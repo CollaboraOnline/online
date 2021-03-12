@@ -2348,354 +2348,228 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 	getDataTab: function() {
 		var content = [
 			{
-				'id': 'Data-Section-Calculate',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'separator37',
-						'type': 'separator',
-						'orientation': 'vertical'
-					},
-					{
-						'id': 'SectionBottom13',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:Calculate', 'spreadsheet'),
-								'command': '.uno:Calculate'
-							}
-						]
-					}
-				]
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Calculate', 'spreadsheet'),
+				'command': '.uno:Calculate'
 			},
 			{
-				'id': 'Data-Section-PivotTable',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'separator377',
-						'type': 'separator',
-						'orientation': 'vertical'
-					},
-					{
-						'id': 'SectionPivotTable1',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:DataDataPilotRun', 'spreadsheet'),
-								'command': '.uno:DataDataPilotRun'
-							}
-						]
-					},
-					{
-						'id': 'GroupPivotTable1',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'ToolBoxPivotTable1',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:RecalcPivotTable', 'spreadsheet'),
-										'command': '.uno:RecalcPivotTable'
-									}
-								]
-							},
-							{
-								'id': 'ToolBoxPivotTable2',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DeletePivotTable', 'spreadsheet'),
-										'command': '.uno:DeletePivotTable'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				]
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:DataDataPilotRun', 'spreadsheet'),
+				'command': '.uno:DataDataPilotRun'
 			},
 			{
-				'id': 'Data-Section-Sort',
+				'id': 'GroupPivotTable1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'separator18',
-						'type': 'separator',
-						'orientation': 'vertical'
-					},
-					{
-						'id': 'SectionBottom3',
+						'id': 'ToolBoxPivotTable1',
 						'type': 'toolbox',
 						'children': [
 							{
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:DataSort', 'spreadsheet'),
-								'command': '.uno:DataSort'
+								'type': 'toolitem',
+								'text': _UNO('.uno:RecalcPivotTable', 'spreadsheet'),
+								'command': '.uno:RecalcPivotTable'
+							}
+						]
+					},
+					{
+						'id': 'ToolBoxPivotTable2',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DeletePivotTable', 'spreadsheet'),
+								'command': '.uno:DeletePivotTable'
 							}
 						]
 					}
-				]
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:DataSort', 'spreadsheet'),
+				'command': '.uno:DataSort'
 			},
 			{
 				'id': 'Data-Section-Sort1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'GroupB39',
-						'type': 'container',
+						'id': 'LeftParaMargin8',
+						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'LeftParaMargin8',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:SortAscending', 'spreadsheet'),
-										'command': '.uno:SortAscending'
-									}
-								]
-							},
-							{
-								'id': 'belowspacing8',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:SortDescending', 'spreadsheet'),
-										'command': '.uno:SortDescending'
-									}
-								]
+								'type': 'toolitem',
+								'text': _UNO('.uno:SortAscending', 'spreadsheet'),
+								'command': '.uno:SortAscending'
 							}
-						],
-						'vertical': 'true'
-					}
-				]
-			},
-			{
-				'id': 'Data-Section-Filter',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'separator19',
-						'type': 'separator',
-						'orientation': 'vertical'
+						]
 					},
 					{
-						'id': 'GroupB458',
-						'type': 'container',
+						'id': 'belowspacing8',
+						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'SectionBottom8',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DataFilterAutoFilter', 'spreadsheet'),
-										'command': '.uno:DataFilterAutoFilter'
-									}
-								]
-							},
-							{
-								'id': 'SectionBottom88',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DataFilterSpecialFilter', 'spreadsheet'),
-										'command': '.uno:DataFilterSpecialFilter'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				]
-			},
-			{
-				'id': 'Data-Section-Filter1',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'GroupB45',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'belowspacing9',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DataFilterStandardFilter', 'spreadsheet'),
-										'command': '.uno:DataFilterStandardFilter'
-									}
-								]
-							},
-							{
-								'id': 'LeftParaMargin9',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DataFilterHideAutoFilter', 'spreadsheet'),
-										'command': '.uno:DataFilterHideAutoFilter'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				]
-			},
-			{
-				'id': 'Data-Section-Group1',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'GroupB54',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'LeftParaMargin14',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Group'),
-										'command': '.uno:Group'
-									}
-								]
-							},
-							{
-								'id': 'belowspacing16',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Ungroup'),
-										'command': '.uno:Ungroup'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				]
-			},
-			{
-				'id': 'Data-Section-Group2',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'GroupB92',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'LeftParaMargin15',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:HideDetail'),
-										'command': '.uno:HideDetail'
-									}
-								]
-							},
-							{
-								'id': 'belowspacing17',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:ShowDetail'),
-										'command': '.uno:ShowDetail'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				]
-			},
-			{
-				'id': 'Data-Section-NamedRanges',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'GroupB561',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'LeftParaMargin161',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:AddName', 'spreadsheet'),
-										'command': '.uno:AddName'
-									}
-								]
-							},
-							{
-								'id': 'belowspacing181',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DefineName', 'spreadsheet'),
-										'command': '.uno:DefineName'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				]
-			},
-			{
-				'id': 'Data-Section-TextToColumn1',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'GroupB65',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'belowspacing11',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'bigtoolitem',
-										'text': _UNO('.uno:Validation', 'spreadsheet'),
-										'command': '.uno:Validation'
-									}
-								]
+								'type': 'toolitem',
+								'text': _UNO('.uno:SortDescending', 'spreadsheet'),
+								'command': '.uno:SortDescending'
 							}
 						]
 					}
-				]
+				],
+				'vertical': 'true'
 			},
 			{
-				'id': 'Data-Section-Statistic',
-				'type': 'container',
+				'id': 'Data-Section-Filter',
 				'children': [
 					{
-						'id': 'separator41',
-						'type': 'separator',
-						'orientation': 'vertical'
+						'id': 'SectionBottom8',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataFilterAutoFilter', 'spreadsheet'),
+								'command': '.uno:DataFilterAutoFilter'
+							}
+						]
 					},
 					{
-						'id': 'Data-StatisticsMenu:Menu Statistic',
-						'type': 'menubutton',
-						'text': _UNO('.uno:StatisticsMenu', 'spreadsheet'),
-						'enabled': 'true'
+						'id': 'SectionBottom88',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataFilterSpecialFilter', 'spreadsheet'),
+								'command': '.uno:DataFilterSpecialFilter'
+							}
+						]
 					}
-				]
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'Data-Section-Filter1',
+				'children': [
+					{
+						'id': 'belowspacing9',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataFilterStandardFilter', 'spreadsheet'),
+								'command': '.uno:DataFilterStandardFilter'
+							}
+						]
+					},
+					{
+						'id': 'LeftParaMargin9',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataFilterHideAutoFilter', 'spreadsheet'),
+								'command': '.uno:DataFilterHideAutoFilter'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'Data-Section-Group1',
+				'children': [
+					{
+						'id': 'LeftParaMargin14',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Group'),
+								'command': '.uno:Group'
+							}
+						]
+					},
+					{
+						'id': 'belowspacing16',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Ungroup'),
+								'command': '.uno:Ungroup'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'Data-Section-Group2',
+				'children': [
+					{
+						'id': 'LeftParaMargin15',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:HideDetail'),
+								'command': '.uno:HideDetail'
+							}
+						]
+					},
+					{
+						'id': 'belowspacing17',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ShowDetail'),
+								'command': '.uno:ShowDetail'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'Data-Section-NamedRanges',
+				'children': [
+					{
+						'id': 'LeftParaMargin161',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AddName', 'spreadsheet'),
+								'command': '.uno:AddName'
+							}
+						]
+					},
+					{
+						'id': 'belowspacing181',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DefineName', 'spreadsheet'),
+								'command': '.uno:DefineName'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Validation', 'spreadsheet'),
+				'command': '.uno:Validation'
+			},
+			{
+				'id': 'Data-StatisticsMenu:Menu Statistic',
+				'type': 'menubutton',
+				'text': _UNO('.uno:StatisticsMenu', 'spreadsheet'),
+				'enabled': 'true'
 			}
 		];
 
