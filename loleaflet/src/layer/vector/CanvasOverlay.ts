@@ -8,6 +8,55 @@
 /// <reference path="../marker/Cursor.ts" />
 /* eslint-disable */
 
+// OverlayTransform is used by CanvasOverlay to apply transformations
+// to points/bounds before drawing is done.
+// The reason why we cannot use canvasRenderingContext2D.transform() is it
+// does not support coordinate values bigger than 2^24 - 1 and if we use it in this
+// regime the renders will be incorrect. At least in Calc it is possible to have pixel
+// coordinates greater than this limit at higher zooms near the bottom of the sheet.
+class OverlayTransform {
+	private translationAmount: CPoint;
+	private scaleAmount: CPoint;
+
+	// This does not support a stack of transforms and hence only allows a single
+	// scaling and translation operation.
+	constructor() {
+		this.translationAmount = new CPoint(0, 0);
+		this.scaleAmount = new CPoint(1, 1);
+	}
+
+	translate(x: number, y: number) {
+		this.translationAmount.x = x;
+		this.translationAmount.y = y;
+	}
+
+	scale(sx: number, sy: number) {
+		this.scaleAmount.x = sx;
+		this.scaleAmount.y = sy;
+	}
+
+	reset() {
+		this.translationAmount.x = 0;
+		this.translationAmount.y = 0;
+		this.scaleAmount.x = 1;
+		this.scaleAmount.y = 1;
+	}
+
+	applyToPoint(point: CPoint): CPoint {
+		// 'scale first then translation' model.
+		return new CPoint(
+			point.x * this.scaleAmount.x - this.translationAmount.x,
+			point.y * this.scaleAmount.y - this.translationAmount.y);
+	}
+
+	applyToBounds(bounds: CBounds): CBounds {
+		return new CBounds(
+			this.applyToPoint(bounds.min),
+			this.applyToPoint(bounds.max)
+		);
+	}
+}
+
 // CanvasOverlay handles CPath rendering and mouse events handling via overlay-section of the main canvas.
 // where overlays like cell-cursors, cell-selections, edit-cursors are instances of CPath or its subclasses.
 class CanvasOverlay {
@@ -17,7 +66,7 @@ class CanvasOverlay {
 	private bounds: CBounds;
 	private tsManager: any;
 	private overlaySection: any;
-	private manualTranslationAmount: CPoint;
+	private transform: OverlayTransform;
 
 	constructor(mapObject: any, canvasContext: CanvasRenderingContext2D) {
 		this.map = mapObject;
@@ -25,7 +74,7 @@ class CanvasOverlay {
 		this.tsManager = this.map.getTileSectionMgr();
 		this.overlaySection = undefined;
 		this.paths = new Map<number, CPath>();
-		this.manualTranslationAmount = new CPoint(0, 0);
+		this.transform = new OverlayTransform();
 		this.updateCanvasBounds();
 	}
 
@@ -169,31 +218,19 @@ class CanvasOverlay {
 		return this.bounds;
 	}
 
-	private paneHitCoordinateLimit(paneBounds: CBounds): boolean {
-		// canvasRenderingContext2D.translate() and friends only seem to function with numbers < 2^24
-		// Lets use a more readable upper-bound.
-		return paneBounds.max.y > 16000000 || paneBounds.max.x > 16000000;;
-	}
-
 	// Applies canvas translation so that polygons/circles can be drawn using core-pixel coordinates.
 	private ctStart(clipArea?: CBounds, paneBounds?: CBounds, fixed?: boolean) {
 		this.updateCanvasBounds();
-		var cOrigin = new CPoint(0, 0);
+		this.transform.reset();
 		this.ctx.save();
 
 		if (!paneBounds)
 			paneBounds = this.bounds.clone();
 
-		var doManualTranslation = this.paneHitCoordinateLimit(paneBounds);
-
 		if (this.tsManager._inZoomAnim && !fixed) {
 			// zoom-animation is in progress : so draw overlay on main canvas
 			// at the current frame's zoom level.
 			paneBounds = CBounds.fromCompat(paneBounds);
-
-			// This is complicated to do, bail out.
-			if (doManualTranslation)
-				return;
 
 			var splitPos = this.tsManager.getSplitPos();
 			var scale = this.tsManager._zoomFrameScale;
@@ -211,10 +248,6 @@ class CanvasOverlay {
 					-splitPos.x - 1 + (center.x - (center.x - paneBounds.min.x) / scale)),
 				Math.max(0,
 					-splitPos.y - 1 + (center.y - (center.y - paneBounds.min.y) / scale)));
-
-			// Set canvas section's unscaled origin for the transformation matrix.
-			cOrigin.x = -newTopLeft.x;
-			cOrigin.y = -newTopLeft.y;
 
 			// Compute clip area which needs to be applied after setting the transformation.
 			var clipTopLeft = new CPoint(0, 0);
@@ -237,12 +270,13 @@ class CanvasOverlay {
 				clipTopLeft,
 				clipTopLeft.add(clipSize));
 
-			this.ctx.transform(scale, 0, 0, scale, scale * cOrigin.x, scale * cOrigin.y);
+			this.transform.scale(scale, scale);
+			this.transform.translate(scale * newTopLeft.x, scale * newTopLeft.y);
 
 		} else if (this.tsManager._inZoomAnim && fixed) {
 
 			var scale = this.tsManager._zoomFrameScale;
-			this.ctx.transform(scale, 0, 0, scale, 0, 0);
+			this.transform.scale(scale, scale);
 
 			if (clipArea) {
 				clipArea = new CBounds(
@@ -252,30 +286,16 @@ class CanvasOverlay {
 			}
 
 		} else {
-
-			if (doManualTranslation) {
-				this.manualTranslationAmount.x = this.bounds.min.x;
-				this.manualTranslationAmount.y = this.bounds.min.y;
-			} else {
-				if (paneBounds.min.x)
-					cOrigin.x = -this.bounds.min.x;
-				if (paneBounds.min.y)
-					cOrigin.y = -this.bounds.min.y;
-
-				this.ctx.translate(cOrigin.x, cOrigin.y);
-			}
+			this.transform.translate(
+				paneBounds.min.x ? this.bounds.min.x : 0,
+				paneBounds.min.y ? this.bounds.min.y : 0);
 		}
 
 		if (clipArea) {
 			this.ctx.beginPath();
+			clipArea = this.transform.applyToBounds(clipArea);
 			var clipSize = clipArea.getSize();
-			if (doManualTranslation) {
-				this.ctx.rect(clipArea.min.x - this.manualTranslationAmount.x,
-					clipArea.min.y - this.manualTranslationAmount.y,
-					clipSize.x, clipSize.y);
-			} else {
-				this.ctx.rect(clipArea.min.x, clipArea.min.y, clipSize.x, clipSize.y);
-			}
+			this.ctx.rect(clipArea.min.x, clipArea.min.y, clipSize.x, clipSize.y);
 			this.ctx.clip();
 		}
 	}
@@ -296,25 +316,13 @@ class CanvasOverlay {
 		if (!len)
 			return;
 
-		var doManualTranslation = this.paneHitCoordinateLimit(paneBounds ? paneBounds : this.bounds);
-		// Until we can accurately do the functionality of transform() lets not animate overlay
-		// when pane coordinates have hit the limit.
-		if (doManualTranslation && this.tsManager._inZoomAnim)
-			return;
-
 		this.ctStart(clipArea, paneBounds, path.fixed);
 		this.ctx.beginPath();
 
 		for (i = 0; i < len; i++) {
 			for (j = 0, len2 = parts[i].length; j < len2; j++) {
-				part = parts[i][j];
-				if (doManualTranslation) {
-					this.ctx[j ? 'lineTo' : 'moveTo'](
-						part.x - this.manualTranslationAmount.x,
-						part.y - this.manualTranslationAmount.y);
-				} else {
-					this.ctx[j ? 'lineTo' : 'moveTo'](part.x, part.y);
-				}
+				part = this.transform.applyToPoint(parts[i][j]);
+				this.ctx[j ? 'lineTo' : 'moveTo'](part.x, part.y);
 			}
 			if (closed) {
 				this.ctx.closePath();
@@ -330,15 +338,9 @@ class CanvasOverlay {
 		if (path.empty())
 			return;
 
-		var doManualTranslation = this.paneHitCoordinateLimit(paneBounds ? paneBounds : this.bounds);
-		// Until we can accurately do the functionality of transform() lets not animate overlay
-		// when pane coordinates have hit the limit.
-		if (doManualTranslation && this.tsManager._inZoomAnim)
-			return;
-
 		this.ctStart(clipArea, paneBounds, path.fixed);
 
-		var point = doManualTranslation ? path.point.subtract(this.manualTranslationAmount) : path.point;
+		var point = this.transform.applyToPoint(path.point);
 		var r: number = path.radius;
 		var s: number = (path.radiusY || r) / r;
 
