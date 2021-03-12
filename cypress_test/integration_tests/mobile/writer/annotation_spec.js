@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach Cypress*/
+/* global describe it cy beforeEach require afterEach */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -83,12 +83,6 @@ describe('Annotation tests.', function() {
 
 	it('Reply to comment.', function() {
 		insertComment();
-
-		// TODO: we wait for a focus event before replying because
-		// it would grab the focus from the dialog otherwise.
-		if (Cypress.env('INTEGRATION') === 'php-proxy') {
-			cy.wait(2000);
-		}
 
 		mobileHelper.selectAnnotationMenuItem('Reply');
 
