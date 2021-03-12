@@ -219,19 +219,21 @@ class CanvasSectionContainer {
 	public testing: boolean = false; // If this set to true, container will create a div element for every section. So, cypress tests can find where to click etc.
 	public lowestPropagatedBoundSection: string = null; // Event propagating to bound sections. The first section which stops propagating and the sections those are on top of that section, get the event.
 	private scrollLineHeight: number = 30; // This will be overridden.
+	private mouseIsInside: boolean = false;
 
 	constructor (canvasDOMElement: HTMLCanvasElement) {
 		this.canvas = canvasDOMElement;
 		this.context = canvasDOMElement.getContext('2d');
 		this.context.setTransform(1,0,0,1,0,0);
-		this.canvas.onmousemove = this.onMouseMove.bind(this)
+		document.addEventListener('mousemove', this.onMouseMove.bind(this));
 		this.canvas.onmousedown = this.onMouseDown.bind(this);
-		this.canvas.onmouseup = this.onMouseUp.bind(this);
+		document.addEventListener('mouseup', this.onMouseUp.bind(this));
 		this.canvas.onclick = this.onClick.bind(this);
 		this.canvas.ondblclick = this.onDoubleClick.bind(this);
 		this.canvas.oncontextmenu = this.onContextMenu.bind(this);
 		this.canvas.onwheel = this.onMouseWheel.bind(this);
 		this.canvas.onmouseleave = this.onMouseLeave.bind(this);
+		this.canvas.onmouseenter = this.onMouseEnter.bind(this);
 		this.canvas.ontouchstart = this.onTouchStart.bind(this);
 		this.canvas.ontouchmove = this.onTouchMove.bind(this);
 		this.canvas.ontouchend = this.onTouchEnd.bind(this);
@@ -559,6 +561,10 @@ class CanvasSectionContainer {
 	}
 
 	private onMouseMove (e: MouseEvent) {
+		// Early exit. If mouse is outside and "draggingSomething = false", then there is no reason to check further.
+		if (!this.mouseIsInside && !this.draggingSomething)
+			return;
+
 		if (!this.potentialLongPress) {
 			if (!this.touchEventInProgress) {
 				this.mousePosition = this.convertPositionToCanvasLocale(e);
@@ -622,6 +628,12 @@ class CanvasSectionContainer {
 	}
 
 	private onMouseUp (e: MouseEvent) { // Should be ignored unless this.draggingSomething = true.
+		// Early exit. If mouse down position is not inside the canvas area, we have nothing to check further.
+		if (!this.positionOnMouseDown) {
+			this.clearMousePositions();
+			return;
+		}
+
 		if (e.button === 0 && !this.touchEventInProgress) {
 			this.positionOnMouseUp = this.convertPositionToCanvasLocale(e);
 
@@ -637,6 +649,10 @@ class CanvasSectionContainer {
 					this.propagateOnMouseUp(section, this.convertPositionToSectionLocale(section, this.positionOnMouseUp), e);
 				}
 			}
+		}
+
+		if (!this.mouseIsInside) { // Normally, onclick event clears the positions. In this case, onClick won't be fired. So we clear the positions.
+			this.clearMousePositions();
 		}
 	}
 
@@ -671,14 +687,24 @@ class CanvasSectionContainer {
 	}
 
 	onMouseLeave (e: MouseEvent) {
-		if (this.sectionUnderMouse !== null) {
-			var section: CanvasSectionObject = this.getSectionWithName(this.sectionUnderMouse);
-			if (section)
-				this.propagateOnMouseLeave(section, null, e);
-			this.sectionUnderMouse = null;
+		// While dragging something, we don't clear the event information even if the mouse is outside of the canvas area.
+		// We catch the mouse move and mouse up events even when the mouse pointer is outside the canvas area.
+		// This feature is enabled to create a better dragging experience.
+		if (!this.draggingSomething) {
+			if (this.sectionUnderMouse !== null) {
+				var section: CanvasSectionObject = this.getSectionWithName(this.sectionUnderMouse);
+				if (section)
+					this.propagateOnMouseLeave(section, null, e);
+				this.sectionUnderMouse = null;
+			}
+			this.clearMousePositions();
+			this.mousePosition = null;
 		}
-		this.clearMousePositions();
-		this.mousePosition = null; // This variable is set to null if only mouse is outside canvas area.
+		this.mouseIsInside = false;
+	}
+
+	onMouseEnter (e: MouseEvent) {
+		this.mouseIsInside = true;
 	}
 
 	onTouchStart (e: TouchEvent) { // Should be ignored unless this.draggingSomething = true.
