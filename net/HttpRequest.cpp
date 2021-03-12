@@ -133,6 +133,8 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
     if (!Util::startsWith(std::string(version, VersionLen), "HTTP/") || (versionMaj < 0 || versionMaj > 9)
         || version[VersionDotPos] != '.' || (versionMin < 0 || versionMin > 9))
     {
+        LOG_ERR("StatusLine::parse: Invalid HTTP version [" << std::string(version, VersionLen)
+                                                            << "]");
         return FieldParseState::Invalid;
     }
 
@@ -153,12 +155,18 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
     assert(off + StatusCodeLen < len && "Expected to have more data.");
     _statusCode = std::atoi(&p[off]);
     if (_statusCode < MinValidStatusCode || _statusCode > MaxValidStatusCode)
+    {
+        LOG_ERR("StatusLine::parse: Invalid StatusCode [" << _statusCode << "]");
         return FieldParseState::Invalid;
+    }
 
     // Find the Reason Phrase.
     off = skipSpaceAndTab(p, off + StatusCodeLen, len);
     if (off >= MaxStatusLineLen)
+    {
+        LOG_ERR("StatusLine::parse: StatusCode is too long: " << off);
         return FieldParseState::Invalid;
+    }
 
     const int64_t reasonOff = off;
 
@@ -169,7 +177,10 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
             break;
 
         if (off >= MaxStatusLineLen)
+        {
+            LOG_ERR("StatusLine::parse: StatusCode is too long: " << off);
             return FieldParseState::Invalid;
+        }
     }
 
     if (off >= len)

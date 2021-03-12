@@ -13,6 +13,7 @@
 #include <cstring>
 #include <ctype.h>
 #include <iomanip>
+#include <sstream>
 #include <stdio.h>
 #include <string>
 #include <unistd.h>
@@ -995,7 +996,9 @@ bool StreamSocket::compactChunks(MessageMap *map)
     map->_messageSize -= gap;
 
 #if ENABLE_DEBUG
-    dumpState(std::cerr);
+    std::ostringstream oss;
+    dumpState(oss);
+    LOG_TRC('#' << getFD() << " Socket state: " << oss.str());
 #endif
 
     return true;
