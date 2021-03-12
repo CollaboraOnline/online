@@ -106,7 +106,7 @@ public:
         Entry ent;
         ent._inserted = std::chrono::steady_clock::now();
         ent._rawData = std::make_shared<std::string>(data, size);
-        LOG_TRC("insert cached clipboard: " + key[0] + " and " + key[1]);
+        LOG_TRC("Insert cached clipboard: " << key[0] << " and " << key[1]);
         std::lock_guard<std::mutex> lock(_mutex);
         _cache[key[0]] = ent;
         _cache[key[1]] = ent;
