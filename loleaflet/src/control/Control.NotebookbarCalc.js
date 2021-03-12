@@ -35,6 +35,11 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'name': 'Data'
 			},
 			{
+				'text': _('Format'),
+				'id': '-7',
+				'name': 'Format'
+			},
+			{
 				'text': _('~Review'),
 				'id': '-6',
 				'name': 'Review'
@@ -71,6 +76,10 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 
 		case 'Review':
 			this.loadTab(this.getReviewTab());
+			break;
+
+		case 'Format':
+			this.loadTab(this.getFormatTab());
 			break;
 		}
 	},
@@ -1784,28 +1793,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'enabled': 'true',
 				'children': [
 					{
-						'id': 'PageFormatDialog-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'SectionBottom655',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'type': 'bigtoolitem',
-										'text': _UNO('.uno:PageFormatDialog', 'spreadsheet', true),
-										'command': '.uno:PageFormatDialog'
-									}
-								]
-							}
-						],
-						'vertical': 'false'
-					},
-					{
 						'id': 'rows-Section',
 						'type': 'container',
 						'text': '',
@@ -2873,6 +2860,60 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 		];
 
 		return this.getNotebookbar([this.getTabPage('Review', content)], '-6');
+	},
+
+	getFormatTab: function() {
+		var content = [
+			{
+				'id': 'FormatMenu:FormatMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:FormatMenu', 'spreadsheet'),
+				'command': '.uno:FormatMenu'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FontDialog'),
+				'command': '.uno:FontDialog'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ParagraphDialog'),
+				'command': '.uno:ParagraphDialog'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FormatCellDialog', 'spreadsheet', true),
+				'command': '.uno:FormatCellDialog'
+			},
+			{
+				'id': 'ConditionalFormatMenu:ConditionalFormatMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'),
+				'command': '.uno:ConditionalFormatMenu'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FormatLine'),
+				'command': '.uno:FormatLine'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FormatArea'),
+				'command': '.uno:FormatArea'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:TransformDialog'),
+				'command': '.uno:TransformDialog'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:PageFormatDialog', 'spreadsheet', true),
+				'command': '.uno:PageFormatDialog'
+			}
+		];
+
+		return this.getNotebookbar([this.getTabPage('Format', content)], '-7');
 	}
 });
 
