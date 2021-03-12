@@ -221,13 +221,13 @@ class CanvasOverlay {
 			// Original pane size.
 			var paneSize = paneBounds.getSize();
 			var clipSize = paneSize.clone();
-			if (paneBounds.min.x) {
+			if (paneBounds.min.x || (!paneBounds.min.x && !splitPos.x)) {
 				clipTopLeft.x = newTopLeft.x + splitPos.x;
 				// Pane's "free" size will shrink(expand) as we zoom in(out)
 				// respectively because fixed pane size expand(shrink).
 				clipSize.x = (paneSize.x - splitPos.x * (scale - 1)) / scale;
 			}
-			if (paneBounds.min.y) {
+			if (paneBounds.min.y || (!paneBounds.min.y && !splitPos.y)) {
 				clipTopLeft.y = newTopLeft.y + splitPos.y;
 				// See comment regarding pane width above.
 				clipSize.y = (paneSize.y - splitPos.y * (scale - 1)) / scale;
