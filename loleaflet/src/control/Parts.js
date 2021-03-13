@@ -396,7 +396,7 @@ L.Map.include({
 			if (hiddenParts_.length > 0) {
 				var container = document.createElement('div');
 				container.style.maxHeight = '300px';
-				container.style.maxWidth = '200px';
+				container.style.overflowY = 'auto';
 				for (var i = 0; i < hiddenParts_.length; i++) {
 					var checkbox = document.createElement('input');
 					checkbox.type = 'checkbox';
