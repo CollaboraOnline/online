@@ -770,14 +770,12 @@ std::unique_ptr<TraceFileWriter> LOOLWSD::TraceDumper;
 std::unique_ptr<ClipboardCache> LOOLWSD::SavedClipboards;
 #endif
 
-/// This thread polls basic web serving, and handling of
-/// websockets before upgrade: when upgraded they go to the
-/// relevant DocumentBroker poll instead.
-TerminatingPoll WebServerPoll("websrv_poll");
+std::unique_ptr<TerminatingPoll> LOOLWSD::WebServerPoll;
 
-class PrisonerPoll : public TerminatingPoll {
+class PrisonPoll : public TerminatingPoll
+{
 public:
-    PrisonerPoll() : TerminatingPoll("prisoner_poll") {}
+    PrisonPoll() : TerminatingPoll("prisoner_poll") {}
 
     /// Check prisoners are still alive and balanced.
     void wakeupHook() override;
@@ -821,9 +819,7 @@ private:
 #endif
 };
 
-/// This thread listens for and accepts prisoner kit processes.
-/// And also cleans up and balances the correct number of children.
-PrisonerPoll PrisonerPoll;
+std::unique_ptr<PrisonPoll> LOOLWSD::PrisonerPoll;
 
 /// Helper class to hold default configuration entries.
 class AppConfigMap final : public Poco::Util::MapConfiguration
@@ -1372,6 +1368,10 @@ void LOOLWSD::innerInitialize(Application& self)
     FileServerRequestHandler::initialize();
 #endif
 
+    LOOLWSD::WebServerPoll = Util::make_unique<TerminatingPoll>("websrv_poll");
+
+    LOOLWSD::PrisonerPoll = Util::make_unique<PrisonPoll>();
+
     LOG_TRC("Initialize StorageBase");
     StorageBase::initialize();
 
@@ -1765,7 +1765,7 @@ bool LOOLWSD::checkAndRestoreForKit()
 
 void LOOLWSD::doHousekeeping()
 {
-    PrisonerPoll.wakeup();
+    LOOLWSD::PrisonerPoll->wakeup();
 }
 
 void LOOLWSD::closeDocument(const std::string& docKey, const std::string& message)
@@ -1810,7 +1810,7 @@ void LOOLWSD::setLogLevelsOfKits(const std::string& level)
 }
 
 /// Really do the house-keeping
-void PrisonerPoll::wakeupHook()
+void PrisonPoll::wakeupHook()
 {
 #if !MOBILEAPP
     LOG_TRC("PrisonerPoll - wakes up with " << NewChildren.size() <<
@@ -1927,7 +1927,7 @@ bool LOOLWSD::createForKit()
 
     // Below line will be executed by PrisonerPoll thread.
     ForKitProc = nullptr;
-    PrisonerPoll.setForKitProcess(ForKitProc);
+    LOOLWSD::PrisonerPoll->setForKitProcess(ForKitProc);
 
     // ForKit always spawns one.
     ++OutstandingForks;
@@ -1953,7 +1953,7 @@ bool LOOLWSD::createForKit()
 
 void LOOLWSD::sendMessageToForKit(const std::string& message)
 {
-    PrisonerPoll.sendMessageToForKit(message);
+    LOOLWSD::PrisonerPoll->sendMessageToForKit(message);
 }
 
 #endif // !MOBILEAPP
@@ -2139,7 +2139,7 @@ private:
                 }
                 LOOLWSD::ForKitProc = std::make_shared<ForKitProcess>(LOOLWSD::ForKitProcId, socket, request);
                 socket->getInBuffer().clear();
-                PrisonerPoll.setForKitProcess(LOOLWSD::ForKitProc);
+                LOOLWSD::PrisonerPoll->setForKitProcess(LOOLWSD::ForKitProc);
                 return;
             }
 #endif
@@ -3649,13 +3649,13 @@ public:
 
     void startPrisoners()
     {
-        PrisonerPoll.startThread();
-        PrisonerPoll.insertNewSocket(findPrisonerServerPort());
+        LOOLWSD::PrisonerPoll->startThread();
+        LOOLWSD::PrisonerPoll->insertNewSocket(findPrisonerServerPort());
     }
 
     static void stopPrisoners()
     {
-        PrisonerPoll.joinThread();
+        LOOLWSD::PrisonerPoll->joinThread();
     }
 
     void start()
@@ -3668,7 +3668,7 @@ public:
 #endif
 
         _serverSocket.reset();
-        WebServerPoll.startThread();
+        LOOLWSD::WebServerPoll->startThread();
 
 #if !MOBILEAPP
         Admin::instance().start();
@@ -3678,7 +3678,7 @@ public:
     void stop()
     {
         _acceptPoll.joinThread();
-        WebServerPoll.joinThread();
+        LOOLWSD::WebServerPoll->joinThread();
     }
 
     void dumpState(std::ostream& os)
@@ -3735,10 +3735,10 @@ public:
         _acceptPoll.dumpState(os);
 
         os << "Web Server poll:\n";
-        WebServerPoll.dumpState(os);
+        LOOLWSD::WebServerPoll->dumpState(os);
 
         os << "Prisoner poll:\n";
-        PrisonerPoll.dumpState(os);
+        LOOLWSD::PrisonerPoll->dumpState(os);
 
 #if !MOBILEAPP
         os << "Admin poll:\n";
@@ -3780,7 +3780,7 @@ private:
     {
         std::shared_ptr<SocketFactory> factory = std::make_shared<PrisonerSocketFactory>();
 #if !MOBILEAPP
-        auto socket = std::make_shared<LocalServerSocket>(PrisonerPoll, factory);
+        auto socket = std::make_shared<LocalServerSocket>(*LOOLWSD::PrisonerPoll, factory);
 
         const std::string location = socket->bind();
         if (!location.length())
@@ -3804,7 +3804,7 @@ private:
         constexpr int DEFAULT_MASTER_PORT_NUMBER = 9981;
         std::shared_ptr<ServerSocket> socket
             = ServerSocket::create(ServerSocket::Type::Public, DEFAULT_MASTER_PORT_NUMBER,
-                                   ClientPortProto, PrisonerPoll, factory);
+                                   ClientPortProto, *LOOLWSD::PrisonerPoll, factory);
 
         LOOLWSD::prisonerServerSocketFD = socket->getFD();
         LOG_INF("Listening to prisoner connections on #" << LOOLWSD::prisonerServerSocketFD);
@@ -3824,8 +3824,8 @@ private:
 #endif
             factory = std::make_shared<PlainSocketFactory>();
 
-        std::shared_ptr<ServerSocket> socket
-            = ServerSocket::create(ClientListenAddr, port, ClientPortProto, WebServerPoll, factory);
+        std::shared_ptr<ServerSocket> socket = ServerSocket::create(
+            ClientListenAddr, port, ClientPortProto, *LOOLWSD::WebServerPoll, factory);
 
         while (!socket &&
 #ifdef BUILDING_TESTS
@@ -3837,7 +3837,8 @@ private:
         {
             ++port;
             LOG_INF("Client port " << (port - 1) << " is busy, trying " << port << '.');
-            socket = ServerSocket::create(ClientListenAddr, port, ClientPortProto, WebServerPoll, factory);
+            socket = ServerSocket::create(ClientListenAddr, port, ClientPortProto,
+                                          *LOOLWSD::WebServerPoll, factory);
         }
 
         if (!socket)
@@ -4018,7 +4019,7 @@ int LOOLWSD::innerMain()
         mainWait.poll(waitMicroS);
 
         // Wake the prisoner poll to spawn some children, if necessary.
-        PrisonerPoll.wakeup();
+        PrisonerPoll->wakeup();
 
         const std::chrono::milliseconds timeSinceStartMs
             = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()
@@ -4118,6 +4119,10 @@ int LOOLWSD::innerMain()
     srv->stopPrisoners();
     srv.reset();
 
+    LOOLWSD::PrisonerPoll.reset();
+
+    LOOLWSD::WebServerPoll.reset();
+
     // Terminate child processes
     LOG_INF("Requesting child processes to terminate.");
     for (auto& child : NewChildren)
@@ -4149,7 +4154,13 @@ void LOOLWSD::cleanup()
     {
         srv.reset();
 
+        LOOLWSD::PrisonerPoll.reset();
+
+        LOOLWSD::WebServerPoll.reset();
+
 #if !MOBILEAPP
+        SavedClipboards.reset();
+
         FileServerRequestHandler::uninitialize();
         JWTAuth::cleanup();
 
@@ -4163,6 +4174,9 @@ void LOOLWSD::cleanup()
         }
 #endif
 #endif
+
+        TraceDumper.reset();
+
         Socket::InhibitThreadChecks = true;
         SocketPoll::InhibitThreadChecks = true;
 
