@@ -9,12 +9,13 @@
 
 #include <net/DelaySocket.hpp>
 
+#include <memory>
+#include <mutex>
+
 #define DELAY_LOG(X) std::cerr << X << '\n';
 
-class Delayer;
-
-// FIXME: TerminatingPoll ?
-static SocketPoll DelayPoll("delay_poll");
+std::shared_ptr<TerminatingPoll> Delay::DelayPoll;
+std::once_flag Delay::DelayPollOnceFlag;
 
 /// Reads from fd, delays that and then writes to _dest.
 class DelaySocket : public Socket {
@@ -228,12 +229,31 @@ public:
 ///    internalFd - the internal side of the socket-pair
 ///    delayFd - what we hand on to our un-suspecting wrapped socket
 ///              which looks like an external socket - but delayed.
-namespace Delay {
-    int create(int delayMs, int physicalFd)
+Delay::Delay(std::size_t latencyMs)
+{
+    if (latencyMs)
+    {
+        // This will be called exactly once, and all
+        // competing threads (if more than one) will
+        // block until it returns.
+        std::call_once(DelayPollOnceFlag, []() {
+            DelayPoll = std::make_shared<TerminatingPoll>("delay_poll");
+            DelayPoll->startThread(); // Start the thread.
+        });
+    }
+}
+
+Delay::~Delay() { DelayPoll.reset(); }
+
+int Delay::create(int delayMs, int physicalFd)
+{
+    auto delayPoll = DelayPoll;
+    if (delayPoll && delayPoll->isAlive())
     {
         int pair[2];
         int rc = socketpair(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0, pair);
-        assert (rc == 0); (void)rc;
+        assert(rc == 0);
+        (void)rc;
         int internalFd = pair[0];
         int delayFd = pair[1];
 
@@ -242,19 +262,32 @@ namespace Delay {
         physical->setDestination(internal);
         internal->setDestination(physical);
 
-        DelayPoll.startThread();
-        DelayPoll.insertNewSocket(physical);
-        DelayPoll.insertNewSocket(internal);
-
+        delayPoll->insertNewSocket(physical);
+        delayPoll->insertNewSocket(internal);
+        LOG_TRC("Created DelaySockets with physicalFd: " << physicalFd
+                                                         << " and internalFd: " << internalFd);
         return delayFd;
     }
-    void dumpState(std::ostream &os)
+    else
     {
-        if (DelayPoll.isAlive())
-        {
-            os << "Delay poll:\n";
-            DelayPoll.dumpState(os);
-        }
+        LOG_ERR("Failed to create DelaySockets for physicalFd: " << physicalFd
+                                                                 << ". No DelayPoll exists.");
+    }
+
+    return -1;
+}
+
+void Delay::dumpState(std::ostream& os)
+{
+    auto delayPoll = DelayPoll;
+    if (delayPoll && delayPoll->isAlive())
+    {
+        os << "Delay poll:\n";
+        delayPoll->dumpState(os);
+    }
+    else
+    {
+        os << "Delay poll: doesn't exist.\n";
     }
 }
 

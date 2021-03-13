@@ -223,7 +223,7 @@ int LOOLWSD::prisonerServerSocketFD;
 #else
 
 /// Funky latency simulation basic delay (ms)
-static int SimulatedLatencyMs = 0;
+static std::size_t SimulatedLatencyMs = 0;
 
 #endif
 
@@ -3926,6 +3926,9 @@ int LOOLWSD::innerMain()
         FileServerRoot = Util::getApplicationPath();
     FileServerRoot = Poco::Path(FileServerRoot).absolute().toString();
     LOG_DBG("FileServerRoot: " << FileServerRoot);
+
+    LOG_DBG("Initializing DelaySocket with " << SimulatedLatencyMs << "ms.");
+    Delay delay(SimulatedLatencyMs);
 #endif
 
     ClientRequestDispatcher::InitStaticFileContentCache();
