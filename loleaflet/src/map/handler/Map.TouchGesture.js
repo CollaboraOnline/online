@@ -621,7 +621,9 @@ L.Map.TouchGesture = L.Handler.extend({
 			this._map._docLayer.zoomStepEnd(finalZoom, this._origCenter);
 		}
 
+		this._map.setZoomViewPanning(true);
 		this._map.setView(this._center, finalZoom);
+		this._map.setZoomViewPanning(false);
 	},
 
 	_constructFakeEvent: function (evt, type) {
