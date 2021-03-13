@@ -539,6 +539,23 @@ L.Map = L.Evented.extend({
 		return this._inZoomViewPanning;
 	},
 
+	setZoomViewPanning: function (value) {
+		var docLayer = this._docLayer;
+		if (!docLayer)
+			return;
+		this._inZoomViewPanning = value;
+
+		if (!docLayer.isCursorVisible())
+			return;
+
+		if (this._inZoomViewPanning) {
+			this._textInput.disable();
+		} else {
+			this._textInput.enable();
+			docLayer._updateCursorPos();
+		}
+	},
+
 	setZoom: function (zoom, options) {
 
 		if (this._docLayer instanceof L.CanvasTileLayer) {
