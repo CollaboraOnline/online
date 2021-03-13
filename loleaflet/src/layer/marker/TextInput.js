@@ -133,6 +133,14 @@ L.TextInput = L.Layer.extend({
 		this._map.removeLayer(this._cursorHandler);
 	},
 
+	disable: function () {
+		this._textArea.setAttribute('disabled', true);
+	},
+
+	enable: function () {
+		this._textArea.removeAttribute('disabled');
+	},
+
 	_onPermission: function(e) {
 		if (e.perm === 'edit') {
 			this._textArea.removeAttribute('disabled');
