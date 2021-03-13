@@ -2006,6 +2006,62 @@ L.TileLayer = L.GridLayer.extend({
 		this._updateReferenceMarks();
 	},
 
+	_getStringPart: function (string) {
+		var code = '';
+		var i = 0;
+		while (i < string.length) {
+			if (string.charCodeAt(i) < 48 || string.charCodeAt(i) > 57) {
+				code += string.charAt(i);
+			}
+			i++;
+		}
+		return code;
+	},
+
+	_getNumberPart: function (string) {
+		var number = '';
+		var i = 0;
+		while (i < string.length) {
+			if (string.charCodeAt(i) >= 48 && string.charCodeAt(i) <= 57) {
+				number += string.charAt(i);
+			}
+			i++;
+		}
+		return parseInt(number);
+	},
+
+	_isWholeColumnSelected: function (cellAddress) {
+		var startEnd = cellAddress.split(':');
+		if (startEnd.length === 1)
+			return false; // Selection is not a range.
+
+		var rangeStart = this._getNumberPart(startEnd[0]);
+		if (rangeStart !== 1)
+			return false; // Selection doesn't start at first row.
+
+		var rangeEnd = this._getNumberPart(startEnd[1]);
+		if (rangeEnd === 1048576) // Last row's number.
+			return true;
+		else
+			return false;
+	},
+
+	_isWholeRowSelected: function (cellAddress) {
+		var startEnd = cellAddress.split(':');
+		if (startEnd.length === 1)
+			return false; // Selection is not a range.
+
+		var rangeStart = this._getStringPart(startEnd[0]);
+		if (rangeStart !== 'A')
+			return false; // Selection doesn't start at first column.
+
+		var rangeEnd = this._getStringPart(startEnd[1]);
+		if (rangeEnd === 'AMJ') // Last column's code.
+			return true;
+		else
+			return false;
+	},
+
 	_updateScrollOnCellSelection: function (oldSelection, newSelection) {
 		if (this.isCalc() && oldSelection) {
 			var mapBounds = this._map.getBounds();
@@ -2030,8 +2086,11 @@ L.TileLayer = L.GridLayer.extend({
 					center = center.subtract(this._map.getSize().divideBy(2));
 					center.x = Math.round(center.x < 0 ? 0 : center.x);
 					center.y = Math.round(center.y < 0 ? 0 : center.y);
-					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected)
-						this._map.fire('scrollto', {x: center.x, y: center.y});
+					if (!this._map.wholeColumnSelected && !this._map.wholeRowSelected) {
+						var address = document.getElementById('addressInput').value;
+						if (!this._isWholeColumnSelected(address) && !this._isWholeRowSelected(address))
+							this._map.fire('scrollto', {x: center.x, y: center.y});
+					}
 				}
 			}
 		}
