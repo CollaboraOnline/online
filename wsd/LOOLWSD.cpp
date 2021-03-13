@@ -3858,7 +3858,7 @@ private:
     }
 };
 
-static LOOLWSDServer srv;
+static std::unique_ptr<LOOLWSDServer> srv;
 
 #if !MOBILEAPP
 #if ENABLE_DEBUG
@@ -3933,12 +3933,14 @@ int LOOLWSD::innerMain()
 
     ClientRequestDispatcher::InitStaticFileContentCache();
 
+    srv = Util::make_unique<LOOLWSDServer>();
+
     // Allocate our port - passed to prisoners.
-    srv.findClientPort();
+    srv->findClientPort();
 
     // Start the internal prisoner server and spawn forkit,
     // which in turn forks first child.
-    srv.startPrisoners();
+    srv->startPrisoners();
 
 // No need to "have at least one child" beforehand on mobile
 #if !MOBILEAPP
@@ -3990,7 +3992,7 @@ int LOOLWSD::innerMain()
     Util::mapAnonymized("contents", "contents");
 
     // Start the server.
-    srv.start();
+    srv->start();
 
     /// The main-poll does next to nothing:
     SocketPoll mainWait("main");
@@ -4047,7 +4049,7 @@ int LOOLWSD::innerMain()
             SigUtil::getShutdownRequestFlag() << ", TerminationFlag: " << SigUtil::getTerminationFlag());
 
     // Wait until documents are saved and sessions closed.
-    srv.stop();
+    srv->stop();
 
     // atexit handlers tend to free Admin before Documents
     LOG_INF("Exiting. Cleaning up lingering documents.");
@@ -4113,7 +4115,8 @@ int LOOLWSD::innerMain()
     SigUtil::killChild(ForKitProcId);
 #endif
 
-    srv.stopPrisoners();
+    srv->stopPrisoners();
+    srv.reset();
 
     // Terminate child processes
     LOG_INF("Requesting child processes to terminate.");
@@ -4144,6 +4147,8 @@ void LOOLWSD::cleanup()
 {
     try
     {
+        srv.reset();
+
 #if !MOBILEAPP
         FileServerRequestHandler::uninitialize();
         JWTAuth::cleanup();
@@ -4272,7 +4277,9 @@ void alertAllUsers(const std::string& msg)
 void dump_state()
 {
     std::ostringstream oss;
-    srv.dumpState(oss);
+
+    if (srv)
+        srv->dumpState(oss);
 
     const std::string msg = oss.str();
     fprintf(stderr, "%s\n", msg.c_str());
