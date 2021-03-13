@@ -685,7 +685,7 @@ std::shared_ptr<Socket> ServerSocket::accept()
         // Create a socket object using the factory.
         if (rc != -1)
         {
-            std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
+            std::shared_ptr<Socket> _socket = createSocketFromAccept(rc);
 
 #if !MOBILEAPP
             char addrstr[INET6_ADDRSTRLEN];
@@ -768,7 +768,7 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
         if (rc < 0)
             return std::shared_ptr<Socket>(nullptr);
 
-        std::shared_ptr<Socket> _socket = _sockFactory->create(rc);
+        std::shared_ptr<Socket> _socket = createSocketFromAccept(rc);
         // Sanity check this incoming socket
 #ifndef __FreeBSD__
 #define CREDS_UID(c) c.uid
