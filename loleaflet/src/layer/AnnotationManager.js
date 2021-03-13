@@ -27,7 +27,6 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 		this._map.on('AnnotationSave', this._onAnnotationSave, this);
 		this._map.on('RedlineAccept', this._onRedlineAccept, this);
 		this._map.on('RedlineReject', this._onRedlineReject, this);
-		this._map.on('commandstatechanged', this._onCommandStateChanged, this);
 		this._showResolved = false;
 	},
 
@@ -759,14 +758,6 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 		this._map.sendUnoCommand('.uno:RejectTrackedChange', command);
 		this.unselect();
 		this._map.focus();
-	},
-
-	_onCommandStateChanged: function(e) {
-		if (e.commandName === '.uno:ShowResolvedAnnotations') {
-			var state = e.state === true || e.state === 'true';
-			if (this._showResolved != state)
-				this.setViewResolved(state);
-		}
 	},
 
 	_isThreadResolved: function(annotation) {
