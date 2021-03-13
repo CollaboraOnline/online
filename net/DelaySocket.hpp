@@ -9,14 +9,27 @@
 
 #include <Socket.hpp>
 
+#include <mutex>
+
 /// Simulates network latency for local debugging.
 ///
 /// We are lifecycle managed internally based on the physical /
 /// delayFd lifecycle.
-namespace Delay
+///
+/// An instance of Delay must be created before using the
+/// static members and must outlive all sockets.
+class Delay final
 {
-    int create(int delayMs, int physicalFd);
-    void dumpState(std::ostream &os);
+public:
+    Delay(std::size_t latencyMs);
+    ~Delay();
+
+    static int create(int delayMs, int physicalFd);
+    static void dumpState(std::ostream &os);
+
+private:
+    static std::shared_ptr<TerminatingPoll> DelayPoll;
+    static std::once_flag DelayPollOnceFlag;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
