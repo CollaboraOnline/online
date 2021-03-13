@@ -104,12 +104,18 @@ public:
         }
     }
 
+protected:
+    /// Create a Socket instance from the accepted socket FD.
+    std::shared_ptr<Socket> createSocketFromAccept(int fd) const
+    {
+        return _sockFactory->create(fd);
+    }
+
 private:
 #if !MOBILEAPP
     Socket::Type _type;
 #endif
     SocketPoll& _clientPoller;
-protected:
     std::shared_ptr<SocketFactory> _sockFactory;
 };
 
