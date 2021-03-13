@@ -338,7 +338,10 @@ EXTRA_DIST = discovery.xml \
 if ENABLE_LIBFUZZER
 CLEANUP_COMMAND=true
 else
-CLEANUP_COMMAND=if test -s ./loolwsd; then echo "Cleaning up..." && ./loolwsd --disable-lool-user-checking --cleanup --o:logging.level=trace; fi
+# Use loolwsd to cleanup jails, if any. If it fails, we may have a broken/old loolwsd binary, remove it to rebuild.
+# A CI box may switch branches without cleaning up the binaries, if loolwsd from a broken branch is used here
+# it will fail all subsequent builds, until it's rebuilt from the new branch. So removing loolwsd after failing is needed.
+CLEANUP_COMMAND=if test -s ./loolwsd; then echo "Cleaning up..." && ./loolwsd --disable-lool-user-checking --cleanup --o:logging.level=trace || rm ./loolwsd; fi
 endif
 
 if HAVE_LO_PATH
