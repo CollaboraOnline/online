@@ -109,6 +109,11 @@ int64_t Header::parse(const char* p, int64_t len)
 /// Returns the state and clobbers the len on succcess to the number of bytes read.
 FieldParseState StatusLine::parse(const char* p, int64_t& len)
 {
+#ifdef DEBUG_HTTP
+    LOG_TRC("StatusLine::parse: " << len << " bytes available\n"
+                                  << Util::dumpHex(std::string(p, std::min(len, 10 * 1024L))));
+#endif //DEBUG_HTTP
+
     // First line is the status line.
     if (p == nullptr || len < MinStatusLineLen)
         return FieldParseState::Incomplete;
@@ -130,8 +135,9 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
     const int versionMaj = version[VersionMajPos] - '0';
     const int versionMin = version[VersionMinPos] - '0';
     // Version may not be null-terminated.
-    if (!Util::startsWith(std::string(version, VersionLen), "HTTP/") || (versionMaj < 0 || versionMaj > 9)
-        || version[VersionDotPos] != '.' || (versionMin < 0 || versionMin > 9))
+    if (!Util::startsWith(std::string(version, VersionLen), "HTTP/")
+        || (versionMaj < 0 || versionMaj > 9) || version[VersionDotPos] != '.'
+        || (versionMin < 0 || versionMin > 9))
     {
         LOG_ERR("StatusLine::parse: Invalid HTTP version [" << std::string(version, VersionLen)
                                                             << "]");
@@ -250,9 +256,11 @@ int64_t Response::readData(const char* p, int64_t len)
             available -= read;
             p += read;
 
-            std::ostringstream oss;
-            Util::dumpHex(oss, std::string(p, std::min(available, 1 * 1024L)));
-            LOG_TRC("After Header: " << available << " bytes availble\n" << oss.str());
+#ifdef DEBUG_HTTP
+            LOG_TRC("After Header: "
+                    << available << " bytes available\n"
+                    << Util::dumpHex(std::string(p, std::min(available, 1 * 1024L))));
+#endif //DEBUG_HTTP
 
             // Assume we have a body unless we have reason to expect otherwise.
             _parserStage = ParserStage::Body;
@@ -310,9 +318,11 @@ int64_t Response::readData(const char* p, int64_t len)
             // each chunk is preceeded by its length in hex.
             while (available)
             {
-                std::ostringstream oss;
-                Util::dumpHex(oss, std::string(p, std::min(available, 10 * 1024L)));
-                LOG_TRC("New Chunk, " << available << " bytes availble\n" << oss.str());
+#ifdef DEBUG_HTTP
+                LOG_TRC("New Chunk, "
+                        << available << " bytes available\n"
+                        << Util::dumpHex(std::string(p, std::min(available, 10 * 1024L))));
+#endif //DEBUG_HTTP
 
                 // Read ahead to see if we have enough data
                 // to consume the chunk length.
