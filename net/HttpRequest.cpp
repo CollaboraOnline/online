@@ -72,6 +72,20 @@ static inline int64_t findLineBreak(const char* p, int64_t off, int64_t len)
     return len;
 }
 
+/// Find the end of text.
+/// Returns the offset to the first whitespace or
+/// line-break character if found, otherwise, len.
+static inline int64_t findEndOfToken(const char* p, int64_t off, int64_t len)
+{
+    for (; off < len; ++off)
+    {
+        if (isWhitespace(p[off]) || p[off] == '\n')
+            return off;
+    }
+
+    return len;
+}
+
 int64_t Header::parse(const char* p, int64_t len)
 {
     LOG_TRC("Reading header given " << len << " bytes: " << std::string(p, std::min(len, 80L)));
@@ -206,6 +220,100 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
 
     len = off;
     return FieldParseState::Valid;
+}
+
+int64_t Request::readData(const char* p, const int64_t len)
+{
+    int64_t available = len;
+    if (_stage == Stage::Header)
+    {
+        // First line is the status line.
+        if (p == nullptr || len < MinRequestHeaderLen)
+        {
+            LOG_TRC("Request::readData: len < MinRequestHeaderLen");
+            return 0;
+        }
+
+        // Verb.
+        int64_t off = skipSpaceAndTab(p, 0, available);
+        int64_t end = findEndOfToken(p, off, available);
+        if (end == available)
+        {
+            // Incomplete data.
+            return 0;
+        }
+
+        _verb = std::string(&p[off], end - off);
+
+        // URL.
+        off = skipSpaceAndTab(p, end, available);
+        end = findEndOfToken(p, off, available);
+        if (end == available)
+        {
+            // Incomplete data.
+            return 0;
+        }
+
+        _url = std::string(&p[off], end - off);
+
+        // Version.
+        off = skipSpaceAndTab(p, end, available);
+        if (off + VersionLen >= available)
+        {
+            // Incomplete data.
+            return 0;
+        }
+
+        // We should have the version now.
+        assert(off + VersionLen < available && "Expected to have more data.");
+        const char* version = &p[off];
+        constexpr int VersionMajPos = sizeof("HTTP/") - 1;
+        constexpr int VersionDotPos = VersionMajPos + 1;
+        constexpr int VersionMinPos = VersionDotPos + 1;
+        const int versionMaj = version[VersionMajPos] - '0';
+        const int versionMin = version[VersionMinPos] - '0';
+        // Version may not be null-terminated.
+        if (!Util::startsWith(std::string(version, VersionLen), "HTTP/")
+            || (versionMaj < 0 || versionMaj > 9) || version[VersionDotPos] != '.'
+            || (versionMin < 0 || versionMin > 9))
+        {
+            LOG_ERR("Request::dataRead: Invalid HTTP version [" << std::string(version, VersionLen)
+                                                                << "]");
+            return -1;
+        }
+
+        _version = std::string(version, VersionLen);
+
+        off += VersionLen;
+        end = findLineBreak(p, off, available);
+        if (end == available)
+        {
+            // Incomplete data.
+            return 0;
+        }
+
+        // LOG_TRC("performWrites (header): " << headerStr.size() << ": " << headerStr);
+        _stage = Stage::Body;
+        p += end;
+        available -= end;
+    }
+
+    if (_stage == Stage::Body)
+    {
+        if (_verb == VERB_GET)
+        {
+            // A payload in a GET request "has no defined semantics".
+            return len - available;
+        }
+        else
+        {
+            // TODO: Implement POST and HEAD support.
+            LOG_ERR("Unsupported HTTP Method [" << _verb << ']');
+            return -1;
+        }
+    }
+
+    return len - available;
 }
 
 /// Handles incoming data.
