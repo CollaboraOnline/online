@@ -448,7 +448,8 @@ public:
     static constexpr int64_t VersionLen = 8;
     static constexpr int64_t StatusCodeLen = 3;
     static constexpr int64_t MaxReasonPhraseLen = 512; // Arbitrary large number.
-    static constexpr int64_t MinStatusLineLen = sizeof("HTTP/0.0 000 X\r\n");
+    static constexpr int64_t MinStatusLineLen
+        = sizeof("HTTP/0.0 000\r\n") - 1; // Reason phrase is optional.
     static constexpr int64_t MaxStatusLineLen = VersionLen + StatusCodeLen + MaxReasonPhraseLen;
     static constexpr int64_t MinValidStatusCode = 100;
     static constexpr int64_t MaxValidStatusCode = 599;
