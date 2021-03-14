@@ -44,7 +44,7 @@ static inline int64_t skipSpaceAndTab(const char* p, int64_t off, int64_t len)
     return len;
 }
 
-static inline int64_t skipCRLF(const char* p, int64_t len, int64_t off = 0)
+static inline int64_t skipCRLF(const char* p, int64_t off, int64_t len)
 {
     for (; off < len; ++off)
     {
@@ -59,7 +59,7 @@ static inline int64_t skipCRLF(const char* p, int64_t len, int64_t off = 0)
 /// Returns the offset to the first LF character,
 /// if found, otherwise, len.
 /// Ex.: for [xxxCRLFCRLF] the offset to the second LF is returned.
-static inline int64_t findLineBreak(const char* p, int64_t len, int64_t off = 0)
+static inline int64_t findLineBreak(const char* p, int64_t off, int64_t len)
 {
     // Find the line break, which ends the status line.
     for (; off < len; ++off)
@@ -329,7 +329,7 @@ int64_t Response::readData(const char* p, int64_t len)
 
                 // Read ahead to see if we have enough data
                 // to consume the chunk length.
-                int64_t off = findLineBreak(p, available);
+                int64_t off = findLineBreak(p, 0, available);
                 if (off == available)
                 {
                     LOG_TRC("Not enough data for chunk size");
@@ -383,7 +383,7 @@ int64_t Response::readData(const char* p, int64_t len)
                     LOG_TRC("Wrote " << chunkLen << " bytes for a total of " << _recvBodySize);
 
                     // Skip blank lines.
-                    off = skipCRLF(p, available);
+                    off = skipCRLF(p, 0, available);
                     p += off;
                     available -= off;
                 }
