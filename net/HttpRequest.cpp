@@ -110,7 +110,7 @@ int64_t Header::parse(const char* p, int64_t len)
 FieldParseState StatusLine::parse(const char* p, int64_t& len)
 {
 #ifdef DEBUG_HTTP
-    LOG_TRC("StatusLine::parse: " << len << " bytes availble\n"
+    LOG_TRC("StatusLine::parse: " << len << " bytes available\n"
                                   << Util::dumpHex(std::string(p, std::min(len, 10 * 1024L))));
 #endif //DEBUG_HTTP
 
@@ -258,7 +258,7 @@ int64_t Response::readData(const char* p, int64_t len)
 
 #ifdef DEBUG_HTTP
             LOG_TRC("After Header: "
-                    << available << " bytes availble\n"
+                    << available << " bytes available\n"
                     << Util::dumpHex(std::string(p, std::min(available, 1 * 1024L))));
 #endif //DEBUG_HTTP
 
@@ -320,7 +320,7 @@ int64_t Response::readData(const char* p, int64_t len)
             {
 #ifdef DEBUG_HTTP
                 LOG_TRC("New Chunk, "
-                        << available << " bytes availble\n"
+                        << available << " bytes available\n"
                         << Util::dumpHex(std::string(p, std::min(available, 10 * 1024L))));
 #endif //DEBUG_HTTP
 
