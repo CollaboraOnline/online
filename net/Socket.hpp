@@ -1005,7 +1005,7 @@ public:
                 len = readData(buf, sizeof(buf));
                 last_errno = errno;
 
-                LOG_TRC('#' << getFD() << ": Read incoming data " << len << " bytes to have "
+                LOG_TRC('#' << getFD() << ": Read incoming data " << len << " bytes in addition to "
                             << _inBuffer.size() << " buffered bytes ("
                             << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
                             << ')');
