@@ -194,6 +194,10 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
     const int64_t reasonOff = off;
 
     // Find the line break, which ends the status line.
+    off = findLineBreak(p, off, len);
+    if (off >= len)
+        return FieldParseState::Incomplete;
+
     for (; off < len; ++off)
     {
         if (p[off] == '\r' || p[off] == '\n')
@@ -206,10 +210,7 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
         }
     }
 
-    if (off >= len)
-        return FieldParseState::Incomplete;
-
-    _reasonPhrase = std::string(&p[reasonOff], off - reasonOff);
+    _reasonPhrase = std::string(&p[reasonOff], off - reasonOff - 1); // Exclude '\r'.
 
     // Consume the line breaks.
     for (; off < len; ++off)
