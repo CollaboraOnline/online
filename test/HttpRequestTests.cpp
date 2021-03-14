@@ -71,7 +71,7 @@ void HttpRequestTests::testInvalidURI()
     LOK_ASSERT(httpResponse->done() == false);
     LOK_ASSERT(httpResponse->state() != http::Response::State::Complete);
     LOK_ASSERT(httpResponse->statusLine().statusCode() != Poco::Net::HTTPResponse::HTTP_OK);
-    LOK_ASSERT(httpResponse->statusLine().statusCode() == 0);
+    LOK_ASSERT_EQUAL(0, httpResponse->statusLine().statusCode());
     LOK_ASSERT(httpResponse->statusLine().statusCategory()
                == http::StatusLine::StatusCodeClass::Invalid);
     LOK_ASSERT(httpResponse->getBody().empty());
@@ -127,7 +127,7 @@ void HttpRequestTests::testSimpleGet()
         LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
-        LOK_ASSERT(httpResponse->statusLine().statusCode() == 200);
+        LOK_ASSERT_EQUAL(200, httpResponse->statusLine().statusCode());
         LOK_ASSERT(httpResponse->statusLine().statusCategory()
                    == http::StatusLine::StatusCodeClass::Successful);
 
@@ -160,7 +160,7 @@ void HttpRequestTests::testSimpleGetSync()
     LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
     LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
     LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
-    LOK_ASSERT(httpResponse->statusLine().statusCode() == 200);
+    LOK_ASSERT_EQUAL(200, httpResponse->statusLine().statusCode());
     LOK_ASSERT(httpResponse->statusLine().statusCategory()
                == http::StatusLine::StatusCodeClass::Successful);
 
@@ -244,7 +244,7 @@ void HttpRequestTests::test500GetStatuses()
         LOK_ASSERT(httpResponse->statusLine().statusCategory()
                    == statusCodeClasses[curStatusCodeClass]);
 
-        LOK_ASSERT(httpResponse->statusLine().statusCode() == statusCode);
+        LOK_ASSERT_EQUAL(statusCode, httpResponse->statusLine().statusCode());
 
         if (httpResponse->statusLine().statusCategory()
             != http::StatusLine::StatusCodeClass::Informational)
@@ -299,7 +299,7 @@ void HttpRequestTests::testSimplePost()
     LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
     LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
     LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
-    LOK_ASSERT(httpResponse->statusLine().statusCode() == 200);
+    LOK_ASSERT_EQUAL(200, httpResponse->statusLine().statusCode());
     LOK_ASSERT(httpResponse->statusLine().statusCategory()
                == http::StatusLine::StatusCodeClass::Successful);
 
