@@ -456,10 +456,8 @@ public:
     static constexpr const char* HTTP_1_1 = "HTTP/1.1";
     static constexpr const char* OK = "OK";
 
-    StatusLine(std::string version = HTTP_1_1, int code = 0, std::string reason = std::string())
-        : _httpVersion(std::move(version))
-        , _statusCode(code)
-        , _reasonPhrase(std::move(reason))
+    StatusLine()
+        : _statusCode(0)
     {
     }
 
