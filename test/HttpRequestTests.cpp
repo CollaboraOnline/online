@@ -83,7 +83,7 @@ void HttpRequestTests::testSimpleGet()
     const char* URL = "/";
 
     // Start the polling thread.
-    SocketPoll pollThread("HttpSessionPoll");
+    SocketPoll pollThread("HttpAsyncReqPoll");
     pollThread.startThread();
 
     http::Request httpRequest(URL);
@@ -198,7 +198,7 @@ void HttpRequestTests::test500GetStatuses()
     constexpr int port = 80;
 
     // Start the polling thread.
-    SocketPoll pollThread("HttpSessionPoll");
+    SocketPoll pollThread("HttpAsyncReqPoll");
     pollThread.startThread();
 
     auto httpSession = http::Session::createHttp(Host);
@@ -264,7 +264,7 @@ void HttpRequestTests::testSimplePost()
     const char* URL = "/post";
 
     // Start the polling thread.
-    SocketPoll pollThread("HttpSessionPoll");
+    SocketPoll pollThread("HttpAsyncReqPoll");
     pollThread.startThread();
 
     http::Request httpRequest(URL, http::Request::VERB_POST);
