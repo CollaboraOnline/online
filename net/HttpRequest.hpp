@@ -783,7 +783,7 @@ private:
         if (!_connected && !connect())
             return false;
 
-        SocketPoll poller("HttpSessionPoll");
+        SocketPoll poller("HttpSynReqPoll");
 
         poller.insertNewSocket(_socket);
         poller.poll(timeout.count());
