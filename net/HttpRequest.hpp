@@ -350,14 +350,21 @@ public:
     const std::string& getVersion() const { return _version; }
 
     /// The header object to populate.
+    /// Deprecated: Use set and add directly.
     Header& header() { return _header; }
     const Header& header() const { return _header; }
+
+    /// Add an HTTP header field.
+    void add(const std::string& key, const std::string& value) { _header.add(key, value); }
+
+    /// Set an HTTP header field, replacing an earlier value, if exists.
+    void set(const std::string& key, const std::string& value) { _header.set(key, value); }
 
     /// Set the request body source to upload some data. Meaningful for POST.
     /// Size is needed to set the Content-Length.
     void setBodySource(IoReadFunc bodyReaderCb, int64_t size)
     {
-        header().setContentLength(size);
+        _header.setContentLength(size);
         _bodyReaderCb = std::move(bodyReaderCb);
     }
 
@@ -387,7 +394,7 @@ public:
         {
             std::ostringstream oss;
             oss << getVerb() << ' ' << getUrl() << ' ' << getVersion() << "\r\n";
-            header().serialize(oss);
+            _header.serialize(oss);
             oss << "\r\n";
             const std::string headerStr = oss.str();
 
@@ -822,7 +829,7 @@ private:
         _response.reset(new Response(onFinished));
 
         _request = std::move(req);
-        _request.header().set("Host", host()); // Make sure the host is set.
+        _request.set("Host", host()); // Make sure the host is set.
     }
 
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
