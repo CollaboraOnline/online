@@ -75,6 +75,7 @@ wsd_sources = \
 test_base_source = \
 	TileQueueTests.cpp \
 	WhiteBoxTests.cpp \
+	HttpWhiteBoxTests.cpp \
 	DeltaTests.cpp \
 	WopiProofTests.cpp \
 	$(wsd_sources)
