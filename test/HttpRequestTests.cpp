@@ -131,9 +131,7 @@ void HttpRequestTests::testSimpleGet()
         LOK_ASSERT(httpResponse->statusLine().statusCategory()
                    == http::StatusLine::StatusCodeClass::Successful);
 
-        const std::string body = httpResponse->getBody();
-        LOK_ASSERT(!body.empty());
-        LOK_ASSERT_EQUAL(pocoResponse.second, body);
+        LOK_ASSERT_EQUAL(pocoResponse.second, httpResponse->getBody());
     }
 
     pollThread.joinThread();
@@ -163,10 +161,10 @@ void HttpRequestTests::testSimpleGetSync()
     LOK_ASSERT_EQUAL(200, httpResponse->statusLine().statusCode());
     LOK_ASSERT(httpResponse->statusLine().statusCategory()
                == http::StatusLine::StatusCodeClass::Successful);
+    LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
+    LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
 
-    const std::string body = httpResponse->getBody();
-    LOK_ASSERT(!body.empty());
-    LOK_ASSERT_EQUAL(pocoResponse.second, body);
+    LOK_ASSERT_EQUAL(pocoResponse.second, httpResponse->getBody());
 }
 
 static void compare(const Poco::Net::HTTPResponse& pocoResponse, const std::string& pocoBody,
