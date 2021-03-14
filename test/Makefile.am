@@ -5,7 +5,7 @@ AUTOMAKE_OPTION = serial-tests
 # unittest: tests that run a captive loolwsd as part of themselves.
 check_PROGRAMS = fakesockettest
 
-noinst_PROGRAMS = fakesockettest unittest
+noinst_PROGRAMS = fakesockettest unittest unithttplib
 
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit \
@@ -60,10 +60,7 @@ endif
 AM_CPPFLAGS = -pthread -I$(top_srcdir) -DBUILDING_TESTS -DLOK_ABORT_ON_ASSERTION
 
 wsd_sources = \
-            ../common/FileUtil.cpp \
-            ../common/Protocol.cpp \
             ../common/SpookyV2.cpp \
-            ../common/Util.cpp \
             ../common/Authorization.cpp \
             ../kit/Kit.cpp \
             ../kit/TestStubs.cpp \
@@ -80,20 +77,30 @@ test_base_source = \
 	WopiProofTests.cpp \
 	$(wsd_sources)
 
+common_sources = \
+	../common/Protocol.cpp \
+	../common/ConfigUtil.cpp \
+	../common/Log.cpp \
+	../common/MessageQueue.cpp \
+	../common/Session.cpp \
+	../common/SigUtil.cpp \
+	../common/Unit.cpp \
+	../common/FileUtil.cpp \
+	../common/Util.cpp \
+	../common/StringVector.cpp \
+	../net/HttpRequest.cpp \
+	../net/Socket.cpp \
+	../net/NetUtil.cpp \
+	../wsd/Auth.cpp
+
+unithttplib_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT -g
+unithttplib_SOURCES = $(common_sources) test.cpp HttpRequestTests.cpp
+unithttplib_LDADD = $(CPPUNIT_LIBS)
+
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT -g
 unittest_SOURCES = \
     $(test_base_source) \
-    ../common/ConfigUtil.cpp \
-    ../common/Log.cpp \
-    ../common/MessageQueue.cpp \
-    ../common/Session.cpp \
-    ../common/SigUtil.cpp \
-    ../common/Unit.cpp \
-    ../common/StringVector.cpp \
-    ../net/HttpRequest.cpp \
-    ../net/Socket.cpp \
-    ../net/NetUtil.cpp \
-    ../wsd/Auth.cpp \
+	$(common_sources) \
     ../wsd/TestStubs.cpp \
     test.cpp
 
@@ -101,8 +108,10 @@ unittest_LDADD = $(CPPUNIT_LIBS)
 unit_base_la_LIBADD = $(CPPUNIT_LIBS)
 if ENABLE_SSL
 unittest_SOURCES += ../net/Ssl.cpp
+unithttplib_SOURCES += ../net/Ssl.cpp
 else
 unittest_LDADD += -lssl -lcrypto
+unithttplib_LDADD += -lssl -lcrypto
 unit_base_la_LIBADD += -lssl -lcrypto
 endif
 
@@ -111,7 +120,7 @@ fakesockettest_SOURCES = fakesockettest.cpp  ../net/FakeSocket.cpp ../common/Log
 fakesockettest_LDADD = $(CPPUNIT_LIBS)
 
 # old-style unit tests - bootstrapped via UnitClient
-unit_base_la_SOURCES = UnitClient.cpp ${test_base_source} HttpRequestTests.cpp
+unit_base_la_SOURCES = UnitClient.cpp ${test_base_source}
 unit_tiletest_la_SOURCES = UnitClient.cpp TileCacheTests.cpp
 unit_tiletest_la_LIBADD = $(CPPUNIT_LIBS)
 unit_integration_la_SOURCES = UnitClient.cpp integration-http-server.cpp
@@ -240,7 +249,8 @@ TESTS = \
 	unit-wopi-loadencoded.la \
 	unit-wopi-temp.la \
 	unit-wopi-fileurl.la \
-	unit-wopi-httpheaders.la
+	unit-wopi-httpheaders.la \
+	${top_builddir}/test/unithttplib
 # TESTS += unit-admin.test
 # TESTS += unit-storage.test
 
@@ -270,7 +280,6 @@ unit-load-torture.log : group0.log
 
 unit-wopi-saveas.log : group0.log
 unit-password-protected.log : group0.log
-unit-http.log : group0.log
 unit-tiff-load.log : group0.log
 unit-render-shape.log : group0.log
 unit-oauth.log : group0.log
