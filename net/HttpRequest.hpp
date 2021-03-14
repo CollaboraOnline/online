@@ -152,6 +152,7 @@ using IoWriteFunc = std::function<int64_t(const char*, int64_t)>;
 /// -1 for error (terminates the transfer).
 /// The second argument is the buffer size.
 using IoReadFunc = std::function<int64_t(char*, int64_t)>;
+
 /// An HTTP Header.
 class Header
 {
@@ -309,6 +310,8 @@ private:
 class Request final
 {
 public:
+    static constexpr int64_t VersionLen = 8;
+    static constexpr int64_t MinRequestHeaderLen = sizeof("GET / HTTP/0.0\r\n") - 1;
     static constexpr const char* VERB_GET = "GET";
     static constexpr const char* VERB_POST = "POST";
     static constexpr const char* VERS_1_1 = "HTTP/1.1";
@@ -416,6 +419,11 @@ public:
 
         return true;
     }
+
+    /// Handles incoming data.
+    /// Returns the number of bytes consumed, or -1 for error
+    /// and/or to interrupt transmission.
+    int64_t readData(const char* p, int64_t len);
 
 private:
     Header _header;
