@@ -7,6 +7,7 @@
 
 #include <config.h>
 
+#include <string>
 #include <test/lokassert.hpp>
 
 #include <net/HttpRequest.hpp>
@@ -93,7 +94,8 @@ void HttpWhiteBoxTests::testRequestParserValidComplete()
     const std::string expVerb = "GET";
     const std::string expUrl = "/path/to/data";
     const std::string expVersion = "HTTP/1.1";
-    const std::string data = expVerb + ' ' + expUrl + ' ' + expVersion + "\r\n";
+    const std::string data
+        = expVerb + ' ' + expUrl + ' ' + expVersion + "\r\n" + "Host: localhost.com\r\n\r\n";
 
     http::Request req;
 
@@ -108,7 +110,8 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
     const std::string expVerb = "GET";
     const std::string expUrl = "/path/to/data";
     const std::string expVersion = "HTTP/1.1";
-    const std::string data = expVerb + ' ' + expUrl + ' ' + expVersion + "\r\n";
+    const std::string data
+        = expVerb + ' ' + expUrl + ' ' + expVersion + "\r\n" + "Host: localhost.com\r\n\r\n";
 
     http::Request req;
 
@@ -116,7 +119,7 @@ void HttpWhiteBoxTests::testRequestParserValidIncomplete()
     for (std::size_t i = 0; i < data.size(); ++i)
     {
         // Should return 0 to signify data is incomplete.
-        LOK_ASSERT_EQUAL(0L, req.readData(data.c_str(), i));
+        LOK_ASSERT_EQUAL_MESSAGE("i = " + std::to_string(i), 0L, req.readData(data.c_str(), i));
     }
 
     // Now parse the whole thing.
