@@ -9,6 +9,7 @@
 
 #include <chrono>
 #include <cstdint>
+#include <iostream>
 #include <fstream>
 #include <memory>
 #include <sstream>
@@ -136,7 +137,6 @@ enum class FieldParseState
     Unknown, //< Not yet parsed.
     Incomplete, //< Not enough data to parse this field. Need more data.
     Invalid, //< The field is invalid/unexpected/long.
-    Complete, //< The field is complete. Doesn't imply it's valid.
     Valid //< The field is both complete and valid.
 };
 
@@ -942,5 +942,48 @@ private:
 };
 
 } // namespace http
+
+#define CASE(X)                                                                                    \
+    case X:                                                                                        \
+        os << #X;                                                                                  \
+        break;
+
+inline std::ostream& operator<<(std::ostream& os, const http::FieldParseState& fieldParseState)
+{
+    switch (fieldParseState)
+    {
+        CASE(http::FieldParseState::Unknown);
+        CASE(http::FieldParseState::Incomplete);
+        CASE(http::FieldParseState::Invalid);
+        CASE(http::FieldParseState::Valid);
+    }
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const http::Request::Stage& stage)
+{
+    switch (stage)
+    {
+        CASE(http::Request::Stage::Body);
+        CASE(http::Request::Stage::Finished);
+        CASE(http::Request::Stage::Header);
+    }
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const http::Response::State& state)
+{
+    switch (state)
+    {
+        CASE(http::Response::State::New);
+        CASE(http::Response::State::Incomplete);
+        CASE(http::Response::State::Error);
+        CASE(http::Response::State::Timeout);
+        CASE(http::Response::State::Complete);
+    }
+    return os;
+}
+
+#undef CASE
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
