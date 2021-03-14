@@ -333,7 +333,6 @@ int64_t Response::readData(const char* p, int64_t len)
         switch (_statusLine.parse(p, read))
         {
             case FieldParseState::Unknown:
-            case FieldParseState::Complete:
             case FieldParseState::Incomplete:
                 return 0;
             case FieldParseState::Invalid:
