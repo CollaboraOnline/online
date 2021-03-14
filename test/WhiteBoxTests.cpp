@@ -7,8 +7,6 @@
 
 #include <config.h>
 
-#include <chrono>
-#include <fstream>
 #include <test/lokassert.hpp>
 
 #include <Auth.hpp>
@@ -26,6 +24,11 @@
 #include <common/Authorization.hpp>
 #include <wsd/FileServer.hpp>
 #include <net/Buffer.hpp>
+
+#include <chrono>
+#include <fstream>
+
+#include <cppunit/extensions/HelperMacros.h>
 
 /// WhiteBox unit-tests.
 class WhiteBoxTests : public CPPUNIT_NS::TestFixture
