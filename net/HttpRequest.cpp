@@ -72,6 +72,31 @@ static inline int64_t findLineBreak(const char* p, int64_t off, int64_t len)
     return len;
 }
 
+/// Finds the double CRLF that signifies the end
+/// of a block, such as a header. The second CRLF
+/// is for a blank line, and that's what we seek.
+static inline int64_t findBlankLine(const char* p, int64_t off, int64_t len)
+{
+    for (; off < len;)
+    {
+        off = findLineBreak(p, off, len);
+        // off is at the first LF, and we expect LFCRLF.
+        if (off + 2 >= len)
+        {
+            return len; // Not found.
+        }
+
+        if (p[off + 1] == '\r' && p[off + 2] == '\n')
+        {
+            return off + 2; // Return the second LF.
+        }
+
+        off += 3; // Skip over the mismatch.
+    }
+
+    return len;
+}
+
 /// Find the end of text.
 /// Returns the offset to the first whitespace or
 /// line-break character if found, otherwise, len.
@@ -89,34 +114,56 @@ static inline int64_t findEndOfToken(const char* p, int64_t off, int64_t len)
 int64_t Header::parse(const char* p, int64_t len)
 {
     LOG_TRC("Reading header given " << len << " bytes: " << std::string(p, std::min(len, 80L)));
+    if (len < 4)
+    {
+        // Incomplete; we need at least \r\n\r\n.
+        return 0;
+    }
+
+    // Make sure we have the full header before parsing.
+    const int64_t end = findBlankLine(p, 0, len);
+    if (end == len)
+    {
+        return 0; // Incomplete.
+    }
+
     try
     {
         //FIXME: implement http header parser!
-        Poco::MemoryInputStream data(p, len);
-        Poco::Net::HTTPResponse response;
-        response.read(data);
 
-        // Copy the header entries over to us.
-        for (const auto& pair : response)
+        // Now parse to preserve folded headers and other
+        // corner cases that is conformant to the rfc,
+        // detecting any errors and/or invalid entries.
+        // NB: request.read() expects full message and will fail.
+        Poco::Net::MessageHeader msgHeader;
+        Poco::MemoryInputStream data(p, len);
+        msgHeader.read(data);
+        if (data.tellg() < 0)
         {
-            set(pair.first, pair.second);
+            LOG_DBG("Failed to parse http header.");
+            return -1;
         }
 
-        if (response.hasContentLength())
-            setContentLength(response.getContentLength());
-        setContentType(response.getContentType());
-        _chunked = response.getChunkedTransferEncoding();
+        // Copy the header entries over to us.
+        for (const auto& pair : msgHeader)
+        {
+            set(Util::trimmed(pair.first), Util::trimmed(pair.second));
+        }
+
+        _chunked = getTransferEncoding() == "chunked";
 
         LOG_TRC("Read " << data.tellg() << " bytes of header:\n"
                         << std::string(p, data.tellg())
                         << "\nhasContentLength: " << hasContentLength()
                         << ", contentLength: " << (hasContentLength() ? getContentLength() : -1)
                         << ", chunked: " << getChunkedTransferEncoding());
-        return data.tellg();
+
+        // We consumed the full header, including the blank line.
+        return end + 1;
     }
     catch (const Poco::Exception& exc)
     {
-        LOG_TRC("ERROR: " << exc.displayText());
+        LOG_TRC("ERROR while parsing http header: " << exc.displayText());
     }
 
     return 0;
@@ -287,11 +334,13 @@ int64_t Request::readData(const char* p, const int64_t len)
 
         off += VersionLen;
         end = findLineBreak(p, off, available);
-        if (end == available)
+        if (end >= available)
         {
             // Incomplete data.
             return 0;
         }
+
+        ++end; // Skip the LF character.
 
         // LOG_TRC("performWrites (header): " << headerStr.size() << ": " << headerStr);
         _stage = Stage::Body;
@@ -301,6 +350,25 @@ int64_t Request::readData(const char* p, const int64_t len)
 
     if (_stage == Stage::Body)
     {
+        const int64_t read = _header.parse(p, available);
+        if (read < 0)
+        {
+            // _state = State::Error;
+            return read;
+        }
+
+        if (read > 0)
+        {
+            available -= read;
+            p += read;
+
+#ifdef DEBUG_HTTP
+            LOG_TRC("After Header: "
+                    << available << " bytes availble\n"
+                    << Util::dumpHex(std::string(p, std::min(available, 1 * 1024L))));
+#endif //DEBUG_HTTP
+        }
+
         if (_verb == VERB_GET)
         {
             // A payload in a GET request "has no defined semantics".
