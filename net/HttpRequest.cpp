@@ -26,15 +26,18 @@
 
 namespace http
 {
-/// Skips over space and tab characters starting at off.
-/// Returns the offset of the first match, otherwise, len.
+/// Returns true iff the character given is a whitespace.
 /// FIXME: Technically, we should skip: SP, HTAB, VT (%x0B),
 ///         FF (%x0C), or bare CR.
+static inline bool isWhitespace(const char ch) { return ch == ' ' || ch == '\t' || ch == '\r'; }
+
+/// Skips over space and tab characters starting at off.
+/// Returns the offset of the first match, otherwise, len.
 static inline int64_t skipSpaceAndTab(const char* p, int64_t off, int64_t len)
 {
     for (; off < len; ++off)
     {
-        if (p[off] != ' ' && p[off] != '\t')
+        if (!isWhitespace(p[off]))
             return off;
     }
 
