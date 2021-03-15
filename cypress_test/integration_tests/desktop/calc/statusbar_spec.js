@@ -80,8 +80,7 @@ describe('Statubar tests.', function() {
 	});
 
 	it('Change zoom level.', function() {
-		cy.get('#tb_actionbar_item_zoomreset')
-			.click();
+		desktopHelper.resetZoomLevel();
 
 		desktopHelper.shouldHaveZoomLevel('100');
 
@@ -95,8 +94,7 @@ describe('Statubar tests.', function() {
 	});
 
 	it('Select zoom level.', function() {
-		cy.get('#tb_actionbar_item_zoomreset')
-			.click();
+		desktopHelper.resetZoomLevel();
 
 		desktopHelper.shouldHaveZoomLevel('100');
 
