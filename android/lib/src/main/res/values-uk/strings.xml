@@ -18,4 +18,5 @@
     <string name="edit_copy">Змінити копію</string>
     <string name="view_only">Лише перегляд</string>
     <string name="restarting">Перезапуск...</string>
+    <string name="cant_open_the_document">Не вдалося відкрити документ</string>
 </resources>
