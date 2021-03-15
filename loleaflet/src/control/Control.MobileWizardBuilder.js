@@ -545,9 +545,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 					var response = childData.responses[i].response;
 					var button = $('#' + buttonId);
 					var isHelp = response === '-11' || response === -11 || buttonId === 'help';
-					var isCancel = response === '-6' || response === -6 || buttonId === 'cancel';
-					var isClose = response === '-7' || response === -7 || buttonId === 'close';
-					if (button && (isHelp || isCancel || isClose))
+					if (button && isHelp)
 						button.hide();
 				}
 			}
