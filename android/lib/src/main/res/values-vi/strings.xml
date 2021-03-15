@@ -1,2 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="file_chromeos_read_only">Tệp này không thể được lưu trong vị trí này, đang mở nó dưới dạng chỉ đọc. Di chuyển nó vào các tệp Phát để truy cập đọc/viết đầy đủ.</string>
+    <string name="cant_open_the_document">Không thể mở tài liệu</string>
+    <string name="ask_for_copy">Tài liệu này là chỉ đọc. Bạn có muốn tạo một bản sao để chỉnh sửa không\?</string>
+    <string name="edit_copy">Chỉnh sửa một bản sao</string>
+    <string name="view_only">Chỉ xem</string>
+    <string name="restarting">Đang khởi động lại...</string>
+    <string name="exiting">Đang thoát...</string>
+    <string name="rate_our_app_text">Nếu bạn thích nó, hãy cho chúng tôi 5 sao trên CH Play. Những đánh giá tốt của bạn là động lực tốt nhất của chúng tôi.</string>
+    <string name="rate_now">Đánh giá ngay</string>
+    <string name="preparing_for_the_first_start_after_an_update">Đang chuẩn bị cho lần bắt đầu đầu tiên sau một bản cập nhật.</string>
+    <string name="cannot_open_file_chooser">Không thể mở trình chọn tệp</string>
+    <string name="failed_to_insert_image">Chèn hình ảnh thất bại</string>
+    <string name="failed_to_load_file">Xác định tệp để tải thất bại</string>
+    <string name="storage_permission_required">Yêu cầu quyền truy cập bộ nhớ</string>
+    <string name="rate_our_app_title">Cảm ơn bạn vì đã dùng %1$s!</string>
+    <string name="later">Để sau</string>
+    <string name="loading">Đang tải...</string>
+    <string name="temp_file_saving_disabled">Tệp này là chỉ đọc, việc lưu đã bị tắt.</string>
+</resources>

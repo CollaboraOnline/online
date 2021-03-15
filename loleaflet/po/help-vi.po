@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
-"PO-Revision-Date: 2021-03-05 02:26+0000\n"
-"Last-Translator: doanmanhduy75 <duydm3@viettel.com.vn>\n"
+"PO-Revision-Date: 2021-03-12 09:57+0000\n"
+"Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/help/vi/>\n"
 "Language: vi\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.5.1-dev\n"
+"X-Generator: Weblate 4.5.2-dev\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:20-5
 msgid "Keyboard Shortcuts"
@@ -28,7 +28,7 @@ msgstr "Hoàn tác"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-49
 msgid "Ctrl + Z"
-msgstr ""
+msgstr "Ctrl + Z"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:25-18
 msgid "Redo"
@@ -36,7 +36,7 @@ msgstr "Thực hiện lại"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:25-49
 msgid "Ctrl + Y"
-msgstr ""
+msgstr "Ctrl + Y"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-18
 msgid "Cut"
@@ -44,25 +44,23 @@ msgstr "Cắt"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-48
 msgid "Ctrl + X"
-msgstr ""
+msgstr "Ctrl + X"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
-#, fuzzy
 msgid "Paste as unformatted text"
 msgstr "Dán dưới dạng văn bản chưa được định dạng"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-70
 msgid "Ctrl + Shift + V"
-msgstr ""
+msgstr "Ctrl + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:28-18
-#, fuzzy
 msgid "Paste special"
 msgstr "Dán đặc biệt"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:28-58
 msgid "Ctrl + Alt + Shift + V"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:29-18
 msgid "Print (Download as PDF)"
@@ -70,16 +68,15 @@ msgstr "In (Tải xuống dưới dạng PDF)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:29-68
 msgid "Ctrl + P"
-msgstr ""
+msgstr "Ctrl + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:30-18
-#, fuzzy
 msgid "Display the Keyboard shortcuts help"
-msgstr "Hiển thị trợ giúp về phím tắt"
+msgstr "Hiển thị trợ giúp phím tắt"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:30-80
 msgid "Ctrl + Shift + ?"
-msgstr ""
+msgstr "Ctrl + Shift + ?"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:34-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:156-9
@@ -99,7 +96,7 @@ msgstr "Đậm"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:158-49
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:215-49
 msgid "Ctrl + B"
-msgstr ""
+msgstr "Ctrl + B"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:37-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-18
@@ -113,7 +110,7 @@ msgstr "Nghiêng"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:159-51
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:216-51
 msgid "Ctrl + I"
-msgstr ""
+msgstr "Ctrl + I"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:38-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
@@ -127,7 +124,7 @@ msgstr "Gạch dưới"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:160-54
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:217-54
 msgid "Ctrl + U"
-msgstr ""
+msgstr "Ctrl + U"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:39-18
 msgid "Double Underline"
@@ -136,7 +133,7 @@ msgstr "Gạch dưới kép"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:39-61
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-54
 msgid "Ctrl + D"
-msgstr ""
+msgstr "Ctrl + D"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:40-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
@@ -150,7 +147,7 @@ msgstr "Gạch đè"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:161-58
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:218-58
 msgid "Ctrl + Alt + 5"
-msgstr ""
+msgstr "Ctrl + Alt + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:41-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:162-18
@@ -162,7 +159,7 @@ msgstr "Chỉ số trên"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:162-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:219-56
 msgid "Ctrl + Shift + P"
-msgstr ""
+msgstr "Ctrl + Shift + P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:42-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:163-18
@@ -174,7 +171,7 @@ msgstr "Chỉ số Dưới"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:163-54
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:220-54
 msgid "Ctrl + Shift + B"
-msgstr ""
+msgstr "Ctrl + Shift + B"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:43-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
@@ -184,7 +181,7 @@ msgstr "Xóa định dạng trực tiếp"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:43-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-69
 msgid "Ctrl + M"
-msgstr ""
+msgstr "Ctrl + M"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:45-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:166-9
@@ -204,7 +201,7 @@ msgstr "Giữa"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:168-57
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:225-57
 msgid "Ctrl + E"
-msgstr ""
+msgstr "Ctrl + E"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:48-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-18
@@ -218,7 +215,7 @@ msgstr "Căn lề trái"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:169-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:226-55
 msgid "Ctrl + L"
-msgstr ""
+msgstr "Ctrl + L"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-18
@@ -232,7 +229,7 @@ msgstr "Căn lề phải"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:170-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:227-56
 msgid "Ctrl + R"
-msgstr ""
+msgstr "Ctrl + R"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:50-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-18
@@ -246,16 +243,15 @@ msgstr "Căn đều"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:171-52
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:228-52
 msgid "Ctrl + J"
-msgstr ""
+msgstr "Ctrl + J"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-18
-#, fuzzy
 msgid "Apply Default paragraph style"
 msgstr "Áp dụng kiểu đoạn văn mặc định"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-74
 msgid "Ctrl + 0"
-msgstr ""
+msgstr "Ctrl + 0"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:52-18
 #, fuzzy
@@ -264,7 +260,7 @@ msgstr "Áp dụng kiểu tiêu đề 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:52-76
 msgid "Ctrl + 1"
-msgstr ""
+msgstr "Ctrl + 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:53-18
 #, fuzzy
@@ -273,7 +269,7 @@ msgstr "Áp dụng kiểu tiêu đề 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:53-76
 msgid "Ctrl + 2"
-msgstr ""
+msgstr "Ctrl + 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:54-18
 #, fuzzy
@@ -283,7 +279,7 @@ msgstr "Áp dụng kiểu tiêu đề 3"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:54-76
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-69
 msgid "Ctrl + 3"
-msgstr ""
+msgstr "Ctrl + 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:55-18
 #, fuzzy
@@ -292,7 +288,7 @@ msgstr "Áp dụng kiểu tiêu đề 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:55-76
 msgid "Ctrl + 4"
-msgstr ""
+msgstr "Ctrl + 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:56-18
 #, fuzzy
@@ -301,12 +297,11 @@ msgstr "Áp dụng kiểu tiêu đề 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:56-76
 msgid "Ctrl + 5"
-msgstr ""
+msgstr "Ctrl + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:58-9
-#, fuzzy
 msgid "Text selection and navigation in document"
-msgstr "Lựa chọn văn bản và điều hướng trong tài liệu"
+msgstr "Chọn văn bản và điều hướng trong tài liệu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:60-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
@@ -327,12 +322,11 @@ msgstr "Chọn tất cả"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:234-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:266-71
 msgid "Ctrl + A"
-msgstr ""
+msgstr "Ctrl + A"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:61-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:178-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:235-18
-#, fuzzy
 msgid "Move cursor to the left"
 msgstr "Di chuyển con trỏ sang trái"
 
@@ -384,7 +378,6 @@ msgstr "Ctrl + Shift + ←"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:239-18
-#, fuzzy
 msgid "Move cursor to the right"
 msgstr "Di chuyển con trỏ sang phải"
 
@@ -436,7 +429,6 @@ msgstr "Ctrl + Shift + →"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:243-18
-#, fuzzy
 msgid "Move cursor up one line"
 msgstr "Di chuyển con trỏ lên một dòng"
 
@@ -449,7 +441,6 @@ msgstr "↑"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:244-18
-#, fuzzy
 msgid "Select lines in upwards direction"
 msgstr "Chọn các dòng theo hướng lên trên"
 
@@ -462,7 +453,6 @@ msgstr "Shift + ↑"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:245-18
-#, fuzzy
 msgid "Move cursor to beginning of the previous paragraph"
 msgstr "Di chuyển con trỏ đến đầu đoạn trước"
 
@@ -549,7 +539,7 @@ msgstr "Chuyển đến đầu dòng"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-68
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:251-68
 msgid "Home"
-msgstr ""
+msgstr "Trang chủ"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-18
@@ -627,7 +617,7 @@ msgstr "Đi đến cuối tài liệu"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:200-66
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:257-66
 msgid "Ctrl + End"
-msgstr ""
+msgstr "Ctrl + End"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-18
 #, fuzzy
@@ -638,7 +628,7 @@ msgstr "Đi đến văn bản ở cuối tài liệu và chọn"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:201-81
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:258-81
 msgid "Ctrl + Shift + End"
-msgstr ""
+msgstr "Ctrl + Shift + End"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-18
 #, fuzzy
@@ -647,7 +637,7 @@ msgstr "Di chuyển chế độ xem lên một trang"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-70
 msgid "PageUp"
-msgstr ""
+msgstr "PageUp"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-18
 #, fuzzy
@@ -656,7 +646,7 @@ msgstr "Chuyển con trỏ giữa văn bản và tiêu đề"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-82
 msgid "Ctrl + PageUp"
-msgstr ""
+msgstr "Ctrl + PageUp"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-18
 #, fuzzy
@@ -665,7 +655,7 @@ msgstr "Mở rộng lựa chọn lên một trang"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-77
 msgid "Shift + PageUp"
-msgstr ""
+msgstr "Shift + PageUp"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Move the view down one page"
@@ -673,7 +663,7 @@ msgstr "Di chuyển chế độ xem xuống một trang"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-72
 msgid "PageDown"
-msgstr ""
+msgstr "PageDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-18
 msgid "Switch cursor between text and footer"
@@ -681,7 +671,7 @@ msgstr "Chuyển con trỏ giữa văn bản và chân trang"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-82
 msgid "Ctrl + PageDown"
-msgstr ""
+msgstr "Ctrl + PageDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:90-18
 #, fuzzy
@@ -690,7 +680,7 @@ msgstr "Mở rộng vùng chọn xuống một trang"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:90-79
 msgid "Shift + PageDown"
-msgstr ""
+msgstr "Shift + PageDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:91-18
 #, fuzzy
@@ -699,7 +689,7 @@ msgstr "Xóa đến đầu từ"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:91-72
 msgid "Ctrl + Backspace"
-msgstr ""
+msgstr "Ctrl + Backspace"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:92-18
 #, fuzzy
@@ -708,7 +698,7 @@ msgstr "Xóa đến cuối từ"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:92-66
 msgid "Ctrl + Del"
-msgstr ""
+msgstr "Ctrl + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:93-18
 #, fuzzy
@@ -717,7 +707,7 @@ msgstr "Xóa đến đầu câu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:93-76
 msgid "Ctrl + Shift + Backspace"
-msgstr ""
+msgstr "Ctrl + Shift + Backspace"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:94-18
 #, fuzzy
@@ -726,7 +716,7 @@ msgstr "Xóa đến cuối câu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:94-70
 msgid "Ctrl + Shift + Del"
-msgstr ""
+msgstr "Ctrl + Shift + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:96-9
 #, fuzzy
@@ -766,7 +756,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Ctrl + Tab"
-msgstr ""
+msgstr "Ctrl + Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-56
 #, fuzzy
@@ -816,7 +806,7 @@ msgstr "Ctrl + Alt + Shift + Phím mũi tên"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt + Insert"
-msgstr ""
+msgstr "Alt + Insert"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-58
 #, fuzzy
@@ -829,7 +819,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid "Alt + Del"
-msgstr ""
+msgstr "Alt + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-55
 #, fuzzy
@@ -842,7 +832,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:108-18
 msgid "Shift + Ctrl + Del"
-msgstr ""
+msgstr "Shift + Ctrl + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:108-86
 #, fuzzy
@@ -887,7 +877,7 @@ msgstr "Chèn chú thích cuối trang"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-60
 msgid "Ctrl + Alt + F"
-msgstr ""
+msgstr "Ctrl + Alt + F"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:116-18
 #, fuzzy
@@ -896,7 +886,7 @@ msgstr "Chèn chú thích cuối văn bản"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:116-59
 msgid "Ctrl + Alt + D"
-msgstr ""
+msgstr "Ctrl + Alt + D"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
@@ -907,7 +897,7 @@ msgstr "Chèn chú thích"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-59
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-59
 msgid "Ctrl + Alt + C"
-msgstr ""
+msgstr "Ctrl + Alt + C"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:119-18
 #, fuzzy
@@ -916,7 +906,7 @@ msgstr "Chèn dấu gạch nối mềm"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:119-63
 msgid "Ctrl + -"
-msgstr ""
+msgstr "Ctrl + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-18
 #, fuzzy
@@ -925,7 +915,7 @@ msgstr "Chèn dấu gạch nối không ngắt"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-71
 msgid "Ctrl + Shift + -"
-msgstr ""
+msgstr "Ctrl + Shift + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-18
 #, fuzzy
@@ -943,7 +933,7 @@ msgstr "Chèn ngắt dòng"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-62
 msgid "Shift + Enter"
-msgstr ""
+msgstr "Shift + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-18
 #, fuzzy
@@ -954,7 +944,7 @@ msgstr "Ngắt trang thủ công"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-78
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-85
 msgid "Ctrl + Enter"
-msgstr ""
+msgstr "Ctrl + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-18
 #, fuzzy
@@ -963,7 +953,7 @@ msgstr "Ngắt cột (trong văn bản đa cột)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-81
 msgid "Ctrl + Shift + Enter"
-msgstr ""
+msgstr "Ctrl + Shift + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-18
 #, fuzzy
@@ -975,7 +965,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-119
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:127-155
 msgid "Alt + Enter"
-msgstr ""
+msgstr "Alt + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:127-18
 #, fuzzy
@@ -998,7 +988,7 @@ msgstr "Hiển thị chú thích"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-60
 msgid "Ctrl + F1"
-msgstr ""
+msgstr "Ctrl + F1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
 #, fuzzy
@@ -1017,7 +1007,7 @@ msgstr "Hai chữ số thập phân, dấu phân cách hàng nghìn"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-84
 msgid "Ctrl + Shift + 1"
-msgstr ""
+msgstr "Ctrl + Shift + 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
 #, fuzzy
@@ -1026,7 +1016,7 @@ msgstr "Định dạng hàm mũ tiêu chuẩn"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-72
 msgid "Ctrl + Shift + 2"
-msgstr ""
+msgstr "Ctrl + Shift + 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
 #, fuzzy
@@ -1035,7 +1025,7 @@ msgstr "Định dạng ngày tiêu chuẩn"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-65
 msgid "Ctrl + Shift + 3"
-msgstr ""
+msgstr "Ctrl + Shift + 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-18
 #, fuzzy
@@ -1044,7 +1034,7 @@ msgstr "Định dạng tiền tệ tiêu chuẩn"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-69
 msgid "Ctrl + Shift + 4"
-msgstr ""
+msgstr "Ctrl + Shift + 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-18
 #, fuzzy
@@ -1053,7 +1043,7 @@ msgstr "Định dạng phần trăm tiêu chuẩn (hai chữ số thập phân)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-92
 msgid "Ctrl + Shift + 5"
-msgstr ""
+msgstr "Ctrl + Shift + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-18
 #, fuzzy
@@ -1062,7 +1052,7 @@ msgstr "Định dạng tiêu chuẩn"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-60
 msgid "Ctrl + Shift + 6"
-msgstr ""
+msgstr "Ctrl + Shift + 6"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:172-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-18
@@ -1075,7 +1065,7 @@ msgstr "Giảm cấp mục danh sách (mục danh sách phải được chọn)"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-92
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-99
 msgid "Tab"
-msgstr ""
+msgstr "Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:173-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:230-18
@@ -1088,7 +1078,7 @@ msgstr "Tăng cấp mục danh sách (mục danh sách phải được chọn)"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:230-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-107
 msgid "Shift + Tab"
-msgstr ""
+msgstr "Shift + Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:175-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:232-9
@@ -1126,7 +1116,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-166
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-166
 msgid "Esc"
-msgstr ""
+msgstr "Esc"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-18
