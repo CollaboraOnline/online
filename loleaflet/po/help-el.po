@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
-"PO-Revision-Date: 2021-02-05 18:41+0000\n"
-"Last-Translator: Michalis <michalisntovas@yahoo.gr>\n"
+"PO-Revision-Date: 2021-03-15 15:37+0000\n"
+"Last-Translator: george kitsoukakis <norhorn@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
 "help/el/>\n"
 "Language: el\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.5.2-dev\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-help-el.po\n"
 "X-Pootle-Revision: 830229\n"
 
@@ -1040,7 +1040,7 @@ msgstr "Μετάβαση και επιλογή κειμένου μέχρι το 
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:203-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Συντομεύσεις πληκτρολογίου διαφάνειας"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-18
@@ -1070,27 +1070,23 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
 msgid "Move to next text object on slide"
-msgstr ""
+msgstr "Μετακίνηση στο επόμενο αντικείμενο κειμένου της διαφάνειας"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "Επιλογή όλων στη διαφάνεια"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:260-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
-msgstr "Συντομεύσεις πληκτρολογίου σελίδας διαφάνειας / σχεδίασης"
+msgstr "Συντομεύσεις πληκτρολογίου σελίδας σχεδίασης"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
-#, fuzzy
 msgid "Move to next text object on drawing page"
-msgstr ""
-"Μετάβαση στο επόμενο αντικείμενο κειμένου σε σελίδα διαφάνειας / σχεδίασης"
+msgstr "Μετάβαση στο επόμενο αντικείμενο κειμένου στη σελίδα σχεδίασης"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:266-18
-#, fuzzy
 msgid "Select all in drawing page"
-msgstr "Επιλογή όλων σε σελίδα διαφάνειας / σχεδίασης"
+msgstr "Επιλογή όλων στη σελίδα σχεδίασης"
 
 #: html/loleaflet-help.html%2Bdiv.h1:271-5
 msgid "<span class=\"productname\">%productName</span> Help"

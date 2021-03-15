@@ -18,4 +18,5 @@
     <string name="edit_copy">Επεξεργασία αντιγράφου</string>
     <string name="view_only">Μόνο προβολή</string>
     <string name="restarting">Επανεκκίνηση...</string>
+    <string name="cant_open_the_document">Το έγγραφο δεν μπορεί να ανοίξει</string>
 </resources>
