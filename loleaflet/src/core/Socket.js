@@ -1028,9 +1028,8 @@ L.Socket = L.Class.extend({
 					(new L.CalcGridLines()).addTo(this._map);
 				}
 			}
-			else {
-				if (command.type === 'presentation' &&
-					this._map.options.defaultZoom === this._map.options.zoom) {
+			else if (command.type === 'presentation') {
+				if (this._map.options.defaultZoom === this._map.options.zoom) {
 					if (this._map.getSize().y > 0) {
 						// If we have a presentation document and the zoom level has not been set
 						// in the options, resize the document so that it fits the viewing area.
