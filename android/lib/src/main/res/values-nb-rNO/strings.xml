@@ -18,4 +18,5 @@
     <string name="edit_copy">Rediger en kopi</string>
     <string name="view_only">Kun visning</string>
     <string name="restarting">Starter på ny…</string>
+    <string name="cant_open_the_document">Kunne ikke åpne dokumentet</string>
 </resources>
