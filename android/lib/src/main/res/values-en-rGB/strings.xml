@@ -18,4 +18,5 @@
     <string name="edit_copy">Edit a copy</string>
     <string name="view_only">View only</string>
     <string name="restarting">Restarting...</string>
+    <string name="cant_open_the_document">Couldn\'t open the document</string>
 </resources>
