@@ -714,6 +714,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var menu = {
 			text: [
 				{id: 'nb-hamburger', name: _('Menu'), type: 'menu', menu: [
+					{uno: '.uno:SelectAll'},
 					{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action'},
 					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
 					{type: 'separator'},
@@ -754,6 +755,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			],
 			spreadsheet: [
 				{id: 'nb-hamburger', name: _('Menu'), type: 'menu', menu: [
+					{uno: '.uno:SelectAll'},
 					{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'},
 					{type: 'separator'},
 					{uno: '.uno:SearchDialog'},
@@ -781,6 +783,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			],
 			presentation: [
 				{id: 'nb-hamburger', name: _('Menu'), type: 'menu', menu: [
+					{uno: '.uno:SelectAll'},
 					{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action'},
 					{type: 'separator'},
 					{uno: '.uno:SlideMasterPage'},
