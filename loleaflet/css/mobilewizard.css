@@ -1104,3 +1104,10 @@ input[type='checkbox'][disabled] {
 	flex: 1 44px;
 	text-align: center;
 }
+
+
+/* Treeview */
+.mobile-wizard.ui-treeview {
+	margin-left: 4%;
+	margin-right: 4%;
+}
