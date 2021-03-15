@@ -713,7 +713,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		var menu = {
 			text: [
-				{name: _('Menu'), type: 'menu', menu: [
+				{id: 'nb-hamburger', name: _('Menu'), type: 'menu', menu: [
 					{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action'},
 					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
 					{type: 'separator'},
@@ -753,7 +753,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				]}
 			],
 			spreadsheet: [
-				{name: _('Menu'), type: 'menu', menu: [
+				{id: 'nb-hamburger', name: _('Menu'), type: 'menu', menu: [
 					{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action'},
 					{type: 'separator'},
 					{uno: '.uno:SearchDialog'},
@@ -780,7 +780,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				]}
 			],
 			presentation: [
-				{name: _('Menu'), type: 'menu', menu: [
+				{id: 'nb-hamburger', name: _('Menu'), type: 'menu', menu: [
 					{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action'},
 					{type: 'separator'},
 					{uno: '.uno:SlideMasterPage'},
@@ -805,7 +805,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			]
 		};
 
-		var menubar = L.control.menubar();
+		var menubar = L.control.menubar({allowedReadonlyMenus: ['nb-hamburger']});
 		menubar._map = builder.map;
 
 		var docType = builder.map.getDocType();
