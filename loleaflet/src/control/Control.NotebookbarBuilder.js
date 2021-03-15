@@ -804,6 +804,21 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 						{uno: '.uno:RunMacro', hidden: disabledMacros}
 					]},
 				]}
+			],
+			drawing: [
+				{id: 'nb-hamburger', name: _('Menu'), type: 'menu', menu: [
+					{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action'},
+					{type: 'separator'},
+					{uno: '.uno:SearchDialog'},
+					{type: 'separator'},
+					{name: _('Repair'), id: 'repair',  type: 'action'},
+					{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
+						{uno: '.uno:SpellDialog'},
+						{uno: '.uno:SpellOnline'},
+						{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
+							{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
+					]},
+				]}
 			]
 		};
 

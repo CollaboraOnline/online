@@ -113,6 +113,12 @@
 	background: rgb(163, 62, 3);
 	background: var(rgb(--orange1-txt-primary-color));
 }
+.hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon,
+.hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon:before,
+.hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon:after {
+	background: rgb(163, 62, 3);
+	background: var(rgb(--orange1-txt-primary-color));
+}
 .hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon,
 .hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon:before,
 .hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon:after {
