@@ -219,6 +219,16 @@ function selectZoomLevel(zoomLevel) {
 	shouldHaveZoomLevel(zoomLevel);
 }
 
+// Reser zoom level to 100%.
+function resetZoomLevel() {
+	makeZoomItemsVisible();
+
+	cy.get('#tb_actionbar_item_zoomreset')
+		.click();
+
+	shouldHaveZoomLevel('100');
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
@@ -231,3 +241,4 @@ module.exports.zoomIn = zoomIn;
 module.exports.zoomOut = zoomOut;
 module.exports.shouldHaveZoomLevel = shouldHaveZoomLevel;
 module.exports.selectZoomLevel = selectZoomLevel;
+module.exports.resetZoomLevel = resetZoomLevel;
