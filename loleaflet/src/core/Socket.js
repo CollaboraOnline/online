@@ -967,22 +967,6 @@ L.Socket = L.Class.extend({
 		this._handlingDelayedMessages = false;
 	},
 
-	_delayedFitToScreen: function(height) {
-		if (this._map.getSize().y > 0) {
-			// If we have a presentation document and the zoom level has not been set
-			// in the options, resize the document so that it fits the viewing area
-			var verticalTiles = this._map.getSize().y / 256;
-			this._map._docLayer._tileWidthTwips = Math.round(height / verticalTiles);
-			this._map._docLayer._tileHeightTwips = Math.round(height / verticalTiles);
-			this._map._docLayer._updateTileTwips();
-		} else {
-			var that = this;
-			setTimeout(function() {
-				that._delayedFitToScreen(height);
-			}, 100);
-		}
-	},
-
 	_onStatusMsg: function(textMsg, command) {
 		var that = this;
 
@@ -1029,20 +1013,6 @@ L.Socket = L.Class.extend({
 				}
 			}
 			else if (command.type === 'presentation') {
-				if (this._map.options.defaultZoom === this._map.options.zoom) {
-					if (this._map.getSize().y > 0) {
-						// If we have a presentation document and the zoom level has not been set
-						// in the options, resize the document so that it fits the viewing area.
-						// FIXME: Should this 256 be window.tileSize? Unclear to me.
-						var verticalTiles = this._map.getSize().y / 256;
-						tileWidthTwips = Math.round(command.height / verticalTiles);
-						tileHeightTwips = Math.round(command.height / verticalTiles);
-					} else {
-						setTimeout(function() {
-							that._delayedFitToScreen(command.height);
-						}, 100);
-					}
-				}
 				docLayer = new L.ImpressTileLayer('', {
 					permission: this._map.options.permission,
 					tileWidthTwips: tileWidthTwips / window.devicePixelRatio,
