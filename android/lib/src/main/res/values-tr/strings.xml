@@ -17,4 +17,5 @@
     <string name="edit_copy">Bir kopyasını düzenle</string>
     <string name="view_only">Yalnızca görüntüle</string>
     <string name="restarting">Yeniden başlatılıyor...</string>
+    <string name="cant_open_the_document">Belge açılamadı</string>
 </resources>
