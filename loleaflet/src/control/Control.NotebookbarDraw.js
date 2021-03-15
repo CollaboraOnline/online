@@ -322,8 +322,9 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 																									'enabled': 'true',
 																									'children': [
 																										{
+																											'id': 'downloadas-epub',
 																											'type': 'menubartoolitem',
-																											'text': '',
+																											'text': _('EPUB (.epub)'),
 																											'command': ''
 																										}
 																									]
