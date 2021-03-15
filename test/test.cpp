@@ -97,7 +97,8 @@ int main(int argc, char** argv)
     }
 
     const char* loglevel = verbose ? "trace" : "warning";
-    Log::initialize("tst", loglevel, true, false, {});
+    const bool withColor = isatty(fileno(stderr));
+    Log::initialize("tst", loglevel, withColor, false, {});
 
 #if ENABLE_SSL
     try
