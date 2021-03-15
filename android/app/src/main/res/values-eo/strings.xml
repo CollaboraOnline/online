@@ -38,7 +38,7 @@
     <string name="create_new_document_title">Krei novan dokumenton</string>
     <string name="negative_im_sure">Mi estas certa</string>
     <string name="positive_ok">Akcepti</string>
-    <string name="reason_required_to_read_documents">Necesas permeso por konservejo por legi viajn dokumentojn</string>
+    <string name="reason_required_to_read_documents">Necesas permeso por konservejo por legi viajn dokumentojn.</string>
     <string name="title_permission_required">Permeso bezonata</string>
     <string name="current_dir">Aktuala dosierujo: %1$s</string>
     <string name="bad_directory">Nevalida dosieruja vojprefikso</string>
@@ -53,7 +53,7 @@
     <string name="external_sd_path">Ekstera SD-vojprefikso</string>
     <string name="physical_storage_settings">Agordoj pri fizika konservejo</string>
     <string name="owncloud_settings">Agordoj pri nuba servilo</string>
-    <string name="storage_provider_settings">"Agordoj  pri provizanto de enhavo"</string>
+    <string name="storage_provider_settings">Agordoj pri provizanto de enhavo</string>
     <string name="otg_missing_error">Radika dosiero ne validas. Kontrolu vian OTG-ilon kaj/aŭ viajn agordojn.</string>
     <string name="ext_document_provider_error">Radika dosiero ne validas. Kontrolu viajn SD-kartajn agordojn.</string>
     <string name="owncloud_unspecified_error">Ne indikita eraro okazis konekti al la nuba servilo. Kontrolu viajn agordon kaj/aŭ provu postiome.</string>

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0100\n"
-"PO-Revision-Date: 2021-03-04 02:44+0000\n"
+"PO-Revision-Date: 2021-03-09 23:02+0000\n"
 "Last-Translator: phlostically <phlostically@mailinator.com>\n"
 "Language-Team: Esperanto <https://hosted.weblate.org/projects/"
 "collabora-online/ui/eo/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5.1-dev\n"
+"X-Generator: Weblate 4.5.2-dev\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-ui-eo.po\n"
 "X-Pootle-Revision: 3937773\n"
 
@@ -312,7 +312,7 @@ msgstr "BB"
 
 #: admin/src/Util.js:43 admin/src/Util.js:45
 msgid " hrs"
-msgstr "h"
+msgstr " h"
 
 #: admin/src/Util.js:49 admin/src/Util.js:51
 msgid " mins"
@@ -812,7 +812,7 @@ msgstr "Elektita ĉelaro"
 
 #: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:355
 msgid "Entering text mode"
-msgstr "Eniras en teksta reĝimo."
+msgstr "Eniras en teksta reĝimo"
 
 #: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:360
 msgid "Selection Mode"
@@ -1188,7 +1188,7 @@ msgstr "PIN-kodo"
 
 #: src/control/Signing.js:276
 msgid "Please enter the PIN code from the EMail or SMS"
-msgstr "Bonvolu enigi la PIN-kodon el la retpoŝto aŭ SMS."
+msgstr "Bonvolu enigi la PIN-kodon el la retpoŝto aŭ SMS"
 
 #: src/control/Signing.js:296
 msgid "Login from email or mobile number"
@@ -1471,7 +1471,7 @@ msgid ""
 msgstr ""
 "Ĉi tiu estas nesubtenata versio de {productname}. Por eviti la impreson ke "
 "ĝi taŭgas por disponiĝi en entreprenoj, ĉi tiu mesaĝo aperos kiam pli ol "
-"{docs} dokumentoj aŭ {connections} konektoj estas aktuale uzataj."
+"{docs} dokumentoj aŭ {connections} konektoj estas aktuale uzataj"
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1654,7 +1654,7 @@ msgstr ""
 
 #: src/map/Clipboard.js:290
 msgid "Failed to download clipboard, please re-copy"
-msgstr "Malsukcesis elŝuti tondujon, bonvolu rekopii."
+msgstr "Malsukcesis elŝuti tondujon, bonvolu rekopii"
 
 #: src/map/Clipboard.js:864
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
@@ -1716,14 +1716,14 @@ msgstr "Neaktiva dokumento - bonvolu alklaki por daŭrigi redakti"
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
 msgstr ""
-"Ne povas alŝuti al servilo la dosiertipon %0,  ĉar la dosiero ne havas nomon."
+"Ne povas alŝuti al servilo la dosiertipon %0, ĉar la dosiero ne havas nomon"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
 msgstr ""
-"Ne povas alŝuti al servilo la dosiertipon %0,  ĉar la dosiero estas malplena."
+"Ne povas alŝuti al servilo la dosiertipon %0, ĉar la dosiero estas malplena"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
