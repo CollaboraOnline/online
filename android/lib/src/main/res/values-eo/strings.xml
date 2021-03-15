@@ -18,4 +18,5 @@
     <string name="edit_copy">Redakti kopion</string>
     <string name="view_only">Nurlega</string>
     <string name="restarting">Restartante...</string>
+    <string name="cant_open_the_document">Ne povis malfermi la dokumenton</string>
 </resources>
