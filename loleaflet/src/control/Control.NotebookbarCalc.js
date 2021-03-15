@@ -1935,7 +1935,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							}
 						]
 					},
-					window.mode.isDesktop()? {
+					{
 						'id': 'freeze-section1',
 						'type': 'container',
 						'children': [
@@ -1951,8 +1951,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								]
 							}
 						]
-					} : {},
-					window.mode.isDesktop()? {
+					},
+					{
 						'id': 'freeze-section2',
 						'type': 'container',
 						'vertical': 'true',
@@ -1980,7 +1980,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								]
 							}
 						]
-					} : {}
+					}
 				]
 			}
 		];
