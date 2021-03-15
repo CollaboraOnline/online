@@ -1674,6 +1674,7 @@ L.Control.Menubar = L.Control.extend({
 			switch (menuItem.id) {
 			case 'last-mod':
 			case 'save':
+			case 'runmacro':
 			case 'pagesetup':
 			case 'watermark':
 				return false;
