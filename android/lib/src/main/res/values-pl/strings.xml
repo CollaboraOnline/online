@@ -18,4 +18,5 @@
     <string name="edit_copy">Edytuj kopię</string>
     <string name="view_only">Tylko podgląd</string>
     <string name="restarting">Ponowne uruchamianie...</string>
+    <string name="cant_open_the_document">Nie udało się otworzyć dokumentu</string>
 </resources>
