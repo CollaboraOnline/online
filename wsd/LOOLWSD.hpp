@@ -270,17 +270,6 @@ public:
     static std::unique_ptr<ClipboardCache> SavedClipboards;
 #endif
 
-    /// This thread polls basic web serving, and handling of
-    /// websockets before upgrade: when upgraded they go to the
-    /// relevant DocumentBroker poll instead.
-    static std::unique_ptr<TerminatingPoll> WebServerPoll;
-
-    /// This thread listens for and accepts prisoner kit processes.
-    /// And also cleans up and balances the correct number of children.
-    static std::unique_ptr<PrisonPoll> PrisonerPoll;
-
-    static std::unique_ptr<LOOLWSDServer> Server;
-
     static std::unordered_set<std::string> EditFileExtensions;
     static std::unordered_set<std::string> ViewWithCommentsFileExtensions;
     static unsigned MaxConnections;
