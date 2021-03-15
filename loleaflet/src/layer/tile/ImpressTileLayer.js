@@ -31,10 +31,8 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		this._annotationManager = L.annotationManagerImpress(map);
 		map.uiManager.initializeSpecializedUI(this._docType);
 		if (window.mode.isMobile()) {
-
 			L.Control.MobileWizard.mergeOptions({maxHeight: '55%'});
 			var mobileWizard = L.DomUtil.get('mobile-wizard');
-			//var mobileWizardContent = L.DomUtil.get('mobile-wizard-content');
 			var container = L.DomUtil.createWithId('div', 'mobile-wizard-header', mobileWizard);
 			var preview = L.DomUtil.createWithId('div', 'mobile-slide-sorter', container);
 			L.DomUtil.toBack(container);
@@ -45,7 +43,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 				imageClass: 'preview-img-portrait',
 				frameClass: 'preview-frame-portrait'
 			}));
-			//L.DomUtil.addClass(mobileWizardContent, 'with-slide-sorter-above');
 		}
 	},
 
