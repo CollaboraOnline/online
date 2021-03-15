@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
-"PO-Revision-Date: 2021-03-12 09:57+0000\n"
-"Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
+"PO-Revision-Date: 2021-03-15 15:37+0000\n"
+"Last-Translator: Nguyen Tuan Anh <anhnt633@viettel.com.vn>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/help/vi/>\n"
 "Language: vi\n"
@@ -254,7 +254,6 @@ msgid "Ctrl + 0"
 msgstr "Ctrl + 0"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:52-18
-#, fuzzy
 msgid "Apply Heading 1 paragraph style"
 msgstr "Áp dụng kiểu tiêu đề 1"
 
@@ -263,7 +262,6 @@ msgid "Ctrl + 1"
 msgstr "Ctrl + 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:53-18
-#, fuzzy
 msgid "Apply Heading 2 paragraph style"
 msgstr "Áp dụng kiểu tiêu đề 2"
 
@@ -272,7 +270,6 @@ msgid "Ctrl + 2"
 msgstr "Ctrl + 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:54-18
-#, fuzzy
 msgid "Apply Heading 3 paragraph style"
 msgstr "Áp dụng kiểu tiêu đề 3"
 
@@ -282,7 +279,6 @@ msgid "Ctrl + 3"
 msgstr "Ctrl + 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:55-18
-#, fuzzy
 msgid "Apply Heading 4 paragraph style"
 msgstr "Áp dụng kiểu tiêu đề 4"
 
@@ -291,7 +287,6 @@ msgid "Ctrl + 4"
 msgstr "Ctrl + 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:56-18
-#, fuzzy
 msgid "Apply Heading 5 paragraph style"
 msgstr "Áp dụng kiểu tiêu đề 5"
 
@@ -339,7 +334,6 @@ msgstr "←"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:62-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:179-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:236-18
-#, fuzzy
 msgid "Move cursor with selection to the left"
 msgstr "Di chuyển con trỏ với lựa chọn sang trái"
 
@@ -352,7 +346,6 @@ msgstr "Shift + ←"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:63-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:180-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:237-18
-#, fuzzy
 msgid "Go to beginning of a word"
 msgstr "Đi đến đầu của một từ"
 
@@ -365,7 +358,6 @@ msgstr "Ctrl + ←"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:64-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:238-18
-#, fuzzy
 msgid "Select to the left word by word"
 msgstr "Chọn từ bên trái từng từ"
 
@@ -390,7 +382,6 @@ msgstr "→"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:240-18
-#, fuzzy
 msgid "Move cursor with selection to the right"
 msgstr "Di chuyển con trỏ với lựa chọn sang bên phải"
 
@@ -403,7 +394,6 @@ msgstr "Shift + →"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:241-18
-#, fuzzy
 msgid "Go to start of the next word"
 msgstr "Đến điểm đầu của từ tiếp theo"
 
@@ -416,7 +406,6 @@ msgstr "Ctrl + →"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:242-18
-#, fuzzy
 msgid "Select to the right word by word"
 msgstr "Chọn từng từ theo bên phải"
 
@@ -465,21 +454,18 @@ msgstr "Ctrl + ↑"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:246-18
-#, fuzzy
 msgid "Select to beginning of paragraph"
 msgstr "Chọn đến đầu đoạn văn"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-77
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:246-77
-#, fuzzy
 msgid "Ctrl + Shift + Arrow Up"
 msgstr "Ctrl + Shift + ↑"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:247-18
-#, fuzzy
 msgid "Move cursor down one line"
 msgstr "Di chuyển con trỏ xuống một dòng"
 
@@ -492,7 +478,6 @@ msgstr "↓"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:248-18
-#, fuzzy
 msgid "Select lines in downwards direction"
 msgstr "Chọn các dòng theo hướng đi xuống"
 
@@ -505,7 +490,6 @@ msgstr "Shift + ↓"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:249-18
-#, fuzzy
 msgid "Move cursor to beginning of the next paragraph"
 msgstr "Di chuyển con trỏ đến đầu đoạn tiếp theo"
 
@@ -518,7 +502,6 @@ msgstr "Ctrl + ↓"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:250-18
-#, fuzzy
 msgid "Select to end of paragraph"
 msgstr "Chọn đến kết thúc đoạn văn"
 
@@ -531,7 +514,6 @@ msgstr "Ctrl + Shift + ↓"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:77-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:251-18
-#, fuzzy
 msgid "Go to beginning of line"
 msgstr "Chuyển đến đầu dòng"
 
@@ -544,7 +526,6 @@ msgstr "Trang chủ"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:252-18
-#, fuzzy
 msgid "Go and select to the beginning of a line"
 msgstr "Đi đến đầu dòng và chọn"
 
@@ -557,7 +538,6 @@ msgstr "Shift + Home"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:253-18
-#, fuzzy
 msgid "Go to start of document"
 msgstr "Đi đến đầu tài liệu"
 
@@ -569,7 +549,6 @@ msgid "Ctrl + Home"
 msgstr "Ctrl + Home"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-18
-#, fuzzy
 msgid "Go and select text to start of document"
 msgstr "Đi và chọn văn bản để bắt đầu tài liệu"
 
@@ -582,7 +561,6 @@ msgstr "Ctrl + Shift + Home"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:198-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:255-18
-#, fuzzy
 msgid "Go to end of line"
 msgstr "Đi đến cuối dòng"
 
@@ -595,7 +573,6 @@ msgstr "End"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:199-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:256-18
-#, fuzzy
 msgid "Go and select to the end of a line"
 msgstr "Đi và chọn đến cuối dòng"
 
@@ -608,7 +585,6 @@ msgstr "Shift + End"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:200-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:257-18
-#, fuzzy
 msgid "Go to end of document"
 msgstr "Đi đến cuối tài liệu"
 
@@ -620,7 +596,6 @@ msgid "Ctrl + End"
 msgstr "Ctrl + End"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-18
-#, fuzzy
 msgid "Go and select text to end of document"
 msgstr "Đi đến văn bản ở cuối tài liệu và chọn"
 
@@ -631,7 +606,6 @@ msgid "Ctrl + Shift + End"
 msgstr "Ctrl + Shift + End"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-18
-#, fuzzy
 msgid "Move the view up one page"
 msgstr "Di chuyển chế độ xem lên một trang"
 
@@ -640,7 +614,6 @@ msgid "PageUp"
 msgstr "PageUp"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-18
-#, fuzzy
 msgid "Switch cursor between text and header"
 msgstr "Chuyển con trỏ giữa văn bản và tiêu đề"
 
@@ -649,7 +622,6 @@ msgid "Ctrl + PageUp"
 msgstr "Ctrl + PageUp"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-18
-#, fuzzy
 msgid "Extend the selection up one page"
 msgstr "Mở rộng lựa chọn lên một trang"
 
@@ -674,7 +646,6 @@ msgid "Ctrl + PageDown"
 msgstr "Ctrl + PageDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:90-18
-#, fuzzy
 msgid "Extend the selection down one page"
 msgstr "Mở rộng vùng chọn xuống một trang"
 
@@ -683,7 +654,6 @@ msgid "Shift + PageDown"
 msgstr "Shift + PageDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:91-18
-#, fuzzy
 msgid "Delete to beginning of word"
 msgstr "Xóa đến đầu từ"
 
@@ -692,7 +662,6 @@ msgid "Ctrl + Backspace"
 msgstr "Ctrl + Backspace"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:92-18
-#, fuzzy
 msgid "Delete to end of word"
 msgstr "Xóa đến cuối từ"
 
@@ -701,7 +670,6 @@ msgid "Ctrl + Del"
 msgstr "Ctrl + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:93-18
-#, fuzzy
 msgid "Delete to beginning of sentence"
 msgstr "Xóa đến đầu câu"
 
@@ -710,7 +678,6 @@ msgid "Ctrl + Shift + Backspace"
 msgstr "Ctrl + Shift + Backspace"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:94-18
-#, fuzzy
 msgid "Delete to end of sentence"
 msgstr "Xóa đến cuối câu"
 
@@ -719,12 +686,10 @@ msgid "Ctrl + Shift + Del"
 msgstr "Ctrl + Shift + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:96-9
-#, fuzzy
 msgid "Shortcut Keys for Tables"
 msgstr "Phím tắt cho Bảng"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-54
-#, fuzzy
 msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
@@ -733,18 +698,16 @@ msgstr ""
 "của ô đang kích hoạt. Nhấn một lần nữa để chọn toàn bộ bảng."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-57
-#, fuzzy
 msgid ""
 "If the active cell is empty: goes to the beginning of the table. Otherwise: "
 "first press goes to beginning of the active cell, second press goes to "
 "beginning of the current table, third press goes to beginning of document."
 msgstr ""
 "Nếu ô đang kích hoạt trống: chuyển đến đầu bảng. Nếu không: nhấn lần đầu để "
-"chuyển đến đầu ô đang kích hoạt,  nhấn lần hai để đến đầu bảng hiện tại, "
-"nhấn lần ba để chuyển đến đầu tài liệu."
+"chuyển đến đầu ô đang kích hoạt, nhấn lần hai để đến đầu bảng hiện tại, nhấn "
+"lần ba để chuyển đến đầu tài liệu."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-56
-#, fuzzy
 msgid ""
 "If the active cell is empty: goes to the end of the table. Otherwise: first "
 "press goes to the end of the active cell, second press goes to the end of "
@@ -759,7 +722,6 @@ msgid "Ctrl + Tab"
 msgstr "Ctrl + Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-56
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "Alt + Tab may be used instead."
@@ -768,39 +730,32 @@ msgstr ""
 "sử dụng, Alt + Tab có thể được sử dụng thay thế."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-18
-#, fuzzy
 msgid "Alt + Arrow Keys"
 msgstr "Alt + Phím mũi tên"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-62
-#, fuzzy
 msgid ""
 "Increases/decreases the size of the column/row on the right/bottom cell edge"
 msgstr "Tăng / giảm kích thước của cột / hàng ở cạnh bên phải / dưới cùng của ô"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-18
-#, fuzzy
 msgid "Alt + Shift + Arrow Keys"
 msgstr "Alt + Shift + Phím mũi tên"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-70
-#, fuzzy
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr "Tăng / giảm kích thước của cột / hàng ở cạnh trái / trên cùng của ô"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:104-18
-#, fuzzy
 msgid "Alt + Ctrl + Arrow Keys"
 msgstr "Alt + Ctrl + Phím mũi tên"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:104-69
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-77
-#, fuzzy
 msgid "Like Alt, but only the active cell is modified"
 msgstr "Giống như Alt, nhưng chỉ ô đang kích hoạt được sửa đổi"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-18
-#, fuzzy
 msgid "Ctrl + Alt + Shift + Arrow Keys"
 msgstr "Ctrl + Alt + Shift + Phím mũi tên"
 
@@ -809,7 +764,6 @@ msgid "Alt + Insert"
 msgstr "Alt + Insert"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-58
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key "
 "inserts cell"
@@ -822,7 +776,6 @@ msgid "Alt + Del"
 msgstr "Alt + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-55
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key "
 "merges cell with neighboring cell"
@@ -835,7 +788,6 @@ msgid "Shift + Ctrl + Del"
 msgstr "Shift + Ctrl + Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:108-86
-#, fuzzy
 msgid ""
 "If no whole cell is selected, the text from the cursor to the end of the "
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
@@ -846,7 +798,6 @@ msgstr ""
 "dung của ô tiếp theo sẽ bị xóa."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:109-1
-#, fuzzy
 msgid ""
 "If no whole cell is selected and the cursor is at the end of the table, the "
 "paragraph following the table will be deleted, unless it is the last "
@@ -856,7 +807,6 @@ msgstr ""
 "bảng sẽ bị xóa, trừ khi đó là đoạn cuối cùng trong tài liệu."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:110-1
-#, fuzzy
 msgid ""
 "If one or more cells are selected, the whole rows containing the selection "
 "will be deleted. If all rows are selected completely or partially, the "
@@ -866,12 +816,10 @@ msgstr ""
 "tất cả các hàng được chọn hoàn toàn hoặc một phần, toàn bộ bảng sẽ bị xóa."
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:113-9
-#, fuzzy
 msgid "Word processor functions"
 msgstr "Các chức năng của bộ xử lý văn bản"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-18
-#, fuzzy
 msgid "Insert footnote"
 msgstr "Chèn chú thích cuối trang"
 
@@ -880,7 +828,6 @@ msgid "Ctrl + Alt + F"
 msgstr "Ctrl + Alt + F"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:116-18
-#, fuzzy
 msgid "Insert endnote"
 msgstr "Chèn chú thích cuối văn bản"
 
@@ -890,7 +837,6 @@ msgstr "Ctrl + Alt + D"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
-#, fuzzy
 msgid "Insert comment"
 msgstr "Chèn chú thích"
 
@@ -900,7 +846,6 @@ msgid "Ctrl + Alt + C"
 msgstr "Ctrl + Alt + C"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:119-18
-#, fuzzy
 msgid "Insert soft hyphen"
 msgstr "Chèn dấu gạch nối mềm"
 
@@ -909,7 +854,6 @@ msgid "Ctrl + -"
 msgstr "Ctrl + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-18
-#, fuzzy
 msgid "Insert non-breaking hyphen"
 msgstr "Chèn dấu gạch nối không ngắt"
 
@@ -918,7 +862,6 @@ msgid "Ctrl + Shift + -"
 msgstr "Ctrl + Shift + -"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-18
-#, fuzzy
 msgid "Insert non-breaking space"
 msgstr "Chèn khoảng trống không ngắt"
 
@@ -927,7 +870,6 @@ msgid "Ctrl + Shift + Space"
 msgstr "Ctrl + Shift + Space"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-18
-#, fuzzy
 msgid "Insert line break"
 msgstr "Chèn ngắt dòng"
 
@@ -936,7 +878,6 @@ msgid "Shift + Enter"
 msgstr "Shift + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-18
-#, fuzzy
 msgid "Manual page break"
 msgstr "Ngắt trang thủ công"
 
@@ -947,7 +888,6 @@ msgid "Ctrl + Enter"
 msgstr "Ctrl + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-18
-#, fuzzy
 msgid "Column break (in multicolumnar text)"
 msgstr "Ngắt cột (trong văn bản đa cột)"
 
@@ -956,7 +896,6 @@ msgid "Ctrl + Shift + Enter"
 msgstr "Ctrl + Shift + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-18
-#, fuzzy
 msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
 msgstr ""
@@ -968,7 +907,6 @@ msgid "Alt + Enter"
 msgstr "Alt + Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:127-18
-#, fuzzy
 msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
@@ -977,12 +915,10 @@ msgstr ""
 "con trỏ ở cuối danh sách."
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:131-9
-#, fuzzy
 msgid "Cell formatting"
 msgstr "Định dạng ô"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-18
-#, fuzzy
 msgid "Display comment"
 msgstr "Hiển thị chú thích"
 
@@ -991,17 +927,14 @@ msgid "Ctrl + F1"
 msgstr "Ctrl + F1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
-#, fuzzy
 msgid "Fill Down"
 msgstr "Điền xuống"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
-#, fuzzy
 msgid "Set Optimal Column Width"
 msgstr "Đặt chiều rộng cột tối ưu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
-#, fuzzy
 msgid "Two decimal places, thousands separator"
 msgstr "Hai chữ số thập phân, dấu phân cách hàng nghìn"
 
@@ -1010,7 +943,6 @@ msgid "Ctrl + Shift + 1"
 msgstr "Ctrl + Shift + 1"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
-#, fuzzy
 msgid "Standard exponential format"
 msgstr "Định dạng hàm mũ tiêu chuẩn"
 
@@ -1019,7 +951,6 @@ msgid "Ctrl + Shift + 2"
 msgstr "Ctrl + Shift + 2"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
-#, fuzzy
 msgid "Standard date format"
 msgstr "Định dạng ngày tiêu chuẩn"
 
@@ -1028,7 +959,6 @@ msgid "Ctrl + Shift + 3"
 msgstr "Ctrl + Shift + 3"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-18
-#, fuzzy
 msgid "Standard currency format"
 msgstr "Định dạng tiền tệ tiêu chuẩn"
 
@@ -1037,7 +967,6 @@ msgid "Ctrl + Shift + 4"
 msgstr "Ctrl + Shift + 4"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-18
-#, fuzzy
 msgid "Standard percentage format (two decimal places)"
 msgstr "Định dạng phần trăm tiêu chuẩn (hai chữ số thập phân)"
 
@@ -1046,7 +975,6 @@ msgid "Ctrl + Shift + 5"
 msgstr "Ctrl + Shift + 5"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-18
-#, fuzzy
 msgid "Standard format"
 msgstr "Định dạng tiêu chuẩn"
 
@@ -1056,7 +984,6 @@ msgstr "Ctrl + Shift + 6"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:172-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-18
-#, fuzzy
 msgid "Demote list item (list item has to be selected)"
 msgstr "Giảm cấp mục danh sách (mục danh sách phải được chọn)"
 
@@ -1069,7 +996,6 @@ msgstr "Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:173-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:230-18
-#, fuzzy
 msgid "Promote list item (list item has to be selected)"
 msgstr "Tăng cấp mục danh sách (mục danh sách phải được chọn)"
 
@@ -1082,30 +1008,25 @@ msgstr "Shift + Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:175-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:232-9
-#, fuzzy
 msgid "Text selection and navigation in a textbox"
 msgstr "Lựa chọn văn bản và điều hướng trong hộp văn bản"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:254-18
-#, fuzzy
 msgid "Go and select text to start of textbox"
 msgstr "Đi đến và chọn văn bản để bắt đầu hộp văn bản"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:201-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:258-18
-#, fuzzy
 msgid "Go and select text to end of textbox"
 msgstr "Đi đến và chọn văn bản ở cuối hộp văn bản"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:203-9
-#, fuzzy
 msgid "Slide keyboard shortcuts"
 msgstr "Phím tắt trang chiếu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-18
-#, fuzzy
 msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
@@ -1120,67 +1041,55 @@ msgstr "Esc"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-18
-#, fuzzy
 msgid "Select objects in the order in which they were created"
 msgstr "Chọn các đối tượng theo thứ tự chúng được tạo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-18
-#, fuzzy
 msgid "Select objects in the reverse order in which they were created"
 msgstr "Chọn các đối tượng theo thứ tự ngược lại mà chúng được tạo ra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
-#, fuzzy
 msgid "Move to next text object on slide"
 msgstr "Di chuyển đến đối tượng văn bản tiếp theo trên trang chiếu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
-#, fuzzy
 msgid "Select all in slide"
 msgstr "Chọn tất cả trong trang chiếu"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:260-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
 msgstr "Vẽ trang phím tắt"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
-#, fuzzy
 msgid "Move to next text object on drawing page"
 msgstr "Di chuyển đến đối tượng văn bản tiếp theo trên trang vẽ"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:266-18
-#, fuzzy
 msgid "Select all in drawing page"
 msgstr "Chọn tất cả trong trang vẽ"
 
 #: html/loleaflet-help.html%2Bdiv.h1:271-5
-#, fuzzy
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr "<span class=\"productname\">% productName </span> Trợ giúp"
+msgstr "<span class=\"productname\">%productName</span> Trợ giúp"
 
 #: html/loleaflet-help.html%2Bdiv.p:272-5
 #: html/loleaflet-help.html%2Bdiv.h3:310-5
-#, fuzzy
 msgid "Collaborative editing"
 msgstr "Cộng tác chỉnh sửa"
 
 #: html/loleaflet-help.html%2Bdiv.p:273-5
 #: html/loleaflet-help.html%2Bdiv.h3:317-5
-#, fuzzy
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr "<span class=\"productname\">% productName </span> giao diện người dùng"
+msgstr "<span class=\"productname\">%productName</span> giao diện người dùng"
 
 #: html/loleaflet-help.html%2Bdiv.p:274-5
 #: html/loleaflet-help.html%2Bdiv.h3:337-5
-#, fuzzy
 msgid "Opening, closing, saving, printing and downloading documents"
 msgstr "Mở, đóng, lưu, in và tải xuống tài liệu"
 
 #: html/loleaflet-help.html%2Bdiv.p:275-5
 #: html/loleaflet-help.html%2Bdiv.h3:345-5
-#, fuzzy
 msgid "Editing documents"
 msgstr "Chỉnh sửa tài liệu"
 
@@ -1190,96 +1099,80 @@ msgstr "Chỉnh sửa tài liệu"
 #: html/loleaflet-help.html%2Bdiv.h3:366-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:411-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:491-5
-#, fuzzy
 msgid "Advanced features"
 msgstr "Các tính năng nâng cao"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:278-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:396-5
-#, fuzzy
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr "<span class=\"productname\">% productName </span> trang tính"
+msgstr "<span class=\"productname\">%productName</span> trang tính"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:279-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:398-5
-#, fuzzy
 msgid "Editing spreadsheets"
 msgstr "Chỉnh sửa trang tính"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:280-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:401-5
-#, fuzzy
 msgid "Formulas"
 msgstr "Công thức"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:281-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:407-5
-#, fuzzy
 msgid "Formatting spreadsheets"
 msgstr "Định dạng trang tính"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:285-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:444-5
-#, fuzzy
 msgid "<span class=\"productname\">%productName</span> text documents"
 msgstr "<span class=\"productname\">%productName</span> tài liệu văn bản"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:286-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:446-5
-#, fuzzy
 msgid "Editing text documents"
 msgstr "Chỉnh sửa tài liệu văn bản"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:287-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:449-5
-#, fuzzy
 msgid "Context menus"
 msgstr "Menu ngữ cảnh"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:288-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:459-5
-#, fuzzy
 msgid "Advanced text document editor features"
 msgstr "Các tính năng trình soạn thảo tài liệu văn bản nâng cao"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:291-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:478-5
-#, fuzzy
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr "<span class=\"productname\">% productName </span> bản trình bày"
+msgstr "<span class=\"productname\">%productName</span> bản trình bày"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:292-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:480-5
-#, fuzzy
 msgid "Editing presentations"
 msgstr "Chỉnh sửa bản trình bày"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:293-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:483-5
-#, fuzzy
 msgid "Slide show"
 msgstr "Trình chiếu"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:294-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:487-5
-#, fuzzy
 msgid "Slide pane"
 msgstr "Ngăn trang chiếu"
 
 #: html/loleaflet-help.html%2Bdiv.p:297-5
 #: html/loleaflet-help.html%2Bdiv.h2:500-5
-#, fuzzy
 msgid "Frequently Asked Questions"
 msgstr "Các câu hỏi thường gặp"
 
 #: html/loleaflet-help.html%2Bdiv.p:298-5
-#, fuzzy
 msgid "General"
 msgstr "Chung"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:300-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:531-5
-#, fuzzy
 msgid "Text documents"
 msgstr "Tài liệu văn bản"
 
@@ -1290,12 +1183,10 @@ msgstr "Trang tính"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:306-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:623-5
-#, fuzzy
 msgid "Presentations"
 msgstr "Bản trình bày"
 
 #: html/loleaflet-help.html%2Bdiv.p:308-5
-#, fuzzy
 msgid ""
 "<span class=\"productname\">%productName</span> allows you to create and "
 "edit office documents text documents, spreadsheets and presentations "
@@ -1308,7 +1199,6 @@ msgstr ""
 "mình trên tài liệu hoặc cộng tác như một phần của nhóm."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:312-11
-#, fuzzy
 msgid ""
 "Each user gets assigned a color. The cursor of each user will be shown in "
 "the assigned color. Note: you will see your cursor as black, blinking "
@@ -1320,7 +1210,6 @@ msgstr ""
 "khác."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:313-11
-#, fuzzy
 msgid ""
 "You can jump to the cursor of a user by clicking on the name (or avatar) of "
 "the user. It is possible to follow the editor."
@@ -1329,7 +1218,6 @@ msgstr ""
 "hình đại diện) của người dùng. Có thể theo dõi chỉnh sửa."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:314-11
-#, fuzzy
 msgid ""
 "<span class=\"productname\">%productName</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
@@ -1338,7 +1226,6 @@ msgstr ""
 "thông báo nhỏ ở chân trang khi người dùng mới vào hoặc khi người dùng rời đi."
 
 #: html/loleaflet-help.html%2Bdiv.p:318-5
-#, fuzzy
 msgid ""
 "<span class=\"productname\">%productName</span> uses modern browser "
 "resources to adapt the user interface to the size of the viewing area, "
@@ -1351,7 +1238,6 @@ msgstr ""
 "diện bao gồm:"
 
 #: html/loleaflet-help.html%2Bdiv.p:319-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
@@ -1360,7 +1246,6 @@ msgstr ""
 "dung tài liệu, bảng tính, bản trình bày hoặc tài liệu văn bản."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:320-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
 "and includes many options, commands for printing, editing, viewing and other "
@@ -1377,78 +1262,69 @@ msgstr ""
 "\"images/unfold.svg\"> để hiển thị menu."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Context menus:</span> On clicking with the right mouse "
 "button, a menu appears with commands associated with the underlying object."
 msgstr ""
-"<span class=\"def\"> Menu ngữ cảnh:</span> Khi nhấp vào nút chuột phải, một "
+"<span class=\"def\">Menu ngữ cảnh:</span> Khi nhấp vào nút chuột phải, một "
 "menu xuất hiện với các lệnh được liên kết với đối tượng bên dưới."
 
 #: html/loleaflet-help.html%2Bdiv.p:322-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The toolbar:</span> The toolbar contains the most used "
 "options for daily editing. Toolbar buttons are dynamic, meaning that their "
 "state (on or off) depends on different factors."
 msgstr ""
-"<span class=\"def\"> Thanh công cụ:</span> Thanh công cụ chứa các tùy chọn "
+"<span class=\"def\">Thanh công cụ:</span> Thanh công cụ chứa các tùy chọn "
 "được sử dụng nhiều nhất để chỉnh sửa hàng ngày. Nút thanh công cụ là động, "
 "có nghĩa là trạng thái của chúng (bật hoặc tắt) phụ thuộc vào các yếu tố "
 "khác nhau."
 
 #: html/loleaflet-help.html%2Bdiv.p:323-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The status bar:</span> The status bar is shown in the "
 "bottom, and contains several useful options and features."
 msgstr ""
-"<span class=\"def\"> Thanh trạng thái:</span> Thanh trạng thái được hiển thị "
+"<span class=\"def\">Thanh trạng thái:</span> Thanh trạng thái được hiển thị "
 "ở phía dưới và chứa một số tùy chọn và tính năng hữu ích."
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The search bar:</span> Searching starts automatically "
 "when content is inserted in the search box, and the document window "
 "automatically moves to the first occurrence found. Searching is not case-"
 "sensitive. There are three buttons right next to the search box:"
 msgstr ""
-"<span class=\"def\"> Thanh tìm kiếm:</span> Tìm kiếm bắt đầu tự động khi nội "
+"<span class=\"def\">Thanh tìm kiếm:</span> Tìm kiếm bắt đầu tự động khi nội "
 "dung được chèn vào hộp tìm kiếm và cửa sổ tài liệu tự động di chuyển đến lần "
 "xuất hiện đầu tiên được tìm thấy. Tìm kiếm không phân biệt chữ hoa chữ "
 "thường. Có ba nút ngay bên cạnh hộp tìm kiếm:"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:327-11
-#, fuzzy
 msgid "Search backwards"
 msgstr "Tìm lui"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:328-11
-#, fuzzy
 msgid "Search forward"
 msgstr "Tìm tiếp"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:329-11
-#, fuzzy
 msgid "Cancel the search (appears only when a text has been searched)"
 msgstr "Hủy tìm kiếm (chỉ xuất hiện khi một văn bản đã được tìm kiếm)"
 
 #: html/loleaflet-help.html%2Bdiv.p:331-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The zoom bar:</span> At the right of the status bar, "
 "there is a set of buttons that allow you to zoom to 100%, zoom out and zoom "
 "in. The zoom applies to the document area, the user interface is not "
 "affected. The current level of zoom is shown in this area."
 msgstr ""
-"<span class=\"def\"> Thanh thu phóng:</span> Ở bên phải thanh trạng thái, có "
+"<span class=\"def\">Thanh thu phóng:</span> Ở bên phải thanh trạng thái, có "
 "một tập hợp các nút cho phép bạn phóng to đến 100%, thu nhỏ và phóng to. Thu "
 "phóng áp dụng cho khu vực tài liệu, giao diện người dùng không bị ảnh hưởng. "
 "Mức thu phóng hiện tại được hiển thị trong khu vực này."
 
 #: html/loleaflet-help.html%2Bdiv.p:332-5
-#, fuzzy
 msgid ""
 "Text, charts, shapes and svg images will stay sharp, when zooming in, you "
 "will only see pixels appear at inserted images, such as jpg’s or png’s."
@@ -1458,25 +1334,22 @@ msgstr ""
 "hạn như jpg hoặc png."
 
 #: html/loleaflet-help.html%2Bdiv.p:333-5
-#, fuzzy
 msgid "Using the browser zoom affects the document and user interface areas."
 msgstr ""
 "Sử dụng thu phóng của trình duyệt ảnh hưởng đến các khu vực tài liệu và khu "
 "vực giao diện người dùng."
 
 #: html/loleaflet-help.html%2Bdiv.p:334-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The information bar:</span> At the right of the search "
 "bar, a set of information on the document is displayed. The actual "
 "information depends on the nature of the document."
 msgstr ""
-"<span class=\"def\"> Thanh thông tin:</span> Ở bên phải thanh tìm kiếm, một "
+"<span class=\"def\">Thanh thông tin:</span> Ở bên phải thanh tìm kiếm, một "
 "tập hợp thông tin trên tài liệu được hiển thị. Thông tin thực tế phụ thuộc "
 "vào bản chất của tài liệu."
 
 #: html/loleaflet-help.html%2Bdiv.p:338-5
-#, fuzzy
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
 "integrated with <span class=\"productname\">%productName</span>."
@@ -1485,7 +1358,6 @@ msgstr ""
 "hợp với <span class=\"productname\">%productName</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:339-5
-#, fuzzy
 msgid ""
 "To download a document download it from the <span class=\"productname\""
 ">%productName</span> application’s <span class=\"ui\">File</span> menu. The "
@@ -1493,12 +1365,11 @@ msgid ""
 "exports documents in PDF format."
 msgstr ""
 "Để tải xuống tài liệu, tải xuống từ menu <span class=\"productname\""
-">%productName</span> của ứng dụng <span class=\"ui\">Tài liệu</span>menu. "
-"Các định dạng tải xuống có sẵn phụ thuộc vào ứng dụng. Tất cả các ứng dụng "
-"xuất tài liệu ở định dạng PDF."
+">%productName</span> <span class=\"ui\">Tài liệu</span>của ứng dụng. Các "
+"định dạng tải xuống có sẵn phụ thuộc vào ứng dụng. Tất cả các ứng dụng xuất "
+"tài liệu ở định dạng PDF."
 
 #: html/loleaflet-help.html%2Bdiv.p:340-5
-#, fuzzy
 msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
 ">%productName</span> module associated to the document format."
@@ -1507,7 +1378,6 @@ msgstr ""
 ">%productName</span> được liên kết với định dạng tài liệu."
 
 #: html/loleaflet-help.html%2Bdiv.p:341-5
-#, fuzzy
 msgid ""
 "Documents in <span class=\"productname\">%productName</span> save "
 "automatically, but if you are concerned that a document is synchronized as "
@@ -1517,10 +1387,9 @@ msgstr ""
 "Tài liệu trong <span class=\"productname\">%productName</span> lưu tự động, "
 "nhưng nếu bạn muốn tài liệu được đồng bộ hóa càng nhanh càng tốt, bạn cũng "
 "có thể buộc lưu bằng cách sử dụng mục nhập <span class=\"ui\">Tài liệu</"
-"span> của menu <span class=\"ui\">Lưu</span>."
+"span> <span class=\"ui\">Lưu</span> của menu."
 
 #: html/loleaflet-help.html%2Bdiv.p:342-5
-#, fuzzy
 msgid ""
 "Depending on the capabilities of your browser the print window may appear or "
 "a “Download PDF export?” popup shows. You can print this PDF in your "
@@ -1531,7 +1400,6 @@ msgstr ""
 "PDF yêu thích của mình."
 
 #: html/loleaflet-help.html%2Bdiv.p:343-5
-#, fuzzy
 msgid ""
 "When closing a document, it is automatically saved if it has been changed."
 msgstr ""
@@ -1539,7 +1407,6 @@ msgstr ""
 "đổi."
 
 #: html/loleaflet-help.html%2Bdiv.p:346-5
-#, fuzzy
 msgid ""
 "Document editing should be familiar to everyone that has used an office "
 "application before, but here are some distinctive features:"
@@ -1548,12 +1415,10 @@ msgstr ""
 "phòng trước đây, nhưng dưới đây là một số tính năng đặc biệt:"
 
 #: html/loleaflet-help.html%2Bdiv.h4:347-5
-#, fuzzy
 msgid "Copy and Paste"
-msgstr "Sao chép và dán"
+msgstr "Sao chép và Dán"
 
 #: html/loleaflet-help.html%2Bdiv.p:348-5
-#, fuzzy
 msgid ""
 "Rich content copy/cut and paste is supported, not only within a given "
 "document, but also across documents on the same or different <span class=\""
@@ -1581,7 +1446,6 @@ msgstr ""
 "lần nhấn dài để truy cập sao chép / cắt / dán qua menu ngữ cảnh là bắt buộc."
 
 #: html/loleaflet-help.html%2Bdiv.p:349-5
-#, fuzzy
 msgid ""
 "To copy larger pieces of content to other applications on your device, users "
 "need to press the <span class=\"ui\">Start download</span> button, and then "
@@ -1600,12 +1464,10 @@ msgstr ""
 "thành hình ảnh tĩnh."
 
 #: html/loleaflet-help.html%2Bdiv.h4:350-5
-#, fuzzy
 msgid "Document repair"
 msgstr "Sửa chữa tài liệu"
 
 #: html/loleaflet-help.html%2Bdiv.p:351-5
-#, fuzzy
 msgid ""
 "When multiple people edit the same document concurrently, it is possible for "
 "their changes to conflict and this can cause some confusion. The Document "
@@ -1618,7 +1480,6 @@ msgstr ""
 "sửa khác đối với tài liệu về trạng thái trước đó."
 
 #: html/loleaflet-help.html%2Bdiv.p:352-5
-#, fuzzy
 msgid ""
 "To jump back to the selected state, select it with the mouse and hit <span "
 "class=\"ui\">Jump to state</span>."
@@ -1627,7 +1488,6 @@ msgstr ""
 "\"ui\"> Chuyển đến trạng thái </span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:354-5
-#, fuzzy
 msgid ""
 "This is particularly useful – say when a colleague inadvertently selected "
 "all text in the document with <span class=\"kbd\">Ctrl</span> + <span class="
@@ -1640,26 +1500,23 @@ msgstr ""
 "đồng thời chỉnh sửa."
 
 #: html/loleaflet-help.html%2Bdiv.h4:355-5
-#, fuzzy
 msgid "Inactive document"
 msgstr "Tài liệu không hoạt động"
 
 #: html/loleaflet-help.html%2Bdiv.p:356-5
-#, fuzzy
 msgid ""
 "When <span class=\"productname\">%productName</span> detects that there has "
 "not been any activity in the browser for a while, it puts the document in an "
 "“Inactive” state. The document is shown with a transparent gray overlay, "
 "with the message “Inactive document – please click to resume editing”."
 msgstr ""
-"Khi <span class=\"productname\">% productName </span> phát hiện rằng không "
-"có bất kỳ hoạt động nào trong trình duyệt trong một thời gian, nó sẽ đặt tài "
+"Khi <span class=\"productname\">%productName </span> phát hiện rằng không có "
+"bất kỳ hoạt động nào trong trình duyệt trong một thời gian, nó sẽ đặt tài "
 "liệu ở trạng thái “Không hoạt động”. Tài liệu được hiển thị với lớp phủ màu "
 "xám trong suốt, với thông báo “Tài liệu không hoạt động - vui lòng nhấp để "
 "tiếp tục chỉnh sửa”."
 
 #: html/loleaflet-help.html%2Bdiv.p:358-5
-#, fuzzy
 msgid ""
 "To continue editing, click on the document and the layover and message "
 "disappear. Any changes that may have been made by other users – while "
@@ -1674,7 +1531,6 @@ msgid "Pasting"
 msgstr "Dán"
 
 #: html/loleaflet-help.html%2Bdiv.p:360-5
-#, fuzzy
 msgid ""
 "When you paste content copied from within the same document, the format and "
 "elements are maintained. If you copy from another document, in another tab "
@@ -1687,7 +1543,6 @@ msgstr ""
 "giữ nguyên văn bản đa dạng thức."
 
 #: html/loleaflet-help.html%2Bdiv.p:361-5
-#, fuzzy
 msgid ""
 "You can paste as unformatted text with the keyboard shortcut: <span class=\""
 "kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\""
@@ -1698,7 +1553,6 @@ msgstr ""
 "class=\"kbd\"> V </span>"
 
 #: html/loleaflet-help.html%2Bdiv.p:362-5
-#, fuzzy
 msgid ""
 "When you paste text from within the document, formatting will be respected. "
 "You can also paste objects, such as images, if they are copied from the "
@@ -1709,7 +1563,6 @@ msgstr ""
 "chép từ tài liệu bạn đang làm việc."
 
 #: html/loleaflet-help.html%2Bdiv.p:363-5
-#, fuzzy
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application, it will be pasted as rich text."
@@ -1719,7 +1572,6 @@ msgstr ""
 "có định dạng."
 
 #: html/loleaflet-help.html%2Bdiv.p:364-5
-#, fuzzy
 msgid ""
 "When you have internal cut or copied content, you can paste this content "
 "using the context menu."
@@ -1728,21 +1580,18 @@ msgstr ""
 "này bằng menu ngữ cảnh."
 
 #: html/loleaflet-help.html%2Bdiv.h4:367-5
-#, fuzzy
 msgid "Adding charts"
 msgstr "Thêm biểu đồ"
 
 #: html/loleaflet-help.html%2Bdiv.p:368-5
-#, fuzzy
 msgid ""
 "<span class=\"productname\">%productName</span> supports inserting and "
 "visualization of charts in documents. To add a chart:"
 msgstr ""
-"<span class=\"productname\">% productName </span> hỗ trợ chèn và hiển thị "
+"<span class=\"productname\">%productName </span> hỗ trợ chèn và hiển thị "
 "biểu đồ trong tài liệu. Để thêm biểu đồ:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:370-11
-#, fuzzy
 msgid ""
 "Select a table in text document, a range in a spreadsheet or a table in a "
 "presentation."
@@ -1751,91 +1600,81 @@ msgstr ""
 "bảng trong bản trình bày."
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:372-9
-#, fuzzy
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
 "Customize your chart on the sidebar:"
 msgstr ""
-"Chọn <span class=\"ui\"> Chèn </span> → <span class=\"ui\"> Biểu đồ </span>. "
+"Chọn <span class=\"ui\">Chèn </span> → <span class=\"ui\">Biểu đồ </span>. "
 "Tùy chỉnh biểu đồ của bạn trên thanh bên:"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:375-11
-#, fuzzy
 msgid "If no table or range was selected, a prototype chart is displayed."
 msgstr ""
 "Nếu không có bảng hoặc phạm vi nào được chọn, biểu đồ nguyên mẫu sẽ được "
 "hiển thị."
 
 #: html/loleaflet-help.html%2Bdiv.p:378-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Chart editing:</span> Double click the chart to select. "
 "Use context menus to add chart elements such as title, axis, and other. "
 "Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart "
 "Type</span> to edit chart data and select chart type."
 msgstr ""
-"<span class=\"def\"> Chỉnh sửa biểu đồ: </span> Nhấp đúp vào biểu đồ để "
-"chọn. Sử dụng menu ngữ cảnh để thêm các phần tử biểu đồ như tiêu đề, trục, "
-"v.v. Chọn <span class=\"ui\"> Dải dữ liệu </span> và <span class=\"ui\"> "
-"Loại biểu đồ </span> để chỉnh sửa dữ liệu biểu đồ và chọn loại biểu đồ."
+"<span class=\"def\">Chỉnh sửa biểu đồ: </span> Nhấp đúp vào biểu đồ để chọn. "
+"Sử dụng menu ngữ cảnh để thêm các phần tử biểu đồ như tiêu đề, trục, v.v. "
+"Chọn <span class=\"ui\">Dải dữ liệu </span> và <span class=\"ui\">Loại biểu "
+"đồ </span> để chỉnh sửa dữ liệu biểu đồ và chọn loại biểu đồ."
 
 #: html/loleaflet-help.html%2Bdiv.p:379-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Chart formatting:</span> The same context menu brings "
 "you to chart data table and chart type selection."
 msgstr ""
-"<span class=\"def\"> Định dạng biểu đồ: </span> Cùng một menu ngữ cảnh đưa "
+"<span class=\"def\">Định dạng biểu đồ: </span> Cùng một menu ngữ cảnh đưa "
 "bạn đến bảng dữ liệu biểu đồ và lựa chọn loại biểu đồ."
 
 #: html/loleaflet-help.html%2Bdiv.p:380-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Data series formatting:</span> Open the context menu and "
 "choose <span class=\"ui\">Format data series</span>."
 msgstr ""
-"<span class=\"def\"> Định dạng chuỗi dữ liệu: </span> Mở menu ngữ cảnh và "
+"<span class=\"def\">Định dạng chuỗi dữ liệu: </span> Mở menu ngữ cảnh và "
 "chọn <span class=\"ui\"> Định dạng chuỗi dữ liệu </span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:381-5
-#, fuzzy
 msgid "Handling images"
 msgstr "Xử lý hình ảnh"
 
 #: html/loleaflet-help.html%2Bdiv.p:382-5
-#, fuzzy
 msgid ""
 "<span class=\"productname\">%productName</span> inserts images in the text "
 "document from your local computer or from your cloud storage. Inserted "
 "images are always embedded in the document."
 msgstr ""
-"<span class=\"productname\">% productName </span> chèn hình ảnh vào tài liệu "
+"<span class=\"productname\">%productName </span> chèn hình ảnh vào tài liệu "
 "văn bản từ máy tính cục bộ hoặc từ bộ nhớ đám mây của bạn. Hình ảnh đã chèn "
 "luôn được nhúng trong tài liệu."
 
 #: html/loleaflet-help.html%2Bdiv.p:383-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui\">"
 "Insert image</span> icon allows you to choose an image from the cloud "
 "storage's folders and shares."
 msgstr ""
-"<span class=\"def\"> Chèn hình ảnh: </span> Nhấp vào biểu tượng <span class="
-"\"ui\"> Chèn hình ảnh </span> cho phép bạn chọn hình ảnh từ các thư mục và "
+"<span class=\"def\">Chèn hình ảnh: </span> Nhấp vào biểu tượng <span class="
+"\"ui\">Chèn hình ảnh </span> cho phép bạn chọn hình ảnh từ các thư mục và "
 "chia sẻ của bộ lưu trữ đám mây."
 
 #: html/loleaflet-help.html%2Bdiv.p:384-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Insert local image:</span> opens the browser file picker "
 "to upload the image from your local computer and insert it into the document."
 msgstr ""
-"<span class=\"def\"> Chèn hình ảnh cục bộ: </span> mở trình chọn tệp của "
+"<span class=\"def\">Chèn hình ảnh cục bộ: </span> mở trình chọn tệp của "
 "trình duyệt để tải hình ảnh lên từ máy tính cục bộ của bạn và chèn vào tài "
 "liệu."
 
 #: html/loleaflet-help.html%2Bdiv.p:385-5
-#, fuzzy
 msgid ""
 "Images can be resized, rotated and anchored. Text can be wrapped around the "
 "image. Select the image and open the context menu. Use the images handles to "
@@ -1846,61 +1685,53 @@ msgstr ""
 "khiển hình ảnh để thay đổi kích thước hình ảnh bằng chuột."
 
 #: html/loleaflet-help.html%2Bdiv.h4:386-5
-#, fuzzy
 msgid "Comments in documents"
 msgstr "Nhận xét trong tài liệu"
 
 #: html/loleaflet-help.html%2Bdiv.p:387-5
-#, fuzzy
 msgid ""
 "Insert comments in <span class=\"productname\">%productName</span> in places "
 "that need special reader attention. Comments are displayed on the right and "
 "carry the name and date of the issuer."
 msgstr ""
-"Chèn nhận xét vào <span class=\"productname\">% productName </span> ở những "
+"Chèn nhận xét vào <span class=\"productname\">%productName </span> ở những "
 "vị trí cần người đọc chú ý đặc biệt. Bình luận được hiển thị ở bên phải và "
 "mang tên và ngày của người phát hành."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:389-5
-#, fuzzy
 msgid ""
 "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
 "\"images/submenu.svg\">) icon to reply, move and delete comments."
 msgstr ""
-"Nhấp vào biểu tượng menu con (<img style = \"height: 0.6cm; width: 0.6cm;\" "
-"alt = \"\" src = \"images / submenu.svg\">) để trả lời, di chuyển và xóa "
-"nhận xét."
+"Nhấp vào biểu tượng menu con (<img style=\"height:0.6cm;width:0.6cm;\" alt=\""
+"\" src=\"images/submenu.svg\">) để trả lời, di chuyển và xóa nhận xét."
 
 #: html/loleaflet-help.html%2Bdiv.h4:390-5
-#, fuzzy
 msgid "Spellchecking"
 msgstr "Kiểm tra chính tả"
 
 #: html/loleaflet-help.html%2Bdiv.p:391-5
-#, fuzzy
 msgid ""
 "<span class=\"productname\">%productName</span> can check spelling in text "
 "documents, spreadsheets and presentations. A red wavy underline indicates "
 "misspelled words. Click on the right mouse button to open a context menu "
 "with suggested misspelling corrections."
 msgstr ""
-"<span class=\"productname\">% productName </span> có thể kiểm tra chính tả "
+"<span class=\"productname\">%productName </span> có thể kiểm tra chính tả "
 "trong tài liệu văn bản, bảng tính và bản trình bày. Gạch chân gợn sóng màu "
 "đỏ cho biết các từ sai chính tả. Nhấp vào nút chuột phải để mở menu ngữ cảnh "
 "với các sửa lỗi chính tả được đề xuất."
 
 #: html/loleaflet-help.html%2Bdiv.p:393-5
-#, fuzzy
 msgid ""
 "To systematically spell-check the whole document use the <span class=\"ui\""
 ">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
 msgstr ""
 "Để kiểm tra chính tả một cách có hệ thống toàn bộ tài liệu, hãy sử dụng tùy "
-"chọn <span class=\"ui\"> Công cụ </span> của menu <span class=\"ui\"> Chính "
-"tả </span>."
+"chọn <span class=\"ui\">Công cụ </span> của menu <span class=\"ui\">Chính tả "
+"</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:399-5
-#, fuzzy
 msgid ""
 "You edit an online spreadsheet in the same way you edit a desktop "
 "spreadsheet. Operations like entering data, selecting ranges, columns, rows "
@@ -1916,24 +1747,21 @@ msgstr ""
 "hoặc trang tính đều giống nhau. Sử dụng bàn phím, menu hoặc thanh công cụ để "
 "ra lệnh cho các hành động trong bảng tính. Kéo nội dung ô để điền dữ liệu "
 "vào ô cũng được hỗ trợ. Các lệnh sao chép, cắt và dán có sẵn từ menu ngữ "
-"cảnh. Tiếp theo dữ liệu đã nhập bằng   <span class=\"kbd\"> Tab  </span> sẽ "
-"di chuyển con trỏ đến ô tiếp theo ở bên phải và với <span class=\"kbd\"> "
-"Enter </span> vào ô bên dưới để dễ dàng nhập dữ liệu hơn."
+"cảnh. Tiếp theo dữ liệu đã nhập bằng <span class=\"kbd\">Tab </span> sẽ di "
+"chuyển con trỏ đến ô tiếp theo ở bên phải và với <span class=\"kbd\">Enter</"
+"span> vào ô bên dưới để dễ dàng nhập dữ liệu hơn."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:402-5
-#, fuzzy
 msgid ""
 "Formulas are entered in the formula bar. Enter '=' and insert the formula."
 msgstr "Công thức được nhập vào thanh công thức. Nhập '=' và chèn công thức."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:403-5
-#, fuzzy
 msgid "All spreadsheets functions and mathematical rules applies."
 msgstr ""
 "Tất cả các chức năng của bảng tính và các quy tắc toán học được áp dụng."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:405-5
-#, fuzzy
 msgid ""
 "The formula language should be extremely familiar to any spreadsheet user, "
 "and is specified in great detail in the <a href=\"https://www.oasis-open.org/"
@@ -1942,11 +1770,10 @@ msgid ""
 msgstr ""
 "Ngôn ngữ công thức phải cực kỳ quen thuộc với bất kỳ người dùng bảng tính "
 "nào và được chỉ định rất chi tiết trong <a href=\"https://www.oasis-open.org/"
-"committees/download.php/16826/openformula-spec-20060221.html\"> đặc tả "
-"OpenFormula của OASIS </a>."
+"committees/download.php/16826/openformula-spec-20060221.html\"> đặc tả OASIS "
+"OpenFormula</a>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:408-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Direct formatting:</span> You can format spreadsheets "
 "cells, columns, rows and sheets by formatting directly from the menus, "
@@ -1960,134 +1787,122 @@ msgstr ""
 "cột, hàng và trang bảng tính bằng cách định dạng trực tiếp từ menu, thanh "
 "công cụ hoặc menu ngữ cảnh. Định dạng trực tiếp chỉ áp dụng cho đối tượng "
 "hiện tại được chọn. Để định dạng ô, hãy sử dụng menu hoặc nhấn <span class="
-"\"kbd\"> Ctrl </span> + <span class=\"kbd\"> 1 </span>. Hộp thoại cho phép "
-"định dạng số phức tạp và tùy chỉnh, cũng như phông chữ, đường viền phức tạp, "
-"nền, bảo vệ ô và các tùy chọn khác."
+"\"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. Hộp thoại cho phép định "
+"dạng số phức tạp và tùy chỉnh, cũng như phông chữ, đường viền phức tạp, nền, "
+"bảo vệ ô và các tùy chọn khác."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:412-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or "
 "text ascending or descending. <span class=\"productname\">%productName</span>"
 " automatically detects cells that are headers, and adjoining columns, to "
 "extend the selection."
 msgstr ""
-"<span class=\"def\"> Sắp xếp dữ liệu: </span> Bạn có thể sắp xếp danh sách "
-"các số hoặc văn bản tăng dần hoặc giảm dần. <span class=\"productname\">% "
-"productName </span> tự động phát hiện các ô là tiêu đề và cột liền kề, để mở "
-"rộng lựa chọn."
+"<span class=\"def\">Sắp xếp dữ liệu:</span> Bạn có thể sắp xếp danh sách các "
+"số hoặc văn bản tăng dần hoặc giảm dần. <span class=\"productname\""
+">%productName</span> tự động phát hiện các ô là tiêu đề và cột liền kề, để "
+"mở rộng lựa chọn."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:413-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Filtering data:</span> Filters and advanced filters "
 "allow you to work on certain filtered rows (records) of a data range. In the "
 "spreadsheets in <span class=\"productname\">%productName</span> there are "
 "various possibilities for applying filters."
 msgstr ""
-"<span class=\"def\"> Lọc dữ liệu: </span> Bộ lọc và bộ lọc nâng cao cho phép "
+"<span class=\"def\">Lọc dữ liệu: </span> Bộ lọc và bộ lọc nâng cao cho phép "
 "bạn làm việc trên các hàng (bản ghi) được lọc nhất định của phạm vi dữ liệu. "
 "Trong các bảng tính trong <span class=\"productname\">% productName </span>, "
 "có nhiều khả năng áp dụng bộ lọc."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:416-10
-#, fuzzy
 msgid ""
 "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly "
 "restrict the display to records with identical entries in a data field."
 msgstr ""
-"Một công dụng của chức năng <span class=\"ui\"> Bộ lọc tự động </span> là "
+"Một công dụng của chức năng <span class=\"ui\">Bộ lọc tự động </span> là "
 "nhanh chóng hạn chế hiển thị đối với các bản ghi có các mục giống nhau trong "
 "trường dữ liệu."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:419-11
-#, fuzzy
 msgid ""
 "In the <span class=\"ui\">Standard Filter</span> dialog, you can also define "
 "ranges which contain the values in particular data fields. You can use the "
 "standard filter to connect the conditions with either a logical AND or a "
 "logical OR operator."
 msgstr ""
-"Trong hộp thoại <span class=\"ui\"> Bộ lọc Chuẩn </span>, bạn cũng có thể "
-"xác định các phạm vi chứa các giá trị trong các trường dữ liệu cụ thể. Bạn "
-"có thể sử dụng bộ lọc tiêu chuẩn để kết nối các điều kiện với toán tử logic "
-"AND hoặc OR."
+"Trong hộp thoại <span class=\"ui\">Bộ lọc Chuẩn </span>, bạn cũng có thể xác "
+"định các phạm vi chứa các giá trị trong các trường dữ liệu cụ thể. Bạn có "
+"thể sử dụng bộ lọc tiêu chuẩn để kết nối các điều kiện với toán tử logic AND "
+"hoặc OR."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:420-11
-#, fuzzy
 msgid ""
 "The <span class=\"ui\">Advanced Filter</span> allows up to a total of eight "
 "filter conditions. With advanced filters you enter the conditions directly "
 "into the sheet."
 msgstr ""
-"<span class=\"ui\"> Bộ lọc nâng cao </span> cho phép tổng cộng tám điều kiện "
+"<span class=\"ui\">Bộ lọc nâng cao </span> cho phép tổng cộng tám điều kiện "
 "bộ lọc. Với các bộ lọc nâng cao, bạn nhập các điều kiện trực tiếp vào trang "
 "tính."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:422-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Outlining:</span> You can create an outline of your data "
 "and group rows and columns together so that you can collapse and expand the "
 "groups with a single click making it easy to represent hierarchical data."
 msgstr ""
-"<span class=\"def\"> Phác thảo: </span> Bạn có thể tạo phác thảo dữ liệu của "
+"<span class=\"def\">Phác thảo: </span> Bạn có thể tạo phác thảo dữ liệu của "
 "mình và nhóm các hàng và cột lại với nhau để có thể thu gọn và mở rộng các "
 "nhóm chỉ bằng một cú nhấp chuột, giúp dễ dàng trình bày dữ liệu phân cấp."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:424-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Data validation:</span> For each cell, you can define "
 "entries to be valid. Invalid entries to a cell will be rejected. To enable "
 "data validation:"
 msgstr ""
-"<span class=\"def\"> Xác thực dữ liệu: </span> Đối với mỗi ô, bạn có thể xác "
+"<span class=\"def\">Xác thực dữ liệu: </span> Đối với mỗi ô, bạn có thể xác "
 "định các mục nhập là hợp lệ. Các mục nhập không hợp lệ vào một ô sẽ bị từ "
 "chối. Để bật xác thực dữ liệu:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:427-9
-#, fuzzy
 msgid ""
 "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\""
 ">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."
 msgstr ""
-"Chọn <span class=\"ui\"> Tính hợp lệ </span> từ menu <span class=\"ui\"> Dữ "
-"liệu </span>. Hộp thoại <span class=\"ui\"> Tính hợp lệ </span> mở ra."
+"Chọn <span class=\"ui\">Tính hợp lệ </span> từ menu <span class=\"ui\">Dữ "
+"liệu </span>. Hộp thoại <span class=\"ui\">Tính hợp lệ </span> mở ra."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:430-11
-#, fuzzy
 msgid ""
 "Select the validity criterion in the <span class=\"ui\">Allow</span> drop-"
 "box list. Depending on the criterion, more options shows. Fill the required "
 "data."
 msgstr ""
-"Chọn tiêu chí hợp lệ trong danh sách thả xuống <span class=\"ui\"> Cho phép "
-"</span>. Tùy thuộc vào tiêu chí, nhiều tùy chọn hiển thị hơn. Điền các dữ "
-"liệu cần thiết."
+"Chọn tiêu chí hợp lệ trong danh sách thả xuống <span class=\"ui\">Cho phép </"
+"span>. Tùy thuộc vào tiêu chí, nhiều tùy chọn hiển thị hơn. Điền các dữ liệu "
+"cần thiết."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:432-9
-#, fuzzy
 msgid ""
 "Use the <span class=\"ui\">Input Help</span> and <span class=\"ui\">Error "
 "Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\""
 ">OK</span> to close the dialog."
 msgstr ""
-"Sử dụng các tab <span class=\"ui\"> Nhập trợ giúp  </span> và <span class="
-"\"ui\"> Cảnh báo lỗi </span> để nâng cao khả năng tương tác của người dùng. "
-"Nhấp vào <span class=\"ui\"> OK </span> để đóng hộp thoại."
+"Sử dụng các tab <span class=\"ui\">Nhập trợ giúp  </span> và <span class=\"ui"
+"\"> Cảnh báo lỗi </span> để nâng cao khả năng tương tác của người dùng. Nhấp "
+"vào <span class=\"ui\"> OK </span> để đóng hộp thoại."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:435-11
-#, fuzzy
 msgid ""
 "To remove the validity of the cell, open the dialog and set the <span class="
 "\"ui\">Allow</span> list to “All values”."
 msgstr ""
 "Để loại bỏ tính hợp lệ của ô, hãy mở hộp thoại và đặt danh sách <span class="
-"\"ui\"> Cho phép </span> thành “Tất cả các giá trị”."
+"\"ui\">Cho phép </span> thành “Tất cả các giá trị”."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:437-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
 "comment per cell. When you select <span class=\"ui\">Insert comment</span>, "
@@ -2095,14 +1910,13 @@ msgid ""
 "dot shows on the top right corner of the cell when it has a comment. Hover "
 "the mouse on the cell to display comments."
 msgstr ""
-"<span class=\"def\"> Nhận xét: </span> Trong bảng tính, bạn có thể chèn một "
+"<span class=\"def\">Nhận xét: </span> Trong bảng tính, bạn có thể chèn một "
 "nhận xét vào mỗi ô. Khi bạn chọn <span class=\"ui\"> Chèn nhận xét </span>, "
 "một cửa sổ bật lên sẽ xuất hiện cho phép bạn viết nội dung cho nhận xét. Một "
 "chấm màu đỏ hiển thị ở góc trên cùng bên phải của ô khi nó có nhận xét. Di "
 "chuột vào ô để hiển thị nhận xét."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:439-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Conditional formatting:</span> <span class=\""
 "productname\">%productName</span> adds symbols to each cell of a range based "
@@ -2110,14 +1924,13 @@ msgid ""
 "Conditional Formatting</span> icon on the toolbar. Select the symbol set to "
 "apply on the range."
 msgstr ""
-"<span class=\"def\"> Định dạng có điều kiện: </span> <span class="
-"\"productname\">% productName </span> thêm ký hiệu vào mỗi ô của một dải ô "
-"dựa trên điều kiện ô. Chọn phạm vi ô và nhấp vào biểu tượng <span class=\"ui"
-"\"> Định dạng có điều kiện </span> trên thanh công cụ. Chọn bộ ký hiệu để áp "
-"dụng trên phạm vi."
+"<span class=\"def\">Định dạng có điều kiện:</span> <span class=\"productname"
+"\">%productName </span> thêm ký hiệu vào mỗi ô của một dải ô dựa trên điều "
+"kiện ô. Chọn phạm vi ô và nhấp vào biểu tượng <span class=\"ui\">Định dạng "
+"có điều kiện</span> trên thanh công cụ. Chọn bộ ký hiệu để áp dụng trên phạm "
+"vi."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:447-5
-#, fuzzy
 msgid ""
 "<span class=\"productname\">%productName</span> edits text documents in the "
 "same way you edit a desktop document. It provides a What You See Is What You "
@@ -2136,7 +1949,6 @@ msgstr ""
 "dụng bàn phím, menu và thanh công cụ để tương tác với tài liệu của bạn."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:450-5
-#, fuzzy
 msgid ""
 "Context menus are available on clicking the right mouse button. The commands "
 "available in the context menu are related - not extensively - to the "
@@ -2147,12 +1959,10 @@ msgstr ""
 "liệu"
 
 #: html/loleaflet-help.html%2Bdiv.div.h3:452-5
-#, fuzzy
 msgid "Formatting text"
 msgstr "Định dạng văn bản"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:453-5
-#, fuzzy
 msgid ""
 "<span class=\"productname\">%productName</span> supports modern techniques "
 "for paragraph formatting through styles. A style is a set of text properties "
@@ -2163,17 +1973,16 @@ msgid ""
 "changes formatting as well, simplifying the effort of formatting many "
 "paragraph individually."
 msgstr ""
-"<span class=\"productname\">%productName </span> hỗ trợ các kỹ thuật hiện "
-"đại để định dạng đoạn văn thông qua các kiểu. Kiểu là một tập hợp các thuộc "
-"tính văn bản (phông chữ, màu sắc, nền và nhiều đặc tính khác) được gắn nhãn "
-"với tên, tên kiểu. Sử dụng style để áp dụng cùng một tập hợp các thuộc tính "
-"cho nhiều đoạn văn trong tài liệu và tạo ra một cái nhìn thống nhất, chuyên "
+"<span class=\"productname\">%productName</span> hỗ trợ các kỹ thuật hiện đại "
+"để định dạng đoạn văn thông qua các kiểu. Kiểu là một tập hợp các thuộc tính "
+"văn bản (phông chữ, màu sắc, nền và nhiều đặc tính khác) được gắn nhãn với "
+"tên, tên kiểu. Sử dụng style để áp dụng cùng một tập hợp các thuộc tính cho "
+"nhiều đoạn văn trong tài liệu và tạo ra một cái nhìn thống nhất, chuyên "
 "nghiệp. Ngoài ra, nếu bạn thay đổi một trong các thuộc tính định dạng kiểu, "
 "tất cả các đoạn có cùng kiểu cũng sẽ thay đổi định dạng, giúp đơn giản hóa "
 "nỗ lực định dạng nhiều đoạn riêng lẻ."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:454-5
-#, fuzzy
 msgid ""
 "In contrast, direct formatting applies formatting to selected excerpts of "
 "the document contents. On a long document, direct formatting must be applied "
@@ -2186,37 +1995,33 @@ msgstr ""
 "thành một nhiệm vụ dài, dễ xảy ra lỗi và chậm trễ."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:455-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Direct formatting:</span> You can format text document "
 "objects by formatting directly from the menus, toolbar or context menus. "
 "Direct formatting applies only to the current object selected."
 msgstr ""
-"<span class=\"def\"> Định dạng trực tiếp: </span> Bạn có thể định dạng các "
+"<span class=\"def\">Định dạng trực tiếp: </span> Bạn có thể định dạng các "
 "đối tượng tài liệu văn bản bằng cách định dạng trực tiếp từ menu, thanh công "
 "cụ hoặc menu ngữ cảnh. Định dạng trực tiếp chỉ áp dụng cho đối tượng hiện "
 "tại được chọn."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:456-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Style formatting:</span> <span class=\"productname\""
 ">%productName</span> supports paragraph styles. You can apply an existing "
 "paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
-"<span class=\"def\"> Định dạng kiểu: </span> <span class=\"productname\""
+"<span class=\"def\">Định dạng kiểu:</span> <span class=\"productname\""
 ">%productName </span> hỗ trợ kiểu đoạn văn. Bạn có thể áp dụng một kiểu đoạn "
 "văn hiện có cho một đoạn văn. Chọn menu <span class=\"ui\"> Chỉnh sửa </"
 "span> → <span class=\"ui\"> Chỉnh sửa kiểu </span> để thay đổi kiểu."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:460-5
-#, fuzzy
 msgid "Handling Tables"
 msgstr "Xử lý bảng"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:461-5
-#, fuzzy
 msgid ""
 "Insert tables with proper icon in the toolbar. Select the initial number of "
 "rows and columns. Add rows and columns with the cell context menu. Merge "
@@ -2229,23 +2034,20 @@ msgstr ""
 " dung bảng\"."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:463-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Formatting cells:</span> Click in the cell or range of "
 "cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\""
 ">Properties</span>. Fine tune the table with the properties dialog."
 msgstr ""
-"<span class=\"def\"> Định dạng ô: </span> Nhấp vào ô hoặc dải ô và chọn menu "
-"<span class=\"ui\"> Bảng </span> → <span class=\"ui\"> Thuộc tính </span>. "
-"Tinh chỉnh bảng với hộp thoại thuộc tính."
+"<span class=\"def\">Định dạng ô:</span> Nhấp vào ô hoặc dải ô và chọn menu "
+"<span class=\"ui\">Bảng</span> → <span class=\"ui\">Thuộc tính</span>. Tinh "
+"chỉnh bảng với hộp thoại thuộc tính."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:464-5
-#, fuzzy
 msgid "Track changes"
 msgstr "Theo dõi các thay đổi"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:465-5
-#, fuzzy
 msgid ""
 "When you turn on Track Changes, <span class=\"productname\""
 ">%productName</span> marks up new changes made to the document. Select this "
@@ -2256,7 +2058,6 @@ msgstr ""
 "tùy chọn này để tắt."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:467-5
-#, fuzzy
 msgid ""
 "Changes made by different people are shown in different colors and each "
 "tracked change can be accepted or rejected, using the box the appears on the "
@@ -2267,27 +2068,24 @@ msgstr ""
 "sử dụng hộp xuất hiện ở bên phải. Bạn cũng có thể thêm một bình luận ở đó."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:468-5
-#, fuzzy
 msgid "Other advanced features"
 msgstr "Các tính năng nâng cao khác"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:469-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Comments:</span> Comments are inserted in the text and "
 "displayed on the right side of the screen."
 msgstr ""
-"<span class=\"def\"> Nhận xét: </span> Nhận xét được chèn vào văn bản và "
-"hiển thị ở bên phải màn hình."
+"<span class=\"def\">Nhận xét:</span> Nhận xét được chèn vào văn bản và hiển "
+"thị ở bên phải màn hình."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:470-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Formatting marks:</span> Paragraph, page and unbreakable "
 "spaces are shown as marks to assisting text alignment, editing and "
 "formatting."
 msgstr ""
-"<span class=\"def\"> Dấu định dạng: </span> Đoạn văn, trang và khoảng trắng "
+"<span class=\"def\">Dấu định dạng:</span> Đoạn văn, trang và khoảng trắng "
 "không thể ngắt được hiển thị dưới dạng dấu để hỗ trợ căn chỉnh, chỉnh sửa và "
 "định dạng văn bản."
 
