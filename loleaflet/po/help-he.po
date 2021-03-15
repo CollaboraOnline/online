@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-02-09 10:49+0200\n"
-"PO-Revision-Date: 2021-02-14 21:50+0000\n"
+"PO-Revision-Date: 2021-03-14 16:35+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "help/he/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 4.5-dev\n"
+"X-Generator: Weblate 4.5.2-dev\n"
 "X-Pootle-Path: /he/libo_online/loleaflet-help-he.po\n"
 "X-Pootle-Revision: 3930691\n"
 
@@ -1055,19 +1055,16 @@ msgid "Select all in slide"
 msgstr "לבחור הכול בשקופית"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:260-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
-msgstr "קיצורי מקשים בשקופית / עמוד ציור"
+msgstr "קיצורי מקשים בעמוד ציור"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
-#, fuzzy
 msgid "Move to next text object on drawing page"
-msgstr "לעבור לפריט הטקסט הבא בשקופית / עמוד ציור"
+msgstr "לעבור לפריט הטקסט הבא בעמוד ציור"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:266-18
-#, fuzzy
 msgid "Select all in drawing page"
-msgstr "לבחור הכול בשקופית / עמוד ציור"
+msgstr "לבחור הכול בעמוד ציור"
 
 #: html/loleaflet-help.html%2Bdiv.h1:271-5
 msgid "<span class=\"productname\">%productName</span> Help"
@@ -1200,12 +1197,16 @@ msgid ""
 "the assigned color. Note: you will see your cursor as black, blinking "
 "cursor, although others will see you with a different color."
 msgstr ""
+"לכל משתמש מוקצה צבע. הסמן של כל משתמש יופיע בצבע המוקצה. לתשומת לבך: הסמן "
+"שלך יהיה בשחור ויהבהב, לעומת אחרים שיופיעו בצבע אחר."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:313-11
 msgid ""
 "You can jump to the cursor of a user by clicking on the name (or avatar) of "
 "the user. It is possible to follow the editor."
 msgstr ""
+"ניתן לקפוץ לסמנים של שאר המשתמשים בלחיצה על השם (או התמונה הייצוגית) של "
+"המשתמש. אפשר לעקוב אחר מי שעורך כרגע."
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:314-11
 msgid ""
@@ -1220,12 +1221,17 @@ msgid ""
 "including small screens found in mobile devices. The interface is composed "
 "of:"
 msgstr ""
+"<span class=\"productname\">%productName</span> משתמש במשאבי דפדפנים "
+"מודרניים כדי לסגל את מנשק המשתמש לגודל שטח התצוגה לרבות צגים קטנים כמו "
+"במכשירים ניידים. המנשק מורכב מהרכיבים:"
 
 #: html/loleaflet-help.html%2Bdiv.p:319-5
 msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
 msgstr ""
+"<span class=\"def\">אזור המסמך:</span> שטח היישום שמציג את תכני המסמך, בין "
+"אם אלו גיליונות, מצגות או מסמכי טקסט."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:320-5
 msgid ""
@@ -1236,12 +1242,19 @@ msgid ""
 "Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold."
 "svg\"> icon to show the menu."
 msgstr ""
+"<span class=\"def\">סרגל התפריטים:</span> התפריט הראשי מוצב למעלה וכולל "
+"בתוכו מגוון אפשרויות, פקודות להדפסה, עריכה, צפייה ושלל פקודות מתקדמות. ניתן "
+"להסתיר את סרגל התפריטים בלחיצה על הסמל <img style=\"height:0.6cm;width:0.6cm;"
+"\" src=\"images/fold.svg\"> בפינה השמאלית הרחוקה. לחיצה על הסמל <img style="
+"\"height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> תציג את התפריט."
 
 #: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid ""
 "<span class=\"def\">Context menus:</span> On clicking with the right mouse "
 "button, a menu appears with commands associated with the underlying object."
 msgstr ""
+"<span class=\"def\">תפריטי הקשר:</span> לחיצה על הכפתור הימני בעכבר מעלה "
+"תפריט עם פקודות שקשורות לפריט עליו לחצת."
 
 #: html/loleaflet-help.html%2Bdiv.p:322-5
 msgid ""
@@ -1249,12 +1262,17 @@ msgid ""
 "options for daily editing. Toolbar buttons are dynamic, meaning that their "
 "state (on or off) depends on different factors."
 msgstr ""
+"<span class=\"def\">סרגל הכלים:</span> סרגל הכלים מכיל את האפשרויות הנפוצות "
+"ביותר לעריכה יומיומית. כפתורי סרגל הכלים הם דינמיים, כלומר שהמצב שלהם (כבוי "
+"או פעיל) תלוי במגוון גורמים."
 
 #: html/loleaflet-help.html%2Bdiv.p:323-5
 msgid ""
 "<span class=\"def\">The status bar:</span> The status bar is shown in the "
 "bottom, and contains several useful options and features."
 msgstr ""
+"<span class=\"def\">סרגל המצב:</span> סרגל המצב מופיע בתחתית ומכיל מגוון "
+"אפשרויות ויכולות שימושיות."
 
 #: html/loleaflet-help.html%2Bdiv.p:325-5
 msgid ""

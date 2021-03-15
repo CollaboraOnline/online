@@ -17,4 +17,5 @@
     <string name="view_only">צפייה בלבד</string>
     <string name="restarting">מופעל מחדש…</string>
     <string name="file_chromeos_read_only">אי אפשר לשמור את הקובץ הזה למיקום הזה, הוא ייפתח לקריאה בלבד. יש להעביר אותו לקובצי נגינה לגישת קריאה/כתיבה מלאה.</string>
+    <string name="cant_open_the_document">לא ניתן לפתוח את המסמך</string>
 </resources>
