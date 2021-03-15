@@ -18,4 +18,5 @@
     <string name="edit_copy">Edita\'n una còpia</string>
     <string name="view_only">Només de visualització</string>
     <string name="restarting">S\'està reiniciant…</string>
+    <string name="cant_open_the_document">No s\'ha pogut obrir el document</string>
 </resources>

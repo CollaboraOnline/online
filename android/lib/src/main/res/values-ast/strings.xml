@@ -12,4 +12,5 @@
     <string name="restarting">Reaniciando…</string>
     <string name="rate_our_app_title">¡Gracies por usar %1$s!</string>
     <string name="cannot_open_file_chooser">Nun se pue abrir el seleutor de ficheros</string>
+    <string name="cant_open_the_document">Nun pudo abrise\'l documentu</string>
 </resources>

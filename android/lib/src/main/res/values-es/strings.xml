@@ -19,4 +19,5 @@
     <string name="edit_copy">Editar copia</string>
     <string name="view_only">Solo para visualización</string>
     <string name="restarting">Reiniciando…</string>
+    <string name="cant_open_the_document">No se pudo abrir el documento</string>
 </resources>
