@@ -18,4 +18,5 @@
     <string name="edit_copy">Másolat szerkesztése</string>
     <string name="view_only">Csak olvasás</string>
     <string name="restarting">Újraindítás...</string>
+    <string name="cant_open_the_document">Nem sikerült megnyitni a dokumentumot</string>
 </resources>
