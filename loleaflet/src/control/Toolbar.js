@@ -448,7 +448,7 @@ L.Map.include({
 				//translatable screenshots
 				var supportedLanguage = ['fr', 'it', 'de', 'es', 'pt-BR'];
 				var currentLanguage = String.locale;
-				if (supportedLanguage.includes(currentLanguage)) {
+				if (supportedLanguage.indexOf(currentLanguage) >= 0) {
 					translatableContent = $($vexContent.find('.screenshot')).find('img');
 					for (i = 0, max = translatableContent.length; i < max; i++) {
 						translatableContent[i].src = translatableContent[i].src.replace('/en/', '/'+currentLanguage+'/');

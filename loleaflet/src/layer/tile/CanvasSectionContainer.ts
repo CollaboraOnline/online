@@ -265,6 +265,13 @@ class CanvasSectionContainer {
 		return this.clearColor;
 	}
 
+	/**
+	 * IE11 doesn't support Array.includes, use replacement
+	*/
+	private arrayIncludes<T> (array: Array<T>, element: T) {
+		return array.indexOf(element) >= 0;
+	};
+
 	private clearMousePositions () {
 		this.positionOnClick = this.positionOnDoubleClick = this.positionOnMouseDown = this.positionOnMouseUp = this.dragDistance = this.sectionOnMouseDown = null;
 		this.touchCenter = null;
@@ -343,14 +350,14 @@ class CanvasSectionContainer {
 		if (section.boundToSection) {
 			var tempSection = this.getSectionWithName(section.boundToSection);
 			if (tempSection && tempSection.isLocated) {
-				if (!sectionList.includes(tempSection))
+				if (!this.arrayIncludes(sectionList, tempSection))
 					tempSectionList.push(tempSection);
 			}
 		}
 
 		for (var i: number = 0; i < this.sections.length; i++) {
 			if (this.sections[i].isLocated && this.sections[i].boundToSection === section.name) {
-				if (!sectionList.includes(this.sections[i]))
+				if (!this.arrayIncludes(sectionList, this.sections[i]))
 					tempSectionList.push(this.sections[i]);
 			}
 		}
@@ -1039,23 +1046,23 @@ class CanvasSectionContainer {
 	}
 
 	private expandSection(section: CanvasSectionObject) {
-		if (section.expand.includes('left')) {
+		if (this.arrayIncludes(section.expand, 'left')) {
 			var initialX = section.myTopLeft[0];
 			section.myTopLeft[0] = this.hitLeft(section);
 			section.size[0] = initialX - section.myTopLeft[0];
 		}
 
-		if (section.expand.includes('right')) {
+		if (this.arrayIncludes(section.expand, 'right')) {
 			section.size[0] = this.hitRight(section) - section.myTopLeft[0];
 		}
 
-		if (section.expand.includes('top')) {
+		if (this.arrayIncludes(section.expand, 'top')) {
 			var initialY = section.myTopLeft[1];
 			section.myTopLeft[1] = this.hitTop(section);
 			section.size[1] = initialY - section.myTopLeft[1];
 		}
 
-		if (section.expand.includes('bottom')) {
+		if (this.arrayIncludes(section.expand, 'bottom')) {
 			section.size[1] = this.hitBottom(section) - section.myTopLeft[1];
 		}
 	}
@@ -1209,7 +1216,7 @@ class CanvasSectionContainer {
 				console.error('There is a section with the same name. Use doesSectionExist for existancy checks.');
 				return false;
 			}
-			else if (['top', 'left', 'bottom', 'right'].includes(options.name.trim())) {
+			else if (this.arrayIncludes(['top', 'left', 'bottom', 'right'], options.name.trim())) {
 				console.error('"top", "left", "bottom" and "right" words are reserved. Choose another name for the section.');
 				return false;
 			}
