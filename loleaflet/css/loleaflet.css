@@ -18,7 +18,8 @@
 	--orange1-txt-primary-color: 163, 62, 3;
 
 	--gray-light-txt--color: #696969;
-	--gray-bg-color: #EFEFEF;
+	--gray-light-bg-color: #EFEFEF;
+	--gray-color: #b6b6b6;
 }
 /* clip technique: hide visually but keep it available to screen readers */
 .visuallyhidden {
@@ -32,7 +33,7 @@
 	width: 1px;
 }
 #document-container {
-	border-top: 1px solid #B6B6B6;
+	border-top: 1px solid var(--gray-color);
 	background: #DFDFDF;
 	position: absolute;
 	top: 77px;
@@ -166,7 +167,7 @@ body {
 	left: 0px;
 	bottom: 66px;
 	max-width: 218px;
-	border-top: 1px solid #b6b6b6;
+	border-top: 1px solid var(--gray-color);
 	display: block;
 }
 
@@ -184,8 +185,8 @@ body {
 	position: absolute;
 	top: 77px;
 	right: 0px;
-	border-top: 1px solid #b6b6b6;
-	border-left: 1px solid #b6b6b6;
+	border-top: 1px solid var(--gray-color);
+	border-left: 1px solid var(--gray-color);
 	overflow: hidden;
 	z-index: 990;
 }
@@ -346,7 +347,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	font-family: var(--loleaflet-font) !important;
 	font-size: 13px;
 	text-align: left;
-	background-color: var(--gray-bg-color);
+	background-color: var(--gray-light-bg-color);
 	box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
 	color: #222;
 	border: none;

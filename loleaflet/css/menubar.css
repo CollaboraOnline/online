@@ -70,7 +70,7 @@
 	position: relative;
 }
 .main-nav.hasnotebookbar:not(.readonly) {
-	background: var(--gray-bg-color);
+	background: var(--gray-light-bg-color);
 	margin: 0px;
 }
 
@@ -170,7 +170,7 @@
 	overflow: hidden;
 	padding-top: 0;
 	padding-bottom: 0;
-	background-color: var(--gray-bg-color);
+	background-color: var(--gray-light-bg-color);
 }
 /* lo-menu customizations end */
 

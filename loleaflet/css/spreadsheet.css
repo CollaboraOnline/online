@@ -1,5 +1,5 @@
 #document-container.spreadsheet-document {
-	border-top: 1px solid #B6B6B6;
+	border-top: 1px solid var(--gray-color);
 	top: 137px;
 	left: 50px;
 	bottom: 68px;
@@ -25,7 +25,7 @@
 	overflow: hidden;
 	white-space: nowrap;
 
-	background-color: var(--gray-bg-color);
+	background-color: var(--gray-light-bg-color);
 }
 
 .spreadsheet-tab-scroll {
