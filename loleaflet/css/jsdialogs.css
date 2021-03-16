@@ -330,12 +330,19 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .ui-iconview {
 	overflow: scroll;
 	display: inline-flex;
+	display: -ms-inline-flexbox;
 	flex-wrap: wrap;
 	justify-content: space-between;
 }
 
 .ui-iconview.mobile-wizard {
 	justify-content: space-around;
+}
+
+@supports (display: flex) {
+	.ui-iconview-entry {
+		flex: 1;
+	}
 }
 
 .ui-iconview-entry {
@@ -346,7 +353,6 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	align-self: center;
 	border: 2px solid transparent;
 	border-radius: 3px;
-	flex: 1;
 }
 
 .ui-iconview-entry.selected {
