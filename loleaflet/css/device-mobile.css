@@ -778,3 +778,62 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 .context-menu-list .context-menu-item:nth-child(4) span {
 	background: url('images/lc_ok.svg') no-repeat left center /24px;
 }
+
+/* Related to jsdialogs.css */
+/*   - macros */
+#mobile-wizard-content #MacroWarnMedium p {
+	color: var(--gray-light-txt--color);
+}
+#mobile-wizard-content #MacroWarnMedium p:first-child {
+	color: #333;
+}
+#mobile-wizard-content #MacroWarnMedium p:first-child::after {
+	content: ' ';
+	background: url('images/lc_runmacro.svg') no-repeat left -2px / 24px;
+	width: 24px;
+	height: 24px;
+	float: left;
+	padding-left: 8px;
+}
+#mobile-wizard-content #MacroSelectorDialog #helpmacro {
+	margin: 4%;
+	padding: 5px;
+	width: auto;
+	box-sizing: border-box;
+	color: var(--gray-light-txt--color) !important;
+	border-radius: 4px;
+	border: 1px solid var(--gray-light-bg-color);
+	font-family: var(--mobile-font);
+	font-size: 16px;
+	font-weight: normal;
+	/*hide for now*/
+	display: none;
+}
+#mobile-wizard-content #MacroSelectorDialog #categories,
+#mobile-wizard-content #MacroSelectorDialog #commands {
+	border-radius: 4px;
+	height: auto;
+	border-color: var(--gray-light-bg-color);
+}
+#mobile-wizard-content #MacroSelectorDialog #categories > .ui-treeview-body > .mobile-wizard li {
+	border-bottom: 1px solid var(--gray-light-bg-color);
+}
+#mobile-wizard-content #MacroSelectorDialog #commands {
+	margin-bottom: 6px;
+}
+#mobile-wizard-content #MacroSelectorDialog #commands.selected {
+	border-color: #0b87e7;
+}
+#mobile-wizard-content #MacroSelectorDialog #commands > .mobile-wizard.ui-treeview-body {
+	min-height: auto;
+}
+#mobile-wizard-content #MacroSelectorDialog #commands > .mobile-wizard.ui-treeview-body::after {
+	content: '…';
+	width: 22px;
+	height: 22px;
+	line-height: 11px;
+	display: block;
+	padding-left: 8px;
+	color: var(--gray-color);
+	font-size: 22px;
+}
