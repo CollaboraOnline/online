@@ -174,6 +174,8 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._initialDistY     = 0;
 		this._rotationStart    = null;
 		this._rotationOriginPt = null;
+		this._handlersVisible  = true;
+		this._handlerPointsConverted = false;
 
 		// preview and transform matrix
 		this._matrix          = new L.Matrix(1, 0, 0, 1, 0, 0);
@@ -242,6 +244,9 @@ L.Handler.PathTransform = L.Handler.extend({
 	},
 
 	_onHandlerStatus: function(e) {
+		if ((e.hidden && this._handlersVisible === false)
+			|| (!e.hidden && this._handlersVisible))
+			return;
 		if (e.hidden) {
 			this._hideHandlers();
 			this._path.off('dragstart', this._onDragStart, this);
@@ -603,11 +608,13 @@ L.Handler.PathTransform = L.Handler.extend({
 			this._handlers = [];
 			var points = this._getPoints();
 			for (var i = 0; i < points.length; i++) {
-				points[i].point = map._docLayer._convertCalcTileTwips(points[i].point);
+				if (!this._handlerPointsConverted)
+					points[i].point = map._docLayer._convertCalcTileTwips(points[i].point);
 				this._handlers.push(
 					this._createHandler(this._map._docLayer._twipsToLatLng(points[i].point, this._map.getZoom()), i * 2, i, this._onScaleStart)
 						.addTo(this._handlersGroup));
 			}
+			this._handlerPointsConverted = true;
 		}
 
 		if (this.options.handles['custom'] !== '') {
@@ -1196,11 +1203,13 @@ L.Handler.PathTransform = L.Handler.extend({
 	_hideHandlers: function() {
 		if (this._handlersGroup)
 			this._map.removeLayer(this._handlersGroup);
+		this._handlersVisible = false;
 	},
 
 	_showHandlers: function() {
 		this._map.addLayer(this._handlersGroup);
 		this._updateHandlers();
+		this._handlersVisible = true;
 	},
 
 	/**
