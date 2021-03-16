@@ -108,25 +108,46 @@ void HttpWhiteBoxTests::testRequestParserValidComplete()
 void HttpWhiteBoxTests::testRequestParserValidIncomplete()
 {
     const std::string expVerb = "GET";
-    const std::string expUrl = "/path/to/data";
+    const std::string expUrl = "/long/path/to/data";
     const std::string expVersion = "HTTP/1.1";
+    const std::string expHost = "localhost.com";
     const std::string data
-        = expVerb + ' ' + expUrl + ' ' + expVersion + "\r\n" + "Host: localhost.com\r\n\r\n";
+        = expVerb + ' ' + expUrl + ' ' + expVersion + "\r\n" + "Host: " + expHost + "\r\n\r\n";
 
     http::Request req;
 
     // Pass incomplete data to the reader.
-    for (std::size_t i = 0; i < data.size(); ++i)
+    for (std::size_t i = 0; i < 33; ++i)
     {
-        // Should return 0 to signify data is incomplete.
-        LOK_ASSERT_EQUAL_MESSAGE("i = " + std::to_string(i), 0L, req.readData(data.c_str(), i));
+        // Should return 0 to signify that data is incomplete.
+        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, 0L,
+                                 req.readData(data.c_str(), i));
     }
 
-    // Now parse the whole thing.
-    LOK_ASSERT(req.readData(data.c_str(), data.size()) > 0);
+    // Offset of the end of first line.
+    const int64_t off = 33;
+
+    // Parse the first line.
+    LOK_ASSERT_EQUAL_MESSAGE("Parsing the first line failed.", off,
+                             req.readData(data.c_str(), off));
+
+    // Skip the first line and parse the header.
+    for (std::size_t i = off; i < data.size(); ++i)
+    {
+        // Should return 0 to signify that data is incomplete.
+        LOK_ASSERT_EQUAL_MESSAGE("i = " << i << " of " << data.size() - 1, 0L,
+                                 req.readData(data.c_str() + off, i - off));
+    }
+
+    // Parse the header.
+    LOK_ASSERT_EQUAL_MESSAGE("Parsing the header failed.",
+                             static_cast<int64_t>(expHost.size() + 10),
+                             req.readData(data.c_str() + off, data.size() - off));
+
     LOK_ASSERT_EQUAL(expVerb, req.getVerb());
     LOK_ASSERT_EQUAL(expUrl, req.getUrl());
     LOK_ASSERT_EQUAL(expVersion, req.getVersion());
+    LOK_ASSERT_EQUAL(expHost, req.header().get("Host"));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HttpWhiteBoxTests);
