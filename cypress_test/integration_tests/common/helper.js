@@ -278,12 +278,13 @@ function waitForInterferingUser() {
 // subsequentLoad - whether we load a test document for the first time in the
 //                  test case or not. It's important for nextcloud because we need to sign in
 //                  with the username + password only for the first time.
-function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
+function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad, hasInteractionBeforeLoad) {
 	cy.log('Loading test document - start.');
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
 	cy.log('Param - noFileCopy: ' + noFileCopy);
-	cy.log('Param - subsequentLoad: ' + noFileCopy);
+	cy.log('Param - subsequentLoad: ' + subsequentLoad);
+	cy.log('Param - hasInteractionBeforeLoad: ' + hasInteractionBeforeLoad);
 
 	// We set the mobile screen size here. We could use any other phone type here.
 	doIfOnMobile(function() {
@@ -296,6 +297,14 @@ function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 		loadTestDocNoIntegration(fileName, subFolder, noFileCopy);
 	}
 
+	// When dialog appears before document load (eg. macro warning, csv import options)
+	if (hasInteractionBeforeLoad === true)
+		return;
+
+	checkIfDocIsLoaded();
+}
+
+function checkIfDocIsLoaded() {
 	// Wait for the document to fully load
 	cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
@@ -444,8 +453,8 @@ function matchClipboardText(regexp) {
 	});
 }
 
-function beforeAll(fileName, subFolder, noFileCopy, subsequentLoad) {
-	loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad);
+function beforeAll(fileName, subFolder, noFileCopy, subsequentLoad, hasInteractionBeforeLoad) {
+	loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad, hasInteractionBeforeLoad);
 }
 
 // This method is intended to call after each test case.
@@ -1119,6 +1128,7 @@ function typeIntoInputField(selector, text, clearBefore = true, prop = true)
 }
 
 module.exports.loadTestDoc = loadTestDoc;
+module.exports.checkIfDocIsLoaded = checkIfDocIsLoaded;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
 module.exports.assertHaveKeyboardInput = assertHaveKeyboardInput;
