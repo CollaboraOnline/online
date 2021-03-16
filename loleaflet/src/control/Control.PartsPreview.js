@@ -629,7 +629,7 @@ L.Control.PartsPreview = L.Control.extend({
 		var part = this.partsPreview._findClickedPart(e.target.parentNode);
 		if (part !== null) {
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
-			if (this.partsPreview._map._docLayer && !this.partsPreview._map._docLayer._selectedParts.includes(partId))
+			if (this.partsPreview._map._docLayer && !this.partsPreview._map._docLayer._selectedParts.indexOf(partId) >= 0)
 			{
 				this.partsPreview._map.setPart(partId);
 				this.partsPreview._map.selectPart(partId, 1, false); // And select.
