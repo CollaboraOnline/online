@@ -3577,33 +3577,35 @@ L.TileLayer = L.GridLayer.extend({
 
 	// This is really just called on zoomend
 	_fitWidthZoom: function (e, maxZoom) {
+		if (this.isCalc())
+			return;
+
 		if (isNaN(this._docWidthTwips)) { return; }
 		var oldSize = e ? e.oldSize : this._map.getSize();
 		var newSize = e ? e.newSize : this._map.getSize();
 
-		if (!this.isImpress() && newSize.x - oldSize.x === 0) { return; }
+		newSize.x *= window.devicePixelRatio;
+		newSize.y *= window.devicePixelRatio;
+		oldSize.x *= window.devicePixelRatio;
+		oldSize.y *= window.devicePixelRatio;
 
-		var widthTwips = newSize.x * this._map.options.tileWidthTwips / this._tileSize;
+		if (this.isWriter() && newSize.x - oldSize.x === 0) { return; }
+
+		var widthTwips = newSize.x * this._tileWidthTwips / this._tileSize;
 		var ratio = widthTwips / this._docWidthTwips;
 
-		maxZoom = maxZoom ? maxZoom : this._map.options.zoom;
-		// 'fit width zoom' has no use in spreadsheets, ignore it there
-		if (!this.isCalc()) {
-			var crsScale = this._map.options.crs.scale(1);
-			var zoom = 10 + Math.floor(Math.log(ratio) / Math.log(crsScale));
+		maxZoom = maxZoom ? maxZoom : 10;
+		var zoom = this._map.getScaleZoom(ratio, 10);
 
-			zoom = Math.min(maxZoom, Math.max(1, zoom));
-			if (this._docWidthTwips * this._map.getZoomScale(zoom, 10) < widthTwips) {
-				// Not clear why we wanted to zoom in the past.
-				// This resets the view & scroll area and does a 'panTo'
-				// to keep the cursor in view.
-				// But of course, zoom to fit the first time.
-				if (this._firstFitDone)
-					zoom = this._map._zoom;
-				this._firstFitDone = true;
-				this._map.setZoom(zoom, {animate: false});
-			}
-		}
+		zoom = Math.min(maxZoom, Math.max(0.1, zoom));
+		// Not clear why we wanted to zoom in the past.
+		// This resets the view & scroll area and does a 'panTo'
+		// to keep the cursor in view.
+		// But of course, zoom to fit the first time.
+		if (this._firstFitDone)
+			zoom = this._map._zoom;
+		this._firstFitDone = true;
+		this._map.setZoom(zoom, {animate: false});
 	},
 
 	_onCurrentPageUpdate: function () {
