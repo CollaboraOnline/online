@@ -3108,7 +3108,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 });
 
 L.Control.JSDialogBuilder.getMenuStructureForMobileWizard = function(menu, mainMenu, itemCommand) {
-	if (itemCommand.includes('sep'))
+	if (itemCommand.indexOf('sep') >= 0)
 		return null;
 
 	var itemText = '';
