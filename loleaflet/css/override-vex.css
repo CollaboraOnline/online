@@ -15,7 +15,7 @@
 	margin-right: 2px;
 	font-size: 11px;
 	border: thin solid lightgray;
-	background: var(--gray-bg-color);
+	background: var(--gray-light-bg-color);
 	color: gray;
 	box-sizing: border-box;
 	vertical-align: top;

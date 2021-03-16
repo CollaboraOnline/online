@@ -897,8 +897,8 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 	background-color: #ebf2fb;
 }
 #mobile-wizard button:disabled{
-	background-color: var(--gray-bg-color);
-	border-color: var(--gray-bg-color);
+	background-color: var(--gray-light-bg-color);
+	border-color: var(--gray-light-bg-color);
 	color: var(--gray-light-txt--color) !important;
 }
 #enablecontour + button {
@@ -1046,7 +1046,7 @@ input[type='checkbox'][disabled] {
 	flex-direction: column;
 	justify-content: center;
 	align-content: center;
-	background: var(--gray-bg-color);
+	background: var(--gray-light-bg-color);
 }
 
 #mobile-wizard .empty-comment-wizard-img {
