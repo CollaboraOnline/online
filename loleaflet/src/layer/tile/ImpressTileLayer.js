@@ -278,7 +278,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			if (this._docType === 'drawing') {
 				L.DomUtil.addClass(L.DomUtil.get('presentation-controls-wrapper'), 'drawing');
 			}
-			this._updateMaxBounds(true);
+			this._updateMaxBoundsImpress(true);
 			this._documentInfo = textMsg;
 			this._parts = command.parts;
 			this._viewId = parseInt(command.viewid);
@@ -299,12 +299,12 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
-	_updateMaxBounds: function (sizeChanged, options) {
+	_updateMaxBoundsImpress: function (sizeChanged, options) {
 		var extraSize = options ? options.extraSize : null;
 		if (!extraSize) {
 			extraSize = this._annotationManager.allocateExtraSize();
 		}
-		L.GridLayer.prototype._updateMaxBounds.call(this, sizeChanged, {panInside: false, extraSize: extraSize});
+		this._updateMaxBounds.call(this, sizeChanged, {panInside: false, extraSize: extraSize});
 	},
 
 	_createCommentStructure: function (menuStructure) {
