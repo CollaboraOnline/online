@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-09 10:49+0200\n"
+"POT-Creation-Date: 2021-03-16 12:55+0200\n"
 "PO-Revision-Date: 2021-02-11 11:50+0000\n"
 "Last-Translator: 日陰のコスモス <baffclan@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.5-dev\n"
+"X-Generator: Translate Toolkit 2.5.0\n"
 "X-Pootle-Path: /ja/libo_online/loleaflet-help-ja.po\n"
 "X-Pootle-Revision: 3446209\n"
 
@@ -1033,8 +1033,9 @@ msgid "Select objects in the reverse order in which they were created"
 msgstr "オブジェクトを、作成した逆順に選択します"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
+#, fuzzy
 msgid "Move to next text object on slide"
-msgstr ""
+msgstr "スライド/描画ページ内の次のテキストオブジェクトに移動"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"

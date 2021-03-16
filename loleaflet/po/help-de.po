@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-09 10:49+0200\n"
+"POT-Creation-Date: 2021-03-16 12:55+0200\n"
 "PO-Revision-Date: 2020-10-16 03:24+0000\n"
 "Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
@@ -1063,8 +1063,9 @@ msgstr ""
 "Auswahl von Objekten in der umgekehrten Reihenfolge der Erstellung wechseln"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
+#, fuzzy
 msgid "Move to next text object on slide"
-msgstr ""
+msgstr "Zum nächsten Textobjekt auf der Folie / Zeichenfläche wechseln"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"

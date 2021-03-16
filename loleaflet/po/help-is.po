@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-09 10:49+0200\n"
+"POT-Creation-Date: 2021-03-16 12:55+0200\n"
 "PO-Revision-Date: 2020-12-11 12:47+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
@@ -1056,8 +1056,9 @@ msgid "Select objects in the reverse order in which they were created"
 msgstr "Velur hluti á síðu í öfugri röð við þá sem þeir voru búnir til"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
+#, fuzzy
 msgid "Move to next text object on slide"
-msgstr ""
+msgstr "Fara á næsta textahlut á skyggnu / teikningu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"

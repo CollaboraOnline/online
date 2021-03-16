@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-09 10:49+0200\n"
+"POT-Creation-Date: 2021-03-16 12:55+0200\n"
 "PO-Revision-Date: 2020-10-08 12:25+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/collabora-online/"
@@ -1035,8 +1035,9 @@ msgid "Select objects in the reverse order in which they were created"
 msgstr "개체를 만든 역순으로 선택합니다."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
+#, fuzzy
 msgid "Move to next text object on slide"
-msgstr ""
+msgstr "슬라이드/드로우 페이지에서 다음 텍스트 개체로 이동"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"
