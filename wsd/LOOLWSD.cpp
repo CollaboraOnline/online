@@ -1955,7 +1955,10 @@ bool LOOLWSD::createForKit()
 
 void LOOLWSD::sendMessageToForKit(const std::string& message)
 {
-    LOOLWSD::PrisonerPoll->sendMessageToForKit(message);
+    if (LOOLWSD::PrisonerPoll)
+    {
+        LOOLWSD::PrisonerPoll->sendMessageToForKit(message);
+    }
 }
 
 #endif // !MOBILEAPP
