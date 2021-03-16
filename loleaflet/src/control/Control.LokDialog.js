@@ -1729,13 +1729,13 @@ L.Control.LokDialog = L.Control.extend({
 		var containerTop = dialogContainer.getBoundingClientRect().top + dialogContainer.ownerDocument.defaultView.pageYOffset;
 		var containerLeft = dialogContainer.getBoundingClientRect().left + dialogContainer.ownerDocument.defaultView.pageXOffset;
 		var grandParentID = dialogContainer.parentNode.id;
-		if (grandParentID.includes('sidebar-panel'))
+		if (grandParentID.indexOf('sidebar-panel') >= 0)
 		{
 			// floatingCanvas is a child window of a sidebar.
 			L.DomUtil.setStyle(floatingCanvas, 'left', (containerLeft + left) + 'px');
 			L.DomUtil.setStyle(floatingCanvas, 'top', (containerTop + top) + 'px');
 		}
-		else if (grandParentID.includes('calc-inputbar')) {
+		else if (grandParentID.indexOf('calc-inputbar') >= 0) {
 			// This is the calculator input bar.
 			L.DomUtil.setStyle(floatingCanvas, 'left', (containerLeft + left) + 'px');
 			L.DomUtil.setStyle(floatingCanvas, 'top', (containerTop + 20) + 'px');
