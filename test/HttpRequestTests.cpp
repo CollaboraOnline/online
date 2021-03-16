@@ -172,19 +172,23 @@ void HttpRequestTests::testSimpleGetSync()
 static void compare(const Poco::Net::HTTPResponse& pocoResponse, const std::string& pocoBody,
                     const http::Response& httpResponse)
 {
-    LOK_ASSERT(httpResponse.state() == http::Response::State::Complete);
+    LOK_ASSERT_EQUAL_MESSAGE("Response state", httpResponse.state(),
+                             http::Response::State::Complete);
     LOK_ASSERT(!httpResponse.statusLine().httpVersion().empty());
     LOK_ASSERT(!httpResponse.statusLine().reasonPhrase().empty());
 
-    LOK_ASSERT_EQUAL(pocoBody, httpResponse.getBody());
+    LOK_ASSERT_EQUAL_MESSAGE("Body", pocoBody, httpResponse.getBody());
 
-    LOK_ASSERT_EQUAL(static_cast<int>(pocoResponse.getStatus()),
-                     httpResponse.statusLine().statusCode());
-    LOK_ASSERT_EQUAL(pocoResponse.getReason(), httpResponse.statusLine().reasonPhrase());
+    LOK_ASSERT_EQUAL_MESSAGE("Status Code", static_cast<int>(pocoResponse.getStatus()),
+                             httpResponse.statusLine().statusCode());
+    LOK_ASSERT_EQUAL_MESSAGE("Reason Phrase", pocoResponse.getReason(),
+                             httpResponse.statusLine().reasonPhrase());
 
-    LOK_ASSERT_EQUAL(pocoResponse.hasContentLength(), httpResponse.header().hasContentLength());
+    LOK_ASSERT_EQUAL_MESSAGE("hasContentLength", pocoResponse.hasContentLength(),
+                             httpResponse.header().hasContentLength());
     if (pocoResponse.hasContentLength())
-        LOK_ASSERT_EQUAL(pocoResponse.getContentLength(), httpResponse.header().getContentLength());
+        LOK_ASSERT_EQUAL_MESSAGE("ContentLength", pocoResponse.getContentLength(),
+                                 httpResponse.header().getContentLength());
 }
 
 /// This test requests specific *reponse* codes from
