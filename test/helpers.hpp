@@ -160,8 +160,17 @@ pocoGet(const Poco::URI& uri)
         session->sendRequest(request);
         auto response = std::make_shared<Poco::Net::HTTPResponse>();
         std::istream& rs = session->receiveResponse(*response);
-        LOG_DBG("pocoGet response for [" << uri.toString() << "]: " << response->getStatus() << ' '
-                                         << response->getReason());
+
+        LOG_DBG("pocoGet response for ["
+                << uri.toString() << "]: " << response->getStatus() << ' ' << response->getReason()
+                << ", hasContentLength: " << response->hasContentLength() << ", ContentLength: "
+                // << (response->hasContentLength() ? response->getContentLength64() : -1));
+                << response->getContentLength64());
+
+        for (const auto& pair : *response)
+        {
+            LOG_TRC(pair.first << '=' << pair.second);
+        }
 
         std::string responseString;
         if (response->hasContentLength() && response->getContentLength() > 0)
