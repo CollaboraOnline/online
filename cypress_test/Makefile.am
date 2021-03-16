@@ -149,6 +149,7 @@ define start_loolwsd
 			--o:admin_console.username=admin --o:admin_console.password=admin \
 			--o:logging.file[@enable]=true --o:logging.level=trace \
 			--o:welcome.enable=false \
+			--o:security.enable_macros_execution=true \
 			--port=$(FREE_PORT) \
 			--pidfile=$(PID_FILE) \
 			--o:logging.file.property[0]=$(LOOLWSD_LOG) \
