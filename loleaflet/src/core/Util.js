@@ -270,6 +270,14 @@ if (!String.prototype.startsWith) {
 	};
 }
 
+if (!Element.prototype.remove) {
+	Element.prototype.remove = function() {
+		if (this.parentNode) {
+			this.parentNode.removeChild(this);
+		}
+	};
+}
+
 // shortcuts for most used utility functions
 L.extend = L.Util.extend;
 L.bind = L.Util.bind;
