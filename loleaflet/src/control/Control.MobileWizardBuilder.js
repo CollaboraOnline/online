@@ -511,6 +511,10 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 			}
 
 			var childObject = parent;
+			if (childData.dialogid) {
+				var dialog = L.DomUtil.createWithId('div', childData.dialogid, childObject);
+				childObject = dialog;
+			}
 
 			var handler = this._controlHandlers[childType];
 			var twoPanelsAsChildren =
