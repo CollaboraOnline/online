@@ -733,7 +733,8 @@ public:
     /// I.e. when statusLine().statusCategory() != StatusLine::StatusCodeClass::Successful.
     bool syncDownload(const Request& req, const std::string& saveToFilePath)
     {
-        LOG_TRC("syncDownload");
+        LOG_TRC("syncDownload: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
+                                 << req.getUrl());
 
         newRequest(req);
 
@@ -747,7 +748,8 @@ public:
     /// The payload body of the response, if any, can be read via getBody().
     bool syncRequest(const Request& req)
     {
-        LOG_TRC("syncRequest");
+        LOG_TRC("syncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
+                                << req.getUrl());
 
         newRequest(req);
 
@@ -756,7 +758,8 @@ public:
 
     bool asyncRequest(const Request& req, SocketPoll& poll)
     {
-        LOG_TRC("asyncRequest");
+        LOG_TRC("asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
+                                 << req.getUrl());
 
         newRequest(req);
 
