@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-09 10:49+0200\n"
+"POT-Creation-Date: 2021-03-16 12:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -836,16 +836,18 @@ msgid "Insert footnote"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-60
+#, fuzzy
 msgid "Ctrl + Alt + F"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:116-18
 msgid "Insert endnote"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:116-59
+#, fuzzy
 msgid "Ctrl + Alt + D"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
@@ -854,8 +856,9 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-59
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-59
+#, fuzzy
 msgid "Ctrl + Alt + C"
-msgstr ""
+msgstr "Ctrl + Alt + Shift + V"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:119-18
 msgid "Insert soft hyphen"
