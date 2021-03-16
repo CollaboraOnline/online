@@ -901,6 +901,11 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 	border-color: var(--gray-light-bg-color);
 	color: var(--gray-light-txt--color) !important;
 }
+#mobile-wizard button#cancel {
+	background-color: transparent;
+	border-color: var(--gray-color);
+	color: var(--gray-light-txt--color) !important;
+}
 #enablecontour + button {
 	float: right;
 	margin: 24px 0px;
