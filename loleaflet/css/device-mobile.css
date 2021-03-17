@@ -827,7 +827,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 #mobile-wizard-content #MacroSelectorDialog #commands > .mobile-wizard.ui-treeview-body {
 	min-height: auto;
 }
-#mobile-wizard-content #MacroSelectorDialog #commands > .mobile-wizard.ui-treeview-body::after {
+#mobile-wizard-content #MacroSelectorDialog #commands.empty > .mobile-wizard.ui-treeview-body::after {
 	content: '…';
 	width: 22px;
 	height: 22px;
