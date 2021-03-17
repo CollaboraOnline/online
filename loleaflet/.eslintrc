@@ -1,6 +1,7 @@
 {
-  "extends": "eslint:recommended",
+  "extends": ["plugin:compat/recommended"],
   "rules": {
+    "compat/compat": 1,
     "camelcase": 2,
     "quotes": [2, "single"],
     "no-mixed-spaces-and-tabs": [2, "smart-tabs"],
