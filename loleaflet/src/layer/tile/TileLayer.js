@@ -44,6 +44,13 @@ var CStyleData = L.Class.extend({
 
 	getFloatPropValue: function(name) { // (String) -> Number
 		return parseFloat(this.getPropValue(name));
+	},
+
+	getFloatPropWithoutUnit: function(name) { // (String) -> Number
+		var value = this.getPropValue(name);
+		if (value.indexOf('px'))
+			value = value.split('px')[0];
+		return parseFloat(value);
 	}
 });
 
@@ -92,14 +99,16 @@ var CSelections = L.Class.extend({
 		if (!this._polygon) {
 			var fillColor = this._isView ?
 				L.LOUtil.rgbToHex(this._map.getViewColor(this._viewId)) :
-				this._styleData.getPropValue('--fill-color');
+				this._styleData.getPropValue('background-color');
+			var opacity = this._styleData.getFloatPropValue('opacity');
+			var weight = this._styleData.getFloatPropWithoutUnit('border-top-width');
 			var attributes = {
 				name: this._name,
 				pointerEvents: 'none',
 				fillColor: fillColor,
-				fillOpacity: this._styleData.getPropValue('--fill-opacity'),
-				opacity: this._styleData.getFloatPropValue('--opacity'),
-				weight: Math.round(this._styleData.getIntPropValue('--weight') * this._dpiScale)
+				fillOpacity: opacity,
+				opacity: opacity,
+				weight: Math.round(weight * this._dpiScale)
 			};
 			this._polygon = new CPolygon(this._pointSet, attributes);
 			this._overlay.initPath(this._polygon);
@@ -3275,14 +3284,15 @@ L.TileLayer = L.GridLayer.extend({
 			}
 			else {
 				var cursorStyle = new CStyleData(this._cursorDataDiv);
+				var weight = cursorStyle.getFloatPropWithoutUnit('border-top-width');
 				this._cellCursorMarker = new CRectangle(
 					corePxBounds,
 					{
 						name: 'cell-cursor',
 						pointerEvents: 'none',
 						fill: false,
-						color: cursorStyle.getPropValue('--stroke-color'),
-						weight: Math.round(cursorStyle.getIntPropValue('--weight') *
+						color: cursorStyle.getPropValue('border-top-color'),
+						weight: Math.round(weight *
 							(this._painter ? this._painter._dpiScale : 1))
 					});
 				if (!this._cellCursorMarker) {
