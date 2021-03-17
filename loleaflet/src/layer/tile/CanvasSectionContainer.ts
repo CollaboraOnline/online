@@ -736,6 +736,10 @@ class CanvasSectionContainer {
 	}
 
 	private onTouchMove (e: TouchEvent) {
+		// Sometimes onTouchStart is fired for another element. In this case, we return.
+		if (this.positionOnMouseDown === null)
+			return;
+
 		this.potentialLongPress = false;
 		if (!this.multiTouch) {
 			this.mousePosition = this.convertPositionToCanvasLocale(e);
