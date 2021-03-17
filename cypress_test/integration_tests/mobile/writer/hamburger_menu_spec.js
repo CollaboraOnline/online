@@ -638,49 +638,6 @@ describe('Trigger hamburger menu options.', function() {
 		helper.imageShouldBeFullWhite(centerTile);
 	});
 
-	it('Resolved comments.', function() {
-		// Insert comment first
-		mobileHelper.openInsertionWizard();
-
-		cy.contains('.menu-entry-with-icon', 'Comment')
-			.click();
-
-		cy.get('.loleaflet-annotation-table')
-			.should('exist');
-
-		cy.get('.loleaflet-annotation-textarea')
-			.type('some text');
-
-		cy.get('.vex-dialog-button-primary')
-			.click();
-
-		cy.get('.wizard-comment-box')
-			.should('exist');
-
-		// Resolve comment
-		mobileHelper.selectAnnotationMenuItem('Resolve');
-
-		cy.get('.wizard-comment-box')
-			.should('not.exist');
-
-		// Show resolved comments
-		mobileHelper.selectHamburgerMenuItem(['View', 'Resolved Comments']);
-
-		mobileHelper.openCommentWizard();
-
-		cy.get('.wizard-comment-box')
-			.should('exist');
-
-		// Hide resolved comments
-		mobileHelper.selectHamburgerMenuItem(['View', 'Resolved Comments']);
-
-		mobileHelper.openCommentWizard();
-
-		// TODO: can't hide resolved comments again
-		//cy.get('.wizard-comment-box')
-		//	.should('exist');
-	});
-
 	it('Check version information.', function() {
 		mobileHelper.selectHamburgerMenuItem(['About']);
 
