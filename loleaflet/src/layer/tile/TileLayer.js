@@ -1421,8 +1421,6 @@ L.TileLayer = L.GridLayer.extend({
 			return;
 		}
 		var modifierViewId = parseInt(obj.viewId);
-		if (modifierViewId != this._viewId)
-			return;
 
 		this._cursorAtMispelledWord = obj.mispelledWord ? Boolean(parseInt(obj.mispelledWord)).valueOf() : false;
 		this._visibleCursor = new L.LatLngBounds(
