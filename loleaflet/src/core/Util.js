@@ -278,6 +278,14 @@ if (!Element.prototype.remove) {
 	};
 }
 
+if (Number.EPSILON === undefined) {
+	Number.EPSILON = Math.pow(2, -52);
+}
+
+if (!Number.MAX_SAFE_INTEGER) {
+	Number.MAX_SAFE_INTEGER = 9007199254740991; // Math.pow(2, 53) - 1;
+}
+
 // shortcuts for most used utility functions
 L.extend = L.Util.extend;
 L.bind = L.Util.bind;
