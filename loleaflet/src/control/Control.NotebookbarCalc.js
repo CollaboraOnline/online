@@ -260,9 +260,18 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 										]
 									}
 								]
-							},
+							}
+						]
+					},
+					{
+						'id': 'saveas-Section',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'vertical': 'true',
+						'children': [
 							{
-								'id': 'saveas-Section3',
+								'id': 'saveas-Section1',
 								'type': 'container',
 								'text': '',
 								'enabled': 'true',
