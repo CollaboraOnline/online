@@ -1905,8 +1905,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			tbody.ondragover = function (event) { event.preventDefault(); };
 		}
 
-		if (!data.entries || data.entries.length === 0)
+		if (!data.entries || data.entries.length === 0) {
+			L.DomUtil.addClass(table, 'empty');
 			return false;
+		}
 
 		if (isHeaderListBox) {
 			// list view with headers
