@@ -598,9 +598,13 @@ L.CanvasTileLayer = L.TileLayer.extend({
 					this._map.options.documentContainer.style.marginTop = String(this._getGroupHeight()) + 'px';
 			}
 
-			this._painter._sectionContainer.onResize(size.x, size.y);
 			tileContainer.style.width = this._painter._sectionContainer.canvas.style.width;
 			tileContainer.style.height = this._painter._sectionContainer.canvas.style.height;
+			this._painter._sectionContainer.onResize(size.x, size.y);
+			if (this._painter._sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
+				this._painter._sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
+				this._painter._sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
+			}
 		}
 	},
 
