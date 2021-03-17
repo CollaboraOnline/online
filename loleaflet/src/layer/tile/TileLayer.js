@@ -2868,6 +2868,21 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			};
 
+			if (e.shapeId && e.glueId)
+			{
+				var glueParams = {
+					ShapeId: {
+						type: 'long',
+						value: e.shapeId
+					},
+					GlueId: {
+						type: 'long',
+						value: e.glueId
+					}
+				};
+				param = L.Util.extend({}, param, glueParams);
+			}
+
 			this._map.sendUnoCommand('.uno:MoveShapeHandle', param);
 			this._graphicMarker.isDragged = false;
 			this._graphicMarker.setVisible(false);
@@ -3157,6 +3172,7 @@ L.TileLayer = L.GridLayer.extend({
 				rotation: extraInfo.isRotatable && !this.hasTableSelection(),
 				uniformScaling: !this._isGraphicAngleDivisibleBy90(),
 				handles: (extraInfo.handles) ? extraInfo.handles.kinds || [] : [],
+				shapes: (extraInfo.GluePoints) ? extraInfo.GluePoints.shapes : [],
 				shapeType: extraInfo.type,
 				scaleSouthAndEastOnly: this.hasTableSelection()});
 			if (extraInfo.dragInfo && extraInfo.dragInfo.svg) {
