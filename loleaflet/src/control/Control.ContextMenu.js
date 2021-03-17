@@ -52,8 +52,8 @@ L.Control.ContextMenu = L.Control.extend({
 				   'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
 				   'SpellCheckIgnore'],
 
-			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'FormatCellDialog',
-				          'ShowNote', 'HideNote', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize'],
+			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable',
+				      'FormatCellDialog', 'ShowNote', 'HideNote', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize'],
 
 			presentation: ['SetDefault'],
 			drawing: []
@@ -81,7 +81,7 @@ L.Control.ContextMenu = L.Control.extend({
 			// text
 			'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
 			// spreadsheet
-			'FormatCellDialog',
+			'FormatCellDialog', 'DataDataPilotRun'
 		]
 	},
 
