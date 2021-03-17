@@ -49,6 +49,9 @@ var nextcloudBlackList = [
 			'Print'
 		]
 	],
+	['desktop/calc/macro_spec.js',
+		[]
+	],
 	['multiuser/calc/sheet_operations_user1_spec.js',
 		[]
 	],
