@@ -2972,6 +2972,17 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			};
 
+			if (e.ordNum)
+			{
+				var glueParams = {
+					OrdNum: {
+						type: 'long',
+						value: e.ordNum
+					}
+				};
+				param = L.Util.extend({}, param, glueParams);
+			}
+
 			this._map.sendUnoCommand('.uno:MoveShapeHandle', param);
 			this._graphicMarker.isDragged = false;
 			this._graphicMarker.setVisible(false);
@@ -3261,6 +3272,7 @@ L.TileLayer = L.GridLayer.extend({
 				rotation: extraInfo.isRotatable && !this.hasTableSelection(),
 				uniformScaling: !this._isGraphicAngleDivisibleBy90(),
 				handles: (extraInfo.handles) ? extraInfo.handles.kinds || [] : [],
+				shapes: (extraInfo.GluePoints) ? extraInfo.GluePoints.shapes : [],
 				shapeType: extraInfo.type,
 				scaleSouthAndEastOnly: this.hasTableSelection()});
 			if (extraInfo.dragInfo && extraInfo.dragInfo.svg) {
@@ -3782,11 +3794,12 @@ L.TileLayer = L.GridLayer.extend({
 		return new L.Bounds(newTopLeft, newTopLeft.add(rectSize));
 	},
 
-	_convertCalcTileTwips: function (point) {
+	_convertCalcTileTwips: function (point, offset) {
 		if (!this.options.printTwipsMsgsEnabled || !this.sheetGeometry)
 			return point;
 		var newPoint = new L.Point(parseInt(point.x), parseInt(point.y));
-		return newPoint.add(this._shapeGridOffset);
+		var _offset = offset ? new L.Point(parseInt(offset.x), parseInt(offset.y)) : this._shapeGridOffset;
+		return newPoint.add(_offset);
 	},
 
 	_getEditCursorRectangle: function (msgObj) {

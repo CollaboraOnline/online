@@ -20,6 +20,17 @@ L.PathTransform.Handle = L.CircleMarker.extend({
 	}
 });
 
+L.PathTransform.GlueHandle = L.CircleMarker.extend({
+	options: {
+		className: 'leaflet-path-transform-handler'
+	},
+
+	onAdd: function (map) {
+		L.CircleMarker.prototype.onAdd.call(this, map);
+		this.setCursorType('default');
+	}
+});
+
 
 /**
  * @const
@@ -96,6 +107,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		uniformScaling: true,
 		maxZoom:  22,
 		handles: [],
+		shapes: [],
 		shapeType: 0,
 		// edge handlers
 		handlerOptions: {
@@ -106,6 +118,18 @@ L.Handler.PathTransform = L.Handler.extend({
 			weight:      2,
 			opacity:     0.7,
 			setCursor:   true
+		},
+
+		gluePointOptions: {
+			radius:      L.Browser.touch && !L.Browser.pointer ? 10 : 5,
+			fillColor:   '#EE3E3E',
+			color:       '#202020',
+			fillOpacity: 1,
+			weight:      2,
+			opacity:     1,
+			interactive: false,
+			draggable: false,
+			setCursor:   false
 		},
 
 		// rectangle
@@ -139,7 +163,8 @@ L.Handler.PathTransform = L.Handler.extend({
 		handleClass:       L.PathTransform.Handle,
 		rotateHandleClass: L.PathTransform.RotateHandle,
 		customHandleClass: L.PathTransform.CustomHandle,
-		polyHandleClass:   L.PathTransform.PolyHandle
+		polyHandleClass:   L.PathTransform.PolyHandle,
+		glueHandleClass:   L.PathTransform.GlueHandle
 	},
 
 
@@ -186,6 +211,9 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._rect           = null;
 		this._handlers       = [];
 		this._handleLine     = null;
+		this._glueHandlersGroup = null;
+		this._glueHandlers   = [];
+		this._activeGluePoint = null;
 	},
 
 
@@ -238,9 +266,15 @@ L.Handler.PathTransform = L.Handler.extend({
 			this._polyLine = null;
 		}
 
+		for (var i = 0; i < this._glueHandlers.length; i++) {
+			this._map.removeLayer(this._glueHandlers[i]);
+		}
+
 		this._handlersGroup = null;
+		this._glueHandlersGroup = null;
 		this._rect = null;
 		this._handlers = [];
+		this._glueHandlers = [];
 	},
 
 	_onHandlerStatus: function(e) {
@@ -593,6 +627,45 @@ L.Handler.PathTransform = L.Handler.extend({
 			return [ne, e, se, s, sw, w, nw, n][index];
 	},
 
+	_createGluePoints: function() {
+		var map = this._map;
+		var GlueHandleClass = this.options.glueHandleClass;
+		this._glueHandlersGroup = this._glueHandlersGroup ||
+		new L.LayerGroup().addTo(map);
+		for (var i = 0; i < this.options.shapes.length; i++) {
+			var shape = this.options.shapes[i];
+			var gridoffset = this.options.shapes[i].gridoffset;
+			for (var j = 0; j < shape.gluepoints.length; j++) {
+				var point = shape.gluepoints[j].point;
+				point = map._docLayer._convertCalcTileTwips(point, gridoffset);
+				point = map._docLayer._twipsToLatLng(point, map.getZoom());
+				this._glueHandlers.push(new GlueHandleClass(point,
+					L.Util.extend({}, this.options.gluePointOptions, { ordNum: shape.ordnum }))
+					.addTo(this._glueHandlersGroup));
+			}
+		}
+	},
+
+	_gluePointMouseEnter: function(e) {
+		if (e === this._activeGluePoint || this._activeGluePoint !== null)
+			return;
+		var marker = e;
+		// Ugly way to clone the object.
+		// Object.assign is not supported nor the spread syntax (...)
+		var options = JSON.parse(JSON.stringify(this.options.gluePointOptions));
+		options.radius *= 2;
+		L.CircleMarker.prototype.setStyle.call(marker, options);
+		this._activeGluePoint = e;
+	},
+
+	_gluePointMouseLeave: function(e) {
+		if (e !== this._activeGluePoint)
+			return;
+		var marker = e;
+		L.CircleMarker.prototype.setStyle.call(marker, this.options.gluePointOptions);
+		this._activeGluePoint = null;
+	},
+
 	/**
 	* Creates markers and handles
 	*/
@@ -615,6 +688,10 @@ L.Handler.PathTransform = L.Handler.extend({
 						.addTo(this._handlersGroup));
 			}
 			this._handlerPointsConverted = true;
+		}
+		// Glue Points
+		if (this.options.shapes.length > 0) {
+			this._createGluePoints();
 		}
 
 		if (this.options.handles['custom'] !== '') {
@@ -1063,6 +1140,19 @@ L.Handler.PathTransform = L.Handler.extend({
 		if (!this._rect || !this._scaleOrigin) {
 			return;
 		}
+		if (this.options.shapes.length > 0) {
+			var glueList = this._glueHandlers;
+			for (var i = 0; i < glueList.length; i++) {
+				var gluePoint = glueList[i];
+				if (gluePoint._pxBounds.intersects(new L.Bounds(evt.layerPoint, evt.layerPoint))) {
+					gluePoint.options.enter = true;
+					this._gluePointMouseEnter(gluePoint);
+				} else if (gluePoint.options.enter) {
+					this._gluePointMouseLeave(gluePoint);
+					gluePoint.options.enter = false;
+				}
+			}
+		}
 
 		var originPoint = this._originMarker._point;
 		var ratioX, ratioY;
@@ -1115,13 +1205,18 @@ L.Handler.PathTransform = L.Handler.extend({
 			this._map.addLayer(this._customMarker);
 		}
 
+		var _ordNum = null;
+		if (this._activeGluePoint) {
+			_ordNum = this._activeGluePoint.options.ordNum;
+		}
 		var index = this._activeMarker.options.index;
 		this._apply();
 		this._path.fire('scaleend', {
 			layer: this._path,
 			scale: this._scale.clone(),
 			pos: this._activeMarker._latlng,
-			handleId: this._activeMarker.options.id || this._getPoints()[index].id
+			handleId: this._activeMarker.options.id || this._getPoints()[index].id,
+			ordNum: _ordNum
 		});
 
 		this._scaleOrigin = undefined;
