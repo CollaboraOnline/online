@@ -1339,6 +1339,12 @@
 		BEDB888725F8C4F400990028 /* editobj2.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = editobj2.hxx; path = "../../ios-device/editeng/source/editeng/editobj2.hxx"; sourceTree = "<group>"; };
 		BEDB888825F8C4F400990028 /* impedit5.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impedit5.cxx; path = "../../ios-device/editeng/source/editeng/impedit5.cxx"; sourceTree = "<group>"; };
 		BEDB888925F8C4F400990028 /* section.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = section.cxx; path = "../../ios-device/editeng/source/editeng/section.cxx"; sourceTree = "<group>"; };
+		BEDB889A2600E3EB00990028 /* macspellimp.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = macspellimp.mm; path = "../../ios-device/lingucomponent/source/spellcheck/macosxspell/macspellimp.mm"; sourceTree = "<group>"; };
+		BEDB889B2600E3EC00990028 /* macspellimp.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = macspellimp.hxx; path = "../../ios-device/lingucomponent/source/spellcheck/macosxspell/macspellimp.hxx"; sourceTree = "<group>"; };
+		BEDB889C2600E40600990028 /* sspellimp.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = sspellimp.hxx; path = "../../ios-device/lingucomponent/source/spellcheck/spell/sspellimp.hxx"; sourceTree = "<group>"; };
+		BEDB889D2600E40600990028 /* sspellimp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sspellimp.cxx; path = "../../ios-device/lingucomponent/source/spellcheck/spell/sspellimp.cxx"; sourceTree = "<group>"; };
+		BEDB88A02600F60000990028 /* lingutil.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lingutil.cxx; path = "../../ios-device/lingucomponent/source/lingutil/lingutil.cxx"; sourceTree = "<group>"; };
+		BEDB88A12600F60000990028 /* lingutil.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = lingutil.hxx; path = "../../ios-device/lingucomponent/source/lingutil/lingutil.hxx"; sourceTree = "<group>"; };
 		BEDCC84C2452F82800FB02BD /* MobileApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MobileApp.cpp; sourceTree = "<group>"; };
 		BEDCC84D2452F82800FB02BD /* MobileApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MobileApp.hpp; sourceTree = "<group>"; };
 		BEDCC8972456FFAC00FB02BD /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
@@ -2297,6 +2303,7 @@
 				BEDB886725F8C4C000990028 /* editeng */,
 				BEDCC941246175A700FB02BD /* framework */,
 				BEA8CDC42199E5ED009FE17E /* i18nlangtag */,
+				BEDB88962600E38100990028 /* lingucomponent */,
 				BEB6521A216F5D4600B8C09A /* sal */,
 				BE34D1892190712C00815297 /* sc */,
 				BE26269F25EE3F170041833D /* scaddins */,
@@ -3399,6 +3406,51 @@
 				BEDB887E25F8C4F400990028 /* textconv.hxx */,
 			);
 			name = editeng;
+			sourceTree = "<group>";
+		};
+		BEDB88962600E38100990028 /* lingucomponent */ = {
+			isa = PBXGroup;
+			children = (
+				BEDB889F2600F5DB00990028 /* lingutil */,
+				BEDB88972600E3A900990028 /* spellcheck */,
+			);
+			name = lingucomponent;
+			sourceTree = "<group>";
+		};
+		BEDB88972600E3A900990028 /* spellcheck */ = {
+			isa = PBXGroup;
+			children = (
+				BEDB88982600E3B700990028 /* macosxspell */,
+				BEDB88992600E3C300990028 /* spell */,
+			);
+			name = spellcheck;
+			sourceTree = "<group>";
+		};
+		BEDB88982600E3B700990028 /* macosxspell */ = {
+			isa = PBXGroup;
+			children = (
+				BEDB889B2600E3EC00990028 /* macspellimp.hxx */,
+				BEDB889A2600E3EB00990028 /* macspellimp.mm */,
+			);
+			name = macosxspell;
+			sourceTree = "<group>";
+		};
+		BEDB88992600E3C300990028 /* spell */ = {
+			isa = PBXGroup;
+			children = (
+				BEDB889D2600E40600990028 /* sspellimp.cxx */,
+				BEDB889C2600E40600990028 /* sspellimp.hxx */,
+			);
+			name = spell;
+			sourceTree = "<group>";
+		};
+		BEDB889F2600F5DB00990028 /* lingutil */ = {
+			isa = PBXGroup;
+			children = (
+				BEDB88A02600F60000990028 /* lingutil.cxx */,
+				BEDB88A12600F60000990028 /* lingutil.hxx */,
+			);
+			name = lingutil;
 			sourceTree = "<group>";
 		};
 		BEDCC941246175A700FB02BD /* framework */ = {
