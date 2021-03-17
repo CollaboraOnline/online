@@ -679,19 +679,27 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 .leaflet-canvas-container .cell-cursor-data {
-	--stroke-color: #000000;
-	--weight: 2;
+	border-style: solid; /* required for ie11 */
+	display: none; /* prevent cypress failure */
+
+	border-top-color: #000000; /* color */
+	border-top-width: 2px; /* weight */
 }
 
 .leaflet-canvas-container .selections-data {
-	--fill-color: #43ACE8;
-	--fill-opacity: 0.25;
-	--opacity: 0.25;
-	--weight: 2;
+	border-style: solid; /* required for ie11 */
+	display: none; /* prevent cypress failure */
+
+	background-color: #43ACE8; /* fill color */
+	opacity: 0.25; /* opacity */
+	border-top-width: 2px; /* weight */
 }
 
 .leaflet-canvas-container .splitters-data {
-	--color: #e0e0e0;
-	--opacity: 1;
-	--weight: 3;
+	border-style: solid; /* required for ie11 */
+	display: none; /* prevent cypress failure */
+
+	color: #e0e0e0; /* color */
+	opacity: 1; /* opacity */
+	border-top-width: 3px; /* weight */
 }

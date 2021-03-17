@@ -1562,10 +1562,10 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			this._xSplitter = new CSplitterLine(
 				map, {
 					name: 'horiz-pane-splitter',
-					fillColor: this._splittersStyleData.getPropValue('--color'),
-					fillOpacity: this._splittersStyleData.getFloatPropValue('--opacity'),
+					fillColor: this._splittersStyleData.getPropValue('color'),
+					fillOpacity: this._splittersStyleData.getFloatPropValue('opacity'),
 					thickness: Math.round(
-						this._splittersStyleData.getIntPropValue('--weight')
+						this._splittersStyleData.getFloatPropWithoutUnit('border-top-width')
 						* this._painter._dpiScale),
 					isHoriz: true
 				});
@@ -1585,10 +1585,10 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			this._ySplitter = new CSplitterLine(
 				map, {
 					name: 'vert-pane-splitter',
-					fillColor: this._splittersStyleData.getPropValue('--color'),
-					fillOpacity: this._splittersStyleData.getFloatPropValue('--opacity'),
+					fillColor: this._splittersStyleData.getPropValue('color'),
+					fillOpacity: this._splittersStyleData.getFloatPropValue('opacity'),
 					thickness: Math.round(
-						this._splittersStyleData.getIntPropValue('--weight')
+						this._splittersStyleData.getFloatPropWithoutUnit('border-top-width')
 						* this._painter._dpiScale),
 					isHoriz: false
 				});
