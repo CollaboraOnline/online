@@ -4000,11 +4000,13 @@ L.TileLayer = L.GridLayer.extend({
 				type : 'mainmenu',
 				enabled : true,
 				text : _('Comment'),
-				customTitle : customTitleBar,
 				executionType : 'menu',
 				data : [],
 				children : []
 			};
+
+			if (this._map.isPermissionEditForComments() && !this._map.isPermissionReadOnly())
+				menuStructure['customTitle'] = customTitleBar;
 		}
 
 		this._map._docLayer._createCommentStructure(menuStructure);
