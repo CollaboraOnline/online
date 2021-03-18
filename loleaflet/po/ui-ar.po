@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0100\n"
-"PO-Revision-Date: 2020-10-23 21:26+0000\n"
+"PO-Revision-Date: 2021-03-17 14:18+0000\n"
 "Last-Translator: abidin toumi <abidin24@disroot.org>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
-"Language: \n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.3.1\n"
+"X-Generator: Weblate 4.5.2-dev\n"
 "X-Pootle-Path: /ar/libo_online/loleaflet-ui-ar.po\n"
 "X-Pootle-Revision: 3937633\n"
 
@@ -69,14 +69,12 @@ msgstr "المستندات المفتوحة"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
-#, fuzzy
 msgid " user(s)."
-msgstr "لا مستخدمين"
+msgstr " مستخدم."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
-#, fuzzy
 msgid " document(s) open."
-msgstr "المستندات المفتوحة"
+msgstr " مستندات مفتوحة"
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -184,7 +182,7 @@ msgstr "المستندات:"
 
 #: admin/admin.strings.js:44
 msgid "Expired:"
-msgstr ""
+msgstr "إنقضت صلاحيته:"
 
 #: admin/admin.strings.js:45
 msgid "Refresh"
@@ -192,7 +190,7 @@ msgstr "أنعش"
 
 #: admin/admin.strings.js:46
 msgid "Shutdown Server"
-msgstr ""
+msgstr "اغلق الخادم"
 
 #: admin/admin.strings.js:47
 msgid "Server uptime"
