@@ -588,19 +588,28 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 	},
 
+	_getRealMapSize: function() {
+		this._map._sizeChanged = true; // force using real size
+		return this._map.getPixelBounds().getSize();
+	},
+
 	_syncTileContainerSize: function () {
 		var tileContainer = this._container;
 		if (tileContainer) {
-			var size = this._map.getPixelBounds().getSize();
+			var size = this._getRealMapSize();
 			var heightIncreased = parseInt(this._painter._sectionContainer.canvas.style.height.replace('px', '')) < size.y;
 
 			if (this._docType === 'spreadsheet') {
 				var offset = this._getUIWidth() + this._getGroupWidth();
 				offset += (this._getGroupWidth() > 0 ? 3: 1);
 
+				// modify map size
+				this._map.options.documentContainer.style.left = String(offset) + 'px';
+				// update according to the new size
+				size = this._getRealMapSize();
+
 				size.x += offset;
 				this._canvasContainer.style.left = -1 * (offset) + 'px';
-				this._map.options.documentContainer.style.left = String(offset) + 'px';
 
 				offset = this._getUIHeight() + this._getGroupHeight();
 				size.y += offset;
@@ -608,14 +617,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 				this._canvasContainer.style.top = -1 * offset + 'px';
 
-				if (window.mode.isDesktop() || window.mode.isTablet()) {
-					if (document.getElementById('map').classList.contains('notebookbar-opened'))
-						this._map.options.documentContainer.style.marginTop = (Math.floor(this._getGroupHeight() + this._getUIHeight())) + 'px';
-					else
-						this._map.options.documentContainer.style.marginTop = (Math.floor(this._getGroupHeight())) + 'px';
-				}
-				else // Mobile.
-					this._map.options.documentContainer.style.marginTop = String(this._getGroupHeight()) + 'px';
+				this._map.options.documentContainer.style.marginTop = this._getGroupHeight() + 'px';
 			}
 
 			this._painter._sectionContainer.onResize(size.x, size.y);
