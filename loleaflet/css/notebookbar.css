@@ -552,6 +552,14 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	width: 32px !important;
 }
 
+#InsertMultiIndex .unolabel {
+	max-width: 190px;
+	table-layout: fixed;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 #table-Reference-Section-Field.notebookbar
 {
 	display: none;
