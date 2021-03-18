@@ -667,7 +667,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_saveAsControl: function(parentContainer, data, builder) {
-		data.text = data.text.slice(0, -3);
+		data.text = data.text.replace('...', '');
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
 		$(control.container).unbind('click');
@@ -686,7 +686,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_printControl: function(parentContainer, data, builder) {
-		data.text = data.text.slice(0, -3);
+		data.text = data.text.replace('...', '');
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
 		$(control.container).unbind('click');
