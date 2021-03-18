@@ -415,9 +415,9 @@ L.Control.UIManager = L.Control.extend({
 		var additionalOffset = 0;
 		if (docType === 'spreadsheet') {
 			if (window.mode.isTablet())
-				additionalOffset = -7;
+				additionalOffset = -6;
 			else
-				additionalOffset = 53;
+				additionalOffset = 57;
 		}
 
 		this.moveObjectVertically($('#document-container'), 43 + additionalOffset);
