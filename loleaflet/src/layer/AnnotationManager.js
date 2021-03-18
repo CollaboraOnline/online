@@ -897,7 +897,9 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 				this.update();
 			}
 		}
-		if (window.mode.isMobile())
+		if (window.mode.isMobile() &&
+		(obj.comment.author === this._map.getViewName(this._map._docLayer._viewId) ||
+		obj.comment.author === undefined && window.commentWizard === true))
 			this._map._docLayer._openCommentWizard(annotation);
 	},
 
@@ -1090,7 +1092,7 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 			this.updateDocBounds();
 	},
 
-	
+
 });
 
 
