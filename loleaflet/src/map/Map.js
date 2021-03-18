@@ -1166,7 +1166,7 @@ L.Map = L.Evented.extend({
 		var zoomChanged = (this._zoom !== zoom);
 
 		if (!afterZoomAnim) {
-			this.fire('movestart');
+			this.fire('movestart', {zoomChanged: zoomChanged});
 
 			if (zoomChanged) {
 				this.fire('zoomstart');
@@ -1184,20 +1184,20 @@ L.Map = L.Evented.extend({
 		var loading = !this._loaded;
 		this._loaded = true;
 
-		this.fire('viewreset', {hard: !preserveMapOffset});
+		this.fire('viewreset', {hard: !preserveMapOffset, zoomChanged: zoomChanged});
 
 		if (loading) {
-			this.fire('load');
+			this.fire('load', {zoomChanged: zoomChanged});
 		}
 
-		this.fire('move');
+		this.fire('move', {zoomChanged: zoomChanged});
 
 		if (zoomChanged || afterZoomAnim) {
-			this.fire('zoomend');
-			this.fire('zoomlevelschange');
+			this.fire('zoomend', {zoomChanged: zoomChanged});
+			this.fire('zoomlevelschange', {zoomChanged: zoomChanged});
 		}
 
-		this.fire('moveend', {hard: !preserveMapOffset});
+		this.fire('moveend', {hard: !preserveMapOffset, zoomChanged: zoomChanged});
 
 		if (this.getDocType() === 'presentation') {
 			if (this._docLayer._annotationManager.getSelectedPart() !== undefined) {
