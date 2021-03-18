@@ -2189,13 +2189,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}, data.annotation);
 		}
 
-		if (data.annotation.options.noMenu !== true && this.map.isPermissionEditForComments()) {
+		if (data.annotation.options.noMenu !== true && this.map.isPermissionEditForComments() && !this.map.isPermissionReadOnly()) {
 			var tdMenu = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
 			var divMenu = data.annotation._menu = L.DomUtil.create(tagDiv, data.data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
 			divMenu.title = _('Open menu');
 			divMenu.annotation = data.annotation;
 			if (this.map._docLayer._docType === 'text')
 				divMenu.isRoot = isRoot;
+
+			divMenu.onclick = function(e) {
+				L.DomEvent.stopPropagation(e);
+				L.DomEvent.preventDefault(e);
+				$(divMenu).contextMenu();
+			};
 		}
 		if (data.data.trackchange) {
 			data.annotation._captionNode = L.DomUtil.create(tagDiv, 'loleaflet-annotation-caption', wrapper);
@@ -2210,12 +2216,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var d = new Date(data.data.dateTime.replace(/,.*/, 'Z'));
 		var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
 		$(data.annotation._contentDate).text(isNaN(d.getTime()) ? data.data.dateTime: d.toLocaleDateString(String.locale, dateOptions));
-
-		divMenu.onclick = function(e) {
-			L.DomEvent.stopPropagation(e);
-			L.DomEvent.preventDefault(e);
-			$(divMenu).contextMenu();
-		};
 	},
 
 	_rootCommentControl: function(parentContainer, data, builder) {
@@ -2286,9 +2286,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var textNode = L.DomUtil.create('figcaption', 'empty-comment-wizard', emptyCommentWizard);
 		textNode.innerText = data.text;
 		L.DomUtil.create('br', 'empty-comment-wizard', textNode);
-		var linkNode = L.DomUtil.create('div', 'empty-comment-wizard-link', textNode);
-		linkNode.innerText = _('Insert Comment');
-		linkNode.onclick = builder.map.insertComment.bind(builder.map);
+		if (this.map.isPermissionEditForComments() && !this.map.isPermissionReadOnly()) {
+			var linkNode = L.DomUtil.create('div', 'empty-comment-wizard-link', textNode);
+			linkNode.innerText = _('Insert Comment');
+			linkNode.onclick = builder.map.insertComment.bind(builder.map);
+		}
 	},
 
 	_createIconURL: function(name) {

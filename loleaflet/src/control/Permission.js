@@ -79,6 +79,7 @@ L.Map.include({
 		this._enterEditMode('edit');
 		if (window.mode.isMobile() || window.mode.isTablet()) {
 			this.fire('editorgotfocus');
+			this.fire('closemobilewizard');
 			// In the iOS/android app, just clicking the mobile-edit-button is
 			// not reason enough to pop up the on-screen keyboard.
 			if (!(window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp))
