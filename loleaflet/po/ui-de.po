@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0100\n"
 "PO-Revision-Date: 2021-03-17 22:08+0000\n"
-"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
+"Last-Translator: Jörn Liebau <joern@liebau.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -744,7 +744,7 @@ msgstr "Excel-Tabellendokument (.xlsx)"
 
 #: src/control/Control.Menubar.js:516
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "CSV-Datei (.csv)"
 
 #: src/control/Control.Menubar.js:743 src/control/Control.Menubar.js:792
 #: src/control/Control.Menubar.js:840 src/control/Control.StatusBar.js:190
