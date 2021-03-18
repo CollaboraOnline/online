@@ -1017,7 +1017,7 @@ L.Socket = L.Class.extend({
 					(new L.CalcGridLines()).addTo(this._map);
 				}
 			}
-			else if (command.type === 'presentation') {
+			else if (command.type === 'presentation' || command.type === 'drawing') {
 				docLayer = new L.ImpressTileLayer('', {
 					permission: this._map.options.permission,
 					tileWidthTwips: tileWidthTwips / window.devicePixelRatio,
