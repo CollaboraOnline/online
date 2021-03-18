@@ -374,6 +374,8 @@ L.Map.TouchGesture = L.Handler.extend({
 			docLayer._postMouseEvent('buttonup', mousePos.x, mousePos.y, 1, 1, 0);
 		}
 
+		this._cancelAutoScroll = true;
+
 		// Always move the focus to the document on tap,
 		// but only show the keyboard when we need editing.
 		this._map.focus(acceptInput);
@@ -667,10 +669,15 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_autoscroll: function() {
+		if (this._cancelAutoScroll === true) {
+			this._cancelAutoScroll = false;
+			return;
+		}
+
 		var elapsed, delta;
 
 		elapsed = Date.now() - this._timeStamp;
-		delta = this._amplitude.multiplyBy(Math.exp(-elapsed / 325));
+		delta = this._amplitude.multiplyBy(Math.exp(-elapsed / 650));
 		var e = this._constructFakeEvent({
 			clientX: delta.x + this._startSwipePoint.x,
 			clientY: delta.y + this._startSwipePoint.y,
