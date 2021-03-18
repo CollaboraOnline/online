@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0200\n"
-"PO-Revision-Date: 2021-03-14 16:35+0000\n"
+"PO-Revision-Date: 2021-03-18 09:49+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "help/he/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.5.2-dev\n"
 "X-Pootle-Path: /he/libo_online/loleaflet-help-he.po\n"
 "X-Pootle-Revision: 3930691\n"
 
@@ -1284,15 +1284,15 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:327-11
 msgid "Search backwards"
-msgstr ""
+msgstr "חיפוש אחורה"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:328-11
 msgid "Search forward"
-msgstr ""
+msgstr "חיפוש קדימה"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:329-11
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr ""
+msgstr "ביטול החיפוש (מופיע רק כאשר חיפשת טקסט)"
 
 #: html/loleaflet-help.html%2Bdiv.p:331-5
 msgid ""
@@ -2051,6 +2051,8 @@ msgid ""
 "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove "
 "from my text document?"
 msgstr ""
+"מה אלו הסימנים הכחולים האלו: <span class=\"blue\">¶</span> ואיך אוכל להסיר "
+"אותם ממסמך הטקסט שלי?"
 
 #: html/loleaflet-help.html%2Bdiv.p:528-5
 msgid ""
@@ -2059,6 +2061,9 @@ msgid ""
 "document display, choose menu <span class=\"ui\">View</span> → <span class=\""
 "ui\">Formatting mark</span>."
 msgstr ""
+"<span class=\"blue\">¶</span> הוא סימן עיצוב. הוא משמש לסיוע ביישור הטקסט "
+"ואינו מודפס. כדי לכבות או להפעיל אותו בתצוגת המסמך, יש לבחור בתפריט, <span "
+"class=\"ui\">תצוגה</span> ← <span class=\"ui\">סימן עיצוב</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:532-5
 msgid "How do I get a word count of my document?"
@@ -2070,6 +2075,9 @@ msgid ""
 "ui\">Word count</span>. A dialog shows word counts for selection and for the "
 "whole document."
 msgstr ""
+"ספירת המילים זמינה ב־<span class=\"ui\">כלים</span> ← <span class=\"ui\""
+">ספירת מילים</span>. תיבת דו־שיח מציגה את מספר המילים עבור הבחירה ועבור "
+"המסמך כולו."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:535-5
 msgid ""
@@ -2077,21 +2085,25 @@ msgid ""
 "word count is for the whole document. Otherwise the word count is for the "
 "selected text."
 msgstr ""
+"ספירת המילים מוצגת גם בשורת המצב. אם לא נבחר טקסט ספירת המילים היא לכל "
+"המסמך. אחרת, ספירת המילים היא לטקסט הנבחר."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:536-5
 msgid ""
 "How can I insert a currency, copyright or trademark symbol in the document?"
-msgstr ""
+msgstr "איך אפשר להוסיף סימן מטבע, זכויות יוצרים או סימן רשום למסמך?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:537-5
 msgid ""
 "You can insert these special characters in the document using the <span "
 "class=\"ui\">Special Character</span> dialog."
 msgstr ""
+"ניתן להוסיף את התווים המיוחדים האלה למסמך בעזרת תיבת הדו־שיח <span class=\"ui"
+"\">תו מיוחד</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:539-11
 msgid "Place the cursor in the position to insert the character."
-msgstr ""
+msgstr "יש להציב את הסמן במקום בו הסימן אמור להתווסף."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:541-9
 msgid ""
