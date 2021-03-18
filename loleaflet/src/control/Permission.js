@@ -94,9 +94,6 @@ L.Map.include({
 	},
 
 	_enterEditMode: function (perm) {
-		if (this.isPermissionReadOnly() && (window.mode.isMobile() || window.mode.isTablet())) {
-			this.sendInitUNOCommands();
-		}
 		this._permission = perm;
 
 		this._socket.sendMessage('requestloksession');
