@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0100\n"
-"PO-Revision-Date: 2021-02-19 22:08+0000\n"
-"Last-Translator: sebastiaanveld <sebastiaan.veld@gmail.com>\n"
+"PO-Revision-Date: 2021-03-17 22:08+0000\n"
+"Last-Translator: Cor Nouws <cno@nouenoff.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5\n"
+"X-Generator: Weblate 4.5.2-dev\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-ui-nl.po\n"
 "X-Pootle-Revision: 3939479\n"
 
@@ -485,7 +485,7 @@ msgstr "Antwoorden"
 
 #: src/control/Control.JSDialogBuilder.js:2290
 msgid "Insert Comment"
-msgstr ""
+msgstr "Notitie invoegen"
 
 #: src/control/Control.JSDialogBuilder.js:2673
 msgid "Cell borders"
@@ -1685,7 +1685,7 @@ msgstr "Functies"
 
 #: src/layer/tile/TileLayer.js:4024
 msgid "No Comments"
-msgstr ""
+msgstr "Geen notities"
 
 #: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
