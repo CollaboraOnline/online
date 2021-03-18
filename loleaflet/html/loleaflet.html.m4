@@ -40,6 +40,7 @@ m4_dnl# and window.ThisIsTheGtkApp
 
 m4_ifelse(MOBILEAPP,[true],
   [   window.ThisIsAMobileApp = true;
+   window.HelpFile = String.raw`m4_syscmd([cat html/loleaflet-help.html])`;
    window.open = function (url, windowName, windowFeatures) {
      window.postMobileMessage('HYPERLINK ' + url); /* don't call the 'normal' window.open on mobile at all */
    }
