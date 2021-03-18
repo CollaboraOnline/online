@@ -80,7 +80,7 @@
     <string name="otg_device_path">Ruta del dispositivo OTG</string>
     <string name="otg_warning">Función experimental: utilice solo si el dispositivo OTG es grabable.</string>
     <string name="server_url">URL del servidor</string>
-    <string name="server_url_and_port">URL y puerto del servidor en la nube</string>
+    <string name="server_url_and_port">URL y puerto del servidor en la nube.</string>
     <string name="user_name">Nombre de usuario</string>
     <string name="password">Contraseña</string>
     <!-- Directory browser strings -->
@@ -113,7 +113,7 @@
     <!-- Clipboard Actions -->
     <!-- UNO cmd controller Strings -->
     <string name="unable_to_go_further">No se puede ir más allá.</string>
-    <string name="bmp_null">El BMP no es válido.</string>
+    <string name="bmp_null">¡El Bmp no es válido!</string>
     <string name="directory_not_saved">Directorio no guardado.</string>
     <string name="title_activity_show_html">Acerca de</string>
     <string name="share_document">Compartir documento</string>
