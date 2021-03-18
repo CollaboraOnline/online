@@ -520,6 +520,10 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._docType = command.type;
 			this._parts = command.parts;
 			this._selectedPart = command.selectedPart;
+			if (this.sheetGeometry && this._selectedPart != this.sheetGeometry.getPart()) {
+				// Core initiated sheet switch, need to get full sheetGeometry data for the selected sheet.
+				this.requestSheetGeometryData();
+			}
 			this._viewId = parseInt(command.viewid);
 			var mapSize = this._map.getSize();
 			var sizePx = this._twipsToPixels(new L.Point(this._docWidthTwips, this._docHeightTwips));
@@ -1277,6 +1281,10 @@ L.SheetGeometry = L.Class.extend({
 		this._rows.setViewLimits(top, bottom);
 
 		return true;
+	},
+
+	getPart: function () {
+		return this._part;
 	},
 
 	getColumnsGeometry: function () {
