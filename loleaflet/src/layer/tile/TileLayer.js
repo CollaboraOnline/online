@@ -354,8 +354,6 @@ L.TileLayer = L.GridLayer.extend({
 		this._levels = {};
 		this._tiles = {};
 		this._tileCache = {};
-		this._map._socket.sendMessage('commandvalues command=.uno:LanguageStatus');
-		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 		var that = this;
 		L.installContextMenu({
 			selector: '.loleaflet-annotation-menu',
@@ -493,6 +491,8 @@ L.TileLayer = L.GridLayer.extend({
 		map.setPermission(this.options.permission);
 
 		map.fire('statusindicator', {statusType: 'loleafletloaded'});
+
+		this._map.sendInitUNOCommands();
 	},
 
 	// Returns true iff the document type is Writer.
