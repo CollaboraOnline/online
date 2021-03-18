@@ -5,7 +5,7 @@
 
 /* global $ _ _UNO vex L */
 L.Control.Menubar = L.Control.extend({
-	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help)
+	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help, eg: mobiledrawing)
 	options: {
 		initial: [
 			{name: _UNO('.uno:PickList')},
@@ -767,6 +767,55 @@ L.Control.Menubar = L.Control.extend({
 		],
 
 		mobilepresentation: [
+			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
+				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
+				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
+				{name: _('Share...'), id:'shareas', type: 'action'},
+				{name: _UNO('.uno:Print', 'presentation'), id: 'print', type: 'action'},
+				{name: _('See revision history'), id: 'rev-history', type: 'action'},
+			]},
+			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id:'downloadas', type: 'menu', menu: [
+				{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
+				{name: _('ODF presentation (.odp)'), id: 'downloadas-odp', type: 'action', drawing: false},
+				{name: _('PowerPoint 2003 Presentation (.ppt)'), id: 'downloadas-ppt', type: 'action', drawing: false},
+				{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action', drawing: false},
+				{name: _('ODF Drawing (.odg)'), id: 'downloadas-odg', type: 'action'}
+			]},
+			{name: _UNO('.uno:EditMenu', 'presentation'), id: 'editmenu', type: 'menu', menu: [
+				{uno: '.uno:Undo'},
+				{uno: '.uno:Redo'},
+				{name: _('Repair'), id: 'repair',  type: 'action'},
+				{type: 'separator'},
+				{uno: '.uno:Cut'},
+				{uno: '.uno:Copy'},
+				{uno: '.uno:Paste'},
+				{uno: '.uno:SelectAll'}
+			]},
+			{name: _('Search'), id: 'searchdialog', type: 'action'},
+			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), id: 'tablemenu', type: 'menu', menu: [
+				{uno: '.uno:InsertRowsBefore'},
+				{uno: '.uno:InsertRowsAfter'},
+				{type: 'separator'},
+				{uno: '.uno:InsertColumnsBefore'},
+				{uno: '.uno:InsertColumnsAfter'},
+				{uno: '.uno:DeleteRows'},
+				{uno: '.uno:DeleteColumns'},
+				{uno: '.uno:MergeCells'}]
+			},
+			{name: _UNO('.uno:SlideMenu', 'presentation'), id: 'slidemenu', type: 'menu', menu: [
+				{name: _UNO('.uno:InsertSlide', 'presentation'), id: 'insertpage', type: 'action'},
+				{name: _UNO('.uno:DuplicateSlide', 'presentation'), id: 'duplicatepage', type: 'action'},
+				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'}]
+			},
+			{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
+			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
+			{uno: '.uno:SpellOnline'},
+			{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
+			{name: _('Latest Updates'), id: 'latest-updates', type: 'action', iosapp: false},
+			{name: _('About'), id: 'about', type: 'action'},
+		],
+
+		mobiledrawing: [
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
