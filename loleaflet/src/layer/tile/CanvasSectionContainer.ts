@@ -105,6 +105,8 @@
 */
 
 // This class will be used internally by CanvasSectionContainer.
+
+declare var L: any;
 class CanvasSectionObject {
 	context: CanvasRenderingContext2D = null;
 	myTopLeft: Array<number> = null;
@@ -1159,9 +1161,17 @@ class CanvasSectionContainer {
 	private drawSections () {
 		this.context.setTransform(1, 0, 0, 1, 0, 0);
 		this.context.fillStyle = this.clearColor;
-		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
+		// When we zoom in we try to avoid the entire canvas repaint
+		// instead we just clear the surrounding of the doc (remnant from previous zoom)
+		if (L.Map.THIS.getTileSectionMgr() && L.Map.THIS.getTileSectionMgr()._zoomChanged) {
+			this.context.clearRect(0, 0, -this.documentTopLeft[0], this.canvas.height);
+			this.context.fillRect(0, 0, -this.documentTopLeft[0], this.canvas.height);
+		}
+		else {
+			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+			this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+		}
 		this.context.font = String(20 * this.dpiScale) + "px Verdana";
 		for (var i: number = 0; i < this.sections.length; i++) {
 			if (this.sections[i].isLocated) {

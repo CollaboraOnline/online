@@ -93,8 +93,17 @@ class TilesSection {
 	paintWithPanes (tile: any, ctx: any) {
 		var tileTopLeft = tile.coords.getPos();
 		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
+		var tileWidth = tileBounds.max.x - tileBounds.min.x;
+		var tileHeight = tileBounds.max.y - tileBounds.min.y;
 
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
+
+			// When zooming we have avoided to clear the canvas
+			// so here we clear area for each tile as we recieve
+			if (L.Map.THIS.getTileSectionMgr() && L.Map.THIS.getTileSectionMgr()._zoomChanged) {
+				this.context.clearRect(tileTopLeft.x, tileTopLeft.y, tileWidth, tileHeight);
+				this.context.fillRect(tileTopLeft.x, tileTopLeft.y, tileWidth, tileHeight);
+			}
 			// co-ordinates of this pane in core document pixels
 			var paneBounds = ctx.paneBoundsList[i];
 			// co-ordinates of the main-(bottom right) pane in core document pixels
@@ -165,6 +174,12 @@ class TilesSection {
 			this.context.fillRect(offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
 		}
 
+		// When zooming we have avoided to clear the canvas
+		// so here we clear area for each tile as we recieve
+		if (L.Map.THIS.getTileSectionMgr() && L.Map.THIS.getTileSectionMgr()._zoomChanged) {
+			this.context.clearRect(offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
+			this.context.fillRect(offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
+		}
 		this.context.drawImage(tile.el, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
 		this.oscCtxs[0].drawImage(tile.el, extendedOffset.x, extendedOffset.y, ctx.tileSize.x, ctx.tileSize.y);
 	}

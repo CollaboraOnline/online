@@ -78,12 +78,13 @@ L.TileSectionManager = L.Class.extend({
 		sourceElement.addEventListener('touchcancel', function (e) { that._sectionContainer.onTouchCancel(e); }, true);
 	},
 
-	startUpdates: function () {
+	startUpdates: function (e) {
 		if (this._updatesRunning === true) {
 			return false;
 		}
 
 		this._updatesRunning = true;
+		this._zoomChanged = e.zoomChanged;
 		this._updateWithRAF();
 		return true;
 	},
@@ -93,6 +94,7 @@ L.TileSectionManager = L.Class.extend({
 			L.Util.cancelAnimFrame(this._canvasRAF);
 			this.update();
 			this._updatesRunning = false;
+			this._zoomChanged = false;
 			return true;
 		}
 
@@ -330,7 +332,9 @@ L.TileSectionManager = L.Class.extend({
 		this._layer._canvasOverlay.paintRegion(tileBounds);
 	},
 
-	update: function () {
+	update: function (e) {
+		if (e)
+			this._zoomChanged = e.zoomChanged;
 		this._sectionContainer.requestReDraw();
 	},
 
@@ -495,8 +499,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		// Using L.TileSectionManager's own requestAnimationFrame loop to do the updates in that case does not perform well.
 		if (window.mode.isMobile() || window.mode.isTablet()) {
 			this._map.on('move', this._painter.update, this._painter);
-			this._map.on('moveend', function () {
-				setTimeout(this.update.bind(this), 200);
+			this._map.on('moveend', function (e) {
+				setTimeout(this.update.bind(this, e), 200);
 			}, this._painter);
 		}
 		else {
