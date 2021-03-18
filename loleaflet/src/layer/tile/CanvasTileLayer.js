@@ -574,6 +574,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		var tileContainer = this._container;
 		if (tileContainer) {
 			var size = this._map.getPixelBounds().getSize();
+			var heightIncreased = parseInt(this._painter._sectionContainer.canvas.style.height.replace('px', '')) < size.y;
+
 			if (this._docType === 'spreadsheet') {
 				var offset = this._getUIWidth() + this._getGroupWidth();
 				offset += (this._getGroupWidth() > 0 ? 3: 1);
@@ -605,6 +607,9 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				this._painter._sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
 				this._painter._sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
 			}
+
+			if (!heightIncreased)
+				this._onUpdateCursor(true);
 		}
 	},
 
