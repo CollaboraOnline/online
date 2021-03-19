@@ -26,6 +26,7 @@ class Cursor {
 	private map: any;
 	private blinkTimeout: NodeJS.Timeout;
 	private visible: boolean = false;
+	private domAttached: boolean = false;
 
 	// position and size should be in core pixels.
 	constructor(position: CPoint, size: CPoint, map: any, options: any) {
@@ -60,6 +61,7 @@ class Cursor {
 
 		this.map.getCursorOverlayContainer().appendChild(this.container);
 		this.visible = true;
+		this.domAttached = true;
 		this.update();
 		if (this.map._docLayer.isCalc())
 			this.map.on('splitposchanged move', this.update, this);
@@ -77,18 +79,19 @@ class Cursor {
 		} else {
 			$('.leaflet-pane.leaflet-map-pane').css('cursor', '');
 		}
-		if (this.container) {
+		if (this.container && this.domAttached) {
 			this.map.getCursorOverlayContainer().removeChild(this.container);
 		}
 
 		this.visible = false;
+		this.domAttached = false;
 
 		document.removeEventListener('blur', this.onFocusBlur.bind(this));
 		document.removeEventListener('focus', this.onFocusBlur.bind(this));
 	}
 
-	isVisible(): boolean {
-		return this.visible;
+	isDomAttached(): boolean {
+		return this.domAttached;
 	}
 
 	onFocusBlur(ev: FocusEvent) {
