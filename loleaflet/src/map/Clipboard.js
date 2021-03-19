@@ -509,9 +509,29 @@ L.Clipboard = L.Class.extend({
 		return true; // prevent default
 	},
 
+	_isAnyInputFieldSelected: function() {
+		if ($('#search-input').is(':focus'))
+			return true;
+
+		if ($('.ui-edit').is(':focus'))
+			return true;
+
+		if ($('.w2ui-input').is(':focus'))
+			return true;
+
+		if (isAnyVexDialogActive() && !(this.pasteSpecialVex && this.pasteSpecialVex.isOpen))
+			return true;
+
+		return false;
+	},
+
 	// only used by IE.
 	_beforePasteIE: function(ev) {
 		console.log('IE11 work ...');
+
+		if (this._isAnyInputFieldSelected())
+			return;
+
 		this._beforeSelect(ev);
 		this._dummyDiv.focus();
 		// Now wait for the paste ...
@@ -520,6 +540,10 @@ L.Clipboard = L.Class.extend({
 	// Does the selection of text before an event comes in
 	_beforeSelect: function(ev) {
 		console.log('Got event ' + ev.type + ' setting up selection');
+
+		if (this._isAnyInputFieldSelected())
+			return;
+
 		this._beforeSelectImpl(ev.type);
 	},
 
@@ -686,6 +710,10 @@ L.Clipboard = L.Class.extend({
 
 	_doCopyCut: function(ev, unoName) {
 		console.log(unoName);
+
+		if (this._isAnyInputFieldSelected())
+			return;
+
 		var preventDefault = this._map['wopi'].DisableCopy === true ? true : this.populateClipboard(ev);
 		this._map._socket.sendMessage('uno .uno:' + unoName);
 		if (preventDefault) {
@@ -715,16 +743,7 @@ L.Clipboard = L.Class.extend({
 	paste: function(ev) {
 		console.log('Paste');
 
-		if ($('.ui-edit').is(':focus'))
-			return;
-
-		if ($('.w2ui-input').is(':focus'))
-			return;
-
-		if (isAnyVexDialogActive() && !(this.pasteSpecialVex && this.pasteSpecialVex.isOpen))
-			return;
-
-		if ($('.annotation-active').length > 0 && !this._map.hasFocus())
+		if (this._isAnyInputFieldSelected())
 			return;
 
 		// If the focus is in the search box, paste there.
