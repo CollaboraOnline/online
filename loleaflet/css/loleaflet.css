@@ -138,6 +138,7 @@
 	background-image: url('images/table-row-or-column-select-marker.svg');
 	background-size: cover;
 	background-repeat: no-repeat;
+	cursor: pointer;
 }
 
 .table-move-marker {
@@ -148,7 +149,7 @@
 	background-image: url('images/table-move-marker.svg');
 	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	cursor: col-resize;
+	cursor: move;
 }
 
 body {
