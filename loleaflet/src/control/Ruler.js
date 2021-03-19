@@ -373,12 +373,6 @@ L.Control.Ruler = L.Control.extend({
 			this._lMarginDrag.setAttribute('aria-label', lMarginTooltipText);
 			this._rMarginDrag.dataset.title = rMarginTooltipText;
 			this._rMarginDrag.setAttribute('aria-label', rMarginTooltipText);
-
-			if (window.ThisIsTheiOSApp) {
-				this.options.interactive = true;
-				L.DomEvent.on(this._rMarginDrag, 'touchstart', this._initiateDrag, this);
-				L.DomEvent.on(this._lMarginDrag, 'touchstart', this._initiateDrag, this);
-			}
 		}
 
 		this._lMarginMarker.style.width = (this.options.DraggableConvertRatio*lMargin) + 'px';
@@ -531,14 +525,8 @@ L.Control.Ruler = L.Control.extend({
 		this._map.rulerActive = true;
 
 		var dragableElem = e.srcElement || e.target;
-		if (window.ThisIsTheiOSApp) {
-			L.DomEvent.on(this._rFace, 'touchmove', this._moveMargin, this);
-			L.DomEvent.on(this._rFace, 'touchend', this._endDrag, this);
-		}
-		else {
-			L.DomEvent.on(this._rFace, 'mousemove', this._moveMargin, this);
-			L.DomEvent.on(this._map, 'mouseup', this._endDrag, this);
-		}
+		L.DomEvent.on(this._rFace, 'mousemove', this._moveMargin, this);
+		L.DomEvent.on(this._map, 'mouseup', this._endDrag, this);
 		this._initialposition = e.clientX;
 		this._lastposition = this._initialposition;
 
@@ -586,14 +574,9 @@ L.Control.Ruler = L.Control.extend({
 			posChange = e.originalEvent.clientX - this._initialposition;
 		var unoObj = {}, marginType, fact;
 
-		if (window.ThisIsTheiOSApp) {
-			L.DomEvent.off(this._rFace, 'touchmove', this._moveMargin, this);
-			L.DomEvent.off(this._rFace, 'touchend', this._endDrag, this);
-		}
-		else {
-			L.DomEvent.off(this._rFace, 'mousemove', this._moveMargin, this);
-			L.DomEvent.off(this._map, 'mouseup', this._endDrag, this);
-		}
+		L.DomEvent.off(this._rFace, 'mousemove', this._moveMargin, this);
+		L.DomEvent.off(this._map, 'mouseup', this._endDrag, this);
+
 		if (L.DomUtil.hasClass(this._rMarginDrag, 'leaflet-drag-moving')) {
 			marginType = 'Margin2';
 			fact = -1;
@@ -706,7 +689,7 @@ L.Control.Ruler = L.Control.extend({
 		tabstopContainer.tabStopMarkerBeingDragged = tabstop;
 		tabstopContainer.tabStopInitialPosiiton = pointX;
 
-		if (event.pointerType !== 'touch') {
+		if (!window.ThisIsTheiOSApp && event.pointerType !== 'touch') {
 			L.DomEvent.on(this._rTSContainer, 'mousemove', this._moveTabstop, this);
 			L.DomEvent.on(this._rTSContainer, 'mouseup', this._endTabstopDrag, this);
 			L.DomEvent.on(this._rTSContainer, 'mouseout', this._endTabstopDrag, this);
