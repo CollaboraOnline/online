@@ -1163,6 +1163,17 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.fire('closemobilewizard');
 	},
 
+	_extractAndSetGraphicSelection: function(messageJSON) {
+		var topLeftTwips = new L.Point(messageJSON[0], messageJSON[1]);
+		var offset = new L.Point(messageJSON[2], messageJSON[3]);
+		var bottomRightTwips = topLeftTwips.add(offset);
+		this._graphicSelectionTwips = this._getGraphicSelectionRectangle(
+			new L.Bounds(topLeftTwips, bottomRightTwips));
+		this._graphicSelection = new L.LatLngBounds(
+			this._twipsToLatLng(this._graphicSelectionTwips.getTopLeft(), this._map.getZoom()),
+			this._twipsToLatLng(this._graphicSelectionTwips.getBottomRight(), this._map.getZoom()));
+	},
+
 	_onGraphicSelectionMsg: function (textMsg) {
 		if (this._map.hyperlinkPopup !== null) {
 			this._closeURLPopUp();
@@ -1175,6 +1186,13 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.match('INPLACE')) {
 			if (!this._map.hasObjectFocusDarkOverlay()) {
+				textMsg = '[' + textMsg.substr('graphicselection:'.length) + ']';
+				try {
+					var msgData = JSON.parse(textMsg);
+					if (msgData.length > 1)
+						this._extractAndSetGraphicSelection(msgData);
+				} catch (error) { console.warn('cannot parse graphicselection command'); }
+
 				var xTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getNorthWest()).x;
 				var yTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getNorthWest()).y;
 				var wTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getSouthEast()).x - xTwips;
@@ -1188,15 +1206,8 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else {
 			textMsg = '[' + textMsg.substr('graphicselection:'.length) + ']';
-			var msgData = JSON.parse(textMsg);
-			var topLeftTwips = new L.Point(msgData[0], msgData[1]);
-			var offset = new L.Point(msgData[2], msgData[3]);
-			var bottomRightTwips = topLeftTwips.add(offset);
-			this._graphicSelectionTwips = this._getGraphicSelectionRectangle(
-				new L.Bounds(topLeftTwips, bottomRightTwips));
-			this._graphicSelection = new L.LatLngBounds(
-				this._twipsToLatLng(this._graphicSelectionTwips.getTopLeft(), this._map.getZoom()),
-				this._twipsToLatLng(this._graphicSelectionTwips.getBottomRight(), this._map.getZoom()));
+			msgData = JSON.parse(textMsg);
+			this._extractAndSetGraphicSelection(msgData);
 
 			this._graphicSelectionAngle = (msgData.length > 4) ? msgData[4] : 0;
 
