@@ -2711,14 +2711,14 @@ L.TileLayer = L.GridLayer.extend({
 				viewCursorMarker.setPositionSize(viewCursorPos, pixBounds.getSize());
 			}
 			viewCursorMarker.setOpacity(this.isCursorVisible() && this._cursorMarker.getPosition().equals(viewCursorMarker.getPosition()) ? 0 : 1);
-			if (!viewCursorMarker.isVisible())
+			if (!viewCursorMarker.isDomAttached())
 				viewCursorMarker.add();
 		}
-		else if (viewCursorMarker.isVisible()) {
+		else if (viewCursorMarker.isDomAttached()) {
 			viewCursorMarker.remove();
 		}
 
-		if (this._viewCursors[viewId].marker && this._viewCursors[viewId].marker.isVisible())
+		if (this._viewCursors[viewId].marker && this._viewCursors[viewId].marker.isDomAttached())
 			this._viewCursors[viewId].marker.showCursorHeader();
 	},
 
@@ -2729,7 +2729,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	isCursorVisible: function() {
-		return this._cursorMarker ? this._cursorMarker.isVisible() : false;
+		return this._cursorMarker ? this._cursorMarker.isDomAttached() : false;
 	},
 
 	goToViewCursor: function(viewId) {
