@@ -2771,6 +2771,10 @@ L.TileLayer = L.GridLayer.extend({
 		    (this.isWriter() || this._selectedPart === viewPart)) {
 
 			if (viewSelection) {
+				if (!this._map.hasInfoForView(viewId)) {
+					viewSelection.clear();
+					return;
+				}
 				// change previous selections
 				viewSelection.setPointSet(viewPointSet);
 			} else {
