@@ -910,11 +910,11 @@ void WhiteBoxTests::testTime()
 {
     std::ostringstream oss;
 
-    std::chrono::system_clock::time_point t(std::chrono::nanoseconds(1567444337874777375));
+    std::chrono::system_clock::time_point t(std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::nanoseconds(1567444337874777375)));
     LOK_ASSERT_EQUAL(std::string("2019-09-02T17:12:17.874777Z"),
                          Util::getIso8601FracformatTime(t));
 
-    t = std::chrono::system_clock::time_point(std::chrono::nanoseconds(0));
+    t = std::chrono::system_clock::time_point(std::chrono::system_clock::duration::zero());
     LOK_ASSERT_EQUAL(std::string("1970-01-01T00:00:00.000000Z"),
                          Util::getIso8601FracformatTime(t));
 
@@ -927,14 +927,20 @@ void WhiteBoxTests::testTime()
     oss.str(std::string());
     t = Util::iso8601ToTimestamp("2019-09-02T17:12:17.874777Z", "LastModifiedTime");
     oss << t.time_since_epoch().count();
-    LOK_ASSERT_EQUAL(std::string("1567444337874777000"), oss.str());
+    if (std::is_same<std::chrono::system_clock::period, std::nano>::value)
+        LOK_ASSERT_EQUAL(std::string("1567444337874777000"), oss.str());
+    else
+        LOK_ASSERT_EQUAL(std::string("1567444337874777"), oss.str());
     LOK_ASSERT_EQUAL(std::string("2019-09-02T17:12:17.874777Z"),
                          Util::time_point_to_iso8601(t));
 
     oss.str(std::string());
     t = Util::iso8601ToTimestamp("2019-10-24T14:31:28.063730Z", "LastModifiedTime");
     oss << t.time_since_epoch().count();
-    LOK_ASSERT_EQUAL(std::string("1571927488063730000"), oss.str());
+    if (std::is_same<std::chrono::system_clock::period, std::nano>::value)
+        LOK_ASSERT_EQUAL(std::string("1571927488063730000"), oss.str());
+    else
+        LOK_ASSERT_EQUAL(std::string("1571927488063730"), oss.str());
     LOK_ASSERT_EQUAL(std::string("2019-10-24T14:31:28.063730Z"),
                          Util::time_point_to_iso8601(t));
 
@@ -945,7 +951,7 @@ void WhiteBoxTests::testTime()
     t = std::chrono::system_clock::time_point();
     LOK_ASSERT_EQUAL(std::string("Thu, 01 Jan 1970 00:00:00"), Util::getHttpTime(t));
 
-    t = std::chrono::system_clock::time_point(std::chrono::nanoseconds(1569592993495336798));
+    t = std::chrono::system_clock::time_point(std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::nanoseconds(1569592993495336798)));
     LOK_ASSERT_EQUAL(std::string("Fri, 27 Sep 2019 14:03:13"), Util::getHttpTime(t));
 
     t = Util::iso8601ToTimestamp("2020-09-22T21:45:12.583000Z", "LastModifiedTime");
@@ -963,8 +969,16 @@ void WhiteBoxTests::testTime()
 
         const std::string s = Util::getIso8601FracformatTime(t);
         t = Util::iso8601ToTimestamp(s, "LastModifiedTime");
-        LOK_ASSERT_EQUAL(std::to_string(t_in_micros),
-                             std::to_string(t.time_since_epoch().count()));
+
+        std::string t_in_micros_str = std::to_string(t_in_micros);
+        std::string time_since_epoch_str = std::to_string(t.time_since_epoch().count());
+        if (!std::is_same<std::chrono::system_clock::period, std::nano>::value)
+        {
+            t_in_micros_str.resize(t_in_micros_str.length() - 3);
+            time_since_epoch_str.resize(time_since_epoch_str.length() - 3);
+        }
+
+        LOK_ASSERT_EQUAL(t_in_micros_str, time_since_epoch_str);
 
         // Allow a small delay to get a different timestamp on next iteration.
         sleep(0);
