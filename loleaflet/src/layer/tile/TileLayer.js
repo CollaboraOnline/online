@@ -4116,7 +4116,8 @@ L.TileLayer = L.GridLayer.extend({
 	_replayPrintTwipsMsgAllViews: function (msgType) {
 		Object.keys(this._cellViewCursors).forEach(function (viewId) {
 			var msg = this._printTwipsMessagesForReplay.get(msgType, parseInt(viewId));
-			this._onMessage(msg);
+			if (msg)
+				this._onMessage(msg);
 		}.bind(this));
 	}
 });
