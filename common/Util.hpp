@@ -13,6 +13,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
+#include <algorithm>
 #include <atomic>
 #include <functional>
 #include <memory>
@@ -1184,6 +1185,13 @@ int main(int argc, char**argv)
     {
         const auto pair = u64FromString(input);
         return pair.second ? pair : std::make_pair(def, false);
+    }
+
+    /// Converts and returns the argument to lower-case.
+    inline std::string toLower(std::string s)
+    {
+        std::transform(s.begin(), s.end(), s.begin(), ::tolower);
+        return s;
     }
 
     /// Get system_clock now in miliseconds.
