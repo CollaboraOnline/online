@@ -55,7 +55,7 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     void testOnFinished_Complete();
     void testOnFinished_Timeout();
 
-    static constexpr std::chrono::seconds DefTimeoutSeconds {5};
+    static constexpr std::chrono::seconds DefTimeoutSeconds{ 5 };
 };
 
 constexpr std::chrono::seconds HttpRequestTests::DefTimeoutSeconds;
@@ -169,24 +169,37 @@ void HttpRequestTests::testSimpleGetSync()
     LOK_ASSERT_EQUAL(pocoResponse.second, httpResponse->getBody());
 }
 
+/// Compare the response from Poco with ours.
+/// @checkReasonPhrase controls whether we compare the Reason Phrase too or not.
+/// This is useful for when a status code is recognized by one and not the other.
+/// @checkBody controls whether we compare the body content or not.
+/// This is useful when we don't care about the content of the body, just that
+/// there is some content at all or not.
 static void compare(const Poco::Net::HTTPResponse& pocoResponse, const std::string& pocoBody,
-                    const http::Response& httpResponse)
+                    const http::Response& httpResponse, bool checkReasonPhrase, bool checkBody)
 {
     LOK_ASSERT_EQUAL_MESSAGE("Response state", httpResponse.state(),
                              http::Response::State::Complete);
     LOK_ASSERT(!httpResponse.statusLine().httpVersion().empty());
     LOK_ASSERT(!httpResponse.statusLine().reasonPhrase().empty());
 
-    LOK_ASSERT_EQUAL_MESSAGE("Body", pocoBody, httpResponse.getBody());
+    if (checkBody)
+        LOK_ASSERT_EQUAL_MESSAGE("Body", pocoBody, httpResponse.getBody());
+    else
+        LOK_ASSERT_EQUAL_MESSAGE("Body empty?", pocoBody.empty(), httpResponse.getBody().empty());
 
     LOK_ASSERT_EQUAL_MESSAGE("Status Code", static_cast<unsigned>(pocoResponse.getStatus()),
                              httpResponse.statusLine().statusCode());
-    LOK_ASSERT_EQUAL_MESSAGE("Reason Phrase", pocoResponse.getReason(),
-                             httpResponse.statusLine().reasonPhrase());
+    if (checkReasonPhrase)
+        LOK_ASSERT_EQUAL_MESSAGE("Reason Phrase", Util::toLower(pocoResponse.getReason()),
+                                 Util::toLower(httpResponse.statusLine().reasonPhrase()));
+    else
+        LOK_ASSERT_EQUAL_MESSAGE("Reason Phrase empty?", pocoResponse.getReason().empty(),
+                                 httpResponse.statusLine().reasonPhrase().empty());
 
     LOK_ASSERT_EQUAL_MESSAGE("hasContentLength", pocoResponse.hasContentLength(),
                              httpResponse.header().hasContentLength());
-    if (pocoResponse.hasContentLength())
+    if (checkBody && pocoResponse.hasContentLength())
         LOK_ASSERT_EQUAL_MESSAGE("ContentLength", pocoResponse.getContentLength(),
                                  httpResponse.header().getContentLength());
 }
@@ -259,7 +272,10 @@ void HttpRequestTests::test500GetStatuses()
         // Poco throws exception "No message received" for 1xx Status Codes.
         if (statusCode > 100)
         {
-            compare(*pocoResponse.first, pocoResponse.second, *httpResponse);
+            const bool checkReasonPhrase = (statusCode != 103 && statusCode != 208);
+            const bool checkBody = (statusCode != 402);
+            compare(*pocoResponse.first, pocoResponse.second, *httpResponse, checkReasonPhrase,
+                    checkBody);
         }
     }
 
