@@ -34,6 +34,8 @@
 #include <iterator>
 #include <fstream>
 #include <string>
+#include <chrono>
+#include <thread>
 
 #ifndef TDOC
 #error TDOC must be defined (see Makefile.am)
@@ -152,42 +154,59 @@ inline std::unique_ptr<Poco::Net::HTTPClientSession> createSession(const Poco::U
 inline std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string>
 pocoGet(const Poco::URI& uri)
 {
-    try
+    LOG_INF("pocoGet: " << uri.toString());
+    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(uri));
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uri.getPathAndQuery(),
+                                   Poco::Net::HTTPMessage::HTTP_1_1);
+    session->sendRequest(request);
+    auto response = std::make_shared<Poco::Net::HTTPResponse>();
+    std::istream& rs = session->receiveResponse(*response);
+
+    LOG_DBG("pocoGet response for [" << uri.toString() << "]: " << response->getStatus() << ' '
+                                     << response->getReason()
+                                     << ", hasContentLength: " << response->hasContentLength()
+                                     << ", ContentLength: " << response->getContentLength64());
+
+    for (const auto& pair : *response)
     {
-        LOG_INF("pocoGet: " << uri.toString());
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(uri));
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, uri.getPathAndQuery(),
-                                       Poco::Net::HTTPMessage::HTTP_1_1);
-        session->sendRequest(request);
-        auto response = std::make_shared<Poco::Net::HTTPResponse>();
-        std::istream& rs = session->receiveResponse(*response);
-
-        LOG_DBG("pocoGet response for ["
-                << uri.toString() << "]: " << response->getStatus() << ' ' << response->getReason()
-                << ", hasContentLength: " << response->hasContentLength() << ", ContentLength: "
-                // << (response->hasContentLength() ? response->getContentLength64() : -1));
-                << response->getContentLength64());
-
-        for (const auto& pair : *response)
-        {
-            LOG_TRC(pair.first << '=' << pair.second);
-        }
-
-        std::string responseString;
-        if (response->hasContentLength() && response->getContentLength() > 0)
-        {
-            std::ostringstream outputStringStream;
-            Poco::StreamCopier::copyStream(rs, outputStringStream);
-            responseString = outputStringStream.str();
-            LOG_DBG("pocoGet [" << uri.toString() << "]: " << responseString);
-        }
-
-        return std::make_pair(response, responseString);
+        LOG_TRC(pair.first << '=' << pair.second);
     }
-    catch (const std::exception& ex)
+
+    std::string responseString;
+    if (response->hasContentLength() && response->getContentLength() > 0)
     {
-        LOG_ERR("pocoGet failed for [" << uri.toString() << "]: " << ex.what());
-        throw;
+        std::ostringstream outputStringStream;
+        Poco::StreamCopier::copyStream(rs, outputStringStream);
+        responseString = outputStringStream.str();
+        LOG_DBG("pocoGet [" << uri.toString() << "]: " << responseString);
+    }
+
+    return std::make_pair(response, responseString);
+}
+
+/// Uses Poco to make an HTTP GET from the given URI.
+/// And optionally retries up to @retry times with
+/// @delayMs between attempts.
+inline std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string>
+pocoGetRetry(const Poco::URI& uri, int retry = 3,
+             std::chrono::milliseconds delayMs = std::chrono::seconds(1))
+{
+    for (int attempt = 1; attempt <= retry; ++attempt)
+    {
+        try
+        {
+            LOG_INF("pocoGet #" << attempt << ": " << uri.toString());
+            return pocoGet(uri);
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERR("pocoGet #" << attempt << " failed for [" << uri.toString()
+                                << "]: " << ex.what());
+            if (attempt == retry)
+                throw;
+
+            std::this_thread::sleep_for(delayMs);
+        }
     }
 }
 
