@@ -264,7 +264,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 	_onUpdateParts: function (e) {
 		if (typeof this._prevSelectedPart === 'number' && !e.source) {
-			this._clearMsgReplayStore();
 			this.refreshViewData(undefined, false /* compatDataSrcOnly */, true /* sheetGeometryChanged */);
 			this._switchSplitPanesContext();
 			this.hideAnnotations(this._prevSelectedPart);
@@ -423,6 +422,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var part = parseInt(textMsg.match(/\d+/g)[0]);
 		if (!this.isHiddenPart(part)) {
 			this.refreshViewData(undefined, true /* compatDataSrcOnly */, false /* sheetGeometryChanged */);
+			this._replayPrintTwipsMsgAllViews('cellviewcursor');
+			this._replayPrintTwipsMsgAllViews('textviewselection');
 		}
 	},
 
