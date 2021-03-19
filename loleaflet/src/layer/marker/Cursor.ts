@@ -66,7 +66,7 @@ class Cursor {
 		if (this.map._docLayer.isCalc())
 			this.map.on('splitposchanged move', this.update, this);
 		else
-			this.map.on('zoomend move', this.update, this);
+			this.map.on('move', this.update, this);
 
 		document.addEventListener('blur', this.onFocusBlur.bind(this));
 		document.addEventListener('focus', this.onFocusBlur.bind(this));
