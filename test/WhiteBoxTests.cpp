@@ -58,6 +58,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testRequestDetails);
     CPPUNIT_TEST(testUIDefaults);
     CPPUNIT_TEST(testCSSVars);
+    CPPUNIT_TEST(testAsciiToLower);
     CPPUNIT_TEST(testStat);
 
     CPPUNIT_TEST_SUITE_END();
@@ -85,6 +86,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testRequestDetails();
     void testUIDefaults();
     void testCSSVars();
+    void testAsciiToLower();
     void testStat();
 };
 
@@ -1724,6 +1726,18 @@ void WhiteBoxTests::testCSSVars()
 
     LOK_ASSERT_EQUAL(std::string("<style>:root {--co-somestyle-text:#123456;}</style>"),
                      FileServerRequestHandler::cssVarsToStyle("--co-somestyle-text=#123456;;--some-val=3453--some-other-val=4536;;"));
+}
+
+void WhiteBoxTests::testAsciiToLower()
+{
+    LOK_ASSERT_EQUAL(std::string("something in lower case"),
+                     Util::toLower("SOMETHING IN LOWER CASE"));
+
+    LOK_ASSERT_EQUAL(std::string("\t\r\n"),
+                     Util::toLower("\t\r\n"));
+
+    LOK_ASSERT_EQUAL(std::string("Á É Í Ó Ú Ý Ć Ǵ Ḱ Ĺ Ḿ Ń Ṕ Ŕ Ś Ẃ Ź"),
+                     Util::toLower("Á É Í Ó Ú Ý Ć Ǵ Ḱ Ĺ Ḿ Ń Ṕ Ŕ Ś Ẃ Ź"));
 }
 
 void WhiteBoxTests::testStat()
