@@ -1599,6 +1599,7 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (cellViewCursorMarker) {
 			this._canvasOverlay.removePath(cellViewCursorMarker);
+			this._cellViewCursors[viewId].marker = undefined;
 		}
 	},
 
@@ -4108,6 +4109,12 @@ L.TileLayer = L.GridLayer.extend({
 		this._onMessage(msg);
 	},
 
+	_replayPrintTwipsMsgAllViews: function (msgType) {
+		Object.keys(this._cellViewCursors).forEach(function (viewId) {
+			var msg = this._printTwipsMessagesForReplay.get(msgType, parseInt(viewId));
+			this._onMessage(msg);
+		}.bind(this));
+	}
 });
 
 
