@@ -417,7 +417,7 @@ L.TextInput = L.Layer.extend({
 		var top = this._map._docLayer._visibleCursor.getNorthWest();
 		var bottom = this._map._docLayer._visibleCursor.getSouthWest();
 
-		if (!this._map._docLayer._cursorMarker.isVisible()) {
+		if (!this._map._docLayer._cursorMarker.isDomAttached()) {
 			// Display caret
 			this._map._docLayer._cursorMarker.add();
 		}
@@ -443,7 +443,7 @@ L.TextInput = L.Layer.extend({
 		if (!this._map._docLayer._cursorMarker) {
 			return;
 		}
-		if (this._map._docLayer._cursorMarker.isVisible())
+		if (this._map._docLayer._cursorMarker.isDomAttached())
 			this._map._docLayer._cursorMarker.remove();
 		this._map.removeLayer(this._cursorHandler);
 		// shape handlers visible again (if selected)
