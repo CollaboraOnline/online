@@ -143,12 +143,13 @@ class Cursor {
 		var canvasOffset = this.position.subtract(origin);
 
 		if (inDocCursor) {
-			var paneOffset = new CPoint(
+			var cursorOffset = new CPoint(
 				origin.x ? canvasOffset.x - splitPos.x : canvasOffset.x,
 				origin.y ? canvasOffset.y - splitPos.y : canvasOffset.y);
 			var paneBounds = new CBounds(new CPoint(0, 0), paneSize);
+			var cursorBounds = new CBounds(cursorOffset, cursorOffset.add(this.size));
 
-			if (!paneBounds.contains(paneOffset)) {
+			if (!paneBounds.contains(cursorBounds)) {
 				this.container.style.visibility = 'hidden';
 				this.visible = false;
 				this.showCursorHeader();
