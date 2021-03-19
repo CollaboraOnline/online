@@ -173,6 +173,7 @@ namespace
             return false;
         }
 #else
+        (void)directory;
         return false;
 #endif
     }
