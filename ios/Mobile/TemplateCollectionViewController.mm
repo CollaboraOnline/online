@@ -32,6 +32,8 @@ static NSString *mapTemplateExtensionToActual(NSString *templateName) {
 
 - (void)viewDidLoad {
 
+    self.modalInPresentation = YES;
+
     static NSString *downloadedTemplates = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingString:@"/downloadedTemplates/"];
 
     // Scan for available templates. First downloaded ones.
