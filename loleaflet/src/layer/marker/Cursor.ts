@@ -59,13 +59,12 @@ class Cursor {
 		}
 
 		this.map.getCursorOverlayContainer().appendChild(this.container);
+		this.visible = true;
 		this.update();
 		if (this.map._docLayer.isCalc())
 			this.map.on('splitposchanged move', this.update, this);
 		else
 			this.map.on('zoomend move', this.update, this);
-
-		this.visible = true;
 
 		document.addEventListener('blur', this.onFocusBlur.bind(this));
 		document.addEventListener('focus', this.onFocusBlur.bind(this));
@@ -151,11 +150,14 @@ class Cursor {
 
 			if (!paneBounds.contains(paneOffset)) {
 				this.container.style.visibility = 'hidden';
+				this.visible = false;
+				this.showCursorHeader();
 				return;
 			}
 		}
 
 		this.container.style.visibility = 'visible';
+		this.visible = true;
 
 		var tileSectionPos = this.map._docLayer.getTileSectionPos();
 		// Compute tile-section offset in css pixels.
@@ -163,6 +165,7 @@ class Cursor {
 		var size = this.size.divideBy(this.dpiScale)._round();
 		this.setSize(size);
 		this.setPos(pos);
+		this.showCursorHeader();
 	}
 
 	setOpacity(opacity: number) {
@@ -171,8 +174,14 @@ class Cursor {
 		}
 	}
 
+	// Shows cursor header if cursor is in visible area.
 	showCursorHeader() {
 		if (this.cursorHeader) {
+			if (!this.visible) {
+				L.DomUtil.setStyle(this.cursorHeader, 'visibility', 'hidden');
+				return;
+			}
+
 			L.DomUtil.setStyle(this.cursorHeader, 'visibility', 'visible');
 
 			clearTimeout(this.blinkTimeout);
