@@ -27,6 +27,11 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
+/// When enabled, in addition to the loopback
+/// server, an external server will be used
+/// to check for regressions.
+#define ENABLE_EXTERNAL_REGRESSION_CHECK
+
 /// http::Request unit-tests.
 /// FIXME: use loopback and avoid depending on external services.
 /// Currently we need to rely on external services to validate
@@ -252,6 +257,11 @@ void HttpRequestTests::test500GetStatuses()
         std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string> pocoResponse;
         if (statusCode > 100)
             pocoResponse = helpers::pocoGet(secure, Host, port, url);
+#ifdef ENABLE_EXTERNAL_REGRESSION_CHECK
+        std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string> pocoResponseExt;
+        if (statusCode > 100)
+            pocoResponseExt = helpers::pocoGet(secure, "httpbin.org", 80, url);
+#endif
 
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
@@ -272,10 +282,19 @@ void HttpRequestTests::test500GetStatuses()
         // Poco throws exception "No message received" for 1xx Status Codes.
         if (statusCode > 100)
         {
-            const bool checkReasonPhrase = (statusCode != 103 && statusCode != 208);
-            const bool checkBody = (statusCode != 402);
-            compare(*pocoResponse.first, pocoResponse.second, *httpResponse, checkReasonPhrase,
-                    checkBody);
+            compare(*pocoResponse.first, pocoResponse.second, *httpResponse, true, true);
+
+#ifdef ENABLE_EXTERNAL_REGRESSION_CHECK
+            // These Status Codes are not recognized by httpbin.org,
+            // so we get "unknown" and must skip comparing them.
+            const bool checkReasonPhrase
+                = (statusCode != 103 && statusCode != 208 && statusCode != 413 && statusCode != 414
+                   && statusCode != 416 && statusCode != 421 && statusCode != 425
+                   && statusCode != 440 && statusCode != 508 && statusCode != 511);
+            const bool checkBody = (statusCode != 402 && statusCode != 418);
+            compare(*pocoResponseExt.first, pocoResponseExt.second, *httpResponse,
+                    checkReasonPhrase, checkBody);
+#endif
         }
     }
 
