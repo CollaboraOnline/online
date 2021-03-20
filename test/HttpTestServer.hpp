@@ -60,6 +60,7 @@ private:
             LOG_TRC('#' << socket->getFD() << " handleIncomingMessage: removed " << read
                         << " bytes to have " << data.size() << " in the buffer.");
 
+            Buffer& out = socket->getOutBuffer();
             if (request.getVerb() == http::Request::VERB_GET)
             {
                 // Return test data.
@@ -70,6 +71,7 @@ private:
                     const auto reason = http::getReasonPhraseForCode(statusCode.first);
                     LOG_TRC('#' << socket->getFD() << " handleIncomingMessage: got StatusCode "
                                 << statusCode.first << ", sending back: " << reason);
+                    http::Response response(http::StatusLine(statusCode.first));
 
                     std::ostringstream oss;
                     oss << "HTTP/1.1 " << statusCode.first << ' ' << reason << "\r\n"
@@ -80,27 +82,24 @@ private:
                     if (statusCode.first == 402)
                     {
                         const std::string body = "Pay me!";
-                        oss << "Content-Length: " << body.size() << "\r\n";
-                        oss << "\r\n";
-                        oss << body;
-                        socket->send(oss.str());
+                        response.set("Content-Length", std::to_string(body.size()));
+                        response.writeData(out);
+                        socket->send(body);
                     }
                     else if (statusCode.first == 406)
                     {
                         const std::string body
                             = R"({"message": "Client did not request a supported media type.", "accept": ["image/webp", "image/svg+xml", "image/jpeg", "image/png", "image/*"]})";
-                        oss << "Content-Length: " << body.size() << "\r\n";
-                        oss << "\r\n";
-                        oss << body;
-                        socket->send(oss.str());
+                        response.set("Content-Length", std::to_string(body.size()));
+                        response.writeData(out);
+                        socket->send(body);
                     }
                     else if (statusCode.first == 418)
                     {
                         const std::string body = "I'm a teapot!";
-                        oss << "Content-Length: " << body.size() << "\r\n";
-                        oss << "\r\n";
-                        oss << body;
-                        socket->send(oss.str());
+                        response.set("Content-Length", std::to_string(body.size()));
+                        response.writeData(out);
+                        socket->send(body);
                     }
                     else
                     {
@@ -125,13 +124,10 @@ private:
             }
             else
             {
-                std::ostringstream oss;
-                oss << "HTTP/1.1 501 Not Implemented\r\n"
-                    << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                    << "Server: " HTTP_AGENT_STRING "\r\n"
-                    << "Content-Length: 0\r\n"
-                    << "\r\n";
-                socket->send(oss.str());
+                http::Response response(http::StatusLine(501));
+                response.set("Content-Length", "0");
+                response.writeData(out);
+                socket->send(nullptr, 0);
             }
         }
         else if (read < 0)
