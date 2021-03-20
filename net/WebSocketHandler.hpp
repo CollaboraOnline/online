@@ -15,6 +15,7 @@
 #include "common/Log.hpp"
 #include "common/Unit.hpp"
 #include "Socket.hpp"
+#include <net/HttpRequest.hpp>
 
 #include <Poco/MemoryStream.h>
 #include <Poco/Net/HTTPRequest.h>
@@ -416,7 +417,17 @@ public:
         }
 #if !MOBILEAPP
         else if (_isClient && !socket->isWebSocket())
-            handleClientUpgrade(socket);
+        {
+            try
+            {
+                handleClientUpgrade(socket);
+            }
+            catch (const std::exception& ex)
+            {
+                LOG_DBG('#' << socket->getFD()
+                            << " handleClientUpgrade exception caught: " << ex.what());
+            }
+        }
 #endif
         else
         {
@@ -798,66 +809,50 @@ protected:
     {
         assert(socket && "socket must be valid");
 
-        LOG_TRC("Incoming client websocket upgrade response: "
-                << std::string(&socket->getInBuffer()[0], socket->getInBuffer().size()));
+        std::vector<char>& data = socket->getInBuffer();
 
-        bool bOk = false;
-        StreamSocket::MessageMap map;
+        LOG_TRC('#' << socket->getFD() << " Incoming client websocket upgrade response: "
+                    << std::string(data.data(), data.size()));
 
-        try
-        {
-            Poco::MemoryInputStream message(&socket->getInBuffer()[0], socket->getInBuffer().size());;
-            Poco::Net::HTTPResponse response;
-
-            response.read(message);
-
-            {
-                static const std::string marker("\r\n\r\n");
-                auto itBody = std::search(socket->getInBuffer().begin(),
-                                          socket->getInBuffer().end(),
-                                          marker.begin(), marker.end());
-
-                if (itBody != socket->getInBuffer().end())
-                    map._headerSize = itBody - socket->getInBuffer().begin() + marker.size();
-            }
-
-            if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_SWITCHING_PROTOCOLS
-                && response.has("Upgrade")
-                && Poco::icompare(response.get("Upgrade"), "websocket") == 0)
+        // Consume the incoming data by parsing and processing the body.
+        http::Response response([&]() {
+            if (response.statusLine().statusCode()
+                    == Poco::Net::HTTPResponse::HTTP_SWITCHING_PROTOCOLS
+                && Poco::icompare(response.header().get("Upgrade"), "websocket") == 0)
             {
 #if 0 // SAL_DEBUG ...
-                const std::string wsKey = response.get("Sec-WebSocket-Accept", "");
-                const std::string wsProtocol = response.get("Sec-WebSocket-Protocol", "");
-                if (Poco::icompare(wsProtocol, "chat") != 0)
-                    LOG_ERR("Unknown websocket protocol " << wsProtocol);
-                else
+                    const std::string wsKey = response.get("Sec-WebSocket-Accept", "");
+                    const std::string wsProtocol = response.get("Sec-WebSocket-Protocol", "");
+                    if (Poco::icompare(wsProtocol, "chat") != 0)
+                        LOG_ERR("Unknown websocket protocol " << wsProtocol);
+                    else
 #endif
                 {
-                    LOG_TRC("Accepted incoming websocket response");
+                    LOG_TRC('#' << socket->getFD() << " Accepted incoming websocket response");
                     // FIXME: validate Sec-WebSocket-Accept vs. Sec-WebSocket-Key etc.
-                    bOk = true;
+                    setWebSocket();
                 }
             }
-        }
-        catch (const Poco::Exception& exc)
-        {
-            LOG_DBG("handleClientUpgrade exception caught: " << exc.displayText());
-        }
-        catch (const std::exception& exc)
-        {
-            LOG_DBG("handleClientUpgrade exception caught.");
-        }
+        });
 
-        if (!bOk || map._headerSize == 0)
+        const int64_t read = response.readData(data.data(), data.size());
+        if (read < 0)
         {
-            LOG_ERR("Bad websocker server response.");
-
+            // Error: Interrupt the transfer.
+            LOG_ERR('#' << socket->getFD()
+                        << " Error in client websocket upgrade response. Disconnecting");
             socket->shutdown();
             return;
         }
 
-        setWebSocket();
-        socket->eraseFirstInputBytes(map);
+        if (read > 0)
+        {
+            // Remove consumed data.
+            data.erase(data.begin(), data.begin() + read);
+            return;
+        }
+
+        assert(read == 0 && "Not enough data.");
     }
 #endif
 
