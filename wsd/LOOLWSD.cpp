@@ -2538,15 +2538,12 @@ private:
                 catch (const Poco::Net::NotAuthenticatedException& exc)
                 {
                     //LOG_ERR("FileServerRequestHandler::NotAuthenticated: " << exc.displayText());
-                    std::ostringstream oss;
-                    oss << "HTTP/1.1 401 \r\n"
-                        << "Content-Type: text/html charset=UTF-8\r\n"
-                        << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                        << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
-                        << "WWW-authenticate: Basic realm=\"online\"\r\n"
-                        << "Connection: close\r\n" // Let the client know we will disconnect.
-                        << "\r\n";
-                    socket->send(oss.str());
+                    http::Response httpResponse(http::StatusLine(401));
+                    httpResponse.set("Content-Type", "text/html charset=UTF-8");
+                    httpResponse.set("WWW-authenticate", "Basic realm=\"online\"");
+                    httpResponse.set("Connection", "close");
+                    httpResponse.writeData(socket->getOutBuffer());
+                    socket->flush();
                     socket->shutdown();
                     return;
                 }
@@ -3272,14 +3269,11 @@ private:
                 else
                     LOG_ERR("Download with id [" << downloadId << "] not found.");
 
-                std::ostringstream oss;
-                oss << "HTTP/1.1 404 Not Found\r\n"
-                    << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                    << "Server: " HTTP_SERVER_STRING "\r\n"
-                    << "Content-Length: 0\r\n"
-                    << "Connection: close\r\n" // Let the client know we will disconnect.
-                    << "\r\n";
-                socket->send(oss.str());
+                http::Response httpResponse(http::StatusLine(404));
+                httpResponse.set("Content-Length", "0");
+                httpResponse.set("Connection", "close");
+                httpResponse.writeData(socket->getOutBuffer());
+                socket->flush();
                 socket->shutdown();
             }
             return;
