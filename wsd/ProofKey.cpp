@@ -20,17 +20,7 @@
 #include <Poco/BinaryWriter.h>
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
-#include <Poco/Dynamic/Var.h>
-#include <Poco/JSON/Object.h>
-#include <Poco/JSON/Parser.h>
 #include <Poco/LineEndingConverter.h>
-#include <Poco/Net/HTTPClientSession.h>
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/NetException.h>
-#include <Poco/Timestamp.h>
-#include <Poco/URI.h>
-#include <Poco/Util/Application.h>
 
 #include "Exceptions.hpp"
 #include <Log.hpp>
