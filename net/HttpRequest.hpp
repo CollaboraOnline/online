@@ -490,14 +490,18 @@ public:
     {
         if (_stage == Stage::Header)
         {
-            std::ostringstream oss;
-            oss << getVerb() << ' ' << getUrl() << ' ' << getVersion() << "\r\n";
-            _header.serialize(oss);
-            oss << "\r\n";
-            const std::string headerStr = oss.str();
+            LOG_TRC("performWrites (header).");
 
-            out.append(headerStr.data(), headerStr.size());
-            LOG_TRC("performWrites (header): " << headerStr.size() << ": " << headerStr);
+            out.append(getVerb());
+            out.append(' ');
+            out.append(getUrl());
+            out.append(' ');
+            out.append(getVersion());
+            out.append("\r\n", 2);
+
+            _header.writeData(out);
+            out.append("\r\n", 2);
+
             _stage = Stage::Body;
         }
 
