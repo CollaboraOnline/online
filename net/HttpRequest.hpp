@@ -364,6 +364,20 @@ public:
         return cookies;
     }
 
+    bool writeData(Buffer& out)
+    {
+        // Note: we don't add the end-of-header '\r\n'.
+        for (const auto& pair : _headers)
+        {
+            out.append(pair.first);
+            out.append(": ", 2);
+            out.append(pair.second);
+            out.append("\r\n", 2);
+        }
+
+        return true;
+    }
+
     /// Serialize the header to an output stream.
     template <typename T> T& serialize(T& os) const
     {
@@ -632,6 +646,11 @@ public:
         saveBodyToMemory();
     }
 
+    Response(StatusLine statusLine)
+        : _statusLine(std::move(statusLine))
+    {
+    }
+
     /// The state of the response.
     enum class State
     {
@@ -654,6 +673,12 @@ public:
     const StatusLine& statusLine() const { return _statusLine; }
 
     const Header& header() const { return _header; }
+
+    /// Add an HTTP header field.
+    void add(const std::string& key, const std::string& value) { _header.add(key, value); }
+
+    /// Set an HTTP header field, replacing an earlier value, if exists.
+    void set(const std::string& key, const std::string& value) { _header.set(key, value); }
 
     /// Redirect the response body, if any, to a file.
     /// If the server responds with a non-success status code (i.e. not 2xx)
@@ -688,10 +713,23 @@ public:
     /// Returns the body, assuming it wasn't redirected to file or callback.
     const std::string& getBody() const { return _body; }
 
-    /// Handles incoming data.
+    /// Handles incoming data (from the Server) in the Client.
     /// Returns the number of bytes consumed, or -1 for error
     /// and/or to interrupt transmission.
     int64_t readData(const char* p, int64_t len);
+
+    /// Serializes the Server Response into the given buffer.
+    bool writeData(Buffer& out)
+    {
+        _header.set("Date", Util::getHttpTimeNow());
+        // constexpr auto server = HTTP_AGENT_STRING;
+        // _header.set("Server", server);
+
+        _statusLine.writeData(out);
+        _header.writeData(out);
+        out.append("\r\n", 2);
+        return true;
+    }
 
     /// Signifies that we got all the data we expected
     /// and cleans up and updates the states.
