@@ -104,7 +104,9 @@ namespace Util
         {
             std::stringstream ss;
             Poco::HexBinaryEncoder hex(ss);
+            hex.rdbuf()->setLineLength(0); // Don't insert line breaks.
             hex.write(getBytes(length).data(), length);
+            hex.close(); // Flush.
             return ss.str().substr(0, length);
         }
 
@@ -125,7 +127,10 @@ namespace Util
                 LOG_ERR("failed to read " << length << " hard random bytes, got " << len << " for hash: " << errno);
             }
             close(fd);
+
+            hex.rdbuf()->setLineLength(0); // Don't insert line breaks.
             hex.write(random.data(), length);
+            hex.close(); // Flush.
             return ss.str().substr(0, length);
         }
 
