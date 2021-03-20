@@ -426,7 +426,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                 }
             }
 
-            response.set("User-Agent", HTTP_AGENT_STRING);
+            response.set("Server", HTTP_SERVER_STRING);
             response.set("Date", Util::getHttpTimeNow());
 
             bool gzip = request.hasToken("Accept-Encoding", "gzip");
@@ -984,7 +984,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     // No referrer-policy
     response.add("Referrer-Policy", "no-referrer");
     response.add("X-Content-Type-Options", "nosniff");
-    response.set("User-Agent", HTTP_AGENT_STRING);
+    response.set("Server", HTTP_SERVER_STRING);
     response.set("Date", Util::getHttpTimeNow());
 
     response.setContentType("text/html");
