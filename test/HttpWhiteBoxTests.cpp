@@ -24,6 +24,7 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testStatusLineParserValidComplete);
     CPPUNIT_TEST(testStatusLineParserValidIncomplete);
+    CPPUNIT_TEST(testStatusLineSerialize);
 
     CPPUNIT_TEST(testRequestParserValidComplete);
     CPPUNIT_TEST(testRequestParserValidIncomplete);
@@ -32,17 +33,18 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
 
     void testStatusLineParserValidComplete();
     void testStatusLineParserValidIncomplete();
+    void testStatusLineSerialize();
     void testRequestParserValidComplete();
     void testRequestParserValidIncomplete();
 };
 
 void HttpWhiteBoxTests::testStatusLineParserValidComplete()
 {
-    const int expVersionMajor = 1;
-    const int expVersionMinor = 1;
+    const unsigned expVersionMajor = 1;
+    const unsigned expVersionMinor = 1;
     const std::string expVersion
         = "HTTP/" + std::to_string(expVersionMajor) + '.' + std::to_string(expVersionMinor);
-    const int expStatusCode = 101;
+    const unsigned expStatusCode = 101;
     const std::string expReasonPhrase = "Something Something";
     const std::string data
         = expVersion + ' ' + std::to_string(expStatusCode) + ' ' + expReasonPhrase + "\r\n";
@@ -60,11 +62,11 @@ void HttpWhiteBoxTests::testStatusLineParserValidComplete()
 
 void HttpWhiteBoxTests::testStatusLineParserValidIncomplete()
 {
-    const int expVersionMajor = 1;
-    const int expVersionMinor = 1;
+    const unsigned expVersionMajor = 1;
+    const unsigned expVersionMinor = 1;
     const std::string expVersion
         = "HTTP/" + std::to_string(expVersionMajor) + '.' + std::to_string(expVersionMinor);
-    const int expStatusCode = 101;
+    const unsigned expStatusCode = 101;
     const std::string expReasonPhrase = "Something Something";
     const std::string data
         = expVersion + ' ' + std::to_string(expStatusCode) + ' ' + expReasonPhrase + "\r\n";
@@ -87,6 +89,15 @@ void HttpWhiteBoxTests::testStatusLineParserValidIncomplete()
     LOK_ASSERT_EQUAL(expVersionMinor, statusLine.versionMinor());
     LOK_ASSERT_EQUAL(expStatusCode, statusLine.statusCode());
     LOK_ASSERT_EQUAL(expReasonPhrase, statusLine.reasonPhrase());
+}
+
+void HttpWhiteBoxTests::testStatusLineSerialize()
+{
+    http::StatusLine statusLine(200);
+    Buffer buf;
+    statusLine.writeData(buf);
+    const std::string out(buf.getBlock(), buf.getBlockSize());
+    LOK_ASSERT_EQUAL(std::string("HTTP/1.1 200 OK\r\n"), out);
 }
 
 void HttpWhiteBoxTests::testRequestParserValidComplete()
