@@ -469,7 +469,7 @@ public:
     /// Set the file to send as the body of the request.
     void setBodyFile(const std::string& path)
     {
-        //FIXME: use generalized lambda campture to move the ifstream, available in C++14.
+        //FIXME: use generalized lambda capture to move the ifstream, available in C++14.
         auto ifs = std::make_shared<std::ifstream>(path, std::ios::binary);
 
         ifs->seekg(0, std::ios_base::end);
@@ -490,14 +490,18 @@ public:
     {
         if (_stage == Stage::Header)
         {
-            std::ostringstream oss;
-            oss << getVerb() << ' ' << getUrl() << ' ' << getVersion() << "\r\n";
-            _header.serialize(oss);
-            oss << "\r\n";
-            const std::string headerStr = oss.str();
+            LOG_TRC("performWrites (header).");
 
-            out.append(headerStr.data(), headerStr.size());
-            LOG_TRC("performWrites (header): " << headerStr.size());
+            out.append(getVerb());
+            out.append(' ');
+            out.append(getUrl());
+            out.append(' ');
+            out.append(getVersion());
+            out.append("\r\n", 2);
+
+            _header.writeData(out);
+            out.append("\r\n", 2);
+
             _stage = Stage::Body;
         }
 
