@@ -946,6 +946,13 @@ public:
     /// Adds Date and User-Agent.
     void send(Poco::Net::HTTPResponse& response);
 
+    /// Safely flush any outgoing data.
+    inline void flush()
+    {
+        if (!_outBuffer.empty())
+            writeOutgoingData();
+    }
+
     /// Sends data with file descriptor as control data.
     /// Can be used only with Unix sockets.
     void sendFD(const char* data, const uint64_t len, int fd)
@@ -955,8 +962,7 @@ public:
         // Flush existing non-ancillary data
         // so that our non-ancillary data will
         // match ancillary data.
-        if (getOutBuffer().size() > 0)
-            writeOutgoingData();
+        flush();
 
         msghdr msg;
         iovec iov[1];
