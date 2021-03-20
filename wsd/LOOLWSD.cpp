@@ -2531,7 +2531,8 @@ private:
                 if (!LOOLWSD::AdminEnabled)
                     throw Poco::FileAccessDeniedException("Admin console disabled");
 
-                try{
+                try
+                {
                     if (!FileServerRequestHandler::isAdminLoggedIn(request, *response))
                         throw Poco::Net::NotAuthenticatedException("Invalid admin login");
                 }
@@ -2615,14 +2616,11 @@ private:
 
             // Bad request.
             // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
-            std::ostringstream oss;
-            oss << "HTTP/1.1 400\r\n"
-                << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                << "User-Agent: LOOLWSD WOPI Agent\r\n"
-                << "Content-Length: 0\r\n"
-                << "Connection: close\r\n" // Let the client know we will disconnect.
-                << "\r\n";
-            socket->send(oss.str());
+            http::Response httpResponse(http::StatusLine(400));
+            httpResponse.set("Content-Length", "0");
+            httpResponse.set("Connection", "close");
+            httpResponse.writeData(socket->getOutBuffer());
+            socket->flush();
             socket->shutdown();
             return;
         }
