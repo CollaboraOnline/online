@@ -306,6 +306,9 @@ public:
 
     std::string get(const std::string& key) const
     {
+        // There are typically half a dozen header
+        // entries, rarely much more. A map would
+        // probably not be faster but would add complexity.
         for (const auto& pair : _headers)
         {
             if (pair.first == key)
@@ -758,7 +761,8 @@ private:
             LOG_TRC("Finishing");
             _bodyFile.close();
             _state = newState;
-            _finishedCallback();
+            if (_finishedCallback)
+                _finishedCallback();
         }
     }
 
