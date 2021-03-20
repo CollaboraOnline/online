@@ -77,6 +77,10 @@ public:
         _size = _buffer.size() - _offset;
     }
 
+    void append(const std::string& s) { append(s.c_str(), s.size()); }
+
+    void append(const char ch) { append(&ch, 1); }
+
     void dumpHex(std::ostream &os, const char *legend, const char *prefix) const
     {
         if (_size > 0 || _offset > 0)
