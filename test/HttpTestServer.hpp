@@ -74,8 +74,6 @@ private:
         LOG_TRC('#' << socket->getFD() << " handleIncomingMessage: removed " << read
                     << " bytes to have " << data.size() << " in the buffer.");
 
-        Buffer& out = socket->getOutBuffer();
-
         if (request.getVerb() == http::Request::VERB_GET)
         {
             // Return test data.
@@ -88,47 +86,40 @@ private:
                             << statusCode.first << ", sending back: " << reason);
 
                 http::Response response(http::StatusLine(statusCode.first));
-                std::string body;
                 if (statusCode.first == 402)
                 {
-                    body = "Pay me!";
+                    response.setBody("Pay me!");
                 }
                 else if (statusCode.first == 406)
                 {
-                    body
-                        = R"({"message": "Client did not request a supported media type.", "accept": ["image/webp", "image/svg+xml", "image/jpeg", "image/png", "image/*"]})";
+                    response.setBody(
+                        R"({"message": "Client did not request a supported media type.", )"
+                        R"("accept": ["image/webp", "image/svg+xml", "image/jpeg", "image/png", "image/*"]})");
                 }
                 else if (statusCode.first == 418)
                 {
-                    body = "I'm a teapot!";
+                    response.setBody("I'm a teapot!");
                 }
 
-                if (!body.empty())
-                    response.set("Content-Length", std::to_string(body.size()));
-                else if (statusCode.first >= 200 && statusCode.first != 204
-                         && statusCode.first != 304) // No Content for other tags.
+                if (response.getBody().empty() && statusCode.first >= 200 && statusCode.first != 204
+                    && statusCode.first != 304) // No Content for other tags.
                     response.set("Content-Length", "0");
 
-                response.writeData(out);
-                socket->send(body);
+                socket->send(response);
             }
             else
             {
                 http::Response response(http::StatusLine(200));
-                const std::string body = (Util::startsWith(request.getUrl(), "/echo/")
-                                              ? request.getUrl().substr(sizeof("/echo"))
-                                              : std::string());
-                response.set("Content-Length", std::to_string(body.size()));
-                response.writeData(out);
-                socket->send(body);
+                if (Util::startsWith(request.getUrl(), "/echo/"))
+                    response.setBody(request.getUrl().substr(sizeof("/echo")));
+                socket->send(response);
             }
         }
         else
         {
             http::Response response(http::StatusLine(501));
             response.set("Content-Length", "0");
-            response.writeData(out);
-            socket->flush();
+            socket->send(response);
         }
     }
 
