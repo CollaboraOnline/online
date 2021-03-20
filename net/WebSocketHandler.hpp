@@ -700,7 +700,7 @@ protected:
         return size;
     }
 
-    bool isControlFrame(WSOpCode code){ return code >= WSOpCode::Close; }
+    bool isControlFrame(WSOpCode code) const { return code >= WSOpCode::Close; }
 
     void readPayload(unsigned char *data, size_t dataLen, unsigned char* mask, std::vector<char>& payload)
     {
