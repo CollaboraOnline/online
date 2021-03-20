@@ -726,8 +726,7 @@ public:
     bool writeData(Buffer& out)
     {
         _header.set("Date", Util::getHttpTimeNow());
-        // constexpr auto server = HTTP_AGENT_STRING;
-        // _header.set("Server", server);
+        _header.set("Server", HTTP_SERVER_STRING);
 
         _statusLine.writeData(out);
         _header.writeData(out);
