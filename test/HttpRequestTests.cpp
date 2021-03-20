@@ -5,15 +5,20 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <chrono>
-#include <condition_variable>
 #include <config.h>
 
+#include "HttpTestServer.hpp"
+
+#include <Poco/Net/AcceptCertificateHandler.h>
+#include <Poco/Net/InvalidCertificateHandler.h>
+#include <Poco/Net/SSLManager.h>
 #include <Poco/Net/HTTPClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/StreamCopier.h>
 
+#include <chrono>
+#include <condition_variable>
 #include <mutex>
 #include <string>
 #include <test/lokassert.hpp>
@@ -22,6 +27,8 @@
 #include "Ssl.hpp"
 #include <net/SslSocket.hpp>
 #endif
+#include <net/ServerSocket.hpp>
+#include <net/DelaySocket.hpp>
 #include <net/HttpRequest.hpp>
 #include <FileUtil.hpp>
 #include <Util.hpp>
@@ -61,6 +68,81 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     void testOnFinished_Timeout();
 
     static constexpr std::chrono::seconds DefTimeoutSeconds{ 5 };
+
+    int _port;
+    SocketPoll _pollServerThread;
+    std::shared_ptr<ServerSocket> _socket;
+
+    static const int SimulatedLatencyMs = 0;
+
+public:
+    HttpRequestTests()
+        : _port(9990)
+        , _pollServerThread("HttpServerPoll")
+    {
+#if ENABLE_SSL
+        Poco::Net::initializeSSL();
+        // Just accept the certificate anyway for testing purposes
+        Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler
+            = new Poco::Net::AcceptCertificateHandler(false);
+        Poco::Net::Context::Params sslParams;
+        Poco::Net::Context::Ptr sslContext
+            = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
+        Poco::Net::SSLManager::instance().initializeClient(nullptr, invalidCertHandler, sslContext);
+#endif
+    }
+
+    ~HttpRequestTests()
+    {
+#if ENABLE_SSL
+        Poco::Net::uninitializeSSL();
+#endif
+    }
+
+    class ServerSocketFactory final : public SocketFactory
+    {
+        std::shared_ptr<Socket> create(const int physicalFd) override
+        {
+            int fd = physicalFd;
+
+#if !MOBILEAPP
+            if (HttpRequestTests::SimulatedLatencyMs > 0)
+                fd = Delay::create(HttpRequestTests::SimulatedLatencyMs, physicalFd);
+#endif
+
+            // #if ENABLE_SSL
+            //             using SocketType = SslStreamSocket;
+            // #else
+            using SocketType = StreamSocket;
+            // #endif
+            return StreamSocket::create<SocketType>(fd, false,
+                                                    std::make_shared<ServerRequestHandler>());
+        }
+    };
+
+    void setUp()
+    {
+        LOG_INF("HttpRequestTests::setUp");
+        std::shared_ptr<SocketFactory> factory = std::make_shared<ServerSocketFactory>();
+        for (int i = 0; i < 40; ++i, ++_port)
+        {
+            // Try listening on this port.
+            LOG_INF("HttpRequestTests::setUp: creating socket to listen on port " << _port);
+            _socket = ServerSocket::create(ServerSocket::Type::Local, _port, Socket::Type::IPv4,
+                                           _pollServerThread, factory);
+            if (_socket)
+                break;
+        }
+
+        _pollServerThread.startThread();
+        _pollServerThread.insertNewSocket(_socket);
+    }
+
+    void tearDown()
+    {
+        LOG_INF("HttpRequestTests::tearDown");
+        _pollServerThread.stop();
+    }
 };
 
 constexpr std::chrono::seconds HttpRequestTests::DefTimeoutSeconds;
@@ -148,30 +230,44 @@ void HttpRequestTests::testSimpleGet()
 
 void HttpRequestTests::testSimpleGetSync()
 {
-    const std::string Host = "http://www.example.com";
-    const char* URL = "/";
+    constexpr auto testname = "simpleGetSync";
 
-    const auto pocoResponse = helpers::pocoGet(Poco::URI(Host + URL));
+    const std::string Host("127.0.0.1");
+    const int port = _port;
+    constexpr bool secure = false;
+
+    const auto data = Util::rng::getHardRandomHexString(Util::rng::getNext() % 1024);
+    const auto body = std::string(data.data(), data.size());
+    const std::string URL = "/echo/" + body;
+    TST_LOG("Requesting URI: [" << URL << ']');
+
+    const auto pocoResponse = helpers::pocoGet(secure, Host, port, URL);
 
     http::Request httpRequest(URL);
 
-    auto httpSession = http::Session::create(Host);
-    httpSession->setTimeout(DefTimeoutSeconds);
-    LOK_ASSERT(httpSession->syncRequest(httpRequest));
-    LOK_ASSERT(httpSession->syncRequest(httpRequest)); // Second request.
+    auto httpSession = http::Session::create(Host, http::Session::Protocol::HttpUnencrypted, port);
+    httpSession->setTimeout(std::chrono::seconds(1));
 
-    const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
-    LOK_ASSERT(httpResponse->done());
-    LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
-    LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
-    LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
-    LOK_ASSERT_EQUAL(200U, httpResponse->statusLine().statusCode());
-    LOK_ASSERT(httpResponse->statusLine().statusCategory()
-               == http::StatusLine::StatusCodeClass::Successful);
-    LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
-    LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
+    for (int i = 0; i < 5; ++i)
+    {
+        TST_LOG("Request #" << i);
+        LOK_ASSERT(httpSession->syncRequest(httpRequest));
 
-    LOK_ASSERT_EQUAL(pocoResponse.second, httpResponse->getBody());
+        const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
+        LOK_ASSERT(httpResponse->done());
+        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+
+        LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
+        LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
+        LOK_ASSERT_EQUAL(200U, httpResponse->statusLine().statusCode());
+        LOK_ASSERT(httpResponse->statusLine().statusCategory()
+                   == http::StatusLine::StatusCodeClass::Successful);
+        LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
+        LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
+
+        LOK_ASSERT_EQUAL(pocoResponse.second, httpResponse->getBody());
+        LOK_ASSERT_EQUAL(body, httpResponse->getBody());
+    }
 }
 
 /// Compare the response from Poco with ours.
