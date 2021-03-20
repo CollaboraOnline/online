@@ -793,16 +793,14 @@ protected:
             socket->setSocketBufferSize(0);
 #endif
 
-        std::ostringstream oss;
-        oss << "HTTP/1.1 101 Switching Protocols\r\n"
-            << "Upgrade: websocket\r\n"
-            << "Connection: Upgrade\r\n"
-            << "Sec-WebSocket-Accept: " << PublicComputeAccept::doComputeAccept(wsKey) << "\r\n"
-            << "\r\n";
-
-        const std::string res = oss.str();
-        LOG_TRC('#' << socket->getFD() << ": Sending WS Upgrade response: " << res);
-        socket->send(res);
+        http::Response httpResponse(http::StatusLine(101));
+        httpResponse.set("Upgrade", "websocket");
+        httpResponse.set("Connection", "Upgrade");
+        httpResponse.set("Sec-WebSocket-Accept", PublicComputeAccept::doComputeAccept(wsKey));
+        httpResponse.writeData(socket->getOutBuffer());
+        LOG_TRC('#' << socket->getFD()
+                    << ": Sending WS Upgrade response: " << httpResponse.header().toString());
+        socket->flush();
 #endif
         setWebSocket();
     }
