@@ -52,11 +52,14 @@ constexpr const char CAPABILITIES_END_POINT[] = "/hosting/capabilities";
 /// the code: they are logical execution unit names.
 #define SHARED_DOC_THREADNAME_SUFFIX "broker_"
 
-/// The HTTP response User-Agent.
+/// The HTTP request User-Agent. Used only in Requests.
 #define HTTP_AGENT_STRING "LOOLWSD HTTP Agent " LOOLWSD_VERSION
 
-/// The WOPI User-Agent.
-#define WOPI_AGENT_STRING "LOOLWSD WOPI Agent " LOOLWSD_VERSION
+/// The WOPI User-Agent. Depricated: use HTTP_AGENT_STRING.
+#define WOPI_AGENT_STRING HTTP_AGENT_STRING
+
+/// The HTTP response Server. Used only in Responses.
+#define HTTP_SERVER_STRING "LOOLWSD HTTP Server " LOOLWSD_VERSION
 
 // The client port number, both loolwsd and the kits have this.
 extern int ClientPortNumber;
