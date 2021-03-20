@@ -18,10 +18,7 @@
 #include <Poco/JSON/JSON.h>
 #include <Poco/JSON/Parser.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
-#include <Poco/Net/HTTPClientSession.h>
-#include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/InvalidCertificateHandler.h>
 #include <Poco/Net/NetException.h>
 #include <Poco/Net/PrivateKeyPassphraseHandler.h>

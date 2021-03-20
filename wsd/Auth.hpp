@@ -17,8 +17,6 @@
 #include <Poco/Crypto/RSADigestEngine.h>
 #include <Poco/Crypto/RSAKey.h>
 #endif
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/URI.h>
 
 /// Base class of all Authentication/Authorization implementations.
 class AuthBase

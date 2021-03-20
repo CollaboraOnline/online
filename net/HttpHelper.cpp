@@ -13,9 +13,8 @@
 #include <string>
 #include <zlib.h>
 
-#include <Poco/MemoryStream.h>
-#include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
+
 #include <common/Common.hpp>
 #include <common/FileUtil.hpp>
 #include <common/Util.hpp>

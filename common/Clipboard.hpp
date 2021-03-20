@@ -17,7 +17,6 @@
 #include <stdlib.h>
 #include <Log.hpp>
 #include <Exceptions.hpp>
-#include <Poco/MemoryStream.h>
 
 struct ClipboardData
 {

@@ -24,7 +24,6 @@
 #include <Poco/Net/FilePartSource.h>
 #include <Poco/Net/SSLManager.h>
 #include <Poco/Net/WebSocket.h>
-#include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
