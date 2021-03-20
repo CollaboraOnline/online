@@ -541,8 +541,22 @@ public:
     static constexpr const char* HTTP_1_1 = "HTTP/1.1";
     static constexpr const char* OK = "OK";
 
+    /// Construct an invalid StatusLine, used for parsing.
     StatusLine()
-        : _statusCode(0)
+        : _versionMajor(1)
+        , _versionMinor(1)
+        , _statusCode(0)
+    {
+    }
+
+    /// Construct a StatusLine with a given code and
+    /// the default protocol version.
+    StatusLine(unsigned statusCode)
+        : _httpVersion(HTTP_1_1)
+        , _versionMajor(1)
+        , _versionMinor(1)
+        , _statusCode(statusCode)
+        , _reasonPhrase(getReasonPhraseForCode(statusCode))
     {
     }
 
@@ -577,17 +591,28 @@ public:
     /// Returns the state and clobbers the len on succcess to the number of bytes read.
     FieldParseState parse(const char* p, int64_t& len);
 
+    bool writeData(Buffer& out)
+    {
+        out.append(_httpVersion);
+        out.append(' ');
+        out.append(std::to_string(_statusCode));
+        out.append(' ');
+        out.append(_reasonPhrase);
+        out.append("\r\n", 2);
+        return true;
+    }
+
     const std::string& httpVersion() const { return _httpVersion; }
-    int versionMajor() const { return _versionMajor; }
-    int versionMinor() const { return _versionMinor; }
-    int statusCode() const { return _statusCode; }
+    unsigned versionMajor() const { return _versionMajor; }
+    unsigned versionMinor() const { return _versionMinor; }
+    unsigned statusCode() const { return _statusCode; }
     const std::string& reasonPhrase() const { return _reasonPhrase; }
 
 private:
     std::string _httpVersion; //< Typically "HTTP/1.1"
-    int _versionMajor; //< The first version digit (typically 1).
-    int _versionMinor; //< The second version digit (typically 1).
-    int _statusCode;
+    unsigned _versionMajor; //< The first version digit (typically 1).
+    unsigned _versionMinor; //< The second version digit (typically 1).
+    unsigned _statusCode;
     std::string _reasonPhrase; //< A client SHOULD ignore the reason-phrase content.
 };
 

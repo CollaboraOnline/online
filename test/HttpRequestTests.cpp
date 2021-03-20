@@ -71,7 +71,7 @@ void HttpRequestTests::testInvalidURI()
     LOK_ASSERT(httpResponse->done() == false);
     LOK_ASSERT(httpResponse->state() != http::Response::State::Complete);
     LOK_ASSERT(httpResponse->statusLine().statusCode() != Poco::Net::HTTPResponse::HTTP_OK);
-    LOK_ASSERT_EQUAL(0, httpResponse->statusLine().statusCode());
+    LOK_ASSERT_EQUAL(0U, httpResponse->statusLine().statusCode());
     LOK_ASSERT(httpResponse->statusLine().statusCategory()
                == http::StatusLine::StatusCodeClass::Invalid);
     LOK_ASSERT(httpResponse->getBody().empty());
@@ -127,7 +127,7 @@ void HttpRequestTests::testSimpleGet()
         LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
-        LOK_ASSERT_EQUAL(200, httpResponse->statusLine().statusCode());
+        LOK_ASSERT_EQUAL(200U, httpResponse->statusLine().statusCode());
         LOK_ASSERT(httpResponse->statusLine().statusCategory()
                    == http::StatusLine::StatusCodeClass::Successful);
 
@@ -158,7 +158,7 @@ void HttpRequestTests::testSimpleGetSync()
     LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
     LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
     LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
-    LOK_ASSERT_EQUAL(200, httpResponse->statusLine().statusCode());
+    LOK_ASSERT_EQUAL(200U, httpResponse->statusLine().statusCode());
     LOK_ASSERT(httpResponse->statusLine().statusCategory()
                == http::StatusLine::StatusCodeClass::Successful);
     LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
@@ -177,7 +177,7 @@ static void compare(const Poco::Net::HTTPResponse& pocoResponse, const std::stri
 
     LOK_ASSERT_EQUAL_MESSAGE("Body", pocoBody, httpResponse.getBody());
 
-    LOK_ASSERT_EQUAL_MESSAGE("Status Code", static_cast<int>(pocoResponse.getStatus()),
+    LOK_ASSERT_EQUAL_MESSAGE("Status Code", static_cast<unsigned>(pocoResponse.getStatus()),
                              httpResponse.statusLine().statusCode());
     LOK_ASSERT_EQUAL_MESSAGE("Reason Phrase", pocoResponse.getReason(),
                              httpResponse.statusLine().reasonPhrase());
@@ -222,7 +222,7 @@ void HttpRequestTests::test500GetStatuses()
             http::StatusLine::StatusCodeClass::Client_Error,
             http::StatusLine::StatusCodeClass::Server_Error };
     int curStatusCodeClass = -1;
-    for (int statusCode = 100; statusCode < 512; ++statusCode)
+    for (unsigned statusCode = 100; statusCode < 512; ++statusCode)
     {
         const std::string url = "/status/" + std::to_string(statusCode);
 
@@ -301,7 +301,7 @@ void HttpRequestTests::testSimplePost()
     LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
     LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
     LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
-    LOK_ASSERT_EQUAL(200, httpResponse->statusLine().statusCode());
+    LOK_ASSERT_EQUAL(200U, httpResponse->statusLine().statusCode());
     LOK_ASSERT(httpResponse->statusLine().statusCategory()
                == http::StatusLine::StatusCodeClass::Successful);
 
