@@ -55,6 +55,7 @@
 #include <map>
 #include <mutex>
 #include <sstream>
+#include <string>
 #include <thread>
 #include <unordered_map>
 
@@ -2684,19 +2685,15 @@ private:
         const std::string mimeType = "text/plain";
         const std::string responseString = "OK";
 
-        std::ostringstream oss;
-        oss << "HTTP/1.1 200 OK\r\n"
-            "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-            "User-Agent: " WOPI_AGENT_STRING "\r\n"
-            "Content-Length: " << responseString.size() << "\r\n"
-            "Content-Type: " << mimeType << "\r\n"
-            "Connection: close\r\n" // Let the client know we will disconnect.
-            "\r\n";
-
+        http::Response httpResponse(http::StatusLine(200));
+        httpResponse.set("Content-Length", std::to_string(responseString.size()));
+        httpResponse.set("Content-Type", std::to_string(mimeType.size()));
+        httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+        httpResponse.set("Connection", "close");
+        httpResponse.writeData(socket->getOutBuffer());
         if (requestDetails.isGet())
-            oss << responseString;
-
-        socket->send(oss.str());
+            socket->send(responseString);
+        socket->flush();
         socket->shutdown();
         LOG_INF("Sent / response successfully.");
     }
@@ -2735,20 +2732,14 @@ private:
             srvUrl = requestDetails.getProxyPrefix();
         Poco::replaceInPlace(xml, std::string("%SRV_URI%"), srvUrl);
 
-        // TODO: Refactor this to some common handler.
-        std::ostringstream oss;
-        oss << "HTTP/1.1 200 OK\r\n"
-            "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-            "User-Agent: " WOPI_AGENT_STRING "\r\n"
-            "Content-Length: " << xml.size() << "\r\n"
-            "Content-Type: text/xml\r\n"
-            "X-Content-Type-Options: nosniff\r\n"
-            "Connection: close\r\n" // Let the client know we will disconnect.
-            "\r\n"
-            << xml;
-
-        LOG_ERR("Sending back: " << oss.str());
-        socket->send(oss.str());
+        http::Response httpResponse(http::StatusLine(200));
+        httpResponse.set("Content-Length", std::to_string(xml.size()));
+        httpResponse.set("Content-Type", "text/xml");
+        httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+        httpResponse.set("X-Content-Type-Options", "nosniff");
+        httpResponse.set("Connection", "close");
+        httpResponse.writeData(socket->getOutBuffer());
+        socket->send(xml);
         socket->shutdown();
         LOG_INF("Sent discovery.xml successfully.");
     }
