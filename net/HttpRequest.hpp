@@ -308,7 +308,8 @@ public:
         return false;
     }
 
-    std::string get(const std::string& key) const
+    /// Get a header entry value by key, if found, defaulting to @def, if missing.
+    std::string get(const std::string& key, const std::string& def = std::string()) const
     {
         // There are typically half a dozen header
         // entries, rarely much more. A map would
@@ -319,7 +320,7 @@ public:
                 return pair.second;
         }
 
-        return std::string();
+        return def;
     }
 
     /// Set the Content-Type header.
@@ -466,6 +467,12 @@ public:
 
     /// Set an HTTP header field, replacing an earlier value, if exists.
     void set(const std::string& key, std::string value) { _header.set(key, std::move(value)); }
+
+    /// Get a header entry value by key, if found, defaulting to @def, if missing.
+    std::string get(const std::string& key, const std::string& def = std::string()) const
+    {
+        return _header.get(key, def);
+    }
 
     /// Set the request body source to upload some data. Meaningful for POST.
     /// Size is needed to set the Content-Length.
