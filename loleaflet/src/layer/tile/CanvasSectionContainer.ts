@@ -124,6 +124,7 @@ class CanvasSectionObject {
 	drawingOrder: number = null;
 	zIndex: number = null;
 	interactable: boolean = true;
+	isAnimating: boolean = false;
 	sectionProperties: any = {};
 	onInitialize: Function; // Paramaters: null (use sectionProperties).
 	onMouseMove: Function; // Parameters: Point [x, y], DragDistance [x, y] (null when not dragging), e (native event object)
@@ -140,7 +141,8 @@ class CanvasSectionObject {
 	onMultiTouchMove: Function; // Parameters: Point [x, y], DragDistance [x, y], e (native event object)
 	onMultiTouchEnd: Function; // Parameters: e (native event object)
 	onResize: Function; // Parameters: null (Section's size is up to date when this callback is called.)
-	onDraw: Function; // Parameters: null
+	onDraw: Function; // Parameters: null || (frameCount, elapsedTime, interval)
+	onAnimationEnded: Function; // frameCount, elapsedTime, interval. Sections that will use animation, have to have this function defined.
 	onNewDocumentTopLeft: Function; // Parameters: Size [x, y]
 	onRemove: Function; // This Function is called right before section is removed.
 	setDrawingOrder: Function; // Parameters: integer. Do not implement this. This function is added by section container.
@@ -148,6 +150,8 @@ class CanvasSectionObject {
 	bindToSection: Function; // Parameters: string. Do not implement this. This function is added by section container.
 	boundsList: Array<CanvasSectionObject>; // The sections those this section can propagate events to. Updated by container.
 	stopPropagating: Function; // Do not implement this. This function is added by section container.
+	startAnimating: Function; // Do not implement this. This function is added by section container. Return value: boolean.
+	resetAnimation: Function; // Do not implement this. This function is added by section container.
 
 	constructor (options: any) {
 		this.name = options.name;
@@ -180,6 +184,7 @@ class CanvasSectionObject {
 		this.onDraw = options.onDraw ? options.onDraw: function() {};
 		this.onNewDocumentTopLeft = options.onNewDocumentTopLeft ? options.onNewDocumentTopLeft: function() {};
 		this.onRemove = options.onRemove ? options.onRemove: function() {};
+		this.onAnimationEnded = options.onAnimationEnded ? options.onAnimationEnded: function() {};
 	}
 
 	getTestDivContainer(): HTMLDivElement {
@@ -220,6 +225,17 @@ class CanvasSectionContainer {
 	public lowestPropagatedBoundSection: string = null; // Event propagating to bound sections. The first section which stops propagating and the sections those are on top of that section, get the event.
 	private scrollLineHeight: number = 30; // This will be overridden.
 	private mouseIsInside: boolean = false;
+
+	// Below variables are related to animation feature.
+	private animatingSectionName: string = null; // The section that called startAnimating function. This variable is null when animations are not running.
+	private interval: number = null; // Time interval between 2 frames.
+	private lastFrameStamp: number = null;
+	private continueAnimating: boolean = null;
+	private frameCount: number = null; // Frame count of the current animation.
+	private duration: number = null; // Duration for the animation.
+	private elapsedTime: number = null; // Time that passed since the animation started.
+	private stoppingFunctionList: Array<EventListener>; // Event listeners need to be removed from the canvas object. So we keep track of their functions.
+	private stoppingEventTypes: Array<string>; // Events those stop the animation.
 
 	constructor (canvasDOMElement: HTMLCanvasElement) {
 		this.canvas = canvasDOMElement;
@@ -1170,7 +1186,7 @@ class CanvasSectionContainer {
 		this.context.translate(section.myTopLeft[0], section.myTopLeft[1]);
 	}
 
-	private drawSections () {
+	private drawSections (frameCount: number = null, elapsedTime: number = null, interval: number = null) {
 		this.context.setTransform(1, 0, 0, 1, 0, 0);
 		this.context.fillStyle = this.clearColor;
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -1185,9 +1201,9 @@ class CanvasSectionContainer {
 					this.context.fillRect(0, 0, this.sections[i].size[0], this.sections[i].size[1]);
 				}
 
-				this.sections[i].onDraw();
+				this.sections[i].onDraw(frameCount, elapsedTime, interval);
 
-				if (this.sections[i].borderColor) {
+				if (this.sections[i].borderColor) { // If section's border is set, draw its borders after section's "onDraw" function is called.
 					this.context.lineWidth = this.dpiScale;
 					this.context.strokeStyle = this.sections[i].borderColor;
 					this.context.strokeRect(0.5, 0.5, this.sections[i].size[0], this.sections[i].size[1]);
@@ -1306,6 +1322,14 @@ class CanvasSectionContainer {
 		section.stopPropagating = function() {
 			section.containerObject.lowestPropagatedBoundSection = section.name;
 		}
+
+		section.startAnimating = function(options: any): boolean {
+			return section.containerObject.startAnimating(section.name, options);
+		}
+
+		section.resetAnimation = function () {
+			section.containerObject.resetAnimation(section.name);
+		}
 	}
 
 	private pushSection (newSection: CanvasSectionObject) {
@@ -1341,6 +1365,135 @@ class CanvasSectionContainer {
 		if (found) {
 			this.updateBoundSectionLists();
 			this.reNewAllSections();
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private setAnimatingSectionName (sectionName: string) {
+		this.animatingSectionName = sectionName;
+	}
+
+	public getAnimatingSectionName (): string {
+		return this.animatingSectionName;
+	}
+
+	private animate (timeStamp: number) {
+		if (this.lastFrameStamp > 0)
+			this.elapsedTime += timeStamp - this.lastFrameStamp;
+
+		if (this.duration && this.elapsedTime >= this.duration) { // This is not the only place that can set "continueAnimating" to "false".
+			this.continueAnimating = false;
+		}
+
+		if (this.continueAnimating) {
+			if (timeStamp - this.lastFrameStamp > this.interval) {
+				this.lastFrameStamp = timeStamp;
+				this.drawSections(this.frameCount, this.elapsedTime, this.interval);
+				this.frameCount++;
+			}
+
+			requestAnimationFrame(this.animate.bind(this));
+		}
+		else {
+			for (var i: number = 0; i < this.stoppingFunctionList.length; i++) {
+				this.canvas.removeEventListener(this.stoppingEventTypes[i], this.stoppingFunctionList[i], true);
+			}
+
+			var section: CanvasSectionObject = this.getSectionWithName(this.getAnimatingSectionName());
+			if (section) {
+				section.isAnimating = false;
+				section.onAnimationEnded(this.frameCount, this.elapsedTime, this.interval);
+			}
+
+			this.setAnimatingSectionName(null);
+			this.frameCount = this.elapsedTime = this.interval = null;
+
+			this.drawSections();
+		}
+	}
+
+	private createStoppingFunction () {
+		var that: any = this;
+		return function () {
+			that.continueAnimating = false;
+		}
+	}
+
+	// Resets animation duration. Not to be called directly. Instead, use (inside section class) this.resetAnimation()
+	public resetAnimation (sectionName: string) {
+		if (sectionName === this.getAnimatingSectionName()) {
+			this.lastFrameStamp = 0;
+			this.elapsedTime = 0;
+			this.frameCount = 0;
+		}
+	}
+
+	public stopAnimating () {
+		// Though this function is available for every section, generally, only the section that started animation should use this.
+		this.continueAnimating = false;
+	}
+
+	// Don't call this directly. Instead, call (inside the section class) section.startAnimating(options).
+	public startAnimating (sectionName: string, options: any): boolean {
+		/*
+			Most of the time, we need to draw entire canvas when animating.
+			Because if there is another section under the animated one, that section needs to be renewed too.
+			Also, sections may need to be redrawn because of the updated view (while animating).
+			This animation feature re-draws all sections with given interval.
+			Developer can set options to ensure the animation stops at certain point.
+			If your section's "onDraw" function is given the variables "count, elapsedTime, interval", then you can assume that CanvasSectionContainer is in animation mode.
+			You can also check "animatingSectionName" variable of container class (if it is null or not) to see if animating is on.
+			When animating, onDraw function	gets 3 variables (some of these are interchangeable with simple math):
+				frameCount ~= elapsedTime / interval.
+				elapsedTime ~= interval * frameCount.
+				interval ~= 1000 / fps.
+
+			Sections other than the one which started the animation, can't know when the animation will stop.
+
+			The section which started the animation => "(inside section class) this.containerObject.animatingSectionName".
+
+			For now, only one section can start animations at a time.
+
+			options (possible values are separated by the '|' char):
+				// Developer can specify the events those will stop animating.
+				// Important note: User shouldn't depend on the order of the events if they assign a stopping handler to an event.
+					Let's assume a stopping function is bound to 'onclick' event.
+					For now, most probably, onclick event will first be propagated to sections, then animation will stop.
+					But when Leaflet is removed, animation will stop first and then onclick event will be propagated to sections.
+
+				stoppingEvents: ['click', 'mousemove' ..etc] // Events should match the real keywords.
+				// Frames per second. This variable is usually 60. It is assumed (or known) 60 is enough for human eye. If this variable is not set, it defaults to 60.
+				fps: 60 | 90 | 30 | 15 ..etc
+				// Developer can set the duration for the animation, in miliseconds. There are also other ways to stop the animation.
+				duration: 2000 | null // 2 seconds | null.
+		*/
+
+		if (!this.getAnimatingSectionName()) {
+			this.setAnimatingSectionName(sectionName);
+			this.getSectionWithName(sectionName).isAnimating = true;
+			var fps = options.fps || 60;
+			this.interval = Math.round(1000 / fps);
+			this.lastFrameStamp = 0;
+			this.continueAnimating = true;
+			this.duration = options.duration ? options.duration: null;
+			this.elapsedTime = 0;
+			this.frameCount = 0;
+
+			this.stoppingFunctionList = new Array<EventListener>(0);
+			this.stoppingEventTypes = new Array<string>(0);
+
+			if (options.stoppingEvents) {
+				for (var i: number = 0; i < options.stoppingEvents.length; i++) {
+					this.stoppingEventTypes.push(options.stoppingEvents[i]);
+					this.stoppingFunctionList.push(this.createStoppingFunction());
+					this.canvas.addEventListener(options.stoppingEvents[i], this.stoppingFunctionList[i], true);
+				}
+			}
+
+			this.animate(performance.now());
 			return true;
 		}
 		else {
