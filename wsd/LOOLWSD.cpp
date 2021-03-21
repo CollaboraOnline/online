@@ -3344,7 +3344,7 @@ private:
         LOG_TRC("Client WS request: " << requestDetails.getURI() << ", url: " << url << ", socket #" << socket->getFD());
 
         // First Upgrade.
-        auto ws = std::make_shared<WebSocketHandler>(_socket, request);
+        auto ws = std::make_shared<WebSocketHandler>(socket, request);
 
         // Response to clients beyond this point is done via WebSocket.
         try
