@@ -1002,8 +1002,8 @@ private:
         if (duration > getTimeout())
         {
             LOG_WRN("Socket #" << _socket->getFD() << " has timed out while requesting ["
-                               << _request.getVerb() << ' ' << _request.getUrl() << "] after "
-                               << duration);
+                               << _request.getVerb() << ' ' << _host << _request.getUrl()
+                               << "] after " << duration);
 
             // Flag that we timed out.
             _response->timeout();
