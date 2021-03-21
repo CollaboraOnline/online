@@ -76,7 +76,7 @@ public:
     /// socket: the TCP socket which received the upgrade request
     /// request: the HTTP upgrade request to WebSocket
     template <typename T>
-    WebSocketHandler(const std::weak_ptr<StreamSocket>& socket, const T& request)
+    WebSocketHandler(const std::shared_ptr<StreamSocket>& socket, const T& request)
         : _socket(socket)
 #if !MOBILEAPP
         , _lastPingSentTime(std::chrono::steady_clock::now()
@@ -89,7 +89,10 @@ public:
         , _shuttingDown(false)
         , _isClient(false)
     {
-        upgradeToWebSocket(request);
+        if (!socket)
+            throw std::runtime_error("Invalid socket while upgrading to WebSocket.");
+
+        upgradeToWebSocket(*socket, request);
     }
 
     /// Implementation of the ProtocolHandlerInterface.
@@ -767,14 +770,10 @@ private:
 protected:
     /// Upgrade the http(s) connection to a websocket.
     template <typename T>
-    void upgradeToWebSocket(const T& req)
+    void upgradeToWebSocket(StreamSocket& socket, const T& req)
     {
-        std::shared_ptr<StreamSocket> socket = _socket.lock();
-        if (!socket)
-            throw std::runtime_error("Invalid socket while upgrading to WebSocket. Request: " + req.getURI());
-
-        LOG_TRC('#' << socket->getFD() << ": Upgrading to WebSocket.");
-        assert(!socket->isWebSocket());
+        LOG_TRC('#' << socket.getFD() << ": Upgrading to WebSocket.");
+        assert(!socket.isWebSocket());
 
 #if !MOBILEAPP
         // create our websocket goodness ...
@@ -782,21 +781,21 @@ protected:
         const std::string wsKey = req.get("Sec-WebSocket-Key", "");
         const std::string wsProtocol = req.get("Sec-WebSocket-Protocol", "chat");
         // FIXME: other sanity checks ...
-        LOG_INF('#' << socket->getFD() << ": WebSocket version: " << wsVersion <<
-                ", key: [" << wsKey << "], protocol: [" << wsProtocol << "].");
+        LOG_INF('#' << socket.getFD() << ": WebSocket version: " << wsVersion << ", key: [" << wsKey
+                    << "], protocol: [" << wsProtocol << "].");
 
 #if ENABLE_DEBUG
         if (std::getenv("LOOL_ZERO_BUFFER_SIZE"))
-            socket->setSocketBufferSize(0);
+            socket.setSocketBufferSize(0);
 #endif
 
         http::Response httpResponse(http::StatusLine(101));
         httpResponse.set("Upgrade", "websocket");
         httpResponse.set("Connection", "Upgrade");
         httpResponse.set("Sec-WebSocket-Accept", PublicComputeAccept::doComputeAccept(wsKey));
-        LOG_TRC('#' << socket->getFD()
+        LOG_TRC('#' << socket.getFD()
                     << ": Sending WS Upgrade response: " << httpResponse.header().toString());
-        socket->send(httpResponse);
+        socket.send(httpResponse);
 #endif
         setWebSocket();
     }

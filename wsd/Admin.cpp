@@ -295,9 +295,9 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
                                        const std::weak_ptr<StreamSocket>& socket,
                                        const Poco::Net::HTTPRequest& request)
-    : WebSocketHandler(socket, request),
-      _admin(adminManager),
-      _isAuthenticated(false)
+    : WebSocketHandler(socket.lock(), request)
+    , _admin(adminManager)
+    , _isAuthenticated(false)
 {
     // Different session id pool for admin sessions (?)
     _sessionId = Util::decodeId(LOOLWSD::GetConnectionId());

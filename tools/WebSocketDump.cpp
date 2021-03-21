@@ -33,8 +33,8 @@ class DumpSocketHandler : public WebSocketHandler
 {
 public:
     DumpSocketHandler(const std::weak_ptr<StreamSocket>& socket,
-                      const Poco::Net::HTTPRequest& request) :
-        WebSocketHandler(socket, request)
+                      const Poco::Net::HTTPRequest& request)
+        : WebSocketHandler(socket.lock(), request)
     {
     }
 
