@@ -39,6 +39,10 @@
 
 #define LOG_SOCKET_DATA
 
+namespace http
+{
+class Response;
+}
 namespace Poco
 {
     class MemoryInputStream;
@@ -945,6 +949,10 @@ public:
     /// Sends HTTP response.
     /// Adds Date and User-Agent.
     void send(Poco::Net::HTTPResponse& response);
+
+    /// Send an http::Response and flush.
+    /// Does not add any fields to the header.
+    void send(const http::Response& response);
 
     /// Safely flush any outgoing data.
     inline void flush()
