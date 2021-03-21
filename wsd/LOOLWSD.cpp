@@ -2544,8 +2544,7 @@ private:
                     httpResponse.set("Content-Type", "text/html charset=UTF-8");
                     httpResponse.set("WWW-authenticate", "Basic realm=\"online\"");
                     httpResponse.set("Connection", "close");
-                    httpResponse.writeData(socket->getOutBuffer());
-                    socket->flush();
+                    socket->send(httpResponse);
                     socket->shutdown();
                     return;
                 }
@@ -2620,8 +2619,7 @@ private:
             http::Response httpResponse(http::StatusLine(400));
             httpResponse.set("Content-Length", "0");
             httpResponse.set("Connection", "close");
-            httpResponse.writeData(socket->getOutBuffer());
-            socket->flush();
+            socket->send(httpResponse);
             socket->shutdown();
             return;
         }
@@ -2733,13 +2731,11 @@ private:
         Poco::replaceInPlace(xml, std::string("%SRV_URI%"), srvUrl);
 
         http::Response httpResponse(http::StatusLine(200));
-        httpResponse.set("Content-Length", std::to_string(xml.size()));
-        httpResponse.set("Content-Type", "text/xml");
+        httpResponse.setBody(xml, "text/xml");
         httpResponse.set("Last-Modified", Util::getHttpTimeNow());
         httpResponse.set("X-Content-Type-Options", "nosniff");
         httpResponse.set("Connection", "close");
-        httpResponse.writeData(socket->getOutBuffer());
-        socket->send(xml);
+        socket->send(httpResponse);
         socket->shutdown();
         LOG_INF("Sent discovery.xml successfully.");
     }
@@ -2755,12 +2751,10 @@ private:
 
         http::Response httpResponse(http::StatusLine(200));
         httpResponse.set("Last-Modified", Util::getHttpTimeNow());
-        httpResponse.set("Content-Length", std::to_string(capabilities.size()));
-        httpResponse.set("Content-Type", "application/json");
+        httpResponse.setBody(capabilities, "application/json");
         httpResponse.set("X-Content-Type-Options", "nosniff");
         httpResponse.set("Connection", "close");
-        httpResponse.writeData(socket->getOutBuffer());
-        socket->send(capabilities);
+        socket->send(httpResponse);
         socket->shutdown();
         LOG_INF("Sent capabilities.json successfully.");
     }
@@ -2804,8 +2798,7 @@ private:
             http::Response httpResponse(http::StatusLine(400));
             httpResponse.set("Content-Length", "0");
             httpResponse.set("Connection", "close");
-            httpResponse.writeData(socket->getOutBuffer());
-            socket->send(errMsg);
+            socket->send(httpResponse);
             socket->shutdown();
             return;
         }
@@ -3065,8 +3058,7 @@ private:
                 http::Response httpResponse(http::StatusLine(403));
                 httpResponse.set("Content-Length", "0");
                 httpResponse.set("Connection", "close");
-                httpResponse.writeData(socket->getOutBuffer());
-                socket->flush();
+                socket->send(httpResponse);
                 socket->shutdown();
                 return;
             }
@@ -3163,8 +3155,7 @@ private:
                     http::Response httpResponse(http::StatusLine(200));
                     httpResponse.set("Content-Length", "0");
                     httpResponse.set("Connection", "close");
-                    httpResponse.writeData(socket->getOutBuffer());
-                    socket->flush();
+                    socket->send(httpResponse);
                     socket->shutdown();
                     return;
                 }
@@ -3249,8 +3240,7 @@ private:
                 http::Response httpResponse(http::StatusLine(404));
                 httpResponse.set("Content-Length", "0");
                 httpResponse.set("Connection", "close");
-                httpResponse.writeData(socket->getOutBuffer());
-                socket->flush();
+                socket->send(httpResponse);
                 socket->shutdown();
             }
             return;
