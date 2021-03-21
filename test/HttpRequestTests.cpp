@@ -233,11 +233,17 @@ void HttpRequestTests::test500GetStatuses()
 
         httpSession->asyncRequest(httpRequest, pollThread);
 
-        std::unique_lock<std::mutex> lock(mutex);
-        cv.wait_for(lock, std::chrono::seconds(1));
+        // Get via Poco in parallel.
+        std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string> pocoResponse;
+        if (statusCode > 100)
+            pocoResponse = helpers::pocoGet(secure, Host, port, url);
 
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
-        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+
+        std::unique_lock<std::mutex> lock(mutex);
+        cv.wait_for(lock, std::chrono::seconds(1), [&]() { return httpResponse->done(); });
+
+        LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
         LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
 
@@ -248,11 +254,9 @@ void HttpRequestTests::test500GetStatuses()
 
         LOK_ASSERT_EQUAL(statusCode, httpResponse->statusLine().statusCode());
 
-        if (httpResponse->statusLine().statusCategory()
-            != http::StatusLine::StatusCodeClass::Informational)
+        // Poco throws exception "No message received" for 1xx Status Codes.
+        if (statusCode > 100)
         {
-            // Get via Poco in parallel.
-            const auto pocoResponse = helpers::pocoGet(secure, Host, port, url);
             compare(*pocoResponse.first, pocoResponse.second, *httpResponse);
         }
     }
