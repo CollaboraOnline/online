@@ -139,16 +139,14 @@ void HttpRequestTests::testSimpleGet()
 
 void HttpRequestTests::testSimpleGetSync()
 {
-    const char* Host = "www.example.com";
+    const std::string Host = "http://www.example.com";
     const char* URL = "/";
-    const bool secure = false;
-    const int port = 80;
 
-    const auto pocoResponse = helpers::pocoGet(secure, Host, port, URL);
+    const auto pocoResponse = helpers::pocoGet(Poco::URI(Host + URL));
 
     http::Request httpRequest(URL);
 
-    auto httpSession = http::Session::createHttp(Host);
+    auto httpSession = http::Session::create(Host);
     httpSession->setTimeout(std::chrono::seconds(1));
     LOK_ASSERT(httpSession->syncRequest(httpRequest));
     LOK_ASSERT(httpSession->syncRequest(httpRequest)); // Second request.
