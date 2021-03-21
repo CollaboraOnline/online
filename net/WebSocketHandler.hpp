@@ -75,13 +75,13 @@ public:
     /// Parameters:
     /// socket: the TCP socket which received the upgrade request
     /// request: the HTTP upgrade request to WebSocket
-    WebSocketHandler(const std::weak_ptr<StreamSocket>& socket,
-                     const Poco::Net::HTTPRequest& request)
+    template <typename T>
+    WebSocketHandler(const std::weak_ptr<StreamSocket>& socket, const T& request)
         : _socket(socket)
 #if !MOBILEAPP
-        , _lastPingSentTime(std::chrono::steady_clock::now() -
-                            std::chrono::microseconds(PingFrequencyMicroS) -
-                            std::chrono::microseconds(InitialPingDelayMicroS))
+        , _lastPingSentTime(std::chrono::steady_clock::now()
+                            - std::chrono::microseconds(PingFrequencyMicroS)
+                            - std::chrono::microseconds(InitialPingDelayMicroS))
         , _pingTimeUs(0)
         , _isMasking(false)
         , _inFragmentBlock(false)
@@ -766,7 +766,8 @@ private:
 
 protected:
     /// Upgrade the http(s) connection to a websocket.
-    void upgradeToWebSocket(const Poco::Net::HTTPRequest& req)
+    template <typename T>
+    void upgradeToWebSocket(const T& req)
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (!socket)
@@ -789,16 +790,13 @@ protected:
             socket->setSocketBufferSize(0);
 #endif
 
-        std::ostringstream oss;
-        oss << "HTTP/1.1 101 Switching Protocols\r\n"
-            << "Upgrade: websocket\r\n"
-            << "Connection: Upgrade\r\n"
-            << "Sec-WebSocket-Accept: " << PublicComputeAccept::doComputeAccept(wsKey) << "\r\n"
-            << "\r\n";
-
-        const std::string res = oss.str();
-        LOG_TRC('#' << socket->getFD() << ": Sending WS Upgrade response: " << res);
-        socket->send(res);
+        http::Response httpResponse(http::StatusLine(101));
+        httpResponse.set("Upgrade", "websocket");
+        httpResponse.set("Connection", "Upgrade");
+        httpResponse.set("Sec-WebSocket-Accept", PublicComputeAccept::doComputeAccept(wsKey));
+        LOG_TRC('#' << socket->getFD()
+                    << ": Sending WS Upgrade response: " << httpResponse.header().toString());
+        socket->send(httpResponse);
 #endif
         setWebSocket();
     }
