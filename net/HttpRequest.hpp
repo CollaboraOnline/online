@@ -739,17 +739,28 @@ public:
     /// Returns the body, assuming it wasn't redirected to file or callback.
     const std::string& getBody() const { return _body; }
 
+    /// Set the body to be sent to the client.
+    /// Also sets Content-Length and Content-Type.
+    void setBody(std::string body, std::string contentType = "text/html charset=UTF-8")
+    {
+        _body = std::move(body);
+        _header.setContentLength(_body.size()); // Always set it, even if 0.
+        if (!_body.empty()) // Type is only meaningful if there is a body.
+            _header.setContentType(std::move(contentType));
+    }
+
     /// Handles incoming data (from the Server) in the Client.
     /// Returns the number of bytes consumed, or -1 for error
     /// and/or to interrupt transmission.
     int64_t readData(const char* p, int64_t len);
 
     /// Serializes the Server Response into the given buffer.
-    bool writeData(Buffer& out)
+    bool writeData(Buffer& out) const
     {
         _statusLine.writeData(out);
         _header.writeData(out);
         out.append("\r\n", 2); // End of header.
+        out.append(_body);
         return true;
     }
 
@@ -782,7 +793,6 @@ private:
         }
     }
 
-private:
     /// The stage we're at in consuming the received data.
     enum class ParserStage
     {
