@@ -646,6 +646,8 @@ class Response final
 public:
     using FinishedCallback = std::function<void()>;
 
+    /// A response received from a server.
+    /// Used for parsing an incoming response.
     Response(FinishedCallback finishedCallback)
         : _state(State::New)
         , _parserStage(ParserStage::StatusLine)
@@ -656,12 +658,16 @@ public:
         saveBodyToMemory();
     }
 
+    /// A response sent from a server.
+    /// Used for generating an outgoing response.
     Response(StatusLine statusLine)
         : _statusLine(std::move(statusLine))
     {
+        _header.add("Date", Util::getHttpTimeNow());
+        _header.add("Server", HTTP_SERVER_STRING);
     }
 
-    /// The state of the response.
+    /// The state of an incoming response, when parsing.
     enum class State
     {
         New, //< Valid but meaningless.
@@ -731,9 +737,6 @@ public:
     /// Serializes the Server Response into the given buffer.
     bool writeData(Buffer& out)
     {
-        _header.set("Date", Util::getHttpTimeNow());
-        _header.set("Server", HTTP_SERVER_STRING);
-
         _statusLine.writeData(out);
         _header.writeData(out);
         out.append("\r\n", 2);
@@ -989,6 +992,8 @@ private:
 
         _request = std::move(req);
         _request.set("Host", host()); // Make sure the host is set.
+        _request.set("Date", Util::getHttpTimeNow());
+        _request.set("User-Agent", HTTP_AGENT_STRING);
     }
 
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
