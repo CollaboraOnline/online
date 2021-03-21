@@ -185,16 +185,16 @@ private:
 
 #if !MOBILEAPP
 
-class ForKitProcWSHandler: public WebSocketHandler
+class ForKitProcWSHandler : public WebSocketHandler
 {
 public:
-
-    ForKitProcWSHandler(const std::weak_ptr<StreamSocket>& socket, const Poco::Net::HTTPRequest& request)
-    : WebSocketHandler(socket, request)
+    ForKitProcWSHandler(const std::weak_ptr<StreamSocket>& socket,
+                        const Poco::Net::HTTPRequest& request)
+        : WebSocketHandler(socket.lock(), request)
     {
     }
 
-    virtual void handleMessage(const std::vector<char> &data) override;
+    virtual void handleMessage(const std::vector<char>& data) override;
 };
 
 class ForKitProcess : public WSProcess
