@@ -35,6 +35,7 @@
 #include <net/SslSocket.hpp>
 #endif
 #include "WebSocketHandler.hpp"
+#include <net/HttpRequest.hpp>
 
 int SocketPoll::DefaultPollTimeoutMicroS = 5000 * 1000;
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
@@ -570,6 +571,12 @@ void StreamSocket::send(Poco::Net::HTTPResponse& response)
     response.write(oss);
 
     send(oss.str());
+}
+
+void StreamSocket::send(const http::Response& response)
+{
+    response.writeData(_outBuffer);
+    flush();
 }
 
 void SocketPoll::dumpState(std::ostream& os)
