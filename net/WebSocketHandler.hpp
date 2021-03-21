@@ -75,13 +75,13 @@ public:
     /// Parameters:
     /// socket: the TCP socket which received the upgrade request
     /// request: the HTTP upgrade request to WebSocket
-    WebSocketHandler(const std::weak_ptr<StreamSocket>& socket,
-                     const Poco::Net::HTTPRequest& request)
+    template <typename T>
+    WebSocketHandler(const std::weak_ptr<StreamSocket>& socket, const T& request)
         : _socket(socket)
 #if !MOBILEAPP
-        , _lastPingSentTime(std::chrono::steady_clock::now() -
-                            std::chrono::microseconds(PingFrequencyMicroS) -
-                            std::chrono::microseconds(InitialPingDelayMicroS))
+        , _lastPingSentTime(std::chrono::steady_clock::now()
+                            - std::chrono::microseconds(PingFrequencyMicroS)
+                            - std::chrono::microseconds(InitialPingDelayMicroS))
         , _pingTimeUs(0)
         , _isMasking(false)
         , _inFragmentBlock(false)
@@ -770,7 +770,8 @@ private:
 
 protected:
     /// Upgrade the http(s) connection to a websocket.
-    void upgradeToWebSocket(const Poco::Net::HTTPRequest& req)
+    template <typename T>
+    void upgradeToWebSocket(const T& req)
     {
         std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (!socket)
@@ -797,10 +798,9 @@ protected:
         httpResponse.set("Upgrade", "websocket");
         httpResponse.set("Connection", "Upgrade");
         httpResponse.set("Sec-WebSocket-Accept", PublicComputeAccept::doComputeAccept(wsKey));
-        httpResponse.writeData(socket->getOutBuffer());
         LOG_TRC('#' << socket->getFD()
                     << ": Sending WS Upgrade response: " << httpResponse.header().toString());
-        socket->flush();
+        socket->send(httpResponse);
 #endif
         setWebSocket();
     }
