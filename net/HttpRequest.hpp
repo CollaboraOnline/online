@@ -367,7 +367,7 @@ public:
         return cookies;
     }
 
-    bool writeData(Buffer& out)
+    bool writeData(Buffer& out) const
     {
         // Note: we don't add the end-of-header '\r\n'.
         for (const auto& pair : _headers)
@@ -612,7 +612,7 @@ public:
     /// Returns the state and clobbers the len on succcess to the number of bytes read.
     FieldParseState parse(const char* p, int64_t& len);
 
-    bool writeData(Buffer& out)
+    bool writeData(Buffer& out) const
     {
         out.append(_httpVersion);
         out.append(' ');
