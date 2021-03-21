@@ -273,24 +273,24 @@ public:
     int64_t parse(const char* p, int64_t len);
 
     /// Add an HTTP header field.
-    void add(const std::string& key, const std::string& value)
+    void add(std::string key, std::string value)
     {
-        _headers.emplace_back(key, value);
+        _headers.emplace_back(std::move(key), std::move(value));
     }
 
     /// Set an HTTP header field, replacing an earlier value, if exists.
-    void set(const std::string& key, const std::string& value)
+    void set(const std::string& key, std::string value)
     {
         for (auto& pair : _headers)
         {
             if (pair.first == key)
             {
-                pair.second = value;
+                pair.second.swap(value);
                 return;
             }
         }
 
-        _headers.emplace_back(key, value);
+        _headers.emplace_back(key, std::move(value));
     }
 
     bool has(const std::string& key) const
@@ -319,7 +319,7 @@ public:
     }
 
     /// Set the Content-Type header.
-    void setContentType(const std::string& type) { set(CONTENT_TYPE, type); }
+    void setContentType(std::string type) { set(CONTENT_TYPE, std::move(type)); }
     /// Get the Content-Type header.
     std::string getContentType() const { return get(CONTENT_TYPE); }
     /// Returns true iff a Content-Type header exists.
@@ -456,10 +456,10 @@ public:
     const Header& header() const { return _header; }
 
     /// Add an HTTP header field.
-    void add(const std::string& key, const std::string& value) { _header.add(key, value); }
+    void add(std::string key, std::string value) { _header.add(std::move(key), std::move(value)); }
 
     /// Set an HTTP header field, replacing an earlier value, if exists.
-    void set(const std::string& key, const std::string& value) { _header.set(key, value); }
+    void set(const std::string& key, std::string value) { _header.set(key, std::move(value)); }
 
     /// Set the request body source to upload some data. Meaningful for POST.
     /// Size is needed to set the Content-Length.
@@ -688,10 +688,10 @@ public:
     const Header& header() const { return _header; }
 
     /// Add an HTTP header field.
-    void add(const std::string& key, const std::string& value) { _header.add(key, value); }
+    void add(std::string key, std::string value) { _header.add(std::move(key), std::move(value)); }
 
     /// Set an HTTP header field, replacing an earlier value, if exists.
-    void set(const std::string& key, const std::string& value) { _header.set(key, value); }
+    void set(const std::string& key, std::string value) { _header.set(key, std::move(value)); }
 
     /// Redirect the response body, if any, to a file.
     /// If the server responds with a non-success status code (i.e. not 2xx)
