@@ -871,6 +871,44 @@ public:
         return create(host, Protocol::HttpSsl, port);
     }
 
+    /// Create a new HTTP Session to the given URI.
+    /// The @uri must include the scheme, e.g. https://domain.com:9980
+    static std::shared_ptr<Session> create(const std::string& uri)
+    {
+        const std::string lowerUri = Util::toLower(uri);
+        if (!Util::startsWith(lowerUri, "http"))
+        {
+            LOG_ERR("Unsupported scheme in URI: " << uri);
+            return nullptr;
+        }
+
+        std::string hostPort;
+        bool secure = false;
+        if (Util::startsWith(uri, "http://"))
+        {
+            hostPort = uri.substr(7);
+        }
+        else if (Util::startsWith(uri, "https://"))
+        {
+            hostPort = uri.substr(8);
+            secure = true;
+        }
+        else
+        {
+            LOG_ERR("Invalid URI: " << uri);
+            return nullptr;
+        }
+
+        int port = 0;
+        const auto tokens = Util::tokenize(hostPort, ':');
+        if (tokens.size() > 1)
+        {
+            port = std::stoi(tokens[1]);
+        }
+
+        return create(tokens[0], secure ? Protocol::HttpSsl : Protocol::HttpUnencrypted, port);
+    }
+
     /// Returns the given protocol's default port.
     static int getDefaultPort(Protocol protocol)
     {
