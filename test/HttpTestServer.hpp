@@ -79,12 +79,40 @@ private:
                             << "Content-Type: text/html; charset=utf-8\r\n"
                             << "Server: " HTTP_AGENT_STRING "\r\n";
 
-                        if (statusCode.first >= 200 && statusCode.first != 204
-                            && statusCode.first != 304) // No Content
-                            oss << "Content-Length: 0\r\n";
+                        if (statusCode.first == 402)
+                        {
+                            const std::string body = "Pay me!";
+                            oss << "Content-Length: " << body.size() << "\r\n";
+                            oss << "\r\n";
+                            oss << body;
+                            socket->send(oss.str());
+                        }
+                        else if (statusCode.first == 406)
+                        {
+                            const std::string body
+                                = R"({"message": "Client did not request a supported media type.", "accept": ["image/webp", "image/svg+xml", "image/jpeg", "image/png", "image/*"]})";
+                            oss << "Content-Length: " << body.size() << "\r\n";
+                            oss << "\r\n";
+                            oss << body;
+                            socket->send(oss.str());
+                        }
+                        else if (statusCode.first == 418)
+                        {
+                            const std::string body = "I'm a teapot!";
+                            oss << "Content-Length: " << body.size() << "\r\n";
+                            oss << "\r\n";
+                            oss << body;
+                            socket->send(oss.str());
+                        }
+                        else
+                        {
+                            if (statusCode.first >= 200 && statusCode.first != 204
+                                && statusCode.first != 304) // No Content
+                                oss << "Content-Length: 0\r\n";
 
-                        oss << "\r\n";
-                        socket->send(oss.str());
+                            oss << "\r\n";
+                            socket->send(oss.str());
+                        }
                     }
                     else
                     {
