@@ -52,89 +52,83 @@ private:
         // Consume the incoming data by parsing and processing the body.
         http::Request request;
         const int64_t read = request.readData(data.data(), data.size());
-        if (read > 0)
-        {
-            // Remove consumed data.
-            data.erase(data.begin(), data.begin() + read);
-
-            LOG_TRC('#' << socket->getFD() << " handleIncomingMessage: removed " << read
-                        << " bytes to have " << data.size() << " in the buffer.");
-
-            Buffer& out = socket->getOutBuffer();
-            if (request.getVerb() == http::Request::VERB_GET)
-            {
-                // Return test data.
-                if (Util::startsWith(request.getUrl(), "/status/"))
-                {
-                    const auto statusCode
-                        = Util::i32FromString(request.getUrl().substr(sizeof("/status")));
-                    const auto reason = http::getReasonPhraseForCode(statusCode.first);
-                    LOG_TRC('#' << socket->getFD() << " handleIncomingMessage: got StatusCode "
-                                << statusCode.first << ", sending back: " << reason);
-                    http::Response response(http::StatusLine(statusCode.first));
-
-                    std::ostringstream oss;
-                    oss << "HTTP/1.1 " << statusCode.first << ' ' << reason << "\r\n"
-                        << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                        << "Content-Type: text/html; charset=utf-8\r\n"
-                        << "Server: " HTTP_AGENT_STRING "\r\n";
-
-                    if (statusCode.first == 402)
-                    {
-                        const std::string body = "Pay me!";
-                        response.set("Content-Length", std::to_string(body.size()));
-                        response.writeData(out);
-                        socket->send(body);
-                    }
-                    else if (statusCode.first == 406)
-                    {
-                        const std::string body
-                            = R"({"message": "Client did not request a supported media type.", "accept": ["image/webp", "image/svg+xml", "image/jpeg", "image/png", "image/*"]})";
-                        response.set("Content-Length", std::to_string(body.size()));
-                        response.writeData(out);
-                        socket->send(body);
-                    }
-                    else if (statusCode.first == 418)
-                    {
-                        const std::string body = "I'm a teapot!";
-                        response.set("Content-Length", std::to_string(body.size()));
-                        response.writeData(out);
-                        socket->send(body);
-                    }
-                    else
-                    {
-                        if (statusCode.first >= 200 && statusCode.first != 204
-                            && statusCode.first != 304) // No Content
-                            oss << "Content-Length: 0\r\n";
-
-                        oss << "\r\n";
-                        socket->send(oss.str());
-                    }
-                }
-                else
-                {
-                    std::ostringstream oss;
-                    oss << "HTTP/1.1 200 OK\r\n"
-                        << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                        << "Server: " HTTP_AGENT_STRING "\r\n"
-                        << "Content-Length: 0\r\n"
-                        << "\r\n";
-                    socket->send(oss.str());
-                }
-            }
-            else
-            {
-                http::Response response(http::StatusLine(501));
-                response.set("Content-Length", "0");
-                response.writeData(out);
-                socket->send(nullptr, 0);
-            }
-        }
-        else if (read < 0)
+        if (read < 0)
         {
             // Interrupt the transfer.
             disposition.setClosed();
             socket->shutdown();
+            return;
+        }
+
+        if (read == 0)
+        {
+            // Not enough data.
+            return;
+        }
+
+        assert(read > 0 && "Must have read some data!");
+
+        // Remove consumed data.
+        data.erase(data.begin(), data.begin() + read);
+
+        LOG_TRC('#' << socket->getFD() << " handleIncomingMessage: removed " << read
+                    << " bytes to have " << data.size() << " in the buffer.");
+
+        Buffer& out = socket->getOutBuffer();
+
+        if (request.getVerb() == http::Request::VERB_GET)
+        {
+            // Return test data.
+            if (Util::startsWith(request.getUrl(), "/status/"))
+            {
+                const auto statusCode
+                    = Util::i32FromString(request.getUrl().substr(sizeof("/status")));
+                const auto reason = http::getReasonPhraseForCode(statusCode.first);
+                LOG_TRC('#' << socket->getFD() << " handleIncomingMessage: got StatusCode "
+                            << statusCode.first << ", sending back: " << reason);
+
+                http::Response response(http::StatusLine(statusCode.first));
+                std::string body;
+                if (statusCode.first == 402)
+                {
+                    body = "Pay me!";
+                }
+                else if (statusCode.first == 406)
+                {
+                    body
+                        = R"({"message": "Client did not request a supported media type.", "accept": ["image/webp", "image/svg+xml", "image/jpeg", "image/png", "image/*"]})";
+                }
+                else if (statusCode.first == 418)
+                {
+                    body = "I'm a teapot!";
+                }
+
+                if (!body.empty())
+                    response.set("Content-Length", std::to_string(body.size()));
+                else if (statusCode.first >= 200 && statusCode.first != 204
+                         && statusCode.first != 304) // No Content for other tags.
+                    response.set("Content-Length", "0");
+
+                response.writeData(out);
+                socket->send(body);
+            }
+            else
+            {
+                std::ostringstream oss;
+                oss << "HTTP/1.1 200 OK\r\n"
+                    << "Date: " << Util::getHttpTimeNow() << "\r\n"
+                    << "Server: " HTTP_AGENT_STRING "\r\n"
+                    << "Content-Length: 0\r\n"
+                    << "\r\n";
+                socket->send(oss.str());
+            }
+        }
+        else
+        {
+            http::Response response(http::StatusLine(501));
+            response.set("Content-Length", "0");
+            response.writeData(out);
+            socket->send(nullptr, 0);
         }
     }
 
