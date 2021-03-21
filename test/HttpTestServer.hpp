@@ -114,13 +114,13 @@ private:
             }
             else
             {
-                std::ostringstream oss;
-                oss << "HTTP/1.1 200 OK\r\n"
-                    << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                    << "Server: " HTTP_AGENT_STRING "\r\n"
-                    << "Content-Length: 0\r\n"
-                    << "\r\n";
-                socket->send(oss.str());
+                http::Response response(http::StatusLine(200));
+                const std::string body = (Util::startsWith(request.getUrl(), "/echo/")
+                                              ? request.getUrl().substr(sizeof("/echo"))
+                                              : std::string());
+                response.set("Content-Length", std::to_string(body.size()));
+                response.writeData(out);
+                socket->send(body);
             }
         }
         else
@@ -128,7 +128,7 @@ private:
             http::Response response(http::StatusLine(501));
             response.set("Content-Length", "0");
             response.writeData(out);
-            socket->send(nullptr, 0);
+            socket->flush();
         }
     }
 
@@ -149,10 +149,7 @@ private:
 
         Buffer& out = socket->getOutBuffer();
         LOG_TRC("performWrites: " << out.size() << " bytes.");
-        if (!out.empty())
-        {
-            socket->writeOutgoingData();
-        }
+        socket->flush();
     }
 
 private:
