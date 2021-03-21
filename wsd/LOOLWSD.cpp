@@ -2753,18 +2753,14 @@ private:
 
         const std::string capabilities = getCapabilitiesJson(request, socket);
 
-        std::ostringstream oss;
-        oss << "HTTP/1.1 200 OK\r\n"
-            "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-            "User-Agent: " WOPI_AGENT_STRING "\r\n"
-            "Content-Length: " << capabilities.size() << "\r\n"
-            "Content-Type: application/json\r\n"
-            "X-Content-Type-Options: nosniff\r\n"
-            "Connection: close\r\n" // Let the client know we will disconnect.
-            "\r\n"
-            << capabilities;
-
-        socket->send(oss.str());
+        http::Response httpResponse(http::StatusLine(200));
+        httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+        httpResponse.set("Content-Length", std::to_string(capabilities.size()));
+        httpResponse.set("Content-Type", "application/json");
+        httpResponse.set("X-Content-Type-Options", "nosniff");
+        httpResponse.set("Connection", "close");
+        httpResponse.writeData(socket->getOutBuffer());
+        socket->send(capabilities);
         socket->shutdown();
         LOG_INF("Sent capabilities.json successfully.");
     }
@@ -2805,15 +2801,11 @@ private:
                                        + "on request to URL: " + request.getURI();
             LOG_ERR(errMsg);
             // we got the wrong request.
-            std::ostringstream oss;
-            oss << "HTTP/1.1 400\r\n"
-                << "Date: " << Util::getHttpTimeNow() << "\r\n"
-                << "User-Agent: LOOLWSD WOPI Agent\r\n"
-                << "Content-Length: 0\r\n"
-                << "Connection: close\r\n" // Let the client know we will disconnect.
-                << "\r\n"
-                << errMsg;
-            socket->send(oss.str());
+            http::Response httpResponse(http::StatusLine(400));
+            httpResponse.set("Content-Length", "0");
+            httpResponse.set("Connection", "close");
+            httpResponse.writeData(socket->getOutBuffer());
+            socket->send(errMsg);
             socket->shutdown();
             return;
         }
@@ -2883,24 +2875,20 @@ private:
         assert(socket && "Must have a valid socket");
 
         LOG_DBG("HTTP request: " << request.getURI());
-        const std::string mimeType = "text/plain";
         const std::string responseString = "User-agent: *\nDisallow: /\n";
 
-        std::ostringstream oss;
-        oss << "HTTP/1.1 200 OK\r\n"
-            "Last-Modified: " << Util::getHttpTimeNow() << "\r\n"
-            "User-Agent: " WOPI_AGENT_STRING "\r\n"
-            "Content-Length: " << responseString.size() << "\r\n"
-            "Content-Type: " << mimeType << "\r\n"
-            "Connection: close\r\n" // Let the client know we will disconnect.
-            "\r\n";
+        http::Response httpResponse(http::StatusLine(200));
+        httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+        httpResponse.set("Content-Length", std::to_string(responseString.size()));
+        httpResponse.set("Content-Type", "text/plain");
+        httpResponse.set("Connection", "close");
+        httpResponse.writeData(socket->getOutBuffer());
 
         if (request.getMethod() == Poco::Net::HTTPRequest::HTTP_GET)
         {
-            oss << responseString;
+            socket->send(responseString);
         }
 
-        socket->send(oss.str());
         socket->shutdown();
         LOG_INF("Sent robots.txt response successfully.");
     }
@@ -3068,22 +3056,17 @@ private:
 
         LOG_INF("Post request: [" << LOOLWSD::anonymizeUrl(requestDetails.getURI()) << ']');
 
-        Poco::Net::HTTPResponse response;
-
         if (requestDetails.equals(1, "convert-to"))
         {
             // Validate sender - FIXME: should do this even earlier.
             if (!allowConvertTo(socket->clientAddress(), request))
             {
                 LOG_WRN("Conversion requests not allowed from this address: " << socket->clientAddress());
-                std::ostringstream oss;
-                oss << "HTTP/1.1 403\r\n"
-                    "Date: " << Util::getHttpTimeNow() << "\r\n"
-                    "Server: " HTTP_SERVER_STRING "\r\n"
-                    "Content-Length: 0\r\n"
-                    "Connection: close\r\n" // Let the client know we will disconnect.
-                    "\r\n";
-                socket->send(oss.str());
+                http::Response httpResponse(http::StatusLine(403));
+                httpResponse.set("Content-Length", "0");
+                httpResponse.set("Connection", "close");
+                httpResponse.writeData(socket->getOutBuffer());
+                socket->flush();
                 socket->shutdown();
                 return;
             }
@@ -3176,9 +3159,12 @@ private:
                         FileUtil::removeFile(dir);
 
                     handler.takeFile();
-                    response.setContentLength(0);
-                    response.set("Connection", "close"); // Let the client know we will disconnect.
-                    socket->send(response);
+
+                    http::Response httpResponse(http::StatusLine(200));
+                    httpResponse.set("Content-Length", "0");
+                    httpResponse.set("Connection", "close");
+                    httpResponse.writeData(socket->getOutBuffer());
+                    socket->flush();
                     socket->shutdown();
                     return;
                 }
@@ -3232,10 +3218,12 @@ private:
                 if (attachmentIt != postRequestQueryParams.end())
                     serveAsAttachment = attachmentIt->second != "0";
 
+                Poco::Net::HTTPResponse response;
+
                 // Instruct browsers to download the file, not display it
                 // with the exception of SVG where we need the browser to
                 // actually show it.
-                std::string contentType = getContentType(fileName);
+                const std::string contentType = getContentType(fileName);
                 if (serveAsAttachment && contentType != "image/svg+xml")
                     response.set("Content-Disposition", "attachment; filename=\"" + fileName + '"');
 
