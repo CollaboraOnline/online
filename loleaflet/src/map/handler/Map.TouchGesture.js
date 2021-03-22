@@ -619,14 +619,14 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		this._pinchStartCenter = undefined;
 
-		var newMapCenter;
 		if (this._map._docLayer.zoomStepEnd) {
-			newMapCenter = this._map._docLayer.zoomStepEnd(finalZoom, this._origCenter);
+			var thisObj = this;
+			this._map._docLayer.zoomStepEnd(finalZoom, this._origCenter, function (newMapCenter) {
+				thisObj._map.setZoomViewPanning(true);
+				thisObj._map.setView(newMapCenter || thisObj._center, finalZoom);
+				thisObj._map.setZoomViewPanning(false);
+			});
 		}
-
-		this._map.setZoomViewPanning(true);
-		this._map.setView(newMapCenter || this._center, finalZoom);
-		this._map.setZoomViewPanning(false);
 	},
 
 	_constructFakeEvent: function (evt, type) {
