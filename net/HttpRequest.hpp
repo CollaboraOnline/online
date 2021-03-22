@@ -373,7 +373,8 @@ public:
 
     bool writeData(Buffer& out) const
     {
-        // Note: we don't add the end-of-header '\r\n'.
+        // Note: we don't add the end-of-header '\r\n'
+        // to allow for manually extending the headers.
         for (const auto& pair : _headers)
         {
             out.append(pair.first);
@@ -397,6 +398,7 @@ public:
         return os;
     }
 
+    /// Serialize the header to string. For logging only.
     std::string toString() const
     {
         std::ostringstream oss;
@@ -507,7 +509,7 @@ public:
             out.append("\r\n", 2);
 
             _header.writeData(out);
-            out.append("\r\n", 2);
+            out.append("\r\n", 2); // End the header.
 
             _stage = Stage::Body;
         }
@@ -740,7 +742,7 @@ public:
     {
         _statusLine.writeData(out);
         _header.writeData(out);
-        out.append("\r\n", 2);
+        out.append("\r\n", 2); // End of header.
         return true;
     }
 
