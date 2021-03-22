@@ -58,6 +58,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testUIDefaults);
     CPPUNIT_TEST(testCSSVars);
     CPPUNIT_TEST(testStat);
+    CPPUNIT_TEST(testStringCompare);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -84,6 +85,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testUIDefaults();
     void testCSSVars();
     void testStat();
+    void testStringCompare();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -1771,6 +1773,19 @@ void WhiteBoxTests::testStat()
 
     ofs.close();
     FileUtil::removeFile(tmpFile);
+}
+
+void WhiteBoxTests::testStringCompare()
+{
+    LOK_ASSERT(Util::iequal("abcd", "abcd"));
+    LOK_ASSERT(Util::iequal("aBcd", "abCd"));
+    LOK_ASSERT(Util::iequal("", ""));
+
+    LOK_ASSERT(!Util::iequal("abcd", "abc"));
+    LOK_ASSERT(!Util::iequal("abc", "abcd"));
+    LOK_ASSERT(!Util::iequal("abc", "abcd"));
+
+    LOK_ASSERT(!Util::iequal("abc", 3, "abcd", 4));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
