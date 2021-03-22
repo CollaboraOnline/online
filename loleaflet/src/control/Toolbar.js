@@ -382,6 +382,12 @@ L.Map.include({
 					else if (map.getDocType() === 'drawing') {
 						document.getElementById('drawing-shortcuts').style.display='block';
 					}
+					if (String.locale === 'de') {
+						$('.bold-shortcut').each(function()
+						{
+							$(this).text(_('Ctrl + Shift + F'));
+						});
+					}
 				} else /* id === 'online-help' */ {
 					document.getElementById('keyboard-shortcuts').style.display='none';
 					if (window.socketProxy) {
