@@ -18,6 +18,7 @@
 
 #include <Unit.hpp>
 #include <helpers.hpp>
+#include <net/HttpRequest.hpp>
 
 class LOOLWebSocket;
 
@@ -53,6 +54,7 @@ class UnitLoad : public UnitWSD
     TestResult testBadLoad();
     TestResult testExcelLoad();
     TestResult testReload();
+    TestResult testLoad();
 
 public:
     void invokeWSDTest() override;
@@ -179,6 +181,34 @@ UnitBase::TestResult UnitLoad::testReload()
         TST_LOG("loading #" << (i + 1));
         loadDoc(documentURL, testname);
     }
+    return TestResult::Ok;
+}
+
+UnitBase::TestResult UnitLoad::testLoad()
+{
+    const char* testname = "load ";
+
+    std::string documentPath, documentURL;
+    helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
+
+    // Start the polling thread.
+    SocketPoll pollThread("WsAsyncReqPoll");
+    pollThread.startThread();
+
+    http::Request httpRequest(documentURL);
+    auto httpSession = http::Session::create(helpers::getTestServerURI());
+    httpSession->asyncRequest(httpRequest, pollThread);
+
+    // Load a document and wait for the status.
+    // Don't replace with helpers, so we catch status.
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
+    Poco::URI uri(helpers::getTestServerURI());
+    Poco::Net::HTTPResponse response;
+    std::shared_ptr<LOOLWebSocket> socket = helpers::connectLOKit(uri, request, response, testname);
+    helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
+
+    helpers::assertResponseString(socket, "status:", testname);
+
     return TestResult::Ok;
 }
 
