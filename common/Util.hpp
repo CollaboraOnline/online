@@ -1167,16 +1167,41 @@ int main(int argc, char**argv)
         return pair.second ? pair : std::make_pair(def, false);
     }
 
+    /// Convert a single ascii character to lower case.
+    /// If the character is not in the ascii range, it's left as-is.
+    inline char asciiLower(char c) { return (c >= 'A' && c <= 'Z') ? (c + 'a' - 'A') : c; }
+
     /// For ASCII input only: converts the argument to lower-case.
     inline std::string toLower(std::string s)
     {
         for (std::size_t i = 0; i < s.size(); ++i)
         {
-            const char c = s[i];
-            s[i] = (c >= 'A' && c <= 'Z') ? (c + 'a' - 'A') : c;
+            s[i] = asciiLower(s[i]);
         }
 
         return s;
+    }
+
+    /// Case insensitive comparison of two strings.
+    /// Returns true iff the two strings are equal, regardless of case.
+    inline bool iequal(const char* lhs, std::size_t lhs_len, const char* rhs, std::size_t rhs_len)
+    {
+        return ((lhs_len == rhs_len)
+                && std::equal(lhs, lhs + lhs_len, rhs, [](const char lch, const char rch) {
+                       return asciiLower(lch) == asciiLower(rch);
+                   }));
+    }
+
+    /// Case insensitive comparison of two strings.
+    template <std::size_t N> inline bool iequal(const std::string& lhs, const char (&rhs)[N])
+    {
+        return iequal(lhs.c_str(), lhs.size(), rhs, N - 1); // Minus null termination.
+    }
+
+    /// Case insensitive comparison of two strings.
+    inline bool iequal(const std::string& lhs, const std::string& rhs)
+    {
+        return iequal(lhs.c_str(), lhs.size(), rhs.c_str(), rhs.size());
     }
 
     /// Get system_clock now in miliseconds.
