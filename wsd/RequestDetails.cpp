@@ -81,7 +81,7 @@ RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::strin
     if (_isProxy)
         _proxyPrefix = it->second;
     it = request.find("Upgrade");
-    _isWebSocket = it != request.end() && (Poco::icompare(it->second, "websocket") == 0);
+    _isWebSocket = it != request.end() && Util::iequal(it->second, "websocket");
 #if MOBILEAPP
     // request.getHost fires an exception on mobile.
 #else
