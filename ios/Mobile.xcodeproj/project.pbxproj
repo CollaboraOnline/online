@@ -1345,6 +1345,28 @@
 		BEDB889D2600E40600990028 /* sspellimp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sspellimp.cxx; path = "../../ios-device/lingucomponent/source/spellcheck/spell/sspellimp.cxx"; sourceTree = "<group>"; };
 		BEDB88A02600F60000990028 /* lingutil.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = lingutil.cxx; path = "../../ios-device/lingucomponent/source/lingutil/lingutil.cxx"; sourceTree = "<group>"; };
 		BEDB88A12600F60000990028 /* lingutil.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = lingutil.hxx; path = "../../ios-device/lingucomponent/source/lingutil/lingutil.hxx"; sourceTree = "<group>"; };
+		BEDB88B52604B3A200990028 /* view.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = view.cxx; path = "../../ios-device/sw/source/uibase/uiview/view.cxx"; sourceTree = "<group>"; };
+		BEDB88B62604B3A300990028 /* srcview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = srcview.cxx; path = "../../ios-device/sw/source/uibase/uiview/srcview.cxx"; sourceTree = "<group>"; };
+		BEDB88B72604B3A300990028 /* viewcoll.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewcoll.cxx; path = "../../ios-device/sw/source/uibase/uiview/viewcoll.cxx"; sourceTree = "<group>"; };
+		BEDB88B82604B3A300990028 /* pview.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = pview.cxx; path = "../../ios-device/sw/source/uibase/uiview/pview.cxx"; sourceTree = "<group>"; };
+		BEDB88B92604B3A300990028 /* viewdlg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewdlg.cxx; path = "../../ios-device/sw/source/uibase/uiview/viewdlg.cxx"; sourceTree = "<group>"; };
+		BEDB88BA2604B3A300990028 /* scroll.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scroll.cxx; path = "../../ios-device/sw/source/uibase/uiview/scroll.cxx"; sourceTree = "<group>"; };
+		BEDB88BB2604B3A300990028 /* formatclipboard.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = formatclipboard.cxx; path = "../../ios-device/sw/source/uibase/uiview/formatclipboard.cxx"; sourceTree = "<group>"; };
+		BEDB88BC2604B3A300990028 /* view0.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = view0.cxx; path = "../../ios-device/sw/source/uibase/uiview/view0.cxx"; sourceTree = "<group>"; };
+		BEDB88BD2604B3A300990028 /* viewdraw.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewdraw.cxx; path = "../../ios-device/sw/source/uibase/uiview/viewdraw.cxx"; sourceTree = "<group>"; };
+		BEDB88BE2604B3A300990028 /* swcli.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = swcli.cxx; path = "../../ios-device/sw/source/uibase/uiview/swcli.cxx"; sourceTree = "<group>"; };
+		BEDB88BF2604B3A300990028 /* viewling.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewling.cxx; path = "../../ios-device/sw/source/uibase/uiview/viewling.cxx"; sourceTree = "<group>"; };
+		BEDB88C02604B3A300990028 /* view1.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = view1.cxx; path = "../../ios-device/sw/source/uibase/uiview/view1.cxx"; sourceTree = "<group>"; };
+		BEDB88C12604B3A300990028 /* viewmdi.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewmdi.cxx; path = "../../ios-device/sw/source/uibase/uiview/viewmdi.cxx"; sourceTree = "<group>"; };
+		BEDB88C22604B3A300990028 /* viewprt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewprt.cxx; path = "../../ios-device/sw/source/uibase/uiview/viewprt.cxx"; sourceTree = "<group>"; };
+		BEDB88C32604B3A300990028 /* viewsrch.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewsrch.cxx; path = "../../ios-device/sw/source/uibase/uiview/viewsrch.cxx"; sourceTree = "<group>"; };
+		BEDB88C42604B3A300990028 /* viewport.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewport.cxx; path = "../../ios-device/sw/source/uibase/uiview/viewport.cxx"; sourceTree = "<group>"; };
+		BEDB88C52604B3A300990028 /* view2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = view2.cxx; path = "../../ios-device/sw/source/uibase/uiview/view2.cxx"; sourceTree = "<group>"; };
+		BEDB88C62604B3A300990028 /* viewfunc.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = viewfunc.hxx; path = "../../ios-device/sw/source/uibase/uiview/viewfunc.hxx"; sourceTree = "<group>"; };
+		BEDB88C72604B3A300990028 /* viewtab.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewtab.cxx; path = "../../ios-device/sw/source/uibase/uiview/viewtab.cxx"; sourceTree = "<group>"; };
+		BEDB88C82604B3A300990028 /* uivwimp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = uivwimp.cxx; path = "../../ios-device/sw/source/uibase/uiview/uivwimp.cxx"; sourceTree = "<group>"; };
+		BEDB88C92604B3A300990028 /* viewstat.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewstat.cxx; path = "../../ios-device/sw/source/uibase/uiview/viewstat.cxx"; sourceTree = "<group>"; };
+		BEDB88CA2604B3A300990028 /* viewdlg2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = viewdlg2.cxx; path = "../../ios-device/sw/source/uibase/uiview/viewdlg2.cxx"; sourceTree = "<group>"; };
 		BEDCC84C2452F82800FB02BD /* MobileApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MobileApp.cpp; sourceTree = "<group>"; };
 		BEDCC84D2452F82800FB02BD /* MobileApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MobileApp.hpp; sourceTree = "<group>"; };
 		BEDCC8972456FFAC00FB02BD /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
@@ -1678,6 +1700,7 @@
 			children = (
 				BE34D10E218B669000815297 /* app */,
 				BE34D120218B674400815297 /* shells */,
+				BEDB88B42604B37B00990028 /* uiview */,
 			);
 			name = uibase;
 			sourceTree = "<group>";
@@ -3451,6 +3474,35 @@
 				BEDB88A12600F60000990028 /* lingutil.hxx */,
 			);
 			name = lingutil;
+			sourceTree = "<group>";
+		};
+		BEDB88B42604B37B00990028 /* uiview */ = {
+			isa = PBXGroup;
+			children = (
+				BEDB88BB2604B3A300990028 /* formatclipboard.cxx */,
+				BEDB88B82604B3A300990028 /* pview.cxx */,
+				BEDB88BA2604B3A300990028 /* scroll.cxx */,
+				BEDB88B62604B3A300990028 /* srcview.cxx */,
+				BEDB88BE2604B3A300990028 /* swcli.cxx */,
+				BEDB88C82604B3A300990028 /* uivwimp.cxx */,
+				BEDB88B52604B3A200990028 /* view.cxx */,
+				BEDB88BC2604B3A300990028 /* view0.cxx */,
+				BEDB88C02604B3A300990028 /* view1.cxx */,
+				BEDB88C52604B3A300990028 /* view2.cxx */,
+				BEDB88B72604B3A300990028 /* viewcoll.cxx */,
+				BEDB88B92604B3A300990028 /* viewdlg.cxx */,
+				BEDB88CA2604B3A300990028 /* viewdlg2.cxx */,
+				BEDB88BD2604B3A300990028 /* viewdraw.cxx */,
+				BEDB88C62604B3A300990028 /* viewfunc.hxx */,
+				BEDB88BF2604B3A300990028 /* viewling.cxx */,
+				BEDB88C12604B3A300990028 /* viewmdi.cxx */,
+				BEDB88C42604B3A300990028 /* viewport.cxx */,
+				BEDB88C22604B3A300990028 /* viewprt.cxx */,
+				BEDB88C32604B3A300990028 /* viewsrch.cxx */,
+				BEDB88C92604B3A300990028 /* viewstat.cxx */,
+				BEDB88C72604B3A300990028 /* viewtab.cxx */,
+			);
+			name = uiview;
 			sourceTree = "<group>";
 		};
 		BEDCC941246175A700FB02BD /* framework */ = {
