@@ -28,7 +28,6 @@ class TilesSection {
 	map: any;
 	offscreenCanvases: Array<any> = new Array(0);
 	oscCtxs: Array<any> = new Array(0);
-	inZoomAnimation: boolean = false;
 
 	constructor () {
 		this.name = L.CSections.Tiles.name;
@@ -170,6 +169,9 @@ class TilesSection {
 	}
 
 	public paint (tile: any, ctx: any, async: boolean = false) {
+		if (this.containerObject.isInZoomAnimation())
+			return;
+
 		if (!ctx)
 			ctx = this.sectionProperties.tsManager._paintContext();
 
@@ -182,7 +184,7 @@ class TilesSection {
 	}
 
 	public onDraw () {
-		if (this.inZoomAnimation)
+		if (this.containerObject.isInZoomAnimation())
 			return;
 
 		var zoom = Math.round(this.map.getZoom());
@@ -217,10 +219,6 @@ class TilesSection {
 				}
 			}
 		}
-	}
-
-	public setInZoomAnim(setValue: boolean) {
-		this.inZoomAnimation = setValue;
 	}
 
 	public onMouseWheel () {}

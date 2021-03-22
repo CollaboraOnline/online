@@ -342,6 +342,49 @@ L.TileSectionManager = L.Class.extend({
 		}
 	},
 
+	_getZoomDocPos: function (pinchCenter, paneBounds, splitPos, scale, findFreePaneCenter) {
+		var inXBounds = (pinchCenter.x >= paneBounds.min.x) && (pinchCenter.x <= paneBounds.max.x);
+		var inYBounds = (pinchCenter.y >= paneBounds.min.y) && (pinchCenter.y <= paneBounds.max.y);
+
+		// Calculate the pinch-center in off-screen canvas coordinates.
+		var center = paneBounds.min.clone();
+		if (inXBounds)
+			center.x = pinchCenter.x;
+		if (inYBounds)
+			center.y = pinchCenter.y;
+
+		// Top left in document coordinates.
+		var docTopLeft = new L.Point(
+			Math.max(paneBounds.min.x ? splitPos.x: 0,
+				center.x - (center.x - paneBounds.min.x) / scale),
+			Math.max(paneBounds.min.y ? splitPos.y: 0,
+				center.y - (center.y - paneBounds.min.y) / scale));
+
+		if (!findFreePaneCenter)
+			return { topLeft: docTopLeft };
+
+		// Assumes paneBounds is the bounds of the free pane.
+		var paneSize = paneBounds.getSize();
+		var newPaneCenter = new L.Point(
+			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) / (2 * scale)) * scale / this._tilesSection.dpiScale,
+			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) / (2 * scale)) * scale / this._tilesSection.dpiScale);
+
+		return {
+			topLeft: docTopLeft,
+			center: newPaneCenter
+		};
+	},
+
+	_getZoomMapCenter: function (zoom) {
+		var scale = this._calcZoomFrameScale(zoom);
+		var ctx = this._paintContext();
+		var splitPos = ctx.splitPos;
+		var viewBounds = ctx.viewBounds;
+		var freePaneBounds = new L.Bounds(viewBounds.min.add(splitPos), viewBounds.max);
+
+		return this._getZoomDocPos(this._newCenter, freePaneBounds, splitPos, scale, true /* findFreePaneCenter */).center;
+	},
+
 	_zoomAnimation: function () {
 		var painter = this;
 		var ctx = this._paintContext();
@@ -358,32 +401,9 @@ L.TileSectionManager = L.Class.extend({
 				var paneBoundsOffset = paneBounds.min.subtract(extendedBounds.min);
 				var scale = painter._zoomFrameScale;
 
-				var inXBounds = (painter._newCenter.x >= paneBounds.min.x) && (painter._newCenter.x <= paneBounds.max.x);
-				var inYBounds = (painter._newCenter.y >= paneBounds.min.y) && (painter._newCenter.y <= paneBounds.max.y);
-
-				// Calculate the pinch-center in off-screen canvas coordinates.
-				var center = paneBounds.min.clone();
-				if (inXBounds)
-					center.x = painter._newCenter.x;
-				if (inYBounds)
-					center.y = painter._newCenter.y;
-
 				// Top left in document coordinates.
-				var docTopLeft = new L.Point(
-					Math.max(paneBounds.min.x ? splitPos.x: 0,
-						center.x - (center.x - paneBounds.min.x) / scale),
-					Math.max(paneBounds.min.y ? splitPos.y: 0,
-						center.y - (center.y - paneBounds.min.y) / scale));
-
-				if (final &&
-					(paneBounds.min.x || (!paneBounds.min.x && !splitPos.x)) &&
-					(paneBounds.min.y || (!paneBounds.min.y && !splitPos.y))) {
-					// This is needed to set the map center once animation has finished.
-					// Done only for the freely movable pane.
-					painter._newMapCenter = new L.Point(
-						(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) / (2 * scale)) * scale / painter._tilesSection.dpiScale,
-						(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) / (2 * scale)) * scale / painter._tilesSection.dpiScale);
-				}
+				var docPos = painter._getZoomDocPos(painter._newCenter, paneBounds, splitPos, scale, false /* findFreePaneCenter? */);
+				var docTopLeft = docPos.topLeft;
 
 				// Top left position in the offscreen canvas.
 				var sourceTopLeft = docTopLeft.subtract(paneBounds.min).add(paneBoundsOffset);
@@ -430,20 +450,23 @@ L.TileSectionManager = L.Class.extend({
 		rafFunc();
 	},
 
-	_calcZoomFrameScale: function (zoom, newCenter) {
+	_calcZoomFrameScale: function (zoom) {
 		zoom = this._layer._map._limitZoom(zoom);
 		var origZoom = this._layer._map.getZoom();
 		// Compute relative-multiplicative scale of this zoom-frame w.r.t the starting zoom(ie the current Map's zoom).
-		this._zoomFrameScale = this._layer._map.zoomToFactor(zoom - origZoom + this._layer._map.options.zoom);
+		return this._layer._map.zoomToFactor(zoom - origZoom + this._layer._map.options.zoom);
+	},
 
+	_calcZoomFrameParams: function (zoom, newCenter) {
+		this._zoomFrameScale = this._calcZoomFrameScale(zoom);
 		this._newCenter = this._layer._map.project(newCenter).multiplyBy(this._tilesSection.dpiScale); // in core pixels
 	},
 
 	zoomStep: function (zoom, newCenter) {
-		this._calcZoomFrameScale(zoom, newCenter);
+		this._calcZoomFrameParams(zoom, newCenter);
 
 		if (!this._inZoomAnim) {
-			this._tilesSection.setInZoomAnim(true);
+			this._sectionContainer.setInZoomAnimation(true);
 			this._inZoomAnim = true;
 			this._layer._prefetchTilesSync();
 			// Start RAF loop for zoom-animation
@@ -451,18 +474,49 @@ L.TileSectionManager = L.Class.extend({
 		}
 	},
 
-	zoomStepEnd: function (zoom, newCenter) {
-		this._zoomFrameScale = undefined;
-		if (this._inZoomAnim) {
-			cancelAnimationFrame(this._zoomRAF);
-			this._calcZoomFrameScale(zoom, newCenter);
-			this.rafFunc(undefined, true /* final? */);
-			this._zoomFrameScale = undefined;
-			this._tilesSection.setInZoomAnim(false);
-			this._inZoomAnim = false;
-			var newMapCenterLatLng = this._newMapCenter ? this._map.unproject(this._newMapCenter, zoom) : undefined;
-			return newMapCenterLatLng;
-		}
+	zoomStepEnd: function (zoom, newCenter, mapUpdater) {
+
+		if (!this._inZoomAnim)
+			return;
+
+		// Do a another animation from current non-integral log-zoom to
+		// the final integral zoom, but maintain the same center.
+		var steps = 10;
+		var stepId = 0;
+		// This buys us time till new tiles arrive.
+		var intervalGap = 20;
+		var startZoom = this._zoomFrameScale;
+		var endZoom = this._calcZoomFrameScale(zoom);
+		var painter = this;
+		var map = this._map;
+
+		// Calculate the final center at final zoom in advance.
+		var newMapCenter = this._getZoomMapCenter(zoom);
+		var newMapCenterLatLng = map.unproject(newMapCenter, zoom);
+		// Fetch tiles for the new zoom and center as we start final animation.
+		// But this does not update the map.
+		this._layer._update(newMapCenterLatLng, zoom);
+
+		var intervalId = setInterval(function () {
+
+			if (stepId < steps) {
+				// continue animating till we reach "close" to 'final zoom'.
+				painter._zoomFrameScale = startZoom + (endZoom - startZoom) * stepId / steps;
+				stepId += 1;
+				return;
+			}
+
+			clearInterval(intervalId);
+			cancelAnimationFrame(painter._zoomRAF);
+			painter._calcZoomFrameParams(zoom, newCenter);
+			// Draw one last frame at final zoom.
+			painter.rafFunc(undefined, true /* final? */);
+			painter._zoomFrameScale = undefined;
+			painter._sectionContainer.setInZoomAnimation(false);
+			painter._inZoomAnim = false;
+			// Set view and paint the tiles (requested above).
+			mapUpdater(newMapCenterLatLng);
+		}, intervalGap);
 	},
 
 	getTileSectionPos : function () {
@@ -678,8 +732,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._painter.zoomStep(zoom, newCenter);
 	},
 
-	zoomStepEnd: function (zoom, newCenter) {
-		return this._painter.zoomStepEnd(zoom, newCenter);
+	zoomStepEnd: function (zoom, newCenter, mapUpdater) {
+		this._painter.zoomStepEnd(zoom, newCenter, mapUpdater);
 	},
 
 	_viewReset: function (e) {
