@@ -2402,17 +2402,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertField', 'text'),
-								'command': '.uno:InsertField'
-							}
-						]
-					},
-					{
-						'id': 'LineA18',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
 								'text': _UNO('.uno:InsertPageNumberField'),
 								'command': '.uno:InsertPageNumberField'
 							},
@@ -2421,6 +2410,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'text': _UNO('.uno:InsertPageCountField', 'text'),
 								'command': '.uno:InsertPageCountField'
 							},
+						]
+					},
+					{
+						'id': 'LineA18',
+						'type': 'toolbox',
+						'children': [
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertDateField', 'text'),
