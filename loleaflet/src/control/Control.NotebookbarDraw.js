@@ -191,9 +191,9 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'children': [
 							{
 								'id': 'print',
-								'type': 'menubartoolitem',
+								'type': 'bigtoolitem',
 								'text': _UNO('.uno:Print', 'presentation'),
-								'command': ''
+								'command': '.uno:Print'
 							}
 						]
 					} : {},
