@@ -223,10 +223,10 @@ namespace Util
 
         for (unsigned int i = 0; i < width; i++)
         {
-            if ((offset + i) < buffer.size() && ::isprint(buffer[offset+i]))
-                sprintf (scratch, "%c", buffer[offset+i]);
+            if ((offset + i) < buffer.size())
+                sprintf(scratch, "%c", ::isprint(buffer[offset + i]) ? buffer[offset + i] : '.');
             else
-                sprintf (scratch, ".");
+                sprintf(scratch, " "); // Leave blank if we are out of data.
             os << scratch;
         }
 
