@@ -2679,7 +2679,7 @@ L.TileLayer = L.GridLayer.extend({
 		} else {
 			this._map._textInput.hideCursor();
 			// Maintain input if a dialog or search-box has the focus.
-			if (this._map.editorHasFocus() && !this._map.isSearching())
+			if (this._map.editorHasFocus() && !isAnyVexDialogActive() && !this._map.isSearching())
 				this._map.focus(false);
 		}
 	},
