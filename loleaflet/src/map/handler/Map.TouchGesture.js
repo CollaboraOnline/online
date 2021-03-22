@@ -619,12 +619,13 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		this._pinchStartCenter = undefined;
 
+		var newMapCenter;
 		if (this._map._docLayer.zoomStepEnd) {
-			this._map._docLayer.zoomStepEnd(finalZoom, this._origCenter);
+			newMapCenter = this._map._docLayer.zoomStepEnd(finalZoom, this._origCenter);
 		}
 
 		this._map.setZoomViewPanning(true);
-		this._map.setView(this._center, finalZoom);
+		this._map.setView(newMapCenter || this._center, finalZoom);
 		this._map.setZoomViewPanning(false);
 	},
 
