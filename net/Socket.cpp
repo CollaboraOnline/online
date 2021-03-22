@@ -866,7 +866,7 @@ bool StreamSocket::parseHeader(const char *clientName,
             map->_messageSize += contentLength;
 
         const std::string expect = request.get("Expect", "");
-        bool getExpectContinue =  !expect.empty() && Poco::icompare(expect, "100-continue") == 0;
+        const bool getExpectContinue = Util::iequal(expect, "100-continue");
         if (getExpectContinue && !_sentHTTPContinue)
         {
             LOG_TRC('#' << getFD() << " got Expect: 100-continue, sending Continue");

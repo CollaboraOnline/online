@@ -1166,11 +1166,11 @@ void LOOLWSD::initialize(Application& self)
 
     {
         std::string proto = getConfigValue<std::string>(conf, "net.proto", "");
-        if (!Poco::icompare(proto, "ipv4"))
+        if (Util::iequal(proto, "ipv4"))
             ClientPortProto = Socket::Type::IPv4;
-        else if (!Poco::icompare(proto, "ipv6"))
+        else if (Util::iequal(proto, "ipv6"))
             ClientPortProto = Socket::Type::IPv6;
-        else if (!Poco::icompare(proto, "all"))
+        else if (Util::iequal(proto, "all"))
             ClientPortProto = Socket::Type::All;
         else
             LOG_WRN("Invalid protocol: " << proto);
@@ -1178,9 +1178,9 @@ void LOOLWSD::initialize(Application& self)
 
     {
         std::string listen = getConfigValue<std::string>(conf, "net.listen", "");
-        if (!Poco::icompare(listen, "any"))
+        if (Util::iequal(listen, "any"))
             ClientListenAddr = ServerSocket::Type::Public;
-        else if (!Poco::icompare(listen, "loopback"))
+        else if (Util::iequal(listen, "loopback"))
             ClientListenAddr = ServerSocket::Type::Local;
         else
             LOG_WRN("Invalid listen address: " << listen << ". Falling back to default: 'any'" );
