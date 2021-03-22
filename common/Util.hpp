@@ -1194,6 +1194,28 @@ int main(int argc, char**argv)
         return s;
     }
 
+    /// Case insensitive comparison of two strings.
+    /// Returns true iff the two strings are equal, regardless of case.
+    inline bool iequal(const char* lhs, std::size_t lhs_len, const char* rhs, std::size_t rhs_len)
+    {
+        return ((lhs_len == rhs_len)
+                && std::equal(lhs, lhs + lhs_len, rhs, [](const char lch, const char rch) {
+                       return std::tolower(lch) == std::tolower(rch);
+                   }));
+    }
+
+    /// Case insensitive comparison of two strings.
+    template <std::size_t N> inline bool iequal(const std::string& lhs, const char (&rhs)[N])
+    {
+        return iequal(lhs.c_str(), lhs.size(), rhs, N - 1); // Minus null termination.
+    }
+
+    /// Case insensitive comparison of two strings.
+    inline bool iequal(const std::string& lhs, const std::string& rhs)
+    {
+        return iequal(lhs.c_str(), lhs.size(), rhs.c_str(), rhs.size());
+    }
+
     /// Get system_clock now in miliseconds.
     inline int64_t getNowInMS()
     {
