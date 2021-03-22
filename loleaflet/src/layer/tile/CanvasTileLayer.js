@@ -349,7 +349,7 @@ L.TileSectionManager = L.Class.extend({
 		var splitPos = ctx.splitPos;
 		var canvasOverlay = this._layer._canvasOverlay;
 
-		var rafFunc = function () {
+		var rafFunc = function (timeStamp, final) {
 			painter._sectionContainer.setPenPosition(painter._tilesSection);
 			for (var i = 0; i < paneBoundsList.length; ++i) {
 				var paneBounds = paneBoundsList[i];
@@ -368,13 +368,25 @@ L.TileSectionManager = L.Class.extend({
 				if (inYBounds)
 					center.y = painter._newCenter.y;
 
-				// Top left position in the offscreen canvas.
-				var sourceTopLeft = new L.Point(
+				// Top left in document coordinates.
+				var docTopLeft = new L.Point(
 					Math.max(paneBounds.min.x ? splitPos.x: 0,
 						center.x - (center.x - paneBounds.min.x) / scale),
 					Math.max(paneBounds.min.y ? splitPos.y: 0,
-						center.y - (center.y - paneBounds.min.y) / scale))
-					._subtract(paneBounds.min)._add(paneBoundsOffset);
+						center.y - (center.y - paneBounds.min.y) / scale));
+
+				if (final &&
+					(paneBounds.min.x || (!paneBounds.min.x && !splitPos.x)) &&
+					(paneBounds.min.y || (!paneBounds.min.y && !splitPos.y))) {
+					// This is needed to set the map center once animation has finished.
+					// Done only for the freely movable pane.
+					painter._newMapCenter = new L.Point(
+						(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) / (2 * scale)) * scale / painter._tilesSection.dpiScale,
+						(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) / (2 * scale)) * scale / painter._tilesSection.dpiScale);
+				}
+
+				// Top left position in the offscreen canvas.
+				var sourceTopLeft = docTopLeft.subtract(paneBounds.min).add(paneBoundsOffset);
 
 				var destPos = new L.Point(0, 0);
 				if (paneBoundsList.length > 1) {
@@ -411,7 +423,8 @@ L.TileSectionManager = L.Class.extend({
 
 			canvasOverlay.onDraw();
 
-			painter._zoomRAF = requestAnimationFrame(rafFunc);
+			if (!final)
+				painter._zoomRAF = requestAnimationFrame(rafFunc);
 		};
 		this.rafFunc = rafFunc;
 		rafFunc();
@@ -443,11 +456,12 @@ L.TileSectionManager = L.Class.extend({
 		if (this._inZoomAnim) {
 			cancelAnimationFrame(this._zoomRAF);
 			this._calcZoomFrameScale(zoom, newCenter);
-			this.rafFunc();
-			cancelAnimationFrame(this._zoomRAF);
+			this.rafFunc(undefined, true /* final? */);
 			this._zoomFrameScale = undefined;
 			this._tilesSection.setInZoomAnim(false);
 			this._inZoomAnim = false;
+			var newMapCenterLatLng = this._newMapCenter ? this._map.unproject(this._newMapCenter, zoom) : undefined;
+			return newMapCenterLatLng;
 		}
 	},
 
@@ -665,7 +679,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	zoomStepEnd: function (zoom, newCenter) {
-		this._painter.zoomStepEnd(zoom, newCenter);
+		return this._painter.zoomStepEnd(zoom, newCenter);
 	},
 
 	_viewReset: function (e) {
