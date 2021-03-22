@@ -475,7 +475,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 
-		if (e.ctrlKey && (e.key === 'f' || e.key === 'F')) {
+		if (e.ctrlKey && !e.shiftKey && !e.altKey && (e.key === 'f' || e.key === 'F')) {
 			this._map.fire('focussearch');
 			e.preventDefault();
 			return true;
