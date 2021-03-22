@@ -140,7 +140,8 @@ private:
 
             const std::string& requestURI = request.getURI();
             StringVector pathTokens(Util::tokenize(requestURI, '/'));
-            if (request.find("Upgrade") != request.end() && Poco::icompare(request["Upgrade"], "websocket") == 0)
+            if (request.find("Upgrade") != request.end()
+                && Util::iequal(request["Upgrade"], "websocket"))
             {
                 auto dumpHandler = std::make_shared<DumpSocketHandler>(_socket, request);
                 socket->setHandler(dumpHandler);

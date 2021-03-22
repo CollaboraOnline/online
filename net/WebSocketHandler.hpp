@@ -818,12 +818,12 @@ protected:
         http::Response response([&]() {
             if (response.statusLine().statusCode()
                     == Poco::Net::HTTPResponse::HTTP_SWITCHING_PROTOCOLS
-                && Poco::icompare(response.header().get("Upgrade"), "websocket") == 0)
+                && Util::iequal(response.header().get("Upgrade"), "websocket"))
             {
 #if 0 // SAL_DEBUG ...
                     const std::string wsKey = response.get("Sec-WebSocket-Accept", "");
                     const std::string wsProtocol = response.get("Sec-WebSocket-Protocol", "");
-                    if (Poco::icompare(wsProtocol, "chat") != 0)
+                    if (!Util::iequal(wsProtocol, "chat"))
                         LOG_ERR("Unknown websocket protocol " << wsProtocol);
                     else
 #endif
