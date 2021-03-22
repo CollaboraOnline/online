@@ -220,13 +220,13 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'vertical': 'true',
 						'children': [
 							{
-								'id': 'saveas-Section2',
+								'id': 'saveas-Section1',
 								'type': 'container',
 								'text': '',
 								'enabled': 'true',
 								'children': [
 									{
-										'id': 'Section10',
+										'id': 'Section6',
 										'type': 'toolbox',
 										'text': '',
 										'enabled': 'true',
@@ -235,6 +235,28 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 												'id': 'downloadas-odg',
 												'type': 'menubartoolitem',
 												'text': _('ODF Drawing (.odg)'),
+												'command': ''
+											}
+										]
+									}
+								]
+							},
+							{
+								'id': 'saveas-Section2',
+								'type': 'container',
+								'text': '',
+								'enabled': 'true',
+								'children': [
+									{
+										'id': 'Section7',
+										'type': 'toolbox',
+										'text': '',
+										'enabled': 'true',
+										'children': [
+											{
+												'id': 'downloadas-pdf',
+												'type': 'menubartoolitem',
+												'text': _('PDF Document (.pdf)'),
 												'command': ''
 											}
 										]
@@ -251,42 +273,21 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'vertical': 'true',
 						'children': [
 							{
-								'id': 'saveas-Section1',
+								'id': 'saveas-Section4',
 								'type': 'container',
 								'text': '',
 								'enabled': 'true',
 								'children': [
 									{
-										'id': 'Section6',
+										'id': 'Section8',
 										'type': 'toolbox',
 										'text': '',
 										'enabled': 'true',
 										'children': [
 											{
-												'id': 'downloadas-pdf',
+												'id': 'downloadas-png',
 												'type': 'menubartoolitem',
-												'text': _('PDF Document (.pdf)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							},
-							{
-								'id': 'saveas-Section2',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section11',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'type': 'menubartoolitem',
-												'text': '',
+												'text': _('Image (.png)'),
 												'command': ''
 											}
 										]
