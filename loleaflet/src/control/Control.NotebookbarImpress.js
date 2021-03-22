@@ -1944,6 +1944,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
+								'text': _UNO('.uno:InsertAuthorField', 'presentation'),
+								'command': '.uno:InsertAuthorField'
+							},
+							{
+								'type': 'toolitem',
 								'text': _UNO('.uno:InsertTimeFieldFix', 'presentation'),
 								'command': '.uno:InsertTimeFieldFix'
 							},
