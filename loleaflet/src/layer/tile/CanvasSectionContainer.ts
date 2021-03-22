@@ -225,6 +225,7 @@ class CanvasSectionContainer {
 	public lowestPropagatedBoundSection: string = null; // Event propagating to bound sections. The first section which stops propagating and the sections those are on top of that section, get the event.
 	private scrollLineHeight: number = 30; // This will be overridden.
 	private mouseIsInside: boolean = false;
+	private inZoomAnimation: boolean = false;
 
 	// Below variables are related to animation feature.
 	private animatingSectionName: string = null; // The section that called startAnimating function. This variable is null when animations are not running.
@@ -279,6 +280,14 @@ class CanvasSectionContainer {
 
 	getClearColor () {
 		return this.clearColor;
+	}
+
+	setInZoomAnimation (inZoomAnimation: boolean) {
+		this.inZoomAnimation = inZoomAnimation;
+	}
+
+	isInZoomAnimation (): boolean {
+		return this.inZoomAnimation;
 	}
 
 	/**
