@@ -35,7 +35,7 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
     {                                                                                              \
         if (!(condition))                                                                          \
         {                                                                                          \
-            TST_LOG_NAME("unittest", "Assertion failure: " << (#condition));                       \
+            TST_LOG_NAME("unittest", "ERROR: Assertion failure: " << (#condition));                \
             LOK_ASSERT_IMPL(condition);                                                            \
             CPPUNIT_ASSERT(condition);                                                             \
         }                                                                                          \
@@ -46,7 +46,7 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
     {                                                                                              \
         if (!((expected) == (actual)))                                                             \
         {                                                                                          \
-            TST_LOG_NAME("unittest", "Assertion failure: Expected ["                               \
+            TST_LOG_NAME("unittest", "ERROR: Assertion failure: Expected ["                        \
                                          << (expected) << "] but got [" << (actual) << ']');       \
             LOK_ASSERT_IMPL((expected) == (actual));                                               \
             CPPUNIT_ASSERT_EQUAL((expected), (actual));                                            \
@@ -62,9 +62,9 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
             std::ostringstream oss##__LINE__;                                                      \
             oss##__LINE__ << message;                                                              \
             const auto msg##__LINE__ = oss##__LINE__.str();                                        \
-            TST_LOG_NAME("unittest", "Assertion failure: " << msg##__LINE__ << ". Expected ["      \
-                                                           << (expected) << "] but got ["          \
-                                                           << (actual) << "]: ");                  \
+            TST_LOG_NAME("unittest", "ERROR: Assertion failure: "                                  \
+                                         << msg##__LINE__ << ". Expected [" << (expected)          \
+                                         << "] but got [" << (actual) << "]: ");                   \
             CPPUNIT_ASSERT_EQUAL_MESSAGE(msg##__LINE__, (expected), (actual));                     \
         }                                                                                          \
     } while (false)
@@ -74,8 +74,8 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
     {                                                                                              \
         if (!(condition))                                                                          \
         {                                                                                          \
-            TST_LOG_NAME("unittest",                                                               \
-                         "Assertion failure: " << (message) << ". Condition: " << (#condition));   \
+            TST_LOG_NAME("unittest", "ERROR: Assertion failure: " << (message) << ". Condition: "  \
+                                                                  << (#condition));                \
             LOK_ASSERT_IMPL(condition);                                                            \
             CPPUNIT_ASSERT_MESSAGE((message), (condition));                                        \
         }                                                                                          \
@@ -84,7 +84,7 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
 #define LOK_ASSERT_FAIL(message)                                                                   \
     do                                                                                             \
     {                                                                                              \
-        TST_LOG_NAME("unittest", "Forced failure: " << (message));                                 \
+        TST_LOG_NAME("unittest", "ERROR: Forced failure: " << (message));                          \
         LOK_ASSERT_IMPL(!"Forced failure");                                                        \
         CPPUNIT_FAIL((message));                                                                   \
     } while (false)
