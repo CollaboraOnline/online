@@ -74,35 +74,38 @@ echo "Running $tst | $tst_log ...";
 echo > $tst_log
 if ${trace} \
        ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
-       --o:child_root_path="$jails_path" \
-                                   --o:storage.filesystem[@allow]=true \
-                                   --o:logging.level=trace \
-                                   --o:ssl.key_file_path="${abs_top_builddir}/etc/key.pem" \
-                                   --o:ssl.cert_file_path="${abs_top_builddir}/etc/cert.pem" \
-                                   --o:ssl.ca_file_path="${abs_top_builddir}/etc/ca-chain.cert.pem" \
-                                   --o:admin_console.username=admin --o:admin_console.password=admin \
-                                   --o:storage.ssl.enable=false \
-                                   --unitlib="${abs_top_builddir}/test/.libs/$tst.so" 2> "$tst_log"; then
-        echo "Test $tst passed."
-        echo ":test-result: PASS $tst" >> $test_output
+				   --o:child_root_path="$jails_path" \
+				   --o:security.capabilities="${capabilities}" \
+				   --o:storage.filesystem[@allow]=true \
+				   --o:logging.level=trace \
+				   --o:ssl.key_file_path="${abs_top_builddir}/etc/key.pem" \
+				   --o:ssl.cert_file_path="${abs_top_builddir}/etc/cert.pem" \
+				   --o:ssl.ca_file_path="${abs_top_builddir}/etc/ca-chain.cert.pem" \
+				   --o:admin_console.username=admin --o:admin_console.password=admin \
+				   --o:storage.ssl.enable=false \
+				   --unitlib="${abs_top_builddir}/test/.libs/$tst.so" 2> "$tst_log"; then
+	echo "Test $tst passed."
+	echo ":test-result: PASS $tst" >> $test_output
 else
+	echo "Test $tst FAILED."
 	cat $tst_log
-        echo "============================================================="
-        echo "Test failed on unit: $tst re-run with:"
-        echo "   $ gdb --args ${abs_top_builddir}/loolwsd --o:sys_template_path=\"$systemplate_path\" \\"
-        echo "         --o:child_root_path=\"$jails_path\" \\"
-        echo "         --o:storage.filesystem[@allow]=true \\"
-        echo "         --o:storage.ssl.enable=false \\"
-        echo "         --o:logging.level=trace \\"
-        echo "         --o:ssl.key_file_path=\"${abs_top_builddir}/etc/key.pem\" \\"
-        echo "         --o:ssl.cert_file_path=\"${abs_top_builddir}/etc/cert.pem\" \\"
-        echo "         --o:ssl.ca_file_path=\"${abs_top_builddir}/etc/ca-chain.cert.pem\" \\"
-        echo "         --o:admin_console.username=admin --o:admin_console.password=admin \\"
-        echo "         --unitlib=\"${abs_top_builddir}/test/.libs/$tst.so\""
+	echo "============================================================="
+	echo "Test failed on unit: $tst re-run with:"
+	echo "   $ gdb --args ${abs_top_builddir}/loolwsd --o:sys_template_path=\"$systemplate_path\" \\"
+	echo "         --o:child_root_path=\"$jails_path\" \\"
+	echo "         --o:security.capabilities=\"${capabilities}\" \\"
+	echo "         --o:storage.filesystem[@allow]=true \\"
+	echo "         --o:logging.level=error\\" # logs and gdb don't go well together
+	echo "         --o:ssl.key_file_path=\"${abs_top_builddir}/etc/key.pem\" \\"
+	echo "         --o:ssl.cert_file_path=\"${abs_top_builddir}/etc/cert.pem\" \\"
+	echo "         --o:ssl.ca_file_path=\"${abs_top_builddir}/etc/ca-chain.cert.pem\" \\"
+	echo "         --o:admin_console.username=admin --o:admin_console.password=admin \\"
+	echo "         --o:storage.ssl.enable=false \\"
+	echo "         --unitlib=\"${abs_top_builddir}/test/.libs/$tst.so\""
 	echo ""
 	echo "   $ less $tst_log # for detailed failure log files"
-        echo "============================================================="
-        echo ":test-result: FAIL $tst" >> $test_output
+	echo "============================================================="
+	echo ":test-result: FAIL $tst" >> $test_output
 fi
 
 echo "Finished $tst in $SECONDS";
