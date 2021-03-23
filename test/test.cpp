@@ -121,6 +121,10 @@ int main(int argc, char** argv)
     if (!SslContext::isInitialized())
         LOG_ERR("Failed to initialize SSL. Set the path to the certificates via --cert-path. "
                 "HTTPS tests will be disabled in unit-tests.");
+    else
+        LOG_INF("Initialized SSL.");
+#else
+    LOG_INF("SSL is unsupported in this build.");
 #endif
 
     return runClientTests(true, verbose)? 0: 1;
