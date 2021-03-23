@@ -1353,6 +1353,10 @@ msgstr ""
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr ""
 
+#: src/core/Socket.js:311
+msgid "Server has been restarted. We have to refresh the page now."
+msgstr ""
+
 #: src/core/Socket.js:310
 msgid "Served by:"
 msgstr ""

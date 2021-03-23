@@ -289,7 +289,26 @@ L.Socket = L.Class.extend({
 		var command = this.parseServerCmd(textMsg);
 		if (textMsg.startsWith('loolserver ')) {
 			// This must be the first message, unless we reconnect.
+			var oldId = null;
+			var oldVersion = null;
+			// Check if we are reconnecting.
+			if (this.WSDServer && this.WSDServer.Id) {
+				// Yes we are reconnecting.
+				// If server is restarted, we have to refresh the page.
+				// If our connection was lost and is ready again, we will not need to refresh the page.
+				oldId = this.WSDServer.Id;
+				oldVersion = this.WSDServer.Version;
+			}
+
 			this.WSDServer = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+
+			if (oldId && oldVersion) {
+				if (this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) {
+					alert(_('Server has been restarted. We have to refresh the page now.'));
+					window.location.reload();
+				}
+			}
+
 			var h = this.WSDServer.Hash;
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				h = '<a href="javascript:void(window.open(\'https://github.com/CollaboraOnline/online/commits/' + h + '\'));">' + h + '</a>';
