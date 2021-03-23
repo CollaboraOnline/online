@@ -95,13 +95,6 @@ public:
         upgradeToWebSocket(*socket, request);
     }
 
-    /// Implementation of the ProtocolHandlerInterface.
-    void onConnect(const std::shared_ptr<StreamSocket>& socket) override
-    {
-        _socket = socket;
-        LOG_TRC('#' << socket->getFD() << " Connected to WS Handler " << this);
-    }
-
     /// Status codes sent to peer on shutdown.
     enum class StatusCodes : unsigned short
     {
@@ -119,6 +112,14 @@ public:
         UNEXPECTED_CONDITION    = 1011,
         RESERVED_TLS_FAILURE    = 1015
     };
+
+protected:
+    /// Implementation of the ProtocolHandlerInterface.
+    void onConnect(const std::shared_ptr<StreamSocket>& socket) override
+    {
+        _socket = socket;
+        LOG_TRC('#' << socket->getFD() << " Connected to WS Handler " << this);
+    }
 
     /// Sends WS Close frame to the peer.
     void sendCloseFrame(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE, const std::string& statusMessage = "")
@@ -172,7 +173,9 @@ public:
         }
     }
 
-    void shutdown(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE, const std::string& statusMessage = "")
+public:
+    void shutdown(const StatusCodes statusCode = StatusCodes::NORMAL_CLOSE,
+                  const std::string& statusMessage = std::string())
     {
         if (!_shuttingDown)
             sendCloseFrame(statusCode, statusMessage);
@@ -190,6 +193,7 @@ public:
         _shuttingDown = false;
     }
 
+private:
     bool handleTCPStream(const std::shared_ptr<StreamSocket>& socket)
     {
         assert(socket && "Expected a valid socket instance.");
@@ -403,6 +407,7 @@ public:
         return true;
     }
 
+protected:
     /// Implementation of the ProtocolHandlerInterface.
     virtual void handleIncomingMessage(SocketDisposition&) override
     {
