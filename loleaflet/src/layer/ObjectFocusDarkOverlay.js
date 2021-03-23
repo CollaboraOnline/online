@@ -23,10 +23,10 @@ L.ObjectFocusDarkOverlay = L.ObjectFocusDarkOverlay.extend({
 	// coordinates are in Twips
 	_addPart: function(x, y, w, h) {
 		var rectangles = [];
-		var topLeftTwips = new L.Point(x, y);
-		var topRightTwips = topLeftTwips.add(new L.Point(w, 0));
-		var bottomLeftTwips = topLeftTwips.add(new L.Point(0, h));
-		var bottomRightTwips = topLeftTwips.add(new L.Point(w, h));
+		var topLeftTwips = new L.Point(parseInt(x), parseInt(y));
+		var topRightTwips = topLeftTwips.add(new L.Point(parseInt(w), 0));
+		var bottomLeftTwips = topLeftTwips.add(new L.Point(0, parseInt(h)));
+		var bottomRightTwips = topLeftTwips.add(new L.Point(parseInt(w), parseInt(h)));
 		rectangles.push([bottomLeftTwips, bottomRightTwips, topLeftTwips, topRightTwips]);
 
 		var polygons = L.PolyUtil.rectanglesToPolygons(rectangles, this._map._docLayer);
