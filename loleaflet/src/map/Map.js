@@ -476,6 +476,8 @@ L.Map = L.Evented.extend({
 		if (!calcLayer.options.sheetGeometryDataEnabled || !calcLayer.sheetGeometry)
 			return false;
 
+		calcLayer.setZoomChanged(true);
+
 		var sheetGeom = calcLayer.sheetGeometry;
 		var zoomScaleAbs = this.zoomToFactor(zoom);
 
@@ -532,6 +534,7 @@ L.Map = L.Evented.extend({
 			calcLayer.activateCursor();
 		}
 
+		calcLayer.setZoomChanged(false);
 		return;
 	},
 
@@ -588,6 +591,7 @@ L.Map = L.Evented.extend({
 			}
 		}
 
+		this._docLayer.setZoomChanged(true);
 		if (this._docLayer && this._docLayer._visibleCursor && this.getBounds().contains(this._docLayer._visibleCursor.getCenter())) {
 			// Calculate new center after zoom. The intent is that the caret
 			// position stays the same.
@@ -595,9 +599,14 @@ L.Map = L.Evented.extend({
 			var caretPos = this._docLayer._visibleCursor.getCenter();
 			var newCenter = new L.LatLng(curCenter.lat + (caretPos.lat - curCenter.lat) * (1.0 - zoomScale),
 						     curCenter.lng + (caretPos.lng - curCenter.lng) * (1.0 - zoomScale));
-			return this.setView(newCenter, zoom, {zoom: options});
+			var retValue = this.setView(newCenter, zoom, {zoom: options});
+			this._docLayer.setZoomChanged(false);
+			return retValue;
 		}
-		return this.setView(curCenter, zoom, {zoom: options});
+
+		retValue = this.setView(curCenter, zoom, {zoom: options});
+		this._docLayer.setZoomChanged(false);
+		return retValue;
 	},
 
 	zoomIn: function (delta, options) {
