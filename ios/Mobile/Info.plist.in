@@ -475,24 +475,6 @@
 				<string>public.content</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>OpenDocument Text</string>
-			<key>UTTypeIconFiles</key>
-			<array/>
-			<key>UTTypeIdentifier</key>
-			<string>org.oasis-open.opendocument.text</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<string>odt</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-				<string>public.content</string>
-			</array>
-			<key>UTTypeDescription</key>
 			<string>OpenDocument Flat Text</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.collabora.office.uti.fodt</string>
@@ -500,42 +482,6 @@
 			<dict>
 				<key>public.filename-extension</key>
 				<string>fodt</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-				<string>public.content</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>OpenDocument Spreadsheet</string>
-			<key>UTTypeIconFiles</key>
-			<array/>
-			<key>UTTypeIdentifier</key>
-			<string>org.oasis-open.opendocument.spreadsheet</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<string>ods</string>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.data</string>
-				<string>public.content</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>OpenDocument Presentation</string>
-			<key>UTTypeIconFiles</key>
-			<array/>
-			<key>UTTypeIdentifier</key>
-			<string>org.oasis-open.opendocument.presentation</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<string>odp</string>
 			</dict>
 		</dict>
 		<dict>
@@ -566,6 +512,24 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.data</string>
+				<string>public.content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>OpenDocument Text</string>
+			<key>UTTypeIconFiles</key>
+			<array/>
+			<key>UTTypeIdentifier</key>
+			<string>org.oasis-open.opendocument.text</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<string>odt</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>org.openxmlformats.openxml</string>
 				<string>public.composite-content</string>
 			</array>
@@ -588,6 +552,24 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string>public.data</string>
+				<string>public.content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>OpenDocument Spreadsheet</string>
+			<key>UTTypeIconFiles</key>
+			<array/>
+			<key>UTTypeIdentifier</key>
+			<string>org.oasis-open.opendocument.spreadsheet</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<string>ods</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
 				<string>org.openxmlformats.openxml</string>
 				<string>public.composite-content</string>
 			</array>
@@ -605,6 +587,24 @@
 				<array>
 					<string>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</string>
 				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+				<string>public.content</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>OpenDocument Presentation</string>
+			<key>UTTypeIconFiles</key>
+			<array/>
+			<key>UTTypeIdentifier</key>
+			<string>org.oasis-open.opendocument.presentation</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<string>odp</string>
 			</dict>
 		</dict>
 		<dict>
