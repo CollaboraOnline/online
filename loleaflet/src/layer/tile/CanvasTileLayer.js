@@ -515,8 +515,10 @@ L.TileSectionManager = L.Class.extend({
 			painter._zoomFrameScale = undefined;
 			painter._sectionContainer.setInZoomAnimation(false);
 			painter._inZoomAnim = false;
+			painter._sectionContainer.setZoomChanged(true);
 			// Set view and paint the tiles (requested above).
 			mapUpdater(newMapCenterLatLng);
+			painter._sectionContainer.setZoomChanged(false);
 			map.enableTextInput();
 		}, intervalGap);
 	},
@@ -599,8 +601,10 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		if (tilePane) {
 			var mapPanePos = this._map._getMapPanePos();
 			L.DomUtil.setPosition(tilePane, new L.Point(-mapPanePos.x , -mapPanePos.y));
-			var documentPos = this._map.getPixelBoundsCore().min;
-			this._painter._sectionContainer.setDocumentTopLeft([documentPos.x, documentPos.y]);
+			var documentBounds = this._map.getPixelBoundsCore();
+			var documentPos = documentBounds.min;
+			var documentEndPos = documentBounds.max;
+			this._painter._sectionContainer.setDocumentBounds([documentPos.x, documentPos.y, documentEndPos.x, documentEndPos.y]);
 		}
 	},
 
@@ -701,6 +705,10 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 
 		return false;
+	},
+
+	setZoomChanged: function (zoomChanged) {
+		this._painter._sectionContainer.setZoomChanged(zoomChanged);
 	},
 
 	onAdd: function (map) {
