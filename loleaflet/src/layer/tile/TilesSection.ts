@@ -134,6 +134,14 @@ class TilesSection {
 		var cropHeight = crop.max.y - crop.min.y;
 
 		if (cropWidth && cropHeight) {
+			if (this.containerObject.isZoomChanged()) {
+				// Whole canvas is not cleared after zoom has changed, so clear it per tile as they arrive.
+				this.context.fillStyle = this.containerObject.getClearColor();
+				this.context.fillRect(
+					crop.min.x - paneOffset.x,
+					crop.min.y - paneOffset.y,
+					cropWidth, cropHeight);
+			}
 			canvasCtx.drawImage(tile.el,
 				crop.min.x - tileBounds.min.x,
 				crop.min.y - tileBounds.min.y,
@@ -156,10 +164,11 @@ class TilesSection {
 		var halfExtraSize = this.sectionProperties.osCanvasExtraSize / 2;
 		var extendedOffset = offset.add(new L.Point(halfExtraSize, halfExtraSize));
 
-		if (async) {
+		if (async || this.containerObject.isZoomChanged()) {
 			// Non Calc tiles(handled by paintSimple) can have transparent pixels,
 			// so clear before paint if the call is an async one.
 			// For the full view area repaint, whole canvas is cleared by section container.
+			// Whole canvas is not cleared after zoom has changed, so clear it per tile as they arrive even if not async.
 			this.context.fillStyle = this.containerObject.getClearColor();
 			this.context.fillRect(offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
 		}
