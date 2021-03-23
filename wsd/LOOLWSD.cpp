@@ -1499,6 +1499,13 @@ void LOOLWSD::initializeSSL()
                            ssl_key_file_path,
                            ssl_ca_file_path,
                            ssl_cipher_list);
+
+    if (!SslContext::isInitialized())
+        LOG_ERR("Failed to initialize SSL.");
+    else
+        LOG_INF("Initialized SSL.");
+#else
+    LOG_INF("SSL is unavailable in this build.");
 #endif
 }
 
