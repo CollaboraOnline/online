@@ -24,8 +24,11 @@ class ScrollSection {
 	drawingOrder: number = null;
 	zIndex: number = null;
 	interactable: boolean = true;
+	isAnimating: boolean = false; // This variable is set by the CanvasSectionContainer class.
 	sectionProperties: any = {};
 	stopPropagating: Function; // Implemented by container.
+	startAnimating: Function; // Implemented by container.
+	resetAnimation: Function; // Implemented by container.
 	map: any;
 	autoScrollTimer: any;
 
@@ -86,11 +89,15 @@ class ScrollSection {
 		// Opacity.
 		this.sectionProperties.alphaWhenVisible = 0.5; // Scroll bar is visible but not being used.
 		this.sectionProperties.alphaWhenBeingUsed = 0.8; // Scroll bar is being used.
+		this.sectionProperties.currentAlpha = 1.0; // This variable will be updated while animating. When not animating, this will be equal to one of the above variables.
 
 		this.sectionProperties.yOffset = 0;
 		this.sectionProperties.xOffset = 0;
 
 		this.sectionProperties.horizontalScrollRightOffset = this.sectionProperties.usableThickness * 2; // To prevent overlapping of the scroll bars.
+
+		this.sectionProperties.animatingVerticalScrollBar = false;
+		this.sectionProperties.animatingHorizontalScrollBar = false;
 	}
 
 	public onScrollTo (e: any) {
@@ -235,7 +242,12 @@ class ScrollSection {
 
 	private DrawVerticalScrollBarMobile () {
 		var scrollProps: any = this.getVerticalScrollProperties();
-		this.context.globalAlpha = this.sectionProperties.clickScrollVertical ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
+
+		if (this.sectionProperties.animatingVerticalScrollBar)
+			this.context.globalAlpha = this.sectionProperties.currentAlpha;
+		else
+			this.context.globalAlpha = this.sectionProperties.clickScrollVertical ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
+
 		this.context.strokeStyle = '#7E8182';
 		this.context.fillStyle = 'white';
 
@@ -280,7 +292,12 @@ class ScrollSection {
 
 	private drawVerticalScrollBar () {
 		var scrollProps: any = this.getVerticalScrollProperties();
-		this.context.globalAlpha = this.sectionProperties.clickScrollVertical ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
+
+		if (this.sectionProperties.animatingVerticalScrollBar)
+			this.context.globalAlpha = this.sectionProperties.currentAlpha;
+		else
+			this.context.globalAlpha = this.sectionProperties.clickScrollVertical ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
+
 		this.context.fillStyle = '#7E8182';
 
 		var startX = this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
@@ -294,7 +311,12 @@ class ScrollSection {
 
 	private drawHorizontalScrollBar () {
 		var scrollProps: any = this.getHorizontalScrollProperties();
-		this.context.globalAlpha = this.sectionProperties.clickScrollHorizontal ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
+
+		if (this.sectionProperties.animatingHorizontalScrollBar)
+			this.context.globalAlpha = this.sectionProperties.currentAlpha;
+		else
+			this.context.globalAlpha = this.sectionProperties.clickScrollHorizontal ? this.sectionProperties.alphaWhenBeingUsed: this.sectionProperties.alphaWhenVisible;
+
 		this.context.fillStyle = '#7E8182';
 
 		var startY = this.size[1] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
@@ -306,16 +328,52 @@ class ScrollSection {
 		this.context.globalAlpha = 1.0;
 	}
 
-	public onDraw () {
-		if (this.sectionProperties.drawVerticalScrollBar && (this.sectionProperties.clickScrollVertical || this.documentTopLeft[1] >= 0)) {
+	public onDraw (frameCount: number, elapsedTime: number, interval: number) {
+		if (this.isAnimating && frameCount)
+			this.sectionProperties.currentAlpha = Math.max((1 - (elapsedTime / 2000)) * this.sectionProperties.alphaWhenVisible, 0.1);
+
+		if ((this.sectionProperties.drawVerticalScrollBar || this.sectionProperties.animatingVerticalScrollBar) && this.documentTopLeft[1] >= 0) {
 			if ((<any>window).mode.isMobile())
 				this.DrawVerticalScrollBarMobile();
 			else
 				this.drawVerticalScrollBar();
 		}
 
-		if (this.sectionProperties.drawHorizontalScrollBar && this.documentTopLeft[0] >= 0) {
+		if ((this.sectionProperties.drawHorizontalScrollBar || this.sectionProperties.animatingHorizontalScrollBar) && this.documentTopLeft[0] >= 0) {
 			this.drawHorizontalScrollBar();
+		}
+	}
+
+	public onAnimationEnded (frameCount: number, elapsedTime: number, interval: number) {
+		this.sectionProperties.animatingVerticalScrollBar = false;
+		this.sectionProperties.animatingHorizontalScrollBar = false;
+	}
+
+	private fadeOutHorizontalScrollBar () {
+		if (this.isAnimating) {
+			this.resetAnimation();
+			this.sectionProperties.animatingHorizontalScrollBar = true;
+		}
+		else {
+			var options: any = {
+				duration: 2000
+			};
+
+			this.sectionProperties.animatingHorizontalScrollBar = this.startAnimating(options);
+		}
+	}
+
+	private fadeOutVerticalScrollBar () {
+		if (this.isAnimating) {
+			this.resetAnimation();
+			this.sectionProperties.animatingVerticalScrollBar = true;
+		}
+		else {
+			var options: any = {
+				duration: 2000
+			};
+
+			this.sectionProperties.animatingVerticalScrollBar = this.startAnimating(options);
 		}
 	}
 
@@ -324,11 +382,14 @@ class ScrollSection {
 			this.sectionProperties.drawVerticalScrollBar = false;
 			this.sectionProperties.mouseIsOnVerticalScrollBar = false;
 			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
-			this.containerObject.requestReDraw();
+			this.fadeOutVerticalScrollBar();
 		}
 	}
 
 	private showVerticalScrollBar () {
+		if (this.isAnimating && this.sectionProperties.animatingVerticalScrollBar)
+			this.containerObject.stopAnimating();
+
 		if (!this.sectionProperties.mouseIsOnVerticalScrollBar) {
 			this.sectionProperties.drawVerticalScrollBar = true;
 			this.sectionProperties.mouseIsOnVerticalScrollBar = true;
@@ -342,11 +403,14 @@ class ScrollSection {
 			this.sectionProperties.drawHorizontalScrollBar = false;
 			this.sectionProperties.mouseIsOnHorizontalScrollBar = false;
 			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
-			this.containerObject.requestReDraw();
+			this.fadeOutHorizontalScrollBar();
 		}
 	}
 
 	private showHorizontalScrollBar () {
+		if (this.isAnimating && this.sectionProperties.animatingHorizontalScrollBar)
+			this.containerObject.stopAnimating();
+
 		if (!this.sectionProperties.mouseIsOnHorizontalScrollBar) {
 			this.sectionProperties.drawHorizontalScrollBar = true;
 			this.sectionProperties.mouseIsOnHorizontalScrollBar = true;
@@ -386,8 +450,8 @@ class ScrollSection {
 	}
 
 	public onMouseLeave () {
-		this.sectionProperties.drawVerticalScrollBar = false;
-		this.sectionProperties.drawHorizontalScrollBar = false;
+		this.hideVerticalScrollBar();
+		this.hideHorizontalScrollBar();
 	}
 
 	public scrollVerticalWithOffset (offset: number) {
@@ -420,8 +484,7 @@ class ScrollSection {
 				this.sectionProperties.previousDragDistance = [0, 0];
 			}
 
-			if (!this.sectionProperties.drawVerticalScrollBar)
-				this.sectionProperties.drawVerticalScrollBar = true;
+			this.showVerticalScrollBar();
 
 			var scrollProps: any = this.getVerticalScrollProperties();
 			var diffY: number = dragDistance[1] - this.sectionProperties.previousDragDistance[1];
@@ -437,8 +500,7 @@ class ScrollSection {
 				this.sectionProperties.previousDragDistance = [0, 0];
 			}
 
-			if (!this.sectionProperties.drawHorizontalScrollBar)
-				this.sectionProperties.drawHorizontalScrollBar = true;
+			this.showHorizontalScrollBar();
 
 			var scrollProps: any = this.getHorizontalScrollProperties();
 			var diffX: number = dragDistance[0] - this.sectionProperties.previousDragDistance[0];
@@ -514,18 +576,26 @@ class ScrollSection {
 
 	private performVerticalScroll (delta: number) {
 		this.scrollVerticalWithOffset(delta);
-		this.sectionProperties.drawVerticalScrollBar = true;
-		this.containerObject.requestReDraw();
-		this.sectionProperties.drawVerticalScrollBar = false;
-		this.sectionProperties.drawHorizontalScrollBar = false;
+		if (!this.sectionProperties.drawVerticalScrollBar) {
+			if (this.isAnimating) {
+				this.resetAnimation();
+				this.sectionProperties.animatingVerticalScrollBar = true;
+			}
+			else
+				this.fadeOutVerticalScrollBar();
+		}
 	}
 
 	private performHorizontalScroll (delta: number) {
 		this.scrollHorizontalWithOffset(delta);
-		this.sectionProperties.drawHorizontalScrollBar = true;
-		this.containerObject.requestReDraw();
-		this.sectionProperties.drawVerticalScrollBar = false;
-		this.sectionProperties.drawHorizontalScrollBar = false;
+		if (!this.sectionProperties.drawHorizontalScrollBar) {
+			if (this.isAnimating) {
+				this.resetAnimation();
+				this.sectionProperties.animatingHorizontalScrollBar = true;
+			}
+			else
+				this.fadeOutHorizontalScrollBar();
+		}
 	}
 
 	public onMouseWheel (point: Array<number>, delta: Array<number>, e: MouseEvent) {
