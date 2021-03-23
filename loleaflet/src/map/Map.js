@@ -526,9 +526,9 @@ L.Map = L.Evented.extend({
 		var newCenter = newTopLeftPx.add(newHalfSize);
 		var newCenterLatLng = this.unproject(newCenter, zoom);
 
-		this._inZoomViewPanning = true;
+		this._ignoreCursorUpdate = true;
 		this._resetView(L.latLng(newCenterLatLng), this._limitZoom(zoom));
-		this._inZoomViewPanning = false;
+		this._ignoreCursorUpdate = false;
 		if (cursorActive) {
 			calcLayer.activateCursor();
 		}
@@ -536,20 +536,28 @@ L.Map = L.Evented.extend({
 		return;
 	},
 
-	inZoomViewPanning: function () {
-		return this._inZoomViewPanning;
+	ignoreCursorUpdate: function () {
+		return this._ignoreCursorUpdate;
 	},
 
-	setZoomViewPanning: function (value) {
+	enableTextInput: function () {
+		this._setTextInputState(true /* enable? */);
+	},
+
+	disableTextInput: function () {
+		this._setTextInputState(false /* enable? */);
+	},
+
+	_setTextInputState: function (enable) {
 		var docLayer = this._docLayer;
 		if (!docLayer)
 			return;
-		this._inZoomViewPanning = value;
+		this._ignoreCursorUpdate = !enable;
 
 		if (!docLayer.isCursorVisible())
 			return;
 
-		if (this._inZoomViewPanning) {
+		if (!enable) {
 			this._textInput.disable();
 		} else {
 			this._textInput.enable();
