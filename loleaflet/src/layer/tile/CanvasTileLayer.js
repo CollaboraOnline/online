@@ -479,6 +479,7 @@ L.TileSectionManager = L.Class.extend({
 		if (!this._inZoomAnim)
 			return;
 
+		this._map.disableTextInput();
 		// Do a another animation from current non-integral log-zoom to
 		// the final integral zoom, but maintain the same center.
 		var steps = 10;
@@ -516,6 +517,7 @@ L.TileSectionManager = L.Class.extend({
 			painter._inZoomAnim = false;
 			// Set view and paint the tiles (requested above).
 			mapUpdater(newMapCenterLatLng);
+			map.enableTextInput();
 		}, intervalGap);
 	},
 
