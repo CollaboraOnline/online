@@ -591,38 +591,37 @@ L.Map.TouchGesture = L.Handler.extend({
 		var zoomDelta = this._zoom - oldZoom;
 		var finalZoom = this._map._limitZoom(zoomDelta > 0 ? Math.ceil(this._zoom) : Math.floor(this._zoom));
 
-
-		if (this._map._docLayer.isCursorVisible()) {
-			this._map._docLayer._cursorMarker.setOpacity(1);
-		}
-		if (this._map._textInput._cursorHandler) {
-			this._map._textInput._cursorHandler.setOpacity(1);
-		}
-		if (this._map._docLayer._cellCursorMarker) {
-			this._map.setOverlaysOpacity(1);
-			this._map.setMarkersOpacity(1);
-		}
-		if (this._map._docLayer._selectionHandles['start']) {
-			this._map._docLayer._selectionHandles['start'].setOpacity(1);
-		}
-		if (this._map._docLayer._selectionHandles['end']) {
-			this._map._docLayer._selectionHandles['end'].setOpacity(1);
-		}
-
-		if (this._map._docLayer && this._map._docLayer._annotations) {
-			var annotations = this._map._docLayer._annotations;
-			if (annotations.update)
-				setTimeout(function() {
-					annotations.update();
-				}, 250 /* ms */);
-		}
-
 		this._pinchStartCenter = undefined;
 
 		if (this._map._docLayer.zoomStepEnd) {
 			var thisObj = this;
 			this._map._docLayer.zoomStepEnd(finalZoom, this._origCenter, function (newMapCenter) {
 				thisObj._map.setView(newMapCenter || thisObj._center, finalZoom);
+
+				if (thisObj._map._docLayer.isCursorVisible()) {
+					thisObj._map._docLayer._cursorMarker.setOpacity(1);
+				}
+				if (thisObj._map._textInput._cursorHandler) {
+					thisObj._map._textInput._cursorHandler.setOpacity(1);
+				}
+				if (thisObj._map._docLayer._cellCursorMarker) {
+					thisObj._map.setOverlaysOpacity(1);
+					thisObj._map.setMarkersOpacity(1);
+				}
+				if (thisObj._map._docLayer._selectionHandles['start']) {
+					thisObj._map._docLayer._selectionHandles['start'].setOpacity(1);
+				}
+				if (thisObj._map._docLayer._selectionHandles['end']) {
+					thisObj._map._docLayer._selectionHandles['end'].setOpacity(1);
+				}
+
+				if (thisObj._map._docLayer && thisObj._map._docLayer._annotations) {
+					var annotations = thisObj._map._docLayer._annotations;
+					if (annotations.update)
+						setTimeout(function() {
+							annotations.update();
+						}, 250 /* ms */);
+				}
 			});
 		}
 	},
