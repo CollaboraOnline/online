@@ -476,8 +476,6 @@ L.Map = L.Evented.extend({
 		if (!calcLayer.options.sheetGeometryDataEnabled || !calcLayer.sheetGeometry)
 			return false;
 
-		calcLayer.setZoomChanged(true);
-
 		var sheetGeom = calcLayer.sheetGeometry;
 		var zoomScaleAbs = this.zoomToFactor(zoom);
 
@@ -534,7 +532,6 @@ L.Map = L.Evented.extend({
 			calcLayer.activateCursor();
 		}
 
-		calcLayer.setZoomChanged(false);
 		return;
 	},
 
