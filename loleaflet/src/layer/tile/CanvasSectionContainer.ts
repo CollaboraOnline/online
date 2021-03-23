@@ -1,5 +1,7 @@
 /* eslint-disable */
 
+declare var L: any;
+
 // Below classes are for managing the canvas layout.
 /*
 	Potential values are separated with '|'
@@ -202,6 +204,7 @@ class CanvasSectionContainer {
 	private dpiScale: number = window.devicePixelRatio;
 	private sections: Array<any> = new Array(0);
 	private documentTopLeft: Array<number> = [0, 0];
+	private documentBottomRight: Array<number> = [0, 0];
 	private canvas: HTMLCanvasElement;
 	private context: CanvasRenderingContext2D;
 	private right: number;
@@ -226,6 +229,7 @@ class CanvasSectionContainer {
 	private scrollLineHeight: number = 30; // This will be overridden.
 	private mouseIsInside: boolean = false;
 	private inZoomAnimation: boolean = false;
+	private zoomChanged: boolean = false;
 
 	// Below variables are related to animation feature.
 	private animatingSectionName: string = null; // The section that called startAnimating function. This variable is null when animations are not running.
@@ -287,6 +291,14 @@ class CanvasSectionContainer {
 
 	isInZoomAnimation (): boolean {
 		return this.inZoomAnimation;
+	}
+
+	setZoomChanged (zoomChanged: boolean) {
+		this.zoomChanged = zoomChanged;
+	}
+
+	isZoomChanged (): boolean {
+		return this.zoomChanged;
 	}
 
 	/**
@@ -355,9 +367,13 @@ class CanvasSectionContainer {
 		return [this.documentTopLeft[0], this.documentTopLeft[1]];
 	}
 
-	setDocumentTopLeft (point: Array<number>) {
-		this.documentTopLeft[0] = Math.round(point[0]);
-		this.documentTopLeft[1] = Math.round(point[1]);
+	setDocumentBounds (points: Array<number>) {
+		this.documentTopLeft[0] = Math.round(points[0]);
+		this.documentTopLeft[1] = Math.round(points[1]);
+
+		this.documentBottomRight[0] = Math.round(points[2]);
+		this.documentBottomRight[1] = Math.round(points[3]);
+
 		for (var i: number = 0; i < this.sections.length; i++) {
 			this.sections[i].onNewDocumentTopLeft(this.getDocumentTopLeft());
 		}
@@ -1195,11 +1211,55 @@ class CanvasSectionContainer {
 		this.context.translate(section.myTopLeft[0], section.myTopLeft[1]);
 	}
 
+	private clearNonDocContentArea() {
+		// Assumes origin is at canvas's (0, 0).
+		// Document content area is not necessarily the tile section area
+		// or what is represented by map's getPixelBoundsCore().
+
+		this.context.fillStyle = this.clearColor;
+		var tileSection = this.getSectionWithName(L.CSections.Tiles.name);
+
+		if (!tileSection) {
+			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+			this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+			return;
+		}
+
+		// compute topleft and bottom right of "tile content area" in absolute canvas coordinates.
+		var contentTopLeft: Array<number> = [
+			this.documentTopLeft[0] >= 0 ? tileSection.myTopLeft[0] : tileSection.myTopLeft[0] - this.documentTopLeft[0],
+			this.documentTopLeft[1] >= 0 ? tileSection.myTopLeft[1] : tileSection.myTopLeft[1] - this.documentTopLeft[1]];
+
+		var contentBottomRight: Array<number> = [
+			tileSection.myTopLeft[0] + this.documentBottomRight[0] - this.documentTopLeft[0],
+			tileSection.myTopLeft[1] + this.documentBottomRight[1] - this.documentTopLeft[1]];
+		if (this.documentTopLeft[0] < 0)
+			contentBottomRight[0] += this.documentTopLeft[0];
+		if (this.documentTopLeft[1] < 0)
+			contentBottomRight[1] += this.documentTopLeft[1];
+
+		// top margin
+		this.context.fillRect(0, 0, this.canvas.width, contentTopLeft[1]);
+		// bottom margin
+		this.context.fillRect(0, contentBottomRight[1], this.canvas.width, this.canvas.height - contentBottomRight[1]);
+		// left margin
+		this.context.fillRect(0, contentTopLeft[1], contentTopLeft[0], contentBottomRight[1] - contentTopLeft[1]);
+		// right margin
+		this.context.fillRect(contentBottomRight[0], contentTopLeft[1],
+			this.canvas.width - contentBottomRight[0], contentBottomRight[1] - contentTopLeft[1]);
+
+	}
+
 	private drawSections (frameCount: number = null, elapsedTime: number = null) {
 		this.context.setTransform(1, 0, 0, 1, 0, 0);
-		this.context.fillStyle = this.clearColor;
-		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+		if (this.zoomChanged) {
+			this.clearNonDocContentArea();
+		} else {
+			this.context.fillStyle = this.clearColor;
+			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+			this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+		}
 
 		this.context.font = String(20 * this.dpiScale) + "px Verdana";
 		for (var i: number = 0; i < this.sections.length; i++) {
