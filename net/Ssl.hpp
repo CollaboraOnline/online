@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <common/Util.hpp>
+
 #include <atomic>
 #include <cassert>
 #include <memory>
@@ -25,10 +27,9 @@
 class SslContext
 {
 public:
-    static void initialize(const std::string& certFilePath,
-                           const std::string& keyFilePath,
+    static void initialize(const std::string& certFilePath, const std::string& keyFilePath,
                            const std::string& caFilePath,
-                           const std::string& cipherList = "")
+                           const std::string& cipherList = std::string())
     {
         assert (!Instance);
         Instance.reset(new SslContext(certFilePath, keyFilePath, caFilePath, cipherList));
@@ -41,6 +42,7 @@ public:
 
     static SSL* newSsl()
     {
+        assert(SslContext::isInitialized() && "SslContext is not initialized");
         return SSL_new(Instance->_ctx);
     }
 
