@@ -2606,7 +2606,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (!this._visibleCursor ||
 			this._referenceMarkerStart.isDragged ||
 			this._referenceMarkerEnd.isDragged ||
-			this._map.inZoomViewPanning()) {
+			this._map.ignoreCursorUpdate()) {
 			return;
 		}
 

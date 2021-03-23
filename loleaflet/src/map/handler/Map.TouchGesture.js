@@ -622,9 +622,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (this._map._docLayer.zoomStepEnd) {
 			var thisObj = this;
 			this._map._docLayer.zoomStepEnd(finalZoom, this._origCenter, function (newMapCenter) {
-				thisObj._map.setZoomViewPanning(true);
 				thisObj._map.setView(newMapCenter || thisObj._center, finalZoom);
-				thisObj._map.setZoomViewPanning(false);
 			});
 		}
 	},
