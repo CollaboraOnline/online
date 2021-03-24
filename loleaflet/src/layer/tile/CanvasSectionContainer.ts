@@ -144,6 +144,7 @@ class CanvasSectionObject {
 	onMultiTouchEnd: Function; // Parameters: e (native event object)
 	onResize: Function; // Parameters: null (Section's size is up to date when this callback is called.)
 	onDraw: Function; // Parameters: null || (frameCount, elapsedTime)
+	onDrawArea: Function; // Optional Parameter: area - The area inside the section to be painted.
 	onAnimationEnded: Function; // frameCount, elapsedTime. Sections that will use animation, have to have this function defined.
 	onNewDocumentTopLeft: Function; // Parameters: Size [x, y]
 	onRemove: Function; // This Function is called right before section is removed.
@@ -184,6 +185,7 @@ class CanvasSectionObject {
 		this.onMultiTouchEnd = options.onMultiTouchEnd ? options.onMultiTouchEnd: function() {};
 		this.onResize = options.onResize ? options.onResize: function() {};
 		this.onDraw = options.onDraw ? options.onDraw: function() {};
+		this.onDrawArea = options.onDrawArea ? options.onDrawArea: function() {};
 		this.onNewDocumentTopLeft = options.onNewDocumentTopLeft ? options.onNewDocumentTopLeft: function() {};
 		this.onRemove = options.onRemove ? options.onRemove: function() {};
 		this.onAnimationEnded = options.onAnimationEnded ? options.onAnimationEnded: function() {};
