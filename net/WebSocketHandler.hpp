@@ -870,9 +870,8 @@ protected:
                     == Poco::Net::HTTPResponse::HTTP_SWITCHING_PROTOCOLS
                 && Util::iequal(response.get("Upgrade"), "websocket")
                 && Util::iequal(response.get("Connection", ""), "Upgrade")
-                // && response.get("Sec-WebSocket-Accept", "") // FIXME: enable validation
-                //        == PublicComputeAccept::doComputeAccept(_key)
-                )
+                && response.get("Sec-WebSocket-Accept", "")
+                       == PublicComputeAccept::doComputeAccept(_key))
             {
                 LOG_TRC('#' << socket->getFD() << " Accepted incoming websocket response");
                 setWebSocket();

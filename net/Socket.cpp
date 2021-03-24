@@ -13,6 +13,7 @@
 #include <cstring>
 #include <ctype.h>
 #include <iomanip>
+#include <memory>
 #include <sstream>
 #include <stdio.h>
 #include <string>
@@ -408,45 +409,14 @@ void SocketPoll::insertNewWebSocketSync(const Poco::URI& uri,
     }
 }
 
-// should this be a static method in the WebsocketHandler(?)
-void SocketPoll::clientRequestWebsocketUpgrade(const std::shared_ptr<StreamSocket>& socket,
-                                               const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler,
-                                               const std::string &pathAndQuery, const int shareFD)
-{
-    // cf. WebSocketHandler::upgradeToWebSocket (?)
-    // send Sec-WebSocket-Key: <hmm> ... Sec-WebSocket-Protocol: chat, Sec-WebSocket-Version: 13
-
-    LOG_TRC("Requesting upgrade of websocket at path " << pathAndQuery << " #" << socket->getFD());
-
-    std::ostringstream oss;
-    oss << "GET " << pathAndQuery << " HTTP/1.1\r\n"
-        "Connection:Upgrade\r\n"
-        "User-Foo: Adminbits\r\n"
-        "Sec-WebSocket-Key:fxTaWTEMVhq1PkWsMoLxGw==\r\n"
-        "Upgrade:websocket\r\n"
-        "Accept-Language:en\r\n"
-        "Cache-Control:no-cache\r\n"
-        "Pragma:no-cache\r\n"
-        "Sec-WebSocket-Version:13\r\n"
-        "User-Agent: " WOPI_AGENT_STRING "\r\n"
-        "\r\n";
-    if (shareFD == -1)
-        socket->send(oss.str());
-    else
-    {
-        std::string request = oss.str();
-        socket->sendFD(request.c_str(), request.size(), shareFD);
-    }
-    websocketHandler->onConnect(socket);
-}
-
 void SocketPoll::insertNewUnixSocket(
     const std::string &location,
     const std::string &pathAndQuery,
-    const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler,
+    const std::shared_ptr<WebSocketHandler>& websocketHandler,
     const int shareFD)
 {
-    int fd = socket(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK, 0);
+    LOG_DBG("Connecting to local UDS " << location);
+    const int fd = socket(AF_UNIX, SOCK_STREAM | SOCK_NONBLOCK, 0);
 
     struct sockaddr_un addrunix;
     std::memset(&addrunix, 0, sizeof(addrunix));
@@ -454,23 +424,47 @@ void SocketPoll::insertNewUnixSocket(
     addrunix.sun_path[0] = '\0'; // abstract name
     memcpy(&addrunix.sun_path[1], location.c_str(), location.length());
 
-    int res = connect(fd, (const struct sockaddr *)&addrunix, sizeof(addrunix));
+    const int res = connect(fd, (const struct sockaddr*)&addrunix, sizeof(addrunix));
     if (fd < 0 || (res < 0 && errno != EINPROGRESS))
     {
         LOG_ERR("Failed to connect to unix socket at " << location);
         ::close(fd);
+        return;
+    }
+
+    std::shared_ptr<StreamSocket> socket
+        = StreamSocket::create<StreamSocket>(fd, true, websocketHandler);
+    if (!socket)
+    {
+        LOG_ERR("Failed to create socket unix socket at " << location);
+        return;
+    }
+
+    LOG_DBG("Connected to local UDS " << location << " #" << socket->getFD());
+
+    http::Request req(pathAndQuery);
+    req.set("User-Foo", "Adminbits");
+    req.set("Sec-WebSocket-Key", websocketHandler->getWebSocketKey());
+    req.set("Sec-WebSocket-Version", "13");
+    //FIXME: Why do we need the following here?
+    req.set("Accept-Language", "en");
+    req.set("Cache-Control", "no-cache");
+    req.set("Pragma", "no-cache");
+
+    LOG_TRC("Requesting upgrade of websocket at path " << pathAndQuery << " #" << socket->getFD());
+    if (shareFD == -1)
+    {
+        socket->send(req);
     }
     else
     {
-        std::shared_ptr<StreamSocket> socket;
-        socket = StreamSocket::create<StreamSocket>(fd, true, websocketHandler);
-        if (socket)
-        {
-            LOG_DBG("Connected to local UDS " << location << " #" << socket->getFD());
-            clientRequestWebsocketUpgrade(socket, websocketHandler, pathAndQuery, shareFD);
-            insertNewSocket(socket);
-        }
+        Buffer buf;
+        req.writeData(buf);
+        socket->sendFD(buf.getBlock(), buf.getBlockSize(), shareFD);
     }
+
+    std::static_pointer_cast<ProtocolHandlerInterface>(websocketHandler)->onConnect(socket);
+    insertNewSocket(socket);
 }
 
 #else
