@@ -1063,7 +1063,12 @@ public:
     /// Remove the first @count bytes from input buffer
     void eraseFirstInputBytes(const MessageMap &map)
     {
-        size_t count = map._headerSize;
+        eraseFirstInputBytes(map._headerSize);
+    }
+
+    /// Remove the first @count bytes from input buffer
+    void eraseFirstInputBytes(const std::size_t count)
+    {
         size_t toErase = std::min(count, _inBuffer.size());
         if (toErase < count)
             LOG_ERR('#' << getFD() << ": attempted to remove: " << count << " which is > size: " << _inBuffer.size() << " clamped to " << toErase);
