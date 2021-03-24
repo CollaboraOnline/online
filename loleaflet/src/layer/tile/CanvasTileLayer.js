@@ -193,17 +193,16 @@ L.TileSectionManager = L.Class.extend({
 		this.onDrawArea();
 	},
 
-	_drawGridSectionArea: function (repaintArea) {
+	_drawGridSectionArea: function (repaintArea, canvasCtx) {
 		if (!this.sectionProperties.docLayer.sheetGeometry)
 			return;
 
-		this.context.strokeStyle = this.sectionProperties.strokeStyle;
-		this.context.lineWidth = 1.0;
+		var context = canvasCtx ? canvasCtx : this.context;
+		context.strokeStyle = this.sectionProperties.strokeStyle;
+		context.lineWidth = 1.0;
 
 		var ctx = this.sectionProperties.tsManager._paintContext();
-		var context = this.context;
-
-		this.context.beginPath();
+		context.beginPath();
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
 			// co-ordinates of this pane in core document pixels
 			var paneBounds = ctx.paneBoundsList[i];
@@ -241,7 +240,7 @@ L.TileSectionManager = L.Class.extend({
 					context.stroke();
 				});
 		}
-		this.context.closePath();
+		context.closePath();
 	},
 
 	// This section is added when debug is enabled. Splits are enabled for only Calc for now.
