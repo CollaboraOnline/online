@@ -433,6 +433,9 @@ public:
     virtual void dumpState(std::ostream& os) { os << "\n"; }
 };
 
+// Forward declare WebSocketHandler, which is inherited from ProtocolHandlerInterface.
+class WebSocketHandler;
+
 /// A ProtocolHandlerInterface with dummy sending API.
 class SimpleSocketHandler : public ProtocolHandlerInterface
 {
@@ -686,8 +689,8 @@ public:
 #if !MOBILEAPP
     /// Inserts a new remote websocket to be polled.
     /// NOTE: The DNS lookup is synchronous.
-    void insertNewWebSocketSync(const Poco::URI &uri,
-                                const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler);
+    void insertNewWebSocketSync(const Poco::URI& uri,
+                                const std::shared_ptr<WebSocketHandler>& websocketHandler);
 
     void insertNewUnixSocket(
         const std::string &location,

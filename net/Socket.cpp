@@ -376,10 +376,11 @@ void SocketPoll::wakeupWorld()
 
 #if !MOBILEAPP
 
-void SocketPoll::insertNewWebSocketSync(
-    const Poco::URI &uri,
-    const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler)
+void SocketPoll::insertNewWebSocketSync(const Poco::URI& uri,
+                                        const std::shared_ptr<WebSocketHandler>& websocketHandler)
 {
+    LOG_TRC("Connecting WS to " << uri.getHost());
+
     const bool isSSL = uri.getScheme() != "ws";
 #if !ENABLE_SSL
     if (isSSL)
@@ -389,13 +390,21 @@ void SocketPoll::insertNewWebSocketSync(
     }
 #endif
 
-    std::shared_ptr<StreamSocket> socket
-        = net::connect(uri.getHost(), std::to_string(uri.getPort()), isSSL, websocketHandler);
-    if (socket)
+    http::Request req(uri.getPathAndQuery());
+    req.set("User-Foo", "Adminbits");
+    //FIXME: Why do we need the following here?
+    req.set("Accept-Language", "en");
+    req.set("Cache-Control", "no-cache");
+    req.set("Pragma", "no-cache");
+
+    const std::string port = std::to_string(uri.getPort());
+    if (websocketHandler->wsRequest(req, uri.getHost(), port, isSSL, *this))
     {
-        LOG_DBG("Connected to client websocket " << uri.getHost() << " #" << socket->getFD());
-        clientRequestWebsocketUpgrade(socket, websocketHandler, uri.getPathAndQuery());
-        insertNewSocket(socket);
+        LOG_DBG("Connected WS to " << uri.getHost());
+    }
+    else
+    {
+        LOG_ERR("Failed to connected WS to " << uri.getHost());
     }
 }
 

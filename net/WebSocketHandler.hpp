@@ -120,6 +120,11 @@ public:
         RESERVED_TLS_FAILURE    = 1015
     };
 
+#if !MOBILEAPP
+
+    /// Returns the Web-Socket Security Key generated for this instance.
+    const std::string& getWebSocketKey() const { return _key; }
+
     bool wsRequest(http::Request& req, const std::string& host, const std::string& port,
                    bool isSecure, SocketPoll& poll)
     {
@@ -152,6 +157,7 @@ public:
         LOG_ERR("Failed to make WebSocket request.");
         return false;
     }
+#endif
 
 protected:
     /// Implementation of the ProtocolHandlerInterface.
@@ -847,9 +853,6 @@ protected:
     }
 
 #if !MOBILEAPP
-    /// Returns the Web-Socket Security Key generated for this instance.
-    const std::string& getWebSocketKey() const { return _key; }
-
     // Handle incoming upgrade to full socket as client WS.
     void handleClientUpgrade(const std::shared_ptr<StreamSocket>& socket)
     {
