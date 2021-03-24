@@ -328,8 +328,8 @@ class ScrollSection {
 		this.context.globalAlpha = 1.0;
 	}
 
-	public onDraw (frameCount: number, elapsedTime: number, interval: number) {
-		if (this.isAnimating && frameCount)
+	public onDraw (frameCount: number, elapsedTime: number) {
+		if (this.isAnimating && frameCount >= 0)
 			this.sectionProperties.currentAlpha = Math.max((1 - (elapsedTime / 2000)) * this.sectionProperties.alphaWhenVisible, 0.1);
 
 		if ((this.sectionProperties.drawVerticalScrollBar || this.sectionProperties.animatingVerticalScrollBar) && this.documentTopLeft[1] >= 0) {
@@ -344,7 +344,7 @@ class ScrollSection {
 		}
 	}
 
-	public onAnimationEnded (frameCount: number, elapsedTime: number, interval: number) {
+	public onAnimationEnded (frameCount: number, elapsedTime: number) {
 		this.sectionProperties.animatingVerticalScrollBar = false;
 		this.sectionProperties.animatingHorizontalScrollBar = false;
 	}
