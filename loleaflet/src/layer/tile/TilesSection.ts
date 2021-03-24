@@ -141,6 +141,8 @@ class TilesSection {
 					crop.min.x - paneOffset.x,
 					crop.min.y - paneOffset.y,
 					cropWidth, cropHeight);
+				var gridSection = this.containerObject.getSectionWithName(L.CSections.CalcGrid.name);
+				gridSection.onDrawArea(crop);
 			}
 			canvasCtx.drawImage(tile.el,
 				crop.min.x - tileBounds.min.x,
