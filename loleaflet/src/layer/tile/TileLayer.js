@@ -885,6 +885,12 @@ L.TileLayer = L.GridLayer.extend({
 			message = message.split(' ');
 			if (message.length > 1) {
 				this._map.context = {context: message[1]};
+
+				if (this._docType === 'spreadsheet') {
+					// We need to know the current context in Calc.
+					this.currentContext = message[1];
+				}
+
 				this._map.fire('contextchange', {context: message[1]});
 			}
 		}
@@ -1310,6 +1316,9 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		if (textMsg.match('EMPTY') || !this._map.isPermissionEdit()) {
+			// Backup the last position of the cell cursor before it's too late.
+			this.lastCellCursorLatLng = new L.LatLngBounds(this._cellCursor.getNorthWest(), this._cellCursor.getSouthEast());
+
 			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._cellCursor = L.LatLngBounds.createDefault();
 			this._cellCursorXY = new L.Point(-1, -1);
@@ -2630,7 +2639,22 @@ L.TileLayer = L.GridLayer.extend({
 				    !(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
 				    !(docLayer._followEditor || docLayer._followUser) &&
 				    !this._map.calcInputBarHasFocus()) {
-					this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: scroll !== undefined});
+
+					if (this._docType !== 'spreadsheet' || (this.currentContext !== 'EditCell' || !this.lastCellCursorLatLng))
+						this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: scroll !== undefined});
+					else {
+						/*
+							Now, user has started to edit a cell.
+								Cell cursor is gone, caret position is old.
+							Before we jump the view, we'll check if the last position of cell cursor was visible.
+							If it was visible, caret should be visible too, so we won't need to jump.
+							But while user writes new things, view may need to jump, so we'll prevent jumping only once after cell edit mode is enabled.
+						*/
+						if (!this.lastCellCursorLatLng.isInAny(paneRectsInLatLng)) {
+							this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: scroll !== undefined});
+						}
+						this.lastCellCursorLatLng = null;
+					}
 				}
 			}
 		}
