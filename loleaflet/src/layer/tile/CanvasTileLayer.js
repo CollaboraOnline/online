@@ -189,7 +189,7 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_onDrawGridSection: function () {
-		if (this._inZoomAnim)
+		if (this.containerObject.isInZoomAnimation() || this.containerObject.isZoomChanged())
 			return;
 		// grid-section's onDrawArea is TileSectionManager's _drawGridSectionArea().
 		this.onDrawArea();
@@ -477,6 +477,9 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	zoomStep: function (zoom, newCenter) {
+		if (this._finishingZoom) // finishing steps of animation still going on.
+			return;
+
 		this._calcZoomFrameParams(zoom, newCenter);
 
 		if (!this._inZoomAnim) {
@@ -490,8 +493,10 @@ L.TileSectionManager = L.Class.extend({
 
 	zoomStepEnd: function (zoom, newCenter, mapUpdater) {
 
-		if (!this._inZoomAnim)
+		if (!this._inZoomAnim || this._finishingZoom)
 			return;
+
+		this._finishingZoom = true;
 
 		this._map.disableTextInput();
 		// Do a another animation from current non-integral log-zoom to
@@ -512,28 +517,51 @@ L.TileSectionManager = L.Class.extend({
 		// But this does not update the map.
 		this._layer._update(newMapCenterLatLng, zoom);
 
+		var stopAnimation = false;
+		var waitForTiles = false;
 		var intervalId = setInterval(function () {
 
 			if (stepId < steps) {
 				// continue animating till we reach "close" to 'final zoom'.
 				painter._zoomFrameScale = startZoom + (endZoom - startZoom) * stepId / steps;
 				stepId += 1;
+				if (stepId >= steps)
+					stopAnimation = true;
 				return;
 			}
 
-			clearInterval(intervalId);
-			cancelAnimationFrame(painter._zoomRAF);
-			painter._calcZoomFrameParams(zoom, newCenter);
-			// Draw one last frame at final zoom.
-			painter.rafFunc(undefined, true /* final? */);
-			painter._zoomFrameScale = undefined;
-			painter._sectionContainer.setInZoomAnimation(false);
-			painter._inZoomAnim = false;
-			painter._sectionContainer.setZoomChanged(true);
-			// Set view and paint the tiles (requested above).
-			mapUpdater(newMapCenterLatLng);
-			painter._sectionContainer.setZoomChanged(false);
-			map.enableTextInput();
+			if (stopAnimation) {
+				stopAnimation = false;
+				cancelAnimationFrame(painter._zoomRAF);
+				painter._calcZoomFrameParams(zoom, newCenter);
+				// Draw one last frame at final zoom.
+				painter.rafFunc(undefined, true /* final? */);
+				painter._zoomFrameScale = undefined;
+				painter._sectionContainer.setInZoomAnimation(false);
+				painter._inZoomAnim = false;
+
+				painter._sectionContainer.setZoomChanged(true);
+				// Set view and paint the tiles if all available.
+				mapUpdater(newMapCenterLatLng);
+				waitForTiles = true;
+				return;
+			}
+
+			if (waitForTiles) {
+				// Wait until we get all tiles.
+				if (painter._tilesSection.haveAllTilesInView()) {
+					// All done.
+					waitForTiles = false;
+					clearInterval(intervalId);
+					painter._sectionContainer.setZoomChanged(false);
+					map.enableTextInput();
+					// Paint everything.
+					painter._sectionContainer.requestReDraw();
+					// Don't let a subsequent pinchZoom start before finishing all steps till this point.
+					painter._finishingZoom = false;
+				}
+			}
+
 		}, intervalGap);
 	},
 
