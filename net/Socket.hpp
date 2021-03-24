@@ -39,6 +39,7 @@
 
 namespace http
 {
+class Request;
 class Response;
 }
 namespace Poco
@@ -923,9 +924,15 @@ public:
     /// Adds Date and User-Agent.
     void send(Poco::Net::HTTPResponse& response);
 
+    /// Send an http::Request and flush.
+    /// Does not add any fields to the header.
+    /// Will shutdown the socket upon error and return false.
+    bool send(http::Request& request);
+
     /// Send an http::Response and flush.
     /// Does not add any fields to the header.
-    void send(const http::Response& response);
+    /// Will shutdown the socket upon error and return false.
+    bool send(const http::Response& response);
 
     /// Safely flush any outgoing data.
     inline void flush()

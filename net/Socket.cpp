@@ -573,10 +573,32 @@ void StreamSocket::send(Poco::Net::HTTPResponse& response)
     send(oss.str());
 }
 
-void StreamSocket::send(const http::Response& response)
+bool StreamSocket::send(const http::Response& response)
 {
-    response.writeData(_outBuffer);
-    flush();
+    if (response.writeData(_outBuffer))
+    {
+        flush();
+        return true;
+    }
+    else
+    {
+        shutdown();
+        return false;
+    }
+}
+
+bool StreamSocket::send(http::Request& request)
+{
+    if (request.writeData(_outBuffer))
+    {
+        flush();
+        return true;
+    }
+    else
+    {
+        shutdown();
+        return false;
+    }
 }
 
 void SocketPoll::dumpState(std::ostream& os)
