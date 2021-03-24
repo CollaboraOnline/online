@@ -372,8 +372,7 @@ class CanvasOverlay {
 		if (path.stroke && path.weight !== 0) {
 			this.ctx.globalAlpha = path.opacity;
 
-			this.ctx.lineWidth = this.tsManager._inZoomAnim ?
-				path.weight / this.tsManager._zoomFrameScale : path.weight;
+			this.ctx.lineWidth = path.weight;
 			this.ctx.strokeStyle = path.color;
 			this.ctx.lineCap = path.lineCap;
 			this.ctx.lineJoin = path.lineJoin;
