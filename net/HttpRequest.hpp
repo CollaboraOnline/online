@@ -1120,14 +1120,9 @@ private:
     {
         LOG_TRC("performWrites");
 
-        Buffer& out = _socket->getOutBuffer();
-        if (!_request.writeData(out))
+        if (!_socket->send(_request))
         {
-            _socket->shutdown();
-        }
-        else if (!out.empty())
-        {
-            _socket->writeOutgoingData();
+            LOG_ERR('#' << _socket->getFD() << " Error while writing to socket.");
         }
     }
 
