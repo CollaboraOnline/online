@@ -37,7 +37,7 @@
 #include "Buffer.hpp"
 #include "SigUtil.hpp"
 
-#define LOG_SOCKET_DATA
+#define LOG_SOCKET_DATA ENABLE_DEBUG
 
 namespace http
 {
