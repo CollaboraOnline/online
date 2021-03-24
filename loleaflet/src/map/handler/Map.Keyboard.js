@@ -408,6 +408,13 @@ L.Map.Keyboard = L.Handler.extend({
 		L.DomEvent.stopPropagation(ev);
 	},
 
+	_isCtrlKey: function (e) {
+		if (window.ThisIsTheiOSApp || navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1)
+			return e.metaKey;
+		else
+			return e.ctrlKey;
+	},
+
 	// Given a DOM keyboard event that happened while the Control key was depressed,
 	// triggers the appropriate action or loolwsd message.
 	_handleCtrlCommand: function (e) {
@@ -428,14 +435,15 @@ L.Map.Keyboard = L.Handler.extend({
 			e.preventDefault();
 		}
 
-		if (e.ctrlKey && e.shiftKey && e.key === '?') {
+		if (this._isCtrlKey(e) && e.shiftKey && e.key === '?') {
 			this._map.showHelp('keyboard-shortcuts');
 			e.preventDefault();
 			return true;
 		}
 
-		// Handles paste special
-		if (e.ctrlKey && e.shiftKey && e.altKey && (e.key === 'v' || e.key === 'V')) {
+		// Handles paste special. The "Your browser" thing seems to indicate that this code
+		// snippet is relevant in a browser only.
+		if (!window.ThisIsAMobileApp && e.ctrlKey && e.shiftKey && e.altKey && (e.key === 'v' || e.key === 'V')) {
 			var map = this._map;
 			var msg = _('<p>Your browser has very limited access to the clipboard, so now press:</li><li><b>Ctrl+V</b>: To open paste special menu.</li></ul></p><p>Close popup to ignore paste special</p>');
 			msg = L.Util.replaceCtrlInMac(msg);
@@ -453,29 +461,29 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		// Handles unformatted paste
-		if (e.ctrlKey && e.shiftKey && (e.key === 'v' || e.key === 'V')) {
+		if (this._isCtrlKey(e) && e.shiftKey && (e.key === 'v' || e.key === 'V')) {
 			return true;
 		}
 
-		if (e.ctrlKey && (e.key === 'k' || e.key === 'K')) {
+		if (this._isCtrlKey(e) && (e.key === 'k' || e.key === 'K')) {
 			this._map.showHyperlinkDialog();
 			e.preventDefault();
 			return true;
 		}
 
-		if (e.ctrlKey && (e.key === 'z' || e.key === 'Z')) {
+		if (this._isCtrlKey(e) && (e.key === 'z' || e.key === 'Z')) {
 			this._map._socket.sendMessage('uno .uno:Undo');
 			e.preventDefault();
 			return true;
 		}
 
-		if (e.ctrlKey && (e.key === 'y' || e.key === 'Y')) {
+		if (this._isCtrlKey(e) && (e.key === 'y' || e.key === 'Y')) {
 			this._map._socket.sendMessage('uno .uno:Redo');
 			e.preventDefault();
 			return true;
 		}
 
-		if (e.ctrlKey && !e.shiftKey && !e.altKey && (e.key === 'f' || e.key === 'F')) {
+		if (this._isCtrlKey(e) && !e.shiftKey && !e.altKey && (e.key === 'f' || e.key === 'F')) {
 			this._map.fire('focussearch');
 			e.preventDefault();
 			return true;
@@ -519,16 +527,18 @@ L.Map.Keyboard = L.Handler.extend({
 		if (e.type === 'keydown' && window.ThisIsAMobileApp) {
 			if (e.key === 'c' || e.key === 'C') {
 				this._map._socket.sendMessage('uno .uno:Copy');
+				return true;
 			}
 			else if (e.key === 'v' || e.key === 'V') {
 				this._map._socket.sendMessage('uno .uno:Paste');
+				return true;
 			}
 			else if (e.key === 'x' || e.key === 'X') {
 				this._map._socket.sendMessage('uno .uno:Cut');
+				return true;
 			}
 			if (window.ThisIsTheAndroidApp)
 				e.preventDefault();
-			return true;
 		}
 
 		switch (e.keyCode) {
