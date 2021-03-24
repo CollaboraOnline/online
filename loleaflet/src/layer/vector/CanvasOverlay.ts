@@ -177,6 +177,11 @@ class CanvasOverlay {
 	}
 
 	private draw(paintArea?: CBounds) {
+		if (this.overlaySection && this.overlaySection.containerObject.isZoomChanged()) {
+			// don't paint anything till tiles arrive for new zoom.
+			return;
+		}
+
 		var orderedPaths = Array<CPath>();
 		this.paths.forEach((path: CPath) => {
 			orderedPaths.push(path);
@@ -196,6 +201,11 @@ class CanvasOverlay {
 	}
 
 	private redraw(path: CPath, oldBounds: CBounds) {
+		if (this.overlaySection && this.overlaySection.containerObject.isZoomChanged()) {
+			// don't paint anything till tiles arrive for new zoom.
+			return;
+		}
+
 		if (!this.isVisible(path) && (!oldBounds.isValid() || !this.intersectsVisible(oldBounds)))
 			return;
 		// This does not get called via onDraw(ie, tiles aren't painted), so ask tileSection to "erase" by painting over.
