@@ -63,7 +63,7 @@ L.Map.SlideShow = L.Handler.extend({
 			return;
 		}
 
-		this.fullscreen = document.fullscreen ||
+		this.fullscreen = document.fullscreenElement ||
 			document.webkitIsFullScreen ||
 			document.mozFullScreen ||
 			document.msFullscreenElement;
