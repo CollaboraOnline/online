@@ -668,6 +668,13 @@ public:
         saveBodyToMemory();
     }
 
+    /// A response received from a server.
+    /// Used for parsing an incoming response.
+    Response()
+        : Response(nullptr)
+    {
+    }
+
     /// A response sent from a server.
     /// Used for generating an outgoing response.
     Response(StatusLine statusLine)
@@ -705,6 +712,12 @@ public:
 
     /// Set an HTTP header field, replacing an earlier value, if exists.
     void set(const std::string& key, std::string value) { _header.set(key, std::move(value)); }
+
+    /// Get a header entry value by key, if found, defaulting to @def, if missing.
+    std::string get(const std::string& key, const std::string& def = std::string()) const
+    {
+        return _header.get(key, def);
+    }
 
     /// Redirect the response body, if any, to a file.
     /// If the server responds with a non-success status code (i.e. not 2xx)
