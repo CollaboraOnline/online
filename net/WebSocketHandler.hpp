@@ -120,6 +120,39 @@ public:
         RESERVED_TLS_FAILURE    = 1015
     };
 
+    bool wsRequest(http::Request& req, const std::string& host, const std::string& port,
+                   bool isSecure, SocketPoll& poll)
+    {
+        LOG_TRC("Web-Socket request: " << host << ':' << port);
+
+        req.set("Host", host); // Make sure the host is set.
+        req.set("Date", Util::getHttpTimeNow());
+        req.set("User-Agent", HTTP_AGENT_STRING);
+
+        req.set("Connection", "Upgrade");
+        req.set("Upgrade", "websocket");
+        req.set("Sec-WebSocket-Version", "13");
+        req.set("Sec-WebSocket-Key", getWebSocketKey());
+
+        auto socket = net::connect(host, port, isSecure, shared_from_this());
+        if (!socket)
+        {
+            LOG_ERR("Failed to connect to " << host << ':' << port);
+            return false;
+        }
+
+        onConnect(socket);
+
+        if (socket->send(req))
+        {
+            poll.insertNewSocket(socket);
+            return true;
+        }
+
+        LOG_ERR("Failed to make WebSocket request.");
+        return false;
+    }
+
 protected:
     /// Implementation of the ProtocolHandlerInterface.
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
