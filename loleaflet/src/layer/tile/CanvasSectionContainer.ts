@@ -144,7 +144,7 @@ class CanvasSectionObject {
 	onMultiTouchEnd: Function; // Parameters: e (native event object)
 	onResize: Function; // Parameters: null (Section's size is up to date when this callback is called.)
 	onDraw: Function; // Parameters: null || (frameCount, elapsedTime)
-	onDrawArea: Function; // Optional Parameters: (area, canvasContext) - area is the area to be painted using canvasContext.
+	onDrawArea: Function; // Optional Parameters: (area, paneTopLeft, canvasContext) - area is the area to be painted using canvasContext.
 	onAnimationEnded: Function; // frameCount, elapsedTime. Sections that will use animation, have to have this function defined.
 	onNewDocumentTopLeft: Function; // Parameters: Size [x, y]
 	onRemove: Function; // This Function is called right before section is removed.

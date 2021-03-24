@@ -189,11 +189,13 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_onDrawGridSection: function () {
+		if (this._inZoomAnim)
+			return;
 		// grid-section's onDrawArea is TileSectionManager's _drawGridSectionArea().
 		this.onDrawArea();
 	},
 
-	_drawGridSectionArea: function (repaintArea, canvasCtx) {
+	_drawGridSectionArea: function (repaintArea, paneTopLeft, canvasCtx) {
 		if (!this.sectionProperties.docLayer.sheetGeometry)
 			return;
 
@@ -212,16 +214,17 @@ L.TileSectionManager = L.Class.extend({
 			paneBounds.round();
 			viewBounds.round();
 
-			if (!repaintArea) {
+			var paneOffset;
+			if (!repaintArea || !paneTopLeft) {
 				repaintArea = paneBounds;
+				paneOffset = paneBounds.getTopLeft(); // allocates
+				// Cute way to detect the in-canvas pixel offset of each pane
+				paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
+				paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
 			} else {
 				repaintArea = paneBounds.clamp(repaintArea);
+				paneOffset = paneTopLeft.clone();
 			}
-
-			var paneOffset = paneBounds.getTopLeft(); // allocates
-			// Cute way to detect the in-canvas pixel offset of each pane
-			paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
-			paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
 
 			// URGH -> zooming etc. (!?) ...
 			this.sectionProperties.docLayer.sheetGeometry._columns.forEachInCorePixelRange(
