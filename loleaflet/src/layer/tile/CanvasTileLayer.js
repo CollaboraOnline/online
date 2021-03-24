@@ -299,7 +299,8 @@ L.TileSectionManager = L.Class.extend({
 				tsManager: that,
 				strokeStyle: '#c0c0c0'
 			},
-			onDraw: that._onDrawGridSection
+			onDraw: that._onDrawGridSection,
+			onDrawArea: that._drawGridSectionArea
 		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
 	},
 
@@ -329,6 +330,11 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_onDrawGridSection: function () {
+		// grid-section's onDrawArea is TileSectionManager's _drawGridSectionArea().
+		this.onDrawArea();
+	},
+
+	_drawGridSectionArea: function (repaintArea) {
 		if (!this.sectionProperties.docLayer.sheetGeometry)
 			return;
 
@@ -348,6 +354,12 @@ L.TileSectionManager = L.Class.extend({
 			paneBounds.round();
 			viewBounds.round();
 
+			if (!repaintArea) {
+				repaintArea = paneBounds;
+			} else {
+				repaintArea = paneBounds.clamp(repaintArea);
+			}
+
 			var paneOffset = paneBounds.getTopLeft(); // allocates
 			// Cute way to detect the in-canvas pixel offset of each pane
 			paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
@@ -355,18 +367,18 @@ L.TileSectionManager = L.Class.extend({
 
 			// URGH -> zooming etc. (!?) ...
 			this.sectionProperties.docLayer.sheetGeometry._columns.forEachInCorePixelRange(
-				paneBounds.min.x, paneBounds.max.x,
+				repaintArea.min.x, repaintArea.max.x,
 				function(pos) {
-					context.moveTo(pos - paneOffset.x - 0.5, paneBounds.min.y - paneOffset.y - 0.5);
-					context.lineTo(pos - paneOffset.x - 0.5, paneBounds.max.y - paneOffset.y - 0.5);
+					context.moveTo(pos - paneOffset.x - 0.5, repaintArea.min.y - paneOffset.y - 0.5);
+					context.lineTo(pos - paneOffset.x - 0.5, repaintArea.max.y - paneOffset.y - 0.5);
 					context.stroke();
 				});
 
 			this.sectionProperties.docLayer.sheetGeometry._rows.forEachInCorePixelRange(
-				paneBounds.min.y, paneBounds.max.y,
+				repaintArea.min.y, repaintArea.max.y,
 				function(pos) {
-					context.moveTo(paneBounds.min.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
-					context.lineTo(paneBounds.max.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
+					context.moveTo(repaintArea.min.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
+					context.lineTo(repaintArea.max.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
 					context.stroke();
 				});
 		}
