@@ -457,7 +457,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return true;
 		}
 
-		if (e.ctrlKey && (e.key === 'k' || e.key === 'K')) {
+		if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) {
 			this._map.showHyperlinkDialog();
 			e.preventDefault();
 			return true;
