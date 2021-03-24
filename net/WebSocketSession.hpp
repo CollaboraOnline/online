@@ -165,7 +165,7 @@ public:
         _request.set("Connection", "Upgrade");
         _request.set("Upgrade", "websocket");
         _request.set("Sec-WebSocket-Version", "13");
-        _request.set("Sec-WebSocket-Key", PublicComputeAccept::generateKey());
+        _request.set("Sec-WebSocket-Key", getWebSocketKey());
 
         auto socket = net::connect(_host, _port, isSecure(), shared_from_this());
         if (!socket)
