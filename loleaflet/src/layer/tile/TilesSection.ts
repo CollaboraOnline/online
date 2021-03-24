@@ -89,7 +89,7 @@ class TilesSection {
 		return extendedBounds;
 	}
 
-	paintWithPanes (tile: any, ctx: any) {
+	paintWithPanes (tile: any, ctx: any, async: boolean) {
 		var tileTopLeft = tile.coords.getPos();
 		var tileBounds = new L.Bounds(tileTopLeft, tileTopLeft.add(ctx.tileSize));
 
@@ -112,17 +112,17 @@ class TilesSection {
 				paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
 				paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
 
-				this.drawTileInPane(tile, tileBounds, paneBounds, paneOffset, this.context);
+				this.drawTileInPane(tile, tileBounds, paneBounds, paneOffset, this.context, async);
 			}
 
 			if (extendedBounds.intersects(tileBounds)) {
 				var offset = extendedBounds.getTopLeft();
-				this.drawTileInPane(tile, tileBounds, extendedBounds, offset, this.oscCtxs[i]);
+				this.drawTileInPane(tile, tileBounds, extendedBounds, offset, this.oscCtxs[i], async);
 			}
 		}
 	}
 
-	drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: any) {
+	drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: any, clearBackground: boolean) {
 		// intersect - to avoid state thrash through clipping
 		var crop = new L.Bounds(tileBounds.min, tileBounds.max);
 		crop.min.x = Math.max(paneBounds.min.x, tileBounds.min.x);
@@ -134,7 +134,7 @@ class TilesSection {
 		var cropHeight = crop.max.y - crop.min.y;
 
 		if (cropWidth && cropHeight) {
-			if (this.containerObject.isZoomChanged()) {
+			if (clearBackground || this.containerObject.isZoomChanged()) {
 				// Whole canvas is not cleared after zoom has changed, so clear it per tile as they arrive.
 				this.context.fillStyle = this.containerObject.getClearColor();
 				this.context.fillRect(
@@ -187,7 +187,7 @@ class TilesSection {
 		this.containerObject.setPenPosition(this);
 
 		if (ctx.paneBoundsActive === true)
-			this.paintWithPanes(tile, ctx);
+			this.paintWithPanes(tile, ctx, async);
 		else
 			this.paintSimple(tile, ctx, async);
 	}
