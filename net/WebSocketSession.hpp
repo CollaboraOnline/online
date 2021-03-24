@@ -152,39 +152,12 @@ public:
     Protocol protocol() const { return _protocol; }
     bool isSecure() const { return _protocol == Protocol::HttpSsl; }
 
-    bool asyncRequest(Request req, SocketPoll& poll)
+    bool asyncRequest(http::Request req, SocketPoll& poll)
     {
         LOG_TRC("asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                  << req.getUrl());
 
-        _request = std::move(req);
-        _request.set("Host", host()); // Make sure the host is set.
-        _request.set("Date", Util::getHttpTimeNow());
-        _request.set("User-Agent", HTTP_AGENT_STRING);
-
-        _request.set("Connection", "Upgrade");
-        _request.set("Upgrade", "websocket");
-        _request.set("Sec-WebSocket-Version", "13");
-        _request.set("Sec-WebSocket-Key", getWebSocketKey());
-
-        auto socket = net::connect(_host, _port, isSecure(), shared_from_this());
-        if (!socket)
-        {
-            LOG_ERR("Failed to connect to " << _host << ':' << _port);
-            return false;
-        }
-
-        onConnect(socket);
-
-        if (socket->send(_request))
-        {
-            poll.insertNewSocket(socket);
-
-            return true;
-        }
-
-        LOG_ERR("Failed to make WebSocket request.");
-        return false;
+        return wsRequest(req, host(), port(), isSecure(), poll);
     }
 
     /// Wait until the given prefix is matched and return the payload.
