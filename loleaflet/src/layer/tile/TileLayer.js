@@ -3202,9 +3202,14 @@ L.TileLayer = L.GridLayer.extend({
 
 			this._addDropDownMarker();
 
+			var isEditingAnnotation = this.editedAnnotation &&
+				(this._map.hasLayer(this.editedAnnotation) || this._map.hasLayer(this.editedAnnotation.annotation));
+			var hasDialogOpened = isEditingAnnotation;
+
 			// when the cell cursor is moving, the user is in the document,
 			// and the focus should leave the cell input bar
-			this._map.fire('editorgotfocus');
+			if (!hasDialogOpened)
+				this._map.fire('editorgotfocus');
 		}
 		else if (this._cellCursorMarker) {
 			this._map.removeLayer(this._cellCursorMarker);

@@ -9,6 +9,8 @@ L.CalcTileLayer = L.TileLayer.extend({
 							  * 0.1986cm with TeX points,
 							  * 0.1993cm with PS points. */
 
+	editedAnnotation: null,
+
 	twipsToHMM: function (twips) {
 		return (twips * 127 + 36) / 72;
 	},
@@ -33,6 +35,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 				annotation._annotation._tag = annotation;
 				this.showAnnotation(annotation);
 			}
+			this.editedAnnotation = annotation;
 			annotation.editAnnotation();
 		}
 	},
@@ -73,6 +76,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	onAnnotationModify: function (annotation) {
+		this.editedAnnotation = annotation;
 		if (window.mode.isMobile() || window.mode.isTablet()) {
 			var that = this;
 			this.newAnnotationVex(annotation, function(annotation) { that._onAnnotationSave(annotation); }, /* isMod */ true);
@@ -96,6 +100,7 @@ L.CalcTileLayer = L.TileLayer.extend({
 	},
 
 	onAnnotationReply: function (annotation) {
+		this.editedAnnotation = annotation;
 		annotation.reply();
 		annotation.focus();
 	},
