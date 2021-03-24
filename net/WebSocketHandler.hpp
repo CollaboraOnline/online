@@ -226,6 +226,9 @@ private:
         size_t payloadLen = p[1] & 0x7f;
         size_t headerLen = 2;
 
+        LOG_TRC('#' << socket->getFD() << " >>> : isClient: " << _isClient
+                    << ", isWebSocket: " << socket->isWebSocket());
+
         if (_isClient && !socket->isWebSocket())
         {
             // Handle the upgrade response from the server and validate.
