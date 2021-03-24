@@ -180,7 +180,7 @@ class TilesSection {
 	}
 
 	public paint (tile: any, ctx: any, async: boolean = false) {
-		if (this.containerObject.isInZoomAnimation())
+		if (this.containerObject.isInZoomAnimation() || this.containerObject.isZoomChanged())
 			return;
 
 		if (!ctx)
@@ -194,20 +194,8 @@ class TilesSection {
 			this.paintSimple(tile, ctx, async);
 	}
 
-	public onDraw () {
-		if (this.containerObject.isInZoomAnimation())
-			return;
-
-		var zoom = Math.round(this.map.getZoom());
-		var part = this.sectionProperties.docLayer._selectedPart;
-
-		// Calculate all this here intead of doing it per tile.
-		var ctx = this.sectionProperties.tsManager._paintContext();
-
-		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
-			this.oscCtxs[i].fillStyle = 'white';
-			this.oscCtxs[i].fillRect(0, 0, this.offscreenCanvases[i].width, this.offscreenCanvases[i].height);
-		}
+	private forEachTileInView(zoom: number, part: number, ctx: any,
+		callback: (tile: any, coords: any) => boolean) {
 
 		var docLayer = this.sectionProperties.docLayer;
 		var tileRanges = ctx.paneBoundsList.map(docLayer._pxBoundsToTileRange, docLayer);
@@ -222,14 +210,62 @@ class TilesSection {
 						part);
 
 					var key = coords.key();
-					var tile = this.sectionProperties.docLayer._tiles[key];
-					// Ensure tile is loaded and is within document bounds.
-					if (tile && tile.loaded && docLayer._isValidTile(coords)) {
-						this.paint(tile, ctx, false /* async? */);
-					}
+					var tile = docLayer._tiles[key];
+
+					if (!callback(tile, coords))
+						return;
 				}
 			}
 		}
+	}
+
+	public haveAllTilesInView(zoom?: number, part?: number, ctx?: any): boolean {
+		zoom = zoom || Math.round(this.map.getZoom());
+		part = part || this.sectionProperties.docLayer._selectedPart;
+		ctx = ctx || this.sectionProperties.tsManager._paintContext();
+
+		var allTilesLoaded = true;
+		this.forEachTileInView(zoom, part, ctx, function (tile: any): boolean {
+			// Ensure tile is loaded.
+			if (!tile || !tile.loaded) {
+				allTilesLoaded = false;
+				return false; // stop search.
+			}
+			return true; // continue checking remaining tiles.
+		});
+
+		return allTilesLoaded;
+	}
+
+	public onDraw () {
+		if (this.containerObject.isInZoomAnimation())
+			return;
+
+		var zoom = Math.round(this.map.getZoom());
+		var part = this.sectionProperties.docLayer._selectedPart;
+
+		// Calculate all this here intead of doing it per tile.
+		var ctx = this.sectionProperties.tsManager._paintContext();
+
+		if (this.containerObject.isZoomChanged()) {
+			if (!this.haveAllTilesInView(zoom, part, ctx))
+				return;
+		}
+
+		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
+			this.oscCtxs[i].fillStyle = 'white';
+			this.oscCtxs[i].fillRect(0, 0, this.offscreenCanvases[i].width, this.offscreenCanvases[i].height);
+		}
+
+		var docLayer = this.sectionProperties.docLayer;
+		var tileSection = this;
+		this.forEachTileInView(zoom, part, ctx, function (tile: any, coords: any): boolean {
+			// Ensure tile is loaded and is within document bounds.
+			if (tile && tile.loaded && docLayer._isValidTile(coords)) {
+				tileSection.paint(tile, ctx, false /* async? */);
+			}
+			return true; // continue with remaining tiles.
+		});
 	}
 
 	public onMouseWheel () {}
