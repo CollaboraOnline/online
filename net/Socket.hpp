@@ -719,7 +719,7 @@ public:
     void insertNewUnixSocket(
         const std::string &location,
         const std::string &pathAndQuery,
-        const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler,
+        const std::shared_ptr<WebSocketHandler>& websocketHandler,
         const int shareFD = -1);
 #else
     void insertNewFakeSocket(
@@ -779,12 +779,6 @@ protected:
 private:
     /// Actual poll implementation
     int poll(int64_t timeoutMaxMicroS);
-
-    /// Generate the request to connect & upgrade this socket to a given path
-    /// and sends a file descriptor along request if is != -1.
-    void clientRequestWebsocketUpgrade(const std::shared_ptr<StreamSocket>& socket,
-                                       const std::shared_ptr<ProtocolHandlerInterface>& websocketHandler,
-                                       const std::string &pathAndQuery, const int shareFD = -1);
 
     /// Initialize the poll fds array with the right events
     void setupPollFds(std::chrono::steady_clock::time_point now,
