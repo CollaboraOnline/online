@@ -281,12 +281,9 @@
 					else if (b <= 0xdf) {
 						code = b & 0x1f;
 						seqLen = 2;
-					} else if (b <= 0xdf) {
-						code = b & 0x0f;
-						seqLen = 3;
 					} else if (b <= 0xf4) {
 						code = b & 0x07;
-						seqLen = 4;
+						seqLen = 3;
 					}
 					var left = bytes.length - i;
 					if (left >= seqLen) {
