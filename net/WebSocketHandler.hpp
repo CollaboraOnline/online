@@ -775,7 +775,6 @@ protected:
     /// Implementation of the ProtocolHandlerInterface.
     void dumpState(std::ostream& os) override;
 
-private:
     /// To make the protected 'computeAccept' accessible.
     class PublicComputeAccept : public Poco::Net::WebSocket
     {
@@ -788,7 +787,6 @@ private:
         static std::string generateKey() { return createKey(); }
     };
 
-protected:
     /// Upgrade the http(s) connection to a websocket.
     template <typename T>
     void upgradeToWebSocket(StreamSocket& socket, const T& req)

@@ -278,6 +278,7 @@ shared_headers = common/Common.hpp \
                  net/ServerSocket.hpp \
                  net/Socket.hpp \
                  net/WebSocketHandler.hpp \
+                 net/WebSocketSession.hpp \
                  tools/Replay.hpp
 if ENABLE_SSL
 shared_headers += net/Ssl.hpp \
