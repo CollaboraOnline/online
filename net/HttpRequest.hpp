@@ -241,7 +241,7 @@ using IoWriteFunc = std::function<int64_t(const char*, int64_t)>;
 /// The second argument is the buffer size.
 using IoReadFunc = std::function<int64_t(char*, int64_t)>;
 
-/// An HTTP Header.
+/// HTTP Header.
 class Header
 {
 public:
@@ -1124,13 +1124,9 @@ private:
         Buffer& out = _socket->getOutBuffer();
         LOG_TRC("performWrites: " << out.size() << " bytes.");
 
-        if (!_request.writeData(out))
+        if (!_socket->send(_request))
         {
-            _socket->shutdown();
-        }
-        else if (!out.empty())
-        {
-            _socket->writeOutgoingData();
+            LOG_ERR('#' << _socket->getFD() << " Error while writing to socket.");
         }
     }
 
