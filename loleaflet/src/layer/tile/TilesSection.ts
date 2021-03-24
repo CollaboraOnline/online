@@ -134,7 +134,7 @@ class TilesSection {
 		var cropHeight = crop.max.y - crop.min.y;
 
 		if (cropWidth && cropHeight) {
-			if (clearBackground || this.containerObject.isZoomChanged()) {
+			if (clearBackground || this.containerObject.isZoomChanged() || canvasCtx !== this.context) {
 				// Whole canvas is not cleared after zoom has changed, so clear it per tile as they arrive.
 				canvasCtx.fillStyle = this.containerObject.getClearColor();
 				canvasCtx.fillRect(
@@ -142,7 +142,7 @@ class TilesSection {
 					crop.min.y - paneOffset.y,
 					cropWidth, cropHeight);
 				var gridSection = this.containerObject.getSectionWithName(L.CSections.CalcGrid.name);
-				gridSection.onDrawArea(crop, canvasCtx);
+				gridSection.onDrawArea(crop, paneOffset, canvasCtx);
 			}
 			canvasCtx.drawImage(tile.el,
 				crop.min.x - tileBounds.min.x,
