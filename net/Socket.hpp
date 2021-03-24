@@ -994,7 +994,18 @@ public:
         msg.msg_controllen = CMSG_LEN(sizeof(int));
         msg.msg_flags = 0;
 
-        sendmsg(getFD(), &msg, 0);
+#ifdef LOG_SOCKET_DATA
+        if (len > 0)
+            LOG_TRC('#' << getFD() << " (Unix) outBuffer (" << len << " bytes):\n"
+                        << Util::dumpHex(std::string(data, len)));
+#endif
+
+        //FIXME: retry on EINTR?
+        const auto wrote = sendmsg(getFD(), &msg, 0);
+        if (wrote < 0)
+            LOG_SYS('#' << getFD() << " Failed to send message to unix socket");
+        else
+            LOG_TRC('#' << fd << " wrote " << wrote << " bytes of " << len);
     }
 
     /// Reads data by invoking readData() and buffering.
@@ -1183,7 +1194,8 @@ protected:
 
 #ifdef LOG_SOCKET_DATA
         if (!_inBuffer.empty())
-            LOG_TRC('#' << getFD() << " inBuffer:\n" << Util::dumpHex(_inBuffer));
+            LOG_TRC('#' << getFD() << " inBuffer (" << _outBuffer.size() << " bytes):\n"
+                        << Util::dumpHex(_inBuffer));
 #endif
 
         // If we have data, allow the app to consume.
@@ -1265,7 +1277,7 @@ public:
 
 #ifdef LOG_SOCKET_DATA
                 if (len > 0 && !_outBuffer.empty())
-                    LOG_TRC('#' << getFD() << " outBuffer:\n"
+                    LOG_TRC('#' << getFD() << " outBuffer (" << _outBuffer.size() << " bytes):\n"
                                 << Util::dumpHex(std::string(_outBuffer.getBlock(), len)));
 #endif
 
