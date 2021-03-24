@@ -8,6 +8,7 @@
 #include <config.h>
 
 #include "NetUtil.hpp"
+#include <common/Util.hpp>
 
 #include "Socket.hpp"
 #if ENABLE_SSL && !MOBILEAPP
@@ -88,6 +89,43 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
         LOG_ERR("Failed to lookup host [" << host << "]. Skipping.");
 
     return socket;
+}
+
+bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port)
+{
+    const auto itScheme = uri.find("://");
+    if (itScheme != uri.npos)
+    {
+        scheme = uri.substr(0, itScheme + 3); // Include the last slash.
+        uri = uri.substr(scheme.size()); // Remove the scheme.
+    }
+    else
+    {
+        // No scheme.
+        scheme.clear();
+    }
+
+    const auto itUrl = uri.find('/');
+    if (itUrl != uri.npos)
+    {
+        // Remove the URL.
+        uri = uri.substr(0, itUrl);
+    }
+
+    const auto itPort = uri.find(':');
+    if (itPort != uri.npos)
+    {
+        host = uri.substr(0, itPort);
+        port = uri.substr(itPort + 1); // Skip the colon.
+    }
+    else
+    {
+        // No port, just hostname.
+        host = uri;
+        port.clear();
+    }
+
+    return !host.empty();
 }
 
 } // namespace net
