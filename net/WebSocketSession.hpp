@@ -12,10 +12,13 @@
 #include <iostream>
 #include <fstream>
 #include <memory>
+#include <condition_variable>
+#include <mutex>
 #include <sstream>
 #include <string>
 
 #include "Common.hpp"
+#include <common/MessageQueue.hpp>
 #include "NetUtil.hpp"
 #include <net/Socket.hpp>
 #include <net/HttpRequest.hpp>
@@ -32,8 +35,7 @@
 
 namespace http
 {
-/// A client socket to make asynchronous HTTP requests.
-/// Designed to be reused for multiple requests.
+/// A client socket for asynchronous Web-Socket protocol.
 class WebSocketSession final : public WebSocketHandler
 {
 public:
@@ -45,7 +47,8 @@ public:
 
 private:
     WebSocketSession(const std::string& hostname, Protocol protocolType, int portNumber)
-        : _host(hostname)
+        : WebSocketHandler(true)
+        , _host(hostname)
         , _port(std::to_string(portNumber))
         , _protocol(protocolType)
     {
@@ -154,9 +157,6 @@ public:
         LOG_TRC("asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                  << req.getUrl());
 
-        // FIXME: Generate key.
-        std::string key = "fxTaWTEMVhq1PkWsMoLxGw==";
-
         _request = std::move(req);
         _request.set("Host", host()); // Make sure the host is set.
         _request.set("Date", Util::getHttpTimeNow());
@@ -165,7 +165,7 @@ public:
         _request.set("Connection", "Upgrade");
         _request.set("Upgrade", "websocket");
         _request.set("Sec-WebSocket-Version", "13");
-        _request.set("Sec-WebSocket-Key", key);
+        _request.set("Sec-WebSocket-Key", PublicComputeAccept::generateKey());
 
         auto socket = net::connect(_host, _port, isSecure(), shared_from_this());
         if (!socket)
@@ -187,14 +187,54 @@ public:
         return false;
     }
 
-    /// Upgrade the socket to WebSocket and migrate to the given handler.
-    std::shared_ptr<WebSocketHandler> upgradeToWebSocket();
+    /// Wait until the given prefix is matched and return the payload.
+    std::vector<char> waitForMessage(const std::string& prefix, std::chrono::milliseconds timeout)
+    {
+        const auto deadline = std::chrono::steady_clock::now() + timeout;
+        LOG_DBG("Waiting for [" << prefix << "] for " << timeout);
+
+        std::unique_lock<std::mutex> lock(_mutex);
+        do
+        {
+            // Drain the queue, first.
+            while (!_queue.isEmpty())
+            {
+                std::vector<char> message = _queue.pop();
+                if (matchMessage(prefix, message))
+                    return message;
+            }
+
+            // Timed wait, if we must.
+        } while (_cv.wait_until(lock, deadline, [this]() { return !_queue.isEmpty(); }));
+
+        LOG_DBG("Giving up waiting for [" << prefix << "] after " << timeout);
+        return std::vector<char>();
+    }
+
+private:
+    void handleMessage(const std::vector<char>& data) override
+    {
+        LOG_DBG("Got message: " << LOOLProtocol::getFirstLine(data));
+        std::unique_lock<std::mutex> lock(_mutex);
+        _queue.put(data);
+        _cv.notify_one();
+    }
+
+    bool matchMessage(const std::string& prefix, const std::vector<char>& message)
+    {
+        const auto header = LOOLProtocol::getFirstLine(message);
+        LOG_DBG("Evaluating message: " << header);
+        return LOOLProtocol::matchPrefix(prefix, header);
+    }
 
 private:
     const std::string _host;
     const std::string _port;
     const Protocol _protocol;
     Request _request;
+    MessageQueue _queue; //< The incoming message queue.
+    std::condition_variable _cv;
+    std::mutex _mutex; //< The queue lock.
 };
 
 } // namespace http
