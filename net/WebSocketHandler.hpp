@@ -36,6 +36,9 @@ private:
 #endif
 
     std::vector<char> _wsPayload;
+
+    /// The security key. Meaningful only for clients.
+    const std::string _key;
     std::atomic<bool> _shuttingDown;
     bool _isClient;
 
@@ -66,6 +69,7 @@ public:
         _isMasking(isClient && isMasking),
         _inFragmentBlock(false),
 #endif
+        _key(isClient ? PublicComputeAccept::generateKey() : std::string()),
         _shuttingDown(false),
         _isClient(isClient)
     {
@@ -76,7 +80,8 @@ public:
     /// socket: the TCP socket which received the upgrade request
     /// request: the HTTP upgrade request to WebSocket
     template <typename T>
-    WebSocketHandler(const std::shared_ptr<StreamSocket>& socket, const T& request)
+    WebSocketHandler(const std::shared_ptr<StreamSocket>& socket, const T& request,
+                     bool isClient = false)
         : _socket(socket)
 #if !MOBILEAPP
         , _lastPingSentTime(std::chrono::steady_clock::now()
@@ -86,13 +91,16 @@ public:
         , _isMasking(false)
         , _inFragmentBlock(false)
 #endif
+        , _key(isClient ? PublicComputeAccept::generateKey() : std::string())
         , _shuttingDown(false)
-        , _isClient(false)
+        , _isClient(isClient)
     {
         if (!socket)
             throw std::runtime_error("Invalid socket while upgrading to WebSocket.");
 
-        upgradeToWebSocket(*socket, request);
+        // As a server, respond with 101 protocol-upgrade.
+        if (!_isClient)
+            upgradeToWebSocket(*socket, request);
     }
 
     /// Status codes sent to peer on shutdown.
@@ -217,6 +225,12 @@ private:
         const bool hasMask = p[1] & 0x80;
         size_t payloadLen = p[1] & 0x7f;
         size_t headerLen = 2;
+
+        if (_isClient && !socket->isWebSocket())
+        {
+            // Handle the upgrade response from the server and validate.
+            return finishHandshake(socket);
+        }
 
         // normally - 7 bit length.
         if (payloadLen == 126) // 2 byte length
@@ -770,6 +784,8 @@ private:
         {
             return computeAccept(key);
         }
+
+        static std::string generateKey() { return createKey(); }
     };
 
 protected:
@@ -803,6 +819,49 @@ protected:
         socket.send(httpResponse);
 #endif
         setWebSocket();
+    }
+
+    /// Finish Web-Socket upgrade handshake, on the client side.
+    bool finishHandshake(const std::shared_ptr<StreamSocket>& socket)
+    {
+        assert(_isClient && "Handshake is finished by the client.");
+
+        http::Response response;
+        const int64_t read
+            = response.readData(socket->getInBuffer().data(), socket->getInBuffer().size());
+        if (read < 0)
+        {
+            LOG_ERR('#' << socket->getFD()
+                        << " Error while handling Web-Socket upgrade response from the server. "
+                           "Shutting down socket.");
+            socket->shutdown();
+            return false;
+        }
+
+        if (read > 0)
+        {
+            // Remove what we consumed.
+            socket->eraseFirstInputBytes(read);
+
+            if (Util::iequal(response.get("Connection", ""), "Upgrade")
+                && Util::iequal(response.get("Upgrade", ""), "websocket")
+                && response.get("Sec-WebSocket-Accept", "")
+                       == PublicComputeAccept::doComputeAccept(_key))
+            {
+                LOG_TRC('#' << socket->getFD() << " Web-Socket upgrade completed.");
+                socket->setWebSocket();
+                return true;
+            }
+
+            LOG_ERR('#' << socket->getFD()
+                        << " Server returned invalid accept token during handshake. "
+                           "Shutting down socket.");
+            socket->shutdown();
+            return false;
+        }
+
+        assert(read == 0);
+        return false; // Not enough data.
     }
 
 #if !MOBILEAPP
