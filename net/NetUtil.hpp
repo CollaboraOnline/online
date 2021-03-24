@@ -23,4 +23,9 @@ namespace net
 std::shared_ptr<StreamSocket>
 connect(const std::string& host, const std::string& port, const bool isSSL,
         const std::shared_ptr<ProtocolHandlerInterface>& protocolHandler);
+
+/// Decomposes a URI into its components.
+/// Returns true if parsing was successful.
+bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port);
+
 } // namespace net

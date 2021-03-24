@@ -24,6 +24,7 @@
 #include <common/Authorization.hpp>
 #include <wsd/FileServer.hpp>
 #include <net/Buffer.hpp>
+#include <net/NetUtil.hpp>
 
 #include <chrono>
 #include <fstream>
@@ -61,6 +62,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testAsciiToLower);
     CPPUNIT_TEST(testStat);
     CPPUNIT_TEST(testStringCompare);
+    CPPUNIT_TEST(testParseUri);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -90,6 +92,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testAsciiToLower();
     void testStat();
     void testStringCompare();
+    void testParseUri();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -1801,6 +1804,51 @@ void WhiteBoxTests::testStringCompare()
     LOK_ASSERT(!Util::iequal("abc", "abcd"));
 
     LOK_ASSERT(!Util::iequal("abc", 3, "abcd", 4));
+}
+
+void WhiteBoxTests::testParseUri()
+{
+    std::string scheme;
+    std::string host;
+    std::string port;
+
+    scheme = "***";
+    host = "***";
+    port = "***";
+    LOK_ASSERT(!net::parseUri(std::string(), scheme, host, port));
+    LOK_ASSERT(scheme.empty());
+    LOK_ASSERT(host.empty());
+    LOK_ASSERT(port.empty());
+
+    LOK_ASSERT(net::parseUri("domain.com", scheme, host, port));
+    LOK_ASSERT(scheme.empty());
+    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
+    LOK_ASSERT(port.empty());
+
+    LOK_ASSERT(net::parseUri("domain.com:88", scheme, host, port));
+    LOK_ASSERT(scheme.empty());
+    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
+    LOK_ASSERT_EQUAL(std::string("88"), port);
+
+    LOK_ASSERT(net::parseUri("http://domain.com", scheme, host, port));
+    LOK_ASSERT_EQUAL(std::string("http://"), scheme);
+    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
+    LOK_ASSERT(port.empty());
+
+    LOK_ASSERT(net::parseUri("https://domain.com:88", scheme, host, port));
+    LOK_ASSERT_EQUAL(std::string("https://"), scheme);
+    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
+    LOK_ASSERT_EQUAL(std::string("88"), port);
+
+    LOK_ASSERT(net::parseUri("http://domain.com/path/to/file", scheme, host, port));
+    LOK_ASSERT_EQUAL(std::string("http://"), scheme);
+    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
+    LOK_ASSERT(port.empty());
+
+    LOK_ASSERT(net::parseUri("https://domain.com:88/path/to/file", scheme, host, port));
+    LOK_ASSERT_EQUAL(std::string("https://"), scheme);
+    LOK_ASSERT_EQUAL(std::string("domain.com"), host);
+    LOK_ASSERT_EQUAL(std::string("88"), port);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
