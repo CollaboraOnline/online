@@ -91,6 +91,23 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
     return socket;
 }
 
+std::shared_ptr<StreamSocket>
+connect(std::string uri, const std::shared_ptr<ProtocolHandlerInterface>& protocolHandler)
+{
+    std::string scheme;
+    std::string host;
+    std::string port;
+    if (!parseUri(std::move(uri), scheme, host, port))
+    {
+        return nullptr;
+    }
+
+    scheme = Util::toLower(std::move(scheme));
+    const bool isSsl = scheme == "https://" || scheme == "wss://";
+
+    return connect(host, port, isSsl, protocolHandler);
+}
+
 bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port)
 {
     const auto itScheme = uri.find("://");
