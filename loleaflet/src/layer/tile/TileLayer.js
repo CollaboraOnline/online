@@ -234,6 +234,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._prevCellCursor = L.LatLngBounds.createDefault();
 		this._cellCursorOnPgUp = null;
 		this._cellCursorOnPgDn = null;
+		this._shapeGridOffset = new L.Point(0, 0);
 
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
@@ -1179,11 +1180,28 @@ L.TileLayer = L.GridLayer.extend({
 		var topLeftTwips = new L.Point(messageJSON[0], messageJSON[1]);
 		var offset = new L.Point(messageJSON[2], messageJSON[3]);
 		var bottomRightTwips = topLeftTwips.add(offset);
-		this._graphicSelectionTwips = this._getGraphicSelectionRectangle(
-			new L.Bounds(topLeftTwips, bottomRightTwips));
+		var hasExtraInfo = messageJSON.length > 5;
+		var hasGridOffset = false;
+		var extraInfo = null;
+		if (hasExtraInfo) {
+			extraInfo = messageJSON[5];
+			if (extraInfo.gridOffsetX || extraInfo.gridOffsetY) {
+				this._shapeGridOffset = new L.Point(parseInt(extraInfo.gridOffsetX), parseInt(extraInfo.gridOffsetY));
+				hasGridOffset = true;
+			}
+		}
+
+		if (hasGridOffset) {
+			this._graphicSelectionTwips = new L.Bounds(topLeftTwips.add(this._shapeGridOffset), bottomRightTwips.add(this._shapeGridOffset));
+		} else {
+			this._graphicSelectionTwips = this._getGraphicSelectionRectangle(
+				new L.Bounds(topLeftTwips, bottomRightTwips));
+		}
 		this._graphicSelection = new L.LatLngBounds(
 			this._twipsToLatLng(this._graphicSelectionTwips.getTopLeft(), this._map.getZoom()),
 			this._twipsToLatLng(this._graphicSelectionTwips.getBottomRight(), this._map.getZoom()));
+
+		this._graphicSelection.extraInfo = extraInfo;
 	},
 
 	_onGraphicSelectionMsg: function (textMsg) {
@@ -1222,10 +1240,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._extractAndSetGraphicSelection(msgData);
 
 			this._graphicSelectionAngle = (msgData.length > 4) ? msgData[4] : 0;
-
-			this._graphicSelection.extraInfo = {};
-			if (msgData.length > 5) {
-				this._graphicSelection.extraInfo = msgData[5];
+			if (this._graphicSelection.extraInfo) {
 				var dragInfo = this._graphicSelection.extraInfo.dragInfo;
 				if (dragInfo && dragInfo.dragMethod === 'PieSegmentDragging') {
 					dragInfo.initialOffset /= 100.0;
@@ -1238,12 +1253,14 @@ L.TileLayer = L.GridLayer.extend({
 
 			// defaults
 			var extraInfo = this._graphicSelection.extraInfo;
-			if (extraInfo.isDraggable === undefined)
-				extraInfo.isDraggable = true;
-			if (extraInfo.isResizable === undefined)
-				extraInfo.isResizable = true;
-			if (extraInfo.isRotatable === undefined)
-				extraInfo.isRotatable = true;
+			if (extraInfo) {
+				if (extraInfo.isDraggable === undefined)
+					extraInfo.isDraggable = true;
+				if (extraInfo.isResizable === undefined)
+					extraInfo.isResizable = true;
+				if (extraInfo.isRotatable === undefined)
+					extraInfo.isRotatable = true;
+			}
 
 			// Workaround for tdf#123874. For some reason the handling of the
 			// shapeselectioncontent messages that we get back causes the WebKit process
@@ -3769,7 +3786,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (!this.options.printTwipsMsgsEnabled || !this.sheetGeometry)
 			return point;
 		var newPoint = new L.Point(parseInt(point.x), parseInt(point.y));
-		return this.sheetGeometry.getTileTwipsPointFromPrint(newPoint);
+		return newPoint.add(this._shapeGridOffset);
 	},
 
 	_getEditCursorRectangle: function (msgObj) {
