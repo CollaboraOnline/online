@@ -24,6 +24,7 @@
 #include <Protocol.hpp>
 #include <LOOLWebSocket.hpp>
 
+#include "lokassert.hpp"
 #include <countloolkits.hpp>
 #include <helpers.hpp>
 
@@ -34,6 +35,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
     Poco::Net::HTTPResponse _response;
+    SocketPoll _socketPoll;
 
     CPPUNIT_TEST_SUITE(HTTPWSTest);
 
@@ -57,6 +59,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 public:
     HTTPWSTest()
         : _uri(helpers::getTestServerURI())
+        , _socketPoll("HttpWsPoll")
     {
 #if ENABLE_SSL
         Poco::Net::initializeSSL();
@@ -80,10 +83,12 @@ public:
         resetTestStartTime();
         testCountHowManyLoolkits();
         resetTestStartTime();
+        _socketPoll.startThread();
     }
 
     void tearDown()
     {
+        _socketPoll.joinThread();
         resetTestStartTime();
         testNoExtraLoolKitsLeft();
         resetTestStartTime();
@@ -272,11 +277,13 @@ void HTTPWSTest::testInactiveClient()
         std::string documentPath, documentURL;
         getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
-        std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, "inactiveClient-1 ");
+        std::shared_ptr<http::WebSocketSession> socket1
+            = loadDocAndGetSession(_socketPoll, _uri, documentURL, "inactiveClient-1 ");
 
         // Connect another and go inactive.
         TST_LOG_NAME("inactiveClient-2 ", "Connecting second client.");
-        std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, "inactiveClient-2 ", true);
+        std::shared_ptr<http::WebSocketSession> socket2
+            = loadDocAndGetSession(_socketPoll, _uri, documentURL, "inactiveClient-2 ", true);
         sendTextFrame(socket2, "userinactive", "inactiveClient-2 ");
 
         // While second is inactive, make some changes.
@@ -315,8 +322,13 @@ void HTTPWSTest::testInactiveClient()
                 });
 
         TST_LOG("Second client finished.");
-        socket1->shutdown();
-        socket2->shutdown();
+        socket1->asyncShutdown(_socketPoll);
+        socket2->asyncShutdown(_socketPoll);
+
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                           socket1->waitForDisconnection(std::chrono::seconds(5)));
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
+                           socket2->waitForDisconnection(std::chrono::seconds(5)));
     }
     catch (const Poco::Exception& exc)
     {
@@ -340,16 +352,19 @@ void HTTPWSTest::testViewInfoMsg()
 
     std::string response;
     int part, parts, width, height;
-    int viewid[2];
+    int viewid[2] = { 0 };
 
     try
     {
         // Load first view and remember the viewid
+        TST_LOG("Loading the first view");
         sendTextFrame(socket0, "load url=" + docURL);
         response = getResponseString(socket0, "status:", testname + "0 ");
+        LOK_ASSERT_MESSAGE("Expected status: message", !response.empty());
         parseDocSize(response.substr(7), "text", part, parts, width, height, viewid[0]);
 
         // Check if viewinfo message also mentions the same viewid
+        TST_LOG("Waiting for [viewinfo:] from the first view");
         response = getResponseString(socket0, "viewinfo: ", testname + "0 ");
         Poco::JSON::Parser parser0;
         Poco::JSON::Array::Ptr array = parser0.parse(response.substr(9)).extract<Poco::JSON::Array::Ptr>();
@@ -360,12 +375,14 @@ void HTTPWSTest::testViewInfoMsg()
         LOK_ASSERT_EQUAL(viewid[0], viewid0);
 
         // Load second view and remember the viewid
+        TST_LOG("Loading the second view");
         sendTextFrame(socket1, "load url=" + docURL);
         response = getResponseString(socket1, "status:", testname + "1 ");
         parseDocSize(response.substr(7), "text", part, parts, width, height, viewid[1]);
 
         // Check if viewinfo message in this view mentions
         // viewid of both first loaded view and this view
+        TST_LOG("Waiting for [viewinfo:] from the second view");
         response = getResponseString(socket1, "viewinfo: ", testname + "1 ");
         Poco::JSON::Parser parser1;
         array = parser1.parse(response.substr(9)).extract<Poco::JSON::Array::Ptr>();
@@ -384,6 +401,7 @@ void HTTPWSTest::testViewInfoMsg()
             LOK_ASSERT_FAIL("Inconsistent viewid in viewinfo and status messages");
 
         // Check if first view also got the same viewinfo message
+        TST_LOG("Waiting for [viewinfo:] from the first view, again");
         const auto response1 = getResponseString(socket0, "viewinfo: ", testname + "0 ");
         LOK_ASSERT_EQUAL(response, response1);
     }
@@ -391,6 +409,8 @@ void HTTPWSTest::testViewInfoMsg()
     {
         LOK_ASSERT_FAIL(exc.displayText());
     }
+
+    TST_LOG("Done");
 }
 
 void HTTPWSTest::testUndoConflict()
