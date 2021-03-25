@@ -432,9 +432,12 @@ public:
         Finished //< Done.
     };
 
-    explicit Request(std::string url = "/", std::string verb = VERB_GET,
+    /// Create a Request given a @url, http @verb, @header, and http @version.
+    /// All are optional, since they can be overwritten later.
+    explicit Request(std::string url = "/", std::string verb = VERB_GET, Header header = Header(),
                      std::string version = VERS_1_1)
-        : _url(std::move(url))
+        : _header(std::move(header))
+        , _url(std::move(url))
         , _verb(std::move(verb))
         , _version(std::move(version))
         , _bodyReaderCb([](const char*, int64_t) { return 0; })
