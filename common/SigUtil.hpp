@@ -62,7 +62,10 @@ namespace SigUtil
     void setTerminationSignals();
 
     /// Trap all fatal signals to assist debugging.
-    void setFatalSignals();
+    void setFatalSignals(const std::string &versionInfo);
+
+    /// Update version info
+    void setVersionInfo(const std::string &versionInfo);
 
     /// Trap generally useful signals
     void setUserSignals();
