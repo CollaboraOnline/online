@@ -216,20 +216,7 @@ UnitBase::TestResult UnitLoad::testLoad()
     std::vector<char> message = wsSession->waitForMessage("status:", std::chrono::seconds(50));
     LOK_ASSERT_MESSAGE("Failed to load the document", !message.empty());
 
-    // TST_LOG(">>> Sleeping");
-    // std::this_thread::sleep_for(std::chrono::seconds(20));
-    // TST_LOG(">>> Woke up");
-
-    // Load a document and wait for the status.
-    // Don't replace with helpers, so we catch status.
-    // Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-    // Poco::URI uri(helpers::getTestServerURI());
-    // Poco::Net::HTTPResponse response;
-    // std::shared_ptr<LOOLWebSocket> socket = helpers::connectLOKit(uri, request, response, testname);
-    // helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
-
-    // helpers::assertResponseString(socket, "status:", testname);
-
+    pollThread.joinThread();
     return TestResult::Ok;
 }
 
