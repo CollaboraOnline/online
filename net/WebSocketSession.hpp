@@ -149,7 +149,7 @@ public:
     Protocol protocol() const { return _protocol; }
     bool isSecure() const { return _protocol == Protocol::HttpSsl; }
 
-    bool asyncRequest(http::Request req, SocketPoll& poll)
+    bool asyncRequest(http::Request& req, SocketPoll& poll)
     {
         LOG_TRC("asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                  << req.getUrl());

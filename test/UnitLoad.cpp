@@ -202,21 +202,19 @@ UnitBase::TestResult UnitLoad::testLoad()
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
-    // Start the polling thread.
-    SocketPoll pollThread("WsAsyncReqPoll");
-    pollThread.startThread();
+    SocketPoll socketPoll("UnitLoadPoll");
+    socketPoll.startThread();
 
-    http::Request httpRequest(documentURL);
-    auto wsSession = http::WebSocketSession::create(helpers::getTestServerURI());
-    wsSession->asyncRequest(httpRequest, pollThread);
+    auto wsSession
+        = http::WebSocketSession::create(socketPoll, helpers::getTestServerURI(), documentURL);
 
-    TST_LOG(">>> Loading");
+    TST_LOG("Loading " << documentURL);
     wsSession->sendMessage("load url=" + documentURL);
 
     std::vector<char> message = wsSession->waitForMessage("status:", std::chrono::seconds(50));
     LOK_ASSERT_MESSAGE("Failed to load the document", !message.empty());
 
-    pollThread.joinThread();
+    socketPoll.joinThread();
     return TestResult::Ok;
 }
 
