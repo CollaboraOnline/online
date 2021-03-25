@@ -1446,6 +1446,57 @@
 		BEE5C08E24C1D9BF001D794C /* impglyphitem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = impglyphitem.cxx; path = "../../ios-device/vcl/source/gdi/impglyphitem.cxx"; sourceTree = "<group>"; };
 		BEE5C08F24C1D9BF001D794C /* scrptrun.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = scrptrun.cxx; path = "../../ios-device/vcl/source/gdi/scrptrun.cxx"; sourceTree = "<group>"; };
 		BEE5C09024C1D9C0001D794C /* embeddedfontshelper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = embeddedfontshelper.cxx; path = "../../ios-device/vcl/source/gdi/embeddedfontshelper.cxx"; sourceTree = "<group>"; };
+		BEF2FC78260B97BB0005E937 /* menubarwrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menubarwrapper.cxx; path = "../../ios-device/framework/source/uielement/menubarwrapper.cxx"; sourceTree = "<group>"; };
+		BEF2FC79260B97BB0005E937 /* menubarmerger.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menubarmerger.cxx; path = "../../ios-device/framework/source/uielement/menubarmerger.cxx"; sourceTree = "<group>"; };
+		BEF2FC7A260B97BB0005E937 /* statusbar.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = statusbar.cxx; path = "../../ios-device/framework/source/uielement/statusbar.cxx"; sourceTree = "<group>"; };
+		BEF2FC7B260B97BB0005E937 /* statusbarmanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = statusbarmanager.cxx; path = "../../ios-device/framework/source/uielement/statusbarmanager.cxx"; sourceTree = "<group>"; };
+		BEF2FC7C260B97BB0005E937 /* dropdownboxtoolbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dropdownboxtoolbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/dropdownboxtoolbarcontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC7D260B97BC0005E937 /* imagebuttontoolbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = imagebuttontoolbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/imagebuttontoolbarcontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC7E260B97BC0005E937 /* fontsizemenucontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fontsizemenucontroller.cxx; path = "../../ios-device/framework/source/uielement/fontsizemenucontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC7F260B97BC0005E937 /* subtoolbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = subtoolbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/subtoolbarcontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC80260B97BC0005E937 /* togglebuttontoolbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = togglebuttontoolbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/togglebuttontoolbarcontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC81260B97BC0005E937 /* styletoolbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = styletoolbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/styletoolbarcontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC82260B97BC0005E937 /* toolbarsmenucontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = toolbarsmenucontroller.cxx; path = "../../ios-device/framework/source/uielement/toolbarsmenucontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC83260B97BC0005E937 /* addonstoolbarwrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = addonstoolbarwrapper.cxx; path = "../../ios-device/framework/source/uielement/addonstoolbarwrapper.cxx"; sourceTree = "<group>"; };
+		BEF2FC84260B97BC0005E937 /* toolbarmodemenucontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = toolbarmodemenucontroller.cxx; path = "../../ios-device/framework/source/uielement/toolbarmodemenucontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC85260B97BC0005E937 /* statusbaritem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = statusbaritem.cxx; path = "../../ios-device/framework/source/uielement/statusbaritem.cxx"; sourceTree = "<group>"; };
+		BEF2FC86260B97BC0005E937 /* resourcemenucontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = resourcemenucontroller.cxx; path = "../../ios-device/framework/source/uielement/resourcemenucontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC87260B97BC0005E937 /* fontmenucontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = fontmenucontroller.cxx; path = "../../ios-device/framework/source/uielement/fontmenucontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC88260B97BC0005E937 /* footermenucontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = footermenucontroller.cxx; path = "../../ios-device/framework/source/uielement/footermenucontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC89260B97BC0005E937 /* langselectionstatusbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = langselectionstatusbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/langselectionstatusbarcontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC8A260B97BC0005E937 /* toolbarmanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = toolbarmanager.cxx; path = "../../ios-device/framework/source/uielement/toolbarmanager.cxx"; sourceTree = "<group>"; };
+		BEF2FC8B260B97BC0005E937 /* complextoolbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = complextoolbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/complextoolbarcontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC8C260B97BC0005E937 /* objectmenucontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objectmenucontroller.cxx; path = "../../ios-device/framework/source/uielement/objectmenucontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC8D260B97BC0005E937 /* thesaurusmenucontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = thesaurusmenucontroller.cxx; path = "../../ios-device/framework/source/uielement/thesaurusmenucontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC8E260B97BC0005E937 /* popuptoolbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = popuptoolbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/popuptoolbarcontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC8F260B97BC0005E937 /* headermenucontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = headermenucontroller.cxx; path = "../../ios-device/framework/source/uielement/headermenucontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC90260B97BC0005E937 /* toolbarmerger.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = toolbarmerger.cxx; path = "../../ios-device/framework/source/uielement/toolbarmerger.cxx"; sourceTree = "<group>"; };
+		BEF2FC91260B97BC0005E937 /* toolbarwrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = toolbarwrapper.cxx; path = "../../ios-device/framework/source/uielement/toolbarwrapper.cxx"; sourceTree = "<group>"; };
+		BEF2FC92260B97BC0005E937 /* progressbarwrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = progressbarwrapper.cxx; path = "../../ios-device/framework/source/uielement/progressbarwrapper.cxx"; sourceTree = "<group>"; };
+		BEF2FC93260B97BD0005E937 /* uicommanddescription.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = uicommanddescription.cxx; path = "../../ios-device/framework/source/uielement/uicommanddescription.cxx"; sourceTree = "<group>"; };
+		BEF2FC94260B97BD0005E937 /* edittoolbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = edittoolbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/edittoolbarcontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC95260B97BD0005E937 /* statusbarmerger.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = statusbarmerger.cxx; path = "../../ios-device/framework/source/uielement/statusbarmerger.cxx"; sourceTree = "<group>"; };
+		BEF2FC96260B97BD0005E937 /* spinfieldtoolbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = spinfieldtoolbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/spinfieldtoolbarcontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC97260B97BD0005E937 /* menubarmanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = menubarmanager.cxx; path = "../../ios-device/framework/source/uielement/menubarmanager.cxx"; sourceTree = "<group>"; };
+		BEF2FC98260B97BD0005E937 /* FixedTextToolbarController.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixedTextToolbarController.cxx; path = "../../ios-device/framework/source/uielement/FixedTextToolbarController.cxx"; sourceTree = "<group>"; };
+		BEF2FC99260B97BD0005E937 /* genericstatusbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = genericstatusbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/genericstatusbarcontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC9A260B97BD0005E937 /* generictoolbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = generictoolbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/generictoolbarcontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC9B260B97BD0005E937 /* langselectionmenucontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = langselectionmenucontroller.cxx; path = "../../ios-device/framework/source/uielement/langselectionmenucontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC9C260B97BD0005E937 /* comboboxtoolbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = comboboxtoolbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/comboboxtoolbarcontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC9D260B97BD0005E937 /* statusindicatorinterfacewrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = statusindicatorinterfacewrapper.cxx; path = "../../ios-device/framework/source/uielement/statusindicatorinterfacewrapper.cxx"; sourceTree = "<group>"; };
+		BEF2FC9E260B97BD0005E937 /* buttontoolbarcontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = buttontoolbarcontroller.cxx; path = "../../ios-device/framework/source/uielement/buttontoolbarcontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FC9F260B97BD0005E937 /* statusbarwrapper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = statusbarwrapper.cxx; path = "../../ios-device/framework/source/uielement/statusbarwrapper.cxx"; sourceTree = "<group>"; };
+		BEF2FCA0260B97BD0005E937 /* controlmenucontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = controlmenucontroller.cxx; path = "../../ios-device/framework/source/uielement/controlmenucontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FCA1260B97BD0005E937 /* macrosmenucontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = macrosmenucontroller.cxx; path = "../../ios-device/framework/source/uielement/macrosmenucontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FCA2260B97BD0005E937 /* newmenucontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = newmenucontroller.cxx; path = "../../ios-device/framework/source/uielement/newmenucontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FCA3260B97BD0005E937 /* recentfilesmenucontroller.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = recentfilesmenucontroller.cxx; path = "../../ios-device/framework/source/uielement/recentfilesmenucontroller.cxx"; sourceTree = "<group>"; };
+		BEF2FCA4260B97BD0005E937 /* FixedImageToolbarController.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FixedImageToolbarController.cxx; path = "../../ios-device/framework/source/uielement/FixedImageToolbarController.cxx"; sourceTree = "<group>"; };
+		BEF2FCA5260B97BD0005E937 /* addonstoolbarmanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = addonstoolbarmanager.cxx; path = "../../ios-device/framework/source/uielement/addonstoolbarmanager.cxx"; sourceTree = "<group>"; };
+		BEF2FCA9260BA4DF0005E937 /* cuiresmgr.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cuiresmgr.cxx; path = "../../ios-device/cui/source/factory/cuiresmgr.cxx"; sourceTree = "<group>"; };
+		BEF2FCAA260BA4DF0005E937 /* dlgfact.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = dlgfact.hxx; path = "../../ios-device/cui/source/factory/dlgfact.hxx"; sourceTree = "<group>"; };
+		BEF2FCAB260BA4DF0005E937 /* init.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = init.cxx; path = "../../ios-device/cui/source/factory/init.cxx"; sourceTree = "<group>"; };
+		BEF2FCAC260BA4DF0005E937 /* dlgfact.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = dlgfact.cxx; path = "../../ios-device/cui/source/factory/dlgfact.cxx"; sourceTree = "<group>"; };
+		BEF2FCAD260BA4DF0005E937 /* cuiexp.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cuiexp.cxx; path = "../../ios-device/cui/source/factory/cuiexp.cxx"; sourceTree = "<group>"; };
 		BEF755A723E8200A008A4BB2 /* drawdoc.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawdoc.cxx; path = "../../ios-device/sd/source/core/drawdoc.cxx"; sourceTree = "<group>"; };
 		BEF755A823E8200A008A4BB2 /* drawdoc3.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = drawdoc3.cxx; path = "../../ios-device/sd/source/core/drawdoc3.cxx"; sourceTree = "<group>"; };
 		BEF755A923E8200A008A4BB2 /* sdiocmpt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = sdiocmpt.cxx; path = "../../ios-device/sd/source/core/sdiocmpt.cxx"; sourceTree = "<group>"; };
@@ -2322,6 +2373,7 @@
 				BEA8CDC12199AC7A009FE17E /* comphelper */,
 				BE7D6A2023FA9BFB00C2E605 /* configmgr */,
 				BE80E43321B5629300859C97 /* cppuhelper */,
+				BEF2FCA7260BA4A70005E937 /* cui */,
 				BE34D182218CFC6C00815297 /* desktop */,
 				BEDB886725F8C4C000990028 /* editeng */,
 				BEDCC941246175A700FB02BD /* framework */,
@@ -3510,6 +3562,7 @@
 			children = (
 				BEDCC942246175C300FB02BD /* services */,
 				BEF7895D24C88A270013A906 /* uiconfiguration */,
+				BEF2FC77260B97950005E937 /* uielement */,
 			);
 			name = framework;
 			sourceTree = "<group>";
@@ -3601,6 +3654,79 @@
 				BEE5C08724C1D9BF001D794C /* WidgetDefinitionReader.cxx */,
 			);
 			name = gdi;
+			sourceTree = "<group>";
+		};
+		BEF2FC77260B97950005E937 /* uielement */ = {
+			isa = PBXGroup;
+			children = (
+				BEF2FCA5260B97BD0005E937 /* addonstoolbarmanager.cxx */,
+				BEF2FC83260B97BC0005E937 /* addonstoolbarwrapper.cxx */,
+				BEF2FC9E260B97BD0005E937 /* buttontoolbarcontroller.cxx */,
+				BEF2FC9C260B97BD0005E937 /* comboboxtoolbarcontroller.cxx */,
+				BEF2FC8B260B97BC0005E937 /* complextoolbarcontroller.cxx */,
+				BEF2FCA0260B97BD0005E937 /* controlmenucontroller.cxx */,
+				BEF2FC7C260B97BB0005E937 /* dropdownboxtoolbarcontroller.cxx */,
+				BEF2FC94260B97BD0005E937 /* edittoolbarcontroller.cxx */,
+				BEF2FCA4260B97BD0005E937 /* FixedImageToolbarController.cxx */,
+				BEF2FC98260B97BD0005E937 /* FixedTextToolbarController.cxx */,
+				BEF2FC87260B97BC0005E937 /* fontmenucontroller.cxx */,
+				BEF2FC7E260B97BC0005E937 /* fontsizemenucontroller.cxx */,
+				BEF2FC88260B97BC0005E937 /* footermenucontroller.cxx */,
+				BEF2FC99260B97BD0005E937 /* genericstatusbarcontroller.cxx */,
+				BEF2FC9A260B97BD0005E937 /* generictoolbarcontroller.cxx */,
+				BEF2FC8F260B97BC0005E937 /* headermenucontroller.cxx */,
+				BEF2FC7D260B97BC0005E937 /* imagebuttontoolbarcontroller.cxx */,
+				BEF2FC9B260B97BD0005E937 /* langselectionmenucontroller.cxx */,
+				BEF2FC89260B97BC0005E937 /* langselectionstatusbarcontroller.cxx */,
+				BEF2FCA1260B97BD0005E937 /* macrosmenucontroller.cxx */,
+				BEF2FC97260B97BD0005E937 /* menubarmanager.cxx */,
+				BEF2FC79260B97BB0005E937 /* menubarmerger.cxx */,
+				BEF2FC78260B97BB0005E937 /* menubarwrapper.cxx */,
+				BEF2FCA2260B97BD0005E937 /* newmenucontroller.cxx */,
+				BEF2FC8C260B97BC0005E937 /* objectmenucontroller.cxx */,
+				BEF2FC8E260B97BC0005E937 /* popuptoolbarcontroller.cxx */,
+				BEF2FC92260B97BC0005E937 /* progressbarwrapper.cxx */,
+				BEF2FCA3260B97BD0005E937 /* recentfilesmenucontroller.cxx */,
+				BEF2FC86260B97BC0005E937 /* resourcemenucontroller.cxx */,
+				BEF2FC96260B97BD0005E937 /* spinfieldtoolbarcontroller.cxx */,
+				BEF2FC7A260B97BB0005E937 /* statusbar.cxx */,
+				BEF2FC85260B97BC0005E937 /* statusbaritem.cxx */,
+				BEF2FC7B260B97BB0005E937 /* statusbarmanager.cxx */,
+				BEF2FC95260B97BD0005E937 /* statusbarmerger.cxx */,
+				BEF2FC9F260B97BD0005E937 /* statusbarwrapper.cxx */,
+				BEF2FC9D260B97BD0005E937 /* statusindicatorinterfacewrapper.cxx */,
+				BEF2FC81260B97BC0005E937 /* styletoolbarcontroller.cxx */,
+				BEF2FC7F260B97BC0005E937 /* subtoolbarcontroller.cxx */,
+				BEF2FC8D260B97BC0005E937 /* thesaurusmenucontroller.cxx */,
+				BEF2FC80260B97BC0005E937 /* togglebuttontoolbarcontroller.cxx */,
+				BEF2FC8A260B97BC0005E937 /* toolbarmanager.cxx */,
+				BEF2FC90260B97BC0005E937 /* toolbarmerger.cxx */,
+				BEF2FC84260B97BC0005E937 /* toolbarmodemenucontroller.cxx */,
+				BEF2FC82260B97BC0005E937 /* toolbarsmenucontroller.cxx */,
+				BEF2FC91260B97BC0005E937 /* toolbarwrapper.cxx */,
+				BEF2FC93260B97BD0005E937 /* uicommanddescription.cxx */,
+			);
+			name = uielement;
+			sourceTree = "<group>";
+		};
+		BEF2FCA7260BA4A70005E937 /* cui */ = {
+			isa = PBXGroup;
+			children = (
+				BEF2FCA8260BA4BA0005E937 /* factory */,
+			);
+			name = cui;
+			sourceTree = "<group>";
+		};
+		BEF2FCA8260BA4BA0005E937 /* factory */ = {
+			isa = PBXGroup;
+			children = (
+				BEF2FCAD260BA4DF0005E937 /* cuiexp.cxx */,
+				BEF2FCA9260BA4DF0005E937 /* cuiresmgr.cxx */,
+				BEF2FCAC260BA4DF0005E937 /* dlgfact.cxx */,
+				BEF2FCAA260BA4DF0005E937 /* dlgfact.hxx */,
+				BEF2FCAB260BA4DF0005E937 /* init.cxx */,
+			);
+			name = factory;
 			sourceTree = "<group>";
 		};
 		BEF755A623E81FEB008A4BB2 /* core */ = {
