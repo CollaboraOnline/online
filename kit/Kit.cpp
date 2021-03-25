@@ -2168,7 +2168,7 @@ void lokit_main(
 #if !MOBILEAPP
 
 #ifndef FUZZER
-    SigUtil::setFatalSignals();
+    SigUtil::setFatalSignals("kit startup of " LOOLWSD_VERSION " " LOOLWSD_VERSION_HASH);
     SigUtil::setTerminationSignals();
 #endif
 
@@ -2452,6 +2452,8 @@ void lokit_main(
             std::string versionString(versionInfo);
             if (displayVersion)
                 std::cout << "office version details: " << versionString << std::endl;
+
+            SigUtil::setVersionInfo(versionString);
 
             // Add some parameters we want to pass to the client. Could not figure out how to get
             // the configuration parameters from LOOLWSD.cpp's initialize() or loolwsd.xml here, so

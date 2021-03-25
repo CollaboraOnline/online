@@ -519,7 +519,7 @@ int main(int argc, char** argv)
     }
 
 #ifndef FUZZER
-    SigUtil::setFatalSignals();
+    SigUtil::setFatalSignals("forkit startup of " LOOLWSD_VERSION " " LOOLWSD_VERSION_HASH);
     SigUtil::setTerminationSignals();
 #endif
 
