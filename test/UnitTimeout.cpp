@@ -7,6 +7,8 @@
 
 #include <config.h>
 
+#include <chrono>
+
 #include <cassert>
 #include <sysexits.h>
 
