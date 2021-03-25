@@ -1051,6 +1051,29 @@ inline void deleteAll(const std::shared_ptr<http::WebSocketSession>& ws,
     }
 }
 
+inline std::string getAllText(const std::shared_ptr<http::WebSocketSession>& socket,
+                              const std::string& testname,
+                              const std::string& expected = std::string(),
+                              int retry = COMMAND_RETRY_COUNT)
+{
+    static const std::string prefix = "textselectioncontent: ";
+
+    for (int i = 0; i < retry; ++i)
+    {
+        selectAll(socket, testname);
+
+        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
+        std::string text = getResponseString(socket, prefix, testname);
+        if (!text.empty())
+        {
+            if (expected.empty() || (prefix + expected) == text)
+                return text;
+        }
+    }
+
+    return std::string();
+}
+
 inline std::string getAllText(const std::shared_ptr<LOOLWebSocket>& socket,
                               const std::string& testname,
                               const std::string& expected = std::string(),
@@ -1063,7 +1086,7 @@ inline std::string getAllText(const std::shared_ptr<LOOLWebSocket>& socket,
         selectAll(socket, testname);
 
         sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        const std::string text = getResponseString(socket, prefix, testname);
+        std::string text = getResponseString(socket, prefix, testname);
         if (!text.empty())
         {
             if (expected.empty() || (prefix + expected) == text)
