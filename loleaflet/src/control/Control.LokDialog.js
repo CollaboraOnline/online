@@ -1553,6 +1553,7 @@ L.Control.LokDialog = L.Control.extend({
 					}
 				}
 				var correctWidth = container.clientWidth - deckOffset;
+				that._map._docLayer._syncTileContainerSize();
 				// resize the input bar to the correct size
 				// the input bar is rendered only if when the size is the expected one
 				if (that._calcInputBar.width !== correctWidth) {
