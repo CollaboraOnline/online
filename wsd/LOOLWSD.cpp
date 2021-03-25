@@ -3914,7 +3914,7 @@ int LOOLWSD::innerMain()
 {
 #if !defined FUZZER && !MOBILEAPP
     SigUtil::setUserSignals();
-    SigUtil::setFatalSignals();
+    SigUtil::setFatalSignals("wsd " LOOLWSD_VERSION " " LOOLWSD_VERSION_HASH);
     SigUtil::setTerminationSignals();
 #endif
 
