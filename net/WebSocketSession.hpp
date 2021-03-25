@@ -78,56 +78,31 @@ public:
         return std::shared_ptr<WebSocketSession>(new WebSocketSession(host, protocol, port));
     }
 
-    /// Create a new unencrypted HTTP WebSocketSession to the given host.
-    /// @port <= 0 will default to the http default port.
-    static std::shared_ptr<WebSocketSession> createHttp(const std::string& host, int port = 0)
-    {
-        return create(host, Protocol::HttpUnencrypted, port);
-    }
-
-    /// Create a new SSL HTTP WebSocketSession to the given host.
-    /// @port <= 0 will default to the https default port.
-    static std::shared_ptr<WebSocketSession> createHttpSsl(const std::string& host, int port = 0)
-    {
-        return create(host, Protocol::HttpSsl, port);
-    }
-
     /// Create a new HTTP WebSocketSession to the given URI.
     /// The @uri must include the scheme, e.g. https://domain.com:9980
     static std::shared_ptr<WebSocketSession> create(const std::string& uri)
     {
-        const std::string lowerUri = Util::toLower(uri);
-        if (!Util::startsWith(lowerUri, "http"))
+        std::string scheme;
+        std::string host;
+        std::string port;
+        if (!net::parseUri(uri, scheme, host, port))
         {
-            LOG_ERR("Unsupported scheme in URI: " << uri);
+            LOG_ERR("Invalid URI while creating WebSocketSession: " << uri);
             return nullptr;
         }
 
-        std::string hostPort;
-        bool secure = false;
-        if (Util::startsWith(uri, "http://"))
+        const std::string lowerScheme = Util::toLower(scheme);
+        if (!Util::startsWith(lowerScheme, "http") && !Util::startsWith(lowerScheme, "ws"))
         {
-            hostPort = uri.substr(7);
-        }
-        else if (Util::startsWith(uri, "https://"))
-        {
-            hostPort = uri.substr(8);
-            secure = true;
-        }
-        else
-        {
-            LOG_ERR("Invalid URI: " << uri);
+            LOG_ERR("Unsupported scheme in URI while creating WebSocketSession: " << uri);
             return nullptr;
         }
 
-        int port = 0;
-        const auto tokens = Util::tokenize(hostPort, ':');
-        if (tokens.size() > 1)
-        {
-            port = std::stoi(tokens[1]);
-        }
+        const bool secure
+            = Util::startsWith(lowerScheme, "https") || Util::startsWith(lowerScheme, "wss");
 
-        return create(tokens[0], secure ? Protocol::HttpSsl : Protocol::HttpUnencrypted, port);
+        const int portInt = port.empty() ? 0 : std::stoi(port);
+        return create(host, secure ? Protocol::HttpSsl : Protocol::HttpUnencrypted, portInt);
     }
 
     /// Returns the given protocol's default port.
