@@ -69,6 +69,14 @@ private:
     }
 
 public:
+
+    /// Destroy WebSocketSession.
+    /// Note: must never be called with the owning poll thread still active.
+    ~WebSocketSession()
+    {
+        shutdown();
+    }
+
     /// Create a new HTTP WebSocketSession to the given host.
     /// The port defaults to the protocol's default port.
     static std::shared_ptr<WebSocketSession> create(const std::string& host, Protocol protocol,
@@ -103,6 +111,20 @@ public:
 
         const int portInt = port.empty() ? 0 : std::stoi(port);
         return create(host, secure ? Protocol::HttpSsl : Protocol::HttpUnencrypted, portInt);
+    }
+
+    /// Create a WebSocketSession and make a request to given @url.
+    static std::shared_ptr<WebSocketSession> create(SocketPoll& socketPoll, const std::string& uri,
+                                                    const std::string& url)
+    {
+        auto session = create(uri);
+        if (session)
+        {
+            http::Request req(url);
+            session->asyncRequest(req, socketPoll);
+        }
+
+        return session;
     }
 
     /// Returns the given protocol's default port.
@@ -173,6 +195,14 @@ private:
         const auto header = LOOLProtocol::getFirstLine(message);
         LOG_DBG("Evaluating message: " << header);
         return LOOLProtocol::matchPrefix(prefix, header);
+    }
+
+    using WebSocketHandler::shutdown;
+
+    void shutdown()
+    {
+        LOG_TRC("shutdown");
+        shutdown(true, "Shutting down");
     }
 
 private:
