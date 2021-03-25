@@ -69,26 +69,26 @@ public:
         Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
         Poco::Net::SSLManager::instance().initializeClient(nullptr, invalidCertHandler, sslContext);
 #endif
+        _socketPoll.startThread();
     }
 
-#if ENABLE_SSL
     ~HTTPWSTest()
     {
+        _socketPoll.joinThread();
+#if ENABLE_SSL
         Poco::Net::uninitializeSSL();
-    }
 #endif
+    }
 
     void setUp()
     {
         resetTestStartTime();
         testCountHowManyLoolkits();
         resetTestStartTime();
-        _socketPoll.startThread();
     }
 
     void tearDown()
     {
-        _socketPoll.joinThread();
         resetTestStartTime();
         testNoExtraLoolKitsLeft();
         resetTestStartTime();
@@ -97,7 +97,7 @@ public:
 
 void HTTPWSTest::testSaveOnDisconnect()
 {
-    const char* testname = "saveOnDisconnect ";
+    const std::string testname = "saveOnDisconnect- ";
 
     const std::string text = helpers::genRandomString(40);
     TST_LOG("Test string: [" << text << "].");
@@ -108,31 +108,39 @@ void HTTPWSTest::testSaveOnDisconnect()
     int kitcount = -1;
     try
     {
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+        std::shared_ptr<http::WebSocketSession> socket1
+            = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "1 ");
+        std::shared_ptr<http::WebSocketSession> socket2
+            = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "2 ");
 
-        std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, testname);
         sendTextFrame(socket2, "userinactive");
 
-        deleteAll(socket, testname);
-        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
+        deleteAll(socket1, testname);
+        sendTextFrame(socket1, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
 
         TST_LOG("Validating what we sent before disconnecting.");
 
         // Check if the document contains the pasted text.
-        const std::string selection = getAllText(socket, testname);
+        const std::string selection = getAllText(socket1, testname);
         LOK_ASSERT_EQUAL("textselectioncontent: " + text, selection);
 
         // Closing connection too fast might not flush buffers.
         // Often nothing more than the SelectAll reaches the server before
         // the socket is closed, when the doc is not even modified yet.
-        getResponseMessage(socket, "statechanged", testname);
+        getResponseMessage(socket1, "statechanged", testname);
 
         kitcount = getLoolKitProcessCount();
 
         // Shutdown abruptly.
         TST_LOG("Closing connection after pasting.");
-        socket->shutdown();
-        socket2->shutdown();
+
+        socket1->asyncShutdown(_socketPoll);
+        socket2->asyncShutdown(_socketPoll);
+
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                           socket1->waitForDisconnection(std::chrono::seconds(5)));
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
+                           socket2->waitForDisconnection(std::chrono::seconds(5)));
     }
     catch (const Poco::Exception& exc)
     {
@@ -145,7 +153,8 @@ void HTTPWSTest::testSaveOnDisconnect()
     try
     {
         // Load the same document and check that the last changes (pasted text) is saved.
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+        std::shared_ptr<http::WebSocketSession> socket
+            = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "3 ");
 
         // Should have no new instances.
         LOK_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
@@ -153,6 +162,11 @@ void HTTPWSTest::testSaveOnDisconnect()
         // Check if the document contains the pasted text.
         const std::string selection = getAllText(socket, testname, text);
         LOK_ASSERT_EQUAL("textselectioncontent: " + text, selection);
+
+        socket->asyncShutdown(_socketPoll);
+
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 3",
+                           socket->waitForDisconnection(std::chrono::seconds(5)));
     }
     catch (const Poco::Exception& exc)
     {
@@ -162,7 +176,7 @@ void HTTPWSTest::testSaveOnDisconnect()
 
 void HTTPWSTest::testSavePassiveOnDisconnect()
 {
-    const char* testname = "savePassiveOnDisconnect ";
+    const std::string testname = "savePassiveOnDisconnect- ";
 
     const std::string text = helpers::genRandomString(40);
     TST_LOG("Test string: [" << text << "].");
@@ -173,32 +187,38 @@ void HTTPWSTest::testSavePassiveOnDisconnect()
     int kitcount = -1;
     try
     {
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
-        getResponseMessage(socket, "textselection", testname);
+        std::shared_ptr<http::WebSocketSession> socket1
+            = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "1 ");
+        getResponseMessage(socket1, "textselection", testname);
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::shared_ptr<LOOLWebSocket> socket2 = connectLOKit(_uri, request, _response, testname);
+        std::shared_ptr<http::WebSocketSession> socket2
+            = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "2 ");
 
-        deleteAll(socket, testname);
+        deleteAll(socket1, testname);
 
-        sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
-        getResponseMessage(socket, "textselection:", testname);
+        sendTextFrame(socket1, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
+        getResponseMessage(socket1, "textselection:", testname);
 
         // Check if the document contains the pasted text.
-        const std::string selection = getAllText(socket, testname);
+        const std::string selection = getAllText(socket1, testname);
         LOK_ASSERT_EQUAL("textselectioncontent: " + text, selection);
 
         // Closing connection too fast might not flush buffers.
         // Often nothing more than the SelectAll reaches the server before
         // the socket is closed, when the doc is not even modified yet.
-        getResponseMessage(socket, "statechanged", testname);
+        getResponseMessage(socket1, "statechanged", testname);
 
         kitcount = getLoolKitProcessCount();
 
         // Shutdown abruptly.
         TST_LOG("Closing connection after pasting.");
-        socket->shutdown(); // Should trigger saving.
-        socket2->shutdown();
+        socket1->asyncShutdown(_socketPoll); // Should trigger saving.
+        socket2->asyncShutdown(_socketPoll);
+
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                           socket1->waitForDisconnection(std::chrono::seconds(5)));
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
+                           socket2->waitForDisconnection(std::chrono::seconds(5)));
     }
     catch (const Poco::Exception& exc)
     {
@@ -211,7 +231,8 @@ void HTTPWSTest::testSavePassiveOnDisconnect()
     try
     {
         // Load the same document and check that the last changes (pasted text) is saved.
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+        std::shared_ptr<http::WebSocketSession> socket
+            = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "3 ");
         getResponseMessage(socket, "textselection", testname);
 
         // Should have no new instances.
@@ -220,6 +241,11 @@ void HTTPWSTest::testSavePassiveOnDisconnect()
         // Check if the document contains the pasted text.
         const std::string selection = getAllText(socket, testname);
         LOK_ASSERT_EQUAL("textselectioncontent: " + text, selection);
+
+        socket->asyncShutdown(_socketPoll);
+
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 3",
+                           socket->waitForDisconnection(std::chrono::seconds(5)));
     }
     catch (const Poco::Exception& exc)
     {
@@ -235,7 +261,8 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         std::string documentPath, documentURL;
         getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+        std::shared_ptr<http::WebSocketSession> socket
+            = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
         deleteAll(socket, testname);
         sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\naaa bbb ccc", testname);
@@ -249,11 +276,13 @@ void HTTPWSTest::testReloadWhileDisconnecting()
 
         // Shutdown abruptly.
         TST_LOG("Closing connection after pasting.");
-        socket->shutdown();
+        socket->asyncShutdown(_socketPoll);
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                           socket->waitForDisconnection(std::chrono::seconds(5)));
 
         // Load the same document and check that the last changes (pasted text) is saved.
         TST_LOG("Loading again.");
-        socket = loadDocAndGetSocket(_uri, documentURL, testname);
+        socket = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
         // Should have no new instances.
         LOK_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
@@ -262,6 +291,11 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         const std::string expected = "aaa bbb ccc";
         const std::string selection = getAllText(socket, testname, expected);
         LOK_ASSERT_EQUAL(std::string("textselectioncontent: ") + expected, selection);
+
+        socket->asyncShutdown(_socketPoll);
+
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                           socket->waitForDisconnection(std::chrono::seconds(5)));
     }
     catch (const Poco::Exception& exc)
     {
@@ -322,13 +356,13 @@ void HTTPWSTest::testInactiveClient()
                 });
 
         TST_LOG("Second client finished.");
-        socket1->asyncShutdown(_socketPoll);
         socket2->asyncShutdown(_socketPoll);
+        socket1->asyncShutdown(_socketPoll);
 
-        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
-                           socket1->waitForDisconnection(std::chrono::seconds(5)));
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
                            socket2->waitForDisconnection(std::chrono::seconds(5)));
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                           socket1->waitForDisconnection(std::chrono::seconds(5)));
     }
     catch (const Poco::Exception& exc)
     {
@@ -346,9 +380,10 @@ void HTTPWSTest::testViewInfoMsg()
     std::string docURL;
     getDocumentPathAndURL("hello.odt", docPath, docURL, testname);
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
-    std::shared_ptr<LOOLWebSocket> socket0 = connectLOKit(_uri, request, _response, testname);
-    std::shared_ptr<LOOLWebSocket> socket1 = connectLOKit(_uri, request, _response, testname);
+    std::shared_ptr<http::WebSocketSession> socket0
+        = connectLOKit(_socketPoll, _uri, docURL, testname + "0 ");
+    std::shared_ptr<http::WebSocketSession> socket1
+        = connectLOKit(_socketPoll, _uri, docURL, testname + "1 ");
 
     std::string response;
     int part, parts, width, height;
@@ -404,6 +439,14 @@ void HTTPWSTest::testViewInfoMsg()
         TST_LOG("Waiting for [viewinfo:] from the first view, again");
         const auto response1 = getResponseString(socket0, "viewinfo: ", testname + "0 ");
         LOK_ASSERT_EQUAL(response, response1);
+
+        socket1->asyncShutdown(_socketPoll);
+        socket0->asyncShutdown(_socketPoll);
+
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                           socket1->waitForDisconnection(std::chrono::seconds(5)));
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 0",
+                           socket0->waitForDisconnection(std::chrono::seconds(5)));
     }
     catch(const Poco::Exception& exc)
     {
@@ -423,9 +466,10 @@ void HTTPWSTest::testUndoConflict()
 
     getDocumentPathAndURL("empty.odt", docPath, docURL, testname);
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, docURL);
-    std::shared_ptr<LOOLWebSocket> socket0 = connectLOKit(_uri, request, _response, testname);
-    std::shared_ptr<LOOLWebSocket> socket1 = connectLOKit(_uri, request, _response, testname);
+    std::shared_ptr<http::WebSocketSession> socket0
+        = connectLOKit(_socketPoll, _uri, docURL, testname + "0 ");
+    std::shared_ptr<http::WebSocketSession> socket1
+        = connectLOKit(_socketPoll, _uri, docURL, testname + "1 ");
 
     std::string response;
     try
@@ -462,6 +506,15 @@ void HTTPWSTest::testUndoConflict()
         LOK_ASSERT_EQUAL(std::string("long"), resultObj->get("type").toString());
         LOK_ASSERT(Poco::strToInt(resultObj->get("value").toString(), conflict, 10));
         LOK_ASSERT(conflict > 0); /*UNDO_CONFLICT*/
+
+        socket1->asyncShutdown(_socketPoll);
+        socket0->asyncShutdown(_socketPoll);
+
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                           socket1->waitForDisconnection(std::chrono::seconds(5)));
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 0",
+                           socket0->waitForDisconnection(std::chrono::seconds(5)));
+
     }
     catch(const Poco::Exception& exc)
     {
