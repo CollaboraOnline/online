@@ -56,14 +56,15 @@ class Cursor {
 		this.map.getCursorOverlayContainer().appendChild(this.container);
 		this.visible = true;
 		this.domAttached = true;
+		this.onFocusBlur(new FocusEvent('focus'));
 		this.update();
 		if (this.map._docLayer.isCalc())
 			this.map.on('splitposchanged move', this.update, this);
 		else
 			this.map.on('move', this.update, this);
 
-		document.addEventListener('blur', this.onFocusBlur.bind(this));
-		document.addEventListener('focus', this.onFocusBlur.bind(this));
+		window.addEventListener('blur', this.onFocusBlur.bind(this));
+		window.addEventListener('focus', this.onFocusBlur.bind(this));
 	}
 
 	setMouseCursor() {
@@ -90,8 +91,8 @@ class Cursor {
 		this.visible = false;
 		this.domAttached = false;
 
-		document.removeEventListener('blur', this.onFocusBlur.bind(this));
-		document.removeEventListener('focus', this.onFocusBlur.bind(this));
+		window.removeEventListener('blur', this.onFocusBlur.bind(this));
+		window.removeEventListener('focus', this.onFocusBlur.bind(this));
 	}
 
 	isDomAttached(): boolean {
