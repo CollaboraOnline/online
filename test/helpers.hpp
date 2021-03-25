@@ -467,6 +467,8 @@ connectLOKit(const Poco::URI& uri,
         try
         {
             std::unique_ptr<Poco::Net::HTTPClientSession> session(createSession(uri));
+            TST_LOG("Connection to " << uri.toString() << " is "
+                                     << (session->secure() ? "secure" : "plain"));
             auto ws = std::make_shared<LOOLWebSocket>(*session, request, response);
 
             const char* expected_response = "statusindicator: ready";
