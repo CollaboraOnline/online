@@ -7,6 +7,8 @@
 
 #include <config.h>
 
+#include "Protocol.hpp"
+
 #include <memory>
 #include <string>
 
@@ -16,6 +18,7 @@
 #include <Unit.hpp>
 #include <Util.hpp>
 #include <helpers.hpp>
+#include <net/WebSocketSession.hpp>
 
 class LOOLWebSocket;
 
@@ -41,10 +44,14 @@ int UnitLoadTorture::loadTorture(const std::string& testname, const std::string&
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL(docName, documentPath, documentURL, testname);
 
+    TST_LOG("Starting test on " << documentURL << ' ' << documentPath);
+
     std::atomic<int> sum_view_ids;
     sum_view_ids = 0;
     std::atomic<int> num_of_views(0);
     std::atomic<int> num_to_load(thread_count);
+    SocketPoll poll("WebSocketPoll");
+    poll.startThread();
 
     std::vector<std::thread> threads;
     for (size_t i = 0; i < thread_count; ++i)
@@ -58,14 +65,17 @@ int UnitLoadTorture::loadTorture(const std::string& testname, const std::string&
             try
             {
                 // Load a document and wait for the status.
-                Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-                Poco::Net::HTTPResponse response;
-                std::shared_ptr<LOOLWebSocket> socket = helpers::connectLOKit(
-                    Poco::URI(helpers::getTestServerURI()), request, response, testname);
-                helpers::sendTextFrame(socket, "load url=" + documentURL, testname);
+                auto wsSession = http::WebSocketSession::create(helpers::getTestServerURI());
+                http::Request req(documentURL);
+                wsSession->asyncRequest(req, poll);
+
+                wsSession->sendMessage("load url=" + documentURL);
 
                 // 20s is double of the default.
-                const auto status = helpers::assertResponseString(socket, "status:", testname, 20000);
+                std::vector<char> message
+                    = wsSession->waitForMessage("status:", std::chrono::seconds(20), testname + id + ' ');
+                const std::string status = LOOLProtocol::getFirstLine(message);
+
                 int viewid = -1;
                 LOOLProtocol::getTokenIntegerFromMessage(status, "viewid", viewid);
                 sum_view_ids += viewid;
