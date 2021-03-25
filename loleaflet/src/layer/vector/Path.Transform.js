@@ -667,10 +667,14 @@ L.Handler.PathTransform = L.Handler.extend({
 	* Poly Handles(Lines, Connectors..), id = 9
 	*/
 	_createPolyHandlers: function() {
+		var map = this._map;
 		var handleList = this.options.handles['poly']['9'];
 		this._handlers = [];
 		this._polyEdges = [];
 		for (var i = 0; i < handleList.length; ++i) {
+			var point = new L.Point(handleList[i].point.x,handleList[i].point.y);
+			point = map._docLayer._convertCalcTileTwips(point);
+			handleList[i].convertedPoint = point;
 			this._handlers.push(
 				this._createPolyHandler(handleList[i], i)
 					.addTo(this._handlersGroup));
@@ -830,7 +834,9 @@ L.Handler.PathTransform = L.Handler.extend({
 		var map = this._map;
 		var handle = this.options.handles['custom']['22'][0];
 		this._customHandle = handle;
-		this._customHandlePosition = map._docLayer._twipsToLatLng(handle.point, this._map.getZoom());
+		var point = new L.Point(handle.point.x, handle.point.y);
+		point = map._docLayer._convertCalcTileTwips(point);
+		this._customHandlePosition = map._docLayer._twipsToLatLng(point, this._map.getZoom());
 		var CustomHandleClass = this.options.customHandleClass;
 		var options = this.options.handlerOptions;
 		this._customMarker = new CustomHandleClass(this._customHandlePosition,
@@ -1188,7 +1194,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		if (options.cursor != 10 && options.cursor != 8) {
 			this._polyEdges.push(index);
 		}
-		var marker = new HandleClass(this._map._docLayer._twipsToLatLng(handle.point, this._map.getZoom()),
+		var marker = new HandleClass(this._map._docLayer._twipsToLatLng(handle.convertedPoint, this._map.getZoom()),
 			L.Util.extend({}, this.options.handlerOptions, options)
 		);
 
