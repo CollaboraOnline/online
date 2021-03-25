@@ -433,8 +433,6 @@ namespace RenderTiles
 
     static void generateBmpHeader(char *buffer, int width, int height)
     {
-        assert(width%4 == 0);
-
         BITMAPFILEHEADER *bf = (BITMAPFILEHEADER*)buffer;
         bf->bfType = ('B' | ('M' << 8));
         bf->bfSize = bmpFileSize(width, height);
