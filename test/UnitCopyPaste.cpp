@@ -7,8 +7,9 @@
 
 // Test various copy/paste pieces ...
 
-#include "lokassert.hpp"
 #include <config.h>
+
+#include "lokassert.hpp"
 
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
