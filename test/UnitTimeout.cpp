@@ -5,8 +5,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <chrono>
 #include <config.h>
+
+#include <chrono>
 
 #include <cassert>
 #include <sysexits.h>
