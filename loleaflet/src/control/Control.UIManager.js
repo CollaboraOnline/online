@@ -438,6 +438,8 @@ L.Control.UIManager = L.Control.extend({
 		$('#toolbar-up').css('display', 'none');
 
 		$('#document-container').addClass('tabs-collapsed');
+
+		this.map._docLayer._syncTileContainerSize();
 	},
 
 	extendNotebookbar: function() {
@@ -451,6 +453,8 @@ L.Control.UIManager = L.Control.extend({
 		$('#toolbar-up').css('display', '');
 
 		$('#document-container').removeClass('tabs-collapsed');
+
+		this.map._docLayer._syncTileContainerSize();
 	},
 
 	isNotebookbarCollapsed: function() {
