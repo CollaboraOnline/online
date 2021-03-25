@@ -225,6 +225,7 @@ namespace SigUtil
         sigaction(SIGHUP, &action, nullptr);
     }
 
+    static char *VersionInfo = nullptr;
     static char FatalGdbString[256] = { '\0' };
 
     static
@@ -264,6 +265,11 @@ namespace SigUtil
         Log::signalLogPrefix();
         Log::signalLog(" Backtrace ");
         Log::signalLogNumber(getpid());
+        if (VersionInfo)
+        {
+            Log::signalLog(" - ");
+            Log::signalLog(VersionInfo);
+        }
         Log::signalLog(":\n");
 
         const int maxSlots = 50;
@@ -296,9 +302,18 @@ namespace SigUtil
         }
     }
 
-    void setFatalSignals()
+    void setVersionInfo(const std::string &versionInfo)
+    {
+        if (VersionInfo)
+            free (VersionInfo);
+        VersionInfo = strdup(versionInfo.c_str());
+    }
+
+    void setFatalSignals(const std::string &versionInfo)
     {
         struct sigaction action;
+
+        setVersionInfo(versionInfo);
 
         sigemptyset(&action.sa_mask);
         action.sa_flags = 0;
