@@ -383,6 +383,11 @@ class ScrollSection {
 			this.sectionProperties.mouseIsOnVerticalScrollBar = false;
 			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
 			this.fadeOutVerticalScrollBar();
+
+			// just in case if we have blinking cursor visible
+			// we need to change cursor from default style
+			if (this.map._docLayer._cursorMarker)
+				this.map._docLayer._cursorMarker.setMouseCursor();
 		}
 	}
 
@@ -404,6 +409,11 @@ class ScrollSection {
 			this.sectionProperties.mouseIsOnHorizontalScrollBar = false;
 			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
 			this.fadeOutHorizontalScrollBar();
+
+			// just in case if we have blinking cursor visible
+			// we need to change cursor from default style
+			if (this.map._docLayer._cursorMarker)
+				this.map._docLayer._cursorMarker.setMouseCursor();
 		}
 	}
 
