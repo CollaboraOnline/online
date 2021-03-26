@@ -31,7 +31,6 @@
 
 .document-title {
 	height: 30px;
-	min-width: 84px;
 	white-space: nowrap;
 	display: flex;
 	align-items: center;

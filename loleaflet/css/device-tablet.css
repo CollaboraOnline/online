@@ -37,6 +37,14 @@
 }
 .main-nav.hasnotebookbar {
 	overflow: visible; /*make sure #Menubar's contents are visible*/
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	flex-direction: row;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
 }
 .hasnotebookbar{
 	min-width: 808px; /*set a minimum so the logo fits*/
@@ -92,13 +100,17 @@
 	flex-wrap: nowrap;
 	word-wrap: nowrap;
 	max-width: 60%;
-	margin: 0px auto;
 	background: transparent no-repeat;
 	background-image: -webkit-radial-gradient(0 50%, farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0)), -webkit-radial-gradient(100% 50%, farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0));
 	background-image: -o-radial-gradient(0 50%, farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0)), -o-radial-gradient(100% 50%, farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0));
 	background-image: radial-gradient(farthest-side at 0 50%, rgba(0,0,0,0.2), rgba(0,0,0,0)), radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,0.2), rgba(0,0,0,0));
 	background-position: 0 0, 100% 0;
 	background-size: 1rem 100%;
+	height: 24px;
+}
+
+.main-nav.readonly.hasnotebookbar .notebookbar-tabs-container {
+	display: none;
 }
 
 .notebookbar-tabs-container:after,
@@ -128,4 +140,23 @@
 	background: -webkit-linear-gradient(left,rgba(255,255,255,0),var(--gray-light-bg-color) 50%,var(--gray-light-bg-color));
 	background: -o-linear-gradient(left,rgba(255,255,255,0),var(--gray-light-bg-color) 50%,var(--gray-light-bg-color));
 	background: linear-gradient(to right,rgba(255,255,255,0),var(--gray-light-bg-color) 50%,var(--gray-light-bg-color));
+}
+
+.hasnotebookbar #document-titlebar {
+	position: static;
+	display: inline-flex;
+	margin-left: 4px;
+}
+
+.main-nav.readonly.hasnotebookbar #document-titlebar {
+	width: auto;
+}
+
+.main-nav.readonly.hasnotebookbar #document-name-input {
+	min-width: 100%;
+}
+
+.main-nav.readonly.hasnotebookbar #document-title-pencil {
+	min-width: 24px;
+	margin: 0;
 }
