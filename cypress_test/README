@@ -78,8 +78,8 @@ Or open the test suite in the interactive test runner:
 
     make run-mobile spec=writer/apply_font_spec.js
 
-Openning interactive test runner
---------------------------------
+Opening interactive test runner
+-------------------------------
 
 Cypress has an interactive test runner application which
 runs the test in the browser. So you can see the result of
@@ -212,7 +212,7 @@ Other useful flags
 
 You can enable video recording during running a test suite in headless mode.
 So you can check visually what happens in the browser during the test.
-Unfortunatelly this does not work for multi-user tests.
+Unfortunately this does not work for multi-user tests.
 
     ENABLE_VIDEO_REC="1" make check-mobile spec=writer/apply_font_spec.js
 
@@ -247,8 +247,8 @@ is called by the following command:
 
     make run-cov
 
-The output is put under cypress_test/covarage folder.
-Open the cypress_test/covarage/lcov-report/index.html
+The output is put under cypress_test/coverage folder.
+Open the cypress_test/coverage/lcov-report/index.html
 file to get the summary report.
 
 The make command above touches the source files under
