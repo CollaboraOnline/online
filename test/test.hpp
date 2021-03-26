@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <vector>
+#include <set>
 
 /// Are we running inside WSD or by ourselves.
 bool isStandalone();
@@ -18,15 +18,15 @@ bool runClientTests(bool standalone, bool verbose);
 // ---- Abstraction for standalone vs. WSD ----
 
 /// Get the list of all kit PIDs
-std::vector<int> getKitPids();
+std::set<pid_t> getKitPids();
 
 /// Get the list of spare (unused) kit PIDs
-std::vector<int> getSpareKitPids();
+std::set<pid_t> getSpareKitPids();
 /// Get the list of doc (loaded) kit PIDs
-std::vector<int> getDocKitPids();
+std::set<pid_t> getDocKitPids();
 
 /// Get the PID of the forkit
-std::vector<int> getForKitPids();
+std::set<pid_t> getForKitPids();
 
 /// Which port should we connect to get to WSD.
 int getClientPort();

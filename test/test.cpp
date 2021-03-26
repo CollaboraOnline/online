@@ -280,17 +280,17 @@ bool runClientTests(bool standalone, bool verbose)
 // Standalone tests don't really use WSD
 #ifndef STANDALONE_CPPUNIT
 
-std::vector<int> getKitPids()
+std::set<pid_t> getKitPids()
 {
     return LOOLWSD::getKitPids();
 }
 
 /// Get the PID of the forkit
-std::vector<int> getForKitPids()
+std::set<pid_t> getForKitPids()
 {
-    std::vector<int> pids;
+    std::set<pid_t> pids;
     if (LOOLWSD::ForKitProcId >= 0)
-        pids.push_back(LOOLWSD::ForKitProcId);
+        pids.emplace(LOOLWSD::ForKitProcId);
     return pids;
 }
 
