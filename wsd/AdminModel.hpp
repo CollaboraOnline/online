@@ -65,6 +65,8 @@ struct DocCleanupSettings
     size_t getLimitDirtyMem() const { return _limitDirtyMem; }
     void setLimitCpu(size_t limitCpu) { _limitCpu = limitCpu; }
     size_t getLimitCpu() const { return _limitCpu; }
+    void setLostKitGracePeriod(size_t lostKitGracePeriod) { _lostKitGracePeriod = lostKitGracePeriod; }
+    size_t getLostKitGracePeriod() { return _lostKitGracePeriod; }
 
 private:
     bool _enable;
@@ -73,6 +75,7 @@ private:
     size_t _idleTime;
     size_t _limitDirtyMem;
     size_t _limitCpu;
+    size_t _lostKitGracePeriod;
 };
 
 struct DocProcSettings
@@ -373,6 +376,7 @@ public:
     void setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds wopiUploadDuration);
     void addSegFaultCount(unsigned segFaultCount);
     void setForKitPid(pid_t pid) { _forKitPid = pid; }
+    void addLostKitsTerminated(unsigned lostKitsTerminated);
 
     void getMetrics(std::ostringstream &oss);
 
@@ -384,6 +388,9 @@ public:
     void setDefDocProcSettings(const DocProcSettings& docProcSettings) { _defDocProcSettings = docProcSettings; }
 
     static int getPidsFromProcName(const std::regex& procNameRegEx, std::vector<int> *pids);
+    static int getAssignedKitPids(std::vector<int> *pids);
+    static int getUnassignedKitPids(std::vector<int> *pids);
+    static int getKitPidsFromSystem(std::vector<int> *pids);
 
 private:
     void doRemove(std::map<std::string, std::unique_ptr<Document>>::iterator &docIt);
@@ -424,6 +431,7 @@ private:
     uint64_t _recvBytesTotal = 0;
 
     uint64_t _segFaultCount = 0;
+    uint64_t _lostKitsTerminatedCount = 0;
 
     pid_t _forKitPid = 0;
 

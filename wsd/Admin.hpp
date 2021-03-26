@@ -139,6 +139,7 @@ public:
     void setDocWopiDownloadDuration(const std::string& docKey, std::chrono::milliseconds wopiDownloadDuration);
     void setDocWopiUploadDuration(const std::string& docKey, const std::chrono::milliseconds uploadDuration);
     void addSegFaultCount(unsigned segFaultCount);
+    void addLostKitsTerminated(unsigned lostKitsTerminated);
 
     void getMetrics(std::ostringstream &metrics);
 
@@ -151,6 +152,7 @@ private:
     void triggerMemoryCleanup(size_t hardModeLimit);
     void notifyDocsMemDirtyChanged();
     void cleanupResourceConsumingDocs();
+    void cleanupLostKits();
 
     /// Round the interval up to multiples of MinStatsIntervalMs.
     /// This is to avoid arbitrarily small intervals that hammer the server.

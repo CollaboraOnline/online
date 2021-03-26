@@ -846,6 +846,11 @@ void AdminModel::addSegFaultCount(unsigned segFaultCount)
     _segFaultCount += segFaultCount;
 }
 
+void AdminModel::addLostKitsTerminated(unsigned lostKitsTerminated)
+{
+    _lostKitsTerminatedCount += lostKitsTerminated;
+}
+
 int filterNumberName(const struct dirent *dir)
 {
     return !fnmatch("[0-9]*", dir->d_name, 0);
@@ -862,9 +867,6 @@ int AdminModel::getPidsFromProcName(const std::regex& procNameRegEx, std::vector
 
     std::string comm;
     char line[256] = { 0 }; //Here we need only 16 bytes but for safety reasons we use file name max length
-
-    if (pids != NULL)
-        pids->clear();
 
     while (n--)
     {
@@ -893,6 +895,24 @@ int AdminModel::getPidsFromProcName(const std::regex& procNameRegEx, std::vector
     free(namelist);
 
     return pidCount;
+}
+
+int AdminModel::getAssignedKitPids(std::vector<int> *pids)
+{
+    return getPidsFromProcName(std::regex("kitbroker_.*"), pids);
+}
+
+int AdminModel::getUnassignedKitPids(std::vector<int> *pids)
+{
+    return getPidsFromProcName(std::regex("kit_spare_.*"), pids);
+}
+
+int AdminModel::getKitPidsFromSystem(std::vector<int> *pids)
+{
+    int count = getAssignedKitPids(pids);
+    count += getUnassignedKitPids(pids);
+
+    return count;
 }
 
 class AggregateStats
@@ -1026,8 +1046,8 @@ void AdminModel::CalcDocAggregateStats(DocumentAggregateStats& stats)
 void CalcKitStats(KitProcStats& stats)
 {
     std::vector<int> childProcs;
-    stats.unassignedCount = AdminModel::getPidsFromProcName(std::regex("kit_spare_[0-9]*"), &childProcs);
-    stats.assignedCount = AdminModel::getPidsFromProcName(std::regex("kit_[0-9]*"), &childProcs);
+    stats.unassignedCount = AdminModel::getUnassignedKitPids(&childProcs);
+    stats.assignedCount = AdminModel::getAssignedKitPids(&childProcs);
     for (int& pid : childProcs)
     {
         stats.UpdateAggregateStats(pid);
@@ -1069,6 +1089,7 @@ void AdminModel::getMetrics(std::ostringstream &oss)
     oss << "kit_unassigned_count " << kitStats.unassignedCount << std::endl;
     oss << "kit_assigned_count " << kitStats.assignedCount << std::endl;
     oss << "kit_segfault_count " << _segFaultCount << std::endl;
+    oss << "kit_lost_terminated_count " << _lostKitsTerminatedCount << std::endl;
     PrintKitAggregateMetrics(oss, "thread_count", "", kitStats._threadCount);
     PrintKitAggregateMetrics(oss, "memory_used", "bytes", docStats._kitUsedMemory._active);
     PrintKitAggregateMetrics(oss, "cpu_time", "seconds", kitStats._cpuTime);

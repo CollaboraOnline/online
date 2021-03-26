@@ -491,6 +491,8 @@ void Admin::pollingThread()
             if (cleanupWait <= MinStatsIntervalMs / 2) // Close enough
             {
                 cleanupResourceConsumingDocs();
+                if (_defDocProcSettings.getCleanupSettings().getLostKitGracePeriod())
+                    cleanupLostKits();
 
                 cleanupWait += _cleanupIntervalMs;
                 lastCleanup = now;
@@ -714,6 +716,11 @@ void Admin::addSegFaultCount(unsigned segFaultCount)
     addCallback([=]{ _model.addSegFaultCount(segFaultCount); });
 }
 
+void Admin::addLostKitsTerminated(unsigned lostKitsTerminated)
+{
+    addCallback([=]{ _model.addLostKitsTerminated(lostKitsTerminated); });
+}
+
 void Admin::notifyForkit()
 {
     std::ostringstream oss;
@@ -781,6 +788,57 @@ void Admin::notifyDocsMemDirtyChanged()
 void Admin::cleanupResourceConsumingDocs()
 {
     _model.cleanupResourceConsumingDocs();
+}
+
+void Admin::cleanupLostKits()
+{
+    static std::map<pid_t, std::time_t> mapKitsLost;
+    std::set<pid_t> internalKitPids;
+    std::vector<int> kitPids;
+    int pid;
+    unsigned lostKitsTerminated = 0;
+    size_t gracePeriod = _defDocProcSettings.getCleanupSettings().getLostKitGracePeriod();
+
+    internalKitPids = LOOLWSD::getKitPids();
+    AdminModel::getKitPidsFromSystem(&kitPids);
+
+    for (auto itProc = kitPids.begin(); itProc != kitPids.end(); itProc ++)
+    {
+        pid = *itProc;
+        if (internalKitPids.find(pid) == internalKitPids.end())
+        {
+            // Check if this is our kit process (forked from our ForKit process)
+            if (Util::getStatFromPid(pid, 3) == (size_t)_forKitPid)
+                mapKitsLost.insert(std::pair<pid_t, std::time_t>(pid, std::time(nullptr)));
+        }
+        else
+            mapKitsLost.erase(pid);
+    }
+
+    for (auto itLost = mapKitsLost.begin(); itLost != mapKitsLost.end();)
+    {
+        if (std::time(nullptr) - itLost->second > (time_t)gracePeriod)
+        {
+            pid = itLost->first;
+            if (::kill(pid, 0) == 0)
+            {
+                if (::kill(pid, SIGKILL) == -1)
+                    LOG_ERR("Detected lost kit [" << pid << "]. Failed to send SIGKILL.");
+                else
+                {
+                    lostKitsTerminated ++;
+                    LOG_ERR("Detected lost kit [" << pid << "]. Sent SIGKILL for termination.");
+                }
+            }
+
+            itLost = mapKitsLost.erase(itLost);
+        }
+        else
+            itLost ++;
+    }
+
+    if (lostKitsTerminated)
+        Admin::instance().addLostKitsTerminated(lostKitsTerminated);
 }
 
 void Admin::dumpState(std::ostream& os)
