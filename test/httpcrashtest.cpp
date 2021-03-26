@@ -234,11 +234,11 @@ void HTTPCrashTest::testCrashForkit()
     }
 }
 
-static void killPids(const std::vector<int> &pids, const std::string& testname)
+static void killPids(const std::set<pid_t> &pids, const std::string& testname)
 {
     TST_LOG("kill pids " << pids.size());
     // Now kill them
-    for (int pid : pids)
+    for (pid_t pid : pids)
     {
         TST_LOG_BEGIN("Killing " << pid);
         if (kill(pid, SIGKILL) == -1)

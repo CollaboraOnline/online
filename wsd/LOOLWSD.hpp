@@ -287,10 +287,11 @@ public:
 
     /// For testing only [!]
     static int getClientPortNumber();
-    /// For testing only [!]
-    static std::vector<int> getKitPids();
     /// For testing only [!] DocumentBrokers are mostly single-threaded with their own thread
     static std::vector<std::shared_ptr<DocumentBroker>> getBrokersTestOnly();
+
+    // Return a map for fast searches. Used in testing and in admin for cleanup
+    static std::set<pid_t> getKitPids();
 
     static std::string GetConnectionId()
     {
