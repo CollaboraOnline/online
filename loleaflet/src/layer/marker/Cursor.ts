@@ -51,13 +51,7 @@ class Cursor {
 			this.initLayout();
 		}
 
-		if (this.container.querySelector('.blinking-cursor') !== null) {
-			if (this.map._docLayer._docType === 'presentation') {
-				$('.leaflet-interactive').css('cursor', 'text');
-			} else {
-				$('.leaflet-pane.leaflet-map-pane').css('cursor', 'text');
-			}
-		}
+		this.setMouseCursor();
 
 		this.map.getCursorOverlayContainer().appendChild(this.container);
 		this.visible = true;
@@ -70,6 +64,16 @@ class Cursor {
 
 		document.addEventListener('blur', this.onFocusBlur.bind(this));
 		document.addEventListener('focus', this.onFocusBlur.bind(this));
+	}
+
+	setMouseCursor() {
+		if (this.container.querySelector('.blinking-cursor') !== null) {
+			if (this.map._docLayer._docType === 'presentation') {
+				$('.leaflet-interactive').css('cursor', 'text');
+			} else {
+				$('.leaflet-pane.leaflet-map-pane').css('cursor', 'text');
+			}
+		}
 	}
 
 	remove() {
