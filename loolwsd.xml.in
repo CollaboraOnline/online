@@ -38,6 +38,7 @@
             <idle_time_secs desc="Minimum idle time for a document to be candidate for bad state" type="uint" default="300">300</idle_time_secs>
             <limit_dirty_mem_mb desc="Minimum memory usage for a document to be candidate for bad state" type="uint" default="3072">3072</limit_dirty_mem_mb>
             <limit_cpu_per desc="Minimum CPU usage for a document to be candidate for bad state" type="uint" default="85">85</limit_cpu_per>
+            <lost_kit_grace_period_secs desc="The minimum grace period for a lost kit process (not referenced by loolwsd) to resolve its lost status before it is terminated. To disable the cleanup of lost kits use value 0" default="120">120</lost_kit_grace_period_secs>
         </cleanup>
     </per_document>
 

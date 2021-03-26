@@ -946,6 +946,7 @@ void LOOLWSD::initialize(Application& self)
             { "per_document.cleanup.idle_time_secs", "300" },
             { "per_document.cleanup.limit_dirty_mem_mb", "3072" },
             { "per_document.cleanup.limit_cpu_per", "85" },
+            { "per_document.cleanup.lost_kit_grace_period_secs", "120"},
             { "per_document.cleanup[@enable]", "false" },
             { "per_document.document_signing_url", VEREIGN_URL },
             { "per_document.idle_timeout_secs", "3600" },
@@ -1462,6 +1463,7 @@ void LOOLWSD::initialize(Application& self)
     docCleanupSettings.setIdleTime(getConfigValue<int>("per_document.cleanup.idle_time_secs", 300));
     docCleanupSettings.setLimitDirtyMem(getConfigValue<int>("per_document.cleanup.limit_dirty_mem_mb", 3072));
     docCleanupSettings.setLimitCpu(getConfigValue<int>("per_document.cleanup.limit_cpu_per", 85));
+    docCleanupSettings.setLostKitGracePeriod(getConfigValue<int>("per_document.cleanup.lost_kit_grace_period_secs", 120));
 
     Admin::instance().setDefDocProcSettings(docProcSettings, false);
 
@@ -4336,21 +4338,25 @@ int LOOLWSD::getClientPortNumber()
     return ClientPortNumber;
 }
 
-std::vector<int> LOOLWSD::getKitPids()
+std::set<pid_t> LOOLWSD::getKitPids()
 {
-    std::vector<int> pids;
+    std::set<pid_t> pids;
+    pid_t pid;
     {
         std::unique_lock<std::mutex> lock(NewChildrenMutex);
         for (const auto &child : NewChildren)
-            pids.push_back(child->getPid());
+        {
+            pid = child->getPid();
+            pids.emplace(pid);
+        }
     }
     {
         std::unique_lock<std::mutex> lock(DocBrokersMutex);
         for (const auto &it : DocBrokers)
         {
-            int pid = it.second->getPid();
+            pid = it.second->getPid();
             if (pid > 0)
-                pids.push_back(pid);
+                pids.emplace(pid);
         }
     }
     return pids;

@@ -59,7 +59,7 @@ static int countLoolKitProcesses(const int expected,
     if (expected != count)
     {
         TST_LOG_BEGIN("Found " << count << " LoKit processes but was expecting " << expected << ": [");
-        for (int i : getKitPids())
+        for (pid_t i : getKitPids())
         {
             TST_LOG_APPEND(i << ' ');
         }
@@ -68,10 +68,10 @@ static int countLoolKitProcesses(const int expected,
 
     }
 
-    std::vector<int> pids = getKitPids();
+    std::set<pid_t> pids = getKitPids();
     std::ostringstream oss;
     oss << "Test kit pids are ";
-    for (auto i : pids)
+    for (pid_t i : pids)
         oss << i << ' ';
     TST_LOG(oss.str());
 
