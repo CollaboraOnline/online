@@ -660,6 +660,7 @@ L.TileSectionManager = L.Class.extend({
 
 		var stopAnimation = false;
 		var waitForTiles = false;
+		var waitTries = 30;
 		var intervalId = setInterval(function () {
 
 			if (stepId < steps) {
@@ -689,8 +690,8 @@ L.TileSectionManager = L.Class.extend({
 			}
 
 			if (waitForTiles) {
-				// Wait until we get all tiles.
-				if (painter._tilesSection.haveAllTilesInView()) {
+				// Wait until we get all tiles or wait time exceeded.
+				if (waitTries <= 0 || painter._tilesSection.haveAllTilesInView()) {
 					// All done.
 					waitForTiles = false;
 					clearInterval(intervalId);
@@ -701,6 +702,8 @@ L.TileSectionManager = L.Class.extend({
 					// Don't let a subsequent pinchZoom start before finishing all steps till this point.
 					painter._finishingZoom = false;
 				}
+				else
+					waitTries -= 1;
 			}
 
 		}, intervalGap);
