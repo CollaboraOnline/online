@@ -460,49 +460,63 @@ public class LOActivity extends AppCompatActivity {
 
     /** When we get the file via a content: URI, we need to put it to a temp file. */
     private boolean copyFileToTemp() {
-        ContentResolver contentResolver = getContentResolver();
-        InputStream inputStream = null;
-        OutputStream outputStream = null;
+        final ContentResolver contentResolver = getContentResolver();
+        class CopyThread extends Thread {
+            /** Whether copy operation was successful. */
+            private boolean result = false;
+            @Override
+            public void run() {
+                InputStream inputStream = null;
+                OutputStream outputStream = null;
+                // CSV files need a .csv suffix to be opened in Calc.
+                String suffix = null;
+                String intentType = mActivity.getIntent().getType();
+                // K-9 mail uses the first, GMail uses the second variant.
+                if ("text/comma-separated-values".equals(intentType) || "text/csv".equals(intentType))
+                    suffix = ".csv";
+                try {
+                    try {
+                        Uri uri = mActivity.getIntent().getData();
+                        inputStream = contentResolver.openInputStream(uri);
 
-        // CSV files need a .csv suffix to be opened in Calc.
-        String suffix = null;
-        String intentType = getIntent().getType();
-        // K-9 mail uses the first, GMail uses the second variant.
-        if ("text/comma-separated-values".equals(intentType) || "text/csv".equals(intentType))
-            suffix = ".csv";
+                        mTempFile = File.createTempFile("LibreOffice", suffix, mActivity.getCacheDir());
+                        outputStream = new FileOutputStream(mTempFile);
 
-        try {
-            try {
-                Uri uri = getIntent().getData();
-                inputStream = contentResolver.openInputStream(uri);
+                        byte[] buffer = new byte[1024];
+                        int length;
+                        long bytes = 0;
+                        while ((length = inputStream.read(buffer)) != -1) {
+                            outputStream.write(buffer, 0, length);
+                            bytes += length;
+                        }
 
-                mTempFile = File.createTempFile("LibreOffice", suffix, this.getCacheDir());
-                outputStream = new FileOutputStream(mTempFile);
-
-                byte[] buffer = new byte[1024];
-                int length;
-                long bytes = 0;
-                while ((length = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, length);
-                    bytes += length;
+                        Log.i(TAG, "Success copying " + bytes + " bytes from " + uri + " to " + mTempFile);
+                    } finally {
+                        if (inputStream != null)
+                            inputStream.close();
+                        if (outputStream != null)
+                            outputStream.close();
+                        result = true;
+                    }
+                } catch (FileNotFoundException e) {
+                    Log.e(TAG, "file not found: " + e.getMessage());
+                    result = false;
+                } catch (IOException e) {
+                    Log.e(TAG, "exception: " + e.getMessage());
+                    result = false;
                 }
-
-                Log.i(TAG, "Success copying " + bytes + " bytes from " + uri + " to " + mTempFile);
-            } finally {
-                if (inputStream != null)
-                    inputStream.close();
-                if (outputStream != null)
-                    outputStream.close();
             }
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, "file not found: " + e.getMessage());
-            return false;
-        } catch (IOException e) {
-            Log.e(TAG, "exception: " + e.getMessage());
-            return false;
         }
-
-        return true;
+        CopyThread copyThread = new CopyThread();
+        copyThread.start();
+        try {
+            // wait for copy operation to finish
+            // NOTE: might be useful to add some indicator in UI for long copy operations involving network...
+            copyThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return copyThread.result;
     }
 
     /** Check that we have created a temp file, and if yes, copy it back to the content: URI. */
