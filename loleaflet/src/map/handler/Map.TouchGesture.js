@@ -536,7 +536,12 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPinchStart: function (e) {
-		if (isNaN(e.center.x) || isNaN(e.center.y) || this._inSwipeAction)
+		if (this._inSwipeAction) {
+			this._cancelAutoscrollRAF();
+			return;
+		}
+
+		if (isNaN(e.center.x) || isNaN(e.center.y))
 			return;
 
 		this._pinchStartCenter = {x: e.center.x, y: e.center.y};
@@ -664,14 +669,19 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._map.dragging._draggable._onDown(evt);
 		this._timeStamp = Date.now();
 		this._inSwipeAction = true;
-		L.Util.requestAnimFrame(this._autoscroll, this, true);
+		this.autoscrollAnimReq = L.Util.requestAnimFrame(this._autoscroll, this, true);
+	},
+
+	_cancelAutoscrollRAF: function () {
+		this._cancelAutoScroll = false;
+		this._inSwipeAction = false;
+		L.Util.cancelAnimFrame(this.autoscrollAnimReq);
+		return;
 	},
 
 	_autoscroll: function() {
 		if (this._cancelAutoScroll === true) {
-			this._cancelAutoScroll = false;
-			this._inSwipeAction = false;
-			L.Util.cancelAnimFrame(this.autoscrollAnimReq);
+			this._cancelAutoscrollRAF();
 			return;
 		}
 
