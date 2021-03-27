@@ -133,6 +133,7 @@ using Poco::Net::PartHandler;
 #include <UnitHTTP.hpp>
 #include "UserMessages.hpp"
 #include <Util.hpp>
+#include <common/ConfigUtil.hpp>
 
 #ifdef FUZZER
 #  include <tools/Replay.hpp>
@@ -383,7 +384,7 @@ static int forkChildren(const int number)
 
 #ifdef KIT_IN_PROCESS
         forkLibreOfficeKit(LOOLWSD::ChildRoot, LOOLWSD::SysTemplate, LOOLWSD::LoTemplate,
-                           LO_JAIL_SUBPATH, *KitXmlConfig, number);
+                           LO_JAIL_SUBPATH, number);
 #else
         const std::string aMessage = "spawn " + std::to_string(number) + '\n';
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
@@ -1027,27 +1028,6 @@ void LOOLWSD::initialize(Application& self)
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(config());
 
-    // Copy and serialize the config into XML to pass to forkit.
-    KitXmlConfig.reset(new Poco::Util::XMLConfiguration);
-    for (const auto& pair : DefAppConfig)
-    {
-        const auto& key = pair.first;
-        try
-        {
-            KitXmlConfig->setString(key, config().getRawString(key));
-        }
-        catch (const std::exception&)
-        {
-            // Nothing to do.
-        }
-    }
-
-    // We don't pass the config via command-line
-    // to avoid dealing with escaping and other traps.
-    std::ostringstream oss;
-    KitXmlConfig->save(oss);
-    setenv("LOOL_CONFIG", oss.str().c_str(), true);
-
     // Setup user interface mode
     UserInterface = getConfigValue<std::string>(conf, "user_interface.mode", "classic");
 
@@ -1291,7 +1271,34 @@ void LOOLWSD::initialize(Application& self)
             LOG_INF("Creating childroot: " + ChildRoot);
     }
 
+    // Copy and serialize the config into XML to pass to forkit.
+    KitXmlConfig.reset(new Poco::Util::XMLConfiguration);
+    for (const auto& pair : DefAppConfig)
+    {
+        try
+        {
+            KitXmlConfig->setString(pair.first, config().getRawString(pair.first));
+        }
+        catch (const std::exception&)
+        {
+            // Nothing to do.
+        }
+    }
+
+    // Fixup some config entries to match out decisions/overrides.
+    KitXmlConfig->setBool("ssl.enable", isSSLEnabled());
+    KitXmlConfig->setBool("ssl.termination", isSSLTermination());
+
+    // We don't pass the config via command-line
+    // to avoid dealing with escaping and other traps.
+    std::ostringstream oss;
+    KitXmlConfig->save(oss);
+    setenv("LOOL_CONFIG", oss.str().c_str(), true);
+
 #if !MOBILEAPP
+    // Initialize the config subsystem too.
+    config::initialize(&config());
+
     // Setup the jails.
     JailUtil::setupJails(getConfigValue<bool>(conf, "mount_jail_tree", true), ChildRoot,
                          SysTemplate);

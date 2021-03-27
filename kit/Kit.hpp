@@ -23,14 +23,6 @@
 
 #endif
 
-namespace Poco
-{
-namespace Util
-{
-class XMLConfiguration;
-}
-} // namespace Poco
-
 void lokit_main(
 #if !MOBILEAPP
                 const std::string& childRoot,
@@ -46,8 +38,7 @@ void lokit_main(
                 int docBrokerSocket,
                 const std::string& userInterface,
 #endif
-                size_t numericIdentifier,
-                const Poco::Util::XMLConfiguration& xmlConfig
+                size_t numericIdentifier
                 );
 
 #ifdef IOS
@@ -139,7 +130,6 @@ void forkLibreOfficeKit(const std::string& childRoot,
                         const std::string& sysTemplate,
                         const std::string& loTemplate,
                         const std::string& loSubPath,
-                        const Poco::Util::XMLConfiguration& xmlConfig,
                         int limit = 0);
 
 /// Anonymize the basename of filenames, preserving the path and extension.
