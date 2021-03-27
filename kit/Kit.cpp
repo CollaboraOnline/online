@@ -9,7 +9,6 @@
  * a document editing session.
  */
 
-#include <Poco/File.h>
 #include <config.h>
 
 #include <dlfcn.h>
@@ -39,6 +38,7 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitInit.h>
 
+#include <Poco/File.h>
 #include <Poco/Exception.h>
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
@@ -2176,8 +2176,7 @@ void lokit_main(
                 int docBrokerSocket,
                 const std::string& userInterface,
 #endif
-                size_t numericIdentifier,
-                const Poco::Util::XMLConfiguration&
+                size_t numericIdentifier
                 )
 {
 #if !MOBILEAPP
@@ -2193,7 +2192,7 @@ void lokit_main(
     const bool logToFile = std::getenv("LOOL_LOGFILE");
     const char* logFilename = std::getenv("LOOL_LOGFILENAME");
     const char* logLevel = std::getenv("LOOL_LOGLEVEL");
-    const bool logColor = std::getenv("LOOL_LOGCOLOR");
+    const bool logColor = config::getBool("logging.color", true) && isatty(fileno(stderr));
     std::map<std::string, std::string> logProperties;
     if (logToFile && logFilename)
     {
