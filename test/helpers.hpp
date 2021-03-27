@@ -28,7 +28,8 @@
 #include <Common.hpp>
 #include "common/FileUtil.hpp"
 #include <LOOLWebSocket.hpp>
-#include <Util.hpp>
+#include <common/ConfigUtil.hpp>
+#include <common/Util.hpp>
 
 #include <iterator>
 #include <fstream>
@@ -268,12 +269,8 @@ inline
 std::string const & getTestServerURI()
 {
     static std::string serverURI(
-#if ENABLE_SSL
-            "https://127.0.0.1:"
-#else
-            "http://127.0.0.1:"
-#endif
-            + std::to_string(ClientPortNumber));
+        (config::isSslEnabled() ? "https://127.0.0.1:" : "http://127.0.0.1:")
+        + std::to_string(ClientPortNumber));
 
     return serverURI;
 }
