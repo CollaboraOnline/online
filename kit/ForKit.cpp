@@ -49,6 +49,9 @@ static bool NoSeccomp = false;
 #if ENABLE_DEBUG
 static bool SingleKit = false;
 #endif
+#else
+static const bool NoCapsForKit = true; // NoCaps for in-process kit.
+static const bool NoSeccomp = true; // NoSeccomp for in-process kit.
 #endif
 
 static std::string UserInterface;
@@ -369,11 +372,8 @@ static int createLibreOfficeKit(const std::string& childRoot,
             }
         }
 
-#ifndef KIT_IN_PROCESS
-        lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, NoCapsForKit, NoSeccomp, queryVersion, DisplayVersion, spareKitId);
-#else
-        lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, true, true, queryVersion, DisplayVersion, spareKitId);
-#endif
+        lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, NoCapsForKit, NoSeccomp,
+                   queryVersion, DisplayVersion, spareKitId);
     }
     else
     {
