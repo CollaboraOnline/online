@@ -8,27 +8,35 @@
 // Configuration related utilities.
 // Placed here to reduce avoid polluting
 // Util.hpp with the config headers.
+// This is designed to be used from both wsd and kit.
 
 #pragma once
 
 #include <string>
 
-#include <Poco/Util/AbstractConfiguration.h>
+namespace Poco
+{
+namespace Util
+{
+class AbstractConfiguration;
+}
+} // namespace Poco
 
 namespace config
 {
-/// Returns the value of an entry as string or @def if it is not found.
-inline std::string getString(const Poco::Util::AbstractConfiguration& config,
-                             const std::string& key, const std::string& def)
-{
-    return config.getString(key, def);
-}
+/// Initialize the config from an XML string.
+void initialize(const std::string& xml);
+
+/// Initialize the config given a pointer to a long-lived pointer.
+void initialize(const Poco::Util::AbstractConfiguration* config);
 
 /// Returns the value of an entry as string or @def if it is not found.
-inline bool getBool(const Poco::Util::AbstractConfiguration& config, const std::string& key,
-                    const bool def)
-{
-    return config.getBool(key, def);
-}
+std::string getString(const std::string& key, const std::string& def);
+
+/// Returns the value of an entry as string or @def if it is not found.
+bool getBool(const std::string& key, const bool def);
+
+/// Return true if SSL is enabled in the config and no fuzzing is enabled.
+bool isSslEnabled();
 
 } // namespace config

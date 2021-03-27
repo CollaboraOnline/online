@@ -101,6 +101,7 @@ shared_sources = common/FileUtil.cpp \
                  common/SpookyV2.cpp \
                  common/Unit.cpp \
                  common/Util.cpp \
+                 common/ConfigUtil.cpp \
                  common/Authorization.cpp \
                  net/DelaySocket.cpp \
                  net/HttpRequest.cpp \
@@ -196,7 +197,7 @@ clientsession_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
 clientnb_SOURCES = net/clientnb.cpp \
                    common/Log.cpp \
-		   common/StringVector.cpp \
+                   common/StringVector.cpp \
                    common/Util.cpp
 
 loolmount_SOURCES = tools/mount.cpp
@@ -210,7 +211,7 @@ loolstress_SOURCES = tools/Stress.cpp \
                      common/Protocol.cpp \
                      common/StringVector.cpp \
                      common/Log.cpp \
-		     common/Util.cpp
+                     common/Util.cpp
 
 loolconfig_SOURCES = tools/Config.cpp \
 		     common/Crypto.cpp \
@@ -255,6 +256,7 @@ shared_headers = common/Common.hpp \
                  common/Unit.hpp \
                  common/UnitHTTP.hpp \
                  common/Util.hpp \
+                 common/ConfigUtil.hpp \
                  common/Authorization.hpp \
                  common/MessageQueue.hpp \
                  common/Message.hpp \

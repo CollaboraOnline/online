@@ -2165,7 +2165,7 @@ void lokit_main(
                 const std::string& userInterface,
 #endif
                 std::size_t numericIdentifier,
-                const Poco::Util::XMLConfiguration& xmlConfig
+                const Poco::Util::XMLConfiguration&
                 )
 {
 #if !MOBILEAPP
@@ -2181,8 +2181,7 @@ void lokit_main(
     const bool logToFile = std::getenv("LOOL_LOGFILE");
     const char* logFilename = std::getenv("LOOL_LOGFILENAME");
     const char* logLevel = std::getenv("LOOL_LOGLEVEL");
-    const bool logColor
-        = config::getBool(xmlConfig, "logging.color", true) && isatty(fileno(stderr));
+    const bool logColor = std::getenv("LOOL_LOGCOLOR");
     std::map<std::string, std::string> logProperties;
     if (logToFile && logFilename)
     {
