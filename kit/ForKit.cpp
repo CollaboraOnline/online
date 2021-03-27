@@ -335,6 +335,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
                                 const std::string& sysTemplate,
                                 const std::string& loTemplate,
                                 const std::string& loSubPath,
+                                const Poco::Util::XMLConfiguration& xmlConfig,
                                 bool queryVersion = false)
 {
     // Generate a jail ID to be used for in the jail path.
@@ -373,7 +374,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
         }
 
         lokit_main(childRoot, jailId, sysTemplate, loTemplate, loSubPath, NoCapsForKit, NoSeccomp,
-                   queryVersion, DisplayVersion, spareKitId);
+                   queryVersion, DisplayVersion, spareKitId, xmlConfig);
     }
     else
     {
@@ -400,6 +401,7 @@ void forkLibreOfficeKit(const std::string& childRoot,
                         const std::string& sysTemplate,
                         const std::string& loTemplate,
                         const std::string& loSubPath,
+                        const Poco::Util::XMLConfiguration& xmlConfig,
                         int limit)
 {
     // Cleanup first, to reduce disk load.
@@ -420,7 +422,9 @@ void forkLibreOfficeKit(const std::string& childRoot,
         const size_t retry = count * 2;
         for (size_t i = 0; ForkCounter > 0 && i < retry; ++i)
         {
-            if (ForkCounter-- <= 0 || createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath) < 0)
+            if (ForkCounter-- <= 0
+                || createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath, xmlConfig)
+                       < 0)
             {
                 LOG_ERR("Failed to create a kit process.");
                 ++ForkCounter;
@@ -609,6 +613,7 @@ int main(int argc, char** argv)
             SingleKit = true;
         }
 #endif
+
         // we are running in a lower-privilege mode - with no chroot
         else if (std::strstr(cmd, "--nocaps") == cmd)
         {
@@ -674,12 +679,18 @@ int main(int argc, char** argv)
     // Make dev/[u]random point to the writable devices in tmp/dev/.
     JailUtil::SysTemplate::setupRandomDeviceLinks(sysTemplate);
 
+    // Parse the configuration.
+    const auto conf = std::getenv("LOOL_CONFIG");
+    std::istringstream iss(std::string(conf ? conf : std::string()));
+    Poco::AutoPtr<Poco::Util::XMLConfiguration> xmlConfig(new Poco::Util::XMLConfiguration(iss));
+
     LOG_INF("Preinit stage OK.");
 
     // We must have at least one child, more are created dynamically.
     // Ask this first child to send version information to master process and trace startup.
     ::setenv("LOOL_TRACE_STARTUP", "1", 1);
-    pid_t forKitPid = createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath, true);
+    const pid_t forKitPid
+        = createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath, *xmlConfig, true);
     if (forKitPid < 0)
     {
         LOG_FTL("Failed to create a kit process.");
@@ -719,7 +730,7 @@ int main(int argc, char** argv)
 #if ENABLE_DEBUG
         if (!SingleKit)
 #endif
-        forkLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath);
+            forkLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath, *xmlConfig);
     }
 
     int returnValue = EX_OK;

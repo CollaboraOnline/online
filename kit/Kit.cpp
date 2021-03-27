@@ -66,6 +66,7 @@
 #include "Watermark.hpp"
 #include "RenderTiles.hpp"
 #include "SetupKitEnvironment.hpp"
+#include <common/ConfigUtil.hpp>
 
 #if !MOBILEAPP
 #include <common/SigUtil.hpp>
@@ -2175,7 +2176,8 @@ void lokit_main(
                 int docBrokerSocket,
                 const std::string& userInterface,
 #endif
-                size_t numericIdentifier
+                size_t numericIdentifier,
+                const Poco::Util::XMLConfiguration& xmlConfig
                 )
 {
 #if !MOBILEAPP
@@ -2191,7 +2193,8 @@ void lokit_main(
     const bool logToFile = std::getenv("LOOL_LOGFILE");
     const char* logFilename = std::getenv("LOOL_LOGFILENAME");
     const char* logLevel = std::getenv("LOOL_LOGLEVEL");
-    const char* logColor = std::getenv("LOOL_LOGCOLOR");
+    const bool logColor
+        = config::getBool(xmlConfig, "logging.color", true) && isatty(fileno(stderr));
     std::map<std::string, std::string> logProperties;
     if (logToFile && logFilename)
     {
@@ -2202,7 +2205,7 @@ void lokit_main(
 
     const std::string LogLevel = logLevel ? logLevel : "trace";
     const bool bTraceStartup = (std::getenv("LOOL_TRACE_STARTUP") != nullptr);
-    Log::initialize("kit", bTraceStartup ? "trace" : logLevel, logColor != nullptr, logToFile, logProperties);
+    Log::initialize("kit", bTraceStartup ? "trace" : logLevel, logColor, logToFile, logProperties);
     if (bTraceStartup && LogLevel != "trace")
     {
         LOG_INF("Setting log-level to [trace] and delaying setting to configured [" << LogLevel << "] until after Kit initialization.");
