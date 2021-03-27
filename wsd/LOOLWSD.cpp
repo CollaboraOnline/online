@@ -202,6 +202,7 @@ static std::chrono::steady_clock::time_point LastForkRequestTime = std::chrono::
 static std::atomic<int> OutstandingForks(0);
 static std::map<std::string, std::shared_ptr<DocumentBroker> > DocBrokers;
 static std::mutex DocBrokersMutex;
+static Poco::AutoPtr<Poco::Util::XMLConfiguration> KitXmlConfig;
 
 extern "C" { void dump_state(void); /* easy for gdb */ }
 
@@ -381,7 +382,8 @@ static int forkChildren(const int number)
         LOOLWSD::checkDiskSpaceAndWarnClients(false);
 
 #ifdef KIT_IN_PROCESS
-        forkLibreOfficeKit(LOOLWSD::ChildRoot, LOOLWSD::SysTemplate, LOOLWSD::LoTemplate, LO_JAIL_SUBPATH, number);
+        forkLibreOfficeKit(LOOLWSD::ChildRoot, LOOLWSD::SysTemplate, LOOLWSD::LoTemplate,
+                           LO_JAIL_SUBPATH, *KitXmlConfig, number);
 #else
         const std::string aMessage = "spawn " + std::to_string(number) + '\n';
         LOG_DBG("MasterToForKit: " << aMessage.substr(0, aMessage.length() - 1));
@@ -1024,6 +1026,27 @@ void LOOLWSD::initialize(Application& self)
 
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(config());
+
+    // Copy and serialize the config into XML to pass to forkit.
+    KitXmlConfig.reset(new Poco::Util::XMLConfiguration);
+    for (const auto& pair : DefAppConfig)
+    {
+        const auto& key = pair.first;
+        try
+        {
+            KitXmlConfig->setString(key, config().getRawString(key));
+        }
+        catch (const std::exception&)
+        {
+            // Nothing to do.
+        }
+    }
+
+    // We don't pass the config via command-line
+    // to avoid dealing with escaping and other traps.
+    std::ostringstream oss;
+    KitXmlConfig->save(oss);
+    setenv("LOOL_CONFIG", oss.str().c_str(), true);
 
     // Setup user interface mode
     UserInterface = getConfigValue<std::string>(conf, "user_interface.mode", "classic");
