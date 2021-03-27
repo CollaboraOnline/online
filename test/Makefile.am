@@ -83,6 +83,7 @@ test_base_source = \
 unittest_CPPFLAGS = -I$(top_srcdir) -DBUILDING_TESTS -DSTANDALONE_CPPUNIT -g
 unittest_SOURCES = \
     $(test_base_source) \
+    ../common/ConfigUtil.cpp \
     ../common/Log.cpp \
     ../common/MessageQueue.cpp \
     ../common/Session.cpp \
