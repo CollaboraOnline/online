@@ -24,7 +24,7 @@ jobs:
       matrix:
         # Override automatic language detection by changing the below list
         # Supported options are ['csharp', 'cpp', 'go', 'java', 'javascript', 'python']
-        language: ['javascript', 'python']
+        language: ['cpp', 'javascript', 'python']
         # Learn more...
         # https://docs.github.com/en/github/finding-security-vulnerabilities-and-errors-in-your-code/configuring-code-scanning#overriding-automatic-language-detection
 
@@ -51,21 +51,28 @@ jobs:
         # Prefix the list here with "+" to use these queries and those in the config file.
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
 
-    # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
-    # If this step fails, then you should remove it and run the build manually (see below)
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
+    - name: Install dependencies
+      run: |
+        sudo sh -c "echo deb-src http://archive.ubuntu.com/ubuntu/ focal main restricted >> /etc/apt/sources.list"
+        sudo sh -c "echo deb-src http://archive.ubuntu.com/ubuntu/ focal-updates main restricted >> /etc/apt/sources.list"
+        sudo sh -c "echo deb-src http://security.ubuntu.com/ubuntu/ focal-security main restricted >> /etc/apt/sources.list"
+        sudo sh -c "echo deb-src http://security.ubuntu.com/ubuntu/ focal-security universe >> /etc/apt/sources.list"
+        sudo sh -c "echo deb-src http://security.ubuntu.com/ubuntu/ focal-security multiverse >> /etc/apt/sources.list"
+        sudo apt-get update
+        sudo apt-get install -y build-essential git libpoco-dev libcap-dev python3-polib npm libpng-dev python3-lxml libpam-dev
+        sudo apt-get build-dep -y libreoffice
+        pip install lxml
+        pip install polib
 
-    # ℹ️ Command-line programs to run using the OS shell.
-    # 📚 https://git.io/JvXDl
+    - name: Configure
+      run: |
+        cd .. && wget https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-cp-6.4-assets.tar.gz
+        tar xvf core-cp-6.4-assets.tar.gz && rm core-cp-6.4-assets.tar.gz && export LOCOREPATH=$(pwd)
+        cd online && ./autogen.sh
+        ./configure --enable-silent-rules --with-lokit-path=${LOCOREPATH}/include --with-lo-path=${LOCOREPATH}/instdir --enable-debug --disable-setcap
 
-    # ✏️ If the Autobuild fails above, remove it and uncomment the following three lines
-    #    and modify them (or add more) to build your code if your project
-    #    uses a compiled language
-
-    #- run: |
-    #   make bootstrap
-    #   make release
+    - name: Build
+      run: make -j `nproc`
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
