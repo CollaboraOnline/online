@@ -953,6 +953,7 @@ void LOOLWSD::initialize(Application& self)
             { "per_document.limit_virt_mem_mb", "0" },
             { "per_document.max_concurrency", "4" },
             { "per_document.batch_priority", "5" },
+            { "per_document.pdf_resolution_dpi", "96"},
             { "per_document.redlining_as_comments", "false" },
             { "per_view.idle_timeout_secs", "900" },
             { "per_view.out_of_focus_timeout_secs", "120" },
@@ -1191,6 +1192,15 @@ void LOOLWSD::initialize(Application& self)
     setenv("LOK_WHITELIST_LANGUAGES", allowedLanguages.c_str(), 1);
 
 #endif
+
+    const int pdfResolution = getConfigValue<int>(conf, "per_document.pdf_resolution_dpi", 96);
+    if (pdfResolution > 0)
+    {
+        const std::string pdfResolutionStr = std::to_string(pdfResolution);
+        LOG_DBG("Setting envar PDFIMPORT_RESOLUTION_DPI="
+                << pdfResolutionStr << " per config per_document.pdf_resolution_dpi");
+        ::setenv("PDFIMPORT_RESOLUTION_DPI", pdfResolutionStr.c_str(), 1);
+    }
 
     SysTemplate = getPathFromConfig("sys_template_path");
     if (SysTemplate.empty())
