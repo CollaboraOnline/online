@@ -520,6 +520,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._docHeightTwips = command.height;
 			this._docType = command.type;
 			this._parts = command.parts;
+			if (this._selectedPart !== command.selectedPart) {
+				this._map._socket.sendMessage('resetselection');
+			}
 			this._selectedPart = command.selectedPart;
 			if (this.sheetGeometry && this._selectedPart != this.sheetGeometry.getPart()) {
 				// Core initiated sheet switch, need to get full sheetGeometry data for the selected sheet.
