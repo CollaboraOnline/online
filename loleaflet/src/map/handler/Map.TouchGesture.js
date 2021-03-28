@@ -600,34 +600,38 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		if (this._map._docLayer.zoomStepEnd) {
 			var thisObj = this;
-			this._map._docLayer.zoomStepEnd(finalZoom, this._origCenter, function (newMapCenter) {
-				thisObj._map.setView(newMapCenter || thisObj._center, finalZoom);
+			this._map._docLayer.zoomStepEnd(finalZoom, this._origCenter,
+				function (newMapCenter) { // mapUpdater
+					thisObj._map.setView(newMapCenter || thisObj._center, finalZoom);
+				},
+				// showMarkers
+				function () {
 
-				if (thisObj._map._docLayer.isCursorVisible()) {
-					thisObj._map._docLayer._cursorMarker.setOpacity(1);
-				}
-				if (thisObj._map._textInput._cursorHandler) {
-					thisObj._map._textInput._cursorHandler.setOpacity(1);
-				}
-				if (thisObj._map._docLayer._cellCursorMarker) {
-					thisObj._map.setOverlaysOpacity(1);
-					thisObj._map.setMarkersOpacity(1);
-				}
-				if (thisObj._map._docLayer._selectionHandles['start']) {
-					thisObj._map._docLayer._selectionHandles['start'].setOpacity(1);
-				}
-				if (thisObj._map._docLayer._selectionHandles['end']) {
-					thisObj._map._docLayer._selectionHandles['end'].setOpacity(1);
-				}
+					if (thisObj._map._docLayer.isCursorVisible()) {
+						thisObj._map._docLayer._cursorMarker.setOpacity(1);
+					}
+					if (thisObj._map._textInput._cursorHandler) {
+						thisObj._map._textInput._cursorHandler.setOpacity(1);
+					}
+					if (thisObj._map._docLayer._cellCursorMarker) {
+						thisObj._map.setOverlaysOpacity(1);
+						thisObj._map.setMarkersOpacity(1);
+					}
+					if (thisObj._map._docLayer._selectionHandles['start']) {
+						thisObj._map._docLayer._selectionHandles['start'].setOpacity(1);
+					}
+					if (thisObj._map._docLayer._selectionHandles['end']) {
+						thisObj._map._docLayer._selectionHandles['end'].setOpacity(1);
+					}
 
-				if (thisObj._map._docLayer && thisObj._map._docLayer._annotations) {
-					var annotations = thisObj._map._docLayer._annotations;
-					if (annotations.update)
-						setTimeout(function() {
-							annotations.update();
-						}, 250 /* ms */);
-				}
-			});
+					if (thisObj._map._docLayer && thisObj._map._docLayer._annotations) {
+						var annotations = thisObj._map._docLayer._annotations;
+						if (annotations.update)
+							setTimeout(function() {
+								annotations.update();
+							}, 250 /* ms */);
+					}
+				});
 		}
 	},
 
