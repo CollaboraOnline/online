@@ -491,7 +491,7 @@ L.TileSectionManager = L.Class.extend({
 		}
 	},
 
-	zoomStepEnd: function (zoom, newCenter, mapUpdater) {
+	zoomStepEnd: function (zoom, newCenter, mapUpdater, showMarkers) {
 
 		if (!this._inZoomAnim || this._finishingZoom)
 			return;
@@ -560,6 +560,8 @@ L.TileSectionManager = L.Class.extend({
 					painter._sectionContainer.requestReDraw();
 					// Don't let a subsequent pinchZoom start before finishing all steps till this point.
 					painter._finishingZoom = false;
+					// Make the markers and svg overlays visible.
+					showMarkers();
 				}
 				else
 					waitTries -= 1;
@@ -791,8 +793,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._painter.zoomStep(zoom, newCenter);
 	},
 
-	zoomStepEnd: function (zoom, newCenter, mapUpdater) {
-		this._painter.zoomStepEnd(zoom, newCenter, mapUpdater);
+	zoomStepEnd: function (zoom, newCenter, mapUpdater, showMarkers) {
+		this._painter.zoomStepEnd(zoom, newCenter, mapUpdater, showMarkers);
 	},
 
 	_viewReset: function (e) {

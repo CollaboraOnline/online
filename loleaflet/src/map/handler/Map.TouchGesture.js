@@ -600,8 +600,13 @@ L.Map.TouchGesture = L.Handler.extend({
 
 		if (this._map._docLayer.zoomStepEnd) {
 			var thisObj = this;
-			this._map._docLayer.zoomStepEnd(finalZoom, this._origCenter, function (newMapCenter) {
+			this._map._docLayer.zoomStepEnd(finalZoom, this._origCenter,
+			// mapUpdater
+			function (newMapCenter) {
 				thisObj._map.setView(newMapCenter || thisObj._center, finalZoom);
+			},
+			// showMarkers
+			function () {
 
 				if (thisObj._map._docLayer.isCursorVisible()) {
 					thisObj._map._docLayer._cursorMarker.setOpacity(1);
