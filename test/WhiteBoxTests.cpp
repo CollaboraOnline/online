@@ -974,6 +974,10 @@ void WhiteBoxTests::testTime()
         std::string time_since_epoch_str = std::to_string(t.time_since_epoch().count());
         if (!std::is_same<std::chrono::system_clock::period, std::nano>::value)
         {
+            // If the system clock has nanoseconds precision, the last 3 digits
+            // of these strings may not match. For example,
+            // 1567444337874777000
+            // 1567444337874777123
             t_in_micros_str.resize(t_in_micros_str.length() - 3);
             time_since_epoch_str.resize(time_since_epoch_str.length() - 3);
         }
