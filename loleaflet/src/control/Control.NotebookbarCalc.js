@@ -2486,16 +2486,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				],
 				'vertical': 'true'
 			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:TraceChangeMode', 'spreadsheet'),
-				'command': '.uno:TraceChangeMode'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:AcceptChanges', 'spreadsheet'),
-				'command': '.uno:AcceptChanges'
-			}
 		];
 
 		return this.getNotebookbar([this.getTabPage('Review', content)], '-6');
