@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "config.h"
+
 #include "ClientSession.hpp"
 
 bool DoInitialization()
