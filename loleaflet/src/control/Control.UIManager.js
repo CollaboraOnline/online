@@ -4,7 +4,7 @@
 			 and allows to controll them (show/hide)
  */
 
-/* global $ setupToolbar w2ui w2utils toolbarUpMobileItems _ */
+/* global app $ setupToolbar w2ui w2utils toolbarUpMobileItems _ */
 L.Control.UIManager = L.Control.extend({
 	mobileWizard: null,
 
@@ -526,7 +526,7 @@ L.Control.UIManager = L.Control.extend({
 					this.notebookbar = null;
 				}
 			} else {
-				this.map._socket.sendMessage('uno .uno:SidebarHide');
+				app.socket.sendMessage('uno .uno:SidebarHide');
 			}
 		}
 

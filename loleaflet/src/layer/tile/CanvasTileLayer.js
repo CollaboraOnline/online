@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a L.TileLayer with canvas based rendering.
  */
 
-/* global L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData CPoint */
+/* global app L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData CPoint */
 
 L.TileCoordData = L.Class.extend({
 
@@ -1059,8 +1059,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		if (this._clientVisibleArea !== newClientVisibleArea || forceUpdate) {
 			// Visible area is dirty, update it on the server
-			this._map._socket.sendMessage(newClientVisibleArea);
-			if (!this._map._fatal && this._map._active && this._map._socket.connected())
+			app.socket.sendMessage(newClientVisibleArea);
+			if (!this._map._fatal && this._map._active && app.socket.connected())
 				this._clientVisibleArea = newClientVisibleArea;
 			if (this._debug) {
 				this._debugInfo.clearLayers();
@@ -1197,7 +1197,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 					'tilewidth=' + this._tileWidthTwips + ' ' +
 				        'tileheight=' + this._tileHeightTwips;
 
-				this._map._socket.sendMessage(message, '');
+				app.socket.sendMessage(message, '');
 			}
 
 		}
@@ -1396,12 +1396,12 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				'oldwid=' + tileWids + ' ' +
 				'tilewidth=' + this._tileWidthTwips + ' ' +
 				'tileheight=' + this._tileHeightTwips;
-			this._map._socket.sendMessage(msg, '');
+			app.socket.sendMessage(msg, '');
 		}
 	},
 
 	_cancelTiles: function () {
-		this._map._socket.sendMessage('canceltiles');
+		app.socket.sendMessage('canceltiles');
 		for (var key in this._tiles) {
 			var tile = this._tiles[key];
 			// When _invalidCount > 0 the tile has been invalidated, however the new tile content
@@ -1555,7 +1555,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	_onTileMsg: function (textMsg, img) {
-		var tileMsgObj = this._map._socket.parseServerCmd(textMsg);
+		var tileMsgObj = app.socket.parseServerCmd(textMsg);
 		this._checkTileMsgObject(tileMsgObj);
 		var coords = this._tileMsgToCoords(tileMsgObj);
 		var key = this._tileCoordsToKey(coords);
@@ -1621,7 +1621,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		// Send acknowledgment, that the tile message arrived
 		var tileID = tileMsgObj.part + ':' + tileMsgObj.x + ':' + tileMsgObj.y + ':' + tileMsgObj.tileWidth + ':' + tileMsgObj.tileHeight + ':' + tileMsgObj.nviewid;
-		this._map._socket.sendMessage('tileprocessed tile=' + tileID);
+		app.socket.sendMessage('tileprocessed tile=' + tileID);
 	},
 
 	_coordsToPixBounds: function (coords) {

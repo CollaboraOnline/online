@@ -6,7 +6,7 @@
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
-/* global vex $ L _ isAnyVexDialogActive w2ui CPointSet CRectangle CPolyUtil CPolygon Cursor CBounds */
+/* global app vex $ L _ isAnyVexDialogActive w2ui CPointSet CRectangle CPolyUtil CPolygon Cursor CBounds */
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
 	String.prototype.startsWith = function (str) {
@@ -431,7 +431,7 @@ L.TileLayer = L.GridLayer.extend({
 				}
 			}
 		});
-		this._map._socket.sendMessage('commandvalues command=.uno:AcceptTrackedChanges');
+		app.socket.sendMessage('commandvalues command=.uno:AcceptTrackedChanges');
 
 		map._fadeAnimated = false;
 		this._viewReset();
@@ -687,7 +687,7 @@ L.TileLayer = L.GridLayer.extend({
 	_getToolbarCommandsValues: function() {
 		for (var i = 0; i < this._map.unoToolbarCommands.length; i++) {
 			var command = this._map.unoToolbarCommands[i];
-			this._map._socket.sendMessage('commandvalues command=' + command);
+			app.socket.sendMessage('commandvalues command=' + command);
 		}
 	},
 
@@ -1077,7 +1077,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onDownloadAsMsg: function (textMsg) {
-		var command = this._map._socket.parseServerCmd(textMsg);
+		var command = app.socket.parseServerCmd(textMsg);
 		var parser = document.createElement('a');
 		parser.href = this._map.options.server;
 
@@ -1119,7 +1119,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onErrorMsg: function (textMsg) {
-		var command = this._map._socket.parseServerCmd(textMsg);
+		var command = app.socket.parseServerCmd(textMsg);
 
 		// let's provide some convenience error codes for the UI
 		var errorId = 1; // internal error
@@ -1139,7 +1139,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onGetChildIdMsg: function (textMsg) {
-		var command = this._map._socket.parseServerCmd(textMsg);
+		var command = app.socket.parseServerCmd(textMsg);
 		this._map.fire('childid', {id: command.id});
 	},
 
@@ -1246,7 +1246,7 @@ L.TileLayer = L.GridLayer.extend({
 			// shapeselectioncontent messages that we get back causes the WebKit process
 			// to crash on iOS.
 			if (!window.ThisIsTheiOSApp && this._graphicSelection.extraInfo.isDraggable && !this._graphicSelection.extraInfo.svg) {
-				this._map._socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
+				app.socket.sendMessage('rendershapeselection mimetype=image/svg+xml');
 			}
 		}
 
@@ -1257,7 +1257,7 @@ L.TileLayer = L.GridLayer.extend({
 			clearTimeout(this._selectionContentRequest);
 		}
 		this._selectionContentRequest = setTimeout(L.bind(function () {
-			this._map._socket.sendMessage('gettextselection mimetype=text/html');}, this), 100);
+			app.socket.sendMessage('gettextselection mimetype=text/html');}, this), 100);
 
 		this._onUpdateGraphicSelection();
 	},
@@ -1730,7 +1730,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onRenderFontMsg: function (textMsg, img) {
-		var command = this._map._socket.parseServerCmd(textMsg);
+		var command = app.socket.parseServerCmd(textMsg);
 		this._map.fire('renderfont', {
 			font: command.font,
 			char: command.char,
@@ -1896,7 +1896,7 @@ L.TileLayer = L.GridLayer.extend({
 				clearTimeout(this._selectionContentRequest);
 			}
 			this._selectionContentRequest = setTimeout(L.bind(function () {
-				this._map._socket.sendMessage('gettextselection mimetype=text/html');}, this), 100);
+				app.socket.sendMessage('gettextselection mimetype=text/html');}, this), 100);
 		}
 		else {
 			this._selections.clear();
@@ -2189,15 +2189,15 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onDialogPaintMsg: function(textMsg, img) {
-		var command = this._map._socket.parseServerCmd(textMsg);
+		var command = app.socket.parseServerCmd(textMsg);
 
-		// this._map._socket.sendMessage('DEBUG _onDialogPaintMsg: hash=' + command.hash + ' img=' + typeof(img) + (typeof(img) == 'string' ? (' (length:' + img.length + ':"' + img.substring(0, 30) + (img.length > 30 ? '...' : '') + '")') : '') + ', cache size ' + this._pngCache.length);
+		// app.socket.sendMessage('DEBUG _onDialogPaintMsg: hash=' + command.hash + ' img=' + typeof(img) + (typeof(img) == 'string' ? (' (length:' + img.length + ':"' + img.substring(0, 30) + (img.length > 30 ? '...' : '') + '")') : '') + ', cache size ' + this._pngCache.length);
 		if (command.nopng) {
 			var found = false;
 			for (var i = 0; i < this._pngCache.length; i++) {
 				if (this._pngCache[i].hash == command.hash) {
 					found = true;
-					// this._map._socket.sendMessage('DEBUG - Found in cache');
+					// app.socket.sendMessage('DEBUG - Found in cache');
 					img = this._pngCache[i].img;
 					// Remove item (and add it below at the start of the array)
 					this._pngCache.splice(i, 1);
@@ -2209,7 +2209,7 @@ L.TileLayer = L.GridLayer.extend({
 				    + ' is cached here in the client but not found';
 				if (L.Browser.cypressTest)
 					throw new Error(message);
-				this._map._socket.sendMessage('ERROR ' + message);
+				app.socket.sendMessage('ERROR ' + message);
 				// Not sure what to do. Ask the server to re-send the windowpaint: message but this time including the PNG?
 			}
 		} else {
@@ -2220,7 +2220,7 @@ L.TileLayer = L.GridLayer.extend({
 					    + ' even if it was already cached here in the client';
 					if (L.Browser.cypressTest)
 						throw new Error(message);
-					this._map._socket.sendMessage('ERROR ' + message);
+					app.socket.sendMessage('ERROR ' + message);
 					// Remove the extra copy, code below will add it at the start of the array
 					this._pngCache.splice(i, 1);
 					break;
@@ -2229,15 +2229,15 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		// If cache is max size, drop the last element
-		if (this._pngCache.length == this._map._socket.TunnelledDialogImageCacheSize) {
-			// this._map._socket.sendMessage('DEBUG - Dropping last cache element');
+		if (this._pngCache.length == app.socket.TunnelledDialogImageCacheSize) {
+			// app.socket.sendMessage('DEBUG - Dropping last cache element');
 			this._pngCache.pop();
 		}
 
 		// Add element to cache
 		this._pngCache.unshift({hash: command.hash, img:img});
 
-		// this._map._socket.sendMessage('DEBUG - Cache size now ' + this._pngCache.length);
+		// app.socket.sendMessage('DEBUG - Cache size now ' + this._pngCache.length);
 
 		this._map.fire('windowpaint', {
 			id: command.id,
@@ -2258,7 +2258,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onTileMsg: function (textMsg, img) {
-		var command = this._map._socket.parseServerCmd(textMsg);
+		var command = app.socket.parseServerCmd(textMsg);
 		var coords = this._twipsToCoords(command);
 		coords.z = command.zoom;
 		coords.part = command.part;
@@ -2408,7 +2408,7 @@ L.TileLayer = L.GridLayer.extend({
 
 		// Send acknowledgment, that the tile message arrived
 		var tileID = command.part + ':' + command.x + ':' + command.y + ':' + command.tileWidth + ':' + command.tileHeight + ':' + command.nviewid;
-		this._map._socket.sendMessage('tileprocessed tile=' + tileID);
+		app.socket.sendMessage('tileprocessed tile=' + tileID);
 	},
 
 	_tileOnLoad: function (done, tile) {
@@ -2486,7 +2486,7 @@ L.TileLayer = L.GridLayer.extend({
 
 		this._sendClientVisibleArea();
 
-		this._map._socket.sendMessage('mouse type=' + type +
+		app.socket.sendMessage('mouse type=' + type +
 				' x=' + x + ' y=' + y + ' count=' + count +
 				' buttons=' + buttons + ' modifier=' + modifier);
 
@@ -2537,7 +2537,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._sendClientVisibleArea();
 
 		if (winId === 0) {
-			this._map._socket.sendMessage(
+			app.socket.sendMessage(
 				'key' +
 				' type=' + type +
 				' char=' + charCode +
@@ -2545,7 +2545,7 @@ L.TileLayer = L.GridLayer.extend({
 				'\n'
 			);
 		} else {
-			this._map._socket.sendMessage(
+			app.socket.sendMessage(
 				'windowkey id=' + winId +
 				' type=' + type +
 				' char=' + charCode +
@@ -2556,7 +2556,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_postSelectTextEvent: function(type, x, y) {
-		this._map._socket.sendMessage('selecttext type=' + type +
+		app.socket.sendMessage('selecttext type=' + type +
 				' x=' + x + ' y=' + y);
 	},
 
@@ -3596,7 +3596,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_onRequestLOKSession: function () {
-		this._map._socket.sendMessage('requestloksession');
+		app.socket.sendMessage('requestloksession');
 	},
 
 	// This is really just called on zoomend
@@ -3659,7 +3659,7 @@ L.TileLayer = L.GridLayer.extend({
 	// hence we need to request an updated cell cursor position for this level.
 	_onCellCursorShift: function (force) {
 		if ((this._cellCursorMarker && !this.options.sheetGeometryDataEnabled) || force) {
-			this._map._socket.sendMessage('commandvalues command=.uno:CellCursor'
+			app.socket.sendMessage('commandvalues command=.uno:CellCursor'
 			                     + '?outputHeight=' + this._tileWidthPx
 			                     + '&outputWidth=' + this._tileHeightPx
 			                     + '&tileHeight=' + this._tileWidthTwips
@@ -3953,7 +3953,7 @@ L.TileLayer = L.GridLayer.extend({
 		// query server ping time after invalidation messages
 		// pings will be paired with the pong messages
 		this._debugPINGQueue.push(+new Date());
-		this._map._socket.sendMessage('ping');
+		app.socket.sendMessage('ping');
 	},
 
 	_debugAddInvalidationData: function(tile) {

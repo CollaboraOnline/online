@@ -3,7 +3,7 @@
  * Toolbar handler
  */
 
-/* global $ window vex sanitizeUrl brandProductName brandProductURL _ Hammer */
+/* global app $ window vex sanitizeUrl brandProductName brandProductURL _ Hammer */
 L.Map.include({
 
 	// a mapping of uno commands to more readable toolbar items
@@ -149,7 +149,7 @@ L.Map.include({
 			var msg = 'uno .uno:CharFontName {' +
 				'"CharFontName.FamilyName": ' +
 					'{"type": "string", "value": "' + fontName + '"}}';
-			this._socket.sendMessage(msg);
+			app.socket.sendMessage(msg);
 		}
 	},
 
@@ -158,7 +158,7 @@ L.Map.include({
 			var msg = 'uno .uno:FontHeight {' +
 				'"FontHeight.Height": ' +
 				'{"type": "float", "value": "' + fontSize + '"}}';
-			this._socket.sendMessage(msg);
+			app.socket.sendMessage(msg);
 		}
 	},
 
@@ -192,7 +192,7 @@ L.Map.include({
 
 		if (!window.ThisIsAMobileApp)
 			this.showBusy(_('Downloading...'), false);
-		this._socket.sendMessage('downloadas ' +
+		app.socket.sendMessage('downloadas ' +
 			'name=' + encodeURIComponent(name) + ' ' +
 			'id=' + id + ' ' +
 			'format=' + format + ' ' +
@@ -220,7 +220,7 @@ L.Map.include({
 		}
 
 		this.showBusy(_('Saving...'), false);
-		this._socket.sendMessage('saveas ' +
+		app.socket.sendMessage('saveas ' +
 			'url=wopi:' + encodeURIComponent(url) + ' ' +
 			'format=' + format + ' ' +
 			'options=' + options);
@@ -231,7 +231,7 @@ L.Map.include({
 			return;
 		}
 		this.showBusy(_('Renaming...'), false);
-		this._socket.sendMessage('renamefile filename=' + encodeURIComponent(filename));
+		app.socket.sendMessage('renamefile filename=' + encodeURIComponent(filename));
 	},
 
 	applyStyle: function (style, familyName) {
@@ -244,7 +244,7 @@ L.Map.include({
 					'"Style":{"type":"string", "value": "' + style + '"},' +
 					'"FamilyName":{"type":"string", "value":"' + familyName + '"}' +
 					'}';
-			this._socket.sendMessage(msg);
+			app.socket.sendMessage(msg);
 		}
 	},
 
@@ -258,7 +258,7 @@ L.Map.include({
 					'"WhatPage":{"type":"unsigned short", "value": "' + this.getCurrentPartNumber() + '"},' +
 					'"WhatLayout":{"type":"unsigned short", "value": "' + layout + '"}' +
 					'}';
-			this._socket.sendMessage(msg);
+			app.socket.sendMessage(msg);
 		}
 	},
 
@@ -271,7 +271,7 @@ L.Map.include({
 			msg += ' extendedData=' + extendedData;
 		}
 
-		this._socket.sendMessage(msg);
+		app.socket.sendMessage(msg);
 	},
 
 	messageNeedsToBeRedirected: function(command) {
@@ -312,7 +312,7 @@ L.Map.include({
 			this.dialog.blinkOpenDialog();
 		else if (this.isPermissionEdit() || isAllowedInReadOnly) {
 			if (!this.messageNeedsToBeRedirected(command))
-				this._socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
+				app.socket.sendMessage('uno ' + command + (json ? ' ' + JSON.stringify(json) : ''));
 		}
 	},
 
@@ -566,7 +566,7 @@ L.Map.include({
 			},
 			beforeClose: function () {
 				if (!calledFromMenu) {
-					localStorage.setItem('WSDWelcomeVersion', map._socket.WSDServer.Version);
+					localStorage.setItem('WSDWelcomeVersion', app.socket.WSDServer.Version);
 				}
 				map.focus();
 			}
@@ -607,7 +607,7 @@ L.Map.include({
 			return false;
 
 		var storedVersion = localStorage.getItem('WSDWelcomeVersion');
-		var currentVersion = this._socket.WSDServer.Version;
+		var currentVersion = app.socket.WSDServer.Version;
 		var welcomeDisabledCookie = localStorage.getItem('WSDWelcomeDisabled');
 		var welcomeDisabledDate = localStorage.getItem('WSDWelcomeDisabledDate');
 		var isWelcomeDisabled = false;

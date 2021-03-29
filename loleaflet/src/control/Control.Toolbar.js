@@ -3,7 +3,7 @@
  * Collabora Online toolbar
  */
 
-/* global $ w2ui _ */
+/* global app $ w2ui _ */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function(global) {
 
@@ -107,7 +107,7 @@ function onClick(e, id, item) {
 		}
 	}
 	else if (id === 'repair') {
-		map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
+		app.socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 	}
 	else if (id === 'showsearchbar') {
 		$('#toolbar-down').hide();
@@ -313,7 +313,7 @@ function insertTable() {
 				' }, "Rows": { "type": "long","value": '
 				+ row + ' }}';
 
-			map._socket.sendMessage(msg);
+			app.socket.sendMessage(msg);
 
 			closePopup();
 		}
