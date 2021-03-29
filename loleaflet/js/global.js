@@ -1,5 +1,9 @@
 /* -*- js-indent-level: 8 -*- */
 /* global Uint8Array */
+
+window.app = {};
+window.app.definitions = {};
+
 (function (global) {
 
 	global.getParameterByName = function (name) {

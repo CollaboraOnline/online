@@ -3,9 +3,9 @@
  * L.Socket contains methods for the communication with the server
  */
 
-/* global _ vex $ errorMessages Uint8Array brandProductName brandProductFAQURL */
+/* global app _ vex $ errorMessages Uint8Array brandProductName brandProductFAQURL */
 
-L.Socket = L.Class.extend({
+app.definitions.Socket = L.Class.extend({
 	ProtocolVersionNumber: '0.1',
 	ReconnectCount: 0,
 	WasShownLimitDialog: false,
@@ -1541,7 +1541,3 @@ L.Socket = L.Class.extend({
 
 	threadLocalLoggingLevelToggle: false
 });
-
-L.socket = function (map) {
-	return new L.Socket(map);
-};

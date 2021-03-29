@@ -3,7 +3,7 @@
 * Control.Menubar
 */
 
-/* global $ _ _UNO vex L */
+/* global app $ _ _UNO vex L */
 L.Control.Menubar = L.Control.extend({
 	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help, eg: mobiledrawing)
 	options: {
@@ -1556,7 +1556,7 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'closedocument') {
 			window.onClose();
 		} else if (id === 'repair') {
-			this._map._socket.sendMessage('commandvalues command=.uno:DocumentRepair');
+			app.socket.sendMessage('commandvalues command=.uno:DocumentRepair');
 		} else if (id === 'searchdialog') {
 			if (this._map.isPermissionReadOnly()) {
 				$('#toolbar-down').hide();

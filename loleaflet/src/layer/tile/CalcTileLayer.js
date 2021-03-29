@@ -3,7 +3,7 @@
  * Calc tile layer is used to display a spreadsheet document
  */
 
-/* global $ */
+/* global app $ */
 
 L.CalcTileLayer = L.CanvasTileLayer.extend({
 	options: {
@@ -332,15 +332,15 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		} else if (textMsg.startsWith('invalidateheader: column')) {
 			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: 0,
 				offset: {x: undefined, y: 0}}, true /* compatDataSrcOnly */);
-			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
+			app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else if (textMsg.startsWith('invalidateheader: row')) {
 			this.refreshViewData({x: 0, y: this._map._getTopLeftPoint().y,
 				offset: {x: 0, y: undefined}}, true /* compatDataSrcOnly */);
-			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
+			app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else if (textMsg.startsWith('invalidateheader: all')) {
 			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: this._map._getTopLeftPoint().y,
 				offset: {x: undefined, y: undefined}}, true /* compatDataSrcOnly */);
-			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
+			app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		} else if (this.options.sheetGeometryDataEnabled &&
 				textMsg.startsWith('invalidatesheetgeometry:')) {
 			var params = textMsg.substring('invalidatesheetgeometry:'.length).trim().split(' ');
@@ -355,7 +355,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_onInvalidateTilesMsg: function (textMsg) {
-		var command = this._map._socket.parseServerCmd(textMsg);
+		var command = app.socket.parseServerCmd(textMsg);
 		if (command.x === undefined || command.y === undefined || command.part === undefined) {
 			var strTwips = textMsg.match(/\d+/g);
 			command.x = parseInt(strTwips[0]);
@@ -452,7 +452,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._map.fire('zoomchanged');
 		this.refreshViewData();
 		this._replayPrintTwipsMsgs();
-		this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
+		app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 	},
 
 	_restrictDocumentSize: function () {
@@ -513,7 +513,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_onStatusMsg: function (textMsg) {
-		var command = this._map._socket.parseServerCmd(textMsg);
+		var command = app.socket.parseServerCmd(textMsg);
 		if (command.width && command.height && this._documentInfo !== textMsg) {
 			var firstSelectedPart = (typeof this._selectedPart !== 'number');
 			this._docWidthTwips = command.width;
@@ -639,7 +639,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var payload = 'commandvalues command=.uno:ViewRowColumnHeaders?x=' + Math.round(pos.x) + '&y=' + Math.round(pos.y) +
 			'&width=' + Math.round(size.x) + '&height=' + Math.round(size.y);
 
-		this._map._socket.sendMessage(payload);
+		app.socket.sendMessage(payload);
 	},
 
 	// sends the .uno:SheetGeometryData command optionally with arguments.
@@ -684,7 +684,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			payload += '?' + argList.join('&');
 		}
 
-		this._map._socket.sendMessage(payload);
+		app.socket.sendMessage(payload);
 	},
 
 	// Sends a notification to the row/col header and gridline controls that

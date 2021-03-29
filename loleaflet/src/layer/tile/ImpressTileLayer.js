@@ -3,7 +3,7 @@
  * Impress tile layer is used to display a presentation document
  */
 
-/* global L isAnyVexDialogActive $ */
+/* global app L isAnyVexDialogActive $ */
 
 L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
@@ -175,7 +175,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_onInvalidateTilesMsg: function (textMsg) {
-		var command = this._map._socket.parseServerCmd(textMsg);
+		var command = app.socket.parseServerCmd(textMsg);
 		if (command.x === undefined || command.y === undefined || command.part === undefined) {
 			var strTwips = textMsg.match(/\d+/g);
 			command.x = parseInt(strTwips[0]);
@@ -261,7 +261,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_onStatusMsg: function (textMsg) {
-		var command = this._map._socket.parseServerCmd(textMsg);
+		var command = app.socket.parseServerCmd(textMsg);
 		// Since we have two status commands, remove them so we store and compare payloads only.
 		textMsg = textMsg.replace('status: ', '');
 		textMsg = textMsg.replace('statusupdate: ', '');

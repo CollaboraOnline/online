@@ -8,7 +8,7 @@
  * text area itself.
  */
 
-/* global isAnyVexDialogActive */
+/* global app isAnyVexDialogActive */
 
 L.TextInput = L.Layer.extend({
 	initialize: function() {
@@ -820,7 +820,7 @@ L.TextInput = L.Layer.extend({
 
 		/// TODO: rename the event to 'removetextcontent' as soon as loolwsd supports it
 		/// TODO: Ask Marco about it
-		this._map._socket.sendMessage(
+		app.socket.sendMessage(
 			'removetextcontext id=' +
 			this._map.getWinId() +
 			' before=' + before +
@@ -856,7 +856,7 @@ L.TextInput = L.Layer.extend({
 		{
 			var encodedText = encodeURIComponent(text);
 			var winId = this._map.getWinId();
-			this._map._socket.sendMessage(
+			app.socket.sendMessage(
 				'textinput id=' + winId + ' text=' + encodedText);
 		}
 	},
@@ -868,11 +868,11 @@ L.TextInput = L.Layer.extend({
 			type = 'input';
 		}
 		if (this._map.editorHasFocus()) {
-			this._map._socket.sendMessage(
+			app.socket.sendMessage(
 				'key type=' + type + ' char=' + charCode + ' key=' + unoKeyCode + '\n'
 			);
 		} else {
-			this._map._socket.sendMessage(
+			app.socket.sendMessage(
 				'windowkey id=' +
 					this._map.getWinId() +
 					' type=' +

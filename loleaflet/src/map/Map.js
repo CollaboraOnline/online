@@ -11,7 +11,7 @@ function isAnyVexDialogActive() {
 	return res;
 }
 
-/* global vex $ _ Cursor */
+/* global app vex $ _ Cursor */
 L.Map = L.Evented.extend({
 
 	statics: {
@@ -157,7 +157,7 @@ L.Map = L.Evented.extend({
 			L.Icon.Default.imagePath = this.options.imagePath;
 		}
 		this._addLayers(this.options.layers);
-		this._socket = L.socket(this);
+		app.socket = new app.definitions.Socket(this);
 
 		this._progressBar = L.progressOverlay(new L.point(150, 25));
 
@@ -296,7 +296,7 @@ L.Map = L.Evented.extend({
 						var showSidebar = map.uiManager.getSavedStateOrDefault('ShowSidebar');
 
 						if (showSidebar === false)
-							map._socket.sendMessage('uno .uno:SidebarHide');
+							app.socket.sendMessage('uno .uno:SidebarHide');
 					}
 					else if (window.mode.isChromebook()) {
 						// HACK - currently the sidebar shows when loaded,
@@ -306,7 +306,7 @@ L.Map = L.Evented.extend({
 						// _launchSidebar() in Control.LokDialog.js
 						// So for the moment, let's just hide it on
 						// Chromebooks early
-						map._socket.sendMessage('uno .uno:SidebarHide');
+						app.socket.sendMessage('uno .uno:SidebarHide');
 					}
 				}, 200);
 			}
@@ -319,7 +319,7 @@ L.Map = L.Evented.extend({
 	},
 
 	loadDocument: function(socket) {
-		this._socket.connect(socket);
+		app.socket.connect(socket);
 		if (this._clip)
 			this._clip.clearSelection();
 		this.removeObjectFocusDarkOverlay();
@@ -327,8 +327,8 @@ L.Map = L.Evented.extend({
 
 	sendInitUNOCommands: function() {
 		// TODO: remove duplicated init code
-		this._socket.sendMessage('commandvalues command=.uno:LanguageStatus');
-		this._socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
+		app.socket.sendMessage('commandvalues command=.uno:LanguageStatus');
+		app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 		if (this._docLayer._docType === 'spreadsheet') {
 			this._docLayer.refreshViewData();
 		}
@@ -772,7 +772,7 @@ L.Map = L.Evented.extend({
 		if (this._docLayer) {
 			this.removeLayer(this._docLayer);
 		}
-		this._socket.close();
+		app.socket.close();
 		return this;
 	},
 
@@ -1321,7 +1321,7 @@ L.Map = L.Evented.extend({
 					}
 					if (width > 0 && height > 0 && sizeChanged) {
 						console.log('_onResize: container width: ' + width + ', container height: ' + height + ', _calcInputBar width: ' + this.dialog._calcInputBar.width);
-						this._socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
+						app.socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
 					}
 				}
 			}
@@ -1344,11 +1344,11 @@ L.Map = L.Evented.extend({
 
 		if (!this._active) {
 			// Only activate when we are connected.
-			if (this._socket.connected()) {
+			if (app.socket.connected()) {
 				// console.debug('sending useractive');
-				this._socket.sendMessage('useractive');
+				app.socket.sendMessage('useractive');
 				this._active = true;
-				this._socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
+				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 
 				if (isAnyVexDialogActive()) {
 					for (var vexId in vex.getAll()) {
@@ -1396,7 +1396,7 @@ L.Map = L.Evented.extend({
 		}
 
 		// console.debug('_dim:');
-		if (!this._socket.connected() || isAnyVexDialogActive()) {
+		if (!app.socket.connected() || isAnyVexDialogActive()) {
 			return;
 		}
 
@@ -1448,7 +1448,7 @@ L.Map = L.Evented.extend({
 		this._doclayer && this._docLayer._onMessage('textselection:', null);
 		// console.debug('_dim: sending userinactive');
 		map.fire('postMessage', {msgId: 'User_Idle'});
-		this._socket.sendMessage('userinactive');
+		app.socket.sendMessage('userinactive');
 	},
 
 	notifyActive : function() {
@@ -1494,9 +1494,9 @@ L.Map = L.Evented.extend({
 			// shows an error message. Leave it alone.
 			this._active = false;
 			this._docLayer && this._docLayer._onMessage('textselection:', null);
-			if (this._socket.connected()) {
+			if (app.socket.connected()) {
 				// console.debug('_deactivate: sending userinactive');
-				this._socket.sendMessage('userinactive');
+				app.socket.sendMessage('userinactive');
 			}
 
 			return;
@@ -1573,7 +1573,7 @@ L.Map = L.Evented.extend({
 
 	_onUpdateProgress: function (e) {
 		if (e.statusType === 'start') {
-			if (this._socket.socket.readyState === 1) {
+			if (app.socket.socket.readyState === 1) {
 				// auto-save
 				this.showBusy(_('Saving...'), true);
 			}

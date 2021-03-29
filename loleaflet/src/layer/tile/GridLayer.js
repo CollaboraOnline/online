@@ -3,6 +3,8 @@
  * L.GridLayer is used as base class for grid-like layers like TileLayer.
  */
 
+/* global app */
+
 L.GridLayer = L.Layer.extend({
 
 	options: {
@@ -313,7 +315,7 @@ L.GridLayer = L.Layer.extend({
 	_viewReset: function (e) {
 		this._reset(this._map.getCenter(), this._map.getZoom(), e && e.hard);
 		if (this._docType === 'spreadsheet' && this._annotations !== 'undefined') {
-			this._map._socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
+			app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
 		}
 	},
 
@@ -725,8 +727,8 @@ L.GridLayer = L.Layer.extend({
 
 		if (this._clientVisibleArea !== newClientVisibleArea || forceUpdate) {
 			// Visible area is dirty, update it on the server
-			this._map._socket.sendMessage(newClientVisibleArea);
-			if (!this._map._fatal && this._map._active && this._map._socket.connected())
+			app.socket.sendMessage(newClientVisibleArea);
+			if (!this._map._fatal && this._map._active && app.socket.connected())
 				this._clientVisibleArea = newClientVisibleArea;
 			if (this._debug) {
 				this._debugInfo.clearLayers();
@@ -749,15 +751,15 @@ L.GridLayer = L.Layer.extend({
 
 		if (this._clientZoom !== newClientZoom || forceUpdate) {
 			// the zoom level has changed
-			this._map._socket.sendMessage('clientzoom ' + newClientZoom);
+			app.socket.sendMessage('clientzoom ' + newClientZoom);
 
-			if (!this._map._fatal && this._map._active && this._map._socket.connected())
+			if (!this._map._fatal && this._map._active && app.socket.connected())
 				this._clientZoom = newClientZoom;
 		}
 	},
 
 	_cancelTiles: function() {
-		this._map._socket.sendMessage('canceltiles');
+		app.socket.sendMessage('canceltiles');
 		for (var key in this._tiles) {
 			var tile = this._tiles[key];
 			// When _invalidCount > 0 the tile has been invalidated, however the new tile content
@@ -1199,7 +1201,7 @@ L.GridLayer = L.Layer.extend({
 			'tileposy=' + tilePositionsY.join() + ' ' +
 			'tilewidth=' + this._tileWidthTwips + ' ' +
 			'tileheight=' + this._tileHeightTwips;
-		this._map._socket.sendMessage(msg, '');
+		app.socket.sendMessage(msg, '');
 	},
 
 	_preFetchTiles: function (forceBorderCalc) {
