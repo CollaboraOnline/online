@@ -3,7 +3,7 @@
  * Ruler Handler
  */
 
-/* global $ L _ Hammer */
+/* global app $ L _ Hammer */
 L.Control.Ruler = L.Control.extend({
 	options: {
 		interactive: true,
@@ -484,7 +484,7 @@ L.Control.Ruler = L.Control.extend({
 			unoObj[indentType] = {};
 			unoObj[indentType]['type'] = 'string';
 			unoObj[indentType]['value'] = leftValue;
-			this._map._socket.sendMessage('uno .uno:ParagraphChangeState ' + JSON.stringify(unoObj));
+			app.socket.sendMessage('uno .uno:ParagraphChangeState ' + JSON.stringify(unoObj));
 		}
 
 		this._indentationElementId = '';
@@ -595,7 +595,7 @@ L.Control.Ruler = L.Control.extend({
 		unoObj[marginType] = {};
 		unoObj[marginType]['type'] = 'string';
 		unoObj[marginType]['value'] = fact * posChange/(this.options.DraggableConvertRatio * this.options.pageWidth);
-		this._map._socket.sendMessage('uno .uno:RulerChangeState ' + JSON.stringify(unoObj));
+		app.socket.sendMessage('uno .uno:RulerChangeState ' + JSON.stringify(unoObj));
 	},
 
 	_getTabStopHit: function(tabstopContainer, pointX) {

@@ -3,7 +3,7 @@
  * Document Signing
  */
 
-/* global window setupViamAPI w2ui vex Promise $ _ */
+/* global app window setupViamAPI w2ui vex Promise $ _ */
 
 var library = null;
 var identity = null;
@@ -101,7 +101,7 @@ function checkCurrentDocument() {
 	};
 	var blob = new Blob(['asksignaturestatus\n', JSON.stringify(certificates)]);
 	if (_map) {
-		_map._socket.sendMessage(blob);
+		app.socket.sendMessage(blob);
 	}
 }
 
@@ -355,7 +355,7 @@ function vereignUpload(documentType) {
 					type: documentType
 				};
 				var blob = new Blob(['uploadsigneddocument\n', JSON.stringify(jsonRequest)]);
-				_map._socket.sendMessage(blob);
+				app.socket.sendMessage(blob);
 				// Let the user know that we're done.
 				_map.fire('infobar', {
 					msg: _('Document uploaded.') + '\n\n' + filename,
@@ -391,7 +391,7 @@ function vereignExportSignAndUploadToVereign(documentType) {
 						type: documentType
 					};
 					var blob = new Blob(['exportsignanduploaddocument\n', JSON.stringify(parameters)]);
-					_map._socket.sendMessage(blob);
+					app.socket.sendMessage(blob);
 				}
 			}
 		});
@@ -424,7 +424,7 @@ function vereignSignAndUploadForType(uploadDocType) {
 			if (isSuccess(result)) {
 				var otp = result.data;
 				var blob = new Blob(['signdocument\n', JSON.stringify(otp)]);
-				_map._socket.sendMessage(blob);
+				app.socket.sendMessage(blob);
 				awaitForDocumentStatusToUpload = true;
 				currentDocumentType = documentType;
 				checkCurrentDocument();

@@ -4,7 +4,7 @@
  * from the JSON description provided by the server.
  */
 
-/* global $ w2ui _ _UNO L */
+/* global app $ w2ui _ _UNO L */
 
 L.Control.JSDialogBuilder = L.Control.extend({
 
@@ -255,7 +255,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				+ '\", \"cmd\": \"' + eventType
 				+ '\", \"data\": \"' + (typeof(data) === 'object' ? encodeURIComponent(JSON.stringify(data)) : data)
 				+ '\", \"type\": \"' + objectType + '\"}';
-			builder.map._socket.sendMessage(message);
+			app.socket.sendMessage(message);
 		}
 	},
 
@@ -678,7 +678,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			});
 			$(leftDiv).click(function() {
 				if (functionName !== '') {
-					that.map._socket.sendMessage('completefunction name=' + functionName);
+					app.socket.sendMessage('completefunction name=' + functionName);
 					that.map.fire('closemobilewizard');
 				}
 			});

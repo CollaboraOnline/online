@@ -2,7 +2,7 @@
 /*
  * Document permission handler
  */
-/* global $ _ vex */
+/* global app $ _ vex */
 L.Map.include({
 	setPermission: function (perm) {
 		var button = $('#mobile-edit-button');
@@ -56,9 +56,8 @@ L.Map.include({
 			button.show();
 			button.off('click');
 
-			var that = this;
 			button.on('click', function () {
-				that._socket.sendMessage('attemptlock');
+				app.socket.sendMessage('attemptlock');
 			});
 		}
 		else if (this.options.canTryLock) {
@@ -96,7 +95,7 @@ L.Map.include({
 	_enterEditMode: function (perm) {
 		this._permission = perm;
 
-		this._socket.sendMessage('requestloksession');
+		app.socket.sendMessage('requestloksession');
 		if (!L.Browser.touch) {
 			this.dragging.disable();
 		}
@@ -135,7 +134,7 @@ L.Map.include({
 		if (this.isPermissionEdit()) {
 			return;
 		}
-		this._socket.sendMessage('requestloksession');
+		app.socket.sendMessage('requestloksession');
 		this.dragging.disable();
 	},
 

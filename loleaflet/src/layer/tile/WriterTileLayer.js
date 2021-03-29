@@ -3,7 +3,7 @@
  * Writer tile layer is used to display a text document
  */
 
-/* global $*/
+/* global app $*/
 L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 	newAnnotation: function (comment) {
@@ -127,7 +127,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_onInvalidateTilesMsg: function (textMsg) {
-		var command = this._map._socket.parseServerCmd(textMsg);
+		var command = app.socket.parseServerCmd(textMsg);
 		if (command.x === undefined || command.y === undefined || command.part === undefined) {
 			var strTwips = textMsg.match(/\d+/g);
 			command.x = parseInt(strTwips[0]);
@@ -214,7 +214,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_onStatusMsg: function (textMsg) {
-		var command = this._map._socket.parseServerCmd(textMsg);
+		var command = app.socket.parseServerCmd(textMsg);
 		if (!command.width || !command.height || this._documentInfo === textMsg)
 			return;
 

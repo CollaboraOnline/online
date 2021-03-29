@@ -3,7 +3,7 @@
  * L.Control.NotebookbarBuilder
  */
 
-/* global $ _ _UNO */
+/* global app $ _ _UNO */
 L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 	_customizeOptions: function() {
@@ -859,7 +859,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		// initialize languages list
 		builder.map.on('commandvalues', menubar._onInitLanguagesMenu, menubar);
-		builder.map._socket.sendMessage('commandvalues command=.uno:LanguageStatus');
+		app.socket.sendMessage('commandvalues command=.uno:LanguageStatus');
 	},
 
 	buildControl: function(parent, data) {

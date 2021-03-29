@@ -3,7 +3,7 @@
  * L.Control.LokDialog used for displaying LOK dialogs
  */
 
-/* global $ L Hammer w2ui brandProductName */
+/* global app $ L Hammer w2ui brandProductName */
 L.WinUtil = {
 
 };
@@ -260,14 +260,14 @@ L.Control.LokDialog = L.Control.extend({
 
 		var dpiscale = L.getDpiScaleFactor();
 		//console.log('_sendPaintWindow: rectangle: ' + rectangle + ', dpiscale: ' + dpiscale);
-		this._map._socket.sendMessage('paintwindow ' + id + ' rectangle=' + rectangle + ' dpiscale=' + dpiscale);
+		app.socket.sendMessage('paintwindow ' + id + ' rectangle=' + rectangle + ' dpiscale=' + dpiscale);
 
 		if (this._map._docLayer && this._map._docLayer._debug && this._map._debugSidebar)
 			this._debugPaintWindow(id, rectangle);
 	},
 
 	_sendCloseWindow: function(id) {
-		this._map._socket.sendMessage('windowcommand ' + id + ' close');
+		app.socket.sendMessage('windowcommand ' + id + ' close');
 	},
 
 	_isRectangleValid: function(rect) {
@@ -627,7 +627,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (swap) {
 			handles.lastDraggedHandle = e.target.type;
 			var pos = e.target.pos;
-			this._map._socket.sendMessage('windowselecttext id=' + e.target.dialogId +
+			app.socket.sendMessage('windowselecttext id=' + e.target.dialogId +
 				                          ' swap=true x=' + pos.x + ' y=' + pos.y);
 		}
 	},
@@ -728,7 +728,7 @@ L.Control.LokDialog = L.Control.extend({
 
 		L.DomUtil.setStyle(draggedHandle, 'left', handlePos.x + 'px');
 		L.DomUtil.setStyle(draggedHandle, 'top', handlePos.y + 'px');
-		this._map._socket.sendMessage('windowselecttext id=' + draggedHandle.dialogId +
+		app.socket.sendMessage('windowselecttext id=' + draggedHandle.dialogId +
 			                          ' swap=false x=' + pos.x + ' y=' + pos.y);
 
 		// check if we need to move to previous/next line
@@ -1382,7 +1382,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_postWindowMouseEvent: function(type, winid, x, y, count, buttons, modifier) {
-		this._map._socket.sendMessage('windowmouse id=' + winid +  ' type=' + type +
+		app.socket.sendMessage('windowmouse id=' + winid +  ' type=' + type +
 		                              ' x=' + x + ' y=' + y + ' count=' + count +
 		                              ' buttons=' + buttons + ' modifier=' + modifier);
 		// Keep map active while user is playing with sidebar/dialog.
@@ -1391,7 +1391,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_postWindowGestureEvent: function(winid, type, x, y, offset) {
 		console.log('x ' + x + ' y ' + y + ' o ' + offset);
-		this._map._socket.sendMessage('windowgesture id=' + winid +  ' type=' + type +
+		app.socket.sendMessage('windowgesture id=' + winid +  ' type=' + type +
 		                              ' x=' + x + ' y=' + y + ' offset=' + offset);
 		// Keep map active while user is playing with sidebar/dialog.
 		this._map.lastActiveTime = Date.now();
@@ -1559,7 +1559,7 @@ L.Control.LokDialog = L.Control.extend({
 				if (that._calcInputBar.width !== correctWidth) {
 					console.log('_paintDialog: correct width: ' + correctWidth + ', _calcInputBar width: ' + that._calcInputBar.width);
 					that._dialogs[parentId].isPainting = false;
-					that._map._socket.sendMessage('resizewindow ' + parentId + ' size=' + correctWidth + ',' + that._calcInputBar.height);
+					app.socket.sendMessage('resizewindow ' + parentId + ' size=' + correctWidth + ',' + that._calcInputBar.height);
 					return;
 				}
 			}
@@ -1679,7 +1679,7 @@ L.Control.LokDialog = L.Control.extend({
 					var height = calcInputbarContainer.clientHeight;
 					if (width !== 0 && height !== 0) {
 						console.log('_resizeCalcInputBar: id: ' + id + ', width: ' + width + ', height: ' + height);
-						this._map._socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
+						app.socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
 					}
 				}
 			}

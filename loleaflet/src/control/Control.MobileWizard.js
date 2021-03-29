@@ -3,7 +3,7 @@
  * L.Control.MobileWizard
  */
 
-/* global $ w2ui */
+/* global app $ w2ui */
 L.Control.MobileWizard = L.Control.extend({
 	options: {
 		maxHeight: '45%'
@@ -363,12 +363,11 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_refreshSidebar: function(ms) {
 		ms = ms !== undefined ? ms : 400;
-		var map = this.map;
 		setTimeout(function () {
 			var message = 'dialogevent ' +
 			    (window.sidebarId !== undefined ? window.sidebarId : -1) +
 			    ' {"id":"-1"}';
-			map._socket.sendMessage(message);
+			app.socket.sendMessage(message);
 		}, ms);
 	},
 

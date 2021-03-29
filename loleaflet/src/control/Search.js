@@ -1,4 +1,6 @@
 /* -*- js-indent-level: 8 -*- */
+/* global app */
+
 L.Map.include({
 	search: function (text, backward, replaceString,  command, expand) {
 		if (backward === undefined) {
@@ -62,7 +64,7 @@ L.Map.include({
 		searchCmd['SearchItem.SearchStartPointY'].value = searchStartPointY;
 		searchCmd['SearchItem.Command'].value = command;
 		this._searchRequested = true;
-		this._socket.sendMessage('uno .uno:ExecuteSearch ' + JSON.stringify(searchCmd));
+		app.socket.sendMessage('uno .uno:ExecuteSearch ' + JSON.stringify(searchCmd));
 	},
 
 	highlightAll: function (text) {
@@ -74,6 +76,6 @@ L.Map.include({
 
 	resetSelection: function () {
 		this._docLayer._clearSearchResults();
-		this._socket.sendMessage('resetselection');
+		app.socket.sendMessage('resetselection');
 	}
 });
