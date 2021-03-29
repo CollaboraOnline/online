@@ -2,7 +2,7 @@
 /*
  * L.FormFieldButton is used to interact with text based form fields.
  */
-/* global $ */
+/* global app $ */
 L.FormFieldButton = L.Layer.extend({
 
 	options: {
@@ -164,7 +164,7 @@ L.FormFieldButton = L.Layer.extend({
 					  '\"data\":\"' + index.toString() + '\"}';
 
 		// Apply selection in the document.
-		this.map._socket.sendMessage(message);
+		app.socket.sendMessage(message);
 	},
 
 	_onZoomStart: function() {

@@ -3,7 +3,7 @@
  * L.Clipboard is used to abstract our storage and management of
  * local & remote clipboard data.
  */
-/* global _ vex brandProductName isAnyVexDialogActive $ */
+/* global app _ vex brandProductName isAnyVexDialogActive $ */
 
 // Get all interesting clipboard related events here, and handle
 // download logic in one place ...
@@ -95,7 +95,7 @@ L.Clipboard = L.Class.extend({
 		if (!idx)
 			idx = 0;
 		return '/lool/clipboard?WOPISrc=' + encodeURIComponent(this._map.options.doc) +
-			'&ServerId=' + this._map._socket.WSDServer.Id +
+			'&ServerId=' + app.socket.WSDServer.Id +
 			'&ViewId=' + this._map._docLayer._viewId +
 			'&Tag=' + this._accessKey[idx];
 	},
@@ -268,10 +268,10 @@ L.Clipboard = L.Class.extend({
 						if (this.pasteSpecialVex && this.pasteSpecialVex.isOpen) {
 							vex.close(this.pasteSpecialVex);
 							console.log('up-load done, now paste special');
-							that.map._socket.sendMessage('uno .uno:PasteSpecial');
+							app.socket.sendMessage('uno .uno:PasteSpecial');
 						} else {
 							console.log('up-load done, now paste');
-							that._map._socket.sendMessage('uno .uno:Paste');
+							app.socket.sendMessage('uno .uno:Paste');
 						}
 
 					},
@@ -303,10 +303,10 @@ L.Clipboard = L.Class.extend({
 						if (this.pasteSpecialVex && this.pasteSpecialVex.isOpen) {
 							vex.close(this.pasteSpecialVex);
 							console.log('up-load of fallback done, now paste special');
-							that.map._socket.sendMessage('uno .uno:PasteSpecial');
+							app.socket.sendMessage('uno .uno:PasteSpecial');
 						} else {
 							console.log('up-load of fallback done, now paste');
-							that._map._socket.sendMessage('uno .uno:Paste');
+							app.socket.sendMessage('uno .uno:Paste');
 						}
 
 					},
@@ -320,7 +320,7 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_onFileLoadFunc: function(file) {
-		var socket = this._map._socket;
+		var socket = app.socket;
 		return function(e) {
 			var blob = new Blob(['paste mimetype=' + file.type + '\n', e.target.result]);
 			socket.sendMessage(blob);
@@ -687,7 +687,7 @@ L.Clipboard = L.Class.extend({
 			// perform internal operations
 
 			if (cmd === '.uno:Copy' || cmd === '.uno:Cut') {
-				this._map._socket.sendMessage('uno ' + cmd);
+				app.socket.sendMessage('uno ' + cmd);
 			} else if (cmd === '.uno:Paste') {
 				var dummyEvent = {preventDefault: function() {}};
 				this.paste(dummyEvent);
@@ -718,7 +718,7 @@ L.Clipboard = L.Class.extend({
 			return;
 
 		var preventDefault = this._map['wopi'].DisableCopy === true ? true : this.populateClipboard(ev);
-		this._map._socket.sendMessage('uno .uno:' + unoName);
+		app.socket.sendMessage('uno .uno:' + unoName);
 		if (preventDefault) {
 			ev.preventDefault();
 			return false;
@@ -732,10 +732,10 @@ L.Clipboard = L.Class.extend({
 			map._textInput._sendKeyEvent(0, KEY_PASTE);
 		} else if (this.pasteSpecialVex && this.pasteSpecialVex.isOpen) {
 			this.pasteSpecialVex.close();
-			map._socket.sendMessage('uno .uno:PasteSpecial');
+			app.socket.sendMessage('uno .uno:PasteSpecial');
 		} else {
 			// paste into document
-			map._socket.sendMessage('uno .uno:Paste');
+			app.socket.sendMessage('uno .uno:Paste');
 		}
 	},
 

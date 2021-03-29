@@ -3,7 +3,7 @@
  * L.WOPI contains WOPI related logic
  */
 
-/* global w2ui _ */
+/* global w2ui _ app */
 L.Map.WOPI = L.Handler.extend({
 	// If the CheckFileInfo call fails on server side, we won't have any PostMessageOrigin.
 	// So use '*' because we still needs to send 'close' message to the parent frame which
@@ -232,7 +232,7 @@ L.Map.WOPI = L.Handler.extend({
 
 		// allow closing documents before they are completely loaded
 		if (msg.MessageId === 'Close_Session') {
-			this._map._socket.sendMessage('closedocument');
+			app.socket.sendMessage('closedocument');
 			return;
 		}
 
@@ -330,7 +330,7 @@ L.Map.WOPI = L.Handler.extend({
 
 		// allow closing documents before they are completely loaded
 		if (msg.MessageId === 'Close_Session') {
-			this._map._socket.sendMessage('closedocument');
+			app.socket.sendMessage('closedocument');
 			return;
 		}
 
@@ -416,7 +416,7 @@ L.Map.WOPI = L.Handler.extend({
 		}
 		else if (msg.MessageId === 'Host_VersionRestore') {
 			if (msg.Values.Status === 'Pre_Restore') {
-				this._map._socket.sendMessage('versionrestore prerestore');
+				app.socket.sendMessage('versionrestore prerestore');
 			}
 		}
 		else if (msg.MessageId === 'CallPythonScript' &&
@@ -427,7 +427,7 @@ L.Map.WOPI = L.Handler.extend({
 		}
 		else if (msg.MessageId === 'Action_RemoveView') {
 			if (msg.Values && msg.Values.ViewId !== null && msg.Values.ViewId !== undefined) {
-				this._map._socket.sendMessage('removesession ' + msg.Values.ViewId);
+				app.socket.sendMessage('removesession ' + msg.Values.ViewId);
 			}
 		}
 		else if (msg.MessageId === 'Action_ChangeUIMode') {

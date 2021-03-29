@@ -3,7 +3,7 @@
  * Document parts switching and selecting handler
  */
 
-/* global vex $ _ */
+/* global app vex $ _ */
 
 L.Map.include({
 	setPart: function (part, external, calledFromSetPartHandler) {
@@ -37,13 +37,13 @@ L.Map.include({
 
 		if (docLayer.isCursorVisible()) {
 			// a click outside the slide to clear any selection
-			this._socket.sendMessage('resetselection');
+			app.socket.sendMessage('resetselection');
 		}
 
 		// If this wasn't triggered from the server,
 		// then notify the server of the change.
 		if (!external) {
-			this._socket.sendMessage('setclientpart part=' + docLayer._selectedPart);
+			app.socket.sendMessage('setclientpart part=' + docLayer._selectedPart);
 		}
 
 		this.fire('updateparts', {
@@ -100,7 +100,7 @@ L.Map.include({
 		// If this wasn't triggered from the server,
 		// then notify the server of the change.
 		if (!external) {
-			this._socket.sendMessage('selectclientpart part=' + part + ' how=' + how);
+			app.socket.sendMessage('selectclientpart part=' + part + ' how=' + how);
 		}
 	},
 
@@ -138,7 +138,7 @@ L.Map.include({
 				// skip this! we can't see it
 				continue;
 			this._previewRequestsOnFly++;
-			this._socket.sendMessage(tile[1]);
+			app.socket.sendMessage(tile[1]);
 		}
 	},
 
@@ -250,7 +250,7 @@ L.Map.include({
 			this.scrollLeft(pos.x, {update: true});
 		}
 		else {
-			this._socket.sendMessage('setpage page=' + docLayer._currentPage);
+			app.socket.sendMessage('setpage page=' + docLayer._currentPage);
 		}
 		this.fire('pagenumberchanged', {
 			currentPage: docLayer._currentPage,
@@ -261,7 +261,7 @@ L.Map.include({
 
 	insertPage: function(nPos) {
 		if (this.isPresentationOrDrawing()) {
-			this._socket.sendMessage('uno .uno:InsertPage');
+			app.socket.sendMessage('uno .uno:InsertPage');
 		}
 		else if (this.getDocType() === 'spreadsheet') {
 			var command = {
@@ -275,7 +275,7 @@ L.Map.include({
 				}
 			};
 
-			this._socket.sendMessage('uno .uno:Insert ' + JSON.stringify(command));
+			app.socket.sendMessage('uno .uno:Insert ' + JSON.stringify(command));
 		}
 		else {
 			return;
@@ -306,7 +306,7 @@ L.Map.include({
 		if (!this.isPresentationOrDrawing()) {
 			return;
 		}
-		this._socket.sendMessage('uno .uno:DuplicatePage');
+		app.socket.sendMessage('uno .uno:DuplicatePage');
 		var docLayer = this._docLayer;
 
 		// At least for Impress, we should not fire this. It causes a circular reference.
@@ -323,7 +323,7 @@ L.Map.include({
 
 	deletePage: function (nPos) {
 		if (this.isPresentationOrDrawing()) {
-			this._socket.sendMessage('uno .uno:DeletePage');
+			app.socket.sendMessage('uno .uno:DeletePage');
 		}
 		else if (this.getDocType() === 'spreadsheet') {
 			var command = {
@@ -333,7 +333,7 @@ L.Map.include({
 				}
 			};
 
-			this._socket.sendMessage('uno .uno:Remove ' + JSON.stringify(command));
+			app.socket.sendMessage('uno .uno:Remove ' + JSON.stringify(command));
 		}
 		else {
 			return;
@@ -383,7 +383,7 @@ L.Map.include({
 				}
 			};
 
-			this._socket.sendMessage('uno .uno:Name ' + JSON.stringify(command));
+			app.socket.sendMessage('uno .uno:Name ' + JSON.stringify(command));
 			this.setPart(this._docLayer);
 		}
 	},
@@ -411,7 +411,7 @@ L.Map.include({
 				}
 			}
 
-			var socket_ = this._socket;
+			var socket_ = app.socket;
 			vex.dialog.open({
 				unsafeMessage: container.outerHTML,
 				buttons: [
@@ -437,7 +437,7 @@ L.Map.include({
 	hidePage: function (tabNumber) {
 		if (this.getDocType() === 'spreadsheet' && this.getNumberOfVisibleParts() > 1) {
 			var argument = {nTabNumber: {type: 'int16', value: tabNumber}};
-			this._socket.sendMessage('uno .uno:Hide ' + JSON.stringify(argument));
+			app.socket.sendMessage('uno .uno:Hide ' + JSON.stringify(argument));
 		}
 	},
 

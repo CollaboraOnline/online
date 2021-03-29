@@ -3,7 +3,7 @@
  * L.Control.PartsPreview
  */
 
-/* global $ Hammer w2ui */
+/* global app $ Hammer w2ui */
 L.Control.PartsPreview = L.Control.extend({
 	options: {
 		fetchThumbnail: true,
@@ -198,7 +198,7 @@ L.Control.PartsPreview = L.Control.extend({
 				// if mobile or tab then second tap will open the mobile wizard
 				if (this._map._permission === 'edit') {
 					// Remove selection to get the slide properties in mobile wizard.
-					this._map._socket.sendMessage('resetselection');
+					app.socket.sendMessage('resetselection');
 					setTimeout(function () {
 						w2ui['actionbar'].click('mobile_wizard');
 					}, 0);
@@ -630,7 +630,7 @@ L.Control.PartsPreview = L.Control.extend({
 				var partId = parseInt(part) - 1; // First frame is a drop-site for reordering.
 				if (partId < 0)
 					partId = -1; // First item is -1.
-				this._map._socket.sendMessage('moveselectedclientparts position=' + partId);
+				app.socket.sendMessage('moveselectedclientparts position=' + partId);
 			}
 		}
 		$('.preview-frame').removeClass('preview-img-dropsite');
@@ -686,7 +686,7 @@ L.Control.PartsPreview = L.Control.extend({
 			var partId = parseInt(part) - 1; // First frame is a drop-site for reordering.
 			if (partId < 0)
 				partId = -1; // First item is -1.
-			this.partsPreview._map._socket.sendMessage('moveselectedclientparts position=' + partId);
+			app.socket.sendMessage('moveselectedclientparts position=' + partId);
 		}
 
 		this.classList.remove('preview-img-dropsite');

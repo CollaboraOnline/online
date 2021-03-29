@@ -3,7 +3,7 @@
  * L.Map.FileInserter is handling the fileInserter action
  */
 
-/* global _ Uint8Array errorMessages */
+/* global app _ Uint8Array errorMessages */
 
 L.Map.mergeOptions({
 	fileInserter: true
@@ -46,7 +46,7 @@ L.Map.FileInserter = L.Handler.extend({
 
 	_onInsertFile: function (e) {
 		if (!this._childId) {
-			this._map._socket.sendMessage('getchildid');
+			app.socket.sendMessage('getchildid');
 			this._toInsert[Date.now()] = e.file;
 		}
 		else {
@@ -56,7 +56,7 @@ L.Map.FileInserter = L.Handler.extend({
 
 	_onInsertURL: function (e) {
 		if (!this._childId) {
-			this._map._socket.sendMessage('getchildid');
+			app.socket.sendMessage('getchildid');
 			this._toInsertURL[Date.now()] = e.url;
 		}
 		else {
@@ -66,7 +66,7 @@ L.Map.FileInserter = L.Handler.extend({
 
 	_onSelectBackground: function (e) {
 		if (!this._childId) {
-			this._map._socket.sendMessage('getchildid');
+			app.socket.sendMessage('getchildid');
 			this._toInsertBackground[Date.now()] = e.file;
 		}
 		else {
@@ -97,7 +97,7 @@ L.Map.FileInserter = L.Handler.extend({
 	},
 
 	_sendFile: function (name, file, type) {
-		var socket = this._map._socket;
+		var socket = app.socket;
 		var map = this._map;
 		var url = this.getWopiUrl(map);
 
@@ -170,7 +170,7 @@ L.Map.FileInserter = L.Handler.extend({
 	},
 
 	_sendURL: function (name, url) {
-		this._map._socket.sendMessage('insertfile name=' + encodeURIComponent(url) + ' type=graphicurl');
+		app.socket.sendMessage('insertfile name=' + encodeURIComponent(url) + ' type=graphicurl');
 	}
 });
 

@@ -1,6 +1,6 @@
 /* -*- js-indent-level: 8 -*- */
 /* global errorMessages getParameterByName accessToken accessTokenTTL accessHeader reuseCookies */
-/* global vex host serviceRoot idleTimeoutSecs outOfFocusTimeoutSecs*/
+/* global app vex host serviceRoot idleTimeoutSecs outOfFocusTimeoutSecs*/
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function (global) {
 
@@ -78,12 +78,12 @@ L.Map.THIS = map;
 
 map.loadDocument(global.socket);
 
-global.socket = map._socket;
+global.socket = app.socket;
 window.addEventListener('beforeunload', function () {
-	if (map && map._socket) {
-		if (map._socket.setUnloading)
-			map._socket.setUnloading();
-		map._socket.close();
+	if (map && app.socket) {
+		if (app.socket.setUnloading)
+			app.socket.setUnloading();
+		app.socket.close();
 	}
 });
 

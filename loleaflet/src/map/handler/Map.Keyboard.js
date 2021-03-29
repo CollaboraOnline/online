@@ -7,7 +7,7 @@
  * at TextInput.
  */
 
- /* global vex _ */
+/* global app vex _ */
 
 L.Map.mergeOptions({
 	keyboard: true,
@@ -481,13 +481,13 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		if (this._isCtrlKey(e) && (e.key === 'z' || e.key === 'Z')) {
-			this._map._socket.sendMessage('uno .uno:Undo');
+			app.socket.sendMessage('uno .uno:Undo');
 			e.preventDefault();
 			return true;
 		}
 
 		if (this._isCtrlKey(e) && (e.key === 'y' || e.key === 'Y')) {
-			this._map._socket.sendMessage('uno .uno:Redo');
+			app.socket.sendMessage('uno .uno:Redo');
 			e.preventDefault();
 			return true;
 		}
@@ -510,17 +510,17 @@ L.Map.Keyboard = L.Handler.extend({
 			if (!e.shiftKey) {
 				switch (e.keyCode) {
 				case 53: // 5
-					this._map._socket.sendMessage('uno .uno:Strikeout');
+					app.socket.sendMessage('uno .uno:Strikeout');
 					return true;
 				case 70: // f
-					this._map._socket.sendMessage('uno .uno:InsertFootnote');
+					app.socket.sendMessage('uno .uno:InsertFootnote');
 					return true;
 				case 67: // c
 				case 77: // m
-					this._map._socket.sendMessage('uno .uno:InsertAnnotation');
+					app.socket.sendMessage('uno .uno:InsertAnnotation');
 					return true;
 				case 68: // d
-					this._map._socket.sendMessage('uno .uno:InsertEndnote');
+					app.socket.sendMessage('uno .uno:InsertEndnote');
 					return true;
 				}
 			} else if (e.altKey) {
@@ -535,15 +535,15 @@ L.Map.Keyboard = L.Handler.extend({
 		/* Without specifying the key type, the messages are sent twice (both keydown/up) */
 		if (e.type === 'keydown' && window.ThisIsAMobileApp) {
 			if (e.key === 'c' || e.key === 'C') {
-				this._map._socket.sendMessage('uno .uno:Copy');
+				app.socket.sendMessage('uno .uno:Copy');
 				return true;
 			}
 			else if (e.key === 'v' || e.key === 'V') {
-				this._map._socket.sendMessage('uno .uno:Paste');
+				app.socket.sendMessage('uno .uno:Paste');
 				return true;
 			}
 			else if (e.key === 'x' || e.key === 'X') {
-				this._map._socket.sendMessage('uno .uno:Cut');
+				app.socket.sendMessage('uno .uno:Cut');
 				return true;
 			}
 			if (window.ThisIsTheAndroidApp)
@@ -553,14 +553,14 @@ L.Map.Keyboard = L.Handler.extend({
 		switch (e.keyCode) {
 		case 51: // 3
 			if (this._map.getDocType() === 'spreadsheet') {
-				this._map._socket.sendMessage('uno .uno:SetOptimalColumnWidthDirect');
-				this._map._socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
+				app.socket.sendMessage('uno .uno:SetOptimalColumnWidthDirect');
+				app.socket.sendMessage('commandvalues command=.uno:ViewRowColumnHeaders');
 				return true;
 			}
 			return false;
 		case 53: // 5
 			if (this._map.getDocType() === 'spreadsheet') {
-				this._map._socket.sendMessage('uno .uno:Strikeout');
+				app.socket.sendMessage('uno .uno:Strikeout');
 				return true;
 			}
 			return false;
@@ -591,13 +591,13 @@ L.Map.Keyboard = L.Handler.extend({
 		case 118: // v (Safari)
 			return true;
 		case 112: // f1
-			this._map._socket.sendMessage('uno .uno:NoteVisible');
+			app.socket.sendMessage('uno .uno:NoteVisible');
 			return true;
 		case 188: // ,
-			this._map._socket.sendMessage('uno .uno:SubScript');
+			app.socket.sendMessage('uno .uno:SubScript');
 			return true;
 		case 190: // .
-			this._map._socket.sendMessage('uno .uno:SuperScript');
+			app.socket.sendMessage('uno .uno:SuperScript');
 			return true;
 		}
 		if (e.type === 'keypress' && (e.ctrlKey || e.metaKey) &&

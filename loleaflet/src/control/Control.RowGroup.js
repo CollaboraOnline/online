@@ -3,7 +3,7 @@
  * L.Control.RowGroup
 */
 
-/* global */
+/* global app */
 
 /*
 	This file is Calc only. This adds a section for grouped rows in Calc.
@@ -142,7 +142,7 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 	_updateOutlineState: function (group) {
 		var state = group.hidden ? 'visible' : 'hidden'; // we have to send the new state
 		var payload = 'outlinestate type=row' + ' level=' + group.level + ' index=' + group.index + ' state=' + state;
-		this._map._socket.sendMessage(payload);
+		app.socket.sendMessage(payload);
 	},
 
 	// When user clicks somewhere on the section, onMouseClick event is called by CanvasSectionContainer.
