@@ -123,8 +123,8 @@ class CanvasOverlay {
 		this.overlaySection = overlaySection;
 	}
 
-	getTestDivContainer(): HTMLDivElement {
-		return this.overlaySection.getTestDivContainer();
+	getTestDiv(): HTMLDivElement {
+		return this.overlaySection.getTestDiv();
 	}
 
 	setPenOnOverlay() {
