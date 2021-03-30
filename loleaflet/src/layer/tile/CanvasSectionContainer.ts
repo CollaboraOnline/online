@@ -236,11 +236,6 @@ class CanvasSectionObject {
 		this.onRemove = options.onRemove ? options.onRemove: function() {};
 		this.onAnimationEnded = options.onAnimationEnded ? options.onAnimationEnded: function() {};
 	}
-
-	getTestDivContainer(): HTMLDivElement {
-		var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + this.name);
-		return element;
-	}
 }
 
 class CanvasSectionContainer {
