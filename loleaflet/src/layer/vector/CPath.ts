@@ -85,7 +85,7 @@ abstract class CPath extends CEventsHandler {
 
 	// Adds a div for cypress-tests (if active) for this CPath if not already done.
 	private addPathTestDiv() {
-		var testContainer = this.renderer.getTestDivContainer();
+		var testContainer = this.renderer.getTestDiv();
 		if (testContainer && !this.testDiv) {
 			this.testDiv = document.createElement('div');
 			this.testDiv.id = 'test-div-overlay-' + this.name;

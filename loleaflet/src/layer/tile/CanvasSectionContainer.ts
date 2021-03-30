@@ -154,6 +154,7 @@ class CanvasSectionObject {
 	stopPropagating: Function; // Do not implement this. This function is added by section container.
 	startAnimating: Function; // Do not implement this. This function is added by section container. Return value: boolean.
 	resetAnimation: Function; // Do not implement this. This function is added by section container.
+	getTestDiv: Function; // Do not implement this. This function is added by section container.
 
 	constructor (options: any) {
 		this.name = options.name;
@@ -187,11 +188,6 @@ class CanvasSectionObject {
 		this.onNewDocumentTopLeft = options.onNewDocumentTopLeft ? options.onNewDocumentTopLeft: function() {};
 		this.onRemove = options.onRemove ? options.onRemove: function() {};
 		this.onAnimationEnded = options.onAnimationEnded ? options.onAnimationEnded: function() {};
-	}
-
-	getTestDivContainer(): HTMLDivElement {
-		var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + this.name);
-		return element;
 	}
 }
 
@@ -1396,6 +1392,14 @@ class CanvasSectionContainer {
 
 		section.resetAnimation = function () {
 			section.containerObject.resetAnimation(section.name);
+		}
+
+		section.getTestDiv = function (): HTMLDivElement {
+			var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + this.name);
+			if (element)
+				return element;
+			else
+				return null;
 		}
 	}
 
