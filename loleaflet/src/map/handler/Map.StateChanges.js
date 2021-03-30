@@ -27,7 +27,6 @@ L.Map.StateChangeHandler = L.Handler.extend({
 	},
 
 	_onStateChanged: function(e) {
-		var slideMasterPageItem = this._map['stateChangeHandler'].getItemValue('.uno:SlideMasterPage');
 		var state;
 
 		if (typeof(e.state) == 'object') {
@@ -44,13 +43,19 @@ L.Map.StateChangeHandler = L.Handler.extend({
 		}
 		$('#document-container').removeClass('slide-master-mode');
 		$('#document-container').addClass('slide-normal-mode');
-		if (slideMasterPageItem) {
-			$('#document-container').removeClass('slide-normal-mode');
-			$('#document-container').addClass('slide-master-mode');
-		}
-		if (!slideMasterPageItem  || slideMasterPageItem  == 'false' || slideMasterPageItem  == 'undefined') {
-			$('#document-container').removeClass('slide-master-mode');
-			$('#document-container').addClass('slide-normal-mode');
+
+		if (e.commandName === '.uno:SlideMasterPage') {
+			var slideMasterPageItem = this._map['stateChangeHandler'].getItemValue('.uno:SlideMasterPage');
+			if (slideMasterPageItem === 'true') {
+				$('#document-container').removeClass('slide-normal-mode');
+				$('#document-container').addClass('slide-master-mode');
+				this._map._docLayer._preview._showMasterSlides();
+			}
+			if (!slideMasterPageItem  || slideMasterPageItem  == 'false' || slideMasterPageItem  == 'undefined') {
+				$('#document-container').removeClass('slide-master-mode');
+				$('#document-container').addClass('slide-normal-mode');
+				this._map._docLayer._preview._hideMasterSlides();
+			}
 		}
 	},
 
