@@ -1293,6 +1293,8 @@ app.definitions.Socket = L.Class.extend({
 			else if (tokens[i] === 'nopng') {
 				command.nopng = true;
 			}
+			else if (tokens[i].startsWith('masterpagecount='))
+				command.masterPageCount = parseInt(tokens[i].substring(16));
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
 			var defaultZoom = this._map.options.zoom;
