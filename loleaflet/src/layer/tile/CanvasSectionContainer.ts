@@ -359,11 +359,24 @@ class CanvasSectionContainer {
 		}
 	}
 
-	getDocumentTopLeft (): Array<number> {
+	public getDocumentTopLeft (): Array<number> {
 		return [this.documentTopLeft[0], this.documentTopLeft[1]];
 	}
 
-	setDocumentBounds (points: Array<number>) {
+	public getDocumentBottomRight (): Array<number> {
+		return [this.documentBottomRight[0], this.documentBottomRight[1]];
+	}
+
+	// Returns top-left and bottom-right coordinates respectively.
+	public getDocumentBounds (): Array<number> {
+		return [this.documentTopLeft[0], this.documentTopLeft[1], this.documentBottomRight[0], this.documentBottomRight[1]];
+	}
+
+	public getDocumentSize (): Array<number> {
+		return [this.documentBottomRight[0] - this.documentTopLeft[0], this.documentBottomRight[1] - this.documentTopLeft[1]];
+	}
+
+	public setDocumentBounds (points: Array<number>) {
 		this.documentTopLeft[0] = Math.round(points[0]);
 		this.documentTopLeft[1] = Math.round(points[1]);
 
