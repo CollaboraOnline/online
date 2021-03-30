@@ -472,7 +472,7 @@ class CanvasSectionContainer {
 		}
 	}
 
-	getDocumentTopLeft (): Array<number> {
+	public getDocumentTopLeft (): Array<number> {
 		return [this.documentTopLeft[0], this.documentTopLeft[1]];
 	}
 
