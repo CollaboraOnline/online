@@ -1085,8 +1085,7 @@ void ClientSession::writeQueuedMessages(std::size_t capacity)
     try
     {
         // Drain the queue, for efficient communication.
-        // FIXME: use 'while' to write at least capacity bytes, if possible.
-        if (capacity > wrote && _senderQueue.dequeue(item) && item)
+        while (capacity > wrote && _senderQueue.dequeue(item) && item)
         {
             const std::vector<char>& data = item->data();
             const auto size = data.size();
