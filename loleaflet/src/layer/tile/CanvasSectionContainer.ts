@@ -1128,13 +1128,11 @@ class CanvasSectionContainer {
 			this.mousePosition = this.convertPositionToCanvasLocale(e);
 			this.draggingSomething = true;
 
-			if (this.positionOnMouseDown !== null) {
-				this.dragDistance = [this.mousePosition[0] - this.positionOnMouseDown[0], this.mousePosition[1] - this.positionOnMouseDown[1]];
+			this.dragDistance = [this.mousePosition[0] - this.positionOnMouseDown[0], this.mousePosition[1] - this.positionOnMouseDown[1]];
 
-				var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
-				if (section) {
-					this.propagateOnMouseMove(section, this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, <MouseEvent><any>e);
-				}
+			var section: CanvasSectionObject = this.getSectionWithName(this.sectionOnMouseDown);
+			if (section) {
+				this.propagateOnMouseMove(section, this.convertPositionToSectionLocale(section, this.mousePosition), this.dragDistance, <MouseEvent><any>e);
 			}
 		}
 		else if (e.touches.length === 2) {
