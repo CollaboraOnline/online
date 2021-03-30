@@ -8,7 +8,7 @@
 L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 	initialize: function (url, options) {
-		L.TileLayer.prototype.initialize.call(this, url, options);
+		L.CanvasTileLayer.prototype.initialize.call(this, url, options);
 		this._preview = L.control.partsPreview();
 		this._partHashes = null;
 		if (window.mode.isMobile()) {
@@ -103,7 +103,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_openMobileWizard: function(data) {
-		L.TileLayer.prototype._openMobileWizard.call(this, data);
+		L.CanvasTileLayer.prototype._openMobileWizard.call(this, data);
 	},
 
 	onUpdateParts: function () {
@@ -155,7 +155,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		if (values.comments) {
 			this._annotationManager.addCommentsFromCommandValues(values.comments);
 		} else {
-			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
+			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
 	},
 
@@ -167,7 +167,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			}
 			this._annotationManager.processCommentMessage(object.comment);
 		} else {
-			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
+			L.CanvasTileLayer.prototype._onMessage.call(this, textMsg, img);
 		}
 	},
 

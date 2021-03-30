@@ -330,7 +330,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			});
 			this.requestSheetGeometryData(flags);
 		} else {
-			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
+			L.CanvasTileLayer.prototype._onMessage.call(this, textMsg, img);
 		}
 	},
 
@@ -953,17 +953,17 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			}
 			this.showAnnotations();
 		} else {
-			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
+			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
 	},
 
 	_onTextSelectionMsg: function (textMsg) {
-		L.TileLayer.prototype._onTextSelectionMsg.call(this, textMsg);
+		L.CanvasTileLayer.prototype._onTextSelectionMsg.call(this, textMsg);
 		this._onUpdateSelectionHeader();
 	},
 
 	_onCellCursorMsg: function (textMsg) {
-		L.TileLayer.prototype._onCellCursorMsg.call(this, textMsg);
+		L.CanvasTileLayer.prototype._onCellCursorMsg.call(this, textMsg);
 		this._onUpdateCurrentHeader();
 	},
 
@@ -973,7 +973,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			!Object.prototype.hasOwnProperty.call(msgObj, 'relrect') || !Object.prototype.hasOwnProperty.call(msgObj, 'refpoint')) {
 			// 1) non-print-twips messaging mode OR
 			// 2) the edit-cursor belongs to draw/chart objects.
-			return L.TileLayer.prototype._getEditCursorRectangle.call(this, msgObj);
+			return L.CanvasTileLayer.prototype._getEditCursorRectangle.call(this, msgObj);
 		}
 
 		if (typeof msgObj !== 'object') {
@@ -990,7 +990,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	_getTextSelectionRectangles: function (textMsg) {
 
 		if (!this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
-			return L.TileLayer.prototype._getTextSelectionRectangles.call(this, textMsg);
+			return L.CanvasTileLayer.prototype._getTextSelectionRectangles.call(this, textMsg);
 		}
 
 		if (typeof textMsg !== 'string') {
