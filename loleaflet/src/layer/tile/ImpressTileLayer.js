@@ -284,6 +284,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			this._viewId = parseInt(command.viewid);
 			this._selectedPart = command.selectedPart;
 			this._selectedParts = command.selectedParts || [command.selectedPart];
+			this._masterPageCount = command.masterPageCount;
 			this._resetPreFetching(true);
 			this._update();
 			var partMatch = textMsg.match(/[^\r\n]+/g);
