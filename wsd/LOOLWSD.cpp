@@ -1187,9 +1187,20 @@ void LOOLWSD::innerInitialize(Application& self)
 
 #endif
 
-    const int pdfResolution = getConfigValue<int>(conf, "per_document.pdf_resolution_dpi", 96);
+    int pdfResolution = getConfigValue<int>(conf, "per_document.pdf_resolution_dpi", 96);
     if (pdfResolution > 0)
     {
+        constexpr int MaxPdfResolutionDpi = 384;
+        if (pdfResolution > MaxPdfResolutionDpi)
+        {
+            // Avoid excessive memory consumption.
+            LOG_WRN("The PDF resolution specified in per_document.pdf_resolution_dpi ("
+                    << pdfResolution << ") is larger than the maximum (" << MaxPdfResolutionDpi
+                    << "). Using " << MaxPdfResolutionDpi << " instead.");
+
+            pdfResolution = MaxPdfResolutionDpi;
+        }
+
         const std::string pdfResolutionStr = std::to_string(pdfResolution);
         LOG_DBG("Setting envar PDFIMPORT_RESOLUTION_DPI="
                 << pdfResolutionStr << " per config per_document.pdf_resolution_dpi");
