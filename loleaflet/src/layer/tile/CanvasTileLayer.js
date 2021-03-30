@@ -187,6 +187,7 @@ L.TileSectionManager = L.Class.extend({
 		this._tilesSection = null; // Shortcut.
 
 		this._sectionContainer = new CanvasSectionContainer(this._canvas);
+		app.sectionContainer = this._sectionContainer;
 		if (L.Browser.cypressTest) // If cypress is active, create test divs.
 			this._sectionContainer.testing = true;
 
