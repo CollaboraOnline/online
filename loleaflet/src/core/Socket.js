@@ -1195,6 +1195,8 @@ L.Socket = L.Class.extend({
 					command.selectedParts.push(parseInt(item));
 				});
 			}
+			else if (tokens[i].startsWith('masterpagecount='))
+				command.masterPageCount = parseInt(tokens[i].substring(16));
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
 			var defaultZoom = this._map.options.zoom;
