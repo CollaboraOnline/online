@@ -3,7 +3,7 @@
  * Table Overlay
  */
 
-L.TileLayer.include({
+L.CanvasTileLayer.include({
 	_initializeTableOverlay: function () {
 		this._tableColumnMarkers = [];
 		this._tableRowMarkers = [];

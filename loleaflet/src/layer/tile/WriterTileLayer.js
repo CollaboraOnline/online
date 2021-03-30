@@ -39,7 +39,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	onAdd: function (map) {
-		L.TileLayer.prototype.onAdd.call(this, map);
+		L.CanvasTileLayer.prototype.onAdd.call(this, map);
 		this._annotations = L.annotationManager(map);
 	},
 
@@ -104,7 +104,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			this._annotations.fillChanges(values.redlines);
 		}
 		else {
-			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
+			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
 	},
 
@@ -122,7 +122,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			this._annotations.onACKComment(obj);
 		}
 		else {
-			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
+			L.CanvasTileLayer.prototype._onMessage.call(this, textMsg, img);
 		}
 	},
 

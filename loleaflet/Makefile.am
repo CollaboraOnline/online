@@ -221,8 +221,6 @@ LOLEAFLET_JS =\
 	src/layer/tile/TilesSection.js \
 	src/layer/tile/ScrollSection.js \
 	src/layer/vector/CanvasOverlay.js \
-	src/layer/tile/GridLayer.js \
-	src/layer/tile/TileLayer.js \
 	src/layer/tile/CanvasTileLayer.js \
 	src/layer/SplitPanesContext.js \
 	src/layer/tile/TileLayer.TableOverlay.js \
@@ -668,7 +666,6 @@ pot:
 		src/layer/marker/TextInput.js \
 		src/layer/tile/CalcTileLayer.js \
 		src/layer/tile/ImpressTileLayer.js \
-		src/layer/tile/TileLayer.js \
 		src/layer/tile/WriterTileLayer.js \
 		src/map/Clipboard.js \
 		src/map/Map.js \
