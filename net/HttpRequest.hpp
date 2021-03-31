@@ -1146,6 +1146,9 @@ private:
 
     void checkTimeout(std::chrono::steady_clock::time_point now) override
     {
+        if (!_response || _response->done())
+            return;
+
         const auto duration
             = std::chrono::duration_cast<std::chrono::milliseconds>(now - _startTime);
         if (duration > getTimeout())
