@@ -295,6 +295,8 @@ static void compare(const Poco::Net::HTTPResponse& pocoResponse, const std::stri
 /// It exercises a few hundred requests/responses.
 void HttpRequestTests::test500GetStatuses()
 {
+    constexpr auto testname = "test500GetStatuses ";
+
     constexpr auto Host = "httpbin.org";
     constexpr bool secure = false;
     constexpr int port = 80;
@@ -329,6 +331,9 @@ void HttpRequestTests::test500GetStatuses()
         http::Request httpRequest;
         httpRequest.setUrl(url);
 
+        TST_LOG("Requesting Status Code [" << statusCode << "]: " << url);
+
+        std::unique_lock<std::mutex> lock(mutex);
         timedout = true; // Assume we timed out until we prove otherwise.
 
         httpSession->asyncRequest(httpRequest, pollThread);
@@ -345,7 +350,6 @@ void HttpRequestTests::test500GetStatuses()
 
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
-        std::unique_lock<std::mutex> lock(mutex);
         cv.wait_for(lock, DefTimeoutSeconds, [&]() { return httpResponse->done(); });
 
         LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
