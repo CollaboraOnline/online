@@ -522,6 +522,9 @@ L.Clipboard = L.Class.extend({
 		if (isAnyVexDialogActive() && !(this.pasteSpecialVex && this.pasteSpecialVex.isOpen))
 			return true;
 
+		if ($('.annotation-active').length)
+			return true;
+
 		return false;
 	},
 
