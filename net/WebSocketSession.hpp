@@ -153,13 +153,18 @@ public:
         return wsRequest(req, host(), port(), isSecure(), poll);
     }
 
-    /// Wait until the given prefix is matched and return the payload.
-    std::vector<char> waitForMessage(const std::string& prefix, std::chrono::milliseconds timeout,
-                                     const std::string& context = std::string())
+    /// Poll for messages and invoke the given callback.
+    /// Returns only when the callback returns true, or,
+    /// when no new messages are received within the given timeout.
+    std::vector<char> poll(const std::function<bool(const std::vector<char>&)>& cb,
+                           std::chrono::milliseconds timeout,
+                           const std::string& context = std::string())
     {
-        const auto deadline = std::chrono::steady_clock::now() + timeout;
-        LOG_DBG(context << "Waiting for [" << prefix << "] for " << timeout);
+        LOG_DBG(context << "Polling for " << timeout);
 
+        // Note: ideally, this lock will be timed, but that
+        // might prove expensive and we don't expect draining
+        // the queue to take anywhere close to the timeout.
         std::unique_lock<std::mutex> lock(_mutex);
         do
         {
@@ -167,15 +172,28 @@ public:
             while (!_queue.isEmpty())
             {
                 std::vector<char> message = _queue.pop();
-                if (matchMessage(prefix, message, context))
+                if (cb(message))
                     return message;
             }
 
             // Timed wait, if we must.
-        } while (_cv.wait_until(lock, deadline, [this]() { return !_queue.isEmpty(); }));
+        } while (_cv.wait_for(lock, timeout, [this]() { return !_queue.isEmpty(); }));
 
-        LOG_DBG(context << "Giving up waiting for [" << prefix << "] after " << timeout);
+        LOG_DBG(context << "Giving up polling after " << timeout);
         return std::vector<char>();
+    }
+
+    /// Wait until the given prefix is matched and return the payload.
+    std::vector<char> waitForMessage(const std::string& prefix, std::chrono::milliseconds timeout,
+                                     const std::string& context = std::string())
+    {
+        LOG_DBG(context << "Waiting for [" << prefix << "] for " << timeout);
+
+        return poll(
+            [&](const std::vector<char>& message) {
+                return matchMessage(prefix, message, context);
+            },
+            timeout, context);
     }
 
 private:
