@@ -7,6 +7,8 @@
 
 #include <config.h>
 
+#include "WebSocketSession.hpp"
+
 #include <algorithm>
 #include <vector>
 
