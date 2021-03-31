@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData CPoint vex $ _ isAnyVexDialogActive w2ui CPointSet CRectangle CPolyUtil CPolygon Cursor CBounds */
+/* global app L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData CPoint vex $ _ isAnyVexDialogActive CPointSet CRectangle CPolyUtil CPolygon Cursor CBounds */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -4721,8 +4721,10 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_openCommentWizard: function(annotation) {
-		this._map.fire('closemobilewizard');
-		w2ui['actionbar'].click('comment_wizard');
+		window.commentWizard = true;
+		var menuData = this._map._docLayer.getCommentWizardStructure();
+		this._map.fire('mobilewizard', menuData);
+
 		// if annotation is provided we can select perticular comment
 		if (annotation) {
 			$('#comment' + annotation._data.id).click();
