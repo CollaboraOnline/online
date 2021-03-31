@@ -2130,6 +2130,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._cellCursor = L.LatLngBounds.createDefault();
 			this._cellCursorXY = new L.Point(-1, -1);
+			this._cellCursorPixels = null;
 		}
 		else {
 			var strTwips = textMsg.match(/\d+/g);
@@ -2141,6 +2142,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._cellCursor = new L.LatLngBounds(
 				this._twipsToLatLng(this._cellCursorTwips.getTopLeft(), this._map.getZoom()),
 				this._twipsToLatLng(this._cellCursorTwips.getBottomRight(), this._map.getZoom()));
+
+			var start = this._twipsToCorePixels(this._cellCursorTwips.min);
+			var offsetPixels = offsetPixels = this._twipsToCorePixels(this._cellCursorTwips.getSize());
+			this._cellCursorPixels = L.LOUtil.createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
+
 			this._cellCursorXY = new L.Point(parseInt(strTwips[4]), parseInt(strTwips[5]));
 		}
 
@@ -2982,12 +2988,17 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._twipsToLatLng(boundsTwips.getTopLeft(), this._map.getZoom()),
 				this._twipsToLatLng(boundsTwips.getBottomRight(), this._map.getZoom()));
 
+			var offsetPixels = this._twipsToCorePixels(boundsTwips.getSize());
+			var start = this._twipsToCorePixels(boundsTwips.min);
+			this._cellSelectionAreaPixels = L.LOUtil.createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
+
 			if (this._cellCursor === null) {
 				this._cellCursor = L.LatLngBounds.createDefault();
 			}
 			this._updateScrollOnCellSelection(oldSelection, this._cellSelectionArea);
 		} else {
 			this._cellSelectionArea = null;
+			this._cellSelectionAreaPixels = null;
 		}
 	},
 
