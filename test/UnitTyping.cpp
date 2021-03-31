@@ -100,8 +100,8 @@ public:
         LOG_TRC("Waiting for test selection:");
         const char response[] = "textselectioncontent:";
         const int responseLen = sizeof(response) - 1;
-        std::string result = getResponseString(
-            socket, response, testname, 5000 /* 5 secs */);
+        const std::string result
+            = getResponseString(socket, response, testname, std::chrono::seconds(5));
 
         LOG_TRC("length " << result.length() << " vs. " << (responseLen + 4));
         if (strncmp(result.c_str(), response, responseLen) ||
@@ -179,7 +179,7 @@ public:
             }
         }
 
-        int waitMS = 5;
+        constexpr std::chrono::milliseconds waitMS{ 5 };
         std::vector<std::thread> threads;
         std::atomic<bool> started(false);
         std::atomic<int> liveTyping(0);
@@ -200,7 +200,8 @@ public:
                             << " tilewidth=7680 tileheight=7680";
                         sendTextFrame(sock, oss.str(), testname);
 
-                        std::vector<char> tile = getResponseMessage(sock, "tile:", testname, 5 /* ms */);
+                        const std::vector<char> tile = getResponseMessage(
+                            sock, "tile:", testname, std::chrono::milliseconds(5));
 
                         std::this_thread::sleep_for(std::chrono::milliseconds(25));
                     }
@@ -223,7 +224,7 @@ public:
                             sendTextFrame(sock, "ping", testname);
 
                         // suck and dump replies down
-                        std::vector<char> tile = getResponseMessage(sock, "tile:", testname, waitMS /* ms */);
+                        std::vector<char> tile = getResponseMessage(sock, "tile:", testname, waitMS);
                         if (tile.size())
                         {
 // 1544818858022 INCOMING: tile: nviewid=0 part=0 width=256 height=256 tileposx=15360 tileposy=38400 tilewidth=3840 tileheight=3840 oldwid=0 wid=232 ver=913 imgsize=1002
@@ -259,7 +260,8 @@ public:
             sendTextFrame(sockets[i], "gettextselection mimetype=text/plain;charset=utf-8", testname);
 
             LOG_TRC("Waiting for test selection:");
-            std::string result = getResponseString(sockets[i],  "textselectioncontent:", testname, 20000 /* 20 secs */);
+            const std::string result = getResponseString(sockets[i], "textselectioncontent:", testname,
+                                                   std::chrono::seconds(20));
             results[i] = result;
 
             char target = 'a'+i;

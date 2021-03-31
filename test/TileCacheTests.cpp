@@ -313,7 +313,8 @@ void TileCacheTests::testCancelTiles()
         sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=2560 height=2560 tileposx=0 tileposy=0 tilewidth=38400 tileheight=38400");
         sendTextFrame(socket, "canceltiles");
 
-        const auto res = getResponseString(socket, "tile:", testname, 1000);
+        const auto res
+            = getResponseString(socket, "tile:", testname, std::chrono::milliseconds(1000));
         if (res.empty())
         {
             break;
@@ -354,7 +355,8 @@ void TileCacheTests::testCancelTilesMultiView()
         sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,0 tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-2 ");
 
         sendTextFrame(socket1, "canceltiles");
-        const auto res1 = getResponseString(socket1, "tile:", "cancelTilesMultiView-1 ", 500);
+        const auto res1 = getResponseString(socket1, "tile:", "cancelTilesMultiView-1 ",
+                                            std::chrono::milliseconds(500));
         if (!res1.empty())
         {
             if (j == repeat)
@@ -375,7 +377,8 @@ void TileCacheTests::testCancelTilesMultiView()
         // Though in practice we get the rendering result from socket1's request and ours.
         // This happens because we currently always send back tiles even if they are of old version
         // because we want to be responsive, since we've rendered them anyway.
-        const auto res2 = getResponseString(socket2, "tile:", "cancelTilesMultiView-2 ", 500);
+        const auto res2 = getResponseString(socket2, "tile:", "cancelTilesMultiView-2 ",
+                                            std::chrono::milliseconds(500));
         if (!res2.empty())
         {
             if (j == repeat)
@@ -423,7 +426,8 @@ void TileCacheTests::testDisconnectMultiView()
         }
 
         // Should never get more than 4 tiles on socket2.
-        getResponseString(socket2, "tile:", "disconnectMultiView-2 ", 500);
+        getResponseString(socket2, "tile:", "disconnectMultiView-2 ",
+                          std::chrono::milliseconds(500));
     }
 }
 
@@ -1292,7 +1296,9 @@ void TileCacheTests::testTileWireIDHandling()
     assertResponseString(socket, "invalidatetiles:", testname);
 
     // For the first input wsd will send all invalidated tiles
-    LOK_ASSERT_MESSAGE("Expected at least two tiles.", countMessages(socket, "tile:", testname, 500) > 1);
+    LOK_ASSERT_MESSAGE("Expected at least two tiles.",
+                       countMessages(socket, "tile:", testname, std::chrono::milliseconds(500))
+                           > 1);
 
     // Let WSD know we got these so it wouldn't stop sending us modified tiles automatically.
     sendTextFrame(socket, "tileprocessed tile=0:0:0:3840:3840:0", testname);
@@ -1304,7 +1310,8 @@ void TileCacheTests::testTileWireIDHandling()
     assertResponseString(socket, "invalidatetiles:", testname);
 
     // For the second input wsd will send one tile, since some of them are identical.
-    const int arrivedTiles = countMessages(socket, "tile:", testname, 500);
+    const int arrivedTiles
+        = countMessages(socket, "tile:", testname, std::chrono::milliseconds(500));
     if (arrivedTiles == 1)
         return;
 
@@ -1316,7 +1323,9 @@ void TileCacheTests::testTileWireIDHandling()
     sendChar(socket, 'z', skNone, testname);
     assertResponseString(socket, "invalidatetiles:", testname);
 
-    LOK_ASSERT_MESSAGE("Expected exactly one tile.", countMessages(socket, "tile:", testname, 500) == 1);
+    LOK_ASSERT_MESSAGE("Expected exactly one tile.",
+                       countMessages(socket, "tile:", testname, std::chrono::milliseconds(500))
+                           == 1);
 }
 
 void TileCacheTests::testTileProcessed()
@@ -1443,7 +1452,9 @@ void TileCacheTests::testTileBeingRenderedHandling()
     assertResponseString(socket, "invalidatetiles:", testname);
 
     // For the first input wsd will send all invalidated tiles
-    LOK_ASSERT_MESSAGE("Expected at least two tiles.", countMessages(socket, "tile:", testname, 500) > 1);
+    LOK_ASSERT_MESSAGE("Expected at least two tiles.",
+                       countMessages(socket, "tile:", testname, std::chrono::milliseconds(500))
+                           > 1);
 
     // For the later inputs wsd will send one tile, since other ones are identical
     for(int i = 0; i < 5; ++i)
@@ -1454,7 +1465,8 @@ void TileCacheTests::testTileBeingRenderedHandling()
         sendChar(socket, 'y', skNone, testname);
         assertResponseString(socket, "invalidatetiles:", testname);
 
-        const int arrivedTiles = countMessages(socket, "tile:", testname, 500);
+        const int arrivedTiles
+            = countMessages(socket, "tile:", testname, std::chrono::milliseconds(500));
         if (arrivedTiles != 1)
         {
             // Or, at most 2. The reason is that sometimes we get line antialiasing differences that
@@ -1467,7 +1479,9 @@ void TileCacheTests::testTileBeingRenderedHandling()
             sendChar(socket, 'z', skNone, testname);
             assertResponseString(socket, "invalidatetiles:", testname);
 
-            LOK_ASSERT_MESSAGE("Expected exactly one tile.", countMessages(socket, "tile:", testname, 500) == 1);
+            LOK_ASSERT_MESSAGE(
+                "Expected exactly one tile.",
+                countMessages(socket, "tile:", testname, std::chrono::milliseconds(500)) == 1);
         }
     }
 }
@@ -1497,7 +1511,9 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     assertResponseString(socket1, "invalidatetiles:", testname);
 
     // For the first input wsd will send all invalidated tiles
-    LOK_ASSERT_MESSAGE("Expected at least two tiles.", countMessages(socket1, "tile:", testname, 500) > 1);
+    LOK_ASSERT_MESSAGE("Expected at least two tiles.",
+                       countMessages(socket1, "tile:", testname, std::chrono::milliseconds(500))
+                           > 1);
 
     // Let WSD know we got these so it wouldn't stop sending us modified tiles automatically.
     sendTextFrame(socket1, "tileprocessed tile=0:0:0:3840:3840:0", testname);
@@ -1509,7 +1525,8 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     assertResponseString(socket1, "invalidatetiles:", testname);
 
     // For the second input wsd will send one tile, since some of them are identical.
-    const int arrivedTiles = countMessages(socket1, "tile:", testname, 500);
+    const int arrivedTiles
+        = countMessages(socket1, "tile:", testname, std::chrono::milliseconds(500));
     if (arrivedTiles == 1)
         return;
 
@@ -1521,17 +1538,20 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     sendChar(socket1, 'z', skNone, testname);
     assertResponseString(socket1, "invalidatetiles:", testname);
 
-    LOK_ASSERT_MESSAGE("Expected exactly one tile.", countMessages(socket1, "tile:", testname, 500) == 1);
+    LOK_ASSERT_MESSAGE("Expected exactly one tile.",
+                       countMessages(socket1, "tile:", testname, std::chrono::milliseconds(500))
+                           == 1);
 
     //2. Now request the same tiles by the other client (e.g. scroll to the same view)
 
     sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
 
     // We expect three tiles sent to the second client
-    LOK_ASSERT_EQUAL(3, countMessages(socket2, "tile:", testname, 500));
+    LOK_ASSERT_EQUAL(3, countMessages(socket2, "tile:", testname, std::chrono::milliseconds(500)));
 
     // wsd should not send tiles messages for the first client
-    std::vector<char> tile = getResponseMessage(socket1, "tile:", testname, 1000);
+    const std::vector<char> tile
+        = getResponseMessage(socket1, "tile:", testname, std::chrono::milliseconds(1000));
     LOK_ASSERT_MESSAGE("Not expected tile message arrived!", tile.empty());
 }
 
@@ -1556,7 +1576,8 @@ void TileCacheTests::testLimitTileVersionsOnFly()
     bool getTileResp = false;
     do
     {
-        std::string tile = getResponseString(socket, "tile:", testname, 1000);
+        const std::string tile
+            = getResponseString(socket, "tile:", testname, std::chrono::milliseconds(1000));
         getTileResp = !tile.empty();
     } while(getTileResp);
 
@@ -1566,7 +1587,8 @@ void TileCacheTests::testLimitTileVersionsOnFly()
     // Handle all tiles sent by wsd
     do
     {
-        std::string tile = getResponseString(socket, "tile:", testname, 1000);
+        const std::string tile
+            = getResponseString(socket, "tile:", testname, std::chrono::milliseconds(1000));
         getTileResp = !tile.empty();
     } while(getTileResp);
 
@@ -1574,7 +1596,8 @@ void TileCacheTests::testLimitTileVersionsOnFly()
     // two versions of the same tile were already sent.
     sendChar(socket, 'x', skNone, testname);
 
-    std::vector<char> tile1 = getResponseMessage(socket, "tile:", testname, 1000);
+    const std::vector<char> tile1
+        = getResponseMessage(socket, "tile:", testname, std::chrono::milliseconds(1000));
     LOK_ASSERT_MESSAGE("Not expected tile message arrived!", tile1.empty());
 
     // When the next tileprocessed message arrive with correct tileID
@@ -1585,7 +1608,8 @@ void TileCacheTests::testLimitTileVersionsOnFly()
     bool gotTile = false;
     do
     {
-        std::vector<char> tile = getResponseMessage(socket, "tile:", testname, 1000);
+        const std::vector<char> tile
+            = getResponseMessage(socket, "tile:", testname, std::chrono::milliseconds(1000));
         gotTile = !tile.empty();
         if(gotTile)
             ++arrivedTiles;

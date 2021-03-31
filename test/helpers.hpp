@@ -315,15 +315,16 @@ int getErrorCode(const std::shared_ptr<LOOLWebSocket>& ws, std::string& message,
     return getErrorCode(*ws, message, testname);
 }
 
-inline
-std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
+inline std::vector<char>
+getResponseMessage(LOOLWebSocket& ws, const std::string& prefix, const std::string& testname,
+                   const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     try
     {
         int flags = 0;
         std::vector<char> response;
 
-        auto endTime = std::chrono::steady_clock::now() + std::chrono::milliseconds(timeoutMs);
+        auto endTime = std::chrono::steady_clock::now() + timeoutMs;
 
         ws.setReceiveTimeout(0);
         do
@@ -331,7 +332,7 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
             auto now = std::chrono::steady_clock::now();
             if (now > endTime) // timedout
             {
-                TST_LOG("Timeout after " << timeoutMs << " ms.");
+                TST_LOG("Timeout after " << timeoutMs);
                 break;
             }
             long waitTimeUs = std::chrono::duration_cast<std::chrono::microseconds>(endTime - now).count();
@@ -384,21 +385,26 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
     return std::vector<char>();
 }
 
-inline
-std::vector<char> getResponseMessage(const std::shared_ptr<LOOLWebSocket>& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
+inline std::vector<char> getResponseMessage(const std::shared_ptr<LOOLWebSocket>& ws,
+                                            const std::string& prefix, const std::string& testname,
+                                            const std::chrono::milliseconds timeoutMs
+                                            = std::chrono::seconds(10))
 {
     return getResponseMessage(*ws, prefix, testname, timeoutMs);
 }
 
 template <typename T>
-std::string getResponseString(T& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
+std::string getResponseString(T& ws, const std::string& prefix, const std::string& testname,
+                              const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     const auto response = getResponseMessage(ws, prefix, testname, timeoutMs);
     return std::string(response.data(), response.size());
 }
 
 template <typename T>
-std::string assertResponseString(T& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
+std::string assertResponseString(T& ws, const std::string& prefix, const std::string& testname,
+                                 const std::chrono::milliseconds timeoutMs
+                                 = std::chrono::seconds(10))
 {
     const auto res = getResponseString(ws, prefix, testname, timeoutMs);
     LOK_ASSERT_EQUAL(prefix, res.substr(0, prefix.length()));
@@ -409,13 +415,13 @@ std::string assertResponseString(T& ws, const std::string& prefix, const std::st
 template <typename T>
 std::string assertNotInResponse(T& ws, const std::string& prefix, const std::string& testname)
 {
-    const auto res = getResponseString(ws, prefix, testname, 1000);
+    const auto res = getResponseString(ws, prefix, testname, std::chrono::milliseconds(1000));
     LOK_ASSERT_MESSAGE(testname + "Did not expect getting message [" + res + "].", res.empty());
     return res;
 }
 
-inline
-int countMessages(LOOLWebSocket& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
+inline int countMessages(LOOLWebSocket& ws, const std::string& prefix, const std::string& testname,
+                         const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     int count = 0;
     while (!getResponseMessage(ws, prefix, testname, timeoutMs).empty())
@@ -424,8 +430,9 @@ int countMessages(LOOLWebSocket& ws, const std::string& prefix, const std::strin
     return count;
 }
 
-inline
-int countMessages(const std::shared_ptr<LOOLWebSocket>& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
+inline int countMessages(const std::shared_ptr<LOOLWebSocket>& ws, const std::string& prefix,
+                         const std::string& testname,
+                         const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     return countMessages(*ws, prefix, testname, timeoutMs);
 }
@@ -434,8 +441,8 @@ inline
 bool isDocumentLoaded(LOOLWebSocket& ws, const std::string& testname, bool isView = true)
 {
     const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
-    // Allow 20 secs to load
-    const auto message = getResponseString(ws, prefix, testname, 30 * 1000);
+    // Allow 30 secs to load
+    const auto message = getResponseString(ws, prefix, testname, std::chrono::seconds(30));
     bool success = LOOLProtocol::matchPrefix(prefix, message);
     if (!success)
         TST_LOG("ERR: Timed out loading document");
@@ -544,15 +551,14 @@ std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const std::string& docFilenam
     return nullptr;
 }
 
-inline
-void SocketProcessor(const std::string& testname,
-                     const std::shared_ptr<LOOLWebSocket>& socket,
-                     const std::function<bool(const std::string& msg)>& handler,
-                     const size_t timeoutMs = 10000)
+inline void SocketProcessor(const std::string& testname,
+                            const std::shared_ptr<LOOLWebSocket>& socket,
+                            const std::function<bool(const std::string& msg)>& handler,
+                            const std::chrono::milliseconds timeoutMs = std::chrono::seconds(10))
 {
     socket->setReceiveTimeout(0);
 
-    const Poco::Timespan waitTime(timeoutMs * 1000);
+    const Poco::Timespan waitTime(std::chrono::microseconds(timeoutMs).count());
     int flags = 0;
     int n = 0;
     char buffer[READ_BUFFER_SIZE];
