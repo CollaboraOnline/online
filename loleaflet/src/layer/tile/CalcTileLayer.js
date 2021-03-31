@@ -94,6 +94,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		this._annotations = {};
 
+		app.sectionContainer.addSection(new app.definitions.AutoFillMarkerSection());
+
 		this.insertMode = false;
 		this._cellSelections = Array(0);
 		this._cellCursorXY = {x: -1, y: -1};
