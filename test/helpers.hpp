@@ -699,6 +699,25 @@ loadDocAndGetSession(SocketPoll& socketPoll, const Poco::URI& uri, const std::st
     return nullptr;
 }
 
+inline std::shared_ptr<http::WebSocketSession>
+loadDocAndGetSession(SocketPoll& socketPoll, const std::string& docFilename, const Poco::URI& uri,
+                     const std::string& testname, bool isView = true, bool isAssert = true)
+{
+    try
+    {
+        std::string documentPath, documentURL;
+        getDocumentPathAndURL(docFilename, documentPath, documentURL, testname);
+        return loadDocAndGetSession(socketPoll, uri, documentURL, testname, isView, isAssert);
+    }
+    catch (const std::exception& ex)
+    {
+        LOK_ASSERT_FAIL(ex.what());
+    }
+
+    // Really couldn't reach here, but the compiler doesn't know any better.
+    return nullptr;
+}
+
 inline void SocketProcessor(const std::string& testname,
                             const std::shared_ptr<LOOLWebSocket>& socket,
                             const std::function<bool(const std::string& msg)>& handler,
