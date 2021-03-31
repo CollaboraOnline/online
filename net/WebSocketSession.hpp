@@ -143,14 +143,14 @@ public:
     const std::string& host() const { return _host; }
     const std::string& port() const { return _port; }
     Protocol protocol() const { return _protocol; }
-    bool isSecure() const { return _protocol == Protocol::HttpSsl; }
+    bool secure() const { return _protocol == Protocol::HttpSsl; }
 
     bool asyncRequest(http::Request& req, SocketPoll& poll)
     {
         LOG_TRC("asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                  << req.getUrl());
 
-        return wsRequest(req, host(), port(), isSecure(), poll);
+        return wsRequest(req, host(), port(), secure(), poll);
     }
 
     /// Poll for messages and invoke the given callback.
