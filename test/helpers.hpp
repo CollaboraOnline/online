@@ -30,6 +30,7 @@
 #include <LOOLWebSocket.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/Util.hpp>
+#include <net/WebSocketSession.hpp>
 
 #include <iterator>
 #include <fstream>
@@ -138,6 +139,18 @@ inline
 void sendTextFrame(const std::shared_ptr<LOOLWebSocket>& socket, const std::string& string, const std::string& name = "")
 {
     sendTextFrame(*socket, string, name);
+}
+
+inline void sendTextFrame(const std::shared_ptr<http::WebSocketSession>& ws,
+                          const std::string& string, const std::string& testname = std::string())
+{
+#ifndef FUZZER
+    TST_LOG("Sending " << string.size()
+                       << " bytes: " << LOOLProtocol::getAbbreviatedMessage(string));
+#else
+    (void)testname;
+#endif
+    ws->sendMessage(string);
 }
 
 inline std::unique_ptr<Poco::Net::HTTPClientSession> createSession(const Poco::URI& uri)
@@ -416,6 +429,16 @@ std::string getResponseString(T& ws, const std::string& prefix, const std::strin
     return std::string(response.data(), response.size());
 }
 
+inline std::string getResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
+                                     const std::string& prefix, const std::string& testname,
+                                     const std::chrono::milliseconds timeoutMs
+                                     = std::chrono::seconds(10))
+{
+    const std::vector<char> response = ws->waitForMessage(prefix, timeoutMs, testname);
+
+    return std::string(response.data(), response.size());
+}
+
 template <typename T>
 std::string assertResponseString(T& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
 {
@@ -465,6 +488,19 @@ inline
 bool isDocumentLoaded(std::shared_ptr<LOOLWebSocket>& ws, const std::string& testname, bool isView = true)
 {
     return isDocumentLoaded(*ws, testname, isView);
+}
+
+inline bool isDocumentLoaded(const std::shared_ptr<http::WebSocketSession>& ws,
+                             const std::string& testname, bool isView = true)
+{
+    const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
+    constexpr auto timeout = std::chrono::seconds(20); // Allow 20 secs to load
+    const std::string message = getResponseString(ws, prefix, testname, timeout);
+
+    const bool success = LOOLProtocol::matchPrefix(prefix, message);
+    if (!success)
+        TST_LOG("ERROR: Timed out loading document. Did not get [" << prefix << "] in time.");
+    return success;
 }
 
 // Connecting to a Kit process is managed by document broker, that it does several
@@ -563,11 +599,46 @@ std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const std::string& docFilenam
     return nullptr;
 }
 
-inline
-void SocketProcessor(const std::string& testname,
-                     const std::shared_ptr<LOOLWebSocket>& socket,
-                     const std::function<bool(const std::string& msg)>& handler,
-                     const size_t timeoutMs = 10000)
+inline std::shared_ptr<http::WebSocketSession>
+loadDocAndGetSession(SocketPoll& socketPoll, const Poco::URI& uri, const std::string& documentURL,
+                     const std::string& testname, bool isView = true, bool isAssert = true)
+{
+    try
+    {
+        // Load a document and get its status.
+        auto ws = http::WebSocketSession::create(uri.toString());
+        http::Request req(documentURL);
+        ws->asyncRequest(req, socketPoll);
+
+        sendTextFrame(ws, "load url=" + documentURL, testname);
+        const bool isLoaded = isDocumentLoaded(ws, testname, isView);
+        if (!isLoaded && !isAssert)
+        {
+            return nullptr;
+        }
+
+        LOK_ASSERT_MESSAGE("Failed to load the document " + documentURL, isLoaded);
+
+        TST_LOG("Loaded document [" << documentURL << "].");
+        return ws;
+    }
+    catch (const Poco::Exception& ex)
+    {
+        LOK_ASSERT_FAIL(ex.displayText());
+    }
+    catch (const std::exception& ex)
+    {
+        LOK_ASSERT_FAIL(ex.what());
+    }
+
+    // Really can't reach here, but the compiler doesn't know better.
+    return nullptr;
+}
+
+inline void SocketProcessor(const std::string& testname,
+                            const std::shared_ptr<LOOLWebSocket>& socket,
+                            const std::function<bool(const std::string& msg)>& handler,
+                            const size_t timeoutMs = 10000)
 {
     socket->setReceiveTimeout(0);
 
@@ -594,6 +665,18 @@ void SocketProcessor(const std::string& testname,
         }
     }
     while (n > 0 && (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) != Poco::Net::WebSocket::FRAME_OP_CLOSE);
+}
+
+inline void
+SocketProcessor(const std::string& testname, const std::shared_ptr<http::WebSocketSession>& ws,
+                const std::function<bool(const std::string& msg)>& handler,
+                const std::chrono::milliseconds timeout = std::chrono::milliseconds(10000))
+{
+    ws->poll(
+        [&](const std::vector<char>& message) {
+            return !handler(std::string(message.data(), message.size()));
+        },
+        timeout, testname);
 }
 
 inline
@@ -808,6 +891,18 @@ inline void selectAll(const std::shared_ptr<LOOLWebSocket>& socket, const std::s
     }
 }
 
+/// Select all and wait for the text selection update.
+inline void selectAll(const std::shared_ptr<http::WebSocketSession>& ws,
+                      const std::string& testname, int repeat = COMMAND_RETRY_COUNT)
+{
+    for (int i = 0; i < repeat; ++i)
+    {
+        TST_LOG("Sending [uno .uno:SelectAll], attempt #" << repeat);
+        sendTextFrame(ws, "uno .uno:SelectAll", testname);
+        if (!getResponseString(ws, "textselection:", testname).empty())
+            break;
+    }
+}
 
 /// Delete all and wait for the text selection update.
 inline void deleteAll(const std::shared_ptr<LOOLWebSocket>& socket, const std::string& testname, int repeat = COMMAND_RETRY_COUNT)
@@ -818,6 +913,21 @@ inline void deleteAll(const std::shared_ptr<LOOLWebSocket>& socket, const std::s
     {
         sendTextFrame(socket, "uno .uno:Delete", testname);
         if (!getResponseString(socket, "textselection:", testname).empty())
+            break;
+    }
+}
+
+/// Delete all and wait for the text selection update.
+inline void deleteAll(const std::shared_ptr<http::WebSocketSession>& ws,
+                      const std::string& testname, int repeat = COMMAND_RETRY_COUNT)
+{
+    selectAll(ws, testname);
+
+    for (int i = 0; i < repeat; ++i)
+    {
+        TST_LOG("Sending [uno .uno:Delete], attempt #" << repeat);
+        sendTextFrame(ws, "uno .uno:Delete", testname);
+        if (!getResponseString(ws, "textselection:", testname).empty())
             break;
     }
 }
