@@ -38,7 +38,8 @@ dist_doc_DATA = wsd/README \
                 wsd/README.vars \
                 wsd/protocol.txt \
                 wsd/reference.md \
-                wsd/metrics.txt
+                wsd/metrics.txt \
+                EULA
 
 loolwsddatadir = @LOOLWSD_DATADIR@
 
@@ -330,6 +331,7 @@ EXTRA_DIST = discovery.xml \
              etc/nginx/loolwsd.conf \
              scripts/unocommands.py \
              scripts/refresh-git-hooks \
+             README.md \
              $(man_MANS)
 
 if ENABLE_LIBFUZZER
