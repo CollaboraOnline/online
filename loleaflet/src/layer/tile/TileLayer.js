@@ -6,7 +6,7 @@
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
-/* global vex $ L _ isAnyVexDialogActive CPointSet CRectangle CPolyUtil CPolygon Cursor CBounds w2ui */
+/* global vex $ L _ isAnyVexDialogActive CPointSet CRectangle CPolyUtil CPolygon Cursor CBounds */
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
 	String.prototype.startsWith = function (str) {
@@ -4084,8 +4084,10 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_openCommentWizard: function(annotation) {
-		this._map.fire('closemobilewizard');
-		w2ui['actionbar'].click('comment_wizard');
+		window.commentWizard = true;
+		var menuData = this._map._docLayer.getCommentWizardStructure();
+		this._map.fire('mobilewizard', menuData);
+
 		// if annotation is provided we can select perticular comment
 		if (annotation) {
 			$('#comment' + annotation._data.id).click();

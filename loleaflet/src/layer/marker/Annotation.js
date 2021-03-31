@@ -93,9 +93,6 @@ L.Annotation = L.Layer.extend({
 	},
 
 	show: function () {
-		if (this._data.textSelected && this._map.hasLayer && !this._map.hasLayer(this._data.textSelected)) {
-			this._map.addLayer(this._data.textSelected);
-		}
 		this.showMarker();
 		if (window.mode.isMobile())
 			return;
@@ -104,6 +101,10 @@ L.Annotation = L.Layer.extend({
 		this._contentNode.style.display = '';
 		this._nodeModify.style.display = 'none';
 		this._nodeReply.style.display = 'none';
+
+		if (this._data.textSelected && this._map.hasLayer && !this._map.hasLayer(this._data.textSelected)) {
+			this._map.addLayer(this._data.textSelected);
+		}
 	},
 
 	hide: function () {
