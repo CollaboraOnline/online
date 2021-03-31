@@ -208,11 +208,7 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 			this._map.sendUnoCommand('.uno:EditAnnotation', comment);
 			this._selectedAnnotation = undefined;
 		}
-		if (window.mode.isMobile()) {
-			this._map._docLayer._openCommentWizard(event.annotation);
-		} else {
-			this._map.focus();
-		}
+		this._map.focus();
 	},
 	countDocumentAnnotations: function () {
 		var count = 0;
@@ -462,7 +458,7 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 			this.updateDocBounds(1, this.extraSize);
 			this.layoutAnnotations();
 			if (window.mode.isMobile())
-				this._map._docLayer._openCommentWizard();
+				this._map._docLayer._openCommentWizard(this.getAnnotation(comment.id));
 		} else if (comment.action === 'Remove') {
 			var pageIndex = this.removeAnnotation(comment.id);
 			if (pageIndex != -1) {

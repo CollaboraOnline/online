@@ -842,7 +842,9 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 			if (this._selected && !this._selected.isEdit()) {
 				this._map.focus();
 			}
-			this.layout();
+			annotation = this._items[this.getRootIndexOf(obj.comment.id)];
+			if (!window.mode.isMobile())
+				this.layout();
 		} else if (action === 'Remove') {
 			if (window.mode.isMobile() && obj.comment.id === annotation._data.id) {
 				var child = this._items[this.getIndexOf(obj.comment.id) + 1];

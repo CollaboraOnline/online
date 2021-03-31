@@ -283,11 +283,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 					this._annotations[obj.comment.tab] = {};
 				}
 				this._annotations[obj.comment.tab][obj.comment.id] = this.createAnnotation(obj.comment);
+				var addedComment = this._annotations[obj.comment.tab][obj.comment.id];
 				if (obj.comment.tab === this._selectedPart) {
-					this.showAnnotation(this._annotations[obj.comment.tab][obj.comment.id]);
+					this.showAnnotation(addedComment);
 				}
 				if (window.mode.isMobile())
-					this._map._docLayer._openCommentWizard();
+					this._map._docLayer._openCommentWizard(addedComment._annotation);
 			} else if (obj.comment.action === 'Remove') {
 				var removed = this._annotations[obj.comment.tab][obj.comment.id];
 				if (removed) {
@@ -307,7 +308,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 					modified.setLatLngBounds(obj.comment.cellPos);
 				}
 				if (window.mode.isMobile())
-					this._map._docLayer._openCommentWizard(modified);
+					this._map._docLayer._openCommentWizard(modified._annotation);
 			}
 		} else if (textMsg.startsWith('invalidateheader: column')) {
 			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: 0,
