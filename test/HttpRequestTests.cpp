@@ -53,7 +53,11 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     void testTimeout();
     void testOnFinished_Complete();
     void testOnFinished_Timeout();
+
+    static constexpr std::chrono::seconds DefTimeoutSeconds {5};
 };
+
+constexpr std::chrono::seconds HttpRequestTests::DefTimeoutSeconds;
 
 void HttpRequestTests::testInvalidURI()
 {
@@ -63,7 +67,7 @@ void HttpRequestTests::testInvalidURI()
     http::Request httpRequest(URL);
 
     auto httpSession = http::Session::createHttp(Host);
-    httpSession->setTimeout(std::chrono::seconds(1));
+    httpSession->setTimeout(DefTimeoutSeconds);
     LOK_ASSERT(httpSession->syncRequest(httpRequest) == false);
 
     const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
@@ -118,7 +122,7 @@ void HttpRequestTests::testSimpleGet()
         const auto pocoResponse = helpers::pocoGet(secure, Host, port, URL);
 
         std::unique_lock<std::mutex> lock(mutex);
-        cv.wait_for(lock, std::chrono::seconds(1));
+        cv.wait_for(lock, DefTimeoutSeconds);
 
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
@@ -146,7 +150,7 @@ void HttpRequestTests::testSimpleGetSync()
     http::Request httpRequest(URL);
 
     auto httpSession = http::Session::create(Host);
-    httpSession->setTimeout(std::chrono::seconds(1));
+    httpSession->setTimeout(DefTimeoutSeconds);
     LOK_ASSERT(httpSession->syncRequest(httpRequest));
     LOK_ASSERT(httpSession->syncRequest(httpRequest)); // Second request.
 
@@ -201,7 +205,7 @@ void HttpRequestTests::test500GetStatuses()
     pollThread.startThread();
 
     auto httpSession = http::Session::createHttp(Host);
-    httpSession->setTimeout(std::chrono::seconds(1));
+    httpSession->setTimeout(DefTimeoutSeconds);
 
     std::condition_variable cv;
     std::mutex mutex;
@@ -238,7 +242,7 @@ void HttpRequestTests::test500GetStatuses()
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
         std::unique_lock<std::mutex> lock(mutex);
-        cv.wait_for(lock, std::chrono::seconds(1), [&]() { return httpResponse->done(); });
+        cv.wait_for(lock, DefTimeoutSeconds, [&]() { return httpResponse->done(); });
 
         LOK_ASSERT_EQUAL(http::Response::State::Complete, httpResponse->state());
         LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
@@ -282,7 +286,7 @@ void HttpRequestTests::testSimplePost()
     httpRequest.setBodyFile(path);
 
     auto httpSession = http::Session::createHttp(Host);
-    httpSession->setTimeout(std::chrono::seconds(1));
+    httpSession->setTimeout(DefTimeoutSeconds);
 
     std::condition_variable cv;
     std::mutex mutex;
@@ -296,7 +300,7 @@ void HttpRequestTests::testSimplePost()
     httpSession->asyncRequest(httpRequest, pollThread);
 
     std::unique_lock<std::mutex> lock(mutex);
-    cv.wait_for(lock, std::chrono::seconds(1));
+    cv.wait_for(lock, DefTimeoutSeconds);
 
     const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
     LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
