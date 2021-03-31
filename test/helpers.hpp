@@ -558,6 +558,55 @@ connectLOKit(const Poco::URI& uri,
     throw std::runtime_error("Cannot connect to [" + uri.toString() + "].");
 }
 
+// Connecting to a Kit process is managed by document broker, that it does several
+// jobs to establish the bridge connection between the Client and Kit process,
+// The result, it is mostly time outs to get messages in the unit test and it could fail.
+// connectLOKit ensures the websocket is connected to a kit process.
+inline std::shared_ptr<http::WebSocketSession> connectLOKit(SocketPoll& socketPoll,
+                                                            const Poco::URI& uri,
+                                                            const std::string& url,
+                                                            const std::string& testname)
+{
+    TST_LOG("Connecting to " << uri.toString());
+    constexpr int max_retries = 11;
+    int retries = max_retries - 1;
+    do
+    {
+        try
+        {
+            // Load a document and get its status.
+            auto ws = http::WebSocketSession::create(uri.toString());
+
+            TST_LOG("Connection to " << uri.toString() << " is "
+                                     << (ws->secure() ? "secure" : "plain"));
+
+            http::Request req(url);
+            ws->asyncRequest(req, socketPoll);
+
+            const char* expected_response = "statusindicator: ready";
+
+            TST_LOG("Connected to " << uri.toString() << ", waiting for response ["
+                                    << expected_response << "]");
+            if (getResponseString(ws, expected_response, testname) == expected_response)
+            {
+                return ws;
+            }
+
+            TST_LOG("ERROR: Reconnecting (retry #" << (max_retries - retries) << ") to "
+                                                   << uri.toString());
+        }
+        catch (const std::exception& ex)
+        {
+            TST_LOG("ERROR: Failed to connect to " << uri.toString() << ": " << ex.what());
+        }
+
+        std::this_thread::sleep_for(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
+    } while (retries--);
+
+    TST_LOG("ERROR: Giving up connecting to " << uri.toString());
+    throw std::runtime_error("Cannot connect to [" + uri.toString() + "].");
+}
+
 inline
 std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const Poco::URI& uri, const std::string& documentURL, const std::string& testname, bool isView = true, bool isAssert = true)
 {
