@@ -66,8 +66,7 @@ describe('Formula bar tests.', function() {
 		// A2 cell is empty
 		helper.typeIntoInputField('input#addressInput', 'A2');
 
-		cy.get('.spreadsheet-cell-autofill-marker')
-			.should('be.visible');
+		cy.get('[id="test-div-auto fill marker"]').should('exist');
 
 		calcHelper.typeIntoFormulabar('{end}');
 
