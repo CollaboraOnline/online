@@ -310,14 +310,6 @@ L.TileLayer = L.GridLayer.extend({
 			draggable: true
 		});
 
-		this._cellAutofillMarker = L.marker(new L.LatLng(0, 0), {
-			icon: L.divIcon({
-				className: 'spreadsheet-cell-autofill-marker',
-				iconSize: window.mode.isDesktop() ? [8, 8] : [16, 16]
-			}),
-			draggable: true
-		});
-
 		this._initializeTableOverlay();
 
 		this._emptyTilesCount = 0;
@@ -485,7 +477,6 @@ L.TileLayer = L.GridLayer.extend({
 		this._cellResizeMarkerEnd.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
 		this._referenceMarkerStart.on('dragstart drag dragend', this._onReferenceMarkerDrag, this);
 		this._referenceMarkerEnd.on('dragstart drag dragend', this._onReferenceMarkerDrag, this);
-		this._cellAutofillMarker.on('dragstart drag dragend', this._onCellResizeMarkerDrag, this);
 		this._dropDownButton.on('click', this._onDropDownButtonClick, this);
 		// The 'tap' events are not broadcasted by L.Map.TouchGesture, A specialized 'dropdownmarkertapped' event is
 		// generated just for the validity-dropdown-icon.
@@ -2242,8 +2233,13 @@ L.TileLayer = L.GridLayer.extend({
 			this._cellAutoFillArea = new L.LatLngBounds(
 						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
 						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
+
+			var topLeftPixels = this._twipsToCorePixels(topLeftTwips);
+			var offsetPixels = this._twipsToCorePixels(offset);
+			this._cellAutoFillAreaPixels = L.LOUtil.createRectangle(topLeftPixels.x, topLeftPixels.y, offsetPixels.x, offsetPixels.y);
 		} else {
 			this._cellAutoFillArea = null;
+			this._cellAutoFillAreaPixels = null;
 		}
 	},
 
@@ -3157,16 +3153,8 @@ L.TileLayer = L.GridLayer.extend({
 
 	// Update dragged text selection.
 	_onCellResizeMarkerDrag: function (e) {
-		var buttonType = null;
 		if (e.type === 'dragstart') {
 			e.target.isDragged = true;
-
-			// handle scrolling
-			if (this._cellAutofillMarker === e.target) {
-				var autoFillPosition = this._latLngToTwips(this._cellAutoFillArea.getCenter());
-				this._postMouseEvent('buttondown', autoFillPosition.x, autoFillPosition.y, 1, 1, 0);
-				buttonType = 'move';
-			}
 		}
 		else if (e.type === 'drag') {
 			var event = e.originalEvent;
@@ -3210,21 +3198,12 @@ L.TileLayer = L.GridLayer.extend({
 			containerPos = containerPos.add(e.target.dragging._draggable.startOffset);
 			this._map.fire('handleautoscroll', {pos: containerPos, map: this._map});
 
-			// cell auto marker
-			if (this._cellAutofillMarker === e.target) {
-				buttonType = 'move';
-			}
 		} else if (e.type === 'dragend') {
 			e.target.isDragged = false;
 
 			// handle scrolling
 			this._map.focus();
 			this._map.fire('scrollvelocity', {vx: 0, vy: 0});
-
-			// cell auto marker
-			if (this._cellAutofillMarker === e.target) {
-				buttonType = 'buttonup';
-			}
 		}
 
 		// modify the mouse position - move to center of the marker
@@ -3237,9 +3216,7 @@ L.TileLayer = L.GridLayer.extend({
 		else if (this._cellResizeMarkerEnd === e.target) {
 			size = this._cellResizeMarkerEnd._icon.getBoundingClientRect();
 		}
-		else if (this._cellAutofillMarker === e.target) {
-			size = this._cellAutofillMarker._icon.getBoundingClientRect();
-		}
+
 		aMousePosition = aMousePosition.add(new L.Point(size.width / 2, size.height / 2));
 		aMousePosition = this._map.unproject(aMousePosition);
 		aMousePosition = this._latLngToTwips(aMousePosition);
@@ -3257,9 +3234,6 @@ L.TileLayer = L.GridLayer.extend({
 				this._onUpdateCellResizeMarkers();
 				window.IgnorePanning = undefined;
 			}
-		}
-		else if (this._cellAutofillMarker === e.target) {
-			this._postMouseEvent(buttonType, aMousePosition.x, aMousePosition.y, 1, 1, 0);
 		}
 	},
 
@@ -3564,35 +3538,13 @@ L.TileLayer = L.GridLayer.extend({
 				posEnd = this._map.unproject(posEnd);
 				this._cellResizeMarkerEnd.setLatLng(posEnd);
 			}
-			if (this._cellAutoFillArea) {
-				if (!this._cellAutofillMarker.isDragged) {
-					this._map.addLayer(this._cellAutofillMarker);
-					var cellAutoFillMarkerPoisition = cellRectangle.getCenter();
-					cellAutoFillMarkerPoisition.lat = cellRectangle.getSouth();
-					this._cellAutofillMarker.setLatLng(cellAutoFillMarkerPoisition);
-				}
-				else if (this._cellAutofillMarker) {
-					this._map.removeLayer(this._cellAutofillMarker);
-				}
-			}
 		}
 		else if (selectionOnDesktop) {
-			cellRectangle = this._cellSelectionArea ? this._cellSelectionArea : this._cellCursor;
-
-			if (this._cellAutoFillArea) {
-				if (!this._cellAutofillMarker.isDragged) {
-					this._map.addLayer(this._cellAutofillMarker);
-					cellAutoFillMarkerPoisition = L.latLng(cellRectangle.getSouth(), cellRectangle.getEast());
-					this._cellAutofillMarker.setLatLng(cellAutoFillMarkerPoisition);
-				}
-			}
-
 			this._map.removeLayer(this._cellResizeMarkerStart);
 			this._map.removeLayer(this._cellResizeMarkerEnd);
 		} else {
 			this._map.removeLayer(this._cellResizeMarkerStart);
 			this._map.removeLayer(this._cellResizeMarkerEnd);
-			this._map.removeLayer(this._cellAutofillMarker);
 		}
 	},
 
