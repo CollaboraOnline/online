@@ -881,20 +881,23 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var tabs = [];
 			var contentDivs = [];
 			var tabIds = [];
+			var singleTabId = null;
 			for (var tabIdx = 0; tabIdx < data.tabs.length; tabIdx++) {
 				var item = data.tabs[tabIdx];
 
 				var title = builder._cleanText(item.text);
 
 				var tab = L.DomUtil.create('div', 'ui-tab ' + builder.options.cssClass, tabsContainer);
-				tab.id = data.tabs[tabIdx].name + '-tab-label';
-				tab.number = data.tabs[tabIdx].id - 1;
+				tab.id = item.name + '-tab-label';
+				tab.number = item.id - 1;
 
-				var isSelectedTab = data.selected == data.tabs[tabIdx].id;
-				if (isSelectedTab)
+				var isSelectedTab = data.selected == item.id;
+				if (isSelectedTab) {
 					$(tab).addClass('selected');
+					singleTabId = tabIdx;
+				}
 
-				var tabContext = data.tabs[tabIdx].context;
+				var tabContext = item.context;
 				if (tabContext) {
 					var tabHasCurrentContext = builder.map.context.context !== ''
 											&& tabContext.indexOf(builder.map.context.context) !== -1;
@@ -906,16 +909,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}
 
 				tabs[tabIdx] = tab;
-				tabIds[tabIdx] = data.tabs[tabIdx].name;
+				tabIds[tabIdx] = item.name;
 
 				var label = L.DomUtil.create('span', 'ui-tab-content ' + builder.options.cssClass + ' unolabel', tab);
 				label.innerHTML = title;
 
 				var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
 				contentDiv.title = title;
-				contentDiv.id = data.tabs[tabIdx].name;
+				contentDiv.id = item.name;
 
-				if (!isMultiTabJSON || !isSelectedTab)
+				if (!isSelectedTab)
 					$(contentDiv).hide();
 				contentDivs[tabIdx] = contentDiv;
 			}
@@ -952,9 +955,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			return false;
-		}
+		} else {
+			for (var tabIdx = 0; tabIdx < data.children.length; tabIdx++) {
+				var tab = data.children[tabIdx];
 
-		return true;
+				if (tab.type !== 'tabpage')
+					continue;
+
+				builder.build(contentDivs[singleTabId], [tab], false, false);
+				break;
+			}
+
+			return false;
+		}
 	},
 
 	_panelTabsHandler: function(parentContainer, data, builder) {
