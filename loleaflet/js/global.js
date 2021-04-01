@@ -285,10 +285,10 @@ window.app.definitions = {};
 					else if (b <= 0xdf) {
 						code = b & 0x1f;
 						seqLen = 2;
-					} else if (b <= 0xdf) {
+					} else if (b <= 0xef) {
 						code = b & 0x0f;
 						seqLen = 3;
-					} else if (b <= 0xf4) {
+					} else if (b <= 0xf7) {
 						code = b & 0x07;
 						seqLen = 4;
 					}
@@ -300,7 +300,11 @@ window.app.definitions = {};
 						seqLen = left;
 						code = 0xfffd;
 					}
-					decoded += String.fromCharCode(code);
+				        if (code <= 0xFFFF)
+						decoded += String.fromCharCode(code);
+					else
+						decoded += String.fromCharCode(((code - 0x10000) >> 10) + 0xD800,
+									       ((code - 0x10000) % 0x400) + 0xDC00);
 					i += seqLen;
 				}
 				return decoded;
