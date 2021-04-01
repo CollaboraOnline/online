@@ -11,7 +11,7 @@ class AutoFillMarkerSection {
 	documentTopLeft: Array<number> = null;
 	containerObject: any = null;
 	dpiScale: number = null;
-	name: string = L.CSections.AutoFillMarker;
+	name: string = L.CSections.AutoFillMarker.name;
 	backgroundColor: string = null;
 	borderColor: string = null;
 	boundToSection: string = L.CSections.Tiles.name;
