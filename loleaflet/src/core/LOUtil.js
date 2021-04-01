@@ -194,6 +194,28 @@ L.LOUtil = {
 			return L.LOUtil.createRectangle(result.x1, result.y1, result.width, result.height);
 		};
 
+		result.containsPoint = function (x, y) {
+			if (x >= result.x1 && x <= result.x2) {
+				if (y >= result.y1 && y <= result.y2)
+					return true;
+				else
+					return false;
+			}
+			else
+				return false;
+		};
+
+		result.containsPixel = function (px, py) {
+			if (px >= result.px.x1 && px <= result.px.x2) {
+				if (py >= result.px.y1 && py <= result.px.y2)
+					return true;
+				else
+					return false;
+			}
+			else
+				return false;
+		};
+
 		result.calculatePx = function () {
 			result.px.x1 = Math.round(result.x1);
 			result.px.x2 = Math.round(result.x2);
@@ -311,7 +333,7 @@ L.LOUtil = {
 		};
 
 		result.getCenter = function () {
-			return [(result.x2 - result.x1) / 2, (result.y2 - result.y1) / 2];
+			return [(result.x2 + result.x1) / 2, (result.y2 + result.y1) / 2];
 		};
 
 		result.getPxX1 = function () {
@@ -343,7 +365,7 @@ L.LOUtil = {
 		};
 
 		result.getPxCenter = function () {
-			return [Math.round((result.px.x2 - result.px.x1) / 2), Math.round((result.px.y2 - result.px.y1) / 2)];
+			return [Math.round((result.px.x2 + result.px.x1) / 2), Math.round((result.px.y2 + result.px.y1) / 2)];
 		};
 
 		return result;
