@@ -899,8 +899,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				continue;
 
 			var childType = childData.type;
-			if (childType === 'toolbox' && !childData.id)
-				continue;
 
 			if (parentHasManyChildren) {
 				if (!hasVerticalParent)
