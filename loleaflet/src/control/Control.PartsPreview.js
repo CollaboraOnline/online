@@ -682,7 +682,10 @@ L.Control.PartsPreview = L.Control.extend({
 			var partId = parseInt(part) - 1; // First frame is a drop-site for reordering.
 			if (partId < 0)
 				partId = -1; // First item is -1.
-			app.socket.sendMessage('moveselectedclientparts position=' + partId);
+			if (e.ctrlKey)
+				app.socket.sendMessage('copyselectedclientparts position=' + partId);
+			else
+				app.socket.sendMessage('moveselectedclientparts position=' + partId);
 		}
 
 		this.classList.remove('preview-img-dropsite');

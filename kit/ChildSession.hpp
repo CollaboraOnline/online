@@ -291,7 +291,7 @@ private:
     bool saveAs(const char* buffer, int length, const StringVector& tokens);
     bool setClientPart(const char* buffer, int length, const StringVector& tokens);
     bool selectClientPart(const char* buffer, int length, const StringVector& tokens);
-    bool moveSelectedClientParts(const char* buffer, int length, const StringVector& tokens);
+    bool moveSelectedClientParts(const char* buffer, int length, const StringVector& tokens, bool bDuplicate=false);
     bool setPage(const char* buffer, int length, const StringVector& tokens);
     bool sendWindowCommand(const char* buffer, int length, const StringVector& tokens);
     bool signDocumentContent(const char* buffer, int length, const StringVector& tokens);

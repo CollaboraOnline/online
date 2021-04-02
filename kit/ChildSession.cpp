@@ -241,6 +241,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     {
         return moveSelectedClientParts(buffer, length, tokens);
     }
+    else if (tokens.equals(0, "copyselectedclientparts"))
+    {
+        return moveSelectedClientParts(buffer, length, tokens, true);
+    }
     else if (tokens.equals(0, "setpage"))
     {
         return setPage(buffer, length, tokens);
@@ -2282,7 +2286,7 @@ bool ChildSession::selectClientPart(const char* /*buffer*/, int /*length*/, cons
     return true;
 }
 
-bool ChildSession::moveSelectedClientParts(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
+bool ChildSession::moveSelectedClientParts(const char* /*buffer*/, int /*length*/, const StringVector& tokens, bool bDuplicate)
 {
     int nPosition;
     if (tokens.size() < 2 ||
@@ -2296,7 +2300,7 @@ bool ChildSession::moveSelectedClientParts(const char* /*buffer*/, int /*length*
 
     if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT)
     {
-        getLOKitDocument()->moveSelectedParts(nPosition, false); // Move, don't duplicate.
+        getLOKitDocument()->moveSelectedParts(nPosition, bDuplicate); // Move, don't duplicate.
 
         // Get the status to notify clients of the reordering and selection change.
         const std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());

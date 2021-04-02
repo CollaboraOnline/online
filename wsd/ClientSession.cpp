@@ -617,6 +617,23 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             }
         }
     }
+    else if (tokens.equals(0, "copyselectedclientparts"))
+    {
+        if(!_isTextDocument)
+        {
+            int nPosition;
+            if (tokens.size() != 2 ||
+                !getTokenInteger(tokens[1], "position", nPosition))
+            {
+                sendTextFrameAndLogError("error: cmd=copyselectedclientparts kind=syntax");
+                return false;
+            }
+            else
+            {
+                return forwardToChild(std::string(buffer, length), docBroker);
+            }
+        }
+    }
     else if (tokens.equals(0, "clientzoom"))
     {
         int tilePixelWidth, tilePixelHeight, tileTwipWidth, tileTwipHeight;
