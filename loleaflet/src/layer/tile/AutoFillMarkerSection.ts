@@ -40,7 +40,9 @@ class AutoFillMarkerSection {
 	}
 
 	public onInitialize () {
-
+		this.sectionProperties.rectangleSizeDesktop = Math.round(8 * this.dpiScale); // In core pixels.
+		this.sectionProperties.rectangleSizeMobile = Math.round(16 * this.dpiScale); // In core pixels.
+		this.sectionProperties.rectangleColor = 'black';
 	}
 
 	public onResize () {
@@ -60,18 +62,18 @@ class AutoFillMarkerSection {
 				var topLeft: Array<number>;
 				var size: number;
 				if ((<any>window).mode.isDesktop()) {
-					size = 4 * this.dpiScale;
+					size = this.sectionProperties.rectangleSizeDesktop * 0.5;
 					this.sectionProperties.cursorRectangle.moveBy(-size, -size);
 					topLeft = [this.sectionProperties.cursorRectangle.getX2(), this.sectionProperties.cursorRectangle.getY2()];
 
 				}
 				else {
-					size = 8 * this.dpiScale;
+					size = this.sectionProperties.rectangleSizeMobile * 0.5;
 					this.sectionProperties.cursorRectangle.moveBy(-size, -size);
 					topLeft = [this.sectionProperties.cursorRectangle.getX2() - this.sectionProperties.cursorRectangle.getWidth() * 0.5, this.sectionProperties.cursorRectangle.getY2()];
 				}
 
-				this.context.fillStyle = 'black';
+				this.context.fillStyle = this.sectionProperties.rectangleColor;
 				this.context.fillRect(topLeft[0] - this.documentTopLeft[0], topLeft[1] - this.documentTopLeft[1], 2 * size, 2 * size);
 
 				this.sectionProperties.autoFillRectangle = L.LOUtil.createRectangle(topLeft[0], topLeft[1], size * 2, size * 2);
@@ -100,7 +102,6 @@ class AutoFillMarkerSection {
 		point[1] = this.sectionProperties.dragStartPosition[1] + dragDistance[1];
 		pos = this.sectionProperties.docLayer._corePixelsToTwips(new L.Point(point[0], point[1]));
 
-		console.log('pos:' + JSON.stringify(pos));
 		this.sectionProperties.docLayer._postMouseEvent('move', pos.x, pos.y, 1, 1, 0);
 
 		if (this.sectionProperties.handlingMouseEvent) {
