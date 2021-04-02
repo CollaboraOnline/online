@@ -1271,6 +1271,8 @@ void LOOLWSD::initialize(Application& self)
             LOG_INF("Creating childroot: " + ChildRoot);
     }
 
+#if !MOBILEAPP
+
     // Copy and serialize the config into XML to pass to forkit.
     KitXmlConfig.reset(new Poco::Util::XMLConfiguration);
     for (const auto& pair : DefAppConfig)
@@ -1295,7 +1297,6 @@ void LOOLWSD::initialize(Application& self)
     KitXmlConfig->save(oss);
     setenv("LOOL_CONFIG", oss.str().c_str(), true);
 
-#if !MOBILEAPP
     // Initialize the config subsystem too.
     config::initialize(&config());
 
