@@ -32,11 +32,9 @@ class AutoFillMarkerSection {
 		this.map = L.Map.THIS;
 
 		this.sectionProperties.docLayer = this.map._docLayer;
-		this.sectionProperties.tsManager = this.sectionProperties.docLayer._painter;
 		this.sectionProperties.draggingStarted = false;
 		this.sectionProperties.cursorRectangle = null; // Selected area or cell cursor, in core pixels.
 		this.sectionProperties.autoFillRectangle = null; // Autofill marker's rectangle.
-		this.sectionProperties.skipThisDraggingEvent = false; // If it is not handled at first mouse move, we shouldn't handle it until the event ends.
 		this.sectionProperties.dragStartPosition = null;
 		this.sectionProperties.handlingMouseEvent = false;
 	}
@@ -121,7 +119,6 @@ class AutoFillMarkerSection {
 			this.sectionProperties.docLayer._postMouseEvent('buttonup', pos.x, pos.y, 1, 1, 0);
 		}
 
-		this.sectionProperties.skipThisDraggingEvent = false;
 		this.map.scrollingIsHandled = false;
 
 		if (this.sectionProperties.handlingMouseEvent) {
