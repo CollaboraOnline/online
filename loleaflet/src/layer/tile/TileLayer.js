@@ -2229,16 +2229,11 @@ L.TileLayer = L.GridLayer.extend({
 		if (strTwips != null && this._map.isPermissionEdit()) {
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
-			var bottomRightTwips = topLeftTwips.add(offset);
-			this._cellAutoFillArea = new L.LatLngBounds(
-						this._twipsToLatLng(topLeftTwips, this._map.getZoom()),
-						this._twipsToLatLng(bottomRightTwips, this._map.getZoom()));
 
 			var topLeftPixels = this._twipsToCorePixels(topLeftTwips);
 			var offsetPixels = this._twipsToCorePixels(offset);
 			this._cellAutoFillAreaPixels = L.LOUtil.createRectangle(topLeftPixels.x, topLeftPixels.y, offsetPixels.x, offsetPixels.y);
 		} else {
-			this._cellAutoFillArea = null;
 			this._cellAutoFillAreaPixels = null;
 		}
 	},
