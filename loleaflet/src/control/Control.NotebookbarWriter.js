@@ -15,7 +15,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'text': _('~Home'),
-				'id': '-10',
+				'id': this.HOME_TAB_ID,
 				'name': 'Home',
 				'context': 'default|Text'
 			},
@@ -64,48 +64,20 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		];
 	},
 
-	selectedTab: function(tabName) {
-		switch (tabName) {
-		case 'File':
-			this.loadTab(this.getFileTab());
-			break;
-
-		case 'Help':
-			this.loadTab(this.getHelpTab());
-			break;
-
-		case 'Home':
-			this.loadTab(this.getHomeTab());
-			break;
-
-		case 'Format':
-			this.loadTab(this.getFormatTab());
-			break;
-
-		case 'Insert':
-			this.loadTab(this.getInsertTab());
-			break;
-
-		case 'Layout':
-			this.loadTab(this.getLayoutTab());
-			break;
-
-		case 'References':
-			this.loadTab(this.getReferencesTab());
-			break;
-
-		case 'Review':
-			this.loadTab(this.getReviewTab());
-			break;
-
-		case 'Table':
-			this.loadTab(this.getTableTab());
-			break;
-
-		case 'Draw':
-			this.loadTab(this.getDrawTab());
-			break;
-		}
+	getFullJSON: function(selectedId) {
+		return this.getNotebookbar(
+			[
+				this.getFileTab(),
+				this.getHomeTab(),
+				this.getInsertTab(),
+				this.getLayoutTab(),
+				this.getReferencesTab(),
+				this.getReviewTab(),
+				this.getFormatTab(),
+				this.getTableTab(),
+				this.getDrawTab(),
+				this.getHelpTab()
+			], selectedId);
 	},
 
 	getFileTab: function() {
@@ -360,7 +332,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('File', content)], '-1');
+		return this.getTabPage('File', content);
 	},
 
 	getHelpTab: function() {
@@ -448,7 +420,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('Help', content)], '-2');
+		return this.getTabPage('Help', content);
 	},
 
 	getHomeTab: function() {
@@ -873,7 +845,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('Home', content)], '-10');
+		return this.getTabPage('Home', content);
 	},
 
 	getFormatTab: function() {
@@ -932,7 +904,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 		];
 
-		return this.getNotebookbar([this.getTabPage('Format', content)], '-3');
+		return this.getTabPage('Format', content);
 	},
 
 	getInsertTab: function() {
@@ -1135,7 +1107,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('Insert', content)], '-4');
+		return this.getTabPage('Insert', content);
 	},
 
 	getLayoutTab: function() {
@@ -1397,7 +1369,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('Layout', content)], '-5');
+		return this.getTabPage('Layout', content);
 	},
 
 	getReferencesTab: function() {
@@ -1588,7 +1560,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('References', content)], '-6');
+		return this.getTabPage('References', content);
 	},
 
 	getReviewTab: function() {
@@ -1800,7 +1772,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('Review', content)], '-7');
+		return this.getTabPage('Review', content);
 	},
 
 	getTableTab: function() {
@@ -2052,7 +2024,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 		];
 
-		return this.getNotebookbar([this.getTabPage('Table', content)], '-8');
+		return this.getTabPage('Table', content);
 	},
 
 	getDrawTab: function() {
@@ -2322,7 +2294,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('Draw', content)], '-9');
+		return this.getTabPage('Draw', content);
 	},
 
 	getNotebookbar: function(tabPages, selectedPage) {

@@ -14,6 +14,8 @@ L.Control.Notebookbar = L.Control.extend({
 
 	lastContext: 'Text',
 
+	HOME_TAB_ID: '-10',
+
 	additionalShortcutButtons: [],
 	hiddenShortcutButtons: [],
 
@@ -30,7 +32,7 @@ L.Control.Notebookbar = L.Control.extend({
 		$('#toolbar-logo').after(this.map.toolbarUpTemplate.cloneNode(true));
 		toolbar = $('#toolbar-up');
 
-		this.loadTab(this.getHomeTab());
+		this.loadTab(this.getFullJSON(this.HOME_TAB_ID));
 
 		this.createScrollButtons();
 		this.setupResizeHandler();
@@ -143,7 +145,6 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map._isNotebookbarLoadedOnCore = true;
 		// setup id for events
 		this.builder.setWindowId(data.id);
-		//this.loadTab(data);
 	},
 
 	showTabs: function() {
