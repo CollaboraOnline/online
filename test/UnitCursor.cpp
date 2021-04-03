@@ -198,7 +198,6 @@ UnitBase::TestResult UnitCursor::testInsertAnnotationWriter()
 
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
     Poco::URI uri(helpers::getTestServerURI());
     std::shared_ptr<LOOLWebSocket> socket
