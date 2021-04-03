@@ -83,7 +83,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			},
 			{
 				'text': _('~Home'),
-				'id': '-02',
+				'id': this.HOME_TAB_ID,
 				'name': 'Home',
 				'context': 'default|DrawText'
 			},
@@ -99,7 +99,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			},
 			{
 				'text': '~Draw',
-				'id': '-10',
+				'id': '-11',
 				'name': 'Draw',
 				'context': 'Draw'
 			},
@@ -111,32 +111,16 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		];
 	},
 
-	selectedTab: function(tabName) {
-		switch (tabName) {
-		case 'File':
-			this.loadTab(this.getFileTab());
-			break;
-
-		case 'Home':
-			this.loadTab(this.getHomeTab());
-			break;
-
-		case 'Help':
-			this.loadTab(this.getHelpTab());
-			break;
-
-		case 'Format':
-			this.loadTab(this.getFormatTab());
-			break;
-
-		case 'Insert':
-			this.loadTab(this.getInsertTab());
-			break;
-
-		case 'Draw':
-			this.loadTab(this.getDrawTab());
-			break;
-		}
+	getFullJSON: function(selectedId) {
+		return this.getNotebookbar(
+			[
+				this.getFileTab(),
+				this.getHomeTab(),
+				this.getInsertTab(),
+				this.getFormatTab(),
+				this.getDrawTab(),
+				this.getHelpTab()
+			], selectedId);
 	},
 
 	getFileTab: function() {
@@ -300,7 +284,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('File', content)], '-1');
+		return this.getTabPage('File', content);
 	},
 
 	getHomeTab: function() {
@@ -671,7 +655,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			}
 		];
 
-		return this.getNotebookbar([this.getTabPage('Home', content)], '-02');
+		return this.getTabPage('Home', content);
 	}
 });
 
