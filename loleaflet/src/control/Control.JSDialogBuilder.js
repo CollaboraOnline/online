@@ -2075,8 +2075,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			image.src = data.image.replace(/\\/g, '');
 			image.alt = data.text;
 			image.title = data.text;
-			if (!window.ThisIsAMobileApp)
-				$(image).tooltip();
+			builder.map.uiManager.enableTooltip(image);
 
 			if (data.loading && data.loading === 'true') {
 				var loaderContainer = L.DomUtil.create('div', 'ui-drawing-area-loader-container', container);
@@ -2383,8 +2382,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(div).addClass('no-label');
 			} else {
 				div.title = data.text;
-				if (!window.ThisIsAMobileApp)
-					$(div).tooltip();
+				builder.map.uiManager.enableTooltip(div);
 				$(div).addClass('no-label');
 			}
 
@@ -2606,8 +2604,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		sectionTitle.title = data.text;
-		if (!window.ThisIsAMobileApp)
-			$(sectionTitle).tooltip();
+		builder.map.uiManager.enableTooltip(sectionTitle);
 
 		var updateFunction = function() {
 			var items = builder.map['stateChangeHandler'];

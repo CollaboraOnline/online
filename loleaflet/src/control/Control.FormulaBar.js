@@ -42,8 +42,7 @@ L.Control.FormulaBar = L.Control.extend({
 				$('#addressInput').off('keyup', that.onAddressInput.bind(that)).on('keyup', that.onAddressInput.bind(that));
 			}
 		});
-		if (window.mode.isDesktop())
-			toolbar.tooltip();
+		this.map.uiManager.enableTooltip(toolbar);
 
 		toolbar.bind('touchstart', function(e) {
 			w2ui['formulabar'].touchStarted = true;
