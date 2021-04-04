@@ -4,7 +4,7 @@
 			 and allows to controll them (show/hide)
  */
 
-/* global app $ setupToolbar w2ui w2utils toolbarUpMobileItems _ */
+/* global app $ setupToolbar w2ui w2utils toolbarUpMobileItems _ Hammer */
 L.Control.UIManager = L.Control.extend({
 	mobileWizard: null,
 
@@ -603,6 +603,32 @@ L.Control.UIManager = L.Control.extend({
 				return true;
 			else
 				return retval;
+		}
+	},
+
+	enableTooltip: function(element) {
+		var elem = $(element);
+		if (window.mode.isDesktop()) {
+			elem.tooltip();
+			elem.click(function() {
+				$('.ui-tooltip').fadeOut(function() {
+					$(this).remove();
+				});
+			});
+		}
+		else {
+			elem.tooltip({disabled: true});
+			(new Hammer(elem.get(0), {recognizers: [[Hammer.Press]]}))
+				.on('press', function () {
+					elem.tooltip('enable');
+					elem.tooltip('open');
+					document.addEventListener('touchstart', function closeTooltip () {
+						elem.tooltip('close');
+						elem.tooltip('disable');
+						document.removeEventListener('touchstart', closeTooltip);
+					});
+				}.bind(this));
+
 		}
 	}
 });
