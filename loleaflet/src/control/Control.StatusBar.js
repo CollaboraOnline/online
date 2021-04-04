@@ -239,8 +239,7 @@ L.Control.StatusBar = L.Control.extend({
 					window.setupSearchInput();
 				}
 			});
-			if (window.mode.isDesktop())
-				toolbar.tooltip();
+			this.map.uiManager.enableTooltip(toolbar);
 		}
 
 		toolbar.bind('touchstart', function() {

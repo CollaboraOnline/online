@@ -35,8 +35,7 @@ L.Control.SheetsBar = L.Control.extend({
 				window.hideTooltip(this, e.target);
 			}
 		});
-		if (window.mode.isDesktop())
-			toolbar.tooltip();
+		this.map.uiManager.enableTooltip(toolbar);
 
 		toolbar.bind('touchstart', function(e) {
 			w2ui['spreadsheet-toolbar'].touchStarted = true;

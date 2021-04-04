@@ -39,8 +39,8 @@ L.Control.PresentationBar = L.Control.extend({
 				window.hideTooltip(this, e.target);
 			}
 		});
-		if (window.mode.isDesktop())
-			toolbar.tooltip();
+
+		this.map.uiManager.enableTooltip(toolbar);
 
 		if (this.map.getDocType() === 'drawing')
 			w2ui['presentation-toolbar'].disable('presentation');
