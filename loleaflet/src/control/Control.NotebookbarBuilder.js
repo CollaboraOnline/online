@@ -286,6 +286,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		L.DomUtil.addClass(container, builder.options.cssClass);
 		L.DomUtil.addClass(container, 'ui-combobox');
 		var select = L.DomUtil.create('select', builder.options.cssClass, container);
+		builder.map.uiManager.enableTooltip(container);
 
 		var processedData = [];
 
@@ -404,8 +405,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			div.id = id;
 
 			div.title = data.text;
-			if (!window.ThisIsAMobileApp)
-				$(div).tooltip();
+			builder.map.uiManager.enableTooltip(div);
 
 			var icon = builder._createIconURL(data.command);
 			var buttonId = id + 'img';
