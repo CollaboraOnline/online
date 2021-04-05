@@ -149,23 +149,8 @@ constexpr std::chrono::seconds HttpRequestTests::DefTimeoutSeconds;
 
 void HttpRequestTests::testInvalidURI()
 {
-    const char* Host = "";
-    const char* URL = "/";
-
-    http::Request httpRequest(URL);
-
-    auto httpSession = http::Session::createHttp(Host);
-    httpSession->setTimeout(DefTimeoutSeconds);
-    LOK_ASSERT(httpSession->syncRequest(httpRequest) == false);
-
-    const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
-    LOK_ASSERT(httpResponse->done() == false);
-    LOK_ASSERT(httpResponse->state() != http::Response::State::Complete);
-    LOK_ASSERT(httpResponse->statusLine().statusCode() != Poco::Net::HTTPResponse::HTTP_OK);
-    LOK_ASSERT_EQUAL(0U, httpResponse->statusLine().statusCode());
-    LOK_ASSERT(httpResponse->statusLine().statusCategory()
-               == http::StatusLine::StatusCodeClass::Invalid);
-    LOK_ASSERT(httpResponse->getBody().empty());
+    // Cannot create from a blank URI.
+    LOK_ASSERT(http::Session::createHttp(std::string()) == nullptr);
 }
 
 void HttpRequestTests::testSimpleGet()

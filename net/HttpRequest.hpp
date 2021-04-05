@@ -838,6 +838,8 @@ public:
     };
 
 private:
+    /// Construct a Session instance from a hostname, protocol and port.
+    /// @hostname is *not* a URI, it's either an IP or a domain name.
     Session(std::string hostname, Protocol protocolType, int portNumber)
         : _host(std::move(hostname))
         , _port(std::to_string(portNumber))
@@ -845,6 +847,15 @@ private:
         , _timeout(std::chrono::seconds(30))
         , _connected(false)
     {
+        assert(!_host.empty() && portNumber > 0
+               && "Invalid hostname and portNumber for http::Sesssion");
+#ifdef ENABLE_DEBUG
+        std::string scheme;
+        std::string host;
+        std::string port;
+        assert(net::parseUri(_host, scheme, host, port) && scheme.empty() && port.empty()
+               && host == _host && "http::Session expects a hostname and not a URI");
+#endif
     }
 
     /// Returns the given protocol's scheme.
@@ -864,11 +875,7 @@ private:
 public:
     /// Create a new HTTP Session to the given host.
     /// The port defaults to the protocol's default port.
-    static std::shared_ptr<Session> create(std::string host, Protocol protocol, int port = 0)
-    {
-        port = (port > 0 ? port : getDefaultPort(protocol));
-        return std::shared_ptr<Session>(new Session(std::move(host), protocol, port));
-    }
+    static std::shared_ptr<Session> create(std::string host, Protocol protocol, int port = 0);
 
     /// Create a new unencrypted HTTP Session to the given host.
     /// @port <= 0 will default to the http default port.
