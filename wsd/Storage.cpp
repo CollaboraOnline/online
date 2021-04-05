@@ -661,9 +661,8 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
             LOG_END(logger, true);
         }
 
-        const bool success = httpSession->syncRequest(httpRequest);
-
-        std::shared_ptr<const http::Response> httpResponse = httpSession->response();
+        const std::shared_ptr<const http::Response> httpResponse
+            = httpSession->syncRequest(httpRequest);
 
         callDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - startTime);
@@ -671,8 +670,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
         // Note: we don't log the response if obfuscation is enabled, except for failures.
         wopiResponse = httpResponse->getBody();
         const bool failed
-            = !success
-              || (httpResponse->statusLine().statusCode() != Poco::Net::HTTPResponse::HTTP_OK);
+            = (httpResponse->statusLine().statusCode() != Poco::Net::HTTPResponse::HTTP_OK);
 
         Log::StreamLogger logRes = failed ? Log::error() : Log::trace();
         if (logRes.enabled())
@@ -1036,15 +1034,15 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
 
     LOG_TRC("Downloading from [" << uriAnonym << "] to [" << getRootFilePath()
                                  << "]: " << httpRequest.header().toString());
-    bool success = httpSession->syncDownload(httpRequest, getRootFilePath());
-    std::shared_ptr<const http::Response> httpResponse = httpSession->response();
+    const std::shared_ptr<const http::Response> httpResponse
+        = httpSession->syncDownload(httpRequest, getRootFilePath());
 
     const std::chrono::milliseconds diff = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::steady_clock::now() - startTime);
 
     _wopiLoadDuration += diff;
 
-    if (success)
+    if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_OK)
     {
         // Log the response header.
         Log::StreamLogger logger = Log::trace();
@@ -1056,13 +1054,10 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
                 logger << '\t' << pair.first << ": " << pair.second << " / ";
             }
 
-        LOG_END(logger, true);
+            LOG_END(logger, true);
+        }
     }
-
-        success = (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_OK);
-    }
-
-    if (!success)
+    else
     {
         const std::string responseString = httpResponse->getBody();
         LOG_ERR("WOPI::GetFile [" << uriAnonym << "] failed with Status Code: "
@@ -1197,9 +1192,8 @@ WopiStorage::uploadLocalFileToStorage(const Authorization& auth, const std::stri
         httpRequest.setBodyFile(filePath);
 
         // Make the request.
-        httpSession->syncRequest(httpRequest);
-
-        const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
+        const std::shared_ptr<const http::Response> httpResponse
+            = httpSession->syncRequest(httpRequest);
 
         _wopiSaveDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - startTime);

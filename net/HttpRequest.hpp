@@ -957,7 +957,8 @@ public:
     /// Note: when the server returns an error, the response body,
     /// if any, will be stored in memory and can be read via getBody().
     /// I.e. when statusLine().statusCategory() != StatusLine::StatusCodeClass::Successful.
-    bool syncDownload(const Request& req, const std::string& saveToFilePath)
+    const std::shared_ptr<const Response> syncDownload(const Request& req,
+                                                       const std::string& saveToFilePath)
     {
         LOG_TRC("syncDownload: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                  << req.getUrl());
@@ -967,19 +968,20 @@ public:
         if (!saveToFilePath.empty())
             _response->saveBodyToFile(saveToFilePath);
 
-        return syncRequestImpl();
+        syncRequestImpl();
+        return _response;
     }
 
     /// Make a synchronous request.
     /// The payload body of the response, if any, can be read via getBody().
-    bool syncRequest(const Request& req)
+    const std::shared_ptr<const Response> syncRequest(const Request& req)
     {
         LOG_TRC("syncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                 << req.getUrl());
 
         newRequest(req);
-
-        return syncRequestImpl();
+        syncRequestImpl();
+        return _response;
     }
 
     bool asyncRequest(const Request& req, SocketPoll& poll)
@@ -1045,7 +1047,7 @@ private:
         // has retired, so we can perform housekeeping.
         Response::FinishedCallback onFinished = [&]() {
             LOG_TRC("onFinished");
-            assert(_response->done());
+            assert(_response && _response->done() && "Must have response and must be done");
             if (_onFinished)
             {
                 LOG_TRC("onFinished calling client");

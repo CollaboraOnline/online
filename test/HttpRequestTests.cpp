@@ -236,9 +236,8 @@ void HttpRequestTests::testSimpleGetSync()
     for (int i = 0; i < 5; ++i)
     {
         TST_LOG("Request #" << i);
-        LOK_ASSERT(httpSession->syncRequest(httpRequest));
-
-        const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
+        const std::shared_ptr<const http::Response> httpResponse
+            = httpSession->syncRequest(httpRequest);
         LOK_ASSERT(httpResponse->done());
         LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
 
@@ -446,9 +445,8 @@ void HttpRequestTests::testTimeout()
 
     httpSession->setTimeout(std::chrono::milliseconds(1)); // Very short interval.
 
-    LOK_ASSERT(!httpSession->syncRequest(httpRequest)); // Must fail to complete.
-
-    const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
+    const std::shared_ptr<const http::Response> httpResponse
+        = httpSession->syncRequest(httpRequest);
     LOK_ASSERT(httpResponse->done());
     LOK_ASSERT(httpResponse->state() == http::Response::State::Timeout);
 }
@@ -470,9 +468,8 @@ void HttpRequestTests::testOnFinished_Complete()
         return true;
     });
 
-    LOK_ASSERT(httpSession->syncRequest(httpRequest));
-
-    const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
+    const std::shared_ptr<const http::Response> httpResponse
+        = httpSession->syncRequest(httpRequest);
     LOK_ASSERT(completed);
     LOK_ASSERT(httpResponse->done());
     LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
@@ -497,9 +494,8 @@ void HttpRequestTests::testOnFinished_Timeout()
         return true;
     });
 
-    LOK_ASSERT(!httpSession->syncRequest(httpRequest));
-
-    const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
+    const std::shared_ptr<const http::Response> httpResponse
+        = httpSession->syncRequest(httpRequest);
     LOK_ASSERT(completed);
     LOK_ASSERT(httpResponse->done());
     LOK_ASSERT(httpResponse->state() == http::Response::State::Timeout);
