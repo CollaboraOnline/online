@@ -108,7 +108,8 @@ connect(std::string uri, const std::shared_ptr<ProtocolHandlerInterface>& protoc
     return connect(host, port, isSsl, protocolHandler);
 }
 
-bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port)
+bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port,
+              std::string& url)
 {
     const auto itScheme = uri.find("://");
     if (itScheme != uri.npos)
@@ -125,8 +126,12 @@ bool parseUri(std::string uri, std::string& scheme, std::string& host, std::stri
     const auto itUrl = uri.find('/');
     if (itUrl != uri.npos)
     {
-        // Remove the URL.
+        url = uri.substr(itUrl); // Including the first foreslash.
         uri = uri.substr(0, itUrl);
+    }
+    else
+    {
+        url.clear();
     }
 
     const auto itPort = uri.find(':');
