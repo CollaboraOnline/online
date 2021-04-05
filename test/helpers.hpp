@@ -439,6 +439,16 @@ inline std::string getResponseString(const std::shared_ptr<http::WebSocketSessio
     return std::string(response.data(), response.size());
 }
 
+inline std::string assertResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
+                                        const std::string& prefix, const std::string& testname,
+                                        const std::chrono::milliseconds timeoutMs
+                                        = std::chrono::seconds(10))
+{
+    auto res = getResponseString(ws, prefix, testname, timeoutMs);
+    LOK_ASSERT_EQUAL(prefix, res.substr(0, prefix.length()));
+    return res;
+}
+
 inline std::vector<char> getResponseMessage(const std::shared_ptr<LOOLWebSocket>& ws,
                                             const std::string& prefix, const std::string& testname,
                                             const std::chrono::milliseconds timeoutMs
@@ -460,7 +470,7 @@ std::string assertResponseString(T& ws, const std::string& prefix, const std::st
                                  const std::chrono::milliseconds timeoutMs
                                  = std::chrono::seconds(10))
 {
-    const auto res = getResponseString(ws, prefix, testname, timeoutMs);
+    auto res = getResponseString(ws, prefix, testname, timeoutMs);
     LOK_ASSERT_EQUAL(prefix, res.substr(0, prefix.length()));
     return res;
 }
@@ -787,6 +797,12 @@ void parseDocSize(const std::string& message, const std::string& type,
     CPPUNIT_ASSERT(viewid >= 0);
 }
 
+inline std::vector<char> getTileMessage(const std::shared_ptr<http::WebSocketSession>& ws,
+                                        const std::string& testname)
+{
+    return getResponseMessage(ws, "tile", testname);
+}
+
 inline
 std::vector<char> getTileMessage(LOOLWebSocket& ws, const std::string& testname)
 {
@@ -871,6 +887,36 @@ inline void sendChar(std::shared_ptr<LOOLWebSocket>& socket, char ch, SpecialKey
 }
 
 inline void sendText(std::shared_ptr<LOOLWebSocket>& socket, const std::string& text, const std::string& testname)
+{
+    for (char ch : text)
+    {
+        sendChar(socket, ch, skNone, testname);
+    }
+}
+
+inline void sendKeyEvent(std::shared_ptr<http::WebSocketSession>& socket, const char* type, int chr,
+                         int key, const std::string& testname)
+{
+    std::ostringstream ssIn;
+    ssIn << "key type=" << type << " char=" << chr << " key=" << key;
+    sendTextFrame(socket, ssIn.str(), testname);
+}
+
+inline void sendKeyPress(std::shared_ptr<http::WebSocketSession>& socket, int chr, int key,
+                         const std::string& testname)
+{
+    sendKeyEvent(socket, "input", chr, key, testname);
+    sendKeyEvent(socket, "up", chr, key, testname);
+}
+
+inline void sendChar(std::shared_ptr<http::WebSocketSession>& socket, char ch,
+                     SpecialKey specialKeys, const std::string& testname)
+{
+    sendKeyPress(socket, getCharChar(ch, specialKeys), getCharKey(ch, specialKeys), testname);
+}
+
+inline void sendText(std::shared_ptr<http::WebSocketSession>& socket, const std::string& text,
+                     const std::string& testname)
 {
     for (char ch : text)
     {
