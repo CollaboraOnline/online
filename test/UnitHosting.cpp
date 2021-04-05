@@ -44,9 +44,8 @@ UnitBase::TestResult UnitHosting::testDiscovery()
     http::Request httpRequest("/hosting/discovery");
 
     auto httpSession = http::Session::create(helpers::getTestServerURI());
-    LOK_ASSERT(httpSession->syncRequest(httpRequest));
-
-    const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
+    const std::shared_ptr<const http::Response> httpResponse
+        = httpSession->syncRequest(httpRequest);
 
     LOK_ASSERT(httpResponse->done());
     LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
@@ -64,9 +63,8 @@ UnitBase::TestResult UnitHosting::testDiscovery()
     http::Request httpRequest2("/hosting/discovery/");
 
     auto httpSession2 = http::Session::create(helpers::getTestServerURI());
-    LOK_ASSERT(httpSession2->syncRequest(httpRequest2));
-
-    const std::shared_ptr<const http::Response> httpResponse2 = httpSession2->response();
+    const std::shared_ptr<const http::Response> httpResponse2
+        = httpSession2->syncRequest(httpRequest2);
 
     LOK_ASSERT(httpResponse2->done());
     LOK_ASSERT(httpResponse2->state() == http::Response::State::Complete);
