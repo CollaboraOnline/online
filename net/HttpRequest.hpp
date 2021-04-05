@@ -432,11 +432,11 @@ public:
         Finished //< Done.
     };
 
-    Request(const std::string& url = "/", const std::string& verb = VERB_GET,
-            const std::string& version = VERS_1_1)
-        : _url(url)
-        , _verb(verb)
-        , _version(version)
+    explicit Request(std::string url = "/", std::string verb = VERB_GET,
+                     std::string version = VERS_1_1)
+        : _url(std::move(url))
+        , _verb(std::move(verb))
+        , _version(std::move(version))
         , _bodyReaderCb([](const char*, int64_t) { return 0; })
         , _stage(Stage::Header)
     {
