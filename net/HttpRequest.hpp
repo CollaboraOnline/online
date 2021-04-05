@@ -847,7 +847,7 @@ private:
         : _host(std::move(hostname))
         , _port(std::to_string(portNumber))
         , _protocol(protocolType)
-        , _timeout(std::chrono::seconds(30))
+        , _timeout(getDefaultTimeout())
         , _connected(false)
     {
         assert(!_host.empty() && portNumber > 0
@@ -925,6 +925,12 @@ public:
         }
 
         return 0;
+    }
+
+    /// Returns the default timeout.
+    static constexpr std::chrono::milliseconds getDefaultTimeout()
+    {
+        return std::chrono::seconds(30);
     }
 
     /// Returns the current protocol scheme.
