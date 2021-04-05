@@ -838,8 +838,8 @@ public:
     };
 
 private:
-    Session(const std::string& hostname, Protocol protocolType, int portNumber)
-        : _host(hostname)
+    Session(std::string hostname, Protocol protocolType, int portNumber)
+        : _host(std::move(hostname))
         , _port(std::to_string(portNumber))
         , _protocol(protocolType)
         , _timeout(std::chrono::seconds(30))
@@ -864,31 +864,31 @@ private:
 public:
     /// Create a new HTTP Session to the given host.
     /// The port defaults to the protocol's default port.
-    static std::shared_ptr<Session> create(const std::string& host, Protocol protocol, int port = 0)
+    static std::shared_ptr<Session> create(std::string host, Protocol protocol, int port = 0)
     {
         port = (port > 0 ? port : getDefaultPort(protocol));
-        return std::shared_ptr<Session>(new Session(host, protocol, port));
+        return std::shared_ptr<Session>(new Session(std::move(host), protocol, port));
     }
 
     /// Create a new unencrypted HTTP Session to the given host.
     /// @port <= 0 will default to the http default port.
-    static std::shared_ptr<Session> createHttp(const std::string& host, int port = 0)
+    static std::shared_ptr<Session> createHttp(std::string host, int port = 0)
     {
-        return create(host, Protocol::HttpUnencrypted, port);
+        return create(std::move(host), Protocol::HttpUnencrypted, port);
     }
 
     /// Create a new SSL HTTP Session to the given host.
     /// @port <= 0 will default to the https default port.
-    static std::shared_ptr<Session> createHttpSsl(const std::string& host, int port = 0)
+    static std::shared_ptr<Session> createHttpSsl(std::string host, int port = 0)
     {
-        return create(host, Protocol::HttpSsl, port);
+        return create(std::move(host), Protocol::HttpSsl, port);
     }
 
     /// Create a new HTTP Session to the given URI.
     /// The @uri must include the scheme, e.g. https://domain.com:9980
-    static std::shared_ptr<Session> create(const std::string& uri)
+    static std::shared_ptr<Session> create(std::string uri)
     {
-        const std::string lowerUri = Util::toLower(uri);
+        const std::string lowerUri = Util::toLower(std::move(uri));
         if (!Util::startsWith(lowerUri, "http"))
         {
             LOG_ERR("Unsupported scheme in URI: " << uri);
