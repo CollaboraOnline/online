@@ -58,13 +58,13 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
     {                                                                                              \
         if (!((expected) == (actual)))                                                             \
         {                                                                                          \
-            LOK_ASSERT_IMPL((expected) == (actual));                                               \
             std::ostringstream oss##__LINE__;                                                      \
             oss##__LINE__ << message;                                                              \
             const auto msg##__LINE__ = oss##__LINE__.str();                                        \
             TST_LOG_NAME("unittest", "ERROR: Assertion failure: "                                  \
                                          << msg##__LINE__ << ". Expected [" << (expected)          \
                                          << "] but got [" << (actual) << "]: ");                   \
+            LOK_ASSERT_IMPL((expected) == (actual));                                               \
             CPPUNIT_ASSERT_EQUAL_MESSAGE(msg##__LINE__, (expected), (actual));                     \
         }                                                                                          \
     } while (false)
