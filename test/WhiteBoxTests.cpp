@@ -1820,10 +1820,25 @@ void WhiteBoxTests::testParseUri()
     LOK_ASSERT(host.empty());
     LOK_ASSERT(port.empty());
 
+    LOK_ASSERT(net::parseUri("localhost", scheme, host, port));
+    LOK_ASSERT(scheme.empty());
+    LOK_ASSERT_EQUAL(std::string("localhost"), host);
+    LOK_ASSERT(port.empty());
+
+    LOK_ASSERT(net::parseUri("127.0.0.1", scheme, host, port));
+    LOK_ASSERT(scheme.empty());
+    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
+    LOK_ASSERT(port.empty());
+
     LOK_ASSERT(net::parseUri("domain.com", scheme, host, port));
     LOK_ASSERT(scheme.empty());
     LOK_ASSERT_EQUAL(std::string("domain.com"), host);
     LOK_ASSERT(port.empty());
+
+    LOK_ASSERT(net::parseUri("127.0.0.1:9999", scheme, host, port));
+    LOK_ASSERT(scheme.empty());
+    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
+    LOK_ASSERT_EQUAL(std::string("9999"), port);
 
     LOK_ASSERT(net::parseUri("domain.com:88", scheme, host, port));
     LOK_ASSERT(scheme.empty());
@@ -1849,6 +1864,11 @@ void WhiteBoxTests::testParseUri()
     LOK_ASSERT_EQUAL(std::string("https://"), scheme);
     LOK_ASSERT_EQUAL(std::string("domain.com"), host);
     LOK_ASSERT_EQUAL(std::string("88"), port);
+
+    LOK_ASSERT(net::parseUri("wss://127.0.0.1:9999/", scheme, host, port));
+    LOK_ASSERT_EQUAL(std::string("wss://"), scheme);
+    LOK_ASSERT_EQUAL(std::string("127.0.0.1"), host);
+    LOK_ASSERT_EQUAL(std::string("9999"), port);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
