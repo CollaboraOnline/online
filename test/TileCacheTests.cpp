@@ -52,6 +52,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
     Poco::Net::HTTPResponse _response;
+    SocketPoll _socketPoll;
 
     CPPUNIT_TEST_SUITE(TileCacheTests);
 
@@ -143,6 +144,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 public:
     TileCacheTests()
         : _uri(helpers::getTestServerURI())
+        , _socketPoll("TileCachePoll")
     {
 #if ENABLE_SSL
         Poco::Net::initializeSSL();
@@ -152,11 +154,13 @@ public:
         Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
         Poco::Net::SSLManager::instance().initializeClient(nullptr, invalidCertHandler, sslContext);
 #endif
+        _socketPoll.startThread();
     }
 
 #if ENABLE_SSL
     ~TileCacheTests()
     {
+        _socketPoll.joinThread();
         Poco::Net::uninitializeSSL();
     }
 #endif
@@ -409,21 +413,38 @@ void TileCacheTests::testDisconnectMultiView()
         countLoolKitProcesses(InitialLoolKitCount);
 
         // Request a huge tile, and cancel immediately.
-        std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, "disconnectMultiView-1 ");
-        std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, "disconnectMultiView-2 ", true);
+        std::shared_ptr<http::WebSocketSession> socket1
+            = loadDocAndGetSession(_socketPoll, _uri, documentURL, "disconnectMultiView-1 ");
+        std::shared_ptr<http::WebSocketSession> socket2
+            = loadDocAndGetSession(_socketPoll, _uri, documentURL, "disconnectMultiView-2 ", true);
 
-        sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-1 ");
-        sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,0 tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-2 ");
+        sendTextFrame(socket1,
+                      "tilecombine nviewid=0 part=0 width=256 height=256 "
+                      "tileposx=0,3840,7680,11520,0,3840,7680,11520 "
+                      "tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840",
+                      "cancelTilesMultiView-1 ");
+        sendTextFrame(socket2,
+                      "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,0 "
+                      "tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840",
+                      "cancelTilesMultiView-2 ");
 
-        socket1->shutdown();
+        socket1->asyncShutdown(_socketPoll);
 
         for (int i = 0; i < 4; ++i)
         {
-            getTileMessage(*socket2, "disconnectMultiView-2 ");
+            getTileMessage(socket2, "disconnectMultiView-2 ");
         }
 
         // Should never get more than 4 tiles on socket2.
-        getResponseString(socket2, "tile:", "disconnectMultiView-2 ", 500);
+        getResponseString(socket2, "tile:", "disconnectMultiView-2 ",
+                          std::chrono::milliseconds(500).count());
+
+        socket2->asyncShutdown(_socketPoll);
+
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                           socket1->waitForDisconnection(std::chrono::seconds(5)));
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
+                           socket2->waitForDisconnection(std::chrono::seconds(5)));
     }
 }
 
@@ -437,12 +458,12 @@ void TileCacheTests::testUnresponsiveClient()
     getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
     TST_LOG("Connecting first client.");
-    std::shared_ptr<LOOLWebSocket> socket1
-        = loadDocAndGetSocket(_uri, documentURL, testname + "1 ");
+    std::shared_ptr<http::WebSocketSession> socket1
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "1 ");
 
     TST_LOG("Connecting second client.");
-    std::shared_ptr<LOOLWebSocket> socket2
-        = loadDocAndGetSocket(_uri, documentURL, testname + "2 ");
+    std::shared_ptr<http::WebSocketSession> socket2
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "2 ");
 
     // Pathologically request tiles and fail to read (say slow connection).
     // Meanwhile, verify that others can get all tiles fine.
@@ -484,6 +505,14 @@ void TileCacheTests::testUnresponsiveClient()
         /// Send canceltiles message to clear tiles-on-fly list, otherwise wsd waits for tileprocessed messages
         sendTextFrame(socket2, "canceltiles", testname + "2 ");
     }
+
+    socket1->asyncShutdown(_socketPoll);
+    socket2->asyncShutdown(_socketPoll);
+
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                       socket1->waitForDisconnection(std::chrono::seconds(5)));
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
+                       socket2->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testImpressTiles()
@@ -1219,7 +1248,9 @@ void TileCacheTests::testTileRequestByInvalidation()
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
-    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+
+    std::shared_ptr<http::WebSocketSession> socket
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // 1. use case: invalidation without having a valid visible area in wsd
     // Type one character to trigger invalidation
@@ -1245,6 +1276,9 @@ void TileCacheTests::testTileRequestByInvalidation()
 
     // Then sends the new tile which was invalidated inside the visible area
     assertResponseString(socket, "tile:", testname);
+
+    socket->asyncShutdown(_socketPoll);
+    socket->waitForDisconnection(std::chrono::seconds(5));
 }
 
 void TileCacheTests::testTileRequestByZoom()
