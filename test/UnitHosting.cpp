@@ -7,6 +7,8 @@
 
 #include <config.h>
 
+#include <net/HttpRequest.hpp>
+
 #include <memory>
 #include <ostream>
 #include <set>
@@ -25,9 +27,6 @@
 #include <Unit.hpp>
 #include <helpers.hpp>
 
-// Include config.h last, so the test server URI is still HTTP, even in SSL builds.
-#include <config.h>
-
 class LOOLWebSocket;
 
 /// Test suite for /hosting, etc.
@@ -42,24 +41,47 @@ public:
 
 UnitBase::TestResult UnitHosting::testDiscovery()
 {
-    Poco::URI uri(helpers::getTestServerURI());
-    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(uri));
+    http::Request httpRequest("/hosting/discovery");
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/hosting/discovery");
-    session->sendRequest(request);
+    auto httpSession = http::Session::create(helpers::getTestServerURI());
+    LOK_ASSERT(httpSession->syncRequest(httpRequest));
 
-    Poco::Net::HTTPResponse response;
-    session->receiveResponse(response);
-    LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
-    LOK_ASSERT_EQUAL(std::string("text/xml"), response.getContentType());
+    const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
 
-    Poco::Net::HTTPRequest request2(Poco::Net::HTTPRequest::HTTP_GET, "/hosting/discovery/");
-    session->sendRequest(request2);
+    LOK_ASSERT(httpResponse->done());
+    LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
 
-    Poco::Net::HTTPResponse response2;
-    session->receiveResponse(response2);
-    LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response2.getStatus());
-    LOK_ASSERT_EQUAL(std::string("text/xml"), response2.getContentType());
+    LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
+    LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
+    LOK_ASSERT_EQUAL(200U, httpResponse->statusLine().statusCode());
+    LOK_ASSERT(httpResponse->statusLine().statusCategory()
+               == http::StatusLine::StatusCodeClass::Successful);
+    LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
+    LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
+    LOK_ASSERT_EQUAL(std::string("text/xml"), httpResponse->header().getContentType());
+
+    // Repeat, with a trailing foreslash in the URL.
+    http::Request httpRequest2("/hosting/discovery/");
+
+    auto httpSession2 = http::Session::create(helpers::getTestServerURI());
+    LOK_ASSERT(httpSession2->syncRequest(httpRequest2));
+
+    const std::shared_ptr<const http::Response> httpResponse2 = httpSession2->response();
+
+    LOK_ASSERT(httpResponse2->done());
+    LOK_ASSERT(httpResponse2->state() == http::Response::State::Complete);
+
+    LOK_ASSERT(!httpResponse2->statusLine().httpVersion().empty());
+    LOK_ASSERT(!httpResponse2->statusLine().reasonPhrase().empty());
+    LOK_ASSERT_EQUAL(200U, httpResponse2->statusLine().statusCode());
+    LOK_ASSERT(httpResponse2->statusLine().statusCategory()
+               == http::StatusLine::StatusCodeClass::Successful);
+    LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse2->statusLine().httpVersion());
+    LOK_ASSERT_EQUAL(std::string("OK"), httpResponse2->statusLine().reasonPhrase());
+    LOK_ASSERT_EQUAL(std::string("text/xml"), httpResponse2->header().getContentType());
+
+    LOK_ASSERT_EQUAL(httpResponse2->getBody(), httpResponse->getBody());
+
     return TestResult::Ok;
 }
 
