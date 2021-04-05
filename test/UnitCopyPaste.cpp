@@ -33,6 +33,7 @@ class UnitCopyPaste : public UnitWSD
 {
 public:
     UnitCopyPaste()
+        : UnitWSD("UnitCopyPaste")
     {
     }
 
@@ -59,7 +60,7 @@ public:
     std::shared_ptr<ClipboardData> getClipboard(const std::string &clipURIstr,
                                                 HTTPResponse::HTTPStatus expected)
     {
-        LOG_TST("connect to " << clipURIstr);
+        LOG_TST("getClipboard: connect to " << clipURIstr);
         Poco::URI clipURI(clipURIstr);
 
         HTTPResponse response;
@@ -67,11 +68,11 @@ public:
         std::unique_ptr<HTTPClientSession> session(helpers::createSession(clipURI));
         session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
         session->sendRequest(request);
-        LOG_TST("sent request.");
+        LOG_TST("getClipboard: sent request: " << clipURI.getPathAndQuery());
 
         try {
             std::istream& responseStream = session->receiveResponse(response);
-            LOG_TST("HTTP get request returned reason: " << response.getReason());
+            LOG_TST("getClipboard: HTTP get request returned reason: " << response.getReason());
 
             if (response.getStatus() != expected)
             {
@@ -81,7 +82,7 @@ public:
                 return std::shared_ptr<ClipboardData>();
             }
 
-            LOK_ASSERT_EQUAL_MESSAGE("clipboard content-type mismatches expected",
+            LOK_ASSERT_EQUAL_MESSAGE("getClipboard: clipboard content-type mismatches expected",
                                      std::string("application/octet-stream"),
                                      response.getContentType());
 
@@ -89,7 +90,7 @@ public:
             clipboard->read(responseStream);
             clipboard->dumpState(std::cerr);
 
-            LOG_TST("got response");
+            LOG_TST("getClipboard: got response");
             return clipboard;
         } catch (Poco::Exception &e) {
             LOG_TST("Poco exception: " << e.message());
