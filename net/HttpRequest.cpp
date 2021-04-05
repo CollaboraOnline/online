@@ -612,6 +612,48 @@ int64_t Response::readData(const char* p, int64_t len)
     return len - available;
 }
 
+std::shared_ptr<Session> Session::create(std::string host, Protocol protocol, int port)
+{
+    std::string scheme;
+    std::string hostname;
+    std::string portString;
+    if (!net::parseUri(host, scheme, hostname, portString))
+    {
+        LOG_ERR("Invalid URI [" << host << "] to http::Session::create.");
+        return nullptr;
+    }
+
+    scheme = Util::toLower(std::move(scheme));
+    if (!scheme.empty())
+    {
+        switch (protocol)
+        {
+            case Protocol::HttpUnencrypted:
+                assert((scheme == "http://" || scheme == "ws://")
+                       && "createHttp has a conflicting scheme.");
+                break;
+            case Protocol::HttpSsl:
+                assert((scheme == "https://" || scheme == "wss://")
+                       && "createHttp has a conflicting scheme.");
+                break;
+        }
+    }
+
+    if (!hostname.empty())
+        host.swap(hostname);
+
+    if (!portString.empty())
+    {
+        const int portInt = std::stoi(portString);
+        assert((port == 0 || port == portInt) && "Two conflicting port numbers given.");
+        if (portInt > 0)
+            port = portInt;
+    }
+
+    port = (port > 0 ? port : getDefaultPort(protocol));
+    return std::shared_ptr<Session>(new Session(std::move(host), protocol, port));
+}
+
 } // namespace http
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
