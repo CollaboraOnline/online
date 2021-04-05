@@ -18,7 +18,8 @@
 #include <wsd/LOOLWSD.hpp>
 #include <common/Clipboard.hpp>
 #include <wsd/ClientSession.hpp>
-#include <Poco/Timestamp.h>
+#include <net/WebSocketSession.hpp>
+
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <Poco/Net/HTMLForm.h>
@@ -142,9 +143,10 @@ public:
                               const std::string &content,
                               HTTPResponse::HTTPStatus expected = HTTPResponse::HTTP_OK)
     {
-        std::shared_ptr<ClipboardData> clipboard;
-        try {
-            clipboard = getClipboard(clipURI, expected);
+        try
+        {
+            std::shared_ptr<ClipboardData> clipboard = getClipboard(clipURI, expected);
+            return assertClipboard(clipboard, mimeType, content);
         }
         catch (const ParseError& err)
         {
@@ -165,8 +167,6 @@ public:
             return false;
         }
 
-        if (!assertClipboard(clipboard, mimeType, content))
-            return false;
         return true;
     }
 
@@ -240,8 +240,9 @@ public:
         // Load a doc with the cursor saved at a top row.
         std::string documentPath, documentURL;
         helpers::getDocumentPathAndURL("empty.ods", documentPath, documentURL, testname);
-        std::shared_ptr<LOOLWebSocket> socket =
-            helpers::loadDocAndGetSocket(Poco::URI(helpers::getTestServerURI()), documentURL, testname);
+
+        std::shared_ptr<http::WebSocketSession> socket = helpers::loadDocAndGetSession(
+            socketPoll(), Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
         std::string clipURI = getSessionClipboardURI(0);
 
@@ -258,8 +259,8 @@ public:
             return;
 
         LOG_TST("Open second connection");
-        std::shared_ptr<LOOLWebSocket> socket2 =
-            helpers::loadDocAndGetSocket(Poco::URI(helpers::getTestServerURI()), documentURL, testname);
+        std::shared_ptr<http::WebSocketSession> socket2 = helpers::loadDocAndGetSession(
+            socketPoll(), Poco::URI(helpers::getTestServerURI()), documentURL, testname);
         std::string clipURI2 = getSessionClipboardURI(1);
 
         LOG_TST("Check no clipboard content");
@@ -309,8 +310,13 @@ public:
             return;
 
         LOG_TST("Close sockets:");
-        socket->shutdown(testname);
-        socket2->shutdown(testname);
+        socket2->asyncShutdown(socketPoll());
+        socket->asyncShutdown(socketPoll());
+
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
+                           socket2->waitForDisconnection(std::chrono::seconds(5)));
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 0",
+                           socket->waitForDisconnection(std::chrono::seconds(5)));
 
         sleep(1); // paranoia.
 
