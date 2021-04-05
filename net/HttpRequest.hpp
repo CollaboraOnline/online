@@ -984,6 +984,24 @@ public:
         return _response;
     }
 
+    /// Make a synchronous request with the given timeout.
+    /// After returning the timeout set by setTimeout is restored.
+    const std::shared_ptr<const Response> syncRequest(const Request& req,
+                                                      std::chrono::milliseconds timeout)
+    {
+        LOG_TRC("syncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
+                                << req.getUrl());
+
+        const auto origTimeout = getTimeout();
+        setTimeout(timeout);
+
+        auto response = syncRequest(req);
+
+        setTimeout(origTimeout);
+
+        return response;
+    }
+
     bool asyncRequest(const Request& req, SocketPoll& poll)
     {
         LOG_TRC("asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
@@ -1176,6 +1194,23 @@ private:
     FinishedCallback _onFinished;
     bool _connected;
 };
+
+/// HTTP Get a URL synchronously.
+inline const std::shared_ptr<const http::Response>
+get(const std::string& url, std::chrono::milliseconds timeout = Session::getDefaultTimeout())
+{
+    auto httpSession = http::Session::create(url);
+    return httpSession->syncRequest(http::Request(net::parseUrl(url)), timeout);
+}
+
+/// HTTP Get synchronously given a url and a path.
+inline const std::shared_ptr<const http::Response> get(std::string url, const std::string& path,
+                                                       std::chrono::milliseconds timeout
+                                                       = Session::getDefaultTimeout())
+{
+    auto httpSession = http::Session::create(std::move(url));
+    return httpSession->syncRequest(http::Request(path), timeout);
+}
 
 } // namespace http
 
