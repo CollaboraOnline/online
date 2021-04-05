@@ -41,11 +41,8 @@ public:
 
 UnitBase::TestResult UnitHosting::testDiscovery()
 {
-    http::Request httpRequest("/hosting/discovery");
-
-    auto httpSession = http::Session::create(helpers::getTestServerURI());
     const std::shared_ptr<const http::Response> httpResponse
-        = httpSession->syncRequest(httpRequest);
+        = http::get(helpers::getTestServerURI(), "/hosting/discovery");
 
     LOK_ASSERT(httpResponse->done());
     LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
@@ -60,11 +57,8 @@ UnitBase::TestResult UnitHosting::testDiscovery()
     LOK_ASSERT_EQUAL(std::string("text/xml"), httpResponse->header().getContentType());
 
     // Repeat, with a trailing foreslash in the URL.
-    http::Request httpRequest2("/hosting/discovery/");
-
-    auto httpSession2 = http::Session::create(helpers::getTestServerURI());
     const std::shared_ptr<const http::Response> httpResponse2
-        = httpSession2->syncRequest(httpRequest2);
+        = http::get(helpers::getTestServerURI(), "/hosting/discovery/");
 
     LOK_ASSERT(httpResponse2->done());
     LOK_ASSERT(httpResponse2->state() == http::Response::State::Complete);
