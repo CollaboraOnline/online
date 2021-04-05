@@ -58,7 +58,7 @@ struct ClipboardData
 
     void dumpState(std::ostream& os)
     {
-        os << "Clipboard with " << size() << " entries\n";
+        os << "Clipboard with " << size() << " entries:\n";
         for (size_t i = 0; i < size(); ++i)
             os << "\t[" << i << "] - size " << _content[i].size() <<
                 " type: '" << _mimeTypes[i] << "'\n";
@@ -74,7 +74,7 @@ struct ClipboardData
                 return true;
             }
         }
-        value = "";
+        value.clear();
         return false;
     }
 };

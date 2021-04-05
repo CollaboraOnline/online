@@ -156,12 +156,15 @@ UnitBase::~UnitBase()
 
 UnitWSD::UnitWSD(std::string testname)
     : UnitBase(std::move(testname))
+    , _socketPoll(getTestname())
     , _hasKitHooks(false)
 {
+    _socketPoll.startThread();
 }
 
 UnitWSD::~UnitWSD()
 {
+    _socketPoll.joinThread();
 }
 
 void UnitWSD::configure(Poco::Util::LayeredConfiguration &config)

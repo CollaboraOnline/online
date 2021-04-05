@@ -259,6 +259,7 @@ private:
 /// Derive your WSD unit test / hooks from me.
 class UnitWSD : public UnitBase
 {
+    SocketPoll _socketPoll;
     bool _hasKitHooks;
 
 public:
@@ -271,6 +272,8 @@ public:
         assert(Global && Global->_type == UnitType::Wsd);
         return *static_cast<UnitWSD *>(Global);
     }
+
+    SocketPoll& socketPoll() { return _socketPoll; }
 
     enum class TestRequest
     {
