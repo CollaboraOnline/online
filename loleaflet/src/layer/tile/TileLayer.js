@@ -2657,7 +2657,7 @@ L.TileLayer = L.GridLayer.extend({
 				    !(this._selectionHandles.end && this._selectionHandles.end.isDragged) &&
 				    !(docLayer._followEditor || docLayer._followUser) &&
 				    !this._map.calcInputBarHasFocus()) {
-					this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: scroll !== undefined});
+					this._map.fire('scrollto', {x: center.x, y: center.y});
 				}
 			}
 		}
@@ -2781,7 +2781,7 @@ L.TileLayer = L.GridLayer.extend({
 				center.x = Math.round(center.x < 0 ? 0 : center.x);
 				center.y = Math.round(center.y < 0 ? 0 : center.y);
 
-				this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: true});
+				this._map.fire('scrollto', {x: center.x, y: center.y});
 			}
 
 			this._viewCursors[viewId].marker.showCursorHeader();
@@ -3326,7 +3326,7 @@ L.TileLayer = L.GridLayer.extend({
 					center = center.subtract(this._map.getSize().divideBy(2));
 					center.x = Math.round(center.x < 0 ? 0 : center.x);
 					center.y = Math.round(center.y < 0 ? 0 : center.y);
-					this._map.fire('scrollto', {x: center.x, y: center.y, calledFromInvalidateCursorMsg: true});
+					this._map.fire('scrollto', {x: center.x, y: center.y});
 				}
 				this._prevCellCursorXY = this._cellCursorXY;
 			}
