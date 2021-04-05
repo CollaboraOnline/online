@@ -1470,6 +1470,12 @@ L.TileLayer = L.GridLayer.extend({
 		var modifierViewId = parseInt(obj.viewId);
 
 		this._cursorAtMispelledWord = obj.mispelledWord ? Boolean(parseInt(obj.mispelledWord)).valueOf() : false;
+
+		// Remember the last position of the caret (in core pixels).
+		if (this._cursorCorePixels) {
+			this._cursorPreviousPositionCorePixels = this._cursorCorePixels.clone();
+		}
+
 		this._visibleCursor = new L.LatLngBounds(
 			this._twipsToLatLng(recCursor.getTopLeft(), this._map.getZoom()),
 			this._twipsToLatLng(recCursor.getBottomRight(), this._map.getZoom()));
@@ -1505,7 +1511,7 @@ L.TileLayer = L.GridLayer.extend({
 			this.lastCursorPos = recCursor.getTopLeft();
 		}
 
-		this._onUpdateCursor(updateCursor && (modifierViewId === this._viewId));
+		this._onUpdateCursor(updateCursor && (modifierViewId === this._viewId), undefined /* zoom */, !(this._viewId === modifierViewId));
 	},
 
 	_updateEditor: function(textMsg) {
@@ -2634,7 +2640,7 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	// Update cursor layer (blinking cursor).
-	_onUpdateCursor: function (scroll, zoom) {
+	_onUpdateCursor: function (scroll, zoom, keepCaretPositionRelativeToScreen) {
 
 		if (!this._visibleCursor ||
 			this._referenceMarkerStart.isDragged ||
@@ -2666,6 +2672,16 @@ L.TileLayer = L.GridLayer.extend({
 					this._map.fire('scrollto', {x: center.x, y: center.y});
 				}
 			}
+		}
+		else if (keepCaretPositionRelativeToScreen) {
+			/* We should be here when:
+				Another view updated the text.
+				That edit changed our cursor position.
+			Now we already set the cursor position to another point.
+			We want to keep the cursor position at the same point relative to screen.
+			*/
+			var y = this._cursorCorePixels.min.y - this._cursorPreviousPositionCorePixels.min.y;
+			this._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name).scrollVerticalWithOffset(y);
 		}
 
 		this._updateCursorAndOverlay();
