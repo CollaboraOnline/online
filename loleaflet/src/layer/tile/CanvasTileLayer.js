@@ -2869,6 +2869,9 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_isWholeColumnSelected: function (cellAddress) {
+		if (!cellAddress)
+			cellAddress = document.getElementById('addressInput').value;
+
 		var startEnd = cellAddress.split(':');
 		if (startEnd.length === 1)
 			return false; // Selection is not a range.
@@ -2885,6 +2888,9 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_isWholeRowSelected: function (cellAddress) {
+		if (!cellAddress)
+			cellAddress = document.getElementById('addressInput').value;
+
 		var startEnd = cellAddress.split(':');
 		if (startEnd.length === 1)
 			return false; // Selection is not a range.
