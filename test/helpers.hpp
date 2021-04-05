@@ -416,6 +416,24 @@ std::vector<char> getResponseMessage(LOOLWebSocket& ws, const std::string& prefi
     return std::vector<char>();
 }
 
+inline std::vector<char> getResponseMessage(const std::shared_ptr<http::WebSocketSession>& ws,
+                                            const std::string& prefix, const std::string& testname,
+                                            const std::chrono::milliseconds timeoutMs
+                                            = std::chrono::seconds(10))
+{
+    return ws->waitForMessage(prefix, timeoutMs, testname);
+}
+
+inline std::string getResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
+                                     const std::string& prefix, const std::string& testname,
+                                     const std::chrono::milliseconds timeoutMs
+                                     = std::chrono::seconds(10))
+{
+    const std::vector<char> response = ws->waitForMessage(prefix, timeoutMs, testname);
+
+    return std::string(response.data(), response.size());
+}
+
 inline
 std::vector<char> getResponseMessage(const std::shared_ptr<LOOLWebSocket>& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
 {
@@ -426,16 +444,6 @@ template <typename T>
 std::string getResponseString(T& ws, const std::string& prefix, const std::string& testname, const size_t timeoutMs = 10000)
 {
     const auto response = getResponseMessage(ws, prefix, testname, timeoutMs);
-    return std::string(response.data(), response.size());
-}
-
-inline std::string getResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
-                                     const std::string& prefix, const std::string& testname,
-                                     const std::chrono::milliseconds timeoutMs
-                                     = std::chrono::seconds(10))
-{
-    const std::vector<char> response = ws->waitForMessage(prefix, timeoutMs, testname);
-
     return std::string(response.data(), response.size());
 }
 
