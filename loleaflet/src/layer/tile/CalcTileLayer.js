@@ -841,7 +841,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._onSplitStateChanged(e, false /* isSplitCol */);
 		}
 		else if (e.commandName === '.uno:RowColSelCount') {
-			this._onRowColSelCount(e.state.replace('Selected:', '').replace('row', '').replace('column', '').replace('s', ''));
+			// We also call the function when state is empty, because row/column variables should be set.
+			if (e.state.trim() === '' || e.state.startsWith('Selected'))
+				this._onRowColSelCount(e.state.replace('Selected:', '').replace('row', '').replace('column', '').replace('s', ''));
 		}
 	},
 
