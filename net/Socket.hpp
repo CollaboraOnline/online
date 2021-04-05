@@ -534,7 +534,7 @@ class SocketPoll
 {
 public:
     /// Create a socket poll, called rather infrequently.
-    SocketPoll(const std::string& threadName);
+    explicit SocketPoll(const std::string& threadName);
     virtual ~SocketPoll();
 
     /// Default poll time - useful to increase for debugging.
