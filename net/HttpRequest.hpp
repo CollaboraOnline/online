@@ -893,40 +893,21 @@ public:
 
     /// Create a new HTTP Session to the given URI.
     /// The @uri must include the scheme, e.g. https://domain.com:9980
-    static std::shared_ptr<Session> create(std::string uri)
+    static std::shared_ptr<Session> create(const std::string& uri)
     {
-        const std::string lowerUri = Util::toLower(std::move(uri));
-        if (!Util::startsWith(lowerUri, "http"))
+        std::string scheme;
+        std::string hostname;
+        std::string portString;
+        if (!net::parseUri(uri, scheme, hostname, portString))
         {
-            LOG_ERR("Unsupported scheme in URI: " << uri);
+            LOG_ERR("Invalid URI [" << uri << "] to http::Session::create.");
             return nullptr;
         }
 
-        std::string hostPort;
-        bool secure = false;
-        if (Util::startsWith(uri, "http://"))
-        {
-            hostPort = uri.substr(7);
-        }
-        else if (Util::startsWith(uri, "https://"))
-        {
-            hostPort = uri.substr(8);
-            secure = true;
-        }
-        else
-        {
-            LOG_ERR("Invalid URI: " << uri);
-            return nullptr;
-        }
-
-        int port = 0;
-        const auto tokens = Util::tokenize(hostPort, ':');
-        if (tokens.size() > 1)
-        {
-            port = std::stoi(tokens[1]);
-        }
-
-        return create(tokens[0], secure ? Protocol::HttpSsl : Protocol::HttpUnencrypted, port);
+        scheme = Util::toLower(std::move(scheme));
+        const bool secure = (scheme == "https://" || scheme == "wss://");
+        return create(hostname, secure ? Protocol::HttpSsl : Protocol::HttpUnencrypted,
+                      std::stoi(portString));
     }
 
     /// Returns the given protocol's default port.
