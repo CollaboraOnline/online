@@ -171,8 +171,12 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	onDraw: function () {
+		var isHighlighted = null;
+		if (this._map._docLayer._isWholeRowSelected() === true)
+			isHighlighted = true;
+
 		this._headerInfo.forEachElement(function(elemData) {
-			this.drawHeaderEntry(elemData, false);
+			this.drawHeaderEntry(elemData, false, isHighlighted);
 		}.bind(this));
 	},
 
