@@ -30,6 +30,37 @@ connect(std::string uri, const std::shared_ptr<ProtocolHandlerInterface>& protoc
 
 /// Decomposes a URI into its components.
 /// Returns true if parsing was successful.
-bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port);
+bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port,
+              std::string& url);
+
+/// Decomposes a URI into its components.
+/// Returns true if parsing was successful.
+inline bool parseUri(std::string uri, std::string& scheme, std::string& host, std::string& port)
+{
+    std::string url;
+    return parseUri(std::move(uri), scheme, host, port, url);
+}
+
+/// Return the locator given a URI.
+inline std::string parseUrl(const std::string& uri)
+{
+    auto itScheme = uri.find("://");
+    if (itScheme != uri.npos)
+    {
+        itScheme += 3; // Skip it.
+    }
+    else
+    {
+        itScheme = 0;
+    }
+
+    const auto itUrl = uri.find('/', itScheme);
+    if (itUrl != uri.npos)
+    {
+        return uri.substr(itUrl); // Including the first foreslash.
+    }
+
+    return std::string();
+}
 
 } // namespace net
