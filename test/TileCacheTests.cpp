@@ -775,8 +775,8 @@ void TileCacheTests::checkBlackTile(std::stringstream& tile)
             png_byte R = rows[itRow][itCol + 0];
             png_byte G = rows[itRow][itCol + 1];
             png_byte B = rows[itRow][itCol + 2];
-            //png_byte A = rows[itRow][itCol + 3];
-            if (R == 0x00 && G == 0x00 && B == 0x00)
+            png_byte A = rows[itRow][itCol + 3];
+            if (R == 0x00 && G == 0x00 && B == 0x00 && A == 0xff)
             {
                 ++black;
             }
