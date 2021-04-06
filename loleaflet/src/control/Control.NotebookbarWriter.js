@@ -627,6 +627,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 										'text': _UNO('.uno:DecrementIndent'),
 										'command': '.uno:DecrementIndent'
 									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:LineSpacing'),
+										'command': '.uno:LineSpacing'
+									},
 								]
 							},
 						],
@@ -666,11 +671,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}
 				],
 				'vertical': 'true'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:LineSpacing'),
-				'command': '.uno:LineSpacing'
 			},
 			{
 				'children': [
