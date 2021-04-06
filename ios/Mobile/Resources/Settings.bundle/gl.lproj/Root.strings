@@ -3,6 +3,6 @@
 
 "Template list URL" = "URL da lista de modelos";
 "Settings" = "Configuración";
-"Core git hash" = "Identificador da versión no repositorio «git» «core»";
-"Online git hash" = "Identificador da versión no repositorio «git» na rede";
+"Core git hash" = "Identificador da versión no repositorio Git «core»";
+"Online git hash" = "Identificador da versión no repositorio Git «online»";
 "Version information" = "Información sobre a versión";

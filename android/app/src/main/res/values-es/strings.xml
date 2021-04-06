@@ -113,7 +113,7 @@
     <!-- Clipboard Actions -->
     <!-- UNO cmd controller Strings -->
     <string name="unable_to_go_further">No se puede ir más allá.</string>
-    <string name="bmp_null">¡El Bmp no es válido!</string>
+    <string name="bmp_null">El BMP no es válido.</string>
     <string name="directory_not_saved">Directorio no guardado.</string>
     <string name="title_activity_show_html">Acerca de</string>
     <string name="share_document">Compartir documento</string>
