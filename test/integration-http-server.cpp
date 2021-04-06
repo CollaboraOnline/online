@@ -7,6 +7,8 @@
 
 #include <config.h>
 
+#include <net/HttpRequest.hpp>
+
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/FilePartSource.h>
 #include <Poco/Net/HTMLForm.h>
@@ -26,6 +28,7 @@
 
 #include <countloolkits.hpp>
 #include <helpers.hpp>
+#include <memory>
 
 /// Tests the HTTP GET API of loolwsd.
 class HTTPServerTest : public CPPUNIT_NS::TestFixture
@@ -106,23 +109,21 @@ public:
     }
 };
 
-
 void HTTPServerTest::testLoleafletGet()
 {
-    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+    const auto pathAndQuery = "/loleaflet/dist/loleaflet.html?access_token=111111111";
+    const std::shared_ptr<const http::Response> httpResponse
+        = http::get(_uri.toString(), pathAndQuery);
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/loleaflet/dist/loleaflet.html?access_token=111111111");
+    LOK_ASSERT_EQUAL(static_cast<unsigned>(Poco::Net::HTTPResponse::HTTP_OK),
+                     httpResponse->statusLine().statusCode());
+    LOK_ASSERT_EQUAL(std::string("text/html"), httpResponse->header().getContentType());
+
+    //FIXME: Replace with own URI parser.
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, pathAndQuery);
     Poco::Net::HTMLForm param(request);
-    session->sendRequest(request);
 
-    Poco::Net::HTTPResponse response;
-    std::istream& rs = session->receiveResponse(response);
-    LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
-    LOK_ASSERT_EQUAL(std::string("text/html"), response.getContentType());
-
-    std::string html;
-    Poco::StreamCopier::copyToString(rs, html);
-
+    const std::string html = httpResponse->getBody();
     LOK_ASSERT(html.find(param["access_token"]) != std::string::npos);
     LOK_ASSERT(html.find(_uri.getHost()) != std::string::npos);
     LOK_ASSERT(html.find(std::string(LOOLWSD_VERSION_HASH)) != std::string::npos);
