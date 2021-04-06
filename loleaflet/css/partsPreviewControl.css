@@ -1,12 +1,16 @@
 #document-container.parts-preview-document {
-	left: 214px;
+	left: 194px;
 }
 
 #slide-sorter {
-	height: 100%;
+	height: calc(100% - 36px); /*minus #presentation-toolbar*/
+	min-width: 194px;
 	white-space: nowrap;
 	overflow-x: hidden;
 	overflow-y: scroll;
+	background: #dfdfdf;
+	scrollbar-color: #ccc #dfdfdf;
+	scrollbar-width: thin;
 }
 
 #sidebar-panel {
