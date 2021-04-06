@@ -495,6 +495,11 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Insert Tab */
 
+#table-Insert.notebookbar
+{
+	margin-top: 10px;
+}
+
 #table-Insert-Section-Pagebreak #InsertPagebreak.notebookbar img,
 #table-Insert-Section-Image #InsertGraphic.notebookbar img,
 #HyperlinkDialog.notebookbar img,
@@ -513,6 +518,11 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Layout Tab */
 
+#table-Layout.notebookbar
+{
+	margin-top: 10px;
+}
+
 #FormatGroup.notebookbar img,
 #PageDialog.notebookbar img
 {
@@ -526,7 +536,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* References Tab */
 
-#table-References
+#table-References.notebookbar
 {
 	margin-top: 10px;
 }
@@ -615,7 +625,15 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Help tab */
 
+#table-Help-Section.notebookbar {
+	margin-top: 30px;
+}
+
 /* File tab */
+
+#table-File-Section.notebookbar {
+	margin-top: 10px;
+}
 
 /* Draw tab */
 #table-Draw #table-box16 #table-first16.notebookbar,
