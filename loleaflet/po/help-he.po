@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0200\n"
-"PO-Revision-Date: 2021-04-06 01:14+0000\n"
+"PO-Revision-Date: 2021-04-06 11:03+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "help/he/>\n"
@@ -1309,16 +1309,21 @@ msgid ""
 "in. The zoom applies to the document area, the user interface is not "
 "affected. The current level of zoom is shown in this area."
 msgstr ""
+"<span class=\"def\">סרגל התקריב:</span> בצדו השמאלי של סרגל הכלים ישנה סדרת "
+"כלים שמאפשרת לך להציג את המסמך בגודלו המקורי (100%), להתקרב ולהתרחק. התקריב "
+"מתייחס לאזור המסמך, מנשק המשתמש לא מושפע. רמת התקריב הנוכחית מופיעה באזור זה."
 
 #: html/loleaflet-help.html%2Bdiv.p:332-5
 msgid ""
 "Text, charts, shapes and svg images will stay sharp, when zooming in, you "
 "will only see pixels appear at inserted images, such as jpg’s or png’s."
 msgstr ""
+"טקסט, תרשימים, צורות ותמונות svg יישארו חדים גם כשהם מוגדלים, פיקסלים יופיעו "
+"רק בתמונות שנוספו כגון jpg או png."
 
 #: html/loleaflet-help.html%2Bdiv.p:333-5
 msgid "Using the browser zoom affects the document and user interface areas."
-msgstr ""
+msgstr "שימוש בתקריב של הדפדפן משפיע הן על אזור המסמך והן על אזור מנשק המשתמש."
 
 #: html/loleaflet-help.html%2Bdiv.p:334-5
 msgid ""
@@ -1326,12 +1331,16 @@ msgid ""
 "bar, a set of information on the document is displayed. The actual "
 "information depends on the nature of the document."
 msgstr ""
+"<span class=\"def\">סרגל המידע:</span> לשמאל סרגל החיפוש, מופיעה סדרה של "
+"נתונים על המסמך. הנתונים עצמם תלויים באופי המסמך."
 
 #: html/loleaflet-help.html%2Bdiv.p:338-5
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
 "integrated with <span class=\"productname\">%productName</span>."
 msgstr ""
+"המסמכים שלך מאוחסנים ומנוהלים באחסון בענן שמשתלב עם <span class=\"productname"
+"\">%productName</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:339-5
 msgid ""
@@ -1340,12 +1349,17 @@ msgid ""
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
+"כדי להוריד מסמך יש להוריד אותו מהתפריט <span class=\"ui\">קובץ</span> של "
+"היישום <span class=\"productname\">%productName</span>. תצורות ההורדה זמינות "
+"כתלות ביישום. כל הקבצים המיוצאים של היישום הם בתצורת PDF."
 
 #: html/loleaflet-help.html%2Bdiv.p:340-5
 msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
 ">%productName</span> module associated to the document format."
 msgstr ""
+"כדי לפתוח מסמך, יש ללחוץ על הקובץ כדי לפתוח את המודול ב־<span class="
+"\"productname\">%productName</span> שמשויך לתצורת המסמך."
 
 #: html/loleaflet-help.html%2Bdiv.p:341-5
 msgid ""
@@ -1354,6 +1368,9 @@ msgid ""
 "quickly as possible you can also force saving using the <span class=\"ui\""
 ">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
+"מסמכים ב־<span class=\"productname\">%productName</span> נשמרים אוטומטית, אך "
+"במקרה של חשש מתדירות העדכונים ניתן לכפות שמירה בעזרת רשומת ה<span class=\"ui"
+"\">שמירה</span> בתפריט <span class=\"ui\">קובץ</span>."
 
 #: html/loleaflet-help.html%2Bdiv.p:342-5
 msgid ""
