@@ -244,6 +244,11 @@ L.Map.Keyboard = L.Handler.extend({
 		if (ev.charCode == 0) {
 			this._handleKeyEvent(ev);
 		}
+		if (this._map._docLayer)
+			if (ev.shiftKey && ev.type === 'keydown')
+				this._map._docLayer.shiftKeyPressed = true;
+			else if (ev.keyCode === 16 && ev.type === 'keyup')
+				this._map._docLayer.shiftKeyPressed = false;
 	},
 
 	_globalKeyEvent: function(ev) {

@@ -28,6 +28,8 @@ L.Map.BoxZoom = L.Handler.extend({
 	},
 
 	_onMouseDown: function (e) {
+		if (this._map._docLayer._hasActiveSelection)
+			return false;
 		if (!e.shiftKey || ((e.which !== 1) && (e.button !== 0))) { return false; }
 
 		this._moved = false;
