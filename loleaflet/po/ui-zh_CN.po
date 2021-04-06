@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0100\n"
-"PO-Revision-Date: 2020-09-29 07:57+0000\n"
-"Last-Translator: Ming Hua <plateauwolf@qq.com>\n"
-"Language-Team: Chinese (Simplified) <https://weblate.documentfoundation.org/"
-"projects/libo_online/loleaflet-ui/zh_Hans/>\n"
-"Language: \n"
+"PO-Revision-Date: 2021-04-01 08:26+0000\n"
+"Last-Translator: wxf26054 <wxf26054@live.cn>\n"
+"Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
+"collabora-online/ui/zh_Hans/>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.6-dev\n"
 "X-Pootle-Path: /zh_CN/libo_online/loleaflet-ui-zh_CN.po\n"
 "X-Pootle-Revision: 3938267\n"
 
@@ -62,7 +62,6 @@ msgid "User Name"
 msgstr "用户名称"
 
 #: admin/admin.strings.js:16
-#, fuzzy
 msgid "Documents open"
 msgstr "打开的文档"
 
@@ -101,7 +100,7 @@ msgstr "文档"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "查看"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -160,7 +159,7 @@ msgstr "CPU 统计的时间间隔（毫秒）"
 
 #: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "结束会话。"
 
 #: admin/admin.strings.js:40
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -234,7 +233,7 @@ msgstr "已发送"
 
 #: admin/src/AdminSocketBase.js:60
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "服务器已关闭，请刷新该页面。"
 
 #: admin/src/AdminSocketBase.js:70
 msgid "Connection error"
@@ -471,17 +470,16 @@ msgid "Open menu"
 msgstr "打开菜单"
 
 #: src/control/Control.JSDialogBuilder.js:2240
-#, fuzzy
 msgid "reply"
 msgstr "回复"
 
 #: src/control/Control.JSDialogBuilder.js:2243
 msgid "replies"
-msgstr ""
+msgstr "回复"
 
 #: src/control/Control.JSDialogBuilder.js:2290
 msgid "Insert Comment"
-msgstr ""
+msgstr "插入评论"
 
 #: src/control/Control.JSDialogBuilder.js:2673
 msgid "Cell borders"
@@ -508,7 +506,6 @@ msgid "Columns"
 msgstr "列"
 
 #: src/control/Control.JSDialogBuilder.js:2924
-#, fuzzy
 msgid "Insert Table"
 msgstr "插入表格"
 
@@ -630,7 +627,7 @@ msgstr "显示标尺"
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:309
 #: src/control/Control.Menubar.js:428
 msgid "Show Status Bar"
-msgstr ""
+msgstr "显示状态栏"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:312
 #: src/control/Control.Menubar.js:431 src/control/Control.Menubar.js:549
@@ -739,7 +736,7 @@ msgstr "Excel 电子表格 (.xlsx)"
 
 #: src/control/Control.Menubar.js:516
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "CSV文件(.csv)"
 
 #: src/control/Control.Menubar.js:743 src/control/Control.Menubar.js:792
 #: src/control/Control.Menubar.js:840 src/control/Control.StatusBar.js:190
@@ -878,15 +875,15 @@ msgstr "幻灯片数"
 
 #: src/control/Control.StatusBar.js:450
 msgid "Select multiple cells"
-msgstr ""
+msgstr "选择多个单元格"
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "插入模式: 未激活"
 
 #: src/control/Control.StatusBar.js:466
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "插入模式: 未激活"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
@@ -898,11 +895,11 @@ msgstr "在后面插入工作表"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "向左移动工作表"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "向右移动工作表"
 
 #: src/control/Control.Tabs.js:251
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -953,7 +950,7 @@ msgstr "插入形状"
 
 #: src/control/Control.TopToolbar.js:251
 msgid "Insert connectors"
-msgstr ""
+msgstr "插入连接器"
 
 #: src/control/Control.TopToolbar.js:499
 msgid "Style"
@@ -1075,21 +1072,21 @@ msgstr "帮助(~H)"
 #: src/control/Control.NotebookbarCalc.js:125
 #: src/control/Control.NotebookbarImpress.js:206
 msgid "Share"
-msgstr ""
+msgstr "共享"
 
 #: src/control/Control.NotebookbarWriter.js:176
 #: src/control/Control.NotebookbarCalc.js:155
 #: src/control/Control.NotebookbarImpress.js:236
 msgid "See history"
-msgstr ""
+msgstr "查看历史记录"
 
 #: src/control/Control.NotebookbarWriter.js:1420
 msgid "Text Body"
-msgstr ""
+msgstr "正文"
 
 #: src/control/Control.NotebookbarWriter.js:1423
 msgid "Title"
-msgstr ""
+msgstr "标题"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
@@ -1101,7 +1098,7 @@ msgstr "数据(~D)"
 
 #: src/control/Control.NotebookbarCalc.js:279
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "CSV文件(.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:1826
 msgid "Insert Rows Above"
@@ -1121,11 +1118,11 @@ msgstr "在当前列右方插入"
 
 #: src/control/Control.NotebookbarCalc.js:1884
 msgid "Insert Row Break"
-msgstr ""
+msgstr "插入换行符"
 
 #: src/control/Control.NotebookbarCalc.js:1895
 msgid "Insert Column Break"
-msgstr ""
+msgstr "插入分栏符"
 
 #: src/control/Control.NotebookbarCalc.js:1913
 msgid "Delete Rows"
@@ -1137,11 +1134,11 @@ msgstr "删除列"
 
 #: src/control/Control.NotebookbarCalc.js:1942
 msgid "Remove Row Break"
-msgstr ""
+msgstr "删除分行符"
 
 #: src/control/Control.NotebookbarCalc.js:1953
 msgid "Remove Column Break"
-msgstr ""
+msgstr "删除分栏符"
 
 #: src/control/Control.NotebookbarImpress.js:30
 msgid "Start Presentation"
@@ -1149,7 +1146,7 @@ msgstr "开始演示"
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
-msgstr ""
+msgstr "显示选定的工作表"
 
 #: src/control/Permission.js:48
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -1360,9 +1357,8 @@ msgstr ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:64
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "糟糕，连接到文件时出错"
+msgstr "糟糕，连接到文件 %productName:  时出现问题 "
 
 #: src/core/Socket.js:310
 msgid "Served by:"
@@ -1394,7 +1390,7 @@ msgstr "糟糕，连接到文件时出错"
 
 #: src/core/Socket.js:433
 msgid "Server is down, restarting automatically. Please wait."
-msgstr ""
+msgstr "服务器已关闭，将会自动重新启动。请稍候..."
 
 #: src/core/Socket.js:461
 msgid ""
@@ -1613,7 +1609,7 @@ msgstr "解决"
 
 #: src/layer/tile/TileLayer.js:383
 msgid "Unresolve"
-msgstr ""
+msgstr "未解决"
 
 #: src/layer/tile/TileLayer.js:389
 msgid "Unresolve Thread"
@@ -1629,7 +1625,7 @@ msgstr "函数"
 
 #: src/layer/tile/TileLayer.js:4024
 msgid "No Comments"
-msgstr ""
+msgstr "暂无评论"
 
 #: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
