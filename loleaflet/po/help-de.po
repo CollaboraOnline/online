@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0200\n"
-"PO-Revision-Date: 2020-10-16 03:24+0000\n"
-"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"PO-Revision-Date: 2021-03-23 13:42+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "help/de/>\n"
 "Language: de\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.5.2-dev\n"
 "X-Pootle-Path: /de/libo_online/loleaflet-help-de.po\n"
 "X-Pootle-Revision: 3254192\n"
 
@@ -98,7 +98,7 @@ msgstr "Fett"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:158-49
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:215-49
 msgid "Ctrl + B"
-msgstr "Strg + B"
+msgstr "Strg + Umschalt + F"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:37-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-18
@@ -1035,7 +1035,7 @@ msgstr "Die Auswahl bis zum Ende der Textbox verändern"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:203-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Tastenkombinationen für Folien"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-18
@@ -1063,28 +1063,24 @@ msgstr ""
 "Auswahl von Objekten in der umgekehrten Reihenfolge der Erstellung wechseln"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
-#, fuzzy
 msgid "Move to next text object on slide"
-msgstr "Zum nächsten Textobjekt auf der Folie / Zeichenfläche wechseln"
+msgstr "Zum nächsten Textobjekt auf der Folie wechseln"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "Alles auf der Folie auswählen"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:260-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
-msgstr "Tastenkombinationen für Folien / Zeichenflächen"
+msgstr "Tastenkombinationen für Zeichenflächen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
-#, fuzzy
 msgid "Move to next text object on drawing page"
-msgstr "Zum nächsten Textobjekt auf der Folie / Zeichenfläche wechseln"
+msgstr "Zum nächsten Textobjekt auf der Zeichenfläche wechseln"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:266-18
-#, fuzzy
 msgid "Select all in drawing page"
-msgstr "Alles auf der Folie / Zeichenfläche auswählen"
+msgstr "Alles auf der Zeichenfläche auswählen"
 
 #: html/loleaflet-help.html%2Bdiv.h1:271-5
 msgid "<span class=\"productname\">%productName</span> Help"
