@@ -14,4 +14,9 @@
     <string name="rate_now">Eman puntuazioa orain</string>
     <string name="exiting">Irteten...</string>
     <string name="file_chromeos_read_only">Fitxategi hau ezin da gorde kokaleku honetan, irakurtzeko moduan irekiko da. Eraman Play fitxategietara irakurtzeko/idazteko atzipen osoa eduki ahal izateko.</string>
+    <string name="restarting">Berrabiarazten...</string>
+    <string name="cant_open_the_document">Ezin da dokumentua ireki</string>
+    <string name="ask_for_copy">Dokumentu hau soilik irakurtzeko da. Editatzeko kopia bat egin nahi duzu\?</string>
+    <string name="edit_copy">Editatu kopia bat</string>
+    <string name="view_only">Ikusi soilik</string>
 </resources>

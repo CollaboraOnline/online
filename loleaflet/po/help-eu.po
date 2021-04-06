@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0200\n"
-"PO-Revision-Date: 2020-10-12 07:13+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2021-04-01 08:26+0000\n"
+"Last-Translator: Gontzal Manuel Pujana Onaindia <thadahdenyse@gmail.com>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "help/eu/>\n"
 "Language: eu\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.6-dev\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-help-eu.po\n"
 "X-Pootle-Revision: 3858781\n"
 
@@ -613,7 +613,7 @@ msgstr "Mugitu bista gora orrialde bat"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-70
 msgid "PageUp"
-msgstr "PageUp"
+msgstr "Re Pág"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-18
 msgid "Switch cursor between text and header"
@@ -621,7 +621,7 @@ msgstr "Mugitu kurtsorea testua eta goiburukoaren artean"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-82
 msgid "Ctrl + PageUp"
-msgstr "Ctrl + PageUp"
+msgstr "Ctrl + Re Pág"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-18
 msgid "Extend the selection up one page"
@@ -637,7 +637,7 @@ msgstr "Mugitu ikuspegia orrialde bat behera"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-72
 msgid "PageDown"
-msgstr "PageDown"
+msgstr "Av Pág"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-18
 msgid "Switch cursor between text and footer"
@@ -645,7 +645,7 @@ msgstr "Mugitu kurtsorea testua eta orri-oinaren artean"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-82
 msgid "Ctrl + PageDown"
-msgstr "Ctrl + PageDown"
+msgstr "Ctrl + Av Pág"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:90-18
 msgid "Extend the selection down one page"
@@ -1040,7 +1040,7 @@ msgstr "Joan eta hautatu testu-kutxaren amaiera arte"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:203-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Diapositiberako teklatu-lasterbideak"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-18
@@ -1064,31 +1064,27 @@ msgstr "Hautatu objektuak sorkuntza ordenean"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-18
 msgid "Select objects in the reverse order in which they were created"
-msgstr "Hautatu objektuak sortu ziren kontrako ordenan."
+msgstr "Hautatu objektuak sortu ziren kontrako ordenan"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
-#, fuzzy
 msgid "Move to next text object on slide"
-msgstr "Joan diapositiba / marrazte orriko hurrengo objektura"
+msgstr "Mugitu diapositibako hurrengo testu objektura"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "Hautatu diapositibako eduki guztia"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:260-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
-msgstr "Diapositiba / marrazte orriaren laster-teklak"
+msgstr "Draw orrien laster-teklak"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
-#, fuzzy
 msgid "Move to next text object on drawing page"
-msgstr "Joan diapositiba / marrazte orriko hurrengo objektura"
+msgstr "Mugitu marrazte orriaren hurrengo testu objektura"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:266-18
-#, fuzzy
 msgid "Select all in drawing page"
-msgstr "Hautatu guztia diapositiban / marrazketa orrian"
+msgstr "Hautatu guztia marrazketa orrian"
 
 #: html/loleaflet-help.html%2Bdiv.h1:271-5
 msgid "<span class=\"productname\">%productName</span> Help"
@@ -1457,11 +1453,11 @@ msgid ""
 "tap to access copy/cut/paste via the context menu is required."
 msgstr ""
 "Eduki aberatsak kopiatzea/moztea eta itsastea onartzen da, es soilik "
-"dokumentu barruan, baina dokumentu desberdinen artean ere  <span class=\""
-"productname\">%productName</span> barruan edo kanpoan. Barneko erabilera "
+"dokumentu barruan, baina dokumentu desberdinen artean ere <span class="
+"\"productname\">%productName</span> barruan edo kanpoan. Barneko erabilera "
 "horietarako, erabiltzaileek edukia ordenagailura kopiatu/moztu dezakete, "
-"baita irudiak eta eduki mistoak ere, lasterbideak erabilita (<span class=\""
-"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\""
+"baita irudiak eta eduki mistoak ere, lasterbideak erabilita (<span class="
+"\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span class=\"kbd\""
 ">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\">Ctrl</span> "
 "+ <span class=\"kbd\">V</span>). Segurtasunagatik, derrigorrezkoa da <span "
 "class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span> erabiltzea "
@@ -2511,7 +2507,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:547-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr "Zergatik ezin da testua ezabatu? Marratuta ageri da."
+msgstr "Zergatik ezin da testua ezabatu? Marratuta ageri da?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:548-5
 msgid ""
@@ -2652,7 +2648,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:574-11
 msgid "Select Landscape in “With Page Style”"
-msgstr "Hautatu 'Bertikala' aukera 'Orrialde-estiloarekin' atalean."
+msgstr "Hautatu 'Bertikala' aukera 'Orrialde-estiloarekin' atalean"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-11
 msgid "Select if you want to change page numbering."
@@ -2678,7 +2674,7 @@ msgstr "Zuzenean:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:581-11
 msgid "Select the text with the existing format"
-msgstr "Hautatu dagoeneko formatua duen testua."
+msgstr "Hautatu dagoeneko formatua duen testua"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:582-11
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:613-11
@@ -2701,7 +2697,7 @@ msgstr "Paragrafo-estiloa aplikatuta:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:587-11
 msgid "Place the cursor at the paragraph to be formatted"
-msgstr "Kokatu kurtsorea formatua eman nahi zaion paragrafoan."
+msgstr "Kokatu kurtsorea formatua eman nahi zaion paragrafoan"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:588-11
 msgid ""
@@ -2757,7 +2753,7 @@ msgid ""
 "to the clipboard"
 msgstr ""
 "Kargatu CSV datuak zure plataformako jatorrizko tresna batean, hautatu "
-"datuak eta kopiatu arbelean."
+"datuak eta kopiatu arbelean"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:601-11
 msgid ""
@@ -2852,7 +2848,7 @@ msgstr "Nola exekutatu dezaket diapositiba-aurkezpen bat?"
 msgid ""
 "Open the presentation in <span class=\"productname\">%productName</span>"
 msgstr ""
-"Ireki aurkezpena <span class=\"productname\">%productName</span> aplikazioan."
+"Ireki aurkezpena <span class=\"productname\">%productName</span> aplikazioan"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:627-11
 msgid ""
