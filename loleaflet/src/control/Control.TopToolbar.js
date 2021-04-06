@@ -500,11 +500,10 @@ L.Control.TopToolbar = L.Control.extend({
 			});
 			$('.styles-select').val(this.options.stylesSelectValue).trigger('change');
 			$('.styles-select').on('select2:select', this.onStyleSelect.bind(this));
-			w2ui['editbar'].resize();
-		} else if (e.commandName === '.uno:CharFontName') {
-			this.map.createFontSelector('.fonts-select');
-			w2ui['editbar'].resize();
 		}
+
+		if (w2ui['editbar'])
+			w2ui['editbar'].resize();
 	},
 
 	processStateChangedCommand: function(commandName, state) {
