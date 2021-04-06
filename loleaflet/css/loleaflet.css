@@ -166,14 +166,10 @@ body {
 	position: absolute;
 	top: 77px;
 	left: 0px;
-	bottom: 66px;
+	bottom: 33px;
 	max-width: 218px;
 	border-top: 1px solid var(--gray-color);
 	display: block;
-}
-
-#presentation-controls-wrapper.drawing {
-	bottom: 33px; /* Hide the presentation toolbar (insert slide etc.) for doctype = drawing */
 }
 
 #presentation-controls-wrapper.readonly {
