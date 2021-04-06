@@ -8,114 +8,117 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-03-28 12:29+0000\n"
+"Last-Translator: Ron Stephen Mathew <ronstephenmathew@gmail.com>\n"
+"Language-Team: Malayalam <https://hosted.weblate.org/projects/"
+"collabora-online/ui/ml/>\n"
 "Language: ml\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.6-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
-msgstr ""
+msgstr "നിയന്ത്രകന്റെ കണ്‍സോള്‍"
 
 #: admin/admin.strings.js:7
 msgid "Settings"
-msgstr ""
+msgstr "ക്രമീകരണങ്ങള്‍"
 
 #: admin/admin.strings.js:8
 msgid "Overview"
-msgstr ""
+msgstr "മൊത്തംകാഴ്ച്ച"
 
 #: admin/admin.strings.js:9
 msgid "(current)"
-msgstr ""
+msgstr "(ഇപ്പോഴത്തേത്)"
 
 #: admin/admin.strings.js:10
 msgid "Analytics"
-msgstr ""
+msgstr "അപഗ്രഥനം"
 
 #: admin/admin.strings.js:11
 msgid "History"
-msgstr ""
+msgstr "ക്രിയാചരിത്രം"
 
 #: admin/admin.strings.js:12
 msgid "Log"
-msgstr ""
+msgstr "പ്രശ്നക്കുറിപ്പ്"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
-msgstr ""
+msgstr "പണിപ്പെട്ടി"
 
 #: admin/admin.strings.js:14
 msgid "Users online"
-msgstr ""
+msgstr "ഓണ്‍ലൈന്‍ ഉപയോക്താക്കള്‍"
 
 #: admin/admin.strings.js:15
 msgid "User Name"
-msgstr ""
+msgstr "ആളുടെ പേര്"
 
 #: admin/admin.strings.js:16
 msgid "Documents open"
-msgstr ""
+msgstr "തുറന്നിരിക്കുന്ന രേഖകള്‍"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
 msgid " user(s)."
-msgstr ""
+msgstr " ഉപയോക്താവ്(ള്‍)"
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
 msgid " document(s) open."
-msgstr ""
+msgstr " തുറന്ന രേഖകള്‍"
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
-msgstr ""
+msgstr "രേഖകളുടെ എണ്ണം"
 
 #: admin/admin.strings.js:20
 msgid "Memory consumed"
-msgstr ""
+msgstr "ഉപയോഗിക്കുന്ന ഓര്‍മ്മ"
 
 #: admin/admin.strings.js:21
 msgid "Bytes sent"
-msgstr ""
+msgstr "അയച്ച ബൈറ്റുകള്‍"
 
 #: admin/admin.strings.js:22
 msgid "Bytes received"
-msgstr ""
+msgstr "മേടിച്ച ബൈറ്റുകള്‍"
 
 #: admin/admin.strings.js:23
 msgid "PID"
-msgstr ""
+msgstr "പിഐഡി"
 
 #: admin/admin.strings.js:24
 msgid "Document"
-msgstr ""
+msgstr "രേഖകള്‍"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "കാഴ്ച്ചകള്‍"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
-msgstr ""
+msgstr "എടുത്ത സമയം"
 
 #: admin/admin.strings.js:27
 msgid "Idle time"
-msgstr ""
+msgstr "പോയ സമയം"
 
 #: admin/admin.strings.js:28
 msgid "Modified"
-msgstr ""
+msgstr "മാറ്റം വരുത്തിയത്"
 
 #: admin/admin.strings.js:29
 msgid "Kill"
-msgstr ""
+msgstr "നിര്‍ത്തുക"
 
 #: admin/admin.strings.js:30
 msgid "Graphs"
-msgstr ""
+msgstr "രേഖാചിത്രങ്ങള്‍"
 
 #: admin/admin.strings.js:31
 msgid "Memory Graph"
@@ -134,7 +137,7 @@ msgstr ""
 #: src/control/Control.NotebookbarDraw.js:24 src/layer/marker/Annotation.js:279
 #: src/layer/tile/TileLayer.js:545
 msgid "Save"
-msgstr ""
+msgstr "സൂക്ഷിക്കുക"
 
 #: admin/admin.strings.js:35
 msgid "Cache size of memory statistics"
