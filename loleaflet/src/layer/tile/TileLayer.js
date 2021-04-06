@@ -256,6 +256,8 @@ L.TileLayer = L.GridLayer.extend({
 		this._cursorMarker = null;
 		// Graphic marker
 		this._graphicMarker = null;
+		// Graphic Selected?
+		this._hasActiveSelection = false;
 		// Selection handle marker
 		this._selectionHandles = {};
 		['start', 'end'].forEach(L.bind(function (handle) {
@@ -1151,6 +1153,10 @@ L.TileLayer = L.GridLayer.extend({
 		return (this._graphicSelectionAngle % 9000 === 0);
 	},
 
+	_shouldScaleUniform: function(extraInfo) {
+		return (!this._isGraphicAngleDivisibleBy90() || extraInfo.isWriterGraphic || extraInfo.type === 22);
+	},
+
 	_onShapeSelectionContent: function (textMsg) {
 		textMsg = textMsg.substring('shapeselectioncontent:'.length + 1);
 		if (this._graphicMarker) {
@@ -1166,6 +1172,7 @@ L.TileLayer = L.GridLayer.extend({
 	_resetSelectionRanges: function() {
 		this._graphicSelectionTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 		this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
+		this._hasActiveSelection = false;
 	},
 
 	_openMobileWizard: function(data) {
@@ -3273,7 +3280,8 @@ L.TileLayer = L.GridLayer.extend({
 			this._graphicMarker.transform.enable({
 				scaling: extraInfo.isResizable,
 				rotation: extraInfo.isRotatable && !this.hasTableSelection(),
-				uniformScaling: !this._isGraphicAngleDivisibleBy90(),
+				uniformScaling: this._shouldScaleUniform(extraInfo),
+				isRotated: !this._isGraphicAngleDivisibleBy90(),
 				handles: (extraInfo.handles) ? extraInfo.handles.kinds || [] : [],
 				shapes: (extraInfo.GluePoints) ? extraInfo.GluePoints.shapes : [],
 				shapeType: extraInfo.type,
@@ -3282,6 +3290,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._graphicMarker.removeEmbeddedSVG();
 				this._graphicMarker.addEmbeddedSVG(extraInfo.dragInfo.svg);
 			}
+			this._hasActiveSelection = true;
 		}
 		else if (this._graphicMarker) {
 			this._graphicMarker.off('graphicmovestart graphicmoveend', this._onGraphicMove, this);
