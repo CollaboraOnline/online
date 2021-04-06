@@ -761,7 +761,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._updateHeadersGridLines(undefined, true /* updateCols */,
 			true /* updateRows */);
 
+		this.dontSendSplitPosToCore = true;
 		this.setSplitPosFromCell();
+		this.dontSendSplitPosToCore = false;
 
 		this._syncTileContainerSize();
 
@@ -1194,8 +1196,10 @@ L.CalcSplitPanesContext = L.SplitPanesContext.extend({
 		var newSplitCell = this._docLayer.sheetGeometry.getCellFromPos(this._splitPos, 'corepixels');
 
 		// Send new state via uno commands if there is any change.
-		this.setSplitCol(newSplitCell.x) && this._docLayer.sendSplitIndex(newSplitCell.x, true /*  isSplitCol */);
-		this.setSplitRow(newSplitCell.y) && this._docLayer.sendSplitIndex(newSplitCell.y, false /* isSplitCol */);
+		if (!this._docLayer.dontSendSplitPosToCore) {
+			this.setSplitCol(newSplitCell.x) && this._docLayer.sendSplitIndex(newSplitCell.x, true /*  isSplitCol */);
+			this.setSplitRow(newSplitCell.y) && this._docLayer.sendSplitIndex(newSplitCell.y, false /* isSplitCol */);
+		}
 	},
 });
 
