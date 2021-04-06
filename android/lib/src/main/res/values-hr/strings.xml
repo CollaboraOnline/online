@@ -18,4 +18,5 @@
     <string name="later">Kasnije</string>
     <string name="rate_now">Ocijeni sada</string>
     <string name="file_chromeos_read_only">Datoteku nije moguće spremiti na ovom mjestu, otvorit će se u zaštićenom stanju. Premjesti je u datoteke za reprodukciju za potpuni pristup čitanju/pisanju.</string>
+    <string name="cant_open_the_document">Dokument se ne može otvoriti</string>
 </resources>
