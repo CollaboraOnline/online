@@ -33,27 +33,33 @@ L.Map.include({
 	},
 
 	createFontSelector: function(nodeSelector) {
-		var commandValues = this.getToolbarCommandValues('.uno:CharFontName');
+		var that = this;
 
-		var data = []; // reset data in order to avoid that the font select box is populated with styles, too.
-		// Old browsers like IE11 et al don't like Object.keys with
-		// empty arguments
-		if (typeof commandValues === 'object') {
-			data = data.concat(Object.keys(commandValues));
-		}
+		var createSelector = function() {
+			var commandValues = that.getToolbarCommandValues('.uno:CharFontName');
 
-		$(nodeSelector).select2({
-			data: data.sort(function (a, b) {  // also sort(localely)
-				return a.localeCompare(b);
-			}),
-			placeholder: _('Font')
-		});
+			var data = []; // reset data in order to avoid that the font select box is populated with styles, too.
+			// Old browsers like IE11 et al don't like Object.keys with
+			// empty arguments
+			if (typeof commandValues === 'object') {
+				data = data.concat(Object.keys(commandValues));
+			}
 
-		$(nodeSelector).on('select2:select', this.onFontSelect.bind(this));
+			$(nodeSelector).select2({
+				data: data.sort(function (a, b) {  // also sort(localely)
+					return a.localeCompare(b);
+				}),
+				placeholder: _('Font')
+			});
 
-		var items = this['stateChangeHandler'];
-		var val = items.getItemValue('.uno:CharFontName');
-		$(nodeSelector).val(val).trigger('change');
+			$(nodeSelector).on('select2:select', that.onFontSelect.bind(that));
+
+			var items = that['stateChangeHandler'];
+			var val = items.getItemValue('.uno:CharFontName');
+			$(nodeSelector).val(val).trigger('change');
+		};
+
+		createSelector();
 
 		var onCommandStateChanged = function(e) {
 			var commandName = e.commandName;
@@ -81,8 +87,15 @@ L.Map.include({
 			$(nodeSelector).val(state).trigger('change');
 		};
 
+		var onFontListChanged = function(e) {
+			if (e.commandName === '.uno:CharFontName')
+				createSelector();
+		};
+
 		this.off('commandstatechanged', onCommandStateChanged);
 		this.on('commandstatechanged', onCommandStateChanged);
+		this.off('updatetoolbarcommandvalues', onFontListChanged);
+		this.on('updatetoolbarcommandvalues', onFontListChanged);
 	},
 
 	onFontSizeSelect: function(e) {
