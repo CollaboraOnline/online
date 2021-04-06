@@ -105,6 +105,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		scaling:  true,
 		scaleSouthAndEastOnly:  false,
 		uniformScaling: true,
+		isRotated: false,
 		maxZoom:  22,
 		handles: [],
 		shapes: [],
@@ -1159,8 +1160,13 @@ L.Handler.PathTransform = L.Handler.extend({
 
 		this._handleDragged = true;
 
-		if ((window.ThisIsAMobileApp && (this._activeMarker.options.index % 2) == 0) ||
-		    this.options.uniformScaling) {
+		var isCornerMarker = (this._activeMarker.options.index % 2) == 0;
+		var scaleUniform = this.options.isRotated || (window.ThisIsAMobileApp && isCornerMarker);
+		// toggle with shift key when it does not matter whether it is scaled or not
+		if (!scaleUniform && isCornerMarker)
+			scaleUniform = this.options.uniformScaling ^ this._map._docLayer.shiftKeyPressed;
+
+		if (scaleUniform) {
 			ratioX = originPoint.distanceTo(evt.layerPoint) / this._initialDist;
 			ratioY = ratioX;
 		} else {
