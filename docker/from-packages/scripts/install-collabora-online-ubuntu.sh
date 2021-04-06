@@ -24,6 +24,11 @@ apt-get -y install openssh-client
 # Install curl for simple healthchecks
 apt-get -y install curl
 
+# On ARM64 we built core with system nss
+if [ $(uname -i) == "aarch64" ]; then
+    apt-get -y install libnss3
+fi
+
 # Add Collabora repos
 if [ "$type" == "cool" ] && [ -n ${secret_key+set} ]; then
     echo "Based on the provided build arguments Collabora Online from customer repo will be used."
