@@ -234,7 +234,7 @@ L.TileSectionManager = L.Class.extend({
 			this.sectionProperties.docLayer.sheetGeometry._columns.forEachInCorePixelRange(
 				repaintArea.min.x, repaintArea.max.x,
 				function(pos) {
-					context.moveTo(pos - paneOffset.x - 0.5, repaintArea.min.y - paneOffset.y - 0.5);
+					context.moveTo(pos - paneOffset.x - 0.5, repaintArea.min.y - paneOffset.y + 0.5);
 					context.lineTo(pos - paneOffset.x - 0.5, repaintArea.max.y - paneOffset.y - 0.5);
 					context.stroke();
 				});
@@ -242,7 +242,7 @@ L.TileSectionManager = L.Class.extend({
 			this.sectionProperties.docLayer.sheetGeometry._rows.forEachInCorePixelRange(
 				repaintArea.min.y, repaintArea.max.y,
 				function(pos) {
-					context.moveTo(repaintArea.min.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
+					context.moveTo(repaintArea.min.x - paneOffset.x + 0.5, pos - paneOffset.y - 0.5);
 					context.lineTo(repaintArea.max.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
 					context.stroke();
 				});
