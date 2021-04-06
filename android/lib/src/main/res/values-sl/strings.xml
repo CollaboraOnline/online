@@ -18,4 +18,5 @@
     <string name="edit_copy">Uredi kopijo</string>
     <string name="view_only">Samo pokaži</string>
     <string name="restarting">Ponoven zagon ...</string>
+    <string name="cant_open_the_document">Dokumenta ni možno odpreti</string>
 </resources>
