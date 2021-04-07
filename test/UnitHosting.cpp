@@ -79,22 +79,20 @@ UnitBase::TestResult UnitHosting::testDiscovery()
 
 UnitBase::TestResult UnitHosting::testCapabilities()
 {
-    Poco::URI uri(helpers::getTestServerURI());
-    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(uri));
+    auto httpSession = http::Session::create(helpers::getTestServerURI());
+    std::shared_ptr<const http::Response> httpResponse
+        = httpSession->syncRequest(http::Request("/hosting/discovery"));
+
+    LOK_ASSERT(httpResponse->done());
+    LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
 
     // Get discovery first and extract the urlsrc of the capabilities end point
     std::string capabilitiesURI;
     {
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/hosting/discovery");
-        session->sendRequest(request);
+        LOK_ASSERT_EQUAL(200U, httpResponse->statusLine().statusCode());
+        LOK_ASSERT_EQUAL(std::string("text/xml"), httpResponse->header().getContentType());
 
-        Poco::Net::HTTPResponse response;
-        std::istream& rs = session->receiveResponse(response);
-        LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
-        LOK_ASSERT_EQUAL(std::string("text/xml"), response.getContentType());
-
-        std::string discoveryXML;
-        Poco::StreamCopier::copyToString(rs, discoveryXML);
+        const std::string discoveryXML = httpResponse->getBody();
 
         Poco::XML::DOMParser parser;
         Poco::XML::AutoPtr<Poco::XML::Document> docXML = parser.parseString(discoveryXML);
@@ -115,22 +113,20 @@ UnitBase::TestResult UnitHosting::testCapabilities()
         }
 
         LOK_ASSERT(foundCapabilities);
-        LOK_ASSERT_EQUAL(uri.toString() + CAPABILITIES_END_POINT, capabilitiesURI);
+        LOK_ASSERT_EQUAL(helpers::getTestServerURI() + CAPABILITIES_END_POINT, capabilitiesURI);
     }
 
     // Then get the capabilities json
     {
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, CAPABILITIES_END_POINT);
-        session->sendRequest(request);
+        httpResponse = httpSession->syncRequest(http::Request(CAPABILITIES_END_POINT));
 
-        Poco::Net::HTTPResponse response;
-        std::istream& rs = session->receiveResponse(response);
-        LOK_ASSERT_EQUAL(Poco::Net::HTTPResponse::HTTP_OK, response.getStatus());
-        LOK_ASSERT_EQUAL(std::string("application/json"), response.getContentType());
+        LOK_ASSERT(httpResponse->done());
+        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
 
-        std::ostringstream oss;
-        Poco::StreamCopier::copyStream(rs, oss);
-        std::string responseString = oss.str();
+        LOK_ASSERT_EQUAL(200U, httpResponse->statusLine().statusCode());
+        LOK_ASSERT_EQUAL(std::string("application/json"), httpResponse->header().getContentType());
+
+        const std::string responseString = httpResponse->getBody();
 
         Poco::JSON::Parser parser;
         Poco::Dynamic::Var jsonFile = parser.parse(responseString);
