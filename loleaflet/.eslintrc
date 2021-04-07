@@ -30,4 +30,28 @@
   "env": {
     "browser": true
   },
+  "overrides": [
+    {
+      "files": ["**/*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": [
+        "@typescript-eslint"
+      ],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+      ],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "no-var": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-namespace": "off",
+        "no-inner-declarations": "off",
+        "no-constant-condition": "off",
+        "@typescript-eslint/triple-slash-reference": "off"
+      }
+    }
+  ]
 }
