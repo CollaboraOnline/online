@@ -1201,7 +1201,7 @@ protected:
 
 #ifdef LOG_SOCKET_DATA
         if (!_inBuffer.empty())
-            LOG_TRC('#' << getFD() << " inBuffer (" << _outBuffer.size() << " bytes):\n"
+            LOG_TRC('#' << getFD() << " inBuffer (" << _inBuffer.size() << " bytes):\n"
                         << Util::dumpHex(_inBuffer));
 #endif
 
