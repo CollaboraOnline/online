@@ -52,6 +52,10 @@
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
 
+#ifdef IOS
+#include <ios.h>
+#endif
+
 bool StorageBase::FilesystemEnabled;
 bool StorageBase::WopiEnabled;
 bool StorageBase::SSLAsScheme = true;
@@ -300,8 +304,17 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
 
     // Set automatic userid and username.
     const std::string userId = std::to_string(LastLocalStorageId++);
+    std::string userNameString;
+
+#ifdef IOS
+    if (user_name != nullptr)
+        userNameString = std::string(user_name);
+#endif
+    if (userNameString.size() == 0)
+        userNameString = "LocalUser#" + userId;
+
     return std::unique_ptr<LocalStorage::LocalFileInfo>(
-        new LocalFileInfo("LocalUser" + userId, "LocalUser#" + userId));
+        new LocalFileInfo({"LocalUser" + userId, userNameString}));
 }
 
 std::string LocalStorage::downloadStorageFileToLocal(const Authorization& /*auth*/,

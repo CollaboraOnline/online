@@ -279,6 +279,17 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
         }
     }
 
+    // Also look for managed configuration setting of the user name.
+
+    if (managedConfig != nil) {
+        NSString *userName = managedConfig[@"userName"];
+        if (userName != nil && [userName isKindOfClass:[NSString class]])
+            user_name = [userName UTF8String];
+    }
+
+    if (user_name == nullptr)
+        user_name = [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] UTF8String];
+
     fakeSocketSetLoggingCallback([](const std::string& line)
                                  {
                                      LOG_INF_NOFILE(line);
