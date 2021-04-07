@@ -847,7 +847,7 @@ private:
         , _timeout(getDefaultTimeout())
         , _connected(false)
     {
-        assert(!_host.empty() && portNumber > 0
+        assert(!_host.empty() && portNumber > 0 && !_port.empty()
                && "Invalid hostname and portNumber for http::Sesssion");
 #ifdef ENABLE_DEBUG
         std::string scheme;
@@ -1076,7 +1076,7 @@ private:
         _response.reset(new Response(onFinished));
 
         _request = std::move(req);
-        _request.set("Host", host()); // Make sure the host is set.
+        _request.set("Host", host() + ':' + port()); // Make sure the host is set.
         _request.set("Date", Util::getHttpTimeNow());
         _request.set("User-Agent", HTTP_AGENT_STRING);
     }
