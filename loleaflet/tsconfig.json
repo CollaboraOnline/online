@@ -5,13 +5,29 @@
       "module": "none",
       "lib": ["dom", "es2016"],
       "sourceMap": false,
+      "allowJs": true,
+      "checkJs": false,
+      "incremental": true,
+
       "moduleResolution": "classic",
       "noImplicitAny": true,
       "removeComments": false,
       "preserveConstEnums": false,
-      "watch": false
+      "downlevelIteration": true,
+      "watch": false,
     },
     "exclude": [
-      "node_modules"
+      "node_modules",
+      "./node_modules",
+      "./node_modules/*",
+      "js",
+      "admin",
+      "mocha_tests",
+      "docs",
+      "test",
+      "typescript_js",
+      "dist",
+      "release",
+      "debug"
     ]
   }

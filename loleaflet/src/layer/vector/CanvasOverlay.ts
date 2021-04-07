@@ -1,11 +1,3 @@
-/// <reference path="CPoint.ts" />
-/// <reference path="CBounds.ts" />
-/// <reference path="CPath.ts" />
-/// <reference path="CPolyline.ts" />
-/// <reference path="CPolygon.ts" />
-/// <reference path="CRectangle.ts" />
-/// <reference path="CSplitterLine.ts" />
-/// <reference path="../marker/Cursor.ts" />
 /* eslint-disable */
 
 // OverlayTransform is used by CanvasOverlay to apply transformations

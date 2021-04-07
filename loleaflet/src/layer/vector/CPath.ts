@@ -1,4 +1,3 @@
-/// <reference path="CEventsHandler.ts" />
 /* eslint-disable */
 
 declare var L: any;

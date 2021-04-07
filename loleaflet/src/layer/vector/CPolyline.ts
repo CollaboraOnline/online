@@ -1,6 +1,4 @@
 /* eslint-disable */
-/// <reference path="CLineUtil.ts" />
-/// <reference path="CPointSet.ts" />
 
 /*
  * CPolyline implements polyline vector layer (a set of points connected with lines).
