@@ -208,6 +208,10 @@ pocoGetRetry(const Poco::URI& uri, int retry = 3,
             std::this_thread::sleep_for(delayMs);
         }
     }
+
+    auto response = std::make_shared<Poco::Net::HTTPResponse>();
+    std::string responseString;
+    return std::make_pair(response, responseString);
 }
 
 /// Uses Poco to make an HTTP GET from the given URI components.
