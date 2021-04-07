@@ -61,6 +61,10 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'button',  id: 'comment_wizard', img: 'viewcomments'},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 			];
+		} else if (docType == 'drawing') {
+			return [
+				{type: 'button',  id: 'comment_wizard', img: 'viewcomments'}
+			];
 		}
 	},
 
