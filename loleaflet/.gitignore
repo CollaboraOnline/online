@@ -8,9 +8,8 @@ index.html
 bower.json
 component.json
 
-src/layer/tile/CanvasSectionContainer.js
-src/layer/vector/CanvasOverlay.js
 mocha_tests/*.js
+tscompile.done
 
 _site
 dist/*.js

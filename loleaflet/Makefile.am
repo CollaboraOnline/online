@@ -27,25 +27,11 @@ $(L10N_IOS_ALL_JS) : $(wildcard $(srcdir)/po/ui-*.po) $(shell find $(srcdir)/l10
 	done
 endif
 
-DIRECTORY_TS = $(srcdir)/src/layer/tile $(srcdir)/src/control # Add ts directories here.
-SRC_TS_ALL := $(foreach dir, $(DIRECTORY_TS), $(wildcard $(dir)/*.ts))
-SRC_TS_JS_FILES := $(SRC_TS_ALL:.ts=.js)
-
-$(SRC_TS_ALL:.ts=.js): $(SRC_TS_ALL:.ts=.ts)
-	$(builddir)/node_modules/typescript/bin/tsc $(@:.js=.ts) --outfile $@ --module none --lib dom,es2016 --target ES5
-
 MOCHA_DIR = $(srcdir)/mocha_tests
 MOCHA_TS_FILES = $(wildcard $(MOCHA_DIR)/*.ts)
 MOCHA_TS_JS_FILES := $(MOCHA_TS_FILES:.ts=.js)
 $(MOCHA_TS_JS_FILES): %.js: %.ts
 	$(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --lib dom,es2016 --target ES5
-
-SRC_TS = $(srcdir)/src/layer/vector/CanvasOverlay.ts
-SRC_TS_JS = $(srcdir)/src/layer/vector/CanvasOverlay.js
-SRC_TS_JS_DST = $(patsubst $(srcdir)/%.js,$(DIST_FOLDER)/%.js,$(SRC_TS_JS_FILES)) $(DIST_FOLDER)/src/layer/vector/CanvasOverlay.js
-
-$(srcdir)/src/layer/vector/CanvasOverlay.js: $(srcdir)/src/layer/vector/*.ts $(srcdir)/src/layer/marker/*.ts
-	$(builddir)/node_modules/typescript/bin/tsc $(srcdir)/src/layer/vector/CanvasOverlay.ts --outfile $(srcdir)/src/layer/vector/CanvasOverlay.js --module none --lib dom,es2016 --target ES5
 
 JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness
 JQUERY_LIGHTNESS_IMAGES = $(wildcard $(JQUERY_LIGHTNESS_IMAGE_PATH)/*.png)
@@ -220,8 +206,20 @@ LOLEAFLET_JS =\
 	src/layer/tile/CanvasSectionContainer.js \
 	src/layer/tile/TilesSection.js \
 	src/layer/tile/AutoFillMarkerSection.js \
-	src/layer/tile/ScrollSection.js \
+	src/layer/vector/CPoint.js \
+	src/layer/vector/CBounds.js \
+	src/layer/vector/CEventsHandler.js \
+	src/layer/vector/CPointSet.js \
+	src/layer/vector/CPath.js \
+	src/layer/vector/CLineUtil.js \
+	src/layer/vector/CPolyline.js \
+	src/layer/vector/CPolyUtil.js \
+	src/layer/vector/CPolygon.js \
+	src/layer/vector/CRectangle.js \
+	src/layer/vector/CSplitterLine.js \
+	src/layer/marker/Cursor.js \
 	src/layer/vector/CanvasOverlay.js \
+	src/layer/tile/ScrollSection.js \
 	src/layer/tile/CanvasTileLayer.js \
 	src/layer/SplitPanesContext.js \
 	src/layer/tile/TileLayer.TableOverlay.js \
@@ -354,7 +352,8 @@ LOLEAFLET_JS =\
 	src/main.js
 
 LOLEAFLET_JS_SRC = $(shell find $(srcdir)/src -name '*.js')
-LOLEAFLET_JS_DST = $(patsubst $(srcdir)/src/%.js,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_JS_SRC))
+LOLEAFLET_TS_SRC = $(shell find $(srcdir)/src -name '*.ts')
+LOLEAFLET_JS_DST = $(patsubst $(srcdir)/src/%.js,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_JS_SRC)) $(patsubst $(srcdir)/src/%.ts,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_TS_SRC))
 
 COMMA := ,
 EMPTY :=
@@ -558,14 +557,11 @@ $(DIST_FOLDER)/welcome/%.html: $(srcdir)/welcome/%.html
 		`ln -sf $(abs_srcdir)/$< $@`; \
 	fi
 
-$(DIST_FOLDER)/src/%.js: $(srcdir)/src/%.js
-	@mkdir -p $(dir $@)
-	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
-		`cp $< $@`; \
-	else \
-		`echo $< $@`; \
-		`ln -sf $(abs_srcdir)/$< $@`; \
-	fi
+tscompile.done: $(LOLEAFLET_JS_SRC) $(LOLEAFLET_TS_SRC)
+	$(builddir)/node_modules/typescript/bin/tsc --outDir $(DIST_FOLDER)/src --rootDir $(srcdir)/src --project $(srcdir)/tsconfig.json
+
+$(LOLEAFLET_JS_DST): tscompile.done
+	@echo -n ""
 
 $(DIST_FOLDER)/%.js: $(srcdir)/js/%.js
 	@mkdir -p $(dir $@)

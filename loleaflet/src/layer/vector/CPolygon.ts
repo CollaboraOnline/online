@@ -1,5 +1,4 @@
 /* eslint-disable */
-/// <reference path="CPolyUtil.ts" />
 
 /*
  * CPolygon implements polygon vector layer (closed polyline with a fill inside).
