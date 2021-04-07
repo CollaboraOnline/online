@@ -333,8 +333,10 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		if (this.lastWizardCommentHighlight) {
 			this.lastWizardCommentHighlight.removeClass('impress-comment-highlight');
 		}
-		this.lastWizardCommentHighlight = $(this._map._layers[annotation._annotationMarker._leaflet_id]._icon);
-		this.lastWizardCommentHighlight.addClass('impress-comment-highlight');
+		if (annotation._annotationMarker) {
+			this.lastWizardCommentHighlight = $(this._map._layers[annotation._annotationMarker._leaflet_id]._icon);
+			this.lastWizardCommentHighlight.addClass('impress-comment-highlight');
+		}
 	},
 
 	_removeHighlightSelectedWizardComment: function() {

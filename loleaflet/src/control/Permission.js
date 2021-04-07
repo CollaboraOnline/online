@@ -147,7 +147,10 @@ L.Map.include({
 	},
 
 	isPermissionEditForComments: function() {
-		return true;
+		// Currently we allow user to perform comment operations
+		// even in the view/readonly mode(initial mobile mode)
+		// allow comment operations if user has edit permission for doc
+		return window.docPermission === 'edit';
 	},
 
 	isPermissionReadOnly: function() {

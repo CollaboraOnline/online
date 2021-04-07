@@ -2216,7 +2216,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}, data.annotation);
 		}
 
-		if (data.annotation.options.noMenu !== true && this.map.isPermissionEditForComments() && !this.map.isPermissionReadOnly()) {
+		if (data.annotation.options.noMenu !== true && this.map.isPermissionEditForComments()) {
 			var tdMenu = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
 			var divMenu = data.annotation._menu = L.DomUtil.create(tagDiv, data.data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
 			divMenu.title = _('Open menu');
@@ -2313,7 +2313,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var textNode = L.DomUtil.create('figcaption', 'empty-comment-wizard', emptyCommentWizard);
 		textNode.innerText = data.text;
 		L.DomUtil.create('br', 'empty-comment-wizard', textNode);
-		if (this.map.isPermissionEditForComments() && !this.map.isPermissionReadOnly()) {
+		if (this.map.isPermissionEditForComments()) {
 			var linkNode = L.DomUtil.create('div', 'empty-comment-wizard-link', textNode);
 			linkNode.innerText = _('Insert Comment');
 			linkNode.onclick = builder.map.insertComment.bind(builder.map);

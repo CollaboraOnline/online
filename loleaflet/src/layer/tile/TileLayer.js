@@ -4064,7 +4064,7 @@ L.TileLayer = L.GridLayer.extend({
 				children : []
 			};
 
-			if (this._map.isPermissionEditForComments() && !this._map.isPermissionReadOnly())
+			if (this._map.isPermissionEditForComments())
 				menuStructure['customTitle'] = customTitleBar;
 		}
 
