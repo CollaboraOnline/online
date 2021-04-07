@@ -101,7 +101,7 @@ namespace CLineUtil {
 		var codeA = useLastCode ? _lastCode : _getBitCode(a, bounds);
 		var codeB = _getBitCode(b, bounds);
 		var codeOut: number;
-		var p: CPoint
+		var p: CPoint;
 		var newCode: number;
 
 		// save 2nd code to avoid calculating it on the next segment
@@ -179,8 +179,8 @@ namespace CLineUtil {
 
 	// square distance (to avoid unnecessary Math.sqrt calls)
 	function _sqDist(p1: CPoint, p2: CPoint): number {
-		var dx = p2.x - p1.x,
-			dy = p2.y - p1.y;
+		var dx = p2.x - p1.x;
+		var dy = p2.y - p1.y;
 		return dx * dx + dy * dy;
 	}
 

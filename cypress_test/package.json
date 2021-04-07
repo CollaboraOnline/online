@@ -11,6 +11,9 @@
     "cypress-select-tests": "1.5.9",
     "cypress-wait-until": "1.7.1",
     "eslint": "7.19.0",
+    "typescript": "3.9.5",
+    "@typescript-eslint/eslint-plugin": "^4.21.0",
+    "@typescript-eslint/parser": "^4.21.0",
     "eslint-plugin-cypress-rules": "file:eslint_plugin",
     "get-port-cli": "2.0.0",
     "wait-on": "5.2.1"
