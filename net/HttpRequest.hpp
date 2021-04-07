@@ -1071,6 +1071,12 @@ private:
                 LOG_TRC("onFinished calling client");
                 _onFinished(std::static_pointer_cast<Session>(shared_from_this()));
             }
+
+            if (_response->get("Connection", "") == "close")
+            {
+                LOG_TRC("Our peer has sent the 'Connection: close' token. Disconnecting.");
+                onDisconnect();
+            }
         };
 
         _response.reset(new Response(onFinished));
@@ -1143,12 +1149,22 @@ private:
     void onDisconnect() override
     {
         LOG_TRC("onDisconnect");
+
+        // Make sure the socket is disconnected and released.
+        if (_socket)
+        {
+            _socket->shutdown(); // Flag for shutdown for housekeeping in SocketPoll.
+            _socket->closeConnection(); // Immediately disconnect.
+            _socket.reset();
+        }
+
         _connected = false;
         _response->complete();
     }
 
     bool connect()
     {
+        _socket.reset(); // Reset to make sure we are disconnected.
         _socket = net::connect(_host, _port, isSecure(), shared_from_this());
         return _socket != nullptr;
     }
@@ -1172,8 +1188,6 @@ private:
             // Disconnect and trigger the right events and handlers.
             // Note that this is the right way to end a request in HTTP, it's also
             // no good maintaining a poor connection (if that's the issue).
-            _socket->shutdown(); // Flag for shutdown for housekeeping in SocketPoll.
-            _socket->closeConnection(); // Immediately disconnect.
             onDisconnect(); // Trigger manually (why wait for poll to do it?).
             assert(_connected == false);
         }
