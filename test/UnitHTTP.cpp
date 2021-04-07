@@ -27,6 +27,7 @@ class UnitHTTP : public UnitWSD
 {
 public:
     UnitHTTP()
+        : UnitWSD("UnitHTTP")
     {
     }
 
@@ -40,7 +41,7 @@ public:
     void testContinue()
     {
         //FIXME: use logging
-        std::cerr << "testContinue\n";
+        LOG_TST("testContinue");
         for (int i = 0; i < 3; ++i)
         {
             std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(Poco::URI(helpers::getTestServerURI())));
@@ -77,7 +78,8 @@ public:
 
             if (sent != responseStr)
             {
-                std::cerr << "Test " << i << " failed - mismatching string '" << responseStr << " vs. '" << sent << "'\n";
+                LOG_TST("Test " << i << " failed - mismatching string '" << responseStr << " vs. '"
+                                << sent << "'");
                 exitTest(TestResult::Failed);
                 return;
             }
@@ -98,7 +100,8 @@ public:
         if (got != (int)str.size() ||
             strncmp(buffer.data(), str.c_str(), got))
         {
-            std::cerr << "testChunks got " << got << " mismatching strings '" << buffer.data() << " vs. expected '" << str << "'\n";
+            LOG_TST("testChunks got " << got << " mismatching strings '" << buffer.data()
+                                      << " vs. expected '" << str << "'");
             exitTest(TestResult::Failed);
             return false;
         }
@@ -108,7 +111,7 @@ public:
 
     void testChunks()
     {
-        std::cerr << "testChunks\n";
+        LOG_TST("testChunks");
 
         std::shared_ptr<Poco::Net::StreamSocket> socket = helpers::createRawSocket();
 
@@ -172,11 +175,12 @@ public:
         static const std::string start =
             "HTTP/1.0 200 OK\r\n"
             "Content-Disposition: attachment; filename=\"test.txt\"\r\n";
-        LOK_ASSERT(Util::startsWith(std::string(buffer), start));
 
         if (strncmp(buffer, start.c_str(), start.size()))
         {
-            std::cerr << "missing pre-amble " << got << " '" << buffer << " vs. expected '" << start << "'\n";
+            LOG_TST("missing pre-amble " << got << " [" << buffer << "] vs. expected [" << start
+                                         << ']');
+            LOK_ASSERT(Util::startsWith(std::string(buffer), start));
             exitTest(TestResult::Failed);
             return;
         }
@@ -187,7 +191,7 @@ public:
         LOK_ASSERT_MESSAGE("Missing separator, got " + std::string(buffer), ptr);
         if (!ptr)
         {
-            std::cerr << "missing separator " << got << " '" << buffer << '\n';
+            LOG_TST("missing separator " << got << " '" << buffer);
             exitTest(TestResult::Failed);
             return;
         }
@@ -205,14 +209,14 @@ public:
             buffer[got] = '\0';
         else
         {
-            std::cerr << "No content returned " << got << '\n';
+            LOG_TST("No content returned " << got);
             exitTest(TestResult::Failed);
             return;
         }
 
         if (strcmp(buffer, "\357\273\277This is some text.\nAnd some more.\n"))
         {
-            std::cerr << "unexpected file content " << got << " '" << buffer << '\n';
+            LOG_TST("unexpected file content " << got << " '" << buffer);
             exitTest(TestResult::Failed);
             return;
         }
@@ -222,7 +226,7 @@ public:
     {
         testChunks();
         testContinue();
-        std::cerr << "All tests passed.\n";
+        LOG_TST("All tests passed.");
         exitTest(TestResult::Ok);
     }
 };
