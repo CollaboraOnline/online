@@ -50,6 +50,10 @@
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
 
+#ifdef IOS
+#include <ios.h>
+#endif
+
 using std::size_t;
 
 bool StorageBase::FilesystemEnabled;
@@ -312,7 +316,16 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
     setFileInfo(FileInfo({filename, "localhost", lastModified, size}));
 
     // Set automatic userid and username
-    return std::unique_ptr<LocalStorage::LocalFileInfo>(new LocalFileInfo({"localhost" + std::to_string(LastLocalStorageId), "LocalHost#" + std::to_string(LastLocalStorageId++)}));
+    std::string userNameString;
+
+#ifdef IOS
+    if (user_name != nullptr)
+        userNameString = std::string(user_name);
+#endif
+    if (userNameString.size() == 0)
+        userNameString = "LocalHost#" + std::to_string(LastLocalStorageId++);
+
+    return std::unique_ptr<LocalStorage::LocalFileInfo>(new LocalFileInfo({"localhost" + std::to_string(LastLocalStorageId), userNameString}));
 }
 
 std::string LocalStorage::loadStorageFileToLocal(const Authorization& /*auth*/,
