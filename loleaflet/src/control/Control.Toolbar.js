@@ -705,6 +705,10 @@ function unoCmdToToolbarId(commandname)
 		// selectionType is 'text', so ignore object align state messages.
 		id = '';
 	}
+
+	if (id === 'hyperlinkdialog')
+		id = 'link';
+
 	return id;
 }
 
