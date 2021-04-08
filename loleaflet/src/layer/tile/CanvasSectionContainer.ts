@@ -595,7 +595,7 @@ class CanvasSectionContainer {
 				var s2 = this.findSectionContainingPoint(this.positionOnMouseUp);
 				if (s1 && s2 && s1 == s2) { // Allow click event if only mouse was above same section while clicking.
 					var section: CanvasSectionObject = this.findSectionContainingPoint(this.positionOnClick);
-					if (section) { // "interactable" property is also checked inside function "findSectionContainingPoint".
+					if (section) { // "interactable" property is checked while propagating the event.
 						this.propagateOnClick(section, this.convertPositionToSectionLocale(section, this.positionOnClick), e);
 					}
 				}
@@ -886,7 +886,7 @@ class CanvasSectionContainer {
 
 	findSectionContainingPoint (point: Array<number>): any {
 		for (var i: number = this.sections.length - 1; i > -1; i--) { // Search from top to bottom. Top section will be sent as target section.
-			if (this.sections[i].isLocated && this.sections[i].interactable && this.doesSectionIncludePoint(this.sections[i], point))
+			if (this.sections[i].isLocated && this.doesSectionIncludePoint(this.sections[i], point))
 				return this.sections[i];
 		}
 
