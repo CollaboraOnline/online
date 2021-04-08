@@ -5,8 +5,6 @@
       "module": "none",
       "lib": ["dom", "es2016"],
       "sourceMap": false,
-      "allowJs": true,
-      "checkJs": false,
       "incremental": true,
 
       "moduleResolution": "classic",
