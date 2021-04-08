@@ -169,8 +169,8 @@ L.Control.ContextMenu = L.Control.extend({
 	},
 
 	_amendContextMenuData: function(obj) {
-		// Add a 'delete' entry for mobile for graphic selection.
-		if (this._map._docLayer.hasGraphicSelection() && window.mode.isMobile()) {
+		// Add a 'delete' entry  for graphic selection when on mobile browser or in a mobile app.
+		if (this._map._docLayer.hasGraphicSelection() && (window.ThisIsAMobileApp || window.mode.isMobile())) {
 			var insertIndex = -1;
 			obj.menu.forEach(function(item, index) {
 				if (item.command === '.uno:Paste') {
