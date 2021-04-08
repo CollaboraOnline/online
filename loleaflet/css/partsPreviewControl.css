@@ -7,7 +7,7 @@
 	min-width: 194px;
 	white-space: nowrap;
 	overflow-x: hidden;
-	overflow-y: scroll;
+	overflow-y: visible;
 	background: #dfdfdf;
 	scrollbar-color: #ccc #dfdfdf;
 	scrollbar-width: thin;
