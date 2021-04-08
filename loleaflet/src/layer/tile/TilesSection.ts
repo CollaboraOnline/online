@@ -180,7 +180,7 @@ class TilesSection {
 	}
 
 	public paint (tile: any, ctx: any, async: boolean = false) {
-		if (this.containerObject.isInZoomAnimation() || this.containerObject.isZoomChanged())
+		if (this.containerObject.isInZoomAnimation() || this.sectionProperties.tsManager.waitForTiles())
 			return;
 
 		if (!ctx)
@@ -247,7 +247,7 @@ class TilesSection {
 		// Calculate all this here intead of doing it per tile.
 		var ctx = this.sectionProperties.tsManager._paintContext();
 
-		if (this.containerObject.isZoomChanged()) {
+		if (this.sectionProperties.tsManager.waitForTiles()) {
 			if (!this.haveAllTilesInView(zoom, part, ctx))
 				return;
 		}
