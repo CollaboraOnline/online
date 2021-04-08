@@ -177,7 +177,7 @@ class CanvasOverlay {
 	}
 
 	private draw(paintArea?: CBounds) {
-		if (this.overlaySection && this.overlaySection.containerObject.isZoomChanged()) {
+		if (this.tsManager && this.tsManager.waitForTiles()) {
 			// don't paint anything till tiles arrive for new zoom.
 			return;
 		}
@@ -201,7 +201,7 @@ class CanvasOverlay {
 	}
 
 	private redraw(path: CPath, oldBounds: CBounds) {
-		if (this.overlaySection && this.overlaySection.containerObject.isZoomChanged()) {
+		if (this.tsManager && this.tsManager.waitForTiles()) {
 			// don't paint anything till tiles arrive for new zoom.
 			return;
 		}
