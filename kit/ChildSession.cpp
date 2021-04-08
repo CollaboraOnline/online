@@ -2664,8 +2664,11 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("redlinetablemodified: " + payload);
         break;
     case LOK_CALLBACK_COMMENT:
+    {
         sendTextFrame("comment: " + payload);
+        getStatus("", 0);
         break;
+    }
     case LOK_CALLBACK_INVALIDATE_HEADER:
         sendTextFrame("invalidateheader: " + payload);
         break;
