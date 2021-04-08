@@ -189,7 +189,7 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_onDrawGridSection: function () {
-		if (this.containerObject.isInZoomAnimation() || this.containerObject.isZoomChanged())
+		if (this.containerObject.isInZoomAnimation() || this.sectionProperties.tsManager.waitForTiles())
 			return;
 		// grid-section's onDrawArea is TileSectionManager's _drawGridSectionArea().
 		this.onDrawArea();
@@ -476,6 +476,14 @@ L.TileSectionManager = L.Class.extend({
 		this._newCenter = this._layer._map.project(newCenter).multiplyBy(this._tilesSection.dpiScale); // in core pixels
 	},
 
+	setWaitForTiles: function (wait) {
+		this._waitForTiles = wait;
+	},
+
+	waitForTiles: function () {
+		return this._waitForTiles;
+	},
+
 	zoomStep: function (zoom, newCenter) {
 		if (this._finishingZoom) // finishing steps of animation still going on.
 			return;
@@ -542,6 +550,7 @@ L.TileSectionManager = L.Class.extend({
 				painter._inZoomAnim = false;
 
 				painter._sectionContainer.setZoomChanged(true);
+				painter.setWaitForTiles(true);
 				// Set view and paint the tiles if all available.
 				mapUpdater(newMapCenterLatLng);
 				waitForTiles = true;
@@ -554,6 +563,7 @@ L.TileSectionManager = L.Class.extend({
 					// All done.
 					waitForTiles = false;
 					clearInterval(intervalId);
+					painter.setWaitForTiles(false);
 					painter._sectionContainer.setZoomChanged(false);
 					map.enableTextInput();
 					// Paint everything.
