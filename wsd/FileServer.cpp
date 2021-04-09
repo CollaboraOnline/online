@@ -281,8 +281,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         LOG_TRC("Fileserver request: " << requestUri.toString());
         requestUri.normalize(); // avoid .'s and ..'s
 
-        std::string path(requestUri.getPath());
-        if (path.find("loleaflet/" LOOLWSD_VERSION_HASH "/") == std::string::npos)
+        if (requestUri.getPath().find("loleaflet/" LOOLWSD_VERSION_HASH "/") == std::string::npos)
         {
             LOG_WRN("client - server version mismatch, disabling browser cache. Expected: " LOOLWSD_VERSION_HASH);
             noCache = true;
