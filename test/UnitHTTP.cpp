@@ -88,11 +88,14 @@ public:
 
     void writeString(const std::shared_ptr<Poco::Net::StreamSocket> &socket, const std::string& str)
     {
+        LOG_TST("Sending " << str.size() << " bytes:\n" << str);
         socket->sendBytes(str.c_str(), str.size());
     }
 
     bool expectString(const std::shared_ptr<Poco::Net::StreamSocket> &socket, const std::string& str)
     {
+        LOG_TST("Expecting " << str.size() << " bytes:\n" << str);
+
         std::vector<char> buffer(str.size() + 64);
         const int got = socket->receiveBytes(buffer.data(), str.size());
         LOK_ASSERT_EQUAL(str, std::string(buffer.data(), got));
@@ -170,6 +173,7 @@ public:
 
         writeString(socket, START_CHUNK_HEX("0"));
 
+        LOG_TST("Receiving...");
         char buffer[4096] = { 0, };
         int got = socket->receiveBytes(buffer, 4096);
         static const std::string start =
@@ -203,6 +207,7 @@ public:
         }
 
         // Oddly we need another read to get the content.
+        LOG_TST("Receiving...");
         got = socket->receiveBytes(buffer, 4096);
         LOK_ASSERT_MESSAGE("No content returned.", got >= 0);
         if (got >=0 )
