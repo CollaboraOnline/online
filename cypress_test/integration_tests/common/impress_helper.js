@@ -187,6 +187,48 @@ function dblclickOnSelectedShape() {
 		.should('exist');
 }
 
+//add multiple comments
+function addComment(numberOfComments) {
+
+	for (var n=0;n<numberOfComments;n++) {
+		cy.get('#menu-insert').click()
+			.get('#menu-insertcomment').click();
+
+		cy.get('.loleaflet-annotation-table')
+			.should('exist');
+
+		cy.get('.loleaflet-annotation-edit[style=""]')
+			.type('some text ' + n);
+
+		cy.get('.loleaflet-annotation-edit[style=""] #annotation-save')
+			.click();
+	}
+}
+
+//add multiple slides
+function addSlide(numberOfSlides) {
+	var insertSlideButton = cy.get('#tb_presentation-toolbar_item_insertpage');
+	for (let i=0;i<numberOfSlides;i++) {
+		insertSlideButton.should('not.have.class', 'disabled')
+			.click();
+	}
+}
+
+//change multiple slides
+function changeSlide(changeNum,direction) {
+	var slideButton;
+	if (direction === 'next') {
+		slideButton = cy.get('#tb_actionbar_item_next');
+	} else if (direction === 'previous') {
+		slideButton = cy.get('#tb_actionbar_item_prev');
+	}
+	if (slideButton) {
+		for (var n=0;n<changeNum;n++) {
+			slideButton.click();
+		}
+	}
+}
+
 module.exports.assertNotInTextEditMode = assertNotInTextEditMode;
 module.exports.assertInTextEditMode = assertInTextEditMode;
 module.exports.typeTextAndVerify = typeTextAndVerify;
@@ -196,3 +238,6 @@ module.exports.triggerNewSVGForShapeInTheCenter = triggerNewSVGForShapeInTheCent
 module.exports.removeShapeSelection = removeShapeSelection;
 module.exports.selectTextOfShape = selectTextOfShape;
 module.exports.dblclickOnSelectedShape = dblclickOnSelectedShape;
+module.exports.addComment = addComment;
+module.exports.addSlide = addSlide;
+module.exports.changeSlide = changeSlide;
