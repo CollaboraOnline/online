@@ -363,6 +363,14 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_menubarToolItemHandler: function(parentContainer, data, builder) {
+		if (data.id && data.id.startsWith('downloadas-')) {
+			var format = data.id.substring('downloadas-'.length);
+			builder.map._docLayer.registerExportFormat(data.text, format);
+
+			if (builder.map['wopi'].HideExportOption)
+				return false;
+		}
+
 		var originalInLineState = builder.options.useInLineLabelsForUnoButtons;
 		builder.options.useInLineLabelsForUnoButtons = true;
 
