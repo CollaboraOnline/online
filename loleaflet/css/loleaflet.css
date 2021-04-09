@@ -131,14 +131,38 @@
 	cursor: row-resize;
 }
 
-.table-row-or-column-select-marker {
+.table-select-marker {
 	margin: 0px;
 	width: 24px;
 	height: 24px;
-	background-image: url('images/table-row-or-column-select-marker.svg');
-	background-size: cover;
-	background-repeat: no-repeat;
+	background: url('images/table-row-or-column-select-marker.svg') no-repeat center center /12px;
 	cursor: pointer;
+}
+
+.table-select-marker::before {
+	content: '';
+	position: absolute;
+	z-index: 0;
+}
+
+.table-select-marker--column::before {
+	bottom: 50%;
+	border-bottom: 1px dashed lightgray;
+	width: 100%;
+}
+
+.table-select-marker--row::before {
+	left: 50%;
+	border-left: 1px dashed lightgray;
+	height: 100%;
+}
+
+.table-select-marker:hover {
+	background: url('images/table-row-or-column-select-marker-selected.svg') no-repeat center center /12px;
+}
+
+.table-select-marker:hover::before {
+	border-color: #1C99E0;
 }
 
 .table-move-marker {
