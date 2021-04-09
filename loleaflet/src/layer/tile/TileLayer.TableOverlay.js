@@ -237,13 +237,15 @@ L.CanvasTileLayer.include({
 
 		var delta1 = this._convertPixelToTwips(this._selectionHeaderDistanceFromTable);
 
-		// The 24 is the height and width of the .table-row-or-column-select-marker in loleaflet.css
+		// The 24 is the height and width of the .table-select-marker in loleaflet.css
 		var height = 24;
 		var width = height;
 		var selectionMarkerNominalSize = this._convertPixelToTwips(width);
+		var classNameMarker = 'table-select-marker';
 
 		for (var i = 0; i < positions.length - 1; i++) {
 			if (type === 'column') {
+				classNameMarker += ' table-select-marker--column';
 				startX = this._tablePositionColumnOffset + positions[i];
 				endX = this._tablePositionColumnOffset + positions[i + 1];
 				startY = start;
@@ -253,6 +255,7 @@ L.CanvasTileLayer.include({
 				width = this._convertTwipsToPixels(new L.Point(endX - startX, 0)).x - 2;
 			}
 			else {
+				classNameMarker += ' table-select-marker--row';
 				startX = start;
 				endX = end;
 				startY = this._tablePositionRowOffset + positions[i];
@@ -265,7 +268,7 @@ L.CanvasTileLayer.include({
 			var selectionRectangle = L.marker(point1,
 				{
 					icon: L.divIcon({
-						className: 'table-row-or-column-select-marker',
+						className: classNameMarker,
 						iconSize: [width, height],
 						iconAnchor: [0, 0],
 					}),
