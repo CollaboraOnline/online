@@ -1484,7 +1484,7 @@ bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const Str
     }
     else
     {
-        getLOKit()->sendDialogEvent(nLOKWindowId, tokens.cat(' ', 2).c_str());
+        getLOKitDocument()->sendDialogEvent(nLOKWindowId, tokens.cat(' ', 2).c_str());
     }
 
     return true;
