@@ -42,6 +42,16 @@ declare var L: any;
 		2- [["column header", "bottom", "ruler", "bottom", "top"], ["row header", "right", "left"]]
 
 	position: [0, 0] | [10, 50] | [x, y] // Related to anchor. Example 'bottom right': P(0, 0) is bottom right etc. myTopLeft is updated according to position and anchor.
+	documentObject:
+		* This means that the section is a document object. So its anchor can only be "top left", it doesn't need to be set.
+		* Container's documentAnchorSectionName should be set for enabling document objects.
+		* For this type of sections, only "size" and "position" are meaningful.
+		* Position is the object's position inside the document.
+		* So a document object is not a UI element, other sections are UI elements and their position and size can be managed by the section container.
+		* Document objects' positions and sizes are not managed by the section container.
+		* When "onDraw" function of document-object section is called, the canvas pen is positioned to the coordinate of the document object. So the section can draw from point (0, 0)
+		* Before "onDraw" function is called, section's "isVisible" property is set. If the object is visible inside the viewed area (even partially), the property value will be true, if not, it will be false.
+
 	size: [100, 100] | [10, 20] | [maxX, maxY] // This doesn't restrict the drawable area, that is up to implementation. Size is not important for expanded directions. Expandable size is assigned after calculations.
 	zIndex: Elements with highest zIndex will be drawn on top.
 	expand: '' | 'right' | 'left' | 'top' | 'bottom' | 'left right top bottom' (any combination)
@@ -118,6 +128,9 @@ class CanvasSectionObject {
 	borderColor: string = null; // Default is null (no borders).
 	boundToSection: string = null;
 	anchor: Array<string> = new Array(0);
+	documentObject: boolean = false; // If true, the section is a document object.
+	// When section is a document object, its position should be the real position inside the document, in core pixels.
+	isVisible: boolean = false; // This property is valid for document objects. This is managed by the section container.
 	position: Array<number> = new Array(0);
 	size: Array<number> = new Array(0);
 	expand: Array<string> = new Array(0);
@@ -228,6 +241,9 @@ class CanvasSectionContainer {
 	private mouseIsInside: boolean = false;
 	private inZoomAnimation: boolean = false;
 	private zoomChanged: boolean = false;
+	private documentAnchorSectionName: string = null; // This section's top left point declares the point where document starts.
+	private documentAnchor: Array<number> = null; // This is the point where document starts inside canvas element. Initial value shouldn't be [0, 0].
+	// Above 2 properties can be used with documentBounds.
 
 	// Below variables are related to animation feature.
 	private animatingSectionName: string = null; // The section that called startAnimating function. This variable is null when animations are not running.
@@ -273,6 +289,17 @@ class CanvasSectionContainer {
 
 	getContext () {
 		return this.context;
+	}
+
+	public setDocumentAnchorSection(sectionName: string) {
+		var section: CanvasSectionObject = this.getSectionWithName(sectionName);
+		if (section) {
+			this.documentAnchorSectionName = sectionName;
+		}
+		else {
+			this.documentAnchorSectionName = null;
+			this.documentAnchor = null;
+		}
 	}
 
 	setClearColor (color: string) {
@@ -378,6 +405,24 @@ class CanvasSectionContainer {
 		return [this.documentBottomRight[0] - this.documentTopLeft[0], this.documentBottomRight[1] - this.documentTopLeft[1]];
 	}
 
+	private isDocumentObjectVisible(section: CanvasSectionObject): boolean {
+		if (
+			(
+				section.myTopLeft[0] >= this.documentTopLeft[0] && section.myTopLeft[0] <= this.documentBottomRight[0] ||
+				section.myTopLeft[0] + section.size[0] >= this.documentTopLeft[0] && section.myTopLeft[0] + section.size[0] <= this.documentBottomRight[0]
+			)
+			&&
+			(
+				section.myTopLeft[1] >= this.documentTopLeft[1] && section.myTopLeft[1] <= this.documentBottomRight[1] ||
+				section.myTopLeft[1] + section.size[1] >= this.documentTopLeft[1] && section.myTopLeft[1] + section.size[1] <= this.documentBottomRight[1]
+			)
+		) {
+			return true;
+		}
+		else
+			return false;
+	}
+
 	public setDocumentBounds (points: Array<number>) {
 		this.documentTopLeft[0] = Math.round(points[0]);
 		this.documentTopLeft[1] = Math.round(points[1]);
@@ -386,6 +431,13 @@ class CanvasSectionContainer {
 		this.documentBottomRight[1] = Math.round(points[3]);
 
 		for (var i: number = 0; i < this.sections.length; i++) {
+			var section: CanvasSectionObject = this.sections[i];
+
+			if (section.documentObject === true) {
+				section.myTopLeft = [this.documentAnchor[0] + section.position[0] - this.documentTopLeft[0], this.documentAnchor[1] + section.position[1] - this.documentTopLeft[1]];
+				section.isVisible = this.isDocumentObjectVisible(section);
+			}
+
 			this.sections[i].onNewDocumentTopLeft(this.getDocumentTopLeft());
 		}
 	}
@@ -1127,9 +1179,18 @@ class CanvasSectionContainer {
 			this.sections[i].myTopLeft = null;
 		}
 
+		this.documentAnchor = null;
+
 		for (var i: number = 0; i < this.sections.length; i++) {
 			var section: CanvasSectionObject = this.sections[i];
-			if (!section.boundToSection) {
+
+			if (section.documentObject === true) {
+				if (section.size && section.position) {
+					section.isLocated = true;
+					section.myTopLeft = [this.documentAnchor[0] + section.position[0] - this.documentTopLeft[0], this.documentAnchor[1] + section.position[1] - this.documentTopLeft[1]];
+				}
+			}
+			else if (!section.boundToSection) {
 				section.myTopLeft = [this.calculateSectionInitialPosition(section, 1), this.calculateSectionInitialPosition(section, 0)];
 
 				if (section.expand[0] !== '')
@@ -1152,6 +1213,10 @@ class CanvasSectionContainer {
 					this.roundPositionAndSize(section);
 					section.isLocated = true;
 				}
+			}
+
+			if (section.name === this.documentAnchorSectionName) {
+				this.documentAnchor = [section.myTopLeft[0], section.myTopLeft[1]];
 			}
 		}
 	}
