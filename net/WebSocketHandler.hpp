@@ -125,19 +125,13 @@ public:
     /// Returns the Web-Socket Security Key generated for this instance.
     const std::string& getWebSocketKey() const { return _key; }
 
+    /// Create a WebSocket connection to the given @host
+    /// and @port and add the socket to @poll.
     bool wsRequest(http::Request& req, const std::string& host, const std::string& port,
                    bool isSecure, SocketPoll& poll)
     {
-        LOG_TRC("Web-Socket request: " << host << ':' << port);
-
-        req.set("Host", host); // Make sure the host is set.
-        req.set("Date", Util::getHttpTimeNow());
-        req.set("User-Agent", HTTP_AGENT_STRING);
-
-        req.set("Connection", "Upgrade");
-        req.set("Upgrade", "websocket");
-        req.set("Sec-WebSocket-Version", "13");
-        req.set("Sec-WebSocket-Key", getWebSocketKey());
+        const std::string hostAndPort = host + ':' + port;
+        LOG_TRC("Web-Socket request: " << hostAndPort);
 
         auto socket = net::connect(host, port, isSecure, shared_from_this());
         if (!socket)
@@ -147,6 +141,15 @@ public:
         }
 
         onConnect(socket);
+
+        req.set("Host", hostAndPort); // Make sure the host is set.
+        req.set("Date", Util::getHttpTimeNow());
+        req.set("User-Agent", HTTP_AGENT_STRING);
+
+        req.set("Connection", "Upgrade");
+        req.set("Upgrade", "websocket");
+        req.set("Sec-WebSocket-Version", "13");
+        req.set("Sec-WebSocket-Key", getWebSocketKey());
 
         if (socket->send(req))
         {
