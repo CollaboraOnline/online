@@ -1329,22 +1329,25 @@ class CanvasSectionContainer {
 			return minY - Math.round(this.dpiScale); // Don't overlap with the section on the bottom.
 	}
 
-	createUpdateDivElements () {
+	createUpdateSingleDivElement (section: CanvasSectionObject) {
 		var bcr: ClientRect = this.canvas.getBoundingClientRect();
+		var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + section.name);
+		if (!element) {
+			element = document.createElement('div');
+			element.id = 'test-div-' + section.name;
+			document.body.appendChild(element);
+		}
+		element.style.position = 'fixed';
+		element.style.zIndex = '0';
+		element.style.left = String(bcr.left + Math.round(section.myTopLeft[0] / this.dpiScale)) + 'px';
+		element.style.top = String(bcr.top + Math.round(section.myTopLeft[1] / this.dpiScale)) + 'px';
+		element.style.width = String(Math.round(section.size[0] / this.dpiScale)) + 'px';
+		element.style.height = String(Math.round(section.size[1] / this.dpiScale)) + 'px';
+	}
+
+	createUpdateDivElements () {
 		for (var i: number = 0; i < this.sections.length; i++) {
-			var section: CanvasSectionObject = this.sections[i];
-			var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + this.sections[i].name);
-			if (!element) {
-				element = document.createElement('div');
-				element.id = 'test-div-' + this.sections[i].name;
-				document.body.appendChild(element);
-			}
-			element.style.position = 'fixed';
-			element.style.zIndex = '0';
-			element.style.left = String(bcr.left + Math.round(section.myTopLeft[0] / this.dpiScale)) + 'px';
-			element.style.top = String(bcr.top + Math.round(section.myTopLeft[1] / this.dpiScale)) + 'px';
-			element.style.width = String(Math.round(section.size[0] / this.dpiScale)) + 'px';
-			element.style.height = String(Math.round(section.size[1] / this.dpiScale)) + 'px';
+			this.createUpdateSingleDivElement(this.sections[i]);
 		}
 	}
 
@@ -1786,6 +1789,7 @@ class CanvasSectionContainer {
 				section.position[0] = x;
 				section.position[1] = y;
 				section.isVisible = section.containerObject.isDocumentObjectVisible(section);
+				section.containerObject.createUpdateSingleDivElement(section);
 			}
 		}
 	}
