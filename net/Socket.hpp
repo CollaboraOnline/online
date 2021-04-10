@@ -661,6 +661,16 @@ public:
     /// -1 for error, and otherwise the number of events signalled.
     int poll(std::chrono::microseconds timeoutMax) { return poll(timeoutMax.count()); }
 
+    /// Poll the sockets for available data to read or buffer to write.
+    /// Returns the return-value of poll(2): 0 on timeout,
+    /// -1 for error, and otherwise the number of events signalled.
+    /// Takes the deadline, instead of a timeout.
+    int poll(std::chrono::steady_clock::time_point deadline)
+    {
+        const auto now = std::chrono::steady_clock::now();
+        return poll(std::chrono::duration_cast<std::chrono::microseconds>(deadline - now));
+    }
+
     /// Write to a wakeup descriptor
     static void wakeup (int fd)
     {
