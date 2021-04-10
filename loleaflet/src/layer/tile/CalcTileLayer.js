@@ -90,7 +90,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		this._annotations = {};
 
-		app.sectionContainer.pushSection(new app.definitions.AutoFillMarkerSection());
+		app.sectionContainer.addSection(new app.definitions.AutoFillMarkerSection());
 	},
 
 	onAnnotationModify: function (annotation) {
