@@ -12,10 +12,11 @@ class AutoFillMarkerSection {
 	containerObject: any = null;
 	dpiScale: number = null;
 	name: string = L.CSections.AutoFillMarker.name;
-	backgroundColor: string = null;
+	backgroundColor: string = 'black';
 	borderColor: string = null;
-	boundToSection: string = L.CSections.Tiles.name;
+	boundToSection: string = null;
 	anchor: Array<any> = new Array(0);
+	documentObject: boolean = true;
 	position: Array<number> = new Array(0);
 	size: Array<number> = new Array(0);
 	expand: Array<string> = new Array(0);
@@ -26,66 +27,79 @@ class AutoFillMarkerSection {
 	interactable: boolean = true;
 	sectionProperties: any = {};
 	stopPropagating: Function; // Implemented by section container.
+	setPosition: Function; // Implemented by section container. Document objects only.
 	map: any;
 
 	constructor () {
 		this.map = L.Map.THIS;
 
 		this.sectionProperties.docLayer = this.map._docLayer;
+		this.sectionProperties.selectedAreaPoint = null;
+		this.sectionProperties.cellCursorPoint = null;
+
 		this.sectionProperties.draggingStarted = false;
-		this.sectionProperties.cursorRectangle = null; // Selected area or cell cursor, in core pixels.
-		this.sectionProperties.autoFillRectangle = null; // Autofill marker's rectangle.
 		this.sectionProperties.dragStartPosition = null;
-		this.sectionProperties.handlingMouseEvent = false;
+
+		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 	}
 
 	public onInitialize () {
-		this.sectionProperties.rectangleSizeDesktop = Math.round(8 * this.dpiScale); // In core pixels.
-		this.sectionProperties.rectangleSizeMobile = Math.round(16 * this.dpiScale); // In core pixels.
-		this.sectionProperties.rectangleColor = 'black';
+		if ((<any>window).mode.isDesktop()) {
+			this.size = [Math.round(8 * this.dpiScale), Math.round(8 * this.dpiScale)];
+		}
+		else {
+			this.size = [Math.round(16 * this.dpiScale), Math.round(16 * this.dpiScale)];
+		}
 	}
 
 	public onResize () {
 
 	}
 
-	public onDraw () {
-		if (this.sectionProperties.docLayer) {
-			if (this.sectionProperties.docLayer._cellSelectionAreaPixels)
-				this.sectionProperties.cursorRectangle = this.sectionProperties.docLayer._cellSelectionAreaPixels.clone();
-			else if (this.sectionProperties.docLayer._cellCursorPixels)
-				this.sectionProperties.cursorRectangle = this.sectionProperties.docLayer._cellCursorPixels.clone();
-			else
-				this.sectionProperties.cursorRectangle = null;
-
-			if (this.sectionProperties.cursorRectangle) {
-				var topLeft: Array<number>;
-				var size: number;
-				if ((<any>window).mode.isDesktop()) {
-					size = this.sectionProperties.rectangleSizeDesktop * 0.5;
-					this.sectionProperties.cursorRectangle.moveBy(-size, -size);
-					topLeft = [this.sectionProperties.cursorRectangle.getX2(), this.sectionProperties.cursorRectangle.getY2()];
-
-				}
-				else {
-					size = this.sectionProperties.rectangleSizeMobile * 0.5;
-					this.sectionProperties.cursorRectangle.moveBy(-size, -size);
-					topLeft = [this.sectionProperties.cursorRectangle.getX2() - this.sectionProperties.cursorRectangle.getWidth() * 0.5, this.sectionProperties.cursorRectangle.getY2()];
-				}
-
-				this.context.fillStyle = this.sectionProperties.rectangleColor;
-				this.context.fillRect(topLeft[0] - this.documentTopLeft[0], topLeft[1] - this.documentTopLeft[1], 2 * size, 2 * size);
-
-				this.sectionProperties.autoFillRectangle = L.LOUtil.createRectangle(topLeft[0], topLeft[1], size * 2, size * 2);
-			}
-			else {
-				this.sectionProperties.autoFillRectangle = null;
-			}
+	private setMarkerPosition () {
+		var center = 0;
+		if (!(<any>window).mode.isDesktop()) {
+			center = this.map._docLayer._cellCursorPixels.getWidth() * 0.5;
 		}
+
+		if (this.sectionProperties.selectedAreaPoint !== null)
+			this.setPosition(this.sectionProperties.selectedAreaPoint[0] - center, this.sectionProperties.selectedAreaPoint[1]);
+		else if (this.sectionProperties.cellCursorPoint !== null)
+			this.setPosition(this.sectionProperties.cellCursorPoint[0] - center, this.sectionProperties.cellCursorPoint[1]);
+		else
+			this.setPosition(-100, -100);
+
+		this.containerObject.requestReDraw();
+	}
+
+	// Give bottom right position of selected area, in core pixels. Call with null parameter when auto fill marker is not visible.
+	public calculatePositionViaCellSelection (point: Array<number>) {
+		if (point === null) {
+			this.sectionProperties.selectedAreaPoint = null;
+		}
+		else {
+			this.sectionProperties.selectedAreaPoint = [point[0] - this.size[0] * 0.5, point[1] - this.size[1] * 0.5];
+		}
+		this.setMarkerPosition();
+	}
+
+	// Give bottom right position of cell cursor, in core pixels. Call with null parameter when auto fill marker is not visible.
+	public calculatePositionViaCellCursor (point: Array<number>) {
+		if (point === null) {
+			this.sectionProperties.cellCursorPoint = null;
+		}
+		else {
+			this.sectionProperties.cellCursorPoint = [point[0] - this.size[0] * 0.5, point[1] - this.size[1] * 0.5];
+		}
+		this.setMarkerPosition();
+	}
+
+	public onDraw () {
+
 	}
 
 	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
-		if (dragDistance === null || !this.sectionProperties.docLayer._cellAutoFillAreaPixels || !this.sectionProperties.handlingMouseEvent)
+		if (dragDistance === null || !this.sectionProperties.docLayer._cellAutoFillAreaPixels)
 			return; // No dragging or no event handling or auto fill marker is not visible.
 
 		var pos: any;
@@ -104,49 +118,42 @@ class AutoFillMarkerSection {
 
 		this.sectionProperties.docLayer._postMouseEvent('move', pos.x, pos.y, 1, 1, 0);
 
-		if (this.sectionProperties.handlingMouseEvent) {
-			this.map.scrollingIsHandled = true;
-			this.stopPropagating(); // Stop propagating to sections.
-			e.stopPropagation(); // Stop native event.
-		}
+		this.map.scrollingIsHandled = true;
+		this.stopPropagating(); // Stop propagating to sections.
+		e.stopPropagation(); // Stop native event.
 	}
 
 	public onMouseUp (point: Array<number>, e: MouseEvent) {
 		if (this.sectionProperties.draggingStarted) {
 			this.sectionProperties.draggingStarted = false;
-			point[0] += this.sectionProperties.cursorRectangle.getWidth() * 0.5;
-			point[1] += this.sectionProperties.cursorRectangle.getHeight() * 0.5;
+			point[0] += this.myTopLeft[0] + this.size[0] * 0.5;
+			point[1] += this.myTopLeft[1] + this.size[1] * 0.5;
 			var pos = this.sectionProperties.docLayer._corePixelsToTwips(new L.Point(point[0], point[1]));
 			this.sectionProperties.docLayer._postMouseEvent('buttonup', pos.x, pos.y, 1, 1, 0);
 		}
 
 		this.map.scrollingIsHandled = false;
-
-		if (this.sectionProperties.handlingMouseEvent) {
-			this.stopPropagating();
-			e.stopPropagation();
-			this.sectionProperties.handlingMouseEvent = false;
-			(<any>window).IgnorePanning = false;
-		}
+		this.stopPropagating();
+		e.stopPropagation();
+		(<any>window).IgnorePanning = false;
 	}
 
 	public onMouseDown (point: Array<number>, e: MouseEvent) {
 		// Just to be safe. We don't need this, but it makes no harm.
-		this.sectionProperties.handlingMouseEvent = false;
+		this.stopPropagating();
+		e.stopPropagation();
+		(<any>window).IgnorePanning = true; // We'll keep this until we have consistent sections and remove map element.
+	}
 
-		if (this.sectionProperties.docLayer._cellAutoFillAreaPixels && this.sectionProperties.autoFillRectangle) {
-			if (this.sectionProperties.autoFillRectangle.containsPoint(point[0] + this.documentTopLeft[0], point[1] + this.documentTopLeft[1])) {
-				this.sectionProperties.handlingMouseEvent = true;
-				this.stopPropagating();
-				e.stopPropagation();
-				(<any>window).IgnorePanning = true; // We'll keep this until we have consistent sections and remove map element.
-			}
-		}
+	public onMouseEnter () {
+		this.sectionProperties.mapPane.style.cursor = 'crosshair';
+	}
+
+	public onMouseLeave () {
+		this.sectionProperties.mapPane.style.cursor = 'default';
 	}
 
 	public onMouseWheel () {}
-	public onMouseEnter () {}
-	public onMouseLeave () {}
 	public onClick () {}
 	public onDoubleClick () {}
 	public onContextMenu () {}

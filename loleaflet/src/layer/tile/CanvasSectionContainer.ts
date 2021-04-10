@@ -169,6 +169,7 @@ class CanvasSectionObject {
 	startAnimating: Function; // Do not implement this. This function is added by section container. Return value: boolean.
 	resetAnimation: Function; // Do not implement this. This function is added by section container.
 	getTestDiv: Function; // Do not implement this. This function is added by section container.
+	setPosition: Function; // Document objects only. Do not implement this. This function is added by section container.
 
 	constructor (options: any) {
 		this.name = options.name;
@@ -1480,6 +1481,19 @@ class CanvasSectionContainer {
 				return element;
 			else
 				return null;
+		}
+
+		// Only for document objects.
+		if (section.documentObject === true) {
+			section.setPosition = function (x: number, y: number) {
+				x = Math.round(x);
+				y = Math.round(y);
+				section.myTopLeft[0] = section.containerObject.documentAnchor[0] + x - section.containerObject.documentTopLeft[0];
+				section.myTopLeft[1] = section.containerObject.documentAnchor[1] + y - section.containerObject.documentTopLeft[1];
+				section.position[0] = x;
+				section.position[1] = y;
+				section.isVisible = section.containerObject.isDocumentObjectVisible(section);
+			}
 		}
 	}
 
