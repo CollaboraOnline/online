@@ -25,9 +25,9 @@ L.CSections.ColumnGroup = 			{ name: 'column group'		, zIndex: 5 };
 L.CSections.RowGroup = 				{ name: 'row group'			, zIndex: 5 };
 L.CSections.CornerGroup = 			{ name: 'corner group'		, zIndex: 5 };
 
-L.CSections.AutoFillMarker = 		{ name: 'auto fill marker'	, zIndex: 6 };
+L.CSections.Scroll =				{ name: 'scroll'			, zIndex: 8};
 
-L.CSections.Scroll =				{ name: 'scroll'			, zIndex: 10};
+L.CSections.AutoFillMarker = 		{ name: 'auto fill marker'	, zIndex: 10};
 
 /* Processing and drawing orders are meaningful between sections with the same zIndex. */
 /* Processing order	: Important for locations and sizes of sections. */
@@ -64,12 +64,12 @@ L.CSections.ColumnHeader.drawingOrder = 			15; // Calc.
 
 /* zIndex = 6 and goes on. */
 
-/* zIndex = 6  */
-L.CSections.AutoFillMarker.processingOrder =		1; // Calc.
-
-L.CSections.AutoFillMarker.drawingOrder =			1; // Calc.
-
-/* zIndex = 10 */
+/* zIndex = 8 */
 L.CSections.Scroll.processingOrder = 				1; // Writer & Impress & Calc.
 
 L.CSections.Scroll.drawingOrder = 					1; // Writer & Impress & Calc.
+
+/* zIndex = 10  */
+L.CSections.AutoFillMarker.processingOrder =		1; // Calc.
+
+L.CSections.AutoFillMarker.drawingOrder =			1; // Calc.
