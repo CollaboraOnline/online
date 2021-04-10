@@ -37,10 +37,6 @@ class ScrollSection {
 
 	constructor () {
 		this.name = L.CSections.Scroll.name;
-		this.anchor = ['top', 'right'];
-		this.position = [0, 0];
-		this.size = [30 * window.devicePixelRatio, 0];
-		this.expand = ['bottom'];
 		this.processingOrder = L.CSections.Scroll.processingOrder;
 		this.drawingOrder = L.CSections.Scroll.drawingOrder;
 		this.zIndex = L.CSections.Scroll.zIndex;
