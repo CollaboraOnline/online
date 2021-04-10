@@ -993,6 +993,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		var dpiScale = this._painter._dpiScale;
 		var extraSize = options ? options.extraSize : null;
+		if (this._docType === 'presentation')
+			extraSize = this._annotationManager.allocateExtraSize();
 		var docPixelLimits = new L.Point(this._docWidthTwips / this.options.tileWidthTwips,
 			this._docHeightTwips / this.options.tileHeightTwips);
 		// docPixelLimits should be in csspx.
