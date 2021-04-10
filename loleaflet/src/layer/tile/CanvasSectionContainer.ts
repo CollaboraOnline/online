@@ -130,7 +130,8 @@ class CanvasSectionObject {
 	anchor: Array<string> = new Array(0);
 	documentObject: boolean = false; // If true, the section is a document object.
 	// When section is a document object, its position should be the real position inside the document, in core pixels.
-	isVisible: boolean = false; // This property is valid for document objects. This is managed by the section container.
+	isVisible: boolean = false; // Is section visible on the viewed area of the document? This property is valid for document objects. This is managed by the section container.
+	showSection: boolean = true; // Show / hide section.
 	position: Array<number> = new Array(0);
 	size: Array<number> = new Array(0);
 	expand: Array<string> = new Array(0);
@@ -183,6 +184,7 @@ class CanvasSectionObject {
 		this.drawingOrder = options.drawingOrder;
 		this.zIndex = options.zIndex;
 		this.interactable = options.interactable;
+		this.showSection = options.showSection;
 		this.sectionProperties = options.sectionProperties ? options.sectionProperties: {};
 		this.onInitialize = options.onInitialize ? options.onInitialize: function() {};
 		this.onMouseMove = options.onMouseMove ? options.onMouseMove: function() {};
@@ -1338,7 +1340,7 @@ class CanvasSectionContainer {
 
 		this.context.font = String(20 * this.dpiScale) + "px Verdana";
 		for (var i: number = 0; i < this.sections.length; i++) {
-			if (this.sections[i].isLocated) {
+			if (this.sections[i].isLocated && this.sections[i].showSection) {
 				this.context.translate(this.sections[i].myTopLeft[0], this.sections[i].myTopLeft[1]);
 				if (this.sections[i].backgroundColor) {
 					this.context.fillStyle = this.sections[i].backgroundColor;
@@ -1408,6 +1410,9 @@ class CanvasSectionContainer {
 			return false;
 		}
 		else {
+			if (options.showSection === undefined)
+				options.showSection = true;
+
 			return true;
 		}
 	}

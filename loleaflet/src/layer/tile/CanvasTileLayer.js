@@ -280,7 +280,7 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_addTilesSection: function () {
-		this._sectionContainer.pushSection(L.getNewTilesSection());
+		this._sectionContainer.addSection(L.getNewTilesSection());
 		this._tilesSection = this._sectionContainer.getSectionWithName('tiles');
 		app.sectionContainer.setDocumentAnchorSection(L.CSections.Tiles.name);
 	},
