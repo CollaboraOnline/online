@@ -19,6 +19,7 @@ class AutoFillMarkerSection {
 	size: Array<number> = new Array(0);
 	expand: Array<string> = new Array(0);
 	isLocated: boolean = false;
+	showSection: boolean = true;
 	processingOrder: number = L.CSections.AutoFillMarker.processingOrder;
 	drawingOrder: number = L.CSections.AutoFillMarker.drawingOrder;
 	zIndex: number = L.CSections.AutoFillMarker.zIndex;
@@ -55,19 +56,40 @@ class AutoFillMarkerSection {
 	}
 
 	private setMarkerPosition () {
-		var center = 0;
-		if (!(<any>window).mode.isDesktop()) {
+		var center: number = 0;
+		if (!(<any>window).mode.isDesktop() && this.map._docLayer._cellCursorPixels) {
 			center = this.map._docLayer._cellCursorPixels.getWidth() * 0.5;
 		}
 
-		if (this.sectionProperties.selectedAreaPoint !== null)
-			this.setPosition(this.sectionProperties.selectedAreaPoint[0] - center, this.sectionProperties.selectedAreaPoint[1]);
-		else if (this.sectionProperties.cellCursorPoint !== null)
-			this.setPosition(this.sectionProperties.cellCursorPoint[0] - center, this.sectionProperties.cellCursorPoint[1]);
-		else
-			this.setPosition(-100, -100);
+		var position: Array<number> = [0, 0];
+		this.showSection = true;
 
-		this.containerObject.requestReDraw();
+		if (this.sectionProperties.selectedAreaPoint !== null)
+			position = [this.sectionProperties.selectedAreaPoint[0] - center, this.sectionProperties.selectedAreaPoint[1]];
+		else if (this.sectionProperties.cellCursorPoint !== null)
+			position = [this.sectionProperties.cellCursorPoint[0] - center, this.sectionProperties.cellCursorPoint[1]];
+		else
+			this.showSection = false;
+
+		// At this point, position is calculated without taking splitter into account.
+		var splitPosCore = {x: 0, y: 0};
+		if (this.map._docLayer.getSplitPanesContext())
+			splitPosCore = this.map._docLayer.getSplitPanesContext().getSplitPos();
+
+		splitPosCore.x *= this.dpiScale;
+		splitPosCore.y *= this.dpiScale;
+
+		if (position[0] <= splitPosCore.x)
+			position[0] += this.documentTopLeft[0];
+		else if (position[0] - this.documentTopLeft[0] <= splitPosCore.x)
+			this.showSection = false;
+
+		if (position[1] <= splitPosCore.y)
+			position[1] += this.documentTopLeft[1];
+		else if (position[1] - this.documentTopLeft[1] <= splitPosCore.y)
+			this.showSection = false;
+
+		this.setPosition(position[0], position[1]);
 	}
 
 	// Give bottom right position of selected area, in core pixels. Call with null parameter when auto fill marker is not visible.
@@ -151,6 +173,10 @@ class AutoFillMarkerSection {
 		this.sectionProperties.mapPane.style.cursor = 'default';
 	}
 
+	public onNewDocumentTopLeft () {
+		this.setMarkerPosition();
+	}
+
 	public onMouseWheel () {}
 	public onClick () {}
 	public onDoubleClick () {}
@@ -159,7 +185,6 @@ class AutoFillMarkerSection {
 	public onMultiTouchStart () {}
 	public onMultiTouchMove () {}
 	public onMultiTouchEnd () {}
-	public onNewDocumentTopLeft () {}
 }
 
 L.getAutoFillMarkerSection = function () {
