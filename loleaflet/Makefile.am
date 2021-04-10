@@ -687,8 +687,11 @@ l10n: pot
 clean-local:
 	@rm -rf $(DIST_FOLDER)
 	@rm -rf $(INTERMEDIATE_DIR)
+	@rm -rf node_modules
 	@rm -f $(abs_srcdir)/jsconfig.json
 	@rm -f $(abs_srcdir)/admin/jsconfig.json
+
+CLEANFILES = tscompile.done $(INTERMEDIATE_DIR)/loleaflet-src.js $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/bundle.js $(INTERMEDIATE_DIR)/loleaflet-src.js
 
 ctags:
 	@$(CTAGS) --language-force=JavaScript $(LOLEAFLET_JS_SRC) $(srcdir)/js/global.js
