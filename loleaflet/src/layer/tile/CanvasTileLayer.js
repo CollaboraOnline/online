@@ -282,6 +282,7 @@ L.TileSectionManager = L.Class.extend({
 	_addTilesSection: function () {
 		this._sectionContainer.pushSection(L.getNewTilesSection());
 		this._tilesSection = this._sectionContainer.getSectionWithName('tiles');
+		app.sectionContainer.setDocumentAnchorSection(L.CSections.Tiles.name);
 	},
 
 	_addGridSection: function () {
@@ -2166,6 +2167,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onCellCursorMsg: function (textMsg) {
+		var autofillMarkerSection = app.sectionContainer.getSectionWithName(L.CSections.AutoFillMarker.name);
+
 		if (!this._cellCursor) {
 			this._cellCursor = L.LatLngBounds.createDefault();
 		}
@@ -2184,6 +2187,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._cellCursor = L.LatLngBounds.createDefault();
 			this._cellCursorXY = new L.Point(-1, -1);
 			this._cellCursorPixels = null;
+			if (autofillMarkerSection)
+				autofillMarkerSection.calculatePositionViaCellCursor(null);
 		}
 		else {
 			var strTwips = textMsg.match(/\d+/g);
@@ -2199,6 +2204,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			var start = this._twipsToCorePixels(this._cellCursorTwips.min);
 			var offsetPixels = offsetPixels = this._twipsToCorePixels(this._cellCursorTwips.getSize());
 			this._cellCursorPixels = L.LOUtil.createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
+			if (autofillMarkerSection)
+				autofillMarkerSection.calculatePositionViaCellCursor([this._cellCursorPixels.getX2(), this._cellCursorPixels.getY2()]);
 
 			this._cellCursorXY = new L.Point(parseInt(strTwips[4]), parseInt(strTwips[5]));
 		}
@@ -3042,6 +3049,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onCellSelectionAreaMsg: function (textMsg) {
+		var autofillMarkerSection = app.sectionContainer.getSectionWithName(L.CSections.AutoFillMarker.name);
 		var strTwips = textMsg.match(/\d+/g);
 		if (strTwips != null && this._map.isPermissionEdit()) {
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
@@ -3056,7 +3064,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var offsetPixels = this._twipsToCorePixels(boundsTwips.getSize());
 			var start = this._twipsToCorePixels(boundsTwips.min);
-			this._cellSelectionAreaPixels = L.LOUtil.createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
+			var cellSelectionAreaPixels = L.LOUtil.createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
+			if (autofillMarkerSection)
+				autofillMarkerSection.calculatePositionViaCellSelection([cellSelectionAreaPixels.getX2(), cellSelectionAreaPixels.getY2()]);
 
 			if (this._cellCursor === null) {
 				this._cellCursor = L.LatLngBounds.createDefault();
@@ -3064,7 +3074,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._updateScrollOnCellSelection(oldSelection, this._cellSelectionArea);
 		} else {
 			this._cellSelectionArea = null;
-			this._cellSelectionAreaPixels = null;
+			if (autofillMarkerSection)
+				autofillMarkerSection.calculatePositionViaCellSelection(null);
 		}
 	},
 
