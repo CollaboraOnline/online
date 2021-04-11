@@ -425,7 +425,7 @@ private:
         const size_t payloadLen = len;
 #endif
 
-        socket->getInBuffer().erase(socket->getInBuffer().begin(), socket->getInBuffer().begin() + headerLen + payloadLen);
+        socket->eraseFirstInputBytes(headerLen + payloadLen);
 
 #if !MOBILEAPP
 
@@ -448,7 +448,6 @@ private:
         }
 #else
         handleMessage(_wsPayload);
-
 #endif
 
         _wsPayload.clear();
