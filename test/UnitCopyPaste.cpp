@@ -14,6 +14,7 @@
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
 #include <helpers.hpp>
+#include <sstream>
 #include <wsd/LOOLWSD.hpp>
 #include <common/Clipboard.hpp>
 #include <wsd/ClientSession.hpp>
@@ -88,9 +89,10 @@ public:
 
             auto clipboard = std::make_shared<ClipboardData>();
             clipboard->read(responseStream);
-            clipboard->dumpState(std::cerr);
+            std::ostringstream oss;
+            clipboard->dumpState(oss);
 
-            LOG_TST("getClipboard: got response");
+            LOG_TST("getClipboard: got response. State:\n" << oss.str());
             return clipboard;
         } catch (Poco::Exception &e) {
             LOG_TST("Poco exception: " << e.message());
