@@ -51,6 +51,7 @@ private:
         , _host(hostname)
         , _port(std::to_string(portNumber))
         , _protocol(protocolType)
+        , _disconnected(true)
     {
     }
 
@@ -213,6 +214,20 @@ public:
         });
     }
 
+    /// Wait until disconnected.
+    /// Returns true iff we are disconnected, otherwise false,
+    /// if we timed out without disconnecting.
+    bool waitForDisconnection(const std::chrono::milliseconds timeout)
+    {
+        std::unique_lock<std::mutex> lock(_outMutex);
+
+        if (_disconnected)
+            return true;
+
+        _disconnectCv.wait_for(lock, timeout, [this]() { return _disconnected.load(); });
+        return _disconnected;
+    }
+
 private:
     void handleMessage(const std::vector<char>& data) override
     {
@@ -268,6 +283,19 @@ private:
     using WebSocketHandler::sendTextMessage;
     using WebSocketHandler::shutdown;
 
+    void onConnect(const std::shared_ptr<StreamSocket>& socket) override
+    {
+        _disconnected = false;
+        WebSocketHandler::onConnect(socket);
+    }
+
+    void onDisconnect() override
+    {
+        std::unique_lock<std::mutex> lock(_outMutex);
+        _disconnected = true;
+        _disconnectCv.notify_all();
+    }
+
 private:
     const std::string _host;
     const std::string _port;
@@ -278,6 +306,9 @@ private:
     std::mutex _inMutex; //< The incoming queue lock.
     MessageQueueBase<std::vector<char>> _outQueue; //< The outgoing message queue.
     std::mutex _outMutex; //< The outgoing queue lock.
+    std::condition_variable _disconnectCv; //< Traps disconnections.
+    std::mutex _disconnectMutex; //< The disconnection event lock.
+    std::atomic_bool _disconnected; //< True iff we are disconnected.
 };
 
 } // namespace http
