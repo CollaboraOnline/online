@@ -197,6 +197,8 @@ namespace FileUtil
         if (root.empty())
             root = getSysTempDirectoryPath();
 
+        Poco::File(root).createDirectories();
+
         // Don't const to allow for automatic move on return.
         std::string newTmp = root + "/lool-" + Util::rng::getFilename(16);
         if (::mkdir(newTmp.c_str(), S_IRWXU) < 0)
