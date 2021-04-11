@@ -280,6 +280,7 @@ unit-load-torture.log : group0.log
 
 unit-wopi-saveas.log : group0.log
 unit-password-protected.log : group0.log
+unit-http.log : group0.log
 unit-tiff-load.log : group0.log
 unit-render-shape.log : group0.log
 unit-oauth.log : group0.log
