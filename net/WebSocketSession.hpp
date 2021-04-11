@@ -247,6 +247,15 @@ private:
         return match;
     }
 
+    int getPollEvents(std::chrono::steady_clock::time_point /*now*/,
+                      int64_t& /*timeoutMaxMicroS*/) override
+    {
+        std::unique_lock<std::mutex> lock(_outMutex);
+        if (!_outQueue.isEmpty())
+            return POLLIN | POLLOUT;
+        return POLLIN;
+    }
+
     void performWrites() override
     {
         LOG_TRC("WebSocketSession: performing writes.");
