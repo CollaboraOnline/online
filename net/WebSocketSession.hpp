@@ -165,19 +165,19 @@ public:
         // Note: ideally, this lock will be timed, but that
         // might prove expensive and we don't expect draining
         // the queue to take anywhere close to the timeout.
-        std::unique_lock<std::mutex> lock(_mutex);
+        std::unique_lock<std::mutex> lock(_inMutex);
         do
         {
             // Drain the queue, first.
-            while (!_queue.isEmpty())
+            while (!_inQueue.isEmpty())
             {
-                std::vector<char> message = _queue.pop();
+                std::vector<char> message = _inQueue.pop();
                 if (cb(message))
                     return message;
             }
 
             // Timed wait, if we must.
-        } while (_cv.wait_for(lock, timeout, [this]() { return !_queue.isEmpty(); }));
+        } while (_inCv.wait_for(lock, timeout, [this]() { return !_inQueue.isEmpty(); }));
 
         LOG_DBG(context << "Giving up polling after " << timeout);
         return std::vector<char>();
@@ -196,13 +196,20 @@ public:
             timeout, context);
     }
 
+    /// Send a text message to our peer.
+    void sendMessage(const std::string& msg)
+    {
+        std::unique_lock<std::mutex> lock(_outMutex);
+        _outQueue.put(std::vector<char>(msg.data(), msg.data() + msg.size()));
+    }
+
 private:
     void handleMessage(const std::vector<char>& data) override
     {
         LOG_DBG("Got message: " << LOOLProtocol::getFirstLine(data));
-        std::unique_lock<std::mutex> lock(_mutex);
-        _queue.put(data);
-        _cv.notify_one();
+        std::unique_lock<std::mutex> lock(_inMutex);
+        _inQueue.put(data);
+        _inCv.notify_one();
     }
 
     bool matchMessage(const std::string& prefix, const std::vector<char>& message,
@@ -215,6 +222,40 @@ private:
         return match;
     }
 
+    void performWrites() override
+    {
+        LOG_TRC("WebSocketSession: performing writes.");
+
+        std::unique_lock<std::mutex> lock(_outMutex);
+
+        std::size_t wrote = 0;
+        try
+        {
+            // Drain the queue, for efficient communication.
+            if (!_outQueue.isEmpty())
+            {
+                std::vector<char> item = _outQueue.get();
+                const auto size = item.size();
+                assert(size && "Zero-sized messages must never be queued for sending.");
+
+                sendTextMessage(item.data(), size);
+
+                wrote += size;
+                LOG_TRC("WebSocketSession: wrote " << size << ", total " << wrote << " bytes.");
+            }
+        }
+        catch (const std::exception& ex)
+        {
+            LOG_ERR("WebSocketSession: Failed to send message: " << ex.what());
+        }
+
+        LOG_TRC("WebSocketSession: performed write, wrote " << wrote << " bytes.");
+    }
+
+    // Make these inaccessible since they must only be called from the poll thread.
+    using WebSocketHandler::sendBinaryMessage;
+    using WebSocketHandler::sendMessage;
+    using WebSocketHandler::sendTextMessage;
     using WebSocketHandler::shutdown;
 
     void shutdown()
@@ -228,9 +269,11 @@ private:
     const std::string _port;
     const Protocol _protocol;
     Request _request;
-    MessageQueue _queue; //< The incoming message queue.
-    std::condition_variable _cv;
-    std::mutex _mutex; //< The queue lock.
+    MessageQueue _inQueue; //< The incoming message queue.
+    std::condition_variable _inCv; //< The incoming queue cond_var.
+    std::mutex _inMutex; //< The incoming queue lock.
+    MessageQueueBase<std::vector<char>> _outQueue; //< The outgoing message queue.
+    std::mutex _outMutex; //< The outgoing queue lock.
 };
 
 } // namespace http
