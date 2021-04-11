@@ -203,6 +203,16 @@ public:
         _outQueue.put(std::vector<char>(msg.data(), msg.data() + msg.size()));
     }
 
+    /// Send asynchronous shutdown frame and disconnect socket.
+    void asyncShutdown(SocketPoll& poll)
+    {
+        LOG_TRC("WebSocketSession: queueing shutdown");
+        poll.addCallback([&]() {
+            LOG_TRC("WebSocketSession: shutdown");
+            shutdown(true, "Shutting down");
+        });
+    }
+
 private:
     void handleMessage(const std::vector<char>& data) override
     {
@@ -257,12 +267,6 @@ private:
     using WebSocketHandler::sendMessage;
     using WebSocketHandler::sendTextMessage;
     using WebSocketHandler::shutdown;
-
-    void shutdown()
-    {
-        LOG_TRC("shutdown");
-        shutdown(true, "Shutting down");
-    }
 
 private:
     const std::string _host;
