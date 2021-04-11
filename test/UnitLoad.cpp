@@ -211,8 +211,13 @@ UnitBase::TestResult UnitLoad::testLoad()
     TST_LOG("Loading " << documentURL);
     wsSession->sendMessage("load url=" + documentURL);
 
-    std::vector<char> message = wsSession->waitForMessage("status:", std::chrono::seconds(50));
+    std::vector<char> message = wsSession->waitForMessage("status:", std::chrono::seconds(5));
     LOK_ASSERT_MESSAGE("Failed to load the document", !message.empty());
+
+    wsSession->asyncShutdown(socketPoll);
+
+    LOK_ASSERT_MESSAGE("Expected success disconnection of the WebSocket",
+                       wsSession->waitForDisconnection(std::chrono::seconds(5)));
 
     socketPoll.joinThread();
     return TestResult::Ok;
