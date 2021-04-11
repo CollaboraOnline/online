@@ -703,8 +703,9 @@ protected:
         socket->assertCorrectThread();
         Buffer& out = socket->getOutBuffer();
 
-        LOG_TRC("WebSocketHandle::sendFrame: Writing to #" << socket->getFD() << ' ' << len
-                                                           << " bytes");
+        LOG_TRC("WebSocketHandler::sendFrame: Writing to #"
+                << socket->getFD() << ' ' << len << " bytes in addition to " << out.size()
+                << " bytes buffered.");
 
 #if !MOBILEAPP
         const size_t oldSize = out.size();
