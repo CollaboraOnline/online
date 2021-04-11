@@ -474,10 +474,11 @@ class MessageHandlerInterface :
 {
 protected:
     std::shared_ptr<ProtocolHandlerInterface> _protocol;
-    MessageHandlerInterface(const std::shared_ptr<ProtocolHandlerInterface> &protocol) :
-        _protocol(protocol)
+    MessageHandlerInterface(std::shared_ptr<ProtocolHandlerInterface> protocol)
+        : _protocol(std::move(protocol))
     {
     }
+
     virtual ~MessageHandlerInterface() {}
 
 public:
