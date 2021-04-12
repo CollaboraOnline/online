@@ -103,11 +103,15 @@ protected:
         exitTest(TestResult::Ok);
     }
 
-    UnitBase();
-    UnitBase(std::string name)
-        : UnitBase()
+    /// Construct a UnitBase instance with a default name.
+    explicit UnitBase(std::string name = "UnitBase")
+        : _dlHandle(nullptr)
+        , _setRetValue(false)
+        , _retValue(0)
+        , _timeoutMilliSeconds(30000)
+        , _type(UnitType::Wsd)
+        , _testname(std::move(name))
     {
-        _testname = std::move(name);
     }
 
     virtual ~UnitBase();

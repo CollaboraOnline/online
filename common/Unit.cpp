@@ -140,15 +140,6 @@ void UnitBase::setTimeout(int timeoutMilliSeconds)
     LOG_TST(getTestname() << ": setTimeout: " << _timeoutMilliSeconds);
 }
 
-UnitBase::UnitBase()
-    : _dlHandle(nullptr),
-      _setRetValue(false),
-      _retValue(0),
-      _timeoutMilliSeconds(30 * 1000),
-      _type(UnitType::Wsd)
-{
-}
-
 UnitBase::~UnitBase()
 {
 // FIXME: we should really clean-up properly.
