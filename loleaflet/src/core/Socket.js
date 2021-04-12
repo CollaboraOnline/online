@@ -295,6 +295,7 @@ app.definitions.Socket = L.Class.extend({
 			// This must be the first message, unless we reconnect.
 			var oldId = null;
 			var oldVersion = null;
+			var sameFile = true;
 			// Check if we are reconnecting.
 			if (this.WSDServer && this.WSDServer.Id) {
 				// Yes we are reconnecting.
@@ -302,11 +303,18 @@ app.definitions.Socket = L.Class.extend({
 				// If our connection was lost and is ready again, we will not need to refresh the page.
 				oldId = this.WSDServer.Id;
 				oldVersion = this.WSDServer.Version;
+
+				// If another file is opened, we will not refresh the page.
+				var previousFileName = this._map.wopi.PreviousFileName;
+				if (previousFileName && this._map.wopi.BaseFileName) {
+					if (previousFileName !== this._map.wopi.BaseFileName)
+						sameFile = false;
+				}
 			}
 
 			this.WSDServer = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 
-			if (oldId && oldVersion) {
+			if (oldId && oldVersion && sameFile) {
 				if (this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) {
 					alert(_('Server has been restarted. We have to refresh the page now.'));
 					window.location.reload();
