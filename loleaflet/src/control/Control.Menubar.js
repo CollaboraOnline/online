@@ -363,7 +363,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:MergeCells'},
 				{uno: '.uno:TableDialog'}]
 			},
-			{name: _UNO('.uno:SlideMenu', 'presentation'), type: 'menu', menu: [
+			{name: _UNO('.uno:SlideMenu', 'presentation'), id: 'slide', type: 'menu', menu: [
 				{name: _UNO('.uno:InsertSlide', 'presentation'), id: 'insertpage', type: 'action'},
 				{name: _UNO('.uno:DuplicateSlide', 'presentation'), id: 'duplicatepage', type: 'action'},
 				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'},
