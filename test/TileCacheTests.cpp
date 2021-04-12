@@ -243,36 +243,46 @@ void TileCacheTests::testSimple()
 
 void TileCacheTests::testSimpleCombine()
 {
-    const char* testname = "simpleCombine ";
+    const std::string testname = "simpleCombine-";
     std::string documentPath, documentURL;
     getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
     // First.
-    std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, "simpleCombine-1 ");
+    std::shared_ptr<http::WebSocketSession> socket1
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "1 ");
 
     sendTextFrame(socket1, "tilecombine nviewid=0  part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
-    std::vector<char> tile1a = getResponseMessage(socket1, "tile:", testname);
+    std::vector<char> tile1a = getResponseMessage(socket1, "tile:", testname + "1 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
-    std::vector<char> tile1b = getResponseMessage(socket1, "tile:", testname);
+    std::vector<char> tile1b = getResponseMessage(socket1, "tile:", testname + "1 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
     sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
-    tile1a = getResponseMessage(socket1, "tile:", testname);
+    tile1a = getResponseMessage(socket1, "tile:", testname + "1 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1a.empty());
-    tile1b = getResponseMessage(socket1, "tile:", testname);
+    tile1b = getResponseMessage(socket1, "tile:", testname + "1 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile1b.empty());
 
     // Second.
     TST_LOG("Connecting second client.");
-    std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, "simpleCombine-2 ", true);
+    std::shared_ptr<http::WebSocketSession> socket2
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "2 ");
 
     sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840 tileposy=0,0 tilewidth=3840 tileheight=3840");
 
-    std::vector<char> tile2a = getResponseMessage(socket2, "tile:", testname);
+    std::vector<char> tile2a = getResponseMessage(socket2, "tile:", testname + "2 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2a.empty());
-    std::vector<char> tile2b = getResponseMessage(socket2, "tile:", testname);
+    std::vector<char> tile2b = getResponseMessage(socket2, "tile:", testname + "2 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2b.empty());
+
+    socket1->asyncShutdown(_socketPoll);
+    socket2->asyncShutdown(_socketPoll);
+
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                       socket1->waitForDisconnection(std::chrono::seconds(5)));
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
+                       socket2->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testSize()
@@ -318,18 +328,18 @@ void TileCacheTests::testCancelTiles()
         // Wait to clear previous sessions.
         countLoolKitProcesses(InitialLoolKitCount);
 
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("setclientpart.ods", _uri, testname);
+        std::shared_ptr<http::WebSocketSession> socket
+            = loadDocAndGetSession(_socketPoll, "setclientpart.ods", _uri, testname);
 
         // Request a huge tile, and cancel immediately.
-        sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=2560 height=2560 tileposx=0 tileposy=0 tilewidth=38400 tileheight=38400");
-        sendTextFrame(socket, "canceltiles");
+        sendTextFrame(socket,
+                      "tilecombine nviewid=0 part=0 width=2560 height=2560 tileposx=0 tileposy=0 "
+                      "tilewidth=38400 tileheight=38400",
+                      testname);
+        sendTextFrame(socket, "canceltiles", testname);
 
-        const auto res = getResponseString(socket, "tile:", testname, 1000);
-        if (res.empty())
-        {
-            break;
-        }
-        else
+        const auto res = getResponseString(socket, "tile:", testname, std::chrono::seconds(1));
+        if (!res.empty())
         {
             if (i == repeat)
             {
@@ -338,14 +348,20 @@ void TileCacheTests::testCancelTiles()
 
             TST_LOG("Unexpected: [" << res << ']');
         }
+
+        socket->asyncShutdown(_socketPoll);
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                           socket->waitForDisconnection(std::chrono::seconds(5)));
+        if (res.empty())
+            break;
     }
 }
 
 void TileCacheTests::testCancelTilesMultiView()
 {
-    const char* testname = "testCancelTilesMultiView";
+    const std::string testname = "testCancelTilesMultiView-";
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL, "cancelTilesMultiView ");
+    getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL, testname);
 
     // The tile response can race past the canceltiles,
     // so be forgiving to avoid spurious failures.
@@ -358,14 +374,24 @@ void TileCacheTests::testCancelTilesMultiView()
         countLoolKitProcesses(InitialLoolKitCount);
 
         // Request a huge tile, and cancel immediately.
-        std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-1 ");
-        std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, "cancelTilesMultiView-2 ", true);
+        std::shared_ptr<http::WebSocketSession> socket1
+            = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "1 ");
+        std::shared_ptr<http::WebSocketSession> socket2
+            = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "2 ");
 
-        sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-1 ");
-        sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,0 tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840", "cancelTilesMultiView-2 ");
+        sendTextFrame(socket1,
+                      "tilecombine nviewid=0 part=0 width=256 height=256 "
+                      "tileposx=0,3840,7680,11520,0,3840,7680,11520 "
+                      "tileposy=0,0,0,0,3840,3840,3840,3840 tilewidth=3840 tileheight=3840",
+                      testname + "1 ");
+        sendTextFrame(socket2,
+                      "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,0 "
+                      "tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840",
+                      testname + "2 ");
 
-        sendTextFrame(socket1, "canceltiles");
-        const auto res1 = getResponseString(socket1, "tile:", "cancelTilesMultiView-1 ", 500);
+        sendTextFrame(socket1, "canceltiles", testname + "1 ");
+        const auto res1
+            = getResponseString(socket1, "tile:", testname + "1 ", std::chrono::milliseconds(500));
         if (!res1.empty())
         {
             if (j == repeat)
@@ -379,14 +405,15 @@ void TileCacheTests::testCancelTilesMultiView()
 
         for (int i = 0; i < 4; ++i)
         {
-            getTileMessage(*socket2, "cancelTilesMultiView-2 ");
+            getTileMessage(socket2, testname + "2 ");
         }
 
         // Should never get more than 4 tiles on socket2.
         // Though in practice we get the rendering result from socket1's request and ours.
         // This happens because we currently always send back tiles even if they are of old version
         // because we want to be responsive, since we've rendered them anyway.
-        const auto res2 = getResponseString(socket2, "tile:", "cancelTilesMultiView-2 ", 500);
+        const auto res2
+            = getResponseString(socket2, "tile:", testname + "2 ", std::chrono::milliseconds(500));
         if (!res2.empty())
         {
             if (j == repeat)
@@ -397,6 +424,14 @@ void TileCacheTests::testCancelTilesMultiView()
             TST_LOG("Unexpected: [" << res2 << ']');
             continue;
         }
+
+        socket1->asyncShutdown(_socketPoll);
+        socket2->asyncShutdown(_socketPoll);
+
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                           socket1->waitForDisconnection(std::chrono::seconds(5)));
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
+                           socket2->waitForDisconnection(std::chrono::seconds(5)));
 
         if (res1.empty() && res2.empty())
         {
@@ -509,6 +544,7 @@ void TileCacheTests::testUnresponsiveClient()
             std::vector<char> tile = getResponseMessage(socket2, "tile:", testname + "2 ");
             LOK_ASSERT_MESSAGE("Did not receive tile #" + std::to_string(i+1) + " of 8: message as expected", !tile.empty());
         }
+
         /// Send canceltiles message to clear tiles-on-fly list, otherwise wsd waits for tileprocessed messages
         sendTextFrame(socket2, "canceltiles", testname + "2 ");
     }
@@ -572,7 +608,7 @@ void TileCacheTests::testClientPartCalc()
     {
         const std::string testName = "clientPartCalc ";
         std::shared_ptr<http::WebSocketSession> socket
-            = loadDocAndGetSession(_socketPoll, "setclientpart.odp", _uri, testName);
+            = loadDocAndGetSession(_socketPoll, "setclientpart.ods", _uri, testName);
 
         checkTiles(socket, "spreadsheet", testName);
 

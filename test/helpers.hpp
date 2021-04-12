@@ -425,11 +425,18 @@ inline std::vector<char> getResponseMessage(const std::shared_ptr<http::WebSocke
 
 inline std::string getResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
                                      const std::string& prefix, const std::string& testname,
-                                     const size_t timeoutMs = 10000)
+                                     const std::chrono::milliseconds timeoutMs)
 {
-    const std::vector<char> response = ws->waitForMessage(prefix, std::chrono::milliseconds(timeoutMs), testname);
+    const std::vector<char> response = ws->waitForMessage(prefix, timeoutMs, testname);
 
     return std::string(response.data(), response.size());
+}
+
+inline std::string getResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
+                                     const std::string& prefix, const std::string& testname,
+                                     const size_t timeoutMs = 10000)
+{
+    return getResponseString(ws, prefix, testname, std::chrono::milliseconds(timeoutMs));
 }
 
 inline std::string assertResponseString(const std::shared_ptr<http::WebSocketSession>& ws,
