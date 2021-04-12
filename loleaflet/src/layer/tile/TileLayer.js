@@ -2998,6 +2998,9 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (e.type === 'rotateend') {
 			var center = this._graphicSelectionTwips.getCenter();
+			if (this.isCalc() && this.options.printTwipsMsgsEnabled) {
+				center = this.sheetGeometry.getPrintTwipsPointFromTile(center);
+			}
 			var param = {
 				TransformRotationDeltaAngle: {
 					type: 'long',
