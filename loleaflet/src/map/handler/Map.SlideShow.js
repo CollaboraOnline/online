@@ -10,9 +10,14 @@ L.Map.mergeOptions({
 L.Map.SlideShow = L.Handler.extend({
 
 	_slideURL: '', // store the URL for svg
+	_cypressSVGPresentationTest: false,
 
 	initialize: function (map) {
 		this._map = map;
+		console.log('L.Map.SlideShow: Cypress in window: ' + ('Cypress' in window));
+		this._cypressSVGPresentationTest =
+			L.Browser.cypressTest && 'Cypress' in window
+			&& window.Cypress.spec.name === 'impress/fullscreen_presentation_spec.js';
 	},
 
 	addHooks: function () {
@@ -31,7 +36,7 @@ L.Map.SlideShow = L.Handler.extend({
 			return;
 		}
 
-		if (!this._map['wopi'].DownloadAsPostMessage) {
+		if (!this._cypressSVGPresentationTest && !this._map['wopi'].DownloadAsPostMessage) {
 			this._slideShow = L.DomUtil.create('iframe', 'leaflet-slideshow', this._map._container);
 			if (this._slideShow.requestFullscreen) {
 				this._slideShow.requestFullscreen();
@@ -54,7 +59,7 @@ L.Map.SlideShow = L.Handler.extend({
 		if (e.startSlideNumber !== undefined) {
 			this._startSlideNumber = e.startSlideNumber;
 		}
-		this.fullscreen = true;
+		this.fullscreen = !this._cypressSVGPresentationTest;
 		this._map.downloadAs('slideshow.svg', 'svg', null, 'slideshow');
 	},
 
@@ -79,6 +84,10 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_startPlaying: function() {
+		if (this._cypressSVGPresentationTest) {
+			window.open(this._slideURL, '_self');
+			return;
+		}
 		var separator = (this._slideURL.indexOf('?') === -1) ? '?' : '&';
 		this._slideShow.src = this._slideURL + separator + 'StartSlideNumber=' + this._startSlideNumber;
 		this._slideShow.contentWindow.focus();
