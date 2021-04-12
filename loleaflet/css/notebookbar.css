@@ -567,6 +567,11 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 /* Format Tab */
 
 #table-Format {
+	margin-top: 10px;
+}
+
+.presentation-color-indicator + table #table-Format,
+.drawing-color-indicator + table #table-Format {
 	margin-top: 15px;
 }
 
@@ -608,6 +613,10 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 /* Review Tab */
 
 #table-Review {
+	margin-top: 15px;
+}
+
+.spreadsheet-color-indicator + table #table-Review {
 	margin-top: 10px;
 }
 
