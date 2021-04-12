@@ -1050,7 +1050,7 @@ public:
                             << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
                             << ')');
 
-                if (len <= 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
+                if (len < 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
                     LOG_SYS_ERRNO(last_errno, '#' << getFD() << ": Socket read returned " << len);
             }
             while (len < 0 && last_errno == EINTR);
