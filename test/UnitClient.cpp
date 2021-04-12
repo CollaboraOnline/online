@@ -24,8 +24,9 @@ class UnitClient : public UnitWSD
     std::thread _worker;
 
 public:
-    UnitClient() :
-        _workerStarted(false)
+    UnitClient()
+        : UnitWSD("UnitClient")
+        , _workerStarted(false)
     {
         int timeout_minutes = 5;
         setTimeout(timeout_minutes * 60 * 1000);
