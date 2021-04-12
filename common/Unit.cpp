@@ -83,6 +83,7 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
     if (!unitLibPath.empty())
     {
         Global = linkAndCreateUnit(type, unitLibPath);
+        LOG_DBG(Global->_testname << ": Initializing");
         if (Global && type == UnitType::Kit)
         {
             TimeoutThreadMutex.lock();
@@ -92,12 +93,13 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
 
                     if (TimeoutThreadMutex.try_lock_for(Global->_timeoutMilliSeconds))
                     {
-                        LOG_DBG("Unit test finished in time");
+                        LOG_DBG(Global->_testname << ": Unit test finished in time");
                         TimeoutThreadMutex.unlock();
                     }
                     else
                     {
-                        LOG_ERR("Unit test timeout after " << Global->_timeoutMilliSeconds);
+                        LOG_ERR(Global->_testname << ": Unit test timeout after "
+                                                  << Global->_timeoutMilliSeconds);
                         Global->timeout();
                     }
                     TimeoutThreadRunning = false;
@@ -135,6 +137,7 @@ void UnitBase::setTimeout(std::chrono::milliseconds timeoutMilliSeconds)
 {
     assert(!TimeoutThreadRunning);
     _timeoutMilliSeconds = timeoutMilliSeconds;
+    LOG_TST(getTestname() << ": setTimeout: " << _timeoutMilliSeconds);
 }
 
 UnitBase::UnitBase()
@@ -206,9 +209,11 @@ void UnitBase::exitTest(TestResult result)
     }
 
     if (result == TestResult::Ok)
-        LOG_INF("SUCCESS: exitTest: " << testResultAsString(result) << ". Flagging to shutdown.");
+        LOG_INF(getTestname() << ": SUCCESS: exitTest: " << testResultAsString(result)
+                              << ". Flagging to shutdown.");
     else
-        LOG_ERR("FAILURE: exitTest: " << testResultAsString(result) << ". Flagging to shutdown.");
+        LOG_ERR(getTestname() << ": FAILURE: exitTest: " << testResultAsString(result)
+                              << ". Flagging to shutdown.");
 
     _setRetValue = true;
     _retValue = result == TestResult::Ok ? EX_OK : EX_SOFTWARE;
@@ -224,7 +229,7 @@ void UnitBase::timeout()
     // Don't timeout if we had already finished.
     if (isUnitTesting() && !_setRetValue)
     {
-        LOG_ERR("Timed out waiting for unit test to complete");
+        LOG_ERR(getTestname() << ": Timed out waiting for unit test to complete");
         exitTest(TestResult::TimedOut);
     }
 }
