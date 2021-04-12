@@ -164,6 +164,8 @@ public:
     void startTest(CppUnit::Test* test)
     {
         writeTestLog("\n=============== START " + test->getName() + '\n');
+        if (UnitBase::isUnitTesting()) // Only if we are in UnitClient.
+            UnitBase::get().setTestname(test->getName());
         _startTime = std::chrono::steady_clock::now();
     }
 
