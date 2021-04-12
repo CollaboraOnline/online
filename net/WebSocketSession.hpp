@@ -72,7 +72,11 @@ private:
 public:
     /// Destroy WebSocketSession.
     /// Note: must never be called with the owning poll thread still active.
-    ~WebSocketSession() { shutdown(); }
+    ~WebSocketSession()
+    {
+        if (!_disconnected)
+            LOG_ERR("Destroying WebSocketSession without disconnecting first.");
+    }
 
     /// Create a new HTTP WebSocketSession to the given host.
     /// The port defaults to the protocol's default port.
@@ -207,11 +211,20 @@ public:
     /// Send asynchronous shutdown frame and disconnect socket.
     void asyncShutdown(SocketPoll& poll)
     {
-        LOG_TRC("WebSocketSession: queueing shutdown");
-        poll.addCallback([&]() {
-            LOG_TRC("WebSocketSession: shutdown");
-            shutdown(true, "Shutting down");
-        });
+        if (!_disconnected)
+        {
+            LOG_TRC("WebSocketSession: queueing shutdown");
+            std::weak_ptr<WebSocketSession> weakptr
+                = std::static_pointer_cast<WebSocketSession>(shared_from_this());
+            poll.addCallback([weakptr]() {
+                auto ws = weakptr.lock();
+                if (ws)
+                {
+                    LOG_TRC("WebSocketSession: shutdown");
+                    ws->shutdown(true, "Shutting down");
+                }
+            });
+        }
     }
 
     /// Wait until disconnected.
