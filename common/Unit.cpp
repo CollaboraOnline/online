@@ -140,15 +140,6 @@ void UnitBase::setTimeout(std::chrono::milliseconds timeoutMilliSeconds)
     LOG_TST(getTestname() << ": setTimeout: " << _timeoutMilliSeconds);
 }
 
-UnitBase::UnitBase()
-    : _dlHandle(nullptr),
-      _setRetValue(false),
-      _retValue(0),
-      _timeoutMilliSeconds(std::chrono::seconds(30)),
-      _type(UnitType::Wsd)
-{
-}
-
 UnitBase::~UnitBase()
 {
 // FIXME: we should really clean-up properly.
