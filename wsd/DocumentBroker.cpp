@@ -396,7 +396,8 @@ void DocumentBroker::pollThread()
             LOG_INF("Autosaving DocumentBroker for docKey [" << getDocKey() << "] for " << reason);
             if (!autoSave(isPossiblyModified()))
             {
-                LOG_INF("Terminating DocumentBroker for docKey [" << getDocKey() << "].");
+                LOG_INF("Terminating DocumentBroker for docKey [" << getDocKey()
+                                                                  << "]: " << reason);
                 stop(reason);
             }
         }
