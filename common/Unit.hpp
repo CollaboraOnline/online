@@ -111,6 +111,7 @@ protected:
         , _timeoutMilliSeconds(30000)
         , _type(UnitType::Wsd)
         , _testname(std::move(name))
+        , _socketPoll(_testname)
     {
     }
 
@@ -230,6 +231,8 @@ public:
     const std::string& getTestname() const { return _testname; }
     void setTestname(const std::string& testname) { _testname = testname; }
 
+    SocketPoll& socketPoll() { return _socketPoll; }
+
 private:
     void setHandle(void *dlHandle)
     {
@@ -255,6 +258,8 @@ private:
 
     /// The name of the current test.
     std::string _testname;
+
+    SocketPoll _socketPoll; //< Poll thread for async http comm.
 };
 
 /// Derive your WSD unit test / hooks from me.
