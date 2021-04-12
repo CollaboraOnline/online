@@ -87,6 +87,11 @@ class ScrollSection {
 		this.sectionProperties.alphaWhenBeingUsed = 0.8; // Scroll bar is being used.
 		this.sectionProperties.currentAlpha = 1.0; // This variable will be updated while animating. When not animating, this will be equal to one of the above variables.
 
+		// Durations.
+		this.sectionProperties.idleDuration = 2000; // In miliseconds. Scroll bar will be visible for this period of time after being used.
+		this.sectionProperties.fadeOutStartingTime = 1800; // After this period, scroll bar starts to disappear. This duration is included in "idleDuration".
+		this.sectionProperties.fadeOutDuration = this.sectionProperties.idleDuration - this.sectionProperties.fadeOutStartingTime;
+
 		this.sectionProperties.yOffset = 0;
 		this.sectionProperties.xOffset = 0;
 
@@ -324,9 +329,18 @@ class ScrollSection {
 		this.context.globalAlpha = 1.0;
 	}
 
+	private calculateCurrentAlpha (elapsedTime: number) {
+		if (elapsedTime >= this.sectionProperties.fadeOutStartingTime) {
+			this.sectionProperties.currentAlpha = Math.max((1 - ((elapsedTime - this.sectionProperties.fadeOutStartingTime) / this.sectionProperties.fadeOutDuration)) * this.sectionProperties.alphaWhenVisible, 0.1);
+		}
+		else {
+			this.sectionProperties.currentAlpha = this.sectionProperties.alphaWhenVisible;
+		}
+	}
+
 	public onDraw (frameCount: number, elapsedTime: number) {
 		if (this.isAnimating && frameCount >= 0)
-			this.sectionProperties.currentAlpha = Math.max((1 - (elapsedTime / 2000)) * this.sectionProperties.alphaWhenVisible, 0.1);
+			this.calculateCurrentAlpha(elapsedTime);
 
 		if ((this.sectionProperties.drawVerticalScrollBar || this.sectionProperties.animatingVerticalScrollBar) && this.documentTopLeft[1] >= 0) {
 			if ((<any>window).mode.isMobile())
@@ -352,7 +366,7 @@ class ScrollSection {
 		}
 		else {
 			var options: any = {
-				duration: 2000
+				duration: this.sectionProperties.idleDuration
 			};
 
 			this.sectionProperties.animatingHorizontalScrollBar = this.startAnimating(options);
@@ -366,7 +380,7 @@ class ScrollSection {
 		}
 		else {
 			var options: any = {
-				duration: 2000
+				duration: this.sectionProperties.idleDuration
 			};
 
 			this.sectionProperties.animatingVerticalScrollBar = this.startAnimating(options);
