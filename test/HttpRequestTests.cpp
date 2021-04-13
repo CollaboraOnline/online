@@ -7,8 +7,10 @@
 
 #include <config.h>
 
+#include "ConfigUtil.hpp"
 #include "HttpTestServer.hpp"
 
+#include <Poco/URI.h>
 #include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/InvalidCertificateHandler.h>
 #include <Poco/Net/SSLManager.h>
@@ -36,12 +38,9 @@
 /// When enabled, in addition to the loopback
 /// server, an external server will be used
 /// to check for regressions.
-#define ENABLE_EXTERNAL_REGRESSION_CHECK
+// #define ENABLE_EXTERNAL_REGRESSION_CHECK
 
 /// http::Request unit-tests.
-/// FIXME: use loopback and avoid depending on external services.
-/// Currently we need to rely on external services to validate
-/// the implementation.
 class HttpRequestTests final : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(HttpRequestTests);
@@ -49,8 +48,10 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInvalidURI);
     CPPUNIT_TEST(testSimpleGet);
     CPPUNIT_TEST(testSimpleGetSync);
-    // CPPUNIT_TEST(test500GetStatuses); // Slow.
-    // CPPUNIT_TEST(testSimplePost);
+    CPPUNIT_TEST(test500GetStatuses); // Slow.
+#ifdef ENABLE_EXTERNAL_REGRESSION_CHECK
+    CPPUNIT_TEST(testSimplePost_External);
+#endif
     CPPUNIT_TEST(testTimeout);
     CPPUNIT_TEST(testOnFinished_Complete);
     CPPUNIT_TEST(testOnFinished_Timeout);
@@ -61,14 +62,14 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     void testSimpleGet();
     void testSimpleGetSync();
     void test500GetStatuses();
-    void testSimplePost();
+    void testSimplePost_External();
     void testTimeout();
     void testOnFinished_Complete();
     void testOnFinished_Timeout();
 
     static constexpr std::chrono::seconds DefTimeoutSeconds{ 5 };
 
-    int _port;
+    std::string _localUri;
     SocketPoll _pollServerThread;
     std::shared_ptr<ServerSocket> _socket;
 
@@ -76,8 +77,7 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
 
 public:
     HttpRequestTests()
-        : _port(9990)
-        , _pollServerThread("HttpServerPoll")
+        : _pollServerThread("HttpServerPoll")
     {
 #if ENABLE_SSL
         Poco::Net::initializeSSL();
@@ -108,14 +108,12 @@ public:
             if (HttpRequestTests::SimulatedLatencyMs > 0)
                 fd = Delay::create(HttpRequestTests::SimulatedLatencyMs, physicalFd);
 #endif
-
-            // #if ENABLE_SSL
-            //             using SocketType = SslStreamSocket;
-            // #else
-            using SocketType = StreamSocket;
-            // #endif
-            return StreamSocket::create<SocketType>(fd, false,
-                                                    std::make_shared<ServerRequestHandler>());
+            if (helpers::haveSsl())
+                return StreamSocket::create<SslStreamSocket>(
+                    fd, false, std::make_shared<ServerRequestHandler>());
+            else
+                return StreamSocket::create<StreamSocket>(fd, false,
+                                                          std::make_shared<ServerRequestHandler>());
         }
     };
 
@@ -123,15 +121,21 @@ public:
     {
         LOG_INF("HttpRequestTests::setUp");
         std::shared_ptr<SocketFactory> factory = std::make_shared<ServerSocketFactory>();
-        for (int i = 0; i < 40; ++i, ++_port)
+        int port = 9990;
+        for (int i = 0; i < 40; ++i, ++port)
         {
             // Try listening on this port.
-            LOG_INF("HttpRequestTests::setUp: creating socket to listen on port " << _port);
-            _socket = ServerSocket::create(ServerSocket::Type::Local, _port, Socket::Type::IPv4,
+            LOG_INF("HttpRequestTests::setUp: creating socket to listen on port " << port);
+            _socket = ServerSocket::create(ServerSocket::Type::Local, port, Socket::Type::IPv4,
                                            _pollServerThread, factory);
             if (_socket)
                 break;
         }
+
+        if (helpers::haveSsl())
+            _localUri = "https://127.0.0.1:" + std::to_string(port);
+        else
+            _localUri = "http://127.0.0.1:" + std::to_string(port);
 
         _pollServerThread.startThread();
         _pollServerThread.insertNewSocket(_socket);
@@ -141,6 +145,7 @@ public:
     {
         LOG_INF("HttpRequestTests::tearDown");
         _pollServerThread.stop();
+        _socket.reset();
     }
 };
 
@@ -154,8 +159,7 @@ void HttpRequestTests::testInvalidURI()
 
 void HttpRequestTests::testSimpleGet()
 {
-    const char* Host = "example.com";
-    const char* URL = "/";
+    constexpr auto URL = "/";
 
     // Start the polling thread.
     SocketPoll pollThread("HttpAsyncReqPoll");
@@ -163,19 +167,21 @@ void HttpRequestTests::testSimpleGet()
 
     http::Request httpRequest(URL);
 
+    //TODO: test with both SSL and Unencrypted.
     static constexpr http::Session::Protocol Protocols[]
         = { http::Session::Protocol::HttpUnencrypted, http::Session::Protocol::HttpSsl };
     for (const http::Session::Protocol protocol : Protocols)
     {
-        if (protocol == http::Session::Protocol::HttpSsl)
-        {
 #if ENABLE_SSL
-            if (!SslContext::isInitialized())
+        if (protocol != http::Session::Protocol::HttpSsl)
+#else
+        if (protocol != http::Session::Protocol::HttpUnencrypted)
 #endif
-                continue; // Skip SSL, it's not enabled.
+        {
+            continue; // Skip, unsupported.
         }
 
-        auto httpSession = http::Session::create(Host, protocol);
+        auto httpSession = http::Session::create(_localUri);
 
         std::condition_variable cv;
         std::mutex mutex;
@@ -186,14 +192,13 @@ void HttpRequestTests::testSimpleGet()
             cv.notify_all();
         });
 
-        httpSession->asyncRequest(httpRequest, pollThread);
+        std::unique_lock<std::mutex> lock(mutex);
+
+        LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread));
 
         // Use Poco to get the same URL in parallel.
-        const bool secure = (protocol == http::Session::Protocol::HttpSsl);
-        const int port = (protocol == http::Session::Protocol::HttpSsl ? 443 : 80);
-        const auto pocoResponse = helpers::pocoGet(secure, Host, port, URL);
+        const auto pocoResponse = helpers::pocoGetRetry(Poco::URI(_localUri + URL));
 
-        std::unique_lock<std::mutex> lock(mutex);
         cv.wait_for(lock, DefTimeoutSeconds);
 
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
@@ -216,20 +221,16 @@ void HttpRequestTests::testSimpleGetSync()
 {
     constexpr auto testname = "simpleGetSync";
 
-    const std::string Host("127.0.0.1");
-    const int port = _port;
-    constexpr bool secure = false;
-
     const auto data = Util::rng::getHardRandomHexString(Util::rng::getNext() % 1024);
     const auto body = std::string(data.data(), data.size());
     const std::string URL = "/echo/" + body;
     TST_LOG("Requesting URI: [" << URL << ']');
 
-    const auto pocoResponse = helpers::pocoGet(secure, Host, port, URL);
+    const auto pocoResponse = helpers::pocoGet(Poco::URI(_localUri + URL));
 
     http::Request httpRequest(URL);
 
-    auto httpSession = http::Session::create(Host, http::Session::Protocol::HttpUnencrypted, port);
+    auto httpSession = http::Session::create(_localUri);
     httpSession->setTimeout(std::chrono::seconds(1));
 
     for (int i = 0; i < 5; ++i)
@@ -296,15 +297,11 @@ void HttpRequestTests::test500GetStatuses()
 {
     constexpr auto testname = "test500GetStatuses ";
 
-    constexpr auto Host = "httpbin.org";
-    constexpr bool secure = false;
-    constexpr int port = 80;
-
     // Start the polling thread.
     SocketPoll pollThread("HttpAsyncReqPoll");
     pollThread.startThread();
 
-    auto httpSession = http::Session::createHttp(Host);
+    auto httpSession = http::Session::create(_localUri);
     httpSession->setTimeout(DefTimeoutSeconds);
 
     std::condition_variable cv;
@@ -335,16 +332,16 @@ void HttpRequestTests::test500GetStatuses()
         std::unique_lock<std::mutex> lock(mutex);
         timedout = true; // Assume we timed out until we prove otherwise.
 
-        httpSession->asyncRequest(httpRequest, pollThread);
+        LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread));
 
         // Get via Poco in parallel.
         std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string> pocoResponse;
         if (statusCode > 100)
-            pocoResponse = helpers::pocoGet(secure, Host, port, url);
+            pocoResponse = helpers::pocoGetRetry(Poco::URI(_localUri + url));
 #ifdef ENABLE_EXTERNAL_REGRESSION_CHECK
         std::pair<std::shared_ptr<Poco::Net::HTTPResponse>, std::string> pocoResponseExt;
         if (statusCode > 100)
-            pocoResponseExt = helpers::pocoGet(secure, "httpbin.org", 80, url);
+            pocoResponseExt = helpers::pocoGet(false, "httpbin.org", 80, url);
 #endif
 
         const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
@@ -384,7 +381,7 @@ void HttpRequestTests::test500GetStatuses()
     pollThread.joinThread();
 }
 
-void HttpRequestTests::testSimplePost()
+void HttpRequestTests::testSimplePost_External()
 {
     const std::string Host = "httpbin.org";
     const char* URL = "/post";
@@ -416,9 +413,10 @@ void HttpRequestTests::testSimplePost()
         cv.notify_all();
     });
 
-    httpSession->asyncRequest(httpRequest, pollThread);
-
     std::unique_lock<std::mutex> lock(mutex);
+
+    LOK_ASSERT(httpSession->asyncRequest(httpRequest, pollThread));
+
     cv.wait_for(lock, DefTimeoutSeconds);
 
     const std::shared_ptr<const http::Response> httpResponse = httpSession->response();
@@ -439,12 +437,11 @@ void HttpRequestTests::testSimplePost()
 
 void HttpRequestTests::testTimeout()
 {
-    const char* Host = "www.example.com";
-    const char* URL = "/";
+    const char* URL = "/timeout";
 
     http::Request httpRequest(URL);
 
-    auto httpSession = http::Session::createHttp(Host);
+    auto httpSession = http::Session::create(_localUri);
 
     httpSession->setTimeout(std::chrono::milliseconds(1)); // Very short interval.
 
@@ -456,12 +453,11 @@ void HttpRequestTests::testTimeout()
 
 void HttpRequestTests::testOnFinished_Complete()
 {
-    const char* Host = "www.example.com";
     const char* URL = "/";
 
     http::Request httpRequest(URL);
 
-    auto httpSession = http::Session::createHttp(Host);
+    auto httpSession = http::Session::create(_localUri);
 
     bool completed = false;
     httpSession->setFinishedHandler([&](const std::shared_ptr<http::Session>& session) {
@@ -480,12 +476,11 @@ void HttpRequestTests::testOnFinished_Complete()
 
 void HttpRequestTests::testOnFinished_Timeout()
 {
-    const char* Host = "www.example.com";
-    const char* URL = "/";
+    const char* URL = "/timeout";
 
     http::Request httpRequest(URL);
 
-    auto httpSession = http::Session::createHttp(Host);
+    auto httpSession = http::Session::create(_localUri);
 
     httpSession->setTimeout(std::chrono::milliseconds(1)); // Very short interval.
 
