@@ -301,11 +301,21 @@ inline int connectToLocalServer(int portNumber, int socketTimeOutMS, bool blocki
     }
 }
 
-inline
-std::string const & getTestServerURI()
+/// Returns true iff built with SSL and it is successfully initialized.
+inline bool haveSsl()
+{
+#if ENABLE_SSL
+    return SslContext::isInitialized();
+#else
+    return false;
+#endif
+}
+
+/// Return a fully-qualified URI, with schema, to the test loopback server.
+inline std::string const& getTestServerURI()
 {
     static std::string serverURI(
-        (config::isSslEnabled() ? "https://127.0.0.1:" : "http://127.0.0.1:")
+        (haveSsl() && config::isSslEnabled() ? "https://127.0.0.1:" : "http://127.0.0.1:")
         + std::to_string(ClientPortNumber));
 
     return serverURI;
