@@ -26,6 +26,7 @@
 #include <Poco/URI.h>
 
 #include <Common.hpp>
+#include "Socket.hpp"
 #include "common/FileUtil.hpp"
 #include <LOOLWebSocket.hpp>
 #include <common/ConfigUtil.hpp>
@@ -458,6 +459,17 @@ inline std::string assertResponseString(const std::shared_ptr<http::WebSocketSes
     auto res = getResponseString(ws, prefix, testname, timeoutMs);
     LOK_ASSERT_EQUAL(prefix, res.substr(0, prefix.length()));
     return res;
+}
+
+inline int countMessages(const std::shared_ptr<http::WebSocketSession>& ws,
+                         const std::string& prefix, const std::string& testname,
+                         const size_t timeoutMs = 10000)
+{
+    int count = 0;
+    while (!getResponseMessage(ws, prefix, testname, timeoutMs).empty())
+        ++count;
+
+    return count;
 }
 
 inline
