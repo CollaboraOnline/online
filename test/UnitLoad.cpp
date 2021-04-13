@@ -202,8 +202,8 @@ UnitBase::TestResult UnitLoad::testLoad()
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
-    SocketPoll socketPoll("UnitLoadPoll");
-    socketPoll.startThread();
+    std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("UnitLoadPoll");
+    socketPoll->startThread();
 
     auto wsSession
         = http::WebSocketSession::create(socketPoll, helpers::getTestServerURI(), documentURL);
@@ -214,12 +214,11 @@ UnitBase::TestResult UnitLoad::testLoad()
     std::vector<char> message = wsSession->waitForMessage("status:", std::chrono::seconds(5));
     LOK_ASSERT_MESSAGE("Failed to load the document", !message.empty());
 
-    wsSession->asyncShutdown(socketPoll);
+    wsSession->asyncShutdown();
 
     LOK_ASSERT_MESSAGE("Expected success disconnection of the WebSocket",
                        wsSession->waitForDisconnection(std::chrono::seconds(5)));
 
-    socketPoll.joinThread();
     return TestResult::Ok;
 }
 

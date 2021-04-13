@@ -52,6 +52,7 @@ private:
         , _port(std::to_string(portNumber))
         , _protocol(protocolType)
         , _disconnected(true)
+        , _shutdown(false)
     {
     }
 
@@ -72,11 +73,7 @@ private:
 public:
     /// Destroy WebSocketSession.
     /// Note: must never be called with the owning poll thread still active.
-    ~WebSocketSession()
-    {
-        if (!_disconnected)
-            LOG_ERR("Destroying WebSocketSession without disconnecting first.");
-    }
+    ~WebSocketSession() { shutdown(); }
 
     /// Create a new HTTP WebSocketSession to the given host.
     /// The port defaults to the protocol's default port.
@@ -115,8 +112,8 @@ public:
     }
 
     /// Create a WebSocketSession and make a request to given @url.
-    static std::shared_ptr<WebSocketSession> create(SocketPoll& socketPoll, const std::string& uri,
-                                                    const std::string& url)
+    static std::shared_ptr<WebSocketSession> create(std::shared_ptr<SocketPoll> socketPoll,
+                                                    const std::string& uri, const std::string& url)
     {
         auto session = create(uri);
         if (session)
@@ -150,12 +147,19 @@ public:
     Protocol protocol() const { return _protocol; }
     bool secure() const { return _protocol == Protocol::HttpSsl; }
 
-    bool asyncRequest(http::Request& req, SocketPoll& poll)
+    bool asyncRequest(http::Request& req, std::shared_ptr<SocketPoll> socketPoll)
     {
         LOG_TRC("asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                  << req.getUrl());
 
-        return wsRequest(req, host(), port(), secure(), poll);
+        if (!socketPoll)
+        {
+            LOG_ERR("Invalid SocketPoll instance while creating asyncRequest in WebSocketSession.");
+            return false;
+        }
+
+        _socketPoll = socketPoll;
+        return wsRequest(req, host(), port(), secure(), *socketPoll);
     }
 
     /// Poll for messages and invoke the given callback.
@@ -204,26 +208,57 @@ public:
     /// Send a text message to our peer.
     void sendMessage(const std::string& msg)
     {
-        std::unique_lock<std::mutex> lock(_outMutex);
-        _outQueue.put(std::vector<char>(msg.data(), msg.data() + msg.size()));
+        {
+            std::unique_lock<std::mutex> lock(_outMutex);
+            _outQueue.put(std::vector<char>(msg.data(), msg.data() + msg.size()));
+        }
+
+        const auto poll = _socketPoll.lock();
+        if (poll)
+            poll->wakeup();
     }
 
-    /// Send asynchronous shutdown frame and disconnect socket.
-    void asyncShutdown(SocketPoll& poll)
+    /// Shutdown the WebSocket, either asynchronously or synchronously,
+    /// depending on whether we have a SocketPoll or not.
+    void shutdownWS()
     {
         if (!_disconnected)
         {
-            LOG_TRC("WebSocketSession: queueing shutdown");
-            std::weak_ptr<WebSocketSession> weakptr
-                = std::static_pointer_cast<WebSocketSession>(shared_from_this());
-            poll.addCallback([weakptr]() {
-                auto ws = weakptr.lock();
-                if (ws)
-                {
-                    LOG_TRC("WebSocketSession: shutdown");
-                    ws->shutdown(true, "Shutting down");
-                }
-            });
+            const auto poll = _socketPoll.lock();
+            if (poll && poll->isAlive())
+            {
+                // Delegate, never call shutdown when our poller is active.
+                LOG_TRC("WebSocketSession: queueing shutdown");
+                std::weak_ptr<WebSocketSession> weakptr
+                    = std::static_pointer_cast<WebSocketSession>(shared_from_this());
+                poll->addCallback([weakptr]() {
+                    auto ws = weakptr.lock();
+                    if (ws)
+                    {
+                        LOG_TRC("WebSocketSession: shutdown");
+                        ws->shutdown(true, "Shutting down");
+                    }
+                });
+            }
+            else
+            {
+                LOG_TRC("WebSocketSession: shutdown");
+                shutdown(true, "Shutting down");
+            }
+        }
+    }
+
+    /// Flags to shutdown after sending all the data.
+    void asyncShutdown()
+    {
+        _shutdown = true;
+        if (!_disconnected)
+        {
+            std::unique_lock<std::mutex> lock(_outMutex);
+            if (_outQueue.isEmpty())
+            {
+                shutdownWS();
+            }
         }
     }
 
@@ -290,6 +325,12 @@ private:
                 wrote += size;
                 LOG_TRC("WebSocketSession: wrote " << size << ", total " << wrote << " bytes.");
             }
+
+            if (_shutdown && _outQueue.isEmpty())
+            {
+                LOG_DBG("WebSocketSession: shutting down after sending all the data, as flagged.");
+                shutdownWS();
+            }
         }
         catch (const std::exception& ex)
         {
@@ -331,6 +372,8 @@ private:
     std::condition_variable _disconnectCv; //< Traps disconnections.
     std::mutex _disconnectMutex; //< The disconnection event lock.
     std::atomic_bool _disconnected; //< True iff we are disconnected.
+    std::atomic_bool _shutdown; //< Whether we should shutdown after sending all the data.
+    std::weak_ptr<SocketPoll> _socketPoll;
 };
 
 } // namespace http
