@@ -937,6 +937,7 @@ app.definitions.Socket = L.Class.extend({
 			}
 		}
 		else if (textMsg.startsWith('jsdialog:')) {
+			textMsg = textMsg.replace('Collabora Office', 'Collabora Online'); // Required for macro dialogs
 			this._onJSDialog(textMsg);
 		}
 		else if (textMsg.startsWith('hyperlinkclicked:')) {
