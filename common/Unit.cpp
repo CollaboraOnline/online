@@ -208,6 +208,7 @@ void UnitBase::exitTest(TestResult result)
     _setRetValue = true;
     _retValue = result == TestResult::Ok ? EX_OK : EX_SOFTWARE;
 #if !MOBILEAPP
+    LOG_INF("Setting ShutdownRequestFlag: " << getTestname() << " test has finished.");
     SigUtil::requestShutdown(); // And wakupWorld.
 #else
     SocketPoll::wakeupWorld();
