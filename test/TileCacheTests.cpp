@@ -54,7 +54,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
     Poco::Net::HTTPResponse _response;
-    SocketPoll _socketPoll;
+    std::shared_ptr<SocketPoll> _socketPoll;
 
     CPPUNIT_TEST_SUITE(TileCacheTests);
 
@@ -144,7 +144,7 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 public:
     TileCacheTests()
         : _uri(helpers::getTestServerURI())
-        , _socketPoll("TileCachePoll")
+        , _socketPoll(std::make_shared<SocketPoll>("TileCachePoll"))
     {
 #if ENABLE_SSL
         Poco::Net::initializeSSL();
@@ -165,18 +165,18 @@ public:
 
     void setUp()
     {
-        _socketPoll.startThread();
         resetTestStartTime();
         testCountHowManyLoolkits();
         resetTestStartTime();
+        _socketPoll->startThread();
     }
 
     void tearDown()
     {
+        _socketPoll->joinThread();
         resetTestStartTime();
         testNoExtraLoolKitsLeft();
         resetTestStartTime();
-        _socketPoll.joinThread();
     }
 };
 
@@ -269,8 +269,8 @@ void TileCacheTests::testSimpleCombine()
     std::vector<char> tile2b = getResponseMessage(socket2, "tile:", testname + "2 ");
     LOK_ASSERT_MESSAGE("did not receive a tile: message as expected", !tile2b.empty());
 
-    socket1->asyncShutdown(_socketPoll);
-    socket2->asyncShutdown(_socketPoll);
+    socket1->asyncShutdown();
+    socket2->asyncShutdown();
 
     LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
                        socket1->waitForDisconnection(std::chrono::seconds(5)));
@@ -342,7 +342,7 @@ void TileCacheTests::testCancelTiles()
             TST_LOG("Unexpected: [" << res << ']');
         }
 
-        socket->asyncShutdown(_socketPoll);
+        socket->asyncShutdown();
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
                            socket->waitForDisconnection(std::chrono::seconds(5)));
         if (res.empty())
@@ -418,8 +418,8 @@ void TileCacheTests::testCancelTilesMultiView()
             continue;
         }
 
-        socket1->asyncShutdown(_socketPoll);
-        socket2->asyncShutdown(_socketPoll);
+        socket1->asyncShutdown();
+        socket2->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
                            socket1->waitForDisconnection(std::chrono::seconds(5)));
@@ -463,7 +463,7 @@ void TileCacheTests::testDisconnectMultiView()
                       "tileposy=0,0,0,22520 tilewidth=3840 tileheight=3840",
                       "cancelTilesMultiView-2 ");
 
-        socket1->asyncShutdown(_socketPoll);
+        socket1->asyncShutdown();
 
         for (int i = 0; i < 4; ++i)
         {
@@ -474,7 +474,7 @@ void TileCacheTests::testDisconnectMultiView()
         getResponseString(socket2, "tile:", "disconnectMultiView-2 ",
                           std::chrono::milliseconds(500).count());
 
-        socket2->asyncShutdown(_socketPoll);
+        socket2->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
                            socket1->waitForDisconnection(std::chrono::seconds(5)));
@@ -542,8 +542,8 @@ void TileCacheTests::testUnresponsiveClient()
         sendTextFrame(socket2, "canceltiles", testname + "2 ");
     }
 
-    socket1->asyncShutdown(_socketPoll);
-    socket2->asyncShutdown(_socketPoll);
+    socket1->asyncShutdown();
+    socket2->asyncShutdown();
 
     LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
                        socket1->waitForDisconnection(std::chrono::seconds(5)));
@@ -565,7 +565,7 @@ void TileCacheTests::testImpressTiles()
                       testName);
         getTileMessage(socket, testName);
 
-        socket->asyncShutdown(_socketPoll);
+        socket->asyncShutdown();
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
                            socket->waitForDisconnection(std::chrono::seconds(5)));
     }
@@ -585,7 +585,7 @@ void TileCacheTests::testClientPartImpress()
 
         checkTiles(socket, "presentation", testName);
 
-        socket->asyncShutdown(_socketPoll);
+        socket->asyncShutdown();
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
                            socket->waitForDisconnection(std::chrono::seconds(5)));
     }
@@ -605,7 +605,7 @@ void TileCacheTests::testClientPartCalc()
 
         checkTiles(socket, "spreadsheet", testName);
 
-        socket->asyncShutdown(_socketPoll);
+        socket->asyncShutdown();
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
                            socket->waitForDisconnection(std::chrono::seconds(5)));
     }
@@ -675,7 +675,7 @@ void TileCacheTests::testTilesRenderedJustOnce()
         LOK_ASSERT_EQUAL(renderCount2, renderCount3);
     }
 
-    socket->asyncShutdown(_socketPoll);
+    socket->asyncShutdown();
     LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
                        socket->waitForDisconnection(std::chrono::seconds(5)));
 }
@@ -1492,7 +1492,7 @@ void TileCacheTests::testTileRequestByInvalidation()
     // Then sends the new tile which was invalidated inside the visible area
     assertResponseString(socket, "tile:", testname);
 
-    socket->asyncShutdown(_socketPoll);
+    socket->asyncShutdown();
     socket->waitForDisconnection(std::chrono::seconds(5));
 }
 
