@@ -136,6 +136,9 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
                       const int part, const int docWidth, const int docHeight,
                       const std::string& testname);
 
+    void checkBlackTiles(std::shared_ptr<http::WebSocketSession>& socket, const int /*part*/,
+                         const int /*docWidth*/, const int /*docHeight*/,
+                         const std::string& testname);
     void checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket, const int part, const int docWidth,
                          const int docHeight, const std::string& testname);
 
@@ -556,15 +559,15 @@ void TileCacheTests::testImpressTiles()
 {
     try
     {
-        const std::string testName = "impressTiles ";
+        const std::string testname = "impressTiles ";
         std::shared_ptr<http::WebSocketSession> socket
-            = loadDocAndGetSession(_socketPoll, "setclientpart.odp", _uri, testName);
+            = loadDocAndGetSession(_socketPoll, "setclientpart.odp", _uri, testname);
 
         sendTextFrame(socket,
                       "tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 "
                       "tilewidth=15875 tileheight=11906 id=0",
-                      testName);
-        getTileMessage(socket, testName);
+                      testname);
+        getTileMessage(socket, testname);
 
         socket->asyncShutdown();
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
@@ -580,11 +583,11 @@ void TileCacheTests::testClientPartImpress()
 {
     try
     {
-        const std::string testName = "clientPartImpress ";
+        const std::string testname = "clientPartImpress ";
         std::shared_ptr<http::WebSocketSession> socket
-            = loadDocAndGetSession(_socketPoll, "setclientpart.odp", _uri, testName);
+            = loadDocAndGetSession(_socketPoll, "setclientpart.odp", _uri, testname);
 
-        checkTiles(socket, "presentation", testName);
+        checkTiles(socket, "presentation", testname);
 
         socket->asyncShutdown();
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
@@ -600,11 +603,11 @@ void TileCacheTests::testClientPartCalc()
 {
     try
     {
-        const std::string testName = "clientPartCalc ";
+        const std::string testname = "clientPartCalc ";
         std::shared_ptr<http::WebSocketSession> socket
-            = loadDocAndGetSession(_socketPoll, "setclientpart.ods", _uri, testName);
+            = loadDocAndGetSession(_socketPoll, "setclientpart.ods", _uri, testname);
 
-        checkTiles(socket, "spreadsheet", testName);
+        checkTiles(socket, "spreadsheet", testname);
 
         socket->asyncShutdown();
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
@@ -693,38 +696,42 @@ void TileCacheTests::testTilesRenderedJustOnceMultiClient()
     getDocumentPathAndURL("with_comment.odt", documentPath, documentURL, testname);
 
     TST_LOG("Connecting first client.");
-    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname1);
+    std::shared_ptr<http::WebSocketSession> socket1
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname1);
     TST_LOG("Connecting second client.");
-    std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, testname2);
+    std::shared_ptr<http::WebSocketSession> socket2
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname2);
     TST_LOG("Connecting third client.");
-    std::shared_ptr<LOOLWebSocket> socket3 = loadDocAndGetSocket(_uri, documentURL, testname3);
+    std::shared_ptr<http::WebSocketSession> socket3
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname3);
     TST_LOG("Connecting fourth client.");
-    std::shared_ptr<LOOLWebSocket> socket4 = loadDocAndGetSocket(_uri, documentURL, "tilesRenderdJustOnce-4 ");
+    std::shared_ptr<http::WebSocketSession> socket4
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname4);
 
     for (int i = 0; i < 10; ++i)
     {
         // No tiles at this point.
-        assertNotInResponse(socket, "tile:", testname1);
+        assertNotInResponse(socket1, "tile:", testname1);
         assertNotInResponse(socket2, "tile:", testname2);
         assertNotInResponse(socket3, "tile:", testname3);
         assertNotInResponse(socket4, "tile:", testname4);
 
         // Get initial rendercount.
-        sendTextFrame(socket, "ping", testname1);
-        const auto ping1 = assertResponseString(socket, "pong", testname1);
+        sendTextFrame(socket1, "ping", testname1);
+        const auto ping1 = assertResponseString(socket1, "pong", testname1);
         int renderCount1 = 0;
         LOK_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping1, "rendercount", renderCount1));
         LOK_ASSERT_EQUAL(i * 3, renderCount1);
 
         // Modify.
-        sendText(socket, "a", testname1);
-        assertResponseString(socket, "invalidatetiles:", testname1);
+        sendText(socket1, "a", testname1);
+        assertResponseString(socket1, "invalidatetiles:", testname1);
 
         // Get 3 tiles.
-        sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname1);
-        assertResponseString(socket, "tile:", testname1);
-        assertResponseString(socket, "tile:", testname1);
-        assertResponseString(socket, "tile:", testname1);
+        sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname1);
+        assertResponseString(socket1, "tile:", testname1);
+        assertResponseString(socket1, "tile:", testname1);
+        assertResponseString(socket1, "tile:", testname1);
 
         assertResponseString(socket2, "invalidatetiles:", testname2);
         sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname2);
@@ -745,48 +752,64 @@ void TileCacheTests::testTilesRenderedJustOnceMultiClient()
         assertResponseString(socket4, "tile:", testname4);
 
         // Get new rendercount.
-        sendTextFrame(socket, "ping", testname1);
-        const auto ping2 = assertResponseString(socket, "pong", testname1);
+        sendTextFrame(socket1, "ping", testname1);
+        const auto ping2 = assertResponseString(socket1, "pong", testname1);
         int renderCount2 = 0;
         LOK_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping2, "rendercount", renderCount2));
         LOK_ASSERT_EQUAL((i+1) * 3, renderCount2);
 
         // Get same 3 tiles.
-        sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname1);
-        const auto tile1 = assertResponseString(socket, "tile:", testname1);
+        sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname1);
+        const auto tile1 = assertResponseString(socket1, "tile:", testname1);
         std::string renderId1;
         LOOLProtocol::getTokenStringFromMessage(tile1, "renderid", renderId1);
         LOK_ASSERT_EQUAL(std::string("cached"), renderId1);
 
-        const auto tile2 = assertResponseString(socket, "tile:", testname1);
+        const auto tile2 = assertResponseString(socket1, "tile:", testname1);
         std::string renderId2;
         LOOLProtocol::getTokenStringFromMessage(tile2, "renderid", renderId2);
         LOK_ASSERT_EQUAL(std::string("cached"), renderId2);
 
-        const auto tile3 = assertResponseString(socket, "tile:", testname1);
+        const auto tile3 = assertResponseString(socket1, "tile:", testname1);
         std::string renderId3;
         LOOLProtocol::getTokenStringFromMessage(tile3, "renderid", renderId3);
         LOK_ASSERT_EQUAL(std::string("cached"), renderId3);
 
         // Get new rendercount.
-        sendTextFrame(socket, "ping", testname1);
-        const auto ping3 = assertResponseString(socket, "pong", testname1);
+        sendTextFrame(socket1, "ping", testname1);
+        const auto ping3 = assertResponseString(socket1, "pong", testname1);
         int renderCount3 = 0;
         LOK_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping3, "rendercount", renderCount3));
         LOK_ASSERT_EQUAL(renderCount2, renderCount3);
     }
+
+    socket1->asyncShutdown();
+    socket2->asyncShutdown();
+    socket3->asyncShutdown();
+    socket4->asyncShutdown();
+
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                       socket1->waitForDisconnection(std::chrono::seconds(5)));
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
+                       socket2->waitForDisconnection(std::chrono::seconds(5)));
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 3",
+                       socket3->waitForDisconnection(std::chrono::seconds(5)));
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 4",
+                       socket4->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testSimultaneousTilesRenderedJustOnce()
 {
-    const char* testname = "testSimultaneousTilesRenderedJustOnce";
+    const std::string testname = "testSimultaneousTilesRenderedJustOnce-";
     std::string documentPath, documentURL;
-    getDocumentPathAndURL("hello.odt", documentPath, documentURL, "simultaneousTilesrenderedJustOnce ");
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
     TST_LOG("Connecting first client.");
-    std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, "simultaneousTilesRenderdJustOnce-1 ");
+    std::shared_ptr<http::WebSocketSession> socket1
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "1 ");
     TST_LOG("Connecting second client.");
-    std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, "simultaneousTilesRenderdJustOnce-2 ");
+    std::shared_ptr<http::WebSocketSession> socket2
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "2 ");
 
     // Wait for the invalidatetile events to pass, otherwise they
     // remove our tile subscription.
@@ -810,6 +833,14 @@ void TileCacheTests::testSimultaneousTilesRenderedJustOnce()
                        (renderId1 == "cached" && renderId2 != "cached") ||
                        (renderId1 != "cached" && renderId2 == "cached"));
     }
+
+    socket1->asyncShutdown();
+    socket2->asyncShutdown();
+
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                       socket1->waitForDisconnection(std::chrono::seconds(5)));
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
+                       socket2->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testLoad12ods()
@@ -817,7 +848,8 @@ void TileCacheTests::testLoad12ods()
     try
     {
         const char* testname = "load12ods ";
-        std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("load12.ods", _uri, testname);
+        std::shared_ptr<http::WebSocketSession> socket
+            = loadDocAndGetSession(_socketPoll, "load12.ods", _uri, testname);
 
         int docSheet = -1;
         int docSheets = 0;
@@ -832,6 +864,10 @@ void TileCacheTests::testLoad12ods()
         parseDocSize(response.substr(7), "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
 
         checkBlackTiles(socket, docSheet, docWidth, docWidth, testname);
+
+        socket->asyncShutdown();
+        LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                           socket->waitForDisconnection(std::chrono::seconds(5)));
     }
     catch (const Poco::Exception& exc)
     {
@@ -875,6 +911,39 @@ void TileCacheTests::checkBlackTile(std::stringstream& tile)
     LOK_ASSERT_MESSAGE("The tile is 90% black", (black * 100) / (height * width) < 90);
 }
 
+void TileCacheTests::checkBlackTiles(std::shared_ptr<http::WebSocketSession>& socket,
+                                     const int /*part*/, const int /*docWidth*/,
+                                     const int /*docHeight*/, const std::string& testname)
+{
+    // Check the last row of tiles to verify that the tiles
+    // render correctly and there are no black tiles.
+    // Current cap of table size ends at 257280 twips (for load12.ods),
+    // otherwise 2035200 should be rendered successfully.
+    const char* req = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=253440 "
+                      "tilewidth=3840 tileheight=3840";
+    sendTextFrame(socket, req);
+
+    const std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
+    if (!tile.size())
+    {
+        LOK_ASSERT_FAIL("No tile returned to checkBlackTiles - failed load ?");
+        return;
+    }
+
+    const std::string firstLine = LOOLProtocol::getFirstLine(tile);
+
+#if 0
+    std::fstream outStream("/tmp/black.png", std::ios::out);
+    outStream.write(tile.data() + firstLine.size() + 1, tile.size() - firstLine.size() - 1);
+    outStream.close();
+#endif
+
+    std::stringstream streamTile;
+    std::copy(tile.begin() + firstLine.size() + 1, tile.end(),
+              std::ostream_iterator<char>(streamTile));
+    checkBlackTile(streamTile);
+}
+
 void TileCacheTests::checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket, const int /*part*/,
                                      const int /*docWidth*/, const int /*docHeight*/,
                                      const std::string& testname)
@@ -911,9 +980,9 @@ void TileCacheTests::testTileInvalidateWriter()
     const char* testname = "tileInvalidateWriter ";
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
-    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+    std::shared_ptr<http::WebSocketSession> socket
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     std::string text = "Test. Now go 3 \"Enters\":\n\n\nNow after the enters, goes this text";
     for (char ch : text)
@@ -940,6 +1009,10 @@ void TileCacheTests::testTileInvalidateWriter()
     //LOK_ASSERT_MESSAGE("received unexpected invalidatetiles: message", getResponseMessage(socket, "invalidatetiles:").empty());
 
     // TODO: implement a random-sequence "monkey test"
+
+    socket->asyncShutdown();
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                       socket->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testTileInvalidateWriterPage()
@@ -948,9 +1021,9 @@ void TileCacheTests::testTileInvalidateWriterPage()
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
-    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+    std::shared_ptr<http::WebSocketSession> socket
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     sendChar(socket, '\n', skCtrl, testname); // Send Ctrl+Enter (page break).
     assertResponseString(socket, "invalidatetiles:", testname);
@@ -962,6 +1035,10 @@ void TileCacheTests::testTileInvalidateWriterPage()
     LOK_ASSERT_MESSAGE("No part# in invalidatetiles message.",
                            LOOLProtocol::getTokenIntegerFromMessage(res, "part", part));
     LOK_ASSERT_EQUAL(0, part);
+
+    socket->asyncShutdown();
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                       socket->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 // This isn't yet used
@@ -970,9 +1047,9 @@ void TileCacheTests::testWriterAnyKey()
     const char* testname = "writerAnyKey ";
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
 
-    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+    std::shared_ptr<http::WebSocketSession> socket
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Now test "usual" keycodes (TODO: whole 32-bit range)
     for (int i=0; i<0x1000; ++i)
@@ -1047,12 +1124,17 @@ void TileCacheTests::testWriterAnyKey()
         getResponseMessage(socket, "status:", testname);
     }
     //    sendTextFrame(socket, "saveas url=file:///tmp/emptyempty.odt format= options=");
+
+    socket->asyncShutdown();
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                       socket->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testTileInvalidateCalc()
 {
     const std::string testname = "tileInvalidateCalc ";
-    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket("empty.ods", _uri, testname);
+        std::shared_ptr<http::WebSocketSession> socket
+            = loadDocAndGetSession(_socketPoll, "empty.ods", _uri, testname);
 
     std::string text = "Test. Now go 3 \"Enters\": Now after the enters, goes this text";
     for (char ch : text)
@@ -1075,6 +1157,10 @@ void TileCacheTests::testTileInvalidateCalc()
         sendChar(socket, ch, skNone, testname);
         assertResponseString(socket, "invalidatetiles:", testname);
     }
+
+    socket->asyncShutdown();
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                       socket->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testTileInvalidatePartCalc()
@@ -1086,13 +1172,15 @@ void TileCacheTests::testTileInvalidatePartCalc()
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL(filename, documentPath, documentURL, testname);
-    std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, testname1);
+    std::shared_ptr<http::WebSocketSession> socket1
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname1);
 
     sendTextFrame(socket1, "setclientpart part=2", testname1);
     assertResponseString(socket1, "setpart:", testname1);
     sendTextFrame(socket1, "mouse type=buttondown x=1500 y=1500 count=1 buttons=1 modifier=0", testname1);
 
-    std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, testname2);
+    std::shared_ptr<http::WebSocketSession> socket2
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname2);
     sendTextFrame(socket2, "setclientpart part=5", testname2);
     assertResponseString(socket2, "setpart:", testname2);
     sendTextFrame(socket2, "mouse type=buttondown x=1500 y=1500 count=1 buttons=1 modifier=0", testname2);
@@ -1113,6 +1201,14 @@ void TileCacheTests::testTileInvalidatePartCalc()
         LOOLProtocol::getTokenIntegerFromMessage(response2, "part", value2);
         LOK_ASSERT_EQUAL(5, value2);
     }
+
+    socket1->asyncShutdown();
+    socket2->asyncShutdown();
+
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                       socket1->waitForDisconnection(std::chrono::seconds(5)));
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
+                       socket2->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testTileInvalidatePartImpress()
@@ -1124,13 +1220,15 @@ void TileCacheTests::testTileInvalidatePartImpress()
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL(filename, documentPath, documentURL, testname);
-    std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, testname1);
+    std::shared_ptr<http::WebSocketSession> socket1
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname1);
 
     sendTextFrame(socket1, "setclientpart part=2", testname1);
     assertResponseString(socket1, "setpart:", testname1);
     sendTextFrame(socket1, "mouse type=buttondown x=1500 y=1500 count=1 buttons=1 modifier=0", testname1);
 
-    std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, testname2);
+    std::shared_ptr<http::WebSocketSession> socket2
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname2);
     sendTextFrame(socket2, "setclientpart part=5", testname2);
     assertResponseString(socket2, "setpart:", testname2);
     sendTextFrame(socket2, "mouse type=buttondown x=1500 y=1500 count=1 buttons=1 modifier=0", testname2);
@@ -1152,6 +1250,14 @@ void TileCacheTests::testTileInvalidatePartImpress()
         LOOLProtocol::getTokenIntegerFromMessage(response2, "part", value2);
         LOK_ASSERT_EQUAL(5, value2);
     }
+
+    socket1->asyncShutdown();
+    socket2->asyncShutdown();
+
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                       socket1->waitForDisconnection(std::chrono::seconds(5)));
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
+                       socket2->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::checkTiles(std::shared_ptr<http::WebSocketSession>& socket,
@@ -1506,7 +1612,8 @@ void TileCacheTests::testTileRequestByZoom()
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
-    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+    std::shared_ptr<http::WebSocketSession> socket
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
     sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=16000 height=9875");
@@ -1521,6 +1628,10 @@ void TileCacheTests::testTileRequestByZoom()
         std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
         LOK_ASSERT_MESSAGE("Did not get tile as expected!", !tile.empty());
     }
+
+    socket->asyncShutdown();
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                       socket->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testTileWireIDHandling()
@@ -1529,7 +1640,8 @@ void TileCacheTests::testTileWireIDHandling()
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
-    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+    std::shared_ptr<http::WebSocketSession> socket
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
     sendTextFrame(socket, "clientvisiblearea x=-4005 y=0 width=50490 height=72300");
@@ -1572,6 +1684,10 @@ void TileCacheTests::testTileWireIDHandling()
     LOK_ASSERT_MESSAGE("Expected exactly one tile.",
                        countMessages(socket, "tile:", testname, std::chrono::milliseconds(500))
                            == 1);
+
+    socket->asyncShutdown();
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                       socket->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testTileProcessed()
@@ -1581,7 +1697,8 @@ void TileCacheTests::testTileProcessed()
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
-    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+    std::shared_ptr<http::WebSocketSession> socket
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
     sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=10000 height=9000");
@@ -1637,6 +1754,10 @@ void TileCacheTests::testTileProcessed()
     } while(gotTile);
 
     LOK_ASSERT_MESSAGE("We expect one tile at least!", arrivedTile2 > 1);
+
+    socket->asyncShutdown();
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                       socket->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testTileInvalidatedOutside()
@@ -1646,7 +1767,8 @@ void TileCacheTests::testTileInvalidatedOutside()
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
-    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+    std::shared_ptr<http::WebSocketSession> socket
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Type one character to trigger invalidation and get the invalidation rectangle
     sendChar(socket, 'x', skNone, testname);
@@ -1675,6 +1797,10 @@ void TileCacheTests::testTileInvalidatedOutside()
     // are partly visible.
     std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
     LOK_ASSERT_MESSAGE("Not expected tile message arrived!", tile.empty());
+
+    socket->asyncShutdown();
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                       socket->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testTileBeingRenderedHandling()
@@ -1685,7 +1811,8 @@ void TileCacheTests::testTileBeingRenderedHandling()
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
-    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+    std::shared_ptr<http::WebSocketSession> socket
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
     sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=16000 height=9875");
@@ -1730,6 +1857,10 @@ void TileCacheTests::testTileBeingRenderedHandling()
                 countMessages(socket, "tile:", testname, std::chrono::milliseconds(500)) == 1);
         }
     }
+
+    socket->asyncShutdown();
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                        socket->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testWireIDFilteringOnWSDSide()
@@ -1738,12 +1869,14 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
-    std::shared_ptr<LOOLWebSocket> socket1 = loadDocAndGetSocket(_uri, documentURL, testname);
+    std::shared_ptr<http::WebSocketSession> socket1
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
     // Set the client visible area
     sendTextFrame(socket1, "clientvisiblearea x=-4005 y=0 width=50490 height=72300");
     sendTextFrame(socket1, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
 
-    std::shared_ptr<LOOLWebSocket> socket2 = loadDocAndGetSocket(_uri, documentURL, testname, true);
+    std::shared_ptr<http::WebSocketSession> socket2
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname, true);
     // Set the client visible area
     sendTextFrame(socket1, "clientvisiblearea x=-4005 y=0 width=50490 height=72300");
     sendTextFrame(socket1, "clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840");
@@ -1799,6 +1932,14 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     const std::vector<char> tile
         = getResponseMessage(socket1, "tile:", testname, std::chrono::milliseconds(1000));
     LOK_ASSERT_MESSAGE("Not expected tile message arrived!", tile.empty());
+
+    socket1->asyncShutdown();
+    socket2->asyncShutdown();
+
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 1",
+                       socket1->waitForDisconnection(std::chrono::seconds(5)));
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
+                       socket2->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 void TileCacheTests::testLimitTileVersionsOnFly()
@@ -1809,7 +1950,8 @@ void TileCacheTests::testLimitTileVersionsOnFly()
 
     std::string documentPath, documentURL;
     getDocumentPathAndURL("empty.odt", documentPath, documentURL, testname);
-    std::shared_ptr<LOOLWebSocket> socket = loadDocAndGetSocket(_uri, documentURL, testname);
+    std::shared_ptr<http::WebSocketSession> socket
+        = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
     // Set the client visible area
     sendTextFrame(socket, "clientvisiblearea x=-2662 y=0 width=16000 height=9875");
@@ -1862,6 +2004,10 @@ void TileCacheTests::testLimitTileVersionsOnFly()
     } while(gotTile);
 
     LOK_ASSERT_EQUAL(1, arrivedTiles);
+
+    socket->asyncShutdown();
+    LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
+                       socket->waitForDisconnection(std::chrono::seconds(5)));
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TileCacheTests);
