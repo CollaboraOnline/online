@@ -206,7 +206,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     }
     else if (tokens.equals(0, "shutdown"))
     {
-        LOG_INF("Shutdown requested by admin.");
+        LOG_INF("Setting ShutdownRequestFlag: Shutdown requested by admin.");
         SigUtil::requestShutdown();
         return;
     }
