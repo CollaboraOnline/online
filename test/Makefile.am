@@ -250,28 +250,9 @@ TESTS = \
 	unit-wopi-temp.la \
 	unit-wopi-fileurl.la \
 	unit-wopi-httpheaders.la \
-	${top_builddir}/test/unithttplib
+	unithttplib
 # TESTS += unit-admin.test
 # TESTS += unit-storage.test
-
-# Start forced grouping of tests using stamp files
-
-group0.log: unit-integration.log \
-			unit-tiletest.log unit-insert-delete.log unit-crash.log unit-each-view.log \
-			unit-httpws.log unit-close.log unit-wopi-documentconflict.log unit-prefork.log \
-			unit-wopi-versionrestore.log unit-wopi-temp.log unit-wopi-fileurl.log \
-			unit_wopi_renamefile.log unit_wopi_watermark.log unit-wopi.log \
-			unit-wopi-ownertermination.log unit-load-torture.log unit-wopi-saveas.log \
-			unit-password-protected.log unit-http.log unit-tiff-load.log unit-render-shape.log \
-			unit-oauth.log unit-large-paste.log unit-paste.log unit-rendering-options.log \
-			unit-session.log unit-uno-command.log unit-load.log unit-cursor.log unit-calc.log \
-			unit-bad-doc-load.log unit-hosting.log unit-wopi-loadencoded.log \
-			unit-convert.log unit-typing.log unit-tilecache.log unit-timeout.log unit-base.log \
-			unit-wopi-httpheaders.log unit-copy-paste.log
-	$(CLEANUP_COMMAND)
-	touch $@
-
-# end forced grouping
 
 endif
 
