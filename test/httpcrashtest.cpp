@@ -45,7 +45,7 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
     Poco::Net::HTTPResponse _response;
-    SocketPoll _socketPoll;
+    std::shared_ptr<SocketPoll> _socketPoll;
 
     CPPUNIT_TEST_SUITE(HTTPCrashTest);
 
@@ -68,7 +68,7 @@ class HTTPCrashTest : public CPPUNIT_NS::TestFixture
 public:
     HTTPCrashTest()
         : _uri(helpers::getTestServerURI())
-        , _socketPoll("HttpCrashPoll")
+        , _socketPoll(std::make_shared<SocketPoll>("HttpCrashPoll"))
     {
 #if ENABLE_SSL
         Poco::Net::initializeSSL();
@@ -78,12 +78,10 @@ public:
         Poco::Net::Context::Ptr sslContext = new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
         Poco::Net::SSLManager::instance().initializeClient(nullptr, invalidCertHandler, sslContext);
 #endif
-        _socketPoll.startThread();
     }
 
     ~HTTPCrashTest()
     {
-        _socketPoll.joinThread();
 #if ENABLE_SSL
         Poco::Net::uninitializeSSL();
 #endif
@@ -94,10 +92,12 @@ public:
         resetTestStartTime();
         testCountHowManyLoolkits();
         resetTestStartTime();
+        _socketPoll->startThread();
     }
 
     void tearDown()
     {
+        _socketPoll->joinThread();
         resetTestStartTime();
         testNoExtraLoolKitsLeft();
         resetTestStartTime();
@@ -123,7 +123,7 @@ void HTTPCrashTest::testBarren()
         sendTextFrame(socket, "status", testname);
         assertResponseString(socket, "status:", testname);
 
-        socket->asyncShutdown(_socketPoll);
+        socket->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
                            socket->waitForDisconnection(std::chrono::seconds(5)));
@@ -159,7 +159,7 @@ void HTTPCrashTest::testCrashKit()
 
         // respond close frame
         TST_LOG("Shutting down socket.");
-        socket->asyncShutdown(_socketPoll);
+        socket->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
                            socket->waitForDisconnection(std::chrono::seconds(5)));
@@ -201,8 +201,8 @@ void HTTPCrashTest::testRecoverAfterKitCrash()
         sendTextFrame(socket2, "status", testname);
         assertResponseString(socket2, "status:", testname);
 
-        socket2->asyncShutdown(_socketPoll);
-        socket1->asyncShutdown(_socketPoll);
+        socket2->asyncShutdown();
+        socket1->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
                            socket2->waitForDisconnection(std::chrono::seconds(5)));
@@ -231,7 +231,7 @@ void HTTPCrashTest::testCrashForkit()
         assertResponseString(socket, "status:", testname);
 
         // respond close frame
-        socket->asyncShutdown(_socketPoll);
+        socket->asyncShutdown();
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
                            socket->waitForDisconnection(std::chrono::seconds(5)));
 
@@ -240,13 +240,9 @@ void HTTPCrashTest::testCrashForkit()
         countLoolKitProcesses(0);
         TST_LOG("Communicating after kill.");
         socket = loadDocAndGetSession(_socketPoll, "empty.odt", _uri, testname);
-        socket->asyncShutdown(_socketPoll);
+        socket->asyncShutdown();
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
                            socket->waitForDisconnection(std::chrono::seconds(5)));
-
-        // Wait till async shutdown fully completes, as _socketPoll has no owning reference to
-        // socket.
-        _socketPoll.wakeupWorld();
     }
     catch (const Poco::Exception& exc)
     {

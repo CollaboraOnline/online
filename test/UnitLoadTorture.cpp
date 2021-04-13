@@ -50,8 +50,8 @@ int UnitLoadTorture::loadTorture(const std::string& testname, const std::string&
     sum_view_ids = 0;
     std::atomic<int> num_of_views(0);
     std::atomic<int> num_to_load(thread_count);
-    SocketPoll poll("WebSocketPoll");
-    poll.startThread();
+    std::shared_ptr<SocketPoll> poll = std::make_shared<SocketPoll>("WebSocketPoll");
+    poll->startThread();
 
     std::vector<std::thread> threads;
     for (size_t i = 0; i < thread_count; ++i)

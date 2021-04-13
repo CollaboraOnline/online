@@ -309,8 +309,8 @@ public:
             return;
 
         LOG_TST("Close sockets:");
-        socket2->asyncShutdown(socketPoll());
-        socket->asyncShutdown(socketPoll());
+        socket2->asyncShutdown();
+        socket->asyncShutdown();
 
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket 2",
                            socket2->waitForDisconnection(std::chrono::seconds(5)));

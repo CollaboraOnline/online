@@ -593,7 +593,7 @@ connectLOKit(const Poco::URI& uri,
 // jobs to establish the bridge connection between the Client and Kit process,
 // The result, it is mostly time outs to get messages in the unit test and it could fail.
 // connectLOKit ensures the websocket is connected to a kit process.
-inline std::shared_ptr<http::WebSocketSession> connectLOKit(SocketPoll& socketPoll,
+inline std::shared_ptr<http::WebSocketSession> connectLOKit(std::shared_ptr<SocketPoll> socketPoll,
                                                             const Poco::URI& uri,
                                                             const std::string& url,
                                                             const std::string& testname)
@@ -612,7 +612,7 @@ inline std::shared_ptr<http::WebSocketSession> connectLOKit(SocketPoll& socketPo
                                      << (ws->secure() ? "secure" : "plain"));
 
             http::Request req(url);
-            ws->asyncRequest(req, socketPoll);
+            ws->asyncRequest(req, std::move(socketPoll));
 
             const char* expected_response = "statusindicator: ready";
 
@@ -688,15 +688,16 @@ std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const std::string& docFilenam
 }
 
 inline std::shared_ptr<http::WebSocketSession>
-loadDocAndGetSession(SocketPoll& socketPoll, const Poco::URI& uri, const std::string& documentURL,
-                     const std::string& testname, bool isView = true, bool isAssert = true)
+loadDocAndGetSession(std::shared_ptr<SocketPoll> socketPoll, const Poco::URI& uri,
+                     const std::string& documentURL, const std::string& testname,
+                     bool isView = true, bool isAssert = true)
 {
     try
     {
         // Load a document and get its status.
         auto ws = http::WebSocketSession::create(uri.toString());
         http::Request req(documentURL);
-        ws->asyncRequest(req, socketPoll);
+        ws->asyncRequest(req, std::move(socketPoll));
 
         sendTextFrame(ws, "load url=" + documentURL, testname);
         const bool isLoaded = isDocumentLoaded(ws, testname, isView);
@@ -724,14 +725,15 @@ loadDocAndGetSession(SocketPoll& socketPoll, const Poco::URI& uri, const std::st
 }
 
 inline std::shared_ptr<http::WebSocketSession>
-loadDocAndGetSession(SocketPoll& socketPoll, const std::string& docFilename, const Poco::URI& uri,
-                     const std::string& testname, bool isView = true, bool isAssert = true)
+loadDocAndGetSession(std::shared_ptr<SocketPoll> socketPoll, const std::string& docFilename,
+                     const Poco::URI& uri, const std::string& testname, bool isView = true,
+                     bool isAssert = true)
 {
     try
     {
         std::string documentPath, documentURL;
         getDocumentPathAndURL(docFilename, documentPath, documentURL, testname);
-        return loadDocAndGetSession(socketPoll, uri, documentURL, testname, isView, isAssert);
+        return loadDocAndGetSession(std::move(socketPoll), uri, documentURL, testname, isView, isAssert);
     }
     catch (const std::exception& ex)
     {
