@@ -699,7 +699,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 /* Sheet Tab */
 
 #table-Sheet-Section.notebookbar {
-	margin-top: 10px;
+	margin-top: 5px;
 }
 
 /* Data Tab */
