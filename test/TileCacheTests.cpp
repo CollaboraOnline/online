@@ -125,26 +125,19 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
     void testLimitTileVersionsOnFly();
 
     void checkTiles(std::shared_ptr<http::WebSocketSession>& socket, const std::string& docType,
-                    const std::string& name);
-    void checkTiles(std::shared_ptr<LOOLWebSocket>& socket,
-                    const std::string& type,
-                    const std::string& name = "checkTiles ");
+                    const std::string& testname);
+    void checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const std::string& type,
+                    const std::string& testname);
 
     void requestTiles(std::shared_ptr<http::WebSocketSession>& socket, const std::string& docType,
                       const int part, const int docWidth, const int docHeight,
-                      const std::string& name = "requestTiles ");
-    void requestTiles(std::shared_ptr<LOOLWebSocket>& socket,
-                      const std::string& docType,
-                      const int part,
-                      const int docWidth,
-                      const int docHeight,
-                      const std::string& name = "requestTiles ");
+                      const std::string& testname);
+    void requestTiles(std::shared_ptr<LOOLWebSocket>& socket, const std::string& docType,
+                      const int part, const int docWidth, const int docHeight,
+                      const std::string& testname);
 
-    void checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket,
-                         const int part,
-                         const int docWidth,
-                         const int docHeight,
-                         const std::string& name = "checkBlackTiles ");
+    void checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket, const int part, const int docWidth,
+                         const int docHeight, const std::string& testname);
 
     void checkBlackTile(std::stringstream& tile);
 
@@ -881,7 +874,9 @@ void TileCacheTests::checkBlackTile(std::stringstream& tile)
     LOK_ASSERT_MESSAGE("The tile is 90% black", (black * 100) / (height * width) < 90);
 }
 
-void TileCacheTests::checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket, const int /*part*/, const int /*docWidth*/, const int /*docHeight*/, const std::string& name)
+void TileCacheTests::checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket, const int /*part*/,
+                                     const int /*docWidth*/, const int /*docHeight*/,
+                                     const std::string& testname)
 {
     // Check the last row of tiles to verify that the tiles
     // render correctly and there are no black tiles.
@@ -890,7 +885,7 @@ void TileCacheTests::checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket, con
     const char* req = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=253440 tilewidth=3840 tileheight=3840";
     sendTextFrame(socket, req);
 
-    const std::vector<char> tile = getResponseMessage(socket, "tile:", name);
+    const std::vector<char> tile = getResponseMessage(socket, "tile:", testname);
     if (!tile.size())
     {
         LOK_ASSERT_FAIL("No tile returned to checkBlackTiles - failed load ?");
@@ -1159,9 +1154,8 @@ void TileCacheTests::testTileInvalidatePartImpress()
 }
 
 void TileCacheTests::checkTiles(std::shared_ptr<http::WebSocketSession>& socket,
-                                const std::string& docType, const std::string& name)
+                                const std::string& docType, const std::string& testname)
 {
-    const char* testname = "checkTiles";
     const std::string current = "current=";
     const std::string height = "height=";
     const std::string parts = "parts=";
@@ -1174,8 +1168,8 @@ void TileCacheTests::checkTiles(std::shared_ptr<http::WebSocketSession>& socket,
     int docWidth = 0;
 
     // check total slides 10
-    sendTextFrame(socket, "status", name);
-    const auto response = assertResponseString(socket, "status:", name);
+    sendTextFrame(socket, "status", testname);
+    const auto response = assertResponseString(socket, "status:", testname);
     {
         std::string line;
         std::istringstream istr(response.substr(8));
@@ -1212,7 +1206,7 @@ void TileCacheTests::checkTiles(std::shared_ptr<http::WebSocketSession>& socket,
     {
         // request tiles
         TST_LOG("Requesting Impress tiles.");
-        requestTiles(socket, docType, currentPart, docWidth, docHeight, name);
+        requestTiles(socket, docType, currentPart, docWidth, docHeight, testname);
     }
 
     // random setclientpart
@@ -1226,17 +1220,18 @@ void TileCacheTests::checkTiles(std::shared_ptr<http::WebSocketSession>& socket,
         {
             // change part
             const std::string text = Poco::format("setclientpart part=%d", it);
-            sendTextFrame(socket, text, name);
+            sendTextFrame(socket, text, testname);
             // Wait for the change to take effect otherwise we get invalidatetile
             // which removes our next tile request subscription (expecting us to
             // issue a new tile request as a response, which a real client would do).
-            assertResponseString(socket, "setpart:", name);
+            assertResponseString(socket, "setpart:", testname);
 
-            requestTiles(socket, docType, it, docWidth, docHeight, name);
+            requestTiles(socket, docType, it, docWidth, docHeight, testname);
 
             if (++requests >= 3)
             {
                 // No need to test all parts.
+                TST_LOG("Breaking checkTiles for " << testname);
                 break;
             }
         }
@@ -1247,7 +1242,7 @@ void TileCacheTests::checkTiles(std::shared_ptr<http::WebSocketSession>& socket,
 
 void TileCacheTests::requestTiles(std::shared_ptr<http::WebSocketSession>& socket,
                                   const std::string&, const int part, const int docWidth,
-                                  const int docHeight, const std::string& name)
+                                  const int docHeight, const std::string& testname)
 {
     // twips
     const int tileSize = 3840;
@@ -1266,6 +1261,8 @@ void TileCacheTests::requestTiles(std::shared_ptr<http::WebSocketSession>& socke
 
     rows = docHeight / tileSize;
     cols = docWidth / tileSize;
+    TST_LOG("requestTiles for " << testname << " will request " << rows << " rows and " << cols
+                                << " cols.");
 
     // Note: this code tests tile requests in the wrong way.
 
@@ -1291,8 +1288,8 @@ void TileCacheTests::requestTiles(std::shared_ptr<http::WebSocketSession>& socke
                                "tilewidth=%d tileheight=%d",
                                part, pixTileSize, pixTileSize, tileX, tileY, tileWidth, tileHeight);
 
-            sendTextFrame(socket, text, name);
-            tile = assertResponseString(socket, "tile:", name);
+            sendTextFrame(socket, text, testname);
+            tile = assertResponseString(socket, "tile:", testname);
             // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
             StringVector tokens(Util::tokenize(tile, ' '));
             LOK_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
@@ -1310,11 +1307,13 @@ void TileCacheTests::requestTiles(std::shared_ptr<http::WebSocketSession>& socke
                              std::stoi(tokens[8].substr(std::string("tileHeight=").size())));
         }
     }
+
+    TST_LOG("requestTiles for " << testname << " finished.");
 }
 
-void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const std::string& docType, const std::string& name)
+void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const std::string& docType,
+                                const std::string& testname)
 {
-    const char* testname = "checkTiles";
     const std::string current = "current=";
     const std::string height = "height=";
     const std::string parts = "parts=";
@@ -1327,8 +1326,8 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
     int docWidth = 0;
 
     // check total slides 10
-    sendTextFrame(socket, "status", name);
-    const auto response = assertResponseString(socket, "status:", name);
+    sendTextFrame(socket, "status", testname);
+    const auto response = assertResponseString(socket, "status:", testname);
     {
         std::string line;
         std::istringstream istr(response.substr(8));
@@ -1364,7 +1363,7 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
     {
         // request tiles
         TST_LOG("Requesting Impress tiles.");
-        requestTiles(socket, docType, currentPart, docWidth, docHeight, name);
+        requestTiles(socket, docType, currentPart, docWidth, docHeight, testname);
     }
 
     // random setclientpart
@@ -1378,13 +1377,13 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
         {
             // change part
             const std::string text = Poco::format("setclientpart part=%d", it);
-            sendTextFrame(socket, text, name);
+            sendTextFrame(socket, text, testname);
             // Wait for the change to take effect otherwise we get invalidatetile
             // which removes our next tile request subscription (expecting us to
             // issue a new tile request as a response, which a real client would do).
-            assertResponseString(socket, "setpart:", name);
+            assertResponseString(socket, "setpart:", testname);
 
-            requestTiles(socket, docType, it, docWidth, docHeight, name);
+            requestTiles(socket, docType, it, docWidth, docHeight, testname);
 
             if (++requests >= 3)
             {
@@ -1399,7 +1398,7 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
 
 void TileCacheTests::requestTiles(std::shared_ptr<LOOLWebSocket>& socket,
                                   const std::string& , const int part, const int docWidth,
-                                  const int docHeight, const std::string& name)
+                                  const int docHeight, const std::string& testname)
 {
     // twips
     const int tileSize = 3840;
@@ -1441,8 +1440,8 @@ void TileCacheTests::requestTiles(std::shared_ptr<LOOLWebSocket>& socket,
             text = Poco::format("tile nviewid=0 part=%d width=%d height=%d tileposx=%d tileposy=%d tilewidth=%d tileheight=%d",
                                 part, pixTileSize, pixTileSize, tileX, tileY, tileWidth, tileHeight);
 
-            sendTextFrame(socket, text, name);
-            tile = assertResponseString(socket, "tile:", name);
+            sendTextFrame(socket, text, testname);
+            tile = assertResponseString(socket, "tile:", testname);
             // expected tile: part= width= height= tileposx= tileposy= tilewidth= tileheight=
             StringVector tokens(Util::tokenize(tile, ' '));
             LOK_ASSERT_EQUAL(std::string("tile:"), tokens[0]);
