@@ -810,64 +810,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'type': 'container',
 				'children': [
 					{
-						'id': 'rows-Section',
-						'type': 'container',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'Section7',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Insert Rows Above'),
-										'command': '.uno:InsertRowsBefore'
-									}
-								]
-							},
-							{
-								'id': 'Section10',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Insert Rows Below'),
-										'command': '.uno:InsertRowsAfter'
-									}
-								]
-							}
-						]
-					},
-					{
-						'id': 'columns-Section',
-						'type': 'container',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'Section8',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Insert Columns Before'),
-										'command': '.uno:InsertColumnsBefore'
-									}
-								]
-							},
-							{
-								'id': 'Section9',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Insert Columns After'),
-										'command': '.uno:InsertColumnsAfter'
-									}
-								]
-							}
-						]
-					},
-					{
 						'id': 'break-Section',
 						'type': 'container',
 						'vertical': 'true',
@@ -891,35 +833,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 										'type': 'toolitem',
 										'text': _('Insert Column Break'),
 										'command': '.uno:InsertColumnBreak'
-									}
-								]
-							}
-						]
-					},
-					{
-						'id': 'delete-Section',
-						'type': 'container',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'Section7',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Delete Rows'),
-										'command': '.uno:DeleteRows'
-									}
-								]
-							},
-							{
-								'id': 'Section10',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Delete Columns'),
-										'command': '.uno:DeleteColumns'
 									}
 								]
 							}
@@ -953,6 +866,111 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								]
 							}
 						]
+					},
+					{
+						'id': 'rows-Section',
+						'type': 'container',
+						'vertical': 'true',
+						'children': [
+							{
+								'id': 'Section7',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _('Insert Rows Above'),
+										'command': '.uno:InsertRowsBefore'
+									},
+									{
+										'type': 'toolitem',
+										'text': _('Insert Columns Before'),
+										'command': '.uno:InsertColumnsBefore'
+									},
+									{
+										'type': 'toolitem',
+										'text': _('Delete Rows'),
+										'command': '.uno:DeleteRows'
+									}
+								]
+							},
+							{
+								'id': 'Section10',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _('Insert Rows Below'),
+										'command': '.uno:InsertRowsAfter'
+									},
+									{
+										'type': 'toolitem',
+										'text': _('Insert Columns After'),
+										'command': '.uno:InsertColumnsAfter'
+									},
+									{
+										'type': 'toolitem',
+										'text': _('Delete Columns'),
+										'command': '.uno:DeleteColumns'
+									}
+								]
+							}
+						]
+					},
+					{
+						'id': 'Data-Section-Group1',
+						'children': [
+							{
+								'id': 'LeftParaMargin14',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:Group'),
+										'command': '.uno:Group'
+									}
+								]
+							},
+							{
+								'id': 'belowspacing16',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:Ungroup'),
+										'command': '.uno:Ungroup'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
+					},
+					{
+						'id': 'Data-Section-Group2',
+						'children': [
+							{
+								'id': 'LeftParaMargin15',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:HideDetail'),
+										'command': '.uno:HideDetail'
+									}
+								]
+							},
+							{
+								'id': 'belowspacing17',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:ShowDetail'),
+										'command': '.uno:ShowDetail'
+									}
+								]
+							}
+						],
+						'vertical': 'true'
 					},
 					{
 						'id': 'freeze-section1',
@@ -1294,62 +1312,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:ClearOutline', 'spreadsheet'),
 								'command': '.uno:ClearOutline'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'Data-Section-Group1',
-				'children': [
-					{
-						'id': 'LeftParaMargin14',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:Group'),
-								'command': '.uno:Group'
-							}
-						]
-					},
-					{
-						'id': 'belowspacing16',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:Ungroup'),
-								'command': '.uno:Ungroup'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'Data-Section-Group2',
-				'children': [
-					{
-						'id': 'LeftParaMargin15',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:HideDetail'),
-								'command': '.uno:HideDetail'
-							}
-						]
-					},
-					{
-						'id': 'belowspacing17',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:ShowDetail'),
-								'command': '.uno:ShowDetail'
 							}
 						]
 					}
