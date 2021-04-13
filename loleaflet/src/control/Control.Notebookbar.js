@@ -58,9 +58,7 @@ L.Control.Notebookbar = L.Control.extend({
 		var retryNotebookbarInit = function() {
 			if (!that.map._isNotebookbarLoadedOnCore) {
 				console.error('notebookbar is not initialized, retrying');
-				that.map.sendUnoCommand('.uno:Notebookbar?File:string=notebookbar.ui');
-				that.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar.ui');
-				that.retry = setTimeout(retryNotebookbarInit, 10000);
+				that.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
 			}
 		};
 
@@ -69,6 +67,7 @@ L.Control.Notebookbar = L.Control.extend({
 
 	onRemove: function() {
 		clearTimeout(this.retry);
+		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=Default');
 		this.map.off('contextchange', this.onContextChange, this);
 		this.map.off('updatepermission', this.onUpdatePermission, this);
 		this.map.off('notebookbar');
