@@ -1217,7 +1217,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:SortAscending', 'spreadsheet'),
 								'command': '.uno:SortAscending'
-							}
+							},
+							{}
 						]
 					},
 					{
@@ -1228,7 +1229,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:SortDescending', 'spreadsheet'),
 								'command': '.uno:SortDescending'
-							}
+							},
+							{}
 						]
 					}
 				],
