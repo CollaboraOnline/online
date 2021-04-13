@@ -107,11 +107,17 @@ private:
 
                 socket->send(response);
             }
+            else if (request.getUrl() == "/timeout")
+            {
+                // Don't send anything back.
+            }
             else
             {
                 http::Response response(http::StatusLine(200));
                 if (Util::startsWith(request.getUrl(), "/echo/"))
                     response.setBody(request.getUrl().substr(sizeof("/echo")));
+                else
+                    response.setBody("You have reached HttpTestServer " + request.getUrl());
                 socket->send(response);
             }
         }
