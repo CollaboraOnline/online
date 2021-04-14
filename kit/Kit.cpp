@@ -866,7 +866,9 @@ public:
             self->setDocumentPassword(type);
             return;
         }
-        else if (type == LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE)
+        else if (type == LOK_CALLBACK_STATUS_INDICATOR_START ||
+                 type == LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE ||
+                 type == LOK_CALLBACK_STATUS_INDICATOR_FINISH)
         {
             for (auto& it : self->_sessions)
             {
