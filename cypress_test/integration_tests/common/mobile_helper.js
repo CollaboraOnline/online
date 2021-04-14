@@ -310,6 +310,27 @@ function selectListBoxItem2(listboxSelector, item) {
 
 	cy.log('Selecting an item from listbox 2 - end.');
 }
+function insertComment() {
+	openInsertionWizard();
+
+	cy.contains('.menu-entry-with-icon', 'Comment')
+		.click();
+
+	cy.get('.loleaflet-annotation-table')
+		.should('exist');
+
+	cy.get('.loleaflet-annotation-textarea')
+		.type('some text');
+
+	cy.get('.vex-dialog-button-primary')
+		.click();
+
+	cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
+		.should('exist');
+
+	cy.get('.wizard-comment-box .loleaflet-annotation-content')
+		.should('have.text', 'some text');
+}
 
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
@@ -327,3 +348,4 @@ module.exports.openTextPropertiesPanel = openTextPropertiesPanel;
 module.exports.selectListBoxItem = selectListBoxItem;
 module.exports.selectListBoxItem2 = selectListBoxItem2;
 module.exports.openCommentWizard = openCommentWizard;
+module.exports.insertComment = insertComment;

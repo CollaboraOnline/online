@@ -3,12 +3,12 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Annotation tests.', function() {
-	var testFileName = 'annotation.odp';
-
+describe('Annotation Tests',function() {
+	var testFileName = 'focus.ods';
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		helper.beforeAll(testFileName, 'calc');
 
+		// Click on edit button
 		mobileHelper.enableEditingMobile();
 	});
 
@@ -19,12 +19,12 @@ describe('Annotation tests.', function() {
 	it('Saving comment.', function() {
 		mobileHelper.insertComment();
 
-		cy.get('.leaflet-marker-icon.annotation-marker')
-			.should('be.visible');
+		cy.get('.loleaflet-div-layer')
+			.should('exist');
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
-		helper.beforeAll(testFileName, 'impress', true);
+		helper.beforeAll(testFileName, 'calc', true);
 
 		mobileHelper.enableEditingMobile();
 
@@ -33,15 +33,15 @@ describe('Annotation tests.', function() {
 		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
 
-		cy.get('.leaflet-marker-icon.annotation-marker')
-			.should('be.visible');
+		cy.get('.loleaflet-div-layer')
+			.should('exist');
 	});
 
 	it('Modifying comment.', function() {
 		mobileHelper.insertComment();
 
-		cy.get('.leaflet-marker-icon.annotation-marker')
-			.should('be.visible');
+		cy.get('.loleaflet-div-layer')
+			.should('exist');
 
 		mobileHelper.selectAnnotationMenuItem('Modify');
 
@@ -67,8 +67,8 @@ describe('Annotation tests.', function() {
 	it('Remove comment.', function() {
 		mobileHelper.insertComment();
 
-		cy.get('.leaflet-marker-icon.annotation-marker')
-			.should('be.visible');
+		cy.get('.loleaflet-div-layer')
+			.should('exist');
 
 		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
@@ -78,7 +78,7 @@ describe('Annotation tests.', function() {
 		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('not.exist');
 
-		cy.get('.leaflet-marker-icon.annotation-marker')
+		cy.get('.loleaflet-div-layer')
 			.should('not.exist');
 	});
 

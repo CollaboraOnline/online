@@ -229,6 +229,24 @@ function resetZoomLevel() {
 	shouldHaveZoomLevel('100');
 }
 
+function insertMultipleComment(numberOfComments) {
+	numberOfComments = numberOfComments || 1;
+	for (var n=0;n<numberOfComments;n++) {
+		cy.get('#menu-insert').click()
+			.get('#menu-insertcomment').click();
+
+		cy.get('.loleaflet-annotation-table')
+			.should('exist');
+
+		// Fixme: when there are multiple comments, .modify-annotation class does not gives unique element that's why using style to identify them.
+
+		cy.get('.loleaflet-annotation-edit.modify-annotation[style=""]')
+			.type('some text' + n);
+
+		cy.get('.loleaflet-annotation-edit.modify-annotation[style=""] #annotation-save')
+			.click();
+	}
+}
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
@@ -242,3 +260,4 @@ module.exports.zoomOut = zoomOut;
 module.exports.shouldHaveZoomLevel = shouldHaveZoomLevel;
 module.exports.selectZoomLevel = selectZoomLevel;
 module.exports.resetZoomLevel = resetZoomLevel;
+module.exports.insertMultipleComment = insertMultipleComment;
