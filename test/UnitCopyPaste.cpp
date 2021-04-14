@@ -235,7 +235,7 @@ public:
 
     void invokeWSDTest() override
     {
-        std::string testname = "copypaste";
+        std::string testname = "copypaste ";
 
         // Load a doc with the cursor saved at a top row.
         std::string documentPath, documentURL;
@@ -246,12 +246,12 @@ public:
 
         std::string clipURI = getSessionClipboardURI(0);
 
-        LOG_TST("Fetch empty clipboard content");
+        LOG_TST("Fetch empty clipboard content after loading");
         if (!fetchClipboardAssert(clipURI, "", ""))
             return;
 
         // Check existing content
-        LOG_TST("Fetch pristine content");
+        LOG_TST("Fetch pristine content from the document");
         helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
         helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
         std::string oneColumn = "2\n3\n5\n";
@@ -263,11 +263,11 @@ public:
             socketPoll(), Poco::URI(helpers::getTestServerURI()), documentURL, testname);
         std::string clipURI2 = getSessionClipboardURI(1);
 
-        LOG_TST("Check no clipboard content");
+        LOG_TST("Check no clipboard content on second view");
         if (!fetchClipboardAssert(clipURI2, "", ""))
             return;
 
-        LOG_TST("Inject content");
+        LOG_TST("Inject content through first view");
         helpers::sendTextFrame(socket, "uno .uno:Deselect", testname);
         std::string text = "This is some content?&*/\\!!";
         helpers::sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
