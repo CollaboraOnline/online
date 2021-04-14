@@ -17,4 +17,5 @@
     <string name="edit_copy">Sunting suatu salinan</string>
     <string name="view_only">Hanya tilik</string>
     <string name="restarting">Memulai ulang...</string>
+    <string name="cant_open_the_document">Tidak dapat membuka dokumen</string>
 </resources>
