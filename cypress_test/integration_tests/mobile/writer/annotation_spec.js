@@ -17,30 +17,9 @@ describe('Annotation tests.', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	function insertComment() {
-		mobileHelper.openInsertionWizard();
-
-		cy.contains('.menu-entry-with-icon', 'Comment')
-			.click();
-
-		cy.get('.loleaflet-annotation-table')
-			.should('exist');
-
-		cy.get('.loleaflet-annotation-textarea')
-			.type('some text');
-
-		cy.get('.vex-dialog-button-primary')
-			.click();
-
-		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
-			.should('exist');
-
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
-			.should('have.text', 'some text');
-	}
 
 	it('Saving comment.', function() {
-		insertComment();
+		mobileHelper.insertComment();
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
@@ -55,7 +34,7 @@ describe('Annotation tests.', function() {
 	});
 
 	it('Modifying comment.', function() {
-		insertComment();
+		mobileHelper.insertComment();
 
 		mobileHelper.selectAnnotationMenuItem('Modify');
 
@@ -82,7 +61,7 @@ describe('Annotation tests.', function() {
 	});
 
 	it('Reply to comment.', function() {
-		insertComment();
+		mobileHelper.insertComment();
 
 		mobileHelper.selectAnnotationMenuItem('Reply');
 
@@ -109,7 +88,7 @@ describe('Annotation tests.', function() {
 	});
 
 	it('Remove comment.', function() {
-		insertComment();
+		mobileHelper.insertComment();
 
 		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
@@ -150,7 +129,7 @@ describe('Annotation tests.', function() {
 		// Show resolved comments
 		mobileHelper.selectHamburgerMenuItem(['View', 'Resolved Comments']);
 
-		insertComment();
+		mobileHelper.insertComment();
 
 		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
