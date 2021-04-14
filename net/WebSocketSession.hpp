@@ -279,9 +279,12 @@ public:
 private:
     void handleMessage(const std::vector<char>& data) override
     {
-        LOG_DBG("Got message: " << LOOLProtocol::getFirstLine(data));
-        std::unique_lock<std::mutex> lock(_inMutex);
-        _inQueue.put(data);
+        LOG_DBG("Got message: " << LOOLProtocol::getAbbreviatedMessage(data));
+        {
+            std::unique_lock<std::mutex> lock(_inMutex);
+            _inQueue.put(data);
+        }
+
         _inCv.notify_one();
     }
 
@@ -354,8 +357,11 @@ private:
 
     void onDisconnect() override
     {
-        std::unique_lock<std::mutex> lock(_outMutex);
-        _disconnected = true;
+        {
+            std::unique_lock<std::mutex> lock(_outMutex);
+            _disconnected = true;
+        }
+
         _disconnectCv.notify_all();
     }
 
