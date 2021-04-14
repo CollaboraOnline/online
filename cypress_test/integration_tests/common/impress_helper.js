@@ -189,24 +189,6 @@ function dblclickOnSelectedShape() {
 		.should('exist');
 }
 
-//add multiple comments
-function addComment(numberOfComments) {
-
-	for (var n=0;n<numberOfComments;n++) {
-		cy.get('#menu-insert').click()
-			.get('#menu-insertcomment').click();
-
-		cy.get('.loleaflet-annotation-table')
-			.should('exist');
-
-		cy.get('.loleaflet-annotation-edit[style=""]')
-			.type('some text ' + n);
-
-		cy.get('.loleaflet-annotation-edit[style=""] #annotation-save')
-			.click();
-	}
-}
-
 //add multiple slides
 function addSlide(numberOfSlides) {
 	var insertSlideButton = cy.get('#tb_presentation-toolbar_item_insertpage');
@@ -240,6 +222,5 @@ module.exports.triggerNewSVGForShapeInTheCenter = triggerNewSVGForShapeInTheCent
 module.exports.removeShapeSelection = removeShapeSelection;
 module.exports.selectTextOfShape = selectTextOfShape;
 module.exports.dblclickOnSelectedShape = dblclickOnSelectedShape;
-module.exports.addComment = addComment;
 module.exports.addSlide = addSlide;
 module.exports.changeSlide = changeSlide;

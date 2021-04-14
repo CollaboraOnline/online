@@ -266,10 +266,10 @@ L.Annotation = L.Layer.extend({
 			this._captionText = L.DomUtil.create(tagDiv, empty, this._captionNode);
 		}
 		this._contentNode = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content loleaflet-dont-break', wrapper);
-		this._nodeModify = L.DomUtil.create(tagDiv, classEdit, wrapper);
+		this._nodeModify = L.DomUtil.create(tagDiv, classEdit + ' modify-annotation', wrapper);
 		this._nodeModifyText = L.DomUtil.create(tagTextArea, classTextArea, this._nodeModify);
 		this._contentText = L.DomUtil.create(tagDiv, empty, this._contentNode);
-		this._nodeReply = L.DomUtil.create(tagDiv, classEdit, wrapper);
+		this._nodeReply = L.DomUtil.create(tagDiv, classEdit + ' reply-annotation', wrapper);
 		this._nodeReplyText = L.DomUtil.create(tagTextArea, classTextArea, this._nodeReply);
 
 		buttons = L.DomUtil.create(tagDiv, empty, this._nodeModify);

@@ -297,10 +297,10 @@ describe('Top toolbar tests.', function() {
 			.should('exist');
 
 		// Add some comment
-		cy.get('.loleaflet-annotation-edit:nth-of-type(2) .loleaflet-annotation-textarea')
+		cy.get('.loleaflet-annotation-edit.modify-annotation')
 			.type('some text');
 
-		cy.get('#annotation-save')
+		cy.get('.loleaflet-annotation-edit.modify-annotation #annotation-save')
 			.click();
 
 		cy.get('.loleaflet-annotation')
