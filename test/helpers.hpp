@@ -379,7 +379,7 @@ getResponseMessage(LOOLWebSocket& ws, const std::string& prefix, const std::stri
             auto now = std::chrono::steady_clock::now();
             if (now > endTime) // timedout
             {
-                TST_LOG("Timeout after " << timeoutMs);
+                TST_LOG("Timeout waiting for [" << prefix << "] after " << timeoutMs);
                 break;
             }
             long waitTimeUs = std::chrono::duration_cast<std::chrono::microseconds>(endTime - now).count();
@@ -1054,17 +1054,65 @@ inline void selectAll(const std::shared_ptr<LOOLWebSocket>& socket, const std::s
     }
 }
 
-/// Select all and wait for the text selection update.
-inline void selectAll(const std::shared_ptr<http::WebSocketSession>& ws,
-                      const std::string& testname, int repeat = COMMAND_RETRY_COUNT)
+/// Sends a command and waits for an event in response, with retrying.
+inline void sendAndWait(const std::shared_ptr<http::WebSocketSession>& ws,
+                        const std::string& testname, const std::string& command,
+                        const std::string& response,
+                        std::chrono::milliseconds timeoutPerAttempt = std::chrono::seconds(10),
+                        int repeat = COMMAND_RETRY_COUNT)
 {
-    for (int i = 0; i < repeat; ++i)
+    for (int i = 1; i <= repeat; ++i)
     {
-        TST_LOG("Sending [uno .uno:SelectAll], attempt #" << repeat);
-        sendTextFrame(ws, "uno .uno:SelectAll", testname);
-        if (!getResponseString(ws, "textselection:", testname).empty())
+        TST_LOG("Sending [" << command << "], waiting for [" << response << "], attempt #" << i);
+        sendTextFrame(ws, command, testname);
+        if (!getResponseString(ws, response, testname, timeoutPerAttempt).empty())
             break;
     }
+}
+
+/// Select all and wait for the text selection update.
+inline void selectAll(const std::shared_ptr<http::WebSocketSession>& ws,
+                      const std::string& testname,
+                      std::chrono::milliseconds timeoutPerAttempt = std::chrono::seconds(10),
+                      int repeat = COMMAND_RETRY_COUNT)
+{
+    sendAndWait(ws, testname, "uno .uno:SelectAll", "textselection:", timeoutPerAttempt, repeat);
+}
+
+/// Delete all and wait for the text selection update.
+inline void deleteAll(const std::shared_ptr<http::WebSocketSession>& ws,
+                      const std::string& testname,
+                      std::chrono::milliseconds timeoutPerAttempt = std::chrono::seconds(10),
+                      int repeat = COMMAND_RETRY_COUNT)
+{
+    selectAll(ws, testname);
+
+    sendAndWait(ws, testname, "uno .uno:Delete", "textselection:", timeoutPerAttempt, repeat);
+}
+
+inline std::string getAllText(const std::shared_ptr<http::WebSocketSession>& socket,
+                              const std::string& testname,
+                              const std::string& expected = std::string(),
+                              int retry = COMMAND_RETRY_COUNT)
+{
+    static const std::string prefix = "textselectioncontent: ";
+
+    for (int i = 1; i <= retry; ++i)
+    {
+        TST_LOG("getAllText attempt #" << i);
+
+        selectAll(socket, testname);
+
+        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
+        std::string text = getResponseString(socket, prefix, testname);
+        if (!text.empty())
+        {
+            if (expected.empty() || (prefix + expected) == text)
+                return text;
+        }
+    }
+
+    return std::string();
 }
 
 /// Delete all and wait for the text selection update.
@@ -1078,44 +1126,6 @@ inline void deleteAll(const std::shared_ptr<LOOLWebSocket>& socket, const std::s
         if (!getResponseString(socket, "textselection:", testname).empty())
             break;
     }
-}
-
-/// Delete all and wait for the text selection update.
-inline void deleteAll(const std::shared_ptr<http::WebSocketSession>& ws,
-                      const std::string& testname, int repeat = COMMAND_RETRY_COUNT)
-{
-    selectAll(ws, testname);
-
-    for (int i = 0; i < repeat; ++i)
-    {
-        TST_LOG("Sending [uno .uno:Delete], attempt #" << repeat);
-        sendTextFrame(ws, "uno .uno:Delete", testname);
-        if (!getResponseString(ws, "textselection:", testname).empty())
-            break;
-    }
-}
-
-inline std::string getAllText(const std::shared_ptr<http::WebSocketSession>& socket,
-                              const std::string& testname,
-                              const std::string& expected = std::string(),
-                              int retry = COMMAND_RETRY_COUNT)
-{
-    static const std::string prefix = "textselectioncontent: ";
-
-    for (int i = 0; i < retry; ++i)
-    {
-        selectAll(socket, testname);
-
-        sendTextFrame(socket, "gettextselection mimetype=text/plain;charset=utf-8", testname);
-        std::string text = getResponseString(socket, prefix, testname);
-        if (!text.empty())
-        {
-            if (expected.empty() || (prefix + expected) == text)
-                return text;
-        }
-    }
-
-    return std::string();
 }
 
 inline std::string getAllText(const std::shared_ptr<LOOLWebSocket>& socket,
