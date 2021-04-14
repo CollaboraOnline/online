@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0100\n"
-"PO-Revision-Date: 2021-03-17 22:08+0000\n"
-"Last-Translator: Jörn Liebau <joern@liebau.org>\n"
+"PO-Revision-Date: 2021-04-14 20:26+0000\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5.2-dev\n"
+"X-Generator: Weblate 4.6-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -540,7 +540,7 @@ msgstr "Keine (Rechtschreibung nicht prüfen)"
 #: src/control/Control.Menubar.js:820
 #: src/control/Control.NotebookbarDraw.js:180
 msgid "Share..."
-msgstr "Teilen..."
+msgstr "Teilen …"
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:271
 #: src/control/Control.Menubar.js:400 src/control/Control.Menubar.js:510
@@ -642,7 +642,7 @@ msgstr "Statusleiste anzeigen"
 #: src/control/Control.Menubar.js:883 src/control/Control.Menubar.js:924
 #: src/control/Control.Menubar.js:938
 msgid "Local Image..."
-msgstr "Lokales Bild..."
+msgstr "Lokales Bild …"
 
 #: src/control/Control.Menubar.js:95 src/control/Control.Menubar.js:97
 #: src/control/Control.Menubar.js:899 src/control/Control.Menubar.js:901
@@ -919,7 +919,7 @@ msgstr "Neuen Tabellennamen eingeben"
 
 #: src/control/Control.Toolbar.js:238
 msgid "More..."
-msgstr "Weitere..."
+msgstr "Weitere …"
 
 #: src/control/Control.Toolbar.js:943
 msgid "Previous slide"
@@ -1318,15 +1318,15 @@ msgstr "Schriftart"
 
 #: src/control/Toolbar.js:194 src/control/Toolbar.js:206
 msgid "Downloading..."
-msgstr "Wird heruntergeladen..."
+msgstr "Wird heruntergeladen …"
 
 #: src/control/Toolbar.js:222 src/map/Map.js:1526
 msgid "Saving..."
-msgstr "Speichern..."
+msgstr "Speichern …"
 
 #: src/control/Toolbar.js:233
 msgid "Renaming..."
-msgstr "Umbenennen..."
+msgstr "Umbenennen …"
 
 #: src/control/Toolbar.js:548
 msgid "I understand the risks"
@@ -1472,7 +1472,7 @@ msgstr "Lade …"
 
 #: src/core/Socket.js:829
 msgid "Connecting..."
-msgstr "Verbinden..."
+msgstr "Verbinden …"
 
 #: src/core/Socket.js:1164
 msgid ""
@@ -1705,7 +1705,7 @@ msgstr "Keine Kommentare"
 msgid "To paste outside %productName, please first click the 'download' button"
 msgstr ""
 "Um außerhalb von %productName einzufügen, klicken Sie bitte zunächst auf die "
-"Schaltfläche \"Herunterladen\""
+"Schaltfläche „Herunterladen“"
 
 #: src/map/Clipboard.js:290
 msgid "Failed to download clipboard, please re-copy"
@@ -1738,9 +1738,9 @@ msgid ""
 msgstr ""
 "<p>Wenn Sie größere Elemente Ihres Dokuments für andere Anwendungen "
 "freigeben möchten, müssen Sie diese zuerst auf Ihr Gerät herunterladen. "
-"Klicken Sie dazu unten auf die Schaltfläche \"Download starten\" und "
-"anschließend auf \"Kopie in Zwischenablage bestätigen\".</p><p>Wenn Sie "
-"zwischen Dokumenten in %productName kopieren möchten,brauschen Sie nichts "
+"Klicken Sie dazu unten auf die Schaltfläche „Download starten“ und "
+"anschließend auf „Kopie in Zwischenablage bestätigen“.</p><p>Wenn Sie "
+"zwischen Dokumenten in %productName kopieren möchten, brauschen Sie nichts "
 "herunterladen.</p>"
 
 #: src/map/Clipboard.js:903
@@ -1755,7 +1755,7 @@ msgstr ""
 
 #: src/map/Map.js:227
 msgid "Initializing..."
-msgstr "Initialisierung..."
+msgstr "Initialisierung …"
 
 #: src/map/Map.js:434
 #, javascript-format
@@ -1789,7 +1789,7 @@ msgstr ""
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
-msgstr "Hochladen..."
+msgstr "Hochladen …"
 
 #: src/map/handler/Map.FileInserter.js:152
 msgid "Uploading file to server failed with status: %0"
@@ -1798,11 +1798,11 @@ msgstr ""
 
 #: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
-msgstr "Neue Datei aus Vorlage erzeugen..."
+msgstr "Neue Datei aus Vorlage erzeugen …"
 
 #: src/map/handler/Map.WOPI.js:410
 msgid "Creating copy..."
-msgstr "Kopie erstellen..."
+msgstr "Kopie erstellen …"
 
 #~ msgid "Subtitle"
 #~ msgstr "Untertitel"
