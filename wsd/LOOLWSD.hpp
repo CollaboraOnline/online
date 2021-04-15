@@ -455,6 +455,13 @@ protected:
         {
             innerInitialize(self);
         }
+        catch (const Poco::Exception& ex)
+        {
+            LOG_FTL("Failed to initialize LOOLWSD: "
+                    << ex.displayText()
+                    << (ex.nested() ? " (" + ex.nested()->displayText() + ')' : ""));
+            throw; // Nothing further to do.
+        }
         catch (const std::exception& ex)
         {
             LOG_FTL("Failed to initialize LOOLWSD: " << ex.what());
