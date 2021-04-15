@@ -306,9 +306,9 @@ void DocumentBroker::pollThread()
     {
         _poll->poll(SocketPoll::DefaultPollTimeoutMicroS);
 
+#if !MOBILEAPP
         const auto now = std::chrono::steady_clock::now();
 
-#if !MOBILEAPP
         // a tile's data is ~8k, a 4k screen is ~128 256x256 tiles
         if (_tileCache)
             _tileCache->setMaxCacheSize(8 * 1024 * 128 * _sessions.size());
