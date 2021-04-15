@@ -83,99 +83,6 @@ L.Control.Header = L.Class.extend({
 		}
 	},
 
-	select: function (entry, isCurrent) {
-		this.containerObject.setPenPosition(this);
-		this.drawHeaderEntry(entry, /*isOver=*/false, /*isHighlighted=*/true, isCurrent);
-	},
-
-	unselect: function (entry) {
-		this.containerObject.setPenPosition(this);
-		this.drawHeaderEntry(entry, /*isOver=*/false, /*isHighlighted=*/false, false);
-	},
-
-	isHeaderSelected: function (index) {
-		return index === this._current;
-	},
-
-	isHighlighted: function (index) {
-		if (this._selection.start === -1 && this._selection.end === -1) {
-			return index === this._current;
-		}
-		return (this._selection.start <= index && index <= this._selection.end);
-	},
-
-	clearSelection: function () {
-		if (this._selection.start === -1 && this._selection.end === -1)
-			return;
-		var start = (this._selection.start < 1) ? 0 : this._selection.start;
-		var end = this._headerInfo.getNextIndex(this._selection.end);
-
-		for (var i = start; i < end; i = this._headerInfo.getNextIndex(i)) {
-			if (i === this._current) {
-				// after clearing selection, we need to select the header entry for the current cursor position,
-				// since we can't be sure that the selection clearing is due to click on a cell
-				// different from the one where the cursor is already placed
-				this.select(this._headerInfo.getElementData(i), true);
-			} else {
-				this.unselect(this._headerInfo.getElementData(i));
-			}
-		}
-
-		this._selection.start = this._selection.end = -1;
-		this.containerObject.requestReDraw();
-	},
-
-	// Sets the internal this._selection values accordingly, unselects the previous set of rows/cols and
-	// selects the new set of rows/cols.
-	// Start and end are given in pixels absolute to the document
-	updateSelection: function(start, end) {
-		if (!this._headerInfo)
-			return;
-
-		start = this._headerInfo.docToHeaderPos(start);
-		end = this._headerInfo.docToHeaderPos(end);
-
-		var x0 = 0, x1 = 0;
-		var itStart = -1, itEnd = -1;
-
-		// if the start selection position is above/on the left of the first header entry,
-		// but the end selection position is below/on the right of it
-		// then we set the start selected entry to the first header entry.
-		var entry = this._headerInfo.getElementData(this._headerInfo.getMinIndex());
-		if (entry) {
-			x0 = entry.pos - entry.size;
-			if (start < x0 && end > x0) {
-				itStart = 0;
-			}
-		}
-
-		this._headerInfo.forEachElement((function(entry) {
-			x0 = entry.pos - entry.size;
-			x1 = entry.pos;
-			if (start < x1 && end > x0) {
-				this.select(entry, false);
-				if (itStart === -1) {
-					itStart = entry.index;
-				}
-			} else {
-				this.unselect(entry);
-				if (itStart !== -1 && itEnd === -1) {
-					itEnd = this._headerInfo.getPreviousIndex(entry.index);
-				}
-			}
-		}).bind(this));
-
-		// if end is greater than the last fetched header position set itEnd to the max possible value
-		// without this hack selecting a whole row and then a whole column (or viceversa) leads to an incorrect selection
-		if (itStart !== -1 && itEnd === -1) {
-			itEnd = this._headerInfo.getMaxIndex();
-		}
-
-		this._selection.start = itStart;
-		this._selection.end = itEnd;
-		//this.containerObject.requestReDraw();
-	},
-
 	onLongPress: function () {
 		if (this._map.isPermissionEdit()) {
 			window.contextMenuWizard = true;
@@ -190,41 +97,8 @@ L.Control.Header = L.Class.extend({
 		}
 	},
 
-	_onClearSelection: function () {
-		this.clearSelection();
-	},
-
-	// Called whenever the cell cursor is in a cell corresponding to the cursorPos-th
-	// column/row.
-	updateCurrent: function (cursorPos, slim) {
-		if (!this._headerInfo || !this._headerInfo._elements) {return;}
-
-		if (cursorPos < 0) {
-			this.unselect(this._headerInfo.getElementData(this._current));
-			this._current = -1;
-			return;
-		}
-
-		var prevEntry = cursorPos > 0 ? this._headerInfo.getPreviousIndex(cursorPos) : null;
-		var zeroSizeEntry = slim && prevEntry && prevEntry.size === 0;
-
-		var entry = this._headerInfo.getElementData(cursorPos);
-		if (this._selection.start === -1 && this._selection.end === -1) {
-			// when a whole row (column) is selected the cell cursor is moved to the first column (row)
-			// but this action should not cause to select/unselect anything, on the contrary we end up
-			// with all column (row) header entries selected but the one where the cell cursor was
-			// previously placed
-			this.unselect(this._headerInfo.getElementData(this._current));
-			// no selection when the cell cursor is slim
-			if (entry && !zeroSizeEntry)
-				this.select(entry, true);
-		}
-		this._current = entry && !zeroSizeEntry ? entry.index : -1;
-		//this.containerObject.requestReDraw();
-	},
-
 	optimalHeight: function(index) {
-		if (!this.isHighlighted(index)) {
+		if (!this._headerInfo.getElementData(index).isCurrent) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:SetOptimalRowHeight');
@@ -234,45 +108,38 @@ L.Control.Header = L.Class.extend({
 		// First select the corresponding row because
 		// .uno:InsertRows doesn't accept any row number
 		// as argument and just inserts before the selected row
-		if (!this.isHighlighted(index)) {
+		if (!this._headerInfo.getElementData(index).isCurrent) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertRows');
 	},
 
 	insertRowBelow: function(index) {
-		if (!this.isHighlighted(index)) {
+		if (!this._headerInfo.getElementData(index).isCurrent) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertRowsAfter');
 	},
 
 	deleteRow: function(index) {
-		if (!this.isHighlighted(index)) {
+		if (!this._headerInfo.getElementData(index).isCurrent) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:DeleteRows');
 	},
 
 	hideRow: function(index) {
-		if (!this.isHighlighted(index)) {
+		if (!this._headerInfo.getElementData(index).isCurrent) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:HideRow');
 	},
 
 	showRow: function(index) {
-		if (!this.isHighlighted(index)) {
+		if (!this._headerInfo.getElementData(index).isCurrent) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:ShowRow');
-	},
-
-	_onUpdateCurrentRow: function (e) {
-		var y = e.curY - 1; // 1-based to 0-based.
-		var h = this._twipsToPixels(e.height);
-		var slim = h <= 1;
-		this.updateCurrent(y, slim);
 	},
 
 	_selectRow: function(row, modifier) {
@@ -345,7 +212,7 @@ L.Control.Header = L.Class.extend({
 	},
 
 	optimalWidth: function(index) {
-		if (!this.isHighlighted(index)) {
+		if (!this._headerInfo.getElementData(index).isCurrent) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:SetOptimalColumnWidth');
@@ -355,7 +222,7 @@ L.Control.Header = L.Class.extend({
 		// First select the corresponding column because
 		// .uno:InsertColumn doesn't accept any column number
 		// as argument and just inserts before the selected column
-		if (!this.isHighlighted(index)) {
+		if (!this._headerInfo.getElementData(index).isCurrent) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertColumns');
@@ -363,7 +230,7 @@ L.Control.Header = L.Class.extend({
 	},
 
 	insertColumnAfter: function(index) {
-		if (!this.isHighlighted(index)) {
+		if (!this._headerInfo.getElementData(index).isCurrent) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:InsertColumnsAfter');
@@ -371,7 +238,7 @@ L.Control.Header = L.Class.extend({
 	},
 
 	deleteColumn: function(index) {
-		if (!this.isHighlighted(index)) {
+		if (!this._headerInfo.getElementData(index).isCurrent) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:DeleteColumns');
@@ -379,7 +246,7 @@ L.Control.Header = L.Class.extend({
 	},
 
 	hideColumn: function(index) {
-		if (!this.isHighlighted(index)) {
+		if (!this._headerInfo.getElementData(index).isCurrent) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:HideColumn');
@@ -387,18 +254,11 @@ L.Control.Header = L.Class.extend({
 	},
 
 	showColumn: function(index) {
-		if (!this.isHighlighted(index)) {
+		if (!this._headerInfo.getElementData(index).isCurrent) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:ShowColumn');
 		this._updateColumnHeader();
-	},
-
-	_onUpdateCurrentColumn: function (e) {
-		var x = e.curX - 1; // 1-based to 0-based.
-		var w = this._twipsToPixels(e.width);
-		var slim = w <= 1;
-		this.updateCurrent(x, slim);
 	},
 
 	_updateColumnHeader: function () {
@@ -502,7 +362,7 @@ L.Control.Header = L.Class.extend({
 			var start = end - entry.size;
 			if (position >= start && position < end) {
 				var resizeAreaStart = Math.max(start, end - 3 * that.dpiScale);
-				if (that.isHeaderSelected(entry.index) || window.mode.isMobile()) {
+				if (entry.isCurrent || window.mode.isMobile()) {
 					resizeAreaStart = end - that._resizeHandleSize;
 				}
 				var isMouseOverResizeArea = (position > resizeAreaStart);
@@ -526,9 +386,8 @@ L.Control.Header = L.Class.extend({
 		}
 
 		if (this._mouseOverEntry) {
-			var mouseOverIsCurrent = (this._mouseOverEntry.index == this._current);
 			this.containerObject.setPenPosition(this);
-			this.drawHeaderEntry(this._mouseOverEntry, /*isOver: */ false, null, mouseOverIsCurrent);
+			this.drawHeaderEntry(this._mouseOverEntry);
 			this._mouseOverEntry = null;
 		}
 		this._hitResizeArea = false;
@@ -584,16 +443,18 @@ L.Control.Header = L.Class.extend({
 			// If mouse was over another entry previously, we draw that again (without mouse-over effect).
 			if (this._mouseOverEntry && (!result || result.entry.index !== this._mouseOverEntry.index)) {
 				this.containerObject.setPenPosition(this);
-				this.drawHeaderEntry(this._mouseOverEntry, false, null, (this._mouseOverEntry.index === this._current));
+				this._mouseOverEntry.isOver = false;
+				this.drawHeaderEntry(this._mouseOverEntry);
 			}
 
 			var isMouseOverResizeArea = false;
 
 			if (result) { // Is mouse over an entry.
 				this._mouseOverEntry = result.entry;
+				this._mouseOverEntry.isOver = true;
 				this._lastMouseOverIndex = this._mouseOverEntry.index; // used by context menu
 				this.containerObject.setPenPosition(this);
-				this.drawHeaderEntry(result.entry, true, null, result.entry.index === this._current);
+				this.drawHeaderEntry(result.entry);
 				isMouseOverResizeArea = result.hit;
 			}
 
@@ -611,20 +472,6 @@ L.Control.Header = L.Class.extend({
 			this._dragDistance = dragDistance;
 			this.containerObject.requestReDraw(); // Remove previously drawn line and paint a new one.
 		}
-	},
-
-	_onGroupControlClick: function (e) {
-		var group = e.group;
-		if (!group)
-			return false;
-
-		var pos = this._headerInfo.headerToDocPos(
-			this._getParallelPos(this._mouseEventToCanvasPos(this._canvas, e)));
-		if (group.startPos < pos && pos < group.startPos + this._groupHeadSize) {
-			this._updateOutlineState(/*isColumnOutline: */ this._isColumn, group);
-			return true;
-		}
-		return false;
 	},
 
 	onDoubleClick: function () {
@@ -674,13 +521,6 @@ L.Control.Header = L.Class.extend({
 	},
 
 	onMouseWheel: function() {},
-	onDragEnd: function () {},
-	getHeaderEntryBoundingClientRect: function () {},
-	drawHeaderEntry: function () {},
-	drawGroupControl: function () {},
-	_getParallelPos: function () {},
-	_getOrthogonalPos: function () {}
-
 });
 
 L.Control.Header.HeaderInfo = L.Class.extend({
@@ -693,11 +533,33 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 		console.assert(this._map._docLayer.sheetGeometry, 'no sheet geometry data-structure found!');
 		var sheetGeom = this._map._docLayer.sheetGeometry;
 		this._dimGeom = this._isColumn ? sheetGeom.getColumnsGeometry() : sheetGeom.getRowsGeometry();
-		//this.update();
+	},
+
+	isHeaderEntryHighLighted: function (cellSelections, ordinate) {
+		if (this._isColumn && this._map.wholeRowSelected)
+			return true;
+		else if (!this._isColumn && this._map.wholeColumnSelected)
+			return true;
+		else if (this._isColumn && cellSelections.length > 0) {
+			return cellSelections.find(function (element) { return element.containsPixelOrdinateX(ordinate);}) ? true: false;
+		}
+		else if (!this._isColumn && cellSelections.length > 0) {
+			return cellSelections.find(function (element) { return element.containsPixelOrdinateY(ordinate);}) ? true: false;
+		}
+		else
+			return false;
 	},
 
 	update: function (section) {
-		var startPx = this._isColumn === true ? section.documentTopLeft[0]: section.documentTopLeft[1]; // this._isColumn ? bounds.getTopLeft().x : bounds.getTopLeft().y;
+		var cellSelections = this._map._docLayer._cellSelections;
+		var that = this;
+		var currentIndex = -1;
+
+		if (this._map._docLayer._cellCursorXY) {
+			currentIndex = this._isColumn ? this._map._docLayer._cellCursorXY.x: this._map._docLayer._cellCursorXY.y;
+		}
+
+		var startPx = this._isColumn === true ? section.documentTopLeft[0]: section.documentTopLeft[1];
 		this._docVisStart = startPx;
 		var endPx = startPx + (this._isColumn === true ? section.size[0]: section.size[1]);
 		var startIdx = this._dimGeom.getIndexFromPos(startPx, 'corepixels');
@@ -726,6 +588,8 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 							pos: data.startpos + data.size, // end position on the header canvas
 							size: data.size,
 							origsize: data.size,
+							isHighlighted: that.isHeaderEntryHighLighted(cellSelections, data.startpos + data.size * 0.5),
+							isCurrent: idx === currentIndex ? true: false
 						};
 					}.bind(this)
 				);
@@ -750,6 +614,8 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 			pos: firstFreeEnd, // end position on the header canvas
 			size: firstFreeSize,
 			origsize: dataFirstFree.size,
+			isHighlighted: that.isHeaderEntryHighLighted(cellSelections, dataFirstFree.startpos + dataFirstFree.size * 0.5),
+			isCurrent: startIdx === currentIndex ? true: false
 		};
 
 		this._dimGeom.forEachInRange(startIdx + 1,
@@ -759,6 +625,8 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 					pos: data.startpos - startPx + data.size, // end position on the header canvas
 					size: data.size,
 					origsize: data.size,
+					isHighlighted: that.isHeaderEntryHighLighted(cellSelections, data.startpos + data.size * 0.5),
+					isCurrent: idx === currentIndex ? true: false
 				};
 			}.bind(this));
 
@@ -767,7 +635,6 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 	},
 
 	docToHeaderPos: function (docPos) {
-
 		if (!this._hasSplits) {
 			return docPos - this._docVisStart;
 		}
