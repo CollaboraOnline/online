@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <atomic>
 #include <chrono>
+#include <cstdio>
 #include <map>
 #include <set>
 #include <unordered_set>
@@ -240,6 +241,7 @@ public:
     static std::string WelcomeFilesRoot; ///< From where we should serve the release notes (or otherwise useful content) that is shown on first install or version update.
     static std::string ServiceRoot; ///< There are installations that need prefixing every page with some path.
     static std::string LOKitVersion;
+    static FILE *EventTraceFile;
     static std::string LogLevel;
     static bool AnonymizeUserData;
     static bool CheckLoolUser;
