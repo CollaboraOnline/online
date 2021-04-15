@@ -1,12 +1,11 @@
 <style>
     h1 { text-align: center; }
     table.help { border-collapse: collapse; width: 100%; }
-    td.function { padding: 5px; border-bottom: solid black 1px; width: 70%; }
-    td.shortcut { padding: 5px; border-bottom: solid black 1px; font-weight: bold; width: 30%; }
+    td.function { padding: 5px; border-bottom: solid #ddd 1px; width: 70%; }
+    td.shortcut { padding: 5px; border-bottom: solid #ddd 1px; font-weight: bold; width: 30%; }
     .productname { font-weight:bold; font-style:italic; }
     .ui { font-weight:bold; }
     .def { font-weight:bold; }
-    .kbd { background-color: #eee; border-radius: 3px; border: 1px solid #b4b4b4; box-shadow: 0 1px 1px rgba(0,0,0,.2), 0 2px 0 0 rgba(255,255,255,.7) inset; color: #333; display: inline-block; font-family: monospace; font-size: .85em; font-weight: 700; line-height: 1; padding: 2px 4px; white-space: nowrap; }
     .toc-h2 { font-weight:bold; }
     .toc-h3 { margin-left:0.1965in; }
     .screenshot { text-align:center; margin: 0.1in; }
@@ -21,249 +20,249 @@
     <div id="general-shortcuts">
         <h2>General Keyboard Shortcuts</h2>
         <table class="help">
-            <tr> <td class="function">Undo</td> <td class="shortcut">Ctrl + Z</td> </tr>
-            <tr> <td class="function">Redo</td> <td class="shortcut">Ctrl + Y</td> </tr>
-            <tr> <td class="function">Cut</td> <td class="shortcut">Ctrl + X</td> </tr>
-            <tr> <td class="function">Paste as unformatted text</td> <td class="shortcut">Ctrl + Shift + V</td> </tr>
-            <tr> <td class="function">Paste special</td> <td class="shortcut">Ctrl + Alt + Shift + V</td> </tr>
-            <tr> <td class="function">Print (Download as PDF)</td> <td class="shortcut">Ctrl + P</td> </tr>
-            <tr> <td class="function">Display the Keyboard shortcuts help</td> <td class="shortcut">Ctrl + Shift + ?</td> </tr>
+            <tr> <td class="function">Undo</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Z</kbd></td> </tr>
+            <tr> <td class="function">Redo</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Y</kbd></td> </tr>
+            <tr> <td class="function">Cut</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>X</kbd></td> </tr>
+            <tr> <td class="function">Paste as unformatted text</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>V</kbd></td> </tr>
+            <tr> <td class="function">Paste special</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>V</kbd></td> </tr>
+            <tr> <td class="function">Print (Download as PDF)</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>P</kbd></td> </tr>
+            <tr> <td class="function">Display the Keyboard shortcuts help</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>?</kbd></td> </tr>
         </table>
     </div>
     <div id="text-shortcuts" style="display: none;">
         <h2>Text formatting</h2>
         <table class="help">
-            <tr> <td class="function">Bold</td> <td class="shortcut">Ctrl + B</td> </tr>
-            <tr> <td class="function">Italic</td> <td class="shortcut">Ctrl + I</td> </tr>
-            <tr> <td class="function">Underline</td> <td class="shortcut">Ctrl + U</td> </tr>
-            <tr> <td class="function">Double Underline</td> <td class="shortcut">Ctrl + D</td> </tr>
-            <tr> <td class="function">Strikethrough</td> <td class="shortcut">Ctrl + Alt + 5</td> </tr>
-            <tr> <td class="function">Superscript</td> <td class="shortcut">Ctrl + Shift + P</td> </tr>
-            <tr> <td class="function">Subscript</td> <td class="shortcut">Ctrl + Shift + B</td> </tr>
-            <tr> <td class="function">Remove direct formatting</td> <td class="shortcut">Ctrl + M</td> </tr>
+            <tr> <td class="function">Bold</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>B</kbd></td> </tr>
+            <tr> <td class="function">Italic</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>I</kbd></td> </tr>
+            <tr> <td class="function">Underline</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>U</kbd></td> </tr>
+            <tr> <td class="function">Double Underline</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>D</kbd></td> </tr>
+            <tr> <td class="function">Strikethrough</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>5</kbd></td> </tr>
+            <tr> <td class="function">Superscript</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>P</kbd></td> </tr>
+            <tr> <td class="function">Subscript</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>B</kbd></td> </tr>
+            <tr> <td class="function">Remove direct formatting</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>M</kbd></td> </tr>
         </table>
         <h2>Paragraph formatting</h2>
         <table class="help">
-            <tr> <td class="function">Align Center</td> <td class="shortcut">Ctrl + E</td> </tr>
-            <tr> <td class="function">Align Left</td> <td class="shortcut">Ctrl + L</td> </tr>
-            <tr> <td class="function">Align Right</td> <td class="shortcut">Ctrl + R</td> </tr>
-            <tr> <td class="function">Justify</td> <td class="shortcut">Ctrl + J</td> </tr>
-            <tr> <td class="function">Apply Default paragraph style</td> <td class="shortcut">Ctrl + 0</td> </tr>
-            <tr> <td class="function">Apply Heading 1 paragraph style</td> <td class="shortcut">Ctrl + 1</td> </tr>
-            <tr> <td class="function">Apply Heading 2 paragraph style</td> <td class="shortcut">Ctrl + 2</td> </tr>
-            <tr> <td class="function">Apply Heading 3 paragraph style</td> <td class="shortcut">Ctrl + 3</td> </tr>
-            <tr> <td class="function">Apply Heading 4 paragraph style</td> <td class="shortcut">Ctrl + 4</td> </tr>
-            <tr> <td class="function">Apply Heading 5 paragraph style</td> <td class="shortcut">Ctrl + 5</td> </tr>
+            <tr> <td class="function">Align Center</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>E</kbd></td> </tr>
+            <tr> <td class="function">Align Left</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>L</kbd></td> </tr>
+            <tr> <td class="function">Align Right</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>R</kbd></td> </tr>
+            <tr> <td class="function">Justify</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>J</kbd></td> </tr>
+            <tr> <td class="function">Apply Default paragraph style</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>0</kbd></td> </tr>
+            <tr> <td class="function">Apply Heading 1 paragraph style</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>1</kbd></td> </tr>
+            <tr> <td class="function">Apply Heading 2 paragraph style</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>2</kbd></td> </tr>
+            <tr> <td class="function">Apply Heading 3 paragraph style</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>3</kbd></td> </tr>
+            <tr> <td class="function">Apply Heading 4 paragraph style</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>4</kbd></td> </tr>
+            <tr> <td class="function">Apply Heading 5 paragraph style</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>5</kbd></td> </tr>
         </table>
         <h2>Text selection and navigation in document</h2>
         <table class="help">
-            <tr> <td class="function">Select All</td> <td class="shortcut">Ctrl + A</td> </tr>
-            <tr> <td class="function">Move cursor to the left</td> <td class="shortcut">Arrow Left</td> </tr>
-            <tr> <td class="function">Move cursor with selection to the left</td> <td class="shortcut">Shift + Arrow Left</td> </tr>
-            <tr> <td class="function">Go to beginning of a word</td> <td class="shortcut">Ctrl + Arrow Left</td> </tr>
-            <tr> <td class="function">Select to the left word by word</td> <td class="shortcut">Ctrl + Shift + Arrow Left</td> </tr>
-            <tr> <td class="function">Move cursor to the right</td> <td class="shortcut">Arrow Right</td> </tr>
-            <tr> <td class="function">Move cursor with selection to the right</td> <td class="shortcut">Shift + Arrow Right</td> </tr>
-            <tr> <td class="function">Go to start of the next word</td> <td class="shortcut">Ctrl + Arrow Right</td> </tr>
-            <tr> <td class="function">Select to the right word by word</td> <td class="shortcut">Ctrl + Shift + Arrow Right</td> </tr>
-            <tr> <td class="function">Move cursor up one line</td> <td class="shortcut">Arrow Up</td> </tr>
-            <tr> <td class="function">Select lines in upwards direction</td> <td class="shortcut">Shift + Arrow Up</td> </tr>
-            <tr> <td class="function">Move cursor to beginning of the previous paragraph</td> <td class="shortcut">Ctrl + Arrow Up</td> </tr>
-            <tr> <td class="function">Select to beginning of paragraph</td> <td class="shortcut">Ctrl + Shift + Arrow Up</td> </tr>
-            <tr> <td class="function">Move cursor down one line</td> <td class="shortcut">Arrow Down</td> </tr>
-            <tr> <td class="function">Select lines in downwards direction</td> <td class="shortcut">Shift + Arrow Down</td> </tr>
-            <tr> <td class="function">Move cursor to beginning of the next paragraph</td> <td class="shortcut">Ctrl + Arrow Down</td> </tr>
-            <tr> <td class="function">Select to end of paragraph</td> <td class="shortcut">Ctrl + Shift + Arrow Down</td> </tr>
-            <tr> <td class="function">Go to beginning of line</td> <td class="shortcut">Home</td> </tr>
-            <tr> <td class="function">Go and select to the beginning of a line</td> <td class="shortcut">Shift + Home</td> </tr>
-            <tr> <td class="function">Go to start of document</td> <td class="shortcut">Ctrl + Home</td> </tr>
-            <tr> <td class="function">Go and select text to start of document</td> <td class="shortcut">Ctrl + Shift + Home</td> </tr>
-            <tr> <td class="function">Go to end of line</td> <td class="shortcut">End</td> </tr>
-            <tr> <td class="function">Go and select to the end of a line</td> <td class="shortcut">Shift + End</td> </tr>
-            <tr> <td class="function">Go to end of document</td> <td class="shortcut">Ctrl + End</td> </tr>
-            <tr> <td class="function">Go and select text to end of document</td> <td class="shortcut">Ctrl + Shift + End</td> </tr>
-            <tr> <td class="function">Move the view up one page</td> <td class="shortcut">PageUp</td> </tr>
-            <tr> <td class="function">Switch cursor between text and header</td> <td class="shortcut">Ctrl + PageUp</td> </tr>
-            <tr> <td class="function">Extend the selection up one page</td> <td class="shortcut">Shift + PageUp</td> </tr>
-            <tr> <td class="function">Move the view down one page</td> <td class="shortcut">PageDown</td> </tr>
-            <tr> <td class="function">Switch cursor between text and footer</td> <td class="shortcut">Ctrl + PageDown</td> </tr>
-            <tr> <td class="function">Extend the selection down one page</td> <td class="shortcut">Shift + PageDown</td> </tr>
-            <tr> <td class="function">Delete to beginning of word</td> <td class="shortcut">Ctrl + Backspace</td> </tr>
-            <tr> <td class="function">Delete to end of word</td> <td class="shortcut">Ctrl + Del</td> </tr>
-            <tr> <td class="function">Delete to beginning of sentence</td> <td class="shortcut">Ctrl + Shift + Backspace</td> </tr>
-            <tr> <td class="function">Delete to end of sentence</td> <td class="shortcut">Ctrl + Shift + Del</td> </tr>
+            <tr> <td class="function">Select All</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>A</kbd></td> </tr>
+            <tr> <td class="function">Move cursor to the left</td> <td class="shortcut"><kbd>Arrow Left</kbd></td> </tr>
+            <tr> <td class="function">Move cursor with selection to the left</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Left</kbd></td> </tr>
+            <tr> <td class="function">Go to beginning of a word</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow Left</kbd></td> </tr>
+            <tr> <td class="function">Select to the left word by word</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Left</kbd></td> </tr>
+            <tr> <td class="function">Move cursor to the right</td> <td class="shortcut"><kbd>Arrow Right</kbd></td> </tr>
+            <tr> <td class="function">Move cursor with selection to the right</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Right</kbd></td> </tr>
+            <tr> <td class="function">Go to start of the next word</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow Right</kbd></td> </tr>
+            <tr> <td class="function">Select to the right word by word</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Right</kbd></td> </tr>
+            <tr> <td class="function">Move cursor up one line</td> <td class="shortcut"><kbd>Arrow Up</kbd></td> </tr>
+            <tr> <td class="function">Select lines in upwards direction</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Up</kbd></td> </tr>
+            <tr> <td class="function">Move cursor to beginning of the previous paragraph</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow Up</kbd></td> </tr>
+            <tr> <td class="function">Select to beginning of paragraph</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Up</kbd></td> </tr>
+            <tr> <td class="function">Move cursor down one line</td> <td class="shortcut"><kbd>Arrow Down</kbd></td> </tr>
+            <tr> <td class="function">Select lines in downwards direction</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Down</kbd></td> </tr>
+            <tr> <td class="function">Move cursor to beginning of the next paragraph</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow Down</kbd></td> </tr>
+            <tr> <td class="function">Select to end of paragraph</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Down</kbd></td> </tr>
+            <tr> <td class="function">Go to beginning of line</td> <td class="shortcut"><kbd>Home</kbd></td> </tr>
+            <tr> <td class="function">Go and select to the beginning of a line</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Home</kbd></td> </tr>
+            <tr> <td class="function">Go to start of document</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Home</kbd></td> </tr>
+            <tr> <td class="function">Go and select text to start of document</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Home</kbd></td> </tr>
+            <tr> <td class="function">Go to end of line</td> <td class="shortcut"><kbd>End</kbd></td> </tr>
+            <tr> <td class="function">Go and select to the end of a line</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>End</kbd></td> </tr>
+            <tr> <td class="function">Go to end of document</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>End</kbd></td> </tr>
+            <tr> <td class="function">Go and select text to end of document</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>End</kbd></td> </tr>
+            <tr> <td class="function">Move the view up one page</td> <td class="shortcut"><kbd>PageUp</kbd></td> </tr>
+            <tr> <td class="function">Switch cursor between text and header</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>PageUp</kbd></td> </tr>
+            <tr> <td class="function">Extend the selection up one page</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>PageUp</kbd></td> </tr>
+            <tr> <td class="function">Move the view down one page</td> <td class="shortcut"><kbd>PageDown</kbd></td> </tr>
+            <tr> <td class="function">Switch cursor between text and footer</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>PageDown</kbd></td> </tr>
+            <tr> <td class="function">Extend the selection down one page</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>PageDown</kbd></td> </tr>
+            <tr> <td class="function">Delete to beginning of word</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Backspace</kbd></td> </tr>
+            <tr> <td class="function">Delete to end of word</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Del</kbd></td> </tr>
+            <tr> <td class="function">Delete to beginning of sentence</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Backspace</kbd></td> </tr>
+            <tr> <td class="function">Delete to end of sentence</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Del</kbd></td> </tr>
         </table>
         <h2>Shortcut Keys for Tables</h2>
         <table class="help">
-            <tr> <td class="shortcut">Ctrl + A</td>  <td class="function">If the active cell is empty: selects the whole table. Otherwise: selects the contents of the active cell. Pressing again selects the entire table.</td>  </tr>
-            <tr> <td class="shortcut">Ctrl + Home</td>  <td class="function">If the active cell is empty: goes to the beginning of the table. Otherwise: first press goes to beginning of the active cell, second press goes to beginning of the current table, third press goes to beginning of document.</td>  </tr>
-            <tr> <td class="shortcut">Ctrl + End</td>  <td class="function">If the active cell is empty: goes to the end of the table. Otherwise: first press goes to the end of the active cell, second press goes to the end of the current table, third press goes to the end of the document.</td>  </tr>
-            <tr> <td class="shortcut">Ctrl + Tab</td>  <td class="function">Inserts a tab stop (only in tables). Depending on the Window Manager in use, Alt + Tab may be used instead.</td>  </tr>
-            <tr> <td class="shortcut">Alt + Arrow Keys</td>  <td class="function">Increases/decreases the size of the column/row on the right/bottom cell edge</td>  </tr>
-            <tr> <td class="shortcut">Alt + Shift + Arrow Keys</td>  <td class="function">Increase/decrease the size of the column/row on the left/top cell edge</td>  </tr>
-            <tr> <td class="shortcut">Alt + Ctrl + Arrow Keys</td>  <td class="function">Like Alt, but only the active cell is modified</td>  </tr>
-            <tr> <td class="shortcut">Ctrl + Alt + Shift + Arrow Keys</td>  <td class="function">Like Alt, but only the active cell is modified</td>  </tr>
-            <tr> <td class="shortcut">Alt + Insert</td>  <td class="function">3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key inserts cell</td>  </tr>
-            <tr> <td class="shortcut">Alt + Del</td>  <td class="function">3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key merges cell with neighboring cell</td>  </tr>
-            <tr> <td class="shortcut">Shift + Ctrl + Del</td>  <td class="function"> <p>If no whole cell is selected, the text from the cursor to the end of the current sentence is deleted. If the cursor is at the end of a cell, and no whole cell is selected, the contents of the next cell are deleted.</p>
+            <tr> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>A</kbd></td>  <td class="function">If the active cell is empty: selects the whole table. Otherwise: selects the contents of the active cell. Pressing again selects the entire table.</td>  </tr>
+            <tr> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Home</kbd></td>  <td class="function">If the active cell is empty: goes to the beginning of the table. Otherwise: first press goes to beginning of the active cell, second press goes to beginning of the current table, third press goes to beginning of document.</td>  </tr>
+            <tr> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>End</kbd></td>  <td class="function">If the active cell is empty: goes to the end of the table. Otherwise: first press goes to the end of the active cell, second press goes to the end of the current table, third press goes to the end of the document.</td>  </tr>
+            <tr> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Tab</kbd></td>  <td class="function">Inserts a tab stop (only in tables). Depending on the Window Manager in use, <kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>Tab</kbd> may be used instead.</td>  </tr>
+            <tr> <td class="shortcut"><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>Arrow Keys</kbd></td>  <td class="function">Increases/decreases the size of the column/row on the right/bottom cell edge</td>  </tr>
+            <tr> <td class="shortcut"><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Keys</kbd></td>  <td class="function">Increase/decrease the size of the column/row on the left/top cell edge</td>  </tr>
+            <tr> <td class="shortcut"><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow Keys</kbd></td>  <td class="function">Like Alt, but only the active cell is modified</td>  </tr>
+            <tr> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Keys</kbd></td>  <td class="function">Like Alt, but only the active cell is modified</td>  </tr>
+            <tr> <td class="shortcut"><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>Insert</kbd></td>  <td class="function">3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow Key</kbd> inserts cell</td>  </tr>
+            <tr> <td class="shortcut"><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>Del</kbd></td>  <td class="function">3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow key</kbd> merges cell with neighboring cell</td>  </tr>
+            <tr> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Del</kbd></td>  <td class="function"> <p>If no whole cell is selected, the text from the cursor to the end of the current sentence is deleted. If the cursor is at the end of a cell, and no whole cell is selected, the contents of the next cell are deleted.</p>
 <p>If no whole cell is selected and the cursor is at the end of the table, the paragraph following the table will be deleted, unless it is the last paragraph in the document.</p>
 <p>If one or more cells are selected, the whole rows containing the selection will be deleted. If all rows are selected completely or partially, the entire table will be deleted.</p>
 </td>  </tr>
         </table>
         <h2>Word processor functions</h2>
         <table class="help">
-            <tr> <td class="function">Insert footnote</td> <td class="shortcut">Ctrl + Alt + F</td> </tr>
-            <tr> <td class="function">Insert endnote</td> <td class="shortcut">Ctrl + Alt + D</td> </tr>
-            <tr> <td class="function">Insert comment</td> <td class="shortcut">Ctrl + Alt + C</td> </tr>
-            <!-- <tr> <td class="function">Calculates the selected text and copies the result to the clipboard.</td> <td class="shortcut">Ctrl + Plus Key(+)</td> </tr> -->
-            <tr> <td class="function">Insert soft hyphen</td> <td class="shortcut">Ctrl + -</td> </tr>
-            <tr> <td class="function">Insert non-breaking hyphen</td> <td class="shortcut">Ctrl + Shift + -</td> </tr>
-            <!-- <tr> <td class="function">Run macro field</td> <td class="shortcut">Ctrl + * (on numeric keypad)</td> </tr> -->
-            <tr> <td class="function">Insert non-breaking space</td> <td class="shortcut">Ctrl + Shift + Space</td> </tr>
-            <tr> <td class="function">Insert line break</td> <td class="shortcut">Shift + Enter</td> </tr>
-            <tr> <td class="function">Manual page break</td> <td class="shortcut">Ctrl + Enter</td> </tr>
-            <tr> <td class="function">Column break (in multicolumnar text)</td> <td class="shortcut">Ctrl + Shift + Enter</td> </tr>
-            <tr> <td class="function">Insert new paragraph directly before or after a section, or before a table</td> <td class="shortcut">Alt + Enter</td> </tr>
-            <tr> <td class="function">Insert new paragraph without numbering inside a list. Does not work when the cursor is at the end of the list.</td> <td class="shortcut">Alt + Enter</td> </tr>
+            <tr> <td class="function">Insert footnote</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>F</kbd></td> </tr>
+            <tr> <td class="function">Insert endnote</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>D</kbd></td> </tr>
+            <tr> <td class="function">Insert comment</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>C</kbd></td> </tr>
+            <!-- <tr> <td class="function">Calculates the selected text and copies the result to the clipboard.</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span>Plus Key(+)</td> </tr> -->
+            <tr> <td class="function">Insert soft hyphen</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>-</kbd></td> </tr>
+            <tr> <td class="function">Insert non-breaking hyphen</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>-</kbd></td> </tr>
+            <!-- <tr> <td class="function">Run macro field</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span>* (on numeric keypad)</td> </tr> -->
+            <tr> <td class="function">Insert non-breaking space</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Space</kbd></td> </tr>
+            <tr> <td class="function">Insert line break</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Enter</kbd></td> </tr>
+            <tr> <td class="function">Manual page break</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Enter</kbd></td> </tr>
+            <tr> <td class="function">Column break (in multicolumnar text)</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Enter</kbd></td> </tr>
+            <tr> <td class="function">Insert new paragraph directly before or after a section, or before a table</td> <td class="shortcut"><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>Enter</kbd></td> </tr>
+            <tr> <td class="function">Insert new paragraph without numbering inside a list. Does not work when the cursor is at the end of the list.</td> <td class="shortcut"><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>Enter</kbd></td> </tr>
         </table>
     </div>
     <div id="spreadsheet-shortcuts" style="display: none;">
         <h2>Cell formatting</h2>
         <table class="help">
-            <tr> <td class="function">Bold</td> <td class="shortcut">Ctrl + B</td> </tr>
-            <tr> <td class="function">Italic</td> <td class="shortcut">Ctrl + I</td> </tr>
-            <tr> <td class="function">Underline</td> <td class="shortcut">Ctrl + U</td> </tr>
-            <tr> <td class="function">Strikethrough</td> <td class="shortcut">Ctrl + Alt + 5</td> </tr>
-            <tr> <td class="function">Remove direct formatting</td> <td class="shortcut">Ctrl + M</td> </tr>
-            <tr> <td class="function">Insert comment</td> <td class="shortcut">Ctrl + Alt + C</td> </tr>
-            <tr> <td class="function">Display comment</td> <td class="shortcut">Ctrl + F1</td> </tr>
-            <tr> <td class="function">Fill Down</td> <td class="shortcut">Ctrl + D</td> </tr>
-            <tr> <td class="function">Select All</td> <td class="shortcut">Ctrl + A</td> </tr>
-            <tr> <td class="function">Align Center</td> <td class="shortcut">Ctrl + E</td> </tr>
-            <tr> <td class="function">Align Left</td> <td class="shortcut">Ctrl + L</td> </tr>
-            <tr> <td class="function">Align Right</td> <td class="shortcut">Ctrl + R</td> </tr>
-            <tr> <td class="function">Justify</td> <td class="shortcut">Ctrl + J</td> </tr>
-            <tr> <td class="function">Set Optimal Column Width</td> <td class="shortcut">Ctrl + 3</td> </tr>
-            <tr> <td class="function">Two decimal places, thousands separator</td> <td class="shortcut">Ctrl + Shift + 1</td> </tr>
-            <tr> <td class="function">Standard exponential format</td> <td class="shortcut">Ctrl + Shift + 2</td> </tr>
-            <tr> <td class="function">Standard date format</td> <td class="shortcut">Ctrl + Shift + 3</td> </tr>
-            <tr> <td class="function">Standard currency format</td> <td class="shortcut">Ctrl + Shift + 4</td> </tr>
-            <tr> <td class="function">Standard percentage format (two decimal places)</td> <td class="shortcut">Ctrl + Shift + 5</td> </tr>
-            <tr> <td class="function">Standard format</td> <td class="shortcut">Ctrl + Shift + 6</td> </tr>
+            <tr> <td class="function">Bold</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>B</kbd></td> </tr>
+            <tr> <td class="function">Italic</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>I</kbd></td> </tr>
+            <tr> <td class="function">Underline</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>U</kbd></td> </tr>
+            <tr> <td class="function">Strikethrough</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>5</kbd></td> </tr>
+            <tr> <td class="function">Remove direct formatting</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>M</kbd></td> </tr>
+            <tr> <td class="function">Insert comment</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>C</kbd></td> </tr>
+            <tr> <td class="function">Display comment</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>F1</kbd></td> </tr>
+            <tr> <td class="function">Fill Down</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>D</kbd></td> </tr>
+            <tr> <td class="function">Select All</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>A</kbd></td> </tr>
+            <tr> <td class="function">Align Center</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>E</kbd></td> </tr>
+            <tr> <td class="function">Align Left</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>L</kbd></td> </tr>
+            <tr> <td class="function">Align Right</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>R</kbd></td> </tr>
+            <tr> <td class="function">Justify</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>J</kbd></td> </tr>
+            <tr> <td class="function">Set Optimal Column Width</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>3</kbd></td> </tr>
+            <tr> <td class="function">Two decimal places, thousands separator</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>1</kbd></td> </tr>
+            <tr> <td class="function">Standard exponential format</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>2</kbd></td> </tr>
+            <tr> <td class="function">Standard date format</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>3</kbd></td> </tr>
+            <tr> <td class="function">Standard currency format</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>4</kbd></td> </tr>
+            <tr> <td class="function">Standard percentage format (two decimal places)</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>5</kbd></td> </tr>
+            <tr> <td class="function">Standard format</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>6</kbd></td> </tr>
         </table>
     </div>
     <div id="presentation-shortcuts" style="display: none;">
         <h2>Text formatting</h2>
         <table class="help">
-            <tr> <td class="function">Bold</td> <td class="shortcut">Ctrl + B</td> </tr>
-            <tr> <td class="function">Italic</td> <td class="shortcut">Ctrl + I</td> </tr>
-            <tr> <td class="function">Underline</td> <td class="shortcut">Ctrl + U</td> </tr>
-            <tr> <td class="function">Strikethrough</td> <td class="shortcut">Ctrl + Alt + 5</td> </tr>
-            <tr> <td class="function">Superscript</td> <td class="shortcut">Ctrl + Shift + P</td> </tr>
-            <tr> <td class="function">Subscript</td> <td class="shortcut">Ctrl + Shift + B</td> </tr>
-            <tr> <td class="function">Select All</td> <td class="shortcut">Ctrl + A</td> </tr>
+            <tr> <td class="function">Bold</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>B</kbd></td> </tr>
+            <tr> <td class="function">Italic</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>I</kbd></td> </tr>
+            <tr> <td class="function">Underline</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>U</kbd></td> </tr>
+            <tr> <td class="function">Strikethrough</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>5</kbd></td> </tr>
+            <tr> <td class="function">Superscript</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>P</kbd></td> </tr>
+            <tr> <td class="function">Subscript</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>B</kbd></td> </tr>
+            <tr> <td class="function">Select All</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>A</kbd></td> </tr>
         </table>
         <h2>Paragraph formatting</h2>
         <table class="help">
-            <tr> <td class="function">Align Center</td> <td class="shortcut">Ctrl + E</td> </tr>
-            <tr> <td class="function">Align Left</td> <td class="shortcut">Ctrl + L</td> </tr>
-            <tr> <td class="function">Align Right</td> <td class="shortcut">Ctrl + R</td> </tr>
-            <tr> <td class="function">Justify</td> <td class="shortcut">Ctrl + J</td> </tr>
-            <tr> <td class="function">Demote list item (list item has to be selected)</td> <td class="shortcut">Tab</td> </tr>
-            <tr> <td class="function">Promote list item (list item has to be selected)</td> <td class="shortcut">Shift + Tab</td> </tr>
+            <tr> <td class="function">Align Center</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>E</kbd></td> </tr>
+            <tr> <td class="function">Align Left</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>L</kbd></td> </tr>
+            <tr> <td class="function">Align Right</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>R</kbd></td> </tr>
+            <tr> <td class="function">Justify</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>J</kbd></td> </tr>
+            <tr> <td class="function">Demote list item (list item has to be selected)</td> <td class="shortcut"><kbd>Tab</kbd></td> </tr>
+            <tr> <td class="function">Promote list item (list item has to be selected)</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Tab</kbd></td> </tr>
         </table>
         <h2>Text selection and navigation in a textbox</h2>
         <table class="help">
-            <tr> <td class="function">Select All</td> <td class="shortcut">Ctrl + A</td> </tr>
-            <tr> <td class="function">Move cursor to the left</td> <td class="shortcut">Arrow Left</td> </tr>
-            <tr> <td class="function">Move cursor with selection to the left</td> <td class="shortcut">Shift + Arrow Left</td> </tr>
-            <tr> <td class="function">Go to beginning of a word</td> <td class="shortcut">Ctrl + Arrow Left</td> </tr>
-            <tr> <td class="function">Select to the left word by word</td> <td class="shortcut">Ctrl + Shift + Arrow Left</td> </tr>
-            <tr> <td class="function">Move cursor to the right</td> <td class="shortcut">Arrow Right</td> </tr>
-            <tr> <td class="function">Move cursor with selection to the right</td> <td class="shortcut">Shift + Arrow Right</td> </tr>
-            <tr> <td class="function">Go to start of the next word</td> <td class="shortcut">Ctrl + Arrow Right</td> </tr>
-            <tr> <td class="function">Select to the right word by word</td> <td class="shortcut">Ctrl + Shift + Arrow Right</td> </tr>
-            <tr> <td class="function">Move cursor up one line</td> <td class="shortcut">Arrow Up</td> </tr>
-            <tr> <td class="function">Select lines in upwards direction</td> <td class="shortcut">Shift + Arrow Up</td> </tr>
-            <tr> <td class="function">Move cursor to beginning of the previous paragraph</td> <td class="shortcut">Ctrl + Arrow Up</td> </tr>
-            <tr> <td class="function">Select to beginning of paragraph</td> <td class="shortcut">Ctrl + Shift + Arrow Up</td> </tr>
-            <tr> <td class="function">Move cursor down one line</td> <td class="shortcut">Arrow Down</td> </tr>
-            <tr> <td class="function">Select lines in downwards direction</td> <td class="shortcut">Shift + Arrow Down</td> </tr>
-            <tr> <td class="function">Move cursor to beginning of the next paragraph</td> <td class="shortcut">Ctrl + Arrow Down</td> </tr>
-            <tr> <td class="function">Select to end of paragraph</td> <td class="shortcut">Ctrl + Shift + Arrow Down</td> </tr>
-            <tr> <td class="function">Go to beginning of line</td> <td class="shortcut">Home</td> </tr>
-            <tr> <td class="function">Go and select to the beginning of a line</td> <td class="shortcut">Shift + Home</td> </tr>
-            <tr> <td class="function">Go to start of document</td> <td class="shortcut">Ctrl + Home</td> </tr>
-            <tr> <td class="function">Go and select text to start of textbox</td> <td class="shortcut">Ctrl + Shift + Home</td> </tr>
-            <tr> <td class="function">Go to end of line</td> <td class="shortcut">End</td> </tr>
-            <tr> <td class="function">Go and select to the end of a line</td> <td class="shortcut">Shift + End</td> </tr>
-            <tr> <td class="function">Go to end of document</td> <td class="shortcut">Ctrl + End</td> </tr>
-            <tr> <td class="function">Go and select text to end of textbox</td> <td class="shortcut">Ctrl + Shift + End</td> </tr>
+            <tr> <td class="function">Select All</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>A</kbd></td> </tr>
+            <tr> <td class="function">Move cursor to the left</td> <td class="shortcut"><kbd>Arrow Left</kbd></td> </tr>
+            <tr> <td class="function">Move cursor with selection to the left</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Left</kbd></td> </tr>
+            <tr> <td class="function">Go to beginning of a word</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow Left</kbd></td> </tr>
+            <tr> <td class="function">Select to the left word by word</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Left</kbd></td> </tr>
+            <tr> <td class="function">Move cursor to the right</td> <td class="shortcut"><kbd>Arrow Right</kbd></td> </tr>
+            <tr> <td class="function">Move cursor with selection to the right</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Right</kbd></td> </tr>
+            <tr> <td class="function">Go to start of the next word</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow Right</kbd></td> </tr>
+            <tr> <td class="function">Select to the right word by word</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Right</kbd></td> </tr>
+            <tr> <td class="function">Move cursor up one line</td> <td class="shortcut"><kbd>Arrow Up</kbd></td> </tr>
+            <tr> <td class="function">Select lines in upwards direction</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Up</kbd></td> </tr>
+            <tr> <td class="function">Move cursor to beginning of the previous paragraph</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow Up</kbd></td> </tr>
+            <tr> <td class="function">Select to beginning of paragraph</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Up</kbd></td> </tr>
+            <tr> <td class="function">Move cursor down one line</td> <td class="shortcut"><kbd>Arrow Down</kbd></td> </tr>
+            <tr> <td class="function">Select lines in downwards direction</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Down</kbd></td> </tr>
+            <tr> <td class="function">Move cursor to beginning of the next paragraph</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow Down</kbd></td> </tr>
+            <tr> <td class="function">Select to end of paragraph</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Down</kbd></td> </tr>
+            <tr> <td class="function">Go to beginning of line</td> <td class="shortcut"><kbd>Home</kbd></td> </tr>
+            <tr> <td class="function">Go and select to the beginning of a line</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Home</kbd></td> </tr>
+            <tr> <td class="function">Go to start of document</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Home</kbd></td> </tr>
+            <tr> <td class="function">Go and select text to start of textbox</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Home</kbd></td> </tr>
+            <tr> <td class="function">Go to end of line</td> <td class="shortcut"><kbd>End</kbd></td> </tr>
+            <tr> <td class="function">Go and select to the end of a line</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>End</kbd></td> </tr>
+            <tr> <td class="function">Go to end of document</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>End</kbd></td> </tr>
+            <tr> <td class="function">Go and select text to end of textbox</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>End</kbd></td> </tr>
         </table>
         <h2>Slide keyboard shortcuts</h2>
         <table class="help">
-            <tr> <td class="function">Escape current mode, i.e. from edit mode switch to object selection mode, from object selection mode switch to view mode.</td> <td class="shortcut">Esc</td> </tr>
-            <tr> <td class="function">Select objects in the order in which they were created</td> <td class="shortcut">Tab</td> </tr>
-            <tr> <td class="function">Select objects in the reverse order in which they were created</td> <td class="shortcut">Shift + Tab</td> </tr>
-            <tr> <td class="function">Move to next text object on slide</td> <td class="shortcut">Ctrl + Enter</td> </tr>
-            <tr> <td class="function">Select all in slide</td> <td class="shortcut">Ctrl + A</td> </tr>
+            <tr> <td class="function">Escape current mode, i.e. from edit mode switch to object selection mode, from object selection mode switch to view mode.</td> <td class="shortcut"><kbd>Esc</kbd></td> </tr>
+            <tr> <td class="function">Select objects in the order in which they were created</td> <td class="shortcut"><kbd>Tab</kbd></td> </tr>
+            <tr> <td class="function">Select objects in the reverse order in which they were created</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Tab</kbd></td> </tr>
+            <tr> <td class="function">Move to next text object on slide</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Enter</kbd></td> </tr>
+            <tr> <td class="function">Select all in slide</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>A</kbd></td> </tr>
         </table>
     </div>
         <div id="drawing-shortcuts" style="display: none;">
         <h2>Text formatting</h2>
         <table class="help">
-            <tr> <td class="function">Bold</td> <td class="shortcut">Ctrl + B</td> </tr>
-            <tr> <td class="function">Italic</td> <td class="shortcut">Ctrl + I</td> </tr>
-            <tr> <td class="function">Underline</td> <td class="shortcut">Ctrl + U</td> </tr>
-            <tr> <td class="function">Strikethrough</td> <td class="shortcut">Ctrl + Alt + 5</td> </tr>
-            <tr> <td class="function">Superscript</td> <td class="shortcut">Ctrl + Shift + P</td> </tr>
-            <tr> <td class="function">Subscript</td> <td class="shortcut">Ctrl + Shift + B</td> </tr>
-            <tr> <td class="function">Select All</td> <td class="shortcut">Ctrl + A</td> </tr>
+            <tr> <td class="function">Bold</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>B</kbd></td> </tr>
+            <tr> <td class="function">Italic</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>I</kbd></td> </tr>
+            <tr> <td class="function">Underline</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>U</kbd></td> </tr>
+            <tr> <td class="function">Strikethrough</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Alt</kbd><span class="kbd--plus">+</span><kbd>5</kbd></td> </tr>
+            <tr> <td class="function">Superscript</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>P</kbd></td> </tr>
+            <tr> <td class="function">Subscript</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span>B</td> </tr>
+            <tr> <td class="function">Select All</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>A</kbd></td> </tr>
         </table>
         <h2>Paragraph formatting</h2>
         <table class="help">
-            <tr> <td class="function">Align Center</td> <td class="shortcut">Ctrl + E</td> </tr>
-            <tr> <td class="function">Align Left</td> <td class="shortcut">Ctrl + L</td> </tr>
-            <tr> <td class="function">Align Right</td> <td class="shortcut">Ctrl + R</td> </tr>
-            <tr> <td class="function">Justify</td> <td class="shortcut">Ctrl + J</td> </tr>
+            <tr> <td class="function">Align Center</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span>E</td> </tr>
+            <tr> <td class="function">Align Left</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span>L</td> </tr>
+            <tr> <td class="function">Align Right</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span>R</td> </tr>
+            <tr> <td class="function">Justify</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span>J</td> </tr>
             <tr> <td class="function">Demote list item (list item has to be selected)</td> <td class="shortcut">Tab</td> </tr>
-            <tr> <td class="function">Promote list item (list item has to be selected)</td> <td class="shortcut">Shift + Tab</td> </tr>
+            <tr> <td class="function">Promote list item (list item has to be selected)</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span>Tab</td> </tr>
         </table>
         <h2>Text selection and navigation in a textbox</h2>
         <table class="help">
-            <tr> <td class="function">Select All</td> <td class="shortcut">Ctrl + A</td> </tr>
-            <tr> <td class="function">Move cursor to the left</td> <td class="shortcut">Arrow Left</td> </tr>
-            <tr> <td class="function">Move cursor with selection to the left</td> <td class="shortcut">Shift + Arrow Left</td> </tr>
-            <tr> <td class="function">Go to beginning of a word</td> <td class="shortcut">Ctrl + Arrow Left</td> </tr>
-            <tr> <td class="function">Select to the left word by word</td> <td class="shortcut">Ctrl + Shift + Arrow Left</td> </tr>
-            <tr> <td class="function">Move cursor to the right</td> <td class="shortcut">Arrow Right</td> </tr>
-            <tr> <td class="function">Move cursor with selection to the right</td> <td class="shortcut">Shift + Arrow Right</td> </tr>
-            <tr> <td class="function">Go to start of the next word</td> <td class="shortcut">Ctrl + Arrow Right</td> </tr>
-            <tr> <td class="function">Select to the right word by word</td> <td class="shortcut">Ctrl + Shift + Arrow Right</td> </tr>
-            <tr> <td class="function">Move cursor up one line</td> <td class="shortcut">Arrow Up</td> </tr>
-            <tr> <td class="function">Select lines in upwards direction</td> <td class="shortcut">Shift + Arrow Up</td> </tr>
-            <tr> <td class="function">Move cursor to beginning of the previous paragraph</td> <td class="shortcut">Ctrl + Arrow Up</td> </tr>
-            <tr> <td class="function">Select to beginning of paragraph</td> <td class="shortcut">Ctrl + Shift + Arrow Up</td> </tr>
-            <tr> <td class="function">Move cursor down one line</td> <td class="shortcut">Arrow Down</td> </tr>
-            <tr> <td class="function">Select lines in downwards direction</td> <td class="shortcut">Shift + Arrow Down</td> </tr>
-            <tr> <td class="function">Move cursor to beginning of the next paragraph</td> <td class="shortcut">Ctrl + Arrow Down</td> </tr>
-            <tr> <td class="function">Select to end of paragraph</td> <td class="shortcut">Ctrl + Shift + Arrow Down</td> </tr>
-            <tr> <td class="function">Go to beginning of line</td> <td class="shortcut">Home</td> </tr>
-            <tr> <td class="function">Go and select to the beginning of a line</td> <td class="shortcut">Shift + Home</td> </tr>
-            <tr> <td class="function">Go to start of document</td> <td class="shortcut">Ctrl + Home</td> </tr>
-            <tr> <td class="function">Go and select text to start of textbox</td> <td class="shortcut">Ctrl + Shift + Home</td> </tr>
-            <tr> <td class="function">Go to end of line</td> <td class="shortcut">End</td> </tr>
-            <tr> <td class="function">Go and select to the end of a line</td> <td class="shortcut">Shift + End</td> </tr>
-            <tr> <td class="function">Go to end of document</td> <td class="shortcut">Ctrl + End</td> </tr>
-            <tr> <td class="function">Go and select text to end of textbox</td> <td class="shortcut">Ctrl + Shift + End</td> </tr>
+            <tr> <td class="function">Select All</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span>A</td> </tr>
+            <tr> <td class="function">Move cursor to the left</td> <td class="shortcut"><kbd>Arrow Left</kbd></td> </tr>
+            <tr> <td class="function">Move cursor with selection to the left</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Left</kbd></td> </tr>
+            <tr> <td class="function">Go to beginning of a word</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow Left</kbd></td> </tr>
+            <tr> <td class="function">Select to the left word by word</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Left</kbd></td> </tr>
+            <tr> <td class="function">Move cursor to the right</td> <td class="shortcut"><kbd>Arrow Right</kbd></td> </tr>
+            <tr> <td class="function">Move cursor with selection to the right</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Right</kbd></td> </tr>
+            <tr> <td class="function">Go to start of the next word</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow Right</kbd></td> </tr>
+            <tr> <td class="function">Select to the right word by word</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Right</kbd></td> </tr>
+            <tr> <td class="function">Move cursor up one line</td> <td class="shortcut"><kbd>Arrow Up</kbd></td> </tr>
+            <tr> <td class="function">Select lines in upwards direction</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Up</kbd></td> </tr>
+            <tr> <td class="function">Move cursor to beginning of the previous paragraph</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow Up</kbd></td> </tr>
+            <tr> <td class="function">Select to beginning of paragraph</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Up</kbd></td> </tr>
+            <tr> <td class="function">Move cursor down one line</td> <td class="shortcut"><kbd>Arrow Down</kbd></td> </tr>
+            <tr> <td class="function">Select lines in downwards direction</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Arrow Down</kbd></td> </tr>
+            <tr> <td class="function">Move cursor to beginning of the next paragraph</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Arrow Down</kbd></td> </tr>
+            <tr> <td class="function">Select to end of paragraph</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span>Arrow Down</td> </tr>
+            <tr> <td class="function">Go to beginning of line</td> <td class="shortcut"><kbd>Home</kbd></td> </tr>
+            <tr> <td class="function">Go and select to the beginning of a line</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Home</kbd></td> </tr>
+            <tr> <td class="function">Go to start of document</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Home</kbd></td> </tr>
+            <tr> <td class="function">Go and select text to start of textbox</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>Home</kbd></td> </tr>
+            <tr> <td class="function">Go to end of line</td> <td class="shortcut"><kbd>End</kbd></td> </tr>
+            <tr> <td class="function">Go and select to the end of a line</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>End</kbd></td> </tr>
+            <tr> <td class="function">Go to end of document</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>End</kbd></td> </tr>
+            <tr> <td class="function">Go and select text to end of textbox</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>End</kbd></td> </tr>
         </table>
         <h2>Draw page keyboard shortcuts</h2>
         <table class="help">
             <tr> <td class="function">Escape current mode, i.e. from edit mode switch to object selection mode, from object selection mode switch to view mode.</td> <td class="shortcut">Esc</td> </tr>
             <tr> <td class="function">Select objects in the order in which they were created</td> <td class="shortcut">Tab</td> </tr>
-            <tr> <td class="function">Select objects in the reverse order in which they were created</td> <td class="shortcut">Shift + Tab</td> </tr>
-            <tr> <td class="function">Move to next text object on drawing page</td> <td class="shortcut">Ctrl + Enter</td> </tr>
-            <tr> <td class="function">Select all in drawing page</td> <td class="shortcut">Ctrl + A</td> </tr>
+            <tr> <td class="function">Select objects in the reverse order in which they were created</td> <td class="shortcut"><kbd>Shift</kbd><span class="kbd--plus">+</span>Tab</td> </tr>
+            <tr> <td class="function">Move to next text object on drawing page</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span>Enter</td> </tr>
+            <tr> <td class="function">Select all in drawing page</td> <td class="shortcut"><kbd>Ctrl</kbd><span class="kbd--plus">+</span>A</td> </tr>
         </table>
     </div>
 </div>
@@ -345,20 +344,20 @@
     <h3>Editing documents</h3>
     <p>Document editing should be familiar to everyone that has used an office application before, but here are some distinctive features:</p>
     <h4>Copy and Paste</h4>
-    <p>Rich content copy/cut and paste is supported, not only within a given document, but also across documents on the same or different <span class="productname">%productName</span>. For these internal uses, users can copy/cut content, including images and mixed content, on PC by using the keyboard shortcuts directly (<span class="kbd">Ctrl</span> + <span class="kbd">X</span>, <span class="kbd">Ctrl</span> + <span class="kbd">C</span>, <span class="kbd">Ctrl</span> + <span class="kbd">V</span>). For security reasons it is necessary to use <span class="kbd">Ctrl</span> + <span class="kbd">V</span> to paste on PC, but context menus can be used for cut and copy. On Android or iOS selecting text by double tapping, and using a long-tap to access copy/cut/paste via the context menu is required.</p>
+    <p>Rich content copy/cut and paste is supported, not only within a given document, but also across documents on the same or different <span class="productname">%productName</span>. For these internal uses, users can copy/cut content, including images and mixed content, on PC by using the keyboard shortcuts directly (<kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>X</kbd>, <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>C</kbd>, <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd>). For security reasons it is necessary to use <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd> to paste on PC, but context menus can be used for cut and copy. On Android or iOS selecting text by double tapping, and using a long-tap to access copy/cut/paste via the context menu is required.</p>
     <p>To copy larger pieces of content to other applications on your device, users need to press the <span class="ui">Start download</span> button, and then re-copy this to their clipboard in order to make it available to the target application to read. This is possible via a tiny widget that pops up in the bottom-right corner, and is only necessary to export the content for pasting in external applications. This step also converts complex object types into static images.</p>
     <h4>Document repair</h4>
     <p>When multiple people edit the same document concurrently, it is possible for their changes to conflict and this can cause some confusion. The Document Repair function allows users to undo other editor’s changes to the document to a previous state.</p>
     <p>To jump back to the selected state, select it with the mouse and hit <span class="ui">Jump to state</span>.</p>
     <div class="screenshot"><img alt="" src="images/help/en/repair-document.png"/></div>
-    <p>This is particularly useful – say when a colleague inadvertently selected all text in the document with <span class="kbd">Ctrl</span> + <span class="kbd">A</span> and proceeded to type over it destroying it – while you were concurrently editing.</p>
+    <p>This is particularly useful – say when a colleague inadvertently selected all text in the document with <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>A</kbd> and proceeded to type over it destroying it – while you were concurrently editing.</p>
     <h4>Inactive document</h4>
     <p>When <span class="productname">%productName</span> detects that there has not been any activity in the browser for a while, it puts the document in an “Inactive” state. The document is shown with a transparent gray overlay, with the message “Inactive document – please click to resume editing”.</p>
     <div class="screenshot"><img alt="" src="images/help/en/inactive-document.png"/></div>
     <p>To continue editing, click on the document and the layover and message disappear. Any changes that may have been made by other users – while collaboratively editing the document – are re-loaded.</p>
     <h4>Pasting</h4>
     <p>When you paste content copied from within the same document, the format and elements are maintained. If you copy from another document, in another tab or browser window, or from outside of the browser, the pasted content will preserve rich text.</p>
-    <p>You can paste as unformatted text with the keyboard shortcut: <span class="kbd">Ctrl</span> + <span class="kbd">Shift</span> + <span class="kbd">V</span></p>
+    <p>You can paste as unformatted text with the keyboard shortcut: <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>Shift</kbd><span class="kbd--plus">+</span><kbd>V</kbd></p>
     <p>When you paste text from within the document, formatting will be respected. You can also paste objects, such as images, if they are copied from the document you are working in.</p>
     <p>When you paste text from outside of the document (another browser window or a desktop application, it will be pasted as rich text.</p>
     <p>When you have internal cut or copied content, you can paste this content using the context menu.</p>
@@ -396,7 +395,7 @@
     <h2><span class="productname">%productName</span> spreadsheets</h2>
     <a id="1361"/>
     <h3>Editing spreadsheets</h3>
-    <p>You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <span class="kbd">Tab</span> will move the cursor to the next cell to the right, and with an <span class="kbd">Enter</span> to the cell below for easy further data entry.</p>
+    <p>You edit an online spreadsheet in the same way you edit a desktop spreadsheet. Operations like entering data, selecting ranges, columns, rows or sheets are the same. Use the keyboard, menus or toolbar to command actions in the spreadsheet. Dragging cells contents to fill cells with data is also supported. Copy, cut and paste commands are available from the context menu. Following entered data with a <kbd>Tab</kbd> will move the cursor to the next cell to the right, and with an <kbd>Enter</kbd> to the cell below for easy further data entry.</p>
     <a id="1363"/>
     <h3>Formulas</h3>
     <p>Formulas are entered in the formula bar. Enter '=' and insert the formula.</p>
@@ -405,7 +404,7 @@
     <p>The formula language should be extremely familiar to any spreadsheet user, and is specified in great detail in the <a href="https://www.oasis-open.org/committees/download.php/16826/openformula-spec-20060221.html">OASIS OpenFormula specification</a>.</p>
     <a id="1367"/>
     <h3>Formatting spreadsheets</h3>
-    <p><span class="def">Direct formatting:</span> You can format spreadsheets cells, columns, rows and sheets by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected. To format a cell either use the menu or hit <span class="kbd">Ctrl</span> + <span class="kbd">1</span>. The dialog allows complex and custom number formatting, as well as font, complex border, background, cell protection and other options.</p>
+    <p><span class="def">Direct formatting:</span> You can format spreadsheets cells, columns, rows and sheets by formatting directly from the menus, toolbar or context menus. Direct formatting applies only to the current object selected. To format a cell either use the menu or hit <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>1</kbd>. The dialog allows complex and custom number formatting, as well as font, complex border, background, cell protection and other options.</p>
     <div class="screenshot"><img alt="" src="images/help/en/format-cells.png"/></div>
     <a id="1371"/>
     <h3>Advanced features</h3>
@@ -482,7 +481,7 @@
     <a id="1395"/>
     <h3>Slide show</h3>
     <p><span class="productname">%productName</span> displays presentation slide shows, including a subset of slide transitions and object animations. Choose the slide show from the menu or click on icon in the bottom left toolbar in the slide pane.</p>
-    <p>To exit a <span class="productname">%productName</span> slide show, press the <span class="kbd">Esc</span> key to return to the presentation edit mode.</p>
+    <p>To exit a <span class="productname">%productName</span> slide show, press the <kbd>Esc</kbd> key to return to the presentation edit mode.</p>
     <a id="1397"/>
     <h3>Slide pane</h3>
     <p>Click on any slide thumbnail in the pane to switch to this slide to view or edit it.</p>
@@ -508,7 +507,7 @@
     <h4>How do I save a document with another name?</h4>
     <ol>
       <li><p>Hover the mouse on the document name in the menu bar.</p></li>
-      <li><p>Type the new file name in the text box and press <span class="kbd">Enter</span>.</p></li>
+      <li><p>Type the new file name in the text box and press <kbd>Enter</kbd>.</p></li>
     </ol>
     <p>A copy of the document is saved with the new name in the same folder.</p>
     <h4>How can I quit <span class="productname">%productName</span> without saving my edits?</h4>
@@ -600,7 +599,7 @@
       <li><p>Load your CSV data in some native tool to your platform, select and copy it to the clipboard</p></li>
       <li><p>Activate the <span class="productname">%productName</span> spreadsheet window.</p></li>
       <li>
-        <p>Paste from the browser <span class="ui">Edit</span> → <span class="ui">Paste</span> or press <span class="kbd">Ctrl</span> + <span class="kbd">V</span>. The <span class="ui">Text Import</span> dialog opens to let you describe the precise format of the CSV data.</p>
+        <p>Paste from the browser <span class="ui">Edit</span> → <span class="ui">Paste</span> or press <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd>. The <span class="ui">Text Import</span> dialog opens to let you describe the precise format of the CSV data.</p>
         <div class="screenshot"><img alt="" src="images/help/en/text-import.png"/></div>
       </li>
       <li><p>Select the character set, language and separator options for the CSV file.</p></li>
