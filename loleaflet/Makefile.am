@@ -463,7 +463,7 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_TS_JS) $(LOLEAFLET_ADMIN_JS)
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@awk 'FNR == 1 {print ""} 1' $(LOLEAFLET_ADMIN_TS_JS) $(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_ADMIN_JS)) > $@
 
-$(INTERMEDIATE_DIR)/loleaflet-src.js: $(call prereq_loleaflet)
+$(INTERMEDIATE_DIR)/loleaflet-src.js: tscompile.done $(call prereq_loleaflet)
 	@mkdir -p $(dir $@)
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 	@echo "Checking for loleaflet JS errors..."
