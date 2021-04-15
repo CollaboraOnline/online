@@ -972,9 +972,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.on('splitposchanged', this._painter.update, this._painter);
 		this._map.on('sheetgeometrychanged', this._painter.update, this._painter);
 		this._map.on('move', this._syncTilePanePos, this);
-		this._map.on('updateselectionheader', this._painter.update, this._painter);
-		this._map.on('clearselectionheader', this._painter.update, this._painter);
-		this._map.on('updatecurrentheader', this._painter.update, this._painter);
 
 		this._map.on('viewrowcolumnheaders', this._painter.update, this._painter);
 
@@ -3099,6 +3096,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._cellSelectionArea = null;
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellSelection(null);
+			this._cellSelections = Array(0);
+			this._map.wholeColumnSelected = false; // Message related to whole column/row selection should be on the way, we should update the variables now.
+			this._map.wholeRowSelected = false;
+			this._refreshRowColumnHeaders();
 		}
 	},
 
