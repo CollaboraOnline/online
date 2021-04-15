@@ -1059,6 +1059,32 @@ inline void sendAndWait(const std::shared_ptr<http::WebSocketSession>& ws,
     }
 }
 
+/// Sends a command and drain an event in response.
+/// We expect @response within the given @timeoutResponse and
+/// we drain all messages to get a steady-state.
+/// Draining happens for @timeoutDrain.
+inline bool sendAndDrain(const std::shared_ptr<http::WebSocketSession>& ws,
+                         const std::string& testname, const std::string& command,
+                         const std::string& response,
+                         std::chrono::milliseconds timeoutResponse = std::chrono::seconds(10),
+                         std::chrono::milliseconds timeoutDrain = std::chrono::milliseconds(300))
+{
+    TST_LOG("Sending [" << command << "], waiting for [" << response
+                        << "], and draining the events.");
+    sendTextFrame(ws, command, testname);
+    const std::string res = getResponseString(ws, response, testname, timeoutResponse);
+    if (res.empty())
+    {
+        TST_LOG("Timed-out waiting for [" << response << "] after sending [" << command << "].");
+        return false;
+    }
+
+    while (!getResponseString(ws, response, testname, timeoutDrain).empty())
+        ; // Skip.
+
+    return true;
+}
+
 /// Select all and wait for the text selection update.
 inline void selectAll(const std::shared_ptr<http::WebSocketSession>& ws,
                       const std::string& testname,
