@@ -1092,7 +1092,7 @@ function setupToolbar(e) {
 			setTimeout(function () {
 				$('#findthis').removeClass('search-not-found');
 				L.DomUtil.removeClass(searchInput, 'search-not-found');
-			}, 500);
+			}, 800);
 		}
 	});
 
