@@ -34,9 +34,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._selectionBackgroundGradient = [ '#3465A4', '#729FCF', '#004586' ];
 
 		this._map.on('move zoomchanged sheetgeometrychanged splitposchanged', this._updateCanvas, this);
-		this._map.on('updateselectionheader', this._onUpdateSelection, this);
-		this._map.on('clearselectionheader', this._onClearSelection, this);
-		this._map.on('updatecurrentheader', this._onUpdateCurrentColumn, this);
 
 		this._initHeaderEntryStyles('spreadsheet-header-column');
 		this._initHeaderEntryHoverStyles('spreadsheet-header-column-hover');
@@ -76,35 +73,21 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._headerInfo = new L.Control.Header.HeaderInfo(this._map, true /* isCol */);
 	},
 
-	_onUpdateSelection: function (e) {
-		var start = e.start.x;
-		var end = e.end.x;
-		if (start !== -1) {
-			start = this._twipsToPixels(start);
-		}
-		if (end !== -1) {
-			end = this._twipsToPixels(end);
-		}
-		this.updateSelection(start, end);
-	},
-
-	drawHeaderEntry: function (entry, isOver, isHighlighted, isCurrent) {
+	drawHeaderEntry: function (entry) {
 		if (!entry)
 			return;
 
 		var content = this._colIndexToAlpha(entry.index + 1);
 		var startX = entry.pos - entry.size;
 
-		if (isHighlighted !== true && isHighlighted !== false) {
-			isHighlighted = this.isHighlighted(entry.index);
-		}
-
 		if (entry.size <= 0)
 			return;
 
+		var highlight = entry.isCurrent || entry.isHighlighted;
+
 		// background gradient
 		var selectionBackgroundGradient = null;
-		if (isHighlighted) {
+		if (highlight) {
 			selectionBackgroundGradient = this.context.createLinearGradient(startX, 0, startX, this.size[1]);
 			selectionBackgroundGradient.addColorStop(0, this._selectionBackgroundGradient[0]);
 			selectionBackgroundGradient.addColorStop(0.5, this._selectionBackgroundGradient[1]);
@@ -113,12 +96,12 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		// draw background
 		this.context.beginPath();
-		this.context.fillStyle = isHighlighted ? selectionBackgroundGradient : isOver ? this._hoverColor : this._backgroundColor;
+		this.context.fillStyle = highlight ? selectionBackgroundGradient : entry.isOver ? this._hoverColor : this._backgroundColor;
 		this.context.fillRect(startX, 0, entry.size, this.size[1]);
 
 		// draw resize handle
 		var handleSize = this._resizeHandleSize;
-		if (isCurrent && entry.size > 2 * handleSize && !this.inResize()) {
+		if (entry.isCurrent && entry.size > 2 * handleSize && !this.inResize()) {
 			var center = startX + entry.size - handleSize / 2;
 			var y = 2 * this.dpiScale;
 			var h = this.size[1] - 4 * this.dpiScale;
@@ -133,7 +116,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		}
 
 		// draw text content
-		this.context.fillStyle = isHighlighted ? this._selectionTextColor : this._textColor;
+		this.context.fillStyle = highlight ? this._selectionTextColor : this._textColor;
 		this.context.font = this.getFont();
 		this.context.textAlign = 'center';
 		this.context.textBaseline = 'middle';
@@ -171,12 +154,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	},
 
 	onDraw: function () {
-		var isHighlighted = null;
-		if (this._map._docLayer._isWholeRowSelected() === true)
-			isHighlighted = true;
-
 		this._headerInfo.forEachElement(function(elemData) {
-			this.drawHeaderEntry(elemData, false, isHighlighted);
+			this.drawHeaderEntry(elemData);
 		}.bind(this));
 
 		this.drawResizeLineIfNeeded();

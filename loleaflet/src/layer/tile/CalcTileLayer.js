@@ -93,6 +93,10 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}.bind(this));
 
 		this._annotations = {};
+
+		this.insertMode = false;
+		this._cellSelections = Array(0);
+		this._cellCursorXY = {x: -1, y: -1};
 	},
 
 	onAnnotationModify: function (annotation) {
@@ -472,10 +476,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._map.fire('docsize', newSizePx.clone());
 	},
 
-	_onUpdateCurrentHeader: function() {
-		this._map.fire('updatecurrentheader', this._getCursorPosSize());
-	},
-
 	_getCursorPosSize: function () {
 		var x = -1, y = -1;
 		if (this._cellCursorXY) {
@@ -488,16 +488,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		return { curX: x, curY: y, width: size.x, height: size.y };
-	},
-
-	_onUpdateSelectionHeader: function () {
-		var selectionHeaderData = this._getSelectionHeaderData();
-		if (selectionHeaderData.hasSelection) {
-			this._map.fire('updateselectionheader', selectionHeaderData);
-			return;
-		}
-
-		this._map.fire('clearselectionheader');
 	},
 
 	_getSelectionHeaderData: function() {
@@ -847,6 +837,13 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			if (e.state.trim() === '' || e.state.startsWith('Selected'))
 				this._onRowColSelCount(e.state.replace('Selected:', '').replace('row', '').replace('column', '').replace('s', ''));
 		}
+		else if (e.commandName === '.uno:InsertMode') {
+			/* If we get textselection message from core:
+				When insertMode is active:  User is selecting some text.
+				When insertMode is passive: User is selecting cells.
+			*/
+			this.insertMode = e.state.trim() === '' ? false: true;
+		}
 	},
 
 	_onSplitStateChanged: function (e, isSplitCol) {
@@ -969,14 +966,37 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
+	_refreshRowColumnHeaders: function () {
+		if (this._painter._sectionContainer.doesSectionExist(L.CSections.RowHeader.name))
+			this._painter._sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
+		if (this._painter._sectionContainer.doesSectionExist(L.CSections.ColumnHeader.name))
+			this._painter._sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
+	},
+
 	_onTextSelectionMsg: function (textMsg) {
-		L.TileLayer.prototype._onTextSelectionMsg.call(this, textMsg);
-		this._onUpdateSelectionHeader();
+		L.CanvasTileLayer.prototype._onTextSelectionMsg.call(this, textMsg);
+		// If this is a cellSelection message, user shouldn't be editing a cell. Below check is for ensuring that.
+		if (this.insertMode === false && this._cellCursorXY && this._cellCursorXY.x !== -1) {
+			// When insertMode is false, this is a cell selection message.
+			textMsg = textMsg.replace('textselection:', '');
+			if (textMsg.trim() !== 'EMPTY') {
+				this._cellSelections = textMsg.split(';');
+				var ratio = this._tileSize / this._tileWidthTwips;
+				this._cellSelections = this._cellSelections.map(function(element) {
+					element = element.split(',');
+					return L.LOUtil.createRectangle(parseInt(element[0]) * ratio, parseInt(element[1]) * ratio, parseInt(element[2]) * ratio, parseInt(element[3]) * ratio);
+				});
+			}
+			else {
+				this._cellSelections = Array(0);
+			}
+			this._refreshRowColumnHeaders();
+		}
 	},
 
 	_onCellCursorMsg: function (textMsg) {
-		L.TileLayer.prototype._onCellCursorMsg.call(this, textMsg);
-		this._onUpdateCurrentHeader();
+		L.CanvasTileLayer.prototype._onCellCursorMsg.call(this, textMsg);
+		this._refreshRowColumnHeaders();
 	},
 
 	_getEditCursorRectangle: function (msgObj) {
