@@ -931,7 +931,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         << preprocess;
 
     socket->send(oss.str());
-    LOG_DBG("Sent file: " << relPath << ": " << preprocess);
+    LOG_DBG("Sent file: " << relPath << ", " << preprocess.length() << " bytes.");
 }
 
 void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
