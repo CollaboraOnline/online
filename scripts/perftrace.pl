@@ -96,7 +96,7 @@ my @event_pairs = (
     { # Save - to storage
       name => 'save to storage',
       emitter => '^docbroker',
-      start => '^Saving to storage docKey',
+      start => '^Uploading to storage docKey',
       end => '^(Saved docKey.* to URI)|(Save skipped as document)',
     }
     );
