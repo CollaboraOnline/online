@@ -216,6 +216,34 @@ L.LOUtil = {
 				return false;
 		};
 
+		result.containsXOrdinate = function (ox) {
+			if (ox >= result.x1 && ox <= result.x2)
+				return true;
+			else
+				return false;
+		};
+
+		result.containsYOrdinate = function (oy) {
+			if (oy >= result.y1 && oy <= result.y2)
+				return true;
+			else
+				return false;
+		};
+
+		result.containsPixelOrdinateX = function (ox) {
+			if (ox >= result.px.x1 && ox <= result.px.x2)
+				return true;
+			else
+				return false;
+		};
+
+		result.containsPixelOrdinateY = function (oy) {
+			if (oy >= result.px.y1 && oy <= result.px.y2)
+				return true;
+			else
+				return false;
+		};
+
 		result.calculatePx = function () {
 			result.px.x1 = Math.round(result.x1);
 			result.px.x2 = Math.round(result.x2);
