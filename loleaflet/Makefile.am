@@ -354,6 +354,8 @@ LOLEAFLET_JS =\
 LOLEAFLET_JS_SRC = $(shell find $(srcdir)/src -name '*.js')
 LOLEAFLET_TS_SRC = $(shell find $(srcdir)/src -name '*.ts')
 LOLEAFLET_JS_DST = $(patsubst $(srcdir)/src/%.js,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_JS_SRC)) $(patsubst $(srcdir)/src/%.ts,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_TS_SRC))
+# should be no lingering / obsolete files:
+LOLEAFLET_ASSERT_INTERSECT = $(filter $(LOLEAFLET_JS_SRC), $(patsubst %.ts,%.js,$(LOLEAFLET_TS_SRC)))
 
 COMMA := ,
 EMPTY :=
@@ -466,6 +468,8 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_TS_JS) $(LOLEAFLET_ADMIN_JS)
 $(INTERMEDIATE_DIR)/loleaflet-src.js: tscompile.done $(call prereq_loleaflet)
 	@mkdir -p $(dir $@)
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
+	@echo -n "Checking for obsolete JS build intermediates in source tree... "
+	@if ! test "z$(LOLEAFLET_ASSERT_INTERSECT)" == "z"; then echo; echo "Error: please remove obsolete files:"; echo "$(LOLEAFLET_ASSERT_INTERSECT)"; exit 1; else echo "clean"; fi
 	@echo "Checking for loleaflet JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
 		$(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
