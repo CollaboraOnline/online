@@ -132,11 +132,10 @@ class CanvasOverlay {
 	}
 
 	removePath(path: CPath) {
-		// This does not get called via onDraw, so ask tileSection to "erase" by painting over.
-		this.tsManager._tilesSection.onDraw();
+		// This does not get called via onDraw, so ask section container to redraw everything.
 		path.setDeleted();
 		this.paths.delete(path.getId());
-		this.draw();
+		this.overlaySection.containerObject.requestReDraw();
 	}
 
 	updatePath(path: CPath, oldBounds: CBounds) {
