@@ -236,7 +236,47 @@ public:
     {
         std::string testname = "copypaste ";
 
+        // NOTE: This code has multiple race-conditions!
+        // The main one is that the fetching of clipboard
+        // data (via fetchClipboardAssert) is done via
+        // independent HTTP GET requests that have nothing
+        // whatever with the long-lived WebSocket that
+        // processes all the client commands below.
+        // This suffers a very interesting race, which is
+        // that the getClipboard command may end up
+        // anywhere within the Kit queue, even before the
+        // other commands preceeding it in this test!
+        // As an example: in the 'Inject content' case we
+        // send .uno:Deselect, paste, .uno:SelectAll,
+        // .uno:Copy (all through the WebSocket), and an
+        // HTTP GET for the getClipboard. But, in DocBroker,
+        // the WebSocket commands might be interleaved with
+        // the getClipboard, such that the Kit might receive
+        // .uno:Deselect, paste, .uno:SelectAll, getClipboard,
+        // .uno:Copy! This has been observed in practice.
+        //
+        // There are other race-conditions, too.
+        // For example, even if Kit gets these commands in
+        // the correct order (i.e. getClipboard last, after
+        // .uno:Copy), getClipboard is executed immediately
+        // while all the .uno commands are queued for async
+        // execution. This means that when getClipboard is
+        // executed in Core, the .uno:Copy command might not
+        // have yet been executed and, therefore, will not
+        // contain the expected contents, failing the test.
+        //
+        // To combat these races, we drain the events coming
+        // from Core before we read the clipboard through
+        // getClipboard. This way we are reasonably in
+        // control of the state. Notice that the client
+        // code will suffer these races, if the getClipboard
+        // HTTP GET is done "too soon" after a copy, but
+        // that is unlikely in practice because the URL for
+        // getClipboard is generated as a link to the user,
+        // which is clicked to download the clipboard contents.
+
         // Load a doc with the cursor saved at a top row.
+        // NOTE: This load a spreadsheet, not a writer doc!
         std::string documentPath, documentURL;
         helpers::getDocumentPathAndURL("empty.ods", documentPath, documentURL, testname);
 
@@ -252,7 +292,7 @@ public:
         // Check existing content
         LOG_TST("Fetch pristine content from the document");
         helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
+        helpers::sendAndDrain(socket, testname, "uno .uno:Copy", "statechanged:");
         std::string oneColumn = "2\n3\n5\n";
         if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", oneColumn))
             return;
@@ -271,7 +311,7 @@ public:
         std::string text = "This is some content?&*/\\!!";
         helpers::sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n" + text, testname);
         helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
+        helpers::sendAndDrain(socket, testname, "uno .uno:Copy", "statechanged:");
 
         std::string existing = "2\t\n3\t\n5\t";
         if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", existing + text + '\n'))
@@ -283,17 +323,17 @@ public:
 
         LOG_TST("Push new clipboard content");
         std::string newcontent = "1234567890";
-        helpers::sendTextFrame(socket, "uno .uno:Deselect", testname);
+        helpers::sendAndWait(socket, testname, "uno .uno:Deselect", "statechanged:");
         if (!setClipboard(clipURI, buildClipboardText(newcontent), HTTPResponse::HTTP_OK))
             return;
-        helpers::sendTextFrame(socket, "uno .uno:Paste", testname);
+        helpers::sendAndWait(socket, testname, "uno .uno:Paste", "statechanged:");
 
         if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", newcontent))
             return;
 
         LOG_TST("Check the result.");
         helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);
-        helpers::sendTextFrame(socket, "uno .uno:Copy", testname);
+        helpers::sendAndDrain(socket, testname, "uno .uno:Copy", "statechanged:");
         if (!fetchClipboardAssert(clipURI, "text/plain;charset=utf-8", existing + newcontent + '\n'))
             return;
 
