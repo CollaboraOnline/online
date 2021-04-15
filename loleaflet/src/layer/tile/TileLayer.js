@@ -2212,6 +2212,10 @@ L.TileLayer = L.GridLayer.extend({
 			this._updateScrollOnCellSelection(oldSelection, this._cellSelectionArea);
 		} else {
 			this._cellSelectionArea = null;
+			this._cellSelections = Array(0);
+			this._map.wholeColumnSelected = false; // Message related to whole column/row selection should be on the way, we should update the variables now.
+			this._map.wholeRowSelected = false;
+			this._refreshRowColumnHeaders();
 		}
 	},
 
