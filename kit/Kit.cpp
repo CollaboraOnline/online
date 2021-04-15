@@ -820,9 +820,22 @@ public:
         }
 
         const std::string payload = p ? p : "(nil)";
+        Document* self = static_cast<Document*>(data);
+
+        if (type == LOK_CALLBACK_PROFILE_FRAME)
+        {
+            // We must send the trace data to the wsd process for output
+
+            LOG_TRC("Document::GlobalCallback " << lokCallbackTypeToString(type) << ": " << payload.length() << " bytes.");
+
+            self->sendTextFrame("trace:\n" + payload);
+
+            return;
+        }
+
         LOG_TRC("Document::GlobalCallback " << lokCallbackTypeToString(type) <<
                 " [" << payload << "].");
-        Document* self = static_cast<Document*>(data);
+
         if (type == LOK_CALLBACK_DOCUMENT_PASSWORD_TO_MODIFY ||
             type == LOK_CALLBACK_DOCUMENT_PASSWORD)
         {
@@ -857,8 +870,6 @@ public:
                 }
             }
         }
-        else if (type == LOK_CALLBACK_PROFILE_FRAME)
-            return; // already trace dumped above.
 
         // Broadcast leftover status indicator callbacks to all clients
         self->broadcastCallbackToClients(type, payload);

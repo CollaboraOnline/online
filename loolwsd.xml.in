@@ -73,6 +73,10 @@
         </anonymize>
     </logging>
 
+    <event_trace>
+      <path type="string" desc="Event Trace file path." default="@LOOLWSD_EVENTTRACEFILE@">@LOOLWSD_EVENTTRACEFILE@</path>
+    </event_trace>
+
     <loleaflet_logging desc="Logging in the browser console" default="@LOLEAFLET_LOGGING@">@LOLEAFLET_LOGGING@</loleaflet_logging>
 
     <trace desc="Dump commands and notifications for replay. When 'snapshot' is true, the source file is copied to the path first." enable="false">
