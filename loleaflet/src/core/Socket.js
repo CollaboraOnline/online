@@ -291,6 +291,7 @@ L.Socket = L.Class.extend({
 			// This must be the first message, unless we reconnect.
 			var oldId = null;
 			var oldVersion = null;
+			var sameFile = true;
 			// Check if we are reconnecting.
 			if (this.WSDServer && this.WSDServer.Id) {
 				// Yes we are reconnecting.
@@ -298,11 +299,17 @@ L.Socket = L.Class.extend({
 				// If our connection was lost and is ready again, we will not need to refresh the page.
 				oldId = this.WSDServer.Id;
 				oldVersion = this.WSDServer.Version;
+
+				// If another file is opened, we will not refresh the page.
+				if (this._map.options.previousWopiSrc && this._map.options.wopiSrc) {
+					if (this._map.options.previousWopiSrc !== this._map.options.wopiSrc)
+						sameFile = false;
+				}
 			}
 
 			this.WSDServer = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 
-			if (oldId && oldVersion) {
+			if (oldId && oldVersion && sameFile) {
 				if (this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) {
 					alert(_('Server has been restarted. We have to refresh the page now.'));
 					window.location.reload();
@@ -809,6 +816,7 @@ L.Socket = L.Class.extend({
 				// setup for loading the new document, and trigger the load
 				var docUrl = url.split('?')[0];
 				this._map.options.doc = docUrl;
+				this._map.options.previousWopiSrc = this._map.options.wopiSrc; // After save-as op, we may connect to another server, then code will think that server has restarted. In this case, we don't want to reload the page (detect the file name is different).
 				this._map.options.wopiSrc = encodeURIComponent(docUrl);
 
 				// if this is save-as, we need to load the document with edit permission
