@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-16 12:55+0100\n"
+"POT-Creation-Date: 2021-04-16 22:04+0200\n"
 "PO-Revision-Date: 2021-04-01 08:26+0000\n"
 "Last-Translator: wxf26054 <wxf26054@live.cn>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
-"Language: zh_CN\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -134,10 +134,10 @@ msgstr "CPU 图"
 msgid "Network Graph"
 msgstr "网络图"
 
-#: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:229
+#: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:230
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/control/Control.NotebookbarDraw.js:24 src/layer/marker/Annotation.js:279
-#: src/layer/tile/TileLayer.js:545
+#: src/control/Control.NotebookbarDraw.js:24 src/layer/marker/Annotation.js:280
+#: src/layer/tile/CanvasTileLayer.js:1440
 msgid "Save"
 msgstr "保存"
 
@@ -223,6 +223,10 @@ msgstr "关闭"
 msgid "Update Log Levels"
 msgstr "更新日志级别"
 
+#: admin/admin.strings.js:55
+msgid "Version Information"
+msgstr ""
+
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
 msgstr "已接收"
@@ -248,18 +252,18 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "您确定要停止此次会话吗？"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1480
+#: src/control/Control.Menubar.js:1530
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:253
-#: src/control/Control.Tabs.js:270 src/control/Toolbar.js:744
+#: src/control/Control.Tabs.js:270 src/control/Toolbar.js:760
 msgid "OK"
 msgstr "确定"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1481
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1531
 #: src/control/Control.MobileTopBar.js:45
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:254
-#: src/control/Control.Tabs.js:271 src/control/Toolbar.js:745
-#: src/layer/marker/Annotation.js:203 src/layer/tile/TileLayer.js:546
+#: src/control/Control.Tabs.js:271 src/control/Toolbar.js:761
+#: src/layer/marker/Annotation.js:204 src/layer/tile/CanvasTileLayer.js:1441
 msgid "Cancel"
 msgstr "取消"
 
@@ -360,8 +364,10 @@ msgid "Index"
 msgstr "索引"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2249 src/layer/tile/TileLayer.js:412
-#: src/layer/tile/TileLayer.js:3999 src/layer/tile/TileLayer.js:4009
+#: src/control/Control.JSDialogBuilder.js:2282
+#: src/layer/tile/CanvasTileLayer.js:4743
+#: src/layer/tile/CanvasTileLayer.js:4753
+#: src/layer/tile/CanvasTileLayer.js:5069
 msgid "Comment"
 msgstr "批注"
 
@@ -433,83 +439,83 @@ msgstr "方形"
 msgid "Fixed size"
 msgstr "固定大小"
 
-#: src/control/Control.JSDialogBuilder.js:1457
+#: src/control/Control.JSDialogBuilder.js:1474
 msgid "From"
 msgstr "从"
 
-#: src/control/Control.JSDialogBuilder.js:1460
+#: src/control/Control.JSDialogBuilder.js:1477
 msgid "To"
 msgstr "到"
 
-#: src/control/Control.JSDialogBuilder.js:1591
+#: src/control/Control.JSDialogBuilder.js:1608
 msgid "Select range"
 msgstr "选择范围"
 
-#: src/control/Control.JSDialogBuilder.js:1620
-#: src/control/Control.NotebookbarBuilder.js:229
+#: src/control/Control.JSDialogBuilder.js:1637
+#: src/control/Control.NotebookbarBuilder.js:228
 msgid "Font Name"
 msgstr "字体名称"
 
-#: src/control/Control.JSDialogBuilder.js:1622
+#: src/control/Control.JSDialogBuilder.js:1639
 msgid "Font Size"
 msgstr "字体大小"
 
-#: src/control/Control.JSDialogBuilder.js:2181
-#: src/layer/marker/Annotation.js:240
+#: src/control/Control.JSDialogBuilder.js:2213
+#: src/layer/marker/Annotation.js:241
 msgid "Accept change"
 msgstr "接受更改"
 
-#: src/control/Control.JSDialogBuilder.js:2186
-#: src/layer/marker/Annotation.js:241
+#: src/control/Control.JSDialogBuilder.js:2218
+#: src/layer/marker/Annotation.js:242
 msgid "Reject change"
 msgstr "拒绝更改"
 
-#: src/control/Control.JSDialogBuilder.js:2195
-#: src/layer/marker/Annotation.js:259
+#: src/control/Control.JSDialogBuilder.js:2227
+#: src/layer/marker/Annotation.js:260
 msgid "Open menu"
 msgstr "打开菜单"
 
-#: src/control/Control.JSDialogBuilder.js:2240
+#: src/control/Control.JSDialogBuilder.js:2273
 msgid "reply"
 msgstr "回复"
 
-#: src/control/Control.JSDialogBuilder.js:2243
+#: src/control/Control.JSDialogBuilder.js:2276
 msgid "replies"
 msgstr "回复"
 
-#: src/control/Control.JSDialogBuilder.js:2290
+#: src/control/Control.JSDialogBuilder.js:2324
 msgid "Insert Comment"
 msgstr "插入评论"
 
-#: src/control/Control.JSDialogBuilder.js:2673
+#: src/control/Control.JSDialogBuilder.js:2708
 msgid "Cell borders"
 msgstr "单元格边框"
 
-#: src/control/Control.JSDialogBuilder.js:2717
+#: src/control/Control.JSDialogBuilder.js:2752
 msgid "Background Color"
 msgstr "背景颜色"
 
-#: src/control/Control.JSDialogBuilder.js:2719
+#: src/control/Control.JSDialogBuilder.js:2754
 msgid "Gradient Start"
 msgstr "渐变起点"
 
-#: src/control/Control.JSDialogBuilder.js:2721
+#: src/control/Control.JSDialogBuilder.js:2756
 msgid "Gradient End"
 msgstr "渐变终点"
 
-#: src/control/Control.JSDialogBuilder.js:2903
+#: src/control/Control.JSDialogBuilder.js:2938
 msgid "Rows"
 msgstr "行"
 
-#: src/control/Control.JSDialogBuilder.js:2904
+#: src/control/Control.JSDialogBuilder.js:2939
 msgid "Columns"
 msgstr "列"
 
-#: src/control/Control.JSDialogBuilder.js:2924
+#: src/control/Control.JSDialogBuilder.js:2959
 msgid "Insert Table"
 msgstr "插入表格"
 
-#: src/control/Control.JSDialogBuilder.js:2953
+#: src/control/Control.JSDialogBuilder.js:2988
 msgid "Line style:"
 msgstr "线条样式:"
 
@@ -517,83 +523,83 @@ msgstr "线条样式:"
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:493
 #: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:507
-#: src/control/Control.NotebookbarBuilder.js:740
-#: src/control/Control.NotebookbarBuilder.js:742
-#: src/control/Control.NotebookbarBuilder.js:744
-#: src/control/Control.NotebookbarBuilder.js:768
-#: src/control/Control.NotebookbarBuilder.js:803
-#: src/control/Control.NotebookbarBuilder.js:820
+#: src/control/Control.NotebookbarBuilder.js:749
+#: src/control/Control.NotebookbarBuilder.js:751
+#: src/control/Control.NotebookbarBuilder.js:753
+#: src/control/Control.NotebookbarBuilder.js:777
+#: src/control/Control.NotebookbarBuilder.js:812
+#: src/control/Control.NotebookbarBuilder.js:829
 msgid "None (Do not check spelling)"
 msgstr "无 (不检查拼写)"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:270
 #: src/control/Control.Menubar.js:398 src/control/Control.Menubar.js:509
 #: src/control/Control.Menubar.js:720 src/control/Control.Menubar.js:771
-#: src/control/Control.Menubar.js:820
-#: src/control/Control.NotebookbarDraw.js:180
+#: src/control/Control.Menubar.js:820 src/control/Control.Menubar.js:866
+#: src/control/Control.NotebookbarDraw.js:164
 msgid "Share..."
 msgstr "分享..."
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:271
 #: src/control/Control.Menubar.js:400 src/control/Control.Menubar.js:510
 #: src/control/Control.Menubar.js:722 src/control/Control.Menubar.js:773
-#: src/control/Control.Menubar.js:822
-#: src/control/Control.NotebookbarDraw.js:210
+#: src/control/Control.Menubar.js:822 src/control/Control.Menubar.js:868
+#: src/control/Control.NotebookbarDraw.js:194
 msgid "See revision history"
 msgstr "查看修订历史"
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:272
 #: src/control/Control.Menubar.js:401 src/control/Control.Menubar.js:511
 #: src/control/Control.Menubar.js:725 src/control/Control.Menubar.js:775
-#: src/control/Control.Menubar.js:824
+#: src/control/Control.Menubar.js:824 src/control/Control.Menubar.js:870
 msgid "Download as"
 msgstr "下载为"
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:272
 #: src/control/Control.Menubar.js:401 src/control/Control.Menubar.js:511
 #: src/control/Control.Menubar.js:725 src/control/Control.Menubar.js:775
-#: src/control/Control.Menubar.js:824
+#: src/control/Control.Menubar.js:824 src/control/Control.Menubar.js:870
 msgid "Export as"
 msgstr "导出为"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:273
 #: src/control/Control.Menubar.js:402 src/control/Control.Menubar.js:512
 #: src/control/Control.Menubar.js:726 src/control/Control.Menubar.js:776
-#: src/control/Control.Menubar.js:825
-#: src/control/Control.NotebookbarWriter.js:309
-#: src/control/Control.NotebookbarCalc.js:204
-#: src/control/Control.NotebookbarImpress.js:369
-#: src/control/Control.NotebookbarDraw.js:268
+#: src/control/Control.Menubar.js:825 src/control/Control.Menubar.js:871
+#: src/control/Control.NotebookbarWriter.js:285
+#: src/control/Control.NotebookbarCalc.js:186
+#: src/control/Control.NotebookbarImpress.js:351
+#: src/control/Control.NotebookbarDraw.js:243
 msgid "PDF Document (.pdf)"
 msgstr "PDF 文档 (.pdf)"
 
 #: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:727
-#: src/control/Control.NotebookbarWriter.js:203
+#: src/control/Control.NotebookbarWriter.js:179
 msgid "ODF text document (.odt)"
 msgstr "ODF 文本文档 (.odt)"
 
 #: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:728
-#: src/control/Control.NotebookbarWriter.js:256
+#: src/control/Control.NotebookbarWriter.js:232
 msgid "Word 2003 Document (.doc)"
 msgstr "Word 2003 文档 (.doc)"
 
 #: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:729
-#: src/control/Control.NotebookbarWriter.js:278
+#: src/control/Control.NotebookbarWriter.js:254
 msgid "Word Document (.docx)"
 msgstr "Word 文档 (.docx)"
 
 #: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:730
-#: src/control/Control.NotebookbarWriter.js:225
+#: src/control/Control.NotebookbarWriter.js:201
 msgid "Rich Text (.rtf)"
 msgstr "富文本 (.rtf)"
 
 #: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:731
-#: src/control/Control.NotebookbarWriter.js:331
+#: src/control/Control.NotebookbarWriter.js:307
 msgid "EPUB (.epub)"
 msgstr "电子出版物 (.epub)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:723
-#: src/control/Control.NotebookbarWriter.js:350 src/control/Signing.js:601
+#: src/control/Control.NotebookbarWriter.js:326 src/control/Signing.js:601
 msgid "Sign document"
 msgstr "签名文档"
 
@@ -605,11 +611,11 @@ msgstr "关闭文档"
 #: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:285
 #: src/control/Control.Menubar.js:411 src/control/Control.Menubar.js:524
 #: src/control/Control.Menubar.js:736 src/control/Control.Menubar.js:785
-#: src/control/Control.Menubar.js:833
-#: src/control/Control.NotebookbarBuilder.js:733
-#: src/control/Control.NotebookbarBuilder.js:763
-#: src/control/Control.NotebookbarBuilder.js:798
-#: src/control/Control.NotebookbarBuilder.js:815
+#: src/control/Control.Menubar.js:831 src/control/Control.Menubar.js:879
+#: src/control/Control.NotebookbarBuilder.js:742
+#: src/control/Control.NotebookbarBuilder.js:772
+#: src/control/Control.NotebookbarBuilder.js:807
+#: src/control/Control.NotebookbarBuilder.js:824
 msgid "Repair"
 msgstr "修复"
 
@@ -620,7 +626,7 @@ msgid "Reset zoom"
 msgstr "重置缩放"
 
 #: src/control/Control.Menubar.js:67
-#: src/control/Control.NotebookbarBuilder.js:719
+#: src/control/Control.NotebookbarBuilder.js:728
 msgid "Show Ruler"
 msgstr "显示标尺"
 
@@ -631,13 +637,13 @@ msgstr "显示状态栏"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:312
 #: src/control/Control.Menubar.js:431 src/control/Control.Menubar.js:549
-#: src/control/Control.Menubar.js:883 src/control/Control.Menubar.js:924
-#: src/control/Control.Menubar.js:938
+#: src/control/Control.Menubar.js:933 src/control/Control.Menubar.js:974
+#: src/control/Control.Menubar.js:988
 msgid "Local Image..."
 msgstr "本地图像…"
 
 #: src/control/Control.Menubar.js:95 src/control/Control.Menubar.js:97
-#: src/control/Control.Menubar.js:899 src/control/Control.Menubar.js:901
+#: src/control/Control.Menubar.js:949 src/control/Control.Menubar.js:951
 msgid "All"
 msgstr "所有"
 
@@ -647,35 +653,35 @@ msgstr "文字方向"
 
 #: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:384
 #: src/control/Control.Menubar.js:496 src/control/Control.Menubar.js:707
-#: src/control/Control.NotebookbarWriter.js:381
+#: src/control/Control.NotebookbarWriter.js:357
 msgid "Online Help"
 msgstr "在线帮助"
 
 #: src/control/Control.Menubar.js:257 src/control/Control.Menubar.js:385
 #: src/control/Control.Menubar.js:497 src/control/Control.Menubar.js:708
-#: src/control/Control.NotebookbarWriter.js:395
+#: src/control/Control.NotebookbarWriter.js:371
 msgid "Keyboard shortcuts"
 msgstr "键盘快捷键"
 
 #: src/control/Control.Menubar.js:258 src/control/Control.Menubar.js:386
 #: src/control/Control.Menubar.js:498 src/control/Control.Menubar.js:709
-#: src/control/Control.NotebookbarWriter.js:409
+#: src/control/Control.NotebookbarWriter.js:385
 msgid "Report an issue"
 msgstr "报告问题"
 
 #: src/control/Control.Menubar.js:259 src/control/Control.Menubar.js:387
 #: src/control/Control.Menubar.js:499 src/control/Control.Menubar.js:710
 #: src/control/Control.Menubar.js:763 src/control/Control.Menubar.js:812
-#: src/control/Control.Menubar.js:876
-#: src/control/Control.NotebookbarWriter.js:424
+#: src/control/Control.Menubar.js:858 src/control/Control.Menubar.js:926
+#: src/control/Control.NotebookbarWriter.js:400
 msgid "Latest Updates"
 msgstr "最新更新"
 
 #: src/control/Control.Menubar.js:260 src/control/Control.Menubar.js:388
 #: src/control/Control.Menubar.js:500 src/control/Control.Menubar.js:711
 #: src/control/Control.Menubar.js:764 src/control/Control.Menubar.js:813
-#: src/control/Control.Menubar.js:877
-#: src/control/Control.NotebookbarWriter.js:438
+#: src/control/Control.Menubar.js:859 src/control/Control.Menubar.js:927
+#: src/control/Control.NotebookbarWriter.js:414
 msgid "About"
 msgstr "关于"
 
@@ -690,22 +696,22 @@ msgid "Save Comments"
 msgstr "保存批注"
 
 #: src/control/Control.Menubar.js:274 src/control/Control.Menubar.js:777
-#: src/control/Control.NotebookbarImpress.js:263
+#: src/control/Control.NotebookbarImpress.js:245
 msgid "ODF presentation (.odp)"
 msgstr "ODF 演示文稿 (.odp)"
 
 #: src/control/Control.Menubar.js:275 src/control/Control.Menubar.js:778
-#: src/control/Control.NotebookbarImpress.js:316
+#: src/control/Control.NotebookbarImpress.js:298
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "PowerPoint 2003 演示文稿 (.ppt)"
 
 #: src/control/Control.Menubar.js:276 src/control/Control.Menubar.js:779
-#: src/control/Control.NotebookbarImpress.js:338
+#: src/control/Control.NotebookbarImpress.js:320
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint 演示文稿 (.pptx)"
 
 #: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:811
-#: src/control/Control.PresentationBar.js:57
+#: src/control/Control.Menubar.js:857 src/control/Control.PresentationBar.js:57
 msgid "Fullscreen presentation"
 msgstr "全屏演示"
 
@@ -714,23 +720,24 @@ msgid "Present current slide"
 msgstr "从当前幻灯片开始演示"
 
 #: src/control/Control.Menubar.js:403 src/control/Control.Menubar.js:780
-#: src/control/Control.NotebookbarImpress.js:285
-#: src/control/Control.NotebookbarDraw.js:237
+#: src/control/Control.Menubar.js:826
+#: src/control/Control.NotebookbarImpress.js:267
+#: src/control/Control.NotebookbarDraw.js:221
 msgid "ODF Drawing (.odg)"
 msgstr "ODF 绘图 (.odg)"
 
-#: src/control/Control.Menubar.js:513 src/control/Control.Menubar.js:826
-#: src/control/Control.NotebookbarCalc.js:182
+#: src/control/Control.Menubar.js:513 src/control/Control.Menubar.js:872
+#: src/control/Control.NotebookbarCalc.js:164
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF 电子表格 (.ods)"
 
-#: src/control/Control.Menubar.js:514 src/control/Control.Menubar.js:827
-#: src/control/Control.NotebookbarCalc.js:235
+#: src/control/Control.Menubar.js:514 src/control/Control.Menubar.js:873
+#: src/control/Control.NotebookbarCalc.js:217
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003 电子表格 (.xls)"
 
-#: src/control/Control.Menubar.js:515 src/control/Control.Menubar.js:828
-#: src/control/Control.NotebookbarCalc.js:257
+#: src/control/Control.Menubar.js:515 src/control/Control.Menubar.js:874
+#: src/control/Control.NotebookbarCalc.js:239
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Excel 电子表格 (.xlsx)"
 
@@ -739,7 +746,8 @@ msgid "CSV file (.csv)"
 msgstr "CSV文件(.csv)"
 
 #: src/control/Control.Menubar.js:743 src/control/Control.Menubar.js:792
-#: src/control/Control.Menubar.js:840 src/control/Control.StatusBar.js:190
+#: src/control/Control.Menubar.js:838 src/control/Control.Menubar.js:886
+#: src/control/Control.StatusBar.js:190
 msgid "Search"
 msgstr "搜索"
 
@@ -747,15 +755,15 @@ msgstr "搜索"
 msgid "Page Setup"
 msgstr "页面设置"
 
-#: src/control/Control.Menubar.js:1043 src/control/Control.StatusBar.js:506
+#: src/control/Control.Menubar.js:1093 src/control/Control.StatusBar.js:506
 msgid "Reset to Default Language"
 msgstr "重置为默认语言"
 
-#: src/control/Control.Menubar.js:1385
+#: src/control/Control.Menubar.js:1435
 msgid "Insert Shape"
 msgstr "插入形状"
 
-#: src/control/Control.Menubar.js:1478
+#: src/control/Control.Menubar.js:1528
 msgid "Are you sure you want to delete this slide?"
 msgstr "您确定要删除这张幻灯片吗？"
 
@@ -913,21 +921,21 @@ msgstr "输入新的工作表名"
 msgid "More..."
 msgstr "更多..."
 
-#: src/control/Control.Toolbar.js:943
+#: src/control/Control.Toolbar.js:947
 msgid "Previous slide"
 msgstr "上一张幻灯片"
 
-#: src/control/Control.Toolbar.js:944
+#: src/control/Control.Toolbar.js:948
 msgid "Next slide"
 msgstr "下一张幻灯片"
 
-#: src/control/Control.Toolbar.js:999
+#: src/control/Control.Toolbar.js:1003
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "多个用户之间的「撤销」「恢复」操作发生冲突。请使用文档修复功能解决问题"
 
 #: src/control/Control.TopToolbar.js:122
-#: src/control/Control.NotebookbarWriter.js:1416
+#: src/control/Control.NotebookbarWriter.js:751
 msgid "Default Style"
 msgstr "默认样式"
 
@@ -940,7 +948,7 @@ msgid "Insert table"
 msgstr "插入表格"
 
 #: src/control/Control.TopToolbar.js:245
-#: src/control/Control.NotebookbarBuilder.js:569
+#: src/control/Control.NotebookbarBuilder.js:576
 msgid "Insert Local Image"
 msgstr "插入本地图像"
 
@@ -988,23 +996,23 @@ msgstr "总是跟随编辑器"
 msgid "Current"
 msgstr "当前"
 
-#: src/control/Control.Notebookbar.js:223
+#: src/control/Control.Notebookbar.js:224
 #: src/control/Control.NotebookbarImpress.js:18
 #: src/control/Control.NotebookbarDraw.js:18
-#: src/control/Control.NotebookbarBuilder.js:716
-#: src/control/Control.NotebookbarBuilder.js:757
-#: src/control/Control.NotebookbarBuilder.js:785
-#: src/control/Control.NotebookbarBuilder.js:810
+#: src/control/Control.NotebookbarBuilder.js:725
+#: src/control/Control.NotebookbarBuilder.js:766
+#: src/control/Control.NotebookbarBuilder.js:794
+#: src/control/Control.NotebookbarBuilder.js:819
 msgid "Menu"
 msgstr "菜单"
 
-#: src/control/Control.Notebookbar.js:235
+#: src/control/Control.Notebookbar.js:236
 #: src/control/Control.NotebookbarImpress.js:36
 #: src/control/Control.NotebookbarDraw.js:30
 msgid "Undo"
 msgstr "撤消"
 
-#: src/control/Control.Notebookbar.js:241
+#: src/control/Control.Notebookbar.js:242
 #: src/control/Control.NotebookbarImpress.js:42
 #: src/control/Control.NotebookbarDraw.js:36
 msgid "Redo"
@@ -1068,25 +1076,33 @@ msgstr ""
 msgid "~Help"
 msgstr "帮助(~H)"
 
-#: src/control/Control.NotebookbarWriter.js:146
-#: src/control/Control.NotebookbarCalc.js:125
-#: src/control/Control.NotebookbarImpress.js:206
+#: src/control/Control.NotebookbarWriter.js:122
+#: src/control/Control.NotebookbarCalc.js:107
+#: src/control/Control.NotebookbarImpress.js:188
 msgid "Share"
 msgstr "共享"
 
-#: src/control/Control.NotebookbarWriter.js:176
-#: src/control/Control.NotebookbarCalc.js:155
-#: src/control/Control.NotebookbarImpress.js:236
+#: src/control/Control.NotebookbarWriter.js:152
+#: src/control/Control.NotebookbarCalc.js:137
+#: src/control/Control.NotebookbarImpress.js:218
 msgid "See history"
 msgstr "查看历史记录"
 
-#: src/control/Control.NotebookbarWriter.js:1420
+#: src/control/Control.NotebookbarWriter.js:755
 msgid "Text Body"
 msgstr "正文"
 
-#: src/control/Control.NotebookbarWriter.js:1423
+#: src/control/Control.NotebookbarWriter.js:758
 msgid "Title"
 msgstr "标题"
+
+#: src/control/Control.NotebookbarWriter.js:789
+msgid "Emphasis"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:794
+msgid "Strong Emphasis"
+msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
@@ -1096,53 +1112,122 @@ msgstr "工作表(~S)"
 msgid "~Data"
 msgstr "数据(~D)"
 
-#: src/control/Control.NotebookbarCalc.js:279
+#: src/control/Control.NotebookbarCalc.js:270
 msgid "CSV File (.csv)"
 msgstr "CSV文件(.csv)"
 
-#: src/control/Control.NotebookbarCalc.js:1826
-msgid "Insert Rows Above"
-msgstr "在当前行上方插入"
+#: src/control/Control.NotebookbarCalc.js:596
+msgid "General"
+msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1837
-msgid "Insert Rows Below"
-msgstr "在当前行下方插入"
+#: src/control/Control.NotebookbarCalc.js:597
+msgid "Number"
+msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1855
-msgid "Insert Columns Before"
-msgstr "在当前列左方插入"
+#: src/control/Control.NotebookbarCalc.js:598
+msgid "Percent"
+msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1866
-msgid "Insert Columns After"
-msgstr "在当前列右方插入"
+#: src/control/Control.NotebookbarCalc.js:599
+#, fuzzy
+msgid "Currency"
+msgstr "当前"
 
-#: src/control/Control.NotebookbarCalc.js:1884
+#: src/control/Control.NotebookbarCalc.js:600
+msgid "Date"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:601
+msgid "Time"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:602
+msgid "Scientific"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:603
+msgid "Fraction"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:604
+msgid "Boolean Value"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:605 src/control/Toolbar.js:756
+msgid "Text"
+msgstr "文本"
+
+#: src/control/Control.NotebookbarCalc.js:723
+msgid "Default"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:728
+msgid "Heading 1"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:733
+msgid "Heading 2"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:744
+msgid "Good"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:749
+msgid "Neutral"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:754
+msgid "Bad"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:823
 msgid "Insert Row Break"
 msgstr "插入换行符"
 
-#: src/control/Control.NotebookbarCalc.js:1895
+#: src/control/Control.NotebookbarCalc.js:834
 msgid "Insert Column Break"
 msgstr "插入分栏符"
 
-#: src/control/Control.NotebookbarCalc.js:1913
-msgid "Delete Rows"
-msgstr "删除行"
-
-#: src/control/Control.NotebookbarCalc.js:1924
-msgid "Delete Columns"
-msgstr "删除列"
-
-#: src/control/Control.NotebookbarCalc.js:1942
+#: src/control/Control.NotebookbarCalc.js:852
 msgid "Remove Row Break"
 msgstr "删除分行符"
 
-#: src/control/Control.NotebookbarCalc.js:1953
+#: src/control/Control.NotebookbarCalc.js:863
 msgid "Remove Column Break"
 msgstr "删除分栏符"
+
+#: src/control/Control.NotebookbarCalc.js:881
+msgid "Insert Rows Above"
+msgstr "在当前行上方插入"
+
+#: src/control/Control.NotebookbarCalc.js:886
+msgid "Insert Columns Before"
+msgstr "在当前列左方插入"
+
+#: src/control/Control.NotebookbarCalc.js:891
+msgid "Delete Rows"
+msgstr "删除行"
+
+#: src/control/Control.NotebookbarCalc.js:902
+msgid "Insert Rows Below"
+msgstr "在当前行下方插入"
+
+#: src/control/Control.NotebookbarCalc.js:907
+msgid "Insert Columns After"
+msgstr "在当前列右方插入"
+
+#: src/control/Control.NotebookbarCalc.js:912
+msgid "Delete Columns"
+msgstr "删除列"
 
 #: src/control/Control.NotebookbarImpress.js:30
 msgid "Start Presentation"
 msgstr "开始演示"
+
+#: src/control/Control.NotebookbarDraw.js:274
+msgid "Image (.png)"
+msgstr ""
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
@@ -1152,11 +1237,11 @@ msgstr "显示选定的工作表"
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr "无法锁定文档，因此以只读模式打开。"
 
-#: src/control/Permission.js:50 src/control/Permission.js:68
+#: src/control/Permission.js:50 src/control/Permission.js:67
 msgid "Server returned this reason:"
 msgstr "服务器返回的原因为："
 
-#: src/control/Permission.js:66
+#: src/control/Permission.js:65
 msgid "The document could not be locked."
 msgstr "无法锁定文档。"
 
@@ -1168,11 +1253,11 @@ msgstr "左边距"
 msgid "Right Margin"
 msgstr "右边距"
 
-#: src/control/Ruler.js:646
+#: src/control/Ruler.js:629
 msgid "Insert tabstop"
 msgstr "插入制表位"
 
-#: src/control/Ruler.js:653
+#: src/control/Ruler.js:636
 msgid "Delete tabstop"
 msgstr "删除制表位"
 
@@ -1300,48 +1385,44 @@ msgstr "签名没有问题，但文档仅被部分签名"
 msgid "Signed but not all files are signed"
 msgstr "已签名但不是所有文件都有签名"
 
-#: src/control/Toolbar.js:49
+#: src/control/Toolbar.js:52
 msgid "Font"
 msgstr "字体"
 
-#: src/control/Toolbar.js:194 src/control/Toolbar.js:206
+#: src/control/Toolbar.js:207 src/control/Toolbar.js:219
 msgid "Downloading..."
 msgstr "正在下载..."
 
-#: src/control/Toolbar.js:222 src/map/Map.js:1526
+#: src/control/Toolbar.js:235 src/map/Map.js:1557
 msgid "Saving..."
 msgstr "正在保存..."
 
-#: src/control/Toolbar.js:233
+#: src/control/Toolbar.js:246
 msgid "Renaming..."
 msgstr "重命名..."
 
-#: src/control/Toolbar.js:548
+#: src/control/Toolbar.js:564
 msgid "I understand the risks"
 msgstr "我理解其中的风险"
 
-#: src/control/Toolbar.js:598
+#: src/control/Toolbar.js:614
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr "抱歉，无法获得与最新更新相关的信息。"
 
-#: src/control/Toolbar.js:643
+#: src/control/Toolbar.js:659
 msgid "This version of %productName is powered by"
 msgstr "当前版本 %productName 的提供者为"
 
-#: src/control/Toolbar.js:653
+#: src/control/Toolbar.js:669
 msgid "\"Slow Proxy\""
 msgstr "“慢速代理”"
 
-#: src/control/Toolbar.js:738
+#: src/control/Toolbar.js:754
 msgid "Insert hyperlink"
 msgstr "插入超链接"
 
-#: src/control/Toolbar.js:740
-msgid "Text"
-msgstr "文本"
-
-#: src/control/Toolbar.js:741
+#: src/control/Toolbar.js:757
 msgid "Link"
 msgstr "链接"
 
@@ -1360,93 +1441,97 @@ msgstr ""
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr "糟糕，连接到文件 %productName:  时出现问题 "
 
-#: src/core/Socket.js:310
+#: src/core/Socket.js:319
+msgid "Server has been restarted. We have to refresh the page now."
+msgstr ""
+
+#: src/core/Socket.js:337
 msgid "Served by:"
 msgstr "服务提供方:"
 
-#: src/core/Socket.js:315
+#: src/core/Socket.js:342
 msgid "Unsupported server version."
 msgstr "不被支持的服务器版本。"
 
-#: src/core/Socket.js:410
+#: src/core/Socket.js:437
 msgid "Session terminated by document owner"
 msgstr "会话已被文档所有者终止"
 
-#: src/core/Socket.js:415
+#: src/core/Socket.js:442
 msgid "Idle document - please click to reload and resume editing"
 msgstr "文档已暂停，请单击以重新加载并继续编辑"
 
-#: src/core/Socket.js:417
+#: src/core/Socket.js:444
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "文档已暂停，请点击屏幕以重新加载并继续编辑"
 
-#: src/core/Socket.js:425
+#: src/core/Socket.js:452
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "服务器将关闭以维护（自动保存中）"
 
-#: src/core/Socket.js:429
+#: src/core/Socket.js:456
 msgid "Oops, there is a problem connecting the document"
 msgstr "糟糕，连接到文件时出错"
 
-#: src/core/Socket.js:433
+#: src/core/Socket.js:460
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "服务器已关闭，将会自动重新启动。请稍候..."
 
-#: src/core/Socket.js:461
+#: src/core/Socket.js:488
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr "文档已在服务器上被更改。正在加载新的文件，您编辑将作为更改历史保存。"
 
-#: src/core/Socket.js:467
+#: src/core/Socket.js:494
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr "恢复老版本。任何未保存的更改可在版本历史中查看"
 
-#: src/core/Socket.js:587
+#: src/core/Socket.js:614
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr "文档已在存储位置被更改。对于您尚未保存更改的文档，您打算怎么做？"
 
-#: src/core/Socket.js:591
+#: src/core/Socket.js:618
 msgid "Discard"
 msgstr "丢弃"
 
-#: src/core/Socket.js:596
+#: src/core/Socket.js:623
 msgid "Overwrite"
 msgstr "覆盖"
 
-#: src/core/Socket.js:601
+#: src/core/Socket.js:628
 msgid "Save to new file"
 msgstr "保存为新文档"
 
-#: src/core/Socket.js:671
+#: src/core/Socket.js:698
 msgid "Document requires password to view."
 msgstr "文档需要密码才能查看。"
 
-#: src/core/Socket.js:674
+#: src/core/Socket.js:701
 msgid "Document requires password to modify."
 msgstr "文档需要密码才能修改。"
 
-#: src/core/Socket.js:676
+#: src/core/Socket.js:703
 msgid "Hit Cancel to open in view-only mode."
 msgstr "点击“取消”在只读模式下打开。"
 
-#: src/core/Socket.js:680
+#: src/core/Socket.js:707
 msgid "Wrong password provided. Please try again."
 msgstr "密码错误。请重试。"
 
-#: src/core/Socket.js:829 src/map/Map.js:1529
+#: src/core/Socket.js:856 src/map/Map.js:1560
 msgid "Loading..."
 msgstr "正在载入..."
 
-#: src/core/Socket.js:829
+#: src/core/Socket.js:856
 msgid "Connecting..."
 msgstr "正在连接..."
 
-#: src/core/Socket.js:1164
+#: src/core/Socket.js:1160
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1587,45 +1672,45 @@ msgstr "向服务器上传文件失败，找不到文件。"
 msgid "Uploading file to server failed, the file is too large."
 msgstr "向服务器上传文件失败，文件过大。"
 
-#: src/layer/marker/Annotation.js:282 src/layer/tile/TileLayer.js:365
+#: src/layer/marker/Annotation.js:283 src/layer/tile/CanvasTileLayer.js:5022
 msgid "Reply"
 msgstr "回复"
 
-#: src/layer/tile/TileLayer.js:359
-msgid "Modify"
-msgstr "修改"
-
-#: src/layer/tile/TileLayer.js:371
-msgid "Remove"
-msgstr "删除"
-
-#: src/layer/tile/TileLayer.js:377
-msgid "Remove Thread"
-msgstr ""
-
-#: src/layer/tile/TileLayer.js:383
-msgid "Resolve"
-msgstr "解决"
-
-#: src/layer/tile/TileLayer.js:383
-msgid "Unresolve"
-msgstr "未解决"
-
-#: src/layer/tile/TileLayer.js:389
-msgid "Unresolve Thread"
-msgstr ""
-
-#: src/layer/tile/TileLayer.js:389
-msgid "Resolve Thread"
-msgstr ""
-
-#: src/layer/tile/TileLayer.js:975
+#: src/layer/tile/CanvasTileLayer.js:1855
 msgid "Functions"
 msgstr "函数"
 
-#: src/layer/tile/TileLayer.js:4024
+#: src/layer/tile/CanvasTileLayer.js:4770
 msgid "No Comments"
 msgstr "暂无评论"
+
+#: src/layer/tile/CanvasTileLayer.js:5016
+msgid "Modify"
+msgstr "修改"
+
+#: src/layer/tile/CanvasTileLayer.js:5028
+msgid "Remove"
+msgstr "删除"
+
+#: src/layer/tile/CanvasTileLayer.js:5034
+msgid "Remove Thread"
+msgstr ""
+
+#: src/layer/tile/CanvasTileLayer.js:5040
+msgid "Resolve"
+msgstr "解决"
+
+#: src/layer/tile/CanvasTileLayer.js:5040
+msgid "Unresolve"
+msgstr "未解决"
+
+#: src/layer/tile/CanvasTileLayer.js:5046
+msgid "Unresolve Thread"
+msgstr ""
+
+#: src/layer/tile/CanvasTileLayer.js:5046
+msgid "Resolve Thread"
+msgstr ""
 
 #: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
@@ -1635,11 +1720,11 @@ msgstr "想要向 %productName 以外粘贴，请先点击「下载」按钮"
 msgid "Failed to download clipboard, please re-copy"
 msgstr "下载剪切板失败，请重新复制"
 
-#: src/map/Clipboard.js:864
+#: src/map/Clipboard.js:886
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>请使用您屏幕键盘上的「复制／粘贴」按钮。</p>"
 
-#: src/map/Clipboard.js:866
+#: src/map/Clipboard.js:888
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
@@ -1648,7 +1733,7 @@ msgstr ""
 "<p>您的浏览器对剪贴板的访问受到限制，所以请使用下列快捷键：<ul><li><b>Ctrl+C</b>：用于复制。</li><li><b>Ctrl+X<"
 "/b>：用于剪切。</li><li><b>Ctrl+V</b>用于粘贴。</li></ul></p>"
 
-#: src/map/Clipboard.js:887
+#: src/map/Clipboard.js:909
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -1659,7 +1744,7 @@ msgstr ""
 "<p>若要将文档中的较大元素与其他应用程序共享，必须先将其下载到您的设备上。要进行该操作，请点击下方的“开始下载”按钮，并在下载完成之后点击“确认复制到剪"
 "贴板”。</p><p>若是在 %productName 之内的文档间复制和粘贴，则无需下载。</p>"
 
-#: src/map/Clipboard.js:903
+#: src/map/Clipboard.js:925
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -1680,7 +1765,7 @@ msgstr "%d 秒前"
 msgid "%d minutes ago"
 msgstr "%d 分钟前"
 
-#: src/map/Map.js:1380
+#: src/map/Map.js:1411
 msgid "Inactive document - please click to resume editing"
 msgstr "文档已暂停，单击以继续编辑"
 
@@ -1704,11 +1789,11 @@ msgstr "正在上传..."
 msgid "Uploading file to server failed with status: %0"
 msgstr "向服务器上传文件失败，失败状态为 %0"
 
-#: src/map/handler/Map.WOPI.js:133
+#: src/map/handler/Map.WOPI.js:134
 msgid "Creating new file from template..."
 msgstr "从模版创建新文件..."
 
-#: src/map/handler/Map.WOPI.js:410
+#: src/map/handler/Map.WOPI.js:405
 msgid "Creating copy..."
 msgstr "正在创建副本…"
 

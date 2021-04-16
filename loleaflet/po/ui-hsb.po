@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-16 12:55+0100\n"
+"POT-Creation-Date: 2021-04-16 22:04+0200\n"
 "PO-Revision-Date: 2020-10-08 21:00+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Upper Sorbian <https://hosted.weblate.org/projects/"
@@ -135,10 +135,10 @@ msgstr "CPU-grafika"
 msgid "Network Graph"
 msgstr "Syćowa grafika"
 
-#: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:229
+#: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:230
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/control/Control.NotebookbarDraw.js:24 src/layer/marker/Annotation.js:279
-#: src/layer/tile/TileLayer.js:545
+#: src/control/Control.NotebookbarDraw.js:24 src/layer/marker/Annotation.js:280
+#: src/layer/tile/CanvasTileLayer.js:1440
 msgid "Save"
 msgstr "Składować"
 
@@ -228,6 +228,10 @@ msgstr "Začinić"
 msgid "Update Log Levels"
 msgstr "Protokolowe runiny aktualizować"
 
+#: admin/admin.strings.js:55
+msgid "Version Information"
+msgstr ""
+
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
 msgstr "Přijate"
@@ -253,18 +257,18 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "Chceće tute posedźenje woprawdźe skónčić?"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1480
+#: src/control/Control.Menubar.js:1530
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:253
-#: src/control/Control.Tabs.js:270 src/control/Toolbar.js:744
+#: src/control/Control.Tabs.js:270 src/control/Toolbar.js:760
 msgid "OK"
 msgstr "W porjadku"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1481
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1531
 #: src/control/Control.MobileTopBar.js:45
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:254
-#: src/control/Control.Tabs.js:271 src/control/Toolbar.js:745
-#: src/layer/marker/Annotation.js:203 src/layer/tile/TileLayer.js:546
+#: src/control/Control.Tabs.js:271 src/control/Toolbar.js:761
+#: src/layer/marker/Annotation.js:204 src/layer/tile/CanvasTileLayer.js:1441
 msgid "Cancel"
 msgstr "Přetorhnyć"
 
@@ -365,8 +369,10 @@ msgid "Index"
 msgstr "Indeks"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2249 src/layer/tile/TileLayer.js:412
-#: src/layer/tile/TileLayer.js:3999 src/layer/tile/TileLayer.js:4009
+#: src/control/Control.JSDialogBuilder.js:2282
+#: src/layer/tile/CanvasTileLayer.js:4743
+#: src/layer/tile/CanvasTileLayer.js:4753
+#: src/layer/tile/CanvasTileLayer.js:5069
 msgid "Comment"
 msgstr "Komentar"
 
@@ -438,85 +444,85 @@ msgstr "Kwadrat"
 msgid "Fixed size"
 msgstr "Kruta wulkosć"
 
-#: src/control/Control.JSDialogBuilder.js:1457
+#: src/control/Control.JSDialogBuilder.js:1474
 msgid "From"
 msgstr "Wot"
 
-#: src/control/Control.JSDialogBuilder.js:1460
+#: src/control/Control.JSDialogBuilder.js:1477
 msgid "To"
 msgstr "Do"
 
-#: src/control/Control.JSDialogBuilder.js:1591
+#: src/control/Control.JSDialogBuilder.js:1608
 msgid "Select range"
 msgstr "Wobłuk wubrać"
 
-#: src/control/Control.JSDialogBuilder.js:1620
-#: src/control/Control.NotebookbarBuilder.js:229
+#: src/control/Control.JSDialogBuilder.js:1637
+#: src/control/Control.NotebookbarBuilder.js:228
 msgid "Font Name"
 msgstr "Mjeno pisma"
 
-#: src/control/Control.JSDialogBuilder.js:1622
+#: src/control/Control.JSDialogBuilder.js:1639
 msgid "Font Size"
 msgstr "Wulkosć pisma"
 
-#: src/control/Control.JSDialogBuilder.js:2181
-#: src/layer/marker/Annotation.js:240
+#: src/control/Control.JSDialogBuilder.js:2213
+#: src/layer/marker/Annotation.js:241
 msgid "Accept change"
 msgstr "Změnu přiwzać"
 
-#: src/control/Control.JSDialogBuilder.js:2186
-#: src/layer/marker/Annotation.js:241
+#: src/control/Control.JSDialogBuilder.js:2218
+#: src/layer/marker/Annotation.js:242
 msgid "Reject change"
 msgstr "Změnu wotpokazać"
 
-#: src/control/Control.JSDialogBuilder.js:2195
-#: src/layer/marker/Annotation.js:259
+#: src/control/Control.JSDialogBuilder.js:2227
+#: src/layer/marker/Annotation.js:260
 msgid "Open menu"
 msgstr "Meni wočinić"
 
-#: src/control/Control.JSDialogBuilder.js:2240
+#: src/control/Control.JSDialogBuilder.js:2273
 #, fuzzy
 msgid "reply"
 msgstr "Wotmołwić"
 
-#: src/control/Control.JSDialogBuilder.js:2243
+#: src/control/Control.JSDialogBuilder.js:2276
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2290
+#: src/control/Control.JSDialogBuilder.js:2324
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2673
+#: src/control/Control.JSDialogBuilder.js:2708
 msgid "Cell borders"
 msgstr "Kromy cele"
 
-#: src/control/Control.JSDialogBuilder.js:2717
+#: src/control/Control.JSDialogBuilder.js:2752
 msgid "Background Color"
 msgstr "Pozadkowa barba"
 
-#: src/control/Control.JSDialogBuilder.js:2719
+#: src/control/Control.JSDialogBuilder.js:2754
 msgid "Gradient Start"
 msgstr "Spočatk přeběha"
 
-#: src/control/Control.JSDialogBuilder.js:2721
+#: src/control/Control.JSDialogBuilder.js:2756
 msgid "Gradient End"
 msgstr "Kónc přeběha"
 
-#: src/control/Control.JSDialogBuilder.js:2903
+#: src/control/Control.JSDialogBuilder.js:2938
 msgid "Rows"
 msgstr "Linki"
 
-#: src/control/Control.JSDialogBuilder.js:2904
+#: src/control/Control.JSDialogBuilder.js:2939
 msgid "Columns"
 msgstr "Špalty"
 
-#: src/control/Control.JSDialogBuilder.js:2924
+#: src/control/Control.JSDialogBuilder.js:2959
 #, fuzzy
 msgid "Insert Table"
 msgstr "Tabelu zasadźić"
 
-#: src/control/Control.JSDialogBuilder.js:2953
+#: src/control/Control.JSDialogBuilder.js:2988
 msgid "Line style:"
 msgstr "Linijowy stil:"
 
@@ -524,83 +530,83 @@ msgstr "Linijowy stil:"
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:493
 #: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:507
-#: src/control/Control.NotebookbarBuilder.js:740
-#: src/control/Control.NotebookbarBuilder.js:742
-#: src/control/Control.NotebookbarBuilder.js:744
-#: src/control/Control.NotebookbarBuilder.js:768
-#: src/control/Control.NotebookbarBuilder.js:803
-#: src/control/Control.NotebookbarBuilder.js:820
+#: src/control/Control.NotebookbarBuilder.js:749
+#: src/control/Control.NotebookbarBuilder.js:751
+#: src/control/Control.NotebookbarBuilder.js:753
+#: src/control/Control.NotebookbarBuilder.js:777
+#: src/control/Control.NotebookbarBuilder.js:812
+#: src/control/Control.NotebookbarBuilder.js:829
 msgid "None (Do not check spelling)"
 msgstr "Žadyn (prawopis njekontrolować)"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:270
 #: src/control/Control.Menubar.js:398 src/control/Control.Menubar.js:509
 #: src/control/Control.Menubar.js:720 src/control/Control.Menubar.js:771
-#: src/control/Control.Menubar.js:820
-#: src/control/Control.NotebookbarDraw.js:180
+#: src/control/Control.Menubar.js:820 src/control/Control.Menubar.js:866
+#: src/control/Control.NotebookbarDraw.js:164
 msgid "Share..."
 msgstr "Dźělić..."
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:271
 #: src/control/Control.Menubar.js:400 src/control/Control.Menubar.js:510
 #: src/control/Control.Menubar.js:722 src/control/Control.Menubar.js:773
-#: src/control/Control.Menubar.js:822
-#: src/control/Control.NotebookbarDraw.js:210
+#: src/control/Control.Menubar.js:822 src/control/Control.Menubar.js:868
+#: src/control/Control.NotebookbarDraw.js:194
 msgid "See revision history"
 msgstr "Wersijowu historiju pokazać"
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:272
 #: src/control/Control.Menubar.js:401 src/control/Control.Menubar.js:511
 #: src/control/Control.Menubar.js:725 src/control/Control.Menubar.js:775
-#: src/control/Control.Menubar.js:824
+#: src/control/Control.Menubar.js:824 src/control/Control.Menubar.js:870
 msgid "Download as"
 msgstr "Sćahnyć jako"
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:272
 #: src/control/Control.Menubar.js:401 src/control/Control.Menubar.js:511
 #: src/control/Control.Menubar.js:725 src/control/Control.Menubar.js:775
-#: src/control/Control.Menubar.js:824
+#: src/control/Control.Menubar.js:824 src/control/Control.Menubar.js:870
 msgid "Export as"
 msgstr "Eksportować jako"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:273
 #: src/control/Control.Menubar.js:402 src/control/Control.Menubar.js:512
 #: src/control/Control.Menubar.js:726 src/control/Control.Menubar.js:776
-#: src/control/Control.Menubar.js:825
-#: src/control/Control.NotebookbarWriter.js:309
-#: src/control/Control.NotebookbarCalc.js:204
-#: src/control/Control.NotebookbarImpress.js:369
-#: src/control/Control.NotebookbarDraw.js:268
+#: src/control/Control.Menubar.js:825 src/control/Control.Menubar.js:871
+#: src/control/Control.NotebookbarWriter.js:285
+#: src/control/Control.NotebookbarCalc.js:186
+#: src/control/Control.NotebookbarImpress.js:351
+#: src/control/Control.NotebookbarDraw.js:243
 msgid "PDF Document (.pdf)"
 msgstr "PDF-dokument (.pdf)"
 
 #: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:727
-#: src/control/Control.NotebookbarWriter.js:203
+#: src/control/Control.NotebookbarWriter.js:179
 msgid "ODF text document (.odt)"
 msgstr "Tekstowy dokument ODF (.odt)"
 
 #: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:728
-#: src/control/Control.NotebookbarWriter.js:256
+#: src/control/Control.NotebookbarWriter.js:232
 msgid "Word 2003 Document (.doc)"
 msgstr "Dokument Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:729
-#: src/control/Control.NotebookbarWriter.js:278
+#: src/control/Control.NotebookbarWriter.js:254
 msgid "Word Document (.docx)"
 msgstr "Dokument Word (.docx)"
 
 #: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:730
-#: src/control/Control.NotebookbarWriter.js:225
+#: src/control/Control.NotebookbarWriter.js:201
 msgid "Rich Text (.rtf)"
 msgstr "Rich Text (.rtf)"
 
 #: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:731
-#: src/control/Control.NotebookbarWriter.js:331
+#: src/control/Control.NotebookbarWriter.js:307
 msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:723
-#: src/control/Control.NotebookbarWriter.js:350 src/control/Signing.js:601
+#: src/control/Control.NotebookbarWriter.js:326 src/control/Signing.js:601
 msgid "Sign document"
 msgstr "Dokument signować"
 
@@ -612,11 +618,11 @@ msgstr "Dokument začinić"
 #: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:285
 #: src/control/Control.Menubar.js:411 src/control/Control.Menubar.js:524
 #: src/control/Control.Menubar.js:736 src/control/Control.Menubar.js:785
-#: src/control/Control.Menubar.js:833
-#: src/control/Control.NotebookbarBuilder.js:733
-#: src/control/Control.NotebookbarBuilder.js:763
-#: src/control/Control.NotebookbarBuilder.js:798
-#: src/control/Control.NotebookbarBuilder.js:815
+#: src/control/Control.Menubar.js:831 src/control/Control.Menubar.js:879
+#: src/control/Control.NotebookbarBuilder.js:742
+#: src/control/Control.NotebookbarBuilder.js:772
+#: src/control/Control.NotebookbarBuilder.js:807
+#: src/control/Control.NotebookbarBuilder.js:824
 msgid "Repair"
 msgstr "Porjedźić"
 
@@ -627,7 +633,7 @@ msgid "Reset zoom"
 msgstr "Skalowanje wróćo stajić"
 
 #: src/control/Control.Menubar.js:67
-#: src/control/Control.NotebookbarBuilder.js:719
+#: src/control/Control.NotebookbarBuilder.js:728
 msgid "Show Ruler"
 msgstr "Lineal pokazać"
 
@@ -638,13 +644,13 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:312
 #: src/control/Control.Menubar.js:431 src/control/Control.Menubar.js:549
-#: src/control/Control.Menubar.js:883 src/control/Control.Menubar.js:924
-#: src/control/Control.Menubar.js:938
+#: src/control/Control.Menubar.js:933 src/control/Control.Menubar.js:974
+#: src/control/Control.Menubar.js:988
 msgid "Local Image..."
 msgstr "Lokalny wobraz..."
 
 #: src/control/Control.Menubar.js:95 src/control/Control.Menubar.js:97
-#: src/control/Control.Menubar.js:899 src/control/Control.Menubar.js:901
+#: src/control/Control.Menubar.js:949 src/control/Control.Menubar.js:951
 msgid "All"
 msgstr "Wšě"
 
@@ -654,35 +660,35 @@ msgstr "Tekstowe wusměrjenje"
 
 #: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:384
 #: src/control/Control.Menubar.js:496 src/control/Control.Menubar.js:707
-#: src/control/Control.NotebookbarWriter.js:381
+#: src/control/Control.NotebookbarWriter.js:357
 msgid "Online Help"
 msgstr "Pomoc online"
 
 #: src/control/Control.Menubar.js:257 src/control/Control.Menubar.js:385
 #: src/control/Control.Menubar.js:497 src/control/Control.Menubar.js:708
-#: src/control/Control.NotebookbarWriter.js:395
+#: src/control/Control.NotebookbarWriter.js:371
 msgid "Keyboard shortcuts"
 msgstr "Tastowe skrótšenki"
 
 #: src/control/Control.Menubar.js:258 src/control/Control.Menubar.js:386
 #: src/control/Control.Menubar.js:498 src/control/Control.Menubar.js:709
-#: src/control/Control.NotebookbarWriter.js:409
+#: src/control/Control.NotebookbarWriter.js:385
 msgid "Report an issue"
 msgstr "Problem zdźělić"
 
 #: src/control/Control.Menubar.js:259 src/control/Control.Menubar.js:387
 #: src/control/Control.Menubar.js:499 src/control/Control.Menubar.js:710
 #: src/control/Control.Menubar.js:763 src/control/Control.Menubar.js:812
-#: src/control/Control.Menubar.js:876
-#: src/control/Control.NotebookbarWriter.js:424
+#: src/control/Control.Menubar.js:858 src/control/Control.Menubar.js:926
+#: src/control/Control.NotebookbarWriter.js:400
 msgid "Latest Updates"
 msgstr "Najnowšě aktualizacije"
 
 #: src/control/Control.Menubar.js:260 src/control/Control.Menubar.js:388
 #: src/control/Control.Menubar.js:500 src/control/Control.Menubar.js:711
 #: src/control/Control.Menubar.js:764 src/control/Control.Menubar.js:813
-#: src/control/Control.Menubar.js:877
-#: src/control/Control.NotebookbarWriter.js:438
+#: src/control/Control.Menubar.js:859 src/control/Control.Menubar.js:927
+#: src/control/Control.NotebookbarWriter.js:414
 msgid "About"
 msgstr "Wo"
 
@@ -697,22 +703,22 @@ msgid "Save Comments"
 msgstr "Komentary składować"
 
 #: src/control/Control.Menubar.js:274 src/control/Control.Menubar.js:777
-#: src/control/Control.NotebookbarImpress.js:263
+#: src/control/Control.NotebookbarImpress.js:245
 msgid "ODF presentation (.odp)"
 msgstr "ODF-prezentacija (.odp)"
 
 #: src/control/Control.Menubar.js:275 src/control/Control.Menubar.js:778
-#: src/control/Control.NotebookbarImpress.js:316
+#: src/control/Control.NotebookbarImpress.js:298
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "Prezentacija Powerpoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.js:276 src/control/Control.Menubar.js:779
-#: src/control/Control.NotebookbarImpress.js:338
+#: src/control/Control.NotebookbarImpress.js:320
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "Prezentacija Powerpoint (.pptx)"
 
 #: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:811
-#: src/control/Control.PresentationBar.js:57
+#: src/control/Control.Menubar.js:857 src/control/Control.PresentationBar.js:57
 msgid "Fullscreen presentation"
 msgstr "Prezentacija połneje wobrazowki"
 
@@ -721,23 +727,24 @@ msgid "Present current slide"
 msgstr "Aktualnu foliju prezentować"
 
 #: src/control/Control.Menubar.js:403 src/control/Control.Menubar.js:780
-#: src/control/Control.NotebookbarImpress.js:285
-#: src/control/Control.NotebookbarDraw.js:237
+#: src/control/Control.Menubar.js:826
+#: src/control/Control.NotebookbarImpress.js:267
+#: src/control/Control.NotebookbarDraw.js:221
 msgid "ODF Drawing (.odg)"
 msgstr "ODF-rysowanka (.odg)"
 
-#: src/control/Control.Menubar.js:513 src/control/Control.Menubar.js:826
-#: src/control/Control.NotebookbarCalc.js:182
+#: src/control/Control.Menubar.js:513 src/control/Control.Menubar.js:872
+#: src/control/Control.NotebookbarCalc.js:164
 msgid "ODF spreadsheet (.ods)"
 msgstr "Tabelowy dokument ODF (.ods)"
 
-#: src/control/Control.Menubar.js:514 src/control/Control.Menubar.js:827
-#: src/control/Control.NotebookbarCalc.js:235
+#: src/control/Control.Menubar.js:514 src/control/Control.Menubar.js:873
+#: src/control/Control.NotebookbarCalc.js:217
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Tabelowy dokument Excel 2003 (.xls)"
 
-#: src/control/Control.Menubar.js:515 src/control/Control.Menubar.js:828
-#: src/control/Control.NotebookbarCalc.js:257
+#: src/control/Control.Menubar.js:515 src/control/Control.Menubar.js:874
+#: src/control/Control.NotebookbarCalc.js:239
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Tabelowy dokument Excel (.xlsx)"
 
@@ -746,7 +753,8 @@ msgid "CSV file (.csv)"
 msgstr ""
 
 #: src/control/Control.Menubar.js:743 src/control/Control.Menubar.js:792
-#: src/control/Control.Menubar.js:840 src/control/Control.StatusBar.js:190
+#: src/control/Control.Menubar.js:838 src/control/Control.Menubar.js:886
+#: src/control/Control.StatusBar.js:190
 msgid "Search"
 msgstr "Pytać"
 
@@ -754,15 +762,15 @@ msgstr "Pytać"
 msgid "Page Setup"
 msgstr "Nastajenja strony"
 
-#: src/control/Control.Menubar.js:1043 src/control/Control.StatusBar.js:506
+#: src/control/Control.Menubar.js:1093 src/control/Control.StatusBar.js:506
 msgid "Reset to Default Language"
 msgstr "Na standardnu rěč wróćo stajić"
 
-#: src/control/Control.Menubar.js:1385
+#: src/control/Control.Menubar.js:1435
 msgid "Insert Shape"
 msgstr "Twar zasadźić"
 
-#: src/control/Control.Menubar.js:1478
+#: src/control/Control.Menubar.js:1528
 msgid "Are you sure you want to delete this slide?"
 msgstr "Chceće tutu foliju woprawdźe zhašeć?"
 
@@ -920,15 +928,15 @@ msgstr "Nowe tabelowe mjeno zapodać"
 msgid "More..."
 msgstr "Wjace..."
 
-#: src/control/Control.Toolbar.js:943
+#: src/control/Control.Toolbar.js:947
 msgid "Previous slide"
 msgstr "Předchadna folija"
 
-#: src/control/Control.Toolbar.js:944
+#: src/control/Control.Toolbar.js:948
 msgid "Next slide"
 msgstr "Přichodna folija"
 
-#: src/control/Control.Toolbar.js:999
+#: src/control/Control.Toolbar.js:1003
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
@@ -936,7 +944,7 @@ msgstr ""
 "wužiwajće dokumentowe porjedźenje za rozrisanje"
 
 #: src/control/Control.TopToolbar.js:122
-#: src/control/Control.NotebookbarWriter.js:1416
+#: src/control/Control.NotebookbarWriter.js:751
 msgid "Default Style"
 msgstr "Standardna předłoha"
 
@@ -949,7 +957,7 @@ msgid "Insert table"
 msgstr "Tabelu zasadźić"
 
 #: src/control/Control.TopToolbar.js:245
-#: src/control/Control.NotebookbarBuilder.js:569
+#: src/control/Control.NotebookbarBuilder.js:576
 msgid "Insert Local Image"
 msgstr "Lokalny wobraz zasadźić"
 
@@ -997,23 +1005,23 @@ msgstr "Přeco wobdźěłarjej slědować"
 msgid "Current"
 msgstr "Aktualny"
 
-#: src/control/Control.Notebookbar.js:223
+#: src/control/Control.Notebookbar.js:224
 #: src/control/Control.NotebookbarImpress.js:18
 #: src/control/Control.NotebookbarDraw.js:18
-#: src/control/Control.NotebookbarBuilder.js:716
-#: src/control/Control.NotebookbarBuilder.js:757
-#: src/control/Control.NotebookbarBuilder.js:785
-#: src/control/Control.NotebookbarBuilder.js:810
+#: src/control/Control.NotebookbarBuilder.js:725
+#: src/control/Control.NotebookbarBuilder.js:766
+#: src/control/Control.NotebookbarBuilder.js:794
+#: src/control/Control.NotebookbarBuilder.js:819
 msgid "Menu"
 msgstr "Meni"
 
-#: src/control/Control.Notebookbar.js:235
+#: src/control/Control.Notebookbar.js:236
 #: src/control/Control.NotebookbarImpress.js:36
 #: src/control/Control.NotebookbarDraw.js:30
 msgid "Undo"
 msgstr "Cofnyć"
 
-#: src/control/Control.Notebookbar.js:241
+#: src/control/Control.Notebookbar.js:242
 #: src/control/Control.NotebookbarImpress.js:42
 #: src/control/Control.NotebookbarDraw.js:36
 msgid "Redo"
@@ -1077,24 +1085,32 @@ msgstr "~Rysowanka"
 msgid "~Help"
 msgstr "~Pomoc"
 
-#: src/control/Control.NotebookbarWriter.js:146
-#: src/control/Control.NotebookbarCalc.js:125
-#: src/control/Control.NotebookbarImpress.js:206
+#: src/control/Control.NotebookbarWriter.js:122
+#: src/control/Control.NotebookbarCalc.js:107
+#: src/control/Control.NotebookbarImpress.js:188
 msgid "Share"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:176
-#: src/control/Control.NotebookbarCalc.js:155
-#: src/control/Control.NotebookbarImpress.js:236
+#: src/control/Control.NotebookbarWriter.js:152
+#: src/control/Control.NotebookbarCalc.js:137
+#: src/control/Control.NotebookbarImpress.js:218
 msgid "See history"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1420
+#: src/control/Control.NotebookbarWriter.js:755
 msgid "Text Body"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:1423
+#: src/control/Control.NotebookbarWriter.js:758
 msgid "Title"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:789
+msgid "Emphasis"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:794
+msgid "Strong Emphasis"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:28
@@ -1105,53 +1121,122 @@ msgstr "~Tabela"
 msgid "~Data"
 msgstr "~Daty"
 
-#: src/control/Control.NotebookbarCalc.js:279
+#: src/control/Control.NotebookbarCalc.js:270
 msgid "CSV File (.csv)"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1826
-msgid "Insert Rows Above"
-msgstr "Linki nad tym zasadźić"
+#: src/control/Control.NotebookbarCalc.js:596
+msgid "General"
+msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1837
-msgid "Insert Rows Below"
-msgstr "Linki pod tym zasadźić"
+#: src/control/Control.NotebookbarCalc.js:597
+msgid "Number"
+msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1855
-msgid "Insert Columns Before"
-msgstr "Špalty před tym zasadźić"
+#: src/control/Control.NotebookbarCalc.js:598
+msgid "Percent"
+msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:1866
-msgid "Insert Columns After"
-msgstr "Špalty za tym zasadźić"
+#: src/control/Control.NotebookbarCalc.js:599
+#, fuzzy
+msgid "Currency"
+msgstr "Aktualny"
 
-#: src/control/Control.NotebookbarCalc.js:1884
+#: src/control/Control.NotebookbarCalc.js:600
+msgid "Date"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:601
+msgid "Time"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:602
+msgid "Scientific"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:603
+msgid "Fraction"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:604
+msgid "Boolean Value"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:605 src/control/Toolbar.js:756
+msgid "Text"
+msgstr "Tekst"
+
+#: src/control/Control.NotebookbarCalc.js:723
+msgid "Default"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:728
+msgid "Heading 1"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:733
+msgid "Heading 2"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:744
+msgid "Good"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:749
+msgid "Neutral"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:754
+msgid "Bad"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:823
 msgid "Insert Row Break"
 msgstr "Łamanje linki zasadźić"
 
-#: src/control/Control.NotebookbarCalc.js:1895
+#: src/control/Control.NotebookbarCalc.js:834
 msgid "Insert Column Break"
 msgstr "Łamanje špalty zasadźić"
 
-#: src/control/Control.NotebookbarCalc.js:1913
-msgid "Delete Rows"
-msgstr "Linki zhašeć"
-
-#: src/control/Control.NotebookbarCalc.js:1924
-msgid "Delete Columns"
-msgstr "Špalty zhašeć"
-
-#: src/control/Control.NotebookbarCalc.js:1942
+#: src/control/Control.NotebookbarCalc.js:852
 msgid "Remove Row Break"
 msgstr "Łamanje linki wotstronić"
 
-#: src/control/Control.NotebookbarCalc.js:1953
+#: src/control/Control.NotebookbarCalc.js:863
 msgid "Remove Column Break"
 msgstr "Łamanje špalty wotstronić"
+
+#: src/control/Control.NotebookbarCalc.js:881
+msgid "Insert Rows Above"
+msgstr "Linki nad tym zasadźić"
+
+#: src/control/Control.NotebookbarCalc.js:886
+msgid "Insert Columns Before"
+msgstr "Špalty před tym zasadźić"
+
+#: src/control/Control.NotebookbarCalc.js:891
+msgid "Delete Rows"
+msgstr "Linki zhašeć"
+
+#: src/control/Control.NotebookbarCalc.js:902
+msgid "Insert Rows Below"
+msgstr "Linki pod tym zasadźić"
+
+#: src/control/Control.NotebookbarCalc.js:907
+msgid "Insert Columns After"
+msgstr "Špalty za tym zasadźić"
+
+#: src/control/Control.NotebookbarCalc.js:912
+msgid "Delete Columns"
+msgstr "Špalty zhašeć"
 
 #: src/control/Control.NotebookbarImpress.js:30
 msgid "Start Presentation"
 msgstr "Prezentaciju startować"
+
+#: src/control/Control.NotebookbarDraw.js:274
+msgid "Image (.png)"
+msgstr ""
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
@@ -1161,11 +1246,11 @@ msgstr "Wubrane tabele pokazać"
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr "Dokument njeda so zawrěć a wočinja so w čitanskim modusu."
 
-#: src/control/Permission.js:50 src/control/Permission.js:68
+#: src/control/Permission.js:50 src/control/Permission.js:67
 msgid "Server returned this reason:"
 msgstr "Serwer je slědowacu přičinu wróćił:"
 
-#: src/control/Permission.js:66
+#: src/control/Permission.js:65
 msgid "The document could not be locked."
 msgstr "Dokument njeda so zawrěć."
 
@@ -1177,11 +1262,11 @@ msgstr "Lěwa kroma"
 msgid "Right Margin"
 msgstr "Prawa kroma"
 
-#: src/control/Ruler.js:646
+#: src/control/Ruler.js:629
 msgid "Insert tabstop"
 msgstr "Tabulator zasadźić"
 
-#: src/control/Ruler.js:653
+#: src/control/Ruler.js:636
 msgid "Delete tabstop"
 msgstr "Tabulator zhašeć"
 
@@ -1309,48 +1394,44 @@ msgstr "Signatura je w porjadku, ale dokument je jenož zdźěla signowany"
 msgid "Signed but not all files are signed"
 msgstr "Signowany, ale nic wšě dataje su signowane"
 
-#: src/control/Toolbar.js:49
+#: src/control/Toolbar.js:52
 msgid "Font"
 msgstr "Pismo"
 
-#: src/control/Toolbar.js:194 src/control/Toolbar.js:206
+#: src/control/Toolbar.js:207 src/control/Toolbar.js:219
 msgid "Downloading..."
 msgstr "Sćahuje so..."
 
-#: src/control/Toolbar.js:222 src/map/Map.js:1526
+#: src/control/Toolbar.js:235 src/map/Map.js:1557
 msgid "Saving..."
 msgstr "Składuje so..."
 
-#: src/control/Toolbar.js:233
+#: src/control/Toolbar.js:246
 msgid "Renaming..."
 msgstr "Přemjenuje so..."
 
-#: src/control/Toolbar.js:548
+#: src/control/Toolbar.js:564
 msgid "I understand the risks"
 msgstr "Rozumju rizika"
 
-#: src/control/Toolbar.js:598
+#: src/control/Toolbar.js:614
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr "Bohužel informacije wo najnowšich aktualizacijach k dispoziciji njejsu."
 
-#: src/control/Toolbar.js:643
+#: src/control/Toolbar.js:659
 msgid "This version of %productName is powered by"
 msgstr "Tuta wersija %productName spěchuje so wot"
 
-#: src/control/Toolbar.js:653
+#: src/control/Toolbar.js:669
 msgid "\"Slow Proxy\""
 msgstr "„Pomały proksy“"
 
-#: src/control/Toolbar.js:738
+#: src/control/Toolbar.js:754
 msgid "Insert hyperlink"
 msgstr "Hyperwotkaz zasadźić"
 
-#: src/control/Toolbar.js:740
-msgid "Text"
-msgstr "Tekst"
-
-#: src/control/Toolbar.js:741
+#: src/control/Toolbar.js:757
 msgid "Link"
 msgstr "Wotkaz"
 
@@ -1371,43 +1452,47 @@ msgstr ""
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Hopla, je problem při zwjazowanju z dokumentom"
 
-#: src/core/Socket.js:310
+#: src/core/Socket.js:319
+msgid "Server has been restarted. We have to refresh the page now."
+msgstr ""
+
+#: src/core/Socket.js:337
 msgid "Served by:"
 msgstr "K dispoziciji stajeny wot:"
 
-#: src/core/Socket.js:315
+#: src/core/Socket.js:342
 msgid "Unsupported server version."
 msgstr "Serwerowa wersija so njepodpěruje."
 
-#: src/core/Socket.js:410
+#: src/core/Socket.js:437
 msgid "Session terminated by document owner"
 msgstr "Posedźenje bu wot dokumentoweho swójstwownika skónčene"
 
-#: src/core/Socket.js:415
+#: src/core/Socket.js:442
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Inaktiwny dokument - prošu klikńće, zo byšće znowa začitał a z "
 "wobdźěłowanjom pokročował"
 
-#: src/core/Socket.js:417
+#: src/core/Socket.js:444
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Inaktiwny dokument - prošu podótkńće so, zo byšće znowa začitał a z "
 "wobdźěłowanjom pokročował"
 
-#: src/core/Socket.js:425
+#: src/core/Socket.js:452
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Serwer so za wothladowanje wupina (awtomatiske zwěsćenje)"
 
-#: src/core/Socket.js:429
+#: src/core/Socket.js:456
 msgid "Oops, there is a problem connecting the document"
 msgstr "Hopla, je problem při zwjazowanju z dokumentom"
 
-#: src/core/Socket.js:433
+#: src/core/Socket.js:460
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 
-#: src/core/Socket.js:461
+#: src/core/Socket.js:488
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1415,7 +1500,7 @@ msgstr ""
 "Dokument je so w składowaku změnił. Nowy dokument so začita. Waša wersija je "
 "jako předźěłana wersija k dispoziciji."
 
-#: src/core/Socket.js:467
+#: src/core/Socket.js:494
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1423,7 +1508,7 @@ msgstr ""
 "Starša wersija so wobnowja. Njeskładowane změny so we wersijowej historiji "
 "wobchowaja"
 
-#: src/core/Socket.js:587
+#: src/core/Socket.js:614
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1431,44 +1516,44 @@ msgstr ""
 "Dokument je so w składowaku změnił. Što chceće ze swojimi njeskładowanymi "
 "změnami činić?"
 
-#: src/core/Socket.js:591
+#: src/core/Socket.js:618
 msgid "Discard"
 msgstr "Zaćisnyć"
 
-#: src/core/Socket.js:596
+#: src/core/Socket.js:623
 msgid "Overwrite"
 msgstr "Přepisać"
 
-#: src/core/Socket.js:601
+#: src/core/Socket.js:628
 msgid "Save to new file"
 msgstr "Do noweje dataje składować"
 
-#: src/core/Socket.js:671
+#: src/core/Socket.js:698
 msgid "Document requires password to view."
 msgstr "Dokument sej hesło wužaduje, zo by so pokazał."
 
-#: src/core/Socket.js:674
+#: src/core/Socket.js:701
 msgid "Document requires password to modify."
 msgstr "Dokument sej hesło wužaduje, zo by so změnił."
 
-#: src/core/Socket.js:676
+#: src/core/Socket.js:703
 msgid "Hit Cancel to open in view-only mode."
 msgstr ""
 "Klikńće na Přetorhnyć, zo byšće dokument we wobhladanskim modusu wočinił."
 
-#: src/core/Socket.js:680
+#: src/core/Socket.js:707
 msgid "Wrong password provided. Please try again."
 msgstr "Wopačne hesło podate. Prošu spytajće hišće raz."
 
-#: src/core/Socket.js:829 src/map/Map.js:1529
+#: src/core/Socket.js:856 src/map/Map.js:1560
 msgid "Loading..."
 msgstr "Čita so..."
 
-#: src/core/Socket.js:829
+#: src/core/Socket.js:856
 msgid "Connecting..."
 msgstr "Zwjazuje so..."
 
-#: src/core/Socket.js:1164
+#: src/core/Socket.js:1160
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1642,44 +1727,44 @@ msgstr "Nahrawanje na serwer njeje so poradźiło, dataja njeje so namakała."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Nahrawanje na serwer njeje so poradźiło, dataja je přewulka."
 
-#: src/layer/marker/Annotation.js:282 src/layer/tile/TileLayer.js:365
+#: src/layer/marker/Annotation.js:283 src/layer/tile/CanvasTileLayer.js:5022
 msgid "Reply"
 msgstr "Wotmołwić"
 
-#: src/layer/tile/TileLayer.js:359
-msgid "Modify"
-msgstr "Změnić"
-
-#: src/layer/tile/TileLayer.js:371
-msgid "Remove"
-msgstr "Wotstronić"
-
-#: src/layer/tile/TileLayer.js:377
-msgid "Remove Thread"
-msgstr ""
-
-#: src/layer/tile/TileLayer.js:383
-msgid "Resolve"
-msgstr "Rozrisać"
-
-#: src/layer/tile/TileLayer.js:383
-msgid "Unresolve"
-msgstr ""
-
-#: src/layer/tile/TileLayer.js:389
-msgid "Unresolve Thread"
-msgstr ""
-
-#: src/layer/tile/TileLayer.js:389
-msgid "Resolve Thread"
-msgstr ""
-
-#: src/layer/tile/TileLayer.js:975
+#: src/layer/tile/CanvasTileLayer.js:1855
 msgid "Functions"
 msgstr "Funkcije"
 
-#: src/layer/tile/TileLayer.js:4024
+#: src/layer/tile/CanvasTileLayer.js:4770
 msgid "No Comments"
+msgstr ""
+
+#: src/layer/tile/CanvasTileLayer.js:5016
+msgid "Modify"
+msgstr "Změnić"
+
+#: src/layer/tile/CanvasTileLayer.js:5028
+msgid "Remove"
+msgstr "Wotstronić"
+
+#: src/layer/tile/CanvasTileLayer.js:5034
+msgid "Remove Thread"
+msgstr ""
+
+#: src/layer/tile/CanvasTileLayer.js:5040
+msgid "Resolve"
+msgstr "Rozrisać"
+
+#: src/layer/tile/CanvasTileLayer.js:5040
+msgid "Unresolve"
+msgstr ""
+
+#: src/layer/tile/CanvasTileLayer.js:5046
+msgid "Unresolve Thread"
+msgstr ""
+
+#: src/layer/tile/CanvasTileLayer.js:5046
+msgid "Resolve Thread"
 msgstr ""
 
 #: src/map/Clipboard.js:138
@@ -1692,13 +1777,13 @@ msgstr ""
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Wobsah mjezyskłada njeda so zasadźić, prošu kopěrujće znowa"
 
-#: src/map/Clipboard.js:864
+#: src/map/Clipboard.js:886
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 "<p>Prošu wužiwajće tłóčatce kopěrować/zasadźić na wašej tastaturje "
 "wobrazowki.</p>"
 
-#: src/map/Clipboard.js:866
+#: src/map/Clipboard.js:888
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
@@ -1709,7 +1794,7 @@ msgstr ""
 "kopěrowanje.</li><li><b>Strg+X</b>: za wutřihanje.</li><li><b>Strg+V</b>: za "
 "zasadźenje.</li></ul></p>"
 
-#: src/map/Clipboard.js:887
+#: src/map/Clipboard.js:909
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -1723,7 +1808,7 @@ msgstr ""
 "je dokónčene, na „Kopěrowanje do mjezyskłada wobkrućić“.</p><p>Jeli mjez "
 "dokumentami w %productName kopěrujeće, njetrjebaće sćahnyć.</p>"
 
-#: src/map/Clipboard.js:903
+#: src/map/Clipboard.js:925
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -1747,7 +1832,7 @@ msgstr "před %d sekundami"
 msgid "%d minutes ago"
 msgstr "před %d mjeńšami"
 
-#: src/map/Map.js:1380
+#: src/map/Map.js:1411
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 "Inaktiwny dokument - prošu klikńće, zo byšće z wobdźěłowanjom pokročował"
@@ -1772,11 +1857,11 @@ msgstr "Nahrawa so..."
 msgid "Uploading file to server failed with status: %0"
 msgstr "Nahrawanje dataje na serwer njeje so ze statusom %0 poradźiło"
 
-#: src/map/handler/Map.WOPI.js:133
+#: src/map/handler/Map.WOPI.js:134
 msgid "Creating new file from template..."
 msgstr "Nowa dataja so z předłohi wutworja..."
 
-#: src/map/handler/Map.WOPI.js:410
+#: src/map/handler/Map.WOPI.js:405
 msgid "Creating copy..."
 msgstr "Kopija so wutworja..."
 
