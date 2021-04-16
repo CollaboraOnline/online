@@ -180,7 +180,10 @@ NODE_MODULES_JS_DST = $(patsubst %.js,$(DIST_FOLDER)/%.js,$(NODE_MODULES_JS))
 LOLEAFLET_LIBS_JS_SRC = $(patsubst %.js,$(srcdir)/js/%.js,$(LOLEAFLET_LIBS_JS))
 LOLEAFLET_LIBS_JS_DST = $(patsubst %.js,$(DIST_FOLDER)/%.js,$(LOLEAFLET_LIBS_JS))
 
-LOLEAFLET_JS =\
+# the ordering of this is delicate to get JS initialization right,
+# this list includes both Javascript and Typescript generated files
+# in a rather precise order.
+LOLEAFLET_JS_WEBORDER =\
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
@@ -353,7 +356,9 @@ LOLEAFLET_JS =\
 
 LOLEAFLET_JS_SRC = $(shell find $(srcdir)/src -name '*.js')
 LOLEAFLET_TS_SRC = $(shell find $(srcdir)/src -name '*.ts')
-LOLEAFLET_JS_DST = $(patsubst $(srcdir)/src/%.js,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_JS_SRC)) $(patsubst $(srcdir)/src/%.ts,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_TS_SRC))
+
+LOLEAFLET_TS_JS_DST = $(patsubst src/%.ts,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_TS_SRC))
+LOLEAFLET_JS_DST = $(patsubst src/%.js,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_JS_SRC)) $(LOLEAFLET_TS_JS_DST)
 # should be no lingering / obsolete files:
 LOLEAFLET_ASSERT_INTERSECT = $(filter $(LOLEAFLET_JS_SRC), $(patsubst %.ts,%.js,$(LOLEAFLET_TS_SRC)))
 
@@ -374,7 +379,7 @@ define bundle_loleaflet
 			-DMOBILEAPPNAME="$(APP_NAME)" \
 			-DVERSION=$(LOLEAFLET_VERSION) \
 			-DCOPYRIGHT=$(srcdir)/src/copyright.js \
-			-DLOLEAFLET_JS=$(subst $(SPACE),$(COMMA),$(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_JS))) \
+			-DLOLEAFLET_JS=$(subst $(SPACE),$(COMMA),$(LOLEAFLET_JS_WEBORDER)) \
 			$(srcdir)/loleaflet-src.js.m4 > $@)
 endef
 
@@ -465,10 +470,10 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_TS_JS) $(LOLEAFLET_ADMIN_JS)
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@awk 'FNR == 1 {print ""} 1' $(LOLEAFLET_ADMIN_TS_JS) $(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_ADMIN_JS)) > $@
 
-$(INTERMEDIATE_DIR)/loleaflet-src.js: tscompile.done $(call prereq_loleaflet)
+$(INTERMEDIATE_DIR)/loleaflet-src.js: tscompile.done $(call prereq_loleaflet) $(LOLEAFLET_JS_SRC) $(LOLEAFLET_TS_SRC)
 	@mkdir -p $(dir $@)
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
-	@echo -n "Checking for obsolete JS build intermediates in source tree... "
+	@echo -n "Checking for obsolete JS build intermediates in this makefile... "
 	@if ! test "z$(LOLEAFLET_ASSERT_INTERSECT)" == "z"; then echo; echo "Error: please remove obsolete files:"; echo "$(LOLEAFLET_ASSERT_INTERSECT)"; exit 1; else echo "clean"; fi
 	@echo "Checking for loleaflet JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
@@ -505,7 +510,7 @@ $(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 \
 		-DGLOBAL_JS="$(DIST_FOLDER)/global.js" \
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS) \
 		$(LOLEAFLET_LIBS_JS) \
-		$(LOLEAFLET_JS))" \
+		$(LOLEAFLET_JS_WEBORDER))" \
 		-DVENDOR="$(VENDOR)" \
 		$(srcdir)/html/loleaflet.html.m4 > $@
 
@@ -565,7 +570,7 @@ tscompile.done: $(LOLEAFLET_JS_SRC) $(LOLEAFLET_TS_SRC)
 	$(builddir)/node_modules/typescript/bin/tsc --outDir $(DIST_FOLDER)/src --rootDir $(srcdir)/src --allowJs true --checkJs false --project $(srcdir)/tsconfig.json
 	@touch $@
 
-$(LOLEAFLET_JS_DST): tscompile.done
+$(LOLEAFLET_TS_JS_DST): tscompile.done
 	@echo -n ""
 
 $(DIST_FOLDER)/%.js: $(srcdir)/js/%.js
