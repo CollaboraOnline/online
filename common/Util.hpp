@@ -1117,6 +1117,7 @@ int main(int argc, char**argv)
     {
         const char* str = input.data();
         char* endptr = nullptr;
+        errno = 0;
         const auto value = std::strtol(str, &endptr, 10);
         return std::make_pair(value, endptr > str && errno != ERANGE);
     }
@@ -1130,50 +1131,13 @@ int main(int argc, char**argv)
         return pair.second ? pair : std::make_pair(def, false);
     }
 
-    /// Convert a string to 32-bit unsigned int.
-    /// Returns the parsed value and a boolean indiciating success or failure.
-    inline std::pair<std::uint32_t, bool> u32FromString(const std::string& input)
-    {
-        const char* str = input.data();
-        char* endptr = nullptr;
-        const auto value = std::strtoul(str, &endptr, 10);
-        return std::make_pair(value, endptr > str && errno != ERANGE);
-    }
-
-    /// Convert a string to 32-bit usigned int. On failure, returns the default
-    /// value, and sets the bool to false (to signify that parsing had failed).
-    inline std::pair<std::uint32_t, bool> u32FromString(const std::string& input,
-                                                        const std::uint32_t def)
-    {
-        const auto pair = u32FromString(input);
-        return pair.second ? pair : std::make_pair(def, false);
-    }
-
-    /// Convert a string to 64-bit signed int.
-    /// Returns the parsed value and a boolean indiciating success or failure.
-    inline std::pair<std::int64_t, bool> i64FromString(const std::string& input)
-    {
-        const char* str = input.data();
-        char* endptr = nullptr;
-        const auto value = std::strtol(str, &endptr, 10);
-        return std::make_pair(value, endptr > str && errno != ERANGE);
-    }
-
-    /// Convert a string to 64-bit signed int. On failure, returns the default
-    /// value, and sets the bool to false (to signify that parsing had failed).
-    inline std::pair<std::int64_t, bool> i64FromString(const std::string& input,
-                                                       const std::int64_t def)
-    {
-        const auto pair = i64FromString(input);
-        return pair.second ? pair : std::make_pair(def, false);
-    }
-
     /// Convert a string to 64-bit unsigned int.
     /// Returns the parsed value and a boolean indiciating success or failure.
     inline std::pair<std::uint64_t, bool> u64FromString(const std::string& input)
     {
         const char* str = input.data();
         char* endptr = nullptr;
+        errno = 0;
         const auto value = std::strtoul(str, &endptr, 10);
         return std::make_pair(value, endptr > str && errno != ERANGE);
     }
