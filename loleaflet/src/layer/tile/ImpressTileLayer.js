@@ -85,6 +85,9 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		map.on('updateparts', this.onUpdateParts, this);
 		map.on('updatepermission', this.onUpdatePermission, this);
 
+		if (!map._docPreviews)
+			map._docPreviews = {};
+
 		map.uiManager.initializeSpecializedUI(this._docType);
 		if (window.mode.isMobile()) {
 			L.Control.MobileWizard.mergeOptions({maxHeight: '55vh'});
