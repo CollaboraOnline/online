@@ -2511,6 +2511,8 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_postMouseEvent: function(type, x, y, count, buttons, modifier) {
+		if (!this._map._docLoaded)
+			return;
 
 		if (this._map.calcInputBarHasFocus() && type === 'move') {
 			// When the Formula-bar has the focus, sending
@@ -2544,6 +2546,9 @@ L.TileLayer = L.GridLayer.extend({
 	// PageUp/PageDown and select column & row are handled as special cases for spreadsheets - in
 	// addition of sending messages to loolwsd, they move the cell cursor around.
 	postKeyboardEvent: function(type, charCode, unoKeyCode) {
+		if (!this._map._docLoaded)
+			return;
+
 		var winId = this._map.getWinId();
 		if (
 			this.isCalc() &&
