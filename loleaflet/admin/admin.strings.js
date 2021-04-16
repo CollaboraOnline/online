@@ -52,6 +52,7 @@ l10nstrings.strSetLogLevels = _('Set Log Levels');
 l10nstrings.strLogLevels = _('Log Levels');
 l10nstrings.strCloseModal = _('Close');
 l10nstrings.strUpdateLogLevels = _('Update Log Levels');
+l10nstrings.strVersionInfo = _('Version Information');
 
 if (module) {
 	module.exports = l10nstrings;
