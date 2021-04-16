@@ -28,6 +28,9 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		map.on('updatepermission', this.onUpdatePermission, this);
 		map.on('resize', this.onResize, this);
 
+		if (!map._docPreviews)
+			map._docPreviews = {};
+
 		this._annotationManager = L.annotationManagerImpress(map);
 		map.uiManager.initializeSpecializedUI(this._docType);
 		if (window.mode.isMobile()) {
