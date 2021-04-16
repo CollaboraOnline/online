@@ -324,10 +324,10 @@ app.definitions.Socket = L.Class.extend({
 			var h = this.WSDServer.Hash;
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				h = '<a href="javascript:void(window.open(\'https://github.com/CollaboraOnline/online/commits/' + h + '\'));">' + h + '</a>';
-				$('#loolwsd-version').html(this.WSDServer.Version + ' (git hash: ' + h + ')');
+				$('#loolwsd-version').html(this.WSDServer.Version.replace('.0.','-') + ' (git hash: ' + h + ')');
 			}
 			else {
-				$('#loolwsd-version').text(this.WSDServer.Version);
+				$('#loolwsd-version').text(this.WSDServer.Version.replace('.0.','-'));
 			}
 
 			if (!window.ThisIsAMobileApp) {
@@ -349,7 +349,7 @@ app.definitions.Socket = L.Class.extend({
 				h = '<a href="javascript:void(window.open(\'https://hub.libreoffice.org/git-core/' + h + '\'));">' + h + '</a>';
 			}
 			$('#lokit-version').html(lokitVersionObj.ProductName + ' ' +
-			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension.replace('.10.','-') +
+			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension.replace('.0.','-') +
 			                         ' (git hash: ' + h + ')');
 			this.TunnelledDialogImageCacheSize = lokitVersionObj.tunnelled_dialog_image_cache_size;
 		}
