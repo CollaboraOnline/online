@@ -674,6 +674,7 @@ pot:
 		src/layer/marker/Annotation.js \
 		src/layer/marker/TextInput.js \
 		src/layer/tile/CalcTileLayer.js \
+		src/layer/tile/CanvasTileLayer.js \
 		src/layer/tile/ImpressTileLayer.js \
 		src/layer/tile/WriterTileLayer.js \
 		src/map/Clipboard.js \
