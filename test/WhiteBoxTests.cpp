@@ -38,6 +38,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testRegexListMatcher);
     CPPUNIT_TEST(testRegexListMatcher_Init);
     CPPUNIT_TEST(testEmptyCellCursor);
+    CPPUNIT_TEST(testTileDesc);
     CPPUNIT_TEST(testRectanglesIntersect);
     CPPUNIT_TEST(testAuthorization);
     CPPUNIT_TEST(testJson);
@@ -63,6 +64,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testRegexListMatcher();
     void testRegexListMatcher_Init();
     void testEmptyCellCursor();
+    void testTileDesc();
     void testRectanglesIntersect();
     void testAuthorization();
     void testJson();
@@ -683,6 +685,18 @@ void WhiteBoxTests::testEmptyCellCursor()
     CallbackDescriptor callbackDescriptor{&document, 0};
     // This failed as stoi raised an std::invalid_argument exception.
     documentViewCallback(LOK_CALLBACK_CELL_CURSOR, "EMPTY", &callbackDescriptor);
+}
+
+void WhiteBoxTests::testTileDesc()
+{
+    // simulate a previous overflow
+    errno = ERANGE;
+    TileDesc desc = TileDesc::parse(
+        "tile nviewid=0 part=5 width=256 height=256 tileposx=0 tileposy=12288 tilewidth=3072 tileheight=3072 oldwid=0 wid=0 ver=33");
+    (void)desc; // exception in parse if we have problems.
+    TileCombined combined = TileCombined::parse(
+        "tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504 tileposy=0,0,0,0,0,0,0,0,3072,3072,3072,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360,15360,15360,15360,18432,18432,18432,18432,18432,18432,18432,18432 oldwid=2,3,4,5,6,7,8,8,9,10,11,12,13,14,15,16,17,18,19,20,21,0,0,0,24,25,26,27,28,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 tilewidth=3072 tileheight=3072");
+    (void)combined; // exception in parse if we have problems.
 }
 
 void WhiteBoxTests::testRectanglesIntersect()
