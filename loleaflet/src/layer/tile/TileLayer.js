@@ -496,6 +496,9 @@ L.TileLayer = L.GridLayer.extend({
 		map.fire('statusindicator', {statusType: 'loleafletloaded'});
 
 		this._map.sendInitUNOCommands();
+
+		this._resetClientVisArea();
+		this._requestNewTiles();
 	},
 
 	// Returns true iff the document type is Writer.
