@@ -18,7 +18,9 @@
 #include <string.h>
 #include <stdio.h>
 
-#define LOOL_USER_ID "lool"
+#ifndef COOL_USER_ID
+#  error "include config.h for user id";
+#endif
 
 #ifndef KIT_IN_PROCESS
 inline int hasUID(const char *userId)
@@ -61,10 +63,10 @@ inline int hasCorrectUID(const char *appName)
     (void)appName;
     return 1; // insecure but easy to use.
 #else
-    if (hasUID(LOOL_USER_ID))
+    if (hasUID(COOL_USER_ID))
         return 1;
     else {
-        fprintf(stderr, "Security: %s incorrect user-name, other than '" LOOL_USER_ID "'\n", appName);
+        fprintf(stderr, "Security: %s incorrect user-name, other than '" COOL_USER_ID "'\n", appName);
         return 0;
     }
 #endif
