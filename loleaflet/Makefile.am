@@ -206,23 +206,23 @@ LOLEAFLET_JS_WEBORDER =\
 	src/map/Clipboard.js \
 	src/layer/Layer.js \
 	src/layer/tile/CanvasSectionProps.js \
-	src/layer/tile/CanvasSectionContainer.js \
-	src/layer/tile/TilesSection.js \
-	src/layer/tile/AutoFillMarkerSection.js \
-	src/layer/vector/CPoint.js \
-	src/layer/vector/CBounds.js \
-	src/layer/vector/CEventsHandler.js \
-	src/layer/vector/CPointSet.js \
-	src/layer/vector/CPath.js \
-	src/layer/vector/CLineUtil.js \
-	src/layer/vector/CPolyline.js \
-	src/layer/vector/CPolyUtil.js \
-	src/layer/vector/CPolygon.js \
-	src/layer/vector/CRectangle.js \
-	src/layer/vector/CSplitterLine.js \
-	src/layer/marker/Cursor.js \
-	src/layer/vector/CanvasOverlay.js \
-	src/layer/tile/ScrollSection.js \
+	src/layer/tile/CanvasSectionContainer.ts \
+	src/layer/tile/TilesSection.ts \
+	src/layer/tile/AutoFillMarkerSection.ts \
+	src/layer/vector/CPoint.ts \
+	src/layer/vector/CBounds.ts \
+	src/layer/vector/CEventsHandler.ts \
+	src/layer/vector/CPointSet.ts \
+	src/layer/vector/CPath.ts \
+	src/layer/vector/CLineUtil.ts \
+	src/layer/vector/CPolyline.ts \
+	src/layer/vector/CPolyUtil.ts \
+	src/layer/vector/CPolygon.ts \
+	src/layer/vector/CRectangle.ts \
+	src/layer/vector/CSplitterLine.ts \
+	src/layer/marker/Cursor.ts \
+	src/layer/vector/CanvasOverlay.ts \
+	src/layer/tile/ScrollSection.ts \
 	src/layer/tile/CanvasTileLayer.js \
 	src/layer/SplitPanesContext.js \
 	src/layer/tile/TileLayer.TableOverlay.js \
@@ -354,9 +354,10 @@ LOLEAFLET_JS_WEBORDER =\
 	src/layer/marker/DivOverlay.js \
 	src/main.js
 
-LOLEAFLET_JS_SRC = $(shell find $(srcdir)/src -name '*.js')
-LOLEAFLET_TS_SRC = $(shell find $(srcdir)/src -name '*.ts')
+LOLEAFLET_JS_SRC = $(filter %.js,$(LOLEAFLET_JS_WEBORDER))
+LOLEAFLET_TS_SRC = $(filter %.ts,$(LOLEAFLET_JS_WEBORDER))
 
+# beware these are not helpfully ordered
 LOLEAFLET_TS_JS_DST = $(patsubst src/%.ts,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_TS_SRC))
 LOLEAFLET_JS_DST = $(patsubst src/%.js,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_JS_SRC)) $(LOLEAFLET_TS_JS_DST)
 # should be no lingering / obsolete files:
@@ -379,7 +380,7 @@ define bundle_loleaflet
 			-DMOBILEAPPNAME="$(APP_NAME)" \
 			-DVERSION=$(LOLEAFLET_VERSION) \
 			-DCOPYRIGHT=$(srcdir)/src/copyright.js \
-			-DLOLEAFLET_JS=$(subst $(SPACE),$(COMMA),$(LOLEAFLET_JS_WEBORDER)) \
+			-DLOLEAFLET_JS=$(subst $(SPACE),$(COMMA),$(patsubst src/%.ts,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_JS_WEBORDER))) \
 			$(srcdir)/loleaflet-src.js.m4 > $@)
 endef
 
@@ -470,7 +471,7 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_TS_JS) $(LOLEAFLET_ADMIN_JS)
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@awk 'FNR == 1 {print ""} 1' $(LOLEAFLET_ADMIN_TS_JS) $(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_ADMIN_JS)) > $@
 
-$(INTERMEDIATE_DIR)/loleaflet-src.js: tscompile.done $(call prereq_loleaflet) $(LOLEAFLET_JS_SRC) $(LOLEAFLET_TS_SRC)
+$(INTERMEDIATE_DIR)/loleaflet-src.js: tscompile.done $(call prereq_loleaflet) $(LOLEAFLET_JS_DST)
 	@mkdir -p $(dir $@)
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 	@echo -n "Checking for obsolete JS build intermediates in this makefile... "
@@ -478,6 +479,7 @@ $(INTERMEDIATE_DIR)/loleaflet-src.js: tscompile.done $(call prereq_loleaflet) $(
 	@echo "Checking for loleaflet JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
 		$(srcdir)/js --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
+	@echo "Bundling loleaflet..."
 	$(call bundle_loleaflet)
 
 $(DIST_FOLDER)/bundle.css: $(call prereq_css)
@@ -510,7 +512,7 @@ $(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 \
 		-DGLOBAL_JS="$(DIST_FOLDER)/global.js" \
 		-DLOLEAFLET_JS="$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS) \
 		$(LOLEAFLET_LIBS_JS) \
-		$(LOLEAFLET_JS_WEBORDER))" \
+		$(patsubst %.ts,%.js,$(LOLEAFLET_JS_WEBORDER)))" \
 		-DVENDOR="$(VENDOR)" \
 		$(srcdir)/html/loleaflet.html.m4 > $@
 
@@ -714,3 +716,6 @@ jsconfig: $(abs_srcdir)/jsconfig.json $(abs_srcdir)/admin/jsconfig.json
 check: $(MOCHA_TS_JS_FILES)
 	@echo "Running mocha tests..."
 	npm test
+
+# for now - unwinding ts and js deps for different targets is a real pain.
+.NOTPARALLEL:
