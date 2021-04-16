@@ -47,7 +47,7 @@
     <string name="share_via">Comparteix mitjançant</string>
     <string name="share">Comparteix</string>
     <string name="open">Obre</string>
-    <string name="action_settings">Configuració</string>
+    <string name="action_settings">Paràmetres</string>
     <string name="action_about">Quant a</string>
     <string name="title_browser">Tots els fitxers</string>
     <string name="title_recents">Fitxers recents</string>
@@ -90,7 +90,7 @@
     <string name="app_version">Versió: %1$s
 \nRevisió del dipòsit Git «online»: %2$s
 \nRevisió del dipòsit Git «core»: %3$s</string>
-    <string name="app_name_settings">Configuració</string>
+    <string name="app_name_settings">Paràmetres</string>
     <string name="owncloud_unspecified_error">S\'ha produït un error no especificat en connectar amb el servidor al núvol. Comproveu la configuració o intenteu-ho de nou més tard.</string>
     <string name="owncloud_unauthorized">No es pot iniciar una sessió al servidor al núvol. Comproveu la configuració.</string>
     <string name="owncloud_wrong_connection">No es pot connectar amb el servidor al núvol. Comproveu la configuració.</string>
