@@ -98,7 +98,6 @@ L.Map.WOPI = L.Handler.extend({
 			this.PostMessageOrigin = wopiInfo['PostMessageOrigin'];
 		}
 
-		this.PreviousFileName = this.BaseFileName; // After a save as operation, we will check the previous file name, for not refreshing the page.
 		this.BaseFileName = wopiInfo['BaseFileName'];
 		this.BreadcrumbDocName = wopiInfo['BreadcrumbDocName'];
 		if (this.BreadcrumbDocName === undefined)
