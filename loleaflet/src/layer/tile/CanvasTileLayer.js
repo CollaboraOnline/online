@@ -1111,6 +1111,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	_sendClientVisibleArea: function (forceUpdate) {
+		if (!this._map._docLoaded)
+			return;
 
 		var splitPos = this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0);
 
@@ -1265,9 +1267,9 @@ L.CanvasTileLayer = L.TileLayer.extend({
 					'height=' + this._tileHeightPx + ' ' +
 					'tileposx=' + tilePositionsX + ' ' +
 					'tileposy=' + tilePositionsY + ' ' +
-				        'wid=' + tileWids + ' ' +
+					'wid=' + tileWids + ' ' +
 					'tilewidth=' + this._tileWidthTwips + ' ' +
-				        'tileheight=' + this._tileHeightTwips;
+					'tileheight=' + this._tileHeightTwips;
 
 				this._map._socket.sendMessage(message, '');
 			}
