@@ -1263,6 +1263,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_sendClientZoom: function (forceUpdate) {
+		if (!this._map._docLoaded)
+			return;
 
 		var newClientZoom = 'tilepixelwidth=' + this._tileWidthPx + ' ' +
 			'tilepixelheight=' + this._tileHeightPx + ' ' +
@@ -3275,6 +3277,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_postMouseEvent: function(type, x, y, count, buttons, modifier) {
+		if (!this._map._docLoaded)
+			return;
 
 		if (this._map.calcInputBarHasFocus() && type === 'move') {
 			// When the Formula-bar has the focus, sending
@@ -3308,6 +3312,9 @@ L.CanvasTileLayer = L.Layer.extend({
 	// PageUp/PageDown and select column & row are handled as special cases for spreadsheets - in
 	// addition of sending messages to loolwsd, they move the cell cursor around.
 	postKeyboardEvent: function(type, charCode, unoKeyCode) {
+		if (!this._map._docLoaded)
+			return;
+
 		var winId = this._map.getWinId();
 		if (
 			this.isCalc() &&
@@ -5566,6 +5573,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_sendClientVisibleArea: function (forceUpdate) {
+		if (!this._map._docLoaded)
+			return;
 
 		var splitPos = this._splitPanesContext ? this._splitPanesContext.getSplitPos() : new L.Point(0, 0);
 
@@ -5720,9 +5729,9 @@ L.CanvasTileLayer = L.Layer.extend({
 					'height=' + this._tileHeightPx + ' ' +
 					'tileposx=' + tilePositionsX + ' ' +
 					'tileposy=' + tilePositionsY + ' ' +
-				        'wid=' + tileWids + ' ' +
+					'wid=' + tileWids + ' ' +
 					'tilewidth=' + this._tileWidthTwips + ' ' +
-				        'tileheight=' + this._tileHeightTwips;
+					'tileheight=' + this._tileHeightTwips;
 
 				app.socket.sendMessage(message, '');
 			}
