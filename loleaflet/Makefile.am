@@ -180,180 +180,184 @@ NODE_MODULES_JS_DST = $(patsubst %.js,$(DIST_FOLDER)/%.js,$(NODE_MODULES_JS))
 LOLEAFLET_LIBS_JS_SRC = $(patsubst %.js,$(srcdir)/js/%.js,$(LOLEAFLET_LIBS_JS))
 LOLEAFLET_LIBS_JS_DST = $(patsubst %.js,$(DIST_FOLDER)/%.js,$(LOLEAFLET_LIBS_JS))
 
-LOLEAFLET_JS =\
-	src/Leaflet.js \
-	src/errormessages.js \
-	src/unocommands.js \
-	src/core/Log.js \
-	src/core/Util.js \
-	src/core/LOUtil.js \
-	src/core/Class.js \
-	src/core/Events.js \
-	src/core/Socket.js \
-	src/core/Matrix.js \
-	src/geometry/Point.js \
-	src/geometry/Bounds.js \
-	src/geometry/Transformation.js \
-	src/dom/DomUtil.js src/geo/LatLng.js \
-	src/geo/LatLngBounds.js \
-	src/geo/projection/Projection.LonLat.js \
-	src/geo/crs/CRS.js \
-	src/geo/crs/CRS.Simple.js \
-	src/map/Map.js \
-	src/map/Clipboard.js \
-	src/layer/Layer.js \
-	src/layer/tile/CanvasSectionProps.js \
-	src/layer/tile/CanvasSectionContainer.js \
-	src/layer/tile/TilesSection.js \
-	src/layer/tile/AutoFillMarkerSection.js \
-	src/layer/vector/CPoint.js \
-	src/layer/vector/CBounds.js \
-	src/layer/vector/CEventsHandler.js \
-	src/layer/vector/CPointSet.js \
-	src/layer/vector/CPath.js \
-	src/layer/vector/CLineUtil.js \
-	src/layer/vector/CPolyline.js \
-	src/layer/vector/CPolyUtil.js \
-	src/layer/vector/CPolygon.js \
-	src/layer/vector/CRectangle.js \
-	src/layer/vector/CSplitterLine.js \
-	src/layer/marker/Cursor.js \
-	src/layer/vector/CanvasOverlay.js \
-	src/layer/tile/ScrollSection.js \
-	src/layer/tile/CanvasTileLayer.js \
-	src/layer/SplitPanesContext.js \
-	src/layer/tile/TileLayer.TableOverlay.js \
-	src/layer/ObjectFocusDarkOverlay.js \
-	src/layer/tile/WriterTileLayer.js \
-	src/layer/tile/ImpressTileLayer.js \
-	src/layer/tile/CalcTileLayer.js \
-	src/layer/BackgroundColor.js \
-	src/layer/ImageOverlay.js \
-	src/layer/marker/ProgressOverlay.js \
-	src/layer/marker/TextInput.js \
-	src/layer/marker/Icon.js \
-	src/layer/marker/Icon.Default.js \
-	src/layer/marker/Marker.js \
-	src/layer/marker/DivIcon.js \
-	src/layer/Popup.js \
-	src/layer/Layer.Popup.js \
-	src/layer/marker/Marker.Popup.js \
-	src/layer/LayerGroup.js \
-	src/layer/FeatureGroup.js \
-	src/layer/CalcGridLines.js \
-	src/layer/vector/Renderer.js \
-	src/layer/vector/Path.js \
-	src/layer/vector/Path.Popup.js \
-	src/geometry/LineUtil.js \
-	src/layer/vector/Polyline.js \
-	src/geometry/PolyUtil.js \
-	src/layer/vector/Polygon.js \
-	src/layer/vector/Rectangle.js \
-	src/layer/vector/CircleMarker.js \
-	src/layer/vector/Circle.js \
-	src/layer/vector/SVG.js \
-	src/layer/vector/SplitPanesRenderer.js \
-	src/layer/vector/SplitPanesSVG.js \
-	src/layer/vector/Path.Transform.SVG.js \
-	src/core/Handler.js \
-	src/layer/vector/SVGGroup.js \
-	src/layer/vector/Path.Drag.Transform.js \
-	src/layer/vector/Path.Drag.js \
-	src/layer/vector/Path.Transform.Util.js \
-	src/layer/vector/Path.Transform.js \
-	src/layer/vector/SVG.VML.js \
-	src/layer/vector/Path.Transform.SVG.VML.js \
-	src/layer/vector/Canvas.js \
-	src/layer/vector/Path.Transform.Canvas.js \
-	src/layer/FormFieldButtonLayer.js \
-	src/dom/DomEvent.js \
-	src/dom/Draggable.js \
-	src/map/handler/Map.Drag.js \
-	src/map/handler/Map.Scroll.js \
-	src/map/handler/Map.DoubleClickZoom.js \
-	src/dom/DomEvent.Pointer.js \
-	src/map/handler/Map.TouchGesture.js \
-	src/map/handler/Map.BoxZoom.js \
-	src/map/handler/Map.Keyboard.js \
-	src/dom/DomEvent.MultiClick.js \
-	src/map/handler/Map.Mouse.js \
-	src/map/handler/Map.Print.js \
-	src/map/handler/Map.SlideShow.js \
-	src/map/handler/Map.FileInserter.js \
-	src/map/handler/Map.StateChanges.js \
-	src/map/handler/Map.WOPI.js \
-	src/layer/marker/Marker.Drag.js \
-	src/control/Control.Toolbar.js \
-	src/control/Control.js \
-	src/control/Control.PartsPreview.js \
-	src/control/Control.GroupBase.js \
-	src/control/Control.CornerGroup.js \
-	src/control/Control.RowGroup.js \
-	src/control/Control.ColumnGroup.js \
-	src/control/Control.CornerHeader.js \
-	src/control/Control.Header.js \
-	src/control/Control.ColumnHeader.js \
-	src/control/Control.RowHeader.js \
-	src/control/Control.DocumentRepair.js \
-	src/control/Control.DownloadProgress.js \
-	src/control/Control.ContextMenu.js \
-	src/control/Control.Menubar.js \
-	src/control/Control.Tabs.js \
+LOLEAFLET_JS_SRC =\
 	src/control/Control.Permission.js \
+	src/control/Control.Toolbar.js \
 	src/control/Control.Selection.js \
-	src/control/Control.LokDialog.js \
-	src/control/Control.AlertDialog.js \
-	src/control/Control.Infobar.js src/control/ColorPicker.js \
-	src/control/Control.JSDialog.js \
+	src/control/Control.SigningBar.js \
+	src/control/Control.UserList.js \
+	src/control/Control.ColumnGroup.js \
+	src/control/Control.ContextMenu.js \
 	src/control/Control.JSDialogBuilder.js \
-	src/control/Control.MobileWizardBuilder.js \
-	src/control/Control.MobileWizard.js \
-	src/control/Control.LanguageDialog.js \
+	src/control/Control.Menubar.js \
+	src/control/Parts.js \
+	src/control/Signing.js \
+	src/control/Permission.js \
+	src/control/Control.MobileBottomBar.js \
+	src/control/Control.AutofilterDropdown.js \
 	src/control/Control.Attribution.js \
+	src/control/Search.js \
+	src/control/Control.MobileWizard.js \
+	src/control/Control.Header.js \
+	src/control/Control.NotebookbarCalc.js \
+	src/control/Control.ColumnHeader.js \
+	src/control/Control.TopToolbar.js \
+	src/control/Control.AlertDialog.js \
+	src/control/Control.RowGroup.js \
+	src/control/Control.NotebookbarDraw.js \
+	src/control/Control.NotebookbarImpress.js \
+	src/control/Control.UIManager.js \
+	src/control/Ruler.js \
+	src/control/Control.NotebookbarWriter.js \
+	src/control/Control.CornerGroup.js \
 	src/control/Control.MobileSlide.js \
 	src/control/Control.Scale.js \
-	src/control/Control.StatusBar.js \
-	src/control/Control.SearchBar.js \
-	src/control/Control.MobileTopBar.js \
-	src/control/Control.MobileBottomBar.js \
-	src/control/Control.UserList.js \
-	src/control/Control.FormulaBar.js \
+	src/control/Control.LokDialog.js \
 	src/control/Control.SheetsBar.js \
-	src/control/Control.PresentationBar.js \
-	src/control/Control.SigningBar.js \
-	src/control/Control.TopToolbar.js \
-	src/control/Control.UIManager.js \
-	src/control/Control.DocumentNameInput.js \
-	src/control/Control.Notebookbar.js \
-	src/control/Control.NotebookbarWriter.js \
-	src/control/Control.NotebookbarCalc.js \
-	src/control/Control.NotebookbarImpress.js \
-	src/control/Control.NotebookbarDraw.js \
-	src/control/Control.NotebookbarBuilder.js \
-	src/control/Control.AutofilterDropdown.js \
-	src/control/Control.Layers.js \
-	src/control/Search.js \
-	src/control/Permission.js \
-	src/control/Toolbar.js \
-	src/control/Signing.js \
-	src/control/Parts.js \
-	src/control/Scroll.js \
+	src/control/Control.CornerHeader.js \
 	src/control/Styles.js \
-	src/control/Ruler.js \
-	src/dom/PosAnimation.js \
-	src/map/anim/Map.PanAnimation.js \
-	src/dom/PosAnimation.Timer.js \
-	src/layer/AnnotationManagerBase.js \
-	src/layer/AnnotationManager.js \
-	src/layer/AnnotationManagerImpress.js \
+	src/control/Control.StatusBar.js \
+	src/control/Control.Layers.js \
+	src/control/Control.Tabs.js \
+	src/control/Control.DownloadProgress.js \
+	src/control/Control.FormulaBar.js \
+	src/control/Control.Infobar.js \
+	src/control/Control.LanguageDialog.js \
+	src/control/Control.JSDialog.js \
+	src/control/Control.NotebookbarBuilder.js \
+	src/control/Control.SearchBar.js \
+	src/control/Control.js \
+	src/control/Control.DocumentNameInput.js \
+	src/control/Control.MobileWizardBuilder.js \
+	src/control/Control.PresentationBar.js \
+	src/control/ColorPicker.js \
+	src/control/Toolbar.js \
+	src/control/Scroll.js \
+	src/control/Control.GroupBase.js \
+	src/control/Control.PartsPreview.js \
+	src/control/Control.DocumentRepair.js \
+	src/control/Control.RowHeader.js \
 	src/control/Control.Scroll.Annotation.js \
-	src/layer/marker/Annotation.js \
+	src/control/Control.Notebookbar.js \
+	src/control/Control.MobileTopBar.js \
+	src/core/Events.js \
+	src/core/Handler.js \
+	src/core/Log.js \
+	src/core/Matrix.js \
+	src/core/Class.js \
+	src/core/Util.js \
+	src/core/LOUtil.js \
+	src/core/Socket.js \
+	src/dom/DomEvent.MultiClick.js \
+	src/dom/DomEvent.Pointer.js \
+	src/dom/Draggable.js \
+	src/dom/PosAnimation.Timer.js \
+	src/dom/PosAnimation.js \
+	src/dom/DomEvent.js \
+	src/dom/DomUtil.js \
+	src/geo/crs/CRS.Simple.js \
+	src/geo/crs/CRS.js \
+	src/geo/projection/Projection.LonLat.js \
+	src/geo/LatLng.js \
+	src/geo/LatLngBounds.js \
+	src/geometry/Bounds.js \
+	src/geometry/Transformation.js \
+	src/geometry/PolyUtil.js \
+	src/geometry/LineUtil.js \
+	src/geometry/Point.js \
+	src/layer/marker/DivIcon.js \
+	src/layer/marker/TextInput.js \
+	src/layer/marker/Icon.Default.js \
+	src/layer/marker/Icon.js \
+	src/layer/marker/Marker.Drag.js \
+	src/layer/marker/Marker.Popup.js \
 	src/layer/marker/DivOverlay.js \
-	src/main.js
+	src/layer/marker/ProgressOverlay.js \
+	src/layer/marker/Marker.js \
+	src/layer/marker/Annotation.js \
+	src/layer/tile/WriterTileLayer.js \
+	src/layer/tile/CalcTileLayer.js \
+	src/layer/tile/CanvasTileLayer.js \
+	src/layer/tile/TileLayer.TableOverlay.js \
+	src/layer/tile/CanvasSectionProps.js \
+	src/layer/tile/ImpressTileLayer.js \
+	src/layer/vector/Path.Transform.SVG.js \
+	src/layer/vector/Path.js \
+	src/layer/vector/Polygon.js \
+	src/layer/vector/Rectangle.js \
+	src/layer/vector/SVGGroup.js \
+	src/layer/vector/SplitPanesSVG.js \
+	src/layer/vector/Path.Transform.Canvas.js \
+	src/layer/vector/Path.Drag.js \
+	src/layer/vector/Path.Transform.Util.js \
+	src/layer/vector/Canvas.js \
+	src/layer/vector/Polyline.js \
+	src/layer/vector/SVG.VML.js \
+	src/layer/vector/SVG.js \
+	src/layer/vector/SplitPanesRenderer.js \
+	src/layer/vector/Renderer.js \
+	src/layer/vector/Path.Transform.js \
+	src/layer/vector/Circle.js \
+	src/layer/vector/CircleMarker.js \
+	src/layer/vector/Path.Drag.Transform.js \
+	src/layer/vector/Path.Popup.js \
+	src/layer/vector/Path.Transform.SVG.VML.js \
+	src/layer/LayerGroup.js \
+	src/layer/Layer.js \
+	src/layer/AnnotationManager.js \
+	src/layer/FormFieldButtonLayer.js \
+	src/layer/AnnotationManagerImpress.js \
+	src/layer/AnnotationManagerBase.js \
+	src/layer/BackgroundColor.js \
+	src/layer/FeatureGroup.js \
+	src/layer/CalcGridLines.js \
+	src/layer/ImageOverlay.js \
+	src/layer/Layer.Popup.js \
+	src/layer/SplitPanesContext.js \
+	src/layer/Popup.js \
+	src/layer/ObjectFocusDarkOverlay.js \
+	src/map/anim/Map.PanAnimation.js \
+	src/map/handler/Map.BoxZoom.js \
+	src/map/handler/Map.DoubleClickZoom.js \
+	src/map/handler/Map.Mouse.js \
+	src/map/handler/Map.Print.js \
+	src/map/handler/Map.Drag.js \
+	src/map/handler/Map.Scroll.js \
+	src/map/handler/Map.FileInserter.js \
+	src/map/handler/Map.Keyboard.js \
+	src/map/handler/Map.StateChanges.js \
+	src/map/handler/Map.TouchGesture.js \
+	src/map/handler/Map.WOPI.js \
+	src/map/handler/Map.SlideShow.js \
+	src/map/Clipboard.js \
+	src/map/Map.js \
+	src/Leaflet.js \
+	src/copyright.js \
+	src/errormessages.js \
+	src/main.js \
+	src/unocommands.js
 
-LOLEAFLET_JS_SRC = $(shell find $(srcdir)/src -name '*.js')
-LOLEAFLET_TS_SRC = $(shell find $(srcdir)/src -name '*.ts')
-LOLEAFLET_JS_DST = $(patsubst $(srcdir)/src/%.js,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_JS_SRC)) $(patsubst $(srcdir)/src/%.ts,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_TS_SRC))
+LOLEAFLET_TS_SRC = \
+	src/layer/marker/Cursor.ts \
+	src/layer/tile/AutoFillMarkerSection.ts \
+	src/layer/tile/TilesSection.ts \
+	src/layer/tile/CanvasSectionContainer.ts \
+	src/layer/tile/ScrollSection.ts \
+	src/layer/vector/CPolyUtil.ts \
+	src/layer/vector/CPointSet.ts \
+	src/layer/vector/CBounds.ts \
+	src/layer/vector/CPoint.ts \
+	src/layer/vector/CEventsHandler.ts \
+	src/layer/vector/CRectangle.ts \
+	src/layer/vector/CSplitterLine.ts \
+	src/layer/vector/CLineUtil.ts \
+	src/layer/vector/CPath.ts \
+	src/layer/vector/CPolygon.ts \
+	src/layer/vector/CPolyline.ts \
+	src/layer/vector/CanvasOverlay.ts
+
+LOLEAFLET_TS_JS_DST = $(patsubst src/%.ts,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_TS_SRC))
+LOLEAFLET_JS_DST = $(patsubst src/%.js,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_JS_SRC)) $(LOLEAFLET_TS_JS_DST)
 # should be no lingering / obsolete files:
 LOLEAFLET_ASSERT_INTERSECT = $(filter $(LOLEAFLET_JS_SRC), $(patsubst %.ts,%.js,$(LOLEAFLET_TS_SRC)))
 
@@ -374,7 +378,7 @@ define bundle_loleaflet
 			-DMOBILEAPPNAME="$(APP_NAME)" \
 			-DVERSION=$(LOLEAFLET_VERSION) \
 			-DCOPYRIGHT=$(srcdir)/src/copyright.js \
-			-DLOLEAFLET_JS=$(subst $(SPACE),$(COMMA),$(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_JS))) \
+			-DLOLEAFLET_JS=$(subst $(SPACE),$(COMMA),$(LOLEAFLET_JS_DST)) \
 			$(srcdir)/loleaflet-src.js.m4 > $@)
 endef
 
@@ -465,10 +469,10 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_TS_JS) $(LOLEAFLET_ADMIN_JS)
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@awk 'FNR == 1 {print ""} 1' $(LOLEAFLET_ADMIN_TS_JS) $(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_ADMIN_JS)) > $@
 
-$(INTERMEDIATE_DIR)/loleaflet-src.js: tscompile.done $(call prereq_loleaflet)
+$(INTERMEDIATE_DIR)/loleaflet-src.js: tscompile.done $(call prereq_loleaflet) $(LOLEAFLET_JS_SRC) $(LOLEAFLET_TS_SRC)
 	@mkdir -p $(dir $@)
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
-	@echo -n "Checking for obsolete JS build intermediates in source tree... "
+	@echo -n "Checking for obsolete JS build intermediates in this makefile... "
 	@if ! test "z$(LOLEAFLET_ASSERT_INTERSECT)" == "z"; then echo; echo "Error: please remove obsolete files:"; echo "$(LOLEAFLET_ASSERT_INTERSECT)"; exit 1; else echo "clean"; fi
 	@echo "Checking for loleaflet JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
@@ -565,7 +569,7 @@ tscompile.done: $(LOLEAFLET_JS_SRC) $(LOLEAFLET_TS_SRC)
 	$(builddir)/node_modules/typescript/bin/tsc --outDir $(DIST_FOLDER)/src --rootDir $(srcdir)/src --allowJs true --checkJs false --project $(srcdir)/tsconfig.json
 	@touch $@
 
-$(LOLEAFLET_JS_DST): tscompile.done
+$(LOLEAFLET_TS_JS_DST): tscompile.done
 	@echo -n ""
 
 $(DIST_FOLDER)/%.js: $(srcdir)/js/%.js
