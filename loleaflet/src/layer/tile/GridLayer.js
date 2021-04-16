@@ -451,7 +451,7 @@ L.GridLayer = L.Layer.extend({
 	_setZoomTransform: function (level, center, zoom) {
 		var scale = this._map.getZoomScale(zoom, level.zoom),
 		    translate = level.origin.multiplyBy(scale)
-		        .subtract(this._map._getNewPixelOrigin(center, zoom)).round();
+			.subtract(this._map._getNewPixelOrigin(center, zoom)).round();
 
 		L.DomUtil.setTransform(level.el, translate, scale);
 	},
@@ -711,6 +711,9 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_sendClientVisibleArea: function (forceUpdate) {
+		if (!this._map._docLoaded)
+			return;
+
 		var visibleTopLeft = this._latLngToTwips(this._map.getBounds().getNorthWest());
 		var visibleBottomRight = this._latLngToTwips(this._map.getBounds().getSouthEast());
 		var visibleArea = new L.Bounds(visibleTopLeft, visibleBottomRight);
@@ -736,6 +739,8 @@ L.GridLayer = L.Layer.extend({
 	},
 
 	_sendClientZoom: function (forceUpdate) {
+		if (!this._map._docLoaded)
+			return;
 
 		var newClientZoom = 'tilepixelwidth=' + this._tileWidthPx + ' ' +
 			'tilepixelheight=' + this._tileHeightPx + ' ' +
