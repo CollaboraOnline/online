@@ -182,6 +182,10 @@ AC_ARG_WITH([app-name],
               AS_HELP_STRING([--with-app-name=<name>],
                              [Set the user-visible name of the app you build.]))
 
+AC_ARG_WITH([user-id],
+              AS_HELP_STRING([--with-user-id=lool],
+                             [Set the account name of the user required to run the app (outside debug mode).]))
+
 AC_ARG_WITH([icon-theme],
               AS_HELP_STRING([--with-icon-theme=<path>],
                              [Path to custom icon theme (similar to loleflet/images).]))
@@ -1074,6 +1078,12 @@ AC_SUBST(LOOLWSD_CONFIGDIR)
 
 LOOLWSD_DATADIR=${datadir}/${PACKAGE}
 AC_SUBST(LOOLWSD_DATADIR)
+
+COOL_USER_ID="lool"
+if test -n "$with_user_id"; then
+   COOL_USER_ID="$with_user_id"
+fi
+AC_DEFINE_UNQUOTED([COOL_USER_ID],["$COOL_USER_ID"],[The user-name which is allowed to run loolwsd and its tools])
 
 AM_CONDITIONAL([ENABLE_SETCAP], [test "$enable_setcap" != "no"])
 
