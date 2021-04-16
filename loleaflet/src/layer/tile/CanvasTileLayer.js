@@ -5222,6 +5222,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._map.sendInitUNOCommands();
 
+		this._resetClientVisArea();
+		this._requestNewTiles();
+
 		map.setZoom();
 	},
 
