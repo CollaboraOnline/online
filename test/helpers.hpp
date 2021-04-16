@@ -975,8 +975,14 @@ inline void getServerVersion(LOOLWebSocket& socket,
     std::string loProductVersion = loVersionObject->get("ProductVersion").toString();
     std::istringstream stream(loProductVersion);
     stream >> major;
-    assert(stream.get() == '.');
-    stream >> minor;
+    if (stream.get() == '.')
+    {
+        stream >> minor;
+    }
+    else
+    {
+        minor = 0;
+    }
 
     TST_LOG("Client [" << major << '.' << minor << "].");
 }
