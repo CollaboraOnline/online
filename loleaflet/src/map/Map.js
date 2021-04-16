@@ -1333,10 +1333,6 @@ L.Map = L.Evented.extend({
 				// console.debug('sending useractive');
 				app.socket.sendMessage('useractive');
 				this._active = true;
-				if (this._docLayer) {
-					this._docLayer._resetClientVisArea();
-					this._docLayer._requestNewTiles();
-				}
 				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 
 				if (isAnyVexDialogActive()) {
