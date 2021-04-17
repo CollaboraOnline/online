@@ -878,7 +878,7 @@ button.ui-button::-moz-focus-inner {
 .ui-widget,
 [data-title]:after {
 	font-family: var(--jquery-ui-font);
-	font-size: 1.1em;
+	font-size: 1em;
 }
 .ui-widget .ui-widget {
 	font-size: 1em;
