@@ -2234,7 +2234,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._twipsToLatLng(this._cellCursorTwips.getBottomRight(), this._map.getZoom()));
 
 			var start = this._twipsToCorePixels(this._cellCursorTwips.min);
-			var offsetPixels = offsetPixels = this._twipsToCorePixels(this._cellCursorTwips.getSize());
+			var offsetPixels = this._twipsToCorePixels(this._cellCursorTwips.getSize());
 			this._cellCursorPixels = L.LOUtil.createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellCursor([this._cellCursorPixels.getX2(), this._cellCursorPixels.getY2()]);
