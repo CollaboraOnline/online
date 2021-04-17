@@ -13,18 +13,18 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-16 22:04+0200\n"
-"PO-Revision-Date: 2021-03-17 14:18+0000\n"
+"PO-Revision-Date: 2021-04-17 22:21+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<"
-"12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) ||"
-" (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-"X-Generator: Weblate 4.5.2-dev\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 4.6-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -230,7 +230,7 @@ msgstr "Zaktualizuj poziomy dziennika"
 
 #: admin/admin.strings.js:55
 msgid "Version Information"
-msgstr ""
+msgstr "Informacje o wersji"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -1107,11 +1107,11 @@ msgstr "Tytuł"
 
 #: src/control/Control.NotebookbarWriter.js:789
 msgid "Emphasis"
-msgstr ""
+msgstr "Wyróżnienie"
 
 #: src/control/Control.NotebookbarWriter.js:794
 msgid "Strong Emphasis"
-msgstr ""
+msgstr "Mocne wyróżnienie"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
@@ -1127,40 +1127,39 @@ msgstr "Plik CSV (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:596
 msgid "General"
-msgstr ""
+msgstr "Ogólne"
 
 #: src/control/Control.NotebookbarCalc.js:597
 msgid "Number"
-msgstr ""
+msgstr "Liczba"
 
 #: src/control/Control.NotebookbarCalc.js:598
 msgid "Percent"
-msgstr ""
+msgstr "Procent"
 
 #: src/control/Control.NotebookbarCalc.js:599
-#, fuzzy
 msgid "Currency"
-msgstr "Bieżący"
+msgstr "Waluta"
 
 #: src/control/Control.NotebookbarCalc.js:600
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: src/control/Control.NotebookbarCalc.js:601
 msgid "Time"
-msgstr ""
+msgstr "Godzina"
 
 #: src/control/Control.NotebookbarCalc.js:602
 msgid "Scientific"
-msgstr ""
+msgstr "Naukowy"
 
 #: src/control/Control.NotebookbarCalc.js:603
 msgid "Fraction"
-msgstr ""
+msgstr "Ułamek"
 
 #: src/control/Control.NotebookbarCalc.js:604
 msgid "Boolean Value"
-msgstr ""
+msgstr "Wartość logiczna"
 
 #: src/control/Control.NotebookbarCalc.js:605 src/control/Toolbar.js:756
 msgid "Text"
@@ -1168,27 +1167,27 @@ msgstr "Tekst"
 
 #: src/control/Control.NotebookbarCalc.js:723
 msgid "Default"
-msgstr ""
+msgstr "Domyślne"
 
 #: src/control/Control.NotebookbarCalc.js:728
 msgid "Heading 1"
-msgstr ""
+msgstr "Nagłówek 1"
 
 #: src/control/Control.NotebookbarCalc.js:733
 msgid "Heading 2"
-msgstr ""
+msgstr "Nagłówek 2"
 
 #: src/control/Control.NotebookbarCalc.js:744
 msgid "Good"
-msgstr ""
+msgstr "Dobry"
 
 #: src/control/Control.NotebookbarCalc.js:749
 msgid "Neutral"
-msgstr ""
+msgstr "Neutralny"
 
 #: src/control/Control.NotebookbarCalc.js:754
 msgid "Bad"
-msgstr ""
+msgstr "Zły"
 
 #: src/control/Control.NotebookbarCalc.js:823
 msgid "Insert Row Break"
@@ -1236,7 +1235,7 @@ msgstr "Rozpocznij prezentację"
 
 #: src/control/Control.NotebookbarDraw.js:274
 msgid "Image (.png)"
-msgstr ""
+msgstr "Obraz (.png)"
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
@@ -1455,7 +1454,7 @@ msgstr "Ups, wystąpił problem z połączeniem z %productName: "
 
 #: src/core/Socket.js:319
 msgid "Server has been restarted. We have to refresh the page now."
-msgstr ""
+msgstr "Serwer został uruchomiony ponownie. Musimy teraz odświeżyć stronę."
 
 #: src/core/Socket.js:337
 msgid "Served by:"
