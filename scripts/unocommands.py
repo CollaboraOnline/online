@@ -383,8 +383,7 @@ def writeTranslations(onlineDir, translationsDir, strings):
 
     dir = translationsDir + '/source/'
     for lang in os.listdir(dir):
-        poFile = dir + lang
-        + '/officecfg/registry/data/org/openoffice/Office/UI.po'
+        poFile = dir + lang + '/officecfg/registry/data/org/openoffice/Office/UI.po'
         if not os.path.isfile(poFile):
             continue
 
