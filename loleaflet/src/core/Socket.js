@@ -1083,13 +1083,26 @@ app.definitions.Socket = L.Class.extend({
 		}
 
 		if (msgData.action) {
-			switch (msgData.action) {
-			case 'update':
-				this._map.fire('jsdialogupdate', {data: msgData});
-				return;
+			var that = this;
+			var fireJSDialogEvent = function () {
+				switch (msgData.action) {
+				case 'update':
+					that._map.fire('jsdialogupdate', {data: msgData});
+					return true;
 
-			case 'action':
-				this._map.fire('jsdialogaction', {data: msgData});
+				case 'action':
+					that._map.fire('jsdialogaction', {data: msgData});
+					return true;
+				}
+
+				return false;
+			};
+
+			var isNotebookbarInitialized = (this._map.uiManager && this._map.uiManager.notebookbar);
+			if (msgData.jsontype === 'notebookbar' && !isNotebookbarInitialized) {
+				setTimeout(fireJSDialogEvent, 1000);
+				return;
+			} else if (fireJSDialogEvent() === true) {
 				return;
 			}
 		}
