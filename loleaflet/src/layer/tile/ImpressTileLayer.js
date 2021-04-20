@@ -15,6 +15,22 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			this._addButton = L.control.mobileSlide();
 			L.DomUtil.addClass(L.DomUtil.get('mobile-edit-button'), 'impress');
 		}
+		this._spaceBetweenParts = 100; // In twips. This is used when all parts of an Impress or Draw document is shown in one view (like a Writer file). This mode is used when document is read only.
+
+		// app.file variable should exist, this is a precaution.
+		if (!app.file)
+			app.file = {};
+
+		// Before this instance is created, app.file.readOnly and app.file.editComments variables are set.
+		// If document is on read only mode, we will draw all parts at once.
+		// Let's call default view the "part based view" and new view the "file based view".
+		if (app.file.readOnly)
+			app.file.fileBasedView = true;
+		else
+			app.file.partBasedView = true;
+
+		this._partHeightTwips = 0; // Single part's height.
+		this._partWidthTwips = 0; // Single part's width. These values are equal to _docWidthTwips & _docHeightTwips when app.file.partBasedView is true.
 	},
 
 	newAnnotation: function (comment) {
@@ -279,6 +295,15 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 				L.DomUtil.addClass(L.DomUtil.get('presentation-controls-wrapper'), 'drawing');
 			}
 			this._parts = command.parts;
+			this._partHeightTwips = this._docHeightTwips;
+			this._partWidthTwips = this._docWidthTwips;
+
+			if (app.file.fileBasedView) {
+				var totalHeight = this._parts * this._docHeightTwips; // Total height in twips.
+				totalHeight += (this._parts - 1) * this._spaceBetweenParts; // Space between parts.
+				this._docHeightTwips = totalHeight;
+			}
+
 			this._updateMaxBoundsImpress(true);
 			this._documentInfo = textMsg;
 			this._viewId = parseInt(command.viewid);

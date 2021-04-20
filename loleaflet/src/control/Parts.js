@@ -162,8 +162,8 @@ L.Map.include({
 			var part = index;
 			var tilePosX = 0;
 			var tilePosY = 0;
-			var tileWidth = docLayer._docWidthTwips;
-			var tileHeight = docLayer._docHeightTwips;
+			var tileWidth = docLayer._partWidthTwips ? docLayer._partWidthTwips: docLayer._docWidthTwips;
+			var tileHeight = docLayer._partHeightTwips ? docLayer._partHeightTwips: docLayer._docHeightTwips;
 		}
 		var docRatio = tileWidth / tileHeight;
 		var imgRatio = maxWidth / maxHeight;
