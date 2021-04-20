@@ -62,6 +62,13 @@ std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHand
 /// welcome.html if no lang matches.
 #define WELCOME_ENDPOINT "/loleaflet/dist/welcome"
 
+
+#ifdef ENABLE_FEEDBACK
+#define RATE_LOCATION "http://127.0.0.1:8000/Rate/feedback.html"
+#else
+#define RATE_LOCATION ""
+#endif
+
 namespace {
 
 int functionConversation(int /*num_msg*/, const struct pam_message** /*msg*/,
@@ -787,6 +794,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     if (config.getBool("security.enable_macros_execution", false))
         enableMacrosExecution = "true";
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_MACROS_EXECUTION%"), enableMacrosExecution);
+    Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_LOCATION%"), std::string(RATE_LOCATION));
 
     // Capture cookies so we can optionally reuse them for the storage requests.
     {
@@ -808,7 +816,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     // iframe purposes.
     std::ostringstream cspOss;
     cspOss << "Content-Security-Policy: default-src 'none'; "
-           "frame-src 'self' blob: " << documentSigningURL << "; "
+        "frame-src 'self' " << RATE_LOCATION << " blob: " << documentSigningURL << "; "
            "connect-src 'self' " << cnxDetails.getWebSocketUrl() << "; "
            "script-src 'unsafe-inline' 'self'; "
            "style-src 'self' 'unsafe-inline'; "
