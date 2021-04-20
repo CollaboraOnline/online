@@ -340,6 +340,13 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             endPoint = relPath.substr(sizeof(WELCOME_ENDPOINT));
         }
 
+        if (endPoint.find("feedback") != std::string::npos &&
+            endPoint.rfind(".hmtl") != std::string::npos)
+        {
+            preprocessFeedbackFile(request, requestDetails, socket);
+            return;
+        }
+
         // Is this a file we read at startup - if not; its not for serving.
         if (FileHash.find(relPath) == FileHash.end())
             throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
@@ -999,6 +1006,40 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     std::ostringstream oss;
     response.write(oss);
     oss << templateFile;
+    socket->send(oss.str());
+}
+
+void FileServerRequestHandler::preprocessFeedbackFile(const HTTPRequest& request,
+                                                      const RequestDetails &/*requestDetails*/,
+                                                      const std::shared_ptr<StreamSocket>& socket)
+{
+    Poco::Net::HTTPResponse response;
+
+    const std::string relPath = getRequestPathname(request);
+    LOG_DBG("Preprocessing file: " << relPath);
+    std::string feedbackFile = *getUncompressedFile(relPath);
+    if (feedbackFile.empty())
+    {
+        Poco::Path defaultFile(relPath);
+
+        defaultFile.setFileName("feedback.html");
+        feedbackFile = *getUncompressedFile(relPath);
+    }
+
+    // Ask UAs to block if they detect any XSS attempt
+    response.add("X-XSS-Protection", "1; mode=block");
+    // No referrer-policy
+    response.add("Referrer-Policy", "no-referrer");
+    response.add("X-Content-Type-Options", "nosniff");
+    response.set("User-Agent", HTTP_AGENT_STRING);
+    response.set("Date", Util::getHttpTimeNow());
+
+    response.setContentType("text/html");
+    response.setChunkedTransferEncoding(false);
+
+    std::ostringstream oss;
+    response.write(oss);
+    oss << feedbackFile;
     socket->send(oss.str());
 }
 

@@ -27,6 +27,9 @@ class FileServerRequestHandler
     static void preprocessAdminFile(const Poco::Net::HTTPRequest& request,
                                     const RequestDetails &requestDetails,
                                     const std::shared_ptr<StreamSocket>& socket);
+    static void preprocessFeedbackFile(const Poco::Net::HTTPRequest& request,
+                                    const RequestDetails &requestDetails,
+                                    const std::shared_ptr<StreamSocket>& socket);
 
     /// Construct a JSON to be accepted by the loleflet.html from a list like
     /// UIMode=classic;TextRuler=true;PresentationStatusbar=false
