@@ -5404,11 +5404,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (coords.x < 0 || coords.y < 0) {
 			return false;
 		}
-		if ((coords.x / this._tileSize) * this._tileWidthTwips >= this._docWidthTwips ||
-			(coords.y / this._tileSize) * this._tileHeightTwips >= this._docHeightTwips) {
+		else if ((coords.x / this._tileSize) * this._tileWidthTwips > this._docWidthTwips ||
+			(coords.y / this._tileSize) * this._tileHeightTwips > this._docHeightTwips) {
 			return false;
 		}
-		return true;
+		else
+			return true;
 	},
 
 	_updateMaxBounds: function (sizeChanged, options, zoom) {
@@ -5420,9 +5421,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		var dpiScale = this._painter._dpiScale;
-		var extraSize = options ? options.extraSize : null;
+		var extraSize = new L.Point(0, 0);
 		if (this._docType === 'presentation')
-			extraSize = this._annotationManager.allocateExtraSize();
+			extraSize = this._annotationManager.allocateExtraSize(); // This changes only the width.
+
 		var docPixelLimits = new L.Point(this._docWidthTwips / this.options.tileWidthTwips,
 			this._docHeightTwips / this.options.tileHeightTwips);
 		// docPixelLimits should be in csspx.
@@ -5432,10 +5434,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		topLeft = this._map.unproject(topLeft.multiplyBy(scale));
 		var bottomRight = new L.Point(docPixelLimits.x, docPixelLimits.y);
 		bottomRight = bottomRight.multiplyBy(scale);
-		if (extraSize) {
-			// extraSize is unscaled.
-			bottomRight = bottomRight.add(extraSize);
-		}
+
+		// extraSize is unscaled.
+		bottomRight = bottomRight.add(extraSize);
 		bottomRight = this._map.unproject(bottomRight);
 
 		if (this._documentInfo === '' || sizeChanged) {
@@ -5447,10 +5448,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		var scrollPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips,
 			this._docHeightTwips / this._tileHeightTwips);
 		scrollPixelLimits = scrollPixelLimits.multiplyBy(this._tileSize / dpiScale);
-		if (extraSize) {
-			// extraSize is unscaled.
-			scrollPixelLimits = scrollPixelLimits.add(extraSize);
-		}
+		// extraSize is unscaled.
+		scrollPixelLimits = scrollPixelLimits.add(extraSize);
+
 		this._docPixelSize = {x: scrollPixelLimits.x, y: scrollPixelLimits.y};
 		this._map.fire('docsize', {x: scrollPixelLimits.x, y: scrollPixelLimits.y, extraSize: extraSize});
 	},
