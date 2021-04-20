@@ -290,6 +290,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.protocolDebug = %PROTOCOL_DEBUG%;
       window.frameAncestors = '%FRAME_ANCESTORS%';
       window.socketProxy = %SOCKET_PROXY%;
+      window.feebackLocation = '%FEEDBACK_LOCATION%';
       window.tileSize = 256;
       window.uiDefaults = %UI_DEFAULTS%;])
 m4_syscmd([cat ]GLOBAL_JS)m4_dnl
