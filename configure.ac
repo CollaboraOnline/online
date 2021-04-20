@@ -281,6 +281,11 @@ AC_ARG_ENABLE(welcome-message,
         [Enables welcome message on version update. Can be changed later in loolwsd.xml.])
 )
 
+AC_ARG_ENABLE(feedback,
+    AS_HELP_STRING([--enable-feedback],
+        [Enables feedback, user rating.])
+)
+
 AC_ARG_WITH([sanitizer],
              AS_HELP_STRING([--with-sanitizer],
                            [Enable one or more compatible sanitizers. E.g. --with-sanitizer=address,undefined,leak]))
@@ -728,6 +733,13 @@ AS_IF([test "$enable_welcome_message" = "yes"],
       [ENABLE_WELCOME_MESSAGE="true"])
 AC_DEFINE_UNQUOTED([ENABLE_WELCOME_MESSAGE],["$ENABLE_WELCOME_MESSAGE"],[Should the Release notes message on startup be enabled by default?])
 AC_SUBST(ENABLE_WELCOME_MESSAGE)
+
+ENABLE_FEEDBACK=
+AS_IF([test "$enable_feedback" = "yes"],
+      [ENABLE_FEEDBACK="true"])
+AC_DEFINE_UNQUOTED([ENABLE_FEEDBACK],["$ENABLE_FEEDBACK"],[User feedback rating])
+AC_SUBST(ENABLE_FEEDBACK)
+AM_CONDITIONAL([ENABLE_FEEDBACK], [test "$ENABLE_FEEDBACK" = "true"])
 
 ENABLE_WELCOME_MESSAGE_BUTTON=false
 AS_IF([test "$enable_welcome_message_button" = "yes"],
