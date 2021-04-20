@@ -149,6 +149,9 @@ define start_loolwsd
 			--o:logging.file[@enable]=true --o:logging.level=trace \
 			--o:welcome.enable=false \
 			--o:security.enable_macros_execution=true \
+			--o:ssl.cert_file_path="$(abs_srcdir)/../etc/cert.pem" \
+			--o:ssl.key_file_path="$(abs_srcdir)/../etc/key.pem" \
+			--o:ssl.ca_file_path="$(abs_srcdir)/../etc/ca-chain.cert.pem" \
 			--port=$(FREE_PORT) \
 			--pidfile=$(PID_FILE) \
 			--o:logging.file.property[0]=$(LOOLWSD_LOG) \
