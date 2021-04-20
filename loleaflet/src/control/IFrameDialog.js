@@ -1,6 +1,6 @@
 /* -*- js-indent-level: 8 -*- */
 /*
- * L.Control.IFrameDialog
+ * L.IFrameDialog
  */
 
 L.IFrameDialog = L.Class.extend({
