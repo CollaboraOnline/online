@@ -486,7 +486,7 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 		var annotations = [];
 		if (this._annotations && this.getPartHashes() && this.getSelectedPart() !== undefined)
 			annotations = this._annotations[this.getSelectedPartHash()];
-		return (annotations !== undefined && annotations.length > 0) ? this.options.extraSize : null;
+		return (annotations !== undefined && annotations.length > 0) ? this.options.extraSize : new L.Point(0, 0);
 	}
 });
 
