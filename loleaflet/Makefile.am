@@ -286,6 +286,7 @@ LOLEAFLET_JS =\
 	src/map/handler/Map.SlideShow.js \
 	src/map/handler/Map.FileInserter.js \
 	src/map/handler/Map.StateChanges.js \
+	$(if $(ENABLE_FEEDBACK),src/map/handler/Map.Feedback.js,) \
 	src/map/handler/Map.WOPI.js \
 	src/layer/marker/Marker.Drag.js \
 	src/control/Control.Toolbar.js \
