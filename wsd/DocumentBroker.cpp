@@ -688,6 +688,15 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
                 session->setAllowChangeComments();
             }
         }
+        else if (wopifileinfo->getUserCanWrite())
+        {
+            session->setReadOnly(false);
+            session->setAllowChangeComments(true);
+        }
+
+        // We will send the client about information of the usage type of the file.
+        // Some file types may be treated differently than others.
+        session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
 
         // Construct a JSON containing relevant WOPI host properties
         Object::Ptr wopiInfo = new Object();
@@ -778,6 +787,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
                     session->setAllowChangeComments();
                 }
             }
+            session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
         }
     }
 

@@ -38,6 +38,8 @@ public:
 
     void setReadOnly(bool bValue = true) override;
 
+    void sendFileMode(const bool readOnly, const bool editComments);
+
     void setLockFailed(const std::string& sReason);
 
     enum SessionState {
