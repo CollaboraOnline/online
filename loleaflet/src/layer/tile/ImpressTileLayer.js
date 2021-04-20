@@ -278,9 +278,9 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			if (this._docType === 'drawing') {
 				L.DomUtil.addClass(L.DomUtil.get('presentation-controls-wrapper'), 'drawing');
 			}
+			this._parts = command.parts;
 			this._updateMaxBoundsImpress(true);
 			this._documentInfo = textMsg;
-			this._parts = command.parts;
 			this._viewId = parseInt(command.viewid);
 			this._selectedPart = command.selectedPart;
 			this._selectedParts = command.selectedParts || [command.selectedPart];
