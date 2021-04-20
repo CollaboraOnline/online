@@ -124,21 +124,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								}
 							]
 						} : {},
-					hasPrint ?
-						{
-							'id': 'Section4',
-							'type': 'toolbox',
-							'text': '',
-							'enabled': 'true',
-							'children': [
-								{
-									'id': 'print',
-									'type': 'bigtoolitem',
-									'text': _UNO('.uno:Print', 'text'),
-									'command': '.uno:Print'
-								}
-							]
-						} : {},
 					hasRevisionHistory ?
 						{
 							'id': 'Section5',
@@ -151,6 +136,76 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 									'type': 'bigtoolitem',
 									'text': _('See history'),
 									'command': '.uno:rev-history'
+								}
+							]
+						} : {},
+					{
+						'id': 'saveas-Section',
+						'type': 'container',
+						'text': '',
+						'enabled': 'true',
+						'vertical': 'true',
+						'children': [
+							hasShare ?
+								{
+									'id': 'shareas-Section1',
+									'type': 'container',
+									'text': '',
+									'enabled': 'true',
+									'children': [
+										{
+											'id': 'Section7',
+											'type': 'toolbox',
+											'text': '',
+											'enabled': 'true',
+											'children': [
+												{
+													'id': 'shareas',
+													'type': 'menubartoolitem',
+													'text': _('Share'),
+													'command': '.uno:shareas'
+												}
+											]
+										}
+									]
+								} : {},
+							hasRevisionHistory ?
+								{
+									'id': 'shareas-Section2',
+									'type': 'container',
+									'text': '',
+									'enabled': 'true',
+									'children': [
+										{
+											'id': 'Section10',
+											'type': 'toolbox',
+											'text': '',
+											'enabled': 'true',
+											'children': [
+												{
+													'id': 'rev-history',
+													'type': 'menubartoolitem',
+													'text': _('See history'),
+													'command': '.uno:rev-history'
+												}
+											]
+										}
+									]
+								} : {},
+						]
+					},
+					hasPrint ?
+						{
+							'id': 'Section4',
+							'type': 'toolbox',
+							'text': '',
+							'enabled': 'true',
+							'children': [
+								{
+									'id': 'print',
+									'type': 'bigtoolitem',
+									'text': _UNO('.uno:Print', 'text'),
+									'command': '.uno:Print'
 								}
 							]
 						} : {},
