@@ -65,11 +65,16 @@ if !ENABLE_MOBILEAPP
 LOLEAFLET_L10N_DST =  $(patsubst $(srcdir)/l10n/%,$(DIST_FOLDER)/l10n/%,$(LOLEAFLET_L10N_SRC))
 endif
 
+LOLEAFLET_FEEDBACK_SRC = $(shell find $(srcdir)/feedback -name '*.html')
+LOLEAFLET_FEEDBACK_DST = $(patsubst $(srcdir)/feedback/%.html,$(DIST_FOLDER)/feedback/%.html,$(LOLEAFLET_FEEDBACK_SRC))
+
 LOLEAFLET_HTML_SRC = $(shell find $(srcdir)/html -name '*.html')
 LOLEAFLET_HTML_DST = $(patsubst $(srcdir)/html/%.html,$(DIST_FOLDER)/%.html,$(LOLEAFLET_HTML_SRC))
+LOLEAFLET_HTML_DST += $(if $(ENABLE_FEEDBACK),$(LOLEAFLET_FEEDBACK_DST),)
 
 LOLEAFLET_WELCOME_SRC = $(shell find $(srcdir)/welcome -name '*.html')
 LOLEAFLET_WELCOME_DST = $(patsubst $(srcdir)/welcome/%.html,$(DIST_FOLDER)/welcome/%.html,$(LOLEAFLET_WELCOME_SRC))
+
 
 LOLEAFLET_ADMIN_SRC = $(shell find $(srcdir)/admin -name '*.html' -or -name '*.css' -or -name '*.ttf' -or -name 'OFL.txt' -or -name '*.svg')
 LOLEAFLET_ADMIN_ALL = $(shell find $(srcdir)/admin -name '*')
@@ -552,6 +557,14 @@ $(DIST_FOLDER)/%.html: $(srcdir)/html/%.html
 	fi
 
 $(DIST_FOLDER)/welcome/%.html: $(srcdir)/welcome/%.html
+	@mkdir -p $(dir $@)
+	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
+		`cp $< $@`; \
+	else \
+		`ln -sf $(abs_srcdir)/$< $@`; \
+	fi
+
+$(DIST_FOLDER)/feedback/%.html: $(srcdir)/feedback/%.html
 	@mkdir -p $(dir $@)
 	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
 		`cp $< $@`; \
