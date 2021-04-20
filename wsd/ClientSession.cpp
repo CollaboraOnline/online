@@ -1274,6 +1274,16 @@ void ClientSession::setReadOnly(bool bVal)
     sendTextFrame("perm: " + sPerm);
 }
 
+void ClientSession::sendFileMode(const bool readOnly, const bool editComments)
+{
+    std::string result = "filemode:{\"readOnly\": ";
+    result += readOnly ? "true": "false";
+    result += ", \"editComment\": ";
+    result += editComments ? "true": "false";
+    result += "}";
+    sendTextFrame(result);
+}
+
 void ClientSession::setLockFailed(const std::string& sReason)
 {
     _isLockFailed = true;
