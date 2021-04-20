@@ -573,8 +573,19 @@ app.definitions.Socket = L.Class.extend({
 			// Lets also try to set the permission ourself since this can well be received
 			// after doclayer is initialized. There's no harm to call this in any case.
 			this._map.setPermission(perm);
+			if (!app.file)
+				app.file = {};
 
+			app.file.readOnly = perm === 'readonly' ? true: false;
 			return;
+		}
+		else if (textMsg.startsWith('filemode:')) {
+			var json = JSON.parse(textMsg.substring('filemode:'.length).trim());
+			if (!app.file)
+				app.file = {};
+
+			app.file.readOnly = json.readOnly;
+			app.file.editComment = json.editComment;
 		}
 		else if (textMsg.startsWith('lockfailed:')) {
 			this._map.onLockFailed(textMsg.substring('lockfailed:'.length).trim());
