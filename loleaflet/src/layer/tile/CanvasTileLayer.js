@@ -5511,11 +5511,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._cancelTiles();
 			}
 
-			// if its the first batch of tiles to load
-			if (this._noTilesToLoad()) {
-				this.fire('loading');
-			}
-
 			this._addTiles(queue);
 		}
 	},
@@ -5612,11 +5607,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				// we know that a new set of tiles (that completely cover one/more panes) has been requested
 				// so we're able to cancel the previous requests that are being processed
 				this._cancelTiles();
-			}
-
-			// if its the first batch of tiles to load
-			if (this._noTilesToLoad()) {
-				this.fire('loading');
 			}
 
 			var tilePositionsX = '';
