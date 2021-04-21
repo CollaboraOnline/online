@@ -289,6 +289,15 @@ removesession <viewid>
     privilege views cannot remove higher ones, eg. a readonly view
     can't remove an editor.
 
+traceeventrecording <start/stop>
+
+    Starts or stops comphelper::TraceEvent recording.
+
+sallogoverride <string>
+
+    Overrides the SAL_LOG value, or stops overriding if no parameter
+    or parameter is "default".
+
 server -> client
 ================
 
@@ -621,6 +630,12 @@ clipboardcontent:
      length\n
      <binary selection content>
      ...
+
+trace:
+
+     Followed by a number of lines consisting of Chrome Trace Event
+     formatted data recorded by the comphelper::TraceEvent API in the
+     core parts of the kit process.
 
 parent -> child
 ===============
