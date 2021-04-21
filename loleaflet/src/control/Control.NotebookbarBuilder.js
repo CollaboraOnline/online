@@ -415,9 +415,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			button.id = buttonId;
 			button.setAttribute('alt', id);
 
-			if (data.id === 'FontColor' || data.id === 'BackColor' || data.id === 'BackgroundColor') {
-				L.DomUtil.create('i', 'unoarrow', div);
-			}
+			L.DomUtil.create('i', 'unoarrow', div);
 
 			var valueNode =  L.DomUtil.create('div', 'selected-color', div);
 
