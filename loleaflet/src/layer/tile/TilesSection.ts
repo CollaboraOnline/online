@@ -259,11 +259,16 @@ class TilesSection {
 
 		var docLayer = this.sectionProperties.docLayer;
 		var tileSection = this;
+		var doneTiles = new Set();
 		this.forEachTileInView(zoom, part, ctx, function (tile: any, coords: any): boolean {
+			if (doneTiles.has(coords.key()))
+				return true;
+
 			// Ensure tile is loaded and is within document bounds.
 			if (tile && tile.loaded && docLayer._isValidTile(coords)) {
 				tileSection.paint(tile, ctx, false /* async? */);
 			}
+			doneTiles.add(coords.key());
 			return true; // continue with remaining tiles.
 		});
 	}
