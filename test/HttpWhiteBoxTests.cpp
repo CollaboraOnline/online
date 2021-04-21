@@ -26,6 +26,8 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testStatusLineParserValidIncomplete);
     CPPUNIT_TEST(testStatusLineSerialize);
 
+    CPPUNIT_TEST(testHeader);
+
     CPPUNIT_TEST(testRequestParserValidComplete);
     CPPUNIT_TEST(testRequestParserValidIncomplete);
 
@@ -34,6 +36,7 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testStatusLineParserValidComplete();
     void testStatusLineParserValidIncomplete();
     void testStatusLineSerialize();
+    void testHeader();
     void testRequestParserValidComplete();
     void testRequestParserValidIncomplete();
 };
@@ -100,13 +103,21 @@ void HttpWhiteBoxTests::testStatusLineSerialize()
     LOK_ASSERT_EQUAL(std::string("HTTP/1.1 200 OK\r\n"), out);
 }
 
+void HttpWhiteBoxTests::testHeader()
+{
+    http::Header header;
+
+    const std::string data = "\r\na=\r\n\r\n";
+    LOK_ASSERT_EQUAL(8L, header.parse(data.c_str(), data.size()));
+}
+
 void HttpWhiteBoxTests::testRequestParserValidComplete()
 {
     const std::string expVerb = "GET";
     const std::string expUrl = "/path/to/data";
     const std::string expVersion = "HTTP/1.1";
-    const std::string data
-        = expVerb + ' ' + expUrl + ' ' + expVersion + "\r\n" + "Host: localhost.com\r\n\r\n";
+    const std::string data = expVerb + ' ' + expUrl + ' ' + expVersion + "\r\n" + "EmptyKey:\r\n"
+                             + "Host: localhost.com\r\n\r\n";
 
     http::Request req;
 
@@ -114,6 +125,8 @@ void HttpWhiteBoxTests::testRequestParserValidComplete()
     LOK_ASSERT_EQUAL(expVerb, req.getVerb());
     LOK_ASSERT_EQUAL(expUrl, req.getUrl());
     LOK_ASSERT_EQUAL(expVersion, req.getVersion());
+    LOK_ASSERT_EQUAL(std::string(), req.get("emptykey"));
+    LOK_ASSERT_EQUAL(std::string("localhost.com"), req.get("Host"));
 }
 
 void HttpWhiteBoxTests::testRequestParserValidIncomplete()
