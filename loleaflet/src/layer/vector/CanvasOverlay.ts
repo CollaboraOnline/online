@@ -204,9 +204,7 @@ class CanvasOverlay {
 		// is potentially expensive to compute (think of overlapped path objects).
 		// TODO: We could repaint the area on the canvas occupied by all the visible path-objects
 		// and paint tiles just for that, but need a more general version of _tilesSection.onDraw() and callees.
-		this.tsManager.clearTilesSection();
-		this.tsManager._tilesSection.onDraw();
-		this.draw();
+		this.overlaySection.containerObject.requestReDraw();
 	}
 
 	private updateCanvasBounds() {
