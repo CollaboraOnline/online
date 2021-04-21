@@ -1022,7 +1022,7 @@ void FileServerRequestHandler::preprocessFeedbackFile(const HTTPRequest& request
         Poco::Path defaultFile(relPath);
 
         defaultFile.setFileName("feedback.html");
-        feedbackFile = *getUncompressedFile(relPath);
+        feedbackFile = *getUncompressedFile(defaultFile.toString());
     }
 
     // Ask UAs to block if they detect any XSS attempt
