@@ -246,6 +246,10 @@ void HTTPCrashTest::testCrashForkit()
         socket->asyncShutdown();
         LOK_ASSERT_MESSAGE("Expected successful disconnection of the WebSocket",
                            socket->waitForDisconnection(std::chrono::seconds(5)));
+
+        // Wait till async shutdown fully completes, as _socketPoll has no owning reference to
+        // socket.
+        _socketPoll->wakeupWorld();
     }
     catch (const Poco::Exception& exc)
     {
