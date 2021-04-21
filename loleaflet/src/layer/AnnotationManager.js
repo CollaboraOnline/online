@@ -908,10 +908,17 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 				this.update();
 			}
 		}
-		if (window.mode.isMobile() &&
-		(obj.comment.author === this._map.getViewName(this._map._docLayer._viewId) ||
-		obj.comment.author === undefined && window.commentWizard === true))
-			this._map._docLayer._openCommentWizard(annotation);
+		if (window.mode.isMobile()) {
+			var shouldOpenWizard = false;
+			var wePerformedAction = obj.comment.author === this._map.getViewName(this._map._docLayer._viewId);
+
+			if (window.commentWizard || (action === 'Add' && wePerformedAction))
+				shouldOpenWizard = true;
+
+			if (shouldOpenWizard) {
+				this._map._docLayer._openCommentWizard(annotation);
+			}
+		}
 	},
 
 	_onAnnotationCancel: function (e) {
