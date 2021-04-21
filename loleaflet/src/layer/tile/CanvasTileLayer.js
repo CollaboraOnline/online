@@ -361,6 +361,7 @@ L.TileSectionManager = L.Class.extend({
 			viewBounds.round();
 
 			var paneOffset;
+			var doOnePane = false;
 			if (!repaintArea || !paneTopLeft) {
 				repaintArea = paneBounds;
 				paneOffset = paneBounds.getTopLeft(); // allocates
@@ -368,7 +369,8 @@ L.TileSectionManager = L.Class.extend({
 				paneOffset.x = Math.min(paneOffset.x, viewBounds.min.x);
 				paneOffset.y = Math.min(paneOffset.y, viewBounds.min.y);
 			} else {
-				repaintArea = paneBounds.clamp(repaintArea);
+				// do only for the predefined pane (paneOffset/repaintArea)
+				doOnePane = true;
 				paneOffset = paneTopLeft.clone();
 			}
 
@@ -388,6 +390,9 @@ L.TileSectionManager = L.Class.extend({
 					context.lineTo(repaintArea.max.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
 					context.stroke();
 				});
+
+			if (doOnePane)
+				break;
 		}
 		context.closePath();
 	},
