@@ -5455,7 +5455,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.fire('docsize', {x: scrollPixelLimits.x, y: scrollPixelLimits.y, extraSize: extraSize});
 	},
 
-
 	_update: function (center, zoom) {
 		var map = this._map;
 		if (!map || this._documentInfo === '') {
