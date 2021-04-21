@@ -665,7 +665,7 @@ a.leaflet-control-zoom-in {
 #buttonnone + label, #buttonbefore + label, #buttonafter + label, #buttonoptimal + label, #buttonparallel + label, #buttonthrough + label{
 	padding-left: 0;
 }
-#Color > img{
+#mobile-wizard #Color > img{
 	border-radius: 100px;
 	background-color: #696969;
 }
