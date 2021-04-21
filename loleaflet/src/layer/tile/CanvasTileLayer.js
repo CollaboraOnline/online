@@ -1334,50 +1334,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		return true;
 	},
 
-	_initPreFetchPartTiles: function() {
-		// check existing timeout and clear it before the new one
-		if (this._partTilePreFetcher)
-			clearTimeout(this._partTilePreFetcher);
-		this._partTilePreFetcher =
-			setTimeout(
-				L.bind(function() {
-					this._preFetchPartTiles(this._selectedPart + this._map._partsDirection);
-				},
-				this),
-				100 /*ms*/);
-	},
-
-	_preFetchPartTiles: function(part) {
-		var center = this._map.getCenter();
-		var zoom = this._map.getZoom();
-		var pixelBounds = this._map.getPixelBounds(center, zoom);
-		var tileRange = this._pxBoundsToTileRange(pixelBounds);
-		var tilePositionsX = [];
-		var tilePositionsY = [];
-		for (var j = tileRange.min.y; j <= tileRange.max.y; j++) {
-			for (var i = tileRange.min.x; i <= tileRange.max.x; i++) {
-				var coords = new L.Point(i, j);
-				coords.z = zoom;
-				coords.part = part;
-
-				if (!this._isValidTile(coords))
-					continue;
-
-				var key = this._tileCoordsToKey(coords);
-				if (this._tileCache[key])
-					continue;
-
-				var twips = this._coordsToTwips(coords);
-				tilePositionsX.push(twips.x);
-				tilePositionsY.push(twips.y);
-			}
-		}
-		if (tilePositionsX.length <= 0 || tilePositionsY.length <= 0) {
-			return;
-		}
-		this._sendTileCombineRequest(part, tilePositionsX, tilePositionsY);
-	},
-
 	_sendTileCombineRequest: function(part, tilePositionsX, tilePositionsY) {
 		var msg = 'tilecombine ' +
 			'nviewid=0 ' +
