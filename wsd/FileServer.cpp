@@ -340,8 +340,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             endPoint = relPath.substr(sizeof(WELCOME_ENDPOINT));
         }
 
-        if (endPoint.find("feedback") != std::string::npos &&
-            endPoint.rfind(".hmtl") != std::string::npos)
+        if (Util::startsWith(endPoint, "feedback"))
         {
             preprocessFeedbackFile(request, requestDetails, socket);
             return;
