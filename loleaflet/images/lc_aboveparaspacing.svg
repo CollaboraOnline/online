@@ -1,1 +1,25 @@
-<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><g fill="#1e8bcd" transform="matrix(1 0 0 -1 0 16)"><path d="m6 7h5v1h-5z"/><path d="m6 14h5v1h-5z"/><path d="m8 7h1v8h-1z"/></g><g fill="#3a3a38" transform="scale(1 -1)"><rect height="1" ry=".5" width="14" x="1" y="-12"/><rect height="1" ry=".5" width="14" x="1" y="-15"/></g></svg>
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"
+     class="icn icn--line-color" 
+     fill="none"
+     stroke="#3a3a38"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     >
+      <path d="M 3.5,17.5 H 20.5 Z m 0,3 H 20.5 Z" />
+  </g>
+  <g id="symbol"
+	 class="icn icn--highlight-color-line"  
+     fill="none" 
+     stroke="#1e8bcd" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+     transform="translate(-0.5)"
+      >
+      <path d="m 8,6.5 4,-4 4,4" />
+      <path d="M 12,2.5 V 10.5" />
+      <path d="M 12,6.5 V 14.5" />
+      <path d="M 8,10.5 12,14.5 16,10.5" />
+  </g>
+</svg>
