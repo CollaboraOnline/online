@@ -8,7 +8,7 @@
  * text area itself.
  */
 
-/* global app */
+/* global app isAnyVexDialogActive */
 
 L.TextInput = L.Layer.extend({
 	initialize: function() {
@@ -209,7 +209,8 @@ L.TextInput = L.Layer.extend({
 			// on clicking focus is important
 			// specially in chrome once document loses focus it never gets it back
 			// which causes shortcuts to stop working (i.e: print, search etc...)
-			this._map.getContainer().focus();
+			if (!isAnyVexDialogActive()) // required because now comments can be inserted in mobile view mode
+				this._map.getContainer().focus();
 			return;
 		}
 
@@ -220,9 +221,9 @@ L.TextInput = L.Layer.extend({
 				this._textArea.setAttribute('readonly', true);
 		}
 
-		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone') {
+		if (!window.ThisIsTheiOSApp && navigator.platform !== 'iPhone' && !isAnyVexDialogActive()) {
 			this._textArea.focus();
-		} else if (acceptInput === true) {
+		} else if (acceptInput === true && !isAnyVexDialogActive()) {
 			// On the iPhone, only call the textarea's focus() when we get an explicit
 			// true parameter. On the other hand, never call the textarea's blur().
 
