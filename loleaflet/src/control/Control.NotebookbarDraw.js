@@ -130,157 +130,72 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		var hasShare = this._map['wopi'].EnableShare;
 
 		var content = [
+			hasSaveAs ?
 			{
-				'id': 'File-Section',
+				'id': 'file-saveas',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:SaveAs', 'presentation'),
+				'command': '.uno:SaveAs'
+			} : {},
+			{
+				'id': 'file-shareas-rev-history',
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
 				'children': [
-					hasSaveAs ?
-					{
-						'id': 'Section2',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'saveas',
-								'type': 'menubartoolitem',
-								'text': _UNO('.uno:SaveAs', 'presentation'),
-								'command': ''
-							}
-						]
-					} : {},
 					hasShare ?
 					{
-						'id': 'Section3',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'shareas',
-								'type': 'menubartoolitem',
-								'text': _('Share...'),
-								'command': ''
-							}
-						]
-					} : {},
-					hasPrint ?
-					{
-						'id': 'Section4',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'print',
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:Print', 'presentation'),
-								'command': '.uno:Print'
-							}
-						]
+						'id': 'shareas',
+						'type': 'menubartoolitem',
+						'text': _('Share'),
+						'command': '.uno:shareas'
 					} : {},
 					hasRevisionHistory ?
 					{
-						'id': 'Section5',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'rev-history',
-								'type': 'menubartoolitem',
-								'text': _('See revision history'),
-								'command': ''
-							}
-						]
+						'id': 'rev-history',
+						'type': 'menubartoolitem',
+						'text': _('See history'),
+						'command': '.uno:rev-history'
 					} : {},
+				],
+				'vertical': 'true'
+			},
+			hasPrint ?
+			{
+				'id': 'print',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Print', 'presentation'),
+				'command': '.uno:Print'
+			} : {},
+			{
+				'id': 'file-downloadas-odg-downloadas-png',
+				'type': 'container',
+				'children': [
 					{
-						'id': 'saveas-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'saveas-Section1',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section6',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'downloadas-odg',
-												'type': 'menubartoolitem',
-												'text': _('ODF Drawing (.odg)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							},
-							{
-								'id': 'saveas-Section2',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section7',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'downloadas-pdf',
-												'type': 'menubartoolitem',
-												'text': _('PDF Document (.pdf)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							}
-						]
+						'id': 'downloadas-odg',
+						'type': 'menubartoolitem',
+						'text': _('ODF Drawing (.odg)'),
+						'command': ''
 					},
 					{
-						'id': 'saveas-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'saveas-Section4',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section8',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'downloadas-png',
-												'type': 'menubartoolitem',
-												'text': _('Image (.png)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							}
-						]
+						'id': 'downloadas-png',
+						'type': 'menubartoolitem',
+						'text': _('Image (.png)'),
+						'command': ''
+					},
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'file-downloadas-pdf',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'downloadas-pdf',
+						'type': 'menubartoolitem',
+						'text': _('PDF Document (.pdf)'),
+						'command': ''
 					}
-				]
+				],
+				'vertical': 'true'
 			}
 		];
 
