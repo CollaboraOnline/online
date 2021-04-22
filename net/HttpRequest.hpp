@@ -529,7 +529,7 @@ public:
             // Get the data to write into the socket
             // from the client's callback. This is
             // used to upload files, or other data.
-            char buffer[16 * 1024];
+            char buffer[64 * 1024];
             std::size_t wrote = 0;
             do
             {
