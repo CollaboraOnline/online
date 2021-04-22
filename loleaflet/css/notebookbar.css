@@ -392,6 +392,13 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 /* Writer */
 
+/* File Tab */
+
+#table-File.notebookbar
+{
+	margin-top: 10px;
+}
+
 /* Home tab */
 #table-HomeTab {
 	margin-left: -16px;/*force alignment: clipboard elements*/
