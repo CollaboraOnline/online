@@ -88,248 +88,105 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var hasShare = this._map['wopi'].EnableShare;
 
 		var content = [
+			hasSaveAs ?
 			{
-				'id': 'File-Section',
+				'id': 'file-saveas',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:SaveAs', 'text'),
+				'command': '.uno:SaveAs'
+			} : {},
+			{
+				'id': 'file-shareas-rev-history',
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
 				'children': [
-					hasSaveAs ?
-					{
-						'id': 'Section2',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'saveas',
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:SaveAs', 'text'),
-								'command': '.uno:SaveAs'
-							}
-						]
-					} : {},
 					hasShare ?
 					{
-						'id': 'Section3',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'shareas',
-								'type': 'bigtoolitem',
-								'text': _('Share'),
-								'command': '.uno:shareas'
-							}
-						]
-					} : {},
-					hasPrint ?
-					{
-						'id': 'Section4',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'print',
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:Print', 'text'),
-								'command': '.uno:Print'
-							}
-						]
+						'id': 'shareas',
+						'type': 'menubartoolitem',
+						'text': _('Share'),
+						'command': '.uno:shareas'
 					} : {},
 					hasRevisionHistory ?
 					{
-						'id': 'Section5',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'rev-history',
-								'type': 'bigtoolitem',
-								'text': _('See history'),
-								'command': '.uno:rev-history'
-							}
-						]
+						'id': 'rev-history',
+						'type': 'menubartoolitem',
+						'text': _('See history'),
+						'command': '.uno:rev-history'
 					} : {},
+				],
+				'vertical': 'true'
+			},
+			hasPrint ?
+			{
+				'id': 'print',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Print', 'text'),
+				'command': '.uno:Print'
+			} : {},
+			{
+				'id': 'file-downloadas-odt-downloadas-rtf',
+				'type': 'container',
+				'children': [
 					{
-						'id': 'saveas-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'saveas-Section1',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section7',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'downloadas-odt',
-												'type': 'menubartoolitem',
-												'text': _('ODF text document (.odt)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							},
-							{
-								'id': 'saveas-Section2',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section10',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'downloadas-rtf',
-												'type': 'menubartoolitem',
-												'text': _('Rich Text (.rtf)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							}
-						]
+						'id': 'downloadas-odt',
+						'type': 'menubartoolitem',
+						'text': _('ODF text document (.odt)'),
+						'command': ''
 					},
 					{
-						'id': 'saveas-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'saveas-Section1',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section8',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'downloadas-doc',
-												'type': 'menubartoolitem',
-												'text': _('Word 2003 Document (.doc)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							},
-							{
-								'id': 'saveas-Section2',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section9',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'downloadas-docx',
-												'type': 'menubartoolitem',
-												'text': _('Word Document (.docx)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							}
-						]
+						'id': 'downloadas-rtf',
+						'type': 'menubartoolitem',
+						'text': _('Rich Text (.rtf)'),
+						'command': ''
+					},
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'file-downloadas-doc-downloadas-docx',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'downloadas-doc',
+						'type': 'menubartoolitem',
+						'text': _('Word 2003 Document (.doc)'),
+						'command': ''
 					},
 					{
-						'id': 'saveas-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'saveas-Section1',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section6',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'downloadas-pdf',
-												'type': 'menubartoolitem',
-												'text': _('PDF Document (.pdf)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							},
-							{
-								'id': 'saveas-Section2',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section11',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'downloadas-epub',
-												'type': 'menubartoolitem',
-												'text': _('EPUB (.epub)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							}
-						]
+						'id': 'downloadas-docx',
+						'type': 'menubartoolitem',
+						'text': _('Word Document (.docx)'),
+						'command': ''
 					},
-					hasSigning ?
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'file-downloadas-pdf-downloadas-epub',
+				'type': 'container',
+				'children': [
 					{
-						'id': 'Section12',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'signdocument',
-								'type': 'menubartoolitem',
-								'text': _('Sign document'),
-								'command': ''
-							}
-						]
-					} : {}
-				]
-			}
+						'id': 'downloadas-pdf',
+						'type': 'menubartoolitem',
+						'text': _('PDF Document (.pdf)'),
+						'command': ''
+					},
+					{
+						'id': 'downloadas-epub',
+						'type': 'menubartoolitem',
+						'text': _('EPUB (.epub)'),
+						'command': ''
+					},
+				],
+				'vertical': 'true'
+			},
+			hasSigning ?
+			{
+				'id': 'signdocument',
+				'type': 'menubartoolitem',
+				'text': _('Sign document'),
+				'command': ''
+			} : {}
 		];
 
 		return this.getTabPage('File', content);
