@@ -118,7 +118,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		// draw resize handle
 		var handleSize = this._resizeHandleSize;
-		if (isCurrent && entry.size > 2 * handleSize) {
+		if (isCurrent && entry.size > 2 * handleSize && !this.inResize()) {
 			var center = startX + entry.size - handleSize / 2;
 			var y = 2 * this.dpiScale;
 			var h = this.size[1] - 4 * this.dpiScale;

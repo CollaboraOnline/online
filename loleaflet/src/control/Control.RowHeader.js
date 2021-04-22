@@ -117,7 +117,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 		// draw resize handle
 		var handleSize = this._resizeHandleSize;
-		if (isCurrent && entry.size > 2 * handleSize) {
+		if (isCurrent && entry.size > 2 * handleSize && !this.inResize()) {
 			var center = startY + entry.size - handleSize / 2;
 			var x = 2 * this.dpiScale;
 			var w = this.size[0] - 4 * this.dpiScale;
