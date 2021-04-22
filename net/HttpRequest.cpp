@@ -259,7 +259,13 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
         }
     }
 
-    _reasonPhrase = std::string(&p[reasonOff], off - reasonOff - 1); // Exclude '\r'.
+    int64_t stringSize = off - reasonOff - 1; // Exclude '\r'.
+    if (stringSize < 0)
+    {
+        LOG_ERR("StatusLine::parse: missing line break");
+        return FieldParseState::Invalid;
+    }
+    _reasonPhrase = std::string(&p[reasonOff], stringSize);
 
     // Consume the line breaks.
     for (; off < len; ++off)
