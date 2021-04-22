@@ -173,6 +173,8 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._headerInfo.forEachElement(function(elemData) {
 			this.drawHeaderEntry(elemData, false, isHighlighted);
 		}.bind(this));
+
+		this.drawResizeLineIfNeeded();
 	},
 
 	onClick: function (point, e) {
