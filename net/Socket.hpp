@@ -250,17 +250,6 @@ public:
 #endif
     }
 
-    /// The available number of bytes in the socket
-    /// buffer for an optimal transmition.
-    int getSendBufferCapacity() const
-    {
-#if !MOBILEAPP
-        return _sendBufferSize * 6;
-#else
-        return INT_MAX; // We want to always send a single record in one go
-#endif
-    }
-
 #if !MOBILEAPP
     /// Sets the receive buffer size in bytes.
     /// Note: TCP will allocate twice this size for admin purposes,
@@ -1129,6 +1118,18 @@ public:
 
     bool processInputEnabled() const { return _inputProcessingEnabled; }
     void enableProcessInput(bool enable = true){ _inputProcessingEnabled = enable; }
+
+    /// The available number of bytes in the socket
+    /// buffer for an optimal transmition.
+    int getSendBufferCapacity() const
+    {
+#if !MOBILEAPP
+        const int capacity = getSendBufferSize();
+        return std::max<int>(0, capacity - _outBuffer.size());
+#else
+        return INT_MAX; // We want to always send a single record in one go
+#endif
+    }
 
 protected:
 
