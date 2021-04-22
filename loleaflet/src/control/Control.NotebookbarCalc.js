@@ -181,7 +181,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:Cut'),
+								'text': _UNO('.uno:Cut', true),
 								'command': '.uno:Cut'
 							}
 						]
@@ -192,7 +192,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:Copy'),
+								'text': _UNO('.uno:Copy', true),
 								'command': '.uno:Copy'
 							}
 						]
@@ -287,62 +287,49 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'type': 'container',
 						'children': [
 							{
-								'id': 'ExtTop4',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Bold'),
-										'command': '.uno:Bold'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Italic'),
-										'command': '.uno:Italic'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Underline'),
-										'command': '.uno:Underline'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Strikeout'),
-										'command': '.uno:Strikeout'
-									}
-								]
+								'type': 'toolitem',
+								'text': _UNO('.uno:Bold'),
+								'command': '.uno:Bold'
 							},
 							{
-								'id': 'ExtTop5',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:SuperScript'),
-										'command': '.uno:SuperScript'
-									}
-								]
+								'type': 'toolitem',
+								'text': _UNO('.uno:Italic'),
+								'command': '.uno:Italic'
 							},
 							{
-								'id': 'ExtTop2',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:SetBorderStyle'),
-										'command': '.uno:SetBorderStyle'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:BackgroundColor'),
-										'command': '.uno:BackgroundColor'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Color'),
-										'command': '.uno:Color'
-									}
-								]
+								'type': 'toolitem',
+								'text': _UNO('.uno:Underline'),
+								'command': '.uno:Underline'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Strikeout'),
+								'command': '.uno:Strikeout'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SubScript'),
+								'command': '.uno:SubScript'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SuperScript'),
+								'command': '.uno:SuperScript'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SetBorderStyle'),
+								'command': '.uno:SetBorderStyle'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:BackgroundColor'),
+								'command': '.uno:BackgroundColor'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Color'),
+								'command': '.uno:Color'
 							}
 						],
 						'vertical': 'false'
@@ -376,6 +363,16 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 										'type': 'toolitem',
 										'text': _UNO('.uno:AlignBottom', 'spreadsheet'),
 										'command': '.uno:AlignBottom'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:IncrementIndent'),
+										'command': '.uno:IncrementIndent'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:DecrementIndent'),
+										'command': '.uno:DecrementIndent'
 									}
 								]
 							}
@@ -404,50 +401,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 										'type': 'toolitem',
 										'text': _UNO('.uno:AlignRight', 'spreadsheet'),
 										'command': '.uno:AlignRight'
-									}
-								]
-							}
-						],
-						'vertical': 'false'
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'Home-Section-Align1',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'GroupB80',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'first16',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:IncrementIndent'),
-										'command': '.uno:IncrementIndent'
 									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:DecrementIndent'),
-										'command': '.uno:DecrementIndent'
-									}
-								]
-							}
-						],
-						'vertical': 'false'
-					},
-					{
-						'id': 'GroupB85',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'second12',
-								'type': 'toolbox',
-								'children': [
 									{
 										'type': 'toolitem',
 										'text': _UNO('.uno:AlignBlock', 'spreadsheet'),
@@ -539,7 +493,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ToggleMergeCells', 'spreadsheet'),
+				'text': _UNO('.uno:MergeCells', 'spreadsheet'),
 				'command': '.uno:ToggleMergeCells'
 			},
 			{
@@ -554,6 +508,11 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertRowsBefore', 'spreadsheet'),
 								'command': '.uno:InsertRowsBefore'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertRowsAfter', 'spreadsheet'),
+								'command': '.uno:InsertRowsAfter'
 							},
 							{
 								'type': 'toolitem',
@@ -578,6 +537,11 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 							},
 							{
 								'type': 'toolitem',
+								'text': _UNO('.uno:InsertColumnsAfter', 'spreadsheet'),
+								'command': '.uno:InsertColumnsAfter'
+							},
+							{
+								'type': 'toolitem',
 								'text': _UNO('.uno:DeleteColumns', 'spreadsheet'),
 								'command': '.uno:DeleteColumns'
 							},
@@ -590,6 +554,11 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					}
 				],
 				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'),
+				'command': '.uno:ConditionalFormatMenu'
 			},
 			{
 				'id': 'Home-Section-Style2',
@@ -642,16 +611,11 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'),
-				'command': '.uno:ConditionalFormatMenu'
-			},
-			{
-				'type': 'bigtoolitem',
 				'text': _UNO('.uno:SearchDialog'),
 				'command': '.uno:SearchDialog'
 			},
 			{
-				'id': 'Home-Section-Find1',
+				'id': 'Home-Section-Find',
 				'type': 'container',
 				'children': [
 					{
