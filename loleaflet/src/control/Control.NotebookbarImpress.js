@@ -196,7 +196,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					{
 						'id': 'downloadas-odp',
 						'type': 'menubartoolitem',
-						'text': _('ODF presentation (.odp)'),
+						'text': _('ODF Presentation (.odp)'),
 						'command': ''
 					},
 					{
@@ -221,7 +221,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					{
 						'id': 'downloadas-pptx',
 						'type': 'menubartoolitem',
-						'text': _('PowerPoint 2003 Presentation (.pptx)'),
+						'text': _('PowerPoint Presentation (.pptx)'),
 						'command': ''
 					},
 				],

@@ -130,7 +130,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					{
 						'id': 'downloadas-odt',
 						'type': 'menubartoolitem',
-						'text': _('ODF text document (.odt)'),
+						'text': _('ODF Text Document (.odt)'),
 						'command': ''
 					},
 					{
@@ -174,7 +174,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					{
 						'id': 'downloadas-epub',
 						'type': 'menubartoolitem',
-						'text': _('EPUB (.epub)'),
+						'text': _('EPUB Document (.epub)'),
 						'command': ''
 					},
 				],
