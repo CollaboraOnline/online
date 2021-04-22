@@ -905,7 +905,8 @@ protected:
             return;
         }
 
-        assert(read == 0 && "Not enough data.");
+        // Nothing to do, not enough data to parse.
+        assert(read == 0 && "Need more more data to parse.");
     }
 #endif
 
