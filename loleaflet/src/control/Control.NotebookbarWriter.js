@@ -302,6 +302,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'Home-Section-Style',
 				'type': 'container',
 				'children': [
 					{
@@ -330,6 +331,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'Home-Section-Format',
 				'type': 'container',
 				'children': [
 					{
@@ -408,13 +410,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 										'type': 'toolitem',
 										'text': _UNO('.uno:Strikeout'),
 										'command': '.uno:Strikeout'
-									}
-								]
-							},
-							{
-								'id': 'ExtTop5',
-								'type': 'toolbox',
-								'children': [
+									},
 									{
 										'type': 'toolitem',
 										'text': _UNO('.uno:SubScript'),
@@ -424,13 +420,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 										'type': 'toolitem',
 										'text': _UNO('.uno:SuperScript'),
 										'command': '.uno:SuperScript'
-									}
-								]
-							},
-							{
-								'id': 'ExtTop2',
-								'type': 'toolbox',
-								'children': [
+									},
 									{
 										'type': 'toolitem',
 										'text': _UNO('.uno:BackColor'),
@@ -450,6 +440,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'id': 'Home-Section-Paragraph',
+				'type': 'container',
 				'children': [
 					{
 						'type': 'container',
@@ -480,9 +472,19 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 									},
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:LineSpacing'),
-										'command': '.uno:LineSpacing'
+										'text': _UNO('.uno:ControlCodes', 'text'),
+										'command': '.uno:ControlCodes'
 									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:ParaLeftToRight'),
+										'command': '.uno:ParaLeftToRight'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:ParaRightToLeft'),
+										'command': '.uno:ParaRightToLeft'
+									}
 								]
 							},
 						],
@@ -514,54 +516,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 										'type': 'toolitem',
 										'text': _UNO('.uno:JustifyPara'),
 										'command': '.uno:JustifyPara'
-									}
-								]
-							},
-						],
-						'vertical': 'false'
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'children': [
-					{
-						'type': 'container',
-						'children': [
-							{
-								'id': 'SectionBottom81',
-								'type': 'toolbox',
-								'children': [
-
+									},
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:ControlCodes', 'text'),
-										'command': '.uno:ControlCodes'
-									}
-								]
-							},
-							{
-								'id': 'SectionBottom93',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:ParaLeftToRight'),
-										'command': '.uno:ParaLeftToRight'
-									}
-								]
-							}
-						],
-						'vertical': 'false'
-					},
-					{
-						'type': 'container',
-						'children': [
-							{
-								'id': 'SectionBottom125',
-								'type': 'toolbox',
-								'children': [
-
+										'text': _UNO('.uno:LineSpacing'),
+										'command': '.uno:LineSpacing'
+									},
 									{
 										'type': 'toolitem',
 										'text': _UNO('.uno:BackgroundColor'),
@@ -569,17 +529,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 									}
 								]
 							},
-							{
-								'id': 'SectionBottom130',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:ParaRightToLeft'),
-										'command': '.uno:ParaRightToLeft'
-									}
-								]
-							}
 						],
 						'vertical': 'false'
 					}
@@ -602,45 +551,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}
 				],
 				'vertical': 'false'
-			},
-			{
-				'id': 'Home-Section-Style4',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'SectionBottom138',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:StyleUpdateByExample'),
-								'command': '.uno:StyleUpdateByExample'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:EditStyle'),
-								'command': '.uno:EditStyle'
-							}
-						]
-					},
-					{
-						'id': 'SectionBottom141',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _('Emphasis'),
-								'command': '.uno:StyleApply?Style:string=Emphasis&FamilyName:string=CharacterStyles'
-							},
-							{
-								'type': 'toolitem',
-								'text': _('Strong Emphasis'),
-								'command': '.uno:StyleApply?Style:string=Strong Emphasis&FamilyName:string=CharacterStyles'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
 			},
 			{
 				'id': 'Home-Section-Insert',
@@ -675,16 +585,16 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:CharmapControl'),
 								'command': '.uno:CharmapControl'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertAnnotation'),
+								'command': '.uno:InsertAnnotation'
 							}
 						]
 					}
 				],
 				'vertical': 'true'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertAnnotation'),
-				'command': '.uno:InsertAnnotation'
 			}
 		];
 
