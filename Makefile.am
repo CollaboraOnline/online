@@ -145,7 +145,8 @@ noinst_PROGRAMS = clientnb \
 if ENABLE_LIBFUZZER
 noinst_PROGRAMS += \
 		   admin_fuzzer \
-		   clientsession_fuzzer
+		   clientsession_fuzzer \
+		   httpheader_fuzzer
 else
 noinst_PROGRAMS += loolwsd_fuzzer
 endif
@@ -195,6 +196,16 @@ clientsession_fuzzer_SOURCES = \
 			       $(shared_sources) \
 			       fuzzer/ClientSession.cpp
 clientsession_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
+
+httpheader_fuzzer_CPPFLAGS = \
+				-DKIT_IN_PROCESS=1 \
+				$(AM_CPPFLAGS)
+httpheader_fuzzer_SOURCES = \
+			       $(loolwsd_sources) \
+			       $(loolforkit_sources) \
+			       $(shared_sources) \
+			       fuzzer/HttpHeader.cpp
+httpheader_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
 clientnb_SOURCES = net/clientnb.cpp \
                    common/Log.cpp \
