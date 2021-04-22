@@ -115,7 +115,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					{
 						'id': 'downloadas-ods',
 						'type': 'menubartoolitem',
-						'text': _('ODF spreadsheet (.ods)'),
+						'text': _('ODF Spreadsheet (.ods)'),
 						'command': ''
 					},
 					{
