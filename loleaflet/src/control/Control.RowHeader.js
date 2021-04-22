@@ -238,6 +238,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 			this._map.sendUnoCommand('.uno:RowHeight', command);
 			//this.containerObject.requestReDraw();
+			this._mouseOverEntry = null;
 		}
 	},
 
