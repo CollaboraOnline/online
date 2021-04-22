@@ -445,7 +445,7 @@ L.Map.Keyboard = L.Handler.extend({
 		// snippet is relevant in a browser only.
 		if (!window.ThisIsAMobileApp && e.ctrlKey && e.shiftKey && e.altKey && (e.key === 'v' || e.key === 'V')) {
 			var map = this._map;
-			var msg = _('<p>Your browser has very limited access to the clipboard, so now press:</li><li><b>Ctrl+V</b>: To open paste special menu.</li></ul></p><p>Close popup to ignore paste special</p>');
+			var msg = _('<p>Your browser has very limited access to the clipboard</p><p>Please press now: <kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd> to see more options</p><p class="vex-footnote">Close popup to ignore paste special</p>');
 			msg = L.Util.replaceCtrlInMac(msg);
 			this._map._clip.pasteSpecialVex = vex.open({
 				unsafeContent: msg,
