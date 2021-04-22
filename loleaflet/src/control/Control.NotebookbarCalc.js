@@ -73,210 +73,91 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 		var hasShare = this._map['wopi'].EnableShare;
 
 		var content = [
+			hasSaveAs ?
 			{
-				'id': 'File-Section',
+				'id': 'file-saveas',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:SaveAs', 'spreadsheet'),
+				'command': '.uno:SaveAs'
+			} : {},
+			{
+				'id': 'file-shareas-rev-history',
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
 				'children': [
-					hasSaveAs ?
-					{
-						'id': 'Section2',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'saveas',
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:SaveAs', 'spreadsheet'),
-								'command': '.uno:SaveAs'
-							}
-						]
-					} : {},
 					hasShare ?
 					{
-						'id': 'Section3',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'shareas',
-								'type': 'bigtoolitem',
-								'text': _('Share'),
-								'command': '.uno:shareas'
-							}
-						]
-					} : {},
-					hasPrint ?
-					{
-						'id': 'Section4',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'print',
-								'type': 'bigtoolitem',
-								'text': _UNO('.uno:Print', 'spreadsheet'),
-								'command': '.uno:Print'
-							}
-						]
+						'id': 'shareas',
+						'type': 'menubartoolitem',
+						'text': _('Share'),
+						'command': '.uno:shareas'
 					} : {},
 					hasRevisionHistory ?
 					{
-						'id': 'Section5',
-						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
-						'children': [
-							{
-								'id': 'rev-history',
-								'type': 'bigtoolitem',
-								'text': _('See history'),
-								'command': '.uno:rev-history'
-							}
-						]
+						'id': 'rev-history',
+						'type': 'menubartoolitem',
+						'text': _('See history'),
+						'command': '.uno:rev-history'
 					} : {},
+				],
+				'vertical': 'true'
+			},
+			hasPrint ?
+			{
+				'id': 'print',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Print', 'spreadsheet'),
+				'command': '.uno:Print'
+			} : {},
+			{
+				'id': 'file-downloadas-ods-downloadas-csv',
+				'type': 'container',
+				'children': [
 					{
-						'id': 'saveas-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'saveas-Section1',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section7',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'downloadas-ods',
-												'type': 'menubartoolitem',
-												'text': _('ODF spreadsheet (.ods)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							},
-							{
-								'id': 'saveas-Section2',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section10',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'downloadas-pdf',
-												'type': 'menubartoolitem',
-												'text': _('PDF Document (.pdf)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							}
-						]
+						'id': 'downloadas-ods',
+						'type': 'menubartoolitem',
+						'text': _('ODF spreadsheet (.ods)'),
+						'command': ''
 					},
 					{
-						'id': 'saveas-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'saveas-Section1',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section8',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'downloadas-xls',
-												'type': 'menubartoolitem',
-												'text': _('Excel 2003 Spreadsheet (.xls)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							},
-							{
-								'id': 'saveas-Section2',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section9',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'downloadas-xlsx',
-												'type': 'menubartoolitem',
-												'text': _('Excel Spreadsheet (.xlsx)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							}
-						]
+						'id': 'downloadas-csv',
+						'type': 'menubartoolitem',
+						'text': _('CSV File (.csv)'),
+						'command': ''
+					},
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'file-downloadas-xls-downloadas-xlsx',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'downloadas-xls',
+						'type': 'menubartoolitem',
+						'text': _('Excel 2003 Spreadsheet (.xls)'),
+						'command': ''
 					},
 					{
-						'id': 'saveas-Section',
-						'type': 'container',
-						'text': '',
-						'enabled': 'true',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'saveas-Section1',
-								'type': 'container',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'Section9',
-										'type': 'toolbox',
-										'text': '',
-										'enabled': 'true',
-										'children': [
-											{
-												'id': 'downloadas-csv',
-												'type': 'menubartoolitem',
-												'text': _('CSV File (.csv)'),
-												'command': ''
-											}
-										]
-									}
-								]
-							}
-						]
+						'id': 'downloadas-xlsx',
+						'type': 'menubartoolitem',
+						'text': _('Excel Spreadsheet (.xlsx)'),
+						'command': ''
+					},
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'file-downloadas-pdf',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'downloadas-pdf',
+						'type': 'menubartoolitem',
+						'text': _('PDF Document (.pdf)'),
+						'command': ''
 					}
-				]
+				],
+				'vertical': 'true'
 			}
 		];
 
