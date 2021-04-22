@@ -1565,9 +1565,8 @@ size_t DocumentBroker::removeSession(const std::string& id)
         // Last view going away, can destroy.
         if (_sessions.size() <= 1)
             _docState.markToDestroy();
-
-        assert((_sessions.size() <= 1 && _docState.isMarkedToDestroy())
-               || !_docState.isMarkedToDestroy());
+        else
+            assert(!_docState.isMarkedToDestroy());
 
         const bool lastEditableSession = (!session->isReadOnly() || session->isAllowChangeComments()) && !haveAnotherEditableSession(id);
         static const bool dontSaveIfUnmodified = !LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
