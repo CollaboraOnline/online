@@ -418,7 +418,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	width: 60px !important;
 }
 
-#Paste.notebookbar img, #InsertAnnotation.notebookbar img, #SearchDialog.notebookbar img {
+#Paste.notebookbar img, #SearchDialog.notebookbar img {
 	height: 32px !important;
 	width: 32px !important;
 }
@@ -463,7 +463,7 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 
 #stylesview {
 	height: 60px;
-	width: 400px;
+	width: 530px;
 	overflow-x: hidden;
 	padding: 5px;
 	padding: 0px;
