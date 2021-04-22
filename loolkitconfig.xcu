@@ -31,7 +31,8 @@
 <!-- Use the large icons in the sidebar -->
 <item oor:path="/org.openoffice.Office.Common/Misc"><prop oor:name="SidebarIconSize" oor:op="fuse"><value>2</value></prop></item>
 
-<!-- To show Non-printing/Hidden Characters and paragraph -->
+<!-- To show Hidden Characters and Hiddent Text/Paragraph fields -->
+<item oor:path="/org.openoffice.Office.Writer/Content/NonprintingCharacter"><prop oor:name="HiddenCharacter" oor:op="fuse"><value>false</value></prop></item>
 <item oor:path="/org.openoffice.Office.Writer/Content/NonprintingCharacter"><prop oor:name="HiddenText" oor:op="fuse"><value>false</value></prop></item>
 <item oor:path="/org.openoffice.Office.Writer/Content/NonprintingCharacter"><prop oor:name="HiddenParagraph" oor:op="fuse"><value>false</value></prop></item>
 
