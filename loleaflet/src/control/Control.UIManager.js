@@ -426,6 +426,17 @@ L.Control.UIManager = L.Control.extend({
 		return $('.loleaflet-ruler').is(':visible');
 	},
 
+	isFullscreen: function() {
+		if (!document.fullscreenElement && 
+			!document.mozFullscreenElement &&
+			!document.msFullscreenElement &&
+			!document.webkitFullscreenElement)
+			return false;
+		else
+			return true;
+	},
+	
+	
 	// Notebookbar helpers
 
 	hasNotebookbarShown: function() {
