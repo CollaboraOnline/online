@@ -1556,7 +1556,7 @@ L.Control.LokDialog = L.Control.extend({
 				that._map._docLayer._syncTileContainerSize();
 				// resize the input bar to the correct size
 				// the input bar is rendered only if when the size is the expected one
-				if (that._calcInputBar.width !== correctWidth) {
+				if (correctWidth !== 0 && that._calcInputBar.width !== correctWidth) {
 					console.log('_paintDialog: correct width: ' + correctWidth + ', _calcInputBar width: ' + that._calcInputBar.width);
 					that._dialogs[parentId].isPainting = false;
 					that._map._socket.sendMessage('resizewindow ' + parentId + ' size=' + correctWidth + ',' + that._calcInputBar.height);
