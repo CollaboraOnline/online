@@ -1392,11 +1392,17 @@ L.Control.Menubar = L.Control.extend({
 						$(aItem).removeClass(constChecked);
 					}
 				} else if (type === 'action') { // enable all except fullscreen on windows
-					if (id === 'fullscreen' && (L.Browser.ie || L.Browser.edge)) { // Full screen works weirdly on IE 11 and on Edge
-						$(aItem).addClass('disabled');
-						var index = self.options.allowedViewModeActions.indexOf('fullscreen');
-						if (index > 0) {
-							self.options.allowedViewModeActions.splice(index, 1);
+					if (id === 'fullscreen') { // Full screen works weirdly on IE 11 and on Edge
+						if (L.Browser.ie || L.Browser.edge) {
+							$(aItem).addClass('disabled');
+							var index = self.options.allowedViewModeActions.indexOf('fullscreen');
+							if (index > 0) {
+								self.options.allowedViewModeActions.splice(index, 1);
+							}
+						} else if (self._map.uiManager.isFullscreen()) {
+							$(aItem).addClass(constChecked);
+						} else {
+							$(aItem).removeClass(constChecked);
 						}
 					} else if (id === 'showruler') {
 						if (self._map.uiManager.isRulerVisible()) {
