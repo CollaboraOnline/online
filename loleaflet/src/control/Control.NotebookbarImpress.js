@@ -206,12 +206,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 							'command': '.uno:Print'
 						} : {},
 					{
-						'id': 'downloadas-pdf',
-						'type': 'menubartoolitem',
-						'text': _('PDF Document (.pdf)'),
-						'command': ''
-					},
-					{
 						'id': 'Save-Section-ODF',
 						'type': 'container',
 						'children': [
@@ -268,6 +262,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 							}
 						],
 						'vertical': 'true'
+					},
+					{
+						'id': 'downloadas-pdf',
+						'type': 'menubartoolitem',
+						'text': _('PDF Document (.pdf)'),
+						'command': ''
 					},
 				]
 			}
