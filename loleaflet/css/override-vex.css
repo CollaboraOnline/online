@@ -42,6 +42,11 @@
 	position: absolute;
 	top: 0px;
 }
+
+.vex-content .vex-footnote {
+	color: var(--gray-light-txt--color) !important;
+	font-size: 0.78em;
+}
 /* dialog shown when user is idle */
 .vex-open .loleaflet-user-idle {
 	background: #ffffffe0 !important;
@@ -55,6 +60,11 @@
 
 .vex.vex-theme-plain, .vex.vex-theme-bottom-right-corner{
 	z-index: 2001 !important;
+}
+
+.vex.vex-theme-plain .vex-content,
+.vex-dialog-message {
+	font-size: 1.1em;
 }
 
 .vex.vex-theme-plain .vex-content{
