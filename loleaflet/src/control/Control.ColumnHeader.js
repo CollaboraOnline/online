@@ -242,6 +242,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			};
 
 			this._map.sendUnoCommand('.uno:ColumnWidth', command);
+			this._mouseOverEntry = null;
 		}
 	},
 
