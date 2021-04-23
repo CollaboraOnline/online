@@ -230,7 +230,9 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
         LOG_ERR("StatusLine::parse: expected valid integer number");
         return FieldParseState::Invalid;
     }
-    _statusCode = std::atoi(&p[off]);
+    // p may not be null-terminated.
+    std::string token(&p[off], len - off);
+    _statusCode = std::atoi(token.c_str());
     if (_statusCode < MinValidStatusCode || _statusCode > MaxValidStatusCode)
     {
         LOG_ERR("StatusLine::parse: Invalid StatusCode [" << _statusCode << "]");
