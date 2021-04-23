@@ -511,15 +511,19 @@ L.Control.UIManager = L.Control.extend({
 		var enableNotebookbar = window.userInterfaceMode === 'notebookbar';
 		if (enableNotebookbar && !window.mode.isMobile()) {
 			if (e.perm === 'edit') {
+				if (this.map.menubar) {
+					this.map.removeControl(this.map.menubar);
+					this.map.menubar = null;
+				}
 				this.makeSpaceForNotebookbar(this.map._docLayer._docType);
-			} else if (e.perm === 'readonly' && $('#mobile-edit-button').is(':hidden')) {
+			} else if (e.perm === 'readonly') {
 				if (!this.map.menubar) {
 					var menubar = L.control.menubar();
 					this.map.menubar = menubar;
 					this.map.addControl(menubar);
 				}
 
-				if (this.notebookbar) {
+				if (this.notebookbar && $('#mobile-edit-button').is(':hidden')) {
 					this.map.removeControl(this.notebookbar);
 					this.notebookbar = null;
 				}
