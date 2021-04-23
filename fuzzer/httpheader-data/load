@@ -1,7 +1,0 @@
-HTTP/1.1 101 Switching Protocols
-Date: Thu, 22 Apr 2021 07:37:15
-Server: LOOLWSD HTTP Server 2021.0.0
-Upgrade: websocket
-Connection: Upgrade
-Sec-WebSocket-Accept: WPZXjXJKKiTiMWIRRSJnOzhX5ZI=
-

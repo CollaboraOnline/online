@@ -146,7 +146,7 @@ if ENABLE_LIBFUZZER
 noinst_PROGRAMS += \
 		   admin_fuzzer \
 		   clientsession_fuzzer \
-		   httpheader_fuzzer \
+		   httpresponse_fuzzer \
 		   httpstatus_fuzzer
 else
 noinst_PROGRAMS += loolwsd_fuzzer
@@ -198,15 +198,15 @@ clientsession_fuzzer_SOURCES = \
 			       fuzzer/ClientSession.cpp
 clientsession_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
-httpheader_fuzzer_CPPFLAGS = \
+httpresponse_fuzzer_CPPFLAGS = \
 				-DKIT_IN_PROCESS=1 \
 				$(AM_CPPFLAGS)
-httpheader_fuzzer_SOURCES = \
+httpresponse_fuzzer_SOURCES = \
 			       $(loolwsd_sources) \
 			       $(loolforkit_sources) \
 			       $(shared_sources) \
-			       fuzzer/HttpHeader.cpp
-httpheader_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
+			       fuzzer/HttpResponse.cpp
+httpresponse_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
 httpstatus_fuzzer_CPPFLAGS = \
 				-DKIT_IN_PROCESS=1 \
