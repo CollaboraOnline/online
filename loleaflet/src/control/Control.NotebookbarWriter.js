@@ -604,6 +604,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getFormatTab: function() {
 		var content = [
 			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FontDialog', 'text'),
+				'command': '.uno:FontDialog'
+			},
+			{
 				'id': 'FormatMenu:FormatMenu',
 				'type': 'menubutton',
 				'text': _UNO('.uno:FormatMenu', 'text'),
@@ -611,12 +616,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:FontDialog'),
-				'command': '.uno:FontDialog'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ParagraphDialog'),
+				'text': _UNO('.uno:ParagraphDialog', 'text'),
 				'command': '.uno:ParagraphDialog'
 			},
 			{
@@ -626,8 +626,14 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:FormatBulletsMenu'
 			},
 			{
+				'id': 'FormatBulletsMenu:FormatBulletsMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:FormatBulletsMenu', 'text'),
+				'command': '.uno:FormatBulletsMenu'
+			},
+			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:OutlineBullet'),
+				'text': _UNO('.uno:OutlineBullet', 'text'),
 				'command': '.uno:OutlineBullet'
 			},
 			{
@@ -659,11 +665,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TransformDialog'),
 				'command': '.uno:TransformDialog'
-			},
+			}
 		];
-
-		return this.getTabPage('Format', content);
-	},
 
 	getInsertTab: function() {
 		var content = [
