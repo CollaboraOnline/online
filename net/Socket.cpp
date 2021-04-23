@@ -808,9 +808,9 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
 #define CREDS_PID(c) c.pid
         struct ucred creds;
         socklen_t credSize = sizeof(struct ucred);
-        if (getsockopt(getFD(), SOL_SOCKET, SO_PEERCRED, &creds, &credSize) < 0)
+        if (getsockopt(rc, SOL_SOCKET, SO_PEERCRED, &creds, &credSize) < 0)
         {
-            LOG_SYS("Failed to get peer creds on " << getFD());
+            LOG_SYS("Failed to get peer creds on " << rc);
             ::close(rc);
             return std::shared_ptr<Socket>(nullptr);
         }
@@ -820,9 +820,9 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
 #define CREDS_PID(c) c.cr_pid
         struct xucred creds;
         socklen_t credSize = sizeof(struct xucred);
-        if (getsockopt(getFD(), 0, LOCAL_PEERCRED, &creds, &credSize) < 0)
+        if (getsockopt(rc, 0, LOCAL_PEERCRED, &creds, &credSize) < 0)
         {
-            LOG_SYS("Failed to get peer creds on " << getFD());
+            LOG_SYS("Failed to get peer creds on " << rc);
             ::close(rc);
             return std::shared_ptr<Socket>(nullptr);
         }
