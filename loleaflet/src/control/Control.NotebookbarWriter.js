@@ -1189,10 +1189,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:InsertMultiIndex'
 			},
 			{
-				'id': 'Reference-Section-Index1',
 				'children': [
 					{
-						'id': 'LineA17',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1203,7 +1201,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB18',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1222,11 +1219,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:InsertFootnote'
 			},
 			{
-				'id': 'Reference-Section-Reference1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LeftParaMargin4',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1237,7 +1232,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'belowspacing3',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1256,11 +1250,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:InsertReferenceField'
 			},
 			{
-				'id': 'Reference-Section-Caption1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineB23',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1271,13 +1263,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineA22',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertCaptionDialog', 'text'),
-								'command': '.uno:InsertCaptionDialog'
+								'text': _UNO('.uno:InsertAuthoritiesEntry', 'text'),
+								'command': '.uno:InsertAuthoritiesEntry'
 							}
 						]
 					}
@@ -1290,11 +1281,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:InsertFieldCtrl'
 			},
 			{
-				'id': 'Reference-Section-Field1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineB19',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1310,7 +1299,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineA18',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1322,40 +1310,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:InsertTitleField', 'text'),
 								'command': '.uno:InsertTitleField'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertAuthoritiesEntry', 'text'),
-				'command': '.uno:InsertAuthoritiesEntry'
-			},
-			{
-				'id': 'Reference-Section-Bibliothek1',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'LineA19',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:BibliographyComponent', 'text'),
-								'command': '.uno:BibliographyComponent'
-							}
-						]
-					},
-					{
-						'id': 'LineB20',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:ViewDataSourceBrowser', 'text'),
-								'command': '.uno:ViewDataSourceBrowser'
 							}
 						]
 					}
