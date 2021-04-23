@@ -618,6 +618,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getFormatTab: function() {
 		var content = [
 			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FontDialog', 'text'),
+				'command': '.uno:FontDialog'
+			},
+			{
 				'id': 'FormatMenu:FormatMenu',
 				'type': 'menubutton',
 				'text': _UNO('.uno:FormatMenu', 'text'),
@@ -625,18 +630,34 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:FontDialog'),
-				'command': '.uno:FontDialog'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ParagraphDialog'),
+				'text': _UNO('.uno:ParagraphDialog', 'text'),
 				'command': '.uno:ParagraphDialog'
 			},
 			{
+				'id': 'FormatBulletsMenu:FormatBulletsMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:FormatBulletsMenu', 'text'),
+				'command': '.uno:FormatBulletsMenu'
+			},
+			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:OutlineBullet'),
+				'text': _UNO('.uno:OutlineBullet', 'text'),
 				'command': '.uno:OutlineBullet'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:PageDialog', 'text'),
+				'command': '.uno:PageDialog'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FormatColumns', 'text'),
+				'command': '.uno:FormatColumns'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:EditRegion', 'text'),
+				'command': '.uno:EditRegion'
 			},
 			{
 				'type': 'bigtoolitem',
@@ -652,27 +673,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TransformDialog'),
 				'command': '.uno:TransformDialog'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:FormatColumns', 'text'),
-				'command': '.uno:FormatColumns'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:EditRegion', 'text'),
-				'command': '.uno:EditRegion'
-			},
-			{
-				'id': 'FormatBulletsMenu:FormatBulletsMenu',
-				'type': 'menubutton',
-				'text': _UNO('.uno:FormatBulletsMenu', 'text'),
-				'command': '.uno:FormatBulletsMenu'
-			},
+			}
 		];
-
-		return this.getTabPage('Format', content);
-	},
 
 	getInsertTab: function() {
 		var content = [
