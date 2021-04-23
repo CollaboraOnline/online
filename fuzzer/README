@@ -19,14 +19,14 @@ Run the fuzzers like this:
 ./clientsession_fuzzer -max_len=16384 fuzzer/data/
 ----
 
-- HttpHeader (less useful, found no problems so far):
-
-----
-./httpheader_fuzzer -max_len=16384 fuzzer/httpheader-data/
-----
-
 - HttpStatus:
 
 ----
 ./httpstatus_fuzzer -max_len=16384 fuzzer/httpstatus-data/
+----
+
+- HttpRessponse:
+
+----
+./httpresponse_fuzzer -max_len=16384 fuzzer/httpresponse-data/
 ----
