@@ -171,6 +171,24 @@ int64_t Header::parse(const char* p, int64_t len)
     return 0;
 }
 
+int64_t Header::getContentLength() const
+{
+    std::string contentLength = get(CONTENT_LENGTH);
+    if (contentLength.empty() || contentLength[0] < '0' || contentLength[0] > '9')
+    {
+        return -1;
+    }
+
+    try
+    {
+        return std::stoll(contentLength);
+    }
+    catch (std::out_of_range&)
+    {
+        return -1;
+    }
+}
+
 /// Parses a Status Line.
 /// Returns the state and clobbers the len on succcess to the number of bytes read.
 FieldParseState StatusLine::parse(const char* p, int64_t& len)
