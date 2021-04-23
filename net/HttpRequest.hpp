@@ -333,7 +333,7 @@ public:
     /// Set the Content-Length header.
     void setContentLength(int64_t length) { set(CONTENT_LENGTH, std::to_string(length)); }
     /// Get the Content-Length header.
-    int64_t getContentLength() const { return std::stoll(get(CONTENT_LENGTH)); }
+    int64_t getContentLength() const;
     /// Returns true iff a Content-Length header exists.
     bool hasContentLength() const { return has(CONTENT_LENGTH); }
 
