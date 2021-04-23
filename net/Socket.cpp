@@ -743,9 +743,9 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
         // Sanity check this incoming socket
         struct ucred creds;
         socklen_t credSize = sizeof(struct ucred);
-        if (getsockopt(getFD(), SOL_SOCKET, SO_PEERCRED, &creds, &credSize) < 0)
+        if (getsockopt(rc, SOL_SOCKET, SO_PEERCRED, &creds, &credSize) < 0)
         {
-            LOG_ERR("Failed to get peer creds on " << getFD() << ' ' << strerror(errno));
+            LOG_ERR("Failed to get peer creds on " << rc << ' ' << strerror(errno));
             ::close(rc);
             return std::shared_ptr<Socket>(nullptr);
         }
