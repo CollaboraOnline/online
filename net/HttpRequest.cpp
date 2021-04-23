@@ -230,8 +230,14 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
         LOG_ERR("StatusLine::parse: expected valid integer number");
         return FieldParseState::Invalid;
     }
-    // p may not be null-terminated.
-    std::string token(&p[off], len - off);
+    // p may not be null-terminated, also make sure we limit the size of the allocated string.
+    int64_t lineBreak = findLineBreak(p, off, len);
+    if (lineBreak - off > MaxStatusLineLen)
+    {
+        LOG_ERR("StatusLine::parse: StatusCode is too long: " << (lineBreak - off));
+        return FieldParseState::Invalid;
+    }
+    std::string token(&p[off], lineBreak - off);
     _statusCode = std::atoi(token.c_str());
     if (_statusCode < MinValidStatusCode || _statusCode > MaxValidStatusCode)
     {
