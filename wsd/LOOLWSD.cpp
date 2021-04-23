@@ -2317,7 +2317,7 @@ private:
         return POLLIN;
     }
 
-    void performWrites(std::size_t /*capcity*/) override {}
+    void performWrites(std::size_t /*capacity*/) override {}
 };
 
 #if !MOBILEAPP
