@@ -225,6 +225,11 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
 
     // Read the Status Code now.
     assert(off + StatusCodeLen < len && "Expected to have more data.");
+    if (p[off] < '0' || p[off] > '9')
+    {
+        LOG_ERR("StatusLine::parse: expected valid integer number");
+        return FieldParseState::Invalid;
+    }
     _statusCode = std::atoi(&p[off]);
     if (_statusCode < MinValidStatusCode || _statusCode > MaxValidStatusCode)
     {
