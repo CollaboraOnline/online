@@ -942,11 +942,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:FontworkGalleryFloater'),
-				'command': '.uno:FontworkGalleryFloater'
-			},
-			{
-				'type': 'bigtoolitem',
 				'text': _UNO('.uno:HyperlinkDialog'),
 				'command': '.uno:HyperlinkDialog'
 			},
@@ -956,7 +951,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:DrawText'
 			},
 			{
-				'id': 'Insert-BasicShapes-VerticalText',
+				'id': 'Insert-BasicShapes-Shapes',
 				'type': 'container',
 				'children': [
 					{
@@ -976,7 +971,36 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:VerticalText', 'text'),
+								'text': _UNO('.uno:Line', 'spreadsheet'),
+								'command': '.uno:Line'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'Insert-Text-Fontwork',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'LineA153',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:FontworkGalleryFloater'),
+								'command': '.uno:FontworkGalleryFloater'
+							}
+						]
+					},
+					{
+						'id': 'LineB163',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:VerticalText', 'spreadsheet'),
 								'command': '.uno:VerticalText'
 							}
 						]
@@ -986,18 +1010,37 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:CharmapControl'),
-				'command': '.uno:CharmapControl'
-			},
-			{
-				'type': 'bigtoolitem',
 				'text': _UNO('.uno:EditHeaderAndFooter', 'spreadsheet'),
 				'command': '.uno:EditHeaderAndFooter'
 			},
 			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertAnnotation', 'spreadsheet'),
-				'command': '.uno:InsertAnnotation'
+				'id': 'Insert-Charmap-Annotation',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'LineA153',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:CharmapControl'),
+								'command': '.uno:CharmapControl'
+							}
+						]
+					},
+					{
+						'id': 'LineB163',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertAnnotation', 'text'),
+								'command': '.uno:InsertAnnotation'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			}
 		];
 
