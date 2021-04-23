@@ -1334,6 +1334,11 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 	getFormatTab: function() {
 		var content = [
 			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FontDialog'),
+				'command': '.uno:FontDialog'
+			},
+			{
 				'id': 'FormatMenu:FormatMenu',
 				'type': 'menubutton',
 				'text': _UNO('.uno:FormatMenu', 'spreadsheet'),
@@ -1341,13 +1346,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:FontDialog'),
-				'command': '.uno:FontDialog'
+				'text': _UNO('.uno:ParagraphDialog'),
+				'command': '.uno:ParagraphDialog'
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ParagraphDialog'),
-				'command': '.uno:ParagraphDialog'
+				'text': _UNO('.uno:PageFormatDialog', 'spreadsheet', true),
+				'command': '.uno:PageFormatDialog'
 			},
 			{
 				'type': 'bigtoolitem',
@@ -1374,11 +1379,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:TransformDialog'),
 				'command': '.uno:TransformDialog'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:PageFormatDialog', 'spreadsheet', true),
-				'command': '.uno:PageFormatDialog'
 			}
 		];
 
