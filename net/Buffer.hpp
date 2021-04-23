@@ -79,7 +79,12 @@ public:
 
     void append(const std::string& s) { append(s.c_str(), s.size()); }
 
-    void append(const char ch) { append(&ch, 1); }
+    /// Append a literal string, with compile-time size capturing.
+    template <std::size_t N> void append(const char (&s)[N])
+    {
+        static_assert(N > 1, "Cannot append empty strings.");
+        append(s, N - 1); // Minus null termination.
+    }
 
     void dumpHex(std::ostream &os, const char *legend, const char *prefix) const
     {
