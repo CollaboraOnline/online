@@ -918,11 +918,16 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getLayoutTab: function() {
 		var content = [
 			{
-				'id': 'Layout-Section-File5',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:PageDialog'),
+				'command': '.uno:PageDialog'
+			},
+			{
+				'id': 'Layout-Section-InsertPagebreak-InsertBreak',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA16',
+						'id': 'Layout-InsertPagebreak',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -933,7 +938,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB17',
+						'id': 'Layout-InsertBreak',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -947,27 +952,29 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Layout-Section-Backgrounds',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:TitlePageDialog', 'text'),
+				'command': '.uno:TitlePageDialog'
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA14',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:TitlePageDialog', 'text'),
-								'command': '.uno:TitlePageDialog'
+								'text': _UNO('.uno:FormatColumns', 'text'),
+								'command': '.uno:FormatColumns'
 							}
 						]
 					},
 					{
-						'id': 'LineB15',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text':  _UNO('.uno:Watermark', 'text'),
+								'text': _UNO('.uno:Watermark', 'text'),
 								'command': '.uno:Watermark'
 							}
 						]
@@ -976,22 +983,22 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Layout-Section-Backgrounds1',
+				'id': 'Layout-Section-Hyphenate-LineNumberingDialog',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LeftParaMargin3',
+						'id': 'Layout-Hyphenate',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:Hyphenate', 'text'),
+								'text':  _UNO('.uno:Hyphenate', 'text'),
 								'command': '.uno:Hyphenate'
 							}
 						]
 					},
 					{
-						'id': 'belowspacing2',
+						'id': 'Layout-LineNumberingDialog',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1005,40 +1012,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Layout-Section-SelectGroup',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'LineA27',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:SelectObject'),
-								'command': '.uno:SelectObject'
-							}
-						]
-					},
-					{
-						'id': 'LineB28',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:FormatGroup'),
-								'command': '.uno:FormatGroup'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
 				'id': 'Layout-Section-Wrap',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'Wrap7',
+						'id': 'Layout-WrapOff-WrapIdeal',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1059,7 +1037,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'Wrap8',
+						'id': 'Layout-WrapLeft-WrapRight',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1086,7 +1064,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'id': 'Layout-Section-Wrap1',
 				'children': [
 					{
-						'id': 'Wrap15',
+						'id': 'Layout-ContourDialog',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1097,7 +1075,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'Wrap16',
+						'id': 'Layout-TextWrap',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1111,66 +1089,92 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Layout-Section-Arrange',
+				'id': 'Layout-Section-Align',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'belowspacing14',
+						'id': 'Layout-ObjectAlignLeft-ObjectAlignRight',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:BringToFront'),
+								'text': _UNO('.uno:ObjectAlignLeft', 'text'),
+								'command': '.uno:ObjectAlignLeft'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignCenter', 'text'),
+								'command': '.uno:AlignCenter'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectAlignRight', 'text'),
+								'command': '.uno:ObjectAlignRight'
+							}
+						]
+					},
+					{
+						'id': 'Layout-AlignUp-AlignDown',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignUp', 'text'),
+								'command': '.uno:AlignUp'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignMiddle', 'text'),
+								'command': '.uno:AlignMiddle'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignDown', 'text'),
+								'command': '.uno:AlignDown'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'Layout-Section-ForwardBackward',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'Layout-ObjectForwardOne-BringToFront',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectForwardOne', 'text'),
+								'command': '.uno:ObjectForwardOne'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:BringToFront', 'text'),
 								'command': '.uno:BringToFront'
 							}
 						]
 					},
 					{
-						'id': 'belowspacing15',
+						'id': 'Layout-ObjectBackOne-SendToBack',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:SendToBack'),
+								'text': _UNO('.uno:ObjectBackOne', 'text'),
+								'command': '.uno:ObjectBackOne'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SendToBack', 'text'),
 								'command': '.uno:SendToBack'
 							}
 						]
 					}
 				],
 				'vertical': 'true'
-			},
-			{
-				'id': 'Layout-Section-Arrange1',
-				'children': [
-					{
-						'id': 'belowspacing1',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:ObjectForwardOne'),
-								'command': '.uno:ObjectForwardOne'
-							}
-						]
-					},
-					{
-						'id': 'belowspacing10',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:ObjectBackOne'),
-								'command': '.uno:ObjectBackOne'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:PageDialog'),
-				'command': '.uno:PageDialog'
 			}
 		];
 
