@@ -741,11 +741,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:HyperlinkDialog'
 			},
 			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:FontworkGalleryFloater'),
-				'command': '.uno:FontworkGalleryFloater'
-			},
-			{
 				'id': 'Insert-Section-Bookmark',
 				'type': 'container',
 				'children': [
@@ -814,7 +809,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:DrawText'
 			},
 			{
-				'id': 'Insert-BasicShapes-VerticalText',
+				'id': 'Insert-BasicShapes-Shapes',
 				'type': 'container',
 				'children': [
 					{
@@ -834,6 +829,35 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'type': 'toolitem',
+								'text': _UNO('.uno:Line', 'text'),
+								'command': '.uno:Line'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'Insert-Text-Fontwork',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'LineA153',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:FontworkGalleryFloater'),
+								'command': '.uno:FontworkGalleryFloater'
+							}
+						]
+					},
+					{
+						'id': 'LineB163',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
 								'text': _UNO('.uno:VerticalText', 'text'),
 								'command': '.uno:VerticalText'
 							}
@@ -843,25 +867,39 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:CharmapControl'),
-				'command': '.uno:CharmapControl'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Line', 'text'),
-				'command': '.uno:Line'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertAnnotation', 'text'),
-				'command': '.uno:InsertAnnotation'
-			},
-			{
 				'id': 'FormattingMarkMenu:FormattingMarkMenu',
 				'type': 'menubutton',
 				'text': _UNO('.uno:FormattingMarkMenu', 'text'),
 				'command': '.uno:FormattingMarkMenu'
+			},
+			{
+				'id': 'Insert-Charmap-Annotation',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'LineA153',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:CharmapControl'),
+								'command': '.uno:CharmapControl'
+							}
+						]
+					},
+					{
+						'id': 'LineB163',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertAnnotation', 'text'),
+								'command': '.uno:InsertAnnotation'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			}
 		];
 
