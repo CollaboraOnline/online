@@ -182,7 +182,8 @@ void UnitWSD::lookupTile(int part, int width, int height, int tilePosX, int tile
         onTileCacheMiss(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
 }
 
-UnitKit::UnitKit()
+UnitKit::UnitKit(std::string testname)
+    : UnitBase(std::move(testname))
 {
 }
 

@@ -105,7 +105,7 @@ protected:
     }
 
     /// Construct a UnitBase instance with a default name.
-    explicit UnitBase(std::string name = "UnitBase")
+    explicit UnitBase(std::string name)
         : _dlHandle(nullptr)
         , _setRetValue(false)
         , _retValue(0)
@@ -390,7 +390,7 @@ private:
 class UnitKit : public UnitBase
 {
 public:
-    UnitKit();
+    explicit UnitKit(std::string testname = std::string());
     virtual ~UnitKit();
     static UnitKit& get()
     {
