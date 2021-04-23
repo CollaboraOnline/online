@@ -379,9 +379,9 @@ public:
         for (const auto& pair : _headers)
         {
             out.append(pair.first);
-            out.append(": ", 2);
+            out.append(": ");
             out.append(pair.second);
-            out.append("\r\n", 2);
+            out.append("\r\n");
         }
 
         return true;
@@ -512,14 +512,14 @@ public:
             LOG_TRC("performWrites (header).");
 
             out.append(getVerb());
-            out.append(' ');
+            out.append(" ");
             out.append(getUrl());
-            out.append(' ');
+            out.append(" ");
             out.append(getVersion());
-            out.append("\r\n", 2);
+            out.append("\r\n");
 
             _header.writeData(out);
-            out.append("\r\n", 2); // End the header.
+            out.append("\r\n"); // End the header.
 
             _stage = Stage::Body;
         }
@@ -639,11 +639,11 @@ public:
     bool writeData(Buffer& out) const
     {
         out.append(_httpVersion);
-        out.append(' ');
+        out.append(" ");
         out.append(std::to_string(_statusCode));
-        out.append(' ');
+        out.append(" ");
         out.append(_reasonPhrase);
-        out.append("\r\n", 2);
+        out.append("\r\n");
         return true;
     }
 
@@ -783,7 +783,7 @@ public:
     {
         _statusLine.writeData(out);
         _header.writeData(out);
-        out.append("\r\n", 2); // End of header.
+        out.append("\r\n"); // End of header.
         out.append(_body);
         return true;
     }
