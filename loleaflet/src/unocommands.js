@@ -28,7 +28,7 @@ var unoCommandsArray = {
 	'BackColor':{text:{menu:_('Highlight Color'),},},
 	'BackgroundColor':{global:{menu:_('Background Color'),},},
 	'Backward':{global:{menu:_('Send Back~ward'),},presentation:{menu:_('Send Back~ward'),},},
-	'BasicShapes':{global:{context:_('Basic Shapes'),menu:_('Basic Shapes'),},},
+	'BasicShapes':{global:{context:_('Shapes'),menu:_('Shapes'),},},
 	'Bezier_Unfilled':{global:{menu:_('Curve'),},},
 	'BibliographyComponent':{global:{menu:_('~Bibliography Database'),},},
 	'Bold':{global:{menu:_('Bold'),},},
