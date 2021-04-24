@@ -668,6 +668,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			}
 		];
 
+		return this.getTabPage('Format', content);
+	},
+
 	getInsertTab: function() {
 		var content = [
 			{
