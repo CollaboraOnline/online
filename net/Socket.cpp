@@ -448,7 +448,11 @@ void SocketPoll::insertNewUnixSocket(
     struct sockaddr_un addrunix;
     std::memset(&addrunix, 0, sizeof(addrunix));
     addrunix.sun_family = AF_UNIX;
+#ifdef __linux__
     addrunix.sun_path[0] = '\0'; // abstract name
+#else
+    addrunix.sun_path[0] = '0';
+#endif
     memcpy(&addrunix.sun_path[1], location.c_str(), location.length());
 
     const int res = connect(fd, (const struct sockaddr*)&addrunix, sizeof(addrunix));
@@ -869,7 +873,9 @@ std::string LocalServerSocket::bind()
         std::memset(&addrunix, 0, sizeof(addrunix));
         addrunix.sun_family = AF_UNIX;
         std::memcpy(addrunix.sun_path, socketAbstractUnixName.c_str(), socketAbstractUnixName.length());
+#ifdef __linux__
         addrunix.sun_path[0] = '\0'; // abstract name
+#endif
 
         const std::string rand = Util::rng::getFilename(8);
         memcpy(addrunix.sun_path + socketAbstractUnixName.length(), rand.c_str(), 8);
