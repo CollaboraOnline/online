@@ -1,1 +1,89 @@
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g stroke-width=".999999" transform="matrix(1.00000001 0 0 1.00000001 0 -.000008)"><path d="m3 2v6a1.0001 1.0001 0 0 1 1-1h1a1.0001 1.0001 0 0 1 1 1v5h5a1.0001 1.0001 0 0 1 1 1v1a1.0001 1.0001 0 0 1 -1 1h-6-1a1.0001 1.0001 0 0 1 -1-1v6h5v-1.5c0-.432593.1940807-.828873.4980469-1.105469.2677906-.243677.6208435-.394531 1.0019531-.394531h1.005859 1.994141c.813703 0 1.5.686297 1.5 1.5 0 .662853-.457681 1.234142-1.066406 1.425781.040524.026682.083857.048559.125.074219h1.941406v-4h-1.5c-.813703 0-1.5-.686297-1.5-1.5s.686297-1.5 1.5-1.5h1.5v-.572266c-1.112875-.601945-1.9979-1.651784-2-2.925781v-.001953c0-.9028472.369436-1.7974117 1-2.4433594v-3.0566406h-5a1.0001 1.0001 0 0 1 -1-1v-1a1.0001 1.0001 0 0 1 1-1zm13 0a1.0001 1.0001 0 0 1 1 1v1 3.0507812c.739428.1101257 1.445521.4455204 1.974609.9746094.647921.6479205 1.025391 1.5583115 1.025391 2.4746094-.000138 1.275824-.885603 2.32879-2 2.931641v.568359h1.5c.813703 0 1.5.686297 1.5 1.5s-.686297 1.5-1.5 1.5h-1.5v4h1.949219c.039845-.024886.081828-.046415.121093-.072266-.610793-.190319-1.070312-.763382-1.070312-1.427734 0-.813703.686297-1.5 1.5-1.5h1.5v-16z" fill="#fafafa"/><path d="m7 2v4h-4v1h1 1 2v4 1h1 4v2 1 .5l1-1.40625v-2.09375h.447266l-.398438-1h-.048828v-.498047-.001953-3.5-1h-1-4v-2-1-1zm5 13.5v.5h-1-3-1-3-1v1h4v4h1v-1.5-2.5h4v1h.5l.5.09375v-1.09375h.5zm5-13.5v1 1 2 1 .050781l1 .3046876v-.3554686h4v-1h-4v-4zm-9 5h4v4h-4zm11.951172 4-.396484 1h2.445312v-1zm.955078 5-1.40625 1h2.5v-1zm-7.90625 4.892578-.066406.033203.066406.039063z" fill="#c8c6c4"/><path d="m3 1c-.554 0-1 .4459969-1 1v19c0 .554003.446 1 1 1h5v-1h-5v-19h19v16h.498047.501953v-16c0-.5540031-.446-1-1-1z" fill="#3a3a38"/></g><g fill="#1e8bcd" transform="translate(0 .000128)"><path d="m12 7v4h-4v-4z" opacity=".5" stroke-width=".561952"/><path d="m7 6v1 4 1h6v-1-4-1zm1 1h4v4h-4z"/></g><path d="m9 3v1h6v3.3554688c.31719-.1509219.652766-.2529727 1-.3046876v-3.0507812-1h-1z" fill="#3a3a38"/><path d="m11 15v-1h-6v-6h-1v6 1h1z" fill="#3a3a38"/><path d="m16.5 8a2.5 2.5 0 0 0 -2.5 2.5 2.5 2.5 0 0 0 2 2.445313v2.054687h-2.5c-.277 0-.5.223-.5.5s.223.5.5.5h2.5v6.974609a7.5 7.5 0 0 1 -5.490234-2.974609h1.990234c.277 0 .5-.223.5-.5s-.223-.5-.5-.5h-3c-.277 0-.5.223-.5.5v3c0 .277.223.5.5.5s.5-.223.5-.5v-1.550781a8.5 8.5 0 0 0 6.5 3.050781 8.5 8.5 0 0 0 6.5-3.042969v1.542969c0 .277.223.5.5.5s.5-.223.5-.5v-3c0-.277-.223-.5-.5-.5h-3c-.277 0-.5.223-.5.5s.223.5.5.5h1.988281a7.5 7.5 0 0 1 -5.488281 2.974609v-6.974609h2.5c.277 0 .5-.223.5-.5s-.223-.5-.5-.5h-2.5v-2.050781a2.5 2.5 0 0 0 2-2.449219 2.5 2.5 0 0 0 -2.5-2.5zm0 1a1.5 1.5 0 0 1 1.5 1.5 1.5 1.5 0 0 1 -1.5 1.5 1.5 1.5 0 0 1 -1.5-1.5 1.5 1.5 0 0 1 1.5-1.5z" fill="#1e8bcd"/></svg>
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"
+     class="icn icn--area-color"
+     fill="#fafafa"
+     stroke="#3a3a38"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     >
+      <path d="m 2.5,2.5 h 19 v 19 h -19 z" />
+  </g>
+  <g 
+     class="icn icn--secondary-line-color"
+     fill="#797774"
+     stroke="#797774"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     >
+      <path d="m 2.5,5.5 h 19 z m 0,4 h 19 z m 0,4 h 19 z m 0,4 h 19 z" />
+      <path d="m 8.5,2.5 v 19 z m 7,0 v 19 z" />
+  </g>
+  <g id="background"
+     class="icn icn--line-color"
+     fill="none"
+     stroke="#3a3a38"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     >
+      <path d="m 2.5,2.5 h 19 v 19 h -19 z" />
+  </g>
+  <g id="symbol"
+	 class="icn icn--background"
+     fill="#fff"
+     stroke="#fff" 
+     stroke-width="3px"
+	 stroke-linecap="round" 
+     stroke-linejoin="round" >
+      <path d="m 18.5,7 v -4.5 h -7" />
+      <path d="m 5.5,8 v 4.5 h 7" />
+      <path d="m 8.5,5.5 h 7 v 4 h -7 z" />
+  </g>
+  <g id="symbol"
+	 class="icn icn--highlight-color"  
+     fill="#83beec" 
+     stroke="#1e8bcd" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+      >
+      <path d="m 8.5,5.5 h 7 v 4 h -7 z" />
+  </g>
+  <g id="symbol"
+	 class="icn icn--positiv-color-color-line"
+     fill="none"
+     stroke="#18ab50" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+     >
+      <path d="m 18.5,7 v -4.5 h -7" />
+      <path d="m 5.5,8 v 4.5 h 7" />
+  </g>
+  <g id="symbol"
+	 class="icn icn--background"
+     fill="#fff"
+     stroke="#fff" 
+     stroke-width="3px"
+	 stroke-linecap="round" 
+     stroke-linejoin="round" >
+      <path d="m 9.5,22.5 v -3 h 3" />
+      <path d="m 20.5,19.5 h 3 v 3" />
+      <path d="m 13.5,15.5 h 6" />
+      <path d="m 18.5,10.5 a 2,2 0 0 1 -2,2 2,2 0 0 1 -2,-2 2,2 0 0 1 2,-2 2,2 0 0 1 2,2 z" />
+      <path d="m 16.5,12.5 v 11" />
+      <path d="m 9.5,19.5 c 0,0 2.5,4 7,4 4.5,0 7,-4 7,-4" />
+  </g>
+  <g id="symbol"
+	 class="icn icn--highlight-color-line"  
+     fill="none" 
+     stroke="#1e8bcd" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+      >
+      <path d="m 9.5,22.5 v -3 h 3" />
+      <path d="m 20.5,19.5 h 3 v 3" />
+      <path d="m 13.5,15.5 h 6" />
+      <path d="m 18.5,10.5 a 2,2 0 0 1 -2,2 2,2 0 0 1 -2,-2 2,2 0 0 1 2,-2 2,2 0 0 1 2,2 z" />
+      <path d="m 16.5,12.5 v 11" />
+      <path d="m 9.5,19.5 c 0,0 2.5,4 7,4 4.5,0 7,-4 7,-4" />
+  </g>
+</svg>
