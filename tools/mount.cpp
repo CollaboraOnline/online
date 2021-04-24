@@ -67,8 +67,8 @@ int mount_wrapper(const char *source, const char *target,
           const char *filesystemtype, unsigned long mountflags,
           const void *data)
 {
-    struct iovec *iov;
-    int iovlen;
+    struct iovec *iov = NULL;
+    int iovlen = 0;
     int freebsd_flags = 0;
     (void)data;
 
