@@ -1,1 +1,48 @@
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m3 6h18v15h-18z" fill="#fafafa"/><path d="m3 2c-.554 0-1 .446-1 1v18c0 .554.446 1 1 1h18c.554 0 1-.446 1-1v-18c0-.554-.446-1-1-1zm0 4h18v15h-18z" fill="#3a3a38"/><rect fill="#3a3a38" height="1" ry=".5" width="12" x="6" y="11"/><g fill="#1e8bcd"><rect height="1" ry=".5" width="4" x="6" y="15"/><path d="m10.5 14a1.5 1.5 0 0 0 -1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0 -1.5-1.5zm0 1a.5.5 0 0 1 .5.5.5.5 0 0 1 -.5.5.5.5 0 0 1 -.5-.5.5.5 0 0 1 .5-.5z"/><path d="m13.5 10c-.828427 0-1.5.671573-1.5 1.5s.671573 1.5 1.5 1.5 1.5-.671573 1.5-1.5-.671573-1.5-1.5-1.5z"/><rect height="1" ry=".491011" width="7" x="11" y="15"/></g><g fill="#3a3a38"><rect height="1" ry=".5" width="4" x="6" y="15"/><rect height="1" ry=".491011" width="7" x="11" y="15"/><path d="m10.5 14a1.5 1.5 0 0 0 -1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0 -1.5-1.5zm0 1a.5.5 0 0 1 .5.5.5.5 0 0 1 -.5.5.5.5 0 0 1 -.5-.5.5.5 0 0 1 .5-.5z" fill="#1e8bcd"/></g></svg>
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"
+     class="icn icn--area-color"
+     fill="#fafafa"
+     stroke="#3a3a38"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     >
+      <path d="m 2.5,2.5 h 19 v 19 h -19 z" />
+  </g>
+  <g 
+     class="icn icn--secondary-line-color"
+     fill="#797774"
+     stroke="#797774"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     >
+      <path d="m 2.5,2.5 h 19 v 3 h -19 z" />
+  </g>
+  <g id="symbol"
+     class="icn icn--area-color"
+     fill="#c8c6c4"
+     stroke="#3a3a38"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+      >
+      <path d="m 21.5,5.5 v -3 h -19 v 3 z" />
+  </g>
+  <g id="symbol"
+     class="icn icn--area-color"
+     fill="#fafafa"
+     stroke="#3a3a38"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+      >
+      <path d="m 6.5,11.5 h 11 z m 0,4 h 11 z" />
+  </g>
+  <g id="symbol"
+	 class="icn icn--highlight-color"  
+     fill="#83beec" 
+     stroke="#1e8bcd" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+      >
+      <path d="M 13.5 10.5 A 1 1 0 0 0 12.5 11.5 A 1 1 0 0 0 13.5 12.5 A 1 1 0 0 0 14.5 11.5 A 1 1 0 0 0 13.5 10.5 z M 10.5 14.5 A 1 1 0 0 0 9.5 15.5 A 1 1 0 0 0 10.5 16.5 A 1 1 0 0 0 11.5 15.5 A 1 1 0 0 0 10.5 14.5 z " />
+  </g>
+</svg>

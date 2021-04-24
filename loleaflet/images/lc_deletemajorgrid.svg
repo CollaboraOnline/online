@@ -1,1 +1,32 @@
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="#ed3d3b"><rect height="20" ry=".5" transform="matrix(0 -1 -1 0 0 0)" width="1" x="-5" y="-22"/><path d="m2.5 19c-.277 0-.5.223-.5.5s.223.5.5.5h11.371094l1-1z"/><rect height="20" ry=".5" transform="matrix(0 -1 -1 0 0 0)" width="1" x="-12" y="-22"/><path d="m22.285683 12.999968-4.285715 4.285714-4.285715-4.285714-.714285.714285 4.285714 4.285715-4.285714 4.285715.714285.714285 4.285715-4.285714 4.285715 4.285714.714285-.714285-4.285714-4.285715 4.285714-4.285715z"/></g></svg>
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="symbol"
+	 class="icn icn--highlight-color-line"  
+     fill="none" 
+     stroke="#1e8bcd" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+      >
+      <path d="m 2.5,4.5 h 19 z m 0,8 h 19 z m 0,8 h 19 z" />
+  </g>
+  <g id="symbol-background"
+     class="icn icn--background"
+     stroke="#fff" 
+     stroke-width="3px"
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+      >
+      <path d="m 22.5,22.5 -9,-9" />
+      <path d="m 13.5,22.5 9,-9" />
+  </g>
+  <g id="symbol"
+     class="icn icn--negative-color-line"
+     fill="none" 
+     stroke="#da4453" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+      >
+      <path d="m 22.5,22.5 -9,-9" />
+      <path d="m 13.5,22.5 9,-9" />
+  </g>
+</svg>
