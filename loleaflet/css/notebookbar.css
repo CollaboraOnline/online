@@ -437,7 +437,6 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 #Copy.notebookbar,
-#DataFilterAutoFilter.notebookbar,
 #clearFormatting.notebookbar {
 	margin-top: 10px;
 }
