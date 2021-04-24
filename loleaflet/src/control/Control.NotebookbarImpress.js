@@ -1107,11 +1107,14 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 	getTableTab: function() {
 		var content = [
 			{
-				'id': 'Table-Section-Layout1',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:TableDialog', 'presentation'),
+				'command': '.uno:TableDialog'
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
-						'id': 'SectionBottom55',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1132,7 +1135,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						]
 					},
 					{
-						'id': 'SectionBottom57',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1157,16 +1159,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:FormatArea'),
-				'command': '.uno:FormatArea'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:FillColor'),
-				'command': '.uno:FillColor'
-			},
-			{
-				'type': 'bigtoolitem',
 				'text': _UNO('.uno:MergeCells', 'presentation'),
 				'command': '.uno:MergeCells'
 			},
@@ -1181,11 +1173,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:SelectTable'
 			},
 			{
-				'id': 'Table-Section-Select1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'SectionBottom40',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1196,7 +1186,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						]
 					},
 					{
-						'id': 'SectionBottom62',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1210,11 +1199,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Table-Section-Optimize1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'SectionBottom84',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1231,16 +1218,10 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:CellVertBottom'),
 								'command': '.uno:CellVertBottom'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:ParaRightToLeft'),
-								'command': '.uno:ParaRightToLeft'
 							}
 						]
 					},
 					{
-						'id': 'SectionBottom85',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1267,11 +1248,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					}
 				],
 				'vertical': 'true'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:TableDialog', 'presentation'),
-				'command': '.uno:TableDialog'
 			}
 		];
 
