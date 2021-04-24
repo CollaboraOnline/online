@@ -768,7 +768,7 @@ int Socket::getPid() const
 #elif defined(__FreeBSD__)
     struct xucred creds;
     socklen_t credSize = sizeof(struct xucred);
-    if (getsockopt(_fd, 0, LOCAL_PEERCRED, &creds, &credSize) < 0)
+    if (getsockopt(_fd, SOL_LOCAL, LOCAL_PEERCRED, &creds, &credSize) < 0)
     {
         LOG_SYS("Failed to get pid via peer creds on " << _fd);
         return -1;
@@ -820,7 +820,7 @@ std::shared_ptr<Socket> LocalServerSocket::accept()
 #define CREDS_PID(c) c.cr_pid
         struct xucred creds;
         socklen_t credSize = sizeof(struct xucred);
-        if (getsockopt(rc, 0, LOCAL_PEERCRED, &creds, &credSize) < 0)
+        if (getsockopt(rc, SOL_LOCAL, LOCAL_PEERCRED, &creds, &credSize) < 0)
         {
             LOG_SYS("Failed to get peer creds on " << rc);
             ::close(rc);
