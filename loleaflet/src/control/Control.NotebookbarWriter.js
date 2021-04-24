@@ -1547,15 +1547,13 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var content = [
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertCaptionDialog', 'text'),
-				'command': '.uno:InsertCaptionDialog'
+				'text': _UNO('.uno:TableDialog', 'text'),
+				'command': '.uno:TableDialog'
 			},
 			{
-				'id': 'Table-Section-Layout1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'SectionBottom39',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1576,7 +1574,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'SectionBottom41',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1605,11 +1602,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:MergeCells'
 			},
 			{
-				'id': 'Table-Section-Merge1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA25',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1620,7 +1615,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB26',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1639,11 +1633,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:EntireCell'
 			},
 			{
-				'id': 'Table-Section-Select1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'SectionBottom84',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1659,7 +1651,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'SectionBottom85',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1678,11 +1669,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Table-Section-Optimize1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'SectionBottom44',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1699,16 +1688,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:CellVertBottom'),
 								'command': '.uno:CellVertBottom'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:ParaRightToLeft'),
-								'command': '.uno:ParaRightToLeft'
 							}
 						]
 					},
 					{
-						'id': 'SectionBottom101',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1747,11 +1730,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:TableNumberFormatDialog'
 			},
 			{
-				'id': 'Table-Section-FormatCalc1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'SectionBottom109',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1761,24 +1742,23 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:NumberFormatDecimal', 'text'),
-								'command': '.uno:NumberFormatDecimal'
+								'text': _UNO('.uno:NumberFormatDate', 'text'),
+								'command': '.uno:NumberFormatDate'
 							}
 						]
 					},
 					{
-						'id': 'SectionBottom110',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:NumberFormatPercent', 'text'),
-								'command': '.uno:NumberFormatPercent'
+								'text': _UNO('.uno:NumberFormatDecimal', 'text'),
+								'command': '.uno:NumberFormatDecimal'
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:NumberFormatDate', 'text'),
-								'command': '.uno:NumberFormatDate'
+								'text': _UNO('.uno:NumberFormatPercent', 'text'),
+								'command': '.uno:NumberFormatPercent'
 							}
 						]
 					}
@@ -1787,8 +1767,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:TableDialog', 'text'),
-				'command': '.uno:TableDialog'
+				'text': _UNO('.uno:InsertCaptionDialog', 'text'),
+				'command': '.uno:InsertCaptionDialog'
 			},
 		];
 
