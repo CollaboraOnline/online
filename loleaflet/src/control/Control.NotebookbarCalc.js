@@ -762,62 +762,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						]
 					},
 					{
-						'id': 'Data-Section-Group1',
-						'children': [
-							{
-								'id': 'LeftParaMargin14',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Group'),
-										'command': '.uno:Group'
-									}
-								]
-							},
-							{
-								'id': 'belowspacing16',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Ungroup'),
-										'command': '.uno:Ungroup'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					},
-					{
-						'id': 'Data-Section-Group2',
-						'children': [
-							{
-								'id': 'LeftParaMargin15',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:HideDetail'),
-										'command': '.uno:HideDetail'
-									}
-								]
-							},
-							{
-								'id': 'belowspacing17',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:ShowDetail'),
-										'command': '.uno:ShowDetail'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					},
-					{
 						'id': 'freeze-section1',
 						'type': 'container',
 						'children': [
@@ -946,6 +890,31 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:HyperlinkDialog'
 			},
 			{
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AddName', 'spreadsheet'),
+								'command': '.uno:AddName'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DefineName', 'spreadsheet'),
+								'command': '.uno:DefineName'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:DrawText'),
 				'command': '.uno:DrawText'
@@ -1051,54 +1020,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 		var content = [
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Calculate', 'spreadsheet'),
-				'command': '.uno:Calculate'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:DataDataPilotRun', 'spreadsheet'),
-				'command': '.uno:DataDataPilotRun'
-			},
-			{
-				'id': 'GroupPivotTable1',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'ToolBoxPivotTable1',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:RecalcPivotTable', 'spreadsheet'),
-								'command': '.uno:RecalcPivotTable'
-							}
-						]
-					},
-					{
-						'id': 'ToolBoxPivotTable2',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:DeletePivotTable', 'spreadsheet'),
-								'command': '.uno:DeletePivotTable'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'bigtoolitem',
 				'text': _UNO('.uno:DataSort', 'spreadsheet'),
 				'command': '.uno:DataSort'
 			},
 			{
-				'id': 'Data-Section-Sort1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LeftParaMargin8',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1106,46 +1034,15 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'text': _UNO('.uno:SortAscending', 'spreadsheet'),
 								'command': '.uno:SortAscending'
 							},
-							{}
 						]
 					},
 					{
-						'id': 'belowspacing8',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:SortDescending', 'spreadsheet'),
 								'command': '.uno:SortDescending'
-							},
-							{}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'Data-Section-Filter',
-				'children': [
-					{
-						'id': 'SectionBottom8',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:DataFilterAutoFilter', 'spreadsheet'),
-								'command': '.uno:DataFilterAutoFilter'
-							}
-						]
-					},
-					{
-						'id': 'SectionBottom88',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:DataFilterHideAutoFilter', 'spreadsheet'),
-								'command': '.uno:DataFilterHideAutoFilter'
 							}
 						]
 					}
@@ -1153,21 +1050,24 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Data-Section-Filter1',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:DataFilterAutoFilter', 'spreadsheet'),
+				'command': '.uno:DataFilterAutoFilter'
+			},
+			{
+				'type': 'container',
 				'children': [
 					{
-						'id': 'belowspacing9',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:DataFilterStandardFilter', 'spreadsheet'),
 								'command': '.uno:DataFilterStandardFilter'
-							}
+							},
 						]
 					},
 					{
-						'id': 'LeftParaMargin9',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1181,10 +1081,19 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Data-Section-Filter2',
+				'type': 'container',
 				'children': [
 					{
-						'id': 'belowspacing9',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DataFilterHideAutoFilter', 'spreadsheet'),
+								'command': '.uno:DataFilterHideAutoFilter'
+							},
+						]
+					},
+					{
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1193,9 +1102,29 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 								'command': '.uno:DataFilterRemoveFilter'
 							}
 						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Group'),
+				'command': '.uno:Group'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Ungroup'),
+								'command': '.uno:Ungroup'
+							}
+						]
 					},
 					{
-						'id': 'LeftParaMargin9',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1209,27 +1138,25 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Data-Section-NamedRanges',
+				'type': 'container',
 				'children': [
 					{
-						'id': 'LeftParaMargin161',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:AddName', 'spreadsheet'),
-								'command': '.uno:AddName'
+								'text': _UNO('.uno:ShowDetail'),
+								'command': '.uno:ShowDetail'
 							}
 						]
 					},
 					{
-						'id': 'belowspacing181',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:DefineName', 'spreadsheet'),
-								'command': '.uno:DefineName'
+								'text': _UNO('.uno:HideDetail'),
+								'command': '.uno:HideDetail'
 							}
 						]
 					}
@@ -1238,15 +1165,41 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Validation', 'spreadsheet'),
-				'command': '.uno:Validation'
+				'text': _UNO('.uno:Calculate', 'spreadsheet'),
+				'command': '.uno:Calculate'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:GoalSeekDialog', 'spreadsheet'),
+								'command': '.uno:GoalSeekDialog'
+							},
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Validation', 'spreadsheet'),
+								'command': '.uno:Validation'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			},
 			{
 				'id': 'Data-StatisticsMenu:Menu Statistic',
 				'type': 'menubutton',
 				'text': _UNO('.uno:StatisticsMenu', 'spreadsheet'),
 				'enabled': 'true'
-			}
+			},
 		];
 
 		return this.getTabPage('Data', content);
