@@ -35,14 +35,14 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'name': 'Data'
 			},
 			{
-				'text': _('Format'),
-				'id': '-7',
-				'name': 'Format'
-			},
-			{
 				'text': _('~Review'),
 				'id': '-6',
 				'name': 'Review'
+			},
+			{
+				'text': _('Format'),
+				'id': '-7',
+				'name': 'Format'
 			},
 			{
 				'text': _('~Help'),
@@ -60,8 +60,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				this.getInsertTab(),
 				this.getSheetTab(),
 				this.getDataTab(),
-				this.getFormatTab(),
 				this.getReviewTab(),
+				this.getFormatTab(),
 				this.getHelpTab()
 			], selectedId);
 	},
