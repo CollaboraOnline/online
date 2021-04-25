@@ -365,20 +365,14 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 								'command': '.uno:FontHeight'
 							},
 							{
-								'id': 'ExtTop6',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Grow'),
-										'command': '.uno:Grow'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Shrink'),
-										'command': '.uno:Shrink'
-									}
-								]
+								'type': 'toolitem',
+								'text': _UNO('.uno:Grow'),
+								'command': '.uno:Grow'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Shrink'),
+								'command': '.uno:Shrink'
 							}
 						],
 						'vertical': 'false'
