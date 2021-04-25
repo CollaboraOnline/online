@@ -253,7 +253,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:Paste'
 			},
 			{
-				'id': 'GroupB9',
 				'type': 'container',
 				'children': [
 					{
@@ -282,45 +281,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Home-Section-Slide',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA8',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:InsertPage', 'presentation'),
-								'command': '.uno:InsertPage'
-							}
-						]
-					},
-					{
-						'id': 'LineB9',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:DuplicatePage', 'presentation'),
-								'command': '.uno:DuplicatePage'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:DeletePage', 'presentation'),
-								'command': '.uno:DeletePage'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'Home-Section-Style',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'LineA7',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -331,7 +294,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						]
 					},
 					{
-						'id': 'LineB8',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -345,11 +307,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Home-Section-Format',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'box76',
 						'type': 'container',
 						'children': [
 							{
@@ -361,52 +321,37 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								],
 								'selectedCount': '1',
 								'selectedEntries': [
-									'71'
+									'0'
 								],
 								'command': '.uno:CharFontName'
 							},
 							{
-								'id': 'fontheight',
-								'type': 'toolbox',
-								'text': '',
-								'enabled': 'true',
-								'children': [
-									{
-										'id': 'fontsize',
-										'type': 'combobox',
-										'text': '18 pt',
-										'entries': [
-											'18 pt'
-										],
-										'selectedCount': '1',
-										'selectedEntries': [
-											'12'
-										],
-										'command': '.uno:FontHeight'
-									}
-								]
+								'id': 'fontsize',
+								'type': 'combobox',
+								'text': '12 pt',
+								'entries': [
+									'12 pt'
+								],
+								'selectedCount': '1',
+								'selectedEntries': [
+									'0'
+								],
+								'command': '.uno:FontHeight'
 							},
 							{
-								'id': 'ExtTop6',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Grow'),
-										'command': '.uno:Grow'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Shrink'),
-										'command': '.uno:Shrink'
-									}
-								]
+								'type': 'toolitem',
+								'text': _UNO('.uno:Grow'),
+								'command': '.uno:Grow'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Shrink'),
+								'command': '.uno:Shrink'
 							}
 						],
 						'vertical': 'false'
 					},
 					{
-						'id': 'GroupB11',
 						'type': 'container',
 						'children': [
 							{
@@ -437,17 +382,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 										'type': 'toolitem',
 										'text': _UNO('.uno:Shadowed'),
 										'command': '.uno:Shadowed'
-									}
-								]
-							},
-							{
-								'id': 'ExtTop2',
-								'type': 'toolbox',
-								'children': [
+									},
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:Spacing', 'presentation'),
-										'command': '.uno:Spacing'
+										'text': _UNO('.uno:FontworkGalleryFloater'),
+										'command': '.uno:FontworkGalleryFloater'
 									},
 									{
 										'type': 'toolitem',
@@ -468,15 +407,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Home-Section-Paragraph',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'GroupB16',
 						'type': 'container',
 						'children': [
 							{
-								'id': 'SectionBottom9',
 								'type': 'toolbox',
 								'children': [
 									{
@@ -495,12 +431,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 										'command': '.uno:CellVertBottom'
 									}
 								]
-							}
+							},
 						],
 						'vertical': 'false'
 					},
 					{
-						'id': 'GroupB15',
 						'type': 'container',
 						'children': [
 							{
@@ -521,9 +456,14 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 										'type': 'toolitem',
 										'text': _UNO('.uno:RightPara'),
 										'command': '.uno:RightPara'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:JustifyPara'),
+										'command': '.uno:JustifyPara'
 									}
 								]
-							}
+							},
 						],
 						'vertical': 'false'
 					}
@@ -531,17 +471,13 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Home-Section-Paragraph2',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'GroupB95',
 						'type': 'container',
 						'children': [
 							{
-								'id': 'SectionBottom98',
 								'type': 'toolbox',
-								'enabled': 'true',
 								'children': [
 									{
 										'type': 'toolitem',
@@ -552,207 +488,56 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 										'type': 'toolitem',
 										'text': _UNO('.uno:DefaultNumbering'),
 										'command': '.uno:DefaultNumbering'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:IncrementIndent'),
+										'command': '.uno:IncrementIndent'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:DecrementIndent'),
+										'command': '.uno:DecrementIndent'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:ParaLeftToRight'),
+										'command': '.uno:ParaLeftToRight'
 									}
 								]
-							}
+							},
 						],
 						'vertical': 'false'
 					},
 					{
-						'id': 'GroupB97',
 						'type': 'container',
 						'children': [
 							{
-								'id': 'SectionBottom143',
+								'id': 'SectionBottom13',
 								'type': 'toolbox',
 								'children': [
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:JustifyPara'),
-										'command': '.uno:JustifyPara'
+										'text': _UNO('.uno:ParaspaceIncrease'),
+										'command': '.uno:ParaspaceIncrease'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:ParaspaceDecrease'),
+										'command': '.uno:ParaspaceDecrease'
 									},
 									{
 										'type': 'toolitem',
 										'text': _UNO('.uno:LineSpacing'),
 										'command': '.uno:LineSpacing'
-									}
-								]
-							}
-						],
-						'vertical': 'false'
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'Home-Section-Paragraph3',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'SectionBottom145',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:IncrementIndent'),
-								'command': '.uno:IncrementIndent'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:DecrementIndent'),
-								'command': '.uno:DecrementIndent'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:ParaLeftToRight'),
-								'command': '.uno:ParaLeftToRight'
-							}
-						]
-					},
-					{
-						'id': 'SectionBottom146',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:ParaspaceIncrease'),
-								'command': '.uno:ParaspaceIncrease'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:ParaspaceDecrease'),
-								'command': '.uno:ParaspaceDecrease'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:ParaRightToLeft'),
-								'command': '.uno:ParaRightToLeft'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:BasicShapes'),
-				'command': '.uno:BasicShapes'
-			},
-			{
-				'id': 'Home-Section-DrawSection',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'shapes121',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:Text'),
-								'command': '.uno:Text'
-							}
-						]
-					},
-					{
-						'id': 'LineA282',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:VerticalText'),
-								'command': '.uno:VerticalText'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'Home-Section-DrawSection1',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'GroupB12',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'shapes12',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Line'),
-										'command': '.uno:Line'
 									},
-								]
-							}
-						],
-						'vertical': 'false'
-					},
-					{
-						'id': 'GroupB38',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'shapes15',
-								'type': 'toolbox',
-								'children': [
-									{
-										'id': 'shapes1',
-										'type': 'toolbox',
-										'children': [
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:ConnectorToolbox', 'presentation'),
-												'command': '.uno:ConnectorToolbox'
-											}
-										]
-									},
-								]
-							}
-						],
-						'vertical': 'false'
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'Home-Section-DrawSection2',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'GroupB93',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'LineA28',
-								'type': 'toolbox',
-								'children': [
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:XLineColor'),
-										'command': '.uno:XLineColor'
+										'text': _UNO('.uno:ParaRightToLeft'),
+										'command': '.uno:ParaRightToLeft'
 									}
 								]
-							}
-						],
-						'vertical': 'false'
-					},
-					{
-						'id': 'GroupB94',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'LineB29',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:FillColor'),
-										'command': '.uno:FillColor'
-									}
-								]
-							}
+							},
 						],
 						'vertical': 'false'
 					}
@@ -761,14 +546,114 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Presentation', 'presentation'),
+				'text': _UNO('.uno:Text'),
+				'command': '.uno:Text'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'LineA6',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:BasicShapes'),
+								'command': '.uno:BasicShapes'
+							}
+						]
+					},
+					{
+						'id': 'LineB7',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': 'Connectors',
+								'command': '.uno:ConnectorToolbox'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:XLineColor'),
+								'command': '.uno:XLineColor'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:FillColor'),
+								'command': '.uno:FillColor'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertGraphic'),
+								'command': '.uno:InsertGraphic'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertPage'),
+								'command': '.uno:InsertPage'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DuplicatePage'),
+								'command': '.uno:DuplicatePage'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertObjectChart'),
+								'command': '.uno:InsertObjectChart'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:InsertTable'),
+								'command': '.uno:InsertTable'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Presentation'),
 				'command': '.uno:Presentation'
 			},
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:SearchDialog'),
 				'command': '.uno:SearchDialog'
-			},
+			}
 		];
 
 		return this.getTabPage('Home', content);
