@@ -245,7 +245,7 @@ class CanvasSectionContainer {
 
 	constructor (canvasDOMElement: HTMLCanvasElement) {
 		this.canvas = canvasDOMElement;
-		this.context = canvasDOMElement.getContext('2d');
+		this.context = canvasDOMElement.getContext('2d', { alpha: false , desynchronized: true });
 		this.context.setTransform(1,0,0,1,0,0);
 		document.addEventListener('mousemove', this.onMouseMove.bind(this));
 		this.canvas.onmousedown = this.onMouseDown.bind(this);
