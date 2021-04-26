@@ -35,21 +35,21 @@
 }
 .main-nav.hasnotebookbar.text-color-indicator .ui-tab.selected.notebookbar{
 	color: rgb(3, 105, 163);
-	color: var(rgb(--blue1-txt-primary-color));
+	color: rgb(var(--blue1-txt-primary-color));
 	text-shadow: 0px 0px 0.2px rgb(3, 105, 163);
-	text-shadow: 0px 0px 0.2px var(rgb(--blue1-txt-primary-color));
+	text-shadow: 0px 0px 0.2px rgb(var(--blue1-txt-primary-color));
 }
 .main-nav.hasnotebookbar.spreadsheet-color-indicator .ui-tab.selected.notebookbar{
 	color: rgb(16, 104, 2);
-	color: var(rgb(--green0-txt-primary-color));
+	color: rgb(var(--green0-txt-primary-color));
 	text-shadow: 0px 0px 0.2px rgb(16, 104, 2);
-	text-shadow: 0px 0px 0.2px var(rgb(--green0-txt-primary-color));
+	text-shadow: 0px 0px 0.2px rgb(var(--green0-txt-primary-color));
 }
 .main-nav.hasnotebookbar.presentation-color-indicator .ui-tab.selected.notebookbar{
 	color: rgb(163, 62, 3);
-	color: var(rgb(--orange1-txt-primary-color));
+	color: rgb(var(--orange1-txt-primary-color));
 	text-shadow: 0px 0px 0.2px rgb(163, 62, 3);
-	text-shadow: 0px 0px 0.2px var(rgb(--orange1-txt-primary-color));
+	text-shadow: 0px 0px 0.2px rgb(var(--orange1-txt-primary-color));
 }
 .ui-tab.notebookbar:hover:not(.selected) {
 	border-radius: 0.1px;
@@ -106,25 +106,25 @@
 .hasnotebookbar.text-color-indicator #shortcuts-menubar-icon:before,
 .hasnotebookbar.text-color-indicator #shortcuts-menubar-icon:after {
 	background: rgb(3, 105, 163);
-	background: var(rgb(--blue1-txt-primary-color));
+	background: rgb(var(--blue1-txt-primary-color));
 }
 .hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon,
 .hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon:before,
 .hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon:after {
 	background: rgb(163, 62, 3);
-	background: var(rgb(--orange1-txt-primary-color));
+	background: rgb(var(--orange1-txt-primary-color));
 }
 .hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon,
 .hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon:before,
 .hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon:after {
 	background: rgb(163, 62, 3);
-	background: var(rgb(--orange1-txt-primary-color));
+	background: rgb(var(--orange1-txt-primary-color));
 }
 .hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon,
 .hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon:before,
 .hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon:after {
 	background: rgb(16, 104, 2);
-	background: var(rgb(--green0-txt-primary-color));
+	background: rgb(var(--green0-txt-primary-color));
 }
 
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar,
