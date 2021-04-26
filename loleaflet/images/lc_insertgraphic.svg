@@ -1,1 +1,30 @@
-<svg height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m0 0h24v24h-24z" fill="none"/><path d="m21 19v-14c0-1.1-.9-2-2-2h-14c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-12.5-5.5 2.5 3.01 3.5-4.51 4.5 6h-14z" fill="#555"/></svg>
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"
+     class="icn icn--area-color"
+     fill="#fafafa"
+     stroke="#3a3a38"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     >
+      <path d="m 2.5,2.5 h 19 v 19 h -19 z" />
+  </g>
+  <g id="symbol"
+	 class="icn icn--highlight-color-2"
+     fill="#f8db8f" 
+     stroke="#ed8733" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+      >
+      <path d="m 9.5,7.5 a 2,2 0 0 1 -2,2 2,2 0 0 1 -2,-2 2,2 0 0 1 2,-2 2,2 0 0 1 2,2 z" />
+  </g>
+  <g id="symbol"
+	 class="icn icn--highlight-color"  
+     fill="#83beec" 
+     stroke="#1e8bcd" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+      >
+      <path d="M 3.5,21 9,15.5 11,17 16,12.5 21.5,18 v 3.5 H 3.8 Z" />
+  </g>
+</svg>
