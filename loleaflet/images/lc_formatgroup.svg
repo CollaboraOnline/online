@@ -1,1 +1,22 @@
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m4 3c-.554 0-1 .446-1 1v9c0 .554.446 1 1 1h11c.554 0 1-.446 1-1v-9c0-.554-.446-1-1-1zm0 1h11v9h-11z" fill="#3a3a38"/><path d="m4 4h11v9h-11z" fill="#fafafa"/><path d="m9 10c-.554 0-1 .446-1 1v9c0 .554.446 1 1 1h11c.554 0 1-.446 1-1v-9c0-.554-.446-1-1-1zm0 1h11v9h-11z" fill="#3a3a38"/><path d="m16 11v2c0 .554-.446 1-1 1h-6v6h11v-9z" fill="#fafafa"/><g fill="#0063b1"><path d="m2 2h3v3h-3z"/><path d="m19 2h3v3h-3z"/><path d="m2 19h3v3h-3z"/><path d="m19 19h3v3h-3z"/></g><g fill="#fafafa"><path d="m3 3h1v1h-1z"/><path d="m20 3h1v1h-1z"/><path d="m20 20h1v1h-1z"/><path d="m3 20h1v1h-1z"/></g></svg>
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="symbol"
+     class="icn icn--area-color-line"
+     fill="none"
+     stroke="#3a3a38"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+      >
+      <path d="m 3.5,3.5 h 12 v 10 h -12 z" />
+      <path d="m 8.5,10.5 h 12 v 10 h -12 z" />
+  </g>
+  <g id="symbol"
+	 class="icn icn--highlight-color"  
+     fill="#83beec" 
+     stroke="#1e8bcd" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+      >
+      <path d="m 2.5,2.5 v 2 h 2 v -2 z m 17,0 v 2 h 2 v -2 z m -17,17 v 2 h 2 v -2 z m 17,0 v 2 h 2 v -2 z" />
+  </g>
+</svg>
