@@ -1143,37 +1143,29 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 		var content = [
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:FlipVertical'),
-				'command': '.uno:FlipVertical'
+				'text': _UNO('.uno:TransformDialog', 'text'),
+				'command': '.uno:TransformDialog'
 			},
 			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:FlipHorizontal'),
-				'command': '.uno:FlipHorizontal'
-			},
-			{
-				'id': 'Draw-Section-FormatLineArea1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'third10',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:FormatLine'),
-								'command': '.uno:FormatLine'
+								'text': _UNO('.uno:FlipVertical'),
+								'command': '.uno:FlipVertical'
 							}
 						]
 					},
 					{
-						'id': 'third13',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:FormatArea'),
-								'command': '.uno:FormatArea'
+								'text': _UNO('.uno:FlipHorizontal'),
+								'command': '.uno:FlipHorizontal'
 							}
 						]
 					}
@@ -1181,47 +1173,25 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Draw-Section-FormatLineArea3',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'box6',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'SectionBottom38',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:XLineColor'),
-										'command': '.uno:XLineColor'
-									}
-								]
-							}
-						],
-						'vertical': 'false'
-					},
-					{
-						'id': 'SectionBottom50',
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': '',
-								'type': 'window',
-								'children': [
-									{
-										'id': 'colortoolbox',
-										'type': 'toolbox',
-										'children': [
-											{
-												'type': 'toolitem',
-												'text': _UNO('.uno:FillColor'),
-												'command': '.uno:FillColor'
-											}
-										]
-									}
-								]
+								'type': 'toolitem',
+								'text': _UNO('.uno:XLineColor'),
+								'command': '.uno:XLineColor'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:FillColor'),
+								'command': '.uno:FillColor'
 							}
 						]
 					}
@@ -1229,168 +1199,127 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Draw-Section-ObjectAlign1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'AlignGroup1',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'Align1',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:ObjectAlignLeft'),
-										'command': '.uno:ObjectAlignLeft'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:AlignCenter'),
-										'command': '.uno:AlignCenter'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:ObjectAlignRight'),
-										'command': '.uno:ObjectAlignRight'
-									}
-								]
-							},
-							{
-								'id': 'Align2',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:AlignUp'),
-										'command': '.uno:AlignUp'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:AlignMiddle'),
-										'command': '.uno:AlignMiddle'
-									},
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:AlignDown'),
-										'command': '.uno:AlignDown'
-									}
-								]
-							}
-						],
-						'vertical': 'true'
-					}
-				],
-				'vertical': 'false'
-			},
-			{
-				'id': 'Draw-Section-Arrange',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'grid2',
-						'type': 'grid',
-						'children': [
-							{
-								'id': 'first8',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:BringToFront'),
-										'command': '.uno:BringToFront'
-									}
-								],
-								'left': '0',
-								'top': '0'
-							},
-							{
-								'id': 'first9',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Forward'),
-										'command': '.uno:Forward'
-									}
-								],
-								'left': '1',
-								'top': '0'
-							},
-							{
-								'id': 'second1',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:SendToBack'),
-										'command': '.uno:SendToBack'
-									}
-								],
-								'left': '0',
-								'top': '1'
-							},
-							{
-								'id': 'Second1',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:Backward'),
-										'command': '.uno:Backward'
-									}
-								],
-								'left': '1',
-								'top': '1'
-							}
-						]
-					}
-				]
-			},
-			{
-				'id': 'Draw-Section-MergeCombine',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'SectionBottom147',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:Combine', 'presentation'),
-								'command': '.uno:Combine'
+								'text': _UNO('.uno:WrapOff', 'text'),
+								'command': '.uno:WrapOff'
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:Dismantle', 'presentation'),
-								'command': '.uno:Dismantle'
+								'text': _UNO('.uno:WrapOn', 'text'),
+								'command': '.uno:WrapOn'
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:DistributeSelection', 'presentation'),
-								'command': '.uno:DistributeSelection'
+								'text': _UNO('.uno:WrapIdeal', 'text'),
+								'command': '.uno:WrapIdeal'
 							}
 						]
 					},
 					{
-						'id': 'SectionBottom148',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:Merge', 'presentation'),
-								'command': '.uno:Merge'
+								'text': _UNO('.uno:WrapLeft', 'text'),
+								'command': '.uno:WrapLeft'
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:Substract', 'presentation'),
-								'command': '.uno:Substract'
+								'text': _UNO('.uno:WrapThrough', 'text'),
+								'command': '.uno:WrapThrough'
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:Intersect', 'presentation'),
-								'command': '.uno:Intersect'
+								'text': _UNO('.uno:WrapRight', 'text'),
+								'command': '.uno:WrapRight'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectAlignLeft'),
+								'command': '.uno:ObjectAlignLeft'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignCenter'),
+								'command': '.uno:AlignCenter'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectAlignRight'),
+								'command': '.uno:ObjectAlignRight'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignUp'),
+								'command': '.uno:AlignUp'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignMiddle'),
+								'command': '.uno:AlignMiddle'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignDown'),
+								'command': '.uno:AlignDown'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:BringToFront'),
+								'command': '.uno:BringToFront'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SendToBack'),
+								'command': '.uno:SendToBack'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectForwardOne'),
+								'command': '.uno:ObjectForwardOne'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectBackOne'),
+								'command': '.uno:ObjectBackOne'
 							}
 						]
 					}
@@ -1403,11 +1332,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:FormatGroup'
 			},
 			{
-				'id': 'Draw-Section-Group1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'SectionBottom52',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1418,7 +1345,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						]
 					},
 					{
-						'id': 'SectionBottom53',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1433,9 +1359,66 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:FontworkGalleryFloater'),
-				'command': '.uno:FontworkGalleryFloater'
-			}
+				'text': _UNO('.uno:Text'),
+				'command': '.uno:Text'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'LineA6',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:BasicShapes'),
+								'command': '.uno:BasicShapes'
+							}
+						]
+					},
+					{
+						'id': 'LineB7',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': 'Connectors',
+								'command': '.uno:ConnectorToolbox'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'Insert-Text-Fontwork',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'LineA153',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:FontworkGalleryFloater'),
+								'command': '.uno:FontworkGalleryFloater'
+							}
+						]
+					},
+					{
+						'id': 'LineB163',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:VerticalText', 'text'),
+								'command': '.uno:VerticalText'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
 		];
 
 		return this.getTabPage('Draw', content);
