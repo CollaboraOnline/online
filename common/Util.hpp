@@ -1221,6 +1221,13 @@ int main(int argc, char**argv)
         return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
     }
 
+    /**
+     * Similar to std::atoi() but does not require p to be null-terminated.
+     *
+     * Returns std::numeric_limits<int>::min/max() if the result would overflow.
+     */
+    int safe_atoi(const char* p, int len);
+
 } // end namespace Util
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
