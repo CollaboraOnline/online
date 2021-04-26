@@ -465,14 +465,27 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 	height: 60px;
 	width: 530px;
 	overflow-x: hidden;
-	border: 1px dashed silver;
 	padding: 5px;
+	padding: 0px;
+	border: 1px solid #c0c0c0;
+	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
+	-webkit-box-shadow: 0 0 3px #ccc;
+	box-shadow: inset 0 0 3px #ccc;
 }
 
 #stylesview .ui-iconview-entry {
 	width: 30%;
-	margin-left: 5px;
-	margin-top: 5px;
+	height: 60px;
+	padding: 2px;
+	box-sizing: border-box;
+	border-radius: 0;
+}
+
+#stylesview .ui-iconview-entry.selected {
+	border: 1px solid var(--gray-light-txt--color);
+	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
+	-webkit-box-shadow: 0 0 2px var(--gray-light-txt--color);
+	box-shadow: 0 0 2px var(--gray-light-txt--color);
 }
 
 #stylesview .ui-iconview-icon img {
@@ -494,13 +507,14 @@ div[id*='Row'].notebookbar, div[id*='Column'].notebookbar, #SendToBack.notebookb
 }
 
 #stylesview .ui-iconview-entry:not(.selected) {
-	border-radius: 3px;
-	border: 2px solid transparent;
+	border: 1px solid transparent;
 }
 
 #stylesview .ui-iconview-entry:hover {
-	border-radius: 3px;
-	border: 2px solid #e6e6e6b0;
+	border: 1px solid #ccc;
+	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
+	-webkit-box-shadow: 0 0 3px 1px #8080804f, inset -0.5px -0.5px 0 0.5px #ccc, inset 0.5px 0.5px 0 0.5px #ccc;
+	box-shadow: 0 0 3px 1px #8080804f, inset -0.5px -0.5px 0 0.5px #ccc, inset 0.5px 0.5px 0 0.5px #ccc;
 	cursor: pointer;
 }
 
