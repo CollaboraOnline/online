@@ -64,6 +64,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testParseUri);
     CPPUNIT_TEST(testParseUriUrl);
     CPPUNIT_TEST(testParseUrl);
+    CPPUNIT_TEST(testSafeAtoi);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -95,6 +96,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testParseUri();
     void testParseUriUrl();
     void testParseUrl();
+    void testSafeAtoi();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -1953,6 +1955,53 @@ void WhiteBoxTests::testParseUrl()
 
     LOK_ASSERT_EQUAL(std::string("/some/path"),
                      net::parseUrl("https://sub.domain.com:80/some/path"));
+}
+
+void WhiteBoxTests::testSafeAtoi()
+{
+    {
+        std::string s("7");
+        LOK_ASSERT_EQUAL(7, Util::safe_atoi(s.data(), s.size()));
+    }
+    {
+        std::string s("+7");
+        LOK_ASSERT_EQUAL(7, Util::safe_atoi(s.data(), s.size()));
+    }
+    {
+        std::string s("-7");
+        LOK_ASSERT_EQUAL(-7, Util::safe_atoi(s.data(), s.size()));
+    }
+    {
+        std::string s("42");
+        LOK_ASSERT_EQUAL(42, Util::safe_atoi(s.data(), s.size()));
+    }
+    {
+        std::string s("42");
+        LOK_ASSERT_EQUAL(4, Util::safe_atoi(s.data(), 1));
+    }
+    {
+        std::string s("  42");
+        LOK_ASSERT_EQUAL(42, Util::safe_atoi(s.data(), s.size()));
+    }
+    {
+        std::string s("42xy");
+        LOK_ASSERT_EQUAL(42, Util::safe_atoi(s.data(), s.size()));
+    }
+    {
+        // Make sure signed integer overflow doesn't happen.
+        std::string s("9999999990");
+        // Good:       2147483647
+        // Bad:        1410065398
+        LOK_ASSERT_EQUAL(std::numeric_limits<int>::max(), Util::safe_atoi(s.data(), s.size()));
+    }
+    {
+        std::string s("123");
+        s[1] = '\0';
+        LOK_ASSERT_EQUAL(1, Util::safe_atoi(s.data(), s.size()));
+    }
+    {
+        LOK_ASSERT_EQUAL(0, Util::safe_atoi(nullptr, 0));
+    }
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
