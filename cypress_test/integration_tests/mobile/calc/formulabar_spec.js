@@ -203,7 +203,7 @@ describe('Formula bar tests.', function() {
 
 		cy.get('.ui-content.level-1.mobile-wizard[title=\'AND\'] .func-info-sig')
 			.should('be.visible')
-			.should('contain.text', 'AND( Logical value 1, Logical value 2, ...');
+			.should('contain.text', 'AND( Logical value 1, Logical value 2, ');
 
 		cy.get('.ui-content.level-1.mobile-wizard[title=\'AND\'] .func-info-desc')
 			.should('be.visible')
