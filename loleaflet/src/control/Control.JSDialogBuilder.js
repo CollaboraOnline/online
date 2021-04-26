@@ -357,7 +357,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_cleanText: function(text) {
 		if (!text)
 			return '';
-		return text.replace('~', '').replace('...', '');
+		return text.replace('~', '');
 	},
 
 	_cleanValueFromUnits: function(text) {
@@ -2398,7 +2398,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(div).addClass('inline');
 				label = L.DomUtil.create('span', 'ui-content unolabel', div);
 				label.for = buttonId;
-				label.innerHTML = builder._cleanText(data.text);
+				label.innerHTML = data.text;
 
 				controls['label'] = label;
 			}
