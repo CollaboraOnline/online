@@ -1,11 +1,11 @@
 <?xml-stylesheet type="text/css" href="icons.css" ?>
 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path
-	 class="icn icn--shape-color" 
-     d="m22 12a10 8 0 0 1 -10 8 10 8 0 0 1 -10-8 10 8 0 0 1 10-8 10 8 0 0 1 10 8z"
-     fill="#fafafa" 
-	 stroke="#3a3a38" 
-	 stroke-linecap="round" 
+	 class="icn icn--highlight-color"
+     d="m12 4.5a9.5 7.5 0 0 0 -9.5 7.5 9.5 7.5 0 0 0 9.5 7.5 9.5 7.5 0 0 0 9.5-7.5 9.5 7.5 0 0 0 -9.5-7.5"
+     fill="#83beec"
+	 stroke="#1e8bcd"
+	 stroke-linecap="round"
 	 stroke-linejoin="round"
      />
 </svg>
