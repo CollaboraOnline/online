@@ -1135,6 +1135,28 @@ void WhiteBoxTests::testStringVector()
 
     CPPUNIT_ASSERT(vector.equals(0, vector2, 0));
     CPPUNIT_ASSERT(!vector.equals(0, vector2, 1));
+
+    {
+        StringVector tokens;
+        tokens.push_back("a=1");
+        uint32_t value{};
+        CPPUNIT_ASSERT(tokens.getUInt32(0, "a", value));
+        CPPUNIT_ASSERT_EQUAL(static_cast<uint32_t>(1), value);
+
+        // Prefix does not match.
+        CPPUNIT_ASSERT(!tokens.getUInt32(0, "b", value));
+
+        // Index is out of bounds.
+        CPPUNIT_ASSERT(!tokens.getUInt32(1, "a", value));
+
+        // Expected key is prefix of actual key.
+        tokens.push_back("bb=1");
+        CPPUNIT_ASSERT(!tokens.getUInt32(1, "b", value));
+
+        // Actual key is prefix of expected key.
+        tokens.push_back("c=1");
+        CPPUNIT_ASSERT(!tokens.getUInt32(1, "cc", value));
+    }
 }
 
 void WhiteBoxTests::testRequestDetails_DownloadURI()
