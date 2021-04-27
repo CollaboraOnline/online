@@ -3405,6 +3405,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onUpdateCursor: function (scroll, zoom, keepCaretPositionRelativeToScreen) {
 
 		if (!this._visibleCursor ||
+			this._isEmptyRectangle(this._visibleCursor) ||
 			this._referenceMarkerStart.isDragged ||
 			this._referenceMarkerEnd.isDragged ||
 			this._map.ignoreCursorUpdate()) {
