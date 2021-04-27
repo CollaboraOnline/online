@@ -215,9 +215,9 @@ public:
         TileWireId wireId = 0;
         for (size_t i = 0; i < tokens.size(); ++i)
         {
-            if (LOOLProtocol::getTokenUInt32(tokens[i], "oldwid", oldWireId))
+            if (tokens.getUInt32(i, "oldwid", oldWireId))
                 ;
-            else if (LOOLProtocol::getTokenUInt32(tokens[i], "wid", wireId))
+            else if (tokens.getUInt32(i, "wid", wireId))
                 ;
             else
             {
