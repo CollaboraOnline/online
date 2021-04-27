@@ -15,7 +15,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			this._addButton = L.control.mobileSlide();
 			L.DomUtil.addClass(L.DomUtil.get('mobile-edit-button'), 'impress');
 		}
-		this._spaceBetweenParts = 100; // In twips. This is used when all parts of an Impress or Draw document is shown in one view (like a Writer file). This mode is used when document is read only.
+		this._spaceBetweenParts = 300; // In twips. This is used when all parts of an Impress or Draw document is shown in one view (like a Writer file). This mode is used when document is read only.
 
 		// app.file variable should exist, this is a precaution.
 		if (!app.file)
@@ -27,7 +27,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		if (app.file.readOnly)
 			app.file.fileBasedView = true;
 		else
-			app.file.partBasedView = true;
+			app.file.partBasedView = true; // For Writer and Calc, this one should always be "true".
 
 		this._partHeightTwips = 0; // Single part's height.
 		this._partWidthTwips = 0; // Single part's width. These values are equal to _docWidthTwips & _docHeightTwips when app.file.partBasedView is true.
