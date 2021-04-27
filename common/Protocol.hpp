@@ -74,13 +74,6 @@ namespace LOOLProtocol
         return false;
     }
 
-    inline
-    bool parseNameIntegerPair(const std::string& token, std::string& name, int& value)
-    {
-        std::string strValue;
-        return parseNameValuePair(token, name, strValue, '=') && stringToInteger(strValue, value);
-    }
-
     bool getTokenInteger(const std::string& token, const std::string& name, int& value);
     bool getTokenUInt32(const std::string& token, const std::string& name, uint32_t& value);
     bool getTokenUInt64(const std::string& token, const std::string& name, uint64_t& value);
