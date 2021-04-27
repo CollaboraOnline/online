@@ -1146,6 +1146,26 @@ void WhiteBoxTests::testStringVector()
         tokens.push_back("c=1");
         CPPUNIT_ASSERT(!tokens.getUInt32(1, "cc", value));
     }
+
+    {
+        StringVector tokens;
+        tokens.push_back("a=1");
+        std::string name;
+        int value{};
+        CPPUNIT_ASSERT(tokens.getNameIntegerPair(0, name, value));
+        CPPUNIT_ASSERT_EQUAL(std::string("a"), name);
+        CPPUNIT_ASSERT_EQUAL(1, value);
+
+        tokens.push_back("aa=1");
+        CPPUNIT_ASSERT(tokens.getNameIntegerPair(1, name, value));
+        CPPUNIT_ASSERT_EQUAL(std::string("aa"), name);
+        CPPUNIT_ASSERT_EQUAL(1, value);
+
+        tokens.push_back("a=11");
+        CPPUNIT_ASSERT(tokens.getNameIntegerPair(2, name, value));
+        CPPUNIT_ASSERT_EQUAL(std::string("a"), name);
+        CPPUNIT_ASSERT_EQUAL(11, value);
+    }
 }
 
 void WhiteBoxTests::testRequestDetails_DownloadURI()

@@ -49,4 +49,34 @@ bool StringVector::getUInt32(std::size_t index, const std::string& key, uint32_t
     return false;
 }
 
+bool StringVector::getNameIntegerPair(std::size_t index, std::string& name, int& value) const
+{
+    if (index >= _tokens.size())
+    {
+        return false;
+    }
+
+    const StringToken& token = _tokens[index];
+    size_t mid = std::string::npos;
+    for (size_t i = token._index; i < token._index + token._length; ++i)
+    {
+        if (_string[i] != '=')
+        {
+            continue;
+        }
+
+        mid = i;
+        break;
+    }
+    if (mid == std::string::npos)
+    {
+        return false;
+    }
+
+    name = _string.substr(token._index, mid - token._index);
+    size_t offset = mid + 1;
+    value = Util::safe_atoi(&_string[offset], token._index + token._length - offset);
+    return value > std::numeric_limits<int>::min() && value < std::numeric_limits<int>::max();
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
