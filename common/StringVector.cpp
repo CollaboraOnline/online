@@ -7,6 +7,8 @@
 
 #include "StringVector.hpp"
 
+#include "Util.hpp"
+
 bool StringVector::equals(std::size_t index, const StringVector& other, std::size_t otherIndex)
 {
     if (index >= _tokens.size())
@@ -24,6 +26,27 @@ bool StringVector::equals(std::size_t index, const StringVector& other, std::siz
     int ret = _string.compare(token._index, token._length, other._string, otherToken._index,
                               otherToken._length);
     return ret == 0;
+}
+
+bool StringVector::getUInt32(std::size_t index, const std::string& key, uint32_t& value) const
+{
+    if (index >= _tokens.size())
+    {
+        return false;
+    }
+
+    const StringToken& token = _tokens[index];
+
+    size_t offset = key.size() + 1;
+    if (token._length > offset &&
+            _string.compare(token._index, key.size(), key, 0, key.size()) == 0 &&
+            _string[token._index + key.size()] == '=')
+    {
+        value = Util::safe_atoi(&_string[token._index + offset], token._length - offset);
+        return value < std::numeric_limits<int>::max();
+    }
+
+    return false;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
