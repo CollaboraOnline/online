@@ -5455,9 +5455,141 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._map.fire('docsize', {x: scrollPixelLimits.x, y: scrollPixelLimits.y, extraSize: extraSize});
 	},
 
+	// In file based view, all parts may be drawn, not only selected part.
+	_getTileInfoForFileBasedView: function (currentX, currentY, zoom, partHeightPixels, queue) {
+		var yMin = currentY;
+		var yMax = yMin + this._tileSize;
+
+		var parts = [];
+		for (var i = 0; i < this._parts; i++) {
+			var partMin = i * partHeightPixels;
+			var partMax = (i + 1) * partHeightPixels;
+			if ((yMin >= partMin && yMin <= partMax) || (yMax >= partMin && yMax <= partMax)) {
+				parts.push(i);
+			}
+		}
+
+		for (i = 0; i < parts.length; i++) {
+			var yMinLocal = yMin - parts[i] * partHeightPixels;
+			if (yMinLocal >= 0) {
+				yMinLocal = yMinLocal - yMinLocal % this._tileSize;
+				queue.push(new L.TileCoordData(currentX, yMinLocal, zoom, parts[i]));
+			}
+
+			var yMaxLocal = yMax - parts[i] * partHeightPixels;
+			if (yMaxLocal >= 0) {
+				yMaxLocal = yMaxLocal - yMaxLocal % this._tileSize;
+				if (yMaxLocal !== yMinLocal)
+					queue.push(new L.TileCoordData(currentX, yMaxLocal, zoom, parts[i]));
+			}
+		}
+	},
+
+	_sortFileBasedQueue: function (queue) {
+		for (var i = 0; i < queue.length - 1; i++) {
+			for (var j = i + 1; j < queue.length; j++) {
+				var a = queue[i];
+				var b = queue[j];
+				var switchTiles = false;
+
+				if (a.part === b.part) {
+					if (a.y > b.y) {
+						switchTiles = true;
+					}
+					else if (a.y === b.y) {
+						switchTiles = a.x > b.x;
+					}
+					else {
+						switchTiles = false;
+					}
+				}
+				else {
+					switchTiles = a.part > b.part;
+				}
+
+				if (switchTiles) {
+					var temp = a;
+					queue[i] = b;
+					queue[j] = temp;
+				}
+			}
+		}
+	},
+
+	_updateFileBasedView: function (checkOnly) {
+		if (this._partHeightTwips === 0) // This is true before status message is handled.
+			return [];
+
+		var zoom = Math.round(this._map.getZoom());
+
+		var ratio = this._tileSize / this._tileHeightTwips;
+		var partHeightPixels = Math.round((this._partHeightTwips + this._spaceBetweenParts) * ratio);
+
+		var topLeft = app.sectionContainer.getDocumentTopLeft();
+		var bottomRight = app.sectionContainer.getDocumentBottomRight();
+
+		topLeft = [topLeft[0] - topLeft[0] % this._tileSize, topLeft[1] - topLeft[1] % this._tileSize];
+		bottomRight = [bottomRight[0] - bottomRight[0] % this._tileSize, bottomRight[1] - bottomRight[1] % this._tileSize];
+
+		var currentX = topLeft[0];
+		var currentY = topLeft[1];
+
+		var queue = [];
+		while (currentY <= bottomRight[1]) {
+			if (currentX > bottomRight[0]) {
+				currentX = topLeft[0];
+				currentY += this._tileSize;
+			}
+
+			this._getTileInfoForFileBasedView(currentX, currentY, zoom, partHeightPixels, queue);
+			currentX += this._tileSize;
+		}
+
+		this._sortFileBasedQueue(queue);
+
+		if (checkOnly) {
+			return queue;
+		}
+		else {
+			this._sendClientVisibleArea();
+			this._sendClientZoom();
+
+			for (var i = 0; i < queue.length; i++) {
+				var key = this._tileCoordsToKey(queue[i]);
+				var tile = this._tiles[key];
+				if (!tile) {
+					tile = this.createTile(this._wrapCoords(queue[i]), L.bind(this._tileReady, this, queue[i]));
+
+					// save tile in cache
+					this._tiles[key] = {
+						el: tile,
+						wid: 0,
+						coords: queue[i],
+						current: true
+					};
+
+					if (tile && this._tileCache[key]) {
+						tile.src = this._tileCache[key];
+					}
+					else {
+						this._sendTileCombineRequest(queue[i].part, (queue[i].x / this._tileSize) * this._tileWidthTwips, (queue[i].y / this._tileSize) * this._tileHeightTwips);
+					}
+				}
+				else if (!tile.loaded) {
+					this._sendTileCombineRequest(queue[i].part, (queue[i].x / this._tileSize) * this._tileWidthTwips, (queue[i].y / this._tileSize) * this._tileHeightTwips);
+				}
+			}
+		}
+	},
+
 	_update: function (center, zoom) {
 		var map = this._map;
 		if (!map || this._documentInfo === '') {
+			return;
+		}
+
+		if (app.file && app.file.fileBasedView) {
+			this._updateFileBasedView();
 			return;
 		}
 
@@ -6015,7 +6147,46 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	_onTileMsgFileBasedView: function (textMsg, img) {
+		var tileMsgObj = app.socket.parseServerCmd(textMsg);
+		var ratio = [this._tileSize / this._tileWidthTwips, this._tileSize / this._tileHeightTwips];
+		var coords = new L.TileCoordData(tileMsgObj.x * ratio[0], tileMsgObj.y * ratio[1]);
+		coords.z = tileMsgObj.zoom;
+		coords.part = tileMsgObj.part;
+
+		var tile = this._tiles[coords.key()];
+
+		if (tile) {
+			if (tile._invalidCount > 0) {
+				tile._invalidCount -= 1;
+			}
+
+			tile.el.src = img;
+			tile.wireId = tileMsgObj.wireId;
+		}
+
+		if (tileMsgObj.id !== undefined) {
+			this._map.fire('tilepreview', {
+				tile: img,
+				id: tileMsgObj.id,
+				width: tileMsgObj.width,
+				height: tileMsgObj.height,
+				part: tileMsgObj.part,
+				docType: this._docType
+			});
+		}
+
+		// Send acknowledgment, that the tile message arrived
+		var tileID = tileMsgObj.part + ':' + tileMsgObj.x + ':' + tileMsgObj.y + ':' + tileMsgObj.tileWidth + ':' + tileMsgObj.tileHeight + ':' + tileMsgObj.nviewid;
+		app.socket.sendMessage('tileprocessed tile=' + tileID);
+	},
+
 	_onTileMsg: function (textMsg, img) {
+		if (app.file.fileBasedView) {
+			this._onTileMsgFileBasedView(textMsg, img);
+			return;
+		}
+
 		var tileMsgObj = app.socket.parseServerCmd(textMsg);
 		this._checkTileMsgObject(tileMsgObj);
 		var coords = this._tileMsgToCoords(tileMsgObj);
