@@ -175,8 +175,38 @@ class TilesSection {
 			this.context.fillRect(offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
 		}
 
-		this.context.drawImage(tile.el, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
-		this.oscCtxs[0].drawImage(tile.el, extendedOffset.x, extendedOffset.y, ctx.tileSize.x, ctx.tileSize.y);
+		if (app.file && app.file.fileBasedView) {
+            var tileSize = this.sectionProperties.docLayer._tileSize;
+			var ratio = tileSize / this.sectionProperties.docLayer._tileHeightTwips;
+			var partHeightPixels = Math.round((this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts) * ratio);
+
+			offset.y = tile.coords.part * partHeightPixels + tile.coords.y - this.documentTopLeft[1];
+
+			this.context.drawImage(tile.el, offset.x, offset.y, tileSize, tileSize);
+
+			if (tile.coords.part === 0)
+				this.context.strokeStyle = 'black';
+			else if (tile.coords.part === 1)
+				this.context.strokeStyle = 'red';
+			else if (tile.coords.part === 2)
+				this.context.strokeStyle = 'blue';
+			else if (tile.coords.part === 3)
+				this.context.strokeStyle = 'yellow';
+			else if (tile.coords.part === 4)
+				this.context.strokeStyle = 'purple';
+			else if (tile.coords.part === 5)
+				this.context.strokeStyle = 'red';
+			else if (tile.coords.part === 6)
+				this.context.strokeStyle = 'blue';
+			else if (tile.coords.part === 7)
+				this.context.strokeStyle = 'yellow';
+
+			this.context.strokeRect(offset.x, offset.y, tileSize, tileSize);
+		}
+		else {
+			this.context.drawImage(tile.el, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
+			this.oscCtxs[0].drawImage(tile.el, extendedOffset.x, extendedOffset.y, ctx.tileSize.x, ctx.tileSize.y);
+		}
 	}
 
 	public paint (tile: any, ctx: any, async: boolean = false) {
@@ -196,24 +226,37 @@ class TilesSection {
 
 	private forEachTileInView(zoom: number, part: number, ctx: any,
 		callback: (tile: any, coords: any) => boolean) {
-
+		var fileBasedView = app.file && app.file.fileBasedView;
 		var docLayer = this.sectionProperties.docLayer;
 		var tileRanges = ctx.paneBoundsList.map(docLayer._pxBoundsToTileRange, docLayer);
-		for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
-			var tileRange = tileRanges[rangeIdx];
-			for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
-				for (var i: number = tileRange.min.x; i <= tileRange.max.x; ++i) {
-					var coords = new L.TileCoordData(
-						i * ctx.tileSize.x,
-						j * ctx.tileSize.y,
-						zoom,
-						part);
 
-					var key = coords.key();
-					var tile = docLayer._tiles[key];
+		if (fileBasedView) {
+			var coordList: Array<any> = this.sectionProperties.docLayer._updateFileBasedView(true);
 
-					if (!callback(tile, coords))
-						return;
+			for (var k: number = 0; k < coordList.length; k++) {
+				var key = coordList[k].key();
+				var tile = docLayer._tiles[key];
+				if (!callback(tile, coordList[k]))
+					return;
+			}
+		}
+		else {
+			for (var rangeIdx = 0; rangeIdx < tileRanges.length; ++rangeIdx) {
+				var tileRange = tileRanges[rangeIdx];
+				for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
+					for (var i: number = tileRange.min.x; i <= tileRange.max.x; ++i) {
+						var coords = new L.TileCoordData(
+							i * ctx.tileSize.x,
+							j * ctx.tileSize.y,
+							zoom,
+							part);
+
+						var key = coords.key();
+						var tile = docLayer._tiles[key];
+
+						if (!callback(tile, coords))
+							return;
+					}
 				}
 			}
 		}

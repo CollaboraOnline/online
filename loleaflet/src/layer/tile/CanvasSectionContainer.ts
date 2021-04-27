@@ -236,7 +236,7 @@ class CanvasSectionContainer {
 	private multiTouch: boolean = false;
 	private touchCenter: Array<number> = null;
 	private potentialLongPress: boolean = false;
-	private clearColor: string = '#f8f9fa';
+	private clearColor: string = 'green'; // '#f8f9fa';
 	private touchEventInProgress: boolean = false; // This prevents multiple calling of mouse down and up events.
 	public testing: boolean = false; // If this set to true, container will create a div element for every section. So, cypress tests can find where to click etc.
 	public lowestPropagatedBoundSection: string = null; // Event propagating to bound sections. The first section which stops propagating and the sections those are on top of that section, get the event.
