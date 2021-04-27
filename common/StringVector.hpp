@@ -140,6 +140,7 @@ public:
     bool equals(std::size_t index, const StringVector& other, std::size_t otherIndex);
 
     bool getUInt32(std::size_t index, const std::string& key, uint32_t& value) const;
+    bool getNameIntegerPair(std::size_t index, std::string& name, int& value) const;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
