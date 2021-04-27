@@ -223,7 +223,7 @@ public:
             {
                 std::string name;
                 int value = -1;
-                if (LOOLProtocol::parseNameIntegerPair(tokens[i], name, value))
+                if (tokens.getNameIntegerPair(i, name, value))
                 {
                     pairs[name] = value;
                 }
