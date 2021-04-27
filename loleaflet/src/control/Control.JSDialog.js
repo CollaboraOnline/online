@@ -69,6 +69,12 @@ L.Control.JSDialog = L.Control.extend({
 		var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'jsdialog'});
 		builder.build(content, [data]);
 
+		// We show some dialogs such as Macro Security Warning Dialog and Text Import Dialog (csv)
+		// They are displayed before the document is loaded
+		// Spinning should be happening until the 1st interaction with the user
+		// which is the dialog opening in this case
+		this.map._progressBar.end();
+
 		var that = this;
 		button.onclick = function() {
 			that.closeDialog(data.id);
