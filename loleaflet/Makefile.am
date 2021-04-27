@@ -575,6 +575,15 @@ tscompile.done: $(LOLEAFLET_JS_SRC) $(LOLEAFLET_TS_SRC)
 $(LOLEAFLET_TS_JS_DST): tscompile.done
 	@echo -n ""
 
+$(DIST_FOLDER)/src/%.js: $(srcdir)/src/%.js
+	@mkdir -p $(dir $@)
+	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
+		`cp $< $@`; \
+	else \
+		`echo $< $@`; \
+		`ln -sf $(abs_srcdir)/$< $@`; \
+	fi
+
 $(DIST_FOLDER)/%.js: $(srcdir)/js/%.js
 	@mkdir -p $(dir $@)
 	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
