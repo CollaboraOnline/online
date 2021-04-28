@@ -43,7 +43,7 @@ bool StringVector::getUInt32(std::size_t index, const std::string& key, uint32_t
             _string[token._index + key.size()] == '=')
     {
         value = Util::safe_atoi(&_string[token._index + offset], token._length - offset);
-        return value < std::numeric_limits<int>::max();
+        return value < std::numeric_limits<uint32_t>::max();
     }
 
     return false;
