@@ -1048,6 +1048,11 @@ public class LOActivity extends AppCompatActivity {
                 }
                 return false;
             }
+            case "hideProgressbar": {
+                if (mProgressDialog != null)
+                    mProgressDialog.dismiss();
+                return false;
+            }
             case "loadwithpassword": {
                 mProgressDialog.determinate(R.string.loading);
                 return true;
