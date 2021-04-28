@@ -545,7 +545,6 @@ private:
                   const char* data, const size_t len,
                   const std::shared_ptr<StreamSocket>& socket)
     {
-        assert(_isClient);
         sendPingOrPong(now, data, len, WSOpCode::Pong, socket);
     }
 #endif
