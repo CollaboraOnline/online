@@ -19,13 +19,7 @@ Run the fuzzers like this:
 ./clientsession_fuzzer -max_len=16384 fuzzer/data/
 ----
 
-- HttpStatus:
-
-----
-./httpstatus_fuzzer -max_len=16384 fuzzer/httpstatus-data/
-----
-
-- HttpRessponse:
+- HttpResponse:
 
 ----
 ./httpresponse_fuzzer -max_len=16384 fuzzer/httpresponse-data/
