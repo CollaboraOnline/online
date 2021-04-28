@@ -544,6 +544,9 @@ L.Control.PartsPreview = L.Control.extend({
 	},
 
 	_addDnDHandlers: function (elem) {
+		if (app.file.fileBasedView) // No drag & drop for pdf files and the like.
+			return;
+
 		if (elem) {
 			elem.setAttribute('draggable', true);
 			elem.addEventListener('dragstart', this._handleDragStart, false);
