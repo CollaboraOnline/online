@@ -210,7 +210,7 @@ void DocumentBroker::setupPriorities()
 void DocumentBroker::setupTransfer(SocketDisposition &disposition,
                                    SocketDisposition::MoveFunction transferFn)
 {
-    disposition.setTransfer(*_poll.get(), transferFn);
+    disposition.setTransfer(*_poll, transferFn);
 }
 
 void DocumentBroker::assertCorrectThread() const
