@@ -3539,7 +3539,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!viewCursorMarker.isDomAttached())
 				viewCursorMarker.add();
 		}
-		else if (viewCursorMarker.isDomAttached()) {
+		else if (viewCursorMarker && viewCursorMarker.isDomAttached()) {
 			viewCursorMarker.remove();
 		}
 
