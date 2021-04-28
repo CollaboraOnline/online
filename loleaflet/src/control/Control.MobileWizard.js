@@ -442,6 +442,8 @@ L.Control.MobileWizard = L.Control.extend({
 
 			this._builder = L.control.mobileWizardBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'mobile-wizard'});
 			this._builder.build(this.content.get(0), [data]);
+			if (window.ThisIsTheAndroidApp)
+				window.postMobileMessage('hideProgressbar');
 
 			this._mainTitle = data.text ? data.text : '';
 			this._customTitle = data.customTitle;
