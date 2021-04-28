@@ -311,6 +311,7 @@ noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  test/lokassert.hpp \
                  test/test.hpp \
                  test/testlog.hpp \
+                 test/HttpTestServer.hpp \
                  test/helpers.hpp
 
 dist-hook:
