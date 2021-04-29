@@ -903,21 +903,21 @@ public:
     }
 
     /// Send data to the socket peer.
-    void send(const char* data, const int len, const bool flush = true)
+    void send(const char* data, const int len, const bool doFlush = true)
     {
         assertCorrectThread();
         if (data != nullptr && len > 0)
         {
             _outBuffer.append(data, len);
-            if (flush)
+            if (doFlush)
                 writeOutgoingData();
         }
     }
 
     /// Send a string to the socket peer.
-    void send(const std::string& str, const bool flush = true)
+    void send(const std::string& str, const bool doFlush = true)
     {
-        send(str.data(), str.size(), flush);
+        send(str.data(), str.size(), doFlush);
     }
 
     /// Sends HTTP response.

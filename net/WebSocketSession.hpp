@@ -213,9 +213,9 @@ public:
             _outQueue.put(std::vector<char>(msg.data(), msg.data() + msg.size()));
         }
 
-        const auto poll = _socketPoll.lock();
-        if (poll)
-            poll->wakeup();
+        const auto pollPtr = _socketPoll.lock();
+        if (pollPtr)
+            pollPtr->wakeup();
     }
 
     /// Shutdown the WebSocket, either asynchronously or synchronously,
@@ -224,14 +224,14 @@ public:
     {
         if (!_disconnected)
         {
-            const auto poll = _socketPoll.lock();
-            if (poll && poll->isAlive())
+            const auto pollPtr = _socketPoll.lock();
+            if (pollPtr && pollPtr->isAlive())
             {
                 // Delegate, never call shutdown when our poller is active.
                 LOG_TRC("WebSocketSession: queueing shutdown");
                 std::weak_ptr<WebSocketSession> weakptr
                     = std::static_pointer_cast<WebSocketSession>(shared_from_this());
-                poll->addCallback([weakptr]() {
+                pollPtr->addCallback([weakptr]() {
                     auto ws = weakptr.lock();
                     if (ws)
                     {

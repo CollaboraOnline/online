@@ -434,9 +434,9 @@ public:
 
     /// Create a Request given a @url, http @verb, @header, and http @version.
     /// All are optional, since they can be overwritten later.
-    explicit Request(std::string url = "/", std::string verb = VERB_GET, Header header = Header(),
+    explicit Request(std::string url = "/", std::string verb = VERB_GET, Header headerObj = Header(),
                      std::string version = VERS_1_1)
-        : _header(std::move(header))
+        : _header(std::move(headerObj))
         , _url(std::move(url))
         , _verb(std::move(verb))
         , _version(std::move(version))
@@ -596,12 +596,12 @@ public:
 
     /// Construct a StatusLine with a given code and
     /// the default protocol version.
-    StatusLine(unsigned statusCode)
+    StatusLine(unsigned statusCodeNumber)
         : _httpVersion(HTTP_1_1)
         , _versionMajor(1)
         , _versionMinor(1)
-        , _statusCode(statusCode)
-        , _reasonPhrase(getReasonPhraseForCode(statusCode))
+        , _statusCode(statusCodeNumber)
+        , _reasonPhrase(getReasonPhraseForCode(statusCodeNumber))
     {
     }
 
@@ -688,8 +688,8 @@ public:
 
     /// A response sent from a server.
     /// Used for generating an outgoing response.
-    Response(StatusLine statusLine)
-        : _statusLine(std::move(statusLine))
+    Response(StatusLine statusLineObj)
+        : _statusLine(std::move(statusLineObj))
     {
         _header.add("Date", Util::getHttpTimeNow());
         _header.add("Server", HTTP_SERVER_STRING);
@@ -862,10 +862,10 @@ private:
                && "Invalid hostname and portNumber for http::Sesssion");
 #ifdef ENABLE_DEBUG
         std::string scheme;
-        std::string host;
-        std::string port;
-        assert(net::parseUri(_host, scheme, host, port) && scheme.empty() && port.empty()
-               && host == _host && "http::Session expects a hostname and not a URI");
+        std::string hostString;
+        std::string portString;
+        assert(net::parseUri(_host, scheme, hostString, portString) && scheme.empty() && portString.empty()
+               && hostString == _host && "http::Session expects a hostname and not a URI");
 #endif
     }
 
@@ -1006,11 +1006,11 @@ public:
         const auto origTimeout = getTimeout();
         setTimeout(timeout);
 
-        auto response = syncRequest(req);
+        auto responsePtr = syncRequest(req);
 
         setTimeout(origTimeout);
 
-        return response;
+        return responsePtr;
     }
 
     bool asyncRequest(const Request& req, SocketPoll& poll)

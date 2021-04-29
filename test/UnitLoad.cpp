@@ -202,11 +202,11 @@ UnitBase::TestResult UnitLoad::testLoad()
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
-    std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>("UnitLoadPoll");
-    socketPoll->startThread();
+    std::shared_ptr<SocketPoll> socketPollPtr = std::make_shared<SocketPoll>("UnitLoadPoll");
+    socketPollPtr->startThread();
 
     auto wsSession
-        = http::WebSocketSession::create(socketPoll, helpers::getTestServerURI(), documentURL);
+        = http::WebSocketSession::create(socketPollPtr, helpers::getTestServerURI(), documentURL);
 
     TST_LOG("Loading " << documentURL);
     wsSession->sendMessage("load url=" + documentURL);
