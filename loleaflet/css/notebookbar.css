@@ -7,7 +7,7 @@
 
 .ui-tabs.notebookbar {
 	display: inline-block;
-	z-index: 1000;
+	z-index: 999;
 	padding: 0px;
 	height: 100%;
 }
