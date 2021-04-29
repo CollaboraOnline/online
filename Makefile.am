@@ -303,6 +303,7 @@ kit_headers = kit/ChildSession.hpp \
               kit/Watermark.hpp
 
 noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
+                 test/HttpTestServer.hpp \
                  test/WopiTestServer.hpp \
                  test/countloolkits.hpp \
                  test/lokassert.hpp \
