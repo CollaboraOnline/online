@@ -2389,6 +2389,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// If modifier view is different than the current view, then set last variable to "true". We'll keep the caret position at the same point relative to screen.
 		this._onUpdateCursor(updateCursor && (modifierViewId === this._viewId), undefined /* zoom */, !(this._viewId === modifierViewId));
+		// Only for reference equality comparison.
+		this._lastVisibleCursorRef = this._visibleCursor;
 	},
 
 	_updateEditor: function(textMsg) {
@@ -3411,6 +3413,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!zoom
 		&& scroll !== false
 		&& this._map._isCursorVisible
+		// Do not center view in Calc if no new cursor coordinates have arrived yet.
+		// ie, 'invalidatecursor' has not arrived after 'cursorvisible' yet.
+		&& (!this.isCalc() || this._lastVisibleCursorRef !== this._visibleCursor)
 		&& this._allowViewJump()) {
 
 			var paneRectsInLatLng = this.getPaneLatLngRectangles();
