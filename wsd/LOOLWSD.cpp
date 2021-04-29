@@ -2539,9 +2539,7 @@ private:
                     http::Response httpResponse(http::StatusLine(401));
                     httpResponse.set("Content-Type", "text/html charset=UTF-8");
                     httpResponse.set("WWW-authenticate", "Basic realm=\"online\"");
-                    httpResponse.set("Connection", "close");
-                    socket->send(httpResponse);
-                    socket->shutdown();
+                    socket->sendAndShutdown(httpResponse);
                     return;
                 }
 
@@ -2614,9 +2612,7 @@ private:
             // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
             http::Response httpResponse(http::StatusLine(400));
             httpResponse.set("Content-Length", "0");
-            httpResponse.set("Connection", "close");
-            socket->send(httpResponse);
-            socket->shutdown();
+            socket->sendAndShutdown(httpResponse);
             return;
         }
 
@@ -2728,9 +2724,7 @@ private:
         httpResponse.setBody(xml, "text/xml");
         httpResponse.set("Last-Modified", Util::getHttpTimeNow());
         httpResponse.set("X-Content-Type-Options", "nosniff");
-        httpResponse.set("Connection", "close");
-        socket->send(httpResponse);
-        socket->shutdown();
+        socket->sendAndShutdown(httpResponse);
         LOG_INF("Sent discovery.xml successfully.");
     }
 
@@ -2747,9 +2741,7 @@ private:
         httpResponse.set("Last-Modified", Util::getHttpTimeNow());
         httpResponse.setBody(capabilities, "application/json");
         httpResponse.set("X-Content-Type-Options", "nosniff");
-        httpResponse.set("Connection", "close");
-        socket->send(httpResponse);
-        socket->shutdown();
+        socket->sendAndShutdown(httpResponse);
         LOG_INF("Sent capabilities.json successfully.");
     }
 
@@ -2791,9 +2783,7 @@ private:
             // we got the wrong request.
             http::Response httpResponse(http::StatusLine(400));
             httpResponse.set("Content-Length", "0");
-            httpResponse.set("Connection", "close");
-            socket->send(httpResponse);
-            socket->shutdown();
+            socket->sendAndShutdown(httpResponse);
             return;
         }
 
@@ -3051,9 +3041,7 @@ private:
                 LOG_WRN("Conversion requests not allowed from this address: " << socket->clientAddress());
                 http::Response httpResponse(http::StatusLine(403));
                 httpResponse.set("Content-Length", "0");
-                httpResponse.set("Connection", "close");
-                socket->send(httpResponse);
-                socket->shutdown();
+                socket->sendAndShutdown(httpResponse);
                 return;
             }
 
@@ -3148,9 +3136,7 @@ private:
 
                     http::Response httpResponse(http::StatusLine(200));
                     httpResponse.set("Content-Length", "0");
-                    httpResponse.set("Connection", "close");
-                    socket->send(httpResponse);
-                    socket->shutdown();
+                    socket->sendAndShutdown(httpResponse);
                     return;
                 }
             }
@@ -3233,9 +3219,7 @@ private:
 
                 http::Response httpResponse(http::StatusLine(404));
                 httpResponse.set("Content-Length", "0");
-                httpResponse.set("Connection", "close");
-                socket->send(httpResponse);
-                socket->shutdown();
+                socket->sendAndShutdown(httpResponse);
             }
             return;
         }
