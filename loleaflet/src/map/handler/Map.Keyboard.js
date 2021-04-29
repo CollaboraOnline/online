@@ -387,8 +387,12 @@ L.Map.Keyboard = L.Handler.extend({
 				ev.preventDefault();
 			}
 		}
-		else if (!this.modifier && (keyCode === 33 || keyCode === 34)) {
-			// let the scrollbar handle page up / page down when viewing
+		else if (!this.modifier && (keyCode === 33 || keyCode === 34) && ev.type === 'keydown') {
+			if (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') {
+				var partToSelect = this._map._docLayer._selectedPart;
+				partToSelect = keyCode === 33 ? partToSelect - 1 : partToSelect + 1;
+				this._map.setPart(partToSelect);
+			}
 			return;
 		}
 		else if (ev.type === 'keydown') {
