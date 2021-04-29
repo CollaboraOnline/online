@@ -307,6 +307,10 @@ class CanvasSectionContainer {
 		}
 	}
 
+	public getViewSize (): Array<number> {
+		return [this.canvas.width, this.canvas.height];
+	}
+
 	setClearColor (color: string) {
 		this.clearColor = color;
 	}
