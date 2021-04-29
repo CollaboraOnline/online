@@ -282,7 +282,7 @@ app.definitions.Socket = L.Class.extend({
 		var that = this;
 		if (!this._slurpQueue || !this._slurpQueue.length) {
 			setTimeout(function() {
-				console.log2('Slurp events ' + that._slurpQueue.length);
+				// console.log2('Slurp events ' + that._slurpQueue.length);
 				for (var i = 0; i < that._slurpQueue.length; ++i) {
 					// it is - are you ?
 					that._onMessage(that._slurpQueue[i]);
@@ -291,8 +291,6 @@ app.definitions.Socket = L.Class.extend({
 			}, 1 /* ms */);
 			that._slurpQueue = [];
 		}
-		// I imagine e doesn't hang around at all nicely and this fails
-		// but lets see ...
 		that._slurpQueue.push(e);
 	},
 
