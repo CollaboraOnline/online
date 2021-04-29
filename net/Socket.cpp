@@ -77,6 +77,7 @@ bool StreamSocket::simulateSocketError(bool read)
     return false;
 }
 
+#if !MOBILEAPP && ENABLE_SSL
 bool SslStreamSocket::simulateSocketError(bool read)
 {
     if ((socketErrorCount++ % 7) == 0)
@@ -90,6 +91,7 @@ bool SslStreamSocket::simulateSocketError(bool read)
 
     return false;
 }
+#endif
 #endif
 
 // help with initialization order
