@@ -609,6 +609,18 @@ bool StreamSocket::send(http::Request& request)
     }
 }
 
+bool StreamSocket::sendAndShutdown(http::Response& response)
+{
+    response.set("Connection", "close");
+    if (send(response))
+    {
+        shutdown();
+        return true;
+    }
+
+    return false;
+}
+
 void SocketPoll::dumpState(std::ostream& os)
 {
     // FIXME: NOT thread-safe! _pollSockets is modified from the polling thread!
