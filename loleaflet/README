@@ -376,9 +376,11 @@ Z-index values:
 -------------------------------------------
 990			sidebar
 999			toolbar-up
+999			Notebookbar tabs (.ui-tabs.notebookbar)
 -------------------------------------------
 		menu items
 -------------------------------------------
+x				menu-nb-hamburger > ul (calculated from jquery.smartmenus.js)
 1000			main-menu(desktop-only)
 0			toolbar-down
 1050			closebuttonwrapper (not being used currently)
