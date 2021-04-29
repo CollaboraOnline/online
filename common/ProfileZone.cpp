@@ -5,6 +5,10 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+// Turn this on to compile a test executable for just ProfileZone
+
+// #define TEST_PROFILEZONE_EXE
+
 #include <cassert>
 #include <mutex>
 
@@ -14,7 +18,7 @@
 
 std::atomic<bool> ProfileZone::s_bRecording(false);
 
-int ProfileZone::s_nNesting = 0; // level of overlapped zones
+thread_local int ProfileZone::s_nNesting = 0; // level of overlapped zones
 
 namespace
 {
@@ -79,7 +83,7 @@ std::vector<std::string> ProfileZone::getRecordingAndClear()
     return aRecording;
 }
 
-#if 0 // Test main() used during development of this
+#ifdef TEST_PROFILEZONE_EXE
 
 #include <iostream>
 #include <thread>
@@ -87,8 +91,6 @@ std::vector<std::string> ProfileZone::getRecordingAndClear()
 int main(int argc, char** argv)
 {
     ProfileZone::startRecording();
-
-    ProfileZone a("main");
 
     {
         ProfileZone b("first block");
@@ -150,6 +152,12 @@ int main(int argc, char** argv)
     for (auto e : v)
         std::cout << "  " << e << "\n";
     std::cout << "]\n";
+
+    // Intentional misuse: overlapping ProfileZones
+    auto p1 = new ProfileZone("p1");
+    auto p2 = new ProfileZone("p2");
+    delete p1;
+    delete p2;
 
     return 0;
 }
