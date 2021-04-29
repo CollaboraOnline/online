@@ -123,8 +123,8 @@ int64_t Header::parse(const char* p, int64_t len)
     }
 
     // Make sure we have the full header before parsing.
-    const int64_t end = findBlankLine(p, 0, len);
-    if (end == len)
+    const int64_t endPos = findBlankLine(p, 0, len);
+    if (endPos == len)
     {
         return 0; // Incomplete.
     }
@@ -161,7 +161,7 @@ int64_t Header::parse(const char* p, int64_t len)
                         << ", chunked: " << getChunkedTransferEncoding());
 
         // We consumed the full header, including the blank line.
-        return end + 1;
+        return endPos + 1;
     }
     catch (const Poco::Exception& exc)
     {
