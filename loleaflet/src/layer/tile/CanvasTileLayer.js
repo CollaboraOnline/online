@@ -1150,6 +1150,11 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		this._sortFileBasedQueue(queue);
 
+		if (queue.length > 0 && queue[0].part !== this._selectedPart) {
+			this._selectedPart = queue[0].part;
+			this._preview._scrollToPart();
+		}
+
 		if (checkOnly) {
 			return queue;
 		}
