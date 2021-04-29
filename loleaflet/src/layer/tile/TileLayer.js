@@ -2168,7 +2168,24 @@ L.TileLayer = L.GridLayer.extend({
 	},
 
 	_tileOnLoad: function (done, tile) {
-		done(null, tile);
+		// slurp multiple async tile loads into one render:
+		// FIXME: probably we should nicely combine
+		// async image decoding into Socket.js' _slurpMessage
+		// to save another 1ms timer.
+		var that = this;
+		if (!that._slurpQueue || !that._slurpQueue.length) {
+			setTimeout(function() {
+				for (var i = 0; i < that._slurpQueue.length; i += 2) {
+					var slurpTile = that._slurpQueue[i];
+					var slurpCallback = that._slurpQueue[i+1];
+					slurpCallback(null, slurpTile);
+				}
+				that._slurpQueue = [];
+			}, 1 /* ms */);
+			that._slurpQueue = [];
+		}
+		that._slurpQueue.push(tile);
+		that._slurpQueue.push(done);
 	},
 
 	_tileOnError: function (done, tile, e) {
