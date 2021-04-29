@@ -766,16 +766,20 @@ L.Control.LokDialog = L.Control.extend({
 	_setCanvasWidthHeight: function(canvas, width, height) {
 		var scale = L.getDpiScaleFactor();
 		var newWidth = width * scale;
+		var changed = false;
 		if (canvas.width != newWidth) {
 			L.DomUtil.setStyle(canvas, 'width', width + 'px');
 			canvas.width = newWidth;
+			changed = true;
 		}
 
 		var newHeight = height * scale;
 		if (canvas.height != newHeight) {
 			L.DomUtil.setStyle(canvas, 'height', height + 'px');
 			canvas.height = newHeight;
+			changed = true;
 		}
+		return changed;
 	},
 
 	_launchDialog: function(id, leftTwips, topTwips, width, height, title) {
@@ -1541,9 +1545,9 @@ L.Control.LokDialog = L.Control.extend({
 			var isCalcInputBar = that.isCalcInputBar(parentId);
 			var container = L.DomUtil.get(strId);
 			if (isCalcInputBar && container) {
-				//console.log('_paintDialog: calc input bar: width: ' + that._calcInputBar.width);
+				// console.log2('_paintDialog: calc input bar: width: ' + that._calcInputBar.width);
 				var canvas = L.DomUtil.get(that._calcInputBar.strId + '-canvas');
-				that._setCanvasWidthHeight(canvas, that._calcInputBar.width, that._calcInputBar.height);
+				var changed = that._setCanvasWidthHeight(canvas, that._calcInputBar.width, that._calcInputBar.height);
 				$(container).parent().show(); // show or width is 0
 				var deckOffset = 0;
 				if (that._currentDeck) {
@@ -1553,7 +1557,11 @@ L.Control.LokDialog = L.Control.extend({
 					}
 				}
 				var correctWidth = container.clientWidth - deckOffset;
-				that._map._docLayer._syncTileContainerSize();
+
+				// only touch styles & doc-layer sizing when absolutely necessary
+				if (changed)
+					that._map._docLayer._syncTileContainerSize();
+
 				// resize the input bar to the correct size
 				// the input bar is rendered only if when the size is the expected one
 				if (correctWidth !== 0 && that._calcInputBar.width !== correctWidth) {
