@@ -1,1 +1,21 @@
-<svg height="24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="m3 6c-.554 0-1 .446-1 1v9c0 .554.446 1 1 1h17c.554 0 1-.446 1-1v-9c0-.554-.446-1-1-1zm0 1h17v9h-17zm1 1v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm-14 2v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm-14 2v1h2v-1zm3 0v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm2 0v1h1v-1zm2 0v1h2v-1zm-13 2v1h2v-1zm3 0v1h9v-1zm10 0v1h2v-1z" fill="#3a3a38"/></svg>
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"
+     class="icn icn--area-color"
+     fill="#fafafa"
+     stroke="#3a3a38" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+     >
+      <path d="m 2.5,6.5 h 19 v 11 h -19 z" />
+  </g>
+  <g id="background"
+     class="icn icn--secondary-line-color"
+     fill="none"
+     stroke="#797774"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     >
+      <path d="M 5.5 8.5 L 5.5 9.5 L 6.5 9.5 L 6.5 8.5 L 5.5 8.5 z M 8.5 8.5 L 8.5 9.5 L 9.5 9.5 L 9.5 8.5 L 8.5 8.5 z M 11.5 8.5 L 11.5 9.5 L 12.5 9.5 L 12.5 8.5 L 11.5 8.5 z M 14.5 8.5 L 14.5 9.5 L 15.5 9.5 L 15.5 8.5 L 14.5 8.5 z M 17.5 8.5 L 17.5 9.5 L 18.5 9.5 L 18.5 8.5 L 17.5 8.5 z M 5.5 11.5 L 5.5 12.5 L 6.5 12.5 L 6.5 11.5 L 5.5 11.5 z M 8.5 11.5 L 8.5 12.5 L 9.5 12.5 L 9.5 11.5 L 8.5 11.5 z M 11.5 11.5 L 11.5 12.5 L 12.5 12.5 L 12.5 11.5 L 11.5 11.5 z M 14.5 11.5 L 14.5 12.5 L 15.5 12.5 L 15.5 11.5 L 14.5 11.5 z M 17.5 11.5 L 17.5 12.5 L 18.5 12.5 L 18.5 11.5 L 17.5 11.5 z M 7.5 14.5 L 7.5 15.5 L 16.5 15.5 L 16.5 14.5 L 7.5 14.5 z " />
+  </g>
+</svg>

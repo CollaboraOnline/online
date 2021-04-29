@@ -18,4 +18,26 @@
      >
       <path d="m 6.5,5.5 v 3 h 3 v -3 z m 6,0 h 5 z m 0,3 h 5 z m -6,3 h 11 z m 0,3 h 11 z m 0,3 h 11 z" />
   </g>
+  <g id="symbol-background"
+	 class="icn icn--background"
+     stroke="#fff" 
+     stroke-width="3px"
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+      >
+      <path d="m 10.5,22.5 5,-2 -3,-3 z" />
+      <path d="m 15.5,20.5 5,-5 -3,-3 -5,5 z" />
+      <path d="m 22.5,13.5 -2,2 -3,-3 2,-2 z" />
+  </g>
+  <g id="symbol"
+	 class="icn icn--highlight-color"  
+     fill="#83beec" 
+     stroke="#1e8bcd" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+      >
+      <path d="m 10.5,22.5 5,-2 -3,-3 z" />
+      <path d="m 15.5,20.5 5,-5 -3,-3 -5,5 z" />
+      <path d="m 22.5,13.5 -2,2 -3,-3 2,-2 z" />
+  </g>
 </svg>
