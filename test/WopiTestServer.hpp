@@ -243,14 +243,11 @@ protected:
                 const std::string fileModifiedTime = Util::getIso8601FracformatTime(_fileLastModifiedTime);
                 if (wopiTimestamp != fileModifiedTime)
                 {
-                    std::ostringstream oss;
-                    oss << "HTTP/1.1 409 Conflict\r\n"
-                        "User-Agent: " WOPI_AGENT_STRING "\r\n"
-                        "\r\n"
-                        "{\"LOOLStatusCode\":" << static_cast<int>(LOOLStatusCode::DocChanged) << '}';
-
-                    socket->send(oss.str());
-                    socket->shutdown();
+                    http::Response httpResponse(http::StatusLine(409));
+                    httpResponse.setBody(
+                        "{\"LOOLStatusCode\":" +
+                        std::to_string(static_cast<int>(LOOLStatusCode::DocChanged)) + '}');
+                    socket->sendAndShutdown(httpResponse);
                     return true;
                 }
             }
@@ -262,15 +259,10 @@ protected:
 
             assertPutFileRequest(request);
 
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-                "User-Agent: " WOPI_AGENT_STRING "\r\n"
-                "\r\n"
-                "{\"LastModifiedTime\": \"" << Util::getIso8601FracformatTime(_fileLastModifiedTime) << "\" }";
-
-            socket->send(oss.str());
-            socket->shutdown();
-
+            http::Response httpResponse(http::StatusLine(200));
+            httpResponse.setBody("{\"LastModifiedTime\": \"" +
+                                 Util::getIso8601FracformatTime(_fileLastModifiedTime) + "\" }");
+            socket->sendAndShutdown(httpResponse);
             return true;
         }
         else if (!Util::startsWith(uriReq.getPath(), "/lool/")) // Skip requests to the websrv.
