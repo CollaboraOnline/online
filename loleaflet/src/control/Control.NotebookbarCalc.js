@@ -25,9 +25,9 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'name': 'Insert'
 			},
 			{
-				'text': _('~Sheet'),
+				'text': _('~Layout'),
 				'id': '-3',
-				'name': 'Sheet'
+				'name': 'Layout'
 			},
 			{
 				'text': _('~Data'),
@@ -64,7 +64,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				this.getFileTab(),
 				this.getHomeTab(),
 				this.getInsertTab(),
-				this.getSheetTab(),
+				this.getLayoutTab(),
 				this.getDataTab(),
 				this.getReviewTab(),
 				this.getFormatTab(),
@@ -649,166 +649,177 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 		return this.getTabPage('Home', content);
 	},
 
-	getSheetTab: function() {
+	getLayoutTab: function() {
 		var content = [
 			{
-				'id': 'Sheet-Section',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:PageDialog'),
+				'command': '.uno:PageDialog'
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
-						'id': 'break-Section',
-						'type': 'container',
-						'vertical': 'true',
+						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'Section7',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Insert Row Break'),
-										'command': '.uno:InsertRowBreak'
-									}
-								]
+								'type': 'toolitem',
+								'text': _('Insert Rows Above'),
+								'command': '.uno:InsertRowsBefore'
 							},
 							{
-								'id': 'Section10',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Insert Column Break'),
-										'command': '.uno:InsertColumnBreak'
-									}
-								]
+								'type': 'toolitem',
+								'text': _('Insert Columns Before'),
+								'command': '.uno:InsertColumnsBefore'
+							},
+							{
+								'type': 'toolitem',
+								'text': _('Delete Rows'),
+								'command': '.uno:DeleteRows'
 							}
 						]
 					},
 					{
-						'id': 'deletebreak-Section',
-						'type': 'container',
-						'vertical': 'true',
+						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'Section7',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Remove Row Break'),
-										'command': '.uno:DeleteRowbreak'
-									}
-								]
+								'type': 'toolitem',
+								'text': _('Insert Rows Below'),
+								'command': '.uno:InsertRowsAfter'
 							},
 							{
-								'id': 'Section10',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Remove Column Break'),
-										'command': '.uno:DeleteColumnbreak'
-									}
-								]
-							}
-						]
-					},
-					{
-						'id': 'rows-Section',
-						'type': 'container',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'Section7',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Insert Rows Above'),
-										'command': '.uno:InsertRowsBefore'
-									},
-									{
-										'type': 'toolitem',
-										'text': _('Insert Columns Before'),
-										'command': '.uno:InsertColumnsBefore'
-									},
-									{
-										'type': 'toolitem',
-										'text': _('Delete Rows'),
-										'command': '.uno:DeleteRows'
-									}
-								]
+								'type': 'toolitem',
+								'text': _('Insert Columns After'),
+								'command': '.uno:InsertColumnsAfter'
 							},
 							{
-								'id': 'Section10',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _('Insert Rows Below'),
-										'command': '.uno:InsertRowsAfter'
-									},
-									{
-										'type': 'toolitem',
-										'text': _('Insert Columns After'),
-										'command': '.uno:InsertColumnsAfter'
-									},
-									{
-										'type': 'toolitem',
-										'text': _('Delete Columns'),
-										'command': '.uno:DeleteColumns'
-									}
-								]
-							}
-						]
-					},
-					{
-						'id': 'freeze-section1',
-						'type': 'container',
-						'children': [
-							{
-								'id': 'Section7',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'bigtoolitem',
-										'text': _UNO('.uno:FreezePanes', 'spreadsheet', true),
-										'command': '.uno:FreezePanes'
-									}
-								]
-							}
-						]
-					},
-					{
-						'id': 'freeze-section2',
-						'type': 'container',
-						'vertical': 'true',
-						'children': [
-							{
-								'id': 'Section7',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text':_UNO('.uno:FreezePanesColumn', 'spreadsheet', true),
-										'command': '.uno:FreezePanesColumn'
-									}
-								]
-							},
-							{
-								'id': 'Section10',
-								'type': 'toolbox',
-								'children': [
-									{
-										'type': 'toolitem',
-										'text': _UNO('.uno:FreezePanesRow', 'spreadsheet', true),
-										'command': '.uno:FreezePanesRow'
-									}
-								]
+								'type': 'toolitem',
+								'text': _('Delete Columns'),
+								'command': '.uno:DeleteColumns'
 							}
 						]
 					}
-				]
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FreezePanes', 'spreadsheet', true),
+				'command': '.uno:FreezePanes'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text':_UNO('.uno:FreezePanesColumn', 'spreadsheet', true),
+								'command': '.uno:FreezePanesColumn'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:FreezePanesRow', 'spreadsheet', true),
+								'command': '.uno:FreezePanesRow'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'Layout-Section-Align',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'Layout-ObjectAlignLeft-ObjectAlignRight',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectAlignLeft', 'text'),
+								'command': '.uno:ObjectAlignLeft'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignCenter', 'text'),
+								'command': '.uno:AlignCenter'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectAlignRight', 'text'),
+								'command': '.uno:ObjectAlignRight'
+							}
+						]
+					},
+					{
+						'id': 'Layout-AlignUp-AlignDown',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignUp', 'text'),
+								'command': '.uno:AlignUp'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignMiddle', 'text'),
+								'command': '.uno:AlignMiddle'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignDown', 'text'),
+								'command': '.uno:AlignDown'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'Layout-Section-ForwardBackward',
+				'type': 'container',
+				'children': [
+					{
+						'id': 'Layout-ObjectForwardOne-BringToFront',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectForwardOne', 'text'),
+								'command': '.uno:ObjectForwardOne'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:BringToFront', 'text'),
+								'command': '.uno:BringToFront'
+							}
+						]
+					},
+					{
+						'id': 'Layout-ObjectBackOne-SendToBack',
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectBackOne', 'text'),
+								'command': '.uno:ObjectBackOne'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SendToBack', 'text'),
+								'command': '.uno:SendToBack'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			}
 		];
 
