@@ -938,6 +938,12 @@ public:
     /// Will shutdown the socket upon error and return false.
     bool send(const http::Response& response);
 
+    /// Send an http::Response, flush, and shutdown.
+    /// Will set 'Connection: close' header.
+    /// Returns true if no errors are encountered.
+    /// Will always shutdown the socket.
+    bool sendAndShutdown(http::Response& response);
+
     /// Safely flush any outgoing data.
     inline void flush()
     {
