@@ -170,7 +170,11 @@ namespace
     bool detectSlowStackingFileSystem(const std::string &directory)
     {
 #ifdef __linux__
-        struct statfs fs = {};
+#ifndef OVERLAYFS_SUPER_MAGIC
+// From linux/magic.h.
+#define OVERLAYFS_SUPER_MAGIC   0x794c7630
+#endif
+        struct statfs fs;
         if (::statfs(directory.c_str(), &fs) != 0)
         {
             LOG_SYS("statfs failed on '" << directory << "'");
