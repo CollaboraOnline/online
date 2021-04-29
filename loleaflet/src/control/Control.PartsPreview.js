@@ -99,7 +99,8 @@ L.Control.PartsPreview = L.Control.extend({
 				for (var i = 0; i < parts; i++) {
 					this._previewTiles.push(this._createPreview(i, e.partNames[i], bottomBound));
 				}
-				L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-currentpart');
+				if (!app.file.fileBasedView)
+					L.DomUtil.addClass(this._previewTiles[selectedPart], 'preview-img-currentpart');
 				this._onScroll(); // Load previews.
 				this._previewInitialized = true;
 			}
@@ -109,14 +110,16 @@ L.Control.PartsPreview = L.Control.extend({
 					this._syncPreviews(e);
 				}
 
-				// change the border style of the selected preview.
-				for (var j = 0; j < parts; j++) {
-					L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-currentpart');
-					L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-selectedpart');
-					if (j === selectedPart)
-						L.DomUtil.addClass(this._previewTiles[j], 'preview-img-currentpart');
-					else if (selectedParts.indexOf(j) >= 0)
-						L.DomUtil.addClass(this._previewTiles[j], 'preview-img-selectedpart');
+				if (!app.file.fileBasedView) {
+					// change the border style of the selected preview.
+					for (var j = 0; j < parts; j++) {
+						L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-currentpart');
+						L.DomUtil.removeClass(this._previewTiles[j], 'preview-img-selectedpart');
+						if (j === selectedPart)
+							L.DomUtil.addClass(this._previewTiles[j], 'preview-img-currentpart');
+						else if (selectedParts.indexOf(j) >= 0)
+							L.DomUtil.addClass(this._previewTiles[j], 'preview-img-selectedpart');
+					}
 				}
 			}
 
@@ -194,7 +197,7 @@ L.Control.PartsPreview = L.Control.extend({
 			var part = this._findClickedPart(e.target.parentNode);
 			if (part !== null)
 				var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
-			if (!window.mode.isDesktop() && partId === this._map._docLayer._selectedPart) {
+			if (!window.mode.isDesktop() && partId === this._map._docLayer._selectedPart && !app.file.fileBasedView) {
 				// if mobile or tab then second tap will open the mobile wizard
 				if (this._map._permission === 'edit') {
 					// Remove selection to get the slide properties in mobile wizard.
@@ -328,9 +331,28 @@ L.Control.PartsPreview = L.Control.extend({
 		return -1;
 	},
 
+	// This is used with fileBasedView.
+	_scrollViewToPartPosition: function (partNumber) {
+		var ratio = this._map._docLayer._tileSize / this._map._docLayer._tileHeightTwips;
+		var partHeightPixels = Math.round((this._map._docLayer._partHeightTwips + this._map._docLayer._spaceBetweenParts) * ratio);
+		var scrollTop = partHeightPixels * partNumber;
+		var viewHeight = app.sectionContainer.getViewSize()[1];
+
+		if (viewHeight > partHeightPixels && partNumber > 0)
+			scrollTop -= Math.round((viewHeight - partHeightPixels) * 0.5);
+
+		scrollTop = Math.round(scrollTop / app.sectionContainer.dpiScale);
+		app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).onScrollTo({x: 0, y: scrollTop});
+	},
+
 	_setPart: function (e) {
 		var part = this._findClickedPart(e.target.parentNode);
 		if (part !== null) {
+			if (app.file.fileBasedView) {
+				this._scrollViewToPartPosition(part - 1);
+				return;
+			}
+
 			var partId = parseInt(part) - 1; // The first part is just a drop-site for reordering.
 
 			if (e.ctrlKey) {
