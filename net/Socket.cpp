@@ -85,7 +85,7 @@ bool StreamSocket::simulateSocketError(bool read)
     return false;
 }
 
-#if ENABLE_SSL
+#if !MOBILEAPP && ENABLE_SSL
 bool SslStreamSocket::simulateSocketError(bool read)
 {
     if ((socketErrorCount++ % 7) == 0)

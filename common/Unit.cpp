@@ -176,10 +176,13 @@ void UnitWSD::lookupTile(int part, int width, int height, int tilePosX, int tile
                          int tileWidth, int tileHeight,
                          std::shared_ptr<std::vector<char>> &tile)
 {
-    if (tile)
-        onTileCacheHit(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
-    else
-        onTileCacheMiss(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    if (isUnitTesting())
+    {
+        if (tile)
+            onTileCacheHit(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+        else
+            onTileCacheMiss(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight);
+    }
 }
 
 UnitKit::UnitKit(std::string testname)
