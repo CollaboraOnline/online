@@ -1,1 +1,46 @@
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m5.0234 3c-.55513 0-.98653.44704-1.002 1.002l-.046875 16.996c0 .55513.44682 1.002 1.002 1.002h14.029c.55513 0 1.002-.44682 1.002-1.002l.035157-12.563a3.5385 3.5385 0 0 1 -2.2285.79102 3.5385 3.5385 0 0 1 -3.5371-3.5391 3.5385 3.5385 0 0 1 1.2422-2.6875h-10.496z" fill="#808080"/><path d="m19.501 5.6875a1.686 1.686 0 0 1 -1.686 1.686 1.686 1.686 0 0 1 -1.686-1.686 1.686 1.686 0 0 1 1.686-1.686 1.686 1.686 0 0 1 1.686 1.686z" fill="#4d82b8"/><g fill="#fff"><path d="m11.5 18v1h4v-1z"/><path d="m11.5 12v1h7v-1z"/><circle cx="7.5" cy="12.5" r="1.5"/><circle cx="7.5" cy="18.5" r="1.5"/></g></svg>
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"
+     class="icn icn--area-color"
+     fill="#fafafa"
+     stroke="#3a3a38"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     >
+      <path d="m 18.5,10.5 a 8,8 0 0 1 -8,8 8,8 0 0 1 -8,-8 8,8 0 0 1 8,-8 8,8 0 0 1 8,8 z" />  
+  </g>
+  <g id="symbol"
+     class="icn icn--area-color-line"
+     fill="none" 
+     stroke="#3a3a38" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+      >
+      <path d="m 2.5,10.5 h 16" />
+      <path d="m 4.5,5.5 c 3.8427591,1.236962 7.818617,1.4268786 12,0" />
+      <path d="m 4.5,15.52205 c 3.8427591,-1.236962 7.818617,-1.426878 12,0" />
+      <path d="m 10,2.5 c -3.1546018,5.1757352 -3.5081702,10.491405 0,16" />
+      <path d="m 11,2.5 c 3.154601,5.1757352 3.50817,10.491405 0,16" />
+  </g>
+  <g id="symbol-background"
+	 class="icn icn--background-line"
+     fill="none"
+     stroke="#fff" 
+     stroke-width="3px"
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+     transform="translate(6,11)">
+      <path d="m 7.5,6.5 4,4 4,-4" />
+      <path d="m 11.5,1.5 v 9" />
+  </g>
+  <g id="symbol"
+	 class="icn icn--highlight-color-line"  
+     fill="none" 
+     stroke="#1e8bcd" 
+	 stroke-linecap="round" 
+	 stroke-linejoin="round"
+     transform="translate(6,11)">
+      <path d="m 7.5,6.5 4,4 4,-4" />
+      <path d="m 11.5,1.5 v 9" />
+  </g>
+</svg>
