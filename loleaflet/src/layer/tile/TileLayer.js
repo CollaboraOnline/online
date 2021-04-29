@@ -1517,6 +1517,8 @@ L.TileLayer = L.GridLayer.extend({
 		}
 
 		this._onUpdateCursor(updateCursor && (modifierViewId === this._viewId), undefined /* zoom */, !(this._viewId === modifierViewId));
+		// Only for reference equality comparison.
+		this._lastVisibleCursorRef = this._visibleCursor;
 	},
 
 	_updateEditor: function(textMsg) {
@@ -2663,6 +2665,9 @@ L.TileLayer = L.GridLayer.extend({
 		if (!zoom
 		&& scroll !== false
 		&& this._map._isCursorVisible
+		// Do not center view in Calc if no new cursor coordinates have arrived yet.
+		// ie, 'invalidatecursor' has not arrived after 'cursorvisible' yet.
+		&& (!this.isCalc() || this._lastVisibleCursorRef !== this._visibleCursor)
 		&& this._allowViewJump()) {
 
 			var paneRectsInLatLng = this.getPaneLatLngRectangles();
