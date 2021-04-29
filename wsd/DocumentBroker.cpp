@@ -315,6 +315,7 @@ void DocumentBroker::pollThread()
 
         if (isInteractive())
         {
+            // Extend the deadline while we are interactiving with the user.
             loadDeadline = now + std::chrono::seconds(limit_load_secs);
             continue;
         }
