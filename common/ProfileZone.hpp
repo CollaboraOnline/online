@@ -15,14 +15,21 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#ifdef TEST_PROFILEZONE_EXE
+#include <iostream>
+#else
+#include <Log.hpp>
+#endif
+
 class ProfileZone
 {
 private:
     static std::atomic<bool> s_bRecording; // true during recording
-    static int s_nNesting;
+    thread_local static int s_nNesting;
     const char* m_sProfileId;
     std::chrono::time_point<std::chrono::system_clock> m_nCreateTime;
     int m_nPid;
+    int m_nNesting;
 
     void addRecording();
 
@@ -32,6 +39,8 @@ public:
     // lifetime.
     ProfileZone(const char* sProfileId)
         : m_sProfileId(sProfileId ? sProfileId : "(null)")
+        , m_nPid(-1)
+        , m_nNesting(-1)
     {
         if (s_bRecording)
         {
@@ -40,17 +49,33 @@ public:
 
             m_nPid = getpid();
 
-            s_nNesting++;
+            m_nNesting = s_nNesting++;
         }
     }
+
     ~ProfileZone()
     {
-        if (s_bRecording)
+        if (m_nCreateTime.time_since_epoch() > std::chrono::time_point<std::chrono::system_clock>().time_since_epoch())
         {
             s_nNesting--;
-            addRecording();
+
+            if (m_nNesting != s_nNesting)
+            {
+#ifdef TEST_PROFILEZONE_EXE
+                std::cerr << "Incorrect ProfileZone nesting for " << m_sProfileId << "\n";
+#else
+                LOG_WRN("Incorrect ProfileZone nesting for " << m_sProfileId);
+#endif
+            }
+            else
+            {
+                addRecording();
+            }
         }
     }
+
+    ProfileZone(const ProfileZone&) = delete;
+    void operator=(const ProfileZone&) = delete;
 
     static void startRecording();
     static void stopRecording();
