@@ -66,7 +66,7 @@ L.Socket = L.Class.extend({
 		this.socket.onerror = L.bind(this._onSocketError, this);
 		this.socket.onclose = L.bind(this._onSocketClose, this);
 		this.socket.onopen = L.bind(this._onSocketOpen, this);
-		this.socket.onmessage = L.bind(this._onMessage, this);
+		this.socket.onmessage = L.bind(this._slurpMessage, this);
 		this.socket.binaryType = 'arraybuffer';
 		if (map.options.docParams.access_token && parseInt(map.options.docParams.access_token_ttl)) {
 			var tokenExpiryWarning = 900 * 1000; // Warn when 15 minutes remain
@@ -257,6 +257,28 @@ L.Socket = L.Class.extend({
 		var color = type === 'OUTGOING' ? 'color:red' : 'color:blue';
 		console.log2(+new Date() + ' %c' + type + status + '%c: ' + msg.concat(' ').replace(' ', '%c '),
 			     'background:#ddf;color:black', color, 'color:black');
+	},
+
+	// The problem: if we process one websocket message at a time, the
+	// browser -loves- to trigger a re-render as we hit the main-loop,
+	// this takes ~200ms on a large screen, and worse we get
+	// producer/consumer issues that can fill a multi-second long
+	// buffer of web-socket messages in the client that we can't
+	// process so - slurp and the emit at idle - its faster to delay!
+	_slurpMessage: function(e) {
+		var that = this;
+		if (!this._slurpQueue || !this._slurpQueue.length) {
+			setTimeout(function() {
+				// console.log2('Slurp events ' + that._slurpQueue.length);
+				for (var i = 0; i < that._slurpQueue.length; ++i) {
+					// it is - are you ?
+					that._onMessage(that._slurpQueue[i]);
+				}
+				that._slurpQueue = [];
+			}, 1 /* ms */);
+			that._slurpQueue = [];
+		}
+		that._slurpQueue.push(e);
 	},
 
 	_onMessage: function (e) {
