@@ -2435,6 +2435,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		if (options && options.hasDropdownArrow) {
+			$(div).addClass('has-dropdown');
 			var arrow = L.DomUtil.create('i', 'unoarrow', div);
 			controls['arrow'] = arrow;
 		}
