@@ -431,25 +431,7 @@
 
 #Copy.notebookbar,
 #clearFormatting.notebookbar {
-	margin-top: 10px;
-}
-
-#table-GroupB19 #table-GroupB93.notebookbar {
-	margin-left: -84px;
-	margin-bottom: -4px !important;
-}
-
-#table-GroupB95 {
-	margin-left: -8px;
-}
-
-#table-GroupB80 {
-	margin-left: -19px;
-	margin-bottom: -4px !important;
-}
-
-#table-GroupB85 {
-	margin-left: -12px;
+	margin-top: 6px;
 }
 
 /* Styles preview */
