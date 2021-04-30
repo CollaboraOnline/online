@@ -55,7 +55,8 @@ public:
         return res;
     }
 
-    void assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         if (_savingPhase == SavingPhase::Unmodified)
         {
@@ -88,6 +89,8 @@ public:
 
         if (_finishedSaveUnmodified && _finishedSaveModified)
             passTest("Headers for both modified and unmodified received as expected.");
+
+        return nullptr;
     }
 
     bool onDocumentLoaded(const std::string& message) override
