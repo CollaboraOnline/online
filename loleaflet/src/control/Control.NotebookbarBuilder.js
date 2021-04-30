@@ -416,6 +416,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			button.setAttribute('alt', id);
 
 			L.DomUtil.create('i', 'unoarrow', div);
+			$(div).addClass('has-dropdown--color');
 
 			var valueNode =  L.DomUtil.create('div', 'selected-color', div);
 
