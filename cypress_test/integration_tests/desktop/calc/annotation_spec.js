@@ -3,7 +3,7 @@ var helper = require('../../common/helper');
 var { insertMultipleComment } = require('../../common/desktop_helper');
 
 describe('Annotation Tests', function() {
-	var testFileName = 'focus.ods';
+	var testFileName = 'annotation.ods';
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
