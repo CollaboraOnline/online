@@ -275,6 +275,10 @@
 	margin-right: 0px !important;
 }
 
+.has-dropdown--color.notebookbar {
+	height: 24px !important;
+}
+
 .unotoolbutton.notebookbar .unolabel {
 	font-family: var(--loleaflet-font);
 	color: #696969;
@@ -334,7 +338,7 @@
 	height: 5px;
 	width: 24px;
 	position: relative;
-	top: -4px;
+	top: -6px;
 	border: 1px solid silver;
 }
 
