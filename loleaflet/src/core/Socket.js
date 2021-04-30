@@ -1058,13 +1058,6 @@ app.definitions.Socket = L.Class.extend({
 					tileHeightTwips: tileHeightTwips / window.devicePixelRatio,
 					docType: command.type
 				});
-
-				this._map.options.backgroundLayerEnabled = !(docLayer instanceof L.CanvasTileLayer);
-
-				if (this._map.options.backgroundLayerEnabled) {
-					docLayer.backgroundLayer = new L.CalcBackground().addTo(this._map);
-					(new L.CalcGridLines()).addTo(this._map);
-				}
 			}
 			else if (command.type === 'presentation' || command.type === 'drawing') {
 				docLayer = new L.ImpressTileLayer('', {
