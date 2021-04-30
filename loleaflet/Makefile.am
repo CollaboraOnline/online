@@ -243,7 +243,6 @@ LOLEAFLET_JS_WEBORDER =\
 	src/layer/marker/Marker.Popup.js \
 	src/layer/LayerGroup.js \
 	src/layer/FeatureGroup.js \
-	src/layer/CalcGridLines.js \
 	src/layer/vector/Renderer.js \
 	src/layer/vector/Path.js \
 	src/layer/vector/Path.Popup.js \

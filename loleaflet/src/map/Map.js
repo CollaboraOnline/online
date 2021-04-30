@@ -46,7 +46,6 @@ L.Map = L.Evented.extend({
 		urlPrefix: 'lool',
 		wopiSrc: '',
 		cursorURL: L.LOUtil.getURL('cursors'),
-		backgroundLayerEnabled: true,
 	},
 
 	// Control.UIManager instance, set in main.js
