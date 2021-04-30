@@ -44,13 +44,16 @@ public:
     {
     }
 
-    void assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
         if (_phase == Phase::WaitPutFile)
         {
             LOG_TST("assertPutFileRequest: document saved.");
             _isDocumentSaved = true;
         }
+
+        return nullptr;
     }
 
     bool onDocumentLoaded(const std::string& message) override

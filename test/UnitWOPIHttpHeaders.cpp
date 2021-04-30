@@ -35,10 +35,12 @@ protected:
         exitTest(TestResult::Ok); //TODO: Remove when we add put/rename cases.
     }
 
-    void assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         assertHeaders(request);
         exitTest(TestResult::Ok);
+        return nullptr;
     }
 
     void assertPutRelativeFileRequest(const Poco::Net::HTTPRequest& request) override

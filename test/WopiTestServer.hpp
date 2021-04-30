@@ -92,8 +92,11 @@ public:
     {
     }
 
-    virtual void assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/)
+    /// Assert the PutFile request is valid and optinally return a response.
+    virtual std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/)
     {
+        return nullptr;
     }
 
     virtual void assertPutRelativeFileRequest(const Poco::Net::HTTPRequest& /*request*/)
@@ -257,12 +260,21 @@ protected:
             message.read(buffer, size);
             setFileContent(std::string(buffer, size));
 
-            assertPutFileRequest(request);
+            std::unique_ptr<http::Response> response = assertPutFileRequest(request);
+            if (response)
+            {
+                socket->sendAndShutdown(*response);
+            }
+            else
+            {
+                // By default we return success.
+                http::Response httpResponse(http::StatusLine(200));
+                httpResponse.setBody("{\"LastModifiedTime\": \"" +
+                                     Util::getIso8601FracformatTime(_fileLastModifiedTime) +
+                                     "\" }");
+                socket->sendAndShutdown(httpResponse);
+            }
 
-            http::Response httpResponse(http::StatusLine(200));
-            httpResponse.setBody("{\"LastModifiedTime\": \"" +
-                                 Util::getIso8601FracformatTime(_fileLastModifiedTime) + "\" }");
-            socket->sendAndShutdown(httpResponse);
             return true;
         }
         else if (!Util::startsWith(uriReq.getPath(), "/lool/")) // Skip requests to the websrv.

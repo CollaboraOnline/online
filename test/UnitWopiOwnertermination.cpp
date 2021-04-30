@@ -49,7 +49,8 @@ public:
     {
     }
 
-    void assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
         if (_phase == Phase::Polling)
         {
@@ -60,6 +61,8 @@ public:
         {
             failTest("Saving in an unexpected phase: " + toString(_phase));
         }
+
+        return nullptr;
     }
 
     bool onDocumentLoaded(const std::string& message) override
