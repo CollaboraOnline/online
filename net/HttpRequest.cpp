@@ -303,7 +303,7 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
 
 int64_t Request::readData(const char* p, const int64_t len)
 {
-    int64_t available = len;
+    uint64_t available = len;
     if (_stage == Stage::Header)
     {
         // First line is the status line.
@@ -314,8 +314,8 @@ int64_t Request::readData(const char* p, const int64_t len)
         }
 
         // Verb.
-        int64_t off = skipSpaceAndTab(p, 0, available);
-        int64_t end = findEndOfToken(p, off, available);
+        uint64_t off = skipSpaceAndTab(p, 0, available);
+        uint64_t end = findEndOfToken(p, off, available);
         if (end == available)
         {
             // Incomplete data.
