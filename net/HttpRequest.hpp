@@ -861,8 +861,8 @@ private:
         , _timeout(getDefaultTimeout())
         , _connected(false)
     {
-        assert(!_host.empty() && portNumber > 0 && !_port.empty()
-               && "Invalid hostname and portNumber for http::Sesssion");
+        assert(!_host.empty() && portNumber > 0 && !_port.empty() &&
+               "Invalid hostname and portNumber for http::Sesssion");
 #ifdef ENABLE_DEBUG
         std::string scheme;
         std::string hostString;
@@ -951,6 +951,7 @@ public:
     const std::string& port() const { return _port; }
     Protocol protocol() const { return _protocol; }
     bool isSecure() const { return _protocol == Protocol::HttpSsl; }
+    bool isConnected() const { return _connected; };
 
     /// Set the timeout, in microseconds.
     void setTimeout(const std::chrono::microseconds timeout) { _timeout = timeout; }
@@ -1023,7 +1024,7 @@ public:
 
         newRequest(req);
 
-        if (!_connected && connect())
+        if (!isConnected() && connect())
         {
             LOG_TRC("Connected");
             poll.insertNewSocket(_socket);
@@ -1048,7 +1049,7 @@ private:
 
         assert(!!_response && "Response must be set!");
 
-        if (!_connected && !connect())
+        if (!isConnected() && !connect())
             return false;
 
         SocketPoll poller("HttpSynReqPoll");
@@ -1058,8 +1059,8 @@ private:
         while (!_response->done())
         {
             const auto now = std::chrono::steady_clock::now();
-            const auto remaining
-                = std::chrono::duration_cast<std::chrono::microseconds>(deadline - now);
+            const auto remaining =
+                std::chrono::duration_cast<std::chrono::microseconds>(deadline - now);
             poller.poll(remaining);
         }
 
@@ -1091,6 +1092,7 @@ private:
             {
                 LOG_TRC("Our peer has sent the 'Connection: close' token. Disconnecting.");
                 onDisconnect();
+                assert(isConnected() == false);
             }
         };
 
@@ -1205,7 +1207,7 @@ private:
             // Note that this is the right way to end a request in HTTP, it's also
             // no good maintaining a poor connection (if that's the issue).
             onDisconnect(); // Trigger manually (why wait for poll to do it?).
-            assert(_connected == false);
+            assert(isConnected() == false);
         }
     }
 
