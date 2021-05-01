@@ -1168,10 +1168,10 @@ private:
             _socket->shutdown(); // Flag for shutdown for housekeeping in SocketPoll.
             _socket->closeConnection(); // Immediately disconnect.
             _socket.reset();
+            _response->complete();
         }
 
         _connected = false;
-        _response->complete();
     }
 
     bool connect()
