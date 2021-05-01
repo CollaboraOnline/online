@@ -1130,8 +1130,17 @@ private:
 
     virtual void handleIncomingMessage(SocketDisposition& disposition) override
     {
-        LOG_TRC("handleIncomingMessage");
+        if (!isConnected())
+        {
+            LOG_ERR("handleIncomingMessage called when not connected.");
+            assert(!_socket && "Expected no socket when not connected.");
+            return;
+        }
 
+        assert(_socket && "No valid socket to handleIncomingMessage.");
+        LOG_TRC('#' << _socket->getFD() << " handleIncomingMessage.");
+
+        bool close = false;
         std::vector<char>& data = _socket->getInBuffer();
 
         // Consume the incoming data by parsing and processing the body.
@@ -1140,12 +1149,18 @@ private:
         {
             // Remove consumed data.
             data.erase(data.begin(), data.begin() + read);
+            close = !isConnected();
         }
         else if (read < 0)
         {
-            // Interrupt the transfer.
+            // Protocol error: Interrupt the transfer.
+            close = true;
+        }
+
+        if (close)
+        {
             disposition.setClosed();
-            _socket->shutdown();
+            onDisconnect();
         }
     }
 
@@ -1188,8 +1203,8 @@ private:
         if (!_response || _response->done())
             return;
 
-        const auto duration
-            = std::chrono::duration_cast<std::chrono::milliseconds>(now - _startTime);
+        const auto duration =
+            std::chrono::duration_cast<std::chrono::milliseconds>(now - _startTime);
         if (duration > getTimeout())
         {
             LOG_WRN("Socket #" << _socket->getFD() << " has timed out while requesting ["
