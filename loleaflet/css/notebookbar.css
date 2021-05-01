@@ -206,7 +206,7 @@
 	scrollbar-width: none; /* Firefox */
 	-ms-overflow-style: none;  /* Internet Explorer 10+ */
 	display: flex;
-	height: 84px;
+	height: 72px;
 	align-items: center;
 }
 
