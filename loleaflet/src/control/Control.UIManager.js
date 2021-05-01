@@ -433,9 +433,9 @@ L.Control.UIManager = L.Control.extend({
 				additionalOffset = 57;
 		}
 
-		this.moveObjectVertically($('#document-container'), 43 + additionalOffset);
-		this.moveObjectVertically($('#presentation-controls-wrapper'), 43);
-		this.moveObjectVertically($('#sidebar-dock-wrapper'), 43);
+		this.moveObjectVertically($('#document-container'), 31 + additionalOffset);
+		this.moveObjectVertically($('#presentation-controls-wrapper'), 31);
+		this.moveObjectVertically($('#sidebar-dock-wrapper'), 31);
 
 		$('#map').addClass('notebookbar-opened');
 	},
@@ -444,9 +444,9 @@ L.Control.UIManager = L.Control.extend({
 		if (this.isNotebookbarCollapsed())
 			return;
 
-		this.moveObjectVertically($('#document-container'), -85);
-		this.moveObjectVertically($('#presentation-controls-wrapper'), -85);
-		this.moveObjectVertically($('#sidebar-dock-wrapper'), -85);
+		this.moveObjectVertically($('#document-container'), -73);
+		this.moveObjectVertically($('#presentation-controls-wrapper'), -73);
+		this.moveObjectVertically($('#sidebar-dock-wrapper'), -73);
 		this.moveObjectVertically($('#formulabar'), -1);
 		$('#toolbar-up').css('display', 'none');
 
@@ -459,9 +459,9 @@ L.Control.UIManager = L.Control.extend({
 		if (!this.isNotebookbarCollapsed())
 			return;
 
-		this.moveObjectVertically($('#document-container'), 85);
-		this.moveObjectVertically($('#presentation-controls-wrapper'), 85);
-		this.moveObjectVertically($('#sidebar-dock-wrapper'), 85);
+		this.moveObjectVertically($('#document-container'), 73);
+		this.moveObjectVertically($('#presentation-controls-wrapper'), 73);
+		this.moveObjectVertically($('#sidebar-dock-wrapper'), 73);
 		this.moveObjectVertically($('#formulabar'), 1);
 		$('#toolbar-up').css('display', '');
 
