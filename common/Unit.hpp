@@ -310,6 +310,13 @@ public:
             // Invoke the test, expect no exceptions.
             invokeWSDTest();
         }
+        catch (const Poco::Exception& ex)
+        {
+            LOG_ERR("ERROR: unexpected exception while invoking WSD Test: : "
+                    << ex.displayText()
+                    << (ex.nested() ? "( " + ex.nested()->displayText() + ')' : ""));
+            exitTest(TestResult::Failed);
+        }
         catch (const std::exception& ex)
         {
             LOG_TST("ERROR: unexpected exception while invoking WSD Test: " << ex.what());
