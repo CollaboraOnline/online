@@ -239,7 +239,7 @@ protected:
         {
             LOG_TST("Fake wopi host request, handling PutFile: " << uriReq.getPath());
 
-            std::string wopiTimestamp = request.get("X-LOOL-WOPI-Timestamp");
+            std::string wopiTimestamp = request.get("X-LOOL-WOPI-Timestamp", std::string());
             if (!wopiTimestamp.empty())
             {
 
