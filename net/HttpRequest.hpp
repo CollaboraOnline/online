@@ -496,7 +496,8 @@ public:
         ifs->seekg(0, std::ios_base::beg);
 
         setBodySource(
-            [=](char* buf, int64_t len) -> int64_t {
+            [=](char* buf, int64_t len) -> int64_t
+            {
                 ifs->read(buf, len);
                 return ifs->gcount();
             },
@@ -577,8 +578,8 @@ public:
     static constexpr int64_t VersionLen = 8;
     static constexpr int64_t StatusCodeLen = 3;
     static constexpr int64_t MaxReasonPhraseLen = 512; // Arbitrary large number.
-    static constexpr int64_t MinStatusLineLen
-        = sizeof("HTTP/0.0 000\r\n") - 1; // Reason phrase is optional.
+    static constexpr int64_t MinStatusLineLen =
+        sizeof("HTTP/0.0 000\r\n") - 1; // Reason phrase is optional.
     static constexpr int64_t MaxStatusLineLen = VersionLen + StatusCodeLen + MaxReasonPhraseLen;
     static constexpr int64_t MinValidStatusCode = 100;
     static constexpr int64_t MaxValidStatusCode = 599;
@@ -737,7 +738,8 @@ public:
     void saveBodyToFile(const std::string& path)
     {
         _bodyFile.open(path, std::ios_base::out | std::ios_base::binary);
-        _onBodyWriteCb = [this](const char* p, int64_t len) {
+        _onBodyWriteCb = [this](const char* p, int64_t len)
+        {
             LOG_TRC("Writing " << len << " bytes.");
             if (_bodyFile.good())
                 _bodyFile.write(p, len);
@@ -753,7 +755,8 @@ public:
     /// Use getBody() to read it.
     void saveBodyToMemory()
     {
-        _onBodyWriteCb = [this](const char* p, int64_t len) {
+        _onBodyWriteCb = [this](const char* p, int64_t len)
+        {
             _body.insert(_body.end(), p, p + len);
             // LOG_TRC("Body: " << len << "\n" << _body);
             return len;
@@ -1074,7 +1077,8 @@ private:
         // doesn't have our (Session) reference. Also,
         // it's good that we are notified that the request
         // has retired, so we can perform housekeeping.
-        Response::FinishedCallback onFinished = [&]() {
+        Response::FinishedCallback onFinished = [&]()
+        {
             LOG_TRC("onFinished");
             assert(_response && _response->done() && "Must have response and must be done");
             if (_onFinished)
