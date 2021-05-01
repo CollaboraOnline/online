@@ -1236,11 +1236,11 @@ get(const std::string& url, std::chrono::milliseconds timeout = Session::getDefa
 }
 
 /// HTTP Get synchronously given a url and a path.
-inline const std::shared_ptr<const http::Response> get(std::string url, const std::string& path,
-                                                       std::chrono::milliseconds timeout
-                                                       = Session::getDefaultTimeout())
+inline const std::shared_ptr<const http::Response>
+get(const std::string& url, const std::string& path,
+    std::chrono::milliseconds timeout = Session::getDefaultTimeout())
 {
-    auto httpSession = http::Session::create(std::move(url));
+    auto httpSession = http::Session::create(url);
     return httpSession->syncRequest(http::Request(path), timeout);
 }
 
