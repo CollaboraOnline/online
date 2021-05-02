@@ -395,8 +395,11 @@ void DocumentBroker::pollThread()
         if (SigUtil::getShutdownRequestFlag() || _docState.isCloseRequested())
         {
             const std::string reason = SigUtil::getShutdownRequestFlag() ? "recycling" : _closeReason;
-            LOG_INF("Autosaving DocumentBroker for docKey [" << getDocKey() << "] for " << reason);
-            if (!autoSave(isPossiblyModified()))
+            const bool possiblyModified = isPossiblyModified();
+            LOG_INF("Autosaving DocumentBroker for docKey ["
+                    << getDocKey() << "], possiblyModified: " << (possiblyModified ? "yes" : "no")
+                    << ", for " << reason);
+            if (!autoSave(possiblyModified))
             {
                 LOG_INF("Terminating DocumentBroker for docKey [" << getDocKey()
                                                                   << "]: " << reason);
@@ -1180,9 +1183,11 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
 
     // Storage save is considered successful when either storage returns OK or the document on the storage
     // was changed and it was used to overwrite local changes
-    _storageManager.setLastUploadResult(
-        uploadResult.getResult() == StorageBase::UploadResult::Result::OK
-        || uploadResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED);
+    const bool lastUploadSuccessful =
+        uploadResult.getResult() == StorageBase::UploadResult::Result::OK ||
+        uploadResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED;
+    LOG_TRC("lastUploadSuccessful: " << lastUploadSuccessful);
+    _storageManager.setLastUploadResult(lastUploadSuccessful);
 
     if (uploadResult.getResult() == StorageBase::UploadResult::Result::OK)
     {
@@ -2364,6 +2369,7 @@ void DocumentBroker::setModified(const bool value)
 
     // Set the X-LOOL-WOPI-IsModifiedByUser header flag sent to storage.
     _storage->setUserModified(value);
+    LOG_TRC("Modified state set to " << value << " for Doc [" << _docId << ']');
 }
 
 bool DocumentBroker::isInitialSettingSet(const std::string& name) const
