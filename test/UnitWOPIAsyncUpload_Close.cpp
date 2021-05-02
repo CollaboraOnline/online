@@ -88,7 +88,7 @@ public:
         LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus",
                            _phase == Phase::WaitLoadStatus);
 
-        LOG_TST("onDocumentModified: Switching to Phase::WaitLoadStatus, SavingPhase::Modify");
+        LOG_TST("onDocumentModified: Switching to Phase::Modify");
         _phase = Phase::Modify;
 
         SocketPoll::wakeupWorld();
@@ -102,8 +102,7 @@ public:
         LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitModified",
                            _phase == Phase::WaitModifiedStatus);
         {
-            LOG_TST("onDocumentModified: Switching to Phase::WaitModifiedStatus, "
-                    "SavingPhase::WaitFirstPutFile");
+            LOG_TST("onDocumentModified: Switching to Phase::WaitFirstPutFile");
             _phase = Phase::WaitFirstPutFile;
 
             WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
