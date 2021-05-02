@@ -10,6 +10,7 @@
 #include "ClientSession.hpp"
 
 #include <fstream>
+#include <ios>
 #include <sstream>
 #include <memory>
 #include <unordered_map>
@@ -1439,10 +1440,15 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             // When the document is saved internally, but saving to storage failed,
             // don't update the client's modified status
             // (otherwise client thinks document is unmodified b/c saving was successful)
+            const bool isModified = stateTokens.equals(1, "true");
             if (!docBroker->isLastStorageUploadSuccessful())
+            {
+                LOG_DBG("Skipping ModifiedStatus (" << std::boolalpha << isModified
+                                                    << ") because last storage upload failed.");
                 return false;
+            }
 
-            docBroker->setModified(stateTokens.equals(1, "true"));
+            docBroker->setModified(isModified);
         }
         else
         {
