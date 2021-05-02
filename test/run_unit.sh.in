@@ -113,6 +113,6 @@ else
 	echo ":test-result: FAIL $tst" >> $test_output
 fi
 
-echo "Finished $tst in $SECONDS";
+echo "Finished $tst in ${SECONDS}s";
 
 # vim:set shiftwidth=4 expandtab:
