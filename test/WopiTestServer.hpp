@@ -264,7 +264,7 @@ protected:
             if (response)
             {
                 LOG_TST("Fake wopi host response to POST "
-                        << uriReq.getPath() << ": " << response->statusLine().statusCode()
+                        << uriReq.getPath() << ": " << response->statusLine().statusCode() << ' '
                         << response->statusLine().reasonPhrase());
                 socket->sendAndShutdown(*response);
             }
