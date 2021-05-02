@@ -263,15 +263,21 @@ protected:
             std::unique_ptr<http::Response> response = assertPutFileRequest(request);
             if (response)
             {
+                LOG_TST("Fake wopi host response to POST "
+                        << uriReq.getPath() << ": " << response->statusLine().statusCode()
+                        << response->statusLine().reasonPhrase());
                 socket->sendAndShutdown(*response);
             }
             else
             {
                 // By default we return success.
+                const std::string body = "{\"LastModifiedTime\": \"" +
+                                         Util::getIso8601FracformatTime(_fileLastModifiedTime) +
+                                         "\" }";
+                LOG_TST("Fake wopi host response to POST " << uriReq.getPath() << ": 200 OK "
+                                                           << body);
                 http::Response httpResponse(http::StatusLine(200));
-                httpResponse.setBody("{\"LastModifiedTime\": \"" +
-                                     Util::getIso8601FracformatTime(_fileLastModifiedTime) +
-                                     "\" }");
+                httpResponse.setBody(body);
                 socket->sendAndShutdown(httpResponse);
             }
 
