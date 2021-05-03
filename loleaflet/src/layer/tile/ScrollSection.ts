@@ -44,7 +44,7 @@ class ScrollSection {
 		this.map.on('scrollby', this.onScrollBy, this);
 		this.map.on('scrollvelocity', this.onScrollVelocity, this);
 		this.map.on('handleautoscroll', this.onHandleAutoScroll, this);
-		this.map.on('docsize', this.onUpdateSize, this);
+		this.map.on('scrolllimits', this.onUpdateLimits, this);
 		this.map.on('updatescrolloffset', this.onUpdateScrollOffset, this);
 	}
 
@@ -56,8 +56,8 @@ class ScrollSection {
 		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 		this.sectionProperties.defaultCursorStyle = this.sectionProperties.mapPane.style.cursor;
 
-		this.sectionProperties.documentWidth = 0;
-		this.sectionProperties.documentHeight = 0;
+		this.sectionProperties.scrollWidth = 0;
+		this.sectionProperties.scrollHeight = 0;
 
 		this.sectionProperties.documentTopMax = Infinity;
 		this.sectionProperties.documentRightMax = Infinity;
@@ -154,14 +154,14 @@ class ScrollSection {
 		this.onScrollVelocity({vx: vx, vy: vy});
 	}
 
-	public onUpdateSize (e: any) {
+	public onUpdateLimits (e: any) {
 		// we need to avoid precision issues in comparison (in the end values are pixels)
-		var newDocWidth = Math.ceil(e.x);
-		var newDocHeight = Math.ceil(e.y);
+		var newScrollWidth = Math.ceil(e.x);
+		var newScrollHeight = Math.ceil(e.y);
 
 		// Don't get them through L.DomUtil.getStyle because precision is no more than 6 digits
-		this.sectionProperties.documentWidth = Math.round(newDocWidth * this.dpiScale);
-		this.sectionProperties.documentHeight = Math.round(newDocHeight * this.dpiScale);
+		this.sectionProperties.scrollWidth = Math.round(newScrollWidth * this.dpiScale);
+		this.sectionProperties.scrollHeight = Math.round(newScrollHeight * this.dpiScale);
 	}
 
 	private getVerticalScrollLength () :number {
@@ -178,7 +178,7 @@ class ScrollSection {
 	}
 
 	private calculateVerticalScrollSize (scrollLength: number) :number {
-		var scrollSize = scrollLength * scrollLength / this.sectionProperties.documentHeight;
+		var scrollSize = scrollLength * scrollLength / this.sectionProperties.scrollHeight;
 		if (scrollSize > this.sectionProperties.minimumScrollSize) {
 			return Math.round(scrollSize);
 		}
@@ -192,7 +192,7 @@ class ScrollSection {
 		result.scrollLength = this.getVerticalScrollLength(); // The length of the railway that the scroll bar moves on up & down.
 		result.scrollSize = this.calculateVerticalScrollSize(result.scrollLength);
 		result.scrollableLength = result.scrollLength - result.scrollSize;
-		result.scrollableHeight = this.sectionProperties.documentHeight - this.size[1];
+		result.scrollableHeight = this.sectionProperties.scrollHeight - this.size[1];
 		result.ratio = result.scrollableHeight / result.scrollableLength; // 1px scrolling = xpx document height.
 		result.startY = Math.round(this.documentTopLeft[1] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.yOffset);
 		this.sectionProperties.documentTopMax = result.scrollableHeight; // When documentTopLeft[1] value is equal to this value, it means whole document is visible.
@@ -214,7 +214,7 @@ class ScrollSection {
 	}
 
 	private calculateHorizontalScrollSize (scrollLength: number) :number {
-		var scrollSize = scrollLength * scrollLength / this.sectionProperties.documentWidth;
+		var scrollSize = scrollLength * scrollLength / this.sectionProperties.scrollWidth;
 		if (scrollSize > this.sectionProperties.minimumScrollSize) {
 			return Math.round(scrollSize);
 		}
@@ -228,7 +228,7 @@ class ScrollSection {
 		result.scrollLength = this.getHorizontalScrollLength(); // The length of the railway that the scroll bar moves on up & down.
 		result.scrollSize = this.calculateHorizontalScrollSize(result.scrollLength); // Width of the scroll bar.
 		result.scrollableLength = result.scrollLength - result.scrollSize;
-		result.scrollableWidth = this.sectionProperties.documentWidth - this.size[0];
+		result.scrollableWidth = this.sectionProperties.scrollWidth - this.size[0];
 		result.ratio = result.scrollableWidth / result.scrollableLength;
 		result.startX = Math.round(this.documentTopLeft[0] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.xOffset);
 		this.sectionProperties.documentRightMax = result.scrollableWidth;
@@ -525,7 +525,7 @@ class ScrollSection {
 			var scrollProps: any = this.getHorizontalScrollProperties();
 			var diffX: number = dragDistance[0] - this.sectionProperties.previousDragDistance[0];
 			var percentage: number = diffX / scrollProps.scrollLength;
-			var actualDistance = this.sectionProperties.documentWidth * percentage;
+			var actualDistance = this.sectionProperties.scrollWidth * percentage;
 
 			this.scrollHorizontalWithOffset(actualDistance);
 			this.sectionProperties.previousDragDistance[0] = dragDistance[0];
