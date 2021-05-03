@@ -1,0 +1,10 @@
+.iframe-dialog-wrap {
+	position: absolute;
+	z-index: 1106;
+	margin-left: 350px;
+	margin-top: 30px;
+}
+
+.iframe-dialog-modal {
+	height: 470px;
+}

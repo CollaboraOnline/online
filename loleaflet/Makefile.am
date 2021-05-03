@@ -127,7 +127,7 @@ NODE_MODULES_SRC =\
 	l10n-for-node@0.0.1 \
 	@braintree/sanitize-url@4.0.1
 
-LOLEAFLET_CSS =\
+LOLEAFLET_CSS_LST =\
 	$(builddir)/node_modules/select2/dist/css/select2.css \
 	$(srcdir)/css/w2ui-1.5.rc1.css \
 	$(srcdir)/css/leaflet.css \
@@ -158,6 +158,12 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/notebookbar.css \
 	$(srcdir)/css/override-vex.css \
 	$(srcdir)/css/jquery-ui-lightness.css
+
+if ENABLE_FEEDBACK
+LOLEAFLET_CSS_LST += $(srcdir)/css/iframedialog.css
+endif
+
+LOLEAFLET_CSS = $(filter %,$(LOLEAFLET_CSS_LST))
 
 LOLEAFLET_CSS_DST = $(foreach file,$(LOLEAFLET_CSS),$(DIST_FOLDER)/$(notdir $(file)))
 LOLEAFLET_CSS_M4 = $(strip $(foreach file,$(LOLEAFLET_CSS),$(notdir $(file))))
@@ -194,7 +200,7 @@ NODE_MODULES_JS_DST = $(patsubst %.js,$(DIST_FOLDER)/%.js,$(NODE_MODULES_JS))
 LOLEAFLET_LIBS_JS_SRC = $(patsubst %.js,$(srcdir)/js/%.js,$(LOLEAFLET_LIBS_JS))
 LOLEAFLET_LIBS_JS_DST = $(patsubst %.js,$(DIST_FOLDER)/%.js,$(LOLEAFLET_LIBS_JS))
 
-LOLEAFLET_JS =\
+LOLEAFLET_JS_LST =\
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
@@ -352,8 +358,17 @@ LOLEAFLET_JS =\
 	src/map/anim/Map.PanAnimation.js \
 	src/dom/PosAnimation.Timer.js \
 	src/control/Control.Scroll.Annotation.js \
-	src/layer/marker/DivOverlay.js \
+	src/layer/marker/DivOverlay.js
+
+if ENABLE_FEEDBACK
+LOLEAFLET_JS_LST +=\
+	src/control/IFrameDialog.js
+endif
+
+LOLEAFLET_JS_LST +=\
 	src/main.js
+
+LOLEAFLET_JS = $(filter %,$(LOLEAFLET_JS_LST))
 
 LOLEAFLET_JS_SRC = $(shell find $(srcdir)/src -name '*.js')
 LOLEAFLET_JS_DST = $(patsubst $(srcdir)/src/%.js,$(DIST_FOLDER)/src/%.js,$(LOLEAFLET_JS_SRC))
