@@ -545,7 +545,7 @@ L.Map.include({
 			w = iw / 5 + 590;
 		}
 
-		if (hasDismissBtn) {
+		if (!hasDismissBtn && window.mode.isMobile()) {
 			var ih = window.innerHeight;
 			var h = ih / 2;
 			if (iw < 768) {
@@ -561,14 +561,14 @@ L.Map.include({
 		var map = this;
 		vex.dialog.open({
 			unsafeMessage: data,
-			showCloseButton: !hasDismissBtn,
+			showCloseButton: (!hasDismissBtn && !window.mode.isMobile()),
 			escapeButtonCloses: false,
 			overlayClosesOnClick: false,
 			closeAllOnPopState: false,
 			focusFirstInput: false, // Needed to avoid auto-scroll to the bottom
-			buttons: !hasDismissBtn ? {} : [
-				$.extend({}, vex.dialog.buttons.YES, { text: _('I understand the risks') }),
-			],
+			buttons: (window.mode.isMobile() && !hasDismissBtn) ? [
+				$.extend({}, vex.dialog.buttons.YES, { text: _('Dismiss') }),
+			] : {},
 			afterOpen: function() {
 				var $vexContent = $(this.contentEl);
 				this.contentEl.style.width = w + 'px';
