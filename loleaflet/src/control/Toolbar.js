@@ -534,6 +534,7 @@ L.Map.include({
 		var w;
 		var iw = window.innerWidth;
 		var hasDismissBtn = window.enableWelcomeMessageButton;
+		var btnText = 'I understand the risks';
 
 		if (iw < 768) {
 			w = iw - 30;
@@ -555,20 +556,23 @@ L.Map.include({
 			containerDiv += data;
 			containerDiv += '</div>';
 			data = containerDiv;
+			btnText = 'Dismiss';
+			hasDismissBtn = true;
 		}
 
 		// show the dialog
 		var map = this;
 		vex.dialog.open({
 			unsafeMessage: data,
-			showCloseButton: (!hasDismissBtn && !window.mode.isMobile()),
+			showCloseButton: !hasDismissBtn,
 			escapeButtonCloses: false,
 			overlayClosesOnClick: false,
+			className: 'vex-theme-plain vex-welcome-mobile',
 			closeAllOnPopState: false,
 			focusFirstInput: false, // Needed to avoid auto-scroll to the bottom
-			buttons: (window.mode.isMobile() && !hasDismissBtn) ? [
-				$.extend({}, vex.dialog.buttons.YES, { text: _('Dismiss') }),
-			] : {},
+			buttons: !hasDismissBtn ? {} : [
+				$.extend({}, vex.dialog.buttons.YES, { text: _(btnText) }),
+			],
 			afterOpen: function() {
 				var $vexContent = $(this.contentEl);
 				this.contentEl.style.width = w + 'px';
