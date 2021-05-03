@@ -48,7 +48,7 @@ L.Control.PartsPreview = L.Control.extend({
 		map.on('tilepreview', this._updatePreview, this);
 		map.on('insertpage', this._insertPreview, this);
 		map.on('deletepage', this._deletePreview, this);
-		map.on('docsize', this._updateAllPreview, this);
+		map.on('scrolllimits', this._updateAllPreview, this);
 		map.on('scrolltopart', this._scrollToPart, this);
 	},
 
