@@ -39,6 +39,9 @@ void ProfileZone::addRecording()
 {
     assert(s_bRecording);
 
+    std::stringstream threadIdStr;
+    threadIdStr << Util::getThreadId();
+
     auto nNow = std::chrono::system_clock::now();
 
     // Generate a single "Complete Event" (type X)
@@ -61,7 +64,7 @@ void ProfileZone::addRecording()
         + std::to_string(m_nPid)
         + ","
           "\"tid\":"
-        + std::to_string(syscall(SYS_gettid)) + "},");
+        + threadIdStr.str() + "},");
     std::lock_guard<std::mutex> aGuard(g_aMutex);
 
     g_aRecording.emplace_back(sRecordingData);
