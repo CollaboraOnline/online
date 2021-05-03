@@ -358,6 +358,14 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	padding-top: 160px !important;
 	padding-bottom: 160px !important;
 }
+/* Vex: Welcome dialog */
+.vex-welcome-mobile .vex-dialog-form .vex-content {
+	padding: 0;
+}
+
+.vex-welcome-mobile .vex-dialog-button-primary {
+	width: 100%;
+}
 
 /* Related to toolbar.css */
 .insertshape-grid {
