@@ -184,22 +184,22 @@ class TilesSection {
 
 			this.context.drawImage(tile.el, offset.x, offset.y, tileSize, tileSize);
 
-			if (tile.coords.part === 0)
+			if (tile.coords.part % 8 === 0)
 				this.context.strokeStyle = 'black';
-			else if (tile.coords.part === 1)
+			else if (tile.coords.part % 8 === 1)
 				this.context.strokeStyle = 'red';
-			else if (tile.coords.part === 2)
+			else if (tile.coords.part % 8 === 2)
 				this.context.strokeStyle = 'blue';
-			else if (tile.coords.part === 3)
+			else if (tile.coords.part % 8 === 3)
 				this.context.strokeStyle = 'yellow';
-			else if (tile.coords.part === 4)
+			else if (tile.coords.part % 8 === 4)
+				this.context.strokeStyle = 'brown';
+			else if (tile.coords.part % 8 === 5)
 				this.context.strokeStyle = 'purple';
-			else if (tile.coords.part === 5)
-				this.context.strokeStyle = 'red';
-			else if (tile.coords.part === 6)
-				this.context.strokeStyle = 'blue';
-			else if (tile.coords.part === 7)
-				this.context.strokeStyle = 'yellow';
+			else if (tile.coords.part % 8 === 6)
+				this.context.strokeStyle = 'grey';
+			else if (tile.coords.part % 8 === 7)
+				this.context.strokeStyle = 'pink';
 
 			this.context.strokeRect(offset.x, offset.y, tileSize, tileSize);
 		}
