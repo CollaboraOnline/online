@@ -109,12 +109,17 @@ public:
             if (HttpRequestTests::SimulatedLatencyMs > 0)
                 fd = Delay::create(HttpRequestTests::SimulatedLatencyMs, physicalFd);
 #endif
+#if ENABLE_SSL
             if (helpers::haveSsl())
                 return StreamSocket::create<SslStreamSocket>(
                     fd, false, std::make_shared<ServerRequestHandler>());
             else
                 return StreamSocket::create<StreamSocket>(fd, false,
                                                           std::make_shared<ServerRequestHandler>());
+#else
+            return StreamSocket::create<StreamSocket>(fd, false,
+                                                      std::make_shared<ServerRequestHandler>());
+#endif
         }
     };
 
