@@ -155,6 +155,7 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/menubar.css \
 	$(srcdir)/css/mobilewizard.css \
 	$(srcdir)/css/jsdialogs.css \
+	$(if $(ENABLE_FEEDBACK),$(srcdir)/css/iframedialog.css,) \
 	$(srcdir)/css/btns.css \
 	$(srcdir)/css/notebookbar.css \
 	$(srcdir)/css/override-vex.css \
@@ -344,6 +345,7 @@ LOLEAFLET_JS =\
 	src/control/Scroll.js \
 	src/control/Styles.js \
 	src/control/Ruler.js \
+	$(if $(ENABLE_FEEDBACK),src/control/IFrameDialog.js,) \
 	src/dom/PosAnimation.js \
 	src/map/anim/Map.PanAnimation.js \
 	src/dom/PosAnimation.Timer.js \
