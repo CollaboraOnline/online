@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var { insertMultipleComment } = require('../../common/desktop_helper');
 
 describe('Annotation Tests', function() {
-	var testFileName = 'copy_paste.odt';
+	var testFileName = 'annotation.odt';
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
