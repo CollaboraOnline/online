@@ -113,7 +113,7 @@ NODE_MODULES_SRC =\
 	l10n-for-node@0.0.1 \
 	@braintree/sanitize-url@4.0.1
 
-LOLEAFLET_CSS =\
+LOLEAFLET_CSS_LST =\
 	$(builddir)/node_modules/select2/dist/css/select2.css \
 	$(srcdir)/css/w2ui-1.5.rc1.css \
 	$(srcdir)/css/leaflet.css \
@@ -146,6 +146,12 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/jssidebar.css \
 	$(srcdir)/css/override-vex.css \
 	$(srcdir)/css/jquery-ui-lightness.css
+
+if ENABLE_FEEDBACK
+LOLEAFLET_CSS_LST += $(srcdir)/css/iframedialog.css
+endif
+
+LOLEAFLET_CSS = $(filter %,$(LOLEAFLET_CSS_LST))
 
 LOLEAFLET_CSS_DST = $(foreach file,$(LOLEAFLET_CSS),$(DIST_FOLDER)/$(notdir $(file)))
 LOLEAFLET_CSS_M4 = $(strip $(foreach file,$(LOLEAFLET_CSS),$(notdir $(file))))
@@ -186,7 +192,7 @@ LOLEAFLET_LIBS_JS_DST = $(patsubst %.js,$(DIST_FOLDER)/%.js,$(LOLEAFLET_LIBS_JS)
 # the ordering of this is delicate to get JS initialization right,
 # this list includes both Javascript and Typescript generated files
 # in a rather precise order.
-LOLEAFLET_JS_WEBORDER =\
+LOLEAFLET_JS_LST =\
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
@@ -353,8 +359,17 @@ LOLEAFLET_JS_WEBORDER =\
 	src/map/anim/Map.PanAnimation.js \
 	src/dom/PosAnimation.Timer.js \
 	src/control/Control.Scroll.Annotation.js \
-	src/layer/marker/DivOverlay.js \
+	src/layer/marker/DivOverlay.js
+
+if ENABLE_FEEDBACK
+LOLEAFLET_JS_LST +=\
+	src/control/IFrameDialog.js
+endif
+
+LOLEAFLET_JS_LST +=\
 	src/main.js
+
+LOLEAFLET_JS_WEBORDER = $(filter %,$(LOLEAFLET_JS_LST))
 
 LOLEAFLET_JS_SRC = $(filter %.js,$(LOLEAFLET_JS_WEBORDER))
 LOLEAFLET_TS_SRC = $(filter %.ts,$(LOLEAFLET_JS_WEBORDER))
