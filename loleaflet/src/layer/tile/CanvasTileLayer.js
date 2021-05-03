@@ -5422,7 +5422,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var dpiScale = this._painter._dpiScale;
 		var extraSize = new L.Point(0, 0);
-		if (this._docType === 'presentation')
+		if (this._docType === 'presentation' || (this._docType === 'drawing' && app.file.fileBasedView))
 			extraSize = this._annotationManager.allocateExtraSize(); // This changes only the width.
 
 		var docPixelLimits = new L.Point(this._docWidthTwips / this.options.tileWidthTwips,
