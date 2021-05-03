@@ -471,7 +471,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._docPixelSize = newSizePx.clone();
 		this._docWidthTwips = newDocWidth;
 		this._docHeightTwips = newDocHeight;
-		this._map.fire('docsize', newSizePx.clone());
+		this._map.fire('scrolllimits', newSizePx.clone());
 	},
 
 	_getCursorPosSize: function () {
@@ -526,7 +526,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				var bottomRight = this._map.unproject(new L.Point(width, height));
 				this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
 				this._docPixelSize = {x: width, y: height};
-				this._map.fire('docsize', {x: width, y: height});
+				this._map.fire('scrolllimits', {x: width, y: height});
 			}
 			else {
 				this._updateMaxBounds(true);
