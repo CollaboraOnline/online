@@ -1055,7 +1055,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		scrollPixelLimits = scrollPixelLimits.add(extraSize);
 
 		this._docPixelSize = {x: scrollPixelLimits.x, y: scrollPixelLimits.y};
-		this._map.fire('docsize', {x: scrollPixelLimits.x, y: scrollPixelLimits.y, extraSize: extraSize});
+		this._map.fire('scrolllimits', {x: scrollPixelLimits.x, y: scrollPixelLimits.y, extraSize: extraSize});
 	},
 
 	// In file based view, all parts may be drawn, not only selected part.
