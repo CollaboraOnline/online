@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * Toolbar handler
  */
@@ -304,6 +304,9 @@ L.Map.include({
 	},
 
 	sendUnoCommand: function (command, json) {
+		// To exercise the Trace Event functionality, uncomment this
+		// app.socket.emitInstantTraceEvent('loleaflet-unocommand:' + command);
+
 		var isAllowedInReadOnly = false;
 		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog', '.uno:EditAnnotation', '.uno:InsertAnnotation', '.uno:DeleteAnnotation'];
 
@@ -654,6 +657,11 @@ L.Map.include({
 	},
 
 	showLOAboutDialog: function() {
+
+		// Just as a test to exercise the Async Trace Event functionality, uncomment this
+		// line and the asyncTraceEvent.finish() below.
+		// var asyncTraceEvent = app.socket.createAsyncTraceEvent('loleaflet-showLOAboutDialog');
+
 		// Move the div sitting in 'body' as vex-content and make it visible
 		var content = $('#about-dialog').clone().css({display: 'block'});
 		// fill product-name and product-string
@@ -713,7 +721,7 @@ L.Map.include({
 				hammer.on('tap', function() {
 					map._docLayer.toggleTileDebugMode();
 
-					map._socket.sendMessage('traceeventrecording ' + (map._profilingRequestedToggle ? 'stop' : 'start'));
+					app.socket.sendMessage('traceeventrecording ' + (map._profilingRequestedToggle ? 'stop' : 'start'));
 
 					// Just as a test, uncomment this to toggle SAL_WARN and SAL_INFO
 					// selection between two states: 1) the default as directed by the
@@ -722,7 +730,7 @@ L.Map.include({
 					// (Note that loolwsd sets the SAL_LOG environment variable to
 					// "-WARN-INFO", i.e. the default is that nothing is logged)
 
-					// map._socket.sendMessage('sallogoverride ' + (map._profilingRequestedToggle ? 'default' : '+WARN+INFO.sc'));
+					// app.socket.sendMessage('sallogoverride ' + (map._profilingRequestedToggle ? 'default' : '+WARN+INFO.sc'));
 
 					map._profilingRequestedToggle = !map._profilingRequestedToggle;
 				});
@@ -740,6 +748,7 @@ L.Map.include({
 					touchGesture._hammer.on('tripletap', L.bind(touchGesture._onTripleTap, touchGesture));
 				}
 				map.focus();
+				// asyncTraceEvent.finish();
 			}
 		});
 	},
