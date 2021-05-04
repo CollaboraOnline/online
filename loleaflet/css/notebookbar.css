@@ -429,12 +429,12 @@
 	width: 170px !important;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
+.notebookbar.ui-combobox > .select2 * {
 	line-height: 22px;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-	height: 22px;    
+.notebookbar.ui-combobox > .select2 .select2-selection__arrow {
+	height: 22px;
 }
 
 #Copy.notebookbar,
