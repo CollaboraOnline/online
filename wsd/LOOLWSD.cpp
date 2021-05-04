@@ -749,7 +749,7 @@ std::string LOOLWSD::ServiceRoot;
 std::string LOOLWSD::LOKitVersion;
 std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
-FILE *LOOLWSD::EventTraceFile = NULL;
+FILE *LOOLWSD::TraceEventFile = NULL;
 std::string LOOLWSD::LogLevel = "trace";
 std::string LOOLWSD::UserInterface = "classic";
 bool LOOLWSD::AnonymizeUserData = false;
@@ -1062,7 +1062,7 @@ void LOOLWSD::innerInitialize(Application& self)
         }
     }
 
-    const auto eventTraceFile = getConfigValue<std::string>(conf, "event_trace.path", LOOLWSD_EVENTTRACEFILE);
+    const auto traceEventFile = getConfigValue<std::string>(conf, "trace_event.path", LOOLWSD_TRACEEVENTFILE);
 
     // Setup the logfile envar for the kit processes.
     if (logToFile)
@@ -1087,17 +1087,17 @@ void LOOLWSD::innerInitialize(Application& self)
 
     if (LogLevel == "trace")
     {
-        LOG_INF("Event Trace file is " << eventTraceFile << ".");
-        EventTraceFile = fopen(eventTraceFile.c_str(), "w");
-        if (EventTraceFile != NULL)
+        LOG_INF("Trace Event file is " << traceEventFile << ".");
+        TraceEventFile = fopen(traceEventFile.c_str(), "w");
+        if (TraceEventFile != NULL)
         {
-            if (fcntl(fileno(EventTraceFile), F_SETFD, FD_CLOEXEC) == -1)
+            if (fcntl(fileno(TraceEventFile), F_SETFD, FD_CLOEXEC) == -1)
             {
-                fclose(EventTraceFile);
-                EventTraceFile = NULL;
+                fclose(TraceEventFile);
+                TraceEventFile = NULL;
             }
             else
-                fprintf(EventTraceFile, "[\n");
+                fprintf(TraceEventFile, "[\n");
         }
     }
 
@@ -4146,14 +4146,14 @@ int LOOLWSD::innerMain()
         DocBrokers.clear();
     }
 
-    if (EventTraceFile != NULL)
+    if (TraceEventFile != NULL)
     {
         // Back over the last comma and newline.
-        fseek(EventTraceFile, -2, SEEK_CUR);
+        fseek(TraceEventFile, -2, SEEK_CUR);
         // And close the JSON array.
-        fprintf(EventTraceFile, "\n]\n");
-        fclose(EventTraceFile);
-        EventTraceFile = NULL;
+        fprintf(TraceEventFile, "\n]\n");
+        fclose(TraceEventFile);
+        TraceEventFile = NULL;
     }
 
 #if !defined(KIT_IN_PROCESS) && !MOBILEAPP

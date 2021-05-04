@@ -1877,11 +1877,11 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
         else if (message->firstTokenMatches("trace:"))
         {
             LOG_CHECK_RET(message->tokens().size() == 1, false);
-            if (LOOLWSD::EventTraceFile != NULL)
+            if (LOOLWSD::TraceEventFile != NULL)
             {
                 const auto newLine = static_cast<const char*>(memchr(payload.data(), '\n', payload.size()));
                 if (newLine)
-                    fwrite(newLine + 1, payload.size() - (newLine + 1 - payload.data()), 1, LOOLWSD::EventTraceFile);
+                    fwrite(newLine + 1, payload.size() - (newLine + 1 - payload.data()), 1, LOOLWSD::TraceEventFile);
             }
         }
         else
