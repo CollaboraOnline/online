@@ -228,9 +228,9 @@ AC_ARG_WITH([logfile],
             AS_HELP_STRING([--with-logfile=<path>],
                            [Path to the location of the logfile.]))
 
-AC_ARG_WITH([event-trace-file],
-            AS_HELP_STRING([--with-event-trace-file=<path>],
-                           [Path to the location of the Event Trace file.]))
+AC_ARG_WITH([trace-event-file],
+            AS_HELP_STRING([--with-trace-event-file=<path>],
+                           [Path to the location of the Trace Event file.]))
 
 AC_ARG_WITH([poco-includes],
             AS_HELP_STRING([--with-poco-includes=<path>],
@@ -317,7 +317,7 @@ ENABLE_DEBUG_PROTOCOL=false
 LOOLWSD_LOGLEVEL="warning"
 LOOLWSD_LOG_TO_FILE="false"
 LOOLWSD_LOGFILE="/var/log/loolwsd.log"
-LOOLWSD_EVENTTRACEFILE="/var/log/loolwsd.trace"
+LOOLWSD_TRACEEVENTFILE="/var/log/loolwsd.trace"
 LOOLWSD_ANONYMIZE_USER_DATA=false
 LOLEAFLET_LOGGING="false"
 debug_msg="secure mode: product build"
@@ -329,7 +329,7 @@ if test "$enable_debug" = "yes"; then
    LOOLWSD_LOGLEVEL="trace"
    LOOLWSD_LOG_TO_FILE="true"
    LOOLWSD_LOGFILE="/tmp/loolwsd.log"
-   LOOLWSD_EVENTTRACEFILE="/tmp/loolwsd.trace"
+   LOOLWSD_TRACEEVENTFILE="/tmp/loolwsd.trace"
    LOOLWSD_ANONYMIZE_USER_DATA=false
    LOLEAFLET_LOGGING="true"
    debug_msg="low security debugging mode"
@@ -359,11 +359,11 @@ if test -n "$with_logfile" ; then
 fi
 AC_SUBST(LOOLWSD_LOGFILE)
 
-if test -n "$with_event_trace_file" ; then
-   LOOLWSD_EVENTTRACEFILE="$with_event_trace_file"
+if test -n "$with_trace_event_file" ; then
+   LOOLWSD_TRACEEVENTFILE="$with_trace_event_file"
 fi
-AC_SUBST(LOOLWSD_EVENTTRACEFILE)
-AC_DEFINE_UNQUOTED([LOOLWSD_EVENTTRACEFILE], [["]$LOOLWSD_EVENTTRACEFILE["]], [Destination for Event Trace output])
+AC_SUBST(LOOLWSD_TRACEEVENTFILE)
+AC_DEFINE_UNQUOTED([LOOLWSD_TRACEEVENTFILE], [["]$LOOLWSD_TRACEEVENTFILE["]], [Destination for Trace Event output])
 
 if test "$enable_anonymization" = "yes" ; then
    LOOLWSD_ANONYMIZE_USER_DATA=true
