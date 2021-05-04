@@ -12,6 +12,7 @@ L.IFrameDialog = L.Class.extend({
 
 	create: function () {
 		this._container = L.DomUtil.create('div', 'iframe-dialog-wrap', document.body);
+		this._container.style.display = 'none';
 		this._content = L.DomUtil.create('div', 'iframe-dialog-content', this._container);
 		this._iframe = L.DomUtil.create('iframe', 'iframe-dialog-modal', this._content);
 		this._iframe.src = this._url;
@@ -24,11 +25,13 @@ L.IFrameDialog = L.Class.extend({
 			= this._urlFrame = null;
 	},
 
-	hasOpened: function () {
-		var elems = document.body.querySelector('iframe-dialog-wrap');
-		return elems.length > 0;
+	hasLoaded: function () {
+		return document.body.querySelectors('.iframe-dialog-wrap');
 	},
 
+	show: function () {
+		this._container.style.display = '';
+	}
 });
 
 L.iframeDialog = function (url, options) {
