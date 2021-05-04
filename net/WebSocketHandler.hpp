@@ -39,7 +39,7 @@ private:
 
     std::vector<char> _wsPayload;
     std::atomic<bool> _shuttingDown;
-    bool _isClient;
+    const bool _isClient;
 
 protected:
     struct WSFrameMask
@@ -61,7 +61,7 @@ public:
     ///                 defragmentation should be handled inside message handler (true) or the message handler
     ///                 should be called after all fragments of a message were received and the message
     ///                 was defragmented (false).
-    WebSocketHandler(bool isClient = false, bool isMasking = true) :
+    WebSocketHandler(bool isClient, bool isMasking) :
 #if !MOBILEAPP
         _lastPingSentTime(std::chrono::steady_clock::now()),
         _pingTimeUs(0),
@@ -79,8 +79,7 @@ public:
     /// socket: the TCP socket which received the upgrade request
     /// request: the HTTP upgrade request to WebSocket
     template <typename T>
-    WebSocketHandler(const std::shared_ptr<StreamSocket>& socket, const T& request,
-                     bool isClient = false)
+    WebSocketHandler(const std::shared_ptr<StreamSocket>& socket, const T& request)
         : _socket(socket)
 #if !MOBILEAPP
         , _lastPingSentTime(std::chrono::steady_clock::now()
@@ -89,10 +88,10 @@ public:
         , _pingTimeUs(0)
         , _isMasking(false)
         , _inFragmentBlock(false)
-        , _key(isClient ? PublicComputeAccept::generateKey() : std::string())
+        , _key(std::string())
 #endif
         , _shuttingDown(false)
-        , _isClient(isClient)
+        , _isClient(false)
     {
         if (!socket)
             throw std::runtime_error("Invalid socket while upgrading to WebSocket.");
