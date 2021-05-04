@@ -1225,11 +1225,6 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:SpellDialog'
 			},
 			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ThesaurusDialog'),
-				'command': '.uno:ThesaurusDialog'
-			},
-			{
 				'id': 'Review-Section-Language1',
 				'children': [
 					{
