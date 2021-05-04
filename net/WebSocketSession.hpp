@@ -47,7 +47,7 @@ public:
 
 private:
     WebSocketSession(const std::string& hostname, Protocol protocolType, int portNumber)
-        : WebSocketHandler(true)
+        : WebSocketHandler(/* isClient = */ true, /* isMasking = */ true)
         , _host(hostname)
         , _port(std::to_string(portNumber))
         , _protocol(protocolType)

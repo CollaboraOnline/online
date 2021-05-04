@@ -304,7 +304,7 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
 }
 
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
-    : WebSocketHandler(true),
+    : WebSocketHandler(/* isClient = */ true, /* isMasking = */ true),
       _admin(adminManager),
       _isAuthenticated(true)
 {

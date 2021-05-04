@@ -2139,6 +2139,7 @@ class PrisonerRequestDispatcher : public WebSocketHandler
     std::weak_ptr<ChildProcess> _childProcess;
 public:
     PrisonerRequestDispatcher()
+        : WebSocketHandler(/* isClient = */ false, /* isMasking = */ true)
     {
     }
     ~PrisonerRequestDispatcher()
