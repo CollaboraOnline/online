@@ -352,6 +352,47 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         LOG_ERR("From client: " << std::string(buffer, length).substr(strlen("ERROR") + 1));
         return false;
     }
+    else if (tokens.equals(0, "TRACEEVENT"))
+    {
+        if (tokens.size() >= 4)
+        {
+            // The timestamps and durations loleaflet sends are in milliseconds, the Trace Event
+            // format wants microseconds. The intent is that when doing event trace generation, the
+            // web browser client and the server run on the same machine, so there is no clock skew
+            // problem.
+            std::string name;
+            std::string ph;
+            uint64_t ts;
+            if (getTokenString(tokens[1], "name", name) &&
+                getTokenString(tokens[2], "ph", ph) &&
+                getTokenUInt64(tokens[3], "ts", ts))
+            {
+                uint64_t id;
+                uint64_t dur;
+                if (ph == "i")
+                {
+                    fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"i\",\"ts\":%lu,\"pid\":%d,\"tid\":1,}\n", name.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid());
+                }
+                else if ((ph == "b" || ph == "e") &&
+                    getTokenUInt64(tokens[4], "id", id))
+                {
+                    fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"%s\",\"ts\":%lu,\"pid\":%d,\"tid\":1,\"id\"=%lu}\n", name.c_str(), ph.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid(), id);
+                }
+                else if (ph == "X" &&
+                         getTokenUInt64(tokens[4], "dur", dur))
+                {
+                    fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"X\",\"ts\":%lu,\"pid\":%d,\"tid\":1,\"dur\"=%lu}\n", name.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid(), dur);
+                }
+                else
+                {
+                    LOG_WRN("Unrecognized TRACEEVENT message");
+                }
+            }
+        }
+        else
+            LOG_WRN("Unrecognized TRACEEVENT message");
+        return false;
+    }
 
     LOOLWSD::dumpIncomingTrace(docBroker->getJailId(), getId(), firstLine);
 
@@ -375,6 +416,29 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         {
             sendTextFrameAndLogError("error: cmd=loolclient kind=badprotocolversion");
             return false;
+        }
+
+        _performanceCounterEpoch = 0;
+        if (tokens.size() >= 4)
+        {
+            const char* str = tokens[2].data();
+            char* endptr = nullptr;
+            uint64_t ts = strtoull(str, &endptr, 10);
+            if (*endptr == '\0')
+            {
+                str = tokens[3].data();
+                endptr = nullptr;
+                double counter = strtod(str, &endptr);
+                if (*endptr == '\0')
+                {
+                    // Now we know how to translate from the client's performance.now() values to
+                    // microseconds since the epoch.
+                    _performanceCounterEpoch = ts * 1000 - (uint64_t)(counter * 1000);
+                    LOG_INF("Client timestamps: Date.now():" << ts <<
+                            ", performance.now():" << counter
+                            << " => " << _performanceCounterEpoch);
+                }
+            }
         }
 
         // Send LOOL version information
