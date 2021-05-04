@@ -28,7 +28,7 @@
 }
 
 .ui-tab.selected.notebookbar {
-	border: none;
+	border: 0px;
 	border-radius: 0px;
 	background: #fff;
 	box-shadow: 0 3px 0px 0px #fff, 0px -1px 8px -4px rgba(105, 105, 105, 0.4), -1px -15px 15px -4px rgb(77, 130, 184, 0.1);
@@ -50,6 +50,12 @@
 	color: rgb(var(--orange1-txt-primary-color));
 	text-shadow: 0px 0px 0.2px rgb(163, 62, 3);
 	text-shadow: 0px 0px 0.2px rgb(var(--orange1-txt-primary-color));
+}
+.main-nav.hasnotebookbar.drawing-color-indicator .ui-tab.selected.notebookbar{
+	color: rgb(135, 105, 0);
+	color: rgb(var(--yellow0-txt-primary-color));
+	text-shadow: 0px 0px 0.2px rgb(135, 105, 0);
+	text-shadow: 0px 0px 0.2px rgb(var(--yellow0-txt-primary-color));
 }
 .ui-tab.notebookbar:hover:not(.selected) {
 	border-radius: 0.1px;
@@ -108,6 +114,12 @@
 	background: rgb(3, 105, 163);
 	background: rgb(var(--blue1-txt-primary-color));
 }
+.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon,
+.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon:before,
+.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon:after {
+	background: rgb(16, 104, 2);
+	background: rgb(var(--green0-txt-primary-color));
+}
 .hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon,
 .hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon:before,
 .hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon:after {
@@ -117,14 +129,8 @@
 .hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon,
 .hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon:before,
 .hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon:after {
-	background: rgb(163, 62, 3);
-	background: rgb(var(--orange1-txt-primary-color));
-}
-.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon,
-.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon:before,
-.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon:after {
-	background: rgb(16, 104, 2);
-	background: rgb(var(--green0-txt-primary-color));
+	background: rgb(135, 105, 0);
+	background: rgb(var(--yellow0-txt-primary-color));
 }
 
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar,
