@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * Toolbar handler
  */
@@ -304,6 +304,9 @@ L.Map.include({
 	},
 
 	sendUnoCommand: function (command, json) {
+		// To exercise the Trace Event functionality, uncomment this
+		// this._socket.emitInstantTraceEvent('loleaflet-unocommand:' + command);
+
 		var isAllowedInReadOnly = false;
 		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog', '.uno:EditAnnotation', '.uno:InsertAnnotation', '.uno:DeleteAnnotation'];
 
@@ -651,6 +654,11 @@ L.Map.include({
 	},
 
 	showLOAboutDialog: function() {
+
+		// Just as a test to exercise the Async Trace Event functionality, uncomment this
+		// line and the asyncTraceEvent.finish() below.
+		// var asyncTraceEvent = this._socket.createAsyncTraceEvent('loleaflet-showLOAboutDialog');
+
 		// Move the div sitting in 'body' as vex-content and make it visible
 		var content = $('#about-dialog').clone().css({display: 'block'});
 		// fill product-name and product-string
@@ -737,6 +745,7 @@ L.Map.include({
 					touchGesture._hammer.on('tripletap', L.bind(touchGesture._onTripleTap, touchGesture));
 				}
 				map.focus();
+				// asyncTraceEvent.finish();
 			}
 		});
 	},

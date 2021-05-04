@@ -323,6 +323,9 @@ private:
 
     /// Store last sent payload of form field button, so we can filter out redundant messages.
     std::string _lastSentFormFielButtonMessage;
+
+    /// Epoch of the client's performance.now() function, as microseconds sinze Unix epoch
+    uint64_t _performanceCounterEpoch;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
