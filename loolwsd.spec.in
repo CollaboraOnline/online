@@ -33,7 +33,7 @@ BuildRequires:  libpcap kernel-headers python3-polib python3-lxml
 BuildRequires:  libcap-progs linux-glibc-devel systemd-rpm-macros python3-polib python3-lxml
 %endif
 
-Requires:       collaboraoffice2021 collaboraoffice2021-ure collaboraofficebasis2021-core collaboraofficebasis2021-writer collaboraofficebasis2021-impress collaboraofficebasis2021-graphicfilter collaboraofficebasis2021-en-US collaboraofficebasis2021-calc collaboraofficebasis2021-ooofonts collaboraofficebasis2021-images collaboraofficebasis2021-draw collaboraofficebasis2021-extension-pdf-import collaboraofficebasis2021-ooolinguistic
+Requires:       collaboraoffice collaboraoffice-ure collaboraofficebasis-core collaboraofficebasis-writer collaboraofficebasis-impress collaboraofficebasis-graphicfilter collaboraofficebasis-en-US collaboraofficebasis-calc collaboraofficebasis-ooofonts collaboraofficebasis-images collaboraofficebasis-draw collaboraofficebasis-extension-pdf-import collaboraofficebasis-ooolinguistic
 Requires(post): coreutils grep sed cpio
 %if 0%{?rhel}
 # loolwsd dependencies
@@ -47,7 +47,7 @@ Requires:       expat fontconfig freetype libuuid bzip2-libs
 Requires(post): libcap-progs
 Requires:       systemd libopenssl1_0_0 libpcre1 libz1 libcap2 libpng12-0 %{fillup_prereq}
 # Collabora Office dependencies (unfortunately Collabora Office RPM packages do not have real dependencies)
-# cd /opt/collaboraoffice2021/program ; for i in soffice.bin *.so ;do ldd $i | grep '=>' | sed -e "s/^.*=> //" -e "s/ [(].*$//"; done | sort | uniq | xargs rpm -qf --qf="%{NAME}\n" | sort | uniq | grep -v collaboraoffice
+# cd /opt/collaboraoffice/program ; for i in soffice.bin *.so ;do ldd $i | grep '=>' | sed -e "s/^.*=> //" -e "s/ [(].*$//"; done | sort | uniq | xargs rpm -qf --qf="%{NAME}\n" | sort | uniq | grep -v collaboraoffice
 Requires:       fontconfig libbz2-1 libexpat1 libfreetype6 libpng16-16 libuuid1 openssh
 %endif
 
@@ -70,7 +70,7 @@ Obsoletes:      loleaflet <= 1.5.8
 %configure \
 	--enable-silent-rules \
 	--with-lokit-path=bundled/include \
-	--with-lo-path=/opt/collaboraoffice2021 \
+	--with-lo-path=/opt/collaboraoffice \
 	--disable-setcap \
 %if 0%{?config_options:1}
 	%{config_options}
@@ -168,7 +168,7 @@ if [ $LOOLWSD_IS_ACTIVE == "1" ]; then systemctl stop loolwsd; fi
 
 # Figure out where LO is installed, let's hope it is not a mount point
 # Create a directory for loolwsd on the same file system
-loroot=/opt/collaboraoffice2021
+loroot=/opt/collaboraoffice
 loolparent=`cd ${loroot} && cd .. && /bin/pwd`
 
 rm -rf ${loolparent}/lool

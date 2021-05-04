@@ -10,19 +10,19 @@ Section: web
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
  adduser, expat, fontconfig, cpio, libcap2-bin, openssh-client, systemd,
- collaboraofficebasis2021-calc,
- collaboraofficebasis2021-core,
- collaboraofficebasis2021-graphicfilter,
- collaboraofficebasis2021-images,
- collaboraofficebasis2021-impress,
- collaboraofficebasis2021-ooofonts,
- collaboraofficebasis2021-writer,
- collaboraoffice2021,
- collaboraoffice2021-ure,
- collaboraofficebasis2021-en-us,
- collaboraofficebasis2021-draw,
- collaboraofficebasis2021-extension-pdf-import,
- collaboraofficebasis2021-ooolinguistic
+ collaboraofficebasis-calc,
+ collaboraofficebasis-core,
+ collaboraofficebasis-graphicfilter,
+ collaboraofficebasis-images,
+ collaboraofficebasis-impress,
+ collaboraofficebasis-ooofonts,
+ collaboraofficebasis-writer,
+ collaboraoffice,
+ collaboraoffice-ure,
+ collaboraofficebasis-en-us,
+ collaboraofficebasis-draw,
+ collaboraofficebasis-extension-pdf-import,
+ collaboraofficebasis-ooolinguistic
 Description: Collabora Online WebSocket Daemon
  LOOLWSD is a daemon that talks to web browser clients and provides LibreOffice
  services.
