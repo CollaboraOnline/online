@@ -178,7 +178,12 @@ app.definitions.Socket = L.Class.extend({
 
 		// Always send the protocol version number.
 		// TODO: Move the version number somewhere sensible.
-		this._doSend('loolclient ' + this.ProtocolVersionNumber);
+
+		// Also send information about our performance timer epoch
+		var now0 = Date.now();
+		var now1 = performance.now();
+		var now2 = Date.now();
+		this._doSend('loolclient ' + this.ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
 
 		var msg = 'load url=' + encodeURIComponent(this._map.options.doc);
 		if (this._map._docLayer) {
@@ -1340,5 +1345,47 @@ app.definitions.Socket = L.Class.extend({
 			command.zoom = Math.round(defaultZoom - Math.log(scale) / Math.log(1.2));
 		}
 		return command;
+	},
+
+	emitInstantTraceEvent: function (name) {
+		this.sendMessage('TRACEEVENT name=' + name + ' ph=i ts=' + performance.now());
+	},
+
+	asyncTraceEventCounter: 0,
+
+	createAsyncTraceEvent: function (name) {
+		var result = {};
+		result.id = this.asyncTraceEventCounter++;
+		result.active = true;
+		this.sendMessage('TRACEEVENT name=' + name + ' ph=b ts=' + Math.round(performance.now() * 1000) + ' id=' + result.id);
+		var that = this;
+		result.finish = function () {
+			if (this.active) {
+				that.sendMessage('TRACEEVENT name=' + name + ' ph=e ts=' + Math.round(performance.now() * 1000) + ' id=' + this.id);
+				this.active = false;
+			}
+		};
+		result.abort = function () {
+			this.active = false;
+		};
+		return result;
+	},
+
+	createCompleteTraceEvent: function (name) {
+		var result = {};
+		result.active = true;
+		result.begin = performance.now();
+		var that = this;
+		result.finish = function () {
+			if (this.active) {
+				var now = performance.now();
+				that.sendMessage('TRACEEVENT name=' + name + ' ph=X ts=' + Math.round(now * 1000) + ' dur=' + Math.round((now - this.begin) * 1000));
+				this.active = false;
+			}
+		};
+		result.abort = function () {
+			this.active = false;
+		};
+		return result;
 	}
 });

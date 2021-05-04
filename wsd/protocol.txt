@@ -39,6 +39,10 @@ it as a final error (that requires reloading to retry).
 client -> server
 ================
 
+A convention: Messages that have the first token (keyword) in
+UPPERCASE are related to debugging and tracing of the client and
+server software and not related to the user's actions.
+
 DEBUG <rest of message>
 
     The rest of the message (without the DEBUG keyword), possibly
@@ -48,6 +52,28 @@ ERROR <rest of message>
 
     The rest of the message (without the ERROR keyword), possibly
     multiple lines, is logged by the server as LOG_ERR.
+
+TRACEEVENT name=<name> ph=<letter> ts=<timestamp> <more parameters>...
+
+    Timestamps and durations are in microseconds, from
+    performance.now(), multiplied by 1000, and rouded to an integer.
+
+    name is a string of non-space characters.
+
+    ts is the timestamp when the trace event was generated.
+
+    ph is one of the following, and the rest of the parameters depend
+    on what it is.
+
+    'i': An "Instant" event. Nothing more.
+
+    'b', 'e': The begin and end of an "Async" event. In addition to
+    the name, the messages have an "id" parameter, a unique number
+    that must be the same for the 'b' and 'e' messages.
+
+    'X': A "complete" event. The "dur" parameter is the duration
+    between the beginning of the thing being timed and the time when
+    the 'X' message was emitted, also in microseconds.
 
 canceltiles
 
@@ -122,15 +148,25 @@ load [part=<partNumber>] url=<url> [timestamp=<time>] [lang=<locale>] [deviceFor
 
     options are the whole rest of the line, not URL-encoded, and must be valid JSON.
 
-loolclient <major.minor[-patch]>
+loolclient <major.minor[-patch]> [ <timestamp> <perfcounter> ]
 
     Upon connection, a client must announce the version number it supports.
-    Major: an integer that must always match between client and server,
+    major: an integer that must always match between client and server,
            otherwise there are no guarantees of any sensible
            compatibility. This is bumped when API changes.
-    Minor: an integer is more flexible and is at the discretion of either party.
+    minor: an integer is more flexible and is at the discretion of either party.
            Security fixes that do not alter the API would bump the minor version number.
-    Patch: an optional string that is informational.
+    patch: an optional string that is informational.
+
+    timestamp: the value of the JavaScript Date.now(), i.e. integer number of milliseconds since
+           the Unix epoch.
+
+    perfcounter: the value of the JavaScript performance.now() function at the same time.
+            This is also in milliseconds but can be a floating point number and can be up to
+            microsecond precision.
+
+            The timestamp and perfcounter are used by the server to translate performance
+            counter values from the client for Trace Event logging into absolute timestamps.
 
 mouse type=<type> x=<x> y=<y> count=<count>
 
