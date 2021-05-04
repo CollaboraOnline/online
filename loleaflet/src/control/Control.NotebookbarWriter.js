@@ -96,7 +96,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'command': '.uno:SaveAs'
 				} : {},
 			{
-				'id': 'file-shareas-rev-history',
 				'type': 'container',
 				'children': [
 					hasShare ?
@@ -124,7 +123,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'command': '.uno:Print'
 				} : {},
 			{
-				'id': 'file-downloadas-odt-downloadas-rtf',
 				'type': 'container',
 				'children': [
 					{
@@ -143,7 +141,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'file-downloadas-doc-downloadas-docx',
 				'type': 'container',
 				'children': [
 					{
@@ -162,7 +159,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'file-downloadas-pdf-downloadas-epub',
 				'type': 'container',
 				'children': [
 					{
@@ -197,16 +193,10 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 		var content = [
 			{
-				'id': 'Help-Section',
 				'type': 'container',
-				'text': '',
-				'enabled': 'true',
 				'children': [
 					{
-						'id': 'Section1',
 						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
 								'id': 'online-help',
@@ -217,10 +207,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'Section2',
 						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
 								'id': 'keyboard-shortcuts',
@@ -231,10 +218,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'Section3',
 						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
 								'id': 'report-an-issue',
@@ -246,10 +230,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					},
 					hasLatestUpdates ?
 						{
-							'id': 'Section4',
 							'type': 'toolbox',
-							'text': '',
-							'enabled': 'true',
 							'children': [
 								{
 									'id': 'latest-updates',
@@ -260,10 +241,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							]
 						} : {},
 					{
-						'id': 'Section5',
 						'type': 'toolbox',
-						'text': '',
-						'enabled': 'true',
 						'children': [
 							{
 								'id': 'about',
@@ -291,7 +269,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA6',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -302,7 +279,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB7',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -316,11 +292,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Home-Section-Style',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA7',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -331,7 +305,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB8',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -345,11 +318,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Home-Section-Format',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'box76',
 						'type': 'container',
 						'children': [
 							{
@@ -392,11 +363,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'vertical': 'false'
 					},
 					{
-						'id': 'GroupB11',
 						'type': 'container',
 						'children': [
 							{
-								'id': 'ExtTop4',
 								'type': 'toolbox',
 								'children': [
 									{
@@ -448,14 +417,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Home-Section-Paragraph',
 				'type': 'container',
 				'children': [
 					{
 						'type': 'container',
 						'children': [
 							{
-								'id': 'SectionBottom91',
 								'type': 'toolbox',
 								'children': [
 									{
@@ -502,7 +469,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'container',
 						'children': [
 							{
-								'id': 'SectionBottom13',
 								'type': 'toolbox',
 								'children': [
 									{
@@ -561,11 +527,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'false'
 			},
 			{
-				'id': 'Home-Section-Insert',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA8',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -576,7 +540,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB9',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -686,11 +649,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:InsertPagebreak'
 			},
 			{
-				'id': 'Insert-Section-Pagebreak1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA15',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -701,7 +662,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB16',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -720,11 +680,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:InsertGraphic'
 			},
 			{
-				'id': 'Insert-Section-Table-Chart',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA152',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -735,7 +693,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB162',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -754,11 +711,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:HyperlinkDialog'
 			},
 			{
-				'id': 'Insert-Section-Bookmark',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA13',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -769,7 +724,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB14',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -788,11 +742,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:InsertFieldCtrl'
 			},
 			{
-				'id': 'Insert-Section-HeaderFoorter',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA151',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -803,7 +755,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB161',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -822,11 +773,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:DrawText'
 			},
 			{
-				'id': 'Insert-BasicShapes-Shapes',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA153',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -837,7 +786,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB163',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -851,11 +799,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Insert-Text-Fontwork',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA153',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -866,7 +812,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB163',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -886,11 +831,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:FormattingMarkMenu'
 			},
 			{
-				'id': 'Insert-Charmap-Annotation',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA153',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -901,7 +844,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB163',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -927,11 +869,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:PageDialog'
 			},
 			{
-				'id': 'Layout-Section-InsertPagebreak-InsertBreak',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'Layout-InsertPagebreak',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -942,7 +882,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'Layout-InsertBreak',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -987,11 +926,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Layout-Section-Hyphenate-LineNumberingDialog',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'Layout-Hyphenate',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1002,7 +939,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'Layout-LineNumberingDialog',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1016,11 +952,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Layout-Section-Wrap',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'Layout-WrapOff-WrapIdeal',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1041,7 +975,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'Layout-WrapLeft-WrapRight',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1065,10 +998,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Layout-Section-Wrap1',
+				'type': 'container',
 				'children': [
 					{
-						'id': 'Layout-ContourDialog',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1079,7 +1011,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'Layout-TextWrap',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1093,11 +1024,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Layout-Section-Align',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'Layout-ObjectAlignLeft-ObjectAlignRight',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1118,7 +1047,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'Layout-AlignUp-AlignDown',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1142,11 +1070,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Layout-Section-ForwardBackward',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'Layout-ObjectForwardOne-BringToFront',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1162,7 +1088,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'Layout-ObjectBackOne-SendToBack',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1193,6 +1118,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:InsertMultiIndex'
 			},
 			{
+				'type': 'container',
 				'children': [
 					{
 						'type': 'toolbox',
@@ -1343,11 +1269,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:ThesaurusDialog'
 			},
 			{
-				'id': 'Review-Section-Language1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA20',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1358,7 +1282,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB21',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1382,11 +1305,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:ShowResolvedAnnotations'
 			},
 			{
-				'id': 'Review-Section-Annotation1',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LeftParaMargin9',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1397,7 +1318,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'belowspacing9',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1421,10 +1341,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:ShowTrackedChanges'
 			},
 			{
-				'id': 'Review-Section-TrackChanges1',
+				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA21',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1435,7 +1354,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB22',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1449,10 +1367,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Review-Section-TrackChanges2',
 				'children': [
 					{
-						'id': 'LineB38',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1463,7 +1379,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineA38',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1477,10 +1392,8 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Review-Section-TrackChanges3',
 				'children': [
 					{
-						'id': 'LineB42',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1491,7 +1404,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineA42',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1505,10 +1417,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Review-Section-TrackChanges4',
+				'type': 'container',
 				'children': [
 					{
-						'id': 'LineB27',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -1519,7 +1430,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineA26',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -2001,7 +1911,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA6',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -2012,7 +1921,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB7',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -2026,11 +1934,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Insert-Text-Fontwork',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA153',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -2041,7 +1947,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						]
 					},
 					{
-						'id': 'LineB163',
 						'type': 'toolbox',
 						'children': [
 							{
