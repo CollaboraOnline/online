@@ -26,15 +26,26 @@ L.Map.Feedback = L.Handler.extend({
 
 	onFeedback: function () {
 		if (window.localStorage.getItem('WSDFeedbackEnabled')) {
+			if (this._iframeDialog && this._iframeDialog.hasLoaded())
+				this._iframeDialog.remove();
+
 			this._iframeDialog = L.iframeDialog(window.feebackLocation);
 			this._iframeDialog.create();
 		}
 	},
 
+	onError: function () {
+		window.localStorage.removeItem('WSDFeedbackEnabled');
+		this._iframeDialog.remove();
+	},
+
 	onMessage: function (e) {
 		var data = e.data;
 
-		if (data == 'never') {
+		if (data == 'show') {
+			this._iframeDialog.show();
+		}
+		else if (data == 'never') {
 			window.localStorage.removeItem('WSDFeedbackEnabled');
 			this._iframeDialog.remove();
 		} else if (data == 'later') {
