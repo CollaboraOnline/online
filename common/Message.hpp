@@ -32,10 +32,9 @@ public:
         _tokens(Util::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
-        _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
         _type(detectType())
     {
-        LOG_TRC("Message " << _abbr);
+        LOG_TRC("Message " << abbr());
     }
 
     /// Construct a message from a string with type and
@@ -49,11 +48,10 @@ public:
         _tokens(Util::tokenize(message.data() + _forwardToken.size(), message.size() - _forwardToken.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(message)),
-        _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(message)),
         _type(detectType())
     {
         _data.reserve(std::max(reserve, message.size()));
-        LOG_TRC("Message " << _abbr);
+        LOG_TRC("Message " << abbr());
     }
 
     /// Construct a message from a character array with type.
@@ -66,10 +64,9 @@ public:
         _tokens(Util::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
-        _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size())),
         _type(detectType())
     {
-        LOG_TRC("Message " << _abbr);
+        LOG_TRC("Message " << abbr());
     }
 
     size_t size() const { return _data.size(); }
@@ -88,7 +85,9 @@ public:
     }
 
     /// Return the abbreviated message for logging purposes.
-    const std::string& abbr() const { return _abbr; }
+    std::string abbr() const {
+        return _id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size());
+    }
     const std::string& id() const { return _id; }
 
     /// Returns the json part of the message, if any.
@@ -121,7 +120,6 @@ public:
         {
             // Check - just the body.
             assert(_firstLine == LOOLProtocol::getFirstLine(_data.data(), _data.size()));
-            assert(_abbr == _id + ' ' + LOOLProtocol::getAbbreviatedMessage(_data.data(), _data.size()));
             assert(_type == detectType());
         }
     }
@@ -183,7 +181,6 @@ private:
     const StringVector _tokens;
     const std::string _id;
     const std::string _firstLine;
-    const std::string _abbr;
     const Type _type;
 };
 

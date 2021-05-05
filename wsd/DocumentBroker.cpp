@@ -1832,11 +1832,11 @@ void DocumentBroker::unregisterDownloadId(const std::string& downloadId)
 bool DocumentBroker::handleInput(const std::vector<char>& payload)
 {
     auto message = std::make_shared<Message>(payload.data(), payload.size(), Message::Dir::Out);
-    const auto& msg = message->abbr();
-    LOG_TRC("DocumentBroker handling child message: [" << msg << "].");
+    LOG_TRC("DocumentBroker handling child message: [" << message->abbr() << "].");
 
 #if !MOBILEAPP
-    LOOLWSD::dumpOutgoingTrace(getJailId(), "0", msg);
+    if (LOOLWSD::TraceDumper)
+        LOOLWSD::dumpOutgoingTrace(getJailId(), "0", message->abbr());
 #endif
 
     if (LOOLProtocol::getFirstToken(message->forwardToken(), '-') == "client")
@@ -1886,7 +1886,7 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
         }
         else
         {
-            LOG_ERR("Unexpected message: [" << msg << "].");
+            LOG_ERR("Unexpected message: [" << message->abbr() << "].");
             return false;
         }
     }
@@ -2361,9 +2361,8 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
 {
     assertCorrectThread();
 
-    const std::string& msg = payload->abbr();
     const std::string& prefix = payload->forwardToken();
-    LOG_TRC("Forwarding payload to [" << prefix << "]: " << msg);
+    LOG_TRC("Forwarding payload to [" << prefix << "]: " << payload->abbr());
 
     std::string name;
     std::string sid;
@@ -2395,7 +2394,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
             }
             else
             {
-                LOG_WRN("Client session [" << sid << "] not found to forward message: " << msg);
+                LOG_WRN("Client session [" << sid << "] not found to forward message: " << payload->abbr());
             }
         }
     }
