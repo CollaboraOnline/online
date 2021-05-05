@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var { insertImage, deleteImage } = require('../../common/desktop_helper');
 
 describe('Image Operation Tests', function() {
-	var testFileName = 'copy_paste.odt';
+	var testFileName = 'image_operation.odt';
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
