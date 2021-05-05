@@ -1857,16 +1857,6 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
 
             _registeredDownloadLinks[downloadid] = url;
         }
-        else if (command == "trace:")
-        {
-            LOG_CHECK_RET(message->tokens().size() == 1, false);
-            if (LOOLWSD::EventTraceFile != NULL)
-            {
-                const auto newLine = static_cast<const char*>(memchr(payload.data(), '\n', payload.size()));
-                if (newLine)
-                    fwrite(newLine + 1, payload.size() - (newLine + 1 - payload.data()), 1, LOOLWSD::EventTraceFile);
-            }
-        }
         else
         {
             LOG_ERR("Unexpected message: [" << msg << "].");

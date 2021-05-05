@@ -747,7 +747,6 @@ std::string LOOLWSD::ServiceRoot;
 std::string LOOLWSD::LOKitVersion;
 std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
-FILE *LOOLWSD::EventTraceFile = NULL;
 std::string LOOLWSD::LogLevel = "trace";
 std::string LOOLWSD::UserInterface = "classic";
 bool LOOLWSD::AnonymizeUserData = false;
@@ -1059,8 +1058,6 @@ void LOOLWSD::initialize(Application& self)
         }
     }
 
-    const auto eventTraceFile = getConfigValue<std::string>(conf, "event_trace.path", LOOLWSD_EVENTTRACEFILE);
-
     // Setup the logfile envar for the kit processes.
     if (logToFile)
     {
@@ -1080,22 +1077,6 @@ void LOOLWSD::initialize(Application& self)
     {
         LOG_INF("Setting log-level to [trace] and delaying setting to configured ["
                 << LogLevel << "] until after WSD initialization.");
-    }
-
-    if (LogLevel == "trace")
-    {
-        LOG_INF("Event Trace file is " << eventTraceFile << ".");
-        EventTraceFile = fopen(eventTraceFile.c_str(), "w");
-        if (EventTraceFile != NULL)
-        {
-            if (fcntl(fileno(EventTraceFile), F_SETFD, FD_CLOEXEC) == -1)
-            {
-                fclose(EventTraceFile);
-                EventTraceFile = NULL;
-            }
-            else
-                fprintf(EventTraceFile, "[\n");
-        }
     }
 
     ServerName = config().getString("server_name");
@@ -4210,16 +4191,6 @@ int LOOLWSD::innerMain()
         // Now should be safe to destroy what's left.
         cleanupDocBrokers();
         DocBrokers.clear();
-    }
-
-    if (EventTraceFile != NULL)
-    {
-        // Back over the last comma and newline.
-        fseek(EventTraceFile, -2, SEEK_CUR);
-        // And close the JSON array.
-        fprintf(EventTraceFile, "\n]\n");
-        fclose(EventTraceFile);
-        EventTraceFile = NULL;
     }
 
 #if !defined(KIT_IN_PROCESS) && !MOBILEAPP

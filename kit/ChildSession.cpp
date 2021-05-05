@@ -305,9 +305,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "removetextcontext") ||
                tokens.equals(0, "dialogevent") ||
                tokens.equals(0, "completefunction")||
-               tokens.equals(0, "formfieldevent") ||
-               tokens.equals(0, "traceeventrecording") ||
-               tokens.equals(0, "sallogoverride"));
+               tokens.equals(0, "formfieldevent"));
 
         if (tokens.equals(0, "clientzoom"))
         {
@@ -458,37 +456,6 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         else if (tokens.equals(0, "formfieldevent"))
         {
             return formFieldEvent(buffer, length, tokens);
-        }
-        else if (tokens.equals(0, "traceeventrecording"))
-        {
-            if (tokens.size() > 0)
-            {
-                if (tokens.equals(1, "start"))
-                {
-                    getLOKit()->setOption("traceeventrecording", "start");
-                    LOG_INF("Profile zone tracing in this kit process turned on (might have been on all the time)");
-                }
-                else if (tokens.equals(1, "stop"))
-                {
-                    getLOKit()->setOption("traceeventrecording", "stop");
-                    LOG_INF("Profile zone tracing in this kit process turned off");
-                }
-            }
-        }
-        else if (tokens.equals(0, "sallogoverride"))
-        {
-            if (tokens.size() == 0 || tokens.equals(1, "default"))
-            {
-                getLOKit()->setOption("sallogoverride", nullptr);
-            }
-            else if (tokens.size() > 0 && tokens.equals(1, "off"))
-            {
-                getLOKit()->setOption("sallogoverride", "-WARN-INFO");
-            }
-            else if (tokens.size() > 0)
-            {
-                getLOKit()->setOption("sallogoverride", tokens[1].c_str());
-            }
         }
         else
         {
