@@ -113,7 +113,6 @@ protected:
         , _testname(std::move(name))
         , _socketPoll(std::make_shared<SocketPoll>(_testname))
     {
-        _socketPoll->startThread();
     }
 
     virtual ~UnitBase();
@@ -237,7 +236,10 @@ public:
 private:
     void setHandle(void *dlHandle)
     {
+        assert(_dlHandle == nullptr && "setHandle must only be called once");
+        assert(dlHandle != nullptr && "Invalid handle to set");
         _dlHandle = dlHandle;
+        _socketPoll->startThread();
     }
     static UnitBase *linkAndCreateUnit(UnitType type, const std::string& unitLibPath);
 
