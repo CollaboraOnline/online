@@ -304,7 +304,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 				this._docHeightTwips = totalHeight;
 			}
 
-			this._updateMaxBoundsImpress(true);
+			this._updateMaxBounds(true);
 			this._documentInfo = textMsg;
 			this._viewId = parseInt(command.viewid);
 			this._selectedPart = command.selectedPart;
@@ -323,14 +323,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 				partNames: this._partHashes
 			});
 		}
-	},
-
-	_updateMaxBoundsImpress: function (sizeChanged, options) {
-		var extraSize = options ? options.extraSize : null;
-		if (!extraSize) {
-			extraSize = this._annotationManager.allocateExtraSize();
-		}
-		this._updateMaxBounds.call(this, sizeChanged, {panInside: false, extraSize: extraSize});
 	},
 
 	_createCommentStructure: function (menuStructure) {

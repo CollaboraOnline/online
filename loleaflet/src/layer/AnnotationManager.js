@@ -324,7 +324,10 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 			if (delta.y > 0) {
 				delta.y += margin.y;
 			}
-			this._map._docLayer._updateMaxBounds(true, {extraSize: delta});
+
+			this._map._docLayer._extraScollSizeCSS.x = delta.x;
+			this._map._docLayer._extraScollSizeCSS.y = delta.y;
+			this._map._docLayer._updateMaxBounds(true);
 		}
 	},
 
