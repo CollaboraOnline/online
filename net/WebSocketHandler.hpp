@@ -57,10 +57,6 @@ public:
     /// isClient: the instance should behave like a client (true) or like a server (false)
     ///           (from websocket perspective)
     /// isMasking: a client should mask (true) or not (false) outgoing frames
-    /// isManualDefrag: the message handler should be called for every fragment of a message and
-    ///                 defragmentation should be handled inside message handler (true) or the message handler
-    ///                 should be called after all fragments of a message were received and the message
-    ///                 was defragmented (false).
     WebSocketHandler(bool isClient, bool isMasking) :
 #if !MOBILEAPP
         _lastPingSentTime(std::chrono::steady_clock::now()),
