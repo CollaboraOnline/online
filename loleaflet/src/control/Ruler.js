@@ -291,7 +291,7 @@ L.Control.Ruler = L.Control.extend({
 		rMargin = this.options.pageWidth - (this.options.nullOffset + this.options.margin2);
 
 		scale = this._map.getZoomScale(this._map.getZoom(), 10);
-		wPixel = this._map._docLayer._docPixelSize.x - (this.options.extraSize + this.options.tileMargin * 2) * scale;
+		wPixel = this._map._docLayer._docPixelSize.x - (this.options.tileMargin * 2) * scale;
 
 		this._fixOffset();
 
