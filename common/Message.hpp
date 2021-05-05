@@ -28,7 +28,7 @@ public:
     Message(const std::string& message,
             const enum Dir dir) :
         _forwardToken(getForwardToken(message.data(), message.size())),
-        _data(skipWhitespace(message.data() + _forwardToken.size()), message.data() + message.size()),
+        _data(copyDataAfterOffset(message.data(), message.size(), _forwardToken.size())),
         _tokens(Util::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
@@ -45,16 +45,14 @@ public:
             const enum Dir dir,
             const size_t reserve) :
         _forwardToken(getForwardToken(message.data(), message.size())),
-        _data(std::max(reserve, message.size())),
+        _data(copyDataAfterOffset(message.data(), message.size(), _forwardToken.size())),
         _tokens(Util::tokenize(message.data() + _forwardToken.size(), message.size() - _forwardToken.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(message)),
         _abbr(_id + ' ' + LOOLProtocol::getAbbreviatedMessage(message)),
         _type(detectType())
     {
-        _data.resize(message.size());
-        const char* offset = skipWhitespace(message.data() + _forwardToken.size());
-        std::memcpy(_data.data(), offset, message.size() - (offset - message.data()));
+        _data.reserve(std::max(reserve, message.size()));
         LOG_TRC("Message " << _abbr);
     }
 
@@ -64,7 +62,7 @@ public:
             const size_t len,
             const enum Dir dir) :
         _forwardToken(getForwardToken(p, len)),
-        _data(skipWhitespace(p + _forwardToken.size()), p + len),
+        _data(copyDataAfterOffset(p, len, _forwardToken.size())),
         _tokens(Util::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
         _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
@@ -147,7 +145,7 @@ private:
             return Type::Binary;
         }
 
-        if (_data[_data.size() - 1] == '}')
+        if (_data.size() > 0 && _data[_data.size() - 1] == '}')
         {
             return Type::JSON;
         }
@@ -162,14 +160,21 @@ private:
         return (forward.find('-') != std::string::npos ? forward : std::string());
     }
 
-    const char* skipWhitespace(const char* p)
+    std::vector<char> copyDataAfterOffset(const char *p, size_t len, size_t fromOffset)
     {
-        while (p && *p == ' ')
-        {
-            ++p;
-        }
+        if (!p || fromOffset >= len)
+            return std::vector<char>();
 
-        return p;
+        size_t i;
+        for (i = fromOffset; i < len; ++i)
+        {
+            if (p[i] != ' ')
+                break;
+        }
+        if (i < len)
+            return std::vector<char>(p + i, p + len);
+        else
+            return std::vector<char>();
     }
 
 private:
