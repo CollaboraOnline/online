@@ -88,7 +88,9 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 	updateDocBounds: function (count, extraSize) {
 		var annotations = this._annotations[this.getSelectedPartHash()];
 		if (annotations && annotations.length === count) {
-			this._map._docLayer._updateMaxBounds(true, extraSize);
+			this._map._docLayer._extraScollSizeCSS.x = extraSize ? extraSize.x: 0;
+			this._map._docLayer._extraScollSizeCSS.y = extraSize ? extraSize.y: 0;
+			this._map._docLayer._updateMaxBounds(true);
 		}
 	},
 	unselectAnnotations: function() {
@@ -482,12 +484,6 @@ L.AnnotationManagerImpress = L.AnnotationManagerBase.extend({
 				this._map._docLayer._openCommentWizard(modified);
 		}
 	},
-	allocateExtraSize: function() {
-		var annotations = [];
-		if (this._annotations && this.getPartHashes() && this.getSelectedPart() !== undefined)
-			annotations = this._annotations[this.getSelectedPartHash()];
-		return (annotations !== undefined && annotations.length > 0) ? this.options.extraSize : new L.Point(0, 0);
-	}
 });
 
 L.annotationManagerImpress = function (map, options) {
