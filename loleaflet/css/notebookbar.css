@@ -18,9 +18,10 @@
 	font-family: var(--loleaflet-font);
 	line-height: normal;
 	color: dimgray;
-	height: 24px;
+	height: 32px;
+	display: flex;
+	align-items: center;
 	padding: 0px 1em;
-	padding-top: 7px;
 }
 
 .ui-tab.hidden.notebookbar {
@@ -88,22 +89,10 @@
 	height: 33px;
 }
 
-.notebookbar-shortcuts-bar .unotoolbutton.notebookbar {
-	margin-right: 10px;
-	height: auto;
-}
-
-.notebookbar-shortcuts-bar #Menubar.unotoolbutton.notebookbar {
-	height: 16px;
-}
-
 .notebookbar-shortcuts-bar .unotoolbutton.notebookbar .unobutton {
 	width: 16px !important;
 	height: 16px !important;
 	margin-right: 0px;
-}
-.notebookbar-shortcuts-bar #Save > .unobutton {
-	margin-top: 3px;
 }
 
 
