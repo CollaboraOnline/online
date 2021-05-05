@@ -931,6 +931,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._followEditor = false;
 		this._selectedTextContent = '';
 
+		// Document size is the scroll size in general.
+		// We want to show comments like document objects, so we use this extra size.
+		this._extraScollSizeCSS = {x: 0, y: 0};
 	},
 
 	_initContainer: function () {
@@ -1159,7 +1162,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._tileZoom = tileZoom;
 			if (tileZoomChanged) {
 				this._updateTileTwips();
-				this._updateMaxBounds(null, null, zoom);
+				this._updateMaxBounds();
 			}
 			this._updateLevels();
 			this._resetGrid();
@@ -5412,46 +5415,27 @@ L.CanvasTileLayer = L.Layer.extend({
 			return true;
 	},
 
-	_updateMaxBounds: function (sizeChanged, options, zoom) {
+	_updateMaxBounds: function (sizeChanged) {
 		if (this._docWidthTwips === undefined || this._docHeightTwips === undefined) {
 			return;
 		}
-		if (!zoom) {
-			zoom = this._map.getZoom();
-		}
 
-		var dpiScale = this._painter._dpiScale;
-		var extraSize = new L.Point(0, 0);
-		if (this._docType === 'presentation' || (this._docType === 'drawing' && app.file.fileBasedView))
-			extraSize = this._annotationManager.allocateExtraSize(); // This changes only the width.
+		var extraSize = new L.Point(this._extraScollSizeCSS.x, this._extraScollSizeCSS.y);
 
-		var docPixelLimits = new L.Point(this._docWidthTwips / this.options.tileWidthTwips,
-			this._docHeightTwips / this.options.tileHeightTwips);
-		// docPixelLimits should be in csspx.
-		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize / dpiScale);
-		var scale = this._map.getZoomScale(zoom, 10);
-		var topLeft = new L.Point(0, 0);
-		topLeft = this._map.unproject(topLeft.multiplyBy(scale));
-		var bottomRight = new L.Point(docPixelLimits.x, docPixelLimits.y);
-		bottomRight = bottomRight.multiplyBy(scale);
+		var docPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips, this._docHeightTwips / this._tileHeightTwips);
+		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize / this._painter._dpiScale); // docPixelLimits should be in csspx.
 
-		// extraSize is unscaled.
-		bottomRight = bottomRight.add(extraSize);
-		bottomRight = this._map.unproject(bottomRight);
+		var scrollPixelLimits = docPixelLimits.add(extraSize);
+
+		var topLeft = this._map.unproject(new L.Point(0, 0));
 
 		if (this._documentInfo === '' || sizeChanged) {
 			// we just got the first status so we need to center the document
-			this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight), options);
-			this._map.setDocBounds(new L.LatLngBounds(topLeft, this._map.unproject(docPixelLimits.multiplyBy(scale))));
+			this._map.setMaxBounds(new L.LatLngBounds(topLeft, this._map.unproject(scrollPixelLimits)));
+			this._map.setDocBounds(new L.LatLngBounds(topLeft, this._map.unproject(docPixelLimits)));
 		}
 
-		var scrollPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips,
-			this._docHeightTwips / this._tileHeightTwips);
-		scrollPixelLimits = scrollPixelLimits.multiplyBy(this._tileSize / dpiScale);
-		// extraSize is unscaled.
-		scrollPixelLimits = scrollPixelLimits.add(extraSize);
-
-		this._docPixelSize = {x: scrollPixelLimits.x, y: scrollPixelLimits.y};
+		this._docPixelSize = {x: docPixelLimits.x, y: docPixelLimits.y};
 		this._map.fire('scrolllimits', {x: scrollPixelLimits.x, y: scrollPixelLimits.y, extraSize: extraSize});
 	},
 
