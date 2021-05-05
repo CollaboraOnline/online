@@ -795,8 +795,7 @@ public:
 
             LOG_TRC("Document::GlobalCallback " << lokCallbackTypeToString(type) << ": " << payload.length() << " bytes.");
 
-            self->sendTextFrame("trace:\n" + payload);
-
+            self->sendTextFrame("trace: \n" + payload);
             return;
         }
 
