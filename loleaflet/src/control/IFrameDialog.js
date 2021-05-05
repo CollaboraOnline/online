@@ -7,15 +7,12 @@ L.IFrameDialog = L.Class.extend({
 
 	initialize: function (url, options) {
 		L.setOptions(this, options);
-		this._url = url;
-	},
 
-	create: function () {
 		this._container = L.DomUtil.create('div', 'iframe-dialog-wrap', document.body);
 		this._container.style.display = 'none';
 		this._content = L.DomUtil.create('div', 'iframe-dialog-content', this._container);
 		this._iframe = L.DomUtil.create('iframe', 'iframe-dialog-modal', this._content);
-		this._iframe.src = this._url;
+		this._iframe.src = url;
 	},
 
 	remove: function () {

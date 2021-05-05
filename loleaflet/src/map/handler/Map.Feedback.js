@@ -30,7 +30,6 @@ L.Map.Feedback = L.Handler.extend({
 				this._iframeDialog.remove();
 
 			this._iframeDialog = L.iframeDialog(window.feebackLocation);
-			this._iframeDialog.create();
 		}
 	},
 
