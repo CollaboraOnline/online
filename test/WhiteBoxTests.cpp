@@ -22,6 +22,7 @@
 #include <JsonUtil.hpp>
 #include <RequestDetails.hpp>
 
+#include <common/Message.hpp>
 #include <common/Authorization.hpp>
 
 /// WhiteBox unit-tests.
@@ -31,6 +32,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST(testLOOLProtocolFunctions);
     CPPUNIT_TEST(testSplitting);
+    CPPUNIT_TEST(testMessage);
     CPPUNIT_TEST(testMessageAbbreviation);
     CPPUNIT_TEST(testTokenizer);
     CPPUNIT_TEST(testTokenizerTokenizeAnyOf);
@@ -53,6 +55,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
 
     void testLOOLProtocolFunctions();
     void testSplitting();
+    void testMessage();
     void testMessageAbbreviation();
     void testTokenizer();
     void testTokenizerTokenizeAnyOf();
@@ -292,6 +295,19 @@ void WhiteBoxTests::testSplitting()
     LOK_ASSERT_EQUAL(std::string("filename"), second);
     LOK_ASSERT_EQUAL(std::string(".ext"), third);
     LOK_ASSERT_EQUAL(std::string("?params=3&command=5"), fourth);
+}
+
+void WhiteBoxTests::testMessage()
+{
+    // try to force an isolated page alloc, likely to have
+    // an invalid, electrified fence page after it.
+    size_t sz = 4096*128;
+    char *big = static_cast<char *>(malloc(sz));
+    const char msg[] = "bogus-forward";
+    char *dest = big + sz - (sizeof(msg) - 1);
+    memcpy(dest, msg, sizeof (msg) - 1);
+    Message overrun(dest, sizeof (msg) - 1, Message::Dir::Out);
+    free(big);
 }
 
 void WhiteBoxTests::testMessageAbbreviation()
