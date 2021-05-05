@@ -18,9 +18,10 @@
 	font-family: var(--loleaflet-font);
 	line-height: normal;
 	color: dimgray;
-	height: 24px;
+	height: 32px;
+	display: flex;
+	align-items: center;
 	padding: 0px 1em;
-	padding-top: 7px;
 }
 
 .ui-tab.hidden.notebookbar {
@@ -88,22 +89,10 @@
 	height: 33px;
 }
 
-.notebookbar-shortcuts-bar .unotoolbutton.notebookbar {
-	margin-right: 10px;
-	height: auto;
-}
-
-.notebookbar-shortcuts-bar #Menubar.unotoolbutton.notebookbar {
-	height: 16px;
-}
-
 .notebookbar-shortcuts-bar .unotoolbutton.notebookbar .unobutton {
 	width: 16px !important;
 	height: 16px !important;
 	margin-right: 0px;
-}
-.notebookbar-shortcuts-bar #Save > .unobutton {
-	margin-top: 3px;
 }
 
 
@@ -217,7 +206,8 @@
 }
 
 .root-container.notebookbar {
-	display: table;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .notebookbar-scroll-wrapper::-webkit-scrollbar { /* WebKit */
@@ -404,11 +394,6 @@
 /* File Tab */
 
 /* Home tab */
-#table-HomeTab {
-	margin-left: -16px;/*force alignment: clipboard elements*/
-	margin-top: -5px;
-}
-
 #clearFormatting.notebookbar div img {
 	width: 24px !important;
 	height: 24px !important;
@@ -530,14 +515,8 @@
 /* Review Tab */
 
 /* Help tab */
-#table-Help-Section {
-	margin-top: 30px;
-}
 
 /* File tab */
-#table-File-Section {
-	margin-top: 10px;
-}
 
 /* Draw tab */
 
