@@ -5,7 +5,7 @@ var helper = require('../../common/helper');
 var { insertImage, deleteImage } = require('../../common/desktop_helper');
 
 describe('Image Operation Tests', function() {
-	var testFileName = 'comment_switching.odp';
+	var testFileName = 'image_operation.odp';
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'impress');

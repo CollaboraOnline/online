@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Image Operation Tests', function() {
-	var testFileName = 'annotation.odp';
+	var testFileName = 'image_operation.odp';
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'impress');

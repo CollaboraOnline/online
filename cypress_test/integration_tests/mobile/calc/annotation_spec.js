@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Annotation Tests',function() {
-	var testFileName = 'focus.ods';
+	var testFileName = 'annotation.ods';
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
 
