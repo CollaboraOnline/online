@@ -11,6 +11,8 @@ if [ ! -d "${srcdir}/.git" ]; then
     exit 0
 fi
 
+mkdir -p ${srcdir}/.git/hooks
+
 for hook_name in ${srcdir}/.git-hooks/*
 do
     hook="${srcdir}/.git/hooks/${hook_name##*/}"
