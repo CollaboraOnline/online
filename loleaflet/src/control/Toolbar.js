@@ -26,11 +26,6 @@ L.Map.include({
 		}
 	},
 
-	// Triple-clicking turns profiling on in the kit process for
-	// this document (it is already if the server is running with log level
-	// "trace"). Triple-clicking again turns it off. Etc.
-	_profilingRequestedToggle: false,
-
 	onFontSelect: function(e) {
 		var font = e.target.value;
 		this.applyFont(font);
@@ -721,18 +716,25 @@ L.Map.include({
 				hammer.on('tap', function() {
 					map._docLayer.toggleTileDebugMode();
 
-					app.socket.sendMessage('traceeventrecording ' + (map._profilingRequestedToggle ? 'stop' : 'start'));
+					// Triple-clicking turns Trace Event recording on in the kit
+					// process for this document, as long as loolwsd has been
+					// started with the --enable-trace-event-logging option.
+					// Triple-clicking again turns it off.
 
-					// Just as a test, uncomment this to toggle SAL_WARN and SAL_INFO
-					// selection between two states: 1) the default as directed by the
-					// SAL_LOG environment variable, and 2) all warnings on plus SAL_INFO for sc.
-					//
-					// (Note that loolwsd sets the SAL_LOG environment variable to
-					// "-WARN-INFO", i.e. the default is that nothing is logged)
+					if (L.Params.enableTraceEventLogging) {
+						app.socket.sendMessage('traceeventrecording ' + (app.socket.traceEventRecordingToggle ? 'stop' : 'start'));
 
-					// app.socket.sendMessage('sallogoverride ' + (map._profilingRequestedToggle ? 'default' : '+WARN+INFO.sc'));
+						// Just as a test, uncomment this to toggle SAL_WARN and SAL_INFO
+						// selection between two states: 1) the default as directed by the
+						// SAL_LOG environment variable, and 2) all warnings on plus SAL_INFO for sc.
+						//
+						// (Note that loolwsd sets the SAL_LOG environment variable to
+						// "-WARN-INFO", i.e. the default is that nothing is logged)
 
-					map._profilingRequestedToggle = !map._profilingRequestedToggle;
+						// app.socket.sendMessage('sallogoverride ' + (app.socket.traceEventRecordingToggle ? 'default' : '+WARN+INFO.sc'));
+
+						app.socket.traceEventRecordingToggle = !app.socket.traceEventRecordingToggle;
+					}
 				});
 
 				this.contentEl.style.width = w + 'px';

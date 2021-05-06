@@ -2738,4 +2738,6 @@ void dump_kit_state()
     LOG_TRC(msg);
 }
 
+bool EnableTraceEventLogging = false;
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

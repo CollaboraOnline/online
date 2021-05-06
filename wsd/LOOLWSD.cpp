@@ -681,6 +681,8 @@ inline std::string getLaunchURI(const std::string &document)
     oss << "?file_path=file://";
     oss << DEBUG_ABSSRCDIR "/";
     oss << document;
+    if (LOOLWSD::EnableTraceEventLogging)
+        oss << "&enabletraceeventlogging=yes";
 
     return oss.str();
 }
@@ -749,6 +751,7 @@ std::string LOOLWSD::ServiceRoot;
 std::string LOOLWSD::LOKitVersion;
 std::string LOOLWSD::ConfigFile = LOOLWSD_CONFIGDIR "/loolwsd.xml";
 std::string LOOLWSD::ConfigDir = LOOLWSD_CONFIGDIR "/conf.d";
+bool LOOLWSD::EnableTraceEventLogging = false;
 FILE *LOOLWSD::TraceEventFile = NULL;
 std::string LOOLWSD::LogLevel = "trace";
 std::string LOOLWSD::UserInterface = "classic";
@@ -1637,6 +1640,13 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("path"));
 
+    optionSet.addOption(Option("enable-trace-event-logging", "",
+                               "Enable turning Trace Event recording and logging on and off. "
+                               "Note that this option does not turn it on, that needs to be done at run-time "
+                               "for a specific client.")
+                        .required(false)
+                        .repeatable(false));
+
 #if ENABLE_DEBUG
     optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
                         .required(false)
@@ -1706,6 +1716,8 @@ void LOOLWSD::handleOption(const std::string& optionName,
         ConfigDir = value;
     else if (optionName == "lo-template-path")
         LoTemplate = value;
+    else if (optionName == "enable-trace-event-logging")
+        EnableTraceEventLogging = true;
 #if ENABLE_DEBUG
     else if (optionName == "unitlib")
         UnitTestLibrary = value;
@@ -1985,6 +1997,9 @@ bool LOOLWSD::createForKit()
 
     if (!CheckLoolUser)
         args.push_back("--disable-lool-user-checking");
+
+    if (EnableTraceEventLogging)
+        args.push_back("--enable-trace-event-logging");
 
 #if ENABLE_DEBUG
     if (SingleKit)
