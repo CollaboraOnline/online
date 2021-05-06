@@ -143,4 +143,6 @@ std::string anonymizeUsername(const std::string& username);
 std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly();
 #endif
 
+extern bool EnableTraceEventLogging;
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

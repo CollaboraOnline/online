@@ -1415,8 +1415,11 @@ L.Socket = L.Class.extend({
 		return command;
 	},
 
+	traceEventRecordingToggle: false,
+
 	emitInstantTraceEvent: function (name) {
-		this.sendMessage('TRACEEVENT name=' + name + ' ph=i ts=' + performance.now());
+		if (this.traceEventRecordingToggle)
+			this.sendMessage('TRACEEVENT name=' + name + ' ph=i ts=' + performance.now());
 	},
 
 	asyncTraceEventCounter: 0,
@@ -1424,8 +1427,11 @@ L.Socket = L.Class.extend({
 	createAsyncTraceEvent: function (name) {
 		var result = {};
 		result.id = this.asyncTraceEventCounter++;
-		result.active = true;
-		this.sendMessage('TRACEEVENT name=' + name + ' ph=b ts=' + Math.round(performance.now() * 1000) + ' id=' + result.id);
+		result.active = this.traceEventRecordingToggle;
+
+		if (this.traceEventRecordingToggle)
+			this.sendMessage('TRACEEVENT name=' + name + ' ph=b ts=' + Math.round(performance.now() * 1000) + ' id=' + result.id);
+
 		var that = this;
 		result.finish = function () {
 			if (this.active) {
@@ -1441,7 +1447,7 @@ L.Socket = L.Class.extend({
 
 	createCompleteTraceEvent: function (name) {
 		var result = {};
-		result.active = true;
+		result.active = this.traceEventRecordingToggle;
 		result.begin = performance.now();
 		var that = this;
 		result.finish = function () {

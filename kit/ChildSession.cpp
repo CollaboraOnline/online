@@ -461,17 +461,20 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens.equals(0, "traceeventrecording"))
         {
-            if (tokens.size() > 0)
+            if (EnableTraceEventLogging)
             {
-                if (tokens.equals(1, "start"))
+                if (tokens.size() > 0)
                 {
-                    getLOKit()->setOption("traceeventrecording", "start");
-                    LOG_INF("Profile zone tracing in this kit process turned on (might have been on all the time)");
-                }
-                else if (tokens.equals(1, "stop"))
-                {
-                    getLOKit()->setOption("traceeventrecording", "stop");
-                    LOG_INF("Profile zone tracing in this kit process turned off");
+                    if (tokens.equals(1, "start"))
+                        {
+                            getLOKit()->setOption("traceeventrecording", "start");
+                            LOG_INF("Trace Event recording in this kit process turned on (might have been on all the time)");
+                        }
+                    else if (tokens.equals(1, "stop"))
+                    {
+                        getLOKit()->setOption("traceeventrecording", "stop");
+                        LOG_INF("Trace Event recording in this kit process turned off");
+                    }
                 }
             }
         }
