@@ -435,7 +435,8 @@ run: all @JAILS_PATH@
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
-			  --o:logging.file[@enable]=${OUTPUT_TO_FILE} --o:logging.level=trace
+			  --o:logging.file[@enable]=${OUTPUT_TO_FILE} --o:logging.level=trace \
+			  --enable-trace-event-logging
 
 if ENABLE_DEBUG
 run-one: all @JAILS_PATH@

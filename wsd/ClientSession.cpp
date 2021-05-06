@@ -354,43 +354,46 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "TRACEEVENT"))
     {
-        if (tokens.size() >= 4)
+        if (LOOLWSD::EnableTraceEventLogging)
         {
-            // The timestamps and durations loleaflet sends are in milliseconds, the Trace Event
-            // format wants microseconds. The intent is that when doing event trace generation, the
-            // web browser client and the server run on the same machine, so there is no clock skew
-            // problem.
-            std::string name;
-            std::string ph;
-            uint64_t ts;
-            if (getTokenString(tokens[1], "name", name) &&
-                getTokenString(tokens[2], "ph", ph) &&
-                getTokenUInt64(tokens[3], "ts", ts))
+            if (tokens.size() >= 4)
             {
-                uint64_t id;
-                uint64_t dur;
-                if (ph == "i")
+                // The timestamps and durations loleaflet sends are in milliseconds, the Trace Event
+                // format wants microseconds. The intent is that when doing event trace generation, the
+                // web browser client and the server run on the same machine, so there is no clock skew
+                // problem.
+                std::string name;
+                std::string ph;
+                uint64_t ts;
+                if (getTokenString(tokens[1], "name", name) &&
+                    getTokenString(tokens[2], "ph", ph) &&
+                    getTokenUInt64(tokens[3], "ts", ts))
                 {
-                    fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"i\",\"ts\":%lu,\"pid\":%d,\"tid\":1,}\n", name.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid());
-                }
-                else if ((ph == "b" || ph == "e") &&
-                    getTokenUInt64(tokens[4], "id", id))
-                {
-                    fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"%s\",\"ts\":%lu,\"pid\":%d,\"tid\":1,\"id\"=%lu}\n", name.c_str(), ph.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid(), id);
-                }
-                else if (ph == "X" &&
-                         getTokenUInt64(tokens[4], "dur", dur))
-                {
-                    fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"X\",\"ts\":%lu,\"pid\":%d,\"tid\":1,\"dur\"=%lu}\n", name.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid(), dur);
-                }
-                else
-                {
-                    LOG_WRN("Unrecognized TRACEEVENT message");
+                    uint64_t id;
+                    uint64_t dur;
+                    if (ph == "i")
+                    {
+                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"i\",\"ts\":%lu,\"pid\":%d,\"tid\":1,}\n", name.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid());
+                    }
+                    else if ((ph == "b" || ph == "e") &&
+                        getTokenUInt64(tokens[4], "id", id))
+                    {
+                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"%s\",\"ts\":%lu,\"pid\":%d,\"tid\":1,\"id\"=%lu}\n", name.c_str(), ph.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid(), id);
+                    }
+                    else if (ph == "X" &&
+                             getTokenUInt64(tokens[4], "dur", dur))
+                    {
+                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"X\",\"ts\":%lu,\"pid\":%d,\"tid\":1,\"dur\"=%lu}\n", name.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid(), dur);
+                    }
+                    else
+                    {
+                        LOG_WRN("Unrecognized TRACEEVENT message");
+                    }
                 }
             }
+            else
+                LOG_WRN("Unrecognized TRACEEVENT message");
         }
-        else
-            LOG_WRN("Unrecognized TRACEEVENT message");
         return false;
     }
 
