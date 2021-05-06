@@ -54,6 +54,11 @@ window.app.definitions = {};
 
 		/// Shows revision history file menu option
 		revHistoryEnabled: global.getParameterByName('revisionhistory'),
+
+		/// WHether Trace Event recording is enabled or not.
+		/// ("Enabled" here means whether it can be turned on
+		/// (and off again), not whether it is on.)
+		enableTraceEventLogging: (global.getParameterByName('enabletraceeventlogging') === 'yes'),
 	};
 
 	global.L.Browser = {
