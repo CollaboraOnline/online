@@ -99,6 +99,10 @@ class Cursor {
 		return this.domAttached;
 	}
 
+	isVisible(): boolean {
+		return this.visible;
+	}
+
 	onFocusBlur(ev: FocusEvent) {
 		if (ev.type === 'blur')
 			$('.leaflet-cursor').addClass('blinking-cursor-hidden');
