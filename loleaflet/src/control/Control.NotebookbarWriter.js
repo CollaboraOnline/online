@@ -210,9 +210,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'online-help',
-								'type': 'menubartoolitem',
+								'type': 'bigtoolitem',
 								'text': _('Online Help'),
-								'command': ''
+								'command': '.uno:OnlineHelp'
 							}
 						]
 					},
@@ -224,9 +224,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'keyboard-shortcuts',
-								'type': 'menubartoolitem',
+								'type': 'bigtoolitem',
 								'text': _('Keyboard shortcuts'),
-								'command': ''
+								'command': '.uno:KeyboardShortcuts'
 							}
 						]
 					},
@@ -253,9 +253,9 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'children': [
 							{
 								'id': 'about',
-								'type': 'menubartoolitem',
+								'type': 'bigtoolitem',
 								'text': _('About'),
-								'command': ''
+								'command': '.uno:About'
 							}
 						]
 					}
