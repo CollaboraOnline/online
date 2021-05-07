@@ -45,8 +45,8 @@ L.Control.Notebookbar = L.Control.extend({
 
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
 		$('.main-nav').addClass('hasnotebookbar');
-		var docType = this._map.getDocType();
-		$('.main-nav').addClass(docType + '-color-indicator');
+		$('.main-nav').addClass(this._map.getDocType() + '-color-indicator');
+		document.getElementById('document-container').classList.add('notebookbar-active');
 
 		var docLogoHeader = L.DomUtil.create('div', '');
 		docLogoHeader.id = 'document-header';

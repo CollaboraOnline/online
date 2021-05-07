@@ -164,7 +164,6 @@ L.Control.UIManager = L.Control.extend({
 	addClassicUI: function(adjustVertPos) {
 		if (adjustVertPos) {
 			this.moveObjectVertically($('#spreadsheet-row-column-frame'), -36);
-			this.moveObjectVertically($('#document-container'), -36);
 			this.moveObjectVertically($('#presentation-controls-wrapper'), -36);
 			this.moveObjectVertically($('#sidebar-dock-wrapper'), -36);
 		}
@@ -200,8 +199,6 @@ L.Control.UIManager = L.Control.extend({
 		$('.main-nav').removeClass('readonly');
 
 		if (adjustVertPos) {
-			this.moveObjectVertically($('#spreadsheet-row-column-frame'), 36);
-			this.moveObjectVertically($('#document-container'), 36);
 			this.moveObjectVertically($('#presentation-controls-wrapper'), 36);
 			this.moveObjectVertically($('#sidebar-dock-wrapper'), 36);
 		}
@@ -344,7 +341,6 @@ L.Control.UIManager = L.Control.extend({
 		obj.removeClass('w2ui-icon unfold');
 		obj.addClass('w2ui-icon fold');
 
-		this.moveObjectVertically($('#document-container'), 36);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), 36);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), 36);
 	},
@@ -361,7 +357,6 @@ L.Control.UIManager = L.Control.extend({
 		obj.removeClass('w2ui-icon fold');
 		obj.addClass('w2ui-icon unfold');
 
-		this.moveObjectVertically($('#document-container'), -36);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), -36);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), -36);
 	},
@@ -408,19 +403,10 @@ L.Control.UIManager = L.Control.extend({
 		return $('#map').hasClass('notebookbar-opened');
 	},
 
-	makeSpaceForNotebookbar: function(docType) {
+	makeSpaceForNotebookbar: function() {
 		if (this.hasNotebookbarShown())
 			return;
 
-		var additionalOffset = 0;
-		if (docType === 'spreadsheet') {
-			if (window.mode.isTablet())
-				additionalOffset = -6;
-			else
-				additionalOffset = 57;
-		}
-
-		this.moveObjectVertically($('#document-container'), 31 + additionalOffset);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), 31);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), 31);
 
@@ -431,7 +417,6 @@ L.Control.UIManager = L.Control.extend({
 		if (this.isNotebookbarCollapsed())
 			return;
 
-		this.moveObjectVertically($('#document-container'), -73);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), -73);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), -73);
 		this.moveObjectVertically($('#formulabar'), -1);
@@ -446,7 +431,6 @@ L.Control.UIManager = L.Control.extend({
 		if (!this.isNotebookbarCollapsed())
 			return;
 
-		this.moveObjectVertically($('#document-container'), 73);
 		this.moveObjectVertically($('#presentation-controls-wrapper'), 73);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), 73);
 		this.moveObjectVertically($('#formulabar'), 1);

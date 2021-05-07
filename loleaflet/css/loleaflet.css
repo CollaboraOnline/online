@@ -36,23 +36,55 @@
 #document-container {
 	border-top: 1px solid var(--gray-color);
 	background: #DFDFDF;
-	position: absolute;
-	top: 77px;
-	bottom: 33px;
-	right: 0px;
+	position: relative;
+	top: 0;
 	left: 0px;
-}
-#document-container.sidebar-closed {
-	right: 0px !important;
-}
-
-
-#document-container.tablet {
-	top: 36px;
+	width: 100%;
+	height: calc(100vh - 135px);
 }
 
-#document-container.readonly {
-	top: 36px;
+#document-container.text-doctype {
+	height: calc(100vh - 100px);
+}
+
+#document-container.text-doctype.notebookbar-active {
+	height: calc(100vh - 135px);
+}
+
+#document-container.text-doctype.tabs-collapsed {
+	height: calc(100vh - 65px);
+}
+
+#document-container.spreadsheet-doctype {
+	height: calc(100vh - 185px);
+}
+
+#document-container.presentation-doctype {
+	height: calc(100vh - 100px);
+}
+
+#document-container.presentation-doctype.notebookbar-active {
+	height: calc(100vh - 135px);
+}
+
+#document-container.presentation-doctype.notebookbar-active.tabs-collapsed {
+	height: calc(100vh - 65px);
+}
+
+#document-container.spreadsheet-document.notebookbar-active {
+	height: calc(100vh - 220px);
+}
+
+#document-container.spreadsheet-document.tabs-collapsed.notebookbar-active {
+	height: calc(100vh - 148px);
+}
+
+#document-container.sidebar-open {
+	width: calc(100vw - 351px);
+}
+
+#document-container.presentation-doctype.sidebar-open {
+	width: calc(100vw - 536px);
 }
 
 #toolbar-wrapper.readonly {

@@ -1,5 +1,6 @@
 #document-container.parts-preview-document {
 	left: 194px;
+	width: calc(100vw - 194px);
 }
 
 #slide-sorter {
