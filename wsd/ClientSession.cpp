@@ -409,7 +409,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         _performanceCounterEpoch = 0;
         if (tokens.size() >= 4)
         {
-            const char* str = tokens[2].data();
+            std::string token = tokens[2];
+            const char* str = token.data();
             char* endptr = nullptr;
             uint64_t ts = strtoull(str, &endptr, 10);
             if (*endptr == '\0')
