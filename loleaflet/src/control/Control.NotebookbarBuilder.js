@@ -59,6 +59,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:DrawText'] = this._insertTextBoxControl;
 		this._toolitemHandlers['.uno:VerticalText'] = this._insertTextBoxControl;
 		this._toolitemHandlers['.uno:ShowResolvedAnnotations'] = this._showResolvedAnnotationsControl;
+		this._toolitemHandlers['.uno:OnlineHelp'] = this._onlineHelpControl;
+		this._toolitemHandlers['.uno:KeyboardShortcuts'] = this._onlineHelpControl;
+		this._toolitemHandlers['.uno:ReportIssue'] = this._onlineHelpControl;
+		this._toolitemHandlers['.uno:LatestUpdates'] = this._onlineHelpControl;
+		this._toolitemHandlers['.uno:About'] = this._onlineHelpControl;
 
 		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
 		this._toolitemHandlers['.uno:SetOutline'] = function() {};
@@ -494,6 +499,15 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			var val = items.getItemValue('.uno:ShowResolvedAnnotations');
 			val = (val === 'true' || val === true);
 			builder.map.showResolvedComments(!val);
+		});
+	},
+
+	_onlineHelpControl: function(parentContainer, data, builder) {
+		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {
+			L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
 		});
 	},
 
