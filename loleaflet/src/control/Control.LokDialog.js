@@ -893,35 +893,6 @@ L.Control.LokDialog = L.Control.extend({
 				$('#' + this._calcInputBar.strId).remove();
 				this._createCalcInputbar(id, left, top, width, height, textLines);
 
-				// Resize the container.
-				var documentContainer = L.DomUtil.get('document-container');
-				if (documentContainer) {
-					var offsetTop = documentContainer.offsetTop;
-					var marginTop = documentContainer.style.marginTop;
-					if (marginTop)
-						marginTop = parseInt(marginTop.replace('px', ''));
-					else
-						marginTop = 0;
-
-					offsetTop -= marginTop;
-
-					var noTopProp = true;
-					var props = documentContainer.style.cssText.split(';');
-					for (var i = 0; i < props.length; ++i) {
-						if (props[i].trim().startsWith('top')) {
-							props[i] = 'top: ' + (offsetTop + delta).toString() + 'px !important';
-							documentContainer.setAttribute('style', props.join(';'));
-							noTopProp = false;
-							break;
-						}
-					}
-					if (noTopProp) {
-						var styleAttr = documentContainer.style.cssText;
-						styleAttr += '; top: ' + (offsetTop + delta).toString() + 'px !important';
-						documentContainer.setAttribute('style', styleAttr);
-					}
-				}
-
 				console.log('_adjustCalcInputBarHeight: end');
 			}
 
@@ -1101,6 +1072,7 @@ L.Control.LokDialog = L.Control.extend({
 		} else {
 			this._createSidebar(id, strId, width, height);
 			$('#document-container').removeClass('sidebar-closed');
+			$('#document-container').addClass('sidebar-open');
 		}
 	},
 
@@ -1416,6 +1388,7 @@ L.Control.LokDialog = L.Control.extend({
 			this._map.focus();
 		}
 		$('#document-container').addClass('sidebar-closed');
+		$('#document-container').removeClass('sidebar-open');
 		if (window.initSidebarState)
 			this._map.uiManager.setSavedState('ShowSidebar', false);
 	},
@@ -1645,23 +1618,13 @@ L.Control.LokDialog = L.Control.extend({
 		}
 
 		var wrapper = L.DomUtil.get('sidebar-dock-wrapper');
-		if (wrapper) {
-			var offsetWidth;
-			var panel = L.DomUtil.get('sidebar-panel');
-
-			if (panel.style.display !== 'none')
-				offsetWidth = wrapper.offsetWidth;
-			else {
-				panel.style.visibility = 'hidden';
-				panel.style.display = '';
-				offsetWidth = wrapper.offsetWidth;
-				panel.style.display = 'none';
-				panel.style.visibility = '';
-			}
-
-			this._map.options.documentContainer.style.right = offsetWidth + 'px';
-		} else
-			this._map.options.documentContainer.style.right = (width - 15).toString() + 'px';
+		if (wrapper.style.display !== 'none') {
+			document.getElementById('document-container').classList.add('sidebar-open');
+			document.getElementById('document-container').classList.remove('sidebar-closed');
+		} else {
+			document.getElementById('document-container').classList.add('sidebar-closed');
+			document.getElementById('document-container').classList.remove('sidebar-open');
+		}
 
 		this._map._onResize();
 
