@@ -94,8 +94,11 @@ function typeIntoFormulabar(text) {
 			}
 		});
 
-	cy.get('#calc-inputbar .lokdialog-cursor')
-		.should('be.visible');
+	// TODO: check if cursor is in formulabar
+	// with core cp-6.4 it was possible with:
+	// cy.get('#calc-inputbar .lokdialog-cursor')
+	//	 .should('be.visible');
+	// with core co-2021 cursor is rendered on the canvas
 
 	helper.doIfOnMobile(function() {
 		cy.get('#tb_actionbar_item_acceptformula')
