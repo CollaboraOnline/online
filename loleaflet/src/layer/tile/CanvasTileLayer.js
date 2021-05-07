@@ -205,6 +205,13 @@ L.TileSectionManager = L.Class.extend({
 			splitPanesContext.getSplitPos() : new L.Point(0, 0);
 		this._updatesRunning = false;
 		this._mirrorEventsFromSourceToCanvasSectionContainer(document.getElementById('map'));
+
+		var canvasContainer = document.getElementById('document-container');
+		var that = this;
+		this.resObserver = new ResizeObserver(function() {
+			that._layer._syncTileContainerSize();
+		});
+		this.resObserver.observe(canvasContainer);
 	},
 
 	// Map and TilesSection overlap entirely. Map is above tiles section. In order to handle events in tiles section, we need to mirror them from map.
@@ -955,6 +962,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var mapContainer = document.getElementById('document-container');
 		var canvasContainerClass = 'leaflet-canvas-container';
 		this._canvasContainer = L.DomUtil.create('div', canvasContainerClass, mapContainer);
+		this._canvasContainer.id = 'canvas-container';
 		this._setup();
 	},
 
@@ -4951,6 +4959,16 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	_getTilesSectionRectangle: function () {
+		var section = app.sectionContainer.getSectionWithName(L.CSections.Tiles.name);
+		if (section) {
+			return L.LOUtil.createRectangle(section.myTopLeft[0] / section.dpiScale, section.myTopLeft[1] / section.dpiScale, section.size[0] / section.dpiScale, section.size[1] / section.dpiScale);
+		}
+		else {
+			return L.LOUtil.createRectangle(0, 0, 0, 0);
+		}
+	},
+
 	_getRealMapSize: function() {
 		this._map._sizeChanged = true; // force using real size
 		return this._map.getPixelBounds().getSize();
@@ -4959,36 +4977,36 @@ L.CanvasTileLayer = L.Layer.extend({
 	_syncTileContainerSize: function () {
 		var tileContainer = this._container;
 		if (tileContainer) {
-			var size = this._getRealMapSize();
-			var heightIncreased = parseInt(this._painter._sectionContainer.canvas.style.height.replace('px', '')) < size.y;
+			var documentContainerSize = document.getElementById('document-container');
+			documentContainerSize = documentContainerSize.getBoundingClientRect();
+			documentContainerSize = [documentContainerSize.width, documentContainerSize.height];
+
+			this._painter._sectionContainer.onResize(documentContainerSize[0], documentContainerSize[1]); // Canvas's size = documentContainer's size.
+
+			var oldSize = this._getRealMapSize();
+
+			var rectangle = this._getTilesSectionRectangle();
+			var mapElement = document.getElementById('map'); // map's size = tiles section's size.
+			mapElement.style.left = rectangle.getPxX1() + 'px';
+			mapElement.style.top = rectangle.getPxY1() + 'px';
+			mapElement.style.width = rectangle.getPxWidth() + 'px';
+			mapElement.style.height = rectangle.getPxHeight() + 'px';
+
+			tileContainer.style.width = rectangle.getPxWidth() + 'px';
+			tileContainer.style.height = rectangle.getPxHeight() + 'px';
+
+			var newSize = this._getRealMapSize();
+			var heightIncreased = oldSize < newSize.y;
 
 			if (this._docType === 'spreadsheet') {
-				var offset = this._getUIWidth() + this._getGroupWidth();
-				offset += (this._getGroupWidth() > 0 ? 3: 1);
-
-				// modify map size
-				this._map.options.documentContainer.style.left = String(offset) + 'px';
-				// update according to the new size
-				size = this._getRealMapSize();
-
-				size.x += offset;
-				this._canvasContainer.style.left = -1 * (offset) + 'px';
-
-				offset = this._getUIHeight() + this._getGroupHeight();
-				size.y += offset;
-				offset += (this._getGroupHeight() > 0 ? 3: 1);
-
-				this._canvasContainer.style.top = -1 * offset + 'px';
-
-				this._map.options.documentContainer.style.marginTop = this._getGroupHeight() + 'px';
+				if (this._painter._sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
+					this._painter._sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
+					this._painter._sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
+				}
 			}
 
-			this._painter._sectionContainer.onResize(size.x, size.y);
-			tileContainer.style.width = this._painter._sectionContainer.canvas.style.width;
-			tileContainer.style.height = this._painter._sectionContainer.canvas.style.height;
-			if (this._painter._sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
-				this._painter._sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
-				this._painter._sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
+			if (oldSize.x !== newSize.x || oldSize.y !== newSize.y) {
+				this._map.invalidateSize();
 			}
 
 			if (!heightIncreased)

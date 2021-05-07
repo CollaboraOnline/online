@@ -232,7 +232,7 @@
 
 #toolbar-wrapper.hasnotebookbar {
 	background: var(--white-bg-color);
-	position: fixed;
+	position: relative;
 	z-index: 11;
 }
 
