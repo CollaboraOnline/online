@@ -163,8 +163,6 @@ L.Control.UIManager = L.Control.extend({
 
 	addClassicUI: function(adjustVertPos) {
 		if (adjustVertPos) {
-			this.moveObjectVertically($('#spreadsheet-row-column-frame'), -36);
-			this.moveObjectVertically($('#presentation-controls-wrapper'), -36);
 			this.moveObjectVertically($('#sidebar-dock-wrapper'), -36);
 		}
 
@@ -199,7 +197,6 @@ L.Control.UIManager = L.Control.extend({
 		$('.main-nav').removeClass('readonly');
 
 		if (adjustVertPos) {
-			this.moveObjectVertically($('#presentation-controls-wrapper'), 36);
 			this.moveObjectVertically($('#sidebar-dock-wrapper'), 36);
 		}
 		$('#map').addClass('notebookbar-opened');
@@ -341,7 +338,6 @@ L.Control.UIManager = L.Control.extend({
 		obj.removeClass('w2ui-icon unfold');
 		obj.addClass('w2ui-icon fold');
 
-		this.moveObjectVertically($('#presentation-controls-wrapper'), 36);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), 36);
 	},
 
@@ -357,7 +353,6 @@ L.Control.UIManager = L.Control.extend({
 		obj.removeClass('w2ui-icon fold');
 		obj.addClass('w2ui-icon unfold');
 
-		this.moveObjectVertically($('#presentation-controls-wrapper'), -36);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), -36);
 	},
 
@@ -407,7 +402,6 @@ L.Control.UIManager = L.Control.extend({
 		if (this.hasNotebookbarShown())
 			return;
 
-		this.moveObjectVertically($('#presentation-controls-wrapper'), 31);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), 31);
 
 		$('#map').addClass('notebookbar-opened');
@@ -417,7 +411,6 @@ L.Control.UIManager = L.Control.extend({
 		if (this.isNotebookbarCollapsed())
 			return;
 
-		this.moveObjectVertically($('#presentation-controls-wrapper'), -73);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), -73);
 		this.moveObjectVertically($('#formulabar'), -1);
 		$('#toolbar-up').css('display', 'none');
@@ -431,7 +424,6 @@ L.Control.UIManager = L.Control.extend({
 		if (!this.isNotebookbarCollapsed())
 			return;
 
-		this.moveObjectVertically($('#presentation-controls-wrapper'), 73);
 		this.moveObjectVertically($('#sidebar-dock-wrapper'), 73);
 		this.moveObjectVertically($('#formulabar'), 1);
 		$('#toolbar-up').css('display', '');
@@ -449,7 +441,6 @@ L.Control.UIManager = L.Control.extend({
 
 	showStatusBar: function() {
 		$('#document-container').css('bottom', this.documentBottom);
-		$('#presentation-controls-wrapper').css('bottom', this.presentationControlBottom);
 		$('#toolbar-down').show();
 		this.setSavedState('ShowStatusbar', true);
 	},
@@ -459,9 +450,7 @@ L.Control.UIManager = L.Control.extend({
 			return;
 
 		this.documentBottom = $('#document-container').css('bottom');
-		this.presentationControlBottom = $('#presentation-controls-wrapper').css('bottom');
 		$('#document-container').css('bottom', '0px');
-		$('#presentation-controls-wrapper').css('bottom','33px');
 		$('#toolbar-down').hide();
 		if (!firstStart)
 			this.setSavedState('ShowStatusbar', false);
