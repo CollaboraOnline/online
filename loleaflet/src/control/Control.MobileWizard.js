@@ -101,6 +101,11 @@ L.Control.MobileWizard = L.Control.extend({
 			window.postMobileMessage('MOBILEWIZARD show');
 		if (window.mobileMenuWizard)
 			this.map.showSidebar = false;
+
+		document.getElementById('document-container').classList.add('mobile-wizard-open');
+		var stb = document.getElementById('spreadsheet-toolbar');
+		if (stb)
+			stb.style.display = 'none';
 	},
 
 	_showWizardSidebar: function() {
@@ -153,6 +158,11 @@ L.Control.MobileWizard = L.Control.extend({
 		if (!this.map.hasFocus()) {
 			this.map.focus();
 		}
+
+		document.getElementById('document-container').classList.remove('mobile-wizard-open');
+		var stb = document.getElementById('spreadsheet-toolbar');
+		if (stb)
+			stb.style.display = 'block';
 
 		this._updateMapSize();
 	},
