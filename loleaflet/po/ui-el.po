@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-16 22:04+0200\n"
-"PO-Revision-Date: 2021-03-15 15:37+0000\n"
+"PO-Revision-Date: 2021-05-06 23:13+0000\n"
 "Last-Translator: george kitsoukakis <norhorn@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
 "ui/el/>\n"
-"Language: \n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5.2-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-ui-el.po\n"
 "X-Pootle-Revision: 3940107\n"
 
@@ -227,7 +227,7 @@ msgstr "Ενημέρωση επιπέδων σύνδεσης"
 
 #: admin/admin.strings.js:55
 msgid "Version Information"
-msgstr ""
+msgstr "Πληροφορίες έκδοσης"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -490,7 +490,7 @@ msgstr "απαντήσεις"
 
 #: src/control/Control.JSDialogBuilder.js:2324
 msgid "Insert Comment"
-msgstr ""
+msgstr "Εισαγωγή σχολίου"
 
 #: src/control/Control.JSDialogBuilder.js:2708
 msgid "Cell borders"
@@ -1105,11 +1105,11 @@ msgstr "Τίτλος"
 
 #: src/control/Control.NotebookbarWriter.js:789
 msgid "Emphasis"
-msgstr ""
+msgstr "Έμφαση"
 
 #: src/control/Control.NotebookbarWriter.js:794
 msgid "Strong Emphasis"
-msgstr ""
+msgstr "Ισχυρή έμφαση"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
@@ -1125,40 +1125,39 @@ msgstr "Αρχείο CSV (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:596
 msgid "General"
-msgstr ""
+msgstr "Γενικά"
 
 #: src/control/Control.NotebookbarCalc.js:597
 msgid "Number"
-msgstr ""
+msgstr "Αριθμός"
 
 #: src/control/Control.NotebookbarCalc.js:598
 msgid "Percent"
-msgstr ""
+msgstr "Ποσοστό"
 
 #: src/control/Control.NotebookbarCalc.js:599
-#, fuzzy
 msgid "Currency"
-msgstr "Τρέχουσα"
+msgstr "Νόμισμα"
 
 #: src/control/Control.NotebookbarCalc.js:600
 msgid "Date"
-msgstr ""
+msgstr "Ημερομηνία"
 
 #: src/control/Control.NotebookbarCalc.js:601
 msgid "Time"
-msgstr ""
+msgstr "Ώρα"
 
 #: src/control/Control.NotebookbarCalc.js:602
 msgid "Scientific"
-msgstr ""
+msgstr "Επιστημονικό"
 
 #: src/control/Control.NotebookbarCalc.js:603
 msgid "Fraction"
-msgstr ""
+msgstr "Κλάσμα"
 
 #: src/control/Control.NotebookbarCalc.js:604
 msgid "Boolean Value"
-msgstr ""
+msgstr "Δυαδική τιμή"
 
 #: src/control/Control.NotebookbarCalc.js:605 src/control/Toolbar.js:756
 msgid "Text"
@@ -1166,27 +1165,27 @@ msgstr "Κείμενο"
 
 #: src/control/Control.NotebookbarCalc.js:723
 msgid "Default"
-msgstr ""
+msgstr "Προεπιλογή"
 
 #: src/control/Control.NotebookbarCalc.js:728
 msgid "Heading 1"
-msgstr ""
+msgstr "Επικεφαλίδα 1"
 
 #: src/control/Control.NotebookbarCalc.js:733
 msgid "Heading 2"
-msgstr ""
+msgstr "Επικεφαλίδα 2"
 
 #: src/control/Control.NotebookbarCalc.js:744
 msgid "Good"
-msgstr ""
+msgstr "Καλό"
 
 #: src/control/Control.NotebookbarCalc.js:749
 msgid "Neutral"
-msgstr ""
+msgstr "Ουδέτερο"
 
 #: src/control/Control.NotebookbarCalc.js:754
 msgid "Bad"
-msgstr ""
+msgstr "Κακό"
 
 #: src/control/Control.NotebookbarCalc.js:823
 msgid "Insert Row Break"
@@ -1234,7 +1233,7 @@ msgstr "Έναρξη παρουσίασης"
 
 #: src/control/Control.NotebookbarDraw.js:274
 msgid "Image (.png)"
-msgstr ""
+msgstr "Εικόνα (.png)"
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
@@ -1459,7 +1458,7 @@ msgstr "Όπα, υπάρχει πρόβλημα σύνδεσης με το %prod
 
 #: src/core/Socket.js:319
 msgid "Server has been restarted. We have to refresh the page now."
-msgstr ""
+msgstr "Έχει γίνει επανεκκίνηση του διακομιστή. Ανανεώστε τη σελίδα."
 
 #: src/core/Socket.js:337
 msgid "Served by:"
@@ -1755,7 +1754,7 @@ msgstr "Λειτουργίες"
 
 #: src/layer/tile/CanvasTileLayer.js:4770
 msgid "No Comments"
-msgstr ""
+msgstr "Χωρίς σχόλια"
 
 #: src/layer/tile/CanvasTileLayer.js:5016
 msgid "Modify"
