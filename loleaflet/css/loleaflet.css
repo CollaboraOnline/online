@@ -40,43 +40,9 @@
 	top: 0;
 	left: 0px;
 	width: 100%;
-	height: calc(100vh - 135px);
-}
-
-#document-container.text-doctype {
-	height: calc(100vh - 100px);
-}
-
-#document-container.text-doctype.notebookbar-active {
-	height: calc(100vh - 135px);
-}
-
-#document-container.text-doctype.tabs-collapsed {
-	height: calc(100vh - 65px);
-}
-
-#document-container.spreadsheet-doctype {
-	height: calc(100vh - 185px);
-}
-
-#document-container.presentation-doctype {
-	height: calc(100vh - 100px);
-}
-
-#document-container.presentation-doctype.notebookbar-active {
-	height: calc(100vh - 135px);
-}
-
-#document-container.presentation-doctype.notebookbar-active.tabs-collapsed {
-	height: calc(100vh - 65px);
-}
-
-#document-container.spreadsheet-document.notebookbar-active {
-	height: calc(100vh - 220px);
-}
-
-#document-container.spreadsheet-document.tabs-collapsed.notebookbar-active {
-	height: calc(100vh - 148px);
+	display: flex;
+	flex-direction: column;
+	flex: 1;
 }
 
 #document-container.sidebar-open {
@@ -229,8 +195,12 @@ body {
 	display: block;
 }
 
-#presentation-controls-wrapper.readonly {
-	top: 36px;
+#document-container.notebookbar-active.presentation-doctype ~ #presentation-controls-wrapper {
+	top: 107px;
+}
+
+#document-container.notebookbar-active.presentation-doctype.tabs-collapsed ~ #presentation-controls-wrapper {
+	top: 34px;
 }
 
 #sidebar-dock-wrapper {
@@ -259,7 +229,6 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 #toolbar-wrapper {
-	position: relative;
 	table-layout: fixed;
 	border-collapse: collapse;
 	width: 100%;

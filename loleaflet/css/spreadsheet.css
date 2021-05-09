@@ -1,23 +1,21 @@
 .spreadsheet-tabs-container {
 	margin: 0;
 	padding: 0;
-	left: 142px;
-	right: 0;
-	bottom: 36px;
-	position: absolute;
-	cursor: pointer;
+	position: relative;
 	height: 39px;
 	overflow: hidden;
+	width: 100%;
 	white-space: nowrap;
-
+	text-align: left;
 	background-color: var(--gray-light-bg-color);
+	vertical-align: middle;
 }
 
 .spreadsheet-tab-scroll {
 	width: 100%;
 	height: 100%;
-	overflow: auto;
-	padding-bottom: 20px; /* to hide the horizontal scrollbar */
+	overflow-y: hidden;
+	overflow-x: auto;
 	margin-left: 6px;
 }
 
