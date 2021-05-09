@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0200\n"
-"PO-Revision-Date: 2020-10-31 17:26+0000\n"
-"Last-Translator: Lukáš Jelínek <devel@aiken.cz>\n"
+"PO-Revision-Date: 2021-05-06 23:13+0000\n"
+"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "help/cs/>\n"
 "Language: cs\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /cs/libo_online/loleaflet-help-cs.po\n"
 "X-Pootle-Revision: 855408\n"
 
@@ -1028,7 +1028,7 @@ msgstr "Přejít na konec textového pole a vybrat při tom text"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:203-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Klávesové zkratky pro snímek"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-18
@@ -1055,28 +1055,24 @@ msgid "Select objects in the reverse order in which they were created"
 msgstr "Vybírat objekty v opačném pořadí, než v jakém byly vytvořeny"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
-#, fuzzy
 msgid "Move to next text object on slide"
-msgstr "Přesunout se na další textový objekt na snímku/kresbě"
+msgstr "Přesunout se na další textový objekt na snímku"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "Vybrat vše na snímku"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:260-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
-msgstr "Klávesové zkratky snímku/kresby"
+msgstr "Klávesové zkratky pro stránku s kresbou"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
-#, fuzzy
 msgid "Move to next text object on drawing page"
-msgstr "Přesunout se na další textový objekt na snímku/kresbě"
+msgstr "Přesunout se na další textový objekt na stránce s kresbou"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:266-18
-#, fuzzy
 msgid "Select all in drawing page"
-msgstr "Vybrat vše na snímku/kresbě"
+msgstr "Vybrat vše na stránce s kresbou"
 
 #: html/loleaflet-help.html%2Bdiv.h1:271-5
 msgid "<span class=\"productname\">%productName</span> Help"
@@ -1178,7 +1174,7 @@ msgstr "Často kladené dotazy"
 
 #: html/loleaflet-help.html%2Bdiv.p:298-5
 msgid "General"
-msgstr "Obecné"
+msgstr "Obecný"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:300-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:531-5
