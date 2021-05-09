@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0200\n"
-"PO-Revision-Date: 2021-04-16 19:54+0000\n"
+"PO-Revision-Date: 2021-05-06 23:13+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "help/ca/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.6-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /ca/libo_online/loleaflet-help-ca.po\n"
 "X-Pootle-Revision: 827117\n"
 
@@ -1181,7 +1181,7 @@ msgstr "Preguntes freqüents"
 
 #: html/loleaflet-help.html%2Bdiv.p:298-5
 msgid "General"
-msgstr "Generals"
+msgstr "General"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:300-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:531-5
