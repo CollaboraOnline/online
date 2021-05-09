@@ -73,7 +73,7 @@
     <string name="negative_cancel">Cancelar</string>
     <string name="negative_im_sure">Tenho a certeza</string>
     <string name="positive_ok">Aceitar</string>
-    <string name="reason_required_to_read_documents">Necessitamos desta permissão para poder ler os documentos.</string>
+    <string name="reason_required_to_read_documents">É necessária a permissão para poder ler os documentos.</string>
     <string name="title_permission_required">Permissão necessária</string>
     <string name="current_dir">Diretório atual: %1$s</string>
     <string name="bad_directory">Caminho inválido</string>
@@ -90,7 +90,7 @@
     <string name="external_sd_path">Caminho do cartão SD</string>
     <string name="physical_storage_settings">Definições do armazenamento físico</string>
     <string name="owncloud_settings">Definições do servidor na nuvem</string>
-    <string name="storage_provider_settings">Definições do provedor de armazenamento</string>
+    <string name="storage_provider_settings">Definições do fornecedor de armazenamento</string>
     <string name="otg_missing_error">Ficheiro raiz inválido. Verifique o dispositivo OTG e/ou a sua configuração.</string>
     <string name="ext_document_provider_error">Ficheiro raiz inválido. Verifique a configuração do cartão SD.</string>
     <string name="owncloud_unspecified_error">Erro não especificado ao estabelecer a ligação. Verifique a sua configuração e/ou tente mais tarde.</string>
@@ -107,4 +107,9 @@
     <string name="app_version_and_hash">Versão: %1$s
 \nonline git-hash: %2$s
 \ncore git-hash: %3$s</string>
+    <string name="theme_light">Claro</string>
+    <string name="theme_dark">Escuro</string>
+    <string name="theme_system_default">Padrão do sistema</string>
+    <string name="choose_theme">Escolha o tema</string>
+    <string name="theme">Tema</string>
 </resources>
