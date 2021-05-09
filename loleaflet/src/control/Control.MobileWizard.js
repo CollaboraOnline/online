@@ -6,7 +6,7 @@
 /* global app $ w2ui */
 L.Control.MobileWizard = L.Control.extend({
 	options: {
-		maxHeight: '45%'
+		maxHeight: '45vh'
 	},
 
 	_builder: null,
@@ -102,10 +102,15 @@ L.Control.MobileWizard = L.Control.extend({
 		if (window.mobileMenuWizard)
 			this.map.showSidebar = false;
 
-		document.getElementById('document-container').classList.add('mobile-wizard-open');
 		var stb = document.getElementById('spreadsheet-toolbar');
 		if (stb)
 			stb.style.display = 'none';
+
+		if (!document.getElementById('document-container').classList.contains('landscape')) {
+			var pcw = document.getElementById('presentation-controls-wrapper');
+			if (pcw)
+				pcw.style.display = 'none';
+		}
 	},
 
 	_showWizardSidebar: function(event) {
@@ -129,6 +134,13 @@ L.Control.MobileWizard = L.Control.extend({
 		}
 
 		$('#mobile-wizard').hide();
+		document.getElementById('mobile-wizard').classList.remove('menuwizard');
+		document.getElementById('mobile-wizard').classList.remove('shapeswizard');
+		if (!document.getElementById('document-container').classList.contains('landscape')) {
+			var pcw = document.getElementById('presentation-controls-wrapper');
+			if (pcw)
+				pcw.style.display = 'block';
+		}
 		$('#mobile-wizard-content').empty();
 		if (this.map.isPermissionEdit()) {
 			$('#toolbar-down').show();
@@ -163,7 +175,6 @@ L.Control.MobileWizard = L.Control.extend({
 			this.map.focus();
 		}
 
-		document.getElementById('document-container').classList.remove('mobile-wizard-open');
 		var stb = document.getElementById('spreadsheet-toolbar');
 		if (stb)
 			stb.style.display = 'block';
@@ -492,7 +503,7 @@ L.Control.MobileWizard = L.Control.extend({
 			this._customTitle ? this._setCustomTitle(this._customTitle) : this._setTitle(this._mainTitle);
 
 			if (data.id === 'menubar' || data.id === 'insertshape') {
-				$('#mobile-wizard').height('100%');
+				document.getElementById('mobile-wizard').style.height = '100vh';
 				if (data.id === 'menubar')
 					$('#mobile-wizard').addClass('menuwizard');
 				else if (data.id === 'insertshape') {
@@ -500,11 +511,11 @@ L.Control.MobileWizard = L.Control.extend({
 				}
 				$('#mobile-wizard').css('top', $('#document-container').css('top'));
 			} else if (data.id === 'funclist') {
-				$('#mobile-wizard').height('100%');
+				document.getElementById('mobile-wizard').style.height = '100vh';
 				$('#mobile-wizard').css('top', $('#document-container').css('top'));
 				$('#mobile-wizard').addClass('funcwizard');
 			} else {
-				$('#mobile-wizard').height(this.options.maxHeight);
+				document.getElementById('mobile-wizard').style.height = this.options.maxHeight;
 				$('#mobile-wizard').css('top', '');
 			}
 			if (!this.map._docLoaded) {

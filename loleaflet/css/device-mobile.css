@@ -185,13 +185,6 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	border: none;
 }
 
-/* Related to spreadsheet.css */
-@-moz-document url-prefix() {
-	#document-container.spreadsheet-document {
-		top: 95px !important;
-	}
-}
-
 .spreadsheet-tab{
 	background-color: #eaf5ff;
 	color: #4c4c4c;
@@ -213,7 +206,6 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 }
 
 .spreadsheet-tabs-container {
-	bottom: 0;
 	left: 28px;
 }
 
@@ -233,14 +225,10 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	border-top: 1px solid #eceff4;
 }
 #spreadsheet-toolbar{
-	bottom: 0;
 	background-color: #fbfbfb;
 	border-top: 1px solid #eceff4;
 	height: 40px;
-	padding-top: 6px;
-	padding-left: 1px;
-	padding-bottom: 0px;
-	padding-right: 0px;
+	padding: 0;
 }
 #spreadsheet-toolbar .w2ui-tb-image{
 	padding-top: 0px !important;
@@ -570,15 +558,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 /* Related to slidesorter */
 /* Show slidesorter beyond 768px only */
 #presentation-controls-wrapper {
-	top: 41px;
-	left: initial;
-	bottom: 33px;
 	max-width: initial;
-}
-
-#presentation-controls-wrapper.readonly {
-	top: 41px;
-	bottom: 0px;
 }
 
 /* Show sidebar beyond 768px only */
@@ -587,12 +567,15 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	top: 41px;
 }
 
+#document-container.mobile.spreadsheet-doctype.readonly {
+	height: calc(100vh - 100px);
+}
+
 #document-container.sidebar-document {
 	left: 0px !important;
 }
 
 #document-container.readonly {
-	top: 37px; /*set equal to toolbar up's height*/
 	bottom: 0px;
 }
 
@@ -601,7 +584,6 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 }
 
 #document-container.readonly.spreadsheet-document {
-	top: 58px !important;
 	bottom: 39px;
 }
 
@@ -610,15 +592,8 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	bottom: 95px;
 }
 
-#document-container.spreadsheet-document {
-	top: 92px !important;
-	bottom: 72px;
-}
-
 #document-container {
-	top: 37px; /*set equal to toolbar up's height*/
-	right: 0px !important;
-	bottom: 35px;
+	width: 100%;
 }
 
 #closebuttonwrapper {
@@ -627,19 +602,12 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 
 /* Slidesorter in portrait mode */
 #presentation-controls-wrapper.portrait {
-	top: initial;
-	left: initial;
-	bottom: 33px;
-	position: fixed;
+	position: relative;
 	width: 100%;
 	max-width: initial;
-}
-
-#presentation-controls-wrapper.portrait.readonly {
-	top: initial;
-	bottom: 0px;
-	width: 100%;
-	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
 }
 
 #document-container.portrait.readonly.parts-preview-document {
@@ -695,21 +663,14 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 }
 
 #presentation-controls-wrapper.landscape.readonly {
-	top: 41px;
 	bottom: 0px;
 	max-width: 120px;
 }
 
 #document-container.landscape.parts-preview-document {
-	top: 41px;
 	left: 66px !important;
 	bottom: 35px;
-}
-
-#document-container.landscape.readonly.parts-preview-document {
-	top: 41px;
-	bottom: 0px;
-	width: initial;
+	width: calc(100vw - 66px);
 }
 
 #document-container.landscape.parts-preview-document.keyboard {
@@ -739,6 +700,21 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	border-bottom: 10px solid var(--gray-color);
 }
 
+#mobile-wizard.menuwizard {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+#mobile-wizard.shapeswizard {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
 /* Related to mobilewizard.cxx */
 #mobile-wizard-header.landscape {
 	display: none;
@@ -750,9 +726,6 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 /* Related to mobile-wizard based menubar */
 #mobile-wizard.menuwizard.landscape #mobile-wizard-content.landscape {
 	overflow-y: auto !important;
-}
-#mobile-wizard.menuwizard.portrait #mobile-wizard-content.portrait {
-	overflow-y: hidden !important;
 }
 
 /* Disable tooltips when on touch devices */
