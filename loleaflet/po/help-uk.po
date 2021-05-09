@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0200\n"
-"PO-Revision-Date: 2021-02-24 23:12+0000\n"
+"PO-Revision-Date: 2021-05-03 21:03+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/help/uk/>\n"
@@ -11,9 +11,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /uk/libo_online/loleaflet-help-uk.po\n"
 "X-Pootle-Revision: 3023426\n"
 
@@ -92,7 +92,7 @@ msgstr "Форматування тексту"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:158-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:215-18
 msgid "Bold"
-msgstr "Жирний"
+msgstr "Грубий"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:36-49
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-49
@@ -1248,7 +1248,7 @@ msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
 msgstr ""
-"<span class=\"def\">Область документа:</span> ділянка програми, що показує "
+"<span class=\"def\">Ділянка документа:</span> ділянка програми, що показує "
 "вміст документів: електронних таблиць, презентацій або текстових документів."
 
 #: html/loleaflet-help.html%2Bdiv.p.img:320-5
@@ -1343,7 +1343,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.p:333-5
 msgid "Using the browser zoom affects the document and user interface areas."
 msgstr ""
-"Використання масштабування браузера змінює як область документа, так і "
+"Використання масштабування браузера змінює як ділянку документа, так і "
 "інтерфейс користувача."
 
 #: html/loleaflet-help.html%2Bdiv.p:334-5
@@ -2823,7 +2823,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:629-5
 msgid "How can I change the line, area and position of a shape in my slides?"
-msgstr "Як змінити рядок, область і розташування фігури на слайдах?"
+msgstr "Як змінити рядок, ділянку та розташування фігури на слайдах?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:631-11
 msgid "Select the shape in your slide. A set of handles shows."
@@ -2836,7 +2836,7 @@ msgid ""
 "Size</span>). A dialog opens."
 msgstr ""
 "Виберіть <span class=\"ui\">Формат</span> → <span class=\"ui\">Рядок</span> ("
-"або <span class=\"ui\">Область</span>, або <span class=\"ui\">Положення та "
+"або <span class=\"ui\">Ділянка</span>, або <span class=\"ui\">Положення та "
 "розмір</span>). Відкриється діалогове вікно."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:636-11
