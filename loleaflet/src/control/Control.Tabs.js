@@ -22,14 +22,12 @@ L.Control.Tabs = L.Control.extend({
 			$('.spreadsheet-tab').contextMenu(e.perm === 'edit');
 		}, 100);
 
-		if (window.mode.isMobile() == true) {
+		if (window.mode.isMobile()) {
 			if (e.perm === 'edit') {
-				$('.spreadsheet-tabs-container').css('bottom', '33px');
-				$('#spreadsheet-toolbar').css('bottom', '33px');
+				document.getElementById('spreadsheet-toolbar').style.display = 'block';
 			}
 			else {
-				$('.spreadsheet-tabs-container').css('bottom', '0px');
-				$('#spreadsheet-toolbar').css('bottom', '0px');
+				document.getElementById('spreadsheet-toolbar').style.display = 'none';
 			}
 		}
 	},
@@ -40,8 +38,9 @@ L.Control.Tabs = L.Control.extend({
 		this._spreadsheetTabs = {};
 		this._tabForContextMenu = 0;
 		var map = this._map;
-		var docContainer = map.options.documentContainer;
-		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tabs-container', docContainer.parentElement);
+		var tableCell = document.getElementById('tb_spreadsheet-toolbar_right');
+		tableCell.style.verticalAlign = 'middle';
+		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tabs-container', tableCell);
 
 		this._menuItem = {
 			'insertsheetbefore': {name: _('Insert sheet before this'),
