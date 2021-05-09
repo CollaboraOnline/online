@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-16 22:04+0200\n"
-"PO-Revision-Date: 2021-03-17 22:08+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2021-04-23 22:10+0000\n"
+"Last-Translator: Sérgio Morais <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.5.2-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /pt/libo_online/loleaflet-ui-pt.po\n"
 "X-Pootle-Revision: 3938583\n"
 
@@ -112,7 +112,7 @@ msgstr "Tempo de inatividade"
 
 #: admin/admin.strings.js:28
 msgid "Modified"
-msgstr "Modificado"
+msgstr "Alterado"
 
 #: admin/admin.strings.js:29
 msgid "Kill"
@@ -124,7 +124,7 @@ msgstr "Gráficos"
 
 #: admin/admin.strings.js:31
 msgid "Memory Graph"
-msgstr "Gráfico de memoria"
+msgstr "Gráfico de memória"
 
 #: admin/admin.strings.js:32
 msgid "CPU Graph"
@@ -203,7 +203,7 @@ msgstr "Recarregar registos"
 
 #: admin/admin.strings.js:49
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Filtro de canal:"
 
 #: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:373
 #: src/control/Control.StatusBar.js:331
@@ -229,7 +229,7 @@ msgstr "Atualizar níveis de registo"
 
 #: admin/admin.strings.js:55
 msgid "Version Information"
-msgstr ""
+msgstr "Informação da versão"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -241,7 +241,7 @@ msgstr "Enviado"
 
 #: admin/src/AdminSocketBase.js:60
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "O servidor foi desligado; por favor, recarregue a página."
 
 #: admin/src/AdminSocketBase.js:70
 msgid "Connection error"
@@ -481,17 +481,16 @@ msgid "Open menu"
 msgstr "Abrir menu"
 
 #: src/control/Control.JSDialogBuilder.js:2273
-#, fuzzy
 msgid "reply"
-msgstr "Responder"
+msgstr "resposta"
 
 #: src/control/Control.JSDialogBuilder.js:2276
 msgid "replies"
-msgstr "Respostas"
+msgstr "respostas"
 
 #: src/control/Control.JSDialogBuilder.js:2324
 msgid "Insert Comment"
-msgstr "Inserir Comentário"
+msgstr "Inserir comentário"
 
 #: src/control/Control.JSDialogBuilder.js:2708
 msgid "Cell borders"
@@ -518,7 +517,6 @@ msgid "Columns"
 msgstr "Colunas"
 
 #: src/control/Control.JSDialogBuilder.js:2959
-#, fuzzy
 msgid "Insert Table"
 msgstr "Inserir tabela"
 
@@ -696,7 +694,7 @@ msgstr "Sobre"
 #: src/control/Control.Menubar.js:502 src/control/Control.Menubar.js:713
 #: src/map/Map.js:399
 msgid "Last modification"
-msgstr "Última modificação"
+msgstr "Última alteração"
 
 #: src/control/Control.Menubar.js:269 src/control/Control.Menubar.js:397
 msgid "Save Comments"
@@ -890,15 +888,15 @@ msgstr "Número de diapositivos"
 
 #: src/control/Control.StatusBar.js:450
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Selecionar várias células"
 
 #: src/control/Control.StatusBar.js:453
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "Modo de inserção: inativo"
 
 #: src/control/Control.StatusBar.js:466
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Modo de seleção: inativo"
 
 #: src/control/Control.Tabs.js:47
 msgid "Insert sheet before this"
@@ -910,11 +908,11 @@ msgstr "Inserir folha após"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Mover folha para a esquerda"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Mover folha para a direita"
 
 #: src/control/Control.Tabs.js:251
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -941,7 +939,7 @@ msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
 "Conflito desfazer/refazer com vários utilizadores. Por favor use a reparação "
-"de documentos para o resolver."
+"de documentos para o resolver"
 
 #: src/control/Control.TopToolbar.js:122
 #: src/control/Control.NotebookbarWriter.js:751
@@ -967,7 +965,7 @@ msgstr "Inserir formas"
 
 #: src/control/Control.TopToolbar.js:251
 msgid "Insert connectors"
-msgstr ""
+msgstr "Inserir conectores"
 
 #: src/control/Control.TopToolbar.js:499
 msgid "Style"
@@ -1099,7 +1097,7 @@ msgstr "Ver histórico"
 
 #: src/control/Control.NotebookbarWriter.js:755
 msgid "Text Body"
-msgstr ""
+msgstr "Corpo do texto"
 
 #: src/control/Control.NotebookbarWriter.js:758
 msgid "Title"
@@ -1107,11 +1105,11 @@ msgstr "Título"
 
 #: src/control/Control.NotebookbarWriter.js:789
 msgid "Emphasis"
-msgstr ""
+msgstr "Ênfase"
 
 #: src/control/Control.NotebookbarWriter.js:794
 msgid "Strong Emphasis"
-msgstr ""
+msgstr "Ênfase forte"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
@@ -1127,40 +1125,39 @@ msgstr "CSV File (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:596
 msgid "General"
-msgstr ""
+msgstr "Geral"
 
 #: src/control/Control.NotebookbarCalc.js:597
 msgid "Number"
-msgstr ""
+msgstr "Número"
 
 #: src/control/Control.NotebookbarCalc.js:598
 msgid "Percent"
-msgstr ""
+msgstr "Percentagem"
 
 #: src/control/Control.NotebookbarCalc.js:599
-#, fuzzy
 msgid "Currency"
-msgstr "Atual"
+msgstr "Moeda"
 
 #: src/control/Control.NotebookbarCalc.js:600
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: src/control/Control.NotebookbarCalc.js:601
 msgid "Time"
-msgstr ""
+msgstr "Hora"
 
 #: src/control/Control.NotebookbarCalc.js:602
 msgid "Scientific"
-msgstr ""
+msgstr "Científica"
 
 #: src/control/Control.NotebookbarCalc.js:603
 msgid "Fraction"
-msgstr ""
+msgstr "Fração"
 
 #: src/control/Control.NotebookbarCalc.js:604
 msgid "Boolean Value"
-msgstr ""
+msgstr "Valor booleano"
 
 #: src/control/Control.NotebookbarCalc.js:605 src/control/Toolbar.js:756
 msgid "Text"
@@ -1168,27 +1165,27 @@ msgstr "Texto"
 
 #: src/control/Control.NotebookbarCalc.js:723
 msgid "Default"
-msgstr ""
+msgstr "Predefinido"
 
 #: src/control/Control.NotebookbarCalc.js:728
 msgid "Heading 1"
-msgstr ""
+msgstr "Cabeçalho 1"
 
 #: src/control/Control.NotebookbarCalc.js:733
 msgid "Heading 2"
-msgstr ""
+msgstr "Cabeçalho 2"
 
 #: src/control/Control.NotebookbarCalc.js:744
 msgid "Good"
-msgstr ""
+msgstr "Bom"
 
 #: src/control/Control.NotebookbarCalc.js:749
 msgid "Neutral"
-msgstr ""
+msgstr "Neutro"
 
 #: src/control/Control.NotebookbarCalc.js:754
 msgid "Bad"
-msgstr ""
+msgstr "Mau"
 
 #: src/control/Control.NotebookbarCalc.js:823
 msgid "Insert Row Break"
@@ -1236,11 +1233,11 @@ msgstr "Iniciar apresentação"
 
 #: src/control/Control.NotebookbarDraw.js:274
 msgid "Image (.png)"
-msgstr ""
+msgstr "Imagem (.png)"
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
-msgstr ""
+msgstr "Mostrar folhas selecionadas"
 
 #: src/control/Permission.js:48
 msgid "The document could not be locked, and is opened in read-only mode."
@@ -1372,7 +1369,7 @@ msgstr "Assinatura danificada"
 
 #: src/control/Signing.js:627
 msgid "The signature was valid, but the document has been modified"
-msgstr "A assinatura era válida, mas o documento foi modificado."
+msgstr "A assinatura era válida, mas o documento foi alterado"
 
 #: src/control/Signing.js:628
 msgid "Signed but document modified"
@@ -1388,7 +1385,7 @@ msgstr "Assinado mas não validado"
 
 #: src/control/Signing.js:635
 msgid "The signature is OK, but the document is only partially signed"
-msgstr "A assinatura está correta, mas apenas parte do documento está assinado."
+msgstr "A assinatura está correta, mas apenas parte do documento está assinado"
 
 #: src/control/Signing.js:636
 msgid "Signed but not all files are signed"
@@ -1453,7 +1450,7 @@ msgstr "Ocorreu um erro ao estabelecer a ligação a %productName: "
 
 #: src/core/Socket.js:319
 msgid "Server has been restarted. We have to refresh the page now."
-msgstr ""
+msgstr "O servidor foi reiniciado. Temos de atualizar a página agora."
 
 #: src/core/Socket.js:337
 msgid "Served by:"
@@ -1486,6 +1483,7 @@ msgstr "Ocorreu um erro ao estabelecer a ligação ao documento"
 #: src/core/Socket.js:460
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
+"O servidor está desligado, a reiniciar automaticamente. Por favor, aguarde."
 
 #: src/core/Socket.js:488
 msgid ""
@@ -1501,7 +1499,7 @@ msgid ""
 "history"
 msgstr ""
 "A restaurar a revisão anterior. Quaisquer alterações não guardadas estarão "
-"disponíveis no histórico da versão."
+"disponíveis no histórico da versão"
 
 #: src/core/Socket.js:614
 msgid ""
@@ -1579,9 +1577,9 @@ msgid ""
 "concurrently"
 msgstr ""
 "Esta é uma versão não suportada do {productname}. Para evitar dar a "
-"impressão de que é adequada para utilização empresarial, este mensage "
+"impressão de que é adequada para utilização empresarial, esta mensagem "
 "aparece sempre que estiver abertos mais do que {docs} documentos ou mais do "
-"que {connections} ligações em simultâneo."
+"que {connections} ligações em simultâneo"
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1737,7 +1735,7 @@ msgstr "Funções"
 
 #: src/layer/tile/CanvasTileLayer.js:4770
 msgid "No Comments"
-msgstr ""
+msgstr "Sem comentários"
 
 #: src/layer/tile/CanvasTileLayer.js:5016
 msgid "Modify"
@@ -1749,7 +1747,7 @@ msgstr "Remover"
 
 #: src/layer/tile/CanvasTileLayer.js:5034
 msgid "Remove Thread"
-msgstr ""
+msgstr "Remover tópico"
 
 #: src/layer/tile/CanvasTileLayer.js:5040
 msgid "Resolve"
@@ -1757,15 +1755,15 @@ msgstr "Resolver"
 
 #: src/layer/tile/CanvasTileLayer.js:5040
 msgid "Unresolve"
-msgstr ""
+msgstr "Não resolver"
 
 #: src/layer/tile/CanvasTileLayer.js:5046
 msgid "Unresolve Thread"
-msgstr ""
+msgstr "Não resolver tópico"
 
 #: src/layer/tile/CanvasTileLayer.js:5046
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Resolver tópico"
 
 #: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
@@ -1842,7 +1840,7 @@ msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
 msgstr ""
 "O ficheiro do tipo %0 não pode ser enviado para o servidor porque o ficheiro "
-"não tem nome."
+"não tem nome"
 
 #: src/map/handler/Map.FileInserter.js:107
 #, javascript-format
@@ -1850,7 +1848,7 @@ msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
 msgstr ""
 "O ficheiro do tipo %0 não pode ser enviado para o servidor porque o ficheiro "
-"está vazio."
+"está vazio"
 
 #: src/map/handler/Map.FileInserter.js:138
 msgid "Uploading..."
