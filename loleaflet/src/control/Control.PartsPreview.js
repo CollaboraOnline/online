@@ -207,7 +207,11 @@ L.Control.PartsPreview = L.Control.extend({
 				this._setPart(e);
 				this._map.focus();
 				this.partsFocused = true;
-				document.activeElement.blur();
+				if (!window.mode.isDesktop()) {
+					// needed so on-screen keyboard doesn't pop up when switching slides,
+					// but would cause PgUp/Down to not work on desktop in slide sorter
+					document.activeElement.blur();
+				}
 			}
 		}, this);
 
