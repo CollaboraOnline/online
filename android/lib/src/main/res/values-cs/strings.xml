@@ -18,4 +18,5 @@
     <string name="edit_copy">Upravit kopii</string>
     <string name="view_only">Jen prohlížení</string>
     <string name="restarting">Restartování...</string>
+    <string name="cant_open_the_document">Dokument nelze otevřít</string>
 </resources>
