@@ -17,4 +17,5 @@
     <string name="edit_copy">Breyta afriti</string>
     <string name="view_only">Aðeins skoða</string>
     <string name="restarting">Endurræsi...</string>
+    <string name="cant_open_the_document">Gat ekki opnað skjalið</string>
 </resources>
