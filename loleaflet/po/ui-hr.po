@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-16 22:04+0200\n"
-"PO-Revision-Date: 2021-03-26 12:29+0000\n"
+"PO-Revision-Date: 2021-05-03 21:03+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.5.2\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /hr/libo_online/loleaflet-ui-hr.po\n"
 "X-Pootle-Revision: 3937859\n"
 
@@ -229,7 +229,7 @@ msgstr "Aktualiziraj razine dnevnika"
 
 #: admin/admin.strings.js:55
 msgid "Version Information"
-msgstr ""
+msgstr "Podaci verzije"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -1105,11 +1105,11 @@ msgstr "Naslov"
 
 #: src/control/Control.NotebookbarWriter.js:789
 msgid "Emphasis"
-msgstr ""
+msgstr "Isticanje"
 
 #: src/control/Control.NotebookbarWriter.js:794
 msgid "Strong Emphasis"
-msgstr ""
+msgstr "Snažno isticanje"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
@@ -1125,40 +1125,39 @@ msgstr "CSV datoteka (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:596
 msgid "General"
-msgstr ""
+msgstr "Opće"
 
 #: src/control/Control.NotebookbarCalc.js:597
 msgid "Number"
-msgstr ""
+msgstr "Broj"
 
 #: src/control/Control.NotebookbarCalc.js:598
 msgid "Percent"
-msgstr ""
+msgstr "Postotak"
 
 #: src/control/Control.NotebookbarCalc.js:599
-#, fuzzy
 msgid "Currency"
-msgstr "Trenutačno"
+msgstr "Valuta"
 
 #: src/control/Control.NotebookbarCalc.js:600
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: src/control/Control.NotebookbarCalc.js:601
 msgid "Time"
-msgstr ""
+msgstr "Vrijeme"
 
 #: src/control/Control.NotebookbarCalc.js:602
 msgid "Scientific"
-msgstr ""
+msgstr "Znanstveni"
 
 #: src/control/Control.NotebookbarCalc.js:603
 msgid "Fraction"
-msgstr ""
+msgstr "Razlomak"
 
 #: src/control/Control.NotebookbarCalc.js:604
 msgid "Boolean Value"
-msgstr ""
+msgstr "Booleova vrijednost"
 
 #: src/control/Control.NotebookbarCalc.js:605 src/control/Toolbar.js:756
 msgid "Text"
@@ -1166,27 +1165,27 @@ msgstr "Tekst"
 
 #: src/control/Control.NotebookbarCalc.js:723
 msgid "Default"
-msgstr ""
+msgstr "Standarno"
 
 #: src/control/Control.NotebookbarCalc.js:728
 msgid "Heading 1"
-msgstr ""
+msgstr "Naslov 1"
 
 #: src/control/Control.NotebookbarCalc.js:733
 msgid "Heading 2"
-msgstr ""
+msgstr "Naslov 2"
 
 #: src/control/Control.NotebookbarCalc.js:744
 msgid "Good"
-msgstr ""
+msgstr "Dobro"
 
 #: src/control/Control.NotebookbarCalc.js:749
 msgid "Neutral"
-msgstr ""
+msgstr "Neutralno"
 
 #: src/control/Control.NotebookbarCalc.js:754
 msgid "Bad"
-msgstr ""
+msgstr "Loše"
 
 #: src/control/Control.NotebookbarCalc.js:823
 msgid "Insert Row Break"
@@ -1234,7 +1233,7 @@ msgstr "Pokreni prezentaciju"
 
 #: src/control/Control.NotebookbarDraw.js:274
 msgid "Image (.png)"
-msgstr ""
+msgstr "Slika (.png)"
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
@@ -1451,7 +1450,7 @@ msgstr "Ups, postoji problem s povezivanjem na %productName: "
 
 #: src/core/Socket.js:319
 msgid "Server has been restarted. We have to refresh the page now."
-msgstr ""
+msgstr "Poslužitelj je ponovo pokrenut. Moramo aktualizirati stranicu."
 
 #: src/core/Socket.js:337
 msgid "Served by:"
