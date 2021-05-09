@@ -3,6 +3,7 @@ apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ .Values.hpa.name }}
+  namespace: {{ .Values.namespace.collabora }}
   labels:
     app: {{ template "name" . }}
     chart: {{ template "chartname" . }}
@@ -17,16 +18,16 @@ spec:
 {{- end }}
   maxReplicas: {{ .Values.global.app.scaling.max }}
   metrics:
-{{- if gt .Values.global.app.scaling.target.memory 1.0 }}  
+{{- if gt .Values.global.app.scaling.target.memory 1.0 }}
   - type: Resource
     resource:
       name: memory
       targetAverageUtilization: {{ .Values.global.app.scaling.target.memory }}
-{{- end }}  
-{{- if gt .Values.global.app.scaling.target.cpu 1.0 }}      
+{{- end }}
+{{- if gt .Values.global.app.scaling.target.cpu 1.0 }}
   - type: Resource
     resource:
       name: cpu
-      targetAverageUtilization: {{ .Values.global.app.scaling.target.cpu }}      
-{{- end }}        
+      targetAverageUtilization: {{ .Values.global.app.scaling.target.cpu }}
+{{- end }}
 {{- end }}

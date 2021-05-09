@@ -18,10 +18,11 @@ global:
       path: "/lool/getMetrics"
     service:
       name: collabora-online
-      type: NodePort # Use ClusterIP instead of NodePort if you are using standalone cluster structure 
+      type: ClusterIP
       externalPort: 9980
       internalPort: 9980
-  ingress: {}
+  ingress:
+    name: collabora-online
 
 replicaCount: 3 # This is the amount of how many instances of loolwsd will run
 
@@ -57,7 +58,7 @@ deployment:
   maxUnavailable: 0
   maxSurge: 1
 
-environmentVariablesLool: 
+environmentVariablesLool:
   - name: extra_params
     value: --o:ssl.enable=false
   - name: username
@@ -72,6 +73,12 @@ service:
 
 hpa:
   name: collabora-online
+
+hosts:
+  host: loolwsd.public.example.com
+
+namespace:
+  collabora: collabora
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

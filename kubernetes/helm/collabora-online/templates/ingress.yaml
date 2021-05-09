@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.global.ingress.name }}
+  namespace: {{ .Values.namespace.collabora }}
+spec:
+  rules:
+  - host: {{ .Values.hosts.host }}
+  - http:
+      paths:
+      - path: "/"
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Values.global.app.service.name }}
+            port:
+              number: 9980
