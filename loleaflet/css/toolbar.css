@@ -14,10 +14,10 @@
 	right: 0;
 	text-align: center;
 	padding: 0;
-	position: fixed;
 	bottom: 0;
 	z-index: 0;
 	border-top: 1px solid #bbbbbb;
+	display: block;
 }
 #toolbar-down *{
 	font-family: var(--loleaflet-font);
@@ -81,11 +81,9 @@ w2ui-toolbar {
 	margin-top: -5px;
 }
 #spreadsheet-toolbar {
-	left: 0;
+	width: 100%;
 	text-align: center;
-	bottom: 35px;
 	padding: 7px 0px 0px;
-	position: absolute;
 }
 
 #formulabar {
