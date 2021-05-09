@@ -18,4 +18,5 @@
     <string name="edit_copy">編輯副本</string>
     <string name="view_only">僅檢視</string>
     <string name="restarting">正在重新啟動……</string>
+    <string name="cant_open_the_document">無法開啟文件</string>
 </resources>
