@@ -546,7 +546,7 @@ L.Control.UIManager = L.Control.extend({
 					this.map.removeControl(this.map.menubar);
 					this.map.menubar = null;
 				}
-				this.makeSpaceForNotebookbar(this.map._docLayer._docType);
+				this.makeSpaceForNotebookbar();
 			} else if (e.perm === 'readonly') {
 				if (!this.map.menubar) {
 					var menubar = L.control.menubar();
