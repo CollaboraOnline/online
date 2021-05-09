@@ -204,6 +204,7 @@ L.Map = L.Evented.extend({
 			// or not to be in sync with the test in _onJSDialogMsg in TileLayer.js.
 			if (window.mode.isMobile())
 			{
+				document.getElementById('document-container').classList.add('mobile');
 				this._size = new L.Point(0,0);
 				this._onResize();
 			}
