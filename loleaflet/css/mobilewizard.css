@@ -261,7 +261,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 
 #mobile-wizard {
 	width: 100%;
-	position: fixed;
+	position: relative;
 	bottom: 0px;
 	z-index: 1001;
 	background-color: white;
