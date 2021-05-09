@@ -8,41 +8,44 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-16 22:04+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-05-08 22:33+0000\n"
+"Last-Translator: Oymate <dhruboadittya96@gmail.com>\n"
+"Language-Team: Bengali <https://hosted.weblate.org/projects/collabora-online/"
+"ui/bn/>\n"
 "Language: bn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
-msgstr ""
+msgstr "ব্যবস্থাপক কনসোল"
 
 #: admin/admin.strings.js:7
 msgid "Settings"
-msgstr ""
+msgstr "পছন্দসমূহ"
 
 #: admin/admin.strings.js:8
 msgid "Overview"
-msgstr ""
+msgstr "একনজর"
 
 #: admin/admin.strings.js:9
 msgid "(current)"
-msgstr ""
+msgstr "(বর্তমান)"
 
 #: admin/admin.strings.js:10
 msgid "Analytics"
-msgstr ""
+msgstr "পরিসংখ্যান"
 
 #: admin/admin.strings.js:11
 msgid "History"
-msgstr ""
+msgstr "ইতিহাস"
 
 #: admin/admin.strings.js:12
 msgid "Log"
-msgstr ""
+msgstr "সূচী"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
