@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-04-16 22:04+0200\n"
-"PO-Revision-Date: 2021-03-17 14:18+0000\n"
+"PO-Revision-Date: 2021-04-25 18:50+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.5.2-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -230,7 +230,7 @@ msgstr "Günlük Tutma Düzeylerini Güncelle"
 
 #: admin/admin.strings.js:55
 msgid "Version Information"
-msgstr ""
+msgstr "Sürüm Bilgileri"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -1105,11 +1105,11 @@ msgstr "Başlık"
 
 #: src/control/Control.NotebookbarWriter.js:789
 msgid "Emphasis"
-msgstr ""
+msgstr "Vurgu"
 
 #: src/control/Control.NotebookbarWriter.js:794
 msgid "Strong Emphasis"
-msgstr ""
+msgstr "Güçlü Vurgu"
 
 #: src/control/Control.NotebookbarCalc.js:28
 msgid "~Sheet"
@@ -1125,40 +1125,39 @@ msgstr "CSV Dosyası (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:596
 msgid "General"
-msgstr ""
+msgstr "Genel"
 
 #: src/control/Control.NotebookbarCalc.js:597
 msgid "Number"
-msgstr ""
+msgstr "Sayı"
 
 #: src/control/Control.NotebookbarCalc.js:598
 msgid "Percent"
-msgstr ""
+msgstr "Yüzde"
 
 #: src/control/Control.NotebookbarCalc.js:599
-#, fuzzy
 msgid "Currency"
-msgstr "Şimdiki"
+msgstr "Para Birimi"
 
 #: src/control/Control.NotebookbarCalc.js:600
 msgid "Date"
-msgstr ""
+msgstr "Tarih"
 
 #: src/control/Control.NotebookbarCalc.js:601
 msgid "Time"
-msgstr ""
+msgstr "Zaman"
 
 #: src/control/Control.NotebookbarCalc.js:602
 msgid "Scientific"
-msgstr ""
+msgstr "Bilimsel"
 
 #: src/control/Control.NotebookbarCalc.js:603
 msgid "Fraction"
-msgstr ""
+msgstr "Kesir"
 
 #: src/control/Control.NotebookbarCalc.js:604
 msgid "Boolean Value"
-msgstr ""
+msgstr "Boole Değeri"
 
 #: src/control/Control.NotebookbarCalc.js:605 src/control/Toolbar.js:756
 msgid "Text"
@@ -1166,27 +1165,27 @@ msgstr "Metin"
 
 #: src/control/Control.NotebookbarCalc.js:723
 msgid "Default"
-msgstr ""
+msgstr "Öntanımlı"
 
 #: src/control/Control.NotebookbarCalc.js:728
 msgid "Heading 1"
-msgstr ""
+msgstr "Başlık 1"
 
 #: src/control/Control.NotebookbarCalc.js:733
 msgid "Heading 2"
-msgstr ""
+msgstr "Başlık 2"
 
 #: src/control/Control.NotebookbarCalc.js:744
 msgid "Good"
-msgstr ""
+msgstr "İyi"
 
 #: src/control/Control.NotebookbarCalc.js:749
 msgid "Neutral"
-msgstr ""
+msgstr "Nötr"
 
 #: src/control/Control.NotebookbarCalc.js:754
 msgid "Bad"
-msgstr ""
+msgstr "Kötü"
 
 #: src/control/Control.NotebookbarCalc.js:823
 msgid "Insert Row Break"
@@ -1234,7 +1233,7 @@ msgstr "Sunumu Başlat"
 
 #: src/control/Control.NotebookbarDraw.js:274
 msgid "Image (.png)"
-msgstr ""
+msgstr "Resim (.png)"
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
@@ -1452,7 +1451,7 @@ msgstr "%productName'e bağlanırken hata oluştu: "
 
 #: src/core/Socket.js:319
 msgid "Server has been restarted. We have to refresh the page now."
-msgstr ""
+msgstr "Sunucu yeniden başlatıldı. Şimdi sayfayı yenilemeliyiz."
 
 #: src/core/Socket.js:337
 msgid "Served by:"
