@@ -6051,7 +6051,7 @@ w2utils.event = {
             }
             if (!this.box) return;
             // render all buttons
-            var html = '<div class="w2ui-scroll-wrapper" onmousedown="var el=w2ui[\''+ this.name +'\']; if (el) el.resize();" onscroll="var el=w2ui[\'editbar\']; if (el) el.resize();">'+
+            var html = '<div class="w2ui-scroll-wrapper" onmousedown="var el=w2ui[\''+ this.name +'\']; if (el) el.resize();">'+
                        '<table cellspacing="0" cellpadding="0" width="100%"><tbody>'+
                        '<tr>';
             for (var i = 0; i < this.items.length; i++) {
@@ -6069,8 +6069,8 @@ w2utils.event = {
             html += '<td width="100%" id="tb_'+ this.name +'_right" align="right">'+ this.right +'</td>';
             html += '</tr>'+
                     '</tbody></table></div>'+
-                    '<div class="w2ui-scroll-left" onmousedown="event.preventDefault()" onclick="if($(this).closest(\'#toolbar-up\').length>0 || $(\'#toolbar-down\').width() > 768){var el=w2ui[\''+ this.name +'\']; if (el) el.scroll(\'left\');}"></div>'+
-                    '<div class="w2ui-scroll-right" onmousedown="event.preventDefault()" onclick="if($(this).closest(\'#toolbar-up\').length>0 || $(\'#toolbar-down\').width() > 768){var el=w2ui[\''+ this.name +'\']; if (el) el.scroll(\'right\');}"></div>';
+                    '<div class="w2ui-scroll-left" onmousedown="event.preventDefault()" onclick="var el=w2ui[\''+ this.name +'\']; if (el) el.scroll(\'left\');"></div>'+
+                    '<div class="w2ui-scroll-right" onmousedown="event.preventDefault()" onclick="var el=w2ui[\''+ this.name +'\']; if (el) el.scroll(\'right\');"></div>';
             $(this.box)
                 .attr('name', this.name)
                 .addClass('w2ui-reset w2ui-toolbar')
