@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0200\n"
-"PO-Revision-Date: 2021-03-15 15:37+0000\n"
-"Last-Translator: george kitsoukakis <norhorn@gmail.com>\n"
+"PO-Revision-Date: 2021-05-03 21:03+0000\n"
+"Last-Translator: Eugenia Russell <eugenia.russell2019@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
 "help/el/>\n"
 "Language: el\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-help-el.po\n"
 "X-Pootle-Revision: 830229\n"
 
@@ -613,7 +613,7 @@ msgstr "Μετακίνηση της προβολής μια σελίδα προ�
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-70
 msgid "PageUp"
-msgstr "PageUp"
+msgstr "Σελίδα προς τα πάνω"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-18
 msgid "Switch cursor between text and header"
@@ -629,7 +629,7 @@ msgstr "Επέκταση της επιλογής κατά μια σελίδα π
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-77
 msgid "Shift + PageUp"
-msgstr "Shift + PageUp"
+msgstr "Μετατόπιση + ΣελίδαUp"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Move the view down one page"
@@ -637,7 +637,7 @@ msgstr "Μετακίνηση της προβολής κατά μία σελίδ�
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-72
 msgid "PageDown"
-msgstr "PageDown"
+msgstr "ΣελίδαDown"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-18
 msgid "Switch cursor between text and footer"
