@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-16 12:55+0200\n"
-"PO-Revision-Date: 2021-04-09 16:26+0000\n"
+"PO-Revision-Date: 2021-04-26 23:46+0000\n"
 "Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/help/id/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.6-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /id/libo_online/loleaflet-help-id.po\n"
 "X-Pootle-Revision: 3755739\n"
 
@@ -2207,55 +2207,66 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:566-11
 msgid "Set the page margins in the dialog."
-msgstr ""
+msgstr "Atur margin halaman pada dialog."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:569-5
 msgid "How do I change the page orientation to landscape inside my document"
 msgstr ""
+"Bagaimana cara mengubah orientasi halaman menjadi lanskap di dalam dokumen "
+"saya"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:571-11
 msgid ""
 "Place the cursor at the place where the page orientation is to change. Add "
 "an empty paragraph."
 msgstr ""
+"Letakkan kursor di tempat orientasi halaman yang ingin diubah, lalu "
+"tambahkan paragraf kosong."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:572-11
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</span>"
 ", <span class=\"ui\">Text Flow </span> tab"
 msgstr ""
+"Pilih <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraf</span>, "
+"<span class=\"ui\">Alur Teks </span> tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:573-11
 msgid ""
 "In the <span class=\"ui\">Breaks</span> area, mark Insert, Type: Page Break, "
 "Position: Before."
 msgstr ""
+"In the <span class=\"ui\">Breaks</span> area, tandai Sisipkan, Tipe: Batas "
+"Halaman, Posisi: Sebelumnya."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:574-11
 msgid "Select Landscape in “With Page Style”"
-msgstr ""
+msgstr "Pilih Lanskap di \"Dengan Gaya Halaman\""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-11
 msgid "Select if you want to change page numbering."
-msgstr ""
+msgstr "Pilih jika Anda ingin mengubah penomoran halaman."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:577-5
 msgid ""
 "To return to portrait orientation, repeat the procedure, choosing Portrait "
 "in “With page style”."
 msgstr ""
+"Untuk kembali ke orientasi potret, ulangi prosedur, pilih Potret dalam “"
+"Dengan gaya halaman”."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:578-5
 msgid "How can I make the new text look like other existing text?"
 msgstr ""
+"Bagaimana cara membuat teks baru terlihat seperti teks lain yang sudah ada?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:579-5
 msgid "Directly:"
-msgstr ""
+msgstr "Langsung:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:581-11
 msgid "Select the text with the existing format"
-msgstr ""
+msgstr "Pilih teks dengan format yang sudah ada"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:582-11
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:613-11
@@ -2275,7 +2286,7 @@ msgstr "Menerapkan suatu gaya paragraf:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:587-11
 msgid "Place the cursor at the paragraph to be formatted"
-msgstr ""
+msgstr "Letakkan kursor ke paragraf yang akan diformat"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:588-11
 msgid ""
@@ -2335,13 +2346,15 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:606-11
 msgid ""
 "Select the character set, language and separator options for the CSV file."
-msgstr ""
+msgstr "Pilih opsi kumpulan karakter, bahasa, dan pemisah untuk file CSV."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:608-5
 msgid ""
 "The CSV data is loaded into the selected cell where you pasted, according to "
 "these settings."
 msgstr ""
+"Data CSV dimuat ke dalam sel yang dipilih tempat Anda menempelkan, sesuai "
+"dengan pengaturan ini."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:609-5
 msgid "How can I copy the formatting of existing cells to new ones?"
@@ -2396,7 +2409,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:626-11
 msgid ""
 "Open the presentation in <span class=\"productname\">%productName</span>"
-msgstr ""
+msgstr "Buka presentasi di <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:627-11
 msgid ""
