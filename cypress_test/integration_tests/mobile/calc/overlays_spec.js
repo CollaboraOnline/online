@@ -23,13 +23,13 @@ describe('Overlay bounds.', function () {
 		calcHelper.clickOnFirstCell();
 
 		var cellA1Bounds = new helper.Bounds();
-		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor', cellA1Bounds);
+		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellA1Bounds);
 
 		helper.typeIntoInputField('input#addressInput', 'C3');
 
 		var cellC3Bounds = new helper.Bounds();
-		helper.overlayItemHasDifferentBoundsThan('#test-div-overlay-cell-cursor', cellA1Bounds);
-		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor', cellC3Bounds);
+		helper.overlayItemHasDifferentBoundsThan('#test-div-overlay-cell-cursor-border-0', cellA1Bounds);
+		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellC3Bounds);
 
 		helper.typeIntoInputField('input#addressInput', 'B2');
 
@@ -44,7 +44,7 @@ describe('Overlay bounds.', function () {
 			cellB2Bounds.width = cellC3Bounds.left - cellB2Bounds.left;
 			cellB2Bounds.height = cellC3Bounds.top - cellB2Bounds.top;
 
-			helper.overlayItemHasBounds('#test-div-overlay-cell-cursor', cellB2Bounds);
+			helper.overlayItemHasBounds('#test-div-overlay-cell-cursor-border-0', cellB2Bounds);
 		});
 	});
 
@@ -53,13 +53,13 @@ describe('Overlay bounds.', function () {
 		calcHelper.clickOnFirstCell();
 
 		var cellA1Bounds = new helper.Bounds();
-		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor', cellA1Bounds);
+		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellA1Bounds);
 
 		helper.typeIntoInputField('input#addressInput', 'D4');
 
 		var cellD4Bounds = new helper.Bounds();
-		helper.overlayItemHasDifferentBoundsThan('#test-div-overlay-cell-cursor', cellA1Bounds);
-		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor', cellD4Bounds);
+		helper.overlayItemHasDifferentBoundsThan('#test-div-overlay-cell-cursor-border-0', cellA1Bounds);
+		helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', cellD4Bounds);
 
 		helper.typeIntoInputField('input#addressInput', 'A1:D4');
 
@@ -74,7 +74,7 @@ describe('Overlay bounds.', function () {
 			rangeA1D4Bounds.width = cellD4Bounds.left + cellD4Bounds.width - cellA1Bounds.left;
 			rangeA1D4Bounds.height = cellD4Bounds.top + cellD4Bounds.height - cellA1Bounds.top;
 
-			helper.overlayItemHasBounds('#test-div-overlay-selections', rangeA1D4Bounds);
+			helper.overlayItemHasBounds('#test-div-overlay-selections-border-0', rangeA1D4Bounds);
 		});
 	});
 });

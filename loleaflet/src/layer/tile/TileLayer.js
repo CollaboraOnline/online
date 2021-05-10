@@ -6,7 +6,7 @@
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
-/* global vex $ L _ isAnyVexDialogActive CPointSet CRectangle CPolyUtil CPolygon Cursor CBounds */
+/* global vex $ L _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CBounds CCellCursor CCellSelection */
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
 	String.prototype.startsWith = function (str) {
@@ -67,8 +67,8 @@ var CSelections = L.Class.extend({
 		this._name = 'selections' + (isView ? '-viewid-' + viewId : '');
 		this._isView = isView;
 		this._viewId = viewId;
-		this._polygon = undefined;
-		this._updatePolygon();
+		this._cellSelection = undefined;
+		this._updateCellSelection();
 	},
 
 	empty: function () {
@@ -81,22 +81,22 @@ var CSelections = L.Class.extend({
 
 	setPointSet: function(pointSet) {
 		this._pointSet = pointSet;
-		this._updatePolygon();
+		this._updateCellSelection();
 	},
 
 	contains: function(corePxPoint) {
-		if (!this._polygon)
+		if (!this._cellSelection)
 			return false;
 
-		return this._polygon.anyRingBoundContains(corePxPoint);
+		return this._cellSelection.anyRingBoundContains(corePxPoint);
 	},
 
 	getBounds: function() {
-		return this._polygon.getBounds();
+		return this._cellSelection.getBounds();
 	},
 
-	_updatePolygon: function() {
-		if (!this._polygon) {
+	_updateCellSelection: function() {
+		if (!this._cellSelection) {
 			var fillColor = this._isView ?
 				L.LOUtil.rgbToHex(this._map.getViewColor(this._viewId)) :
 				this._styleData.getPropValue('background-color');
@@ -110,17 +110,17 @@ var CSelections = L.Class.extend({
 				opacity: opacity,
 				weight: Math.round(weight * this._dpiScale)
 			};
-			this._polygon = new CPolygon(this._pointSet, attributes);
-			this._overlay.initPath(this._polygon);
+			this._cellSelection = new CCellSelection(this._pointSet, attributes);
+			this._overlay.initPathGroup(this._cellSelection);
 			return;
 		}
 
-		this._polygon.setPointSet(this._pointSet);
+		this._cellSelection.setPointSet(this._pointSet);
 	},
 
 	remove: function() {
-		if (this._polygon)
-			this._overlay.removePath(this._polygon);
+		if (this._cellSelection)
+			this._overlay.removePathGroup(this._cellSelection);
 	}
 });
 
@@ -1623,7 +1623,7 @@ L.TileLayer = L.GridLayer.extend({
 		if (!this._isEmptyRectangle(this._cellViewCursors[viewId].bounds) && this._selectedPart === viewPart && this._map.hasInfoForView(viewId)) {
 			if (!cellViewCursorMarker) {
 				var backgroundColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
-				cellViewCursorMarker = new CRectangle(this._cellViewCursors[viewId].corePixelBounds, {
+				cellViewCursorMarker = new CCellCursor(this._cellViewCursors[viewId].corePixelBounds, {
 					fill: false,
 					color: backgroundColor,
 					weight: 2 * (this._painter ? this._painter._dpiScale : 1),
@@ -1634,14 +1634,14 @@ L.TileLayer = L.GridLayer.extend({
 				});
 				this._cellViewCursors[viewId].marker = cellViewCursorMarker;
 				cellViewCursorMarker.bindPopup(this._map.getViewName(viewId), {autoClose: false, autoPan: false, backgroundColor: backgroundColor, color: 'white', closeButton: false});
-				this._canvasOverlay.initPath(cellViewCursorMarker);
+				this._canvasOverlay.initPathGroup(cellViewCursorMarker);
 			}
 			else {
 				cellViewCursorMarker.setBounds(this._cellViewCursors[viewId].corePixelBounds);
 			}
 		}
 		else if (cellViewCursorMarker) {
-			this._canvasOverlay.removePath(cellViewCursorMarker);
+			this._canvasOverlay.removePathGroup(cellViewCursorMarker);
 			this._cellViewCursors[viewId].marker = undefined;
 		}
 	},
@@ -3371,7 +3371,7 @@ L.TileLayer = L.GridLayer.extend({
 			else {
 				var cursorStyle = new CStyleData(this._cursorDataDiv);
 				var weight = cursorStyle.getFloatPropWithoutUnit('border-top-width');
-				this._cellCursorMarker = new CRectangle(
+				this._cellCursorMarker = new CCellCursor(
 					corePxBounds,
 					{
 						name: 'cell-cursor',
@@ -3385,7 +3385,7 @@ L.TileLayer = L.GridLayer.extend({
 					this._map.fire('error', {msg: 'Cell Cursor marker initialization', cmd: 'cellCursor', kind: 'failed', id: 1});
 					return;
 				}
-				this._canvasOverlay.initPath(this._cellCursorMarker);
+				this._canvasOverlay.initPathGroup(this._cellCursorMarker);
 			}
 
 			this._addDropDownMarker();
@@ -3404,7 +3404,7 @@ L.TileLayer = L.GridLayer.extend({
 				this._map.fire('editorgotfocus');
 		}
 		else if (this._cellCursorMarker) {
-			this._canvasOverlay.removePath(this._cellCursorMarker);
+			this._canvasOverlay.removePathGroup(this._cellCursorMarker);
 			this._cellCursorMarker = undefined;
 		}
 		this._removeDropDownMarker();
