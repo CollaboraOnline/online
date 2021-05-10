@@ -105,10 +105,10 @@ abstract class CPath extends CEventsHandler {
 		var topLeft = bounds.getTopLeft();
 		var size = bounds.getSize();
 		this.testDiv.innerText = JSON.stringify({
-			top: topLeft.y,
-			left: topLeft.x,
-			width: size.x,
-			height: size.y
+			top: Math.round(topLeft.y),
+			left: Math.round(topLeft.x),
+			width: Math.round(size.x),
+			height: Math.round(size.y)
 		});
 	}
 
@@ -314,3 +314,19 @@ abstract class CPath extends CEventsHandler {
 	}
 
 };
+
+class CPathGroup {
+	private paths: CPath[];
+
+	constructor(paths: CPath[]) {
+		this.paths = paths;
+	}
+
+	forEach(callback: (path: CPath, index: number, pathArray: CPath[]) => void) {
+		this.paths.forEach(callback);
+	}
+
+	push(path: CPath) {
+		this.paths.push(path);
+	}
+}

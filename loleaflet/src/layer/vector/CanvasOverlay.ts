@@ -131,11 +131,23 @@ class CanvasOverlay {
 		path.updatePathAllPanes();
 	}
 
+	initPathGroup(pathGroup: CPathGroup) {
+		pathGroup.forEach(function (path: CPath) {
+			this.initPath(path);
+		}.bind(this));
+	}
+
 	removePath(path: CPath) {
 		// This does not get called via onDraw, so ask section container to redraw everything.
 		path.setDeleted();
 		this.paths.delete(path.getId());
 		this.overlaySection.containerObject.requestReDraw();
+	}
+
+	removePathGroup(pathGroup: CPathGroup) {
+		pathGroup.forEach(function (path: CPath) {
+			this.removePath(path);
+		}.bind(this));
 	}
 
 	updatePath(path: CPath, oldBounds: CBounds) {
