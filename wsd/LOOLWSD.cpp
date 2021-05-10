@@ -1088,7 +1088,7 @@ void LOOLWSD::innerInitialize(Application& self)
                 << LogLevel << "] until after WSD initialization.");
     }
 
-    if (LogLevel == "trace")
+    if (EnableTraceEventLogging)
     {
         LOG_INF("Trace Event file is " << traceEventFile << ".");
         TraceEventFile = fopen(traceEventFile.c_str(), "w");
@@ -4165,9 +4165,10 @@ int LOOLWSD::innerMain()
 
     if (TraceEventFile != NULL)
     {
-        // Back over the last comma and newline.
-        fseek(TraceEventFile, -2, SEEK_CUR);
-        // And close the JSON array.
+        // If we have written any objects to it, it ends with a comma and newline. Back over those.
+        if (ftell(TraceEventFile) > 2)
+            fseek(TraceEventFile, -2, SEEK_CUR);
+        // Close the JSON array.
         fprintf(TraceEventFile, "\n]\n");
         fclose(TraceEventFile);
         TraceEventFile = NULL;
