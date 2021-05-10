@@ -56,7 +56,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 		});
 
 	if (firstClick && !dblClick) {
-		cy.get('#test-div-overlay-cell-cursor')
+		cy.get('#test-div-overlay-cell-cursor-border-0')
 			.should(function (elem) {
 				expect(helper.Bounds.parseBoundsJson(elem.text()).left).to.be.equal(0);
 				expect(helper.Bounds.parseBoundsJson(elem.text()).top).to.be.equal(0);
