@@ -1161,7 +1161,8 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._handleDragged = true;
 
 		var isCornerMarker = (this._activeMarker.options.index % 2) == 0;
-		var scaleUniform = this.options.isRotated || (window.ThisIsAMobileApp && isCornerMarker);
+		var mobileScaling = window.ThisIsAMobileApp && !this._polyEdges.length;
+		var scaleUniform = this.options.isRotated || (mobileScaling && isCornerMarker);
 		// toggle with shift key when it does not matter whether it is scaled or not
 		if (!scaleUniform && isCornerMarker)
 			scaleUniform = this.options.uniformScaling ^ this._map._docLayer.shiftKeyPressed;
