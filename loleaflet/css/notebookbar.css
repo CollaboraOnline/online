@@ -18,6 +18,7 @@
 	font-family: var(--loleaflet-font);
 	line-height: normal;
 	color: dimgray;
+	color: var(--gray-light-txt--color);
 	height: 32px;
 	display: flex;
 	align-items: center;
