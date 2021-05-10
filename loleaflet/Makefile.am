@@ -218,6 +218,7 @@ LOLEAFLET_JS =\
 	src/layer/Layer.js \
 	src/layer/tile/CanvasSectionProps.js \
 	src/layer/tile/CanvasSectionContainer.js \
+	src/layer/tile/CommentSection.ts \
 	src/layer/tile/TilesSection.js \
 	src/layer/tile/AutoFillMarkerSection.js \
 	src/layer/tile/ScrollSection.js \
