@@ -185,8 +185,17 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	hideAnnotations: function (part) {
+		if (part === undefined) { // remove all the comments from all tabs
+			for (var tab in this._annotations) {
+				for (var key in this._annotations[tab]) {
+					this.hideAnnotation(this._annotations[tab][key]);
+				}
+			}
+			return;
+		}
+
 		var annotations = this._annotations[part];
-		for (var key in annotations) {
+		for (key in annotations) {
 			this.hideAnnotation(annotations[key]);
 		}
 	},
