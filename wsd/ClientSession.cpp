@@ -373,17 +373,17 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     uint64_t dur;
                     if (ph == "i")
                     {
-                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"i\",\"ts\":%lu,\"pid\":%d,\"tid\":1,}\n", name.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid());
+                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"i\",\"ts\":%lu,\"pid\":%d,\"tid\":1}m\n", name.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid());
                     }
                     else if ((ph == "b" || ph == "e") &&
                         getTokenUInt64(tokens[4], "id", id))
                     {
-                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"%s\",\"ts\":%lu,\"pid\":%d,\"tid\":1,\"id\"=%lu}\n", name.c_str(), ph.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid(), id);
+                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"%s\",\"ts\":%lu,\"pid\":%d,\"tid\":1,\"id\":%lu},\n", name.c_str(), ph.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid(), id);
                     }
                     else if (ph == "X" &&
                              getTokenUInt64(tokens[4], "dur", dur))
                     {
-                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"X\",\"ts\":%lu,\"pid\":%d,\"tid\":1,\"dur\"=%lu}\n", name.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid(), dur);
+                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"X\",\"ts\":%lu,\"pid\":%d,\"tid\":1,\"dur\":%lu},\n", name.c_str(), (ts + _performanceCounterEpoch), docBroker->getPid(), dur);
                     }
                     else
                     {
