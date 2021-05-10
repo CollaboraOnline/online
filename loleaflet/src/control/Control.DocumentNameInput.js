@@ -75,14 +75,12 @@ L.Control.DocumentNameInput = L.Control.extend({
 			$('#document-name-input').hide();
 		} else {
 			$('#document-name-input').show();
-			$('#document-title-pencil').show();
 		}
 
 		if (window.ThisIsAMobileApp) {
 			// We can now set the document name in the menu bar
 			$('#document-name-input').prop('disabled', false);
 			$('#document-name-input').removeClass('editable');
-			$('#document-title-pencil').removeClass('editable');
 			$('#document-name-input').focus(function() { $(this).blur(); });
 			// Call decodecodeURIComponent twice: Reverse both our encoding and the encoding of
 			// the name in the file system.
@@ -101,7 +99,6 @@ L.Control.DocumentNameInput = L.Control.extend({
 		if (e.UserCanNotWriteRelative === false) {
 			// Save As allowed
 			$('#document-name-input').prop('disabled', false);
-			$('#document-title-pencil').addClass('editable');
 			$('#document-name-input').addClass('editable');
 			$('#document-name-input').off('keypress', this.onDocumentNameKeyPress).on('keypress', this.onDocumentNameKeyPress.bind(this));
 			$('#document-name-input').off('focus', this.onDocumentNameFocus).on('focus', this.onDocumentNameFocus.bind(this));
@@ -109,7 +106,6 @@ L.Control.DocumentNameInput = L.Control.extend({
 		} else {
 			$('#document-name-input').prop('disabled', true);
 			$('#document-name-input').removeClass('editable');
-			$('#document-title-pencil').removeClass('editable');
 			$('#document-name-input').off('keypress', this.onDocumentNameKeyPress);
 		}
 	},

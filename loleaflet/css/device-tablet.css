@@ -47,7 +47,6 @@
 	align-items: center;
 }
 .hasnotebookbar{
-	min-width: 808px; /*set a minimum so the logo fits*/
 	overflow: auto hidden;
 	scrollbar-width: none;
 	-ms-overflow-style: none;
@@ -145,7 +144,8 @@
 .hasnotebookbar #document-titlebar {
 	position: static;
 	display: inline-flex;
-	margin-left: 4px;
+	margin: 0 32px 0 4px;
+	width: auto;
 }
 
 .main-nav.readonly.hasnotebookbar #document-titlebar {
