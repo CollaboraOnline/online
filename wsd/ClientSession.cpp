@@ -449,6 +449,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // Send LOKit version information
         sendTextFrame("lokitversion " + LOOLWSD::LOKitVersion);
 
+        // If Trace Event generation and logging is enabled (whether it can be turned on), tell it
+        // to loleaflet
+        if (LOOLWSD::EnableTraceEventLogging)
+            sendTextFrame("enabletraceeventlogging yes");
+
         #if !MOBILEAPP
             // If it is not mobile, it must be Linux (for now).
             sendTextFrame(std::string("osinfo ") + Util::getLinuxVersion());

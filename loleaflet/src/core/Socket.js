@@ -11,6 +11,10 @@ L.Socket = L.Class.extend({
 	WasShownLimitDialog: false,
 	WSDServer: {},
 
+	/// Whether Trace Event recording is enabled or not. ("Enabled" here means whether it can be
+	/// turned on (and off again), not whether it is on.)
+	enableTraceEventLogging: false,
+
 	// Will be set from lokitversion message
 	TunnelledDialogImageCacheSize: 0,
 
@@ -465,6 +469,9 @@ L.Socket = L.Class.extend({
 			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension.replace('.10.','-') +
 			                         ' (git hash: ' + h + ')');
 			this.TunnelledDialogImageCacheSize = lokitVersionObj.tunnelled_dialog_image_cache_size;
+		}
+		else if (textMsg.startsWith('enabletraceeventlogging ')) {
+			this.enableTraceEventLogging = true;
 		}
 		else if (textMsg.startsWith('osinfo ')) {
 			var osInfo = textMsg.replace('osinfo ', '');

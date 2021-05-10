@@ -718,7 +718,7 @@ L.Map.include({
 					// started with the --enable-trace-event-logging option.
 					// Triple-clicking again turns it off.
 
-					if (L.Params.enableTraceEventLogging) {
+					if (map._socket.enableTraceEventLogging) {
 						map._socket.sendMessage('traceeventrecording ' + (map._socket.traceEventRecordingToggle ? 'stop' : 'start'));
 
 						// Just as a test, uncomment this to toggle SAL_WARN and SAL_INFO
