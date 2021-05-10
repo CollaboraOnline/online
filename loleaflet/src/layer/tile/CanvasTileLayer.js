@@ -3091,6 +3091,13 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	_refreshRowColumnHeaders: function () {
+		if (app.sectionContainer.doesSectionExist(L.CSections.RowHeader.name))
+			app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
+		if (app.sectionContainer.doesSectionExist(L.CSections.ColumnHeader.name))
+			app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
+	},
+
 	_onCellSelectionAreaMsg: function (textMsg) {
 		var autofillMarkerSection = app.sectionContainer.getSectionWithName(L.CSections.AutoFillMarker.name);
 		var strTwips = textMsg.match(/\d+/g);
