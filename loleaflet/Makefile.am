@@ -209,6 +209,7 @@ LOLEAFLET_JS_WEBORDER =\
 	src/layer/Layer.js \
 	src/layer/tile/CanvasSectionProps.js \
 	src/layer/tile/CanvasSectionContainer.ts \
+	src/layer/tile/CommentSection.ts \
 	src/layer/tile/TilesSection.ts \
 	src/layer/tile/AutoFillMarkerSection.ts \
 	src/layer/vector/CPoint.ts \

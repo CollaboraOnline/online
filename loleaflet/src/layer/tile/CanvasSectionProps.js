@@ -16,6 +16,7 @@ L.CSections.Overlays =				{ name: 'overlay'			, zIndex: 5 };
 L.CSections.CalcGrid = 				{ name: 'calc grid'			, zIndex: 5 };
 L.CSections.Debug.Splits = 			{ name: 'splits'			, zIndex: 5 };
 L.CSections.Debug.TilePixelGrid = 	{ name: 'tile pixel grid'	, zIndex: 5 };
+L.CSections.CommentList =			{ name: 'comment list'		, zIndex: 5	};
 
 L.CSections.ColumnHeader = 			{ name: 'column header'		, zIndex: 5 };
 L.CSections.RowHeader = 			{ name: 'row header'		, zIndex: 5 };
@@ -41,6 +42,7 @@ L.CSections.ColumnGroup.processingOrder =			29; // Calc.
 L.CSections.CornerHeader.processingOrder =			30; // Calc.
 L.CSections.RowHeader.processingOrder =				40; // Calc.
 L.CSections.ColumnHeader.processingOrder =			50; // Calc.
+L.CSections.CommentList.processingOrder = 			51; // Writer & Impress. Before tiles section, because tiles section will be expanded into the empty area.
 L.CSections.Tiles.processingOrder = 				60; // Writer & Impress & Calc.
 L.CSections.Overlays.processingOrder =				61; // Writer & Impress & Calc. This is bound to tiles.
 L.CSections.Debug.TilePixelGrid.processingOrder = 	62; // Writer & Impress & Calc. This is bound to tiles.
@@ -48,18 +50,19 @@ L.CSections.CalcGrid.processingOrder = 				63; // Calc. This is bound to tiles.
 L.CSections.Debug.Splits.processingOrder = 			64; // Calc. This is bound to tiles.
 
 
-L.CSections.CalcGrid.drawingOrder = 				4; // Calc.
-L.CSections.Tiles.drawingOrder = 					5; // Writer & Impress & Calc.
-L.CSections.Debug.TilePixelGrid.drawingOrder = 		6; // Writer & Impress & Calc.
-L.CSections.Overlays.drawingOrder =					7; // Writer & Impress & Calc.
-L.CSections.CalcGrid.drawingOrderDebug =            8; // Calc debug mode.
-L.CSections.Debug.Splits.drawingOrder = 			9; // Calc.
-L.CSections.RowGroup.drawingOrder =					10; // Calc.
-L.CSections.ColumnGroup.drawingOrder =				11; // Calc.
-L.CSections.CornerGroup.drawingOrder =				12; // Calc.
-L.CSections.CornerHeader.drawingOrder =				13; // Calc.
-L.CSections.RowHeader.drawingOrder = 				14; // Calc.
-L.CSections.ColumnHeader.drawingOrder = 			15; // Calc.
+L.CSections.CalcGrid.drawingOrder = 				40; // Calc.
+L.CSections.Tiles.drawingOrder = 					50; // Writer & Impress & Calc.
+L.CSections.Debug.TilePixelGrid.drawingOrder = 		60; // Writer & Impress & Calc.
+L.CSections.CommentList.drawingOrder =				70; // Writer & Impress.
+L.CSections.Overlays.drawingOrder =					71; // Writer & Impress & Calc.
+L.CSections.CalcGrid.drawingOrderDebug =            80; // Calc debug mode.
+L.CSections.Debug.Splits.drawingOrder = 			90; // Calc.
+L.CSections.RowGroup.drawingOrder =					100; // Calc.
+L.CSections.ColumnGroup.drawingOrder =				110; // Calc.
+L.CSections.CornerGroup.drawingOrder =				120; // Calc.
+L.CSections.CornerHeader.drawingOrder =				130; // Calc.
+L.CSections.RowHeader.drawingOrder = 				140; // Calc.
+L.CSections.ColumnHeader.drawingOrder = 			150; // Calc.
 
 
 /* zIndex = 6 and goes on. */
