@@ -970,13 +970,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
-	_refreshRowColumnHeaders: function () {
-		if (app.sectionContainer.doesSectionExist(L.CSections.RowHeader.name))
-			app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name)._updateCanvas();
-		if (app.sectionContainer.doesSectionExist(L.CSections.ColumnHeader.name))
-			app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name)._updateCanvas();
-	},
-
 	_onTextSelectionMsg: function (textMsg) {
 		L.CanvasTileLayer.prototype._onTextSelectionMsg.call(this, textMsg);
 		// If this is a cellSelection message, user shouldn't be editing a cell. Below check is for ensuring that.
