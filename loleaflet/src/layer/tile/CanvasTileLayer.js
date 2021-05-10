@@ -682,6 +682,11 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		if (this._docType === 'spreadsheet') {
 			this._painter._addGridSection();
 		}
+
+		if (this._docType === 'text' || this._docType === 'presentation' || this._docType === 'drawing') {
+			app.sectionContainer.addSection(new app.definitions.CommentSection());
+		}
+
 		this._syncTileContainerSize();
 	},
 
