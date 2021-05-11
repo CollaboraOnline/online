@@ -782,16 +782,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		subdomains: 'abc',
 		errorTileUrl: '',
-		zoomOffset: 0,
 
-		maxNativeZoom: null, // Number
-		tms: false,
-		zoomReverse: false,
 		detectRetina: true,
 		crossOrigin: false,
 		previewInvalidationTimeout: 1000,
-		marginX: 10,
-		marginY: 10
 	},
 
 	_pngCache: [],
@@ -803,18 +797,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._tileWidthPx = options.tileSize;
 		this._tileHeightPx = options.tileSize;
 
-		// Conversion factor between the pixel view of tiled rendering
-		// and CSS pixels. NB. similar but not the same as
-		// L.Util.dpiScaleFactor()
-		this._tilePixelScale = 1;
-
 		// detecting retina displays, adjusting tileWidthPx, tileHeightPx and zoom levels
 		if (options.detectRetina && L.Browser.retina && options.maxZoom > 0) {
-			this._tilePixelScale = 2;
-			this._tileWidthPx *= this._tilePixelScale;
-			this._tileHeightPx *= this._tilePixelScale;
-			options.zoomOffset++;
-
 			options.minZoom = Math.max(0, options.minZoom);
 			options.maxZoom--;
 		}
@@ -5038,10 +5022,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	onAdd: function (map) {
-		// Override L.TileLayer._tilePixelScale to 1 (independent of the device).
 		this._tileWidthPx = this.options.tileSize;
 		this._tileHeightPx = this.options.tileSize;
-		this._tilePixelScale = 1;
 
 		this._initContainer();
 		this._getToolbarCommandsValues();
