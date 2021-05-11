@@ -1,8 +1,25 @@
 /* -*- js-indent-level: 8 -*- */
 /* global Uint8Array */
 
-window.app = {};
-window.app.definitions = {};
+window.app = { // Shouldn't have any functions defined.
+	definitions: {},
+	file: {
+		editComment: false,
+		readOnly: true,
+		size: {
+			pixels: [0, 0], // This can change according to the zoom level and document's size.
+			twips: [0, 0] // This doesn't change unless the document size is changed.
+		},
+		fileBasedView: false, // (draw-impress only) Default is false. For read-only documents, user can view all parts at once. In that case, this variable is set to "true".
+		partList: [], // Elements will have these properties: {hash, number, size {pixels, twips}}
+	},
+	view: {
+		size: {
+			pixels: [0, 0] // This can be larger than the document's size.
+		}
+	},
+	socket: null,
+};
 
 (function (global) {
 

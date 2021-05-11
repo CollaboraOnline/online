@@ -175,7 +175,7 @@ class TilesSection {
 			this.context.fillRect(offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
 		}
 
-		if (app.file && app.file.fileBasedView) {
+		if (app.file.fileBasedView) {
             var tileSize = this.sectionProperties.docLayer._tileSize;
 			var ratio = tileSize / this.sectionProperties.docLayer._tileHeightTwips;
 			var partHeightPixels = Math.round((this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts) * ratio);
@@ -226,11 +226,10 @@ class TilesSection {
 
 	private forEachTileInView(zoom: number, part: number, ctx: any,
 		callback: (tile: any, coords: any) => boolean) {
-		var fileBasedView = app.file && app.file.fileBasedView;
 		var docLayer = this.sectionProperties.docLayer;
 		var tileRanges = ctx.paneBoundsList.map(docLayer._pxBoundsToTileRange, docLayer);
 
-		if (fileBasedView) {
+		if (app.file.fileBasedView) {
 			var coordList: Array<any> = this.sectionProperties.docLayer._updateFileBasedView(true);
 
 			for (var k: number = 0; k < coordList.length; k++) {
