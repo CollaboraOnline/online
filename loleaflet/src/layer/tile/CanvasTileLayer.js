@@ -1197,7 +1197,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			return;
 		}
 
-		if (app.file && app.file.fileBasedView) {
+		if (app.file.fileBasedView) {
 			this._updateFileBasedView();
 			return;
 		}
