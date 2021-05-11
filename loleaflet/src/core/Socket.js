@@ -1369,25 +1369,34 @@ app.definitions.Socket = L.Class.extend({
 
 	traceEventRecordingToggle: false,
 
-	emitInstantTraceEvent: function (name) {
+	_stringifyArgs: function (args) {
+		return (args == null ? '' : (' args=' + JSON.stringify(args)));
+	},
+
+	// The args parameter, if present, should be an object where both keys and values are strings that don't contain any spaces.
+	emitInstantTraceEvent: function (name, args) {
 		if (this.traceEventRecordingToggle)
-			this.sendMessage('TRACEEVENT name=' + name + ' ph=i ts=' + performance.now());
+			this.sendMessage('TRACEEVENT name=' + name + ' ph=i ts=' + performance.now()
+					 + this._stringifyArgs(args));
 	},
 
 	asyncTraceEventCounter: 0,
 
-	createAsyncTraceEvent: function (name) {
+	createAsyncTraceEvent: function (name, args) {
 		var result = {};
 		result.id = this.asyncTraceEventCounter++;
 		result.active = this.traceEventRecordingToggle;
+		result.args = args;
 
 		if (this.traceEventRecordingToggle)
-			this.sendMessage('TRACEEVENT name=' + name + ' ph=b ts=' + Math.round(performance.now() * 1000) + ' id=' + result.id);
+			this.sendMessage('TRACEEVENT name=' + name + ' ph=b ts=' + Math.round(performance.now() * 1000) + ' id=' + result.id
+					 + this._stringifyArgs(args));
 
 		var that = this;
 		result.finish = function () {
 			if (this.active) {
-				that.sendMessage('TRACEEVENT name=' + name + ' ph=e ts=' + Math.round(performance.now() * 1000) + ' id=' + this.id);
+				that.sendMessage('TRACEEVENT name=' + name + ' ph=e ts=' + Math.round(performance.now() * 1000) + ' id=' + this.id
+						 + that._stringifyArgs(this.args));
 				this.active = false;
 			}
 		};
@@ -1397,15 +1406,17 @@ app.definitions.Socket = L.Class.extend({
 		return result;
 	},
 
-	createCompleteTraceEvent: function (name) {
+	createCompleteTraceEvent: function (name, args) {
 		var result = {};
 		result.active = this.traceEventRecordingToggle;
 		result.begin = performance.now();
+		result.args = args;
 		var that = this;
 		result.finish = function () {
 			if (this.active) {
 				var now = performance.now();
-				that.sendMessage('TRACEEVENT name=' + name + ' ph=X ts=' + Math.round(now * 1000) + ' dur=' + Math.round((now - this.begin) * 1000));
+				that.sendMessage('TRACEEVENT name=' + name + ' ph=X ts=' + Math.round(now * 1000) + ' dur=' + Math.round((now - this.begin) * 1000)
+						 + that._stringifyArgs(args));
 				this.active = false;
 			}
 		};
