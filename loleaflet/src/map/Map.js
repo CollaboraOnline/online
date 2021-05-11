@@ -277,6 +277,9 @@ L.Map = L.Evented.extend({
 					this.focus();
 				}
 				this._activate();
+				if (window.ThisIsTheAndroidApp) {
+					window.postMobileMessage('hideProgressbar');
+				}
 			} else if (this._docLayer) {
 				// remove the comments and changes
 				this._docLayer.clearAnnotations();
