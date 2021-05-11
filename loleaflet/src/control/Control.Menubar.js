@@ -932,6 +932,7 @@ L.Control.Menubar = L.Control.extend({
 				name: _UNO('.uno:InsertMenu', 'text'), id: 'insert', type: 'menu', menu: [
 					{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 					{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
+					{uno: '.uno:InsertObjectChart'},
 					{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
 					{name: _UNO('.uno:TableMenu'), id: 'inserttable', type: 'action'},
 					{type: 'separator'},
@@ -987,6 +988,7 @@ L.Control.Menubar = L.Control.extend({
 				name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 					{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 					{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
+					{uno: '.uno:InsertObjectChart'},
 					{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
 					{name: _UNO('.uno:TableMenu'), id: 'inserttable', type: 'action'},
 					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
