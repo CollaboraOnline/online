@@ -749,7 +749,8 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
                 "image/x-emf",
                 "image/x-svm",
                 "image/x-wmf",
-                "image/svg+xml"
+                "image/svg+xml",
+                "application/pdf"
             };
             i.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
         }
