@@ -29,6 +29,7 @@ public class FileUtilities {
     static final int CALC = 1;
     static final int IMPRESS = 2;
     static final int DRAWING = 3;
+    static final int PDF = 4;
 
     static final int UNKNOWN = 10;
 
@@ -62,6 +63,7 @@ public class FileUtilities {
         mExtnMap.put(".fodg", DRAWING);
         mExtnMap.put(".fodp",  IMPRESS);
         mExtnMap.put(".fods",  CALC);
+        mExtnMap.put(".pdf",  PDF);
 
         // ODF templates
         mExtnMap.put(".ott", DOC);
