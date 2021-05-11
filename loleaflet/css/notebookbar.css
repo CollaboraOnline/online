@@ -250,6 +250,7 @@
 	background-color: var(--gray-light-bg-color);
 	outline: 2px solid var(--gray-light-bg-color);
 	color: var(--gray-light-txt--color);
+	box-shadow: 0 0 2px var(--gray-light-txt--color);
 }
 
 /* avoid bug with arrow in new line when window is small */
@@ -425,14 +426,6 @@
 	width: 170px !important;
 }
 
-.notebookbar.ui-combobox > .select2 * {
-	line-height: 22px;
-}
-
-.notebookbar.ui-combobox > .select2 .select2-selection__arrow {
-	height: 22px;
-}
-
 #Copy.notebookbar,
 #clearFormatting.notebookbar {
 	margin-top: 6px;
@@ -547,10 +540,6 @@
 /* Home Tab */
 
 /* Insert Tab */
-
-#table-Insert #HeaderAndFooter.notebookbar {
-	min-width: 160px;
-}
 
 /* Review Tab */
 
