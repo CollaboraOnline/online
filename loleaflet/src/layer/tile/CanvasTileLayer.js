@@ -797,7 +797,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._tileWidthPx = options.tileSize;
 		this._tileHeightPx = options.tileSize;
 
-		// detecting retina displays, adjusting tileWidthPx, tileHeightPx and zoom levels
+		// Detecting retina displays, adjusting zoom levels
 		if (options.detectRetina && L.Browser.retina && options.maxZoom > 0) {
 			options.minZoom = Math.max(0, options.minZoom);
 			options.maxZoom--;
@@ -5582,7 +5582,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			return;
 		}
 
-		if (app.file && app.file.fileBasedView) {
+		if (app.file.fileBasedView) {
 			this._updateFileBasedView();
 			return;
 		}
