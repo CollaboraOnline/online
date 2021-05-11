@@ -1045,7 +1045,12 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		var docPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips, this._docHeightTwips / this._tileHeightTwips);
 		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize / this._painter._dpiScale); // docPixelLimits should be in csspx.
 
+		//console.log('pixels 1: ' + Math.round(docPixelLimits.x) + ' ' + Math.round(docPixelLimits.y));
+		//console.log('pixels 2: ' + app.file.size.pixels[0] + ' ' + app.file.size.pixels[1]);
+
 		var scrollPixelLimits = docPixelLimits.add(extraSize);
+		app.view.size.pixels[0] = app.file.size.pixels[0] + extraSize.x;
+		app.view.size.pixels[1] = app.file.size.pixels[1] + extraSize.y;
 
 		var topLeft = this._map.unproject(new L.Point(0, 0));
 
