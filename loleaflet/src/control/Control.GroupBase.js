@@ -49,8 +49,8 @@ L.Control.GroupBase = L.Class.extend({
 			if (!this._groups[level]) {
 				this._groups[level] = {};
 			}
-			var startPos = parseInt(groupData.startPos) / this._map._docLayer._tilePixelScale;
-			var endPos = parseInt(groupData.endPos) / this._map._docLayer._tilePixelScale;
+			var startPos = parseInt(groupData.startPos);
+			var endPos = parseInt(groupData.endPos);
 			var isHidden = !!parseInt(groupData.hidden);
 			if (isHidden || startPos === endPos) {
 				startPos -= this._groupHeadSize / 2;

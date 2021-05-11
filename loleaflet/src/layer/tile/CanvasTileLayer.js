@@ -826,10 +826,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	onAdd: function (map) {
-		// Override L.TileLayer._tilePixelScale to 1 (independent of the device).
 		this._tileWidthPx = this.options.tileSize;
 		this._tileHeightPx = this.options.tileSize;
-		this._tilePixelScale = 1;
 
 		L.TileLayer.prototype.onAdd.call(this, map);
 		map.setZoom();
