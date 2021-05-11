@@ -295,6 +295,9 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 				this._docHeightTwips = totalHeight;
 			}
 
+			app.file.size.twips = [this._docWidthTwips, this._docHeightTwips];
+			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
+
 			this._updateMaxBounds(true);
 			this._documentInfo = textMsg;
 			this._viewId = parseInt(command.viewid);

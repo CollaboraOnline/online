@@ -478,6 +478,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._docPixelSize = newSizePx.clone();
 		this._docWidthTwips = newDocWidth;
 		this._docHeightTwips = newDocHeight;
+		app.file.size.twips = [newDocWidth, newDocHeight];
+		app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
 		this._map.fire('scrolllimits', newSizePx.clone());
 	},
 
@@ -514,6 +516,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			var firstSelectedPart = (typeof this._selectedPart !== 'number');
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
+			app.file.size.twips = [this._docWidthTwips, this._docHeightTwips];
+			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
 			this._docType = command.type;
 			this._parts = command.parts;
 			this._selectedPart = command.selectedPart;

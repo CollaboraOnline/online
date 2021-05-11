@@ -995,7 +995,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		if (this._docType === 'text' || this._docType === 'presentation' || this._docType === 'drawing') {
-			app.sectionContainer.addSection(new app.definitions.CommentSection());
+			if (window.mode.isMobile())
+				app.sectionContainer.addSection(new app.definitions.CommentSection());
 		}
 
 		this._syncTileContainerSize();
@@ -1189,6 +1190,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		var factor = Math.pow(1.2, (this._map.options.zoom - this._tileZoom));
 		this._tileWidthTwips = Math.round(this.options.tileWidthTwips * factor);
 		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * factor);
+		app.tile.size.twips = [this._tileWidthTwips, this._tileHeightTwips];
+		app.file.size.pixels = [Math.round(app.tile.size.pixels[0] * (app.file.size.twips[0] / app.tile.size.twips[0])), Math.round(app.tile.size.pixels[1] * (app.file.size.twips[1] / app.tile.size.twips[1]))];
 	},
 
 	_checkSpreadSheetBounds: function (newZoom) {
@@ -1235,11 +1238,15 @@ L.CanvasTileLayer = L.Layer.extend({
 		    crs = map.options.crs,
 		    tileSize = this._tileSize = this._getTileSize(),
 		    tileZoom = this._tileZoom;
+
+		app.tile.size.pixels = [this._tileSize, this._tileSize];
 		if (this._tileWidthTwips === undefined) {
 			this._tileWidthTwips = this.options.tileWidthTwips;
+			app.tile.size.twips[0] = this.options.tileWidthTwips;
 		}
 		if (this._tileHeightTwips === undefined) {
 			this._tileHeightTwips = this.options.tileHeightTwips;
+			app.tile.size.twips[1] = this.options.tileHeightTwips;
 		}
 
 		var bounds = this._map.getPixelWorldBounds(this._tileZoom);
@@ -5430,7 +5437,12 @@ L.CanvasTileLayer = L.Layer.extend({
 		var docPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips, this._docHeightTwips / this._tileHeightTwips);
 		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize / this._painter._dpiScale); // docPixelLimits should be in csspx.
 
+		//console.log('pixels 1: ' + Math.round(docPixelLimits.x) + ' ' + Math.round(docPixelLimits.y));
+		//console.log('pixels 2: ' + app.file.size.pixels[0] + ' ' + app.file.size.pixels[1]);
+
 		var scrollPixelLimits = docPixelLimits.add(extraSize);
+		app.view.size.pixels[0] = app.file.size.pixels[0] + extraSize.x;
+		app.view.size.pixels[1] = app.file.size.pixels[1] + extraSize.y;
 
 		var topLeft = this._map.unproject(new L.Point(0, 0));
 

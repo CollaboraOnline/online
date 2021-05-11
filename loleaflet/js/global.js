@@ -2,13 +2,13 @@
 /* global Uint8Array */
 
 window.app = { // Shouldn't have any functions defined.
-	definitions: {},
+	definitions: {}, // Class instances are created using definitions under this variable.
 	file: {
 		editComment: false,
 		readOnly: true,
 		size: {
 			pixels: [0, 0], // This can change according to the zoom level and document's size.
-			twips: [0, 0] // This doesn't change unless the document size is changed.
+			twips: [0, 0] // This can change according to the zoom level and document's size.
 		},
 		fileBasedView: false, // (draw-impress only) Default is false. For read-only documents, user can view all parts at once. In that case, this variable is set to "true".
 		partList: [], // Elements will have these properties: {hash, number, size {pixels, twips}}
@@ -16,6 +16,12 @@ window.app = { // Shouldn't have any functions defined.
 	view: {
 		size: {
 			pixels: [0, 0] // This can be larger than the document's size.
+		}
+	},
+	tile: {
+		size: {
+			pixels: [0, 0],
+			twips: [0, 0]
 		}
 	},
 	socket: null,
