@@ -995,7 +995,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		if (this._docType === 'text' || this._docType === 'presentation' || this._docType === 'drawing') {
-			if (window.mode.isMobile())
+			if (!window.mode.isMobile())
 				app.sectionContainer.addSection(new app.definitions.CommentSection());
 		}
 
