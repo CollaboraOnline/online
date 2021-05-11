@@ -154,6 +154,9 @@ class RecentFilesAdapter extends RecyclerView.Adapter<RecentFilesAdapter.ViewHol
             case FileUtilities.IMPRESS:
                 compoundDrawableInt = R.drawable.impress;
                 break;
+            case FileUtilities.PDF:
+                compoundDrawableInt = R.drawable.pdf;
+                break;
         }
 
         if (compoundDrawableInt != 0)
