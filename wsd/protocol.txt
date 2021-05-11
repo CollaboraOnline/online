@@ -53,7 +53,7 @@ ERROR <rest of message>
     The rest of the message (without the ERROR keyword), possibly
     multiple lines, is logged by the server as LOG_ERR.
 
-TRACEEVENT name=<name> ph=<letter> ts=<timestamp> <more parameters>...
+TRACEEVENT name=<name> ph=<letter> ts=<timestamp> <more parameters>... [ args=<JSON.stringify-string> ]
 
     Timestamps and durations are in microseconds, from
     performance.now(), multiplied by 1000, and rouded to an integer.
@@ -65,7 +65,10 @@ TRACEEVENT name=<name> ph=<letter> ts=<timestamp> <more parameters>...
     ph is one of the following, and the rest of the parameters depend
     on what it is.
 
-    'i': An "Instant" event. Nothing more.
+    args is an optional parameter, and its value is a JSON string
+    where the keys and values are strings with no spaces in them.
+
+    'i': An "Instant" event.
 
     'b', 'e': The begin and end of an "Async" event. In addition to
     the name, the messages have an "id" parameter, a unique number
