@@ -207,7 +207,7 @@ w2ui-toolbar {
 #document-name-input {
 	font-size: 16px;
 	border: 1px solid transparent;
-	background-color: white;
+	background-color: transparent;
 	border-radius: 1px;
 	padding: 0px 2px;
 	transition: 0.5s;
@@ -225,6 +225,7 @@ w2ui-toolbar {
 	width: auto !important;
 	border-radius: 20px;
 	box-shadow: inset 0 0 2px 0 var(--gray-color);
+	background-color: white;
 }
 
 .main-nav:not(.hasnotebookbar) #document-name-input.editable {
