@@ -1742,7 +1742,6 @@ public:
                 << " readOnly: " << it.second.isReadOnly();
         }
         oss << "\n";
-        // TODO: std::chrono::steady_clock::time_point _lastMemStatsTime;
     }
 
 private:
@@ -1789,7 +1788,6 @@ private:
     std::map<int, int> _speedCount;
     /// For showing disconnected user info in the doc repair dialog.
     std::map<int, UserInfo> _sessionUserInfo;
-    std::chrono::steady_clock::time_point _lastMemStatsTime;
 #ifdef __ANDROID__
     friend std::shared_ptr<lok::Document> getLOKDocumentForAndroidOnly();
 #endif
