@@ -307,6 +307,7 @@ var unoCommandsArray = {
 	'Line':{global:{context:_('Insert Line'),menu:_('Line'),},},
 	'LineNumberingDialog':{text:{menu:_('~Line Numbering...'),},},
 	'LineSpacing':{global:{context:_('Set Line Spacing'),menu:_('Line Spacing'),},},
+	'CharSpacing':{global:{context:_('Set Char Spacing'),menu:_('Char Spacing'),},},
 	'MasterSlidesPanel':{presentation:{menu:_('Master Slides'),},},
 	'Merge':{global:{menu:_('~Merge'),},},
 	'MergeCells':{presentation:{menu:_('Merge Cells'),},spreadsheet:{menu:_('Merge Cells'),},text:{menu:_('Merge Cells'),},},

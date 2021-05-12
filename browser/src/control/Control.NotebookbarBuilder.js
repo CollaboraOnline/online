@@ -39,6 +39,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:InsertGraphic'] = this._insertGraphicControl;
 		this._toolitemHandlers['.uno:InsertAnnotation'] = this._insertAnnotationControl;
 		this._toolitemHandlers['.uno:LineSpacing'] = this._lineSpacingControl;
+		this._toolitemHandlers['.uno:CharSpacing'] = this._CharSpacing;
 		this._toolitemHandlers['.uno:CharmapControl'] = this._symbolControl;
 		this._toolitemHandlers['.uno:Cut'] = this._clipboardButtonControl;
 		this._toolitemHandlers['.uno:Copy'] = this._clipboardButtonControl;
@@ -589,6 +590,38 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			});
 		}
 		builder._preventDocumentLosingFocusOnClick(control.container);
+	},
+
+	_CharSpacing: function(parentContainer, data, builder) {
+		var options = {hasDropdownArrow: true};
+		var control = builder._unoToolButton(parentContainer, data, builder, options);
+
+		$(control.container).unbind('click');
+		$(control.container).click(function () {
+			// TODO: this doesn't work, we need to send that status from the core
+			var isChecked = function(value) {
+				var items = builder.map['stateChangeHandler'];
+				var val = items.getItemValue('.uno:Spacing');
+				if (val && val === value)
+					return true;
+				else
+					return false;
+			};
+
+			$(control.container).w2menu({
+				items: [
+					{id: 'space1', text: _('Very Tight'), uno: 'Spacing?Spacing:short=-60', checked: isChecked(-60)},
+					{id: 'space1', text: _('Tight'), uno: 'Spacing?Spacing:short=-30', checked: isChecked(-30)},
+					{id: 'space15', text: _('Normal'), uno: 'Spacing?Spacing:short=0', checked: isChecked(0)},
+					{id: 'space2', text: _('Loose'), uno: 'Spacing?Spacing:short=60', checked: isChecked(60)},
+					{id: 'space2', text: _('Very Loose'), uno: 'Spacing?Spacing:short=120', checked: isChecked(120)},
+				],
+				type: 'menu',
+				onSelect: function (event) {
+					builder.map.sendUnoCommand('.uno:' + event.item.uno);
+				}
+			});
+		});
 	},
 
 	_lineSpacingControl: function(parentContainer, data, builder) {
