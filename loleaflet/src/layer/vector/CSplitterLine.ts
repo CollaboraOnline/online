@@ -19,8 +19,8 @@ class CSplitterLine extends CRectangle {
 		this.fill = true;
 		this.opacity = 0;
 
-		// Splitters should always be on top.
-		this.zIndex = Infinity;
+		// Splitters should always be behind other overlays.
+		this.zIndex = -Infinity;
 
 		if (options.isHoriz !== undefined)
 			this.isHoriz = options.isHoriz;
