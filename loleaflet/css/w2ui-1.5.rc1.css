@@ -593,6 +593,7 @@ input[type=checkbox].w2ui-toggle:focus {
   overflow: hidden;
   font-size: 13px;
   font-family: Verdana, Arial, sans-serif;
+  font-weight: bold;
   opacity: 0.8;
   filter: alpha(opacity=80);
   background-color: #555555;
@@ -605,7 +606,7 @@ input[type=checkbox].w2ui-toggle:focus {
   display: inline-block;
   width: 24px;
   height: 24px;
-  margin: -3px 8px -7px -10px;
+  margin: 0 8px 0 0;
 }
 /*************************************************
 * ---- Scroll contet, used in toolbar and tabs ----
