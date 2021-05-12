@@ -10,6 +10,7 @@
 #include "MessageQueue.hpp"
 #include <climits>
 #include <algorithm>
+#include <iostream>
 
 #include <Poco/JSON/JSON.h>
 #include <Poco/JSON/Object.h>
@@ -567,6 +568,31 @@ TileQueue::Payload TileQueue::get_impl()
     std::string tileCombined = TileCombined::create(tiles).serialize("tilecombine");
     LOG_TRC("MessageQueue res: " << LOOLProtocol::getAbbreviatedMessage(tileCombined));
     return Payload(tileCombined.data(), tileCombined.data() + tileCombined.size());
+}
+
+void TileQueue::dumpState(std::ostream& oss)
+{
+oss << "\ttileQueue:"
+    << "\n\t\tcursorPositions:";
+for (const auto &it : _cursorPositions)
+{
+    oss << "\n\t\t\tviewId: "
+    << it.first
+    << " part: " << it.second.getPart()
+    << " x: " << it.second.getX()
+    << " y: " << it.second.getY()
+    << " width: " << it.second.getWidth()
+    << " height: " << it.second.getHeight();
+}
+
+oss << "\n\t\tviewOrder: [";
+std::string separator;
+for (const auto& viewId : _viewOrder)
+{
+    oss << separator << viewId;
+    separator = ", ";
+}
+oss << "]\n";
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

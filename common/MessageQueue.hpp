@@ -179,6 +179,8 @@ public:
         _cursorPositions.erase(viewId);
     }
 
+    void dumpState(std::ostream& oss);
+
 protected:
     virtual void put_impl(const Payload& value) override;
 
