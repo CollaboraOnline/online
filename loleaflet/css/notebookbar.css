@@ -400,7 +400,19 @@
 }
 
 #fontnamecombobox.notebookbar .select2 {
-	width: 150px !important;
+	width: 170px !important;
+}
+
+#fontnamecombobox.notebookbar {
+	padding-right: 0px;
+}
+
+#BackColor.notebookbar, #CharBackColor.notebookbar { /* remove when #2149 is fixed*/
+	margin-left: 44px !important;
+}
+
+#BackgroundColor.notebookbar {
+	margin-left: 0px !important;
 }
 
 #fontsizecombobox.notebookbar .select2 {
