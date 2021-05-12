@@ -1231,6 +1231,7 @@ var w2utils = (function ($) {
         if (typeof $lock.fadeIn == 'function') {
             $lock.fadeIn(200);
             mess.html(options.msg).fadeIn(200);
+            mess.css({ 'display': 'flex', 'justify-content': 'center', 'align-items': 'center' });
         } else {
             $lock.show();
             mess.html(options.msg).show(0);
