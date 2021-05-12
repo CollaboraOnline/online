@@ -448,16 +448,16 @@ class CanvasSectionContainer {
 		return [this.documentBottomRight[0] - this.documentTopLeft[0], this.documentBottomRight[1] - this.documentTopLeft[1]];
 	}
 
-	private isDocumentObjectVisible(section: CanvasSectionObject): boolean {
+	private isDocumentObjectVisible (section: CanvasSectionObject): boolean {
 		if (
 			(
-				section.myTopLeft[0] >= this.documentTopLeft[0] && section.myTopLeft[0] <= this.documentBottomRight[0] ||
-				section.myTopLeft[0] + section.size[0] >= this.documentTopLeft[0] && section.myTopLeft[0] + section.size[0] <= this.documentBottomRight[0]
+				section.position[0] >= this.documentTopLeft[0] && section.position[0] <= this.documentBottomRight[0] ||
+				section.position[0] + section.size[0] >= this.documentTopLeft[0] && section.position[0] + section.size[0] <= this.documentBottomRight[0]
 			)
 			&&
 			(
-				section.myTopLeft[1] >= this.documentTopLeft[1] && section.myTopLeft[1] <= this.documentBottomRight[1] ||
-				section.myTopLeft[1] + section.size[1] >= this.documentTopLeft[1] && section.myTopLeft[1] + section.size[1] <= this.documentBottomRight[1]
+				section.position[1] >= this.documentTopLeft[1] && section.position[1] <= this.documentBottomRight[1] ||
+				section.position[1] + section.size[1] >= this.documentTopLeft[1] && section.position[1] + section.size[1] <= this.documentBottomRight[1]
 			)
 		) {
 			return true;
@@ -989,7 +989,7 @@ class CanvasSectionContainer {
 
 	findSectionContainingPoint (point: Array<number>): any {
 		for (var i: number = this.sections.length - 1; i > -1; i--) { // Search from top to bottom. Top section will be sent as target section.
-			if (this.sections[i].isLocated && this.doesSectionIncludePoint(this.sections[i], point))
+			if (this.sections[i].isLocated && (!this.sections[i].documentObject || this.sections[i].isVisible) && this.doesSectionIncludePoint(this.sections[i], point))
 				return this.sections[i];
 		}
 
@@ -1388,7 +1388,7 @@ class CanvasSectionContainer {
 
 		this.context.font = String(20 * this.dpiScale) + "px Verdana";
 		for (var i: number = 0; i < this.sections.length; i++) {
-			if (this.sections[i].isLocated && this.sections[i].showSection) {
+			if (this.sections[i].isLocated && this.sections[i].showSection && (!this.sections[i].documentObject || this.sections[i].isVisible)) {
 				this.context.translate(this.sections[i].myTopLeft[0], this.sections[i].myTopLeft[1]);
 				if (this.sections[i].backgroundColor) {
 					this.context.fillStyle = this.sections[i].backgroundColor;
