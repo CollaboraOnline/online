@@ -227,6 +227,23 @@ public:
         }
         return wid;
     }
+
+    void dumpState(std::ostream& oss)
+    {
+        oss << "\tpngCache:"
+            << "\n\t\tcacheSize: " << _cacheSize
+            << "\n\t\tcacheHits: " << _cacheHits
+            << "\n\t\tcacheTests: " << _cacheTests
+            << "\n\t\tnextId: " << _nextId
+            << "\n\t\tcache entry count: "<< _cache.size();
+        for (const auto &it : _cache)
+        {
+            oss << "\n\t\t\thash: " << it.first
+                << " hitCount: " << it.second.getHitCount()
+                << " wireId: " << it.second.getWireId();
+        }
+        oss << '\n';
+    }
 };
 
 class ThreadPool {
@@ -323,6 +340,16 @@ public:
             if (!_shutdown && !_work.empty())
                 runOne(lock);
         }
+    }
+
+    void dumpState(std::ostream& oss)
+    {
+        oss << "\tthreadPool:"
+            << "\n\t\tshutdown: " << _shutdown
+            << "\n\t\tworking: " << _working
+            << "\n\t\twork count: " << count()
+            << "\n\t\tthread count " << _threads.size()
+            << "\n";
     }
 };
 

@@ -1693,22 +1693,55 @@ public:
             << "\n\tdocPasswordType: " << (int)_docPasswordType
             << "\n\teditorId: " << _editorId
             << "\n\teditorChangeWarning: " << _editorChangeWarning
+            << "\n\tmobileAppDocId: " << _mobileAppDocId
+            << "\n\tinputProcessingEnabled: " << _inputProcessingEnabled
             << "\n";
 
         // dumpState:
         // TODO: _websocketHandler - but this is an odd one.
-        // TODO: std::shared_ptr<TileQueue> _tileQueue;
-        // TODO: PngCache _pngCache;
-        // TODO: std::map<int, std::unique_ptr<CallbackDescriptor>> _viewIdToCallbackDescr;
-        // ThreadPool _pngPool;
+        _tileQueue->dumpState(oss);
+        _pngCache.dumpState(oss);
+        oss << "\tviewIdToCallbackDescr:";
+        for (const auto &it : _viewIdToCallbackDescr)
+        {
+            oss << "\n\t\tviewId: " << it.first
+                << " editorId: " << it.second->getDoc()->getEditorId()
+                << " mobileAppDocId: " << it.second->getDoc()->getMobileAppDocId();
+        }
+        oss << "\n";
 
+        _pngPool.dumpState(oss);
         _sessions.dumpState(oss);
 
-        // TODO: std::map<int, std::chrono::steady_clock::time_point> _lastUpdatedAt;
-        // TODO: std::map<int, int> _speedCount;
+        oss << "\tlastUpdatedAt:";
+        for (const auto &it : _lastUpdatedAt)
+        {
+            auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+                        it.second.time_since_epoch()).count();
+            oss << "\n\t\tviewId: " << it.first
+                << " last update time(ms): " << ms;
+        }
+        oss << "\n";
+
+        oss << "\tspeedCount:";
+        for (const auto &it : _speedCount)
+        {
+            oss << "\n\t\tviewId: " << it.first
+                << " speed: " << it.second;
+        }
+        oss << "\n";
 
         /// For showing disconnected user info in the doc repair dialog.
-        // TODO: std::map<int, UserInfo> _sessionUserInfo;
+        oss << "\tsessionUserInfo:";
+        for (const auto &it : _sessionUserInfo)
+        {
+            oss << "\n\t\tviewId: " << it.first
+                << " userId: " << it.second.getUserId()
+                << " userName: " << it.second.getUserName()
+                << " userExtraInfo: " << it.second.getUserExtraInfo()
+                << " readOnly: " << it.second.isReadOnly();
+        }
+        oss << "\n";
         // TODO: std::chrono::steady_clock::time_point _lastMemStatsTime;
     }
 
