@@ -268,6 +268,23 @@ L.Socket = L.Class.extend({
 			     'background:#ddf;color:black', color, 'color:black');
 	},
 
+	_emitSlurpedEvents: function() {
+		// console.log2('Slurp events ' + that._slurpQueue.length);
+		for (var i = 0; i < this._slurpQueue.length; ++i) {
+			var evt = this._slurpQueue[i];
+			try {
+				// it is - are you ?
+				this._onMessage(evt);
+			}
+			catch (e)
+			{
+				// unpleasant - but stops this one problem
+				// event stopping an unknown number of others.
+				console.log2('Exception ' + e + ' emitting event ' + evt.data);
+			}
+		}
+	},
+
 	// The problem: if we process one websocket message at a time, the
 	// browser -loves- to trigger a re-render as we hit the main-loop,
 	// this takes ~200ms on a large screen, and worse we get
@@ -278,11 +295,7 @@ L.Socket = L.Class.extend({
 		var that = this;
 		if (!this._slurpQueue || !this._slurpQueue.length) {
 			setTimeout(function() {
-				// console.log2('Slurp events ' + that._slurpQueue.length);
-				for (var i = 0; i < that._slurpQueue.length; ++i) {
-					// it is - are you ?
-					that._onMessage(that._slurpQueue[i]);
-				}
+				that._emitSlurpedEvents();
 				that._slurpQueue = [];
 			}, 1 /* ms */);
 			that._slurpQueue = [];
