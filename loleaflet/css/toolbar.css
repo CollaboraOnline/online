@@ -93,6 +93,14 @@ w2ui-toolbar {
 	height: 30px;
 }
 
+.w2ui-reset * {
+	vertical-align: top;
+}
+
+#tb_formulabar_item_address, #tb_formulabar_item_item_2, #tb_formulabar_item_functiondialog {
+	padding-top: 2px;
+}
+
 #presentation-toolbar {
 	background-color: #dfdfdf;
 	text-align: center;
@@ -150,11 +158,12 @@ w2ui-toolbar {
 	width: 100%;
 	position: relative;
 	padding: 0px;
-	margin: 0px 0px -4px;
+	margin: 0px;
 }
 
 #tb_formulabar_item_formula {
 	width: 100%;
+	padding-top: 4px;
 }
 
 #tb_formulabar_item_formula div table {
