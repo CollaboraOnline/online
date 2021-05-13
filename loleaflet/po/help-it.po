@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-16 12:55+0200\n"
+"POT-Creation-Date: 2021-05-13 09:11+0200\n"
 "PO-Revision-Date: 2020-10-16 03:24+0000\n"
 "Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
@@ -16,682 +16,730 @@ msgstr ""
 "X-Pootle-Path: /it/libo_online/loleaflet-help-it.po\n"
 "X-Pootle-Revision: 838337\n"
 
-#: html/loleaflet-help.html%2Bdiv.h1:20-5
+#: html/loleaflet-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
 msgstr "Scorciatoie della tastiera"
 
-#: html/loleaflet-help.html%2Bdiv.div.h2:22-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:21-9
 msgid "General Keyboard Shortcuts"
 msgstr "Scorciatoie da tastiera generali"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:23-18
 msgid "Undo"
 msgstr "Annulla"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-49
-msgid "Ctrl + Z"
-msgstr "Ctrl + Z"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:23-49
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:25-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-18
 msgid "Redo"
 msgstr "Ripeti"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:25-49
-msgid "Ctrl + Y"
-msgstr "Ctrl + Y"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:24-49
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:25-18
 msgid "Cut"
 msgstr "Taglia"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-48
-msgid "Ctrl + X"
-msgstr "Ctrl + X"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:25-48
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-18
 msgid "Paste as unformatted text"
 msgstr "Incolla testo non formattato"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-70
-msgid "Ctrl + Shift + V"
-msgstr "Ctrl + Maiusc + V"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:26-70
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>V"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>V"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:28-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-18
 msgid "Paste special"
 msgstr "Incolla speciale"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:28-58
-msgid "Ctrl + Alt + Shift + V"
-msgstr "Ctrl + Alt + Maiusc + V"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:27-58
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>V"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>V"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:29-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:28-18
 msgid "Print (Download as PDF)"
 msgstr "Stampa (scarica come PDF)"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:29-68
-msgid "Ctrl + P"
-msgstr "Ctrl + P"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:28-68
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:30-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:29-18
 msgid "Display the Keyboard shortcuts help"
 msgstr "Mostra l'aiuto per le scorciatoie della tastiera"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:30-80
-msgid "Ctrl + Shift + ?"
-msgstr "Ctrl + Maiusc + ?"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:29-80
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>?"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>?"
 
-#: html/loleaflet-help.html%2Bdiv.div.h2:34-9
-#: html/loleaflet-help.html%2Bdiv.div.h2:156-9
-#: html/loleaflet-help.html%2Bdiv.div.h2:213-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:33-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:155-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:212-9
 msgid "Text formatting"
 msgstr "Formattazione del testo"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:35-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:157-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:214-18
+msgid "Bold"
+msgstr "Grassetto"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:35-49
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-49
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:157-49
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:214-49
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:36-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:158-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:215-18
-msgid "Bold"
-msgstr "Grassetto"
+msgid "Italic"
+msgstr "Corsivo"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:36-49
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-49
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:158-49
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:215-49
-msgid "Ctrl + B"
-msgstr "Ctrl + B"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:36-51
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-51
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:158-51
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:215-51
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:37-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:159-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:216-18
-msgid "Italic"
-msgstr "Corsivo"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:37-51
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-51
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:159-51
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:216-51
-msgid "Ctrl + I"
-msgstr "Ctrl + I"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:38-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:160-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:217-18
 msgid "Underline"
 msgstr "Sottolineato"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:38-54
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-54
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:160-54
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:217-54
-msgid "Ctrl + U"
-msgstr "Ctrl + U"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:37-54
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-54
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:159-54
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:216-54
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>U"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:39-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:38-18
 msgid "Double Underline"
 msgstr "Doppia sottolineatura"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:39-61
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-54
-msgid "Ctrl + D"
-msgstr "Ctrl + D"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:38-61
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-54
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>D"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:40-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:161-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:218-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:39-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:160-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:217-18
 msgid "Strikethrough"
 msgstr "Barrato"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:40-58
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-58
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:161-58
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:218-58
-msgid "Ctrl + Alt + 5"
-msgstr "Ctrl + Alt + 5"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:39-58
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-58
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:160-58
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:217-58
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>5"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>5"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:40-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:161-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:218-18
+msgid "Superscript"
+msgstr "Apice"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:40-56
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:161-56
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:218-56
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>P"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>P"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:41-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:162-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:219-18
-msgid "Superscript"
-msgstr "Apice"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:41-56
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:162-56
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:219-56
-msgid "Ctrl + Shift + P"
-msgstr "Ctrl + Maiusc + P"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:42-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:163-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:220-18
 msgid "Subscript"
 msgstr "Pedice"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:42-54
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:163-54
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:220-54
-msgid "Ctrl + Shift + B"
-msgstr "Ctrl + Maiusc + B"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:41-54
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:162-54
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>B"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>B"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:43-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:42-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
 msgid "Remove direct formatting"
 msgstr "Rimuovi formattazione diretta"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:43-69
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-69
-msgid "Ctrl + M"
-msgstr "Ctrl + M"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:42-69
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-69
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M"
 
-#: html/loleaflet-help.html%2Bdiv.div.h2:45-9
-#: html/loleaflet-help.html%2Bdiv.div.h2:166-9
-#: html/loleaflet-help.html%2Bdiv.div.h2:223-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:44-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:165-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:222-9
 msgid "Paragraph formatting"
 msgstr "Formattazione paragrafo"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:167-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:224-18
+msgid "Align Center"
+msgstr "Allinea al centro"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-57
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-57
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:167-57
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:168-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:225-18
-msgid "Align Center"
-msgstr "Allinea al centro"
+msgid "Align Left"
+msgstr "Allinea a sinistra"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-57
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-57
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:168-57
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:225-57
-msgid "Ctrl + E"
-msgstr "Ctrl + E"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-55
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-55
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:168-55
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:48-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:169-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:226-18
-msgid "Align Left"
-msgstr "Allinea a sinistra"
+msgid "Align Right"
+msgstr "Allinea a destra"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:48-55
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-55
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:169-55
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:226-55
-msgid "Ctrl + L"
-msgstr "Ctrl + L"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:48-56
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-56
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:169-56
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:170-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:227-18
-msgid "Align Right"
-msgstr "Allinea a destra"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-56
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-56
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:170-56
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:227-56
-msgid "Ctrl + R"
-msgstr "Ctrl + R"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:50-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:171-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:228-18
 msgid "Justify"
 msgstr "Giustificato"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:50-52
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-52
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:171-52
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:228-52
-msgid "Ctrl + J"
-msgstr "Ctrl + J"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-52
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-52
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:170-52
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:50-18
 msgid "Apply Default paragraph style"
 msgstr "Applica lo stile di paragrafo Predefinito"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-74
-msgid "Ctrl + 0"
-msgstr "Ctrl + 0"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:50-74
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:52-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-18
 msgid "Apply Heading 1 paragraph style"
 msgstr "Applica lo stile di paragrafo Intestazione 1"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:52-76
-msgid "Ctrl + 1"
-msgstr "Ctrl + 1"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:51-76
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:53-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:52-18
 msgid "Apply Heading 2 paragraph style"
 msgstr "Applica lo stile di paragrafo Intestazione 2"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:53-76
-msgid "Ctrl + 2"
-msgstr "Ctrl + 2"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:52-76
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>2"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:54-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:53-18
 msgid "Apply Heading 3 paragraph style"
 msgstr "Applica lo stile di paragrafo Intestazione 3"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:54-76
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-69
-msgid "Ctrl + 3"
-msgstr "Ctrl + 3"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:53-76
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-69
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>3"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:55-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:54-18
 msgid "Apply Heading 4 paragraph style"
 msgstr "Applica lo stile di paragrafo Intestazione 4"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:55-76
-msgid "Ctrl + 4"
-msgstr "Ctrl + 4"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:54-76
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>4"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:56-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:55-18
 msgid "Apply Heading 5 paragraph style"
 msgstr "Applica lo stile di paragrafo Intestazione 5"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:56-76
-msgid "Ctrl + 5"
-msgstr "Ctrl + 5"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:55-76
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>5"
 
-#: html/loleaflet-help.html%2Bdiv.div.h2:58-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:57-9
 msgid "Text selection and navigation in document"
 msgstr "Selezione testo e navigazione nel documento"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:60-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:164-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:221-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:234-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:59-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:163-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:176-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:220-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:233-18
 msgid "Select All"
 msgstr "Seleziona tutto"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:60-55
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-55
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:164-55
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-55
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-64
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:221-55
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:234-55
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:266-71
-msgid "Ctrl + A"
-msgstr "Ctrl + A"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:59-55
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-55
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:163-55
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:176-55
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-64
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:220-55
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:60-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:234-18
+msgid "Move cursor to the left"
+msgstr "Sposta il cursore a sinistra"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:60-68
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:177-68
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:234-68
+msgid "Arrow Left"
+msgstr "Freccia sinistra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:61-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:178-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:235-18
-msgid "Move cursor to the left"
-msgstr "Sposta il cursore a sinistra"
+msgid "Move cursor with selection to the left"
+msgstr "Sposta il cursore con la selezione a sinistra"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:61-68
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:178-68
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:235-68
-msgid "Arrow Left"
-msgstr "Freccia sinistra"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:61-83
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:178-83
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:235-83
+msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left"
+msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>Freccia sinistra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:62-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:179-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:236-18
-msgid "Move cursor with selection to the left"
-msgstr "Sposta il cursore con la selezione a sinistra"
+msgid "Go to beginning of a word"
+msgstr "Vai all'inizio di una parola"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:62-83
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:179-83
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:236-83
-msgid "Shift + Arrow Left"
-msgstr "Maiusc + Freccia sinistra"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:62-70
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:179-70
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:236-70
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Left"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Freccia sinistra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:63-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:180-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:237-18
-msgid "Go to beginning of a word"
-msgstr "Vai all'inizio di una parola"
+msgid "Select to the left word by word"
+msgstr "Seleziona a sinistra parola per parola"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:63-70
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:180-70
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:237-70
-msgid "Ctrl + Arrow Left"
-msgstr "Ctrl + Freccia sinistra"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:63-76
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:180-76
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:237-76
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Arrow Left"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>Freccia sinistra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:64-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:238-18
-msgid "Select to the left word by word"
-msgstr "Seleziona a sinistra parola per parola"
+msgid "Move cursor to the right"
+msgstr "Sposta il cursore a destra"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:64-76
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-76
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:238-76
-msgid "Ctrl + Shift + Arrow Left"
-msgstr "Ctrl + Maiusc + Freccia sinistra"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:64-69
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:181-69
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:238-69
+msgid "Arrow Right"
+msgstr "Freccia destra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:239-18
-msgid "Move cursor to the right"
-msgstr "Sposta il cursore a destra"
+msgid "Move cursor with selection to the right"
+msgstr "Sposta il cursore con la selezione a destra"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-69
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-69
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:239-69
-msgid "Arrow Right"
-msgstr "Freccia destra"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:65-84
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:182-84
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:239-84
+msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right"
+msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>Freccia destra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:240-18
-msgid "Move cursor with selection to the right"
-msgstr "Sposta il cursore con la selezione a destra"
+msgid "Go to start of the next word"
+msgstr "Vai all'inizio della prossima parola"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-84
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-84
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:240-84
-msgid "Shift + Arrow Right"
-msgstr "Maiusc + Freccia destra"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:66-73
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:183-73
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:240-73
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Right"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Freccia destra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:241-18
-msgid "Go to start of the next word"
-msgstr "Vai all'inizio della prossima parola"
+msgid "Select to the right word by word"
+msgstr "Seleziona a destra parola per parola"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-73
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-73
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:241-73
-msgid "Ctrl + Arrow Right"
-msgstr "Ctrl + Freccia destra"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:67-77
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:184-77
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:241-77
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Arrow Right"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>Freccia destra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:242-18
-msgid "Select to the right word by word"
-msgstr "Seleziona a destra parola per parola"
+msgid "Move cursor up one line"
+msgstr "Sposta il cursore su di una riga"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-77
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-77
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:242-77
-msgid "Ctrl + Shift + Arrow Right"
-msgstr "Ctrl + Maiusc + Freccia destra"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:68-68
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:185-68
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:242-68
+msgid "Arrow Up"
+msgstr "Freccia su"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:243-18
-msgid "Move cursor up one line"
-msgstr "Sposta il cursore su di una riga"
+msgid "Select lines in upwards direction"
+msgstr "Seleziona righe verso l'alto"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-68
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-68
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:243-68
-msgid "Arrow Up"
-msgstr "Freccia su"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:69-78
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:186-78
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:243-78
+msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up"
+msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>Freccia su"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:244-18
-msgid "Select lines in upwards direction"
-msgstr "Seleziona righe verso l'alto"
+msgid "Move cursor to beginning of the previous paragraph"
+msgstr "Sposta il cursore all'inizio del paragrafo precedente"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-78
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-78
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:244-78
-msgid "Shift + Arrow Up"
-msgstr "Maiusc + Freccia su"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:70-95
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:187-95
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:244-95
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Freccia su"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:245-18
-msgid "Move cursor to beginning of the previous paragraph"
-msgstr "Sposta il cursore all'inizio del paragrafo precedente"
+msgid "Select to beginning of paragraph"
+msgstr "Seleziona all'inizio del paragrafo"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-95
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-95
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:245-95
-msgid "Ctrl + Arrow Up"
-msgstr "Ctrl + Freccia su"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:71-77
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:188-77
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:245-77
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Arrow Up"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>Freccia su"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:246-18
-msgid "Select to beginning of paragraph"
-msgstr "Seleziona all'inizio del paragrafo"
+msgid "Move cursor down one line"
+msgstr "Sposta il cursore giù di una riga"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-77
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-77
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:246-77
-msgid "Ctrl + Shift + Arrow Up"
-msgstr "Ctrl + Maiusc + Freccia su"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-70
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-70
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:246-70
+msgid "Arrow Down"
+msgstr "Freccia giù"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:247-18
-msgid "Move cursor down one line"
-msgstr "Sposta il cursore giù di una riga"
+msgid "Select lines in downwards direction"
+msgstr "Seleziona righe verso il basso"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-70
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-70
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:247-70
-msgid "Arrow Down"
-msgstr "Freccia giù"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:73-80
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:190-80
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:247-80
+msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down"
+msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>Freccia giù"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:248-18
-msgid "Select lines in downwards direction"
-msgstr "Seleziona righe verso il basso"
+msgid "Move cursor to beginning of the next paragraph"
+msgstr "Sposta il cursore all'inizio del paragrafo successivo"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-80
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-80
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:248-80
-msgid "Shift + Arrow Down"
-msgstr "Maiusc + Freccia giù"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:74-91
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-91
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:248-91
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Freccia giù"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:249-18
-msgid "Move cursor to beginning of the next paragraph"
-msgstr "Sposta il cursore all'inizio del paragrafo successivo"
+msgid "Select to end of paragraph"
+msgstr "Seleziona fino alla fine del paragrafo"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-91
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-91
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:249-91
-msgid "Ctrl + Arrow Down"
-msgstr "Ctrl + Freccia giù"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-71
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-71
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Arrow Down"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>Freccia giù"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:250-18
-msgid "Select to end of paragraph"
-msgstr "Seleziona fino alla fine del paragrafo"
+msgid "Go to beginning of line"
+msgstr "Vai all'inizio della riga"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-71
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-71
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:250-71
-msgid "Ctrl + Shift + Arrow Down"
-msgstr "Ctrl + Maiusc + Freccia giù"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-68
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-68
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:250-68
+msgid "Home"
+msgstr "Inizio"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:77-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:251-18
-msgid "Go to beginning of line"
-msgstr "Vai all'inizio della riga"
+msgid "Go and select to the beginning of a line"
+msgstr "Vai e seleziona fino all'inizio della riga"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:77-68
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-68
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:251-68
-msgid "Home"
-msgstr "Inizio"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:77-85
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:194-85
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:251-85
+msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
+msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>Inizio"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:252-18
-msgid "Go and select to the beginning of a line"
-msgstr "Vai e seleziona fino all'inizio della riga"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-85
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-85
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:252-85
-msgid "Shift + Home"
-msgstr "Maiusc + Inizio"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:253-18
 msgid "Go to start of document"
 msgstr "Vai all'inizio del documento"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-68
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-68
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:253-68
-msgid "Ctrl + Home"
-msgstr "Ctrl + Inizio"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:78-68
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:195-68
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:252-68
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Inizio"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-18
 msgid "Go and select text to start of document"
 msgstr "Vai e seleziona il testo fino all'inizio del documento"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-84
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-83
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:254-83
-msgid "Ctrl + Shift + Home"
-msgstr "Ctrl + Maiusc + Inizio"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:79-84
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-83
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:253-83
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Home"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>Inizio"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:254-18
+msgid "Go to end of line"
+msgstr "Vai alla fine della riga"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:80-62
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-62
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:254-62
+msgid "End"
+msgstr "Fine"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:198-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:255-18
-msgid "Go to end of line"
-msgstr "Vai alla fine della riga"
+msgid "Go and select to the end of a line"
+msgstr "Vai e seleziona fino alla fine della riga"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-62
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:198-62
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:255-62
-msgid "End"
-msgstr "Fine"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:81-79
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:198-79
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:255-79
+msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End"
+msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>Fine"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:199-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:256-18
-msgid "Go and select to the end of a line"
-msgstr "Vai e seleziona fino alla fine della riga"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-79
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:199-79
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:256-79
-msgid "Shift + End"
-msgstr "Maiusc + Fine"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:200-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:257-18
 msgid "Go to end of document"
 msgstr "Vai alla fine del documento"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-66
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:200-66
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:257-66
-msgid "Ctrl + End"
-msgstr "Ctrl + Fine"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:82-66
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:199-66
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:256-66
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Fine"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-18
 msgid "Go and select text to end of document"
 msgstr "Vai e seleziona il testo fino alla fine del documento"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-82
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:201-81
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:258-81
-msgid "Ctrl + Shift + End"
-msgstr "Ctrl + Maiusc + Fine"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:83-82
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:200-81
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:257-81
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>End"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>Fine"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-18
 msgid "Move the view up one page"
 msgstr "Sposta la vista su di una pagina"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-70
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:84-70
 msgid "PageUp"
 msgstr "PagSu"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-18
 msgid "Switch cursor between text and header"
 msgstr "Alterna il cursore tra il testo e la riga d'intestazione"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-82
-msgid "Ctrl + PageUp"
-msgstr "Ctrl + PagSu"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:85-82
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PagSu"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-18
 msgid "Extend the selection up one page"
 msgstr "Estendi la selezione su di una pagina"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-77
-msgid "Shift + PageUp"
-msgstr "Maiusc + PagSu"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:86-77
+msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>PagSu"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-18
 msgid "Move the view down one page"
 msgstr "Sposta la vista giù di una pagina"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-72
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:87-72
 msgid "PageDown"
 msgstr "PagGiù"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-18
 msgid "Switch cursor between text and footer"
 msgstr "Alterna il cursore tra il testo e il piè di pagina"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-82
-msgid "Ctrl + PageDown"
-msgstr "Ctrl + PagGiù"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-82
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PagGiù"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:90-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-18
 msgid "Extend the selection down one page"
 msgstr "Estendi la selezione giù di una pagina"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:90-79
-msgid "Shift + PageDown"
-msgstr "Maiusc + PagGiù"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-79
+msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>PagGiù"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:91-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:90-18
 msgid "Delete to beginning of word"
 msgstr "Elimina fino all'inizio della parola"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:91-72
-msgid "Ctrl + Backspace"
-msgstr "Ctrl + Backspace"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:90-72
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:92-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:91-18
 msgid "Delete to end of word"
 msgstr "Elimina fino alla fine della parola"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:92-66
-msgid "Ctrl + Del"
-msgstr "Ctrl + Canc"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:91-66
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Canc"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:93-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:92-18
 msgid "Delete to beginning of sentence"
 msgstr "Elimina fino all'inizio della frase"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:93-76
-msgid "Ctrl + Shift + Backspace"
-msgstr "Ctrl + Maiusc + Backspace"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:92-76
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Backspace"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>Backspace"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:94-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:93-18
 msgid "Delete to end of sentence"
 msgstr "Elimina fino alla fine della frase"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:94-70
-msgid "Ctrl + Shift + Del"
-msgstr "Ctrl + Maiusc + Canc"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:93-70
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Del"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>Canc"
 
-#: html/loleaflet-help.html%2Bdiv.div.h2:96-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:95-9
 msgid "Shortcut Keys for Tables"
 msgstr "Tasti di scelta rapida per le tabelle"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-54
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:97-105
 msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
@@ -700,7 +748,7 @@ msgstr ""
 "seleziona il contenuto della cella attiva. Premuto ancora seleziona l'intera "
 "tabella."
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-57
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:98-108
 msgid ""
 "If the active cell is empty: goes to the beginning of the table. Otherwise: "
 "first press goes to beginning of the active cell, second press goes to "
@@ -710,7 +758,7 @@ msgstr ""
 "prima volta va all'inizio della cella attiva, la seconda volta all'inizio "
 "della tabella corrente e la terza volta all'inizio del documento."
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-56
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:99-107
 msgid ""
 "If the active cell is empty: goes to the end of the table. Otherwise: first "
 "press goes to the end of the active cell, second press goes to the end of "
@@ -720,81 +768,107 @@ msgstr ""
 "volta va alla fine della cella attiva, la seconda alla fine della tabella "
 "corrente e la terza volta alla fine del documento."
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
-msgid "Ctrl + Tab"
-msgstr "Ctrl + Tab"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-18
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-56
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
+#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
-"Alt + Tab may be used instead."
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
+"instead."
 msgstr ""
 "Inserisce una tabulazione (solo nelle tabelle). A seconda del gestore "
-"finestre in uso, potrebbe essere usato Alt + Tab."
+"finestre in uso, potrebbe essere usato Alt</kbd><span class=\"kbd--plus\""
+">+</span><kbd>Tab."
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-18
-msgid "Alt + Arrow Keys"
-msgstr "Alt + Tasti freccia"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
+msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tasti freccia"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-62
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-113
 msgid ""
 "Increases/decreases the size of the column/row on the right/bottom cell edge"
 msgstr ""
 "Aumenta/diminuisce le dimensioni della colonna/riga nel margine in basso a "
 "destra della cella"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-18
-msgid "Alt + Shift + Arrow Keys"
-msgstr "Alt + Maiusc + Tasti freccia"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-18
+msgid ""
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Arrow Keys"
+msgstr ""
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Tasti freccia"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-70
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-161
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
 msgstr ""
 "Aumenta/diminuisce la dimensione della colonna/riga sul margine in alto a "
 "sinistra della cella"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:104-18
-msgid "Alt + Ctrl + Arrow Keys"
-msgstr "Alt + Ctrl + Tasti freccia"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-18
+msgid ""
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Arrow Keys"
+msgstr ""
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Tasti freccia"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:104-69
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-77
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-160
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:104-208
 msgid "Like Alt, but only the active cell is modified"
 msgstr "Come Alt, ma si applica solo alla cella attiva"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-18
-msgid "Ctrl + Alt + Shift + Arrow Keys"
-msgstr "Ctrl + Alt + Maiusc + Tasti freccia"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
-msgid "Alt + Insert"
-msgstr "Alt + Ins"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-58
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:104-18
 msgid ""
-"3 seconds in Insert mode, Arrow Key inserts row/column, Ctrl + Arrow Key "
-"inserts cell"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow "
+"Keys"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>Tasti "
+"freccia"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-18
+msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ins"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-109
+#, fuzzy
+msgid ""
+"3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
 "Tre secondi in modo inserimento, il tasto freccia inserisce una riga/"
-"colonna, Ctrl + tasto freccia inserisce una cella"
+"colonna, Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>tasto freccia "
+"inserisce una cella"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
-msgid "Alt + Del"
-msgstr "Alt + Canc"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
+msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Canc"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-55
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
+#, fuzzy
 msgid ""
-"3 seconds in Delete mode, Arrow key deletes row/column, Ctrl + Arrow key "
-"merges cell with neighboring cell"
+"3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
+"neighboring cell"
 msgstr ""
 "Tre secondi in modo eliminazione, il tasto freccia elimina una riga/colonna, "
-"Ctrl + tasto freccia unisce celle adiacenti"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>tasto freccia unisce celle "
+"adiacenti"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:108-18
-msgid "Shift + Ctrl + Del"
-msgstr "Maiusc + Ctrl + Canc"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
+msgid ""
+"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Del"
+msgstr ""
+"Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\""
+"kbd--plus\">+</span><kbd>Canc"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:108-86
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:107-177
 msgid ""
 "If no whole cell is selected, the text from the cursor to the end of the "
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
@@ -804,7 +878,7 @@ msgstr ""
 "frase. Se il cursore è alla fine di una cella, e nessuna cella è "
 "selezionata, elimina il contenuto della cella successiva."
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:109-1
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:108-1
 msgid ""
 "If no whole cell is selected and the cursor is at the end of the table, the "
 "paragraph following the table will be deleted, unless it is the last "
@@ -814,7 +888,7 @@ msgstr ""
 "elimina il paragrafo successivo alla tabella, a meno che non sia l'ultimo "
 "paragrafo del documento."
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:110-1
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:109-1
 msgid ""
 "If one or more cells are selected, the whole rows containing the selection "
 "will be deleted. If all rows are selected completely or partially, the "
@@ -824,99 +898,122 @@ msgstr ""
 "contengono le parti selezionate. Se tutte le righe vengono selezionate "
 "completamente o in parte, sarà eliminata l'intera tabella."
 
-#: html/loleaflet-help.html%2Bdiv.div.h2:113-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:112-9
 msgid "Word processor functions"
 msgstr "Funzioni elaboratore di testi"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:114-18
 msgid "Insert footnote"
 msgstr "Inserisci nota a piè di pagina"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-60
-msgid "Ctrl + Alt + F"
-msgstr "Ctrl + Alt + F"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:114-60
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>F"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>F"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:116-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-18
 msgid "Insert endnote"
 msgstr "Inserisci nota di chiusura"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:116-59
-msgid "Ctrl + Alt + D"
-msgstr "Ctrl + Alt + D"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-59
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>D"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>D"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:116-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
 msgid "Insert comment"
 msgstr "Inserisci commento"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:117-59
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-59
-msgid "Ctrl + Alt + C"
-msgstr "Ctrl + Alt + C"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:116-59
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-59
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>C"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>C"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:119-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:118-18
 msgid "Insert soft hyphen"
 msgstr "Inserisci trattino opzionale"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:119-63
-msgid "Ctrl + -"
-msgstr "Ctrl + -"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:118-63
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:119-18
 msgid "Insert non-breaking hyphen"
 msgstr "Inserisci trattino non divisibile"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:120-71
-msgid "Ctrl + Shift + -"
-msgstr "Ctrl + Maiusc + -"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:119-71
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>-"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>-"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-18
 msgid "Insert non-breaking space"
 msgstr "Inserisci spazio non divisibile"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-70
-msgid "Ctrl + Shift + Space"
-msgstr "Ctrl + Maiusc + Spazio"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-70
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Space"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>Spazio"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-18
 msgid "Insert line break"
 msgstr "Inserisci interruzione di riga"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-62
-msgid "Shift + Enter"
-msgstr "Maiusc + Invio"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-62
+msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>Invio"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-18
 msgid "Manual page break"
 msgstr "Interruzione manuale di pagina"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-62
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-78
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-85
-msgid "Ctrl + Enter"
-msgstr "Ctrl + Invio"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-62
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-78
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Invio"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-18
 msgid "Column break (in multicolumnar text)"
 msgstr "Interruzione di colonna (in testo a più colonne)"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-81
-msgid "Ctrl + Shift + Enter"
-msgstr "Ctrl + Maiusc + Invio"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-81
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Enter"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>Invio"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-18
 msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
 msgstr ""
 "Inserisce un nuovo paragrafo direttamente prima o dopo una sezione o una "
 "tabella"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-119
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:127-155
-msgid "Alt + Enter"
-msgstr "Alt + Invio"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-119
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-155
+msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Invio"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:127-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-18
 msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
@@ -924,119 +1021,141 @@ msgstr ""
 "Inserisce un nuovo paragrafo senza numerazione all'interno di un elenco. Non "
 "funziona quando il cursore si trova alla fine dell'elenco."
 
-#: html/loleaflet-help.html%2Bdiv.div.h2:131-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:130-9
 msgid "Cell formatting"
 msgstr "Formattazione cella"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid "Display comment"
 msgstr "Visualizza commento"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-60
-msgid "Ctrl + F1"
-msgstr "Ctrl + F1"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-60
+msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-18
 msgid "Fill Down"
 msgstr "Compila verso il basso"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Set Optimal Column Width"
 msgstr "Imposta larghezza ottimale della colonna"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Two decimal places, thousands separator"
 msgstr "Due posizioni dopo la virgola, separatore delle migliaia"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-84
-msgid "Ctrl + Shift + 1"
-msgstr "Ctrl + Maiusc + 1"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-84
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>1"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>1"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
 msgid "Standard exponential format"
 msgstr "Formato esponenziale standard"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-72
-msgid "Ctrl + Shift + 2"
-msgstr "Ctrl + Maiusc + 2"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-72
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>2"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>2"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
 msgid "Standard date format"
 msgstr "Formato data standard"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-65
-msgid "Ctrl + Shift + 3"
-msgstr "Ctrl + Maiusc + 3"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-65
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>3"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>3"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
 msgid "Standard currency format"
 msgstr "Formato valuta standard"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-69
-msgid "Ctrl + Shift + 4"
-msgstr "Ctrl + Maiusc + 4"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-69
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>4"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>4"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-18
 msgid "Standard percentage format (two decimal places)"
 msgstr "Formato percentuale standard (con 2 decimali)"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-92
-msgid "Ctrl + Shift + 5"
-msgstr "Ctrl + Maiusc + 5"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-92
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>5"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>5"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Standard format"
 msgstr "Formato standard"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-60
-msgid "Ctrl + Shift + 6"
-msgstr "Ctrl + Maiusc + 6"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-60
+msgid ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>6"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>6"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:172-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:171-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:228-18
 msgid "Demote list item (list item has to be selected)"
 msgstr "Al livello inferiore (l'elemento della lista deve essere selezionato)"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:172-92
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-99
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-92
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-99
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:171-92
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-99
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:228-92
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-99
 msgid "Tab"
 msgstr "Tab"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:173-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:230-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:172-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-18
 msgid "Promote list item (list item has to be selected)"
 msgstr "Al livello superiore (l'elemento della lista deve essere selezionato)"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:173-93
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-107
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:230-93
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-107
-msgid "Shift + Tab"
-msgstr "Maiusc + Tab"
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:172-93
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-107
+msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
+msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
-#: html/loleaflet-help.html%2Bdiv.div.h2:175-9
-#: html/loleaflet-help.html%2Bdiv.div.h2:232-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:174-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:231-9
 msgid "Text selection and navigation in a textbox"
 msgstr "Selezione del testo e navigazione in una casella di testo"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:197-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:254-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:196-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:253-18
 msgid "Go and select text to start of textbox"
 msgstr "Vai e seleziona il testo fino all'inizio della casella di testo"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:201-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:258-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:200-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:257-18
 msgid "Go and select text to end of textbox"
 msgstr "Vai e seleziona il testo fino alla fine della casella di testo"
 
-#: html/loleaflet-help.html%2Bdiv.div.h2:203-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:202-9
 msgid "Slide keyboard shortcuts"
 msgstr ""
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:261-18
 msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
@@ -1044,166 +1163,221 @@ msgstr ""
 "Commuta la modalità corrente, ad esempio dalla modalità modifica passa alla "
 "modalità selezione oggetto, da questa alla modalità visualizzazione."
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-166
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-166
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:204-166
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:261-166
 msgid "Esc"
 msgstr "Esc"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:205-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:262-18
 msgid "Select objects in the order in which they were created"
 msgstr "Seleziona gli oggetti nell'ordine in cui sono stati creati"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-18
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-18
 msgid "Select objects in the reverse order in which they were created"
 msgstr ""
 "Seleziona gli oggetti nell'ordine inverso a quello in cui sono stati creati"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-18
 #, fuzzy
 msgid "Move to next text object on slide"
 msgstr ""
 "Sposta al prossimo oggetto di testo sulla diapositiva / pagina di disegno"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:209-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
 msgid "Select all in slide"
 msgstr ""
 
-#: html/loleaflet-help.html%2Bdiv.div.h2:260-9
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:219-54
+#, fuzzy
+msgid ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span>B"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>B"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:224-57
+#, fuzzy
+msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:225-55
+#, fuzzy
+msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>L"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:226-56
+#, fuzzy
+msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>R"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:227-52
+#, fuzzy
+msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>J"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-93
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-107
+#, fuzzy
+msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span>Tab"
+msgstr "Maiusc</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:233-55
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-71
+#, fuzzy
+msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:249-71
+#, fuzzy
+msgid ""
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span>Arrow Down"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span class=\""
+"kbd--plus\">+</span><kbd>Freccia giù"
+
+#: html/loleaflet-help.html%2Bdiv.div.h2:259-9
 #, fuzzy
 msgid "Draw page keyboard shortcuts"
 msgstr "Scorciatoie di tastiera per diapositive e pagine di disegno"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-18
 #, fuzzy
 msgid "Move to next text object on drawing page"
 msgstr ""
 "Sposta al prossimo oggetto di testo sulla diapositiva / pagina di disegno"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:266-18
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-85
+#, fuzzy
+msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Invio"
+
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
 #, fuzzy
 msgid "Select all in drawing page"
 msgstr "Seleziona tutto nella diapositiva / pagina di disegno"
 
-#: html/loleaflet-help.html%2Bdiv.h1:271-5
+#: html/loleaflet-help.html%2Bdiv.h1:270-5
 msgid "<span class=\"productname\">%productName</span> Help"
 msgstr "Guida di <span class=\"productname\">%productName</span>"
 
-#: html/loleaflet-help.html%2Bdiv.p:272-5
-#: html/loleaflet-help.html%2Bdiv.h3:310-5
+#: html/loleaflet-help.html%2Bdiv.p:271-5
+#: html/loleaflet-help.html%2Bdiv.h3:309-5
 msgid "Collaborative editing"
 msgstr "Modifica collaborativa"
 
-#: html/loleaflet-help.html%2Bdiv.p:273-5
-#: html/loleaflet-help.html%2Bdiv.h3:317-5
+#: html/loleaflet-help.html%2Bdiv.p:272-5
+#: html/loleaflet-help.html%2Bdiv.h3:316-5
 msgid "<span class=\"productname\">%productName</span> user interface"
 msgstr "Interfaccia utente di <span class=\"productname\">%productName</span>"
 
-#: html/loleaflet-help.html%2Bdiv.p:274-5
-#: html/loleaflet-help.html%2Bdiv.h3:337-5
+#: html/loleaflet-help.html%2Bdiv.p:273-5
+#: html/loleaflet-help.html%2Bdiv.h3:336-5
 msgid "Opening, closing, saving, printing and downloading documents"
 msgstr "Aprire, chiudere, salvare, stampare e scaricare documenti"
 
-#: html/loleaflet-help.html%2Bdiv.p:275-5
-#: html/loleaflet-help.html%2Bdiv.h3:345-5
+#: html/loleaflet-help.html%2Bdiv.p:274-5
+#: html/loleaflet-help.html%2Bdiv.h3:344-5
 msgid "Editing documents"
 msgstr "Modificare documenti"
 
-#: html/loleaflet-help.html%2Bdiv.p:276-5
-#: html/loleaflet-help.html%2Bdiv.div.p:282-9
-#: html/loleaflet-help.html%2Bdiv.div.p:295-9
-#: html/loleaflet-help.html%2Bdiv.h3:366-5
-#: html/loleaflet-help.html%2Bdiv.div.h3:411-5
-#: html/loleaflet-help.html%2Bdiv.div.h3:491-5
+#: html/loleaflet-help.html%2Bdiv.p:275-5
+#: html/loleaflet-help.html%2Bdiv.div.p:281-9
+#: html/loleaflet-help.html%2Bdiv.div.p:294-9
+#: html/loleaflet-help.html%2Bdiv.h3:365-5
+#: html/loleaflet-help.html%2Bdiv.div.h3:410-5
+#: html/loleaflet-help.html%2Bdiv.div.h3:490-5
 msgid "Advanced features"
 msgstr "Funzionalità avanzate"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:278-9
-#: html/loleaflet-help.html%2Bdiv.div.h2:396-5
+#: html/loleaflet-help.html%2Bdiv.div.p:277-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:395-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
 msgstr "Fogli elettronici <span class=\"productname\">%productName</span>"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:279-9
-#: html/loleaflet-help.html%2Bdiv.div.h3:398-5
+#: html/loleaflet-help.html%2Bdiv.div.p:278-9
+#: html/loleaflet-help.html%2Bdiv.div.h3:397-5
 msgid "Editing spreadsheets"
 msgstr "Modificare un foglio di calcolo"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:280-9
-#: html/loleaflet-help.html%2Bdiv.div.h3:401-5
+#: html/loleaflet-help.html%2Bdiv.div.p:279-9
+#: html/loleaflet-help.html%2Bdiv.div.h3:400-5
 msgid "Formulas"
 msgstr "Formule"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:281-9
-#: html/loleaflet-help.html%2Bdiv.div.h3:407-5
+#: html/loleaflet-help.html%2Bdiv.div.p:280-9
+#: html/loleaflet-help.html%2Bdiv.div.h3:406-5
 msgid "Formatting spreadsheets"
 msgstr "Formattare un foglio elettronico"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:285-9
-#: html/loleaflet-help.html%2Bdiv.div.h2:444-5
+#: html/loleaflet-help.html%2Bdiv.div.p:284-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:443-5
 msgid "<span class=\"productname\">%productName</span> text documents"
 msgstr "Documenti di testo <span class=\"productname\">%productName</span>"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:286-9
-#: html/loleaflet-help.html%2Bdiv.div.h3:446-5
+#: html/loleaflet-help.html%2Bdiv.div.p:285-9
+#: html/loleaflet-help.html%2Bdiv.div.h3:445-5
 msgid "Editing text documents"
 msgstr "Modificare un documento di testo"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:287-9
-#: html/loleaflet-help.html%2Bdiv.div.h3:449-5
+#: html/loleaflet-help.html%2Bdiv.div.p:286-9
+#: html/loleaflet-help.html%2Bdiv.div.h3:448-5
 msgid "Context menus"
 msgstr "Menu di contesto"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:288-9
-#: html/loleaflet-help.html%2Bdiv.div.h3:459-5
+#: html/loleaflet-help.html%2Bdiv.div.p:287-9
+#: html/loleaflet-help.html%2Bdiv.div.h3:458-5
 msgid "Advanced text document editor features"
 msgstr "Funzionalità di editor avanzate per i documenti di testo"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:291-9
-#: html/loleaflet-help.html%2Bdiv.div.h2:478-5
+#: html/loleaflet-help.html%2Bdiv.div.p:290-9
+#: html/loleaflet-help.html%2Bdiv.div.h2:477-5
 msgid "<span class=\"productname\">%productName</span> presentations"
 msgstr "Presentazioni <span class=\"productname\">%productName</span>"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:292-9
-#: html/loleaflet-help.html%2Bdiv.div.h3:480-5
+#: html/loleaflet-help.html%2Bdiv.div.p:291-9
+#: html/loleaflet-help.html%2Bdiv.div.h3:479-5
 msgid "Editing presentations"
 msgstr "Modificare una presentazione"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:293-9
-#: html/loleaflet-help.html%2Bdiv.div.h3:483-5
+#: html/loleaflet-help.html%2Bdiv.div.p:292-9
+#: html/loleaflet-help.html%2Bdiv.div.h3:482-5
 msgid "Slide show"
 msgstr "Presentazione"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:294-9
-#: html/loleaflet-help.html%2Bdiv.div.h3:487-5
+#: html/loleaflet-help.html%2Bdiv.div.p:293-9
+#: html/loleaflet-help.html%2Bdiv.div.h3:486-5
 msgid "Slide pane"
 msgstr "Riquadro diapositive"
 
-#: html/loleaflet-help.html%2Bdiv.p:297-5
-#: html/loleaflet-help.html%2Bdiv.h2:500-5
+#: html/loleaflet-help.html%2Bdiv.p:296-5
+#: html/loleaflet-help.html%2Bdiv.h2:499-5
 msgid "Frequently Asked Questions"
 msgstr "Domande frequenti"
 
-#: html/loleaflet-help.html%2Bdiv.p:298-5
+#: html/loleaflet-help.html%2Bdiv.p:297-5
 msgid "General"
 msgstr "Generale"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:300-9
-#: html/loleaflet-help.html%2Bdiv.div.h3:531-5
+#: html/loleaflet-help.html%2Bdiv.div.p:299-9
+#: html/loleaflet-help.html%2Bdiv.div.h3:530-5
 msgid "Text documents"
 msgstr "Documenti di testo"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:303-9
-#: html/loleaflet-help.html%2Bdiv.div.h3:595-5
+#: html/loleaflet-help.html%2Bdiv.div.p:302-9
+#: html/loleaflet-help.html%2Bdiv.div.h3:594-5
 msgid "Spreadsheets"
 msgstr "Fogli di calcolo"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:306-9
-#: html/loleaflet-help.html%2Bdiv.div.h3:623-5
+#: html/loleaflet-help.html%2Bdiv.div.p:305-9
+#: html/loleaflet-help.html%2Bdiv.div.h3:622-5
 msgid "Presentations"
 msgstr "Presentazioni"
 
-#: html/loleaflet-help.html%2Bdiv.p:308-5
+#: html/loleaflet-help.html%2Bdiv.p:307-5
 msgid ""
 "<span class=\"productname\">%productName</span> allows you to create and "
 "edit office documents text documents, spreadsheets and presentations "
@@ -1215,7 +1389,7 @@ msgstr ""
 "semplice e intuitivo: documenti di testo, fogli elettronici e presentazioni. "
 "Puoi lavorare da solo, o in collaborazione se fai parte di un team."
 
-#: html/loleaflet-help.html%2Bdiv.ul.li.p:312-11
+#: html/loleaflet-help.html%2Bdiv.ul.li.p:311-11
 msgid ""
 "Each user gets assigned a color. The cursor of each user will be shown in "
 "the assigned color. Note: you will see your cursor as black, blinking "
@@ -1225,7 +1399,7 @@ msgstr ""
 "mostrato del colore assegnato. Nota: vedrai il tuo cursore di colore nero e "
 "lampeggiante, mentre gli altri utenti ti visualizzeranno colorato."
 
-#: html/loleaflet-help.html%2Bdiv.ul.li.p:313-11
+#: html/loleaflet-help.html%2Bdiv.ul.li.p:312-11
 msgid ""
 "You can jump to the cursor of a user by clicking on the name (or avatar) of "
 "the user. It is possible to follow the editor."
@@ -1233,7 +1407,7 @@ msgstr ""
 "Puoi passare al cursore di un utente facendo clic sul nome (o l'avatar) "
 "dell'utente. È possibile seguire l'editor."
 
-#: html/loleaflet-help.html%2Bdiv.ul.li.p:314-11
+#: html/loleaflet-help.html%2Bdiv.ul.li.p:313-11
 msgid ""
 "<span class=\"productname\">%productName</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
@@ -1241,7 +1415,7 @@ msgstr ""
 "<span class=\"productname\">%productName</span> ti notifica in modo discreto "
 "nel piè di pagina quando un nuovo utente accede o esce."
 
-#: html/loleaflet-help.html%2Bdiv.p:318-5
+#: html/loleaflet-help.html%2Bdiv.p:317-5
 msgid ""
 "<span class=\"productname\">%productName</span> uses modern browser "
 "resources to adapt the user interface to the size of the viewing area, "
@@ -1253,7 +1427,7 @@ msgstr ""
 "di visualizzazione, inclusi i piccoli schermi dei dispositivi mobili. "
 "L'interfaccia si compone di:"
 
-#: html/loleaflet-help.html%2Bdiv.p:319-5
+#: html/loleaflet-help.html%2Bdiv.p:318-5
 msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
@@ -1261,7 +1435,7 @@ msgstr ""
 "<span class=\"def\">L'area del documento:</span> l'area dell'applicazione "
 "mostra il contenuto, foglio di calcolo, presentazione o testo, del documento."
 
-#: html/loleaflet-help.html%2Bdiv.p.img:320-5
+#: html/loleaflet-help.html%2Bdiv.p.img:319-5
 msgid ""
 "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
 "and includes many options, commands for printing, editing, viewing and other "
@@ -1278,7 +1452,7 @@ msgstr ""
 "height:0.6cm;width:0.6cm;\" src=\"images/unfold.svg\"> per visualizzare il "
 "menu."
 
-#: html/loleaflet-help.html%2Bdiv.p:321-5
+#: html/loleaflet-help.html%2Bdiv.p:320-5
 msgid ""
 "<span class=\"def\">Context menus:</span> On clicking with the right mouse "
 "button, a menu appears with commands associated with the underlying object."
@@ -1287,7 +1461,7 @@ msgstr ""
 "viene richiamato un menu contenente comandi associati all'oggetto "
 "soggiacente."
 
-#: html/loleaflet-help.html%2Bdiv.p:322-5
+#: html/loleaflet-help.html%2Bdiv.p:321-5
 msgid ""
 "<span class=\"def\">The toolbar:</span> The toolbar contains the most used "
 "options for daily editing. Toolbar buttons are dynamic, meaning that their "
@@ -1298,7 +1472,7 @@ msgstr ""
 "degli strumenti sono dinamici, il che significa che il loro stato (attivo o "
 "disattivo) dipende da vari fattori."
 
-#: html/loleaflet-help.html%2Bdiv.p:323-5
+#: html/loleaflet-help.html%2Bdiv.p:322-5
 msgid ""
 "<span class=\"def\">The status bar:</span> The status bar is shown in the "
 "bottom, and contains several useful options and features."
@@ -1306,7 +1480,7 @@ msgstr ""
 "<span class=\"def\">La barra di stato:</span> viene mostrata nella parte "
 "inferiore e contiene varie opzioni e utili funzionalità."
 
-#: html/loleaflet-help.html%2Bdiv.p:325-5
+#: html/loleaflet-help.html%2Bdiv.p:324-5
 msgid ""
 "<span class=\"def\">The search bar:</span> Searching starts automatically "
 "when content is inserted in the search box, and the document window "
@@ -1319,19 +1493,19 @@ msgstr ""
 "La ricerca non distingue maiuscole e minuscole. Sono presenti tre pulsanti "
 "accanto alla casella di ricerca:"
 
-#: html/loleaflet-help.html%2Bdiv.ul.li.p:327-11
+#: html/loleaflet-help.html%2Bdiv.ul.li.p:326-11
 msgid "Search backwards"
 msgstr "Trova precedente"
 
-#: html/loleaflet-help.html%2Bdiv.ul.li.p:328-11
+#: html/loleaflet-help.html%2Bdiv.ul.li.p:327-11
 msgid "Search forward"
 msgstr "Trova successivo"
 
-#: html/loleaflet-help.html%2Bdiv.ul.li.p:329-11
+#: html/loleaflet-help.html%2Bdiv.ul.li.p:328-11
 msgid "Cancel the search (appears only when a text has been searched)"
 msgstr "Annulla la ricerca (appare solo quando viene trovato un testo)"
 
-#: html/loleaflet-help.html%2Bdiv.p:331-5
+#: html/loleaflet-help.html%2Bdiv.p:330-5
 msgid ""
 "<span class=\"def\">The zoom bar:</span> At the right of the status bar, "
 "there is a set of buttons that allow you to zoom to 100%, zoom out and zoom "
@@ -1344,7 +1518,7 @@ msgstr ""
 "documento, non riguarda l'interfaccia. L'attuale livello di ingrandimento "
 "viene mostrato in quest'area."
 
-#: html/loleaflet-help.html%2Bdiv.p:332-5
+#: html/loleaflet-help.html%2Bdiv.p:331-5
 msgid ""
 "Text, charts, shapes and svg images will stay sharp, when zooming in, you "
 "will only see pixels appear at inserted images, such as jpg’s or png’s."
@@ -1353,13 +1527,13 @@ msgstr ""
 "nitidi, e sarà possibile osservare la comparsa di pixel solo nelle immagini "
 "inserite, tipo jpg o png."
 
-#: html/loleaflet-help.html%2Bdiv.p:333-5
+#: html/loleaflet-help.html%2Bdiv.p:332-5
 msgid "Using the browser zoom affects the document and user interface areas."
 msgstr ""
 "L'uso dello zoom del browser coinvolge entrambe le aree del documento e "
 "dell'interfaccia utente."
 
-#: html/loleaflet-help.html%2Bdiv.p:334-5
+#: html/loleaflet-help.html%2Bdiv.p:333-5
 msgid ""
 "<span class=\"def\">The information bar:</span> At the right of the search "
 "bar, a set of information on the document is displayed. The actual "
@@ -1369,7 +1543,7 @@ msgstr ""
 "barra di ricerca è presente un gruppo di informazioni riguardanti il "
 "documento. L'informazione dipende ovviamente dalla natura del documento."
 
-#: html/loleaflet-help.html%2Bdiv.p:338-5
+#: html/loleaflet-help.html%2Bdiv.p:337-5
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
 "integrated with <span class=\"productname\">%productName</span>."
@@ -1377,7 +1551,7 @@ msgstr ""
 "I tuoi documenti sono memorizzati e gestiti nel deposito cloud integrato con "
 "<span class=\"productname\">%productName</span>."
 
-#: html/loleaflet-help.html%2Bdiv.p:339-5
+#: html/loleaflet-help.html%2Bdiv.p:338-5
 msgid ""
 "To download a document download it from the <span class=\"productname\""
 ">%productName</span> application’s <span class=\"ui\">File</span> menu. The "
@@ -1389,7 +1563,7 @@ msgstr ""
 "formati di scaricamento disponibili dipendono dall'applicazione. Tutte le "
 "applicazioni esportano i documenti nel formato PDF."
 
-#: html/loleaflet-help.html%2Bdiv.p:340-5
+#: html/loleaflet-help.html%2Bdiv.p:339-5
 msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
 ">%productName</span> module associated to the document format."
@@ -1397,7 +1571,7 @@ msgstr ""
 "Per aprire un documento, fai clic sul file: si aprirà il modulo di <span "
 "class=\"productname\">%productName</span> associato al formato del documento."
 
-#: html/loleaflet-help.html%2Bdiv.p:341-5
+#: html/loleaflet-help.html%2Bdiv.p:340-5
 msgid ""
 "Documents in <span class=\"productname\">%productName</span> save "
 "automatically, but if you are concerned that a document is synchronized as "
@@ -1409,7 +1583,7 @@ msgstr ""
 "forzare il salvataggio utilizzando il comando <span class=\"ui\">Salva</span>"
 " del menu <span class=\"ui\">File</span>."
 
-#: html/loleaflet-help.html%2Bdiv.p:342-5
+#: html/loleaflet-help.html%2Bdiv.p:341-5
 msgid ""
 "Depending on the capabilities of your browser the print window may appear or "
 "a “Download PDF export?” popup shows. You can print this PDF in your "
@@ -1419,13 +1593,13 @@ msgstr ""
 "stampa oppure la richiesta “Scaricare l'esportazione PDF?”. Puoi stampare "
 "questo PDF nel tuo lettore PDF preferito."
 
-#: html/loleaflet-help.html%2Bdiv.p:343-5
+#: html/loleaflet-help.html%2Bdiv.p:342-5
 msgid ""
 "When closing a document, it is automatically saved if it has been changed."
 msgstr ""
 "Quando chiudi un documento modificato, questo viene automaticamente salvato."
 
-#: html/loleaflet-help.html%2Bdiv.p:346-5
+#: html/loleaflet-help.html%2Bdiv.p:345-5
 msgid ""
 "Document editing should be familiar to everyone that has used an office "
 "application before, but here are some distinctive features:"
@@ -1434,39 +1608,40 @@ msgstr ""
 "utilizzato in precedenza un'applicazione per ufficio, ma con alcune "
 "differenze:"
 
-#: html/loleaflet-help.html%2Bdiv.h4:347-5
+#: html/loleaflet-help.html%2Bdiv.h4:346-5
 msgid "Copy and Paste"
 msgstr "Copia e Incolla"
 
-#: html/loleaflet-help.html%2Bdiv.p:348-5
+#: html/loleaflet-help.html%2Bdiv.p:347-5
 msgid ""
 "Rich content copy/cut and paste is supported, not only within a given "
 "document, but also across documents on the same or different <span class=\""
 "productname\">%productName</span>. For these internal uses, users can copy/"
 "cut content, including images and mixed content, on PC by using the keyboard "
-"shortcuts directly (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\""
-">X</span>, <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <"
-"span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">V</span>). For security "
-"reasons it is necessary to use <span class=\"kbd\">Ctrl</span> + <span class="
-"\"kbd\">V</span> to paste on PC, but context menus can be used for cut and "
-"copy. On Android or iOS selecting text by double tapping, and using a long-"
-"tap to access copy/cut/paste via the context menu is required."
+"shortcuts directly (<kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>). For security reasons it is necessary to use "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to paste on "
+"PC, but context menus can be used for cut and copy. On Android or iOS "
+"selecting text by double tapping, and using a long-tap to access copy/cut/"
+"paste via the context menu is required."
 msgstr ""
 "Sono supportate le funzioni di copia/taglia e incolla di testo formattato, "
 "non solo all'interno di un documento specifico ma tra i vari documenti dello "
 "stesso o di un diverso <span class=\"productname\">%productName</span>. "
 "Nell'uso interno, gli utenti possono copiare/tagliare contenuto, incluso "
 "immagini e contenuto misto, sul computer direttamente con le combinazioni di "
-"tasti (<span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">X</span>, <span "
-"class=\"kbd\">Ctrl</span> + <span class=\"kbd\">C</span>, <span class=\"kbd\""
-">Ctrl</span> + <span class=\"kbd\">V</span>). Per ragioni di sicurezza, è "
-"necessario utilizzare <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\""
-">V</span> per incollare sul PC, ma possono essere utilizzati i menu di "
-"contesto per copiare e tagliare. In Android o iOS è richiesto il doppio tap "
-"e l'uso del tocco prolungato per accedere alle funzioni copia/taglia/incolla "
-"tramite menu di contesto."
+"tasti (<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd>, "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>). Per ragioni "
+"di sicurezza, è necessario utilizzare <kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>V</kbd> per incollare sul PC, ma possono essere "
+"utilizzati i menu di contesto per copiare e tagliare. In Android o iOS è "
+"richiesto il doppio tap e l'uso del tocco prolungato per accedere alle "
+"funzioni copia/taglia/incolla tramite menu di contesto."
 
-#: html/loleaflet-help.html%2Bdiv.p:349-5
+#: html/loleaflet-help.html%2Bdiv.p:348-5
 msgid ""
 "To copy larger pieces of content to other applications on your device, users "
 "need to press the <span class=\"ui\">Start download</span> button, and then "
@@ -1484,11 +1659,11 @@ msgstr ""
 "solo per esportare il contenuto da incollare in applicazioni esterne. Questo "
 "passaggio converte anche gli oggetti complessi in immagini statiche."
 
-#: html/loleaflet-help.html%2Bdiv.h4:350-5
+#: html/loleaflet-help.html%2Bdiv.h4:349-5
 msgid "Document repair"
 msgstr "Ripara documento"
 
-#: html/loleaflet-help.html%2Bdiv.p:351-5
+#: html/loleaflet-help.html%2Bdiv.p:350-5
 msgid ""
 "When multiple people edit the same document concurrently, it is possible for "
 "their changes to conflict and this can cause some confusion. The Document "
@@ -1501,7 +1676,7 @@ msgstr ""
 "modifiche eseguite dagli altri editor e riportare il documento a uno stato "
 "precedente."
 
-#: html/loleaflet-help.html%2Bdiv.p:352-5
+#: html/loleaflet-help.html%2Bdiv.p:351-5
 msgid ""
 "To jump back to the selected state, select it with the mouse and hit <span "
 "class=\"ui\">Jump to state</span>."
@@ -1509,23 +1684,23 @@ msgstr ""
 "Per tornare indietro allo stato selezionato, selezionalo col mouse e premi <"
 "span class=\"ui\">Passa allo stato</span>."
 
-#: html/loleaflet-help.html%2Bdiv.p:354-5
+#: html/loleaflet-help.html%2Bdiv.p:353-5
 msgid ""
 "This is particularly useful – say when a colleague inadvertently selected "
-"all text in the document with <span class=\"kbd\">Ctrl</span> + <span class="
-"\"kbd\">A</span> and proceeded to type over it destroying it – while you "
-"were concurrently editing."
+"all text in the document with <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>A</kbd> and proceeded to type over it destroying it – while "
+"you were concurrently editing."
 msgstr ""
 "Questo è molto utile – mettiamo il caso che un collega abbia eliminato "
-"inavvertitamente tutto il testo del documento selezionandolo con <span class="
-"\"kbd\">Ctrl</span> + <span class=\"kbd\">A</span> e digitandovi sopra – "
-"durante una modifica in contemporanea."
+"inavvertitamente tutto il testo del documento selezionandolo con "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A</kbd> e digitandovi "
+"sopra – durante una modifica in contemporanea."
 
-#: html/loleaflet-help.html%2Bdiv.h4:355-5
+#: html/loleaflet-help.html%2Bdiv.h4:354-5
 msgid "Inactive document"
 msgstr "Documento inattivo"
 
-#: html/loleaflet-help.html%2Bdiv.p:356-5
+#: html/loleaflet-help.html%2Bdiv.p:355-5
 msgid ""
 "When <span class=\"productname\">%productName</span> detects that there has "
 "not been any activity in the browser for a while, it puts the document in an "
@@ -1538,7 +1713,7 @@ msgstr ""
 "compare il messaggio “Documento inattivo – fai clic per riprendere le "
 "modifiche”."
 
-#: html/loleaflet-help.html%2Bdiv.p:358-5
+#: html/loleaflet-help.html%2Bdiv.p:357-5
 msgid ""
 "To continue editing, click on the document and the layover and message "
 "disappear. Any changes that may have been made by other users – while "
@@ -1548,11 +1723,11 @@ msgstr ""
 "messaggio scompariranno. Qualsiasi modifica fatta dagli altri utenti - che "
 "in quel momento ci stanno lavorando - sarà ricaricata."
 
-#: html/loleaflet-help.html%2Bdiv.h4:359-5
+#: html/loleaflet-help.html%2Bdiv.h4:358-5
 msgid "Pasting"
 msgstr "Incollare"
 
-#: html/loleaflet-help.html%2Bdiv.p:360-5
+#: html/loleaflet-help.html%2Bdiv.p:359-5
 msgid ""
 "When you paste content copied from within the same document, the format and "
 "elements are maintained. If you copy from another document, in another tab "
@@ -1564,17 +1739,17 @@ msgstr ""
 "un'altra scheda della finestra del browser, o dall'esterno del browser, il "
 "contenuto incollato conserverà la formattazione."
 
-#: html/loleaflet-help.html%2Bdiv.p:361-5
+#: html/loleaflet-help.html%2Bdiv.p:360-5
 msgid ""
-"You can paste as unformatted text with the keyboard shortcut: <span class=\""
-"kbd\">Ctrl</span> + <span class=\"kbd\">Shift</span> + <span class=\"kbd\""
-">V</span>"
+"You can paste as unformatted text with the keyboard shortcut: "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd>"
 msgstr ""
 "Puoi incollare il testo senza formattazione tramite la combinazione di tasti:"
-" <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\">Maiusc</span> + <span "
-"class=\"kbd\">V</span>"
+" <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Maiusc</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>V</kbd>"
 
-#: html/loleaflet-help.html%2Bdiv.p:362-5
+#: html/loleaflet-help.html%2Bdiv.p:361-5
 msgid ""
 "When you paste text from within the document, formatting will be respected. "
 "You can also paste objects, such as images, if they are copied from the "
@@ -1584,7 +1759,7 @@ msgstr ""
 "preservata. Puoi incollare anche oggetti, come le immagini, se esse vengono "
 "copiate dal documento su cui stai lavorando."
 
-#: html/loleaflet-help.html%2Bdiv.p:363-5
+#: html/loleaflet-help.html%2Bdiv.p:362-5
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application, it will be pasted as rich text."
@@ -1592,7 +1767,7 @@ msgstr ""
 "Quando incolli dall'esterno del documento (un'altra finestra del browser o "
 "un'applicazione desktop), il testo sarà incollato come testo formattato."
 
-#: html/loleaflet-help.html%2Bdiv.p:364-5
+#: html/loleaflet-help.html%2Bdiv.p:363-5
 msgid ""
 "When you have internal cut or copied content, you can paste this content "
 "using the context menu."
@@ -1600,11 +1775,11 @@ msgstr ""
 "Quando copi o tagli internamente del contenuto, puoi incollarlo tramite il "
 "menu di contesto."
 
-#: html/loleaflet-help.html%2Bdiv.h4:367-5
+#: html/loleaflet-help.html%2Bdiv.h4:366-5
 msgid "Adding charts"
 msgstr "Aggiungere grafici"
 
-#: html/loleaflet-help.html%2Bdiv.p:368-5
+#: html/loleaflet-help.html%2Bdiv.p:367-5
 msgid ""
 "<span class=\"productname\">%productName</span> supports inserting and "
 "visualization of charts in documents. To add a chart:"
@@ -1612,7 +1787,7 @@ msgstr ""
 "<span class=\"productname\">%productName</span> supporta l'inserimento e la "
 "visualizzazione di grafici nei documenti. Per aggiungere un grafico:"
 
-#: html/loleaflet-help.html%2Bdiv.ol.li.p:370-11
+#: html/loleaflet-help.html%2Bdiv.ol.li.p:369-11
 msgid ""
 "Select a table in text document, a range in a spreadsheet or a table in a "
 "presentation."
@@ -1620,7 +1795,7 @@ msgstr ""
 "Selezionate una tabella nel documento di testo, un intervallo di celle in un "
 "foglio elettronico o una tabella in una presentazione."
 
-#: html/loleaflet-help.html%2Bdiv.ol.li.p:372-9
+#: html/loleaflet-help.html%2Bdiv.ol.li.p:371-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
 "Customize your chart on the sidebar:"
@@ -1628,13 +1803,13 @@ msgstr ""
 "Scegliete <span class=\"ui\">Inserisci</span> → <span class=\"ui\""
 ">Grafico</span>. Personalizza il tuo grafico nella barra laterale:"
 
-#: html/loleaflet-help.html%2Bdiv.ol.li.p:375-11
+#: html/loleaflet-help.html%2Bdiv.ol.li.p:374-11
 msgid "If no table or range was selected, a prototype chart is displayed."
 msgstr ""
 "Se non è stata selezionata alcuna tabella o alcun intervallo, sarà "
 "visualizzato un prototipo di grafico."
 
-#: html/loleaflet-help.html%2Bdiv.p:378-5
+#: html/loleaflet-help.html%2Bdiv.p:377-5
 msgid ""
 "<span class=\"def\">Chart editing:</span> Double click the chart to select. "
 "Use context menus to add chart elements such as title, axis, and other. "
@@ -1647,7 +1822,7 @@ msgstr ""
 "span class=\"ui\">Tipo di grafico</span> per modificare rispettivamente i "
 "dati del grafico e selezionare il tipo di grafico."
 
-#: html/loleaflet-help.html%2Bdiv.p:379-5
+#: html/loleaflet-help.html%2Bdiv.p:378-5
 msgid ""
 "<span class=\"def\">Chart formatting:</span> The same context menu brings "
 "you to chart data table and chart type selection."
@@ -1656,7 +1831,7 @@ msgstr ""
 "contesto ti permette di accedere alla tabella dei dati e alla selezione del "
 "tipo di grafico."
 
-#: html/loleaflet-help.html%2Bdiv.p:380-5
+#: html/loleaflet-help.html%2Bdiv.p:379-5
 msgid ""
 "<span class=\"def\">Data series formatting:</span> Open the context menu and "
 "choose <span class=\"ui\">Format data series</span>."
@@ -1664,11 +1839,11 @@ msgstr ""
 "<span class=\"def\">Formattazione della serie di dati:</span> apri il menu "
 "di contesto e scegli <span class=\"ui\">Formatta serie di dati</span>."
 
-#: html/loleaflet-help.html%2Bdiv.h4:381-5
+#: html/loleaflet-help.html%2Bdiv.h4:380-5
 msgid "Handling images"
 msgstr "Gestione delle immagini"
 
-#: html/loleaflet-help.html%2Bdiv.p:382-5
+#: html/loleaflet-help.html%2Bdiv.p:381-5
 msgid ""
 "<span class=\"productname\">%productName</span> inserts images in the text "
 "document from your local computer or from your cloud storage. Inserted "
@@ -1678,7 +1853,7 @@ msgstr ""
 "documento di testo dal tuo computer locale o dal tuo cloud personale. Le "
 "immagini inserite vengono sempre incorporate nel documento."
 
-#: html/loleaflet-help.html%2Bdiv.p:383-5
+#: html/loleaflet-help.html%2Bdiv.p:382-5
 msgid ""
 "<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui\">"
 "Insert image</span> icon allows you to choose an image from the cloud "
@@ -1688,7 +1863,7 @@ msgstr ""
 "class=\"ui\">Inserisci immagine</span> per scegliere un'immagine dalle "
 "cartelle e condivisioni del tuo cloud."
 
-#: html/loleaflet-help.html%2Bdiv.p:384-5
+#: html/loleaflet-help.html%2Bdiv.p:383-5
 msgid ""
 "<span class=\"def\">Insert local image:</span> opens the browser file picker "
 "to upload the image from your local computer and insert it into the document."
@@ -1697,7 +1872,7 @@ msgstr ""
 "scelta file per caricare l'immagine dal tuo computer locale e inserirla "
 "all'interno del tuo documento."
 
-#: html/loleaflet-help.html%2Bdiv.p:385-5
+#: html/loleaflet-help.html%2Bdiv.p:384-5
 msgid ""
 "Images can be resized, rotated and anchored. Text can be wrapped around the "
 "image. Select the image and open the context menu. Use the images handles to "
@@ -1707,11 +1882,11 @@ msgstr ""
 "scorrere attorno all'immagine. Seleziona l'immagine e apri il menu di "
 "contesto. Usa le maniglie per ridimensionare l'immagine col mouse."
 
-#: html/loleaflet-help.html%2Bdiv.h4:386-5
+#: html/loleaflet-help.html%2Bdiv.h4:385-5
 msgid "Comments in documents"
 msgstr "Commenti nei documenti"
 
-#: html/loleaflet-help.html%2Bdiv.p:387-5
+#: html/loleaflet-help.html%2Bdiv.p:386-5
 msgid ""
 "Insert comments in <span class=\"productname\">%productName</span> in places "
 "that need special reader attention. Comments are displayed on the right and "
@@ -1722,7 +1897,7 @@ msgstr ""
 "visualizzati sulla destra e recano il nome del creatore e la data di "
 "creazione."
 
-#: html/loleaflet-help.html%2Bdiv.p.img:389-5
+#: html/loleaflet-help.html%2Bdiv.p.img:388-5
 msgid ""
 "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
 "\"images/submenu.svg\">) icon to reply, move and delete comments."
@@ -1731,11 +1906,11 @@ msgstr ""
 "\"\" src=\"images/submenu.svg\">) per rispondere, spostare ed eliminare "
 "commenti."
 
-#: html/loleaflet-help.html%2Bdiv.h4:390-5
+#: html/loleaflet-help.html%2Bdiv.h4:389-5
 msgid "Spellchecking"
 msgstr "Controllo ortografico"
 
-#: html/loleaflet-help.html%2Bdiv.p:391-5
+#: html/loleaflet-help.html%2Bdiv.p:390-5
 msgid ""
 "<span class=\"productname\">%productName</span> can check spelling in text "
 "documents, spreadsheets and presentations. A red wavy underline indicates "
@@ -1748,7 +1923,7 @@ msgstr ""
 "Fai clic col pulsante destro del mouse per aprire il menu di contesto "
 "contenente i suggerimenti per la correzione della parola errata."
 
-#: html/loleaflet-help.html%2Bdiv.p:393-5
+#: html/loleaflet-help.html%2Bdiv.p:392-5
 msgid ""
 "To systematically spell-check the whole document use the <span class=\"ui\""
 ">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
@@ -1757,16 +1932,16 @@ msgstr ""
 "documento, usa l'opzione <span class=\"ui\">Controllo ortografico</span> "
 "presente nel menu <span class=\"ui\">Strumenti</span>."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:399-5
+#: html/loleaflet-help.html%2Bdiv.div.p:398-5
 msgid ""
 "You edit an online spreadsheet in the same way you edit a desktop "
 "spreadsheet. Operations like entering data, selecting ranges, columns, rows "
 "or sheets are the same. Use the keyboard, menus or toolbar to command "
 "actions in the spreadsheet. Dragging cells contents to fill cells with data "
 "is also supported. Copy, cut and paste commands are available from the "
-"context menu. Following entered data with a <span class=\"kbd\">Tab</span> "
-"will move the cursor to the next cell to the right, and with an <span class="
-"\"kbd\">Enter</span> to the cell below for easy further data entry."
+"context menu. Following entered data with a <kbd>Tab</kbd> will move the "
+"cursor to the next cell to the right, and with an <kbd>Enter</kbd> to the "
+"cell below for easy further data entry."
 msgstr ""
 "La modifica di un foglio elettronico in linea è uguale alla modifica di un "
 "foglio elettronico che si trova nel computer. Operazioni come inserimento "
@@ -1774,24 +1949,24 @@ msgstr ""
 "eseguire azioni all'interno del foglio usa la tastiera, i menu o la barra "
 "degli strumenti. È supportato pure il trascinamento del contenuto per "
 "popolare le celle con dati. I comandi copia, taglia e incolla sono "
-"disponibili dal menu di contesto. Se l'inserimento dei dati è seguito da <"
-"span class=\"kbd\">Tab</span>, il cursore si sposterà nella cella destra "
-"successiva, mentre <span class=\"kbd\">Invio</span> sposterà il fuoco nella "
-"cella sottostante per un più rapido inserimento dei dati."
+"disponibili dal menu di contesto. Se l'inserimento dei dati è seguito da "
+"<kbd>Tab</kbd>, il cursore si sposterà nella cella destra successiva, mentre "
+"<kbd>Invio</kbd> sposterà il fuoco nella cella sottostante per un più rapido "
+"inserimento dei dati."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:402-5
+#: html/loleaflet-help.html%2Bdiv.div.p:401-5
 msgid ""
 "Formulas are entered in the formula bar. Enter '=' and insert the formula."
 msgstr ""
 "Le formule vengono inserite nella barra di calcolo. Digitate '=' e inserite "
 "la formula."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:403-5
+#: html/loleaflet-help.html%2Bdiv.div.p:402-5
 msgid "All spreadsheets functions and mathematical rules applies."
 msgstr ""
 "Valgono tutte le regole matematiche e le funzioni dei fogli elettronici."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:405-5
+#: html/loleaflet-help.html%2Bdiv.div.p:404-5
 msgid ""
 "The formula language should be extremely familiar to any spreadsheet user, "
 "and is specified in great detail in the <a href=\"https://www.oasis-open.org/"
@@ -1803,25 +1978,25 @@ msgstr ""
 "<a href=\"https://www.oasis-open.org/committees/download.php/16826/"
 "openformula-spec-20060221.html\">specifiche di OASIS OpenFormula</a>."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:408-5
+#: html/loleaflet-help.html%2Bdiv.div.p:407-5
 msgid ""
 "<span class=\"def\">Direct formatting:</span> You can format spreadsheets "
 "cells, columns, rows and sheets by formatting directly from the menus, "
 "toolbar or context menus. Direct formatting applies only to the current "
-"object selected. To format a cell either use the menu or hit <span class=\""
-"kbd\">Ctrl</span> + <span class=\"kbd\">1</span>. The dialog allows complex "
-"and custom number formatting, as well as font, complex border, background, "
-"cell protection and other options."
+"object selected. To format a cell either use the menu or hit <kbd>Ctrl</kbd><"
+"span class=\"kbd--plus\">+</span><kbd>1</kbd>. The dialog allows complex and "
+"custom number formatting, as well as font, complex border, background, cell "
+"protection and other options."
 msgstr ""
 "<span class=\"def\">Formattazione diretta:</span> puoi formattare fogli, "
 "celle e colonne direttamente dai menu, la barra degli strumenti o i menu di "
 "contesto. La formattazione diretta vale solo per l'oggetto correntemente "
-"selezionato. Per formattare una cella usa il menu o premi <span class=\"kbd\""
-">Ctrl</span> + <span class=\"kbd\">1</span>: la finestra di dialogo consente "
-"di formattare in modo complesso e personalizzato i numeri, oltre il "
+"selezionato. Per formattare una cella usa il menu o premi <kbd>Ctrl</kbd><"
+"span class=\"kbd--plus\">+</span><kbd>1</kbd>: la finestra di dialogo "
+"consente di formattare in modo complesso e personalizzato i numeri, oltre il "
 "carattere, i bordi, lo sfondo, la protezione delle celle e altro ancora."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:412-5
+#: html/loleaflet-help.html%2Bdiv.div.p:411-5
 msgid ""
 "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or "
 "text ascending or descending. <span class=\"productname\">%productName</span>"
@@ -1833,7 +2008,7 @@ msgstr ""
 "productname\">%productName</span> rileva automaticamente le intestazioni e "
 "le colonne contigue per estendere la selezione."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:413-5
+#: html/loleaflet-help.html%2Bdiv.div.p:412-5
 msgid ""
 "<span class=\"def\">Filtering data:</span> Filters and advanced filters "
 "allow you to work on certain filtered rows (records) of a data range. In the "
@@ -1845,7 +2020,7 @@ msgstr ""
 "dati. Nei fogli elettronici <span class=\"productname\">%productName</span> "
 "ci sono varie possibilità di applicazione dei filtri."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:416-10
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:415-10
 msgid ""
 "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly "
 "restrict the display to records with identical entries in a data field."
@@ -1854,7 +2029,7 @@ msgstr ""
 "visualizzare rapidamente solo quei record che contengono la stessa voce in "
 "un campo di dati."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:419-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:418-11
 msgid ""
 "In the <span class=\"ui\">Standard Filter</span> dialog, you can also define "
 "ranges which contain the values in particular data fields. You can use the "
@@ -1866,7 +2041,7 @@ msgstr ""
 "Utilizzando il filtro standard puoi collegare fino a tre condizioni con "
 "l'operatore logico E oppure O."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:420-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:419-11
 msgid ""
 "The <span class=\"ui\">Advanced Filter</span> allows up to a total of eight "
 "filter conditions. With advanced filters you enter the conditions directly "
@@ -1876,7 +2051,7 @@ msgstr ""
 "specificare in totale fino a otto condizioni di filtro. Mediante l'uso di "
 "filtri speciali puoi inserire le condizioni direttamente nel foglio."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:422-5
+#: html/loleaflet-help.html%2Bdiv.div.p:421-5
 msgid ""
 "<span class=\"def\">Outlining:</span> You can create an outline of your data "
 "and group rows and columns together so that you can collapse and expand the "
@@ -1887,7 +2062,7 @@ msgstr ""
 "gruppi con un singolo clic, rendendo semplice la rappresentazione gerarchica "
 "dei dati."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:424-5
+#: html/loleaflet-help.html%2Bdiv.div.p:423-5
 msgid ""
 "<span class=\"def\">Data validation:</span> For each cell, you can define "
 "entries to be valid. Invalid entries to a cell will be rejected. To enable "
@@ -1897,7 +2072,7 @@ msgstr ""
 "i valori validi. I valori che non soddisfano i criteri saranno rifiutati. "
 "Per abilitare la convalida dei dati:"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:427-9
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:426-9
 msgid ""
 "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\""
 ">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."
@@ -1906,7 +2081,7 @@ msgstr ""
 ">Dati</span>. Si apre la finestra di dialogo <span class=\"ui\""
 ">Validità</span>."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:430-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:429-11
 msgid ""
 "Select the validity criterion in the <span class=\"ui\">Allow</span> drop-"
 "box list. Depending on the criterion, more options shows. Fill the required "
@@ -1916,7 +2091,7 @@ msgstr ""
 ">Permetti</span>. A seconda del criterio scelto saranno mostrate altre "
 "opzioni. Compila con i dati richiesti."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:432-9
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:431-9
 msgid ""
 "Use the <span class=\"ui\">Input Help</span> and <span class=\"ui\">Error "
 "Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\""
@@ -1926,7 +2101,7 @@ msgstr ""
 "class=\"ui\">Messaggio di errore</span> per migliorare l'interazione con "
 "l'utente. Fai clic su <span class=\"ui\">OK</span> per chiudere la finestra."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:435-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:434-11
 msgid ""
 "To remove the validity of the cell, open the dialog and set the <span class="
 "\"ui\">Allow</span> list to “All values”."
@@ -1934,7 +2109,7 @@ msgstr ""
 "Per rimuovere la validità della cella, apri la finestra di dialogo e imposta "
 "il parametro <span class=\"ui\">Permetti</span> a “Ogni valore”."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:437-5
+#: html/loleaflet-help.html%2Bdiv.div.p:436-5
 msgid ""
 "<span class=\"def\">Comments:</span> In a spreadsheet you can insert one "
 "comment per cell. When you select <span class=\"ui\">Insert comment</span>, "
@@ -1949,7 +2124,7 @@ msgstr ""
 "superiore destro. Passa sopra il mouse sulla cella per visualizzare il "
 "commento."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:439-5
+#: html/loleaflet-help.html%2Bdiv.div.p:438-5
 msgid ""
 "<span class=\"def\">Conditional formatting:</span> <span class=\""
 "productname\">%productName</span> adds symbols to each cell of a range based "
@@ -1964,7 +2139,7 @@ msgstr ""
 "barra degli strumenti. Seleziona il gruppo di simboli da applicare "
 "all'intervallo."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:447-5
+#: html/loleaflet-help.html%2Bdiv.div.p:446-5
 msgid ""
 "<span class=\"productname\">%productName</span> edits text documents in the "
 "same way you edit a desktop document. It provides a What You See Is What You "
@@ -1984,7 +2159,7 @@ msgstr ""
 "testi desktop. Usa la tastiera, i menu e le barre degli strumenti per "
 "interagire col documento."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:450-5
+#: html/loleaflet-help.html%2Bdiv.div.p:449-5
 msgid ""
 "Context menus are available on clicking the right mouse button. The commands "
 "available in the context menu are related - not extensively - to the "
@@ -1994,11 +2169,11 @@ msgstr ""
 "mouse. I comandi disponibili in questi menu sono collegati, non in modo "
 "esclusivo, all'oggetto soggiacente all'interno del documento."
 
-#: html/loleaflet-help.html%2Bdiv.div.h3:452-5
+#: html/loleaflet-help.html%2Bdiv.div.h3:451-5
 msgid "Formatting text"
 msgstr "Formattazione del testo"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:453-5
+#: html/loleaflet-help.html%2Bdiv.div.p:452-5
 msgid ""
 "<span class=\"productname\">%productName</span> supports modern techniques "
 "for paragraph formatting through styles. A style is a set of text properties "
@@ -2019,7 +2194,7 @@ msgstr ""
 "saranno modificati, evitandoti così l'impegno di dover formattare "
 "singolarmente più paragrafi."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:454-5
+#: html/loleaflet-help.html%2Bdiv.div.p:453-5
 msgid ""
 "In contrast, direct formatting applies formatting to selected excerpts of "
 "the document contents. On a long document, direct formatting must be applied "
@@ -2032,7 +2207,7 @@ msgstr ""
 "e rende la formattazione del testo un compito lungo e soggetto a errori e "
 "ritardi."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:455-5
+#: html/loleaflet-help.html%2Bdiv.div.p:454-5
 msgid ""
 "<span class=\"def\">Direct formatting:</span> You can format text document "
 "objects by formatting directly from the menus, toolbar or context menus. "
@@ -2043,7 +2218,7 @@ msgstr ""
 "degli strumenti o i menu di contesto. La formattazione diretta si applica "
 "solo all'oggetto correntemente selezionato."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:456-5
+#: html/loleaflet-help.html%2Bdiv.div.p:455-5
 msgid ""
 "<span class=\"def\">Style formatting:</span> <span class=\"productname\""
 ">%productName</span> supports paragraph styles. You can apply an existing "
@@ -2056,11 +2231,11 @@ msgstr ""
 "stile scegli il menu <span class=\"ui\">Modifica</span> → <span class=\"ui\">"
 "Modifica stile</span>."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:460-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:459-5
 msgid "Handling Tables"
 msgstr "Gestione delle tabelle"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:461-5
+#: html/loleaflet-help.html%2Bdiv.div.p:460-5
 msgid ""
 "Insert tables with proper icon in the toolbar. Select the initial number of "
 "rows and columns. Add rows and columns with the cell context menu. Merge "
@@ -2073,7 +2248,7 @@ msgstr ""
 ">Tabella</span>. Lo stile di paragrafo predefinito all'interno delle celle è "
 "“Contenuto tabella”."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:463-5
+#: html/loleaflet-help.html%2Bdiv.div.p:462-5
 msgid ""
 "<span class=\"def\">Formatting cells:</span> Click in the cell or range of "
 "cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\""
@@ -2084,11 +2259,11 @@ msgstr ""
 "span class=\"ui\">Proprietà</span>. Regola la tabella nella finestra di "
 "dialogo delle proprietà."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:464-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:463-5
 msgid "Track changes"
 msgstr "Revisioni"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:465-5
+#: html/loleaflet-help.html%2Bdiv.div.p:464-5
 msgid ""
 "When you turn on Track Changes, <span class=\"productname\""
 ">%productName</span> marks up new changes made to the document. Select this "
@@ -2098,7 +2273,7 @@ msgstr ""
 "registra le modifiche fatte al documento. Seleziona di nuovo l'opzione per "
 "disattivarle."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:467-5
+#: html/loleaflet-help.html%2Bdiv.div.p:466-5
 msgid ""
 "Changes made by different people are shown in different colors and each "
 "tracked change can be accepted or rejected, using the box the appears on the "
@@ -2108,11 +2283,11 @@ msgstr ""
 "ciascuna revisione può essere accettata o rifiutata tramite il riquadro che "
 "appare sulla destra. In esso puoi anche aggiungere un commento."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:468-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:467-5
 msgid "Other advanced features"
 msgstr "Altre funzionalità avanzate"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:469-5
+#: html/loleaflet-help.html%2Bdiv.div.p:468-5
 msgid ""
 "<span class=\"def\">Comments:</span> Comments are inserted in the text and "
 "displayed on the right side of the screen."
@@ -2120,7 +2295,7 @@ msgstr ""
 "<span class=\"def\">Commenti:</span> i commenti vengono inseriti nel testo e "
 "visualizzati nella parte destra dello schermo."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:470-5
+#: html/loleaflet-help.html%2Bdiv.div.p:469-5
 msgid ""
 "<span class=\"def\">Formatting marks:</span> Paragraph, page and unbreakable "
 "spaces are shown as marks to assisting text alignment, editing and "
@@ -2130,7 +2305,7 @@ msgstr ""
 "di pagina e non divisibili vengono mostrati come segni di assistenza "
 "all'allineamento, la modifica e la formattazione del testo."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:471-5
+#: html/loleaflet-help.html%2Bdiv.div.p:470-5
 msgid ""
 "<span class=\"def\">Fields:</span> A basic set of fields is available to "
 "insert in the document."
@@ -2138,7 +2313,7 @@ msgstr ""
 "<span class=\"def\">Campi:</span> è disponibile un gruppo di campi di base "
 "da inserire all'interno del documento."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:472-5
+#: html/loleaflet-help.html%2Bdiv.div.p:471-5
 msgid ""
 "<span class=\"def\">Alphabetical index:</span> Existing alphabetical index "
 "can be updated with new entries."
@@ -2146,7 +2321,7 @@ msgstr ""
 "<span class=\"def\">Indice alfabetico:</span> gli indici alfabetici "
 "esistenti possono essere aggiornati con le nuovi voci."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:473-5
+#: html/loleaflet-help.html%2Bdiv.div.p:472-5
 msgid ""
 "<span class=\"def\">Page header and footer:</span> Headers and footers are "
 "available for the existing page style applied in the document at the cursor "
@@ -2156,7 +2331,7 @@ msgstr ""
 "disponibili le intestazioni e i piè di pagina per lo stile di pagina "
 "esistente applicato nel documento alla posizione del cursore."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:474-5
+#: html/loleaflet-help.html%2Bdiv.div.p:473-5
 msgid ""
 "<span class=\"def\">Footnotes and endnotes:</span> Footnotes and endnotes "
 "are supported."
@@ -2164,7 +2339,7 @@ msgstr ""
 "<span class=\"def\">Note a piè di pagina e note di chiusura:</span> sono "
 "supportate le note a piè di pagina e di chiusura."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:481-5
+#: html/loleaflet-help.html%2Bdiv.div.p:480-5
 msgid ""
 "<span class=\"productname\">%productName</span> Impress edits presentations "
 "in a way that should be familiar to people. Operations like typing text, "
@@ -2181,7 +2356,7 @@ msgstr ""
 "tastiera, i menu e le barre degli strumenti per eseguire azioni all'interno "
 "del documento."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:484-5
+#: html/loleaflet-help.html%2Bdiv.div.p:483-5
 msgid ""
 "<span class=\"productname\">%productName</span> displays presentation slide "
 "shows, including a subset of slide transitions and object animations. Choose "
@@ -2193,17 +2368,16 @@ msgstr ""
 "oggetti. Scegli la presentazione dal menu o fai clic sulla barra degli "
 "strumenti del pannello della diapositiva in basso a sinistra."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:485-5
+#: html/loleaflet-help.html%2Bdiv.div.p:484-5
 msgid ""
 "To exit a <span class=\"productname\">%productName</span> slide show, press "
-"the <span class=\"kbd\">Esc</span> key to return to the presentation edit "
-"mode."
+"the <kbd>Esc</kbd> key to return to the presentation edit mode."
 msgstr ""
 "Per uscire da una presentazione di <span class=\"productname\""
-">%productName</span> e tornare nel modo modifica premi il tasto <span class="
-"\"kbd\">Esc</span>."
+">%productName</span> e tornare nel modo modifica premi il tasto "
+"<kbd>Esc</kbd>."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:488-5
+#: html/loleaflet-help.html%2Bdiv.div.p:487-5
 msgid ""
 "Click on any slide thumbnail in the pane to switch to this slide to view or "
 "edit it."
@@ -2211,7 +2385,7 @@ msgstr ""
 "Fai clic su una qualsiasi miniatura presente nel pannello per passare "
 "visualizzare o modificare la relativa diapositiva."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:489-5
+#: html/loleaflet-help.html%2Bdiv.div.p:488-5
 msgid ""
 "Use the slide pane toolbar in the bottom to start the slideshow, add slide, "
 "duplicate or delete the current slide."
@@ -2220,7 +2394,7 @@ msgstr ""
 "presentazione, aggiungere una diapositiva, duplicare o eliminare la "
 "diapositiva attiva."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:492-5
+#: html/loleaflet-help.html%2Bdiv.div.p:491-5
 msgid ""
 "<span class=\"def\">Slide layouts:</span> <span class=\"productname\""
 ">%productName</span> Impress let you change the slide layout. Select the "
@@ -2230,7 +2404,7 @@ msgstr ""
 ">%productName</span> Impress ti permette di cambiare il layout della "
 "diapositiva. Seleziona il layout desiderato nell'elenco dei layout a tendina."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:494-5
+#: html/loleaflet-help.html%2Bdiv.div.p:493-5
 msgid ""
 "<span class=\"def\">Master slide:</span> Select the master slide associated "
 "to the current slide. Format and arrange slide elements in the master slide."
@@ -2239,7 +2413,7 @@ msgstr ""
 "schema associata alla diapositiva corrente. Formatta e disponi gli elementi "
 "nella diapositiva schema."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:495-5
+#: html/loleaflet-help.html%2Bdiv.div.p:494-5
 msgid ""
 "<span class=\"def\">Slide transitions:</span> <span class=\"productname\""
 ">%productName</span> Impress provides visual effects when displaying a new "
@@ -2252,7 +2426,7 @@ msgstr ""
 "fanno parte delle proprietà della diapositiva, usa la barra laterale per "
 "impostare la transizione mentre ti trovi nel modo modifica."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:496-5
+#: html/loleaflet-help.html%2Bdiv.div.p:495-5
 msgid ""
 "<span class=\"def\">Object animation:</span> Individual object in the slide "
 "can have animation. Use the side bar to configure the slide transition for a "
@@ -2262,7 +2436,7 @@ msgstr ""
 "singoli oggetti all'interno della diapositiva. Usa la barra laterale per "
 "configurare la transizione per un singolo oggetto o un gruppo di oggetti."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:497-5
+#: html/loleaflet-help.html%2Bdiv.div.p:496-5
 msgid ""
 "<span class=\"def\">Tables:</span> Insert tables in the presentation. Use "
 "the sidebar to select the table theme."
@@ -2270,7 +2444,7 @@ msgstr ""
 "<span class=\"def\">Tabelle:</span> inserisci tabelle nella presentazione. "
 "Usa la barra laterale per scegliere il tema della tabella."
 
-#: html/loleaflet-help.html%2Bdiv.h4:501-5
+#: html/loleaflet-help.html%2Bdiv.h4:500-5
 msgid ""
 "What are the documents file formats supported by <span class=\"productname\""
 ">%productName</span>?"
@@ -2278,7 +2452,7 @@ msgstr ""
 "Quali formati di documento sono supportati da <span class=\"productname\""
 ">%productName</span>?"
 
-#: html/loleaflet-help.html%2Bdiv.p:502-5
+#: html/loleaflet-help.html%2Bdiv.p:501-5
 msgid ""
 "<span class=\"productname\">%productName</span> supports both reading and "
 "writing for the following file formats:"
@@ -2286,44 +2460,41 @@ msgstr ""
 "<span class=\"productname\">%productName</span> supporta i seguenti formati "
 "di file, sia in lettura sia in scrittura:"
 
-#: html/loleaflet-help.html%2Bdiv.ul.li.p:504-11
+#: html/loleaflet-help.html%2Bdiv.ul.li.p:503-11
 msgid ""
 "Text documents: Microsoft formats DOC, DOCX, RTF. OpenDocument Format ODT"
 msgstr ""
 "Documenti di testo: formati Microsoft DOC, DOCX, RTF, formato OpenDocument "
 "ODT"
 
-#: html/loleaflet-help.html%2Bdiv.ul.li.p:505-11
+#: html/loleaflet-help.html%2Bdiv.ul.li.p:504-11
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
 msgstr ""
 "Fogli elettronici: formati Microsoft XLS, XLSX, formato OpenDocument ODS"
 
-#: html/loleaflet-help.html%2Bdiv.ul.li.p:506-11
+#: html/loleaflet-help.html%2Bdiv.ul.li.p:505-11
 msgid "Presentations: Microsoft formats PPT, PPTX, OpenDocument Format ODP"
 msgstr "Presentazioni: formati Microsoft PPT, PPTX, formato OpenDocument ODP"
 
-#: html/loleaflet-help.html%2Bdiv.h4:508-5
+#: html/loleaflet-help.html%2Bdiv.h4:507-5
 msgid "How do I save a document with another name?"
 msgstr "Come salvo un documento con un altro nome?"
 
-#: html/loleaflet-help.html%2Bdiv.ol.li.p:510-11
+#: html/loleaflet-help.html%2Bdiv.ol.li.p:509-11
 msgid "Hover the mouse on the document name in the menu bar."
 msgstr "Passa il mouse sul nome del documento nella barra dei menu."
 
-#: html/loleaflet-help.html%2Bdiv.ol.li.p:511-11
-msgid ""
-"Type the new file name in the text box and press <span class=\"kbd\""
-">Enter</span>."
+#: html/loleaflet-help.html%2Bdiv.ol.li.p:510-11
+msgid "Type the new file name in the text box and press <kbd>Enter</kbd>."
 msgstr ""
-"Digita il nome nuovo del file nel riquadro di testo e premi <span class=\""
-"kbd\">Invio</span>."
+"Digita il nome nuovo del file nel riquadro di testo e premi <kbd>Invio</kbd>."
 
-#: html/loleaflet-help.html%2Bdiv.p:513-5
+#: html/loleaflet-help.html%2Bdiv.p:512-5
 msgid "A copy of the document is saved with the new name in the same folder."
 msgstr ""
 "Sarà salvata una copia del documento col nuovo nome nella stessa cartella."
 
-#: html/loleaflet-help.html%2Bdiv.h4:514-5
+#: html/loleaflet-help.html%2Bdiv.h4:513-5
 msgid ""
 "How can I quit <span class=\"productname\">%productName</span> without "
 "saving my edits?"
@@ -2331,7 +2502,7 @@ msgstr ""
 "Come posso uscire da <span class=\"productname\">%productName</span> senza "
 "salvare le modifiche che ho fatto?"
 
-#: html/loleaflet-help.html%2Bdiv.p:515-5
+#: html/loleaflet-help.html%2Bdiv.p:514-5
 msgid ""
 "<span class=\"productname\">%productName</span> saves the document in the "
 "background regularly, you can't just close without saving it. To abandon "
@@ -2344,7 +2515,7 @@ msgstr ""
 "class=\"ui\">Vedi la cronologia delle revisioni</span> nel menu <span class="
 "\"ui\">File</span>."
 
-#: html/loleaflet-help.html%2Bdiv.h4:516-5
+#: html/loleaflet-help.html%2Bdiv.h4:515-5
 msgid ""
 "Can <span class=\"productname\">%productName</span> open a password-"
 "protected document?"
@@ -2352,7 +2523,7 @@ msgstr ""
 "<span class=\"productname\">%productName</span> è in grado di aprire un "
 "documento protetto da password?"
 
-#: html/loleaflet-help.html%2Bdiv.p:517-5
+#: html/loleaflet-help.html%2Bdiv.p:516-5
 msgid ""
 "Yes. <span class=\"productname\">%productName</span> opens password-"
 "protected documents, but it is necessary to supply the password in the “"
@@ -2362,11 +2533,11 @@ msgstr ""
 "protetti da password, ma devi fornire la password nella finestra di "
 "richiesta password durante l'apertura del documento."
 
-#: html/loleaflet-help.html%2Bdiv.h4:518-5
+#: html/loleaflet-help.html%2Bdiv.h4:517-5
 msgid "How can I check spelling in my language?"
 msgstr "Come posso eseguire il controllo ortografico nella mia lingua?"
 
-#: html/loleaflet-help.html%2Bdiv.p:519-5
+#: html/loleaflet-help.html%2Bdiv.p:518-5
 msgid ""
 "Choose menu <span class=\"ui\">Tools</span> → <span class=\"ui\""
 ">Languages</span> and select the language for the whole document. Optionally "
@@ -2376,11 +2547,11 @@ msgstr ""
 ">Lingue</span> e seleziona la lingua per l'intero documento. Come opzione, "
 "puoi impostare la lingua per il testo selezionato e per il paragrafo attivo."
 
-#: html/loleaflet-help.html%2Bdiv.h4:520-5
+#: html/loleaflet-help.html%2Bdiv.h4:519-5
 msgid "How can I remove the red wavy lines in my document?"
 msgstr "Come posso rimuovere le linee ondulate rosse dal mio documento?"
 
-#: html/loleaflet-help.html%2Bdiv.p:521-5
+#: html/loleaflet-help.html%2Bdiv.p:520-5
 msgid ""
 "Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\">"
 "Automatic Spell Checking</span>."
@@ -2388,12 +2559,12 @@ msgstr ""
 "Scegli il menu <span class=\"ui\">Strumenti</span> e disattiva <span class=\""
 "ui\">Controllo ortografico automatico</span>."
 
-#: html/loleaflet-help.html%2Bdiv.h4:522-5
+#: html/loleaflet-help.html%2Bdiv.h4:521-5
 msgid "What is the blue wavy underline in some words in the text?"
 msgstr ""
 "Cosa significa la sottolineatura ondulata blu in alcune parole del testo?"
 
-#: html/loleaflet-help.html%2Bdiv.p:523-5
+#: html/loleaflet-help.html%2Bdiv.p:522-5
 msgid ""
 "Grammar errors in the text is marked with the blue wavy underline. Click on "
 "the underlined text with the right mouse button to open a menu with "
@@ -2406,11 +2577,11 @@ msgstr ""
 "regole di grammatica violate. Scegli il suggerimento corretto per cambiare "
 "il testo."
 
-#: html/loleaflet-help.html%2Bdiv.h4:524-5
+#: html/loleaflet-help.html%2Bdiv.h4:523-5
 msgid "Is here a thesaurus?"
 msgstr "Esiste un dizionario dei sinonimi?"
 
-#: html/loleaflet-help.html%2Bdiv.p:525-5
+#: html/loleaflet-help.html%2Bdiv.p:524-5
 msgid ""
 "Yes. Click in the word you want and choose <span class=\"ui\">Tools</span> → "
 "<span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions "
@@ -2420,7 +2591,7 @@ msgstr ""
 "span class=\"ui\">Sinonimi</span>. Si apre una finestra di dialogo "
 "contenente suggerimenti alternativi."
 
-#: html/loleaflet-help.html%2Bdiv.h4:527-5
+#: html/loleaflet-help.html%2Bdiv.h4:526-5
 msgid ""
 "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove "
 "from my text document?"
@@ -2428,7 +2599,7 @@ msgstr ""
 "Cos'è il simbolo blu <span class=\"blue\">¶</span> e come posso rimuoverlo "
 "dal mio documento di testo?"
 
-#: html/loleaflet-help.html%2Bdiv.p:528-5
+#: html/loleaflet-help.html%2Bdiv.p:527-5
 msgid ""
 "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is used to "
 "help text alignment and editing and is not printed. To toggle it in the "
@@ -2441,11 +2612,11 @@ msgstr ""
 "class=\"ui\">Visualizza</span> → <span class=\"ui\">Segni di "
 "formattazione</span>."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:532-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:531-5
 msgid "How do I get a word count of my document?"
 msgstr "Come posso conteggiare le parole contenute nel mio documento?"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:533-5
+#: html/loleaflet-help.html%2Bdiv.div.p:532-5
 msgid ""
 "Word count is available in <span class=\"ui\">Tools</span> → <span class=\""
 "ui\">Word count</span>. A dialog shows word counts for selection and for the "
@@ -2456,7 +2627,7 @@ msgstr ""
 "di dialogo mostra i conteggi delle parole sia per la selezione, sia per "
 "l'intero documento."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:535-5
+#: html/loleaflet-help.html%2Bdiv.div.p:534-5
 msgid ""
 "Word count is also displayed in the status bar. If no text is selected the "
 "word count is for the whole document. Otherwise the word count is for the "
@@ -2466,14 +2637,14 @@ msgstr ""
 "selezionato alcun testo, il conteggio è relativo all'intero documento. "
 "Altrimenti si riferisce al testo selezionato."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:536-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:535-5
 msgid ""
 "How can I insert a currency, copyright or trademark symbol in the document?"
 msgstr ""
 "Come posso inserire un simbolo di valuta, di copyright o di un marchio "
 "registrato nel documento?"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:537-5
+#: html/loleaflet-help.html%2Bdiv.div.p:536-5
 msgid ""
 "You can insert these special characters in the document using the <span "
 "class=\"ui\">Special Character</span> dialog."
@@ -2481,12 +2652,12 @@ msgstr ""
 "Puoi inserire questi speciali caratteri utilizzando la finestra di dialogo <"
 "span class=\"ui\">Carattere speciale</span>."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:539-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:538-11
 msgid "Place the cursor in the position to insert the character."
 msgstr ""
 "Posiziona il cursore nella posizione dove deve essere inserito il carattere."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:541-9
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:540-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Special "
 "Characters </span> or click the corresponding icon in the toolbar. A dialog "
@@ -2496,7 +2667,7 @@ msgstr ""
 "speciale</span> o fai clic sulla corrispondente icona nella barra degli "
 "strumenti. Si apre una finestra di dialogo."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:544-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:543-11
 msgid ""
 "You can either browse the characters displayed with the drop lists or type a "
 "search key in the <span class=\"ui\">Search</span> box. If you know the "
@@ -2508,7 +2679,7 @@ msgstr ""
 ". Digita il codice numerico Unicode del carattere speciale, se lo conosci, "
 "nelle caselle a destra."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:545-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:544-11
 msgid ""
 "Press <span class=\"ui\">Insert</span> button. To close the dialog, press <"
 "span class=\"ui\">Cancel</span>."
@@ -2516,11 +2687,11 @@ msgstr ""
 "Premi il pulsante <span class=\"ui\">Inserisci</span>. Per chiudere la "
 "finestra premi <span class=\"ui\">Annulla</span>."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:547-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:546-5
 msgid "Why can't I delete text? It just gets a strike-through?"
 msgstr "Perché non posso eliminare il testo? Perché viene solo barrato?"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:548-5
+#: html/loleaflet-help.html%2Bdiv.div.p:547-5
 msgid ""
 "You have the Track Changes feature enabled for the document. Track Changes "
 "records all changes in the text and shows the editions for later revision. "
@@ -2535,31 +2706,31 @@ msgstr ""
 ">Modifica</span> → <span class=\"ui\">Revisioni</span> → <span class=\"ui\""
 ">Registra</span>."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:549-5
+#: html/loleaflet-help.html%2Bdiv.div.p:548-5
 msgid "With track changes enabled your document is shown the following manner:"
 msgstr "Con la revisione attivata il documento presenta il seguente aspetto:"
 
-#: html/loleaflet-help.html%2Bdiv.div.ul.li.p:551-11
+#: html/loleaflet-help.html%2Bdiv.div.ul.li.p:550-11
 msgid "Deletions are marked with colored strike-through characters."
 msgstr "Le cancellazioni sono indicate da caratteri barrati colorati."
 
-#: html/loleaflet-help.html%2Bdiv.div.ul.li.p:552-11
+#: html/loleaflet-help.html%2Bdiv.div.ul.li.p:551-11
 msgid "Additions are marked with colored underlined characters."
 msgstr "Le aggiunte sono indicate da caratteri sottolineati colorati."
 
-#: html/loleaflet-help.html%2Bdiv.div.ul.li.p:553-11
+#: html/loleaflet-help.html%2Bdiv.div.ul.li.p:552-11
 msgid "All changes are marked with a vertical bar in the right margin."
 msgstr ""
 "Tutte le modifiche sono indicate da una barra verticale al margine destro "
 "della pagina."
 
-#: html/loleaflet-help.html%2Bdiv.div.ul.li.p:554-11
+#: html/loleaflet-help.html%2Bdiv.div.ul.li.p:553-11
 msgid "Changes are displayed as comment in the right of the document area."
 msgstr ""
 "Le modifiche vengono visualizzate come commento nella destra dell'area del "
 "documento."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:557-5
+#: html/loleaflet-help.html%2Bdiv.div.p:556-5
 msgid ""
 "The color assigned to the changes depends on the user that changes the "
 "document."
@@ -2567,7 +2738,7 @@ msgstr ""
 "Il colore assegnato alle modifiche dipende dall'utente che lavora sul "
 "documento."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:558-5
+#: html/loleaflet-help.html%2Bdiv.div.p:557-5
 msgid ""
 "To display or hide track changes choose <span class=\"ui\">Edit</span> → <"
 "span class=\"ui\">Track Changes </span> → <span class=\"ui\">Show</span>. "
@@ -2580,7 +2751,7 @@ msgstr ""
 "disattivata, stai ancora registrando le modifiche e potresti lasciare "
 "inavvertitamente del testo indesiderato all'interno del documento."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:559-5
+#: html/loleaflet-help.html%2Bdiv.div.p:558-5
 msgid ""
 "Changes can be accepted or rejected. To accept or reject changes, click on "
 "the corresponding icons in the comment box on the right of the document. "
@@ -2602,11 +2773,11 @@ msgstr ""
 "mostra un elenco di tutte le revisioni. Usa i pulsanti della finestra in "
 "base alle tue necessità."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:561-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:560-5
 msgid "How do I set the margins of the document?"
 msgstr "Come posso impostare i margini del documento?"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:562-5
+#: html/loleaflet-help.html%2Bdiv.div.p:561-5
 msgid ""
 "Using the ruler drag the leftmost edge of the ruler to adjust the left "
 "margin, or the rightmost for the right margin."
@@ -2615,11 +2786,11 @@ msgstr ""
 "del righello per regolare il margine sinistro, oppure quelle che si trovano "
 "nell'estremo bordo destro per regolare il margine destro."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:563-5
+#: html/loleaflet-help.html%2Bdiv.div.p:562-5
 msgid "Using the page style"
 msgstr "Uso dello stile di pagina"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:565-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:564-11
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and "
 "select the <span class=\"ui\">Page</span> tab"
@@ -2627,17 +2798,17 @@ msgstr ""
 "Scegli <span class=\"ui\">Formato</span> → <span class=\"ui\">Pagina</span> "
 "e seleziona la scheda <span class=\"ui\">Pagina</span>"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:566-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:565-11
 msgid "Set the page margins in the dialog."
 msgstr "Imposta i margini della pagina nella finestra di dialogo."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:569-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:568-5
 msgid "How do I change the page orientation to landscape inside my document"
 msgstr ""
 "Come posso cambiare l'orientazione della pagina in orizzontale nel mio "
 "documento?"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:571-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:570-11
 msgid ""
 "Place the cursor at the place where the page orientation is to change. Add "
 "an empty paragraph."
@@ -2645,7 +2816,7 @@ msgstr ""
 "Posiziona il cursore nel punto in cui vuoi cambiare l'orientazione della "
 "pagina. Aggiungi un paragrafo vuoto."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:572-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:571-11
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</span>"
 ", <span class=\"ui\">Text Flow </span> tab"
@@ -2653,7 +2824,7 @@ msgstr ""
 "Scegli <span class=\"ui\">Formato</span> → <span class=\"ui\""
 ">Paragrafo</span>, scheda <span class=\"ui\">Flusso di testo</span>"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:573-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:572-11
 msgid ""
 "In the <span class=\"ui\">Breaks</span> area, mark Insert, Type: Page Break, "
 "Position: Before."
@@ -2661,15 +2832,15 @@ msgstr ""
 "Nell'area <span class=\"ui\">Interruzioni</span> attiva l'opzione Inserisci, "
 "Tipo: Pagina, Posizione: Prima."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:574-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:573-11
 msgid "Select Landscape in “With Page Style”"
 msgstr "Seleziona Orizzontale nell'opzione «Con stile di pagina»"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:575-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:574-11
 msgid "Select if you want to change page numbering."
 msgstr "Attiva la casella se vuoi cambiare il numero di pagina."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:577-5
+#: html/loleaflet-help.html%2Bdiv.div.p:576-5
 msgid ""
 "To return to portrait orientation, repeat the procedure, choosing Portrait "
 "in “With page style”."
@@ -2677,21 +2848,21 @@ msgstr ""
 "Per tornare all'orientazione verticale, ripeti la procedura scegliendo "
 "Verticale nell'opzione “Con stile di pagina”."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:578-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:577-5
 msgid "How can I make the new text look like other existing text?"
 msgstr ""
 "Come posso far sì che il nuovo testo sia uguale all'altro testo esistente?"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:579-5
+#: html/loleaflet-help.html%2Bdiv.div.p:578-5
 msgid "Directly:"
 msgstr "In modo diretto:"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:581-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:580-11
 msgid "Select the text with the existing format"
 msgstr "Seleziona il testo col formato esistente"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:582-11
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:613-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:581-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:612-11
 msgid ""
 "Click on the clone formatting icon <img style=\"height:0.6cm;width:0.6cm;\" "
 "alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to "
@@ -2701,19 +2872,19 @@ msgstr ""
 "height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_formatpaintbrush.svg\">"
 ". Il puntatore del mouse si trasforma in un secchiello di vernice."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:583-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:582-11
 msgid "Select the text you want to apply the new format."
 msgstr "Seleziona il testo a cui vuoi applicare il nuovo formato."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:585-5
+#: html/loleaflet-help.html%2Bdiv.div.p:584-5
 msgid "Applying a paragraph style:"
 msgstr "Applicazione di uno stile di paragrafo:"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:587-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:586-11
 msgid "Place the cursor at the paragraph to be formatted"
 msgstr "Posiziona il cursore nel paragrafo da formattare"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:588-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:587-11
 msgid ""
 "Select the style to apply in the style dropdown list. The paragraph displays "
 "the styles attributes."
@@ -2721,14 +2892,14 @@ msgstr ""
 "Seleziona lo stile da applicare nell'elenco a tendina degli stili. Il "
 "paragrafo visualizza gli attributi di stile."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:590-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:589-5
 msgid ""
 "Why did the text I just typed change automatically? How can I revert it?"
 msgstr ""
 "Perché il testo che ho appena scritto cambia automaticamente? Come posso "
 "ripristinarlo?"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:591-5
+#: html/loleaflet-help.html%2Bdiv.div.p:590-5
 msgid ""
 "You have the AutoCorrection enabled. AutoCorrection changes the text just "
 "typed into an internal table of corresponding text. In most cases, "
@@ -2744,11 +2915,11 @@ msgstr ""
 "span class=\"ui\">Correzione automatica</span> → <span class=\"ui\">Durante "
 "la digitazione</span>."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:596-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:595-5
 msgid "How can I select data to print?"
 msgstr "Come seleziono i dati da stampare?"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:597-5
+#: html/loleaflet-help.html%2Bdiv.div.p:596-5
 msgid ""
 "Insert column and row breaks in the spreadsheet to narrow the print range "
 "and print the document to download. On printing the PDF, select the pages of "
@@ -2758,11 +2929,11 @@ msgstr ""
 "restringere l'area di celle e stampare il documento da scaricare. Nella "
 "stampa in PDF, seleziona le pagine interessate."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:598-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:597-5
 msgid "How can I import CSV data?"
 msgstr "Come posso importare i dati CSV?"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:600-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:599-11
 msgid ""
 "Load your CSV data in some native tool to your platform, select and copy it "
 "to the clipboard"
@@ -2770,7 +2941,7 @@ msgstr ""
 "Carica i tuoi dati CSV in qualche strumento nativo nella tua piattaforma, "
 "poi seleziona e copia negli appunti"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:601-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:600-11
 msgid ""
 "Activate the <span class=\"productname\">%productName</span> spreadsheet "
 "window."
@@ -2778,27 +2949,27 @@ msgstr ""
 "Attiva la finestra del foglio elettronico <span class=\"productname\""
 ">%productName</span>."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:603-9
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:602-9
 msgid ""
 "Paste from the browser <span class=\"ui\">Edit</span> → <span class=\"ui\""
-">Paste</span> or press <span class=\"kbd\">Ctrl</span> + <span class=\"kbd\""
-">V</span>. The <span class=\"ui\">Text Import</span> dialog opens to let you "
-"describe the precise format of the CSV data."
+">Paste</span> or press <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> dialog "
+"opens to let you describe the precise format of the CSV data."
 msgstr ""
 "Incolla dal browser <span class=\"ui\">Modifica</span> → <span class=\"ui\""
-">Incolla</span> oppure premi <span class=\"kbd\">Ctrl</span> + <span class=\""
-"kbd\">V</span>. Si apre la finestra di dialogo <span class=\"ui\">"
+">Incolla</span> oppure premi <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>. Si apre la finestra di dialogo <span class=\"ui\">"
 "Importazione testo</span> che ti consente di descrivere l'esatto formato dei "
 "dati CSV."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:606-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:605-11
 msgid ""
 "Select the character set, language and separator options for the CSV file."
 msgstr ""
 "Seleziona le opzioni per il set di caratteri, la lingua e il separatore per "
 "il file CSV."
 
-#: html/loleaflet-help.html%2Bdiv.div.p:608-5
+#: html/loleaflet-help.html%2Bdiv.div.p:607-5
 msgid ""
 "The CSV data is loaded into the selected cell where you pasted, according to "
 "these settings."
@@ -2806,29 +2977,29 @@ msgstr ""
 "I dati CSV vengono caricati nella cella selezionata in cui hai incollato, in "
 "base a queste impostazioni."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:609-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:608-5
 msgid "How can I copy the formatting of existing cells to new ones?"
 msgstr "Come posso copiare la formattazione delle celle esistenti nelle nuove?"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:610-5
+#: html/loleaflet-help.html%2Bdiv.div.p:609-5
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
 msgstr "È facile da fare con lo strumento Clona nella barra degli strumenti."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:612-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:611-11
 msgid "Format the source cell with the font, color background and more."
 msgstr ""
 "Formatta la cella di partenza con il tipo di carattere, il colore di sfondo "
 "e altro ancora."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:614-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:613-11
 msgid "Select the cells you want to format. Release the mouse button."
 msgstr "Seleziona le celle da formattare. Rilascia il pulsante del mouse."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:616-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:615-5
 msgid "What is “Clear Direct Formatting” icon?"
 msgstr "Che cosa significa l'icona “Cancella formattazione diretta”?"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:617-5
+#: html/loleaflet-help.html%2Bdiv.div.p:616-5
 msgid ""
 "Direct formatting is formatting applied directly to the selected contents of "
 "a paragraph or a spreadsheet cell, and overlaps its assigned style "
@@ -2844,11 +3015,11 @@ msgstr ""
 ">Formato</span> → <span class=\"ui\">Cancella formattazione diretta</span> "
 "oppure usa il pulsante nella barra degli strumenti."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:618-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:617-5
 msgid "How do I rename a sheet?"
 msgstr "Come posso rinominare un foglio?"
 
-#: html/loleaflet-help.html%2Bdiv.div.p:619-5
+#: html/loleaflet-help.html%2Bdiv.div.p:618-5
 msgid ""
 "Rename a sheet in the spreadsheet document using the context menu (using the "
 "right mouse button) over the sheet tab in the bottom. Enter the new sheet "
@@ -2858,17 +3029,17 @@ msgstr ""
 "contesto (pulsante destro del mouse) nella linguetta del foglio, in basso. "
 "Digita il nuovo nome del foglio nella finestra di dialogo che appare."
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:624-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:623-5
 msgid "How can I run my slide show?"
 msgstr "Come posso avviare la mia presentazione?"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:626-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:625-11
 msgid ""
 "Open the presentation in <span class=\"productname\">%productName</span>"
 msgstr ""
 "Apri la presentazione in <span class=\"productname\">%productName</span>"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:627-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:626-11
 msgid ""
 "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full "
 "Screen Presentation</span> or click on the left-most icon in the bottom of "
@@ -2880,17 +3051,17 @@ msgstr ""
 "basso a sinistra del pannello delle diapositive: <img style=\""
 "height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
 
-#: html/loleaflet-help.html%2Bdiv.div.h4:629-5
+#: html/loleaflet-help.html%2Bdiv.div.h4:628-5
 msgid "How can I change the line, area and position of a shape in my slides?"
 msgstr ""
 "Come posso cambiare la linea, l'area e la posizione di una forma all'interno "
 "delle mie diapositive?"
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:631-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:630-11
 msgid "Select the shape in your slide. A set of handles shows."
 msgstr "Seleziona la forma nella diapositiva. Appare un gruppo di maniglie."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:633-9
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:632-9
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Line</span> (or "
 "<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and "
@@ -2900,7 +3071,7 @@ msgstr ""
 "oppure <span class=\"ui\">Area</span> o <span class=\"ui\">Posizione e "
 "dimensione</span>). Si apre una finestra di dialogo."
 
-#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:636-11
+#: html/loleaflet-help.html%2Bdiv.div.ol.li.p:635-11
 msgid "Set the properties of the element of the object."
 msgstr "Imposta qui le proprietà dell'elemento dell'oggetto."
 

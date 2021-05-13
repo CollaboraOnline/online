@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-16 22:04+0200\n"
+"POT-Creation-Date: 2021-05-13 09:11+0200\n"
 "PO-Revision-Date: 2021-02-11 11:50+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
@@ -134,10 +134,10 @@ msgstr "Prosessorgraf"
 msgid "Network Graph"
 msgstr "Nettverksgraf"
 
-#: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:230
+#: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:229
 #: src/control/Control.NotebookbarImpress.js:24
 #: src/control/Control.NotebookbarDraw.js:24 src/layer/marker/Annotation.js:280
-#: src/layer/tile/CanvasTileLayer.js:1440
+#: src/layer/tile/CanvasTileLayer.js:1447
 msgid "Save"
 msgstr "Lagre"
 
@@ -203,7 +203,7 @@ msgid "Channel Filter:"
 msgstr "Kanalfilter:"
 
 #: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:373
-#: src/control/Control.StatusBar.js:331
+#: src/control/Control.StatusBar.js:330
 msgid "None"
 msgstr "Ingen"
 
@@ -253,18 +253,18 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "Er du sikker på at du vil avslutte denne økten?"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1530
+#: src/control/Control.Menubar.js:1538
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:253
-#: src/control/Control.Tabs.js:270 src/control/Toolbar.js:760
+#: src/control/Control.Tabs.js:270 src/control/Toolbar.js:793
 msgid "OK"
 msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1531
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1539
 #: src/control/Control.MobileTopBar.js:45
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:254
-#: src/control/Control.Tabs.js:271 src/control/Toolbar.js:761
-#: src/layer/marker/Annotation.js:204 src/layer/tile/CanvasTileLayer.js:1441
+#: src/control/Control.Tabs.js:271 src/control/Toolbar.js:794
+#: src/layer/marker/Annotation.js:204 src/layer/tile/CanvasTileLayer.js:1448
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -365,10 +365,10 @@ msgid "Index"
 msgstr "Indeks"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2282
-#: src/layer/tile/CanvasTileLayer.js:4743
-#: src/layer/tile/CanvasTileLayer.js:4753
-#: src/layer/tile/CanvasTileLayer.js:5069
+#: src/control/Control.JSDialogBuilder.js:2281
+#: src/layer/tile/CanvasTileLayer.js:4822
+#: src/layer/tile/CanvasTileLayer.js:4832
+#: src/layer/tile/CanvasTileLayer.js:5148
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -453,7 +453,7 @@ msgid "Select range"
 msgstr "Velg område"
 
 #: src/control/Control.JSDialogBuilder.js:1637
-#: src/control/Control.NotebookbarBuilder.js:228
+#: src/control/Control.NotebookbarBuilder.js:233
 msgid "Font Name"
 msgstr "Fontnavn"
 
@@ -461,77 +461,77 @@ msgstr "Fontnavn"
 msgid "Font Size"
 msgstr "Fontstørrelse"
 
-#: src/control/Control.JSDialogBuilder.js:2213
+#: src/control/Control.JSDialogBuilder.js:2212
 #: src/layer/marker/Annotation.js:241
 msgid "Accept change"
 msgstr "Godta endring"
 
-#: src/control/Control.JSDialogBuilder.js:2218
+#: src/control/Control.JSDialogBuilder.js:2217
 #: src/layer/marker/Annotation.js:242
 msgid "Reject change"
 msgstr "Avvis endring"
 
-#: src/control/Control.JSDialogBuilder.js:2227
+#: src/control/Control.JSDialogBuilder.js:2226
 #: src/layer/marker/Annotation.js:260
 msgid "Open menu"
 msgstr "Åpne meny"
 
-#: src/control/Control.JSDialogBuilder.js:2273
+#: src/control/Control.JSDialogBuilder.js:2272
 #, fuzzy
 msgid "reply"
 msgstr "Svar"
 
-#: src/control/Control.JSDialogBuilder.js:2276
+#: src/control/Control.JSDialogBuilder.js:2275
 msgid "replies"
 msgstr "Svar"
 
-#: src/control/Control.JSDialogBuilder.js:2324
+#: src/control/Control.JSDialogBuilder.js:2323
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2708
+#: src/control/Control.JSDialogBuilder.js:2706
 msgid "Cell borders"
 msgstr "Kantlinjer"
 
-#: src/control/Control.JSDialogBuilder.js:2752
+#: src/control/Control.JSDialogBuilder.js:2750
 msgid "Background Color"
 msgstr "Bakgrunnsfarge"
 
-#: src/control/Control.JSDialogBuilder.js:2754
+#: src/control/Control.JSDialogBuilder.js:2752
 msgid "Gradient Start"
 msgstr "Gradient Start"
 
-#: src/control/Control.JSDialogBuilder.js:2756
+#: src/control/Control.JSDialogBuilder.js:2754
 msgid "Gradient End"
 msgstr "Gradient Slutt"
 
-#: src/control/Control.JSDialogBuilder.js:2938
+#: src/control/Control.JSDialogBuilder.js:2936
 msgid "Rows"
 msgstr "Rader"
 
-#: src/control/Control.JSDialogBuilder.js:2939
+#: src/control/Control.JSDialogBuilder.js:2937
 msgid "Columns"
 msgstr "Kolonner"
 
-#: src/control/Control.JSDialogBuilder.js:2959
+#: src/control/Control.JSDialogBuilder.js:2957
 #, fuzzy
 msgid "Insert Table"
 msgstr "Sett inn tabell"
 
-#: src/control/Control.JSDialogBuilder.js:2988
+#: src/control/Control.JSDialogBuilder.js:2986
 msgid "Line style:"
 msgstr "Linjestil:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:493
-#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:507
-#: src/control/Control.NotebookbarBuilder.js:749
-#: src/control/Control.NotebookbarBuilder.js:751
-#: src/control/Control.NotebookbarBuilder.js:753
-#: src/control/Control.NotebookbarBuilder.js:777
-#: src/control/Control.NotebookbarBuilder.js:812
+#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:506
+#: src/control/Control.NotebookbarBuilder.js:766
+#: src/control/Control.NotebookbarBuilder.js:768
+#: src/control/Control.NotebookbarBuilder.js:770
+#: src/control/Control.NotebookbarBuilder.js:794
 #: src/control/Control.NotebookbarBuilder.js:829
+#: src/control/Control.NotebookbarBuilder.js:846
 msgid "None (Do not check spelling)"
 msgstr "Ingen (ikke sjekk stavingen)"
 
@@ -539,7 +539,6 @@ msgstr "Ingen (ikke sjekk stavingen)"
 #: src/control/Control.Menubar.js:398 src/control/Control.Menubar.js:509
 #: src/control/Control.Menubar.js:720 src/control/Control.Menubar.js:771
 #: src/control/Control.Menubar.js:820 src/control/Control.Menubar.js:866
-#: src/control/Control.NotebookbarDraw.js:164
 msgid "Share..."
 msgstr "Del..."
 
@@ -547,7 +546,6 @@ msgstr "Del..."
 #: src/control/Control.Menubar.js:400 src/control/Control.Menubar.js:510
 #: src/control/Control.Menubar.js:722 src/control/Control.Menubar.js:773
 #: src/control/Control.Menubar.js:822 src/control/Control.Menubar.js:868
-#: src/control/Control.NotebookbarDraw.js:194
 msgid "See revision history"
 msgstr "Se revisjonshistorikk"
 
@@ -569,40 +567,38 @@ msgstr "Eksporter som"
 #: src/control/Control.Menubar.js:402 src/control/Control.Menubar.js:512
 #: src/control/Control.Menubar.js:726 src/control/Control.Menubar.js:776
 #: src/control/Control.Menubar.js:825 src/control/Control.Menubar.js:871
-#: src/control/Control.NotebookbarWriter.js:285
-#: src/control/Control.NotebookbarCalc.js:186
-#: src/control/Control.NotebookbarImpress.js:351
-#: src/control/Control.NotebookbarDraw.js:243
+#: src/control/Control.NotebookbarWriter.js:167
+#: src/control/Control.NotebookbarCalc.js:163
+#: src/control/Control.NotebookbarImpress.js:237
+#: src/control/Control.NotebookbarDraw.js:194
 msgid "PDF Document (.pdf)"
 msgstr "PDF-dokument (.pdf)"
 
 #: src/control/Control.Menubar.js:25 src/control/Control.Menubar.js:727
-#: src/control/Control.NotebookbarWriter.js:179
 msgid "ODF text document (.odt)"
 msgstr "ODF-tekstdokument (.odt)"
 
 #: src/control/Control.Menubar.js:26 src/control/Control.Menubar.js:728
-#: src/control/Control.NotebookbarWriter.js:232
+#: src/control/Control.NotebookbarWriter.js:149
 msgid "Word 2003 Document (.doc)"
 msgstr "Word 2003 Document (.doc)"
 
 #: src/control/Control.Menubar.js:27 src/control/Control.Menubar.js:729
-#: src/control/Control.NotebookbarWriter.js:254
+#: src/control/Control.NotebookbarWriter.js:155
 msgid "Word Document (.docx)"
 msgstr "Word-dokument (.docx)"
 
 #: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:730
-#: src/control/Control.NotebookbarWriter.js:201
+#: src/control/Control.NotebookbarWriter.js:137
 msgid "Rich Text (.rtf)"
 msgstr "Rik tekst (.rtf)"
 
 #: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:731
-#: src/control/Control.NotebookbarWriter.js:307
 msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:723
-#: src/control/Control.NotebookbarWriter.js:326 src/control/Signing.js:601
+#: src/control/Control.NotebookbarWriter.js:183 src/control/Signing.js:601
 msgid "Sign document"
 msgstr "Signer dokumentet …"
 
@@ -615,10 +611,10 @@ msgstr "Lukk dokumentet"
 #: src/control/Control.Menubar.js:411 src/control/Control.Menubar.js:524
 #: src/control/Control.Menubar.js:736 src/control/Control.Menubar.js:785
 #: src/control/Control.Menubar.js:831 src/control/Control.Menubar.js:879
-#: src/control/Control.NotebookbarBuilder.js:742
-#: src/control/Control.NotebookbarBuilder.js:772
-#: src/control/Control.NotebookbarBuilder.js:807
+#: src/control/Control.NotebookbarBuilder.js:759
+#: src/control/Control.NotebookbarBuilder.js:789
 #: src/control/Control.NotebookbarBuilder.js:824
+#: src/control/Control.NotebookbarBuilder.js:841
 msgid "Repair"
 msgstr "Reparer"
 
@@ -629,7 +625,7 @@ msgid "Reset zoom"
 msgstr "Tilbakestill forstørring/forminsking"
 
 #: src/control/Control.Menubar.js:67
-#: src/control/Control.NotebookbarBuilder.js:728
+#: src/control/Control.NotebookbarBuilder.js:745
 msgid "Show Ruler"
 msgstr "Vis linjal"
 
@@ -640,13 +636,13 @@ msgstr "Vis statusfelt"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:312
 #: src/control/Control.Menubar.js:431 src/control/Control.Menubar.js:549
-#: src/control/Control.Menubar.js:933 src/control/Control.Menubar.js:974
-#: src/control/Control.Menubar.js:988
+#: src/control/Control.Menubar.js:933 src/control/Control.Menubar.js:975
+#: src/control/Control.Menubar.js:989
 msgid "Local Image..."
 msgstr "Lokalt bilde..."
 
 #: src/control/Control.Menubar.js:95 src/control/Control.Menubar.js:97
-#: src/control/Control.Menubar.js:949 src/control/Control.Menubar.js:951
+#: src/control/Control.Menubar.js:950 src/control/Control.Menubar.js:952
 msgid "All"
 msgstr "Alle"
 
@@ -656,19 +652,19 @@ msgstr "Tekstretning"
 
 #: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:384
 #: src/control/Control.Menubar.js:496 src/control/Control.Menubar.js:707
-#: src/control/Control.NotebookbarWriter.js:357
+#: src/control/Control.NotebookbarWriter.js:204
 msgid "Online Help"
 msgstr "Online Hjelp"
 
 #: src/control/Control.Menubar.js:257 src/control/Control.Menubar.js:385
 #: src/control/Control.Menubar.js:497 src/control/Control.Menubar.js:708
-#: src/control/Control.NotebookbarWriter.js:371
+#: src/control/Control.NotebookbarWriter.js:215
 msgid "Keyboard shortcuts"
 msgstr "Tastatursnarveier"
 
 #: src/control/Control.Menubar.js:258 src/control/Control.Menubar.js:386
 #: src/control/Control.Menubar.js:498 src/control/Control.Menubar.js:709
-#: src/control/Control.NotebookbarWriter.js:385
+#: src/control/Control.NotebookbarWriter.js:226
 msgid "Report an issue"
 msgstr "Rapporter et problem"
 
@@ -676,7 +672,7 @@ msgstr "Rapporter et problem"
 #: src/control/Control.Menubar.js:499 src/control/Control.Menubar.js:710
 #: src/control/Control.Menubar.js:763 src/control/Control.Menubar.js:812
 #: src/control/Control.Menubar.js:858 src/control/Control.Menubar.js:926
-#: src/control/Control.NotebookbarWriter.js:400
+#: src/control/Control.NotebookbarWriter.js:238
 msgid "Latest Updates"
 msgstr "Siste opplastinger"
 
@@ -684,13 +680,13 @@ msgstr "Siste opplastinger"
 #: src/control/Control.Menubar.js:500 src/control/Control.Menubar.js:711
 #: src/control/Control.Menubar.js:764 src/control/Control.Menubar.js:813
 #: src/control/Control.Menubar.js:859 src/control/Control.Menubar.js:927
-#: src/control/Control.NotebookbarWriter.js:414
+#: src/control/Control.NotebookbarWriter.js:249
 msgid "About"
 msgstr "Om"
 
 #: src/control/Control.Menubar.js:262 src/control/Control.Menubar.js:390
 #: src/control/Control.Menubar.js:502 src/control/Control.Menubar.js:713
-#: src/map/Map.js:399
+#: src/map/Map.js:402
 msgid "Last modification"
 msgstr "Siste endring"
 
@@ -699,17 +695,16 @@ msgid "Save Comments"
 msgstr "Lagre Kommentarer"
 
 #: src/control/Control.Menubar.js:274 src/control/Control.Menubar.js:777
-#: src/control/Control.NotebookbarImpress.js:245
 msgid "ODF presentation (.odp)"
 msgstr "ODF-presentasjon (.odp)"
 
 #: src/control/Control.Menubar.js:275 src/control/Control.Menubar.js:778
-#: src/control/Control.NotebookbarImpress.js:298
+#: src/control/Control.NotebookbarImpress.js:218
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "PowerPoint 2003 Presentasjon (.ppt)"
 
 #: src/control/Control.Menubar.js:276 src/control/Control.Menubar.js:779
-#: src/control/Control.NotebookbarImpress.js:320
+#: src/control/Control.NotebookbarImpress.js:224
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint-presentasjon"
 
@@ -724,23 +719,22 @@ msgstr "Vis aktivt lysbilde"
 
 #: src/control/Control.Menubar.js:403 src/control/Control.Menubar.js:780
 #: src/control/Control.Menubar.js:826
-#: src/control/Control.NotebookbarImpress.js:267
-#: src/control/Control.NotebookbarDraw.js:221
+#: src/control/Control.NotebookbarImpress.js:205
+#: src/control/Control.NotebookbarDraw.js:175
 msgid "ODF Drawing (.odg)"
 msgstr "ODF-Tegning (.odg)"
 
 #: src/control/Control.Menubar.js:513 src/control/Control.Menubar.js:872
-#: src/control/Control.NotebookbarCalc.js:164
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF-regneark (.ods)"
 
 #: src/control/Control.Menubar.js:514 src/control/Control.Menubar.js:873
-#: src/control/Control.NotebookbarCalc.js:217
+#: src/control/Control.NotebookbarCalc.js:144
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003-rekneark (.xls)"
 
 #: src/control/Control.Menubar.js:515 src/control/Control.Menubar.js:874
-#: src/control/Control.NotebookbarCalc.js:239
+#: src/control/Control.NotebookbarCalc.js:150
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Excel-regneark (.xlsx)"
 
@@ -758,15 +752,15 @@ msgstr "Søk"
 msgid "Page Setup"
 msgstr "Sideoppsett"
 
-#: src/control/Control.Menubar.js:1093 src/control/Control.StatusBar.js:506
+#: src/control/Control.Menubar.js:1095 src/control/Control.StatusBar.js:505
 msgid "Reset to Default Language"
 msgstr "Nullstill til standardspråk"
 
-#: src/control/Control.Menubar.js:1435
+#: src/control/Control.Menubar.js:1443
 msgid "Insert Shape"
 msgstr "Sett inn form"
 
-#: src/control/Control.Menubar.js:1528
+#: src/control/Control.Menubar.js:1536
 msgid "Are you sure you want to delete this slide?"
 msgstr "Er du sikker på at du vil slette dette lysbildet?"
 
@@ -824,75 +818,75 @@ msgstr "Sett inn ark"
 msgid "Cancel the search"
 msgstr "Avbryt søket"
 
-#: src/control/Control.StatusBar.js:296
+#: src/control/Control.StatusBar.js:295
 msgid "Number of Sheets"
 msgstr "Antall ark"
 
-#: src/control/Control.StatusBar.js:301
+#: src/control/Control.StatusBar.js:300
 msgid "Selected range of cells"
 msgstr "Markert celleområde"
 
-#: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:355
+#: src/control/Control.StatusBar.js:305 src/control/Control.StatusBar.js:354
 msgid "Entering text mode"
 msgstr "Åpner tekstmodus."
 
-#: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:360
+#: src/control/Control.StatusBar.js:314 src/control/Control.StatusBar.js:359
 msgid "Selection Mode"
 msgstr "Utvalgsmodus"
 
-#: src/control/Control.StatusBar.js:320
+#: src/control/Control.StatusBar.js:319
 msgid "Choice of functions"
 msgstr "Funksjonsvalg"
 
-#: src/control/Control.StatusBar.js:324
+#: src/control/Control.StatusBar.js:323
 msgid "Average"
 msgstr "Gjennomsnitt"
 
-#: src/control/Control.StatusBar.js:325
+#: src/control/Control.StatusBar.js:324
 msgid "CountA"
 msgstr "AntallA"
 
-#: src/control/Control.StatusBar.js:326
+#: src/control/Control.StatusBar.js:325
 msgid "Count"
 msgstr "Tell"
 
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.StatusBar.js:326
 msgid "Maximum"
 msgstr "Maksimum"
 
-#: src/control/Control.StatusBar.js:328
+#: src/control/Control.StatusBar.js:327
 msgid "Minimum"
 msgstr "Minimum"
 
-#: src/control/Control.StatusBar.js:329
+#: src/control/Control.StatusBar.js:328
 msgid "Sum"
 msgstr "Sum"
 
-#: src/control/Control.StatusBar.js:330
+#: src/control/Control.StatusBar.js:329
 msgid "Selection count"
 msgstr "Utvalgsteller"
 
-#: src/control/Control.StatusBar.js:345
+#: src/control/Control.StatusBar.js:344
 msgid "Number of Pages"
 msgstr "Antall sider"
 
-#: src/control/Control.StatusBar.js:350
+#: src/control/Control.StatusBar.js:349
 msgid "Word Counter"
 msgstr "Ordteller"
 
-#: src/control/Control.StatusBar.js:377
+#: src/control/Control.StatusBar.js:376
 msgid "Number of Slides"
 msgstr "Antall presentasjonssider"
 
-#: src/control/Control.StatusBar.js:450
+#: src/control/Control.StatusBar.js:449
 msgid "Select multiple cells"
 msgstr "Velg flere celler"
 
-#: src/control/Control.StatusBar.js:453
+#: src/control/Control.StatusBar.js:452
 msgid "Insert mode: inactive"
 msgstr "Innsmettingsmodus: inaktivt"
 
-#: src/control/Control.StatusBar.js:466
+#: src/control/Control.StatusBar.js:465
 msgid "Selection mode: inactive"
 msgstr "Utvalgsmodus: inaktivt"
 
@@ -940,7 +934,7 @@ msgstr ""
 "for å løse konflikten."
 
 #: src/control/Control.TopToolbar.js:122
-#: src/control/Control.NotebookbarWriter.js:751
+#: src/control/Control.NotebookbarWriter.js:517
 msgid "Default Style"
 msgstr "Standard Stil"
 
@@ -953,7 +947,7 @@ msgid "Insert table"
 msgstr "Sett inn tabell"
 
 #: src/control/Control.TopToolbar.js:245
-#: src/control/Control.NotebookbarBuilder.js:576
+#: src/control/Control.NotebookbarBuilder.js:593
 msgid "Insert Local Image"
 msgstr "Sett inn lokalt bilde"
 
@@ -966,7 +960,7 @@ msgstr "Sett inn former"
 msgid "Insert connectors"
 msgstr "Sett inn bindeledd"
 
-#: src/control/Control.TopToolbar.js:499
+#: src/control/Control.TopToolbar.js:498
 msgid "Style"
 msgstr "Stil"
 
@@ -1002,23 +996,23 @@ msgstr "Følg alltid editoren"
 msgid "Current"
 msgstr "Gjeldende"
 
-#: src/control/Control.Notebookbar.js:224
+#: src/control/Control.Notebookbar.js:223
 #: src/control/Control.NotebookbarImpress.js:18
 #: src/control/Control.NotebookbarDraw.js:18
-#: src/control/Control.NotebookbarBuilder.js:725
-#: src/control/Control.NotebookbarBuilder.js:766
-#: src/control/Control.NotebookbarBuilder.js:794
-#: src/control/Control.NotebookbarBuilder.js:819
+#: src/control/Control.NotebookbarBuilder.js:742
+#: src/control/Control.NotebookbarBuilder.js:783
+#: src/control/Control.NotebookbarBuilder.js:811
+#: src/control/Control.NotebookbarBuilder.js:836
 msgid "Menu"
 msgstr "Meny"
 
-#: src/control/Control.Notebookbar.js:236
+#: src/control/Control.Notebookbar.js:235
 #: src/control/Control.NotebookbarImpress.js:36
 #: src/control/Control.NotebookbarDraw.js:30
 msgid "Undo"
 msgstr "Angre"
 
-#: src/control/Control.Notebookbar.js:242
+#: src/control/Control.Notebookbar.js:241
 #: src/control/Control.NotebookbarImpress.js:42
 #: src/control/Control.NotebookbarDraw.js:36
 msgid "Redo"
@@ -1046,6 +1040,7 @@ msgid "~Insert"
 msgstr "~Sett inn"
 
 #: src/control/Control.NotebookbarWriter.js:28
+#: src/control/Control.NotebookbarCalc.js:28
 msgid "~Layout"
 msgstr "Utforming"
 
@@ -1054,13 +1049,13 @@ msgid "Reference~s"
 msgstr "Referanser"
 
 #: src/control/Control.NotebookbarWriter.js:38
-#: src/control/Control.NotebookbarCalc.js:43
+#: src/control/Control.NotebookbarCalc.js:38
 #: src/control/Control.NotebookbarImpress.js:107
 msgid "~Review"
 msgstr "Gjennomgang"
 
 #: src/control/Control.NotebookbarWriter.js:43
-#: src/control/Control.NotebookbarCalc.js:38
+#: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarImpress.js:112
 #: src/control/Control.NotebookbarDraw.js:96
 msgid "Format"
@@ -1072,159 +1067,148 @@ msgid "~Table"
 msgstr "Tabell"
 
 #: src/control/Control.NotebookbarWriter.js:54
+#: src/control/Control.NotebookbarCalc.js:48
 msgid "~Draw"
 msgstr "Draw"
 
 #: src/control/Control.NotebookbarWriter.js:60
-#: src/control/Control.NotebookbarCalc.js:48
+#: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarImpress.js:129
 #: src/control/Control.NotebookbarDraw.js:107
 msgid "~Help"
 msgstr "Hjelp"
 
-#: src/control/Control.NotebookbarWriter.js:122
-#: src/control/Control.NotebookbarCalc.js:107
-#: src/control/Control.NotebookbarImpress.js:188
+#: src/control/Control.NotebookbarWriter.js:105
+#: src/control/Control.NotebookbarCalc.js:98
+#: src/control/Control.NotebookbarImpress.js:172
+#: src/control/Control.NotebookbarDraw.js:148
 msgid "Share"
 msgstr "Del"
 
-#: src/control/Control.NotebookbarWriter.js:152
-#: src/control/Control.NotebookbarCalc.js:137
-#: src/control/Control.NotebookbarImpress.js:218
+#: src/control/Control.NotebookbarWriter.js:112
+#: src/control/Control.NotebookbarCalc.js:105
+#: src/control/Control.NotebookbarImpress.js:179
+#: src/control/Control.NotebookbarDraw.js:155
 msgid "See history"
 msgstr "Vis historikk"
 
-#: src/control/Control.NotebookbarWriter.js:755
+#: src/control/Control.NotebookbarWriter.js:131
+#, fuzzy
+msgid "ODF Text Document (.odt)"
+msgstr "ODF-tekstdokument (.odt)"
+
+#: src/control/Control.NotebookbarWriter.js:173
+msgid "EPUB Document (.epub)"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:521
 msgid "Text Body"
 msgstr "Skrivefelt"
 
-#: src/control/Control.NotebookbarWriter.js:758
+#: src/control/Control.NotebookbarWriter.js:524
 #, fuzzy
 msgid "Title"
 msgstr "Tittel"
-
-#: src/control/Control.NotebookbarWriter.js:789
-msgid "Emphasis"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:794
-msgid "Strong Emphasis"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:28
-msgid "~Sheet"
-msgstr "Ark"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
 msgstr "Data"
 
-#: src/control/Control.NotebookbarCalc.js:270
+#: src/control/Control.NotebookbarCalc.js:125
+#, fuzzy
+msgid "ODF Spreadsheet (.ods)"
+msgstr "ODF-regneark (.ods)"
+
+#: src/control/Control.NotebookbarCalc.js:131
 msgid "CSV File (.csv)"
 msgstr "CSV-fil (.csv)"
 
-#: src/control/Control.NotebookbarCalc.js:596
+#: src/control/Control.NotebookbarCalc.js:432
 msgid "General"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:597
+#: src/control/Control.NotebookbarCalc.js:433
 msgid "Number"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:598
+#: src/control/Control.NotebookbarCalc.js:434
 msgid "Percent"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:599
+#: src/control/Control.NotebookbarCalc.js:435
 #, fuzzy
 msgid "Currency"
 msgstr "Gjeldende"
 
-#: src/control/Control.NotebookbarCalc.js:600
+#: src/control/Control.NotebookbarCalc.js:436
 msgid "Date"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:601
+#: src/control/Control.NotebookbarCalc.js:437
 msgid "Time"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:602
+#: src/control/Control.NotebookbarCalc.js:438
 msgid "Scientific"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:603
+#: src/control/Control.NotebookbarCalc.js:439
 msgid "Fraction"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:604
+#: src/control/Control.NotebookbarCalc.js:440
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:605 src/control/Toolbar.js:756
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:789
 msgid "Text"
 msgstr "Tekst"
 
-#: src/control/Control.NotebookbarCalc.js:723
+#: src/control/Control.NotebookbarCalc.js:574
 msgid "Default"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:728
+#: src/control/Control.NotebookbarCalc.js:579
 msgid "Heading 1"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:733
+#: src/control/Control.NotebookbarCalc.js:584
 msgid "Heading 2"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:744
+#: src/control/Control.NotebookbarCalc.js:595
 msgid "Good"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:749
+#: src/control/Control.NotebookbarCalc.js:600
 msgid "Neutral"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:754
+#: src/control/Control.NotebookbarCalc.js:605
 msgid "Bad"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:823
-msgid "Insert Row Break"
-msgstr "Sett inn radbrytning"
-
-#: src/control/Control.NotebookbarCalc.js:834
-msgid "Insert Column Break"
-msgstr "Sett inn kolonnebrytning"
-
-#: src/control/Control.NotebookbarCalc.js:852
-msgid "Remove Row Break"
-msgstr "Fjern Radbrytning"
-
-#: src/control/Control.NotebookbarCalc.js:863
-msgid "Remove Column Break"
-msgstr "Fjern Kolonnebrytning"
-
-#: src/control/Control.NotebookbarCalc.js:881
+#: src/control/Control.NotebookbarCalc.js:667
 msgid "Insert Rows Above"
 msgstr "Sett inn rader over"
 
-#: src/control/Control.NotebookbarCalc.js:886
+#: src/control/Control.NotebookbarCalc.js:672
 msgid "Insert Columns Before"
 msgstr "Sett inn kolonner før"
 
-#: src/control/Control.NotebookbarCalc.js:891
+#: src/control/Control.NotebookbarCalc.js:677
 msgid "Delete Rows"
 msgstr "Slett Rader"
 
-#: src/control/Control.NotebookbarCalc.js:902
+#: src/control/Control.NotebookbarCalc.js:687
 msgid "Insert Rows Below"
 msgstr "Sett inn rader nedenfor"
 
-#: src/control/Control.NotebookbarCalc.js:907
+#: src/control/Control.NotebookbarCalc.js:692
 msgid "Insert Columns After"
 msgstr "Sett inn Kolonner etter"
 
-#: src/control/Control.NotebookbarCalc.js:912
+#: src/control/Control.NotebookbarCalc.js:697
 msgid "Delete Columns"
 msgstr "Slett Kolonner"
 
@@ -1232,7 +1216,12 @@ msgstr "Slett Kolonner"
 msgid "Start Presentation"
 msgstr "Start Presentatsjon"
 
-#: src/control/Control.NotebookbarDraw.js:274
+#: src/control/Control.NotebookbarImpress.js:199
+#, fuzzy
+msgid "ODF Presentation (.odp)"
+msgstr "ODF-presentasjon (.odp)"
+
+#: src/control/Control.NotebookbarDraw.js:181
 msgid "Image (.png)"
 msgstr ""
 
@@ -1400,7 +1389,7 @@ msgstr "Font:"
 msgid "Downloading..."
 msgstr "Laster ned …"
 
-#: src/control/Toolbar.js:235 src/map/Map.js:1557
+#: src/control/Toolbar.js:235 src/map/Map.js:1563
 msgid "Saving..."
 msgstr "Lagrer..."
 
@@ -1408,33 +1397,29 @@ msgstr "Lagrer..."
 msgid "Renaming..."
 msgstr "Endre navn..."
 
-#: src/control/Toolbar.js:564
-msgid "I understand the risks"
-msgstr "Jeg forstår risikoen"
-
-#: src/control/Toolbar.js:614
+#: src/control/Toolbar.js:621
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 "Beklager, informasjonen om de siste oppdateringene er ikke tilgjengelig."
 
-#: src/control/Toolbar.js:659
+#: src/control/Toolbar.js:671
 msgid "This version of %productName is powered by"
 msgstr "Denne versjonen av %productName kjøres på"
 
-#: src/control/Toolbar.js:669
+#: src/control/Toolbar.js:681
 msgid "\"Slow Proxy\""
 msgstr "\"Sen Proxy\""
 
-#: src/control/Toolbar.js:754
+#: src/control/Toolbar.js:787
 msgid "Insert hyperlink"
 msgstr "Sett inn hyperlenke"
 
-#: src/control/Toolbar.js:757
+#: src/control/Toolbar.js:790
 msgid "Link"
 msgstr "Lenke"
 
-#: src/core/Socket.js:62
+#: src/core/Socket.js:66
 msgid ""
 "IE11 has reached its maximum number of connections. Please see this document "
 "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
@@ -1446,47 +1431,47 @@ msgstr ""
 "previous-versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
-#: src/core/Socket.js:64
+#: src/core/Socket.js:68
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Oops, problem med å koble dokumentet til %productName: "
 
-#: src/core/Socket.js:319
+#: src/core/Socket.js:362
 msgid "Server has been restarted. We have to refresh the page now."
 msgstr ""
 
-#: src/core/Socket.js:337
+#: src/core/Socket.js:380
 msgid "Served by:"
 msgstr "Servert av:"
 
-#: src/core/Socket.js:342
+#: src/core/Socket.js:385
 msgid "Unsupported server version."
 msgstr "Denne serverversjonen støttes ikke"
 
-#: src/core/Socket.js:437
+#: src/core/Socket.js:483
 msgid "Session terminated by document owner"
 msgstr "Sesjonen er avsluttet av dokumenteier."
 
-#: src/core/Socket.js:442
+#: src/core/Socket.js:488
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Inaktivt dokument, vennligst klikk for å fortsette redigering"
 
-#: src/core/Socket.js:444
+#: src/core/Socket.js:490
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "Inaktivt dokument, vennligst klikk for å fortsette redigering"
 
-#: src/core/Socket.js:452
+#: src/core/Socket.js:498
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Serveren tas ned for vedlikehold (autolagring)"
 
-#: src/core/Socket.js:456
+#: src/core/Socket.js:502
 msgid "Oops, there is a problem connecting the document"
 msgstr "Oops, problem med å koble til dokumentet"
 
-#: src/core/Socket.js:460
+#: src/core/Socket.js:506
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Tjeneren er nede. Vent mens den starter på nytt automatisk."
 
-#: src/core/Socket.js:488
+#: src/core/Socket.js:534
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1494,7 +1479,7 @@ msgstr ""
 "Dokumentet har blitt endret på serveren. Laster det nye dokumentet. Din "
 "versjon er tilgjengelig som en revisjon."
 
-#: src/core/Socket.js:494
+#: src/core/Socket.js:540
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1502,7 +1487,7 @@ msgstr ""
 "Gjenoppretter en eldre versjon. Alle endringer som ikke er lagret er "
 "tilgjengelige i versjonsloggen"
 
-#: src/core/Socket.js:614
+#: src/core/Socket.js:660
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1510,43 +1495,43 @@ msgstr ""
 "Dokumentet i lageret er endret. Hva vil du gjøre med endringene som ikke er "
 "lagret?"
 
-#: src/core/Socket.js:618
+#: src/core/Socket.js:664
 msgid "Discard"
 msgstr "Forkast"
 
-#: src/core/Socket.js:623
+#: src/core/Socket.js:669
 msgid "Overwrite"
 msgstr "Overskriv"
 
-#: src/core/Socket.js:628
+#: src/core/Socket.js:674
 msgid "Save to new file"
 msgstr "Lagre til ny fil"
 
-#: src/core/Socket.js:698
+#: src/core/Socket.js:744
 msgid "Document requires password to view."
 msgstr "Passord kreves for å se dokumentet."
 
-#: src/core/Socket.js:701
+#: src/core/Socket.js:747
 msgid "Document requires password to modify."
 msgstr "Passord kreves for å endre dokumentet."
 
-#: src/core/Socket.js:703
+#: src/core/Socket.js:749
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Trykk avbryt for å åpne som skrivebeskyttet."
 
-#: src/core/Socket.js:707
+#: src/core/Socket.js:753
 msgid "Wrong password provided. Please try again."
 msgstr "Feil passord. Prøv igjen:"
 
-#: src/core/Socket.js:856 src/map/Map.js:1560
+#: src/core/Socket.js:903 src/map/Map.js:1566
 msgid "Loading..."
 msgstr "Laster …"
 
-#: src/core/Socket.js:856
+#: src/core/Socket.js:903
 msgid "Connecting..."
 msgstr "Kobler til …"
 
-#: src/core/Socket.js:1160
+#: src/core/Socket.js:1213
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1717,43 +1702,43 @@ msgstr "Opplasting av fil til server mislyktes, filen ble ikke funnet."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Opplasting av fil til server mislyktes, filen er for stor."
 
-#: src/layer/marker/Annotation.js:283 src/layer/tile/CanvasTileLayer.js:5022
+#: src/layer/marker/Annotation.js:283 src/layer/tile/CanvasTileLayer.js:5101
 msgid "Reply"
 msgstr "Svar"
 
-#: src/layer/tile/CanvasTileLayer.js:1855
+#: src/layer/tile/CanvasTileLayer.js:1862
 msgid "Functions"
 msgstr "Funksjoner"
 
-#: src/layer/tile/CanvasTileLayer.js:4770
+#: src/layer/tile/CanvasTileLayer.js:4849
 msgid "No Comments"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:5016
+#: src/layer/tile/CanvasTileLayer.js:5095
 msgid "Modify"
 msgstr "Endre"
 
-#: src/layer/tile/CanvasTileLayer.js:5028
+#: src/layer/tile/CanvasTileLayer.js:5107
 msgid "Remove"
 msgstr "Slett"
 
-#: src/layer/tile/CanvasTileLayer.js:5034
+#: src/layer/tile/CanvasTileLayer.js:5113
 msgid "Remove Thread"
 msgstr "Fjern tråd"
 
-#: src/layer/tile/CanvasTileLayer.js:5040
+#: src/layer/tile/CanvasTileLayer.js:5119
 msgid "Resolve"
 msgstr "Løs"
 
-#: src/layer/tile/CanvasTileLayer.js:5040
+#: src/layer/tile/CanvasTileLayer.js:5119
 msgid "Unresolve"
 msgstr "Opphev løst status"
 
-#: src/layer/tile/CanvasTileLayer.js:5046
+#: src/layer/tile/CanvasTileLayer.js:5125
 msgid "Unresolve Thread"
 msgstr "Opphev løst status for tråd"
 
-#: src/layer/tile/CanvasTileLayer.js:5046
+#: src/layer/tile/CanvasTileLayer.js:5125
 msgid "Resolve Thread"
 msgstr "Løs tråd"
 
@@ -1773,12 +1758,12 @@ msgstr "<p> Bruk kopier/lim inn-knappene på skjermtastaturet. </p>"
 #: src/map/Clipboard.js:888
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
-"keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
-"b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
+"keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
+"td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
-"<p>Nettleseren din har begrenset tilgang til utklippstavlen,<ul><li><b> bruk "
-"disse hurtigtastene: Ctrl+C</b>For å kopiere.</li><li><b>Ctrl+X</b>: For å "
-"klippe ut.</li><li><b>Ctrl+P</b>: For å lime inn. </li></ul></p>"
 
 #: src/map/Clipboard.js:909
 msgid ""
@@ -1805,21 +1790,21 @@ msgstr ""
 "allerede startet. Vent til den gjeldende nedlastingen er ferdig, eller "
 "avbryt den før du starter en ny</p>"
 
-#: src/map/Map.js:227
+#: src/map/Map.js:230
 msgid "Initializing..."
 msgstr "Klargjør …"
 
-#: src/map/Map.js:434
+#: src/map/Map.js:437
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "%d sekunder siden"
 
-#: src/map/Map.js:437
+#: src/map/Map.js:440
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "%d minutter siden"
 
-#: src/map/Map.js:1411
+#: src/map/Map.js:1417
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktivt dokument, vennligst klikk for å fortsette redigering"
 
@@ -1845,13 +1830,40 @@ msgstr "Laster opp…"
 msgid "Uploading file to server failed with status: %0"
 msgstr "Opplasting av fil til server mislyktes med status: %0"
 
-#: src/map/handler/Map.WOPI.js:134
+#: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
 msgstr "Oppretter ny fil fra mal ..."
 
-#: src/map/handler/Map.WOPI.js:405
+#: src/map/handler/Map.WOPI.js:404
 msgid "Creating copy..."
 msgstr "Lager en kopi...."
+
+#~ msgid "~Sheet"
+#~ msgstr "Ark"
+
+#~ msgid "Insert Row Break"
+#~ msgstr "Sett inn radbrytning"
+
+#~ msgid "Insert Column Break"
+#~ msgstr "Sett inn kolonnebrytning"
+
+#~ msgid "Remove Row Break"
+#~ msgstr "Fjern Radbrytning"
+
+#~ msgid "Remove Column Break"
+#~ msgstr "Fjern Kolonnebrytning"
+
+#~ msgid "I understand the risks"
+#~ msgstr "Jeg forstår risikoen"
+
+#~ msgid ""
+#~ "<p>Your browser has very limited access to the clipboard, so use these "
+#~ "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
+#~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
+#~ msgstr ""
+#~ "<p>Nettleseren din har begrenset tilgang til utklippstavlen,<ul><li><b> bruk "
+#~ "disse hurtigtastene: Ctrl+C</b>For å kopiere.</li><li><b>Ctrl+X</b>: For å "
+#~ "klippe ut.</li><li><b>Ctrl+P</b>: For å lime inn. </li></ul></p>"
 
 #, fuzzy
 #~ msgid "Subtitle"
