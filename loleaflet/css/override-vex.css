@@ -74,6 +74,15 @@
 	outline: none;
 }
 
+.vex-selectable {
+	-webkit-touch-callout: text;
+	-webkit-user-select: text;
+	-khtml-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
+}
+
 .vex.vex-theme-plain .vex-close:before {
 	width: 20px;
 	height: 20px;
