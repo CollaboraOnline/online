@@ -375,8 +375,9 @@ L.Map.include({
 			unsafeContent: data,
 			showCloseButton: true,
 			escapeButtonCloses: true,
-			overlayClosesOnClick: true,
+			overlayClosesOnClick: false,
 			closeAllOnPopState: false,
+			contentClassName: 'vex-content vex-selectable',
 			buttons: {},
 			afterOpen: function() {
 				var $vexContent = $(this.contentEl);
