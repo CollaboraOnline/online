@@ -717,8 +717,8 @@ L.Map.include({
 					map._docLayer.toggleTileDebugMode();
 
 					// Triple-clicking turns Trace Event recording on in the kit
-					// process for this document, as long as loolwsd has been
-					// started with the --enable-trace-event-logging option.
+					// process for this document, as long as loolwsd is running
+					// with the trace_event[@enable] config option as true.
 					// Triple-clicking again turns it off.
 
 					if (app.socket.enableTraceEventLogging) {

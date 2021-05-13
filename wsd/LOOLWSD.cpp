@@ -992,6 +992,7 @@ void LOOLWSD::innerInitialize(Application& self)
             { "storage.wopi[@allow]", "true" },
             { "storage.wopi.locking.refresh", "900" },
             { "sys_template_path", "systemplate" },
+            { "trace_event[@enable]", "false" },
             { "trace.path[@compress]", "true" },
             { "trace.path[@snapshot]", "false" },
             { "trace[@enable]", "false" },
@@ -1072,8 +1073,6 @@ void LOOLWSD::innerInitialize(Application& self)
         }
     }
 
-    const auto traceEventFile = getConfigValue<std::string>(conf, "trace_event.path", LOOLWSD_TRACEEVENTFILE);
-
     // Setup the logfile envar for the kit processes.
     if (logToFile)
     {
@@ -1095,8 +1094,11 @@ void LOOLWSD::innerInitialize(Application& self)
                 << LogLevel << "] until after WSD initialization.");
     }
 
+    EnableTraceEventLogging = getConfigValue<bool>(conf, "trace_event[@enable]", false);
+
     if (EnableTraceEventLogging)
     {
+        const auto traceEventFile = getConfigValue<std::string>(conf, "trace_event.path", LOOLWSD_TRACEEVENTFILE);
         LOG_INF("Trace Event file is " << traceEventFile << ".");
         TraceEventFile = fopen(traceEventFile.c_str(), "w");
         if (TraceEventFile != NULL)
@@ -1647,13 +1649,6 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("path"));
 
-    optionSet.addOption(Option("enable-trace-event-logging", "",
-                               "Enable turning Trace Event recording and logging on and off. "
-                               "Note that this option does not turn it on, that needs to be done at run-time "
-                               "for a specific client.")
-                        .required(false)
-                        .repeatable(false));
-
 #if ENABLE_DEBUG
     optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
                         .required(false)
@@ -1723,8 +1718,6 @@ void LOOLWSD::handleOption(const std::string& optionName,
         ConfigDir = value;
     else if (optionName == "lo-template-path")
         LoTemplate = value;
-    else if (optionName == "enable-trace-event-logging")
-        EnableTraceEventLogging = true;
 #if ENABLE_DEBUG
     else if (optionName == "unitlib")
         UnitTestLibrary = value;
@@ -2004,9 +1997,6 @@ bool LOOLWSD::createForKit()
 
     if (!CheckLoolUser)
         args.push_back("--disable-lool-user-checking");
-
-    if (EnableTraceEventLogging)
-        args.push_back("--enable-trace-event-logging");
 
 #if ENABLE_DEBUG
     if (SingleKit)
