@@ -285,6 +285,9 @@ app.definitions.Socket = L.Class.extend({
 		var queueLength = this._slurpQueue.length;
 		var completeEventWholeFunction = this.createCompleteTraceEvent('loleaflet._emitSlurpedEvents',
 									       {'_slurpQueue.length' : String(queueLength)});
+		if (this._map && this._map._docLayer) {
+			this._map._docLayer.pauseDrawing();
+		}
 		// console.log2('Slurp events ' + that._slurpQueue.length);
 		try {
 			for (var i = 0; i < this._slurpQueue.length; ++i) {
@@ -328,6 +331,11 @@ app.definitions.Socket = L.Class.extend({
 		finally {
 			if (completeEventWholeFunction)
 				completeEventWholeFunction.finish();
+		}
+
+		if (this._map && this._map._docLayer) {
+			// Resume with redraw if dirty due to previous _onMessage() calls.
+			this._map._docLayer.resumeDrawing();
 		}
 	},
 
