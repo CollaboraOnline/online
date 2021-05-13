@@ -1383,9 +1383,12 @@ app.definitions.Socket = L.Class.extend({
 	asyncTraceEventCounter: 0,
 
 	createAsyncTraceEvent: function (name, args) {
+		if (!this.traceEventRecordingToggle)
+			return null;
+
 		var result = {};
 		result.id = this.asyncTraceEventCounter++;
-		result.active = this.traceEventRecordingToggle;
+		result.active = true;
 		result.args = args;
 
 		if (this.traceEventRecordingToggle)
@@ -1407,8 +1410,11 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	createCompleteTraceEvent: function (name, args) {
+		if (!this.traceEventRecordingToggle)
+			return null;
+
 		var result = {};
-		result.active = this.traceEventRecordingToggle;
+		result.active = true;
 		result.begin = performance.now();
 		result.args = args;
 		var that = this;
