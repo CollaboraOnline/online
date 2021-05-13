@@ -900,7 +900,14 @@ void LOOLWSD::innerInitialize(Application& self)
 
     auto& conf = config();
 
-    // Add default values of new entries here.
+    // Add default values of new entries here, so there is a sensible default in case
+    // the setting is missing from the config file. It is possible that users do not
+    // update their config files, and we are backward compatible.
+    // These defaults should be the same
+    // 1) here
+    // 2) in the 'default' attribute in loolwsd.xml, which is for documentation
+    // 3) the default parameter of getConfigValue() call. That is used when the
+    //    setting is present in loolwsd.xml, but empty (i.e. use the default).
     static const std::map<std::string, std::string> DefAppConfig
         = { { "allowed_languages", "de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru" },
             { "admin_console.enable_pam", "false" },
