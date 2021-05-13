@@ -282,19 +282,32 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	_emitSlurpedEvents: function() {
+		var queueLength = this._slurpQueue.length;
+		var completeEvent = this.createCompleteTraceEvent('loleaflet._emitSlurpedEvents',
+								  {'_slurpQueue.length' : String(queueLength)});
 		// console.log2('Slurp events ' + that._slurpQueue.length);
-		for (var i = 0; i < this._slurpQueue.length; ++i) {
-			var evt = this._slurpQueue[i];
-			try {
-				// it is - are you ?
-				this._onMessage(evt);
+		try {
+			for (var i = 0; i < this._slurpQueue.length; ++i) {
+				var evt = this._slurpQueue[i];
+				try {
+					// it is - are you ?
+					this._onMessage(evt);
+				}
+				catch (e)
+				{
+					// unpleasant - but stops this one problem
+					// event stopping an unknown number of others.
+					console.log2('Exception ' + e + ' emitting event ' + evt.data);
+				}
 			}
-			catch (e)
-			{
-				// unpleasant - but stops this one problem
-				// event stopping an unknown number of others.
-				console.log2('Exception ' + e + ' emitting event ' + evt.data);
-			}
+			var asyncEvent = this.createAsyncTraceEvent('loleaflet._emitSlurpedEvents-to-idle',
+								    {'_slurpQueue.length' : String(queueLength)});
+			if (asyncEvent)
+				setTimeout(function() { asyncEvent.finish(); }, 0);
+		}
+		finally {
+			if (completeEvent)
+				completeEvent.finish();
 		}
 	},
 
