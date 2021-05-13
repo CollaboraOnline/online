@@ -307,6 +307,22 @@ AC_ARG_ENABLE([vereign],
 AC_ARG_ENABLE([cypress],
             AS_HELP_STRING([--enable-cypress],
                            [Enable cypress tests.]))
+
+AC_ARG_WITH([help-url],
+            AS_HELP_STRING([--with-help-url=<url>],
+                [Set the base URL of the online help. Default is https://help.collaboraoffice.com/help.html?])
+                [--without-help-url Help buttons of dialogs will be disabled, external help website will not be used.],,)
+
+AC_ARG_WITH([core-icon-theme],
+            AS_HELP_STRING([--with-core-icon-theme=<theme>],
+                [Set the icon theme coming from core (tunneled sidebar, tunneled dialogs). The default is colibre.]))
+
+AC_ARG_WITH([dictionaries],
+            AS_HELP_STRING([--with-dictionaries=<language list>],
+                [List of supported languages of Writing Aids (spell checker, grammar checker, thesaurus, hyphenation)
+                 on this instance. Allowing too many has negative effect on startup performance. Default: de_DE en_GB
+                 en_US es_ES fr_FR it nl pt_BR pt_PT ru.]))
+
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
       [POCO_DEBUG_SUFFIX=d],
@@ -1104,7 +1120,6 @@ fi
 AC_SUBST(ENABLE_SETCAP)
 
 AC_CONFIG_LINKS([discovery.xml:discovery.xml])
-AC_CONFIG_LINKS([loolkitconfig.xcu:loolkitconfig.xcu])
 AC_CONFIG_LINKS([loleaflet/package.json:loleaflet/package.json])
 AC_CONFIG_LINKS([cypress_test/package.json:cypress_test/package.json])
 AC_CONFIG_LINKS([cypress_test/cypress.json:cypress_test/cypress.json])
@@ -1172,12 +1187,45 @@ else
 fi
 AM_CONDITIONAL([ENABLE_CYPRESS], [$ENABLE_CYPRESS])
 
+AC_MSG_CHECKING([for URL of online help])
+if test -n "$with_help_url" -a "$with_help_url" != "no"; then
+    HELP_URL="$with_help_url"
+    AC_MSG_RESULT([custom: $HELP_URL])
+elif test "$with_help_url" = "no"; then
+    HELP_URL=
+    AC_MSG_RESULT([none, help buttons are disabled])
+else
+    HELP_URL="https://help.collaboraoffice.com/help.html?"
+    AC_MSG_RESULT([default: $HELP_URL])
+fi
+AC_SUBST(HELP_URL)
+
+AC_MSG_CHECKING([for icon theme from core (tunneled sidebar, tunneled dialogs)])
+if test -n "$with_core_icon_theme" -a "$with_core_icon_theme" != "no"; then
+    ICON_THEME="$with_core_icon_theme"
+    AC_MSG_RESULT([custom: $ICON_THEME])
+else
+    ICON_THEME="colibre"
+    AC_MSG_RESULT([default: $ICON_THEME])
+fi
+AC_SUBST(ICON_THEME)
+
+AC_MSG_CHECKING([for allowed languages for Writing Aids])
+if test -n "$with_dictionaries" -a "$with_dictionaries" != "no"; then
+    ALLOWED_LANGUAGES="$with_dictionaries"
+else
+    ALLOWED_LANGUAGES="de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru"
+fi
+AC_MSG_RESULT([$ALLOWED_LANGUAGES])
+AC_SUBST(ALLOWED_LANGUAGES)
+
 AC_CONFIG_FILES([Makefile
                  cypress_test/Makefile
                  gtk/Makefile
                  test/Makefile
                  loleaflet/Makefile
                  loleaflet/npm-shrinkwrap.json
+                 loolkitconfig.xcu
                  loolwsd.spec
                  loolwsd.xml
                  debian/loolwsd.postinst])
