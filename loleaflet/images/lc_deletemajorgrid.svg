@@ -7,17 +7,7 @@
 	 stroke-linecap="round" 
 	 stroke-linejoin="round"
       >
-      <path d="m 2.5,4.5 h 19 z m 0,8 h 19 z m 0,8 h 19 z" />
-  </g>
-  <g id="symbol-background"
-     class="icn icn--background"
-     stroke="#fff" 
-     stroke-width="3px"
-	 stroke-linecap="round" 
-	 stroke-linejoin="round"
-      >
-      <path d="m 22.5,22.5 -9,-9" />
-      <path d="m 13.5,22.5 9,-9" />
+      <path d="m 2.5,4.5 h 19 z m 0,8 h 10 z m 0,8 h 10 z" />
   </g>
   <g id="symbol"
      class="icn icn--negative-color-line"
