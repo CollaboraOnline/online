@@ -35,6 +35,7 @@
 #include <androidapp.hpp>
 #endif
 
+#include <common/ConfigUtil.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/Authorization.hpp>
@@ -461,19 +462,19 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens.equals(0, "traceeventrecording"))
         {
-            if (EnableTraceEventLogging)
+            if (config::getBool("trace_event[@enable]", false))
             {
                 if (tokens.size() > 0)
                 {
                     if (tokens.equals(1, "start"))
                         {
                             getLOKit()->setOption("traceeventrecording", "start");
-                            LOG_INF("Trace Event recording in this kit process turned on (might have been on all the time)");
+                            LOG_INF("Trace Event recording in this kit process turned on (might have been on already)");
                         }
                     else if (tokens.equals(1, "stop"))
                     {
                         getLOKit()->setOption("traceeventrecording", "stop");
-                        LOG_INF("Trace Event recording in this kit process turned off");
+                        LOG_INF("Trace Event recording in this kit process turned off (might have been off already)");
                     }
                 }
             }
