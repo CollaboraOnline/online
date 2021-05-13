@@ -642,12 +642,6 @@ int main(int argc, char** argv)
             eq = std::strchr(cmd, '=');
             UserInterface = std::string(eq+1);
         }
-
-        else if (std::strstr(cmd, "--enable-trace-event-logging") == cmd)
-        {
-            EnableTraceEventLogging = true;
-        }
-
     }
 
     if (loSubPath.empty() || sysTemplate.empty() ||
