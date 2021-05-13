@@ -401,6 +401,7 @@
 
 #fontnamecombobox.notebookbar .select2 {
 	width: 170px !important;
+	top: -1px;
 }
 
 #fontnamecombobox.notebookbar {
