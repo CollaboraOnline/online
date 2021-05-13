@@ -284,42 +284,54 @@ L.Socket = L.Class.extend({
 		// console.log2('Slurp events ' + that._slurpQueue.length);
 		var queueLen = this._slurpQueue.length;
 		var complete = true;
-		for (var i = 0; i < queueLen; ++i) {
-			var evt = this._slurpQueue[i];
-			if (evt.isComplete()) {
-				try {
-					// it is - are you ?
-					this._onMessage(evt);
+		var completeEvent = this.createCompleteTraceEvent('loleaflet._emitSlurpedEvents',
+								  {'_slurpQueue.length' : String(queueLen)});
+		try {
+			for (var i = 0; i < queueLen; ++i) {
+				var evt = this._slurpQueue[i];
+				if (evt.isComplete()) {
+					try {
+						// it is - are you ?
+						this._onMessage(evt);
+					}
+					catch (e)
+					{
+						// unpleasant - but stops this one problem
+						// event stopping an unknown number of others.
+						console.log2('Exception ' + e + ' emitting event ' + evt.data);
+					}
+					var asyncEvent = this.createAsyncTraceEvent('loleaflet._emitSlurpedEvents-to-idle',
+										    {'_slurpQueue.length' : String(queueLen)});
+					if (asyncEvent)
+						setTimeout(function() { asyncEvent.finish(); }, 0);
 				}
-				catch (e)
-				{
-					// unpleasant - but stops this one problem
-					// event stopping an unknown number of others.
-					console.log2('Exception ' + e + ' emitting event ' + evt.data);
+				else {
+					// Stop emitting, continue in the next timer from where we left off.
+					this._slurpQueue = this._slurpQueue.slice(i, queueLen);
+					var that = this;
+					this._slurpTimer = setTimeout(function () {
+						that._emitSlurpedEvents();
+					}, 1 /* ms */);
+					complete = false;
+					break;
 				}
 			}
-			else {
-				// Stop emitting, continue in the next timer from where we left off.
-				this._slurpQueue = this._slurpQueue.slice(i, queueLen);
-				var that = this;
-				this._slurpTimer = setTimeout(function () {
-					that._emitSlurpedEvents();
-				}, 1 /* ms */);
-				complete = false;
-				break;
+
+			if (complete) // Finished all elements in the queue.
+				this._slurpQueue = [];
+
+			if (this._map) {
+				if (this._map._docLayer) {
+					// Resume with redraw if dirty due to previous _onMessage() calls.
+					this._map._docLayer.resumeDrawing();
+				}
+				// Let other layers / overlays catch up.
+				this._map.fire('messagesdone');
 			}
 		}
-
-		if (complete) // Finished all elements in the queue.
-			this._slurpQueue = [];
-
-		if (this._map) {
-			if (this._map._docLayer) {
-				// Resume with redraw if dirty due to previous _onMessage() calls.
-				this._map._docLayer.resumeDrawing();
-			}
-			// Let other layers / overlays catch up.
-			this._map.fire('messagesdone');
+		finally {
+			if (completeEvent)
+				completeEvent.finish();
 		}
 	},
 
