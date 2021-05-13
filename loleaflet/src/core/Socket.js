@@ -269,6 +269,9 @@ L.Socket = L.Class.extend({
 	},
 
 	_emitSlurpedEvents: function() {
+		if (this._map && this._map._docLayer) {
+			this._map._docLayer.pauseDrawing();
+		}
 		// console.log2('Slurp events ' + that._slurpQueue.length);
 		for (var i = 0; i < this._slurpQueue.length; ++i) {
 			var evt = this._slurpQueue[i];
@@ -282,6 +285,11 @@ L.Socket = L.Class.extend({
 				// event stopping an unknown number of others.
 				console.log2('Exception ' + e + ' emitting event ' + evt.data);
 			}
+		}
+
+		if (this._map && this._map._docLayer) {
+			// Resume with redraw if dirty due to previous _onMessage() calls.
+			this._map._docLayer.resumeDrawing();
 		}
 	},
 

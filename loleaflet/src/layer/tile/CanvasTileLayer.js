@@ -671,6 +671,16 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 	},
 
+	pauseDrawing: function () {
+		if (this._painter && this._painter._sectionContainer)
+			this._painter._sectionContainer.pauseDrawing();
+	},
+
+	resumeDrawing: function () {
+		if (this._painter && this._painter._sectionContainer)
+			this._painter._sectionContainer.resumeDrawing();
+	},
+
 	_getUIWidth: function () {
 		var section = this._painter._sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
 		if (section) {

@@ -232,6 +232,8 @@ class CanvasSectionContainer {
 	private mouseIsInside: boolean = false;
 	private inZoomAnimation: boolean = false;
 	private zoomChanged: boolean = false;
+	private drawingPaused: boolean = false;
+	private dirty: boolean = false;
 
 	// Below variables are related to animation feature.
 	private animatingSectionName: string = null; // The section that called startAnimating function. This variable is null when animations are not running.
@@ -301,6 +303,27 @@ class CanvasSectionContainer {
 
 	isZoomChanged (): boolean {
 		return this.zoomChanged;
+	}
+
+	pauseDrawing () {
+		if (!this.drawingPaused) {
+			this.dirty = false;
+			this.drawingPaused = true;
+		}
+	}
+
+	resumeDrawing() {
+		if (this.drawingPaused) {
+			this.drawingPaused = false;
+			if (this.dirty) {
+				this.requestReDraw();
+				this.dirty = false;
+			}
+		}
+	}
+
+	private setDirty() {
+		this.dirty = true;
 	}
 
 	/**
@@ -444,6 +467,12 @@ class CanvasSectionContainer {
 	}
 
 	requestReDraw() {
+		if (this.drawingPaused) {
+			// Someone requested a redraw, but we're paused => schedule a redraw.
+			this.setDirty();
+			return;
+		}
+
 		if (!this.getAnimatingSectionName())
 			this.drawSections();
 	}
