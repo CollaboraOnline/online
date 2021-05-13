@@ -609,7 +609,7 @@ class CommentSection {
 	private clearList () {
 		for (var i: number = this.sectionProperties.list.length -1; i > -1; i--) {
 			if (!this.sectionProperties.list[i].trackchange) {
-				this.map.removeLayer(this.sectionProperties.list[i]);
+				this.containerObject.removeSection(this.sectionProperties.list[i].name);
 				this.sectionProperties.list.splice(i, 1);
 			}
 		}

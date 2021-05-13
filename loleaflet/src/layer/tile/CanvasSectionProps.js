@@ -17,6 +17,7 @@ L.CSections.CalcGrid = 				{ name: 'calc grid'			, zIndex: 5 };
 L.CSections.Debug.Splits = 			{ name: 'splits'			, zIndex: 5 };
 L.CSections.Debug.TilePixelGrid = 	{ name: 'tile pixel grid'	, zIndex: 5 };
 L.CSections.CommentList =			{ name: 'comment list'		, zIndex: 5	};
+L.CSections.Comment =				{ name: 'comment'			, zIndex: 5	}; // This class is for comment markers. It is a document object. One should change instance's name after initializing (there may be many instances of this class).
 
 L.CSections.ColumnHeader = 			{ name: 'column header'		, zIndex: 5 };
 L.CSections.RowHeader = 			{ name: 'row header'		, zIndex: 5 };
@@ -48,7 +49,7 @@ L.CSections.Overlays.processingOrder =				61; // Writer & Impress & Calc. This i
 L.CSections.Debug.TilePixelGrid.processingOrder = 	62; // Writer & Impress & Calc. This is bound to tiles.
 L.CSections.CalcGrid.processingOrder = 				63; // Calc. This is bound to tiles.
 L.CSections.Debug.Splits.processingOrder = 			64; // Calc. This is bound to tiles.
-
+L.CSections.Comment.processingOrder =				70; // Since this is a document object, processing order is not very important. But it should be higher than tiles's processing order. Because tiles section is the document anchor.
 
 L.CSections.CalcGrid.drawingOrder = 				40; // Calc.
 L.CSections.Tiles.drawingOrder = 					50; // Writer & Impress & Calc.
@@ -63,6 +64,7 @@ L.CSections.CornerGroup.drawingOrder =				120; // Calc.
 L.CSections.CornerHeader.drawingOrder =				130; // Calc.
 L.CSections.RowHeader.drawingOrder = 				140; // Calc.
 L.CSections.ColumnHeader.drawingOrder = 			150; // Calc.
+L.CSections.Comment.drawingOrder =					160; // Writer & Imnpress & Calc.
 
 
 /* zIndex = 6 and goes on. */
