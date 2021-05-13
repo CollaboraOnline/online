@@ -12,6 +12,7 @@
 .vscode
 Makefile
 Makefile.in
+loolkitconfig.xcu
 loolwsd.spec
 loolwsd.xml
 aclocal.m4
