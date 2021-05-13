@@ -73,9 +73,9 @@
         </anonymize>
     </logging>
 
-    <event_trace>
+    <trace_event>
       <path type="string" desc="Trace Event file path." default="@LOOLWSD_TRACEEVENTFILE@">@LOOLWSD_TRACEEVENTFILE@</path>
-    </event_trace>
+    </trace_event>
 
     <loleaflet_logging desc="Logging in the browser console" default="@LOLEAFLET_LOGGING@">@LOLEAFLET_LOGGING@</loleaflet_logging>
 
