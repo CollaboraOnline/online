@@ -19,4 +19,8 @@
     <string name="view_only">Лише перегляд</string>
     <string name="restarting">Перезапуск...</string>
     <string name="cant_open_the_document">Не вдалося відкрити документ</string>
+    <string name="convert_odf_message">Цей документ може містити форматування або вміст, який не можна зберегти у вибраному форматі файлу \"Текст\".</string>
+    <string name="ask_for_convert_odf">Підтвердьте формат файлу</string>
+    <string name="use_odf">Використати формат ODF</string>
+    <string name="use_text">Використати текстовий формат</string>
 </resources>
