@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 09:11+0200\n"
-"PO-Revision-Date: 2021-04-11 22:51+0000\n"
+"PO-Revision-Date: 2021-05-14 09:00+0000\n"
 "Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/help/vi/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -770,15 +770,14 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
 "Chèn điểm dừng tab (chỉ trong bảng). Tùy thuộc vào Trình quản lý cửa sổ đang "
-"sử dụng, Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab có thể được sử "
-"dụng thay thế."
+"sử dụng, <kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> có "
+"thể được sử dụng thay thế."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -829,27 +828,25 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
-"3 giây ở chế độ Chèn, Phím mũi tên chèn hàng / cột, Ctrl</kbd><span class=\""
-"kbd--plus\">+</span><kbd>Phím mũi tên chèn ô"
+"3 giây ở chế độ Chèn, Phím mũi tên chèn hàng/cột, <kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Phím mũi tên</kbd> chèn ô"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 giây ở chế độ Xóa, Phím mũi tên xóa hàng / cột, Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Phím mũi tên hợp nhất ô với ô lân cận"
+"3 giây ở chế độ Xóa, Phím mũi tên xóa hàng/cột, <kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Phím mũi tên</kbd> hợp nhất ô với ô lân cận"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
@@ -1175,54 +1172,46 @@ msgid "Select all in slide"
 msgstr "Chọn tất cả trong trang chiếu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:219-54
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span>B"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>B"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span>B"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:224-57
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:225-55
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>L"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>L"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:226-56
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>R"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>R"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:227-52
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>J"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>J"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-107
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span>Tab"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span>Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:233-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-71
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:249-71
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span>Arrow Down"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>↓"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span>Mũi tên xuống"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:259-9
 msgid "Draw page keyboard shortcuts"
@@ -1233,9 +1222,8 @@ msgid "Move to next text object on drawing page"
 msgstr "Di chuyển đến đối tượng văn bản tiếp theo trên trang vẽ"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-85
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
 msgid "Select all in drawing page"
@@ -2843,11 +2831,11 @@ msgid ""
 ">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
 msgstr ""
 "Bạn đã bật AutoCorrection. AutoCorrection thay đổi văn bản vừa nhập vào một "
-"bảng nội bộ của văn bản tương ứng. Trong hầu hết các trường hợp, "
-"AutoCorrection sẽ sửa lỗi chính tả khi bạn đang nhập văn bản. Nếu không cần "
-"thiết Tự động sửa, hãy tắt tính năng này trong <span class=\"ui\">Công cụ "
-"</span> → <span class=\"ui\">Tự động sửa </span> → <span class=\"ui\">Trong "
-"khi nhập </span>."
+"bảng nội bộ chứa văn bản tương ứng. Trong hầu hết các trường hợp, "
+"AutoCorrection sẽ sửa lỗi chính tả khi bạn đang nhập văn bản. Nếu "
+"AutoCorrection là không cần thiết, hãy tắt tính năng này trong <span class="
+"\"ui\">Công cụ </span> → <span class=\"ui\">AutoCorrection </span> → <span "
+"class=\"ui\">Trong khi nhập </span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:595-5
 msgid "How can I select data to print?"
