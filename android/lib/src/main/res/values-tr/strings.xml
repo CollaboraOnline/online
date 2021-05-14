@@ -18,4 +18,8 @@
     <string name="view_only">Yalnızca görüntüle</string>
     <string name="restarting">Yeniden başlatılıyor...</string>
     <string name="cant_open_the_document">Belge açılamadı</string>
+    <string name="convert_odf_message">Bu belge, şu anda seçili olan \"Metin\" dosya biçiminde kaydedilemeyen biçimlendirme veya içerik içerebilir.</string>
+    <string name="ask_for_convert_odf">Dosya Biçimini Onayla</string>
+    <string name="use_odf">ODF Biçimini Kullan</string>
+    <string name="use_text">Metin Biçimini Kullan</string>
 </resources>
