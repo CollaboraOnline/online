@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 09:11+0200\n"
-"PO-Revision-Date: 2021-02-11 11:51+0000\n"
+"PO-Revision-Date: 2021-05-14 09:00+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "help/tr/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /tr/libo_online/loleaflet-help-tr.po\n"
 "X-Pootle-Revision: 828276\n"
 
@@ -492,7 +492,7 @@ msgid ""
 "--plus\">+</span><kbd>Arrow Up"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Üst Ok"
+"--plus\">+</span><kbd>Yukarı Ok"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:72-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:189-18
@@ -528,7 +528,7 @@ msgstr "İmleci bir sonraki paragrafın başlangıcına taşı"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:191-91
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:248-91
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Down"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt Ok"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Aşağı Ok"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-18
@@ -543,7 +543,7 @@ msgid ""
 "--plus\">+</span><kbd>Arrow Down"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Alt Ok"
+"--plus\">+</span><kbd>Aşağı Ok"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:76-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:193-18
@@ -772,15 +772,14 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
 "Bir sekme kesmesi ekler (sadece tablolara). Kullandığınız Pencere "
-"Yöneticisine bağlı olarak Alt</kbd><span class=\"kbd--plus\">+</span><kbd>"
-"Tab da kullanılabilir."
+"Yöneticisine bağlı olarak <kbd>Alt</kbd><span class=\"kbd--plus\""
+">+</span><kbd>Tab</kbd> da kullanılabilir."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -831,27 +830,26 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
-"3 saniye için Ekleme kipi, Yön Tuşları satır/sütun, Ctrl</kbd><span class=\""
-"kbd--plus\">+</span><kbd>Yön Tuşları hücre ekler"
+"3 saniye için Ekleme kipi, Yön Tuşları satır/sütun, <kbd>Ctrl</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Yön Tuşları</kbd> hücre ekler"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 saniye için Silme kipi, Yön Tuşları satır/sütun, Ctrl</kbd><span class=\""
-"kbd--plus\">+</span><kbd>Yön Tuşları hücre siler"
+"3 saniye için Silme kipi, Yön Tuşları satır/sütun siler, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Yön Tuşları</kbd> hücreyi komşu "
+"hücreyle birleştirir"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
@@ -1178,54 +1176,46 @@ msgid "Select all in slide"
 msgstr "Slayttakilerin tümünü seç"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:219-54
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span>B"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>B"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span>B"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:224-57
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:225-55
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>L"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>L"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:226-56
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>R"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>R"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:227-52
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>J"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>J"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-107
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span>Tab"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
+msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span>Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:233-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-71
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:249-71
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span>Arrow Down"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Alt Ok"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span>Aşağı Ok"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:259-9
 msgid "Draw page keyboard shortcuts"
@@ -1236,9 +1226,8 @@ msgid "Move to next text object on drawing page"
 msgstr "Çizim sayfasındaki sonraki metin nesnesine taşı"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-85
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
 msgid "Select all in drawing page"
@@ -1959,9 +1948,10 @@ msgstr ""
 "hücrelerini, sütunları, satırları ve sayfaları doğrudan "
 "biçimlendirebilirsiniz. Doğrudan biçimlendirme yalnızca seçilen geçerli "
 "nesneye uygulanır. Bir hücreyi biçimlendirmek için menüyü kullanın veya "
-"<kbd>Ctrl</kbd>+<kbd>1</kbd> tuşlarına basın. İletişim penceresi, karmaşık "
-"ve özel sayı biçimlendirmesinin yanı sıra yazı tipi, karmaşık kenarlık, arka "
-"plan, hücre koruması ve diğer seçeneklere izin verir."
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd> tuşlarına "
+"basın. İletişim penceresi, karmaşık ve özel sayı biçimlendirmesinin yanı "
+"sıra yazı tipi, karmaşık kenarlık, arka plan, hücre koruması ve diğer "
+"seçeneklere izin verir."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:411-5
 msgid ""
