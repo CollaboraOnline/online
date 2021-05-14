@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Collabora Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-13 09:11+0200\n"
+"POT-Creation-Date: 2021-05-14 11:11+0200\n"
 "PO-Revision-Date: 2021-04-19 21:29+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
@@ -195,6 +195,7 @@ msgstr "Podpisano"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:41-54
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:162-54
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:219-54
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>B"
@@ -228,6 +229,7 @@ msgstr "Poravnaj na sredino"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-57
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-57
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:167-57
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:224-57
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 
@@ -241,6 +243,7 @@ msgstr "Poravnaj levo"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:168-55
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:225-55
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
 msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>L"
 
@@ -254,6 +257,7 @@ msgstr "Poravnaj desno"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:48-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:169-56
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:226-56
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
 msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>R"
 
@@ -267,6 +271,7 @@ msgstr "Poravnaj obojestransko"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-52
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-52
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:170-52
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:227-52
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
 msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>J"
 
@@ -339,6 +344,8 @@ msgstr "Izberi vse"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:176-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-64
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:220-55
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:233-55
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-71
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
 msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>A"
 
@@ -546,6 +553,7 @@ msgstr "Izberi besedilo do konca odstavka"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-71
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-71
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:249-71
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Arrow Down"
@@ -988,6 +996,7 @@ msgstr "Ročni prelom strani"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-78
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-85
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
 msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>vnašalka"
 
@@ -1132,6 +1141,8 @@ msgstr "Povišaj element seznama (slednji mora biti izbran)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:172-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-107
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-93
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-107
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>tabulatorka"
 
@@ -1186,56 +1197,6 @@ msgstr "Pomakni se na naslednji besedilni predmet na prosojnici"
 msgid "Select all in slide"
 msgstr "Izberi vse gradnike prosojnice"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:219-54
-#, fuzzy
-msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span>B"
-msgstr ""
-"Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>B"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:224-57
-#, fuzzy
-msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
-msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>E"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:225-55
-#, fuzzy
-msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>L"
-msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>L"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:226-56
-#, fuzzy
-msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>R"
-msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>R"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:227-52
-#, fuzzy
-msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>J"
-msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>J"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-93
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-107
-#, fuzzy
-msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span>Tab"
-msgstr "Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>tabulatorka"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:233-55
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-71
-#, fuzzy
-msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
-msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>A"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:249-71
-#, fuzzy
-msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span>Arrow Down"
-msgstr ""
-"Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>smerna tipka navzdol"
-
 #: html/loleaflet-help.html%2Bdiv.div.h2:259-9
 msgid "Draw page keyboard shortcuts"
 msgstr "Tipke za bližnjice za stran risbe"
@@ -1243,11 +1204,6 @@ msgstr "Tipke za bližnjice za stran risbe"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-18
 msgid "Move to next text object on drawing page"
 msgstr "Pomakni se na naslednji besedilni predmet na strani risbe"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-85
-#, fuzzy
-msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
-msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>vnašalka"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
 msgid "Select all in drawing page"
@@ -3009,6 +2965,50 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:635-11
 msgid "Set the properties of the element of the object."
 msgstr "Nastavite lastnosti elementa predmeta."
+
+#, fuzzy
+#~ msgid ""
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+#~ "\"kbd--plus\">+</span>B"
+#~ msgstr ""
+#~ "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>B"
+
+#, fuzzy
+#~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
+#~ msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+
+#, fuzzy
+#~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>L"
+#~ msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>L"
+
+#, fuzzy
+#~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>R"
+#~ msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>R"
+
+#, fuzzy
+#~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>J"
+#~ msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>J"
+
+#, fuzzy
+#~ msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span>Tab"
+#~ msgstr "Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>tabulatorka"
+
+#, fuzzy
+#~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
+#~ msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>A"
+
+#, fuzzy
+#~ msgid ""
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+#~ "\"kbd--plus\">+</span>Arrow Down"
+#~ msgstr ""
+#~ "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
+#~ "class=\"kbd--plus\">+</span><kbd>smerna tipka navzdol"
+
+#, fuzzy
+#~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
+#~ msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>vnašalka"
 
 #~ msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
 #~ msgstr "Poleg tega ponuja ogled dokumentov v zapisih Visio, Keynote, Numbers in Pages."
