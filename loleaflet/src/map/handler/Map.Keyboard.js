@@ -393,6 +393,7 @@ L.Map.Keyboard = L.Handler.extend({
 				partToSelect = keyCode === 33 ? partToSelect - 1 : partToSelect + 1;
 				this._map.setPart(partToSelect);
 			}
+			return;
 		}
 		else if (ev.type === 'keydown') {
 			var key = ev.keyCode;
