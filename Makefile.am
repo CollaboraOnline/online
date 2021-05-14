@@ -413,6 +413,14 @@ clean-local:
 	if test "z@JAILS_PATH@" != "z"; then rm -rf "@JAILS_PATH@"; fi
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
 
+if ENABLE_DEBUG
+# can write to /tmp/loolwsd.log
+  OUTPUT_TO_FILE=true
+else
+# can't write to /var/log/loolwsd.log
+  OUTPUT_TO_FILE=false
+endif
+
 run: all @JAILS_PATH@
 	@echo "Launching loolwsd"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
@@ -427,7 +435,7 @@ run: all @JAILS_PATH@
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
 			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
-			  --o:logging.file[@enable]=true --o:logging.level=trace
+			  --o:logging.file[@enable]=${OUTPUT_TO_FILE} --o:logging.level=trace
 
 if ENABLE_DEBUG
 run-one: all @JAILS_PATH@
