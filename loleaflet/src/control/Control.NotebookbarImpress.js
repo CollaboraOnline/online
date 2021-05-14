@@ -123,7 +123,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'text': '~Draw',
 				'id': '-11',
 				'name': 'Draw',
-				'context': 'Draw'
+				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork'
 			},
 			{
 				'text': _('~Help'),
@@ -1038,14 +1038,30 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:MergeCells', 'presentation'),
-				'command': '.uno:MergeCells'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:SplitCell', 'presentation'),
-				'command': '.uno:SplitCell'
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:MergeCells', 'presentation'),
+								'command': '.uno:MergeCells'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SplitCell', 'presentation'),
+								'command': '.uno:SplitCell'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			},
 			{
 				'type': 'bigtoolitem',
@@ -1082,22 +1098,76 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'type': 'container',
 				'children': [
 					{
+						'type': 'container',
+						'children': [
+							{
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:CellVertTop'),
+										'command': '.uno:CellVertTop'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:CellVertCenter'),
+										'command': '.uno:CellVertCenter'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:CellVertBottom'),
+										'command': '.uno:CellVertBottom'
+									}
+								]
+							},
+						],
+						'vertical': 'false'
+					},
+					{
+						'type': 'container',
+						'children': [
+							{
+								'id': 'SectionBottom13',
+								'type': 'toolbox',
+								'children': [
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:LeftPara'),
+										'command': '.uno:LeftPara'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:CenterPara'),
+										'command': '.uno:CenterPara'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:RightPara'),
+										'command': '.uno:RightPara'
+									},
+									{
+										'type': 'toolitem',
+										'text': _UNO('.uno:JustifyPara'),
+										'command': '.uno:JustifyPara'
+									}
+								]
+							},
+						],
+						'vertical': 'false'
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:CellVertTop'),
-								'command': '.uno:CellVertTop'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:CellVertCenter'),
-								'command': '.uno:CellVertCenter'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:CellVertBottom'),
-								'command': '.uno:CellVertBottom'
+								'text': _UNO('.uno:XLineColor'),
+								'command': '.uno:XLineColor'
 							}
 						]
 					},
@@ -1106,29 +1176,97 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:LeftPara'),
-								'command': '.uno:LeftPara'
+								'text': _UNO('.uno:FillColor'),
+								'command': '.uno:FillColor'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectAlignLeft'),
+								'command': '.uno:ObjectAlignLeft'
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:CenterPara'),
-								'command': '.uno:CenterPara'
+								'text': _UNO('.uno:AlignCenter'),
+								'command': '.uno:AlignCenter'
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:RightPara'),
-								'command': '.uno:RightPara'
+								'text': _UNO('.uno:ObjectAlignRight'),
+								'command': '.uno:ObjectAlignRight'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignUp'),
+								'command': '.uno:AlignUp'
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:JustifyPara'),
-								'command': '.uno:JustifyPara'
+								'text': _UNO('.uno:AlignMiddle'),
+								'command': '.uno:AlignMiddle'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignDown'),
+								'command': '.uno:AlignDown'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:BringToFront'),
+								'command': '.uno:BringToFront'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SendToBack'),
+								'command': '.uno:SendToBack'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectForwardOne'),
+								'command': '.uno:ObjectForwardOne'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectBackOne'),
+								'command': '.uno:ObjectBackOne'
 							}
 						]
 					}
 				],
 				'vertical': 'true'
 			}
+            
 		];
 
 		return this.getTabPage('Table', content);
@@ -1187,52 +1325,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 								'type': 'toolitem',
 								'text': _UNO('.uno:FillColor'),
 								'command': '.uno:FillColor'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:WrapOff', 'text'),
-								'command': '.uno:WrapOff'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:WrapOn', 'text'),
-								'command': '.uno:WrapOn'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:WrapIdeal', 'text'),
-								'command': '.uno:WrapIdeal'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:WrapLeft', 'text'),
-								'command': '.uno:WrapLeft'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:WrapThrough', 'text'),
-								'command': '.uno:WrapThrough'
-							},
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:WrapRight', 'text'),
-								'command': '.uno:WrapRight'
 							}
 						]
 					}
