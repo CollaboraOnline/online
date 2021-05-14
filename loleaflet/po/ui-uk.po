@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-13 09:11+0200\n"
+"POT-Creation-Date: 2021-05-14 11:11+0200\n"
 "PO-Revision-Date: 2021-05-14 09:00+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: uk\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /uk/libo_online/loleaflet-ui-uk.po\n"
 "X-Pootle-Revision: 3938227\n"
@@ -571,7 +571,7 @@ msgstr "Експортувати як"
 #: src/control/Control.NotebookbarWriter.js:167
 #: src/control/Control.NotebookbarCalc.js:163
 #: src/control/Control.NotebookbarImpress.js:237
-#: src/control/Control.NotebookbarDraw.js:194
+#: src/control/Control.NotebookbarDraw.js:201
 msgid "PDF Document (.pdf)"
 msgstr "Документ PDF (.pdf)"
 
@@ -721,7 +721,7 @@ msgstr "Показати поточний слайд"
 #: src/control/Control.Menubar.js:403 src/control/Control.Menubar.js:780
 #: src/control/Control.Menubar.js:826
 #: src/control/Control.NotebookbarImpress.js:205
-#: src/control/Control.NotebookbarDraw.js:175
+#: src/control/Control.NotebookbarDraw.js:182
 msgid "ODF Drawing (.odg)"
 msgstr "ODF Графіка (.odg)"
 
@@ -1063,6 +1063,7 @@ msgstr "Формат"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:117
+#: src/control/Control.NotebookbarDraw.js:101
 msgid "~Table"
 msgstr "~Таблиця"
 
@@ -1074,21 +1075,21 @@ msgstr "~Малюнок"
 #: src/control/Control.NotebookbarWriter.js:60
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarImpress.js:129
-#: src/control/Control.NotebookbarDraw.js:107
+#: src/control/Control.NotebookbarDraw.js:113
 msgid "~Help"
 msgstr "~Довідка"
 
 #: src/control/Control.NotebookbarWriter.js:105
 #: src/control/Control.NotebookbarCalc.js:98
 #: src/control/Control.NotebookbarImpress.js:172
-#: src/control/Control.NotebookbarDraw.js:148
+#: src/control/Control.NotebookbarDraw.js:155
 msgid "Share"
 msgstr "Поділитися"
 
 #: src/control/Control.NotebookbarWriter.js:112
 #: src/control/Control.NotebookbarCalc.js:105
 #: src/control/Control.NotebookbarImpress.js:179
-#: src/control/Control.NotebookbarDraw.js:155
+#: src/control/Control.NotebookbarDraw.js:162
 msgid "See history"
 msgstr "Переглянути історію"
 
@@ -1216,7 +1217,7 @@ msgstr "Почати презентацію"
 msgid "ODF Presentation (.odp)"
 msgstr "Презентація ODF (.odp)"
 
-#: src/control/Control.NotebookbarDraw.js:181
+#: src/control/Control.NotebookbarDraw.js:188
 msgid "Image (.png)"
 msgstr "Зображення (.png)"
 

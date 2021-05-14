@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-13 09:11+0200\n"
+"POT-Creation-Date: 2021-05-14 11:11+0200\n"
 "PO-Revision-Date: 2021-04-23 22:10+0000\n"
 "Last-Translator: Sérgio Morais <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
@@ -572,7 +572,7 @@ msgstr "Exportar como"
 #: src/control/Control.NotebookbarWriter.js:167
 #: src/control/Control.NotebookbarCalc.js:163
 #: src/control/Control.NotebookbarImpress.js:237
-#: src/control/Control.NotebookbarDraw.js:194
+#: src/control/Control.NotebookbarDraw.js:201
 msgid "PDF Document (.pdf)"
 msgstr "Documento PDF (.pdf)"
 
@@ -722,7 +722,7 @@ msgstr "Mostrar diapositivo atual"
 #: src/control/Control.Menubar.js:403 src/control/Control.Menubar.js:780
 #: src/control/Control.Menubar.js:826
 #: src/control/Control.NotebookbarImpress.js:205
-#: src/control/Control.NotebookbarDraw.js:175
+#: src/control/Control.NotebookbarDraw.js:182
 msgid "ODF Drawing (.odg)"
 msgstr "Desenho ODF (.odg)"
 
@@ -1064,6 +1064,7 @@ msgstr "Formatar"
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:117
+#: src/control/Control.NotebookbarDraw.js:101
 msgid "~Table"
 msgstr "~Tabela"
 
@@ -1075,21 +1076,21 @@ msgstr "~Desenho"
 #: src/control/Control.NotebookbarWriter.js:60
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarImpress.js:129
-#: src/control/Control.NotebookbarDraw.js:107
+#: src/control/Control.NotebookbarDraw.js:113
 msgid "~Help"
 msgstr "Aju~da"
 
 #: src/control/Control.NotebookbarWriter.js:105
 #: src/control/Control.NotebookbarCalc.js:98
 #: src/control/Control.NotebookbarImpress.js:172
-#: src/control/Control.NotebookbarDraw.js:148
+#: src/control/Control.NotebookbarDraw.js:155
 msgid "Share"
 msgstr "Partilhar"
 
 #: src/control/Control.NotebookbarWriter.js:112
 #: src/control/Control.NotebookbarCalc.js:105
 #: src/control/Control.NotebookbarImpress.js:179
-#: src/control/Control.NotebookbarDraw.js:155
+#: src/control/Control.NotebookbarDraw.js:162
 msgid "See history"
 msgstr "Ver histórico"
 
@@ -1220,7 +1221,7 @@ msgstr "Iniciar apresentação"
 msgid "ODF Presentation (.odp)"
 msgstr "Apresentação ODF (.odp)"
 
-#: src/control/Control.NotebookbarDraw.js:181
+#: src/control/Control.NotebookbarDraw.js:188
 msgid "Image (.png)"
 msgstr "Imagem (.png)"
 
