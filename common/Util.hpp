@@ -162,8 +162,10 @@ namespace Util
 
     const char *getThreadName();
 
-#ifdef __linux__
+#if defined __linux__
     pid_t getThreadId();
+#elif defined __FreeBSD__
+    long getThreadId();
 #else
     std::thread::id getThreadId();
 #endif

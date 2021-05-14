@@ -18,6 +18,7 @@
 #  include <sys/resource.h>
 #elif defined __FreeBSD__
 #  include <sys/resource.h>
+#  include <sys/thr.h>
 #elif defined IOS
 #import <Foundation/Foundation.h>
 #endif
@@ -594,18 +595,26 @@ namespace Util
         return ThreadName;
     }
 
-#ifdef __linux__
+#if defined __linux__
     static thread_local pid_t ThreadTid = 0;
 
     pid_t getThreadId()
+#elif defined __FreeBSD__
+    static thread_local long ThreadTid = 0;
+
+    long getThreadId()
 #else
     std::thread::id getThreadId()
 #endif
     {
         // Avoid so many redundant system calls
-#ifdef __linux__
+#if defined __linux__
         if (!ThreadTid)
             ThreadTid = ::syscall(SYS_gettid);
+        return ThreadTid;
+#elif defined __FreeBSD__
+        if (!ThreadTid)
+            thr_self(&ThreadTid);
         return ThreadTid;
 #else
         return std::this_thread::get_id();
