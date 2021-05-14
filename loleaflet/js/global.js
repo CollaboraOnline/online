@@ -774,7 +774,10 @@ window.app.definitions = {};
 				var timestamp = global.getParameterByName('timestamp');
 				var msg = 'load url=' + encodeURIComponent(global.docURL);
 
-				global.socket.send('loolclient ' + ProtocolVersionNumber);
+				var now0 = Date.now();
+				var now1 = performance.now();
+				var now2 = Date.now();
+				global.socket.send('loolclient ' + ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
 
 				if (window.ThisIsAMobileApp) {
 					msg += ' lang=' + window.LANG;
