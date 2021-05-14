@@ -208,7 +208,6 @@ L.TileSectionManager = L.Class.extend({
 		context.lineWidth = 1.0;
 
 		var ctx = this.sectionProperties.tsManager._paintContext();
-		context.beginPath();
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
 			// co-ordinates of this pane in core document pixels
 			var paneBounds = ctx.paneBoundsList[i];
@@ -232,27 +231,40 @@ L.TileSectionManager = L.Class.extend({
 				paneOffset = paneTopLeft.clone();
 			}
 
-			// URGH -> zooming etc. (!?) ...
-			this.sectionProperties.docLayer.sheetGeometry._columns.forEachInCorePixelRange(
-				repaintArea.min.x, repaintArea.max.x,
-				function(pos) {
-					context.moveTo(pos - paneOffset.x - 0.5, repaintArea.min.y - paneOffset.y + 0.5);
-					context.lineTo(pos - paneOffset.x - 0.5, repaintArea.max.y - paneOffset.y - 0.5);
-					context.stroke();
-				});
+			// Vertical line rendering on large areas is ~10x as expensive
+			// as horizontal line rendering: due to cache effects - so to
+			// help our poor CPU renderers - render in horizontal strips.
+			var bandSize = 256;
+			for (var miny = repaintArea.min.y; miny < repaintArea.max.y; miny += bandSize)
+			{
+				var maxy = Math.min(repaintArea.max.y, miny + bandSize);
 
-			this.sectionProperties.docLayer.sheetGeometry._rows.forEachInCorePixelRange(
-				repaintArea.min.y, repaintArea.max.y,
-				function(pos) {
-					context.moveTo(repaintArea.min.x - paneOffset.x + 0.5, pos - paneOffset.y - 0.5);
-					context.lineTo(repaintArea.max.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
-					context.stroke();
-				});
+				context.beginPath();
+
+				// vertical lines
+				this.sectionProperties.docLayer.sheetGeometry._columns.forEachInCorePixelRange(
+					repaintArea.min.x, repaintArea.max.x,
+					function(pos) {
+						context.moveTo(pos - paneOffset.x - 0.5, miny - paneOffset.y + 0.5);
+						context.lineTo(pos - paneOffset.x - 0.5, maxy - paneOffset.y - 0.5);
+						context.stroke();
+					});
+
+				// horizontal lines
+				this.sectionProperties.docLayer.sheetGeometry._rows.forEachInCorePixelRange(
+					miny, maxy,
+					function(pos) {
+						context.moveTo(repaintArea.min.x - paneOffset.x + 0.5, pos - paneOffset.y - 0.5);
+						context.lineTo(repaintArea.max.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
+						context.stroke();
+					});
+
+				context.closePath();
+			}
 
 			if (doOnePane)
 				break;
 		}
-		context.closePath();
 	},
 
 	// This section is added when debug is enabled. Splits are enabled for only Calc for now.
