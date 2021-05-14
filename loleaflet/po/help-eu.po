@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 09:11+0200\n"
-"PO-Revision-Date: 2021-04-01 08:26+0000\n"
-"Last-Translator: Gontzal Manuel Pujana Onaindia <thadahdenyse@gmail.com>\n"
+"PO-Revision-Date: 2021-05-14 09:00+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "help/eu/>\n"
 "Language: eu\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-help-eu.po\n"
 "X-Pootle-Revision: 3858781\n"
 
@@ -775,15 +775,14 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
 "Tabulazio bat txertatzen du (tauletan besterik ez). Leiho kudeatzailearen "
-"arabera Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab erabili daiteke "
-"ordez."
+"arabera <kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> "
+"erabili daiteke ordez."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -835,28 +834,27 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Txertatu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
 "Txertatze moduan 3 segundotara, gezi-teklak errenkada/zutabea txertatzen du, "
-"Ctrl+Gezi-teklak gelaxka txertatzen du"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Gezi-teklak</kbd> "
+"gelaxka txertatzen du"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
 "Ezabatze moduan 3 segundotara, gezi-teklak errenkada/zutabea ezabatzen du, "
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Gezi-teklak gelaxka ondoko "
-"gelaxkarekin batzen du"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Gezi-teklak</kbd> "
+"gelaxka ondoko gelaxkarekin batzen du"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
@@ -1190,54 +1188,46 @@ msgid "Select all in slide"
 msgstr "Hautatu diapositibako eduki guztia"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:219-54
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span>B"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>⇧</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>B"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span>B"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:224-57
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:225-55
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>L"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>L"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:226-56
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>R"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>R"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:227-52
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>J"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>J"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-107
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span>Tab"
-msgstr "⇧</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
+msgstr "<kbd>⇧</kbd><span class=\"kbd--plus\">+</span>Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:233-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-71
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:249-71
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span>Arrow Down"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>⇧</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Behera-gezia"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>⇧</kbd><span class="
+"\"kbd--plus\">+</span>Behera-gezia"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:259-9
 msgid "Draw page keyboard shortcuts"
@@ -1248,9 +1238,8 @@ msgid "Move to next text object on drawing page"
 msgstr "Mugitu marrazte orriaren hurrengo testu objektura"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-85
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Sartu"
+msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Sartu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
 msgid "Select all in drawing page"
@@ -1687,9 +1676,10 @@ msgid ""
 "you were concurrently editing."
 msgstr ""
 "Ezaugarri hori bereziki erabilgarria da lankide batek dokumentuko testu "
-"guztia konturatu gabe hautatzen duenean <kbd>Ctrl</kbd>+<kbd>A</kbd> "
-"erabilita eta gainean idazten duenean eta horreal aurreko testu guztia "
-"ezabatzen duenean, aldi berean editatzen ari zaretenean."
+"guztia konturatu gabe hautatzen duenean <kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>A</kbd> erabilita eta gainean idazten duenean eta "
+"horreal aurreko testu guztia ezabatzen duenean, aldi berean editatzen ari "
+"zaretenean."
 
 #: html/loleaflet-help.html%2Bdiv.h4:354-5
 msgid "Inactive document"
