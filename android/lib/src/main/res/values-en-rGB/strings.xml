@@ -19,4 +19,8 @@
     <string name="view_only">View only</string>
     <string name="restarting">Restarting...</string>
     <string name="cant_open_the_document">Couldn\'t open the document</string>
+    <string name="convert_odf_message">This document may contain formatting or content that cannot be saved in the currently selected file format \"Text\".</string>
+    <string name="ask_for_convert_odf">Confirm File Format</string>
+    <string name="use_text">Use Text Format</string>
+    <string name="use_odf">Use ODF Format</string>
 </resources>
