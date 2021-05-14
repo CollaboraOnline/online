@@ -796,6 +796,9 @@ public:
 
             LOG_TRC("Document::GlobalCallback " << lokCallbackTypeToString(type) << ": " << payload.length() << " bytes.");
 
+            // TODO: Here we probably would need to parse the JSON and add a "thread":"name" pair to
+            // the args object (if present, adding it if not). Later.
+
             self->sendTextFrame("trace: \n" + payload);
             return;
         }
