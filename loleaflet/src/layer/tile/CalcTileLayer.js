@@ -94,7 +94,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		this._annotations = {};
 
-		app.sectionContainer.addSection(new app.definitions.AutoFillMarkerSection());
+		this._painter._sectionContainer.addSection(L.getAutoFillMarkerSection());
 
 		this.insertMode = false;
 		this._cellSelections = Array(0);
