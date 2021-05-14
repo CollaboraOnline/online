@@ -284,12 +284,28 @@ L.Socket = L.Class.extend({
 		// console.log2('Slurp events ' + that._slurpQueue.length);
 		var queueLen = this._slurpQueue.length;
 		var complete = true;
-		var completeEvent = this.createCompleteTraceEvent('loleaflet._emitSlurpedEvents',
-								  {'_slurpQueue.length' : String(queueLen)});
+		var completeEventWholeFunction = this.createCompleteTraceEvent('loleaflet._emitSlurpedEvents',
+									       {'_slurpQueue.length' : String(queueLen)});
 		try {
 			for (var i = 0; i < queueLen; ++i) {
 				var evt = this._slurpQueue[i];
 				if (evt.isComplete()) {
+					var textMsg;
+					if (typeof (evt.data) === 'string') {
+						textMsg = evt.data;
+					}
+					else if (typeof (evt.data) === 'object') {
+						var imgBytes = new Uint8Array(evt.data);
+						var index = 0;
+						while (index < imgBytes.length && imgBytes[index] !== 10) {
+							index++;
+						}
+						textMsg = String.fromCharCode.apply(null, imgBytes.subarray(0, index));
+					}
+					textMsg = textMsg.replace(/\s+/g, '.');
+
+					var completeEventOneMessage = this.createCompleteTraceEvent('loleaflet._emitOneSlurpedEvent',
+												    { message: textMsg });
 					try {
 						// it is - are you ?
 						this._onMessage(evt);
@@ -299,6 +315,10 @@ L.Socket = L.Class.extend({
 						// unpleasant - but stops this one problem
 						// event stopping an unknown number of others.
 						console.log2('Exception ' + e + ' emitting event ' + evt.data);
+					}
+					finally {
+						if (completeEventOneMessage)
+							completeEventOneMessage.finish();
 					}
 					var asyncEvent = this.createAsyncTraceEvent('loleaflet._emitSlurpedEvents-to-idle',
 										    {'_slurpQueue.length' : String(queueLen)});
@@ -330,8 +350,8 @@ L.Socket = L.Class.extend({
 			}
 		}
 		finally {
-			if (completeEvent)
-				completeEvent.finish();
+			if (completeEventWholeFunction)
+				completeEventWholeFunction.finish();
 		}
 	},
 
