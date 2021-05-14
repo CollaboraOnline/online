@@ -19,4 +19,8 @@
     <string name="view_only">Nurlega</string>
     <string name="restarting">Restartante...</string>
     <string name="cant_open_the_document">Ne povis malfermi la dokumenton</string>
+    <string name="convert_odf_message">Ĉi tiu dokumento povas enhavi aranĝojn aŭ enhavojn ne konserveblajn laŭ la aktuale elektita dosierformo \"Teksto\".</string>
+    <string name="use_text">Uzi tekstan dosierformon</string>
+    <string name="ask_for_convert_odf">Konfirmi dosierformon</string>
+    <string name="use_odf">Uzi dosierformon ODF</string>
 </resources>

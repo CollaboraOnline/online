@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-13 09:11+0200\n"
-"PO-Revision-Date: 2021-03-04 02:44+0000\n"
+"PO-Revision-Date: 2021-05-14 09:00+0000\n"
 "Last-Translator: phlostically <phlostically@mailinator.com>\n"
 "Language-Team: Esperanto <https://hosted.weblate.org/projects/"
 "collabora-online/help/eo/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-help-eo.po\n"
 "X-Pootle-Revision: 2347824\n"
 
@@ -772,14 +772,14 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
 "Enigas tabon (nur en tabeloj). Depende de la Fenestroadministrilo uzata, "
-"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab estas uzebla anstataŭe."
+"<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> estas uzebla "
+"anstataŭe."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -833,28 +833,26 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enmeti"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
-"3 sekundoj en enmeta reĝimo, Sagoklavo enmetas vicon/kolumnon, Ctrl</kbd><"
-"span class=\"kbd--plus\">+</span><kbd>Sagoklavo enmetas ĉelon"
+"3 sekundoj en enmeta reĝimo, Sagoklavo enmetas vicon/kolumnon, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Sagoklavo</kbd> enmetas ĉelon"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>For"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 sekundoj en Forigi-reĝimo, Sagoklavo forigas vicon/kolumnon, Ctrl</kbd><"
-"span class=\"kbd--plus\">+</span><kbd>Sagoklavo kunfandas ĉelon kun najbara "
-"ĉelo"
+"3 sekundoj en Forigi-reĝimo, Sagoklavo forigas vicon/kolumnon, <kbd>Stir</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Sagoklavo</kbd> kunfandas ĉelon "
+"kun najbara ĉelo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
@@ -1181,54 +1179,46 @@ msgid "Select all in slide"
 msgstr "Elekti ĉion en lumbildo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:219-54
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span>B"
 msgstr ""
-"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>B"
+"<kbd>Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class="
+"\"kbd--plus\">+</span>B"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:224-57
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
-msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>E"
+msgstr "<kbd>Stir</kbd><span class=\"kbd--plus\">+</span>E"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:225-55
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>L"
-msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>L"
+msgstr "<kbd>Stir</kbd><span class=\"kbd--plus\">+</span>L"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:226-56
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>R"
-msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>R"
+msgstr "<kbd>Stir</kbd><span class=\"kbd--plus\">+</span>R"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:227-52
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>J"
-msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>J"
+msgstr "<kbd>Stir</kbd><span class=\"kbd--plus\">+</span>J"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-107
-#, fuzzy
 msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span>Tab"
-msgstr "Maj</kbd><span class=\"kbd--plus\">+</span><kbd>Tabo"
+msgstr "<kbd>Maj</kbd><span class=\"kbd--plus\">+</span>Tabo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:233-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-71
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
-msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>A"
+msgstr "<kbd>Stir</kbd><span class=\"kbd--plus\">+</span>A"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:249-71
-#, fuzzy
 msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span>Arrow Down"
 msgstr ""
-"Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--"
-"plus\">+</span><kbd>Sago malsupren"
+"<kbd>Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class="
+"\"kbd--plus\">+</span>Sago malsupren"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:259-9
 msgid "Draw page keyboard shortcuts"
@@ -1239,9 +1229,8 @@ msgid "Move to next text object on drawing page"
 msgstr "Movi al la sekva teksta objekto en desegna paĝo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-85
-#, fuzzy
 msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
-msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Eniga klavo"
+msgstr "<kbd>Stir</kbd><span class=\"kbd--plus\">+</span>Eniga klavo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
 msgid "Select all in drawing page"
@@ -1717,9 +1706,9 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>V</kbd>"
 msgstr ""
-"Vi povas alglui kiel neformatitan tekston per la fulmoklavo: <kbd>Stir</kbd><"
-"span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--plus\""
-">+</span><kbd> <kbd>V</kbd>"
+"Vi povas alglui kiel neformatitan tekston per la fulmoklavo: <kbd>Stir</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Maj</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>"
 
 #: html/loleaflet-help.html%2Bdiv.p:361-5
 msgid ""
