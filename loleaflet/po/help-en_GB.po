@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-13 09:11+0200\n"
+"POT-Creation-Date: 2021-05-14 11:11+0200\n"
 "PO-Revision-Date: 2021-05-14 09:00+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Translate Toolkit 2.5.0\n"
 "X-Pootle-Path: /en_GB/libo_online/loleaflet-help-en_GB.po\n"
 "X-Pootle-Revision: 830635\n"
 
@@ -191,6 +191,7 @@ msgstr "Subscript"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:41-54
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:162-54
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:219-54
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>B"
@@ -224,6 +225,7 @@ msgstr "Align Centre"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:46-57
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-57
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:167-57
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:224-57
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>E"
 
@@ -237,6 +239,7 @@ msgstr "Align Left"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:47-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:168-55
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:225-55
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>L"
 
@@ -250,6 +253,7 @@ msgstr "Align Right"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:48-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-56
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:169-56
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:226-56
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>R"
 
@@ -263,6 +267,7 @@ msgstr "Justify"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:49-52
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-52
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:170-52
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:227-52
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>J"
 
@@ -335,6 +340,8 @@ msgstr "Select All"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:176-55
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-64
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:220-55
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:233-55
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-71
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>A"
 
@@ -538,6 +545,7 @@ msgstr "Select to end of paragraph"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:75-71
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:192-71
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:249-71
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Arrow Down"
@@ -979,6 +987,7 @@ msgstr "Manual page break"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-62
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-78
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-85
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
 
@@ -1124,6 +1133,8 @@ msgstr "Promote list item (list item has to be selected)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:172-93
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:206-107
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-93
+#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-107
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
@@ -1178,48 +1189,6 @@ msgstr "Move to next text object on slide"
 msgid "Select all in slide"
 msgstr "Select all in slide"
 
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:219-54
-msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span>B"
-msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span>B"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:224-57
-msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:225-55
-msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>L"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>L"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:226-56
-msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>R"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>R"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:227-52
-msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>J"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>J"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:229-93
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:263-107
-msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span>Tab"
-msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span>Tab"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:233-55
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-71
-msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:249-71
-msgid ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span>Arrow Down"
-msgstr ""
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span>Arrow Down"
-
 #: html/loleaflet-help.html%2Bdiv.div.h2:259-9
 msgid "Draw page keyboard shortcuts"
 msgstr "Draw page keyboard shortcuts"
@@ -1227,10 +1196,6 @@ msgstr "Draw page keyboard shortcuts"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-18
 msgid "Move to next text object on drawing page"
 msgstr "Move to next text object on drawing page"
-
-#: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-85
-msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
-msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
 msgid "Select all in drawing page"
@@ -2973,6 +2938,41 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:635-11
 msgid "Set the properties of the element of the object."
 msgstr "Set the properties of the element of the object."
+
+#~ msgid ""
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+#~ "\"kbd--plus\">+</span>B"
+#~ msgstr ""
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+#~ "\"kbd--plus\">+</span>B"
+
+#~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
+#~ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>E"
+
+#~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>L"
+#~ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>L"
+
+#~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>R"
+#~ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>R"
+
+#~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>J"
+#~ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>J"
+
+#~ msgid "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span>Tab"
+#~ msgstr "<kbd>Shift</kbd><span class=\"kbd--plus\">+</span>Tab"
+
+#~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
+#~ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>A"
+
+#~ msgid ""
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+#~ "\"kbd--plus\">+</span>Arrow Down"
+#~ msgstr ""
+#~ "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+#~ "\"kbd--plus\">+</span>Arrow Down"
+
+#~ msgid "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
+#~ msgstr "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span>Enter"
 
 #~ msgid "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
 #~ msgstr "In addition it can provide viewing for Visio, Keynote, Numbers, and Pages formats."
