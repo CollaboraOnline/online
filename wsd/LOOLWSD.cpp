@@ -165,7 +165,6 @@ using Poco::Net::MessageHeader;
 using Poco::Net::NameValueCollection;
 using Poco::Path;
 using Poco::StreamCopier;
-using Poco::TemporaryFile;
 using Poco::URI;
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
@@ -179,7 +178,6 @@ using Poco::XML::DOMParser;
 using Poco::XML::DOMWriter;
 using Poco::XML::Element;
 using Poco::XML::InputSource;
-using Poco::XML::Node;
 using Poco::XML::NodeList;
 
 /// Port for external clients to connect to
