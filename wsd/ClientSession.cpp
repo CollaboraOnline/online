@@ -369,34 +369,34 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     uint64_t dur;
                     if (ph == "i")
                     {
-                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"i\"%s,\"ts\":%lu,\"pid\":%d,\"tid\":%d},\n",
+                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"i\"%s,\"ts\":%lu,\"pid\":%d,\"tid\":%ld},\n",
                                 name.c_str(),
                                 args.c_str(),
                                 (ts + _performanceCounterEpoch),
                                 docBroker->getPid(),
-                                Util::getThreadId());
+                                (long) Util::getThreadId());
                     }
                     else if ((ph == "b" || ph == "e") &&
                         getTokenUInt64(tokens[4], "id", id))
                     {
-                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"%s\"%s,\"ts\":%lu,\"pid\":%d,\"tid\":%d,\"id\":%lu},\n",
+                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"%s\"%s,\"ts\":%lu,\"pid\":%d,\"tid\":%ld,\"id\":%lu},\n",
                                 name.c_str(),
                                 ph.c_str(),
                                 args.c_str(),
                                 (ts + _performanceCounterEpoch),
                                 docBroker->getPid(),
-                                Util::getThreadId(),
+                                (long) Util::getThreadId(),
                                 id);
                     }
                     else if (ph == "X" &&
                              getTokenUInt64(tokens[4], "dur", dur))
                     {
-                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"X\"%s,\"ts\":%lu,\"pid\":%d,\"tid\":%d,\"dur\":%lu},\n",
+                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"X\"%s,\"ts\":%lu,\"pid\":%d,\"tid\":%ld,\"dur\":%lu},\n",
                                 name.c_str(),
                                 args.c_str(),
                                 (ts + _performanceCounterEpoch),
                                 docBroker->getPid(),
-                                Util::getThreadId(),
+                                (long) Util::getThreadId(),
                                 dur);
                     }
                     else
