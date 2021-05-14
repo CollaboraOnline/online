@@ -17,7 +17,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'text': _('~Home'),
 				'id': this.HOME_TAB_ID,
 				'name': 'Home',
-				'context': 'default|Cell'
+				'context': 'default|Cell|Text|DrawText'
 			},
 			{
 				'text': _('~Insert'),
@@ -48,7 +48,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'text': _('~Draw'),
 				'id': '-9',
 				'name': 'Draw',
-				'context': 'Draw'
+				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork'
 			},
 			{
 				'text': _('~Help'),

@@ -98,10 +98,16 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'name': 'Format',
 			},
 			{
+				'text': _('~Table'),
+				'id': '-8',
+				'name': 'Table',
+				'context': 'Table'
+			},
+			{
 				'text': '~Draw',
 				'id': '-11',
 				'name': 'Draw',
-				'context': 'Draw'
+				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork'
 			},
 			{
 				'text': _('~Help'),
@@ -118,6 +124,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				this.getHomeTab(),
 				this.getInsertTab(),
 				this.getFormatTab(),
+				this.getTableTab(),
 				this.getDrawTab(),
 				this.getHelpTab()
 			], selectedId);
