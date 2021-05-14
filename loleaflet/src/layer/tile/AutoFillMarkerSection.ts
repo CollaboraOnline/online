@@ -2,9 +2,7 @@
 /* See CanvasSectionContainer.ts for explanations. */
 
 declare var L: any;
-declare var app: any;
 
-app.definitions.AutoFillMarkerSection =
 class AutoFillMarkerSection {
 	context: CanvasRenderingContext2D = null;
 	myTopLeft: Array<number> = null;
@@ -157,4 +155,8 @@ class AutoFillMarkerSection {
 	public onMultiTouchMove () {}
 	public onMultiTouchEnd () {}
 	public onNewDocumentTopLeft () {}
+}
+
+L.getAutoFillMarkerSection = function () {
+	return new AutoFillMarkerSection();
 }
