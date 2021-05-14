@@ -18,4 +18,8 @@
     <string name="later">Để sau</string>
     <string name="loading">Đang tải...</string>
     <string name="temp_file_saving_disabled">Tệp này là chỉ đọc, việc lưu đã bị tắt.</string>
+    <string name="convert_odf_message">Tài liệu này có thể chứa định dạng hoặc nội dung không thể được lưu ở định dạng hiện đã chọn \"Văn bản\".</string>
+    <string name="ask_for_convert_odf">Xác nhận định dạng tệp</string>
+    <string name="use_odf">Sử dụng định dạng ODF</string>
+    <string name="use_text">Sử dụng định dạng văn bản</string>
 </resources>
