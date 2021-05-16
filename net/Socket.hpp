@@ -37,7 +37,8 @@
 #include "Buffer.hpp"
 #include "SigUtil.hpp"
 
-#define LOG_SOCKET_DATA ENABLE_DEBUG
+// Enable to dump socket traffic as hex in logs.
+// #define LOG_SOCKET_DATA ENABLE_DEBUG
 
 namespace http
 {
