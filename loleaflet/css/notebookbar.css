@@ -29,6 +29,7 @@
 }
 
 .ui-tab.selected.notebookbar {
+	display: flex !important;
 	border: 0px;
 	border-radius: 0px;
 	background: #fff;
