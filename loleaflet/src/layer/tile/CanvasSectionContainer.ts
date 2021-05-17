@@ -305,6 +305,10 @@ class CanvasSectionContainer {
 		return this.zoomChanged;
 	}
 
+	isDrawingPaused (): boolean {
+		return this.drawingPaused;
+	}
+
 	pauseDrawing () {
 		if (!this.drawingPaused) {
 			this.dirty = false;
@@ -314,6 +318,10 @@ class CanvasSectionContainer {
 
 	resumeDrawing() {
 		if (this.drawingPaused) {
+			var scrollSection = <any>this.getSectionWithName(L.CSections.Scroll.name)
+			if (scrollSection)
+				scrollSection.completePendingScroll(); // No painting, only dirtying.
+
 			this.drawingPaused = false;
 			if (this.dirty) {
 				this.requestReDraw();
