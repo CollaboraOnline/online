@@ -31,6 +31,7 @@ class ScrollSection {
 	resetAnimation: Function; // Implemented by container.
 	map: any;
 	autoScrollTimer: any;
+	pendingScrollEvent: any = null;
 
 	constructor () {
 		this.name = L.CSections.Scroll.name;
@@ -101,7 +102,19 @@ class ScrollSection {
 		this.sectionProperties.animatingHorizontalScrollBar = false;
 	}
 
-	public onScrollTo (e: any) {
+	public completePendingScroll() {
+		if (this.pendingScrollEvent) {
+			this.onScrollTo(this.pendingScrollEvent, true /* force */)
+			this.pendingScrollEvent = null;
+		}
+	}
+
+	public onScrollTo (e: any, force: boolean = false) {
+		if (!force && this.containerObject.isDrawingPaused()) {
+			// Only remember the last scroll-to position.
+			this.pendingScrollEvent = e;
+			return;
+		}
 		// Triggered by the document (e.g. search result out of the viewing area).
 		this.map.scrollTop(e.y, {});
 		this.map.scrollLeft(e.x, {});
