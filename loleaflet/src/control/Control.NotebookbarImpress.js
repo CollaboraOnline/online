@@ -104,8 +104,13 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'name': 'Insert'
 			},
 			{
-				'text': _('~Review'),
+				'text': _('~Layout'),
 				'id': '-5',
+				'name': 'Layout'
+			},
+			{
+				'text': _('~Review'),
+				'id': '-7',
 				'name': 'Review'
 			},
 			{
@@ -139,6 +144,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				this.getFileTab(),
 				this.getHomeTab(),
 				this.getInsertTab(),
+				this.getLayoutTab(),
 				this.getReviewTab(),
 				this.getFormatTab(),
 				this.getTableTab(),
@@ -709,11 +715,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:InsertPage'
 			},
 			{
-				'id': 'Insert-Section-Pages',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA15',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -724,14 +728,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						]
 					},
 					{
-						'id': 'LineB16',
 						'type': 'toolbox',
 						'children': [
 							{
-								'id': 'selectbackground',
-								'type': 'menubartoolitem',
-								'text': _UNO('.uno:SelectBackground', 'presentation'),
-								'command': ''
+								'type': 'toolitem',
+								'text': _UNO('.uno:DeletePage', 'presentation'),
+								'command': '.uno:DeletePage'
 							}
 						]
 					}
@@ -744,11 +746,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:InsertGraphic'
 			},
 			{
-				'id': 'Insert-Section-Table',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA15',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -759,7 +759,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						]
 					},
 					{
-						'id': 'LineB16',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -778,11 +777,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:HyperlinkDialog'
 			},
 			{
-				'id': 'Insert-Text',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA153',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -808,7 +805,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						]
 					},
 					{
-						'id': 'LineB163',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -837,11 +833,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:Text'
 			},
 			{
-				'id': 'Insert-BasicShapes-Shapes',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA153',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -852,7 +846,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						]
 					},
 					{
-						'id': 'LineB163',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -866,11 +859,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'id': 'Insert-Text-Fontwork',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA153',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -881,7 +872,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						]
 					},
 					{
-						'id': 'LineB163',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -900,11 +890,9 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:HeaderAndFooter'
 			},
 			{
-				'id': 'Insert-Charmap-Annotation',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA153',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -915,7 +903,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						]
 					},
 					{
-						'id': 'LineB163',
 						'type': 'toolbox',
 						'children': [
 							{
@@ -931,6 +918,173 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 		];
 
 		return this.getTabPage('Insert', content);
+	},
+
+	getLayoutTab: function() {
+		var content = [
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:PageSetup', 'presentation'),
+				'command': '.uno:PageSetup'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:HeaderAndFooter', 'presentation'),
+				'command': '.uno:HeaderAndFooter'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:InsertPage', 'presentation'),
+				'command': '.uno:InsertPage'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DuplicatePage', 'presentation'),
+								'command': '.uno:DuplicatePage'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'selectbackground',
+								'type': 'menubartoolitem',
+								'text': _UNO('.uno:SelectBackground', 'presentation'),
+								'command': ''
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ModifyPage', 'presentation'),
+				'command': '.uno:ModifyPage'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SlideChangeWindow', 'presentation'),
+								'command': '.uno:SlideChangeWindow'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:CustomAnimation', 'presentation'),
+								'command': '.uno:CustomAnimation'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:MasterSlidesPanel', 'presentation'),
+				'command': '.uno:MasterSlidesPanel'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectAlignLeft'),
+								'command': '.uno:ObjectAlignLeft'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignCenter'),
+								'command': '.uno:AlignCenter'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectAlignRight'),
+								'command': '.uno:ObjectAlignRight'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignUp'),
+								'command': '.uno:AlignUp'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignMiddle'),
+								'command': '.uno:AlignMiddle'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignDown'),
+								'command': '.uno:AlignDown'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectForwardOne'),
+								'command': '.uno:ObjectForwardOne'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:BringToFront'),
+								'command': '.uno:BringToFront'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectBackOne'),
+								'command': '.uno:ObjectBackOne'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SendToBack'),
+								'command': '.uno:SendToBack'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			}
+		];
+
+		return this.getTabPage('Layout', content);
 	},
 
 	getReviewTab: function() {

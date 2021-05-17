@@ -93,6 +93,16 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'name': 'Insert'
 			},
 			{
+				'text': _('~Layout'),
+				'id': '-5',
+				'name': 'Layout'
+			},
+			{
+				'text': _('~Review'),
+				'id': '-7',
+				'name': 'Review'
+			},
+			{
 				'text': _('Format'),
 				'id': '-3',
 				'name': 'Format',
@@ -123,6 +133,8 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				this.getFileTab(),
 				this.getHomeTab(),
 				this.getInsertTab(),
+				this.getLayoutTab(),
+				this.getReviewTab(),
 				this.getFormatTab(),
 				this.getTableTab(),
 				this.getDrawTab(),
@@ -616,7 +628,143 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		];
 
 		return this.getTabPage('Home', content);
-	}
+	},
+
+	getLayoutTab: function() {
+		var content = [
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:PageSetup', 'presentation'),
+				'command': '.uno:PageSetup'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:HeaderAndFooter', 'presentation'),
+				'command': '.uno:HeaderAndFooter'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:InsertPage', 'presentation'),
+				'command': '.uno:InsertPage'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DuplicatePage', 'presentation'),
+								'command': '.uno:DuplicatePage'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'selectbackground',
+								'type': 'menubartoolitem',
+								'text': _UNO('.uno:SelectBackground', 'presentation'),
+								'command': ''
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ModifyPage', 'presentation'),
+				'command': '.uno:ModifyPage'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectAlignLeft'),
+								'command': '.uno:ObjectAlignLeft'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignCenter'),
+								'command': '.uno:AlignCenter'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectAlignRight'),
+								'command': '.uno:ObjectAlignRight'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignUp'),
+								'command': '.uno:AlignUp'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignMiddle'),
+								'command': '.uno:AlignMiddle'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:AlignDown'),
+								'command': '.uno:AlignDown'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectForwardOne'),
+								'command': '.uno:ObjectForwardOne'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:BringToFront'),
+								'command': '.uno:BringToFront'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:ObjectBackOne'),
+								'command': '.uno:ObjectBackOne'
+							},
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SendToBack'),
+								'command': '.uno:SendToBack'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			}
+		];
+
+		return this.getTabPage('Layout', content);
+	},
 });
 
 L.control.notebookbarDraw = function (options) {
