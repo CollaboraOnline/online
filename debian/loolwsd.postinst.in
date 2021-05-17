@@ -22,6 +22,18 @@ case "$1" in
 
 	fc-cache @LO_PATH@/share/fonts/truetype
 
+	# compatibility with older systemd versions
+	SYSTEMD_VERSION=$(busctl --system get-property org.freedesktop.systemd1 /org/freedesktop/systemd1 org.freedesktop.systemd1.Manager Version | grep -Eo [0-9]{3})
+	if [[ "$SYSTEMD_VERSION" -lt "228" ]]; then
+		sed -i "/^ProtectSystem/d" /lib/systemd/system/loolwsd.service
+	fi
+	if [[ "$SYSTEMD_VERSION" -lt "231" ]]; then
+		sed -i "/^ReadWritePaths/d" /lib/systemd/system/loolwsd.service
+	fi
+	if [[ "$SYSTEMD_VERSION" -lt "232" ]]; then
+		sed -i "/^ProtectControlGroups/d" /lib/systemd/system/loolwsd.service
+	fi
+
 	loolwsd-systemplate-setup /opt/lool/systemplate @LO_PATH@ >/dev/null 2>&1
 	loolwsd-generate-proof-key >/dev/null 2>&1
     cat << EOF > /etc/apt/apt.conf.d/25loolwsd
