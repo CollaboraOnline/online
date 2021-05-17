@@ -30,7 +30,7 @@
 }
 
 .document-title {
-	height: 30px;
+	height: 32px;
 	white-space: nowrap;
 	display: flex;
 	align-items: center;
@@ -49,7 +49,8 @@
 }
 
 .main-nav.hasnotebookbar:not(.readonly) #document-titlebar {
-	top: -11px;
+	/* half of #document-name-input height: */
+	top: -9px;
 }
 .main-nav.readonly #document-titlebar {
 	top: 1px;
