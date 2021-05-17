@@ -563,6 +563,24 @@ function getShapesPopupHtml() {
 			</div>';
 }
 
+function showColorPicker(id) {
+	var it = w2ui['editbar'].get(id);
+	var obj = w2ui['editbar'];
+	var el = '#tb_editbar_item_' + id;
+	if (it.transparent == null) it.transparent = true;
+	$(el).w2color({ color: it.color, transparent: it.transparent }, function (color) {
+		if (color != null) {
+			obj.colorClick({ name: obj.name, item: it, color: color });
+		}
+		closePopup();
+	});
+}
+
+function getColorPickerHTML(id) {
+	return '<div id="' + id +'-wrapper' + '">\
+			</div>';
+}
+
 function getColorPickerData(type) {
 	var uno;
 	if (type === 'Font Color') {
@@ -822,7 +840,6 @@ function processStateChangedCommand(commandName, state) {
 			color = '#' + Array(7 - color.length).join('0') + color;
 		}
 		$('#tb_editbar_item_fontcolor .w2ui-tb-image').css('box-shadow', 'inset 0 -2px #ffffff, inset 0px -6px ' + color);
-		$('#tb_editbar_item_fontcolor .w2ui-tb-down').css('display', 'none');
 		$('#tb_editbar_item_fontcolor .w2ui-tb-caption').css('display', 'none');
 
 		div = L.DomUtil.get('fontcolorindicator');
@@ -842,11 +859,9 @@ function processStateChangedCommand(commandName, state) {
 		}
 		//writer
 		$('#tb_editbar_item_backcolor .w2ui-tb-image').css('box-shadow', 'inset 0 -2px #ffffff, inset 0px -6px ' + color);
-		$('#tb_editbar_item_backcolor .w2ui-tb-down').css('display', 'none');
 		$('#tb_editbar_item_backcolor .w2ui-tb-caption').css('display', 'none');
 		//calc?
 		$('#tb_editbar_item_backgroundcolor .w2ui-tb-image').css('box-shadow', 'inset 0 -2px #ffffff, inset 0px -6px ' + color);
-		$('#tb_editbar_item_backgroundcolor .w2ui-tb-down').css('display', 'none');
 		$('#tb_editbar_item_backgroundcolor .w2ui-tb-caption').css('display', 'none');
 
 		div = L.DomUtil.get('backcolorindicator');
@@ -1143,5 +1158,7 @@ global.getUNOCommand = getUNOCommand;
 global.unoCmdToToolbarId = unoCmdToToolbarId;
 global.onCommandStateChanged = onCommandStateChanged;
 global.processStateChangedCommand = processStateChangedCommand;
+global.showColorPicker = showColorPicker;
+global.getColorPickerHTML = getColorPickerHTML;
 
 }(window));
