@@ -3093,7 +3093,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var hasManyChildren = childData.children && childData.children.length > 1;
 			if (hasManyChildren && childData.type !== 'buttonbox') {
-				var tableId = childData.id ? 'table-' + childData.id.replace(' ', '') : '';
+				var tableId = childData.id ? 'table-' + String(childData.id).replace(' ', '') : '';
 				var table = L.DomUtil.createWithId('div', tableId, td);
 				$(table).addClass(this.options.cssClass);
 				$(table).addClass('vertical');
