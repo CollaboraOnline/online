@@ -952,6 +952,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Sidebar', 'text'),
+				'command': '.uno:Sidebar'
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
