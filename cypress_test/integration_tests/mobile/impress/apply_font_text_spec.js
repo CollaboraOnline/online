@@ -213,7 +213,7 @@ describe('Apply font on selected text.', function() {
 			.should('have.attr', 'font-size', '368px');
 	});
 
-	it('Apply subscript on selected text.', function() {
+	it.skip('Apply subscript on selected text.', function() {
 		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();

@@ -189,7 +189,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'font-size', '368px');
 	});
 
-	it('Apply subscript on text shape.', function() {
+	it.skip('Apply subscript on text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')

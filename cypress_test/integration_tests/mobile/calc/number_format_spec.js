@@ -212,7 +212,7 @@ describe('Apply number formatting.', function() {
 			.should('have.text', '09/26/02');
 	});
 
-	it('Select time format from list.', function() {
+	it.skip('Select time format from list.', function() {
 		selectFormatting('Time');
 
 		// Decimal and leading zeros are changed.
@@ -257,7 +257,7 @@ describe('Apply number formatting.', function() {
 			.should('have.text', '1.00E+03');
 	});
 
-	it('Select fraction format from list.', function() {
+	it.skip('Select fraction format from list.', function() {
 		selectFormatting('Fraction');
 
 		// Decimal and leading zeros are changed.

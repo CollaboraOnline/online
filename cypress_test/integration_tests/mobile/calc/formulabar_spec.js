@@ -56,7 +56,7 @@ describe('Formula bar tests.', function() {
 			.should('not.exist');
 	});
 
-	it('Check input field content', function() {
+	it.skip('Check input field content', function() {
 		// First cell has some long content
 		calcHelper.clickOnFirstCell();
 
@@ -76,7 +76,7 @@ describe('Formula bar tests.', function() {
 			});
 	});
 
-	it('Edit cell via formula bar', function() {
+	it.skip('Edit cell via formula bar', function() {
 		// First cell has some long content
 		calcHelper.clickOnFirstCell();
 
@@ -96,7 +96,7 @@ describe('Formula bar tests.', function() {
 			.should('have.text', 'long line long line long linexxxxxxx');
 	});
 
-	it('Accept formula bar change', function() {
+	it.skip('Accept formula bar change', function() {
 		// First cell has some long content
 		calcHelper.clickOnFirstCell();
 
@@ -124,7 +124,7 @@ describe('Formula bar tests.', function() {
 			.should('have.text', 'long line long line long l');
 	});
 
-	it('Reject formula bar change', function() {
+	it.skip('Reject formula bar change', function() {
 		// First cell has some long content
 		calcHelper.clickOnFirstCell();
 
@@ -149,7 +149,7 @@ describe('Formula bar tests.', function() {
 			.should('have.text', 'long line long line long line');
 	});
 
-	it('Switch oneline-multiline mode of input bar', function() {
+	it.skip('Switch oneline-multiline mode of input bar', function() {
 		// Get the initial height of the input field.
 		var inputOriginalHeight = 0;
 		cy.get('#calc-inputbar')
@@ -183,7 +183,7 @@ describe('Formula bar tests.', function() {
 			});
 	});
 
-	it('Check formula help', function() {
+	it.skip('Check formula help', function() {
 		cy.get('#tb_formulabar_item_functiondialog')
 			.click();
 
@@ -210,7 +210,7 @@ describe('Formula bar tests.', function() {
 			.should('have.text', 'Returns TRUE if all arguments are TRUE.');
 	});
 
-	it('Add formula to cell', function() {
+	it.skip('Add formula to cell', function() {
 		calcHelper.clickOnFirstCell();
 
 		cy.get('#tb_formulabar_item_functiondialog')

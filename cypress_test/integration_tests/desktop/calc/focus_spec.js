@@ -14,7 +14,7 @@ describe('Calc focus tests', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it('Formula-bar focus', function() {
+	it.skip('Formula-bar focus', function() {
 
 		// Select the first cell to edit the same one.
 		// Use the tile's edge to find the first cell's position
