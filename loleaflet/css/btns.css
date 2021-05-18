@@ -29,7 +29,7 @@
 	vertical-align: middle;
 }
 
-.loleaflet-annotation-edit #annotation-save,
+.loleaflet-annotation-edit .annotation-button,
 #annotation-reply,
 .ui-button-box.jsdialog #ok,
 .ui-button-box.autofilter #ok,
