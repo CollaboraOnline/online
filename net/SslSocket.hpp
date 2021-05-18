@@ -211,13 +211,15 @@ private:
             return 0;
 
         case SSL_ERROR_WANT_READ:
-            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_READ (" << sslError << ").");
+            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_READ (" << sslError <<
+                    ") has_pending " << SSL_has_pending(_ssl) << " bytes: " << SSL_pending(_ssl) << ".");
             _sslWantsTo = SslWantsTo::Read;
             errno = last_errno; // Restore errno.
             return rc;
 
         case SSL_ERROR_WANT_WRITE:
-            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_WRITE (" << sslError << ").");
+            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_WRITE (" << sslError <<
+                    ") has_pending " << SSL_has_pending(_ssl) << " bytes: " << SSL_pending(_ssl) << ".");
             _sslWantsTo = SslWantsTo::Write;
             errno = last_errno; // Restore errno.
             return rc;
@@ -255,7 +257,8 @@ private:
                 if (BIO_should_retry(_bio))
                 {
                     LOG_TRC("Socket #" << getFD() << " BIO asks for retry - underlying EAGAIN? " <<
-                            SSL_get_error(_ssl, rc));
+                            SSL_get_error(_ssl, rc) << " has_pending " << SSL_has_pending(_ssl) <<
+                            " bytes: " << SSL_pending(_ssl) << ".");
                     errno = last_errno ? last_errno : EAGAIN; // Restore errno.
                     return -1; // poll is used to detect real errors.
                 }
