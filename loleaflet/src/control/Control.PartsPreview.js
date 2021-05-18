@@ -440,7 +440,7 @@ L.Control.PartsPreview = L.Control.extend({
 			if (!this._previewInitialized)
 				return;
 			if (this._previewTiles[e.id])
-				this._previewTiles[e.id].src = e.tile;
+				this._previewTiles[e.id].src = e.tile.src;
 		}
 	},
 

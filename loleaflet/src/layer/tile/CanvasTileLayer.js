@@ -279,6 +279,12 @@ L.TileSectionManager = L.Class.extend({
 		};
 	},
 
+	coordsIntersectVisible: function (coords) {
+		var ctx = this._paintContext();
+		var tileBounds = new L.Bounds(new L.Point(coords.x, coords.y), new L.Point(coords.x + ctx.tileSize.x, coords.y + ctx.tileSize.y));
+		return tileBounds.intersectsAny(ctx.paneBoundsList);
+	},
+
 	_addTilesSection: function () {
 		this._sectionContainer.addSection(L.getNewTilesSection());
 		this._tilesSection = this._sectionContainer.getSectionWithName('tiles');
@@ -1558,7 +1564,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	createTile: function (coords, done) {
 		var tile = document.createElement('img');
 
-		tile.onload = L.bind(this._tileOnLoad, this, done, tile);
 		tile.onerror = L.bind(this._tileOnError, this, done, tile);
 
 		if (this.options.crossOrigin) {
@@ -3208,31 +3213,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		// e.type refers to signal type
 		dialogMsg.winType = dialogMsg.type;
 		this._map.fire('window', dialogMsg);
-	},
-
-	_tileOnLoad: function (done, tile) {
-		// slurp multiple async tile loads into one render:
-		// FIXME: probably we should nicely combine
-		// async image decoding into Socket.js' _slurpMessage
-		// to save another 1ms timer.
-		var that = this;
-		if (!that._slurpQueue || !that._slurpQueue.length) {
-			setTimeout(function() {
-				console.log2('Slurp tiles ' + that._slurpQueue.length / 2);
-				for (var i = 0; i < that._slurpQueue.length; i += 2) {
-					var slurpTile = that._slurpQueue[i];
-					var slurpCallback = that._slurpQueue[i+1];
-					slurpCallback(null, slurpTile);
-					if (window.ThisIsTheiOSApp) {
-						window.webkit.messageHandlers.lool.postMessage('REMOVE ' + slurpTile.src, '*');
-					}
-				}
-				that._slurpQueue = [];
-			}, 1 /* ms */);
-			that._slurpQueue = [];
-		}
-		that._slurpQueue.push(tile);
-		that._slurpQueue.push(done);
 	},
 
 	_tileOnError: function (done, tile, e) {
@@ -5741,7 +5721,8 @@ L.CanvasTileLayer = L.Layer.extend({
 					tilePositionsY += twips.y;
 				}
 				else {
-					tile.src = this._tileCache[key];
+					tile.el = this._tileCache[key];
+					tile.loaded = true;
 				}
 			}
 
@@ -5801,9 +5782,11 @@ L.CanvasTileLayer = L.Layer.extend({
 		tile.loaded = +new Date();
 		tile.active = true;
 
-		// paint this tile on canvas.
-		this._painter._tilesSection.paint(tile, undefined, true /* async? */);
-		this._painter.paintOverlayArea(coords);
+		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
+		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
+		if (this._painter.coordsIntersectVisible(coords)) {
+			this._painter._sectionContainer.setDirty();
+		}
 
 		if (this._noTilesToLoad()) {
 			this.fire('load');
@@ -5844,7 +5827,8 @@ L.CanvasTileLayer = L.Layer.extend({
 					});
 
 					if (tile && this._tileCache[key]) {
-						tile.src = this._tileCache[key];
+						tile.el = this._tileCache[key];
+						tile.loaded = true;
 					}
 				}
 			}
@@ -6065,7 +6049,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// FIXME: this _tileCache is used for prev/next slide; but it is
 		// dangerous in connection with typing / invalidation
 		if (!(this._tiles[key]._invalidCount > 0)) {
-			this._tileCache[key] = tile.el.src;
+			this._tileCache[key] = tile.el;
 		}
 
 		if (!tile.loaded && this._emptyTilesCount > 0) {
@@ -6163,20 +6147,20 @@ L.CanvasTileLayer = L.Layer.extend({
 				docType: this._docType
 			});
 		}
-		else if (tile && typeof (img) == 'object') {
-			console.error('Not implemented');
-		}
 		else if (tile) {
 			if (this._tiles[key]._invalidCount > 0) {
 				this._tiles[key]._invalidCount -= 1;
 			}
 
+			tile.wireId = tileMsgObj.wireId;
 			if (this._map._canvasDevicePixelGrid)
 				// loleaflet/test/pixel-test.png
-				img = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QEIChoQ0oROpwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACfklEQVR42u3dO67CQBBFwbnI+9/yJbCQLDIkPsZdFRAQjjiv3S8YZ63VNsl6aLvgop5+6vFzZ3QP/uQz2c0RIAAQAAzcASwAmAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACADGBnC8iQ5MABAACAB+zsVYjLZ9dOvd3zzg/QOYADByB/BvUCzBIAAQAFiCwQQAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAwIgAXb2ECgABAAPDaI7SLsZhs+79kvX8AEwDsAM8DASzBIAAQAFiCwQQAAYAAQAAgABAAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAI4LSSOAQBgABAAPDVR9C2ToGxNkfww623bZL98/ilUzIBwA4wbCAgABAACAAswWACgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAAAjAESAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAGAAEAAIAAQAAgABAACAAGAAEAAIAAQAAgAPiaJAEAAIAB48yNWW6fAWJsj4LRbb9sk++fxSxMA7AAMGwgCAAGAAMASDCYACAAEAAIAAYAAQAAgABAACAAEAAIAASAAR4AAQAAgABAACAAEANeW9e675sAEAAGAAODUO4AFgMnu7t9h2ahA0pgAAAAASUVORK5CYII=';
-
-			tile.el.src = img;
-			tile.wireId = tileMsgObj.wireId;
+				tile.el.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QEIChoQ0oROpwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACfklEQVR42u3dO67CQBBFwbnI+9/yJbCQLDIkPsZdFRAQjjiv3S8YZ63VNsl6aLvgop5+6vFzZ3QP/uQz2c0RIAAQAAzcASwAmAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACADGBnC8iQ5MABAACAB+zsVYjLZ9dOvd3zzg/QOYADByB/BvUCzBIAAQAFiCwQQAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAwIgAXb2ECgABAAPDaI7SLsZhs+79kvX8AEwDsAM8DASzBIAAQAFiCwQQAAYAAQAAgABAAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAI4LSSOAQBgABAAPDVR9C2ToGxNkfww623bZL98/ilUzIBwA4wbCAgABAACAAswWACgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAAAjAESAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAGAAEAAIAAQAAgABAACAAGAAEAAIAAQAAgAPiaJAEAAIAB48yNWW6fAWJsj4LRbb9sk++fxSxMA7AAMGwgCAAGAAMASDCYACAAEAAIAAYAAQAAgABAACAAEAAIAASAAR4AAQAAgABAACAAEANeW9e675sAEAAGAAODUO4AFgMnu7t9h2ahA0pgAAAAASUVORK5CYII=';
+			else {
+				tile.el = img;
+				tile.loaded = true;
+				this._tileReady(coords, null /* err */, tile);
+			}
 		}
 		L.Log.log(textMsg, 'INCOMING', key);
 
