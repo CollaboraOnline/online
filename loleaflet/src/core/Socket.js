@@ -85,7 +85,7 @@ L.Socket = L.Class.extend({
 	_emptyQueue: function () {
 		if (window.queueMsg && window.queueMsg.length > 0) {
 			for (var it = 0; it < window.queueMsg.length; it++) {
-				this._onMessage({data: window.queueMsg[it]});
+				this._onMessage({data: window.queueMsg[it], textMsg: window.queueMsg[it]});
 			}
 			window.queueMsg = [];
 		}
@@ -273,19 +273,36 @@ L.Socket = L.Class.extend({
 			this._map._docLayer.pauseDrawing();
 		}
 		// console.log2('Slurp events ' + that._slurpQueue.length);
-		for (var i = 0; i < this._slurpQueue.length; ++i) {
+		var queueLen = this._slurpQueue.length;
+		var complete = true;
+		for (var i = 0; i < queueLen; ++i) {
 			var evt = this._slurpQueue[i];
-			try {
-				// it is - are you ?
-				this._onMessage(evt);
+			if (evt.isComplete()) {
+				try {
+					// it is - are you ?
+					this._onMessage(evt);
+				}
+				catch (e)
+				{
+					// unpleasant - but stops this one problem
+					// event stopping an unknown number of others.
+					console.log2('Exception ' + e + ' emitting event ' + evt.data);
+				}
 			}
-			catch (e)
-			{
-				// unpleasant - but stops this one problem
-				// event stopping an unknown number of others.
-				console.log2('Exception ' + e + ' emitting event ' + evt.data);
+			else {
+				// Stop emitting, continue in the next timer from where we left off.
+				this._slurpQueue = this._slurpQueue.slice(i, queueLen);
+				var that = this;
+				this._slurpTimer = setTimeout(function () {
+					that._emitSlurpedEvents();
+				}, 1 /* ms */);
+				complete = false;
+				break;
 			}
 		}
+
+		if (complete) // Finished all elements in the queue.
+			this._slurpQueue = [];
 
 		if (this._map && this._map._docLayer) {
 			// Resume with redraw if dirty due to previous _onMessage() calls.
@@ -304,28 +321,74 @@ L.Socket = L.Class.extend({
 		if (!this._slurpQueue || !this._slurpQueue.length) {
 			setTimeout(function() {
 				that._emitSlurpedEvents();
-				that._slurpQueue = [];
 			}, 1 /* ms */);
 			that._slurpQueue = [];
 		}
+		this._extractTextImg(e);
 		that._slurpQueue.push(e);
 	},
 
-	_onMessage: function (e) {
-		var imgBytes, index, textMsg, img;
+	_extractTextImg: function (e) {
+		var index = 0;
 
 		if (typeof (e.data) === 'string') {
-			textMsg = e.data;
+			e.textMsg = e.data;
 		}
 		else if (typeof (e.data) === 'object') {
-			imgBytes = new Uint8Array(e.data);
-			index = 0;
+			e.imgBytes = new Uint8Array(e.data);
 			// search for the first newline which marks the end of the message
-			while (index < imgBytes.length && imgBytes[index] !== 10) {
+			while (index < e.imgBytes.length && e.imgBytes[index] !== 10) {
 				index++;
 			}
-			textMsg = String.fromCharCode.apply(null, imgBytes.subarray(0, index));
+			e.textMsg = String.fromCharCode.apply(null, e.imgBytes.subarray(0, index));
 		}
+
+		e.isComplete = function () {
+			if (this.image)
+				return !!this.imageIsComplete;
+			return true;
+		};
+
+		if (!e.textMsg.startsWith('tile:') && !e.textMsg.startsWith('renderfont:') && !e.textMsg.startsWith('windowpaint:'))
+			return;
+
+		var img;
+
+		if (window.ThisIsTheiOSApp) {
+			// In the iOS app, the native code sends us the URL of the BMP for the tile after the newline
+			var newlineIndex = e.textMsg.indexOf('\n');
+			if (newlineIndex > 0) {
+				img = e.textMsg.substring(newlineIndex+1);
+				e.textMsg = e.textMsg.substring(0, newlineIndex);
+			}
+		}
+		else {
+			var data = e.imgBytes.subarray(index + 1);
+			console.assert(data.length == 0 || data[0] != 68 /* D */, 'Socket: got a delta image, not supported !');
+
+			// read the tile data
+			var strBytes = '';
+			for (var i = 0; i < data.length; i++) {
+				strBytes += String.fromCharCode(data[i]);
+			}
+			img = 'data:image/png;base64,' + window.btoa(strBytes);
+		}
+
+		e.image = new Image();
+		e.image.onload = function() {
+			e.imageIsComplete = true;
+			if (window.ThisIsTheiOSApp) {
+				window.webkit.messageHandlers.lool.postMessage('REMOVE ' + e.image.src, '*');
+			}
+		};
+		e.image.src = img;
+	},
+
+	_onMessage: function (e) {
+		var imgBytes, textMsg;
+
+		textMsg = e.textMsg;
+		imgBytes = e.imgBytes;
 
 		this._logSocket('INCOMING', textMsg);
 
@@ -927,32 +990,6 @@ L.Socket = L.Class.extend({
 				textMsg = decodeURIComponent(window.escape(textMsg));
 			}
 		}
-		else if (window.ThisIsTheiOSApp) {
-			// In the iOS app, the native code sends us the URL of the BMP for the tile after the newline
-			var newlineIndex = textMsg.indexOf('\n');
-			if (newlineIndex > 0) {
-				img = textMsg.substring(newlineIndex+1);
-				textMsg = textMsg.substring(0, newlineIndex);
-			}
-		}
-		else {
-			var data = imgBytes.subarray(index + 1);
-
-			if (data.length > 0 && data[0] == 68 /* D */)
-			{
-				console.log('Socket: got a delta !');
-				img = data;
-			}
-			else
-			{
-				// read the tile data
-				var strBytes = '';
-				for (var i = 0; i < data.length; i++) {
-					strBytes += String.fromCharCode(data[i]);
-				}
-				img = 'data:image/png;base64,' + window.btoa(strBytes);
-			}
-		}
 
 		if (textMsg.startsWith('status:')) {
 			this._onStatusMsg(textMsg, command);
@@ -988,7 +1025,7 @@ L.Socket = L.Class.extend({
 		}
 
 		if (this._map._docLayer && !msgDelayed) {
-			this._map._docLayer._onMessage(textMsg, img);
+			this._map._docLayer._onMessage(textMsg, e.image);
 		}
 	},
 
