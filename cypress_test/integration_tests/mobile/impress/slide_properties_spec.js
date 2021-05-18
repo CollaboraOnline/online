@@ -37,7 +37,7 @@ describe('Changing slide properties.', function() {
 		previewShouldBeFullWhite(false);
 	}
 
-	it('Apply solid color background.', function() {
+	it.skip('Apply solid color background.', function() {
 		// Change fill style
 		mobileHelper.selectListBoxItem2('#fillstyle', 'Color');
 
@@ -66,7 +66,7 @@ describe('Changing slide properties.', function() {
 			.should('have.attr', 'style', 'background-color: rgb(0, 255, 0);');
 	});
 
-	it('Apply gradient fill.', function() {
+	it.skip('Apply gradient fill.', function() {
 		// Change fill style
 		mobileHelper.selectListBoxItem2('#fillstyle', 'Gradient');
 
@@ -108,7 +108,7 @@ describe('Changing slide properties.', function() {
 			.should('have.attr', 'style', 'background-color: rgb(255, 255, 0);');
 	});
 
-	it('Apply hatching fill.', function() {
+	it.skip('Apply hatching fill.', function() {
 		// Change fill style
 		mobileHelper.selectListBoxItem2('#fillstyle', 'Hatching');
 
@@ -132,7 +132,7 @@ describe('Changing slide properties.', function() {
 			.should('have.text', 'Blue Triple 90 Degrees');
 	});
 
-	it('Apply bitmap fill.', function() {
+	it.skip('Apply bitmap fill.', function() {
 		// Change fill style
 		mobileHelper.selectListBoxItem2('#fillstyle', 'Bitmap');
 
@@ -156,7 +156,7 @@ describe('Changing slide properties.', function() {
 			.should('have.text', 'Wooden Board');
 	});
 
-	it('Apply pattern fill.', function() {
+	it.skip('Apply pattern fill.', function() {
 		// Change fill style
 		mobileHelper.selectListBoxItem2('#fillstyle', 'Pattern');
 
@@ -335,7 +335,7 @@ describe('Changing slide properties.', function() {
 			.should('have.text', 'Colored');
 	});
 
-	it('Apply layout.', function() {
+	it.skip('Apply layout.', function() {
 		// Apply title / subtitle layout
 		helper.clickOnIdle('#Layouts');
 

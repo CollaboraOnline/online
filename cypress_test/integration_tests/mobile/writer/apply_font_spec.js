@@ -220,7 +220,7 @@ describe('Apply font changes.', function() {
 			.should('have.attr', 'style', 'margin-bottom: 0in; line-height: 100%');
 	});
 
-	it('New style and update style items are hidden.', function() {
+	it.skip('New style and update style items are hidden.', function() {
 		cy.get('#applystyle')
 			.should('exist');
 

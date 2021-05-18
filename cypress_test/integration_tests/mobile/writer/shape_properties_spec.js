@@ -173,7 +173,7 @@ describe('Change shape properties via mobile wizard.', function() {
 		cy.wait(300);
 	});
 
-	it('Change line color', function() {
+	it.skip('Change line color', function() {
 		openLinePropertyPanel();
 
 		helper.clickOnIdle('#XLineColor');
@@ -186,7 +186,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.attr', 'stroke', 'rgb(152,0,0)');
 	});
 
-	it('Change line style', function() {
+	it.skip('Change line style', function() {
 		openLinePropertyPanel();
 
 		mobileHelper.selectListBoxItem2('#linestyle', 'Ultrafine Dashed');
@@ -197,7 +197,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.length.greaterThan', 12);
 	});
 
-	it('Change line width', function() {
+	it.skip('Change line width', function() {
 		openLinePropertyPanel();
 
 		cy.get('#linewidth .spinfield')
@@ -220,7 +220,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.attr', 'stroke-width', '88');
 	});
 
-	it('Change line transparency', function() {
+	it.skip('Change line transparency', function() {
 		openLinePropertyPanel();
 
 		helper.typeIntoInputField('#linetransparency .spinfield', '20', true, false);
@@ -231,7 +231,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('exist');
 	});
 
-	it('Arrow style items are hidden.', function() {
+	it.skip('Arrow style items are hidden.', function() {
 		openLinePropertyPanel();
 
 		cy.get('#linestyle')
@@ -245,7 +245,7 @@ describe('Change shape properties via mobile wizard.', function() {
 
 	});
 
-	it('Apply gradient fill', function() {
+	it.skip('Apply gradient fill', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 defs pattern')
 			.should('not.exist');
 
@@ -284,7 +284,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('exist');
 	});
 
-	it('Apply hatching fill', function() {
+	it.skip('Apply hatching fill', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 defs pattern')
 			.should('not.exist');
 

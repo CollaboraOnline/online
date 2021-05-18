@@ -76,7 +76,7 @@ describe('Chart tests.', function() {
 			.should('be.visible');
 	}
 
-	it('Change chart type.', function() {
+	it.skip('Change chart type.', function() {
 		stepIntoChartEditing();
 
 		mobileHelper.openMobileWizard();
