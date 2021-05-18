@@ -625,7 +625,9 @@ namespace Util
 
     pid_t getThreadId()
 #else
-    std::thread::id getThreadId()
+    static thread_local long ThreadTid = 0;
+
+    long getThreadId()
 #endif
     {
         // Avoid so many redundant system calls
@@ -634,7 +636,10 @@ namespace Util
             ThreadTid = ::syscall(SYS_gettid);
         return ThreadTid;
 #else
-        return std::this_thread::get_id();
+        static long threadCounter = 1;
+        if (!ThreadTid)
+            ThreadTid = threadCounter++;
+        return ThreadTid;
 #endif
     }
 

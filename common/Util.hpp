@@ -169,7 +169,7 @@ namespace Util
 #ifdef __linux
     pid_t getThreadId();
 #else
-    std::thread::id getThreadId();
+    long getThreadId();
 #endif
 
     /// Get version information
