@@ -8,7 +8,7 @@ window.app = { // Shouldn't have any functions defined.
 		readOnly: true,
 		size: {
 			pixels: [0, 0], // This can change according to the zoom level and document's size.
-			twips: [0, 0] // This can change according to the zoom level and document's size.
+			twips: [0, 0]
 		},
 		fileBasedView: false, // (draw-impress only) Default is false. For read-only documents, user can view all parts at once. In that case, this variable is set to "true".
 		partList: [], // Elements will have these properties: {hash, number, size {pixels, twips}}
