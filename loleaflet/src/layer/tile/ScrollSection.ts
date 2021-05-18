@@ -60,7 +60,9 @@ class ScrollSection {
 		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 		this.sectionProperties.defaultCursorStyle = this.sectionProperties.mapPane.style.cursor;
 
-		this.sectionProperties.documentTopMax = Infinity;
+		//this.sectionProperties.documentTopMax = Infinity;
+		this.sectionProperties.yMax = 0;
+		this.sectionProperties.yMin = 0;
 		this.sectionProperties.documentRightMax = Infinity;
 
 		this.sectionProperties.previousDragDistance = null;
@@ -181,7 +183,7 @@ class ScrollSection {
 	}
 
 	private calculateVerticalScrollSize (scrollLength: number) :number {
-		var scrollSize = scrollLength * scrollLength / app.view.size.pixels[1];
+		var scrollSize = scrollLength * scrollLength / (this.sectionProperties.yMax - this.sectionProperties.yMin);
 		if (scrollSize > this.sectionProperties.minimumScrollSize) {
 			return Math.round(scrollSize);
 		}
@@ -190,15 +192,39 @@ class ScrollSection {
 		}
 	}
 
+	// Returns the min position of documentTopLeft[1]
+	private calculateYMax () {
+		var anchorSectionHeight = this.containerObject.getDocumentAnchorSection().size[1];
+		this.sectionProperties.yMax = Math.round(app.view.size.pixels[1] - anchorSectionHeight);
+	}
+
+	// Returns the min position of documentTopLeft[1]
+	private calculateYMin () {
+		var anchorSectionHeight = this.containerObject.getDocumentAnchorSection().size[1];
+
+		if (app.file.size.pixels[1] < anchorSectionHeight) {
+			//this.sectionProperties.yMin = 0;
+			this.sectionProperties.yMin = Math.round((anchorSectionHeight - app.file.size.pixels[1]) * 0.5 * -1); // Allow centering the document on the screen after zooming out.
+		}
+		else {
+			this.sectionProperties.yMin = 0;
+		}
+	}
+
 	public getVerticalScrollProperties () :any {
 		var result: any = {};
 		result.scrollLength = this.getVerticalScrollLength(); // The length of the railway that the scroll bar moves on up & down.
+		this.calculateYMax();
+		this.calculateYMin();
+		if (this.sectionProperties.yMax < this.sectionProperties.yMin)
+			this.sectionProperties.yMax = this.sectionProperties.yMin;
+		result.scrollableHeight = (this.sectionProperties.yMax - this.sectionProperties.yMin);
 		result.scrollSize = this.calculateVerticalScrollSize(result.scrollLength);
 		result.scrollableLength = result.scrollLength - result.scrollSize;
-		result.scrollableHeight = app.view.size.pixels[1] - this.size[1];
 		result.ratio = result.scrollableHeight / result.scrollableLength; // 1px scrolling = xpx document height.
 		result.startY = Math.round(this.documentTopLeft[1] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.yOffset);
-		this.sectionProperties.documentTopMax = result.scrollableHeight; // When documentTopLeft[1] value is equal to this value, it means whole document is visible.
+		//this.sectionProperties.documentTopMax = ((app.view.size.pixels[1] - app.file.size.pixels[1]) * 0.5 * -1); //   result.scrollableHeight; // When documentTopLeft[1] value is equal to this value, it means whole document is visible.
+
 
 		return result;
 	}
@@ -345,7 +371,7 @@ class ScrollSection {
 		if (this.isAnimating && frameCount >= 0)
 			this.calculateCurrentAlpha(elapsedTime);
 
-		if ((this.sectionProperties.drawVerticalScrollBar || this.sectionProperties.animatingVerticalScrollBar) && this.documentTopLeft[1] >= 0) {
+		if ((this.sectionProperties.drawVerticalScrollBar || this.sectionProperties.animatingVerticalScrollBar)) {
 			if ((<any>window).mode.isMobile())
 				this.DrawVerticalScrollBarMobile();
 			else
@@ -478,15 +504,12 @@ class ScrollSection {
 	}
 
 	public scrollVerticalWithOffset (offset: number) {
-		if (this.documentTopLeft[1] + offset <= 0) { // We shouldn't scroll document to a negative y value.
-			if (this.documentTopLeft[1] > 0)
-				this.map.scrollTop(0, {});
-		}
-		else if (this.documentTopLeft[1] + offset >= this.sectionProperties.documentTopMax) // We should stop at the bottom of the document.
-			this.map.scrollTop(this.sectionProperties.documentTopMax / this.dpiScale, {});
-		else // Humph, everything is normal.
+		if (this.documentTopLeft[1] + offset > this.sectionProperties.yMax)
+			this.map.scrollTop(this.sectionProperties.yMax / this.dpiScale, {});
+		else if (this.documentTopLeft[1] + offset < this.sectionProperties.yMin)
+			this.map.scrollTop(this.sectionProperties.yMin / this.dpiScale, {});
+		else
 			this.map.scroll(0, offset / this.dpiScale, {});
-		this.onUpdateScrollOffset();
 	}
 
 	public scrollHorizontalWithOffset (offset: number) {
