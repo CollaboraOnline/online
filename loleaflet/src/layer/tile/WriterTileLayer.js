@@ -7,20 +7,20 @@
 L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 	newAnnotation: function (comment) {
-		if (!comment.anchorPos && this._map._isCursorVisible) {
-			comment.anchorPos = L.bounds(this._latLngToTwips(this._visibleCursor.getSouthWest()),
-				this._latLngToTwips(this._visibleCursor.getNorthEast()));
-			comment.anchorPix = this._twipsToPixels(comment.anchorPos.min);
+		if (this._map._isCursorVisible) {
+			comment.anchorPos = L.bounds(this._latLngToTwips(this._visibleCursor.getSouthWest()), this._latLngToTwips(this._visibleCursor.getNorthEast()));
+			//comment.anchorPix = this._twipsToPixels(comment.anchorPos.min);
 		} else if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {
-			// An image is selected, then guess the anchor based on the graphic
-			// selection.
-			comment.anchorPos = L.bounds(this._latLngToTwips(this._graphicSelection.getSouthWest()),
-				this._latLngToTwips(this._graphicSelection.getNorthEast()));
-			comment.anchorPix = this._twipsToPixels(comment.anchorPos.min);
+			// An image is selected, then guess the anchor based on the graphic selection.
+			comment.anchorPos = L.bounds(this._latLngToTwips(this._graphicSelection.getSouthWest()), this._latLngToTwips(this._graphicSelection.getNorthEast()));
+			//comment.anchorPix = this._twipsToPixels(comment.anchorPos.min);
 		}
-		if (comment.anchorPos) {
-			this._annotations.modify(this._annotations.add(comment));
-		}
+
+		var annotation = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(annotation);
+
+		//this._annotations.modify(this._annotations.add(comment));
+
 		if (window.mode.isMobile() || window.mode.isTablet()) {
 			var that = this;
 			this.newAnnotationVex(comment, function(annotation) { that._annotations._onAnnotationSave(annotation); });
@@ -36,54 +36,6 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 	beforeAdd: function (map) {
 		map.uiManager.initializeSpecializedUI('text');
-	},
-
-	onAdd: function (map) {
-		L.TileLayer.prototype.onAdd.call(this, map);
-		this._annotations = L.annotationManager(map);
-	},
-
-	onAnnotationModify: function (annotation) {
-		if (window.mode.isMobile() || window.mode.isTablet()) {
-			var that = this;
-			this.newAnnotationVex(annotation, function(annotation) { that._annotations._onAnnotationSave(annotation); }, /* isMod */ true);
-		} else {
-			this._annotations.modify(annotation);
-		}
-	},
-
-	layoutAnnotations: function () {
-		this._annotations.layout();
-	},
-
-	unselectAnnotations: function () {
-		if (this._annotations) {
-			this._annotations.unselect();
-		}
-	},
-
-	onAnnotationRemove: function (id) {
-		this._annotations.remove(id);
-	},
-
-	onAnnotationRemoveThread: function (id) {
-		this._annotations.removeThread(id);
-	},
-
-	onAnnotationReply: function (annotation) {
-		this._annotations.reply(annotation);
-	},
-
-	onAnnotationResolve: function (annotation) {
-		this._annotations.resolve(annotation);
-	},
-
-	onAnnotationResolveThread: function (annotation) {
-		this._annotations.resolveThread(annotation);
-	},
-
-	isThreadResolved: function(annotation) {
-		return this._annotations._isThreadResolved(annotation);
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -109,24 +61,6 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		}
 		else {
 			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
-		}
-	},
-
-	_onMessage: function (textMsg, img) {
-		if (textMsg.startsWith('comment:')) {
-			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
-			this._annotations.onACKComment(obj);
-		}
-		else if (textMsg.startsWith('redlinetablemodified:')) {
-			obj = JSON.parse(textMsg.substring('redlinetablemodified:'.length + 1));
-			this._annotations.onACKComment(obj);
-		}
-		else if (textMsg.startsWith('redlinetablechanged:')) {
-			obj = JSON.parse(textMsg.substring('redlinetablechanged:'.length + 1));
-			this._annotations.onACKComment(obj);
-		}
-		else {
-			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
 		}
 	},
 
