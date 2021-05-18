@@ -93,12 +93,9 @@ w2ui-toolbar {
 	height: 30px;
 }
 
-.w2ui-reset * {
-	vertical-align: top;
-}
-
 #tb_formulabar_item_address, #tb_formulabar_item_item_2, #tb_formulabar_item_functiondialog {
 	padding-top: 2px;
+	vertical-align: top;
 }
 
 #presentation-toolbar {
