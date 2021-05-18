@@ -307,6 +307,10 @@ class CanvasSectionContainer {
 		}
 	}
 
+	public getDocumentAnchorSection (): CanvasSectionObject {
+		return this.getSectionWithName(this.documentAnchorSectionName);
+	}
+
 	public getViewSize (): Array<number> {
 		return [this.canvas.width, this.canvas.height];
 	}
