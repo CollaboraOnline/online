@@ -33,11 +33,13 @@ class Comment {
 	setPosition: Function; // Implemented by section container. Document objects only.
 	map: any;
 
-	constructor (data: any, options: any) {
+	constructor (data: any, options: any, commentListSectionPointer: any) {
 		this.map = L.Map.THIS;
 
 		if (!options)
 			options = {};
+
+		this.sectionProperties.commentListSection = commentListSectionPointer;
 
 		this.sectionProperties.docLayer = this.map._docLayer;
 		this.sectionProperties.selectedAreaPoint = null;
@@ -55,7 +57,6 @@ class Comment {
 		this.sectionProperties.noMenu = options.noMenu ? options.noMenu : false;
 
 		this.sectionProperties.data = data;
-		this.sectionProperties.skipCheckBounds = false;
 		this.sectionProperties.annotationMarker = null;
 		this.sectionProperties.wrapper = null;
 		this.sectionProperties.container = null;
@@ -78,6 +79,8 @@ class Comment {
 		this.sectionProperties.nodeReply = null;
 		this.sectionProperties.nodeReplyText = null;
 		this.sectionProperties.contextMenu = false;
+
+		this.name = data.id === 'new' ? 'new comment': 'comment ' + data.id;
 	}
 
 	private createContainerAndWrapper () {
@@ -88,6 +91,8 @@ class Comment {
 		} else {
 			this.sectionProperties.wrapper = L.DomUtil.create('div', 'loleaflet-annotation-content-wrapper', this.sectionProperties.container);
 		}
+
+		document.getElementById('document-container').appendChild(this.sectionProperties.container);
 	}
 
 	private createAuthorTable () {
@@ -102,7 +107,7 @@ class Comment {
 		this.updateResolvedField(this.sectionProperties.data.resolved);
 
 		var tr = L.DomUtil.create('tr', '', tbody);
-		tr.id = 'author table row';
+		tr.id = 'author table row ' + this.sectionProperties.data.id;
 		var tdImg = L.DomUtil.create('td', 'loleaflet-annotation-img', tr);
 		var tdAuthor = L.DomUtil.create('td', 'loleaflet-annotation-author', tr);
 		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
@@ -119,7 +124,7 @@ class Comment {
 	}
 
 	private createMenu () {
-		var tdMenu = L.DomUtil.create('td', 'loleaflet-annotation-menubar', document.getElementById('author table row'));
+		var tdMenu = L.DomUtil.create('td', 'loleaflet-annotation-menubar', document.getElementById('author table row ' + this.sectionProperties.data.id));
 		this.sectionProperties.menu = L.DomUtil.create('div', this.sectionProperties.data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
 		var divMenuTooltipText = _('Open menu');
 		this.sectionProperties.menu.dataset.title = divMenuTooltipText;
@@ -127,25 +132,33 @@ class Comment {
 		this.sectionProperties.menu.annotation = this;
 	}
 
+	public setData (data: any) {
+		if (this.sectionProperties.data.textSelected) {
+			this.sectionProperties.data.textSelected.removeEventParent(this.map);
+			this.map.removeLayer(this.sectionProperties.data.textSelected);
+		}
+		this.sectionProperties.data = data;
+	}
+
 	private createTrackChangeButtons () {
-		var tdAccept = L.DomUtil.create('td', 'loleaflet-annotation-menubar', document.getElementById('author table row'));
+		var tdAccept = L.DomUtil.create('td', 'loleaflet-annotation-menubar', document.getElementById('author table row ' + this.sectionProperties.data.id));
 		var acceptButton = this.sectionProperties.acceptButton = L.DomUtil.create('button', 'loleaflet-redline-accept-button', tdAccept);
 
-		var tdReject = L.DomUtil.create('td', 'loleaflet-annotation-menubar', document.getElementById('author table row'));
+		var tdReject = L.DomUtil.create('td', 'loleaflet-annotation-menubar', document.getElementById('author table row ' + this.sectionProperties.data.id));
 		var rejectButton = this.sectionProperties.rejectButton = L.DomUtil.create('button', 'loleaflet-redline-reject-button', tdReject);
 
 		acceptButton.dataset.title = _('Accept change');
 		acceptButton.setAttribute('aria-label', _('Accept change'));
 
 		L.DomEvent.on(acceptButton, 'click', function() {
-			this._map.fire('RedlineAccept', {id: this.sectionProperties.data.id});
+			this.map.fire('RedlineAccept', {id: this.sectionProperties.data.id});
 		}, this);
 
 		rejectButton.dataset.title = _('Reject change');
 		rejectButton.setAttribute('aria-label', _('Reject change'));
 
 		L.DomEvent.on(rejectButton, 'click', function() {
-			this._map.fire('RedlineReject', {id: this.sectionProperties.data.id});
+			this.map.fire('RedlineReject', {id: this.sectionProperties.data.id});
 		}, this);
 	}
 
@@ -158,13 +171,17 @@ class Comment {
 		L.DomEvent.on(button, 'click', handler, this);
 	}
 
+	public parentOf (comment: any) {
+		return this.sectionProperties.data.id === comment.sectionProperties.data.parent;
+	}
+
 	private updateResolvedField (state: string) {
 		this.sectionProperties.resolvedTextElement.text = state === 'true' ? 'Resolved' : '';
 	}
 
 	private updateContent () {
 		// .text() method will escape the string, does not interpret the string as HTML
-		this.sectionProperties.contentText.innerText(this.sectionProperties.data.text);
+		this.sectionProperties.contentText.innerText = this.sectionProperties.data.text;
 		// Get the escaped HTML out and find for possible, useful links
 		var linkedText = Autolinker.link(this.sectionProperties.contentText.outerHTML);
 		// Set the property of text field directly. This is insecure otherwise because it doesn't escape the input
@@ -190,10 +207,10 @@ class Comment {
 
 		var d = new Date(this.sectionProperties.data.dateTime.replace(/,.*/, 'Z'));
 		var dateOptions: any = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-		this.sectionProperties.contentDate.innerText(isNaN(d.getTime()) ? this.sectionProperties.data.dateTime: d.toLocaleDateString((<any>String).locale, dateOptions));
+		this.sectionProperties.contentDate.innerText = isNaN(d.getTime()) ? this.sectionProperties.data.dateTime: d.toLocaleDateString((<any>String).locale, dateOptions);
 
 		if (this.sectionProperties.data.trackchange) {
-			this.sectionProperties.captionText.innerText(this.sectionProperties.data.description);
+			this.sectionProperties.captionText.innerText = this.sectionProperties.data.description;
 		}
 	}
 
@@ -210,12 +227,11 @@ class Comment {
 			//var pos = this._map.latLngToLayerPoint(this._latlng);
 			//L.DomUtil.setPosition(this.sectionProperties.container, pos);
 		}
-		this.checkBounds();
 	}
 
 	private updateAnnotationMarker () {
 		// Make sure to place the markers only for presentations and draw documents
-		if (this.map._docLayer._docType !== 'presentation' && this.map._docLayer._docType !== 'drawing')
+		if (this.sectionProperties.docLayer._docType !== 'presentation' && this.sectionProperties.docLayer._docType !== 'drawing')
 			return;
 
 		if (this.sectionProperties.data == null)
@@ -229,7 +245,7 @@ class Comment {
 				}),
 				draggable: true
 			});
-			if (this.map._docLayer._partHashes[this.map._docLayer._selectedPart] == this.sectionProperties.data.parthash)
+			if (this.sectionProperties.docLayer._partHashes[this.sectionProperties.docLayer._selectedPart] == this.sectionProperties.data.parthash)
 				this.map.addLayer(this.sectionProperties.annotationMarker);
 		}
 		if (this.sectionProperties.data.rectangle != null) {
@@ -238,8 +254,8 @@ class Comment {
 			var offset = new L.Point(parseInt(stringTwips[2]), parseInt(stringTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
 			var bounds = new L.LatLngBounds(
-				this.map._docLayer._twipsToLatLng(topLeftTwips, this.map.getZoom()),
-				this.map._docLayer._twipsToLatLng(bottomRightTwips, this.map.getZoom()));
+				this.sectionProperties.docLayer._twipsToLatLng(topLeftTwips, this.map.getZoom()),
+				this.sectionProperties.docLayer._twipsToLatLng(bottomRightTwips, this.map.getZoom()));
 			this.sectionProperties._annotationMarker.setLatLng(bounds.getNorthWest());
 			this.sectionProperties._annotationMarker.on('dragstart drag dragend', this.onMarkerDrag, this);
 			this.sectionProperties._annotationMarker.on('click', this.onMarkerClick, this);
@@ -247,39 +263,47 @@ class Comment {
 		if (this.sectionProperties.annotationMarker._icon) {
 			(new Hammer(this.sectionProperties.annotationMarker._icon, {recognizers: [[Hammer.Tap]]}))
 				.on('tap', function() {
-					this._map._docLayer._openCommentWizard(this);
+					this.sectionProperties.docLayer._openCommentWizard(this);
 				}.bind(this));
 		}
 	}
 
-	private getBounds (): any {
-		//var point = this._map.latLngToLayerPoint(this._latlng);
-		//return L.bounds(point, point.add(L.point(this._container.offsetWidth, this._container.offsetHeight)));
-	}
-
-	private isContainerVisible () {
+	public isContainerVisible () {
 		return (this.sectionProperties.container.style && this.sectionProperties.container.style.visibility === '');
 	}
 
-	private checkBounds () {
-		if (this.sectionProperties.skipCheckBounds || !this.map || this.map.animatingZoom || !this.isContainerVisible()) {
+	updateScaling (scaleFactor: number, initialLayoutData: any) {
+		if ((<any>window).mode.isDesktop())
 			return;
-		}
-		var maxBounds = this.map.getLayerMaxBounds();
-		var thisBounds = this.getBounds();
-		if (!maxBounds.contains(thisBounds)) {
-			var docBounds = this.map.getLayerDocBounds();
-			var delta = L.point(Math.max(thisBounds.max.x - docBounds.max.x, 0), Math.max(thisBounds.max.y - docBounds.max.y, 0));
-			if (delta.x > 0) {
-				delta.x += this.sectionProperties.margin.x;
+
+		var wrapperWidth = Math.round(initialLayoutData.wrapperWidth * scaleFactor);
+		this.sectionProperties.wrapper.style.width = wrapperWidth + 'px';
+		var wrapperFontSize = Math.round(initialLayoutData.wrapperFontSize * scaleFactor);
+		this.sectionProperties.wrapper.style.fontSize = wrapperFontSize + 'px';
+		var contentAuthorHeight = Math.round(initialLayoutData.authorContentHeight * scaleFactor);
+		this.sectionProperties.contentAuthor.style.height = contentAuthorHeight + 'px';
+		var dateFontSize = Math.round(initialLayoutData.dateFontSize * scaleFactor);
+		this.sectionProperties.contentDate.style.fontSize = dateFontSize + 'px';
+		if (this.sectionProperties.menu) {
+			var menuWidth = Math.round(initialLayoutData.menuWidth * scaleFactor);
+			this.sectionProperties.menu.style.width = menuWidth + 'px';
+			var menuHeight = Math.round(initialLayoutData.menuHeight * scaleFactor);
+			this.sectionProperties.menu.style.height = menuHeight + 'px';
+
+			if (this.sectionProperties.acceptButton) {
+				this.sectionProperties.acceptButton.style.width = menuWidth + 'px';
+				this.sectionProperties.acceptButton.style.height = menuHeight + 'px';
 			}
-			if (delta.y > 0) {
-				delta.y += this.sectionProperties.margin.y;
+			if (this.sectionProperties.rejectButton) {
+				this.sectionProperties.rejectButton.style.width = menuWidth + 'px';
+				this.sectionProperties.rejectButton.style.height = menuHeight + 'px';
 			}
-			this.map._docLayer._extraScollSizeCSS.x = delta.x;
-			this.map._docLayer._extraScollSizeCSS.y = delta.y;
-			this.map._docLayer._updateMaxBounds(true);
 		}
+
+		var authorImageWidth = Math.round(this.sectionProperties.imgSize.x * scaleFactor);
+		var authorImageHeight = Math.round(this.sectionProperties.imgSize.y * scaleFactor);
+		this.sectionProperties.authorAvatarImg.setAttribute('width', authorImageWidth);
+		this.sectionProperties.authorAvatarImg.setAttribute('height', authorImageHeight);
 	}
 
 	private update () {
@@ -327,6 +351,105 @@ class Comment {
 		this.hideMarker();
 	}
 
+	private onLeave (e: any) {
+		var layerPoint = this.map.mouseEventToLayerPoint(e),
+		    latlng = this.map.layerPointToLatLng(layerPoint);
+		L.DomEvent.stopPropagation(e);
+		if (this.sectionProperties.contextMenu || this.isEdit()) {
+			return;
+		}
+		//this.fire('AnnotationMouseLeave', {
+		//	originalEvent: e,
+		//	latlng: latlng,
+		//	layerPoint: layerPoint
+		//});
+	}
+
+	private onMouseClick (e: any) {
+		var target = e.target;
+		L.DomEvent.stopPropagation(e);
+		if (L.DomUtil.hasClass(target, 'loleaflet-annotation-menu') || L.DomUtil.hasClass(target, 'loleaflet-annotation-menu-redline')) {
+			$(target).contextMenu();
+			return;
+		} else if (((<any>window).mode.isMobile() || (<any>window).mode.isTablet())
+			&& this.map.getDocType() == 'spreadsheet') {
+			this.hide();
+		}
+		L.DomEvent.stopPropagation(e);
+		this.sectionProperties.commentListSection.click(this);
+	}
+
+	public onReplyClick (e: any) {
+		L.DomEvent.stopPropagation(e);
+		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
+			this.sectionProperties.data.reply = this.sectionProperties.data.text;
+			this.show();
+			this.sectionProperties.commentListSection.saveReply(this);
+		} else {
+			this.sectionProperties.data.reply = this.sectionProperties.nodeReplyText.value;
+			// Assigning an empty string to .innerHTML property in some browsers will convert it to 'null'
+			// While in browsers like Chrome and Firefox, a null value is automatically converted to ''
+			// Better to assign '' here instead of null to keep the behavior same for all
+			this.sectionProperties.nodeReplyText.value = '';
+			this.show();
+			this.sectionProperties.commentListSection.saveReply(this);
+		}
+	}
+
+	public onCancelClick (e: any) {
+		L.DomEvent.stopPropagation(e);
+		this.sectionProperties.nodeModifyText.value = this.sectionProperties.contentText.origText;
+		this.sectionProperties.nodeReplyText.value = '';
+		this.show();
+		this.sectionProperties.commentListSection.cancel(this);
+	}
+
+	public onSaveComment (e: any) {
+		L.DomEvent.stopPropagation(e);
+		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.value;
+		this.updateContent();
+		this.show();
+		this.sectionProperties.commentListSection.save(this);
+	}
+
+	public onLostFocus (e: any) {
+		$(this.sectionProperties.container).removeClass('annotation-active');
+		if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
+			this.onSaveComment(e);
+		}
+		else if (this.sectionProperties.nodeModifyText.value === '') {
+			this.onCancelClick(e);
+		}
+	}
+
+	public onLostFocusReply (e: any) {
+		if (this.sectionProperties.nodeReplyText.value !== '') {
+			this.onReplyClick(e);
+		}
+	}
+
+	public focus () {
+		this.sectionProperties.container.classList.add('annotation-active');
+		this.sectionProperties.nodeModifyText.focus();
+		this.sectionProperties.nodeReplyText.focus();
+	}
+
+	public reply () {
+		this.sectionProperties.container.style.visibility = '';
+		this.sectionProperties.contentNode.style.display = '';
+		this.sectionProperties.nodeModify.style.display = 'none';
+		this.sectionProperties.nodeReply.style.display = '';
+		return this;
+	}
+
+	public edit () {
+		this.sectionProperties.nodeModify.style.display = '';
+		this.sectionProperties.nodeReply.style.display = 'none';
+		this.sectionProperties.container.style.visibility = '';
+		this.sectionProperties.contentNode.style.display = 'none';
+		return this;
+	}
+
 	private isEdit () {
 		return (this.sectionProperties.nodeModify && this.sectionProperties.nodeModify.style.display !== 'none') ||
 		       (this.sectionProperties.nodeReply && this.sectionProperties.nodeReply.style.display !== 'none');
@@ -350,20 +473,6 @@ class Comment {
 		this.map.sendUnoCommand('.uno:EditAnnotation', comment);
 	}
 
-	private containerMouseClick (e: any) {
-		var target = e.target;
-		L.DomEvent.stopPropagation(e);
-		if (L.DomUtil.hasClass(target, 'loleaflet-annotation-menu') || L.DomUtil.hasClass(target, 'loleaflet-annotation-menu-redline')) {
-			$(target).contextMenu();
-			return;
-		} else if (((<any>window).mode.isMobile() || (<any>window).mode.isTablet())
-			&& this.map.getDocType() == 'spreadsheet') {
-			this.hide();
-		}
-		L.DomEvent.stopPropagation(e);
-		this.map.fire('AnnotationClick', {annotation: this});
-	}
-
 	private onMarkerClick () {
 		this.map.fire('AnnotationSelect', {annotation: this});
 	}
@@ -373,77 +482,9 @@ class Comment {
 			return;
 
 		if (event.type === 'dragend') {
-			var pointTwip = this.map._docLayer._latLngToTwips(this.sectionProperties.annotationMarker.getLatLng());
+			var pointTwip = this.sectionProperties.docLayer._latLngToTwips(this.sectionProperties.annotationMarker.getLatLng());
 			this.sendAnnotationPositionChange(pointTwip);
 		}
-	}
-
-	private containerCancelClick (e: any) {
-		L.DomEvent.stopPropagation(e);
-		this.sectionProperties.nodeModifyText.value = this.sectionProperties.contentText.origText;
-		this.sectionProperties.nodeReplyText.value = '';
-		this.show();
-		if (this.map)
-			this.map.fire('AnnotationCancel', {annotation: this});
-	}
-
-	private containerSaveComment (e: any) {
-		L.DomEvent.stopPropagation(e);
-		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.value;
-		this.updateContent();
-		this.show();
-		this.checkBounds();
-		this.map.fire('AnnotationSave', {annotation: this});
-	}
-
-	private containerLostFocus (e: any) {
-		$(this.sectionProperties.container).removeClass('annotation-active');
-		if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
-			this.containerSaveComment(e);
-		}
-		else if (this.sectionProperties.nodeModifyText.value == '') {
-			// Implies that this._contentText.origText == ''
-			this.containerCancelClick(e);
-		}
-	}
-
-	private containerLostFocusReply (e: any) {
-		if (this.sectionProperties.nodeReplyText.value !== '') {
-			this.containerReplyClick(e);
-		}
-	}
-
-	private containerReplyClick (e: any) {
-		L.DomEvent.stopPropagation(e);
-		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
-			e.annotation._data.reply = e.annotation._data.text;
-			e.annotation.show();
-			e.annotation._checkBounds();
-			this.map.fire('AnnotationReply', {annotation: e.annotation});
-		} else {
-			this.sectionProperties.data.reply = this.sectionProperties.nodeReplyText.value;
-			// Assigning an empty string to .innerHTML property in some browsers will convert it to 'null'
-			// While in browsers like Chrome and Firefox, a null value is automatically converted to ''
-			// Better to assign '' here instead of null to keep the behavior same for all
-			this.sectionProperties.nodeReplyText.value = '';
-			this.show();
-			this.checkBounds();
-			this.map.fire('AnnotationReply', {annotation: this});
-		}
-	}
-
-	private containerMouseLeave (e: any) {
-		var layerPoint = this.map.mouseEventToLayerPoint(e),
-		    latlng = this.map.layerPointToLatLng(layerPoint);
-		L.DomEvent.stopPropagation(e);
-		if (this.sectionProperties.contextMenu || this.isEdit()) {
-			return;
-		}
-		//this.fire('AnnotationMouseLeave', {
-		//	originalEvent: e,
-		//	latlng: latlng,
-		//	layerPoint: layerPoint
-		//});
 	}
 
 	public onInitialize () {
@@ -472,13 +513,13 @@ class Comment {
 		this.sectionProperties.nodeReplyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeReply);
 
 		var button = L.DomUtil.create('div', '', this.sectionProperties.nodeModify);
-		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'blur', this.containerLostFocus, this);
-		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'blur', this.containerLostFocusReply, this);
-		this.createButton(button, 'annotation-cancel', _('Cancel'), this.containerCancelClick);
-		this.createButton(button, 'annotation-save', _('Save'), this.containerSaveComment);
+		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'blur', this.onLostFocus, this);
+		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'blur', this.onLostFocusReply, this);
+		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, _('Cancel'), this.onCancelClick);
+		this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, _('Save'), this.onSaveComment);
 		button = L.DomUtil.create('div', '', this.sectionProperties.nodeReply);
-		this.createButton(button, 'annotation-cancel', _('Cancel'), this.containerCancelClick);
-		this.createButton(button, 'annotation-reply', _('Reply'), this.containerReplyClick);
+		this.createButton(button, 'annotation-cancel-reply-' + this.sectionProperties.data.id, _('Cancel'), this.onCancelClick);
+		this.createButton(button, 'annotation-reply', _('Reply'), this.onReplyClick);
 		L.DomEvent.disableScrollPropagation(this.sectionProperties.container);
 
 		this.sectionProperties.container.style.visibility = 'hidden';
@@ -486,8 +527,8 @@ class Comment {
 		this.sectionProperties.nodeReply.style.display = 'none';
 
 		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup', 'touchstart', 'touchmove', 'touchend'];
-		L.DomEvent.on(this.sectionProperties.container, 'click', this.containerMouseClick, this);
-		L.DomEvent.on(this.sectionProperties.container, 'mouseleave', this.containerMouseLeave, this);
+		L.DomEvent.on(this.sectionProperties.container, 'click', this.onMouseClick, this);
+		L.DomEvent.on(this.sectionProperties.container, 'mouseleave', this.onLeave, this);
 		for (var it = 0; it < events.length; it++) {
 			L.DomEvent.on(this.sectionProperties.container, events[it], L.DomEvent.stopPropagation, this);
 		}
@@ -507,136 +548,33 @@ class Comment {
 			}, this.map.scrollHandler);
 		}
 
-		//this.map._panes.popupPane.appendChild(this._container);
+		document.getElementById('document-container').appendChild(this.sectionProperties.container);
 		this.update();
+	}
+
+	public isDisplayed () {
+		return (this.sectionProperties.container.style && this.sectionProperties.container.style.visibility === '');
 	}
 
 	public onResize () {
 
 	}
 
-	private setMarkerPosition () {
-		var center: number = 0;
-		if (!(<any>window).mode.isDesktop() && this.map._docLayer._cellCursorPixels) {
-			center = this.map._docLayer._cellCursorPixels.getWidth() * 0.5;
-		}
+	public onDraw () {}
 
-		var position: Array<number> = [0, 0];
-		this.showSection = true;
+	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {}
 
-		if (this.sectionProperties.selectedAreaPoint !== null)
-			position = [this.sectionProperties.selectedAreaPoint[0] - center, this.sectionProperties.selectedAreaPoint[1]];
-		else if (this.sectionProperties.cellCursorPoint !== null)
-			position = [this.sectionProperties.cellCursorPoint[0] - center, this.sectionProperties.cellCursorPoint[1]];
-		else
-			this.showSection = false;
+	public onMouseUp (point: Array<number>, e: MouseEvent) {}
 
-		// At this point, position is calculated without taking splitter into account.
-		var splitPosCore = {x: 0, y: 0};
-		if (this.map._docLayer.getSplitPanesContext())
-			splitPosCore = this.map._docLayer.getSplitPanesContext().getSplitPos();
+	public onMouseDown (point: Array<number>, e: MouseEvent) {}
 
-		splitPosCore.x *= this.dpiScale;
-		splitPosCore.y *= this.dpiScale;
+	public onMouseEnter () {}
 
-		if (position[0] <= splitPosCore.x)
-			position[0] += this.documentTopLeft[0];
-		else if (position[0] - this.documentTopLeft[0] <= splitPosCore.x)
-			this.showSection = false;
+	public onMouseLeave () {}
 
-		if (position[1] <= splitPosCore.y)
-			position[1] += this.documentTopLeft[1];
-		else if (position[1] - this.documentTopLeft[1] <= splitPosCore.y)
-			this.showSection = false;
+	public onNewDocumentTopLeft () {}
 
-		this.setPosition(position[0], position[1]);
-	}
-
-	// Give bottom right position of selected area, in core pixels. Call with null parameter when auto fill marker is not visible.
-	public calculatePositionViaCellSelection (point: Array<number>) {
-		if (point === null) {
-			this.sectionProperties.selectedAreaPoint = null;
-		}
-		else {
-			this.sectionProperties.selectedAreaPoint = [point[0] - this.size[0] * 0.5, point[1] - this.size[1] * 0.5];
-		}
-		this.setMarkerPosition();
-	}
-
-	// Give bottom right position of cell cursor, in core pixels. Call with null parameter when auto fill marker is not visible.
-	public calculatePositionViaCellCursor (point: Array<number>) {
-		if (point === null) {
-			this.sectionProperties.cellCursorPoint = null;
-		}
-		else {
-			this.sectionProperties.cellCursorPoint = [point[0] - this.size[0] * 0.5, point[1] - this.size[1] * 0.5];
-		}
-		this.setMarkerPosition();
-	}
-
-	public onDraw () {
-
-	}
-
-	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
-		if (dragDistance === null || !this.sectionProperties.docLayer._cellAutoFillAreaPixels)
-			return; // No dragging or no event handling or auto fill marker is not visible.
-
-		var pos: any;
-
-		if (!this.sectionProperties.draggingStarted) { // Is it first move?
-			this.sectionProperties.draggingStarted = true;
-			this.sectionProperties.dragStartPosition = this.sectionProperties.docLayer._cellAutoFillAreaPixels.getCenter();
-			pos = new L.Point(this.sectionProperties.dragStartPosition[0], this.sectionProperties.dragStartPosition[1]);
-			pos = this.sectionProperties.docLayer._corePixelsToTwips(pos);
-			this.sectionProperties.docLayer._postMouseEvent('buttondown', pos.x, pos.y, 1, 1, 0);
-		}
-
-		point[0] = this.sectionProperties.dragStartPosition[0] + dragDistance[0];
-		point[1] = this.sectionProperties.dragStartPosition[1] + dragDistance[1];
-		pos = this.sectionProperties.docLayer._corePixelsToTwips(new L.Point(point[0], point[1]));
-
-		this.sectionProperties.docLayer._postMouseEvent('move', pos.x, pos.y, 1, 1, 0);
-
-		this.map.scrollingIsHandled = true;
-		this.stopPropagating(); // Stop propagating to sections.
-		e.stopPropagation(); // Stop native event.
-	}
-
-	public onMouseUp (point: Array<number>, e: MouseEvent) {
-		if (this.sectionProperties.draggingStarted) {
-			this.sectionProperties.draggingStarted = false;
-			point[0] += this.myTopLeft[0] + this.size[0] * 0.5;
-			point[1] += this.myTopLeft[1] + this.size[1] * 0.5;
-			var pos = this.sectionProperties.docLayer._corePixelsToTwips(new L.Point(point[0], point[1]));
-			this.sectionProperties.docLayer._postMouseEvent('buttonup', pos.x, pos.y, 1, 1, 0);
-		}
-
-		this.map.scrollingIsHandled = false;
-		this.stopPropagating();
-		e.stopPropagation();
-		(<any>window).IgnorePanning = false;
-	}
-
-	public onMouseDown (point: Array<number>, e: MouseEvent) {
-		// Just to be safe. We don't need this, but it makes no harm.
-		this.stopPropagating();
-		e.stopPropagation();
-		(<any>window).IgnorePanning = true; // We'll keep this until we have consistent sections and remove map element.
-	}
-
-	public onMouseEnter () {
-		this.sectionProperties.mapPane.style.cursor = 'crosshair';
-	}
-
-	public onMouseLeave () {
-		this.sectionProperties.mapPane.style.cursor = 'default';
-	}
-
-	public onNewDocumentTopLeft () {
-		this.setMarkerPosition();
-	}
-
+	public onRemove () {}
 	public onClick () {}
 	public onMouseWheel () {}
 	public onDoubleClick () {}

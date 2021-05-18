@@ -217,7 +217,8 @@ LOLEAFLET_JS =\
 	src/map/Clipboard.js \
 	src/layer/Layer.js \
 	src/layer/tile/CanvasSectionProps.js \
-	src/layer/tile/CanvasSectionContainer.js \
+	src/layer/tile/CanvasSectionContainer.ts \
+	src/layer/tile/Comment.ts \
 	src/layer/tile/CommentSection.ts \
 	src/layer/tile/TilesSection.js \
 	src/layer/tile/AutoFillMarkerSection.js \
