@@ -1,8 +1,34 @@
 /* eslint-disable */
 /* See CanvasSectionContainer.ts for explanations. */
 
+L.Map.include({
+	insertComment: function() {
+		var avatar = undefined;
+		var author = this.getViewName(this._docLayer._viewId);
+		if (author in this._viewInfoByUserName) {
+			avatar = this._viewInfoByUserName[author].userextrainfo.avatar;
+		}
+		this._docLayer.newAnnotation({
+			text: '',
+			textrange: '',
+			author: author,
+			dateTime: new Date().toDateString(),
+			id: 'new', // 'new' only when added by us
+			avatar: avatar
+		});
+	},
+
+	showResolvedComments: function(on: any) {
+		var unoCommand = '.uno:ShowResolvedAnnotations';
+		this.sendUnoCommand(unoCommand);
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).setViewResolved(on);
+	}
+});
+
+
 declare var L: any;
 declare var app: any;
+declare var vex: any;
 
 app.definitions.CommentSection =
 class CommentSection {
@@ -37,25 +63,439 @@ class CommentSection {
 		// If there is column header section, its bottom will be this section's top.
 		this.anchor = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], 'right'];
 		this.sectionProperties.docLayer = this.map._docLayer;
-		this.sectionProperties.list = new Array(0);
+		this.sectionProperties.commentList = new Array(0);
 		this.sectionProperties.selectedComment = null;
 		this.sectionProperties.arrow = null;
 		this.sectionProperties.hiddenCommentCount = 0;
 		this.sectionProperties.initialLayoutData = null;
-		this.sectionProperties.lastSelectedComment = null;
 		this.sectionProperties.showResolved = null;
 		this.sectionProperties.marginX = 40;
 		this.sectionProperties.marginY = 10;
 		this.sectionProperties.offset = 5;
 		this.sectionProperties.layoutTimer = null;
+		this.sectionProperties.draft = null;
 	}
 
 	public onInitialize () {
+		this.map.on('RedlineAccept', this.onRedlineAccept, this);
+		this.map.on('RedlineReject', this.onRedlineReject, this);
+		this.map.on('zoomend', function() {
+			var that = this;
+			that.layout(true);
+		}, this);
+
 		this.backgroundColor = this.containerObject.getClearColor();
+		this.initializeContextMenus();
+	}
+
+	public newAnnotationVex (comment: any, addCommentFn: any, isMod: any, displayContent: any = undefined) {
+		var that = this;
+
+		var commentData = null;
+		var content = '';
+		if (comment.author) {
+			// New comment - full data
+			commentData = comment;
+		} else {
+			// Modification
+			commentData = comment.sectionProperties.data;
+			if (displayContent === undefined)
+				content = commentData.text;
+			else
+				content = displayContent;
+		}
+
+		var dialog = vex.dialog.open({
+			message: '',
+			input: [
+				'<textarea name="comment" class="loleaflet-annotation-textarea" required>' + content + '</textarea>'
+			].join(''),
+			buttons: [
+				$.extend({}, vex.dialog.buttons.YES, { text: _('Save') }),
+				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
+			],
+			callback: function (data: any) {
+				if (data) {
+					var annotation = null;
+					if (isMod) {
+						annotation = comment;
+					} else {
+						annotation = L.annotation(L.latLng(0, 0), comment, {noMenu: true}).addTo(that.map);
+						that.sectionProperties.draft = annotation;
+					}
+
+					annotation.sectionProperties.data.text = data.comment;
+					comment.text = data.comment;
+
+					// FIXME: Unify annotation code in all modules...
+					addCommentFn.call(that, {annotation: annotation}, comment);
+					if (!isMod)
+						that.map.removeLayer(annotation);
+				}
+			}
+		});
+
+		var tagTd = 'td',
+		empty = '',
+		tagDiv = 'div';
+		var author = L.DomUtil.create('table', 'loleaflet-annotation-table');
+		var tbody = L.DomUtil.create('tbody', empty, author);
+		var tr = L.DomUtil.create('tr', empty, tbody);
+		var tdImg = L.DomUtil.create(tagTd, 'loleaflet-annotation-img', tr);
+		var tdAuthor = L.DomUtil.create(tagTd, 'loleaflet-annotation-author', tr);
+		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
+		imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg'));
+		imgAuthor.setAttribute('width', 32);
+		imgAuthor.setAttribute('height', 32);
+		var authorAvatarImg = imgAuthor;
+		var contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
+		var contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
+
+		//$(this._nodeModifyText).text(commentData.text);
+		$(contentAuthor).text(commentData.author);
+		$(authorAvatarImg).attr('src', commentData.avatar);
+		var user = this.map.getViewId(commentData.author);
+		if (user >= 0) {
+			var color = L.LOUtil.rgbToHex(this.map.getViewColor(user));
+			$(authorAvatarImg).css('border-color', color);
+		}
+
+		if (commentData.dateTime) {
+			var d = new Date(commentData.dateTime.replace(/,.*/, 'Z'));
+			var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+			$(contentDate).text(isNaN(d.getTime()) ? comment.dateTime: d.toLocaleDateString((<any>String).locale, <any>dateOptions));
+		}
+
+		dialog.contentEl.insertBefore(author, dialog.contentEl.childNodes[0]);
+
+		$(dialog.contentEl).find('textarea').focus();
+	}
+
+	public removeItem (id: any) {
+		var annotation;
+		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
+			annotation = this.sectionProperties.commentList[i];
+			if (annotation.sectionProperties.data.id === id) {
+				this.containerObject.removeSection(annotation.name);
+				this.sectionProperties.commentList.splice(i, 1);
+				document.getElementById('document-container').removeChild(annotation.sectionProperties.container);
+				//return annotation;
+			}
+		}
+	}
+
+	public click (annotation: any) {
+		this.select(annotation);
+	}
+
+	public save (annotation: any) {
+		var comment;
+		if (annotation.sectionProperties.data.id === 'new') {
+			comment = {
+				Text: {
+					type: 'string',
+					value: annotation.sectionProperties.data.text
+				},
+				Author: {
+					type: 'string',
+					value: annotation.sectionProperties.data.author
+				}
+			};
+			this.map.sendUnoCommand('.uno:InsertAnnotation', comment);
+			this.removeItem(annotation.sectionProperties.data.id);
+		} else if (annotation.sectionProperties.data.trackchange) {
+			comment = {
+				ChangeTrackingId: {
+					type: 'long',
+					value: annotation.sectionProperties.data.index
+				},
+				Text: {
+					type: 'string',
+					value: annotation.sectionProperties.data.text
+				}
+			};
+			this.map.sendUnoCommand('.uno:CommentChangeTracking', comment);
+		} else {
+			comment = {
+				Id: {
+					type: 'string',
+					value: annotation.sectionProperties.data.id
+				},
+				Text: {
+					type: 'string',
+					value: annotation.sectionProperties.data.text
+				}
+			};
+			this.map.sendUnoCommand('.uno:EditAnnotation', comment);
+		}
+		this.unselect();
+		this.map.focus();
+	}
+
+	public reply (annotation: any) {
+		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
+			var avatar = undefined;
+			var author = this.map.getViewName(this.sectionProperties.docLayer._viewId);
+			if (author in this.map._viewInfoByUserName) {
+				avatar = this.map._viewInfoByUserName[author].userextrainfo.avatar;
+			}
+			var replyAnnotation = {
+				text: '',
+				textrange: '',
+				author: author,
+				dateTime: new Date().toDateString(),
+				id: annotation.sectionProperties.data.id,
+				avatar: avatar,
+				parent: annotation.sectionProperties.data.parent
+			};
+			this.sectionProperties.docLayer.newAnnotationVex(replyAnnotation, annotation.onReplyClick,/* isMod */ false, '');
+		}
+		else {
+			annotation.reply();
+			this.select(annotation);
+			annotation.focus();
+		}
+	}
+
+	public modify (annotation: any) {
+		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
+			var that = this;
+			this.newAnnotationVex(annotation, function(annotation: any) { that.save(annotation); }, /* isMod */ true);
+		} else {
+			annotation.edit();
+			this.select(annotation);
+			annotation.focus();
+		}
+	}
+
+	public select (annotation: any) {
+		if (annotation) {
+			// Select the root comment
+			var idx = this.getRootIndexOf(annotation.sectionProperties.data.id);
+
+			if (this.sectionProperties.selectedComment && $(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active'))
+				$(this.sectionProperties.selectedComment.sectionProperties.container).removeClass('annotation-active');
+
+			this.sectionProperties.selectedComment = this.sectionProperties.commentList[idx];
+
+			if (this.sectionProperties.selectedComment && !$(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active'))
+				$(this.sectionProperties.selectedComment.sectionProperties.container).addClass('annotation-active');
+
+			this.update();
+		}
+	}
+
+	public unselect () {
+		if (this.sectionProperties.selectedComment) {
+			if (this.sectionProperties.selectedComment && $(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active'))
+				$(this.sectionProperties.selectedComment.sectionProperties.container).removeClass('annotation-active');
+
+			this.sectionProperties.selectedComment = null;
+			this.update();
+		}
+	}
+
+	public saveReply (annotation: any) {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: annotation.sectionProperties.data.id
+			},
+			Text: {
+				type: 'string',
+				value: annotation.sectionProperties.data.reply
+			}
+		};
+		this.map.sendUnoCommand('.uno:ReplyComment', comment);
+		this.unselect();
+		this.map.focus();
+	}
+
+	public cancel (annotation: any) {
+		if (annotation.sectionProperties.data.id === 'new') {
+			this.removeItem(annotation.sectionProperties.data.id);
+		}
+		if (this.sectionProperties.selectedComment === annotation) {
+			this.unselect();
+		} else {
+			this.layout();
+		}
+		this.map.focus();
+	}
+
+	public onRedlineAccept (e: any) {
+		var command = {
+			AcceptTrackedChange: {
+				type: 'unsigned short',
+				value: e.id.substring('change-'.length)
+			}
+		};
+		this.map.sendUnoCommand('.uno:AcceptTrackedChange', command);
+		this.unselect();
+		this.map.focus();
+	}
+
+	public onRedlineReject (e: any) {
+		var command = {
+			RejectTrackedChange: {
+				type: 'unsigned short',
+				value: e.id.substring('change-'.length)
+			}
+		};
+		this.map.sendUnoCommand('.uno:RejectTrackedChange', command);
+		this.unselect();
+		this.map.focus();
+	}
+
+	public remove (id: any) {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: id
+			}
+		};
+		this.map.sendUnoCommand('.uno:DeleteComment', comment);
+		this.unselect();
+		this.map.focus();
+	}
+
+	public removeThread (id: any) {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: id
+			}
+		};
+		this.map.sendUnoCommand('.uno:DeleteCommentThread', comment);
+		this.unselect();
+		this.map.focus();
+	}
+
+	public resolve (annotation: any) {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: annotation.sectionProperties.data.id
+			}
+		};
+		this.map.sendUnoCommand('.uno:ResolveComment', comment);
+	}
+
+	public resolveThread (annotation: any) {
+		var comment = {
+			Id: {
+				type: 'string',
+				value: annotation.sectionProperties.data.id
+			}
+		};
+		this.map.sendUnoCommand('.uno:ResolveCommentThread', comment);
+	}
+
+	public getIndexOf (id: any): number {
+		for (var index = 0; index < this.sectionProperties.commentList.length; index++) {
+			if (this.sectionProperties.commentList[index].sectionProperties.data.id === id) {
+				return index;
+			}
+		}
+		return -1;
+	}
+
+	public isThreadResolved (annotation: any) {
+		var lastChild = this.getLastChildIndexOf(annotation.sectionProperties.data.id);
+
+		while (this.sectionProperties.commentList[lastChild].sectionProperties.data.parent !== '0') {
+			if (this.sectionProperties.commentList[lastChild].sectionProperties.data.resolved === 'false')
+				return false;
+			lastChild = this.getIndexOf(this.sectionProperties.commentList[lastChild].sectionProperties.data.parent);
+		}
+		if (this.sectionProperties.commentList[lastChild].sectionProperties.data.resolved === 'false')
+			return false;
+		return true;
+	}
+
+	private initializeContextMenus () {
+		var that = this;
+		var docLayer = this.sectionProperties.docLayer;
+		L.installContextMenu({
+			selector: '.loleaflet-annotation-menu',
+			trigger: 'none',
+			className: 'loleaflet-font',
+			build: function ($trigger: any) {
+				return {
+					items: {
+						modify: {
+							name: _('Modify'),
+							callback: function (key: any, options: any) {
+								that.modify.call(that, options.$trigger[0].annotation);
+							}
+						},
+						reply: (docLayer._docType !== 'text' && docLayer._docType !== 'presentation') ? undefined : {
+							name: _('Reply'),
+							callback: function (key: any, options: any) {
+								that.reply.call(that, options.$trigger[0].annotation);
+							}
+						},
+						remove: {
+							name: _('Remove'),
+							callback: function (key: any, options: any) {
+								that.remove.call(that, options.$trigger[0].annotation.sectionProperties.data.id);
+							}
+						},
+						removeThread: docLayer._docType !== 'text' || $trigger[0].isRoot === true ? undefined : {
+							name: _('Remove Thread'),
+							callback: function (key: any, options: any) {
+								that.removeThread.call(that, options.$trigger[0].annotation.sectionProperties.data.id);
+							}
+						},
+						resolve: docLayer._docType !== 'text' ? undefined : {
+							name: $trigger[0].annotation.sectionProperties.data.resolved === 'false' ? _('Resolve') : _('Unresolve'),
+							callback: function (key: any, options: any) {
+								that.resolve.call(that, options.$trigger[0].annotation);
+							}
+						},
+						resolveThread: docLayer._docType !== 'text' || $trigger[0].isRoot === true ? undefined : {
+							name: that.isThreadResolved($trigger[0].annotation) ? _('Unresolve Thread') : _('Resolve Thread'),
+							callback: function (key: any, options: any) {
+								that.resolveThread.call(that, options.$trigger[0].annotation);
+							}
+						}
+					},
+				};
+			},
+			events: {
+				show: function (options: any) {
+					options.$trigger[0].annotation.sectionProperties.contextMenu = true;
+				},
+				hide: function (options: any) {
+					options.$trigger[0].annotation.sectionProperties.contextMenu = false;
+				}
+			}
+		});
+		L.installContextMenu({
+			selector: '.loleaflet-annotation-menu-redline',
+			trigger: 'none',
+			className: 'loleaflet-font',
+			items: {
+				modify: {
+					name: _('Comment'),
+					callback: function (key: any, options: any) {
+						that.modify.call(that, options.$trigger[0].annotation);
+					}
+				}
+			},
+			events: {
+				show: function (options: any) {
+					options.$trigger[0].annotation.sectionProperties.contextMenu = true;
+				},
+				hide: function (options: any) {
+					options.$trigger[0].annotation.sectionProperties.contextMenu = false;
+				}
+			}
+		});
 	}
 
 	public onResize () {
-
+		this.layout();
 	}
 
 	public onDraw () {
@@ -79,15 +519,239 @@ class CommentSection {
 	}
 
 	public onNewDocumentTopLeft () {
+		this.layout();
+	}
 
+	public showHideComment (annotation: any) {
+		// This manually shows/hides comments
+		if (!this.sectionProperties.showResolved) {
+			if (annotation.isContainerVisible() && annotation.sectionProperties.data.resolved === 'true') {
+				if (this.sectionProperties.selectedComment == annotation) {
+					this.unselect();
+				}
+				annotation.hide();
+				this.sectionProperties.hiddenCommentCount++;
+				annotation.update();
+			} else if (!annotation.isContainerVisible() && annotation.sectionProperties.data.resolved === 'false') {
+				annotation.show();
+				this.sectionProperties.hiddenCommentCount--;
+				annotation.update();
+			}
+			this.layout();
+			this.update();
+		}
+	}
+
+	public add (comment: any) {
+		var annotation = new app.definitions.Comment(comment, comment.id === 'new' ? {noMenu: true} : {}, this);
+
+		if (comment.parent && comment.parent > '0') {
+			var parentIdx = this.getIndexOf(comment.parent);
+
+			this.containerObject.addSection(annotation);
+			this.sectionProperties.commentList.splice(parentIdx + 1, 0, annotation);
+
+			this.updateResolvedState(annotation);
+			this.showHideComment(annotation);
+		}
+		else {
+			this.containerObject.addSection(annotation);
+			this.sectionProperties.commentList.push(annotation);
+		}
+
+		this.orderCommentList();
+		return annotation;
+	}
+
+	public adjustRedLine (redline: any) {
+		// All sane values ?
+		if (!redline.textRange) {
+			console.warn('Redline received has invalid textRange');
+			return false;
+		}
+
+		// transform change tracking index into an id
+		redline.id = 'change-' + redline.index;
+		redline.anchorPos = L.LOUtil.stringToBounds(redline.textRange);
+		redline.anchorPix = this.sectionProperties.docLayer._twipsToPixels(redline.anchorPos.min);
+		redline.trackchange = true;
+		redline.text = redline.comment;
+		var rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(redline.textRange), this.sectionProperties.docLayer);
+		if (rectangles.length > 0) {
+			redline.textSelected = L.polygon(rectangles, {
+				pointerEvents: 'all',
+				interactive: false,
+				fillOpacity: 0,
+				opacity: 0
+			});
+			redline.textSelected.addEventParent(this.map);
+			redline.textSelected.on('click', function() {
+				this.selectById(redline.id);
+			}, this);
+		}
+
+		return true;
+	}
+
+	public getComment (id: any) {
+		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
+			if (this.sectionProperties.commentList[i].sectionProperties.data.id === id) {
+				return this.sectionProperties.commentList[i];
+			}
+		}
+		return null;
+	}
+
+	// Adjust parent-child relationship, if required, after `comment` is added
+	public adjustParentAdd (comment: any) {
+		if (comment.parent && comment.parent > '0') {
+			var parentIdx = this.getIndexOf(comment.parent);
+			if (parentIdx === -1) {
+				console.warn('adjustParentAdd: No parent comment to attach received comment to. ' +
+				             'Parent comment ID sought is :' + comment.parent + ' for current comment with ID : ' + comment.id);
+				return;
+			}
+			if (this.sectionProperties.commentList[parentIdx + 1] && this.sectionProperties.commentList[parentIdx + 1].sectionProperties.data.parent === this.sectionProperties.commentList[parentIdx].sectionProperties.data.id) {
+				this.sectionProperties.commentList[parentIdx + 1].sectionProperties.data.parent = comment.id;
+			}
+		}
+	}
+
+	// Adjust parent-child relationship, if required, after `comment` is removed
+	public adjustParentRemove (comment: any) {
+		var newId = '0';
+		var parentIdx = this.getIndexOf(comment.sectionProperties.data.parent);
+		if (parentIdx >= 0) {
+			newId = this.sectionProperties.commentList[parentIdx].sectionProperties.data.id;
+		}
+		var currentIdx = this.getIndexOf(comment.sectionProperties.data.id);
+		if (this.sectionProperties.commentList[currentIdx + 1] && this.sectionProperties.commentList[currentIdx].parentOf(this.sectionProperties.commentList[currentIdx + 1])) {
+			this.sectionProperties.commentList[currentIdx + 1].sectionProperties.data.parent = newId;
+		}
+	}
+
+	public onACKComment (obj: any) {
+		var id;
+		var changetrack = obj.redline ? true : false;
+		var action = changetrack ? obj.redline.action : obj.comment.action;
+
+		if (changetrack && obj.redline.author in this.map._viewInfoByUserName) {
+			obj.redline.avatar = this.map._viewInfoByUserName[obj.redline.author].userextrainfo.avatar;
+		}
+		else if (!changetrack && obj.comment.author in this.map._viewInfoByUserName) {
+			obj.comment.avatar = this.map._viewInfoByUserName[obj.comment.author].userextrainfo.avatar;
+		}
+
+		if ((<any>window).mode.isMobile()) {
+			var annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj.comment.id)];
+			if (!annotation)
+				annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj.comment.parent)]; //this is required for reload after reply in writer
+		}
+		if (action === 'Add') {
+			if (changetrack) {
+				if (!this.adjustRedLine(obj.redline)) {
+					// something wrong in this redline
+					return;
+				}
+				this.add(obj.redline);
+			} else {
+				this.adjustComment(obj.comment);
+				this.adjustParentAdd(obj.comment);
+				this.add(obj.comment);
+			}
+			if (this.sectionProperties.selectedComment && !this.sectionProperties.selectedComment.isEdit()) {
+				this.map.focus();
+			}
+			annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj.comment.id)];
+			if (!(<any>window).mode.isMobile())
+				this.layout();
+		} else if (action === 'Remove') {
+			if ((<any>window).mode.isMobile() && obj.comment.id === annotation.sectionProperties.data.id) {
+				var child = this.sectionProperties.commentList[this.getIndexOf(obj.comment.id) + 1];
+				// Need to restore the original layers here because once removed they will be inaccessible and will stay there
+				this.map.removeLayer(annotation.sectionProperties.data.wizardHighlight);
+				this.map.addLayer(annotation.sectionProperties.data.textSelected);
+				if (child && child.sectionProperties.data.parent === annotation.sectionProperties.data.id)
+					annotation = child;
+				else
+					annotation = undefined;
+			}
+			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
+			var removed = this.getComment(id);
+			if (removed) {
+				this.adjustParentRemove(removed);
+				this.removeItem(id);
+				if (this.sectionProperties.selectedComment === removed) {
+					this.unselect();
+				} else {
+					this.layout();
+				}
+			}
+		} else if (action === 'Modify') {
+			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
+			var modified = this.getComment(id);
+			if (modified) {
+				var modifiedObj;
+				if (changetrack) {
+					if (!this.adjustRedLine(obj.redline)) {
+						// something wrong in this redline
+						return;
+					}
+					modifiedObj = obj.redline;
+				} else {
+					this.adjustComment(obj.comment);
+					modifiedObj = obj.comment;
+				}
+				modified.setData(modifiedObj);
+				modified.update();
+				this.update();
+			}
+		} else if (action === 'Resolve') {
+			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
+			var resolved = this.getComment(id);
+			if (resolved) {
+				var resolvedObj;
+				if (changetrack) {
+					if (!this.adjustRedLine(obj.redline)) {
+						// something wrong in this redline
+						return;
+					}
+					resolvedObj = obj.redline;
+				} else {
+					this.adjustComment(obj.comment);
+					resolvedObj = obj.comment;
+				}
+				resolved.setData(resolvedObj);
+				resolved.update();
+				this.showHideComment(resolved);
+				this.update();
+			}
+		}
+		if ((<any>window).mode.isMobile()) {
+			var shouldOpenWizard = false;
+			var wePerformedAction = obj.comment.author === this.map.getViewName(this.sectionProperties.docLayer._viewId);
+
+			if ((<any>window).commentWizard || (action === 'Add' && wePerformedAction))
+				shouldOpenWizard = true;
+
+			if (shouldOpenWizard) {
+				this.sectionProperties.docLayer._openCommentWizard(annotation);
+			}
+		}
+	}
+
+	public selectById (commentId: any) {
+		var idx = this.getRootIndexOf(commentId);
+		this.sectionProperties.selectedComment = this.sectionProperties.commentList[idx];
+		this.update();
 	}
 
 	private adjustComment (comment: any) {
 		var rectangles, color, viewId;
 		comment.trackchange = false;
-		rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(comment.textRange || comment.anchorPos), this.map._docLayer);
+		rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(comment.textRange || comment.anchorPos), this.sectionProperties.docLayer);
 		comment.anchorPos = L.LOUtil.stringToBounds(comment.anchorPos);
-		comment.anchorPix = this.map._docLayer._twipsToPixels(comment.anchorPos.min);
+		comment.anchorPix = this.twipsToCorePixels(comment.anchorPos.min);
 		viewId = this.map.getViewId(comment.author);
 		color = viewId >= 0 ? L.LOUtil.rgbToHex(this.map.getViewColor(viewId)) : '#43ACE8';
 		if (rectangles.length > 0) {
@@ -143,7 +807,7 @@ class CommentSection {
 		if (index < 0)
 			return undefined;
 		for (var idx = index + 1;
-		     idx < this.sectionProperties.commentList.length && this.sectionProperties.commentList[idx]._data.parent === this.sectionProperties.commentList[idx - 1]._data.id;
+		     idx < this.sectionProperties.commentList.length && this.sectionProperties.commentList[idx].sectionProperties.data.parent === this.sectionProperties.commentList[idx - 1].sectionProperties.data.id;
 		     idx++)
 		{
 			index = idx;
@@ -156,7 +820,7 @@ class CommentSection {
 		if ((<any>window).mode.isDesktop() || this.sectionProperties.commentList.length === 0)
 			return;
 		var contentWrapperClassName, menuClassName;
-		if (this.sectionProperties.commentList[0]._data.trackchange) {
+		if (this.sectionProperties.commentList[0].sectionProperties.data.trackchange) {
 			contentWrapperClassName = '.loleaflet-annotation-redline-content-wrapper';
 			menuClassName = '.loleaflet-annotation-menu-redline';
 		} else {
@@ -195,371 +859,219 @@ class CommentSection {
 		var scaleFactor = this.getScaleFactor();
 		var idx;
 		if (this.sectionProperties.selectedComment) {
-			var selectIndexFirst = this.getRootIndexOf(this.sectionProperties.selectedComment._data.id);
-			var selectIndexLast = this.getLastChildIndexOf(this.sectionProperties.selectedComment._data.id);
+			var selectIndexFirst = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
+			var selectIndexLast = this.getLastChildIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
 			for (idx = 0; idx < this.sectionProperties.commentList.length; idx++) {
 				if (idx < selectIndexFirst || idx >  selectIndexLast) {
-					this.sectionProperties.commentList[idx]._updateScaling(scaleFactor, this.sectionProperties.initialLayoutData);
+					this.sectionProperties.commentList[idx].updateScaling(scaleFactor, this.sectionProperties.initialLayoutData);
 				}
 				else {
-					this.sectionProperties.commentList[idx]._updateScaling(1, this.sectionProperties.initialLayoutData);
+					this.sectionProperties.commentList[idx].updateScaling(1, this.sectionProperties.initialLayoutData);
 				}
 			}
 		}
 		else {
 			for (idx = 0; idx < this.sectionProperties.commentList.length; idx++) {
-				this.sectionProperties.commentList[idx]._updateScaling(scaleFactor, this.sectionProperties.initialLayoutData);
+				this.sectionProperties.commentList[idx].updateScaling(scaleFactor, this.sectionProperties.initialLayoutData);
 			}
 		}
 	}
 
-	private layoutDown (commentThread: any, latLng: any, layoutBounds: any) {
-		if (commentThread.length <= 0)
-			return;
+	private twipsToCorePixels (twips: any) {
+		return [twips.x / this.sectionProperties.docLayer._tileWidthTwips * this.sectionProperties.docLayer._tileSize, twips.y / this.sectionProperties.docLayer._tileHeightTwips * this.sectionProperties.docLayer._tileSize];
+	}
 
-		(new L.PosAnimation()).run(commentThread[0]._container, this.map.latLngToLayerPoint(latLng));
-		commentThread[0].setLatLng(latLng, /*skip check bounds*/ true);
-		var bounds = commentThread[0].getBounds();
-		var idx = 1;
-		while (idx < commentThread.length) {
-			bounds.extend(bounds.max.add([0, commentThread[idx].getBounds().getSize().y]));
-			idx++;
+	private layoutUp (subList: any, actualPosition: Array<number>, lastY: number) {
+		var height: number;
+		for (var i = 0; i < subList.length; i++) {
+			height = subList[i].sectionProperties.container.getBoundingClientRect().height;
+			lastY = subList[i].sectionProperties.data.anchorPix[1] + height < lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY - height;
+			(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: actualPosition[0], y: lastY});
+			subList[i].show();
 		}
+		return lastY;
+	}
 
-		var docRight = this.map.project(this.map.options.docBounds.getNorthEast());
-		var posX = docRight.x + this.sectionProperties.marginX;
-		posX = this.map.latLngToLayerPoint(this.map.unproject(L.point(posX, 0))).x;
-		var posY;
-		if (layoutBounds.max.y >= bounds.min.y) {
-			posY = layoutBounds.getBottomLeft().y;
-			layoutBounds.extend(layoutBounds.max.add([0, bounds.getSize().y]));
+	private loopUp (startIndex: number, x: number, startY: number) {
+		var tmpIdx = 0;
+		startY -= this.sectionProperties.marginY;
+		// Pass over all comments present
+		for (var i = startIndex; i > -1;) {
+			var subList = [];
+			tmpIdx = i;
+			do {
+				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix = this.twipsToCorePixels(this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos.min);
+				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix[1] -= this.documentTopLeft[1];
+				// Add this item to the list of comments.
+				if (this.sectionProperties.commentList[tmpIdx].sectionProperties.data.resolved !== 'true' || this.sectionProperties.showResolved) {
+					subList.push(this.sectionProperties.commentList[tmpIdx]);
+				}
+				tmpIdx = tmpIdx - 1;
+				// Continue this loop, until we reach the last item, or an item which is not a direct descendant of the previous item.
+			} while (tmpIdx > -1 && this.sectionProperties.commentList[tmpIdx].sectionProperties.data.parent === this.sectionProperties.commentList[tmpIdx + 1].sectionProperties.data.id);
+
+			if (subList.length > 0) {
+				startY = this.layoutUp(subList, [x, subList[0].sectionProperties.data.anchorPix[1]], startY);
+				i = i - subList.length;
+			} else {
+				i = tmpIdx;
+			}
+			startY -= this.sectionProperties.marginY;
+		}
+		return startY;
+	}
+
+	private layoutDown (subList: any, actualPosition: Array<number>, lastY: number) {
+		var selectedComment = subList[0] === this.sectionProperties.selectedComment;
+		for (var i = 0; i < subList.length; i++) {
+			lastY = subList[i].sectionProperties.data.anchorPix[1] > lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY;
+
+			if (selectedComment)
+				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: actualPosition[0] - 60, y: lastY});
+			else
+				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: actualPosition[0], y: lastY});
+
+			lastY += (subList[i].sectionProperties.container.getBoundingClientRect().height);
+			if (!subList[i].isEdit())
+				subList[i].show();
+		}
+		return lastY;
+	}
+
+	private loopDown (startIndex: number, x: number, startY: number) {
+		var tmpIdx = 0;
+		// Pass over all comments present
+		for (var i = startIndex; i < this.sectionProperties.commentList.length;) {
+			var subList = [];
+			tmpIdx = i;
+			do {
+				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix = this.twipsToCorePixels(this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos.min);
+				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix[1] -= this.documentTopLeft[1];
+				// Add this item to the list of comments.
+				if (this.sectionProperties.commentList[tmpIdx].sectionProperties.data.resolved !== 'true' || this.sectionProperties.showResolved) {
+					subList.push(this.sectionProperties.commentList[tmpIdx]);
+				}
+				tmpIdx = tmpIdx + 1;
+				// Continue this loop, until we reach the last item, or an item which is not a direct descendant of the previous item.
+			} while (tmpIdx < this.sectionProperties.commentList.length && this.sectionProperties.commentList[tmpIdx].sectionProperties.data.parent === this.sectionProperties.commentList[tmpIdx - 1].sectionProperties.data.id);
+
+			if (subList.length > 0) {
+				startY = this.layoutDown(subList, [x, subList[0].sectionProperties.data.anchorPix[1]], startY);
+				i = i + subList.length;
+			} else {
+				i = tmpIdx;
+			}
+			startY += this.sectionProperties.marginY;
+		}
+		return startY;
+	}
+
+	private hideArrow () {
+		if (this.sectionProperties.arrow) {
+			document.getElementById('document-container').removeChild(this.sectionProperties.arrow);
+			this.sectionProperties.arrow = null;
+		}
+	}
+
+	private showArrow (startPoint: Array<number>, endPoint: Array<number>) {
+		var anchorSection = this.containerObject.getDocumentAnchorSection();
+		startPoint[0] -= anchorSection.myTopLeft[0] + this.documentTopLeft[0];
+		startPoint[1] -= anchorSection.myTopLeft[1] + this.documentTopLeft[1];
+		endPoint[0] -= anchorSection.myTopLeft[0] + this.documentTopLeft[0];
+		endPoint[1] -= anchorSection.myTopLeft[1] + this.documentTopLeft[1];
+
+		if (this.sectionProperties.arrow !== null) {
+			var line: SVGLineElement = <SVGLineElement>(<any>document.getElementById('comment-arrow-line'));
+			line.setAttribute('x1', String(startPoint[0]));
+			line.setAttribute('y1', String(startPoint[1]));
+			line.setAttribute('x2', String(endPoint[0]));
+			line.setAttribute('y2', String(endPoint[1]));
 		}
 		else {
-			posY = bounds.min.y;
-			layoutBounds.extend(L.point(layoutBounds.max.x, bounds.max.y));
-		}
-		var pt = L.point(posX, posY);
-		layoutBounds.extend(layoutBounds.max.add([0, this.sectionProperties.marginY]));
-
-		idx = 0;
-		for (idx = 0; idx < commentThread.length; ++idx) {
-			if (commentThread[idx]._data.resolved !== 'true' || this.sectionProperties.showResolved) {
-				latLng = this.map.layerPointToLatLng(pt);
-				(new L.PosAnimation()).run(commentThread[idx]._container, this.map.latLngToLayerPoint(latLng));
-				commentThread[idx].setLatLng(latLng, /*skip check bounds*/ true);
-				commentThread[idx].show();
-
-				var commentBounds = commentThread[idx].getBounds();
-				pt = pt.add([0, commentBounds.getSize().y]);
-			}
-		}
-	}
-
-	private getBounds () {
-		if (this.sectionProperties.commentList.length <= 0 || this.sectionProperties.commentList.length === this.sectionProperties.hiddenCommentCount)
-			return null;
-
-		var allCommentsBounds = null;
-		for (var idx = 0; idx < this.sectionProperties.commentList.length; ++idx) {
-			if (this.sectionProperties.commentList[idx].isVisible()) {
-				if (!allCommentsBounds) {
-					allCommentsBounds = this.sectionProperties.commentList[idx].getBounds();
-				} else {
-					var bounds = this.sectionProperties.commentList[idx].getBounds();
-					allCommentsBounds.extend(bounds.min);
-					allCommentsBounds.extend(bounds.max);
-				}
-			}
-		}
-		return allCommentsBounds;
-	}
-
-	checkBounds () {
-		if (!this.map || this.map.animatingZoom || this.sectionProperties.commentList.length === 0) {
-			return;
-		}
-
-		var thisBounds = this.getBounds();
-		if (!thisBounds)
-			return;
-
-		var maxBounds = this.map.getLayerMaxBounds();
-		if (!maxBounds.contains(thisBounds)) {
-			var margin = this.sectionProperties.commentList[0].getMargin();
-			var docBounds = this.map.getLayerDocBounds();
-			var delta = L.point(Math.max(thisBounds.max.x - docBounds.max.x, 0), Math.max(thisBounds.max.y - docBounds.max.y, 0));
-			if (delta.x > 0) {
-				delta.x += margin.x;
-			}
-			if (delta.y > 0) {
-				delta.y += margin.y;
-			}
-
-			this.map._docLayer._extraScollSizeCSS.x = delta.x;
-			this.map._docLayer._extraScollSizeCSS.y = delta.y;
-			this.map._docLayer._updateMaxBounds(true);
+			var svg: SVGElement = (<any>document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
+			svg.setAttribute('version', '1.1');
+			svg.style.zIndex = '9';
+			svg.id = 'comment-arrow-container';
+			svg.style.position = 'absolute';
+			svg.style.top = svg.style.left = svg.style.right = svg.style.bottom = '0';
+			svg.setAttribute('width', String(this.context.canvas.width));
+			svg.setAttribute('height', String(this.context.canvas.height));
+			var line  = document.createElementNS('http://www.w3.org/2000/svg','line');
+			line.id = 'comment-arrow-line';
+			line.setAttribute('x1', String(startPoint[0]));
+			line.setAttribute('y1', String(startPoint[1]));
+			line.setAttribute('x2', String(endPoint[0]));
+			line.setAttribute('y2', String(endPoint[1]));
+			line.setAttribute('stroke', 'darkblue');
+			line.setAttribute('stroke-width', '1');
+			svg.append(line);
+			document.getElementById('document-container').appendChild(svg);
+			this.sectionProperties.arrow = svg;
 		}
 	}
 
-	private doLayout (zoom: any) {
-		this.updateScaling();
-		var docRight = this.map.project(this.map.options.docBounds.getNorthEast());
-		var topRight = docRight.add(L.point(this.sectionProperties.marginX, this.sectionProperties.marginY));
-		var latlng, layoutBounds, point, idx;
-		if (this.sectionProperties.selectedComment) {
-			var selectIndexFirst = this.getRootIndexOf(this.sectionProperties.selectedComment._data.id);
-			var selectIndexLast = this.getLastChildIndexOf(this.sectionProperties.selectedComment._data.id);
-			if (zoom) {
-				this.sectionProperties.commentList[selectIndexFirst]._data.anchorPix = this.map._docLayer._twipsToPixels(this.sectionProperties.commentList[selectIndexFirst]._data.anchorPos.min);
+	private doLayout (zoomEnd = false) {
+		if (this.sectionProperties.commentList.length > 0) {
+			this.updateScaling();
+			this.orderCommentList();
+
+			var topRight: Array<number> = [this.myTopLeft[0], this.myTopLeft[1] + this.sectionProperties.marginY - this.documentTopLeft[1]];
+			var yOrigin = null;
+			var selectedIndex = null;
+
+			if (this.sectionProperties.selectedComment) {
+				selectedIndex = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
+				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix = this.twipsToCorePixels(this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPos.min);
+				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1];
+				yOrigin = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1] - this.documentTopLeft[1];
+				var tempCrd: Array<number> = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix;
+				this.showArrow([tempCrd[0], tempCrd[1]], [topRight[0], tempCrd[1]]);
+			}
+			else {
+				this.hideArrow();
 			}
 
-			var anchorPx = this.sectionProperties.commentList[selectIndexFirst]._data.anchorPix;
-			var posX = docRight.x;
-			var posY = anchorPx.y;
-			point = this.map._docLayer._twipsToPixels(this.sectionProperties.commentList[selectIndexFirst]._data.anchorPos.min);
-
-			var mapBoundsPx = this.map.getPixelBounds();
-			var annotationBoundsPx = this.sectionProperties.commentList[selectIndexFirst].getBounds();
-			var annotationSize = annotationBoundsPx.getSize();
-			var topLeftPoint = L.point(posX, posY);
-			var bottomRightPoint = topLeftPoint.add(annotationSize);
-			var scrollX = 0, scrollY = 0, spacing = 16;
-			// there is an odd gap between map top and anchor point y coordinate; is this due to the top ruler bar ?
-			// anyway without taking it into account the y-scroll offset is wrong
-			var gapY = 22;
-
-			if (this.sectionProperties.selectedComment !== this.sectionProperties.lastSelectedComment) {
-				this.sectionProperties.lastSelectedComment = this.sectionProperties.selectedComment;
-				if (anchorPx.x < mapBoundsPx.min.x) {
-					// a lot of spacing; we would need to know where is the left start of the annotated element;
-					// the anchor point is on the bottom right
-					scrollX = anchorPx.x - mapBoundsPx.min.x - 3 * spacing;
-				}
-				if (anchorPx.y < mapBoundsPx.min.y + gapY) {
-					scrollY = anchorPx.y - mapBoundsPx.min.y - gapY - spacing;
-				}
-				scrollX = Math.round(scrollX);
-				scrollY = Math.round(scrollY);
-				if (scrollX !== 0 || scrollY !== 0) {
-					this.map.fire('scrollby', {x: scrollX, y: scrollY});
-					return;
-				}
+			var lastY = 0;
+			if (selectedIndex) {
+				this.loopUp(selectedIndex - 1, topRight[0], yOrigin);
+				lastY = this.loopDown(selectedIndex, topRight[0], yOrigin);
 			}
-
-			// move the annotation box in order to make it visible but only if the annotated element is already visible
-			if (anchorPx.x >= mapBoundsPx.min.x &&  anchorPx.x <= mapBoundsPx.max.x
-				&& anchorPx.y >= mapBoundsPx.min.y + gapY && anchorPx.y <= mapBoundsPx.max.y + gapY) {
-				scrollX = 0; scrollY = 0;
-
-				if (bottomRightPoint.x > mapBoundsPx.max.x) {
-					scrollX = bottomRightPoint.x - mapBoundsPx.max.x + spacing;
-				}
-				if (bottomRightPoint.y > mapBoundsPx.max.y) {
-					scrollY = bottomRightPoint.y - mapBoundsPx.max.y - spacing;
-				}
-				scrollX = Math.round(scrollX);
-				scrollY = Math.round(scrollY);
-				console.log('doLayout: scrollY 2: ' + scrollY);
-				posX -= scrollX;
-				if (posX < mapBoundsPx.min.x)
-					posX = Math.round(mapBoundsPx.min.x + spacing);
-				posY -= scrollY;
-				if (posY < mapBoundsPx.min.y)
-					posY = Math.round(mapBoundsPx.min.y + spacing);
-				// avoid the annotation box to cover the annotated element
-				if (posX < anchorPx.x + spacing) {
-					var anchorPosMax = this.map._docLayer._twipsToPixels(this.sectionProperties.commentList[selectIndexFirst]._data.anchorPos.max);
-					var lineHeight = Math.round(anchorPosMax.y - anchorPx.y);
-					posY += 2 * lineHeight;
-					point.y += lineHeight;
-				}
-			}
-
-			// Draw arrow
-			this.sectionProperties.arrow.setLatLngs([this.map.unproject(point), this.map.unproject(L.point(posX, posY))]);
-			this.map.addLayer(this.sectionProperties.arrow);
-
-			latlng = this.map.unproject(L.point(posX, posY));
-			var annotationCoords = this.map.latLngToLayerPoint(latlng);
-			(new L.PosAnimation()).run(this.sectionProperties.commentList[selectIndexFirst]._container, annotationCoords);
-			this.sectionProperties.commentList[selectIndexFirst].setLatLng(latlng, /*skip check bounds*/ true);
-			layoutBounds = this.sectionProperties.commentList[selectIndexFirst].getBounds();
-
-			// Adjust child comments too, if any
-			for (idx = selectIndexFirst + 1; idx <= selectIndexLast; idx++) {
-				if (this.sectionProperties.commentList[idx]._data.resolved !== 'true' || this.sectionProperties.showResolved) {
-					if (zoom) {
-						this.sectionProperties.commentList[idx]._data.anchorPix = this.map._docLayer._twipsToPixels(this.sectionProperties.commentList[idx]._data.anchorPos.min);
-					}
-					latlng = this.map.layerPointToLatLng(layoutBounds.getBottomLeft());
-					(new L.PosAnimation()).run(this.sectionProperties.commentList[idx]._container, layoutBounds.getBottomLeft());
-					this.sectionProperties.commentList[idx].setLatLng(latlng, /*skip check bounds*/ true);
-					var commentBounds = this.sectionProperties.commentList[idx].getBounds();
-					layoutBounds.extend(layoutBounds.max.add([0, commentBounds.getSize().y]));
-				}
-			}
-
-			layoutBounds.min = layoutBounds.min.add([this.sectionProperties.marginX, 0]);
-			layoutBounds.max = layoutBounds.max.add([this.sectionProperties.marginX, 0]);
-			layoutBounds.extend(layoutBounds.min.subtract([0, this.sectionProperties.marginY]));
-			layoutBounds.extend(layoutBounds.max.add([0, this.sectionProperties.marginY]));
-
-			for (idx = selectIndexFirst - 1; idx >= 0;) {
-				var commentThread = [];
-				var tmpIdx: number = idx;
-				do {
-					if (zoom) {
-						this.sectionProperties.commentList[idx]._data.anchorPix = this.map._docLayer._twipsToPixels(this.sectionProperties.commentList[idx]._data.anchorPos.min);
-					}
-					if (this.sectionProperties.commentList[tmpIdx]._data.resolved !== 'true' || this.sectionProperties.showResolved) {
-						commentThread.push(this.sectionProperties.commentList[tmpIdx]);
-					}
-
-					tmpIdx = tmpIdx - 1;
-				} while (tmpIdx >= 0 && this.sectionProperties.commentList[tmpIdx]._data.id === this.sectionProperties.commentList[tmpIdx + 1]._data.parent);
-
-				if (commentThread.length > 0) {
-					commentThread.reverse();
-					// All will have some anchor position
-					this.layoutUp(commentThread, this.map.unproject(L.point(topRight.x, commentThread[0]._data.anchorPix.y)), layoutBounds);
-					idx = idx - commentThread.length;
-				} else {
-					idx = tmpIdx;
-				}
-			}
-
-			for (idx = selectIndexLast + 1; idx < this.sectionProperties.commentList.length;) {
-				commentThread = [];
-				tmpIdx = idx;
-				do {
-					if (zoom) {
-						this.sectionProperties.commentList[idx]._data.anchorPix = this.map._docLayer._twipsToPixels(this.sectionProperties.commentList[idx]._data.anchorPos.min);
-					}
-					if (this.sectionProperties.commentList[tmpIdx]._data.resolved !== 'true' || this.sectionProperties.showResolved) {
-						commentThread.push(this.sectionProperties.commentList[tmpIdx]);
-					}
-
-					tmpIdx = tmpIdx + 1;
-				} while (tmpIdx < this.sectionProperties.commentList.length && this.sectionProperties.commentList[tmpIdx]._data.parent === this.sectionProperties.commentList[tmpIdx - 1]._data.id);
-
-
-				// All will have some anchor position
-				if (commentThread.length > 0) {
-					this.layoutDown(commentThread, this.map.unproject(L.point(topRight.x, commentThread[0]._data.anchorPix.y)), layoutBounds);
-					idx = idx + commentThread.length;
-				} else {
-					idx = tmpIdx;
-				}
-			}
-			if (!this.sectionProperties.selectedComment.isEdit()) {
-				this.sectionProperties.selectedComment.show();
-			}
-		} else if (this.sectionProperties.commentList.length > 0) { // If nothing is selected, but there are comments:
-			this.sectionProperties.lastSelectedComment = null;
-			point = this.map.latLngToLayerPoint(this.map.unproject(L.point(topRight.x, this.sectionProperties.commentList[0]._data.anchorPix.y)));
-			layoutBounds = L.bounds(point, point);
-			// Pass over all comments present
-			for (idx = 0; idx < this.sectionProperties.commentList.length;) {
-				commentThread = [];
-				tmpIdx = idx;
-				do {
-					if (zoom) {
-						this.sectionProperties.commentList[tmpIdx]._data.anchorPix = this.map._docLayer._twipsToPixels(this.sectionProperties.commentList[tmpIdx]._data.anchorPos.min);
-					}
-					// Add this item to the list of comments.
-					if (this.sectionProperties.commentList[tmpIdx]._data.resolved !== 'true' || this.sectionProperties.showResolved) {
-						commentThread.push(this.sectionProperties.commentList[tmpIdx]);
-					}
-					tmpIdx = tmpIdx + 1;
-					// Continue this loop, until we reach the last item, or an item which is not a direct descendant of the previous item.
-				} while (tmpIdx < this.sectionProperties.commentList.length && this.sectionProperties.commentList[tmpIdx]._data.parent === this.sectionProperties.commentList[tmpIdx - 1]._data.id);
-
-				if (commentThread.length > 0) {
-					this.layoutDown(commentThread, this.map.unproject(L.point(topRight.x, commentThread[0]._data.anchorPix.y)), layoutBounds);
-					idx = idx + commentThread.length;
-				} else {
-					idx = tmpIdx;
-				}
+			else {
+				lastY = this.loopDown(0, topRight[0], topRight[1]);
 			}
 		}
-		this.checkBounds();
-	}
 
-	layoutUp (commentThread: any, latLng: any, layoutBounds: any) {
-		if (commentThread.length <= 0)
-			return;
-
-		(new L.PosAnimation()).run(commentThread[0]._container, this.map.latLngToLayerPoint(latLng));
-		commentThread[0].setLatLng(latLng, /*skip check bounds*/ true);
-		var bounds = commentThread[0].getBounds();
-		var idx = 1;
-		while (idx < commentThread.length) {
-			bounds.extend(bounds.max.add([0, commentThread[idx].getBounds().getSize().y]));
-			idx++;
-		}
-
-		var docRight = this.map.project(this.map.options.docBounds.getNorthEast());
-		var posX = docRight.x + this.sectionProperties.marginX;
-		posX = this.map.latLngToLayerPoint(this.map.unproject(L.point(posX, 0))).x;
-		var posY;
-		if (layoutBounds.min.y <= bounds.max.y) {
-			layoutBounds.extend(layoutBounds.min.subtract([0, bounds.getSize().y]));
-			posY = layoutBounds.min.y;
-		}
-		else {
-			posY = bounds.min.y;
-			layoutBounds.extend(L.point(layoutBounds.min.x, bounds.min.y));
-		}
-		var pt = L.point(posX, posY);
-		layoutBounds.extend(layoutBounds.min.subtract([0, this.sectionProperties.marginY]));
-
-		idx = 0;
-		for (idx = 0; idx < commentThread.length; ++idx) {
-			if (commentThread[idx]._data.resolved !== 'true' || this.sectionProperties.showResolved) {
-				latLng = this.map.layerPointToLatLng(pt);
-				(new L.PosAnimation()).run(commentThread[idx]._container, this.map.latLngToLayerPoint(latLng));
-				commentThread[idx].setLatLng(latLng, /*skip check bounds*/ true);
-				commentThread[idx].show();
-
-				var commentBounds = commentThread[idx].getBounds();
-				pt = pt.add([0, commentBounds.getSize().y]);
-			}
+		if (zoomEnd) {
+            var anchorSectionHeight = this.containerObject.getDocumentAnchorSection().size[1];
+            var diff = lastY - anchorSectionHeight;
+            if (diff > 0)
+                app.view.size.pixels[1] = lastY;
+            else
+                app.view.size.pixels[1] = app.file.size.pixels[1];
 		}
 	}
 
 	private layout (zoom: any = null) {
 		if (zoom)
-			this.doLayout(zoom);
+			this.doLayout();
 		else if (!this.sectionProperties.layoutTimer) {
 			var that = this;
 			that.sectionProperties.layoutTimer = setTimeout(function() {
 				delete that.sectionProperties.layoutTimer;
-				that.doLayout(zoom);
+				that.doLayout();
 			}, 250 /* ms */);
 		} // else - avoid excessive re-layout
 	}
 
 	private update () {
-		if (!this.sectionProperties.selectedComment) {
-			this.map.removeLayer(this.sectionProperties.arrow);
-		}
 		this.layout();
 	}
 
-	private getIndexOf (id: any) {
-		for (var index = 0; index < this.sectionProperties.commentList.length; index++) {
-			if (this.sectionProperties.commentList[index]._data.id === id) {
-				return index;
-			}
-		}
-		return -1;
-	}
-
-	// Returns the root comment id of given id
+	// Returns the root comment index of given id
 	private getRootIndexOf (id: any) {
 		var index = this.getIndexOf(id);
 		for (var idx = index - 1;
-			     idx >=0 && this.sectionProperties.commentList[idx]._data.id === this.sectionProperties.commentList[idx + 1]._data.parent;
+			     idx >=0 && this.sectionProperties.commentList[idx].sectionProperties.data.id === this.sectionProperties.commentList[idx + 1].sectionProperties.data.parent;
 			     idx--)
 		{
 			index = idx;
@@ -568,54 +1080,78 @@ class CommentSection {
 		return index;
 	}
 
+	public setViewResolved (state: any) {
+		this.sectionProperties.showResolved = state;
+
+		for (var idx = 0; idx < this.sectionProperties.commentList.length;idx++) {
+			if (this.sectionProperties.commentList[idx].sectionProperties.data.resolved === 'true') {
+				if (state==false) {
+					if (this.sectionProperties.selectedComment == this.sectionProperties.commentList[idx]) {
+						this.unselect();
+					}
+					this.sectionProperties.commentList[idx].hide();
+					this.sectionProperties.hiddenCommentCount++;
+				} else {
+					this.sectionProperties.commentList[idx].show();
+					this.sectionProperties.hiddenCommentCount--;
+				}
+			}
+			this.sectionProperties.commentList[idx].update();
+		}
+		this.layout();
+		this.update();
+	}
+
 	private updateResolvedState (comment: any) {
-		var threadIndexFirst = this.getRootIndexOf(comment._data.id);
-		if (this.sectionProperties.commentList[threadIndexFirst]._data.resolved !== comment._data.resolved) {
-			comment._data.resolved = this.sectionProperties.commentList[threadIndexFirst]._data.resolved;
+		var threadIndexFirst = this.getRootIndexOf(comment.sectionProperties.data.id);
+		if (this.sectionProperties.commentList[threadIndexFirst].sectionProperties.data.resolved !== comment.sectionProperties.data.resolved) {
+			comment.sectionProperties.data.resolved = this.sectionProperties.commentList[threadIndexFirst].sectionProperties.data.resolved;
 			comment.update();
 			this.update();
 		}
 	}
 
+	private orderCommentList () {
+		this.sectionProperties.commentList.sort(function(a: any, b: any) {
+			return Math.abs(a.sectionProperties.data.anchorPos.min.y) - Math.abs(b.sectionProperties.data.anchorPos.min.y) ||
+				Math.abs(a.sectionProperties.data.anchorPos.min.x) - Math.abs(b.sectionProperties.data.anchorPos.min.x);
+		});
+	}
+
 	public importComments (commentList: any) {
 		var comment;
 		this.clearList();
-		// items contains redlines
-		var ordered = !this.sectionProperties.list.length;
-		for (var index in commentList) {
-			comment = commentList[index];
-			this.adjustComment(comment);
-			if (comment.author in this.map._viewInfoByUserName) {
-				comment.avatar = this.map._viewInfoByUserName[comment.author].userextrainfo.avatar;
+		if (commentList.length > 0) {
+			for (var i = 0; i < commentList.length; i++) {
+				comment = commentList[i];
+				this.adjustComment(comment);
+				if (comment.author in this.map._viewInfoByUserName) {
+					comment.avatar = this.map._viewInfoByUserName[comment.author].userextrainfo.avatar;
+				}
+				var commentSection = new app.definitions.Comment(comment, {}, this);
+				this.containerObject.addSection(commentSection);
+				this.sectionProperties.commentList.push(commentSection);
+				this.updateResolvedState(this.sectionProperties.commentList[i]);
+				if (this.sectionProperties.commentList[i].sectionProperties.data.resolved === 'true') {
+					this.sectionProperties.hiddenCommentCount++;
+				}
 			}
-			this.sectionProperties.list.push(L.annotation(this.map.options.docBounds.getSouthEast(), comment).addTo(this.map));
-			this.updateResolvedState(this.sectionProperties.list[this.sectionProperties.list.length - 1]);
-			if (this.sectionProperties.list[this.sectionProperties.list.length - 1]._data.resolved === 'true') {
-				this.sectionProperties.hiddenCommentCount++;
-			}
-		}
-		if (this.sectionProperties.list.length > 0) {
-			if (!ordered) {
-				this.sectionProperties.list.sort(function(a: any, b: any) {
-					return Math.abs(a._data.anchorPos.min.y) - Math.abs(b._data.anchorPos.min.y) ||
-						Math.abs(a._data.anchorPos.min.x) - Math.abs(b._data.anchorPos.min.x);
-				});
-			}
+
+			this.orderCommentList();
 			this.layout();
 		}
 	}
 
 	// Remove only text comments from the document (excluding change tracking comments)
 	private clearList () {
-		for (var i: number = this.sectionProperties.list.length -1; i > -1; i--) {
-			if (!this.sectionProperties.list[i].trackchange) {
-				this.containerObject.removeSection(this.sectionProperties.list[i].name);
-				this.sectionProperties.list.splice(i, 1);
+		for (var i: number = this.sectionProperties.commentList.length -1; i > -1; i--) {
+			if (!this.sectionProperties.commentList[i].trackchange) {
+				this.containerObject.removeSection(this.sectionProperties.commentList[i].name);
+				this.sectionProperties.commentList.splice(i, 1);
 			}
 		}
 
 		this.sectionProperties.selectedComment = null;
-		this.map.removeLayer(this.sectionProperties.arrow);
 	}
 
 	public onMouseWheel () {}
