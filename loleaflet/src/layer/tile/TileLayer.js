@@ -674,7 +674,6 @@ L.TileLayer = L.GridLayer.extend({
 	createTile: function (coords, done) {
 		var tile = document.createElement('img');
 
-		tile.onload = L.bind(this._tileOnLoad, this, done, tile);
 		tile.onerror = L.bind(this._tileOnError, this, done, tile);
 
 		if (this.options.crossOrigin) {
@@ -2451,31 +2450,6 @@ L.TileLayer = L.GridLayer.extend({
 		// Send acknowledgment, that the tile message arrived
 		var tileID = command.part + ':' + command.x + ':' + command.y + ':' + command.tileWidth + ':' + command.tileHeight + ':' + command.nviewid;
 		this._map._socket.sendMessage('tileprocessed tile=' + tileID);
-	},
-
-	_tileOnLoad: function (done, tile) {
-		// slurp multiple async tile loads into one render:
-		// FIXME: probably we should nicely combine
-		// async image decoding into Socket.js' _slurpMessage
-		// to save another 1ms timer.
-		var that = this;
-		if (!that._slurpQueue || !that._slurpQueue.length) {
-			setTimeout(function() {
-				console.log2('Slurp tiles ' + that._slurpQueue.length / 2);
-				for (var i = 0; i < that._slurpQueue.length; i += 2) {
-					var slurpTile = that._slurpQueue[i];
-					var slurpCallback = that._slurpQueue[i+1];
-					slurpCallback(null, slurpTile);
-					if (window.ThisIsTheiOSApp) {
-						window.webkit.messageHandlers.lool.postMessage('REMOVE ' + slurpTile.src, '*');
-					}
-				}
-				that._slurpQueue = [];
-			}, 1 /* ms */);
-			that._slurpQueue = [];
-		}
-		that._slurpQueue.push(tile);
-		that._slurpQueue.push(done);
 	},
 
 	_tileOnError: function (done, tile, e) {

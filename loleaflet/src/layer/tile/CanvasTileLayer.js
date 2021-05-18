@@ -138,6 +138,12 @@ L.TileSectionManager = L.Class.extend({
 		};
 	},
 
+	coordsIntersectVisible: function (coords) {
+		var ctx = this._paintContext();
+		var tileBounds = new L.Bounds(new L.Point(coords.x, coords.y), new L.Point(coords.x + ctx.tileSize.x, coords.y + ctx.tileSize.y));
+		return tileBounds.intersectsAny(ctx.paneBoundsList);
+	},
+
 	_addTilesSection: function () {
 		this._sectionContainer.pushSection(L.getNewTilesSection());
 		this._tilesSection = this._sectionContainer.getSectionWithName('tiles');
@@ -1276,7 +1282,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 					tilePositionsY += twips.y;
 				}
 				else {
-					tile.src = this._tileCache[key];
+					tile.el = this._tileCache[key];
+					tile.loaded = true;
 				}
 			}
 
@@ -1344,9 +1351,11 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			}, 1000);
 		}
 
-		// paint this tile on canvas.
-		this._painter._tilesSection.paint(tile, undefined, true /* async? */);
-		this._painter.paintOverlayArea(coords);
+		// Don't paint the tile, only dirty the sectionsContainer if it is in the visible area.
+		// _emitSlurpedTileEvents() will repaint canvas (if it is dirty).
+		if (this._painter.coordsIntersectVisible(coords)) {
+			this._painter._sectionContainer.setDirty();
+		}
 
 		if (this._noTilesToLoad()) {
 			this.fire('load');
@@ -1387,7 +1396,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 					});
 
 					if (tile && this._tileCache[key]) {
-						tile.src = this._tileCache[key];
+						tile.el = this._tileCache[key];
+						tile.loaded = true;
 					}
 				}
 			}
@@ -1608,7 +1618,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		// FIXME: this _tileCache is used for prev/next slide; but it is
 		// dangerous in connection with typing / invalidation
 		if (!(this._tiles[key]._invalidCount > 0)) {
-			this._tileCache[key] = tile.el.src;
+			this._tileCache[key] = tile.el;
 		}
 
 		if (!tile.loaded && this._emptyTilesCount > 0) {
@@ -1706,20 +1716,20 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				docType: this._docType
 			});
 		}
-		else if (tile && typeof (img) == 'object') {
-			console.error('Not implemented');
-		}
 		else if (tile) {
 			if (this._tiles[key]._invalidCount > 0) {
 				this._tiles[key]._invalidCount -= 1;
 			}
 
+			tile.wireId = tileMsgObj.wireId;
 			if (this._map._canvasDevicePixelGrid)
 				// loleaflet/test/pixel-test.png
-				img = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QEIChoQ0oROpwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACfklEQVR42u3dO67CQBBFwbnI+9/yJbCQLDIkPsZdFRAQjjiv3S8YZ63VNsl6aLvgop5+6vFzZ3QP/uQz2c0RIAAQAAzcASwAmAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACADGBnC8iQ5MABAACAB+zsVYjLZ9dOvd3zzg/QOYADByB/BvUCzBIAAQAFiCwQQAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAwIgAXb2ECgABAAPDaI7SLsZhs+79kvX8AEwDsAM8DASzBIAAQAFiCwQQAAYAAQAAgABAAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAI4LSSOAQBgABAAPDVR9C2ToGxNkfww623bZL98/ilUzIBwA4wbCAgABAACAAswWACgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAAAjAESAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAGAAEAAIAAQAAgABAACAAGAAEAAIAAQAAgAPiaJAEAAIAB48yNWW6fAWJsj4LRbb9sk++fxSxMA7AAMGwgCAAGAAMASDCYACAAEAAIAAYAAQAAgABAACAAEAAIAASAAR4AAQAAgABAACAAEANeW9e675sAEAAGAAODUO4AFgMnu7t9h2ahA0pgAAAAASUVORK5CYII=';
-
-			tile.el.src = img;
-			tile.wireId = tileMsgObj.wireId;
+				tile.el.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QEIChoQ0oROpwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACfklEQVR42u3dO67CQBBFwbnI+9/yJbCQLDIkPsZdFRAQjjiv3S8YZ63VNsl6aLvgop5+6vFzZ3QP/uQz2c0RIAAQAAzcASwAmAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACADGBnC8iQ5MABAACAB+zsVYjLZ9dOvd3zzg/QOYADByB/BvUCzBIAAQAFiCwQQAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAwIgAXb2ECgABAAPDaI7SLsZhs+79kvX8AEwDsAM8DASzBIAAQAFiCwQQAAYAAQAAgABAAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAI4LSSOAQBgABAAPDVR9C2ToGxNkfww623bZL98/ilUzIBwA4wbCAgABAACAAswWACgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAAAjAESAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAGAAEAAIAAQAAgABAACAAGAAEAAIAAQAAgAPiaJAEAAIAB48yNWW6fAWJsj4LRbb9sk++fxSxMA7AAMGwgCAAGAAMASDCYACAAEAAIAAYAAQAAgABAACAAEAAIAASAAR4AAQAAgABAACAAEANeW9e675sAEAAGAAODUO4AFgMnu7t9h2ahA0pgAAAAASUVORK5CYII=';
+			else {
+				tile.el = img;
+				tile.loaded = true;
+				this._tileReady(coords, null /* err */, tile);
+			}
 		}
 		L.Log.log(textMsg, 'INCOMING', key);
 
