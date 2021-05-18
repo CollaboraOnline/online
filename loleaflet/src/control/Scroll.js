@@ -16,7 +16,7 @@ L.Map.include({
 		var centerOffset = center.subtract(this.getSize().divideBy(2));
 		var offset = {};
 		offset.x = centerOffset.x < 0 ? 0 : Math.round(centerOffset.x);
-		offset.y = centerOffset.y < 0 ? 0 : Math.round(centerOffset.y);
+		offset.y = Math.round(centerOffset.y);
 		return offset;
 	},
 
