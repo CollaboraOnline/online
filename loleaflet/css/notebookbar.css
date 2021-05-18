@@ -33,8 +33,7 @@
 	display: flex !important;
 	border: 0px;
 	border-radius: 0px;
-	background: #fff;
-	box-shadow: 0 3px 0px 0px #fff, 0px -1px 8px -4px rgba(105, 105, 105, 0.4), -1px -15px 15px -4px rgb(77, 130, 184, 0.1);
+	background: var(--white-bg-color);
 }
 .main-nav.hasnotebookbar.text-color-indicator .ui-tab.selected.notebookbar{
 	color: rgb(3, 105, 163);
@@ -204,6 +203,7 @@
 }
 
 #toolbar-wrapper.hasnotebookbar {
+	background: var(--white-bg-color);
 	position: fixed;
 	z-index: 11;
 }
@@ -265,7 +265,6 @@
 
 .unotoolbutton.notebookbar .unolabel {
 	font-family: var(--loleaflet-font);
-	color: #696969;
 	color: var(--gray-light-txt--color);
 	padding: 0px 5px !important;
 }
@@ -276,7 +275,7 @@
 	font-size: 0;
 	line-height: 0;
 	border: 4px solid transparent;
-	border-top: 5px solid #8D99A7;
+	border-top: 5px solid var(--gray-light-txt--color);
 	display: inline-block;
 	margin-left: 3px;
 }
@@ -289,7 +288,7 @@
 }
 
 .unotoolbutton.notebookbar:hover .unoarrow {
-	border-top: 5px solid #4c566a;
+	border-top: 5px solid var(--gray-light-txt--color);
 }
 
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
@@ -323,7 +322,7 @@
 	width: 24px;
 	position: relative;
 	top: -6px;
-	border: 1px solid silver;
+	border: 1px solid var(--gray-color);
 }
 
 .unotoolbutton.notebookbar .unobutton.selected + .ui-content.unolabel {
@@ -446,10 +445,10 @@
 	overflow-x: hidden;
 	padding: 5px;
 	padding: 0px;
-	border: 1px solid #c0c0c0;
+	border: 1px solid var(--gray-color);
 	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
-	-webkit-box-shadow: 0 0 3px #ccc;
-	box-shadow: inset 0 0 3px #ccc;
+	-webkit-box-shadow: 0 0 3px var(--gray-color);
+	box-shadow: inset 0 0 3px var(--gray-color);
 }
 
 #stylesview .ui-iconview-entry {
@@ -478,7 +477,7 @@
 	left: 0;
 	width: 100%;
 	height: 30px;
-	background-color: #fff;
+	background-color: var(--white-bg-color);
 	overflow: hidden;
 	white-space: nowrap;
 	text-align: center;
@@ -490,7 +489,7 @@
 }
 
 #stylesview .ui-iconview-entry:hover {
-	border: 1px solid #ccc;
+	border: 1px solid var(--gray-color);
 	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
 	-webkit-box-shadow: 0 0 3px 1px #8080804f, inset -0.5px -0.5px 0 0.5px #ccc, inset 0.5px 0.5px 0 0.5px #ccc;
 	box-shadow: 0 0 3px 1px #8080804f, inset -0.5px -0.5px 0 0.5px #ccc, inset 0.5px 0.5px 0 0.5px #ccc;
