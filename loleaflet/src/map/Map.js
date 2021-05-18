@@ -287,7 +287,7 @@ L.Map = L.Evented.extend({
 				}
 			} else if (this._docLayer) {
 				// remove the comments and changes
-				this._docLayer.clearAnnotations();
+				app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).clearList();
 			}
 
 			this.initializeModificationIndicator();
@@ -1614,8 +1614,8 @@ L.Map = L.Evented.extend({
 			}
 
 			// unselect if anything is selected already
-			if (this._docLayer) {
-				this._docLayer.unselectAnnotations();
+			if (app.sectionContainer.doesSectionExist(L.CSections.CommentList.name)) {
+				app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).unselect();
 			}
 		}
 

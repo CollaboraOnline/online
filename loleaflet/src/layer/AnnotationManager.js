@@ -5,7 +5,7 @@
 
 /* global $ */
 
-L.AnnotationManager = L.AnnotationManagerBase.extend({
+L.AnnotationManagerOld = L.AnnotationManagerBase.extend({
 	options: {
 		marginX: 40,
 		marginY: 10,
@@ -21,12 +21,6 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 		L.setOptions(this, options);
 		this._arrow = L.polyline([], {color: 'darkblue', weight: 1});
 		this._map.on('zoomend', this._onAnnotationZoom, this);
-		this._map.on('AnnotationCancel', this._onAnnotationCancel, this);
-		this._map.on('AnnotationClick', this._onAnnotationClick, this);
-		this._map.on('AnnotationReply', this._onAnnotationReply, this);
-		this._map.on('AnnotationSave', this._onAnnotationSave, this);
-		this._map.on('RedlineAccept', this._onRedlineAccept, this);
-		this._map.on('RedlineReject', this._onRedlineReject, this);
 		this._map.on('commandstatechanged', this._onCommandStateChanged, this);
 		this._showResolved = false;
 	},
@@ -1116,32 +1110,6 @@ L.AnnotationManager = L.AnnotationManagerBase.extend({
 
 });
 
-
-L.Map.include({
-	insertComment: function() {
-		var avatar = undefined;
-		var author = this.getViewName(this._docLayer._viewId);
-		if (author in this._viewInfoByUserName) {
-			avatar = this._viewInfoByUserName[author].userextrainfo.avatar;
-		}
-		this._docLayer.newAnnotation({
-			text: '',
-			textrange: '',
-			author: author,
-			dateTime: new Date().toDateString(),
-			id: 'new', // 'new' only when added by us
-			avatar: avatar
-		});
-	},
-
-	showResolvedComments: function(on) {
-		var unoCommand = '.uno:ShowResolvedAnnotations';
-		this.sendUnoCommand(unoCommand);
-		this._docLayer._annotations.setViewResolved(on);
-	}
-});
-
-
-L.annotationManager = function (map, options) {
-	return new L.AnnotationManager(map, options);
+L.annotationManagerOld = function (map, options) {
+	return new L.AnnotationManagerOld(map, options);
 };
