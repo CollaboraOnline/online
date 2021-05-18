@@ -62,8 +62,9 @@
 	height: 32px; /* on mouseover menubar items, border emerges */
 	width: auto;
 	background: #ffffff;
-	margin: 3px;
+	padding: 3px;
 	white-space: nowrap;
+	z-index: 12;
 }
 .main-nav.readonly {
 	top: -1px; /*update .main-nav.readonly #document-titlebar*/
@@ -71,7 +72,7 @@
 }
 .main-nav.hasnotebookbar:not(.readonly) {
 	background: var(--gray-light-bg-color);
-	margin: 0px;
+	padding: 0px;
 }
 
 /* Customizations to sm-simple theme to make it look like LO menu, lo-menu class */
