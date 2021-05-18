@@ -10,7 +10,6 @@ L.Control.Ruler = L.Control.extend({
 		marginSet: false,
 		displayNumber: true,
 		tileMargin: 18, // No idea what this means and where it comes from
-		extraSize: 0,
 		margin1: null,
 		margin2: null,
 		nullOffset: null,
@@ -35,9 +34,7 @@ L.Control.Ruler = L.Control.extend({
 		return this._initLayout();
 	},
 
-	_updatePaintTimer: function(e) {
-		if (e.extraSize)
-			this.options.extraSize = e.extraSize.x;
+	_updatePaintTimer: function() {
 		clearTimeout(this.options.timer);
 		this.options.timer = setTimeout(L.bind(this._updateBreakPoints, this), 300);
 	},
@@ -271,12 +268,6 @@ L.Control.Ruler = L.Control.extend({
 
 		if (this.options.margin1 == null || this.options.margin2 == null)
 			return;
-
-		if (this._map._docLayer._annotations._items.length === 0
-		|| this._map._docLayer._annotations._items.length
-		=== this._map._docLayer._annotations._hiddenItems
-		|| !this.options.marginSet)
-			this.options.extraSize = 0;
 
 		var lMargin, rMargin, wPixel, scale;
 
