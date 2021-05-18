@@ -599,12 +599,10 @@ namespace Util
     static thread_local pid_t ThreadTid = 0;
 
     pid_t getThreadId()
-#elif defined __FreeBSD__
+#else
     static thread_local long ThreadTid = 0;
 
     long getThreadId()
-#else
-    std::thread::id getThreadId()
 #endif
     {
         // Avoid so many redundant system calls
@@ -617,7 +615,10 @@ namespace Util
             thr_self(&ThreadTid);
         return ThreadTid;
 #else
-        return std::this_thread::get_id();
+        static long threadCounter = 1;
+        if (!ThreadTid)
+            ThreadTid = threadCounter++;
+        return ThreadTid;
 #endif
     }
 

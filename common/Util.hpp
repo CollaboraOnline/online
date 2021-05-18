@@ -164,10 +164,8 @@ namespace Util
 
 #if defined __linux__
     pid_t getThreadId();
-#elif defined __FreeBSD__
-    long getThreadId();
 #else
-    std::thread::id getThreadId();
+    long getThreadId();
 #endif
 
     /// Get version information
