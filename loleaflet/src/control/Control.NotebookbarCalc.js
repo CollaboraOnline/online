@@ -734,6 +734,11 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Sidebar', 'spreadsheet'),
+				'command': '.uno:Sidebar'
+			},
+			{
 				'id': 'Layout-Section-Align',
 				'type': 'container',
 				'children': [
