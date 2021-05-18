@@ -234,6 +234,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	border-collapse: collapse;
 	width: 100%;
 	border-top: none;
+	z-index: 11;
 }
 
 #toolbar-logo {
@@ -364,6 +365,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	-moz-user-select: text;
 	-webkit-user-select: text;
 	-ms-user-select: text;
+	z-index: 10;
 }
 
 .loleaflet-annotation-content-wrapper, .loleaflet-annotation-redline-content-wrapper {
