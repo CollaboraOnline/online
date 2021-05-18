@@ -1735,6 +1735,18 @@ L.CanvasTileLayer = L.Layer.extend({
 		else if (textMsg.startsWith('formfieldbutton:')) {
 			this._onFormFieldButtonMsg(textMsg);
 		}
+		else if (textMsg.startsWith('comment:')) {
+			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+		}
+		else if (textMsg.startsWith('redlinetablemodified:')) {
+			obj = JSON.parse(textMsg.substring('redlinetablemodified:'.length + 1));
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+		}
+		else if (textMsg.startsWith('redlinetablechanged:')) {
+			obj = JSON.parse(textMsg.substring('redlinetablechanged:'.length + 1));
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+		}
 	},
 
 	_onTabStopListUpdate: function (textMsg) {
@@ -3449,7 +3461,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 				// We will focus map if no comment is being edited (writer only for now).
 				if (this._docType === 'text') {
-					if (!this._annotations._selected || !this._annotations._selected.isEdit())
+					var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+					if (!section || !section.sectionProperties.selectedComment || !section.sectionProperties.selectedComment.isEdit())
 						this._map.focus(true);
 				}
 				else
@@ -5056,83 +5069,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._levels = {};
 		this._tiles = {};
 		this._tileCache = {};
-		var that = this;
-		L.installContextMenu({
-			selector: '.loleaflet-annotation-menu',
-			trigger: 'none',
-			className: 'loleaflet-font',
-			build: function($trigger) {
-				return {
-					items: {
-						modify: {
-							name: _('Modify'),
-							callback: function (key, options) {
-								that.onAnnotationModify.call(that, options.$trigger.get(0).annotation);
-							}
-						},
-						reply: (that._docType !== 'text' && that._docType !== 'presentation') ? undefined : {
-							name: _('Reply'),
-							callback: function (key, options) {
-								that.onAnnotationReply.call(that, options.$trigger.get(0).annotation);
-							}
-						},
-						remove: {
-							name: _('Remove'),
-							callback: function (key, options) {
-								that.onAnnotationRemove.call(that, options.$trigger.get(0).annotation._data.id);
-							}
-						},
-						removeThread: that._docType !== 'text' || $trigger.get(0).isRoot === true ? undefined : {
-							name: _('Remove Thread'),
-							callback: function (key, options) {
-								that.onAnnotationRemoveThread.call(that, options.$trigger.get(0).annotation._data.id);
-							}
-						},
-						resolve: that._docType !== 'text' ? undefined : {
-							name: $trigger.get(0).annotation._data.resolved === 'false' ? _('Resolve') : _('Unresolve'),
-							callback: function (key, options) {
-								that.onAnnotationResolve.call(that, options.$trigger.get(0).annotation);
-							}
-						},
-						resolveThread: that._docType !== 'text' || $trigger.get(0).isRoot === true ? undefined : {
-							name: that.isThreadResolved($trigger.get(0).annotation) ? _('Unresolve Thread') : _('Resolve Thread'),
-							callback: function (key, options) {
-								that.onAnnotationResolveThread.call(that, options.$trigger.get(0).annotation);
-							}
-						}
-					},
-				};
-			},
-			events: {
-				show: function (options) {
-					options.$trigger.get(0).annotation._contextMenu = true;
-				},
-				hide: function (options) {
-					options.$trigger.get(0).annotation._contextMenu = false;
-				}
-			}
-		});
-		L.installContextMenu({
-			selector: '.loleaflet-annotation-menu-redline',
-			trigger: 'none',
-			className: 'loleaflet-font',
-			items: {
-				modify: {
-					name: _('Comment'),
-					callback: function (key, options) {
-						that.onAnnotationModify.call(that, options.$trigger.get(0).annotation);
-					}
-				}
-			},
-			events: {
-				show: function (options) {
-					options.$trigger.get(0).annotation._contextMenu = true;
-				},
-				hide: function (options) {
-					options.$trigger.get(0).annotation._contextMenu = false;
-				}
-			}
-		});
+
 		app.socket.sendMessage('commandvalues command=.uno:AcceptTrackedChanges');
 
 		map._fadeAnimated = false;

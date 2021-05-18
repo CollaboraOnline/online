@@ -1427,14 +1427,17 @@ L.Control.Menubar = L.Control.extend({
 							$(aItem).removeClass('disabled');
 						}
 					} else if (id === 'showresolved') {
-						if (self._map._docLayer._annotations._items.length === 0) {
-							$(aItem).addClass('disabled');
-						} else if (self._map._docLayer._annotations._showResolved) {
-							$(aItem).removeClass('disabled');
-							$(aItem).addClass(constChecked);
-						} else {
-							$(aItem).removeClass('disabled');
-							$(aItem).removeClass(constChecked);
+						var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+						if (section) {
+							if (section.sectionProperties.commentList.length === 0) {
+								$(aItem).addClass('disabled');
+							} else if (section.sectionProperties.showResolved) {
+								$(aItem).removeClass('disabled');
+								$(aItem).addClass(constChecked);
+							} else {
+								$(aItem).removeClass('disabled');
+								$(aItem).removeClass(constChecked);
+							}
 						}
 					} else {
 						$(aItem).removeClass('disabled');
