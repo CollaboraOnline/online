@@ -43,6 +43,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 				comment.id = comment.id.toString();
 				comment.parent = comment.parent.toString();
 			});
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).clearList();
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
 		}
 		else if (values.redlines) {
