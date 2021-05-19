@@ -319,7 +319,7 @@ function checkIfDocIsLoaded() {
 	// Wait for the sidebar to open.
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 		doIfOnDesktop(function() {
-			cy.get('#sidebar-panel')
+			cy.get('#sidebar-dock-wrapper')
 				.should('be.visible');
 
 			// Check that the document does not take the whole window width.

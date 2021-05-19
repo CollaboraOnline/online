@@ -1259,7 +1259,7 @@ L.Map = L.Evented.extend({
 		this._resizeRequest = L.Util.requestAnimFrame(
 			function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
 		var deckOffset = 0;
-		var sidebarpanel = L.DomUtil.get('sidebar-panel');
+		var sidebarpanel = L.DomUtil.get('#sidebar-dock-wrapper');
 		if (sidebarpanel) {
 			var sidebar = sidebarpanel.children[0];
 			if (sidebar) {

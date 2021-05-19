@@ -24,7 +24,7 @@ describe('Sidebar visibility: user-1.', function() {
 			.should('have.text', '2 users');
 
 		// Visible by default
-		cy.get('#sidebar-panel')
+		cy.get('#sidebar-dock-wrapper')
 			.should('be.visible');
 
 		desktopHelper.hideSidebar();
@@ -38,7 +38,7 @@ describe('Sidebar visibility: user-1.', function() {
 			.should('have.class', 'checked');
 
 		// sidebar should be still invisible
-		cy.get('#sidebar-panel')
+		cy.get('#sidebar-dock-wrapper')
 			.should('not.be.visible');
 
 		// Show sidebar again
@@ -53,7 +53,7 @@ describe('Sidebar visibility: user-1.', function() {
 			.should('have.class', 'checked');
 
 		// sidebar should be still visible
-		cy.get('#sidebar-panel')
+		cy.get('#sidebar-dock-wrapper')
 			.should('be.visible');
 	});
 
