@@ -242,6 +242,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'menubartoolitem',
 						'text': _('PDF Document (.pdf)'),
 						'command': ''
+					},
+					{
+						'id': 'repair',
+						'type': 'menubartoolitem',
+						'text': _('Repair'),
+						'command': _('Repair')
 					}
 				],
 				'vertical': 'true'
@@ -976,6 +982,67 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'fullscreen',
+								'type': 'menubartoolitem',
+								'text': _UNO('.uno:FullScreen'),
+								'command': '.uno:FullScreen'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoomreset',
+								'type': 'menubartoolitem',
+								'text': _('Reset zoom'),
+								'command': _('Reset zoom')
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoomout',
+								'type': 'menubartoolitem',
+								'text': _UNO('.uno:ZoomMinus'),
+								'command': '.uno:ZoomMinus'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoomin',
+								'type': 'menubartoolitem',
+								'text': _UNO('.uno:ZoomPlus'),
+								'command': '.uno:ZoomPlus'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:MasterSlidesPanel', 'presentation'),
+				'command': '.uno:MasterSlidesPanel'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:SlideChangeWindow', 'presentation'),
 								'command': '.uno:SlideChangeWindow'
@@ -994,11 +1061,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					}
 				],
 				'vertical': 'true'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:MasterSlidesPanel', 'presentation'),
-				'command': '.uno:MasterSlidesPanel'
 			},
 			{
 				'type': 'container',
