@@ -183,8 +183,8 @@ L.Handler.PathTransform = L.Handler.extend({
 		this._activeMarker   = null;
 		this._originMarker   = null;
 		this._rotationMarker = null;
-		this._customMarker   = null;
-		this._customHandle   = null;
+		this._customMarkers   = [];
+		this._anchor          = null;
 		this._customHandlePosition = null;
 		this._polyMarker     = null;
 		this._polyMarkerPosition = null;
@@ -269,6 +269,10 @@ L.Handler.PathTransform = L.Handler.extend({
 
 		for (var i = 0; i < this._glueHandlers.length; i++) {
 			this._map.removeLayer(this._glueHandlers[i]);
+		}
+
+		if (this._anchor) {
+			this._map.removeLayer(this._anchor);
 		}
 
 		this._handlersGroup = null;
@@ -454,6 +458,9 @@ L.Handler.PathTransform = L.Handler.extend({
 				this._handlersGroup.removeLayer(this._rect);
 				this._rect = this._getBoundingPolygon().addTo(this._handlersGroup);
 			}
+			if (this._anchor) {
+				this._map.removeLayer(this._anchor);
+			}
 			this._updateHandlers();
 		}
 	},
@@ -473,12 +480,12 @@ L.Handler.PathTransform = L.Handler.extend({
 			this._handlersGroup.removeLayer(this._rotationMarker);
 		}
 
-		if (this._customMarker) {
-			this._handlersGroup.removeLayer(this._customMarker);
-		}
-
 		if (this._polyLine) {
 			this._handlersGroup.removeLayer(this._polyLine);
+		}
+
+		if (this._anchor) {
+			this._map.removeLayer(this._anchor);
 		}
 
 		this._handleLine = this._rotationMarker = this._polyLine = null;
@@ -702,6 +709,9 @@ L.Handler.PathTransform = L.Handler.extend({
 			this._createPolyHandlers();
 			this.options.rotation = false;
 		}
+		if (this.options.handles['anchor'] !== '') {
+			this._createAnchor();
+		}
 		// add bounds
 		if (this.options.rotation) {
 			//add rotation handler
@@ -886,10 +896,6 @@ L.Handler.PathTransform = L.Handler.extend({
 			this._map.addLayer(this._rotationMarker);
 		}
 
-		if (this.options.handles['custom'] !== '') {
-			this._map.addLayer(this._customMarker);
-		}
-
 		this._apply();
 		this._path.fire('scaleend', {
 			layer: this._path,
@@ -905,24 +911,46 @@ L.Handler.PathTransform = L.Handler.extend({
 		}
 	},
 
-	/**
-	* Custom Shape Handles, id = 22
-	*/
-	_createCustomHandlers: function() {
+	_createAnchor: function() {
 		var map = this._map;
-		var handle = this.options.handles['custom']['22'][0];
-		this._customHandle = handle;
+		var handle = this.options.handles['anchor']['16'][0];
 		var point = new L.Point(handle.point.x, handle.point.y);
 		point = map._docLayer._convertCalcTileTwips(point);
-		this._customHandlePosition = map._docLayer._twipsToLatLng(point, this._map.getZoom());
-		var CustomHandleClass = this.options.customHandleClass;
-		var options = this.options.handlerOptions;
-		this._customMarker = new CustomHandleClass(this._customHandlePosition,
-			options)
-			.addTo(this._handlersGroup)
+		var anchorPos = map._docLayer._twipsToLatLng(point, this._map.getZoom());
+		var options = {
+			handleId: handle.id,
+			initialPosition: anchorPos,
+			icon: L.divIcon({
+				className: 'anchor-marker',
+				iconSize: [18, 18],
+				iconAnchor: [0, 0]
+			}),
+			draggable: false
+		};
+		this._anchor = L.marker(anchorPos, options)
 			.on('mousedown', this._onCustomHandleDragStart, this);
+		map.addLayer(this._anchor);
+	},
 
-		this._handlers.push(this._customMarker);
+	_createCustomHandlers: function() {
+		var map = this._map;
+		var handles = this.options.handles['custom']['22'];
+		this._customMarkers = [];
+		for (var i = 0; i < handles.length; ++i) {
+			var point = new L.Point(handles[i].point.x, handles[i].point.y);
+			point = map._docLayer._convertCalcTileTwips(point);
+			var customHandlePosition = map._docLayer._twipsToLatLng(point, this._map.getZoom());
+			var options = {
+				handleId: handles[i].id,
+				initialPosition: customHandlePosition
+			};
+			var marker = new this.options.customHandleClass(customHandlePosition,
+				L.Util.extend({}, this.options.handlerOptions, options))
+				.addTo(this._handlersGroup)
+				.on('mousedown', this._onCustomHandleDragStart, this);
+			this._customMarkers.push(marker);
+			this._handlers.push(marker);
+		}
 	},
 
 	_onCustomHandleDragStart: function(evt) {
@@ -937,7 +965,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			this._mapDraggingWasEnabled = true;
 		}
 
-		this._customMarker.addEventParent(this._map);
+		this._activeMarker.addEventParent(this._map);
 		this._path._map
 			.on('mousemove', this._onCustomHandleDrag,     this)
 			.on('mouseup',   this._onCustomHandleDragEnd,  this);
@@ -951,8 +979,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			return;
 		}
 		this._handleDragged = true;
-		this._customMarker.setLatLng(evt.latlng);
-		this._customMarker._updatePath();
+		this._activeMarker.setLatLng(evt.latlng);
 	},
 
 	_onCustomHandleDragEnd: function() {
@@ -961,22 +988,21 @@ L.Handler.PathTransform = L.Handler.extend({
 		}
 		var map = this._map;
 		map._docLayer._graphicMarker.isDragged = false;
-		this._customMarker.removeEventParent(this._map);
+		this._activeMarker.removeEventParent(this._map);
 		this._path._map
 			.off('mousemove', this._onCustomHandleDrag,     this)
 			.off('mouseup',   this._onCustomHandleDragEnd,  this);
 
 		this._path.fire('scaleend', {
 			pos: this._activeMarker._latlng,
-			handleId: this._customHandle.id
+			handleId: this._activeMarker.options.handleId
 		});
 
-		this._activeMarker = null;
 		// Set the initial position;
 		// If the final look of the shape does not change we dont get selection update
 		// In that case, marker may stay where it is placed. This fixes that.
-		this._customMarker.setLatLng(this._customHandlePosition);
-		this._customMarker._updatePath();
+		this._activeMarker.setLatLng(this._activeMarker.options.initialPosition);
+		this._activeMarker = null;
 	},
 
 	/**
@@ -1127,7 +1153,12 @@ L.Handler.PathTransform = L.Handler.extend({
 		}
 
 		if (this.options.handles['custom'] !== '') {
-			this._map.removeLayer(this._customMarker);
+			for (var i = 0; i < this._customMarkers.length; ++i)
+				this._map.removeLayer(this._customMarkers[i]);
+		}
+
+		if (this._anchor) {
+			this._map.removeLayer(this._anchor);
 		}
 
 		//this._handleLine = this._rotationMarker = null;
@@ -1209,7 +1240,12 @@ L.Handler.PathTransform = L.Handler.extend({
 		}
 
 		if (this.options.handles['custom'] !== '') {
-			this._map.addLayer(this._customMarker);
+			for (var i = 0; i < this._customMarkers.length; ++i)
+				this._map.addLayer(this._customMarkers[i]);
+		}
+
+		if (this._anchor) {
+			this._map.addLayer(this._anchor);
 		}
 
 		var _ordNum = null;
@@ -1311,6 +1347,9 @@ L.Handler.PathTransform = L.Handler.extend({
 	_hideHandlers: function() {
 		if (this._handlersGroup)
 			this._map.removeLayer(this._handlersGroup);
+		if (this._anchor) {
+			this._map.removeLayer(this._anchor);
+		}
 		this._handlersVisible = false;
 	},
 
