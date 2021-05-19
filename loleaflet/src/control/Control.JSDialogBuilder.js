@@ -2736,6 +2736,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_colorControl: function(parentContainer, data, builder) {
+		var commandOverride = data.command === '.uno:Color' && builder.map.getDocType() === 'text';
+		if (commandOverride)
+			data.command = '.uno:FontColor';
+
 		var titleOverride = builder._getTitleForControlWithId(data.id);
 		if (titleOverride)
 			data.text = titleOverride;
@@ -2744,49 +2748,59 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		data.text = builder._cleanText(data.text);
 
-		var valueNode =  L.DomUtil.create('div', 'color-sample-selected', null);
-		var selectedColor = null;
+		if (data.command) {
+			var div = builder._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
 
-		var updateFunction = function (titleSpan) {
-			selectedColor = builder._getCurrentColor(data, builder);
-			valueNode.style.backgroundColor = selectedColor;
-			if (titleSpan) {
-				if (data.id === 'fillattr')
-					data.text = _('Background Color');
-				else if (data.id === 'fillattr2')
-					data.text = _('Gradient Start');
-				else if (data.id === 'fillattr3')
-					data.text = _('Gradient End');
-				titleSpan.innerHTML = data.text;
-			}
-		}.bind(this);
+			var id = data.command.substr('.uno:'.length);
+			div.id = id;
 
-		updateFunction(null);
+			div.title = data.text;
+			builder.map.uiManager.enableTooltip(div);
 
-		var iconPath = builder._createIconURL(data.command);
-		var noColorControl = (data.command !== '.uno:FontColor' && data.command !== '.uno:Color');
-		var autoColorControl = (data.command === '.uno:FontColor' || data.command === '.uno:Color');
+			var icon = builder._createIconURL(data.command);
+			var buttonId = id + 'img';
 
-		var callback = function(color) {
-			builder._sendColorCommand(builder, data, color);
-		};
+			var button = L.DomUtil.create('img', 'ui-content unobutton', div);
+			button.src = icon;
+			button.id = buttonId;
+			button.setAttribute('alt', id);
 
-		var colorPickerControl = new L.ColorPicker(
-			valueNode,
-			{
-				selectedColor: selectedColor,
-				noColorControl: noColorControl,
-				autoColorControl: autoColorControl,
-				selectionCallback: callback
+			L.DomUtil.create('i', 'unoarrow', div);
+			$(div).addClass('has-dropdown--color');
+
+			var valueNode =  L.DomUtil.create('div', 'selected-color', div);
+
+			var selectedColor;
+
+			var updateFunction = function (color) {
+				selectedColor = builder._getCurrentColor(data, builder);
+				valueNode.style.backgroundColor = color ? color : selectedColor;
+			};
+
+			updateFunction();
+
+			builder.map.on('commandstatechanged', function(e) {
+				if (e.commandName === data.command)
+					updateFunction();
+			}, this);
+
+			var noColorControl = (data.command !== '.uno:FontColor' && data.command !== '.uno:Color');
+
+			$(div).click(function() {
+				$(div).w2color({ color: selectedColor, transparent: noColorControl }, function (color) {
+					if (color != null) {
+						if (color) {
+							updateFunction('#' + color);
+							builder._sendColorCommand(builder, data, color);
+						} else {
+							updateFunction('#FFFFFF');
+							builder._sendColorCommand(builder, data, 'transparent');
+						}
+					}
+				});
 			});
-		builder._colorPickers.push(colorPickerControl);
+		}
 
-		// color control panel
-		var colorsContainer = colorPickerControl.getContainer();
-
-		var contentNode = {type: 'container', children: [colorsContainer], onshow: L.bind(colorPickerControl.onShow, colorPickerControl)};
-
-		builder._explorableEntry(parentContainer, data, contentNode, builder, valueNode, iconPath, updateFunction);
 		return false;
 	},
 

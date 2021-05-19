@@ -4,7 +4,7 @@
  * from the JSON description provided by the server.
  */
 
-/* global $ _UNO */
+/* global $ _UNO _ */
 
 L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	_customizeOptions: function() {
@@ -490,6 +490,61 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		];
 
 		builder.build(parentContainer, json);
+	},
+
+	_colorControl: function(parentContainer, data, builder) {
+		var titleOverride = builder._getTitleForControlWithId(data.id);
+		if (titleOverride)
+			data.text = titleOverride;
+
+		data.id = data.id ? data.id : (data.command ? data.command.replace('.uno:', '') : undefined);
+
+		data.text = builder._cleanText(data.text);
+
+		var valueNode =  L.DomUtil.create('div', 'color-sample-selected', null);
+		var selectedColor = null;
+
+		var updateFunction = function (titleSpan) {
+			selectedColor = builder._getCurrentColor(data, builder);
+			valueNode.style.backgroundColor = selectedColor;
+			if (titleSpan) {
+				if (data.id === 'fillattr')
+					data.text = _('Background Color');
+				else if (data.id === 'fillattr2')
+					data.text = _('Gradient Start');
+				else if (data.id === 'fillattr3')
+					data.text = _('Gradient End');
+				titleSpan.innerHTML = data.text;
+			}
+		}.bind(this);
+
+		updateFunction(null);
+
+		var iconPath = builder._createIconURL(data.command);
+		var noColorControl = (data.command !== '.uno:FontColor' && data.command !== '.uno:Color');
+		var autoColorControl = (data.command === '.uno:FontColor' || data.command === '.uno:Color');
+
+		var callback = function(color) {
+			builder._sendColorCommand(builder, data, color);
+		};
+
+		var colorPickerControl = new L.ColorPicker(
+			valueNode,
+			{
+				selectedColor: selectedColor,
+				noColorControl: noColorControl,
+				autoColorControl: autoColorControl,
+				selectionCallback: callback
+			});
+		builder._colorPickers.push(colorPickerControl);
+
+		// color control panel
+		var colorsContainer = colorPickerControl.getContainer();
+
+		var contentNode = {type: 'container', children: [colorsContainer], onshow: L.bind(colorPickerControl.onShow, colorPickerControl)};
+
+		builder._explorableEntry(parentContainer, data, contentNode, builder, valueNode, iconPath, updateFunction);
+		return false;
 	},
 
 	build: function(parent, data) {

@@ -619,3 +619,12 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 #MacroSelectorDialog #table-frame3 .jsdialog.ui-treeview-entry {
 	padding-left: 8px;
 }
+
+/* color selector */
+.unotoolbutton .selected-color {
+	height: 5px;
+	width: 24px;
+	position: relative;
+	top: -6px;
+	border: 1px solid var(--gray-color);
+}
