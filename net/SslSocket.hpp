@@ -211,15 +211,23 @@ private:
             return 0;
 
         case SSL_ERROR_WANT_READ:
+#if OPENSSL_VERSION_NUMBER > 0x10100000L
             LOG_TRC("Socket #" << getFD() << " SSL error: WANT_READ (" << sslError <<
                     ") has_pending " << SSL_has_pending(_ssl) << " bytes: " << SSL_pending(_ssl) << ".");
+#else
+            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_READ (" << sslError << ").");
+#endif
             _sslWantsTo = SslWantsTo::Read;
             errno = last_errno; // Restore errno.
             return rc;
 
         case SSL_ERROR_WANT_WRITE:
+#if OPENSSL_VERSION_NUMBER > 0x10100000L
             LOG_TRC("Socket #" << getFD() << " SSL error: WANT_WRITE (" << sslError <<
                     ") has_pending " << SSL_has_pending(_ssl) << " bytes: " << SSL_pending(_ssl) << ".");
+#else
+            LOG_TRC("Socket #" << getFD() << " SSL error: WANT_WRITE (" << sslError << ").");
+#endif
             _sslWantsTo = SslWantsTo::Write;
             errno = last_errno; // Restore errno.
             return rc;
@@ -256,9 +264,14 @@ private:
                 // Effectively an EAGAIN error at the BIO layer
                 if (BIO_should_retry(_bio))
                 {
+#if OPENSSL_VERSION_NUMBER > 0x10100000L
                     LOG_TRC("Socket #" << getFD() << " BIO asks for retry - underlying EAGAIN? " <<
                             SSL_get_error(_ssl, rc) << " has_pending " << SSL_has_pending(_ssl) <<
                             " bytes: " << SSL_pending(_ssl) << ".");
+#else
+                    LOG_TRC("Socket #" << getFD() << " BIO asks for retry - underlying EAGAIN? " <<
+                            SSL_get_error(_ssl, rc));
+#endif
                     errno = last_errno ? last_errno : EAGAIN; // Restore errno.
                     return -1; // poll is used to detect real errors.
                 }
