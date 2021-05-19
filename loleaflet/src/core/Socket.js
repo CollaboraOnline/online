@@ -1239,6 +1239,8 @@ app.definitions.Socket = L.Class.extend({
 			this._map.fire('autofilterdropdown', msgData);
 		} else if (msgData.jsontype === 'dialog') {
 			this._map.fire('jsdialog', {data: msgData});
+		} else if (msgData.jsontype === 'sidebar') {
+			this._map.fire('sidebar', {data: msgData});
 		} else if (msgData.jsontype === 'notebookbar') {
 			if (msgData.children) {
 				for (var i = 0; i < msgData.children.length; i++) {

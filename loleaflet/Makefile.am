@@ -143,6 +143,7 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/jsdialogs.css \
 	$(srcdir)/css/btns.css \
 	$(srcdir)/css/notebookbar.css \
+	$(srcdir)/css/jssidebar.css \
 	$(srcdir)/css/override-vex.css \
 	$(srcdir)/css/jquery-ui-lightness.css
 
@@ -335,6 +336,7 @@ LOLEAFLET_JS_WEBORDER =\
 	src/control/Control.NotebookbarBuilder.js \
 	src/control/Control.AutofilterDropdown.js \
 	src/control/Control.Layers.js \
+	src/control/Control.Sidebar.js \
 	src/control/Search.js \
 	src/control/Permission.js \
 	src/control/Toolbar.js \
@@ -665,6 +667,7 @@ pot:
 		src/control/Control.NotebookbarDraw.js \
 		src/control/Control.NotebookbarBuilder.js \
 		src/control/Control.AutofilterDropdown.js \
+		src/control/Control.Sidebar.js \
 		src/control/Parts.js \
 		src/control/Permission.js \
 		src/control/Ruler.js \

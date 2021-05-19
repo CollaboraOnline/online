@@ -8,7 +8,7 @@ function showSidebar() {
 	cy.get('#tb_editbar_item_sidebar .w2ui-button')
 		.should('not.have.class', 'checked');
 
-	cy.get('#sidebar-panel')
+	cy.get('#sidebar-dock-wrapper')
 		.should('not.be.visible');
 
 	cy.get('#tb_editbar_item_sidebar .w2ui-button')
@@ -17,7 +17,7 @@ function showSidebar() {
 	cy.get('#tb_editbar_item_sidebar .w2ui-button')
 		.should('have.class', 'checked');
 
-	cy.get('#sidebar-panel')
+	cy.get('#sidebar-dock-wrapper')
 		.should('be.visible');
 
 	cy.log('Showing sidebar - end.');
@@ -31,7 +31,7 @@ function hideSidebar() {
 	cy.get('#tb_editbar_item_sidebar .w2ui-button')
 		.should('have.class', 'checked');
 
-	cy.get('#sidebar-panel')
+	cy.get('#sidebar-dock-wrapper')
 		.should('be.visible');
 
 	cy.get('#tb_editbar_item_sidebar .w2ui-button')
@@ -40,7 +40,7 @@ function hideSidebar() {
 	cy.get('#tb_editbar_item_sidebar .w2ui-button')
 		.should('not.have.class', 'checked');
 
-	cy.get('#sidebar-panel')
+	cy.get('#sidebar-dock-wrapper')
 		.should('not.be.visible');
 
 	cy.log('Hiding sidebar - end.');
@@ -73,7 +73,7 @@ function showSidebarIfHidden() {
 			}
 		});
 
-	cy.get('#sidebar-panel')
+	cy.get('#sidebar-dock-wrapper')
 		.should('be.visible');
 }
 
@@ -86,7 +86,7 @@ function hideSidebarIfVisible() {
 			}
 		});
 
-	cy.get('#sidebar-panel')
+	cy.get('#sidebar-dock-wrapper')
 		.should('not.be.visible');
 }
 

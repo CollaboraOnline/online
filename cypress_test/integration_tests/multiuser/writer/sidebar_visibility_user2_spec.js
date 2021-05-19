@@ -23,7 +23,7 @@ describe('Sidebar visibility: user-2.', function() {
 			.should('have.text', '2 users');
 
 		// Visible by default
-		cy.get('#sidebar-panel')
+		cy.get('#sidebar-dock-wrapper')
 			.should('be.visible');
 
 		// user-1 changes the paragraph alignment
@@ -31,7 +31,7 @@ describe('Sidebar visibility: user-2.', function() {
 			.should('have.class', 'checked');
 
 		// sidebar should be still visible (user-1 hid his own sidebar)
-		cy.get('#sidebar-panel')
+		cy.get('#sidebar-dock-wrapper')
 			.should('be.visible');
 
 		// Change paragraph alignment to trigger user-1 actions
@@ -43,7 +43,7 @@ describe('Sidebar visibility: user-2.', function() {
 			.should('have.class', 'checked');
 
 		// sidebar should be still visible
-		cy.get('#sidebar-panel')
+		cy.get('#sidebar-dock-wrapper')
 			.should('be.visible');
 
 		// Change paragraph alignment to trigger user-1 actions
