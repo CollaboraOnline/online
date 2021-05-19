@@ -343,7 +343,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	background-color: #fff;
 }
 
-.ui-content .unobutton {
+#mobile-wizard .ui-content .unobutton {
 	width: 32px;
 	height: 32px;
 	margin-right: 5px;
@@ -698,9 +698,24 @@ a.leaflet-control-zoom-in {
 	float: left;
 	padding: 20px !important;
 }
-#belowparaspacing, #spacinglabel, #OutlineRight, #DefaultBullet, #CellVertTop, #rowheight, #columnwidth{float: left;}
-#Shadowed, #StyleNewByExample + div, #AlignTop, #AlignBottom + p, #mergecells, #BackgroundColor + p, #LineSpacing, #indentlabel, #spacinglabel, #sizelabel{clear: both;}
-#BackgroundColor + p, #LineSpacing + p, #denominatorplaceslabel, #decimalplaceslabel, #leadingzeroeslabel, #leftindentlabel, #orientationlabel, #cellbackgroundlabel, .mobile-wizard.ui-text {
+#mobile-wizard #belowparaspacing, #mobile-wizard #spacinglabel, #mobile-wizard #OutlineRight,
+#mobile-wizard #DefaultBullet, #mobile-wizard #CellVertTop, #mobile-wizard #rowheight,
+#mobile-wizard #columnwidth {
+	float: left;
+}
+
+#mobile-wizard #Shadowed, #mobile-wizard #StyleNewByExample + div, #mobile-wizard #AlignTop,
+#mobile-wizard #AlignBottom + p, #mobile-wizard #mergecells, #mobile-wizard #BackgroundColor + p,
+#mobile-wizard #LineSpacing, #mobile-wizard #indentlabel, #mobile-wizard #spacinglabel,
+#mobile-wizard #sizelabel {
+	clear: both;
+}
+
+#mobile-wizard #BackgroundColor + p, #mobile-wizard #LineSpacing + p,
+#mobile-wizard #denominatorplaceslabel, #mobile-wizard #decimalplaceslabel,
+#mobile-wizard #leadingzeroeslabel, #mobile-wizard #leftindentlabel,
+#mobile-wizard #orientationlabel, #mobile-wizard #cellbackgroundlabel,
+#mobile-wizard .mobile-wizard.ui-text {
 	border-bottom: 1px solid rgba(var(--blue1-txt-primary-color),0.5);
 	color: rgba(var(--blue1-txt-primary-color),0.5) !important;
 	margin-left: 4%;
@@ -739,7 +754,10 @@ div#mobile-wizard-content .spinfieldcontainer:active .spinfieldimage, div#mobile
 div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	opacity: 0.5 !important;
 }
-#buttonbefore, #buttonafter, #buttonoptimal, #buttonparallel, #buttonnone, #buttonthrough, #bottom, #top, #standard, #Bold, #Italic, #Underline, #Strikeout{
+#mobile-wizard #buttonbefore, #mobile-wizard #buttonafter, #mobile-wizard #buttonoptimal,
+#mobile-wizard #buttonparallel, #mobile-wizard #buttonnone, #mobile-wizard #buttonthrough,
+#mobile-wizard #bottom, #mobile-wizard #top, #mobile-wizard #standard, #mobile-wizard #Bold,
+#mobile-wizard #Italic, #mobile-wizard #Underline, #mobile-wizard #Strikeout{
 	margin: 0;
 	-webkit-appearance: none;
 	-moz-appearance: none;
@@ -753,15 +771,15 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	box-shadow: 0 0 0px 8px #e5f1ff;
 	border-radius: 0.1px;
 }
-#buttonbefore{background: url('images/sc_wrapleft.svg') no-repeat center;}
-#buttonafter{background: url('images/sc_wrapright.svg') no-repeat center;}
-#buttonoptimal{background: url('images/sc_wrapideal.svg') no-repeat center;}
-#buttonparallel{background: url('images/sc_wrapmenu.svg') no-repeat center;}
-#buttonnone{background: url('images/sc_wrapoff.svg') no-repeat center;}
-#buttonthrough{background: url('images/sc_wrapthrough.svg') no-repeat center;}
-#top{background: url('images/sc_aligntop.svg') no-repeat center;}
-#bottom{background: url('images/sc_alignbottom.svg') no-repeat center;}
-#standard{background: url('images/sc_alignverticalcenter.svg') no-repeat center;}
+#mobile-wizard #buttonbefore{background: url('images/sc_wrapleft.svg') no-repeat center;}
+#mobile-wizard #buttonafter{background: url('images/sc_wrapright.svg') no-repeat center;}
+#mobile-wizard #buttonoptimal{background: url('images/sc_wrapideal.svg') no-repeat center;}
+#mobile-wizard #buttonparallel{background: url('images/sc_wrapmenu.svg') no-repeat center;}
+#mobile-wizard #buttonnone{background: url('images/sc_wrapoff.svg') no-repeat center;}
+#mobile-wizard #buttonthrough{background: url('images/sc_wrapthrough.svg') no-repeat center;}
+#mobile-wizard #top{background: url('images/sc_aligntop.svg') no-repeat center;}
+#mobile-wizard #bottom{background: url('images/sc_alignbottom.svg') no-repeat center;}
+#mobile-wizard #standard{background: url('images/sc_alignverticalcenter.svg') no-repeat center;}
 .checkbutton{
 	clear: both;
 }
