@@ -1268,7 +1268,6 @@ L.Control.Menubar = L.Control.extend({
 					var $menu = $('#main-menu');
 					var $nav = $menu.parent();
 					if (this.checked) {
-						self._map.fire('closesidebar');
 						if (!window.mode.isMobile()) {
 							// Surely this code, if it really is related only to the hamburger menu,
 							// will never be invoked on non-mobile browsers? I might be wrong though.

@@ -123,7 +123,6 @@ L.Control.LokDialog = L.Control.extend({
 		map.on('docloaded', this._docLoaded, this);
 		map.on('closepopup', this.onCloseCurrentPopUp, this);
 		map.on('closepopups', this._onClosePopups, this);
-		map.on('closesidebar', this._closeSidebar, this);
 		map.on('editorgotfocus', this._onEditorGotFocus, this);
 		// Fired to signal that the input focus is being changed.
 		map.on('changefocuswidget', this._changeFocusWidget, this);
@@ -131,13 +130,12 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_dialogs: {},
-	_currentDeck: null, // The sidebar.
 	_calcInputBar: null, // The Formula-Bar.
 
 	hasOpenedDialog: function() {
 		var nonDialogEntries = 0;
 		for (var index in this._dialogs) {
-			if (this._dialogs[index].isSidebar || this._dialogs[index].isCalcInputBar)
+			if (this._dialogs[index].isCalcInputBar)
 				nonDialogEntries++;
 		}
 
@@ -172,10 +170,6 @@ L.Control.LokDialog = L.Control.extend({
 	_isOpen: function(id) {
 		return (id in this._dialogs) && this._dialogs[id] &&
 			$('#' + this._toStrId(id)).length > 0;
-	},
-
-	_isSidebar: function(id) {
-		return (id in this._dialogs) && this._dialogs[id].isSidebar;
 	},
 
 	isCalcInputBar: function(id) {
@@ -262,7 +256,7 @@ L.Control.LokDialog = L.Control.extend({
 		//console.log('_sendPaintWindow: rectangle: ' + rectangle + ', dpiscale: ' + dpiscale);
 		app.socket.sendMessage('paintwindow ' + id + ' rectangle=' + rectangle + ' dpiscale=' + dpiscale);
 
-		if (this._map._docLayer && this._map._docLayer._debug && this._map._debugSidebar)
+		if (this._map._docLayer && this._map._docLayer._debug)
 			this._debugPaintWindow(id, rectangle);
 	},
 
@@ -317,13 +311,6 @@ L.Control.LokDialog = L.Control.extend({
 			} else if (e.winType === 'calc-input-win') {
 				lines = parseInt(e.lines);
 				this._launchCalcInputBar(e.id, left, top, width, height, lines);
-			} else if (e.winType === 'deck') {
-				if (!window.mode.isMobile()) {
-					this._launchSidebar(e.id, width, height);
-				} else {
-					// In mobile we get jsdialog messages.
-					window.sidebarId = e.id;
-				}
 			} else if (e.winType === 'child' || e.winType === 'tooltip') {
 				var parentId = parseInt(e.parentId);
 				if (!this._isOpen(parentId))
@@ -366,7 +353,7 @@ L.Control.LokDialog = L.Control.extend({
 			return;
 		}
 
-		// We don't want dialogs and sidebar on smartphones, only calc input window is allowed
+		// We don't want dialogs on smartphones, only calc input window is allowed
 		if (window.mode.isMobile() && e.winType !== 'calc-input-win' && !this.isCalcInputBar(e.id))
 			return;
 
@@ -407,10 +394,7 @@ L.Control.LokDialog = L.Control.extend({
 		} else if (e.action === 'size_changed') {
 			// FIXME: we don't really have to destroy and launch the dialog again but do it for
 			// now because the size sent to us previously in 'created' cb is not correct
-			if (e.winType === 'deck' || this._isSidebar(e.id)) {
-				$('#' + strId).remove();
-				this._launchSidebar(e.id, width, height);
-			} else if (e.winType === 'calc-input-win' || this.isCalcInputBar(e.id)) {
+			if (e.winType === 'calc-input-win' || this.isCalcInputBar(e.id)) {
 				lines = parseInt(e.lines);
 				left = left || this._calcInputBar.left;
 				top = top || this._calcInputBar.top;
@@ -482,8 +466,6 @@ L.Control.LokDialog = L.Control.extend({
 			parent = this._getParentId(e.id);
 			if (parent)
 				this._onDialogChildClose(parent);
-			else if (this._isSidebar(e.id))
-				this._onSidebarClose(e.id);
 			else if (this.isCalcInputBar(e.id))
 				this._onCalcInputBarClose(e.id);
 			else
@@ -741,19 +723,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	focus: function(dlgId, acceptInput) {
-		// In case of the sidebar we should be careful about
-		// grabbing the focus from the main window.
-		if (this._isSidebar(dlgId)) {
-			// On mobile, grab the focus if the sidebar is visible.
-			if (window.mode.isMobile()) {
-				if (!this.mobileSidebarVisible)
-					return;
-			} else if (!this._isOpen(dlgId) || !this.isCursorVisible(dlgId)) {
-				// On desktop, grab the focus only when there is a visible cursor on the sidebar.
-				return;
-			}
-		}
-		else if (this.isCalcInputBar(dlgId) && (!this._isOpen(dlgId) || !this.isCursorVisible(dlgId))) {
+		if (this.isCalcInputBar(dlgId) && (!this._isOpen(dlgId) || !this.isCursorVisible(dlgId))) {
 			return;
 		}
 
@@ -846,7 +816,6 @@ L.Control.LokDialog = L.Control.extend({
 		this._dialogs[id] = {
 			id: id,
 			strId: strId,
-			isSidebar: false,
 			isCalcInputBar: false,
 			width: width,
 			height: height,
@@ -999,7 +968,6 @@ L.Control.LokDialog = L.Control.extend({
 			open: true,
 			id: id,
 			strId: strId,
-			isSidebar: false,
 			isCalcInputBar: true,
 			left: left,
 			top: top,
@@ -1022,146 +990,9 @@ L.Control.LokDialog = L.Control.extend({
 		console.log('_createCalcInputBar: end');
 	},
 
-	_launchSidebar: function(id, width, height) {
-		// In read-only mode, we don't need to show sidebar. This if clause prevents sidebar from opening also when revision history is open.
-		if (this._map.isPermissionReadOnly()) {
-			return;
-		}
-
-		console.log('_launchSidebar: start: id: ' + id + ', width: ' + width + ', height: ' + height);
-		if ((window.mode.isMobile() || window.mode.isTablet())
-			&& !this._map.isPermissionEdit())
-			return;
-
-		$('#sidebar-dock-wrapper').css('display', 'block');
-		if (window.mode.isTablet())
-			$('#sidebar-dock-wrapper').addClass('tablet');
-
-		var ratio = 1.0;
-		if (width > window.screen.width) {
-			ratio = window.screen.width / width;
-			if (ratio < 1.0)
-				$('#sidebar-dock-wrapper').css('width', String(width * ratio) + 'px');
-		}
-
-		var strId = this._toStrId(id);
-
-		if (this._currentDeck) {
-
-			var oldId = this._currentDeck.id;
-			if (oldId != id) {
-				// This is a new deck; update the HTML elements in-place.
-				var strOldId = this._toStrId(oldId);
-
-				var oldPanel = document.getElementById(strOldId);
-				if (oldPanel)
-					oldPanel.id = strOldId + '-offscreen';
-				var oldCanvas = document.getElementById(strOldId + '-canvas');
-				if (oldCanvas)
-					oldCanvas.id = strOldId + '-offscreen';
-
-				$('#' + this._currentDeck.strId).remove();
-				delete this._dialogs[oldId];
-				this._currentDeck = null;
-
-				this._createSidebar(id, strId, width, height);
-
-				var newCanvas = document.getElementById(strId + '-canvas');
-				if (oldCanvas && newCanvas)
-				{
-					this._setCanvasWidthHeight(newCanvas, oldCanvas.width, oldCanvas.height);
-					var ctx = newCanvas.getContext('2d');
-					ctx.drawImage(oldCanvas, 0, 0);
-				}
-
-				oldPanel.remove();
-
-				return;
-			}
-
-			// Update the existing sidebar.
-			this._currentDeck.width = width;
-			this._currentDeck.height = height;
-
-			// Hide cursor.
-			this._currentDeck.cursorVisible = false;
-			$('#' + strId + '-cursor').css({display: 'none'});
-
-			var panel = L.DomUtil.get('sidebar-panel');
-			if (width > 1)
-				$(panel).parent().show();
-			else
-				$(panel).parent().hide();
-
-			if (window.initSidebarState)
-				this._map.uiManager.setSavedState('ShowSidebar', width > 1);
-
-			// Render window.
-			this._sendPaintWindowRect(id);
-		} else {
-			this._createSidebar(id, strId, width, height);
-			$('#document-container').removeClass('sidebar-closed');
-		}
-	},
-
-	_createSidebar: function(id, strId, width, height) {
-		// Create a new sidebar.
-
-		var panelContainer = L.DomUtil.create('div', 'panel', L.DomUtil.get('sidebar-panel'));
-		panelContainer.id = strId;
-		this._setCanvasWidthHeight(panelContainer, width, height);
-
-		// Create the panel canvas.
-		var panelCanvas = L.DomUtil.create('canvas', 'panel_canvas', panelContainer);
-		L.DomUtil.setStyle(panelCanvas, 'position', 'absolute');
-		this._setCanvasWidthHeight(panelCanvas, width, height);
-		panelCanvas.id = strId + '-canvas';
-
-		// Create the child canvas now, to make it on top of the main panel canvas.
-		var floatingCanvas = L.DomUtil.create('canvas', 'lokdialogchild-canvas', panelContainer);
-		L.DomUtil.setStyle(floatingCanvas, 'position', 'absolute');
-		floatingCanvas.width = 0;
-		floatingCanvas.height = 0;
-		floatingCanvas.id = strId + '-floating';
-
-		// Don't show the sidebar until we get the contents.
-		$(panelContainer).parent().hide();
-
-		this._dialogs[id] = {
-			open: true,
-			id: id,
-			strId: strId,
-			isSidebar: true,
-			left: 0,
-			top: 0,
-			width: width,
-			height: height,
-			cursor: null,
-			child: null, // One child, typically drop-down list
-			title: null  // Never used for sidebars
-		};
-
-		this._currentDeck = this._dialogs[id];
-
-		this._createDialogCursor(strId);
-
-		this._postLaunch(id, panelContainer, panelCanvas);
-		if (window.initSidebarState)
-			this._map.uiManager.setSavedState('ShowSidebar', true);
-	},
-
 	_postLaunch: function(id, panelContainer, panelCanvas) {
 		if (!this.isCalcInputBar(id) || window.mode.isDesktop()) {
 			this._setupWindowEvents(id, panelCanvas/*, dlgInput*/);
-
-			if (this._isSidebar(id)) {
-				// Move the mouse off-screen when we leave the sidebar
-				// so we don't leave edge-elements highlighted as if
-				// the mouse is still over them.
-				L.DomEvent.on(panelContainer, 'mouseleave', function () {
-					this._postWindowMouseEvent('move', id, -1, -1, 1, 0, 0);
-				}, this);
-			}
 		}
 
 		// Render window.
@@ -1193,7 +1024,7 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stop(e);
 
-			if ((this._isSidebar(id) || this.isCalcInputBar(id)) && this.hasOpenedDialog()) {
+			if (this.isCalcInputBar(id) && this.hasOpenedDialog()) {
 				this.blinkOpenDialog();
 				return;
 			}
@@ -1389,7 +1220,7 @@ L.Control.LokDialog = L.Control.extend({
 		app.socket.sendMessage('windowmouse id=' + winid +  ' type=' + type +
 		                              ' x=' + x + ' y=' + y + ' count=' + count +
 		                              ' buttons=' + buttons + ' modifier=' + modifier);
-		// Keep map active while user is playing with sidebar/dialog.
+		// Keep map active while user is playing with dialog.
 		this._map.lastActiveTime = Date.now();
 	},
 
@@ -1397,27 +1228,8 @@ L.Control.LokDialog = L.Control.extend({
 		console.log('x ' + x + ' y ' + y + ' o ' + offset);
 		app.socket.sendMessage('windowgesture id=' + winid +  ' type=' + type +
 		                              ' x=' + x + ' y=' + y + ' offset=' + offset);
-		// Keep map active while user is playing with sidebar/dialog.
+		// Keep map active while user is playing with dialog.
 		this._map.lastActiveTime = Date.now();
-	},
-
-	_onSidebarClose: function(dialogId) {
-		var strId = this._toStrId(dialogId);
-		this._resizeSidebar(strId, 0);
-		delete this._dialogs[dialogId];
-		if (this._currentDeck) {
-			$('#' + this._currentDeck.strId).remove();
-			this._currentDeck = null;
-		}
-
-		$('#sidebar-dock-wrapper').css({display: ''});
-		if (!this._map.editorHasFocus()) {
-			this._map.fire('editorgotfocus');
-			this._map.focus();
-		}
-		$('#document-container').addClass('sidebar-closed');
-		if (window.initSidebarState)
-			this._map.uiManager.setSavedState('ShowSidebar', false);
 	},
 
 	_onCalcInputBarClose: function(dialogId) {
@@ -1437,7 +1249,7 @@ L.Control.LokDialog = L.Control.extend({
 		var foundCurrent = false;
 
 		Object.keys(this._dialogs).forEach(function(id) {
-			if (foundCurrent && !that._isSidebar(id) && !that._isCalcInputBar(id))
+			if (foundCurrent && !that._isCalcInputBar(id))
 				that._onDialogClose(id, true);
 
 			if (id == dialogId)
@@ -1469,7 +1281,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onClosePopups: function() {
 		for (var dialogId in this._dialogs) {
-			if (!this._isSidebar(dialogId) && !this.isCalcInputBar(dialogId)) {
+			if (!this.isCalcInputBar(dialogId)) {
 				this._onDialogClose(dialogId, true);
 			}
 		}
@@ -1481,20 +1293,12 @@ L.Control.LokDialog = L.Control.extend({
 	onCloseCurrentPopUp: function() {
 		// for title-less dialog only (context menu, pop-up)
 		if (this._currentId && this._isOpen(this._currentId) &&
-			!this._dialogs[this._currentId].title && !this._isSidebar(this._currentId) && !this.isCalcInputBar(this._currentId))
+			!this._dialogs[this._currentId].title && !this.isCalcInputBar(this._currentId))
 			this._onDialogClose(this._currentId, true);
 	},
 
-	_closeSidebar: function() {
-		for (var dialogId in this._dialogs) {
-			if (this._isSidebar(dialogId)) {
-				this._onSidebarClose(dialogId);
-			}
-		}
-	},
-
 	_onEditorGotFocus: function() {
-		// We need to lose focus on any dialogs/sidebars currently with focus.
+		// We need to lose focus on any dialogs currently with focus.
 		for (var winId in this._dialogs) {
 			$('#' + this._dialogs[winId].strId + '-cursor').css({display: 'none'});
 		}
@@ -1529,16 +1333,6 @@ L.Control.LokDialog = L.Control.extend({
 			y = parseInt(rectangle[1]);
 		}
 
-		// Sidebars find out their size and become visible on first paint.
-		if (that._isSidebar(parentId)) {
-			//console.log('_paintDialog: side-bar: width: ' + that._currentDeck.width);
-			that._resizeSidebar(strId, that._currentDeck.width);
-
-			// Update the underlying canvas.
-			var panelCanvas = L.DomUtil.get(that._currentDeck.strId + '-canvas');
-			that._setCanvasWidthHeight(panelCanvas, that._currentDeck.width, that._currentDeck.height);
-		}
-
 		// calc input bar find out their size on first paint call
 		var isCalcInputBar = that.isCalcInputBar(parentId);
 		var container = L.DomUtil.get(strId);
@@ -1548,11 +1342,9 @@ L.Control.LokDialog = L.Control.extend({
 			var changed = that._setCanvasWidthHeight(canvas, that._calcInputBar.width, that._calcInputBar.height);
 			$(container).parent().show(); // show or width is 0
 			var deckOffset = 0;
-			if (that._currentDeck) {
-				var sidebar = L.DomUtil.get(that._currentDeck.strId);
-				if (sidebar) {
-					deckOffset = sidebar.clientWidth;
-				}
+			var sidebar = $('#sidebar-dock-wrapper');
+			if (sidebar) {
+				deckOffset = sidebar.get(0).clientWidth;
 			}
 			var correctWidth = container.clientWidth - deckOffset;
 
@@ -1579,7 +1371,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (parentId in that._dialogs) {
 			// We might have closed the dialog by the time we render.
 			that._dialogs[parentId].isPainting = false;
-			if (!that._isSidebar(parentId) && !isCalcInputBar)
+			if (!isCalcInputBar)
 				that._map.fire('changefocuswidget', {winId: parentId, dialog: that});
 		}
 	},
@@ -1632,42 +1424,6 @@ L.Control.LokDialog = L.Control.extend({
 		$(canvas).show();
 	},
 
-	_resizeSidebar: function(strId, width) {
-		this._currentDeck.width = width;
-		var deckOffset = 0;
-		var sidebar = L.DomUtil.get(strId);
-		if (sidebar) {
-			if (sidebar.width !== width)
-				deckOffset = width === 0 ? sidebar.width : -width;
-			sidebar.width = width;
-			if (sidebar.style)
-				sidebar.style.width = width.toString() + 'px';
-		}
-
-		var wrapper = L.DomUtil.get('sidebar-dock-wrapper');
-		if (wrapper) {
-			var offsetWidth;
-			var panel = L.DomUtil.get('sidebar-panel');
-
-			if (panel.style.display !== 'none')
-				offsetWidth = wrapper.offsetWidth;
-			else {
-				panel.style.visibility = 'hidden';
-				panel.style.display = '';
-				offsetWidth = wrapper.offsetWidth;
-				panel.style.display = 'none';
-				panel.style.visibility = '';
-			}
-
-			this._map.options.documentContainer.style.right = offsetWidth + 'px';
-		} else
-			this._map.options.documentContainer.style.right = (width - 15).toString() + 'px';
-
-		this._map._onResize();
-
-		this._resizeCalcInputBar(deckOffset);
-	},
-
 	_resizeCalcInputBar: function(offset) {
 		if (this._calcInputBar && !this._calcInputBar.isPainting && offset !== 0) {
 			var id = this._calcInputBar.id;
@@ -1688,7 +1444,7 @@ L.Control.LokDialog = L.Control.extend({
 
 	_onDialogChildClose: function(dialogId) {
 		$('#' + this._toStrId(dialogId) + '-floating').remove();
-		if (!this._isSidebar(dialogId) && !this.isCalcInputBar(dialogId)) {
+		if (!this.isCalcInputBar(dialogId)) {
 			// Remove any extra height allocated for the parent container (only for floating dialogs).
 			var canvas = document.getElementById(dialogId + '-canvas');
 			if (!canvas) {
@@ -1725,7 +1481,6 @@ L.Control.LokDialog = L.Control.extend({
 
 		/*
 			Some notes:
-				* Sidebar windows' child positions are relative to their container (sidebar itself).
 				* Modal windows' child positions are relative to page borders.
 				* So this code adapts to it.
 		*/
@@ -1740,9 +1495,9 @@ L.Control.LokDialog = L.Control.extend({
 			L.DomUtil.setStyle(floatingCanvas, 'left', (containerLeft + left) + 'px');
 			L.DomUtil.setStyle(floatingCanvas, 'top', (containerTop + 20) + 'px');
 		}
-		else if (grandParentID.indexOf('sidebar-panel') >= 0 || isIE11)
+		else if (isIE11)
 		{
-			// floatingCanvas is a child window of a sidebar.
+			// child positions are relative to their container.
 			L.DomUtil.setStyle(floatingCanvas, 'left', (containerLeft + left) + 'px');
 			L.DomUtil.setStyle(floatingCanvas, 'top', (containerTop + top) + 'px');
 		}
