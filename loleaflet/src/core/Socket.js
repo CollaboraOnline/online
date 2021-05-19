@@ -352,6 +352,9 @@ L.Socket = L.Class.extend({
 		if (!e.textMsg.startsWith('tile:') && !e.textMsg.startsWith('renderfont:') && !e.textMsg.startsWith('windowpaint:'))
 			return;
 
+		if (e.textMsg.indexOf(' nopng') !== -1)
+			return;
+
 		var img;
 
 		if (window.ThisIsTheiOSApp) {
