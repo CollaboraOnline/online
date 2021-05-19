@@ -45,11 +45,23 @@ L.Control.Notebookbar = L.Control.extend({
 
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
 		$('.main-nav').addClass('hasnotebookbar');
-		$('.main-nav').addClass(this._map.getDocType() + '-color-indicator');
+		var docType = this._map.getDocType();
+		$('.main-nav').addClass(docType + '-color-indicator');
 
 		var docLogoHeader = L.DomUtil.create('div', '');
 		docLogoHeader.id = 'document-header';
-		var docLogo = L.DomUtil.create('div', 'document-logo', docLogoHeader);
+
+		var iconClass = 'document-logo';
+		if (docType === 'text') {
+			iconClass += ' writer-icon-img';
+		} else if (docType === 'spreadsheet') {
+			iconClass += ' calc-icon-img';
+		} else if (docType === 'presentation') {
+			iconClass += ' impress-icon-img';
+		} else if (docType === 'drawing') {
+			iconClass += ' draw-icon-img';
+		}
+		var docLogo = L.DomUtil.create('div', iconClass, docLogoHeader);
 		$(docLogo).data('id', 'document-logo');
 		$(docLogo).data('type', 'action');
 		$('.main-nav').prepend(docLogoHeader);
