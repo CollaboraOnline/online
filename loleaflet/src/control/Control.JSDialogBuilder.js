@@ -3078,8 +3078,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				continue;
 
 			var childType = childData.type;
-			if (childType === 'toolbox' && !childData.id)
-				continue;
 
 			if (parentHasManyChildren) {
 				if (!hasVerticalParent)
@@ -3117,42 +3115,34 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			var handler = this._controlHandlers[childType];
-			var twoPanelsAsChildren =
-			    childData.children && childData.children.length == 2
-			    && childData.children[0] && childData.children[0].type == 'panel'
-			    && childData.children[1] && childData.children[1].type == 'panel';
 
-			if (twoPanelsAsChildren) {
-				handler = this._controlHandlers['paneltabs'];
-				processChildren = handler(childObject, childData.children, this);
-			} else {
-				if (handler)
-					processChildren = handler(childObject, childData, this);
-				else
-					console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
+			if (handler)
+				processChildren = handler(childObject, childData, this);
+			else
+				console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
 
-				if (childType === 'toolbox' && hasVerticalParent === true && childData.children.length === 1)
-					this.options.useInLineLabelsForUnoButtons = true;
+			var noLabels = this.options.noLabelsForUnoButtons;
+			if (childType === 'toolbox')
+				this.options.noLabelsForUnoButtons = true;
 
-				if (processChildren && childData.children != undefined)
-					this.build(childObject, childData.children, isVertical, hasManyChildren);
-				else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
-					$('#' + childData.id).addClass('hidden-from-event');
-				}
-
-				if ((childType === 'dialog' || childType === 'messagebox' || childType === 'modelessdialog')
-					&& childData.responses) {
-					for (var i in childData.responses) {
-						var buttonId = childData.responses[i].id;
-						var response = childData.responses[i].response;
-						var button = $('#' + buttonId);
-						if (button)
-							this.setupStandardButtonHandler(button, response, this);
-					}
-				}
-
-				this.options.useInLineLabelsForUnoButtons = false;
+			if (processChildren && childData.children != undefined)
+				this.build(childObject, childData.children, isVertical, hasManyChildren);
+			else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
+				$('#' + childData.id).addClass('hidden-from-event');
 			}
+
+			if ((childType === 'dialog' || childType === 'messagebox' || childType === 'modelessdialog')
+				&& childData.responses) {
+				for (var i in childData.responses) {
+					var buttonId = childData.responses[i].id;
+					var response = childData.responses[i].response;
+					var button = $('#' + buttonId);
+					if (button)
+						this.setupStandardButtonHandler(button, response, this);
+				}
+			}
+
+			this.options.noLabelsForUnoButtons = noLabels;
 		}
 	}
 });
