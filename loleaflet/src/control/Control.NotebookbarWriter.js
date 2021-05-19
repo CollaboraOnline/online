@@ -176,13 +176,25 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				],
 				'vertical': 'true'
 			},
-			hasSigning ?
-				{
-					'id': 'signdocument',
-					'type': 'menubartoolitem',
-					'text': _('Sign document'),
-					'command': ''
-				} : {}
+			{
+				'type': 'container',
+				'children': [
+					{
+						'id': 'repair',
+						'type': 'menubartoolitem',
+						'text': _('Repair'),
+						'command': _('Repair')
+					},
+					hasSigning ?
+						{
+							'id': 'signdocument',
+							'type': 'menubartoolitem',
+							'text': _('Sign document'),
+							'command': ''
+						} : {},
+				],
+				'vertical': 'true'
+			}
 		];
 
 		return this.getTabPage('File', content);
@@ -953,8 +965,97 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Sidebar', 'text'),
+				'text': _UNO('.uno:ControlCodes', 'text'),
+				'command': '.uno:ControlCodes'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'fullscreen',
+								'type': 'menubartoolitem',
+								'text': _UNO('.uno:FullScreen'),
+								'command': '.uno:FullScreen'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoomreset',
+								'type': 'menubartoolitem',
+								'text': _('Reset zoom'),
+								'command': _('Reset zoom')
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoomout',
+								'type': 'menubartoolitem',
+								'text': _UNO('.uno:ZoomMinus'),
+								'command': '.uno:ZoomMinus'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoomin',
+								'type': 'menubartoolitem',
+								'text': _UNO('.uno:ZoomPlus'),
+								'command': '.uno:ZoomPlus'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Sidebar'),
 				'command': '.uno:Sidebar'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'showruler',
+								'type': 'menubartoolitem',
+								'text': _('Show Ruler'),
+								'command': _('Show Ruler')
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'showstatusbar',
+								'type': 'menubartoolitem',
+								'text': _('Show Status Bar'),
+								'command': _('Show Status Bar')
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			},
 			{
 				'type': 'container',
