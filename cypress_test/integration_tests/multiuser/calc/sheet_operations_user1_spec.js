@@ -36,6 +36,8 @@ describe('Sheet operations: user-1.', function() {
 		cy.get('#spreadsheet-tab1')
 			.should('have.text', 'Sheet2');
 
+		cy.wait(1000);
+
 		// user-2 remove the first sheet
 		cy.get('.spreadsheet-tab')
 			.should('have.length', 1);

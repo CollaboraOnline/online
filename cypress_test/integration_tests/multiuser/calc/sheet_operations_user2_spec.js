@@ -30,6 +30,8 @@ describe('Sheet operations: user-2.', function() {
 		cy.get('#spreadsheet-tab1')
 			.should('have.text', 'Sheet2');
 
+		cy.wait(1000);
+
 		// remove the first tab
 		cy.get('#spreadsheet-tab0')
 			.rightclick();

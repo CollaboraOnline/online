@@ -1261,7 +1261,7 @@ L.Map = L.Evented.extend({
 		var deckOffset = 0;
 		var sidebarpanel = L.DomUtil.get('#sidebar-dock-wrapper');
 		if (sidebarpanel) {
-			var sidebar = sidebarpanel.children[0];
+			var sidebar = sidebarpanel;
 			if (sidebar) {
 				sidebar.height = this._container.clientHeight - 10;
 				sidebar.style.height = sidebar.height + 'px';
