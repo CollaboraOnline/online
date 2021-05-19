@@ -221,6 +221,17 @@
 	cursor: ns-resize;
 }
 
+.anchor-marker {
+	background: url('images/lc_anchormenu.svg') rgba(75, 85, 105, 0.5) no-repeat center;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.anchor-marker:hover {
+	background: url('images/lc_anchormenu.svg') rgba(93, 118, 170, 0.5) no-repeat center;
+	cursor: grab;
+}
+
 /* visual tweaks */
 
 .leaflet-container a {
