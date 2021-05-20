@@ -319,7 +319,7 @@
 	height: 18px !important;
 	padding: 4px;
 }
-.unotoolbutton.notebookbar:not(.disabled):hover, #clearFormatting.notebookbar div img:hover {
+.unotoolbutton.notebookbar:not(.disabled):hover, #clearFormatting.notebookbar div img:hover, #FormatPaintbrush.notebookbar div img:hover {
 	background-color: #e6e6e6b0;
 	cursor: pointer;
 	outline: 1px solid var(--gray-color);
@@ -395,12 +395,12 @@
 	margin-top: -5px;
 }
 
-#clearFormatting.notebookbar div img {
+#clearFormatting.notebookbar div img, #FormatPaintbrush.notebookbar div img {
 	width: 24px !important;
 	height: 24px !important;
 }
 
-#clearFormatting.notebookbar {
+#clearFormatting.notebookbar, #FormatPaintbrush.notebookbar{
 	height: 24px !important;
 }
 
@@ -442,7 +442,8 @@
 }
 
 #Copy.notebookbar,
-#clearFormatting.notebookbar {
+#clearFormatting.notebookbar,
+#FormatPaintbrush.notebookbar {
 	margin-top: 6px;
 }
 
