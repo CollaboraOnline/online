@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2021-05-06 23:13+0000\n"
-"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
+"PO-Revision-Date: 2021-05-15 10:32+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "help/cs/>\n"
 "Language: cs\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /cs/libo_online/loleaflet-help-cs.po\n"
 "X-Pootle-Revision: 855408\n"
 
@@ -783,15 +783,14 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
 "Vloží krok tabulátoru (pouze v tabulkách). V závislosti na použití správce "
-"oken lze místo této zkratky použít Alt</kbd><span class=\"kbd--plus\""
-">+</span><kbd>Tab."
+"oken lze místo této zkratky použít <kbd>Alt</kbd><span class=\"kbd--plus\""
+">+</span><kbd>Tab</kbd>."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -841,28 +840,26 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
-"3 sekundy v režimu vkládání, klávesa šipky vloží řádek/sloupec, Ctrl</kbd><"
-"span class=\"kbd--plus\">+</span><kbd>klávesa šipky vloží buňku"
+"3 sekundy v režimu vkládání, klávesa šipky vloží řádek/sloupec, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>klávesa šipky</kbd> vloží buňku"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 sekundy v režimu mazání, klávesa šipky smaže řádek/sloupec, Ctrl</kbd><"
-"span class=\"kbd--plus\">+</span><kbd>klávesa šipky sloučí buňku se sousední "
-"buňkou"
+"3 sekundy v režimu mazání, klávesa šipky smaže řádek/sloupec, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>klávesa šipky</kbd> sloučí buňku "
+"se sousední buňkou"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
