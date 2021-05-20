@@ -78,6 +78,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['alignment'] = this._alignmentHandler;
 		this._controlHandlers['buttonbox'] = this._buttonBox;
 		this._controlHandlers['frame'] = this._frameHandler;
+		this._controlHandlers['deck'] = this._deckHandler;
 		this._controlHandlers['panel'] = this._panelHandler;
 		this._controlHandlers['calcfuncpanel'] = this._calcFuncListPanelHandler;
 		this._controlHandlers['tabcontrol'] = this._tabsControlHandler;
@@ -460,6 +461,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var rows = builder._getGridRows(data.children);
 		var cols = builder._getGridColumns(data.children);
 
+		var processedChildren = [];
+
 		var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-grid', parentContainer);
 		for (var row = 0; row < rows; row++) {
 			var rowNode = L.DomUtil.create('tr', builder.options.cssClass, table);
@@ -472,7 +475,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						$(colNode).attr('colspan', parseInt(child.width));
 
 					builder.build(colNode, [child], false, false);
+
+					processedChildren.push(child);
 				}
+			}
+		}
+
+		for (var i = 0; i < data.children.length; i++) {
+			child = data.children[i];
+			if (processedChildren.indexOf(child) === -1) {
+				rowNode = L.DomUtil.create('tr', builder.options.cssClass, table);
+				colNode = L.DomUtil.create('td', builder.options.cssClass, rowNode);
+				builder.build(colNode, [child], false, false);
+				processedChildren.push(child);
 			}
 		}
 
@@ -706,10 +721,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				$(expander).click(function () {
 					builder.callback('expander', 'toggle', data, null, builder);
+					$(label).toggleClass('expanded');
+					$(expander).siblings().toggleClass('expanded');
 				});
 			}
 
 			var expanderChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, container);
+			$(expanderChildren).addClass('expanded');
 
 			var children = [];
 			var startPos = 1;
@@ -815,6 +833,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			label.innerText = builder._cleanText(data.children[0].text);
 
 			var frameChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, parentContainer);
+			$(frameChildren).addClass('expanded');
 
 			var children = [];
 			for (var i = 1; i < data.children.length; i++) {
@@ -829,20 +848,22 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_panelHandler: function(parentContainer, data, builder) {
-		var content = data.children;
-		var contentData = content.length ? content : [content];
-		var contentNode = contentData.length === 1 ? contentData[0] : null;
-
-		var iconPath = null;
-		if (contentNode) {
-			var entryId = contentNode.id;
-			if (entryId && entryId.length) {
-				iconPath = builder._createIconURL(entryId);
-			}
+	_deckHandler: function(parentContainer, data, builder) {
+		for (var i = 0; i < data.children.length; i++) {
+			builder.build(parentContainer, [data.children[i]]);
 		}
 
-		builder._explorableEntry(parentContainer, data, content, builder, null, iconPath);
+		return false;
+	},
+
+	_panelHandler: function(parentContainer, data, builder) {
+		data.type = 'expander';
+		data.children = [{text: data.text}].concat(data.children);
+		builder._expanderHandler(parentContainer, data, builder);
+
+		if (data.hidden === 'true' || data.hidden === true)
+			$(parentContainer).children('#' + data.id).hide();
+
 		return false;
 	},
 
