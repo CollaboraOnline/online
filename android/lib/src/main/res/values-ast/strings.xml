@@ -13,4 +13,8 @@
     <string name="rate_our_app_title">¡Gracies por usar %1$s!</string>
     <string name="cannot_open_file_chooser">Nun se pue abrir el seleutor de ficheros</string>
     <string name="cant_open_the_document">Nun pudo abrise\'l documentu</string>
+    <string name="ask_for_convert_odf">Confirma\'l formatu del ficheru</string>
+    <string name="use_odf">Usar el formatu ODF</string>
+    <string name="use_text">Usar el formatu Testu</string>
+    <string name="convert_odf_message">Esti documentu pue contener formatu o conteníu que nun pue guardase nel formatu de ficheru «Testu».</string>
 </resources>

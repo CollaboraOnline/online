@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2021-05-06 23:13+0000\n"
+"PO-Revision-Date: 2021-05-18 13:32+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1042,7 +1042,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
-msgstr ""
+msgstr "Referencie~s"
 
 #: src/control/Control.NotebookbarWriter.js:38
 #: src/control/Control.NotebookbarCalc.js:38
@@ -1091,17 +1091,16 @@ msgid "See history"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:131
-#, fuzzy
 msgid "ODF Text Document (.odt)"
 msgstr "Documentu de testu ODF (.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:173
 msgid "EPUB Document (.epub)"
-msgstr ""
+msgstr "Documentu EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:521
 msgid "Text Body"
-msgstr ""
+msgstr "Cuerpu del testu"
 
 #: src/control/Control.NotebookbarWriter.js:524
 msgid "Title"
@@ -1112,7 +1111,6 @@ msgid "~Data"
 msgstr "~Datos"
 
 #: src/control/Control.NotebookbarCalc.js:125
-#, fuzzy
 msgid "ODF Spreadsheet (.ods)"
 msgstr "Fueya de cálculu ODF (.ods)"
 
@@ -1215,7 +1213,6 @@ msgid "Start Presentation"
 msgstr "Aniciar la presentación"
 
 #: src/control/Control.NotebookbarImpress.js:199
-#, fuzzy
 msgid "ODF Presentation (.odp)"
 msgstr "Presentación ODF (.odp)"
 

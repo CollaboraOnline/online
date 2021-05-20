@@ -19,4 +19,8 @@
     <string name="view_only">Només de visualització</string>
     <string name="restarting">S\'està reiniciant…</string>
     <string name="cant_open_the_document">No s\'ha pogut obrir el document</string>
+    <string name="convert_odf_message">Aquest document pot contenir formatació o contingut que no es pot desar en el format de fitxer «Text», ara seleccionat.</string>
+    <string name="ask_for_convert_odf">Confirmeu el format del fitxer</string>
+    <string name="use_odf">Usa el format ODF</string>
+    <string name="use_text">Usa el format de text</string>
 </resources>
