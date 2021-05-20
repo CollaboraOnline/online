@@ -1,5 +1,6 @@
 MAKEFLAGS = --no-builtin-rules
 CTAGS = ctags
+BUILT_SOURCES = node_modules
 
 L10N_PO = $(wildcard $(srcdir)/po/*.po)
 BUNDLE ?= $(if $(filter true,$(ENABLE_DEBUG)),DEBUG,RELEASE)
@@ -518,14 +519,6 @@ $(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 \
 node_modules: package.json archived-packages
 	@npm install
 	@touch node_modules
-
-Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status node_modules
-	@case '$?' in \
-	 *config.status*) \
-	  cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh;; \
-	 *) \
-	  cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@;; \
-	esac;
 
 $(DIST_FOLDER)/device-%.css: $(srcdir)/css/device-%.css
 	@mkdir -p $(dir $@)
