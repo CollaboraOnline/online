@@ -251,6 +251,9 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Toggle bulleted list.', function() {
+		cy.get('#toolbar-up .w2ui-scroll-right')
+			.click();
+
 		cy.get('#tb_editbar_item_defaultbullet')
 			.click();
 
