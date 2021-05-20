@@ -250,7 +250,7 @@ describe('Top toolbar tests.', function() {
 			.should('exist');
 	});
 
-	it('Toggle bulleted list.', function() {
+	it.skip('Toggle bulleted list.', function() {
 		cy.get('#tb_editbar_item_defaultbullet')
 			.click();
 
