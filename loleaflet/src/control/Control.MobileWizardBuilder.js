@@ -21,6 +21,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['basespinfield'] = this.baseSpinField;
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
 		this._controlHandlers['edit'] = this._editControl;
+		this._controlHandlers['panel'] = this._panelHandler;
 
 		this._toolitemHandlers['.uno:FontworkAlignmentFloater'] = function () { return false; };
 		this._toolitemHandlers['.uno:FontworkCharacterSpacingFloater'] = function () { return false; };
@@ -544,6 +545,23 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		var contentNode = {type: 'container', children: [colorsContainer], onshow: L.bind(colorPickerControl.onShow, colorPickerControl)};
 
 		builder._explorableEntry(parentContainer, data, contentNode, builder, valueNode, iconPath, updateFunction);
+		return false;
+	},
+
+	_panelHandler: function(parentContainer, data, builder) {
+		var content = data.children;
+		var contentData = content.length ? content : [content];
+		var contentNode = contentData.length === 1 ? contentData[0] : null;
+
+		var iconPath = null;
+		if (contentNode) {
+			var entryId = contentNode.id;
+			if (entryId && entryId.length) {
+				iconPath = builder._createIconURL(entryId);
+			}
+		}
+
+		builder._explorableEntry(parentContainer, data, content, builder, null, iconPath);
 		return false;
 	},
 

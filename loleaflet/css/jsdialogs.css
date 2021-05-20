@@ -126,6 +126,14 @@ td.jsdialog > [id^='table-box'] {
 	color: #444;
 }
 
+.ui-expander-content.expanded {
+	display: block;
+}
+
+.ui-expander-content:not(.expanded) {
+	display: none;
+}
+
 .ui-expander:hover {
 	cursor: pointer;
 }
