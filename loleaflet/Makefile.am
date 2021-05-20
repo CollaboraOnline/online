@@ -43,9 +43,8 @@ JQUERY_MINIFIED_DIST_IMAGES = $(patsubst $(JQUERY_MINIFIED_IMAGE_PATH)/%.png,$(D
 
 LOLEAFLET_IMAGES_SRC = $(shell find $(srcdir)/images -name '*.*')
 LOLEAFLET_IMAGES_DST = $(patsubst $(srcdir)/%,$(DIST_FOLDER)/%,$(LOLEAFLET_IMAGES_SRC))
-LOLEAFLET_IMAGES_CUSTOM_SRC = $(shell find $(CUSTOM_ICONS_DIRECTORY) -name '*.*')
+LOLEAFLET_IMAGES_CUSTOM_SRC = $(shell if test -n "$(CUSTOM_ICONS_DIRECTORY)"; then find $(CUSTOM_ICONS_DIRECTORY) -name '*.*'; fi)
 LOLEAFLET_IMAGES_CUSTOM_DST = $(patsubst $(CUSTOM_ICONS_DIRECTORY)/%,$(DIST_FOLDER)/images/%,$(LOLEAFLET_IMAGES_CUSTOM_SRC))
-
 LOLEAFLET_L10N_SRC = $(shell find $(srcdir)/l10n -name '*.*')
 if !ENABLE_MOBILEAPP
 LOLEAFLET_L10N_DST =  $(patsubst $(srcdir)/l10n/%,$(DIST_FOLDER)/l10n/%,$(LOLEAFLET_L10N_SRC))
@@ -473,7 +472,7 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_TS_JS) $(LOLEAFLET_ADMIN_JS)
 $(INTERMEDIATE_DIR)/loleaflet-src.js: tscompile.done $(call prereq_loleaflet) $(LOLEAFLET_JS_DST)
 	@mkdir -p $(dir $@)
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
-	@echo -n "Checking for obsolete JS build intermediates in this makefile... "
+	@printf "Checking for obsolete JS build intermediates in this makefile... "
 	@if ! test "z$(LOLEAFLET_ASSERT_INTERSECT)" == "z"; then echo; echo "Error: please remove obsolete files:"; echo "$(LOLEAFLET_ASSERT_INTERSECT)"; exit 1; else echo "clean"; fi
 	@echo "Checking for loleaflet JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src \
@@ -572,7 +571,7 @@ tscompile.done: $(LOLEAFLET_JS_SRC) $(LOLEAFLET_TS_SRC)
 	@touch $@
 
 $(LOLEAFLET_TS_JS_DST): tscompile.done
-	@echo -n ""
+	@:
 
 $(DIST_FOLDER)/src/%.js: $(srcdir)/src/%.js
 	@mkdir -p $(dir $@)
