@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2021-04-26 23:46+0000\n"
-"Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
+"PO-Revision-Date: 2021-05-20 23:32+0000\n"
+"Last-Translator: liimee <alt3753.7@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1096,13 +1096,12 @@ msgid "See history"
 msgstr "Lihat riwayat"
 
 #: src/control/Control.NotebookbarWriter.js:131
-#, fuzzy
 msgid "ODF Text Document (.odt)"
-msgstr "Dokumen teks ODF (*.odt)"
+msgstr "Dokumen Teks ODF (*.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:173
 msgid "EPUB Document (.epub)"
-msgstr ""
+msgstr "Dokumen EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:521
 msgid "Text Body"
@@ -1218,7 +1217,6 @@ msgid "Start Presentation"
 msgstr "Mulai Presentasi"
 
 #: src/control/Control.NotebookbarImpress.js:199
-#, fuzzy
 msgid "ODF Presentation (.odp)"
 msgstr "Presentasi ODF (.odp)"
 
