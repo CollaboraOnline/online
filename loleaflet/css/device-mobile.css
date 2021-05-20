@@ -188,7 +188,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	}
 }
 
-.spreadsheet-tab{
+.spreadsheet-tab {
 	background-color: #eaf5ff;
 	color: #4c4c4c;
 	border-radius: 3px;
@@ -196,6 +196,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	padding-top: 2px;
 	padding-bottom: 6px;
 	margin-top: 4px;
+	height: 100%;
 }
 
 .spreadsheet-tab-selected{
@@ -232,7 +233,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	bottom: 0;
 	background-color: #fbfbfb;
 	border-top: 1px solid #eceff4;
-	height: 40px;
+	height: 36px;
 	padding-top: 6px;
 	padding-left: 1px;
 	padding-bottom: 0px;
@@ -243,6 +244,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	margin-top: 0px !important;
 	margin-bottom: 0px !important;
 }
+
 #toolbar-down table.w2ui-button.over {
 	border: 1px solid #eee;
 	background-color: #eeeeee;
