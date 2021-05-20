@@ -565,7 +565,7 @@ class CanvasSectionContainer {
 	private propagateOnClick(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
-				section.boundsList[i].onClick(position, e);
+				section.boundsList[i].onClick((position ? [position[0], position[1]]: null), e);
 
 			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 				break; // Stop propagation.
@@ -575,7 +575,7 @@ class CanvasSectionContainer {
 	private propagateOnDoubleClick(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
-				section.boundsList[i].onDoubleClick(position, e);
+				section.boundsList[i].onDoubleClick((position ? [position[0], position[1]]: null), e);
 
 			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 				break; // Stop propagation.
@@ -585,7 +585,7 @@ class CanvasSectionContainer {
 	private propagateOnMouseLeave(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMouseLeave(position, e);
+				section.boundsList[i].onMouseLeave((position ? [position[0], position[1]]: null), e);
 
 			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 				break; // Stop propagation.
@@ -595,7 +595,7 @@ class CanvasSectionContainer {
 	private propagateOnMouseEnter(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMouseEnter(position, e);
+				section.boundsList[i].onMouseEnter((position ? [position[0], position[1]]: null), e);
 
 			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 				break; // Stop propagation.
@@ -605,7 +605,7 @@ class CanvasSectionContainer {
 	private propagateOnMouseMove(section: CanvasSectionObject, position: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMouseMove(position, dragDistance, e);
+				section.boundsList[i].onMouseMove((position ? [position[0], position[1]]: null), dragDistance, e);
 
 			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 				break; // Stop propagation.
@@ -615,7 +615,7 @@ class CanvasSectionContainer {
 	private propagateOnLongPress(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
-				section.boundsList[i].onLongPress(position, e);
+				section.boundsList[i].onLongPress((position ? [position[0], position[1]]: null), e);
 
 			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 				break; // Stop propagation.
@@ -625,7 +625,7 @@ class CanvasSectionContainer {
 	private propagateOnMouseDown(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMouseDown(position, e);
+				section.boundsList[i].onMouseDown((position ? [position[0], position[1]]: null), e);
 
 			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 				break; // Stop propagation.
@@ -635,7 +635,7 @@ class CanvasSectionContainer {
 	private propagateOnMouseUp(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMouseUp(position, e);
+				section.boundsList[i].onMouseUp((position ? [position[0], position[1]]: null), e);
 
 			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 				break; // Stop propagation.
@@ -655,7 +655,7 @@ class CanvasSectionContainer {
 	private propagateOnMouseWheel(section: CanvasSectionObject, position: Array<number>, delta: Array<number>, e: MouseEvent) {
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMouseWheel(position, delta, e);
+				section.boundsList[i].onMouseWheel((position ? [position[0], position[1]]: null), delta, e);
 
 			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 				break; // Stop propagation.
@@ -675,7 +675,7 @@ class CanvasSectionContainer {
 	private propagateOnMultiTouchMove(section: CanvasSectionObject, position: Array<number>, distance: number, e: TouchEvent) {
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMultiTouchMove(position, distance, e);
+				section.boundsList[i].onMultiTouchMove((position ? [position[0], position[1]]: null), distance, e);
 
 			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
 				break; // Stop propagation.
