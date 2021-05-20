@@ -627,6 +627,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			console.error('called _initContainer() when this._canvasContainer is present!');
 		}
 
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).createCommentStructure(menuStructure);
+
 		L.TileLayer.prototype._initContainer.call(this);
 
 		var mapContainer = document.getElementById('document-container');
