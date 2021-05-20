@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2021-05-03 21:03+0000\n"
-"Last-Translator: Eugenia Russell <eugenia.russell2019@gmail.com>\n"
+"PO-Revision-Date: 2021-05-15 10:32+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
 "help/el/>\n"
 "Language: el\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-help-el.po\n"
 "X-Pootle-Revision: 830229\n"
 
@@ -783,7 +783,6 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
@@ -791,7 +790,7 @@ msgid ""
 msgstr ""
 "Εισάγει μια στάση στηλοθέτη (μόνο σε πίνακες). Ανάλογα με τον "
 "χρησιμοποιούμενο διαχειριστή παραθύρου, μπορεί να χρησιμοποιηθεί στη θέση "
-"του το Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab."
+"του το <kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -845,29 +844,27 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
 "Με 3 δευτερόλεπτα στην κατάσταση εισαγωγής, το πλήκτρο βέλους εισάγει γραμμή/"
-"στήλη, ενώ το Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>πλήκτρο "
-"βέλους εισάγει κελί"
+"στήλη, ενώ το <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>πλήκτρο "
+"βέλους</kbd> εισάγει κελί"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
 "3 δευτερόλεπτα σε λειτουργία διαγραφής, το πλήκτρο βέλους διαγράφει τη "
-"γραμμή/στήλη, το Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>πλήκτρο "
-"βέλους συγχωνεύει το κελί με γειτονικό"
+"γραμμή/στήλη, το <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</"
+"span><kbd>πλήκτρο βέλους</kbd> συγχωνεύει το κελί με γειτονικό"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""

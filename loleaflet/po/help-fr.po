@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2021-05-06 23:13+0000\n"
-"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"PO-Revision-Date: 2021-05-15 10:32+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "help/fr/>\n"
 "Language: fr\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /fr/libo_online/loleaflet-help-fr.po\n"
 "X-Pootle-Revision: 3339432\n"
 
@@ -781,15 +781,14 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
 "Insère une tabulation (uniquement dans les tableaux). En fonction du "
-"gestionnaire de fenêtre, Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab "
-"peut être utilisé à la place."
+"gestionnaire de fenêtre, <kbd>Alt</kbd><span class=\"kbd--plus\""
+">+</span><kbd>Tab</kbd> peut être utilisé à la place."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -844,29 +843,27 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Inser"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
 "3 secondes en mode Insertion, la flèche de direction insère une ligne/"
-"colonne, Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Flèche de "
-"direction insère une cellule"
+"colonne, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Flèche</kbd> "
+"de direction insère une cellule"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Suppr"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
 "3 secondes en mode Suppression, la flèche de direction supprime une ligne/"
-"colonne, Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Flèche de "
-"direction fusionne la cellule avec la cellule voisine"
+"colonne, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Flèche de "
+"direction</kbd> fusionne la cellule avec la cellule voisine"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
