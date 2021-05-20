@@ -75,7 +75,7 @@ for MODULE in lxml polib; do
         AC_MSG_RESULT([yes])
     else
         AC_MSG_RESULT([no])
-        AS_IF([test `uname -s` = Linux -o `uname -s` = FreeBSD],
+        AS_IF([test `uname -s` = Linux -o `uname -s` = FreeBSD -o `uname -s`= Darwin],
               [AC_MSG_ERROR([${MODULE} for python3 is needed. It might be in a package called python3-${MODULE}.])],
               [AC_MSG_WARN([${MODULE} for python3 is needed. It might be in a package called python3-${MODULE}. But
                if you are building the JS bits on another (Linux) machine, that doesn't matter])])
@@ -116,9 +116,7 @@ AC_ARG_ENABLE([anonymization],
 
 AC_ARG_ENABLE([iosapp],
               AS_HELP_STRING([--enable-iosapp],
-                             [Use in a tree where the only purpose is to build the HTML and CSS stuff
-                              to be copied to a Mac where the iOS app is being built, *or* in a tree where
-                              you will build the iOS app.]))
+                             [Use on a Mac where you will build the iOS app.]))
 
 AC_ARG_WITH([iosapp-appicon],
               AS_HELP_STRING([--with-iosapp-appicon=<path>],
@@ -592,8 +590,12 @@ AC_DEFINE_UNQUOTED([CORE_VERSION_HASH],[["$CORE_VERSION_HASH"]],[LibreOffice cor
 
 LIBPNG_INCLUDES="$with_libpng_includes"
 LIBPNG_LIBS="$with_libpng_libs"
-LOKIT_PATH=`readlink -f $with_lokit_path`
-if test "$enable_androidapp" = "yes"; then
+
+if test "$enable_iosapp" != yes -a "$enable_androidapp" != yes; then
+   LOKIT_PATH=`readlink -f $with_lokit_path`
+fi
+
+if test "$enable_iosapp" = "yes" -o "$enable_androidapp" = "yes"; then
    if test -n "$LIBPNG_INCLUDES" ; then
       AC_MSG_ERROR([--with-libpng-includes is ignored on Android, please remove the parameter.])
    fi
@@ -1060,29 +1062,36 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
 
        ])
 
-AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD"],
-      # We need npm and node only on Linux, both in the normal Online case,
-      # and when only building JS for the iOS app. When building the iOS app itself on macOS,
-      # don't do this.
-      [AC_PATH_PROG(NPM, npm, no)
-       if test "$NPM" = "no"; then
-           AC_MSG_ERROR([npm required to build loleaflet, but not installed])
-       else
-           NPM_VER=`npm -v | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
-           if test "$NPM_VER" -lt 50000; then
-               AC_MSG_ERROR([This npm version is too old, upgrade to >= 5.0.0])
-           fi
-       fi
-
-       AC_PATH_PROG(NODE, node, no)
+AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD" -o `uname -s` = "Darwin"],
+      # We need npm and node unconditionally only on Linux, both in the normal Online case, and when
+      # only building loleaflet for the iOS app. When building the iOS app itself on macOS, this is
+      # optional. If node and npm are not available, loleaflet will have to be built on a Linux box.
+      [AC_PATH_PROG(NODE, node, no)
        if test "$NODE" = "no"; then
-           AC_MSG_ERROR([node required to build loleaflet, but not installed])
+           if test `uname -s` = "Darwin"; then
+               AC_MSG_WARN([The loleaflet bits will have to be built on a Linux machine and copied over])
+           else
+               AC_MSG_ERROR([node required to build loleaflet, but not installed])
+           fi
        else
            NODE_VER=`node --version | sed 's/^v//' | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
            if test "$NODE_VER" -lt 100000; then
                AC_MSG_ERROR([This node version is old, upgrade to >= 10.0.0])
            fi
        fi
+
+       if test "$NODE" != "no"; then
+           AC_PATH_PROG(NPM, npm, no)
+           if test "$NPM" = "no"; then
+               AC_MSG_ERROR([npm required to build loleaflet, but not installed])
+           else
+               NPM_VER=`npm -v | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
+               if test "$NPM_VER" -lt 50000; then
+                   AC_MSG_ERROR([This npm version is too old, upgrade to >= 5.0.0])
+               fi
+           fi
+       fi
+
        if test "$enable_cypress" = "yes"; then
            AC_PATH_PROGS(CHROME, chromium chromium-browser chrome google-chrome, no)
            if test "$CHROME" = "no"; then
