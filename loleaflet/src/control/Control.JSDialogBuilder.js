@@ -1648,6 +1648,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			data.text = _('Font Name');
 		} else if (data.command == '.uno:FontHeight') {
 			data.text = _('Font Size');
+		} else if (data.command == '.uno:StyleApply') {
+			data.text = _('Style');
 		}
 	},
 
