@@ -915,7 +915,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				label.innerHTML = title;
 
 				var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
-				contentDiv.title = title;
 				contentDiv.id = item.name;
 
 				if (!isSelectedTab)
