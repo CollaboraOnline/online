@@ -19,4 +19,8 @@
     <string name="view_only">Afficher seulement</string>
     <string name="restarting">Redémarrage…</string>
     <string name="cant_open_the_document">Impossible d\'ouvrir le document</string>
+    <string name="convert_odf_message">Ce document peut contenir un formatage ou un contenu qui ne peut pas être enregistré dans le format de fichier \"Texte\" actuellement sélectionné.</string>
+    <string name="ask_for_convert_odf">Confirmer le format du fichier</string>
+    <string name="use_odf">Utilisez le format ODF</string>
+    <string name="use_text">Utilisez le format Texte</string>
 </resources>
