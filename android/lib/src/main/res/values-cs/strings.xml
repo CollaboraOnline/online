@@ -19,4 +19,8 @@
     <string name="view_only">Jen prohlížení</string>
     <string name="restarting">Restartování...</string>
     <string name="cant_open_the_document">Dokument nelze otevřít</string>
+    <string name="convert_odf_message">Tento dokument může obsahovat formátování nebo obsah, který nelze uložit v aktuálně vybraném textovém formátu.</string>
+    <string name="ask_for_convert_odf">Potvrdit formát souboru</string>
+    <string name="use_odf">Použít formát ODF</string>
+    <string name="use_text">Použít textový formát</string>
 </resources>
