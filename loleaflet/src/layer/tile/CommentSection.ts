@@ -746,41 +746,27 @@ class CommentSection {
 		this.update();
 	}
 
-	private adjustComment (comment: any) {
-		var rectangles, color, viewId;
-		comment.trackchange = false;
-		rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(comment.textRange || comment.anchorPos), this.sectionProperties.docLayer);
-		comment.anchorPos = L.LOUtil.stringToBounds(comment.anchorPos);
-		comment.anchorPix = this.twipsToCorePixels(comment.anchorPos.min);
-		viewId = this.map.getViewId(comment.author);
-		color = viewId >= 0 ? L.LOUtil.rgbToHex(this.map.getViewColor(viewId)) : '#43ACE8';
-		if (rectangles.length > 0) {
-			comment.textSelected = L.polygon(rectangles, {
-				pointerEvents: 'all',
-				interactive: false,
-				fillColor: color,
-				fillOpacity: 0.25,
-				weight: 2,
-				opacity: 0.25
-			});
-			comment.textSelected.addEventParent(this.map);
-			comment.textSelected.on('click', function() {
-				this.selectById(comment.id);
-			}, this);
-
-			if ((<any>window).mode.isMobile()) {
-				// This would be used to highlight comment when tapped on the comment in wizard
-				comment.wizardHighlight = L.polygon(rectangles, {
-					pointerEvents: 'all',
-					interactive: false,
-					color: '#777777',
-					fillColor: '#777777',
-					fillOpacity: 0.25,
-					weight: 2,
-					opacity: 0.25
-				});
+	private stringToRectangles (str: string) {
+		var matches = str.match(/\d+/g);
+		var rectangles = [];
+		if (matches !== null) {
+			for (var i: number = 0; i < matches.length; i += 4) {
+				rectangles.push([parseInt(matches[i]), parseInt(matches[i + 1]), parseInt(matches[i + 2]), parseInt(matches[i + 3])]);
 			}
 		}
+		return rectangles;
+	}
+
+	private adjustComment (comment: any) {
+		comment.trackchange = false;
+		comment.rectangles = this.stringToRectangles(comment.textRange || comment.anchorPos); // Simple array of point arrays [x1, y1, x2, y2].
+		comment.rectanglesOriginal = this.stringToRectangles(comment.textRange || comment.anchorPos); // This unmodified version will be kept for re-calculations.
+		comment.anchorPos = L.LOUtil.stringToBounds(comment.anchorPos);
+		comment.anchorPix = this.twipsToCorePixels(comment.anchorPos.min);
+		var viewId = this.map.getViewId(comment.author);
+		var color = viewId >= 0 ? L.LOUtil.rgbToHex(this.map.getViewColor(viewId)) : '#43ACE8';
+
+		comment.color = color;
 	}
 
 	private getScaleFactor () {

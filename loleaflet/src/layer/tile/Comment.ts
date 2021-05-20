@@ -9,17 +9,17 @@ declare var Autolinker: any;
 app.definitions.Comment =
 class Comment {
 	context: CanvasRenderingContext2D = null;
-	myTopLeft: Array<number> = null;
+	myTopLeft: Array<number> = [0, 0];
 	documentTopLeft: Array<number> = null;
 	containerObject: any = null;
 	dpiScale: number = null;
 	name: string = L.CSections.Comment.name;
-	backgroundColor: string = 'black';
+	backgroundColor: string = '';
 	borderColor: string = null;
 	boundToSection: string = null;
 	anchor: Array<any> = new Array(0);
 	documentObject: boolean = true;
-	position: Array<number> = new Array(0);
+	position: Array<number> = [0, 0];
 	size: Array<number> = new Array(0);
 	expand: Array<string> = new Array(0);
 	isLocated: boolean = false;
@@ -83,6 +83,70 @@ class Comment {
 		this.name = data.id === 'new' ? 'new comment': 'comment ' + data.id;
 	}
 
+	public onInitialize () {
+		this.createContainerAndWrapper();
+
+		this.createAuthorTable();
+
+		if (this.sectionProperties.data.trackchange && !this.map.isPermissionReadOnly()) {
+			this.createTrackChangeButtons();
+		}
+
+		if (this.sectionProperties.noMenu !== true && this.map.isPermissionEditForComments()) {
+			this.createMenu();
+		}
+
+		if (this.sectionProperties.data.trackchange) {
+			this.sectionProperties.captionNode = L.DomUtil.create('div', 'loleaflet-annotation-caption', this.sectionProperties.wrapper);
+			this.sectionProperties.captionText = L.DomUtil.create('div', '', this.sectionProperties.captionNode);
+		}
+
+		this.sectionProperties.contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content loleaflet-dont-break', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeModify = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeModifyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeModify);
+		this.sectionProperties.contentText = L.DomUtil.create('div', '', this.sectionProperties.contentNode);
+		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeReplyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeReply);
+
+		var button = L.DomUtil.create('div', '', this.sectionProperties.nodeModify);
+		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'blur', this.onLostFocus, this);
+		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'blur', this.onLostFocusReply, this);
+		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, _('Cancel'), this.onCancelClick);
+		this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, _('Save'), this.onSaveComment);
+		button = L.DomUtil.create('div', '', this.sectionProperties.nodeReply);
+		this.createButton(button, 'annotation-cancel-reply-' + this.sectionProperties.data.id, _('Cancel'), this.onCancelClick);
+		this.createButton(button, 'annotation-reply', _('Reply'), this.onReplyClick);
+		L.DomEvent.disableScrollPropagation(this.sectionProperties.container);
+
+		this.sectionProperties.container.style.visibility = 'hidden';
+		this.sectionProperties.nodeModify.style.display = 'none';
+		this.sectionProperties.nodeReply.style.display = 'none';
+
+		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup', 'touchstart', 'touchmove', 'touchend'];
+		L.DomEvent.on(this.sectionProperties.container, 'click', this.onMouseClick, this);
+		for (var it = 0; it < events.length; it++) {
+			L.DomEvent.on(this.sectionProperties.container, events[it], L.DomEvent.stopPropagation, this);
+		}
+
+		L.DomEvent.on(this.sectionProperties.container, 'touchstart',
+			function (e: TouchEvent) {
+				if (e && e.touches.length > 1) {
+					L.DomEvent.preventDefault(e);
+				}
+			},
+			this);
+
+		if ((<any>window).mode.isDesktop()) {
+			L.DomEvent.on(this.sectionProperties.container, {
+				mousewheel: this.map.scrollHandler._onWheelScroll,
+				MozMousePixelScroll: L.DomEvent.preventDefault
+			}, this.map.scrollHandler);
+		}
+
+		document.getElementById('document-container').appendChild(this.sectionProperties.container);
+		this.update();
+	}
+
 	private createContainerAndWrapper () {
 		this.sectionProperties.container = L.DomUtil.create('div', 'loleaflet-annotation');
 
@@ -133,10 +197,6 @@ class Comment {
 	}
 
 	public setData (data: any) {
-		if (this.sectionProperties.data.textSelected) {
-			this.sectionProperties.data.textSelected.removeEventParent(this.map);
-			this.map.removeLayer(this.sectionProperties.data.textSelected);
-		}
 		this.sectionProperties.data = data;
 	}
 
@@ -222,10 +282,160 @@ class Comment {
 		style.whiteSpace = '';
 	}
 
+	// This returns the svg element for the commented portion of the document. Doesn't set the coordinates of it.
+	private getContainerForCommentedText () {
+		var data = this.sectionProperties.data;
+
+		var container = document.getElementById('commented-text-container-' + data.id);
+		if (container)
+			data.textSelected = container;
+
+		if (data.textSelected) {
+			data.textSelected.setAttribute('width', String(this.context.canvas.width));
+			data.textSelected.setAttribute('height', String(this.context.canvas.height));
+			return data.textSelected;
+		}
+		else {
+			var svg: SVGElement = (<any>document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
+			svg.setAttribute('version', '1.1');
+			svg.style.zIndex = '9';
+			svg.id = 'commented-text-container-' + data.id;
+			svg.style.position = 'absolute';
+			svg.style.top = svg.style.left = svg.style.right = svg.style.bottom = '0';
+			svg.setAttribute('width', String(this.context.canvas.width));
+			svg.setAttribute('height', String(this.context.canvas.height));
+
+			document.getElementById('document-container').appendChild(svg);
+			data.textSelected = svg;
+			return svg;
+		}
+	}
+
+	private setPositionAndSize () {
+		var rectangles = this.sectionProperties.data.rectangles;
+		if (rectangles) { // A text file.
+			var xMin: number = Infinity, yMin: number = Infinity, xMax: number = 0, yMax: number = 0;
+			for (var i = 0; i < rectangles.length; i++) {
+				if (rectangles[i][0] < xMin)
+					xMin = rectangles[i][0];
+
+				if (rectangles[i][1] < yMin)
+					yMin = rectangles[i][1];
+
+				if (rectangles[i][0] + rectangles[i][2] > xMax)
+					xMax = rectangles[i][0] + rectangles[i][2];
+
+				if (rectangles[i][1] + rectangles[i][3] > yMax)
+					yMax = rectangles[i][1] + rectangles[i][3];
+			}
+			var documentAnchorSection = this.containerObject.getDocumentAnchorSection();
+			var diff = [documentAnchorSection.myTopLeft[0] - this.documentTopLeft[0], documentAnchorSection.myTopLeft[1] - this.documentTopLeft[1]];
+			this.setPosition(xMin - diff[0], yMin - diff[1]); // This function is added by section container.
+			this.size = [xMax - xMin, yMax - yMin];
+		}
+	}
+
+	private createRectanglesForSelectedText (container: any) {
+		var rectangles = this.sectionProperties.data.rectangles;
+		var data = this.sectionProperties.data;
+		if (rectangles && container) {
+			for (var i = 0; i < rectangles.length; i++) {
+				var rectangle: SVGRectElement = <SVGRectElement>(<any>document.getElementById('commented-text-rectangle-' + data.id + '-' + String(i)));
+				if (!rectangle) {
+					rectangle = document.createElementNS('http://www.w3.org/2000/svg','rect');
+					rectangle.id = 'commented-text-rectangle-' + data.id + '-' + String(i);
+					rectangle.setAttribute('fill-opacity', '1');
+					rectangle.setAttribute('weight', '2');
+					rectangle.setAttribute('opacity', '0.25');
+					container.append(rectangle);
+				}
+
+				rectangle.setAttributeNS(null, 'x', String(rectangles[i][0]));
+				rectangle.setAttributeNS(null, 'y', String(rectangles[i][1]));
+				rectangle.setAttributeNS(null, 'width', String(rectangles[i][2] > 1 ? rectangles[i][2]: 1));
+				rectangle.setAttributeNS(null, 'height', String(rectangles[i][3] > 1 ? rectangles[i][3]: 1));
+				rectangle.setAttributeNS(null, 'fill', data.color);
+				rectangle.setAttributeNS(null, 'stroke', data.color);
+			}
+
+			// Remove extra elements (Example: user added a multi line comment and deleted some lines).
+			for (i = container.children.length - 1; i > -1; i--) {
+				var rectElement = container.children[i];
+				var number = parseInt(rectElement.id.replace('commented-text-rectangle-' + data.id + '-', ''));
+				if (number >= rectangles.length) {
+					container.removeChild(container.children[i]);
+				}
+			}
+		}
+	}
+
+	private removeHighlight () {
+		var element = document.getElementById('commented-text-highlighter-polygon-' + this.sectionProperties.data.id);
+		if (element)
+			element.parentElement.removeChild(element);
+	}
+
+	private highlightSelectedText () {
+		var data = this.sectionProperties.data;
+		var polygonContainer = data.textSelected;
+
+		if (polygonContainer) {
+			if (!document.getElementById('commented-text-highlighter-polygon-' + data.id)) {
+				var highlighter = data.textSelected.children[0].outerHTML;
+				highlighter.setAttribute('color', '#777777');
+				highlighter.setAttribute('fill-color', '#777777');
+				data.textSelected.append(highlighter);
+			}
+		}
+	}
+
+	private rectangleToString () {
+		var rectangles = this.sectionProperties.data.rectangle;
+		if (!rectangles)
+			return;
+
+		var anchorSection = this.containerObject.getDocumentAnchorSection();
+		var diffX = anchorSection.myTopLeft[0] + this.documentTopLeft[0];
+		var diffY = anchorSection.myTopLeft[1] + this.documentTopLeft[1];
+
+		var result = '';
+
+		for (var i = 0; i < rectangles.length; i++) {
+			result += String(Math.round(rectangles[i].x - diffX)) + ',' + String(Math.round(rectangles[i].y - diffY)) + (i < rectangles.length - 1 ? ' ': '');
+		}
+		return result;
+	}
+
+	// This is for svg elements that will be bound to document-container.
+	private convertRectanglesToCoreCoordinates () {
+		var rectangles = this.sectionProperties.data.rectangles;
+		var originals = this.sectionProperties.data.rectanglesOriginal;
+
+		if (rectangles) {
+			var documentAnchorSection = this.containerObject.getDocumentAnchorSection();
+			var diff = [documentAnchorSection.myTopLeft[0] - this.documentTopLeft[0], documentAnchorSection.myTopLeft[1] - this.documentTopLeft[1]];
+
+			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+			for (var i = 0; i < rectangles.length; i++) {
+				rectangles[i][0] = Math.round(originals[i][0] * ratio) + diff[0];
+				rectangles[i][1] = Math.round(originals[i][1] * ratio) + diff[1];
+				rectangles[i][2] = Math.round(originals[i][2] * ratio);
+				rectangles[i][3] = Math.round(originals[i][3] * ratio);
+			}
+		}
+	}
+
 	private updatePosition () {
-		if (this.map) {
-			//var pos = this._map.latLngToLayerPoint(this._latlng);
-			//L.DomUtil.setPosition(this.sectionProperties.container, pos);
+		var data = this.sectionProperties.data;
+		this.convertRectanglesToCoreCoordinates();
+		this.setPositionAndSize();
+		var container = this.getContainerForCommentedText();
+		this.createRectanglesForSelectedText(container);
+
+		// If text is highlighted, refresh it.
+		if (document.getElementById('commented-text-highlighter-polygon-' + data.id)) {
+			//this.removeHighlight();
+			//this.highlightSelectedText();
 		}
 	}
 
@@ -327,9 +537,6 @@ class Comment {
 
 	private show () {
 		this.showMarker();
-		if (this.sectionProperties.data.textSelected && this.map.hasLayer && !this.map.hasLayer(this.sectionProperties.data.textSelected)) {
-			this.map.addLayer(this.sectionProperties.data.textSelected);
-		}
 
 		if ((<any>window).mode.isMobile())
 			return;
@@ -349,20 +556,6 @@ class Comment {
 			this.map.removeLayer(this.sectionProperties.data.textSelected);
 		}
 		this.hideMarker();
-	}
-
-	private onLeave (e: any) {
-		var layerPoint = this.map.mouseEventToLayerPoint(e),
-		    latlng = this.map.layerPointToLatLng(layerPoint);
-		L.DomEvent.stopPropagation(e);
-		if (this.sectionProperties.contextMenu || this.isEdit()) {
-			return;
-		}
-		//this.fire('AnnotationMouseLeave', {
-		//	originalEvent: e,
-		//	latlng: latlng,
-		//	layerPoint: layerPoint
-		//});
 	}
 
 	private onMouseClick (e: any) {
@@ -487,77 +680,37 @@ class Comment {
 		}
 	}
 
-	public onInitialize () {
-		this.createContainerAndWrapper();
-
-		this.createAuthorTable();
-
-		if (this.sectionProperties.data.trackchange && !this.map.isPermissionReadOnly()) {
-			this.createTrackChangeButtons();
-		}
-
-		if (this.sectionProperties.noMenu !== true && this.map.isPermissionEditForComments()) {
-			this.createMenu();
-		}
-
-		if (this.sectionProperties.data.trackchange) {
-			this.sectionProperties.captionNode = L.DomUtil.create('div', 'loleaflet-annotation-caption', this.sectionProperties.wrapper);
-			this.sectionProperties.captionText = L.DomUtil.create('div', '', this.sectionProperties.captionNode);
-		}
-
-		this.sectionProperties.contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content loleaflet-dont-break', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeModify = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeModifyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeModify);
-		this.sectionProperties.contentText = L.DomUtil.create('div', '', this.sectionProperties.contentNode);
-		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeReplyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeReply);
-
-		var button = L.DomUtil.create('div', '', this.sectionProperties.nodeModify);
-		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'blur', this.onLostFocus, this);
-		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'blur', this.onLostFocusReply, this);
-		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, _('Cancel'), this.onCancelClick);
-		this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, _('Save'), this.onSaveComment);
-		button = L.DomUtil.create('div', '', this.sectionProperties.nodeReply);
-		this.createButton(button, 'annotation-cancel-reply-' + this.sectionProperties.data.id, _('Cancel'), this.onCancelClick);
-		this.createButton(button, 'annotation-reply', _('Reply'), this.onReplyClick);
-		L.DomEvent.disableScrollPropagation(this.sectionProperties.container);
-
-		this.sectionProperties.container.style.visibility = 'hidden';
-		this.sectionProperties.nodeModify.style.display = 'none';
-		this.sectionProperties.nodeReply.style.display = 'none';
-
-		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup', 'touchstart', 'touchmove', 'touchend'];
-		L.DomEvent.on(this.sectionProperties.container, 'click', this.onMouseClick, this);
-		L.DomEvent.on(this.sectionProperties.container, 'mouseleave', this.onLeave, this);
-		for (var it = 0; it < events.length; it++) {
-			L.DomEvent.on(this.sectionProperties.container, events[it], L.DomEvent.stopPropagation, this);
-		}
-
-		L.DomEvent.on(this.sectionProperties.container, 'touchstart',
-			function (e: TouchEvent) {
-				if (e && e.touches.length > 1) {
-					L.DomEvent.preventDefault(e);
-				}
-			},
-			this);
-
-		if ((<any>window).mode.isDesktop()) {
-			L.DomEvent.on(this.sectionProperties.container, {
-				mousewheel: this.map.scrollHandler._onWheelScroll,
-				MozMousePixelScroll: L.DomEvent.preventDefault
-			}, this.map.scrollHandler);
-		}
-
-		document.getElementById('document-container').appendChild(this.sectionProperties.container);
-		this.update();
-	}
-
 	public isDisplayed () {
 		return (this.sectionProperties.container.style && this.sectionProperties.container.style.visibility === '');
 	}
 
 	public onResize () {
+		this.updatePosition();
+	}
 
+	private doesRectangleContainPoint (rectangle: any, point: Array<number>): boolean {
+        if (point[0] >= rectangle[0] && point[0] <= rectangle[0] + rectangle[2]) {
+            if (point[1] >= rectangle[1] && point[1] <= rectangle[1] + rectangle[3]) {
+                return true;
+            }
+        }
+        return false;
+	}
+
+	public onClick (point: Array<number>, e: MouseEvent) {
+		var rectangles = this.sectionProperties.data.rectangles;
+		point[0] = point[0] + this.myTopLeft[0];
+		point[1] = point[1] + this.myTopLeft[1];
+		if (rectangles) { // A text file.
+			for (var i: number = 0; i < rectangles.length; i++) {
+				if (this.doesRectangleContainPoint(rectangles[i], point)) {
+					this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
+					e.stopPropagation();
+					this.stopPropagating();
+					return;
+				}
+			}
+		}
 	}
 
 	public onDraw () {}
@@ -572,10 +725,17 @@ class Comment {
 
 	public onMouseLeave () {}
 
-	public onNewDocumentTopLeft () {}
+	public onNewDocumentTopLeft () {
+		this.updatePosition();
+	}
 
-	public onRemove () {}
-	public onClick () {}
+	public onRemove () {
+		var data = this.sectionProperties.data;
+		if (data.textSelected) {
+			data.textSelected.parentElement.removeChild(data.textSelected);
+		}
+	}
+
 	public onMouseWheel () {}
 	public onDoubleClick () {}
 	public onContextMenu () {}
