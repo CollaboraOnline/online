@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2021-03-23 13:42+0000\n"
+"PO-Revision-Date: 2021-05-15 10:32+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "help/de/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /de/libo_online/loleaflet-help-de.po\n"
 "X-Pootle-Revision: 3254192\n"
 
@@ -785,15 +785,14 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Tabulator"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
 "Fügt einen Tabulator ein (nur in Tabellen). Abhängig davon, ob von der "
-"Benutzeroberfläche bereits verwendet, könnte auch Alt</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Tabulator funktionieren."
+"Benutzeroberfläche bereits verwendet, könnte auch <kbd>Alt</kbd><span class="
+"\"kbd--plus\">+</span><kbd>Tabulator</kbd> funktionieren."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -846,28 +845,27 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Einfg"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
 "3 Sekunden andauernder Einfügemodus, Pfeiltasten fügen Zeilen/Spalten ein, "
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeiltasten fügt Zellen ein"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeiltasten</kbd> fügt "
+"Zellen ein"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Entf"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
 "3 Sekunden andauernder Löschmodus, Pfeiltasten löschen Zeilen/Spalten, "
-"Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeiltasten verbindet mit "
-"Nachbarzellen"
+"<kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeiltasten</kbd> "
+"verbindet mit Nachbarzellen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""

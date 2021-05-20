@@ -3,16 +3,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2020-09-12 22:35+0000\n"
-"Last-Translator: Mihail Balabanov <m.balabanov@gmail.com>\n"
-"Language-Team: Bulgarian <https://weblate.documentfoundation.org/projects/"
-"libo_online/loleaflet-help/bg/>\n"
+"PO-Revision-Date: 2021-05-15 10:32+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"Language-Team: Bulgarian <https://hosted.weblate.org/projects/"
+"collabora-online/help/bg/>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /bg/libo_online/loleaflet-help-bg.po\n"
 "X-Pootle-Revision: 2706811\n"
 
@@ -782,15 +782,14 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
 "Вмъква позиция за табулация (само в таблици). В зависимост от използвания "
-"диспечер на прозорци, вместо това може да се използва Alt</kbd><span class=\""
-"kbd--plus\">+</span><kbd>Tab."
+"диспечер на прозорци, вместо това може да се използва <kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Tab</kbd>."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -845,28 +844,27 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
 "3 секунди в режим „Вмъкване“, клавиш със стрелка вмъква ред/колона, "
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>стрелка вмъква клетка"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>стрелка</kbd> вмъква "
+"клетка"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
 "3 секунди в режим „Изтриване“, клавиш със стрелка изтрива ред/колона, "
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>стрелка обединява клетка "
-"със съседна"
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>стрелка</kbd> "
+"обединява клетка със съседна"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
