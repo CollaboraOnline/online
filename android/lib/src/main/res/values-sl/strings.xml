@@ -19,4 +19,8 @@
     <string name="view_only">Samo pokaži</string>
     <string name="restarting">Ponoven zagon ...</string>
     <string name="cant_open_the_document">Dokumenta ni možno odpreti</string>
+    <string name="use_text">Uporabi zapis besedila</string>
+    <string name="ask_for_convert_odf">Potrdi vrsto zapisa datoteke</string>
+    <string name="convert_odf_message">Ta dokument lahko vsebuje oblikovanje ali vsebino, ki je ni možno shraniti v trenutno izbrani vrsti zapisa »Besedilo«.</string>
+    <string name="use_odf">Uporabi zapis ODF</string>
 </resources>
