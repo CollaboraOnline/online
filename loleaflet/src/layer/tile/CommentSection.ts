@@ -668,9 +668,6 @@ class CommentSection {
 		} else if (action === 'Remove') {
 			if ((<any>window).mode.isMobile() && obj.comment.id === annotation.sectionProperties.data.id) {
 				var child = this.sectionProperties.commentList[this.getIndexOf(obj.comment.id) + 1];
-				// Need to restore the original layers here because once removed they will be inaccessible and will stay there
-				this.map.removeLayer(annotation.sectionProperties.data.wizardHighlight);
-				this.map.addLayer(annotation.sectionProperties.data.textSelected);
 				if (child && child.sectionProperties.data.parent === annotation.sectionProperties.data.id)
 					annotation = child;
 				else
