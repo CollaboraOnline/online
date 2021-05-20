@@ -86,6 +86,65 @@ class CommentSection {
 
 		this.backgroundColor = this.containerObject.getClearColor();
 		this.initializeContextMenus();
+
+		if ((<any>window).mode.isMobile()) {
+			this.showSection = false;
+			this.size[0] = 0;
+		}
+	}
+
+	private createCommentStructureWriter (menuStructure: any) {
+		var rootComment, lastChild, comment;
+		var commentList = this.sectionProperties.commentList;
+		var showResolved = this.sectionProperties.showResolved;
+
+		for (var i = 0; i < commentList.length; i++) {
+			if (commentList[i].sectionProperties.data.parent === '0') {
+
+				lastChild = this.getLastChildIndexOf(commentList[i].sectionProperties.data.id);
+				var commentThread = [];
+				while (true) {
+					comment = {
+						id: 'comment' + commentList[lastChild].sectionProperties.data.id,
+						enable: true,
+						data: commentList[lastChild].sectionProperties.data,
+						type: 'comment',
+						text: commentList[lastChild].sectionProperties.data.text,
+						annotation: commentList[lastChild],
+						children: []
+					};
+
+					if (showResolved || comment.data.resolved !== 'true') {
+						commentThread.unshift(comment);
+					}
+
+					if (commentList[lastChild].sectionProperties.data.parent === '0')
+						break;
+
+					lastChild = this.getIndexOf(commentList[lastChild].sectionProperties.data.parent);
+				}
+				if (commentThread.length > 0)
+				{
+					rootComment = {
+						id: commentThread[0].id,
+						enable: true,
+						data: commentThread[0].data,
+						type: 'rootcomment',
+						text: commentThread[0].data.text,
+						annotation: commentThread[0].annotation,
+						children: commentThread
+					};
+
+					menuStructure['children'].push(rootComment);
+				}
+			}
+		}
+	}
+
+	public createCommentStructure (menuStructure: any) {
+		if (this.sectionProperties.docLayer._docType === 'text') {
+			this.createCommentStructureWriter(menuStructure);
+		}
 	}
 
 	public newAnnotationVex (comment: any, addCommentFn: any, isMod: any, displayContent: any = undefined) {

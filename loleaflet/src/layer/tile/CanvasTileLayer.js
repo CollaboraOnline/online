@@ -995,8 +995,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		if (this._docType === 'text' || this._docType === 'presentation' || this._docType === 'drawing') {
-			if (!window.mode.isMobile())
-				app.sectionContainer.addSection(new app.definitions.CommentSection());
+			app.sectionContainer.addSection(new app.definitions.CommentSection());
 		}
 
 		this._syncTileContainerSize();
@@ -4807,7 +4806,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				menuStructure['customTitle'] = customTitleBar;
 		}
 
-		this._map._docLayer._createCommentStructure(menuStructure);
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).createCommentStructure(menuStructure);
 
 		if (menuStructure.children.length === 0) {
 			var noComments = {
