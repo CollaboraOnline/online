@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2021-04-06 11:03+0000\n"
+"PO-Revision-Date: 2021-05-17 08:32+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "help/he/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /he/libo_online/loleaflet-help-he.po\n"
 "X-Pootle-Revision: 3930691\n"
 
@@ -837,27 +837,25 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
-"3 שניות במצב הוספה (Insert), מקשי החצים מוסיפים שורה/עמודה, Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>מקש חץ מוסיף תא"
+"3 שניות במצב הוספה (Insert), מקשי החצים מוסיפים שורה/עמודה, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>מקש חץ</kbd> מוסיף תא"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 שניות במצב מחיקה, מקשי חצים מוחקים שורה/עמודה, Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>מקש חץ ממזג את התא עם התאים הסמוכים"
+"3 שניות במצב מחיקה, מקשי חצים מוחקים שורה/עמודה, <kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>מקש חץ</kbd> ממזג את התא עם התאים הסמוכים"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
@@ -2567,7 +2565,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:635-11
 msgid "Set the properties of the element of the object."
-msgstr ""
+msgstr "הגדרת מאפייני הרכיב של העצם."
 
 #, fuzzy
 #~ msgid ""
