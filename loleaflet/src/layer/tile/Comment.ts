@@ -235,7 +235,7 @@ class Comment {
 		return this.sectionProperties.data.id === comment.sectionProperties.data.parent;
 	}
 
-	private updateResolvedField (state: string) {
+	public updateResolvedField (state: string) {
 		this.sectionProperties.resolvedTextElement.text = state === 'true' ? 'Resolved' : '';
 	}
 

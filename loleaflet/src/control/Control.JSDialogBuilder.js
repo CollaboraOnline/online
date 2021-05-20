@@ -2219,19 +2219,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		    empty = '',
 		    click = 'click';
 		if (data.data.trackchange) {
-			var wrapper = data.annotation._wrapper = L.DomUtil.create(tagDiv, 'loleaflet-annotation-redline-content-wrapper wizard-comment-box', container);
+			var wrapper = data.annotation.sectionProperties.wrapper = L.DomUtil.create(tagDiv, 'loleaflet-annotation-redline-content-wrapper wizard-comment-box', container);
 		} else {
-			wrapper = data.annotation._wrapper = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-wrapper wizard-comment-box', container);
+			wrapper = data.annotation.sectionProperties.wrapper = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-wrapper wizard-comment-box', container);
 		}
 
 		data.annotation._author = L.DomUtil.create('table', 'loleaflet-annotation-table', wrapper);
-		var tbody = L.DomUtil.create('tbody', empty, data.annotation._author);
+		var tbody = L.DomUtil.create('tbody', empty, data.annotation.sectionProperties.author);
 		var rowResolved = L.DomUtil.create('tr', empty, tbody);
 		var tdResolved = L.DomUtil.create(tagTd, 'loleaflet-annotation-resolved', rowResolved);
 		var pResolved = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-resolved', tdResolved);
-		data.annotation._resolved = pResolved;
+		data.annotation.sectionProperties.data.resolved = pResolved;
 
-		data.annotation._updateResolvedField(data.annotation._data.resolved);
+		data.annotation.updateResolvedField(data.annotation.sectionProperties.data.resolved);
 
 		var tr = L.DomUtil.create('tr', empty, tbody);
 		var tdImg = L.DomUtil.create(tagTd, 'loleaflet-annotation-img', tr);
@@ -2239,15 +2239,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
 
 		imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg'));
-		imgAuthor.setAttribute('width', data.annotation.options.imgSize.x);
-		imgAuthor.setAttribute('height', data.annotation.options.imgSize.y);
+		imgAuthor.setAttribute('width', data.annotation.sectionProperties.imgSize.x);
+		imgAuthor.setAttribute('height', data.annotation.sectionProperties.imgSize.y);
 		imgAuthor.onerror = function () { imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg')); };
 
-		data.annotation._authorAvatarImg = imgAuthor;
-		data.annotation._authorAvatartdImg = tdImg;
+		data.annotation.sectionProperties.authorAvatarImg = imgAuthor;
+		data.annotation.sectionProperties.authorAvatartdImg = tdImg;
 
-		data.annotation._contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
-		data.annotation._contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
+		data.annotation.sectionProperties.contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
+		data.annotation.sectionProperties.contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
 
 		if (data.data.trackchange && !this.map.isPermissionReadOnly()) {
 			var tdAccept = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
@@ -2266,7 +2266,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}, data.annotation);
 		}
 
-		if (data.annotation.options.noMenu !== true && this.map.isPermissionEditForComments()) {
+		if (data.annotation.sectionProperties.noMenu !== true && this.map.isPermissionEditForComments()) {
 			var tdMenu = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
 			var divMenu = data.annotation._menu = L.DomUtil.create(tagDiv, data.data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
 			divMenu.title = _('Open menu');
@@ -2281,14 +2281,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			};
 		}
 		if (data.data.trackchange) {
-			data.annotation._captionNode = L.DomUtil.create(tagDiv, 'loleaflet-annotation-caption', wrapper);
-			data.annotation._captionText = L.DomUtil.create(tagDiv, empty, data.annotation._captionNode);
+			data.annotation.sectionProperties.captionNode = L.DomUtil.create(tagDiv, 'loleaflet-annotation-caption', wrapper);
+			data.annotation.sectionProperties.captionText = L.DomUtil.create(tagDiv, empty, data.annotation.sectionProperties.captionNode);
 		}
 
 		var _contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content loleaflet-dont-break', wrapper);
 		var _contentText = L.DomUtil.create('div', '', _contentNode);
 		$(_contentText).text(data.text);
-		$(data.annotation._contentAuthor).text(data.data.author);
+		$(data.annotation.sectionProperties.contentAuthor).text(data.data.author);
 
 		var d = new Date(data.data.dateTime.replace(/,.*/, 'Z'));
 		var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
