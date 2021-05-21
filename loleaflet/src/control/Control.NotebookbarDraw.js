@@ -25,6 +25,12 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'command': '.uno:Save'
 					},
 					{
+						'id': 'fullscreen',
+						'type': 'toolitem',
+						'text': _UNO('.uno:FullScreen'),
+						'command': '.uno:FullScreen'
+					},
+					{
 						'id': 'undo',
 						'type': 'toolitem',
 						'text': _('Undo'),
