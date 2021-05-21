@@ -256,6 +256,13 @@
 	color: var(--gray-light-txt--color);
 }
 
+.hasnotebookbar .ui-content.unotoolbutton.selected:hover,
+.unotoolbutton.notebookbar:hover,
+.hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline):hover {
+	outline: 1px solid var(--gray-color);
+	border-radius: 0.1px;
+}
+
 /* avoid bug with arrow in new line when window is small */
 #table-Home-Section-Insert #table-LineB9 #InsertGraphic.notebookbar,
 #table-Home-Section-Insert #table-GroupB20 #InsertTable.notebookbar {
@@ -333,6 +340,8 @@
 .unotoolbutton.notebookbar:not(.disabled):hover, #clearFormatting.notebookbar div img:hover, #FormatPaintbrush.notebookbar div img:hover {
 	background-color: #e6e6e6b0;
 	cursor: pointer;
+	outline: 1px solid var(--gray-color);
+	border-radius: 0.1px;
 }
 
 .unotoolbutton.notebookbar .selected-color {
