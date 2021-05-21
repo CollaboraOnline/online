@@ -64,6 +64,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:ReportIssue'] = this._onlineHelpControl;
 		this._toolitemHandlers['.uno:LatestUpdates'] = this._onlineHelpControl;
 		this._toolitemHandlers['.uno:About'] = this._onlineHelpControl;
+		this._toolitemHandlers['.uno:FullScreen'] = this._onlineHelpControl;
 
 		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
 		this._toolitemHandlers['.uno:SetOutline'] = function() {};
