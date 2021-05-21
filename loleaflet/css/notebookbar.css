@@ -62,11 +62,24 @@
 	text-shadow: 0px 0px 0.2px rgb(135, 105, 0);
 	text-shadow: 0px 0px 0.2px rgb(var(--yellow0-txt-primary-color));
 }
-.ui-tab.notebookbar:hover:not(.selected) {
-	border-radius: 0.1px;
-	background-color: #f9f9f9;
+.main-nav.hasnotebookbar.text-color-indicator .ui-tab.notebookbar:hover {
+	color: rgb(var(--blue1-txt-primary-color));
+	box-shadow: 0 2px rgb(var(--blue1-txt-primary-color));
+}
+.main-nav.hasnotebookbar.spreadsheet-color-indicator .ui-tab.notebookbar:hover {
+	color: rgb(var(--green0-txt-primary-color));
+	box-shadow: 0 2px rgb(var(--green0-txt-primary-color));
+}
+.main-nav.hasnotebookbar.presentation-color-indicator .ui-tab.notebookbar:hover {
+	color: rgb(var(--orange1-txt-primary-color));
+	box-shadow: 0 2px rgb(var(--orange1-txt-primary-color));
+}
+.main-nav.hasnotebookbar.drawing-color-indicator .ui-tab.notebookbar:hover {
+	color: rgb(var(--yellow0-txt-primary-color));
+	box-shadow: 0 2px rgb(var(--yellow0-txt-primary-color));
+}
+.ui-tab.notebookbar:hover {
 	cursor: pointer;
-	color: #555;
 }
 /* Document Logo */
 .main-nav.hasnotebookbar #document-header {
