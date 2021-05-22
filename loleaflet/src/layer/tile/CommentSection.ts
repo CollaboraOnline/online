@@ -230,6 +230,32 @@ class CommentSection {
 		$(dialog.contentEl).find('textarea').focus();
 	}
 
+	public hightlightComment (comment: any) {
+		this.removeHighlighters();
+
+		var commentList = this.sectionProperties.commentList;
+
+		var lastChild: any = this.getLastChildIndexOf(comment.sectionProperties.data.id);
+
+		while (true) {
+			commentList[lastChild].highlightSelectedText();
+
+			if (commentList[lastChild].sectionProperties.data.parent === '0')
+				break;
+
+			lastChild = this.getIndexOf(commentList[lastChild].sectionProperties.data.parent);
+		}
+	}
+
+	public removeHighlighters () {
+		var commentList = this.sectionProperties.commentList;
+		for (var i: number = 0; i < commentList.length; i++) {
+			if (commentList[i].isHighlighted) {
+				commentList[i].removeHighlight();
+			}
+		}
+	}
+
 	public removeItem (id: any) {
 		var annotation;
 		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
@@ -861,6 +887,7 @@ class CommentSection {
 	private updateScaling () {
 		if ((<any>window).mode.isDesktop() || this.sectionProperties.commentList.length === 0)
 			return;
+
 		var contentWrapperClassName, menuClassName;
 		if (this.sectionProperties.commentList[0].sectionProperties.data.trackchange) {
 			contentWrapperClassName = '.loleaflet-annotation-redline-content-wrapper';
@@ -872,7 +899,8 @@ class CommentSection {
 
 		var initNeeded = (this.sectionProperties.initialLayoutData === null);
 		var contentWrapperClass = $(contentWrapperClassName);
-		if (initNeeded && contentWrapperClass.length > 0) {
+
+		if (initNeeded) {
 			var contentAuthor = $('.loleaflet-annotation-content-author');
 			var dateClass = $('.loleaflet-annotation-date');
 
@@ -883,14 +911,6 @@ class CommentSection {
 				dateFontSize: parseInt(dateClass.css('font-size')),
 			};
 		}
-
-		// What if this._initialLayoutData is still null when we get here? (I.e. if
-		// contentWrapperClass.length == 0.) No idea. Using
-		// this._initialLayoutData.menuWidth below will lead to an unhandled exception.
-		// Maybe best to just return then? Somebody who understands the code could fix this
-		// better, perhaps.
-		if (this.sectionProperties.initialLayoutData === null)
-			return;
 
 		var menuClass = $(menuClassName);
 		if ((this.sectionProperties.initialLayoutData.menuWidth === undefined) && menuClass.length > 0) {

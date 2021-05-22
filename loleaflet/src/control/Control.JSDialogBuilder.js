@@ -2160,88 +2160,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_createComment: function(container, data, isRoot) {
-
-		//this function is replica of Annotation._initLayout
-		//todo: find way to reuse existing mathod or merge both the methods
-		var tagTd = 'td',
-		    tagDiv = 'div',
-		    empty = '',
-		    click = 'click';
-		if (data.data.trackchange) {
-			var wrapper = data.annotation.sectionProperties.wrapper = L.DomUtil.create(tagDiv, 'loleaflet-annotation-redline-content-wrapper wizard-comment-box', container);
-		} else {
-			wrapper = data.annotation.sectionProperties.wrapper = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-wrapper wizard-comment-box', container);
+		// This function changes the container of the comment div for mobile wizard view.
+		// First, remove comment from its container.
+		if (data.annotation.sectionProperties.wrapper) {
+			if (data.annotation.sectionProperties.wrapper.parentElement) {
+				data.annotation.sectionProperties.wrapper.parentElement.removeChild(data.annotation.sectionProperties.wrapper);
+			}
 		}
 
-		data.annotation._author = L.DomUtil.create('table', 'loleaflet-annotation-table', wrapper);
-		var tbody = L.DomUtil.create('tbody', empty, data.annotation.sectionProperties.author);
-		var rowResolved = L.DomUtil.create('tr', empty, tbody);
-		var tdResolved = L.DomUtil.create(tagTd, 'loleaflet-annotation-resolved', rowResolved);
-		var pResolved = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-resolved', tdResolved);
-		data.annotation.sectionProperties.data.resolved = pResolved;
-
-		data.annotation.updateResolvedField(data.annotation.sectionProperties.data.resolved);
-
-		var tr = L.DomUtil.create('tr', empty, tbody);
-		var tdImg = L.DomUtil.create(tagTd, 'loleaflet-annotation-img', tr);
-		var tdAuthor = L.DomUtil.create(tagTd, 'loleaflet-annotation-author', tr);
-		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
-
-		imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg'));
-		imgAuthor.setAttribute('width', data.annotation.sectionProperties.imgSize.x);
-		imgAuthor.setAttribute('height', data.annotation.sectionProperties.imgSize.y);
-		imgAuthor.onerror = function () { imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg')); };
-
-		data.annotation.sectionProperties.authorAvatarImg = imgAuthor;
-		data.annotation.sectionProperties.authorAvatartdImg = tdImg;
-
-		data.annotation.sectionProperties.contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
-		data.annotation.sectionProperties.contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
-
-		if (data.data.trackchange && !this.map.isPermissionReadOnly()) {
-			var tdAccept = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
-			var acceptButton = data.annotation._acceptButton = L.DomUtil.create('button', 'loleaflet-redline-accept-button', tdAccept);
-			var tdReject = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
-			var rejectButton = data.annotation._rejectButton = L.DomUtil.create('button', 'loleaflet-redline-reject-button', tdReject);
-
-			acceptButton.title = _('Accept change');
-			L.DomEvent.on(acceptButton, click, function() {
-				this.map.fire('RedlineAccept', {id: data.data.id});
-			}, data.annotation);
-
-			rejectButton.title = _('Reject change');
-			L.DomEvent.on(rejectButton, click, function() {
-				this.map.fire('RedlineReject', {id: data.data.id});
-			}, data.annotation);
-		}
-
-		if (data.annotation.sectionProperties.noMenu !== true && this.map.isPermissionEditForComments()) {
-			var tdMenu = L.DomUtil.create(tagTd, 'loleaflet-annotation-menubar', tr);
-			var divMenu = data.annotation._menu = L.DomUtil.create(tagDiv, data.data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
-			divMenu.title = _('Open menu');
-			divMenu.annotation = data.annotation;
-			if (this.map._docLayer._docType === 'text')
-				divMenu.isRoot = isRoot;
-
-			divMenu.onclick = function(e) {
-				L.DomEvent.stopPropagation(e);
-				L.DomEvent.preventDefault(e);
-				$(divMenu).contextMenu();
-			};
-		}
-		if (data.data.trackchange) {
-			data.annotation.sectionProperties.captionNode = L.DomUtil.create(tagDiv, 'loleaflet-annotation-caption', wrapper);
-			data.annotation.sectionProperties.captionText = L.DomUtil.create(tagDiv, empty, data.annotation.sectionProperties.captionNode);
-		}
-
-		var _contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content loleaflet-dont-break', wrapper);
-		var _contentText = L.DomUtil.create('div', '', _contentNode);
-		$(_contentText).text(data.text);
-		$(data.annotation.sectionProperties.contentAuthor).text(data.data.author);
-
-		var d = new Date(data.data.dateTime.replace(/,.*/, 'Z'));
-		var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-		$(data.annotation._contentDate).text(isNaN(d.getTime()) ? data.data.dateTime: d.toLocaleDateString(String.locale, dateOptions));
+		data.annotation.sectionProperties.menu.isRoot = isRoot;
+		// Now, add it into the container.
+		container.appendChild(data.annotation.sectionProperties.wrapper);
 	},
 
 	_rootCommentControl: function(parentContainer, data, builder) {
@@ -2251,7 +2180,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return;
 		}
 
-		var container = L.DomUtil.create('div',  'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
+		var mainContainer = document.getElementById('explorable-entry level-' + builder._currentDepth + ' ' + data.id);
+		if (!mainContainer)
+			mainContainer = L.DomUtil.create('div', 'ui-explorable-entry level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
+
+		mainContainer.id = 'explorable-entry level-' + builder._currentDepth + ' ' + data.id;
+
+		var container = document.getElementById(data.id);
+		if (!container)
+			container = L.DomUtil.create('div',  'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', mainContainer);
+
 		container.annotation = data.annotation;
 		container.id = data.id;
 		builder._createComment(container, data, true);
@@ -2270,31 +2208,46 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}
 				$(replyCountNode).text(replyCountText);
 			}
-			var childContainer = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
+
+			var childContainer = document.getElementById('comment-thread' + data.id);
+
+			if (!childContainer)
+				childContainer = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, mainContainer);
+
 			childContainer.id = 'comment-thread' + data.id;
 			childContainer.title = _('Comment');
-
-			builder._currentDepth++;
-			builder.build(childContainer, data.children);
-			builder._currentDepth--;
 
 			$(childContainer).hide();
 
 			if (builder.wizard) {
 				if (data.children.length >= 2) {
 					L.DomUtil.remove($(container).find('.loleaflet-annotation-menubar')[0]);
-					var arrowSpan = L.DomUtil.create('span','sub-menu-arrow',$(container).find('.loleaflet-annotation-content-wrapper')[0]);
+
+					var arrowSpan = document.getElementById('arrow span ' + data.id);
+
+					if (!arrowSpan)
+						arrowSpan = L.DomUtil.create('span','sub-menu-arrow',$(container).find('.loleaflet-annotation-content-wrapper')[0]);
+
 					arrowSpan.innerHTML = '>';
 					arrowSpan.style.padding = '0px';
+					arrowSpan.id = 'arrow span ' + data.id;
 
-					$(container).click(function() {
-						builder.wizard.goLevelDown(childContainer);
-					});
+					container.onclick = function() {
+						builder.wizard.goLevelDown(mainContainer);
+						builder.build(childContainer, data.children);
+					};
+
+					var backButton = document.getElementById('mobile-wizard-back');
+
+					backButton.onclick = function () {
+						if (backButton.className !== 'close-button')
+							builder.build(mainContainer, data);
+					};
 				}
 			}
 		}
 		$(container).click(function() {
-			builder.map._docLayer._addHighlightSelectedWizardComment(data.annotation);
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hightlightComment(data.annotation);
 		});
 		return false;
 	},
