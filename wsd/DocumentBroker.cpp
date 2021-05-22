@@ -955,7 +955,7 @@ bool DocumentBroker::attemptLock(const ClientSession& session, std::string& fail
     return bResult;
 }
 
-bool DocumentBroker::needToUploadToStorage() const
+DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
 {
     // When destroying, we might have to force uploading if always_save_on_exit=true.
     if (isMarkedToDestroy())
@@ -965,8 +965,17 @@ bool DocumentBroker::needToUploadToStorage() const
         if (always_save)
         {
             LOG_INF("Need to upload per always_save_on_exit config (MarkedToDestroy=true).");
-            return true;
+            return NeedToUpload::Force;
         }
+    }
+
+    if (!_storageManager.lastUploadSuccessful())
+    {
+        //FIXME: Forcing is used when overwriting a 'document conflict' and
+        // for uploading when otherwise we might not have an immediate
+        // reason. We shouldn't use a single flag for both these uses.
+        LOG_INF("Enabling forced uploading to storage as last attempt had failed.");
+        return NeedToUpload::Force;
     }
 
     // Get the modified-time of the file on disk.
@@ -974,7 +983,10 @@ bool DocumentBroker::needToUploadToStorage() const
         = FileUtil::Stat(_storage->getRootFilePath()).modifiedTimepoint();
 
     // Compare to the last uploaded file's modified-time.
-    return currentModifiedTime != _storageManager.getLastUploadedFileModifiedTime();
+    if (currentModifiedTime != _storageManager.getLastUploadedFileModifiedTime())
+        return NeedToUpload::Yes; // Timestamp changed, upload.
+
+    return NeedToUpload::No; // No reason to upload, seems up-to-date.
 }
 
 void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool success,
@@ -991,9 +1003,11 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     _saveManager.setLastSaveResult(success || result == "unmodified");
 
     // See if we have anything to upload.
-    if (needToUploadToStorage())
+    NeedToUpload needToUploadState = needToUploadToStorage();
+    if (needToUploadState != NeedToUpload::No)
     {
-        uploadToStorage(sessionId, success, result, /*force=*/false);
+        uploadToStorage(sessionId, success, result,
+                        /*force=*/needToUploadState == NeedToUpload::Force);
     }
 }
 
@@ -1001,27 +1015,6 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
                                      const std::string& result, bool force)
 {
     assertCorrectThread();
-
-    // Force saving on exit, if enabled.
-    if (!force)
-    {
-        static const bool always_save
-            = LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
-        if (isMarkedToDestroy() && always_save)
-        {
-            LOG_INF("Enabling forced uploading to storage per always_save_on_exit config.");
-            force = true;
-        }
-        else if (!_storageManager.lastUploadSuccessful())
-        {
-            //FIXME: Forcing is used when overwriting a 'document conflict' and
-            // for uploading when otherwise we might not have an immediate
-            // reason. We shouldn't use a single flag for both these uses.
-            // Also, we should use the file timestamp to decide when we upload.
-            LOG_INF("Enabling forced uploading to storage as last attempt had failed.");
-            force = true;
-        }
-    }
 
     if (force && _storage)
     {
