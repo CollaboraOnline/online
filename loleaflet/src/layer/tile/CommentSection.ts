@@ -179,17 +179,16 @@ class CommentSection {
 					if (isMod) {
 						annotation = comment;
 					} else {
-						annotation = L.annotation(L.latLng(0, 0), comment, {noMenu: true}).addTo(that.map);
+						annotation = that.add(comment, true);
 						that.sectionProperties.draft = annotation;
 					}
 
 					annotation.sectionProperties.data.text = data.comment;
 					comment.text = data.comment;
 
-					// FIXME: Unify annotation code in all modules...
-					addCommentFn.call(that, {annotation: annotation}, comment);
+					addCommentFn.call(annotation, annotation, comment);
 					if (!isMod)
-						that.map.removeLayer(annotation);
+						that.containerObject.removeSection(annotation);
 				}
 			}
 		});
@@ -331,9 +330,10 @@ class CommentSection {
 				dateTime: new Date().toDateString(),
 				id: annotation.sectionProperties.data.id,
 				avatar: avatar,
-				parent: annotation.sectionProperties.data.parent
+				parent: annotation.sectionProperties.data.parent,
+				anchorPos: annotation.sectionProperties.data.anchorPos.clone()
 			};
-			this.sectionProperties.docLayer.newAnnotationVex(replyAnnotation, annotation.onReplyClick,/* isMod */ false, '');
+			this.newAnnotationVex(replyAnnotation, annotation.onReplyClick,/* isMod */ false, '');
 		}
 		else {
 			annotation.reply();
@@ -627,7 +627,7 @@ class CommentSection {
 		}
 	}
 
-	public add (comment: any) {
+	public add (comment: any, mobileReply: boolean = false) {
 		var annotation = new app.definitions.Comment(comment, comment.id === 'new' ? {noMenu: true} : {}, this);
 
 		if (comment.parent && comment.parent > '0') {
@@ -640,6 +640,8 @@ class CommentSection {
 			this.showHideComment(annotation);
 		}
 		else {
+			if (mobileReply)
+				annotation.name += '-reply'; // Section name.
 			this.containerObject.addSection(annotation);
 			this.sectionProperties.commentList.push(annotation);
 		}
@@ -1074,8 +1076,12 @@ class CommentSection {
 
 	private doLayout (zoomEnd = false) {
 		if (this.sectionProperties.commentList.length > 0) {
-			this.updateScaling();
 			this.orderCommentList();
+
+			if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet())
+				return; // No layout changes for mobile || tablet.
+
+			this.updateScaling();
 
 			var topRight: Array<number> = [this.myTopLeft[0], this.myTopLeft[1] + this.sectionProperties.marginY - this.documentTopLeft[1]];
 			var yOrigin = null;
