@@ -1,1 +1,29 @@
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect fill="#8959ab" height="20" rx="0" ry="1" width="20" x="2" y="2"/><g fill="#fff"><rect height="8" ry="1" width="16" x="4" y="3"/><path d="m8 15c-.554 0-1 .446-1 1v4c0 .554.446 1 1 1h2v-5h2v5h5c .554 0 1-.446 1-1v-4c0-.554-.446-1-1-1z"/></g></svg>
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"
+	 class="icn icn--highlight-color"
+     fill="#83beec"
+     stroke="#1e8bcd"
+	 stroke-linecap="round"
+	 stroke-linejoin="round"
+      >
+      <path d="m 2.5,2.5 h 19 v 19 h -19 z" />
+      <path d="m 3.5,2.5 v 9 h 17 v -9 z m 3,12 v 7 h 12 v -7 z" />
+      <path d="m 10.5,16.5 h 1 v 5 h -1 z" />
+  </g>
+  <g id="background"
+     class="icn icn--area-color"
+     fill="#fafafa"
+      >
+      <path d="M 5,3 C 4.446,3 4,3.446 4,4 v 6 c 0,0.554 0.446,1 1,1 h 14 c 0.554,0 1,-0.446 1,-1 V 4 C 20,3.446 19.554,3 19,3 Z m 3,12 c -0.554,0 -1,0.446 -1,1 v 4 c 0,0.554 0.446,1 1,1 h 9 c 0.554,0 1,-0.446 1,-1 v -4 c 0,-0.554 -0.446,-1 -1,-1 z" />
+  </g>
+  <g id="background"
+	 class="icn icn--highlight-color"
+     fill="#83beec"
+     stroke="#1e8bcd"
+	 stroke-linecap="round"
+	 stroke-linejoin="round"
+      >
+      <path d="m 10.5,16.5 h 1 v 5 h -1 z" />
+  </g>
+</svg>

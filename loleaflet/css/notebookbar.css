@@ -103,7 +103,7 @@
 
 .notebookbar-shortcuts-bar > table {
 	display: block;
-	height: 33px;
+	height: 31px;
 }
 
 .notebookbar-shortcuts-bar .unotoolbutton.notebookbar .unobutton {
@@ -112,6 +112,16 @@
 	margin: 0 !important;
 }
 
+.notebookbar-shortcuts-bar #Save,
+.notebookbar-shortcuts-bar #Presentation,
+.notebookbar-shortcuts-bar #FullScreen,
+.notebookbar-shortcuts-bar #Undo,
+.notebookbar-shortcuts-bar #Redo {
+	height: 27px;
+	width: 24px;
+	display: inline-block;
+	margin: 0px !important;
+}
 
 /* Hamburger icon: from shortcutsbar (notebookbar) */
 .hasnotebookbar.text-color-indicator #shortcuts-menubar-icon,
@@ -143,25 +153,24 @@
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar li,
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar > li > a {
 	background-color: transparent;
+	margin: 0px !important;
 }
 
 
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar > li > a {
 	cursor: pointer;
 	border: none;
-	height: 20px;
+	height: 27px;
 }
 
 .hasnotebookbar #shortcuts-menubar-icon {
 	position: absolute;
-	top: 56%;
-	left: 0px;
+	top: 50%;
+	left: 6px;
 	height: 1px;
-	width: 13px;
+	width: 16px;
 	-webkit-transition: all 0.25s;
 	transition: all 0.25s;
-
-	margin-left: 8px;
 }
 
 .hasnotebookbar #shortcuts-menubar-icon:before,
@@ -170,7 +179,7 @@
 	top: 52%;
 	left: 0px;
 	height: 1px;
-	width: 13px;
+	width: 16px;
 	-webkit-transition: all 0.25s;
 	transition: all 0.25s;
 }
