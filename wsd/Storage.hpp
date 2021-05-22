@@ -88,8 +88,10 @@ public:
 
         const std::string& getOwnerId() const { return _ownerId; }
 
+        /// Set the modified time as reported to the WOPI host.
         void setModifiedTime(const std::chrono::system_clock::time_point& modifiedTime) { _modifiedTime = modifiedTime; }
 
+        /// Get the modified time as reported by the WOPI host.
         const std::chrono::system_clock::time_point& getModifiedTime() const { return _modifiedTime; }
 
     private:
