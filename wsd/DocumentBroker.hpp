@@ -494,6 +494,7 @@ private:
                                  const std::string& saveAsFilename, const bool isRename,
                                  const bool force);
 
+    /// Handles the completion of uploading to storage, both success and failure cases.
     void handleUploadToStorageResponse(const StorageBase::UploadResult& uploadResult);
 
     /**

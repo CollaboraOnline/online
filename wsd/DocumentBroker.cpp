@@ -1029,13 +1029,6 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
     const auto it = _sessions.find(sessionId);
     if (_docState.isMarkedToDestroy() || (it != _sessions.end() && it->second->isCloseFrame()))
         disconnectSessionInternal(sessionId);
-
-    // If marked to destroy, then this was the last session.
-    if (_docState.isMarkedToDestroy() || _sessions.empty())
-    {
-        // Stop so we get cleaned up and removed.
-        _stop = true;
-    }
 }
 
 void DocumentBroker::uploadAsToStorage(const std::string& sessionId,
@@ -1259,6 +1252,17 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         }
 
         broadcastLastModificationTime();
+
+        // If marked to destroy, then this was the last session.
+        if (_docState.isMarkedToDestroy() || _sessions.empty())
+        {
+            // Stop so we get cleaned up and removed.
+            LOG_DBG("Stopping after uploading because "
+                    << (_sessions.empty() ? "there are no active sessions left."
+                                          : "the document is marked to destroy."));
+            _stop = true;
+        }
+
         return;
     }
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::DISKFULL)
