@@ -48,8 +48,6 @@ class Comment {
 		this.sectionProperties.draggingStarted = false;
 		this.sectionProperties.dragStartPosition = null;
 
-		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
-
 		this.sectionProperties.minWidth = options.minWidth ? options.minWidth : 160;
 		this.sectionProperties.maxHeight = options.maxHeight ? options.maxHeight : 50;
 		this.sectionProperties.imgSize = options.imgSize ? options.imgSize : [32, 32];
@@ -79,6 +77,8 @@ class Comment {
 		this.sectionProperties.nodeReply = null;
 		this.sectionProperties.nodeReplyText = null;
 		this.sectionProperties.contextMenu = false;
+
+		this.sectionProperties.isHighlighted = false;
 
 		this.name = data.id === 'new' ? 'new comment': 'comment ' + data.id;
 	}
@@ -150,10 +150,12 @@ class Comment {
 	private createContainerAndWrapper () {
 		this.sectionProperties.container = L.DomUtil.create('div', 'loleaflet-annotation');
 
+		var mobileClass = (<any>window).mode.isMobile() ? ' wizard-comment-box': '';
+
 		if (this.sectionProperties.data.trackchange) {
-			this.sectionProperties.wrapper = L.DomUtil.create('div', 'loleaflet-annotation-redline-content-wrapper', this.sectionProperties.container);
+			this.sectionProperties.wrapper = L.DomUtil.create('div', 'loleaflet-annotation-redline-content-wrapper' + mobileClass, this.sectionProperties.container);
 		} else {
-			this.sectionProperties.wrapper = L.DomUtil.create('div', 'loleaflet-annotation-content-wrapper', this.sectionProperties.container);
+			this.sectionProperties.wrapper = L.DomUtil.create('div', 'loleaflet-annotation-content-wrapper' + mobileClass, this.sectionProperties.container);
 		}
 
 		document.getElementById('document-container').appendChild(this.sectionProperties.container);
@@ -350,10 +352,11 @@ class Comment {
 					container.append(rectangle);
 				}
 
-				rectangle.setAttributeNS(null, 'x', String(rectangles[i][0]));
-				rectangle.setAttributeNS(null, 'y', String(rectangles[i][1]));
-				rectangle.setAttributeNS(null, 'width', String(rectangles[i][2] > 1 ? rectangles[i][2]: 1));
-				rectangle.setAttributeNS(null, 'height', String(rectangles[i][3] > 1 ? rectangles[i][3]: 1));
+				// Svg elements are added into document-container. Their coordinates are in CSS units.
+				rectangle.setAttributeNS(null, 'x', String(Math.round(rectangles[i][0] / this.dpiScale)));
+				rectangle.setAttributeNS(null, 'y', String(Math.round(rectangles[i][1] / this.dpiScale)));
+				rectangle.setAttributeNS(null, 'width', String(Math.round(rectangles[i][2] / this.dpiScale) > 1 ? Math.round(rectangles[i][2] / this.dpiScale): 1));
+				rectangle.setAttributeNS(null, 'height', String(Math.round(rectangles[i][3] / this.dpiScale) > 1 ? Math.round(rectangles[i][3] / this.dpiScale): 1));
 				rectangle.setAttributeNS(null, 'fill', data.color);
 				rectangle.setAttributeNS(null, 'stroke', data.color);
 			}
@@ -370,40 +373,32 @@ class Comment {
 	}
 
 	private removeHighlight () {
-		var element = document.getElementById('commented-text-highlighter-polygon-' + this.sectionProperties.data.id);
+		var selectionContainer = this.getContainerForCommentedText();
+		if (selectionContainer)
+			selectionContainer.style.display = 'block';
+
+		var element = document.getElementById('commented-text-highlighter-container-' + this.sectionProperties.data.id);
 		if (element)
 			element.parentElement.removeChild(element);
+
+			this.sectionProperties.isHighlighted = false;
 	}
 
-	private highlightSelectedText () {
-		var data = this.sectionProperties.data;
-		var polygonContainer = data.textSelected;
+	public highlightSelectedText () {
+		var selectionContainer = this.getContainerForCommentedText();
 
-		if (polygonContainer) {
-			if (!document.getElementById('commented-text-highlighter-polygon-' + data.id)) {
-				var highlighter = data.textSelected.children[0].outerHTML;
-				highlighter.setAttribute('color', '#777777');
-				highlighter.setAttribute('fill-color', '#777777');
-				data.textSelected.append(highlighter);
+		if (selectionContainer) {
+			selectionContainer.style.display = 'none';
+			var highlighterContainer: SVGElement = (<any>document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
+			highlighterContainer = selectionContainer.cloneNode();
+			highlighterContainer.id = 'commented-text-highlighter-container-' + this.sectionProperties.data.id;
+			selectionContainer.parentElement.append(highlighterContainer);
+			for (var i = 0; i < selectionContainer.children.length; i++) {
+				selectionContainer.children[i].setAttribute('stroke', '#777777');
+				selectionContainer.children[i].setAttribute('fill', '#777777');
 			}
+			this.sectionProperties.isHighlighted = true;
 		}
-	}
-
-	private rectangleToString () {
-		var rectangles = this.sectionProperties.data.rectangle;
-		if (!rectangles)
-			return;
-
-		var anchorSection = this.containerObject.getDocumentAnchorSection();
-		var diffX = anchorSection.myTopLeft[0] + this.documentTopLeft[0];
-		var diffY = anchorSection.myTopLeft[1] + this.documentTopLeft[1];
-
-		var result = '';
-
-		for (var i = 0; i < rectangles.length; i++) {
-			result += String(Math.round(rectangles[i].x - diffX)) + ',' + String(Math.round(rectangles[i].y - diffY)) + (i < rectangles.length - 1 ? ' ': '');
-		}
-		return result;
 	}
 
 	// This is for svg elements that will be bound to document-container.
@@ -433,9 +428,9 @@ class Comment {
 		this.createRectanglesForSelectedText(container);
 
 		// If text is highlighted, refresh it.
-		if (document.getElementById('commented-text-highlighter-polygon-' + data.id)) {
-			//this.removeHighlight();
-			//this.highlightSelectedText();
+		if (document.getElementById('commented-text-highlighter-container-' + data.id)) {
+			this.removeHighlight();
+			this.highlightSelectedText();
 		}
 	}
 
@@ -482,7 +477,7 @@ class Comment {
 		return (this.sectionProperties.container.style && this.sectionProperties.container.style.visibility === '');
 	}
 
-	updateScaling (scaleFactor: number, initialLayoutData: any) {
+	public updateScaling (scaleFactor: number, initialLayoutData: any) {
 		if ((<any>window).mode.isDesktop())
 			return;
 
@@ -643,7 +638,7 @@ class Comment {
 		return this;
 	}
 
-	private isEdit () {
+	public isEdit () {
 		return (this.sectionProperties.nodeModify && this.sectionProperties.nodeModify.style.display !== 'none') ||
 		       (this.sectionProperties.nodeReply && this.sectionProperties.nodeReply.style.display !== 'none');
 	}
@@ -734,6 +729,10 @@ class Comment {
 		if (data.textSelected) {
 			data.textSelected.parentElement.removeChild(data.textSelected);
 		}
+
+		var highlighter = document.getElementById('commented-text-highlighter-container-' + data.id);
+		if (highlighter)
+			highlighter.parentElement.removeChild(highlighter);
 	}
 
 	public onMouseWheel () {}
