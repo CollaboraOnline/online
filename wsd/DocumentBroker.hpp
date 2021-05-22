@@ -476,9 +476,17 @@ private:
     /// with the child and cleans up ChildProcess etc.
     void terminateChild(const std::string& closeReason);
 
+    /// Encodes whether or not uploading is needed.
+    enum class NeedToUpload
+    {
+        No, //< No need to upload, data up-to-date.
+        Yes, //< Data is out of date.
+        Force //< Force uploading, typically because always_save_on_exit is set.
+    };
+
     /// Returns true iff the Document in Storage is
     /// out-of-date and we must upload the last file on disk.
-    bool needToUploadToStorage() const;
+    NeedToUpload needToUploadToStorage() const;
 
     /// Upload the doc to the storage.
     void uploadToStorageInternal(const std::string& sessionId, bool success,
