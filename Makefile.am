@@ -10,7 +10,7 @@ endif
 
 else
 
-SUBDIRS = loleaflet . test cypress_test
+SUBDIRS = . loleaflet test cypress_test
 
 export ENABLE_DEBUG
 
@@ -134,6 +134,8 @@ loolwsd_json = $(patsubst %.cpp,%.cmd,$(loolwsd_sources))
 
 loolwsd_SOURCES = $(loolwsd_sources) \
                   $(shared_sources)
+
+EXTRA_loolwsd_DEPENDENCIES = loleaflet/node_modules
 
 noinst_PROGRAMS = clientnb \
                   connect \
@@ -581,3 +583,6 @@ $(abs_srcdir)/compile_commands.json: $(JSON_COMPILE_SRC)
 	@echo -n "]" >> $@
 
 compile_commands: $(abs_srcdir)/compile_commands.json
+
+loleaflet/node_modules: loleaflet/package.json loleaflet/archived-packages
+	@cd loleaflet && npm install
