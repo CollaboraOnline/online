@@ -126,10 +126,7 @@ L.Control.MobileWizard = L.Control.extend({
 		}
 
 		if (window.commentWizard === true) {
-			var map = this._map;
-			$('.ui-header.level-0.mobile-wizard').each(function() {
-				map._docLayer._removeHighlightSelectedWizardComment(this.annotation);
-			});
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
 		}
 
 		$('#mobile-wizard').hide();
@@ -309,12 +306,8 @@ L.Control.MobileWizard = L.Control.extend({
 					$('#mobile-wizard-tabs').show();
 				}
 			}
-			var map = this._map;
 			if (window.commentWizard === true) {
-				$('.ui-header.level-0.mobile-wizard').each(function() {
-					map._docLayer._removeHighlightSelectedWizardComment(this.annotation);
-				});
-
+				app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
 			}
 		}
 	},

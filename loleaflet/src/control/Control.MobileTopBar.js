@@ -3,7 +3,7 @@
  * L.Control.SearchBar
  */
 
-/* global $ w2ui _UNO _ */
+/* global $ w2ui _UNO _ app */
 L.Control.MobileTopBar = L.Control.extend({
 
 	options: {
@@ -132,10 +132,7 @@ L.Control.MobileTopBar = L.Control.extend({
 		else if (id === 'comment_wizard') {
 			if (window.commentWizard) {
 				window.commentWizard = false;
-				var map = this._map;
-				$('.ui-header.level-0.mobile-wizard').each(function() {
-					map._docLayer._removeHighlightSelectedWizardComment(this.annotation);
-				});
+				app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
 				this.map.fire('closemobilewizard');
 				toolbar.uncheck(id);
 			}
