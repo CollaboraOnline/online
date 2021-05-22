@@ -192,6 +192,7 @@ class Comment {
 	private createMenu () {
 		var tdMenu = L.DomUtil.create('td', 'loleaflet-annotation-menubar', document.getElementById('author table row ' + this.sectionProperties.data.id));
 		this.sectionProperties.menu = L.DomUtil.create('div', this.sectionProperties.data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
+		this.sectionProperties.menu.onclick = this.menuOnMouseClick.bind(this);
 		var divMenuTooltipText = _('Open menu');
 		this.sectionProperties.menu.dataset.title = divMenuTooltipText;
 		this.sectionProperties.menu.setAttribute('aria-label', divMenuTooltipText);
@@ -553,13 +554,13 @@ class Comment {
 		this.hideMarker();
 	}
 
-	private onMouseClick (e: any) {
-		var target = e.target;
+	private menuOnMouseClick (e: any) {
+		$(this.sectionProperties.menu).contextMenu();
 		L.DomEvent.stopPropagation(e);
-		if (L.DomUtil.hasClass(target, 'loleaflet-annotation-menu') || L.DomUtil.hasClass(target, 'loleaflet-annotation-menu-redline')) {
-			$(target).contextMenu();
-			return;
-		} else if (((<any>window).mode.isMobile() || (<any>window).mode.isTablet())
+	}
+
+	private onMouseClick (e: any) {
+		if (((<any>window).mode.isMobile() || (<any>window).mode.isTablet())
 			&& this.map.getDocType() == 'spreadsheet') {
 			this.hide();
 		}

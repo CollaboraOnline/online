@@ -2222,6 +2222,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		data.annotation.sectionProperties.menu.isRoot = isRoot;
 		// Now, add it into the container.
 		container.appendChild(data.annotation.sectionProperties.wrapper);
+
+		$(container).find('.loleaflet-annotation-menubar')[0].style.display = 'block';
+
+		var replyCountNode = document.getElementById('reply-count-node-' + data.id);
+		if (replyCountNode)
+			replyCountNode.style.display = 'none';
+
+		var arrowSpan = document.getElementById('arrow span ' + data.id);
+		if (arrowSpan)
+			arrowSpan.style.display = 'none';
 	},
 
 	_rootCommentControl: function(parentContainer, data, builder) {
@@ -2244,12 +2254,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		container.annotation = data.annotation;
 		container.id = data.id;
 		builder._createComment(container, data, true);
-		if (data.children.length > 1)
+		if (data.children.length > 1 && mainContainer.id !== 'comment-thread' + data.id)
 		{
 			var numberOfReplies = data.children.length - 1;
 			if (numberOfReplies > 0)
 			{
-				var replyCountNode = L.DomUtil.create('div','loleaflet-annotation-reply-count loleaflet-annotation-content',$(container).find('.loleaflet-annotation-content-wrapper')[0]);
+				var replyCountNode = document.getElementById('reply-count-node-' + data.id);
+
+				if (!replyCountNode)
+					replyCountNode = L.DomUtil.create('div','loleaflet-annotation-reply-count loleaflet-annotation-content', $(container).find('.loleaflet-annotation-content-wrapper')[0]);
+
+				replyCountNode.id = 'reply-count-node-' + data.id;
+				replyCountNode.style.display = 'block';
+
 				var replyCountText;
 				if (numberOfReplies === 1) {
 					replyCountText = numberOfReplies + ' ' + _('reply');
@@ -2271,33 +2288,33 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(childContainer).hide();
 
 			if (builder.wizard) {
-				if (data.children.length >= 2) {
-					L.DomUtil.remove($(container).find('.loleaflet-annotation-menubar')[0]);
+				$(container).find('.loleaflet-annotation-menubar')[0].style.display = 'none';
 
-					var arrowSpan = document.getElementById('arrow span ' + data.id);
+				var arrowSpan = document.getElementById('arrow span ' + data.id);
 
-					if (!arrowSpan)
-						arrowSpan = L.DomUtil.create('span','sub-menu-arrow',$(container).find('.loleaflet-annotation-content-wrapper')[0]);
+				if (!arrowSpan)
+					arrowSpan = L.DomUtil.create('span','sub-menu-arrow',$(container).find('.loleaflet-annotation-content-wrapper')[0]);
 
-					arrowSpan.innerHTML = '>';
-					arrowSpan.style.padding = '0px';
-					arrowSpan.id = 'arrow span ' + data.id;
+				arrowSpan.style.display = 'block';
+				arrowSpan.innerHTML = '>';
+				arrowSpan.style.padding = '0px';
+				arrowSpan.id = 'arrow span ' + data.id;
 
-					container.onclick = function() {
-						builder.wizard.goLevelDown(mainContainer);
-						builder.build(childContainer, data.children);
-					};
+				container.onclick = function() {
+					builder.wizard.goLevelDown(mainContainer);
+					builder.build(childContainer, data.children);
+				};
 
-					var backButton = document.getElementById('mobile-wizard-back');
+				var backButton = document.getElementById('mobile-wizard-back');
 
-					backButton.onclick = function () {
-						if (backButton.className !== 'close-button')
-							builder.build(mainContainer, data);
-					};
-				}
+				backButton.onclick = function () {
+					if (backButton.className !== 'close-button')
+						builder.build(mainContainer, data);
+				};
 			}
 		}
-		$(container).click(function() {
+
+		container.addEventListener('click', function() {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hightlightComment(data.annotation);
 		});
 		return false;
