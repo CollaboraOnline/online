@@ -1072,10 +1072,11 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
     }
 
     // Check that we are actually about to upload a successfully saved document.
+    auto session = it->second;
     if (!success && !force)
     {
         LOG_ERR("Cannot store docKey [" << _docKey << "] as .uno:Save has failed in LOK.");
-        it->second->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
+        session->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
         broadcastSaveResult(false, "Could not save document in LibreOfficeKit");
         return;
     }
@@ -1086,8 +1087,8 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
     }
 
     const bool isSaveAs = !saveAsPath.empty();
-    const Authorization auth = it->second->getAuthorization();
-    const std::string uri = isSaveAs ? saveAsPath : it->second->getPublicUri().toString();
+    const Authorization auth = session->getAuthorization();
+    const std::string uri = isSaveAs ? saveAsPath : session->getPublicUri().toString();
 
     // Map the FileId from the docKey to the new filename to anonymize the new filename as the FileId.
     const std::string newFilename = Util::getFilenameFromURL(uri);
@@ -1120,7 +1121,7 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
 
     LOG_DBG("Uploading [" << _docKey << "] after saving to URI [" << uriAnonym << "].");
 
-    _uploadRequest = Util::make_unique<UploadRequest>(uriAnonym, newFileModifiedTime, it->second,
+    _uploadRequest = Util::make_unique<UploadRequest>(uriAnonym, newFileModifiedTime, session,
                                                       isSaveAs, isRename);
 
     StorageBase::AsyncUploadCallback asyncUploadCallback =
@@ -1149,7 +1150,7 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
         LOG_ERR("Failed to upload [" << _docKey << "] asynchronously.");
     };
 
-    _storage->uploadLocalFileToStorageAsync(auth, it->second->getCookies(), *_lockCtx, saveAsPath,
+    _storage->uploadLocalFileToStorageAsync(auth, session->getCookies(), *_lockCtx, saveAsPath,
                                             saveAsFilename, isRename, *_poll, asyncUploadCallback);
 }
 
