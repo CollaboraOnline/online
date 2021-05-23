@@ -1090,7 +1090,6 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
     }
 
     const bool isSaveAs = !saveAsPath.empty();
-    const Authorization auth = session->getAuthorization();
     const std::string uri = isSaveAs ? saveAsPath : session->getPublicUri().toString();
 
     // Map the FileId from the docKey to the new filename to anonymize the new filename as the FileId.
@@ -1155,8 +1154,9 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
         LOG_ERR("Failed to upload [" << _docKey << "] asynchronously.");
     };
 
-    _storage->uploadLocalFileToStorageAsync(auth, session->getCookies(), *_lockCtx, saveAsPath,
-                                            saveAsFilename, isRename, *_poll, asyncUploadCallback);
+    _storage->uploadLocalFileToStorageAsync(session->getAuthorization(), session->getCookies(),
+                                            *_lockCtx, saveAsPath, saveAsFilename, isRename, *_poll,
+                                            asyncUploadCallback);
 }
 
 void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResult& uploadResult)
