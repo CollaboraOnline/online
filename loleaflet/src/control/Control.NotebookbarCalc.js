@@ -185,42 +185,16 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:Paste'
 			},
 			{
-				'id': 'GroupB9',
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA6',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:Cut', true),
 								'command': '.uno:Cut'
-							}
-						]
-					},
-					{
-						'id': 'LineB7',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:Copy', true),
-								'command': '.uno:Copy'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'Home-Section-Style',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'LineA7',
-						'type': 'toolbox',
-						'children': [
+							},
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:FormatPaintbrush'),
@@ -229,9 +203,13 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 						]
 					},
 					{
-						'id': 'LineB8',
 						'type': 'toolbox',
 						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Copy', true),
+								'command': '.uno:Copy'
+							},
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:ResetAttributes'),
