@@ -350,7 +350,6 @@ LOLEAFLET_JS =\
 	src/map/anim/Map.PanAnimation.js \
 	src/dom/PosAnimation.Timer.js \
 	src/layer/AnnotationManagerBase.js \
-	src/layer/AnnotationManager.js \
 	src/layer/AnnotationManagerImpress.js \
 	src/control/Control.Scroll.Annotation.js \
 	src/layer/marker/Annotation.js \
