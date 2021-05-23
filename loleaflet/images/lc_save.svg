@@ -1,9 +1,8 @@
 <?xml-stylesheet type="text/css" href="icons.css" ?>
 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <g id="background"
-	 class="icn icn--highlight-color"  
-     fill="#83beec" 
-     stroke="#1e8bcd" 
+     fill="#63BBEE" 
+     stroke="#0369A3" 
 	 stroke-linecap="round" 
 	 stroke-linejoin="round"
       >
@@ -19,8 +18,8 @@
   </g>
   <g id="background"
 	 class="icn icn--highlight-color"  
-     fill="#83beec" 
-     stroke="#1e8bcd" 
+     fill="#63BBEE" 
+     stroke="#0369A3" 
 	 stroke-linecap="round" 
 	 stroke-linejoin="round"
       >
