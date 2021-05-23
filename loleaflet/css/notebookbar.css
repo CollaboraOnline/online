@@ -125,29 +125,11 @@
 }
 
 /* Hamburger icon: from shortcutsbar (notebookbar) */
-.hasnotebookbar.text-color-indicator #shortcuts-menubar-icon,
-.hasnotebookbar.text-color-indicator #shortcuts-menubar-icon:before,
-.hasnotebookbar.text-color-indicator #shortcuts-menubar-icon:after {
+.hasnotebookbar #shortcuts-menubar-icon,
+.hasnotebookbar #shortcuts-menubar-icon:before,
+.hasnotebookbar #shortcuts-menubar-icon:after {
 	background: rgb(3, 105, 163);
 	background: rgb(var(--blue1-txt-primary-color));
-}
-.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon,
-.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon:before,
-.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon:after {
-	background: rgb(16, 104, 2);
-	background: rgb(var(--green0-txt-primary-color));
-}
-.hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon,
-.hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon:before,
-.hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon:after {
-	background: rgb(163, 62, 3);
-	background: rgb(var(--orange1-txt-primary-color));
-}
-.hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon,
-.hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon:before,
-.hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon:after {
-	background: rgb(135, 105, 0);
-	background: rgb(var(--yellow0-txt-primary-color));
 }
 
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar,
@@ -168,7 +150,7 @@
 	position: absolute;
 	top: 50%;
 	left: 6px;
-	height: 1px;
+	height: 2px;
 	width: 16px;
 	-webkit-transition: all 0.25s;
 	transition: all 0.25s;
@@ -179,7 +161,7 @@
 	position: absolute;
 	top: 52%;
 	left: 0px;
-	height: 1px;
+	height: 2px;
 	width: 16px;
 	-webkit-transition: all 0.25s;
 	transition: all 0.25s;
@@ -195,6 +177,33 @@
 	content: '';
 	top: 6px;
 	left: 0;
+}
+
+.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon,
+.hasnotebookbar.spreadsheet-color-indicator #Save,
+.hasnotebookbar.spreadsheet-color-indicator #FullScreen,
+.hasnotebookbar.spreadsheet-color-indicator #Undo,
+.hasnotebookbar.spreadsheet-color-indicator #Redo {
+	-webkit-filter: hue-rotate(290deg);
+	filter: hue-rotate(290deg);
+}
+
+.hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon,
+.hasnotebookbar.presentation-color-indicator #Save,
+.hasnotebookbar.presentation-color-indicator #Presentation,
+.hasnotebookbar.presentation-color-indicator #Undo,
+.hasnotebookbar.presentation-color-indicator #Redo {
+	-webkit-filter: hue-rotate(190deg);
+	filter: hue-rotate(190deg);
+}
+
+.hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon,
+.hasnotebookbar.drawing-color-indicator #Save,
+.hasnotebookbar.drawing-color-indicator #FullScreen,
+.hasnotebookbar.drawing-color-indicator #Undo,
+.hasnotebookbar.drawing-color-indicator #Redo {
+	-webkit-filter: hue-rotate(210deg);
+	filter: hue-rotate(210deg);
 }
 
 /* options section */
