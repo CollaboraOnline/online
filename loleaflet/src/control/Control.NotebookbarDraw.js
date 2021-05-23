@@ -244,36 +244,13 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'container',
 				'children': [
 					{
-						'id': 'LineA6',
 						'type': 'toolbox',
 						'children': [
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:Cut'),
 								'command': '.uno:Cut'
-							}
-						]
-					},
-					{
-						'id': 'LineB7',
-						'type': 'toolbox',
-						'children': [
-							{
-								'type': 'toolitem',
-								'text': _UNO('.uno:Copy'),
-								'command': '.uno:Copy'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
+							},
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:FormatPaintbrush'),
@@ -284,6 +261,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 					{
 						'type': 'toolbox',
 						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:Copy'),
+								'command': '.uno:Copy'
+							},
 							{
 								'type': 'toolitem',
 								'text': _UNO('.uno:SetDefault'),

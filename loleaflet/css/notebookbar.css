@@ -463,12 +463,6 @@
 	height: 22px;
 }
 
-#Copy.notebookbar,
-#clearFormatting.notebookbar,
-#FormatPaintbrush.notebookbar {
-	margin-top: 6px;
-}
-
 /* Styles preview */
 
 #stylesview {
