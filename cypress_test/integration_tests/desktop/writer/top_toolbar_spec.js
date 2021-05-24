@@ -407,7 +407,11 @@ describe('Top toolbar tests.', function() {
 
 		helper.beforeAll(testFileName, 'writer', true);
 
+		cy.wait(2000);
+
 		writerHelper.selectAllTextOfDoc();
+
+		cy.wait(2000);
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');

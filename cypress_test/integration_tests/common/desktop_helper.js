@@ -230,6 +230,8 @@ function resetZoomLevel() {
 }
 
 function insertImage() {
+	selectZoomLevel('50');
+
 	cy.get('#menu-insert').click();
 
 	cy.contains('#menu-insertgraphic', 'Local Image...')
@@ -237,6 +239,11 @@ function insertImage() {
 
 	cy.get('#insertgraphic[type=file]')
 		.attachFile('/desktop/writer/image_to_insert.png');
+
+	// hide the menu so it will not cover document area
+	cy.get('#menu-insert').click();
+
+	cy.wait(1000);
 
 	cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 		.should('exist');
@@ -250,6 +257,8 @@ function deleteImage() {
 
 	cy.contains('.context-menu-item','Delete')
 		.click();
+
+	cy.wait(1000);
 
 	cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 		.should('not.exist');

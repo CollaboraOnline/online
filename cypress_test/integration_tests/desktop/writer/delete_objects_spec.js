@@ -69,6 +69,8 @@ describe('Delete Objects', function() {
 
 		helper.typeIntoDocument('{enter}');
 
+		cy.wait(1000);
+
 		// Table is inserted with the markers shown
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('exist');
