@@ -1243,26 +1243,26 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			for (i = 0; i < queue.length; i++) {
 				coords = queue[i];
 				key = this._tileCoordsToKey(coords);
-
+				tile = undefined;
 				if (coords.part === this._selectedPart) {
-					tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
+					var tileImg = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
 
 					// if createTile is defined with a second argument ("done" callback),
 					// we know that tile is async and will be ready later; otherwise
 					if (this.createTile.length < 2) {
 						// mark tile as ready, but delay one frame for opacity animation to happen
-						setTimeout(L.bind(this._tileReady, this, coords, null, tile), 0);
+						setTimeout(L.bind(this._tileReady, this, coords, null, tileImg), 0);
 					}
 
 					// save tile in cache
-					this._tiles[key] = {
-						el: tile,
+					this._tiles[key] = tile = {
+						el: tileImg,
 						coords: coords,
 						current: true
 					};
 
 					this.fire('tileloadstart', {
-						tile: tile,
+						tile: tileImg,
 						coords: coords
 					});
 				}
@@ -1278,7 +1278,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 					}
 					tilePositionsY += twips.y;
 				}
-				else {
+				else if (tile) {
 					tile.el = this._tileCache[key];
 					tile.loaded = true;
 				}
@@ -1361,7 +1361,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	_addTiles: function (coordsQueue) {
-		var coords, key;
+		var coords, key, tile;
 		// first take care of the DOM
 		for (var i = 0; i < coordsQueue.length; i++) {
 			coords = coordsQueue[i];
@@ -1370,25 +1370,25 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 			if (coords.part === this._selectedPart) {
 				if (!this._tiles[key]) {
-					var tile = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
+					var tileImg = this.createTile(this._wrapCoords(coords), L.bind(this._tileReady, this, coords));
 
 					// if createTile is defined with a second argument ("done" callback),
 					// we know that tile is async and will be ready later; otherwise
 					if (this.createTile.length < 2) {
 						// mark tile as ready, but delay one frame for opacity animation to happen
-						setTimeout(L.bind(this._tileReady, this, coords, null, tile), 0);
+						setTimeout(L.bind(this._tileReady, this, coords, null, tileImg), 0);
 					}
 
 					// save tile in cache
-					this._tiles[key] = {
-						el: tile,
+					this._tiles[key] = tile = {
+						el: tileImg,
 						wid: 0,
 						coords: coords,
 						current: true
 					};
 
 					this.fire('tileloadstart', {
-						tile: tile,
+						tile: tileImg,
 						coords: coords
 					});
 
