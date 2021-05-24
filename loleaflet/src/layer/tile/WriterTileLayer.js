@@ -98,6 +98,10 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (values.comments) {
+			values.comments.forEach(function(comment) {
+				comment.id = comment.id.toString();
+				comment.parent = comment.parent.toString();
+			});
 			this._annotations.fill(values.comments);
 		}
 		else if (values.redlines) {
