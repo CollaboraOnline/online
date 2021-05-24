@@ -118,6 +118,7 @@ LOLEAFLET_CSS =\
 	$(srcdir)/css/leaflet.css \
 	$(srcdir)/css/leaflet-spinner.css \
 	$(srcdir)/css/selectionMarkers.css \
+	$(srcdir)/css/color-palette.css \
 	$(srcdir)/css/loleaflet.css \
 	$(srcdir)/css/toolbar.css \
 	$(srcdir)/css/toolbar-mobile.css \
