@@ -18,7 +18,7 @@ describe('Annotation tests.', function() {
 	});
 
 
-	it.skip('Saving comment.', function() {
+	it('Saving comment.', function() {
 		mobileHelper.insertComment();
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
