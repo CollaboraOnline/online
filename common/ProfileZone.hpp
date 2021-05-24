@@ -9,6 +9,7 @@
 
 #include <atomic>
 #include <chrono>
+#include <map>
 #include <string>
 #include <vector>
 
@@ -30,17 +31,38 @@ private:
     std::chrono::time_point<std::chrono::system_clock> m_nCreateTime;
     int m_nPid;
     int m_nNesting;
+    std::string m_sArgs;
 
     void addRecording();
 
-public:
-    // Note that the char pointer is stored as such in the ProfileZone object and used in the
-    // destructor, so be sure to pass a pointer that stays valid for the duration of the object's
-    // lifetime.
-    ProfileZone(const char* sProfileId)
+    static std::string createArgsString(const std::map<std::string, std::string>& args)
+    {
+        if (args.size() == 0)
+            return "";
+
+        std::string sResult = ",\"args\":{";
+        bool first = true;
+        for (auto i : args)
+        {
+            if (!first)
+                sResult += ',';
+            sResult += '"';
+            sResult += i.first;
+            sResult += "\":\"";
+            sResult += i.second;
+            sResult += '"';
+            first = false;
+        }
+        sResult += '}';
+
+        return sResult;
+    }
+
+    ProfileZone(const char* sProfileId, const std::string sArgs)
         : m_sProfileId(sProfileId ? sProfileId : "(null)")
         , m_nPid(-1)
         , m_nNesting(-1)
+        , m_sArgs(sArgs)
     {
         if (s_bRecording)
         {
@@ -51,6 +73,20 @@ public:
 
             m_nNesting = s_nNesting++;
         }
+    }
+
+public:
+    // Note that the char pointer is stored as such in the ProfileZone object and used in the
+    // destructor, so be sure to pass a pointer that stays valid for the duration of the object's
+    // lifetime.
+    ProfileZone(const char* sProfileId, const std::map<std::string, std::string> &args)
+        : ProfileZone(sProfileId, createArgsString(args))
+    {
+    }
+
+    ProfileZone(const char* sProfileId)
+        : ProfileZone(sProfileId, "")
+    {
     }
 
     ~ProfileZone()

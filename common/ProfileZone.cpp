@@ -5,14 +5,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-// Turn this on to compile a test executable for just ProfileZone
-
-// #define TEST_PROFILEZONE_EXE
+// To build a freestanding test executable for just ProfileZone:
+// clang++ -DTEST_PROFILEZONE_EXE ProfileZone.cpp -o ProfileZone -pthread
 
 #include <cassert>
 #include <mutex>
-
-#include <sys/syscall.h>
+#include <sstream>
 
 #include "ProfileZone.hpp"
 
@@ -40,8 +38,18 @@ void ProfileZone::addRecording()
     assert(s_bRecording);
 
     std::stringstream threadIdStr;
-    threadIdStr << Util::getThreadId();
+#ifdef TEST_PROFILEZONE_EXE
+    static thread_local int threadId = 0;
+    static int threadCounter = 1;
 
+    if (!threadId)
+        threadId = threadCounter++;
+
+    std::stringstream thredIdStr;
+    threadIdStr << threadId;
+#else
+    threadIdStr << Util::getThreadId();
+#endif
     auto nNow = std::chrono::system_clock::now();
 
     // Generate a single "Complete Event" (type X)
@@ -64,7 +72,9 @@ void ProfileZone::addRecording()
         + std::to_string(m_nPid)
         + ","
           "\"tid\":"
-        + threadIdStr.str() + "},");
+        + threadIdStr.str()
+        + m_sArgs
+        + "},");
     std::lock_guard<std::mutex> aGuard(g_aMutex);
 
     g_aRecording.emplace_back(sRecordingData);
@@ -126,7 +136,7 @@ int main(int argc, char** argv)
     });
 
     std::thread t3([]() {
-        ProfileZone b("thread t3");
+        ProfileZone b("thread t3", { { "foo", "bar"} } );
 
         for (auto n = 0; n < 400000000; n++)
         {
@@ -156,7 +166,7 @@ int main(int argc, char** argv)
         std::cout << "  " << e << "\n";
     std::cout << "]\n";
 
-    // Intentional misuse: overlapping ProfileZones
+    // Intentional misuse: overlapping ProfileZones. Will generate "Incorrect ProfileZone nesting" messages.
     auto p1 = new ProfileZone("p1");
     auto p2 = new ProfileZone("p2");
     delete p1;
