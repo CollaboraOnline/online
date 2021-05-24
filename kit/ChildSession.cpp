@@ -2631,21 +2631,39 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("setpart: " + payload);
         break;
     case LOK_CALLBACK_UNO_COMMAND_RESULT:
+    {
         sendTextFrame("unocommandresult: " + payload);
-#if MOBILEAPP
+
+        Parser parser;
+        Poco::Dynamic::Var var = parser.parse(payload);
+        Object::Ptr object = var.extract<Object::Ptr>();
+
+        auto commandName = object->get("commandName");
+        auto success = object->get("success");
+
+        if (!commandName.isEmpty() && commandName.toString() == ".uno:Save")
         {
+#if !MOBILEAPP
+            // Create the 'upload' file regardless of success or failure,
+            // because we don't know if the last upload worked or not.
+            // DocBroker will have to decide to upload or skip.
+            const std::string oldName = Poco::URI(getJailedFilePath()).getPath();
+            const std::string newName = oldName + TO_UPLOAD_SUFFIX;
+            if (rename(oldName.c_str(), newName.c_str()) < 0)
+            {
+                // It's not an error if there was no file to rename, when the document isn't modified.
+                LOG_TRC("Failed to renamed [" << oldName << "] to [" << newName << ']');
+            }
+            else
+            {
+                LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
+            }
+
+#else // MOBILEAPP
             // After the document has been saved (into the temporary copy that we set up in
             // -[CODocument loadFromContents:ofType:error:]), save it also using the system API so
             // that file provider extensions notice.
-
-            Parser parser;
-            Poco::Dynamic::Var var = parser.parse(payload);
-            Object::Ptr object = var.extract<Object::Ptr>();
-
-            auto commandName = object->get("commandName");
-            auto success = object->get("success");
-
-            if (!commandName.isEmpty() && commandName.toString() == ".uno:Save" && !success.isEmpty() && success.toString() == "true")
+            if (!success.isEmpty() && success.toString() == "true")
             {
 #if defined(IOS)
                 CODocument *document = getDocumentDataForMobileAppDocId(_docManager->getMobileAppDocId()).coDocument;
@@ -2658,9 +2676,10 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
                 postDirectMessage("SAVE " + payload);
 #endif
             }
-        }
 #endif
-        break;
+        }
+    }
+    break;
     case LOK_CALLBACK_ERROR:
         {
             LOG_ERR("CALLBACK_ERROR: " << payload);

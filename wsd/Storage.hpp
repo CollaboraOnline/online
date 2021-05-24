@@ -214,6 +214,15 @@ public:
     /// Returns the root path to the jailed file.
     const std::string& getRootFilePath() const { return _jailedFilePath; };
 
+    /// Returns the root path to the jailed file to be uploaded.
+    std::string getRootFilePathToUpload() const { return _jailedFilePath + TO_UPLOAD_SUFFIX; };
+
+    /// Returns the root path to the jailed file being uploaded.
+    std::string getRootFilePathUploading() const
+    {
+        return _jailedFilePath + TO_UPLOAD_SUFFIX + UPLOADING_SUFFIX;
+    };
+
     /// Set the root path of the jailed file, only for use in cases where we actually have converted
     /// it to another format, in the same directory
     void setRootFilePath(const std::string& newPath)

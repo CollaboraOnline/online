@@ -429,8 +429,8 @@ StorageBase::UploadResult LocalStorage::uploadLocalFileToStorage(
                                                                      << getRootFilePathAnonym());
 
         // Copy the file back.
-        if (_isCopy && Poco::File(getRootFilePath()).exists())
-            FileUtil::copyFileTo(getRootFilePath(), path);
+        if (_isCopy && Poco::File(getRootFilePathUploading()).exists())
+            FileUtil::copyFileTo(getRootFilePathUploading(), path);
 
         // update its fileinfo object. This is used later to check if someone else changed the
         // document while we are/were editing it
@@ -1154,7 +1154,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth,
     }
 
     const bool isSaveAs = !saveAsPath.empty() && !saveAsFilename.empty();
-    const std::string filePath(isSaveAs ? saveAsPath : getRootFilePath());
+    const std::string filePath(isSaveAs ? saveAsPath : getRootFilePathUploading());
     const std::string filePathAnonym = LOOLWSD::anonymizeUrl(filePath);
 
     const FileUtil::Stat fileStat(filePath);
