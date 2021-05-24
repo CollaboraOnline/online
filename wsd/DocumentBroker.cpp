@@ -1003,6 +1003,7 @@ std::string DocumentBroker::handleRenameFileCommand(std::string sessionId,
 
 void DocumentBroker::startRenameFileCommand()
 {
+    LOG_TRC("Starting renamefile command execution.");
     if (_docState.activity() != DocumentState::Activity::None)
     {
         assert(!"Saving before renaming must be invoked when no other activity exists.");
@@ -1021,7 +1022,7 @@ void DocumentBroker::startRenameFileCommand()
 
     _docState.setActivity(DocumentState::Activity::Rename);
 
-    constexpr bool dontTerminateEdit = false;
+    constexpr bool dontTerminateEdit = false; // We will save, rename, and reload: terminate.
     constexpr bool dontSaveIfUnmodified = true;
     constexpr bool isAutosave = false;
     constexpr bool isExitSave = false;
@@ -1061,8 +1062,8 @@ DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
     }
 
     // Get the modified-time of the file on disk.
-    const std::chrono::system_clock::time_point currentModifiedTime
-        = FileUtil::Stat(_storage->getRootFilePath()).modifiedTimepoint();
+    const auto st = FileUtil::Stat(_storage->getRootFilePathUploading());
+    const std::chrono::system_clock::time_point currentModifiedTime = st.modifiedTimepoint();
 
     // Compare to the last uploaded file's modified-time.
     if (currentModifiedTime != _storageManager.getLastUploadedFileModifiedTime())
@@ -1080,6 +1081,23 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
         LOG_DBG("Save result from Core: saved");
     else
         LOG_INF("Save result from Core (failure): " << result);
+
+#if !MOBILEAPP
+    // Create the 'upload' file regardless of success or failure,
+    // because we don't know if the last upload worked or not.
+    // DocBroker will have to decide to upload or skip.
+    const std::string oldName = _storage->getRootFilePathToUpload();
+    const std::string newName = _storage->getRootFilePathUploading();
+    if (rename(oldName.c_str(), newName.c_str()) < 0)
+    {
+        // It's not an error if there was no file to rename, when the document isn't modified.
+        LOG_TRC("Failed to renamed [" << oldName << "] to [" << newName << ']');
+    }
+    else
+    {
+        LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
+    }
+#endif //!MOBILEAPP
 
     // Record that we got a response to avoid timing out on saving.
     _saveManager.setLastSaveResult(success || result == "unmodified");
@@ -1232,8 +1250,9 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uri);
 
     // If the file timestamp hasn't changed, skip uploading.
+    const std::string filePath = _storage->getRootFilePathUploading();
     const std::chrono::system_clock::time_point newFileModifiedTime
-        = FileUtil::Stat(_storage->getRootFilePath()).modifiedTimepoint();
+        = FileUtil::Stat(filePath).modifiedTimepoint();
     if (!isSaveAs && newFileModifiedTime == _saveManager.getLastModifiedTime() && !isRename
         && !force)
     {
