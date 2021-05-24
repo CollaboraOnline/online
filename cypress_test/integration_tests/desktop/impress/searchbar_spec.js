@@ -30,7 +30,11 @@ describe('Searching via search bar' ,function() {
 	it('Search not existing word.', function() {
 		cy.get('.leaflet-layer').dblclick('center');
 
+		cy.wait(2000);
+
 		helper.selectAllText();
+
+		cy.wait(2000);
 
 		helper.textSelectionShouldExist();
 

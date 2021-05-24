@@ -1,6 +1,7 @@
 /* global describe it cy require afterEach beforeEach */
 
 var helper = require('../../common/helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 describe('Delete Objects', function() {
 	var testFileName = 'delete_objects.odp';
@@ -18,7 +19,10 @@ describe('Delete Objects', function() {
 		cy.get('.leaflet-layer')
 			.dblclick('center');
 
-		cy.wait(100);
+		cy.wait(1000);
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
+			.should('exist');
 
 		helper.typeIntoDocument('text');
 
@@ -70,6 +74,8 @@ describe('Delete Objects', function() {
 	});
 
 	it('Delete Table',function() {
+		desktopHelper.selectZoomLevel('50');
+
 		cy.get('#toolbar-up > .w2ui-scroll-right')
 			.click()
 			.get('#tb_editbar_item_modifypage')
@@ -94,7 +100,7 @@ describe('Delete Objects', function() {
 		cy.contains('.context-menu-item','Delete')
 			.click();
 
-		cy.wait(200);
+		cy.wait(1000);
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('not.exist');

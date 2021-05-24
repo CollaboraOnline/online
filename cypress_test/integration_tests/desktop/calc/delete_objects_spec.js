@@ -56,11 +56,15 @@ describe('Delete Objects', function() {
 
 		helper.typeIntoDocument('{shift}{enter}');
 
+		cy.wait(2000);
+
 		cy.get('.leaflet-control-buttons-disabled path.leaflet-interactive')
 			.should('exist');
 
 		//delete
 		helper.typeIntoDocument('{del}');
+
+		cy.wait(2000);
 
 		cy.get('.leaflet-control-buttons-disabled path.leaflet-interactive')
 			.should('not.exist');
