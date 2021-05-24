@@ -585,7 +585,6 @@ input.spinfield:disabled ~ .spinfieldcontrols *:active, input.spinfield:disabled
 
 /*insert table special layout*/
 .inserttablecontrols p.ui-text{
-	position: absolute;
 	margin-left: 14%;
 	width: 50%;
 	border: none;
