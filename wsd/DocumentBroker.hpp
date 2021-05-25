@@ -295,6 +295,10 @@ public:
 
     bool isLastStorageUploadSuccessful() { return _storageManager.lastUploadSuccessful(); }
 
+    /// Invoked by the client to rename the document filename.
+    /// Returns an error message in case of failure, otherwise an empty string.
+    std::string handleRenameFileCommand(std::string sessionId, std::string newFilename);
+
     /// Handle the save response from Core and upload to storage as necessary.
     /// Also notifies clients of the result.
     void handleSaveResponse(const std::string& sessionId, bool success, const std::string& result);
@@ -468,6 +472,9 @@ private:
     void handleDialogPaintResponse(const std::vector<char>& payload, bool child);
     void handleTileCombinedResponse(const std::vector<char>& payload);
     void handleDialogRequest(const std::string& dialogCmd);
+
+    /// Invoked to issue a save before renaming the document filename.
+    void startRenameFileCommand();
 
     /// Shutdown all client connections with the given reason.
     void shutdownClients(const std::string& closeReason);
@@ -1013,6 +1020,8 @@ private:
     std::atomic<bool> _stop;
     std::string _closeReason;
     std::unique_ptr<LockContext> _lockCtx;
+    std::string _renameFilename; //< The new filename to rename to.
+    std::string _renameSessionId; //< The sessionId used for renaming.
 
     /// Versioning is used to prevent races between
     /// painting and invalidation.

@@ -28,8 +28,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 						// same extension, just rename the file
 						// file name must be without the extension for rename
 						value = value.substr(0, value.lastIndexOf('.'));
-						this.map._renameFilename = value;
-						this.map.sendUnoCommand('.uno:Save');
+						this.map.renameFile(value);
 					}
 				}
 			} else {
