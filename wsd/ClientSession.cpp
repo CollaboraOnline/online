@@ -803,9 +803,17 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             sendTextFrameAndLogError("error: cmd=renamefile kind=syntax");
             return false;
         }
+
         std::string wopiFilename;
         Poco::URI::decode(encodedWopiFilename, wopiFilename);
-        docBroker->uploadAsToStorage(getId(), "", wopiFilename, true);
+        const std::string error =
+            docBroker->handleRenameFileCommand(getId(), std::move(wopiFilename));
+        if (!error.empty())
+        {
+            sendTextFrameAndLogError(error);
+            return false;
+        }
+
         return true;
     }
     else if (tokens.equals(0, "dialogevent") ||
