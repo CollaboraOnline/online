@@ -300,12 +300,12 @@ public:
 
     /// Upload the document to Storage if it needs persisting.
     /// Results are logged and broadcast to users.
-    void uploadToStorage(const std::string& sesionId, bool success, const std::string& result,
+    void uploadToStorage(const std::string& sessionId, bool success, const std::string& result,
                          bool force);
 
     /// UploadAs the document to Storage, with a new name.
     /// @param uploadAsPath Absolute path to the jailed file.
-    void uploadAsToStorage(const std::string& sesionId, const std::string& uploadAsPath,
+    void uploadAsToStorage(const std::string& sessionId, const std::string& uploadAsPath,
                            const std::string& uploadAsFilename, const bool isRename);
 
     bool isModified() const { return _isModified; }
@@ -476,7 +476,7 @@ private:
     void terminateChild(const std::string& closeReason);
 
     /// Upload the doc to the storage.
-    bool uploadToStorageInternal(const std::string& sesionId, bool success,
+    bool uploadToStorageInternal(const std::string& sessionId, bool success,
                                  const std::string& result, const std::string& saveAsPath,
                                  const std::string& saveAsFilename, const bool isRename,
                                  const bool force);
