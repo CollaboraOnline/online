@@ -26,6 +26,7 @@
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
 #include <common/Clipboard.hpp>
+#include <common/ProfileZone.hpp>
 #include <common/Session.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
@@ -794,10 +795,30 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "dialogevent") ||
              tokens.equals(0, "formfieldevent") ||
-             tokens.equals(0, "traceeventrecording") ||
              tokens.equals(0, "sallogoverride"))
     {
         return forwardToChild(firstLine, docBroker);
+    }
+    else if (tokens.equals(0, "traceeventrecording"))
+    {
+        if (LOOLWSD::getConfigValue<bool>("trace_event[@enable]", false))
+        {
+            if (tokens.size() > 0)
+            {
+                if (tokens.equals(1, "start"))
+                {
+                    ProfileZone::startRecording();
+                    LOG_INF("Trace Event recording in this WSD process turned on (might have been on already)");
+                }
+                else if (tokens.equals(1, "stop"))
+                {
+                    ProfileZone::stopRecording();
+                    LOG_INF("Trace Event recording in this WSD process turned off (might have been off already)");
+                }
+            }
+            forwardToChild(firstLine, docBroker);
+        }
+        return true;
     }
     else if (tokens.equals(0, "completefunction"))
     {

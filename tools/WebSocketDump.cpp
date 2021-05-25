@@ -28,8 +28,15 @@
 #if ENABLE_SSL
 #  include <SslSocket.hpp>
 #endif
+#include <common/ProfileZone.hpp>
 
 SocketPoll DumpSocketPoll("websocket");
+
+void ProfileZone::addOneRecording(const std::string &sRecording)
+{
+    // Dummy.
+    (void) sRecording;
+}
 
 // Dumps incoming websocket messages and doesn't respond.
 class DumpSocketHandler : public WebSocketHandler
