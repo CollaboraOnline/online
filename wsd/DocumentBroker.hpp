@@ -870,6 +870,19 @@ private:
             Destroyed //< Unloading complete, destruction pending.
         };
 
+        /// The current activity taking place.
+        /// Meaningful only when Status is Status::Live, but
+        /// we may Save and Upload during Status::Destroying.
+        enum class Activity
+        {
+            None, //< No particular activity.
+            Rename, //< The document is being renamed.
+            SaveAs, //< The document format is being converted.
+            Conflict, //< The document is conflicted in storaged.
+            Save, //< The document is being saved, manually or auto-save.
+            Upload, //< The document is being uploaded to storage.
+        };
+
         static std::string toString(Status status)
         {
 #define CASE(X)                                                                                    \
@@ -889,8 +902,28 @@ private:
             return "Unknown Document Status";
         }
 
+        static std::string toString(Activity activity)
+        {
+#define CASE(X)                                                                                    \
+    case X:                                                                                        \
+        return #X;
+            switch (activity)
+            {
+                CASE(Activity::None);
+                CASE(Activity::Rename);
+                CASE(Activity::SaveAs);
+                CASE(Activity::Conflict);
+                CASE(Activity::Save);
+                CASE(Activity::Upload);
+            }
+
+#undef CASE
+            return "Unknown Document Activity";
+        }
+
         DocumentState()
             : _status(Status::None)
+            , _activity(Activity::None)
             , _closeRequested(false)
             , _loaded(false)
             , _interactive(false)
@@ -904,6 +937,14 @@ private:
                                                   << toString(newStatus));
             assert(newStatus >= _status && "The document status cannot regress");
             _status = newStatus;
+        }
+
+        DocumentState::Activity activity() const { return _activity; }
+        void setActivity(Activity newActivity)
+        {
+            LOG_TRC("Setting Document Activity from " << toString(_activity) << " to "
+                                                      << toString(newActivity));
+            _activity = newActivity;
         }
 
         /// True iff the document had ever loaded completely, without implying it's still loaded.
@@ -935,6 +976,7 @@ private:
 
     private:
         Status _status;
+        Activity _activity;
         std::atomic<bool> _closeRequested; //< Owner-Termination flag.
         std::atomic<bool> _loaded; //< If the document ever loaded (check isLive to see if it still is).
         bool _interactive; //< If the document has interactive dialogs before load
