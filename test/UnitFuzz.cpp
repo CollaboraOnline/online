@@ -121,7 +121,7 @@ class UnitKitFuzz : public UnitKit
 public:
     UnitKitFuzz()
     {
-        std::cerr << "\n\nYour KIT process has fuzzing hooks\n\n\n";
+        std::cerr << "\n\nYour Kit process has fuzzing hooks\n\n\n";
         setTimeout(std::chrono::hours(1));
     }
     virtual bool filterKitMessage(WebSocketHandler *, std::string & /* message */) override

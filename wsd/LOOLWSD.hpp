@@ -37,7 +37,7 @@ class ClipboardCache;
 std::shared_ptr<ChildProcess> getNewChild_Blocks(unsigned mobileAppDocId = 0);
 
 // A WSProcess object in the WSD process represents a descendant process, either the direct child
-// process FORKIT or a grandchild KIT process, with which the WSD process communicates through a
+// process ForKit or a grandchild Kit process, with which the WSD process communicates through a
 // WebSocket.
 class WSProcess
 {
