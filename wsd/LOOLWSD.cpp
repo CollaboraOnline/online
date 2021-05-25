@@ -278,12 +278,12 @@ void alertAllUsersInternal(const std::string& msg)
 
 } // end anonymous namespace
 
-void ProfileZone::addOneRecording(const std::string &sRecording)
+void ProfileZone::addOneRecording(const std::string &recording)
 {
     if (LOOLWSD::TraceEventFile == NULL)
         return;
 
-    fprintf(LOOLWSD::TraceEventFile, "%s\n", sRecording.c_str());
+    fprintf(LOOLWSD::TraceEventFile, "%s\n", recording.c_str());
 }
 
 void LOOLWSD::checkSessionLimitsAndWarnClients()
