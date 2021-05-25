@@ -29,6 +29,8 @@ describe('Fullscreen Presentation.', function() {
 	it('Text fields.', function() {
 		before('text_fields.odp');
 
+		cy.wait(1000);
+
 		cy.get('#id1').should('have.class', 'Slide');
 
 		cy.get('#tf2 > g > text > tspan > tspan > tspan')
@@ -63,6 +65,9 @@ describe('Fullscreen Presentation.', function() {
 
 	it('Custom background.', function() {
 		before('slide-bitmap-background.odp');
+
+		cy.wait(3000);
+
 		cy.get('#id1')
 			.should('have.class', 'Slide');
 		cy.get('#id1 > g').its('0')

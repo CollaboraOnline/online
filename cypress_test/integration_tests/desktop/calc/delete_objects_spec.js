@@ -54,7 +54,7 @@ describe('Delete Objects', function() {
 
 		cy.get('.lokdialog_canvas').click();
 
-		helper.typeIntoDocument('{enter}');
+		helper.typeIntoDocument('{shift}{enter}');
 
 		cy.get('.leaflet-control-buttons-disabled path.leaflet-interactive')
 			.should('exist');
