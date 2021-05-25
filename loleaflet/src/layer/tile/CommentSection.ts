@@ -262,8 +262,7 @@ class CommentSection {
 			if (annotation.sectionProperties.data.id === id) {
 				this.containerObject.removeSection(annotation.name);
 				this.sectionProperties.commentList.splice(i, 1);
-				document.getElementById('document-container').removeChild(annotation.sectionProperties.container);
-				//return annotation;
+				break;
 			}
 		}
 	}
@@ -285,7 +284,15 @@ class CommentSection {
 					value: annotation.sectionProperties.data.author
 				}
 			};
-			this.map.sendUnoCommand('.uno:InsertAnnotation', comment);
+			if (app.file.fileBasedView) {
+				this.map.setPart(this.sectionProperties.docLayer._selectedPart, false);
+				this.map.sendUnoCommand('.uno:InsertAnnotation', comment);
+				this.map.setPart(0, false);
+			}
+			else {
+				this.map.sendUnoCommand('.uno:InsertAnnotation', comment);
+			}
+
 			this.removeItem(annotation.sectionProperties.data.id);
 		} else if (annotation.sectionProperties.data.trackchange) {
 			comment = {
@@ -331,7 +338,7 @@ class CommentSection {
 				id: annotation.sectionProperties.data.id,
 				avatar: avatar,
 				parent: annotation.sectionProperties.data.parent,
-				anchorPos: annotation.sectionProperties.data.anchorPos.clone()
+				anchorPos: [annotation.sectionProperties.data.anchorPos[0], annotation.sectionProperties.data.anchorPos[1]]
 			};
 			this.newAnnotationVex(replyAnnotation, annotation.onReplyClick,/* isMod */ false, '');
 		}
@@ -439,7 +446,11 @@ class CommentSection {
 				value: id
 			}
 		};
-		this.map.sendUnoCommand('.uno:DeleteComment', comment);
+		if (this.sectionProperties.docLayer._docType === 'text')
+			this.map.sendUnoCommand('.uno:DeleteComment', comment);
+		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing')
+			this.map.sendUnoCommand('.uno:DeleteAnnotation', comment);
+
 		this.unselect();
 		this.map.focus();
 	}
@@ -609,7 +620,7 @@ class CommentSection {
 
 	public showHideComment (annotation: any) {
 		// This manually shows/hides comments
-		if (!this.sectionProperties.showResolved) {
+		if (!this.sectionProperties.showResolved && this.sectionProperties.docLayer._docType === 'text') {
 			if (annotation.isContainerVisible() && annotation.sectionProperties.data.resolved === 'true') {
 				if (this.sectionProperties.selectedComment == annotation) {
 					this.unselect();
@@ -624,6 +635,22 @@ class CommentSection {
 			}
 			this.layout();
 			this.update();
+		}
+		else if (this.sectionProperties.docLayer._docType === 'presentation') {
+			if (annotation.sectionProperties.partIndex === this.sectionProperties.docLayer._selectedPart) {
+				if (!annotation.isContainerVisible()) {
+					annotation.show();
+					annotation.update();
+					this.layout();
+					this.update();
+				}
+			}
+			else {
+				annotation.hide();
+				annotation.update();
+				this.layout();
+				this.update();
+			}
 		}
 	}
 
@@ -841,16 +868,102 @@ class CommentSection {
 		return rectangles;
 	}
 
-	private adjustComment (comment: any) {
+	public onPartChange () {
+		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
+			this.showHideComment(this.sectionProperties.commentList[i]);
+		}
+		if (this.sectionProperties.selectedComment)
+			this.sectionProperties.selectedComment.onCancelClick(null);
+	}
+
+	// This converts the specified number of values into core pixels from twips.
+	// Returns a new array with the length of specified numbers.
+	private numberArrayToCorePixFromTwips (numberArray: Array<number>, startIndex: number = 0, length: number = null): Array<number> {
+		if (!length)
+			length = numberArray.length;
+
+		if (startIndex < 0)
+			startIndex = 0;
+
+		if (length < 0)
+			length = 0;
+
+		if (startIndex + length > numberArray.length)
+			length = numberArray.length - startIndex;
+
+		var result = new Array(length);
+		var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+
+		for (var i = startIndex; i < length; i++) {
+			result[i] = Math.round(numberArray[i] * ratio);
+		}
+
+		return result;
+	}
+
+	// In file based view, we need to move comments to their part's position.
+	// Because all parts are drawn on the screen. Core side doesn't have this feature.
+	// Core side sends the information in part coordinates.
+	// When a coordinate like [0, 0] is inside 2nd part for example, that coordinate should correspond to a value like (just guessing) [0, 45646].
+	// See that y value is different. Because there is 1st part above the 2nd one in the view.
+	// We will add their part's position to comment's variables.
+	// When we are saving their position, we will remove the additions before sending the information.
+	private adjustCommentFileBasedView (comment: any) {
+		// Below calculations are the same with the ones we do while drawing tiles in fileBasedView.
+		var partHeightTwips = this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts;
+		var index = this.sectionProperties.docLayer._partHashes.indexOf(comment.parthash);
+		var yAddition = index * partHeightTwips;
+		comment.yAddition = yAddition; // We'll use this while we save the new position of the comment.
+
 		comment.trackchange = false;
-		comment.rectangles = this.stringToRectangles(comment.textRange || comment.anchorPos); // Simple array of point arrays [x1, y1, x2, y2].
-		comment.rectanglesOriginal = this.stringToRectangles(comment.textRange || comment.anchorPos); // This unmodified version will be kept for re-calculations.
-		comment.anchorPos = L.LOUtil.stringToBounds(comment.anchorPos);
-		comment.anchorPix = this.twipsToCorePixels(comment.anchorPos.min);
+
+		comment.rectangles = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle); // Simple array of point arrays [x1, y1, x2, y2].
+		comment.rectangles[0][1] += yAddition; // There is only one rectangle for our case.
+
+		comment.rectanglesOriginal = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle); // This unmodified version will be kept for re-calculations.
+		comment.rectanglesOriginal[0][1] += yAddition;
+
+		comment.anchorPos = this.stringToRectangles(comment.anchorPos || comment.rectangle)[0];
+		comment.anchorPos[1] += yAddition;
+
+		if (comment.rectangle) {
+			comment.rectangle = this.stringToRectangles(comment.rectangle)[0]; // This is the position of the marker.
+			comment.rectangle[1] += yAddition;
+		}
+
+		comment.anchorPix = this.numberArrayToCorePixFromTwips(comment.anchorPos, 0, 2);
+
+		comment.parthash = comment.parthash ? comment.parthash: null;
+
 		var viewId = this.map.getViewId(comment.author);
 		var color = viewId >= 0 ? L.LOUtil.rgbToHex(this.map.getViewColor(viewId)) : '#43ACE8';
-
 		comment.color = color;
+	}
+
+	// Normally, a comment's position information is the same with the desktop version.
+	// So we can use it directly.
+	private adjustCommentNormal (comment: any) {
+		comment.trackchange = false;
+		comment.rectangles = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle); // Simple array of point arrays [x1, y1, x2, y2].
+		comment.rectanglesOriginal = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle); // This unmodified version will be kept for re-calculations.
+		comment.anchorPos = this.stringToRectangles(comment.anchorPos || comment.rectangle)[0];
+		comment.anchorPix = this.numberArrayToCorePixFromTwips(comment.anchorPos, 0, 2);
+		comment.parthash = comment.parthash ? comment.parthash: null;
+
+		if (comment.rectangle) {
+			comment.rectangle = this.stringToRectangles(comment.rectangle)[0]; // This is the position of the marker.
+		}
+
+		var viewId = this.map.getViewId(comment.author);
+		var color = viewId >= 0 ? L.LOUtil.rgbToHex(this.map.getViewColor(viewId)) : '#43ACE8';
+		comment.color = color;
+	}
+
+	private adjustComment (comment: any) {
+		if (!app.file.fileBasedView)
+			this.adjustCommentNormal(comment);
+		else
+			this.adjustCommentFileBasedView(comment);
 	}
 
 	private getScaleFactor () {
@@ -945,6 +1058,12 @@ class CommentSection {
 		return [twips.x / this.sectionProperties.docLayer._tileWidthTwips * this.sectionProperties.docLayer._tileSize, twips.y / this.sectionProperties.docLayer._tileHeightTwips * this.sectionProperties.docLayer._tileSize];
 	}
 
+	// If the file type is presentation or drawing then we shall check the selected part in order to hide comments from other parts.
+	// But if file is in fileBasedView, then we will not hide any comments from not-selected/viewed parts.
+	private mustCheckSelectedPart () {
+		return (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') && !app.file.fileBasedView;
+	}
+
 	private layoutUp (subList: any, actualPosition: Array<number>, lastY: number) {
 		var height: number;
 		for (var i = 0; i < subList.length; i++) {
@@ -958,17 +1077,19 @@ class CommentSection {
 
 	private loopUp (startIndex: number, x: number, startY: number) {
 		var tmpIdx = 0;
+		var checkSelectedPart: boolean = this.mustCheckSelectedPart();
 		startY -= this.sectionProperties.marginY;
 		// Pass over all comments present
 		for (var i = startIndex; i > -1;) {
 			var subList = [];
 			tmpIdx = i;
 			do {
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix = this.twipsToCorePixels(this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos.min);
+				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos, 0, 2);
 				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix[1] -= this.documentTopLeft[1];
 				// Add this item to the list of comments.
 				if (this.sectionProperties.commentList[tmpIdx].sectionProperties.data.resolved !== 'true' || this.sectionProperties.showResolved) {
-					subList.push(this.sectionProperties.commentList[tmpIdx]);
+					if (!checkSelectedPart || this.sectionProperties.docLayer._selectedPart === this.sectionProperties.commentList[tmpIdx].sectionProperties.partIndex)
+						subList.push(this.sectionProperties.commentList[tmpIdx]);
 				}
 				tmpIdx = tmpIdx - 1;
 				// Continue this loop, until we reach the last item, or an item which is not a direct descendant of the previous item.
@@ -1004,16 +1125,18 @@ class CommentSection {
 
 	private loopDown (startIndex: number, x: number, startY: number) {
 		var tmpIdx = 0;
+		var checkSelectedPart: boolean = this.mustCheckSelectedPart();
 		// Pass over all comments present
 		for (var i = startIndex; i < this.sectionProperties.commentList.length;) {
 			var subList = [];
 			tmpIdx = i;
 			do {
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix = this.twipsToCorePixels(this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos.min);
+				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos, 0, 2);
 				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix[1] -= this.documentTopLeft[1];
 				// Add this item to the list of comments.
 				if (this.sectionProperties.commentList[tmpIdx].sectionProperties.data.resolved !== 'true' || this.sectionProperties.showResolved) {
-					subList.push(this.sectionProperties.commentList[tmpIdx]);
+					if (!checkSelectedPart || this.sectionProperties.docLayer._selectedPart === this.sectionProperties.commentList[tmpIdx].sectionProperties.partIndex)
+						subList.push(this.sectionProperties.commentList[tmpIdx]);
 				}
 				tmpIdx = tmpIdx + 1;
 				// Continue this loop, until we reach the last item, or an item which is not a direct descendant of the previous item.
@@ -1089,7 +1212,7 @@ class CommentSection {
 
 			if (this.sectionProperties.selectedComment) {
 				selectedIndex = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
-				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix = this.twipsToCorePixels(this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPos.min);
+				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPos, 0, 2);
 				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1];
 				yOrigin = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1] - this.documentTopLeft[1];
 				var tempCrd: Array<number> = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix;
@@ -1181,14 +1304,32 @@ class CommentSection {
 
 	private orderCommentList () {
 		this.sectionProperties.commentList.sort(function(a: any, b: any) {
-			return Math.abs(a.sectionProperties.data.anchorPos.min.y) - Math.abs(b.sectionProperties.data.anchorPos.min.y) ||
-				Math.abs(a.sectionProperties.data.anchorPos.min.x) - Math.abs(b.sectionProperties.data.anchorPos.min.x);
+			return Math.abs(a.sectionProperties.data.anchorPos[1]) - Math.abs(b.sectionProperties.data.anchorPos[1]) ||
+				Math.abs(a.sectionProperties.data.anchorPos[0]) - Math.abs(b.sectionProperties.data.anchorPos[0]);
 		});
+	}
+
+	private turnIntoAList (commentList: any) {
+		var newArray;
+		if (!Array.isArray(commentList)) {
+			newArray = new Array(0);
+			for (var prop in commentList) {
+				if (Object.prototype.hasOwnProperty.call(commentList, prop)) {
+					newArray.push(commentList[prop]);
+				}
+			}
+		}
+		else {
+			newArray = commentList;
+		}
+		return newArray;
 	}
 
 	public importComments (commentList: any) {
 		var comment;
 		this.clearList();
+		commentList = this.turnIntoAList(commentList);
+
 		if (commentList.length > 0) {
 			for (var i = 0; i < commentList.length; i++) {
 				comment = commentList[i];

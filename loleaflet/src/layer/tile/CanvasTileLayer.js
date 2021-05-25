@@ -4828,7 +4828,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// if annotation is provided we can select perticular comment
 		if (annotation) {
-			$('#comment' + annotation._data.id).click();
+			$('#comment' + annotation.sectionProperties.data.id).click();
 		}
 	},
 

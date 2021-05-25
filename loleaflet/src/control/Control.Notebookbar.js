@@ -52,13 +52,13 @@ L.Control.Notebookbar = L.Control.extend({
 		docLogoHeader.id = 'document-header';
 
 		var iconClass = 'document-logo';
-		if (docType === 'text') {
+		if (this.map._docLayer._docType === 'text') {
 			iconClass += ' writer-icon-img';
-		} else if (docType === 'spreadsheet') {
+		} else if (this.map._docLayer._docType === 'spreadsheet') {
 			iconClass += ' calc-icon-img';
-		} else if (docType === 'presentation') {
+		} else if (this.map._docLayer._docType === 'presentation') {
 			iconClass += ' impress-icon-img';
-		} else if (docType === 'drawing') {
+		} else if (this.map._docLayer._docType === 'drawing') {
 			iconClass += ' draw-icon-img';
 		}
 		var docLogo = L.DomUtil.create('div', iconClass, docLogoHeader);
