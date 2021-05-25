@@ -965,6 +965,10 @@ L.Handler.PathTransform = L.Handler.extend({
 			this._mapDraggingWasEnabled = true;
 		}
 
+		if (this._anchor === this._activeMarker) {
+			L.DomUtil.addClass(this._activeMarker._icon, 'anchor-dragging');
+		}
+
 		this._activeMarker.addEventParent(this._map);
 		this._path._map
 			.on('mousemove', this._onCustomHandleDrag,     this)
@@ -985,6 +989,9 @@ L.Handler.PathTransform = L.Handler.extend({
 	_onCustomHandleDragEnd: function() {
 		if (!this._rect) {
 			return;
+		}
+		if (this._anchor === this._activeMarker) {
+			L.DomUtil.removeClass(this._activeMarker._icon, 'anchor-dragging');
 		}
 		var map = this._map;
 		map._docLayer._graphicMarker.isDragged = false;
