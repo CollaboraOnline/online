@@ -25,13 +25,13 @@
 class ProfileZone
 {
 private:
-    static std::atomic<bool> s_bRecording; // true during recording
-    thread_local static int s_nNesting;
-    const char* m_sProfileId;
-    std::chrono::time_point<std::chrono::system_clock> m_nCreateTime;
-    int m_nPid;
-    int m_nNesting;
-    std::string m_sArgs;
+    static std::atomic<bool> recordingOn; // true during recording
+    thread_local static int threadLocalNesting;
+    const char* profileId;
+    std::chrono::time_point<std::chrono::system_clock> createTime;
+    int pid;
+    int nesting;
+    std::string args;
 
     void addRecording();
 
@@ -40,71 +40,71 @@ private:
         if (args.size() == 0)
             return "";
 
-        std::string sResult = ",\"args\":{";
+        std::string result = ",\"args\":{";
         bool first = true;
         for (auto i : args)
         {
             if (!first)
-                sResult += ',';
-            sResult += '"';
-            sResult += i.first;
-            sResult += "\":\"";
-            sResult += i.second;
-            sResult += '"';
+                result += ',';
+            result += '"';
+            result += i.first;
+            result += "\":\"";
+            result += i.second;
+            result += '"';
             first = false;
         }
-        sResult += '}';
+        result += '}';
 
-        return sResult;
+        return result;
     }
 
-    ProfileZone(const char* sProfileId, const std::string &sArgs)
-        : m_sProfileId(sProfileId ? sProfileId : "(null)")
-        , m_nPid(-1)
-        , m_nNesting(-1)
-        , m_sArgs(sArgs)
+    ProfileZone(const char* id, const std::string &argumentString)
+        : profileId(id ? id : "(null)")
+        , pid(-1)
+        , nesting(-1)
+        , args(argumentString)
     {
-        if (s_bRecording)
+        if (recordingOn)
         {
             // Use system_clock as that matches the clock_gettime(CLOCK_REALTIME) that core uses.
-            m_nCreateTime = std::chrono::system_clock::now();
+            createTime = std::chrono::system_clock::now();
 
-            m_nPid = getpid();
+            pid = getpid();
 
-            m_nNesting = s_nNesting++;
+            nesting = threadLocalNesting++;
         }
     }
 
     // This method needs to be implemented separately in the WSD and Kit processes. (WSD writes the
     // actual Trace Event log file, Kit just forwards the Trace Events to WSD for output.)
-    static void addOneRecording(const std::string &sRecording);
+    static void addOneRecording(const std::string &recording);
 
 public:
     // Note that the char pointer is stored as such in the ProfileZone object and used in the
     // destructor, so be sure to pass a pointer that stays valid for the duration of the object's
     // lifetime.
-    ProfileZone(const char* sProfileId, const std::map<std::string, std::string> &args)
-        : ProfileZone(sProfileId, createArgsString(args))
+    ProfileZone(const char* id, const std::map<std::string, std::string> &arguments)
+        : ProfileZone(id, createArgsString(arguments))
     {
     }
 
-    ProfileZone(const char* sProfileId)
-        : ProfileZone(sProfileId, "")
+    ProfileZone(const char* id)
+        : ProfileZone(id, "")
     {
     }
 
     ~ProfileZone()
     {
-        if (m_nPid > 0)
+        if (pid > 0)
         {
-            s_nNesting--;
+            threadLocalNesting--;
 
-            if (m_nNesting != s_nNesting)
+            if (nesting != threadLocalNesting)
             {
 #ifdef TEST_PROFILEZONE_EXE
-                std::cerr << "Incorrect ProfileZone nesting for " << m_sProfileId << "\n";
+                std::cerr << "Incorrect ProfileZone nesting for " << profileId << "\n";
 #else
-                LOG_WRN("Incorrect ProfileZone nesting for " << m_sProfileId);
+                LOG_WRN("Incorrect ProfileZone nesting for " << profileId);
 #endif
             }
             else
