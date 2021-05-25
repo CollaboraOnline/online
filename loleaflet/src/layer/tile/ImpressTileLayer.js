@@ -69,22 +69,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
-	getAnnotation: function (id) {
-		return this._annotationManager.getAnnotation(id);
-	},
-
-	hideAnnotations: function (part) {
-		return this._annotationManager.hideAnnotation(part);
-	},
-
-	hasAnnotations: function (part) {
-		return this._annotationManager.hasAnnotations(part);
-	},
-
-	updateDocBounds: function (count, extraSize) {
-		return this._annotationManager.updateDocBounds(count, extraSize);
-	},
-
 	onResize: function () {
 		if (window.mode.isDesktop()) {
 			this._map.setView(this._map.getCenter(), this._map.getZoom(), {reset: true});
@@ -109,22 +93,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		clearTimeout(this._previewInvalidator);
 	},
 
-	onAnnotationCancel: function () {
-		this._annotationManager.onAnnotationCancel();
-	},
-
-	onAnnotationModify: function (annotation) {
-		this._annotationManager.onAnnotationModify(annotation);
-	},
-
-	onAnnotationReply: function (annotation) {
-		this._annotationManager.onAnnotationReply(annotation);
-	},
-
-	onAnnotationRemove: function (id) {
-		this._annotationManager.onAnnotationRemove(id);
-	},
-
 	_openMobileWizard: function(data) {
 		L.TileLayer.prototype._openMobileWizard.call(this, data);
 	},
@@ -144,22 +112,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 				this._addButton.remove();
 			}
 		}
-	},
-
-	clearAnnotations: function () {
-		this._annotationManager.clearAnnotations();
-	},
-
-	layoutAnnotations: function () {
-		this._annotationManager.layoutAnnotations();
-	},
-
-	unselectAnnotations: function () {
-		this._annotationManager.unselectAnnotations();
-	},
-
-	removeAnnotation: function (id) {
-		this._annotationManager.removeAnnotation(id);
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
