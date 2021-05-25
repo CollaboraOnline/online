@@ -1208,16 +1208,6 @@ L.Map = L.Evented.extend({
 		}
 
 		this.fire('moveend', {hard: !preserveMapOffset});
-
-		if (this.getDocType() === 'presentation') {
-			if (this._docLayer._annotationManager.getSelectedPart() !== undefined) {
-				var parHash = this._docLayer._annotationManager.getSelectedPartHash();
-				var annotations = this._docLayer._annotationManager._annotations[parHash];
-				for (var i in annotations) {
-					annotations[i].update();
-				}
-			}
-		}
 	},
 
 	_rawPanBy: function (offset) {
