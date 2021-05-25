@@ -777,7 +777,11 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     if (config.getBool("security.enable_macros_execution", false))
         enableMacrosExecution = "true";
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_MACROS_EXECUTION%"), enableMacrosExecution);
-    Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_LOCATION%"), std::string(FEEDBACK_LOCATION));
+
+#ifdef ENABLE_FEEDBACK
+    StringVector tokens = Util::tokenize(std::string(FEEDBACK_LOCATION), ' ');
+    Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_LOCATION%"), tokens.size() > 0 ? tokens[0] : "");
+#endif
 
     // Capture cookies so we can optionally reuse them for the storage requests.
     {
@@ -799,7 +803,11 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     // iframe purposes.
     std::ostringstream cspOss;
     cspOss << "Content-Security-Policy: default-src 'none'; "
+#ifdef ENABLE_FEEDBACK
         "frame-src 'self' " << FEEDBACK_LOCATION << " blob: " << documentSigningURL << "; "
+#else
+        "frame-src 'self' blob: " << documentSigningURL << "; "
+#endif
            "connect-src 'self' " << cnxDetails.getWebSocketUrl() << "; "
            "script-src 'unsafe-inline' 'self'; "
            "style-src 'self' 'unsafe-inline'; "
