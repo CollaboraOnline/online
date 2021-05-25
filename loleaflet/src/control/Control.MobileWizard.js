@@ -564,7 +564,7 @@ L.Control.MobileWizard = L.Control.extend({
 		if (data.jsontype === 'notebookbar')
 			return;
 
-		if (data.id !== window.mobileDialogId)
+		if (data.id !== window.mobileDialogId && data.jsontype !== 'sidebar')
 			return;
 
 		var container = this.content.get(0);
