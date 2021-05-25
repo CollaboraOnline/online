@@ -14,27 +14,24 @@
 
 #include "ProfileZone.hpp"
 
-std::atomic<bool> ProfileZone::s_bRecording(false);
+std::atomic<bool> ProfileZone::recordingOn(false);
 
-thread_local int ProfileZone::s_nNesting = 0; // level of overlapped zones
+thread_local int ProfileZone::threadLocalNesting = 0; // level of overlapped zones
 
-namespace
-{
-std::mutex g_aMutex;
-}
+static std::mutex mutex;
 
 void ProfileZone::startRecording()
 {
-    std::lock_guard<std::mutex> aGuard(g_aMutex);
-    s_nNesting = 0;
-    s_bRecording = true;
+    std::lock_guard<std::mutex> guard(mutex);
+    threadLocalNesting = 0;
+    recordingOn = true;
 }
 
-void ProfileZone::stopRecording() { s_bRecording = false; }
+void ProfileZone::stopRecording() { recordingOn = false; }
 
 void ProfileZone::addRecording()
 {
-    assert(s_bRecording);
+    assert(recordingOn);
 
     std::stringstream threadIdStr;
 #ifdef TEST_PROFILEZONE_EXE
@@ -49,45 +46,45 @@ void ProfileZone::addRecording()
 #else
     threadIdStr << Util::getThreadId();
 #endif
-    auto nNow = std::chrono::system_clock::now();
+    auto now = std::chrono::system_clock::now();
 
     // Generate a single "Complete Event" (type X)
-    auto nDuration = nNow - m_nCreateTime;
-    std::string sRecordingData(
+    auto duration = now - createTime;
+    std::string recordingData(
         "{"
         "\"name\":\""
-        + std::string(m_sProfileId)
+        + std::string(profileId)
         + "\","
           "\"ph\":\"X\","
           "\"ts\":"
         + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(
-                             m_nCreateTime.time_since_epoch())
+                             createTime.time_since_epoch())
                              .count())
         + ","
           "\"dur\":"
-        + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(nDuration).count())
+        + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(duration).count())
         + ","
           "\"pid\":"
-        + std::to_string(m_nPid)
+        + std::to_string(pid)
         + ","
           "\"tid\":"
         + threadIdStr.str()
-        + m_sArgs
+        + args
         + "}"
         // We add a trailing comma and newline, it is up to the code that handles these "recordings"
         // (outputs them into a JSON array) to remove the final comma before adding the terminating
         // ']'.
         + ",\n");
-    std::lock_guard<std::mutex> aGuard(g_aMutex);
-    addOneRecording(sRecordingData);
+    std::lock_guard<std::mutex> guard(mutex);
+    addOneRecording(recordingData);
 }
 
 #ifdef BUILDING_TESTS
 
-void ProfileZone::addOneRecording(const std::string &sRecording)
+void ProfileZone::addOneRecording(const std::string &recording)
 {
     // Dummy.
-    (void) sRecording;
+    (void) recording;
 }
 
 #endif // BUILDING_TESTS
@@ -97,11 +94,11 @@ void ProfileZone::addOneRecording(const std::string &sRecording)
 #include <iostream>
 #include <thread>
 
-static std::vector<std::string> g_aRecording;
+static std::vector<std::string> recordings;
 
-void ProfileZone::addOneRecording(const std::string &sRecording)
+void ProfileZone::addOneRecording(const std::string &recording)
 {
-    g_aRecording.emplace_back(sRecording);
+    recordings.emplace_back(recording);
 }
 
 int main(int argc, char** argv)
@@ -169,7 +166,7 @@ int main(int argc, char** argv)
     delete p2;
 
     std::cout << "[\n";
-    for (auto e : g_aRecording)
+    for (auto e : recordings)
         std::cout << "  " << e << "\n";
     std::cout << "]\n";
 
