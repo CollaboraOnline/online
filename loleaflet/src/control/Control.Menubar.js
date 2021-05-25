@@ -1578,8 +1578,9 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'insertslidesfield') {
 			this._map.sendUnoCommand('.uno:InsertPagesField');
 		} else if (id === 'pagesetup') {
+			this._map.sendUnoCommand('.uno:SidebarShow');
 			this._map.sendUnoCommand('.uno:LOKSidebarWriterPage');
-			this._map.fire('showwizardsidebar');
+			this._map.fire('showwizardsidebar', {noRefresh: true});
 			window.pageMobileWizard = true;
 		}
 		// Inform the host if asked

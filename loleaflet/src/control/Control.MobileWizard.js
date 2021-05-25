@@ -103,9 +103,10 @@ L.Control.MobileWizard = L.Control.extend({
 			this.map.showSidebar = false;
 	},
 
-	_showWizardSidebar: function() {
+	_showWizardSidebar: function(event) {
 		this.map.showSidebar = true;
-		this._refreshSidebar();
+		if (!event || !event.noRefresh)
+			this._refreshSidebar();
 	},
 
 	_hideWizard: function() {
@@ -133,6 +134,9 @@ L.Control.MobileWizard = L.Control.extend({
 		this.map.showSidebar = false;
 		this._isActive = false;
 		this._currentPath = [];
+
+		window.pageMobileWizard = false;
+
 		if (window.mobileWizard === true)
 			window.mobileWizard = false;
 
