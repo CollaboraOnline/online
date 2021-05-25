@@ -58,7 +58,7 @@ private:
         return sResult;
     }
 
-    ProfileZone(const char* sProfileId, const std::string sArgs)
+    ProfileZone(const char* sProfileId, const std::string &sArgs)
         : m_sProfileId(sProfileId ? sProfileId : "(null)")
         , m_nPid(-1)
         , m_nNesting(-1)
@@ -74,6 +74,10 @@ private:
             m_nNesting = s_nNesting++;
         }
     }
+
+    // This method needs to be implemented separately in the WSD and Kit processes. (WSD writes the
+    // actual Trace Event log file, Kit just forwards the Trace Events to WSD for output.)
+    static void addOneRecording(const std::string &sRecording);
 
 public:
     // Note that the char pointer is stored as such in the ProfileZone object and used in the
@@ -91,7 +95,7 @@ public:
 
     ~ProfileZone()
     {
-        if (m_nCreateTime.time_since_epoch() > std::chrono::time_point<std::chrono::system_clock>().time_since_epoch())
+        if (m_nPid > 0)
         {
             s_nNesting--;
 

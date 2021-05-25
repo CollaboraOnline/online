@@ -88,6 +88,7 @@ common_sources = \
 	../common/FileUtil.cpp \
 	../common/Util.cpp \
 	../common/StringVector.cpp \
+	../common/ProfileZone.cpp \
 	../net/HttpRequest.cpp \
 	../net/Socket.cpp \
 	../net/NetUtil.cpp \

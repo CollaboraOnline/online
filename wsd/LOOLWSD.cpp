@@ -134,6 +134,7 @@ using Poco::Net::PartHandler;
 #include "UserMessages.hpp"
 #include <Util.hpp>
 #include <common/ConfigUtil.hpp>
+#include <common/ProfileZone.hpp>
 
 #ifdef FUZZER
 #  include <tools/Replay.hpp>
@@ -277,6 +278,14 @@ void alertAllUsersInternal(const std::string& msg)
 #endif
 
 } // end anonymous namespace
+
+void ProfileZone::addOneRecording(const std::string &sRecording)
+{
+    if (LOOLWSD::TraceEventFile == NULL)
+        return;
+
+    fprintf(LOOLWSD::TraceEventFile, "%s\n", sRecording.c_str());
+}
 
 void LOOLWSD::checkSessionLimitsAndWarnClients()
 {
