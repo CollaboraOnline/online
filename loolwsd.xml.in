@@ -1,3 +1,5 @@
+<!-- -*- nxml-child-indent: 4; tab-width: 4; indent-tabs-mode: nil -*- -->
+
 <config>
 
     <!-- Note: 'default' attributes are used to document a setting's default value as well as to use as fallback. -->
@@ -76,7 +78,7 @@
     </logging>
 
     <trace_event desc="The possibility to turn on generation of a Chrome Trace Event file" enable="false">
-      <path desc="Output path for the Trace Event file, to which they will be written if turned on at run-time" type="string" default="@LOOLWSD_TRACEEVENTFILE@">@LOOLWSD_TRACEEVENTFILE@</path>
+        <path desc="Output path for the Trace Event file, to which they will be written if turned on at run-time" type="string" default="@LOOLWSD_TRACEEVENTFILE@">@LOOLWSD_TRACEEVENTFILE@</path>
     </trace_event>
 
     <loleaflet_logging desc="Logging in the browser console" default="@LOLEAFLET_LOGGING@">@LOLEAFLET_LOGGING@</loleaflet_logging>
