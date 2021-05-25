@@ -34,7 +34,15 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	newAnnotation: function (comment) {
-		this._annotationManager.newAnnotation(comment);
+		var ratio = this._tileWidthTwips / this._tileSize;
+		var docTopLeft = app.sectionContainer.getDocumentTopLeft();
+		docTopLeft = [docTopLeft[0] * ratio, docTopLeft[1] * ratio];
+		comment.anchorPos = [docTopLeft[0], docTopLeft[1]];
+		comment.rectangle = [docTopLeft[0], docTopLeft[1], 566, 566];
+
+		comment.partHash = this._partHashes[this._selectedPart];
+		var annotation = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(annotation);
 	},
 
 	beforeAdd: function (map) {
@@ -44,10 +52,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		map.on('updatepermission', this.onUpdatePermission, this);
 		map.on('resize', this.onResize, this);
 
-		if (!map._docPreviews)
-			map._docPreviews = {};
-
-		this._annotationManager = L.annotationManagerImpress(map);
 		map.uiManager.initializeSpecializedUI(this._docType);
 		if (window.mode.isMobile()) {
 			L.Control.MobileWizard.mergeOptions({maxHeight: '55vh'});
@@ -128,9 +132,8 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	onUpdateParts: function () {
 		if (isAnyVexDialogActive()) // Need this check else vex loses focus
 			return;
-		if (typeof this._prevSelectedPart === 'number') {
-			this._annotationManager.onPartChange(this._prevSelectedPart);
-		}
+
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onPartChange();
 	},
 
 	onUpdatePermission: function (e) {
@@ -172,21 +175,10 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (values.comments) {
-			this._annotationManager.addCommentsFromCommandValues(values.comments);
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).clearList();
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
 		} else {
 			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
-		}
-	},
-
-	_onMessage: function (textMsg, img) {
-		if (textMsg.startsWith('comment:')) {
-			var object = JSON.parse(textMsg.substring('comment:'.length + 1));
-			if (object.comment.author in this._map._viewInfoByUserName) {
-				object.comment.avatar = this._map._viewInfoByUserName[object.comment.author].userextrainfo.avatar;
-			}
-			this._annotationManager.processCommentMessage(object.comment);
-		} else {
-			L.TileLayer.prototype._onMessage.call(this, textMsg, img);
 		}
 	},
 
