@@ -303,7 +303,7 @@ public:
 
     /// UploadAs the document to Storage, with a new name.
     /// @param uploadAsPath Absolute path to the jailed file.
-    void uploadAsToStorage(const std::string& sesionId, const std::string& uploadAsPath,
+    void uploadAsToStorage(const std::string& sessionId, const std::string& uploadAsPath,
                            const std::string& uploadAsFilename, const bool isRename);
 
     bool isModified() const { return _isModified; }
