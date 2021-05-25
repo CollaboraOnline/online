@@ -51,6 +51,7 @@
 #include "ProofKey.hpp"
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
+#include <common/ProfileZone.hpp>
 
 #ifdef IOS
 #include <ios.h>
@@ -651,6 +652,8 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
                                                                         const std::string& cookies,
                                                                         LockContext& lockCtx)
 {
+    ProfileZone profileZone("getWOPIFileInfo", { {"url", _fileUrl} });
+
     // update the access_token to the one matching to the session
     Poco::URI uriObject(getUri());
     auth.authorizeURI(uriObject);
