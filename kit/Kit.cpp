@@ -75,6 +75,7 @@
 #include "RenderTiles.hpp"
 #include "SetupKitEnvironment.hpp"
 #include <common/ConfigUtil.hpp>
+#include <common/ProfileZone.hpp>
 
 #if !MOBILEAPP
 #include <common/SigUtil.hpp>
@@ -113,8 +114,10 @@ using namespace LOOLProtocol;
 
 extern "C" { void dump_kit_state(void); /* easy for gdb */ }
 
-// We only host a single document in our lifetime.
+// A Kit process hosts only a single document in its lifetime.
 class Document;
+static Document *singletonDocument = nullptr;
+
 #ifndef BUILDING_TESTS
 static bool AnonymizeUserData = false;
 static uint64_t AnonymizationSalt = 82589933;
@@ -575,7 +578,8 @@ public:
                 "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
                 "] and id [" << _docId << "].");
         assert(_loKit);
-
+        assert(singletonDocument == nullptr);
+        singletonDocument = this;
     }
 
     virtual ~Document()
@@ -1798,6 +1802,21 @@ private:
     const unsigned _mobileAppDocId;
     bool _inputProcessingEnabled;
 };
+
+#if !defined FUZZER && !defined BUILDING_TESTS
+
+// When building the fuzzer we link LOOLWSD.cpp into the same executable so the
+// Protected::addOneRecording() there gets used. When building the unit tests the one in
+// ProfileZone.cpp gets used.
+
+void ProfileZone::addOneRecording(const std::string &sRecording)
+{
+    if (!config::getBool("trace_event[@enable]", false))
+        return;
+
+    singletonDocument->sendTextFrame("trace: \n" + sRecording);
+}
+#endif
 
 #ifdef __ANDROID__
 
