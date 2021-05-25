@@ -131,6 +131,8 @@ static uint64_t AnonymizationSalt = 82589933;
 /// system root, not the jail.
 static std::string JailRoot;
 
+static void flushProfileZoneRecordings();
+
 #if !MOBILEAPP
 
 static LokHookFunction2* initFunction = nullptr;
@@ -557,7 +559,6 @@ public:
 #ifdef IOS
         deallocateDocumentDataForMobileAppDocId(_mobileAppDocId);
 #endif
-
     }
 
     const std::string& getUrl() const { return _url; }
@@ -650,6 +651,7 @@ public:
             if (num_sessions == 0)
             {
                 LOG_FTL("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
+                flushProfileZoneRecordings();
                 Log::shutdown();
                 std::_Exit(EX_OK);
             }
@@ -1025,6 +1027,7 @@ private:
             if (_sessions.empty())
             {
                 LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
+                flushProfileZoneRecordings();
                 Log::shutdown();
                 std::_Exit(EX_OK);
             }
@@ -1634,6 +1637,7 @@ public:
         {
             LOG_FTL("drainQueue: Exception: " << exc.what());
 #if !MOBILEAPP
+            flushProfileZoneRecordings();
             Log::shutdown();
             std::_Exit(EX_SOFTWARE);
 #endif
@@ -1642,6 +1646,7 @@ public:
         {
             LOG_FTL("drainQueue: Unknown exception");
 #if !MOBILEAPP
+            flushProfileZoneRecordings();
             Log::shutdown();
             std::_Exit(EX_SOFTWARE);
 #endif
@@ -1775,13 +1780,46 @@ private:
 // Protected::addOneRecording() there gets used. When building the unit tests the one in
 // ProfileZone.cpp gets used.
 
-void ProfileZone::addOneRecording(const std::string &sRecording)
+static constexpr int profileZoneRecordingsCapacity = 100;
+static std::vector<std::string> profileZoneRecordings;
+
+static void flushProfileZoneRecordings()
+{
+    if (profileZoneRecordings.size() == 0)
+        return;
+
+    std::size_t totalLength = 0;
+    for (const auto& i: profileZoneRecordings)
+        totalLength += i.length();
+
+    std::string recordings;
+    recordings.reserve(totalLength);
+
+    for (const auto& i: profileZoneRecordings)
+        recordings += i;
+
+    singletonDocument->sendTextFrame("trace: \n" + recordings);
+    profileZoneRecordings.clear();
+}
+
+void ProfileZone::addOneRecording(const std::string &recording)
 {
     if (!config::getBool("trace_event[@enable]", false))
         return;
 
-    singletonDocument->sendTextFrame("trace: \n" + sRecording);
+    if (profileZoneRecordings.size() >= profileZoneRecordingsCapacity)
+        flushProfileZoneRecordings();
+    else if (profileZoneRecordings.size() == 0 && profileZoneRecordings.capacity() < profileZoneRecordingsCapacity)
+        profileZoneRecordings.reserve(profileZoneRecordingsCapacity);
+    profileZoneRecordings.emplace_back(recording);
 }
+
+#else
+
+static void flushProfileZoneRecordings()
+{
+}
+
 #endif
 
 #ifdef __ANDROID__
@@ -1972,6 +2010,9 @@ public:
 protected:
     void handleMessage(const std::vector<char>& data) override
     {
+        // To get A LOT of Trace Events, to exercide their handling, uncomment this:
+        // ProfileZone profileZone("KitWebSocketHandler::handleMessage");
+
         std::string message(data.data(), data.size());
 
 #if !MOBILEAPP
@@ -2038,6 +2079,7 @@ protected:
         {
 #if !MOBILEAPP
             LOG_INF("Terminating immediately due to parent 'exit' command.");
+            flushProfileZoneRecordings();
             Log::shutdown();
             std::_Exit(EX_SOFTWARE);
 #else
@@ -2601,6 +2643,7 @@ void lokit_main(
 #if !MOBILEAPP
 
     LOG_INF("Process finished.");
+    flushProfileZoneRecordings();
     Log::shutdown();
     // Wait for the signal handler, if invoked, to prevent exiting until done.
     SigUtil::waitSigHandlerTrap();
