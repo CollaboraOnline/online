@@ -639,8 +639,9 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 	_setup: function () {
 
-		if (!this._canvasContainer) {
-			console.error('canvas container not found. _initContainer failed ?');
+		// if annotation is provided we can select perticular comment
+		if (annotation) {
+			$('#comment' + annotation.sectionProperties.data.id).click();
 		}
 
 		this._canvas = L.DomUtil.createWithId('canvas', 'document-canvas', this._canvasContainer);

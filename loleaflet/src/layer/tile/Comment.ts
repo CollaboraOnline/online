@@ -78,6 +78,11 @@ class Comment {
 		this.sectionProperties.nodeReplyText = null;
 		this.sectionProperties.contextMenu = false;
 
+		if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
+			this.sectionProperties.parthash = this.sectionProperties.data.parthash;
+			this.sectionProperties.partIndex = this.sectionProperties.docLayer._partHashes.indexOf(this.sectionProperties.parthash);
+		}
+
 		this.sectionProperties.isHighlighted = false;
 
 		this.name = data.id === 'new' ? 'new comment': 'comment ' + data.id;
@@ -294,8 +299,8 @@ class Comment {
 			data.textSelected = container;
 
 		if (data.textSelected) {
-			data.textSelected.setAttribute('width', String(this.context.canvas.width));
-			data.textSelected.setAttribute('height', String(this.context.canvas.height));
+			data.textSelected.setAttribute('width', String(Math.round(this.context.canvas.width / this.dpiScale)));
+			data.textSelected.setAttribute('height', String(Math.round(this.context.canvas.height / this.dpiScale)));
 			return data.textSelected;
 		}
 		else {
@@ -316,7 +321,7 @@ class Comment {
 
 	private setPositionAndSize () {
 		var rectangles = this.sectionProperties.data.rectangles;
-		if (rectangles) { // A text file.
+		if (rectangles && this.sectionProperties.docLayer._docType === 'text') {
 			var xMin: number = Infinity, yMin: number = Infinity, xMax: number = 0, yMax: number = 0;
 			for (var i = 0; i < rectangles.length; i++) {
 				if (rectangles[i][0] < xMin)
@@ -339,35 +344,37 @@ class Comment {
 	}
 
 	private createRectanglesForSelectedText (container: any) {
-		var rectangles = this.sectionProperties.data.rectangles;
-		var data = this.sectionProperties.data;
-		if (rectangles && container) {
-			for (var i = 0; i < rectangles.length; i++) {
-				var rectangle: SVGRectElement = <SVGRectElement>(<any>document.getElementById('commented-text-rectangle-' + data.id + '-' + String(i)));
-				if (!rectangle) {
-					rectangle = document.createElementNS('http://www.w3.org/2000/svg','rect');
-					rectangle.id = 'commented-text-rectangle-' + data.id + '-' + String(i);
-					rectangle.setAttribute('fill-opacity', '1');
-					rectangle.setAttribute('weight', '2');
-					rectangle.setAttribute('opacity', '0.25');
-					container.append(rectangle);
+		if (this.sectionProperties.docLayer._docType === 'text') {
+			var rectangles = this.sectionProperties.data.rectangles;
+			var data = this.sectionProperties.data;
+			if (rectangles && container) {
+				for (var i = 0; i < rectangles.length; i++) {
+					var rectangle: SVGRectElement = <SVGRectElement>(<any>document.getElementById('commented-text-rectangle-' + data.id + '-' + String(i)));
+					if (!rectangle) {
+						rectangle = document.createElementNS('http://www.w3.org/2000/svg','rect');
+						rectangle.id = 'commented-text-rectangle-' + data.id + '-' + String(i);
+						rectangle.setAttribute('fill-opacity', '1');
+						rectangle.setAttribute('weight', '2');
+						rectangle.setAttribute('opacity', '0.25');
+						container.append(rectangle);
+					}
+
+					// Svg elements are added into document-container. Their coordinates are in CSS units.
+					rectangle.setAttributeNS(null, 'x', String(Math.round(rectangles[i][0] / this.dpiScale)));
+					rectangle.setAttributeNS(null, 'y', String(Math.round(rectangles[i][1] / this.dpiScale)));
+					rectangle.setAttributeNS(null, 'width', String(Math.round(rectangles[i][2] / this.dpiScale) > 1 ? Math.round(rectangles[i][2] / this.dpiScale): 1));
+					rectangle.setAttributeNS(null, 'height', String(Math.round(rectangles[i][3] / this.dpiScale) > 1 ? Math.round(rectangles[i][3] / this.dpiScale): 1));
+					rectangle.setAttributeNS(null, 'fill', data.color);
+					rectangle.setAttributeNS(null, 'stroke', data.color);
 				}
 
-				// Svg elements are added into document-container. Their coordinates are in CSS units.
-				rectangle.setAttributeNS(null, 'x', String(Math.round(rectangles[i][0] / this.dpiScale)));
-				rectangle.setAttributeNS(null, 'y', String(Math.round(rectangles[i][1] / this.dpiScale)));
-				rectangle.setAttributeNS(null, 'width', String(Math.round(rectangles[i][2] / this.dpiScale) > 1 ? Math.round(rectangles[i][2] / this.dpiScale): 1));
-				rectangle.setAttributeNS(null, 'height', String(Math.round(rectangles[i][3] / this.dpiScale) > 1 ? Math.round(rectangles[i][3] / this.dpiScale): 1));
-				rectangle.setAttributeNS(null, 'fill', data.color);
-				rectangle.setAttributeNS(null, 'stroke', data.color);
-			}
-
-			// Remove extra elements (Example: user added a multi line comment and deleted some lines).
-			for (i = container.children.length - 1; i > -1; i--) {
-				var rectElement = container.children[i];
-				var number = parseInt(rectElement.id.replace('commented-text-rectangle-' + data.id + '-', ''));
-				if (number >= rectangles.length) {
-					container.removeChild(container.children[i]);
+				// Remove extra elements (Example: user added a multi line comment and deleted some lines).
+				for (i = container.children.length - 1; i > -1; i--) {
+					var rectElement = container.children[i];
+					var number = parseInt(rectElement.id.replace('commented-text-rectangle-' + data.id + '-', ''));
+					if (number >= rectangles.length) {
+						container.removeChild(container.children[i]);
+					}
 				}
 			}
 		}
@@ -386,19 +393,21 @@ class Comment {
 	}
 
 	public highlightSelectedText () {
-		var selectionContainer = this.getContainerForCommentedText();
+		if (this.sectionProperties.docLayer._docType === 'text') {
+			var selectionContainer = this.getContainerForCommentedText();
 
-		if (selectionContainer) {
-			selectionContainer.style.display = 'none';
-			var highlighterContainer: SVGElement = (<any>document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
-			highlighterContainer = selectionContainer.cloneNode();
-			highlighterContainer.id = 'commented-text-highlighter-container-' + this.sectionProperties.data.id;
-			selectionContainer.parentElement.append(highlighterContainer);
-			for (var i = 0; i < selectionContainer.children.length; i++) {
-				selectionContainer.children[i].setAttribute('stroke', '#777777');
-				selectionContainer.children[i].setAttribute('fill', '#777777');
+			if (selectionContainer) {
+				selectionContainer.style.display = 'none';
+				var highlighterContainer: SVGElement = (<any>document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
+				highlighterContainer = selectionContainer.cloneNode();
+				highlighterContainer.id = 'commented-text-highlighter-container-' + this.sectionProperties.data.id;
+				selectionContainer.parentElement.append(highlighterContainer);
+				for (var i = 0; i < selectionContainer.children.length; i++) {
+					selectionContainer.children[i].setAttribute('stroke', '#777777');
+					selectionContainer.children[i].setAttribute('fill', '#777777');
+				}
+				this.sectionProperties.isHighlighted = true;
 			}
-			this.sectionProperties.isHighlighted = true;
 		}
 	}
 
@@ -455,16 +464,9 @@ class Comment {
 				this.map.addLayer(this.sectionProperties.annotationMarker);
 		}
 		if (this.sectionProperties.data.rectangle != null) {
-			var stringTwips = this.sectionProperties.data.rectangle.match(/\d+/g);
-			var topLeftTwips = new L.Point(parseInt(stringTwips[0]), parseInt(stringTwips[1]));
-			var offset = new L.Point(parseInt(stringTwips[2]), parseInt(stringTwips[3]));
-			var bottomRightTwips = topLeftTwips.add(offset);
-			var bounds = new L.LatLngBounds(
-				this.sectionProperties.docLayer._twipsToLatLng(topLeftTwips, this.map.getZoom()),
-				this.sectionProperties.docLayer._twipsToLatLng(bottomRightTwips, this.map.getZoom()));
-			this.sectionProperties._annotationMarker.setLatLng(bounds.getNorthWest());
-			this.sectionProperties._annotationMarker.on('dragstart drag dragend', this.onMarkerDrag, this);
-			this.sectionProperties._annotationMarker.on('click', this.onMarkerClick, this);
+			this.sectionProperties.annotationMarker.setLatLng(this.sectionProperties.docLayer._twipsToLatLng(new L.Point(this.sectionProperties.data.rectangle[0], this.sectionProperties.data.rectangle[1])));
+			this.sectionProperties.annotationMarker.on('dragstart drag dragend', this.onMarkerDrag, this);
+			this.sectionProperties.annotationMarker.on('click', this.onMarkerClick, this);
 		}
 		if (this.sectionProperties.annotationMarker._icon) {
 			(new Hammer(this.sectionProperties.annotationMarker._icon, {recognizers: [[Hammer.Tap]]}))
@@ -541,6 +543,15 @@ class Comment {
 		this.sectionProperties.contentNode.style.display = '';
 		this.sectionProperties.nodeModify.style.display = 'none';
 		this.sectionProperties.nodeReply.style.display = 'none';
+
+		var data = this.sectionProperties.data;
+		if (data.textSelected) { // Writer.
+			data.textSelected.style.display = 'block';
+		}
+
+		var highlighter = document.getElementById('commented-text-highlighter-container-' + data.id); // Writer.
+		if (highlighter)
+			highlighter.style.display = 'block';
 	}
 
 	private hide () {
@@ -548,9 +559,16 @@ class Comment {
 		this.sectionProperties.contentNode.style.display = 'none';
 		this.sectionProperties.nodeModify.style.display = 'none';
 		this.sectionProperties.nodeReply.style.display = 'none';
-		if (this.sectionProperties.data.textSelected && this.map.hasLayer(this.sectionProperties.data.textSelected)) {
-			this.map.removeLayer(this.sectionProperties.data.textSelected);
+
+		var data = this.sectionProperties.data;
+		if (data.textSelected) { // Writer.
+			data.textSelected.style.display = 'none';
 		}
+
+		var highlighter = document.getElementById('commented-text-highlighter-container-' + data.id); // Writer.
+		if (highlighter)
+			highlighter.style.display = 'none';
+
 		this.hideMarker();
 	}
 
@@ -645,6 +663,11 @@ class Comment {
 	}
 
 	private sendAnnotationPositionChange (newPosition: any) {
+		if (app.file.fileBasedView) {
+			this.map.setPart(this.sectionProperties.docLayer._selectedPart, false);
+			newPosition.y -= this.sectionProperties.data.yAddition;
+		}
+
 		var comment = {
 			Id: {
 				type: 'string',
@@ -660,6 +683,9 @@ class Comment {
 			}
 		};
 		this.map.sendUnoCommand('.uno:EditAnnotation', comment);
+
+		if (app.file.fileBasedView)
+			this.map.setPart(0, false);
 	}
 
 	private onMarkerClick () {
@@ -726,6 +752,12 @@ class Comment {
 	}
 
 	public onRemove () {
+		this.hideMarker();
+
+		var container = this.sectionProperties.container;
+		if (container && container.parentElement)
+			container.parentElement.removeChild(container);
+
 		var data = this.sectionProperties.data;
 		if (data.textSelected) {
 			data.textSelected.parentElement.removeChild(data.textSelected);
