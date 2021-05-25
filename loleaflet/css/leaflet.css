@@ -222,14 +222,28 @@
 }
 
 .anchor-marker {
-	background: url('images/lc_anchormenu.svg') rgba(75, 85, 105, 0.5) no-repeat center;
-	border-style: solid;
-	border-width: 1px;
+	background: url('images/lc_anchormenu.svg') rgba(255,255,255,.85) no-repeat center;
+	border: 1px solid transparent;
 }
 
 .anchor-marker:hover {
-	background: url('images/lc_anchormenu.svg') rgba(93, 118, 170, 0.5) no-repeat center;
+	background-color: rgba(255,255,255,.95);
 	cursor: grab;
+	border-color: #4d82b8;
+}
+
+.anchor-marker.anchor-dragging::before {
+	content: '';
+	display: block;
+	background: radial-gradient(#4d82b8 10%, rgba(255,255,255,0) 18%);
+	width: 18px;
+	height: 18px;
+}
+
+.anchor-marker.anchor-dragging {
+	background: rgba(255, 255, 255, 0.75);
+	cursor: grabbing;
+	border-color: #4d82b8;
 }
 
 /* visual tweaks */
