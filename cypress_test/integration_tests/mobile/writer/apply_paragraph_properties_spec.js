@@ -186,37 +186,37 @@ describe('Apply paragraph properties.', function() {
 		// Change spacing
 		helper.clickOnIdle('#aboveparaspacing .plus');
 		cy.get('#aboveparaspacing .spinfield')
+			.should('have.attr', 'value', '0.01');
+
+		helper.clickOnIdle('#aboveparaspacing .plus');
+		cy.get('#aboveparaspacing .spinfield')
 			.should('have.attr', 'value', '0.02');
+
+		helper.clickOnIdle('#aboveparaspacing .plus');
+		cy.get('#aboveparaspacing .spinfield')
+			.should('have.attr', 'value', '0.03');
 
 		helper.clickOnIdle('#aboveparaspacing .plus');
 		cy.get('#aboveparaspacing .spinfield')
 			.should('have.attr', 'value', '0.04');
 
-		helper.clickOnIdle('#aboveparaspacing .plus');
-		cy.get('#aboveparaspacing .spinfield')
-			.should('have.attr', 'value', '0.06');
-
-		helper.clickOnIdle('#aboveparaspacing .plus');
-		cy.get('#aboveparaspacing .spinfield')
-			.should('have.attr', 'value', '0.08');
-
 		helper.clickOnIdle('#aboveparaspacing .minus');
 		cy.get('#aboveparaspacing .spinfield')
-			.should('have.attr', 'value', '0.06');
+			.should('have.attr', 'value', '0.03');
 
 		helper.clickOnIdle('#belowparaspacing .plus');
 		cy.get('#belowparaspacing .spinfield')
-			.should('have.attr', 'value', '0.02');
+			.should('have.attr', 'value', '0.01');
 
 		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
-			.should('contain', 'margin-top: 0.06in');
+			.should('contain', 'margin-top: 0.03in');
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
-			.should('contain', 'margin-bottom: 0.02in');
+			.should('contain', 'margin-bottom: 0.01in');
 	});
 
 	it('Increase / decrease indent.', function() {
@@ -253,51 +253,51 @@ describe('Apply paragraph properties.', function() {
 		// Change indent
 		helper.clickOnIdle('#beforetextindent .plus');
 		cy.get('#beforetextindent .spinfield')
-			.should('have.attr', 'value', '0.02');
+			.should('have.attr', 'value', '0.01');
 
 		helper.clickOnIdle('#beforetextindent .plus');
 		cy.get('#beforetextindent .spinfield')
-			.should('have.attr', 'value', '0.04');
+			.should('have.attr', 'value', '0.02');
 
 		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
-			.should('contain', 'margin-left: 0.04in');
+			.should('contain', 'margin-left: 0.02in');
 	});
 
 	it('Apply after text indent.', function() {
 		// Change indent
 		helper.clickOnIdle('#aftertextindent .plus');
 		cy.get('#aftertextindent .spinfield')
-			.should('have.attr', 'value', '0.02');
+			.should('have.attr', 'value', '0.01');
 
 		helper.clickOnIdle('#aftertextindent .plus');
 		cy.get('#aftertextindent .spinfield')
-			.should('have.attr', 'value', '0.04');
+			.should('have.attr', 'value', '0.02');
 
 		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
-			.should('contain', 'margin-right: 0.04in');
+			.should('contain', 'margin-right: 0.02in');
 	});
 
 	it('Apply first line indent.', function() {
 		// Increase firstline indent
 		helper.clickOnIdle('#firstlineindent .plus');
 		cy.get('#firstlineindent .spinfield')
-			.should('have.attr', 'value', '0.02');
+			.should('have.attr', 'value', '0.01');
 
 		helper.clickOnIdle('#firstlineindent .plus');
 		cy.get('#firstlineindent .spinfield')
-			.should('have.attr', 'value', '0.04');
+			.should('have.attr', 'value', '0.02');
 
 		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'style')
-			.should('contain', 'text-indent: 0.04in');
+			.should('contain', 'text-indent: 0.02in');
 	});
 
 	it('Linespacing item is hidden.', function() {

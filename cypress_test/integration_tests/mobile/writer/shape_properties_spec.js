@@ -45,6 +45,8 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		helper.clickOnIdle('#selectwidth .plus');
 
+		helper.clickOnIdle('#selectwidth .plus');
+
 		mobileHelper.closeMobileWizard();
 	}
 
