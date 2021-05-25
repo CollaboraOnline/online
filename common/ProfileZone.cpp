@@ -20,7 +20,6 @@ thread_local int ProfileZone::s_nNesting = 0; // level of overlapped zones
 
 namespace
 {
-std::vector<std::string> g_aRecording; // recorded data
 std::mutex g_aMutex;
 }
 
@@ -74,32 +73,36 @@ void ProfileZone::addRecording()
           "\"tid\":"
         + threadIdStr.str()
         + m_sArgs
-        + "},");
+        + "}"
+        // We add a trailing comma and newline, it is up to the code that handles these "recordings"
+        // (outputs them into a JSON array) to remove the final comma before adding the terminating
+        // ']'.
+        + ",\n");
     std::lock_guard<std::mutex> aGuard(g_aMutex);
-
-    g_aRecording.emplace_back(sRecordingData);
+    addOneRecording(sRecordingData);
 }
 
-std::vector<std::string> ProfileZone::getRecordingAndClear()
+#ifdef BUILDING_TESTS
+
+void ProfileZone::addOneRecording(const std::string &sRecording)
 {
-    bool bRecording;
-    std::vector<std::string> aRecording;
-    {
-        std::lock_guard<std::mutex> aGuard(g_aMutex);
-        bRecording = s_bRecording;
-        stopRecording();
-        aRecording.swap(g_aRecording);
-    }
-    // reset start time and nesting level
-    if (bRecording)
-        startRecording();
-    return aRecording;
+    // Dummy.
+    (void) sRecording;
 }
+
+#endif // BUILDING_TESTS
 
 #ifdef TEST_PROFILEZONE_EXE
 
 #include <iostream>
 #include <thread>
+
+static std::vector<std::string> g_aRecording;
+
+void ProfileZone::addOneRecording(const std::string &sRecording)
+{
+    g_aRecording.emplace_back(sRecording);
+}
 
 int main(int argc, char** argv)
 {
@@ -159,18 +162,16 @@ int main(int argc, char** argv)
     t2.join();
     t3.join();
 
-    auto v = ProfileZone::getRecordingAndClear();
-
-    std::cout << "[\n";
-    for (auto e : v)
-        std::cout << "  " << e << "\n";
-    std::cout << "]\n";
-
     // Intentional misuse: overlapping ProfileZones. Will generate "Incorrect ProfileZone nesting" messages.
     auto p1 = new ProfileZone("p1");
     auto p2 = new ProfileZone("p2");
     delete p1;
     delete p2;
+
+    std::cout << "[\n";
+    for (auto e : g_aRecording)
+        std::cout << "  " << e << "\n";
+    std::cout << "]\n";
 
     return 0;
 }
