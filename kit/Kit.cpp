@@ -1769,7 +1769,7 @@ private:
     bool _inputProcessingEnabled;
 };
 
-#if !defined FUZZER && !defined BUILDING_TESTS
+#if !defined FUZZER && !defined BUILDING_TESTS && !MOBILEAPP
 
 // When building the fuzzer we link LOOLWSD.cpp into the same executable so the
 // Protected::addOneRecording() there gets used. When building the unit tests the one in
