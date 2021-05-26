@@ -7,6 +7,7 @@
 /* global $ setupToolbar w2ui w2utils toolbarUpMobileItems _ */
 L.Control.UIManager = L.Control.extend({
 	mobileWizard: null,
+	blockedUI: false,
 
 	onAdd: function (map) {
 		this.map = map;
@@ -31,6 +32,9 @@ L.Control.UIManager = L.Control.extend({
 			history.pushState({context: 'app-started'}, 'app-started');
 			history.pushState({context: 'app-started'}, 'app-started');
 		}
+
+		map.on('blockUI', this.blockUI, this);
+		map.on('unblockUI', this.unblockUI, this);
 	},
 
 	// UI initialization
@@ -563,6 +567,20 @@ L.Control.UIManager = L.Control.extend({
 				this.enterReadonlyOrClose();
 			}
 		}
+	},
+
+	// Blocking UI
+
+	isUIBlocked: function() {
+		return this.blockedUI;
+	},
+
+	blockUI: function() {
+		this.blockedUI = true;
+	},
+
+	unblockUI: function() {
+		this.blockedUI = false;
 	},
 
 	// Helper functions
