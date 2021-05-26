@@ -1184,8 +1184,11 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._sortFileBasedQueue(queue);
 
 		if (queue.length > 0) {
-			this._selectedPart = this._getMostVisiblePart(queue);
-			this._preview._scrollToPart();
+			var partToSelect = this._getMostVisiblePart(queue);
+			if (this._selectedPart !== partToSelect) {
+				this._selectedPart = partToSelect;
+				this._preview._scrollToPart();
+			}
 		}
 
 		if (checkOnly) {
