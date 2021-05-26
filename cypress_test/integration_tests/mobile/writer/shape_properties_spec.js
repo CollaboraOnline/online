@@ -37,6 +37,8 @@ describe('Change shape properties via mobile wizard.', function() {
 	function triggerNewSVG() {
 		mobileHelper.closeMobileWizard();
 
+		cy.wait(1000);
+
 		// Change width
 		openPosSizePanel();
 
