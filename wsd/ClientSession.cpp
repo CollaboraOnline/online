@@ -448,7 +448,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 str = perfcounter.data();
                 endptr = nullptr;
                 double counter = strtod(str, &endptr);
-                if (*endptr == '\0')
+                if (*endptr == '\0' && (counter < (double)(std::numeric_limits<uint64_t>::max() / 1000)))
                 {
                     // Now we know how to translate from the client's performance.now() values to
                     // microseconds since the epoch.
