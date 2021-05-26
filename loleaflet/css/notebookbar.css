@@ -25,12 +25,15 @@
 	padding: 0px 1em;
 }
 
+.ui-tab.notebookbar[style*='block'] {
+	display: inline-flex !important;
+}
+
 .ui-tab.hidden.notebookbar {
 	display: none;
 }
 
 .ui-tab.selected.notebookbar {
-	display: flex !important;
 	border: 0px;
 	border-radius: 0px;
 	background: var(--white-bg-color);
