@@ -348,9 +348,13 @@ app.definitions.Socket = L.Class.extend({
 		if (complete) // Finished all elements in the queue.
 			this._slurpQueue = [];
 
-		if (this._map && this._map._docLayer) {
-			// Resume with redraw if dirty due to previous _onMessage() calls.
-			this._map._docLayer.resumeDrawing();
+		if (this._map) {
+			if (this._map._docLayer) {
+				// Resume with redraw if dirty due to previous _onMessage() calls.
+				this._map._docLayer.resumeDrawing();
+			}
+			// Let other layers / overlays catch up.
+			this._map.fire('messagesdone');
 		}
 	},
 
