@@ -884,7 +884,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         }
 #endif
 
-        std::ifstream istr(localPath, std::ios::binary);
+        const std::string localFilePath = Poco::Path(getJailRoot(), localPath).toString();
+        std::ifstream istr(localFilePath, std::ios::binary);
         Poco::SHA1Engine sha1;
         Poco::DigestOutputStream dos(sha1);
         Poco::StreamCopier::copyStream(istr, dos);
