@@ -122,6 +122,8 @@ function openMobileWizard() {
 		.should('not.have.class', 'disabled')
 		.click();
 
+	cy.wait(1000);
+
 	// Mobile wizard is opened and it has content
 	cy.get('#mobile-wizard-content')
 		.should('not.be.empty');
@@ -302,6 +304,8 @@ function selectListBoxItem2(listboxSelector, item) {
 	helper.clickOnIdle(listboxSelector);
 
 	helper.clickOnIdle('.ui-combobox-text', item);
+
+	cy.wait(1000);
 
 	cy.get(listboxSelector + ' .ui-header-left')
 		.should('have.text', item);

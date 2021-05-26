@@ -21,7 +21,12 @@ describe('Apply paragraph properties on selected shape.', function() {
 
 	function triggerNewSVG() {
 		mobileHelper.closeMobileWizard();
+
+		cy.wait(1000);
+
 		impressHelper.triggerNewSVGForShapeInTheCenter();
+
+		cy.wait(1000);
 	}
 
 	function openParagraphPropertiesPanel() {
