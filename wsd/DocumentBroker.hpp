@@ -800,7 +800,6 @@ private:
     const std::string _docKey;
     /// Short numerical ID. Unique during the lifetime of WSD.
     const std::string _docId;
-    const std::string _childRoot;
     std::shared_ptr<ChildProcess> _childProcess;
     std::string _uriJailed;
     std::string _uriJailedAnonym;
