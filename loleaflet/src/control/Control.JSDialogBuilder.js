@@ -238,6 +238,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	// by default send new state to the core
 	_defaultCallbackHandler: function(objectType, eventType, object, data, builder) {
+
+		if (builder.map.uiManager.isUIBlocked())
+			return;
+
 		console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
 
 		if (builder.wizard.setCurrentScrollPosition)

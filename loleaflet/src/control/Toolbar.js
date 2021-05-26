@@ -324,6 +324,8 @@ L.Map.include({
 			}
 		}
 
+		if (this.uiManager.isUIBlocked())
+			return;
 		if (this.dialog.hasOpenedDialog())
 			this.dialog.blinkOpenDialog();
 		else if (this.isPermissionEdit() || isAllowedInReadOnly) {
