@@ -1007,6 +1007,29 @@ L.Control.Menubar = L.Control.extend({
 						{name: _UNO('.uno:InsertSlidesField', 'presentation'), id: 'insertslidesfield', type: 'action'},
 					]},
 				]
+			},
+			drawing : {
+				name: _UNO('.uno:InsertMenu', 'drawing'), id: 'insert', type: 'menu', menu: [
+					{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
+					{name: _UNO('.uno:InsertGraphic', 'drawing'), id: 'insertgraphicremote', type: 'action'},
+					{uno: '.uno:InsertObjectChart'},
+					{name: _UNO('.uno:InsertAnnotation', 'drawing'), id: 'insertcomment', type: 'action'},
+					{name: _UNO('.uno:TableMenu'), id: 'inserttable', type: 'action'},
+					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
+					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
+					{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater'},
+					{name: _UNO('.uno:Text', 'drawing'), id: 'inserttextbox', type: 'action'},
+					{name: _UNO('.uno:InsertField', 'text'), id: 'insertfield', type: 'menu', menu: [
+						{uno: '.uno:InsertDateFieldFix'},
+						{uno: '.uno:InsertDateFieldVar'},
+						{uno: '.uno:InsertTimeFieldFix'},
+						{uno: '.uno:InsertTimeFieldVar'},
+						{type: 'separator'},
+						{name: _UNO('.uno:InsertSlideField', 'drawing'), id: 'insertslidefield', type: 'action'},
+						{name: _UNO('.uno:InsertSlideTitleField', 'drawing'), id: 'insertslidetitlefield', type: 'action'},
+						{name: _UNO('.uno:InsertSlidesField', 'drawing'), id: 'insertslidesfield', type: 'action'},
+					]},
+				]
 			}
 		},
 
