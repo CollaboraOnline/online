@@ -1024,6 +1024,9 @@ L.Control.LokDialog = L.Control.extend({
 		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
 			L.DomEvent.stop(e);
 
+			if (this._map.uiManager.isUIBlocked())
+				return;
+			
 			if (this.isCalcInputBar(id) && this.hasOpenedDialog()) {
 				this.blinkOpenDialog();
 				return;
