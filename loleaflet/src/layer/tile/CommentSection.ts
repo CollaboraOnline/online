@@ -446,10 +446,17 @@ class CommentSection {
 				value: id
 			}
 		};
+
+		if (app.file.fileBasedView) // We have to set the part from which the comment will be removed as selected part before the process.
+			this.map.setPart(this.sectionProperties.docLayer._selectedPart, false);
+
 		if (this.sectionProperties.docLayer._docType === 'text')
 			this.map.sendUnoCommand('.uno:DeleteComment', comment);
 		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing')
 			this.map.sendUnoCommand('.uno:DeleteAnnotation', comment);
+
+		if (app.file.fileBasedView)
+			this.map.setPart(0, false);
 
 		this.unselect();
 		this.map.focus();
