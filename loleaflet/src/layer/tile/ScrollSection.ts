@@ -70,10 +70,10 @@ class ScrollSection {
 		this.sectionProperties.previousDragDistance = null;
 
 		this.sectionProperties.usableThickness = 20 * this.sectionProperties.roundedDpi;
-		this.sectionProperties.scrollBarThickness = 6 * this.sectionProperties.roundedDpi;
+		this.sectionProperties.scrollBarThickness = 12 * this.sectionProperties.roundedDpi;
 		this.sectionProperties.edgeOffset = 10 * this.sectionProperties.roundedDpi;
 
-		this.sectionProperties.drawVerticalScrollBar = false;
+		this.sectionProperties.drawVerticalScrollBar = true;
 		this.sectionProperties.drawHorizontalScrollBar = false;
 
 		this.sectionProperties.clickScrollVertical = false; // true when user presses on the scroll bar drawing.
@@ -104,6 +104,7 @@ class ScrollSection {
 
 		this.sectionProperties.animatingVerticalScrollBar = false;
 		this.sectionProperties.animatingHorizontalScrollBar = false;
+
 	}
 
 	public completePendingScroll() {
@@ -335,9 +336,7 @@ class ScrollSection {
 
 		var startX = this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
 
-		this.context.fillRect(startX + this.sectionProperties.roundedDpi, scrollProps.startY - this.sectionProperties.roundedDpi, this.sectionProperties.roundedDpi * 4, this.sectionProperties.roundedDpi);
         this.context.fillRect(startX, scrollProps.startY, this.sectionProperties.scrollBarThickness, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness);
-        this.context.fillRect(startX + this.sectionProperties.roundedDpi, scrollProps.startY + scrollProps.scrollSize - this.sectionProperties.scrollBarThickness, this.sectionProperties.roundedDpi * 4, this.sectionProperties.roundedDpi);
 
 		this.context.globalAlpha = 1.0;
 	}
@@ -423,7 +422,7 @@ class ScrollSection {
 	}
 
 	private hideVerticalScrollBar () {
-		if (this.sectionProperties.mouseIsOnVerticalScrollBar) {
+		if (this.sectionProperties.mouseIsOnVerticalScrollBar && this.documentTopLeft[1] < 0) {
 			this.sectionProperties.drawVerticalScrollBar = false;
 			this.sectionProperties.mouseIsOnVerticalScrollBar = false;
 			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
