@@ -26,44 +26,37 @@ L.Control.MobileTopBar = L.Control.extend({
 		if (docType == 'text') {
 			return [
 				{type: 'button',  id: 'closemobile',  img: 'closemobile'},
-				{type: 'spacer'},
 				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
+				{type: 'spacer'},
 				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
-				{type: 'button',  id: 'comment_wizard', img: 'viewcomments'},
-				{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
+				{type: 'button',  id: 'comment_wizard', img: 'mobile_comment_wizard'},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 			];
 		} else if (docType == 'spreadsheet') {
 			return [
 				{type: 'button',  id: 'closemobile',  img: 'closemobile'},
-				{type: 'spacer'},
 				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
+				{type: 'spacer'},
 				{type: 'button', hidden: true, id: 'acceptformula',  img: 'ok', hint: _('Accept')},
 				{type: 'button', hidden: true, id: 'cancelformula',  img: 'cancel', hint: _('Cancel')},
 				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
-				{type: 'button',  id: 'comment_wizard', img: 'viewcomments'},
-				{type: 'button',  id: 'fullscreen', img: 'fullscreen', hint: _UNO('.uno:FullScreen', 'text')},
+				{type: 'button',  id: 'comment_wizard', img: 'mobile_comment_wizard'},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 			];
-		} else if (docType == 'presentation') {
+		} else if ((docType == 'presentation') || (docType == 'drawing')) {
 			return [
 				{type: 'button',  id: 'closemobile',  img: 'closemobile'},
-				{type: 'spacer'},
 				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
-				{type: 'button',  id: 'fullscreen-presentation', img: 'fullscreen-presentation', hint: _UNO('.uno:FullScreen', 'presentation')},
+				{type: 'spacer'},
 				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
-				{type: 'button',  id: 'comment_wizard', img: 'viewcomments'},
+				{type: 'button',  id: 'comment_wizard', img: 'mobile_comment_wizard'},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
-			];
-		} else if (docType == 'drawing') {
-			return [
-				{type: 'button',  id: 'comment_wizard', img: 'viewcomments'}
 			];
 		}
 	},
