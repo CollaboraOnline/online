@@ -477,6 +477,8 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}, this);
 
+		this._map.on('zoomend', this._onZoomForTableMarkers, this);
+
 		for (var key in this._selectionHandles) {
 			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
 		}
@@ -490,6 +492,7 @@ L.TileLayer = L.GridLayer.extend({
 		// The 'tap' events are not broadcasted by L.Map.TouchGesture, A specialized 'dropdownmarkertapped' event is
 		// generated just for the validity-dropdown-icon.
 		map.on('dropdownmarkertapped', this._onDropDownButtonClick, this);
+		map.on('messagesdone', this._onMessagesDone, this);
 
 		map.setPermission(this.options.permission);
 
@@ -3253,6 +3256,11 @@ L.TileLayer = L.GridLayer.extend({
 			'&EndRow=' + endRow +
 			'&Table=' + this._map._docLayer._selectedPart
 		);
+	},
+
+	// Refresh pieces after processing incoming message queue
+	_onMessagesDone: function() {
+		this._updateTableMarkers();
 	},
 
 	_onDropDownButtonClick: function () {
