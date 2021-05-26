@@ -363,6 +363,8 @@ L.TileLayer = L.GridLayer.extend({
 			}
 		}, this);
 
+		this._map.on('zoomend', this._onZoomForTableMarkers, this);
+
 		for (var key in this._selectionHandles) {
 			this._selectionHandles[key].on('drag dragend', this._onSelectionHandleDrag, this);
 		}
