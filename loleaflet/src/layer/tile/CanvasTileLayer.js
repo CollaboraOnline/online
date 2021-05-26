@@ -6145,6 +6145,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Send acknowledgment, that the tile message arrived
 		var tileID = tileMsgObj.part + ':' + tileMsgObj.x + ':' + tileMsgObj.y + ':' + tileMsgObj.tileWidth + ':' + tileMsgObj.tileHeight + ':' + tileMsgObj.nviewid;
 		app.socket.sendMessage('tileprocessed tile=' + tileID);
+		app.sectionContainer.requestReDraw();
 	},
 
 	_onTileMsg: function (textMsg, img) {
