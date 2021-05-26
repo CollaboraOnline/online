@@ -132,6 +132,12 @@ L.TileLayer.include({
 	},
 
 	_updateTableMarkers: function() {
+		if (this._currentTableData === undefined)
+			return; // not writer, no table selected yet etc.
+		if (this._currentTableMarkerJson === this._lastTableMarkerJson)
+			return; // identical table setup.
+		this._lastTableMarkerJson = this._currentTableMarkerJson;
+
 		// Clean-up first
 		this._clearTableMarkers();
 
@@ -210,6 +216,7 @@ L.TileLayer.include({
 		}
 	},
 	_onZoomForTableMarkers: function () {
+		this._lastTableMarkerJson = 'foo';
 		this._updateTableMarkers();
 	},
 	_onTableSelectedMsg: function (textMsg) {
@@ -224,9 +231,8 @@ L.TileLayer.include({
 		// Parse the message
 		textMsg = textMsg.substring('tableselected:'.length + 1);
 		var message = JSON.parse(textMsg);
+		this._currentTableMarkerJson = textMsg;
 		this._currentTableData = message;
-		this._updateTableMarkers();
-		this._map.on('zoomend', L.bind(this._onZoomForTableMarkers, this));
 	},
 	_addSelectionMarkers: function (type, positions, start, end) {
 		if (positions.length < 2)
