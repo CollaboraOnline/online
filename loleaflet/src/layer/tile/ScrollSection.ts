@@ -62,7 +62,7 @@ class ScrollSection {
 		this.sectionProperties.previousDragDistance = null;
 
 		this.sectionProperties.usableThickness = 20 * app.roundedDpiScale;
-		this.sectionProperties.scrollBarThickness = 6 * app.roundedDpiScale;
+		this.sectionProperties.scrollBarThickness = 12 * app.roundedDpiScale;
 		this.sectionProperties.edgeOffset = 10 * app.roundedDpiScale;
 
 		this.sectionProperties.drawVerticalScrollBar = ((<any>window).mode.isDesktop() ? true: false);
@@ -96,6 +96,7 @@ class ScrollSection {
 
 		this.sectionProperties.animatingVerticalScrollBar = false;
 		this.sectionProperties.animatingHorizontalScrollBar = false;
+
 	}
 
 	public completePendingScroll() {
@@ -356,9 +357,7 @@ class ScrollSection {
 
 		var startX = this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
 
-		this.context.fillRect(startX + app.roundedDpiScale, scrollProps.startY - app.roundedDpiScale, app.roundedDpiScale * 4, app.roundedDpiScale);
         this.context.fillRect(startX, scrollProps.startY, this.sectionProperties.scrollBarThickness, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness);
-        this.context.fillRect(startX + app.roundedDpiScale, scrollProps.startY + scrollProps.scrollSize - this.sectionProperties.scrollBarThickness, app.roundedDpiScale * 4, app.roundedDpiScale);
 
 		this.context.globalAlpha = 1.0;
 	}
@@ -439,7 +438,8 @@ class ScrollSection {
 	}
 
 	private hideVerticalScrollBar () {
-		if (this.sectionProperties.mouseIsOnVerticalScrollBar) {
+		if (this.sectionProperties.mouseIsOnVerticalScrollBar && this.documentTopLeft[1] < 0) {
+			this.sectionProperties.drawVerticalScrollBar = false;
 			this.sectionProperties.mouseIsOnVerticalScrollBar = false;
 			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
 
