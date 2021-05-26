@@ -932,10 +932,20 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 
         _filename = fileInfo.getFilename();
 
-        // Use the local temp file's timestamp.
-        _saveManager.setLastModifiedTime(
-            templateSource.empty() ? FileUtil::Stat(_storage->getRootFilePath()).modifiedTimepoint()
-                                   : std::chrono::system_clock::time_point());
+        if (!templateSource.empty())
+        {
+            // Invalid timestamp for templates, to force uploading once we save-after-loading.
+            _saveManager.setLastModifiedTime(std::chrono::system_clock::time_point());
+            _storageManager.setLastUploadedFileModifiedTime(
+                std::chrono::system_clock::time_point());
+        }
+        else
+        {
+            // Use the local temp file's timestamp.
+            const auto timepoint = FileUtil::Stat(localFilePath).modifiedTimepoint();
+            _saveManager.setLastModifiedTime(timepoint);
+            _storageManager.setLastUploadedFileModifiedTime(timepoint); // Used to detect modifications.
+        }
 
         bool dontUseCache = false;
 #if MOBILEAPP
