@@ -1067,6 +1067,30 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._map.fire('scrolllimits', {x: scrollPixelLimits.x, y: scrollPixelLimits.y, extraSize: extraSize});
 	},
 
+	// Used with filebasedview.
+	_getMostVisiblePart: function (queue) {
+		var parts = [];
+
+		for (var i = 0; i < queue.length; i++) {
+			if (parts.indexOf(queue[i].part) < 0)
+				parts.push({part: queue[i].part, tileCount: 0});
+		}
+
+		var maxTileCount = 0;
+		var mostVisiblePart = 0;
+		for (i = 0; i < parts.length; i++) {
+			for (var j = 0; j < queue.length; j++) {
+				if (queue[j].part === parts[i].part)
+					parts[i].tileCount++;
+			}
+			if (parts[i].tileCount > maxTileCount) {
+				maxTileCount = parts[i].tileCount;
+				mostVisiblePart = parts[i].part;
+			}
+		}
+		return mostVisiblePart;
+	},
+
 	// In file based view, all parts may be drawn, not only selected part.
 	_getTileInfoForFileBasedView: function (currentX, currentY, zoom, partHeightPixels, queue) {
 		var yMin = currentY;
@@ -1159,8 +1183,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		this._sortFileBasedQueue(queue);
 
-		if (queue.length > 0 && queue[0].part !== this._selectedPart) {
-			this._selectedPart = queue[0].part;
+		if (queue.length > 0) {
+			this._selectedPart = this._getMostVisiblePart(queue);
 			this._preview._scrollToPart();
 		}
 
