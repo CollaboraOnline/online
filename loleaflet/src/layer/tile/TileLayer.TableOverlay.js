@@ -132,6 +132,9 @@ L.TileLayer.include({
 	},
 
 	_updateTableMarkers: function() {
+		if (this._currentTableData === undefined)
+			return; // not writer, no table selected yet etc.
+
 		// Clean-up first
 		this._clearTableMarkers();
 
@@ -226,7 +229,6 @@ L.TileLayer.include({
 		var message = JSON.parse(textMsg);
 		this._currentTableData = message;
 		this._updateTableMarkers();
-		this._map.on('zoomend', L.bind(this._onZoomForTableMarkers, this));
 	},
 	_addSelectionMarkers: function (type, positions, start, end) {
 		if (positions.length < 2)
