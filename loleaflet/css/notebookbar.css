@@ -184,29 +184,17 @@
 	left: 0;
 }
 
-.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon,
-.hasnotebookbar.spreadsheet-color-indicator #Save,
-.hasnotebookbar.spreadsheet-color-indicator #FullScreen,
-.hasnotebookbar.spreadsheet-color-indicator #Undo,
-.hasnotebookbar.spreadsheet-color-indicator #Redo {
+.hasnotebookbar.spreadsheet-color-indicator #table-shortcutstoolbox {
 	-webkit-filter: hue-rotate(290deg);
 	filter: hue-rotate(290deg);
 }
 
-.hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon,
-.hasnotebookbar.presentation-color-indicator #Save,
-.hasnotebookbar.presentation-color-indicator #Presentation,
-.hasnotebookbar.presentation-color-indicator #Undo,
-.hasnotebookbar.presentation-color-indicator #Redo {
+.hasnotebookbar.presentation-color-indicator #table-shortcutstoolbox{
 	-webkit-filter: hue-rotate(190deg);
 	filter: hue-rotate(190deg);
 }
 
-.hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon,
-.hasnotebookbar.drawing-color-indicator #Save,
-.hasnotebookbar.drawing-color-indicator #FullScreen,
-.hasnotebookbar.drawing-color-indicator #Undo,
-.hasnotebookbar.drawing-color-indicator #Redo {
+.hasnotebookbar.drawing-color-indicator #table-shortcutstoolbox {
 	-webkit-filter: hue-rotate(210deg);
 	filter: hue-rotate(210deg);
 }
