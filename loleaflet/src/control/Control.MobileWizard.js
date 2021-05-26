@@ -467,7 +467,12 @@ L.Control.MobileWizard = L.Control.extend({
 				$('#mobile-wizard').height(this.options.maxHeight);
 				$('#mobile-wizard').css('top', '');
 			}
-
+			if (!this.map._docLoaded) {
+				$('#mobile-wizard').height('100%');
+				// Turn backButton icon from down to actually back
+				// since it does not hide it, instead it goes back in this case
+				this.backButton.removeClass('close-button');
+			}
 			if (this._isActive && currentPath.length) {
 				this._goToPath(currentPath);
 				this._scrollToPosition(lastScrollPosition);
