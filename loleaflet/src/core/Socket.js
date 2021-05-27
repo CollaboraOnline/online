@@ -1010,6 +1010,21 @@ app.definitions.Socket = L.Class.extend({
 			var mobileEvent = textMsg.substring('mobile: '.length);
 			this._map.fire(mobileEvent);
 		}
+		else if (textMsg.startsWith('blockui:')) {
+			textMsg = textMsg.substring('blockui:'.length).trim();
+			msg = null;
+
+			if (textMsg === 'rename') {
+				msg = _('The document is being renamed and will reload shortly');
+			}
+
+			this._map.fire('blockUI', {message: msg});
+			return;
+		}
+		else if (textMsg.startsWith('unblockui:')) {
+			this._map.fire('unblockUI');
+			return;
+		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {
 
 			if (imgBytes !== undefined) {
