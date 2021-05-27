@@ -714,13 +714,15 @@ L.Control.Menubar = L.Control.extend({
 		],
 
 		mobiletext:  [
+			{name: _('Search'), id: 'searchdialog', type: 'action'},
 			{name: _UNO('.uno:PickList', 'text'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'text'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'text'), id: 'saveas', type: 'action'},
 				{name: _('Share...'), id:'shareas', type: 'action'},
-				{name: _UNO('.uno:Print', 'text'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
-				{name: _('Sign document'), id: 'signdocument', type: 'action'}
+				{name: _('Sign document'), id: 'signdocument', type: 'action'},
+				{type: 'separator'},
+				{name: _UNO('.uno:Print', 'text'), id: 'print', type: 'action'}
 			]},
 			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id: 'downloadas', type: 'menu', menu: [
 				{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
@@ -740,8 +742,6 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'}
 			]},
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
-			{uno: '.uno:WordCountDialog'},
 			{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
 				{uno: '.uno:TrackChanges'},
 				{uno: '.uno:ShowTrackedChanges'},
@@ -751,26 +751,30 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:PreviousTrackedChange'},
 				{uno: '.uno:NextTrackedChange'}
 			]},
-			{name: _('Page Setup'), id: 'pagesetup', type: 'action'},
-			{id: 'watermark', uno: '.uno:Watermark'},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
 				{uno: '.uno:ControlCodes'},
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action', uno: '.uno:ShowResolvedAnnotations'},
 			]
 			},
+			{id: 'watermark', uno: '.uno:Watermark'},
+			{name: _('Page Setup'), id: 'pagesetup', type: 'action'},
+			{uno: '.uno:WordCountDialog'},
 			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
+			{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('Latest Updates'), id: 'latest-updates', type: 'action', iosapp: false},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
 
 		mobilepresentation: [
+			{name: _('Search'), id: 'searchdialog', type: 'action'},
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
 				{name: _('Share...'), id:'shareas', type: 'action'},
-				{name: _UNO('.uno:Print', 'presentation'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
+				{type: 'separator'},
+				{name: _UNO('.uno:Print', 'presentation'), id: 'print', type: 'action'}
 			]},
 			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id:'downloadas', type: 'menu', menu: [
 				{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
@@ -789,7 +793,6 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'}
 			]},
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), id: 'tablemenu', type: 'menu', menu: [
 				{uno: '.uno:InsertRowsBefore'},
 				{uno: '.uno:InsertRowsAfter'},
@@ -805,15 +808,16 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:DuplicateSlide', 'presentation'), id: 'duplicatepage', type: 'action'},
 				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'}]
 			},
-			{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
-			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{uno: '.uno:SpellOnline'},
+			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
+			{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('Latest Updates'), id: 'latest-updates', type: 'action', iosapp: false},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
 
 		mobiledrawing: [
+			{name: _('Search'), id: 'searchdialog', type: 'action'},
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
@@ -835,7 +839,6 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'}
 			]},
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), id: 'tablemenu', type: 'menu', menu: [
 				{uno: '.uno:InsertRowsBefore'},
 				{uno: '.uno:InsertRowsAfter'},
@@ -851,21 +854,22 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:DuplicateSlide', 'presentation'), id: 'duplicatepage', type: 'action'},
 				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'}]
 			},
-			{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
-			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{uno: '.uno:SpellOnline'},
-			{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
+			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
+			{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('Latest Updates'), id: 'latest-updates', type: 'action', iosapp: false},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
 
 		mobilespreadsheet: [
+			{name: _('Search'), id: 'searchdialog', type: 'action'},
 			{name: _UNO('.uno:PickList', 'spreadsheet'), id: 'file', type: 'menu', menu: [
 				{name: _UNO('.uno:Save', 'spreadsheet'), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'spreadsheet'), id: 'saveas', type: 'action'},
 				{name: _('Share...'), id:'shareas', type: 'action'},
-				{name: _UNO('.uno:Print', 'spreadsheet'), id: 'print', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
+				{type: 'separator'},
+				{name: _UNO('.uno:Print', 'spreadsheet'), id: 'print', type: 'action'}
 			]},
 			{name: !window.ThisIsAMobileApp ? _('Download as') : _('Export as'), id:'downloadas', type: 'menu', menu: [
 				{name: _('PDF Document (.pdf)'), id: 'downloadas-pdf', type: 'action'},
@@ -883,7 +887,6 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:Paste'},
 				{uno: '.uno:SelectAll'}
 			]},
-			{name: _('Search'), id: 'searchdialog', type: 'action'},
 			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), id: 'sheetmenu', type: 'menu', menu: [
 				{name: _UNO('.uno:InsertRowsMenu', 'spreadsheet'), id: 'insertrowsmenu', type: 'menu', menu: [
 					{uno: '.uno:InsertRowsBefore'},
@@ -920,8 +923,8 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:HideDetail'},
 					{uno: '.uno:ShowDetail'}]}
 			]},
-			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{uno: '.uno:SpellOnline'},
+			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('Latest Updates'), id: 'latest-updates', type: 'action', iosapp: false},
 			{name: _('About'), id: 'about', type: 'action'},
