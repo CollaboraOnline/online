@@ -705,6 +705,21 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const S
             LOG_ERR("Failed to save template [" << url << "].");
             return false;
         }
+
+#if !MOBILEAPP
+            // Create the 'upload' file so DocBroker picks up and uploads.
+            const std::string oldName = Poco::URI(url).getPath();
+            const std::string newName = oldName + TO_UPLOAD_SUFFIX;
+            if (rename(oldName.c_str(), newName.c_str()) < 0)
+            {
+                // It's not an error if there was no file to rename, when the document isn't modified.
+                LOG_TRC("Failed to renamed [" << oldName << "] to [" << newName << ']');
+            }
+            else
+            {
+                LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
+            }
+#endif //!MOBILEAPP
     }
 
     getLOKitDocument()->setView(_viewId);
