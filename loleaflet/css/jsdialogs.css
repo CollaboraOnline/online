@@ -8,6 +8,13 @@
 	z-index: 1105;
 }
 
+.jsdialog-container.modalpopup {
+	border: 1px solid grey !important;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	min-width: 300px;
+	min-height: 100px;
+}
+
 .jsdialog-container .ui-dialog-content {
 	background-color: white !important;
 	font-family: var(--jquery-ui-font);
@@ -670,4 +677,38 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 /* toolbox */
 .jsdialog.toolbox {
 	display: flex;
+}
+
+/* spinner */
+.spinner {
+	border: 6px solid #f3f3f3; /* Light grey */
+	border-top: 6px solid grey; /* Blue */
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+/* busy popup */
+
+#busypopup.jsdialog-container {
+	background: white;
+}
+
+#busypopup .vertical {
+	margin: auto;
+}
+
+#busypopup #busyspinner {
+	margin: 20px auto 0px;
+}
+
+#busypopup #busylabel {
+	margin: 20px;
+	text-align: center;
 }
