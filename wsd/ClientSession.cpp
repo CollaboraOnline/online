@@ -20,7 +20,6 @@
 
 #include "DocumentBroker.hpp"
 #include "LOOLWSD.hpp"
-#include "Storage.hpp"
 #include <common/Common.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
@@ -1733,9 +1732,9 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             // Wopi post load actions
             if (_wopiFileInfo && !_wopiFileInfo->getTemplateSource().empty())
             {
-                std::string result;
-                LOG_DBG("Saving template [" << _wopiFileInfo->getTemplateSource() << "] to storage");
-                docBroker->uploadToStorage(getId(), true, result, /*force=*/false);
+                LOG_DBG("Uploading template [" << _wopiFileInfo->getTemplateSource()
+                                               << "] to storage after loading.");
+                docBroker->uploadAfterLoadingTemplate(getId());
             }
 
             for(auto &token : tokens)
