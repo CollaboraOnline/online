@@ -1189,6 +1189,30 @@ void DocumentBroker::uploadAsToStorage(const std::string& sessionId,
                             /*force=*/false);
 }
 
+void DocumentBroker::uploadAfterLoadingTemplate(const std::string& sessionId)
+{
+#if !MOBILEAPP
+    // Create the 'upload' file as it gets created only when
+    // handling .uno:Save, which isn't issued for templates
+    // (save is done in Kit right after loading a template).
+    const std::string oldName = _storage->getRootFilePathToUpload();
+    const std::string newName = _storage->getRootFilePathUploading();
+    if (rename(oldName.c_str(), newName.c_str()) < 0)
+    {
+        // It's not an error if there was no file to rename, when the document isn't modified.
+        LOG_SYS("Expected to renamed the document [" << oldName << "] after template-loading to ["
+                                                     << newName << ']');
+    }
+    else
+    {
+        LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
+    }
+#endif //!MOBILEAPP
+
+    std::string result;
+    uploadToStorage(sessionId, true, result, /*force=*/false);
+}
+
 void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool success,
                                              const std::string& result,
                                              const std::string& saveAsPath,
