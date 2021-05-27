@@ -151,7 +151,7 @@ AC_ARG_ENABLE(fuzzers,
     AS_HELP_STRING([--enable-fuzzers],
         [Enables building libfuzzer targets for fuzz testing. It is useful to enable this switch
          only in a separate build tree, since the switch disables the creation of a coolwsd
-         binary.])
+         binary. For best results: --with-sanitizer=address,undefined])
 )
 
 AC_ARG_ENABLE([androidapp],
