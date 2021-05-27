@@ -703,7 +703,7 @@ a.leaflet-control-zoom-in {
 	float: left;
 }
 
-#mobile-wizard #Shadowed, #mobile-wizard #StyleNewByExample + div, #mobile-wizard #AlignTop,
+#mobile-wizard #StyleNewByExample + div, #mobile-wizard #AlignTop,
 #mobile-wizard #AlignBottom + p, #mobile-wizard #mergecells, #mobile-wizard #BackgroundColor + p,
 #mobile-wizard #LineSpacing, #mobile-wizard #indentlabel, #mobile-wizard #spacinglabel,
 #mobile-wizard #sizelabel {
