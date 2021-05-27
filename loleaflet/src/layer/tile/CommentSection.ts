@@ -141,9 +141,31 @@ class CommentSection {
 		}
 	}
 
+	public createCommentStructureImpress (menuStructure: any) {
+		var rootComment;
+
+		for (var i in this.sectionProperties.commentList) {
+			if (this.sectionProperties.commentList[i].sectionProperties.partIndex === this.sectionProperties.docLayer._selectedPart) {
+				rootComment = {
+					id: 'comment' + this.sectionProperties.commentList[i].sectionProperties.data.id,
+					enable: true,
+					data: this.sectionProperties.commentList[i].sectionProperties.data,
+					type: 'rootcomment',
+					text: this.sectionProperties.commentList[i].sectionProperties.data.text,
+					annotation: this.sectionProperties.commentList[i],
+					children: []
+				};
+				menuStructure['children'].push(rootComment);
+			}
+		}
+	}
+
 	public createCommentStructure (menuStructure: any) {
 		if (this.sectionProperties.docLayer._docType === 'text') {
 			this.createCommentStructureWriter(menuStructure);
+		}
+		else if (this.sectionProperties.docLayer._docType === 'presentation') {
+			this.createCommentStructureImpress(menuStructure);
 		}
 	}
 
@@ -230,19 +252,21 @@ class CommentSection {
 	}
 
 	public hightlightComment (comment: any) {
-		this.removeHighlighters();
+		if (this.sectionProperties.docLayer._docType === 'text') {
+			this.removeHighlighters();
 
-		var commentList = this.sectionProperties.commentList;
+			var commentList = this.sectionProperties.commentList;
 
-		var lastChild: any = this.getLastChildIndexOf(comment.sectionProperties.data.id);
+			var lastChild: any = this.getLastChildIndexOf(comment.sectionProperties.data.id);
 
-		while (true) {
-			commentList[lastChild].highlightSelectedText();
+			while (true) {
+				commentList[lastChild].highlightSelectedText();
 
-			if (commentList[lastChild].sectionProperties.data.parent === '0')
-				break;
+				if (commentList[lastChild].sectionProperties.data.parent === '0')
+					break;
 
-			lastChild = this.getIndexOf(commentList[lastChild].sectionProperties.data.parent);
+				lastChild = this.getIndexOf(commentList[lastChild].sectionProperties.data.parent);
+			}
 		}
 	}
 
@@ -398,7 +422,12 @@ class CommentSection {
 				value: annotation.sectionProperties.data.reply
 			}
 		};
-		this.map.sendUnoCommand('.uno:ReplyComment', comment);
+
+		if (this.sectionProperties.docLayer._docType === 'text')
+			this.map.sendUnoCommand('.uno:ReplyComment', comment);
+		else if (this.sectionProperties.docLayer._docType === 'presentation')
+			this.map.sendUnoCommand('.uno:ReplyToAnnotation', comment);
+
 		this.unselect();
 		this.map.focus();
 	}
