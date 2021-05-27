@@ -536,9 +536,6 @@ class Comment {
 	private show () {
 		this.showMarker();
 
-		if ((<any>window).mode.isMobile())
-			return;
-
 		this.sectionProperties.container.style.visibility = '';
 		this.sectionProperties.contentNode.style.display = '';
 		this.sectionProperties.nodeModify.style.display = 'none';
