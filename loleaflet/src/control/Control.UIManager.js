@@ -78,9 +78,45 @@ L.Control.UIManager = L.Control.extend({
 		this.map.addControl(L.control.infobar());
 		this.map.addControl(L.control.userList());
 
+		var openBusyPopup = function(label) {
+			var json = {
+				id: 'busypopup',
+				jsontype: 'dialog',
+				type: 'modalpopup',
+				children: [
+					{
+						id: 'busycontainer',
+						type: 'container',
+						vertical: 'true',
+						children: [
+							{id: 'busyspinner', type: 'spinner'},
+							{id: 'busylabel', type: 'fixedtext', text: label}
+						]
+					}
+				]
+			};
+			if (app.socket)
+				app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json)});
+		};
+
+		var closeBusyPopup = function() {
+			var json = {
+				id: 'busypopup',
+				jsontype: 'dialog',
+				action: 'close'
+			};
+			if (app.socket)
+				app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json)});
+		};
+
 		this.map.on('showbusy', function(e) {
-			if (w2ui['actionbar'])
-				w2utils.lock(w2ui['actionbar'].box, e.label, true);
+			if (window.mode.isMobile()) {
+				if (w2ui['actionbar'])
+					w2utils.lock(w2ui['actionbar'].box, e.label, true);
+			} else {
+				closeBusyPopup();
+				openBusyPopup(e.label);
+			}
 		});
 
 		this.map.on('hidebusy', function() {
@@ -88,6 +124,7 @@ L.Control.UIManager = L.Control.extend({
 			if (w2ui['actionbar'] && w2ui['actionbar'].box.firstChild.className === 'w2ui-lock') {
 				w2utils.unlock(w2ui['actionbar'].box);
 			}
+			closeBusyPopup();
 		});
 	},
 
@@ -593,11 +630,12 @@ L.Control.UIManager = L.Control.extend({
 
 	blockUI: function(event) {
 		this.blockedUI = true;
-		this.map.fire('showbusy', {label: event.message});
+		this.map.fire('showbusy', {label: event ? event.message : null});
 	},
 
 	unblockUI: function() {
 		this.blockedUI = false;
+		this.map.fire('hidebusy');
 	},
 
 	// Helper functions
