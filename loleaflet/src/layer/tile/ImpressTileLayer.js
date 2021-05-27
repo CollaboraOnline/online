@@ -269,28 +269,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			this._updateFileBasedView();
 	},
 
-	_onUpdateMaxBounds: function (e) {
-		this._updateMaxBounds(e.sizeChanged, e.extraSize);
-	},
-
-	_createCommentStructure: function (menuStructure) {
-		var rootComment;
-		var annotations = this._annotationManager._annotations[this._partHashes[this._selectedPart]];
-
-		for (var i in annotations) {
-			rootComment = {
-				id: 'comment' + annotations[i]._data.id,
-				enable: true,
-				data: annotations[i]._data,
-				type: 'rootcomment',
-				text: annotations[i]._data.text,
-				annotation: annotations[i],
-				children: []
-			};
-			menuStructure['children'].push(rootComment);
-		}
-	},
-
 	_addHighlightSelectedWizardComment: function(annotation) {
 		if (this.lastWizardCommentHighlight) {
 			this.lastWizardCommentHighlight.removeClass('impress-comment-highlight');
