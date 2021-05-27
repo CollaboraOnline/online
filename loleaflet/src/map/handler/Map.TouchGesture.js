@@ -142,6 +142,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onHammer: function (e) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		this._map.notifyActive();
 
 		// Function/Formula Wizard keeps the formula cell active all the time,
@@ -208,6 +211,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPress: function (e) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		var point = e.pointers[0],
 		    containerPoint = this._map.mouseEventToContainerPoint(point),
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
@@ -291,6 +297,8 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onTap: function (e) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
 
 		// We receive each tap here, even when double- and triple-taps
 		// are detected. This is undesirable as the subsequent taps
@@ -377,6 +385,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onDoubleTap: function (e) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		var point = e.pointers[0],
 		    containerPoint = this._map.mouseEventToContainerPoint(point),
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
@@ -406,6 +417,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onTripleTap: function (e) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		var point = e.pointers[0],
 		    containerPoint = this._map.mouseEventToContainerPoint(point),
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
@@ -417,6 +431,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPanStart: function (e) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		if (window.IgnorePanning)
 			return;
 
@@ -474,6 +491,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPan: function (e) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		if (window.IgnorePanning)
 			return;
 
@@ -501,6 +521,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPanEnd: function (e) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		if (window.IgnorePanning)
 			return;
 
@@ -531,6 +554,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPinchStart: function (e) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		if (this._inSwipeAction) {
 			this._cancelAutoscrollRAF();
 			return;
@@ -565,6 +591,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPinch: function (e) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		if (!this._pinchStartCenter || isNaN(e.center.x) || isNaN(e.center.y))
 			return;
 
@@ -584,6 +613,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	},
 
 	_onPinchEnd: function () {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		if (!this._pinchStartCenter)
 			return;
 
@@ -657,6 +689,9 @@ L.Map.TouchGesture = L.Handler.extend({
 	// Some constants are changed based on the testing/experimenting/trial-error
 
 	_onSwipe: function (e) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		this._velocity = new L.Point(e.velocityX, e.velocityY);
 		this._amplitude = this._velocity.multiplyBy(32);
 		this._newPos = L.DomUtil.getPosition(this._map._mapPane);
