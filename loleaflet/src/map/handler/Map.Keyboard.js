@@ -239,6 +239,9 @@ L.Map.Keyboard = L.Handler.extend({
 	// any 'beforeinput', 'keypress' and 'input' events that would add
 	// printable characters. Those are handled by TextInput.js.
 	_onKeyDown: function (ev) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		console.log('keyboard handler:', ev.type, ev.key, ev.charCode, this._expectingInput, ev);
 
 		if (ev.charCode == 0) {
@@ -252,6 +255,9 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_globalKeyEvent: function(ev) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		if (this._map.jsdialog && this._map.jsdialog.hasDialogOpened()
 			&& this._map.jsdialog.handleKeyEvent(ev)) {
 			ev.preventDefault();
@@ -264,6 +270,9 @@ L.Map.Keyboard = L.Handler.extend({
 	// callback if so.
 	// Called from _onKeyDown
 	_handleKeyEvent: function (ev, keyEventFn) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		this._map.notifyActive();
 		if (this._map.slideShow && this._map.slideShow.fullscreen) {
 			return;
@@ -427,6 +436,9 @@ L.Map.Keyboard = L.Handler.extend({
 	// Given a DOM keyboard event that happened while the Control key was depressed,
 	// triggers the appropriate action or loolwsd message.
 	_handleCtrlCommand: function (e) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		// Control
 		if (e.keyCode == 17)
 			return true;
