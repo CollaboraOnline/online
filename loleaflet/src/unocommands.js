@@ -339,6 +339,8 @@ var unoCommandsArray = {
 	'OnlineAutoFormat':{text:{menu:_('~While Typing'),},},
 	'OpenHyperlinkOnCursor':{global:{menu:_('Open Hyperlink'),},},
 	'OutlineBullet':{global:{menu:_('~Bullets and Numbering...'),},},
+	'OutlineLeft':{global:{menu:_('Promote'),},},
+	'OutlineRight':{global:{menu:_('Demote'),},},
 	'OutlineFont':{global:{menu:_('Outline'),},},
 	'Overline':{global:{menu:_('Overline'),},},
 	'PageDialog':{global:{menu:_('~Page...'),},text:{menu:_('~Page Style...'),},},

@@ -33,6 +33,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'break'},
 				{type: 'button',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor')},
 				{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor')},
+				{type: 'break'},
 				{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true),
 					uno: {textCommand: 'LeftPara', objectCommand: 'ObjectAlignLeft'},
 					unosheet: 'AlignLeft', disabled: true},
@@ -79,7 +80,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'sum',  img: 'autosum', hint: _('Sum')},
 				{type: 'break',   id: 'break-number'}, */
 			];
-		} else if (docType == 'presentation') {
+		} else if ((docType == 'presentation') || (docType == 'drawing')) {
 			return [
 				{type: 'button',  id: 'showsearchbar',  img: 'search', hint: _('Show the search bar')},
 				{type: 'break'},
@@ -100,6 +101,8 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button', id: 'justifypara', img: 'alignblock', hint: _UNO('.uno:JustifyPara', '', true), uno: 'JustifyPara'},
 				{type: 'break'},
 				{type: 'button',  id: 'defaultbullet',  img: 'bullet', hint: _UNO('.uno:DefaultBullet', '', true), uno: 'DefaultBullet', disabled: true},
+				{type: 'button',  id: 'outlineright',  img: 'outlineright', hint: _UNO('.uno:OutlineRight', '', true), uno: 'OutlineRight', disabled: true},
+				{type: 'button',  id: 'outlineleft',  img: 'outlineleft', hint: _UNO('.uno:OutlineLeft', '', true), uno: 'OutlineLeft', disabled: true},
 			];
 		}
 	},
