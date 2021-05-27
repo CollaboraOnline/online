@@ -1,5 +1,5 @@
 <?xml-stylesheet type="text/css" href="icons.css" ?>
-<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <g id="symbol"
 	 class="icn icn--highlight-color-line"  
      fill="none" 
@@ -7,7 +7,7 @@
 	 stroke-linecap="round" 
 	 stroke-linejoin="round"
      >
-      <path d="M 10.5,8.5 15.5,4.5 10.5,0.5" />
-      <path d="M 15.5,4.5 H 6 c -3,0 -5.5,2.5 -5.5,5.5 0,3 2.5,5.5 5.5,5.5" />
+      <path d="m 15.3,14.5 5,-5 -5,-5" />
+      <path d="m 20.3,9.5 h -11.5 c -3,0 -5.5,2.5 -5.5,5.5 0,3 2.5,5.5 5.5,5.5" />
   </g>
 </svg>
