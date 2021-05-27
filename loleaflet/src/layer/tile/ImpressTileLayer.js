@@ -171,7 +171,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 						this._debugAddInvalidationData(this._tiles[key]);
 					}
 				}
-				else {
+				else if (!app.file.fileBasedView || !this._tiles[key].current) {
 					// tile outside of the visible area, just remove it
 					this._removeTile(key);
 				}

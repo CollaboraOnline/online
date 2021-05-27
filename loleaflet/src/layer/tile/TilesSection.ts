@@ -166,7 +166,7 @@ class TilesSection {
 		var halfExtraSize = this.sectionProperties.osCanvasExtraSize / 2;
 		var extendedOffset = offset.add(new L.Point(halfExtraSize, halfExtraSize));
 
-		if (async || this.containerObject.isZoomChanged()) {
+		if ((async || this.containerObject.isZoomChanged()) && !app.file.fileBasedView) {
 			// Non Calc tiles(handled by paintSimple) can have transparent pixels,
 			// so clear before paint if the call is an async one.
 			// For the full view area repaint, whole canvas is cleared by section container.

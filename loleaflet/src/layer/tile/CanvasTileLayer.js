@@ -893,6 +893,9 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	_pruneTiles: function () {
+		if (app.file.fileBasedView)
+			this._updateFileBasedView(true);
+
 		var key, tile;
 
 		for (key in this._tiles) {
@@ -1091,6 +1094,14 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		return mostVisiblePart;
 	},
 
+	_doesQueueIncludeTileInfo: function (queue, part, x, y) {
+		for (var i = 0; i < queue.length; i++) {
+			if (queue[i].part === part && queue[i].x === x && queue[i].y === y)
+				return true;
+		}
+		return false;
+	},
+
 	// In file based view, all parts may be drawn, not only selected part.
 	_getTileInfoForFileBasedView: function (currentX, currentY, zoom, partHeightPixels, queue) {
 		var yMin = currentY;
@@ -1109,13 +1120,14 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			var yMinLocal = yMin - parts[i] * partHeightPixels;
 			if (yMinLocal >= 0) {
 				yMinLocal = yMinLocal - yMinLocal % this._tileSize;
-				queue.push(new L.TileCoordData(currentX, yMinLocal, zoom, parts[i]));
+				if (!this._doesQueueIncludeTileInfo(queue, parts[i], currentX, yMinLocal))
+					queue.push(new L.TileCoordData(currentX, yMinLocal, zoom, parts[i]));
 			}
 
 			var yMaxLocal = yMax - parts[i] * partHeightPixels;
 			if (yMaxLocal >= 0) {
 				yMaxLocal = yMaxLocal - yMaxLocal % this._tileSize;
-				if (yMaxLocal !== yMinLocal)
+				if (!this._doesQueueIncludeTileInfo(queue, parts[i], currentX, yMaxLocal))
 					queue.push(new L.TileCoordData(currentX, yMaxLocal, zoom, parts[i]));
 			}
 		}
@@ -1189,6 +1201,17 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				this._selectedPart = partToSelect;
 				this._preview._scrollToPart();
 			}
+		}
+
+
+		for (var i = 0; i < this._tiles.length; i++) {
+			this._tiles[i].current = false; // Visible ones's "current" property will be set to true below.
+		}
+
+		for (i = 0; i < queue.length; i++) {
+			var tempTile = this._tiles[this._tileCoordsToKey(queue[i])];
+			if (tempTile && tempTile.loaded)
+				tempTile.current = true;
 		}
 
 		if (checkOnly) {
