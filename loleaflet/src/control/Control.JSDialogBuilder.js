@@ -104,6 +104,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['emptyCommentWizard'] = this._rootCommentControl;
 		this._controlHandlers['separator'] = this._separatorControl;
 		this._controlHandlers['menubutton'] = this._menubuttonControl;
+		this._controlHandlers['spinner'] = this._spinnerControl;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
@@ -2145,6 +2146,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		} else {
 			console.warn('Not found menu "' + menuId + '"');
 		}
+
+		return false;
+	},
+
+	_spinnerControl: function(parentContainer, data, builder) {
+		var spinner = L.DomUtil.create('div', builder.options.cssClass + ' spinner', parentContainer);
+		spinner.id = data.id;
 
 		return false;
 	},
