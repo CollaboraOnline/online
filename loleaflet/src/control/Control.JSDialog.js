@@ -37,6 +37,7 @@ L.Control.JSDialog = L.Control.extend({
 		var posX = 0;
 		var posY = 0;
 		var data = e.data;
+		var isModalPopup = data.type === 'modalpopup';
 
 		if (this.dialogs[data.id]) {
 			posX = this.dialogs[data.id].startX;
@@ -58,11 +59,15 @@ L.Control.JSDialog = L.Control.extend({
 		if (data.collapsed && (data.collapsed === 'true' || data.collapsed === true))
 			L.DomUtil.addClass(container, 'collapsed');
 
-		var titlebar = L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', container);
-		var title = L.DomUtil.create('span', 'ui-dialog-title', titlebar);
-		title.innerText = data.title;
-		var button = L.DomUtil.create('button', 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close', titlebar);
-		L.DomUtil.create('span', 'ui-button-icon ui-icon ui-icon-closethick', button);
+		if (!isModalPopup) {
+			var titlebar = L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', container);
+			var title = L.DomUtil.create('span', 'ui-dialog-title', titlebar);
+			title.innerText = data.title;
+			var button = L.DomUtil.create('button', 'ui-button ui-corner-all ui-widget ui-button-icon-only ui-dialog-titlebar-close', titlebar);
+			L.DomUtil.create('span', 'ui-button-icon ui-icon ui-icon-closethick', button);
+		} else {
+			L.DomUtil.addClass(container, 'modalpopup');
+		}
 
 		var content = L.DomUtil.create('div', 'lokdialog ui-dialog-content ui-widget-content', container);
 
@@ -76,9 +81,6 @@ L.Control.JSDialog = L.Control.extend({
 		this.map._progressBar.end();
 
 		var that = this;
-		button.onclick = function() {
-			that.closeDialog(data.id);
-		};
 
 		var onInput = function(ev) {
 			if (ev.isFirst)
@@ -95,12 +97,18 @@ L.Control.JSDialog = L.Control.extend({
 			}
 		};
 
-		var hammerTitlebar = new Hammer(titlebar);
-		hammerTitlebar.add(new Hammer.Pan({ threshold: 20, pointers: 0 }));
+		if (!isModalPopup) {
+			button.onclick = function() {
+				that.closeDialog(data.id);
+			};
 
-		hammerTitlebar.on('panstart', this.onPan.bind(this));
-		hammerTitlebar.on('panmove', this.onPan.bind(this));
-		hammerTitlebar.on('hammer.input', onInput);
+			var hammerTitlebar = new Hammer(titlebar);
+			hammerTitlebar.add(new Hammer.Pan({ threshold: 20, pointers: 0 }));
+
+			hammerTitlebar.on('panstart', this.onPan.bind(this));
+			hammerTitlebar.on('panmove', this.onPan.bind(this));
+			hammerTitlebar.on('hammer.input', onInput);
+		}
 
 		if (posX === 0 && posY === 0) {
 			posX = window.innerWidth/2 - container.offsetWidth/2;
