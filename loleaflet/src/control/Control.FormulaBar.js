@@ -159,7 +159,10 @@ L.Map.include({
 		// 'accept' button to act before we hide these buttons because
 		// once hidden, click event won't be processed.
 		// TODO: Some better way to do it ?
+		var that = this;
 		setTimeout(function() {
+			if (that._docLayer._cursorMarker && that._docLayer._cursorMarker.isVisible())
+				return;
 			var mobileTopBar = w2ui['actionbar'];
 			mobileTopBar.show('undo');
 			mobileTopBar.show('redo');
