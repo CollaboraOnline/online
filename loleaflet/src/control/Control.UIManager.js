@@ -591,8 +591,9 @@ L.Control.UIManager = L.Control.extend({
 		return this.blockedUI;
 	},
 
-	blockUI: function() {
+	blockUI: function(event) {
 		this.blockedUI = true;
+		this.map.fire('showbusy', {label: event.message});
 	},
 
 	unblockUI: function() {
