@@ -1653,6 +1653,9 @@ L.Map = L.Evented.extend({
 	},
 
 	_fireDOMEvent: function (target, e, type) {
+		if (this.uiManager.isUIBlocked())
+			return;
+
 		if (!target.listens(type, true) && (type !== 'click' || !target.listens('preclick', true))) { return; }
 
 		if (type === 'contextmenu') {

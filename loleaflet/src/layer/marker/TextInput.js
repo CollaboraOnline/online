@@ -459,6 +459,8 @@ L.TextInput = L.Layer.extend({
 
 	// Generic handle attached to most text area events, just for debugging purposes.
 	_onEvent: function(ev) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
 		var msg = {
 			inputType: ev.inputType,
 			data: ev.data,
@@ -537,6 +539,9 @@ L.TextInput = L.Layer.extend({
 	// we get a beforeinput, but no input for them. Sometimes we can end up
 	// in a state where we lost our leading / terminal chars and can't recover
 	_onBeforeInput: function(ev) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		this._ignoreNextBackspace = false;
 		if (this._hasWorkingSelectionStart) {
 			var value = this._textArea.value;
@@ -559,6 +564,9 @@ L.TextInput = L.Layer.extend({
 
 	// Fired when text has been inputed, *during* and after composing/spellchecking
 	_onInput: function(ev) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		this._map.notifyActive();
 
 		if (this._ignoreInputCount > 0) {
@@ -784,6 +792,9 @@ L.TextInput = L.Layer.extend({
 	},
 
 	_onKeyDown: function(ev) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		if (ev.keyCode === 8)
 			this._deleteHint = 'backspace';
 		else if (ev.keyCode === 46)
@@ -800,6 +811,9 @@ L.TextInput = L.Layer.extend({
 	// Across browsers, arrow up/down / home / end would move the caret to
 	// the beginning/end of the textarea/contenteditable.
 	_onKeyUp: function(ev) {
+		if (this._map.uiManager.isUIBlocked())
+			return;
+
 		this._map.notifyActive();
 		if (ev.key === 'ArrowLeft' || ev.key === 'ArrowRight' ||
 		    ev.key === 'ArrowUp' || ev.key === 'ArrowDown' ||
