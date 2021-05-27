@@ -311,6 +311,11 @@ public:
     void uploadAsToStorage(const std::string& sessionId, const std::string& uploadAsPath,
                            const std::string& uploadAsFilename, const bool isRename);
 
+    /// Uploads the document right after loading from a template.
+    /// Template-loading requires special handling because the
+    /// document changes once loaded into a non-template format.
+    void uploadAfterLoadingTemplate(const std::string& sessionId);
+
     bool isModified() const { return _isModified; }
     void setModified(const bool value);
 
