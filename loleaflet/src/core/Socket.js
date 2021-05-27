@@ -147,6 +147,9 @@ app.definitions.Socket = L.Class.extend({
 				return;
 		}
 
+		if (this._map.uiManager && this._map.uiManager.isUIBlocked())
+			return;
+
 		var socketState = this.socket.readyState;
 		if (socketState === 2 || socketState === 3) {
 			this._map.loadDocument();
