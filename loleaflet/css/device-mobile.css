@@ -69,7 +69,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 /* Related to loleaflet.css */
 #toolbar-hamburger {
 	width: 36px;
-	height: 43px;
+	height: 36px;
 }
 #toolbar-hamburger.menuwizard-opened {
 	width: 36px;
@@ -125,7 +125,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	position: absolute;
 	height: 0;
 	width: 100%;
-	top: 43px; /*set equal to toolbar up's height*/
+	top: 37px; /*set equal to toolbar up's height*/
 	margin: 0;
 	-webkit-overflow-scrolling: touch;
 	overflow: scroll;
@@ -160,14 +160,9 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	display: none;
 }
 
-#tb_formulabar_item_address, #tb_formulabar_item_item_2, #tb_formulabar_item_functiondialog {
-	vertical-align: middle;
-}
-
 /* Related to selectionMarkers.css */
 #tb_formulabar_item_formula, #tb_formulabar_item_address {
-	height: 44px !important;
-	padding-top: 0px !important;
+	height: 54px !important;
 }
 #tb_formulabar_item_formula > div, #tb_formulabar_item_address > div {
 	margin-top: -16px;
@@ -593,7 +588,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 }
 
 #document-container.readonly {
-	top: 43px; /*set equal to toolbar up's height*/
+	top: 37px; /*set equal to toolbar up's height*/
 	bottom: 0px;
 }
 
@@ -602,7 +597,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 }
 
 #document-container.readonly.spreadsheet-document {
-	top: 62px !important;
+	top: 58px !important;
 	bottom: 39px;
 }
 
@@ -617,7 +612,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 }
 
 #document-container {
-	top: 43px; /*set equal to toolbar up's height*/
+	top: 37px; /*set equal to toolbar up's height*/
 	right: 0px !important;
 	bottom: 35px;
 }
