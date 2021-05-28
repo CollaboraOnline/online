@@ -692,11 +692,20 @@ L.Map.include({
 		var handler = function(event) {
 			if (event.keyCode === 68) { // 'd'
 				map._docLayer.toggleTileDebugMode();
-			} else if (event.key === 't'
-				   && event.ctrlKey) {
-				// Control-T turns Trace Event recording on in the Kit process
+			} else if (event.key === 'l') {
+				// L toggges the Online logging level between the default (whatever
+				// is set in loolwsd.xml or on the loolwsd command line) and the
+				// maximum a client is allowed to set (which also can be set in
+				// loolwsd.xml or on the loolwsd command line).
+
+				map._socket.sendMessage('loggingleveloverride '
+						        + (map._socket.threadLocalLoggingLevelToggle ? 'default' : 'max'));
+
+				map._socket.threadLocalLoggingLevelToggle = !map._socket.threadLocalLoggingLevelToggle;
+			} else if (event.key === 't') {
+				// T turns Trace Event recording on in the Kit process
 				// for this document, as long as loolwsd is running with the
-				// trace_event[@enable] config option as true. Control-T again
+				// trace_event[@enable] config option as true. T again
 				// turns it off.
 
 				if (map._socket.enableTraceEventLogging) {

@@ -809,6 +809,76 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         return forwardToChild(firstLine, docBroker);
     }
+    else if (tokens.equals(0, "loggingleveloverride"))
+    {
+        if (tokens.size() > 0)
+        {
+            // Note that these LOG_INF() messages won't necessarily show up if the current logging
+            // level is higher, of course.
+            if (tokens.equals(1, "default"))
+            {
+                LOG_INF("Thread-local logging level being set to default ["
+                        << Log::getLevel()
+                        << "]");
+                Log::setThreadLocalLogLevel(Log::getLevel());
+            }
+            else
+            {
+                try
+                {
+                    auto minAllowed = Poco::Logger::parseLevel(LOOLWSD::MinLogLevelSettableFromClient);
+                    auto maxAllowed = Poco::Logger::parseLevel(LOOLWSD::MaxLogLevelSettableFromClient);
+
+                    if (tokens.equals(1, "min"))
+                    {
+                        LOG_INF("Thread-local logging level being set to ["
+                                << LOOLWSD::MinLogLevelSettableFromClient
+                                << "]");
+                        Log::setThreadLocalLogLevel(LOOLWSD::MinLogLevelSettableFromClient);
+                        LOG_INF("Thread-local logging level was set to ["
+                                << LOOLWSD::MinLogLevelSettableFromClient
+                                << "]");
+                    }
+                    else if (tokens.equals(1, "max"))
+                    {
+                        LOG_INF("Thread-local logging level being set to ["
+                                << LOOLWSD::MaxLogLevelSettableFromClient
+                                << "]");
+                        Log::setThreadLocalLogLevel(LOOLWSD::MaxLogLevelSettableFromClient);
+                        LOG_INF("Thread-local logging level was set to ["
+                                << LOOLWSD::MaxLogLevelSettableFromClient
+                                << "]");
+                    }
+                    else
+                    {
+                        auto level = Poco::Logger::parseLevel(tokens[1]);
+                        // Note that numerically the higher priority levels are lower in value. Our
+                        // "min" and "max" terminology refers to priority, not numeric value. Thus
+                        // the seemingly weird check here.
+                        if (level >= maxAllowed && level <= minAllowed)
+                        {
+                            LOG_INF("Thread-local logging level being set to ["
+                                    << tokens[1]
+                                    << "]");
+                            Log::setThreadLocalLogLevel(tokens[1]);
+                        }
+                        else
+                        {
+                            LOG_WRN("Client tries to set logging level to ["
+                                    << tokens[1]
+                                    << "] which is outside of bounds ["
+                                    << LOOLWSD::MinLogLevelSettableFromClient << ","
+                                    << LOOLWSD::MaxLogLevelSettableFromClient << "]");
+                        }
+                    }
+                }
+                catch (const Poco::Exception &e)
+                {
+                    LOG_WRN("Exception while handling loggingleveloverride message: " << e.message());
+                }
+            }
+        }
+    }
     else if (tokens.equals(0, "traceeventrecording"))
     {
         if (LOOLWSD::getConfigValue<bool>("trace_event[@enable]", false))
