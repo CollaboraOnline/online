@@ -1,5 +1,6 @@
-/* global describe it cy require afterEach beforeEach */
+/* global describe it cy require afterEach beforeEach Cypress */
 
+var desktopHelper = require('../../common/desktop_helper');
 var helper = require('../../common/helper');
 var { addSlide, changeSlide } = require('../../common/impress_helper');
 var { insertMultipleComment } = require('../../common/desktop_helper');
@@ -9,6 +10,14 @@ describe('Annotation Tests', function() {
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'impress');
+
+		if (Cypress.env('INTEGRATION') === 'nextcloud') {
+			desktopHelper.hideSidebarIfVisible();
+		} else {
+			desktopHelper.hideSidebar();
+		}
+
+		desktopHelper.selectZoomLevel('50');
 	});
 
 	afterEach(function() {
