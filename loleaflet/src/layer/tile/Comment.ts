@@ -148,7 +148,6 @@ class Comment {
 			}, this.map.scrollHandler);
 		}
 
-		document.getElementById('document-container').appendChild(this.sectionProperties.container);
 		this.update();
 	}
 
@@ -163,6 +162,7 @@ class Comment {
 			this.sectionProperties.wrapper = L.DomUtil.create('div', 'loleaflet-annotation-content-wrapper' + mobileClass, this.sectionProperties.container);
 		}
 
+		//if (!(<any>window).mode.isMobile())
 		document.getElementById('document-container').appendChild(this.sectionProperties.container);
 	}
 
@@ -536,7 +536,11 @@ class Comment {
 	private show () {
 		this.showMarker();
 
-		this.sectionProperties.container.style.visibility = '';
+		if ((<any>window).mode.isMobile() && this.sectionProperties.container.parentElement === document.getElementById('document-container'))
+			this.sectionProperties.container.style.visibility = 'hidden';
+		else
+			this.sectionProperties.container.style.visibility = '';
+
 		this.sectionProperties.contentNode.style.display = '';
 		this.sectionProperties.nodeModify.style.display = 'none';
 		this.sectionProperties.nodeReply.style.display = 'none';
