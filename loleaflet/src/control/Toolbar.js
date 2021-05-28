@@ -690,8 +690,32 @@ L.Map.include({
 		}
 		var map = this;
 		var handler = function(event) {
-			if (event.keyCode === 68) {
+			if (event.keyCode === 68) { // 'd'
 				map._docLayer.toggleTileDebugMode();
+			} else if (event.key === 't'
+				   && event.ctrlKey) {
+				// Control-T turns Trace Event recording on in the Kit process
+				// for this document, as long as loolwsd is running with the
+				// trace_event[@enable] config option as true. Control-T again
+				// turns it off.
+
+				if (map._socket.enableTraceEventLogging) {
+					map._socket.sendMessage('traceeventrecording '
+							        + (map._socket.traceEventRecordingToggle ? 'stop' : 'start'));
+
+					// Just as a test, uncomment this to toggle SAL_WARN and
+					// SAL_INFO selection between two states: 1) the default
+					// as directed by the SAL_LOG environment variable, and
+					// 2) all warnings on plus SAL_INFO for sc.
+					//
+					// (Note that loolwsd sets the SAL_LOG environment variable
+					// to "-WARN-INFO", i.e. the default is that nothing is
+					// logged from core.)
+
+					// map._socket.sendMessage('sallogoverride ' + (map._socket.traceEventRecordingToggle ? 'default' : '+WARN+INFO.sc'));
+
+					map._socket.traceEventRecordingToggle = !map._socket.traceEventRecordingToggle;
+				}
 			}
 		};
 		vex.open({
@@ -712,26 +736,6 @@ L.Map.include({
 				hammer.add(new Hammer.Tap({ taps: 3 }));
 				hammer.on('tap', function() {
 					map._docLayer.toggleTileDebugMode();
-
-					// Triple-clicking turns Trace Event recording on in the kit
-					// process for this document, as long as loolwsd is running
-					// with the trace_event[@enable] config option as true.
-					// Triple-clicking again turns it off.
-
-					if (map._socket.enableTraceEventLogging) {
-						map._socket.sendMessage('traceeventrecording ' + (map._socket.traceEventRecordingToggle ? 'stop' : 'start'));
-
-						// Just as a test, uncomment this to toggle SAL_WARN and SAL_INFO
-						// selection between two states: 1) the default as directed by the
-						// SAL_LOG environment variable, and 2) all warnings on plus SAL_INFO for sc.
-						//
-						// (Note that loolwsd sets the SAL_LOG environment variable to
-						// "-WARN-INFO", i.e. the default is that nothing is logged)
-
-						// map._socket.sendMessage('sallogoverride ' + (map._socket.traceEventRecordingToggle ? 'default' : '+WARN+INFO.sc'));
-
-						map._socket.traceEventRecordingToggle = !map._socket.traceEventRecordingToggle;
-					}
 				});
 
 				this.contentEl.style.width = w + 'px';
