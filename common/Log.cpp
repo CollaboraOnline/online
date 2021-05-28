@@ -39,7 +39,7 @@ namespace Log
     using namespace Poco;
 
     /// Helper to avoid destruction ordering issues.
-    struct StaticNameHelper
+    static struct StaticHelper
     {
     private:
         Poco::Logger* _logger;
@@ -47,12 +47,12 @@ namespace Log
         std::string _id;
         std::atomic<bool> _inited;
     public:
-        StaticNameHelper() :
+        StaticHelper() :
             _logger(nullptr),
             _inited(true)
         {
         }
-        ~StaticNameHelper()
+        ~StaticHelper()
         {
             _inited = false;
         }
@@ -69,8 +69,7 @@ namespace Log
 
         void setLogger(Poco::Logger* logger) { _logger = logger; };
         Poco::Logger* getLogger() const { return _logger; }
-    };
-    static StaticNameHelper Source;
+    } Static;
     bool IsShutdown = false;
 
     // We need a signal safe means of writing messages
@@ -192,7 +191,7 @@ namespace Log
         // more useful anyway.
 #else
         // Note that snprintf is deemed signal-safe in most common implementations.
-        char* pos = strcopy((Source.getInited() ? Source.getId().c_str() : "<shutdown>"), buffer);
+        char* pos = strcopy((Static.getInited() ? Static.getId().c_str() : "<shutdown>"), buffer);
         *pos++ = '-';
 
         // Thread ID.
@@ -268,14 +267,14 @@ namespace Log
                     const bool logToFile,
                     const std::map<std::string, std::string>& config)
     {
-        Source.setName(name);
+        Static.setName(name);
         std::ostringstream oss;
-        oss << Source.getName();
+        oss << Static.getName();
 #if !MOBILEAPP // Just one process in a mobile app, the pid is uninteresting.
         oss << '-'
             << std::setw(5) << std::setfill('0') << getpid();
 #endif
-        Source.setId(oss.str());
+        Static.setId(oss.str());
 
         // Configure the logger.
         AutoPtr<Channel> channel;
@@ -303,8 +302,8 @@ namespace Log
          * after chroot can cause file creation inside the jail instead of outside
          * */
         channel->open();
-        auto& logger = Poco::Logger::create(Source.getName(), channel, Poco::Message::PRIO_TRACE);
-        Source.setLogger(&logger);
+        auto& logger = Poco::Logger::create(Static.getName(), channel, Poco::Message::PRIO_TRACE);
+        Static.setLogger(&logger);
 
         logger.setLevel(logLevel.empty() ? std::string("trace") : logLevel);
 
@@ -327,9 +326,9 @@ namespace Log
 
     Poco::Logger& logger()
     {
-        Poco::Logger* pLogger = Source.getLogger();
+        Poco::Logger* pLogger = Static.getLogger();
         return pLogger ? *pLogger
-                       : Poco::Logger::get(Source.getInited() ? Source.getName() : std::string());
+                       : Poco::Logger::get(Static.getInited() ? Static.getName() : std::string());
     }
 
     void shutdown()
