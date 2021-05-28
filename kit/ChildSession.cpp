@@ -463,7 +463,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         }
         else if (tokens.equals(0, "traceeventrecording"))
         {
-            if (config::getBool("trace_event[@enable]", false))
+            static const bool traceEventsEnabled = config::getBool("trace_event[@enable]", false);
+            if (traceEventsEnabled)
             {
                 if (tokens.size() > 0)
                 {
