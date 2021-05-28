@@ -136,3 +136,50 @@ kbd,
 .warn-copy-paste {
 	width: 100%;
 }
+
+/* Integrator: fremium */
+.vex.vex-theme-plain .vex-content.vex-freemium {
+	width: 652px;
+}
+
+.vex.vex-theme-plain .vex-content.vex-freemium h1 {
+	margin-bottom: .5em;
+	font-size: 1.1em;
+	color: #fda208;
+}
+
+.vex.vex-theme-plain .vex-content.vex-freemium ul {
+	list-style: none;
+	padding: 0;
+	font-size: 0.84em;
+	text-shadow: 1px 1px 12px #ffbf0038, 0 0 0.5px #00000026;
+}
+
+.vex.vex-theme-plain .vex-content.vex-freemium ul li::before {
+	content: '\2022';
+	color: #fda208;
+	font-weight: bold;
+	display: inline-block;
+	width: 0.5em;
+	margin-left: -0.5em;
+}
+
+.vex.vex-theme-plain .vex-content.vex-freemium .container {
+	display: flex;
+	flex-direction: row;
+}
+.vex.vex-theme-plain .vex-content.vex-freemium .container .item {
+	color: #444;
+	flex: 1;
+}
+.vex.vex-theme-plain .vex-content.vex-freemium .container .item.illustration {
+	flex: 1.3;
+	background: transparent url('images/freemium-illustration.svg') no-repeat left 4px /contain
+}
+
+.vex.vex-theme-plain .vex-content.vex-freemium .vex-dialog-button-primary {
+	background-color: #fda918;
+	color: white;
+	border-color: #cc8202;
+	text-shadow: 0 0 8px #cc8202;
+}
