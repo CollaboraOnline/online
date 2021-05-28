@@ -118,6 +118,7 @@ public:
                 // First, we expect to get a PutFile right after loading.
                 LOK_ASSERT_EQUAL(static_cast<int>(Phase::SaveDoc), static_cast<int>(_phase));
                 _savedTemplate = true;
+                LOG_TST("SaveDoc => CloseDoc");
                 _phase = Phase::CloseDoc;
             }
             else
@@ -142,6 +143,8 @@ public:
             return true;
         }
 
+        LOG_TST("Fake wopi host unknown request "
+                << request.getMethod() << " request: " << uriReq.toString() << ". Defaulting.");
         return false;
     }
 
@@ -152,6 +155,7 @@ public:
         {
             case Phase::LoadTemplate:
             {
+                LOG_TST("LoadTemplate => SaveDoc");
                 _phase = Phase::SaveDoc;
 
                 initWebsocket("/wopi/files/10?access_token=anything");
@@ -162,6 +166,7 @@ public:
             }
             case Phase::CloseDoc:
             {
+                LOG_TST("CloseDoc => Polling");
                 _phase = Phase::Polling;
                 WSD_CMD("closedocument");
                 break;
