@@ -762,6 +762,7 @@ bool LOOLWSD::EnableTraceEventLogging = false;
 FILE *LOOLWSD::TraceEventFile = NULL;
 std::string LOOLWSD::LogLevel = "trace";
 std::string LOOLWSD::MaxLogLevelSettableFromClient = "notice";
+std::string LOOLWSD::MinLogLevelSettableFromClient = "fatal";
 std::string LOOLWSD::UserInterface = "classic";
 bool LOOLWSD::AnonymizeUserData = false;
 bool LOOLWSD::CheckLoolUser = true;
@@ -1049,6 +1050,7 @@ void LOOLWSD::initialize(Application& self)
     // Set the log-level after complete initialization to force maximum details at startup.
     LogLevel = getConfigValue<std::string>(conf, "logging.level", "trace");
     MaxLogLevelSettableFromClient = getConfigValue<std::string>(conf, "logging.max_level_settable_from_client", "notice");
+    MinLogLevelSettableFromClient = getConfigValue<std::string>(conf, "logging.min_level_settable_from_client", "fatal");
 
     setenv("LOOL_LOGLEVEL", LogLevel.c_str(), true);
     std::string SalLog = getConfigValue<std::string>(conf, "logging.lokit_sal_log", "-INFO-WARN");

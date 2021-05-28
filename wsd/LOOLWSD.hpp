@@ -250,6 +250,7 @@ public:
     static FILE *TraceEventFile;
     static std::string LogLevel;
     static std::string MaxLogLevelSettableFromClient;
+    static std::string MinLogLevelSettableFromClient;
     static bool AnonymizeUserData;
     static bool CheckLoolUser;
     static bool CleanupOnly;
