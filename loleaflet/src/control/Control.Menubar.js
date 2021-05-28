@@ -752,6 +752,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:NextTrackedChange'}
 			]},
 			{name: _UNO('.uno:ViewMenu', 'text'), id: 'view', type: 'menu', menu: [
+				{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action', mobileapp: false},
 				{uno: '.uno:ControlCodes'},
 				{uno: '.uno:SpellOnline'},
 				{name: _UNO('.uno:ShowResolvedAnnotations', 'text'), id: 'showresolved', type: 'action', uno: '.uno:ShowResolvedAnnotations'},
@@ -761,7 +762,6 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('Page Setup'), id: 'pagesetup', type: 'action'},
 			{uno: '.uno:WordCountDialog'},
 			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
-			{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('Latest Updates'), id: 'latest-updates', type: 'action', iosapp: false},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
