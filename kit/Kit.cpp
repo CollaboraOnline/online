@@ -1838,7 +1838,8 @@ static void flushProfileZoneRecordings()
 
 void ProfileZone::addOneRecording(const std::string &recording)
 {
-    if (!config::getBool("trace_event[@enable]", false))
+    static const bool traceEventsEnabled = config::getBool("trace_event[@enable]", false);
+    if (!traceEventsEnabled)
         return;
 
     if (profileZoneRecordings.size() >= profileZoneRecordingsCapacity)
