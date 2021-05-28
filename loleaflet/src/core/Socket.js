@@ -1511,5 +1511,7 @@ app.definitions.Socket = L.Class.extend({
 			this.active = false;
 		};
 		return result;
-	}
+	},
+
+	threadLocalLoggingLevelToggle: false
 });
