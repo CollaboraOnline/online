@@ -51,8 +51,27 @@ L.Map.include({
 	},
 
 	openSubscriptionPopup: function() {
+		var map = this;
+		var freemiumLocation = 'freemium.html';
+		if (window.socketProxy)
+			freemiumLocation = window.host + window.serviceRoot + '/loleaflet/dist/' + freemiumLocation;
+		$.get(freemiumLocation, function(data) {
+			console.debug(data);
+			map._doVexOpenFreemiumFile(data);
+		});
+	},
+
+	_doVexOpenFreemiumFile: function(data) {
+		var btnText = 'Unlock';
+		console.debug(data);
 		vex.dialog.open({
-			message: 'Select Subscription plan'
+			unsafeMessage: data,
+			showCloseButton: false,
+			contentClassName: 'vex-content vex-freemium',
+			buttons: [
+				$.extend({}, vex.dialog.buttons.YES, { text: (btnText) }),
+				vex.dialog.buttons.NO
+			]
 		});
 	},
 
