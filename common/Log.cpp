@@ -43,7 +43,9 @@ namespace Log
     {
     private:
         Poco::Logger* _logger;
+        static thread_local Poco::Logger* _threadLocalLogger;
         std::string _name;
+        std::string _logLevel;
         std::string _id;
         std::atomic<bool> _inited;
     public:
@@ -67,9 +69,28 @@ namespace Log
 
         const std::string& getName() const { return _name; }
 
+        void setLevel(const std::string& logLevel) { _logLevel = logLevel; }
+
+        const std::string& getLevel() const { return _logLevel; }
+
         void setLogger(Poco::Logger* logger) { _logger = logger; };
+
+        void setThreadLocalLogger(Poco::Logger* logger)
+        {
+            // FIXME: What to do with the previous thread-local logger, if any? Will deleting it
+            // destroy also its channel? That won't be good as we use the same channel for all
+            // loggers. Best to just leak it?
+            _threadLocalLogger = logger;
+        }
+
         Poco::Logger* getLogger() const { return _logger; }
+
+        Poco::Logger* getThreadLocalLogger() const { return _threadLocalLogger; }
+
     } Static;
+
+    thread_local Poco::Logger* StaticHelper::_threadLocalLogger = nullptr;
+
     bool IsShutdown = false;
 
     // We need a signal safe means of writing messages
@@ -305,7 +326,9 @@ namespace Log
         auto& logger = Poco::Logger::create(Static.getName(), channel, Poco::Message::PRIO_TRACE);
         Static.setLogger(&logger);
 
-        logger.setLevel(logLevel.empty() ? std::string("trace") : logLevel);
+        const std::string level = logLevel.empty() ? std::string("trace") : logLevel;
+        logger.setLevel(level);
+        Static.setLevel(level);
 
         const std::time_t t = std::time(nullptr);
         oss.str("");
@@ -326,7 +349,11 @@ namespace Log
 
     Poco::Logger& logger()
     {
-        Poco::Logger* pLogger = Static.getLogger();
+        Poco::Logger* pLogger = Static.getThreadLocalLogger();
+        if (pLogger != nullptr)
+            return *pLogger;
+
+        pLogger = Static.getLogger();
         return pLogger ? *pLogger
                        : Poco::Logger::get(Static.getInited() ? Static.getName() : std::string());
     }
@@ -344,6 +371,25 @@ namespace Log
         std::flush(std::cerr);
         fflush(stderr);
 #endif
+    }
+
+    void setThreadLocalLogLevel(const std::string& logLevel)
+    {
+        // Use the same channel for all Poco loggers.
+        auto channel = Static.getLogger()->getChannel();
+
+        // The Poco loggers have to have names that are unique, but those aren't displayed anywhere.
+        // So just use the name of the default logger for this process plus a counter.
+        static int counter = 1;
+        auto& logger = Poco::Logger::create(Static.getName() + "." + std::to_string(counter++),
+                                            channel,
+                                            Poco::Logger::parseLevel(logLevel));
+        Static.setThreadLocalLogger(&logger);
+    }
+
+    const std::string& getLevel()
+    {
+        return Static.getLevel();
     }
 }
 

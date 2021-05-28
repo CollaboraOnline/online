@@ -72,11 +72,13 @@ namespace Log
                     const bool logToFile,
                     const std::map<std::string, std::string>& config);
 
-    /// Returns the underlying logging system.
+    /// Returns the underlying logging system. Return value is effectively thread-local.
     Poco::Logger& logger();
 
     /// Shutdown and release the logging system.
     void shutdown();
+
+    void setThreadLocalLogLevel(const std::string& logLevel);
 
 #if !MOBILEAPP
     extern bool IsShutdown;
@@ -103,6 +105,8 @@ namespace Log
     inline bool warnEnabled() { return logger().warning(); }
     inline bool errorEnabled() { return logger().error(); }
     inline bool fatalEnabled() { return logger().fatal(); }
+
+    const std::string& getLevel();
 
     /// Signal safe prefix logging
     void signalLogPrefix();

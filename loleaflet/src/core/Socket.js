@@ -1517,7 +1517,9 @@ L.Socket = L.Class.extend({
 			this.active = false;
 		};
 		return result;
-	}
+	},
+
+	threadLocalLoggingLevelToggle: false
 });
 
 L.socket = function (map) {
