@@ -2189,6 +2189,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		if (textMsg.match('EMPTY') || !this._map.isPermissionEdit()) {
+			app.file.calc.cellCursor.visible = false;
 			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._cellCursor = L.LatLngBounds.createDefault();
 			this._cellCursorXY = new L.Point(-1, -1);
@@ -2198,6 +2199,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else {
 			var strTwips = textMsg.match(/\d+/g);
+
 			var topLeftTwips = new L.Point(parseInt(strTwips[0]), parseInt(strTwips[1]));
 			var offset = new L.Point(parseInt(strTwips[2]), parseInt(strTwips[3]));
 			var bottomRightTwips = topLeftTwips.add(offset);
@@ -2214,6 +2216,11 @@ L.CanvasTileLayer = L.Layer.extend({
 				autofillMarkerSection.calculatePositionViaCellCursor([this._cellCursorPixels.getX2(), this._cellCursorPixels.getY2()]);
 
 			this._cellCursorXY = new L.Point(parseInt(strTwips[4]), parseInt(strTwips[5]));
+
+			app.file.calc.cellCursor.visible = true;
+			app.file.calc.cellCursor.rectangle.twips = [parseInt(strTwips[0]), parseInt(strTwips[1]), parseInt(strTwips[2]), parseInt(strTwips[3])];
+			app.file.calc.cellCursor.rectangle.pixels = [start.x, start.y, offsetPixels.x, offsetPixels.y];
+			app.file.calc.cellCursor.address = [parseInt(strTwips[4]), parseInt(strTwips[5])];
 		}
 
 		var horizontalDirection = 0;

@@ -12,6 +12,16 @@ window.app = { // Shouldn't have any functions defined.
 		},
 		fileBasedView: false, // (draw-impress only) Default is false. For read-only documents, user can view all parts at once. In that case, this variable is set to "true".
 		partList: [], // Elements will have these properties: {hash, number, size {pixels, twips}}
+		calc: {
+			cellCursor: {
+				address: [0, 0],
+				rectangle: {
+					pixels: [0, 0, 0, 0],
+					twips: [0, 0, 0, 0]
+				},
+				visible: false,
+			}
+		}
 	},
 	view: {
 		size: {
