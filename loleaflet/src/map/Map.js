@@ -270,6 +270,7 @@ L.Map = L.Evented.extend({
 		this.on('docloaded', function(e) {
 			this._docLoaded = e.status;
 			if (this._docLoaded) {
+				app.socket.sendMessage('freemiumstatus isFreemiumUser=' + this.Freemium.isFreemiumUser);
 				this.notifyActive();
 				if (!document.hasFocus()) {
 					this.fire('editorgotfocus');

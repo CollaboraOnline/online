@@ -291,6 +291,7 @@ LOLEAFLET_JS =\
 	src/map/handler/Map.WOPI.js \
 	src/layer/marker/Marker.Drag.js \
 	src/control/Control.Toolbar.js \
+	src/control/Control.Freemium.js \
 	src/control/Control.js \
 	src/control/Control.PartsPreview.js \
 	src/control/Control.GroupBase.js \

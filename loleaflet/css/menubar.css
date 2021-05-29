@@ -306,3 +306,78 @@
 	z-index: 400;
 	border: 1px solid transparent;
 }
+
+.freemium-disabled {
+	color: var(--gray-light-txt--color) !important;
+	background-color: #fafafa;
+	box-shadow: inset 0 0 2px 0 rgba(0,0,0,0.2);
+}
+
+
+/* For classic mode */
+#main-menu .freemium-overlay {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	right: 0;
+	bottom: 0;
+	z-index: 2;
+	overflow: hidden;
+}
+
+#main-menu .freemium-disabled:hover {
+	background-color: #fafafa;
+}
+
+#main-menu .freemium-overlay:hover img {
+	top: 0;
+}
+
+#main-menu .freemium-overlay-lock {
+	position: absolute;
+	height: 48px;
+	top: 24px;
+	width: 24px;
+	right: 0px;
+	transform: translateY(-50%);
+}
+
+/* For notebook bar mode */
+.notebookbar .freemium-overlay {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	right: 0px;
+	bottom: 0px;
+	background-color: rgba(0,0,0,0.15);
+	z-index: 2;
+	border-radius: 4px;
+	text-align: center;
+}
+
+.notebookbar .freemium-overlay-lock {
+	position: relative;
+	width: 8%;
+	top: 50%;
+	right: 0px;
+}
+
+/* For mobile mode */
+#mobile-wizard .freemium-overlay {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	right: 0px;
+	bottom: 0px;
+	background-color: rgba(0,0,0,0.15);
+	z-index: 2;
+	border-radius: 4px;
+	text-align: center;
+}
+
+#mobile-wizard .freemium-overlay-lock {
+	position: relative;
+	width: 8%;
+	top: 50%;
+	right: 0px;
+}

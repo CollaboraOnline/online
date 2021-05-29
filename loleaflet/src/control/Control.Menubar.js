@@ -1635,6 +1635,10 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_onItemSelected: function(e, item) {
+		// TODO: Find a way to disable click/select events for freemium elements in disableFreemiumItem
+		if ($(item).data('freemiumDenied') === true)
+			return;
+
 		var self = e.data.self;
 		var type = $(item).data('type');
 		if (type === 'unocommand') {
@@ -1860,6 +1864,7 @@ L.Control.Menubar = L.Control.extend({
 				$(aItem).css('display', 'none');
 			}
 
+			this._map.disableFreemiumItem(menu[i], aItem, aItem);
 			itemList.push(liItem);
 		}
 
