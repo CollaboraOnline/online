@@ -162,7 +162,6 @@ class Comment {
 			this.sectionProperties.wrapper = L.DomUtil.create('div', 'loleaflet-annotation-content-wrapper' + mobileClass, this.sectionProperties.container);
 		}
 
-		//if (!(<any>window).mode.isMobile())
 		document.getElementById('document-container').appendChild(this.sectionProperties.container);
 	}
 
