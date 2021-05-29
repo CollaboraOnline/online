@@ -1612,7 +1612,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_pushbuttonControl: function(parentContainer, data, builder, customCallback) {
-		var pushbutton = L.DomUtil.create('button', '', parentContainer);
+		var wrapper = L.DomUtil.create('div', '', parentContainer); // need for freemium overlay
+		var pushbutton = L.DomUtil.create('button', '', wrapper);
 		pushbutton.id = data.id;
 
 		var text = L.DomUtil.create('span', '', pushbutton);
@@ -1634,6 +1635,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.callback('pushbutton', 'click', pushbutton, data.command, builder);
 		});
 
+		builder.map.disableFreemiumItem(data, wrapper, pushbutton);
 		if (data.hidden)
 			$(pushbutton).hide();
 
@@ -2507,6 +2509,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.enabled === 'false' || data.enabled === false)
 			$(button).prop('disabled', true);
 
+		builder.map.disableFreemiumItem(data, parentContainer, controls['container']);
 		return controls;
 	},
 
@@ -2941,6 +2944,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		} else {
 			console.debug('Builder used outside of mobile wizard: please implement the click handler');
 		}
+
+		builder.map.disableFreemiumItem(data, menuEntry, menuEntry);
 
 		return false;
 	},

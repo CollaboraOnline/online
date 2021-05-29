@@ -300,6 +300,7 @@ private:
     bool exportSignAndUploadDocument(const char* buffer, int length, const StringVector& tokens);
     bool renderShapeSelection(const char* buffer, int length, const StringVector& tokens);
     bool removeTextContext(const char* /*buffer*/, int /*length*/, const StringVector& tokens);
+    bool updateFreemiumStatus(const char* buffer, int length, const StringVector& tokens);
 
     void rememberEventsForInactiveUser(const int type, const std::string& payload);
     bool formFieldEvent(const char* buffer, int length, const StringVector& tokens);

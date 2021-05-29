@@ -202,4 +202,6 @@
     <monitors desc="Addresses of servers we connect to on start for monitoring">
     </monitors>
 
+    @FREEMIUM_CONFIGURATION@
+
 </config>

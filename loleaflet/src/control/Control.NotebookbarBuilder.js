@@ -397,9 +397,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		builder.options.useInLineLabelsForUnoButtons = originalInLineState;
 
 		$(control.container).unbind('click');
-		$(control.container).click(function () {
-			L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
-		});
+		if (!builder.map.isFreemiumDeniedItem(data)) {
+			$(control.container).click(function () {
+				L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
+			});
+		}
 	},
 
 	_insertHyperlinkControl: function(parentContainer, data, builder) {
