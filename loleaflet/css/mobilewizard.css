@@ -186,6 +186,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	overflow-x: hidden;
 	position: static;
 	width: 100%;
+	min-height: 100%;
 }
 #mobile-wizard.funcwizard div#mobile-wizard-content.hideHelpBG {
 	background: none !important;
