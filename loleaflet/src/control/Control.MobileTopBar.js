@@ -47,18 +47,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'button',  id: 'comment_wizard', img: 'mobile_comment_wizard'},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 			];
-		} else if (docType == 'presentation') {
-			return [
-				{type: 'button',  id: 'closemobile',  img: 'closemobile'},
-				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
-				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
-				{type: 'spacer'},
-				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
-				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
-				{type: 'button',  id: 'comment_wizard', img: 'mobile_comment_wizard'},
-				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
-			];
-		} else if (docType == 'drawing') {
+		} else if ((docType == 'presentation') || (docType == 'drawing')) {
 			return [
 				{type: 'button',  id: 'closemobile',  img: 'closemobile'},
 				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
