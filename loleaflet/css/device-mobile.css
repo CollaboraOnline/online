@@ -402,7 +402,7 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 }
 #tb_actionbar_item_fullscreen{display: none;}
 #toolbar-down {
-	height: 34px !important;
+	height: 37px !important;
 	border-top: 1px solid #f1f1f1 !important;
 }
 #toolbar-down > .w2ui-scroll-wrapper {
@@ -486,7 +486,7 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	border-color: #fff transparent;
 }
 #toolbar-down table.w2ui-button .w2ui-tb-image {
-	margin: 5px 9px 3px !important;
+	margin: 5px 9px !important;
 }
 .w2ui-toolbar .w2ui-break{
 	background-image: none;
