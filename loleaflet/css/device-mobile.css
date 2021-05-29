@@ -122,17 +122,15 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 }
 
 .main-nav {
-	position: absolute;
 	height: 0;
 	width: 100%;
-	top: 37px; /*set equal to toolbar up's height*/
 	margin: 0;
 	-webkit-overflow-scrolling: touch;
 	overflow: scroll;
 	z-index: 1010;
 	bottom: 34px !important;
 	background-color: #00000050;
-	display: block !important; /* Show menubar even if folded */
+	display: none;
 }
 
 #main-menu {
@@ -701,7 +699,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 }
 
 #mobile-wizard.menuwizard {
-	position: absolute;
+	position: relative;
 	top: 0;
 	bottom: 0;
 	left: 0;
