@@ -40,6 +40,8 @@
 #include <common/Protocol.hpp>
 #include <common/Unit.hpp>
 #include <common/FileUtil.hpp>
+#include <Freemium.hpp>
+
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
 #endif
@@ -794,6 +796,25 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
             session->sendFileMode(session->isReadOnly(), session->isAllowChangeComments());
         }
     }
+
+#ifdef ENABLE_FREEMIUM
+    Object::Ptr freemiumInfo = new Object();
+    freemiumInfo->set("IsFreemiumUser", Freemium::FreemiumManager::isFreemiumUser());
+    freemiumInfo->set("FreemiumDenyList", Freemium::FreemiumManager::getFreemiumDenyList());
+    freemiumInfo->set("FreemiumPurchaseTitle", Freemium::FreemiumManager::getFreemiumPurchaseTitle());
+    freemiumInfo->set("FreemiumPurchaseLink", Freemium::FreemiumManager::getFreemiumPurchaseLink());
+    freemiumInfo->set("FreemiumPurchaseDiscription", Freemium::FreemiumManager::getFreemiumPurchaseDiscription());
+    freemiumInfo->set("WriterHighlights", Freemium::FreemiumManager::getWriterHighlights());
+    freemiumInfo->set("CalcHighlights", Freemium::FreemiumManager::getCalcHighlights());
+    freemiumInfo->set("ImpressHighlights", Freemium::FreemiumManager::getImpressHighlights());
+    freemiumInfo->set("DrawHighlights", Freemium::FreemiumManager::getDrawHighlights());
+
+    std::ostringstream ossFreemiumInfo;
+    freemiumInfo->stringify(ossFreemiumInfo);
+    const std::string freemiumInfoString = ossFreemiumInfo.str();
+    LOG_TRC("Sending freemium info to client: " << freemiumInfoString);
+    session->sendMessage("freemium: " + freemiumInfoString);
+#endif
 
 #if ENABLE_SUPPORT_KEY
     if (!LOOLWSD::OverrideWatermark.empty())

@@ -52,6 +52,7 @@
 #include <common/JsonUtil.hpp>
 #include <common/TraceEvent.hpp>
 #include <NetUtil.hpp>
+#include <Freemium.hpp>
 
 #ifdef IOS
 #include <ios.h>
@@ -900,7 +901,11 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
     JsonUtil::findJSONValue(object, "UserCanRename", _userCanRename);
     JsonUtil::findJSONValue(object, "BreadcrumbDocName", _breadcrumbDocName);
     JsonUtil::findJSONValue(object, "FileUrl", _fileUrl);
+
     bool booleanFlag = false;
+    JsonUtil::findJSONValue(object, "IsUserFreemium", booleanFlag);
+    Freemium::FreemiumManager::setFreemiumUser(booleanFlag);
+
     if (JsonUtil::findJSONValue(object, "DisableChangeTrackingRecord", booleanFlag))
         _disableChangeTrackingRecord = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
     if (JsonUtil::findJSONValue(object, "DisableChangeTrackingShow", booleanFlag))

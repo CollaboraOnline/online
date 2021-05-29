@@ -47,6 +47,7 @@
 #include <Unit.hpp>
 #include <Clipboard.hpp>
 #include <string>
+#include <Freemium.hpp>
 
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
@@ -295,6 +296,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     {
         // Just ignore these.
         // FIXME: We probably should do something for "canceltiles" at least?
+    }
+    else if (tokens.equals(0, "freemiumstatus"))
+    {
+        return updateFreemiumStatus(buffer, length, tokens);
     }
     else
     {
@@ -2604,6 +2609,20 @@ int ChildSession::getSpeed()
     }
 
     return _cursorInvalidatedEvent.size();
+}
+
+bool ChildSession::updateFreemiumStatus(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
+{
+    std::string status;
+    if (tokens.size() < 2 || !getTokenString(tokens[1], "isFreemiumUser", status))
+    {
+        sendTextFrameAndLogError("error: cmd=freemiumstatus kind=failure");
+        return false;
+    }
+
+    getLOKitDocument()->setFreemiumDenyList(Freemium::FreemiumManager::getFreemiumDenyListString().c_str());
+    getLOKitDocument()->setFreemiumView(_viewId, status == "true");
+    return true;
 }
 
 void ChildSession::loKitCallback(const int type, const std::string& payload)

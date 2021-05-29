@@ -1034,6 +1034,16 @@ void LOOLWSD::innerInitialize(Application& self)
             { "welcome.enable", ENABLE_WELCOME_MESSAGE },
             { "welcome.enable_button", ENABLE_WELCOME_MESSAGE_BUTTON },
             { "welcome.path", "loleaflet/welcome" },
+#ifdef ENABLE_FREEMIUM
+            { "freemium.disabled_commands", DISABLED_COMMANDS },
+            { "freemium.purchase_title", PURCHASE_TITLE },
+            { "freemium.purchase_link", PURCHASE_LINK },
+            { "freemium.purchase_discription", PURCHASE_DISCRIPTION },
+            { "freemium.writer_subscription_highlights", WRITER_SUBSCRIPTION_HIGHLIGHTS },
+            { "freemium.calc_subscription_highlights", CALC_SUBSCRIPTION_HIGHLIGHTS },
+            { "freemium.impress_subscription_highlights", IMPRESS_SUBSCRIPTION_HIGHLIGHTS },
+            { "freemium.draw_subscription_highlights", DRAW_SUBSCRIPTION_HIGHLIGHTS },
+#endif
             { "user_interface.mode", USER_INTERFACE_MODE }
           };
 
