@@ -1045,6 +1045,12 @@ app.definitions.Socket = L.Class.extend({
 			this._map.fire('unblockUI');
 			return;
 		}
+		else if (textMsg.startsWith('freemium: ')) {
+			// Handle freemium related messages
+			var freemiumInfo = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+			this._map._setFreemiumProps(freemiumInfo);
+			return;
+		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {
 
 			if (imgBytes !== undefined) {
