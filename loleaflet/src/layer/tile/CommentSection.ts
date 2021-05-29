@@ -164,7 +164,7 @@ class CommentSection {
 		if (this.sectionProperties.docLayer._docType === 'text') {
 			this.createCommentStructureWriter(menuStructure);
 		}
-		else if (this.sectionProperties.docLayer._docType === 'presentation') {
+		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
 			this.createCommentStructureImpress(menuStructure);
 		}
 	}
