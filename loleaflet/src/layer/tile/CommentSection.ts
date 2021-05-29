@@ -66,7 +66,6 @@ class CommentSection {
 		this.sectionProperties.commentList = new Array(0);
 		this.sectionProperties.selectedComment = null;
 		this.sectionProperties.arrow = null;
-		this.sectionProperties.hiddenCommentCount = 0;
 		this.sectionProperties.initialLayoutData = null;
 		this.sectionProperties.showResolved = null;
 		this.sectionProperties.marginX = 40;
@@ -662,11 +661,9 @@ class CommentSection {
 					this.unselect();
 				}
 				annotation.hide();
-				this.sectionProperties.hiddenCommentCount++;
 				annotation.update();
 			} else if (!annotation.isContainerVisible() && annotation.sectionProperties.data.resolved === 'false') {
 				annotation.show();
-				this.sectionProperties.hiddenCommentCount--;
 				annotation.update();
 			}
 			this.layout();
@@ -1234,6 +1231,12 @@ class CommentSection {
 	}
 
 	private doLayout (zoomEnd = false) {
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+			if (this.sectionProperties.commentList.length > 0)
+				this.orderCommentList();
+			return; // No adjustments for Calc, since only one comment can be shown at a time and that comment is shown at its belonging cell.
+		}
+
 		if (this.sectionProperties.commentList.length > 0) {
 			this.orderCommentList();
 
@@ -1317,10 +1320,8 @@ class CommentSection {
 						this.unselect();
 					}
 					this.sectionProperties.commentList[idx].hide();
-					this.sectionProperties.hiddenCommentCount++;
 				} else {
 					this.sectionProperties.commentList[idx].show();
-					this.sectionProperties.hiddenCommentCount--;
 				}
 			}
 			this.sectionProperties.commentList[idx].update();
@@ -1377,9 +1378,6 @@ class CommentSection {
 				this.containerObject.addSection(commentSection);
 				this.sectionProperties.commentList.push(commentSection);
 				this.updateResolvedState(this.sectionProperties.commentList[i]);
-				if (this.sectionProperties.commentList[i].sectionProperties.data.resolved === 'true') {
-					this.sectionProperties.hiddenCommentCount++;
-				}
 			}
 
 			this.orderCommentList();
