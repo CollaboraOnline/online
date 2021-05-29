@@ -654,7 +654,8 @@ private:
     {
     public:
         SaveManager()
-            : _lastAutosaveCheckTime(RequestManager::now())
+            : _autosaveInterval(std::chrono::seconds(30))
+            , _lastAutosaveCheckTime(RequestManager::now())
             , _isAutosaveEnabled(std::getenv("LOOL_NO_AUTOSAVE") == nullptr)
         {
         }
@@ -668,11 +669,29 @@ private:
             return isAutosaveEnabled()
                    && std::chrono::duration_cast<std::chrono::seconds>(RequestManager::now()
                                                                        - _lastAutosaveCheckTime)
-                          >= std::chrono::seconds(30);
+                          >= _autosaveInterval;
         }
 
         /// Marks autosave check done.
         void autosaveChecked() { _lastAutosaveCheckTime = RequestManager::now(); }
+
+        /// Called to postpone autosaving by at least the given duration.
+        void postponeAutosave(std::chrono::seconds seconds)
+        {
+            const auto now = RequestManager::now();
+
+            const auto nextAutosaveCheck = _lastAutosaveCheckTime + _autosaveInterval;
+            const auto postponeTime = now + seconds;
+            if (nextAutosaveCheck < postponeTime)
+            {
+                // Next autosave check will happen before the desired time.
+                // Let's postpone it by the difference.
+                const auto delay = postponeTime - nextAutosaveCheck;
+                _lastAutosaveCheckTime += delay;
+                LOG_TRC("Autosave check postponed by "
+                        << std::chrono::duration_cast<std::chrono::milliseconds>(delay));
+            }
+        }
 
         /// Marks the last save request as now.
         void markLastSaveRequestTime() { _request.markLastRequestTime(); }
@@ -731,6 +750,9 @@ private:
     private:
         /// Request tracking logic.
         RequestManager _request;
+
+        /// The number of seconds between autosave checks for modification.
+        const std::chrono::seconds _autosaveInterval;
 
         /// The last autosave check time.
         std::chrono::steady_clock::time_point _lastAutosaveCheckTime;
