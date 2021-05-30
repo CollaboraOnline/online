@@ -757,8 +757,9 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-	padding: 24px 32px;
+	padding: 6px 24px;
 	background-size: 24px !important;
+	float: left;
 }
 #mobile-wizard-content > .unobutton:focus, #mobile-wizard-content .unobutton:active{
 	outline: none;
