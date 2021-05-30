@@ -120,8 +120,9 @@
 .notebookbar-shortcuts-bar #Redo {
 	height: 27px;
 	width: 24px;
-	display: inline-block;
+	display: grid;
 	margin: 0px !important;
+	align-content: center;
 }
 
 /* Hamburger icon: from shortcutsbar (notebookbar) */
@@ -148,7 +149,7 @@
 
 .hasnotebookbar #shortcuts-menubar-icon {
 	position: absolute;
-	top: 50%;
+	top: 45%;
 	left: 6px;
 	height: 2px;
 	width: 16px;
