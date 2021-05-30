@@ -386,6 +386,14 @@ void DocumentBroker::pollThread()
             refreshLock();
 #endif
 
+        //TODO: Review if we need this here.
+        if (_saveManager.isSaving() && !_saveManager.hasSavingTimedOut())
+        {
+            // We are saving, nothing more to do but wait (until we save or we timeout).
+            continue;
+        }
+
+        LOG_TRC("Poll: current activity: " << DocumentState::toString(_docState.activity()));
         switch (_docState.activity())
         {
             case DocumentState::Activity::None:
@@ -397,38 +405,37 @@ void DocumentBroker::pollThread()
                     // Nothing more to do until the save is complete.
                     continue;
                 }
+                else if (SigUtil::getShutdownRequestFlag() || _docState.isCloseRequested())
+                {
+                    const std::string reason =
+                        SigUtil::getShutdownRequestFlag() ? "recycling" : _closeReason;
+                    const bool possiblyModified = isPossiblyModified();
+                    LOG_INF("Autosaving DocumentBroker for docKey ["
+                            << getDocKey() << "], possiblyModified: "
+                            << (possiblyModified ? "yes" : "no") << ", for " << reason);
+                    if (!autoSave(possiblyModified))
+                    {
+                        LOG_INF("Terminating DocumentBroker for docKey [" << getDocKey()
+                                                                          << "]: " << reason);
+                        stop(reason);
+                    }
+                }
+                else if (!_stop && _saveManager.needAutosaveCheck())
+                {
+                    LOG_TRC("Triggering an autosave.");
+                    autoSave(false);
+                }
             }
             break;
 
+            // We have some activity ongoing.
             default:
-                break;
-        }
-
-        //TODO: Review if we need this here.
-        if (_saveManager.isSaving() && !_saveManager.hasSavingTimedOut())
-        {
-            // We are saving, nothing more to do but wait (until we save or we timeout).
-            continue;
-        }
-
-        if (SigUtil::getShutdownRequestFlag() || _docState.isCloseRequested())
-        {
-            const std::string reason = SigUtil::getShutdownRequestFlag() ? "recycling" : _closeReason;
-            const bool possiblyModified = isPossiblyModified();
-            LOG_INF("Autosaving DocumentBroker for docKey ["
-                    << getDocKey() << "], possiblyModified: " << (possiblyModified ? "yes" : "no")
-                    << ", for " << reason);
-            if (!autoSave(possiblyModified))
             {
-                LOG_INF("Terminating DocumentBroker for docKey [" << getDocKey()
-                                                                  << "]: " << reason);
-                stop(reason);
+                constexpr std::chrono::seconds postponeAutosaveDuration(30);
+                LOG_TRC("Postponing autosave check by " << postponeAutosaveDuration);
+                _saveManager.postponeAutosave(postponeAutosaveDuration);
             }
-        }
-        else if (!_stop && _saveManager.needAutosaveCheck())
-        {
-            LOG_TRC("Triggering an autosave.");
-            autoSave(false);
+            break;
         }
 
 #if !MOBILEAPP
