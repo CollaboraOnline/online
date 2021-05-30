@@ -1012,13 +1012,6 @@ std::string DocumentBroker::handleRenameFileCommand(std::string sessionId,
 void DocumentBroker::startRenameFileCommand()
 {
     LOG_TRC("Starting renamefile command execution.");
-    if (_docState.activity() != DocumentState::Activity::None)
-    {
-        assert(!"Saving before renaming must be invoked when no other activity exists.");
-        LOG_DBG("Error: Trying to saveBeforeRename while "
-                << DocumentState::toString(_docState.activity()));
-        return;
-    }
 
     if (_renameSessionId.empty() || _renameFilename.empty())
     {
@@ -1028,13 +1021,31 @@ void DocumentBroker::startRenameFileCommand()
         return;
     }
 
-    _docState.setActivity(DocumentState::Activity::Rename);
+    // Transition.
+    if (!startActivity(DocumentState::Activity::Rename))
+    {
+        return;
+    }
+
+    blockUI("rename"); // Prevent user interaction while we start renaming.
 
     constexpr bool dontTerminateEdit = false; // We will save, rename, and reload: terminate.
     constexpr bool dontSaveIfUnmodified = true;
     constexpr bool isAutosave = false;
     constexpr bool isExitSave = false;
     sendUnoSave(_renameSessionId, dontTerminateEdit, dontSaveIfUnmodified, isAutosave, isExitSave);
+}
+
+void DocumentBroker::endRenameFileCommand()
+{
+    LOG_TRC("Ending renamefile command execution.");
+
+    _renameSessionId.clear();
+    _renameFilename.clear();
+
+    unblockUI();
+
+    endActivity();
 }
 
 bool DocumentBroker::attemptLock(const ClientSession& session, std::string& failReason)
@@ -1129,9 +1140,7 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
                 constexpr bool isRename = true;
                 uploadAsToStorage(_renameSessionId, uploadAsPath, _renameFilename, isRename);
 
-                _docState.setActivity(DocumentState::Activity::None); // We are done.
-                _renameSessionId.clear();
-                _renameFilename.clear();
+                endRenameFileCommand();
                 return;
             }
         }
@@ -1336,12 +1345,12 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
             case DocumentState::Activity::Rename:
             {
                 LOG_DBG("Failed to renameFile because uploading post-save failed.");
-                _docState.setActivity(DocumentState::Activity::None);
-                _renameFilename.clear();
-                auto pair = _sessions.find(_renameSessionId);
+                const std::string renameSessionId = _renameSessionId;
+                endRenameFileCommand();
+
+                auto pair = _sessions.find(renameSessionId);
                 if (pair != _sessions.end() && pair->second)
                     pair->second->sendTextFrameAndLogError("error: cmd=renamefile kind=failed");
-                _renameSessionId.clear();
             }
             break;
 
@@ -1414,9 +1423,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
                     constexpr bool isRename = true;
                     uploadAsToStorage(_renameSessionId, uploadAsPath, _renameFilename, isRename);
 
-                    _docState.setActivity(DocumentState::Activity::None); // We are done.
-                    _renameSessionId.clear();
-                    _renameFilename.clear();
+                    endRenameFileCommand();
                 }
                 break;
 
