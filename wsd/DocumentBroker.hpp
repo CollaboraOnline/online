@@ -426,6 +426,18 @@ public:
     /// Sends a message to all sessions
     void broadcastMessage(const std::string& message) const;
 
+    /// Broadcasts 'blockui' command to all users with an optional message.
+    void blockUI(const std::string& msg)
+    {
+        broadcastMessage("blockui: " + msg);
+    }
+
+    /// Broadcasts 'unblockui' command to all users.
+    void unblockUI()
+    {
+        broadcastMessage("unblockui: ");
+    }
+
     /// Returns true iff an initial setting by the given name is already initialized.
     bool isInitialSettingSet(const std::string& name) const;
 
@@ -475,6 +487,9 @@ private:
 
     /// Invoked to issue a save before renaming the document filename.
     void startRenameFileCommand();
+
+    /// Finish handling the renamefile command.
+    void endRenameFileCommand();
 
     /// Shutdown all client connections with the given reason.
     void shutdownClients(const std::string& closeReason);
@@ -1015,6 +1030,36 @@ private:
         std::atomic<bool> _loaded; //< If the document ever loaded (check isLive to see if it still is).
         bool _interactive; //< If the document has interactive dialogs before load
     };
+
+    /// Transition to a given activity. Returns false if an activity exists.
+    bool startActivity(DocumentState::Activity activity)
+    {
+        if (activity == DocumentState::Activity::None)
+        {
+            LOG_DBG("Error: Cannot start 'None' activity.");
+            assert(!"Cannot start 'None' activity.");
+            return false;
+        }
+
+        if (_docState.activity() != DocumentState::Activity::None)
+        {
+            LOG_DBG("Error: Cannot start new activity ["
+                    << DocumentState::toString(activity) << "] while executing ["
+                    << DocumentState::toString(_docState.activity()) << ']');
+            assert(!"Cannot start new activity while executing another.");
+            return false;
+        }
+
+        _docState.setActivity(activity);
+        return true;
+    }
+
+    /// Ends the current activity.
+    void endActivity()
+    {
+        LOG_DBG("Ending [" << DocumentState::toString(_docState.activity()) << "] activity.");
+        _docState.setActivity(DocumentState::Activity::None);
+    }
 
     /// The main state of the document.
     DocumentState _docState;
