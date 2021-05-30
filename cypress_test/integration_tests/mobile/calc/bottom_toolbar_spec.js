@@ -126,54 +126,6 @@ describe('Interact with bottom toolbar.', function() {
 			.should('have.attr', 'colspan', '1024');
 	});
 
-	it('Apply left/right alignment', function() {
-		before('bottom_toolbar.ods');
-
-		// Set right aligment first
-		cy.get('.w2ui-tb-image.w2ui-icon.alignright')
-			.click();
-
-		calcHelper.selectEntireSheet();
-
-		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'align', 'right');
-
-		// Change alignment back
-		calcHelper.clickOnFirstCell();
-
-		cy.get('.w2ui-tb-image.w2ui-icon.alignleft')
-			.click();
-
-		calcHelper.selectEntireSheet();
-
-		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'align', 'left');
-	});
-
-	it('Align to center.', function() {
-		before('bottom_toolbar.ods');
-
-		cy.get('.w2ui-tb-image.w2ui-icon.alignhorizontal')
-			.click();
-
-		calcHelper.selectEntireSheet();
-
-		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'align', 'center');
-	});
-
-	it('Change to block alignment.', function() {
-		before('bottom_toolbar.ods');
-
-		cy.get('.w2ui-tb-image.w2ui-icon.alignblock')
-			.click();
-
-		calcHelper.selectEntireSheet();
-
-		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'align', 'justify');
-	});
-
 	it('Enable text wrapping.', function() {
 		before('bottom_toolbar.ods');
 
