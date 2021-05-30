@@ -13,45 +13,35 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		syncSplits: true, // if false, the splits/freezes are not synced with other users viewing the same sheet.
 	},
 
-	editedAnnotation: null,
-
-	STD_EXTRA_WIDTH: 113, /* 2mm extra for optimal width,
-							  * 0.1986cm with TeX points,
-							  * 0.1993cm with PS points. */
-
 	twipsToHMM: function (twips) {
 		return (twips * 127 + 36) / 72;
 	},
 
 	newAnnotation: function (comment) {
-		if (window.mode.isMobile() || window.mode.isTablet()) {
-			var that = this;
-			this.newAnnotationVex(comment, function(annotation) { that._onAnnotationSave(annotation); });
-		} else {
-			var annotations = this._annotations[this._selectedPart];
-			var annotation;
-			for (var key in annotations) {
-				if (this._cellCursor.contains(annotations[key]._annotation._data.cellPos)) {
-					annotation = annotations[key];
-					break;
-				}
-			}
+		var commentList = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).sectionProperties.commentList;
+		var comment = null;
 
-			if (!annotation) {
-				comment.cellPos = this._cellCursor;
-				annotation = this.createAnnotation(comment);
-				annotation._annotation._tag = annotation;
-				this.showAnnotation(annotation);
+		for (var i = 0; i < commentList; i++) {
+			if (this._cellCursorTwips.contains(commentList[i].sectionProperties.data.cellPos)) {
+				comment = commentList[i];
+				break;
 			}
-			this.editedAnnotation = annotation;
-			annotation.editAnnotation();
 		}
-	},
 
-	createAnnotation: function (comment) {
-		var annotation = L.divOverlay(comment.cellPos).bindAnnotation(L.annotation(L.latLng(0, 0),
-			comment, comment.id === 'new' ? {noMenu: true} : {}));
-		return annotation;
+		if (!comment) {
+			var newComment = {
+				cellPos: app.file.calc.cellCursor.rectangle.twips.slice(), // Copy the array.
+				anchorPos: app.file.calc.cellCursor.rectangle.twips.slice(), // Copy the array.
+				id: 'new',
+				tab: this._selectedPart,
+				dateTime: new Date().toDateString(),
+				author: this._map.getViewName(this._viewId)
+			};
+			comment = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(newComment);
+			comment.show();
+		}
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(comment);
+		comment.focus();
 	},
 
 	beforeAdd: function (map) {
@@ -59,27 +49,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		map._addZoomLimit(this);
 		map.on('zoomend', this._onZoomRowColumns, this);
 		map.on('updateparts', this._onUpdateParts, this);
-		map.on('AnnotationCancel', this._onAnnotationCancel, this);
-		map.on('AnnotationReply', this._onAnnotationReply, this);
-		map.on('AnnotationSave', this._onAnnotationSave, this);
 		map.on('splitposchanged', this.setSplitCellFromPos, this);
 		map.on('commandstatechanged', this._onCommandStateChanged, this);
 		map.uiManager.initializeSpecializedUI('spreadsheet');
-	},
-
-	clearAnnotations: function () {
-		if (this._map) {
-			for (var tab in this._annotations) {
-				this.hideAnnotations(tab);
-			}
-		} // else during shutdown.
-		this._annotations = {};
-	},
-
-	layoutAnnotations: function () {
-	},
-
-	unselectAnnotations: function () {
 	},
 
 	onAdd: function (map) {
@@ -92,46 +64,21 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			}
 		}.bind(this));
 
+<<<<<<< HEAD
 		this._annotations = {};
 
 		this._painter._sectionContainer.addSection(L.getAutoFillMarkerSection());
+=======
+		app.sectionContainer.addSection(new app.definitions.AutoFillMarkerSection());
+>>>>>>> 035845526... Calc: Activate commentList section for desktop.
 
 		this.insertMode = false;
 		this._cellSelections = Array(0);
 		this._cellCursorXY = {x: -1, y: -1};
 	},
 
-	onAnnotationModify: function (annotation) {
-		this.editedAnnotation = annotation;
-		if (window.mode.isMobile() || window.mode.isTablet()) {
-			var that = this;
-			this.newAnnotationVex(annotation, function(annotation) { that._onAnnotationSave(annotation); }, /* isMod */ true);
-		} else {
-			annotation.edit();
-			annotation.focus();
-		}
-	},
-
-	onAnnotationRemove: function (id) {
-		var comment = {
-			Id: {
-				type: 'string',
-				value: id
-			}
-		};
-		var tab = this._selectedPart;
-		this._map.sendUnoCommand('.uno:DeleteNote', comment);
-		this._annotations[tab][id].closePopup();
-		this._map.focus();
-	},
-
-	onAnnotationReply: function (annotation) {
-		this.editedAnnotation = annotation;
-		annotation.reply();
-		annotation.focus();
-	},
-
 	isCurrentCellCommentShown: function () {
+		// I think this function is not used any more. Needs to be confirmed.
 		var annotations = this._annotations[this._selectedPart];
 		for (var key in annotations) {
 			var annotation = annotations[key]._annotation;
@@ -143,6 +90,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	showAnnotationFromCurrentCell: function() {
+		// I think this function is not used any more. Needs to be confirmed.
 		var annotations = this._annotations[this._selectedPart];
 		for (var key in annotations) {
 			var annotation = annotations[key]._annotation;
@@ -158,6 +106,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	hideAnnotationFromCurrentCell: function() {
+		// I think this function is not used any more. Needs to be confirmed.
 		var annotations = this._annotations[this._selectedPart];
 		for (var key in annotations) {
 			var annotation = annotations[key]._annotation;
@@ -168,6 +117,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
+<<<<<<< HEAD
 	showAnnotation: function (annotation) {
 		this._map.addLayer(annotation);
 	},
@@ -200,6 +150,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
+=======
+>>>>>>> 035845526... Calc: Activate commentList section for desktop.
 	isHiddenPart: function (part) {
 		if (!this._hiddenParts)
 			return false;
@@ -217,119 +169,16 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return false;
 		return this.hiddenParts() !== 0;
 	},
-	_onAnnotationCancel: function (e) {
-		if (e.annotation._data.id === 'new') {
-			this.hideAnnotation(e.annotation._tag);
-		} else {
-			this._annotations[e.annotation._data.tab][e.annotation._data.id].closePopup();
-		}
-		this._map.focus();
-	},
-
-	_onAnnotationReply: function (e) {
-		var comment = {
-			Id: {
-				type: 'string',
-				value: e.annotation._data.id
-			},
-			Text: {
-				type: 'string',
-				value: e.annotation._data.reply
-			}
-		};
-		this._map.sendUnoCommand('.uno:ReplyComment', comment);
-		this._map.focus();
-	},
-
-	_onAnnotationSave: function (e) {
-		var comment;
-		if (e.annotation._data.id === 'new') {
-			comment = {
-				Text: {
-					type: 'string',
-					value: e.annotation._data.text
-				},
-				Author: {
-					type: 'string',
-					value: e.annotation._data.author
-				}
-			};
-			this._map.sendUnoCommand('.uno:InsertAnnotation', comment);
-			this.hideAnnotation(e.annotation._tag);
-		} else {
-			comment = {
-				Id: {
-					type: 'string',
-					value: e.annotation._data.id
-				},
-				Text: {
-					type: 'string',
-					value: e.annotation._data.text
-				},
-				Author: {
-					type: 'string',
-					value: this._map.getViewName(this._viewId)
-				}
-			};
-			this._map.sendUnoCommand('.uno:EditAnnotation', comment);
-			this._annotations[e.annotation._data.tab][e.annotation._data.id].closePopup();
-		}
-		this._map.focus();
-	},
 
 	_onUpdateParts: function (e) {
 		if (typeof this._prevSelectedPart === 'number' && !e.source) {
 			this.refreshViewData(undefined, false /* compatDataSrcOnly */, true /* sheetGeometryChanged */);
 			this._switchSplitPanesContext();
-			this.hideAnnotations(this._prevSelectedPart);
-			this.showAnnotations();
 		}
 	},
 
 	_onMessage: function (textMsg, img) {
-		if (textMsg.startsWith('comment:')) {
-			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
-			obj.comment.tab = parseInt(obj.comment.tab);
-			if (obj.comment.action === 'Add') {
-				if (obj.comment.author in this._map._viewInfoByUserName) {
-					obj.comment.avatar = this._map._viewInfoByUserName[obj.comment.author].userextrainfo.avatar;
-				}
-				var cellPos = L.LOUtil.stringToBounds(obj.comment.cellPos);
-				obj.comment.cellPos = this._convertToTileTwipsSheetArea(cellPos);
-				obj.comment.cellPos = L.latLngBounds(this._twipsToLatLng(obj.comment.cellPos.getBottomLeft()),
-					this._twipsToLatLng(obj.comment.cellPos.getTopRight()));
-				if (!this._annotations[obj.comment.tab]) {
-					this._annotations[obj.comment.tab] = {};
-				}
-				this._annotations[obj.comment.tab][obj.comment.id] = this.createAnnotation(obj.comment);
-				var addedComment = this._annotations[obj.comment.tab][obj.comment.id];
-				if (obj.comment.tab === this._selectedPart) {
-					this.showAnnotation(addedComment);
-				}
-				if (window.mode.isMobile())
-					this._map._docLayer._openCommentWizard(addedComment._annotation);
-			} else if (obj.comment.action === 'Remove') {
-				var removed = this._annotations[obj.comment.tab][obj.comment.id];
-				if (removed) {
-					this.hideAnnotation(removed);
-					delete this._annotations[obj.comment.tab][obj.comment.id];
-				}
-				if (window.mode.isMobile())
-					this._map._docLayer._openCommentWizard();
-			} else if (obj.comment.action === 'Modify') {
-				var modified = this._annotations[obj.comment.tab][obj.comment.id];
-				cellPos = L.LOUtil.stringToBounds(obj.comment.cellPos);
-				obj.comment.cellPos = this._convertToTileTwipsSheetArea(cellPos);
-				obj.comment.cellPos = L.latLngBounds(this._twipsToLatLng(obj.comment.cellPos.getBottomLeft()),
-					this._twipsToLatLng(obj.comment.cellPos.getTopRight()));
-				if (modified) {
-					modified._annotation._data = obj.comment;
-					modified.setLatLngBounds(obj.comment.cellPos);
-				}
-				if (window.mode.isMobile())
-					this._map._docLayer._openCommentWizard(modified._annotation);
-			}
-		} else if (textMsg.startsWith('invalidateheader: column')) {
+		if (textMsg.startsWith('invalidateheader: column')) {
 			this.refreshViewData({x: this._map._getTopLeftPoint().x, y: 0,
 				offset: {x: undefined, y: 0}}, true /* compatDataSrcOnly */);
 			app.socket.sendMessage('commandvalues command=.uno:ViewAnnotationsPosition');
@@ -938,42 +787,15 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._handleSheetGeometryDataMsg(values);
 
 		} else if (values.comments) {
-			this.clearAnnotations();
-			for (var index in values.comments) {
-				comment = values.comments[index];
-				comment.tab = parseInt(comment.tab);
-				if (comment.author in this._map._viewInfoByUserName) {
-					comment.avatar = this._map._viewInfoByUserName[comment.author].userextrainfo.avatar;
-				}
-				comment.cellPos = L.LOUtil.stringToBounds(comment.cellPos);
-				comment.cellPos = L.latLngBounds(this._twipsToLatLng(comment.cellPos.getBottomLeft()),
-					this._twipsToLatLng(comment.cellPos.getTopRight()));
-				if (!this._annotations[comment.tab]) {
-					this._annotations[comment.tab] = {};
-				}
-				this._annotations[comment.tab][comment.id] = this.createAnnotation(comment);
-			}
-			this.showAnnotations();
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).clearList();
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
 		} else if (values.commentsPos) {
-			this.hideAnnotations();
-			for (index in values.commentsPos) {
+			for (var index in values.commentsPos) {
 				comment = values.commentsPos[index];
 				comment.tab = parseInt(comment.tab);
 				comment.cellPos = L.LOUtil.stringToBounds(comment.cellPos);
-				comment.cellPos = L.latLngBounds(this._twipsToLatLng(comment.cellPos.getBottomLeft()),
-								 this._twipsToLatLng(comment.cellPos.getTopRight()));
-				if (this._annotations && this._annotations[comment.tab])
-				{
-					var annotation = this._annotations[comment.tab][comment.id];
-					if (annotation) {
-						annotation.setLatLngBounds(comment.cellPos);
-						if (annotation.mark) {
-							annotation.mark.setLatLng(comment.cellPos.getNorthEast());
-						}
-					}
-				}
+				comment.cellPos = L.latLngBounds(this._twipsToLatLng(comment.cellPos.getBottomLeft()), this._twipsToLatLng(comment.cellPos.getTopRight()));
 			}
-			this.showAnnotations();
 		} else {
 			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}

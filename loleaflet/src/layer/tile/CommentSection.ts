@@ -78,6 +78,7 @@ class CommentSection {
 	public onInitialize () {
 		this.map.on('RedlineAccept', this.onRedlineAccept, this);
 		this.map.on('RedlineReject', this.onRedlineReject, this);
+		this.map.on('updateparts', this.hideAllComments, this);
 		this.map.on('zoomend', function() {
 			var that = this;
 			that.layout(true);
@@ -89,6 +90,12 @@ class CommentSection {
 		if ((<any>window).mode.isMobile()) {
 			this.showSection = false;
 			this.size[0] = 0;
+		}
+	}
+
+	private hideAllComments () {
+		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
+			this.sectionProperties.commentList[i].hide();
 		}
 	}
 
@@ -422,7 +429,7 @@ class CommentSection {
 			}
 		};
 
-		if (this.sectionProperties.docLayer._docType === 'text')
+		if (this.sectionProperties.docLayer._docType === 'text' || this.sectionProperties.docLayer._docType === 'spreadsheet')
 			this.map.sendUnoCommand('.uno:ReplyComment', comment);
 		else if (this.sectionProperties.docLayer._docType === 'presentation')
 			this.map.sendUnoCommand('.uno:ReplyToAnnotation', comment);
@@ -482,6 +489,8 @@ class CommentSection {
 			this.map.sendUnoCommand('.uno:DeleteComment', comment);
 		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing')
 			this.map.sendUnoCommand('.uno:DeleteAnnotation', comment);
+		else if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+			this.map.sendUnoCommand('.uno:DeleteNote', comment);
 
 		if (app.file.fileBasedView)
 			this.map.setPart(0, false);
@@ -977,14 +986,18 @@ class CommentSection {
 	// So we can use it directly.
 	private adjustCommentNormal (comment: any) {
 		comment.trackchange = false;
-		comment.rectangles = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle); // Simple array of point arrays [x1, y1, x2, y2].
-		comment.rectanglesOriginal = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle); // This unmodified version will be kept for re-calculations.
-		comment.anchorPos = this.stringToRectangles(comment.anchorPos || comment.rectangle)[0];
+		comment.rectangles = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle || comment.cellPos); // Simple array of point arrays [x1, y1, x2, y2].
+		comment.rectanglesOriginal = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle || comment.cellPos); // This unmodified version will be kept for re-calculations.
+		comment.anchorPos = this.stringToRectangles(comment.anchorPos || comment.rectangle || comment.cellPos)[0];
 		comment.anchorPix = this.numberArrayToCorePixFromTwips(comment.anchorPos, 0, 2);
 		comment.parthash = comment.parthash ? comment.parthash: null;
+		comment.tab = comment.tab ? comment.tab: null;
 
 		if (comment.rectangle) {
-			comment.rectangle = this.stringToRectangles(comment.rectangle)[0]; // This is the position of the marker.
+			comment.rectangle = this.stringToRectangles(comment.rectangle)[0]; // This is the position of the marker (Impress & Draw).
+		}
+		else if (comment.cellPos) {
+			comment.cellPos = this.stringToRectangles(comment.cellPos)[0]; // Calc.
 		}
 
 		var viewId = this.map.getViewId(comment.author);

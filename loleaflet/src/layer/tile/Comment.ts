@@ -248,7 +248,7 @@ class Comment {
 
 	private updateContent () {
 		// .text() method will escape the string, does not interpret the string as HTML
-		this.sectionProperties.contentText.innerText = this.sectionProperties.data.text;
+		this.sectionProperties.contentText.innerText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		// Get the escaped HTML out and find for possible, useful links
 		var linkedText = Autolinker.link(this.sectionProperties.contentText.outerHTML);
 		// Set the property of text field directly. This is insecure otherwise because it doesn't escape the input
@@ -256,8 +256,8 @@ class Comment {
 		// generated text.
 		this.sectionProperties.contentText.innerHTML = linkedText;
 		// Original unlinked text
-		this.sectionProperties.contentText.origText = this.sectionProperties.data.text;
-		this.sectionProperties.nodeModifyText.innerText = this.sectionProperties.data.text;
+		this.sectionProperties.contentText.origText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
+		this.sectionProperties.nodeModifyText.innerText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		this.sectionProperties.contentAuthor.innerText = this.sectionProperties.data.author;
 
 		this.updateResolvedField(this.sectionProperties.data.resolved);
@@ -339,6 +339,11 @@ class Comment {
 			var diff = [documentAnchorSection.myTopLeft[0] - this.documentTopLeft[0], documentAnchorSection.myTopLeft[1] - this.documentTopLeft[1]];
 			this.setPosition(xMin - diff[0], yMin - diff[1]); // This function is added by section container.
 			this.size = [xMax - xMin, yMax - yMin];
+		}
+		else if (this.sectionProperties.data.cellPos && this.sectionProperties.docLayer._docType === 'spreadsheet') {
+			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+			this.size = [Math.round(this.sectionProperties.data.cellPos[2] * ratio), Math.round(this.sectionProperties.data.cellPos[3] * ratio)];
+			this.setPosition(Math.round(this.sectionProperties.data.cellPos[0] * ratio), Math.round(this.sectionProperties.data.cellPos[1] * ratio));
 		}
 	}
 
@@ -535,6 +540,7 @@ class Comment {
 	private show () {
 		this.showMarker();
 
+		// On mobile, container shouldn't be 'document-container', but it is 'document-container' on initialization. So we hide the comment until comment wizard is opened.
 		if ((<any>window).mode.isMobile() && this.sectionProperties.container.parentElement === document.getElementById('document-container'))
 			this.sectionProperties.container.style.visibility = 'hidden';
 		else
@@ -552,9 +558,22 @@ class Comment {
 		var highlighter = document.getElementById('commented-text-highlighter-container-' + data.id); // Writer.
 		if (highlighter)
 			highlighter.style.display = 'block';
+
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet' && !(<any>window).mode.isMobile()) {
+			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+			var originalSize = [Math.round((this.sectionProperties.data.cellPos[2]) * ratio), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
+
+			var pos: Array<number> = [Math.round((this.myTopLeft[0] + originalSize[0] - 3) / this.dpiScale), Math.round(this.myTopLeft[1] / this.dpiScale)];
+			(new L.PosAnimation()).run(this.sectionProperties.container, {x: pos[0], y: pos[1]});
+		}
 	}
 
 	private hide () {
+		if (this.sectionProperties.data.id === 'new') {
+			this.containerObject.removeSection(this.name);
+			return;
+		}
+
 		this.sectionProperties.container.style.visibility = 'hidden';
 		this.sectionProperties.contentNode.style.display = 'none';
 		this.sectionProperties.nodeModify.style.display = 'none';
@@ -743,9 +762,33 @@ class Comment {
 
 	public onMouseDown (point: Array<number>, e: MouseEvent) {}
 
-	public onMouseEnter () {}
+	public onMouseEnter () {
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+			// When mouse is above this section, comment's HTML element will be shown.
+			// If mouse pointer goes to HTML element, onMouseLeave event shouldn't be fired.
+			// But mouse pointer will have left the borders of this section and onMouseLeave event will be fired.
+			// Let's do it properly, when mouse is above this section, we will make this section's size bigger and onMouseLeave event will not be fired.
+			if (parseInt(this.sectionProperties.data.tab) === this.sectionProperties.docLayer._selectedPart) {
+				var containerWidth: number = this.sectionProperties.container.getBoundingClientRect().width;
+				var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+				this.size = [Math.round((this.sectionProperties.data.cellPos[2]) * ratio + containerWidth), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
+				this.show();
+			}
+		}
+	}
 
-	public onMouseLeave () {}
+	public onMouseLeave (point: Array<number>) {
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+			if (parseInt(this.sectionProperties.data.tab) === this.sectionProperties.docLayer._selectedPart) {
+				// Revert the changes we did on "onMouseEnter" event.
+				var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+				this.size = [Math.round((this.sectionProperties.data.cellPos[2]) * ratio), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
+				if (point) {
+					this.hide();
+				}
+			}
+		}
+	}
 
 	public onNewDocumentTopLeft () {
 		this.updatePosition();
@@ -755,8 +798,11 @@ class Comment {
 		this.hideMarker();
 
 		var container = this.sectionProperties.container;
-		if (container && container.parentElement)
-			container.parentElement.removeChild(container);
+		if (container && container.parentElement) {
+			setTimeout(function () {
+				container.parentElement.removeChild(container);
+			}, 100);
+		}
 
 		var data = this.sectionProperties.data;
 		if (data.textSelected) {
