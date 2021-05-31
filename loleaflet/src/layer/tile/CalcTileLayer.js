@@ -3,7 +3,7 @@
  * Calc tile layer is used to display a spreadsheet document
  */
 
-/* global app $ */
+/* global app */
 
 L.CalcTileLayer = L.CanvasTileLayer.extend({
 	options: {
@@ -977,39 +977,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	getSelectedPart: function () {
 		return this._selectedPart;
 	},
-
-	_createCommentStructure: function (menuStructure) {
-		var rootComment;
-		var annotations = this._annotations[this._selectedPart];
-
-		for (var i in annotations) {
-			rootComment = {
-				id: 'comment' + annotations[i]._annotation._data.id,
-				enable: true,
-				data: annotations[i]._annotation._data,
-				type: 'rootcomment',
-				text: annotations[i]._annotation._data.text,
-				annotation: annotations[i]._annotation,
-				children: []
-			};
-			rootComment.annotation.leafletId = annotations[i]._leaflet_id;	// required to highlight the selected cell
-			menuStructure['children'].push(rootComment);
-		}
-	},
-
-	_addHighlightSelectedWizardComment: function(annotation) {
-		if (this.lastWizardCommentHighlight) {
-			this.lastWizardCommentHighlight.removeClass('calc-comment-highlight');
-		}
-		this.lastWizardCommentHighlight = $(this._map._layers[annotation.leafletId]._container);
-		this.lastWizardCommentHighlight.addClass('calc-comment-highlight');
-	},
-
-	_removeHighlightSelectedWizardComment: function() {
-		if (this.lastWizardCommentHighlight)
-			this.lastWizardCommentHighlight.removeClass('calc-comment-highlight');
-	}
-
 });
 
 L.CalcSplitPanesContext = L.SplitPanesContext.extend({

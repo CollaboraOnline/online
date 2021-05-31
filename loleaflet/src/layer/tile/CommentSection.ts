@@ -166,6 +166,27 @@ class CommentSection {
 		}
 	}
 
+	public createCommentStructureCalc (menuStructure: any) {
+		var rootComment;
+		var commentList = this.sectionProperties.commentList;
+		var selectedTab = this.sectionProperties.docLayer._selectedPart;
+
+		for (var i: number = 0; i < commentList.length; i++) {
+			if (parseInt(commentList[i].sectionProperties.data.tab) === selectedTab) {
+				rootComment = {
+					id: 'comment' + commentList[i].sectionProperties.data.id,
+					enable: true,
+					data: commentList[i].sectionProperties.data,
+					type: 'rootcomment',
+					text: commentList[i].sectionProperties.data.text,
+					annotation: commentList[i],
+					children: []
+				};
+				menuStructure['children'].push(rootComment);
+			}
+		}
+	}
+
 	public createCommentStructure (menuStructure: any) {
 		if (this.sectionProperties.docLayer._docType === 'text') {
 			this.createCommentStructureWriter(menuStructure);
@@ -173,9 +194,12 @@ class CommentSection {
 		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
 			this.createCommentStructureImpress(menuStructure);
 		}
+		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+			this.createCommentStructureCalc(menuStructure);
+		}
 	}
 
-	public newAnnotationVex (comment: any, addCommentFn: any, isMod: any, displayContent: any = undefined) {
+	public newAnnotationVex (comment: any, addCommentFn: any, isMod: any, displayContent: string) {
 		var that = this;
 
 		var commentData = null;
@@ -258,28 +282,26 @@ class CommentSection {
 	}
 
 	public hightlightComment (comment: any) {
-		if (this.sectionProperties.docLayer._docType === 'text') {
-			this.removeHighlighters();
+		this.removeHighlighters();
 
-			var commentList = this.sectionProperties.commentList;
+		var commentList = this.sectionProperties.commentList;
 
-			var lastChild: any = this.getLastChildIndexOf(comment.sectionProperties.data.id);
+		var lastChild: any = this.getLastChildIndexOf(comment.sectionProperties.data.id);
 
-			while (true) {
-				commentList[lastChild].highlightSelectedText();
+		while (true && lastChild >= 0) {
+			commentList[lastChild].highlight();
 
-				if (commentList[lastChild].sectionProperties.data.parent === '0')
-					break;
+			if (commentList[lastChild].sectionProperties.data.parent === '0')
+				break;
 
-				lastChild = this.getIndexOf(commentList[lastChild].sectionProperties.data.parent);
-			}
+			lastChild = this.getIndexOf(commentList[lastChild].sectionProperties.data.parent);
 		}
 	}
 
 	public removeHighlighters () {
 		var commentList = this.sectionProperties.commentList;
 		for (var i: number = 0; i < commentList.length; i++) {
-			if (commentList[i].isHighlighted) {
+			if (commentList[i].sectionProperties.isHighlighted) {
 				commentList[i].removeHighlight();
 			}
 		}
@@ -382,7 +404,7 @@ class CommentSection {
 	public modify (annotation: any) {
 		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
 			var that = this;
-			this.newAnnotationVex(annotation, function(annotation: any) { that.save(annotation); }, /* isMod */ true);
+			this.newAnnotationVex(annotation, function(annotation: any) { that.save(annotation); }, /* isMod */ true, '');
 		} else {
 			annotation.edit();
 			this.select(annotation);
@@ -636,6 +658,9 @@ class CommentSection {
 
 	public onResize () {
 		this.layout();
+		// When window is resized, it may mean that comment wizard is closed. So we hide the highlights.
+		this.removeHighlighters();
+		this.containerObject.requestReDraw();
 	}
 
 	public onDraw () {
