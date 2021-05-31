@@ -51,9 +51,9 @@
 
     <logging>
         <color type="bool">true</color>
-        <level type="string" desc="Can be 0-8, or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace" default="@LOOLWSD_LOGLEVEL@">@LOOLWSD_LOGLEVEL@</level>
-        <min_level_settable_from_client type="string" desc="The lowest log level that can be set in a message from a client" default="notice">notice</min_level_settable_from_client>
-        <max_level_settable_from_client type="string" desc="The highest log level that can be set in a message from a client" default="fatal">fatal</max_level_settable_from_client>
+        <level type="string" desc="Can be 0-8 (with the lowest numbers being the least verbose), or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace" default="@LOOLWSD_LOGLEVEL@">@LOOLWSD_LOGLEVEL@</level>
+        <most_verbose_level_settable_from_client type="string" desc="A loggingleveloverride message from the client can not set a more verbose log level than this" default="notice">notice</most_verbose_level_settable_from_client>
+        <least_verbose_level_settable_from_client type="string" desc="A loggingleveloverride message from a client can not set a less verbose log level than this" default="fatal">fatal</least_verbose_level_settable_from_client>
         <protocol type="bool" desc="Enable minimal client-site JS protocol logging from the start">@ENABLE_DEBUG_PROTOCOL@</protocol>
         <!-- lokit_sal_log example: Log WebDAV-related messages, that is interesting for debugging Insert - Image operation: "+TIMESTAMP+INFO.ucb.ucp.webdav+WARN.ucb.ucp.webdav"
              See also: https://docs.libreoffice.org/sal/html/sal_log.html -->
