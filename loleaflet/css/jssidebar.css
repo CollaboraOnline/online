@@ -12,3 +12,19 @@
 #sidebar-dock-wrapper {
 	bottom: 33px;
 }
+
+.sidebar.spinfield {
+	max-width: 100px;
+}
+
+.sidebar.ui-listbox {
+	max-width: 190px;
+}
+
+.ui-expander + .sidebar.ui-expander-content {
+	margin-left: -30px;
+}
+
+.sidebar.ui-drawing-area {
+	max-width: 330px;
+}
