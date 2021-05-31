@@ -826,36 +826,34 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             {
                 try
                 {
-                    auto minAllowed = Poco::Logger::parseLevel(LOOLWSD::MinLogLevelSettableFromClient);
-                    auto maxAllowed = Poco::Logger::parseLevel(LOOLWSD::MaxLogLevelSettableFromClient);
+                    auto leastVerboseAllowed = Poco::Logger::parseLevel(LOOLWSD::LeastVerboseLogLevelSettableFromClient);
+                    auto mostVerboseAllowed = Poco::Logger::parseLevel(LOOLWSD::MostVerboseLogLevelSettableFromClient);
 
-                    if (tokens.equals(1, "min"))
+                    if (tokens.equals(1, "verbose"))
                     {
-                        LOG_INF("Thread-local logging level being set to ["
-                                << LOOLWSD::MinLogLevelSettableFromClient
+                        LOG_INF("Client sets thread-local logging level to the most verbose allowed ["
+                                << LOOLWSD::MostVerboseLogLevelSettableFromClient
                                 << "]");
-                        Log::setThreadLocalLogLevel(LOOLWSD::MinLogLevelSettableFromClient);
+                        Log::setThreadLocalLogLevel(LOOLWSD::MostVerboseLogLevelSettableFromClient);
                         LOG_INF("Thread-local logging level was set to ["
-                                << LOOLWSD::MinLogLevelSettableFromClient
+                                << LOOLWSD::MostVerboseLogLevelSettableFromClient
                                 << "]");
                     }
-                    else if (tokens.equals(1, "max"))
+                    else if (tokens.equals(1, "terse"))
                     {
-                        LOG_INF("Thread-local logging level being set to ["
-                                << LOOLWSD::MaxLogLevelSettableFromClient
+                        LOG_INF("Client sets thread-local logging level to the least verbose allowed ["
+                                << LOOLWSD::LeastVerboseLogLevelSettableFromClient
                                 << "]");
-                        Log::setThreadLocalLogLevel(LOOLWSD::MaxLogLevelSettableFromClient);
+                        Log::setThreadLocalLogLevel(LOOLWSD::LeastVerboseLogLevelSettableFromClient);
                         LOG_INF("Thread-local logging level was set to ["
-                                << LOOLWSD::MaxLogLevelSettableFromClient
+                                << LOOLWSD::LeastVerboseLogLevelSettableFromClient
                                 << "]");
                     }
                     else
                     {
                         auto level = Poco::Logger::parseLevel(tokens[1]);
-                        // Note that numerically the higher priority levels are lower in value. Our
-                        // "min" and "max" terminology refers to priority, not numeric value. Thus
-                        // the seemingly weird check here.
-                        if (level >= maxAllowed && level <= minAllowed)
+                        // Note that numerically the higher priority levels are lower in value.
+                        if (level >= leastVerboseAllowed && level <= mostVerboseAllowed)
                         {
                             LOG_INF("Thread-local logging level being set to ["
                                     << tokens[1]
@@ -867,8 +865,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                             LOG_WRN("Client tries to set logging level to ["
                                     << tokens[1]
                                     << "] which is outside of bounds ["
-                                    << LOOLWSD::MinLogLevelSettableFromClient << ","
-                                    << LOOLWSD::MaxLogLevelSettableFromClient << "]");
+                                    << LOOLWSD::LeastVerboseLogLevelSettableFromClient << ","
+                                    << LOOLWSD::MostVerboseLogLevelSettableFromClient << "]");
                         }
                     }
                 }
