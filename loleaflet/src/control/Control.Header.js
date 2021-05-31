@@ -604,7 +604,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 							pos: data.startpos + data.size, // end position on the header canvas
 							size: data.size,
 							origsize: data.size,
-							isHighlighted: that.isHeaderEntryHighLighted(cellSelections, data.startpos + data.size * 0.5),
+							isHighlighted: that.isHeaderEntryHighLighted(cellSelections, data.startpos - startPx + data.size * 0.5),
 							isCurrent: idx === currentIndex ? true: false
 						};
 					}.bind(this)
@@ -630,7 +630,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 			pos: firstFreeEnd, // end position on the header canvas
 			size: firstFreeSize,
 			origsize: dataFirstFree.size,
-			isHighlighted: that.isHeaderEntryHighLighted(cellSelections, dataFirstFree.startpos + dataFirstFree.size * 0.5),
+			isHighlighted: that.isHeaderEntryHighLighted(cellSelections, dataFirstFree.startpos - startPx + dataFirstFree.size * 0.5),
 			isCurrent: startIdx === currentIndex ? true: false
 		};
 
@@ -641,7 +641,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 					pos: data.startpos - startPx + data.size, // end position on the header canvas
 					size: data.size,
 					origsize: data.size,
-					isHighlighted: that.isHeaderEntryHighLighted(cellSelections, data.startpos + data.size * 0.5),
+					isHighlighted: that.isHeaderEntryHighLighted(cellSelections, data.startpos - startPx + data.size * 0.5),
 					isCurrent: idx === currentIndex ? true: false
 				};
 			}.bind(this));
