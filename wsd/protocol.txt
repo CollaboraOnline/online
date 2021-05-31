@@ -337,17 +337,18 @@ sallogoverride <string>
     Overrides the SAL_LOG value, or stops overriding if no parameter
     or parameter is "default".
 
-loggingleveloverride <default|max|min|none|fatal|critical|error|warning|notice|information|debug|trace>
+loggingleveloverride <default|max|verbose|terse|none|fatal|critical|error|warning|notice|information|debug|trace>
 
     Override the Online logging level for the thread(s) and Kit
     processes handling this particular client.
 
     The value is either one of the log level names, or the special
     value "default" (meaning whatever is the log level specified in
-    the "logging.level" configuration setting), "min", or "max)
-    (meaning the minimum or maximum allowed, the
-    "logging.min_settable_from_client" or
-    "logging.max_settable_from_client" configuration setting).
+    the "logging.level" configuration setting), "verbose", or "terse")
+    (meaning the most or least verbose level allowed, the
+    "logging.most_verbose_level_settable_from_client" or
+    "logging.least_verbose_level_settable_from_client" configuration
+    setting).
 
 
 server -> client
