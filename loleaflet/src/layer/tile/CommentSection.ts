@@ -1,1442 +1,833 @@
 /* eslint-disable */
 /* See CanvasSectionContainer.ts for explanations. */
 
-L.Map.include({
-	insertComment: function() {
-		var avatar = undefined;
-		var author = this.getViewName(this._docLayer._viewId);
-		if (author in this._viewInfoByUserName) {
-			avatar = this._viewInfoByUserName[author].userextrainfo.avatar;
-		}
-		this._docLayer.newAnnotation({
-			text: '',
-			textrange: '',
-			author: author,
-			dateTime: new Date().toDateString(),
-			id: 'new', // 'new' only when added by us
-			avatar: avatar
-		});
-	},
-
-	showResolvedComments: function(on: any) {
-		var unoCommand = '.uno:ShowResolvedAnnotations';
-		this.sendUnoCommand(unoCommand);
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).setViewResolved(on);
-	}
-});
-
-
 declare var L: any;
 declare var app: any;
-declare var vex: any;
+declare var _: any;
+declare var Autolinker: any;
 
-app.definitions.CommentSection =
-class CommentSection {
+app.definitions.Comment =
+class Comment {
 	context: CanvasRenderingContext2D = null;
-	myTopLeft: Array<number> = null;
+	myTopLeft: Array<number> = [0, 0];
 	documentTopLeft: Array<number> = null;
 	containerObject: any = null;
 	dpiScale: number = null;
-	name: string = L.CSections.CommentList.name;
-	backgroundColor: string = null;
+	name: string = L.CSections.Comment.name;
+	backgroundColor: string = '';
+	backgroundOpacity: number = 1; // Valid when backgroundColor is valid.
 	borderColor: string = null;
 	boundToSection: string = null;
 	anchor: Array<any> = new Array(0);
-	documentObject: boolean = false;
+	documentObject: boolean = true;
 	position: Array<number> = [0, 0];
-	size: Array<number> = [290, 0];
-	expand: Array<string> = ['bottom'];
+	size: Array<number> = new Array(0);
+	expand: Array<string> = new Array(0);
 	isLocated: boolean = false;
 	showSection: boolean = true;
-	processingOrder: number = L.CSections.CommentList.processingOrder;
-	drawingOrder: number = L.CSections.CommentList.drawingOrder;
-	zIndex: number = L.CSections.CommentList.zIndex;
-	interactable: boolean = false;
+	processingOrder: number = L.CSections.Comment.processingOrder;
+	drawingOrder: number = L.CSections.Comment.drawingOrder;
+	zIndex: number = L.CSections.Comment.zIndex;
+	interactable: boolean = true;
 	sectionProperties: any = {};
 	stopPropagating: Function; // Implemented by section container.
 	setPosition: Function; // Implemented by section container. Document objects only.
 	map: any;
 
-	constructor () {
+	constructor (data: any, options: any, commentListSectionPointer: any) {
 		this.map = L.Map.THIS;
-		// Below anchor list may be expanded. For example, Writer may have ruler section. Then ruler section should also be added here.
-		// If there is column header section, its bottom will be this section's top.
-		this.anchor = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], 'right'];
+
+		if (!options)
+			options = {};
+
+		this.sectionProperties.commentListSection = commentListSectionPointer;
+
 		this.sectionProperties.docLayer = this.map._docLayer;
-		this.sectionProperties.commentList = new Array(0);
-		this.sectionProperties.selectedComment = null;
-		this.sectionProperties.arrow = null;
-		this.sectionProperties.initialLayoutData = null;
-		this.sectionProperties.showResolved = null;
-		this.sectionProperties.marginX = 40;
-		this.sectionProperties.marginY = 10;
-		this.sectionProperties.offset = 5;
-		this.sectionProperties.layoutTimer = null;
-		this.sectionProperties.draft = null;
+		this.sectionProperties.selectedAreaPoint = null;
+		this.sectionProperties.cellCursorPoint = null;
+
+		this.sectionProperties.draggingStarted = false;
+		this.sectionProperties.dragStartPosition = null;
+
+		this.sectionProperties.minWidth = options.minWidth ? options.minWidth : 160;
+		this.sectionProperties.maxHeight = options.maxHeight ? options.maxHeight : 50;
+		this.sectionProperties.imgSize = options.imgSize ? options.imgSize : [32, 32];
+		this.sectionProperties.margin = options.margin ? options.margin : [40, 40];
+		this.sectionProperties.noMenu = options.noMenu ? options.noMenu : false;
+
+		this.sectionProperties.data = data;
+		this.sectionProperties.annotationMarker = null;
+		this.sectionProperties.wrapper = null;
+		this.sectionProperties.container = null;
+		this.sectionProperties.author = null;
+		this.sectionProperties.resolvedTextElement = null;
+		this.sectionProperties.authorAvatarImg = null;
+		this.sectionProperties.authorAvatartdImg = null;
+		this.sectionProperties.contentAuthor = null;
+		this.sectionProperties.contentDate = null;
+		this.sectionProperties.acceptButton = null;
+		this.sectionProperties.rejectButton = null;
+		this.sectionProperties.menu = null;
+		this.sectionProperties.captionNode = null;
+		this.sectionProperties.captionText = null;
+
+		this.sectionProperties.contentNode = null;
+		this.sectionProperties.nodeModify = null;
+		this.sectionProperties.nodeModifyText = null;
+		this.sectionProperties.contentText = null;
+		this.sectionProperties.nodeReply = null;
+		this.sectionProperties.nodeReplyText = null;
+		this.sectionProperties.contextMenu = false;
+
+		if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
+			this.sectionProperties.parthash = this.sectionProperties.data.parthash;
+			this.sectionProperties.partIndex = this.sectionProperties.docLayer._partHashes.indexOf(this.sectionProperties.parthash);
+		}
+
+		this.sectionProperties.isHighlighted = false;
+
+		this.name = data.id === 'new' ? 'new comment': 'comment ' + data.id;
 	}
 
 	public onInitialize () {
-		this.map.on('RedlineAccept', this.onRedlineAccept, this);
-		this.map.on('RedlineReject', this.onRedlineReject, this);
-		this.map.on('updateparts', this.hideAllComments, this);
-		this.map.on('zoomend', function() {
-			var that = this;
-			that.layout(true);
-		}, this);
+		this.createContainerAndWrapper();
 
-		this.backgroundColor = this.containerObject.getClearColor();
-		this.initializeContextMenus();
+		this.createAuthorTable();
 
-		if ((<any>window).mode.isMobile()) {
-			this.showSection = false;
-			this.size[0] = 0;
-		}
-	}
-
-	private hideAllComments () {
-		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
-			this.sectionProperties.commentList[i].hide();
-		}
-	}
-
-	private createCommentStructureWriter (menuStructure: any) {
-		var rootComment, lastChild, comment;
-		var commentList = this.sectionProperties.commentList;
-		var showResolved = this.sectionProperties.showResolved;
-
-		for (var i = 0; i < commentList.length; i++) {
-			if (commentList[i].sectionProperties.data.parent === '0') {
-
-				lastChild = this.getLastChildIndexOf(commentList[i].sectionProperties.data.id);
-				var commentThread = [];
-				while (true) {
-					comment = {
-						id: 'comment' + commentList[lastChild].sectionProperties.data.id,
-						enable: true,
-						data: commentList[lastChild].sectionProperties.data,
-						type: 'comment',
-						text: commentList[lastChild].sectionProperties.data.text,
-						annotation: commentList[lastChild],
-						children: []
-					};
-
-					if (showResolved || comment.data.resolved !== 'true') {
-						commentThread.unshift(comment);
-					}
-
-					if (commentList[lastChild].sectionProperties.data.parent === '0')
-						break;
-
-					lastChild = this.getIndexOf(commentList[lastChild].sectionProperties.data.parent);
-				}
-				if (commentThread.length > 0)
-				{
-					rootComment = {
-						id: commentThread[0].id,
-						enable: true,
-						data: commentThread[0].data,
-						type: 'rootcomment',
-						text: commentThread[0].data.text,
-						annotation: commentThread[0].annotation,
-						children: commentThread
-					};
-
-					menuStructure['children'].push(rootComment);
-				}
-			}
-		}
-	}
-
-	public createCommentStructureImpress (menuStructure: any) {
-		var rootComment;
-
-		for (var i in this.sectionProperties.commentList) {
-			if (this.sectionProperties.commentList[i].sectionProperties.partIndex === this.sectionProperties.docLayer._selectedPart) {
-				rootComment = {
-					id: 'comment' + this.sectionProperties.commentList[i].sectionProperties.data.id,
-					enable: true,
-					data: this.sectionProperties.commentList[i].sectionProperties.data,
-					type: 'rootcomment',
-					text: this.sectionProperties.commentList[i].sectionProperties.data.text,
-					annotation: this.sectionProperties.commentList[i],
-					children: []
-				};
-				menuStructure['children'].push(rootComment);
-			}
-		}
-	}
-
-	public createCommentStructureCalc (menuStructure: any) {
-		var rootComment;
-		var commentList = this.sectionProperties.commentList;
-		var selectedTab = this.sectionProperties.docLayer._selectedPart;
-
-		for (var i: number = 0; i < commentList.length; i++) {
-			if (parseInt(commentList[i].sectionProperties.data.tab) === selectedTab) {
-				rootComment = {
-					id: 'comment' + commentList[i].sectionProperties.data.id,
-					enable: true,
-					data: commentList[i].sectionProperties.data,
-					type: 'rootcomment',
-					text: commentList[i].sectionProperties.data.text,
-					annotation: commentList[i],
-					children: []
-				};
-				menuStructure['children'].push(rootComment);
-			}
-		}
-	}
-
-	public createCommentStructure (menuStructure: any) {
-		if (this.sectionProperties.docLayer._docType === 'text') {
-			this.createCommentStructureWriter(menuStructure);
-		}
-		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
-			this.createCommentStructureImpress(menuStructure);
-		}
-		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
-			this.createCommentStructureCalc(menuStructure);
-		}
-	}
-
-	public newAnnotationVex (comment: any, addCommentFn: any, isMod: any, displayContent: string) {
-		var that = this;
-
-		var commentData = null;
-		var content = '';
-		if (comment.author) {
-			// New comment - full data
-			commentData = comment;
-		} else {
-			// Modification
-			commentData = comment.sectionProperties.data;
-			if (displayContent === undefined)
-				content = commentData.text;
-			else
-				content = displayContent;
+		if (this.sectionProperties.data.trackchange && !this.map.isPermissionReadOnly()) {
+			this.createTrackChangeButtons();
 		}
 
-		var dialog = vex.dialog.open({
-			message: '',
-			input: [
-				'<textarea name="comment" class="loleaflet-annotation-textarea" required>' + content + '</textarea>'
-			].join(''),
-			buttons: [
-				$.extend({}, vex.dialog.buttons.YES, { text: _('Save') }),
-				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
-			],
-			callback: function (data: any) {
-				if (data) {
-					var annotation = null;
-					if (isMod) {
-						annotation = comment;
-					} else {
-						annotation = that.add(comment, true);
-						that.sectionProperties.draft = annotation;
-					}
-
-					annotation.sectionProperties.data.text = data.comment;
-					comment.text = data.comment;
-
-					addCommentFn.call(annotation, annotation, comment);
-					if (!isMod)
-						that.containerObject.removeSection(annotation);
-				}
-			}
-		});
-
-		var tagTd = 'td',
-		empty = '',
-		tagDiv = 'div';
-		var author = L.DomUtil.create('table', 'loleaflet-annotation-table');
-		var tbody = L.DomUtil.create('tbody', empty, author);
-		var tr = L.DomUtil.create('tr', empty, tbody);
-		var tdImg = L.DomUtil.create(tagTd, 'loleaflet-annotation-img', tr);
-		var tdAuthor = L.DomUtil.create(tagTd, 'loleaflet-annotation-author', tr);
-		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
-		imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg'));
-		imgAuthor.setAttribute('width', 32);
-		imgAuthor.setAttribute('height', 32);
-		var authorAvatarImg = imgAuthor;
-		var contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
-		var contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
-
-		//$(this._nodeModifyText).text(commentData.text);
-		$(contentAuthor).text(commentData.author);
-		$(authorAvatarImg).attr('src', commentData.avatar);
-		var user = this.map.getViewId(commentData.author);
-		if (user >= 0) {
-			var color = L.LOUtil.rgbToHex(this.map.getViewColor(user));
-			$(authorAvatarImg).css('border-color', color);
+		if (this.sectionProperties.noMenu !== true && this.map.isPermissionEditForComments()) {
+			this.createMenu();
 		}
 
-		if (commentData.dateTime) {
-			var d = new Date(commentData.dateTime.replace(/,.*/, 'Z'));
-			var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-			$(contentDate).text(isNaN(d.getTime()) ? comment.dateTime: d.toLocaleDateString((<any>String).locale, <any>dateOptions));
+		if (this.sectionProperties.data.trackchange) {
+			this.sectionProperties.captionNode = L.DomUtil.create('div', 'loleaflet-annotation-caption', this.sectionProperties.wrapper);
+			this.sectionProperties.captionText = L.DomUtil.create('div', '', this.sectionProperties.captionNode);
 		}
 
-		dialog.contentEl.insertBefore(author, dialog.contentEl.childNodes[0]);
+		this.sectionProperties.contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content loleaflet-dont-break', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeModify = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeModifyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeModify);
+		this.sectionProperties.contentText = L.DomUtil.create('div', '', this.sectionProperties.contentNode);
+		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeReplyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeReply);
 
-		$(dialog.contentEl).find('textarea').focus();
-	}
+		var button = L.DomUtil.create('div', '', this.sectionProperties.nodeModify);
+		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'blur', this.onLostFocus, this);
+		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'blur', this.onLostFocusReply, this);
+		this.createButton(button, 'annotation-cancel-' + this.sectionProperties.data.id, _('Cancel'), this.onCancelClick);
+		this.createButton(button, 'annotation-save-' + this.sectionProperties.data.id, _('Save'), this.onSaveComment);
+		button = L.DomUtil.create('div', '', this.sectionProperties.nodeReply);
+		this.createButton(button, 'annotation-cancel-reply-' + this.sectionProperties.data.id, _('Cancel'), this.onCancelClick);
+		this.createButton(button, 'annotation-reply', _('Reply'), this.onReplyClick);
+		L.DomEvent.disableScrollPropagation(this.sectionProperties.container);
 
-	public hightlightComment (comment: any) {
-		this.removeHighlighters();
+		this.sectionProperties.container.style.visibility = 'hidden';
+		this.sectionProperties.nodeModify.style.display = 'none';
+		this.sectionProperties.nodeReply.style.display = 'none';
 
-		var commentList = this.sectionProperties.commentList;
-
-		var lastChild: any = this.getLastChildIndexOf(comment.sectionProperties.data.id);
-
-		while (true && lastChild >= 0) {
-			commentList[lastChild].highlight();
-
-			if (commentList[lastChild].sectionProperties.data.parent === '0')
-				break;
-
-			lastChild = this.getIndexOf(commentList[lastChild].sectionProperties.data.parent);
+		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup', 'touchstart', 'touchmove', 'touchend'];
+		L.DomEvent.on(this.sectionProperties.container, 'click', this.onMouseClick, this);
+		for (var it = 0; it < events.length; it++) {
+			L.DomEvent.on(this.sectionProperties.container, events[it], L.DomEvent.stopPropagation, this);
 		}
-	}
 
-	public removeHighlighters () {
-		var commentList = this.sectionProperties.commentList;
-		for (var i: number = 0; i < commentList.length; i++) {
-			if (commentList[i].sectionProperties.isHighlighted) {
-				commentList[i].removeHighlight();
-			}
-		}
-	}
-
-	public removeItem (id: any) {
-		var annotation;
-		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
-			annotation = this.sectionProperties.commentList[i];
-			if (annotation.sectionProperties.data.id === id) {
-				this.containerObject.removeSection(annotation.name);
-				this.sectionProperties.commentList.splice(i, 1);
-				break;
-			}
-		}
-	}
-
-	public click (annotation: any) {
-		this.select(annotation);
-	}
-
-	public save (annotation: any) {
-		var comment;
-		if (annotation.sectionProperties.data.id === 'new') {
-			comment = {
-				Text: {
-					type: 'string',
-					value: annotation.sectionProperties.data.text
-				},
-				Author: {
-					type: 'string',
-					value: annotation.sectionProperties.data.author
-				}
-			};
-			if (app.file.fileBasedView) {
-				this.map.setPart(this.sectionProperties.docLayer._selectedPart, false);
-				this.map.sendUnoCommand('.uno:InsertAnnotation', comment);
-				this.map.setPart(0, false);
-			}
-			else {
-				this.map.sendUnoCommand('.uno:InsertAnnotation', comment);
-			}
-
-			this.removeItem(annotation.sectionProperties.data.id);
-		} else if (annotation.sectionProperties.data.trackchange) {
-			comment = {
-				ChangeTrackingId: {
-					type: 'long',
-					value: annotation.sectionProperties.data.index
-				},
-				Text: {
-					type: 'string',
-					value: annotation.sectionProperties.data.text
-				}
-			};
-			this.map.sendUnoCommand('.uno:CommentChangeTracking', comment);
-		} else {
-			comment = {
-				Id: {
-					type: 'string',
-					value: annotation.sectionProperties.data.id
-				},
-				Text: {
-					type: 'string',
-					value: annotation.sectionProperties.data.text
-				}
-			};
-			this.map.sendUnoCommand('.uno:EditAnnotation', comment);
-		}
-		this.unselect();
-		this.map.focus();
-	}
-
-	public reply (annotation: any) {
-		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
-			var avatar = undefined;
-			var author = this.map.getViewName(this.sectionProperties.docLayer._viewId);
-			if (author in this.map._viewInfoByUserName) {
-				avatar = this.map._viewInfoByUserName[author].userextrainfo.avatar;
-			}
-			var replyAnnotation = {
-				text: '',
-				textrange: '',
-				author: author,
-				dateTime: new Date().toDateString(),
-				id: annotation.sectionProperties.data.id,
-				avatar: avatar,
-				parent: annotation.sectionProperties.data.parent,
-				anchorPos: [annotation.sectionProperties.data.anchorPos[0], annotation.sectionProperties.data.anchorPos[1]]
-			};
-			this.newAnnotationVex(replyAnnotation, annotation.onReplyClick,/* isMod */ false, '');
-		}
-		else {
-			annotation.reply();
-			this.select(annotation);
-			annotation.focus();
-		}
-	}
-
-	public modify (annotation: any) {
-		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
-			var that = this;
-			this.newAnnotationVex(annotation, function(annotation: any) { that.save(annotation); }, /* isMod */ true, '');
-		} else {
-			annotation.edit();
-			this.select(annotation);
-			annotation.focus();
-		}
-	}
-
-	public select (annotation: any) {
-		if (annotation) {
-			// Select the root comment
-			var idx = this.getRootIndexOf(annotation.sectionProperties.data.id);
-
-			if (this.sectionProperties.selectedComment && $(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active'))
-				$(this.sectionProperties.selectedComment.sectionProperties.container).removeClass('annotation-active');
-
-			this.sectionProperties.selectedComment = this.sectionProperties.commentList[idx];
-
-			if (this.sectionProperties.selectedComment && !$(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active'))
-				$(this.sectionProperties.selectedComment.sectionProperties.container).addClass('annotation-active');
-
-			this.update();
-		}
-	}
-
-	public unselect () {
-		if (this.sectionProperties.selectedComment) {
-			if (this.sectionProperties.selectedComment && $(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active'))
-				$(this.sectionProperties.selectedComment.sectionProperties.container).removeClass('annotation-active');
-
-			this.sectionProperties.selectedComment = null;
-			this.update();
-		}
-	}
-
-	public saveReply (annotation: any) {
-		var comment = {
-			Id: {
-				type: 'string',
-				value: annotation.sectionProperties.data.id
-			},
-			Text: {
-				type: 'string',
-				value: annotation.sectionProperties.data.reply
-			}
-		};
-
-		if (this.sectionProperties.docLayer._docType === 'text' || this.sectionProperties.docLayer._docType === 'spreadsheet')
-			this.map.sendUnoCommand('.uno:ReplyComment', comment);
-		else if (this.sectionProperties.docLayer._docType === 'presentation')
-			this.map.sendUnoCommand('.uno:ReplyToAnnotation', comment);
-
-		this.unselect();
-		this.map.focus();
-	}
-
-	public cancel (annotation: any) {
-		if (annotation.sectionProperties.data.id === 'new') {
-			this.removeItem(annotation.sectionProperties.data.id);
-		}
-		if (this.sectionProperties.selectedComment === annotation) {
-			this.unselect();
-		} else {
-			this.layout();
-		}
-		this.map.focus();
-	}
-
-	public onRedlineAccept (e: any) {
-		var command = {
-			AcceptTrackedChange: {
-				type: 'unsigned short',
-				value: e.id.substring('change-'.length)
-			}
-		};
-		this.map.sendUnoCommand('.uno:AcceptTrackedChange', command);
-		this.unselect();
-		this.map.focus();
-	}
-
-	public onRedlineReject (e: any) {
-		var command = {
-			RejectTrackedChange: {
-				type: 'unsigned short',
-				value: e.id.substring('change-'.length)
-			}
-		};
-		this.map.sendUnoCommand('.uno:RejectTrackedChange', command);
-		this.unselect();
-		this.map.focus();
-	}
-
-	public remove (id: any) {
-		var comment = {
-			Id: {
-				type: 'string',
-				value: id
-			}
-		};
-
-		if (app.file.fileBasedView) // We have to set the part from which the comment will be removed as selected part before the process.
-			this.map.setPart(this.sectionProperties.docLayer._selectedPart, false);
-
-		if (this.sectionProperties.docLayer._docType === 'text')
-			this.map.sendUnoCommand('.uno:DeleteComment', comment);
-		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing')
-			this.map.sendUnoCommand('.uno:DeleteAnnotation', comment);
-		else if (this.sectionProperties.docLayer._docType === 'spreadsheet')
-			this.map.sendUnoCommand('.uno:DeleteNote', comment);
-
-		if (app.file.fileBasedView)
-			this.map.setPart(0, false);
-
-		this.unselect();
-		this.map.focus();
-	}
-
-	public removeThread (id: any) {
-		var comment = {
-			Id: {
-				type: 'string',
-				value: id
-			}
-		};
-		this.map.sendUnoCommand('.uno:DeleteCommentThread', comment);
-		this.unselect();
-		this.map.focus();
-	}
-
-	public resolve (annotation: any) {
-		var comment = {
-			Id: {
-				type: 'string',
-				value: annotation.sectionProperties.data.id
-			}
-		};
-		this.map.sendUnoCommand('.uno:ResolveComment', comment);
-	}
-
-	public resolveThread (annotation: any) {
-		var comment = {
-			Id: {
-				type: 'string',
-				value: annotation.sectionProperties.data.id
-			}
-		};
-		this.map.sendUnoCommand('.uno:ResolveCommentThread', comment);
-	}
-
-	public getIndexOf (id: any): number {
-		for (var index = 0; index < this.sectionProperties.commentList.length; index++) {
-			if (this.sectionProperties.commentList[index].sectionProperties.data.id === id) {
-				return index;
-			}
-		}
-		return -1;
-	}
-
-	public isThreadResolved (annotation: any) {
-		var lastChild = this.getLastChildIndexOf(annotation.sectionProperties.data.id);
-
-		while (this.sectionProperties.commentList[lastChild].sectionProperties.data.parent !== '0') {
-			if (this.sectionProperties.commentList[lastChild].sectionProperties.data.resolved === 'false')
-				return false;
-			lastChild = this.getIndexOf(this.sectionProperties.commentList[lastChild].sectionProperties.data.parent);
-		}
-		if (this.sectionProperties.commentList[lastChild].sectionProperties.data.resolved === 'false')
-			return false;
-		return true;
-	}
-
-	private initializeContextMenus () {
-		var that = this;
-		var docLayer = this.sectionProperties.docLayer;
-		L.installContextMenu({
-			selector: '.loleaflet-annotation-menu',
-			trigger: 'none',
-			className: 'loleaflet-font',
-			build: function ($trigger: any) {
-				return {
-					items: {
-						modify: {
-							name: _('Modify'),
-							callback: function (key: any, options: any) {
-								that.modify.call(that, options.$trigger[0].annotation);
-							}
-						},
-						reply: (docLayer._docType !== 'text' && docLayer._docType !== 'presentation') ? undefined : {
-							name: _('Reply'),
-							callback: function (key: any, options: any) {
-								that.reply.call(that, options.$trigger[0].annotation);
-							}
-						},
-						remove: {
-							name: _('Remove'),
-							callback: function (key: any, options: any) {
-								that.remove.call(that, options.$trigger[0].annotation.sectionProperties.data.id);
-							}
-						},
-						removeThread: docLayer._docType !== 'text' || $trigger[0].isRoot === true ? undefined : {
-							name: _('Remove Thread'),
-							callback: function (key: any, options: any) {
-								that.removeThread.call(that, options.$trigger[0].annotation.sectionProperties.data.id);
-							}
-						},
-						resolve: docLayer._docType !== 'text' ? undefined : {
-							name: $trigger[0].annotation.sectionProperties.data.resolved === 'false' ? _('Resolve') : _('Unresolve'),
-							callback: function (key: any, options: any) {
-								that.resolve.call(that, options.$trigger[0].annotation);
-							}
-						},
-						resolveThread: docLayer._docType !== 'text' || $trigger[0].isRoot === true ? undefined : {
-							name: that.isThreadResolved($trigger[0].annotation) ? _('Unresolve Thread') : _('Resolve Thread'),
-							callback: function (key: any, options: any) {
-								that.resolveThread.call(that, options.$trigger[0].annotation);
-							}
-						}
-					},
-				};
-			},
-			events: {
-				show: function (options: any) {
-					options.$trigger[0].annotation.sectionProperties.contextMenu = true;
-				},
-				hide: function (options: any) {
-					options.$trigger[0].annotation.sectionProperties.contextMenu = false;
-				}
-			}
-		});
-		L.installContextMenu({
-			selector: '.loleaflet-annotation-menu-redline',
-			trigger: 'none',
-			className: 'loleaflet-font',
-			items: {
-				modify: {
-					name: _('Comment'),
-					callback: function (key: any, options: any) {
-						that.modify.call(that, options.$trigger[0].annotation);
-					}
+		L.DomEvent.on(this.sectionProperties.container, 'touchstart',
+			function (e: TouchEvent) {
+				if (e && e.touches.length > 1) {
+					L.DomEvent.preventDefault(e);
 				}
 			},
-			events: {
-				show: function (options: any) {
-					options.$trigger[0].annotation.sectionProperties.contextMenu = true;
-				},
-				hide: function (options: any) {
-					options.$trigger[0].annotation.sectionProperties.contextMenu = false;
-				}
-			}
-		});
-	}
+			this);
 
-	public onResize () {
-		this.layout();
-		// When window is resized, it may mean that comment wizard is closed. So we hide the highlights.
-		this.removeHighlighters();
-		this.containerObject.requestReDraw();
-	}
-
-	public onDraw () {
-
-	}
-
-	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
-
-	}
-
-	public onMouseUp (point: Array<number>, e: MouseEvent) {
-	}
-
-	public onMouseDown (point: Array<number>, e: MouseEvent) {
-	}
-
-	public onMouseEnter () {
-	}
-
-	public onMouseLeave () {
-	}
-
-	public onNewDocumentTopLeft () {
-		this.layout();
-	}
-
-	public showHideComment (annotation: any) {
-		// This manually shows/hides comments
-		if (!this.sectionProperties.showResolved && this.sectionProperties.docLayer._docType === 'text') {
-			if (annotation.isContainerVisible() && annotation.sectionProperties.data.resolved === 'true') {
-				if (this.sectionProperties.selectedComment == annotation) {
-					this.unselect();
-				}
-				annotation.hide();
-				annotation.update();
-			} else if (!annotation.isContainerVisible() && annotation.sectionProperties.data.resolved === 'false') {
-				annotation.show();
-				annotation.update();
-			}
-			this.layout();
-			this.update();
-		}
-		else if (this.sectionProperties.docLayer._docType === 'presentation') {
-			if (annotation.sectionProperties.partIndex === this.sectionProperties.docLayer._selectedPart) {
-				if (!annotation.isContainerVisible()) {
-					annotation.show();
-					annotation.update();
-					this.layout();
-					this.update();
-				}
-			}
-			else {
-				annotation.hide();
-				annotation.update();
-				this.layout();
-				this.update();
-			}
-		}
-	}
-
-	public add (comment: any, mobileReply: boolean = false) {
-		var annotation = new app.definitions.Comment(comment, comment.id === 'new' ? {noMenu: true} : {}, this);
-
-		if (comment.parent && comment.parent > '0') {
-			var parentIdx = this.getIndexOf(comment.parent);
-
-			this.containerObject.addSection(annotation);
-			this.sectionProperties.commentList.splice(parentIdx + 1, 0, annotation);
-
-			this.updateResolvedState(annotation);
-			this.showHideComment(annotation);
-		}
-		else {
-			if (mobileReply)
-				annotation.name += '-reply'; // Section name.
-			this.containerObject.addSection(annotation);
-			this.sectionProperties.commentList.push(annotation);
+		if ((<any>window).mode.isDesktop()) {
+			L.DomEvent.on(this.sectionProperties.container, {
+				mousewheel: this.map.scrollHandler._onWheelScroll,
+				MozMousePixelScroll: L.DomEvent.preventDefault
+			}, this.map.scrollHandler);
 		}
 
-		this.orderCommentList();
-		return annotation;
-	}
-
-	public adjustRedLine (redline: any) {
-		// All sane values ?
-		if (!redline.textRange) {
-			console.warn('Redline received has invalid textRange');
-			return false;
-		}
-
-		// transform change tracking index into an id
-		redline.id = 'change-' + redline.index;
-		redline.anchorPos = L.LOUtil.stringToBounds(redline.textRange);
-		redline.anchorPix = this.sectionProperties.docLayer._twipsToPixels(redline.anchorPos.min);
-		redline.trackchange = true;
-		redline.text = redline.comment;
-		var rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(redline.textRange), this.sectionProperties.docLayer);
-		if (rectangles.length > 0) {
-			redline.textSelected = L.polygon(rectangles, {
-				pointerEvents: 'all',
-				interactive: false,
-				fillOpacity: 0,
-				opacity: 0
-			});
-			redline.textSelected.addEventParent(this.map);
-			redline.textSelected.on('click', function() {
-				this.selectById(redline.id);
-			}, this);
-		}
-
-		return true;
-	}
-
-	public getComment (id: any) {
-		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
-			if (this.sectionProperties.commentList[i].sectionProperties.data.id === id) {
-				return this.sectionProperties.commentList[i];
-			}
-		}
-		return null;
-	}
-
-	// Adjust parent-child relationship, if required, after `comment` is added
-	public adjustParentAdd (comment: any) {
-		if (comment.parent && comment.parent > '0') {
-			var parentIdx = this.getIndexOf(comment.parent);
-			if (parentIdx === -1) {
-				console.warn('adjustParentAdd: No parent comment to attach received comment to. ' +
-				             'Parent comment ID sought is :' + comment.parent + ' for current comment with ID : ' + comment.id);
-				return;
-			}
-			if (this.sectionProperties.commentList[parentIdx + 1] && this.sectionProperties.commentList[parentIdx + 1].sectionProperties.data.parent === this.sectionProperties.commentList[parentIdx].sectionProperties.data.id) {
-				this.sectionProperties.commentList[parentIdx + 1].sectionProperties.data.parent = comment.id;
-			}
-		}
-	}
-
-	// Adjust parent-child relationship, if required, after `comment` is removed
-	public adjustParentRemove (comment: any) {
-		var newId = '0';
-		var parentIdx = this.getIndexOf(comment.sectionProperties.data.parent);
-		if (parentIdx >= 0) {
-			newId = this.sectionProperties.commentList[parentIdx].sectionProperties.data.id;
-		}
-		var currentIdx = this.getIndexOf(comment.sectionProperties.data.id);
-		if (this.sectionProperties.commentList[currentIdx + 1] && this.sectionProperties.commentList[currentIdx].parentOf(this.sectionProperties.commentList[currentIdx + 1])) {
-			this.sectionProperties.commentList[currentIdx + 1].sectionProperties.data.parent = newId;
-		}
-	}
-
-	public onACKComment (obj: any) {
-		var id;
-		var changetrack = obj.redline ? true : false;
-		var action = changetrack ? obj.redline.action : obj.comment.action;
-
-		if (changetrack && obj.redline.author in this.map._viewInfoByUserName) {
-			obj.redline.avatar = this.map._viewInfoByUserName[obj.redline.author].userextrainfo.avatar;
-		}
-		else if (!changetrack && obj.comment.author in this.map._viewInfoByUserName) {
-			obj.comment.avatar = this.map._viewInfoByUserName[obj.comment.author].userextrainfo.avatar;
-		}
-
-		if ((<any>window).mode.isMobile()) {
-			var annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj.comment.id)];
-			if (!annotation)
-				annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj.comment.parent)]; //this is required for reload after reply in writer
-		}
-		if (action === 'Add') {
-			if (changetrack) {
-				if (!this.adjustRedLine(obj.redline)) {
-					// something wrong in this redline
-					return;
-				}
-				this.add(obj.redline);
-			} else {
-				this.adjustComment(obj.comment);
-				this.adjustParentAdd(obj.comment);
-				this.add(obj.comment);
-			}
-			if (this.sectionProperties.selectedComment && !this.sectionProperties.selectedComment.isEdit()) {
-				this.map.focus();
-			}
-			annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj.comment.id)];
-			if (!(<any>window).mode.isMobile())
-				this.layout();
-		} else if (action === 'Remove') {
-			if ((<any>window).mode.isMobile() && obj.comment.id === annotation.sectionProperties.data.id) {
-				var child = this.sectionProperties.commentList[this.getIndexOf(obj.comment.id) + 1];
-				if (child && child.sectionProperties.data.parent === annotation.sectionProperties.data.id)
-					annotation = child;
-				else
-					annotation = undefined;
-			}
-			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
-			var removed = this.getComment(id);
-			if (removed) {
-				this.adjustParentRemove(removed);
-				this.removeItem(id);
-				if (this.sectionProperties.selectedComment === removed) {
-					this.unselect();
-				} else {
-					this.layout();
-				}
-			}
-		} else if (action === 'Modify') {
-			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
-			var modified = this.getComment(id);
-			if (modified) {
-				var modifiedObj;
-				if (changetrack) {
-					if (!this.adjustRedLine(obj.redline)) {
-						// something wrong in this redline
-						return;
-					}
-					modifiedObj = obj.redline;
-				} else {
-					this.adjustComment(obj.comment);
-					modifiedObj = obj.comment;
-				}
-				modified.setData(modifiedObj);
-				modified.update();
-				this.update();
-			}
-		} else if (action === 'Resolve') {
-			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
-			var resolved = this.getComment(id);
-			if (resolved) {
-				var resolvedObj;
-				if (changetrack) {
-					if (!this.adjustRedLine(obj.redline)) {
-						// something wrong in this redline
-						return;
-					}
-					resolvedObj = obj.redline;
-				} else {
-					this.adjustComment(obj.comment);
-					resolvedObj = obj.comment;
-				}
-				resolved.setData(resolvedObj);
-				resolved.update();
-				this.showHideComment(resolved);
-				this.update();
-			}
-		}
-		if ((<any>window).mode.isMobile()) {
-			var shouldOpenWizard = false;
-			var wePerformedAction = obj.comment.author === this.map.getViewName(this.sectionProperties.docLayer._viewId);
-
-			if ((<any>window).commentWizard || (action === 'Add' && wePerformedAction))
-				shouldOpenWizard = true;
-
-			if (shouldOpenWizard) {
-				this.sectionProperties.docLayer._openCommentWizard(annotation);
-			}
-		}
-	}
-
-	public selectById (commentId: any) {
-		var idx = this.getRootIndexOf(commentId);
-		this.sectionProperties.selectedComment = this.sectionProperties.commentList[idx];
 		this.update();
 	}
 
-	private stringToRectangles (str: string) {
-		var matches = str.match(/\d+/g);
-		var rectangles = [];
-		if (matches !== null) {
-			for (var i: number = 0; i < matches.length; i += 4) {
-				rectangles.push([parseInt(matches[i]), parseInt(matches[i + 1]), parseInt(matches[i + 2]), parseInt(matches[i + 3])]);
-			}
-		}
-		return rectangles;
-	}
+	private createContainerAndWrapper () {
+		this.sectionProperties.container = L.DomUtil.create('div', 'loleaflet-annotation');
 
-	public onPartChange () {
-		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
-			this.showHideComment(this.sectionProperties.commentList[i]);
-		}
-		if (this.sectionProperties.selectedComment)
-			this.sectionProperties.selectedComment.onCancelClick(null);
-	}
+		var mobileClass = (<any>window).mode.isMobile() ? ' wizard-comment-box': '';
 
-	// This converts the specified number of values into core pixels from twips.
-	// Returns a new array with the length of specified numbers.
-	private numberArrayToCorePixFromTwips (numberArray: Array<number>, startIndex: number = 0, length: number = null): Array<number> {
-		if (!length)
-			length = numberArray.length;
-
-		if (startIndex < 0)
-			startIndex = 0;
-
-		if (length < 0)
-			length = 0;
-
-		if (startIndex + length > numberArray.length)
-			length = numberArray.length - startIndex;
-
-		var result = new Array(length);
-		var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
-
-		for (var i = startIndex; i < length; i++) {
-			result[i] = Math.round(numberArray[i] * ratio);
-		}
-
-		return result;
-	}
-
-	// In file based view, we need to move comments to their part's position.
-	// Because all parts are drawn on the screen. Core side doesn't have this feature.
-	// Core side sends the information in part coordinates.
-	// When a coordinate like [0, 0] is inside 2nd part for example, that coordinate should correspond to a value like (just guessing) [0, 45646].
-	// See that y value is different. Because there is 1st part above the 2nd one in the view.
-	// We will add their part's position to comment's variables.
-	// When we are saving their position, we will remove the additions before sending the information.
-	private adjustCommentFileBasedView (comment: any) {
-		// Below calculations are the same with the ones we do while drawing tiles in fileBasedView.
-		var partHeightTwips = this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts;
-		var index = this.sectionProperties.docLayer._partHashes.indexOf(comment.parthash);
-		var yAddition = index * partHeightTwips;
-		comment.yAddition = yAddition; // We'll use this while we save the new position of the comment.
-
-		comment.trackchange = false;
-
-		comment.rectangles = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle); // Simple array of point arrays [x1, y1, x2, y2].
-		comment.rectangles[0][1] += yAddition; // There is only one rectangle for our case.
-
-		comment.rectanglesOriginal = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle); // This unmodified version will be kept for re-calculations.
-		comment.rectanglesOriginal[0][1] += yAddition;
-
-		comment.anchorPos = this.stringToRectangles(comment.anchorPos || comment.rectangle)[0];
-		comment.anchorPos[1] += yAddition;
-
-		if (comment.rectangle) {
-			comment.rectangle = this.stringToRectangles(comment.rectangle)[0]; // This is the position of the marker.
-			comment.rectangle[1] += yAddition;
-		}
-
-		comment.anchorPix = this.numberArrayToCorePixFromTwips(comment.anchorPos, 0, 2);
-
-		comment.parthash = comment.parthash ? comment.parthash: null;
-
-		var viewId = this.map.getViewId(comment.author);
-		var color = viewId >= 0 ? L.LOUtil.rgbToHex(this.map.getViewColor(viewId)) : '#43ACE8';
-		comment.color = color;
-	}
-
-	// Normally, a comment's position information is the same with the desktop version.
-	// So we can use it directly.
-	private adjustCommentNormal (comment: any) {
-		comment.trackchange = false;
-		comment.rectangles = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle || comment.cellPos); // Simple array of point arrays [x1, y1, x2, y2].
-		comment.rectanglesOriginal = this.stringToRectangles(comment.textRange || comment.anchorPos || comment.rectangle || comment.cellPos); // This unmodified version will be kept for re-calculations.
-		comment.anchorPos = this.stringToRectangles(comment.anchorPos || comment.rectangle || comment.cellPos)[0];
-		comment.anchorPix = this.numberArrayToCorePixFromTwips(comment.anchorPos, 0, 2);
-		comment.parthash = comment.parthash ? comment.parthash: null;
-		comment.tab = comment.tab ? comment.tab: null;
-
-		if (comment.rectangle) {
-			comment.rectangle = this.stringToRectangles(comment.rectangle)[0]; // This is the position of the marker (Impress & Draw).
-		}
-		else if (comment.cellPos) {
-			comment.cellPos = this.stringToRectangles(comment.cellPos)[0]; // Calc.
-		}
-
-		var viewId = this.map.getViewId(comment.author);
-		var color = viewId >= 0 ? L.LOUtil.rgbToHex(this.map.getViewColor(viewId)) : '#43ACE8';
-		comment.color = color;
-	}
-
-	private adjustComment (comment: any) {
-		if (!app.file.fileBasedView)
-			this.adjustCommentNormal(comment);
-		else
-			this.adjustCommentFileBasedView(comment);
-	}
-
-	private getScaleFactor () {
-		var scaleFactor = 1.0 / this.map.getZoomScale(this.map.options.zoom, this.map.getZoom());
-		if (scaleFactor < 0.4)
-			scaleFactor = 0.4;
-		else if (scaleFactor < 0.6)
-			scaleFactor = 0.6 - (0.6 - scaleFactor) / 2.0;
-		else if (scaleFactor < 0.8)
-			scaleFactor = 0.8;
-		else if (scaleFactor <= 2)
-			scaleFactor = 1;
-		else if (scaleFactor > 2) {
-			scaleFactor = 1 + (scaleFactor - 1) / 10.0;
-			if (scaleFactor > 1.5)
-				scaleFactor = 1.5;
-		}
-		return scaleFactor;
-	}
-
-	// Returns the last comment id of comment thread containing the given id
-	private getLastChildIndexOf (id: any) {
-		var index = this.getIndexOf(id);
-		if (index < 0)
-			return undefined;
-		for (var idx = index + 1;
-		     idx < this.sectionProperties.commentList.length && this.sectionProperties.commentList[idx].sectionProperties.data.parent === this.sectionProperties.commentList[idx - 1].sectionProperties.data.id;
-		     idx++)
-		{
-			index = idx;
-		}
-
-		return index;
-	}
-
-	private updateScaling () {
-		if ((<any>window).mode.isDesktop() || this.sectionProperties.commentList.length === 0)
-			return;
-
-		var contentWrapperClassName, menuClassName;
-		if (this.sectionProperties.commentList[0].sectionProperties.data.trackchange) {
-			contentWrapperClassName = '.loleaflet-annotation-redline-content-wrapper';
-			menuClassName = '.loleaflet-annotation-menu-redline';
+		if (this.sectionProperties.data.trackchange) {
+			this.sectionProperties.wrapper = L.DomUtil.create('div', 'loleaflet-annotation-redline-content-wrapper' + mobileClass, this.sectionProperties.container);
 		} else {
-			contentWrapperClassName = '.loleaflet-annotation-content-wrapper';
-			menuClassName = '.loleaflet-annotation-menu';
+			this.sectionProperties.wrapper = L.DomUtil.create('div', 'loleaflet-annotation-content-wrapper' + mobileClass, this.sectionProperties.container);
 		}
 
-		var initNeeded = (this.sectionProperties.initialLayoutData === null);
-		var contentWrapperClass = $(contentWrapperClassName);
+		document.getElementById('document-container').appendChild(this.sectionProperties.container);
+	}
 
-		if (initNeeded) {
-			var contentAuthor = $('.loleaflet-annotation-content-author');
-			var dateClass = $('.loleaflet-annotation-date');
+	private createAuthorTable () {
+		this.sectionProperties.author = L.DomUtil.create('table', 'loleaflet-annotation-table', this.sectionProperties.wrapper);
 
-			this.sectionProperties.initialLayoutData = {
-				wrapperWidth: parseInt(contentWrapperClass.css('width')),
-				wrapperFontSize: parseInt(contentWrapperClass.css('font-size')),
-				authorContentHeight: parseInt(contentAuthor.css('height')),
-				dateFontSize: parseInt(dateClass.css('font-size')),
-			};
+		var tbody = L.DomUtil.create('tbody', '', this.sectionProperties.author);
+		var rowResolved = L.DomUtil.create('tr', '', tbody);
+		var tdResolved = L.DomUtil.create('td', 'loleaflet-annotation-resolved', rowResolved);
+		var pResolved = L.DomUtil.create('div', 'loleaflet-annotation-content-resolved', tdResolved);
+		this.sectionProperties.resolvedTextElement = pResolved;
+
+		this.updateResolvedField(this.sectionProperties.data.resolved);
+
+		var tr = L.DomUtil.create('tr', '', tbody);
+		tr.id = 'author table row ' + this.sectionProperties.data.id;
+		var tdImg = L.DomUtil.create('td', 'loleaflet-annotation-img', tr);
+		var tdAuthor = L.DomUtil.create('td', 'loleaflet-annotation-author', tr);
+		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
+
+		imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg'));
+		imgAuthor.setAttribute('width', this.sectionProperties.imgSize[0]);
+		imgAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
+		imgAuthor.onerror = function () { imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg')); };
+
+		this.sectionProperties.authorAvatarImg = imgAuthor;
+		this.sectionProperties.authorAvatartdImg = tdImg;
+		this.sectionProperties.contentAuthor = L.DomUtil.create('div', 'loleaflet-annotation-content-author', tdAuthor);
+		this.sectionProperties.contentDate = L.DomUtil.create('div', 'loleaflet-annotation-date', tdAuthor);
+	}
+
+	private createMenu () {
+		var tdMenu = L.DomUtil.create('td', 'loleaflet-annotation-menubar', document.getElementById('author table row ' + this.sectionProperties.data.id));
+		this.sectionProperties.menu = L.DomUtil.create('div', this.sectionProperties.data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
+		this.sectionProperties.menu.onclick = this.menuOnMouseClick.bind(this);
+		var divMenuTooltipText = _('Open menu');
+		this.sectionProperties.menu.dataset.title = divMenuTooltipText;
+		this.sectionProperties.menu.setAttribute('aria-label', divMenuTooltipText);
+		this.sectionProperties.menu.annotation = this;
+	}
+
+	public setData (data: any) {
+		this.sectionProperties.data = data;
+	}
+
+	private createTrackChangeButtons () {
+		var tdAccept = L.DomUtil.create('td', 'loleaflet-annotation-menubar', document.getElementById('author table row ' + this.sectionProperties.data.id));
+		var acceptButton = this.sectionProperties.acceptButton = L.DomUtil.create('button', 'loleaflet-redline-accept-button', tdAccept);
+
+		var tdReject = L.DomUtil.create('td', 'loleaflet-annotation-menubar', document.getElementById('author table row ' + this.sectionProperties.data.id));
+		var rejectButton = this.sectionProperties.rejectButton = L.DomUtil.create('button', 'loleaflet-redline-reject-button', tdReject);
+
+		acceptButton.dataset.title = _('Accept change');
+		acceptButton.setAttribute('aria-label', _('Accept change'));
+
+		L.DomEvent.on(acceptButton, 'click', function() {
+			this.map.fire('RedlineAccept', {id: this.sectionProperties.data.id});
+		}, this);
+
+		rejectButton.dataset.title = _('Reject change');
+		rejectButton.setAttribute('aria-label', _('Reject change'));
+
+		L.DomEvent.on(rejectButton, 'click', function() {
+			this.map.fire('RedlineReject', {id: this.sectionProperties.data.id});
+		}, this);
+	}
+
+	private createButton (container: any, id: any, value: any, handler: any) {
+		var button = L.DomUtil.create('input', 'annotation-button', container);
+		button.id = id;
+		button.type = 'button';
+		button.value = value;
+		L.DomEvent.on(button, 'mousedown', L.DomEvent.preventDefault);
+		L.DomEvent.on(button, 'click', handler, this);
+	}
+
+	public parentOf (comment: any) {
+		return this.sectionProperties.data.id === comment.sectionProperties.data.parent;
+	}
+
+	public updateResolvedField (state: string) {
+		this.sectionProperties.resolvedTextElement.text = state === 'true' ? 'Resolved' : '';
+	}
+
+	private updateContent () {
+		// .text() method will escape the string, does not interpret the string as HTML
+		this.sectionProperties.contentText.innerText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
+		// Get the escaped HTML out and find for possible, useful links
+		var linkedText = Autolinker.link(this.sectionProperties.contentText.outerHTML);
+		// Set the property of text field directly. This is insecure otherwise because it doesn't escape the input
+		// But we have already escaped the input before and only thing we are adding on top of that is Autolinker
+		// generated text.
+		this.sectionProperties.contentText.innerHTML = linkedText;
+		// Original unlinked text
+		this.sectionProperties.contentText.origText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
+		this.sectionProperties.nodeModifyText.innerText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
+		this.sectionProperties.contentAuthor.innerText = this.sectionProperties.data.author;
+
+		this.updateResolvedField(this.sectionProperties.data.resolved);
+		this.sectionProperties.authorAvatarImg.setAttribute('src', this.sectionProperties.data.avatar);
+
+		if (!this.sectionProperties.data.avatar) {
+			$(this.sectionProperties.authorAvatarImg).css('padding-top', '4px');
+		}
+		var user = this.map.getViewId(this.sectionProperties.data.author);
+		if (user >= 0) {
+			var color = L.LOUtil.rgbToHex(this.map.getViewColor(user));
+			this.sectionProperties.authorAvatartdImg.style.borderColor = color;
 		}
 
-		var menuClass = $(menuClassName);
-		if ((this.sectionProperties.initialLayoutData.menuWidth === undefined) && menuClass.length > 0) {
-			this.sectionProperties.initialLayoutData.menuWidth = parseInt(menuClass.css('width'));
-			this.sectionProperties.initialLayoutData.menuHeight = parseInt(menuClass.css('height'));
-		}
+		var d = new Date(this.sectionProperties.data.dateTime.replace(/,.*/, 'Z'));
+		var dateOptions: any = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+		this.sectionProperties.contentDate.innerText = isNaN(d.getTime()) ? this.sectionProperties.data.dateTime: d.toLocaleDateString((<any>String).locale, dateOptions);
 
-		var scaleFactor = this.getScaleFactor();
-		var idx;
-		if (this.sectionProperties.selectedComment) {
-			var selectIndexFirst = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
-			var selectIndexLast = this.getLastChildIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
-			for (idx = 0; idx < this.sectionProperties.commentList.length; idx++) {
-				if (idx < selectIndexFirst || idx >  selectIndexLast) {
-					this.sectionProperties.commentList[idx].updateScaling(scaleFactor, this.sectionProperties.initialLayoutData);
-				}
-				else {
-					this.sectionProperties.commentList[idx].updateScaling(1, this.sectionProperties.initialLayoutData);
-				}
-			}
-		}
-		else {
-			for (idx = 0; idx < this.sectionProperties.commentList.length; idx++) {
-				this.sectionProperties.commentList[idx].updateScaling(scaleFactor, this.sectionProperties.initialLayoutData);
-			}
+		if (this.sectionProperties.data.trackchange) {
+			this.sectionProperties.captionText.innerText = this.sectionProperties.data.description;
 		}
 	}
 
-	private twipsToCorePixels (twips: any) {
-		return [twips.x / this.sectionProperties.docLayer._tileWidthTwips * this.sectionProperties.docLayer._tileSize, twips.y / this.sectionProperties.docLayer._tileHeightTwips * this.sectionProperties.docLayer._tileSize];
+	private updateLayout () {
+		var style = this.sectionProperties.wrapper.style;
+		style.width = '';
+		style.whiteSpace = 'nowrap';
+
+		style.whiteSpace = '';
 	}
 
-	// If the file type is presentation or drawing then we shall check the selected part in order to hide comments from other parts.
-	// But if file is in fileBasedView, then we will not hide any comments from not-selected/viewed parts.
-	private mustCheckSelectedPart () {
-		return (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') && !app.file.fileBasedView;
-	}
+	// This returns the svg element for the commented portion of the document. Doesn't set the coordinates of it.
+	private getContainerForCommentedText () {
+		var data = this.sectionProperties.data;
 
-	private layoutUp (subList: any, actualPosition: Array<number>, lastY: number) {
-		var height: number;
-		for (var i = 0; i < subList.length; i++) {
-			height = subList[i].sectionProperties.container.getBoundingClientRect().height;
-			lastY = subList[i].sectionProperties.data.anchorPix[1] + height < lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY - height;
-			(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: actualPosition[0], y: lastY});
-			subList[i].show();
-		}
-		return lastY;
-	}
+		var container = document.getElementById('commented-text-container-' + data.id);
+		if (container)
+			data.textSelected = container;
 
-	private loopUp (startIndex: number, x: number, startY: number) {
-		var tmpIdx = 0;
-		var checkSelectedPart: boolean = this.mustCheckSelectedPart();
-		startY -= this.sectionProperties.marginY;
-		// Pass over all comments present
-		for (var i = startIndex; i > -1;) {
-			var subList = [];
-			tmpIdx = i;
-			do {
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos, 0, 2);
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix[1] -= this.documentTopLeft[1];
-				// Add this item to the list of comments.
-				if (this.sectionProperties.commentList[tmpIdx].sectionProperties.data.resolved !== 'true' || this.sectionProperties.showResolved) {
-					if (!checkSelectedPart || this.sectionProperties.docLayer._selectedPart === this.sectionProperties.commentList[tmpIdx].sectionProperties.partIndex)
-						subList.push(this.sectionProperties.commentList[tmpIdx]);
-				}
-				tmpIdx = tmpIdx - 1;
-				// Continue this loop, until we reach the last item, or an item which is not a direct descendant of the previous item.
-			} while (tmpIdx > -1 && this.sectionProperties.commentList[tmpIdx].sectionProperties.data.parent === this.sectionProperties.commentList[tmpIdx + 1].sectionProperties.data.id);
-
-			if (subList.length > 0) {
-				startY = this.layoutUp(subList, [x, subList[0].sectionProperties.data.anchorPix[1]], startY);
-				i = i - subList.length;
-			} else {
-				i = tmpIdx;
-			}
-			startY -= this.sectionProperties.marginY;
-		}
-		return startY;
-	}
-
-	private layoutDown (subList: any, actualPosition: Array<number>, lastY: number) {
-		var selectedComment = subList[0] === this.sectionProperties.selectedComment;
-		for (var i = 0; i < subList.length; i++) {
-			lastY = subList[i].sectionProperties.data.anchorPix[1] > lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY;
-
-			if (selectedComment)
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: actualPosition[0] - 60, y: lastY});
-			else
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: actualPosition[0], y: lastY});
-
-			lastY += (subList[i].sectionProperties.container.getBoundingClientRect().height);
-			if (!subList[i].isEdit())
-				subList[i].show();
-		}
-		return lastY;
-	}
-
-	private loopDown (startIndex: number, x: number, startY: number) {
-		var tmpIdx = 0;
-		var checkSelectedPart: boolean = this.mustCheckSelectedPart();
-		// Pass over all comments present
-		for (var i = startIndex; i < this.sectionProperties.commentList.length;) {
-			var subList = [];
-			tmpIdx = i;
-			do {
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPos, 0, 2);
-				this.sectionProperties.commentList[tmpIdx].sectionProperties.data.anchorPix[1] -= this.documentTopLeft[1];
-				// Add this item to the list of comments.
-				if (this.sectionProperties.commentList[tmpIdx].sectionProperties.data.resolved !== 'true' || this.sectionProperties.showResolved) {
-					if (!checkSelectedPart || this.sectionProperties.docLayer._selectedPart === this.sectionProperties.commentList[tmpIdx].sectionProperties.partIndex)
-						subList.push(this.sectionProperties.commentList[tmpIdx]);
-				}
-				tmpIdx = tmpIdx + 1;
-				// Continue this loop, until we reach the last item, or an item which is not a direct descendant of the previous item.
-			} while (tmpIdx < this.sectionProperties.commentList.length && this.sectionProperties.commentList[tmpIdx].sectionProperties.data.parent === this.sectionProperties.commentList[tmpIdx - 1].sectionProperties.data.id);
-
-			if (subList.length > 0) {
-				startY = this.layoutDown(subList, [x, subList[0].sectionProperties.data.anchorPix[1]], startY);
-				i = i + subList.length;
-			} else {
-				i = tmpIdx;
-			}
-			startY += this.sectionProperties.marginY;
-		}
-		return startY;
-	}
-
-	private hideArrow () {
-		if (this.sectionProperties.arrow) {
-			document.getElementById('document-container').removeChild(this.sectionProperties.arrow);
-			this.sectionProperties.arrow = null;
-		}
-	}
-
-	private showArrow (startPoint: Array<number>, endPoint: Array<number>) {
-		var anchorSection = this.containerObject.getDocumentAnchorSection();
-		startPoint[0] -= anchorSection.myTopLeft[0] + this.documentTopLeft[0];
-		startPoint[1] -= anchorSection.myTopLeft[1] + this.documentTopLeft[1];
-		endPoint[0] -= anchorSection.myTopLeft[0] + this.documentTopLeft[0];
-		endPoint[1] -= anchorSection.myTopLeft[1] + this.documentTopLeft[1];
-
-		if (this.sectionProperties.arrow !== null) {
-			var line: SVGLineElement = <SVGLineElement>(<any>document.getElementById('comment-arrow-line'));
-			line.setAttribute('x1', String(startPoint[0]));
-			line.setAttribute('y1', String(startPoint[1]));
-			line.setAttribute('x2', String(endPoint[0]));
-			line.setAttribute('y2', String(endPoint[1]));
+		if (data.textSelected) {
+			data.textSelected.setAttribute('width', String(Math.round(this.context.canvas.width / this.dpiScale)));
+			data.textSelected.setAttribute('height', String(Math.round(this.context.canvas.height / this.dpiScale)));
+			return data.textSelected;
 		}
 		else {
 			var svg: SVGElement = (<any>document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
 			svg.setAttribute('version', '1.1');
 			svg.style.zIndex = '9';
-			svg.id = 'comment-arrow-container';
+			svg.id = 'commented-text-container-' + data.id;
 			svg.style.position = 'absolute';
 			svg.style.top = svg.style.left = svg.style.right = svg.style.bottom = '0';
 			svg.setAttribute('width', String(this.context.canvas.width));
 			svg.setAttribute('height', String(this.context.canvas.height));
-			var line  = document.createElementNS('http://www.w3.org/2000/svg','line');
-			line.id = 'comment-arrow-line';
-			line.setAttribute('x1', String(startPoint[0]));
-			line.setAttribute('y1', String(startPoint[1]));
-			line.setAttribute('x2', String(endPoint[0]));
-			line.setAttribute('y2', String(endPoint[1]));
-			line.setAttribute('stroke', 'darkblue');
-			line.setAttribute('stroke-width', '1');
-			svg.append(line);
+
 			document.getElementById('document-container').appendChild(svg);
-			this.sectionProperties.arrow = svg;
+			data.textSelected = svg;
+			return svg;
 		}
 	}
 
-	private doLayout (zoomEnd = false) {
-		if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
-			if (this.sectionProperties.commentList.length > 0)
-				this.orderCommentList();
-			return; // No adjustments for Calc, since only one comment can be shown at a time and that comment is shown at its belonging cell.
+	private setPositionAndSize () {
+		var rectangles = this.sectionProperties.data.rectangles;
+		if (rectangles && this.sectionProperties.docLayer._docType === 'text') {
+			var xMin: number = Infinity, yMin: number = Infinity, xMax: number = 0, yMax: number = 0;
+			for (var i = 0; i < rectangles.length; i++) {
+				if (rectangles[i][0] < xMin)
+					xMin = rectangles[i][0];
+
+				if (rectangles[i][1] < yMin)
+					yMin = rectangles[i][1];
+
+				if (rectangles[i][0] + rectangles[i][2] > xMax)
+					xMax = rectangles[i][0] + rectangles[i][2];
+
+				if (rectangles[i][1] + rectangles[i][3] > yMax)
+					yMax = rectangles[i][1] + rectangles[i][3];
+			}
+			var documentAnchorSection = this.containerObject.getDocumentAnchorSection();
+			var diff = [documentAnchorSection.myTopLeft[0] - this.documentTopLeft[0], documentAnchorSection.myTopLeft[1] - this.documentTopLeft[1]];
+			this.setPosition(xMin - diff[0], yMin - diff[1]); // This function is added by section container.
+			this.size = [xMax - xMin, yMax - yMin];
 		}
-
-		if (this.sectionProperties.commentList.length > 0) {
-			this.orderCommentList();
-
-			if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet())
-				return; // No layout changes for mobile || tablet.
-
-			this.updateScaling();
-
-			var topRight: Array<number> = [this.myTopLeft[0], this.myTopLeft[1] + this.sectionProperties.marginY - this.documentTopLeft[1]];
-			var yOrigin = null;
-			var selectedIndex = null;
-
-			if (this.sectionProperties.selectedComment) {
-				selectedIndex = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
-				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix = this.numberArrayToCorePixFromTwips(this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPos, 0, 2);
-				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1];
-				yOrigin = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1] - this.documentTopLeft[1];
-				var tempCrd: Array<number> = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix;
-				this.showArrow([tempCrd[0], tempCrd[1]], [topRight[0], tempCrd[1]]);
-			}
-			else {
-				this.hideArrow();
-			}
-
-			var lastY = 0;
-			if (selectedIndex) {
-				this.loopUp(selectedIndex - 1, topRight[0], yOrigin);
-				lastY = this.loopDown(selectedIndex, topRight[0], yOrigin);
-			}
-			else {
-				lastY = this.loopDown(0, topRight[0], topRight[1]);
-			}
-		}
-
-		if (zoomEnd) {
-            var anchorSectionHeight = this.containerObject.getDocumentAnchorSection().size[1];
-            var diff = lastY - anchorSectionHeight;
-            if (diff > 0)
-                app.view.size.pixels[1] = lastY;
-            else
-                app.view.size.pixels[1] = app.file.size.pixels[1];
+		else if (this.sectionProperties.data.cellPos && this.sectionProperties.docLayer._docType === 'spreadsheet') {
+			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+			this.size = [Math.round(this.sectionProperties.data.cellPos[2] * ratio), Math.round(this.sectionProperties.data.cellPos[3] * ratio)];
+			this.setPosition(Math.round(this.sectionProperties.data.cellPos[0] * ratio), Math.round(this.sectionProperties.data.cellPos[1] * ratio));
 		}
 	}
 
-	private layout (zoom: any = null) {
-		if (zoom)
-			this.doLayout();
-		else if (!this.sectionProperties.layoutTimer) {
-			var that = this;
-			that.sectionProperties.layoutTimer = setTimeout(function() {
-				delete that.sectionProperties.layoutTimer;
-				that.doLayout();
-			}, 250 /* ms */);
-		} // else - avoid excessive re-layout
+	private createRectanglesForSelectedText (container: any) {
+		if (this.sectionProperties.docLayer._docType === 'text') {
+			var rectangles = this.sectionProperties.data.rectangles;
+			var data = this.sectionProperties.data;
+			if (rectangles && container) {
+				for (var i = 0; i < rectangles.length; i++) {
+					var rectangle: SVGRectElement = <SVGRectElement>(<any>document.getElementById('commented-text-rectangle-' + data.id + '-' + String(i)));
+					if (!rectangle) {
+						rectangle = document.createElementNS('http://www.w3.org/2000/svg','rect');
+						rectangle.id = 'commented-text-rectangle-' + data.id + '-' + String(i);
+						rectangle.setAttribute('fill-opacity', '1');
+						rectangle.setAttribute('weight', '2');
+						rectangle.setAttribute('opacity', '0.25');
+						container.append(rectangle);
+					}
+
+					// Svg elements are added into document-container. Their coordinates are in CSS units.
+					rectangle.setAttributeNS(null, 'x', String(Math.round(rectangles[i][0] / this.dpiScale)));
+					rectangle.setAttributeNS(null, 'y', String(Math.round(rectangles[i][1] / this.dpiScale)));
+					rectangle.setAttributeNS(null, 'width', String(Math.round(rectangles[i][2] / this.dpiScale) > 1 ? Math.round(rectangles[i][2] / this.dpiScale): 1));
+					rectangle.setAttributeNS(null, 'height', String(Math.round(rectangles[i][3] / this.dpiScale) > 1 ? Math.round(rectangles[i][3] / this.dpiScale): 1));
+					rectangle.setAttributeNS(null, 'fill', data.color);
+					rectangle.setAttributeNS(null, 'stroke', data.color);
+				}
+
+				// Remove extra elements (Example: user added a multi line comment and deleted some lines).
+				for (i = container.children.length - 1; i > -1; i--) {
+					var rectElement = container.children[i];
+					var number = parseInt(rectElement.id.replace('commented-text-rectangle-' + data.id + '-', ''));
+					if (number >= rectangles.length) {
+						container.removeChild(container.children[i]);
+					}
+				}
+			}
+		}
+	}
+
+	private removeHighlight () {
+		if (this.sectionProperties.docLayer._docType === 'text') {
+			var selectionContainer = this.getContainerForCommentedText();
+			if (selectionContainer)
+				selectionContainer.style.display = 'block';
+
+			var element = document.getElementById('commented-text-highlighter-container-' + this.sectionProperties.data.id);
+			if (element)
+				element.parentElement.removeChild(element);
+
+				this.sectionProperties.isHighlighted = false;
+		}
+		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+			this.backgroundColor = null;
+			this.backgroundOpacity = 1;
+		}
+	}
+
+	public highlight () {
+		if (this.sectionProperties.docLayer._docType === 'text') {
+			var selectionContainer = this.getContainerForCommentedText();
+
+			if (selectionContainer) {
+				selectionContainer.style.display = 'none';
+				var highlighterContainer: SVGElement = (<any>document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
+				highlighterContainer = selectionContainer.cloneNode();
+				highlighterContainer.id = 'commented-text-highlighter-container-' + this.sectionProperties.data.id;
+				selectionContainer.parentElement.append(highlighterContainer);
+				for (var i = 0; i < selectionContainer.children.length; i++) {
+					selectionContainer.children[i].setAttribute('stroke', '#777777');
+					selectionContainer.children[i].setAttribute('fill', '#777777');
+				}
+			}
+		}
+		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+			this.backgroundColor = '#777777'; //background: rgba(119, 119, 119, 0.25);
+			this.backgroundOpacity = 0.25;
+		}
+
+		this.containerObject.requestReDraw();
+		this.sectionProperties.isHighlighted = true;
+	}
+
+	// This is for svg elements that will be bound to document-container.
+	private convertRectanglesToCoreCoordinates () {
+		var rectangles = this.sectionProperties.data.rectangles;
+		var originals = this.sectionProperties.data.rectanglesOriginal;
+
+		if (rectangles) {
+			var documentAnchorSection = this.containerObject.getDocumentAnchorSection();
+			var diff = [documentAnchorSection.myTopLeft[0] - this.documentTopLeft[0], documentAnchorSection.myTopLeft[1] - this.documentTopLeft[1]];
+
+			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+			for (var i = 0; i < rectangles.length; i++) {
+				rectangles[i][0] = Math.round(originals[i][0] * ratio) + diff[0];
+				rectangles[i][1] = Math.round(originals[i][1] * ratio) + diff[1];
+				rectangles[i][2] = Math.round(originals[i][2] * ratio);
+				rectangles[i][3] = Math.round(originals[i][3] * ratio);
+			}
+		}
+	}
+
+	private updatePosition () {
+		var data = this.sectionProperties.data;
+		this.convertRectanglesToCoreCoordinates();
+		this.setPositionAndSize();
+		var container = this.getContainerForCommentedText();
+		this.createRectanglesForSelectedText(container);
+
+		// If text is highlighted, refresh it.
+		if (document.getElementById('commented-text-highlighter-container-' + data.id)) {
+			this.removeHighlight();
+			this.highlight();
+		}
+	}
+
+	private updateAnnotationMarker () {
+		// Make sure to place the markers only for presentations and draw documents
+		if (this.sectionProperties.docLayer._docType !== 'presentation' && this.sectionProperties.docLayer._docType !== 'drawing')
+			return;
+
+		if (this.sectionProperties.data == null)
+			return;
+
+		if (this.sectionProperties.annotationMarker == null) {
+			this.sectionProperties.annotationMarker = L.marker(new L.LatLng(0, 0), {
+				icon: L.divIcon({
+					className: 'annotation-marker',
+					iconSize: null
+				}),
+				draggable: true
+			});
+			if (this.sectionProperties.docLayer._partHashes[this.sectionProperties.docLayer._selectedPart] == this.sectionProperties.data.parthash)
+				this.map.addLayer(this.sectionProperties.annotationMarker);
+		}
+		if (this.sectionProperties.data.rectangle != null) {
+			this.sectionProperties.annotationMarker.setLatLng(this.sectionProperties.docLayer._twipsToLatLng(new L.Point(this.sectionProperties.data.rectangle[0], this.sectionProperties.data.rectangle[1])));
+			this.sectionProperties.annotationMarker.on('dragstart drag dragend', this.onMarkerDrag, this);
+			this.sectionProperties.annotationMarker.on('click', this.onMarkerClick, this);
+		}
+		if (this.sectionProperties.annotationMarker._icon) {
+			(new Hammer(this.sectionProperties.annotationMarker._icon, {recognizers: [[Hammer.Tap]]}))
+				.on('tap', function() {
+					this.sectionProperties.docLayer._openCommentWizard(this);
+				}.bind(this));
+		}
+	}
+
+	public isContainerVisible () {
+		return (this.sectionProperties.container.style && this.sectionProperties.container.style.visibility === '');
+	}
+
+	public updateScaling (scaleFactor: number, initialLayoutData: any) {
+		if ((<any>window).mode.isDesktop())
+			return;
+
+		var wrapperWidth = Math.round(initialLayoutData.wrapperWidth * scaleFactor);
+		this.sectionProperties.wrapper.style.width = wrapperWidth + 'px';
+		var wrapperFontSize = Math.round(initialLayoutData.wrapperFontSize * scaleFactor);
+		this.sectionProperties.wrapper.style.fontSize = wrapperFontSize + 'px';
+		var contentAuthorHeight = Math.round(initialLayoutData.authorContentHeight * scaleFactor);
+		this.sectionProperties.contentAuthor.style.height = contentAuthorHeight + 'px';
+		var dateFontSize = Math.round(initialLayoutData.dateFontSize * scaleFactor);
+		this.sectionProperties.contentDate.style.fontSize = dateFontSize + 'px';
+		if (this.sectionProperties.menu) {
+			var menuWidth = Math.round(initialLayoutData.menuWidth * scaleFactor);
+			this.sectionProperties.menu.style.width = menuWidth + 'px';
+			var menuHeight = Math.round(initialLayoutData.menuHeight * scaleFactor);
+			this.sectionProperties.menu.style.height = menuHeight + 'px';
+
+			if (this.sectionProperties.acceptButton) {
+				this.sectionProperties.acceptButton.style.width = menuWidth + 'px';
+				this.sectionProperties.acceptButton.style.height = menuHeight + 'px';
+			}
+			if (this.sectionProperties.rejectButton) {
+				this.sectionProperties.rejectButton.style.width = menuWidth + 'px';
+				this.sectionProperties.rejectButton.style.height = menuHeight + 'px';
+			}
+		}
+
+		var authorImageWidth = Math.round(this.sectionProperties.imgSize.x * scaleFactor);
+		var authorImageHeight = Math.round(this.sectionProperties.imgSize.y * scaleFactor);
+		this.sectionProperties.authorAvatarImg.setAttribute('width', authorImageWidth);
+		this.sectionProperties.authorAvatarImg.setAttribute('height', authorImageHeight);
 	}
 
 	private update () {
-		this.layout();
+		this.updateContent();
+		this.updateLayout();
+		this.updatePosition();
+		this.updateAnnotationMarker();
 	}
 
-	// Returns the root comment index of given id
-	private getRootIndexOf (id: any) {
-		var index = this.getIndexOf(id);
-		for (var idx = index - 1;
-			     idx >=0 && this.sectionProperties.commentList[idx].sectionProperties.data.id === this.sectionProperties.commentList[idx + 1].sectionProperties.data.parent;
-			     idx--)
-		{
-			index = idx;
+	private showMarker () {
+		if (this.sectionProperties.annotationMarker != null) {
+			this.map.addLayer(this.sectionProperties.annotationMarker);
+		}
+	}
+
+	private hideMarker () {
+		if (this.sectionProperties.annotationMarker != null) {
+			this.map.removeLayer(this.sectionProperties.annotationMarker);
+		}
+	}
+
+	private show () {
+		this.showMarker();
+
+		// On mobile, container shouldn't be 'document-container', but it is 'document-container' on initialization. So we hide the comment until comment wizard is opened.
+		if ((<any>window).mode.isMobile() && this.sectionProperties.container.parentElement === document.getElementById('document-container'))
+			this.sectionProperties.container.style.visibility = 'hidden';
+		else
+			this.sectionProperties.container.style.visibility = '';
+
+		this.sectionProperties.contentNode.style.display = '';
+		this.sectionProperties.nodeModify.style.display = 'none';
+		this.sectionProperties.nodeReply.style.display = 'none';
+
+		var data = this.sectionProperties.data;
+		if (data.textSelected) { // Writer.
+			data.textSelected.style.display = 'block';
 		}
 
-		return index;
+		var highlighter = document.getElementById('commented-text-highlighter-container-' + data.id); // Writer.
+		if (highlighter)
+			highlighter.style.display = 'block';
+
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet' && !(<any>window).mode.isMobile()) {
+			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+			var originalSize = [Math.round((this.sectionProperties.data.cellPos[2]) * ratio), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
+
+			var pos: Array<number> = [Math.round((this.myTopLeft[0] + originalSize[0] - 3) / this.dpiScale), Math.round(this.myTopLeft[1] / this.dpiScale)];
+			(new L.PosAnimation()).run(this.sectionProperties.container, {x: pos[0], y: pos[1]});
+		}
 	}
 
-	public setViewResolved (state: any) {
-		this.sectionProperties.showResolved = state;
+	private hide () {
+		if (this.sectionProperties.data.id === 'new') {
+			this.containerObject.removeSection(this.name);
+			return;
+		}
 
-		for (var idx = 0; idx < this.sectionProperties.commentList.length;idx++) {
-			if (this.sectionProperties.commentList[idx].sectionProperties.data.resolved === 'true') {
-				if (state==false) {
-					if (this.sectionProperties.selectedComment == this.sectionProperties.commentList[idx]) {
-						this.unselect();
-					}
-					this.sectionProperties.commentList[idx].hide();
-				} else {
-					this.sectionProperties.commentList[idx].show();
+		this.sectionProperties.container.style.visibility = 'hidden';
+		this.sectionProperties.contentNode.style.display = 'none';
+		this.sectionProperties.nodeModify.style.display = 'none';
+		this.sectionProperties.nodeReply.style.display = 'none';
+
+		var data = this.sectionProperties.data;
+		if (data.textSelected) { // Writer.
+			data.textSelected.style.display = 'none';
+		}
+
+		var highlighter = document.getElementById('commented-text-highlighter-container-' + data.id); // Writer.
+		if (highlighter)
+			highlighter.style.display = 'none';
+
+		this.hideMarker();
+	}
+
+	private menuOnMouseClick (e: any) {
+		$(this.sectionProperties.menu).contextMenu();
+		L.DomEvent.stopPropagation(e);
+	}
+
+	private onMouseClick (e: any) {
+		if (((<any>window).mode.isMobile() || (<any>window).mode.isTablet())
+			&& this.map.getDocType() == 'spreadsheet') {
+			this.hide();
+		}
+		L.DomEvent.stopPropagation(e);
+		this.sectionProperties.commentListSection.click(this);
+	}
+
+	public onReplyClick (e: any) {
+		L.DomEvent.stopPropagation(e);
+		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
+			this.sectionProperties.data.reply = this.sectionProperties.data.text;
+			this.show();
+			this.sectionProperties.commentListSection.saveReply(this);
+		} else {
+			this.sectionProperties.data.reply = this.sectionProperties.nodeReplyText.value;
+			// Assigning an empty string to .innerHTML property in some browsers will convert it to 'null'
+			// While in browsers like Chrome and Firefox, a null value is automatically converted to ''
+			// Better to assign '' here instead of null to keep the behavior same for all
+			this.sectionProperties.nodeReplyText.value = '';
+			this.show();
+			this.sectionProperties.commentListSection.saveReply(this);
+		}
+	}
+
+	public onCancelClick (e: any) {
+		L.DomEvent.stopPropagation(e);
+		this.sectionProperties.nodeModifyText.value = this.sectionProperties.contentText.origText;
+		this.sectionProperties.nodeReplyText.value = '';
+		this.show();
+		this.sectionProperties.commentListSection.cancel(this);
+	}
+
+	public onSaveComment (e: any) {
+		L.DomEvent.stopPropagation(e);
+		this.sectionProperties.data.text = this.sectionProperties.nodeModifyText.value;
+		this.updateContent();
+		this.show();
+		this.sectionProperties.commentListSection.save(this);
+	}
+
+	public onLostFocus (e: any) {
+		$(this.sectionProperties.container).removeClass('annotation-active');
+		if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
+			this.onSaveComment(e);
+		}
+		else if (this.sectionProperties.nodeModifyText.value === '') {
+			this.onCancelClick(e);
+		}
+	}
+
+	public onLostFocusReply (e: any) {
+		if (this.sectionProperties.nodeReplyText.value !== '') {
+			this.onReplyClick(e);
+		}
+	}
+
+	public focus () {
+		this.sectionProperties.container.classList.add('annotation-active');
+		this.sectionProperties.nodeModifyText.focus();
+		this.sectionProperties.nodeReplyText.focus();
+	}
+
+	public reply () {
+		this.sectionProperties.container.style.visibility = '';
+		this.sectionProperties.contentNode.style.display = '';
+		this.sectionProperties.nodeModify.style.display = 'none';
+		this.sectionProperties.nodeReply.style.display = '';
+		return this;
+	}
+
+	public edit () {
+		this.sectionProperties.nodeModify.style.display = '';
+		this.sectionProperties.nodeReply.style.display = 'none';
+		this.sectionProperties.container.style.visibility = '';
+		this.sectionProperties.contentNode.style.display = 'none';
+		return this;
+	}
+
+	public isEdit () {
+		return (this.sectionProperties.nodeModify && this.sectionProperties.nodeModify.style.display !== 'none') ||
+		       (this.sectionProperties.nodeReply && this.sectionProperties.nodeReply.style.display !== 'none');
+	}
+
+	private sendAnnotationPositionChange (newPosition: any) {
+		if (app.file.fileBasedView) {
+			this.map.setPart(this.sectionProperties.docLayer._selectedPart, false);
+			newPosition.y -= this.sectionProperties.data.yAddition;
+		}
+
+		var comment = {
+			Id: {
+				type: 'string',
+				value: this.sectionProperties.data.id
+			},
+			PositionX: {
+				type: 'int32',
+				value: newPosition.x
+			},
+			PositionY: {
+				type: 'int32',
+				value: newPosition.y
+			}
+		};
+		this.map.sendUnoCommand('.uno:EditAnnotation', comment);
+
+		if (app.file.fileBasedView)
+			this.map.setPart(0, false);
+	}
+
+	private onMarkerClick () {
+		this.map.fire('AnnotationSelect', {annotation: this});
+	}
+
+	private onMarkerDrag (event: any) {
+		if (this.sectionProperties.annotationMarker == null)
+			return;
+
+		if (event.type === 'dragend') {
+			var pointTwip = this.sectionProperties.docLayer._latLngToTwips(this.sectionProperties.annotationMarker.getLatLng());
+			this.sendAnnotationPositionChange(pointTwip);
+		}
+	}
+
+	public isDisplayed () {
+		return (this.sectionProperties.container.style && this.sectionProperties.container.style.visibility === '');
+	}
+
+	public onResize () {
+		this.updatePosition();
+	}
+
+	private doesRectangleContainPoint (rectangle: any, point: Array<number>): boolean {
+        if (point[0] >= rectangle[0] && point[0] <= rectangle[0] + rectangle[2]) {
+            if (point[1] >= rectangle[1] && point[1] <= rectangle[1] + rectangle[3]) {
+                return true;
+            }
+        }
+        return false;
+	}
+
+	public onClick (point: Array<number>, e: MouseEvent) {
+		var rectangles = this.sectionProperties.data.rectangles;
+		point[0] = point[0] + this.myTopLeft[0];
+		point[1] = point[1] + this.myTopLeft[1];
+		if (rectangles) { // A text file.
+			for (var i: number = 0; i < rectangles.length; i++) {
+				if (this.doesRectangleContainPoint(rectangles[i], point)) {
+					this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
+					e.stopPropagation();
+					this.stopPropagating();
+					return;
 				}
 			}
-			this.sectionProperties.commentList[idx].update();
-		}
-		this.layout();
-		this.update();
-	}
-
-	private updateResolvedState (comment: any) {
-		var threadIndexFirst = this.getRootIndexOf(comment.sectionProperties.data.id);
-		if (this.sectionProperties.commentList[threadIndexFirst].sectionProperties.data.resolved !== comment.sectionProperties.data.resolved) {
-			comment.sectionProperties.data.resolved = this.sectionProperties.commentList[threadIndexFirst].sectionProperties.data.resolved;
-			comment.update();
-			this.update();
 		}
 	}
 
-	private orderCommentList () {
-		this.sectionProperties.commentList.sort(function(a: any, b: any) {
-			return Math.abs(a.sectionProperties.data.anchorPos[1]) - Math.abs(b.sectionProperties.data.anchorPos[1]) ||
-				Math.abs(a.sectionProperties.data.anchorPos[0]) - Math.abs(b.sectionProperties.data.anchorPos[0]);
-		});
+	public onDraw () {}
+
+	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {}
+
+	public onMouseUp (point: Array<number>, e: MouseEvent) {}
+
+	public onMouseDown (point: Array<number>, e: MouseEvent) {}
+
+	public onMouseEnter () {
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+			// When mouse is above this section, comment's HTML element will be shown.
+			// If mouse pointer goes to HTML element, onMouseLeave event shouldn't be fired.
+			// But mouse pointer will have left the borders of this section and onMouseLeave event will be fired.
+			// Let's do it properly, when mouse is above this section, we will make this section's size bigger and onMouseLeave event will not be fired.
+			if (parseInt(this.sectionProperties.data.tab) === this.sectionProperties.docLayer._selectedPart) {
+				var containerWidth: number = this.sectionProperties.container.getBoundingClientRect().width;
+				var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+				this.size = [Math.round((this.sectionProperties.data.cellPos[2]) * ratio + containerWidth), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
+				this.show();
+			}
+		}
 	}
 
-	private turnIntoAList (commentList: any) {
-		var newArray;
-		if (!Array.isArray(commentList)) {
-			newArray = new Array(0);
-			for (var prop in commentList) {
-				if (Object.prototype.hasOwnProperty.call(commentList, prop)) {
-					newArray.push(commentList[prop]);
+	public onMouseLeave (point: Array<number>) {
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+			if (parseInt(this.sectionProperties.data.tab) === this.sectionProperties.docLayer._selectedPart) {
+				// Revert the changes we did on "onMouseEnter" event.
+				var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+				this.size = [Math.round((this.sectionProperties.data.cellPos[2]) * ratio), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
+				if (point) {
+					this.hide();
 				}
 			}
 		}
-		else {
-			newArray = commentList;
-		}
-		return newArray;
 	}
 
-	public importComments (commentList: any) {
-		var comment;
-		this.clearList();
-		commentList = this.turnIntoAList(commentList);
-
-		if (commentList.length > 0) {
-			for (var i = 0; i < commentList.length; i++) {
-				comment = commentList[i];
-				this.adjustComment(comment);
-				if (comment.author in this.map._viewInfoByUserName) {
-					comment.avatar = this.map._viewInfoByUserName[comment.author].userextrainfo.avatar;
-				}
-				var commentSection = new app.definitions.Comment(comment, {}, this);
-				this.containerObject.addSection(commentSection);
-				this.sectionProperties.commentList.push(commentSection);
-				this.updateResolvedState(this.sectionProperties.commentList[i]);
-			}
-
-			this.orderCommentList();
-			this.layout();
-		}
+	public onNewDocumentTopLeft () {
+		this.updatePosition();
 	}
 
-	// Remove only text comments from the document (excluding change tracking comments)
-	private clearList () {
-		for (var i: number = this.sectionProperties.commentList.length -1; i > -1; i--) {
-			if (!this.sectionProperties.commentList[i].trackchange) {
-				this.containerObject.removeSection(this.sectionProperties.commentList[i].name);
-				this.sectionProperties.commentList.splice(i, 1);
-			}
+	public onRemove () {
+		this.hideMarker();
+
+		var container = this.sectionProperties.container;
+		if (container && container.parentElement) {
+			setTimeout(function () {
+				container.parentElement.removeChild(container);
+			}, 100);
 		}
 
-		this.sectionProperties.selectedComment = null;
+		var data = this.sectionProperties.data;
+		if (data.textSelected) {
+			data.textSelected.parentElement.removeChild(data.textSelected);
+		}
+
+		var highlighter = document.getElementById('commented-text-highlighter-container-' + data.id);
+		if (highlighter)
+			highlighter.parentElement.removeChild(highlighter);
 	}
 
 	public onMouseWheel () {}
-	public onClick () {}
 	public onDoubleClick () {}
 	public onContextMenu () {}
 	public onLongPress () {}
