@@ -54,6 +54,8 @@
 
 #ifdef IOS
 #include <ios.h>
+#elif defined(__ANDROID__)
+#include "androidapp.hpp"
 #endif
 
 using std::size_t;
@@ -320,7 +322,7 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
     // Set automatic userid and username
     std::string userNameString;
 
-#ifdef IOS
+#if MOBILEAPP
     if (user_name != nullptr)
         userNameString = std::string(user_name);
 #endif
