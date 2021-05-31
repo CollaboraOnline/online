@@ -54,6 +54,8 @@
 
 #ifdef IOS
 #include <ios.h>
+#elif defined(__ANDROID__)
+#include "androidapp.hpp"
 #endif
 
 bool StorageBase::FilesystemEnabled;
@@ -306,7 +308,7 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
     const std::string userId = std::to_string(LastLocalStorageId++);
     std::string userNameString;
 
-#ifdef IOS
+#if MOBILEAPP
     if (user_name != nullptr)
         userNameString = std::string(user_name);
 #endif
