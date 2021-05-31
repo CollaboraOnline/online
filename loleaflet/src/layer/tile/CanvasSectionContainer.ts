@@ -125,6 +125,7 @@ class CanvasSectionObject {
 	dpiScale: number = null;
 	name: string = null;
 	backgroundColor: string = null; // Defult is null (container's background color will be used).
+	backgroundOpacity: number = 1; // Valid when backgroundColor is valid.
 	borderColor: string = null; // Default is null (no borders).
 	boundToSection: string = null;
 	anchor: Array<string> = new Array(0);
@@ -1395,8 +1396,10 @@ class CanvasSectionContainer {
 			if (this.sections[i].isLocated && this.sections[i].showSection && (!this.sections[i].documentObject || this.sections[i].isVisible)) {
 				this.context.translate(this.sections[i].myTopLeft[0], this.sections[i].myTopLeft[1]);
 				if (this.sections[i].backgroundColor) {
+					this.context.globalAlpha = this.sections[i].backgroundOpacity;
 					this.context.fillStyle = this.sections[i].backgroundColor;
 					this.context.fillRect(0, 0, this.sections[i].size[0], this.sections[i].size[1]);
+					this.context.globalAlpha = 1;
 				}
 
 				this.sections[i].onDraw(frameCount, elapsedTime);
