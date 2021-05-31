@@ -352,7 +352,6 @@ LOLEAFLET_JS =\
 	src/layer/AnnotationManagerBase.js \
 	src/layer/AnnotationManagerImpress.js \
 	src/control/Control.Scroll.Annotation.js \
-	src/layer/marker/Annotation.js \
 	src/layer/marker/DivOverlay.js \
 	src/main.js
 
@@ -666,7 +665,7 @@ pot:
 		src/control/Toolbar.js \
 		src/core/Socket.js \
 		src/errormessages.js \
-		src/layer/marker/Annotation.js \
+		src/layer/tile/CommentSection.js \
 		src/layer/marker/TextInput.js \
 		src/layer/tile/CalcTileLayer.js \
 		src/layer/tile/CanvasTileLayer.js \
