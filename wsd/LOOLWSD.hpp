@@ -253,8 +253,8 @@ public:
     static bool EnableTraceEventLogging;
     static FILE *TraceEventFile;
     static std::string LogLevel;
-    static std::string MaxLogLevelSettableFromClient;
-    static std::string MinLogLevelSettableFromClient;
+    static std::string MostVerboseLogLevelSettableFromClient;
+    static std::string LeastVerboseLogLevelSettableFromClient;
     static bool AnonymizeUserData;
     static bool CheckLoolUser;
     static bool CleanupOnly;
