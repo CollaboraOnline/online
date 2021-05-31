@@ -348,8 +348,14 @@
 	color: var(--blue1-txt-primary-color) !important;
 }
 
-.unotoolbutton.notebookbar.disabled:not(.unospan-shortcutstoolbox), .mobile-wizard-widebutton.disabled {
+.unotoolbutton.notebookbar.disabled:not(.unospan-shortcutstoolbox),
+.mobile-wizard-widebutton.disabled,
+.freemium-disabled {
 	opacity: 0.65;
+}
+
+.freemium-disabled:hover {
+	opacity: 1;
 }
 
 .unotoolbutton.notebookbar.disabled img, .mobile-wizard-widebutton.disabled img {

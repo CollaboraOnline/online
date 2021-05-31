@@ -307,15 +307,15 @@
 	border: 1px solid transparent;
 }
 
-.freemium-disabled {
+
+/* For classic mode */
+#main-menu .freemium-disabled, #menu-nb-hamburger .freemium-disabled {
 	color: var(--gray-light-txt--color) !important;
 	background-color: #fafafa;
 	box-shadow: inset 0 0 2px 0 rgba(0,0,0,0.2);
 }
 
-
-/* For classic mode */
-#main-menu .freemium-overlay {
+#main-menu .freemium-overlay, #menu-nb-hamburger .freemium-overlay {
 	position: absolute;
 	width: 100%;
 	height: 100%;
@@ -325,15 +325,15 @@
 	overflow: hidden;
 }
 
-#main-menu .freemium-disabled:hover {
+#main-menu .freemium-disabled:hover, #menu-nb-hamburger .freemium-disabled:hover {
 	background-color: #fafafa;
 }
 
-#main-menu .freemium-overlay:hover img {
+#main-menu .freemium-overlay:hover img, #menu-nb-hamburger .freemium-overlay:hover img {
 	top: 0;
 }
 
-#main-menu .freemium-overlay-lock {
+#main-menu .freemium-overlay-lock, #menu-nb-hamburger .freemium-overlay-lock {
 	position: absolute;
 	height: 48px;
 	top: 24px;
@@ -343,25 +343,22 @@
 }
 
 /* For notebook bar mode */
-.notebookbar .freemium-overlay {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	right: 0px;
-	bottom: 0px;
-	background-color: rgba(0,0,0,0.15);
-	z-index: 2;
-	border-radius: 4px;
-	text-align: center;
+.freemium-disabled > .notebookbar {
+	overflow: hidden;
 }
-
-.notebookbar .freemium-overlay-lock {
-	position: relative;
-	width: 8%;
-	top: 50%;
-	right: 0px;
+.freemium-disabled > .notebookbar img.unobutton {
+	background: url('images/lc_freeemiumlock.svg') center top / 24px no-repeat;
+	width: 24px !important;
+	padding-left: 24px;
+	box-sizing: border-box;
 }
-
+.freemium-disabled:hover > .notebookbar img.unobutton {
+	background-position: bottom;
+}
+.freemium-disabled > .notebookbar.has-label img.unobutton {
+	background-size: 32px;
+	padding-left: 32px;
+}
 /* For mobile mode */
 #mobile-wizard .freemium-overlay {
 	position: relative;
