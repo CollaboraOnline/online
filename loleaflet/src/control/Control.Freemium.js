@@ -38,39 +38,55 @@ L.Map.include({
 			$(DOMParentElement).addClass('freemium-disabled');
 			$(buttonToDisable).off('click');
 
-			var overlay = L.DomUtil.create('div', 'freemium-overlay', DOMParentElement);
-			var lock = L.DomUtil.create('img', 'freemium-overlay-lock', overlay);
-			lock.src = 'images/lc_freeemiumlock.svg';
-
 			var that = this;
-			$(overlay).click(function(event) {
-				event.stopPropagation();
-				that.openSubscriptionPopup();
-			});
+			// not using window.interface because even in notebookbar,
+			// we have hamburger menu which is like classic mode (accommodates properties like track changes)
+			// better to check where element exists in the DOM in this case
+			if ($(DOMParentElement).parents('.notebookbar').length) {
+				$(DOMParentElement).click(function(event) {
+					event.stopPropagation();
+					that.openSubscriptionPopup();
+				});
+			} else {
+				var overlay = L.DomUtil.create('div', 'freemium-overlay', DOMParentElement);
+				var lock = L.DomUtil.create('img', 'freemium-overlay-lock', overlay);
+				lock.src = 'images/lc_freeemiumlock.svg';
+
+				$(overlay).click(function(event) {
+					event.stopPropagation();
+					that.openSubscriptionPopup();
+				});
+			}
 		}
 	},
 
 	openSubscriptionPopup: function() {
-		var map = this;
-		var freemiumLocation = 'freemium.html';
-		if (window.socketProxy)
-			freemiumLocation = window.host + window.serviceRoot + '/loleaflet/dist/' + freemiumLocation;
-		$.get(freemiumLocation, function(data) {
-			console.debug(data);
-			map._doVexOpenFreemiumFile(data);
-		});
-	},
-
-	_doVexOpenFreemiumFile: function(data) {
-		var btnText = 'Unlock';
-		console.debug(data);
-		vex.dialog.open({
-			unsafeMessage: data,
+		var that = this;
+		vex.dialog.confirm({
+			unsafeMessage: [
+				'<div class="container">',
+				'<div class="item illustration"></div>',
+				'<div class="item">',
+				'<h1>' + this.Freemium.freemiumPurchaseTitle + '</h1>',
+				'<p>' + this.Freemium.freemiumPurchaseDiscription + '<p>',
+				'<ul>',
+				'<li>' + this.Freemium.writerHighlights + '</li>',
+				'<li>' + this.Freemium.calcHighlights + '</li>',
+				'<li>' + this.Freemium.impressHighlights + '</li>',
+				'<li>' + this.Freemium.drawHighlights + '</li>',
+				'</ul>',
+				'</div>',
+				'<div>'
+			].join(''),
 			showCloseButton: false,
 			contentClassName: 'vex-content vex-freemium',
+			callback: function (value) {
+				if (value)
+					window.open(that.Freemium.freemiumPurchaseLink, '_blank');
+			},
 			buttons: [
-				$.extend({}, vex.dialog.buttons.YES, { text: (btnText) }),
-				vex.dialog.buttons.NO
+				$.extend({}, vex.dialog.buttons.YES, { text: _('Unlock') }),
+				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
 			]
 		});
 	},
