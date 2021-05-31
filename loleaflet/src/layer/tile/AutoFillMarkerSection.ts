@@ -29,6 +29,8 @@ class AutoFillMarkerSection {
 	setPosition: Function; // Implemented by section container. Document objects only.
 	map: any;
 
+	private inSelection: boolean = false;
+
 	constructor () {
 		this.map = L.Map.THIS;
 
@@ -100,6 +102,7 @@ class AutoFillMarkerSection {
 		else {
 			this.sectionProperties.selectedAreaPoint = [point[0] - this.size[0] * 0.5, point[1] - this.size[1] * 0.5];
 		}
+		this.inSelection = true;
 		this.setMarkerPosition();
 	}
 
@@ -111,11 +114,29 @@ class AutoFillMarkerSection {
 		else {
 			this.sectionProperties.cellCursorPoint = [point[0] - this.size[0] * 0.5, point[1] - this.size[1] * 0.5];
 		}
+		this.inSelection = false;
 		this.setMarkerPosition();
 	}
 
 	public onDraw () {
+		if (!this.inSelection)
+			this.drawWhiteOuterBorders();
+	}
 
+	// This is for enhancing contrast of the marker with the background
+	// similar to what we have for cell cursors.
+	private drawWhiteOuterBorders () {
+		this.context.strokeStyle = 'white';
+		this.context.lineCap = 'square';
+		this.context.beginPath();
+		this.context.moveTo(-0.5, -0.5);
+		this.context.lineTo(Math.floor(this.size[0] / 2) - 1.5, -0.5);
+		this.context.stroke();
+
+		this.context.beginPath();
+		this.context.moveTo(-0.5, -0.5);
+		this.context.lineTo(-0.5, Math.floor(this.size[1] / 2) - 1.5);
+		this.context.stroke();
 	}
 
 	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
