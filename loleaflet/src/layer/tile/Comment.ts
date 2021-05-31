@@ -15,6 +15,7 @@ class Comment {
 	dpiScale: number = null;
 	name: string = L.CSections.Comment.name;
 	backgroundColor: string = '';
+	backgroundOpacity: number = 1; // Valid when backgroundColor is valid.
 	borderColor: string = null;
 	boundToSection: string = null;
 	anchor: Array<any> = new Array(0);
@@ -385,18 +386,24 @@ class Comment {
 	}
 
 	private removeHighlight () {
-		var selectionContainer = this.getContainerForCommentedText();
-		if (selectionContainer)
-			selectionContainer.style.display = 'block';
+		if (this.sectionProperties.docLayer._docType === 'text') {
+			var selectionContainer = this.getContainerForCommentedText();
+			if (selectionContainer)
+				selectionContainer.style.display = 'block';
 
-		var element = document.getElementById('commented-text-highlighter-container-' + this.sectionProperties.data.id);
-		if (element)
-			element.parentElement.removeChild(element);
+			var element = document.getElementById('commented-text-highlighter-container-' + this.sectionProperties.data.id);
+			if (element)
+				element.parentElement.removeChild(element);
 
-			this.sectionProperties.isHighlighted = false;
+				this.sectionProperties.isHighlighted = false;
+		}
+		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+			this.backgroundColor = null;
+			this.backgroundOpacity = 1;
+		}
 	}
 
-	public highlightSelectedText () {
+	public highlight () {
 		if (this.sectionProperties.docLayer._docType === 'text') {
 			var selectionContainer = this.getContainerForCommentedText();
 
@@ -410,9 +417,15 @@ class Comment {
 					selectionContainer.children[i].setAttribute('stroke', '#777777');
 					selectionContainer.children[i].setAttribute('fill', '#777777');
 				}
-				this.sectionProperties.isHighlighted = true;
 			}
 		}
+		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+			this.backgroundColor = '#777777'; //background: rgba(119, 119, 119, 0.25);
+			this.backgroundOpacity = 0.25;
+		}
+
+		this.containerObject.requestReDraw();
+		this.sectionProperties.isHighlighted = true;
 	}
 
 	// This is for svg elements that will be bound to document-container.
@@ -444,7 +457,7 @@ class Comment {
 		// If text is highlighted, refresh it.
 		if (document.getElementById('commented-text-highlighter-container-' + data.id)) {
 			this.removeHighlight();
-			this.highlightSelectedText();
+			this.highlight();
 		}
 	}
 
