@@ -636,7 +636,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
                                                                         const std::string& cookies,
                                                                         LockContext& lockCtx)
 {
-    ProfileZone profileZone("getWOPIFileInfo", { {"url", _fileUrl} });
+    ProfileZone profileZone("WopiStorage::getWOPIFileInfo", { {"url", _fileUrl} });
 
     // update the access_token to the one matching to the session
     Poco::URI uriObject(getUri());
@@ -958,6 +958,8 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
                                                     LockContext& /*lockCtx*/,
                                                     const std::string& templateUri)
 {
+    ProfileZone profileZone("WopiStorage::downloadStorageFileToLocal", { {"url", _fileUrl} });
+
     if (!templateUri.empty())
     {
         // Download the template file and load it normally.
@@ -1090,6 +1092,8 @@ WopiStorage::uploadLocalFileToStorage(const Authorization& auth, const std::stri
                                       LockContext& lockCtx, const std::string& saveAsPath,
                                       const std::string& saveAsFilename, const bool isRename)
 {
+    ProfileZone profileZone("WopiStorage::uploadLocalFileToStorage", { {"url", _fileUrl} });
+
     // TODO: Check if this URI has write permission (canWrite = true)
 
     const bool isSaveAs = !saveAsPath.empty() && !saveAsFilename.empty();
