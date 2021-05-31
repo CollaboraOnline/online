@@ -20,6 +20,7 @@
       "./node_modules/*",
       "js",
       "admin",
+      "lib",
       "mocha_tests",
       "docs",
       "test",

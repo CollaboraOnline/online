@@ -90,7 +90,7 @@ define npm_source
 endef
 
 LOLEAFLET_ADMIN_JS =\
-	$(srcdir)/admin/src/ModalDialogCreator.ts \
+	$(srcdir)/lib/ModalDialogCreator.ts \
 	$(srcdir)/admin/src/Base.js \
 	$(srcdir)/admin/src/Admin.js \
 	$(srcdir)/admin/src/AdminSocketBase.js \
@@ -696,6 +696,7 @@ l10n: pot
 clean-local:
 	@rm -rf $(DIST_FOLDER)
 	@rm -rf $(INTERMEDIATE_DIR)
+	@rm -rf $(TYPESCRIPT_JS_DIR)
 	@rm -rf node_modules
 	@rm -f $(abs_srcdir)/jsconfig.json
 	@rm -f $(abs_srcdir)/admin/jsconfig.json
