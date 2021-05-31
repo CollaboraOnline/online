@@ -694,7 +694,7 @@ L.Map.include({
 		}
 		var map = this;
 		var handler = function(event) {
-			if (event.keyCode === 68) { // 'd'
+			if (event.key === 'd') {
 				map._docLayer.toggleTileDebugMode();
 			} else if (event.key === 'l') {
 				// L toggges the Online logging level between the default (whatever
