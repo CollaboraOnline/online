@@ -268,16 +268,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder._fixedtextControl(parentContainer, fixedTextData, builder);
 		}
 
-		var div = L.DomUtil.create('div', 'spinfieldcontainer', parentContainer);
+		var div = L.DomUtil.create('div', builder.options.cssClass + ' spinfieldcontainer', parentContainer);
 		div.id = data.id;
 		controls['container'] = div;
 
-		var spinfield = L.DomUtil.create('input', 'spinfield', div);
+		var spinfield = L.DomUtil.create('input', builder.options.cssClass + ' spinfield', div);
 		spinfield.type = 'number';
 		controls['spinfield'] = spinfield;
 
 		if (data.unit) {
-			var unit = L.DomUtil.create('span', 'spinfieldunit', div);
+			var unit = L.DomUtil.create('span', builder.options.cssClass + ' spinfieldunit', div);
 			unit.innerHTML = builder._unitToVisibleString(data.unit);
 		}
 
