@@ -95,6 +95,7 @@ public class LOActivity extends AppCompatActivity {
     private static final String CLIPBOARD_FILE_PATH = "LibreofficeClipboardFile.data";
     private static final String CLIPBOARD_LOOL_SIGNATURE = "lool-clip-magic-4a22437e49a8-";
     public static final String RECENT_DOCUMENTS_KEY = "RECENT_DOCUMENTS_LIST";
+    private static String USER_NAME_KEY = "USER_NAME";
 
     private File mTempFile = null;
 
@@ -810,7 +811,8 @@ public class LOActivity extends AppCompatActivity {
         String apkFile = getApplication().getPackageResourcePath();
         AssetManager assetManager = getResources().getAssets();
         String uiMode = (isLargeScreen() && !isChromeOS()) ? "notebookbar" : "classic";
-        createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad, uiMode);
+        String userName = getPrefs().getString(USER_NAME_KEY, "Guest User");
+        createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad, uiMode, userName);
 
         // trigger the load of the document
         String finalUrlToLoad = "file:///android_asset/dist/loleaflet.html?file_path=" +
@@ -861,7 +863,7 @@ public class LOActivity extends AppCompatActivity {
     /**
      * Initialize the LOOLWSD to load 'loadFileURL'.
      */
-    public native void createLOOLWSD(String dataDir, String cacheDir, String apkFile, AssetManager assetManager, String loadFileURL, String uiMode);
+    public native void createLOOLWSD(String dataDir, String cacheDir, String apkFile, AssetManager assetManager, String loadFileURL, String uiMode, String userName);
 
     /**
      * Passing messages from JS (instead of the websocket communication).
