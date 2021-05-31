@@ -7,9 +7,10 @@ L.Map.include({
 	setPermission: function (perm) {
 		var button = $('#mobile-edit-button');
 		button.off('click');
+		button.hide();
 		var that = this;
 		if (perm === 'edit') {
-			if (window.mode.isMobile() || window.mode.isTablet()) {
+			if (this._isFilePlainText() || window.mode.isMobile() || window.mode.isTablet()) {
 				button.show();
 				button.on('click', function () {
 					that._switchToEditMode();
@@ -71,8 +72,19 @@ L.Map.include({
 		// do nothing if this.options.canTryLock is defined and is false
 	},
 
-	// from read-only to edit mode
-	_switchToEditMode: function () {
+	_getFileExtension: function (filename) {
+		return filename.substring(filename.lastIndexOf('.'));
+	},
+
+	_isFilePlainText: function () {
+		var fileName = this['wopi'].BaseFileName;
+		// use this feature for only integration.
+		if (!fileName) return false;
+		var extension = this._getFileExtension(fileName);
+		return extension === '.csv' || extension === '.txt';
+	},
+
+	_proceedEditMode: function() {
 		this.options.canTryLock = false; // don't respond to lockfailed anymore
 		$('#mobile-edit-button').hide();
 		this._enterEditMode('edit');
@@ -83,6 +95,48 @@ L.Map.include({
 			// not reason enough to pop up the on-screen keyboard.
 			if (!(window.ThisIsTheiOSApp || window.ThisIsTheAndroidApp))
 				this.focus();
+		}
+	},
+
+	_offerSaveAs: function() {
+		var that = this;
+		var fileName = this['wopi'].BaseFileName;
+		if (!fileName) return false;
+		var extension = this._getFileExtension(fileName);
+		var saveAsFormat = extension === '.csv' ? 'ods' : 'odt';
+		vex.dialog.prompt({
+			message: _('Enter a file name'),
+			placeholder: _('filename'),
+			callback: function (value) {
+				if (!value) return;
+				that.saveAs(value + '.' + saveAsFormat, saveAsFormat);
+			}
+		});
+	},
+
+	// from read-only to edit mode
+	_switchToEditMode: function () {
+		// This will be handled by the native mobile app instead
+		if (this._isFilePlainText() && !window.ThisIsAMobileApp) {
+			var that = this;
+			vex.dialog.open({
+				message: _('This document may contain formatting or content that cannot be saved in the current file format.'),
+				overlayClosesOnClick: false,
+				callback: L.bind(function (value) {
+					if (value) {
+						// offer save-as instead
+						this._offerSaveAs();
+					} else {
+						this._proceedEditMode();
+					}
+				}, that),
+				buttons: [
+					$.extend({}, vex.dialog.buttons.YES, { text: _('Save as ODF format') }),
+					$.extend({}, vex.dialog.buttons.NO, { text: _('Continue editing')})
+				]
+			});
+		} else {
+			this._proceedEditMode();
 		}
 	},
 
