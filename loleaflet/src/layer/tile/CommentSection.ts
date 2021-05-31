@@ -248,7 +248,6 @@ class Comment {
 	}
 
 	private updateContent () {
-		// .text() method will escape the string, does not interpret the string as HTML
 		this.sectionProperties.contentText.innerText = this.sectionProperties.data.text ? this.sectionProperties.data.text: '';
 		// Get the escaped HTML out and find for possible, useful links
 		var linkedText = Autolinker.link(this.sectionProperties.contentText.outerHTML);
@@ -388,14 +387,14 @@ class Comment {
 	private removeHighlight () {
 		if (this.sectionProperties.docLayer._docType === 'text') {
 			var selectionContainer = this.getContainerForCommentedText();
-			if (selectionContainer)
-				selectionContainer.style.display = 'block';
 
-			var element = document.getElementById('commented-text-highlighter-container-' + this.sectionProperties.data.id);
-			if (element)
-				element.parentElement.removeChild(element);
+			for (var i: number = selectionContainer.children.length - 1; i > -1; i--) {
+				var rectElement = selectionContainer.children[i];
+				rectElement.setAttributeNS(null, 'fill', this.sectionProperties.data.color);
+				rectElement.setAttributeNS(null, 'stroke', this.sectionProperties.data.color);
+			}
 
-				this.sectionProperties.isHighlighted = false;
+			this.sectionProperties.isHighlighted = false;
 		}
 		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
 			this.backgroundColor = null;
@@ -407,16 +406,10 @@ class Comment {
 		if (this.sectionProperties.docLayer._docType === 'text') {
 			var selectionContainer = this.getContainerForCommentedText();
 
-			if (selectionContainer) {
-				selectionContainer.style.display = 'none';
-				var highlighterContainer: SVGElement = (<any>document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
-				highlighterContainer = selectionContainer.cloneNode();
-				highlighterContainer.id = 'commented-text-highlighter-container-' + this.sectionProperties.data.id;
-				selectionContainer.parentElement.append(highlighterContainer);
-				for (var i = 0; i < selectionContainer.children.length; i++) {
-					selectionContainer.children[i].setAttribute('stroke', '#777777');
-					selectionContainer.children[i].setAttribute('fill', '#777777');
-				}
+			for (var i: number = selectionContainer.children.length - 1; i > -1; i--) {
+				var rectElement = selectionContainer.children[i];
+				rectElement.setAttributeNS(null, 'fill', '#777777');
+				rectElement.setAttributeNS(null, 'stroke', '#777777');
 			}
 		}
 		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
@@ -448,17 +441,10 @@ class Comment {
 	}
 
 	private updatePosition () {
-		var data = this.sectionProperties.data;
 		this.convertRectanglesToCoreCoordinates();
 		this.setPositionAndSize();
 		var container = this.getContainerForCommentedText();
 		this.createRectanglesForSelectedText(container);
-
-		// If text is highlighted, refresh it.
-		if (document.getElementById('commented-text-highlighter-container-' + data.id)) {
-			this.removeHighlight();
-			this.highlight();
-		}
 	}
 
 	private updateAnnotationMarker () {
@@ -568,10 +554,6 @@ class Comment {
 			data.textSelected.style.display = 'block';
 		}
 
-		var highlighter = document.getElementById('commented-text-highlighter-container-' + data.id); // Writer.
-		if (highlighter)
-			highlighter.style.display = 'block';
-
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet' && !(<any>window).mode.isMobile()) {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
 			var originalSize = [Math.round((this.sectionProperties.data.cellPos[2]) * ratio), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
@@ -596,10 +578,6 @@ class Comment {
 		if (data.textSelected) { // Writer.
 			data.textSelected.style.display = 'none';
 		}
-
-		var highlighter = document.getElementById('commented-text-highlighter-container-' + data.id); // Writer.
-		if (highlighter)
-			highlighter.style.display = 'none';
 
 		this.hideMarker();
 	}
@@ -821,10 +799,6 @@ class Comment {
 		if (data.textSelected) {
 			data.textSelected.parentElement.removeChild(data.textSelected);
 		}
-
-		var highlighter = document.getElementById('commented-text-highlighter-container-' + data.id);
-		if (highlighter)
-			highlighter.parentElement.removeChild(highlighter);
 	}
 
 	public onMouseWheel () {}
