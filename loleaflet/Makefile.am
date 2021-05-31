@@ -89,21 +89,19 @@ define npm_source
 	done
 endef
 
-LOLEAFLET_ADMIN_TS =\
-	admin/src/ModalDialogCreator.ts
-
-LOLEAFLET_ADMIN_TS_JS = $(patsubst %.ts,$(TYPESCRIPT_JS_DIR)/%.js,$(LOLEAFLET_ADMIN_TS))
-
 LOLEAFLET_ADMIN_JS =\
-	admin/src/Base.js \
-	admin/src/Admin.js \
-	admin/src/AdminSocketBase.js \
-	admin/src/Util.js \
-	admin/src/AdminSocketOverview.js \
-	admin/src/AdminSocketAnalytics.js \
-	admin/src/AdminSocketSettings.js \
-	admin/src/AdminSocketHistory.js \
-	admin/src/AdminSocketLog.js
+	$(srcdir)/admin/src/ModalDialogCreator.ts \
+	$(srcdir)/admin/src/Base.js \
+	$(srcdir)/admin/src/Admin.js \
+	$(srcdir)/admin/src/AdminSocketBase.js \
+	$(srcdir)/admin/src/Util.js \
+	$(srcdir)/admin/src/AdminSocketOverview.js \
+	$(srcdir)/admin/src/AdminSocketAnalytics.js \
+	$(srcdir)/admin/src/AdminSocketSettings.js \
+	$(srcdir)/admin/src/AdminSocketHistory.js \
+	$(srcdir)/admin/src/AdminSocketLog.js
+
+LOLEAFLET_ADMIN_JS_SRC = $(patsubst $(srcdir)/%.ts,$(TYPESCRIPT_JS_DIR)/%.js,$(LOLEAFLET_ADMIN_JS))
 
 NODE_MODULES_SRC =\
 	autolinker@3.14.1 \
@@ -467,11 +465,11 @@ $(DIST_FOLDER)/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
 	$(INTERMEDIATE_DIR)/admin-src.js
 	@NODE_PATH=$(abs_builddir)/node_modules:$(INTERMEDIATE_DIR) $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css $(if $(IS_DEBUG),--debug,-g uglifyify) -o $@ $(srcdir)/admin/main-admin.js
 
-$(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_TS_JS) $(LOLEAFLET_ADMIN_JS)
+$(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_JS_SRC)
 	@mkdir -p $(dir $@)
 	@echo "Checking for admin JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js --resolve-plugins-relative-to $(abs_builddir) --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc --no-eslintrc $(srcdir)/admin/src
-	@awk 'FNR == 1 {print ""} 1' $(LOLEAFLET_ADMIN_TS_JS) $(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_ADMIN_JS)) > $@
+	@awk 'FNR == 1 {print ""} 1' $(LOLEAFLET_ADMIN_JS_SRC) > $@
 
 $(INTERMEDIATE_DIR)/loleaflet-src.js: tscompile.done $(call prereq_loleaflet) $(LOLEAFLET_JS_DST)
 	@mkdir -p $(dir $@)
