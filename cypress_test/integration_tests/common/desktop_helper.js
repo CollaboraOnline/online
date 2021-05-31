@@ -213,6 +213,8 @@ function selectZoomLevel(zoomLevel) {
 	cy.get('#tb_actionbar_item_zoom')
 		.click();
 
+	cy.wait(1000);
+
 	cy.contains('.w2ui-drop-menu .menu-text', zoomLevel)
 		.click();
 
