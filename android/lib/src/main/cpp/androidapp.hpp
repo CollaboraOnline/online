@@ -7,6 +7,8 @@
 
 extern int loolwsd_server_socket_fd;
 
+extern const char* user_name;
+
 /** Equivalent of postMobileMessage(), but called directly from the native code. */
 void postDirectMessage(std::string message);
 
