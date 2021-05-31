@@ -28,6 +28,8 @@ const int SHOW_JS_MAXLEN = 70;
 
 int loolwsd_server_socket_fd = -1;
 
+const char* user_name;
+
 static std::string fileURL;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2] = {-1, -1};
@@ -298,7 +300,7 @@ extern "C" jboolean libreofficekit_initialize(JNIEnv* env, jstring dataDir, jstr
 
 /// Create the LOOLWSD instance.
 extern "C" JNIEXPORT void JNICALL
-Java_org_libreoffice_androidlib_LOActivity_createLOOLWSD(JNIEnv *env, jobject instance, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager, jstring loadFileURL, jstring uiMode)
+Java_org_libreoffice_androidlib_LOActivity_createLOOLWSD(JNIEnv *env, jobject instance, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager, jstring loadFileURL, jstring uiMode, jstring userName)
 {
     fileURL = std::string(env->GetStringUTFChars(loadFileURL, nullptr));
 
@@ -319,6 +321,8 @@ Java_org_libreoffice_androidlib_LOActivity_createLOOLWSD(JNIEnv *env, jobject in
     }
     const std::string userInterfaceMode = std::string(env->GetStringUTFChars(uiMode, nullptr));
     setupKitEnvironment(userInterfaceMode);
+    static const std::string userNameString = std::string(env->GetStringUTFChars(userName, nullptr));
+    user_name = userNameString.c_str();
     lokInitialized = true;
     libreofficekit_initialize(env, dataDir, cacheDir, apkFile, assetManager);
 
