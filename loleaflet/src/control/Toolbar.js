@@ -699,11 +699,18 @@ L.Map.include({
 			} else if (event.key === 'l') {
 				// L toggges the Online logging level between the default (whatever
 				// is set in loolwsd.xml or on the loolwsd command line) and the
-				// maximum a client is allowed to set (which also can be set in
+				// minumum a client is allowed to set (which also can be set in
 				// loolwsd.xml or on the loolwsd command line).
+				//
+				// "Minumum" here means "most verbose", i.e. the lowest priority of
+				// messages that get printed.
+				//
+				// In a typical developer "make run" setup, the default is "trace"
+				// so there is nothing more verbose. But presumably it is different
+				// in production setups.
 
 				app.socket.sendMessage('loggingleveloverride '
-						       + (app.socket.threadLocalLoggingLevelToggle ? 'default' : 'max'));
+						       + (app.socket.threadLocalLoggingLevelToggle ? 'default' : 'min'));
 
 				app.socket.threadLocalLoggingLevelToggle = !app.socket.threadLocalLoggingLevelToggle;
 			} else if (event.key === 't') {
