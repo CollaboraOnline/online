@@ -388,7 +388,7 @@ class Comment {
 		if (this.sectionProperties.docLayer._docType === 'text') {
 			var selectionContainer = this.getContainerForCommentedText();
 
-			for (var i: number = selectionContainer.children.length - 1; i > -1; i--) {
+			for (var i: number = 0; i < selectionContainer.children.length; i++) {
 				var rectElement = selectionContainer.children[i];
 				rectElement.setAttributeNS(null, 'fill', this.sectionProperties.data.color);
 				rectElement.setAttributeNS(null, 'stroke', this.sectionProperties.data.color);
@@ -406,10 +406,15 @@ class Comment {
 		if (this.sectionProperties.docLayer._docType === 'text') {
 			var selectionContainer = this.getContainerForCommentedText();
 
-			for (var i: number = selectionContainer.children.length - 1; i > -1; i--) {
+			for (var i: number = 0; i < selectionContainer.children.length; i++) {
 				var rectElement = selectionContainer.children[i];
 				rectElement.setAttributeNS(null, 'fill', '#777777');
 				rectElement.setAttributeNS(null, 'stroke', '#777777');
+			}
+			if (selectionContainer.children.length > 0) {
+				var x: number = Math.round(this.position[0] / this.dpiScale);
+				var y: number = Math.round(this.position[1] / this.dpiScale);
+				this.containerObject.getSectionWithName(L.CSections.Scroll.name).onScrollTo({x: x, y: y});
 			}
 		}
 		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
