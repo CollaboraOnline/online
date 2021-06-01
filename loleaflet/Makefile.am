@@ -7,7 +7,8 @@ BUNDLE ?= $(if $(filter true,$(ENABLE_DEBUG)),DEBUG,RELEASE)
 IS_DEBUG = $(if $(filter DEBUG,$(BUNDLE)),true,)
 
 DIST_FOLDER ?= $(builddir)/dist
-TYPESCRIPT_JS_DIR = $(builddir)/typescript_js
+INTERMEDIATE_DIR ?= $(if $(IS_DEBUG),$(abs_builddir)/debug,$(abs_builddir)/release)
+TYPESCRIPT_JS_DIR = $(INTERMEDIATE_DIR)/typescript_js
 
 export NODE_PATH=$(abs_builddir)/node_module
 
@@ -367,7 +368,6 @@ COMMA := ,
 EMPTY :=
 SPACE := $(EMPTY) $(EMPTY)
 LOLEAFLET_VERSION = $(shell cd $(srcdir) && git log -1 --pretty=format:"%h")
-INTERMEDIATE_DIR ?= $(if $(IS_DEBUG),$(abs_builddir)/debug,$(abs_builddir)/release)
 
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' -not -path './node_modules/*' | sed 's/.\///')
 
@@ -696,7 +696,6 @@ l10n: pot
 clean-local:
 	@rm -rf $(DIST_FOLDER)
 	@rm -rf $(INTERMEDIATE_DIR)
-	@rm -rf $(TYPESCRIPT_JS_DIR)
 	@rm -rf node_modules
 	@rm -f $(abs_srcdir)/jsconfig.json
 	@rm -f $(abs_srcdir)/admin/jsconfig.json
