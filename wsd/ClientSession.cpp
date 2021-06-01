@@ -364,6 +364,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     {
                         args.pop_back();
                         args = args + ",\"thread\":\"" + Util::getThreadName() + "\"}";
+                    } else if (args.length() == 0) {
+                        args = ",\"args\":{\"thread\":\"" + std::string(Util::getThreadName()) + "\"}";
                     }
 
                     uint64_t id;
