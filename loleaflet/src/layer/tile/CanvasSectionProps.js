@@ -11,12 +11,12 @@ L.CSections = {};
 L.CSections.Debug = {}; // For keeping things simple.
 
 // First definitions. Other properties will be written according to their orders.
+L.CSections.CommentList =			{ name: 'comment list'		, zIndex: 5	};
 L.CSections.Tiles = 				{ name: 'tiles'				, zIndex: 5 };
 L.CSections.Overlays =				{ name: 'overlay'			, zIndex: 5 };
 L.CSections.CalcGrid = 				{ name: 'calc grid'			, zIndex: 5 };
 L.CSections.Debug.Splits = 			{ name: 'splits'			, zIndex: 5 };
 L.CSections.Debug.TilePixelGrid = 	{ name: 'tile pixel grid'	, zIndex: 5 };
-L.CSections.CommentList =			{ name: 'comment list'		, zIndex: 5	};
 
 L.CSections.ColumnHeader = 			{ name: 'column header'		, zIndex: 5 };
 L.CSections.RowHeader = 			{ name: 'row header'		, zIndex: 5 };
@@ -38,23 +38,23 @@ L.CSections.AutoFillMarker = 		{ name: 'auto fill marker'	, zIndex: 10};
 
 /* zIndex = 5 */
 
+L.CSections.CommentList.processingOrder = 			24; // Writer & Impress. Before tiles section, because tiles section will be expanded into the empty area.
 L.CSections.CornerGroup.processingOrder =			25; // Calc.
 L.CSections.RowGroup.processingOrder =				27; // Calc.
 L.CSections.ColumnGroup.processingOrder =			29; // Calc.
 L.CSections.CornerHeader.processingOrder =			30; // Calc.
 L.CSections.RowHeader.processingOrder =				40; // Calc.
 L.CSections.ColumnHeader.processingOrder =			50; // Calc.
-L.CSections.CommentList.processingOrder = 			51; // Writer & Impress. Before tiles section, because tiles section will be expanded into the empty area.
 L.CSections.Tiles.processingOrder = 				60; // Writer & Impress & Calc.
 L.CSections.Overlays.processingOrder =				61; // Writer & Impress & Calc. This is bound to tiles.
 L.CSections.Debug.TilePixelGrid.processingOrder = 	62; // Writer & Impress & Calc. This is bound to tiles.
 L.CSections.CalcGrid.processingOrder = 				63; // Calc. This is bound to tiles.
 L.CSections.Debug.Splits.processingOrder = 			64; // Calc. This is bound to tiles.
 
+L.CSections.CommentList.drawingOrder =				30; // Writer & Impress.
 L.CSections.CalcGrid.drawingOrder = 				40; // Calc.
 L.CSections.Tiles.drawingOrder = 					50; // Writer & Impress & Calc.
 L.CSections.Debug.TilePixelGrid.drawingOrder = 		60; // Writer & Impress & Calc.
-L.CSections.CommentList.drawingOrder =				70; // Writer & Impress.
 L.CSections.Overlays.drawingOrder =					71; // Writer & Impress & Calc.
 L.CSections.CalcGrid.drawingOrderDebug =            80; // Calc debug mode.
 L.CSections.Debug.Splits.drawingOrder = 			90; // Calc.
