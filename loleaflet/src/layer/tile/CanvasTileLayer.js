@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData CPoint vex $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CBounds CCellCursor CCellSelection */
+/* global app L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData CPoint $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CBounds CCellCursor CCellSelection */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -1384,101 +1384,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			false, false, false, false, 0, null
 		);
 		return newEvent;
-	},
-
-	newAnnotationVex: function(comment, addCommentFn, isMod, displayContent) {
-		var that = this;
-
-		var commentData = null;
-		var content = '';
-		if (comment.author) {
-			// New comment - full data
-			commentData = comment;
-		} else {
-			// Modification
-			commentData = comment._data;
-			if (displayContent === undefined)
-				content = commentData.text;
-			else
-				content = displayContent;
-		}
-
-		var dialog = vex.dialog.open({
-			message: '',
-			input: [
-				'<textarea name="comment" class="loleaflet-annotation-textarea" required>' + content + '</textarea>'
-			].join(''),
-			buttons: [
-				$.extend({}, vex.dialog.buttons.YES, { text: _('Save') }),
-				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
-			],
-			callback: function (data) {
-				if (data) {
-					var annotation = null;
-					if (isMod) {
-						annotation = comment;
-					} else {
-						annotation = L.annotation(L.latLng(0, 0), comment, {noMenu: true}).addTo(that._map);
-						that._draft = annotation;
-					}
-
-					annotation._data.text = data.comment;
-					comment.text = data.comment;
-
-					// FIXME: Unify annotation code in all modules...
-					addCommentFn.call(that, {annotation: annotation}, comment);
-					if (!isMod)
-						that._map.removeLayer(annotation);
-				}
-			}
-		});
-
-		var tagTd = 'td',
-		empty = '',
-		tagDiv = 'div';
-		this._author = L.DomUtil.create('table', 'loleaflet-annotation-table');
-		var tbody = L.DomUtil.create('tbody', empty, this._author);
-		var tr = L.DomUtil.create('tr', empty, tbody);
-		var tdImg = L.DomUtil.create(tagTd, 'loleaflet-annotation-img', tr);
-		var tdAuthor = L.DomUtil.create(tagTd, 'loleaflet-annotation-author', tr);
-		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
-		imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg'));
-		imgAuthor.setAttribute('width', 32);
-		imgAuthor.setAttribute('height', 32);
-		this._authorAvatarImg = imgAuthor;
-		this._contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
-		this._contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
-
-		$(this._nodeModifyText).text(commentData.text);
-		$(this._contentAuthor).text(commentData.author);
-		$(this._authorAvatarImg).attr('src', commentData.avatar);
-		var user = this._map.getViewId(commentData.author);
-		if (user >= 0) {
-			var color = L.LOUtil.rgbToHex(this._map.getViewColor(user));
-			$(this._authorAvatarImg).css('border-color', color);
-		}
-
-		if (commentData.dateTime) {
-			var d = new Date(commentData.dateTime.replace(/,.*/, 'Z'));
-			var dateOptions = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-			$(this._contentDate).text(isNaN(d.getTime()) ? comment.dateTime: d.toLocaleDateString(String.locale, dateOptions));
-		}
-
-		dialog.contentEl.insertBefore(this._author, dialog.contentEl.childNodes[0]);
-
-		$(dialog.contentEl).find('textarea').focus();
-	},
-
-	clearAnnotations: function() {
-		console.debug('Implemented in child  classes');
-	},
-
-	layoutAnnotations: function () {
-		console.debug('Implemented in child  classes');
-	},
-
-	unselectAnnotations: function () {
-		console.debug('Implemented in child  classes');
 	},
 
 	registerExportFormat: function(label, format) {
