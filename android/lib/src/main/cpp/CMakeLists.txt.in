@@ -8,7 +8,7 @@ add_library(androidapp SHARED
             ../../../../../common/FileUtil.cpp
             ../../../../../common/Log.cpp
             ../../../../../common/MessageQueue.cpp
-            ../../../../../common/ProfileZone.cpp
+            ../../../../../common/TraceEvent.cpp
             ../../../../../common/Protocol.cpp
             ../../../../../common/StringVector.cpp
             ../../../../../common/Session.cpp
