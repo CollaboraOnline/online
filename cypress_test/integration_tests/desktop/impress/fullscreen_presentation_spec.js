@@ -29,7 +29,7 @@ describe('Fullscreen Presentation.', function() {
 	it('Text fields.', function() {
 		before('text_fields.odp');
 
-		cy.wait(1000);
+		cy.wait(3000);
 
 		cy.get('#id1').should('have.class', 'Slide');
 
