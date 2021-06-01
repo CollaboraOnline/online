@@ -25,11 +25,11 @@
 #if ENABLE_SSL
 #  include <SslSocket.hpp>
 #endif
-#include <common/ProfileZone.hpp>
+#include <common/TraceEvent.hpp>
 
 SocketPoll DumpSocketPoll("websocket");
 
-void ProfileZone::addOneRecording(const std::string &sRecording)
+void TraceEvent::emitOneRecording(const std::string &sRecording)
 {
     // Dummy.
     (void) sRecording;

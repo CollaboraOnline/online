@@ -51,7 +51,7 @@
 #include "ProofKey.hpp"
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
-#include <common/ProfileZone.hpp>
+#include <common/TraceEvent.hpp>
 
 #ifdef IOS
 #include <ios.h>

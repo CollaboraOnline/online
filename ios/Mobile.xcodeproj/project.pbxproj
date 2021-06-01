@@ -58,7 +58,7 @@
 		BE8D85D4214055F3009F1860 /* fundamentalrc in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85C6214055F3009F1860 /* fundamentalrc */; };
 		BE8D85D5214055F3009F1860 /* unorc in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85C7214055F3009F1860 /* unorc */; };
 		BE8D85D6214055F3009F1860 /* rc in Resources */ = {isa = PBXBuildFile; fileRef = BE8D85C8214055F3009F1860 /* rc */; };
-		BE9ADE3F265D046600BC034A /* ProfileZone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9ADE3D265D046600BC034A /* ProfileZone.cpp */; };
+		BE9ADE3F265D046600BC034A /* TraceEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE9ADE3D265D046600BC034A /* TraceEvent.cpp */; };
 		BEA2835621467FDD00848631 /* Kit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA2835521467FDD00848631 /* Kit.cpp */; };
 		BEA283582146945500848631 /* ChildSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA283572146945500848631 /* ChildSession.cpp */; };
 		BEA2835A21470A1C00848631 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA2835921470A1C00848631 /* WebKit.framework */; };
@@ -1065,8 +1065,8 @@
 		BE93D46A216D5582007A39F4 /* watermarkitem.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = watermarkitem.cxx; path = "../../ios-device/sfx2/source/doc/watermarkitem.cxx"; sourceTree = "<group>"; };
 		BE93D46B216D5582007A39F4 /* new.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = new.cxx; path = "../../ios-device/sfx2/source/doc/new.cxx"; sourceTree = "<group>"; };
 		BE93D46C216D5582007A39F4 /* objembed.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = objembed.cxx; path = "../../ios-device/sfx2/source/doc/objembed.cxx"; sourceTree = "<group>"; };
-		BE9ADE3D265D046600BC034A /* ProfileZone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProfileZone.cpp; sourceTree = "<group>"; };
-		BE9ADE3E265D046600BC034A /* ProfileZone.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProfileZone.hpp; sourceTree = "<group>"; };
+		BE9ADE3D265D046600BC034A /* TraceEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TraceEvent.cpp; sourceTree = "<group>"; };
+		BE9ADE3E265D046600BC034A /* TraceEvent.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TraceEvent.hpp; sourceTree = "<group>"; };
 		BEA1201A24C587D500332049 /* BitmapMedianFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapMedianFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapMedianFilter.cxx"; sourceTree = "<group>"; };
 		BEA1201B24C587D500332049 /* BitmapColorQuantizationFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapColorQuantizationFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapColorQuantizationFilter.cxx"; sourceTree = "<group>"; };
 		BEA1201C24C587D500332049 /* BitmapDisabledImageFilter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BitmapDisabledImageFilter.cxx; path = "../../ios-device/vcl/source/bitmap/BitmapDisabledImageFilter.cxx"; sourceTree = "<group>"; };
@@ -2332,8 +2332,8 @@
 				BEDCC84C2452F82800FB02BD /* MobileApp.cpp */,
 				BEDCC84D2452F82800FB02BD /* MobileApp.hpp */,
 				BE58E12A217F295B00249358 /* Png.hpp */,
-				BE9ADE3D265D046600BC034A /* ProfileZone.cpp */,
-				BE9ADE3E265D046600BC034A /* ProfileZone.hpp */,
+				BE9ADE3D265D046600BC034A /* TraceEvent.cpp */,
+				BE9ADE3E265D046600BC034A /* TraceEvent.hpp */,
 				BE5EB5BF213FE29900E0826C /* Protocol.cpp */,
 				BE58E12E217F295B00249358 /* Protocol.hpp */,
 				BE5EB5BB213FE29900E0826C /* Session.cpp */,
@@ -3967,7 +3967,7 @@
 				BE8D77352136762500AC58EA /* CODocument.mm in Sources */,
 				BE5EB5C7213FE29900E0826C /* Protocol.cpp in Sources */,
 				BE8D772F2136762500AC58EA /* DocumentBrowserViewController.mm in Sources */,
-				BE9ADE3F265D046600BC034A /* ProfileZone.cpp in Sources */,
+				BE9ADE3F265D046600BC034A /* TraceEvent.cpp in Sources */,
 				BE5EB5D0213FE2D000E0826C /* TileCache.cpp in Sources */,
 				BE5EB5C5213FE29900E0826C /* MessageQueue.cpp in Sources */,
 				BE7228E22417BC9F000ADABD /* StringVector.cpp in Sources */,
