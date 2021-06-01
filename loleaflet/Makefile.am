@@ -474,7 +474,7 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_JS_SRC)
 	@mkdir -p $(dir $@)
 	@echo "Checking for admin JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js --resolve-plugins-relative-to $(abs_builddir) --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc --no-eslintrc $(srcdir)/admin/src
-	@awk 'FNR == 1 {print ""} 1' $(LOLEAFLET_ADMIN_JS_SRC) > $@
+	@$(NODE) node_modules/uglify-js/bin/uglifyjs $(if $(IS_DEBUG),--source-map "url=inline $(COMMA) content=inline $(COMMA) includeSources=true",) -b -o $@ $(LOLEAFLET_ADMIN_JS_SRC)
 
 $(INTERMEDIATE_DIR)/loleaflet-src.js: tscompile.done $(call prereq_loleaflet) $(LOLEAFLET_JS_DST)
 	@mkdir -p $(dir $@)
