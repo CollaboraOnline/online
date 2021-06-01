@@ -563,7 +563,7 @@ $(DIST_FOLDER)/welcome/%.html: $(srcdir)/welcome/%.html
 	fi
 
 tscompile.done: $(LOLEAFLET_JS_SRC) $(LOLEAFLET_TS_SRC)
-	$(builddir)/node_modules/typescript/bin/tsc --typeRoots $(builddir)/node_modules/@types --outDir $(DIST_FOLDER)/src --rootDir $(srcdir)/src --allowJs true --checkJs false --project $(srcdir)/tsconfig.json
+	$(builddir)/node_modules/typescript/bin/tsc --typeRoots $(builddir)/node_modules/@types --outDir $(DIST_FOLDER)/src --rootDir $(srcdir)/src --checkJs false --project $(srcdir)/tsconfig.json
 	@touch $@
 
 $(LOLEAFLET_TS_JS_DST): tscompile.done
