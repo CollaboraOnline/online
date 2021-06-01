@@ -1123,7 +1123,7 @@ class CanvasSectionContainer {
 		}
 	}
 
-	reNewAllSections(redraw: boolean = true) {
+	public reNewAllSections(redraw: boolean = true) {
 		this.orderSections();
 		this.locateSections();
 		for (var i: number = 0; i < this.sections.length; i++) {
