@@ -44,7 +44,7 @@ class CommentSection {
 	anchor: Array<any> = new Array(0);
 	documentObject: boolean = false;
 	position: Array<number> = [0, 0];
-	size: Array<number> = [290, 0];
+	size: Array<number> = [0, 0];
 	expand: Array<string> = ['bottom'];
 	isLocated: boolean = false;
 	showSection: boolean = true;
@@ -61,17 +61,18 @@ class CommentSection {
 		this.map = L.Map.THIS;
 		// Below anchor list may be expanded. For example, Writer may have ruler section. Then ruler section should also be added here.
 		// If there is column header section, its bottom will be this section's top.
-		this.anchor = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], 'right'];
+		this.anchor = ['top', 'right'];
 		this.sectionProperties.docLayer = this.map._docLayer;
 		this.sectionProperties.commentList = new Array(0);
 		this.sectionProperties.selectedComment = null;
 		this.sectionProperties.arrow = null;
 		this.sectionProperties.initialLayoutData = null;
 		this.sectionProperties.showResolved = null;
-		this.sectionProperties.marginX = 40;
 		this.sectionProperties.marginY = 10;
 		this.sectionProperties.offset = 5;
 		this.sectionProperties.layoutTimer = null;
+		this.sectionProperties.width = 290; // Configurable variable.
+		this.size[0] = this.sectionProperties.width;
 	}
 
 	public onInitialize () {
@@ -89,6 +90,23 @@ class CommentSection {
 		if ((<any>window).mode.isMobile()) {
 			this.showSection = false;
 			this.size[0] = 0;
+		}
+	}
+
+	private checkSize () {
+		// When there is no comment || file is a spreadsheet || view type is mobile, we set this section's size to [0, 0].
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile() || this.sectionProperties.commentList.length === 0)
+		{
+			if (this.size[0] !== 0) {
+				this.size[0] = 0;
+				this.containerObject.reNewAllSections(true);
+			}
+		}
+		else {
+			if (this.size[0] !== this.sectionProperties.width) {
+				this.size[0] = this.sectionProperties.width;
+				this.containerObject.reNewAllSections(true);
+			}
 		}
 	}
 
@@ -300,6 +318,7 @@ class CommentSection {
 				break;
 			}
 		}
+		this.checkSize();
 	}
 
 	public click (annotation: any) {
@@ -724,6 +743,7 @@ class CommentSection {
 		}
 
 		this.orderCommentList();
+		this.checkSize();
 		return annotation;
 	}
 
@@ -1402,6 +1422,7 @@ class CommentSection {
 			}
 
 			this.orderCommentList();
+			this.checkSize();
 			this.layout();
 		}
 	}
@@ -1416,6 +1437,7 @@ class CommentSection {
 		}
 
 		this.sectionProperties.selectedComment = null;
+		this.checkSize();
 	}
 
 	public onMouseWheel () {}
