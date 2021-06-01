@@ -467,6 +467,9 @@ void SocketPoll::insertNewUnixSocket(
 
     std::static_pointer_cast<ProtocolHandlerInterface>(websocketHandler)->onConnect(socket);
     insertNewSocket(socket);
+
+    // We send lots of data back via this local UDS'
+    socket->setSocketBufferSize(Socket::MaximumSendBufferSize);
 }
 
 #else
