@@ -72,7 +72,6 @@ class CommentSection {
 		this.sectionProperties.marginY = 10;
 		this.sectionProperties.offset = 5;
 		this.sectionProperties.layoutTimer = null;
-		this.sectionProperties.draft = null;
 	}
 
 	public onInitialize () {
@@ -199,27 +198,14 @@ class CommentSection {
 		}
 	}
 
-	public newAnnotationVex (comment: any, addCommentFn: any, isMod: any, displayContent: string) {
+	public newAnnotationVex (comment: any, addCommentFn: any, isMod: any) {
 		var that = this;
-
-		var commentData = null;
-		var content = '';
-		if (comment.author) {
-			// New comment - full data
-			commentData = comment;
-		} else {
-			// Modification
-			commentData = comment.sectionProperties.data;
-			if (displayContent === undefined)
-				content = commentData.text;
-			else
-				content = displayContent;
-		}
+		var commentData = comment.sectionProperties.data;
 
 		var dialog = vex.dialog.open({
 			message: '',
 			input: [
-				'<textarea name="comment" class="loleaflet-annotation-textarea" required>' + content + '</textarea>'
+				'<textarea name="comment" class="loleaflet-annotation-textarea" required>' + commentData.text + '</textarea>'
 			].join(''),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.YES, { text: _('Save') }),
@@ -227,13 +213,7 @@ class CommentSection {
 			],
 			callback: function (data: any) {
 				if (data) {
-					var annotation = null;
-					if (isMod) {
-						annotation = comment;
-					} else {
-						annotation = that.add(comment, true);
-						that.sectionProperties.draft = annotation;
-					}
+					var annotation = comment;
 
 					annotation.sectionProperties.data.text = data.comment;
 					comment.text = data.comment;
@@ -241,6 +221,9 @@ class CommentSection {
 					addCommentFn.call(annotation, annotation, comment);
 					if (!isMod)
 						that.containerObject.removeSection(annotation);
+				}
+				else {
+					that.cancel(comment);
 				}
 			}
 		});
@@ -392,7 +375,7 @@ class CommentSection {
 				parent: annotation.sectionProperties.data.parent,
 				anchorPos: [annotation.sectionProperties.data.anchorPos[0], annotation.sectionProperties.data.anchorPos[1]]
 			};
-			this.newAnnotationVex(replyAnnotation, annotation.onReplyClick,/* isMod */ false, '');
+			this.newAnnotationVex(this.add(replyAnnotation, true), annotation.onReplyClick,/* isMod */ false);
 		}
 		else {
 			annotation.reply();
@@ -404,7 +387,7 @@ class CommentSection {
 	public modify (annotation: any) {
 		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
 			var that = this;
-			this.newAnnotationVex(annotation, function(annotation: any) { that.save(annotation); }, /* isMod */ true, '');
+			this.newAnnotationVex(annotation, function(annotation: any) { that.save(annotation); }, /* isMod */ true);
 		} else {
 			annotation.edit();
 			this.select(annotation);
@@ -723,6 +706,8 @@ class CommentSection {
 
 	public add (comment: any, mobileReply: boolean = false) {
 		var annotation = new app.definitions.Comment(comment, comment.id === 'new' ? {noMenu: true} : {}, this);
+		if (mobileReply)
+			annotation.name += '-reply'; // Section name.
 
 		if (comment.parent && comment.parent > '0') {
 			var parentIdx = this.getIndexOf(comment.parent);
@@ -734,8 +719,6 @@ class CommentSection {
 			this.showHideComment(annotation);
 		}
 		else {
-			if (mobileReply)
-				annotation.name += '-reply'; // Section name.
 			this.containerObject.addSection(annotation);
 			this.sectionProperties.commentList.push(annotation);
 		}
