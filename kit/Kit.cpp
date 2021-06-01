@@ -67,7 +67,7 @@
 #include "RenderTiles.hpp"
 #include "SetupKitEnvironment.hpp"
 #include <common/ConfigUtil.hpp>
-#include <common/ProfileZone.hpp>
+#include <common/TraceEvent.hpp>
 
 #if !MOBILEAPP
 #include <common/SigUtil.hpp>
@@ -131,7 +131,7 @@ static uint64_t AnonymizationSalt = 82589933;
 /// system root, not the jail.
 static std::string JailRoot;
 
-static void flushProfileZoneRecordings();
+static void flushTraceEventRecordings();
 
 #if !MOBILEAPP
 
@@ -651,7 +651,7 @@ public:
             if (num_sessions == 0)
             {
                 LOG_FTL("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
-                flushProfileZoneRecordings();
+                flushTraceEventRecordings();
                 Log::shutdown();
                 std::_Exit(EX_OK);
             }
@@ -1027,7 +1027,7 @@ private:
             if (_sessions.empty())
             {
                 LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
-                flushProfileZoneRecordings();
+                flushTraceEventRecordings();
                 Log::shutdown();
                 std::_Exit(EX_OK);
             }
@@ -1637,7 +1637,7 @@ public:
         {
             LOG_FTL("drainQueue: Exception: " << exc.what());
 #if !MOBILEAPP
-            flushProfileZoneRecordings();
+            flushTraceEventRecordings();
             Log::shutdown();
             std::_Exit(EX_SOFTWARE);
 #endif
@@ -1646,7 +1646,7 @@ public:
         {
             LOG_FTL("drainQueue: Unknown exception");
 #if !MOBILEAPP
-            flushProfileZoneRecordings();
+            flushTraceEventRecordings();
             Log::shutdown();
             std::_Exit(EX_SOFTWARE);
 #endif
@@ -1777,47 +1777,47 @@ private:
 #if !defined FUZZER && !defined BUILDING_TESTS && !MOBILEAPP
 
 // When building the fuzzer we link LOOLWSD.cpp into the same executable so the
-// Protected::addOneRecording() there gets used. When building the unit tests the one in
-// ProfileZone.cpp gets used.
+// Protected::emitOneRecording() there gets used. When building the unit tests the one in
+// TraceEvent.cpp gets used.
 
-static constexpr int profileZoneRecordingsCapacity = 100;
-static std::vector<std::string> profileZoneRecordings;
+static constexpr int traceEventRecordingsCapacity = 100;
+static std::vector<std::string> traceEventRecordings;
 
-static void flushProfileZoneRecordings()
+static void flushTraceEventRecordings()
 {
-    if (profileZoneRecordings.size() == 0)
+    if (traceEventRecordings.size() == 0)
         return;
 
     std::size_t totalLength = 0;
-    for (const auto& i: profileZoneRecordings)
+    for (const auto& i: traceEventRecordings)
         totalLength += i.length();
 
     std::string recordings;
     recordings.reserve(totalLength);
 
-    for (const auto& i: profileZoneRecordings)
+    for (const auto& i: traceEventRecordings)
         recordings += i;
 
     singletonDocument->sendTextFrame("trace: \n" + recordings);
-    profileZoneRecordings.clear();
+    traceEventRecordings.clear();
 }
 
-void ProfileZone::addOneRecording(const std::string &recording)
+void TraceEvent::emitOneRecording(const std::string &recording)
 {
     static const bool traceEventsEnabled = config::getBool("trace_event[@enable]", false);
     if (!traceEventsEnabled)
         return;
 
-    if (profileZoneRecordings.size() >= profileZoneRecordingsCapacity)
-        flushProfileZoneRecordings();
-    else if (profileZoneRecordings.size() == 0 && profileZoneRecordings.capacity() < profileZoneRecordingsCapacity)
-        profileZoneRecordings.reserve(profileZoneRecordingsCapacity);
-    profileZoneRecordings.emplace_back(recording);
+    if (traceEventRecordings.size() >= traceEventRecordingsCapacity)
+        flushTraceEventRecordings();
+    else if (traceEventRecordings.size() == 0 && traceEventRecordings.capacity() < traceEventRecordingsCapacity)
+        traceEventRecordings.reserve(traceEventRecordingsCapacity);
+    traceEventRecordings.emplace_back(recording);
 }
 
 #else
 
-static void flushProfileZoneRecordings()
+static void flushTraceEventRecordings()
 {
 }
 
@@ -2080,7 +2080,7 @@ protected:
         {
 #if !MOBILEAPP
             LOG_INF("Terminating immediately due to parent 'exit' command.");
-            flushProfileZoneRecordings();
+            flushTraceEventRecordings();
             Log::shutdown();
             std::_Exit(EX_SOFTWARE);
 #else
@@ -2644,7 +2644,7 @@ void lokit_main(
 #if !MOBILEAPP
 
     LOG_INF("Process finished.");
-    flushProfileZoneRecordings();
+    flushTraceEventRecordings();
     Log::shutdown();
     // Wait for the signal handler, if invoked, to prevent exiting until done.
     SigUtil::waitSigHandlerTrap();

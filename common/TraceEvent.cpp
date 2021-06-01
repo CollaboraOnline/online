@@ -1,0 +1,213 @@
+/* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4; fill-column: 100 -*- */
+/*
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
+
+// To build a freestanding test executable for just Tracevent:
+// clang++ -Wall -Wextra -DTEST_TRACEEVENT_EXE TraceEvent.cpp -o TraceEvent -pthread
+
+#include <cassert>
+#include <mutex>
+#include <sstream>
+
+#include "TraceEvent.hpp"
+
+std::atomic<bool> TraceEvent::recordingOn(false);
+
+thread_local int TraceEvent::threadLocalNesting = 0; // level of overlapped zones
+
+static std::mutex mutex;
+
+void TraceEvent::emitInstantEvent(const std::string& name, const std::string& args)
+{
+    if (!recordingOn)
+        return;
+
+#ifdef TEST_TRACEEVENT_EXE
+    static thread_local int threadId = 0;
+    static int threadCounter = 1;
+
+    if (!threadId)
+        threadId = threadCounter++;
+#else
+    auto threadId = Util::getThreadId();
+#endif
+
+    emitOneRecording("{"
+                     "\"name\":\""
+                     + name
+                     + "\","
+                       "\"ph\":\"i\""
+                     + args
+                     + ",\"ts\":"
+                     + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(
+                              std::chrono::system_clock::now().time_since_epoch())
+                              .count())
+                     + ","
+                       "\"pid\":"
+                     + std::to_string(getpid())
+                     + ","
+                       "\"tid\":"
+                     + std::to_string(threadId)
+                     + "}"
+                     // We add a trailing comma and newline, it is up to the code that handles these "recordings"
+                     // (outputs them into a JSON array) to remove the final comma before adding the terminating
+                     // ']'.
+                       ",\n");
+}
+
+void TraceEvent::startRecording()
+{
+    recordingOn = true;
+    threadLocalNesting = 0;
+}
+
+void TraceEvent::stopRecording() { recordingOn = false; }
+
+void ProfileZone::emitRecording()
+{
+    assert(recordingOn);
+
+#ifdef TEST_TRACEEVENT_EXE
+    static thread_local int threadId = 0;
+    static int threadCounter = 1;
+
+    if (!threadId)
+        threadId = threadCounter++;
+#else
+    auto threadId = Util::getThreadId();
+#endif
+    auto now = std::chrono::system_clock::now();
+
+    // Generate a single "Complete Event" (type X)
+    auto duration = now - _createTime;
+    std::string recordingData(
+        "{"
+        "\"name\":\""
+        + std::string(_name)
+        + "\","
+          "\"ph\":\"X\","
+          "\"ts\":"
+        + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(
+                             _createTime.time_since_epoch())
+                             .count())
+        + ","
+          "\"dur\":"
+        + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(duration).count())
+        + ","
+          "\"pid\":"
+        + std::to_string(_pid)
+        + ","
+          "\"tid\":"
+        + std::to_string(threadId)
+        + _args
+        + "}"
+        // We emit a trailing comma and newline, it is up to the code that handles these "recordings"
+        // (outputs them into a JSON array) to remove the final comma before emiting the terminating
+        // ']'.
+          ",\n");
+    std::lock_guard<std::mutex> guard(mutex);
+    emitOneRecording(recordingData);
+}
+
+#ifdef BUILDING_TESTS
+
+void TraceEvent::emitOneRecording(const std::string &recording)
+{
+    // Dummy.
+    (void) recording;
+}
+
+#endif // BUILDING_TESTS
+
+#ifdef TEST_TRACEEVENT_EXE
+
+#include <iostream>
+#include <thread>
+
+void TraceEvent::emitOneRecording(const std::string &recording)
+{
+    std::cout << "  " << recording;
+}
+
+int main(int, char**)
+{
+    std::cout << "[\n";
+
+    TraceEvent::startRecording();
+
+    {
+        ProfileZone b("first block");
+
+        for (auto n = 0; n < 100000000; n++)
+        {
+            volatile auto x = n * 42;
+            (void)x;
+        }
+    }
+
+    std::thread t1([]() {
+        ProfileZone b("thread t1");
+
+        for (auto n = 0; n < 400000000; n++)
+        {
+            volatile auto x = n * 42;
+            (void)x;
+        }
+    });
+
+    std::thread t2([]() {
+        ProfileZone b("thread t2");
+
+        for (auto n = 0; n < 400000000; n++)
+        {
+            auto x = n * 42ll;
+            if (n % 50000000 == 0)
+                TraceEvent::emitInstantEvent("instant t2." + std::to_string(x));
+        }
+    });
+
+    std::thread t3([]() {
+        ProfileZone b("thread t3", { { "foo", "bar"} } );
+
+        for (auto n = 0; n < 400000000; n++)
+        {
+            auto x = n * 42ll;
+            if (n % 50000000 == 0)
+                TraceEvent::emitInstantEvent("instant t3." + std::to_string(x));
+        }
+    });
+
+    {
+        ProfileZone b("second block");
+
+        for (auto n = 0; n < 300000000; n++)
+        {
+            auto x = n * 42ll;
+            if (n % 50000000 == 0)
+                TraceEvent::emitInstantEvent("instant m." + std::to_string(x));
+        }
+    }
+
+    t1.join();
+    t2.join();
+    t3.join();
+
+    // Intentional misuse: overlapping ProfileZones. Will generate "Incorrect ProfileZone nesting" messages.
+    auto p1 = new ProfileZone("p1");
+    auto p2 = new ProfileZone("p2");
+    delete p1;
+    delete p2;
+
+    // Add a dummy integer last in the array to avoid incorrect JSON syntax
+    std::cout << "  0\n";
+    std::cout << "]\n";
+
+    return 0;
+}
+
+#endif
+
+/* vim:set shiftwidth=4 softtabstop=4 expandtab: */
