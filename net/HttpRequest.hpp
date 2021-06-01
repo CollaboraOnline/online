@@ -981,8 +981,8 @@ public:
     /// Note: when the server returns an error, the response body,
     /// if any, will be stored in memory and can be read via getBody().
     /// I.e. when statusLine().statusCategory() != StatusLine::StatusCodeClass::Successful.
-    const std::shared_ptr<const Response> syncDownload(const Request& req,
-                                                       const std::string& saveToFilePath)
+    const std::shared_ptr<const Response>
+    syncDownload(const Request& req, const std::string& saveToFilePath, SocketPoll& poller)
     {
         LOG_TRC("syncDownload: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
                                  << req.getUrl());
@@ -992,7 +992,27 @@ public:
         if (!saveToFilePath.empty())
             _response->saveBodyToFile(saveToFilePath);
 
-        syncRequestImpl();
+        syncRequestImpl(poller);
+        return _response;
+    }
+
+    /// Make a synchronous request to download a file to the given path.
+    const std::shared_ptr<const Response> syncDownload(const Request& req,
+                                                       const std::string& saveToFilePath)
+    {
+        TerminatingPoll poller("HttpSynReqPoll");
+        return syncDownload(req, saveToFilePath, poller);
+    }
+
+    /// Make a synchronous request.
+    /// The payload body of the response, if any, can be read via getBody().
+    const std::shared_ptr<const Response> syncRequest(const Request& req, SocketPoll& poller)
+    {
+        LOG_TRC("syncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
+                                << req.getUrl());
+
+        newRequest(req);
+        syncRequestImpl(poller);
         return _response;
     }
 
@@ -1000,12 +1020,8 @@ public:
     /// The payload body of the response, if any, can be read via getBody().
     const std::shared_ptr<const Response> syncRequest(const Request& req)
     {
-        LOG_TRC("syncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
-                                << req.getUrl());
-
-        newRequest(req);
-        syncRequestImpl();
-        return _response;
+        TerminatingPoll poller("HttpSynReqPoll");
+        return syncRequest(req, poller);
     }
 
     /// Make a synchronous request with the given timeout.
@@ -1026,6 +1042,11 @@ public:
         return responsePtr;
     }
 
+    /// Start an asynchronous request on the given SocketPoll.
+    /// Return true when it dispatches the socket to the SocketPoll.
+    /// Note: when reusing this Session, it is assumed that the socket
+    /// is already added to the SocketPoll on a previous call (do not
+    /// use multiple SocketPoll instances on the same Session).
     bool asyncRequest(const Request& req, SocketPoll& poll)
     {
         LOG_TRC("asyncRequest: " << req.getVerb() << ' ' << host() << ':' << port() << ' '
@@ -1051,7 +1072,7 @@ public:
 
 private:
     /// Make a synchronous request.
-    bool syncRequestImpl()
+    bool syncRequestImpl(SocketPoll& poller)
     {
         const std::chrono::microseconds timeout = getTimeout();
         const auto deadline = std::chrono::steady_clock::now() + timeout;
@@ -1060,8 +1081,6 @@ private:
 
         if (!isConnected() && !connect())
             return false;
-
-        SocketPoll poller("HttpSynReqPoll");
 
         poller.insertNewSocket(_socket);
         poller.poll(timeout);
