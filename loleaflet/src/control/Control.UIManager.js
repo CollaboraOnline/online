@@ -88,7 +88,7 @@ L.Control.UIManager = L.Control.extend({
 						type: 'container',
 						vertical: 'true',
 						children: [
-							{id: 'busyspinner', type: 'spinner'},
+							{id: 'busyspinner', type: 'spinnerimg'},
 							{id: 'busylabel', type: 'fixedtext', text: label}
 						]
 					}
