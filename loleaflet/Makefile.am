@@ -435,8 +435,10 @@ endif
 
 $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 	@mkdir -p $(dir $@)
-	@$(NODE) node_modules/eslint/bin/eslint.js --resolve-plugins-relative-to $(abs_builddir) \
-		--no-eslintrc --config $(srcdir)/.eslintrc --parser @typescript-eslint/parser $<
+	@if test "$(dir $<)" = "$(srcdir)/lib/"; then \
+		$(NODE) node_modules/eslint/bin/eslint.js --resolve-plugins-relative-to $(abs_builddir) \
+			--no-eslintrc --config $(srcdir)/.eslintrc --parser @typescript-eslint/parser $<; \
+	fi
 	@$(builddir)/node_modules/typescript/bin/tsc $(if $(IS_DEBUG),--inlineSourceMap --inlineSources,) \
 		--outFile $@ $<
 
