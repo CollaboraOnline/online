@@ -1064,18 +1064,26 @@ public:
 
         newRequest(req);
 
-        if (!isConnected() && connect())
+        if (!isConnected())
         {
+            std::shared_ptr<StreamSocket> socket = connect();
+            if (!socket)
+            {
+                LOG_ERR("Failed to connect to " << _host << ':' << _port);
+                return false;
+            }
+
+            assert(_socket.lock() && "Connect must set the _socket member.");
             LOG_TRC("Connected");
-            poll.insertNewSocket(_socket);
-        }
-        else if (!_socket)
-        {
-            LOG_ERR("Failed to connect to " << _host << ':' << _port);
-            return false;
+            poll.insertNewSocket(socket);
         }
         else
+        {
+            // Technically, there is a race here. The socket can
+            // get disconnected and removed right after isConnected.
+            // In that case, we will timeout and no request will be sent.
             poll.wakeupWorld();
+        }
 
         return true;
     }
@@ -1089,10 +1097,18 @@ private:
 
         assert(!!_response && "Response must be set!");
 
-        if (!isConnected() && !connect())
-            return false;
+        if (!isConnected())
+        {
+            std::shared_ptr<StreamSocket> socket = connect();
+            if (!socket)
+            {
+                LOG_ERR("Failed to connect to " << _host << ':' << _port);
+                return false;
+            }
 
-        poller.insertNewSocket(_socket);
+            poller.insertNewSocket(socket);
+        }
+
         poller.poll(timeout);
         while (!_response->done())
         {
@@ -1144,9 +1160,16 @@ private:
 
     void onConnect(const std::shared_ptr<StreamSocket>& socket) override
     {
-        LOG_TRC("onConnect");
-        LOG_TRC('#' << socket->getFD() << " Connected.");
-        _connected = true;
+        if (socket)
+        {
+            LOG_TRC('#' << socket->getFD() << " Connected.");
+            _connected = true;
+        }
+        else
+        {
+            LOG_DBG("Error: onConnect without a valid socket");
+            _connected = false;
+        }
     }
 
     void shutdown(bool /*goingAway*/, const std::string& /*statusMessage*/) override
@@ -1157,7 +1180,14 @@ private:
     void getIOStats(uint64_t& sent, uint64_t& recv) override
     {
         LOG_TRC("getIOStats");
-        _socket->getIOStats(sent, recv);
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+            socket->getIOStats(sent, recv);
+        else
+        {
+            sent = 0;
+            recv = 0;
+        }
     }
 
     int getPollEvents(std::chrono::steady_clock::time_point /*now*/,
@@ -1172,18 +1202,19 @@ private:
 
     virtual void handleIncomingMessage(SocketDisposition& disposition) override
     {
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
         if (!isConnected())
         {
             LOG_ERR("handleIncomingMessage called when not connected.");
-            assert(!_socket && "Expected no socket when not connected.");
+            assert(!socket && "Expected no socket when not connected.");
             return;
         }
 
-        assert(_socket && "No valid socket to handleIncomingMessage.");
-        LOG_TRC('#' << _socket->getFD() << " handleIncomingMessage.");
+        assert(socket && "No valid socket to handleIncomingMessage.");
+        LOG_TRC('#' << socket->getFD() << " handleIncomingMessage.");
 
         bool close = false;
-        std::vector<char>& data = _socket->getInBuffer();
+        std::vector<char>& data = socket->getInBuffer();
 
         // Consume the incoming data by parsing and processing the body.
         const int64_t read = _response->readData(data.data(), data.size());
@@ -1209,14 +1240,15 @@ private:
     void performWrites(std::size_t capacity) override
     {
         // We may get called after disconnecting and freeing the Socket instance.
-        if (_socket)
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
         {
-            Buffer& out = _socket->getOutBuffer();
+            Buffer& out = socket->getOutBuffer();
             LOG_TRC("performWrites: " << out.size() << " bytes, capacity: " << capacity);
 
-            if (!_socket->send(_request))
+            if (!socket->send(_request))
             {
-                LOG_ERR('#' << _socket->getFD() << " Error while writing to socket.");
+                LOG_ERR('#' << socket->getFD() << " Error while writing to socket.");
             }
         }
     }
@@ -1226,10 +1258,11 @@ private:
         LOG_TRC("onDisconnect");
 
         // Make sure the socket is disconnected and released.
-        if (_socket)
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
         {
-            _socket->shutdown(); // Flag for shutdown for housekeeping in SocketPoll.
-            _socket->closeConnection(); // Immediately disconnect.
+            socket->shutdown(); // Flag for shutdown for housekeeping in SocketPoll.
+            socket->closeConnection(); // Immediately disconnect.
             _socket.reset();
         }
 
@@ -1238,11 +1271,13 @@ private:
             _response->finish();
     }
 
-    bool connect()
+    std::shared_ptr<StreamSocket> connect()
     {
         _socket.reset(); // Reset to make sure we are disconnected.
-        _socket = net::connect(_host, _port, isSecure(), shared_from_this());
-        return _socket != nullptr;
+        std::shared_ptr<StreamSocket> socket =
+            net::connect(_host, _port, isSecure(), shared_from_this());
+        _socket = socket; // Hold a weak pointer to it.
+        return socket; // Return the shared pointer.
     }
 
     void checkTimeout(std::chrono::steady_clock::time_point now) override
@@ -1254,7 +1289,9 @@ private:
             std::chrono::duration_cast<std::chrono::milliseconds>(now - _startTime);
         if (duration > getTimeout())
         {
-            LOG_WRN("Socket #" << _socket->getFD() << " has timed out while requesting ["
+            std::shared_ptr<StreamSocket> socket = _socket.lock();
+            const int fd = socket ? socket->getFD() : 0;
+            LOG_WRN("Socket #" << fd << " has timed out while requesting ["
                                << _request.getVerb() << ' ' << _host << _request.getUrl()
                                << "] after " << duration);
 
@@ -1282,7 +1319,7 @@ private:
     Request _request;
     FinishedCallback _onFinished;
     std::shared_ptr<Response> _response;
-    std::shared_ptr<StreamSocket> _socket; //< Must be the last member.
+    std::weak_ptr<StreamSocket> _socket; //< Must be the last member.
 };
 
 /// HTTP Get a URL synchronously.
