@@ -920,8 +920,17 @@ public:
 
         scheme = Util::toLower(std::move(scheme));
         const bool secure = (scheme == "https://" || scheme == "wss://");
-        return create(hostname, secure ? Protocol::HttpSsl : Protocol::HttpUnencrypted,
-                      std::stoi(portString));
+        const auto protocol = secure ? Protocol::HttpSsl : Protocol::HttpUnencrypted;
+        if (portString.empty())
+            return create(hostname, protocol, getDefaultPort(protocol));
+
+        const std::pair<std::int32_t, bool> portPair = Util::i32FromString(portString);
+        if (portPair.second && portPair.first > 0)
+            return create(hostname, protocol, portPair.first);
+
+        LOG_ERR("Invalid port [" << portString << "] in URI [" << uri
+                                 << "] to http::Session::create.");
+        return nullptr;
     }
 
     /// Returns the given protocol's default port.
