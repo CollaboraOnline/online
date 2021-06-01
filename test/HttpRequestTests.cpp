@@ -46,6 +46,8 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(HttpRequestTests);
 
     CPPUNIT_TEST(testInvalidURI);
+    CPPUNIT_TEST(testBadResponse);
+    CPPUNIT_TEST(testGoodResponse);
     CPPUNIT_TEST(testSimpleGet);
     CPPUNIT_TEST(testSimpleGetSync);
     CPPUNIT_TEST(test500GetStatuses); // Slow.
@@ -59,6 +61,8 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE_END();
 
     void testInvalidURI();
+    void testBadResponse();
+    void testGoodResponse();
     void testSimpleGet();
     void testSimpleGetSync();
     void test500GetStatuses();
@@ -160,6 +164,64 @@ void HttpRequestTests::testInvalidURI()
 {
     // Cannot create from a blank URI.
     LOK_ASSERT(http::Session::createHttp(std::string()) == nullptr);
+}
+
+void HttpRequestTests::testBadResponse()
+{
+    const std::string URL = "/inject/" + Util::bytesToHexString("\0\0xa", 2);
+
+    http::Request httpRequest(URL);
+
+    auto httpSession = http::Session::create(_localUri);
+    if (httpSession)
+    {
+        httpSession->setTimeout(std::chrono::seconds(1));
+        const std::shared_ptr<const http::Response> httpResponse =
+            httpSession->syncRequest(httpRequest);
+
+        LOK_ASSERT(httpResponse->done());
+        LOK_ASSERT(httpResponse->state() == http::Response::State::Timeout);
+    }
+}
+
+void HttpRequestTests::testGoodResponse()
+{
+    // Inject the following response:
+    // HTTP/1.1 200 OK
+    // Date: Wed, 02 Jun 2021 02:30:52 GMT
+    // Content-Type: text/html; charset=utf-8
+    // Content-Length: 0
+    const std::string URL =
+        "/inject/"
+        "485454502F312E3120323030204F4B0D0A446174653A205765642C203032204A756E20323032312030323A3330"
+        "3A353220474D540D0A436F6E74656E742D547970653A20746578742F68746D6C3B20636861727365743D757466"
+        "2D380D0A436F6E74656E742D4C656E6774683A20300D0A0D0A";
+
+    http::Request httpRequest(URL);
+
+    auto httpSession = http::Session::create(_localUri);
+    if (httpSession)
+    {
+        httpSession->setTimeout(std::chrono::seconds(1));
+        const std::shared_ptr<const http::Response> httpResponse =
+            httpSession->syncRequest(httpRequest);
+
+        LOK_ASSERT(httpResponse->done());
+        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+        LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
+        LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
+        LOK_ASSERT_EQUAL(200U, httpResponse->statusLine().statusCode());
+        LOK_ASSERT(httpResponse->statusLine().statusCategory() ==
+                   http::StatusLine::StatusCodeClass::Successful);
+        LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
+        LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
+        LOK_ASSERT_EQUAL(std::string("text/html; charset=utf-8"),
+                         httpResponse->header().getContentType());
+        LOK_ASSERT_EQUAL(std::string("Wed, 02 Jun 2021 02:30:52 GMT"),
+                         httpResponse->header().get("Date"));
+
+        LOK_ASSERT_EQUAL(std::string(), httpResponse->getBody());
+    }
 }
 
 void HttpRequestTests::testSimpleGet()
