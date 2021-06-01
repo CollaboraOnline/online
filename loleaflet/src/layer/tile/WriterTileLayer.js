@@ -43,7 +43,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).clearList();
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
 		}
-		else if (values.redlines) {
+		else if (values.redlines && values.redlines.length > 0) {
 			this._annotations.fillChanges(values.redlines);
 		}
 		else {
