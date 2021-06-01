@@ -26,8 +26,8 @@
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
 #include <common/Clipboard.hpp>
-#include <common/ProfileZone.hpp>
 #include <common/Session.hpp>
+#include <common/TraceEvent.hpp>
 #include <common/Unit.hpp>
 #include <common/Util.hpp>
 #if !MOBILEAPP
@@ -875,12 +875,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             {
                 if (tokens.equals(1, "start"))
                 {
-                    ProfileZone::startRecording();
+                    TraceEvent::startRecording();
                     LOG_INF("Trace Event recording in this WSD process turned on (might have been on already)");
                 }
                 else if (tokens.equals(1, "stop"))
                 {
-                    ProfileZone::stopRecording();
+                    TraceEvent::stopRecording();
                     LOG_INF("Trace Event recording in this WSD process turned off (might have been off already)");
                 }
             }

@@ -39,7 +39,7 @@
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/Authorization.hpp>
-#include <common/ProfileZone.hpp>
+#include <common/TraceEvent.hpp>
 #include "KitHelper.hpp"
 #include <Log.hpp>
 #include <Png.hpp>
@@ -471,13 +471,13 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                     if (tokens.equals(1, "start"))
                     {
                         getLOKit()->setOption("traceeventrecording", "start");
-                        ProfileZone::startRecording();
+                        TraceEvent::startRecording();
                         LOG_INF("Trace Event recording in this Kit process turned on (might have been on already)");
                     }
                     else if (tokens.equals(1, "stop"))
                     {
                         getLOKit()->setOption("traceeventrecording", "stop");
-                        ProfileZone::stopRecording();
+                        TraceEvent::stopRecording();
                         LOG_INF("Trace Event recording in this Kit process turned off (might have been off already)");
                     }
                 }
