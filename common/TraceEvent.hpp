@@ -40,19 +40,40 @@ protected:
     std::string _args;
     thread_local static int threadLocalNesting; // For use only by the ProfileZone derived class
 
-    // Returns a string that can be inserted into the string representation of a JSON object between
-    // two other properties. The string is either completely empty, or starts with a comma and
-    // contains the property name "args" and as its value an object.
+    static long getThreadId()
+    {
+#ifdef TEST_TRACEEVENT_EXE
+        static thread_local int threadId = 0;
+        static std::atomic<int> threadCounter(1);
+
+        if (!threadId)
+            threadId = threadCounter++;
+        return threadId;
+#else
+    return Util::getThreadId();
+#endif
+    }
+
+    static std::string getThreadName()
+    {
+#ifdef TEST_TRACEEVENT_EXE
+        return "thread-" + std::to_string(getThreadId());
+#else
+        return Util::getThreadName();
+#endif
+    }
+
+    static std::string createDefaultArgsString()
+    {
+        return "{\"thread\":\"" + std::string(getThreadName()) + "\"}";
+    }
 
     static std::string createArgsString(const std::map<std::string, std::string>& args)
     {
         if (!recordingOn)
-            return "";
+            return "0";
 
-        if (args.size() == 0)
-            return "";
-
-        std::string result = ",\"args\":{";
+        std::string result = "{";
         bool first = true;
         for (auto i : args)
         {
@@ -65,6 +86,7 @@ protected:
             result += '"';
             first = false;
         }
+        result += ",\"thread\":\"" + std::string(getThreadName()) + "\"";
         result += '}';
 
         return result;
