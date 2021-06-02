@@ -420,6 +420,10 @@ class Comment {
 		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
 			this.backgroundColor = '#777777'; //background: rgba(119, 119, 119, 0.25);
 			this.backgroundOpacity = 0.25;
+
+			var x: number = Math.round(this.position[0] / this.dpiScale);
+			var y: number = Math.round(this.position[1] / this.dpiScale);
+			this.containerObject.getSectionWithName(L.CSections.Scroll.name).onScrollTo({x: x, y: y});
 		}
 
 		this.containerObject.requestReDraw();
@@ -575,7 +579,7 @@ class Comment {
 		}
 
 		this.sectionProperties.container.style.visibility = 'hidden';
-		this.sectionProperties.contentNode.style.display = 'none';
+		//this.sectionProperties.contentNode.style.display = 'none';
 		this.sectionProperties.nodeModify.style.display = 'none';
 		this.sectionProperties.nodeReply.style.display = 'none';
 
