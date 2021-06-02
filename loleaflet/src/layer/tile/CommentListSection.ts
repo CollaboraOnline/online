@@ -78,7 +78,7 @@ class CommentSection {
 	public onInitialize () {
 		this.map.on('RedlineAccept', this.onRedlineAccept, this);
 		this.map.on('RedlineReject', this.onRedlineReject, this);
-		this.map.on('updateparts', this.hideAllComments, this);
+		this.map.on('updateparts', this.showHideComments, this);
 		this.map.on('zoomend', function() {
 			var that = this;
 			that.layout(true);
@@ -689,6 +689,12 @@ class CommentSection {
 		this.layout();
 	}
 
+	private showHideComments () {
+		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
+			this.showHideComment(this.sectionProperties.commentList[i]);
+		}
+	}
+
 	public showHideComment (annotation: any) {
 		// This manually shows/hides comments
 		if (!this.sectionProperties.showResolved && this.sectionProperties.docLayer._docType === 'text') {
@@ -1272,7 +1278,7 @@ class CommentSection {
 	}
 
 	private doLayout (zoomEnd = false) {
-		if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+		if ((<any>window).mode.isMobile() || this.sectionProperties.docLayer._docType === 'spreadsheet') {
 			if (this.sectionProperties.commentList.length > 0)
 				this.orderCommentList();
 			return; // No adjustments for Calc, since only one comment can be shown at a time and that comment is shown at its belonging cell.
@@ -1280,9 +1286,6 @@ class CommentSection {
 
 		if (this.sectionProperties.commentList.length > 0) {
 			this.orderCommentList();
-
-			if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet())
-				return; // No layout changes for mobile || tablet.
 
 			this.updateScaling();
 
