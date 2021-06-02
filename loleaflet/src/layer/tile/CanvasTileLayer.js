@@ -1299,8 +1299,15 @@ L.CanvasTileLayer = L.TileLayer.extend({
 					'tileheight=' + this._tileHeightTwips;
 
 				this._map._socket.sendMessage(message, '');
+			} else {
+				// We have all necessary tile images in the cache, schedule a paint..
+				// This may not be immediate if we are now in a slurp events call.
+				this._painter.update();
 			}
 
+		} else {
+			// We have all necessary tiles in the tile array, schedule a paint.
+			this._painter.update();
 		}
 
 		if (typeof (this._prevSelectedPart) === 'number' &&
