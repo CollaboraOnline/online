@@ -168,7 +168,7 @@ class CommentSection {
 		var rootComment;
 
 		for (var i in this.sectionProperties.commentList) {
-			if (this.sectionProperties.commentList[i].sectionProperties.partIndex === this.sectionProperties.docLayer._selectedPart) {
+			if (this.sectionProperties.commentList[i].sectionProperties.partIndex === this.sectionProperties.docLayer._selectedPart || app.file.fileBasedView) {
 				rootComment = {
 					id: 'comment' + this.sectionProperties.commentList[i].sectionProperties.data.id,
 					enable: true,
