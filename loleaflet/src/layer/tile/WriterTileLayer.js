@@ -154,9 +154,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		var needsNewTiles = false;
 		for (var key in this._tiles) {
 			var coords = this._tiles[key].coords;
-			var tileTopLeft = this._coordsToTwips(coords);
-			var tileBottomRight = new L.Point(this._tileWidthTwips, this._tileHeightTwips);
-			var bounds = new L.Bounds(tileTopLeft, tileTopLeft.add(tileBottomRight));
+			var bounds = this._coordsToTileBounds(coords);
 			if (coords.part === command.part && invalidBounds.intersects(bounds)) {
 				if (this._tiles[key]._invalidCount) {
 					this._tiles[key]._invalidCount += 1;
@@ -186,14 +184,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			// compute the rectangle that each tile covers in the document based
 			// on the zoom level
 			coords = this._keyToTileCoords(key);
-			var scale = this._map.getZoomScale(coords.z);
-			topLeftTwips = new L.Point(
-				this.options.tileWidthTwips / scale * coords.x,
-				this.options.tileHeightTwips / scale * coords.y);
-			bottomRightTwips = topLeftTwips.add(new L.Point(
-				this.options.tileWidthTwips / scale,
-				this.options.tileHeightTwips / scale));
-			bounds = new L.Bounds(topLeftTwips, bottomRightTwips);
+			bounds = this._coordsToTileBounds(coords);
 			if (invalidBounds.intersects(bounds)) {
 				delete this._tileCache[key];
 			}

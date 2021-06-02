@@ -381,9 +381,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var needsNewTiles = false;
 		for (var key in this._tiles) {
 			var coords = this._tiles[key].coords;
-			var tileTopLeft = this._coordsToTwips(coords);
-			var tileBottomRight = new L.Point(this._tileWidthTwips, this._tileHeightTwips);
-			var bounds = new L.Bounds(tileTopLeft, tileTopLeft.add(tileBottomRight));
+			var bounds = this._coordsToTileBounds(coords);
 			if (coords.part === command.part && invalidBounds.intersects(bounds)) {
 				if (this._tiles[key]._invalidCount) {
 					this._tiles[key]._invalidCount += 1;
@@ -418,7 +416,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				continue;
 			}
 
-			bounds = this._coordsToTwipsBoundsAtZoom(coords, this._map.getZoom());
+			bounds = this._coordsToTileBounds(coords);
 			if (invalidBounds.intersects(bounds)) {
 				delete this._tileCache[key];
 			}
