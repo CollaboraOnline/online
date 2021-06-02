@@ -20,27 +20,22 @@ thread_local int TraceEvent::threadLocalNesting = 0; // level of overlapped zone
 
 static std::mutex mutex;
 
-void TraceEvent::emitInstantEvent(const std::string& name, const std::string& args)
+void TraceEvent::emitInstantEvent(const std::string& name, const std::string& argsOrEmpty)
 {
     if (!recordingOn)
         return;
 
-#ifdef TEST_TRACEEVENT_EXE
-    static thread_local int threadId = 0;
-    static int threadCounter = 1;
-
-    if (!threadId)
-        threadId = threadCounter++;
-#else
-    auto threadId = Util::getThreadId();
-#endif
+    std::string args;
+    if (argsOrEmpty.length() == 0)
+        args = createDefaultArgsString();
+    else
+        args = argsOrEmpty;
 
     emitOneRecording("{"
                      "\"name\":\""
                      + name
                      + "\","
                        "\"ph\":\"i\""
-                     + args
                      + ",\"ts\":"
                      + std::to_string(std::chrono::duration_cast<std::chrono::microseconds>(
                               std::chrono::system_clock::now().time_since_epoch())
@@ -50,7 +45,9 @@ void TraceEvent::emitInstantEvent(const std::string& name, const std::string& ar
                      + std::to_string(getpid())
                      + ","
                        "\"tid\":"
-                     + std::to_string(threadId)
+                     + std::to_string(getThreadId())
+                     + ",\"args\":"
+                     + args
                      + "}"
                      // We add a trailing comma and newline, it is up to the code that handles these "recordings"
                      // (outputs them into a JSON array) to remove the final comma before adding the terminating
@@ -70,19 +67,17 @@ void ProfileZone::emitRecording()
 {
     assert(recordingOn);
 
-#ifdef TEST_TRACEEVENT_EXE
-    static thread_local int threadId = 0;
-    static int threadCounter = 1;
-
-    if (!threadId)
-        threadId = threadCounter++;
-#else
-    auto threadId = Util::getThreadId();
-#endif
     auto now = std::chrono::system_clock::now();
 
     // Generate a single "Complete Event" (type X)
     auto duration = now - _createTime;
+
+    std::string args;
+    if (_args.length() == 0)
+        args = createDefaultArgsString();
+    else
+        args = _args;
+
     std::string recordingData(
         "{"
         "\"name\":\""
@@ -101,8 +96,9 @@ void ProfileZone::emitRecording()
         + std::to_string(_pid)
         + ","
           "\"tid\":"
-        + std::to_string(threadId)
-        + _args
+        + std::to_string(getThreadId())
+        + ",\"args\":"
+        + args
         + "}"
         // We emit a trailing comma and newline, it is up to the code that handles these "recordings"
         // (outputs them into a JSON array) to remove the final comma before emiting the terminating
