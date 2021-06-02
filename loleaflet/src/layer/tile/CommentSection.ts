@@ -384,7 +384,7 @@ class Comment {
 		}
 	}
 
-	private removeHighlight () {
+	public removeHighlight () {
 		if (this.sectionProperties.docLayer._docType === 'text') {
 			var selectionContainer = this.getContainerForCommentedText();
 
@@ -623,7 +623,8 @@ class Comment {
 	}
 
 	public onCancelClick (e: any) {
-		L.DomEvent.stopPropagation(e);
+		if (e)
+			L.DomEvent.stopPropagation(e);
 		this.sectionProperties.nodeModifyText.value = this.sectionProperties.contentText.origText;
 		this.sectionProperties.nodeReplyText.value = '';
 		this.show();
@@ -652,6 +653,9 @@ class Comment {
 		if (this.sectionProperties.nodeReplyText.value !== '') {
 			this.onReplyClick(e);
 		}
+		else {
+            this.sectionProperties.nodeReply.style.display = 'none';
+        }
 	}
 
 	public focus () {
@@ -795,12 +799,12 @@ class Comment {
 	}
 
 	public onRemove () {
-		this.hideMarker();
-
+		var that = this;
 		var container = this.sectionProperties.container;
 		if (container && container.parentElement) {
 			setTimeout(function () {
 				container.parentElement.removeChild(container);
+				that.hideMarker();
 			}, 100);
 		}
 
