@@ -346,14 +346,14 @@
 .freemium-disabled > .notebookbar {
 	overflow: hidden;
 }
-.freemium-disabled > .notebookbar img.unobutton {
-	background: url('images/lc_freeemiumlock.svg') center top / 24px no-repeat;
+.freemium-disabled > .notebookbar img.unobutton, #toolbar-up .freemium-disabled .w2ui-tb-image.w2ui-icon {
+	background: url('images/lc_freeemiumlock.svg') center top / 24px no-repeat !important;
 	width: 24px !important;
 	padding-left: 24px;
 	box-sizing: border-box;
 }
-.freemium-disabled:hover > .notebookbar img.unobutton {
-	background-position: bottom;
+.freemium-disabled:hover > .notebookbar img.unobutton, #toolbar-up .freemium-disabled .w2ui-tb-image.w2ui-icon:hover {
+	background-position: bottom !important;
 }
 .freemium-disabled > .notebookbar.has-label img.unobutton {
 	background-size: 32px;
@@ -362,19 +362,59 @@
 /* For mobile mode */
 #mobile-wizard .freemium-overlay {
 	position: relative;
-	width: 100%;
-	height: 100%;
+	width: 96%;
+	height: 20px;
 	right: 0px;
 	bottom: 0px;
-	background-color: rgba(0,0,0,0.15);
 	z-index: 2;
 	border-radius: 4px;
-	text-align: center;
+	text-align: right;
+	margin-right: 4%;
+	overflow: hidden;
 }
 
 #mobile-wizard .freemium-overlay-lock {
+	width: 20px;
+	filter: brightness(0.8) contrast(1.8);
+	-webkit-animation-iteration-count: 1;
+	animation-iteration-count: 1;
+	animation-direction: normal;
+	-webkit-animation-play-state: running; /* Safari 4.0 - 8.0 */
+	animation-play-state: running;
+	-webkit-animation-name: up-n-down-anim;
+	animation-name: up-n-down-anim;
+	-webkit-animation-duration: 2s;
+	animation-duration: 2s;
+	-webkit-animation-timing-function: ease-in-out;
+	animation-timing-function: ease-in-out;
+}
+@keyframes up-n-down-anim{
+	0%{margin-top: 0;}
+	50%{margin-top: -20px;}
+	100%{margin-top: 0;}
+}
+@-webkit-keyframes up-n-down-anim{
+	0%{margin-top: 0;}
+	50%{margin-top: -20px;}
+	100%{margin-top: 0;}
+}
+.sidebar .freemium-overlay {
+	height: 22px;
+	overflow: hidden;
+	float: left;
 	position: relative;
-	width: 8%;
-	top: 50%;
-	right: 0px;
+	right: -7px;
+	box-shadow: 0 0 1px 1px #0003;
+	border-radius: 12px;
+}
+.sidebar .freemium-overlay-lock {
+	width: 20px;
+	background-color: white;
+	padding: 1px;
+}
+.sidebar .freemium-disabled:hover .freemium-overlay-lock {
+	margin-top: -20px;
+}
+.sidebar .freemium-disabled button:hover ~ .freemium-overlay {
+	box-shadow: 0 0 4px 0 #0b87e7;
 }

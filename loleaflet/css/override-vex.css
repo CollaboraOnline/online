@@ -174,7 +174,8 @@ kbd,
 }
 .vex.vex-theme-plain .vex-content.vex-freemium .container .item.illustration {
 	flex: 1.3;
-	background: transparent url('images/freemium-illustration.svg') no-repeat left 4px /contain
+	background: transparent url('images/freemium-illustration.svg') no-repeat left 4px /contain;
+	height: 288px;
 }
 
 .vex.vex-theme-plain .vex-content.vex-freemium .vex-dialog-button-primary {
@@ -182,4 +183,48 @@ kbd,
 	color: white;
 	border-color: #cc8202;
 	text-shadow: 0 0 8px #cc8202;
+}
+
+.vex.vex-theme-plain .vex-content.vex-freemium .vex-dialog-button-primary:hover {
+	border-color: #fda918 !important;
+	color: #cc8202 !important;
+	text-shadow: none;
+}
+
+.vex.vex-theme-plain .vex-content.vex-freemium.mobile .container .item p {
+	font-size: 1.1em !important;
+	font-family: var(--jquery-ui-font);
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.vex.vex-theme-plain .vex-content.vex-freemium.mobile .container .item h1 {
+	text-align: center;
+	font-size: 1.4em !important;
+}
+.vex.vex-theme-plain .vex-content.vex-freemium.mobile ul {
+	text-shadow: none;
+	font-size: 1em !important;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.vex.vex-theme-plain .vex-content.vex-freemium.mobile ul li::before {
+	width: 0.8em;
+	margin-left: 0em;
+}
+.vex.vex-theme-plain .vex-content.vex-freemium.mobile .container {
+	flex-direction: column;
+}
+.vex.vex-theme-plain .vex-content.vex-freemium.mobile .container .item.illustration {
+	flex: 2 1 auto;
+	height: 238px;
+	background-position: center;
+}
+.vex.vex-theme-plain .vex-content.vex-freemium.mobile .vex-dialog-button-primary {
+	background-color: #fda918 !important;
+	border-color: #cc8202 !important;
+	text-shadow: 0 0 0.5px #cc8202;
+}
+.vex.vex-theme-plain .vex-freemium.mobile .vex-dialog-buttons {
+	display: flex;
+	flex-direction: column-reverse;
 }
