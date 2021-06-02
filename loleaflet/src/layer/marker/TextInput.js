@@ -423,8 +423,6 @@ L.TextInput = L.Layer.extend({
 			this._map._docLayer._cursorMarker.add();
 		}
 		this._map._docLayer._cursorMarker.setMouseCursor();
-		if (window.mode.isMobile() && this._map._docLoaded && this._map.getDocType() === 'spreadsheet')
-			this._map.onFormulaBarFocus();
 
 		// Move and display under-caret marker
 		if (L.Browser.touch) {
@@ -440,6 +438,8 @@ L.TextInput = L.Layer.extend({
 		this.update();
 		// shape handlers hidden (if selected)
 		this._map.fire('handlerstatus', {hidden: true});
+		if (window.mode.isMobile() && this._map._docLoaded && this._map.getDocType() === 'spreadsheet')
+			this._map.onFormulaBarFocus();
 	},
 
 	// Hides the caret and the under-caret marker.
