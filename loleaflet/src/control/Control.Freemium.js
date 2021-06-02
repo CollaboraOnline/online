@@ -42,25 +42,25 @@ L.Map.include({
 			// not using window.interface because even in notebookbar,
 			// we have hamburger menu which is like classic mode (accommodates properties like track changes)
 			// better to check where element exists in the DOM in this case
-			if ($(DOMParentElement).parents('.notebookbar').length) {
-				$(DOMParentElement).click(function(event) {
-					event.stopPropagation();
-					that.openSubscriptionPopup();
-				});
-			} else {
+			if ($(DOMParentElement).parents('.notebookbar').length === 0) {
 				var overlay = L.DomUtil.create('div', 'freemium-overlay', DOMParentElement);
 				var lock = L.DomUtil.create('img', 'freemium-overlay-lock', overlay);
 				lock.src = 'images/lc_freeemiumlock.svg';
-
-				$(overlay).click(function(event) {
-					event.stopPropagation();
-					that.openSubscriptionPopup();
-				});
 			}
+
+			$(DOMParentElement).click(function(event) {
+				event.stopPropagation();
+				that.openSubscriptionPopup();
+			});
 		}
 	},
 
 	openSubscriptionPopup: function() {
+		var freemiumOnMobile = '';
+
+		if (window.mode.isMobile()) {
+			freemiumOnMobile = 'mobile';
+		}
 		var that = this;
 		vex.dialog.confirm({
 			unsafeMessage: [
@@ -79,7 +79,7 @@ L.Map.include({
 				'<div>'
 			].join(''),
 			showCloseButton: false,
-			contentClassName: 'vex-content vex-freemium',
+			contentClassName: 'vex-content vex-freemium ' + freemiumOnMobile,
 			callback: function (value) {
 				if (value)
 					window.open(that.Freemium.freemiumPurchaseLink, '_blank');
