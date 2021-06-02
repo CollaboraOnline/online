@@ -644,7 +644,7 @@ class Comment {
 		if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
 			this.onSaveComment(e);
 		}
-		else if (this.sectionProperties.nodeModifyText.value === '') {
+		else {
 			this.onCancelClick(e);
 		}
 	}

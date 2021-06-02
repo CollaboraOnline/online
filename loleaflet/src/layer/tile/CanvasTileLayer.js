@@ -5309,10 +5309,18 @@ L.CanvasTileLayer = L.Layer.extend({
 	// Used with filebasedview.
 	_getMostVisiblePart: function (queue) {
 		var parts = [];
+		var found = false;
 
 		for (var i = 0; i < queue.length; i++) {
-			if (parts.indexOf(queue[i].part) < 0)
+			for (var j = 0; j < parts.length; j++) {
+				if (parts[j].part === queue[i].part) {
+					found = true;
+					break;
+				}
+			}
+			if (!found)
 				parts.push({part: queue[i].part, tileCount: 0});
+			found = false;
 		}
 
 		var maxTileCount = 0;
@@ -5438,7 +5446,6 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._preview._scrollToPart();
 			}
 		}
-
 
 		for (var i = 0; i < this._tiles.length; i++) {
 			this._tiles[i].current = false; // Visible ones's "current" property will be set to true below.
