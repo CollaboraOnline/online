@@ -430,6 +430,11 @@ class Comment {
 			var y: number = Math.round(this.position[1] / this.dpiScale);
 			this.containerObject.getSectionWithName(L.CSections.Scroll.name).onScrollTo({x: x, y: y});
 		}
+		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
+			var x: number = Math.round(this.position[0] / this.dpiScale);
+			var y: number = Math.round(this.position[1] / this.dpiScale);
+			this.containerObject.getSectionWithName(L.CSections.Scroll.name).onScrollTo({x: x, y: y});
+		}
 
 		this.containerObject.requestReDraw();
 		this.sectionProperties.isHighlighted = true;
