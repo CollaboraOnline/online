@@ -182,6 +182,37 @@ namespace Util
     // Extract all json entries into a map.
     std::map<std::string, std::string> JsonToMap(const std::string& jsonString);
 
+    inline unsigned short hexFromByte(unsigned char byte)
+    {
+        constexpr auto hex = "0123456789ABCDEF";
+        return (hex[byte >> 4] << 8) | hex[byte & 0xf];
+    }
+
+    inline std::string bytesToHexString(const uint8_t* data, size_t size)
+    {
+        std::string s;
+        s.resize(size * 2); // Each byte is two hex digits.
+        for (size_t i = 0; i < size; ++i)
+        {
+            const unsigned short hex = hexFromByte(data[i]);
+            const size_t off = i * 2;
+            s[off] = hex >> 8;
+            s[off + 1] = hex & 0xff;
+        }
+
+        return s;
+    }
+
+    inline std::string bytesToHexString(const char* data, size_t size)
+    {
+        return bytesToHexString(reinterpret_cast<const uint8_t*>(data), size);
+    }
+
+    inline std::string bytesToHexString(const std::string& s)
+    {
+        return bytesToHexString(s.c_str(), s.size());
+    }
+
     inline int hexDigitFromChar(char c)
     {
         if (c >= '0' && c <= '9')
@@ -192,6 +223,35 @@ namespace Util
             return c - 'A' + 10;
         else
             return -1;
+    }
+
+    inline std::string hexStringToBytes(const uint8_t* data, size_t size)
+    {
+        assert(data && (size % 2 == 0) && "Invalid hex digits to convert.");
+
+        std::string s;
+        s.resize(size / 2); // Each pair of hex digits is a single byte.
+        for (size_t i = 0; i < size; i += 2)
+        {
+            const int high = hexDigitFromChar(data[i]);
+            assert(high >= 0 && high <= 16);
+            const int low = hexDigitFromChar(data[i + 1]);
+            assert(low >= 0 && low <= 16);
+            const size_t off = i / 2;
+            s[off] = ((high << 4) | low) & 0xff;
+        }
+
+        return s;
+    }
+
+    inline std::string hexStringToBytes(const char* data, size_t size)
+    {
+        return hexStringToBytes(reinterpret_cast<const uint8_t*>(data), size);
+    }
+
+    inline std::string hexStringToBytes(const std::string& s)
+    {
+        return hexStringToBytes(s.c_str(), s.size());
     }
 
     /// Dump a line of data as hex.
