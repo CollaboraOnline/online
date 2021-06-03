@@ -63,12 +63,13 @@ private:
     void alphaBlend(const std::vector<unsigned char>& from, int from_width, int from_height, int from_offset_x, int from_offset_y,
             unsigned char* to, int to_width, int to_height, const bool isFontBlending)
     {
+        bool isCalc = (_loKitDoc->getDocumentType() == LOK_DOCTYPE_SPREADSHEET);
         for (int to_y = from_offset_y, from_y = 0; (to_y < to_height) && (from_y < from_height) ; ++to_y, ++from_y)
             for (int to_x = from_offset_x, from_x = 0; (to_x < to_width) && (from_x < from_width); ++to_x, ++from_x)
             {
                 unsigned char* t = to + 4 * (to_y * to_width + to_x);
 
-                if (!isFontBlending && t[3] != 255)
+                if (!isFontBlending && !isCalc && t[3] != 255)
                     continue;
 
                 double dst_r = t[0];
