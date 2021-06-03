@@ -462,8 +462,10 @@ class Comment {
 	private updatePosition () {
 		this.convertRectanglesToCoreCoordinates();
 		this.setPositionAndSize();
-		var container = this.getContainerForCommentedText();
-		this.createRectanglesForSelectedText(container);
+		if (this.sectionProperties.docLayer._docType === 'text') {
+			var container = this.getContainerForCommentedText();
+			this.createRectanglesForSelectedText(container);
+		}
 	}
 
 	private updateAnnotationMarker () {
