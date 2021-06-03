@@ -839,7 +839,7 @@ private:
 
     StatusLine _statusLine;
     Header _header;
-    State _state; //< The state of the Response.
+    std::atomic<State> _state; //< The state of the Response.
     ParserStage _parserStage; //< The parser's state.
     int64_t _recvBodySize; //< The amount of data we received (compared to the Content-Length).
     std::string _body; //< Used when _bodyHandling is InMemory.
@@ -1276,11 +1276,11 @@ private:
     const Protocol _protocol;
     std::chrono::microseconds _timeout;
     std::chrono::steady_clock::time_point _startTime;
-    std::shared_ptr<StreamSocket> _socket;
-    Request _request;
-    std::shared_ptr<Response> _response;
-    FinishedCallback _onFinished;
     bool _connected;
+    Request _request;
+    FinishedCallback _onFinished;
+    std::shared_ptr<Response> _response;
+    std::shared_ptr<StreamSocket> _socket; //< Must be the last member.
 };
 
 /// HTTP Get a URL synchronously.
