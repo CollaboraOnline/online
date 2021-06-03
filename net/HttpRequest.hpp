@@ -1131,6 +1131,8 @@ private:
         while (!_response->done())
         {
             const auto now = std::chrono::steady_clock::now();
+            checkTimeout(now);
+
             const auto remaining =
                 std::chrono::duration_cast<std::chrono::microseconds>(deadline - now);
             poller.poll(remaining);
@@ -1322,7 +1324,7 @@ private:
 
         const auto duration =
             std::chrono::duration_cast<std::chrono::milliseconds>(now - _startTime);
-        if (duration > getTimeout())
+        if (now < _startTime || duration > getTimeout() || SigUtil::getTerminationFlag())
         {
             std::shared_ptr<StreamSocket> socket = _socket.lock();
             const int fd = socket ? socket->getFD() : 0;
