@@ -242,7 +242,6 @@ namespace SigUtil
         else
             Log::signalLog(" Fatal signal received: ");
         Log::signalLog(signalName(signal));
-        Log::signalLog("\n");
 
         struct sigaction action;
 
@@ -262,8 +261,7 @@ namespace SigUtil
     void dumpBacktrace()
     {
 #if !defined(__ANDROID__)
-        Log::signalLogPrefix();
-        Log::signalLog(" Backtrace ");
+        Log::signalLog("\nBacktrace ");
         Log::signalLogNumber(getpid());
         if (VersionInfo)
         {
@@ -274,21 +272,10 @@ namespace SigUtil
 
         const int maxSlots = 50;
         void *backtraceBuffer[maxSlots];
-        char **symbols;
-
         const int numSlots = backtrace(backtraceBuffer, maxSlots);
-        symbols = backtrace_symbols(backtraceBuffer, numSlots);
-        if (symbols)
+        if (numSlots > 0)
         {
-            for (int symbol = 0; symbol < numSlots; symbol++)
-            {
-                Log::signalLogPrefix();
-                Log::signalLog(" ");
-                Log::signalLog(symbols[symbol]);
-                Log::signalLog("\n");
-            }
-
-            free(symbols);
+            backtrace_symbols_fd(backtraceBuffer, numSlots, STDERR_FILENO);
         }
 #else
         LOG_INF("Backtrace not available on Android.");
