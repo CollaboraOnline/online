@@ -1,13 +1,13 @@
 /* global describe it cy require afterEach beforeEach */
 
 var helper = require('../../common/helper');
-var { insertImage, deleteImage } = require('../../common/desktop_helper');
+var { insertImage } = require('../../common/desktop_helper');
 
 describe('Image Operation Tests', function() {
-	var testFileName = 'image_operation.odp';
+	var testFileName = 'image_operation.ods';
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		helper.beforeAll(testFileName, 'calc');
 	});
 
 	afterEach(function() {
@@ -22,8 +22,15 @@ describe('Image Operation Tests', function() {
 		//close sidebar because it is covering other elements
 		cy.get('#toolbar-up > .w2ui-scroll-right').click();
 
-		cy.get('#tb_editbar_item_modifypage').click();
+		cy.get('#tb_editbar_item_sidebar').click();
 
-		deleteImage();
+		insertImage();
+
+		helper.typeIntoDocument('{del}');
+
+	    cy.wait(1000);
+
+	    cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
+		    .should('not.exist');
 	});
 });
