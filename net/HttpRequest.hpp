@@ -1170,12 +1170,16 @@ private:
 
     void performWrites(std::size_t capacity) override
     {
-        Buffer& out = _socket->getOutBuffer();
-        LOG_TRC("performWrites: " << out.size() << " bytes, capacity: " << capacity);
-
-        if (!_socket->send(_request))
+        // We may get called after disconnecting and freeing the Socket instance.
+        if (_socket)
         {
-            LOG_ERR('#' << _socket->getFD() << " Error while writing to socket.");
+            Buffer& out = _socket->getOutBuffer();
+            LOG_TRC("performWrites: " << out.size() << " bytes, capacity: " << capacity);
+
+            if (!_socket->send(_request))
+            {
+                LOG_ERR('#' << _socket->getFD() << " Error while writing to socket.");
+            }
         }
     }
 
