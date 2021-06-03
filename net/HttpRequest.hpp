@@ -807,6 +807,14 @@ public:
         finish(State::Timeout);
     }
 
+    /// If not already in done state, finish with State::Error.
+    void finish()
+    {
+        // We expect to have completed successfully, or timed out,
+        // anything else means we didn't get complete data.
+        finish(State::Error);
+    }
+
 private:
     void finish(State newState)
     {
@@ -1221,10 +1229,11 @@ private:
             _socket->shutdown(); // Flag for shutdown for housekeeping in SocketPoll.
             _socket->closeConnection(); // Immediately disconnect.
             _socket.reset();
-            _response->complete();
         }
 
         _connected = false;
+        if (_response)
+            _response->finish();
     }
 
     bool connect()
