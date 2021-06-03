@@ -792,12 +792,19 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		if (this.insertMode === false && this._cellCursorXY && this._cellCursorXY.x !== -1) {
 			// When insertMode is false, this is a cell selection message.
 			textMsg = textMsg.replace('textselection:', '');
-			if (textMsg.trim() !== 'EMPTY') {
+			if (textMsg.trim() !== 'EMPTY' && textMsg.trim() !== '') {
 				this._cellSelections = textMsg.split(';');
 				var ratio = this._tileSize / this._tileWidthTwips;
+				var that = this;
 				this._cellSelections = this._cellSelections.map(function(element) {
 					element = element.split(',');
-					return L.LOUtil.createRectangle(parseInt(element[0]) * ratio, parseInt(element[1]) * ratio, parseInt(element[2]) * ratio, parseInt(element[3]) * ratio);
+					var topLeftTwips = new L.Point(parseInt(element[0]), parseInt(element[1]));
+					var offset = new L.Point(parseInt(element[2]), parseInt(element[3]));
+					var bottomRightTwips = topLeftTwips.add(offset);
+					var boundsTwips = that._convertToTileTwipsSheetArea(new L.Bounds(topLeftTwips, bottomRightTwips));
+
+					element = L.LOUtil.createRectangle(boundsTwips.min.x * ratio, boundsTwips.min.y * ratio, boundsTwips.getSize().x * ratio, boundsTwips.getSize().y * ratio);
+					return element;
 				});
 			}
 			else {
