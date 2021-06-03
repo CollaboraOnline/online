@@ -7,7 +7,7 @@ L.Map.mergeOptions({
 	touchGesture: true,
 });
 
-/* global Hammer $ */
+/* global Hammer app $ */
 L.Map.TouchGesture = L.Handler.extend({
 	statics: {
 		MAP: 1,
@@ -333,6 +333,11 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._map.fire('editorgotfocus');
 
 		var docLayer = this._map._docLayer;
+
+		// unselect if anything is selected already
+		if (app.sectionContainer.doesSectionExist(L.CSections.CommentList.name)) {
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).unselect();
+		}
 
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 
