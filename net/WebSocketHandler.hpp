@@ -13,6 +13,7 @@
 
 #include "common/Common.hpp"
 #include "common/Log.hpp"
+#include "common/TraceEvent.hpp"
 #include "common/Unit.hpp"
 #include "Socket.hpp"
 #include <net/HttpRequest.hpp>
@@ -700,6 +701,12 @@ protected:
         LOG_TRC("WebSocketHandler::sendFrame: Writing to #"
                 << socket->getFD() << ' ' << len << " bytes in addition to " << out.size()
                 << " bytes buffered.");
+
+        // This would generate huge amounts of "instant" Trace Events. Is that what we want? If so,
+        // it would be good to include in the args some identificating information about the sender
+        // and recipient of the frame (and what message it is related to, if any).
+
+        // TraceEvent::emitInstantEvent("WebSocketHandler::sendFrame", { { "length", std::to_string(len) } });
 
 #if !MOBILEAPP
         const size_t oldSize = out.size();
