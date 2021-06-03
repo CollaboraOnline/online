@@ -345,6 +345,11 @@ class Comment {
 			this.size = [Math.round(this.sectionProperties.data.cellPos[2] * ratio), Math.round(this.sectionProperties.data.cellPos[3] * ratio)];
 			this.setPosition(Math.round(this.sectionProperties.data.cellPos[0] * ratio), Math.round(this.sectionProperties.data.cellPos[1] * ratio));
 		}
+		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
+			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+			this.size = [Math.round(this.sectionProperties.imgSize[0] * this.dpiScale), Math.round(this.sectionProperties.imgSize[1] * this.dpiScale)];
+			this.setPosition(Math.round(this.sectionProperties.data.rectangle[0] * ratio), Math.round(this.sectionProperties.data.rectangle[1] * ratio));
+		}
 	}
 
 	private createRectanglesForSelectedText (container: any) {
@@ -464,7 +469,7 @@ class Comment {
 		if (this.sectionProperties.data == null)
 			return;
 
-		if (this.sectionProperties.annotationMarker == null) {
+		if (this.sectionProperties.annotationMarker === null) {
 			this.sectionProperties.annotationMarker = L.marker(new L.LatLng(0, 0), {
 				icon: L.divIcon({
 					className: 'annotation-marker',
@@ -472,7 +477,7 @@ class Comment {
 				}),
 				draggable: true
 			});
-			if (this.sectionProperties.docLayer._partHashes[this.sectionProperties.docLayer._selectedPart] == this.sectionProperties.data.parthash)
+			if (this.sectionProperties.docLayer._partHashes[this.sectionProperties.docLayer._selectedPart] === this.sectionProperties.data.parthash)
 				this.map.addLayer(this.sectionProperties.annotationMarker);
 		}
 		if (this.sectionProperties.data.rectangle != null) {
@@ -520,8 +525,8 @@ class Comment {
 			}
 		}
 
-		var authorImageWidth = Math.round(this.sectionProperties.imgSize.x * scaleFactor);
-		var authorImageHeight = Math.round(this.sectionProperties.imgSize.y * scaleFactor);
+		var authorImageWidth = Math.round(this.sectionProperties.imgSize[0] * scaleFactor);
+		var authorImageHeight = Math.round(this.sectionProperties.imgSize[1] * scaleFactor);
 		this.sectionProperties.authorAvatarImg.setAttribute('width', authorImageWidth);
 		this.sectionProperties.authorAvatarImg.setAttribute('height', authorImageHeight);
 	}
@@ -743,18 +748,24 @@ class Comment {
 	}
 
 	public onClick (point: Array<number>, e: MouseEvent) {
-		var rectangles = this.sectionProperties.data.rectangles;
-		point[0] = point[0] + this.myTopLeft[0];
-		point[1] = point[1] + this.myTopLeft[1];
-		if (rectangles) { // A text file.
-			for (var i: number = 0; i < rectangles.length; i++) {
-				if (this.doesRectangleContainPoint(rectangles[i], point)) {
-					this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
-					e.stopPropagation();
-					this.stopPropagating();
-					return;
+		if (this.sectionProperties.docLayer._docType === 'text') {
+			var rectangles = this.sectionProperties.data.rectangles;
+			point[0] = point[0] + this.myTopLeft[0];
+			point[1] = point[1] + this.myTopLeft[1];
+			if (rectangles) { // A text file.
+				for (var i: number = 0; i < rectangles.length; i++) {
+					if (this.doesRectangleContainPoint(rectangles[i], point)) {
+						this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
+						e.stopPropagation();
+						this.stopPropagating();
+					}
 				}
 			}
+		}
+		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
+			this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
+			e.stopPropagation();
+			this.stopPropagating();
 		}
 	}
 
