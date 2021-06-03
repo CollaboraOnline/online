@@ -52,7 +52,7 @@
         <EditTextPreference
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:defaultValue="Guest User"
+            android:defaultValue="@string/pref_user_name_guest"
             android:key="USER_NAME"
             android:summary="@string/pref_user_name_info"
             android:title="@string/pref_user_name"
