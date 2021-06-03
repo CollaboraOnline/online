@@ -970,6 +970,9 @@ class CanvasSectionContainer {
 			newHeight = cRect.bottom - cRect.top;
 
 		this.dpiScale = window.devicePixelRatio;
+		app.dpiScale = window.devicePixelRatio;
+		app.roundedDpiScale = Math.round(window.devicePixelRatio);
+
 		newWidth = Math.floor(newWidth * this.dpiScale);
 		newHeight = Math.floor(newHeight * this.dpiScale);
 
