@@ -510,7 +510,7 @@ public:
     {
         if (_stage == Stage::Header)
         {
-            LOG_TRC("performWrites (header).");
+            LOG_TRC("performWrites (request header).");
 
             out.append(getVerb());
             out.append(" ");
@@ -527,6 +527,8 @@ public:
 
         if (_stage == Stage::Body)
         {
+            LOG_TRC("performWrites (request body).");
+
             // Get the data to write into the socket
             // from the client's callback. This is
             // used to upload files, or other data.
@@ -543,14 +545,14 @@ public:
 
                 if (read == 0)
                 {
-                    LOG_TRC("performWrites (body): finished, total: " << wrote);
+                    LOG_TRC("performWrites (request body): finished, total: " << wrote);
                     _stage = Stage::Finished;
                     return true;
                 }
 
                 out.append(buffer, read);
                 wrote += read;
-                LOG_TRC("performWrites (body): " << read << " bytes, total: " << wrote);
+                LOG_TRC("performWrites (request body): " << read << " bytes, total: " << wrote);
             } while (wrote < capacity);
         }
 
