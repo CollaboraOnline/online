@@ -58,6 +58,12 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
             if (ai->ai_addrlen && ai->ai_addr)
             {
                 int fd = ::socket(ai->ai_addr->sa_family, SOCK_STREAM | SOCK_NONBLOCK, 0);
+                if (fd < 0)
+                {
+                    LOG_SYS("Failed to create socket");
+                    continue;
+                }
+
                 int res = ::connect(fd, ai->ai_addr, ai->ai_addrlen);
                 if (fd < 0 || (res < 0 && errno != EINPROGRESS))
                 {
@@ -86,7 +92,7 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
         freeaddrinfo(ainfo);
     }
     else
-        LOG_ERR("Failed to lookup host [" << host << "]. Skipping.");
+        LOG_SYS("Failed to lookup host [" << host << "]. Skipping");
 
     return socket;
 }
