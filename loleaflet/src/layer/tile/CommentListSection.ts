@@ -91,6 +91,12 @@ class CommentSection {
 			this.showSection = false;
 			this.size[0] = 0;
 		}
+
+		// For setting some css styles.
+		if (app.file.fileBasedView) {
+			this.map.uiManager.mobileWizard._showSlideSorter();
+			this.map.uiManager.mobileWizard._hideSlideSorter();
+		}
 	}
 
 	private checkSize () {
