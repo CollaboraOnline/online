@@ -66,10 +66,10 @@ class CommentSection {
 		this.sectionProperties.arrow = null;
 		this.sectionProperties.initialLayoutData = null;
 		this.sectionProperties.showResolved = null;
-		this.sectionProperties.marginY = 10;
-		this.sectionProperties.offset = 5;
+		this.sectionProperties.marginY = 10 * app.dpiScale;
+		this.sectionProperties.offset = 5 * app.dpiScale;
 		this.sectionProperties.layoutTimer = null;
-		this.sectionProperties.width = 290; // Configurable variable.
+		this.sectionProperties.width = Math.round(290 * app.dpiScale); // Configurable variable.
 		this.size[0] = this.sectionProperties.width;
 	}
 
@@ -1153,7 +1153,7 @@ class CommentSection {
 		for (var i = 0; i < subList.length; i++) {
 			height = subList[i].sectionProperties.container.getBoundingClientRect().height;
 			lastY = subList[i].sectionProperties.data.anchorPix[1] + height < lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY - height;
-			(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: actualPosition[0], y: lastY});
+			(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)});
 			subList[i].show();
 		}
 		return lastY;
@@ -1196,11 +1196,11 @@ class CommentSection {
 			lastY = subList[i].sectionProperties.data.anchorPix[1] > lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY;
 
 			if (selectedComment)
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: actualPosition[0] - 60, y: lastY});
+				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - 60, y: Math.round(lastY / app.dpiScale)});
 			else
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: actualPosition[0], y: lastY});
+				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)});
 
-			lastY += (subList[i].sectionProperties.container.getBoundingClientRect().height);
+			lastY += (subList[i].sectionProperties.container.getBoundingClientRect().height * app.dpiScale);
 			if (!subList[i].isEdit())
 				subList[i].show();
 		}
@@ -1250,6 +1250,11 @@ class CommentSection {
 		startPoint[1] -= anchorSection.myTopLeft[1] + this.documentTopLeft[1];
 		endPoint[0] -= anchorSection.myTopLeft[0] + this.documentTopLeft[0];
 		endPoint[1] -= anchorSection.myTopLeft[1] + this.documentTopLeft[1];
+
+		startPoint[0] = Math.floor(startPoint[0] / app.dpiScale);
+		startPoint[1] = Math.floor(startPoint[1] / app.dpiScale);
+		endPoint[0] = Math.floor(endPoint[0] / app.dpiScale);
+		endPoint[1] = Math.floor(endPoint[1] / app.dpiScale);
 
 		if (this.sectionProperties.arrow !== null) {
 			var line: SVGLineElement = <SVGLineElement>(<any>document.getElementById('comment-arrow-line'));
