@@ -341,17 +341,7 @@ L.Map.TouchGesture = L.Handler.extend({
 		this._map.fire('editorgotfocus');
 
 		var docLayer = this._map._docLayer;
-		// unselect if anything is selected already
-		if (docLayer && docLayer._annotations && docLayer._annotations.unselect) {
-			docLayer._annotations.unselect();
-			var pointPx = docLayer._twipsToPixels(mousePos);
-			var bounds = docLayer._annotations.getBounds();
-			if (bounds && bounds.contains(pointPx)) {
-				// not forward mouse events to core if the user tap on a comment box
-				// for instance on Writer that causes the text cursor to be moved
-				return;
-			}
-		}
+
 		this._map._contextMenu._onMouseDown({originalEvent: e.srcEvent});
 
 		var acceptInput = false; // No keyboard by default.
