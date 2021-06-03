@@ -59,8 +59,6 @@ class CommentSection {
 
 	constructor () {
 		this.map = L.Map.THIS;
-		// Below anchor list may be expanded. For example, Writer may have ruler section. Then ruler section should also be added here.
-		// If there is column header section, its bottom will be this section's top.
 		this.anchor = ['top', 'right'];
 		this.sectionProperties.docLayer = this.map._docLayer;
 		this.sectionProperties.commentList = new Array(0);
