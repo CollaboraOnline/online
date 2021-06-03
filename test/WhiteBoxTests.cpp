@@ -67,6 +67,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testParseUriUrl);
     CPPUNIT_TEST(testParseUrl);
     CPPUNIT_TEST(testSafeAtoi);
+    CPPUNIT_TEST(testBytesToHex);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -100,6 +101,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testParseUriUrl();
     void testParseUrl();
     void testSafeAtoi();
+    void testBytesToHex();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -2059,6 +2061,16 @@ void WhiteBoxTests::testSafeAtoi()
     }
     {
         LOK_ASSERT_EQUAL(0, Util::safe_atoi(nullptr, 0));
+    }
+}
+
+void WhiteBoxTests::testBytesToHex()
+{
+    {
+        const std::string d("Some text");
+        const std::string hex = Util::bytesToHexString(d);
+        const std::string s = Util::hexStringToBytes(hex);
+        LOK_ASSERT_EQUAL(d, s);
     }
 }
 
