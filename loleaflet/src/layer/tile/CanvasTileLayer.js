@@ -999,6 +999,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._painter._addGridSection();
 		}
 		this._syncTileContainerSize();
+		this._setupTableOverlay();
 	},
 
 	// Returns true if the document type is Writer.
