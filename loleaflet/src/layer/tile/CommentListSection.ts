@@ -227,7 +227,7 @@ class CommentSection {
 		var dialog = vex.dialog.open({
 			message: '',
 			input: [
-				'<textarea name="comment" class="loleaflet-annotation-textarea" required>' + (commentData.text ? commentData.text: '') + '</textarea>'
+				'<textarea name="comment" class="loleaflet-annotation-textarea" required>' + (commentData.text && isMod ? commentData.text: '') + '</textarea>'
 			].join(''),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.YES, { text: _('Save') }),
@@ -387,17 +387,24 @@ class CommentSection {
 			if (author in this.map._viewInfoByUserName) {
 				avatar = this.map._viewInfoByUserName[author].userextrainfo.avatar;
 			}
-			var replyAnnotation = {
-				text: '',
-				textrange: '',
-				author: author,
-				dateTime: new Date().toDateString(),
-				id: annotation.sectionProperties.data.id,
-				avatar: avatar,
-				parent: annotation.sectionProperties.data.parent,
-				anchorPos: [annotation.sectionProperties.data.anchorPos[0], annotation.sectionProperties.data.anchorPos[1]]
-			};
-			this.newAnnotationVex(this.add(replyAnnotation, true), annotation.onReplyClick,/* isMod */ false);
+
+			if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
+				this.newAnnotationVex(annotation, annotation.onReplyClick, /* isMod */ false);
+			}
+			else {
+				var replyAnnotation = {
+					text: '',
+					textrange: '',
+					author: author,
+					dateTime: new Date().toDateString(),
+					id: annotation.sectionProperties.data.id,
+					avatar: avatar,
+					parent: annotation.sectionProperties.data.parent,
+					anchorPos: [annotation.sectionProperties.data.anchorPos[0], annotation.sectionProperties.data.anchorPos[1]],
+				};
+
+				this.newAnnotationVex(this.add(replyAnnotation, true), annotation.onReplyClick, /* isMod */ false);
+			}
 		}
 		else {
 			annotation.reply();
