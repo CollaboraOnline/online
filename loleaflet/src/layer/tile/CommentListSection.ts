@@ -266,7 +266,6 @@ class CommentSection {
 		var contentAuthor = L.DomUtil.create(tagDiv, 'loleaflet-annotation-content-author', tdAuthor);
 		var contentDate = L.DomUtil.create(tagDiv, 'loleaflet-annotation-date', tdAuthor);
 
-		//$(this._nodeModifyText).text(commentData.text);
 		$(contentAuthor).text(commentData.author);
 		$(authorAvatarImg).attr('src', commentData.avatar);
 		var user = this.map.getViewId(commentData.author);
@@ -679,18 +678,6 @@ class CommentSection {
 
 	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
 
-	}
-
-	public onMouseUp (point: Array<number>, e: MouseEvent) {
-	}
-
-	public onMouseDown (point: Array<number>, e: MouseEvent) {
-	}
-
-	public onMouseEnter () {
-	}
-
-	public onMouseLeave () {
 	}
 
 	public onNewDocumentTopLeft () {
@@ -1456,6 +1443,10 @@ class CommentSection {
 		this.checkSize();
 	}
 
+	public onMouseUp () {}
+	public onMouseDown () {}
+	public onMouseEnter () {}
+	public onMouseLeave () {}
 	public onMouseWheel () {}
 	public onClick () {}
 	public onDoubleClick () {}
