@@ -114,7 +114,7 @@ class CommentSection {
 		}
 	}
 
-	private hideAllComments () {
+	public hideAllComments () {
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
 			this.sectionProperties.commentList[i].hide();
 		}
@@ -227,7 +227,7 @@ class CommentSection {
 		var dialog = vex.dialog.open({
 			message: '',
 			input: [
-				'<textarea name="comment" class="loleaflet-annotation-textarea" required>' + commentData.text + '</textarea>'
+				'<textarea name="comment" class="loleaflet-annotation-textarea" required>' + (commentData.text ? commentData.text: '') + '</textarea>'
 			].join(''),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.YES, { text: _('Save') }),
@@ -440,7 +440,11 @@ class CommentSection {
 			if (this.sectionProperties.selectedComment && $(this.sectionProperties.selectedComment.sectionProperties.container).hasClass('annotation-active'))
 				$(this.sectionProperties.selectedComment.sectionProperties.container).removeClass('annotation-active');
 
+			if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+				this.sectionProperties.selectedComment.hide();
+
 			this.sectionProperties.selectedComment = null;
+
 			this.update();
 		}
 	}
