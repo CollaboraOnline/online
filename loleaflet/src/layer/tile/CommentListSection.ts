@@ -117,7 +117,18 @@ class CommentSection {
 	public hideAllComments () {
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
 			this.sectionProperties.commentList[i].hide();
+			var part = this.sectionProperties.docLayer._selectedPart;
+			if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+				// Change drawing order so they don't prevent each other from being shown.
+				if (parseInt(this.sectionProperties.commentList[i].sectionProperties.data.tab) === part) {
+					this.sectionProperties.commentList[i].drawingOrder = 2;
+				}
+				else {
+					this.sectionProperties.commentList[i].drawingOrder = 1;
+				}
+			}
 		}
+		this.containerObject.applyDrawingOrders();
 	}
 
 	private createCommentStructureWriter (menuStructure: any) {
@@ -1435,6 +1446,9 @@ class CommentSection {
 			this.checkSize();
 			this.layout();
 		}
+
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+			this.hideAllComments(); // Apply drawing orders.
 	}
 
 	// Remove only text comments from the document (excluding change tracking comments)
