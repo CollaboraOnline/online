@@ -791,6 +791,7 @@ class Comment {
 		// We will use this event as click event on touch devices, until we remove Hammer.js (then this code will be removed from here).
 		// Control.ColumnHeader.js file is not affected by this situation, because map element (so Hammer.js) doesn't cover headers.
 		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
+			this.onMouseEnter();
 			this.onClick(point, e);
 		}
 	}
@@ -807,6 +808,7 @@ class Comment {
 				var containerWidth: number = this.sectionProperties.container.getBoundingClientRect().width;
 				var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
 				this.size = [Math.round((this.sectionProperties.data.cellPos[2]) * ratio + containerWidth), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
+				this.sectionProperties.commentListSection.selectById(this.sectionProperties.data.id);
 				this.show();
 			}
 		}
