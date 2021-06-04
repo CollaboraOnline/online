@@ -319,7 +319,7 @@ class Comment {
 	}
 
 	private setPositionAndSize () {
-		var rectangles = this.sectionProperties.data.rectangles;
+		var rectangles = this.sectionProperties.data.rectanglesOriginal;
 		if (rectangles && this.sectionProperties.docLayer._docType === 'text') {
 			var xMin: number = Infinity, yMin: number = Infinity, xMax: number = 0, yMax: number = 0;
 			for (var i = 0; i < rectangles.length; i++) {
@@ -335,9 +335,14 @@ class Comment {
 				if (rectangles[i][1] + rectangles[i][3] > yMax)
 					yMax = rectangles[i][1] + rectangles[i][3];
 			}
-			var documentAnchorSection = this.containerObject.getDocumentAnchorSection();
-			var diff = [documentAnchorSection.myTopLeft[0] - this.documentTopLeft[0], documentAnchorSection.myTopLeft[1] - this.documentTopLeft[1]];
-			this.setPosition(xMin - diff[0], yMin - diff[1]); // This function is added by section container.
+			// Rectangles are in twips. Convert them to core pixels.
+			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+			xMin = Math.round(xMin * ratio);
+			yMin = Math.round(yMin * ratio);
+			xMax = Math.round(xMax * ratio);
+			yMax = Math.round(yMax * ratio);
+
+			this.setPosition(xMin, yMin); // This function is added by section container.
 			this.size = [xMax - xMin, yMax - yMin];
 		}
 		else if (this.sectionProperties.data.cellPos && this.sectionProperties.docLayer._docType === 'spreadsheet') {
@@ -780,7 +785,15 @@ class Comment {
 
 	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {}
 
-	public onMouseUp (point: Array<number>, e: MouseEvent) {}
+	public onMouseUp (point: Array<number>, e: MouseEvent) {
+		// Hammer.js doesn't fire onClick event after touchEnd event.
+		// CanvasSectionContainer fires the onClick event. But since Hammer.js is used for map, it disables the onClick for SectionContainer.
+		// We will use this event as click event on touch devices, until we remove Hammer.js (then this code will be removed from here).
+		// Control.ColumnHeader.js file is not affected by this situation, because map element (so Hammer.js) doesn't cover headers.
+		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
+			this.onClick(point, e);
+		}
+	}
 
 	public onMouseDown (point: Array<number>, e: MouseEvent) {}
 
