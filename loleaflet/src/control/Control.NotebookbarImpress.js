@@ -621,12 +621,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertPage'),
+								'text': _UNO('.uno:InsertSlide', 'presentation'),
 								'command': '.uno:InsertPage'
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:DuplicatePage'),
+								'text': _UNO('.uno:DuplicateSlide', 'presentation'),
 								'command': '.uno:DuplicatePage'
 							},
 							{
@@ -636,7 +636,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertTable'),
+								'text': _UNO('.uno:InsertTable', 'presentation'),
 								'command': '.uno:InsertTable'
 							}
 						]
