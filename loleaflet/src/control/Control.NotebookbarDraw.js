@@ -591,12 +591,12 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertPage'),
+								'text': _UNO('.uno:InsertPage', 'presentation'),
 								'command': '.uno:InsertPage'
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:DuplicatePage'),
+								'text': _UNO('.uno:DuplicatePage', 'presentation'),
 								'command': '.uno:DuplicatePage'
 							},
 							{
@@ -606,7 +606,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 							},
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:InsertTable'),
+								'text': _UNO('.uno:InsertTable', 'presentation'),
 								'command': '.uno:InsertTable'
 							}
 						]
