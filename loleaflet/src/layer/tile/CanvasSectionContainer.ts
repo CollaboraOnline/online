@@ -1290,7 +1290,7 @@ class CanvasSectionContainer {
 		}
 	}
 
-	private applyDrawingOrders () {
+	public applyDrawingOrders () {
 		// According to drawing order. Section with the highest drawing order will be drawn on top (inside same zIndex).
 		for (var i: number = 0; i < this.sections.length - 1; i++) {
 			var zIndex = this.sections[i].zIndex;
