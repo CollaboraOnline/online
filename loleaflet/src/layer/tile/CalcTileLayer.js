@@ -246,6 +246,8 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this.refreshViewData(undefined, true /* compatDataSrcOnly */, false /* sheetGeometryChanged */);
 			this._replayPrintTwipsMsgAllViews('cellviewcursor');
 			this._replayPrintTwipsMsgAllViews('textviewselection');
+			// Hide previous tab's shown comment (if any).
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hideAllComments();
 		}
 	},
 
