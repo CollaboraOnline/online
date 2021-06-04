@@ -438,8 +438,6 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:InsertSymbol'},
 				{type: 'separator'},
-				{uno: '.uno:HeaderAndFooter'},
-				{type: 'separator'},
 				{name: _UNO('.uno:InsertField', 'text'), id: 'insertfield', type: 'menu', menu: [
 					{uno: '.uno:InsertDateFieldFix'},
 					{uno: '.uno:InsertDateFieldVar'},
