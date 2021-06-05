@@ -7,7 +7,8 @@
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size)
 {
     http::Response response;
-    response.readData(reinterpret_cast<const char*>(data), size);
+    for (size_t i = 0; i < size; ++i)
+        response.readData(reinterpret_cast<const char*>(data), i);
     return 0;
 }
 
