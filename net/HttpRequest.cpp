@@ -384,7 +384,6 @@ int64_t Request::readData(const char* p, const int64_t len)
         const int64_t read = _header.parse(p, available);
         if (read < 0)
         {
-            // _state = State::Error;
             return read;
         }
 
@@ -436,7 +435,6 @@ int64_t Response::readData(const char* p, int64_t len)
             case FieldParseState::Incomplete:
                 return 0;
             case FieldParseState::Invalid:
-                _state = State::Error;
                 return -1;
             case FieldParseState::Valid:
                 if (read <= 0)
@@ -457,7 +455,6 @@ int64_t Response::readData(const char* p, int64_t len)
         const int64_t read = _header.parse(p, available);
         if (read < 0)
         {
-            _state = State::Error;
             return read;
         }
 
@@ -503,8 +500,7 @@ int64_t Response::readData(const char* p, int64_t len)
                         LOG_ERR("Unexpected Content-Length header in response: "
                                 << _header.getContentLength()
                                 << ", Transfer-Encoding: " << _header.getTransferEncoding());
-                        _state = State::Error;
-                        _parserStage = ParserStage::Finished;
+                        return -1;
                     }
                     else if (_header.getContentLength() == 0)
                         _parserStage = ParserStage::Finished; // No body, we are done.
@@ -580,7 +576,6 @@ int64_t Response::readData(const char* p, int64_t len)
                         LOG_ERR("Error writing http response payload. Write "
                                 "handler returned "
                                 << read << " instead of " << chunkLen);
-                        _state = State::Error;
                         return -1;
                     }
 
@@ -614,7 +609,6 @@ int64_t Response::readData(const char* p, int64_t len)
             {
                 LOG_ERR("Error writing http response payload. Write handler returned "
                         << wrote << " instead of " << available);
-                _state = State::Error;
                 return wrote;
             }
 
