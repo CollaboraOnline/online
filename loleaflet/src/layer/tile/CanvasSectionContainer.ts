@@ -17,12 +17,12 @@ declare var L: any;
 			Bound sections are like layers. They overlap entirely.
 			Every bound section should share same zIndex unless there is a very good reason for different zIndex values.
 			To make a section "bound" to another, one can use "boundToSection" property (section name - string).
-			When 2 or more sections overlap, the top section will get the event first.
-			If a section handles the event and calls stopPropagating function, the sections after that section won't get the event.
+			When 2 or more sections are bound, the top section will get the event first.
+			If a section handles the event and calls stopPropagating function, the bound sections after that section won't get the event.
 			Example scenario:
 				Event: drag
 				Top section handles event.
-				Middle section handles event then calls "stopPropagating" function. From this point, top section still handles the event until the end of the event.
+				Middle section handles the event and then calls "stopPropagating" function. From this point, top section still handles the event until the end of the event.
 				Bottom section doesn't get the event.
 
 			If stopPropagating function is called, it is valid until the end of the event. So for events like dragging, calling
@@ -42,15 +42,45 @@ declare var L: any;
 		2- [["column header", "bottom", "ruler", "bottom", "top"], ["row header", "right", "left"]]
 
 	position: [0, 0] | [10, 50] | [x, y] // Related to anchor. Example 'bottom right': P(0, 0) is bottom right etc. myTopLeft is updated according to position and anchor.
+
 	documentObject:
 		* This means that the section is a document object. So its anchor can only be "top left", it doesn't need to be set.
 		* Container's documentAnchorSectionName should be set for enabling document objects.
 		* For this type of sections, only "size" and "position" are meaningful.
 		* Position is the object's position inside the document.
-		* So a document object is not a UI element, other sections are UI elements and their position and size can be managed by the section container.
+		* So a document object is not a UI element, other sections are UI elements and their positions and sizes can be managed by the section container.
 		* Document objects' positions and sizes are not managed by the section container.
-		* When "onDraw" function of document-object section is called, the canvas pen is positioned to the coordinate of the document object. So the section can draw from point (0, 0)
+		* When "onDraw" function of a document-object section is called, the canvas pen is positioned to the coordinate of the document object. So the section can draw from point (0, 0)
 		* Before "onDraw" function is called, section's "isVisible" property is set. If the object is visible inside the viewed area (even partially), the property value will be true, if not, it will be false.
+
+	windowSection:	Bound sections overlap entirely, their sizes and locations are the same.
+					Events are propagated "only" between bound sections.
+					When an event occurs, the target section is found and local coordinates are calculated.
+					Since the same coordinates are valid for the bound sections beneath the target section, we can easily propagate the event to those bound sections.
+					If 2 sections intersect but not bound, the top section gets the event and event is not propagated to the intersecting section.
+					This type of propagation reduces the computational load of the CanvasSectionContainer.
+
+					Now, the document is placed inside TilesSection and we need to scroll / zoom the document.
+					If we bind the ScrollSection to TilesSection, we can easily scroll the document using event propagation.
+					But now we have CommentListSection next to TilesSection. We also want to be able to scroll the document when mouse is above CommentListSection.
+					This request needs a top handler to be met.
+					Top handlers (sections) will handle events like scroll & zoom universally.
+					Users will be able to scroll the document while the mouse pointer is above CommentListSection.
+					So the solution to problems like scrolling is using "windowSection"s.
+
+					A window section is always the first to handle an event and its size is equal to canvas element's size.
+					An event is propagated for the target section after window section handles it.
+					A window section can stop propagation of the event.
+					"Window section"s drawing order and zIndex can be set. So it will be drawn accordingly.
+
+					If:
+						We don't want to handle the event with the window section while mouse is above "section X".
+							Check canvasSectionContainer.targetSection property. It shows the actual target of the event.
+								Example:	A document object is being moved and window section shouldn't scroll the document.
+											Window section will check the containerObject.targetSection (string) and see it is a document object.
+						We are handling keyboard events with a window section so there is no target section?
+							Check the containerObject.activeSection property, if it is not included in your list, don't handle the keyboard event with the window section.
+							One should set and keep up to date the containerObject.activeSection (string) property accordingly.
 
 	size: [100, 100] | [10, 20] | [maxX, maxY] // This doesn't restrict the drawable area, that is up to implementation. Size is not important for expanded directions. Expandable size is assigned after calculations.
 	zIndex: Elements with highest zIndex will be drawn on top.
@@ -72,8 +102,8 @@ declare var L: any;
 	--------- ----------
 
 	Top bar's height will be static most probably. It needs to be drawn first, so it can be expanded to right.
-	If top bar is drawn after tiles area, since "tiles area" will most probably be expanded to all directions, it will leave no space for top bar.
-	So, tiles area will be drawn last.
+	If top bar is processed after tiles area, since "tiles area" will most probably be expanded to all directions, it will leave no space for top bar.
+	So, tiles area will be processed last.
 	For above situation, processing orders would be (with the same zIndex):
 	* top bar -> 1
 	* left bar -> 2
@@ -94,10 +124,6 @@ declare var L: any;
 	* Requesting a redraw.
 
 	Every section has a "section" property inside "sectionProperties".
-
-	parentSectionName property (parameter of addSection): New section is added and its size and myTopLeft properties are mirrored from its parent section.
-		All other properties and behaviours are the same with any section.
-
 
 	Event handling:
 		Mouse event combinations:
@@ -142,6 +168,7 @@ class CanvasSectionObject {
 	zIndex: number = null;
 	interactable: boolean = true;
 	isAnimating: boolean = false;
+	windowSection: boolean = false;
 	sectionProperties: any = {};
 	onInitialize: Function; // Paramaters: null (use sectionProperties).
 	onMouseMove: Function; // Parameters: Point [x, y], DragDistance [x, y] (null when not dragging), e (native event object)
@@ -246,6 +273,8 @@ class CanvasSectionContainer {
 	private touchEventInProgress: boolean = false; // This prevents multiple calling of mouse down and up events.
 	public testing: boolean = false; // If this set to true, container will create a div element for every section. So, cypress tests can find where to click etc.
 	public lowestPropagatedBoundSection: string = null; // Event propagating to bound sections. The first section which stops propagating and the sections those are on top of that section, get the event.
+	public targetSection: string = null;
+	public activeSection: string = null;
 	private scrollLineHeight: number = 30; // This will be overridden.
 	private mouseIsInside: boolean = false;
 	private inZoomAnimation: boolean = false;
@@ -255,6 +284,9 @@ class CanvasSectionContainer {
 	// Above 2 properties can be used with documentBounds.
 	private drawingPaused: boolean = false;
 	private dirty: boolean = false;
+
+	// For window sections.
+	private windowSectionList: Array<CanvasSectionObject> = [];
 
 	// Below variables are related to animation feature.
 	private animatingSectionName: string = null; // The section that called startAnimating function. This variable is null when animations are not running.
@@ -387,6 +419,7 @@ class CanvasSectionContainer {
 		this.draggingSomething = false;
 		this.touchEventInProgress = false;
 		this.lowestPropagatedBoundSection = null;
+		this.targetSection = null;
 	}
 
 	private convertPositionToSectionLocale (section: CanvasSectionObject, point: Array<number>): Array<number> {
@@ -552,7 +585,7 @@ class CanvasSectionContainer {
 		}
 	}
 
-	requestReDraw() {
+	public requestReDraw() {
 		if (this.drawingPaused) {
 			// Someone requested a redraw, but we're paused => schedule a redraw.
 			this.setDirty();
@@ -564,26 +597,68 @@ class CanvasSectionContainer {
 	}
 
 	private propagateOnClick(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
-		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
-			if (section.boundsList[i].interactable)
-				section.boundsList[i].onClick((position ? [position[0], position[1]]: null), e);
+		this.targetSection = section.name;
 
-			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
-				break; // Stop propagation.
+		var propagate: boolean = true;
+		var windowPosition: Array<number> = position ? [position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]: null;
+		for (var j: number = 0; j < this.windowSectionList.length; j++) {
+			var windowSection = this.windowSectionList[j];
+			if (windowSection.interactable)
+				windowSection.onClick(windowPosition, e);
+
+			if (this.lowestPropagatedBoundSection === windowSection.name)
+				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
+		}
+
+		if (propagate) {
+			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+				if (section.boundsList[i].interactable)
+					section.boundsList[i].onClick((position ? [position[0], position[1]]: null), e);
+
+				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+					break; // Stop propagation.
+			}
 		}
 	}
 
 	private propagateOnDoubleClick(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
-		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
-			if (section.boundsList[i].interactable)
-				section.boundsList[i].onDoubleClick((position ? [position[0], position[1]]: null), e);
+		this.targetSection = section.name;
 
-			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
-				break; // Stop propagation.
+		var propagate: boolean = true;
+		var windowPosition: Array<number> = position ? [position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]: null;
+		for (var j: number = 0; j < this.windowSectionList.length; j++) {
+			var windowSection = this.windowSectionList[j];
+			if (windowSection.interactable)
+				windowSection.onDoubleClick(windowPosition, e);
+
+			if (this.lowestPropagatedBoundSection === windowSection.name)
+				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
+		}
+
+		if (propagate) {
+			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+				if (section.boundsList[i].interactable)
+					section.boundsList[i].onDoubleClick((position ? [position[0], position[1]]: null), e);
+
+				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+					break; // Stop propagation.
+			}
 		}
 	}
 
 	private propagateOnMouseLeave(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
+		this.targetSection = section.name;
+
+		var windowPosition: Array<number> = position ? [position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]: null;
+		if (!windowPosition) { // This event is valid only if the windowPosition is null for window sections. Otherwise mouse cannot leave from a section that is covering entire canvas element.
+			for (var j: number = 0; j < this.windowSectionList.length; j++) {
+				var windowSection = this.windowSectionList[j];
+				if (windowSection.interactable)
+					windowSection.onMouseLeave(windowPosition, e);
+				// This event's propagation shouldn't be cancelled.
+			}
+		}
+
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
 				section.boundsList[i].onMouseLeave((position ? [position[0], position[1]]: null), e);
@@ -594,6 +669,10 @@ class CanvasSectionContainer {
 	}
 
 	private propagateOnMouseEnter(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
+		this.targetSection = section.name;
+
+		// This event is handled in the mouseEnter event of the canvas itself (for window sections).
+
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
 				section.boundsList[i].onMouseEnter((position ? [position[0], position[1]]: null), e);
@@ -604,92 +683,224 @@ class CanvasSectionContainer {
 	}
 
 	private propagateOnMouseMove(section: CanvasSectionObject, position: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
-		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
-			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMouseMove((position ? [position[0], position[1]]: null), dragDistance, e);
+		this.targetSection = section.name;
 
-			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
-				break; // Stop propagation.
+		var propagate: boolean = true;
+		var windowPosition: Array<number> = position ? [position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]: null;
+		for (var j: number = 0; j < this.windowSectionList.length; j++) {
+			var windowSection = this.windowSectionList[j];
+			if (windowSection.interactable)
+				windowSection.onMouseMove(windowPosition, dragDistance, e);
+
+			if (this.lowestPropagatedBoundSection === windowSection.name)
+				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
+		}
+
+		if (propagate) {
+			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+				if (section.boundsList[i].interactable)
+					section.boundsList[i].onMouseMove((position ? [position[0], position[1]]: null), dragDistance, e);
+
+				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+					break; // Stop propagation.
+			}
 		}
 	}
 
 	private propagateOnLongPress(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
-		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
-			if (section.boundsList[i].interactable)
-				section.boundsList[i].onLongPress((position ? [position[0], position[1]]: null), e);
+		this.targetSection = section.name;
 
-			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
-				break; // Stop propagation.
+		var propagate: boolean = true;
+		var windowPosition: Array<number> = position ? [position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]: null;
+		for (var j: number = 0; j < this.windowSectionList.length; j++) {
+			var windowSection = this.windowSectionList[j];
+			if (windowSection.interactable)
+				windowSection.onLongPress(windowPosition, e);
+
+			if (this.lowestPropagatedBoundSection === windowSection.name)
+				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
+		}
+
+		if (propagate) {
+			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+				if (section.boundsList[i].interactable)
+					section.boundsList[i].onLongPress((position ? [position[0], position[1]]: null), e);
+
+				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+					break; // Stop propagation.
+			}
 		}
 	}
 
 	private propagateOnMouseDown(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
-		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
-			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMouseDown((position ? [position[0], position[1]]: null), e);
+		this.targetSection = section.name;
 
-			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
-				break; // Stop propagation.
+		var propagate: boolean = true;
+		var windowPosition: Array<number> = position ? [position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]: null;
+		for (var j: number = 0; j < this.windowSectionList.length; j++) {
+			var windowSection = this.windowSectionList[j];
+			if (windowSection.interactable)
+				windowSection.onMouseDown(windowPosition, e);
+
+			if (this.lowestPropagatedBoundSection === windowSection.name)
+				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
+		}
+
+		if (propagate) {
+			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+				if (section.boundsList[i].interactable)
+					section.boundsList[i].onMouseDown((position ? [position[0], position[1]]: null), e);
+
+				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+					break; // Stop propagation.
+			}
 		}
 	}
 
 	private propagateOnMouseUp(section: CanvasSectionObject, position: Array<number>, e: MouseEvent) {
-		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
-			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMouseUp((position ? [position[0], position[1]]: null), e);
+		this.targetSection = section.name;
 
-			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
-				break; // Stop propagation.
+		var propagate: boolean = true;
+		var windowPosition: Array<number> = position ? [position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]: null;
+		for (var j: number = 0; j < this.windowSectionList.length; j++) {
+			var windowSection = this.windowSectionList[j];
+			if (windowSection.interactable)
+				windowSection.onMouseUp(windowPosition, e);
+
+			if (this.lowestPropagatedBoundSection === windowSection.name)
+				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
+		}
+
+		if (propagate) {
+			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+				if (section.boundsList[i].interactable)
+					section.boundsList[i].onMouseUp((position ? [position[0], position[1]]: null), e);
+
+				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+					break; // Stop propagation.
+			}
 		}
 	}
 
 	private propagateOnContextMenu(section: CanvasSectionObject) {
-		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
-			if (section.boundsList[i].interactable)
-				section.boundsList[i].onContextMenu();
+		this.targetSection = section.name;
 
-			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
-				break; // Stop propagation.
+		var propagate: boolean = true;
+		for (var j: number = 0; j < this.windowSectionList.length; j++) {
+			var windowSection = this.windowSectionList[j];
+			if (windowSection.interactable)
+				windowSection.onContextMenu();
+
+			if (this.lowestPropagatedBoundSection === windowSection.name)
+				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
+		}
+
+		if (propagate) {
+			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+				if (section.boundsList[i].interactable)
+					section.boundsList[i].onContextMenu();
+
+				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+					break; // Stop propagation.
+			}
 		}
 	}
 
 	private propagateOnMouseWheel(section: CanvasSectionObject, position: Array<number>, delta: Array<number>, e: MouseEvent) {
-		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
-			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMouseWheel((position ? [position[0], position[1]]: null), delta, e);
+		this.targetSection = section.name;
 
-			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
-				break; // Stop propagation.
+		var propagate: boolean = true;
+		var windowPosition: Array<number> = position ? [position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]: null;
+		for (var j: number = 0; j < this.windowSectionList.length; j++) {
+			var windowSection = this.windowSectionList[j];
+			if (windowSection.interactable)
+				windowSection.onMouseWheel(windowPosition, delta, e);
+
+			if (this.lowestPropagatedBoundSection === windowSection.name)
+				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
+		}
+
+		if (propagate) {
+			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+				if (section.boundsList[i].interactable)
+					section.boundsList[i].onMouseWheel((position ? [position[0], position[1]]: null), delta, e);
+
+				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+					break; // Stop propagation.
+			}
 		}
 	}
 
 	private propagateOnMultiTouchStart(section: CanvasSectionObject, e: TouchEvent) {
-		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
-			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMultiTouchStart(e);
+		this.targetSection = section.name;
 
-			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
-				break; // Stop propagation.
+		var propagate: boolean = true;
+		for (var j: number = 0; j < this.windowSectionList.length; j++) {
+			var windowSection = this.windowSectionList[j];
+			if (windowSection.interactable)
+				windowSection.onMultiTouchStart(e);
+
+			if (this.lowestPropagatedBoundSection === windowSection.name)
+				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
+		}
+
+		if (propagate) {
+			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+				if (section.boundsList[i].interactable)
+					section.boundsList[i].onMultiTouchStart(e);
+
+				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+					break; // Stop propagation.
+			}
 		}
 	}
 
 	private propagateOnMultiTouchMove(section: CanvasSectionObject, position: Array<number>, distance: number, e: TouchEvent) {
-		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
-			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMultiTouchMove((position ? [position[0], position[1]]: null), distance, e);
+		this.targetSection = section.name;
 
-			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
-				break; // Stop propagation.
+		var propagate: boolean = true;
+		var windowPosition: Array<number> = position ? [position[0] + section.myTopLeft[0], position[1] + section.myTopLeft[1]]: null;
+		for (var j: number = 0; j < this.windowSectionList.length; j++) {
+			var windowSection = this.windowSectionList[j];
+			if (windowSection.interactable)
+				windowSection.onMultiTouchMove(windowPosition, distance, e);
+
+			if (this.lowestPropagatedBoundSection === windowSection.name)
+				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
+		}
+
+		if (propagate) {
+			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+				if (section.boundsList[i].interactable)
+					section.boundsList[i].onMultiTouchMove((position ? [position[0], position[1]]: null), distance, e);
+
+				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+					break; // Stop propagation.
+			}
 		}
 	}
 
 	private propagateOnMultiTouchEnd(section: CanvasSectionObject, e: TouchEvent) {
-		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
-			if (section.boundsList[i].interactable)
-				section.boundsList[i].onMultiTouchEnd(e);
+		this.targetSection = section.name;
 
-			if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
-				break; // Stop propagation.
+		var propagate: boolean = true;
+		for (var j: number = 0; j < this.windowSectionList.length; j++) {
+			var windowSection = this.windowSectionList[j];
+			if (windowSection.interactable)
+				windowSection.onMultiTouchEnd(e);
+
+			if (this.lowestPropagatedBoundSection === windowSection.name)
+				propagate = false; // Window sections can not stop the propagation of the event for other window sections.
+		}
+
+		if (propagate) {
+			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
+				if (section.boundsList[i].interactable)
+					section.boundsList[i].onMultiTouchEnd(e);
+
+				if (section.boundsList[i].name === this.lowestPropagatedBoundSection)
+					break; // Stop propagation.
+			}
 		}
 	}
 
@@ -870,6 +1081,12 @@ class CanvasSectionContainer {
 
 	onMouseEnter (e: MouseEvent) {
 		this.mouseIsInside = true;
+
+		for (var i: number = 0; i < this.windowSectionList.length; i++) {
+			var windowSection = this.windowSectionList[i];
+			if (windowSection.interactable)
+				windowSection.onMouseEnter(null, e);
+		}
 	}
 
 	onTouchStart (e: TouchEvent) { // Should be ignored unless this.draggingSomething = true.
@@ -997,14 +1214,14 @@ class CanvasSectionContainer {
 
 	findSectionContainingPoint (point: Array<number>): any {
 		for (var i: number = this.sections.length - 1; i > -1; i--) { // Search from top to bottom. Top section will be sent as target section.
-			if (this.sections[i].isLocated && this.sections[i].showSection && (!this.sections[i].documentObject || this.sections[i].isVisible) && this.doesSectionIncludePoint(this.sections[i], point))
+			if (this.sections[i].isLocated && !this.sections[i].windowSection && this.sections[i].showSection && (!this.sections[i].documentObject || this.sections[i].isVisible) && this.doesSectionIncludePoint(this.sections[i], point))
 				return this.sections[i];
 		}
 
 		return null;
 	}
 
-	doesSectionIncludePoint (section: any, point: Array<number>): boolean { // No ray casting here, it is a rectangle.
+	private doesSectionIncludePoint (section: any, point: Array<number>): boolean { // No ray casting here, it is a rectangle.
 		return ((point[0] >= section.myTopLeft[0] && point[0] <= section.myTopLeft[0] + section.size[0]) && (point[1] >= section.myTopLeft[1] && point[1] <= section.myTopLeft[1] + section.size[1]));
 	}
 
@@ -1239,26 +1456,18 @@ class CanvasSectionContainer {
 		}
 
 		this.documentAnchor = null;
+		this.windowSectionList = [];
 
 		for (var i: number = 0; i < this.sections.length; i++) {
 			var section: CanvasSectionObject = this.sections[i];
 
-			if (section.documentObject === true) {
+			if (section.documentObject === true) { // "Document anchor" section should be processed before "document object" sections.
 				if (section.size && section.position) {
 					section.isLocated = true;
 					section.myTopLeft = [this.documentAnchor[0] + section.position[0] - this.documentTopLeft[0], this.documentAnchor[1] + section.position[1] - this.documentTopLeft[1]];
 				}
 			}
-			else if (!section.boundToSection) {
-				section.myTopLeft = [this.calculateSectionInitialPosition(section, 1), this.calculateSectionInitialPosition(section, 0)];
-
-				if (section.expand[0] !== '')
-					this.expandSection(section);
-
-				this.roundPositionAndSize(section);
-				section.isLocated = true;
-			}
-			else {
+			else if (section.boundToSection) { // Don't set boundToSection property for "window sections".
 				var parentSection = this.getSectionWithName(section.boundToSection);
 				if (parentSection) {
 					section.myTopLeft = [0, 0];
@@ -1272,6 +1481,21 @@ class CanvasSectionContainer {
 					this.roundPositionAndSize(section);
 					section.isLocated = true;
 				}
+			}
+			else if (section.windowSection) {
+				section.myTopLeft = [0, 0];
+				section.size = [this.canvas.width, this.canvas.height];
+				section.isLocated = true;
+				this.windowSectionList.push(section);
+			}
+			else { // A regular UI element.
+				section.myTopLeft = [this.calculateSectionInitialPosition(section, 1), this.calculateSectionInitialPosition(section, 0)];
+
+				if (section.expand[0] !== '')
+					this.expandSection(section);
+
+				this.roundPositionAndSize(section);
+				section.isLocated = true;
 			}
 
 			if (section.name === this.documentAnchorSectionName) {
@@ -1416,7 +1640,7 @@ class CanvasSectionContainer {
 				this.context.translate(-this.sections[i].myTopLeft[0], -this.sections[i].myTopLeft[1]);
 			}
 		}
-		//this.drawSectionBorders();
+		this.drawSectionBorders();
 	}
 
 	doesSectionExist (name: string): boolean {
@@ -1470,6 +1694,9 @@ class CanvasSectionContainer {
 		else {
 			if (options.showSection === undefined)
 				options.showSection = true;
+
+			if (options.windowSection === undefined)
+				options.windowSection = false;
 
 			return true;
 		}
