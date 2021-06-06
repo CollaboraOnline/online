@@ -14,7 +14,7 @@ class ScrollSection {
 	name: string = null;
 	backgroundColor: string = null;
 	borderColor: string = null;
-	boundToSection: string = L.CSections.Tiles.name;
+	boundToSection: string = null;
 	anchor: Array<string> = new Array(0);
 	position: Array<number> = new Array(0);
 	size: Array<number> = new Array(0);
@@ -25,6 +25,7 @@ class ScrollSection {
 	zIndex: number = null;
 	interactable: boolean = true;
 	isAnimating: boolean = false; // This variable is set by the CanvasSectionContainer class.
+	windowSection = true; // This section covers the entire canvas.
 	sectionProperties: any = {};
 	stopPropagating: Function; // Implemented by container.
 	startAnimating: Function; // Implemented by container.
@@ -60,10 +61,10 @@ class ScrollSection {
 		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 		this.sectionProperties.defaultCursorStyle = this.sectionProperties.mapPane.style.cursor;
 
-		//this.sectionProperties.documentTopMax = Infinity;
 		this.sectionProperties.yMax = 0;
 		this.sectionProperties.yMin = 0;
-		this.sectionProperties.documentRightMax = Infinity;
+		this.sectionProperties.xMax = 0;
+		this.sectionProperties.xMin = 0;
 
 		this.sectionProperties.previousDragDistance = null;
 
@@ -170,20 +171,23 @@ class ScrollSection {
 	}
 
 	private getVerticalScrollLength () :number {
+		var result: number = this.containerObject.getDocumentAnchorSection().size[1];
+		this.sectionProperties.yOffset = this.containerObject.getDocumentAnchorSection().myTopLeft[1];
+
 		if (this.map._docLayer._docType !== 'spreadsheet') {
-			return this.size[1];
+			return result;
 		}
 		else {
 			var splitPanesContext: any = this.map.getSplitPanesContext();
 			var splitPos: any = splitPanesContext.getSplitPos().clone();
 			splitPos.y = Math.round(splitPos.y * this.dpiScale);
-			this.sectionProperties.yOffset = splitPos.y;
-			return this.size[1] - splitPos.y;
+			this.sectionProperties.yOffset += splitPos.y;
+			return result - splitPos.y;
 		}
 	}
 
 	private calculateVerticalScrollSize (scrollLength: number) :number {
-		var scrollSize = scrollLength * scrollLength / (this.sectionProperties.yMax - this.sectionProperties.yMin);
+		var scrollSize = Math.round(scrollLength * scrollLength / app.view.size.pixels[1]);
 		if (scrollSize > this.sectionProperties.minimumScrollSize) {
 			return Math.round(scrollSize);
 		}
@@ -192,75 +196,80 @@ class ScrollSection {
 		}
 	}
 
-	// Returns the min position of documentTopLeft[1]
-	private calculateYMax () {
-		var anchorSectionHeight = this.containerObject.getDocumentAnchorSection().size[1];
-		this.sectionProperties.yMax = Math.round(app.view.size.pixels[1] - anchorSectionHeight);
-	}
+	private calculateYMinMax () {
+		var diff: number = Math.round(app.view.size.pixels[1] - this.containerObject.getDocumentAnchorSection().size[1]);
 
-	// Returns the min position of documentTopLeft[1]
-	private calculateYMin () {
-		var anchorSectionHeight = this.containerObject.getDocumentAnchorSection().size[1];
-
-		if (app.file.size.pixels[1] < anchorSectionHeight) {
-			//this.sectionProperties.yMin = 0;
-			this.sectionProperties.yMin = Math.round((anchorSectionHeight - app.file.size.pixels[1]) * 0.5 * -1); // Allow centering the document on the screen after zooming out.
+		if (diff >= 0) {
+			this.sectionProperties.yMin = 0;
+			this.sectionProperties.yMax = diff;
 		}
 		else {
-			this.sectionProperties.yMin = 0;
+			diff = Math.round((app.file.size.pixels[1] - this.containerObject.getDocumentAnchorSection().size[1]) * 0.5);
+			this.sectionProperties.yMin = diff;
+			this.sectionProperties.yMax = diff;
+			this.sectionProperties.drawVerticalScrollBar = false;
 		}
 	}
 
 	public getVerticalScrollProperties () :any {
+		this.calculateYMinMax()
 		var result: any = {};
 		result.scrollLength = this.getVerticalScrollLength(); // The length of the railway that the scroll bar moves on up & down.
-		this.calculateYMax();
-		this.calculateYMin();
-		if (this.sectionProperties.yMax < this.sectionProperties.yMin)
-			this.sectionProperties.yMax = this.sectionProperties.yMin;
-		result.scrollableHeight = (this.sectionProperties.yMax - this.sectionProperties.yMin);
-		result.scrollSize = this.calculateVerticalScrollSize(result.scrollLength);
-		result.scrollableLength = result.scrollLength - result.scrollSize;
-		result.ratio = result.scrollableHeight / result.scrollableLength; // 1px scrolling = xpx document height.
+		result.scrollSize = this.calculateVerticalScrollSize(result.scrollLength); // Size of the scroll bar.
+		result.ratio = app.view.size.pixels[1] / result.scrollLength; // 1px scrolling = xpx document height.
 		result.startY = Math.round(this.documentTopLeft[1] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.yOffset);
-		//this.sectionProperties.documentTopMax = ((app.view.size.pixels[1] - app.file.size.pixels[1]) * 0.5 * -1); //   result.scrollableHeight; // When documentTopLeft[1] value is equal to this value, it means whole document is visible.
-
 
 		return result;
 	}
 
 	private getHorizontalScrollLength () :number {
+		var result: number = this.containerObject.getDocumentAnchorSection().size[0];
+		this.sectionProperties.xOffset = this.containerObject.getDocumentAnchorSection().myTopLeft[0];
+
 		if (this.map._docLayer._docType !== 'spreadsheet') {
-			return this.size[0] - this.sectionProperties.horizontalScrollRightOffset;
+			return result - this.sectionProperties.horizontalScrollRightOffset;
 		}
 		else {
 			var splitPanesContext: any = this.map.getSplitPanesContext();
 			var splitPos: any = splitPanesContext.getSplitPos().clone();
 			splitPos.x = Math.round(splitPos.x * this.dpiScale);
-			this.sectionProperties.xOffset = splitPos.x;
-			return this.size[0] - splitPos.x - this.sectionProperties.horizontalScrollRightOffset;
+			this.sectionProperties.xOffset += splitPos.x;
+			return result - splitPos.x - this.sectionProperties.horizontalScrollRightOffset;
 		}
 	}
 
 	private calculateHorizontalScrollSize (scrollLength: number) :number {
-		var scrollSize = scrollLength * scrollLength / app.view.size.pixels[0];
+		var scrollSize = Math.round(scrollLength * scrollLength / app.view.size.pixels[0]);
 		if (scrollSize > this.sectionProperties.minimumScrollSize) {
-			return Math.round(scrollSize);
+			return scrollSize;
 		}
 		else {
 			return this.sectionProperties.minimumScrollSize;
 		}
 	}
 
+	private calculateXMinMax () {
+		var diff: number = Math.round(app.view.size.pixels[0] - this.containerObject.getDocumentAnchorSection().size[0]);
+
+		if (diff >= 0) {
+			this.sectionProperties.xMin = 0;
+			this.sectionProperties.xMax = diff;
+		}
+		else {
+			diff = Math.round((app.file.size.pixels[0] - this.containerObject.getDocumentAnchorSection().size[0]) * 0.5);
+			this.sectionProperties.xMin = diff;
+			this.sectionProperties.xMax = diff;
+			this.sectionProperties.drawHorizontalScrollBar = false;
+		}
+	}
+
 	public getHorizontalScrollProperties () :any {
+		this.calculateXMinMax()
 		var result: any = {};
 		result.scrollLength = this.getHorizontalScrollLength(); // The length of the railway that the scroll bar moves on up & down.
 		result.scrollSize = this.calculateHorizontalScrollSize(result.scrollLength); // Width of the scroll bar.
-		result.scrollableLength = result.scrollLength - result.scrollSize;
-		result.scrollableWidth = app.view.size.pixels[0] - this.size[0];
-		result.ratio = result.scrollableWidth / result.scrollableLength;
+		result.ratio = app.view.size.pixels[0] / result.scrollLength;
 		result.startX = Math.round(this.documentTopLeft[0] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.xOffset);
-		this.sectionProperties.documentRightMax = result.scrollableWidth;
 
 		return result;
 	}
@@ -504,24 +513,47 @@ class ScrollSection {
 	}
 
 	public scrollVerticalWithOffset (offset: number) {
-		if (this.documentTopLeft[1] + offset > this.sectionProperties.yMax)
-			this.map.scrollTop(this.sectionProperties.yMax / this.dpiScale, {});
-		else if (this.documentTopLeft[1] + offset < this.sectionProperties.yMin)
-			this.map.scrollTop(this.sectionProperties.yMin / this.dpiScale, {});
-		else
+        var go = true;
+		if (offset > 0) {
+            var props = this.getVerticalScrollProperties();
+            if (props.startY + offset + props.scrollSize > props.scrollLength)
+                offset = props.scrollLength - props.startY - props.scrollSize;
+            if (offset < 0)
+                go = false;
+		}
+		else {
+			if (this.documentTopLeft[1] + offset < this.sectionProperties.yMin)
+				offset = this.sectionProperties.yMin - this.documentTopLeft[1];
+			if (offset > 0)
+				go = false;
+		}
+
+		if (go) {
 			this.map.scroll(0, offset / this.dpiScale, {});
+			this.onUpdateScrollOffset();
+		}
 	}
 
 	public scrollHorizontalWithOffset (offset: number) {
-		if (this.documentTopLeft[0] + offset <= 0){ // We shouldn't scroll document to a negative x value.
-			if (this.documentTopLeft[0] > 0)
-				this.map.scrollLeft(0, {});
+		var go = true;
+		if (offset > 0) {
+            var props = this.getHorizontalScrollProperties();
+            if (props.startX + offset + props.scrollSize > props.scrollLength)
+                offset = props.scrollLength - props.startX - props.scrollSize;
+            if (offset < 0)
+                go = false;
 		}
-		else if (this.documentTopLeft[0] + offset >= this.sectionProperties.documentRightMax) // We should stop at the right edge of the document.
-			this.map.scrollLeft(this.sectionProperties.documentRightMax / this.dpiScale, {});
-		else // Humph, everything is normal.
+		else {
+			if (this.documentTopLeft[0] + offset < this.sectionProperties.xMin)
+				offset = this.sectionProperties.xMin - this.documentTopLeft[0];
+			if (offset > 0)
+				go = false;
+		}
+
+		if (go) {
 			this.map.scroll(offset / this.dpiScale, 0, {});
-		this.onUpdateScrollOffset();
+			this.onUpdateScrollOffset();
+		}
 	}
 
 	public onMouseMove (position: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
