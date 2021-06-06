@@ -1534,28 +1534,30 @@ class CanvasSectionContainer {
 		for (var i: number = 0; i < this.sections.length; i++) {
 			var section = this.sections[i];
 
-			var xStart = section.myTopLeft[0];
-			var xEnd = xStart + section.size[0];
+			if (section.isLocated && section.showSection && (!section.documentObject || section.isVisible)) {
+				var xStart = section.myTopLeft[0];
+				var xEnd = xStart + section.size[0];
 
-			var yStart = section.myTopLeft[1];
-			var yEnd = yStart + section.size[1];
+				var yStart = section.myTopLeft[1];
+				var yEnd = yStart + section.size[1];
 
-			this.context.beginPath();
-			this.context.moveTo(xStart, yStart);
-			this.context.lineTo(xEnd, yStart);
-			this.context.stroke();
-			this.context.beginPath();
-			this.context.moveTo(xEnd, yStart);
-			this.context.lineTo(xEnd, yEnd);
-			this.context.stroke();
-			this.context.beginPath();
-			this.context.moveTo(xEnd, yEnd);
-			this.context.lineTo(xStart, yEnd);
-			this.context.stroke();
-			this.context.beginPath();
-			this.context.moveTo(xStart, yEnd);
-			this.context.lineTo(xStart, yStart);
-			this.context.stroke();
+				this.context.beginPath();
+				this.context.moveTo(xStart, yStart);
+				this.context.lineTo(xEnd, yStart);
+				this.context.stroke();
+				this.context.beginPath();
+				this.context.moveTo(xEnd, yStart);
+				this.context.lineTo(xEnd, yEnd);
+				this.context.stroke();
+				this.context.beginPath();
+				this.context.moveTo(xEnd, yEnd);
+				this.context.lineTo(xStart, yEnd);
+				this.context.stroke();
+				this.context.beginPath();
+				this.context.moveTo(xStart, yEnd);
+				this.context.lineTo(xStart, yStart);
+				this.context.stroke();
+			}
 		}
 	}
 
@@ -1636,7 +1638,7 @@ class CanvasSectionContainer {
 				this.context.translate(-this.sections[i].myTopLeft[0], -this.sections[i].myTopLeft[1]);
 			}
 		}
-		this.drawSectionBorders();
+		//this.drawSectionBorders();
 	}
 
 	doesSectionExist (name: string): boolean {
