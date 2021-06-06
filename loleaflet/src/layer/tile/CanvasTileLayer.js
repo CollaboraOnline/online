@@ -1046,28 +1046,18 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			return;
 		}
 
-		var extraSize = new L.Point(this._extraScollSizeCSS.x, this._extraScollSizeCSS.y);
-
-		var docPixelLimits = new L.Point(this._docWidthTwips / this._tileWidthTwips, this._docHeightTwips / this._tileHeightTwips);
-		docPixelLimits = docPixelLimits.multiplyBy(this._tileSize / this._painter._dpiScale); // docPixelLimits should be in csspx.
-
-		//console.log('pixels 1: ' + Math.round(docPixelLimits.x) + ' ' + Math.round(docPixelLimits.y));
-		//console.log('pixels 2: ' + app.file.size.pixels[0] + ' ' + app.file.size.pixels[1]);
-
-		var scrollPixelLimits = docPixelLimits.add(extraSize);
-		app.view.size.pixels[0] = app.file.size.pixels[0] + extraSize.x;
-		app.view.size.pixels[1] = app.file.size.pixels[1] + extraSize.y;
-
+		var docPixelLimits = new L.Point(app.file.size.pixels[0] / app.dpiScale, app.file.size.pixels[1] / app.dpiScale);
+		var scrollPixelLimits = new L.Point(app.view.size.pixels[0] / app.dpiScale, app.view.size.pixels[1] / app.dpiScale);
 		var topLeft = this._map.unproject(new L.Point(0, 0));
 
 		if (this._documentInfo === '' || sizeChanged) {
 			// we just got the first status so we need to center the document
-			this._map.setMaxBounds(new L.LatLngBounds(topLeft, this._map.unproject(scrollPixelLimits)));
 			this._map.setDocBounds(new L.LatLngBounds(topLeft, this._map.unproject(docPixelLimits)));
+			this._map.setMaxBounds(new L.LatLngBounds(topLeft, this._map.unproject(scrollPixelLimits)));
 		}
 
 		this._docPixelSize = {x: docPixelLimits.x, y: docPixelLimits.y};
-		this._map.fire('scrolllimits', {x: scrollPixelLimits.x, y: scrollPixelLimits.y, extraSize: extraSize});
+		this._map.fire('scrolllimits', {x: scrollPixelLimits.x, y: scrollPixelLimits.y});
 	},
 
 	// Used with filebasedview.
