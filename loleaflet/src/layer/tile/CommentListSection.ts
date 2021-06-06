@@ -1333,10 +1333,10 @@ class CommentSection {
 			}
 		}
 
-		if (lastY > app.file.size.pixels[1])
-			app.view.size.pixels[1] = lastY;
-		else
-			app.view.size.pixels[1] = app.file.size.pixels[1];
+        if (lastY > this.containerObject.getDocumentAnchorSection().size[1])
+            app.view.size.pixels[1] = lastY + app.file.size.pixels[1];
+        else
+            app.view.size.pixels[1] = app.file.size.pixels[1];
 	}
 
 	private layout (zoom: any = null) {
