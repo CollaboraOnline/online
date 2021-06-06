@@ -1295,7 +1295,7 @@ class CommentSection {
 		}
 	}
 
-	private doLayout (zoomEnd = false) {
+	private doLayout () {
 		if ((<any>window).mode.isMobile() || this.sectionProperties.docLayer._docType === 'spreadsheet') {
 			if (this.sectionProperties.commentList.length > 0)
 				this.orderCommentList();
@@ -1333,14 +1333,10 @@ class CommentSection {
 			}
 		}
 
-		if (zoomEnd) {
-            var anchorSectionHeight = this.containerObject.getDocumentAnchorSection().size[1];
-            var diff = lastY - anchorSectionHeight;
-            if (diff > 0)
-                app.view.size.pixels[1] = lastY;
-            else
-                app.view.size.pixels[1] = app.file.size.pixels[1];
-		}
+		if (lastY > app.file.size.pixels[1])
+			app.view.size.pixels[1] = lastY;
+		else
+			app.view.size.pixels[1] = app.file.size.pixels[1];
 	}
 
 	private layout (zoom: any = null) {
@@ -1351,7 +1347,7 @@ class CommentSection {
 			that.sectionProperties.layoutTimer = setTimeout(function() {
 				delete that.sectionProperties.layoutTimer;
 				that.doLayout();
-			}, 250 /* ms */);
+			}, 10 /* ms */);
 		} // else - avoid excessive re-layout
 	}
 
