@@ -1310,6 +1310,10 @@ class CommentSection {
 			var topRight: Array<number> = [this.myTopLeft[0], this.myTopLeft[1] + this.sectionProperties.marginY - this.documentTopLeft[1]];
 			var yOrigin = null;
 			var selectedIndex = null;
+			var x = topRight[0];
+			if (this.containerObject.getDocumentAnchorSection().size[0] > app.file.size.pixels[0]) {
+				x = topRight[0] - Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0]) * 0.5);
+			}
 
 			if (this.sectionProperties.selectedComment) {
 				selectedIndex = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
@@ -1317,7 +1321,7 @@ class CommentSection {
 				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1];
 				yOrigin = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1] - this.documentTopLeft[1];
 				var tempCrd: Array<number> = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix;
-				this.showArrow([tempCrd[0], tempCrd[1]], [topRight[0], tempCrd[1]]);
+				this.showArrow([tempCrd[0], tempCrd[1]], [x, tempCrd[1]]);
 			}
 			else {
 				this.hideArrow();
@@ -1325,11 +1329,11 @@ class CommentSection {
 
 			var lastY = 0;
 			if (selectedIndex) {
-				this.loopUp(selectedIndex - 1, topRight[0], yOrigin);
-				lastY = this.loopDown(selectedIndex, topRight[0], yOrigin);
+				this.loopUp(selectedIndex - 1, x, yOrigin);
+				lastY = this.loopDown(selectedIndex, x, yOrigin);
 			}
 			else {
-				lastY = this.loopDown(0, topRight[0], topRight[1]);
+				lastY = this.loopDown(0, x, topRight[1]);
 			}
 		}
 
