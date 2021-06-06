@@ -328,13 +328,16 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		var topLeft = this._map.unproject(new L.Point(0, 0));
 		var bottomRight = this._map.unproject(newSizePx);
-		this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
 
 		this._docPixelSize = newSizePx.clone();
 		this._docWidthTwips = newDocWidth;
 		this._docHeightTwips = newDocHeight;
 		app.file.size.twips = [newDocWidth, newDocHeight];
 		app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
+		app.view.size.pixels = app.file.size.pixels.slice();
+
+		this._map.setMaxBounds(new L.LatLngBounds(topLeft, bottomRight));
+
 		this._map.fire('scrolllimits', newSizePx.clone());
 	},
 
@@ -373,6 +376,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._docHeightTwips = command.height;
 			app.file.size.twips = [this._docWidthTwips, this._docHeightTwips];
 			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
+			app.view.size.pixels = app.file.size.pixels.slice();
 			this._docType = command.type;
 			this._parts = command.parts;
 			if (this._selectedPart !== command.selectedPart) {
