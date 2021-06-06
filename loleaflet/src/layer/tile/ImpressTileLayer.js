@@ -238,12 +238,13 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 			if (app.file.fileBasedView) {
 				var totalHeight = this._parts * this._docHeightTwips; // Total height in twips.
-				totalHeight += (this._parts - 1) * this._spaceBetweenParts; // Space between parts.
+				totalHeight += (this._parts) * this._spaceBetweenParts; // Space between parts.
 				this._docHeightTwips = totalHeight;
 			}
 
 			app.file.size.twips = [this._docWidthTwips, this._docHeightTwips];
 			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
+			app.view.size.pixels = app.file.size.pixels.slice();
 
 			this._updateMaxBounds(true);
 			this._documentInfo = textMsg;

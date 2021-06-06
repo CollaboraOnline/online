@@ -144,6 +144,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			this._docHeightTwips = command.height;
 			app.file.size.twips = [this._docWidthTwips, this._docHeightTwips];
 			app.file.size.pixels = [Math.round(this._tileSize * (this._docWidthTwips / this._tileWidthTwips)), Math.round(this._tileSize * (this._docHeightTwips / this._tileHeightTwips))];
+			app.view.size.pixels = app.file.size.pixels.slice();
 			this._docType = command.type;
 			this._viewId = parseInt(command.viewid);
 			this._updateMaxBounds(true);
