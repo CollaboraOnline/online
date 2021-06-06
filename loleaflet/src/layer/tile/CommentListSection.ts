@@ -38,7 +38,7 @@ class CommentSection {
 	containerObject: any = null;
 	dpiScale: number = null;
 	name: string = L.CSections.CommentList.name;
-	backgroundColor: string = null;
+	backgroundColor: string = app.sectionContainer.clearColor;
 	borderColor: string = null;
 	boundToSection: string = null;
 	anchor: Array<any> = new Array(0);

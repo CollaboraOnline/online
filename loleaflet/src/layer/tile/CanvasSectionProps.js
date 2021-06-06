@@ -51,9 +51,9 @@ L.CSections.Debug.TilePixelGrid.processingOrder = 	62; // Writer & Impress & Cal
 L.CSections.CalcGrid.processingOrder = 				63; // Calc. This is bound to tiles.
 L.CSections.Debug.Splits.processingOrder = 			64; // Calc. This is bound to tiles.
 
-L.CSections.CommentList.drawingOrder =				30; // Writer & Impress.
 L.CSections.CalcGrid.drawingOrder = 				40; // Calc.
 L.CSections.Tiles.drawingOrder = 					50; // Writer & Impress & Calc.
+L.CSections.CommentList.drawingOrder =				55; // Writer & Impress.
 L.CSections.Debug.TilePixelGrid.drawingOrder = 		60; // Writer & Impress & Calc.
 L.CSections.Overlays.drawingOrder =					71; // Writer & Impress & Calc.
 L.CSections.CalcGrid.drawingOrderDebug =            80; // Calc debug mode.
