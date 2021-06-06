@@ -79,6 +79,10 @@ class Comment {
 		this.sectionProperties.nodeReplyText = null;
 		this.sectionProperties.contextMenu = false;
 
+		this.sectionProperties.highlightedTextColor = '#777777'; // Writer.
+		this.sectionProperties.usedTextColor = this.sectionProperties.data.color; // Writer.
+		this.sectionProperties.showSelectedCoordinate = true; // Writer.
+
 		if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
 			this.sectionProperties.parthash = this.sectionProperties.data.parthash;
 			this.sectionProperties.partIndex = this.sectionProperties.docLayer._partHashes.indexOf(this.sectionProperties.parthash);
@@ -289,35 +293,6 @@ class Comment {
 		style.whiteSpace = '';
 	}
 
-	// This returns the svg element for the commented portion of the document. Doesn't set the coordinates of it.
-	private getContainerForCommentedText () {
-		var data = this.sectionProperties.data;
-
-		var container = document.getElementById('commented-text-container-' + data.id);
-		if (container)
-			data.textSelected = container;
-
-		if (data.textSelected) {
-			data.textSelected.setAttribute('width', String(Math.round(this.context.canvas.width / this.dpiScale)));
-			data.textSelected.setAttribute('height', String(Math.round(this.context.canvas.height / this.dpiScale)));
-			return data.textSelected;
-		}
-		else {
-			var svg: SVGElement = (<any>document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
-			svg.setAttribute('version', '1.1');
-			svg.style.zIndex = '9';
-			svg.id = 'commented-text-container-' + data.id;
-			svg.style.position = 'absolute';
-			svg.style.top = svg.style.left = svg.style.right = svg.style.bottom = '0';
-			svg.setAttribute('width', String(this.context.canvas.width));
-			svg.setAttribute('height', String(this.context.canvas.height));
-
-			document.getElementById('document-container').appendChild(svg);
-			data.textSelected = svg;
-			return svg;
-		}
-	}
-
 	private setPositionAndSize () {
 		var rectangles = this.sectionProperties.data.rectanglesOriginal;
 		if (rectangles && this.sectionProperties.docLayer._docType === 'text') {
@@ -344,6 +319,8 @@ class Comment {
 
 			this.setPosition(xMin, yMin); // This function is added by section container.
 			this.size = [xMax - xMin, yMax - yMin];
+			if (this.size[0] < 5)
+				this.size[0] = 5;
 		}
 		else if (this.sectionProperties.data.cellPos && this.sectionProperties.docLayer._docType === 'spreadsheet') {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
@@ -357,52 +334,9 @@ class Comment {
 		}
 	}
 
-	private createRectanglesForSelectedText (container: any) {
-		if (this.sectionProperties.docLayer._docType === 'text') {
-			var rectangles = this.sectionProperties.data.rectangles;
-			var data = this.sectionProperties.data;
-			if (rectangles && container) {
-				for (var i = 0; i < rectangles.length; i++) {
-					var rectangle: SVGRectElement = <SVGRectElement>(<any>document.getElementById('commented-text-rectangle-' + data.id + '-' + String(i)));
-					if (!rectangle) {
-						rectangle = document.createElementNS('http://www.w3.org/2000/svg','rect');
-						rectangle.id = 'commented-text-rectangle-' + data.id + '-' + String(i);
-						rectangle.setAttribute('fill-opacity', '1');
-						rectangle.setAttribute('weight', '2');
-						rectangle.setAttribute('opacity', '0.25');
-						container.append(rectangle);
-					}
-
-					// Svg elements are added into document-container. Their coordinates are in CSS units.
-					rectangle.setAttributeNS(null, 'x', String(Math.round(rectangles[i][0] / this.dpiScale)));
-					rectangle.setAttributeNS(null, 'y', String(Math.round(rectangles[i][1] / this.dpiScale)));
-					rectangle.setAttributeNS(null, 'width', String(Math.round(rectangles[i][2] / this.dpiScale) > 1 ? Math.round(rectangles[i][2] / this.dpiScale): 1));
-					rectangle.setAttributeNS(null, 'height', String(Math.round(rectangles[i][3] / this.dpiScale) > 1 ? Math.round(rectangles[i][3] / this.dpiScale): 1));
-					rectangle.setAttributeNS(null, 'fill', data.color);
-					rectangle.setAttributeNS(null, 'stroke', data.color);
-				}
-
-				// Remove extra elements (Example: user added a multi line comment and deleted some lines).
-				for (i = container.children.length - 1; i > -1; i--) {
-					var rectElement = container.children[i];
-					var number = parseInt(rectElement.id.replace('commented-text-rectangle-' + data.id + '-', ''));
-					if (number >= rectangles.length) {
-						container.removeChild(container.children[i]);
-					}
-				}
-			}
-		}
-	}
-
 	public removeHighlight () {
 		if (this.sectionProperties.docLayer._docType === 'text') {
-			var selectionContainer = this.getContainerForCommentedText();
-
-			for (var i: number = 0; i < selectionContainer.children.length; i++) {
-				var rectElement = selectionContainer.children[i];
-				rectElement.setAttributeNS(null, 'fill', this.sectionProperties.data.color);
-				rectElement.setAttributeNS(null, 'stroke', this.sectionProperties.data.color);
-			}
+			this.sectionProperties.usedTextColor = this.sectionProperties.data.color;
 
 			this.sectionProperties.isHighlighted = false;
 		}
@@ -414,18 +348,11 @@ class Comment {
 
 	public highlight () {
 		if (this.sectionProperties.docLayer._docType === 'text') {
-			var selectionContainer = this.getContainerForCommentedText();
+			this.sectionProperties.usedTextColor = this.sectionProperties.highlightedTextColor;
 
-			for (var i: number = 0; i < selectionContainer.children.length; i++) {
-				var rectElement = selectionContainer.children[i];
-				rectElement.setAttributeNS(null, 'fill', '#777777');
-				rectElement.setAttributeNS(null, 'stroke', '#777777');
-			}
-			if (selectionContainer.children.length > 0) {
-				var x: number = Math.round(this.position[0] / this.dpiScale);
-				var y: number = Math.round(this.position[1] / this.dpiScale);
-				this.containerObject.getSectionWithName(L.CSections.Scroll.name).onScrollTo({x: x, y: y});
-			}
+			var x: number = Math.round(this.position[0] / this.dpiScale);
+			var y: number = Math.round(this.position[1] / this.dpiScale);
+			this.containerObject.getSectionWithName(L.CSections.Scroll.name).onScrollTo({x: x, y: y});
 		}
 		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
 			this.backgroundColor = '#777777'; //background: rgba(119, 119, 119, 0.25);
@@ -467,10 +394,6 @@ class Comment {
 	private updatePosition () {
 		this.convertRectanglesToCoreCoordinates();
 		this.setPositionAndSize();
-		if (this.sectionProperties.docLayer._docType === 'text') {
-			var container = this.getContainerForCommentedText();
-			this.createRectanglesForSelectedText(container);
-		}
 	}
 
 	private updateAnnotationMarker () {
@@ -575,10 +498,7 @@ class Comment {
 		this.sectionProperties.nodeModify.style.display = 'none';
 		this.sectionProperties.nodeReply.style.display = 'none';
 
-		var data = this.sectionProperties.data;
-		if (data.textSelected) { // Writer.
-			data.textSelected.style.display = 'block';
-		}
+		this.sectionProperties.showSelectedCoordinate = true; // Writer.
 
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet' && !(<any>window).mode.isMobile()) {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
@@ -600,10 +520,7 @@ class Comment {
 		this.sectionProperties.nodeModify.style.display = 'none';
 		this.sectionProperties.nodeReply.style.display = 'none';
 
-		var data = this.sectionProperties.data;
-		if (data.textSelected) { // Writer.
-			data.textSelected.style.display = 'none';
-		}
+		this.sectionProperties.showSelectedCoordinate = false; // Writer.
 
 		this.hideMarker();
 	}
@@ -781,7 +698,26 @@ class Comment {
 		}
 	}
 
-	public onDraw () {}
+	public onDraw () {
+		if (this.sectionProperties.docLayer._docType === 'text' && this.sectionProperties.showSelectedCoordinate) {
+			var rectangles: Array<any> = this.sectionProperties.data.rectangles;
+			if (rectangles) {
+				this.context.fillStyle = this.sectionProperties.usedTextColor;
+				this.context.globalAlpha = 0.25;
+
+				for (var i: number = 0; i < this.sectionProperties.data.rectangles.length;i ++) {
+					var x = rectangles[i][0] - this.myTopLeft[0];
+                    var y = rectangles[i][1] - this.myTopLeft[1];
+                    var w = rectangles[i][2] > 3 ? rectangles[i][2]: 3;
+                    var h = rectangles[i][3];
+
+                    this.context.fillRect(x, y, w , h);
+				}
+
+				this.context.globalAlpha = 1;
+			}
+		}
+	}
 
 	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {}
 
@@ -839,11 +775,6 @@ class Comment {
 				container.parentElement.removeChild(container);
 				that.hideMarker();
 			}, 100);
-		}
-
-		var data = this.sectionProperties.data;
-		if (data.textSelected) {
-			data.textSelected.parentElement.removeChild(data.textSelected);
 		}
 	}
 
