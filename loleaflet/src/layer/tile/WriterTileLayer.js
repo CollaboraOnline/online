@@ -3,7 +3,7 @@
  * Writer tile layer is used to display a text document
  */
 
-/* global app $*/
+/* global app */
 L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 	newAnnotation: function (comment) {
@@ -158,92 +158,4 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		this._resetPreFetching(true);
 		this._update();
 	},
-
-	_createCommentStructure: function (menuStructure) {
-		var rootComment, lastChild, comment;
-		var annotations = this._map._docLayer._annotations;
-		var showResolved = this._map._docLayer._annotations._showResolved;
-		var annotationList = annotations._items;
-		for (var i = 0; i < annotationList.length; i++) {
-			if (annotationList[i]._data.parent === '0') {
-
-				lastChild = annotations.getLastChildIndexOf(annotationList[i]._data.id);
-				var commentThread = [];
-				while (true) {
-					comment = {
-						id: 'comment' + annotationList[lastChild]._data.id,
-						enable: true,
-						data: annotationList[lastChild]._data,
-						type: 'comment',
-						text: annotationList[lastChild]._data.text,
-						annotation: annotationList[lastChild],
-						children: []
-					};
-
-					if (showResolved || comment.data.resolved !== 'true') {
-						commentThread.unshift(comment);
-					}
-
-					if (annotationList[lastChild]._data.parent === '0')
-						break;
-
-					lastChild = annotations.getIndexOf(annotationList[lastChild]._data.parent);
-				}
-				if (commentThread.length > 0)
-				{
-					rootComment = {
-						id: commentThread[0].id,
-						enable: true,
-						data: commentThread[0].data,
-						type: 'rootcomment',
-						text: commentThread[0].data.text,
-						annotation: commentThread[0].annotation,
-						children: commentThread
-					};
-
-					menuStructure['children'].push(rootComment);
-				}
-			}
-		}
-	},
-
-	_addHighlightSelectedWizardComment: function(annotation) {
-		var map = this._map;
-		$('.ui-header.level-0.mobile-wizard').each(function() {
-			map._docLayer._removeHighlightSelectedWizardComment(this.annotation);
-		});
-		var annotations = this._map._docLayer._annotations;
-		var annotationList = annotations._items;
-		var lastChild = annotations.getLastChildIndexOf(annotation._data.id);
-
-		while (true) {
-			this._map.removeLayer(annotationList[lastChild]._data.textSelected);
-			this._map.addLayer(annotationList[lastChild]._data.wizardHighlight);
-
-			if (annotationList[lastChild]._data.parent === '0')
-				break;
-
-			lastChild = annotations.getIndexOf(annotationList[lastChild]._data.parent);
-		}
-	},
-
-	_removeHighlightSelectedWizardComment: function(annotation) {
-		if (annotation) {
-			var annotations = this._map._docLayer._annotations;
-			var annotationList = annotations._items;
-			var lastChild = annotations.getLastChildIndexOf(annotation._data.id);
-
-			if (lastChild !== undefined) {
-				while (true) {
-					this._map.removeLayer(annotationList[lastChild]._data.wizardHighlight);
-					this._map.addLayer(annotationList[lastChild]._data.textSelected);
-
-					if (annotationList[lastChild]._data.parent === '0')
-						break;
-
-					lastChild = annotations.getIndexOf(annotationList[lastChild]._data.parent);
-				}
-			}
-		}
-	}
 });
