@@ -426,6 +426,9 @@ public:
     /// Sends a message to all sessions
     void broadcastMessage(const std::string& message) const;
 
+    /// Sends a message to all sessions except for the session passed as the param
+    void broadcastMessageToOthers(const std::string& message, const std::shared_ptr<ClientSession>& _session) const;
+
     /// Broadcasts 'blockui' command to all users with an optional message.
     void blockUI(const std::string& msg)
     {

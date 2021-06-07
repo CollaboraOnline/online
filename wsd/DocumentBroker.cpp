@@ -1475,8 +1475,13 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
                 std::ostringstream oss;
                 oss << "saveas: url=" << url << " filename=" << encodedName
                     << " xfilename=" << filenameAnonym;
-
                 session->sendTextFrame(oss.str());
+
+                const auto fileExtension = _filename.substr(_filename.find_last_of('.'));
+                if (!strcasecmp(fileExtension.c_str(), ".csv") || !strcasecmp(fileExtension.c_str(), ".txt"))
+                {
+                    broadcastMessageToOthers("warn: " + oss.str() + " username=" + session->getUserName(), session);
+                }
             }
             else
             {
@@ -2795,6 +2800,18 @@ void DocumentBroker::broadcastMessage(const std::string& message) const
     LOG_DBG("Broadcasting message [" << message << "] to all " << _sessions.size() <<  " sessions.");
     for (const auto& sessionIt : _sessions)
     {
+        sessionIt.second->sendTextFrame(message);
+    }
+}
+
+void DocumentBroker::broadcastMessageToOthers(const std::string& message, const std::shared_ptr<ClientSession>& _session) const
+{
+    assertCorrectThread();
+
+    LOG_DBG("Broadcasting message [" << message << "] to all, except for " << _session->getId() << _sessions.size() <<  " sessions.");
+    for (const auto& sessionIt : _sessions)
+    {
+        if (sessionIt.second == _session) continue;
         sessionIt.second->sendTextFrame(message);
     }
 }
