@@ -990,61 +990,20 @@ app.definitions.Socket = L.Class.extend({
 			this._map._docLayer._debugRenderCount = command.rendercount;
 		}
 		else if (textMsg.startsWith('saveas:') || textMsg.startsWith('renamefile:')) {
-			this._map.hideBusy();
-			if (command !== undefined && command.url !== undefined && command.url !== '') {
-				this.close();
-				var url = command.url;
-				var accessToken = this._getParameterByName(url, 'access_token');
-				var accessTokenTtl = this._getParameterByName(url, 'access_token_ttl');
-
-				if (accessToken !== undefined) {
-					if (accessTokenTtl === undefined) {
-						accessTokenTtl = 0;
-					}
-					this._map.options.docParams = { 'access_token': accessToken, 'access_token_ttl': accessTokenTtl };
-				}
-				else {
-					this._map.options.docParams = {};
-				}
-
-				var reuseCookies = this._getParameterByName(url, 'reuse_cookies');
-				if (reuseCookies !== '') {
-					this._map.options.docParams['reuse_cookies'] = reuseCookies;
-				}
-
-				// setup for loading the new document, and trigger the load
-				var docUrl = url.split('?')[0];
-				this._map.options.doc = docUrl;
-				this._map.options.previousWopiSrc = this._map.options.wopiSrc; // After save-as op, we may connect to another server, then code will think that server has restarted. In this case, we don't want to reload the page (detect the file name is different).
-				this._map.options.wopiSrc = encodeURIComponent(docUrl);
-
-				// if this is save-as, we need to load the document with edit permission
-				// otherwise the user has to close the doc then re-open it again
-				// in order to be able to edit.
-				if (textMsg.startsWith('saveas:'))
-					this._map.options.permission = 'edit';
-				this._map.loadDocument();
-				this._map.sendInitUNOCommands();
-
-
-				if (textMsg.startsWith('renamefile:')) {
-					this._map.fire('postMessage', {
-						msgId: 'File_Rename',
-						args: {
-							NewName: command.filename
-						}
-					});
-				} else if (textMsg.startsWith('saveas:')) {
-					this._map.fire('postMessage', {
-						msgId: 'Action_Save_Resp',
-						args: {
-							success: true,
-							fileName: decodeURIComponent(command.filename)
-						}
-					});
-				}
+			this._renameOrSaveAsCallback(textMsg, command);
+		}
+		else if (textMsg.startsWith('warn:')) {
+			var len = 'warn: '.length;
+			textMsg = textMsg.substring(len);
+			if (textMsg.startsWith('saveas:')) {
+				var userName = command.username ? command.username : _('Someone');
+				vex.dialog.confirm({
+					message: userName +  _(' saved this document as ') + command.filename + _('. Do you want to join?'),
+					callback: L.bind(function (val) {
+						if (val) this._renameOrSaveAsCallback(textMsg, command);
+					}, this)
+				});
 			}
-			// var name = command.name; - ignored, we get the new name via the wopi's BaseFileName
 		}
 		else if (textMsg.startsWith('statusindicator:')) {
 			//FIXME: We should get statusindicator when saving too, no?
@@ -1135,6 +1094,64 @@ app.definitions.Socket = L.Class.extend({
 		if (this._map._docLayer && !msgDelayed) {
 			this._map._docLayer._onMessage(textMsg, e.image);
 		}
+	},
+
+	_renameOrSaveAsCallback: function(textMsg, command) {
+		this._map.hideBusy();
+		if (command !== undefined && command.url !== undefined && command.url !== '') {
+			this.close();
+			var url = command.url;
+			var accessToken = this._getParameterByName(url, 'access_token');
+			var accessTokenTtl = this._getParameterByName(url, 'access_token_ttl');
+
+			if (accessToken !== undefined) {
+				if (accessTokenTtl === undefined) {
+					accessTokenTtl = 0;
+				}
+				this._map.options.docParams = { 'access_token': accessToken, 'access_token_ttl': accessTokenTtl };
+			}
+			else {
+				this._map.options.docParams = {};
+			}
+
+			var reuseCookies = this._getParameterByName(url, 'reuse_cookies');
+			if (reuseCookies !== '') {
+				this._map.options.docParams['reuse_cookies'] = reuseCookies;
+			}
+
+			// setup for loading the new document, and trigger the load
+			var docUrl = url.split('?')[0];
+			this._map.options.doc = docUrl;
+			this._map.options.previousWopiSrc = this._map.options.wopiSrc; // After save-as op, we may connect to another server, then code will think that server has restarted. In this case, we don't want to reload the page (detect the file name is different).
+			this._map.options.wopiSrc = encodeURIComponent(docUrl);
+
+			// if this is save-as, we need to load the document with edit permission
+			// otherwise the user has to close the doc then re-open it again
+			// in order to be able to edit.
+			if (textMsg.startsWith('saveas:'))
+				this._map.options.permission = 'edit';
+			this._map.loadDocument();
+			this._map.sendInitUNOCommands();
+
+
+			if (textMsg.startsWith('renamefile:')) {
+				this._map.fire('postMessage', {
+					msgId: 'File_Rename',
+					args: {
+						NewName: command.filename
+					}
+				});
+			} else if (textMsg.startsWith('saveas:')) {
+				this._map.fire('postMessage', {
+					msgId: 'Action_Save_Resp',
+					args: {
+						success: true,
+						fileName: decodeURIComponent(command.filename)
+					}
+				});
+			}
+		}
+		// var name = command.name; - ignored, we get the new name via the wopi's BaseFileName
 	},
 
 	_tryToDelayMessage: function(textMsg) {
@@ -1495,6 +1512,9 @@ app.definitions.Socket = L.Class.extend({
 			}
 			else if (tokens[i].startsWith('masterpagecount='))
 				command.masterPageCount = parseInt(tokens[i].substring(16));
+			else if (tokens[i].substring(0, 9) === 'username=') {
+				command.username = tokens[i].substring(9);
+			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
 			var defaultZoom = this._map.options.zoom;
