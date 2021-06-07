@@ -1,7 +1,10 @@
-/* global cy Cypress expect */
+/* global cy  require Cypress expect */
+
+const { clickOnIdle } = require('./helper');
 
 // Make the sidebar visible by clicking on the corresponding toolbar item.
 // We assume that the sidebar is hidden, when this method is called.
+
 function showSidebar() {
 	cy.log('Showing sidebar - start.');
 
@@ -210,10 +213,7 @@ function zoomOut() {
 function selectZoomLevel(zoomLevel) {
 	makeZoomItemsVisible();
 
-	cy.get('#tb_actionbar_item_zoom')
-		.click();
-
-	cy.wait(1000);
+	clickOnIdle('#tb_actionbar_item_zoom');
 
 	cy.contains('.w2ui-drop-menu .menu-text', zoomLevel)
 		.click();
@@ -284,6 +284,16 @@ function insertMultipleComment(numberOfComments) {
 			.click();
 	}
 }
+
+function actionOnSelector(name,func) {
+	cy.task('getSelectors', {
+		mode: Cypress.env('USER_INTERFACE'),
+		name: name,
+	}).then((selector) => {
+		func(selector);
+	});
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
@@ -300,3 +310,4 @@ module.exports.resetZoomLevel = resetZoomLevel;
 module.exports.insertImage = insertImage;
 module.exports.deleteImage = deleteImage;
 module.exports.insertMultipleComment = insertMultipleComment;
+module.exports.actionOnSelector = actionOnSelector;

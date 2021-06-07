@@ -162,6 +162,7 @@ L.Control.Notebookbar = L.Control.extend({
 		$('.ui-tabs.notebookbar').show();
 		$('.notebookbar-shortcuts-bar').show();
 		this.extend();
+		$(window).resize();
 	},
 
 	hideTabs: function() {
