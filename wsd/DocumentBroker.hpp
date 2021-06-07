@@ -418,6 +418,9 @@ public:
     /// Sends a message to all sessions
     void broadcastMessage(const std::string& message) const;
 
+    /// Sends a message to all sessions except for the session passed as the param
+    void broadcastMessageToOthers(const std::string& message, const std::shared_ptr<ClientSession>& _session) const;
+
     /// Returns true iff an initial setting by the given name is already initialized.
     bool isInitialSettingSet(const std::string& name) const;
 
