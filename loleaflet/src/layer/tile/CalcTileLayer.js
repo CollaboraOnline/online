@@ -798,9 +798,22 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		} else if (values.commentsPos) {
 			for (var index in values.commentsPos) {
 				comment = values.commentsPos[index];
-				comment.tab = parseInt(comment.tab);
-				comment.cellPos = L.LOUtil.stringToBounds(comment.cellPos);
-				comment.cellPos = L.latLngBounds(this._twipsToLatLng(comment.cellPos.getBottomLeft()), this._twipsToLatLng(comment.cellPos.getTopRight()));
+
+				var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+				if (section)
+				{
+					var commentObject;
+					for (var i = 0; i < section.sectionProperties.commentList.length; i++) {
+						if (parseInt(section.sectionProperties.commentList[i].sectionProperties.data.tab) === parseInt(comment.tab)) {
+							if (parseInt(section.sectionProperties.commentList[i].sectionProperties.data.id) === parseInt(comment.id)) {
+								commentObject = section.sectionProperties.commentList[i];
+								break;
+							}
+						}
+					}
+					if (commentObject)
+						commentObject.sectionProperties.data.cellPos = section.stringToRectangles(comment.cellPos)[0];
+				}
 			}
 		} else {
 			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
