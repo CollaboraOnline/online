@@ -946,7 +946,7 @@ class CommentSection {
 		this.update();
 	}
 
-	private stringToRectangles (str: string) {
+	public stringToRectangles (str: string) {
 		var matches = str.match(/\d+/g);
 		var rectangles = [];
 		if (matches !== null) {
