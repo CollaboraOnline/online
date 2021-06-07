@@ -752,15 +752,23 @@ div#mobile-wizard-content .spinfieldcontainer:active .spinfieldimage, div#mobile
 div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	opacity: 0.5 !important;
 }
-#mobile-wizard #buttonbefore, #mobile-wizard #buttonafter, #mobile-wizard #buttonoptimal,
-#mobile-wizard #buttonparallel, #mobile-wizard #buttonnone, #mobile-wizard #buttonthrough,
-#mobile-wizard #bottom, #mobile-wizard #top, #mobile-wizard #standard, #mobile-wizard #Bold,
-#mobile-wizard #Italic, #mobile-wizard #Underline, #mobile-wizard #Strikeout{
+#mobile-wizard #Bold, #mobile-wizard #Italic, #mobile-wizard #Underline, #mobile-wizard #Strikeout{
 	margin: 0;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
 	padding: 24px 32px;
+	background-size: 24px !important;
+}
+#mobile-wizard #buttonbefore, #mobile-wizard #buttonafter, #mobile-wizard #buttonoptimal,
+#mobile-wizard #buttonparallel, #mobile-wizard #buttonnone, #mobile-wizard #buttonthrough,
+#mobile-wizard #bottom, #mobile-wizard #top, #mobile-wizard #standard {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	padding: 4% !important;
+	margin: 0px !important;
+	float: left;
 	background-size: 24px !important;
 }
 #mobile-wizard-content > .unobutton:focus, #mobile-wizard-content .unobutton:active{
