@@ -131,6 +131,8 @@ describe('Delete Objects', function() {
 			.wait(1000)
 			.trigger('pointerup', eventOptions);
 
+		cy.wait(1000);
+
 		cy.contains('.menu-entry-with-icon', 'Delete')
 			.should('be.visible').click();
 

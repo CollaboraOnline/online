@@ -19,7 +19,7 @@ https://docs.cypress.io/guides/guides/continuous-integration.html#Dependencies
 Running tests
 -------------
 
-All tests are part of the make check build. So you can
+All tests are part of the make check build expect notebookbar. So you can
 just execute it from the root folder or under the
 cypress_test folder to run cypress tests only.
 
@@ -43,6 +43,13 @@ To run all mobile tests:
 
     make check-mobile
 
+To run all notebookbar tests:
+
+    make USER_INTERFACE="notebookbar" check-desktop
+
+    Note: Currently all the test spec listed in cypress_test/plugins/whitelists.js
+          are supported for notebookbar
+
 To run one specific test suite of desktop tests,
 use spec argument with a relative path to
 cypress_test/integration_tests/desktop/:
@@ -55,6 +62,14 @@ cypress_test/integration_tests/mobile/:
 
     make check-mobile spec=writer/toolbar_spec.js
 
+To run one specific test suite of desktop notebookbar tests,
+use spec argument with a relative path to
+cypress_test/integration_tests/desktop/:
+
+    make USER_INTERFACE="notebookbar" check-desktop spec=writer/top_toolbar_spec.js
+
+    Note: Currently all the test spec listed in cypress_test/plugins/whitelists.js
+          are supported for notebookbar
 
 Running one specific test
 -------------------------
@@ -96,6 +111,13 @@ To open mobile tests in the test runner:
 
     make run-mobile
 
+To open desktop notebookbar tests in the test runner:
+
+    make USER_INTERFACE="notebookbar" run-desktop
+
+    Note: Currently all the test spec listed in cypress_test/plugins/whitelists.js
+          are supported for notebookbar
+
 To open one specific test suite of desktop tests,
 use spec argument with a relative path to
 cypress_test/integration_tests/desktop/:
@@ -107,6 +129,15 @@ use spec argument with a relative path to
 cypress_test/integration_tests/mobile/:
 
     make run-mobile spec=writer/toolbar_spec.js
+
+To open one specific test suite of desktop notebookbar tests,
+use spec argument with a relative path to
+cypress_test/integration_tests/desktop/:
+
+    make USER_INTERFACE="notebookbar" run-desktop spec=writer/top_toolbar_spec.js
+
+    Note: Currently all the test spec listed in cypress_test/plugins/whitelists.js
+          are supported for notebookbar
 
 During the build we run the tests with Chrome browser, so make sure
 you select Chrome browser on the GUI while checking tests.

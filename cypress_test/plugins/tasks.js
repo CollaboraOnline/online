@@ -1,6 +1,7 @@
 /* global require Promise */
 
 var fs = require('fs');
+var list = require('./selectorList').list;
 
 function copyFile(args) {
 	return new Promise(function(resolve) {
@@ -19,4 +20,13 @@ function copyFile(args) {
 	});
 }
 
+function getSelectors(args) {
+	if (args.mode === 'notebookbar') {
+		return list[args.name][0];
+	} else {
+		return list[args.name][1];
+	}
+}
+
 module.exports.copyFile = copyFile;
+module.exports.getSelectors = getSelectors;
