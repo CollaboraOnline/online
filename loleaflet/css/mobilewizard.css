@@ -175,7 +175,8 @@ p.mobile-wizard.ui-combobox-text {
 .menuwizard #mobile-wizard-content > div .ui-widget {
 	padding-left: 0px !important;
 }
-#mobile-wizard:not(.menuwizard) #mobile-wizard-content > .ui-header.level-0.mobile-wizard.ui-widget{
+#mobile-wizard:not(.menuwizard) #mobile-wizard-content > .ui-header.level-0.mobile-wizard.ui-widget,
+.ui-explorable-entry.level-0.mobile-wizard {
 	padding-left: 2% !important;
 	width: 100%;
 }
