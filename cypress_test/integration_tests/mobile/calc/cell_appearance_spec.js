@@ -232,12 +232,12 @@ describe('Change cell appearance.', function() {
 		helper.clickOnIdle('#border-2');
 
 		// Then apply border color
-		helper.clickOnIdle('#FrameLineColor');
+		helper.clickOnIdle('#FrameLineColor > .ui-header');
 
 		mobileHelper.selectFromColorPalette(2, 3);
 
 		// Check that the color is shown as selected
-		cy.get('#FrameLineColor .color-sample-selected')
+		cy.get('#FrameLineColor > .ui-header .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(255, 153, 0);');
 
 		calcHelper.selectEntireSheet();

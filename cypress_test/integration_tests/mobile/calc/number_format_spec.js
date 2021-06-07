@@ -19,7 +19,7 @@ describe('Apply number formatting.', function() {
 
 		helper.clickOnIdle('#ScNumberFormatPropertyPanel');
 
-		cy.get('#numberformatcombobox')
+		cy.get('#numberformatcombobox > .ui-header')
 			.should('be.visible');
 	});
 
@@ -29,7 +29,7 @@ describe('Apply number formatting.', function() {
 
 	function selectFormatting(formattingString) {
 		// Select formatting list
-		mobileHelper.selectListBoxItem2('#numberformatcombobox', formattingString);
+		mobileHelper.selectListBoxItem2('#numberformatcombobox > .ui-header', formattingString);
 	}
 
 	it('Select percent format from list.', function() {
@@ -183,7 +183,7 @@ describe('Apply number formatting.', function() {
 	});
 
 	it('Select date format from list.', function() {
-		helper.clickOnIdle('#numberformatcombobox');
+		helper.clickOnIdle('#numberformatcombobox > .ui-header');
 
 		helper.clickOnIdle('.mobile-wizard.ui-combobox-text', 'Date');
 
@@ -212,8 +212,16 @@ describe('Apply number formatting.', function() {
 			.should('have.text', '09/26/02');
 	});
 
-	it.skip('Select time format from list.', function() {
-		selectFormatting('Time');
+	it('Select time format from list.', function() {
+
+		helper.clickOnIdle('#numberformatcombobox > .ui-header');
+
+		helper.clickOnIdle('#numberformatcombobox > .ui-content', 'Time');
+
+		cy.wait(1000);
+
+		cy.get('#numberformatcombobox > .ui-header' + ' .ui-header-left')
+			.should('have.text', 'Time');
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
