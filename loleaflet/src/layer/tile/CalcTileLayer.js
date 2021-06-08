@@ -19,7 +19,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 	newAnnotation: function (comment) {
 		var commentList = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).sectionProperties.commentList;
-		var comment = null;
+		comment = null;
 
 		for (var i = 0; i < commentList; i++) {
 			if (this._cellCursorTwips.contains(commentList[i].sectionProperties.data.cellPos)) {
@@ -64,13 +64,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			}
 		}.bind(this));
 
-<<<<<<< HEAD
-		this._annotations = {};
-
-		this._painter._sectionContainer.addSection(L.getAutoFillMarkerSection());
-=======
 		app.sectionContainer.addSection(new app.definitions.AutoFillMarkerSection());
->>>>>>> 035845526... Calc: Activate commentList section for desktop.
 
 		this.insertMode = false;
 		this._cellSelections = Array(0);
@@ -117,41 +111,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
-<<<<<<< HEAD
-	showAnnotation: function (annotation) {
-		this._map.addLayer(annotation);
-	},
-
-	hideAnnotation: function (annotation) {
-		if (annotation)
-			this._map.removeLayer(annotation);
-	},
-
-	showAnnotations: function () {
-		var annotations = this._annotations[this._selectedPart];
-		for (var key in annotations) {
-			this.showAnnotation(annotations[key]);
-		}
-	},
-
-	hideAnnotations: function (part) {
-		if (part === undefined) { // remove all the comments from all tabs
-			for (var tab in this._annotations) {
-				for (var key in this._annotations[tab]) {
-					this.hideAnnotation(this._annotations[tab][key]);
-				}
-			}
-			return;
-		}
-
-		var annotations = this._annotations[part];
-		for (key in annotations) {
-			this.hideAnnotation(annotations[key]);
-		}
-	},
-
-=======
->>>>>>> 035845526... Calc: Activate commentList section for desktop.
 	isHiddenPart: function (part) {
 		if (!this._hiddenParts)
 			return false;
@@ -380,7 +339,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._docType = command.type;
 			this._parts = command.parts;
 			if (this._selectedPart !== command.selectedPart) {
-				this._map._socket.sendMessage('resetselection');
+				app.socket.sendMessage('resetselection');
 			}
 			this._selectedPart = command.selectedPart;
 			if (this.sheetGeometry && this._selectedPart != this.sheetGeometry.getPart()) {
