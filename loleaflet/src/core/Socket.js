@@ -1461,7 +1461,7 @@ app.definitions.Socket = L.Class.extend({
 	// The args parameter, if present, should be an object where both keys and values are strings that don't contain any spaces.
 	emitInstantTraceEvent: function (name, args) {
 		if (this.traceEventRecordingToggle)
-			this.sendMessage('TRACEEVENT name=' + name + ' ph=i ts=' + performance.now()
+			this.sendMessage('TRACEEVENT name=' + name + ' ph=i ts=' + Math.round(performance.now() * 1000)
 					 + this._stringifyArgs(args));
 	},
 
