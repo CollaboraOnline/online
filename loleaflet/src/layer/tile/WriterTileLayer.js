@@ -3,11 +3,7 @@
  * Writer tile layer is used to display a text document
  */
 
-<<<<<<< HEAD
-/* global app $ */
-=======
 /* global app */
->>>>>>> 74d48a523... WriterComments: Remove svg from commented text.
 L.WriterTileLayer = L.CanvasTileLayer.extend({
 
 	newAnnotation: function (comment) {
