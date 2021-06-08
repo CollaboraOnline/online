@@ -4,6 +4,7 @@
 // We are using typescript without modules and compile files individually for now. Typescript needs to know about global definitions.
 // We will keep below definitions until we use tsconfig.json.
 declare var L: any;
+declare var app: any;
 
 class ScrollSection {
 	context: CanvasRenderingContext2D = null;

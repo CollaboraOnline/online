@@ -5,6 +5,8 @@ declare var L: any;
 declare var app: any;
 declare var _: any;
 declare var Autolinker: any;
+declare var Hammer: any;
+declare var $: any;
 
 app.definitions.Comment =
 class Comment {

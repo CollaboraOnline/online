@@ -4,6 +4,7 @@
 declare var L: any;
 declare var $: any;
 declare var Hammer: any;
+declare var app: any;
 
 class TilesSection {
 	context: CanvasRenderingContext2D = null;

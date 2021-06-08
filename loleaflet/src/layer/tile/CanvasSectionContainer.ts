@@ -1,6 +1,7 @@
 /* eslint-disable */
 
 declare var L: any;
+declare var app: any;
 
 // Below classes are for managing the canvas layout.
 /*
