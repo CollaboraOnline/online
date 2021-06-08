@@ -501,7 +501,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (tokens.size() >= 4)
         {
             std::string timestamp = tokens[2];
-            const char* str = timestamp.data();
+            const char* str = timestamp.c_str();
             char* endptr = nullptr;
             uint64_t ts = strtoull(str, &endptr, 10);
             if (*endptr == '\0')
