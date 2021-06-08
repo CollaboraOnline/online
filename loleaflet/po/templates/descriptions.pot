@@ -53,7 +53,7 @@ msgstr ""
 #: descriptions/google-play.html%2Bhtml.body.p:21-1
 msgid ""
 "The new 6.4.9 version is faster, easier to use with an improved and more "
-"beautiful UI and with the folling features:"
+"beautiful UI and with the following features:"
 msgstr ""
 
 #. Release notes 6.4.9
