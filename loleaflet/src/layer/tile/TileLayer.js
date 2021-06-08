@@ -2744,7 +2744,8 @@ L.TileLayer = L.GridLayer.extend({
 
 				// We will focus map if no comment is being edited (writer only for now).
 				if (this._docType === 'text') {
-					if (!this._annotations._selected || !this._annotations._selected.isEdit())
+					var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+					if (!section || !section.sectionProperties.selectedComment || !section.sectionProperties.selectedComment.isEdit())
 						this._map.focus(true);
 				}
 				else
