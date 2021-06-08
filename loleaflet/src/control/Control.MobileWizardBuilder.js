@@ -583,6 +583,9 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 				continue;
 			}
 
+			if (childType === 'deck' && (childData.visible === false || childData.visible === 'false'))
+				continue;
+
 			var childObject = parent;
 			if (childData.dialogid) {
 				var dialog = L.DomUtil.createWithId('div', childData.dialogid, childObject);
@@ -603,9 +606,10 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 				handler = this._controlHandlers['paneltabs'];
 				processChildren = handler(childObject, childData.children, this);
 			} else {
-				if (handler)
+				if (handler) {
 					processChildren = handler(childObject, childData, this);
-				else
+					this.postProcess(childObject, childData);
+				} else
 					console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
 
 				if (processChildren && childData.children != undefined)

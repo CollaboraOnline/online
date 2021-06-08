@@ -385,8 +385,13 @@ L.Control.MobileWizard = L.Control.extend({
 
 			this._inBuilding = true;
 
-			var isSidebar = (data.children && data.children.length >= 1 &&
-					 data.children[0].type == 'deck');
+			var isSidebar = false;
+			if (data.children) {
+				for (var i in data.children) {
+					if (data.children[i].type == 'deck')
+						isSidebar = true;
+				}
+			}
 
 			if (!this._isActive && isSidebar) {
 				if (this.map.showSidebar == false)
@@ -496,12 +501,9 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_isSlidePropertyPanel: function(data) {
-		if (data.children.length > 0 && data.children[0].children && data.children[0].children.length > 1) {
-			var panels = data.children[0].children;
-			return panels[0].id === 'SlideBackgroundPanel' && panels[1].id === 'SdLayoutsPanel';
-		} else {
-			return false;
-		}
+		var backgroundPanel = L.LOUtil.findItemWithAttributeRecursive(data, 'id', 'SlideBackgroundPanel');
+		var layoutPanel = L.LOUtil.findItemWithAttributeRecursive(data, 'id', 'SdLayoutsPanel');
+		return backgroundPanel && layoutPanel;
 	},
 
 	_insertCalcBorders: function(deck) {
@@ -516,6 +518,9 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_modifySidebarLayout: function (data) {
+		if (data.children && data.children.length && data.children[0].type !== 'deck')
+			data.children.splice(stylesIdx, 1);
+
 		var deck = L.LOUtil.findItemWithAttributeRecursive(data, 'type', 'deck');
 		if (deck)
 		{
