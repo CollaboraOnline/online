@@ -453,7 +453,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         _performanceCounterEpoch = 0;
         if (tokens.size() >= 4)
         {
-            const char* str = tokens[2].data();
+            std::string timeToken = tokens[2].data();
+            const char* str = timeToken.c_str();
             char* endptr = nullptr;
             uint64_t ts = strtoull(str, &endptr, 10);
             if (*endptr == '\0')
