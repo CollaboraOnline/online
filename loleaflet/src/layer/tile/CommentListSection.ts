@@ -29,6 +29,8 @@ L.Map.include({
 declare var L: any;
 declare var app: any;
 declare var vex: any;
+declare var $: any;
+declare var _: any;
 
 app.definitions.CommentSection =
 class CommentSection {
