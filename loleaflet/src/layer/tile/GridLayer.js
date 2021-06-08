@@ -1204,8 +1204,8 @@ L.GridLayer = L.Layer.extend({
 			'part=' + part + ' ' +
 			'width=' + this._tileWidthPx + ' ' +
 			'height=' + this._tileHeightPx + ' ' +
-			'tileposx=' + tilePositionsX.join() + ' '	+
-			'tileposy=' + tilePositionsY.join() + ' ' +
+			'tileposx=' + (typeof(tilePositionsX) === 'number' ? tilePositionsX: tilePositionsX.join()) + ' '	+
+			'tileposy=' + (typeof(tilePositionsY) === 'number' ? tilePositionsY: tilePositionsY.join()) + ' ' +
 			'tilewidth=' + this._tileWidthTwips + ' ' +
 			'tileheight=' + this._tileHeightTwips;
 		app.socket.sendMessage(msg, '');
