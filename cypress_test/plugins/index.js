@@ -76,7 +76,7 @@ function removeBlacklistedTest(filename, testsToRun, blackList) {
 
 function isNotebookbarTest(filename, whitelist) {
 	for (var i =0 ; i < whitelist.length; i++) {
-		if (filename.endsWith(whitelist[0])) {
+		if (filename.endsWith(whitelist[i])) {
 			return true;
 		}
 	}
