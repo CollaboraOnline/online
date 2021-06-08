@@ -893,6 +893,18 @@ L.TileLayer = L.GridLayer.extend({
 		else if (textMsg.startsWith('formfieldbutton:')) {
 			this._onFormFieldButtonMsg(textMsg);
 		}
+		else if (textMsg.startsWith('comment:')) {
+			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+		}
+		else if (textMsg.startsWith('redlinetablemodified:')) {
+			obj = JSON.parse(textMsg.substring('redlinetablemodified:'.length + 1));
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+		}
+		else if (textMsg.startsWith('redlinetablechanged:')) {
+			obj = JSON.parse(textMsg.substring('redlinetablechanged:'.length + 1));
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
+		}
 	},
 
 	_onTabStopListUpdate: function (textMsg) {
