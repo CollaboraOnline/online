@@ -684,9 +684,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			this._painter._addGridSection();
 		}
 
-		if (this._docType === 'text' || this._docType === 'presentation' || this._docType === 'drawing') {
-			app.sectionContainer.addSection(new app.definitions.CommentSection());
-		}
+		// Add it regardless of the file type.
+		app.sectionContainer.addSection(new app.definitions.CommentSection());
 
 		this._syncTileContainerSize();
 	},
