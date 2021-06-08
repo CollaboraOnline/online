@@ -85,7 +85,7 @@ public:
 
     bool readIncomingData() override
     {
-        assertCorrectThread();
+        ASSERT_CORRECT_SOCKET_THREAD(this);
 
         const int rc = doHandshake();
         if (rc <= 0)
@@ -97,7 +97,7 @@ public:
 
     void writeOutgoingData() override
     {
-        assertCorrectThread();
+        ASSERT_CORRECT_SOCKET_THREAD(this);
 
         const int rc = doHandshake();
         if (rc <= 0)
@@ -111,7 +111,7 @@ public:
 
     virtual int readData(char* buf, int len) override
     {
-        assertCorrectThread();
+        ASSERT_CORRECT_SOCKET_THREAD(this);
 
 #if ENABLE_DEBUG
         if (simulateSocketError(true))
@@ -122,7 +122,7 @@ public:
 
     virtual int writeData(const char* buf, const int len) override
     {
-        assertCorrectThread();
+        ASSERT_CORRECT_SOCKET_THREAD(this);
 
         assert (len > 0); // Never write 0 bytes.
 
@@ -136,7 +136,7 @@ public:
     int getPollEvents(std::chrono::steady_clock::time_point now,
                       int64_t & timeoutMaxMicroS) override
     {
-        assertCorrectThread();
+        ASSERT_CORRECT_SOCKET_THREAD(this);
         int events = StreamSocket::getPollEvents(now, timeoutMaxMicroS); // Default to base.
         if (_sslWantsTo == SslWantsTo::Write) // If OpenSSL wants to write (and we don't).
             events |= POLLOUT;
@@ -160,7 +160,7 @@ private:
 
     int doHandshake()
     {
-        assertCorrectThread();
+        ASSERT_CORRECT_SOCKET_THREAD(this);
 
         if (_doHandshake)
         {
@@ -190,7 +190,7 @@ private:
     {
         const auto last_errno = errno;
 
-        assertCorrectThread();
+        ASSERT_CORRECT_SOCKET_THREAD(this);
 
         if (rc > 0)
         {

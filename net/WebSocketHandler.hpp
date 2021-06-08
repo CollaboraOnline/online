@@ -698,7 +698,7 @@ protected:
             return 0;
         }
 
-        socket->assertCorrectThread();
+        ASSERT_CORRECT_SOCKET_THREAD(socket);
         Buffer& out = socket->getOutBuffer();
 
         LOG_TRC("WebSocketHandler::sendFrame: Writing to #"
