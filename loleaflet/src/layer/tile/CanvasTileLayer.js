@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a L.TileLayer with canvas based rendering.
  */
 
-/* global app L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData CPoint */
+/* global app L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData CPoint ResizeObserver */
 
 L.TileCoordData = L.Class.extend({
 
@@ -51,6 +51,7 @@ L.TileSectionManager = L.Class.extend({
 		if (this._layer.isCalc())
 			this._sectionContainer.setClearColor('white');
 
+		app.sectionContainer = this._sectionContainer;
 		if (L.Browser.cypressTest) // If cypress is active, create test divs.
 			this._sectionContainer.testing = true;
 
@@ -627,8 +628,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			console.error('called _initContainer() when this._canvasContainer is present!');
 		}
 
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).createCommentStructure(menuStructure);
-
 		L.TileLayer.prototype._initContainer.call(this);
 
 		var mapContainer = document.getElementById('document-container');
@@ -639,9 +638,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 	_setup: function () {
 
-		// if annotation is provided we can select perticular comment
-		if (annotation) {
-			$('#comment' + annotation.sectionProperties.data.id).click();
+		if (!this._canvasContainer) {
+			console.error('canvas container not found. _initContainer failed ?');
 		}
 
 		this._canvas = L.DomUtil.createWithId('canvas', 'document-canvas', this._canvasContainer);
@@ -1080,7 +1078,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		var maxTileCount = 0;
 		var mostVisiblePart = 0;
 		for (i = 0; i < parts.length; i++) {
-			for (var j = 0; j < queue.length; j++) {
+			for (j = 0; j < queue.length; j++) {
 				if (queue[j].part === parts[i].part)
 					parts[i].tileCount++;
 			}
@@ -1218,7 +1216,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			this._sendClientVisibleArea();
 			this._sendClientZoom();
 
-			for (var i = 0; i < queue.length; i++) {
+			for (i = 0; i < queue.length; i++) {
 				var key = this._tileCoordsToKey(queue[i]);
 				var tile = this._tiles[key];
 				if (!tile) {
