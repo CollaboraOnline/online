@@ -202,7 +202,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			this._map.fire('updatepart', {part: command.part, docType: this._docType});
 		}
 
-		var preview = this._map._docPreviews[command.part];
+		var preview = this._map._docPreviews ? this._map._docPreviews[command.part] : null;
 		if (preview) {
 			preview.invalid = true;
 		}
