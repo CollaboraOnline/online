@@ -406,8 +406,8 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 }
 #tb_actionbar_item_fullscreen{display: none;}
 #toolbar-down {
-	height: 37px !important;
-	border-top: 1px solid #f1f1f1 !important;
+	height: 35px !important;
+	border-top: 1px solid var(--gray-color) !important;
 }
 #toolbar-down > .w2ui-scroll-wrapper {
 	overflow-x: scroll !important;
