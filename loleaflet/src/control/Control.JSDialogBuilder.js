@@ -849,8 +849,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_deckHandler: function(parentContainer, data, builder) {
+		var deck = L.DomUtil.create('div', 'deck ' + builder.options.cssClass, parentContainer);
+		deck.id = data.id;
+
 		for (var i = 0; i < data.children.length; i++) {
-			builder.build(parentContainer, [data.children[i]]);
+			builder.build(deck, [data.children[i]]);
 		}
 
 		return false;
@@ -3067,6 +3070,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(entry).get(0).scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'nearest'});
 
 			break;
+
+		case 'show':
+			$(control).show();
+			break;
+
+		case 'hide':
+			$(control).hide();
+			break;
 		}
 	},
 
@@ -3081,6 +3092,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		// Called from build() which is already recursive,
 		// so no need to recurse here over 'data'.
 		this._addMissingLabels(data);
+	},
+
+	postProcess: function(parent, data) {
+		if (!data || !data.id || data.id === '')
+			return;
+
+		if (data.visible === 'false' || data.visible === false) {
+			var control = parent.querySelector('#' + data.id);
+			if (control)
+				control.style.display = 'none';
+		}
 	},
 
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
@@ -3137,9 +3159,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var handler = this._controlHandlers[childType];
 
-			if (handler)
+			if (handler) {
 				processChildren = handler(childObject, childData, this);
-			else
+				this.postProcess(childObject, childData);
+			} else
 				console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
 
 			var noLabels = this.options.noLabelsForUnoButtons;

@@ -898,9 +898,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				handler = this._controlHandlers['paneltabs'];
 				processChildren = handler(childObject, childData.children, this);
 			} else {
-				if (handler)
+				if (handler) {
 					processChildren = handler(childObject, childData, this);
-				else
+					this.postProcess(childObject, childData);
+				} else
 					console.warn('NotebookbarBuilder: Unsupported control type: "' + childType + '"');
 
 				if (childType === 'toolbox' && hasVerticalParent === true && childData.children.length === 1)
