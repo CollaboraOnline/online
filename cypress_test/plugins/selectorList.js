@@ -30,4 +30,6 @@ module.exports.list = {
 	formatBrush: ['#FormatPaintbrush', '#tb_editbar_item_formatpaintbrush'],
 	sidebar: ['#Sidebar', '#tb_editbar_item_sidebar'],
 	backColor: ['#BackColor', '#tb_editbar_item_backcolor'],
+	borderStyle: ['#SetBorderStyle', '#tb_editbar_item_setborderstyle'],
+	backgroundColor: ['#BackgroundColor','#tb_editbar_item_backgroundcolor'],
 };
