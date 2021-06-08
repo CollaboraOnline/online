@@ -541,7 +541,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_explorableEntry: function(parentContainer, data, content, builder, valueNode, iconURL, updateCallback) {
-		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
+		var mainContainer = L.DomUtil.create('div', 'ui-explorable-entry level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
+		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', mainContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 		if (data && data.id)
 			sectionTitle.id = data.id;
@@ -615,7 +616,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		}, this);
 
-		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
+		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, mainContainer);
 		contentDiv.title = data.text;
 
 		var contentData = content.length ? content : [content];
@@ -631,7 +632,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (builder.wizard) {
 				if (data.enabled !== 'false' && data.enabled !== false) {
 					$(sectionTitle).click(function(event, data) {
-						builder.wizard.goLevelDown(contentDiv, data);
+						builder.wizard.goLevelDown(mainContainer, data);
 						if (contentNode && contentNode.onshow)
 							contentNode.onshow();
 					});
@@ -647,7 +648,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_calcFunctionEntry: function(parentContainer, data, contentNode, builder) {
-		var sectionTitle = L.DomUtil.create('div', 'func-entry ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
+		var mainContainer = L.DomUtil.create('div', 'ui-explorable-entry level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
+		var sectionTitle = L.DomUtil.create('div', 'func-entry ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', mainContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 		if (data && data.id)
 			sectionTitle.id = data.id;
@@ -661,7 +663,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var arrowSpan = L.DomUtil.create('div', 'func-info-icon', rightDiv);
 		arrowSpan.innerHTML = '';
 
-		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
+		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, mainContainer);
 		contentDiv.title = data.text;
 
 		builder._currentDepth++;
@@ -673,7 +675,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var that = this;
 			var functionName = data.functionName;
 			$(rightDiv).click(function() {
-				builder.wizard.goLevelDown(contentDiv);
+				builder.wizard.goLevelDown(mainContainer);
 				if (contentNode.onshow)
 					contentNode.onshow();
 			});
@@ -757,7 +759,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_explorableMenu: function(parentContainer, title, children, builder, customContent, dataid) {
 		dataid = dataid || 0;
 		var icon = null;
-		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', parentContainer);
+		var mainContainer = L.DomUtil.create('div', 'ui-explorable-entry level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
+		var sectionTitle = L.DomUtil.create('div', 'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', mainContainer);
 		$(sectionTitle).css('justify-content', 'space-between');
 
 		var commandName = dataid;
@@ -782,7 +785,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', sectionTitle);
 		arrowSpan.innerHTML = '>';
 
-		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
+		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, mainContainer);
 		contentDiv.title = title;
 
 		if (customContent) {
@@ -797,7 +800,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		$(contentDiv).hide();
 		if (builder.wizard) {
-			$(sectionTitle).click(function() { builder.wizard.goLevelDown(contentDiv); });
+			$(sectionTitle).click(function() { builder.wizard.goLevelDown(mainContainer); });
 		} else {
 			console.debug('Builder used outside of mobile wizard: please implement the click handler');
 		}
@@ -2033,6 +2036,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		$(fixedtext).click(function () {
 			builder.refreshSidebar = true;
+			if (builder.wizard)
+				builder.wizard.goLevelUp();
 			builder.callback('combobox', 'selected', fixedtext.parent, data.pos + ';' + fixedtext.innerHTML, builder);
 		});
 	},
