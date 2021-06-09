@@ -616,8 +616,8 @@ public:
     void checkAndReThread()
     {
         if (InhibitThreadChecks)
-            return;
-        std::thread::id us = std::this_thread::get_id();
+            return; // in late shutdown
+        const std::thread::id us = std::this_thread::get_id();
         if (_owner == us)
             return; // all well
         LOG_DBG("Unusual - SocketPoll used from a new thread");
