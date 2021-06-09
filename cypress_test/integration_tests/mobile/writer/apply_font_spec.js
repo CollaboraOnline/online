@@ -104,24 +104,6 @@ describe('Apply font changes.', function() {
 		// TODO: Shadowed is not in the clipboard content.
 	});
 
-	it('Apply grow.', function() {
-		helper.clickOnIdle('#Grow');
-
-		writerHelper.selectAllTextOfDoc();
-
-		cy.get('#copy-paste-container p font')
-			.should('have.attr', 'style', 'font-size: 42pt');
-	});
-
-	it('Apply shrink.', function() {
-		helper.clickOnIdle('#Shrink');
-
-		writerHelper.selectAllTextOfDoc();
-
-		cy.get('#copy-paste-container p font')
-			.should('have.attr', 'style', 'font-size: 38pt');
-	});
-
 	it('Apply font color.', function() {
 		helper.clickOnIdle('#FontColor .ui-header');
 

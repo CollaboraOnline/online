@@ -85,24 +85,6 @@ describe('Apply font changes.', function() {
 			.should('have.attr', 'size', '4');
 	});
 
-	it('Apply grow.', function() {
-		helper.clickOnIdle('#Grow');
-
-		calcHelper.selectEntireSheet();
-
-		cy.get('#copy-paste-container table td font')
-			.should('have.attr', 'size', '3');
-	});
-
-	it('Apply shrink.', function() {
-		helper.clickOnIdle('#Shrink');
-
-		calcHelper.selectEntireSheet();
-
-		cy.get('#copy-paste-container table td font')
-			.should('have.attr', 'size', '1');
-	});
-
 	it('Apply font color.', function() {
 		helper.clickOnIdle('#Color .ui-header');
 

@@ -118,38 +118,6 @@ describe('Apply font on selected text.', function() {
 			.should('have.attr', 'font-size', '847px');
 	});
 
-	it('Grow font size of selected text.', function() {
-		impressHelper.selectTextOfShape();
-
-		mobileHelper.openTextPropertiesPanel();
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
-			.should('have.attr', 'font-size', '635px');
-
-		helper.clickOnIdle('#Grow');
-
-		triggerNewSVG();
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
-			.should('have.attr', 'font-size', '705px');
-	});
-
-	it('Shrink font size of selected text.', function() {
-		impressHelper.selectTextOfShape();
-
-		mobileHelper.openTextPropertiesPanel();
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
-			.should('have.attr', 'font-size', '635px');
-
-		helper.clickOnIdle('#Shrink');
-
-		triggerNewSVG();
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
-			.should('have.attr', 'font-size', '564px');
-	});
-
 	it('Apply text color on selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.attr', 'fill', 'rgb(0,0,0)');
