@@ -110,4 +110,7 @@
     <string name="theme">Etoso</string>
     <string name="theme_light">Hela</string>
     <string name="theme_dark">Malhela</string>
+    <string name="pref_user_name_info">Uzata por aldoni komenton</string>
+    <string name="pref_user_name">Salutnomo</string>
+    <string name="pref_user_name_guest">Gasta uzanto</string>
 </resources>
