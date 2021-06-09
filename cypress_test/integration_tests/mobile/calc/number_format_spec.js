@@ -213,15 +213,7 @@ describe('Apply number formatting.', function() {
 	});
 
 	it('Select time format from list.', function() {
-
-		helper.clickOnIdle('#numberformatcombobox > .ui-header');
-
-		helper.clickOnIdle('#numberformatcombobox > .ui-content', 'Time');
-
-		cy.wait(1000);
-
-		cy.get('#numberformatcombobox > .ui-header' + ' .ui-header-left')
-			.should('have.text', 'Time');
+		selectFormatting('Time');
 
 		// Decimal and leading zeros are changed.
 		cy.get('#decimalplaces input')
