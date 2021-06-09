@@ -110,4 +110,7 @@
     <string name="theme_system_default">Типова системна</string>
     <string name="choose_theme">Оберіть тему</string>
     <string name="theme">Тема</string>
+    <string name="pref_user_name_guest">Користувач Гість</string>
+    <string name="pref_user_name_info">Застосовується під час додавання коментаря</string>
+    <string name="pref_user_name">Ім\'я користувача</string>
 </resources>
