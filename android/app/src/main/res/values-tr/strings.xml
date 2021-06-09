@@ -125,4 +125,7 @@
     <string name="theme_system_default">Sistem öntanımlı değeri</string>
     <string name="choose_theme">Tema seç</string>
     <string name="theme">Tema</string>
+    <string name="pref_user_name_info">Yorum eklerken kullanılır</string>
+    <string name="pref_user_name">Kullanıcı Adı</string>
+    <string name="pref_user_name_guest">Misafir Kullanıcı</string>
 </resources>
