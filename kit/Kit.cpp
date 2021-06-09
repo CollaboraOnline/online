@@ -138,6 +138,43 @@ static uint64_t AnonymizationSalt = 82589933;
 /// system root, not the jail.
 static std::string JailRoot;
 
+// While the core is protected by the SolarMutex which is released
+// during a poll, unfortunately we need to do work of our own in
+// callbacks and when we receive I/O - so we can replicate the
+// SolarMutex's behavior here to protect ourselves. Could expose
+// SolarMutex via LOK API but that's a bit unpleasant.
+//
+// We always take this lock before the SolarMutex, and
+// release it afterwards.
+static std::atomic<size_t> KitSolarMutexCount(0);
+static std::recursive_mutex KitSolarMutex;
+
+struct KitMutexGuard : std::unique_lock<std::mutex> {
+    KitMutexGuard()  { KitSolarMutex.lock(); KitSolarMutexCount++; }
+    ~KitMutexGuard() { KitSolarMutexCount--; KitSolarMutex.unlock(); }
+};
+
+struct KitMutexUnlocker {
+    int _count;
+    KitMutexUnlocker()
+    {
+        // must be locked, and by our thread.
+        assert(KitSolarMutexCount > 0);
+        _count = KitSolarMutexCount;
+        KitSolarMutexCount = 0;
+
+        // grim but _count is small.
+        for (int i = 0; i < _count; ++i)
+            KitSolarMutex.unlock();
+    }
+    ~KitMutexUnlocker()
+    {
+        for (int i = 0; i < _count; ++i)
+            KitSolarMutex.lock();
+        KitSolarMutexCount = _count;
+    }
+};
+
 static void flushTraceEventRecordings();
 
 #if !MOBILEAPP
@@ -821,9 +858,9 @@ public:
     static void GlobalCallback(const int type, const char* p, void* data)
     {
         if (SigUtil::getTerminationFlag())
-        {
             return;
-        }
+
+        KitMutexGuard aGuard;
 
         const std::string payload = p ? p : "(nil)";
         Document* self = static_cast<Document*>(data);
@@ -886,9 +923,9 @@ public:
     static void ViewCallback(const int type, const char* p, void* data)
     {
         if (SigUtil::getTerminationFlag())
-        {
             return;
-        }
+
+        KitMutexGuard aGuard;
 
         CallbackDescriptor* descriptor = static_cast<CallbackDescriptor*>(data);
         assert(descriptor && "Null callback data.");
@@ -1963,8 +2000,12 @@ public:
                 int realTimeout = timeoutMicroS;
                 if (_document && _document->hasQueueItems())
                     realTimeout = 0;
-                if (poll(std::chrono::microseconds(realTimeout)) <= 0)
-                    break;
+
+                {
+                    KitMutexUnlocker aUnlock; // drop so other threads can get in.
+                    if (poll(std::chrono::microseconds(realTimeout)) <= 0)
+                        break;
+                }
 
                 const auto now = std::chrono::steady_clock::now();
                 drainQueue();
@@ -2649,7 +2690,10 @@ void lokit_main(
 
         LOG_INF("Kit unipoll loop run");
 
-        loKit->runLoop(pollCallback, wakeCallback, mainKit.get());
+        {
+            KitMutexGuard aGuard;
+            loKit->runLoop(pollCallback, wakeCallback, mainKit.get());
+        }
 
         LOG_INF("Kit unipoll loop run terminated.");
 
@@ -2701,6 +2745,8 @@ void runKitLoopInAThread()
 {
     std::thread([&]
                 {
+                    KitMutexGuard aGuard;
+
                     Util::setThreadName("lokit_runloop");
 
                     std::shared_ptr<lok::Office> loKit = std::make_shared<lok::Office>(lo_kit);
