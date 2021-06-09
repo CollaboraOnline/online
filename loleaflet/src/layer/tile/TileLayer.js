@@ -4098,7 +4098,7 @@ L.TileLayer = L.GridLayer.extend({
 				menuStructure['customTitle'] = customTitleBar;
 		}
 
-		this._map._docLayer._createCommentStructure(menuStructure);
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).createCommentStructure(menuStructure);
 
 		if (menuStructure.children.length === 0) {
 			var noComments = {
@@ -4120,7 +4120,7 @@ L.TileLayer = L.GridLayer.extend({
 
 		// if annotation is provided we can select perticular comment
 		if (annotation) {
-			$('#comment' + annotation._data.id).click();
+			$('#comment' + annotation.sectionProperties.data.id).click();
 		}
 	},
 
