@@ -724,7 +724,7 @@ class CommentSection {
 			this.update();
 		}
 		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
-			if (annotation.sectionProperties.partIndex === this.sectionProperties.docLayer._selectedPart) {
+			if (annotation.sectionProperties.partIndex === this.sectionProperties.docLayer._selectedPart || app.file.fileBasedView) {
 				if (!annotation.isContainerVisible()) {
 					annotation.show();
 					annotation.update();
