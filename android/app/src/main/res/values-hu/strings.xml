@@ -112,4 +112,7 @@
     <string name="theme_system_default">Alapértelmezett</string>
     <string name="choose_theme">Témaválasztás</string>
     <string name="theme">Téma</string>
+    <string name="pref_user_name_info">Megjegyzés hozzáadásakor használatos</string>
+    <string name="pref_user_name">Felhasználó neve</string>
+    <string name="pref_user_name_guest">Vendég felhasználó</string>
 </resources>
