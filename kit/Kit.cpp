@@ -149,6 +149,11 @@ static void flushTraceEventRecordings();
 // socket buffer & event processing in a single, thread.
 bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char *p, void *data);
 
+// Abnormally we get LOK events from another thread, which must be
+// push safely into our main poll loop to process to keep all
+// socket buffer & event processing in a single, thread.
+bool pushToMainThread(LibreOfficeKitCallback cb, int type, const char *p, void *data);
+
 #if !MOBILEAPP
 
 static LokHookFunction2* initFunction = nullptr;
