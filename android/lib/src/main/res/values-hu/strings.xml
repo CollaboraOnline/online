@@ -19,4 +19,8 @@
     <string name="view_only">Csak olvasás</string>
     <string name="restarting">Újraindítás...</string>
     <string name="cant_open_the_document">Nem sikerült megnyitni a dokumentumot</string>
+    <string name="use_text">Szöveg formátum használata</string>
+    <string name="convert_odf_message">Ez a dokumentum olyan formázást vagy tartalmat tartalmazhat, amely nem menthető az aktuálisan kiválasztott \"Szöveg\" fájlformátumban.</string>
+    <string name="ask_for_convert_odf">Fájlformátum megerősítése</string>
+    <string name="use_odf">ODF formátum használata</string>
 </resources>
