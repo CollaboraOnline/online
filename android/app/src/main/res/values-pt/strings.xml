@@ -112,4 +112,7 @@
     <string name="theme_system_default">Padrão do sistema</string>
     <string name="choose_theme">Escolha o tema</string>
     <string name="theme">Tema</string>
+    <string name="pref_user_name_guest">Utilizador convidado</string>
+    <string name="pref_user_name_info">Utilizado ao adicionar um comentário</string>
+    <string name="pref_user_name">Nome de utilizador</string>
 </resources>
