@@ -1230,7 +1230,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 					};
 
 					if (tile && this._tileCache[key]) {
-						tile.src = this._tileCache[key];
+						tile.el = this._tileCache[key];
 					}
 					else {
 						this._sendTileCombineRequest(queue[i].part, (queue[i].x / this._tileSize) * this._tileWidthTwips, (queue[i].y / this._tileSize) * this._tileHeightTwips);
@@ -1801,7 +1801,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		// FIXME: this _tileCache is used for prev/next slide; but it is
 		// dangerous in connection with typing / invalidation
-		if (!(this._tiles[key]._invalidCount > 0) && tile.el.src) {
+		if (!(this._tiles[key]._invalidCount > 0) && tile.el) {
 			this._tileCache[key] = tile.el;
 		}
 
@@ -1857,17 +1857,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		var coords = this._tileMsgToCoords(tileMsgObj);
 		var tile = this._tiles[this._tileCoordsToKey(coords)];
 
-		if (tile) {
-			if (tile._invalidCount > 0) {
-				tile._invalidCount -= 1;
-			}
-
-			tile.el = img;
-			tile.wireId = tileMsgObj.wireId;
-			tile.loaded = true;
-			this._tileReady(coords, null, tile);
-		}
-
 		if (tileMsgObj.id !== undefined) {
 			this._map.fire('tilepreview', {
 				tile: img,
@@ -1877,6 +1866,16 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				part: tileMsgObj.part,
 				docType: this._docType
 			});
+		}
+		else if (tile) {
+			if (tile._invalidCount > 0) {
+				tile._invalidCount -= 1;
+			}
+
+			tile.el = img;
+			tile.wireId = tileMsgObj.wireId;
+			tile.loaded = true;
+			this._tileReady(coords, null, tile);
 		}
 
 		// Send acknowledgment, that the tile message arrived
