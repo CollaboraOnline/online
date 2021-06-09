@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2021-06-08 00:26+0000\n"
-"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
+"PO-Revision-Date: 2021-06-09 10:46+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -1098,7 +1098,6 @@ msgid "See history"
 msgstr "Versionsgeschichte betrachten"
 
 #: src/control/Control.NotebookbarWriter.js:131
-#, fuzzy
 msgid "ODF Text Document (.odt)"
 msgstr "ODF-Textdokument (.odt)"
 
@@ -1119,7 +1118,6 @@ msgid "~Data"
 msgstr "~Daten"
 
 #: src/control/Control.NotebookbarCalc.js:125
-#, fuzzy
 msgid "ODF Spreadsheet (.ods)"
 msgstr "ODF-Tabellendokument (.ods)"
 
@@ -1156,7 +1154,6 @@ msgid "Scientific"
 msgstr "Wissenschaftlich"
 
 #: src/control/Control.NotebookbarCalc.js:439
-#, fuzzy
 msgid "Fraction"
 msgstr "Fraktion"
 
