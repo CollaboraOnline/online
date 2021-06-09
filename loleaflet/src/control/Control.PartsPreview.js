@@ -175,6 +175,7 @@ L.Control.PartsPreview = L.Control.extend({
 	_createPreview: function (i, hashCode, bottomBound) {
 		var frameClass = 'preview-frame ' + this.options.frameClass;
 		var frame = L.DomUtil.create('div', frameClass, this._partsPreviewCont);
+		frame.id = 'preview-frame-part-' + i;
 		this._addDnDHandlers(frame);
 		L.DomUtil.create('span', 'preview-helper', frame);
 

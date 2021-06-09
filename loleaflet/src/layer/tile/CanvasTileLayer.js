@@ -1159,6 +1159,18 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 	},
 
+	highlightCurrentPart: function (part) {
+		var previews = document.getElementsByClassName('preview-frame');
+		for (var i = 0; i < previews.length; i++) {
+			if (parseInt(previews[i].id.replace('preview-frame-part-', '')) === part) {
+				previews[i].style.border = '1px solid blue';
+			}
+			else {
+				previews[i].style.border = 'none';
+			}
+		}
+	},
+
 	_updateFileBasedView: function (checkOnly) {
 		if (this._partHeightTwips === 0) // This is true before status message is handled.
 			return [];
@@ -1195,6 +1207,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			if (this._selectedPart !== partToSelect) {
 				this._selectedPart = partToSelect;
 				this._preview._scrollToPart();
+				this.highlightCurrentPart(partToSelect);
 			}
 		}
 
