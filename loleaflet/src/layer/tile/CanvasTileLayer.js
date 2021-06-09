@@ -1866,8 +1866,10 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				tile._invalidCount -= 1;
 			}
 
-			tile.el.src = img;
+			tile.el = img;
 			tile.wireId = tileMsgObj.wireId;
+			tile.loaded = true;
+			this._tileReady(coords, null, tile);
 		}
 
 		if (tileMsgObj.id !== undefined) {
