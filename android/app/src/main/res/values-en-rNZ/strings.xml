@@ -109,4 +109,7 @@
 \nonline git-hash: %2$s
 \ncore git-hash: %3$s</string>
     <string name="app_name_settings">Settings</string>
+    <string name="pref_user_name_guest">Guest User</string>
+    <string name="pref_user_name_info">Used when adding a comment</string>
+    <string name="pref_user_name">User Name</string>
 </resources>
