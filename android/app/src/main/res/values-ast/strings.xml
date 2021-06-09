@@ -87,4 +87,7 @@
     <string name="user_name">Nome d\'usuariu</string>
     <string name="server_url">URL del sirvidor</string>
     <string name="external_sd_path">Camín a SD esterna</string>
+    <string name="pref_user_name_guest">Usuariu invitáu</string>
+    <string name="pref_user_name_info">Utilízase al engadir comentarios</string>
+    <string name="pref_user_name">Nome d\'usuariu</string>
 </resources>
