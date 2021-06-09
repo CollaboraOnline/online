@@ -104,34 +104,6 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'font-size', '847px');
 	});
 
-	it('Grow font size of text shape.', function() {
-		mobileHelper.openTextPropertiesPanel();
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
-			.should('have.attr', 'font-size', '635px');
-
-		helper.clickOnIdle('#Grow');
-
-		triggerNewSVG();
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
-			.should('have.attr', 'font-size', '705px');
-	});
-
-	it('Shrink font size of text shape.', function() {
-		mobileHelper.openTextPropertiesPanel();
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
-			.should('have.attr', 'font-size', '635px');
-
-		helper.clickOnIdle('#Shrink');
-
-		triggerNewSVG();
-
-		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
-			.should('have.attr', 'font-size', '564px');
-	});
-
 	it('Apply text color on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition tspan')
 			.should('have.attr', 'fill', 'rgb(0,0,0)');
@@ -214,7 +186,7 @@ describe('Apply font on selected shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		helper.clickOnIdle('#Grow');
+		helper.clickOnIdle('#Bold');
 
 		triggerNewSVG();
 
