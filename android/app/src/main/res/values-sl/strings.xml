@@ -110,4 +110,7 @@
     <string name="theme_system_default">Sistemsko privzeta</string>
     <string name="choose_theme">Izberite temo</string>
     <string name="theme">Tema</string>
+    <string name="pref_user_name_info">Uporabljeno pri dodajanju komentarja</string>
+    <string name="pref_user_name_guest">Gost</string>
+    <string name="pref_user_name">Uporabniško ime</string>
 </resources>
