@@ -98,6 +98,9 @@ L.Control.Sidebar = L.Control.extend({
 			if (window.initSidebarState)
 				this.map.uiManager.setSavedState('ShowSidebar', false);
 		} else {
+			if (data.data.children && data.data.children.length && data.data.children[0].type !== 'deck')
+				data.data.children.splice(0, 1);
+
 			if ($('#sidebar-dock-wrapper').width() != sidebarWidth) {
 				$('#sidebar-dock-wrapper').show();
 				$('#sidebar-dock-wrapper').width(sidebarWidth);

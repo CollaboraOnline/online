@@ -519,7 +519,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 	_modifySidebarLayout: function (data) {
 		if (data.children && data.children.length && data.children[0].type !== 'deck')
-			data.children.splice(stylesIdx, 1);
+			data.children.splice(0, 1);
 
 		var deck = L.LOUtil.findItemWithAttributeRecursive(data, 'type', 'deck');
 		if (deck)
