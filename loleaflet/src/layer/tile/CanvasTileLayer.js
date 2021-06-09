@@ -6046,12 +6046,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_onTileMsgFileBasedView: function (textMsg, img) {
 		var tileMsgObj = app.socket.parseServerCmd(textMsg);
-		var ratio = [this._tileSize / this._tileWidthTwips, this._tileSize / this._tileHeightTwips];
-		var coords = new L.TileCoordData(tileMsgObj.x * ratio[0], tileMsgObj.y * ratio[1]);
-		coords.z = tileMsgObj.zoom;
-		coords.part = tileMsgObj.part;
-
-		var tile = this._tiles[coords.key()];
+		var coords = this._tileMsgToCoords(tileMsgObj);
+		var tile = this._tiles[this._tileCoordsToKey(coords)];
 
 		if (tile) {
 			if (tile._invalidCount > 0) {
