@@ -110,4 +110,7 @@
     <string name="theme_system_default">ברירת מחדל של המערכת</string>
     <string name="choose_theme">בחר ערכת נושא</string>
     <string name="theme">ערכות נושא</string>
+    <string name="pref_user_name_guest">אורח או אורחת</string>
+    <string name="pref_user_name_info">משמש בעת הוספת תגובה</string>
+    <string name="pref_user_name">שם משתמש</string>
 </resources>
