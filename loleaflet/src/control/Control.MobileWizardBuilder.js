@@ -583,7 +583,8 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 				continue;
 			}
 
-			if (childType === 'deck' && (childData.visible === false || childData.visible === 'false'))
+			if ((childType === 'deck' || childType === 'toolbox')
+				&& (childData.visible === false || childData.visible === 'false'))
 				continue;
 
 			var childObject = parent;
