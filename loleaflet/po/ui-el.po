@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2021-05-06 23:13+0000\n"
-"Last-Translator: george kitsoukakis <norhorn@gmail.com>\n"
+"PO-Revision-Date: 2021-06-09 10:46+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
 "ui/el/>\n"
-"Language: \n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1095,13 +1095,12 @@ msgid "See history"
 msgstr "Εμφάνιση ιστορικού"
 
 #: src/control/Control.NotebookbarWriter.js:131
-#, fuzzy
 msgid "ODF Text Document (.odt)"
 msgstr "Έγγραφο κειμένου ODF (.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:173
 msgid "EPUB Document (.epub)"
-msgstr ""
+msgstr "Έγγραφο EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:521
 msgid "Text Body"
@@ -1116,7 +1115,6 @@ msgid "~Data"
 msgstr "~Δεδομένα"
 
 #: src/control/Control.NotebookbarCalc.js:125
-#, fuzzy
 msgid "ODF Spreadsheet (.ods)"
 msgstr "Υπολογιστικό φύλλο ODF (.ods)"
 
@@ -1217,7 +1215,6 @@ msgid "Start Presentation"
 msgstr "Έναρξη παρουσίασης"
 
 #: src/control/Control.NotebookbarImpress.js:199
-#, fuzzy
 msgid "ODF Presentation (.odp)"
 msgstr "Παρουσίαση ODF (.odp)"
 
@@ -1793,6 +1790,13 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
+"<p>Ο πλοηγητής σας έχει πολύ περιορισμένη πρόσβαση στο πρόχειρο, γι' αυτό "
+"χρησιμοποιήστε αυτές τις συντομεύσεις πληκτρολογίου:</p><table class=\"warn-"
+"copy-paste\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd></td></tr><tr><td>Για αντιγραφή</td><td></td>Για "
+"αποκοπή<td>Για επικόλληση</td></tr></table>"
 
 #: src/map/Clipboard.js:909
 msgid ""
