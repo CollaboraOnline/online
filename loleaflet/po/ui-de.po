@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2021-05-06 23:13+0000\n"
-"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"PO-Revision-Date: 2021-06-08 00:26+0000\n"
+"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1104,7 +1104,7 @@ msgstr "ODF-Textdokument (.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:173
 msgid "EPUB Document (.epub)"
-msgstr ""
+msgstr "EPUB-Dokument (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:521
 msgid "Text Body"
@@ -1156,12 +1156,13 @@ msgid "Scientific"
 msgstr "Wissenschaftlich"
 
 #: src/control/Control.NotebookbarCalc.js:439
+#, fuzzy
 msgid "Fraction"
-msgstr ""
+msgstr "Fraktion"
 
 #: src/control/Control.NotebookbarCalc.js:440
 msgid "Boolean Value"
-msgstr ""
+msgstr "Boolescher Wert"
 
 #: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:789
 msgid "Text"
@@ -1169,27 +1170,27 @@ msgstr "Text"
 
 #: src/control/Control.NotebookbarCalc.js:574
 msgid "Default"
-msgstr ""
+msgstr "Voreinstellung"
 
 #: src/control/Control.NotebookbarCalc.js:579
 msgid "Heading 1"
-msgstr ""
+msgstr "Überschrift 1"
 
 #: src/control/Control.NotebookbarCalc.js:584
 msgid "Heading 2"
-msgstr ""
+msgstr "Überschrift 2"
 
 #: src/control/Control.NotebookbarCalc.js:595
 msgid "Good"
-msgstr ""
+msgstr "Gut"
 
 #: src/control/Control.NotebookbarCalc.js:600
 msgid "Neutral"
-msgstr ""
+msgstr "Neutral"
 
 #: src/control/Control.NotebookbarCalc.js:605
 msgid "Bad"
-msgstr ""
+msgstr "Schlecht"
 
 #: src/control/Control.NotebookbarCalc.js:667
 msgid "Insert Rows Above"
@@ -1220,13 +1221,12 @@ msgid "Start Presentation"
 msgstr "Präsentation starten"
 
 #: src/control/Control.NotebookbarImpress.js:199
-#, fuzzy
 msgid "ODF Presentation (.odp)"
-msgstr "ODF Präsentation (.odp)"
+msgstr "ODF-Präsentation (.odp)"
 
 #: src/control/Control.NotebookbarDraw.js:188
 msgid "Image (.png)"
-msgstr ""
+msgstr "Bild (.png)"
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
@@ -1445,6 +1445,7 @@ msgstr "Es besteht ein Problem bei der Verbindung zum %productName: "
 #: src/core/Socket.js:362
 msgid "Server has been restarted. We have to refresh the page now."
 msgstr ""
+"Der Server wurde neu gestartet. Wir müssen die Seite jetzt aktualisieren."
 
 #: src/core/Socket.js:380
 msgid "Served by:"
@@ -1796,6 +1797,13 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
+"<p>Ihr Browser hat nur sehr eingeschränkten Zugriff auf die Zwischenablage, "
+"verwenden Sie daher diese Tastenkombinationen:</p><table class=\"warn-copy-"
+"paste\"><tr><td><kbd>Strg</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd></td><td><kbd>Strg</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd></td><td><kbd>Strg</kbd><span class=\"kbd--plus\">+</spa"
+"n><kbd>V</kbd></td></tr><tr><td>Kopieren</td><td>Ausschneiden</td><td>Einfüge"
+"n</td></tr></table>"
 
 #: src/map/Clipboard.js:909
 msgid ""
