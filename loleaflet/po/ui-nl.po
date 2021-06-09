@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2021-03-17 22:08+0000\n"
+"PO-Revision-Date: 2021-06-03 23:31+0000\n"
 "Last-Translator: Cor Nouws <cno@nouenoff.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5.2-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-ui-nl.po\n"
 "X-Pootle-Revision: 3939479\n"
 
@@ -230,7 +230,7 @@ msgstr "Inlogniveaus bijwerken"
 
 #: admin/admin.strings.js:55
 msgid "Version Information"
-msgstr ""
+msgstr "Versie-informatie"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -1096,13 +1096,12 @@ msgid "See history"
 msgstr "Geschiedenis tonen"
 
 #: src/control/Control.NotebookbarWriter.js:131
-#, fuzzy
 msgid "ODF Text Document (.odt)"
 msgstr "ODF-tekstbestand (.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:173
 msgid "EPUB Document (.epub)"
-msgstr ""
+msgstr "EPUB-document (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:521
 msgid "Text Body"
@@ -1117,7 +1116,6 @@ msgid "~Data"
 msgstr "~Gegevens"
 
 #: src/control/Control.NotebookbarCalc.js:125
-#, fuzzy
 msgid "ODF Spreadsheet (.ods)"
 msgstr "ODF werkblad (.ods)"
 
@@ -1127,40 +1125,39 @@ msgstr "CSV bestand (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:432
 msgid "General"
-msgstr ""
+msgstr "Algemeen"
 
 #: src/control/Control.NotebookbarCalc.js:433
 msgid "Number"
-msgstr ""
+msgstr "Getal"
 
 #: src/control/Control.NotebookbarCalc.js:434
 msgid "Percent"
-msgstr ""
+msgstr "Procent"
 
 #: src/control/Control.NotebookbarCalc.js:435
-#, fuzzy
 msgid "Currency"
-msgstr "Huidig"
+msgstr "Valuta"
 
 #: src/control/Control.NotebookbarCalc.js:436
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: src/control/Control.NotebookbarCalc.js:437
 msgid "Time"
-msgstr ""
+msgstr "Tijd"
 
 #: src/control/Control.NotebookbarCalc.js:438
 msgid "Scientific"
-msgstr ""
+msgstr "Wetenschappelijk"
 
 #: src/control/Control.NotebookbarCalc.js:439
 msgid "Fraction"
-msgstr ""
+msgstr "Fractie"
 
 #: src/control/Control.NotebookbarCalc.js:440
 msgid "Boolean Value"
-msgstr ""
+msgstr "Booleaanse waarde"
 
 #: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:789
 msgid "Text"
@@ -1168,27 +1165,27 @@ msgstr "Tekst"
 
 #: src/control/Control.NotebookbarCalc.js:574
 msgid "Default"
-msgstr ""
+msgstr "Standaard"
 
 #: src/control/Control.NotebookbarCalc.js:579
 msgid "Heading 1"
-msgstr ""
+msgstr "Kop 1"
 
 #: src/control/Control.NotebookbarCalc.js:584
 msgid "Heading 2"
-msgstr ""
+msgstr "Kop 2"
 
 #: src/control/Control.NotebookbarCalc.js:595
 msgid "Good"
-msgstr ""
+msgstr "Goed"
 
 #: src/control/Control.NotebookbarCalc.js:600
 msgid "Neutral"
-msgstr ""
+msgstr "Neutraal"
 
 #: src/control/Control.NotebookbarCalc.js:605
 msgid "Bad"
-msgstr ""
+msgstr "Fout"
 
 #: src/control/Control.NotebookbarCalc.js:667
 msgid "Insert Rows Above"
@@ -1219,13 +1216,12 @@ msgid "Start Presentation"
 msgstr "Presentatie starten"
 
 #: src/control/Control.NotebookbarImpress.js:199
-#, fuzzy
 msgid "ODF Presentation (.odp)"
 msgstr "ODF presentatie (.odp)"
 
 #: src/control/Control.NotebookbarDraw.js:188
 msgid "Image (.png)"
-msgstr ""
+msgstr "Afbeelding (.png)"
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
@@ -1442,7 +1438,7 @@ msgstr "Oeps, er is een probleem met het verbinden met %productName: "
 
 #: src/core/Socket.js:362
 msgid "Server has been restarted. We have to refresh the page now."
-msgstr ""
+msgstr "Server is opnieuw gestart. De pagina moet ververst worden."
 
 #: src/core/Socket.js:380
 msgid "Served by:"
@@ -1780,6 +1776,12 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
+"<p>Je browser heeft maar beperkte toegang tot het klembord. Gebruik daarom "
+"deze sneltoetsen:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Kopiëren<"
+"/td><td>Knippen</td><td>Plakken</td></tr></table>"
 
 #: src/map/Clipboard.js:909
 msgid ""
