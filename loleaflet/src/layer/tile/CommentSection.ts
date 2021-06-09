@@ -420,13 +420,7 @@ class Comment {
 		if (this.sectionProperties.data.rectangle != null) {
 			this.sectionProperties.annotationMarker.setLatLng(this.sectionProperties.docLayer._twipsToLatLng(new L.Point(this.sectionProperties.data.rectangle[0], this.sectionProperties.data.rectangle[1])));
 			this.sectionProperties.annotationMarker.on('dragstart drag dragend', this.onMarkerDrag, this);
-			this.sectionProperties.annotationMarker.on('click', this.onMarkerClick, this);
-		}
-		if (this.sectionProperties.annotationMarker._icon) {
-			(new Hammer(this.sectionProperties.annotationMarker._icon, {recognizers: [[Hammer.Tap]]}))
-				.on('tap', function() {
-					this.sectionProperties.docLayer._openCommentWizard(this);
-				}.bind(this));
+			//this.sectionProperties.annotationMarker.on('click', this.onMarkerClick, this);
 		}
 	}
 
@@ -647,10 +641,6 @@ class Comment {
 			this.map.setPart(0, false);
 	}
 
-	private onMarkerClick () {
-		this.map.fire('AnnotationSelect', {annotation: this});
-	}
-
 	private onMarkerDrag (event: any) {
 		if (this.sectionProperties.annotationMarker == null)
 			return;
@@ -728,7 +718,9 @@ class Comment {
 		// CanvasSectionContainer fires the onClick event. But since Hammer.js is used for map, it disables the onClick for SectionContainer.
 		// We will use this event as click event on touch devices, until we remove Hammer.js (then this code will be removed from here).
 		// Control.ColumnHeader.js file is not affected by this situation, because map element (so Hammer.js) doesn't cover headers.
-		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
+		if (!this.containerObject.draggingSomething && (<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
+			if (this.sectionProperties.docLayer._docType === 'presentataion' || this.sectionProperties.docLayer._docType === 'drawing')
+				this.sectionProperties.docLayer._openCommentWizard(this);
 			this.onMouseEnter();
 			this.onClick(point, e);
 		}
