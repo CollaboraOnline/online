@@ -184,12 +184,7 @@ class ScrollSection {
 
 	private calculateVerticalScrollSize (scrollLength: number) :number {
 		var scrollSize = Math.round(scrollLength * scrollLength / app.view.size.pixels[1]);
-		if (scrollSize > this.sectionProperties.minimumScrollSize) {
-			return Math.round(scrollSize);
-		}
-		else {
-			return this.sectionProperties.minimumScrollSize;
-		}
+		return Math.round(scrollSize);
 	}
 
 	private calculateYMinMax () {
@@ -200,7 +195,7 @@ class ScrollSection {
 			this.sectionProperties.yMax = diff;
 		}
 		else {
-			diff = Math.round((app.file.size.pixels[1] - this.containerObject.getDocumentAnchorSection().size[1]) * 0.5);
+			diff = Math.round((app.view.size.pixels[1] - this.containerObject.getDocumentAnchorSection().size[1]) * 0.5);
 			this.sectionProperties.yMin = diff;
 			this.sectionProperties.yMax = diff;
 			this.sectionProperties.drawVerticalScrollBar = false;
@@ -236,12 +231,7 @@ class ScrollSection {
 
 	private calculateHorizontalScrollSize (scrollLength: number) :number {
 		var scrollSize = Math.round(scrollLength * scrollLength / app.view.size.pixels[0]);
-		if (scrollSize > this.sectionProperties.minimumScrollSize) {
-			return scrollSize;
-		}
-		else {
-			return this.sectionProperties.minimumScrollSize;
-		}
+		return scrollSize;
 	}
 
 	private calculateXMinMax () {
@@ -252,7 +242,7 @@ class ScrollSection {
 			this.sectionProperties.xMax = diff;
 		}
 		else {
-			diff = Math.round((app.file.size.pixels[0] - this.containerObject.getDocumentAnchorSection().size[0]) * 0.5);
+			diff = Math.round((app.view.size.pixels[0] - this.containerObject.getDocumentAnchorSection().size[0]) * 0.5);
 			this.sectionProperties.xMin = diff;
 			this.sectionProperties.xMax = diff;
 			this.sectionProperties.drawHorizontalScrollBar = false;
@@ -328,6 +318,9 @@ class ScrollSection {
 	private drawVerticalScrollBar () {
 		var scrollProps: any = this.getVerticalScrollProperties();
 
+		if (scrollProps.scrollSize < this.sectionProperties.minimumScrollSize)
+			scrollProps.scrollSize = this.sectionProperties.minimumScrollSize;
+
 		if (this.sectionProperties.animatingVerticalScrollBar)
 			this.context.globalAlpha = this.sectionProperties.currentAlpha;
 		else
@@ -346,6 +339,9 @@ class ScrollSection {
 
 	private drawHorizontalScrollBar () {
 		var scrollProps: any = this.getHorizontalScrollProperties();
+
+		if (scrollProps.scrollSize < this.sectionProperties.minimumScrollSize)
+			scrollProps.scrollSize = this.sectionProperties.minimumScrollSize;
 
 		if (this.sectionProperties.animatingHorizontalScrollBar)
 			this.context.globalAlpha = this.sectionProperties.currentAlpha;
