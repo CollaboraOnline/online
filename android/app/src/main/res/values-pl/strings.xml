@@ -112,4 +112,7 @@
     <string name="theme_system_default">Domyślny systemowy</string>
     <string name="choose_theme">Wybierz motyw</string>
     <string name="theme">Motyw</string>
+    <string name="pref_user_name_guest">Użytkownik-gość</string>
+    <string name="pref_user_name_info">Używana podczas dodawania komentarza</string>
+    <string name="pref_user_name">Nazwa użytkownika</string>
 </resources>
