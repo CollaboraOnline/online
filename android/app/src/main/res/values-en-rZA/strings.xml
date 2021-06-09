@@ -109,4 +109,7 @@
     <string name="storage_permission_required">Storage permission is required</string>
     <string name="temp_file_saving_disabled">This file is read-only, saving is disabled.</string>
     <string name="about_license">Show Licence</string>
+    <string name="pref_user_name_guest">Guest User</string>
+    <string name="pref_user_name_info">Used when adding a comment</string>
+    <string name="pref_user_name">User Name</string>
 </resources>
