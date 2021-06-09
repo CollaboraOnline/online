@@ -303,7 +303,12 @@ function selectListBoxItem2(listboxSelector, item) {
 
 	helper.clickOnIdle(listboxSelector);
 
-	helper.clickOnIdle('.ui-combobox-text', item);
+	var endPos = listboxSelector.indexOf(' ');
+	if (endPos < 0)
+		endPos = listboxSelector.length;
+	var parentId = listboxSelector.substring(0, endPos);
+
+	helper.clickOnIdle(parentId + ' .ui-combobox-text', item);
 
 	cy.wait(1000);
 
