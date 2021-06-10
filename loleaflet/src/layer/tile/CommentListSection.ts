@@ -103,12 +103,14 @@ class CommentSection {
 			if (this.size[0] !== 0) {
 				this.size[0] = 0;
 				this.containerObject.reNewAllSections(true);
+				this.sectionProperties.docLayer._syncTileContainerSize();
 			}
 		}
 		else {
 			if (this.size[0] !== this.sectionProperties.width) {
 				this.size[0] = this.sectionProperties.width;
 				this.containerObject.reNewAllSections(true);
+				this.sectionProperties.docLayer._syncTileContainerSize();
 			}
 		}
 	}
