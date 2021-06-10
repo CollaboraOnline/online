@@ -51,6 +51,7 @@
 
 #include <cassert>
 #include <chrono>
+#include <iomanip>
 
 #ifdef IOS
 #include <Foundation/Foundation.h>
@@ -218,9 +219,18 @@ inline bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t st
 
         totalDuration += duration;
         ++nCalls;
+
+        static uint64_t totalPixelBytes = 0;
+        static uint64_t totalOutputBytes = 0;
+
+        totalPixelBytes += (width * height * 4);
+        totalOutputBytes += output.size();
+
         LOG_TRC("PNG compression took "
-                << duration << " (" << output.size() << " bytes). Average after " << nCalls
-                << " calls: " << (totalDuration.count() / static_cast<double>(nCalls)) << "ms.");
+                << duration << " (" << output.size() << " bytes from " << (width * height * 4) << "). Average after " << nCalls
+                << " calls: " << (totalDuration.count() / static_cast<double>(nCalls)) << "ms, "
+                << (totalOutputBytes / static_cast<double>(nCalls)) << " bytes, "
+                << std::setprecision(2) << (100. * totalOutputBytes / totalPixelBytes) << "% compression.");
     }
 
     return res;
