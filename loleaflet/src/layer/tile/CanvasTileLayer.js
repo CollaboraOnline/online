@@ -5399,7 +5399,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var previews = document.getElementsByClassName('preview-frame');
 		for (var i = 0; i < previews.length; i++) {
 			if (parseInt(previews[i].id.replace('preview-frame-part-', '')) === part) {
-				previews[i].style.border = '1px solid blue';
+				previews[i].style.border = '2px solid darkgrey';
 			}
 			else {
 				previews[i].style.border = 'none';
