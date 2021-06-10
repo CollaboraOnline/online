@@ -273,19 +273,14 @@ function deleteImage() {
 function insertMultipleComment(numberOfComments) {
 	numberOfComments = numberOfComments || 1;
 	for (var n=0;n<numberOfComments;n++) {
-		cy.get('#menu-insert').click()
-			.get('#menu-insertcomment').click();
 
-		cy.get('.loleaflet-annotation-table')
-			.should('exist');
+		cy.get('#menu-insert').click().get('#menu-insertcomment').click();
 
-		// Fixme: when there are multiple comments, .modify-annotation class does not gives unique element that's why using style to identify them.
+		cy.get('.loleaflet-annotation-table').should('exist');
 
-		cy.get('.loleaflet-annotation-edit.modify-annotation[style=""]')
-			.type('some text' + n);
+		cy.get('#annotation-modify-textarea-new').type('some text' + n);
 
-		cy.get('.loleaflet-annotation-edit.modify-annotation[style=""] #annotation-save')
-			.click();
+		cy.get('#annotation-save-new').click();
 	}
 }
 

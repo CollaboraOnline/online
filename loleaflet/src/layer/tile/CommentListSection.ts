@@ -69,7 +69,7 @@ class CommentSection {
 		this.sectionProperties.marginY = 10 * app.dpiScale;
 		this.sectionProperties.offset = 5 * app.dpiScale;
 		this.sectionProperties.layoutTimer = null;
-		this.sectionProperties.width = Math.round(290 * app.dpiScale); // Configurable variable.
+		this.sectionProperties.width = Math.round(300 * app.dpiScale); // Configurable variable.
 	}
 
 	public onInitialize () {
