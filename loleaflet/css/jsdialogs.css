@@ -636,3 +636,33 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	top: -6px;
 	border: 1px solid var(--gray-color);
 }
+
+/* dropdown arrow */
+.unoarrow, .menubutton .arrow {
+	width: 0px;
+	height: 0px;
+	font-size: 0;
+	line-height: 0;
+	border: 4px solid transparent;
+	border-top: 5px solid var(--gray-light-txt--color);
+	display: inline-block;
+	margin-left: 3px;
+}
+
+.menubutton .arrow {
+	display: block !important;
+	float: right;
+	margin: 5px 0px;
+}
+
+/* menu button */
+.jsdialog.menubutton {
+	line-height: normal;
+	font-size: 14px;
+	font-family: var(--jquery-ui-font);
+	border: 1px solid #CCC;
+	border-radius: 3px;
+	padding: 8px 10px;
+	margin: 2px 0px;
+	background-color: #F1F1F1;
+}

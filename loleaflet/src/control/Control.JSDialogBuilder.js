@@ -2169,6 +2169,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			});
 
 			builder.options.noLabelsForUnoButtons = noLabels;
+		} else if (data.text) {
+			var button = L.DomUtil.create('div', 'menubutton ' + builder.options.cssClass, parentContainer);
+			button.id = data.id;
+			var label = L.DomUtil.create('span', '', button);
+			label.innerText = data.text;
+			L.DomUtil.create('i', 'arrow', button);
 		} else {
 			console.warn('Not found menu "' + menuId + '"');
 		}
