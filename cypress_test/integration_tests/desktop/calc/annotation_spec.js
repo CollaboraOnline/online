@@ -17,74 +17,84 @@ describe('Annotation Tests', function() {
 	it('Insert',function() {
 		insertMultipleComment();
 
-		cy.get('.loleaflet-div-layer').should('exist');
+		cy.get('.loleaflet-annotation').should('exist');
 
-		cy.get('.loleaflet-div-layer').trigger('mouseover');
+		cy.get('#comment-container-1').then(function (element) {
+			element[0].style.visibility = '';
+			element[0].style.display = '';
+		});
+		cy.get('#comment-container-1').trigger('mouseover');
 
-		cy.get('.loleaflet-annotation-content > div')
-			.should('contain','some text');
+		cy.get('#annotation-content-area-1').should('contain','some text');
 	});
 
 	it('Modify',function() {
 		insertMultipleComment();
 
-		cy.get('.loleaflet-div-layer').should('exist');
+		cy.get('#comment-container-1').should('exist');
 
-		cy.get('.loleaflet-div-layer').trigger('mouseover');
+		cy.get('#comment-container-1').then(function (element) {
+			element[0].style.visibility = '';
+			element[0].style.display = '';
+		});
+		cy.get('#comment-container-1').trigger('mouseover');
 
-		cy.get('.loleaflet-annotation-content > div')
-			.should('contain','some text');
+		cy.get('#annotation-content-area-1').should('contain','some text');
 
-		cy.get('.loleaflet-annotation-menu').click();
+		cy.get('#comment-annotation-menu-1').click();
 
-		cy.contains('.context-menu-item','Modify')
-			.click();
+		cy.contains('.context-menu-item','Modify').click();
 
-		cy.get('.loleaflet-annotation-edit.modify-annotation')
-			.type('some other text, ');
+		cy.get('#annotation-modify-textarea-1').type('some other text, ');
 
-		cy.get('.loleaflet-annotation-edit.modify-annotation #annotation-save')
-			.click();
+		cy.get('#annotation-save-1').click();
 
-		cy.get('.loleaflet-div-layer').trigger('mouseover');
+		cy.get('#comment-container-1').then(function (element) {
+			element[0].style.visibility = '';
+			element[0].style.display = '';
+		});
+		cy.get('#annotation-content-area-1').trigger('mouseover');
 
-		cy.get('.loleaflet-annotation-content > div')
-			.should('contain','some other text, some text');
+		cy.get('#annotation-content-area-1').should('contain','some other text, some text');
 
-		cy.get('.loleaflet-div-layer').should('exist');
+		cy.get('#comment-container-1').should('exist');
 	});
 
 	it('Reply should not be possible', function() {
 		insertMultipleComment();
 
-		cy.get('.loleaflet-div-layer').should('exist');
+		cy.get('#comment-container-1').should('exist');
 
-		cy.get('.loleaflet-div-layer').trigger('mouseover');
+		cy.get('#comment-container-1').then(function (element) {
+			element[0].style.visibility = '';
+			element[0].style.display = '';
+		});
+		cy.get('#comment-container-1').trigger('mouseover');
 
-		cy.get('.loleaflet-annotation-content > div')
-			.should('contain','some text');
+		cy.get('#annotation-content-area-1').should('contain','some text');
 
-		cy.get('.loleaflet-annotation-menu').click();
+		cy.get('#comment-annotation-menu-1').click();
 
-		cy.contains('.context-menu-item','Reply')
-			.should('not.exist');
+		cy.contains('.context-menu-item','Reply').should('not.exist');
 	});
 
 	it('Remove',function() {
 		insertMultipleComment();
 
-		cy.get('.loleaflet-div-layer').should('exist');
+		cy.get('#comment-container-1').should('exist');
 
-		cy.get('.loleaflet-div-layer').trigger('mouseover');
+		cy.get('#comment-container-1').then(function (element) {
+			element[0].style.visibility = '';
+			element[0].style.display = '';
+		});
+		cy.get('#comment-container-1').trigger('mouseover');
 
-		cy.get('.loleaflet-annotation-content > div')
-			.should('contain','some text');
+		cy.get('#annotation-content-area-1').should('contain','some text');
 
-		cy.get('.loleaflet-annotation-menu').click();
+		cy.get('#comment-annotation-menu-1').click();
 
-		cy.contains('.context-menu-item','Remove')
-			.click();
+		cy.contains('.context-menu-item','Remove').click();
 
-		cy.get('.loleaflet-div-layer').should('not.exist');
+		cy.get('#comment-container-1').should('not.exist');
 	});
 });

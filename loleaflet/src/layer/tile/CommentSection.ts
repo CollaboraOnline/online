@@ -161,6 +161,7 @@ class Comment {
 
 	private createContainerAndWrapper () {
 		this.sectionProperties.container = L.DomUtil.create('div', 'loleaflet-annotation');
+		this.sectionProperties.container.id = 'comment-container-' + this.sectionProperties.data.id;
 
 		var mobileClass = (<any>window).mode.isMobile() ? ' wizard-comment-box': '';
 
