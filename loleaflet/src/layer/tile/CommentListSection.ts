@@ -72,12 +72,16 @@ class CommentSection {
 		this.sectionProperties.offset = 5 * app.dpiScale;
 		this.sectionProperties.layoutTimer = null;
 		this.sectionProperties.width = Math.round(300 * app.dpiScale); // Configurable variable.
+		this.sectionProperties.scrollAnnotation = null; // For impress, when 1 or more comments exist.
 	}
 
 	public onInitialize () {
 		this.map.on('RedlineAccept', this.onRedlineAccept, this);
 		this.map.on('RedlineReject', this.onRedlineReject, this);
 		this.map.on('updateparts', this.showHideComments, this);
+		this.map.on('AnnotationScrollUp', this.onAnnotationScrollUp, this);
+		this.map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
+
 		this.map.on('zoomend', function() {
 			var that = this;
 			that.layout(true);
@@ -98,12 +102,50 @@ class CommentSection {
 		}
 	}
 
+	private findNextPartWithComment (currentPart: number) {
+		for (var i = 0;  i < this.sectionProperties.commentList.length; i++) {
+			if (this.sectionProperties.commentList[i].sectionProperties.partIndex > currentPart) {
+				return this.sectionProperties.commentList[i].sectionProperties.partIndex;
+			}
+		}
+		return -1;
+	}
+
+	private findPreviousPartWithComment (currentPart: number) {
+		for (var i = this.sectionProperties.commentList.length - 1;  i > -1; i--) {
+			if (this.sectionProperties.commentList[i].sectionProperties.partIndex < currentPart) {
+				return this.sectionProperties.commentList[i].sectionProperties.partIndex;
+			}
+		}
+		return -1;
+	}
+
+	public onAnnotationScrollDown () {
+		var index = this.findNextPartWithComment(this.sectionProperties.docLayer._selectedPart);
+		if (index >= 0) {
+			this.map.setPart(index);
+		}
+	}
+
+	public onAnnotationScrollUp () {
+		var index = this.findPreviousPartWithComment(this.sectionProperties.docLayer._selectedPart);
+		if (index >= 0) {
+			this.map.setPart(index);
+		}
+	}
+
 	private checkSize () {
 		// When there is no comment || file is a spreadsheet || view type is mobile, we set this section's size to [0, 0].
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile() || this.sectionProperties.commentList.length === 0)
 		{
 			if (this.size[0] !== 0) {
 				this.size[0] = 0;
+
+				if (this.sectionProperties.docLayer._docType === 'presentation' && this.sectionProperties.scrollAnnotation) {
+					this.map.removeControl(this.sectionProperties.scrollAnnotation);
+					this.sectionProperties.scrollAnnotation = null;
+				}
+
 				this.containerObject.reNewAllSections(true);
 				this.sectionProperties.docLayer._syncTileContainerSize();
 			}
@@ -111,6 +153,12 @@ class CommentSection {
 		else {
 			if (this.size[0] !== this.sectionProperties.width) {
 				this.size[0] = this.sectionProperties.width;
+
+				if (this.sectionProperties.docLayer._docType === 'presentation' && !this.sectionProperties.scrollAnnotation) {
+					this.sectionProperties.scrollAnnotation = L.control.scrollannotation();
+					this.sectionProperties.scrollAnnotation.addTo(this.map);
+				}
+
 				this.containerObject.reNewAllSections(true);
 				this.sectionProperties.docLayer._syncTileContainerSize();
 			}
