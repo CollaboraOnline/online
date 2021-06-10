@@ -22,6 +22,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
 		this._controlHandlers['edit'] = this._editControl;
 		this._controlHandlers['panel'] = this._panelHandler;
+		this._controlHandlers['toolbox'] = this._toolboxHandler;
 
 		this._toolitemHandlers['.uno:FontworkAlignmentFloater'] = function () { return false; };
 		this._toolitemHandlers['.uno:FontworkCharacterSpacingFloater'] = function () { return false; };
@@ -567,6 +568,16 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 		builder._explorableEntry(parentContainer, data, content, builder, null, iconPath);
 		return false;
+	},
+
+	_toolboxHandler: function(parentContainer, data) {
+		if (data.enabled === false || data.enabled === 'false') {
+			for (var index in data.children) {
+				data.children[index].enabled = false;
+			}
+		}
+
+		return true;
 	},
 
 	build: function(parent, data) {
