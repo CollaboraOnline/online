@@ -19,8 +19,7 @@ describe('Annotation Tests', function() {
 
 		cy.get('.loleaflet-annotation-content-wrapper').should('exist');
 
-		cy.get('.loleaflet-annotation-content > div')
-			.should('contain','some text');
+		cy.get('#annotation-content-area-1').should('contain','some text0');
 	});
 
 	it('Modify',function() {
@@ -28,24 +27,19 @@ describe('Annotation Tests', function() {
 
 		cy.get('.loleaflet-annotation-content-wrapper').should('exist');
 
-		cy.get('.loleaflet-annotation-content > div')
-			.should('contain','some text');
+		cy.get('#annotation-content-area-1').should('contain','some text0');
 
-		cy.get('.loleaflet-annotation-menu').click();
+		cy.get('#comment-annotation-menu-1').click();
 
-		cy.contains('.context-menu-item','Modify')
-			.click();
+		cy.contains('.context-menu-item','Modify').click();
 
-		cy.get('.loleaflet-annotation-edit.modify-annotation')
-			.type('some other text, ');
+		cy.get('#annotation-modify-textarea-1').type('some other text, ');
 
-		cy.get('.loleaflet-annotation-edit.modify-annotation #annotation-save')
-			.click();
+		cy.get('#annotation-save-1').click();
 
 		cy.get('.loleaflet-annotation-content-wrapper').should('exist');
 
-		cy.get('.loleaflet-annotation-content > div')
-			.should('contain','some other text, some text');
+		cy.get('#annotation-content-area-1').should('contain','some other text, some text0');
 	});
 
 	it('Reply',function() {
@@ -53,22 +47,17 @@ describe('Annotation Tests', function() {
 
 		cy.get('.loleaflet-annotation-content-wrapper').should('exist');
 
-		cy.get('.loleaflet-annotation-content > div')
-			.should('contain','some text');
+		cy.get('#annotation-content-area-1').should('contain','some text');
 
-		cy.get('.loleaflet-annotation-menu').click();
+		cy.get('#comment-annotation-menu-1').click();
 
-		cy.contains('.context-menu-item','Reply')
-			.click();
+		cy.contains('.context-menu-item','Reply').click();
 
-		cy.get('.loleaflet-annotation-edit.reply-annotation')
-			.type('some reply text');
+		cy.get('#annotation-reply-textarea-1').type('some reply text');
 
-		cy.get('.loleaflet-annotation-edit.reply-annotation #annotation-reply')
-			.click();
+		cy.get('#annotation-reply-1').click();
 
-		cy.get('.loleaflet-annotation-content > div').eq(1)
-			.should('contain','some reply text');
+		cy.get('#annotation-content-area-2').should('contain','some reply text');
 	});
 
 	it('Remove',function() {
