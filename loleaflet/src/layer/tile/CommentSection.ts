@@ -769,8 +769,17 @@ class Comment {
 		var that = this;
 		var container = this.sectionProperties.container;
 		if (container && container.parentElement) {
-			container.parentElement.removeChild(container);
 			that.hideMarker();
+			var c: number = 0;
+            while (c < 10) {
+                try {
+                    container.parentElement.removeChild(container);
+                    break;
+                }
+                catch (e) {
+                    c++;
+                }
+            }
 		}
 	}
 
