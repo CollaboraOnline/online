@@ -403,14 +403,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return '';
 	},
 
-	_toolboxHandler: function(parentContainer, data) {
+	_toolboxHandler: function(parentContainer, data, builder) {
+		var toolbox = L.DomUtil.create('div', builder.options.cssClass + ' toolbox', parentContainer);
+		toolbox.id = data.id;
+
 		if (data.enabled === false || data.enabled === 'false') {
 			for (var index in data.children) {
 				data.children[index].enabled = false;
 			}
 		}
 
-		return true;
+		var noLabels = builder.options.noLabelsForUnoButtons;
+		builder.options.noLabelsForUnoButtons = true;
+
+		builder.build(toolbox, data.children, false, false);
+
+		builder.options.noLabelsForUnoButtons = noLabels;
+
+		return false;
 	},
 
 	_containerHandler: function(parentContainer, data, builder) {
@@ -3171,10 +3181,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			} else
 				console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
 
-			var noLabels = this.options.noLabelsForUnoButtons;
-			if (childType === 'toolbox')
-				this.options.noLabelsForUnoButtons = true;
-
 			if (processChildren && childData.children != undefined)
 				this.build(childObject, childData.children, isVertical, hasManyChildren);
 			else if (childData.visible && (childData.visible === false || childData.visible === 'false')) {
@@ -3191,8 +3197,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						this.setupStandardButtonHandler(button, response, this);
 				}
 			}
-
-			this.options.noLabelsForUnoButtons = noLabels;
 		}
 	}
 });

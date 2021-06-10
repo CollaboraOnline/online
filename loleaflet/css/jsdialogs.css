@@ -666,3 +666,8 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	margin: 2px 0px;
 	background-color: #F1F1F1;
 }
+
+/* toolbox */
+.jsdialog.toolbox {
+	display: flex;
+}
