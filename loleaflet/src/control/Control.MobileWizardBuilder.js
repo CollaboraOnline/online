@@ -28,6 +28,8 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:ExtrusionToggle'] = function () { return false; };
 		this._toolitemHandlers['.uno:Grow'] = function () { return false; };
 		this._toolitemHandlers['.uno:Shrink'] = function () { return false; };
+		this._toolitemHandlers['.uno:StyleUpdateByExampleimg'] = function () { return false; };
+		this._toolitemHandlers['.uno:StyleNewByExampleimg'] = function () { return false; };
 
 		this._toolitemHandlers['.uno:FontworkShapeType'] = this._fontworkShapeControl;
 	},
