@@ -760,6 +760,7 @@ class Comment {
 	}
 
 	public onRemove () {
+		this.sectionProperties.commentListSection.hideArrow();
 		var that = this;
 		var container = this.sectionProperties.container;
 		if (container && container.parentElement) {

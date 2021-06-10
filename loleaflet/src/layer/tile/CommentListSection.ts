@@ -1245,7 +1245,7 @@ class CommentSection {
 		return startY;
 	}
 
-	private hideArrow () {
+	public hideArrow () {
 		if (this.sectionProperties.arrow) {
 			document.getElementById('document-container').removeChild(this.sectionProperties.arrow);
 			this.sectionProperties.arrow = null;
