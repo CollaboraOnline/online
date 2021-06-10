@@ -75,21 +75,16 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Comment insertion dialog is opened
-		cy.get('.loleaflet-annotation-table')
-			.should('exist');
+		cy.get('#comment-container-new').should('exist');
 
 		// Add some comment
-		cy.get('.loleaflet-annotation-textarea')
-			.type('some text');
+		cy.get('#new-mobile-comment-input-area').type('some text');
 
-		cy.get('.vex-dialog-button-primary')
-			.click();
+		cy.get('.vex-dialog-button-primary').click();
 
-		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
-			.should('exist');
+		cy.get('#comment-container-1').should('exist');
 
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
-			.should('have.text', 'some text');
+		cy.get('#annotation-content-area-1').should('have.text', 'some text');
 	});
 
 	it('Insert default table.', function() {
