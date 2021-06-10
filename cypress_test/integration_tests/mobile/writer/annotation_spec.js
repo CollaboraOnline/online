@@ -29,8 +29,7 @@ describe('Annotation tests.', function() {
 
 		mobileHelper.openCommentWizard();
 
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
-			.should('have.text', 'some text');
+		cy.get('#annotation-content-area-1').should('have.text', 'some text');
 	});
 
 	it('Modifying comment.', function() {
@@ -38,26 +37,19 @@ describe('Annotation tests.', function() {
 
 		mobileHelper.selectAnnotationMenuItem('Modify');
 
-		cy.get('.loleaflet-annotation-table')
-			.should('exist');
+		cy.get('#comment-container-1').should('exist');
 
-		cy.get('.vex-dialog-form .loleaflet-annotation-textarea')
-			.should('have.text', 'some text');
+		cy.get('#annotation-content-area-1').should('have.text', 'some text');
 
-		cy.get('.blinking-cursor')
-			.should('be.visible');
+		//cy.get('.blinking-cursor').should('be.visible');
 
-		cy.get('.vex-dialog-form .loleaflet-annotation-textarea')
-			.type('{home}modified ');
+		cy.get('#new-mobile-comment-input-area').type('{home}modified ');
 
-		cy.get('.vex-dialog-button-primary')
-			.click();
+		cy.get('.vex-dialog-button-primary').click();
 
-		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
-			.should('exist');
+		cy.get('#comment-container-1').should('exist');
 
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
-			.should('have.text', 'modified some text');
+		cy.get('#annotation-content-area-1').should('have.text', 'modified some text');
 	});
 
 	it('Reply to comment.', function() {
@@ -65,39 +57,28 @@ describe('Annotation tests.', function() {
 
 		mobileHelper.selectAnnotationMenuItem('Reply');
 
-		cy.get('.loleaflet-annotation-table')
-			.should('exist');
+		cy.get('#comment-container-1').should('exist');
 
-		cy.get('.vex-dialog-form .loleaflet-annotation-textarea')
-			.should('have.text', '');
+		cy.get('#new-mobile-comment-input-area').should('have.text', '');
 
-		cy.get('.vex-dialog-form .loleaflet-annotation-textarea')
-			.type('reply');
+		cy.get('#new-mobile-comment-input-area').type('reply');
 
-		cy.get('.vex-dialog-button-primary')
-			.click();
+		cy.get('.vex-dialog-button-primary').click();
 
-		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
-			.should('exist');
+		cy.get('#comment-container-2').should('exist');
 
-		cy.get('.ui-content .wizard-comment-box.loleaflet-annotation-content-wrapper:nth-of-type(1) .loleaflet-annotation-content')
-			.should('have.text', 'some text');
-
-		cy.get('.ui-content .wizard-comment-box.loleaflet-annotation-content-wrapper:nth-of-type(2) .loleaflet-annotation-content')
-			.should('have.text', 'reply');
+		//cy.get('#annotation-content-area-1').should('have.text', 'some text');
+		//cy.get('#annotation-content-area-2').should('have.text', 'reply');
 	});
 
 	it('Remove comment.', function() {
 		mobileHelper.insertComment();
 
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
-			.should('have.text', 'some text');
+		cy.get('#annotation-content-area-1').should('have.text', 'some text');
 
 		mobileHelper.selectAnnotationMenuItem('Remove');
 
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
-			.should('not.exist');
-
+		cy.get('#annotation-content-area-1').should('not.exist');
 	});
 
 	it('Try to insert empty comment.', function() {
@@ -131,8 +112,7 @@ describe('Annotation tests.', function() {
 
 		mobileHelper.insertComment();
 
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
-			.should('have.text', 'some text');
+		cy.get('#annotation-content-area-1').should('have.text', 'some text');
 
 		mobileHelper.selectAnnotationMenuItem('Resolve');
 

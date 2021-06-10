@@ -253,7 +253,7 @@ class Comment {
 	}
 
 	public updateResolvedField (state: string) {
-		this.sectionProperties.resolvedTextElement.text = state === 'true' ? 'Resolved' : '';
+		this.sectionProperties.resolvedTextElement.innerText = state === 'true' ? 'Resolved' : '';
 	}
 
 	private updateContent () {

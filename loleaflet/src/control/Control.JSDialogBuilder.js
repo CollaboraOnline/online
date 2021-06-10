@@ -2302,14 +2302,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 				container.onclick = function() {
 					builder.wizard.goLevelDown(mainContainer);
+					childContainer.style.display = 'block';
 					builder.build(childContainer, data.children);
 				};
 
 				var backButton = document.getElementById('mobile-wizard-back');
 
 				backButton.onclick = function () {
-					if (backButton.className !== 'close-button')
+					if (backButton.className !== 'close-button') {
 						builder.build(mainContainer, data);
+						if (data.type === 'rootcomment') {
+							var temp = document.getElementById('comment-thread' + data.id);
+							if (temp)
+								temp.style.display = 'block';
+						}
+					}
 				};
 			}
 		}
