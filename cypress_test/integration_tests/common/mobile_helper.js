@@ -320,23 +320,17 @@ function selectListBoxItem2(listboxSelector, item) {
 function insertComment() {
 	openInsertionWizard();
 
-	cy.contains('.menu-entry-with-icon', 'Comment')
-		.click();
+	cy.contains('.menu-entry-with-icon', 'Comment').click();
 
-	cy.get('.loleaflet-annotation-table')
-		.should('exist');
+	cy.get('.loleaflet-annotation-table').should('exist');
 
-	cy.get('.loleaflet-annotation-textarea')
-		.type('some text');
+	cy.get('#new-mobile-comment-input-area').type('some text');
 
-	cy.get('.vex-dialog-button-primary')
-		.click();
+	cy.get('.vex-dialog-button-primary').click();
 
-	cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
-		.should('exist');
+	cy.get('#comment-container-1').should('exist');
 
-	cy.get('.wizard-comment-box .loleaflet-annotation-content')
-		.should('have.text', 'some text');
+	cy.get('#annotation-content-area-1').should('have.text', 'some text');
 }
 
 function insertImage() {

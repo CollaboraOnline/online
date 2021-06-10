@@ -102,7 +102,7 @@ class Comment {
 			this.createTrackChangeButtons();
 		}
 
-		if (this.sectionProperties.noMenu !== true && this.map.isPermissionEditForComments()) {
+		if (this.sectionProperties.noMenu !== true && (this.map.isPermissionEditForComments() || this.map.isPermissionEdit())) {
 			this.createMenu();
 		}
 
@@ -769,10 +769,8 @@ class Comment {
 		var that = this;
 		var container = this.sectionProperties.container;
 		if (container && container.parentElement) {
-			setTimeout(function () {
-				container.parentElement.removeChild(container);
-				that.hideMarker();
-			}, 100);
+			container.parentElement.removeChild(container);
+			that.hideMarker();
 		}
 	}
 

@@ -287,7 +287,7 @@ class CommentSection {
 		var dialog = vex.dialog.open({
 			message: '',
 			input: [
-				'<textarea name="comment" class="loleaflet-annotation-textarea" required>' + (commentData.text && isMod ? commentData.text: '') + '</textarea>'
+				'<textarea name="comment" id="new-mobile-comment-input-area" class="loleaflet-annotation-textarea" required>' + (commentData.text && isMod ? commentData.text: '') + '</textarea>'
 			].join(''),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.YES, { text: _('Save') }),
