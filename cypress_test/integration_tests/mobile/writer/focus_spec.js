@@ -18,13 +18,8 @@ describe('Focus tests', function() {
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
 
-		// Body has the focus -> can't type in the document
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
-
 		// Click in the document
-		cy.get('#document-container')
-			.click();
+		cy.get('#document-container').click();
 
 		// Clipboard has the focus -> can type in the document
 		cy.document().its('activeElement.className')
@@ -50,10 +45,6 @@ describe('Focus tests', function() {
 			.should('be.eq', 'BODY');
 
 		mobileHelper.closeMobileWizard();
-
-		// No focus
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
 	});
 
 	it('Focus inside mobile wizard.', function() {
@@ -75,10 +66,6 @@ describe('Focus tests', function() {
 			.should('be.eq', 'spinfield');
 
 		mobileHelper.closeMobileWizard();
-
-		// No focus
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
 	});
 
 	it('Focus after insertion.', function() {
@@ -172,16 +159,8 @@ describe('Focus tests', function() {
 		// Open hamburger menu
 		mobileHelper.openHamburgerMenu();
 
-		// No focus
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
-
 		// Close hamburger menu
 		mobileHelper.closeHamburgerMenu();
-
-		// No focus
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
 	});
 
 	it('Focus after applying font change.', function() {
@@ -213,10 +192,6 @@ describe('Focus tests', function() {
 			.should('be.eq', 'BODY');
 
 		mobileHelper.closeMobileWizard();
-
-		// No focus
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
 	});
 
 	it('Apply bold, check keyboard.', function() {
