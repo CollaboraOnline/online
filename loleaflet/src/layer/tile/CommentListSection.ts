@@ -1260,7 +1260,6 @@ class CommentSection {
 		var anchorSection = this.containerObject.getDocumentAnchorSection();
 		startPoint[0] -= anchorSection.myTopLeft[0] + this.documentTopLeft[0];
 		startPoint[1] -= anchorSection.myTopLeft[1] + this.documentTopLeft[1];
-		endPoint[0] -= anchorSection.myTopLeft[0] + this.documentTopLeft[0];
 		endPoint[1] -= anchorSection.myTopLeft[1] + this.documentTopLeft[1];
 
 		startPoint[0] = Math.floor(startPoint[0] / app.dpiScale);
