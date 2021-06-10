@@ -19,8 +19,7 @@ describe('Annotation Tests',function() {
 	it('Saving comment.', function() {
 		mobileHelper.insertComment();
 
-		cy.get('.loleaflet-div-layer')
-			.should('exist');
+		cy.get('#comment-container-1').should('exist');
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
@@ -30,56 +29,41 @@ describe('Annotation Tests',function() {
 
 		mobileHelper.openCommentWizard();
 
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
-			.should('have.text', 'some text');
+		cy.get('#annotation-content-area-1').should('have.text', 'some text');
 
-		cy.get('.loleaflet-div-layer')
-			.should('exist');
+		cy.get('#comment-container-1').should('exist');
 	});
 
 	it('Modifying comment.', function() {
 		mobileHelper.insertComment();
 
-		cy.get('.loleaflet-div-layer')
-			.should('exist');
+		cy.get('#comment-container-1').should('exist');
 
 		mobileHelper.selectAnnotationMenuItem('Modify');
 
-		cy.get('.loleaflet-annotation-table')
-			.should('exist');
+		cy.get('#annotation-content-area-1').should('have.text', 'some text');
 
-		cy.get('.vex-dialog-form .loleaflet-annotation-textarea')
-			.should('have.text', 'some text');
+		cy.get('#new-mobile-comment-input-area').type('modified ');
 
-		cy.get('.vex-dialog-form .loleaflet-annotation-textarea')
-			.type('modified ');
+		cy.get('.vex-dialog-button-primary').click();
 
-		cy.get('.vex-dialog-button-primary')
-			.click();
+		cy.get('#comment-container-1').should('exist');
 
-		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
-			.should('exist');
-
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
-			.should('have.text', 'modified some text');
+		cy.get('#annotation-content-area-1').should('have.text', 'modified some text');
 	});
 
 	it('Remove comment.', function() {
 		mobileHelper.insertComment();
 
-		cy.get('.loleaflet-div-layer')
-			.should('exist');
+		cy.get('#comment-container-1').should('exist');
 
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
-			.should('have.text', 'some text');
+		cy.get('#annotation-content-area-1').should('have.text', 'some text');
 
 		mobileHelper.selectAnnotationMenuItem('Remove');
 
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
-			.should('not.exist');
+		cy.get('#annotation-content-area-1').should('not.exist');
 
-		cy.get('.loleaflet-div-layer')
-			.should('not.exist');
+		cy.get('#comment-container-1').should('not.exist');
 	});
 
 	it('Try to insert empty comment.', function() {
