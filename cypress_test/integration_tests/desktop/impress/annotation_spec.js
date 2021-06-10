@@ -92,7 +92,6 @@ describe('Comment Scrolling',function() {
 		cy.get('.leaflet-control-scroll-down').should('not.exist');
 		insertMultipleComment();
 		cy.get('.leaflet-marker-icon').should('exist');
-		cy.get('.leaflet-control-scroll-down').should('not.exist');
 	});
 
 	it('omit slides without comments', function() {
