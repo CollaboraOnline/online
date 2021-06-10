@@ -300,17 +300,13 @@ describe('Top toolbar tests.', function() {
 			.should('exist');
 
 		// Add some comment
-		cy.get('.loleaflet-annotation-edit.modify-annotation')
-			.type('some text');
+		cy.get('#annotation-modify-textarea-new').type('some text');
 
-		cy.get('.loleaflet-annotation-edit.modify-annotation #annotation-save')
-			.click();
+		cy.get('#annotation-save-new').click();
 
-		cy.get('.loleaflet-annotation')
-			.should('exist');
+		cy.get('#comment-container-1').should('exist');
 
-		cy.get('.loleaflet-annotation-content.loleaflet-dont-break')
-			.should('have.text', 'some text');
+		cy.get('#annotation-content-area-1').should('have.text', 'some text');
 	});
 
 	it('Insert table.', function() {
