@@ -316,17 +316,6 @@
 	padding: 0px 5px !important;
 }
 
-.unotoolbutton.notebookbar .unoarrow {
-	width: 0px;
-	height: 0px;
-	font-size: 0;
-	line-height: 0;
-	border: 4px solid transparent;
-	border-top: 5px solid var(--gray-light-txt--color);
-	display: inline-block;
-	margin-left: 3px;
-}
-
 /*Adjust arrow for statistics menu (has icon, label stacked up)*/
 .unospan-Data-StatisticsMenu .unoarrow {
 	display: block;
