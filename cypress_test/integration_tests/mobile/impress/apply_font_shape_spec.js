@@ -186,12 +186,12 @@ describe('Apply font on selected shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		helper.clickOnIdle('#Bold');
+		helper.clickOnIdle('#SuperScript');
 
 		triggerNewSVG();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
-			.should('have.attr', 'font-size', '705px');
+			.should('have.attr', 'font-size', '368px');
 
 		// Remove direct formatting
 		mobileHelper.openTextPropertiesPanel();
