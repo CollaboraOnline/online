@@ -17,19 +17,19 @@ L.Control.SearchBar = L.Control.extend({
 		toolbar.w2toolbar({
 			name: 'searchbar',
 			items: [
+				{type: 'button', id: 'hidesearchbar', img: 'unfold', hint: _('Hide the search bar')},
 				{
 					type: 'html', id: 'search',
 					html: '<div id="search-input-group" style="padding: 3px 10px;" class="loleaflet-font">' +
 						'    <label for="search-input">Search:</label>' +
 						'    <input size="10" id="search-input"' +
-						'style="padding: 3px; border-radius: 2px; border: 1px solid silver"/>' +
+						'style="padding: 2px; border-radius: 2px; border: 1px solid silver"/>' +
 						'</div>'
 				},
 				{type: 'button', id: 'searchprev', img: 'prev', hint: _UNO('.uno:UpSearch'), disabled: true},
 				{type: 'button', id: 'searchnext', img: 'next', hint: _UNO('.uno:DownSearch'), disabled: true},
 				{type: 'button', id: 'cancelsearch', img: 'cancel', hint: _('Clear the search field'), hidden: true},
-				{type: 'html', id: 'left'},
-				{type: 'button', id: 'hidesearchbar', img: 'unfold', hint: _('Hide the search bar')}
+				{type: 'html', id: 'left'}
 			],
 			onClick: function (e) {
 				that.onClick(e, e.target, e.item, e.subItem);
