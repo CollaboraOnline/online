@@ -29,8 +29,7 @@ describe('Formula bar tests.', function() {
 
 		helper.typeIntoInputField('input#addressInput', 'A1');
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
-			.should('exist');
+		cy.get('.spreadsheet-cell-resize-marker').should('exist');
 	});
 
 	it('Select a cell range by address', function() {
@@ -46,8 +45,7 @@ describe('Formula bar tests.', function() {
 		// Select first cell by clicking on it.
 		calcHelper.clickOnFirstCell();
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(-8px, -8px, 0px); z-index: -8;\']')
-			.should('exist');
+		cy.get('.spreadsheet-cell-resize-marker').should('exist');
 
 		// Select a cell range again using address input.
 		helper.typeIntoInputField('input#addressInput', 'B2:B3');
