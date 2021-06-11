@@ -295,14 +295,8 @@ app.definitions.Socket = L.Class.extend({
 						textMsg = evt.data;
 					}
 					else if (typeof (evt.data) === 'object') {
-						var imgBytes = new Uint8Array(evt.data);
-						var index = 0;
-						while (index < imgBytes.length && imgBytes[index] !== 10) {
-							index++;
-						}
-						textMsg = String.fromCharCode.apply(null, imgBytes.subarray(0, index));
+						textMsg = evt.textMsg.replace(/\s+/g, '.');
 					}
-					textMsg = textMsg.replace(/\s+/g, '.');
 
 					var completeEventOneMessage = this.createCompleteTraceEvent('loleaflet._emitOneSlurpedEvent',
 												    { message: textMsg });
