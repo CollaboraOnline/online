@@ -376,35 +376,28 @@ app.definitions.Socket = L.Class.extend({
 		that._slurpQueue.push(e);
 	},
 
-	_extractTextImg: function (e) {
-		var index = 0;
+	// make profiling easier
+	_extractCopyObject: function(e) {
+		var index;
 
-		if (typeof (e.data) === 'string') {
-			e.textMsg = e.data;
-		}
-		else if (typeof (e.data) === 'object') {
-			e.imgBytes = new Uint8Array(e.data);
-			// search for the first newline which marks the end of the message
+		e.imgBytes = new Uint8Array(e.data);
+
+		// search for the first newline which marks the end of the message
+		if (L.Browser.isInternetExplorer) {
+			index = 0;
 			while (index < e.imgBytes.length && e.imgBytes[index] !== 10) {
 				index++;
 			}
-			e.textMsg = String.fromCharCode.apply(null, e.imgBytes.subarray(0, index));
+		} else {
+			index = e.imgBytes.indexOf(10);
 		}
+		e.textMsg = String.fromCharCode.apply(null, e.imgBytes.subarray(0, index));
 
-		e.isComplete = function () {
-			if (this.image)
-				return !!this.imageIsComplete;
-			return true;
-		};
+		e.imgIndex = index + 1;
+	},
 
-		if (!e.textMsg.startsWith('tile:') && !e.textMsg.startsWith('renderfont:') && !e.textMsg.startsWith('windowpaint:'))
-			return;
-
-		if (e.textMsg.indexOf(' nopng') !== -1)
-			return;
-
+	_extractImage: function(e) {
 		var img;
-
 		if (window.ThisIsTheiOSApp) {
 			// In the iOS app, the native code sends us the URL of the BMP for the tile after the newline
 			var newlineIndex = e.textMsg.indexOf('\n');
@@ -413,8 +406,10 @@ app.definitions.Socket = L.Class.extend({
 				e.textMsg = e.textMsg.substring(0, newlineIndex);
 			}
 		}
-		else {
-			var data = e.imgBytes.subarray(index + 1);
+		else
+		{
+			var data = e.imgBytes.subarray(e.imgIndex);
+
 			console.assert(data.length == 0 || data[0] != 68 /* D */, 'Socket: got a delta image, not supported !');
 
 			// read the tile data
@@ -424,6 +419,31 @@ app.definitions.Socket = L.Class.extend({
 			}
 			img = 'data:image/png;base64,' + window.btoa(strBytes);
 		}
+		return img;
+	},
+
+	_extractTextImg: function (e) {
+
+		if (typeof (e.data) === 'string')
+			e.textMsg = e.data;
+		else if (typeof (e.data) === 'object')
+			this._extractCopyObject(e);
+
+		e.isComplete = function () {
+			if (this.image)
+				return !!this.imageIsComplete;
+			return true;
+		};
+
+		if (!e.textMsg.startsWith('tile:') &&
+		    !e.textMsg.startsWith('renderfont:') &&
+		    !e.textMsg.startsWith('windowpaint:'))
+			return;
+
+		if (e.textMsg.indexOf(' nopng') !== -1)
+			return;
+
+		var img = this._extractImage(e);
 
 		e.image = new Image();
 		e.image.onload = function() {
