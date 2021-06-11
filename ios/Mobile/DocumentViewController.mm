@@ -527,6 +527,12 @@ static IMP standardImpOfInputAccessoryView = nil;
             NSArray<NSString*> *messageBodyItems = [message.body componentsSeparatedByString:@" "];
             assert([messageBodyItems count] == 2);
             NSURL *tile = [NSURL URLWithString:messageBodyItems[1]];
+
+            // For some reason tunnelled dialogs still use PNG tiles inside data: URLs and not BMP
+            // files pointed to by file: URLs. Guard against getting REMOVE messages for such.
+            if (![[tile scheme] isEqualToString:@"file"])
+                return;
+
             if (unlink([[tile path] UTF8String]) == -1) {
                 LOG_SYS("Could not unlink tile " << [[tile path] UTF8String]);
             }
