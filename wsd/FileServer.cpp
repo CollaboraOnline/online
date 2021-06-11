@@ -835,14 +835,14 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         LOG_TRC("Allowed frame ancestors: " << frameAncestors);
         // X-Frame-Options supports only one ancestor, ignore that
         //(it's deprecated anyway and CSP works in all major browsers)
-        cspOss << "img-src 'self' data: " << frameAncestors << "; "
+        cspOss << "img-src 'self' blob: data: " << frameAncestors << "; "
                 << "frame-ancestors " << frameAncestors;
         Poco::replaceInPlace(preprocess, std::string("%FRAME_ANCESTORS%"), frameAncestors);
     }
     else
     {
         LOG_TRC("Denied all frame ancestors");
-        cspOss << "img-src 'self' data: none;";
+        cspOss << "img-src 'self' blob: data: none;";
     }
 
     cspOss << "\r\n";

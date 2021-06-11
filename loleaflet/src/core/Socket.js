@@ -406,18 +406,21 @@ app.definitions.Socket = L.Class.extend({
 				e.textMsg = e.textMsg.substring(0, newlineIndex);
 			}
 		}
-		else
-		{
-			var data = e.imgBytes.subarray(e.imgIndex);
-
-			console.assert(data.length == 0 || data[0] != 68 /* D */, 'Socket: got a delta image, not supported !');
-
+		else if (L.Browser.isInternetExplorer) {
 			// read the tile data
 			var strBytes = '';
 			for (var i = 0; i < data.length; i++) {
 				strBytes += String.fromCharCode(data[i]);
 			}
 			img = 'data:image/png;base64,' + window.btoa(strBytes);
+		}
+		else // faster blog APIs.
+		{
+			var data = e.imgBytes.subarray(e.imgIndex);
+			console.assert(data.length == 0 || data[0] != 68 /* D */, 'Socket: got a delta image, not supported !');
+
+			var imgBlob = new Blob([data], {'type': 'image/png'});
+			img = URL.createObjectURL(imgBlob);
 		}
 		return img;
 	},
@@ -450,7 +453,12 @@ app.definitions.Socket = L.Class.extend({
 			e.imageIsComplete = true;
 			if (window.ThisIsTheiOSApp) {
 				window.webkit.messageHandlers.lool.postMessage('REMOVE ' + e.image.src, '*');
+			} else if (!L.Browser.isInternetExplorer) {
+				URL.revokeObjectURL(img);
 			}
+		};
+		e.image.onerror = function(err) {
+			console.log('Failed to load image ' + img + ' fun ' + err);
 		};
 		e.image.src = img;
 	},
