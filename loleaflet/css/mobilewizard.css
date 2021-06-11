@@ -182,7 +182,7 @@ p.mobile-wizard.ui-combobox-text {
 	padding-left: 2% !important;
 	width: 100%;
 }
-.ui-explorable-entry {
+.menu-entry-icon.inserttable, .menu-entry-icon.insertfield, .menu-entry-icon.insertheaderfooter, .menu-entry-icon.formattingmark {
 	padding-left: 2% !important;
 }
 #BackgroundColor > .ui-header-left {
