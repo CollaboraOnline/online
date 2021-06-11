@@ -152,7 +152,7 @@ m4_ifelse(MOBILEAPP,[true],
 )m4_dnl
 </head>
 
-  <body style="user-select: none;min-height:100%;display:flex;flex-direction:column">
+  <body style="user-select: none;height:100%;display:flex;flex-direction:column">
     <!--The "controls" div holds map controls such as the Zoom button and
         it's separated from the map in order to have the controls on the top
         of the page all the time.

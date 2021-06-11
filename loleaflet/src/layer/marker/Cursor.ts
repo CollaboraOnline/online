@@ -56,7 +56,11 @@ class Cursor {
 		this.map.getCursorOverlayContainer().appendChild(this.container);
 		this.visible = true;
 		this.domAttached = true;
-		this.onFocusBlur(new FocusEvent('focus'));
+
+		var isIE11 = !!window.MSInputMethodContext && !!(<any>document).documentMode;
+		if (!isIE11)
+			this.onFocusBlur(new FocusEvent('focus'));
+
 		this.update();
 		if (this.map._docLayer.isCalc())
 			this.map.on('splitposchanged move', this.update, this);
