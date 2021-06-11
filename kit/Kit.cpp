@@ -107,9 +107,11 @@ using std::size_t;
 
 extern "C" { void dump_kit_state(void); /* easy for gdb */ }
 
+#if !MOBILEAPP
 // A Kit process hosts only a single document in its lifetime.
 class Document;
 static Document *singletonDocument = nullptr;
+#endif
 
 #ifndef BUILDING_TESTS
 static bool AnonymizeUserData = false;
@@ -131,7 +133,9 @@ static uint64_t AnonymizationSalt = 82589933;
 /// system root, not the jail.
 static std::string JailRoot;
 
+#if !MOBILEAPP
 static void flushTraceEventRecordings();
+#endif
 
 #if !MOBILEAPP
 
@@ -535,8 +539,10 @@ public:
                 "] url [" << anonymizeUrl(_url) << "] on child [" << _jailId <<
                 "] and id [" << _docId << "].");
         assert(_loKit);
+#if !MOBILEAPP
         assert(singletonDocument == nullptr);
         singletonDocument = this;
+#endif
     }
 
     virtual ~Document()
@@ -1815,7 +1821,7 @@ void TraceEvent::emitOneRecording(const std::string &recording)
     traceEventRecordings.emplace_back(recording);
 }
 
-#else
+#elif !MOBILEAPP
 
 static void flushTraceEventRecordings()
 {
