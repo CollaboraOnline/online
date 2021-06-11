@@ -173,6 +173,7 @@ NODE_MODULES_JS =\
 	node_modules/smartmenus/dist/jquery.smartmenus.js
 
 LOLEAFLET_LIBS_JS =\
+	ResizeObserverPolyfill.js \
 	Autolinker.js \
 	json2.js \
 	select2.js \

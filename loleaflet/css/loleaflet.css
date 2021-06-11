@@ -373,6 +373,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	font-family: var(--loleaflet-font) !important;
 	font-size: 13px;
 	text-align: left;
+	background-color: #EFEFEF; /* Fallback color for IE11. */
 	background-color: var(--gray-light-bg-color);
 	box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
 	color: #222;
