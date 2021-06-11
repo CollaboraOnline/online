@@ -1337,7 +1337,7 @@ class CommentSection {
 			line.setAttribute('y2', String(endPoint[1]));
 			line.setAttribute('stroke', 'darkblue');
 			line.setAttribute('stroke-width', '1');
-			svg.append(line);
+			svg.appendChild(line);
 			document.getElementById('document-container').appendChild(svg);
 			this.sectionProperties.arrow = svg;
 		}

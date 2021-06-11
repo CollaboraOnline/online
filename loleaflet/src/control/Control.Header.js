@@ -541,10 +541,10 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 		else if (!this._isColumn && this._map.wholeColumnSelected)
 			return true;
 		else if (this._isColumn && cellSelections.length > 0) {
-			return cellSelections.find(function (element) { return element.containsPixelOrdinateX(ordinate);}) ? true: false;
+			return cellSelections.filter(function (element) { return element.containsPixelOrdinateX(ordinate);}) ? true: false;
 		}
 		else if (!this._isColumn && cellSelections.length > 0) {
-			return cellSelections.find(function (element) { return element.containsPixelOrdinateY(ordinate);}) ? true: false;
+			return cellSelections.filter(function (element) { return element.containsPixelOrdinateY(ordinate);}) ? true: false;
 		}
 		else
 			return false;
