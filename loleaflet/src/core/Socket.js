@@ -281,6 +281,17 @@ app.definitions.Socket = L.Class.extend({
 			     'background:#ddf;color:black', color, 'color:black');
 	},
 
+	_queueSlurpEventEmission: function() {
+		var that = this;
+		if (!that._slurpTimer)
+		{
+			that._slurpTimer = setTimeout(function () {
+				that._slurpTimer = undefined;
+				that._emitSlurpedEvents();
+			}, 1 /* ms */);
+		}
+	},
+
 	_emitSlurpedEvents: function() {
 		var queueLength = this._slurpQueue.length;
 		var completeEventWholeFunction = this.createCompleteTraceEvent('loleaflet._emitSlurpedEvents',
@@ -320,12 +331,8 @@ app.definitions.Socket = L.Class.extend({
 							completeEventOneMessage.finish();
 					}
 				} else {
-					// Stop emitting, continue in the next timer from where we left off.
+					// Stop emitting, re-start when we async images load.
 					this._slurpQueue = this._slurpQueue.slice(i, queueLength);
-					var that = this;
-					this._slurpTimer = setTimeout(function () {
-						that._emitSlurpedEvents();
-					}, 1 /* ms */);
 					complete = false;
 					break;
 				}
@@ -362,9 +369,7 @@ app.definitions.Socket = L.Class.extend({
 	_slurpMessage: function(e) {
 		var that = this;
 		if (!this._slurpQueue || !this._slurpQueue.length) {
-			setTimeout(function() {
-				that._emitSlurpedEvents();
-			}, 1 /* ms */);
+			this._queueSlurpEventEmission();
 			that._slurpQueue = [];
 		}
 		this._extractTextImg(e);
@@ -441,8 +446,8 @@ app.definitions.Socket = L.Class.extend({
 		if (e.textMsg.indexOf(' nopng') !== -1)
 			return;
 
+		var that = this;
 		var img = this._extractImage(e);
-
 		e.image = new Image();
 		e.image.onload = function() {
 			e.imageIsComplete = true;
@@ -451,9 +456,11 @@ app.definitions.Socket = L.Class.extend({
 			} else if (!L.Browser.isInternetExplorer) {
 				URL.revokeObjectURL(img);
 			}
+			that._queueSlurpEventEmission();
 		};
 		e.image.onerror = function(err) {
 			console.log('Failed to load image ' + img + ' fun ' + err);
+			e.imageIsComplete = true;
 		};
 		e.image.src = img;
 	},
