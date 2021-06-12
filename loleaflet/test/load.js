@@ -1,12 +1,27 @@
 var vm = require("vm");
 var fs = require("fs");
+var tmp = require('tmp');
 
-var top_srcdir = process.argv[2];
-var top_builddir = process.argv[3];
+if (process.argv.length < 2 ||
+    process.argv[1] == '--help') {
+	console.debug('load.js <abs_op_builddir> <abs-path-to-file> [bookmark]');
+}
 
-var to_load = top_srcdir + '/test/data/hello-world.ods';
+var top_builddir = process.argv[2];
+
+var to_load;
+if (process.argv.length > 3) {
+	to_load = process.argv[3]
+} else {
+	var content = fs.readFileSync(top_builddir + '/test/data/perf-test-edit.odt');
+	var tmpObj = tmp.fileSync({ mode: 0644, prefix: 'perf-test-', postfix: '.odt' });
+	to_load = tmpObj.name;
+	fs.writeFileSync(to_load, content);
+}
+
+var bookmark;
 if (process.argv.length > 4) {
-	to_load = process.argv[4]
+	bookmark = process.argv[4];
 }
 
 // jsdom for browser emulation
