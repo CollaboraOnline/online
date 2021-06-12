@@ -130,7 +130,7 @@ describe('Apply paragraph properties on selected text.', function() {
 		triggerNewSVG();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
-			.should('have.attr', 'y', '10811');
+			.should('have.attr', 'y', '10810');
 
 		impressHelper.selectTextOfShape();
 
@@ -158,7 +158,7 @@ describe('Apply paragraph properties on selected text.', function() {
 		triggerNewSVG();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
-			.should('have.attr', 'y', '7823');
+			.should('have.attr', 'y', '7822');
 	});
 
 	it('Apply default bulleting on selected text.', function() {
