@@ -722,5 +722,11 @@ check: $(MOCHA_TS_JS_FILES)
 	@echo "Running mocha tests..."
 	npm test
 
+perf-test:
+	@echo "Running perf tests..."
+	@mkdir -p $(abs_top_builddir)/test/data
+	@cp $(abs_top_srcdir)/test/data/perf-test.odt $(abs_top_builddir)/test/data/perf-test-edit.odt
+	$(NODE) $(abs_srcdir)/test/load.js $(abs_top_builddir) $(abs_top_builddir)/test/data/perf-test-edit.odt
+
 # for now - unwinding ts and js deps for different targets is a real pain.
 .NOTPARALLEL:
