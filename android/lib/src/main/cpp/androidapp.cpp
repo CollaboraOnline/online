@@ -357,14 +357,20 @@ Java_org_libreoffice_androidlib_LOActivity_createLOOLWSD(JNIEnv *env, jobject in
 extern "C"
 JNIEXPORT void JNICALL
 Java_org_libreoffice_androidlib_LOActivity_saveAs(JNIEnv *env, jobject,
-                                                  jstring fileUri_, jstring format_) {
+                                                  jstring fileUri_, jstring format_,
+                                                  jstring options_) {
     const char *fileUri = env->GetStringUTFChars(fileUri_, 0);
     const char *format = env->GetStringUTFChars(format_, 0);
+    const char *options = nullptr;
+    if (options_ != nullptr)
+        options = env->GetStringUTFChars(options_, 0);
 
-    getLOKDocumentForAndroidOnly()->saveAs(fileUri, format, nullptr);
+    getLOKDocumentForAndroidOnly()->saveAs(fileUri, format, options);
 
     env->ReleaseStringUTFChars(fileUri_, fileUri);
     env->ReleaseStringUTFChars(format_, format);
+    if (options_ != nullptr)
+        env->ReleaseStringUTFChars(options_, options);
 }
 
 extern "C"
