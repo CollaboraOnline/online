@@ -688,8 +688,6 @@ inline std::string getLaunchURI(const std::string &document)
     oss << "?file_path=file://";
     oss << DEBUG_ABSSRCDIR "/";
     oss << document;
-    if (LOOLWSD::EnableTraceEventLogging)
-        oss << "&enabletraceeventlogging=yes";
 
     return oss.str();
 }
