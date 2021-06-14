@@ -620,6 +620,27 @@ public class LOActivity extends AppCompatActivity {
             return;
         }
 
+        /*
+            Copy is just save-as in general but with TakeOwnership.
+            Meaning that we will switch to the copied (saved-as) document in the bg
+            this way we don't need to reload the activity.
+        */
+        boolean requestCopy = false;
+        if (requestCode == REQUEST_COPY) {
+            requestCopy = true;
+            if (getMimeType().equals("text/plain")) {
+                requestCode = REQUEST_SAVEAS_ODT;
+            }
+            else if (getMimeType().equals("text/comma-separated-values")) {
+                requestCode = REQUEST_SAVEAS_ODS;
+            }
+            else {
+                String filename = getFileName(true);
+                String extension = filename.substring(filename.lastIndexOf('.') + 1);
+                requestCode = getRequestIDForFormat(extension);
+                assert(requestCode != 0);
+            }
+        }
         switch (requestCode) {
             case REQUEST_SELECT_IMAGE_FILE:
                 if (valueCallback == null)
@@ -643,12 +664,13 @@ public class LOActivity extends AppCompatActivity {
                     return;
                 }
                 String format = getFormatForRequestCode(requestCode);
+                File _tempFile = null;
                 if (format != null) {
                     InputStream inputStream = null;
                     OutputStream outputStream = null;
                     try {
                         final File tempFile = File.createTempFile("LibreOffice", "." + format, this.getCacheDir());
-                        LOActivity.this.saveAs(tempFile.toURI().toString(), format);
+                        LOActivity.this.saveAs(tempFile.toURI().toString(), format, requestCopy ? "TakeOwnership" : null);
 
                         inputStream = new FileInputStream(tempFile);
                         try {
@@ -665,6 +687,7 @@ public class LOActivity extends AppCompatActivity {
                             outputStream.write(buffer, 0, len);
                         }
                         outputStream.flush();
+                        _tempFile = tempFile;
                     } catch (Exception e) {
                         Toast.makeText(this, "Something went wrong while Saving as: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
@@ -677,58 +700,31 @@ public class LOActivity extends AppCompatActivity {
                         } catch (Exception e) {
                         }
                     }
+                    if (requestCopy == true) {
+                        assert(_tempFile != null);
+                        mTempFile = _tempFile;
+                        getIntent().setData(intent.getData());
+                        /** add the document to recents */
+                        addIntentToRecents(intent);
+                        // This will actually change the doc permission to write
+                        // It's a toggle for blue edit button, but also changes permission
+                        // Toggle is achieved by calling setPermission('edit') in javascript
+                        callFakeWebsocketOnMessage("'mobile: readonlymode'");
+                        isDocEditable = true;
+                    }
                     return;
                 }
                 break;
-            case REQUEST_COPY:
-                if (intent == null) {
-                    return;
-                }
-                Uri treeFileUri = intent.getData();
-                Uri uri = getIntent().getData();
-                InputStream inputStream = null;
-                OutputStream outputStream = null;
-                try {
-                    ContentResolver contentResolver = getContentResolver();
-                    contentResolver.takePersistableUriPermission(treeFileUri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-
-                    inputStream = contentResolver.openInputStream(uri);
-                    outputStream = contentResolver.openOutputStream(treeFileUri);
-                    byte[] buffer = new byte[1024];
-                    int length;
-                    while ((length = inputStream.read(buffer)) != -1) {
-                        outputStream.write(buffer, 0, length);
-                    }
-
-                    /** add the document to recents */
-                    SharedPreferences recentPrefs = getSharedPreferences(EXPLORER_PREFS_KEY, MODE_PRIVATE);
-                    String recentList =  recentPrefs.getString(RECENT_DOCUMENTS_KEY, "");
-                    recentList = treeFileUri.toString() + "\n" + recentList;
-                    recentPrefs.edit().putString(RECENT_DOCUMENTS_KEY, recentList).apply();
-
-                    /** recreate activity with the copied file */
-                    getIntent().setData(treeFileUri);
-                    getIntent().addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    getIntent().addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                    // because finishing the app takes some time, should show progressbar
-                    finishWithProgress(true);
-                } catch (FileNotFoundException e) {
-                    Log.e(TAG, "file not found: " + e.getMessage());
-                    return;
-                } catch (Exception e) {
-                    Log.e(TAG, "exception: " + e.getMessage());
-                    return;
-                } finally {
-                    try {
-                        if (inputStream != null)
-                            inputStream.close();
-                        if (outputStream != null)
-                            outputStream.close();
-                    } catch (Exception e) {}
-                }
-                return;
         }
         Toast.makeText(this, "Unknown request", Toast.LENGTH_LONG).show();
+    }
+
+    private void addIntentToRecents(Intent intent) {
+        Uri treeFileUri = intent.getData();
+        SharedPreferences recentPrefs = getSharedPreferences(EXPLORER_PREFS_KEY, MODE_PRIVATE);
+        String recentList =  recentPrefs.getString(RECENT_DOCUMENTS_KEY, "");
+        recentList = treeFileUri.toString() + "\n" + recentList;
+        recentPrefs.edit().putString(RECENT_DOCUMENTS_KEY, recentList).apply();
     }
 
     private String getFormatForRequestCode(int requestCode) {
@@ -750,12 +746,12 @@ public class LOActivity extends AppCompatActivity {
     }
 
     /** Show the Saving progress and finish the app. */
-    private void finishWithProgress(final boolean restartApp) {
+    private void finishWithProgress() {
         if (!documentLoaded) {
             finishAndRemoveTask();
             return;
         }
-        mProgressDialog.indeterminate(restartApp ? R.string.restarting : R.string.exiting);
+        mProgressDialog.indeterminate(R.string.exiting);
 
         // The 'BYE' takes a considerable amount of time, we need to post it
         // so that it starts after the saving progress is actually shown
@@ -770,12 +766,9 @@ public class LOActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         mProgressDialog.dismiss();
-                        if (restartApp == true)
-                            recreate();
                     }
                 });
-                if (restartApp == false)
-                    finishAndRemoveTask();
+                finishAndRemoveTask();
             }
         });
     }
@@ -796,7 +789,7 @@ public class LOActivity extends AppCompatActivity {
             return;
         }
 
-        finishWithProgress(false);
+        finishWithProgress();
     }
 
     private void loadDocument() {
@@ -972,7 +965,7 @@ public class LOActivity extends AppCompatActivity {
     private boolean beforeMessageFromWebView(String[] messageAndParam) {
         switch (messageAndParam[0]) {
             case "BYE":
-                finishWithProgress(false);
+                finishWithProgress();
                 return false;
             case "PRINT":
                 getMainHandler().post(new Runnable() {
@@ -1039,10 +1032,8 @@ public class LOActivity extends AppCompatActivity {
                 switch (messageAndParam[1]) {
                     case "on":
                         mIsEditModeActive = true;
-                        if (getMimeType().equals("text/plain")) {
-                            // prompt for file conversion
-                            requestForOdt();
-                        }
+                        // prompt for file conversion
+                        requestForOdf();
                         break;
                     case "off":
                         mIsEditModeActive = false;
@@ -1123,11 +1114,21 @@ public class LOActivity extends AppCompatActivity {
         }).show();
     }
 
-    private void requestForOdt() {
+    private void requestForOdf() {
+        String extTemp = "";
+        if (getMimeType().equals("text/plain")) {
+            extTemp = "odt";
+        }
+        else if (getMimeType().equals("text/comma-separated-values")) {
+            extTemp = "ods";
+        } else
+            // no need to ask -- not a plain type
+            return;
+        final String ext = extTemp;
         buildPrompt(getString(R.string.ask_for_convert_odf), getString(R.string.convert_odf_message), getString(R.string.use_odf), getString(R.string.use_text), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                createNewFileInputDialog(mActivity, getFileName(false) + ".odt", "application/vnd.oasis.opendocument.text", REQUEST_COPY);
+                createNewFileInputDialog(mActivity, getFileName(false) + "." + ext, getMimeForFormat(ext), REQUEST_COPY);
             }
         }).show();
     }
@@ -1226,7 +1227,7 @@ public class LOActivity extends AppCompatActivity {
             public void run() {
                 Log.v(TAG, "saving svg for slideshow by " + Thread.currentThread().getName());
                 final String slideShowFileUri = new File(LOActivity.this.getCacheDir(), "slideShow.svg").toURI().toString();
-                LOActivity.this.saveAs(slideShowFileUri, "svg");
+                LOActivity.this.saveAs(slideShowFileUri, "svg", null);
                 LOActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -1248,7 +1249,7 @@ public class LOActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
-    public native void saveAs(String fileUri, String format);
+    public native void saveAs(String fileUri, String format, String options);
 
     public native boolean getClipboardContent(LokClipboardData aData);
 

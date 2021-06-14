@@ -37,7 +37,7 @@ public class PrintAdapter extends PrintDocumentAdapter {
         super.onStart();
         //Will show its own progress bar for the below task
         printDocFile = new File(mainActivity.getCacheDir(), "print.pdf");
-        mainActivity.saveAs(printDocFile.toURI().toString(), "pdf");
+        mainActivity.saveAs(printDocFile.toURI().toString(), "pdf", null);
     }
 
     @Override
