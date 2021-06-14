@@ -720,7 +720,7 @@ jsconfig: $(abs_srcdir)/jsconfig.json $(abs_srcdir)/admin/jsconfig.json
 
 check-local: $(MOCHA_TS_JS_FILES)
 	@echo "Running mocha tests..."
-	npm test
+	@$(NODE) node_modules/mocha/bin/mocha "$(srcdir)/mocha_tests/**/*.js"
 
 perf-test:
 	@echo "Running perf tests..."
