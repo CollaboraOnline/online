@@ -22,7 +22,7 @@ Help us to maximize the effort we can spend fixing issues and adding new feature
 
 [report]: https://github.com/CollaboraOnline/online/issues/new/choose
 [forum]: https://forum.collaboraonline.com/
-[irc]: https://webchat.freenode.net/?channels=cool-dev
+[irc]: https://web.libera.chat/?channels=cool-dev
 [telegram]: https://t.me/CollaboraOnline
 
 ## Contributing to Source Code

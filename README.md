@@ -1,6 +1,6 @@
 # Collabora Online
 
-[![irc](https://img.shields.io/badge/IRC-%23cool--dev%20on%20freenode-orange.svg)](https://webchat.freenode.net/?channels=cool-dev)
+[![irc](https://img.shields.io/badge/IRC-%23cool--dev%20on%20libera-orange.svg)](https://web.libera.chat/?channels=cool-dev)
 [![Telegram](https://img.shields.io/badge/Telegram-Collabora%20Online-green.svg)](https://t.me/CollaboraOnline)
 [![Forum](https://img.shields.io/badge/Forum-Discourse-blue.svg)](https://forum.collaboraonline.com/)
 [![Website](https://img.shields.io/badge/Website-collaboraonline.github.io-blueviolet.svg)](https://collaboraonline.github.io/)
@@ -22,7 +22,7 @@
 For many more details, build instructions, downloads and more please visit https://collaboraonline.github.io/
 
 ## Developer assistance
-Please ask your questions on `irc.freenode.net` in our `#cool-dev` channel
+Please ask your questions on `irc.libera.chat` in our `#cool-dev` channel
 
 Join the conversation on our Discourse server at https://forum.collaboraonline.com/
 
