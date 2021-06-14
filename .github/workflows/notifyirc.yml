@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: irc push
-        uses: vmiklos/notify-irc@a52a197c9507ad7a81c1a9295c9ed24786e396b3
+        uses: vmiklos/notify-irc@bfd6f632b683859f6cd074e2ee9db68bef204f7d
         if: github.event_name == 'push' && github.event.ref == 'refs/heads/master' && github.repository == 'CollaboraOnline/online'
         with:
           channel: "#cool-dev"
