@@ -11,8 +11,8 @@ window.app.definitions = {};
 			window.postMobileError(log);
 		} else if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1) {
 			global.socket.send(log);
-		} else if (global.socket && global.L && global.L.Socket &&
-			   (global.socket instanceof global.L.Socket) && global.socket.connected()) {
+		} else if (global.socket && global.L && global.app.definitions.Socket &&
+			   (global.socket instanceof global.app.definitions.Socket) && global.socket.connected()) {
 			global.socket.sendMessage(log);
 		} else {
 			var req = new XMLHttpRequest();
