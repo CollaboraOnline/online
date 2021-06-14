@@ -718,7 +718,7 @@ $(abs_srcdir)/admin/jsconfig.json:
 
 jsconfig: $(abs_srcdir)/jsconfig.json $(abs_srcdir)/admin/jsconfig.json
 
-check: $(MOCHA_TS_JS_FILES)
+check-local: $(MOCHA_TS_JS_FILES)
 	@echo "Running mocha tests..."
 	npm test
 
