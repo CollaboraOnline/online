@@ -2146,6 +2146,31 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			});
 
 			builder.options.noLabelsForUnoButtons = noLabels;
+		} else if (data.text) {
+			var button = L.DomUtil.create('div', 'menubutton ' + builder.options.cssClass, parentContainer);
+			button.id = data.id;
+			if (data.image) {
+				var image = L.DomUtil.create('img', '', button);
+				image.src = data.image;
+			}
+			var label = L.DomUtil.create('span', '', button);
+			label.innerText = data.text;
+			L.DomUtil.create('i', 'arrow', button);
+
+			$(button).click(function () {
+				builder.callback('menubutton', 'toggle', button, undefined, builder);
+			});
+
+			if (data.popup) {
+				var popupJSON = data.popup;
+				popupJSON.id = data.popup.id;
+				popupJSON.jsontype = 'dialog';
+				popupJSON.type = 'modalpopup';
+				popupJSON.popupParent = data.id;
+				popupJSON.cancellable = true;
+
+				app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(popupJSON)});
+			}
 		} else {
 			console.warn('Not found menu "' + menuId + '"');
 		}

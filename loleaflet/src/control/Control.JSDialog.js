@@ -26,15 +26,31 @@ L.Control.JSDialog = L.Control.extend({
 		return Object.keys(this.dialogs).length > 0;
 	},
 
-	closeDialog: function(id) {
+	clearDialog: function(id) {
 		var builder = this.dialogs[id].builder;
 
 		L.DomUtil.remove(this.dialogs[id].container);
 		delete this.dialogs[id];
+
+		return builder;
+	},
+
+	closeDialog: function(id) {
+		var builder = this.clearDialog(id);
 		builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
 	},
 
+	closePopover: function(id) {
+		var menubutton = this.dialogs[id].popupParent;
+		var builder = this.clearDialog(id);
+		if (menubutton)
+			menubutton.click();
+		else
+			builder.callback('popover', 'close', {id: '__POPOVER__'}, null, builder);
+	},
+
 	onJSDialog: function(e) {
+		var that = this;
 		var posX = 0;
 		var posY = 0;
 		var data = e.data;
@@ -88,7 +104,6 @@ L.Control.JSDialog = L.Control.extend({
 		// which is the dialog opening in this case
 		this.map._progressBar.end();
 
-		var that = this;
 
 		var onInput = function(ev) {
 			if (ev.isFirst)
@@ -118,7 +133,16 @@ L.Control.JSDialog = L.Control.extend({
 			hammerTitlebar.on('hammer.input', onInput);
 		}
 
-		if (posX === 0 && posY === 0) {
+		if (isModalPopup && data.popupParent) {
+			var parent = L.DomUtil.get(data.popupParent);
+			posX = parent.getBoundingClientRect().left;
+			posY = parent.getBoundingClientRect().bottom + 5;
+
+			if (posX + content.clientWidth > window.innerWidth)
+				posX -= posX + content.clientWidth - window.innerWidth;
+			if (posY + content.clientHeight > window.innerHeight)
+				posY -= posY + content.clientHeight - window.innerHeight;
+		} else if (posX === 0 && posY === 0) {
 			posX = window.innerWidth/2 - container.offsetWidth/2;
 			posY = window.innerHeight/2 - container.offsetHeight/2;
 		}
@@ -127,7 +151,8 @@ L.Control.JSDialog = L.Control.extend({
 			container: container,
 			builder: builder,
 			startX: posX,
-			startY: posY
+			startY: posY,
+			popupParent: parent
 		};
 
 		this.updatePosition(container, posX, posY);
