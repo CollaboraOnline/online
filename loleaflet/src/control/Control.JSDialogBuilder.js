@@ -108,7 +108,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['spinner'] = this._spinnerControl;
 		this._controlHandlers['spinnerimg'] = this._spinnerImgControl;
 
-		this._controlHandlers['overlay'] = this._overlayControl;
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
 		this._controlHandlers['menuitem'] = this._menuItemHandler;
@@ -2196,16 +2195,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var label = L.DomUtil.create('span', '', button);
 			label.innerText = data.text;
 			L.DomUtil.create('i', 'arrow', button);
+
+			$(button).click(function () {
+				builder.callback('menubutton', 'toggle', button, undefined, builder);
+			});
+
+			if (data.popup) {
+				var popupJSON = data.popup;
+				popupJSON.id = data.popup.id;
+				popupJSON.jsontype = 'dialog';
+				popupJSON.type = 'modalpopup';
+				popupJSON.popupParent = data.id;
+				popupJSON.cancellable = true;
+
+				app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(popupJSON)});
+			}
 		} else {
 			console.warn('Not found menu "' + menuId + '"');
 		}
-
-		return false;
-	},
-
-	_overlayControl: function(parentContainer, data, builder) {
-		var overlay = L.DomUtil.create('div', builder.options.cssClass + ' jsdialog-overlay', parentContainer);
-		overlay.id = data.id;
 
 		return false;
 	},

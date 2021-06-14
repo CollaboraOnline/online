@@ -85,10 +85,6 @@ L.Control.UIManager = L.Control.extend({
 				type: 'modalpopup',
 				children: [
 					{
-						id: 'jsdialog-overlay',
-						type: 'overlay'
-					},
-					{
 						id: 'busycontainer',
 						type: 'container',
 						vertical: 'true',
