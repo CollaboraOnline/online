@@ -6,6 +6,49 @@ window.app.definitions = {};
 
 (function (global) {
 
+	global.logServer = function (log) {
+		if (window.ThisIsAMobileApp) {
+			window.postMobileError(log);
+		} else if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1) {
+			global.socket.send(log);
+		} else if (global.socket && global.L && global.L.Socket &&
+			   (global.socket instanceof global.L.Socket) && global.socket.connected()) {
+			global.socket.sendMessage(log);
+		} else {
+			var req = new XMLHttpRequest();
+			var url = global.location.protocol + '//' + global.location.host + global.location.pathname.match(/.*\//) + 'logging.html';
+			req.open('POST', url, true);
+			req.setRequestHeader('Content-type','application/json; charset=utf-8');
+			req.send(log);
+		}
+	};
+
+	// If not debug, don't print anything on the console
+	// except in tile debug mode (Ctrl-Shift-Alt-d)
+	console.log2 = console.log;
+	if (global.loleafletLogging !== 'true') {
+		var methods = ['warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd'];
+		for (var i = 0; i < methods.length; i++) {
+			console[methods[i]] = function() {};
+		}
+	} else {
+		window.onerror = function (msg, src, row, col, err) {
+			var data = {
+				userAgent: navigator.userAgent.toLowerCase(),
+				vendor: navigator.vendor.toLowerCase(),
+				message: msg,
+				source: src,
+				line: row,
+				column: col
+			};
+			var desc = err ? err.message || {}: {}, stack = err ? err.stack || {}: {};
+			var log = 'jserror ' + JSON.stringify(data, null, 2) + '\n' + desc + '\n' + stack + '\n';
+			global.logServer(log);
+
+			return false;
+		};
+	}
+
 	global.getParameterByName = function (name) {
 		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
 		var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -300,7 +343,7 @@ window.app.definitions = {};
 						seqLen = left;
 						code = 0xfffd;
 					}
-				        if (code <= 0xFFFF)
+					if (code <= 0xFFFF)
 						decoded += String.fromCharCode(code);
 					else
 						decoded += String.fromCharCode(((code - 0x10000) >> 10) + 0xD800,
@@ -657,45 +700,6 @@ window.app.definitions = {};
 			return new WebSocket(uri);
 		}
 	};
-
-	// If not debug, don't print anything on the console
-	// except in tile debug mode (Ctrl-Shift-Alt-d)
-	console.log2 = console.log;
-	if (global.loleafletLogging !== 'true') {
-		var methods = ['warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd'];
-		for (var i = 0; i < methods.length; i++) {
-			console[methods[i]] = function() {};
-		}
-	} else {
-		window.onerror = function (msg, src, row, col, err) {
-			var data = {
-				userAgent: navigator.userAgent.toLowerCase(),
-				vendor: navigator.vendor.toLowerCase(),
-				message: msg,
-				source: src,
-				line: row,
-				column: col
-			};
-			var desc = err ? err.message || {}: {}, stack = err ? err.stack || {}: {};
-			var log = 'jserror ' + JSON.stringify(data, null, 2) + '\n' + desc + '\n' + stack + '\n';
-			if (window.ThisIsAMobileApp) {
-				window.postMobileError(log);
-			} else if (global.socket && (global.socket instanceof WebSocket) && global.socket.readyState === 1) {
-				global.socket.send(log);
-			} else if (global.socket && global.L && global.L.Socket &&
-				   (global.socket instanceof global.L.Socket) && global.socket.connected()) {
-				global.socket.sendMessage(log);
-			} else {
-				var req = new XMLHttpRequest();
-				var url = global.location.protocol + '//' + global.location.host + global.location.pathname.match(/.*\//) + 'logging.html';
-				req.open('POST', url, true);
-				req.setRequestHeader('Content-type','application/json; charset=utf-8');
-				req.send(log);
-			}
-
-			return false;
-		};
-	}
 
 	global._ = function (string) {
 		// In the mobile app case we can't use the stuff from l10n-for-node, as that assumes HTTP.
