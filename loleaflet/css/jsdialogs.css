@@ -668,12 +668,6 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	margin-left: 3px;
 }
 
-.menubutton .arrow {
-	display: block !important;
-	float: right;
-	margin: 5px 0px;
-}
-
 /* menu button */
 .jsdialog.menubutton {
 	line-height: normal;
@@ -684,6 +678,20 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	padding: 8px 10px;
 	margin: 2px 0px;
 	background-color: #F1F1F1;
+}
+
+.menubutton span {
+	margin: 0px 5px;
+}
+
+.jsdialog.menubutton img {
+	vertical-align: middle;
+}
+
+.menubutton .arrow {
+	display: table-cell !important;
+	float: right;
+	margin: 5px 0px 5px 5px;
 }
 
 /* toolbox */

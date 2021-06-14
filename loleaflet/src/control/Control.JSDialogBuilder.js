@@ -2189,6 +2189,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		} else if (data.text) {
 			var button = L.DomUtil.create('div', 'menubutton ' + builder.options.cssClass, parentContainer);
 			button.id = data.id;
+			if (data.image) {
+				var image = L.DomUtil.create('img', '', button);
+				image.src = data.image;
+			}
 			var label = L.DomUtil.create('span', '', button);
 			label.innerText = data.text;
 			L.DomUtil.create('i', 'arrow', button);
