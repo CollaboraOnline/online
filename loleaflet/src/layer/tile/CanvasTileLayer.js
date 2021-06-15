@@ -3300,6 +3300,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!this._map._docLoaded)
 			return;
 
+		var completeEvent = app.socket.createCompleteTraceEvent('L.TileSectionManager.postKeyboardEvent', { type: type, charCode: charCode });
+
 		var winId = this._map.getWinId();
 		if (
 			this.isCalc() &&
@@ -3348,6 +3350,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				'\n'
 			);
 		}
+		if (completeEvent)
+			completeEvent.finish();
 	},
 
 	_postSelectTextEvent: function(type, x, y) {
