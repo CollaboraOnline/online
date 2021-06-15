@@ -242,6 +242,7 @@ L.Map.Keyboard = L.Handler.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
+		var completeEvent = app.socket.createCompleteTraceEvent('L.Map.Keyboard._onKeyDown', { type: ev.type, charCode: ev.charCode });
 		console.log('keyboard handler:', ev.type, ev.key, ev.charCode, this._expectingInput, ev);
 
 		if (ev.charCode == 0) {
@@ -252,6 +253,8 @@ L.Map.Keyboard = L.Handler.extend({
 				this._map._docLayer.shiftKeyPressed = true;
 			else if (ev.keyCode === 16 && ev.type === 'keyup')
 				this._map._docLayer.shiftKeyPressed = false;
+		if (completeEvent)
+			completeEvent.finish();
 	},
 
 	_globalKeyEvent: function(ev) {
