@@ -216,12 +216,13 @@ FieldParseState StatusLine::parse(const char* p, int64_t& len)
     constexpr int VersionMajPos = sizeof("HTTP/") - 1;
     constexpr int VersionDotPos = VersionMajPos + 1;
     constexpr int VersionMinPos = VersionDotPos + 1;
+    constexpr int VersionBreakPos = VersionMinPos + 1; // Whitespace past the version.
     const int versionMaj = version[VersionMajPos] - '0';
     const int versionMin = version[VersionMinPos] - '0';
     // Version may not be null-terminated.
-    if (!Util::startsWith(std::string(version, VersionLen), "HTTP/")
-        || (versionMaj < 0 || versionMaj > 9) || version[VersionDotPos] != '.'
-        || (versionMin < 0 || versionMin > 9))
+    if (!Util::startsWith(std::string(version, VersionLen), "HTTP/") ||
+        (versionMaj < 0 || versionMaj > 9) || version[VersionDotPos] != '.' ||
+        (versionMin < 0 || versionMin > 9) || !isWhitespace(version[VersionBreakPos]))
     {
         LOG_ERR("StatusLine::parse: Invalid HTTP version [" << std::string(version, VersionLen)
                                                             << "]");
@@ -349,12 +350,13 @@ int64_t Request::readData(const char* p, const int64_t len)
         constexpr int VersionMajPos = sizeof("HTTP/") - 1;
         constexpr int VersionDotPos = VersionMajPos + 1;
         constexpr int VersionMinPos = VersionDotPos + 1;
+        constexpr int VersionBreakPos = VersionMinPos + 1; // Whitespace past the version.
         const int versionMaj = version[VersionMajPos] - '0';
         const int versionMin = version[VersionMinPos] - '0';
         // Version may not be null-terminated.
-        if (!Util::startsWith(std::string(version, VersionLen), "HTTP/")
-            || (versionMaj < 0 || versionMaj > 9) || version[VersionDotPos] != '.'
-            || (versionMin < 0 || versionMin > 9))
+        if (!Util::startsWith(std::string(version, VersionLen), "HTTP/") ||
+            (versionMaj < 0 || versionMaj > 9) || version[VersionDotPos] != '.' ||
+            (versionMin < 0 || versionMin > 9) || !isWhitespace(version[VersionBreakPos]))
         {
             LOG_ERR("Request::dataRead: Invalid HTTP version [" << std::string(version, VersionLen)
                                                                 << "]");
