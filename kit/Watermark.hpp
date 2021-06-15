@@ -109,10 +109,6 @@ private:
             return &_pixmaps[key];
         }
 
-        _pixmaps[key] = std::vector<unsigned char>();
-
-        std::vector<unsigned char>& _pixmap = _pixmaps[key];
-
         // renderFont returns a buffer based on RGBA mode, where r, g, b
         // are always set to 0 (black) and the alpha level is 0 everywhere
         // except on the text area; the alpha level take into account of
@@ -122,6 +118,7 @@ private:
         if (!textPixels)
         {
             LOG_ERR("Watermark: rendering failed.");
+            return nullptr;
         }
 
         const unsigned int pixel_count = width * height * 4;
@@ -130,6 +127,7 @@ private:
         // No longer needed.
         std::free(textPixels);
 
+        std::vector<unsigned char>& _pixmap = _pixmaps[key]; // create a new vector here
         _pixmap.reserve(pixel_count);
 
         /*
