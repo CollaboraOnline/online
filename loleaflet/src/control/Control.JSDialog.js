@@ -28,6 +28,7 @@ L.Control.JSDialog = L.Control.extend({
 
 	closeDialog: function(id) {
 		var builder = this.dialogs[id].builder;
+
 		L.DomUtil.remove(this.dialogs[id].container);
 		delete this.dialogs[id];
 		builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
@@ -72,6 +73,13 @@ L.Control.JSDialog = L.Control.extend({
 		var content = L.DomUtil.create('div', 'lokdialog ui-dialog-content ui-widget-content', container);
 
 		var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'jsdialog'});
+
+		if (isModalPopup) {
+			var overlay = L.DomUtil.create('div', builder.options.cssClass + ' jsdialog-overlay ' + (data.cancellable ? 'cancellable' : ''), content);
+			if (data.cancellable)
+				overlay.onclick = function () { that.closePopover(data.id); };
+		}
+
 		builder.build(content, [data]);
 
 		// We show some dialogs such as Macro Security Warning Dialog and Text Import Dialog (csv)
