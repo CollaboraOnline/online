@@ -9,8 +9,9 @@
 }
 
 .jsdialog-container.modalpopup {
-	border: 1px solid grey !important;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border: 1px solid #a4a4a4 !important;
+	border-radius: 4px;
+	box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 	min-width: 300px;
 	min-height: 100px;
 }
@@ -653,12 +654,14 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 
 #busypopup #busyspinner {
-	margin: 20px auto 0px;
+	margin: -20px auto 0px;
 }
 
 #busypopup #busylabel {
 	margin: 20px;
 	text-align: center;
+	font-size: 100%;
+	text-transform: initial;
 }
 
 #busypopup #spinner-paper-g {
