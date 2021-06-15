@@ -311,6 +311,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "traceeventrecording") ||
                tokens.equals(0, "sallogoverride"));
 
+        std::string pzName("ChildSession::_handleInput:" + tokens[0]);
+        ProfileZone pz(pzName.c_str());
         if (tokens.equals(0, "clientzoom"))
         {
             return clientZoom(buffer, length, tokens);
