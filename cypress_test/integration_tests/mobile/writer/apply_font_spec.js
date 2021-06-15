@@ -199,7 +199,7 @@ describe('Apply font changes.', function() {
 		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
-			.should('have.attr', 'style', 'margin-bottom: 0in; line-height: 100%');
+			.should('have.attr', 'style', 'line-height: 100%; margin-bottom: 0in');
 	});
 
 	it.skip('New style and update style items are hidden.', function() {
