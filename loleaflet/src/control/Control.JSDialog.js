@@ -28,6 +28,7 @@ L.Control.JSDialog = L.Control.extend({
 
 	closeDialog: function(id) {
 		var builder = this.dialogs[id].builder;
+
 		L.DomUtil.remove(this.dialogs[id].container);
 		delete this.dialogs[id];
 		builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
