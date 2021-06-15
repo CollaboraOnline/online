@@ -303,7 +303,7 @@ endef
 # 2 - log (optional):	log file for cypress run, needed for parallel build only.
 # 3 - +env (optional):	additional env variables (will be appended to $(DESKTOP_ENV).
 define run_desktop_tests
-	@echo $(if $(1),"Running cypress desktop test: $(1)","Running cypress desktop tests...")
+	@echo $(if $(1),"Running cypress desktop $(USER_INTERFACE) mode test: $(1)","Running cypress desktop $(USER_INTERFACE) mode tests...")
 	@echo
 	$(eval ENV_EXTENDED=$(DESKTOP_ENV)$(if $(3),$(COMMA)$(3)))
 	$(if $(and $(PARALLEL_BUILD), $(1)),\

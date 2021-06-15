@@ -88,6 +88,28 @@ function selectTextShapeInTheCenter() {
 	cy.log('Selecting text shape - end.');
 }
 
+function selectTableInTheCenter() {
+	cy.log('Selecting table - start.');
+
+	// Click on the center of the slide to select the text shape there
+	cy.get('#document-container')
+		.then(function(items) {
+			expect(items).to.have.length(1);
+			var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
+			var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
+			cy.get('body')
+				.click(XPos, YPos);
+		});
+
+	cy.get('.leaflet-marker-icon.table-row-resize-marker')
+		.should('be.visible');
+
+	cy.get('.leaflet-pane.leaflet-overlay-pane svg g.Page g')
+		.should('exist');
+
+	cy.log('Selecting table - end.');
+}
+
 // Remove existing shape selection by clicking outside of the shape.
 function removeShapeSelection() {
 	cy.log('Removing shape selection - start.');
@@ -222,3 +244,4 @@ module.exports.selectTextOfShape = selectTextOfShape;
 module.exports.dblclickOnSelectedShape = dblclickOnSelectedShape;
 module.exports.addSlide = addSlide;
 module.exports.changeSlide = changeSlide;
+module.exports.selectTableInTheCenter = selectTableInTheCenter;
