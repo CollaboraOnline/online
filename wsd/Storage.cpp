@@ -1128,7 +1128,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth,
     //TODO: replace with state machine.
     if (_uploadHttpSession)
     {
-        LOG_ERR("Upload is already in progress.");
+        LOG_WRN("Upload is already in progress.");
         return;
     }
 
