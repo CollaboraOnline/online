@@ -18,6 +18,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['tabcontrol'] = this._overriddenTabsControlHandler;
 		this._controlHandlers['menubartoolitem'] = this._menubarToolItemHandler;
 		this._controlHandlers['bigtoolitem'] = this._bigtoolitemHandler;
+		this._controlHandlers['toolbox'] = this._toolboxHandler;
 
 		this._controlHandlers['pushbutton'] = function() { return false; };
 		this._controlHandlers['spinfield'] = function() { return false; };
@@ -366,6 +367,16 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_overriddenTabsControlHandler: function(parentContainer, data, builder) {
 		data.tabs = builder.wizard.getTabs();
 		return builder._tabsControlHandler(parentContainer, data, builder);
+	},
+
+	_toolboxHandler: function(parentContainer, data) {
+		if (data.enabled === false || data.enabled === 'false') {
+			for (var index in data.children) {
+				data.children[index].enabled = false;
+			}
+		}
+
+		return true;
 	},
 
 	_menubarToolItemHandler: function(parentContainer, data, builder) {
