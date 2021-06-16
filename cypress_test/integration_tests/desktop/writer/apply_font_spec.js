@@ -125,7 +125,7 @@ describe('Apply font changes.', function() {
 		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
-			.should('have.attr', 'style', 'margin-bottom: 0in; font-style: normal; font-weight: normal; line-height: 100%');
+			.should('have.attr', 'style', 'font-style: normal; font-weight: normal; line-height: 100%; margin-bottom: 0in');
 
 		cy.get('#tb_editbar_item_styles').click();
 
