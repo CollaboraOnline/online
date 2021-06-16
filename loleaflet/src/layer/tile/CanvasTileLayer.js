@@ -804,6 +804,13 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 			if (!heightIncreased)
 				this._onUpdateCursor(true);
+
+			// Center the view w.r.t the new map-pane position using the current zoom.
+			if (!window.mode.isMobile()) {
+				// FIXME: In mobile view, this causes an incorrect offset in annotations-marker positions in impress/draw.
+				// Remove this isMobile() condition after this is fixed.
+				this._map.setView(this._map.getCenter());
+			}
 		}
 	},
 
