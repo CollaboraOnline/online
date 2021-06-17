@@ -54,20 +54,6 @@ protected:
 #endif
     }
 
-    static std::string getThreadName()
-    {
-#ifdef TEST_TRACEEVENT_EXE
-        return "thread-" + std::to_string(getThreadId());
-#else
-        return Util::getThreadName();
-#endif
-    }
-
-    static std::string createDefaultArgsString()
-    {
-        return "{\"thread\":\"" + std::string(getThreadName()) + "\"}";
-    }
-
     static std::string createArgsString(const std::map<std::string, std::string>& args)
     {
         if (!recordingOn)
@@ -86,7 +72,6 @@ protected:
             result += '"';
             first = false;
         }
-        result += ",\"thread\":\"" + std::string(getThreadName()) + "\"";
         result += '}';
 
         return result;
