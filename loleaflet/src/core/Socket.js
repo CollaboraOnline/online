@@ -411,21 +411,26 @@ app.definitions.Socket = L.Class.extend({
 				e.textMsg = e.textMsg.substring(0, newlineIndex);
 			}
 		}
-		else if (L.Browser.isInternetExplorer) {
-			// read the tile data
-			var strBytes = '';
-			for (var i = 0; i < data.length; i++) {
-				strBytes += String.fromCharCode(data[i]);
-			}
-			img = 'data:image/png;base64,' + window.btoa(strBytes);
-		}
-		else // faster blog APIs.
-		{
+		else {
 			var data = e.imgBytes.subarray(e.imgIndex);
 			console.assert(data.length == 0 || data[0] != 68 /* D */, 'Socket: got a delta image, not supported !');
 
-			var imgBlob = new Blob([data], {'type': 'image/png'});
-			img = URL.createObjectURL(imgBlob);
+			if (L.Browser.isInternetExplorer) {
+				// read the tile data
+				var strBytes = '';
+				for (var i = 0; i < data.length; i++) {
+					strBytes += String.fromCharCode(data[i]);
+				}
+				img = 'data:image/png;base64,' + window.btoa(strBytes);
+			}
+			else // faster blob APIs.
+			{
+				e.blobData = data;
+				var imgBlob = new Blob([e.blobData], {'type': 'image/png'});
+				e.blobData2 = imgBlob;
+				img = URL.createObjectURL(imgBlob);
+				console.log2('create blob: ' + img);
+			}
 		}
 		return img;
 	},
@@ -459,7 +464,8 @@ app.definitions.Socket = L.Class.extend({
 			if (window.ThisIsTheiOSApp) {
 				window.webkit.messageHandlers.lool.postMessage('REMOVE ' + e.image.src, '*');
 			} else if (!L.Browser.isInternetExplorer) {
-				URL.revokeObjectURL(img);
+				console.log2('revoke blob: ' + img);
+				//				URL.revokeObjectURL(img);
 			}
 			that._queueSlurpEventEmission();
 		};

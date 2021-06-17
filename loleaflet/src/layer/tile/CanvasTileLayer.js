@@ -3182,7 +3182,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		// If cache is max size, drop the last element
 		if (this._pngCache.length == app.socket.TunnelledDialogImageCacheSize) {
 			// app.socket.sendMessage('DEBUG - Dropping last cache element');
-			this._pngCache.pop();
+			this._revokeImg(this._pngCache.pop());
 		}
 
 		// Add element to cache
@@ -5718,6 +5718,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					tilePositionsY += twips.y;
 				}
 				else if (tile) {
+					this._revokeImg(tile.el);
 					tile.el = this._tileCache[key];
 					tile.loaded = true;
 				}
@@ -5831,6 +5832,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					});
 
 					if (tile && this._tileCache[key]) {
+						this._revokeImg(tile.el);
 						tile.el = this._tileCache[key];
 						tile.loaded = true;
 					}
@@ -6054,6 +6056,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		// dangerous in connection with typing / invalidation
 		if (!(this._tiles[key]._invalidCount > 0) && tile.el.src) {
 			this._tileCache[key] = tile.el;
+		} else {
+			// ARGH - reference counting [!] ...
+			this._revokeImg(tile.el);
 		}
 
 		if (!tile.loaded && this._emptyTilesCount > 0) {
@@ -6100,6 +6105,13 @@ L.CanvasTileLayer = L.Layer.extend({
 	_clearTilesPreFetcher: function () {
 		if (this._prefetcher) {
 			this._prefetcher.clearTilesPreFetcher();
+		}
+	},
+
+	_revokeImg: function(img) {
+		if (img && img.src && !L.Browser.isInternetExplorer) {
+			console.log2('image revoked ' + removed.img.src);
+			URL.revokeObjectURL(removed.img.src);
 		}
 	},
 
@@ -6161,6 +6173,11 @@ L.CanvasTileLayer = L.Layer.extend({
 				// loleaflet/test/pixel-test.png
 				tile.el.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QEIChoQ0oROpwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACfklEQVR42u3dO67CQBBFwbnI+9/yJbCQLDIkPsZdFRAQjjiv3S8YZ63VNsl6aLvgop5+6vFzZ3QP/uQz2c0RIAAQAAzcASwAmAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACADGBnC8iQ5MABAACAB+zsVYjLZ9dOvd3zzg/QOYADByB/BvUCzBIAAQAFiCwQQAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAwIgAXb2ECgABAAPDaI7SLsZhs+79kvX8AEwDsAM8DASzBIAAQAFiCwQQAAYAAQAAgABAAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAI4LSSOAQBgABAAPDVR9C2ToGxNkfww623bZL98/ilUzIBwA4wbCAgABAACAAswWACgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAAAjAESAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAGAAEAAIAAQAAgABAACAAGAAEAAIAAQAAgAPiaJAEAAIAB48yNWW6fAWJsj4LRbb9sk++fxSxMA7AAMGwgCAAGAAMASDCYACAAEAAIAAYAAQAAgABAACAAEAAIAASAAR4AAQAAgABAACAAEANeW9e675sAEAAGAAODUO4AFgMnu7t9h2ahA0pgAAAAASUVORK5CYII=';
 			else {
+				if (tile.el) {
+					if (!L.Browser.isInternetExplorer)
+					{
+					}
+				}
 				tile.el = img;
 				tile.loaded = true;
 				this._tileReady(coords, null /* err */, tile);

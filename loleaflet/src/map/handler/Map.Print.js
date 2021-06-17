@@ -55,6 +55,7 @@ L.Map.Print = L.Handler.extend({
 	},
 
 	_closePrintIframe: function (printIframe) {
+		URL.revokeObjectURL(printIframe.src);
 		L.DomUtil.remove(printIframe);
 		this._map.focus();
 	}
