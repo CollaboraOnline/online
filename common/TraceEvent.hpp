@@ -102,10 +102,6 @@ protected:
         }
     }
 
-    // This method needs to be implemented separately in the WSD and Kit processes. (WSD writes the
-    // actual Trace Event log file, Kit just forwards the Trace Events to WSD for output.)
-    static void emitOneRecording(const std::string &recording);
-
 public:
     static void startRecording();
     static void stopRecording();
@@ -119,6 +115,10 @@ public:
     {
         emitInstantEvent(name, createArgsString(args));
     }
+
+    // This method needs to be implemented separately in the WSD and Kit processes. (WSD writes the
+    // actual Trace Event log file, Kit just forwards the Trace Events to WSD for output.)
+    static void emitOneRecording(const std::string &recording);
 
     TraceEvent(const TraceEvent&) = delete;
     void operator=(const TraceEvent&) = delete;

@@ -60,6 +60,7 @@
 #include "Common.hpp"
 #include "Log.hpp"
 #include "Protocol.hpp"
+#include "TraceEvent.hpp"
 #include "Util.hpp"
 
 using std::size_t;
@@ -598,6 +599,16 @@ namespace Util
         LOG_INF("Thread " << getThreadId() <<
                 ") is now called [" << s << "].");
 #endif
+
+        // Emit a metadata Trace Event identifying this thread. This will invoke a different function
+        // depending on which executable this is in.
+        TraceEvent::emitOneRecording("{\"name\":\"thread_name\",\"ph\":\"M\",\"args\":{\"name\":\""
+                                     + s
+                                     + "\"},\"pid\":"
+                                     + std::to_string(getpid())
+                                     + ",\"tid\":"
+                                     + std::to_string(Util::getThreadId())
+                                     + "},");
     }
 
     const char *getThreadName()
