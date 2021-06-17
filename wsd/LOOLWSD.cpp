@@ -284,6 +284,10 @@ void TraceEvent::emitOneRecording(const std::string &recording)
     if (LOOLWSD::TraceEventFile == NULL)
         return;
 
+    static std::mutex traceEventFileMutex;
+
+    std::unique_lock<std::mutex> lock(traceEventFileMutex);
+
     fprintf(LOOLWSD::TraceEventFile, "%s\n", recording.c_str());
 }
 
