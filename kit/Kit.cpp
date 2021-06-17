@@ -2291,6 +2291,14 @@ void lokit_main(
     SigUtil::setTerminationSignals();
 #endif
 
+    TraceEvent::emitOneRecording(std::string("{\"name\":\"process_name\",\"ph\":\"M\",\"args\":{\"name\":\"")
+                                 + "Kit-" + Util::encodeId(numericIdentifier, 3)
+                                 + "\"},\"pid\":"
+                                 + std::to_string(getpid())
+                                 + ",\"tid\":"
+                                 + std::to_string(Util::getThreadId())
+                                 + "},");
+
     Util::setThreadName("kit_spare_" + Util::encodeId(numericIdentifier, 3));
 
     // Reinitialize logging when forked.
