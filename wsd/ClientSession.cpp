@@ -371,14 +371,6 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     if (tokens.size() >= 5 && getTokenString(tokens, "args", args))
                         args = ",\"args\":" + args;
 
-                    if (args.length() > 0 && args.back() == '}')
-                    {
-                        args.pop_back();
-                        args = args + ",\"thread\":\"" + Util::getThreadName() + "\"}";
-                    } else if (args.length() == 0) {
-                        args = ",\"args\":{\"thread\":\"" + std::string(Util::getThreadName()) + "\"}";
-                    }
-
                     uint64_t id;
                     uint64_t dur;
                     if (ph == "i")

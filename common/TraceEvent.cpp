@@ -25,12 +25,6 @@ void TraceEvent::emitInstantEvent(const std::string& name, const std::string& ar
     if (!recordingOn)
         return;
 
-    std::string args;
-    if (argsOrEmpty.length() == 0)
-        args = createDefaultArgsString();
-    else
-        args = argsOrEmpty;
-
     emitOneRecording("{"
                      "\"name\":\""
                      + name
@@ -46,8 +40,7 @@ void TraceEvent::emitInstantEvent(const std::string& name, const std::string& ar
                      + ","
                        "\"tid\":"
                      + std::to_string(getThreadId())
-                     + ",\"args\":"
-                     + args
+                     + (argsOrEmpty.length() == 0 ? "" : ",\"args\":" + argsOrEmpty)
                      + "}"
                      // We add a trailing comma and newline, it is up to the code that handles these "recordings"
                      // (outputs them into a JSON array) to remove the final comma before adding the terminating
@@ -72,12 +65,6 @@ void ProfileZone::emitRecording()
     // Generate a single "Complete Event" (type X)
     auto duration = now - _createTime;
 
-    std::string args;
-    if (_args.length() == 0)
-        args = createDefaultArgsString();
-    else
-        args = _args;
-
     std::string recordingData(
         "{"
         "\"name\":\""
@@ -97,8 +84,7 @@ void ProfileZone::emitRecording()
         + ","
           "\"tid\":"
         + std::to_string(getThreadId())
-        + ",\"args\":"
-        + args
+        + (_args.length() == 0 ? "" : ",\"args\":" + _args)
         + "}"
         // We emit a trailing comma and newline, it is up to the code that handles these "recordings"
         // (outputs them into a JSON array) to remove the final comma before emiting the terminating
