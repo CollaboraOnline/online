@@ -306,7 +306,7 @@ app.definitions.Socket = L.Class.extend({
 				if (evt.isComplete()) {
 					var textMsg;
 					if (typeof (evt.data) === 'string') {
-						textMsg = evt.data;
+						textMsg = evt.data.replace(/\s+/g, '.');
 					}
 					else if (typeof (evt.data) === 'object') {
 						textMsg = evt.textMsg.replace(/\s+/g, '.');
