@@ -154,12 +154,14 @@ noinst_PROGRAMS += loolwsd_fuzzer
 endif
 
 connect_SOURCES = tools/Connect.cpp \
+                  common/DummyTraceEventEmitter.cpp \
                   common/Log.cpp \
                   common/Protocol.cpp \
                   common/StringVector.cpp \
                   common/Util.cpp
 
 lokitclient_SOURCES = common/Log.cpp \
+                      common/DummyTraceEventEmitter.cpp \
                       tools/KitClient.cpp \
                       common/Protocol.cpp \
                       common/StringVector.cpp \
@@ -210,6 +212,7 @@ httpresponse_fuzzer_SOURCES = \
 httpresponse_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
 
 clientnb_SOURCES = net/clientnb.cpp \
+                   common/DummyTraceEventEmitter.cpp \
                    common/Log.cpp \
                    common/StringVector.cpp \
                    common/Util.cpp
@@ -222,18 +225,21 @@ loolconvert_SOURCES = tools/Tool.cpp
 
 loolstress_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\" ${include_paths}
 loolstress_SOURCES = tools/Stress.cpp \
+                     common/DummyTraceEventEmitter.cpp \
                      common/Protocol.cpp \
                      common/StringVector.cpp \
                      common/Log.cpp \
                      common/Util.cpp
 
 loolconfig_SOURCES = tools/Config.cpp \
+		     common/DummyTraceEventEmitter.cpp \
 		     common/Crypto.cpp \
 		     common/Log.cpp \
 		     common/StringVector.cpp \
 		     common/Util.cpp
 
 loolsocketdump_SOURCES = tools/WebSocketDump.cpp \
+			 common/DummyTraceEventEmitter.cpp \
 			 $(shared_sources)
 
 wsd_headers = wsd/Admin.hpp \

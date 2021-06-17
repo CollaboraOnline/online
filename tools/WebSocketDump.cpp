@@ -28,15 +28,8 @@
 #if ENABLE_SSL
 #  include <SslSocket.hpp>
 #endif
-#include <common/TraceEvent.hpp>
 
 SocketPoll DumpSocketPoll("websocket");
-
-void TraceEvent::emitOneRecording(const std::string &sRecording)
-{
-    // Dummy.
-    (void) sRecording;
-}
 
 // Dumps incoming websocket messages and doesn't respond.
 class DumpSocketHandler : public WebSocketHandler
