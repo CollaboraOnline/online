@@ -34,7 +34,6 @@
 	width: 1px;
 }
 #document-container {
-	border-top: 1px solid var(--gray-color);
 	background: #DFDFDF;
 	position: relative;
 	top: 0;
@@ -46,7 +45,7 @@
 }
 
 #document-container.sidebar-open {
-	width: calc(100vw - 351px);
+	width: calc(100vw - 336px);
 }
 
 #document-container.presentation-doctype.sidebar-open {
@@ -67,6 +66,7 @@
 	cursor: auto;
 	background-color: transparent;
 	margin: 0;
+	border-top: 1px solid var(--gray-color);
 }
 
 .leaflet-progress-layer
