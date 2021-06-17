@@ -2913,7 +2913,7 @@ button.w2ui-btn-small:focus:before {
 */
 .w2ui-toolbar {
   margin: 0px;
-  padding: 2px;
+  padding: 3px 3px 3px 4px;
   outline: 0px;
   position: relative;
   background-color: #ffffff;
@@ -2946,7 +2946,7 @@ button.w2ui-btn-small:focus:before {
   width: 22px;
   height: 16px;
   padding: 0;
-  margin: 0px 1px!important;
+  margin: 1px!important;
   border: 0!important;
   text-align: center;
 }
