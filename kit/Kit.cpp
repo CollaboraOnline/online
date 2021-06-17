@@ -1830,7 +1830,7 @@ void TraceEvent::emitOneRecording(const std::string &recording)
         flushTraceEventRecordings();
     else if (traceEventRecordings.size() == 0 && traceEventRecordings.capacity() < traceEventRecordingsCapacity)
         traceEventRecordings.reserve(traceEventRecordingsCapacity);
-    traceEventRecordings.emplace_back(recording);
+    traceEventRecordings.emplace_back(recording + "\n");
 }
 
 #elif !MOBILEAPP
