@@ -1124,6 +1124,8 @@ void LOOLWSD::innerInitialize(Application& self)
                 // Output a metadata event that tells that this is the WSD process
                 fprintf(TraceEventFile, "{\"name\":\"process_name\",\"ph\":\"M\",\"args\":{\"name\":\"WSD\"},\"pid\":%d,\"tid\":%ld},\n",
                         getpid(), (long) Util::getThreadId());
+                fprintf(TraceEventFile, "{\"name\":\"thread_name\",\"ph\":\"M\",\"args\":{\"name\":\"Main\"},\"pid\":%d,\"tid\":%ld},\n",
+                        getpid(), (long) Util::getThreadId());
             }
         }
     }
