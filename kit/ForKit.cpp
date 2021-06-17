@@ -525,7 +525,6 @@ int main(int argc, char** argv)
     SigUtil::setTerminationSignals();
 #endif
 
-    Util::setThreadName("forkit");
     Util::setApplicationPath(Poco::Path(argv[0]).parent().toString());
 
     // Initialization
@@ -693,6 +692,8 @@ int main(int argc, char** argv)
     const auto conf = std::getenv("LOOL_CONFIG");
     config::initialize(std::string(conf ? conf : std::string()));
 #endif
+
+    Util::setThreadName("forkit");
 
     LOG_INF("Preinit stage OK.");
 
