@@ -164,6 +164,7 @@ L.Control.UIManager = L.Control.extend({
 		if (this.map.isPresentationOrDrawing()) {
 			// remove unused elements
 			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
+			$('#presentation-controls-wrapper').show();
 		}
 
 		if (docType === 'text') {
