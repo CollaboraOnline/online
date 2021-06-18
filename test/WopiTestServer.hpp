@@ -35,13 +35,14 @@ private:
     /// Websocket to communicate.
     std::unique_ptr<UnitWebSocket> _ws;
 
+protected:
+
     /// Content of the file.
     std::string _fileContent;
 
     /// Last modified time of the file
     std::chrono::system_clock::time_point _fileLastModifiedTime;
 
-protected:
     const std::string& getWopiSrc() const { return _wopiSrc; }
 
     const std::unique_ptr<UnitWebSocket>& getWs() const { return _ws; }
