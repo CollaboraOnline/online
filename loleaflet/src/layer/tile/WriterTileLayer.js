@@ -44,7 +44,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
 		}
 		else if (values.redlines && values.redlines.length > 0) {
-			this._annotations.fillChanges(values.redlines);
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importChanges(values.redlines);
 		}
 		else {
 			L.TileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
