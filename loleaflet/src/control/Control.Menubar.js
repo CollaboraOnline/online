@@ -1257,8 +1257,10 @@ L.Control.Menubar = L.Control.extend({
 
 		$('#main-menu').bind('keydown', {self: this}, this._onKeyDown);
 
-		if (window.mode.isMobile())
+		if (window.mode.isMobile()) {
 			$('#main-menu').parent().css('height', '0');
+			$('#toolbar-wrapper').addClass('mobile');
+		}
 
 		var self = this;
 		// Also the vertical menu displayed when tapping the hamburger button is produced by SmartMenus
