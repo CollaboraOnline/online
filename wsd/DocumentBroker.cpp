@@ -2171,14 +2171,24 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
 
             _registeredDownloadLinks[downloadid] = url;
         }
-        else if (message->firstTokenMatches("trace:"))
+        else if (message->firstTokenMatches("traceevent:"))
+        {
+            LOG_CHECK_RET(message->tokens().size() == 1, false);
+            if (LOOLWSD::TraceEventFile != NULL && TraceEvent::isRecordingOn())
+            {
+                const auto newLine = static_cast<const char*>(memchr(payload.data(), '\n', payload.size()));
+                if (newLine)
+                    LOOLWSD::writeTraceEventRecording(newLine + 1, payload.size() - (newLine + 1 - payload.data()));
+            }
+        }
+        else if (message->firstTokenMatches("forcedtraceevent:"))
         {
             LOG_CHECK_RET(message->tokens().size() == 1, false);
             if (LOOLWSD::TraceEventFile != NULL)
             {
                 const auto newLine = static_cast<const char*>(memchr(payload.data(), '\n', payload.size()));
                 if (newLine)
-                    fwrite(newLine + 1, payload.size() - (newLine + 1 - payload.data()), 1, LOOLWSD::TraceEventFile);
+                    LOOLWSD::writeTraceEventRecording(newLine + 1, payload.size() - (newLine + 1 - payload.data()));
             }
         }
         else

@@ -252,6 +252,8 @@ public:
     static std::string LOKitVersion;
     static bool EnableTraceEventLogging;
     static FILE *TraceEventFile;
+    static void writeTraceEventRecording(const char *data, std::size_t nbytes);
+    static void writeTraceEventRecording(const std::string &recording);
     static std::string LogLevel;
     static std::string MostVerboseLogLevelSettableFromClient;
     static std::string LeastVerboseLogLevelSettableFromClient;

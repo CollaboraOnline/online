@@ -85,24 +85,10 @@ void ProfileZone::emitRecording()
           "\"tid\":"
         + std::to_string(getThreadId())
         + (_args.length() == 0 ? "" : ",\"args\":" + _args)
-        + "}"
-        // We emit a trailing comma and newline, it is up to the code that handles these "recordings"
-        // (outputs them into a JSON array) to remove the final comma before emiting the terminating
-        // ']'.
-          ",\n");
+        + "},");
     std::lock_guard<std::mutex> guard(mutex);
     emitOneRecording(recordingData);
 }
-
-#ifdef BUILDING_TESTS
-
-void TraceEvent::emitOneRecording(const std::string &recording)
-{
-    // Dummy.
-    (void) recording;
-}
-
-#endif // BUILDING_TESTS
 
 #ifdef TEST_TRACEEVENT_EXE
 

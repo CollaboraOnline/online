@@ -9,9 +9,13 @@
 
 #include <common/TraceEvent.hpp>
 
+void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
+{
+    (void) recording;
+}
+
 void TraceEvent::emitOneRecording(const std::string &recording)
 {
-    // Dummy.
     (void) recording;
 }
 
