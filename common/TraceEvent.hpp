@@ -90,6 +90,10 @@ protected:
 public:
     static void startRecording();
     static void stopRecording();
+    static bool isRecordingOn()
+    {
+        return recordingOn;
+    }
 
     static void emitInstantEvent(const std::string& name)
     {
@@ -101,8 +105,15 @@ public:
         emitInstantEvent(name, createArgsString(args));
     }
 
-    // This method needs to be implemented separately in the WSD and Kit processes. (WSD writes the
+    // These methods need to be implemented separately in the WSD and Kit processes. (WSD writes the
     // actual Trace Event log file, Kit just forwards the Trace Events to WSD for output.)
+
+    // This should do its thing if Trace Event generation is enabled, even if not turned on. Used
+    // for metadata that will be needed by a Trace Event viewer if Trace Event generation is turned
+    // on later during the process life-time.
+    static void emitOneRecordingIfEnabled(const std::string &recording);
+
+    // Unless Trace Event generation is enabled and turned on, this should do nothing.
     static void emitOneRecording(const std::string &recording);
 
     TraceEvent(const TraceEvent&) = delete;

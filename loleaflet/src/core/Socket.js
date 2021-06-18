@@ -453,11 +453,16 @@ app.definitions.Socket = L.Class.extend({
 				window.webkit.messageHandlers.lool.postMessage('REMOVE ' + e.image.src, '*');
 			}
 			that._queueSlurpEventEmission();
+			if (e.image.completeTraceEvent)
+				e.image.completeTraceEvent.finish();
 		};
 		e.image.onerror = function(err) {
 			console.log('Failed to load image ' + img + ' fun ' + err);
 			e.imageIsComplete = true;
+			if (e.image.completeTraceEvent)
+				e.image.completeTraceEvent.abort();
 		};
+		e.image.completeTraceEvent = this.createCompleteTraceEvent('loleaflet._extractTextImg');
 		e.image.src = img;
 	},
 

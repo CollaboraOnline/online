@@ -81,6 +81,7 @@ test_base_source = \
 common_sources = \
 	../common/Protocol.cpp \
 	../common/ConfigUtil.cpp \
+	../common/DummyTraceEventEmitter.cpp \
 	../common/Log.cpp \
 	../common/MessageQueue.cpp \
 	../common/Session.cpp \
