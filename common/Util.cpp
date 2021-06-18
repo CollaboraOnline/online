@@ -577,13 +577,13 @@ namespace Util
 
         // Emit a metadata Trace Event identifying this thread. This will invoke a different function
         // depending on which executable this is in.
-        TraceEvent::emitOneRecording("{\"name\":\"thread_name\",\"ph\":\"M\",\"args\":{\"name\":\""
-                                     + s
-                                     + "\"},\"pid\":"
-                                     + std::to_string(getpid())
-                                     + ",\"tid\":"
-                                     + std::to_string(Util::getThreadId())
-                                     + "},");
+        TraceEvent::emitOneRecordingIfEnabled("{\"name\":\"thread_name\",\"ph\":\"M\",\"args\":{\"name\":\""
+                                              + s
+                                              + "\"},\"pid\":"
+                                              + std::to_string(getpid())
+                                              + ",\"tid\":"
+                                              + std::to_string(Util::getThreadId())
+                                              + "},\n");
     }
 
     const char *getThreadName()

@@ -278,16 +278,40 @@ void alertAllUsersInternal(const std::string& msg)
 
 } // end anonymous namespace
 
+void LOOLWSD::writeTraceEventRecording(const char *data, std::size_t nbytes)
+{
+    static std::mutex traceEventFileMutex;
+
+    std::unique_lock<std::mutex> lock(traceEventFileMutex);
+
+    fwrite(data, nbytes, 1, LOOLWSD::TraceEventFile);
+}
+
+void LOOLWSD::writeTraceEventRecording(const std::string &recording)
+{
+    writeTraceEventRecording(recording.data(), recording.length());
+}
+
+// FIXME: Somewhat idiotically, the parameter to emitOneRecordingIfEnabled() should end with a
+// newline, while the paramter to emitOneRecording() should not.
+
+void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
+{
+    if (LOOLWSD::TraceEventFile == NULL)
+        return;
+
+    LOOLWSD::writeTraceEventRecording(recording);
+}
+
 void TraceEvent::emitOneRecording(const std::string &recording)
 {
     if (LOOLWSD::TraceEventFile == NULL)
         return;
 
-    static std::mutex traceEventFileMutex;
+    if (!TraceEvent::isRecordingOn())
+        return;
 
-    std::unique_lock<std::mutex> lock(traceEventFileMutex);
-
-    fprintf(LOOLWSD::TraceEventFile, "%s\n", recording.c_str());
+    LOOLWSD::writeTraceEventRecording(recording + "\n");
 }
 
 void LOOLWSD::checkSessionLimitsAndWarnClients()

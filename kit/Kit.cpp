@@ -844,14 +844,11 @@ public:
 
         if (type == LOK_CALLBACK_PROFILE_FRAME)
         {
-            // We must send the trace data to the wsd process for output
+            // We must send the trace data to the WSD process for output
 
             LOG_TRC("Document::GlobalCallback " << lokCallbackTypeToString(type) << ": " << payload.length() << " bytes.");
 
-            // TODO: Here we probably would need to parse the JSON and add a "thread":"name" pair to
-            // the args object (if present, adding it if not). Later.
-
-            self->sendTextFrame("trace: \n" + payload);
+            self->sendTextFrame("traceevent: \n" + payload);
             return;
         }
 
@@ -1850,14 +1847,34 @@ static void flushTraceEventRecordings()
     for (const auto& i: traceEventRecordings)
         recordings += i;
 
-    singletonDocument->sendTextFrame("trace: \n" + recordings);
+    singletonDocument->sendTextFrame("traceevent: \n" + recordings);
     traceEventRecordings.clear();
+}
+
+// The checks for singletonDocument below are to catch if this gets called in the ForKit process.
+
+void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
+{
+    static const bool traceEventsEnabled = config::getBool("trace_event[@enable]", false);
+    if (!traceEventsEnabled)
+        return;
+
+    if (singletonDocument == nullptr)
+        return;
+
+    singletonDocument->sendTextFrame("forcedtraceevent: \n" + recording);
 }
 
 void TraceEvent::emitOneRecording(const std::string &recording)
 {
     static const bool traceEventsEnabled = config::getBool("trace_event[@enable]", false);
     if (!traceEventsEnabled)
+        return;
+
+    if (!TraceEvent::isRecordingOn())
+        return;
+
+    if (singletonDocument == nullptr)
         return;
 
     if (traceEventRecordings.size() >= traceEventRecordingsCapacity)
@@ -2143,6 +2160,17 @@ protected:
                     std::static_pointer_cast<WebSocketHandler>(shared_from_this()),
                     _mobileAppDocId);
                 _ksPoll->setDocument(_document);
+
+                // We need to send the process name information to WSD if Trace Event recording is enabled (but
+                // not turned on) because it might be turned on later.
+                // We can do this only after creating the Document object.
+                TraceEvent::emitOneRecordingIfEnabled(std::string("{\"name\":\"process_name\",\"ph\":\"M\",\"args\":{\"name\":\"")
+                                                      + "Kit-" + docId
+                                                      + "\"},\"pid\":"
+                                                      + std::to_string(getpid())
+                                                      + ",\"tid\":"
+                                                      + std::to_string(Util::getThreadId())
+                                                      + "},\n");
             }
 
             // Validate and create session.
@@ -2325,14 +2353,6 @@ void lokit_main(
     SigUtil::setFatalSignals("kit startup of " LOOLWSD_VERSION " " LOOLWSD_VERSION_HASH);
     SigUtil::setTerminationSignals();
 #endif
-
-    TraceEvent::emitOneRecording(std::string("{\"name\":\"process_name\",\"ph\":\"M\",\"args\":{\"name\":\"")
-                                 + "Kit-" + Util::encodeId(numericIdentifier, 3)
-                                 + "\"},\"pid\":"
-                                 + std::to_string(getpid())
-                                 + ",\"tid\":"
-                                 + std::to_string(Util::getThreadId())
-                                 + "},");
 
     Util::setThreadName("kit_spare_" + Util::encodeId(numericIdentifier, 3));
 
