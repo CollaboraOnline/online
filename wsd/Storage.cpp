@@ -659,14 +659,14 @@ http::Request WopiStorage::initHttpRequest(const Poco::URI& uri, const Authoriza
     return httpRequest;
 }
 
-std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth,
-                                                                        const std::string& cookies,
-                                                                        LockContext& lockCtx)
+std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject,
+                                                                              const Authorization& auth,
+                                                                              const std::string& cookies,
+                                                                              LockContext& lockCtx)
 {
     ProfileZone profileZone("WopiStorage::getWOPIFileInfo", { {"url", _fileUrl} });
 
     // update the access_token to the one matching to the session
-    Poco::URI uriObject(getUri());
     auth.authorizeURI(uriObject);
     const std::string uriAnonym = LOOLWSD::anonymizeUrl(uriObject.toString());
 
@@ -698,6 +698,16 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
 
         callDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - startTime);
+
+        if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_FOUND ||
+            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_MOVED_PERMANENTLY)
+        {
+            const std::string& location = httpResponse->get("Location");
+            LOG_TRC("WOPI::CheckFileInfo redirect to URI [" << LOOLWSD::anonymizeUrl(location) << "]:\n");
+
+            Poco::URI redirectUriObject(location);
+            return getWOPIFileInfoForUri(redirectUriObject, auth, cookies, lockCtx);
+        }
 
         // Note: we don't log the response if obfuscation is enabled, except for failures.
         wopiResponse = httpResponse->getBody();
@@ -781,6 +791,14 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Au
 
         throw UnauthorizedRequestException("Access denied. WOPI::CheckFileInfo failed on: " + uriAnonym);
     }
+}
+
+std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfo(const Authorization& auth,
+                                                                        const std::string& cookies,
+                                                                        LockContext& lockCtx)
+{
+    Poco::URI uriObject(getUri());
+    return getWOPIFileInfoForUri(uriObject, auth, cookies, lockCtx);
 }
 
 void WopiStorage::WOPIFileInfo::init()
