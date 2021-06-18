@@ -375,35 +375,53 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     uint64_t dur;
                     if (ph == "i")
                     {
-                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"i\"%s,\"ts\":%lu,\"pid\":%d,\"tid\":%d},\n",
-                                name.c_str(),
-                                args.c_str(),
-                                (ts + _performanceCounterEpoch),
-                                docBroker->getPid(),
-                                Util::getThreadId());
+                        LOOLWSD::writeTraceEventRecording("{\"name\":\""
+                                                          + name
+                                                          + "\",\"ph\":\"i\""
+                                                          + args
+                                                          + ",\"ts\":"
+                                                          + std::to_string(ts + _performanceCounterEpoch)
+                                                          + ",\"pid\":"
+                                                          + std::to_string(docBroker->getPid())
+                                                          + ",\"tid\":"
+                                                          + std::to_string(Util::getThreadId())
+                                                          + "},\n");
                     }
                     else if ((ph == "b" || ph == "e") &&
                         getTokenUInt64(tokens[4], "id", id))
                     {
-                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"%s\"%s,\"ts\":%lu,\"pid\":%d,\"tid\":%d,\"id\":%lu},\n",
-                                name.c_str(),
-                                ph.c_str(),
-                                args.c_str(),
-                                (ts + _performanceCounterEpoch),
-                                docBroker->getPid(),
-                                Util::getThreadId(),
-                                id);
+                        LOOLWSD::writeTraceEventRecording("{\"name\":\""
+                                                          + name
+                                                          + "\",\"ph\":\""
+                                                          + ph
+                                                          + "\""
+                                                          + args
+                                                          + ",\"ts\":"
+                                                          + std::to_string(ts + _performanceCounterEpoch)
+                                                          + ",\"pid\":"
+                                                          + std::to_string(docBroker->getPid())
+                                                          + ",\"tid\":"
+                                                          + std::to_string(Util::getThreadId())
+                                                          + ",\"id\":"
+                                                          + std::to_string(id)
+                                                          + "},\n");
                     }
                     else if (ph == "X" &&
                              getTokenUInt64(tokens[4], "dur", dur))
                     {
-                        fprintf(LOOLWSD::TraceEventFile, "{\"name\":\"%s\",\"ph\":\"X\"%s,\"ts\":%lu,\"pid\":%d,\"tid\":%d,\"dur\":%lu},\n",
-                                name.c_str(),
-                                args.c_str(),
-                                (ts + _performanceCounterEpoch),
-                                docBroker->getPid(),
-                                Util::getThreadId(),
-                                dur);
+                        LOOLWSD::writeTraceEventRecording("{\"name\":\""
+                                                          + name
+                                                          + "\",\"ph\":\"X\""
+                                                          + args
+                                                          + ",\"ts\":"
+                                                          + std::to_string(ts + _performanceCounterEpoch)
+                                                          + ",\"pid\":"
+                                                          + std::to_string(docBroker->getPid())
+                                                          + ",\"tid\":"
+                                                          + std::to_string(Util::getThreadId())
+                                                          + ",\"dur\":"
+                                                          + std::to_string(dur)
+                                                          + "},\n");
                     }
                     else
                     {
