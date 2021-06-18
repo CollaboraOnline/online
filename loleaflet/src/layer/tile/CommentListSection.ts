@@ -824,8 +824,8 @@ class CommentSection {
 
 		// transform change tracking index into an id
 		redline.id = 'change-' + redline.index;
-		redline.anchorPos = L.LOUtil.stringToBounds(redline.textRange);
-		redline.anchorPix = this.sectionProperties.docLayer._twipsToPixels(redline.anchorPos.min);
+		redline.anchorPos = this.stringToRectangles(redline.textRange)[0];
+		redline.anchorPix = this.numberArrayToCorePixFromTwips(redline.anchorPos, 0, 2);
 		redline.trackchange = true;
 		redline.text = redline.comment;
 		var rectangles = L.PolyUtil.rectanglesToPolygons(L.LOUtil.stringToRectangles(redline.textRange), this.sectionProperties.docLayer);
@@ -1497,6 +1497,49 @@ class CommentSection {
 
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
 			this.hideAllComments(); // Apply drawing orders.
+	}
+
+	// Accepts redlines/changes comments.
+	public importChanges (changesList: any) {
+		var changeComment;
+		this.clearChanges();
+		changesList = this.turnIntoAList(changesList);
+
+		if (changesList.length > 0) {
+			for (var i = 0; i < changesList.length; i++) {
+				changeComment = changesList[i];
+				if (!this.adjustRedLine(changeComment))
+					// something wrong in this redline, skip this one
+					continue;
+
+				if (changeComment.author in this.map._viewInfoByUserName) {
+					changeComment.avatar = this.map._viewInfoByUserName[changeComment.author].userextrainfo.avatar;
+				}
+				var commentSection = new app.definitions.Comment(changeComment, {}, this);
+				this.containerObject.addSection(commentSection);
+				this.sectionProperties.commentList.push(commentSection);
+			}
+
+			this.orderCommentList();
+			this.checkSize();
+			this.layout();
+		}
+
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+			this.hideAllComments(); // Apply drawing orders.
+	}
+
+	// Remove redline comments.
+	private clearChanges() {
+		for (var i: number = this.sectionProperties.commentList.length -1; i > -1; i--) {
+			if (this.sectionProperties.commentList[i].trackchange) {
+				this.containerObject.removeSection(this.sectionProperties.commentList[i].name);
+				this.sectionProperties.commentList.splice(i, 1);
+			}
+		}
+
+		this.sectionProperties.selectedComment = null;
+		this.checkSize();
 	}
 
 	// Remove only text comments from the document (excluding change tracking comments)
