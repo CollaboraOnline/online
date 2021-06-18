@@ -183,7 +183,7 @@ body {
 	bottom: 33px;
 	max-width: 194px;
 	border-top: 1px solid var(--gray-color);
-	display: block;
+	display: none;
 }
 
 #presentation-controls-wrapper.readonly {
