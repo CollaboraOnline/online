@@ -695,7 +695,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 }
 
 #mobile-wizard.menuwizard {
-	position: relative;
+	position: absolute;
 	top: 0;
 	bottom: 0;
 	left: 0;

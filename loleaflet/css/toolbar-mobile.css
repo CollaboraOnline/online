@@ -3,10 +3,12 @@
 		border-radius: 0px;
 		border: 1px solid #bbbbbb !important;
 	}
-	#toolbar-wrapper{
-		border-top: none;
-	}
 	#toolbar-up{
 		top: -1px;
 	}
+}
+
+#toolbar-wrapper.mobile{
+	border-top: none;
+	z-index: auto;
 }
