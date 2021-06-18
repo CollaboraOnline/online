@@ -571,6 +571,9 @@ public:
     /// Also sets up the locking context for future operations.
     std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Authorization& auth,
                                                   const std::string& cookies, LockContext& lockCtx);
+    /// Implementation of getWOPIFileInfo for specific URI
+    std::unique_ptr<WOPIFileInfo> getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& auth,
+                                                  const std::string& cookies, LockContext& lockCtx);
 
     /// Update the locking state (check-in/out) of the associated file
     bool updateLockState(const Authorization& auth, const std::string& cookies,
