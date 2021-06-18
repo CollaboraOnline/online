@@ -193,7 +193,7 @@ body {
 	bottom: 33px;
 	max-width: 194px;
 	border-top: 1px solid var(--gray-color);
-	display: block;
+	display: none;
 }
 
 #document-container.notebookbar-active.presentation-doctype ~ #presentation-controls-wrapper {
