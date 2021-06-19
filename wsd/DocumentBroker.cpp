@@ -405,14 +405,16 @@ void DocumentBroker::pollThread()
 
 #if !MOBILEAPP
         if (std::chrono::duration_cast<std::chrono::minutes>(now - lastClipboardHashUpdateTime).count() >= 2)
-        for (auto &it : _sessions)
         {
-            if (it.second->staleWaitDisconnect(now))
+            for (auto &it : _sessions)
             {
-                std::string id = it.second->getId();
-                LOG_WRN("Unusual, Kit session " + id + " failed its disconnect handshake, killing");
-                finalRemoveSession(id);
-                break; // it invalid.
+                if (it.second->staleWaitDisconnect(now))
+                {
+                    std::string id = it.second->getId();
+                    LOG_WRN("Unusual, Kit session " + id + " failed its disconnect handshake, killing");
+                    finalRemoveSession(id);
+                    break; // it invalid.
+                }
             }
         }
 
@@ -441,8 +443,9 @@ void DocumentBroker::pollThread()
                 }
             }
         }
+        else
 #endif
-        else if (_sessions.empty() && (isLoaded() || _docState.isMarkedToDestroy()))
+        if (_sessions.empty() && (isLoaded() || _docState.isMarkedToDestroy()))
         {
             // If all sessions have been removed, no reason to linger.
             LOG_INF("Terminating dead DocumentBroker for docKey [" << getDocKey() << "].");
