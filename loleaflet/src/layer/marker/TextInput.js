@@ -388,6 +388,7 @@ L.TextInput = L.Layer.extend({
 			this._textArea.style.width = '1px';
 			this._textArea.style.height = '1px';
 			this._textArea.style.caretColor = 'transparent';
+			this._textArea.style.resize = 'none';
 
 			if (L.Browser.isInternetExplorer || L.Browser.edge)
 			{
