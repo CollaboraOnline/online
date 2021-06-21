@@ -414,14 +414,9 @@ app.definitions.Socket = L.Class.extend({
 		else
 		{
 			var data = e.imgBytes.subarray(e.imgIndex);
-
 			console.assert(data.length == 0 || data[0] != 68 /* D */, 'Socket: got a delta image, not supported !');
 
-			// read the tile data
-			var strBytes = '';
-			for (var i = 0; i < data.length; i++) {
-				strBytes += String.fromCharCode(data[i]);
-			}
+			var strBytes = String.fromCharCode.apply(null, data);
 			img = 'data:image/png;base64,' + window.btoa(strBytes);
 		}
 		return img;
