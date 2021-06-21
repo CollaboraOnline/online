@@ -68,6 +68,8 @@ loleaflet/admin/jsconfig.json
 loleaflet/dist
 loleaflet/compilets
 loleaflet/typescript_js
+loleaflet/src/layer/tile/CommentListSection.js
+loleaflet/src/layer/tile/CommentSection.js
 
 connect
 lokitclient
