@@ -1,4 +1,5 @@
-/* global cy Cypress expect */
+/* global cy require Cypress expect */
+const { clickOnIdle } = require('./helper');
 
 // Make the sidebar visible by clicking on the corresponding toolbar item.
 // We assume that the sidebar is hidden, when this method is called.
@@ -210,8 +211,7 @@ function zoomOut() {
 function selectZoomLevel(zoomLevel) {
 	makeZoomItemsVisible();
 
-	cy.get('#tb_actionbar_item_zoom')
-		.click();
+	clickOnIdle('#tb_actionbar_item_zoom');
 
 	cy.contains('.w2ui-drop-menu .menu-text', zoomLevel)
 		.click();
