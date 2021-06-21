@@ -706,6 +706,7 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfoForUri(Po
             LOG_TRC("WOPI::CheckFileInfo redirect to URI [" << LOOLWSD::anonymizeUrl(location) << "]:\n");
 
             Poco::URI redirectUriObject(location);
+            setUri(redirectUriObject);
             return getWOPIFileInfoForUri(redirectUriObject, auth, cookies, lockCtx);
         }
 
