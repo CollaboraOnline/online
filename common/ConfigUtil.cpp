@@ -35,6 +35,11 @@ void initialize(const std::string& xml)
     initialize(XmlConfig);
 }
 
+bool isInitialized()
+{
+    return Config;
+}
+
 std::string getString(const std::string& key, const std::string& def)
 {
     assert(Config && "Config is not initialized.");
