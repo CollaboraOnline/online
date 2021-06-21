@@ -2747,8 +2747,10 @@ L.TileLayer = L.GridLayer.extend({
 
 			this._updateCursorPos();
 
-			this._map._textInput.showCursor();
-
+			var scrollSection = app.sectionContainer.getSectionWithName(L.CSections.Scroll.name);
+			if (!scrollSection.sectionProperties.mouseIsOnVerticalScrollBar && !scrollSection.sectionProperties.mouseIsOnHorizontalScrollBar) {
+				this._map._textInput.showCursor();
+			}
 			// Don't show the keyboard when the Wizard is visible.
 			if (!window.mobileWizard && !window.pageMobileWizard && !window.insertionMobileWizard) {
 				// If the user is editing, show the keyboard, but don't change
