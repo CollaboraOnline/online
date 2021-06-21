@@ -1821,8 +1821,18 @@ static void flushTraceEventRecordings()
 
 void TraceEvent::emitOneRecordingIfEnabled(const std::string &recording)
 {
-    static const bool traceEventsEnabled = config::getBool("trace_event[@enable]", false);
-    if (!traceEventsEnabled)
+    // This can be called before the config system is initialized. Guard against that, as calling
+    // config::getBool() would cause an assertion failure.
+
+    static bool configChecked = false;
+    static bool traceEventsEnabled;
+    if (!configChecked && config::isInitialized())
+    {
+        traceEventsEnabled = config::getBool("trace_event[@enable]", false);
+        configChecked = true;
+    }
+
+    if (configChecked && !traceEventsEnabled)
         return;
 
     if (singletonDocument == nullptr)
