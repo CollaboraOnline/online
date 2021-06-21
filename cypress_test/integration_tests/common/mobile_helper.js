@@ -326,6 +326,40 @@ function insertComment() {
 	cy.get('#annotation-content-area-1').should('have.text', 'some text');
 }
 
+function insertImage() {
+	openInsertionWizard();
+
+	// We can't use the menu item directly, because it would open file picker.
+	cy.contains('.menu-entry-with-icon', 'Local Image...')
+		.should('be.visible');
+
+	cy.get('#insertgraphic[type=file]')
+		.attachFile('/mobile/writer/image_to_insert.png');
+
+	cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
+		.should('exist');
+}
+
+function deleteImage() {
+	insertImage();
+	var eventOptions = {
+		force: true,
+		button: 0,
+		pointerType: 'mouse'
+	};
+
+	cy.get('.leaflet-control-buttons-disabled > .leaflet-interactive')
+		.trigger('pointerdown', eventOptions)
+		.wait(1000)
+		.trigger('pointerup', eventOptions);
+
+	cy.contains('.menu-entry-with-icon', 'Delete')
+		.should('be.visible').click();
+
+	cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
+		.should('not.exist');
+}
+
 module.exports.enableEditingMobile = enableEditingMobile;
 module.exports.longPressOnDocument = longPressOnDocument;
 module.exports.openHamburgerMenu = openHamburgerMenu;
@@ -343,3 +377,5 @@ module.exports.selectListBoxItem = selectListBoxItem;
 module.exports.selectListBoxItem2 = selectListBoxItem2;
 module.exports.openCommentWizard = openCommentWizard;
 module.exports.insertComment = insertComment;
+module.exports.insertImage = insertImage;
+module.exports.deleteImage = deleteImage;
