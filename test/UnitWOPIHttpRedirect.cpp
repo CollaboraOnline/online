@@ -21,6 +21,8 @@ class UnitWopiHttpRedirect : public WopiTestServer
     {
         Load,
         Redirected,
+        GetFile,
+        Loaded
     } _phase;
 
     const std::string params = "access_token=anything";
@@ -39,19 +41,21 @@ public:
     {
         Poco::URI uriReq(request.getURI());
         Poco::RegularExpression regInfo("/wopi/files/1");
-        Poco::RegularExpression regContents("/wopi/files/[0-9]/contents");
         std::string redirectUri = "/wopi/files/0";
         Poco::RegularExpression regRedirected(redirectUri);
+        Poco::RegularExpression regContents("/wopi/files/0/contents");
 
         LOG_INF("Fake wopi host request URI [" << uriReq.toString() << "]:\n");
 
         // CheckFileInfo - returns redirect response
-        if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()) && !regContents.match(uriReq.getPath()))
+        if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
         {
             LOG_INF("Fake wopi host request, handling CheckFileInfo (1/2)");
-            LOK_ASSERT_MESSAGE("Expected to be in Phase::Load", _phase == Phase::Load);
 
             assertCheckFileInfoRequest(request);
+
+            LOK_ASSERT_MESSAGE("Expected to be in Phase::Load", _phase == Phase::Load);
+            _phase = Phase::Redirected;
 
             std::ostringstream oss;
             oss << "HTTP/1.1 302 Found\r\n"
@@ -61,17 +65,18 @@ public:
             socket->send(oss.str());
             socket->shutdown();
 
-            _phase = Phase::Redirected;
-
             return true;
         }
         // CheckFileInfo - for redirected URI
         else if (request.getMethod() == "GET" && regRedirected.match(uriReq.getPath()) && !regContents.match(uriReq.getPath()))
         {
             LOG_INF("Fake wopi host request, handling CheckFileInfo: (2/2)");
-            LOK_ASSERT_MESSAGE("Expected to be in Phase::Redirected", _phase == Phase::Redirected);
 
             assertCheckFileInfoRequest(request);
+
+            LOK_ASSERT_MESSAGE("Expected to be in Phase::Redirected or Phase::Loaded", _phase == Phase::Redirected || _phase == Phase::Loaded);
+            if (_phase == Phase::Redirected)
+                _phase = Phase::GetFile;
 
             Poco::LocalDateTime now;
             const std::string fileName(uriReq.getPath() == "/wopi/files/3" ? "he%llo.txt" : "hello.txt");
@@ -105,6 +110,32 @@ public:
             socket->send(oss.str());
             socket->shutdown();
 
+            return true;
+        }
+        // GetFile - for redirected URI
+        else if (request.getMethod() == "GET" && regContents.match(uriReq.getPath()))
+        {
+            LOG_TST("Fake wopi host request, handling GetFile: " << uriReq.getPath());
+
+            assertGetFileRequest(request);
+
+            LOK_ASSERT_MESSAGE("Expected to be in Phase::GetFile", _phase == Phase::GetFile);
+            _phase = Phase::Loaded;
+
+            const std::string mimeType = "text/plain; charset=utf-8";
+
+            std::ostringstream oss;
+            oss << "HTTP/1.1 200 OK\r\n"
+                "Last-Modified: " << Util::getHttpTime(_fileLastModifiedTime) << "\r\n"
+                "User-Agent: " WOPI_AGENT_STRING "\r\n"
+                "Content-Length: " << _fileContent.size() << "\r\n"
+                "Content-Type: " << mimeType << "\r\n"
+                "\r\n"
+                << _fileContent;
+
+            socket->send(oss.str());
+            socket->shutdown();
+
             exitTest(TestResult::Ok);
 
             return true;
@@ -127,7 +158,13 @@ public:
                 break;
             }
             case Phase::Redirected:
+            case Phase::GetFile:
             {
+                break;
+            }
+            case Phase::Loaded:
+            {
+                exitTest(TestResult::Ok);
                 break;
             }
         }
