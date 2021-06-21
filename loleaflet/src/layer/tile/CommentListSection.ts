@@ -887,6 +887,10 @@ class CommentSection {
 	public onACKComment (obj: any) {
 		var id;
 		var changetrack = obj.redline ? true : false;
+		var dataroot = changetrack ? 'redline' : 'comment';
+		if (changetrack) {
+			obj.redline.id = 'change-' + obj.redline.index;
+		}
 		var action = changetrack ? obj.redline.action : obj.comment.action;
 
 		if (changetrack && obj.redline.author in this.map._viewInfoByUserName) {
@@ -897,9 +901,9 @@ class CommentSection {
 		}
 
 		if ((<any>window).mode.isMobile()) {
-			var annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj.comment.id)];
+			var annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj[dataroot].id)];
 			if (!annotation)
-				annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj.comment.parent)]; //this is required for reload after reply in writer
+				annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj[dataroot].parent)]; //this is required for reload after reply in writer
 		}
 		if (action === 'Add') {
 			if (changetrack) {
@@ -916,18 +920,18 @@ class CommentSection {
 			if (this.sectionProperties.selectedComment && !this.sectionProperties.selectedComment.isEdit()) {
 				this.map.focus();
 			}
-			annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj.comment.id)];
+			annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj[dataroot].id)];
 			if (!(<any>window).mode.isMobile())
 				this.layout();
 		} else if (action === 'Remove') {
-			if ((<any>window).mode.isMobile() && obj.comment.id === annotation.sectionProperties.data.id) {
-				var child = this.sectionProperties.commentList[this.getIndexOf(obj.comment.id) + 1];
+			if ((<any>window).mode.isMobile() && obj[dataroot].id === annotation.sectionProperties.data.id) {
+				var child = this.sectionProperties.commentList[this.getIndexOf(obj[dataroot].id) + 1];
 				if (child && child.sectionProperties.data.parent === annotation.sectionProperties.data.id)
 					annotation = child;
 				else
 					annotation = undefined;
 			}
-			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
+			id = obj[dataroot].id;
 			var removed = this.getComment(id);
 			if (removed) {
 				this.adjustParentRemove(removed);
@@ -939,7 +943,7 @@ class CommentSection {
 				}
 			}
 		} else if (action === 'Modify') {
-			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
+			id = obj[dataroot].id;
 			var modified = this.getComment(id);
 			if (modified) {
 				var modifiedObj;
@@ -958,7 +962,7 @@ class CommentSection {
 				this.update();
 			}
 		} else if (action === 'Resolve') {
-			id = changetrack ? 'change-' + obj.redline.index : obj.comment.id;
+			id = obj[dataroot].id;
 			var resolved = this.getComment(id);
 			if (resolved) {
 				var resolvedObj;
