@@ -300,7 +300,7 @@ L.Map.include({
 
 	sendUnoCommand: function (command, json) {
 		// To exercise the Trace Event functionality, uncomment this
-		// this._socket.emitInstantTraceEvent('loleaflet-unocommand:' + command);
+		// app.socket.emitInstantTraceEvent('loleaflet-unocommand:' + command);
 
 		var isAllowedInReadOnly = false;
 		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog', '.uno:EditAnnotation', '.uno:InsertAnnotation', '.uno:DeleteAnnotation'];
@@ -654,7 +654,7 @@ L.Map.include({
 
 		// Just as a test to exercise the Async Trace Event functionality, uncomment this
 		// line and the asyncTraceEvent.finish() below.
-		// var asyncTraceEvent = this._socket.createAsyncTraceEvent('loleaflet-showLOAboutDialog');
+		// var asyncTraceEvent = map.socket.createAsyncTraceEvent('loleaflet-showLOAboutDialog');
 
 		// Move the div sitting in 'body' as vex-content and make it visible
 		var content = $('#about-dialog').clone().css({display: 'block'});
@@ -704,19 +704,19 @@ L.Map.include({
 				// so there is nothing more verbose. But presumably it is different
 				// in production setups.
 
-				map._socket.sendMessage('loggingleveloverride '
-						        + (map._socket.threadLocalLoggingLevelToggle ? 'default' : 'verbose'));
+				app.socket.sendMessage('loggingleveloverride '
+						       + (app.socket.threadLocalLoggingLevelToggle ? 'default' : 'verbose'));
 
-				map._socket.threadLocalLoggingLevelToggle = !map._socket.threadLocalLoggingLevelToggle;
+				app.socket.threadLocalLoggingLevelToggle = !app.socket.threadLocalLoggingLevelToggle;
 			} else if (event.key === 't') {
 				// T turns Trace Event recording on in the Kit process
 				// for this document, as long as loolwsd is running with the
 				// trace_event[@enable] config option as true. T again
 				// turns it off.
 
-				if (map._socket.enableTraceEventLogging) {
-					map._socket.sendMessage('traceeventrecording '
-							        + (map._socket.traceEventRecordingToggle ? 'stop' : 'start'));
+				if (app.socket.enableTraceEventLogging) {
+					app.socket.sendMessage('traceeventrecording '
+							       + (app.socket.traceEventRecordingToggle ? 'stop' : 'start'));
 
 					// Just as a test, uncomment this to toggle SAL_WARN and
 					// SAL_INFO selection between two states: 1) the default
@@ -727,9 +727,9 @@ L.Map.include({
 					// to "-WARN-INFO", i.e. the default is that nothing is
 					// logged from core.)
 
-					// map._socket.sendMessage('sallogoverride ' + (map._socket.traceEventRecordingToggle ? 'default' : '+WARN+INFO.sc'));
+					// app.socket.sendMessage('sallogoverride ' + (app.socket.traceEventRecordingToggle ? 'default' : '+WARN+INFO.sc'));
 
-					map._socket.traceEventRecordingToggle = !map._socket.traceEventRecordingToggle;
+					app.socket.traceEventRecordingToggle = !app.socket.traceEventRecordingToggle;
 				}
 			}
 		};
