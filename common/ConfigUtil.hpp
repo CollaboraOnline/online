@@ -30,6 +30,9 @@ void initialize(const std::string& xml);
 /// Initialize the config given a pointer to a long-lived pointer.
 void initialize(const Poco::Util::AbstractConfiguration* config);
 
+/// Check if the config has been initialized
+bool isInitialized();
+
 /// Returns the value of an entry as string or @def if it is not found.
 std::string getString(const std::string& key, const std::string& def);
 
