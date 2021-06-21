@@ -242,6 +242,41 @@ function insertMultipleComment(numberOfComments) {
 		cy.get('#annotation-save-new').click();
 	}
 }
+function insertImage() {
+	selectZoomLevel('50');
+
+	cy.get('#menu-insert').click();
+
+	cy.contains('#menu-insertgraphic', 'Local Image...')
+		.should('be.visible');
+
+	cy.get('#insertgraphic[type=file]')
+		.attachFile('/desktop/writer/image_to_insert.png');
+
+	// hide the menu so it will not cover document area
+	cy.get('#menu-insert').click();
+
+	cy.wait(1000);
+
+	cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
+		.should('exist');
+}
+
+function deleteImage() {
+	insertImage();
+
+	cy.get('.leaflet-pane.leaflet-overlay-pane svg g path.leaflet-interactive')
+		.rightclick();
+
+	cy.contains('.context-menu-item','Delete')
+		.click();
+
+	cy.wait(1000);
+
+	cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
+		.should('not.exist');
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
@@ -256,3 +291,5 @@ module.exports.shouldHaveZoomLevel = shouldHaveZoomLevel;
 module.exports.selectZoomLevel = selectZoomLevel;
 module.exports.resetZoomLevel = resetZoomLevel;
 module.exports.insertMultipleComment = insertMultipleComment;
+module.exports.insertImage = insertImage;
+module.exports.deleteImage = deleteImage;
