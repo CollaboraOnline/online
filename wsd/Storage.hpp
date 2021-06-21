@@ -269,6 +269,9 @@ public:
 
 protected:
 
+    /// Saves new URI when resource was moved
+    void setUri(const Poco::URI& uri) { _uri = uri; }
+
     /// Returns the root path of the jail directory of docs.
     std::string getLocalRootPath() const;
 
@@ -276,7 +279,7 @@ protected:
     const std::string& getExtendedData() const { return _extendedData; }
 
 private:
-    const Poco::URI _uri;
+    Poco::URI _uri;
     const std::string _localStorePath;
     const std::string _jailPath;
     std::string _jailedFilePath;
