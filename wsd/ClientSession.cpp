@@ -379,7 +379,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
 
             if (tokens.size() >= 4)
             {
-                // The intent is that when doing event trace generation, the web browser client and
+                // The intent is that when doing Trace Event generation, the web browser client and
                 // the server run on the same machine, so there is no clock skew problem.
                 std::string name;
                 std::string ph;
