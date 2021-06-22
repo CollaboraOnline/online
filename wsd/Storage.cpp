@@ -636,7 +636,9 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfoForUri(Po
         }
 
         if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_FOUND ||
-            response.getStatus() == Poco::Net::HTTPResponse::HTTP_MOVED_PERMANENTLY)
+            response.getStatus() == Poco::Net::HTTPResponse::HTTP_MOVED_PERMANENTLY ||
+            response.getStatus() == Poco::Net::HTTPResponse::HTTP_TEMPORARY_REDIRECT ||
+            response.getStatus() == Poco::Net::HTTPResponse::HTTP_PERMANENT_REDIRECT)
         {
             const std::string& location = response.get("Location");
             LOG_TRC("WOPI::CheckFileInfo redirect to URI [" << LOOLWSD::anonymizeUrl(location) << "]:\n");
@@ -1019,7 +1021,9 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
         }
 
     if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_FOUND ||
-        response.getStatus() == Poco::Net::HTTPResponse::HTTP_MOVED_PERMANENTLY)
+        response.getStatus() == Poco::Net::HTTPResponse::HTTP_MOVED_PERMANENTLY ||
+        response.getStatus() == Poco::Net::HTTPResponse::HTTP_TEMPORARY_REDIRECT ||
+        response.getStatus() == Poco::Net::HTTPResponse::HTTP_PERMANENT_REDIRECT)
     {
         const std::string& location = response.get("Location");
         LOG_TRC("WOPI::downloadDocument redirect to URI [" << LOOLWSD::anonymizeUrl(location) << "]:\n");
