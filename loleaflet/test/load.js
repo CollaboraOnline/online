@@ -85,6 +85,7 @@ window.HTMLElement.prototype.getBoundingClientRect = function() {
 		width: 0, height: 0, top: 0, left: 0
 	};
 };
+
 window.onload = function() {
 	console.debug('socket ' + window.socket);
 	map = window.socket._map;
@@ -94,4 +95,20 @@ window.onload = function() {
 	// Force some sizes onto key pieces:
 	map._container.___clientWidth = 1024;
 	map._container.___clientHeight = 768;
+
+	map.on('docloaded', function(){
+		console.debug('document loaded');
+		setTimeout(function() {
+			if (bookmark)
+			{
+				console.debug('Jump to bookmark ' + bookmark);
+				var cmd = {
+					'Bookmark': { 'type': 'string', 'value': bookmark }
+				};
+				window.app.socket.sendMessage('uno .uno:JumpToMark ' + JSON.stringify(cmd));
+			}
+			else
+				console.debug('No bookmark to jump to');
+		}, 500);
+	});
 };
