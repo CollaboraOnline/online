@@ -680,7 +680,9 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfoForUri(Po
             std::chrono::steady_clock::now() - startTime);
 
         if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_FOUND ||
-            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_MOVED_PERMANENTLY)
+            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_MOVED_PERMANENTLY ||
+            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_TEMPORARY_REDIRECT ||
+            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_PERMANENT_REDIRECT)
         {
             const std::string& location = httpResponse->get("Location");
             LOG_TRC("WOPI::CheckFileInfo redirect to URI [" << LOOLWSD::anonymizeUrl(location) << "]:\n");
@@ -1089,7 +1091,9 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
         }
     }
     else if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_FOUND ||
-            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_MOVED_PERMANENTLY)
+            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_MOVED_PERMANENTLY ||
+            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_TEMPORARY_REDIRECT ||
+            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_PERMANENT_REDIRECT)
     {
         const std::string& location = httpResponse->get("Location");
         LOG_TRC("WOPI::downloadDocument redirect to URI [" << LOOLWSD::anonymizeUrl(location) << "]:\n");
