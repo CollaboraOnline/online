@@ -165,6 +165,7 @@ lokitclient_SOURCES = common/Log.cpp \
                       tools/KitClient.cpp \
                       common/Protocol.cpp \
                       common/StringVector.cpp \
+                      common/TraceEvent.cpp \
                       common/Util.cpp
 
 loolforkit_sources = kit/ChildSession.cpp \
