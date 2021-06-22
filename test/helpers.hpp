@@ -73,7 +73,8 @@ std::string genRandomString(const size_t size)
     text.reserve(size);
     for (size_t i = 0; i < size; ++i)
     {
-        text += static_cast<char>('!' + Util::rng::getNext() % 95);
+        // Sensible characters only, avoiding 0x7f DEL
+        text += static_cast<char>('!' + Util::rng::getNext() % 94);
     }
 
     return text;
