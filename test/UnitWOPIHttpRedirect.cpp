@@ -22,6 +22,7 @@ class UnitWopiHttpRedirect : public WopiTestServer
         Load,
         Redirected,
         GetFile,
+        Redirected2,
         Loaded
     } _phase;
 
@@ -49,6 +50,8 @@ public:
         std::string redirectUri = "/wopi/files/0";
         Poco::RegularExpression regRedirected(redirectUri);
         Poco::RegularExpression regContents("/wopi/files/0/contents");
+        std::string redirectUri2 = "/wopi/files/2/contents";
+        Poco::RegularExpression regContentsRedirected(redirectUri2);
 
         LOG_INF("Fake wopi host request URI [" << uriReq.toString() << "]:\n");
 
@@ -117,7 +120,7 @@ public:
 
             return true;
         }
-        // GetFile - for redirected URI
+        // GetFile - first try
         else if (request.getMethod() == "GET" && regContents.match(uriReq.getPath()))
         {
             LOG_TST("Fake wopi host request, handling GetFile: " << uriReq.getPath());
@@ -125,6 +128,26 @@ public:
             assertGetFileRequest(request);
 
             LOK_ASSERT_MESSAGE("Expected to be in Phase::GetFile", _phase == Phase::GetFile);
+            _phase = Phase::Redirected2;
+
+            std::ostringstream oss;
+            oss << "HTTP/1.1 302 Found\r\n"
+                "Location: " << helpers::getTestServerURI() << redirectUri2 << "?" << params << "\r\n"
+                "\r\n";
+
+            socket->send(oss.str());
+            socket->shutdown();
+
+            return true;
+        }
+        // GetFile - redirected
+        else if (request.getMethod() == "GET" && regContentsRedirected.match(uriReq.getPath()))
+        {
+            LOG_TST("Fake wopi host request, handling GetFile: " << uriReq.getPath());
+
+            assertGetFileRequest(request);
+
+            LOK_ASSERT_MESSAGE("Expected to be in Phase::Redirected2", _phase == Phase::Redirected2);
             _phase = Phase::Loaded;
 
             const std::string mimeType = "text/plain; charset=utf-8";
@@ -163,6 +186,7 @@ public:
                 break;
             }
             case Phase::Redirected:
+            case Phase::Redirected2:
             case Phase::GetFile:
             {
                 break;
