@@ -170,8 +170,12 @@ function selectTextOfShape() {
 		cy.get('svg g .leaflet-interactive')
 			.then(function(items) {
 				expect(items).to.have.length(1);
-				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
-				var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
+				// Slide does not fit the viewport in cypress.
+				// Use the center of the visible area of the svg group element else the click
+				// event could go to other elements like slide sorter.
+				const clientRect = helper.getVisibleBounds(items[0].getBoundingClientRect());
+				const XPos = (clientRect.left + clientRect.right) / 2;
+				const YPos = (clientRect.top + clientRect.bottom) / 2;
 				cy.get('body')
 					.dblclick(XPos, YPos);
 			});

@@ -115,11 +115,9 @@ describe('Top toolbar tests.', function() {
 			.should('have.attr', 'font-size', '776px');
 	});
 
-	it.skip('Apply left/right alignment on selected text.', function() {
+	it('Apply left/right alignment on text selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
-
-		// FIXME: This test was coordinate based and didn't work because of the size of the document. Disabled for now.
 
 		// Set right alignment first
 		impressHelper.selectTextOfShape();
