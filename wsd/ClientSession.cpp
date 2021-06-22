@@ -370,7 +370,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                                                           + ",\"ts\":"
                                                           + std::to_string(ts + _performanceCounterEpoch)
                                                           + ",\"pid\":"
-                                                          + std::to_string(docBroker->getPid())
+                                                          + std::to_string(getpid())
                                                           + ",\"tid\":"
                                                           + std::to_string(Util::getThreadId())
                                                           + "},\n");
@@ -387,7 +387,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                                                           + ",\"ts\":"
                                                           + std::to_string(ts + _performanceCounterEpoch)
                                                           + ",\"pid\":"
-                                                          + std::to_string(docBroker->getPid())
+                                                          + std::to_string(getpid())
                                                           + ",\"tid\":"
                                                           + std::to_string(Util::getThreadId())
                                                           + ",\"id\":"
@@ -404,7 +404,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                                                           + ",\"ts\":"
                                                           + std::to_string(ts + _performanceCounterEpoch)
                                                           + ",\"pid\":"
-                                                          + std::to_string(docBroker->getPid())
+                                                          + std::to_string(getpid())
                                                           + ",\"tid\":"
                                                           + std::to_string(Util::getThreadId())
                                                           + ",\"dur\":"
