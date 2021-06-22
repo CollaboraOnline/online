@@ -369,6 +369,26 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         if (LOOLWSD::EnableTraceEventLogging)
         {
+            if (_performanceCounterEpoch == 0)
+            {
+                static bool warnedOnce = false;
+                if (!warnedOnce)
+                {
+                    LOG_WRN("For some reason the _performanceCounterEpoch is still zero, ignoring TRACEEVENT from loleaflet as the timestamp would be garbage");
+                    warnedOnce = true;
+                }
+                return false;
+            } else if (_performanceCounterEpoch < 1620000000000000ull || _performanceCounterEpoch > 2000000000000000ull)
+            {
+                static bool warnedOnce = false;
+                if (!warnedOnce)
+                {
+                    LOG_WRN("For some reason the _performanceCounterEpoch is bogus, ignoring TRACEEVENT from loleaflet as the timestamp would be garbage");
+                    warnedOnce = true;
+                }
+                return false;
+            }
+
             if (tokens.size() >= 4)
             {
                 // The intent is that when doing event trace generation, the web browser client and
