@@ -805,7 +805,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if(iter != _tilesOnFly.end())
             _tilesOnFly.erase(iter);
         else
-            LOG_INF("Tileprocessed message with an unknown tile ID");
+            LOG_INF("Tileprocessed message with an unknown tile ID '" << tileID << "' from session " << getId());
 
         docBroker->sendRequestedTiles(client_from_this());
         return true;
