@@ -1088,6 +1088,15 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
             LOG_END(logger, true);
         }
     }
+    else if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_FOUND ||
+            httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_MOVED_PERMANENTLY)
+    {
+        const std::string& location = httpResponse->get("Location");
+        LOG_TRC("WOPI::downloadDocument redirect to URI [" << LOOLWSD::anonymizeUrl(location) << "]:\n");
+
+        Poco::URI redirectUriObject(location);
+        return downloadDocument(redirectUriObject, uriAnonym, auth, cookies);
+    }
     else
     {
         const std::string responseString = httpResponse->getBody();
