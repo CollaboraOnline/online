@@ -577,7 +577,8 @@ public:
                                                   const std::string& cookies, LockContext& lockCtx);
     /// Implementation of getWOPIFileInfo for specific URI
     std::unique_ptr<WOPIFileInfo> getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& auth,
-                                                  const std::string& cookies, LockContext& lockCtx);
+                                                  const std::string& cookies, LockContext& lockCtx,
+                                                  unsigned redirectLimit = 21);
 
     /// Update the locking state (check-in/out) of the associated file
     bool updateLockState(const Authorization& auth, const std::string& cookies,
@@ -631,7 +632,8 @@ private:
     /// Download the document from the given URI.
     /// Does not add authorization tokens or any other logic.
     std::string downloadDocument(const Poco::URI& uriObject, const std::string& uriAnonym,
-                                 const Authorization& auth, const std::string& cookies);
+                                 const Authorization& auth, const std::string& cookies,
+                                 unsigned redirectLimit = 21);
 
 private:
     /// A URl provided by the WOPI host to use for GetFile.

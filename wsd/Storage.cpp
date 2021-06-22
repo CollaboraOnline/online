@@ -633,7 +633,8 @@ http::Request WopiStorage::initHttpRequest(const Poco::URI& uri, const Authoriza
 std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject,
                                                                               const Authorization& auth,
                                                                               const std::string& cookies,
-                                                                              LockContext& lockCtx)
+                                                                              LockContext& lockCtx,
+                                                                              unsigned redirectLimit)
 {
     ProfileZone profileZone("WopiStorage::getWOPIFileInfo", { {"url", _fileUrl} });
 
@@ -675,12 +676,19 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfoForUri(Po
             httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_TEMPORARY_REDIRECT ||
             httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_PERMANENT_REDIRECT)
         {
-            const std::string& location = httpResponse->get("Location");
-            LOG_TRC("WOPI::CheckFileInfo redirect to URI [" << LOOLWSD::anonymizeUrl(location) << "]:\n");
+            if (redirectLimit)
+            {
+                const std::string& location = httpResponse->get("Location");
+                LOG_TRC("WOPI::CheckFileInfo redirect to URI [" << LOOLWSD::anonymizeUrl(location) << "]:\n");
 
-            Poco::URI redirectUriObject(location);
-            setUri(redirectUriObject);
-            return getWOPIFileInfoForUri(redirectUriObject, auth, cookies, lockCtx);
+                Poco::URI redirectUriObject(location);
+                setUri(redirectUriObject);
+                return getWOPIFileInfoForUri(redirectUriObject, auth, cookies, lockCtx, redirectLimit - 1);
+            }
+            else
+            {
+                LOG_TRC("WOPI::CheckFileInfo redirected too many times\n");
+            }
         }
 
         // Note: we don't log the response if obfuscation is enabled, except for failures.
@@ -1048,7 +1056,8 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
 }
 
 std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std::string& uriAnonym,
-                                          const Authorization& auth, const std::string& cookies)
+                                          const Authorization& auth, const std::string& cookies,
+                                          unsigned redirectLimit)
 {
     const auto startTime = std::chrono::steady_clock::now();
     std::shared_ptr<http::Session> httpSession = getHttpSession(uriObject);
@@ -1086,11 +1095,19 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
             httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_TEMPORARY_REDIRECT ||
             httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_PERMANENT_REDIRECT)
     {
-        const std::string& location = httpResponse->get("Location");
-        LOG_TRC("WOPI::downloadDocument redirect to URI [" << LOOLWSD::anonymizeUrl(location) << "]:\n");
+        if (redirectLimit)
+        {
+            const std::string& location = httpResponse->get("Location");
+            LOG_TRC("WOPI::GetFile redirect to URI [" << LOOLWSD::anonymizeUrl(location) << "]:\n");
 
-        Poco::URI redirectUriObject(location);
-        return downloadDocument(redirectUriObject, uriAnonym, auth, cookies);
+            Poco::URI redirectUriObject(location);
+            return downloadDocument(redirectUriObject, uriAnonym, auth, cookies, redirectLimit - 1);
+        }
+        else
+        {
+            throw StorageConnectionException("WOPI::GetFile [" + uriAnonym
+                                         + "] failed: redirected too many times");
+        }
     }
     else
     {
