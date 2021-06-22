@@ -115,28 +115,30 @@ describe('Top toolbar tests.', function() {
 			.should('have.attr', 'font-size', '776px');
 	});
 
-	it('Apply left/right alignment on text seleced text.', function() {
+	it('Apply left/right alignment on text selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
-
-		// FIXME: This test was coordinate based and didn't work because of the size of the document. Disabled for now.
 
 		// Set right alignment first
 		impressHelper.selectTextOfShape();
 
-		//cy.get('#tb_editbar_item_rightpara').click();
+		cy.get('#tb_editbar_item_rightpara')
+			.click();
 
-		//impressHelper.triggerNewSVGForShapeInTheCenter();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		//cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition').should('have.attr', 'x', '24526');
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+			.should('have.attr', 'x', '24526');
 
 		// Set left alignment
-		//impressHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
-		//cy.get('#tb_editbar_item_leftpara').click();
+		cy.get('#tb_editbar_item_leftpara')
+			.click();
 
-		//impressHelper.triggerNewSVGForShapeInTheCenter();
+		impressHelper.triggerNewSVGForShapeInTheCenter();
 
-		//cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition').should('have.attr', 'x', '1400');
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+			.should('have.attr', 'x', '1400');
 	});
 });
