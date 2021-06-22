@@ -1026,6 +1026,14 @@ class Bounds {
 			&& this.height !== undefined);
 	}
 
+	get right() {
+		return this.left + this.width;
+	}
+
+	get bottom() {
+		return this.top + this.height;
+	}
+
 	static parseBoundsJson(boundsJsonString) {
 		var jsonObject = JSON.parse(boundsJsonString);
 		return new Bounds(jsonObject.top, jsonObject.left, jsonObject.width, jsonObject.height);
@@ -1113,6 +1121,14 @@ function typeIntoInputField(selector, text, clearBefore = true, prop = true)
 	cy.log('Typing into input field - end.');
 }
 
+function getVisibleBounds(domRect) {
+	return new Bounds(
+		Math.max(0, domRect.top),
+		Math.max(0, domRect.left),
+		domRect.width,
+		domRect.height);
+}
+
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
 module.exports.assertNoKeyboardInput = assertNoKeyboardInput;
@@ -1151,3 +1167,4 @@ module.exports.getOverlayItemBounds = getOverlayItemBounds;
 module.exports.overlayItemHasBounds = overlayItemHasBounds;
 module.exports.overlayItemHasDifferentBoundsThan = overlayItemHasDifferentBoundsThan;
 module.exports.typeIntoInputField = typeIntoInputField;
+module.exports.getVisibleBounds = getVisibleBounds;
