@@ -401,6 +401,16 @@ app.definitions.Socket = L.Class.extend({
 		e.imgIndex = index + 1;
 	},
 
+	// convert to string of bytes without blowing the stack if data is large.
+	_strFromUint8: function(data) {
+		var i, chunk = 4096;
+		var strBytes = '';
+		for (i = 0; i < data.length; i += chunk)
+			strBytes += String.fromCharCode.apply(null, data.slice(i, i + chunk));
+		strBytes += String.fromCharCode.apply(null, data.slice(i));
+		return strBytes;
+	},
+
 	_extractImage: function(e) {
 		var img;
 		if (window.ThisIsTheiOSApp) {
@@ -415,9 +425,7 @@ app.definitions.Socket = L.Class.extend({
 		{
 			var data = e.imgBytes.subarray(e.imgIndex);
 			console.assert(data.length == 0 || data[0] != 68 /* D */, 'Socket: got a delta image, not supported !');
-
-			var strBytes = String.fromCharCode.apply(null, data);
-			img = 'data:image/png;base64,' + window.btoa(strBytes);
+			img = 'data:image/png;base64,' + window.btoa(this._strFromUint8(data));
 		}
 		return img;
 	},
