@@ -45,7 +45,8 @@ noinst_LTLIBRARIES = \
 	unit-wopi-temp.la \
 	unit-wopi-fileurl.la \
 	unit-wopi-httpheaders.la \
-	unit-wopi-httpredirect.la
+	unit-wopi-httpredirect.la \
+	unit-wopi-httpredirectloop.la
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
 AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION) $(ZLIB_LIBS)
@@ -159,6 +160,8 @@ unit_wopi_httpheaders_la_SOURCES = UnitWOPIHttpHeaders.cpp
 unit_wopi_httpheaders_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_httpredirect_la_SOURCES = UnitWOPIHttpRedirect.cpp
 unit_wopi_httpredirect_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_httpredirectloop_la_SOURCES = UnitWOPIHttpRedirectLoop.cpp
+unit_wopi_httpredirectloop_la_LIBADD = $(CPPUNIT_LIBS)
 unit_tiff_load_la_SOURCES = UnitTiffLoad.cpp
 unit_tiff_load_la_LIBADD = $(CPPUNIT_LIBS)
 unit_large_paste_la_SOURCES = UnitLargePaste.cpp
@@ -239,7 +242,9 @@ TESTS = \
 	unit-wopi-temp.la \
 	unit-wopi-fileurl.la \
 	unit-wopi-httpheaders \
-	unit-wopi-httpredirect.la
+	unit-wopi-httpredirect.la \
+	unit-wopi-httpredirectloop.la
+
 # TESTS += unit-admin.test
 # TESTS += unit-storage.test
 
@@ -304,7 +309,7 @@ group1.log: unit-tiletest.log unit-crash.log unit-insert-delete.log unit-each-vi
 			unit-session.log unit-uno-command.log unit-load.log unit-cursor.log unit-calc.log \
 			unit-bad-doc-load.log unit-hosting.log unit-wopi-loadencoded.log unit-integration.log \
 			unit-convert.log unit-typing.log unit-tilecache.log unit-timeout.log unit-base.log \
-			unit-wopi-httpheaders.log unit-wopi-httpredirect.log
+			unit-wopi-httpheaders.log unit-wopi-httpredirect.log unit-wopi-httpredirectloop.log
 	$(CLEANUP_COMMAND)
 	touch $@
 
