@@ -112,6 +112,7 @@ BUNDLE-VERSION
 # android stuff
 /android/lib/src/main/assets/dist
 /android/lib/src/main/assets/hello-world.od*
+/android/lib/src/main/assets/templates/untitled.od*
 /android/lib/src/main/cpp/CMakeLists.txt
 
 # gtk fake mobile app
@@ -144,3 +145,5 @@ autogen.input
 loleaflet/src/layer/tile/TilesSection.js
 loleaflet/src/layer/tile/ScrollSection.js
 loleaflet/src/layer/tile/AutoFillMarkerSection.js
+loleaflet/src/layer/tile/CommentListSection.js
+loleaflet/src/layer/tile/CommentSection.js
