@@ -1018,7 +1018,16 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
             LOG_END(logger, true);
         }
 
-    if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
+    if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_FOUND ||
+        response.getStatus() == Poco::Net::HTTPResponse::HTTP_MOVED_PERMANENTLY)
+    {
+        const std::string& location = response.get("Location");
+        LOG_TRC("WOPI::downloadDocument redirect to URI [" << LOOLWSD::anonymizeUrl(location) << "]:\n");
+
+        Poco::URI redirectUriObject(location);
+        return downloadDocument(redirectUriObject, uriAnonym, auth, cookies);
+    }
+    else if (response.getStatus() != Poco::Net::HTTPResponse::HTTP_OK)
     {
         std::ostringstream oss;
         Poco::StreamCopier::copyStream(rs, oss);
