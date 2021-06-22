@@ -726,7 +726,10 @@ perf-test:
 	@echo "Running perf tests..."
 	@mkdir -p $(abs_top_builddir)/test/data
 	@cp $(abs_top_srcdir)/test/data/perf-test.odt $(abs_top_builddir)/test/data/perf-test-edit.odt
-	$(NODE) $(abs_srcdir)/test/load.js $(abs_top_builddir) $(abs_top_builddir)/test/data/perf-test-edit.odt
+	for a in 2 3 4 5 6; do \
+		$(NODE) $(abs_srcdir)/test/load.js $(abs_top_builddir) $(abs_top_builddir)/test/data/perf-test-edit.odt testEdit_$$a & \
+	done
+	$(NODE) $(abs_srcdir)/test/load.js $(abs_top_builddir) $(abs_top_builddir)/test/data/perf-test-edit.odt testEdit_1
 
 # for now - unwinding ts and js deps for different targets is a real pain.
 .NOTPARALLEL:
