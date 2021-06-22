@@ -59,6 +59,7 @@
 
 #include "Log.hpp"
 #include "SpookyV2.h"
+#include "TraceEvent.hpp"
 
 namespace Png
 {
@@ -203,6 +204,8 @@ inline bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t st
                                  int height, int bufferWidth, int bufferHeight,
                                  std::vector<char>& output, LibreOfficeKitTileMode mode)
 {
+    ProfileZone pz("encodeSubBufferToPNG");
+
     const auto start = std::chrono::steady_clock::now();
 
     const bool res = impl_encodeSubBufferToPNG(pixmap, startX, startY, width, height, bufferWidth,
