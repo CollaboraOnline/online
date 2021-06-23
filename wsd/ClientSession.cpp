@@ -418,7 +418,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                                                           + std::to_string(getpid() + SYNTHETIC_LOLEAFLET_PID_OFFSET)
                                                           + ",\"tid\":1},\n");
                     }
-                    else if ((ph == "b" || ph == "e") &&
+                    else if ((ph == "S" || ph == "F") &&
                         getTokenUInt64(tokens[4], "id", id))
                     {
                         LOOLWSD::writeTraceEventRecording("{\"name\":\""
