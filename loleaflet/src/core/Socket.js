@@ -1523,13 +1523,13 @@ app.definitions.Socket = L.Class.extend({
 		result.args = args;
 
 		if (this.traceEventRecordingToggle)
-			this.sendMessage('TRACEEVENT name=' + name + ' ph=b ts=' + Math.round(performance.now() * 1000) + ' id=' + result.id
+			this.sendMessage('TRACEEVENT name=' + name + ' ph=S ts=' + Math.round(performance.now() * 1000) + ' id=' + result.id
 					 + this._stringifyArgs(args));
 
 		var that = this;
 		result.finish = function () {
 			if (this.active) {
-				that.sendMessage('TRACEEVENT name=' + name + ' ph=e ts=' + Math.round(performance.now() * 1000) + ' id=' + this.id
+				that.sendMessage('TRACEEVENT name=' + name + ' ph=F ts=' + Math.round(performance.now() * 1000) + ' id=' + this.id
 						 + that._stringifyArgs(this.args));
 				this.active = false;
 			}
