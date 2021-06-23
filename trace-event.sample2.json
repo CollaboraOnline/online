@@ -16,16 +16,31 @@
 
     {"comment":"  A single pair of async b and e events. These doesn't show up in Chrome either, sigh."},
 
-    {"name":"async2", "ph":"b", "id":1, "ts":1623142954401000, "pid":1001, "tid":1},
-    {"name":"async2", "ph":"e", "id":1, "ts":1623142954401200, "pid":1001, "tid":1},
+    {"name":"async2", "ph":"b", "id":2, "ts":1623142954401000, "pid":1001, "tid":1},
+    {"name":"async2", "ph":"e", "id":2, "ts":1623142954401200, "pid":1001, "tid":1},
 
-    {"comment":"  Two pairs of async S(tart) and F(inish) events, nested (with the same id).  "},
+    {"comment":"  Two pairs of async S(tart) and F(inish) events, nested.  "},
     {"comment":"  These are said to be deprecated but do show up in Chrome. Yay for documentation and implementation being in sync.  "},
 
-    {"name":"async3",  "ph":"S", "id":1, "ts":1623142954401200, "pid":1001, "tid":1},
-    {"name":"async32", "ph":"S", "id":1, "ts":1623142954401250, "pid":1001, "tid":1},
-    {"name":"async32", "ph":"F", "id":1, "ts":1623142954401350, "pid":1001, "tid":1},
-    {"name":"async3",  "ph":"F", "id":1, "ts":1623142954401700, "pid":1001, "tid":1},
+    {"name":"async3",  "ph":"S", "id":3, "ts":1623142954401200, "pid":1001, "tid":1},
+    {"name":"async32", "ph":"S", "id":3, "ts":1623142954401250, "pid":1001, "tid":1},
+    {"name":"async32", "ph":"F", "id":3, "ts":1623142954401350, "pid":1001, "tid":1},
+    {"name":"async3",  "ph":"F", "id":3, "ts":1623142954401700, "pid":1001, "tid":1},
+
+    {"comment":"  Two pairs of async S(tart) and F(inish) events, nested (without any id).  "},
+    {"comment":"  Not displayed by Chrome. Is the 'id' required?  "},
+
+    {"name":"async4",  "ph":"S",         "ts":1623142954401800, "pid":1001, "tid":1},
+    {"name":"async42", "ph":"S",         "ts":1623142954401850, "pid":1001, "tid":1},
+    {"name":"async42", "ph":"F",         "ts":1623142954402150, "pid":1001, "tid":1},
+    {"name":"async4",  "ph":"F",         "ts":1623142954402200, "pid":1001, "tid":1},
+
+    {"comment":"  Two pairs of async S(tart) and F(inish) events, overlapping, with an id.  "},
+
+    {"name":"async5",  "ph":"S", "id":5, "ts":1623142954401900, "pid":1001, "tid":1},
+    {"name":"async6",  "ph":"S", "id":6, "ts":1623142954401950, "pid":1001, "tid":1},
+    {"name":"async5",  "ph":"F", "id":5, "ts":1623142954402050, "pid":1001, "tid":1},
+    {"name":"async6",  "ph":"F", "id":6, "ts":1623142954402100, "pid":1001, "tid":1},
 
     {"comment":"  Some complete events. If complete events for the same thread are not nested properly  "},
     {"comment":"  (as the first two aren't, they overlap) Chrome mashes them together on the same line.  "},
