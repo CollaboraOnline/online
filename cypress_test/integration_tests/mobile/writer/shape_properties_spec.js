@@ -4,8 +4,29 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Change shape properties via mobile wizard.', function() {
-	var defaultGeometry = 'M 1965,4863 L 7957,10855 1965,10855 1965,4863 1965,4863 Z';
+	const defaultStartPoint = [1953, 4875];
+	const defaultBase = 5992;
+	const defaultAltitude = 5992;
+	const unitScale = 2540.37;
+
 	var testFileName = 'shape_properties.odt';
+
+	function computeRightTrianglePath(start, base, altitude, horizontalMirrored, verticalMirrored) {
+		// FIXME: This is probably a bug in core side. On flipping horizontally the base length changes.
+		base = horizontalMirrored ? base + 54 : base;
+
+		const xStart = start[0] + (horizontalMirrored ? base : 0);
+		const xEnd = start[0] + (horizontalMirrored ? 0 : base);
+		const yStart = start[1] + (verticalMirrored ? altitude : 0);
+		const yEnd = start[1] + (verticalMirrored ? 0 : altitude);
+
+		var pathString = `M ${xStart},${yStart}`;
+		pathString += ` L ${xEnd},${yEnd}`;      // Hypotenuse
+		pathString += ` ${xStart},${yEnd}`;      // Base
+		pathString += ` ${xStart},${yStart}`;    // Altitude
+		pathString += ` ${xStart},${yStart} Z`;  // Close the polygon
+		return pathString;
+	}
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
@@ -77,7 +98,8 @@ describe('Change shape properties via mobile wizard.', function() {
 
 	it('Check default shape geometry.', function() {
 		// Geometry
-		//cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').should('have.attr', 'd', defaultGeometry);
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
+			.should('have.attr', 'd', computeRightTrianglePath(defaultStartPoint, defaultBase, defaultAltitude));
 		// Fill color
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
 			.should('have.attr', 'fill', 'rgb(114,159,207)');
@@ -90,9 +112,11 @@ describe('Change shape properties via mobile wizard.', function() {
 		helper.typeIntoInputField('#selectwidth .spinfield', '4.2', true, false);
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('not.have.attr', 'd', defaultGeometry);
+			.should('not.have.attr', 'd', computeRightTrianglePath(defaultStartPoint, defaultBase, defaultAltitude));
 
-		//cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').should('have.attr', 'd', 'M 1965,4863 L 12635,10855 1965,10855 1965,4863 1965,4863 Z');
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
+			.should('have.attr', 'd',
+				computeRightTrianglePath(defaultStartPoint, Math.floor(4.2 * unitScale) /* new base */, defaultAltitude));
 	});
 
 	it('Change shape height.', function() {
@@ -102,9 +126,11 @@ describe('Change shape properties via mobile wizard.', function() {
 		helper.typeIntoInputField('#selectheight .spinfield', '5.2', true, false);
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('not.have.attr', 'd', defaultGeometry);
+			.should('not.have.attr', 'd', computeRightTrianglePath(defaultStartPoint, defaultBase, defaultAltitude));
 
-		//cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').should('have.attr', 'd', 'M 1965,4863 L 7957,18073 1965,18073 1965,4863 1965,4863 Z');
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
+			.should('have.attr', 'd',
+				computeRightTrianglePath(defaultStartPoint, defaultBase, Math.ceil(5.2 * unitScale) /* new altitude */));
 	});
 
 	it('Change size with keep ratio enabled.', function() {
@@ -120,9 +146,11 @@ describe('Change shape properties via mobile wizard.', function() {
 		helper.inputOnIdle('#selectheight .spinfield', '5.2');
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('not.have.attr', 'd', defaultGeometry);
+			.should('not.have.attr', 'd', computeRightTrianglePath(defaultStartPoint, defaultBase, defaultAltitude));
 
-		//cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').should('have.attr', 'd', 'M 1965,4863 L 15175,18073 1965,18073 1965,4863 1965,4863 Z');
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
+			.should('have.attr', 'd',
+				computeRightTrianglePath(defaultStartPoint, Math.floor(5.2 * unitScale), Math.ceil(5.2 * unitScale)));
 	});
 
 	it('Vertical mirroring', function() {
@@ -131,9 +159,13 @@ describe('Change shape properties via mobile wizard.', function() {
 		helper.clickOnIdle('#FlipVertical');
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('not.have.attr', 'd', defaultGeometry);
+			.should('not.have.attr', 'd', computeRightTrianglePath(defaultStartPoint, defaultBase, defaultAltitude));
 
-		//cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').should('have.attr', 'd', 'M 1965,10853 L 7957,4861 1965,4861 1965,10853 1965,10853 Z');
+		// Probably due to some rounding in core, we get an offset of 1 pixel in y.
+		const startPoint = [defaultStartPoint[0], defaultStartPoint[1] - 1];
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
+			.should('have.attr', 'd',
+				computeRightTrianglePath(startPoint, defaultBase, defaultAltitude, false /* horiz mirroring */, true /* vert mirroring */));
 	});
 
 	it('Horizontal mirroring', function() {
@@ -144,9 +176,12 @@ describe('Change shape properties via mobile wizard.', function() {
 		triggerNewSVG();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('not.have.attr', 'd', defaultGeometry);
+			.should('not.have.attr', 'd', computeRightTrianglePath(defaultStartPoint, defaultBase, defaultAltitude));
 
-		//cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').should('have.attr', 'd', 'M 8010,4863 L 1963,10855 8010,10855 8010,4863 8010,4863 Z');
+		const startPoint = [defaultStartPoint[0] - 2, defaultStartPoint[1]];
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
+			.should('have.attr', 'd',
+				computeRightTrianglePath(startPoint, defaultBase, defaultAltitude, true /* horiz mirroring */, false /* vert mirroring */));
 	});
 
 	it('Trigger moving backward / forward', function() {
