@@ -1296,7 +1296,7 @@ AC_SUBST(PURCHASE_DISCRIPTION)
 
 WRITER_SUBSCRIPTION_HIGHLIGHTS=
 if test "$enable_freemium" = "yes"; then
-    WRITER_SUBSCRIPTION_HIGHLIGHTS="Review and read your writing with ease"
+    WRITER_SUBSCRIPTION_HIGHLIGHTS="Review and write with ease"
 fi
 AC_DEFINE_UNQUOTED([WRITER_SUBSCRIPTION_HIGHLIGHTS],["$WRITER_SUBSCRIPTION_HIGHLIGHTS"],[Default value of freemium.writer_subscription_highlights])
 AC_SUBST(WRITER_SUBSCRIPTION_HIGHLIGHTS)
