@@ -42,6 +42,13 @@
     {"name":"async5",  "ph":"F", "id":5, "ts":1623142954402050, "pid":1001, "tid":1},
     {"name":"async6",  "ph":"F", "id":6, "ts":1623142954402100, "pid":1001, "tid":1},
 
+    {"comment":"  Events with same names at a later time, not overlapping.  "},
+
+    {"name":"async5",  "ph":"S", "id":5, "ts":1623142954402900, "pid":1001, "tid":1},
+    {"name":"async6",  "ph":"S", "id":6, "ts":1623142954402950, "pid":1001, "tid":1},
+    {"name":"async5",  "ph":"F", "id":5, "ts":1623142954403050, "pid":1001, "tid":1},
+    {"name":"async6",  "ph":"F", "id":6, "ts":1623142954403100, "pid":1001, "tid":1},
+
     {"comment":"  Some complete events. If complete events for the same thread are not nested properly  "},
     {"comment":"  (as the first two aren't, they overlap) Chrome mashes them together on the same line.  "},
 
