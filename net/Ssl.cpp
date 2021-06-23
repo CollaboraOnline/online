@@ -34,6 +34,51 @@ extern "C"
 
 std::unique_ptr<SslContext> SslContext::Instance(nullptr);
 
+namespace ssl
+{
+
+// The locking API is removed from 1.1 onward.
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
+
+/// Manages the SSL locks.
+class Lock
+{
+public:
+    Lock()
+    {
+        for (int x = 0; x < CRYPTO_num_locks(); ++x)
+        {
+            _mutexes.emplace_back(new std::mutex);
+        }
+    }
+
+    void lock(int mode, int n)
+    {
+        assert(n < CRYPTO_num_locks() && "Unexpected lock index");
+        if (mode & CRYPTO_LOCK)
+        {
+            _mutexes[n]->lock();
+        }
+        else
+        {
+            _mutexes[n]->unlock();
+        }
+    }
+
+private:
+    std::vector<std::unique_ptr<std::mutex>> _mutexes;
+};
+
+/// Locks are shared across SSL Contexts (by openssl design).
+static inline void lock(int mode, int n, const char* /*file*/, int /*line*/)
+{
+    static ssl::Lock lock;
+    lock.lock(mode, n);
+}
+
+#endif
+} // namespace ssl
+
 SslContext::SslContext(const std::string& certFilePath,
                        const std::string& keyFilePath,
                        const std::string& caFilePath,
@@ -42,12 +87,6 @@ SslContext::SslContext(const std::string& certFilePath,
 {
     const std::vector<char> rand = Util::rng::getBytes(512);
     RAND_seed(&rand[0], rand.size());
-
-    // Initialize multi-threading support.
-    for (int x = 0; x < CRYPTO_num_locks(); ++x)
-    {
-        _mutexes.emplace_back(new std::mutex);
-    }
 
 #if OPENSSL_VERSION_NUMBER >= 0x0907000L && OPENSSL_VERSION_NUMBER < 0x10100003L
     OPENSSL_config(nullptr);
@@ -61,7 +100,7 @@ SslContext::SslContext(const std::string& certFilePath,
     OpenSSL_add_all_algorithms();
 #endif
 
-    CRYPTO_set_locking_callback(&SslContext::lock);
+    CRYPTO_set_locking_callback(&ssl::lock);
     CRYPTO_set_id_callback(&SslContext::id);
     CRYPTO_set_dynlock_create_callback(&SslContext::dynlockCreate);
     CRYPTO_set_dynlock_lock_callback(&SslContext::dynlock);
@@ -143,30 +182,12 @@ SslContext::~SslContext()
     CRYPTO_set_id_callback(0);
 
     CONF_modules_free();
-
-    _mutexes.clear();
 }
 
 void SslContext::uninitialize()
 {
     assert (Instance);
     Instance.reset();
-}
-
-void SslContext::lock(int mode, int n, const char* /*file*/, int /*line*/)
-{
-    assert(n < CRYPTO_num_locks());
-    if (Instance)
-    {
-        if (mode & CRYPTO_LOCK)
-        {
-            Instance->_mutexes[n]->lock();
-        }
-        else
-        {
-            Instance->_mutexes[n]->unlock();
-        }
-    }
 }
 
 unsigned long SslContext::id()
