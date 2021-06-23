@@ -1,11 +1,65 @@
-/* global describe it cy beforeEach require afterEach Cypress */
+/* global describe it cy beforeEach require afterEach Cypress expect */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Change shape properties via mobile wizard.', function() {
-	var defaultGeometry = 'M 1965,4863 L 7957,10855 1965,10855 1965,4863 1965,4863 Z';
+	const defaultStartPoint = [1953, 4875];
+	const defaultBase = 5992;
+	const defaultAltitude = 5992;
+	const unitScale = 2540.37;
+
 	var testFileName = 'shape_properties.odt';
+
+	class TriangleCoordinatesMatcher {
+		/**
+		 * @param {number} start
+		 * @param {number} base
+		 * @param {number} altitude
+		 * @param {boolean} horizontalMirrored
+		 * @param {boolean} verticalMirrored
+		 */
+		constructor(start, base, altitude, horizontalMirrored, verticalMirrored, delta) {
+			// FIXME: This is probably a bug in core side. On flipping horizontally the base length changes.
+			base = horizontalMirrored ? base + 54 : base;
+
+			this.xStart = start[0] + (horizontalMirrored ? base : 0);
+			this.xEnd = start[0] + (horizontalMirrored ? 0 : base);
+			this.yStart = start[1] + (verticalMirrored ? altitude : 0);
+			this.yEnd = start[1] + (verticalMirrored ? 0 : altitude);
+			this.delta = delta || 30;
+		}
+
+		/**
+		 * Checks the correctness of triangle svg path based on coordinates.
+		 * @param {string} pathCommandStr is the value of the attribute 'd' of the triangle shape's svg path.
+		 */
+		match(pathCommandStr) {
+			// M 1953,10839 L 7945,4847 1953,4847 1953,10839 1953,10839 Z
+			const pathCmdSplit = pathCommandStr.split(' ');
+			expect(pathCmdSplit).to.have.length(8);
+			TriangleCoordinatesMatcher.pointMatch(pathCmdSplit[1], this.xStart, this.yStart, this.delta, 'top of hypotenuse');
+			TriangleCoordinatesMatcher.pointMatch(pathCmdSplit[3], this.xEnd, this.yEnd, this.delta, 'bottom of hypotenuse');
+			TriangleCoordinatesMatcher.pointMatch(pathCmdSplit[4], this.xStart, this.yEnd, this.delta, 'left end of base');
+		}
+
+		/**
+		 * Does approximate matching of a point with the given expected values and error margin.
+		 * @param {string} pointStr
+		 * @param {number} expectedX
+		 * @param {number} expectedY
+		 * @param {number} delta
+		 * @param {string} contextString
+		 */
+		static pointMatch(pointStr, expectedX, expectedY, delta, contextString) {
+			const pointParts = pointStr.split(',');
+			expect(pointParts).to.have.length(2);
+			const x = parseInt(pointParts[0]);
+			const y = parseInt(pointParts[1]);
+			expect(x).to.be.closeTo(expectedX, delta, contextString + ' x ');
+			expect(y).to.be.closeTo(expectedY, delta, contextString + ' y ');
+		}
+	}
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
@@ -81,7 +135,9 @@ describe('Change shape properties via mobile wizard.', function() {
 
 	it('Check default shape geometry.', function() {
 		// Geometry
-		//cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').should('have.attr', 'd', defaultGeometry);
+		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, defaultAltitude);
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
+			.invoke('attr', 'd').should(matcher.match.bind(matcher));
 		// Fill color
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
 			.should('have.attr', 'fill', 'rgb(114,159,207)');
@@ -92,11 +148,11 @@ describe('Change shape properties via mobile wizard.', function() {
 		openPosSizePanel();
 
 		helper.typeIntoInputField('#selectwidth .spinfield', '4.2', true, false);
+		cy.wait(1000);
 
+		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, Math.floor(4.2 * unitScale) /* new base */, defaultAltitude);
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('not.have.attr', 'd', defaultGeometry);
-
-		//cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').should('have.attr', 'd', 'M 1965,4863 L 12635,10855 1965,10855 1965,4863 1965,4863 Z');
+			.invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
 
 	it('Change shape height.', function() {
@@ -104,11 +160,11 @@ describe('Change shape properties via mobile wizard.', function() {
 		openPosSizePanel();
 
 		helper.typeIntoInputField('#selectheight .spinfield', '5.2', true, false);
+		cy.wait(1000);
 
+		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, Math.ceil(5.2 * unitScale) /* new altitude */);
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('not.have.attr', 'd', defaultGeometry);
-
-		//cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').should('have.attr', 'd', 'M 1965,4863 L 7957,18073 1965,18073 1965,4863 1965,4863 Z');
+			.invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
 
 	it('Change size with keep ratio enabled.', function() {
@@ -122,35 +178,35 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		// Change height
 		helper.inputOnIdle('#selectheight .spinfield', '5.2');
+		cy.wait(1000);
 
+		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, Math.floor(5.2 * unitScale), Math.ceil(5.2 * unitScale));
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('not.have.attr', 'd', defaultGeometry);
-
-		//cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').should('have.attr', 'd', 'M 1965,4863 L 15175,18073 1965,18073 1965,4863 1965,4863 Z');
+			.invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
 
 	it('Vertical mirroring', function() {
 		openPosSizePanel();
 
 		helper.clickOnIdle('#FlipVertical');
+		cy.wait(1000);
 
+		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, defaultAltitude, false /* horiz mirroring */, true /* vert mirroring */);
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('not.have.attr', 'd', defaultGeometry);
-
-		//cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').should('have.attr', 'd', 'M 1965,10853 L 7957,4861 1965,4861 1965,10853 1965,10853 Z');
+			.invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
 
 	it('Horizontal mirroring', function() {
 		openPosSizePanel();
 
 		helper.clickOnIdle('#FlipHorizontal');
-
 		triggerNewSVG();
 
-		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
-			.should('not.have.attr', 'd', defaultGeometry);
+		cy.wait(1000);
 
-		//cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path').should('have.attr', 'd', 'M 8010,4863 L 1963,10855 8010,10855 8010,4863 8010,4863 Z');
+		const matcher = new TriangleCoordinatesMatcher(defaultStartPoint, defaultBase, defaultAltitude, true /* horiz mirroring */, false /* vert mirroring */);
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g g g path')
+			.invoke('attr', 'd').should(matcher.match.bind(matcher));
 	});
 
 	it('Trigger moving backward / forward', function() {
