@@ -383,11 +383,11 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		//impressHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		// Check that we have a date in MM/DD/YY format
-		//var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
-		//helper.matchClipboardText(regex);
+		var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
+		helper.matchClipboardText(regex);
 	});
 
 	it('Insert date field (variable) inside existing text shape.', function() {
@@ -402,11 +402,11 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		//impressHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		// Check that we have a date in MM/DD/YY format
-		//var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
-		//helper.matchClipboardText(regex);
+		var regex = /\d{1,2}[/]\d{1,2}[/]\d{1,2}/;
+		helper.matchClipboardText(regex);
 	});
 
 	it('Insert time field (fixed) inside existing text shape.', function() {
@@ -421,11 +421,11 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		//impressHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		// Check that we have a time in HH/MM/SS format
-		//var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
-		//helper.matchClipboardText(regex);
+		var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
+		helper.matchClipboardText(regex);
 	});
 
 	it('Insert time field (variable) inside existing text shape.', function() {
@@ -440,11 +440,11 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		//impressHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
 		// Check that we have a time in HH/MM/SS format
-		//var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
-		//helper.matchClipboardText(regex);
+		var regex = /\d{1,2}[:]\d{1,2}[:]\d{1,2}/;
+		helper.matchClipboardText(regex);
 	});
 
 	it('Insert slide number inside existing text shape.', function() {
@@ -459,9 +459,9 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		//impressHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
-		//helper.expectTextForClipboard('1');
+		helper.expectTextForClipboard('1');
 	});
 
 	it('Insert slide title inside existing text shape.', function() {
@@ -476,9 +476,9 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		//impressHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
-		//helper.expectTextForClipboard('Slide 1');
+		helper.expectTextForClipboard('Slide 1');
 	});
 
 	it('Insert slide count inside existing text shape.', function() {
@@ -493,9 +493,9 @@ describe('Impress insertion wizard.', function() {
 			.click();
 
 		// Check the text
-		//impressHelper.selectTextOfShape();
+		impressHelper.selectTextOfShape();
 
-		//helper.expectTextForClipboard('1');
+		helper.expectTextForClipboard('1');
 	});
 
 	it('Insert new slide with plus button.', function() {
