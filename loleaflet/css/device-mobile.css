@@ -781,3 +781,12 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	width: 90%;
 	position: absolute;
 }
+/*   - Import text */
+#mobile-wizard-content #separatoroptions {
+	margin-top: 54px;
+}
+
+#mobile-wizard-content #toseparatedby.checkbutton {
+	margin-top: -74px;
+	margin-bottom: 24px;
+}
