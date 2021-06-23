@@ -62,7 +62,6 @@ private:
 
     // Multithreading support for OpenSSL.
     // Not needed in recent (1.x?) versions.
-    static void lock(int mode, int n, const char* file, int line);
     static unsigned long id();
     static struct CRYPTO_dynlock_value* dynlockCreate(const char* file, int line);
     static void dynlock(int mode, struct CRYPTO_dynlock_value* lock, const char* file, int line);
@@ -70,8 +69,6 @@ private:
 
 private:
     static std::unique_ptr<SslContext> Instance;
-
-    std::vector<std::unique_ptr<std::mutex>> _mutexes;
 
     SSL_CTX* _ctx;
 };
