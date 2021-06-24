@@ -197,9 +197,10 @@ L.Clipboard = L.Class.extend({
 	// type: GET or POST
 	// url:  where to get / send the data
 	// optionalFormData: used for POST for form data
+	// forClipboard: a boolean telling if we need the "Confirm copy to clipboard" link in the end
 	// completeFn: called on completion - with response.
 	// progressFn: allows splitting the progress bar up.
-	_doAsyncDownload: function(type,url,optionalFormData,completeFn,progressFn,onErrorFn) {
+	_doAsyncDownload: function(type,url,optionalFormData,forClipboard,completeFn,progressFn,onErrorFn) {
 		try {
 			var that = this;
 			var request = new XMLHttpRequest();
@@ -211,7 +212,7 @@ L.Clipboard = L.Class.extend({
 			}
 			request.onload = function() {
 				that._downloadProgress._onComplete();
-				if (type === 'POST') {
+				if (!forClipboard) {
 					that._downloadProgress._onClose();
 				}
 
@@ -257,13 +258,13 @@ L.Clipboard = L.Class.extend({
 		var that = this;
 		// FIXME: add a timestamp in the links (?) ignore old / un-responsive servers (?)
 		that._doAsyncDownload(
-			'GET', src, null,
+			'GET', src, null, false,
 			function(response) {
 				console.log('download done - response ' + response);
 				var formData = new FormData();
 				formData.append('data', response, 'clipboard');
 				that._doAsyncDownload(
-					'POST', dest, formData,
+					'POST', dest, formData, false,
 					function() {
 						if (this.pasteSpecialVex && this.pasteSpecialVex.isOpen) {
 							vex.close(this.pasteSpecialVex);
@@ -298,7 +299,7 @@ L.Clipboard = L.Class.extend({
 				var formData = new FormData();
 				formData.append('data', new Blob([fallbackHtml]), 'clipboard');
 				that._doAsyncDownload(
-					'POST', dest, formData,
+					'POST', dest, formData, false,
 					function() {
 						if (this.pasteSpecialVex && this.pasteSpecialVex.isOpen) {
 							vex.close(this.pasteSpecialVex);
@@ -337,6 +338,8 @@ L.Clipboard = L.Class.extend({
 		return false;
 	},
 
+	// Returns true if it finished synchronously, and false if it have started an async operation
+	// that will likely end at a later time (required to avoid closing progress bar in paste(ev))
 	dataTransferToDocument: function (dataTransfer, preferInternal, htmlText, usePasteKeyEvent) {
 		// Look for our HTML meta magic.
 		//   cf. ClientSession.cpp /textselectioncontent:/
@@ -352,22 +355,23 @@ L.Clipboard = L.Class.extend({
 			// Home from home: short-circuit internally.
 			console.log('short-circuit, internal paste');
 			this._doInternalPaste(this._map, usePasteKeyEvent);
-			return;
+			return true;
 		}
 
 		if (this._map['wopi'].DisableCopy)
-			return;
+			return true;
 
 		// Do we have a remote Online we can suck rich data from ?
 		if (meta !== '')
 		{
 			console.log('Transfer between servers\n\t"' + meta + '" vs. \n\t"' + id + '"');
 			this._dataTransferDownloadAndPasteAsync(meta, this.getMetaURL(), htmlText);
-			return;
+			return false; // just started async operation - did not finish yet
 		}
 
 		// Fallback.
 		this.dataTransferToDocumentFallback(dataTransfer, htmlText, usePasteKeyEvent);
+		return true;
 	},
 
 	dataTransferToDocumentFallback: function(dataTransfer, htmlText, usePasteKeyEvent) {
@@ -419,7 +423,7 @@ L.Clipboard = L.Class.extend({
 			formData.append('file', content);
 
 			var that = this;
-			this._doAsyncDownload('POST', this.getMetaURL(), formData,
+			this._doAsyncDownload('POST', this.getMetaURL(), formData, false,
 				function() {
 					console.log('Posted ' + content.size + ' bytes successfully');
 					that._doInternalPaste(that._map, usePasteKeyEvent);
@@ -789,10 +793,11 @@ L.Clipboard = L.Class.extend({
 			// Always capture the html content separate as we may lose it when we
 			// pass the clipboard data to a different context (async calls, f.e.).
 			var htmlText = ev.clipboardData.getData('text/html');
-			this.dataTransferToDocument(ev.clipboardData, /* preferInternal = */ true, htmlText, usePasteKeyEvent);
+			var hasFinished = this.dataTransferToDocument(ev.clipboardData, /* preferInternal = */ true, htmlText, usePasteKeyEvent);
 			this._map._textInput._abortComposition(ev);
 			this._clipboardSerial++;
-			this._stopHideDownload();
+			if (hasFinished)
+				this._stopHideDownload();
 		}
 		return false;
 	},
