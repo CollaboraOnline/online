@@ -304,7 +304,7 @@ inline int connectToLocalServer(int portNumber, int socketTimeOutMS, bool blocki
 inline bool haveSsl()
 {
 #if ENABLE_SSL
-    return SslContext::isInitialized();
+    return ssl::Manager::isClientContextInitialized();
 #else
     return false;
 #endif
