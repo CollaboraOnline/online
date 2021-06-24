@@ -799,7 +799,11 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertColumnsAfter'},
 				{uno: '.uno:DeleteRows'},
 				{uno: '.uno:DeleteColumns'},
-				{uno: '.uno:MergeCells'}]
+				{uno: '.uno:MergeCells'},
+				{uno: '.uno:SelectTable'},
+				{uno: '.uno:EntireRow'},
+				{uno: '.uno:EntireColumn'}
+			]
 			},
 			{name: _UNO('.uno:SlideMenu', 'presentation'), id: 'slidemenu', type: 'menu', menu: [
 				{name: _UNO('.uno:InsertSlide', 'presentation'), id: 'insertpage', type: 'action'},
