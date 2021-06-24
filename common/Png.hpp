@@ -204,7 +204,19 @@ inline bool encodeSubBufferToPNG(unsigned char* pixmap, size_t startX, size_t st
                                  int height, int bufferWidth, int bufferHeight,
                                  std::vector<char>& output, LibreOfficeKitTileMode mode)
 {
-    ProfileZone pz("encodeSubBufferToPNG");
+    std::shared_ptr<ProfileZone> pz;
+
+    if (TraceEvent::isRecordingOn())
+    {
+        // Allocate the ProfileZone dynamically to possibly costly std::map and contents
+        // constructors being invoked even when Trace Events are not being recorded.
+        pz = std::make_shared<ProfileZone>("encodeSubBufferToPNG",
+                                           std::map<std::string, std::string>({
+                                                   { "startX", std::to_string(startX) },
+                                                   { "startY", std::to_string(startY) },
+                                                   { "width", std::to_string(width) },
+                                                   { "height", std::to_string(height) } }));
+    }
 
     const auto start = std::chrono::steady_clock::now();
 
