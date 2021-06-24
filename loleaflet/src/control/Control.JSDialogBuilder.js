@@ -249,7 +249,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (builder.wizard.setCurrentScrollPosition)
 			builder.wizard.setCurrentScrollPosition();
 
-		if (objectType == 'toolbutton' && eventType == 'click') {
+		if (objectType == 'toolbutton' && eventType == 'click' && data.indexOf('.uno:') >= 0) {
 			// encode spaces
 			var encodedCommand = data.replace(' ', '%20');
 			builder.map.sendUnoCommand(encodedCommand);
@@ -2450,8 +2450,16 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
 		controls['container'] = div;
 
+		var isRealUnoCommand = true;
+
 		if (data.command || data.postmessage === true) {
-			var id = data.command ? encodeURIComponent(data.command.substr('.uno:'.length)).replace(/\%/g, '') : data.id;
+			var id = data.id;
+			if (data.command && data.command.indexOf('.uno:') >= 0)
+				id = encodeURIComponent(data.command.substr('.uno:'.length)).replace(/\%/g, '');
+			else {
+				id = data.command;
+				isRealUnoCommand = false;
+			}
 			id = id.replace(/\./g, '-');
 			div.id = id;
 
@@ -2522,7 +2530,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			controls['label'] = button;
 		}
 
-		if (options && options.hasDropdownArrow) {
+		if ((options && options.hasDropdownArrow) || data.dropdown === true) {
 			$(div).addClass('has-dropdown');
 			var arrow = L.DomUtil.create('i', 'unoarrow', div);
 			controls['arrow'] = arrow;
@@ -2533,8 +2541,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.refreshSidebar = true;
 				if (data.postmessage)
 					builder.map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: data.id} });
-				else
+				else if (isRealUnoCommand)
 					builder.callback('toolbutton', 'click', button, data.command, builder);
+				else
+					builder.callback('toolbox', 'click', parentContainer, data.command, builder);
 			}
 		});
 
