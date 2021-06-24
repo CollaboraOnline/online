@@ -27,33 +27,15 @@
 class SslContext
 {
 public:
-    static void initialize(const std::string& certFilePath, const std::string& keyFilePath,
-                           const std::string& caFilePath,
-                           const std::string& cipherList = std::string())
-    {
-        assert (!Instance);
-        Instance.reset(new SslContext(certFilePath, keyFilePath, caFilePath, cipherList));
-    }
+    SslContext(const std::string& certFilePath, const std::string& keyFilePath,
+               const std::string& caFilePath, const std::string& cipherList);
 
-    static void uninitialize();
-
-    /// Returns true iff the SslContext has been initialized.
-    static bool isInitialized() { return !!Instance; }
-
-    static SSL* newSsl()
-    {
-        assert(SslContext::isInitialized() && "SslContext is not initialized");
-        return SSL_new(Instance->_ctx);
-    }
+    /// Returns a new SSL Context to be used with raw API.
+    SSL* newSsl() { return SSL_new(_ctx); }
 
     ~SslContext();
 
 private:
-    SslContext(const std::string& certFilePath,
-               const std::string& keyFilePath,
-               const std::string& caFilePath,
-               const std::string& cipherList);
-
     void initDH();
     void initECDH();
     void shutdown();
@@ -68,9 +50,61 @@ private:
     static void dynlockDestroy(struct CRYPTO_dynlock_value* lock, const char* file, int line);
 
 private:
-    static std::unique_ptr<SslContext> Instance;
-
     SSL_CTX* _ctx;
 };
+
+namespace ssl
+{
+class Manager
+{
+public:
+    static void initializeServerContext(const std::string& certFilePath,
+                                        const std::string& keyFilePath,
+                                        const std::string& caFilePath,
+                                        const std::string& cipherList = std::string())
+    {
+        assert(!isServerContextInitialized() &&
+               "Cannot initialize the server context more than once");
+        ServerInstance.reset(new SslContext(certFilePath, keyFilePath, caFilePath, cipherList));
+    }
+
+    static void uninitializeServerContext() { ServerInstance.reset(); }
+
+    /// Returns true iff the Server SslContext has been initialized.
+    static bool isServerContextInitialized() { return !!ServerInstance; }
+
+    static SSL* newServerSsl()
+    {
+        assert(isServerContextInitialized() && "Server SslContext is not initialized");
+        return ServerInstance->newSsl();
+    }
+
+    static void initializeClientContext(const std::string& certFilePath,
+                                        const std::string& keyFilePath,
+                                        const std::string& caFilePath,
+                                        const std::string& cipherList = std::string())
+    {
+        assert(!isClientContextInitialized() &&
+               "Cannot initialize the client context more than once");
+        ClientInstance.reset(new SslContext(certFilePath, keyFilePath, caFilePath, cipherList));
+    }
+
+    static void uninitializeClientContext() { ClientInstance.reset(); }
+
+    /// Returns true iff the SslContext has been initialized.
+    static bool isClientContextInitialized() { return !!ClientInstance; }
+
+    static SSL* newClientSsl()
+    {
+        assert(isClientContextInitialized() && "Client SslContext is not initialized");
+        return ClientInstance->newSsl();
+    }
+
+private:
+    static std::unique_ptr<SslContext> ServerInstance;
+    static std::unique_ptr<SslContext> ClientInstance;
+};
+
+} // namespace ssl
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
