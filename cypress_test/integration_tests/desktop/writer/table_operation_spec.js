@@ -1,46 +1,35 @@
-/* global describe it cy require expect afterEach */
+/* global describe it cy beforeEach Cypress require afterEach expect */
 
 var helper = require('../../common/helper');
-var mobileHelper = require('../../common/mobile_helper');
-var writerHelper = require('../../common/writer_helper');
+var desktopHelper = require('../../common/desktop_helper');
+var mode = Cypress.env('USER_INTERFACE');
 
-describe('Change table properties / layout via mobile wizard.', function() {
-	var testFileName = '';
+// This whole test suite uses new native sidebar which is not implemented in co-6-4 yet
+//TODO: enable this tests when sidebar is implemented natively
+describe.skip('Table operations', function() {
+	var testFileName = 'table_operation.odt';
 
-	function before(testFile) {
-		testFileName = testFile;
+	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
-
-		// Click on edit button
-		mobileHelper.enableEditingMobile();
-	}
+		desktopHelper.selectZoomLevel('70');
+	});
 
 	afterEach(function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	function openTablePanel() {
-		mobileHelper.openMobileWizard();
-
-		helper.clickOnIdle('#TableEditPanel');
-
-		cy.get('#InsertRowsBefore')
-			.should('be.visible');
-	}
-
 	function selectFullTable() {
-		helper.clickOnIdle('#SelectTable');
+		helper.moveCursor('down');
+
+		helper.typeIntoDocument('{ctrl}{a}');
 
 		cy.get('#copy-paste-container table')
 			.should('exist');
 	}
 
 	it('Insert row before.', function() {
-		before('table_properties.odt');
 
-		openTablePanel();
-
-		helper.clickOnIdle('#InsertRowsBefore');
+		helper.clickOnIdle('#table-insert #InsertRowsBefore');
 
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
@@ -59,11 +48,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	});
 
 	it('Insert row after.', function() {
-		before('table_properties.odt');
 
-		openTablePanel();
-
-		helper.clickOnIdle('#InsertRowsAfter');
+		helper.clickOnIdle('#table-insert #InsertRowsAfter');
 
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 4);
@@ -82,11 +68,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	});
 
 	it('Insert column before.', function() {
-		before('table_properties.odt');
 
-		openTablePanel();
-
-		helper.clickOnIdle('#InsertColumnsBefore');
+		helper.clickOnIdle('#table-insert #InsertColumnsBefore');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
@@ -102,14 +85,11 @@ describe('Change table properties / layout via mobile wizard.', function() {
 				expect(columns[0].textContent).to.not.have.string('text');
 				expect(columns[1].textContent).to.have.string('text');
 			});
+
 	});
 
 	it('Insert column after.', function() {
-		before('table_properties.odt');
-
-		openTablePanel();
-
-		helper.clickOnIdle('#InsertColumnsAfter');
+		helper.clickOnIdle('#table-insert #InsertColumnsAfter');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
@@ -128,11 +108,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	});
 
 	it('Delete row.', function() {
-		before('table_properties.odt');
-
-		openTablePanel();
-
-		helper.clickOnIdle('#DeleteRows');
+		helper.clickOnIdle('#table-delete #DeleteRows');
 
 		cy.get('.leaflet-marker-icon.table-row-resize-marker')
 			.should('have.length', 2);
@@ -151,50 +127,27 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	});
 
 	it('Delete column.', function() {
-		before('table_properties.odt');
-
 		// Insert column first
-		openTablePanel();
-
-		helper.clickOnIdle('#InsertColumnsBefore');
+		helper.clickOnIdle('#table-insert #InsertColumnsBefore');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 4);
 
 		// Then delete it
-		mobileHelper.closeMobileWizard();
-		openTablePanel();
-
-		helper.clickOnIdle('#DeleteColumns');
+		helper.clickOnIdle('#table-delete #DeleteColumns');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
 	});
 
 	it('Delete table.', function() {
-		before('table_properties.odt');
-
-		openTablePanel();
-
-		helper.clickOnIdle('#DeleteTable');
+		helper.clickOnIdle('#table-delete #DeleteTable');
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('not.exist');
-
-		mobileHelper.closeMobileWizard();
-
-		writerHelper.selectAllTextOfDoc();
-
-		// Check markers are in the same row (we have text selection only)
-		cy.get('.leaflet-marker-icon')
-			.should(function(markers) {
-				expect(markers).to.have.lengthOf(2);
-				expect(markers[0].getBoundingClientRect().top).to.equal(markers[1].getBoundingClientRect().top);
-			});
 	});
 
 	it('Merge cells.', function() {
-		before('table_properties.odt');
 
 		// Select 2x2 part of the table.
 		helper.moveCursor('down', 'shift');
@@ -203,9 +156,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		// We use cursor position as the indicator of layout change.
 		helper.getCursorPos('top', 'origCursorPos');
 
-		openTablePanel();
-
-		helper.clickOnIdle('#MergeCells');
+		helper.clickOnIdle('#table-split_merge #MergeCells');
 
 		// Cursor was in the second row originally.
 		// With merging two rows, the cursor is moved into the first row.
@@ -226,48 +177,43 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			.should('have.length', 3);
 	});
 
+	//Fixme: bug in notebookbar cannot change the rowheight when the table already exist in document
 	it('Change row height.', function() {
-		before('table_properties.odt');
+		if (mode === 'classic') {
+			cy.get('#rowheight .spinfield')
+				.should('have.attr', 'value', '0');
 
-		openTablePanel();
+			helper.typeIntoInputField('#rowheight .spinfield', '1.4', true, false);
 
-		cy.get('#rowheight .spinfield')
-			.should('have.attr', 'value', '0');
+			selectFullTable();
 
-		helper.typeIntoInputField('#rowheight .spinfield', '1.4', true, false);
-
-		selectFullTable();
-
-		// Check row height
-		cy.get('#copy-paste-container td')
-			.should('have.attr', 'height', '125');
+			// Check row height
+			cy.get('#copy-paste-container td')
+				.should('have.attr', 'height', '134');
+		}
 	});
 
+	//Fixme: bug in notebookbar cannot change the columnheight when the table already exist in document
 	it('Change column width.', function() {
-		before('table_properties.odt');
+		if (mode === 'classic') {
+			helper.typeIntoInputField('#columnwidth .spinfield', '1.6', true, false);
 
-		openTablePanel();
+			selectFullTable();
 
-		helper.typeIntoInputField('#columnwidth .spinfield', '1.6', true, false);
-
-		selectFullTable();
-
-		// Check column width
-		cy.get('#copy-paste-container td')
-			.should('have.attr', 'width', '145');
+			// Check column width
+			cy.get('#copy-paste-container td')
+				.should('have.attr', 'width', '23%');
+		}
 	});
 
 	it('Set minimal row height.', function() {
-		before('table_with_text.odt');
 
 		// Select full table (3x2)
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		openTablePanel();
-
-		helper.clickOnIdle('#SetMinimalRowHeight');
+		helper.clickOnIdle('#table-rowsizing #SetMinimalRowHeight');
 
 		selectFullTable();
 
@@ -277,16 +223,13 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	});
 
 	it('Set optimal row height.', function() {
-		before('table_with_text.odt');
 
 		// Select full table (3x2)
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		openTablePanel();
-
-		helper.clickOnIdle('#SetOptimalRowHeight');
+		helper.clickOnIdle('#table-rowsizing #SetOptimalRowHeight');
 
 		selectFullTable();
 
@@ -295,10 +238,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			.should(function(items) {
 				expect(items).to.have.lengthOf(6);
 				for (var i = 0; i < items.length; i++) {
-					if (i == 0 || i == 4)
-						expect(items[i]).have.attr('height', '33');
-					else if (i == 2)
-						expect(items[i]).have.attr('height', '34');
+					if (i == 0 || i == 2 || i == 4)
+						expect(items[i]).have.attr('height', '18');
 					else
 						expect(items[i]).not.have.attr('height');
 				}
@@ -306,16 +247,12 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	});
 
 	it('Distribute rows.', function() {
-		before('table_with_text.odt');
-
 		// Select full table (3x2)
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		openTablePanel();
-
-		helper.clickOnIdle('#DistributeRows');
+		helper.clickOnIdle('#table-rowsizing #DistributeRows');
 
 		selectFullTable();
 
@@ -324,10 +261,8 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			.should(function(items) {
 				expect(items).have.lengthOf(6);
 				for (var i = 0; i < items.length; i++) {
-					if (i == 0 || i == 4)
-						expect(items[i]).have.attr('height', '33');
-					else if (i == 2)
-						expect(items[i]).have.attr('height', '34');
+					if (i == 0 || i == 2 || i == 4)
+						expect(items[i]).have.attr('height', '18');
 					else
 						expect(items[i]).not.have.attr('height');
 				}
@@ -335,58 +270,46 @@ describe('Change table properties / layout via mobile wizard.', function() {
 	});
 
 	it('Set minimal column width.', function() {
-		before('table_with_text.odt');
-
 		// Select full table (3x2)
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		openTablePanel();
-
-		helper.clickOnIdle('#SetMinimalColumnWidth');
+		helper.clickOnIdle('#table-columnsizing #SetMinimalColumnWidth');
 
 		selectFullTable();
 
 		cy.get('#copy-paste-container td')
-			.should('have.attr', 'width', '24');
+			.should('have.attr', 'width', '25');
 	});
 
 	it('Set optimal column width.', function() {
-		before('table_with_text.odt');
-
 		// Select full table (3x2)
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		openTablePanel();
-
-		helper.clickOnIdle('#SetOptimalColumnWidth');
+		helper.clickOnIdle('#table-columnsizing #SetOptimalColumnWidth');
 
 		selectFullTable();
 
 		cy.get('#copy-paste-container td:nth-of-type(1n)')
-			.should('have.attr', 'width', '324');
+			.should('have.attr', 'width', '90%');
 		cy.get('#copy-paste-container td:nth-of-type(2n)')
-			.should('have.attr', 'width', '323');
+			.should('have.attr', 'width', '10%');
 	});
 
 	it('Distribute columns.', function() {
-		before('table_with_text.odt');
-
 		// Select full table (3x2)
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('down', 'shift');
 		helper.moveCursor('right', 'shift');
 
-		openTablePanel();
-
-		helper.clickOnIdle('#DistributeColumns');
+		helper.clickOnIdle('#table-columnsizing #DistributeColumns');
 
 		selectFullTable();
 
 		cy.get('#copy-paste-container td')
-			.should('have.attr', 'width', '323');
+			.should('have.attr', 'width', '50%');
 	});
 });
