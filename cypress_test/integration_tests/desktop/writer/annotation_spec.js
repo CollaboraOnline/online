@@ -8,6 +8,12 @@ describe('Annotation Tests', function() {
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
+
+		cy.get('#toolbar-up .w2ui-scroll-right')
+			.click();
+
+		cy.get('#tb_editbar_item_sidebar')
+			.click();
 	});
 
 	afterEach(function() {
