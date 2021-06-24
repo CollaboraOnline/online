@@ -41,7 +41,7 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	closePopover: function(id) {
-		var menubutton = this.dialogs[id].popupParent;
+		var menubutton = this.dialogs[id].clickToClose;
 		var builder = this.clearDialog(id);
 		if (menubutton)
 			menubutton.click();
@@ -152,7 +152,7 @@ L.Control.JSDialog = L.Control.extend({
 			builder: builder,
 			startX: posX,
 			startY: posY,
-			popupParent: parent
+			clickToClose: data.clickToClose ? L.DomUtil.get(data.clickToClose) : undefined
 		};
 
 		this.updatePosition(container, posX, posY);
