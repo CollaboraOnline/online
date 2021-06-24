@@ -2199,17 +2199,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(button).click(function () {
 				builder.callback('menubutton', 'toggle', button, undefined, builder);
 			});
-
-			if (data.popup) {
-				var popupJSON = data.popup;
-				popupJSON.id = data.popup.id;
-				popupJSON.jsontype = 'dialog';
-				popupJSON.type = 'modalpopup';
-				popupJSON.popupParent = data.id;
-				popupJSON.cancellable = true;
-
-				app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(popupJSON)});
-			}
 		} else {
 			console.warn('Not found menu "' + menuId + '"');
 		}
