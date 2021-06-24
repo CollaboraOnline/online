@@ -36,6 +36,8 @@ MULTIUSER_DATA_FOLDER = $(abs_srcdir)/data/multiuser/
 MULTIUSER_DATA_WORKDIR = $(abs_builddir)/workdir/data/multiuser/
 MULTIUSER_TRACK_FOLDER=$(abs_builddir)/workdir/track/multiuser
 
+USER_INTERFACE = classic
+
 PHP_PROXY_PORT = 9983
 NEXTCLOUD_PORT = 9980
 ALLOWED_PORTS = $(if $(findstring php-proxy, $(CYPRESS_INTEGRATION)),$(PHP_PROXY_PORT),\
@@ -148,6 +150,7 @@ define start_loolwsd
 			--o:admin_console.username=admin --o:admin_console.password=admin \
 			--o:logging.file[@enable]=true --o:logging.level=trace \
 			--o:welcome.enable=false \
+			--o:user_interface.mode=$(USER_INTERFACE) \
 			--port=$(FREE_PORT) \
 			--pidfile=$(PID_FILE) \
 			--o:logging.file.property[0]=$(LOOLWSD_LOG) \

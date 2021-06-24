@@ -5,6 +5,7 @@ var uuid = require('uuid');
 
 var tasks = require('./tasks');
 var blacklists = require('./blacklists');
+var whitelists = require('./whitelists');
 var selectTests = require('cypress-select-tests');
 
 function plugin(on, config) {
@@ -12,7 +13,8 @@ function plugin(on, config) {
 		require('@cypress/code-coverage/task')(on, config);
 	on('task', {
 		copyFile: tasks.copyFile,
-		failed: require('cypress-failed-log/src/failed')()
+		failed: require('cypress-failed-log/src/failed')(),
+		getSelectors: tasks.getSelectors,
 	});
 
 	if (process.env.ENABLE_VIDEO_REC) {
@@ -43,6 +45,10 @@ function plugin(on, config) {
 		config.defaultCommandTimeout = 10000;
 	}
 
+	if (process.env.USER_INTERFACE === 'notebookbar') {
+		config.env.USER_INTERFACE = 'notebookbar';
+	}
+
 	on('file:preprocessor', (file) => {
 		if (file.outputPath.endsWith('support/index.js')) {
 			var runUuid = uuid.v4();
@@ -68,6 +74,14 @@ function removeBlacklistedTest(filename, testsToRun, blackList) {
 	return testsToRun;
 }
 
+function isNotebookbarTest(filename, whitelist) {
+	for (var i =0 ; i < whitelist.length; i++) {
+		if (filename.endsWith(whitelist[0])) {
+			return true;
+		}
+	}
+}
+
 function pickTests(filename, foundTests) {
 	var testsToRun = foundTests;
 
@@ -82,6 +96,11 @@ function pickTests(filename, foundTests) {
 		testsToRun = removeBlacklistedTest(filename, testsToRun, ProxyblackList);
 	}
 
+	if (process.env.USER_INTERFACE === 'notebookbar') {
+		if (!isNotebookbarTest(filename,whitelists.notebookbarOnlyList)) {
+			testsToRun = [];
+		}
+	}
 	return testsToRun;
 }
 

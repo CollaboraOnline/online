@@ -3,6 +3,7 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var writerHelper = require('../../common/writer_helper');
+var mode = Cypress.env('USER_INTERFACE');
 
 describe('Top toolbar tests.', function() {
 	var testFileName = 'top_toolbar.odt';
@@ -22,8 +23,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply highlight color.', function() {
-		cy.get('#tb_editbar_item_backcolor')
-			.click();
+		desktopHelper.actionOnSelector('backColor', (selector) => { cy.get(selector).click(); });
 
 		desktopHelper.selectColorFromPalette('FFF2CC');
 
@@ -34,8 +34,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply font color.', function() {
-		cy.get('#tb_editbar_item_fontcolor')
-			.click();
+		desktopHelper.actionOnSelector('fontColor', (selector) => { cy.get(selector).click(); });
 
 		desktopHelper.selectColorFromPalette('8E7CC3');
 
@@ -46,18 +45,23 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply style.', function() {
-		cy.get('#tb_editbar_item_styles')
-			.click();
+		if (mode === 'notebookbar') {
+			cy.contains('.notebookbar.ui-iconview-entry','Title')
+				.click({force: true});
+		} else {
+			cy.get('#tb_editbar_item_styles')
+				.click();
 
-		desktopHelper.selectFromListbox('Title');
+			desktopHelper.selectFromListbox('Title');
+		}
 
 		cy.get('#copy-paste-container p font font')
 			.should('have.attr', 'style', 'font-size: 28pt');
 	});
 
+
 	it('Apply font name.', function() {
-		cy.get('#tb_editbar_item_fonts')
-			.click();
+		desktopHelper.actionOnSelector('fontName', (selector) => { cy.get(selector).click(); });
 
 		desktopHelper.selectFromListbox('Alef');
 
@@ -65,9 +69,9 @@ describe('Top toolbar tests.', function() {
 			.should('have.attr', 'face', 'Alef, sans-serif');
 	});
 
+
 	it('Apply bold font.', function() {
-		cy.get('#tb_editbar_item_bold')
-			.click();
+		desktopHelper.actionOnSelector('bold', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -76,8 +80,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply italic font.', function() {
-		cy.get('#tb_editbar_item_italic')
-			.click();
+		desktopHelper.actionOnSelector('italic', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -86,8 +89,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply underline.', function() {
-		cy.get('#tb_editbar_item_underline')
-			.click();
+		desktopHelper.actionOnSelector('underline', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -96,8 +98,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply strikethrough.', function() {
-		cy.get('#tb_editbar_item_strikeout')
-			.click();
+		desktopHelper.actionOnSelector('strikeout', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -106,8 +107,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply font size', function() {
-		cy.get('#tb_editbar_item_fontsizes')
-			.click();
+		desktopHelper.actionOnSelector('fontSize', (selector) => { cy.get(selector).click(); });
 
 		desktopHelper.selectFromListbox('72');
 
@@ -116,16 +116,14 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Clear direct formatting', function() {
-		cy.get('#tb_editbar_item_bold')
-			.click();
+		desktopHelper.actionOnSelector('bold', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p b')
 			.should('exist');
 
-		cy.get('#tb_editbar_item_reset')
-			.click();
+		desktopHelper.actionOnSelector('clearFormat', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -134,16 +132,14 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply left/right alignment.', function() {
-		cy.get('#tb_editbar_item_rightpara')
-			.click();
+		desktopHelper.actionOnSelector('rightPara', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
 			.should('have.attr', 'align', 'right');
 
-		cy.get('#tb_editbar_item_leftpara')
-			.click();
+		desktopHelper.actionOnSelector('leftPara', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -152,8 +148,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply center alignment.', function() {
-		cy.get('#tb_editbar_item_centerpara')
-			.click();
+		desktopHelper.actionOnSelector('centerPara', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -162,8 +157,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply justified.', function() {
-		cy.get('#tb_editbar_item_justifypara')
-			.click();
+		desktopHelper.actionOnSelector('justifyPara', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -172,8 +166,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply Line spacing: 1 and 1.5', function() {
-		cy.get('#tb_editbar_item_linespacing')
-			.click();
+		desktopHelper.actionOnSelector('lineSpacing', (selector) => { cy.get(selector).click(); });
 
 		cy.contains('.menu-text', 'Line Spacing: 1.5')
 			.click();
@@ -184,8 +177,7 @@ describe('Top toolbar tests.', function() {
 			.should('have.attr', 'style')
 			.should('contain', 'line-height: 150%');
 
-		cy.get('#tb_editbar_item_linespacing')
-			.click();
+		desktopHelper.actionOnSelector('lineSpacing', (selector) => { cy.get(selector).click(); });
 
 		cy.contains('.menu-text', 'Line Spacing: 1')
 			.click();
@@ -198,8 +190,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Apply Line spacing: 2', function() {
-		cy.get('#tb_editbar_item_linespacing')
-			.click();
+		desktopHelper.actionOnSelector('lineSpacing', (selector) => { cy.get(selector).click(); });
 
 		cy.contains('.menu-text', 'Line Spacing: 2')
 			.click();
@@ -212,8 +203,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Increase/Decrease Paragraph spacing', function() {
-		cy.get('#tb_editbar_item_linespacing')
-			.click();
+		desktopHelper.actionOnSelector('lineSpacing', (selector) => { cy.get(selector).click(); });
 
 		cy.contains('.menu-text', 'Increase Paragraph Spacing')
 			.click();
@@ -227,8 +217,7 @@ describe('Top toolbar tests.', function() {
 		writerHelper.selectAllTextOfDoc();
 
 		//Decrease Paragraph Spacing
-		cy.get('#tb_editbar_item_linespacing')
-			.click();
+		desktopHelper.actionOnSelector('lineSpacing', (selector) => { cy.get(selector).click(); });
 
 		cy.contains('.menu-text', 'Decrease Paragraph Spacing')
 			.click();
@@ -241,8 +230,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Toggle numbered list.', function() {
-		cy.get('#tb_editbar_item_defaultnumbering')
-			.click();
+		desktopHelper.actionOnSelector('numberedList', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -251,11 +239,9 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Toggle bulleted list.', function() {
-		cy.get('#toolbar-up .w2ui-scroll-right')
-			.click();
+		mode !== 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-right').click() : '';
 
-		cy.get('#tb_editbar_item_defaultbullet')
-			.click();
+		desktopHelper.actionOnSelector('bulletList', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -264,12 +250,10 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Increase/Decrease Indent.', function() {
-		cy.get('#toolbar-up .w2ui-scroll-right')
-			.click();
+		mode !== 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-right').click() : '';
 
 		//Increase indent
-		cy.get('#tb_editbar_item_incrementindent')
-			.click();
+		desktopHelper.actionOnSelector('incrementIndent', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -278,8 +262,7 @@ describe('Top toolbar tests.', function() {
 			.should('contain', 'margin-left: 0.49in');
 
 		//Decrease indent
-		cy.get('#tb_editbar_item_decrementindent')
-			.click();
+		desktopHelper.actionOnSelector('decrementIndent', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -292,8 +275,9 @@ describe('Top toolbar tests.', function() {
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
 
-		cy.get('#tb_editbar_item_insertannotation')
-			.click();
+		mode === 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-right').click() : '';
+
+		desktopHelper.actionOnSelector('insertAnnotation', (selector) => { cy.get(selector).click(); });
 
 		// Comment insertion dialog is opened
 		cy.get('.loleaflet-annotation-table')
@@ -310,8 +294,14 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Insert table.', function() {
-		cy.get('#tb_editbar_item_inserttable')
+		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
+
+		mode === 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-right').click() : '';
+
+		cy.wait(500);
+
+		desktopHelper.actionOnSelector('insertTable', (selector) => { cy.get(selector).click(); });
 
 		cy.get('.inserttable-grid > .row > .col').eq(3)
 		   .click();
@@ -328,8 +318,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
 
-		cy.get('#tb_editbar_item_insertgraphic')
-			.should('be.visible');
+		desktopHelper.actionOnSelector('insertGraphic', (selector) => { cy.get(selector).click(); });
 
 		cy.get('#insertgraphic[type=file]')
 			.attachFile('/desktop/writer/image_to_insert.png');
@@ -342,11 +331,12 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container p')
 			.should('have.text', '\ntext');
 
+		mode === 'notebookbar' ? cy.get('#Insert-tab-label').click() : '';
+
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
 
-		cy.get('#tb_editbar_item_link')
-			.click();
+		desktopHelper.actionOnSelector('hyperLink', (selector) => { cy.get(selector).click(); });
 
 		cy.get('.vex-content.hyperlink-dialog')
 			.should('exist');
@@ -370,11 +360,13 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Insert shape.', function() {
+
+		mode === 'notebookbar' ? cy.get('#Insert-tab-label').click() : '';
+
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
 
-		cy.get('#tb_editbar_item_insertshapes')
-			.click();
+		desktopHelper.actionOnSelector('insertShape', (selector) => { cy.get(selector).click(); });
 
 		cy.get('.col.w2ui-icon.basicshapes_octagon')
 			.click();
@@ -384,22 +376,23 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Insert chart.', function() {
+		mode === 'notebookbar' ? cy.get('#Insert-tab-label').click() : '';
+
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
 
-		cy.get('#tb_editbar_item_insertobjectchart')
-			.click();
+		desktopHelper.actionOnSelector('insertChart', (selector) => { cy.get(selector).click(); });
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 			.should('exist');
 	});
 
 	it('Save.', function() {
-		cy.get('#tb_editbar_item_bold')
-			.click();
+		desktopHelper.actionOnSelector('bold', (selector) => { cy.get(selector).click(); });
 
-		cy.get('#tb_editbar_item_save')
-			.click();
+		cy.wait(1000);
+
+		desktopHelper.actionOnSelector('save', (selector) => { cy.get(selector).click(); });
 
 		helper.beforeAll(testFileName, 'writer', true);
 
@@ -416,15 +409,15 @@ describe('Top toolbar tests.', function() {
 				cy.stub(win, 'open');
 			});
 
-		cy.get('#tb_editbar_item_print')
-		    .click();
+		mode === 'notebookbar' ? cy.get('#File-tab-label').click() : '';
+
+		desktopHelper.actionOnSelector('print', (selector) => { cy.get(selector).click(); });
 
 		cy.window().its('open').should('be.called');
 	});
 
 	it('Apply Undo/Redo.', function() {
-		cy.get('#tb_editbar_item_italic')
-			.click();
+		desktopHelper.actionOnSelector('italic', (selector) => { cy.get(selector).click(); });
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -432,9 +425,11 @@ describe('Top toolbar tests.', function() {
 			.should('exist');
 
 		//Undo
-		cy.get('#tb_editbar_item_undo')
-			.should('not.have.class', 'disabled')
-			.click();
+		desktopHelper.actionOnSelector('undo', (selector) => {
+			cy.get(selector)
+				.should('not.have.class', 'disabled')
+				.click();
+		});
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -442,9 +437,12 @@ describe('Top toolbar tests.', function() {
 			.should('not.exist');
 
 		//Redo
-		cy.get('#tb_editbar_item_redo')
-			.should('not.have.class', 'disabled')
-			.click();
+		desktopHelper.actionOnSelector('redo', (selector) => {
+			cy.get(selector)
+				.should('not.have.class', 'disabled')
+				.click();
+		});
+
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -454,42 +452,68 @@ describe('Top toolbar tests.', function() {
 
 	it('Show/Hide sidebar.', function() {
 		//hide sidebar
-		desktopHelper.hideSidebar();
+		mode !== 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-right').click() : '';
+
+		cy.get('#sidebar-dock-wrapper')
+			.should('be.visible');
+
+		desktopHelper.actionOnSelector('sidebar', (selector) => { cy.get(selector).click(); });
+
+		cy.get('#sidebar-dock-wrapper')
+			.should('not.be.visible');
+
+		mode !== 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-left').click() : '';
 
 		//show sidebar
-		desktopHelper.showSidebar();
+
+		mode !== 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-right').click() : '';
+
+		cy.get('#sidebar-dock-wrapper')
+			.should('not.be.visible');
+
+		desktopHelper.actionOnSelector('sidebar', (selector) => { cy.get(selector).click(); });
+
+		cy.get('#sidebar-dock-wrapper')
+			.should('be.visible');
+
 	});
 
 	it('Insert Special Character.', function() {
+
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
 
-		cy.get('#tb_editbar_item_insertsymbol')
-			.click();
+		mode === 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-right').click() : '';
+
+		cy.wait(500);
+
+		desktopHelper.actionOnSelector('insertSymbol', (selector) => { cy.get(selector).click(); });
 
 		desktopHelper.checkDialogAndClose('Special Characters');
 	});
 
 	it('Hide/show menu bar.', function() {
-		cy.get('#main-menu')
-			.should('be.visible');
+		if (mode !== 'notebookbar') {
+			cy.get('#main-menu')
+				.should('be.visible');
 
-		cy.get('#toolbar-up .w2ui-scroll-right')
-			.click();
+			cy.get('#toolbar-up .w2ui-scroll-right')
+				.click();
 
-		// Hide the menu first.
-		cy.get('#tb_editbar_item_fold')
-			.click();
+			// Hide the menu first.
+			cy.get('#tb_editbar_item_fold')
+				.click();
 
-		cy.get('#main-menu')
-			.should('not.be.visible');
+			cy.get('#main-menu')
+				.should('not.be.visible');
 
-		// Show it again.
-		cy.get('#tb_editbar_item_fold')
-			.click();
+			// Show it again.
+			cy.get('#tb_editbar_item_fold')
+				.click();
 
-		cy.get('#main-menu')
-			.should('be.visible');
+			cy.get('#main-menu')
+				.should('be.visible');
+		}
 	});
 
 	it('Clone Formatting.', function() {
@@ -503,11 +527,9 @@ describe('Top toolbar tests.', function() {
 		helper.textSelectionShouldExist();
 
 		// Apply bold and try to clone it to the whole word.
-		cy.get('#tb_editbar_item_bold')
-			.click();
+		desktopHelper.actionOnSelector('bold', (selector) => { cy.get(selector).click(); });
 
-		cy.get('#tb_editbar_item_formatpaintbrush')
-			.click();
+		desktopHelper.actionOnSelector('formatBrush', (selector) => { cy.get(selector).click(); });
 
 		// Click at the blinking cursor position.
 		cy.get('.leaflet-cursor.blinking-cursor')
