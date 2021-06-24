@@ -534,7 +534,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var options = {hasDropdownArrow: true};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
-		$(control.container).unbind('click');
 		$(control.container).click(function () {
 			if (!$('.insertshape-grid').length) {
 				$(control.container).w2overlay(window.getShapesPopupHtml());
@@ -571,7 +570,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var options = {hasDropdownArrow: true};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
-		$(control.container).unbind('click');
 		$(control.container).click(function () {
 			if (!$('#setborderstyle-grid').length) {
 				$(control.container).w2overlay(window.getBorderStyleMenuHtml());
@@ -612,7 +610,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_insertAnnotationControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click');
 		$(control.container).click(function () {builder.map.insertComment();});
 	},
 
@@ -662,7 +659,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_symbolControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click');
 		$(control.container).click(function () {
 			builder.map.sendUnoCommand('.uno:InsertSymbol');
 		});
