@@ -2513,6 +2513,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						updateFunction();
 				}, this);
 			}
+
+			if (data.enabled === 'false' || data.enabled === false)
+				L.DomUtil.addClass(div, 'disabled');
 		} else {
 			button = L.DomUtil.create('label', 'ui-content unolabel', div);
 			button.innerHTML = builder._cleanText(data.text);
