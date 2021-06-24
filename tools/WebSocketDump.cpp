@@ -263,10 +263,8 @@ int main (int argc, char **argv)
 
     // Initialize the non-blocking socket SSL.
     if (isSSL)
-        SslContext::initialize(ssl_cert_file_path,
-                               ssl_key_file_path,
-                               ssl_ca_file_path,
-                               ssl_cipher_list);
+        ssl::Manager::initializeServerContext(ssl_cert_file_path, ssl_key_file_path,
+                                              ssl_ca_file_path, ssl_cipher_list);
 #endif
 
     SocketPoll acceptPoll("accept");

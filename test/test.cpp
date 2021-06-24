@@ -110,15 +110,15 @@ int main(int argc, char** argv)
         const std::string ssl_cipher_list = "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH";
 
         // Initialize the non-blocking socket SSL.
-        SslContext::initialize(ssl_cert_file_path, ssl_key_file_path, ssl_ca_file_path,
-                               ssl_cipher_list);
+        ssl::Manager::initializeServerContext(ssl_cert_file_path, ssl_key_file_path,
+                                              ssl_ca_file_path, ssl_cipher_list);
     }
     catch (const std::exception& ex)
     {
         LOG_ERR("Exception while initializing SslContext: " << ex.what());
     }
 
-    if (!SslContext::isInitialized())
+    if (!ssl::Manager::isServerContextInitialized())
         LOG_ERR("Failed to initialize SSL. Set the path to the certificates via --cert-path. "
                 "HTTPS tests will be disabled in unit-tests.");
     else

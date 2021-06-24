@@ -1564,16 +1564,14 @@ void LOOLWSD::initializeSSL()
             ssl_cipher_list = DEFAULT_CIPHER_SET;
     LOG_INF("SSL Cipher list: " << ssl_cipher_list);
 
-    // Initialize the non-blocking socket SSL.
-    SslContext::initialize(ssl_cert_file_path,
-                           ssl_key_file_path,
-                           ssl_ca_file_path,
-                           ssl_cipher_list);
+    // Initialize the non-blocking server socket SSL context.
+    ssl::Manager::initializeServerContext(ssl_cert_file_path, ssl_key_file_path, ssl_ca_file_path,
+                                          ssl_cipher_list);
 
-    if (!SslContext::isInitialized())
-        LOG_ERR("Failed to initialize SSL.");
+    if (!ssl::Manager::isServerContextInitialized())
+        LOG_ERR("Failed to initialize Server SSL.");
     else
-        LOG_INF("Initialized SSL.");
+        LOG_INF("Initialized Server SSL.");
 #else
     LOG_INF("SSL is unavailable in this build.");
 #endif
@@ -2602,7 +2600,8 @@ private:
                 if (!LOOLWSD::AdminEnabled)
                     throw Poco::FileAccessDeniedException("Admin console disabled");
 
-                try{
+                try
+                {
                     if (!FileServerRequestHandler::isAdminLoggedIn(request, *response))
                         throw Poco::Net::NotAuthenticatedException("Invalid admin login");
                 }
@@ -2894,6 +2893,7 @@ private:
                                        + serverId + " vs. " + Util::getProcessIdentifier()
                                        + "on request to URL: " + request.getURI();
             LOG_ERR(errMsg);
+
             // we got the wrong request.
             std::ostringstream oss;
             oss << "HTTP/1.1 400\r\n"
@@ -4323,7 +4323,8 @@ void LOOLWSD::cleanup()
     {
         Poco::Net::uninitializeSSL();
         Poco::Crypto::uninitializeCrypto();
-        SslContext::uninitialize();
+        ssl::Manager::uninitializeClientContext();
+        ssl::Manager::uninitializeServerContext();
     }
 #endif
 #endif
