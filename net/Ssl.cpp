@@ -32,8 +32,6 @@ extern "C"
     };
 }
 
-std::unique_ptr<SslContext> SslContext::Instance(nullptr);
-
 namespace ssl
 {
 
@@ -78,6 +76,9 @@ static inline void lock(int mode, int n, const char* /*file*/, int /*line*/)
 
 #endif
 } // namespace ssl
+
+std::unique_ptr<SslContext> ssl::Manager::ServerInstance(nullptr);
+std::unique_ptr<SslContext> ssl::Manager::ClientInstance(nullptr);
 
 SslContext::SslContext(const std::string& certFilePath,
                        const std::string& keyFilePath,
@@ -182,12 +183,6 @@ SslContext::~SslContext()
     CRYPTO_set_id_callback(0);
 
     CONF_modules_free();
-}
-
-void SslContext::uninitialize()
-{
-    assert (Instance);
-    Instance.reset();
 }
 
 unsigned long SslContext::id()

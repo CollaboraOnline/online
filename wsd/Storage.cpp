@@ -168,6 +168,15 @@ void StorageBase::initialize()
                                        Poco::Net::Context::Protocols::PROTO_SSLV3 |
                                        Poco::Net::Context::Protocols::PROTO_TLSV1);
     Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
+
+    // Initialize our client SSL context.
+    ssl::Manager::initializeClientContext(sslClientParams.certificateFile,
+                                          sslClientParams.privateKeyFile,
+                                          sslClientParams.caLocation, sslClientParams.cipherList);
+    if (!ssl::Manager::isClientContextInitialized())
+        LOG_ERR("Failed to initialize Client SSL.");
+    else
+        LOG_INF("Initialized Client SSL.");
 #endif
 #else
     FilesystemEnabled = true;

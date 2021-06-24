@@ -35,7 +35,7 @@ public:
 
         BIO_set_fd(_bio, fd, BIO_NOCLOSE);
 
-        _ssl = SslContext::newSsl();
+        _ssl = isClient ? ssl::Manager::newClientSsl() : ssl::Manager::newServerSsl();
         if (!_ssl)
         {
             BIO_free(_bio);

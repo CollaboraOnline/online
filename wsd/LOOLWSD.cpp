@@ -1570,16 +1570,14 @@ void LOOLWSD::initializeSSL()
             ssl_cipher_list = DEFAULT_CIPHER_SET;
     LOG_INF("SSL Cipher list: " << ssl_cipher_list);
 
-    // Initialize the non-blocking socket SSL.
-    SslContext::initialize(ssl_cert_file_path,
-                           ssl_key_file_path,
-                           ssl_ca_file_path,
-                           ssl_cipher_list);
+    // Initialize the non-blocking server socket SSL context.
+    ssl::Manager::initializeServerContext(ssl_cert_file_path, ssl_key_file_path, ssl_ca_file_path,
+                                          ssl_cipher_list);
 
-    if (!SslContext::isInitialized())
-        LOG_ERR("Failed to initialize SSL.");
+    if (!ssl::Manager::isServerContextInitialized())
+        LOG_ERR("Failed to initialize Server SSL.");
     else
-        LOG_INF("Initialized SSL.");
+        LOG_INF("Initialized Server SSL.");
 #else
     LOG_INF("SSL is unavailable in this build.");
 #endif
@@ -4276,7 +4274,8 @@ void LOOLWSD::cleanup()
         {
             Poco::Net::uninitializeSSL();
             Poco::Crypto::uninitializeCrypto();
-            SslContext::uninitialize();
+            ssl::Manager::uninitializeClientContext();
+            ssl::Manager::uninitializeServerContext();
         }
 #endif
 #endif
