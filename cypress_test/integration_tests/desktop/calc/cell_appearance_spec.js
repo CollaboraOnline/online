@@ -2,64 +2,38 @@
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
-var mobileHelper = require('../../common/mobile_helper');
+var desktopHelper = require('../../common/desktop_helper');
 
 describe('Change cell appearance.', function() {
 	var testFileName = 'cell_appearance.ods';
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
-
-		// Click on edit button
-		mobileHelper.enableEditingMobile();
 	});
 
 	afterEach(function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	function openAppearencePanel() {
-		mobileHelper.openMobileWizard();
-
-		helper.clickOnIdle('#ScCellAppearancePropertyPanel');
-
-		cy.contains('.menu-entry-with-icon', 'Background Color')
-			.should('be.visible');
-	}
-
-	function openAppearencePanelOnFirstCell() {
+	it('Apply background color', function() {
 		calcHelper.clickOnFirstCell();
 
-		openAppearencePanel();
-	}
+		desktopHelper.actionOnSelector('backgroundColor', (selector) => { helper.clickOnIdle(selector); });
 
-	function openAppearencePanelOnAllCells() {
-		calcHelper.selectEntireSheet();
-
-		openAppearencePanel();
-	}
-
-	it('Apply background color', function() {
-		openAppearencePanelOnFirstCell();
-
-		helper.clickOnIdle('#BackgroundColor');
-
-		mobileHelper.selectFromColorPalette(1, 2);
-
-		// Check that the color is shown as selected
-		cy.get('#BackgroundColor .color-sample-selected')
-			.should('have.attr', 'style', 'background-color: rgb(255, 0, 0);');
+		desktopHelper.selectColorFromPalette('006CE7');
 
 		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'bgcolor', '#FF0000');
+			.should('have.attr', 'bgcolor', '#006CE7');
 	});
 
 	it('Apply left border', function() {
-		openAppearencePanelOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
-		helper.clickOnIdle('#border-2');
+		desktopHelper.actionOnSelector('borderStyle', (selector) => { helper.clickOnIdle(selector); });
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame02').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -68,10 +42,12 @@ describe('Change cell appearance.', function() {
 	});
 
 	it('Remove cell border', function() {
-		openAppearencePanelOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
 		// First add left border
-		helper.clickOnIdle('#border-2');
+		desktopHelper.actionOnSelector('borderStyle', (selector) => { helper.clickOnIdle(selector); });
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame02').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -79,9 +55,11 @@ describe('Change cell appearance.', function() {
 			.should('have.attr', 'style', 'border-left: 1px solid #000000');
 
 		// Then remove it
-		openAppearencePanelOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
-		helper.clickOnIdle('#border-1');
+		desktopHelper.actionOnSelector('borderStyle', (selector) => { helper.clickOnIdle(selector); });
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame01').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -90,9 +68,11 @@ describe('Change cell appearance.', function() {
 	});
 
 	it('Apply right border', function() {
-		openAppearencePanelOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
-		helper.clickOnIdle('#border-3');
+		desktopHelper.actionOnSelector('borderStyle', (selector) => { helper.clickOnIdle(selector); });
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame03').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -101,9 +81,11 @@ describe('Change cell appearance.', function() {
 	});
 
 	it('Apply left and right border', function() {
-		openAppearencePanelOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
-		helper.clickOnIdle('#border-4');
+		desktopHelper.actionOnSelector('borderStyle', (selector) => { helper.clickOnIdle(selector); });
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame04').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -112,9 +94,11 @@ describe('Change cell appearance.', function() {
 	});
 
 	it('Apply top border', function() {
-		openAppearencePanelOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
-		helper.clickOnIdle('#border-5');
+		desktopHelper.actionOnSelector('borderStyle', (selector) => { helper.clickOnIdle(selector); });
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame05').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -123,9 +107,11 @@ describe('Change cell appearance.', function() {
 	});
 
 	it('Apply bottom border', function() {
-		openAppearencePanelOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
-		helper.clickOnIdle('#border-6');
+		desktopHelper.actionOnSelector('borderStyle', (selector) => { helper.clickOnIdle(selector); });
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame06').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -134,9 +120,11 @@ describe('Change cell appearance.', function() {
 	});
 
 	it('Apply top and bottom border', function() {
-		openAppearencePanelOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
-		helper.clickOnIdle('#border-7');
+		desktopHelper.actionOnSelector('borderStyle', (selector) => { helper.clickOnIdle(selector); });
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame07').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -145,9 +133,11 @@ describe('Change cell appearance.', function() {
 	});
 
 	it('Apply border for all sides', function() {
-		openAppearencePanelOnFirstCell();
+		calcHelper.clickOnFirstCell();
 
-		helper.clickOnIdle('#border-8');
+		desktopHelper.actionOnSelector('borderStyle', (selector) => { helper.clickOnIdle(selector); });
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame08').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -156,9 +146,11 @@ describe('Change cell appearance.', function() {
 	});
 
 	it('Apply horizontal borders for multiple cells', function() {
-		openAppearencePanelOnAllCells();
+		calcHelper.selectEntireSheet();
 
-		helper.clickOnIdle('#border-9');
+		desktopHelper.actionOnSelector('borderStyle', (selector) => { helper.clickOnIdle(selector); });
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame09').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -172,9 +164,11 @@ describe('Change cell appearance.', function() {
 	});
 
 	it('Apply horizontal inner borders and vertical outer borders', function() {
-		openAppearencePanelOnAllCells();
+		calcHelper.selectEntireSheet();
 
-		helper.clickOnIdle('#border-10');
+		desktopHelper.actionOnSelector('borderStyle', (selector) => { helper.clickOnIdle(selector); });
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame10').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -191,9 +185,11 @@ describe('Change cell appearance.', function() {
 	});
 
 	it('Apply vertical inner borders and horizontal outer borders', function() {
-		openAppearencePanelOnAllCells();
+		calcHelper.selectEntireSheet();
 
-		helper.clickOnIdle('#border-11');
+		desktopHelper.actionOnSelector('borderStyle', (selector) => { helper.clickOnIdle(selector); });
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame11').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -210,9 +206,11 @@ describe('Change cell appearance.', function() {
 	});
 
 	it('Apply all inner and outer borders', function() {
-		openAppearencePanelOnAllCells();
+		calcHelper.selectEntireSheet();
 
-		helper.clickOnIdle('#border-12');
+		desktopHelper.actionOnSelector('borderStyle', (selector) => { helper.clickOnIdle(selector); });
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame12').click();
 
 		calcHelper.selectEntireSheet();
 
@@ -225,24 +223,25 @@ describe('Change cell appearance.', function() {
 			});
 	});
 
-	it('Apply border color', function() {
-		openAppearencePanelOnFirstCell();
+	// border color can only be changed from sidebar which is not implemented yet in co-6-4
+	// TODO: enable this test when sidebar becomes native in co-6-4
+	it.skip('Apply border color', function() {
+		calcHelper.clickOnFirstCell();
 
 		// Apply left border first
-		helper.clickOnIdle('#border-2');
+		desktopHelper.actionOnSelector('borderStyle', (selector) => { helper.clickOnIdle(selector); });
+
+		cy.get('.w2ui-tb-image.w2ui-icon.frame02').click();
 
 		// Then apply border color
 		helper.clickOnIdle('#FrameLineColor');
 
-		mobileHelper.selectFromColorPalette(2, 3);
-
-		// Check that the color is shown as selected
-		cy.get('#FrameLineColor .color-sample-selected')
-			.should('have.attr', 'style', 'background-color: rgb(255, 153, 0);');
+		desktopHelper.selectColorFromPalette('006CE7');
 
 		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
-			.should('have.attr', 'style', 'border-left: 1px solid #ff9900');
+			.should('have.attr', 'style', 'border-left: 1px solid #006ce7');
 	});
+
 });
