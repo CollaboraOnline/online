@@ -535,16 +535,32 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 		this._dimGeom = this._isColumn ? sheetGeom.getColumnsGeometry() : sheetGeom.getRowsGeometry();
 	},
 
+	findXInCellSelections: function (cellSelections, ordinate) {
+		for (var i = 0; i < cellSelections.length; i++) {
+			if (cellSelections[i].containsPixelOrdinateX(ordinate))
+				return true;
+		}
+		return false;
+	},
+
+	findYInCellSelections: function (cellSelections, ordinate) {
+		for (var i = 0; i < cellSelections.length; i++) {
+			if (cellSelections[i].containsPixelOrdinateY(ordinate))
+				return true;
+		}
+		return false;
+	},
+
 	isHeaderEntryHighLighted: function (cellSelections, ordinate) {
 		if (this._isColumn && this._map.wholeRowSelected)
 			return true;
 		else if (!this._isColumn && this._map.wholeColumnSelected)
 			return true;
 		else if (this._isColumn && cellSelections.length > 0) {
-			return cellSelections.filter(function (element) { return element.containsPixelOrdinateX(ordinate);}) ? true: false;
+			return this.findXInCellSelections(cellSelections, ordinate);
 		}
 		else if (!this._isColumn && cellSelections.length > 0) {
-			return cellSelections.filter(function (element) { return element.containsPixelOrdinateY(ordinate);}) ? true: false;
+			return this.findYInCellSelections(cellSelections, ordinate);
 		}
 		else
 			return false;
