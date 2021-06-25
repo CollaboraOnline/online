@@ -61,8 +61,8 @@ jobs:
 
     - name: Configure
       run: |
-        cd .. && wget https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-cp-6.4-assets.tar.gz
-        tar xvf core-cp-6.4-assets.tar.gz && rm core-cp-6.4-assets.tar.gz && export LOCOREPATH=$(pwd)
+        cd .. && wget https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-2021-assets.tar.gz
+        tar xvf core-co-2021-assets.tar.gz && rm core-co-2021-assets.tar.gz && export LOCOREPATH=$(pwd)
         cd online && ./autogen.sh
         ./configure --enable-silent-rules --with-lokit-path=${LOCOREPATH}/include --with-lo-path=${LOCOREPATH}/instdir --enable-debug --disable-setcap
 
