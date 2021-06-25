@@ -1656,6 +1656,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		pushbutton.innerHTML = customText !== '' ? customText : builder._cleanText(data.text);
 		pushbutton.id = data.id;
 
+		if (data.image) {
+			var image = L.DomUtil.create('img', '', pushbutton);
+			image.src = data.image;
+		}
+
 		if (data.enabled === 'false' || data.enabled === false)
 			$(pushbutton).prop('disabled', true);
 
@@ -2526,6 +2531,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(div).addClass('has-dropdown');
 			var arrow = L.DomUtil.create('i', 'unoarrow', div);
 			controls['arrow'] = arrow;
+			$(arrow).click(function () {
+				if (!$(div).hasClass('disabled')) {
+					builder.callback('toolbox', 'togglemenu', parentContainer, data.command, builder);
+				}
+			});
 		}
 
 		$(div).click(function () {
