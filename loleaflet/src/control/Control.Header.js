@@ -122,7 +122,7 @@ L.Control.Header = L.Class.extend({
 	},
 
 	deleteRow: function(index) {
-		if (!this._headerInfo.getElementData(index).isCurrent) {
+		if (!this._headerInfo.getElementData(index).isHighlighted) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:DeleteRows');
@@ -238,7 +238,7 @@ L.Control.Header = L.Class.extend({
 	},
 
 	deleteColumn: function(index) {
-		if (!this._headerInfo.getElementData(index).isCurrent) {
+		if (!this._headerInfo.getElementData(index).isHighlighted) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:DeleteColumns');
