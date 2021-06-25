@@ -168,7 +168,7 @@ L.Control.JSDialog = L.Control.extend({
 		if (!dialog)
 			return;
 
-		var control = dialog.querySelector('#' + data.control.id);
+		var control = dialog.querySelector('[id=\'' + data.control.id + '\']');
 		if (!control) {
 			console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
 			return;
@@ -191,7 +191,7 @@ L.Control.JSDialog = L.Control.extend({
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		L.DomUtil.remove(control);
 
-		var newControl = dialog.querySelector('#' + data.control.id);
+		var newControl = dialog.querySelector('[id=\'' + data.control.id + '\']');
 		if (newControl)
 			newControl.scrollTop = scrollTop;
 	},
