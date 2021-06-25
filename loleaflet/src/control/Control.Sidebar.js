@@ -35,7 +35,7 @@ L.Control.Sidebar = L.Control.extend({
 		if (!this.container)
 			return;
 
-		var control = this.container.querySelector('#' + data.control.id);
+		var control = this.container.querySelector('[id=\'' + data.control.id + '\']');
 		if (!control) {
 			console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
 			return;
@@ -56,7 +56,7 @@ L.Control.Sidebar = L.Control.extend({
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		L.DomUtil.remove(control);
 
-		var newControl = this.container.querySelector('#' + data.control.id);
+		var newControl = this.container.querySelector('[id=\'' + data.control.id + '\']');
 		if (newControl)
 			newControl.scrollTop = scrollTop;
 	},

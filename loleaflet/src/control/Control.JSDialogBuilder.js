@@ -3096,7 +3096,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	// executes actions like changing the selection without rebuilding the widget
 	executeAction: function(container, data) {
-		var control = container.querySelector('#' + data.control_id);
+		var control = container.querySelector('[id=\'' + data.control_id + '\']');
 		if (!control) {
 			console.warn('executeAction: not found control with id: "' + data.control_id + '"');
 			return;
@@ -3136,7 +3136,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return;
 
 		if (data.visible === 'false' || data.visible === false) {
-			var control = parent.querySelector('#' + data.id);
+			var control = parent.querySelector('[id=\'' + data.id + '\']');
 			if (control)
 				control.style.display = 'none';
 		}
