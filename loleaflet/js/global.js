@@ -749,7 +749,7 @@
 		window.TheFakeWebSocket = global.socket;
 	} else {
 		// The URL may already contain a query (e.g., 'http://server.tld/foo/wopi/files/bar?desktop=baz') - then just append more params
-		var docParamsPart = docParams ? (global.docURL.includes('?') ? '&' : '?') + docParams : '';
+		var docParamsPart = docParams ? ((global.docURL.indexOf('?') >= 0) ? '&' : '?') + docParams : '';
 		var websocketURI = global.host + global.serviceRoot + '/lool/' + encodeURIComponent(global.docURL + docParamsPart) + '/ws' + wopiSrc;
 
 		try {
