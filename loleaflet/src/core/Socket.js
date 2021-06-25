@@ -402,8 +402,8 @@ app.definitions.Socket = L.Class.extend({
 		var i, chunk = 4096;
 		var strBytes = '';
 		for (i = 0; i < data.length; i += chunk)
-			strBytes += String.fromCharCode.apply(null, data.slice(i, i + chunk));
-		strBytes += String.fromCharCode.apply(null, data.slice(i));
+			strBytes += String.fromCharCode.apply(null, data.subarray(i, i + chunk));
+		strBytes += String.fromCharCode.apply(null, data.subarray(i));
 		return strBytes;
 	},
 
