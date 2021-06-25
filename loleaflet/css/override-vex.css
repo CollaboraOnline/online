@@ -86,8 +86,7 @@
 .vex.vex-theme-plain .vex-close:before {
 	width: 20px;
 	height: 20px;
-	line-height: 18px;
-	font-size: 30px;
+	line-height: 20px;
 }
 
 .vex-closing {
