@@ -124,7 +124,8 @@ L.Control.Notebookbar = L.Control.extend({
 		L.DomUtil.remove(control);
 
 		var newControl = this.container.querySelector('#' + data.control.id);
-		newControl.scrollTop = scrollTop;
+		if (newControl)
+			newControl.scrollTop = scrollTop;
 	},
 
 	onJSAction: function (e) {
