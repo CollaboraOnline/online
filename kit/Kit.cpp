@@ -120,6 +120,10 @@ class Document;
 static Document *singletonDocument = nullptr;
 #endif
 
+/// Used for test code to accelerating waiting until idle and to
+/// flush sockets with a 'processtoidle' -> 'idle' reply.
+static std::chrono::steady_clock::time_point ProcessToIdleDeadline;
+
 #ifndef BUILDING_TESTS
 static bool AnonymizeUserData = false;
 static uint64_t AnonymizationSalt = 82589933;
@@ -1537,6 +1541,21 @@ public:
         return _tileQueue && !_tileQueue->isEmpty();
     }
 
+    // poll is idle, are we ?
+    void checkIdle()
+    {
+        if (!processInputEnabled() || hasQueueItems())
+        {
+            LOG_TRC("Nearly idle - but have more queued items to process");
+            return; // more to do
+        }
+
+        sendTextFrame("idle");
+
+        // get rid of idle check for now.
+        ProcessToIdleDeadline = std::chrono::steady_clock::now() - std::chrono::milliseconds(10);
+    }
+
     void drainQueue()
     {
         try
@@ -1572,6 +1591,13 @@ public:
                 else if (Util::startsWith(tokens[0], "child-"))
                 {
                     forwardToChild(tokens[0], input);
+                }
+                else if (tokens.equals(0, "processtoidle"))
+                {
+                    ProcessToIdleDeadline = std::chrono::steady_clock::now();
+                    uint32_t timeoutUs = 0;
+                    if (tokens.getUInt32(1, "timeout", timeoutUs))
+                        ProcessToIdleDeadline += std::chrono::microseconds(timeoutUs);
                 }
                 else if (tokens.equals(0, "callback"))
                 {
@@ -1993,6 +2019,11 @@ public:
         int maxExtraEvents = 15;
         int eventsSignalled = 0;
 
+        auto startTime = std::chrono::steady_clock::now();
+
+        // handle processtoidle waiting optimization
+        bool checkForIdle = ProcessToIdleDeadline >= startTime;
+
         if (timeoutMicroS < 0)
         {
             // Flush at most 1 + maxExtraEvents, or return when nothing left.
@@ -2001,8 +2032,11 @@ public:
         }
         else
         {
+            if (checkForIdle)
+                timeoutMicroS = 0;
+
             // Flush at most maxEvents+1, or return when nothing left.
-            _pollEnd = std::chrono::steady_clock::now() + std::chrono::microseconds(timeoutMicroS);
+            _pollEnd = startTime + std::chrono::microseconds(timeoutMicroS);
             do
             {
                 int realTimeout = timeoutMicroS;
@@ -2019,6 +2053,19 @@ public:
                 ++eventsSignalled;
             }
             while (timeoutMicroS > 0 && !SigUtil::getTerminationFlag() && maxExtraEvents-- > 0);
+        }
+
+        if (_document && checkForIdle && eventsSignalled == 0 &&
+            timeoutMicroS > 0 && !hasCallbacks() && !hasBuffered())
+        {
+            auto remainingTime = ProcessToIdleDeadline - startTime;
+            LOG_TRC("Poll of " << timeoutMicroS << " vs. remaining time of: " <<
+                    std::chrono::duration_cast<std::chrono::microseconds>(remainingTime).count());
+            // would we poll until then if we could ?
+            if (remainingTime < std::chrono::microseconds(timeoutMicroS))
+                _document->checkIdle();
+            else
+                LOG_TRC("Poll of woudl not close gap - continuing");
         }
 
         drainQueue();

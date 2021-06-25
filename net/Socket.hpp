@@ -186,6 +186,9 @@ public:
                             std::chrono::steady_clock::time_point now,
                             int events) = 0;
 
+    /// Do we have internally queued incoming / outgoing data ?
+    virtual bool hasBuffered() const { return false; }
+
     /// manage latency issues around packet aggregation
     void setNoDelay()
     {
@@ -790,6 +793,19 @@ protected:
     {
         return _stop;
     }
+    bool hasCallbacks()
+    {
+        std::lock_guard<std::mutex> lock(_mutex);
+        return _newCallbacks.size() > 0;
+    }
+
+    bool hasBuffered() const
+    {
+        for (const auto& it : _pollSockets)
+            if (it->hasBuffered())
+                return true;
+        return false;
+    }
 
 private:
     /// Actual poll implementation
@@ -939,6 +955,11 @@ public:
         if (!_outBuffer.empty() || _shutdownSignalled)
             events |= POLLOUT;
         return events;
+    }
+
+    virtual bool hasBuffered() const override
+    {
+        return !_outBuffer.empty() || !_inBuffer.empty();
     }
 
     /// Send data to the socket peer.
