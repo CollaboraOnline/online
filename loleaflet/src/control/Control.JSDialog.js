@@ -192,7 +192,8 @@ L.Control.JSDialog = L.Control.extend({
 		L.DomUtil.remove(control);
 
 		var newControl = dialog.querySelector('#' + data.control.id);
-		newControl.scrollTop = scrollTop;
+		if (newControl)
+			newControl.scrollTop = scrollTop;
 	},
 
 	onJSAction: function (e) {

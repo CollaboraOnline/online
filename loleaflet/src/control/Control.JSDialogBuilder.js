@@ -3094,37 +3094,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		data.parent = parent;
 	},
 
-	_addMissingLabels: function(data) {
-		if (!this._missingLabelData) {
-			this._missingLabelData = {};
-			var labelData = {
-				// This adds a label widget just before the
-				// control with id 'linestyle'
-				'linestyle' : _('Line style:')
-			};
-
-			var mLD = this._missingLabelData;
-			Object.keys(labelData).forEach(function(controlId) {
-				mLD[controlId] = {
-					id: controlId + 'label',
-					type: 'fixedtext',
-					text: labelData[controlId],
-					enabled: 'true'
-				};
-			});
-		}
-
-		for (var idx = 0; idx < data.length; ++idx) {
-			if (!data[idx])
-				continue;
-			var controlId = data[idx].id;
-			if (controlId && Object.prototype.hasOwnProperty.call(this._missingLabelData, controlId)) {
-				data.splice(idx, 0, this._missingLabelData[controlId]);
-				++idx;
-			}
-		}
-	},
-
 	// executes actions like changing the selection without rebuilding the widget
 	executeAction: function(container, data) {
 		var control = container.querySelector('#' + data.control_id);
@@ -3162,12 +3131,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		});
 	},
 
-	_amendJSDialogData: function(data) {
-		// Called from build() which is already recursive,
-		// so no need to recurse here over 'data'.
-		this._addMissingLabels(data);
-	},
-
 	postProcess: function(parent, data) {
 		if (!data || !data.id || data.id === '')
 			return;
@@ -3180,7 +3143,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
-		this._amendJSDialogData(data);
 
 		if (hasVerticalParent === undefined) {
 			parent = L.DomUtil.create('div', 'root-container ' + this.options.cssClass, parent);
