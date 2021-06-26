@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="loading">Завантаження...</string>
-    <string name="preparing_for_the_first_start_after_an_update">Підготовка до першого старту після оновлення.</string>
+    <string name="preparing_for_the_first_start_after_an_update">Підготовка до першого запуску після оновлення.</string>
     <string name="saving">Збереження...</string>
-    <string name="cannot_open_file_chooser">Не можу відкрити оглядач файлів</string>
+    <string name="cannot_open_file_chooser">Не вдалося відкрити переглядач файлів</string>
     <string name="failed_to_insert_image">Помилка вставки зображення</string>
     <string name="failed_to_load_file">Помилка визначення файлу для завантаження</string>
     <string name="storage_permission_required">Необхідний дозвіл на збереження</string>
