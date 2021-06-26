@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2021-05-17 08:32+0000\n"
+"PO-Revision-Date: 2021-06-23 21:32+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "help/he/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.7.1-dev\n"
 "X-Pootle-Path: /he/libo_online/loleaflet-help-he.po\n"
 "X-Pootle-Revision: 3930691\n"
 
@@ -2533,12 +2533,12 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:623-5
 msgid "How can I run my slide show?"
-msgstr ""
+msgstr "איך אוכל להריץ את המצגת שלי?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:625-11
 msgid ""
 "Open the presentation in <span class=\"productname\">%productName</span>"
-msgstr ""
+msgstr "יש לפתוח את המצגת עם <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:626-11
 msgid ""
@@ -2547,6 +2547,9 @@ msgid ""
 "the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\""
 "images/lc_dia.svg\">"
 msgstr ""
+"כעת אפשר לבחור או ב־<span class=\"ui\">מצגת</span> ← <span class=\"ui\">הצגה "
+"במסך מלא</span> או ללחוץ על הסמל הימני ביותר בצדו התחתון של סרגל ההחלקה: "
+"<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\"images/lc_dia.svg\">"
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:628-5
 msgid "How can I change the line, area and position of a shape in my slides?"
