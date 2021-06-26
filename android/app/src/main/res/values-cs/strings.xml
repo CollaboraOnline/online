@@ -128,4 +128,7 @@
     <string name="theme_system_default">Výchozí pro systém</string>
     <string name="theme_dark">Tmavý</string>
     <string name="theme_light">Světlý</string>
+    <string name="pref_user_name_guest">Uživatel typu Host</string>
+    <string name="pref_user_name_info">Používá se při přidávání komentáře</string>
+    <string name="pref_user_name">Uživatelské jméno</string>
 </resources>
