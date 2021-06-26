@@ -110,4 +110,7 @@
     <string name="theme_dark">Dökkt</string>
     <string name="choose_theme">Veldu þemu</string>
     <string name="theme">Þema</string>
+    <string name="pref_user_name_guest">Gestanotandi</string>
+    <string name="pref_user_name_info">Notað þegar bætt er við athugasemd</string>
+    <string name="pref_user_name">Notandanafn</string>
 </resources>

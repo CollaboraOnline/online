@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2020-12-11 12:47+0000\n"
+"PO-Revision-Date: 2021-06-10 16:33+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/help/is/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /is/libo_online/loleaflet-help-is.po\n"
 "X-Pootle-Revision: 2357047\n"
 
@@ -780,15 +780,14 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Dálklykill (Tab)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
 "Setur inn inndráttarmerki/dálklykil (aðeins í töflum). Það fer eftir því "
-"hvaða gluggastjóri er í notkun hvort ekki megi nota Alt</kbd><span class=\""
-"kbd--plus\">+</span><kbd>Dálklykil (Tab) í staðinn."
+"hvaða gluggastjóri er í notkun hvort ekki megi nota <kbd>Alt</kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Dálklykil</kbd> (Tab) í staðinn."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -839,27 +838,26 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
-"3 sekúndur í innsetningarham, örvalyklar setja inn röð/dálk, Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>örvalykill setur inn reit"
+"3 sekúndur í innsetningarham, örvalyklar setja inn röð/dálk, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>örvalykill</kbd> setur inn reit"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Eyða (Del)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 sekúndur í innsetningarham, örvalyklar eyðir röð/dálki, Ctrl</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>örvalykill sameinar reit við grannreit sinn"
+"3 sekúndur í innsetningarham, örvalyklar eyðir röð/dálki, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>örvalykill</kbd> sameinar reit "
+"við grannreit sinn"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
@@ -1183,28 +1181,24 @@ msgid "Select objects in the reverse order in which they were created"
 msgstr "Velur hluti á síðu í öfugri röð við þá sem þeir voru búnir til"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-18
-#, fuzzy
 msgid "Move to next text object on slide"
-msgstr "Fara á næsta textahlut á skyggnu / teikningu"
+msgstr "Fara á næsta textahlut á skyggnu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
 msgid "Select all in slide"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:259-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
-msgstr "Flýtilyklar á skyggnu / teikningu"
+msgstr "Flýtilyklar á Draw-teikningu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:264-18
-#, fuzzy
 msgid "Move to next text object on drawing page"
-msgstr "Fara á næsta textahlut á skyggnu / teikningu"
+msgstr "Fara á næsta textahlut á teikningu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:265-18
-#, fuzzy
 msgid "Select all in drawing page"
-msgstr "Velja allt á skyggnu / teikningu"
+msgstr "Velja allt á teikningu"
 
 #: html/loleaflet-help.html%2Bdiv.h1:270-5
 msgid "<span class=\"productname\">%productName</span> Help"

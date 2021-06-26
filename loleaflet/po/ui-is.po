@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2021-04-30 19:32+0000\n"
+"PO-Revision-Date: 2021-06-10 16:33+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/ui/is/>\n"
-"Language: \n"
+"Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -68,7 +68,7 @@ msgstr "Opnuð skjöl"
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
 msgid " user(s)."
-msgstr " notendur."
+msgstr " notandi/notendur."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
 msgid " document(s) open."
@@ -226,7 +226,7 @@ msgstr "Uppfæra stig atvikaskráningar"
 
 #: admin/admin.strings.js:55
 msgid "Version Information"
-msgstr ""
+msgstr "Upplýsingar um útgáfu"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -955,7 +955,7 @@ msgstr "Setja inn form"
 
 #: src/control/Control.TopToolbar.js:251
 msgid "Insert connectors"
-msgstr ""
+msgstr "Setja inn tengilínur"
 
 #: src/control/Control.TopToolbar.js:498
 msgid "Style"
@@ -1081,23 +1081,22 @@ msgstr "~Hjálp"
 #: src/control/Control.NotebookbarImpress.js:172
 #: src/control/Control.NotebookbarDraw.js:155
 msgid "Share"
-msgstr ""
+msgstr "Deila"
 
 #: src/control/Control.NotebookbarWriter.js:112
 #: src/control/Control.NotebookbarCalc.js:105
 #: src/control/Control.NotebookbarImpress.js:179
 #: src/control/Control.NotebookbarDraw.js:162
 msgid "See history"
-msgstr ""
+msgstr "Skoða feril"
 
 #: src/control/Control.NotebookbarWriter.js:131
-#, fuzzy
 msgid "ODF Text Document (.odt)"
 msgstr "ODF-textaskjal (.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:173
 msgid "EPUB Document (.epub)"
-msgstr ""
+msgstr "EPUB-skjal (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:521
 msgid "Text Body"
@@ -1112,51 +1111,48 @@ msgid "~Data"
 msgstr "~Gögn"
 
 #: src/control/Control.NotebookbarCalc.js:125
-#, fuzzy
 msgid "ODF Spreadsheet (.ods)"
 msgstr "ODF-töflureikniskjal (.ods)"
 
 #: src/control/Control.NotebookbarCalc.js:131
-#, fuzzy
 msgid "CSV File (.csv)"
 msgstr "CSV-skrá (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:432
 msgid "General"
-msgstr ""
+msgstr "Almennt"
 
 #: src/control/Control.NotebookbarCalc.js:433
 msgid "Number"
-msgstr ""
+msgstr "Tala"
 
 #: src/control/Control.NotebookbarCalc.js:434
 msgid "Percent"
-msgstr ""
+msgstr "Prósent"
 
 #: src/control/Control.NotebookbarCalc.js:435
-#, fuzzy
 msgid "Currency"
-msgstr "Núverandi"
+msgstr "Gjaldmiðill"
 
 #: src/control/Control.NotebookbarCalc.js:436
 msgid "Date"
-msgstr ""
+msgstr "Dagsetning"
 
 #: src/control/Control.NotebookbarCalc.js:437
 msgid "Time"
-msgstr ""
+msgstr "Tími"
 
 #: src/control/Control.NotebookbarCalc.js:438
 msgid "Scientific"
-msgstr ""
+msgstr "Vísindalegt"
 
 #: src/control/Control.NotebookbarCalc.js:439
 msgid "Fraction"
-msgstr ""
+msgstr "Tugabrot"
 
 #: src/control/Control.NotebookbarCalc.js:440
 msgid "Boolean Value"
-msgstr ""
+msgstr "Boole-gildi"
 
 #: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:789
 msgid "Text"
@@ -1164,27 +1160,27 @@ msgstr "Texti"
 
 #: src/control/Control.NotebookbarCalc.js:574
 msgid "Default"
-msgstr ""
+msgstr "Sjálfgefið"
 
 #: src/control/Control.NotebookbarCalc.js:579
 msgid "Heading 1"
-msgstr ""
+msgstr "Fyrirsögn 1"
 
 #: src/control/Control.NotebookbarCalc.js:584
 msgid "Heading 2"
-msgstr ""
+msgstr "Fyrirsögn 2"
 
 #: src/control/Control.NotebookbarCalc.js:595
 msgid "Good"
-msgstr ""
+msgstr "Gott"
 
 #: src/control/Control.NotebookbarCalc.js:600
 msgid "Neutral"
-msgstr ""
+msgstr "Hlutlaust"
 
 #: src/control/Control.NotebookbarCalc.js:605
 msgid "Bad"
-msgstr ""
+msgstr "Slæmt"
 
 #: src/control/Control.NotebookbarCalc.js:667
 msgid "Insert Rows Above"
@@ -1215,13 +1211,12 @@ msgid "Start Presentation"
 msgstr "Hefja kynningu"
 
 #: src/control/Control.NotebookbarImpress.js:199
-#, fuzzy
 msgid "ODF Presentation (.odp)"
 msgstr "ODF-kynning (.odp)"
 
 #: src/control/Control.NotebookbarDraw.js:188
 msgid "Image (.png)"
-msgstr ""
+msgstr "Mynd (.png)"
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
@@ -1435,6 +1430,7 @@ msgstr "Úbbs, það kom upp villa við að tengjast %productName: "
 #: src/core/Socket.js:362
 msgid "Server has been restarted. We have to refresh the page now."
 msgstr ""
+"Netþjónninn hefur verið endurræstur. Við þurfum að hlaða síðunni aftur inn."
 
 #: src/core/Socket.js:380
 msgid "Served by:"
@@ -1466,7 +1462,7 @@ msgstr "Úbbs, það kom upp villa við að tengjast skjalinu"
 
 #: src/core/Socket.js:506
 msgid "Server is down, restarting automatically. Please wait."
-msgstr ""
+msgstr "Netþjónninn liggur niðri, endurræsi sjálfvirkt. Bíddu aðeins."
 
 #: src/core/Socket.js:534
 msgid ""
@@ -1715,7 +1711,7 @@ msgstr "Föll"
 
 #: src/layer/tile/CanvasTileLayer.js:4849
 msgid "No Comments"
-msgstr ""
+msgstr "Engar athugasemdir"
 
 #: src/layer/tile/CanvasTileLayer.js:5095
 msgid "Modify"
@@ -1766,6 +1762,13 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
+"<p>Vafrinn þinn er með mjög takmarkaðan aðgang að klippispjaldinu, þannig að "
+"þú ættir að nota þessa flýtilykla:</p><table class=\"warn-copy-paste\""
+"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
+"n><kbd>V</kbd></td></tr><tr><td>Afrita</td><td>Klippa</td><td>Líma</td></tr><"
+"/table>"
 
 #: src/map/Clipboard.js:909
 msgid ""
