@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-14 11:11+0200\n"
-"PO-Revision-Date: 2020-12-15 02:29+0000\n"
-"Last-Translator: Mike Kaganski <mikekaganski@gmail.com>\n"
+"PO-Revision-Date: 2021-06-09 15:34+0000\n"
+"Last-Translator: Mike Kaganski <mikekaganski@hotmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ru/>\n"
-"Language: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.7-dev\n"
 "X-Pootle-Path: /ru/libo_online/loleaflet-ui-ru.po\n"
 "X-Pootle-Revision: 3938105\n"
 
@@ -232,7 +232,7 @@ msgstr "Обновить уровни логирования"
 
 #: admin/admin.strings.js:55
 msgid "Version Information"
-msgstr ""
+msgstr "Информация о версии"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -484,17 +484,16 @@ msgid "Open menu"
 msgstr "Открыть меню"
 
 #: src/control/Control.JSDialogBuilder.js:2272
-#, fuzzy
 msgid "reply"
-msgstr "Ответ"
+msgstr "ответить"
 
 #: src/control/Control.JSDialogBuilder.js:2275
 msgid "replies"
-msgstr ""
+msgstr "ответы"
 
 #: src/control/Control.JSDialogBuilder.js:2323
 msgid "Insert Comment"
-msgstr ""
+msgstr "Вставить комментарий"
 
 #: src/control/Control.JSDialogBuilder.js:2706
 msgid "Cell borders"
@@ -746,7 +745,7 @@ msgstr "Таблица Excel (.xlsx)"
 
 #: src/control/Control.Menubar.js:516
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "Файл CSV (.csv)"
 
 #: src/control/Control.Menubar.js:743 src/control/Control.Menubar.js:792
 #: src/control/Control.Menubar.js:838 src/control/Control.Menubar.js:886
@@ -963,7 +962,7 @@ msgstr "Вставить фигуры"
 
 #: src/control/Control.TopToolbar.js:251
 msgid "Insert connectors"
-msgstr ""
+msgstr "Вставить соединители"
 
 #: src/control/Control.TopToolbar.js:498
 msgid "Style"
@@ -1089,23 +1088,22 @@ msgstr "~Справка"
 #: src/control/Control.NotebookbarImpress.js:172
 #: src/control/Control.NotebookbarDraw.js:155
 msgid "Share"
-msgstr ""
+msgstr "Поделиться"
 
 #: src/control/Control.NotebookbarWriter.js:112
 #: src/control/Control.NotebookbarCalc.js:105
 #: src/control/Control.NotebookbarImpress.js:179
 #: src/control/Control.NotebookbarDraw.js:162
 msgid "See history"
-msgstr ""
+msgstr "Просмотр истории"
 
 #: src/control/Control.NotebookbarWriter.js:131
-#, fuzzy
 msgid "ODF Text Document (.odt)"
-msgstr "ODF текстовый документ (.odt)"
+msgstr "Текстовый документ ODF (.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:173
 msgid "EPUB Document (.epub)"
-msgstr ""
+msgstr "Документ EPUB (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:521
 msgid "Text Body"
@@ -1120,50 +1118,48 @@ msgid "~Data"
 msgstr "~Данные"
 
 #: src/control/Control.NotebookbarCalc.js:125
-#, fuzzy
 msgid "ODF Spreadsheet (.ods)"
-msgstr "ODF эл.таблица (.ods)"
+msgstr "Электронная таблица ODF (.ods)"
 
 #: src/control/Control.NotebookbarCalc.js:131
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "Файл CSV (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:432
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: src/control/Control.NotebookbarCalc.js:433
 msgid "Number"
-msgstr ""
+msgstr "Числовой"
 
 #: src/control/Control.NotebookbarCalc.js:434
 msgid "Percent"
-msgstr ""
+msgstr "Процентный"
 
 #: src/control/Control.NotebookbarCalc.js:435
-#, fuzzy
 msgid "Currency"
-msgstr "Текущий"
+msgstr "Денежный"
 
 #: src/control/Control.NotebookbarCalc.js:436
 msgid "Date"
-msgstr ""
+msgstr "Дата"
 
 #: src/control/Control.NotebookbarCalc.js:437
 msgid "Time"
-msgstr ""
+msgstr "Время"
 
 #: src/control/Control.NotebookbarCalc.js:438
 msgid "Scientific"
-msgstr ""
+msgstr "Научный"
 
 #: src/control/Control.NotebookbarCalc.js:439
 msgid "Fraction"
-msgstr ""
+msgstr "Дробь"
 
 #: src/control/Control.NotebookbarCalc.js:440
 msgid "Boolean Value"
-msgstr ""
+msgstr "Логический"
 
 #: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:789
 msgid "Text"
@@ -1171,27 +1167,27 @@ msgstr "Текст"
 
 #: src/control/Control.NotebookbarCalc.js:574
 msgid "Default"
-msgstr ""
+msgstr "Базовый"
 
 #: src/control/Control.NotebookbarCalc.js:579
 msgid "Heading 1"
-msgstr ""
+msgstr "Заголовок 1"
 
 #: src/control/Control.NotebookbarCalc.js:584
 msgid "Heading 2"
-msgstr ""
+msgstr "Заголовок 2"
 
 #: src/control/Control.NotebookbarCalc.js:595
 msgid "Good"
-msgstr ""
+msgstr "Good"
 
 #: src/control/Control.NotebookbarCalc.js:600
 msgid "Neutral"
-msgstr ""
+msgstr "Neutral"
 
 #: src/control/Control.NotebookbarCalc.js:605
 msgid "Bad"
-msgstr ""
+msgstr "Bad"
 
 #: src/control/Control.NotebookbarCalc.js:667
 msgid "Insert Rows Above"
@@ -1222,13 +1218,12 @@ msgid "Start Presentation"
 msgstr "Начать презентацию"
 
 #: src/control/Control.NotebookbarImpress.js:199
-#, fuzzy
 msgid "ODF Presentation (.odp)"
-msgstr "ODF презентация (.odp)"
+msgstr "Презентация ODF (.odp)"
 
 #: src/control/Control.NotebookbarDraw.js:188
 msgid "Image (.png)"
-msgstr ""
+msgstr "Изображение (.png)"
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
@@ -1442,7 +1437,7 @@ msgstr "Упс, неполадки при подключении к %productName
 
 #: src/core/Socket.js:362
 msgid "Server has been restarted. We have to refresh the page now."
-msgstr ""
+msgstr "Сервер был перезагружен. Необходимо обновить страницу."
 
 #: src/core/Socket.js:380
 msgid "Served by:"
@@ -1478,7 +1473,7 @@ msgstr "Упс, неполадки при подключении к докуме
 
 #: src/core/Socket.js:506
 msgid "Server is down, restarting automatically. Please wait."
-msgstr ""
+msgstr "Сервер отключён, автоматический перезапуск. Подождите."
 
 #: src/core/Socket.js:534
 msgid ""
@@ -1727,7 +1722,7 @@ msgstr "Функции"
 
 #: src/layer/tile/CanvasTileLayer.js:4849
 msgid "No Comments"
-msgstr ""
+msgstr "Нет комментариев"
 
 #: src/layer/tile/CanvasTileLayer.js:5095
 msgid "Modify"
@@ -1778,6 +1773,12 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
+"<p>Доступ браузера к буферу обмена ограничен, используйте следующие "
+"комбинации клавиш:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Копироват"
+"ь</td><td>Вырезать</td><td>Вставить</td></tr></table>"
 
 #: src/map/Clipboard.js:909
 msgid ""

@@ -110,4 +110,7 @@
     <string name="theme_system_default">По умолчанию системы</string>
     <string name="choose_theme">Выбрать тему</string>
     <string name="theme">Тема</string>
+    <string name="pref_user_name_guest">Гость</string>
+    <string name="pref_user_name_info">Используется при добавлении комментария</string>
+    <string name="pref_user_name">Имя пользователя</string>
 </resources>
