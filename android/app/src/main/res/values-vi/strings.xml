@@ -109,4 +109,7 @@
     <string name="no_recent_items">Hãy mở một tệp bằng biểu tượng thư mục trên thanh công cụ.</string>
     <string name="app_vendor">Phiên bản này được cung cấp bởi $VENDOR.</string>
     <string name="app_name_settings">Cài đặt</string>
+    <string name="pref_user_name_guest">Người dùng khách</string>
+    <string name="pref_user_name_info">Được sử dụng khi thêm bình luận</string>
+    <string name="pref_user_name">Tên người dùng</string>
 </resources>
