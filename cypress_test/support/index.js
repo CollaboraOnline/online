@@ -31,3 +31,13 @@ if (Cypress.browser.isHeaded) {
 		});
 	});
 }
+
+// reduce poll interval when waiting.
+Cypress.Commands.overwrite('waitUntil', function(originalFn, subject, checkFunction, originalOptions) {
+	var options = originalOptions;
+	if (!options)
+		options = {};
+	if (!options.interval)
+		options.interval = 10; // ms
+	return originalFn(subject, checkFunction, options);
+});
