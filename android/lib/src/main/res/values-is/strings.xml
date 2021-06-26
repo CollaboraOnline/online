@@ -18,4 +18,8 @@
     <string name="view_only">Aðeins skoða</string>
     <string name="restarting">Endurræsi...</string>
     <string name="cant_open_the_document">Gat ekki opnað skjalið</string>
+    <string name="use_odf">Nota ODF-snið</string>
+    <string name="use_text">Nota textasnið</string>
+    <string name="convert_odf_message">Þetta skjal gæti innihaldið snið eða efni sem ekki er hægt að vista á sniðinu \"Texti\" sem núna er valið.</string>
+    <string name="ask_for_convert_odf">Staðfestu skráasnið</string>
 </resources>
