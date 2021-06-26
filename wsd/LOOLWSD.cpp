@@ -1547,7 +1547,7 @@ void LOOLWSD::initialize(Application& self)
 void LOOLWSD::initializeSSL()
 {
 #if ENABLE_SSL
-    if (!LOOLWSD::isSSLEnabled() && !LOOLWSD::isSSLTermination())
+    if (!LOOLWSD::isSSLEnabled())
         return;
 
     const std::string ssl_cert_file_path = getPathFromConfig("ssl.cert_file_path");
