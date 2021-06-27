@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-14 11:11+0200\n"
+"POT-Creation-Date: 2021-06-27 13:21+0200\n"
 "PO-Revision-Date: 2020-08-30 15:35+0000\n"
 "Last-Translator: 김주현 <kjh000121@gmail.com>\n"
 "Language-Team: Korean <https://weblate.documentfoundation.org/projects/"
@@ -138,10 +138,10 @@ msgstr "CPU 그래프"
 msgid "Network Graph"
 msgstr "네트워크 그래프"
 
-#: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:229
+#: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:242
 #: src/control/Control.NotebookbarImpress.js:24
 #: src/control/Control.NotebookbarDraw.js:24 src/layer/marker/Annotation.js:280
-#: src/layer/tile/CanvasTileLayer.js:1447
+#: src/layer/tile/CanvasTileLayer.js:1451
 msgid "Save"
 msgstr "저장"
 
@@ -206,7 +206,7 @@ msgstr "새로 고침"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:373
+#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:381
 #: src/control/Control.StatusBar.js:330
 msgid "None"
 msgstr "없음"
@@ -257,18 +257,18 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "이 세션을 정말 종료하겠습니까?"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1538
+#: src/control/Control.Menubar.js:1565
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:253
-#: src/control/Control.Tabs.js:270 src/control/Toolbar.js:793
+#: src/control/Control.Tabs.js:270 src/control/Toolbar.js:813
 msgid "OK"
 msgstr "확인"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1539
-#: src/control/Control.MobileTopBar.js:45
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1566
+#: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:254
-#: src/control/Control.Tabs.js:271 src/control/Toolbar.js:794
-#: src/layer/marker/Annotation.js:204 src/layer/tile/CanvasTileLayer.js:1448
+#: src/control/Control.Tabs.js:271 src/control/Toolbar.js:814
+#: src/layer/marker/Annotation.js:204 src/layer/tile/CanvasTileLayer.js:1452
 msgid "Cancel"
 msgstr "취소"
 
@@ -370,10 +370,10 @@ msgid "Index"
 msgstr "차례"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2281
-#: src/layer/tile/CanvasTileLayer.js:4822
-#: src/layer/tile/CanvasTileLayer.js:4832
-#: src/layer/tile/CanvasTileLayer.js:5148
+#: src/control/Control.JSDialogBuilder.js:2358
+#: src/layer/tile/CanvasTileLayer.js:4814
+#: src/layer/tile/CanvasTileLayer.js:4824
+#: src/layer/tile/CanvasTileLayer.js:5150
 msgid "Comment"
 msgstr "추가 설명"
 
@@ -413,171 +413,176 @@ msgstr "교차 복사/붙여넣기 시작"
 msgid "Function Wizard"
 msgstr "함수 마법사"
 
-#: src/control/Control.JSDialogBuilder.js:376
+#: src/control/Control.MobileWizardBuilder.js:518
+msgid "Background Color"
+msgstr ""
+
+#: src/control/Control.MobileWizardBuilder.js:520
+msgid "Gradient Start"
+msgstr ""
+
+#: src/control/Control.MobileWizardBuilder.js:522
+msgid "Gradient End"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:384
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:379
+#: src/control/Control.JSDialogBuilder.js:387
 msgid "Linear"
 msgstr "선"
 
-#: src/control/Control.JSDialogBuilder.js:382
+#: src/control/Control.JSDialogBuilder.js:390
 msgid "Axial"
 msgstr "축"
 
-#: src/control/Control.JSDialogBuilder.js:385
+#: src/control/Control.JSDialogBuilder.js:393
 msgid "Radial"
 msgstr "방사형"
 
-#: src/control/Control.JSDialogBuilder.js:388
+#: src/control/Control.JSDialogBuilder.js:396
 msgid "Ellipsoid"
 msgstr "타원체"
 
-#: src/control/Control.JSDialogBuilder.js:392
+#: src/control/Control.JSDialogBuilder.js:400
 msgid "Quadratic"
 msgstr "입방형"
 
-#: src/control/Control.JSDialogBuilder.js:395
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Square"
 msgstr "정방형"
 
-#: src/control/Control.JSDialogBuilder.js:398
+#: src/control/Control.JSDialogBuilder.js:406
 msgid "Fixed size"
 msgstr "고정 크기"
 
-#: src/control/Control.JSDialogBuilder.js:1474
+#: src/control/Control.JSDialogBuilder.js:1514
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1477
+#: src/control/Control.JSDialogBuilder.js:1517
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1608
+#: src/control/Control.JSDialogBuilder.js:1648
 #, fuzzy
 msgid "Select range"
 msgstr "변경 사항 거부"
 
-#: src/control/Control.JSDialogBuilder.js:1637
-#: src/control/Control.NotebookbarBuilder.js:233
+#: src/control/Control.JSDialogBuilder.js:1677
+#: src/control/Control.NotebookbarBuilder.js:235
 msgid "Font Name"
 msgstr "글꼴 이름"
 
-#: src/control/Control.JSDialogBuilder.js:1639
+#: src/control/Control.JSDialogBuilder.js:1679
 msgid "Font Size"
 msgstr "글꼴 크기"
 
-#: src/control/Control.JSDialogBuilder.js:2212
+#: src/control/Control.JSDialogBuilder.js:1681
+#: src/control/Control.TopToolbar.js:498
+msgid "Style"
+msgstr "스타일"
+
+#: src/control/Control.JSDialogBuilder.js:2289
 #: src/layer/marker/Annotation.js:241
 msgid "Accept change"
 msgstr "변경 사항 적용"
 
-#: src/control/Control.JSDialogBuilder.js:2217
+#: src/control/Control.JSDialogBuilder.js:2294
 #: src/layer/marker/Annotation.js:242
 msgid "Reject change"
 msgstr "변경 사항 거부"
 
-#: src/control/Control.JSDialogBuilder.js:2226
+#: src/control/Control.JSDialogBuilder.js:2303
 #: src/layer/marker/Annotation.js:260
 msgid "Open menu"
 msgstr "메뉴 열기"
 
-#: src/control/Control.JSDialogBuilder.js:2272
+#: src/control/Control.JSDialogBuilder.js:2349
 #, fuzzy
 msgid "reply"
 msgstr "답변"
 
-#: src/control/Control.JSDialogBuilder.js:2275
+#: src/control/Control.JSDialogBuilder.js:2352
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2323
+#: src/control/Control.JSDialogBuilder.js:2400
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2706
+#: src/control/Control.JSDialogBuilder.js:2799
 #, fuzzy
 msgid "Cell borders"
 msgstr "테두리"
 
-#: src/control/Control.JSDialogBuilder.js:2750
-msgid "Background Color"
-msgstr ""
-
-#: src/control/Control.JSDialogBuilder.js:2752
-msgid "Gradient Start"
-msgstr ""
-
-#: src/control/Control.JSDialogBuilder.js:2754
-msgid "Gradient End"
-msgstr ""
-
-#: src/control/Control.JSDialogBuilder.js:2936
+#: src/control/Control.JSDialogBuilder.js:3043
 msgid "Rows"
 msgstr "열"
 
-#: src/control/Control.JSDialogBuilder.js:2937
+#: src/control/Control.JSDialogBuilder.js:3044
 msgid "Columns"
 msgstr "행"
 
-#: src/control/Control.JSDialogBuilder.js:2957
+#: src/control/Control.JSDialogBuilder.js:3064
 #, fuzzy
 msgid "Insert Table"
 msgstr "표 삽입"
 
-#: src/control/Control.JSDialogBuilder.js:2986
+#: src/control/Control.JSDialogBuilder.js:3093
 msgid "Line style:"
 msgstr "줄 양식:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
-#: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:493
-#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:506
-#: src/control/Control.NotebookbarBuilder.js:766
+#: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:491
+#: src/control/Control.Menubar.js:699 src/control/Control.StatusBar.js:506
+#: src/control/Control.NotebookbarBuilder.js:705
+#: src/control/Control.NotebookbarBuilder.js:707
+#: src/control/Control.NotebookbarBuilder.js:709
+#: src/control/Control.NotebookbarBuilder.js:733
 #: src/control/Control.NotebookbarBuilder.js:768
-#: src/control/Control.NotebookbarBuilder.js:770
-#: src/control/Control.NotebookbarBuilder.js:794
-#: src/control/Control.NotebookbarBuilder.js:829
-#: src/control/Control.NotebookbarBuilder.js:846
+#: src/control/Control.NotebookbarBuilder.js:785
 msgid "None (Do not check spelling)"
 msgstr "없음 (맞춤법 검사 안함)"
 
 #: src/control/Control.Menubar.js:21 src/control/Control.Menubar.js:270
-#: src/control/Control.Menubar.js:398 src/control/Control.Menubar.js:509
-#: src/control/Control.Menubar.js:720 src/control/Control.Menubar.js:771
-#: src/control/Control.Menubar.js:820 src/control/Control.Menubar.js:866
+#: src/control/Control.Menubar.js:398 src/control/Control.Menubar.js:507
+#: src/control/Control.Menubar.js:719 src/control/Control.Menubar.js:772
+#: src/control/Control.Menubar.js:826 src/control/Control.Menubar.js:871
 msgid "Share..."
 msgstr "공유"
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:271
-#: src/control/Control.Menubar.js:400 src/control/Control.Menubar.js:510
-#: src/control/Control.Menubar.js:722 src/control/Control.Menubar.js:773
-#: src/control/Control.Menubar.js:822 src/control/Control.Menubar.js:868
+#: src/control/Control.Menubar.js:400 src/control/Control.Menubar.js:508
+#: src/control/Control.Menubar.js:720 src/control/Control.Menubar.js:773
+#: src/control/Control.Menubar.js:828 src/control/Control.Menubar.js:872
 msgid "See revision history"
 msgstr "개정 내역 확인"
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:272
-#: src/control/Control.Menubar.js:401 src/control/Control.Menubar.js:511
-#: src/control/Control.Menubar.js:725 src/control/Control.Menubar.js:775
-#: src/control/Control.Menubar.js:824 src/control/Control.Menubar.js:870
+#: src/control/Control.Menubar.js:401 src/control/Control.Menubar.js:509
+#: src/control/Control.Menubar.js:725 src/control/Control.Menubar.js:777
+#: src/control/Control.Menubar.js:830 src/control/Control.Menubar.js:876
 msgid "Download as"
 msgstr "다음 형식으로 내려 받기"
 
 #: src/control/Control.Menubar.js:23 src/control/Control.Menubar.js:272
-#: src/control/Control.Menubar.js:401 src/control/Control.Menubar.js:511
-#: src/control/Control.Menubar.js:725 src/control/Control.Menubar.js:775
-#: src/control/Control.Menubar.js:824 src/control/Control.Menubar.js:870
+#: src/control/Control.Menubar.js:401 src/control/Control.Menubar.js:509
+#: src/control/Control.Menubar.js:725 src/control/Control.Menubar.js:777
+#: src/control/Control.Menubar.js:830 src/control/Control.Menubar.js:876
 msgid "Export as"
 msgstr "내보내기"
 
 #: src/control/Control.Menubar.js:24 src/control/Control.Menubar.js:273
-#: src/control/Control.Menubar.js:402 src/control/Control.Menubar.js:512
-#: src/control/Control.Menubar.js:726 src/control/Control.Menubar.js:776
-#: src/control/Control.Menubar.js:825 src/control/Control.Menubar.js:871
+#: src/control/Control.Menubar.js:402 src/control/Control.Menubar.js:510
+#: src/control/Control.Menubar.js:726 src/control/Control.Menubar.js:778
+#: src/control/Control.Menubar.js:831 src/control/Control.Menubar.js:877
 #: src/control/Control.NotebookbarWriter.js:167
 #: src/control/Control.NotebookbarCalc.js:163
-#: src/control/Control.NotebookbarImpress.js:237
-#: src/control/Control.NotebookbarDraw.js:201
+#: src/control/Control.NotebookbarImpress.js:243
+#: src/control/Control.NotebookbarDraw.js:219
 msgid "PDF Document (.pdf)"
 msgstr "PDF 문서 (.pdf)"
 
@@ -604,52 +609,72 @@ msgstr "서식 있는 텍스트 (.rtf)"
 msgid "EPUB (.epub)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:723
-#: src/control/Control.NotebookbarWriter.js:183 src/control/Signing.js:601
+#: src/control/Control.Menubar.js:30 src/control/Control.Menubar.js:721
+#: src/control/Control.NotebookbarWriter.js:192 src/control/Signing.js:601
 msgid "Sign document"
 msgstr "문서 서명"
 
 #: src/control/Control.Menubar.js:33 src/control/Control.Menubar.js:280
-#: src/control/Control.Menubar.js:406 src/control/Control.Menubar.js:519
+#: src/control/Control.Menubar.js:406 src/control/Control.Menubar.js:517
 msgid "Close document"
 msgstr "문서 닫기"
 
 #: src/control/Control.Menubar.js:38 src/control/Control.Menubar.js:285
-#: src/control/Control.Menubar.js:411 src/control/Control.Menubar.js:524
-#: src/control/Control.Menubar.js:736 src/control/Control.Menubar.js:785
-#: src/control/Control.Menubar.js:831 src/control/Control.Menubar.js:879
-#: src/control/Control.NotebookbarBuilder.js:759
-#: src/control/Control.NotebookbarBuilder.js:789
-#: src/control/Control.NotebookbarBuilder.js:824
-#: src/control/Control.NotebookbarBuilder.js:841
+#: src/control/Control.Menubar.js:411 src/control/Control.Menubar.js:522
+#: src/control/Control.Menubar.js:736 src/control/Control.Menubar.js:787
+#: src/control/Control.Menubar.js:837 src/control/Control.Menubar.js:885
+#: src/control/Control.NotebookbarWriter.js:185
+#: src/control/Control.NotebookbarWriter.js:186
+#: src/control/Control.NotebookbarCalc.js:169
+#: src/control/Control.NotebookbarCalc.js:170
+#: src/control/Control.NotebookbarImpress.js:249
+#: src/control/Control.NotebookbarImpress.js:250
+#: src/control/Control.NotebookbarDraw.js:225
+#: src/control/Control.NotebookbarDraw.js:226
+#: src/control/Control.NotebookbarBuilder.js:698
+#: src/control/Control.NotebookbarBuilder.js:728
+#: src/control/Control.NotebookbarBuilder.js:763
+#: src/control/Control.NotebookbarBuilder.js:780
 msgid "Repair"
 msgstr "복구"
 
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:299
-#: src/control/Control.Menubar.js:425 src/control/Control.Menubar.js:538
+#: src/control/Control.Menubar.js:425 src/control/Control.Menubar.js:536
 #: src/control/Control.StatusBar.js:205
+#: src/control/Control.NotebookbarWriter.js:975
+#: src/control/Control.NotebookbarWriter.js:976
+#: src/control/Control.NotebookbarCalc.js:745
+#: src/control/Control.NotebookbarCalc.js:746
+#: src/control/Control.NotebookbarImpress.js:980
+#: src/control/Control.NotebookbarImpress.js:981
+#: src/control/Control.NotebookbarDraw.js:696
+#: src/control/Control.NotebookbarDraw.js:697
 msgid "Reset zoom"
 msgstr "배율 초기화"
 
 #: src/control/Control.Menubar.js:67
-#: src/control/Control.NotebookbarBuilder.js:745
+#: src/control/Control.NotebookbarWriter.js:1025
+#: src/control/Control.NotebookbarWriter.js:1026
+#: src/control/Control.NotebookbarBuilder.js:684
 msgid "Show Ruler"
 msgstr "눈금자 보기"
 
 #: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:309
 #: src/control/Control.Menubar.js:428
+#: src/control/Control.NotebookbarWriter.js:1036
+#: src/control/Control.NotebookbarWriter.js:1037
 msgid "Show Status Bar"
 msgstr ""
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:312
-#: src/control/Control.Menubar.js:431 src/control/Control.Menubar.js:549
-#: src/control/Control.Menubar.js:933 src/control/Control.Menubar.js:975
-#: src/control/Control.Menubar.js:989
+#: src/control/Control.Menubar.js:431 src/control/Control.Menubar.js:547
+#: src/control/Control.Menubar.js:938 src/control/Control.Menubar.js:980
+#: src/control/Control.Menubar.js:994 src/control/Control.Menubar.js:1017
 msgid "Local Image..."
 msgstr "로컬 이미지..."
 
 #: src/control/Control.Menubar.js:95 src/control/Control.Menubar.js:97
-#: src/control/Control.Menubar.js:950 src/control/Control.Menubar.js:952
+#: src/control/Control.Menubar.js:955 src/control/Control.Menubar.js:957
 msgid "All"
 msgstr "전체"
 
@@ -658,42 +683,42 @@ msgid "Text orientation"
 msgstr "텍스트 방향"
 
 #: src/control/Control.Menubar.js:256 src/control/Control.Menubar.js:384
-#: src/control/Control.Menubar.js:496 src/control/Control.Menubar.js:707
-#: src/control/Control.NotebookbarWriter.js:204
+#: src/control/Control.Menubar.js:494 src/control/Control.Menubar.js:705
+#: src/control/Control.NotebookbarWriter.js:216
 msgid "Online Help"
 msgstr "온라인 도움말"
 
 #: src/control/Control.Menubar.js:257 src/control/Control.Menubar.js:385
-#: src/control/Control.Menubar.js:497 src/control/Control.Menubar.js:708
-#: src/control/Control.NotebookbarWriter.js:215
+#: src/control/Control.Menubar.js:495 src/control/Control.Menubar.js:706
+#: src/control/Control.NotebookbarWriter.js:227
 msgid "Keyboard shortcuts"
 msgstr "키보드 단축키"
 
 #: src/control/Control.Menubar.js:258 src/control/Control.Menubar.js:386
-#: src/control/Control.Menubar.js:498 src/control/Control.Menubar.js:709
-#: src/control/Control.NotebookbarWriter.js:226
+#: src/control/Control.Menubar.js:496 src/control/Control.Menubar.js:707
+#: src/control/Control.NotebookbarWriter.js:238
 msgid "Report an issue"
 msgstr "문제 보고하기"
 
 #: src/control/Control.Menubar.js:259 src/control/Control.Menubar.js:387
-#: src/control/Control.Menubar.js:499 src/control/Control.Menubar.js:710
-#: src/control/Control.Menubar.js:763 src/control/Control.Menubar.js:812
-#: src/control/Control.Menubar.js:858 src/control/Control.Menubar.js:926
-#: src/control/Control.NotebookbarWriter.js:238
+#: src/control/Control.Menubar.js:497 src/control/Control.Menubar.js:708
+#: src/control/Control.Menubar.js:763 src/control/Control.Menubar.js:817
+#: src/control/Control.Menubar.js:862 src/control/Control.Menubar.js:931
+#: src/control/Control.NotebookbarWriter.js:250
 msgid "Latest Updates"
 msgstr ""
 
 #: src/control/Control.Menubar.js:260 src/control/Control.Menubar.js:388
-#: src/control/Control.Menubar.js:500 src/control/Control.Menubar.js:711
-#: src/control/Control.Menubar.js:764 src/control/Control.Menubar.js:813
-#: src/control/Control.Menubar.js:859 src/control/Control.Menubar.js:927
-#: src/control/Control.NotebookbarWriter.js:249
+#: src/control/Control.Menubar.js:498 src/control/Control.Menubar.js:709
+#: src/control/Control.Menubar.js:764 src/control/Control.Menubar.js:818
+#: src/control/Control.Menubar.js:863 src/control/Control.Menubar.js:932
+#: src/control/Control.NotebookbarWriter.js:261
 msgid "About"
 msgstr "정보"
 
 #: src/control/Control.Menubar.js:262 src/control/Control.Menubar.js:390
-#: src/control/Control.Menubar.js:502 src/control/Control.Menubar.js:713
-#: src/map/Map.js:402
+#: src/control/Control.Menubar.js:500 src/control/Control.Menubar.js:711
+#: src/map/Map.js:405
 msgid "Last modification"
 msgstr "마지막 수정"
 
@@ -702,22 +727,22 @@ msgstr "마지막 수정"
 msgid "Save Comments"
 msgstr "추가 설명"
 
-#: src/control/Control.Menubar.js:274 src/control/Control.Menubar.js:777
+#: src/control/Control.Menubar.js:274 src/control/Control.Menubar.js:779
 msgid "ODF presentation (.odp)"
 msgstr "ODF 프레젠테이션 (.odp)"
 
-#: src/control/Control.Menubar.js:275 src/control/Control.Menubar.js:778
-#: src/control/Control.NotebookbarImpress.js:218
+#: src/control/Control.Menubar.js:275 src/control/Control.Menubar.js:780
+#: src/control/Control.NotebookbarImpress.js:224
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "PowerPoint 2003 프레젠테이션 (.ppt)"
 
-#: src/control/Control.Menubar.js:276 src/control/Control.Menubar.js:779
-#: src/control/Control.NotebookbarImpress.js:224
+#: src/control/Control.Menubar.js:276 src/control/Control.Menubar.js:781
+#: src/control/Control.NotebookbarImpress.js:230
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint 프레젠테이션 (.pptx)"
 
-#: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:811
-#: src/control/Control.Menubar.js:857 src/control/Control.PresentationBar.js:57
+#: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:815
+#: src/control/Control.PresentationBar.js:57
 msgid "Fullscreen presentation"
 msgstr "프레젠테이션 전체 화면"
 
@@ -725,62 +750,62 @@ msgstr "프레젠테이션 전체 화면"
 msgid "Present current slide"
 msgstr ""
 
-#: src/control/Control.Menubar.js:403 src/control/Control.Menubar.js:780
-#: src/control/Control.Menubar.js:826
-#: src/control/Control.NotebookbarImpress.js:205
-#: src/control/Control.NotebookbarDraw.js:182
+#: src/control/Control.Menubar.js:403 src/control/Control.Menubar.js:782
+#: src/control/Control.Menubar.js:832
+#: src/control/Control.NotebookbarImpress.js:211
+#: src/control/Control.NotebookbarDraw.js:200
 #, fuzzy
 msgid "ODF Drawing (.odg)"
 msgstr "ODF 프레젠테이션 (.odp)"
 
-#: src/control/Control.Menubar.js:513 src/control/Control.Menubar.js:872
+#: src/control/Control.Menubar.js:511 src/control/Control.Menubar.js:878
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF 스프레드시트 (.ods)"
 
-#: src/control/Control.Menubar.js:514 src/control/Control.Menubar.js:873
+#: src/control/Control.Menubar.js:512 src/control/Control.Menubar.js:879
 #: src/control/Control.NotebookbarCalc.js:144
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003 스프레드시트 (.xls)"
 
-#: src/control/Control.Menubar.js:515 src/control/Control.Menubar.js:874
+#: src/control/Control.Menubar.js:513 src/control/Control.Menubar.js:880
 #: src/control/Control.NotebookbarCalc.js:150
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Excel 스프레드시트 (.xlsx)"
 
-#: src/control/Control.Menubar.js:516
+#: src/control/Control.Menubar.js:514
 msgid "CSV file (.csv)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:743 src/control/Control.Menubar.js:792
-#: src/control/Control.Menubar.js:838 src/control/Control.Menubar.js:886
+#: src/control/Control.Menubar.js:715 src/control/Control.Menubar.js:768
+#: src/control/Control.Menubar.js:822 src/control/Control.Menubar.js:867
 #: src/control/Control.StatusBar.js:190
 msgid "Search"
 msgstr "검색"
 
-#: src/control/Control.Menubar.js:754
+#: src/control/Control.Menubar.js:760
 msgid "Page Setup"
 msgstr "페이지 설정"
 
-#: src/control/Control.Menubar.js:1095 src/control/Control.StatusBar.js:505
+#: src/control/Control.Menubar.js:1123 src/control/Control.StatusBar.js:505
 msgid "Reset to Default Language"
 msgstr "기본 언어로 다시 설정"
 
-#: src/control/Control.Menubar.js:1443
+#: src/control/Control.Menubar.js:1470
 #, fuzzy
 msgid "Insert Shape"
 msgstr "도형 삽입"
 
-#: src/control/Control.Menubar.js:1536
+#: src/control/Control.Menubar.js:1563
 msgid "Are you sure you want to delete this slide?"
 msgstr "이 슬라이드를 정말 삭제하겠습니까?"
 
 #: src/control/Control.MobileBottomBar.js:27
-#: src/control/Control.MobileBottomBar.js:55
-#: src/control/Control.MobileBottomBar.js:84
+#: src/control/Control.MobileBottomBar.js:56
+#: src/control/Control.MobileBottomBar.js:92
 msgid "Show the search bar"
 msgstr "검색바를 보기"
 
-#: src/control/Control.MobileTopBar.js:44
+#: src/control/Control.MobileTopBar.js:43
 msgid "Accept"
 msgstr "수락"
 
@@ -796,13 +821,13 @@ msgstr "주석 스크롤 올리기"
 msgid "Scroll down annotations"
 msgstr "주석 스크롤 내리기"
 
-#: src/control/Control.SearchBar.js:30
-msgid "Clear the search field"
-msgstr "검색 영역 삭제"
-
-#: src/control/Control.SearchBar.js:32
+#: src/control/Control.SearchBar.js:20
 msgid "Hide the search bar"
 msgstr "검색 바 숨기기"
+
+#: src/control/Control.SearchBar.js:31
+msgid "Clear the search field"
+msgstr "검색 영역 삭제"
 
 #: src/control/Control.SheetsBar.js:27
 msgid "Scroll to the first sheet"
@@ -928,21 +953,21 @@ msgstr "새 시트 이름을 입력하십시오"
 msgid "More..."
 msgstr "더보기..."
 
-#: src/control/Control.Toolbar.js:947
+#: src/control/Control.Toolbar.js:962
 msgid "Previous slide"
 msgstr "이전 슬라이드"
 
-#: src/control/Control.Toolbar.js:948
+#: src/control/Control.Toolbar.js:963
 msgid "Next slide"
 msgstr "다음 슬라이드"
 
-#: src/control/Control.Toolbar.js:1003
+#: src/control/Control.Toolbar.js:1018
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr "여러 사용자에 의한 실행 취소/다시 실행이 서로 충돌했습니다. 이 문제를 해결하려면 문서 복구를 사용하십시오."
 
 #: src/control/Control.TopToolbar.js:122
-#: src/control/Control.NotebookbarWriter.js:517
+#: src/control/Control.NotebookbarWriter.js:513
 msgid "Default Style"
 msgstr "기본양식"
 
@@ -956,7 +981,7 @@ msgstr "표 삽입"
 
 # local 로컬
 #: src/control/Control.TopToolbar.js:245
-#: src/control/Control.NotebookbarBuilder.js:593
+#: src/control/Control.NotebookbarBuilder.js:534
 msgid "Insert Local Image"
 msgstr "로컬 이미지 삽입"
 
@@ -967,10 +992,6 @@ msgstr "도형 삽입"
 #: src/control/Control.TopToolbar.js:251
 msgid "Insert connectors"
 msgstr ""
-
-#: src/control/Control.TopToolbar.js:498
-msgid "Style"
-msgstr "스타일"
 
 #: src/control/Control.UserList.js:10
 msgid "%user has joined"
@@ -1004,52 +1025,54 @@ msgstr "항상 편집자를 따라감"
 msgid "Current"
 msgstr "현재"
 
-#: src/control/Control.Notebookbar.js:223
+#: src/control/Control.Notebookbar.js:236
 #: src/control/Control.NotebookbarImpress.js:18
 #: src/control/Control.NotebookbarDraw.js:18
-#: src/control/Control.NotebookbarBuilder.js:742
-#: src/control/Control.NotebookbarBuilder.js:783
-#: src/control/Control.NotebookbarBuilder.js:811
-#: src/control/Control.NotebookbarBuilder.js:836
+#: src/control/Control.NotebookbarBuilder.js:681
+#: src/control/Control.NotebookbarBuilder.js:722
+#: src/control/Control.NotebookbarBuilder.js:750
+#: src/control/Control.NotebookbarBuilder.js:775
 msgid "Menu"
 msgstr ""
 
-#: src/control/Control.Notebookbar.js:235
+#: src/control/Control.Notebookbar.js:254
 #: src/control/Control.NotebookbarImpress.js:36
-#: src/control/Control.NotebookbarDraw.js:30
+#: src/control/Control.NotebookbarDraw.js:36
 msgid "Undo"
 msgstr ""
 
-#: src/control/Control.Notebookbar.js:241
+#: src/control/Control.Notebookbar.js:260
 #: src/control/Control.NotebookbarImpress.js:42
-#: src/control/Control.NotebookbarDraw.js:36
+#: src/control/Control.NotebookbarDraw.js:42
 msgid "Redo"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:12
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:91
-#: src/control/Control.NotebookbarDraw.js:80
+#: src/control/Control.NotebookbarDraw.js:86
 msgid "~File"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:17
 #: src/control/Control.NotebookbarCalc.js:17
 #: src/control/Control.NotebookbarImpress.js:96
-#: src/control/Control.NotebookbarDraw.js:85
+#: src/control/Control.NotebookbarDraw.js:91
 msgid "~Home"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:23
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarImpress.js:102
-#: src/control/Control.NotebookbarDraw.js:91
+#: src/control/Control.NotebookbarDraw.js:97
 #, fuzzy
 msgid "~Insert"
 msgstr "표 삽입"
 
 #: src/control/Control.NotebookbarWriter.js:28
 #: src/control/Control.NotebookbarCalc.js:28
+#: src/control/Control.NotebookbarImpress.js:107
+#: src/control/Control.NotebookbarDraw.js:102
 msgid "~Layout"
 msgstr ""
 
@@ -1059,21 +1082,22 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:38
 #: src/control/Control.NotebookbarCalc.js:38
-#: src/control/Control.NotebookbarImpress.js:107
+#: src/control/Control.NotebookbarImpress.js:112
+#: src/control/Control.NotebookbarDraw.js:107
 #, fuzzy
 msgid "~Review"
 msgstr "개요"
 
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarCalc.js:43
-#: src/control/Control.NotebookbarImpress.js:112
-#: src/control/Control.NotebookbarDraw.js:96
+#: src/control/Control.NotebookbarImpress.js:117
+#: src/control/Control.NotebookbarDraw.js:112
 msgid "Format"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:48
-#: src/control/Control.NotebookbarImpress.js:117
-#: src/control/Control.NotebookbarDraw.js:101
+#: src/control/Control.NotebookbarImpress.js:122
+#: src/control/Control.NotebookbarDraw.js:117
 msgid "~Table"
 msgstr ""
 
@@ -1084,22 +1108,22 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:60
 #: src/control/Control.NotebookbarCalc.js:54
-#: src/control/Control.NotebookbarImpress.js:129
-#: src/control/Control.NotebookbarDraw.js:113
+#: src/control/Control.NotebookbarImpress.js:134
+#: src/control/Control.NotebookbarDraw.js:129
 msgid "~Help"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:105
 #: src/control/Control.NotebookbarCalc.js:98
-#: src/control/Control.NotebookbarImpress.js:172
-#: src/control/Control.NotebookbarDraw.js:155
+#: src/control/Control.NotebookbarImpress.js:178
+#: src/control/Control.NotebookbarDraw.js:173
 msgid "Share"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:112
 #: src/control/Control.NotebookbarCalc.js:105
-#: src/control/Control.NotebookbarImpress.js:179
-#: src/control/Control.NotebookbarDraw.js:162
+#: src/control/Control.NotebookbarImpress.js:185
+#: src/control/Control.NotebookbarDraw.js:180
 msgid "See history"
 msgstr ""
 
@@ -1112,11 +1136,11 @@ msgstr "ODF 텍스트 문서 (.odt)"
 msgid "EPUB Document (.epub)"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:521
+#: src/control/Control.NotebookbarWriter.js:517
 msgid "Text Body"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:524
+#: src/control/Control.NotebookbarWriter.js:520
 msgid "Title"
 msgstr ""
 
@@ -1133,97 +1157,97 @@ msgstr "ODF 스프레드시트 (.ods)"
 msgid "CSV File (.csv)"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:432
+#: src/control/Control.NotebookbarCalc.js:416
 msgid "General"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:433
+#: src/control/Control.NotebookbarCalc.js:417
 msgid "Number"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:434
+#: src/control/Control.NotebookbarCalc.js:418
 msgid "Percent"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:435
+#: src/control/Control.NotebookbarCalc.js:419
 #, fuzzy
 msgid "Currency"
 msgstr "현재"
 
-#: src/control/Control.NotebookbarCalc.js:436
+#: src/control/Control.NotebookbarCalc.js:420
 msgid "Date"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:437
+#: src/control/Control.NotebookbarCalc.js:421
 msgid "Time"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:438
+#: src/control/Control.NotebookbarCalc.js:422
 msgid "Scientific"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:439
+#: src/control/Control.NotebookbarCalc.js:423
 msgid "Fraction"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:440
+#: src/control/Control.NotebookbarCalc.js:424
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:789
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:809
 msgid "Text"
 msgstr "문자"
 
-#: src/control/Control.NotebookbarCalc.js:574
+#: src/control/Control.NotebookbarCalc.js:558
 msgid "Default"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:579
+#: src/control/Control.NotebookbarCalc.js:563
 msgid "Heading 1"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:584
+#: src/control/Control.NotebookbarCalc.js:568
 msgid "Heading 2"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:595
+#: src/control/Control.NotebookbarCalc.js:579
 msgid "Good"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:600
+#: src/control/Control.NotebookbarCalc.js:584
 msgid "Neutral"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:605
+#: src/control/Control.NotebookbarCalc.js:589
 msgid "Bad"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:667
+#: src/control/Control.NotebookbarCalc.js:651
 #, fuzzy
 msgid "Insert Rows Above"
 msgstr "표 삽입"
 
-#: src/control/Control.NotebookbarCalc.js:672
+#: src/control/Control.NotebookbarCalc.js:656
 #, fuzzy
 msgid "Insert Columns Before"
 msgstr "현재 시트 앞에 시트 삽입"
 
-#: src/control/Control.NotebookbarCalc.js:677
+#: src/control/Control.NotebookbarCalc.js:661
 #, fuzzy
 msgid "Delete Rows"
 msgstr "삭제"
 
-#: src/control/Control.NotebookbarCalc.js:687
+#: src/control/Control.NotebookbarCalc.js:671
 #, fuzzy
 msgid "Insert Rows Below"
 msgstr "시트 삽입"
 
-#: src/control/Control.NotebookbarCalc.js:692
+#: src/control/Control.NotebookbarCalc.js:676
 #, fuzzy
 msgid "Insert Columns After"
 msgstr "현재 시트 뒤에 시트 삽입"
 
-#: src/control/Control.NotebookbarCalc.js:697
+#: src/control/Control.NotebookbarCalc.js:681
 #, fuzzy
 msgid "Delete Columns"
 msgstr "행"
@@ -1233,12 +1257,12 @@ msgstr "행"
 msgid "Start Presentation"
 msgstr "텍스트 방향"
 
-#: src/control/Control.NotebookbarImpress.js:199
+#: src/control/Control.NotebookbarImpress.js:205
 #, fuzzy
 msgid "ODF Presentation (.odp)"
 msgstr "ODF 프레젠테이션 (.odp)"
 
-#: src/control/Control.NotebookbarDraw.js:188
+#: src/control/Control.NotebookbarDraw.js:206
 msgid "Image (.png)"
 msgstr ""
 
@@ -1409,7 +1433,7 @@ msgstr "글꼴"
 msgid "Downloading..."
 msgstr "내려 받는 중..."
 
-#: src/control/Toolbar.js:235 src/map/Map.js:1563
+#: src/control/Toolbar.js:235 src/map/Map.js:1566
 msgid "Saving..."
 msgstr "저장 중..."
 
@@ -1417,24 +1441,24 @@ msgstr "저장 중..."
 msgid "Renaming..."
 msgstr "이름 바꾸기..."
 
-#: src/control/Toolbar.js:621
+#: src/control/Toolbar.js:624
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 
-#: src/control/Toolbar.js:671
+#: src/control/Toolbar.js:674
 msgid "This version of %productName is powered by"
 msgstr "%productName 의 버전의 제공자"
 
-#: src/control/Toolbar.js:681
+#: src/control/Toolbar.js:684
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:787
+#: src/control/Toolbar.js:807
 msgid "Insert hyperlink"
 msgstr "하이퍼링크 삽입"
 
-#: src/control/Toolbar.js:790
+#: src/control/Toolbar.js:810
 msgid "Link"
 msgstr "링크"
 
@@ -1454,98 +1478,102 @@ msgstr ""
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr "문서를 여는데 문제가 발생했습니다."
 
-#: src/core/Socket.js:362
+#: src/core/Socket.js:510
 msgid "Server has been restarted. We have to refresh the page now."
 msgstr ""
 
-#: src/core/Socket.js:380
+#: src/core/Socket.js:528
 msgid "Served by:"
 msgstr "서버제공자:"
 
-#: src/core/Socket.js:385
+#: src/core/Socket.js:533
 msgid "Unsupported server version."
 msgstr "지원하지 않는 서버 버전"
 
-#: src/core/Socket.js:483
+#: src/core/Socket.js:631
 msgid "Session terminated by document owner"
 msgstr "문서 소유자에 의해 세션이 만료되었습니다."
 
-#: src/core/Socket.js:488
+#: src/core/Socket.js:636
 msgid "Idle document - please click to reload and resume editing"
 msgstr "대기중인 문서 - 편집을 계속하려면 클릭하십시오.(새로 고침됨)"
 
-#: src/core/Socket.js:490
+#: src/core/Socket.js:638
 #, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "대기중인 문서 - 편집을 계속하려면 클릭하십시오.(새로 고침됨)"
 
-#: src/core/Socket.js:498
+#: src/core/Socket.js:646
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "유지보수를 위해 서버가 종료됩니다.(자동 저장됨)"
 
-#: src/core/Socket.js:502
+#: src/core/Socket.js:650
 msgid "Oops, there is a problem connecting the document"
 msgstr "문서를 여는데 문제가 발생했습니다."
 
-#: src/core/Socket.js:506
+#: src/core/Socket.js:654
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 
-#: src/core/Socket.js:534
+#: src/core/Socket.js:682
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr "저장소의 문서가 변경되었습니다. 새 문서를 불러 옵니다. 작업한 내용은 개정 이력에서 확인할 수 있습니다."
 
-#: src/core/Socket.js:540
+#: src/core/Socket.js:688
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr "이전 버전으로 복구합니다. 저장되지 않은 변경 사항은 개정 내역에서 확인할 수 있습니다."
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:808
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr "저장소에 있는 문서가 변경되었습니다. 변경 사항을 어떻게 처리하겠습니까?"
 
-#: src/core/Socket.js:664
+#: src/core/Socket.js:812
 msgid "Discard"
 msgstr "버리기"
 
-#: src/core/Socket.js:669
+#: src/core/Socket.js:817
 msgid "Overwrite"
 msgstr "덮어쓰기"
 
-#: src/core/Socket.js:674
+#: src/core/Socket.js:822
 msgid "Save to new file"
 msgstr "새 파일로 저장"
 
-#: src/core/Socket.js:744
+#: src/core/Socket.js:892
 msgid "Document requires password to view."
 msgstr "문서를 보려면 암호를 입력해야 합니다."
 
-#: src/core/Socket.js:747
+#: src/core/Socket.js:895
 msgid "Document requires password to modify."
 msgstr "문서를 수정하려면 암호를 입력해야 합니다."
 
-#: src/core/Socket.js:749
+#: src/core/Socket.js:897
 msgid "Hit Cancel to open in view-only mode."
 msgstr "보기 전용 모드로 열려면 [취소]를 클릭하십시오."
 
-#: src/core/Socket.js:753
+#: src/core/Socket.js:901
 msgid "Wrong password provided. Please try again."
 msgstr "암호가 틀렸습니다. 다시 시도하십시오"
 
-#: src/core/Socket.js:903 src/map/Map.js:1566
+#: src/core/Socket.js:1051 src/map/Map.js:1569
 msgid "Loading..."
 msgstr "불러오는 중..."
 
-#: src/core/Socket.js:903
+#: src/core/Socket.js:1051
 msgid "Connecting..."
 msgstr "연결하는 중.."
 
-#: src/core/Socket.js:1213
+#: src/core/Socket.js:1069
+msgid "The document is being renamed and will reload shortly"
+msgstr ""
+
+#: src/core/Socket.js:1352
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1689,44 +1717,44 @@ msgstr "서버로 파일 업로드가 실패하였습니다. 파일을 찾을 �
 msgid "Uploading file to server failed, the file is too large."
 msgstr "서버로 파일 업로드가 실패하였습니다. 파일이 너무 큽니다."
 
-#: src/layer/marker/Annotation.js:283 src/layer/tile/CanvasTileLayer.js:5101
+#: src/layer/marker/Annotation.js:283 src/layer/tile/CanvasTileLayer.js:5103
 msgid "Reply"
 msgstr "답변"
 
-#: src/layer/tile/CanvasTileLayer.js:1862
+#: src/layer/tile/CanvasTileLayer.js:1865
 #, fuzzy
 msgid "Functions"
 msgstr "함수 마법사"
 
-#: src/layer/tile/CanvasTileLayer.js:4849
+#: src/layer/tile/CanvasTileLayer.js:4841
 msgid "No Comments"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:5095
+#: src/layer/tile/CanvasTileLayer.js:5097
 msgid "Modify"
 msgstr "수정"
 
-#: src/layer/tile/CanvasTileLayer.js:5107
+#: src/layer/tile/CanvasTileLayer.js:5109
 msgid "Remove"
 msgstr "제거하기"
 
-#: src/layer/tile/CanvasTileLayer.js:5113
+#: src/layer/tile/CanvasTileLayer.js:5115
 msgid "Remove Thread"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:5119
+#: src/layer/tile/CanvasTileLayer.js:5121
 msgid "Resolve"
 msgstr "해결"
 
-#: src/layer/tile/CanvasTileLayer.js:5119
+#: src/layer/tile/CanvasTileLayer.js:5121
 msgid "Unresolve"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:5125
+#: src/layer/tile/CanvasTileLayer.js:5127
 msgid "Unresolve Thread"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:5125
+#: src/layer/tile/CanvasTileLayer.js:5127
 msgid "Resolve Thread"
 msgstr ""
 
@@ -1774,17 +1802,17 @@ msgstr ""
 msgid "Initializing..."
 msgstr "초기화하는 중..."
 
-#: src/map/Map.js:437
+#: src/map/Map.js:440
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "%d 초 전"
 
-#: src/map/Map.js:440
+#: src/map/Map.js:443
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "%d 분 전"
 
-#: src/map/Map.js:1417
+#: src/map/Map.js:1420
 msgid "Inactive document - please click to resume editing"
 msgstr "비활성화된 문서 - 편집을 계속하려면 클릭하십시오."
 
