@@ -1576,7 +1576,7 @@ void LOOLWSD::initializeSSL()
 
     // Initialize the non-blocking server socket SSL context.
     ssl::Manager::initializeServerContext(ssl_cert_file_path, ssl_key_file_path, ssl_ca_file_path,
-                                          ssl_cipher_list);
+                                          ssl_cipher_list, ssl::CertificateVerification::Disabled);
 
     if (!ssl::Manager::isServerContextInitialized())
         LOG_ERR("Failed to initialize Server SSL.");

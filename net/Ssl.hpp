@@ -24,16 +24,30 @@
 #include <openssl/conf.h>
 #endif
 
-class SslContext
+namespace ssl
+{
+/// The certificate verification requirements.
+enum class CertificateVerification
+{
+    Disabled, //< No verification is performed or results ignored.
+    IfProvided, //< Verified if an optional certificate is provided.
+    Required //< Certificate must be provided and will be verified.
+};
+} // namespace ssl
+
+class SslContext final
 {
 public:
     SslContext(const std::string& certFilePath, const std::string& keyFilePath,
-               const std::string& caFilePath, const std::string& cipherList);
+               const std::string& caFilePath, const std::string& cipherList,
+               ssl::CertificateVerification verification);
 
     /// Returns a new SSL Context to be used with raw API.
     SSL* newSsl() { return SSL_new(_ctx); }
 
     ~SslContext();
+
+    ssl::CertificateVerification verification() const { return _verification; }
 
 private:
     void initDH();
@@ -51,6 +65,7 @@ private:
 
 private:
     SSL_CTX* _ctx;
+    const ssl::CertificateVerification _verification;
 };
 
 namespace ssl
@@ -61,11 +76,13 @@ public:
     static void initializeServerContext(const std::string& certFilePath,
                                         const std::string& keyFilePath,
                                         const std::string& caFilePath,
-                                        const std::string& cipherList = std::string())
+                                        const std::string& cipherList,
+                                        ssl::CertificateVerification verification)
     {
         assert(!isServerContextInitialized() &&
                "Cannot initialize the server context more than once");
-        ServerInstance.reset(new SslContext(certFilePath, keyFilePath, caFilePath, cipherList));
+        ServerInstance.reset(
+            new SslContext(certFilePath, keyFilePath, caFilePath, cipherList, verification));
     }
 
     static void uninitializeServerContext() { ServerInstance.reset(); }
@@ -73,20 +90,23 @@ public:
     /// Returns true iff the Server SslContext has been initialized.
     static bool isServerContextInitialized() { return !!ServerInstance; }
 
-    static SSL* newServerSsl()
+    static SSL* newServerSsl(ssl::CertificateVerification& verification)
     {
         assert(isServerContextInitialized() && "Server SslContext is not initialized");
+        verification = ServerInstance->verification();
         return ServerInstance->newSsl();
     }
 
     static void initializeClientContext(const std::string& certFilePath,
                                         const std::string& keyFilePath,
                                         const std::string& caFilePath,
-                                        const std::string& cipherList = std::string())
+                                        const std::string& cipherList,
+                                        ssl::CertificateVerification verification)
     {
         assert(!isClientContextInitialized() &&
                "Cannot initialize the client context more than once");
-        ClientInstance.reset(new SslContext(certFilePath, keyFilePath, caFilePath, cipherList));
+        ClientInstance.reset(
+            new SslContext(certFilePath, keyFilePath, caFilePath, cipherList, verification));
     }
 
     static void uninitializeClientContext() { ClientInstance.reset(); }
@@ -94,9 +114,10 @@ public:
     /// Returns true iff the SslContext has been initialized.
     static bool isClientContextInitialized() { return !!ClientInstance; }
 
-    static SSL* newClientSsl()
+    static SSL* newClientSsl(ssl::CertificateVerification& verification)
     {
         assert(isClientContextInitialized() && "Client SslContext is not initialized");
+        verification = ClientInstance->verification();
         return ClientInstance->newSsl();
     }
 
