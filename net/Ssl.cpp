@@ -80,11 +80,11 @@ static inline void lock(int mode, int n, const char* /*file*/, int /*line*/)
 std::unique_ptr<SslContext> ssl::Manager::ServerInstance(nullptr);
 std::unique_ptr<SslContext> ssl::Manager::ClientInstance(nullptr);
 
-SslContext::SslContext(const std::string& certFilePath,
-                       const std::string& keyFilePath,
-                       const std::string& caFilePath,
-                       const std::string& cipherList) :
-    _ctx(nullptr)
+SslContext::SslContext(const std::string& certFilePath, const std::string& keyFilePath,
+                       const std::string& caFilePath, const std::string& cipherList,
+                       ssl::CertificateVerification verification)
+    : _ctx(nullptr)
+    , _verification(verification)
 {
     const std::vector<char> rand = Util::rng::getBytes(512);
     RAND_seed(&rand[0], rand.size());

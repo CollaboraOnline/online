@@ -108,6 +108,11 @@ bool SslStreamSocket::simulateSocketError(bool read)
 #if ENABLE_SSL
 bool SslStreamSocket::verifyCertificate()
 {
+    if (_verification == ssl::CertificateVerification::Disabled)
+    {
+        return true;
+    }
+
     X509* x509 = SSL_get_peer_certificate(_ssl);
     if (x509)
     {
@@ -115,7 +120,8 @@ bool SslStreamSocket::verifyCertificate()
         return cert.verify(hostname());
     }
 
-    return false;
+    // No certificate; acceptable only if verification is not strictly required.
+    return (_verification == ssl::CertificateVerification::IfProvided);
 }
 #endif //ENABLE_SSL
 

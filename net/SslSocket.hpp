@@ -35,7 +35,8 @@ public:
 
         BIO_set_fd(_bio, fd, BIO_NOCLOSE);
 
-        _ssl = isClient ? ssl::Manager::newClientSsl() : ssl::Manager::newServerSsl();
+        _ssl = isClient ? ssl::Manager::newClientSsl(_verification)
+                        : ssl::Manager::newServerSsl(_verification);
         if (!_ssl)
         {
             BIO_free(_bio);
@@ -352,6 +353,8 @@ private:
 private:
     BIO* _bio;
     SSL* _ssl;
+    ssl::CertificateVerification _verification; //< The certificate verification requirement.
+
     /// During handshake SSL might want to read
     /// on write, or write on read.
     SslWantsTo _sslWantsTo;
