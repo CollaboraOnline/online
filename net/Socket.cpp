@@ -29,6 +29,9 @@
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
 #include <Poco/URI.h>
+#if ENABLE_SSL
+#include <Poco/Net/X509Certificate.h>
+#endif
 
 #include <SigUtil.hpp>
 #include "ServerSocket.hpp"
@@ -92,7 +95,21 @@ bool SslStreamSocket::simulateSocketError(bool read)
     return false;
 }
 #endif
-#endif
+#endif //ENABLE_DEBUG
+
+#if ENABLE_SSL
+bool SslStreamSocket::verifyCertificate()
+{
+    X509* x509 = SSL_get_peer_certificate(_ssl);
+    if (x509)
+    {
+        Poco::Net::X509Certificate cert(x509);
+        return cert.verify(hostname());
+    }
+
+    return false;
+}
+#endif //ENABLE_SSL
 
 // help with initialization order
 namespace {
@@ -435,7 +452,7 @@ void SocketPoll::insertNewUnixSocket(
     }
 
     std::shared_ptr<StreamSocket> socket
-        = StreamSocket::create<StreamSocket>(fd, true, websocketHandler);
+        = StreamSocket::create<StreamSocket>(std::string(), fd, true, websocketHandler);
     if (!socket)
     {
         LOG_ERR("Failed to create socket unix socket at " << location);
@@ -489,7 +506,7 @@ void SocketPoll::insertNewFakeSocket(
     else
     {
         std::shared_ptr<StreamSocket> socket;
-        socket = StreamSocket::create<StreamSocket>(fd, true, websocketHandler);
+        socket = StreamSocket::create<StreamSocket>(std::string(), fd, true, websocketHandler);
         if (socket)
         {
             LOG_TRC("Sending 'hello' instead of HTTP GET for now");
