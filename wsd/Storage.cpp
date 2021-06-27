@@ -170,9 +170,11 @@ void StorageBase::initialize()
     Poco::Net::SSLManager::instance().initializeClient(consoleClientHandler, invalidClientCertHandler, sslClientContext);
 
     // Initialize our client SSL context.
-    ssl::Manager::initializeClientContext(sslClientParams.certificateFile,
-                                          sslClientParams.privateKeyFile,
-                                          sslClientParams.caLocation, sslClientParams.cipherList);
+    ssl::Manager::initializeClientContext(
+        sslClientParams.certificateFile, sslClientParams.privateKeyFile, sslClientParams.caLocation,
+        sslClientParams.cipherList,
+        sslClientParams.caLocation.empty() ? ssl::CertificateVerification::Disabled
+                                           : ssl::CertificateVerification::Required);
     if (!ssl::Manager::isClientContextInitialized())
         LOG_ERR("Failed to initialize Client SSL.");
     else
