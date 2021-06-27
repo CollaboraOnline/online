@@ -892,10 +892,11 @@ public:
     };
 
     /// Create a StreamSocket from native FD.
-    StreamSocket(const int fd, bool /* isClient */,
+    StreamSocket(const std::string hostname, const int fd, bool /* isClient */,
                  std::shared_ptr<ProtocolHandlerInterface> socketHandler,
                  ReadType readType = NormalRead) :
         Socket(fd),
+        _hostname(std::move(hostname)),
         _socketHandler(std::move(socketHandler)),
         _bytesSent(0),
         _bytesRecvd(0),
@@ -936,6 +937,9 @@ public:
     bool isClosed() const { return _closed; }
     bool isWebSocket() const { return _wsState == WSState::WS; }
     void setWebSocket() { _wsState = WSState::WS; }
+
+    /// Returns the peer hostname, if set.
+    const std::string& hostname() const { return _hostname; }
 
     /// Just trigger the async shutdown.
     virtual void shutdown() override
@@ -1136,13 +1140,13 @@ public:
     /// We need this helper since the handler needs a shared_ptr to the socket
     /// but we can't have a shared_ptr in the ctor.
     template <typename TSocket>
-    static
-    std::shared_ptr<TSocket> create(const int fd, bool isClient,
-                                    std::shared_ptr<ProtocolHandlerInterface> handler,
-                                    ReadType readType = NormalRead)
+    static std::shared_ptr<TSocket> create(const std::string hostname, const int fd, bool isClient,
+                                           std::shared_ptr<ProtocolHandlerInterface> handler,
+                                           ReadType readType = NormalRead)
     {
         ProtocolHandlerInterface* pHandler = handler.get();
-        auto socket = std::make_shared<TSocket>(fd, isClient, std::move(handler), readType);
+        auto socket = std::make_shared<TSocket>(std::move(hostname), fd, isClient,
+                                                std::move(handler), readType);
         pHandler->onConnect(socket);
         return socket;
     }
@@ -1469,7 +1473,10 @@ protected:
     virtual bool simulateSocketError(bool read);
 #endif
 
-  private:
+private:
+    /// The hostname (or IP) of the peer we are connecting to.
+    const std::string _hostname;
+
     /// Client handling the actual data.
     std::shared_ptr<ProtocolHandlerInterface> _socketHandler;
 
