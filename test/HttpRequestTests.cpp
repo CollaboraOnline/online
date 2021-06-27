@@ -115,12 +115,12 @@ public:
 #if ENABLE_SSL
             if (helpers::haveSsl())
                 return StreamSocket::create<SslStreamSocket>(
-                    fd, false, std::make_shared<ServerRequestHandler>());
+                    std::string(), fd, false, std::make_shared<ServerRequestHandler>());
             else
-                return StreamSocket::create<StreamSocket>(fd, false,
+                return StreamSocket::create<StreamSocket>(std::string(), fd, false,
                                                           std::make_shared<ServerRequestHandler>());
 #else
-            return StreamSocket::create<StreamSocket>(fd, false,
+            return StreamSocket::create<StreamSocket>(std::string(), fd, false,
                                                       std::make_shared<ServerRequestHandler>());
 #endif
         }

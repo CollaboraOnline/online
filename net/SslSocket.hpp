@@ -16,14 +16,14 @@
 class SslStreamSocket final : public StreamSocket
 {
 public:
-    SslStreamSocket(const int fd, bool isClient,
+    SslStreamSocket(const std::string hostname, const int fd, bool isClient,
                     std::shared_ptr<ProtocolHandlerInterface> responseClient,
-                    ReadType readType = NormalRead) :
-        StreamSocket(fd, isClient, std::move(responseClient), readType),
-        _bio(nullptr),
-        _ssl(nullptr),
-        _sslWantsTo(SslWantsTo::Neither),
-        _doHandshake(true)
+                    ReadType readType = NormalRead)
+        : StreamSocket(std::move(hostname), fd, isClient, std::move(responseClient), readType)
+        , _bio(nullptr)
+        , _ssl(nullptr)
+        , _sslWantsTo(SslWantsTo::Neither)
+        , _doHandshake(true)
     {
         LOG_DBG("SslStreamSocket ctor #" << fd);
 
@@ -179,11 +179,26 @@ private:
             }
 
             _doHandshake = false;
+
+            if (rc == 1)
+            {
+                // Successful handshake; TLS/SSL connection established.
+                if (!verifyCertificate())
+                {
+                    LOG_WRN("Failed to verify the certificate of [" << hostname() << ']');
+                    closeConnection();
+                    return 0;
+                }
+            }
         }
 
         // Handshake complete.
         return 1;
     }
+
+    /// Verify the peer's certificate.
+    /// Return true iff the certificate matches the hostname.
+    bool verifyCertificate();
 
     /// Handles the state of SSL after read or write.
     int handleSslState(const int rc)

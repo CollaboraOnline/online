@@ -130,10 +130,10 @@ connect(const std::string& host, const std::string& port, const bool isSSL,
                 {
 #if ENABLE_SSL
                     if (isSSL)
-                        socket = StreamSocket::create<SslStreamSocket>(fd, true, protocolHandler);
+                        socket = StreamSocket::create<SslStreamSocket>(host, fd, true, protocolHandler);
 #endif
                     if (!socket && !isSSL)
-                        socket = StreamSocket::create<StreamSocket>(fd, true, protocolHandler);
+                        socket = StreamSocket::create<StreamSocket>(host, fd, true, protocolHandler);
 
                     if (socket)
                         break;

@@ -3681,11 +3681,8 @@ class PlainSocketFactory final : public SocketFactory
         if (SimulatedLatencyMs > 0)
             fd = Delay::create(SimulatedLatencyMs, physicalFd);
 #endif
-        std::shared_ptr<Socket> socket =
-            StreamSocket::create<StreamSocket>(
-                fd, false, std::make_shared<ClientRequestDispatcher>());
-
-        return socket;
+        return StreamSocket::create<StreamSocket>(std::string(), fd, false,
+                                                  std::make_shared<ClientRequestDispatcher>());
     }
 };
 
@@ -3701,8 +3698,8 @@ class SslSocketFactory final : public SocketFactory
             fd = Delay::create(SimulatedLatencyMs, physicalFd);
 #endif
 
-        return StreamSocket::create<SslStreamSocket>(
-            fd, false, std::make_shared<ClientRequestDispatcher>());
+        return StreamSocket::create<SslStreamSocket>(std::string(), fd, false,
+                                                     std::make_shared<ClientRequestDispatcher>());
     }
 };
 #endif
@@ -3712,7 +3709,8 @@ class PrisonerSocketFactory final : public SocketFactory
     std::shared_ptr<Socket> create(const int fd) override
     {
         // No local delay.
-        return StreamSocket::create<StreamSocket>(fd, false, std::make_shared<PrisonerRequestDispatcher>(),
+        return StreamSocket::create<StreamSocket>(std::string(), fd, false,
+                                                  std::make_shared<PrisonerRequestDispatcher>(),
                                                   StreamSocket::ReadType::UseRecvmsgExpectFD);
     }
 };
