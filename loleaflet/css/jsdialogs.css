@@ -683,6 +683,16 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	margin-left: 3px;
 }
 
+.arrowbackground {
+	width: 15px;
+	height: 23px;
+	display: inline-block;
+}
+
+.arrowbackground:hover {
+	border: 1px solid lightgrey;
+}
+
 /* menu button */
 .jsdialog.menubutton {
 	line-height: normal;
