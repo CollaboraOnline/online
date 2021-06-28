@@ -510,7 +510,7 @@ app.definitions.Socket = L.Class.extend({
 
 			if (oldId && oldVersion && sameFile) {
 				if (this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) {
-					alert(_('Server has been restarted. We have to refresh the page now.'));
+					alert(_('Server is now reachable. We have to refresh the page now.'));
 					// We use this function instead of window.location.reload() to ensure that the browser cache is cleared (as done with CTRL + F5).
 					this.forceReload();
 				}
