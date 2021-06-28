@@ -233,6 +233,7 @@
 	background: var(--white-bg-color);
 	position: relative;
 	z-index: 11;
+	background-color: white;
 }
 
 .cell.notebookbar {
