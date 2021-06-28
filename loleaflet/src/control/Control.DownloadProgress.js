@@ -159,7 +159,7 @@ L.Control.DownloadProgress = L.Control.extend({
 	_download: function () {
 		var that = this;
 		this._map._clip._doAsyncDownload(
-			'GET', that._uri, null,
+			'GET', that._uri, null, true,
 			function(response) {
 				console.log('clipboard async download done');
 				// annoying async parse of the blob ...
