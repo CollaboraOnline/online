@@ -847,8 +847,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	build: function(parent, data, hasVerticalParent, parentHasManyChildren) {
-		this._amendJSDialogData(data);
-
 		if (hasVerticalParent === undefined) {
 			parent = L.DomUtil.create('div', 'root-container ' + this.options.cssClass, parent);
 			parent = L.DomUtil.create('div', 'vertical ' + this.options.cssClass, parent);

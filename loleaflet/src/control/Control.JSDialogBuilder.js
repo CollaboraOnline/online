@@ -2527,13 +2527,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			controls['label'] = button;
 		}
 
-		if ((options && options.hasDropdownArrow) || data.dropdown === true) {
+		if (options && options.hasDropdownArrow) {
 			$(div).addClass('has-dropdown');
 			var arrow = L.DomUtil.create('i', 'unoarrow', div);
 			controls['arrow'] = arrow;
-			$(arrow).click(function () {
+		} else if (data.dropdown === true) {
+			$(div).addClass('has-dropdown');
+			var arrowbackground = L.DomUtil.create('div', 'arrowbackground', div);
+			var arrow = L.DomUtil.create('i', 'unoarrow', arrowbackground);
+			controls['arrow'] = arrow;
+			$(arrowbackground).click(function (event) {
 				if (!$(div).hasClass('disabled')) {
 					builder.callback('toolbox', 'togglemenu', parentContainer, data.command, builder);
+					event.stopPropagation();
 				}
 			});
 		}
