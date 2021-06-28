@@ -423,7 +423,7 @@ L.Clipboard = L.Class.extend({
 			formData.append('file', content);
 
 			var that = this;
-			this._doAsyncDownload('POST', this.getMetaURL(), formData, true,
+			this._doAsyncDownload('POST', this.getMetaURL(), formData, false,
 							function() {
 								console.log('Posted ' + content.size + ' bytes successfully');
 								that._doInternalPaste(that._map, usePasteKeyEvent);
