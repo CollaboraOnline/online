@@ -2257,8 +2257,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (data.enabled === 'false' || data.enabled === false)
 			$(button).prop('disabled', true);
-
-		builder.map.disableFreemiumItem(data, parentContainer, controls['container']);
+		if (window.mode.isMobile())
+			builder.map.disableFreemiumItem(data, controls['container'], controls['container']);
+		else
+			builder.map.disableFreemiumItem(data, parentContainer, controls['container']);
 		return controls;
 	},
 
