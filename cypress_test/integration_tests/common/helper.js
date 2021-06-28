@@ -307,8 +307,8 @@ function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 	// Wait for the sidebar to open.
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 		doIfOnDesktop(function() {
-			cy.get('#sidebar-panel')
-				.should('be.visible');
+			if (Cypress.env('pdf-view') !== true)
+				cy.get('#sidebar-panel').should('be.visible');
 
 			// Check that the document does not take the whole window width.
 			cy.window()
@@ -316,7 +316,8 @@ function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad) {
 					cy.get('#document-container')
 						.should(function(doc) {
 							expect(doc).to.have.lengthOf(1);
-							expect(doc[0].getBoundingClientRect().right).to.be.lessThan(win.innerWidth * 0.95);
+							if (Cypress.env('pdf-view') !== true)
+								expect(doc[0].getBoundingClientRect().right).to.be.lessThan(win.innerWidth * 0.95);
 						});
 				});
 
