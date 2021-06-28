@@ -403,7 +403,12 @@ L.Map.Keyboard = L.Handler.extend({
 			if (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') {
 				var partToSelect = this._map._docLayer._selectedPart;
 				partToSelect = keyCode === 33 ? partToSelect - 1 : partToSelect + 1;
-				this._map.setPart(partToSelect);
+				if (partToSelect > -1 && partToSelect < this._map._docLayer._parts) {
+					this._map._docLayer._preview._scrollViewToPartPosition(partToSelect);
+					setTimeout(function () {
+						app.sectionContainer.requestReDraw();
+					}, 300);
+				}
 			}
 			return;
 		}
