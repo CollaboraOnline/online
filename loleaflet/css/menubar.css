@@ -313,68 +313,78 @@
 	color: var(--gray-light-txt--color) !important;
 	background-color: #fafafa;
 	box-shadow: inset 0 0 2px 0 rgba(0,0,0,0.2);
-}
-
-#main-menu .freemium-overlay, #menu-nb-hamburger .freemium-overlay {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	right: 0;
-	bottom: 0;
-	z-index: 2;
-	overflow: hidden;
+	background: url('images/lc_freeemiumlock.svg') right top / 24px no-repeat
 }
 
 #main-menu .freemium-disabled:hover, #menu-nb-hamburger .freemium-disabled:hover {
 	background-color: #fafafa;
+	background-position: right bottom !important;
 }
 
-#main-menu .freemium-overlay:hover img, #menu-nb-hamburger .freemium-overlay:hover img {
-	top: 0;
-}
-
-#main-menu .freemium-overlay-lock, #menu-nb-hamburger .freemium-overlay-lock {
-	position: absolute;
-	height: 48px;
-	top: 24px;
-	width: 24px;
-	right: 0px;
-	transform: translateY(-50%);
-}
-
-/* For notebook bar mode */
-.freemium-disabled > .notebookbar {
-	overflow: hidden;
-}
-.freemium-disabled > .notebookbar img.unobutton, #toolbar-up .freemium-disabled .w2ui-tb-image.w2ui-icon {
+/* For notebook bar mode and sidebar*/
+.freemium-disabled img.unobutton, #toolbar-up .freemium-disabled .w2ui-tb-image.w2ui-icon {
 	background: url('images/lc_freeemiumlock.svg') center top / 24px no-repeat !important;
 	width: 24px !important;
 	padding-left: 24px;
 	box-sizing: border-box;
 }
-.freemium-disabled:hover > .notebookbar img.unobutton, #toolbar-up .freemium-disabled .w2ui-tb-image.w2ui-icon:hover {
+
+.freemium-disabled:hover img.unobutton, #toolbar-up .freemium-disabled .w2ui-tb-image.w2ui-icon:hover {
 	background-position: bottom !important;
 }
+
 .freemium-disabled > .notebookbar.has-label img.unobutton {
 	background-size: 32px;
 	padding-left: 32px;
 }
 /* For mobile mode */
-#mobile-wizard .freemium-overlay {
+#mobile-wizard .freemium-disabled {
 	position: relative;
-	width: 96%;
-	height: 20px;
-	right: 0px;
-	bottom: 0px;
-	z-index: 2;
-	border-radius: 4px;
-	text-align: right;
-	margin-right: 4%;
 	overflow: hidden;
 }
 
-#mobile-wizard .freemium-overlay-lock {
-	width: 20px;
+#mobile-wizard .freemium-disabled img.unobutton {
+	background: url('images/lc_freeemiumlock.svg') no-repeat center !important;
+	width: 32px !important;
+	padding-left: 32px;
+	box-sizing: border-box;
+	background-size: 32px !important;
+	background-position-y: top !important;
+
+	filter: brightness(0.8) contrast(1.8);
+	-webkit-animation-iteration-count: 1;
+	animation-iteration-count: 1;
+	animation-direction: normal;
+	-webkit-animation-play-state: running; /* Safari 4.0 - 8.0 */
+	animation-play-state: running;
+	-webkit-animation-name: up-n-down-anim-2;
+	animation-name: up-n-down-anim-2;
+	-webkit-animation-duration: 2s;
+	animation-duration: 2s;
+	-webkit-animation-timing-function: ease-in-out;
+	animation-timing-function: ease-in-out;
+}
+
+@keyframes up-n-down-anim-2{
+	0%{background-position-y: top !important;}
+	50%{background-position-y: bottom !important;}
+	100%{background-position-y: top !important;}
+}
+@-webkit-keyframes up-n-down-anim-2{
+	0%{background-position-y: top !important;}
+	50%{background-position: center bottom !important;}
+	100%{background-position-y: top !important;}
+}
+
+.menuwizard .freemium-disabled::after {
+	content: '';
+	position: absolute;
+	width: 100%;
+	height: 90px;
+
+	background: url('images/lc_freeemiumlock.svg') no-repeat right !important;
+	transform: translateY(25%);
+
 	filter: brightness(0.8) contrast(1.8);
 	-webkit-animation-iteration-count: 1;
 	animation-iteration-count: 1;
@@ -388,16 +398,18 @@
 	-webkit-animation-timing-function: ease-in-out;
 	animation-timing-function: ease-in-out;
 }
+
 @keyframes up-n-down-anim{
 	0%{margin-top: 0;}
-	50%{margin-top: -20px;}
+	50%{margin-top: -25%;}
 	100%{margin-top: 0;}
 }
 @-webkit-keyframes up-n-down-anim{
 	0%{margin-top: 0;}
-	50%{margin-top: -20px;}
+	50%{margin-top: -25%;}
 	100%{margin-top: 0;}
 }
+
 .sidebar .freemium-overlay {
 	height: 22px;
 	overflow: hidden;
