@@ -864,6 +864,7 @@ input.clipboard {
 	height: 20px;
 	width: 100vw;
 	margin: 0px;
+	position: fixed;
 }
 
 .loleaflet-ruler-breakcontainer {

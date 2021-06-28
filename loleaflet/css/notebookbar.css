@@ -222,6 +222,7 @@
 #toolbar-wrapper.hasnotebookbar {
 	position: relative;
 	z-index: 11;
+	background-color: white;
 }
 
 .cell.notebookbar {

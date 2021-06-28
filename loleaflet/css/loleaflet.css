@@ -66,7 +66,6 @@
 	cursor: auto;
 	background-color: transparent;
 	margin: 0;
-	border-top: 1px solid var(--gray-color);
 }
 
 .leaflet-progress-layer
@@ -235,6 +234,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	width: 100%;
 	border-top: none;
 	z-index: 11;
+	border-bottom: 1px solid var(--gray-color);
 }
 
 #toolbar-logo {
