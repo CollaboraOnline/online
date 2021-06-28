@@ -1652,9 +1652,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_pushbuttonControl: function(parentContainer, data, builder, customCallback) {
 		var pushbutton = L.DomUtil.create('button', '', parentContainer);
-		var customText = builder._customPushButtonTextForId(data.id);
-		pushbutton.innerHTML = customText !== '' ? customText : builder._cleanText(data.text);
 		pushbutton.id = data.id;
+
+		var text = L.DomUtil.create('span', '', pushbutton);
+		var customText = builder._customPushButtonTextForId(data.id);
+		text.innerHTML = customText !== '' ? customText : builder._cleanText(data.text);
 
 		if (data.image) {
 			var image = L.DomUtil.create('img', '', pushbutton);
