@@ -12,6 +12,7 @@
 #include <Unit.hpp>
 #include <UnitHTTP.hpp>
 #include <helpers.hpp>
+#include <wsd/Storage.hpp>
 
 #include <Poco/Net/HTTPRequest.h>
 
@@ -52,21 +53,24 @@ public:
 
             assertCheckFileInfoRequest(request);
 
-            LOK_ASSERT_MESSAGE("It is expected to stop requesting after 21 redirections", fileId <= 22);
+            std::string sExpectedMessage = "It is expected to stop requesting after " + std::to_string(RedirectionLimit) + " redirections";
+            LOK_ASSERT_MESSAGE(sExpectedMessage, fileId <= RedirectionLimit + 1);
 
             LOK_ASSERT_MESSAGE("Expected to be in Phase::Load or Phase::Redirected", _phase == Phase::Load || _phase == Phase::Redirected);
             _phase = Phase::Redirected;
 
-            if (fileId == 22)
+            if (fileId == RedirectionLimit + 1)
                 _phase = Phase::Polling;
 
             std::ostringstream oss;
             oss << "HTTP/1.1 302 Found\r\n"
-                "Location: " << helpers::getTestServerURI() << redirectUri << fileId++ << "?" << params << "\r\n"
+                "Location: " << helpers::getTestServerURI() << redirectUri << fileId << "?" << params << "\r\n"
                 "\r\n";
 
             socket->send(oss.str());
             socket->shutdown();
+
+            fileId++;
 
             return true;
         }
