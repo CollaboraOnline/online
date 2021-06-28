@@ -310,7 +310,7 @@ L.installContextMenu = function(options) {
 				continue;
 			if (!items[key].isHtmlName) {
 				console.log('re-write name ' + items[key].name);
-				items[key].name = '<a href="#" class="context-menu-link">' + items[key].name + '</a';
+				items[key].name = '<a href="#" class="context-menu-link">' + items[key].name + '</a>';
 				items[key].isHtmlName = true;
 			}
 			rewrite(items[key].items);

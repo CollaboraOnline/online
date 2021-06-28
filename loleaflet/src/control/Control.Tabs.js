@@ -43,6 +43,14 @@ L.Control.Tabs = L.Control.extend({
 		var docContainer = map.options.documentContainer;
 		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tabs-container', docContainer.parentElement);
 
+		function areTabsMultiple() {
+			var numItems = $('.spreadsheet-tab').length;
+			if (numItems === 1) {
+				return false;
+			}
+			return true;
+		}
+
 		this._menuItem = {
 			'insertsheetbefore': {name: _('Insert sheet before this'),
 				callback: (this._insertSheetBefore).bind(this)
@@ -50,28 +58,34 @@ L.Control.Tabs = L.Control.extend({
 			'insertsheetafter': {name: _('Insert sheet after this'),
 				callback: (this._insertSheetAfter).bind(this)
 			},
-			'.uno:Remove': {name: _UNO('.uno:Remove', 'spreadsheet', true),
-				callback: (this._deleteSheet).bind(this)
+			'.uno:Remove': {
+				name: _UNO('.uno:Remove', 'spreadsheet', true),
+				callback: (this._deleteSheet).bind(this),
+				visible: areTabsMultiple
 			},
 			'.uno:Name': {name: _UNO('.uno:RenameTable', 'spreadsheet', true),
 				callback: (this._renameSheet).bind(this)
-			} ,
+			},
 			'.uno:Show': {
 				name: _UNO('.uno:Show', 'spreadsheet', true),
 				callback: (this._showSheet).bind(this),
+				visible: areTabsMultiple
 			},
 			'.uno:Hide': {
 				name: _UNO('.uno:Hide', 'spreadsheet', true),
-				callback: (this._hideSheet).bind(this)
+				callback: (this._hideSheet).bind(this),
+				visible: areTabsMultiple
 			},
 			'movesheetleft': {
 				name: _('Move Sheet Left'),
-				callback: (this._moveSheetLeft).bind(this)
+				callback: (this._moveSheetLeft).bind(this),
+				visible: areTabsMultiple
 			},
 			'movesheetright': {
 				name: _('Move Sheet Right'),
-				callback: (this._moveSheetRight).bind(this)
-			}
+				callback: (this._moveSheetRight).bind(this),
+				visible: areTabsMultiple
+			},
 		};
 
 		if (!window.mode.isMobile()) {
@@ -116,15 +130,27 @@ L.Control.Tabs = L.Control.extend({
 			}
 
 			if ('partNames' in e) {
-
 				while (this._tabsCont.firstChild) {
 					this._tabsCont.removeChild(this._tabsCont.firstChild);
 				}
 				var ssTabScroll = L.DomUtil.create('div', 'spreadsheet-tab-scroll', this._tabsCont);
 				ssTabScroll.id = 'spreadsheet-tab-scroll';
 
+				var menuItemMobile = {};
+				if (parts === 1) {
+					Object.assign(menuItemMobile,
+						{
+							'insertsheetbefore' : this._menuItem['insertsheetbefore'],
+							'insertsheetafter'  :   this._menuItem['insertsheetafter'],
+							'.uno:Name' : this._menuItem['.uno:Name'],
+						}
+					);
+				} else {
+					menuItemMobile = this._menuItem;
+				}
+
 				if (window.mode.isMobile()) {
-					var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(this._menuItem, true, '');
+					var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(menuItemMobile, true, '');
 				}
 
 				var frame = L.DomUtil.create('div', '', ssTabScroll);
