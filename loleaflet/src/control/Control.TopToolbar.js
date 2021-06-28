@@ -287,6 +287,7 @@ L.Control.TopToolbar = L.Control.extend({
 		// Use original template as provided by server
 		$('#toolbar-logo').after(this.map.toolbarUpTemplate.cloneNode(true));
 		toolbar = $('#toolbar-up');
+		var that = this;
 		toolbar.w2toolbar({
 			name: 'editbar',
 			items: this.getToolItems(),
@@ -310,6 +311,13 @@ L.Control.TopToolbar = L.Control.extend({
 
 				if (event.target === 'insertshapes' || event.target === 'insertconnectors')
 					window.insertShapes(event.target);
+
+				if (that.map.isFreemiumUser()) {
+					for (var i = 0; i < this.items.length; i++) {
+						var it = this.items[i];
+						that.map.disableFreemiumItem(it, $('#tb_editbar_item_'+ it.id)[0], $('#tb_editbar_item_'+ it.id)[0]);
+					}
+				}
 			}
 		});
 		this.map.uiManager.enableTooltip(toolbar);

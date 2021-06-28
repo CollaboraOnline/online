@@ -3,7 +3,7 @@
  * Freemium handler
  */
 
-/* global $ vex _ */
+/* global $ vex _ w2ui */
 L.Map.include({
 
 	Freemium: {
@@ -28,6 +28,11 @@ L.Map.include({
 		this.Freemium.calcHighlights = _(freemiumInfo['CalcHighlights']);
 		this.Freemium.impressHighlights = _(freemiumInfo['ImpressHighlights']);
 		this.Freemium.drawHighlights = _(freemiumInfo['DrawHighlights']);
+
+		var toolbar = w2ui['editbar'];
+		if (toolbar)
+			return;
+			// toolbar.refresh();
 	},
 
 	// We mark the element disabled for the freemium
@@ -42,11 +47,11 @@ L.Map.include({
 			// not using window.interface because even in notebookbar,
 			// we have hamburger menu which is like classic mode (accommodates properties like track changes)
 			// better to check where element exists in the DOM in this case
-			if ($(DOMParentElement).parents('.notebookbar').length === 0) {
-				var overlay = L.DomUtil.create('div', 'freemium-overlay', DOMParentElement);
-				var lock = L.DomUtil.create('img', 'freemium-overlay-lock', overlay);
-				lock.src = 'images/lc_freeemiumlock.svg';
-			}
+			// if ($(DOMParentElement).parents('.notebookbar').length === 0) {
+			// 	var overlay = L.DomUtil.create('div', 'freemium-overlay', DOMParentElement);
+			// 	var lock = L.DomUtil.create('img', 'freemium-overlay-lock', overlay);
+			// 	lock.src = 'images/lc_freeemiumlock.svg';
+			// }
 
 			$(DOMParentElement).click(function(event) {
 				event.stopPropagation();
@@ -92,10 +97,25 @@ L.Map.include({
 	},
 
 	isFreemiumDeniedItem: function(item) {
-		if (this.Freemium.freemiumDenyList.includes(item.command) // in notebookbar uno commands are stored as command
-		|| this.Freemium.freemiumDenyList.includes(item.uno) // in classic mode uno commands are stored as uno in menus
-		|| this.Freemium.freemiumDenyList.includes(item.id))
+
+		var command = '';
+		if (item.command) // in notebookbar uno commands are stored as command
+			command = item.command;
+		else if (item.uno) { // in classic mode uno commands are stored as uno in menus
+			if (typeof item.uno === 'string')
+				command = item.uno;
+			else if (this.Freemium.freemiumDenyList.includes(item.uno.textCommand)
+			|| this.Freemium.freemiumDenyList.includes(item.uno.objectCommand)) // some unos have multiple commands
+				return true;
+		}
+		else if (item.id)
+			command = item.id;
+		else if (item.unosheet)
+			command = item.unosheet;
+
+		if (this.Freemium.freemiumDenyList.includes(command))
 			return true;
+
 		return false;
 	},
 
