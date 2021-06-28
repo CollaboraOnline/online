@@ -722,7 +722,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
-	_expanderHandler: function(parentContainer, data, builder) {
+	_expanderHandler: function(parentContainer, data, builder, customCallback) {
 		if (data.children.length > 0) {
 			var container = L.DomUtil.create('div', 'ui-expander-container ' + builder.options.cssClass, parentContainer);
 			container.id = data.id;
@@ -736,7 +736,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					$(label).addClass('expanded');
 
 				$(expander).click(function () {
-					builder.callback('expander', 'toggle', data, null, builder);
+					if (customCallback)
+						customCallback();
+					else
+						builder.callback('expander', 'toggle', data, null, builder);
 					$(label).toggleClass('expanded');
 					$(expander).siblings().toggleClass('expanded');
 				});
@@ -878,7 +881,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_panelHandler: function(parentContainer, data, builder) {
 		data.type = 'expander';
 		data.children = [{text: data.text}].concat(data.children);
-		builder._expanderHandler(parentContainer, data, builder);
+		builder._expanderHandler(parentContainer, data, builder, function() {});
 
 		if (data.hidden === 'true' || data.hidden === true)
 			$(parentContainer).children('#' + data.id).hide();
