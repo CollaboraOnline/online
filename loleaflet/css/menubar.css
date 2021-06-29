@@ -312,9 +312,18 @@
 	background: url('images/lc_freeemiumlock.svg') right top / 24px no-repeat
 }
 
+#main-menu .freemium-disabled {
+	background-size: 19px;
+	background-position-y: 3px;
+}
+
 #main-menu .freemium-disabled:hover, #menu-nb-hamburger .freemium-disabled:hover {
 	background-color: #fafafa;
 	background-position: right bottom !important;
+}
+
+#main-menu .freemium-disabled:hover {
+	background-position-y: -17px !important;
 }
 
 /* For notebook bar mode and sidebar*/
@@ -334,53 +343,21 @@
 	padding-left: 32px;
 }
 /* For mobile mode */
-#mobile-wizard .freemium-disabled {
+#mobile-wizard .freemium-overlay {
 	position: relative;
+	width: 96%;
+	height: 20px;
+	right: 0px;
+	bottom: 0px;
+	z-index: 2;
+	border-radius: 4px;
+	text-align: right;
+	margin-right: 4%;
 	overflow: hidden;
 }
 
-#mobile-wizard .freemium-disabled img.unobutton {
-	background: url('images/lc_freeemiumlock.svg') no-repeat center !important;
-	width: 32px !important;
-	padding-left: 32px;
-	box-sizing: border-box;
-	background-size: 32px !important;
-	background-position-y: top !important;
-
-	filter: brightness(0.8) contrast(1.8);
-	-webkit-animation-iteration-count: 1;
-	animation-iteration-count: 1;
-	animation-direction: normal;
-	-webkit-animation-play-state: running; /* Safari 4.0 - 8.0 */
-	animation-play-state: running;
-	-webkit-animation-name: up-n-down-anim-2;
-	animation-name: up-n-down-anim-2;
-	-webkit-animation-duration: 2s;
-	animation-duration: 2s;
-	-webkit-animation-timing-function: ease-in-out;
-	animation-timing-function: ease-in-out;
-}
-
-@keyframes up-n-down-anim-2{
-	0%{background-position-y: top !important;}
-	50%{background-position-y: bottom !important;}
-	100%{background-position-y: top !important;}
-}
-@-webkit-keyframes up-n-down-anim-2{
-	0%{background-position-y: top !important;}
-	50%{background-position: center bottom !important;}
-	100%{background-position-y: top !important;}
-}
-
-.menuwizard .freemium-disabled::after {
-	content: '';
-	position: absolute;
-	width: 100%;
-	height: 90px;
-
-	background: url('images/lc_freeemiumlock.svg') no-repeat right !important;
-	transform: translateY(25%);
-
+#mobile-wizard .freemium-overlay-lock {
+	width: 20px;
 	filter: brightness(0.8) contrast(1.8);
 	-webkit-animation-iteration-count: 1;
 	animation-iteration-count: 1;
@@ -394,15 +371,14 @@
 	-webkit-animation-timing-function: ease-in-out;
 	animation-timing-function: ease-in-out;
 }
-
 @keyframes up-n-down-anim{
 	0%{margin-top: 0;}
-	50%{margin-top: -25%;}
+	50%{margin-top: -20px;}
 	100%{margin-top: 0;}
 }
 @-webkit-keyframes up-n-down-anim{
 	0%{margin-top: 0;}
-	50%{margin-top: -25%;}
+	50%{margin-top: -20px;}
 	100%{margin-top: 0;}
 }
 
