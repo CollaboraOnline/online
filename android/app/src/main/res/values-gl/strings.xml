@@ -98,11 +98,12 @@
     <string name="unable_to_go_further">Non foi posíbel ir máis lonxe.</string>
     <string name="share_document">Compartir documento</string>
     <string name="pref_enable_chrome_debugger_info">Activar o uso da ferramenta de depuración de Chrome no documento</string>
-    <string name="pref_enable_chrome_debugger">Depuracion de Chrome</string>
+    <string name="pref_enable_chrome_debugger">Depuración de Chrome</string>
     <string name="remove_from_list">Retirar da lista</string>
     <string name="file_actions_icon_desc">Accións para ficheiros</string>
     <string name="pref_category_editor">Configuración do editor</string>
     <string name="app_version_and_hash">Versión: %1$s
 \nIdentificador da versión no repositorio Git «online»: %2$s
 \nIdentificador da versión no repositorio Git «core»: %3$s</string>
+    <string name="pref_user_name">Nome de usuario</string>
 </resources>
