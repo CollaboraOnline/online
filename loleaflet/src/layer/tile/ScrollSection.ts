@@ -181,8 +181,12 @@ class ScrollSection {
 		}
 		else {
 			var splitPanesContext: any = this.map.getSplitPanesContext();
-			var splitPos: any = splitPanesContext.getSplitPos().clone();
-			splitPos.y = Math.round(splitPos.y * this.dpiScale);
+			var splitPos = {x: 0, y: 0};
+			if (splitPanesContext) {
+				splitPos = splitPanesContext.getSplitPos().clone();
+				splitPos.y = Math.round(splitPos.y * this.dpiScale);
+			}
+
 			this.sectionProperties.yOffset += splitPos.y;
 			return result - splitPos.y;
 		}
@@ -199,6 +203,8 @@ class ScrollSection {
 		if (diff >= 0) {
 			this.sectionProperties.yMin = 0;
 			this.sectionProperties.yMax = diff;
+			if ((<any>window).mode.isDesktop())
+				this.sectionProperties.drawVerticalScrollBar = true;
 		}
 		else {
 			diff = Math.round((app.view.size.pixels[1] - this.containerObject.getDocumentAnchorSection().size[1]) * 0.5);
@@ -356,9 +362,7 @@ class ScrollSection {
 
 		var startY = this.size[1] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
 
-		this.context.fillRect(scrollProps.startX - this.sectionProperties.roundedDpi, startY + this.sectionProperties.roundedDpi, this.sectionProperties.roundedDpi, this.sectionProperties.roundedDpi * 4);
 		this.context.fillRect(scrollProps.startX, startY, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness, this.sectionProperties.scrollBarThickness);
-		this.context.fillRect(scrollProps.startX + scrollProps.scrollSize - this.sectionProperties.scrollBarThickness, startY + this.sectionProperties.roundedDpi, this.sectionProperties.roundedDpi, this.sectionProperties.roundedDpi * 4);
 
 		this.context.globalAlpha = 1.0;
 	}
@@ -422,11 +426,14 @@ class ScrollSection {
 	}
 
 	private hideVerticalScrollBar () {
-		if (this.sectionProperties.mouseIsOnVerticalScrollBar && this.documentTopLeft[1] < 0) {
-			this.sectionProperties.drawVerticalScrollBar = false;
+		if (this.sectionProperties.mouseIsOnVerticalScrollBar) {
 			this.sectionProperties.mouseIsOnVerticalScrollBar = false;
 			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
-			this.fadeOutVerticalScrollBar();
+
+			if (!(<any>window).mode.isDesktop()) { // On desktop, we don't want to hide the vertical scroll bar.
+				this.sectionProperties.drawVerticalScrollBar = false;
+				this.fadeOutVerticalScrollBar();
+			}
 
 			// just in case if we have blinking cursor visible
 			// we need to change cursor from default style
