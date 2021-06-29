@@ -2,7 +2,7 @@
 <resources>
     <string name="temp_file_saving_disabled">Soubor je pouze pro čtení, ukládání je zakázáno.</string>
     <string name="loading">Načítání...</string>
-    <string name="cannot_open_file_chooser">Nelze otevřít prohlížeč souborů</string>
+    <string name="cannot_open_file_chooser">Nelze otevřít výběr souboru</string>
     <string name="failed_to_insert_image">Vkládání obrázku selhalo</string>
     <string name="failed_to_load_file">Nepodařilo se určit soubor, který se má načíst</string>
     <string name="storage_permission_required">Je vyžadováno povolení přístupu k úložišti</string>
