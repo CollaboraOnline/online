@@ -1389,8 +1389,9 @@ class CommentSection {
 			}
 		}
 
-        if (lastY > this.containerObject.getDocumentAnchorSection().size[1])
-            app.view.size.pixels[1] = lastY + app.file.size.pixels[1];
+        lastY += this.containerObject.documentTopLeft[1];
+        if (lastY > app.file.size.pixels[1])
+            app.view.size.pixels[1] = lastY;
         else
             app.view.size.pixels[1] = app.file.size.pixels[1];
 	}
