@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-06-27 22:19+0000\n"
+"PO-Revision-Date: 2021-06-29 20:22+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<"
-"12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) ||"
-" (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 4.7.1-dev\n"
 
 #: admin/admin.strings.js:6
@@ -1268,25 +1268,27 @@ msgstr "Dokument nie mógł zostać zablokowany."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Podaj nazwę pliku"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "nazwa pliku"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Ten dokument może zawierać formatowanie lub zawartość, których nie można "
+"zapisać w bieżącym formacie pliku."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Zapisz jako format ODF"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Kontynuuj edycję"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1482,9 +1484,8 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Ups, wystąpił problem z połączeniem z %productName: "
 
 #: src/core/Socket.js:510
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Serwer został uruchomiony ponownie. Musimy teraz odświeżyć stronę."
+msgstr "Serwer jest teraz osiągalny. Teraz musimy odświeżyć stronę."
 
 #: src/core/Socket.js:528
 msgid "Served by:"
