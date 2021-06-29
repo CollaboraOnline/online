@@ -42,7 +42,7 @@ describe('Apply paragraph properties on selected text.', function() {
 			.should('be.visible');
 	}
 
-	it('Apply left/right alignment on selected text.', function() {
+	it.skip('Apply left/right alignment on selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -87,7 +87,7 @@ describe('Apply paragraph properties on selected text.', function() {
 			.should('have.attr', 'x', '12493');
 	});
 
-	it('Apply justified alignment on selected text.', function() {
+	it.skip('Apply justified alignment on selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -116,7 +116,7 @@ describe('Apply paragraph properties on selected text.', function() {
 			.should('have.attr', 'x', '1400');
 	});
 
-	it('Set top/bottom alignment on selected text.', function() {
+	it.skip('Set top/bottom alignment on selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 
@@ -254,7 +254,7 @@ describe('Apply paragraph properties on selected text.', function() {
 			.should('have.attr', 'y', '6600');
 	});
 
-	it('Change writing direction of selected text.', function() {
+	it.skip('Change writing direction of selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -283,7 +283,7 @@ describe('Apply paragraph properties on selected text.', function() {
 			.should('have.attr', 'x', '1400');
 	});
 
-	it('Change bulleting level of selected text.', function() {
+	it.skip('Change bulleting level of selected text.', function() {
 		// We have no bulleting by default
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
 			.should('not.exist');

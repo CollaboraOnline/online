@@ -195,7 +195,7 @@ describe('Impress insertion wizard.', function() {
 			});
 	});
 
-	it('Insert text box.', function() {
+	it.skip('Insert text box.', function() {
 		mobileHelper.openInsertionWizard();
 
 		cy.contains('.menu-entry-with-icon', 'Text Box')
@@ -290,7 +290,7 @@ describe('Impress insertion wizard.', function() {
 		helper.matchClipboardText(regex);
 	});
 
-	it('Insert slide number.', function() {
+	it.skip('Insert slide number.', function() {
 		mobileHelper.openInsertionWizard();
 
 		cy.contains('.menu-entry-with-icon', 'More Fields...')
@@ -308,7 +308,7 @@ describe('Impress insertion wizard.', function() {
 		helper.expectTextForClipboard('1');
 	});
 
-	it('Insert slide title.', function() {
+	it.skip('Insert slide title.', function() {
 		mobileHelper.openInsertionWizard();
 
 		cy.contains('.menu-entry-with-icon', 'More Fields...')
@@ -326,7 +326,7 @@ describe('Impress insertion wizard.', function() {
 		helper.expectTextForClipboard('Slide 1');
 	});
 
-	it('Insert slide count.', function() {
+	it.skip('Insert slide count.', function() {
 		mobileHelper.openInsertionWizard();
 
 		cy.contains('.menu-entry-with-icon', 'More Fields...')
@@ -344,7 +344,7 @@ describe('Impress insertion wizard.', function() {
 		helper.expectTextForClipboard('1');
 	});
 
-	it('Insert hyperlink inside existing text shape.', function() {
+	it.skip('Insert hyperlink inside existing text shape.', function() {
 		stepIntoTextShapeEditing();
 
 		mobileHelper.openInsertionWizard();
@@ -376,7 +376,7 @@ describe('Impress insertion wizard.', function() {
 			.should('have.text', 'http://www.something.com');
 	});
 
-	it('Insert date field (fixed) inside existing text shape.', function() {
+	it.skip('Insert date field (fixed) inside existing text shape.', function() {
 		stepIntoTextShapeEditing();
 
 		mobileHelper.openInsertionWizard();
@@ -395,7 +395,7 @@ describe('Impress insertion wizard.', function() {
 		helper.matchClipboardText(regex);
 	});
 
-	it('Insert date field (variable) inside existing text shape.', function() {
+	it.skip('Insert date field (variable) inside existing text shape.', function() {
 		stepIntoTextShapeEditing();
 
 		mobileHelper.openInsertionWizard();
@@ -414,7 +414,7 @@ describe('Impress insertion wizard.', function() {
 		helper.matchClipboardText(regex);
 	});
 
-	it('Insert time field (fixed) inside existing text shape.', function() {
+	it.skip('Insert time field (fixed) inside existing text shape.', function() {
 		stepIntoTextShapeEditing();
 
 		mobileHelper.openInsertionWizard();
@@ -433,7 +433,7 @@ describe('Impress insertion wizard.', function() {
 		helper.matchClipboardText(regex);
 	});
 
-	it('Insert time field (variable) inside existing text shape.', function() {
+	it.skip('Insert time field (variable) inside existing text shape.', function() {
 		stepIntoTextShapeEditing();
 
 		mobileHelper.openInsertionWizard();
@@ -452,7 +452,7 @@ describe('Impress insertion wizard.', function() {
 		helper.matchClipboardText(regex);
 	});
 
-	it('Insert slide number inside existing text shape.', function() {
+	it.skip('Insert slide number inside existing text shape.', function() {
 		stepIntoTextShapeEditing();
 
 		mobileHelper.openInsertionWizard();
@@ -469,7 +469,7 @@ describe('Impress insertion wizard.', function() {
 		helper.expectTextForClipboard('1');
 	});
 
-	it('Insert slide title inside existing text shape.', function() {
+	it.skip('Insert slide title inside existing text shape.', function() {
 		stepIntoTextShapeEditing();
 
 		mobileHelper.openInsertionWizard();
@@ -486,7 +486,7 @@ describe('Impress insertion wizard.', function() {
 		helper.expectTextForClipboard('Slide 1');
 	});
 
-	it('Insert slide count inside existing text shape.', function() {
+	it.skip('Insert slide count inside existing text shape.', function() {
 		stepIntoTextShapeEditing();
 
 		mobileHelper.openInsertionWizard();

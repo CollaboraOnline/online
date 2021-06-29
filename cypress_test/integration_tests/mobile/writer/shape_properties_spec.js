@@ -376,7 +376,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('have.attr', 'fill', 'rgb(204,0,0)');
 	});
 
-	it('Change fill transparency type', function() {
+	it.skip('Change fill transparency type', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 linearGradient')
 			.should('not.exist');
 
@@ -397,7 +397,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('exist');
 	});
 
-	it('Change fill transparency', function() {
+	it.skip('Change fill transparency', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 path:nth-of-type(1)')
 			.should('not.have.attr', 'fill-opacity');
 

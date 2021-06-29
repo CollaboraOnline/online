@@ -391,7 +391,7 @@ describe('Top toolbar tests.', function() {
 			.should('exist');
 	});
 
-	it('Save.', function() {
+	it.skip('Save.', function() {
 		desktopHelper.actionOnSelector('bold', (selector) => { cy.get(selector).click(); });
 
 		desktopHelper.actionOnSelector('save', (selector) => { cy.get(selector).click(); });
