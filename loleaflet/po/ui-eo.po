@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-05-14 09:00+0000\n"
+"PO-Revision-Date: 2021-06-29 20:22+0000\n"
 "Last-Translator: phlostically <phlostically@mailinator.com>\n"
 "Language-Team: Esperanto <https://hosted.weblate.org/projects/"
 "collabora-online/ui/eo/>\n"
-"Language: \n"
+"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.7.1-dev\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-ui-eo.po\n"
 "X-Pootle-Revision: 3937773\n"
 
@@ -1260,11 +1260,11 @@ msgstr "Ne povas ŝlosi la dokumenton."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Tajpu dosiernomon"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "dosiernomo"
 
 #: src/control/Permission.js:123
 msgid ""
@@ -1274,11 +1274,11 @@ msgstr ""
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Konservi kiel ODF-dosieron"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Rekomenci redaktadon"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1475,9 +1475,8 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Ho ve. Okazis problemo konekti al %productName: "
 
 #: src/core/Socket.js:510
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "La servilo restartis. Ni devas reŝargi la paĝon nun."
+msgstr "La servilo estas nun atingebla. Ni devas reŝargi la paĝon nun."
 
 #: src/core/Socket.js:528
 msgid "Served by:"
