@@ -468,7 +468,7 @@ void HttpRequestTests::testSimplePost_External()
 
     httpRequest.setBodyFile(path);
 
-    auto httpSession = http::Session::createHttp(Host);
+    auto httpSession = http::Session::createHttpSsl(Host);
     httpSession->setTimeout(DefTimeoutSeconds);
 
     std::condition_variable cv;
