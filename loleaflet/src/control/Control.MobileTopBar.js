@@ -31,7 +31,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'spacer'},
 				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
-				{type: 'button',  id: 'comment_wizard', img: 'mobile_comment_wizard'},
+				{type: 'button',  id: 'comment_wizard', img: 'viewcomments'},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 			];
 		} else if (docType == 'spreadsheet') {
@@ -44,7 +44,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'spacer'},
 				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
-				{type: 'button',  id: 'comment_wizard', img: 'mobile_comment_wizard'},
+				{type: 'button',  id: 'comment_wizard', img: 'viewcomments'},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 			];
 		} else if ((docType == 'presentation') || (docType == 'drawing')) {
@@ -55,7 +55,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'spacer'},
 				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
-				{type: 'button',  id: 'comment_wizard', img: 'mobile_comment_wizard'},
+				{type: 'button',  id: 'comment_wizard', img: 'viewcomments'},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 			];
 		}
