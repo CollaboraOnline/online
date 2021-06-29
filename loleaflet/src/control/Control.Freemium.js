@@ -41,6 +41,12 @@ L.Map.include({
 
 			var that = this;
 
+			if (window.mode.isMobile()) {
+				var overlay = L.DomUtil.create('div', 'freemium-overlay', DOMParentElement);
+				var lock = L.DomUtil.create('img', 'freemium-overlay-lock', overlay);
+				lock.src = 'images/lc_freeemiumlock.svg';
+			}
+
 			$(DOMParentElement).click(function(event) {
 				event.stopPropagation();
 				that.openSubscriptionPopup();
