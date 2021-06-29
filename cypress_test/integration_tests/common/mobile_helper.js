@@ -321,7 +321,8 @@ function insertComment() {
 
 	cy.get('.vex-dialog-button-primary').click();
 
-	cy.get('#comment-container-1').should('exist');
+	cy.get('#comment-container-1').should('exist')
+		.wait(300);
 
 	cy.get('#annotation-content-area-1').should('have.text', 'some text');
 }
