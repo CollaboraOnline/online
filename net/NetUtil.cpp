@@ -21,6 +21,8 @@
 
 #include <netdb.h>
 
+#include <Poco/Net/SocketAddress.h>
+
 namespace net
 {
 

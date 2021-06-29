@@ -37,6 +37,7 @@
 #include "ServerSocket.hpp"
 #if !MOBILEAPP && ENABLE_SSL
 #include <net/SslSocket.hpp>
+#include <openssl/x509v3.h>
 #endif
 #include "WebSocketHandler.hpp"
 #include <net/HttpRequest.hpp>
@@ -98,18 +99,62 @@ bool SslStreamSocket::simulateSocketError(bool read)
 #endif //ENABLE_DEBUG
 
 #if ENABLE_SSL
+static std::string X509_NAME_to_utf8(X509_NAME* name)
+{
+    BIO* bio = BIO_new(BIO_s_mem());
+    X509_NAME_print_ex(bio, name, 0,
+                       (ASN1_STRFLGS_RFC2253 | XN_FLAG_SEP_COMMA_PLUS | XN_FLAG_FN_SN |
+                        XN_FLAG_DUMP_UNKNOWN_FIELDS) &
+                           ~ASN1_STRFLGS_ESC_MSB);
+    BUF_MEM* buf;
+    BIO_get_mem_ptr(bio, &buf);
+    std::string text = std::string(buf->data, buf->length);
+    BIO_free(bio);
+    return text;
+}
+
 bool SslStreamSocket::verifyCertificate()
 {
-    if (_verification == ssl::CertificateVerification::Disabled)
+    if (_verification == ssl::CertificateVerification::Disabled || net::isLocalhost(hostname()))
     {
         return true;
     }
 
+    LOG_TRC("Verifying certificate of [" << hostname() << ']');
     X509* x509 = SSL_get_peer_certificate(_ssl);
     if (x509)
     {
+        // Dump cert info, for debugging only.
+        const std::string issuerName = X509_NAME_to_utf8(X509_get_issuer_name(x509));
+        const std::string subjectName = X509_NAME_to_utf8(X509_get_subject_name(x509));
+        std::string serialNumber;
+        BIGNUM* pBN = ASN1_INTEGER_to_BN(X509_get_serialNumber(const_cast<X509*>(x509)), 0);
+        if (pBN)
+        {
+            char* pSN = BN_bn2hex(pBN);
+            if (pSN)
+            {
+                serialNumber = pSN;
+                OPENSSL_free(pSN);
+            }
+
+            BN_free(pBN);
+        }
+
+        LOG_TRC("SSL cert issuer: " << issuerName << ", subject: " << subjectName
+                                    << ", serial: " << serialNumber);
+
         Poco::Net::X509Certificate cert(x509);
-        return cert.verify(hostname());
+        if (cert.verify(hostname()))
+        {
+            LOG_TRC("SSL cert verified for host [" << hostname() << ']');
+            return true;
+        }
+        else
+        {
+            LOG_INF("SSL cert failed verification for host [" << hostname() << ']');
+            return false;
+        }
     }
 
     // No certificate; acceptable only if verification is not strictly required.

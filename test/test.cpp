@@ -113,6 +113,10 @@ int main(int argc, char** argv)
         ssl::Manager::initializeServerContext(ssl_cert_file_path, ssl_key_file_path,
                                               ssl_ca_file_path, ssl_cipher_list,
                                               ssl::CertificateVerification::Disabled);
+
+        ssl::Manager::initializeClientContext(ssl_cert_file_path, ssl_key_file_path,
+                                              ssl_ca_file_path, ssl_cipher_list,
+                                              ssl::CertificateVerification::Required);
     }
     catch (const std::exception& ex)
     {
@@ -120,10 +124,15 @@ int main(int argc, char** argv)
     }
 
     if (!ssl::Manager::isServerContextInitialized())
-        LOG_ERR("Failed to initialize SSL. Set the path to the certificates via --cert-path. "
-                "HTTPS tests will be disabled in unit-tests.");
+        LOG_ERR("Failed to initialize Server SSL. Set the path to the certificates via "
+                "--cert-path. HTTPS tests will be disabled in unit-tests.");
     else
-        LOG_INF("Initialized SSL.");
+        LOG_INF("Initialized Server SSL.");
+
+    if (!ssl::Manager::isClientContextInitialized())
+        LOG_ERR("Failed to initialize Client SSL.");
+    else
+        LOG_INF("Initialized Client SSL.");
 #else
     LOG_INF("SSL is unsupported in this build.");
 #endif
