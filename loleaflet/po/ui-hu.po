@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-05-14 09:00+0000\n"
+"PO-Revision-Date: 2021-06-29 20:22+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.7.1-dev\n"
 "X-Pootle-Path: /hu/libo_online/loleaflet-ui-hu.po\n"
 "X-Pootle-Revision: 3939165\n"
 
@@ -1266,25 +1266,27 @@ msgstr "A dokumentumot nem lehet zárolni."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Fájlnév megadása"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "fájlnév"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Ez a dokumentum olyan formázást vagy tartalmat tartalmazhat, amely nem "
+"menthető az aktuális fájlformátumban."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Mentés ODF formátumban"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Szerkesztés folytatása"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1481,9 +1483,8 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Probléma történt a %productName-hoz kapcsolódás során: "
 
 #: src/core/Socket.js:510
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "A kiszolgáló újraindult. Most frissítenünk kell az oldalt."
+msgstr "A kiszolgáló most már elérhető. Most frissítenünk kell az oldalt."
 
 #: src/core/Socket.js:528
 msgid "Served by:"
@@ -1581,7 +1582,7 @@ msgstr "Kapcsolódás..."
 
 #: src/core/Socket.js:1069
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "A dokumentum átnevezése folyamatban van, és hamarosan újratöltődik"
 
 #: src/core/Socket.js:1352
 msgid ""
