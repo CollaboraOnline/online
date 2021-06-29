@@ -302,8 +302,6 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 }
 .vex.vex-theme-plain {
 	padding: 0px !important;
-	position: relative !important;
-	top: -42px !important;
 }
 .vex-open .vex-overlay {
 	z-index: 2000;
