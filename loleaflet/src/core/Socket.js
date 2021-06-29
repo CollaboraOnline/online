@@ -413,6 +413,11 @@ app.definitions.Socket = L.Class.extend({
 			var data = e.imgBytes.subarray(e.imgIndex);
 			console.assert(data.length == 0 || data[0] != 68 /* D */, 'Socket: got a delta image, not supported !');
 			img = 'data:image/png;base64,' + window.btoa(this._strFromUint8(data));
+			if (L.Browser.cypressTest && localStorage.getItem('image_validation_test')) {
+				if (!window.imgDatas)
+					window.imgDatas = [];
+				window.imgDatas.push(img);
+			}
 		}
 		return img;
 	},
