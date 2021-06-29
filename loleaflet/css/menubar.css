@@ -331,7 +331,7 @@
 }
 
 /* For notebook bar mode and sidebar*/
-.freemium-disabled img.unobutton, #toolbar-up .freemium-disabled .w2ui-tb-image.w2ui-icon {
+.freemium-disabled:not(.mobile-wizard) img.unobutton, #toolbar-up .freemium-disabled .w2ui-tb-image.w2ui-icon {
 	background: url('images/lc_freeemiumlock.svg') center top / 24px no-repeat !important;
 	width: 24px !important;
 	padding-left: 24px;
@@ -349,7 +349,7 @@
 /* For mobile mode */
 #mobile-wizard .freemium-overlay {
 	position: relative;
-	width: 96%;
+	width: 20px;
 	height: 20px;
 	right: 0px;
 	bottom: 0px;
@@ -360,7 +360,7 @@
 	overflow: hidden;
 }
 
-#mobile-wizard .freemium-overlay-lock {
+#mobile-wizard.menuwizard .freemium-overlay-lock {
 	width: 20px;
 	filter: brightness(0.8) contrast(1.8);
 	-webkit-animation-iteration-count: 1;
