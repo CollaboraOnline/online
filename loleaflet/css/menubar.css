@@ -356,6 +356,17 @@
 	overflow: hidden;
 }
 
+#mobile-wizard:not(.menuwizard) .freemium-overlay {
+	top: -38px;
+	background: white;
+	left: -8px;
+	box-shadow: 0 0 1px 2px #00000025;
+}
+
+#mobile-wizard:not(.menuwizard) .freemium-overlay-lock {
+	filter: brightness(0.8) contrast(1.8);
+}
+
 #mobile-wizard.menuwizard .freemium-overlay-lock {
 	width: 20px;
 	filter: brightness(0.8) contrast(1.8);
