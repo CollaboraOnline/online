@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-27 13:21+0200\n"
-"PO-Revision-Date: 2021-06-10 16:33+0000\n"
+"PO-Revision-Date: 2021-06-27 22:19+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/ui/is/>\n"
-"Language: \n"
+"Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.7.1-dev\n"
 "X-Pootle-Path: /is/libo_online/loleaflet-ui-is.po\n"
 "X-Pootle-Revision: 3937885\n"
 
@@ -1551,7 +1551,7 @@ msgstr "Tengist..."
 
 #: src/core/Socket.js:1069
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "Verið er að endurnefna skjalið og það verður bráðum lesið aftur inn"
 
 #: src/core/Socket.js:1352
 msgid ""
