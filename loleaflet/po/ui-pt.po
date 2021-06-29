@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-06-27 22:19+0000\n"
+"PO-Revision-Date: 2021-06-29 20:22+0000\n"
 "Last-Translator: Sérgio Morais <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1264,25 +1264,27 @@ msgstr "Não foi possível bloquear o documento."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Introduza o nome do ficheiro"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "nome_do_ficheiro"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Este documento pode conter formatação ou conteúdo que não pode ser guardado "
+"no formato atual do ficheiro."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Guardar como formato ODF"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Continuar a editar"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1478,9 +1480,8 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Ocorreu um erro ao estabelecer a ligação a %productName: "
 
 #: src/core/Socket.js:510
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "O servidor foi reiniciado. Temos de atualizar a página agora."
+msgstr "Agora o servidor está contactável. Temos de atualizar a página agora."
 
 #: src/core/Socket.js:528
 msgid "Served by:"
