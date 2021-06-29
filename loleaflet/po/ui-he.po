@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-06-29 06:33+0000\n"
+"PO-Revision-Date: 2021-06-29 20:22+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1259,25 +1259,25 @@ msgstr "לא ניתן לנעול את המסמך."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "נא למלא שם קובץ"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "שם קובץ"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
-msgstr ""
+msgstr "המסמך עשוי להכיל עיצוב או תוכן שלא ניתן לשמור בתצורת הקובץ הנוכחית."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "לשמור בתצורת ODF"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "להמשיך בעריכה"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1473,9 +1473,8 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "אופס, אירעה תקלה בעת התחברות אל %productName: "
 
 #: src/core/Socket.js:510
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "השרת הופעל מחדש. עלינו לרענן את העמוד כעת."
+msgstr "השרת זמין כעת. עלינו לרענן את העמוד."
 
 #: src/core/Socket.js:528
 msgid "Served by:"
