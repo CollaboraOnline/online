@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe('Impress focus tests', function() {
+describe.skip('Impress focus tests', function() {
 	var testFileName = 'focus.odp';
 
 	beforeEach(function() {
@@ -61,6 +61,8 @@ describe('Impress focus tests', function() {
 		// Enter edit mode by double-clicking.
 		cy.get('#document-container')
 			.dblclick();
+
+		cy.wait(1000);
 
 		impressHelper.typeTextAndVerify('Hello Impress');
 

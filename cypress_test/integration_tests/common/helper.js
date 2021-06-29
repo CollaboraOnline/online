@@ -411,6 +411,7 @@ function clearAllText() {
 // Parameters:
 // expectedPlainText - a string, the clipboard container should have.
 function expectTextForClipboard(expectedPlainText) {
+
 	doIfInWriter(function() {
 		cy.get('#copy-paste-container p')
 			.then(function(pItem) {
@@ -428,6 +429,8 @@ function expectTextForClipboard(expectedPlainText) {
 			.should('have.text', expectedPlainText);
 	});
 	doIfInImpress(function() {
+		waitUntilIdle('#copy-paste-container pre',undefined);
+
 		cy.get('#copy-paste-container pre')
 			.should('have.text', expectedPlainText);
 	});

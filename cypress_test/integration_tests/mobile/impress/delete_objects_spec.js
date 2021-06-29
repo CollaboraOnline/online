@@ -23,7 +23,7 @@ describe('Delete Objects', function() {
 	});
 
 
-	it('Delete Text', function() {
+	it.skip('Delete Text', function() {
 		cy.get('.leaflet-layer')
 			.dblclick('center');
 
