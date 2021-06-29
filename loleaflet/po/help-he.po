@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-27 13:21+0200\n"
-"PO-Revision-Date: 2021-06-23 21:32+0000\n"
+"PO-Revision-Date: 2021-06-29 06:33+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "help/he/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.7.1-dev\n"
 "X-Pootle-Path: /he/libo_online/loleaflet-help-he.po\n"
 "X-Pootle-Revision: 3930691\n"
 
@@ -1756,11 +1756,11 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.p:401-5
 msgid ""
 "Formulas are entered in the formula bar. Enter '=' and insert the formula."
-msgstr ""
+msgstr "נוסחאות יש למלא בסרגל הנוסחאות. יש להקליד ‚=’ ולאחר מכן את הנוסחה."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:402-5
 msgid "All spreadsheets functions and mathematical rules applies."
-msgstr ""
+msgstr "כל פונקציות גיליון הנתונים והכללים המתמטיים תקפים."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:404-5
 msgid ""
@@ -1769,6 +1769,9 @@ msgid ""
 "committees/download.php/16826/openformula-spec-20060221.html\">OASIS "
 "OpenFormula specification</a>."
 msgstr ""
+"שפת הנוסחאות אמורה להיות מאוד מוכרת לכל מי שמנוסה בגיליונות נתונים כלשהם כפי "
+"שמפורט לפרט פרטים <a href=\"https://www.oasis-open.org/committees/download."
+"php/16826/openformula-spec-20060221.html\">בתקן OASIS OpenFormula</a>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:407-5
 msgid ""
