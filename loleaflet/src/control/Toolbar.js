@@ -708,10 +708,23 @@ L.Map.include({
 				// so there is nothing more verbose. But presumably it is different
 				// in production setups.
 
-				app.socket.sendMessage('loggingleveloverride '
-						       + (app.socket.threadLocalLoggingLevelToggle ? 'default' : 'verbose'));
-
 				app.socket.threadLocalLoggingLevelToggle = !app.socket.threadLocalLoggingLevelToggle;
+
+				var newLogLevel = (app.socket.threadLocalLoggingLevelToggle ? 'verbose' : 'default');
+
+				app.socket.sendMessage('loggingleveloverride ' + newLogLevel);
+
+				var logLevelInformation = newLogLevel;
+				if (newLogLevel === 'default')
+					logLevelInformation = 'default (from loolwsd.xml)';
+				else if (newLogLevel === 'verbose')
+					logLevelInformation = 'most verbose (from loolwsd.xml)';
+				else if (newLogLevel === 'terse')
+					logLevelInformation = 'least verbose (from loolwsd.xml)';
+				else
+					logLevelInformation = newLogLevel;
+
+				$(app.ExpertlyTrickForLOAbout.contentEl).find('#log-level-state').html('Log level: ' + logLevelInformation);
 			} else if (event.key === 't') {
 				// T turns Trace Event recording on in the Kit process
 				// for this document, as long as loolwsd is running with the
@@ -719,9 +732,12 @@ L.Map.include({
 				// turns it off.
 
 				if (app.socket.enableTraceEventLogging) {
-					app.socket.sendMessage('traceeventrecording '
-							       + (app.socket.traceEventRecordingToggle ? 'stop' : 'start'));
+					app.socket.traceEventRecordingToggle = !app.socket.traceEventRecordingToggle;
 
+					app.socket.sendMessage('traceeventrecording '
+							       + (app.socket.traceEventRecordingToggle ? 'start' : 'stop'));
+
+					$(app.ExpertlyTrickForLOAbout.contentEl).find('#trace-event-state').html('Trace Event generation: ' + (app.socket.traceEventRecordingToggle ? 'ON' : 'OFF'));
 					// Just as a test, uncomment this to toggle SAL_WARN and
 					// SAL_INFO selection between two states: 1) the default
 					// as directed by the SAL_LOG environment variable, and
@@ -731,9 +747,7 @@ L.Map.include({
 					// to "-WARN-INFO", i.e. the default is that nothing is
 					// logged from core.)
 
-					// app.socket.sendMessage('sallogoverride ' + (app.socket.traceEventRecordingToggle ? 'default' : '+WARN+INFO.sc'));
-
-					app.socket.traceEventRecordingToggle = !app.socket.traceEventRecordingToggle;
+					// app.socket.sendMessage('sallogoverride ' + (app.socket.traceEventRecordingToggle ? '+WARN+INFO.sc' : 'default'));
 				}
 			}
 		};
@@ -759,6 +773,12 @@ L.Map.include({
 
 				this.contentEl.style.width = w + 'px';
 
+				// FIXME: When we remove vex this needs to be cleaned up.
+
+				// It is hard to access the value of "this" in this afterOpen
+				// function in the handler function. Use a global variable until
+				// somebody figures out a better way.
+				app.ExpertlyTrickForLOAbout = this;
 				$(window).bind('keyup.vex', handler);
 				// workaround for https://github.com/HubSpot/vex/issues/43
 				$('.vex-overlay').css({ 'pointer-events': 'none'});
@@ -770,6 +790,9 @@ L.Map.include({
 					touchGesture._hammer.on('tripletap', L.bind(touchGesture._onTripleTap, touchGesture));
 				}
 				map.focus();
+
+				// Unset the global variable, see comment above.
+				app.ExpertlyTrickForLOAbout = undefined;
 				// asyncTraceEvent.finish();
 			}
 		});
