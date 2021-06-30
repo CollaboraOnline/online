@@ -1744,6 +1744,7 @@ void ClientSession::onDisconnect()
         const std::string status = "error: cmd=internal kind=unauthorized";
         LOG_TRC("Sending to Client [" << status << "].");
         sendMessage(status);
+        // We are disconnecting, no need to close the socket here.
     }
     catch (const std::exception& exc)
     {
