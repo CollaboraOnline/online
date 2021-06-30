@@ -725,6 +725,10 @@ std::unique_ptr<WopiStorage::WOPIFileInfo> WopiStorage::getWOPIFileInfoForUri(Po
 
         if (failed)
         {
+            if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_FORBIDDEN)
+                throw UnauthorizedRequestException(
+                    "Access denied, 403. WOPI::CheckFileInfo failed on: " + uriAnonym);
+
             throw StorageConnectionException("WOPI::CheckFileInfo failed: " + wopiResponse);
         }
     }
