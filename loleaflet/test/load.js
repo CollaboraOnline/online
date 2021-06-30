@@ -91,6 +91,11 @@ window.HTMLElement.prototype.getBoundingClientRect = function() {
 	};
 };
 
+function sleep(ms)
+{
+	return new Promise(r => setTimeout(r, ms));
+}
+
 window.onload = function() {
 	console.debug('socket ' + window.socket);
 	map = window.socket._map;
@@ -103,7 +108,7 @@ window.onload = function() {
 
 	map.on('docloaded', function(){
 		console.debug('document loaded');
-		setTimeout(function() {
+		setTimeout(async function() {
 			if (bookmark)
 			{
 				console.debug('Jump to bookmark ' + bookmark);
@@ -111,6 +116,18 @@ window.onload = function() {
 					'Bookmark': { 'type': 'string', 'value': bookmark }
 				};
 				window.app.socket.sendMessage('uno .uno:JumpToMark ' + JSON.stringify(cmd));
+				let dummyInput = 'askdjf ,asdhflkas r;we f;akdn.adh ;o wh;fa he;qw e.fkahsd ;vbawe.kguday;f vas.,mdb kaery kejraerga';
+				map.focus();
+				for (let i = 0; i < dummyInput.length; i++)
+				{
+					console.debug('sending input key: ' + dummyInput.charCodeAt(i));
+					window.app.socket.sendMessage(
+						'key' +
+						' type=' + 'input' +
+						' char=' + dummyInput.charCodeAt(i) + ' key=0\n'
+					);
+					await sleep(30);
+				}
 			}
 			else
 				console.debug('No bookmark to jump to');
