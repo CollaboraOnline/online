@@ -192,7 +192,6 @@ public:
     StorageBase(const Poco::URI& uri,
                 const std::string& localStorePath,
                 const std::string& jailPath) :
-        _uri(uri),
         _localStorePath(localStorePath),
         _jailPath(jailPath),
         _fileInfo("", "lool", std::chrono::system_clock::time_point(), 0),
@@ -202,7 +201,8 @@ public:
         _isAutosave(false),
         _isExitSave(false)
     {
-        LOG_DBG("Storage ctor: " << LOOLWSD::anonymizeUrl(uri.toString()));
+        setUri(uri);
+        LOG_DBG("Storage ctor: " << LOOLWSD::anonymizeUrl(getUriString()));
     }
 
     virtual ~StorageBase() {}
@@ -338,8 +338,29 @@ public:
 
 protected:
 
+    /// Sanitize a URI by removing authorization tokens.
+    Poco::URI sanitizeUri(Poco::URI uri)
+    {
+        static const std::string access_token("access_token");
+
+        Poco::URI::QueryParameters queryParams = uri.getQueryParameters();
+        for (auto& param : queryParams)
+        {
+            // Sanitize more params as needed.
+            if (param.first == access_token)
+            {
+                // If access_token exists, clear it. But don't add it if not provided.
+                param.second.clear();
+                uri.setQueryParameters(queryParams);
+                break;
+            }
+        }
+
+        return uri;
+    }
+
     /// Saves new URI when resource was moved
-    void setUri(const Poco::URI& uri) { _uri = uri; }
+    void setUri(const Poco::URI& uri) { _uri = sanitizeUri(uri); }
 
     /// Returns the root path of the jail directory of docs.
     std::string getLocalRootPath() const;
