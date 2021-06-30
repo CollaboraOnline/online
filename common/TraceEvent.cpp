@@ -58,7 +58,8 @@ void TraceEvent::stopRecording() { recordingOn = false; }
 
 void ProfileZone::emitRecording()
 {
-    assert(recordingOn);
+    if (!recordingOn)
+        return;
 
     auto now = std::chrono::system_clock::now();
 
