@@ -8,6 +8,7 @@
 #include <config.h>
 
 #include <Poco/JSON/Object.h>
+#include <Poco/URI.h>
 
 #include "FileServer.hpp"
 
@@ -133,7 +134,18 @@ std::string FileServerRequestHandler::cssVarsToStyle(const std::string& cssVars)
             LOG_WRN("Skipping the token [" << tokens.getParam(token) << "] since it has more than one '=' pair");
             continue;
         }
-        styleOSS << keyValue[0] << ":" << keyValue[1] << ";";
+
+        std::string escapedKey, escapedValue;
+        Poco::URI::encode(keyValue[0], "", escapedKey);
+        Poco::URI::encode(keyValue[1], "", escapedValue);
+
+        if (keyValue[0] != escapedKey || keyValue[1] != escapedValue)
+        {
+            LOG_WRN("Skipping the token [" << tokens.getParam(token) << "] since it contains forbidden characters");
+            continue;
+        }
+
+        styleOSS << escapedKey << ":" << escapedValue << ";";
     }
     styleOSS << "}</style>";
 
