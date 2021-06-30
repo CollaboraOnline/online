@@ -139,11 +139,12 @@ private:
         // Create the white blurred background
         // Use box blur, it's enough for our purposes
 
-        // PI / 4 degrees (45)
-        const double PI = 3.14159265359;
-        const double ANGLE = PI / 4;
-        const double sin = std::sin(ANGLE);
-        const double cos = std::cos(ANGLE);
+        // PI / 4 (45 degrees): sin = cos = 1/sqrt(2)
+        const double sin = 0.707106781186547524;
+        const double cos = sin;
+
+        const double x0 = width / 2.0;
+        const double y0 = height / 2.0;
 
         std::vector<unsigned char> _rotatedText;
         _rotatedText.reserve(pixel_count);
@@ -154,8 +155,6 @@ private:
         {
             for (int x = 0; x < width; ++x)
             {
-                const double x0 = width / 2.0;
-                const double y0 = height / 2.0;
                 // move origin to the center
                 const double fx = x - x0;
                 const double fy = y - y0;
