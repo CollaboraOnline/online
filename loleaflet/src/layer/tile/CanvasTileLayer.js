@@ -3002,7 +3002,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._cellSelections = Array(0);
 			this._map.wholeColumnSelected = false; // Message related to whole column/row selection should be on the way, we should update the variables now.
 			this._map.wholeRowSelected = false;
-			this._refreshRowColumnHeaders();
+			if (this._refreshRowColumnHeaders)
+				this._refreshRowColumnHeaders();
 		}
 	},
 
