@@ -127,8 +127,8 @@ private:
         // No longer needed.
         std::free(textPixels);
 
-        std::vector<unsigned char>& _pixmap = _pixmaps[key]; // create a new vector here
-        _pixmap.reserve(pixel_count);
+        _pixmaps.emplace(key, std::vector<unsigned char>(pixel_count));
+        std::vector<unsigned char>& _pixmap = _pixmaps[key];
 
         /*
             apply 2d rotation transformation (counter-clockwise):
@@ -144,8 +144,7 @@ private:
         const double sin = std::sin(ANGLE);
         const double cos = std::cos(ANGLE);
 
-        std::vector<unsigned char> _rotatedText;
-        _rotatedText.reserve(pixel_count);
+        std::vector<unsigned char> _rotatedText(pixel_count);
 
         const int r = 2;
         const double weight = (r+1) * (r+1);
