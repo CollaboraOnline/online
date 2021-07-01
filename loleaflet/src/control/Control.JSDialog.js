@@ -41,6 +41,7 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	closePopover: function(id) {
+		L.DomUtil.remove(this.dialogs[id].overlay);
 		var menubutton = this.dialogs[id].clickToClose;
 		var builder = this.clearDialog(id);
 		if (menubutton)
@@ -91,7 +92,8 @@ L.Control.JSDialog = L.Control.extend({
 		var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'jsdialog'});
 
 		if (isModalPopup) {
-			var overlay = L.DomUtil.create('div', builder.options.cssClass + ' jsdialog-overlay ' + (data.cancellable ? 'cancellable' : ''), content);
+			var overlay = L.DomUtil.create('div', builder.options.cssClass + ' jsdialog-overlay ' + (data.cancellable ? 'cancellable' : ''), document.body);
+			overlay.id = data.id + '-overlay';
 			if (data.cancellable)
 				overlay.onclick = function () { that.closePopover(data.id); };
 		}
@@ -152,7 +154,8 @@ L.Control.JSDialog = L.Control.extend({
 			builder: builder,
 			startX: posX,
 			startY: posY,
-			clickToClose: data.clickToClose ? L.DomUtil.get(data.clickToClose) : undefined
+			clickToClose: data.clickToClose ? L.DomUtil.get(data.clickToClose) : undefined,
+			overlay: overlay
 		};
 
 		this.updatePosition(container, posX, posY);
