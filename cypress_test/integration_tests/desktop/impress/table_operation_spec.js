@@ -185,13 +185,15 @@ describe('Table operations', function() {
 	it('Delete Column.', function() {
 		selectFullTable();
 
-		//mode === 'notebookbar' ? selectOptionNotebookbar('#InsertColumnsBefore') : selectOptionClassic('#menu-table', true, 'Insert', 'Insert Column Before');
+		mode === 'notebookbar' ? selectOptionNotebookbar('#InsertColumnsBefore') : selectOptionClassic('#menu-table', true, 'Insert', 'Insert Column Before');
 
-		//cy.get('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 3);
+		cy.get('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 3);
+
+		cy.wait(1000);
 
 		mode === 'notebookbar' ? selectOptionNotebookbar('#DeleteColumns') : selectOptionClassic('#menu-table', true, 'Delete', 'Delete Column');
 
-		//cy.get('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 2);
+		cy.get('.leaflet-marker-icon.table-column-resize-marker').should('have.length', 2);
 
 		retriggerNewSvgForTableInTheCenter();
 
