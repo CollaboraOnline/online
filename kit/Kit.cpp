@@ -718,8 +718,7 @@ public:
     void setDocumentPassword(int passwordType)
     {
         LOG_INF("setDocumentPassword: passwordProtected=" << _isDocPasswordProtected <<
-                " passwordProvided=" << _haveDocPassword <<
-                " password='" << _docPassword << '\'');
+                " passwordProvided=" << _haveDocPassword);
 
         if (_isDocPasswordProtected && _haveDocPassword)
         {
