@@ -24,6 +24,8 @@ L.TileLayer.include({
 		return point;
 	},
 	hasTableSelection: function () {
+		if (!this._currentTableData)
+			return false;
 		return this._currentTableData.rows != null || this._currentTableData.columns != null;
 	},
 	_initMoveMarkers: function () {
