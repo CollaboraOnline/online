@@ -8,6 +8,7 @@
 	right: 0;
 	bottom: 0;
 	left: 0;
+	z-index: 2000;
 }
 
 .jsdialog-overlay.cancellable {
@@ -16,12 +17,7 @@
 	background: transparent;
 }
 
-.modalpopup .jsdialog-overlay {
-	z-index: 2000;
-}
-
-.modalpopup .jsdialog-overlay + div {
-	position: relative;
+.lokdialog_container.ui-dialog.ui-widget-content.modalpopup {
 	z-index: 2001;
 }
 
