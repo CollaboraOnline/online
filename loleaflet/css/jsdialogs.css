@@ -929,3 +929,12 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	stop-color: rgba(var(--yellow0-txt-primary-color));
 	stop-opacity: 0.2;
 }
+
+/* toolbuttons */
+
+.jsdialog .ui-content.unobutton {
+	width: 24px;
+	height: 24px;
+	margin-right: 5px;
+	vertical-align: middle;
+}
