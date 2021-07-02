@@ -20,7 +20,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it('Apply left/right alignment on selected text.', function() {
+	it.skip('Apply left/right alignment on selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -41,7 +41,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('have.attr', 'x', '1400');
 	});
 
-	it('Apply center alignment on selected text.', function() {
+	it.skip('Apply center alignment on selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -55,7 +55,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('have.attr', 'x', '12493');
 	});
 
-	it('Apply justified alignment on selected text.', function() {
+	it.skip('Apply justified alignment on selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -77,7 +77,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 	});
-	it('Apply default bulleting on selected text.', function() {
+	it.skip('Apply default bulleting on selected text.', function() {
 		// We have no bulleting by default
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .BulletChars')
 			.should('not.exist');
@@ -92,7 +92,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('exist');
 	});
 
-	it('Apply default numbering on selected text.', function() {
+	it.skip('Apply default numbering on selected text.', function() {
 		// We have no bulleting by default
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .SVGTextShape tspan')
 			.should('not.have.attr', 'ooo:numbering-type');
@@ -107,7 +107,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('have.attr', 'ooo:numbering-type', 'number-style');
 	});
 
-	it('Increase/decrease spacing of selected text.', function() {
+	it.skip('Increase/decrease spacing of selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph:nth-of-type(2) tspan')
 			.should('have.attr', 'y', '6600');
 
