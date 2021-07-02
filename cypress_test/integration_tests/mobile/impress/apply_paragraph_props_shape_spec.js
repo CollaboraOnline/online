@@ -47,7 +47,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('be.visible');
 	}
 
-	it.skip('Apply left/right alignment on text shape.', function() {
+	it('Apply left/right alignment on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -86,7 +86,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('have.attr', 'x', '12493');
 	});
 
-	it.skip('Apply justified alignment on text shape.', function() {
+	it('Apply justified alignment on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'x', '1400');
 
@@ -111,7 +111,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 			.should('have.attr', 'x', '1400');
 	});
 
-	it.skip('Set top/bottom alignment on text shape.', function() {
+	it('Set top/bottom alignment on text shape.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '4834');
 

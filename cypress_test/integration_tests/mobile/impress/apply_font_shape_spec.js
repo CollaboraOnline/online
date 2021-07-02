@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe.skip('Apply font on selected shape.', function() {
+describe('Apply font on selected shape.', function() {
 	var testFileName = 'apply_font_shape.odp';
 
 	beforeEach(function() {

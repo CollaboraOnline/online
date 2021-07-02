@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe.skip('Impress focus tests', function() {
+describe('Impress focus tests', function() {
 	var testFileName = 'focus.odp';
 
 	beforeEach(function() {

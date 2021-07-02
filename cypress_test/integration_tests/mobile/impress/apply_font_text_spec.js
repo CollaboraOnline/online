@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
-describe.skip('Apply font on selected text.', function() {
+describe('Apply font on selected text.', function() {
 	var testFileName = 'apply_font_text.odp';
 
 	beforeEach(function() {
@@ -181,7 +181,7 @@ describe.skip('Apply font on selected text.', function() {
 			.should('have.attr', 'font-size', '368px');
 	});
 
-	it.skip('Apply subscript on selected text.', function() {
+	it('Apply subscript on selected text.', function() {
 		impressHelper.selectTextOfShape();
 
 		mobileHelper.openTextPropertiesPanel();
@@ -196,7 +196,7 @@ describe.skip('Apply font on selected text.', function() {
 		triggerNewSVG();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextPosition')
-			.should('have.attr', 'y', '3705');
+			.should('have.attr', 'y', '3546');
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '368px');
 	});

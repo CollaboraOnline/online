@@ -19,7 +19,7 @@ describe('Trigger hamburger menu options.', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it.skip('Save', function() {
+	it('Save', function() {
 		before('hamburger_menu.odp');
 
 		// Change the document content and save it
