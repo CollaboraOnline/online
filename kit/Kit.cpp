@@ -668,9 +668,9 @@ public:
     /// Set Document password for given URL
     void setDocumentPassword(int passwordType)
     {
+        // Log whether the document is password protected and a password is provided
         LOG_INF("setDocumentPassword: passwordProtected=" << _isDocPasswordProtected <<
-                " passwordProvided=" << _haveDocPassword <<
-                " password='" << _docPassword << '\'');
+                " passwordProvided=" << _haveDocPassword);
 
         if (_isDocPasswordProtected && _haveDocPassword)
         {
@@ -691,7 +691,7 @@ public:
             _loKit->setDocumentPassword(_jailedUrl.c_str(), _docPassword.c_str());
         else
             _loKit->setDocumentPassword(_jailedUrl.c_str(), nullptr);
-        LOG_INF("setDocumentPassword returned");
+        LOG_INF("setDocumentPassword returned.");
     }
 
     void renderTile(const StringVector& tokens)
