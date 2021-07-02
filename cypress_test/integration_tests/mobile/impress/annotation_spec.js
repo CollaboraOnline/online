@@ -16,7 +16,7 @@ describe('Annotation tests.', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it('Saving comment.', function() {
+	it.skip('Saving comment.', function() {
 		mobileHelper.insertComment();
 
 		cy.get('.leaflet-marker-icon.annotation-marker')
