@@ -256,7 +256,11 @@ function insertImage() {
 		.attachFile('/desktop/writer/image_to_insert.png');
 
 	// hide the menu so it will not cover document area
-	cy.get('#menu-insert').click();
+	cy.get('#menu-insert > a.has-submenu').then(($submenu) => {
+		if ($submenu.hasClass('highlighted')) {
+			cy.get('#menu-insert').click();
+		}
+	});
 
 	cy.wait(1000);
 
