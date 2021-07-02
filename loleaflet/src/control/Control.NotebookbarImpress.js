@@ -1048,9 +1048,30 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:SplitCell'
 			},
 			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:SelectTable', 'presentation'),
-				'command': '.uno:SelectTable'
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:SelectTable', 'presentation'),
+								'command': '.uno:SelectTable'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'type': 'toolitem',
+								'text': _UNO('.uno:DeleteTable', 'presentation'),
+								'command': '.uno:DeleteTable'
+							}
+						]
+					}
+				],
+				'vertical': 'true',
 			},
 			{
 				'type': 'container',
