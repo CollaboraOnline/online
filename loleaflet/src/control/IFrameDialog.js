@@ -18,7 +18,7 @@ L.IFrameDialog = L.Class.extend({
 		var cssVar = getComputedStyle(document.documentElement).getPropertyValue('--co-primary-element');
 		console.debug(cssVar);
 		cssVar = cssVar.replace(/\s/g, '');
-		url += '?co-primary-element='+cssVar;
+		url += '?'+cssVar;
 		this._iframe.src = url;
 	},
 
