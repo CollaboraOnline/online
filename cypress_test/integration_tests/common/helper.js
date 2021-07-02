@@ -429,8 +429,6 @@ function expectTextForClipboard(expectedPlainText) {
 			.should('have.text', expectedPlainText);
 	});
 	doIfInImpress(function() {
-		waitUntilIdle('#copy-paste-container pre',undefined);
-
 		cy.get('#copy-paste-container pre')
 			.should('have.text', expectedPlainText);
 	});
