@@ -761,6 +761,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			builder.build(expanderChildren, children);
+
+			if (data.expanded === false)
+				$(expander).click();
 		} else {
 			return true;
 		}
