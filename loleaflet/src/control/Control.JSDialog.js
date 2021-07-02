@@ -66,8 +66,10 @@ L.Control.JSDialog = L.Control.extend({
 		if (data.action === 'close')
 		{
 			if (data.id && this.dialogs[data.id]) {
-				L.DomUtil.remove(this.dialogs[data.id].container);
-				delete this.dialogs[data.id];
+				if (this.dialogs[data.id].isPopup)
+					this.closePopover(data.id);
+				else
+					this.closeDialog(data.id);
 			}
 			return;
 		}
@@ -155,7 +157,8 @@ L.Control.JSDialog = L.Control.extend({
 			startX: posX,
 			startY: posY,
 			clickToClose: data.clickToClose ? L.DomUtil.get(data.clickToClose) : undefined,
-			overlay: overlay
+			overlay: overlay,
+			isPopup: isModalPopup
 		};
 
 		this.updatePosition(container, posX, posY);
