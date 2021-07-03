@@ -21,6 +21,7 @@ L.Map = L.Evented.extend({
 	options: {
 		crs: L.CRS.Simple,
 		center: [0, 0],
+		// Default zoom level in which the document will be loaded.
 		zoom: 10,
 		// These zoom values are on a logarithmic scale. Each step away from the default 10
 		// (meaning 1 = 100%) is a multiplication by or division with pow(2,1/4). pow(2,1/4)
@@ -40,12 +41,15 @@ L.Map = L.Evented.extend({
 		// 15 = 1440 twips-per-inch / 96 dpi.
 		// Chosen to match previous hardcoded value of 3840 for
 		// the current tile pixel size of 256.
+		// Default tile width in twips (how much of the document is covered horizontally in a
+		// 256x256 pixels tile). Unless you know what you are doing, this should not be modified;
+		// this means twips value for 256 pixels at 96dpi.
 		tileWidthTwips: window.tileSize * 15,
-		tileHeightTwips: window.tileSize * 15,
 		// tileHeightTwips : 
 		// Default tile height in twips (how much of the document is covered vertically in a 
 		// 256x256 pixels tile).Unless you know what you are doing, this should not be modified; 
 		// this means twips value for 256 pixels at 96dpi.
+		tileHeightTwips: window.tileSize * 15,
 		urlPrefix: 'lool',
 		wopiSrc: '',
 		cursorURL: L.LOUtil.getURL('cursors'),
