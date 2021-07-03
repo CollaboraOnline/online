@@ -134,34 +134,62 @@ class CommentSection {
 		}
 	}
 
+	private hideCommentListPanel () {
+		if (this.size[0] !== 0) {
+			this.size[0] = 0;
+
+			this.containerObject.reNewAllSections(true);
+			this.sectionProperties.docLayer._syncTileContainerSize();
+
+			app.sectionContainer.requestReDraw();
+		}
+	}
+
+	private showCommentListPanel () {
+		if (this.size[0] !== this.sectionProperties.width) {
+			this.size[0] = this.sectionProperties.width;
+
+			this.containerObject.reNewAllSections(true);
+			this.sectionProperties.docLayer._syncTileContainerSize();
+
+			app.sectionContainer.requestReDraw();
+		}
+	}
+
 	private checkSize () {
 		// When there is no comment || file is a spreadsheet || view type is mobile, we set this section's size to [0, 0].
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet' || (<any>window).mode.isMobile() || this.sectionProperties.commentList.length === 0)
 		{
-			if (this.size[0] !== 0) {
-				this.size[0] = 0;
+			if (this.sectionProperties.docLayer._docType === 'presentation' && this.sectionProperties.scrollAnnotation) {
+				this.map.removeControl(this.sectionProperties.scrollAnnotation);
+				this.sectionProperties.scrollAnnotation = null;
+			}
 
-				if (this.sectionProperties.docLayer._docType === 'presentation' && this.sectionProperties.scrollAnnotation) {
-					this.map.removeControl(this.sectionProperties.scrollAnnotation);
-					this.sectionProperties.scrollAnnotation = null;
+			this.hideCommentListPanel();
+		}
+		else if (this.sectionProperties.docLayer._docType === 'presentation') { // If there are comments but none of them are on the selected part.
+			if (!this.sectionProperties.scrollAnnotation) {
+				this.sectionProperties.scrollAnnotation = L.control.scrollannotation();
+				this.sectionProperties.scrollAnnotation.addTo(this.map);
+			}
+
+			var hide = true;
+			for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
+				var comment = this.sectionProperties.commentList[i];
+				if (comment.sectionProperties.partIndex === this.sectionProperties.docLayer._selectedPart) {
+					hide = false;
+					break;
 				}
-
-				this.containerObject.reNewAllSections(true);
-				this.sectionProperties.docLayer._syncTileContainerSize();
+			}
+			if (hide) {
+				this.hideCommentListPanel();
+			}
+			else {
+				this.showCommentListPanel();
 			}
 		}
 		else {
-			if (this.size[0] !== this.sectionProperties.width) {
-				this.size[0] = this.sectionProperties.width;
-
-				if (this.sectionProperties.docLayer._docType === 'presentation' && !this.sectionProperties.scrollAnnotation) {
-					this.sectionProperties.scrollAnnotation = L.control.scrollannotation();
-					this.sectionProperties.scrollAnnotation.addTo(this.map);
-				}
-
-				this.containerObject.reNewAllSections(true);
-				this.sectionProperties.docLayer._syncTileContainerSize();
-			}
+			this.showCommentListPanel();
 		}
 	}
 
@@ -1023,6 +1051,8 @@ class CommentSection {
 		}
 		if (this.sectionProperties.selectedComment)
 			this.sectionProperties.selectedComment.onCancelClick(null);
+
+		this.checkSize();
 	}
 
 	// This converts the specified number of values into core pixels from twips.
