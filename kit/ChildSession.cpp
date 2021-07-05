@@ -1533,7 +1533,20 @@ bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const Str
         return false;
     }
 
-    unsigned long long int nLOKWindowId = std::stoull(tokens[1].c_str());
+    unsigned long long int nLOKWindowId;
+    try
+    {
+        nLOKWindowId = std::stoull(tokens[1].c_str());
+    }
+    catch (const std::exception&)
+    {
+        // Let's just silently ignore the conversion error. (We used to log an ERR message about the
+        // exception, which presumably is misleading, as the JS code intentionally sends tokens[1]
+        // as "busypopup". No idea whether that is wrong or whether the parsing here is too strict.)
+        // FIXME: The dialogevent message is undocumented.
+        return true;
+    }
+
     if (_isDocLoaded)
     {
         getLOKitDocument()->setView(_viewId);
