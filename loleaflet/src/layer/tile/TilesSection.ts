@@ -1,4 +1,4 @@
-/* eslint-disable */
+/* eslint-disable */ /* -*- tab-width: 4 -*- */
 /* See CanvasSectionContainer.ts for explanations. */
 
 declare var L: any;
