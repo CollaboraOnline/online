@@ -320,18 +320,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	listenNumericChanges: function (data, builder, controls, customCallback) {
-		// It listens server state changes using GetControlState
-		// to avoid unit conversion
-		builder.map.on('commandstatechanged', function(e) {
-			var value = e.state[builder._getFieldFromId(data.id)];
-			if (value) {
-				if (customCallback)
-					customCallback();
-				else
-					builder.callback('spinfield', 'value', controls.container, this.value, builder);
-			}
-		}, this);
-
 		controls.spinfield.addEventListener('change', function() {
 			if (customCallback)
 				customCallback();
@@ -1153,17 +1141,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		checkbox.addEventListener('change', toggleFunction);
 
-		var customCommand = builder._mapWindowIdToUnoCommand(data.id);
-
 		var updateFunction = function() {
-			var state = builder._getUnoStateForItemId(data.id, builder);
-
-			if (!state) {
-				var items = builder.map['stateChangeHandler'];
-				state = items.getItemValue(data.command);
-			}
-			if (!state)
-				state = data.checked;
+			var state = data.checked;
 
 			if (state && state === 'true' || state === true || state === 1 || state === '1')
 				$(checkbox).prop('checked', true);
@@ -1172,11 +1151,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		};
 
 		updateFunction();
-
-		builder.map.on('commandstatechanged', function(e) {
-			if (e.commandName === customCommand ? customCommand : data.command)
-				updateFunction();
-		}, this);
 
 		if (data.hidden)
 			$(checkbox).hide();
@@ -1496,23 +1470,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return null;
 	},
 
-	_getFieldFromId: function(id) {
-		switch (id) {
-		case 'aboveparaspacing':
-			return 'upper';
-		case 'belowparaspacing':
-			return 'lower';
-		case 'beforetextindent':
-			return 'left';
-		case 'aftertextindent':
-			return 'right';
-		case 'firstlineindent':
-			return 'firstline';
-		default:
-			return id;
-		}
-	},
-
 	_getTitleForControlWithId: function(id) {
 		switch (id) {
 
@@ -1530,20 +1487,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var controls = builder._controlHandlers['basespinfield'](parentContainer, data, builder, customCallback);
 
 		var updateFunction = function() {
-			var value = builder._getUnoStateForItemId(data.id, builder);
-
-			if (!value && data.text != undefined)
-				value = data.text;
-			else if (!value && data.children && data.children.length)
+			if (data.text != undefined)
+				var value = data.text;
+			else if (data.children && data.children.length)
 				value = data.children[0].text;
 
 			$(controls.spinfield).attr('value', builder._cleanValueFromUnits(value));
 		};
-
-		builder.map.on('commandstatechanged', function(e) {
-			if (e.commandName === builder._mapWindowIdToUnoCommand(data.id))
-				updateFunction();
-		}, this);
 
 		controls.spinfield.addEventListener('change', function() {
 			if (customCallback)
