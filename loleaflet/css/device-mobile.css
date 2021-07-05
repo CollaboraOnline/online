@@ -559,33 +559,8 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	top: 41px;
 }
 
-#document-container.mobile.spreadsheet-doctype.readonly {
-	height: calc(100vh - 100px);
-}
-
 #document-container.sidebar-document {
 	left: 0px !important;
-}
-
-#document-container.readonly {
-	bottom: 0px;
-}
-
-#document-container.readonly.parts-preview-document {
-	bottom: 65px;
-}
-
-#document-container.readonly.spreadsheet-document {
-	bottom: 39px;
-}
-
-#document-container.parts-preview-document {
-	left: 0px !important;
-	bottom: 95px;
-}
-
-#document-container {
-	width: 100%;
 }
 
 #closebuttonwrapper {
@@ -594,21 +569,6 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 
 /* Slidesorter in portrait mode */
 #presentation-controls-wrapper.portrait {
-	position: relative;
-	width: 100%;
-	max-width: initial;
-	top: 0;
-	left: 0;
-	bottom: 0;
-}
-
-#document-container.portrait.readonly.parts-preview-document {
-	bottom: 61px;
-}
-
-#document-container.portrait.parts-preview-document {
-	left: 0px !important;
-	bottom: 95px;
 	width: 100%;
 }
 
@@ -648,29 +608,11 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	border-bottom: none;
 }
 
-/* Slidesorter in landscape mode */
-#presentation-controls-wrapper.landscape {
-	top: 41px;
-	bottom: 33px;
-}
-
-#presentation-controls-wrapper.landscape.readonly {
-	bottom: 0px;
-	max-width: 120px;
-}
-
-#document-container.landscape.parts-preview-document {
-	left: 66px !important;
-	bottom: 35px;
-	width: calc(100vw - 66px);
-}
-
 #document-container.landscape.parts-preview-document.keyboard {
 	left: 0px !important;
 }
 
 #slide-sorter.landscape {
-	max-width: 120px;
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
