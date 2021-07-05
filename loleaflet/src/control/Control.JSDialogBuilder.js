@@ -2384,7 +2384,14 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var controls = {};
 
-		var div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
+		var div;
+		if (data.command === '.uno:Paste' || data.command === '.uno:Cut' || data.command === '.uno:Copy') {
+			var hyperlink = L.DomUtil.create('a', '', parentContainer);
+			div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', hyperlink, data);
+		} else {
+			div = this._createIdentifiable('div', 'unotoolbutton ' + builder.options.cssClass + ' ui-content unospan', parentContainer, data);
+		}
+
 		controls['container'] = div;
 
 		if (data.command || data.postmessage === true) {
