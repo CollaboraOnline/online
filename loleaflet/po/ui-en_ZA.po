@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-06-29 06:33+0000\n"
+"PO-Revision-Date: 2021-07-01 22:49+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (South Africa) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_ZA/>\n"
-"Language: \n"
+"Language: en_ZA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7.1-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 "X-Pootle-Path: /en_ZA/libo_online/loleaflet-ui-en_ZA.po\n"
 "X-Pootle-Revision: 3937768\n"
 
@@ -1258,25 +1258,27 @@ msgstr "The document could not be locked."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Enter a file name"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "filename"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"This document may contain formatting or content that cannot be saved in the "
+"current file format."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Save as ODF format"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Continue editing"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1473,7 +1475,6 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Oops, there is a problem connecting the document "
 
 #: src/core/Socket.js:510
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Server has been restarted. We have to refresh the page now."
 
