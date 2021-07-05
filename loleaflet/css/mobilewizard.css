@@ -372,6 +372,10 @@ p.mobile-wizard.ui-combobox-text.selected {
 	filter: grayscale(90%) brightness(120%);
 }
 
+.mobile-wizard.unotoolbutton .arrowbackground {
+	display: none;
+}
+
 #mobile-wizard-content .ui-content > table > tr > td > table > table > tr:first-child > td > img{
 	margin-top: 0px !important;
 }
