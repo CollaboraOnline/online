@@ -40,14 +40,17 @@ L.Control.JSDialog = L.Control.extend({
 		builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
 	},
 
-	closePopover: function(id) {
+	closePopover: function(id, sendCloseEvent) {
 		L.DomUtil.remove(this.dialogs[id].overlay);
-		var menubutton = this.dialogs[id].clickToClose;
+		var clickToClose = this.dialogs[id].clickToClose;
 		var builder = this.clearDialog(id);
-		if (menubutton)
-			menubutton.click();
-		else
-			builder.callback('popover', 'close', {id: '__POPOVER__'}, null, builder);
+
+		if (sendCloseEvent) {
+			if (clickToClose && L.DomUtil.hasClass(clickToClose, 'menubutton'))
+				clickToClose.click();
+			else
+				builder.callback('popover', 'close', {id: '__POPOVER__'}, null, builder);
+		}
 	},
 
 	onJSDialog: function(e) {
@@ -67,7 +70,7 @@ L.Control.JSDialog = L.Control.extend({
 		{
 			if (data.id && this.dialogs[data.id]) {
 				if (this.dialogs[data.id].isPopup)
-					this.closePopover(data.id);
+					this.closePopover(data.id, false);
 				else
 					this.closeDialog(data.id);
 			}
@@ -97,7 +100,7 @@ L.Control.JSDialog = L.Control.extend({
 			var overlay = L.DomUtil.create('div', builder.options.cssClass + ' jsdialog-overlay ' + (data.cancellable ? 'cancellable' : ''), document.body);
 			overlay.id = data.id + '-overlay';
 			if (data.cancellable)
-				overlay.onclick = function () { that.closePopover(data.id); };
+				overlay.onclick = function () { that.closePopover(data.id, true); };
 		}
 
 		builder.build(content, [data]);
@@ -137,8 +140,19 @@ L.Control.JSDialog = L.Control.extend({
 			hammerTitlebar.on('hammer.input', onInput);
 		}
 
+		var clickToCloseId = data.clickToClose;
+		if (clickToCloseId && clickToCloseId.indexOf('.uno:') === 0)
+			clickToCloseId = clickToCloseId.substr('.uno:'.length);
+
 		if (isModalPopup && data.popupParent) {
+			// in case of toolbox we want to create popup positioned by toolitem not toolbox
 			var parent = L.DomUtil.get(data.popupParent);
+			if (clickToCloseId) {
+				var childButton = parent.querySelector('[id=\'' + clickToCloseId + '\']');
+				if (childButton)
+					parent = childButton;
+			}
+
 			posX = parent.getBoundingClientRect().left;
 			posY = parent.getBoundingClientRect().bottom + 5;
 
@@ -156,7 +170,7 @@ L.Control.JSDialog = L.Control.extend({
 			builder: builder,
 			startX: posX,
 			startY: posY,
-			clickToClose: data.clickToClose ? L.DomUtil.get(data.clickToClose) : undefined,
+			clickToClose: clickToCloseId ? L.DomUtil.get(clickToCloseId) : null,
 			overlay: overlay,
 			isPopup: isModalPopup
 		};
