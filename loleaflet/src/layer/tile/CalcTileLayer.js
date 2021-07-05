@@ -345,6 +345,13 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				flags[param] = true;
 			});
 			this.requestSheetGeometryData(flags);
+		} else if (textMsg.startsWith('viewscroll:')) {
+			var offset = JSON.parse(textMsg.substring('viewscroll:'.length));
+			if (offset.dx)
+				this._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name).scrollHorizontalWithOffset(offset.dx * 10);
+			if (offset.dy)
+				this._painter._sectionContainer.getSectionWithName(L.CSections.Scroll.name).scrollVerticalWithOffset(offset.dy * 10);
+
 		} else {
 			L.CanvasTileLayer.prototype._onMessage.call(this, textMsg, img);
 		}
