@@ -2831,6 +2831,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_INVALIDATE_SHEET_GEOMETRY:
         sendTextFrame("invalidatesheetgeometry: " + payload);
         break;
+    case LOK_CALLBACK_VIEW_SCROLL:
+        sendTextFrame("viewscroll: " + payload);
+        break;
 
 #if !ENABLE_DEBUG
     // we want a compilation-time failure in the debug builds; but ERR in the

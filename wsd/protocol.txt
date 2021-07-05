@@ -570,6 +570,12 @@ viewinfo: <payload>
     <payload> consists of an array of JSON objects. Structure of JSON
     objects is like : {"id": <viewid>, "username": <Full Name of the user>}
 
+viewscroll: <payload>
+    A message is sent if the drag & drop action (cell selections and cell transfer)
+    positions are out of the client side visible area to scroll it.
+    <payload> is a JSON objects like : { "dx" : <offset>, "dy" : <offset> },
+    offset usually 1, -1.
+
 redlinetablechanged:
 
     Signals that the redlines table has been modified.
