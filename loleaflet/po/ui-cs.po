@@ -12,17 +12,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-06-29 06:33+0000\n"
+"PO-Revision-Date: 2021-07-01 22:49+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <="
-" 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 4.7.1-dev\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1264,25 +1264,27 @@ msgstr "Dokument nelze uzamknout."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Zadejte název souboru"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "název souboru"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Tento dokument může obsahovat formátování nebo obsah, které nelze uložit v "
+"aktuálním formátu souboru."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Uložit jako formát ODF"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Pokračovat v úpravách"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1478,9 +1480,8 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Došlo k problému při připojování k %productName: "
 
 #: src/core/Socket.js:510
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Server byl restartován. Nyní je nutné stránku obnovit."
+msgstr "Server je nyní dostupný. Nyní je nutné stránku obnovit."
 
 #: src/core/Socket.js:528
 msgid "Served by:"
