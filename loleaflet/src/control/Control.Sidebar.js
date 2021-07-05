@@ -28,8 +28,6 @@ L.Control.Sidebar = L.Control.extend({
 
 	closeSidebar: function() {
 		$('#sidebar-dock-wrapper').hide();
-		$('#sidebar-dock-wrapper').width(0);
-		this.map.options.documentContainer.style.width = 'calc(100% - 194px)';
 		this.map._onResize();
 		this.map.dialog._resizeCalcInputBar(0);
 
@@ -37,8 +35,6 @@ L.Control.Sidebar = L.Control.extend({
 			this.map.fire('editorgotfocus');
 			this.map.focus();
 		}
-
-		$('#document-container').addClass('sidebar-closed');
 
 		if (window.initSidebarState)
 			this.map.uiManager.setSavedState('ShowSidebar', false);
@@ -95,8 +91,6 @@ L.Control.Sidebar = L.Control.extend({
 	},
 
 	onSidebar: function(data) {
-		var sidebarWidth = 335;
-
 		var sidebarData = data.data;
 		this.builder.setWindowId(sidebarData.id);
 		$(this.container).empty();
@@ -110,17 +104,16 @@ L.Control.Sidebar = L.Control.extend({
 			}
 
 			if (sidebarData.children.length) {
-				if ($('#sidebar-dock-wrapper').width() != sidebarWidth) {
+				var wrapper = document.getElementById('sidebar-dock-wrapper');
+
+				wrapper.style.maxHeight = document.getElementById('document-container').getBoundingClientRect().height + 'px';
+				if (wrapper.style.display === 'none')
 					$('#sidebar-dock-wrapper').show();
-					$('#sidebar-dock-wrapper').width(sidebarWidth);
-					this.map.options.documentContainer.style.width = 'calc(100% - 530px)';
-					this.map._onResize();
-					this.map.dialog._resizeCalcInputBar(sidebarWidth);
-				}
+
+				var sidebarWidth = wrapper.getBoundingClientRect().width;
+				this.map.dialog._resizeCalcInputBar(sidebarWidth);
 
 				this.builder.build(this.container, [sidebarData]);
-
-				$('#document-container').removeClass('sidebar-closed');
 
 				if (window.initSidebarState)
 					this.map.uiManager.setSavedState('ShowSidebar', true);

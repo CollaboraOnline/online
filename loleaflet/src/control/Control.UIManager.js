@@ -214,11 +214,7 @@ L.Control.UIManager = L.Control.extend({
 		}
 	},
 
-	addClassicUI: function(adjustVertPos) {
-		if (adjustVertPos) {
-			this.moveObjectVertically($('#sidebar-dock-wrapper'), -36);
-		}
-
+	addClassicUI: function() {
 		this.map.menubar = L.control.menubar();
 		this.map.addControl(this.map.menubar);
 		this.map.topToolbar = L.control.topToolbar();
@@ -233,7 +229,7 @@ L.Control.UIManager = L.Control.extend({
 		this.map.topToolbar.updateControlsState();
 	},
 
-	addNotebookbarUI: function(adjustVertPos) {
+	addNotebookbarUI: function() {
 		if (this.map.getDocType() === 'spreadsheet') {
 			var notebookbar = L.control.notebookbarCalc();
 		} else if (this.map.getDocType() === 'presentation') {
@@ -251,9 +247,6 @@ L.Control.UIManager = L.Control.extend({
 		notebookbar.showTabs();
 		$('.main-nav').removeClass('readonly');
 
-		if (adjustVertPos) {
-			this.moveObjectVertically($('#sidebar-dock-wrapper'), 36);
-		}
 		$('#map').addClass('notebookbar-opened');
 
 		this.map.sendInitUNOCommands();
@@ -289,16 +282,15 @@ L.Control.UIManager = L.Control.extend({
 			break;
 		}
 
-		var adjustVertPos = (window.userInterfaceMode != uiMode.mode);
 		window.userInterfaceMode = uiMode.mode;
 
 		switch (window.userInterfaceMode) {
 		case 'classic':
-			this.addClassicUI(adjustVertPos);
+			this.addClassicUI();
 			break;
 
 		case 'notebookbar':
-			this.addNotebookbarUI(adjustVertPos);
+			this.addNotebookbarUI();
 			break;
 		}
 	},
@@ -392,8 +384,6 @@ L.Control.UIManager = L.Control.extend({
 		var obj = $('.unfold');
 		obj.removeClass('w2ui-icon unfold');
 		obj.addClass('w2ui-icon fold');
-
-		this.moveObjectVertically($('#sidebar-dock-wrapper'), 36);
 	},
 
 	hideMenubar: function() {
@@ -407,8 +397,6 @@ L.Control.UIManager = L.Control.extend({
 		var obj = $('.fold');
 		obj.removeClass('w2ui-icon fold');
 		obj.addClass('w2ui-icon unfold');
-
-		this.moveObjectVertically($('#sidebar-dock-wrapper'), -36);
 	},
 
 	isMenubarHidden: function() {
@@ -467,8 +455,6 @@ L.Control.UIManager = L.Control.extend({
 		if (this.hasNotebookbarShown())
 			return;
 
-		this.moveObjectVertically($('#sidebar-dock-wrapper'), 31);
-
 		$('#map').addClass('notebookbar-opened');
 	},
 
@@ -476,7 +462,6 @@ L.Control.UIManager = L.Control.extend({
 		if (this.isNotebookbarCollapsed())
 			return;
 
-		this.moveObjectVertically($('#sidebar-dock-wrapper'), -73);
 		this.moveObjectVertically($('#formulabar'), -1);
 		$('#toolbar-up').css('display', 'none');
 
@@ -489,7 +474,6 @@ L.Control.UIManager = L.Control.extend({
 		if (!this.isNotebookbarCollapsed())
 			return;
 
-		this.moveObjectVertically($('#sidebar-dock-wrapper'), 73);
 		this.moveObjectVertically($('#formulabar'), 1);
 		$('#toolbar-up').css('display', '');
 
