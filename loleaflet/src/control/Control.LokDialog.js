@@ -1071,8 +1071,6 @@ L.Control.LokDialog = L.Control.extend({
 			this._sendPaintWindowRect(id);
 		} else {
 			this._createSidebar(id, strId, width, height);
-			$('#document-container').removeClass('sidebar-closed');
-			$('#document-container').addClass('sidebar-open');
 		}
 	},
 
@@ -1390,8 +1388,7 @@ L.Control.LokDialog = L.Control.extend({
 			this._map.fire('editorgotfocus');
 			this._map.focus();
 		}
-		$('#document-container').addClass('sidebar-closed');
-		$('#document-container').removeClass('sidebar-open');
+
 		if (window.initSidebarState)
 			this._map.uiManager.setSavedState('ShowSidebar', false);
 	},
@@ -1609,6 +1606,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_resizeSidebar: function(strId, width) {
+		document.getElementById('sidebar-dock-wrapper').style.minWidth = String(width) + 'px';
 		this._currentDeck.width = width;
 		var deckOffset = 0;
 		var sidebar = L.DomUtil.get(strId);
@@ -1620,18 +1618,10 @@ L.Control.LokDialog = L.Control.extend({
 				sidebar.style.width = width.toString() + 'px';
 		}
 
-		var wrapper = L.DomUtil.get('sidebar-dock-wrapper');
-		if (wrapper.style.display !== 'none') {
-			document.getElementById('document-container').classList.add('sidebar-open');
-			document.getElementById('document-container').classList.remove('sidebar-closed');
-		} else {
-			document.getElementById('document-container').classList.add('sidebar-closed');
-			document.getElementById('document-container').classList.remove('sidebar-open');
-		}
-
 		this._map._onResize();
 
 		this._resizeCalcInputBar(deckOffset);
+		this._map._docLayer._syncTileContainerSize();
 	},
 
 	_resizeCalcInputBar: function(offset) {
