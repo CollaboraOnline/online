@@ -301,10 +301,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var isFontSelector = (data.id === 'fontnamecombobox');
 
 		if (isFontSelector) {
-			builder.map.createFontSelector('#' + data.id + ' select');
+			builder.map.createFontSelector('.notebookbar #' + data.id + ' select');
 			return;
 		} else if (isFontSizeSelector) {
-			builder.map.createFontSizeSelector('#' + data.id + ' select');
+			builder.map.createFontSizeSelector('.notebookbar #' + data.id + ' select');
 			return;
 		}
 
