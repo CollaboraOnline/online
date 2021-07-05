@@ -997,7 +997,7 @@ L.Control.LokDialog = L.Control.extend({
 
 			if (this._map.uiManager.isUIBlocked())
 				return;
-			
+
 			if (this.isCalcInputBar(id) && this.hasOpenedDialog()) {
 				this.blinkOpenDialog();
 				return;
