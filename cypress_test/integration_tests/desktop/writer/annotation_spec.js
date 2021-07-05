@@ -1,7 +1,7 @@
 /* global describe it cy require afterEach beforeEach */
 
 var helper = require('../../common/helper');
-var { insertMultipleComment } = require('../../common/desktop_helper');
+var { insertMultipleComment, selectZoomLevel } = require('../../common/desktop_helper');
 
 describe('Annotation Tests', function() {
 	var testFileName = 'annotation.odt';
@@ -14,6 +14,8 @@ describe('Annotation Tests', function() {
 
 		cy.get('#tb_editbar_item_sidebar')
 			.click();
+
+		selectZoomLevel('50');
 	});
 
 	afterEach(function() {
