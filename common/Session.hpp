@@ -233,6 +233,8 @@ public:
 
     const std::string& getMacroSecurityLevel() const { return _macroSecurityLevel; }
 
+    bool getTraceEventRecordingAtStart () const { return _traceEventRecordingAtStart; }
+
 protected:
     Session(const std::shared_ptr<ProtocolHandlerInterface> &handler,
             const std::string& name, const std::string& id, bool readonly);
@@ -340,6 +342,10 @@ private:
 
     /// Level of Macro security.
     std::string _macroSecurityLevel;
+
+    /// Whether Trace Event recording is turned on right from the start (this is not relevant if it is turned on after the document
+    /// is already loaded, which is the normal case)
+    bool _traceEventRecordingAtStart;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

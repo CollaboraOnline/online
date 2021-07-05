@@ -918,21 +918,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "traceeventrecording"))
     {
-        if (LOOLWSD::getConfigValue<bool>("trace_event[@enable]", false))
+        static const bool traceEventsEnabled = LOOLWSD::getConfigValue<bool>("trace_event[@enable]", false);
+        if (traceEventsEnabled)
         {
-            if (tokens.size() > 0)
-            {
-                if (tokens.equals(1, "start"))
-                {
-                    TraceEvent::startRecording();
-                    LOG_INF("Trace Event recording in this WSD process turned on (might have been on already)");
-                }
-                else if (tokens.equals(1, "stop"))
-                {
-                    TraceEvent::stopRecording();
-                    LOG_INF("Trace Event recording in this WSD process turned off (might have been off already)");
-                }
-            }
             forwardToChild(firstLine, docBroker);
         }
         return true;
@@ -1094,6 +1082,11 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
         if (LOOLWSD::hasProperty("security.macro_security_level"))
         {
             oss << " macroSecurityLevel=" << LOOLWSD::getConfigValue<int>("security.macro_security_level", 1);
+        }
+
+        if (getTraceEventRecordingAtStart())
+        {
+            oss << " traceeventrecording=yes";
         }
 
         if (!getDocOptions().empty())
