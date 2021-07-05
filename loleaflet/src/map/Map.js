@@ -1292,6 +1292,11 @@ L.Map = L.Evented.extend({
 				}
 			}
 		}
+
+		if (window.mode.isMobile() && this._docLayer && (this._docLayer._docType === 'presentation' || this._docLayer._docType === 'drawing')) {
+			this._docLayer.onResize();
+		}
+
 		this.showCalcInputBar(deckOffset);
 	},
 

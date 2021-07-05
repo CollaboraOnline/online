@@ -8,6 +8,11 @@
 L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 	initialize: function (url, options) {
+		// If this is mobile view, we we'll change the layout position of 'presentation-controls-wrapper'.
+		if (window.mode.isMobile()) {
+			this._putPCWOutsideFlex();
+		}
+
 		L.TileLayer.prototype.initialize.call(this, url, options);
 		this._preview = L.control.partsPreview();
 		this._partHashes = null;
@@ -31,6 +36,35 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 
 		this._partHeightTwips = 0; // Single part's height.
 		this._partWidthTwips = 0; // Single part's width. These values are equal to _docWidthTwips & _docHeightTwips when app.file.partBasedView is true.
+	},
+
+	_isPCWInsideFlex: function () {
+		var PCW = document.getElementById('main-document-content').querySelector('#presentation-controls-wrapper');
+		return PCW ? true: false;
+	},
+
+	_putPCWOutsideFlex: function () {
+		if (this._isPCWInsideFlex()) {
+			var pcw = document.getElementById('presentation-controls-wrapper');
+			if (pcw) {
+				var frc = document.getElementById('main-document-content');
+				frc.removeChild(pcw);
+
+				frc.parentNode.insertBefore(pcw, frc.nextSibling);
+			}
+		}
+	},
+
+	_putPCWInsideFlex: function () {
+		if (!this._isPCWInsideFlex()) {
+			var pcw = document.getElementById('presentation-controls-wrapper');
+			if (pcw) {
+				var frc = document.getElementById('main-document-content');
+				document.body.removeChild(pcw);
+
+				document.getElementById('document-container').parentNode.insertBefore(pcw, frc.children[0]);
+			}
+		}
 	},
 
 	newAnnotation: function (comment) {
@@ -75,6 +109,21 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		L.DomUtil.updateElementsOrientation(['presentation-controls-wrapper', 'document-container', 'slide-sorter']);
+
+		if (window.mode.isMobile()) {
+			if (L.DomUtil.isPortrait()) {
+				this._putPCWOutsideFlex();
+			}
+			else {
+				this._putPCWInsideFlex();
+			}
+
+			if (this._firstRun) {
+				this._map.setView(this._map.getCenter());
+				this._syncTileContainerSize();
+			}
+			this._firstRun = true;
+		}
 
 		// update parts
 		var visible = L.DomUtil.getStyle(L.DomUtil.get('presentation-controls-wrapper'), 'display');
