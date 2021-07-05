@@ -105,6 +105,8 @@ window.app.definitions = {};
 
 		/// Shows revision history file menu option
 		revHistoryEnabled: global.getParameterByName('revisionhistory'),
+
+		traceEventsRequested: global.getParameterByName('traceevents') !== '',
 	};
 
 	global.L.Browser = {
