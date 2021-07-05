@@ -1751,7 +1751,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(listbox).attr('disabled', 'disabled');
 
 		$(listbox).change(function() {
-			builder.callback('combobox', 'selected', data, $(this).val()+ ';' + $(this).children('option:selected').text(), builder);
+			if ($(this).val())
+				builder.callback('combobox', 'selected', data, $(this).val()+ ';' + $(this).children('option:selected').text(), builder);
 		});
 
 		if (typeof(data.entries) === 'object') {
