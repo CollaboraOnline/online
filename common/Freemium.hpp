@@ -5,8 +5,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#ifndef ONLINE_COMMON_FREEMIUM
-#define ONLINE_COMMON_FREEMIUM
+#pragma once
 
 #include <string>
 #include <vector>
@@ -40,6 +39,5 @@ public:
     static std::string getDrawHighlights() { return config::getString("freemium.draw_subscription_highlights", ""); }
 };
 } // namespace Freemium
-#endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
