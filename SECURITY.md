@@ -8,7 +8,7 @@ Currently the following Collabora Online versions are supported with security up
 | ------- | ------------------ |
 | 6.4.x   | :white_check_mark: |
 | 4.2.x   | :white_check_mark: |
-| 4.0.x   | :white_check_mark: |
+| 4.0.x   | :x: |
 | < 4.0   | :x:                |
 
 ## Reporting a Vulnerability
