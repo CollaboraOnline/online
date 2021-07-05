@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-05-18 22:33+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2021-07-05 16:32+0000\n"
+"Last-Translator: Joan Montané <joan@montane.cat>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 "X-Pootle-Path: /ca/libo_online/loleaflet-ui-ca.po\n"
 "X-Pootle-Revision: 3939538\n"
 
@@ -1266,25 +1266,27 @@ msgstr "No s'ha pogut blocar el document."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Introduïu un nom de fitxer"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "nom de fitxer"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Aquest document pot contenir formatació o continguts que no es poden desar "
+"el format de document actual."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Desa en format ODF"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Continua l'edició"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1482,9 +1484,8 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Hi ha un problema en connectar al %productName: "
 
 #: src/core/Socket.js:510
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "S'ha reiniciat el servidor. Cal actualitzar la pàgina ara."
+msgstr "El servidor ara és accessible. Cal actualitzar la pàgina ara."
 
 #: src/core/Socket.js:528
 msgid "Served by:"
@@ -1583,7 +1584,7 @@ msgstr "S'està connectant…"
 
 #: src/core/Socket.js:1069
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "S'està canviant de nom el document i es recarregarà de seguida"
 
 #: src/core/Socket.js:1352
 msgid ""
