@@ -2,13 +2,21 @@
 
 var helper = require('../../common/helper');
 var { addSlide, changeSlide } = require('../../common/impress_helper');
-var { insertMultipleComment } = require('../../common/desktop_helper');
+var { insertMultipleComment, selectZoomLevel } = require('../../common/desktop_helper');
 
 describe('Annotation Tests', function() {
 	var testFileName = 'comment_switching.odp';
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'impress');
+
+		cy.get('#toolbar-up .w2ui-scroll-right')
+			.click();
+
+		cy.get('#tb_editbar_item_modifypage')
+			.click();
+
+		selectZoomLevel('50');
 	});
 
 	afterEach(function() {
