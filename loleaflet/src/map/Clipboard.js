@@ -721,6 +721,9 @@ L.Clipboard = L.Class.extend({
 		if (this._isAnyInputFieldSelected())
 			return;
 
+		if (this._downloadProgressStatus() === 'downloadButton')
+			this._stopHideDownload(); // Terminate pending confirmation
+
 		var preventDefault = this._map['wopi'].DisableCopy === true ? true : this.populateClipboard(ev);
 		app.socket.sendMessage('uno .uno:' + unoName);
 		if (preventDefault) {
@@ -756,6 +759,9 @@ L.Clipboard = L.Class.extend({
 		// If the focus is in the search box, paste there.
 		if (this._map.isSearching())
 			return;
+
+		if (this._downloadProgressStatus() === 'downloadButton')
+			this._stopHideDownload(); // Terminate pending confirmation
 
 		if (this._map._activeDialog)
 			ev.usePasteKeyEvent = true;
@@ -805,15 +811,7 @@ L.Clipboard = L.Class.extend({
 	clearSelection: function() {
 		this._selectionContent = '';
 		this._selectionType = null;
-		// If no other copy/paste things occurred then ...
-		var that = this;
-		var serial = this._clipboardSerial;
-		if (!this._hideDownloadTimer)
-			this._hideDownloadTimer = setTimeout(function() {
-				that._hideDownloadTimer = null;
-				if (serial == that._clipboardSerial)
-					that._stopHideDownload();
-			}, 1000 * 15);
+		this._scheduleHideDownload(15);
 	},
 
 	// textselectioncontent: message
@@ -823,6 +821,7 @@ L.Clipboard = L.Class.extend({
 		if (L.Browser.cypressTest) {
 			this._dummyDiv.innerHTML = html;
 		}
+		this._scheduleHideDownload(15);
 	},
 
 	// sets the selection to some (cell formula) text)
@@ -830,12 +829,14 @@ L.Clipboard = L.Class.extend({
 		this._selectionType = 'text';
 		this._selectionContent = this._originWrapBody(
 			'<body>' + text + '</body>');
+		this._scheduleHideDownload(15);
 	},
 
 	// complexselection: message
 	onComplexSelection: function (/*text*/) {
 		// Mark this selection as complex.
 		this._selectionType = 'complex';
+		this._scheduleHideDownload(15);
 	},
 
 	_startProgress: function() {
@@ -858,6 +859,27 @@ L.Clipboard = L.Class.extend({
 			// Otherwise, it's easier to flash the widget or something.
 			this._warnLargeCopyPasteAlreadyStarted();
 		}
+	},
+
+	_downloadProgressStatus: function() {
+		if (this._downloadProgress && this._downloadProgress.isVisible())
+			return this._downloadProgress.currentStatus();
+	},
+
+	// Download button is still shown after selection changed -> user has changed their mind...
+	_scheduleHideDownload: function(s) {
+		if (!this._downloadProgress || !this._downloadProgress.isVisible())
+			return;
+
+		// If no other copy/paste things occurred then ...
+		var that = this;
+		var serial = this._clipboardSerial;
+		if (!this._hideDownloadTimer)
+			this._hideDownloadTimer = setTimeout(function() {
+				that._hideDownloadTimer = null;
+				if (serial == that._clipboardSerial && that._downloadProgressStatus() === 'downloadButton')
+					that._stopHideDownload();
+			}, 1000 * s);
 	},
 
 	// useful if we did an internal paste already and don't want that.
