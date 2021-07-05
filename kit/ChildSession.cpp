@@ -272,7 +272,9 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "freemiumstatus"))
     {
+#ifdef ENABLE_FREEMIUM
         return updateFreemiumStatus(buffer, length, tokens);
+#endif
     }
     else
     {
@@ -2526,6 +2528,7 @@ int ChildSession::getSpeed()
     return _cursorInvalidatedEvent.size();
 }
 
+#ifdef ENABLE_FREEMIUM
 bool ChildSession::updateFreemiumStatus(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
     std::string status;
@@ -2539,6 +2542,7 @@ bool ChildSession::updateFreemiumStatus(const char* /*buffer*/, int /*length*/, 
     getLOKitDocument()->setFreemiumView(_viewId, status == "true");
     return true;
 }
+#endif
 
 void ChildSession::loKitCallback(const int type, const std::string& payload)
 {
