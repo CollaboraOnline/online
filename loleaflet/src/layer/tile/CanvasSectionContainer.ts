@@ -280,6 +280,7 @@ class CanvasSectionContainer {
 	// Above 2 properties can be used with documentBounds.
 	private drawingPaused: boolean = false;
 	private dirty: boolean = false;
+	private sectionsDirty: boolean = false;
 
 	// For window sections.
 	private windowSectionList: Array<CanvasSectionObject> = [];
@@ -386,6 +387,12 @@ class CanvasSectionContainer {
 
 	resumeDrawing() {
 		if (this.drawingPaused) {
+			if (this.sectionsDirty) {
+				this.updateBoundSectionLists();
+				this.reNewAllSections(false);
+				this.sectionsDirty = false;
+			}
+
 			var scrollSection = <any>this.getSectionWithName(L.CSections.Scroll.name)
 			if (scrollSection)
 				scrollSection.completePendingScroll(); // No painting, only dirtying.
@@ -1797,10 +1804,15 @@ class CanvasSectionContainer {
 		newSection.sectionProperties.section = newSection;
 		this.sections.push(newSection);
 		this.addSectionFunctions(newSection);
-		this.updateBoundSectionLists();
 		newSection.onInitialize();
-		this.reNewAllSections(false);
-		this.drawSections();
+		if (!this.isDrawingPaused()) {
+			this.updateBoundSectionLists();
+			this.reNewAllSections();
+		}
+		else {
+			this.sectionsDirty = true;
+			this.dirty = true;
+		}
 	}
 
 	removeSection (name: string) {
