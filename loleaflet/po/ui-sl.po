@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-06-29 06:33+0000\n"
+"PO-Revision-Date: 2021-07-05 22:35+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 4.7.1-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:6
@@ -1262,25 +1262,27 @@ msgstr "Dokumenta ni mogoče zakleniti."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Vnesite ime datoteke"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "Ime datoteke"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Ta dokument morda vsebuje oblikovanje ali vsebino, ki je ni možno shraniti v "
+"izbranem zapisu."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Shrani v zapisu ODF"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Nadaljuj z urejanjem"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1476,9 +1478,8 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Pri povezovanju z %productName je prišlo do težave: "
 
 #: src/core/Socket.js:510
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Strežnik je ponovno zagnan. Zdaj moramo osvežiti stran."
+msgstr "Strežnik je zdaj dosegljiv. Zdaj moramo osvežiti stran."
 
 #: src/core/Socket.js:528
 msgid "Served by:"
