@@ -35,6 +35,8 @@ L.Map.include({
 	createFontSelector: function(nodeSelector) {
 		var that = this;
 
+		var fontcombobox = $(nodeSelector);
+
 		var createSelector = function() {
 			var commandValues = that.getToolbarCommandValues('.uno:CharFontName');
 
@@ -45,18 +47,18 @@ L.Map.include({
 				data = data.concat(Object.keys(commandValues));
 			}
 
-			$(nodeSelector).select2({
+			fontcombobox.select2({
 				data: data.sort(function (a, b) {  // also sort(localely)
 					return a.localeCompare(b);
 				}),
 				placeholder: _('Font')
 			});
 
-			$(nodeSelector).on('select2:select', that.onFontSelect.bind(that));
+			fontcombobox.on('select2:select', that.onFontSelect.bind(that));
 
 			var items = that['stateChangeHandler'];
 			var val = items.getItemValue('.uno:CharFontName');
-			$(nodeSelector).val(val).trigger('change');
+			fontcombobox.val(val).trigger('change');
 		};
 
 		createSelector();
@@ -70,7 +72,7 @@ L.Map.include({
 			var state = e.state;
 			var found = false;
 
-			$(nodeSelector + ' option').each(function () {
+			fontcombobox.children('option').each(function () {
 				var value = this.value;
 				if (value.toLowerCase() === state.toLowerCase()) {
 					found = true;
@@ -79,12 +81,12 @@ L.Map.include({
 			});
 
 			if (!found) {
-				$(nodeSelector)
+				fontcombobox
 					.append($('<option></option>')
 						.text(state));
 			}
 
-			$(nodeSelector).val(state).trigger('change');
+			fontcombobox.val(state).trigger('change');
 		};
 
 		var onFontListChanged = function(e) {
@@ -106,7 +108,10 @@ L.Map.include({
 	createFontSizeSelector: function(nodeSelector) {
 		var data = [6, 7, 8, 9, 10, 10.5, 11, 12, 13, 14, 15, 16, 18, 20,
 			22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72, 80, 88, 96];
-		$(nodeSelector).select2({
+
+		var fontsizecombobox = $(nodeSelector);
+
+		fontsizecombobox.select2({
 			data: data,
 			placeholder: ' ',
 			//Allow manually entered font size.
@@ -122,7 +127,7 @@ L.Map.include({
 				return parseFloat(a.text) - parseFloat(b.text);
 			});}
 		});
-		$(nodeSelector).off('select2:select', this.onFontSizeSelect.bind(this)).on('select2:select', this.onFontSizeSelect.bind(this));
+		fontsizecombobox.off('select2:select', this.onFontSizeSelect.bind(this)).on('select2:select', this.onFontSizeSelect.bind(this));
 
 		var onCommandStateChanged = function(e) {
 			var commandName = e.commandName;
@@ -137,7 +142,7 @@ L.Map.include({
 				state = '';
 			}
 
-			$(nodeSelector + ' option').each(function (i, e) {
+			fontsizecombobox.children('option').each(function (i, e) {
 				if ($(e).text() === state) {
 					found = true;
 				}
@@ -145,12 +150,12 @@ L.Map.include({
 
 			if (!found) {
 				// we need to add the size
-				$(nodeSelector)
+				fontsizecombobox
 					.append($('<option>')
 						.text(state).val(state));
 			}
 
-			$(nodeSelector).val(state).trigger('change');
+			fontsizecombobox.val(state).trigger('change');
 		};
 
 		this.off('commandstatechanged', onCommandStateChanged);
