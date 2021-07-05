@@ -102,7 +102,6 @@ w2ui-toolbar {
 	position: absolute;
 	z-index: 500;
 	width: 100%;
-	max-width: 194px;
 	padding-bottom: 0px;
 	margin-top: -1px;
 	border-bottom: none;

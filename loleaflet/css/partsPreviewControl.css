@@ -1,10 +1,5 @@
-#document-container.parts-preview-document {
-	left: 194px;
-	width: calc(100vw - 194px);
-}
-
 #slide-sorter {
-	min-width: 194px;
+	height: calc(100% - 36px); /*minus #presentation-toolbar*/
 	white-space: nowrap;
 	overflow-x: hidden;
 	overflow-y: visible;
