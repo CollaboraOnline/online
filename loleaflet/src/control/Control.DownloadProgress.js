@@ -85,6 +85,17 @@ L.Control.DownloadProgress = L.Control.extend({
 		return this._started;
 	},
 
+	currentStatus: function () {
+		if (this._closed)
+			return 'closed';
+		if (this._content.contains(this._downloadButton))
+			return 'downloadButton';
+		if (this._content.contains(this._progress))
+			return 'progress';
+		if (this._content.contains(this._confirmPasteButton))
+			return 'confirmPasteButton';
+	},
+
 	setURI: function (uri) {
 		// set up data uri to be downloaded
 		this._uri = uri;
