@@ -2465,7 +2465,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			controls['arrow'] = arrow;
 		}
 
-		$(div).click(function () {
+		$(div).on('click.toolbutton',function () {
 			if (!$(div).hasClass('disabled')) {
 				builder.refreshSidebar = true;
 				if (data.postmessage)
