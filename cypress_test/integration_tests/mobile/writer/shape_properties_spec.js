@@ -4,8 +4,8 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Change shape properties via mobile wizard.', function() {
-	const defaultStartPoint = [1953, 4875];
-	const defaultBase = 5992;
+	const defaultStartPoint = [1939, 4875];
+	const defaultBase = 5991;
 	const defaultAltitude = 5992;
 	const unitScale = 2540.37;
 
@@ -13,7 +13,7 @@ describe('Change shape properties via mobile wizard.', function() {
 
 	function computeRightTrianglePath(start, base, altitude, horizontalMirrored, verticalMirrored) {
 		// FIXME: This is probably a bug in core side. On flipping horizontally the base length changes.
-		base = horizontalMirrored ? base + 54 : base;
+		base = horizontalMirrored ? base + 55 : base;
 
 		const xStart = start[0] + (horizontalMirrored ? base : 0);
 		const xEnd = start[0] + (horizontalMirrored ? 0 : base);
