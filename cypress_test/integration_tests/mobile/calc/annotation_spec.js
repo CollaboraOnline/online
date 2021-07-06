@@ -29,6 +29,8 @@ describe('Annotation Tests',function() {
 
 		mobileHelper.openCommentWizard();
 
+		helper.waitUntilIdle('#mobile-wizard-content', undefined);
+
 		cy.get('#annotation-content-area-1').should('have.text', 'some text');
 
 		cy.get('#comment-container-1').should('exist');
