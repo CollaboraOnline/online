@@ -2420,7 +2420,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (data.command || data.postmessage === true) {
 			var id = data.id;
-			if (data.command && data.command.indexOf('.uno:') >= 0)
+			var isUnoCommand = data.command && data.command.indexOf('.uno:') >= 0;
+			if (isUnoCommand)
 				id = encodeURIComponent(data.command.substr('.uno:'.length)).replace(/\%/g, '');
 			else {
 				id = data.command;
@@ -2433,7 +2434,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var buttonId = id + 'img';
 
 			button = L.DomUtil.create('img', 'ui-content unobutton', div);
-			button.src = data.image ? data.image : icon;
+			button.src = (data.image && !isUnoCommand) ? data.image : icon;
 			button.id = buttonId;
 			button.setAttribute('alt', id);
 
