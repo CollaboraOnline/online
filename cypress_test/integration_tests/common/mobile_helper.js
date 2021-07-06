@@ -4,6 +4,16 @@ var helper = require('./helper');
 
 // Enable editing if we are in read-only mode.
 function enableEditingMobile() {
+
+	//https://stackoverflow.com/a/63519375/1592055
+	const resizeObserverLoopErrRe = /^[^(ResizeObserver loop limit exceeded)]/;
+	Cypress.on('uncaught:exception', (err) => {
+		/* returning false here prevents Cypress from failing the test */
+		if (resizeObserverLoopErrRe.test(err.message)) {
+			return false;
+		}
+	});
+
 	cy.log('Enabling editing mode - start.');
 
 	cy.get('#mobile-edit-button')
