@@ -21,12 +21,14 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['basespinfield'] = this.baseSpinField;
 		this._controlHandlers['radiobutton'] = this._radiobuttonControl;
 		this._controlHandlers['edit'] = this._editControl;
+		this._controlHandlers['mobile-popup-container'] = this._mobilePopupContainer;
 
 		this._toolitemHandlers['.uno:FontworkAlignmentFloater'] = function () { return false; };
 		this._toolitemHandlers['.uno:FontworkCharacterSpacingFloater'] = function () { return false; };
 		this._toolitemHandlers['.uno:ExtrusionToggle'] = function () { return false; };
 
 		this._toolitemHandlers['.uno:FontworkShapeType'] = this._fontworkShapeControl;
+		this._toolitemHandlers['.uno:XLineStyle'] = this._explorableToolItemHandler;
 	},
 
 	baseSpinField: function(parentContainer, data, builder, customCallback) {
@@ -492,6 +494,27 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		builder.build(parentContainer, json);
 	},
 
+	_mobilePopupContainer: function(parentContainer, data) {
+		var container = L.DomUtil.create('div', 'mobile-popup-container', parentContainer);
+		container.id = 'popup-' + data.id;
+		return false;
+	},
+
+	_explorableToolItemHandler: function(parentContainer, data, builder) {
+		data.text = builder._cleanText(data.text);
+
+		var onShow = function() {
+			builder.callback('toolbox', 'togglemenu', {id: data.parent.id}, data.command, builder);
+		};
+
+		var nodeId = data.command.indexOf('.uno:') === 0 ? data.command.substr('.uno:'.length) : data.command;
+		var contentNode = {id: nodeId, type: 'mobile-popup-container', children: [], onshow: onShow};
+		var iconPath = builder._createIconURL(data.command);
+
+		builder._explorableEntry(parentContainer, data, contentNode, builder, null, iconPath);
+
+		return false;
+	},
 	build: function(parent, data) {
 		this._amendJSDialogData(data);
 		for (var childIndex in data) {

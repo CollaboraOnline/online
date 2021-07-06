@@ -1100,3 +1100,12 @@ input[type='checkbox'][disabled] {
 	margin-left: 4%;
 	margin-right: 4%;
 }
+
+/* Shape > Line > Line Style */
+#mobile-wizard #popup-XLineStyle {
+	text-align: center;
+}
+
+#mobile-wizard #popup-XLineStyle #valueset img {
+	width: auto;
+}
