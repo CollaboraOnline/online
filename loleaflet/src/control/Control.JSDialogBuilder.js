@@ -117,7 +117,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		this._toolitemHandlers = {};
 		this._toolitemHandlers['.uno:XLineColor'] = this._colorControl;
-		this._toolitemHandlers['.uno:SelectWidth'] = this._lineWidthControl;
 		this._toolitemHandlers['.uno:FontColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:BackColor'] = this._colorControl;
 		this._toolitemHandlers['.uno:CharBackColor'] = this._colorControl;
@@ -2879,60 +2878,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		return false;
-	},
-
-	_lineWidthControl: function(parentContainer, data, builder) {
-		var values = [ 0.0,
-			0.5,
-			0.8,
-			1.0,
-			1.5,
-			2.3,
-			3.0,
-			4.5,
-			6.0 ];
-
-		var currentWidth = parseInt(builder.map['stateChangeHandler'].getItemValue('.uno:LineWidth'));
-		var currentWidthText = currentWidth ? String(parseFloat(currentWidth)/100.0) : '0.5';
-
-		var lineData = { min: 0.5, max: 5, id: 'linewidth', text: currentWidthText, enabled: data.enabled, readOnly: true };
-
-		var callbackFunction = function(objectType, eventType, object) {
-			var newValue = 0;
-			if (eventType == 'plus') {
-				$(object).find('input').val(function(i, oldVal) {
-					var index = 1;
-					newValue = values[0];
-					while (newValue <= oldVal && index < values.length)
-						newValue = values[index++];
-					return newValue;
-				});
-			} else if (eventType == 'minus') {
-				$(object).find('input').val(function(i, oldVal) {
-					if (oldVal > 0.0)
-					{
-						var index = values.length - 1;
-						newValue = values[index];
-						while (newValue >= oldVal && index > 0)
-							newValue = values[index--];
-					}
-					else
-						newValue = 0.0;
-					return newValue;
-				});
-			}
-
-			var command = '.uno:LineWidth';
-			var params = {
-				LineWidth: {
-					type : 'long',
-					value : (newValue * 100).toFixed(0)
-				}
-			};
-			builder.map.sendUnoCommand(command, params);
-		};
-
-		builder._spinfieldControl(parentContainer, lineData, builder, callbackFunction);
 	},
 
 	_subMenuHandler: function(parentContainer, data, builder) {

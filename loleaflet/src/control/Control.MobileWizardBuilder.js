@@ -31,8 +31,10 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Shrink'] = function () { return false; };
 		this._toolitemHandlers['.uno:StyleUpdateByExampleimg'] = function () { return false; };
 		this._toolitemHandlers['.uno:StyleNewByExampleimg'] = function () { return false; };
+		this._toolitemHandlers['.uno:LineEndStyle'] = function () { return false; };
 
 		this._toolitemHandlers['.uno:FontworkShapeType'] = this._fontworkShapeControl;
+		this._toolitemHandlers['SelectWidth'] = this._lineWidthControl;
 	},
 
 	baseSpinField: function(parentContainer, data, builder, customCallback) {
@@ -553,6 +555,60 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		return false;
 	},
 
+	_lineWidthControl: function(parentContainer, data, builder) {
+		var values = [ 0.0,
+			0.5,
+			0.8,
+			1.0,
+			1.5,
+			2.3,
+			3.0,
+			4.5,
+			6.0 ];
+
+		var currentWidth = parseInt(builder.map['stateChangeHandler'].getItemValue('.uno:LineWidth'));
+		var currentWidthText = currentWidth ? String(parseFloat(currentWidth)/100.0) : '0.5';
+
+		var lineData = { min: 0.5, max: 5, id: 'linewidth', text: currentWidthText, enabled: data.enabled, readOnly: true };
+
+		var callbackFunction = function(objectType, eventType, object) {
+			var newValue = 0;
+			if (eventType == 'plus') {
+				$(object).find('input').val(function(i, oldVal) {
+					var index = 1;
+					newValue = values[0];
+					while (newValue <= oldVal && index < values.length)
+						newValue = values[index++];
+					return newValue;
+				});
+			} else if (eventType == 'minus') {
+				$(object).find('input').val(function(i, oldVal) {
+					if (oldVal > 0.0)
+					{
+						var index = values.length - 1;
+						newValue = values[index];
+						while (newValue >= oldVal && index > 0)
+							newValue = values[index--];
+					}
+					else
+						newValue = 0.0;
+					return newValue;
+				});
+			}
+
+			var command = '.uno:LineWidth';
+			var params = {
+				LineWidth: {
+					type : 'long',
+					value : (newValue * 100).toFixed(0)
+				}
+			};
+			builder.map.sendUnoCommand(command, params);
+		};
+
+		builder._spinfieldControl(parentContainer, lineData, builder, callbackFunction);
+	},
+
 	_panelHandler: function(parentContainer, data, builder) {
 		var content = data.children;
 		var contentData = content.length ? content : [content];
@@ -580,46 +636,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		return true;
 	},
 
-	// TODO: check if linestyle updates works correctly
-	_addMissingLabels: function(data) {
-		if (!this._missingLabelData) {
-			this._missingLabelData = {};
-			var labelData = {
-				// This adds a label widget just before the
-				// control with id 'linestyle'
-				'linestyle' : _('Line style:')
-			};
-
-			var mLD = this._missingLabelData;
-			Object.keys(labelData).forEach(function(controlId) {
-				mLD[controlId] = {
-					id: controlId + 'label',
-					type: 'fixedtext',
-					text: labelData[controlId],
-					enabled: 'true'
-				};
-			});
-		}
-
-		for (var idx = 0; idx < data.length; ++idx) {
-			if (!data[idx])
-				continue;
-			var controlId = data[idx].id;
-			if (controlId && Object.prototype.hasOwnProperty.call(this._missingLabelData, controlId)) {
-				data.splice(idx, 0, this._missingLabelData[controlId]);
-				++idx;
-			}
-		}
-	},
-
-	_amendJSDialogData: function(data) {
-		// Called from build() which is already recursive,
-		// so no need to recurse here over 'data'.
-		this._addMissingLabels(data);
-	},
-
 	build: function(parent, data) {
-		this._amendJSDialogData(data);
 		for (var childIndex in data) {
 			if (!data[childIndex])
 				continue;
