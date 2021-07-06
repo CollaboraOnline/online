@@ -2,17 +2,18 @@ var vm = require("vm");
 var fs = require("fs");
 var tmp = require('tmp');
 
-if (process.argv.length < 2 ||
+if (process.argv.length < 3 ||
     process.argv[2] == '--help') {
-	console.debug('load.js <abs_op_builddir> <abs-path-to-file> [bookmark]');
+	console.debug('load.js <ssl_true_or_false> <abs_op_builddir> <abs-path-to-file> [bookmark]');
 	process.exit(0);
 }
 
-var top_builddir = process.argv[2];
+var ssl_flag = process.argv[2];
+var top_builddir = process.argv[3];
 
 var to_load;
-if (process.argv.length > 3) {
-	to_load = process.argv[3]
+if (process.argv.length > 4) {
+	to_load = process.argv[4]
 } else {
 	var content = fs.readFileSync(top_builddir + '/test/data/perf-test-edit.odt');
 	var tmpObj = tmp.fileSync({ mode: 0644, prefix: 'perf-test-', postfix: '.odt' });
@@ -21,8 +22,8 @@ if (process.argv.length > 3) {
 }
 
 var bookmark;
-if (process.argv.length > 4) {
-	bookmark = process.argv[4];
+if (process.argv.length > 5) {
+	bookmark = process.argv[5];
 }
 
 // jsdom for browser emulation
@@ -34,7 +35,10 @@ var data = fs.readFileSync(top_builddir + '/loleaflet/dist/loleaflet.html', {enc
 data = data.replace(/%SERVICE_ROOT%\/loleaflet\/%VERSION%/g, top_builddir + '/loleaflet/dist');
 data = data.replace(/%SERVICE_ROOT%/g, '');
 data = data.replace(/%VERSION%/g, 'dist');
-data = data.replace(/%HOST%/g, 'wss://localhost:9980');
+if (ssl_flag === 'true')
+    data = data.replace(/%HOST%/g, 'wss://localhost:9980');
+else
+    data = data.replace(/%HOST%/g, 'ws://localhost:9980');
 data = data.replace(/%ACCESS_TOKEN%/g, '');
 data = data.replace(/%ACCESS_TOKEN_TTL%/g, '0');
 data = data.replace(/%ACCESS_HEADER%/g, '');
