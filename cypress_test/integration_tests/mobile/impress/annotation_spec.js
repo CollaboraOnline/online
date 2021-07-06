@@ -30,6 +30,8 @@ describe('Annotation tests.', function() {
 
 		mobileHelper.openCommentWizard();
 
+		cy.wait(1000);
+
 		cy.get('.wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
 
