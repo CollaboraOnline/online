@@ -744,7 +744,7 @@ L.TextInput = L.Layer.extend({
 		// empty string.
 		// FIXME: is that true !? ...
 
-		console.log('Set old/lastContent to empty');
+		// console.log('Set old/lastContent to empty');
 		this._lastContent = [];
 
 		this._textArea.value = this._preSpaceChar + this._postSpaceChar;
