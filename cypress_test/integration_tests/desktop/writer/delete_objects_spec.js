@@ -67,7 +67,7 @@ describe('Delete Objects', function() {
 			.contains('Insert Table...')
 			.click();
 
-		helper.typeIntoDocument('{enter}');
+		helper.typeIntoDocument('{shift}{enter}');
 
 		cy.wait(2000);
 
