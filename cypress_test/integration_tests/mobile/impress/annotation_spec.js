@@ -20,7 +20,7 @@ describe('Annotation tests.', function() {
 		mobileHelper.insertComment();
 
 		cy.get('.leaflet-marker-icon.annotation-marker')
-			.should('be.visible');
+			.should('exist');
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
@@ -36,7 +36,7 @@ describe('Annotation tests.', function() {
 			.should('have.text', 'some text');
 
 		cy.get('.leaflet-marker-icon.annotation-marker')
-			.should('be.visible');
+			.should('exist');
 	});
 
 	it('Modifying comment.', function() {
