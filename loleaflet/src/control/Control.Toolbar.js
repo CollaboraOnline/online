@@ -128,10 +128,10 @@ function onClick(e, id, item) {
 		map.fire('postMessage', {msgId: 'UI_InsertGraphic'});
 	}
 	else if (id === 'fontcolor' && typeof e.color === 'undefined') {
-		map.fire('mobilewizard', getColorPickerData('Font Color'));
+		map.fire('mobilewizard', {data: getColorPickerData('Font Color')});
 	}
 	else if (id === 'backcolor' && typeof e.color === 'undefined') {
-		map.fire('mobilewizard', getColorPickerData('Highlight Color'));
+		map.fire('mobilewizard', {data: getColorPickerData('Highlight Color')});
 	}
 	else if (id === 'fontcolor' && typeof e.color !== 'undefined') {
 		onColorPick(id, e.color);

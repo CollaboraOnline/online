@@ -103,6 +103,7 @@ L.Control.UIManager = L.Control.extend({
 			var json = {
 				id: 'busypopup',
 				jsontype: 'dialog',
+				type: 'modalpopup',
 				action: 'close'
 			};
 			if (app.socket)
