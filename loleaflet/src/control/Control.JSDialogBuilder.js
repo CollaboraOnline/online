@@ -2492,7 +2492,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			});
 		}
 
-		$(div).click(function () {
+		$(div).on('click.toolbutton',function () {
 			if (!$(div).hasClass('disabled')) {
 				builder.refreshSidebar = true;
 				if (data.postmessage)

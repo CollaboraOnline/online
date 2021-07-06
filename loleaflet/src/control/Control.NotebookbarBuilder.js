@@ -396,7 +396,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		builder.options.useInLineLabelsForUnoButtons = originalInLineState;
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
 		});
@@ -405,7 +405,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_insertHyperlinkControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			builder.map.showHyperlinkDialog();
 		});
@@ -414,7 +414,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_headerFooterControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			if (!$(control.container).hasClass('disabled')) {
 				builder.refreshSidebar = true;
@@ -427,7 +427,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_insertTextBoxControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			builder.map.sendUnoCommand(data.command + '?CreateDirectly:bool=true');
 		});
@@ -436,7 +436,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_showResolvedAnnotationsControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			var items = builder.map['stateChangeHandler'];
 			var val = items.getItemValue('.uno:ShowResolvedAnnotations');
@@ -448,7 +448,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_onlineHelpControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
 		});
@@ -458,7 +458,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var options = {hasDropdownArrow: true};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			if (!$('.inserttable-grid').length) {
 				$(control.container).w2overlay(window.getInsertTablePopupHtml());
@@ -475,6 +475,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var options = {hasDropdownArrow: true};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			if (!$('.insertshape-grid').length) {
 				$(control.container).w2overlay(window.getShapesPopupHtml());
@@ -495,7 +496,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var options = {hasDropdownArrow: true};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			if (!$('#conditionalformatmenu-grid').length) {
 				$(control.container).w2overlay(window.getConditionalFormatMenuHtml());
@@ -511,6 +512,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var options = {hasDropdownArrow: true};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			if (!$('#setborderstyle-grid').length) {
 				$(control.container).w2overlay(window.getBorderStyleMenuHtml());
@@ -526,7 +528,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var options = {hasDropdownArrow: builder.map['wopi'].EnableInsertRemoteImage};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			if (builder.map['wopi'].EnableInsertRemoteImage) {
 				$(control.container).w2menu({
@@ -550,7 +552,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 	_insertAnnotationControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
-
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {builder.map.insertComment();});
 	},
 
@@ -558,7 +560,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
 		if (builder.map._clip) {
-			$(control.container).unbind('click');
+			$(control.container).unbind('click.toolbutton');
 			$(control.container).click(function () {
 				builder.map._clip.filterExecCopyPaste(data.command);
 			});
@@ -569,7 +571,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var options = {hasDropdownArrow: true};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			var isChecked = function(command) {
 				var items = builder.map['stateChangeHandler'];
@@ -600,6 +602,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_symbolControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			builder.map.sendUnoCommand('.uno:InsertSymbol');
 		});
@@ -608,7 +611,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_startPresentationControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			builder.map.fire('fullscreen');
 		});
@@ -617,7 +620,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_saveControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			// Save only when not read-only.
 			if (!builder.map.isPermissionReadOnly()) {
@@ -633,7 +636,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		data.text = data.text.replace('...', '');
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			builder.map.openSaveAs();
 		});
@@ -642,7 +645,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_shareAsControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			builder.map.openShare();
 		});
@@ -652,7 +655,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		data.text = data.text.replace('...', '');
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			builder.map.print();
 		});
@@ -661,7 +664,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_revHistoryControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			builder.map.openRevisionHistory();
 		});
@@ -670,7 +673,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_menubarControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
-		$(control.container).unbind('click');
+		$(control.container).unbind('click.toolbutton');
 		$(control.container).tooltip({disabled: true});
 		$(control.container).addClass('sm sm-simple lo-menu');
 
