@@ -1821,7 +1821,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 		// FIXME: this _tileCache is used for prev/next slide; but it is
 		// dangerous in connection with typing / invalidation
-		if (!(this._tiles[key]._invalidCount > 0) && tile.el) {
+		if (!(this._tiles[key]._invalidCount > 0) && tile.el.src) {
 			this._tileCache[key] = tile.el;
 		}
 
