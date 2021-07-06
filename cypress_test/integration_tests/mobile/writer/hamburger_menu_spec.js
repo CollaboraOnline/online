@@ -56,9 +56,13 @@ describe('Trigger hamburger menu options.', function() {
 		// Change the document content and save it
 		writerHelper.selectAllTextOfDoc();
 
+		cy.wait(1000);
+
 		helper.typeIntoDocument('new');
 
 		writerHelper.selectAllTextOfDoc();
+
+		cy.wait(1000);
 
 		helper.expectTextForClipboard('\nnew');
 
