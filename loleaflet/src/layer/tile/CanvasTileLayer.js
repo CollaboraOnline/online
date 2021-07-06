@@ -2051,7 +2051,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_openMobileWizard: function(data) {
-		this._map.fire('mobilewizard', data);
+		this._map.fire('mobilewizard', {data: data});
 	},
 
 	_closeMobileWizard: function() {
@@ -4849,7 +4849,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_openCommentWizard: function(annotation) {
 		window.commentWizard = true;
 		var menuData = this._map._docLayer.getCommentWizardStructure();
-		this._map.fire('mobilewizard', menuData);
+		this._map.fire('mobilewizard', {data: menuData});
 
 		// if annotation is provided we can select perticular comment
 		if (annotation) {

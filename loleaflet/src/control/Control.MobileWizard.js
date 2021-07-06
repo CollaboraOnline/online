@@ -379,12 +379,14 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_onMobileWizard: function(data) {
+		data = data.data;
 		if (data) {
 			if (data.jsontype === 'autofilter' && (data.visible === 'false' || data.visible === false))
 				return;
 
 			this._inBuilding = true;
 
+			var isPopup = data.type === 'modalpopup';
 			var isSidebar = false;
 			if (data.children) {
 				for (var i in data.children) {
@@ -419,6 +421,24 @@ L.Control.MobileWizard = L.Control.extend({
 				currentPath = this._currentPath;
 			if (this._currentScrollPosition)
 				lastScrollPosition = this._currentScrollPosition;
+
+			// for menubutton we inject popup into menu structure
+			if (isPopup) {
+				var popupContainer = $('.mobile-popup-container:visible');
+				if (popupContainer.length) {
+					if (data.action === 'close') {
+						this.goLevelUp();
+						popupContainer.empty();
+					} else {
+						popupContainer.empty();
+						this._builder = L.control.mobileWizardBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'mobile-wizard'});
+						this._builder.build(popupContainer.get(0), [data]);
+					}
+				}
+
+				this._inBuilding = false;
+				return;
+			}
 
 			this._reset();
 

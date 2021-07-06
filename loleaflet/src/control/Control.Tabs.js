@@ -171,7 +171,7 @@ L.Control.Tabs = L.Control.extend({
 									this._tabForContextMenu = j;
 									this._setPart(e);
 									window.contextMenuWizard = true;
-									if (!this._map.isPermissionReadOnly()) this._map.fire('mobilewizard', menuData);
+									if (!this._map.isPermissionReadOnly()) this._map.fire('mobilewizard', {data: menuData});
 								};
 							}(i).bind(this));
 					} else {
