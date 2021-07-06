@@ -136,7 +136,7 @@ L.Control.MobileTopBar = L.Control.extend({
 					this.onClick(null, 'mobile_wizard');
 				window.commentWizard = true;
 				var menuData =this.map._docLayer.getCommentWizardStructure();
-				this.map.fire('mobilewizard', menuData);
+				this.map.fire('mobilewizard', {data: menuData});
 				toolbar.check(id);
 			}
 		}
@@ -188,7 +188,7 @@ L.Control.MobileTopBar = L.Control.extend({
 					this.onClick(null, 'comment_wizard');
 				window.insertionMobileWizard = true;
 				menuData = this.map.menubar.generateInsertMenuStructure();
-				this.map.fire('mobilewizard', menuData);
+				this.map.fire('mobilewizard', {data: menuData});
 				toolbar.check(id);
 			}
 		}

@@ -1288,7 +1288,7 @@ L.Control.Menubar = L.Control.extend({
 						} else {
 							window.mobileMenuWizard = true;
 							var menuData = self._map.menubar.generateFullMenuStructure();
-							self._map.fire('mobilewizard', menuData);
+							self._map.fire('mobilewizard', {data: menuData});
 							$('#toolbar-hamburger').removeClass('menuwizard-closed').addClass('menuwizard-opened');
 							$('#mobile-wizard-header').hide();
 						}

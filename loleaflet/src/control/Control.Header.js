@@ -86,7 +86,7 @@ L.Control.Header = L.Class.extend({
 	onLongPress: function () {
 		if (this._map.isPermissionEdit()) {
 			window.contextMenuWizard = true;
-			this._map.fire('mobilewizard', this._menuData);
+			this._map.fire('mobilewizard', {data: this._menuData});
 		}
 	},
 

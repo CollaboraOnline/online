@@ -384,12 +384,14 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_onMobileWizard: function(data) {
+		data = data.data;
 		if (data) {
 			if (data.jsontype === 'autofilter' && (data.visible === 'false' || data.visible === false))
 				return;
 
 			this._inBuilding = true;
 
+			var isPopup = data.type === 'modalpopup';
 			var isSidebar = (data.children && data.children.length >= 1 &&
 					 data.children[0].type == 'deck');
 
@@ -416,6 +418,12 @@ L.Control.MobileWizard = L.Control.extend({
 				currentPath = this._currentPath;
 			if (this._currentScrollPosition)
 				lastScrollPosition = this._currentScrollPosition;
+
+			// for menubutton we inject popup into menu structure
+			if (isPopup) {
+				this._inBuilding = false;
+				return;
+			}
 
 			this._reset();
 
