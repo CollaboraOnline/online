@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect Cypress*/
+/* global describe it cy beforeEach Cypress expect require afterEach */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -54,7 +54,7 @@ describe('Formula bar tests.', function() {
 			.should('not.exist');
 	});
 
-	it.skip('Check input field content', function() {
+	it('Check input field content', function() {
 		// First cell has some long content
 		calcHelper.clickOnFirstCell();
 
@@ -70,11 +70,11 @@ describe('Formula bar tests.', function() {
 
 		cy.get('#calc-inputbar .lokdialog-cursor')
 			.should(function(cursor) {
-				expect(cursor.offset().left).to.be.equal(103);
+				expect(cursor.offset().left).to.be.equal(97);
 			});
 	});
 
-	it.skip('Edit cell via formula bar', function() {
+	it('Edit cell via formula bar', function() {
 		// First cell has some long content
 		calcHelper.clickOnFirstCell();
 
@@ -85,6 +85,8 @@ describe('Formula bar tests.', function() {
 
 		// Change first cell content via formula bar
 		calcHelper.clickOnFirstCell();
+
+		cy.wait(2000);
 
 		calcHelper.typeIntoFormulabar('{end}xxxxxxx{enter}');
 
@@ -94,7 +96,8 @@ describe('Formula bar tests.', function() {
 			.should('have.text', 'long line long line long linexxxxxxx');
 	});
 
-	it.skip('Accept formula bar change', function() {
+
+	it('Accept formula bar change', function() {
 		// First cell has some long content
 		calcHelper.clickOnFirstCell();
 
@@ -106,12 +109,9 @@ describe('Formula bar tests.', function() {
 		// Change first cell content via formula bar
 		calcHelper.clickOnFirstCell();
 
-		calcHelper.clickFormulaBar();
-		helper.assertCursorAndFocus();
+		cy.wait(1000);
 
-		helper.moveCursor('end', undefined, true, '#calc-inputbar .lokdialog-cursor');
-
-		calcHelper.typeIntoFormulabar('{backspace}{backspace}{backspace}');
+		calcHelper.typeIntoFormulabar('{end}{backspace}{backspace}{backspace}');
 
 		cy.get('#tb_actionbar_item_acceptformula')
 			.click();
@@ -122,7 +122,8 @@ describe('Formula bar tests.', function() {
 			.should('have.text', 'long line long line long l');
 	});
 
-	it.skip('Reject formula bar change', function() {
+
+	it('Reject formula bar change', function() {
 		// First cell has some long content
 		calcHelper.clickOnFirstCell();
 
@@ -147,7 +148,7 @@ describe('Formula bar tests.', function() {
 			.should('have.text', 'long line long line long line');
 	});
 
-	it.skip('Switch oneline-multiline mode of input bar', function() {
+	it('Switch oneline-multiline mode of input bar', function() {
 		// Get the initial height of the input field.
 		var inputOriginalHeight = 0;
 		cy.get('#calc-inputbar')
@@ -168,7 +169,7 @@ describe('Formula bar tests.', function() {
 
 		cy.get('#calc-inputbar')
 			.should(function(inputbar) {
-				expect(inputbar.height()).to.be.equal(111);
+				expect(inputbar.height()).to.be.equal(115);
 			});
 
 		// Switch back to one-line mode.
@@ -181,7 +182,7 @@ describe('Formula bar tests.', function() {
 			});
 	});
 
-	it.skip('Check formula help', function() {
+	it('Check formula help', function() {
 		cy.get('#tb_formulabar_item_functiondialog')
 			.click();
 
@@ -208,7 +209,7 @@ describe('Formula bar tests.', function() {
 			.should('have.text', 'Returns TRUE if all arguments are TRUE.');
 	});
 
-	it.skip('Add formula to cell', function() {
+	it('Add formula to cell', function() {
 		calcHelper.clickOnFirstCell();
 
 		cy.get('#tb_formulabar_item_functiondialog')
@@ -228,11 +229,8 @@ describe('Formula bar tests.', function() {
 		cy.get('#mobile-wizard-content')
 			.should('not.be.visible');
 
-		cy.get('#calc-inputbar .lokdialog-cursor')
-			.should('be.visible');
-
 		// Add a range
-		calcHelper.typeIntoFormulabar('B2:B4');
+		calcHelper.typeIntoFormulabar('{backspace}B2:B4)');
 		cy.get('#tb_actionbar_item_acceptformula')
 			.click();
 

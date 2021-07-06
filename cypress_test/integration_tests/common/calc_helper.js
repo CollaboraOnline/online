@@ -22,7 +22,9 @@ function clickFormulaBar() {
 				.click(XPos, YPos);
 		});
 
-	cy.get('body').trigger('mouseover');
+	helper.doIfOnDesktop(function() {
+		cy.get('body').trigger('mouseover');
+	});
 }
 
 // Click on the first cell of the sheet (A1), we use the document
@@ -102,12 +104,15 @@ function typeIntoFormulabar(text) {
 	// with core co-2021 cursor is rendered on the canvas
 
 	helper.doIfOnMobile(function() {
+
 		cy.get('#tb_actionbar_item_acceptformula')
 			.should('be.visible');
 
 		cy.get('#tb_actionbar_item_cancelformula')
 			.should('be.visible');
 	});
+
+	helper.waitUntilIdle('body',undefined);
 
 	cy.get('body')
 		.type(text);
