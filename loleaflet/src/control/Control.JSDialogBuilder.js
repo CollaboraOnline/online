@@ -1083,6 +1083,12 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var radiobutton = L.DomUtil.create('input', '', container);
 		radiobutton.type = 'radio';
 
+		if (data.image) {
+			var image = L.DomUtil.create('img', '', radiobutton);
+			image.src = data.image;
+			L.DomUtil.addClass(container, 'has-image');
+		}
+
 		if (data.group)
 			radiobutton.name = data.group;
 
