@@ -469,14 +469,6 @@ app.definitions.Socket = L.Class.extend({
 		e.image.src = img;
 	},
 
-	forceReload: function () {
-		var form = document.createElement('form');
-		form.method = 'POST';
-		form.action = location.href;
-		document.body.appendChild(form);
-		form.submit();
-	},
-
 	_onMessage: function (e) {
 		var imgBytes, textMsg;
 
@@ -511,8 +503,7 @@ app.definitions.Socket = L.Class.extend({
 			if (oldId && oldVersion && sameFile) {
 				if (this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) {
 					alert(_('Server is now reachable. We have to refresh the page now.'));
-					// We use this function instead of window.location.reload() to ensure that the browser cache is cleared (as done with CTRL + F5).
-					this.forceReload();
+					window.location.reload();
 				}
 			}
 
