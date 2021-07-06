@@ -119,37 +119,37 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text'), hidden: true, uno: 'ResetAttributes', mobile: false},
 			{type: 'button',  id: 'resetimpress',  img: 'deleteformat', hint: _UNO('.uno:SetDefault', 'presentation', 'true'), hidden: true, uno:'SetDefault', mobile: false},
 			{type: 'html', id: 'styles',
-				html: '<select class="styles-select"><option>' + _('Default Style') + '</option></select>',
+				html: '<select id="styles-select" class="styles-select"><option>' + _('Default Style') + '</option></select>',
 				onRefresh: function (edata) {
 					if (!edata.item.html) {
 						edata.isCancelled = true;
 					} else {
 						$.extend(edata, { onComplete: function (e) {
-							$('.styles-select').select2();
+							$('#styles-select').select2();
 							e.item.html = undefined;
 						}});
 					}
 				}, hidden: true, desktop: true, mobile: false, tablet: false},
 			{type: 'html', id: 'fonts',
-				html: '<select class="fonts-select"><option>Carlito</option></select>',
+				html: '<select id="fonts-select" class="fonts-select"><option>Carlito</option></select>',
 				onRefresh: function (edata) {
 					if (!edata.item.html) {
 						edata.isCancelled = true;
 					} else {
 						$.extend(edata, { onComplete: function (e) {
-							$('.fonts-select').select2();
+							$('#fonts-select').select2();
 							e.item.html = undefined;
 						}});
 					}
 				}, mobile: false},
 			{type: 'html',   id: 'fontsizes',
-				html: '<select class="fontsizes-select">',
+				html: '<select id="fontsizes-select" class="fontsizes-select">',
 				onRefresh: function (edata) {
 					if (!edata.item.html) {
 						edata.isCancelled = true;
 					} else {
 						$.extend(edata, { onComplete: function (e) {
-							$('.fontsizes-select').select2({ dropdownAutoWidth: true, width: 'auto'});
+							$('#fontsizes-select').select2({ dropdownAutoWidth: true, width: 'auto'});
 							e.item.html = undefined;
 						}});
 					}
@@ -318,7 +318,7 @@ L.Control.TopToolbar = L.Control.extend({
 			w2ui['editbar'].touchStarted = true;
 		});
 
-		this.map.createFontSelector('.fonts-select');
+		this.map.createFontSelector('#fonts-select');
 		w2ui['editbar'].resize();
 	},
 
@@ -353,7 +353,7 @@ L.Control.TopToolbar = L.Control.extend({
 			break;
 		case 'presentation':
 			// Fill the style select box if not yet filled
-			if ($('.styles-select')[0] && $('.styles-select')[0].length === 1) {
+			if ($('#styles-select')[0] && $('#styles-select')[0].length === 1) {
 				data = [''];
 				// Inserts a separator element
 				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
@@ -362,11 +362,11 @@ L.Control.TopToolbar = L.Control.extend({
 					data = data.concat({id: layout.id, text: _(layout.text)});
 				}, this);
 
-				$('.styles-select').select2({
+				$('#styles-select').select2({
 					data: data,
 					placeholder: _UNO('.uno:LayoutStatus', 'presentation')
 				});
-				$('.styles-select').on('select2:select', this.onStyleSelect, this);
+				$('#styles-select').on('select2:select', this.onStyleSelect, this);
 			}
 
 			if (toolbarUp) {
@@ -390,20 +390,20 @@ L.Control.TopToolbar = L.Control.extend({
 		if (toolbarUp)
 			toolbarUp.refresh();
 
-		this.map.createFontSizeSelector('.fontsizes-select');
+		this.map.createFontSizeSelector('#fontsizes-select');
 	},
 
 	onUpdatePermission: function(e) {
 		if (e.perm === 'edit') {
 			// Enable list boxes
-			$('.styles-select').prop('disabled', false);
-			$('.fonts-select').prop('disabled', false);
-			$('.fontsizes-select').prop('disabled', false);
+			$('#styles-select').prop('disabled', false);
+			$('#fonts-select').prop('disabled', false);
+			$('#fontsizes-select').prop('disabled', false);
 		} else {
 			// Disable list boxes
-			$('.styles-select').prop('disabled', true);
-			$('.fonts-select').prop('disabled', true);
-			$('.fontsizes-select').prop('disabled', true);
+			$('#styles-select').prop('disabled', true);
+			$('#fonts-select').prop('disabled', true);
+			$('#fontsizes-select').prop('disabled', true);
 		}
 	},
 
@@ -493,12 +493,12 @@ L.Control.TopToolbar = L.Control.extend({
 				}, this);
 			}
 
-			$('.styles-select').select2({
+			$('#styles-select').select2({
 				data: data,
 				placeholder: _('Style')
 			});
-			$('.styles-select').val(this.options.stylesSelectValue).trigger('change');
-			$('.styles-select').on('select2:select', this.onStyleSelect.bind(this));
+			$('#styles-select').val(this.options.stylesSelectValue).trigger('change');
+			$('#styles-select').on('select2:select', this.onStyleSelect.bind(this));
 		}
 
 		if (w2ui['editbar'])
@@ -518,7 +518,7 @@ L.Control.TopToolbar = L.Control.extend({
 				return;
 			}
 
-			$('.styles-select option').each(function () {
+			$('#styles-select option').each(function () {
 				var value = this.value;
 				// For writer we get UI names; ideally we should be getting only programmatic ones
 				// For eg: 'Text body' vs 'Text Body'
@@ -531,13 +531,13 @@ L.Control.TopToolbar = L.Control.extend({
 			});
 			if (!found) {
 				// we need to add the size
-				$('.styles-select')
+				$('#styles-select')
 					.append($('<option></option>')
 						.text(state));
 			}
 
 			this.options.stylesSelectValue = state;
-			$('.styles-select').val(state).trigger('change');
+			$('#styles-select').val(state).trigger('change');
 		}
 		else if (commandName === '.uno:CharFontName') {
 			this.options.fontsSelectValue = state;
