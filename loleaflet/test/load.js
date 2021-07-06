@@ -3,7 +3,7 @@ var fs = require("fs");
 var tmp = require('tmp');
 
 if (process.argv.length < 2 ||
-    process.argv[1] == '--help') {
+    process.argv[2] == '--help') {
 	console.debug('load.js <abs_op_builddir> <abs-path-to-file> [bookmark]');
 }
 
