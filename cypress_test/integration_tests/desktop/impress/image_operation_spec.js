@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach beforeEach */
+/* global describe it require afterEach beforeEach */
 
 var helper = require('../../common/helper');
 var { insertImage, deleteImage } = require('../../common/desktop_helper');
@@ -19,11 +19,6 @@ describe('Image Operation Tests', function() {
 	});
 
 	it('Delete Image', function() {
-		//close sidebar because it is covering other elements
-		cy.get('#toolbar-up > .w2ui-scroll-right').click();
-
-		cy.get('#tb_editbar_item_modifypage').click();
-
 		deleteImage();
 	});
 });
