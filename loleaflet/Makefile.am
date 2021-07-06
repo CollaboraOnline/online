@@ -727,7 +727,10 @@ SSL_FLAG = `xmllint --xpath 'string(/config/ssl/enable)' $(abs_top_builddir)/loo
 perf-test:
 	@echo "Running perf tests..."
 	@mkdir -p $(abs_top_builddir)/test/data
-	@cp $(abs_top_srcdir)/test/data/perf-test.odt $(abs_top_builddir)/test/data/perf-test-edit.odt
+	@if [ ! -f $(abs_top_srcdir)/test/data/perf-test-edit.odt -o "`md5sum <$(abs_top_srcdir)/test/data/perf-test.odt`" != "`md5sum <$(abs_top_srcdir)/test/data/perf-test-edit.odt`" ]; then \
+		echo 'Making fresh copy of the perf-test-edit.odt document'; \
+		cp $(abs_top_srcdir)/test/data/perf-test.odt $(abs_top_builddir)/test/data/perf-test-edit.odt; \
+	fi
 	for a in 2 3 4 5 6; do \
 		$(NODE) $(abs_srcdir)/test/load.js $(SSL_FLAG) $(abs_top_builddir) $(abs_top_builddir)/test/data/perf-test-edit.odt testEdit_$$a & \
 	done
