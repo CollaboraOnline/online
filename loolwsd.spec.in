@@ -14,7 +14,7 @@ Name:           loolwsd
 Version:        @PACKAGE_VERSION@
 Release:        1%{?dist}
 Vendor:         %{vendor}
-Summary:        LibreOffice Online WebSocket Daemon
+Summary:        Collabora Online WebSocket Daemon
 License:        EULA
 Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
 BuildRequires:  libcap-devel libpng-devel pam-devel gcc-c++ cppunit-devel pam-devel fontconfig make
