@@ -144,26 +144,31 @@ L.Control.JSDialog = L.Control.extend({
 		if (clickToCloseId && clickToCloseId.indexOf('.uno:') === 0)
 			clickToCloseId = clickToCloseId.substr('.uno:'.length);
 
-		if (isModalPopup && data.popupParent) {
-			// in case of toolbox we want to create popup positioned by toolitem not toolbox
-			var parent = L.DomUtil.get(data.popupParent);
-			if (clickToCloseId) {
-				var childButton = parent.querySelector('[id=\'' + clickToCloseId + '\']');
-				if (childButton)
-					parent = childButton;
+		var setupPosition = function() {
+			if (isModalPopup && data.popupParent) {
+				// in case of toolbox we want to create popup positioned by toolitem not toolbox
+				var parent = L.DomUtil.get(data.popupParent);
+				if (clickToCloseId) {
+					var childButton = parent.querySelector('[id=\'' + clickToCloseId + '\']');
+					if (childButton)
+						parent = childButton;
+				}
+
+				posX = parent.getBoundingClientRect().left;
+				posY = parent.getBoundingClientRect().bottom + 5;
+
+				if (posX + content.clientWidth > window.innerWidth)
+					posX -= posX + content.clientWidth + 10 - window.innerWidth;
+				if (posY + content.clientHeight > window.innerHeight)
+					posY -= posY + content.clientHeight + 10 - window.innerHeight;
+			} else if (posX === 0 && posY === 0) {
+				posX = window.innerWidth/2 - container.offsetWidth/2;
+				posY = window.innerHeight/2 - container.offsetHeight/2;
 			}
+		};
 
-			posX = parent.getBoundingClientRect().left;
-			posY = parent.getBoundingClientRect().bottom + 5;
-
-			if (posX + content.clientWidth > window.innerWidth)
-				posX -= posX + content.clientWidth - window.innerWidth;
-			if (posY + content.clientHeight > window.innerHeight)
-				posY -= posY + content.clientHeight - window.innerHeight;
-		} else if (posX === 0 && posY === 0) {
-			posX = window.innerWidth/2 - container.offsetWidth/2;
-			posY = window.innerHeight/2 - container.offsetHeight/2;
-		}
+		setupPosition();
+		this.updatePosition(container, posX, posY);
 
 		this.dialogs[data.id] = {
 			container: container,
@@ -175,7 +180,14 @@ L.Control.JSDialog = L.Control.extend({
 			isPopup: isModalPopup
 		};
 
-		this.updatePosition(container, posX, posY);
+		// after some updates, eg. drawing areas window can be bigger than initially
+		// update possition according to that with small delay
+
+		var that = this;
+		setTimeout(function () {
+			setupPosition();
+			that.updatePosition(container, posX, posY);
+		}, 200);
 	},
 
 	onJSUpdate: function (e) {
