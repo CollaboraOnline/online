@@ -76,11 +76,6 @@ describe('Delete Objects', function() {
 	it('Delete Table',function() {
 		desktopHelper.selectZoomLevel('50');
 
-		cy.get('#toolbar-up > .w2ui-scroll-right')
-			.click()
-			.get('#tb_editbar_item_modifypage')
-			.click();
-
 		cy.get('#menu-table')
 			.click()
 			.contains('Insert Table...')
