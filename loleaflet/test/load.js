@@ -5,6 +5,7 @@ var tmp = require('tmp');
 if (process.argv.length < 2 ||
     process.argv[2] == '--help') {
 	console.debug('load.js <abs_op_builddir> <abs-path-to-file> [bookmark]');
+	process.exit(0);
 }
 
 var top_builddir = process.argv[2];
