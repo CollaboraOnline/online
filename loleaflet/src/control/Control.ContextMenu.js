@@ -136,7 +136,7 @@ L.Control.ContextMenu = L.Control.extend({
 		if (window.mode.isMobile()) {
 			window.contextMenuWizard = true;
 			var menuData = L.Control.JSDialogBuilder.getMenuStructureForMobileWizard(contextMenu, true, '');
-			map.fire('mobilewizard', menuData);
+			map.fire('mobilewizard', {data: menuData});
 		} else {
 			L.installContextMenu({
 				selector: '.leaflet-layer',

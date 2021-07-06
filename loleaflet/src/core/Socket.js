@@ -1329,8 +1329,8 @@ app.definitions.Socket = L.Class.extend({
 		if (window.mode.isMobile()) {
 			if (msgData.type == 'borderwindow')
 				return;
-			if (msgData.enabled) {
-				this._map.fire('mobilewizard', msgData);
+			if (msgData.enabled || msgData.type === 'modalpopup') {
+				this._map.fire('mobilewizard', {data: msgData});
 			} else {
 				this._map.fire('closemobilewizard');
 			}
