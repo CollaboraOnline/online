@@ -15,10 +15,66 @@
 #include "SslSocket.hpp"
 #endif
 
+#include <Poco/Exception.h>
+#include <Poco/Net/DNS.h>
+#include <Poco/Net/NetworkInterface.h>
+
 #include <netdb.h>
 
 namespace net
 {
+
+#if !MOBILEAPP
+
+std::string resolveHostAddress(const std::string& targetHost)
+{
+    try
+    {
+        return Poco::Net::DNS::resolveOne(targetHost).toString();
+    }
+    catch (const Poco::Exception& exc)
+    {
+        LOG_WRN("Poco::Net::DNS::resolveOne(\"" << targetHost
+                                                << "\") failed: " << exc.displayText());
+        try
+        {
+            return Poco::Net::IPAddress(targetHost).toString();
+        }
+        catch (const Poco::Exception& exc1)
+        {
+            LOG_WRN("Poco::Net::IPAddress(\"" << targetHost
+                                              << "\") failed: " << exc1.displayText());
+        }
+    }
+
+    return targetHost;
+}
+
+bool isLocalhost(const std::string& targetHost)
+{
+    const std::string targetAddress = resolveHostAddress(targetHost);
+
+    const Poco::Net::NetworkInterface::NetworkInterfaceList list =
+        Poco::Net::NetworkInterface::list(true, true);
+    for (const auto& netif : list)
+    {
+        std::string address = netif.address().toString();
+        address = address.substr(0, address.find('%', 0));
+        if (address == targetAddress)
+        {
+            LOG_TRC("Host [" << targetHost << "] is on the same host as the client: \""
+                             << targetAddress << "\".");
+            return true;
+        }
+    }
+
+    LOG_TRC("Host [" << targetHost << "] is not on the same host as the client: \"" << targetAddress
+                     << "\".");
+    return false;
+}
+
+#endif //!MOBILEAPP
+
 std::shared_ptr<StreamSocket>
 connect(const std::string& host, const std::string& port, const bool isSSL,
         const std::shared_ptr<ProtocolHandlerInterface>& protocolHandler)

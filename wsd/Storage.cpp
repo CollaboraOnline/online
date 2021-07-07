@@ -34,7 +34,6 @@
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/KeyConsoleHandler.h>
 #include <Poco/Net/NameValueCollection.h>
-#include <Poco/Net/NetworkInterface.h>
 #include <Poco/Net/SSLManager.h>
 
 #endif
@@ -52,6 +51,7 @@
 #include <common/FileUtil.hpp>
 #include <common/JsonUtil.hpp>
 #include <common/TraceEvent.hpp>
+#include <NetUtil.hpp>
 
 #ifdef IOS
 #include <ios.h>
@@ -192,39 +192,17 @@ bool StorageBase::allowedWopiHost(const std::string& host)
 
 bool isLocalhost(const std::string& targetHost)
 {
-    std::string targetAddress;
-    try
+    const std::string targetAddress = net::resolveHostAddress(targetHost);
+
+    if (net::isLocalhost(targetHost))
     {
-        targetAddress = Poco::Net::DNS::resolveOne(targetHost).toString();
-    }
-    catch (const Poco::Exception& exc)
-    {
-        LOG_WRN("Poco::Net::DNS::resolveOne(\"" << targetHost << "\") failed: " << exc.displayText());
-        try
-        {
-            targetAddress = Poco::Net::IPAddress(targetHost).toString();
-        }
-        catch (const Poco::Exception& exc1)
-        {
-            LOG_WRN("Poco::Net::IPAddress(\"" << targetHost << "\") failed: " << exc1.displayText());
-        }
+        LOG_INF("WOPI host [" << targetHost << "] is on the same host as the WOPI client: \""
+                              << targetAddress << "\". Connection is allowed.");
+        return true;
     }
 
-    Poco::Net::NetworkInterface::NetworkInterfaceList list = Poco::Net::NetworkInterface::list(true,true);
-    for (auto& netif : list)
-    {
-        std::string address = netif.address().toString();
-        address = address.substr(0, address.find('%', 0));
-        if (address == targetAddress)
-        {
-            LOG_INF("WOPI host is on the same host as the WOPI client: \"" <<
-                    targetAddress << "\". Connection is allowed.");
-            return true;
-        }
-    }
-
-    LOG_INF("WOPI host is not on the same host as the WOPI client: \"" <<
-            targetAddress << "\". Connection is not allowed.");
+    LOG_INF("WOPI host [" << targetHost << "] is not on the same host as the WOPI client: \""
+                          << targetAddress << "\". Connection is not allowed.");
     return false;
 }
 
