@@ -137,7 +137,9 @@ L.Control.TopToolbar = L.Control.extend({
 						edata.isCancelled = true;
 					} else {
 						$.extend(edata, { onComplete: function (e) {
-							$('#fonts-select').select2();
+							$('#fonts-select').select2({
+								placeholder: _('Font')
+							});
 							e.item.html = undefined;
 						}});
 					}
