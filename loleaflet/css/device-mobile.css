@@ -788,3 +788,30 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	margin-top: -74px;
 	margin-bottom: 24px;
 }
+
+/* Feeback dialog */
+.iframe-dialog-wrap {
+	left: 0;
+	top: 0;
+	bottom: 0;
+	height: 100%;
+	background-color: rgba(0,0,0,0.2);
+	width: 100%;
+}
+.iframe-dialog-modal {
+	position: absolute;
+	width: 100%;
+	height: 564px; /* incrase height to account for stacked buttons*/
+	bottom: 0;
+}
+@media  only screen
+	and (max-height: 500px)
+	and (orientation: landscape)  {
+	.iframe-dialog-content {
+		height: 100%;
+	}
+	.iframe-dialog-modal{
+		position: static;
+		height: 100%;
+	}
+}
