@@ -315,10 +315,10 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	},
 
 	_getSelectionHeaderData: function() {
-		if (this._selections.empty())
+		if (this._cellCSelections.empty())
 			return { hasSelection: false };
 
-		var bounds = this._selections.getBounds();
+		var bounds = this._cellCSelections.getBounds();
 		console.assert(bounds.isValid(), 'Non empty selection should have valid bounds');
 		return {
 			hasSelection: true,
