@@ -768,6 +768,10 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	_syncTileContainerSize: function () {
+		if (this._docType === 'presentation') {
+			this.onResizeImpress();
+		}
+
 		var tileContainer = this._container;
 		if (tileContainer) {
 			var documentContainerSize = document.getElementById('document-container');
@@ -806,11 +810,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				this._onUpdateCursor(true);
 
 			// Center the view w.r.t the new map-pane position using the current zoom.
-			if (!window.mode.isMobile()) {
-				// FIXME: In mobile view, this causes an incorrect offset in annotations-marker positions in impress/draw.
-				// Remove this isMobile() condition after this is fixed.
-				this._map.setView(this._map.getCenter());
-			}
+			this._map.setView(this._map.getCenter());
 		}
 	},
 
