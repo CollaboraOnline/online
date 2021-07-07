@@ -19,6 +19,17 @@ class ProtocolHandlerInterface;
 
 namespace net
 {
+
+#if !MOBILEAPP
+
+/// Resolves the IP of the given hostname. On failure, returns @targetHost.
+std::string resolveHostAddress(const std::string& targetHost);
+
+/// Returns true if @targetHost is on the same host.
+bool isLocalhost(const std::string& targetHost);
+
+#endif
+
 /// Connect to an end-point at the given host and port and return StreamSocket.
 std::shared_ptr<StreamSocket>
 connect(const std::string& host, const std::string& port, const bool isSSL,
