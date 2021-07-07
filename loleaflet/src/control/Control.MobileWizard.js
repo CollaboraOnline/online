@@ -171,8 +171,6 @@ L.Control.MobileWizard = L.Control.extend({
 		var stb = document.getElementById('spreadsheet-toolbar');
 		if (stb)
 			stb.style.display = 'block';
-
-		this._updateMapSize();
 	},
 
 	isOpen: function() {
@@ -385,11 +383,6 @@ L.Control.MobileWizard = L.Control.extend({
 		}, ms);
 	},
 
-	_updateMapSize: function() {
-		window.updateMapSizeForWizard = this._map.getDocType() === 'presentation' && this._isActive;
-		this._map.invalidateSize();
-	},
-
 	_onMobileWizard: function(data) {
 		if (data) {
 			if (data.jsontype === 'autofilter' && (data.visible === 'false' || data.visible === false))
@@ -489,8 +482,6 @@ L.Control.MobileWizard = L.Control.extend({
 				this._goToPath(currentPath);
 				this._scrollToPosition(lastScrollPosition);
 			}
-
-			this._updateMapSize();
 
 			this._inBuilding = false;
 		}
