@@ -854,22 +854,10 @@ L.Map = L.Evented.extend({
 	},
 
 	getSize: function () {
-		var clientWidth = this._container.clientWidth;
-		var clientHeight = this._container.clientHeight;
-
-		if (window.updateMapSizeForWizard)
-		{
-			var wizardHeight = $('#mobile-wizard').height();
-			// the container has a bottom pixel set, it does not contain all the height
-			// we need it for calculating how much pixels the wizard covers on the map
-			var containerBottomPixels = parseInt($('#document-container').css('bottom'));
-			clientHeight -= wizardHeight - containerBottomPixels;
-		}
-
 		if (!this._size || this._sizeChanged) {
 			this._size = new L.Point(
-				clientWidth,
-				clientHeight);
+				this._container.clientWidth,
+				this._container.clientHeight);
 
 			this._sizeChanged = false;
 		}
