@@ -95,7 +95,7 @@ function sleep(ms)
 {
 	return new Promise(r => setTimeout(r, ms));
 }
-
+var docLoaded = false;
 window.onload = function() {
 	console.debug('socket ' + window.socket);
 	map = window.socket._map;
@@ -107,6 +107,8 @@ window.onload = function() {
 	map._container.___clientHeight = 768;
 
 	map.on('docloaded', function(){
+		if (docLoaded) return;
+		docLoaded = true;
 		console.debug('document loaded');
 		setTimeout(async function() {
 			if (bookmark)
