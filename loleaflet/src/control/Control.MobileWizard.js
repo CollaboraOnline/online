@@ -179,8 +179,6 @@ L.Control.MobileWizard = L.Control.extend({
 		var stb = document.getElementById('spreadsheet-toolbar');
 		if (stb)
 			stb.style.display = 'block';
-
-		this._updateMapSize();
 	},
 
 	isOpen: function() {
@@ -404,11 +402,6 @@ L.Control.MobileWizard = L.Control.extend({
 			    ' {"id":"-1"}';
 			app.socket.sendMessage(message);
 		}, ms);
-	},
-
-	_updateMapSize: function() {
-		window.updateMapSizeForWizard = this._map.getDocType() === 'presentation' && this._isActive;
-		this._map.invalidateSize();
 	},
 
 	_onMobileWizard: function(data) {
