@@ -1,8 +1,8 @@
 .iframe-dialog-wrap {
 	position: absolute;
 	z-index: 1106;
-	margin-left: 350px;
-	margin-top: 30px;
+	left: calc(50% - 225px);
+	top: calc(50% - 315px);
 }
 
 .iframe-dialog-modal {
