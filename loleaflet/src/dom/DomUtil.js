@@ -21,7 +21,8 @@ L.DomUtil = {
 	},
 
 	setStyle: function (el, style, value) {
-		el.style[style] = value;
+		if (el !== undefined)
+			el.style[style] = value;
 	},
 
 	create: function (tagName, className, container) {
