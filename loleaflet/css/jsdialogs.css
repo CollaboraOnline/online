@@ -934,3 +934,8 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	margin-right: 5px;
 	vertical-align: middle;
 }
+
+/* handling show/hide state */
+.hidden {
+	display: none !important;
+}

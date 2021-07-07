@@ -276,6 +276,7 @@ L.Control.MobileWizard = L.Control.extend({
 			var headers = $('.ui-explorable-entry.level-' + this._currentDepth + '.mobile-wizard:visible').siblings();
 			var currentHeader = $('.ui-explorable-entry.level-' + this._currentDepth + '.mobile-wizard:visible').children('.ui-header');
 			headers = headers.add(currentHeader);
+			headers = headers.not('.hidden');
 
 			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').hide();
 			$('#mobile-wizard.funcwizard div#mobile-wizard-content').removeClass('showHelpBG');
