@@ -66,10 +66,6 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 
 		if (docType === 'presentation' || docType === 'drawing') {
-			var presentationControlWrapperElem = this._container;
-			var visible = L.DomUtil.getStyle(presentationControlWrapperElem, 'display');
-			if (visible === 'none')
-				return;
 			if (!this._previewInitialized)
 			{
 				// make room for the preview
