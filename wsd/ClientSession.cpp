@@ -523,7 +523,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         return true;
     }
 
-    if (tokens.equals(0, "jserror"))
+    if (tokens.equals(0, "jserror") || tokens.equals(0, "jsexception"))
     {
         LOG_ERR(std::string(buffer, length));
         return true;
