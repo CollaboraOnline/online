@@ -21,6 +21,9 @@
 	--gray-light-txt--color: #696969;
 	--gray-light-bg-color: #EFEFEF;
 	--gray-color: #b6b6b6;
+
+	/* Shared color for cell and selection border */
+	--cell-cursor-selection-border-color: #0074e8;
 }
 /* clip technique: hide visually but keep it available to screen readers */
 .visuallyhidden {
@@ -686,7 +689,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	border-style: solid; /* required for ie11 */
 	display: none; /* prevent cypress failure */
 
-	border-top-color: #000000; /* color */
+	border-top-color: var(--cell-cursor-selection-border-color); /* color */
 	border-top-width: 2px; /* weight */
 }
 
@@ -694,9 +697,9 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	border-style: solid; /* required for ie11 */
 	display: none; /* prevent cypress failure */
 
-	background-color: #43ACE8; /* fill color */
+	background-color: var(--cell-cursor-selection-border-color); /* fill color */
 	opacity: 0.25; /* opacity */
-	border-top-width: 2px; /* weight */
+	border-top-width: 1px; /* weight */
 }
 
 .leaflet-canvas-container .splitters-data {

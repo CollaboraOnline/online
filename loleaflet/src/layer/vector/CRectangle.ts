@@ -64,16 +64,16 @@ class CCellCursor extends CPathGroup {
 		// Compute bounds for border path.
 		let boundsForBorder: CBounds[] = [];
 		for (let idx = 0; idx < this.cursorWeight; ++idx) {
-			let pixels = idx; // pixels from real cell-border.
+			let pixels = idx; // device pixels from real cell-border.
 			boundsForBorder.push(new CBounds(
-				cellBounds.min.subtract(new CPoint(pixels, pixels)),
-				cellBounds.max.add(new CPoint(pixels, pixels))
+				cellBounds.min.add(new CPoint(pixels, pixels)),
+				cellBounds.max.subtract(new CPoint(pixels, pixels))
 			));
 		}
 
 		let boundsForContrastBorder = new CBounds(
-			cellBounds.min.add(new CPoint(1, 1)),
-			cellBounds.max.subtract(new CPoint(1, 1)));
+			cellBounds.min.add(new CPoint(this.cursorWeight, this.cursorWeight)),
+			cellBounds.max.subtract(new CPoint(this.cursorWeight, this.cursorWeight)));
 
 		if (this.borderPaths && this.innerContrastBorder) {
 			console.assert(this.borderPaths.length === this.cursorWeight);
@@ -116,14 +116,13 @@ class CCellSelection extends CPathGroup {
 
 	private selectionWeight: number = 2;
 	private borderPaths: CPolygon[];
+	private innerContrastBorder: CPolygon;
 	private options: any;
 
 	constructor(pointSet: CPointSet, options: any) {
 		super([]);
-		if (options.weight != 1) {
-			this.selectionWeight = Math.round(options.weight);
-			options.weight = 1;
-		}
+		this.selectionWeight = Math.round(options.weight);
+		options.weight = 1; // Selection has multiple paths each with weight 1.
 		this.options = options;
 		this.options.lineJoin = 'miter';
 		this.options.lineCap = 'butt';
@@ -134,36 +133,47 @@ class CCellSelection extends CPathGroup {
 	// This method is used to create/update the internal CPaths with the correct positions and dimensions
 	// using CPointSet data-structure.
 	setPointSet(pointSet: CPointSet) {
-		let innerPointSet = pointSet;
-		innerPointSet.applyOffset(new CPoint(0.5, 0.5), false /* centroidSymmetry */, true /* preRound */);
+		let outerPointSet = pointSet;
+		outerPointSet.applyOffset(new CPoint(0.5, 0.5), false /* centroidSymmetry */, true /* preRound */);
 
 		let borderPointSets: CPointSet[] = [];
 
 		for (let idx = 0; idx < this.selectionWeight; ++idx) {
-			let pixels = idx; // pixels from real cell-border.
-			let borderPset = innerPointSet.clone();
-			borderPset.applyOffset(new CPoint(pixels, pixels), true /* centroidSymmetry */, false /* preRound */);
+			let pixels = idx; // device pixels from real cell-border.
+			let borderPset = outerPointSet.clone();
+			borderPset.applyOffset(new CPoint(-pixels, -pixels), true /* centroidSymmetry */, false /* preRound */);
 			borderPointSets.push(borderPset);
 		}
+		let contrastBorderPointSet = outerPointSet.clone();
+		contrastBorderPointSet.applyOffset(new CPoint(-this.selectionWeight, -this.selectionWeight), true /* centroidSymmetry */, false /* preRound */)
 
-		if (this.borderPaths) {
+		if (this.borderPaths && this.innerContrastBorder) {
 			console.assert(this.borderPaths.length === this.selectionWeight);
 			// Update the border path.
 			this.borderPaths.forEach(function (borderPath, index) {
 				borderPath.setPointSet(borderPointSets[index]);
 			})
+			this.innerContrastBorder.setPointSet(contrastBorderPointSet);
 
 		} else {
 			this.borderPaths = [];
 			for (let index = 0; index < this.selectionWeight; ++index) {
 				let borderOpt = getOptionsClone(this.options);
+				borderOpt.fillColor = undefined;
+				borderOpt.fillOpacity = undefined;
+				borderOpt.fill = false;
 				borderOpt.name += '-border-' + index;
-				if (index)
-					borderOpt.fill = false;
 				let borderPath = new CPolygon(borderPointSets[index], borderOpt);
 				this.borderPaths.push(borderPath);
 				this.push(borderPath);
 			}
+
+			let contrastBorderOpt = getOptionsClone(this.options);
+			contrastBorderOpt.name += '-contrast-border';
+			contrastBorderOpt.color = 'white';
+			contrastBorderOpt.fill = true;
+			this.innerContrastBorder = new CPolygon(contrastBorderPointSet, contrastBorderOpt);
+			this.push(this.innerContrastBorder);
 		}
 	}
 
