@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Apply font changes.', function () {
+describe('Sheet Operations.', function () {
 	var testFileName = 'sheet_operation.ods';
 
 	beforeEach(function () {
@@ -25,6 +25,8 @@ describe('Apply font changes.', function () {
 	}
 
 	function selectOptionFromContextMenu(contextMenu) {
+		cy.wait(1000);
+
 		cy.get('.spreadsheet-tab.spreadsheet-tab-selected')
 			.rightclick();
 

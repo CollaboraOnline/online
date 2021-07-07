@@ -68,7 +68,6 @@ L.Control.Tabs = L.Control.extend({
 			'.uno:Show': {
 				name: _UNO('.uno:Show', 'spreadsheet', true),
 				callback: (this._showSheet).bind(this),
-				visible: areTabsMultiple
 			},
 			'.uno:Hide': {
 				name: _UNO('.uno:Hide', 'spreadsheet', true),
@@ -142,6 +141,7 @@ L.Control.Tabs = L.Control.extend({
 							'insertsheetbefore' : this._menuItem['insertsheetbefore'],
 							'insertsheetafter'  :   this._menuItem['insertsheetafter'],
 							'.uno:Name' : this._menuItem['.uno:Name'],
+							'.uno:Show' : this._menuItem['.uno:Show'],
 						}
 					);
 				} else {
