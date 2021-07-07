@@ -30,6 +30,8 @@ class AutoFillMarkerSection {
 	stopPropagating: Function; // Implemented by section container.
 	setPosition: Function; // Implemented by section container. Document objects only.
 	map: any;
+	cursorBorderWidth: number = 2;
+	selectionBorderWidth: number = 1;
 
 	constructor () {
 		this.map = L.Map.THIS;
@@ -42,6 +44,13 @@ class AutoFillMarkerSection {
 		this.sectionProperties.dragStartPosition = null;
 
 		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
+
+		var cursorStyle = getComputedStyle(this.sectionProperties.docLayer._cursorDataDiv);
+		var selectionStyle = getComputedStyle(this.sectionProperties.docLayer._selectionsDataDiv);
+		var cursorColor = cursorStyle.getPropertyValue('border-top-color');
+		this.backgroundColor = cursorColor ? cursorColor : this.backgroundColor;
+		this.cursorBorderWidth = Math.round(window.devicePixelRatio * parseInt(cursorStyle.getPropertyValue('border-top-width')));
+		this.selectionBorderWidth = Math.round(window.devicePixelRatio * parseInt(selectionStyle.getPropertyValue('border-top-width')));
 	}
 
 	public onInitialize () {
@@ -100,7 +109,10 @@ class AutoFillMarkerSection {
 			this.sectionProperties.selectedAreaPoint = null;
 		}
 		else {
-			this.sectionProperties.selectedAreaPoint = [point[0] - this.size[0] * 0.5, point[1] - this.size[1] * 0.5];
+			var translation = (<any>window).mode.isDesktop() ?
+				[this.size[0], this.size[1]] :
+				[Math.floor(this.size[0] * 0.5), Math.floor(this.size[1] * 0.5)];
+			this.sectionProperties.selectedAreaPoint = [point[0] - translation[0], point[1] - translation[1]];
 		}
 		this.setMarkerPosition();
 	}
@@ -111,13 +123,47 @@ class AutoFillMarkerSection {
 			this.sectionProperties.cellCursorPoint = null;
 		}
 		else {
-			this.sectionProperties.cellCursorPoint = [point[0] - this.size[0] * 0.5, point[1] - this.size[1] * 0.5];
+			var translation = (<any>window).mode.isDesktop() ?
+				[this.size[0], this.size[1]] :
+				[Math.floor(this.size[0] * 0.5), Math.floor(this.size[1] * 0.5)];
+			this.sectionProperties.cellCursorPoint = [point[0] - translation[0], point[1] - translation[1]];
 		}
 		this.setMarkerPosition();
 	}
 
-	public onDraw () {
+	// This is for enhancing contrast of the marker with the background
+	// similar to what we have for cell cursors.
+	private drawWhiteOuterBorders () {
+		this.context.strokeStyle = 'white';
+		this.context.lineCap = 'square';
+		this.context.lineWidth = 1;
 
+		var desktop: boolean = (<any>window).mode.isDesktop();
+		var translation = desktop ?
+			[this.size[0], this.size[1]] :
+			[Math.floor(this.size[0] * 0.5), Math.floor(this.size[1] * 0.5)];
+
+		this.context.beginPath();
+		this.context.moveTo(-0.5, -0.5);
+		var borderWidth = this.sectionProperties.selectedAreaPoint ? this.selectionBorderWidth : this.cursorBorderWidth;
+		this.context.lineTo(this.size[0] - 0.5 - (desktop ? borderWidth : 0), -0.5);
+		this.context.stroke();
+
+		if (!desktop) {
+			this.context.beginPath();
+			this.context.moveTo(this.size[0] - 0.5 - (desktop ? borderWidth : 0), -0.5);
+			this.context.lineTo(this.size[0] - 0.5 - (desktop ? borderWidth : 0), translation[1] - 0.5 - borderWidth);
+			this.context.stroke();
+		}
+
+		this.context.beginPath();
+		this.context.moveTo(-0.5, -0.5);
+		this.context.lineTo(-0.5, translation[1] - 0.5 - borderWidth);
+		this.context.stroke();
+	}
+
+	public onDraw () {
+		this.drawWhiteOuterBorders();
 	}
 
 	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {

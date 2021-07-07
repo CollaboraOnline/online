@@ -105,9 +105,10 @@ var CSelections = L.Class.extend({
 			var attributes = {
 				name: this._name,
 				pointerEvents: 'none',
+				color: fillColor,
 				fillColor: fillColor,
 				fillOpacity: opacity,
-				opacity: opacity,
+				opacity: 1.0,
 				weight: Math.round(weight * this._dpiScale)
 			};
 			this._cellSelection = new CCellSelection(this._pointSet, attributes);
