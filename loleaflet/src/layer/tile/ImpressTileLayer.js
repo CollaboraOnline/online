@@ -113,18 +113,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 				this._putPCWInsideFlex();
 			}
 		}
-
-		// update parts
-		var visible = L.DomUtil.getStyle(L.DomUtil.get('presentation-controls-wrapper'), 'display');
-		if (visible !== 'none') {
-			this._map.fire('updateparts', {
-				selectedPart: this._selectedPart,
-				selectedParts: this._selectedParts,
-				parts: this._parts,
-				docType: this._docType,
-				partNames: this._partHashes
-			});
-		}
 	},
 
 	onRemove: function () {
