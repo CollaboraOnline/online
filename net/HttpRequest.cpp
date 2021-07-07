@@ -553,6 +553,11 @@ int64_t Response::readData(const char* p, int64_t len)
                     if (digit < 0)
                         break;
 
+                    if (chunkLen >= (std::numeric_limits<int64_t>::max() - digit) / 16)
+                    {
+                        // Would not fit into chunkLen.
+                        return len - available;
+                    }
                     chunkLen = chunkLen * 16 + digit;
                 }
 
