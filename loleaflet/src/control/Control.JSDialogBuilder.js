@@ -3039,11 +3039,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			break;
 
 		case 'show':
-			$(control).show();
+			$(control).removeClass('hidden');
 			break;
 
 		case 'hide':
-			$(control).hide();
+			$(control).addClass('hidden');
 			break;
 		}
 	},
@@ -3062,7 +3062,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.visible === 'false' || data.visible === false) {
 			var control = parent.querySelector('[id=\'' + data.id + '\']');
 			if (control)
-				control.style.display = 'none';
+				L.DomUtil.addClass(control, 'hidden');
 		}
 	},
 
