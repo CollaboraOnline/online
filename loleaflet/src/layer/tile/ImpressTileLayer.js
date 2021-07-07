@@ -84,7 +84,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		map.addControl(this._preview);
 		map.on('updateparts', this.onUpdateParts, this);
 		map.on('updatepermission', this.onUpdatePermission, this);
-		map.on('resize', this.onResize, this);
 
 		map.uiManager.initializeSpecializedUI(this._docType);
 		if (window.mode.isMobile()) {
@@ -103,11 +102,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
-	onResize: function () {
-		if (window.mode.isDesktop()) {
-			this._map.setView(this._map.getCenter(), this._map.getZoom(), {reset: true});
-		}
-
+	onResizeImpress: function () {
 		L.DomUtil.updateElementsOrientation(['presentation-controls-wrapper', 'document-container', 'slide-sorter']);
 
 		if (window.mode.isMobile()) {
@@ -117,12 +112,6 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			else {
 				this._putPCWInsideFlex();
 			}
-
-			if (this._firstRun) {
-				this._map.setView(this._map.getCenter());
-				this._syncTileContainerSize();
-			}
-			this._firstRun = true;
 		}
 
 		// update parts
