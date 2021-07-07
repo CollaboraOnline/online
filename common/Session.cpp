@@ -52,8 +52,7 @@ Session::Session(const std::shared_ptr<ProtocolHandlerInterface> &protocol,
     _isAllowChangeComments(false),
     _haveDocPassword(false),
     _isDocPasswordProtected(false),
-    _watermarkOpacity(0.2),
-    _traceEventRecordingAtStart(false)
+    _watermarkOpacity(0.2)
 {
 }
 
@@ -204,17 +203,6 @@ void Session::parseDocOptions(const StringVector& tokens, int& part, std::string
         else if (name == "macroSecurityLevel")
         {
             _macroSecurityLevel = value;
-            ++offset;
-        }
-        else if (name == "traceeventrecording")
-        {
-            // Ignore value, it is there only becaue the silly code doesn't accept parameters without a value
-            _traceEventRecordingAtStart = true;
-            ++offset;
-        }
-        else
-        {
-            LOG_WRN("Unrecognized load option " << name);
             ++offset;
         }
     }
