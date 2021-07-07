@@ -413,7 +413,11 @@ L.Control.Ruler = L.Control.extend({
 		var tileContainerXTranslate = 0;
 		if (tileContainer.style !== undefined)
 			tileContainerXTranslate = parseInt(tileContainer.style.transform.match(/\(([-0-9]*)/)[1]);
-		var mapPaneXTranslate = parseInt(mapPane.style.transform.match(/\(([-0-9]*)/)[1]);
+
+		var mapPaneXTranslateMatch = mapPane.style.transform.match(/\(([-0-9]*)/);
+		var mapPaneXTranslate = 0;
+		if (mapPaneXTranslateMatch !== null && mapPaneXTranslateMatch[1] !== undefined)
+			mapPaneXTranslate = parseInt(mapPaneXTranslateMatch[1]);
 
 		var rulerOffset = mapPaneXTranslate + firstTileXTranslate + tileContainerXTranslate + (this.options.tileMargin * scale);
 
