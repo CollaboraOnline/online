@@ -32,6 +32,10 @@ L.Map.include({
 		this.focus();
 	},
 
+	_getCurrentFontName: function() {
+		return this['stateChangeHandler'].getItemValue('.uno:CharFontName');
+	},
+
 	createFontSelector: function(nodeSelector) {
 		var that = this;
 
@@ -46,19 +50,22 @@ L.Map.include({
 			if (typeof commandValues === 'object') {
 				data = data.concat(Object.keys(commandValues));
 			}
-
-			fontcombobox.select2({
-				data: data.sort(function (a, b) {  // also sort(localely)
-					return a.localeCompare(b);
-				}),
-				placeholder: _('Font')
+			fontcombobox.empty();
+			for (var i = 0; i < data.length; ++i) {
+				if (!data[i]) continue;
+				var option = document.createElement('option');
+				option.text = data[i];
+				option.value = data[i];
+				fontcombobox.append(option);
+			}
+			fontcombobox.on('change', function(e) {
+				var item = that._getCurrentFontName();
+				if (!item) return;
+				if (e.target.value.toLowerCase() === item.toLowerCase()) return;
+				if (e.target.value) that.onFontSelect(e);
 			});
 
-			fontcombobox.on('select2:select', that.onFontSelect.bind(that));
-
-			var items = that['stateChangeHandler'];
-			var val = items.getItemValue('.uno:CharFontName');
-			fontcombobox.val(val).trigger('change');
+			fontcombobox.val(that._getCurrentFontName()).trigger('change');
 		};
 
 		createSelector();
@@ -71,7 +78,6 @@ L.Map.include({
 
 			var state = e.state;
 			var found = false;
-
 			fontcombobox.children('option').each(function () {
 				var value = this.value;
 				if (value.toLowerCase() === state.toLowerCase()) {
@@ -80,7 +86,7 @@ L.Map.include({
 				}
 			});
 
-			if (!found) {
+			if (!found && state) {
 				fontcombobox
 					.append($('<option></option>')
 						.text(state));
@@ -163,6 +169,8 @@ L.Map.include({
 	},
 
 	applyFont: function (fontName) {
+		if (!fontName)
+			return;
 		if (this.isPermissionEdit()) {
 			var msg = 'uno .uno:CharFontName {' +
 				'"CharFontName.FamilyName": ' +
