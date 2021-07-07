@@ -428,7 +428,7 @@ L.TextInput = L.Layer.extend({
 
 		// Move and display under-caret marker
 		if (L.Browser.touch) {
-			if (this._map._docLayer._selections.empty()) {
+			if (this._map._docLayer._textCSelections.empty()) {
 				this._cursorHandler.setLatLng(bottom).addTo(this._map);
 			} else {
 				this._map.removeLayer(this._cursorHandler);

@@ -58,7 +58,7 @@ var CStyleData = L.Class.extend({
 // on canvas using polygons (CPolygon).
 var CSelections = L.Class.extend({
 
-	initialize: function (pointSet, canvasOverlay, dpiScale, selectionsDataDiv, map, isView, viewId) {
+	initialize: function (pointSet, canvasOverlay, dpiScale, selectionsDataDiv, map, isView, viewId, isText) {
 		this._pointSet = pointSet ? pointSet : new CPointSet();
 		this._overlay = canvasOverlay;
 		this._dpiScale = dpiScale;
@@ -67,8 +67,9 @@ var CSelections = L.Class.extend({
 		this._name = 'selections' + (isView ? '-viewid-' + viewId : '');
 		this._isView = isView;
 		this._viewId = viewId;
-		this._cellSelection = undefined;
-		this._updateCellSelection();
+		this._isText = isText;
+		this._selection = undefined;
+		this._updateSelection();
 	},
 
 	empty: function () {
@@ -81,28 +82,38 @@ var CSelections = L.Class.extend({
 
 	setPointSet: function(pointSet) {
 		this._pointSet = pointSet;
-		this._updateCellSelection();
+		this._updateSelection();
 	},
 
 	contains: function(corePxPoint) {
-		if (!this._cellSelection)
+		if (!this._selection)
 			return false;
 
-		return this._cellSelection.anyRingBoundContains(corePxPoint);
+		return this._selection.anyRingBoundContains(corePxPoint);
 	},
 
 	getBounds: function() {
-		return this._cellSelection.getBounds();
+		return this._selection.getBounds();
 	},
 
-	_updateCellSelection: function() {
-		if (!this._cellSelection) {
+	_updateSelection: function() {
+		if (!this._selection) {
 			var fillColor = this._isView ?
 				L.LOUtil.rgbToHex(this._map.getViewColor(this._viewId)) :
 				this._styleData.getPropValue('background-color');
 			var opacity = this._styleData.getFloatPropValue('opacity');
 			var weight = this._styleData.getFloatPropWithoutUnit('border-top-width');
-			var attributes = {
+			var attributes = this._isText ? {
+				name: this._name,
+				pointerEvents: 'none',
+				fillColor: fillColor,
+				fillOpacity: opacity,
+				color: fillColor,
+				opacity: 0.60,
+				stroke: true,
+				fill: true,
+				weight: 1.0
+			} : {
 				name: this._name,
 				pointerEvents: 'none',
 				color: fillColor,
@@ -111,17 +122,26 @@ var CSelections = L.Class.extend({
 				opacity: 1.0,
 				weight: Math.round(weight * this._dpiScale)
 			};
-			this._cellSelection = new CCellSelection(this._pointSet, attributes);
-			this._overlay.initPathGroup(this._cellSelection);
+			this._selection = this._isText ? new CPolygon(this._pointSet, attributes) :
+				new CCellSelection(this._pointSet, attributes);
+
+			if (this._isText)
+				this._overlay.initPath(this._selection);
+			else
+				this._overlay.initPathGroup(this._selection);
 			return;
 		}
 
-		this._cellSelection.setPointSet(this._pointSet);
+		this._selection.setPointSet(this._pointSet);
 	},
 
 	remove: function() {
-		if (this._cellSelection)
-			this._overlay.removePathGroup(this._cellSelection);
+		if (!this._selection)
+			return;
+		if (this._isText)
+			this._overlay.removePath(this._selection);
+		else
+			this._overlay.removePathGroup(this._selection);
 	}
 });
 
@@ -328,8 +348,10 @@ L.TileLayer = L.GridLayer.extend({
 	onAdd: function (map) {
 		this._initContainer();
 		this._getToolbarCommandsValues();
-		this._selections = new CSelections(undefined, this._canvasOverlay,
-			this._painter._dpiScale, this._selectionsDataDiv, this._map, false);
+		this._textCSelections = new CSelections(undefined, this._canvasOverlay,
+			this._painter._dpiScale, this._selectionsDataDiv, this._map, false /* isView */, undefined, true /* isText */);
+		this._cellCSelections = new CSelections(undefined, this._canvasOverlay,
+			this._painter._dpiScale, this._selectionsDataDiv, this._map, false /* isView */, undefined, false /* isText */);
 		this._references = new CReferences(this._canvasOverlay);
 		this._referencesAll = [];
 
@@ -1873,7 +1895,7 @@ L.TileLayer = L.GridLayer.extend({
 
 	_clearSearchResults: function() {
 		if (this._searchTerm) {
-			this._selections.clear();
+			this._textCSelections.clear();
 		}
 		this._lastSearchResult = null;
 		this._searchResults = null;
@@ -1973,7 +1995,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onTextSelectionMsg: function (textMsg) {
 
 		var rectArray = this._getTextSelectionRectangles(textMsg);
-
+		var isTextSelection = this.isCursorVisible();
 		if (rectArray.length) {
 
 			var rectangles = rectArray.map(function (rect) {
@@ -2000,7 +2022,12 @@ L.TileLayer = L.GridLayer.extend({
 					corePxPt.round();
 					return corePxPt;
 				});
-			this._selections.setPointSet(pointSet);
+
+			if (isTextSelection)
+				this._textCSelections.setPointSet(pointSet);
+			else
+				this._cellCSelections.setPointSet(pointSet);
+
 			this._map.removeLayer(this._map._textInput._cursorHandler); // User selected a text, we remove the carret marker.
 			if (this._selectionContentRequest) {
 				clearTimeout(this._selectionContentRequest);
@@ -2009,7 +2036,8 @@ L.TileLayer = L.GridLayer.extend({
 				app.socket.sendMessage('gettextselection mimetype=text/html');}, this), 100);
 		}
 		else {
-			this._selections.clear();
+			this._textCSelections.clear();
+			this._cellCSelections.clear();
 		}
 
 		this._onUpdateTextSelection();
@@ -2563,7 +2591,9 @@ L.TileLayer = L.GridLayer.extend({
 		// hide the cursor if not editable
 		this._onUpdateCursor(calledFromSetPartHandler);
 		// hide the text selection
-		this._selections.clear();
+		this._textCSelections.clear();
+		// hide the cell selection
+		this._cellCSelections.clear();
 		// hide the selection handles
 		this._onUpdateTextSelection();
 		// hide the graphic selection
@@ -2582,7 +2612,9 @@ L.TileLayer = L.GridLayer.extend({
 
 	containsSelection: function (latlng) {
 		var corepxPoint = this._map.project(latlng);
-		return this._selections.contains(corepxPoint);
+		return this._textCSelections.empty() ?
+			this._cellCSelections.contains(corepxPoint) :
+			this._textCSelections.contains(corepxPoint);
 	},
 
 	_clearReferences: function () {
@@ -2924,7 +2956,7 @@ L.TileLayer = L.GridLayer.extend({
 				viewSelection.setPointSet(viewPointSet);
 			} else {
 				viewSelection = new CSelections(viewPointSet, this._canvasOverlay,
-					this._painter._dpiScale, this._selectionsDataDiv, this._map, true, viewId);
+					this._painter._dpiScale, this._selectionsDataDiv, this._map, true, viewId, true);
 				this._viewSelections[viewId].selection = viewSelection;
 			}
 		}
@@ -3573,7 +3605,7 @@ L.TileLayer = L.GridLayer.extend({
 									|| (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)));
 
 		if (!selectionOnDesktop &&
-			(!this._selections.empty() || (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)))) {
+			(!this._cellCSelections.empty() || (this._cellCursor && !this._isEmptyRectangle(this._cellCursor)))) {
 			if (this._isEmptyRectangle(this._cellSelectionArea) && this._isEmptyRectangle(this._cellCursor)) {
 				return;
 			}
@@ -3613,7 +3645,7 @@ L.TileLayer = L.GridLayer.extend({
 		var startMarker = this._selectionHandles['start'];
 		var endMarker = this._selectionHandles['end'];
 
-		if (this._map.editorHasFocus() && (!this._selections.empty() || startMarker.isDragged || endMarker.isDragged)) {
+		if (this._map.editorHasFocus() && (!this._textCSelections.empty() || startMarker.isDragged || endMarker.isDragged)) {
 			this._updateMarkers();
 		}
 		else {
@@ -3630,7 +3662,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._map.removeLayer(this._selectionHandles[key]);
 			this._selectionHandles[key].isDragged = false;
 		}
-		this._selections.clear();
+		this._textCSelections.clear();
 	},
 
 	_updateMarkers: function() {

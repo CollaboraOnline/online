@@ -427,7 +427,7 @@ L.Map.Keyboard = L.Handler.extend({
 				map.fire('scrollby', {x: this._panKeys[key][0], y: this._panKeys[key][1]});
 			}
 			else if (key in this._panKeys && ev.shiftKey &&
-					!docLayer._selections.empty()) {
+					!docLayer._textCSelections.empty()) {
 				// if there is a selection and the user wants to modify it
 				keyEventFn('input', charCode, unoKeyCode);
 			}
