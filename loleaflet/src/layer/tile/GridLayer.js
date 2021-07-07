@@ -49,9 +49,14 @@ L.GridLayer = L.Layer.extend({
 		this._clearPreFetch();
 		clearTimeout(this._previewInvalidator);
 
-		if (!this._selections.empty()) {
-			this._selections.clear();
+		if (!this._cellCSelections.empty()) {
+			this._cellCSelections.clear();
 		}
+
+		if (!this._textCSelections.empty()) {
+			this._textCSelections.clear();
+		}
+
 		if (this._cursorMarker && this._cursorMarker.isDomAttached()) {
 			this._cursorMarker.remove();
 		}
