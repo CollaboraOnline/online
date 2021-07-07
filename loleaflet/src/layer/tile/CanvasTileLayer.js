@@ -4893,6 +4893,10 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_syncTileContainerSize: function () {
+		if (this._docType === 'presentation') {
+			this.onResizeImpress();
+		}
+
 		var tileContainer = this._container;
 		if (tileContainer) {
 			var documentContainerSize = document.getElementById('document-container');
@@ -4929,6 +4933,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			if (!heightIncreased)
 				this._onUpdateCursor(true);
+
+			// Center the view w.r.t the new map-pane position using the current zoom.
+			this._map.setView(this._map.getCenter());
 		}
 	},
 
