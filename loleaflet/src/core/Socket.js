@@ -222,16 +222,8 @@ app.definitions.Socket = L.Class.extend({
 				msg += ' spellOnline=' + spellOnline;
 			}
 		}
-		// If there was a query parameter requesting Trace Event recording right from the
-		// start, forward that request to the server. Note that if Trace Event recording is
-		// not enabled for the server, this will have no effect.
-		if (L.Params.traceEventsRequested) {
-			this.traceEventRecordingToggle = true;
-			msg += ' traceeventrecording=yes';
-		}
 
 		this._doSend(msg);
-
 		for (var i = 0; i < this._msgQueue.length; i++) {
 			this._doSend(this._msgQueue[i]);
 		}

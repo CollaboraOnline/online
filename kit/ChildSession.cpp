@@ -648,17 +648,6 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const S
     std::string timestamp, doctemplate;
     parseDocOptions(tokens, part, timestamp, doctemplate);
 
-    if (getTraceEventRecordingAtStart())
-    {
-            static const bool traceEventsEnabled = config::getBool("trace_event[@enable]", false);
-            if (traceEventsEnabled)
-            {
-                getLOKit()->setOption("traceeventrecording", "start");
-                TraceEvent::startRecording();
-                LOG_INF("Trace Event recording in this Kit process turned on");
-            }
-    }
-
     std::string renderOpts;
     if (!getDocOptions().empty())
     {
