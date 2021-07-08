@@ -1986,6 +1986,7 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
     socket->send(oss.str());
 #endif
     socket->shutdown();
+    socket->ignoreInput();
 
     return false;
 }
