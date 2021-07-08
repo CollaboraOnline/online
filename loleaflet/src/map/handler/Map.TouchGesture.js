@@ -566,28 +566,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			return;
 
 		this._pinchStartCenter = {x: e.center.x, y: e.center.y};
-		if (this._map._docLayer.isCursorVisible()) {
-			this._map._docLayer._cursorMarker.setOpacity(0);
-		}
-		if (this._map._textInput._cursorHandler) {
-			this._map._textInput._cursorHandler.setOpacity(0);
-		}
-		if (this._map._docLayer._cellCursorMarker) {
-			this._map.setOverlaysOpacity(0);
-			this._map.setMarkersOpacity(0);
-		}
-		if (this._map._docLayer._selectionHandles['start']) {
-			this._map._docLayer._selectionHandles['start'].setOpacity(0);
-		}
-		if (this._map._docLayer._selectionHandles['end']) {
-			this._map._docLayer._selectionHandles['end'].setOpacity(0);
-		}
-		this._map._docLayer.eachView(this._map._docLayer._viewCursors, function (item) {
-			var viewCursorMarker = item.marker;
-			if (viewCursorMarker) {
-				viewCursorMarker.setOpacity(0);
-			}
-		}, this._map._docLayer, true);
+		this._map._docLayer.preZoomAnimation();
 	},
 
 	_onPinch: function (e) {
@@ -634,31 +613,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			},
 			// showMarkers
 			function () {
-
-				if (thisObj._map._docLayer.isCursorVisible()) {
-					thisObj._map._docLayer._cursorMarker.setOpacity(1);
-				}
-				if (thisObj._map._textInput._cursorHandler) {
-					thisObj._map._textInput._cursorHandler.setOpacity(1);
-				}
-				if (thisObj._map._docLayer._cellCursorMarker) {
-					thisObj._map.setOverlaysOpacity(1);
-					thisObj._map.setMarkersOpacity(1);
-				}
-				if (thisObj._map._docLayer._selectionHandles['start']) {
-					thisObj._map._docLayer._selectionHandles['start'].setOpacity(1);
-				}
-				if (thisObj._map._docLayer._selectionHandles['end']) {
-					thisObj._map._docLayer._selectionHandles['end'].setOpacity(1);
-				}
-
-				if (thisObj._map._docLayer && thisObj._map._docLayer._annotations) {
-					var annotations = thisObj._map._docLayer._annotations;
-					if (annotations.update)
-						setTimeout(function() {
-							annotations.update();
-						}, 250 /* ms */);
-				}
+				thisObj._map._docLayer.postZoomAnimation();
 			});
 		}
 	},
