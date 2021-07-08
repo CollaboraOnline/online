@@ -62,7 +62,7 @@
 	height: 32px; /* on mouseover menubar items, border emerges */
 	width: auto;
 	background: #ffffff;
-	padding: 3px;
+	padding: 3px 3px 3px 0;
 	white-space: nowrap;
 	z-index: 12;
 }
