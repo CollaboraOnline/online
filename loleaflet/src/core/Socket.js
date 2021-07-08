@@ -1070,7 +1070,11 @@ app.definitions.Socket = L.Class.extend({
 		// These can arrive very early during the startup, and never again.
 		if (textMsg.startsWith('statusindicator')) {
 			if (textMsg.startsWith('statusindicatorstart:')) {
-				this._map.fire('statusindicator', {statusType : 'start'});
+				var tokens = textMsg.split(' ');
+				this._map.fire('statusindicator', {
+					statusType : 'start',
+					text: tokens.length > 1 ? tokens[1] : ''
+				});
 				return;
 			}
 			else if (textMsg.startsWith('statusindicatorsetvalue:')) {
