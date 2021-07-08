@@ -53,6 +53,11 @@
 
     <logging>
         <color type="bool">true</color>
+        <!--
+             Note to developers: When you do "make run", the logging.level will be set on the
+             loolwsd command line, so if you want to change it for your testing, do it in
+             Makefile.am, not here.
+        -->
         <level type="string" desc="Can be 0-8 (with the lowest numbers being the least verbose), or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace" default="@LOOLWSD_LOGLEVEL@">@LOOLWSD_LOGLEVEL@</level>
         <most_verbose_level_settable_from_client type="string" desc="A loggingleveloverride message from the client can not set a more verbose log level than this" default="notice">notice</most_verbose_level_settable_from_client>
         <least_verbose_level_settable_from_client type="string" desc="A loggingleveloverride message from a client can not set a less verbose log level than this" default="fatal">fatal</least_verbose_level_settable_from_client>
@@ -77,6 +82,11 @@
         </anonymize>
     </logging>
 
+    <!--
+         Note to developers: When you do "make run", the trace_event[@enable] will be set on the
+         loolwsd command line, so if you want to change it for your testing, do it in Makefile.am,
+         not here.
+    -->
     <trace_event desc="The possibility to turn on generation of a Chrome Trace Event file" enable="false">
         <path desc="Output path for the Trace Event file, to which they will be written if turned on at run-time" type="string" default="@LOOLWSD_TRACEEVENTFILE@">@LOOLWSD_TRACEEVENTFILE@</path>
     </trace_event>
