@@ -114,6 +114,10 @@ public:
     {
         ASSERT_CORRECT_SOCKET_THREAD(this);
 
+        // avoided in readIncomingData
+        if (ignoringInput())
+            return -1;
+
 #if ENABLE_DEBUG
         if (simulateSocketError(true))
             return -1;

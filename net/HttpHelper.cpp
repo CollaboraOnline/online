@@ -40,6 +40,7 @@ void sendErrorAndShutdown(int errorCode, const std::shared_ptr<StreamSocket>& so
 {
     sendError(errorCode, socket, body, extraHeader);
     socket->shutdown();
+    socket->ignoreInput();
 }
 
 void sendUncompressedFileContent(const std::shared_ptr<StreamSocket>& socket,

@@ -2436,6 +2436,7 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
     HttpHelper::sendError(400, socket, "Failed to find this clipboard");
 #endif
     socket->shutdown();
+    socket->ignoreInput();
 
     return false;
 }
