@@ -529,7 +529,7 @@ L.Map = L.Evented.extend({
 
 				newTopLeftPx._add(new L.Point(diffX, diffY));
 				topLeftPx._add(new L.Point(diffX / zoomScaleAbs, diffY / zoomScaleAbs));
-				// FIXME: move to topLeftPx ?
+				// FIXME: pan to topLeftPx before the animation ?
 			}
 		}
 
@@ -553,7 +553,6 @@ L.Map = L.Evented.extend({
 					calcLayer.activateCursor();
 				}
 			});
-		//this._resetView(L.latLng(newCenterLatLng), this._limitZoom(zoom));
 	},
 
 	ignoreCursorUpdate: function () {
@@ -617,12 +616,21 @@ L.Map = L.Evented.extend({
 			var caretPos = this._docLayer._visibleCursor.getCenter();
 			var newCenter = new L.LatLng(curCenter.lat + (caretPos.lat - curCenter.lat) * (1.0 - zoomScale),
 						     curCenter.lng + (caretPos.lng - curCenter.lng) * (1.0 - zoomScale));
-			var retValue = this.setView(newCenter, zoom, {zoom: options});
-			this._docLayer.setZoomChanged(false);
-			return retValue;
+			var thisObj = this;
+			this._docLayer.runZoomAnimation(zoom, caretPos /* pinchCenter */,
+				// mapUpdater
+				function() {
+					thisObj.setView(newCenter, zoom, {zoom: options});
+				},
+				// runAtFinish
+				function() {
+					thisObj._docLayer.setZoomChanged(false);
+				});
+
+			return;
 		}
 
-		retValue = this.setView(curCenter, zoom, {zoom: options});
+		var retValue = this.setView(curCenter, zoom, {zoom: options});
 		this._docLayer.setZoomChanged(false);
 		return retValue;
 	},
