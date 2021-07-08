@@ -4,7 +4,7 @@ var tmp = require('tmp');
 
 if (process.argv.length < 3 ||
     process.argv[2] == '--help') {
-	console.debug('load.js <ssl_true_or_false> <abs_op_builddir> <abs-path-to-file> [bookmark]');
+	console.debug('load.js <ssl_true_or_false> <abs_op_builddir> <abs-path-to-file> [bookmark] [port]');
 	process.exit(0);
 }
 
@@ -26,6 +26,11 @@ if (process.argv.length > 5) {
 	bookmark = process.argv[5];
 }
 
+let port = 9980;
+if (process.argv.length > 6) {
+	port = process.argv[6];
+}
+
 // jsdom for browser emulation
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
@@ -36,9 +41,9 @@ data = data.replace(/%SERVICE_ROOT%\/loleaflet\/%VERSION%/g, top_builddir + '/lo
 data = data.replace(/%SERVICE_ROOT%/g, '');
 data = data.replace(/%VERSION%/g, 'dist');
 if (ssl_flag === 'true')
-    data = data.replace(/%HOST%/g, 'wss://localhost:9980');
+    data = data.replace(/%HOST%/g, `wss://localhost:${port}`);
 else
-    data = data.replace(/%HOST%/g, 'ws://localhost:9980');
+    data = data.replace(/%HOST%/g, `ws://localhost:${port}`);
 data = data.replace(/%ACCESS_TOKEN%/g, '');
 data = data.replace(/%ACCESS_TOKEN_TTL%/g, '0');
 data = data.replace(/%ACCESS_HEADER%/g, '');
