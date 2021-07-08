@@ -239,7 +239,7 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'button',  id: 'numberformatincdecimals',  img: 'numberformatincdecimals', hint: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), hidden: true, uno: '.uno:NumberFormatIncDecimals', disabled: true},
 			{type: 'break',   id: 'break-number', hidden: true},
 			{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), hidden: true, overlay: {onShow: window.insertTable}, html: window.getInsertTablePopupHtml(), freemiumUno: '.uno:InsertTable'},
-			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), uno: '.uno:InsertGraphic'},
+			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), freemiumUno: '.uno:InsertGraphic'},
 			{type: 'menu', id: 'menugraphic', img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), hidden: true, freemiumUno: '.uno:InsertGraphic',
 				items: [
 					{id: 'localgraphic', text: _('Insert Local Image')},
