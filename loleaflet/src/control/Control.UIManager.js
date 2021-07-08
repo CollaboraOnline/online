@@ -8,6 +8,7 @@
 L.Control.UIManager = L.Control.extend({
 	mobileWizard: null,
 	blockedUI: false,
+	busyPopupTimer: null,
 
 	onAdd: function (map) {
 		this.map = map;
@@ -79,27 +80,30 @@ L.Control.UIManager = L.Control.extend({
 		this.map.addControl(L.control.userList());
 
 		var openBusyPopup = function(label) {
-			var json = {
-				id: 'busypopup',
-				jsontype: 'dialog',
-				type: 'modalpopup',
-				children: [
-					{
-						id: 'busycontainer',
-						type: 'container',
-						vertical: 'true',
-						children: [
-							{id: 'busyspinner', type: 'spinnerimg'},
-							{id: 'busylabel', type: 'fixedtext', text: label}
-						]
-					}
-				]
-			};
-			if (app.socket)
-				app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json)});
+			this.busyPopupTimer = setTimeout(function() {
+				var json = {
+					id: 'busypopup',
+					jsontype: 'dialog',
+					type: 'modalpopup',
+					children: [
+						{
+							id: 'busycontainer',
+							type: 'container',
+							vertical: 'true',
+							children: [
+								{id: 'busyspinner', type: 'spinnerimg'},
+								{id: 'busylabel', type: 'fixedtext', text: label}
+							]
+						}
+					]
+				};
+				if (app.socket)
+					app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json)});
+			}, 700);
 		};
 
 		var closeBusyPopup = function() {
+			clearTimeout(this.busyPopupTimer);
 			var json = {
 				id: 'busypopup',
 				jsontype: 'dialog',
