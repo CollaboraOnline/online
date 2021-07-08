@@ -4,7 +4,7 @@
 			 and allows to controll them (show/hide)
  */
 
-/* global app $ setupToolbar w2ui w2utils toolbarUpMobileItems _ Hammer */
+/* global app $ setupToolbar w2ui toolbarUpMobileItems _ Hammer */
 L.Control.UIManager = L.Control.extend({
 	mobileWizard: null,
 	blockedUI: false,
@@ -111,20 +111,11 @@ L.Control.UIManager = L.Control.extend({
 		};
 
 		this.map.on('showbusy', function(e) {
-			if (window.mode.isMobile()) {
-				if (w2ui['actionbar'])
-					w2utils.lock(w2ui['actionbar'].box, e.label, true);
-			} else {
-				closeBusyPopup();
-				openBusyPopup(e.label);
-			}
+			closeBusyPopup();
+			openBusyPopup(e.label);
 		});
 
 		this.map.on('hidebusy', function() {
-			// If locked, unlock
-			if (w2ui['actionbar'] && w2ui['actionbar'].box.firstChild.className === 'w2ui-lock') {
-				w2utils.unlock(w2ui['actionbar'].box);
-			}
 			closeBusyPopup();
 		});
 	},
