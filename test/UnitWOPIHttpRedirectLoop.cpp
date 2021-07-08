@@ -42,7 +42,7 @@ public:
         Poco::URI uriReq(request.getURI());
         Poco::RegularExpression regInfo("/wopi/files/[0-9]+");
         std::string redirectUri = "/wopi/files/";
-        static unsigned fileId = 1;
+        static unsigned redirectionCount = 0;
 
         LOG_INF("Fake wopi host request URI [" << uriReq.toString() << "]:\n");
 
@@ -54,23 +54,23 @@ public:
             assertCheckFileInfoRequest(request);
 
             std::string sExpectedMessage = "It is expected to stop requesting after " + std::to_string(RedirectionLimit) + " redirections";
-            LOK_ASSERT_MESSAGE(sExpectedMessage, fileId <= RedirectionLimit + 1);
+            LOK_ASSERT_MESSAGE(sExpectedMessage, redirectionCount <= RedirectionLimit);
 
             LOK_ASSERT_MESSAGE("Expected to be in Phase::Load or Phase::Redirected", _phase == Phase::Load || _phase == Phase::Redirected);
             _phase = Phase::Redirected;
 
-            if (fileId == RedirectionLimit + 1)
+            if (redirectionCount == RedirectionLimit)
                 _phase = Phase::Polling;
 
             std::ostringstream oss;
             oss << "HTTP/1.1 302 Found\r\n"
-                "Location: " << helpers::getTestServerURI() << redirectUri << fileId << "?" << params << "\r\n"
+                "Location: " << helpers::getTestServerURI() << redirectUri << redirectionCount << "?" << params << "\r\n"
                 "\r\n";
 
             socket->send(oss.str());
             socket->shutdown();
 
-            fileId++;
+            redirectionCount++;
 
             return true;
         }
