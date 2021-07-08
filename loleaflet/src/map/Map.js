@@ -1554,12 +1554,9 @@ L.Map = L.Evented.extend({
 
 	_onUpdateProgress: function (e) {
 		if (e.statusType === 'start') {
-			if (app.socket.socket.readyState === 1) {
-				// auto-save
-				this.showBusy(_('Saving...'), true);
-			}
-			else {
-				this.showBusy(_('Loading...'), true);
+			if (e.text) {
+				// e.text translated by Core
+				this.showBusy(e.text);
 			}
 		}
 		else if (e.statusType === 'setvalue') {
