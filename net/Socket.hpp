@@ -106,10 +106,8 @@ public:
 
     enum Type { IPv4, IPv6, All, Unix };
 
-    Socket(Type type) :
-        _fd(createSocket(type)),
-        _sendBufferSize(DefaultSendBufferSize),
-        _owner(std::this_thread::get_id())
+    // NB. see other Socket::Socket by init below.
+    Socket(Type type) : _fd(createSocket(type))
     {
         init();
     }
@@ -310,12 +308,18 @@ public:
         // assert(sameThread);
     }
 
-protected:
+    bool ignoringInput() const { return _ignoreInput; }
 
+    // Ensure that no further input is processed from this socket
+    virtual void ignoreInput()
+    {
+        LOG_TRC('#' << _fd << ": ignore further input on socket.");
+        _ignoreInput = true;
+    }
+protected:
     /// Construct based on an existing socket fd.
     /// Used by accept() only.
-    Socket(const int fd) :
-        _fd(fd)
+    Socket(const int fd) : _fd(fd)
     {
         init();
     }
@@ -323,6 +327,7 @@ protected:
     void init()
     {
         setNoDelay();
+        _ignoreInput = false;
         _sendBufferSize = DefaultSendBufferSize;
         _owner = std::this_thread::get_id();
         LOG_DBG('#' << _fd << " Thread affinity set to " << Log::to_string(_owner) << '.');
@@ -343,6 +348,10 @@ protected:
 private:
     std::string _clientAddress;
     const int _fd;
+
+    // If _ignoreInput is true no more input from this socket will be processed.
+    bool _ignoreInput;
+
     int _sendBufferSize;
 
     /// We check the owner even in the release builds, needs to be always correct.
@@ -748,6 +757,10 @@ private:
         for (size_t i = 0; i < size; ++i)
         {
             int events = _pollSockets[i]->getPollEvents(now, timeoutMaxMicroS);
+
+            if (_pollSockets[i]->ignoringInput())
+                events &= ~POLLIN; // mask out input.
+
             assert(events >= 0); // Or > 0 even?
             _pollFds[i].fd = _pollSockets[i]->getFD();
             _pollFds[i].events = events;
@@ -851,6 +864,12 @@ public:
         LOG_TRC('#' << getFD() << ": Async shutdown requested.");
     }
 
+    virtual void ignoreInput() override
+    {
+        Socket::ignoreInput();
+        _inBuffer.clear();
+    }
+
     /// Perform the real shutdown.
     virtual void closeConnection()
     {
@@ -934,6 +953,12 @@ public:
     virtual bool readIncomingData()
     {
         assertCorrectThread();
+
+        if (ignoringInput())
+        {
+            LOG_WRN("Ignoring attempted read from " << getFD());
+            return false; // error - close it.
+        }
 
 #if !MOBILEAPP
         // SSL decodes blocks of 16Kb, so for efficiency we use the same.
@@ -1235,6 +1260,11 @@ protected:
     virtual int readData(char* buf, int len)
     {
         assertCorrectThread();
+
+        // avoided in readIncomingData
+        if (ignoringInput())
+            return -1;
+
 #if !MOBILEAPP
         if (_readType == UseRecvmsgExpectFD)
             return readFD(buf, len, _incomingFD);

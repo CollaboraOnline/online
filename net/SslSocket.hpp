@@ -115,6 +115,10 @@ public:
     {
         assertCorrectThread();
 
+        // avoided in readIncomingData
+        if (ignoringInput())
+            return -1;
+
         return handleSslState(SSL_read(_ssl, buf, len));
     }
 
