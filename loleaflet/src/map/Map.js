@@ -499,6 +499,10 @@ L.Map = L.Evented.extend({
 
 		var topLeftCell = sheetGeom.getCellFromPos(
 			cssBounds.getTopLeft().multiplyBy(app.dpiScale), 'corepixels');
+		// top-left w.r.t current zoom.
+		var topLeftPx = sheetGeom.getCellRect(topLeftCell.x, topLeftCell.y)
+			.getTopLeft().divideBy(window.devicePixelRatio);
+		// top-left w.r.t new zoom.
 		var newTopLeftPx = sheetGeom.getCellRect(topLeftCell.x, topLeftCell.y, zoomScaleAbs)
 			.getTopLeft().divideBy(app.dpiScale);
 
@@ -533,21 +537,32 @@ L.Map = L.Evented.extend({
 				}
 
 				newTopLeftPx._add(new L.Point(diffX, diffY));
+				topLeftPx._add(new L.Point(diffX / zoomScaleAbs, diffY / zoomScaleAbs));
+				// FIXME: move to topLeftPx ?
 			}
 		}
 
 		var newHalfSize = cssBoundsSize.divideBy(2);
 		var newCenter = newTopLeftPx.add(newHalfSize);
 		var newCenterLatLng = this.unproject(newCenter, zoom);
+		// pinch center w.r.t current zoom scale.
+		var newPinchCenterLatLng = this.unproject(topLeftPx, this.getZoom());
 
 		this._ignoreCursorUpdate = true;
-		this._resetView(L.latLng(newCenterLatLng), this._limitZoom(zoom));
-		this._ignoreCursorUpdate = false;
-		if (cursorActive) {
-			calcLayer.activateCursor();
-		}
-
-		return;
+		var thisObj = this;
+		this._docLayer.runZoomAnimation(zoom, newPinchCenterLatLng,
+			// mapUpdater
+			function() {
+				thisObj._resetView(L.latLng(newCenterLatLng), thisObj._limitZoom(zoom));
+			},
+			// runAtFinish
+			function() {
+				thisObj._ignoreCursorUpdate = false;
+				if (cursorActive) {
+					calcLayer.activateCursor();
+				}
+			});
+		//this._resetView(L.latLng(newCenterLatLng), this._limitZoom(zoom));
 	},
 
 	ignoreCursorUpdate: function () {

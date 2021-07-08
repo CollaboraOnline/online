@@ -677,7 +677,7 @@ L.TileSectionManager = L.Class.extend({
 		}
 	},
 
-	zoomStepEnd: function (zoom, newCenter, mapUpdater, showMarkers) {
+	zoomStepEnd: function (zoom, newCenter, mapUpdater, runAtFinish) {
 
 		if (!this._inZoomAnim || this._finishingZoom)
 			return;
@@ -748,8 +748,8 @@ L.TileSectionManager = L.Class.extend({
 					painter._sectionContainer.requestReDraw();
 					// Don't let a subsequent pinchZoom start before finishing all steps till this point.
 					painter._finishingZoom = false;
-					// Make the markers and svg overlays visible.
-					showMarkers();
+					// Run the finish callback.
+					runAtFinish();
 				}
 				else
 					waitTries -= 1;
@@ -5180,8 +5180,75 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._painter.zoomStep(zoom, newCenter);
 	},
 
-	zoomStepEnd: function (zoom, newCenter, mapUpdater, showMarkers) {
-		this._painter.zoomStepEnd(zoom, newCenter, mapUpdater, showMarkers);
+	zoomStepEnd: function (zoom, newCenter, mapUpdater, runAtFinish) {
+		this._painter.zoomStepEnd(zoom, newCenter, mapUpdater, runAtFinish);
+	},
+
+	preZoomAnimation: function () {
+		if (this.isCursorVisible()) {
+			this._cursorMarker.setOpacity(0);
+		}
+		if (this._map._textInput._cursorHandler) {
+			this._map._textInput._cursorHandler.setOpacity(0);
+		}
+		if (this._cellCursorMarker) {
+			this._map.setOverlaysOpacity(0);
+			this._map.setMarkersOpacity(0);
+		}
+		if (this._selectionHandles['start']) {
+			this._selectionHandles['start'].setOpacity(0);
+		}
+		if (this._selectionHandles['end']) {
+			this._selectionHandles['end'].setOpacity(0);
+		}
+		this.eachView(this._viewCursors, function (item) {
+			var viewCursorMarker = item.marker;
+			if (viewCursorMarker) {
+				viewCursorMarker.setOpacity(0);
+			}
+		}, this, true);
+	},
+
+	postZoomAnimation: function () {
+		if (this.isCursorVisible()) {
+			this._cursorMarker.setOpacity(1);
+		}
+		if (this._map._textInput._cursorHandler) {
+			this._map._textInput._cursorHandler.setOpacity(1);
+		}
+		if (this._cellCursorMarker) {
+			this._map.setOverlaysOpacity(1);
+			this._map.setMarkersOpacity(1);
+		}
+		if (this._selectionHandles['start']) {
+			this._selectionHandles['start'].setOpacity(1);
+		}
+		if (this._selectionHandles['end']) {
+			this._selectionHandles['end'].setOpacity(1);
+		}
+
+		if (this._annotations) {
+			var annotations = this._annotations;
+			if (annotations.update)
+				setTimeout(function() {
+					annotations.update();
+				}, 250 /* ms */);
+		}
+	},
+
+	// Meant for desktop case, where the ending zoom and centers are all known in advance.
+	runZoomAnimation: function (zoomEnd, pinchCenter, mapUpdater, runAtFinish) {
+
+		this.preZoomAnimation();
+		this.zoomStep(this._map.getZoom(), pinchCenter);
+		var thisObj = this;
+		this.zoomStepEnd(zoomEnd, pinchCenter,
+			mapUpdater,
+			// runAtFinish
+			function () {
+				thisObj.postZoomAnimation();
+				runAtFinish();
+			});
 	},
 
 	_viewReset: function (e) {
