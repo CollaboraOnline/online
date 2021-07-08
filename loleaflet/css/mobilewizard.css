@@ -256,11 +256,15 @@ p.mobile-wizard.ui-combobox-text.selected {
 	width: 100%;
 	position: relative;
 	bottom: 0px;
-	z-index: 1001;
+	z-index: 2001;
 	background-color: white;
 	box-shadow: 0px -2px 4px 1px #00000030;
 	overflow-x: hidden;
 	overflow-y: auto;
+}
+
+#mobile-wizard.menuwizard {
+	z-index: 1001;
 }
 
 #mobile-wizard-content *{
