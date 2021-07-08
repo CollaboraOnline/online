@@ -119,6 +119,8 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_hideWizard: function() {
+		$('.jsdialog-overlay').remove();
+
 		// dialog
 		if (this.map.dialog.hasDialogInMobilePanelOpened()) {
 			this.map.dialog._onDialogClose(window.mobileDialogId, true);
@@ -419,10 +421,10 @@ L.Control.MobileWizard = L.Control.extend({
 			if (this._currentScrollPosition)
 				lastScrollPosition = this._currentScrollPosition;
 
-			// for menubutton we inject popup into menu structure
 			if (isPopup) {
 				var popupContainer = $('.mobile-popup-container:visible');
 				if (popupContainer.length) {
+					// for menubutton we inject popup into menu structure
 					if (data.action === 'close') {
 						this.goLevelUp();
 						popupContainer.empty();
@@ -431,10 +433,16 @@ L.Control.MobileWizard = L.Control.extend({
 						this._builder = L.control.mobileWizardBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'mobile-wizard'});
 						this._builder.build(popupContainer.get(0), [data]);
 					}
-				}
 
-				this._inBuilding = false;
-				return;
+					this._inBuilding = false;
+					return;
+				} else if (data.action === 'close') {
+					this._hideWizard();
+					return;
+				} else {
+					// normal popup - continue to open mobile wizard
+					L.DomUtil.create('div', 'mobile-wizard jsdialog-overlay', document.body);
+				}
 			}
 
 			this._reset();
@@ -499,6 +507,9 @@ L.Control.MobileWizard = L.Control.extend({
 				this._goToPath(currentPath);
 				this._scrollToPosition(lastScrollPosition);
 			}
+
+			if (isPopup)
+				$('#mobile-wizard-titlebar').hide();
 
 			this._inBuilding = false;
 		}
