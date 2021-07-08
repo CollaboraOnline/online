@@ -216,8 +216,12 @@ L.Control.MobileWizard = L.Control.extend({
 		var nodesToHide = $(contentToShow).siblings().not('.mobile-wizard-scroll-indicator');
 
 		var duration = 10;
-		if (animate)
+		if (animate) {
 			nodesToHide.hide('slide', { direction: 'left' }, duration);
+			// be sure all is hidden, sometimes jQuery doesn't work here ...
+			// restoreStyle is called in some jQuery cleanup what causes showing nodes again
+			setTimeout(function() { nodesToHide.hide(); }, duration + 5);
+		}
 		else
 			nodesToHide.hide();
 
