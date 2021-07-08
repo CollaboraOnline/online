@@ -126,6 +126,8 @@ describe('Delete Objects', function() {
 		cy.get('.leaflet-control-buttons-disabled path.leaflet-interactive')
 			.should('exist');
 
+		cy.wait(200);
+
 		cy.get('.leaflet-control-buttons-disabled > .leaflet-interactive')
 			.trigger('pointerdown', eventOptions)
 			.wait(1000)
