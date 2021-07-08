@@ -847,7 +847,12 @@ input.clipboard {
 
 .leaflet-progress-label {
 	text-align: center;
-	font: 12px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font: 12px/1.5 var(--loleaflet-font);
+}
+
+.leaflet-progress-label.brand-label {
+	font-size: 14px;
+	font-weight: bold;
 }
 
 .leaflet-slideshow {
