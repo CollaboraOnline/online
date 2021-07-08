@@ -230,6 +230,7 @@ public:
             LOG_TRC('#' << socket->getFD() << ": Shutdown. Close Connection.");
             socket->closeConnection();
             socket->getInBuffer().clear();
+            socket->ignoreInput();
         }
         _wsPayload.clear();
 #if !MOBILEAPP
@@ -806,6 +807,13 @@ protected:
     void setSocket(const std::weak_ptr<StreamSocket>& socket)
     {
         _socket = socket;
+    }
+
+    void ignoreInput()
+    {
+        std::shared_ptr<StreamSocket> socket = _socket.lock();
+        if (socket)
+            socket->ignoreInput();
     }
 
     /// Implementation of the ProtocolHandlerInterface.

@@ -2531,6 +2531,7 @@ private:
                 "\r\n";
             socket->send(oss.str());
             socket->shutdown();
+            socket->ignoreInput();
             return;
         }
 
@@ -2628,6 +2629,7 @@ private:
                         << "\r\n";
                     socket->send(oss.str());
                     socket->shutdown();
+                    socket->ignoreInput();
                     return;
                 }
 
@@ -2695,6 +2697,7 @@ private:
                     "\r\n";
                 socket->send(oss.str());
                 socket->shutdown();
+                socket->ignoreInput();
                 return;
             }
         }
@@ -2714,6 +2717,7 @@ private:
                 << "\r\n";
             socket->send(oss.str());
             socket->shutdown();
+            socket->ignoreInput();
             return;
         }
 
@@ -2915,6 +2919,7 @@ private:
                 << errMsg;
             socket->send(oss.str());
             socket->shutdown();
+            socket->ignoreInput();
             return;
         }
 
@@ -2982,6 +2987,7 @@ private:
                 << errMsg;
             socket->send(oss.str());
             socket->shutdown();
+            socket->ignoreInput();
         }
     }
 
@@ -3193,6 +3199,7 @@ private:
                     "\r\n";
                 socket->send(oss.str());
                 socket->shutdown();
+                socket->ignoreInput();
                 return;
             }
 
@@ -3283,6 +3290,7 @@ private:
                     response.set("Connection", "close"); // Let the client know we will disconnect.
                     socket->send(response);
                     socket->shutdown();
+                    socket->ignoreInput();
                     return;
                 }
             }
@@ -3453,6 +3461,7 @@ private:
                         << "\r\n";
                     streamSocket->send(oss.str());
                     streamSocket->shutdown();
+                    streamSocket->ignoreInput();
                 });
         }
         else
@@ -3469,6 +3478,7 @@ private:
             // FIXME: send docunloading & re-try on client ?
             streamSocket->send(oss.str());
             streamSocket->shutdown();
+            streamSocket->ignoreInput();
         }
     }
 #endif
@@ -3566,35 +3576,33 @@ private:
                         }
                         catch (const UnauthorizedRequestException& exc)
                         {
-                            LOG_ERR("Unauthorized Request while loading session for " << docBroker->getDocKey() << ": " << exc.what());
-                            sendLoadResult(clientSession, false, "Unauthorized Request");
+                            LOG_ERR("Unauthorized Request while starting session on "
+                                    << docBroker->getDocKey() << " for socket #"
+                                    << moveSocket->getFD()
+                                    << ". Terminating connection. Error: " << exc.what());
                             const std::string msg = "error: cmd=internal kind=unauthorized";
-                            clientSession->sendMessage(msg);
-                            docBroker->addCallback([ws](){
-                                ws->shutdown(); // No document, nothing to communicate.
-                            });
+                            ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
+                            moveSocket->ignoreInput();
                         }
                         catch (const StorageConnectionException& exc)
                         {
-                            sendLoadResult(clientSession, false, exc.what());
-                            // Alert user about failed load
+                            LOG_ERR("Storage error while starting session on "
+                                    << docBroker->getDocKey() << " for socket #"
+                                    << moveSocket->getFD()
+                                    << ". Terminating connection. Error: " << exc.what());
                             const std::string msg = "error: cmd=storage kind=loadfailed";
-                            clientSession->sendMessage(msg);
-                            docBroker->addCallback([ws](){
-                                ws->shutdown(); // No document, nothing to communicate.
-                            });
+                            ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
+                            moveSocket->ignoreInput();
                         }
                         catch (const std::exception& exc)
                         {
-                            LOG_ERR("Error while loading : " << exc.what());
-
-                            // Alert user about failed load
+                            LOG_ERR("Error while starting session on "
+                                    << docBroker->getDocKey() << " for socket #"
+                                    << moveSocket->getFD()
+                                    << ". Terminating connection. Error: " << exc.what());
                             const std::string msg = "error: cmd=storage kind=loadfailed";
-                            clientSession->sendMessage(msg);
-                            sendLoadResult(clientSession, false, exc.what());
-                            docBroker->addCallback([ws](){
-                                ws->shutdown(); // No document, nothing to communicate.
-                            });
+                            ws->shutdown(WebSocketHandler::StatusCodes::POLICY_VIOLATION, msg);
+                            moveSocket->ignoreInput();
                         }
                     });
                 }
@@ -3614,6 +3622,7 @@ private:
             const std::string msg = "error: cmd=internal kind=load";
             ws->sendMessage(msg);
             ws->shutdown(WebSocketHandler::StatusCodes::ENDPOINT_GOING_AWAY, msg);
+            socket->ignoreInput();
         }
     }
 

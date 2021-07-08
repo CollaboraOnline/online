@@ -561,6 +561,7 @@ void StreamSocket::dumpState(std::ostream& os)
     int64_t timeoutMaxMicroS = SocketPoll::DefaultPollTimeoutMicroS;
     int events = getPollEvents(std::chrono::steady_clock::now(), timeoutMaxMicroS);
     os << '\t' << getFD() << '\t' << events << '\t'
+       << (ignoringInput() ? "ignore\t" : "process\t")
        << _inBuffer.size() << '\t' << _outBuffer.size() << '\t'
        << " r: " << _bytesRecvd << "\t w: " << _bytesSent << '\t'
        << clientAddress() << '\t';
