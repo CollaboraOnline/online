@@ -2796,7 +2796,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         sendTextFrame("contextmenu: " + payload);
         break;
     case LOK_CALLBACK_STATUS_INDICATOR_START:
-        sendTextFrame("statusindicatorstart:");
+        sendTextFrame("statusindicatorstart: " + payload);
         break;
     case LOK_CALLBACK_STATUS_INDICATOR_SET_VALUE:
         sendTextFrame("statusindicatorsetvalue: " + payload);
