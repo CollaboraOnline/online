@@ -410,11 +410,23 @@ L.TileSectionManager = L.Class.extend({
 		if (inYBounds)
 			center.y = pinchCenter.y;
 
+		var xMin = 0;
+		if (paneBounds.min.x < 0)
+			xMin = -Infinity;
+		else if (paneBounds.min.x > 0)
+			xMin = splitPos.x;
+
+		var yMin = 0;
+		if (paneBounds.min.y < 0)
+			yMin = -Infinity;
+		else if (paneBounds.min.y > 0)
+			yMin = splitPos.y;
+
 		// Top left in document coordinates.
 		var docTopLeft = new L.Point(
-			Math.max(paneBounds.min.x ? splitPos.x: 0,
+			Math.max(xMin,
 				center.x - (center.x - paneBounds.min.x) / scale),
-			Math.max(paneBounds.min.y ? splitPos.y: 0,
+			Math.max(yMin,
 				center.y - (center.y - paneBounds.min.y) / scale));
 
 		if (!findFreePaneCenter)
