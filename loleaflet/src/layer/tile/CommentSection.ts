@@ -523,6 +523,9 @@ class Comment {
 
 		this.sectionProperties.showSelectedCoordinate = false; // Writer.
 
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+			this.sectionProperties.commentListSection.sectionProperties.selectedComment = null;
+
 		this.hideMarker();
 	}
 
