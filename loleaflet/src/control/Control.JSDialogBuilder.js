@@ -1249,6 +1249,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		case 'fontsizecombobox':
 			return '.uno:FontHeight';
+
+		case 'LB_GLOW_COLOR':
+			return '.uno:GlowColor';
 		}
 
 		return null;
@@ -2564,6 +2567,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_sendColorCommand: function(builder, data, color) {
 		var gradientItem;
 
+		if (data.id === 'LB_GLOW_COLOR') {
+			data.id = 'GlowColor';
+		}
+
 		if (data.id === 'fillgrad1') {
 			gradientItem = builder.map['stateChangeHandler'].getItemValue('.uno:FillGradient');
 			gradientItem.startcolor = color;
@@ -2588,7 +2595,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder.map.sendUnoCommand('.uno:FillPageGradient?FillPageGradientJSON:string=' + JSON.stringify(gradientItem));
 			return;
 		} else if (data.id === 'Color' || data.id === 'CharBackColor' || data.id === 'FillColor'
-			|| data.id === 'XLineColor') {
+			|| data.id === 'XLineColor' || data.id === 'GlowColor') {
 			var params = {};
 			params[data.id] = {
 				type : 'long',

@@ -665,9 +665,21 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 	// apply needed modifications for mobile
 	_modifySidebarNodes: function(data) {
-		for (var i in data) {
-			if ((data[i].id === 'fillgrad1' || data[i].id === 'fillgrad2') && data[i].type === 'menubutton')
+		for (var i = data.length - 1; i >= 0; i--) {
+			if (data[i].type === 'menubutton' &&
+				(data[i].id === 'fillgrad1'
+				|| data[i].id === 'fillgrad2'
+				|| data[i].id === 'LB_GLOW_COLOR')) {
+
+				if (data[i].id === 'LB_GLOW_COLOR')
+					data[i].command = '.uno:GlowColor';
+
 				data[i].type = 'colorlistbox';
+			} else if ((data[i].command === 'sidebargradient' && data[i].type === 'toolitem')
+				|| (data[i].id === 'radiusglow' && data[i].type === 'fixedtext')
+				|| (data[i].id === 'radiussoftedge' && data[i].type === 'fixedtext')) {
+				data.splice(i, 1);
+			}
 		}
 	},
 
