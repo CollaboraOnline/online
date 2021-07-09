@@ -1351,6 +1351,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._cellCursor = L.LatLngBounds.createDefault();
 			this._cellCursorXY = new L.Point(-1, -1);
 			this._cellCursorPixels = null;
+			app.file.calc.cellCursor.visible = false;
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellCursor(null);
 		}
@@ -1366,8 +1367,12 @@ L.TileLayer = L.GridLayer.extend({
 					this._twipsToLatLng(this._cellCursorTwips.getBottomRight(), this._map.getZoom()));
 
 			var start = this._twipsToCorePixels(this._cellCursorTwips.min);
-			var offsetPixels = offsetPixels = this._twipsToCorePixels(this._cellCursorTwips.getSize());
+			var offsetPixels = this._twipsToCorePixels(this._cellCursorTwips.getSize());
 			this._cellCursorPixels = L.LOUtil.createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
+			app.file.calc.cellCursor.address = [parseInt(strTwips[4]), parseInt(strTwips[5])];
+			app.file.calc.cellCursor.rectangle.pixels = [Math.round(start.x), Math.round(start.y), Math.round(offsetPixels.x), Math.round(offsetPixels.y)];
+			app.file.calc.cellCursor.rectangle.twips = [parseInt(strTwips[0]), parseInt(strTwips[1]), parseInt(strTwips[2]), parseInt(strTwips[3])];
+			app.file.calc.cellCursor.visible = true;
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellCursor([this._cellCursorPixels.getX2(), this._cellCursorPixels.getY2()]);
 
