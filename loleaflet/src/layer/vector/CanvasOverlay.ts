@@ -261,11 +261,13 @@ class CanvasOverlay {
 			if (pinchCenter.y >= paneBounds.min.y && pinchCenter.y <= paneBounds.max.y)
 				center.y = pinchCenter.y;
 
+			var leftMin = paneBounds.min.x < 0 ? -Infinity : 0;
+			var topMin = paneBounds.min.y < 0 ? -Infinity : 0;
 			// Compute the new top left in core pixels that ties with the origin of overlay canvas section.
 			var newTopLeft = new CPoint(
-				Math.max(0,
+				Math.max(leftMin,
 					-splitPos.x - 1 + (center.x - (center.x - paneBounds.min.x) / scale)),
-				Math.max(0,
+				Math.max(topMin,
 					-splitPos.y - 1 + (center.y - (center.y - paneBounds.min.y) / scale)));
 
 			// Compute clip area which needs to be applied after setting the transformation.
