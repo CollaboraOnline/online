@@ -660,7 +660,17 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		return false;
 	},
 
+	// apply needed modifications for mobile
+	_modifySidebarNodes: function(data) {
+		for (var i in data) {
+			if ((data[i].id === 'fillgrad1' || data[i].id === 'fillgrad2') && data[i].type === 'menubutton')
+				data[i].type = 'colorlistbox';
+		}
+	},
+
 	build: function(parent, data) {
+		this._modifySidebarNodes(data);
+
 		for (var childIndex in data) {
 			if (!data[childIndex])
 				continue;
