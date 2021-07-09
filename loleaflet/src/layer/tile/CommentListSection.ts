@@ -778,6 +778,11 @@ class CommentSection {
 	}
 
 	public onNewDocumentTopLeft () {
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+			if (this.sectionProperties.selectedComment)
+				this.sectionProperties.selectedComment.hide();
+		}
+
 		this.layout();
 	}
 
