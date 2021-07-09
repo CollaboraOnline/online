@@ -631,14 +631,19 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		return false;
 	},
 
-	_toolboxHandler: function(parentContainer, data) {
+	_toolboxHandler: function(parentContainer, data, builder) {
+		var toolbox = L.DomUtil.create('div', builder.options.cssClass + ' toolbox', parentContainer);
+		toolbox.id = data.id;
+
 		if (data.enabled === false || data.enabled === 'false') {
 			for (var index in data.children) {
 				data.children[index].enabled = false;
 			}
 		}
 
-		return true;
+		builder.build(toolbox, data.children, false, false);
+
+		return false;
 	},
 
 	_mobilePopupContainer: function(parentContainer, data) {
