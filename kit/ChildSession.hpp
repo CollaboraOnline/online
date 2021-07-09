@@ -11,6 +11,8 @@
 #include <unordered_map>
 #include <queue>
 
+#include <atomic>
+
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKit.hxx>
 
@@ -186,6 +188,22 @@ public:
     }
 };
 
+class UnoCommandsRecorder
+{
+public:
+    static const int NUM_UNO_COMMANDS = 4;
+
+    UnoCommandsRecorder();
+
+    void addUnoCommandInfo(const std::string& unoCommandInfo);
+    std::atomic<char*>* getRecordedCommands();
+
+private:
+    std::atomic<char*> _unocommands[NUM_UNO_COMMANDS];
+    std::atomic<unsigned long long> _currentpos;
+
+};
+
 /// Represents a session to the WSD process, in a Kit process. Note that this is not a singleton.
 class ChildSession final : public Session
 {
@@ -312,6 +330,8 @@ private:
     virtual void disconnect() override;
     virtual bool _handleInput(const char* buffer, int length) override;
 
+    static void dumpRecordedUnoCommands();
+
     std::shared_ptr<lok::Document> getLOKitDocument() const
     {
         return _docManager->getLOKitDocument();
@@ -365,6 +385,8 @@ private:
     bool _copyToClipboard;
 
     std::vector<uint64_t> _pixmapCache;
+
+    static UnoCommandsRecorder unoCommandsRecorder;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
