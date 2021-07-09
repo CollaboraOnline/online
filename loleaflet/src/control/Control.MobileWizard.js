@@ -636,6 +636,10 @@ L.Control.MobileWizard = L.Control.extend({
 
 		var scrollTop = control.scrollTop;
 
+		var hasOpenedExplorableEntry = false;
+		if ($(control).children('.ui-content:visible').length)
+			hasOpenedExplorableEntry = true;
+
 		control.style.visibility = 'hidden';
 		if (!this._builder)
 			return;
@@ -661,8 +665,14 @@ L.Control.MobileWizard = L.Control.extend({
 		L.DomUtil.remove(control);
 
 		var newControl = container.querySelector('[id=\'' + data.control.id + '\']');
-		if (newControl)
+		if (newControl) {
+			if (hasOpenedExplorableEntry) {
+				$(newControl).children('.ui-header').first().hide();
+				$(newControl).children('.ui-content').first().show();
+			}
+
 			newControl.scrollTop = scrollTop;
+		}
 
 		// avoid scrolling when adding new bigger elements to the view
 		$('#mobile-wizard-content').animate({ scrollTop: this._currentScrollPosition }, 0);
