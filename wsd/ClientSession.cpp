@@ -2088,6 +2088,12 @@ void ClientSession::handleTileInvalidation(const std::string& message,
         return;
     }
 
+    // While saving / shutting down we can get big invalidatiions: ignore them
+    if (isCloseFrame()) {
+        LOG_TRC("Session [" << getId() << "] ignoring invalidation during close: '" << message);
+        return;
+    }
+
     std::pair<int, Util::Rectangle> result = TileCache::parseInvalidateMsg(message);
     int part = result.first;
     Util::Rectangle& invalidateRect = result.second;
