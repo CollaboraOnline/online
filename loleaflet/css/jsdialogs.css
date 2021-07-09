@@ -939,3 +939,26 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .hidden {
 	display: none !important;
 }
+
+/* dialog/popup fade animation */
+
+.fadeout {
+	animation: fade 1s;
+	-webkit-animation: fade 1s;
+	-moz-animation: fade 1s;
+}
+
+@keyframes fade {
+	from { opacity: 1 }
+	to { opacity: 0 }
+}
+
+@-moz-keyframes fade {
+	from { opacity: 1 }
+	to { opacity: 0 }
+}
+
+@-webkit-keyframes fade {
+	from { opacity: 1 }
+	to { opacity: 0 }
+}

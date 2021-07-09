@@ -60,24 +60,37 @@ L.Control.JSDialog = L.Control.extend({
 		var data = e.data;
 		var isModalPopup = data.type === 'modalpopup';
 
+		var close = function() {
+			if (data.id && that.dialogs[data.id]) {
+				if (that.dialogs[data.id].isPopup)
+					that.closePopover(data.id, false);
+				else
+					that.closeDialog(data.id);
+			}
+		};
+
+		if (data.action === 'fadeout')
+		{
+			if (data.id && this.dialogs[data.id]) {
+				var container = this.dialogs[data.id].container;
+				L.DomUtil.addClass(container, 'fadeout');
+				container.onanimationend = close;
+			}
+			return;
+		}
+		else if (data.action === 'close')
+		{
+			close();
+			return;
+		}
+
 		if (this.dialogs[data.id]) {
 			posX = this.dialogs[data.id].startX;
 			posY = this.dialogs[data.id].startY;
 			L.DomUtil.remove(this.dialogs[data.id].container);
 		}
 
-		if (data.action === 'close')
-		{
-			if (data.id && this.dialogs[data.id]) {
-				if (this.dialogs[data.id].isPopup)
-					this.closePopover(data.id, false);
-				else
-					this.closeDialog(data.id);
-			}
-			return;
-		}
-
-		var container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', document.body);
+		container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', document.body);
 		container.id = data.id;
 		if (data.collapsed && (data.collapsed === 'true' || data.collapsed === true))
 			L.DomUtil.addClass(container, 'collapsed');
