@@ -410,11 +410,12 @@ describe('Trigger hamburger menu options.', function() {
 		// Select B2 cell
 		calcHelper.clickOnFirstCell();
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(77px, 11px, 0px); z-index: 11;\']')
-			.then(function(marker) {
-				expect(marker).to.have.lengthOf(1);
-				var XPos = marker[0].getBoundingClientRect().right + 2;
-				var YPos = marker[0].getBoundingClientRect().bottom + 2;
+		cy.get('.spreadsheet-cell-resize-marker')
+			.then(function(items) {
+				expect(items).to.have.lengthOf(2);
+				var marker = items[1];
+				var XPos = marker.getBoundingClientRect().right + 2;
+				var YPos = marker.getBoundingClientRect().bottom + 2;
 				cy.get('body')
 					.click(XPos, YPos);
 
@@ -448,11 +449,12 @@ describe('Trigger hamburger menu options.', function() {
 		// Select B2 cell
 		calcHelper.clickOnFirstCell();
 
-		cy.get('.spreadsheet-cell-resize-marker[style=\'visibility: visible; transform: translate3d(77px, 11px, 0px); z-index: 11;\']')
-			.then(function(marker) {
-				expect(marker).to.have.lengthOf(1);
-				var XPos = marker[0].getBoundingClientRect().right + 2;
-				var YPos = marker[0].getBoundingClientRect().bottom + 2;
+		cy.get('.spreadsheet-cell-resize-marker')
+			.then(function(items) {
+				expect(items).to.have.lengthOf(2);
+				var marker = items[1];
+				var XPos = marker.getBoundingClientRect().right + 2;
+				var YPos = marker.getBoundingClientRect().bottom + 2;
 				cy.get('body')
 					.click(XPos, YPos);
 
