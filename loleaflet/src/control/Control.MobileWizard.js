@@ -422,7 +422,7 @@ L.Control.MobileWizard = L.Control.extend({
 				lastScrollPosition = this._currentScrollPosition;
 
 			if (isPopup) {
-				if (data.action === 'close') {
+				if (data.action === 'close' || data.action === 'fadeout') {
 					this._hideWizard();
 					return;
 				} else {
@@ -483,7 +483,7 @@ L.Control.MobileWizard = L.Control.extend({
 				document.getElementById('mobile-wizard').style.height = this.options.maxHeight;
 				$('#mobile-wizard').css('top', '');
 			}
-			if (!this.map._docLoaded) {
+			if (!this.map._docLoaded && !isPopup) {
 				$('#mobile-wizard').height('100%');
 				// Turn backButton icon from down to actually back
 				// since it does not hide it, instead it goes back in this case
