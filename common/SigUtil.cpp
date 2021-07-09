@@ -78,6 +78,14 @@ namespace SigUtil
 #endif
     }
 
+    UnoCommandsDumperFn dumpUnoCommandsInfoFn = nullptr;
+
+    void registerUnoCommandInfoHandler(UnoCommandsDumperFn dumpUnoCommandsInfo)
+    {
+        dumpUnoCommandsInfoFn = dumpUnoCommandsInfo;
+    }
+
+
 #if !MOBILEAPP
     /// This traps the signal-handler so we don't _Exit
     /// while dumping stack trace. It's re-entrant.
@@ -242,6 +250,11 @@ namespace SigUtil
         else
             Log::signalLog(" Fatal signal received: ");
         Log::signalLog(signalName(signal));
+
+        if (dumpUnoCommandsInfoFn != nullptr)
+        {
+            dumpUnoCommandsInfoFn();
+        }
 
         struct sigaction action;
 

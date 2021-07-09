@@ -55,6 +55,7 @@ using Poco::URI;
 using namespace LOOLProtocol;
 
 bool ChildSession::NoCapsForKit = false;
+UnoCommandsRecorder ChildSession::unoCommandsRecorder;
 
 namespace {
 
@@ -64,6 +65,31 @@ std::vector<unsigned char> decodeBase64(const std::string & inputBase64)
     Poco::Base64Decoder base64Decoder(stream);
     std::istreambuf_iterator<char> eos;
     return std::vector<unsigned char>(std::istreambuf_iterator<char>(base64Decoder), eos);
+}
+
+}
+
+namespace {
+
+/// Formats the uno command information for logging
+std::string formatUnoCommandInfo(const std::string& sessionId, const std::string& unoCommand)
+{
+    std::string recorded_time = Util::getHttpTimeNow();
+
+    std::string unoCommandInfo;
+
+    // unoCommand(sessionId) : command - HttpTime
+    unoCommandInfo.append("unoCommand");
+    unoCommandInfo.push_back('(');
+    unoCommandInfo.append(sessionId);
+    unoCommandInfo.push_back(')');
+    unoCommandInfo.append(" : ");
+    unoCommandInfo.append(Util::eliminatePrefix(unoCommand,".uno:"));
+    unoCommandInfo.append(" - ");
+    unoCommandInfo.append(recorded_time);
+    unoCommandInfo.push_back('\n');
+
+    return unoCommandInfo;
 }
 
 }
@@ -82,6 +108,7 @@ ChildSession::ChildSession(
     _isDocLoaded(false),
     _copyToClipboard(false)
 {
+    SigUtil::registerUnoCommandInfoHandler(&ChildSession::dumpRecordedUnoCommands);
     LOG_INF("ChildSession ctor [" << getName() << "]. JailRoot: [" << _jailRoot << "].");
 }
 
@@ -830,6 +857,50 @@ bool ChildSession::getStatus(const char* /*buffer*/, int /*length*/)
     }
 
     return sendTextFrame("status: " + status);
+}
+
+void ChildSession::dumpRecordedUnoCommands()
+{
+    std::atomic<char*>* recordedCommands = unoCommandsRecorder.getRecordedCommands();
+
+    for (int i = 0; i < unoCommandsRecorder.NUM_UNO_COMMANDS; i++)
+    {
+        // Set the slot to null to prevent other threads from deleting
+        // the command in future( while recording new command)
+        char * unoCommandInfo = recordedCommands[i].exchange(nullptr);
+
+        // If the slot is already empty or signal handlers reentry
+        if(unoCommandInfo != nullptr)
+            Log::signalLog(unoCommandInfo);
+    }
+}
+
+UnoCommandsRecorder::UnoCommandsRecorder() :
+    _currentpos(0)
+{
+    for (int i = 0; i < NUM_UNO_COMMANDS; i++)
+    {
+        _unocommands[i].store(nullptr);
+    }
+}
+
+void UnoCommandsRecorder::addUnoCommandInfo(const std::string& unoCommandInfo)
+{
+    // Create a new C string on heap with the contents of unoCommandInfo
+    char* command = new char[unoCommandInfo.length()+1];
+    strncpy(command, unoCommandInfo.c_str(), unoCommandInfo.length()+1);
+
+    unsigned long long currentIndex = _currentpos.fetch_add(1);
+
+    char* oldCommand = _unocommands[currentIndex % NUM_UNO_COMMANDS].exchange(command);
+
+    delete[] oldCommand;
+
+}
+
+std::atomic<char*>* UnoCommandsRecorder::getRecordedCommands()
+{
+    return _unocommands;
 }
 
 namespace
@@ -1603,6 +1674,8 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const Stri
         sendTextFrameAndLogError("error: cmd=uno kind=syntax");
         return false;
     }
+
+    unoCommandsRecorder.addUnoCommandInfo(formatUnoCommandInfo(getId(), tokens[1]));
 
     // we need to get LOK_CALLBACK_UNO_COMMAND_RESULT callback when saving
     const bool bNotify = (tokens[1] == ".uno:Save" ||
