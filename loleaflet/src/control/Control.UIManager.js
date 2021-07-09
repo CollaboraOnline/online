@@ -115,6 +115,7 @@ L.Control.UIManager = L.Control.extend({
 		};
 
 		var fadeoutBusyPopup = function() {
+			clearTimeout(this.busyPopupTimer);
 			var json = {
 				id: 'busypopup',
 				jsontype: 'dialog',
