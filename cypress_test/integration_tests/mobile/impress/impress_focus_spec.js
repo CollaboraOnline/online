@@ -93,7 +93,7 @@ describe('Impress focus tests', function() {
 
 				// Click in the top left corner where there is no text.
 				let posX = items[0].getBoundingClientRect().width / 2;
-				let posY = items[0].getBoundingClientRect().height / 2;
+				let posY = items[0].getBoundingClientRect().height * (9 / 16);
 				cy.log('Got center coordinates at (' + posX + ', ' + posY + ')');
 
 				// Start editing; click on the text.
