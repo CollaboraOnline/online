@@ -425,7 +425,7 @@ L.Control.MobileWizard = L.Control.extend({
 				var popupContainer = $('.mobile-popup-container:visible');
 				if (popupContainer.length) {
 					// for menubutton we inject popup into menu structure
-					if (data.action === 'close') {
+					if (data.action === 'close' || data.action === 'fadeout') {
 						this.goLevelUp();
 						popupContainer.empty();
 					} else {
@@ -436,7 +436,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 					this._inBuilding = false;
 					return;
-				} else if (data.action === 'close') {
+				} else if (data.action === 'close' || data.action === 'fadeout') {
 					this._hideWizard();
 					return;
 				} else {
@@ -497,7 +497,7 @@ L.Control.MobileWizard = L.Control.extend({
 				document.getElementById('mobile-wizard').style.height = this.options.maxHeight;
 				$('#mobile-wizard').css('top', '');
 			}
-			if (!this.map._docLoaded) {
+			if (!this.map._docLoaded && !isPopup) {
 				$('#mobile-wizard').height('100%');
 				// Turn backButton icon from down to actually back
 				// since it does not hide it, instead it goes back in this case
