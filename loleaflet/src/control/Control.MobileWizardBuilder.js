@@ -613,18 +613,21 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 	_panelHandler: function(parentContainer, data, builder) {
 		var content = data.children;
-		var contentData = content.length ? content : [content];
-		var contentNode = contentData.length === 1 ? contentData[0] : null;
 
 		var iconPath = null;
-		if (contentNode) {
-			var entryId = contentNode.id;
-			if (entryId && entryId.length) {
-				iconPath = builder._createIconURL(entryId);
-			}
+		var entryId = data.id;
+		if (entryId && entryId.length) {
+			iconPath = builder._createIconURL(entryId);
 		}
 
 		builder._explorableEntry(parentContainer, data, content, builder, null, iconPath);
+
+		if (data.hidden === true) {
+			var control = parentContainer.querySelector('[id=\'' + data.id + '\']');
+			if (control)
+				L.DomUtil.addClass(control, 'hidden');
+		}
+
 		return false;
 	},
 
@@ -686,10 +689,6 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 				&& (childType == 'checkbox' || childType == 'radiobutton')) {
 				continue;
 			}
-
-			if ((childType === 'deck' || childType === 'toolbox')
-				&& (childData.visible === false || childData.visible === 'false'))
-				continue;
 
 			var childObject = parent;
 			if (childData.dialogid) {
