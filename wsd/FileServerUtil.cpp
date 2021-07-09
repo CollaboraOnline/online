@@ -109,6 +109,20 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
     return previousJSON;
 }
 
+namespace
+{
+bool isValidCss(const std::string& token)
+{
+    const std::string forbidden = "<>{}&|\\\"^`'$[]";
+    for (auto c: token)
+    {
+        if (c < 0x20 || c >= 0x7F || forbidden.find(c) != std::string::npos)
+            return false;
+    }
+    return true;
+}
+}
+
 std::string FileServerRequestHandler::cssVarsToStyle(const std::string& cssVars)
 {
     static std::string previousVars;
@@ -135,17 +149,13 @@ std::string FileServerRequestHandler::cssVarsToStyle(const std::string& cssVars)
             continue;
         }
 
-        std::string escapedKey, escapedValue;
-        Poco::URI::encode(keyValue[0], "", escapedKey);
-        Poco::URI::encode(keyValue[1], "", escapedValue);
-
-        if (keyValue[0] != escapedKey || keyValue[1] != escapedValue)
+        if (!isValidCss(tokens.getParam(token)))
         {
             LOG_WRN("Skipping the token [" << tokens.getParam(token) << "] since it contains forbidden characters");
             continue;
         }
 
-        styleOSS << escapedKey << ":" << escapedValue << ";";
+        styleOSS << keyValue[0] << ":" << keyValue[1] << ";";
     }
     styleOSS << "}</style>";
 
