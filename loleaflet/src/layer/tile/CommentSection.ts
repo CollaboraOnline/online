@@ -93,6 +93,8 @@ class Comment {
 		this.sectionProperties.isHighlighted = false;
 
 		this.name = data.id === 'new' ? 'new comment': 'comment ' + data.id;
+
+		this.sectionProperties.isRemoved = false;
 	}
 
 	public onInitialize () {
@@ -507,12 +509,13 @@ class Comment {
 
 			var pos: Array<number> = [Math.round((this.myTopLeft[0] + originalSize[0] - 3) / this.dpiScale), Math.round(this.myTopLeft[1] / this.dpiScale)];
 			this.sectionProperties.container.style.transform = 'translate3d(' + pos[0] + 'px, ' + pos[1] + 'px, 0px)';
+			this.sectionProperties.commentListSection.selectedComment = this;
 		}
 	}
 
 	private hide () {
 		if (this.sectionProperties.data.id === 'new') {
-			this.containerObject.removeSection(this.name);
+			this.sectionProperties.commentListSection.removeItem(this.sectionProperties.data.id);
 			return;
 		}
 
@@ -523,7 +526,7 @@ class Comment {
 
 		this.sectionProperties.showSelectedCoordinate = false; // Writer.
 
-		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet' && this.sectionProperties.commentListSection.sectionProperties.selectedComment === this)
 			this.sectionProperties.commentListSection.sectionProperties.selectedComment = null;
 
 		this.hideMarker();
@@ -565,7 +568,8 @@ class Comment {
 			L.DomEvent.stopPropagation(e);
 		this.sectionProperties.nodeModifyText.value = this.sectionProperties.contentText.origText;
 		this.sectionProperties.nodeReplyText.value = '';
-		this.show();
+		if (this.sectionProperties.docLayer._docType !== 'spreadsheet')
+			this.show();
 		this.sectionProperties.commentListSection.cancel(this);
 	}
 
@@ -578,12 +582,14 @@ class Comment {
 	}
 
 	public onLostFocus (e: any) {
-		$(this.sectionProperties.container).removeClass('annotation-active');
-		if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
-			this.onSaveComment(e);
-		}
-		else {
-			this.onCancelClick(e);
+		if (!this.sectionProperties.isRemoved) {
+			$(this.sectionProperties.container).removeClass('annotation-active');
+			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
+				this.onSaveComment(e);
+			}
+			else {
+				this.onCancelClick(e);
+			}
 		}
 	}
 
@@ -736,13 +742,36 @@ class Comment {
 
 	public onMouseDown (point: Array<number>, e: MouseEvent) {}
 
-	public onMouseEnter () {
+	private calcContinueWithMouseEvent (): boolean {
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+			var conditions: boolean = !this.isEdit();
+			if (conditions) {
+				var sc = this.sectionProperties.commentListSection.sectionProperties.selectedComment;
+				if (sc)
+					conditions = sc.sectionProperties.data.id !== 'new';
+			}
+			return conditions;
+		}
+		else {
+			return false;
+		}
+	}
+
+	public onMouseEnter () {
+		if (this.calcContinueWithMouseEvent()) {
 			// When mouse is above this section, comment's HTML element will be shown.
 			// If mouse pointer goes to HTML element, onMouseLeave event shouldn't be fired.
 			// But mouse pointer will have left the borders of this section and onMouseLeave event will be fired.
 			// Let's do it properly, when mouse is above this section, we will make this section's size bigger and onMouseLeave event will not be fired.
 			if (parseInt(this.sectionProperties.data.tab) === this.sectionProperties.docLayer._selectedPart) {
+				var sc = this.sectionProperties.commentListSection.sectionProperties.selectedComment;
+				if (sc) {
+					if (!sc.isEdit())
+						sc.hide();
+					else
+						return; // Another comment is being edited. Return.
+				}
+
 				var containerWidth: number = this.sectionProperties.container.getBoundingClientRect().width;
 				var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
 				this.size = [Math.round((this.sectionProperties.data.cellPos[2]) * ratio + containerWidth), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
@@ -753,7 +782,7 @@ class Comment {
 	}
 
 	public onMouseLeave (point: Array<number>) {
-		if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
+		if (this.calcContinueWithMouseEvent()) {
 			if (parseInt(this.sectionProperties.data.tab) === this.sectionProperties.docLayer._selectedPart) {
 				// Revert the changes we did on "onMouseEnter" event.
 				var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
@@ -770,6 +799,11 @@ class Comment {
 	}
 
 	public onRemove () {
+		this.sectionProperties.isRemoved = true;
+
+		if (this.sectionProperties.commentListSection.sectionProperties.selectedComment === this)
+			this.sectionProperties.commentListSection.sectionProperties.selectedComment = null;
+
 		this.sectionProperties.commentListSection.hideArrow();
 		var that = this;
 		var container = this.sectionProperties.container;
