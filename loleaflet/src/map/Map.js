@@ -609,6 +609,7 @@ L.Map = L.Evented.extend({
 		}
 
 		this._docLayer.setZoomChanged(true);
+		var cssBounds = this.getPixelBounds();
 		if (this._docLayer && this._docLayer._visibleCursor && this.getBounds().contains(this._docLayer._visibleCursor.getCenter())) {
 			// Calculate new center after zoom. The intent is that the caret
 			// position stays the same.
@@ -617,7 +618,11 @@ L.Map = L.Evented.extend({
 			var newCenter = new L.LatLng(curCenter.lat + (caretPos.lat - curCenter.lat) * (1.0 - zoomScale),
 						     curCenter.lng + (caretPos.lng - curCenter.lng) * (1.0 - zoomScale));
 			var thisObj = this;
-			this._docLayer.runZoomAnimation(zoom, caretPos /* pinchCenter */,
+			this._docLayer.runZoomAnimation(zoom,
+				// pinchCenter
+				new L.LatLng(caretPos.lat,
+					// Use the current x-center if there is a left margin.
+					cssBounds.min.x < 0 ? curCenter.lng : caretPos.lng),
 				// mapUpdater
 				function() {
 					thisObj.setView(newCenter, zoom, {zoom: options});
