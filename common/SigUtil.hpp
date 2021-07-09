@@ -48,6 +48,12 @@ namespace SigUtil
 
     void checkDumpGlobalState(GlobalDumpStateFn dumpState);
 
+    typedef void (*UnoCommandsDumperFn)(void);
+
+    extern UnoCommandsDumperFn dumpUnoCommandsInfoFn;
+
+    void registerUnoCommandInfoHandler(UnoCommandsDumperFn dumpUnoCommandsInfo);
+
 #if !MOBILEAPP
     /// Wait for the signal handler, if any,
     /// and prevent _Exit while collecting backtrace.

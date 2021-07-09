@@ -886,6 +886,27 @@ int main(int argc, char**argv)
         return std::string(message, size);
     }
 
+    /// Eliminates the prefix from str(if present) and returns a copy of the modified string
+    inline
+    std::string eliminatePrefix(const std::string& str, const std::string& prefix)
+    {
+        std::string::const_iterator prefix_pos;
+        std::string::const_iterator str_pos;
+
+        std::tie(prefix_pos,str_pos) = std::mismatch(prefix.begin(), prefix.end(), str.begin());
+
+        if (prefix_pos == prefix.end())
+        {
+            // Non-Prefix part
+            return std::string(str_pos, str.end());
+        }
+        else
+        {
+            // Return the original string as it is
+            return str;
+        }
+    }
+
     /// Split a string in two at the delimiter, removing it.
     inline
     std::pair<std::string, std::string> split(const char* s, const int length, const char delimiter = ' ', bool removeDelim = true)
