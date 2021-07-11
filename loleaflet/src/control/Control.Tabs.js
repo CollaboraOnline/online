@@ -133,6 +133,10 @@ L.Control.Tabs = L.Control.extend({
 				}
 				var ssTabScroll = L.DomUtil.create('div', 'spreadsheet-tab-scroll', this._tabsCont);
 				ssTabScroll.id = 'spreadsheet-tab-scroll';
+				if (!window.mode.isMobile())
+					ssTabScroll.style.overflow = 'hidden';
+
+				this._tabsCont.style.display = 'grid';
 
 				var menuItemMobile = {};
 				if (parts === 1) {
