@@ -23,6 +23,7 @@ noinst_LTLIBRARIES = \
 	unit-fuzz.la unit-oob.la unit-http.la unit-oauth.la \
 	unit-wopi.la unit-wopi-saveas.la \
 	unit-wopi-async-upload-close.la unit-wopi-async-upload-modify.la \
+	unit-wopi-async-upload-modifyclose.la \
 	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
 	unit-wopi-documentconflict.la unit_wopi_renamefile.la unit_wopi_watermark.la \
 	unit-tiff-load.la \
@@ -159,6 +160,8 @@ unit_wopi_async_upload_close_la_SOURCES = UnitWOPIAsyncUpload_Close.cpp
 unit_wopi_async_upload_close_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_async_upload_modify_la_SOURCES = UnitWOPIAsyncUpload_Modify.cpp
 unit_wopi_async_upload_modify_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_async_upload_modifyclose_la_SOURCES = UnitWOPIAsyncUpload_ModifyClose.cpp
+unit_wopi_async_upload_modifyclose_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_saveas_la_SOURCES = UnitWOPISaveAs.cpp
 unit_wopi_saveas_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_ownertermination_la_SOURCES = UnitWopiOwnertermination.cpp
@@ -240,6 +243,7 @@ TESTS = \
 	unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-tilecache.la unit-timeout.la \
 	unit-oauth.la unit-wopi.la unit-wopi-saveas.la \
 	unit-wopi-async-upload-close.la unit-wopi-async-upload-modify.la \
+	unit-wopi-async-upload-modifyclose.la \
 	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
 	unit-wopi-documentconflict.la unit_wopi_renamefile.la unit_wopi_watermark.la \
 	unit-http.la \
