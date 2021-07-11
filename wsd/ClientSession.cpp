@@ -1638,12 +1638,8 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         StringVector stateTokens(Util::tokenize(tokens[1], '='));
         if (stateTokens.size() == 2 && stateTokens.equals(0, ".uno:ModifiedStatus"))
         {
-            // When the document is saved internally, but saving to storage failed,
-            // don't update the client's modified status
-            // (otherwise client thinks document is unmodified b/c saving was successful)
-            if (!docBroker->isLastStorageUploadSuccessful())
-                return false;
-
+            // Always update the modified flag in the DocBroker faithfully.
+            // Let it deal with the upload failure scenario and the admin console.
             docBroker->setModified(stateTokens.equals(1, "true"));
         }
         else
