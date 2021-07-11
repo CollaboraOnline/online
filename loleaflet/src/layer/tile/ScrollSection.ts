@@ -65,8 +65,8 @@ class ScrollSection {
 		this.sectionProperties.scrollBarThickness = 6 * app.roundedDpiScale;
 		this.sectionProperties.edgeOffset = 10 * app.roundedDpiScale;
 
-		this.sectionProperties.drawVerticalScrollBar = false;
-		this.sectionProperties.drawHorizontalScrollBar = false;
+		this.sectionProperties.drawVerticalScrollBar = ((<any>window).mode.isDesktop() ? true: false);
+		this.sectionProperties.drawHorizontalScrollBar = ((<any>window).mode.isDesktop() ? true: false);
 
 		this.sectionProperties.clickScrollVertical = false; // true when user presses on the scroll bar drawing.
 		this.sectionProperties.clickScrollHorizontal = false;
@@ -201,7 +201,10 @@ class ScrollSection {
 			diff = Math.round((app.view.size.pixels[1] - this.containerObject.getDocumentAnchorSection().size[1]) * 0.5);
 			this.sectionProperties.yMin = diff;
 			this.sectionProperties.yMax = diff;
-			this.sectionProperties.drawVerticalScrollBar = false;
+			if (app.view.size.pixels[1] >  0) {
+				if (this.map._docLayer._docType !== 'spreadsheet' || !(<any>window).mode.isDesktop())
+					this.sectionProperties.drawVerticalScrollBar = false;
+			}
 		}
 	}
 
@@ -225,8 +228,12 @@ class ScrollSection {
 		}
 		else {
 			var splitPanesContext: any = this.map.getSplitPanesContext();
-			var splitPos: any = splitPanesContext.getSplitPos().clone();
-			splitPos.x = Math.round(splitPos.x * app.dpiScale);
+			var splitPos = {x: 0, y: 0};
+			if (splitPanesContext) {
+				splitPos = splitPanesContext.getSplitPos().clone();
+				splitPos.x = Math.round(splitPos.x * app.dpiScale);
+			}
+
 			this.sectionProperties.xOffset += splitPos.x;
 			return result - splitPos.x - this.sectionProperties.horizontalScrollRightOffset;
 		}
@@ -243,19 +250,24 @@ class ScrollSection {
 		if (diff >= 0) {
 			this.sectionProperties.xMin = 0;
 			this.sectionProperties.xMax = diff;
+			if ((<any>window).mode.isDesktop())
+				this.sectionProperties.drawHorizontalScrollBar = true;
 		}
 		else {
 			diff = Math.round((app.view.size.pixels[0] - this.containerObject.getDocumentAnchorSection().size[0]) * 0.5);
 			this.sectionProperties.xMin = diff;
 			this.sectionProperties.xMax = diff;
-			this.sectionProperties.drawHorizontalScrollBar = false;
+			if (app.view.size.pixels[0] >  0) {
+				if (this.map._docLayer._docType !== 'spreadsheet' || !(<any>window).mode.isDesktop())
+					this.sectionProperties.drawHorizontalScrollBar = false;
+			}
 		}
 	}
 
 	public getHorizontalScrollProperties () :any {
 		this.calculateXMinMax()
 		var result: any = {};
-		result.scrollLength = this.getHorizontalScrollLength(); // The length of the railway that the scroll bar moves on up & down.
+		result.scrollLength = this.getHorizontalScrollLength(); // The length of the railway that the scroll bar moves on left & right.
 		result.scrollSize = this.calculateHorizontalScrollSize(result.scrollLength); // Width of the scroll bar.
 		result.ratio = app.view.size.pixels[0] / result.scrollLength;
 		result.startX = Math.round(this.documentTopLeft[0] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.xOffset);
@@ -380,7 +392,7 @@ class ScrollSection {
 				this.drawVerticalScrollBar();
 		}
 
-		if ((this.sectionProperties.drawHorizontalScrollBar || this.sectionProperties.animatingHorizontalScrollBar) && this.documentTopLeft[0] >= 0) {
+		if ((this.sectionProperties.drawHorizontalScrollBar || this.sectionProperties.animatingHorizontalScrollBar)) {
 			this.drawHorizontalScrollBar();
 		}
 	}
@@ -449,10 +461,13 @@ class ScrollSection {
 
 	private hideHorizontalScrollBar () {
 		if (this.sectionProperties.mouseIsOnHorizontalScrollBar) {
-			this.sectionProperties.drawHorizontalScrollBar = false;
 			this.sectionProperties.mouseIsOnHorizontalScrollBar = false;
 			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
-			this.fadeOutHorizontalScrollBar();
+
+			if (!(<any>window).mode.isDesktop()) {
+				this.sectionProperties.drawHorizontalScrollBar = false;
+				this.fadeOutHorizontalScrollBar();
+			}
 
 			// just in case if we have blinking cursor visible
 			// we need to change cursor from default style
