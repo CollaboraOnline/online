@@ -1116,9 +1116,11 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     assertCorrectThread();
 
     if (success)
-        LOG_DBG("Save result from Core: saved");
+        LOG_DBG("Save result from Core: saved (during "
+                << DocumentState::toString(_docState.activity()) << ')');
     else
-        LOG_INF("Save result from Core (failure): " << result);
+        LOG_INF("Save result from Core (failure): "
+                << result << " (during " << DocumentState::toString(_docState.activity()) << ')');
 
 #if !MOBILEAPP
     // Create the 'upload' file regardless of success or failure,
@@ -1129,7 +1131,10 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     if (rename(oldName.c_str(), newName.c_str()) < 0)
     {
         // It's not an error if there was no file to rename, when the document isn't modified.
-        LOG_TRC("Failed to renamed [" << oldName << "] to [" << newName << ']');
+        const auto onrre = errno;
+        LOG_TRC("Failed to renamed [" << oldName << "] to [" << newName << "] ("
+                                      << Util::symbolicErrno(onrre) << ": " << std::strerror(onrre)
+                                      << ')');
     }
     else
     {
@@ -1338,12 +1343,15 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
         switch (asyncUp.state())
         {
             case StorageBase::AsyncUpload::State::Running:
-                LOG_DBG("Async upload of [" << _docKey << "] is in progress.");
+                LOG_DBG("Async upload of [" << _docKey << "] is in progress during "
+                                            << DocumentState::toString(_docState.activity()));
                 return;
 
             case StorageBase::AsyncUpload::State::Complete:
             {
-                LOG_DBG("Finished uploading [" << _docKey << "], processing results.");
+                LOG_DBG("Finished uploading [" << _docKey << "] during "
+                                               << DocumentState::toString(_docState.activity())
+                                               << ", processing results.");
                 return handleUploadToStorageResponse(asyncUp.result());
             }
 
@@ -1354,7 +1362,8 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
         }
 
         //FIXME: flag the failure so we retry.
-        LOG_WRN("Failed to upload [" << _docKey << "] asynchronously.");
+        LOG_WRN("Failed to upload [" << _docKey << "] asynchronously. "
+                                     << DocumentState::toString(_docState.activity()));
 
         switch (_docState.activity())
         {
@@ -1665,7 +1674,8 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 
     _saveManager.autosaveChecked();
 
-    LOG_TRC("autoSave(): forceful? " << force);
+    LOG_TRC("autoSave(): forceful? " << force
+                                     << ", dontSaveIfUnmodified: " << dontSaveIfUnmodified);
     if (_sessions.empty() || _storage == nullptr || !isLoaded() ||
         !_childProcess->isAlive() || (!isModified() && !force))
     {
