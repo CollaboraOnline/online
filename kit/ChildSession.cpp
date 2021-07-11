@@ -2749,7 +2749,10 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             if (rename(oldName.c_str(), newName.c_str()) < 0)
             {
                 // It's not an error if there was no file to rename, when the document isn't modified.
-                LOG_TRC("Failed to renamed [" << oldName << "] to [" << newName << ']');
+                const auto onrre = errno;
+                LOG_TRC("Failed to renamed [" << oldName << "] to [" << newName << "] ("
+                                              << Util::symbolicErrno(onrre) << ": "
+                                              << std::strerror(onrre) << ')');
             }
             else
             {
