@@ -1409,6 +1409,16 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
     LOG_TRC("lastUploadSuccessful: " << lastUploadSuccessful);
     _storageManager.setLastUploadResult(lastUploadSuccessful);
 
+#if !MOBILEAPP
+    if (lastUploadSuccessful && !isModified())
+    {
+        // Flag the document as un-modified in the admin console.
+        // But only when we have uploaded successfully and the document
+        // is current not flagged as modified by Core.
+        Admin::instance().modificationAlert(_docKey, getPid(), false);
+    }
+#endif
+
     if (uploadResult.getResult() == StorageBase::UploadResult::Result::OK)
     {
 #if !MOBILEAPP
@@ -2637,17 +2647,24 @@ bool DocumentBroker::haveAnotherEditableSession(const std::string& id) const
 
 void DocumentBroker::setModified(const bool value)
 {
-    if (_isModified != value)
-    {
-        _isModified = value;
 #if !MOBILEAPP
+    if (value)
+    {
+        // Flag the document as modified in the admin console.
+        // But only flag it as unmodified when we do upload it.
         Admin::instance().modificationAlert(_docKey, getPid(), value);
+    }
 #endif
+
+    if (value || _storageManager.lastUploadSuccessful())
+    {
+        // Set the X-LOOL-WOPI-IsModifiedByUser header flag sent to storage.
+        // But retain the last value if we failed to upload, so we don't clobber it.
+        _storage->setUserModified(value);
     }
 
-    // Set the X-LOOL-WOPI-IsModifiedByUser header flag sent to storage.
-    _storage->setUserModified(value);
     LOG_TRC("Modified state set to " << value << " for Doc [" << _docId << ']');
+    _isModified = value;
 }
 
 bool DocumentBroker::isInitialSettingSet(const std::string& name) const
