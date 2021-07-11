@@ -32,6 +32,7 @@
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
 #endif
+
 using namespace LOOLProtocol;
 
 static constexpr int SYNTHETIC_LOLEAFLET_PID_OFFSET = 10000000;
@@ -1621,18 +1622,9 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         StringVector stateTokens(Util::tokenize(tokens[1], '='));
         if (stateTokens.size() == 2 && stateTokens.equals(0, ".uno:ModifiedStatus"))
         {
-            // When the document is saved internally, but saving to storage failed,
-            // don't update the client's modified status
-            // (otherwise client thinks document is unmodified b/c saving was successful)
-            const bool isModified = stateTokens.equals(1, "true");
-            if (!docBroker->isLastStorageUploadSuccessful())
-            {
-                LOG_DBG("Skipping ModifiedStatus (" << std::boolalpha << isModified
-                                                    << ") because last storage upload failed.");
-                return false;
-            }
-
-            docBroker->setModified(isModified);
+            // Always update the modified flag in the DocBroker faithfully.
+            // Let it deal with the upload failure scenario and the admin console.
+            docBroker->setModified(stateTokens.equals(1, "true"));
         }
         else
         {
