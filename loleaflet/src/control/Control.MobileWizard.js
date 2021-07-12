@@ -496,6 +496,9 @@ L.Control.MobileWizard = L.Control.extend({
 			}
 
 			if (isPopup) {
+				// force hide scroll indicator while its showing/hidding is not fixed
+				$('#mobile-wizard-scroll-indicator').hide();
+
 				$('#mobile-wizard').addClass('busypopup');
 				$('#mobile-wizard-titlebar').hide();
 			}
