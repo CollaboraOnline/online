@@ -34,9 +34,9 @@ L.Map = L.Evented.extend({
 		fadeAnimation: false, // Not useful for typing.
 		trackResize: true,
 		markerZoomAnimation: true,
-		//defaultZoom:
-		//The zoom level at which the tile size in twips equals the default size (3840 x 3840).
-        	//Unless you know what you are doing, this should not be modified.
+		// defaultZoom:
+		// The zoom level at which the tile size in twips equals the default size (3840 x 3840).
+		// Unless you know what you are doing, this should not be modified.
 		defaultZoom: 10,
 		// 15 = 1440 twips-per-inch / 96 dpi.
 		// Chosen to match previous hardcoded value of 3840 for
