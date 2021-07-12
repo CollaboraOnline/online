@@ -650,6 +650,8 @@ L.Control.MobileWizard = L.Control.extend({
 		if ($(control).children('.ui-content:visible').length)
 			hasOpenedExplorableEntry = true;
 
+		var wasHidden = control.style.display === 'none';
+
 		control.style.visibility = 'hidden';
 		if (!this._builder)
 			return;
@@ -676,6 +678,9 @@ L.Control.MobileWizard = L.Control.extend({
 
 		var newControl = container.querySelector('[id=\'' + data.control.id + '\']');
 		if (newControl) {
+			if (wasHidden)
+				newControl.style.display = 'none';
+
 			if (hasOpenedExplorableEntry) {
 				$(newControl).children('.ui-header').first().hide();
 				$(newControl).children('.ui-content').first().show();
