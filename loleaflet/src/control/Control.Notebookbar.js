@@ -69,7 +69,8 @@ L.Control.Notebookbar = L.Control.extend({
 		var that = this;
 		var retryNotebookbarInit = function() {
 			if (!that.map._isNotebookbarLoadedOnCore) {
-				console.error('notebookbar is not initialized, retrying');
+				// if notebookbar doesn't have any welded controls it can trigger false alarm here
+				console.warn('notebookbar might be not initialized, retrying');
 				that.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
 			}
 		};
@@ -101,6 +102,8 @@ L.Control.Notebookbar = L.Control.extend({
 
 		if (!this.container)
 			return;
+
+		this.map._isNotebookbarLoadedOnCore = true;
 
 		var control = this.container.querySelector('[id=\'' + data.control.id + '\']');
 		if (!control) {
@@ -139,6 +142,8 @@ L.Control.Notebookbar = L.Control.extend({
 
 		if (!this.container)
 			return;
+
+		this.map._isNotebookbarLoadedOnCore = true;
 
 		this.builder.executeAction(this.container, data.data);
 	},
