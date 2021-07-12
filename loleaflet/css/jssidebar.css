@@ -9,8 +9,17 @@
 	vertical-align: middle;
 }
 
+.ui-expander-label.jsdialog.sidebar {
+	color: var(--gray-light-txt--color);
+}
+
 .sidebar.spinfield {
 	max-width: 100px;
+	border: 1px solid #CCC;
+	padding: 0.2em 0 0.2em 0.2em;
+	border-radius: 3px;
+	height: 28px;
+	box-sizing: border-box;
 }
 
 .sidebar.ui-listbox {
@@ -29,4 +38,39 @@
 
 .sidebar.ui-drawing-area {
 	max-width: 330px;
+}
+
+.sidebar.ui-expander-label.expanded {
+	padding-left: 14px;
+}
+
+.sidebar.ui-expander-label.expanded:before {
+	margin-right: 0;
+	position: absolute;
+	left: 14px;
+}
+
+.sidebar.root-container.jsdialog > .jsdialog.sidebar {
+	width: 100%;
+}
+
+.sidebar-container > .root-container.jsdialog.sidebar {
+	margin: 0;
+}
+
+td.jsdialog .jsdialog.cell.sidebar {
+	padding: 4px 4px 4px 0;
+	width: auto;
+}
+
+.sidebar.jsdialog.ui-listbox {
+	font-size: 13px;
+	height: 28px;
+	box-sizing: border-box;
+	padding: 0.3em 1.2em 0.3em 0.2em;
+}
+
+.sidebar .menu-entry-icon {
+	width: 24px;
+	height: 24px;
 }
