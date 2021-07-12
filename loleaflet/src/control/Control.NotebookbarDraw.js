@@ -73,13 +73,6 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 		];
 	},
 
-	/// override to not load tabs from core
-	onNotebookbar: function(data) {
-		this.map._isNotebookbarLoadedOnCore = true;
-		// setup id for events
-		this.builder.setWindowId(data.id);
-	},
-
 	getTabs: function() {
 		return [
 			{
