@@ -677,6 +677,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 				|| data[i].id === 'fillattr'
 				|| data[i].id === 'fillattr2'
 				|| data[i].id === 'fillattr3'
+				|| data[i].id === 'LB_SHADOW_COLOR'
 				|| data[i].id === 'LB_GLOW_COLOR')) {
 
 				if (data[i].id === 'LB_GLOW_COLOR')
