@@ -80,7 +80,11 @@ public:
 
         passTest("Document uploaded on closing as expected.");
 
-        return nullptr;
+        LOG_TST("WaitSecondPutFile => Polling");
+        _phase = Phase::Polling; // To detect multiple uploads after the last successful one.
+
+        // Success.
+        return Util::make_unique<http::Response>(http::StatusLine(200));
     }
 
     /// The document is loaded.
