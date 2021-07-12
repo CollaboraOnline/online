@@ -6,7 +6,7 @@
 
 var isIE11_ = !!window.MSInputMethodContext && !!document.documentMode;
 
-if (isIE11_) {
+if (isIE11_ || typeof ResizeObserver === 'undefined') {
     (function (global, factory) {
         typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
         typeof define === 'function' && define.amd ? define(factory) :
