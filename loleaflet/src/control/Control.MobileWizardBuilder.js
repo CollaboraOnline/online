@@ -674,6 +674,9 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 			if (data[i].type === 'menubutton' &&
 				(data[i].id === 'fillgrad1'
 				|| data[i].id === 'fillgrad2'
+				|| data[i].id === 'fillattr'
+				|| data[i].id === 'fillattr2'
+				|| data[i].id === 'fillattr3'
 				|| data[i].id === 'LB_GLOW_COLOR')) {
 
 				if (data[i].id === 'LB_GLOW_COLOR')
