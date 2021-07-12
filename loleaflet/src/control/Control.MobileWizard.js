@@ -57,6 +57,7 @@ L.Control.MobileWizard = L.Control.extend({
 		this._currentDepth = 0;
 		this._inMainMenu = true;
 		this.content.empty();
+		this.backButton.show();
 		this.backButton.addClass('close-button');
 		$('#mobile-wizard-tabs').empty();
 		$('#mobile-wizard-tabs').hide();
@@ -459,6 +460,7 @@ L.Control.MobileWizard = L.Control.extend({
 						this.goLevelUp();
 						popupContainer.empty();
 					} else {
+						this.backButton.hide();
 						popupContainer.empty();
 						this._builder = L.control.mobileWizardBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'mobile-wizard'});
 						this._builder.build(popupContainer.get(0), [data]);
