@@ -1782,7 +1782,8 @@ class CanvasSectionContainer {
 				section.position[0] = x;
 				section.position[1] = y;
 				section.isVisible = section.containerObject.isDocumentObjectVisible(section);
-				section.containerObject.createUpdateSingleDivElement(section);
+				if (this.testing)
+					section.containerObject.createUpdateSingleDivElement(section);
 			}
 		}
 	}
