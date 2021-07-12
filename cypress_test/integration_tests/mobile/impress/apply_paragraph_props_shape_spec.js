@@ -123,7 +123,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 		triggerNewSVG();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
-			.should('have.attr', 'y', '10810');
+			.should('have.attr', 'y', '10811');
 
 		// Then set top alignment
 		openParagraphPropertiesPanel();
@@ -147,7 +147,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 		triggerNewSVG();
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
-			.should('have.attr', 'y', '7822');
+			.should('have.attr', 'y', '7823');
 	});
 
 	it('Apply default bulleting on text shape.', function() {
