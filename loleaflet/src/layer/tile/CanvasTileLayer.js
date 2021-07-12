@@ -3477,8 +3477,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				// change previous selections
 				viewSelection.setPointSet(viewPointSet);
 			} else {
+				var scale = (this._painter ? this._painter._dpiScale : 1);
 				viewSelection = new CSelections(viewPointSet, this._canvasOverlay,
-					this._painter._dpiScale, this._selectionsDataDiv, this._map, true, viewId);
+					scale, this._selectionsDataDiv, this._map, true, viewId);
 				this._viewSelections[viewId].selection = viewSelection;
 			}
 		}
@@ -5221,15 +5222,17 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_twipsToCssPixels: function (twips) {
+		var scale = (this._painter ? this._painter._dpiScale : 1);
 		return new L.Point(
-			(twips.x / this._tileWidthTwips) * (this._tileSize / this._painter._dpiScale),
-			(twips.y / this._tileHeightTwips) * (this._tileSize / this._painter._dpiScale));
+			(twips.x / this._tileWidthTwips) * (this._tileSize / scale),
+			(twips.y / this._tileHeightTwips) * (this._tileSize / scale));
 	},
 
 	_cssPixelsToTwips: function (pixels) {
+		var scale = (this._painter ? this._painter._dpiScale : 1);
 		return new L.Point(
-			((pixels.x * this._painter._dpiScale) / this._tileSize) * this._tileWidthTwips,
-			((pixels.y * this._painter._dpiScale) / this._tileSize) * this._tileHeightTwips);
+			((pixels.x * scale) / this._tileSize) * this._tileWidthTwips,
+			((pixels.y * scale) / this._tileSize) * this._tileHeightTwips);
 	},
 
 	_twipsToLatLng: function (twips, zoom) {
