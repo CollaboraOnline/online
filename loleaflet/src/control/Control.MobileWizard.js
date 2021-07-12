@@ -64,6 +64,7 @@ L.Control.MobileWizard = L.Control.extend({
 		$('#mobile-wizard-titlebar').css('top', '0px');
 		$('#mobile-wizard').removeClass('menuwizard');
 		$('#mobile-wizard').removeClass('funcwizard');
+		$('#mobile-wizard').removeClass('busypopup');
 		this._isTabMode = false;
 		this._currentPath = [];
 		this._tabs = [];
@@ -508,8 +509,10 @@ L.Control.MobileWizard = L.Control.extend({
 				this._scrollToPosition(lastScrollPosition);
 			}
 
-			if (isPopup)
+			if (isPopup) {
+				$('#mobile-wizard').addClass('busypopup');
 				$('#mobile-wizard-titlebar').hide();
+			}
 
 			this._inBuilding = false;
 		}
