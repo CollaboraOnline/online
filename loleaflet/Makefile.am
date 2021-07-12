@@ -463,6 +463,11 @@ if ENABLE_ANDROIDAPP
 	@echo "JS, HTML and CSS has been updated (android/lib/src/main/assets/dist)."
 endif
 
+if ENABLE_CYPRESS
+	cp -a  "$(srcdir)/../cypress_test/data/multiuser/cypress-multiuser.html" "$(DIST_FOLDER)/cypress-multiuser.html"
+	@echo "Added HTML file for multiuser tests"
+endif
+
 $(DIST_FOLDER)/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
 	$(INTERMEDIATE_DIR)/admin-src.js
 	@NODE_PATH=$(abs_builddir)/node_modules:$(INTERMEDIATE_DIR) $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css $(if $(IS_DEBUG),--debug,-g uglifyify) -o $@ $(srcdir)/admin/main-admin.js

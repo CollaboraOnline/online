@@ -1,8 +1,9 @@
-/* global require Cypress Promise */
+/* global require cy Cypress Promise */
 
 require('cypress-failed-log');
 require('cypress-wait-until');
 require('cypress-file-upload');
+require('cypress-iframe');
 
 if (Cypress.env('INTEGRATION') === 'php-proxy') {
 	Cypress.Server.defaults({
@@ -40,4 +41,12 @@ Cypress.Commands.overwrite('waitUntil', function(originalFn, subject, checkFunct
 	if (!options.interval)
 		options.interval = 10; // ms
 	return originalFn(subject, checkFunction, options);
+});
+
+Cypress.Commands.add('customGet', function(selector, frameId, options) {
+	if (typeof frameId === 'undefined') {
+		return cy.get(selector, options);
+	} else {
+		return cy.iframe(frameId).find(selector,options);
+	}
 });
