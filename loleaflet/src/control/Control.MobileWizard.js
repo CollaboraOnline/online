@@ -233,6 +233,10 @@ L.Control.MobileWizard = L.Control.extend({
 
 		var nodesToHide = $(contentToShow).siblings().not('.mobile-wizard-scroll-indicator');
 
+		var parent = $(contentToShow).parent();
+		if (parent.hasClass('toolbox'))
+			nodesToHide = nodesToHide.add(parent.siblings().not('.mobile-wizard-scroll-indicator'));
+
 		var duration = 10;
 		if (animate) {
 			nodesToHide.hide('slide', { direction: 'left' }, duration);
@@ -295,9 +299,15 @@ L.Control.MobileWizard = L.Control.extend({
 			else
 				this._customTitle ? this._setCustomTitle(this._customTitle) : this._setTitle(this._mainTitle);
 
-			var headers = $('.ui-explorable-entry.level-' + this._currentDepth + '.mobile-wizard:visible').siblings();
-			var currentHeader = $('.ui-explorable-entry.level-' + this._currentDepth + '.mobile-wizard:visible').children('.ui-header');
+			var currentNode = $('.ui-explorable-entry.level-' + this._currentDepth + '.mobile-wizard:visible');
+			var headers = currentNode.siblings();
+			var currentHeader = currentNode.children('.ui-header');
 			headers = headers.add(currentHeader);
+
+			var parent = currentNode.parent();
+			if (parent.hasClass('toolbox'))
+				headers = headers.add(parent.siblings());
+
 			headers = headers.not('.hidden');
 
 			$('.ui-content.level-' + this._currentDepth + '.mobile-wizard:visible').hide();
