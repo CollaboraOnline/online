@@ -1170,6 +1170,12 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
         }
         break;
 
+        case DocumentState::Activity::Save:
+        {
+            // Done saving.
+            endActivity();
+        }
+
         default:
         break;
     }
@@ -1810,8 +1816,17 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
         const std::string saveArgs = oss.str();
         LOG_TRC(".uno:Save arguments: " << saveArgs);
         const auto command = "uno .uno:Save " + saveArgs;
-        forwardToChild(sessionId, command);
-        _saveManager.markLastSaveRequestTime(); //TODO: Don't update when forwarding fails!
+        if (forwardToChild(sessionId, command))
+        {
+            _saveManager.markLastSaveRequestTime();
+            if (_docState.activity() == DocumentState::Activity::None)
+            {
+                // If we aren't in the midst of any particular activity,
+                // then this is a generic save on its own.
+                startActivity(DocumentState::Activity::Save);
+            }
+        }
+
         return true;
     }
 
