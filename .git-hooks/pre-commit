@@ -6,9 +6,6 @@
 # if it wants to stop the commit.
 
 use strict;
-use lib "solenv/clang-format";
-#use File::Copy;
-#use Cwd;
 
 $ENV{LC_ALL} = "C";
 
