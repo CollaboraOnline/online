@@ -1,20 +1,20 @@
 /* global cy Cypress expect */
 
 var mobileWizardIdleTime = 1250;
-
 // Loading the test document directly in Collabora Online.
 // Parameters:
 // fileName - test document file name (without path)
 // subFolder - sub folder inside data folder (e.g. writer, calc, impress)
 // noFileCopy - whether to create a copy of the test file before run the test.
-//              By default, we create a copy to have a clear test document
-//              but when we open the same document with another user (multi-user tests),
-//              then we intend to open the same document without modification.
-function loadTestDocNoIntegration(fileName, subFolder, noFileCopy) {
+//				By default, we create a copy to have a clear test document but
+//				but when we test saving functionality we need to open same docuement
+// isMultiUser - whether the test is for multiuser
+function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser) {
 	cy.log('Loading test document with a local build - start.');
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
 	cy.log('Param - noFileCopy: ' + noFileCopy);
+	cy.log('Param - isMultiUser: ' + isMultiUser);
 
 	// Get a clean test document, by creating a copy of it in the workdir
 	// We overwrite this copy everytime we run a new test case.
@@ -54,11 +54,26 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy) {
 			Cypress.env('DATA_WORKDIR') + subFolder + '/' + fileName;
 	}
 
-	cy.visit(URI, {
-		onLoad: function(win) {
-			win.onerror = cy.onUncaughtException;
-		}});
+	if (isMultiUser) {
+		cy.viewport(2000,660);
+		var frameURI = 'http://localhost' +
+			':' + Cypress.env('SERVER_PORT') +
+			'/loleaflet/' +
+			Cypress.env('WSD_VERSION_HASH') +
+			'/cypress-multiuser.html';
 
+		cy.visit(frameURI, {
+			onLoad: function(win) {
+				win.onerror = cy.onUncaughtException;
+				win.document.getElementById('iframe1').src = URI;
+				win.document.getElementById('iframe2').src = URI;
+			}});
+	} else {
+		cy.visit(URI, {
+			onLoad: function(win) {
+				win.onerror = cy.onUncaughtException;
+			}});
+	}
 	cy.log('Loading test document with a local build - end.');
 }
 
@@ -272,17 +287,18 @@ function waitForInterferingUser() {
 // fileName - test document file name (without path)
 // subFolder - sub folder inside data folder (e.g. writer, calc, impress)
 // noFileCopy - whether to create a copy of the test file before run the test.
-//              By default, we create a copy to have a clear test document
-//              but when we open the same document with another user (multi-user tests),
-//              then we intend to open the same document without modification.
+//				By default, we create a copy to have a clear test document but
+//				but when we test saving functionality we need to open same docueme
+// isMultiUser - whether test is a multiuser test
 // subsequentLoad - whether we load a test document for the first time in the
 //                  test case or not. It's important for nextcloud because we need to sign in
 //                  with the username + password only for the first time.
-function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad, hasInteractionBeforeLoad) {
+function loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad) {
 	cy.log('Loading test document - start.');
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
 	cy.log('Param - noFileCopy: ' + noFileCopy);
+	cy.log('Param - isMultiUser: ' + isMultiUser);
 	cy.log('Param - subsequentLoad: ' + subsequentLoad);
 	cy.log('Param - hasInteractionBeforeLoad: ' + hasInteractionBeforeLoad);
 
@@ -294,22 +310,35 @@ function loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad, hasInterac
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
 		loadTestDocNextcloud(fileName, subFolder, subsequentLoad);
 	} else {
-		loadTestDocNoIntegration(fileName, subFolder, noFileCopy);
+		loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser);
 	}
 
 	// When dialog appears before document load (eg. macro warning, csv import options)
 	if (hasInteractionBeforeLoad === true)
 		return;
 
-	checkIfDocIsLoaded();
+	if (!isMultiUser) {
+		checkIfDocIsLoaded();
+	} else {
+		checkIfBothDocIsLoaded();
+	}
 }
 
-function checkIfDocIsLoaded() {
+function checkIfBothDocIsLoaded() {
+
+	//assert both the frames are loaded
+	cy.frameLoaded('#iframe1');
+	cy.frameLoaded('#iframe2');
+
+	checkIfDocIsLoaded('#iframe1');
+	checkIfDocIsLoaded('#iframe2');
+}
+function checkIfDocIsLoaded(frameId) {
 	// Wait for the document to fully load
-	cy.get('.leaflet-canvas-container canvas', {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
+	cy.customGet('.leaflet-canvas-container canvas', frameId, {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
 
 	// Wait until anything is drawn on tile canvas.
-	canvasShouldNotBeFullWhite('.leaflet-canvas-container canvas');
+	canvasShouldNotBeFullWhite('.leaflet-canvas-container canvas',frameId);
 
 	// With php-proxy the client is irresponsive for some seconds after load, because of the incoming messages.
 	if (Cypress.env('INTEGRATION') === 'php-proxy') {
@@ -320,12 +349,12 @@ function checkIfDocIsLoaded() {
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 		doIfOnDesktop(function() {
 			if (Cypress.env('pdf-view') !== true)
-				cy.get('#sidebar-panel').should('be.visible');
+				cy.customGet('#sidebar-panel', frameId).should('be.visible');
 
 			// Check that the document does not take the whole window width.
 			cy.window()
 				.then(function(win) {
-					cy.get('#document-container')
+					cy.customGet('#document-container', frameId)
 						.should(function(doc) {
 							expect(doc).to.have.lengthOf(1);
 							if (Cypress.env('pdf-view') !== true)
@@ -335,8 +364,8 @@ function checkIfDocIsLoaded() {
 
 			// Check also that the inputbar is drawn in Calc.
 			doIfInCalc(function() {
-				canvasShouldNotBeFullWhite('#calc-inputbar .inputbar_canvas');
-			});
+				canvasShouldNotBeFullWhite('#calc-inputbar .inputbar_canvas', frameId);
+			}, frameId);
 		});
 	}
 
@@ -354,13 +383,13 @@ function assertNoKeyboardInput() {
 }
 
 // Assert that keyboard input is accepted (i.e. keyboard should be VISIBLE).
-function assertHaveKeyboardInput() {
-	cy.get('textarea.clipboard')
+function assertHaveKeyboardInput(frameId) {
+	cy.customGet('textarea.clipboard', frameId)
 		.should('have.attr', 'data-accept-input', 'true');
 }
 
 // Assert that we have cursor and focus on the text area of the document.
-function assertCursorAndFocus() {
+function assertCursorAndFocus(frameId) {
 	cy.log('Verifying Cursor and Focus - start');
 
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
@@ -370,40 +399,40 @@ function assertCursorAndFocus() {
 	}
 
 	// In edit mode, we should have the blinking cursor.
-	cy.get('.leaflet-cursor.blinking-cursor')
+	cy.customGet('.leaflet-cursor.blinking-cursor', frameId)
 		.should('exist');
-	cy.get('.leaflet-cursor-container')
+	cy.customGet('.leaflet-cursor-container', frameId)
 		.should('exist');
 
-	assertHaveKeyboardInput();
+	assertHaveKeyboardInput(frameId);
 
 	cy.log('Verifying Cursor and Focus - end');
 }
 
 // Select all text via CTRL+A shortcut.
-function selectAllText() {
+function selectAllText(frameId) {
 	cy.log('Select all text - start');
 
-	typeIntoDocument('{ctrl}a');
+	typeIntoDocument('{ctrl}a',frameId);
 
-	textSelectionShouldExist();
+	textSelectionShouldExist(frameId);
 
 	cy.log('Select all text - end');
 }
 
 // Clear all text by selecting all and deleting.
-function clearAllText() {
+function clearAllText(frameId) {
 	cy.log('Clear all text - start');
 
-	assertCursorAndFocus();
+	//assertCursorAndFocus(frameId);
 
 	// Trigger select all
-	selectAllText();
+	selectAllText(frameId);
 
 	// Then remove
-	typeIntoDocument('{del}');
+	typeIntoDocument('{del}',frameId);
 
-	textSelectionShouldNotExist();
+	textSelectionShouldNotExist(frameId);
 
 	cy.log('Clear all text - end');
 }
@@ -411,28 +440,30 @@ function clearAllText() {
 // Check that the clipboard text matches with the specified text.
 // Parameters:
 // expectedPlainText - a string, the clipboard container should have.
-function expectTextForClipboard(expectedPlainText) {
-
+function expectTextForClipboard(expectedPlainText, frameId) {
+	cy.log('Text:' + expectedPlainText ,  'FrameID:' + frameId);
 	doIfInWriter(function() {
-		cy.get('#copy-paste-container p')
+		cy.customGet('#copy-paste-container p', frameId)
 			.then(function(pItem) {
 				if (pItem.children('font').length !== 0) {
-					cy.get('#copy-paste-container p font')
+					cy.customGet('#copy-paste-container p font', frameId)
 						.should('have.text', expectedPlainText);
 				} else {
-					cy.get('#copy-paste-container p')
+					cy.customGet('#copy-paste-container p', frameId)
 						.should('have.text', expectedPlainText);
 				}
 			});
-	});
+	}, frameId);
+
 	doIfInCalc(function() {
-		cy.get('#copy-paste-container pre')
+		cy.customGet('#copy-paste-container pre')
 			.should('have.text', expectedPlainText);
-	});
+	}, frameId);
+
 	doIfInImpress(function() {
-		cy.get('#copy-paste-container pre')
+		cy.customGet('#copy-paste-container pre')
 			.should('have.text', expectedPlainText);
-	});
+	}, frameId);
 }
 
 // Check that the clipboard text matches with the
@@ -455,8 +486,8 @@ function matchClipboardText(regexp) {
 	});
 }
 
-function beforeAll(fileName, subFolder, noFileCopy, subsequentLoad, hasInteractionBeforeLoad) {
-	loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad, hasInteractionBeforeLoad);
+function beforeAll(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad) {
+	loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad);
 }
 
 // This method is intended to call after each test case.
@@ -579,8 +610,8 @@ function initAliasToNegative(aliasName) {
 }
 
 // Run a code snippet if we are inside Calc.
-function doIfInCalc(callback) {
-	cy.get('#document-container')
+function doIfInCalc(callback, frameId) {
+	cy.customGet('#document-container',frameId)
 		.then(function(doc) {
 			if (doc.hasClass('spreadsheet-doctype')) {
 				callback();
@@ -599,8 +630,8 @@ function doIfNotInCalc(callback) {
 }
 
 // Run a code snippet if we are inside Impress.
-function doIfInImpress(callback) {
-	cy.get('#document-container')
+function doIfInImpress(callback, frameId) {
+	cy.customGet('#document-container', frameId)
 		.then(function(doc) {
 			if (doc.hasClass('presentation-doctype')) {
 				callback();
@@ -619,8 +650,8 @@ function doIfNotInImpress(callback) {
 }
 
 // Run a code snippet if we are inside Writer.
-function doIfInWriter(callback) {
-	cy.get('#document-container')
+function doIfInWriter(callback, frameId) {
+	cy.customGet('#document-container', frameId)
 		.then(function(doc) {
 			if (doc.hasClass('text-doctype')) {
 				callback();
@@ -645,14 +676,16 @@ function doIfNotInWriter(callback) {
 // selector - a CSS selector to query a DOM element to type in.
 // text - a text, what we'll type char-by-char.
 // delayMs - delay in ms between the characters.
-function typeText(selector, text, delayMs=0) {
+function typeText(selector, text, delayMs=0, frameId) {
 	for (var i = 0; i < text.length; i++) {
-		cy.get(selector)
+		cy.customGet(selector, frameId)
 			.type(text.charAt(i));
 		if (delayMs > 0)
 			cy.wait(delayMs);
 	}
 }
+
+
 
 // Check whether an img DOM element has only white colored pixels or not.
 // Parameters:
@@ -711,14 +744,15 @@ function imageShouldNotBeFullWhite(selector) {
 // selector - a CSS selector to query the canvas DOM element.
 // fullWhite - this specifies what we expect here, that the canvas is full white
 //             or on the contrary.
-function canvasShouldBeFullWhiteOrNot(selector, fullWhite = true) {
+// frameId - this specifies which frame to look into, in multiuser tests
+function canvasShouldBeFullWhiteOrNot(selector, fullWhite = true,frameId) {
 	cy.log('Check whether a canvas is full white or not - start.');
 	cy.log('Param - selector: ' + selector);
 	cy.log('Param - fullWhite: ' + fullWhite);
 
 	expect(selector).to.have.string('canvas');
 
-	cy.get(selector)
+	cy.customGet(selector,frameId)
 		.should(function(canvas) {
 			var context = canvas[0].getContext('2d');
 			var pixelData = context.getImageData(0, 0, canvas[0].width, canvas[0].height).data;
@@ -742,8 +776,8 @@ function canvasShouldBeFullWhite(selector) {
 }
 
 // Check whether a canvas DOM element has any non-white pixels.
-function canvasShouldNotBeFullWhite(selector) {
-	canvasShouldBeFullWhiteOrNot(selector, false);
+function canvasShouldNotBeFullWhite(selector,frameId) {
+	canvasShouldBeFullWhiteOrNot(selector, false, frameId);
 }
 
 // Waits until a DOM element becomes idle (does not change for a given time).
@@ -891,7 +925,7 @@ function doIfOnDesktop(callback) {
 // cursorSelector - selector for the cursor DOM element (document cursor is the default).
 function moveCursor(direction, modifier,
 	checkCursorVis = true,
-	cursorSelector = '.cursor-overlay .blinking-cursor') {
+	cursorSelector = '.cursor-overlay .blinking-cursor', frameId) {
 	cy.log('Moving text cursor - start.');
 	cy.log('Param - direction: ' + direction);
 	cy.log('Param - modifier: ' + modifier);
@@ -900,7 +934,7 @@ function moveCursor(direction, modifier,
 
 	// Get the original cursor position.
 	var origCursorPos = 0;
-	cy.get(cursorSelector)
+	cy.customGet(cursorSelector, frameId)
 		.should(function(cursor) {
 			if (direction === 'up' ||
 				direction === 'down' ||
@@ -938,10 +972,10 @@ function moveCursor(direction, modifier,
 		key += '{end}';
 	}
 
-	typeIntoDocument(key);
+	typeIntoDocument(key, frameId);
 
 	// Make sure the cursor position was changed.
-	cy.get(cursorSelector)
+	cy.customGet(cursorSelector, frameId)
 		.should(function(cursor) {
 			if (direction === 'up' ||
 				direction === 'down' ||
@@ -958,7 +992,7 @@ function moveCursor(direction, modifier,
 
 	// Cursor should be visible after move, because the view always follows it.
 	if (checkCursorVis === true) {
-		cy.get(cursorSelector)
+		cy.customGet(cursorSelector, frameId)
 			.should('be.visible');
 	}
 
@@ -966,10 +1000,10 @@ function moveCursor(direction, modifier,
 }
 
 // Type something into the document. It can be some text or special characters too.
-function typeIntoDocument(text) {
+function typeIntoDocument(text, frameId) {
 	cy.log('Typing into document - start.');
 
-	cy.get('textarea.clipboard')
+	cy.customGet('textarea.clipboard', frameId)
 		.type(text, {force: true});
 
 	cy.log('Typing into document - end.');
@@ -993,30 +1027,30 @@ function getCursorPos(offsetProperty, aliasName, cursorSelector = '.cursor-overl
 }
 
 // We make sure we have a text selection..
-function textSelectionShouldExist() {
+function textSelectionShouldExist(frameId) {
 	cy.log('Make sure text selection exists - start.');
 
-	cy.get('.leaflet-selection-marker-start')
+	cy.customGet('.leaflet-selection-marker-start', frameId)
 		.should('exist');
 
-	cy.get('.leaflet-selection-marker-end')
+	cy.customGet('.leaflet-selection-marker-end', frameId)
 		.should('exist');
 
 	// One of the marker should be visible at least (if not both).
-	cy.get('.leaflet-selection-marker-start, .leaflet-selection-marker-end')
+	cy.customGet('.leaflet-selection-marker-start, .leaflet-selection-marker-end', frameId)
 		.should('be.visible');
 
 	cy.log('Make sure text selection exists - end.');
 }
 
 // We make sure we don't have a text selection..
-function textSelectionShouldNotExist() {
+function textSelectionShouldNotExist(frameId) {
 	cy.log('Make sure there is no text selection - start.');
 
-	cy.get('.leaflet-selection-marker-start')
+	cy.customGet('.leaflet-selection-marker-start', frameId)
 		.should('not.exist');
 
-	cy.get('.leaflet-selection-marker-end')
+	cy.customGet('.leaflet-selection-marker-end', frameId)
 		.should('not.exist');
 
 	cy.log('Make sure there is no text selection - end.');

@@ -56,8 +56,10 @@ if [ "${TEST_TYPE}" = "desktop" -o "${TEST_TYPE}" = "interfer-desktop" ]; then
     TEST_FILE_PATH=${DESKTOP_TEST_FOLDER}${TEST_FILE};
 elif [ "${TEST_TYPE}" = "mobile" -o "${TEST_TYPE}" = "interfer-mobile" ]; then
     TEST_FILE_PATH=${MOBILE_TEST_FOLDER}${TEST_FILE};
-elif [ "${TEST_TYPE}" = "multi-user" -o "${TEST_TYPE}" = "interfer" ]; then
+elif [ "${TEST_TYPE}" = "multi-user" ]; then
     TEST_FILE_PATH=${MULTIUSER_TEST_FOLDER}${TEST_FILE};
+elif [ "${TEST_TYPE}" = "interfer" ]; then
+    TEST_FILE_PATH="${DIR}/integration_tests/common/"${TEST_FILE};
 fi
 
 RUN_COMMAND="${CYPRESS_BINARY} run \

@@ -68,11 +68,7 @@ MOBILE_TEST_FILES=$(subst $(MOBILE_TEST_FOLDER)/,,$(wildcard $(MOBILE_TEST_FOLDE
 
 DESKTOP_TEST_FILES=$(subst $(DESKTOP_TEST_FOLDER)/,,$(wildcard $(DESKTOP_TEST_FOLDER)/*_spec.js) $(wildcard $(DESKTOP_TEST_FOLDER)/*/*_spec.js))
 
-MULTIUSER_TESTS= \
-	writer/paragraph_prop \
-	writer/sidebar_visibility \
-	writer/simultaneous_typing \
-	calc/sheet_operations
+MULTIUSER_TEST_FILES=$(subst $(MULTIUSER_TEST_FOLDER)/,,$(wildcard $(MULTIUSER_TEST_FOLDER)/*_spec.js) $(wildcard $(MULTIUSER_TEST_FOLDER)/*/*_spec.js))
 
 MOBILE_TEST_FILES_DONE= \
 	$(foreach test_file,$(MOBILE_TEST_FILES),$(MOBILE_TRACK_FOLDER)/$(test_file).done)
@@ -118,7 +114,7 @@ $(DESKTOP_TEST_FILES_DONE): $(PID_FILE)
 	)
 
 $(MULTIUSER_TESTS_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
-	$(foreach test,$(MULTIUSER_TESTS),$(call run_multiuser_test,$(test),$(1)))
+	$(call run_all_multiuser_tests)
 	@mkdir -p $(dir $@) && touch $@
 
 @JAILS_PATH@:
@@ -320,14 +316,7 @@ endef
 ###################
 # Multi-user tests.
 ###################
-
-check-multi: do-multi-check-log
-	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
-
-do-multi-check-log: do-multi-check
-	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
-
-do-multi-check: @JAILS_PATH@ $(NODE_BINS)
+check-multi: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
@@ -340,23 +329,7 @@ run-multi: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(call start_loolwsd)
-	@echo
-	@echo "Running multi-user test in interactive test runner..."
-	@echo
-	$(call check_spec_existence,$(spec),multi)\
-	$(if $(filter 1,$(user)), \
-		$(eval BACKGROUND_USER_SPEC=$(spec)_user2_spec.js), \
-		$(eval BACKGROUND_USER_SPEC=$(spec)_user1_spec.js))
-	$(if $(filter 1,$(user)), \
-		$(eval INTERACTIVE_USER_SPEC=$(spec)_user1_spec.js), \
-		$(eval INTERACTIVE_USER_SPEC=$(spec)_user2_spec.js))
-	$(eval BACKGROUND_USER_LOG=$(MULTIUSER_TRACK_FOLDER)/$(BACKGROUND_USER_SPEC).log)
-	$(eval INTERACTIVE_USER_SPEC=$(MULTIUSER_TEST_FOLDER)/$(INTERACTIVE_USER_SPEC))
-	@$(call run_test_parallel,\
-		$(MULTIUSER_CONFIG),$(MULTIUSER_ENV),$(BACKGROUND_USER_SPEC),multi-user,$(BACKGROUND_USER_LOG)) &
-	@sleep 5
-	$(call run_interactive_single,\
-		$(MULTIUSER_CONFIG),$(MULTIUSER_ENV),$(INTERACTIVE_USER_SPEC)) || true
+	$(call run_interactive_multiuser,$(spec)) || true
 	@$(KILL_COMMAND) || true
 
 MULTIUSER_CONFIG = \
@@ -369,7 +342,22 @@ MULTIUSER_ENV = \
 # Parameters:
 # 1 - +env (optional):	additional env variables (will be appended to $(MULTIUSER_ENV).
 define run_all_multiuser_tests
-	$(foreach test,$(MULTIUSER_TESTS),$(call run_multiuser_test,$(test),$(1)))
+	$(foreach test,$(MULTIUSER_TEST_FILES),$(call run_multiuser_test,$(test),$(1)))
+endef
+
+# Run one multiuser test / all multiuser tests in interactive test runner.
+# Parameters:
+# 1 - spec (optional):	test file to run, if not specified all desktop tests are run.
+define run_interactive_multiuser
+	@echo "Open cypress with multiuser tests..."
+	@echo
+	$(if $(1),\
+		$(eval SPEC_FILE=$(MULTIUSER_TEST_FOLDER)/$(1))\
+		$(call check_spec_existence,$(1),multi)\
+		$(call run_interactive_single,$(MULTIUSER_CONFIG),$(MULTIUSER_ENV),$(SPEC_FILE))\
+	,\
+		$(call run_interactive_all,$(MULTIUSER_CONFIG),$(MULTIUSER_ENV))\
+	)
 endef
 
 # Run one multi-user test in headless mode.
@@ -378,19 +366,12 @@ endef
 # 2 - +env (optional):	additional env variables (will be appended to $(MULTIUSER_ENV).
 define run_multiuser_test
 	$(call check_spec_existence,$(1),multi)
-	$(eval USER1_SPEC=$(strip $(1))_user1_spec.js)
-	$(eval USER2_SPEC=$(strip $(1))_user2_spec.js)
-	$(eval USER1_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER1_SPEC).log)
-	$(eval USER2_LOG=$(MULTIUSER_TRACK_FOLDER)/$(USER2_SPEC).log)
 	@echo "Running cypress multi-user test: $(1)"
 	@echo
 	$(eval ENV_EXTENDED=$(MULTIUSER_ENV)$(if $(2),$(COMMA)$(2)))
-	@$(call run_test_parallel,\
-		$(MULTIUSER_CONFIG),$(ENV_EXTENDED),$(USER1_SPEC),multi-user,$(USER1_LOG)) & \
-	sleep 5 && \
-	$(call run_test_parallel,\
-		$(MULTIUSER_CONFIG),$(ENV_EXTENDED),$(USER2_SPEC),multi-user,$(USER2_LOG)) && \
-	wait # waits the background process to be finished
+	$(eval SPEC_FILE=$(if $(1),$(MULTIUSER_TEST_FOLDER)/$(1)))
+	$(call run_test_headless,\
+		$(MULTIUSER_CONFIG),$(ENV_EXTENDED),$(SPEC_FILE))
 endef
 
 ############################
@@ -437,7 +418,7 @@ INTERFER_MOBILE_ENV1 = \
 	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
 
 INTERFER_MOBILE_CONFIG2 = \
-	integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000,retries=0
+	supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000,retries=0
 
 INTERFER_MOBILE_ENV2 = \
 	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
@@ -510,7 +491,7 @@ INTERFER_DESKTOP_ENV1 = \
 	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
 
 INTERFER_DESKTOP_CONFIG2 = \
-	integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000,retries=0
+	supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000,retries=0
 
 INTERFER_DESKTOP_ENV2 = \
 	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
@@ -639,7 +620,8 @@ endef
 # 2 - test type:      mobile, desktop or multi test.
 define check_spec_existence
 	$(eval TEST_FILES=$(if $(filter mobile,$(2)),$(MOBILE_TEST_FILES),\
-				$(if $(filter desktop,$(2)),$(DESKTOP_TEST_FILES),$(MULTIUSER_TESTS))))
+				$(if $(filter desktop,$(2)),$(DESKTOP_TEST_FILES),\
+				$(if $(filter multi,$(2)),$(MULTIUSER_TEST_FILES)))))
 	$(if $(filter $(1),$(TEST_FILES)),,$(error CypressError: Can't find the given spec file!))
 
 endef

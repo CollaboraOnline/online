@@ -190,7 +190,7 @@ To open one specific desktop test suit in interactive test runner:
     make run-interfer-desktop spec=writer/form_field_spec.js
 
 The implementation of interference testing can be found in
-cypress_test/integration_tests/multiuser/interference_user_spec.js
+cypress_test/integration_tests/common/interference_user_spec.js
 test file.
 
 Running tests in different browsers

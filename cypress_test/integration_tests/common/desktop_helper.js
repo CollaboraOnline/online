@@ -5,22 +5,22 @@ const { clickOnIdle } = require('./helper');
 // Make the sidebar visible by clicking on the corresponding toolbar item.
 // We assume that the sidebar is hidden, when this method is called.
 
-function showSidebar() {
+function showSidebar(frameId) {
 	cy.log('Showing sidebar - start.');
 
-	cy.get('#tb_editbar_item_sidebar .w2ui-button')
+	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId)
 		.should('not.have.class', 'checked');
 
-	cy.get('#sidebar-dock-wrapper')
+	cy.customGet('#sidebar-dock-wrapper', frameId)
 		.should('not.be.visible');
 
-	cy.get('#tb_editbar_item_sidebar .w2ui-button')
+	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId)
 		.click({force: true});
 
-	cy.get('#tb_editbar_item_sidebar .w2ui-button')
+	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId)
 		.should('have.class', 'checked');
 
-	cy.get('#sidebar-dock-wrapper')
+	cy.customGet('#sidebar-dock-wrapper', frameId)
 		.should('be.visible');
 
 	cy.log('Showing sidebar - end.');
@@ -28,22 +28,22 @@ function showSidebar() {
 
 // Hide the sidebar by clicking on the corresponding toolbar item.
 // We assume that the sidebar is visible, when this method is called.
-function hideSidebar() {
+function hideSidebar(frameId) {
 	cy.log('Hiding sidebar - start.');
 
-	cy.get('#tb_editbar_item_sidebar .w2ui-button')
+	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId)
 		.should('have.class', 'checked');
 
-	cy.get('#sidebar-dock-wrapper')
+	cy.customGet('#sidebar-dock-wrapper', frameId)
 		.should('be.visible');
 
-	cy.get('#tb_editbar_item_sidebar .w2ui-button')
+	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId)
 		.click({force: true});
 
-	cy.get('#tb_editbar_item_sidebar .w2ui-button')
+	cy.customGet('#tb_editbar_item_sidebar .w2ui-button', frameId)
 		.should('not.have.class', 'checked');
 
-	cy.get('#sidebar-dock-wrapper')
+	cy.customGet('#sidebar-dock-wrapper', frameId)
 		.should('not.be.visible');
 
 	cy.log('Hiding sidebar - end.');

@@ -15,7 +15,7 @@ describe('macro dialog tests', function() {
 	}
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc', undefined, undefined, true);
+		helper.beforeAll(testFileName, 'calc', undefined, undefined, undefined, true);
 		acceptMacroExecution();
 		helper.checkIfDocIsLoaded();
 	});

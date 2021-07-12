@@ -1,7 +1,7 @@
 /* global describe it cy require Cypress */
 
-var helper = require('../common/helper');
-var mobileHelper = require('../common/mobile_helper');
+var helper = require('./helper');
+var mobileHelper = require('./mobile_helper');
 
 describe('Interfering second user.', function() {
 	function getComponent(fileName) {
