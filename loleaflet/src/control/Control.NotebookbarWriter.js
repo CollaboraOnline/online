@@ -625,12 +625,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:FormatBulletsMenu'
 			},
 			{
-				'id': 'FormatBulletsMenu:FormatBulletsMenu',
-				'type': 'menubutton',
-				'text': _UNO('.uno:FormatBulletsMenu', 'text'),
-				'command': '.uno:FormatBulletsMenu'
-			},
-			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:OutlineBullet', 'text'),
 				'command': '.uno:OutlineBullet'
