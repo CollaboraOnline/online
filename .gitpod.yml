@@ -34,5 +34,5 @@ github:
 
 tasks:
   - init: cd .. && wget https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-2021-assets.tar.gz
-    prebuild: tar xvf core-co-2021-assets.tar.gz && rm core-co-2021-assets.tar.gz && cd online && ./autogen.sh && ./configure --enable-silent-rules --with-lokit-path=/workspace/include --with-lo-path=/workspace/instdir --enable-debug --disable-setcap && cp .gitpod-files/loolwsd-gitpod.xml loolwsd.xml && make -j `nproc`
+    prebuild: tar xvf core-co-2021-assets.tar.gz && rm core-co-2021-assets.tar.gz && cd online && ./autogen.sh && ./configure --enable-silent-rules --with-lokit-path=/workspace/include --with-lo-path=/workspace/instdir --enable-debug --disable-setcap && cp .gitpod-files/loolwsd-gitpod.xml loolwsd.xml && mkdir .vscode && cp .gitpod-files/settings.json .vscode/settings.json && make -j `nproc`
 
