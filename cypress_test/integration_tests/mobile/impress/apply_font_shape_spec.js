@@ -112,7 +112,7 @@ describe('Apply font on selected shape.', function() {
 
 		helper.clickOnIdle('#Color .ui-header');
 
-		mobileHelper.selectFromColorPalette(0, 5, 2);
+		mobileHelper.selectFromColorPalette(2, 5, 13, 2);
 
 		triggerNewSVG();
 
@@ -128,7 +128,7 @@ describe('Apply font on selected shape.', function() {
 
 		helper.clickOnIdle('#CharBackColor');
 
-		mobileHelper.selectFromColorPalette(1, 2, 2);
+		mobileHelper.selectFromColorPalette(3, 2, 3, 2);
 
 		cy.get('#CharBackColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
@@ -196,7 +196,7 @@ describe('Apply font on selected shape.', function() {
 		// Remove direct formatting
 		mobileHelper.openTextPropertiesPanel();
 
-		helper.clickOnIdle('#clearFormatting');
+		helper.clickOnIdle('#defaultattr #clearFormatting');
 
 		triggerNewSVG();
 

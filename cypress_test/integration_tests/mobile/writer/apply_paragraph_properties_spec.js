@@ -30,7 +30,7 @@ describe('Apply paragraph properties.', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it('Apply left/right alignment.', function() {
+	/*it('Apply left/right alignment.', function() {
 		helper.clickOnIdle('#RightPara');
 
 		mobileHelper.closeMobileWizard();
@@ -123,12 +123,12 @@ describe('Apply paragraph properties.', function() {
 
 		cy.get('#copy-paste-container ol li p')
 			.should('exist');
-	});
+	});*/
 
 	it.skip('Apply background color.', function() {
 		helper.clickOnIdle('#BackgroundColor .ui-header');
 
-		mobileHelper.selectFromColorPalette(2, 5, 2);
+		mobileHelper.selectFromColorPalette(4, 5, 5, 2);
 
 		writerHelper.selectAllTextOfDoc();
 
