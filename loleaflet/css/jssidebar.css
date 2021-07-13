@@ -14,8 +14,10 @@
 	vertical-align: middle;
 }
 
-.ui-expander-label.jsdialog.sidebar {
-	color: var(--gray-light-txt--color);
+#sidebar-dock-wrapper {
+	padding: 0;
+	border-left: 1px solid var(--gray-color) !important;
+	margin-top: 0px !important;
 }
 
 .sidebar.spinfield {
