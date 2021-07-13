@@ -204,7 +204,7 @@ m4_ifelse(MOBILEAPP,[true],
       <div class="closebuttonimage" id="closebutton"></div>
     </div>
 
-    <div id="main-document-content" style="display:flex; flex-direction: row; flex: 1; margin: 0; padding: 0">
+    <div id="main-document-content" style="display:flex; flex-direction: row; flex: 1; margin: 0; padding: 0; min-height: 0">
       <div id="presentation-controls-wrapper" class="readonly">
         <div id="slide-sorter"></div>
         <div id="presentation-toolbar" style="display: none"></div>
