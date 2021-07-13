@@ -554,7 +554,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	height: 49px;
 	float: right;
 }
-.spinfieldcontainer input.spinfield {
+.spinfieldcontainer input.spinfield:not(.sidebar) {
 	padding-top: 0px;
 }
 .mobile-wizard input.spinfield:disabled {
