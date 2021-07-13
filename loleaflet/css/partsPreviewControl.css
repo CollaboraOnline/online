@@ -4,6 +4,7 @@
 	overflow-x: hidden;
 	overflow-y: visible;
 	background: #dfdfdf;
+	max-height: 100%;
 	scrollbar-color: #ccc #dfdfdf;
 	scrollbar-width: thin;
 }
