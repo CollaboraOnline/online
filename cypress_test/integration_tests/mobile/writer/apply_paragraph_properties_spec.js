@@ -47,7 +47,7 @@ describe('Apply paragraph properties.', function() {
 
 		cy.get('#Paragraph')
 			.should('have.class', 'selected');
-			
+
 		helper.clickOnIdle('#LeftPara');
 
 		cy.get('#LeftParaimg')
@@ -125,7 +125,7 @@ describe('Apply paragraph properties.', function() {
 			.should('exist');
 	});
 
-	it('Apply background color.', function() {
+	it.skip('Apply background color.', function() {
 		helper.clickOnIdle('#BackgroundColor .ui-header');
 
 		mobileHelper.selectFromColorPalette(2, 5, 2);

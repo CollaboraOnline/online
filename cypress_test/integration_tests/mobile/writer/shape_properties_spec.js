@@ -348,7 +348,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('exist');
 	});
 
-	it('Change fill color', function() {
+	it.skip('Change fill color', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 path:nth-of-type(1)')
 			.should('have.attr', 'fill', 'rgb(114,159,207)');
 

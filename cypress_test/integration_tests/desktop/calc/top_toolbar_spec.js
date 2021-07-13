@@ -24,7 +24,7 @@ describe('Top toolbar tests.', function() {
 		helper.getCursorPos('left', 'currentTextEndPos');
 	}
 
-	it('Save.', function() {
+	it.skip('Save.', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
 
@@ -86,10 +86,10 @@ describe('Top toolbar tests.', function() {
 
 		// Select the full column
 		calcHelper.selectFirstColumn();
-	
+
 		// Despite the selection is there, merge cells needs more time here.
 		cy.wait(1000);
-	
+
 		cy.get('.w2ui-tb-image.w2ui-icon.togglemergecells')
 			.click();
 
@@ -100,36 +100,36 @@ describe('Top toolbar tests.', function() {
 	it('Remove cell border', function() {
 		cy.get('#tb_editbar_item_setborderstyle')
 			.click();
-		 
+
 		//Add left border
 		cy.get('.w2ui-tb-image.w2ui-icon.frame02')
 			 .click({force: true});
-			 
+
 		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-left: 1px solid #000000');
-		
+
 		// Then remove it
 		cy.get('#tb_editbar_item_setborderstyle')
 			.click();
 
 		cy.get('.w2ui-tb-image.w2ui-icon.frame01')
 			 .click({force: true});
-			 
+
 		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
 			.should('not.have.attr', 'style');
 	});
-	
+
 	it('Apply left border', function() {
 		cy.get('#tb_editbar_item_setborderstyle')
 			.click();
 
 		cy.get('.w2ui-tb-image.w2ui-icon.frame02')
 			 .click({force: true});
-			 
+
 		calcHelper.selectEntireSheet();
 
 		cy.get('#copy-paste-container table td')
@@ -187,7 +187,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container table td')
 			.should('have.attr', 'style', 'border-bottom: 1px solid #000000');
 	});
-	
+
 	it('Apply top and bottom border', function() {
 		cy.get('#tb_editbar_item_setborderstyle')
 			.click();
@@ -303,7 +303,7 @@ describe('Top toolbar tests.', function() {
 	it('Apply More Border styles', function() {
 		cy.get('#tb_editbar_item_setborderstyle')
 			.click();
-			
+
 		cy.get('.w2ui-tb-image.w2ui-icon.frame13')
 		    .click();
 
@@ -326,7 +326,7 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('#copy-paste-container table td b')
 			.should('not.exist');
-		
+
 	});
 
 	it('Apply font style.', function() {
