@@ -632,7 +632,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_toolboxHandler: function(parentContainer, data, builder) {
-		var toolbox = L.DomUtil.create('div', builder.options.cssClass + ' toolbox', parentContainer);
+		var toolbox = L.DomUtil.create('div', builder.options.cssClass + ' toolbox level-' + builder._currentDepth, parentContainer);
 		toolbox.id = data.id;
 
 		if (data.enabled === false || data.enabled === 'false') {
