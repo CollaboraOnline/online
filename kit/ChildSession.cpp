@@ -1540,7 +1540,18 @@ bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const Str
         return false;
     }
 
-    unsigned long long int nLOKWindowId = std::stoull(tokens[1].c_str());
+    unsigned long long int nLOKWindowId = 0;
+
+    try
+    {
+        nLOKWindowId = std::stoull(tokens[1].c_str());
+    }
+    catch (...)
+    {
+        sendTextFrameAndLogError("error: cmd=dialogevent kind=syntax");
+        return false;
+    }
+
     if (_isDocLoaded)
     {
         getLOKitDocument()->setView(_viewId);
