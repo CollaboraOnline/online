@@ -1604,18 +1604,16 @@ bool ChildSession::dialogEvent(const char* /*buffer*/, int /*length*/, const Str
         return false;
     }
 
-    unsigned long long int nLOKWindowId;
+    unsigned long long int nLOKWindowId = 0;
+
     try
     {
         nLOKWindowId = std::stoull(tokens[1].c_str());
     }
     catch (const std::exception&)
     {
-        // Let's just silently ignore the conversion error. (We used to log an ERR message about the
-        // exception, which presumably is misleading, as the JS code intentionally sends tokens[1]
-        // as "busypopup". No idea whether that is wrong or whether the parsing here is too strict.)
-        // FIXME: The dialogevent message is undocumented.
-        return true;
+        sendTextFrameAndLogError("error: cmd=dialogevent kind=syntax");
+        return false;
     }
 
     if (_isDocLoaded)
