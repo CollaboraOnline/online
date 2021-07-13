@@ -2,6 +2,11 @@
 	display: inline-flex;
 }
 
+.sidebar * {
+	font-family: var(--jquery-ui-font);
+	text-transform: none !important;
+}
+
 .sidebar .ui-content .unobutton {
 	width: 24px;
 	height: 24px;
