@@ -711,6 +711,9 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 				continue;
 			}
 
+			if (childType === 'deck' && childData.visible === false)
+				continue;
+
 			var childObject = parent;
 			if (childData.dialogid) {
 				var dialog = L.DomUtil.createWithId('div', childData.dialogid, childObject);
