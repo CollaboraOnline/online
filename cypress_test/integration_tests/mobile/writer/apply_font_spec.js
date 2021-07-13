@@ -43,7 +43,7 @@ describe('Apply font changes.', function() {
 	}
 
 	it('Apply font name.', function() {
-		mobileHelper.selectListBoxItem('#fontnamecombobox', 'Linux Libertine G');
+		mobileHelper.selectListBoxItem('#fontnamecombobox .ui-header', 'Linux Libertine G');
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -107,7 +107,7 @@ describe('Apply font changes.', function() {
 	it('Apply font color.', function() {
 		helper.clickOnIdle('#FontColor .ui-header');
 
-		mobileHelper.selectFromColorPalette(0, 5, 2);
+		mobileHelper.selectFromColorPalette(0, 5, 5, 2);
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -131,7 +131,7 @@ describe('Apply font changes.', function() {
 
 		helper.clickOnIdle('#FontColor .ui-header');
 
-		helper.clickOnIdle('.colors-container-auto-color-row');
+		helper.clickOnIdle('.colors-container-auto-color-row:visible');
 
 		writerHelper.selectAllTextOfDoc();
 
@@ -142,7 +142,7 @@ describe('Apply font changes.', function() {
 	it('Apply highlight color.', function() {
 		helper.clickOnIdle('#BackColor .ui-header');
 
-		mobileHelper.selectFromColorPalette(1, 5, 4);
+		mobileHelper.selectFromColorPalette(1, 5, 6, 4);
 
 		writerHelper.selectAllTextOfDoc();
 

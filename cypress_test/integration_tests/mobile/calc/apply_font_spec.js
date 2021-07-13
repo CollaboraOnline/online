@@ -88,7 +88,7 @@ describe('Apply font changes.', function() {
 	it('Apply font color.', function() {
 		helper.clickOnIdle('#Color .ui-header');
 
-		mobileHelper.selectFromColorPalette(0, 5);
+		mobileHelper.selectFromColorPalette(2, 5);
 
 		calcHelper.selectEntireSheet();
 

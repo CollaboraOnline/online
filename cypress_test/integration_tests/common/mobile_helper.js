@@ -219,16 +219,20 @@ function closeInsertionWizard() {
 	cy.log('Closing insertion wizard - end.');
 }
 
-function selectFromColorPalette(paletteNum, groupNum, colorNum) {
+function selectFromColorPalette(paletteNum, groupNum, paletteAfterChangeNum, colorNum) {
 	cy.log('Selecting a color from the color palette - start.');
 
 	cy.get('#color-picker-' + paletteNum.toString() + '-basic-color-' + groupNum.toString())
 		.click();
 
-	if (colorNum !== undefined) {
-		cy.get('#color-picker-' + paletteNum.toString() + '-tint-' + colorNum.toString())
+	cy.wait(1000);
+
+	if (paletteAfterChangeNum !== undefined && colorNum !== undefined) {
+		cy.get('#color-picker-' + paletteAfterChangeNum.toString() + '-tint-' + colorNum.toString())
 			.click();
 	}
+
+	cy.wait(1000);
 
 	cy.get('#mobile-wizard-back')
 		.click();

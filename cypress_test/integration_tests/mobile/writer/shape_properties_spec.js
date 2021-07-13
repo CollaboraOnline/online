@@ -359,7 +359,7 @@ describe('Change shape properties via mobile wizard.', function() {
 
 		helper.clickOnIdle('#FillColor');
 
-		mobileHelper.selectFromColorPalette(0, 2 ,2);
+		mobileHelper.selectFromColorPalette(0, 2, 0, 2);
 
 		cy.get('#FillColor .color-sample-selected')
 			.should('have.attr', 'style', 'background-color: rgb(204, 0, 0);');
