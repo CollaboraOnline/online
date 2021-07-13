@@ -187,10 +187,14 @@ describe.skip('Table operations', function() {
 
 		mode === 'notebookbar' ? selectOptionNotebookbar('#InsertColumnsBefore') : selectOptionClassic('#menu-table', true, 'Insert', 'Insert Column Before');
 
+		cy.wait(100);
+
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 3);
 
 		mode === 'notebookbar' ? selectOptionNotebookbar('#DeleteColumns') : selectOptionClassic('#menu-table', true, 'Delete', 'Delete Column');
+
+		cy.wait(100);
 
 		cy.get('.leaflet-marker-icon.table-column-resize-marker')
 			.should('have.length', 2);
