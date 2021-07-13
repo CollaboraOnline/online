@@ -3023,6 +3023,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		case 'show':
 			$(control).removeClass('hidden');
+			$(control).show();
 			break;
 
 		case 'hide':

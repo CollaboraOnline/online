@@ -647,11 +647,6 @@ L.Control.MobileWizard = L.Control.extend({
 			return;
 
 		var scrollTop = control.scrollTop;
-
-		var hasOpenedExplorableEntry = false;
-		if ($(control).children('.ui-content:visible').length)
-			hasOpenedExplorableEntry = true;
-
 		var wasHidden = control.style.display === 'none';
 
 		control.style.visibility = 'hidden';
@@ -678,15 +673,22 @@ L.Control.MobileWizard = L.Control.extend({
 		parent.insertBefore(temporaryParent.firstChild, control.nextSibling);
 		L.DomUtil.remove(control);
 
+		// when we updated toolbox or menubutton with color picker we need to leave
+		// mobile wizard at the same level (opened color picker) on update
+		if (this._currentPath.length) {
+			var elem = $('[title=\'' + this._currentPath[this._currentPath.length - 1] + '\'').prev(':visible');
+			if (elem.length) {
+				// we already were at this level so go back one step and enter again
+				this._currentPath.pop();
+				this._currentDepth--;
+				$(elem).trigger('click', {animate: false});
+			}
+		}
+
 		var newControl = container.querySelector('[id=\'' + data.control.id + '\']');
 		if (newControl) {
 			if (wasHidden)
 				newControl.style.display = 'none';
-
-			if (hasOpenedExplorableEntry) {
-				$(newControl).children('.ui-header').first().hide();
-				$(newControl).children('.ui-content').first().show();
-			}
 
 			newControl.scrollTop = scrollTop;
 		}
