@@ -15,7 +15,7 @@
 	text-align: center;
 	padding: 0;
 	bottom: 0;
-	z-index: 0;
+	z-index: 11;
 	border-top: 1px solid #bbbbbb;
 	display: block;
 }
