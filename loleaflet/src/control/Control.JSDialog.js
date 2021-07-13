@@ -43,11 +43,9 @@ L.Control.JSDialog = L.Control.extend({
 	closePopover: function(id) {
 		L.DomUtil.remove(this.dialogs[id].overlay);
 		var menubutton = this.dialogs[id].popupParent;
-		var builder = this.clearDialog(id);
+		this.clearDialog(id);
 		if (menubutton)
 			menubutton.click();
-		else
-			builder.callback('popover', 'close', {id: '__POPOVER__'}, null, builder);
 	},
 
 	onJSDialog: function(e) {
