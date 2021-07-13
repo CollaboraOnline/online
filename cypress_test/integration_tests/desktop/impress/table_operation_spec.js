@@ -5,7 +5,7 @@ var desktopHelper = require('../../common/desktop_helper');
 var impressHelper = require('../../common/impress_helper');
 var mode = Cypress.env('USER_INTERFACE');
 
-describe('Table operations', function() {
+describe.skip('Table operations', function() {
 	var testFileName = 'table_operation.odp';
 
 	beforeEach(function() {

@@ -179,7 +179,7 @@ describe('Apply font on selected shape.', function() {
 			.should('have.attr', 'font-size', '368px');
 	});
 
-	it('Clear direct formatting of text shape.', function() {
+	it.skip('Clear direct formatting of text shape.', function() {
 		mobileHelper.openTextPropertiesPanel();
 
 		// Change the font size first

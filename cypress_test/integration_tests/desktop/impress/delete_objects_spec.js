@@ -73,7 +73,7 @@ describe('Delete Objects', function() {
 			.should('not.exist');
 	});
 
-	it('Delete Table',function() {
+	it.skip('Delete Table',function() {
 		desktopHelper.selectZoomLevel('50');
 
 		cy.get('#menu-table')
