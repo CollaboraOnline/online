@@ -382,7 +382,7 @@ Z-index values:
 -------------------------------------------
 x				menu-nb-hamburger > ul (calculated from jquery.smartmenus.js)
 1000			main-menu(desktop-only)
-0			toolbar-down
+11			toolbar-down
 1050			closebuttonwrapper (not being used currently)
 -------------------------------------------
 		on the top
