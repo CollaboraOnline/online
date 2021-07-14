@@ -588,19 +588,17 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	max-height: 60px;
 	overflow-x: scroll;
 	overflow-y: hidden;
+	line-height: 60px;
 }
 
-.preview-img-portrait {
+#slide-sorter.portrait .preview-img {
 	min-width: 37px;
 	max-width: 60px;
-	margin-left: 0px;
-	margin-right: 0px;
-	margin-bottom: 5px;
-	margin-top: 2px;
 	max-height: 45px;
+	margin: 0;
 }
 
-.preview-frame-portrait {
+#slide-sorter.portrait .preview-frame {
 	max-height: 60px;
 	max-width: 100%;
 	display: inline-block;
@@ -608,7 +606,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	margin: 0;
 }
 
-.preview-frame-portrait.preview-img-dropsite {
+#slide-sorter.portrait .preview-frame.preview-img-dropsite {
 	padding-right: 0px;
 	border-right: 20px solid var(--gray-color);
 	border-bottom: none;
@@ -623,20 +621,21 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	overflow-y: scroll;
 }
 
-.preview-img-landscape {
+#slide-sorter.landscape .preview-img {
 	min-width: 20px;
 	max-width: 60px;
-	margin-left: 1px;
+	margin: 0;
 }
 
-.preview-frame-landscape {
+#slide-sorter.landscape .preview-frame {
 	max-height: initial;
 	max-width: 66px;
 	display: block;
+	margin: 1em 3px;
 }
 
 /* Highlight where a slide can be dropped when reordering by drag-and-drop. */
-.preview-frame-landscape.preview-img-dropsite {
+#slide-sorter.landscape .preview-frame.preview-img-dropsite {
 	border-bottom: 10px solid var(--gray-color);
 }
 
