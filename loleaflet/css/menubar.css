@@ -249,10 +249,6 @@
 	display: block;
 }
 
-.readonly {
-	top: 3px;
-}
-
 /* Some more lo-menu specific customizations */
 
 /* The smartmenus plugin doesn't seem to have support for icons, so implement our own pseudo-elements */

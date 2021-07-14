@@ -105,12 +105,18 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 	onResizeImpress: function () {
 		L.DomUtil.updateElementsOrientation(['presentation-controls-wrapper', 'document-container', 'slide-sorter']);
 
+		var mobileEditButton = document.getElementById('mobile-edit-button');
+
 		if (window.mode.isMobile()) {
 			if (L.DomUtil.isPortrait()) {
 				this._putPCWOutsideFlex();
+				if (mobileEditButton)
+					mobileEditButton.classList.add('portrait');
 			}
 			else {
 				this._putPCWInsideFlex();
+				if (mobileEditButton)
+					mobileEditButton.classList.remove('portrait');
 			}
 		}
 	},
