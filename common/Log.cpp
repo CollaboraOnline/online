@@ -382,6 +382,11 @@ namespace Log
 
     void setThreadLocalLogLevel(const std::string& logLevel)
     {
+        if (!Static.getLogger())
+        {
+            return;
+        }
+
         // Use the same channel for all Poco loggers.
         auto channel = Static.getLogger()->getChannel();
 
