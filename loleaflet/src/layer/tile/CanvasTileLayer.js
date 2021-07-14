@@ -809,6 +809,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			if (!heightIncreased)
 				this._onUpdateCursor(true);
 
+			this._fitWidthZoom();
+
 			// Center the view w.r.t the new map-pane position using the current zoom.
 			this._map.setView(this._map.getCenter());
 		}
