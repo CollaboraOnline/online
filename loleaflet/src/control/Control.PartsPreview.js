@@ -256,12 +256,6 @@ L.Control.PartsPreview = L.Control.extend({
 			previewFrameTop = this._previewContTop + this._previewFrameMargin + i * (this._previewFrameHeight + this._previewFrameMargin);
 			previewFrameTop -= this._scrollY;
 			previewFrameBottom = previewFrameTop + this._previewFrameHeight;
-
-			if (this._direction === 'x') {
-				L.DomUtil.setStyle(img, 'width', this._previewImgWidth + 'px');
-			} else {
-				L.DomUtil.setStyle(img, 'height', this._previewImgHeight + 'px');
-			}
 		}
 
 		var imgSize;
