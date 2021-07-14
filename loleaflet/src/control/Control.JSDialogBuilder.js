@@ -2472,6 +2472,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			if (data.enabled === 'false' || data.enabled === false)
 				L.DomUtil.addClass(div, 'disabled');
+
+			if (data.selected === true) {
+				$(button).addClass('selected');
+				$(div).addClass('selected');
+			}
 		} else {
 			button = L.DomUtil.create('label', 'ui-content unolabel', div);
 			button.innerHTML = builder._cleanText(data.text);
