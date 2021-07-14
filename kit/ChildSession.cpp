@@ -2679,8 +2679,6 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_UNO_COMMAND_RESULT:
     {
-        sendTextFrame("unocommandresult: " + payload);
-
         Parser parser;
         Poco::Dynamic::Var var = parser.parse(payload);
         Object::Ptr object = var.extract<Object::Ptr>();
@@ -2728,6 +2726,8 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             }
 #endif
         }
+
+        sendTextFrame("unocommandresult: " + payload);
     }
     break;
     case LOK_CALLBACK_ERROR:
