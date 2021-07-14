@@ -237,7 +237,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	transition: transform 0.5s;
 }
 
-#mobile-edit-button.impress {
+#mobile-edit-button.impress.portrait{
 	bottom: 70px;
 }
 
