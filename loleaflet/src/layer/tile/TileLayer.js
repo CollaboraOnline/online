@@ -3702,6 +3702,10 @@ L.TileLayer = L.GridLayer.extend({
 		if (this._firstFitDone)
 			zoom = this._map._zoom;
 		this._firstFitDone = true;
+
+		if (zoom > 1)
+			zoom = Math.floor(zoom);
+
 		this._map.setZoom(zoom, {animate: false});
 	},
 
