@@ -1130,120 +1130,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var state = null;
 
 		switch (id) {
-		case 'beforetextindent':
-			state = items.getItemValue('.uno:LeftRightParaMargin');
-			if (state)
-				return state.left.replace(',', '.');
-			break;
-
-		case 'aftertextindent':
-			state = items.getItemValue('.uno:LeftRightParaMargin');
-			if (state) {
-				return state.right.replace(',', '.');
-			}
-			break;
-
-		case 'firstlineindent':
-			state = items.getItemValue('.uno:LeftRightParaMargin');
-			if (state)
-				return state.firstline.replace(',', '.');
-			break;
-
-		case 'aboveparaspacing':
-			state = items.getItemValue('.uno:ULSpacing');
-			if (state)
-				return state.upper.replace(',', '.');
-			break;
-
-		case 'belowparaspacing':
-			state = items.getItemValue('.uno:ULSpacing');
-			if (state)
-				return state.lower.replace(',', '.');
-			break;
-
-		case 'rowheight':
-			state = items.getItemValue('.uno:TableRowHeight');
-			if (state)
-				return state.replace(',', '.');
-			break;
-
-		case 'columnwidth':
-			state = items.getItemValue('.uno:TableColumWidth');
-			if (state)
-				return state.replace(',', '.');
-			break;
-
-		case 'decimalplaces':
-			state = items.getItemValue('.uno:NumberFormat');
-			if (state) {
-				state = state.split(',');
-				if (state.length > 2)
-					return state[2];
-			}
-			break;
-
-		case 'leadingzeroes':
-			state = items.getItemValue('.uno:NumberFormat');
-			if (state) {
-				state = state.split(',');
-				if (state.length > 3)
-					return state[3];
-			}
-			break;
-
-		case 'negativenumbersred':
-			state = items.getItemValue('.uno:NumberFormat');
-			if (state) {
-				state = state.split(',');
-				if (state.length > 1)
-					return state[1];
-			}
-			return;
-
-		case 'thousandseparator':
-			state = items.getItemValue('.uno:NumberFormat');
-			if (state) {
-				state = state.split(',');
-				if (state.length > 0)
-					return state[0];
-			}
-			return;
-
-		case 'numberformatcombobox':
-			state = items.getItemValue('.uno:NumberFormatType');
-			if (state) {
-				return state;
-			}
-			break;
-
-		case 'fontsizecombobox':
-			state = items.getItemValue('.uno:FontHeight');
-			if (state) {
-				return state;
-			}
-			break;
-
-		case 'linetransparency':
-			state = items.getItemValue('.uno:LineTransparence');
-			if (state) {
-				return state.replace(',', '.');
-			}
-			break;
-
-		case 'settransparency':
-			state = items.getItemValue('.uno:FillTransparence');
-			if (state) {
-				return state.replace(',', '.');
-			}
-			break;
-
-		case 'FIELD_TRANSPARENCY':
-			state = items.getItemValue('.uno:FillShadowTransparency');
-			if (state) {
-				return state.replace(',', '.');
-			}
-			break;
-
 		case 'fillattr':
 			state = items.getItemValue('.uno:FillPageColor');
 			if (state) {
@@ -1293,52 +1179,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 			break;
 
-		case 'setbrightness':
-			state = items.getItemValue('.uno:GrafLuminance');
+		case 'LB_SHADOW_COLOR':
+			state = items.getItemValue('.uno:FillShadowColor');
 			if (state) {
-				return state.replace(',', '.');
-			}
-			break;
-
-		case 'setcontrast':
-			state = items.getItemValue('.uno:GrafContrast');
-			if (state) {
-				return state.replace(',', '.');
-			}
-			break;
-
-		case 'setgraphtransparency':
-			state = items.getItemValue('.uno:GrafTransparence');
-			if (state) {
-				return state.replace(',', '.');
-			}
-			break;
-
-		case 'setred':
-			state = items.getItemValue('.uno:GrafRed');
-			if (state) {
-				return state.replace(',', '.');
-			}
-			break;
-
-		case 'setgreen':
-			state = items.getItemValue('.uno:GrafGreen');
-			if (state) {
-				return state.replace(',', '.');
-			}
-			break;
-
-		case 'setblue':
-			state = items.getItemValue('.uno:GrafBlue');
-			if (state) {
-				return state.replace(',', '.');
-			}
-			break;
-
-		case 'setgamma':
-			state = items.getItemValue('.uno:GrafGamma');
-			if (state) {
-				return String(state.replace(',', '.') / 100.0);
+				return state;
 			}
 			break;
 		}
@@ -1354,6 +1198,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		case 'fillgrad2':
 			return _('To');
+
+		case 'LB_SHADOW_COLOR':
+			return _('Color');
 		}
 
 		return null;
