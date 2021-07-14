@@ -1,0 +1,19 @@
+# Comment to be posted to on PRs from first time contributors in your repository
+newPRWelcomeComment: |
+  Thanks for opening this pull request!
+
+  Things that will help get your PR across the finish line:
+
+  - Check out our [contributing guidelines](https://github.com/CollaboraOnline/online/blob/master/CONTRIBUTING.md).
+  - Connect with us through one of [our communication channels](https://collaboraonline.github.io/post/communicate/).
+  - Click on the details link next to the failing CI checks, if any, to see an explanation on how to fix it.
+  - Feel free to ping @mrkara or the mentor of the easyHack you are solving if you need help.
+
+# Configuration for first-pr-merge - https://github.com/behaviorbot/first-pr-merge
+
+# Comment to be posted to on pull requests merged by a first time user
+firstPRMergeComment: |
+  Thanks a lot for your contribution, and congrats on your first pull request merged! Welcome aboard! 🎉🎉🎉
+
+  If you haven't decided on your next task yet, take a look at our [easy-hacks](https://github.com/CollaboraOnline/online/issues?q=is%3Aissue+is%3Aopen+easy+label%3A%22Easy+Hack%22). We're looking forward to your next pull request! :)
+
