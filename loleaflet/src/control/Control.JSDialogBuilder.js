@@ -531,33 +531,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
-	_getListBoxUpdateType: function(id) {
-		if (id) {
-			if (id === 'numberformatcombobox')
-				return 'index';
-			else if (id === 'fontsizecombobox')
-				return 'value';
-		}
-		return false;
-	},
-
-	_updateListBox: function(builder, sectionTitle, data, state) {
-		if (!sectionTitle)
-			return;
-
-		var updateBy = builder._getListBoxUpdateType(data.id);
-
-		if (updateBy === 'index')
-			sectionTitle.innerHTML = data.entries[state];
-		else if (updateBy === 'value')
-			sectionTitle.innerHTML = state;
-
-		if (builder.refreshSidebar) {
-			builder.wizard._refreshSidebar(0);
-			builder.refreshSidebar = false;
-		}
-	},
-
 	_explorableEntry: function(parentContainer, data, content, builder, valueNode, iconURL, updateCallback) {
 		var mainContainer = L.DomUtil.create('div', 'ui-explorable-entry level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
 		if (data && data.id)
@@ -608,32 +581,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		arrowSpan.innerHTML = '>';
 
 		var updateFunction = function(titleSpan) {
-			var state = null;
-			if (data.id)
-				state = builder._getUnoStateForItemId(data.id, builder);
-
-			if (state && builder._getListBoxUpdateType(data.id)) {
-				titleSpan.innerHTML = data.text;
-				builder._updateListBox(builder, valueNode?valueDiv:titleSpan, data, state);
-			} else if (state) {
-				titleSpan.innerHTML = state;
-			} else {
-				titleSpan.innerHTML = data.text;
-			}
+			titleSpan.innerHTML = data.text;
 		};
 
 		updateCallback ? updateCallback(titleSpan) : updateFunction(titleSpan);
-
-		builder.map.on('commandstatechanged', function(e) {
-			if (e.commandName === data.command || e.commandName === builder._mapWindowIdToUnoCommand(data.id))
-			{
-				if (updateCallback)
-					updateCallback(titleSpan);
-				else
-					updateFunction(titleSpan);
-			}
-
-		}, this);
 
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, mainContainer);
 		contentDiv.title = data.text;
@@ -1172,89 +1123,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return '°';
 		}
 		return unit;
-	},
-
-	_mapWindowIdToUnoCommand: function(id) {
-		switch (id) {
-		case 'beforetextindent':
-		case 'aftertextindent':
-		case 'firstlineindent':
-			return '.uno:LeftRightParaMargin';
-
-		case 'aboveparaspacing':
-		case 'belowparaspacing':
-			return '.uno:ULSpacing';
-
-		case 'rowheight':
-			return '.uno:TableRowHeight';
-
-		case 'columnwidth':
-			return '.uno:TableColumWidth';
-
-		case 'decimalplaces':
-		case 'leadingzeroes':
-		case 'negativenumbersred':
-		case 'thousandseparator':
-			return '.uno:NumberFormat';
-
-		case 'linetransparency':
-			return '.uno:LineTransparence';
-
-		case 'settransparency':
-			return '.uno:FillTransparence';
-
-		case 'FIELD_TRANSPARENCY':
-			return '.uno:FillShadowTransparency';
-
-		case 'gradientstyle':
-		case 'fillgrad1':
-		case 'fillgrad2':
-		case 'gradangle':
-			return '.uno:FillGradient';
-
-		case 'setbrightness':
-			return '.uno:GrafLuminance';
-
-		case 'setcontrast':
-			return '.uno:GrafContrast';
-
-		case 'setgraphtransparency':
-			return '.uno:GrafTransparence';
-
-		case 'setred':
-			return '.uno:GrafRed';
-
-		case 'setgreen':
-			return '.uno:GrafGreen';
-
-		case 'setblue':
-			return '.uno:GrafBlue';
-
-		case 'setgamma':
-			return '.uno:GrafGamma';
-
-		case 'selectwidth':
-		case 'selectheight':
-			return '.uno:Size';
-
-		case 'horizontalpos':
-		case 'verticalpos':
-			return '.uno:Position';
-
-		case 'transtype':
-			return '.uno:FillFloatTransparence';
-
-		case 'numberformatcombobox':
-			return '.uno:NumberFormatType';
-
-		case 'fontsizecombobox':
-			return '.uno:FontHeight';
-
-		case 'LB_GLOW_COLOR':
-			return '.uno:GlowColor';
-		}
-
-		return null;
 	},
 
 	_getUnoStateForItemId: function(id, builder) {

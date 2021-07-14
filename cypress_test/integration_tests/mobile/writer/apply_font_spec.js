@@ -52,7 +52,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply font size.', function() {
-		mobileHelper.selectListBoxItem('#fontsizecombobox', '36');
+		mobileHelper.selectListBoxItem('#fontsizecombobox', '36 pt');
 
 		writerHelper.selectAllTextOfDoc();
 

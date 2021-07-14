@@ -110,7 +110,7 @@ describe('Apply font on selected text.', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph')
 			.should('have.attr', 'font-size', '635px');
 
-		mobileHelper.selectListBoxItem('#fontsizecombobox', '24');
+		mobileHelper.selectListBoxItem('#fontsizecombobox', '24 pt');
 
 		triggerNewSVG();
 
