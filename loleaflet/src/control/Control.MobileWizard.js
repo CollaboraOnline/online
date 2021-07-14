@@ -407,9 +407,6 @@ L.Control.MobileWizard = L.Control.extend({
 				window.mobileDialogId = data.id;
 			}
 
-			if (this.map.getDocType() === 'presentation' && this._isSlidePropertyPanel(data))
-				this._showSlideSorter();
-
 			this._isActive = true;
 			var currentPath = null;
 			var lastScrollPosition = null;
@@ -485,13 +482,6 @@ L.Control.MobileWizard = L.Control.extend({
 
 			this._inBuilding = false;
 		}
-	},
-
-	// These 2 functions show/hide mobile-slide-sorter.
-	_showSlideSorter: function() {
-		document.getElementById('mobile-wizard-header').style.display = 'block';
-		document.getElementById('mobile-wizard-header').style.whiteSpace = 'nowrap';
-		document.getElementById('mobile-wizard-header').style.overflowX = 'auto';
 	},
 
 	_hideSlideSorter: function() {
