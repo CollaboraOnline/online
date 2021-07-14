@@ -77,7 +77,7 @@ describe('Apply font changes.', function() {
 	});
 
 	it('Apply font size.', function() {
-		mobileHelper.selectListBoxItem('#fontsizecombobox', '14');
+		mobileHelper.selectListBoxItem('#fontsizecombobox', '14 pt');
 
 		calcHelper.selectEntireSheet();
 
