@@ -107,6 +107,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['menubutton'] = this._menubuttonControl;
 		this._controlHandlers['spinner'] = this._spinnerControl;
 		this._controlHandlers['spinnerimg'] = this._spinnerImgControl;
+		this._controlHandlers['image'] = this._imageHandler;
 
 		this._controlHandlers['mainmenu'] = this._containerHandler;
 		this._controlHandlers['submenu'] = this._subMenuHandler;
@@ -1910,6 +1911,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var spinner = L.DomUtil.create('div', builder.options.cssClass + ' spinner-img ' + builder.map.getDocType() + '-doctype', parentContainer);
 		spinner.appendChild(svgElement);
 		spinner.id = data.id;
+
+		return false;
+	},
+
+	_imageHandler: function(parentContainer, data, builder) {
+		if (!data.id)
+			return false;
+
+		var image = L.DomUtil.create('img', builder.options.cssClass + ' ui-image', parentContainer);
+		image.id = data.id;
+		image.src = data.image ? data.image.replace(/\\/g, '') : '';
+		image.alt = data.text;
 
 		return false;
 	},
