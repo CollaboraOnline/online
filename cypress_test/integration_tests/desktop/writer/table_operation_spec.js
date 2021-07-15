@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 var mode = Cypress.env('USER_INTERFACE');
 
-describe.skip('Table operations', function() {
+describe('Table operations', function() {
 	var testFileName = 'table_operation.odt';
 
 	beforeEach(function() {

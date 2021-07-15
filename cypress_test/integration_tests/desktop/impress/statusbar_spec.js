@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe.skip('Statubar tests.', function() {
+describe('Statubar tests.', function() {
 	var testFileName = 'statusbar.odp';
 
 	beforeEach(function() {

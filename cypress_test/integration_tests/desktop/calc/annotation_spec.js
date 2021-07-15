@@ -28,7 +28,7 @@ describe('Annotation Tests', function() {
 		cy.get('#annotation-content-area-1').should('contain','some text');
 	});
 
-	it.skip('Modify',function() {
+	it('Modify',function() {
 		insertMultipleComment();
 
 		cy.get('#comment-container-1').should('exist');

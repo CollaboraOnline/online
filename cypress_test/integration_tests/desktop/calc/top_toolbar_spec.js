@@ -24,7 +24,7 @@ describe('Top toolbar tests.', function() {
 		helper.getCursorPos('left', 'currentTextEndPos');
 	}
 
-	it.skip('Save.', function() {
+	it('Save.', function() {
 		cy.get('#tb_editbar_item_bold')
 			.click();
 
