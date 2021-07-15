@@ -31,6 +31,15 @@ if (process.argv.length > 6) {
 	port = process.argv[6];
 }
 
+let typing_speed = 30;
+if (process.argv.length > 7) {
+	typing_speed = parseInt(process.argv[7]);
+}
+
+let typing_duration = 5000;
+if (process.argv.length > 8) {
+	typing_duration = parseInt(process.argv[8]);
+}
 // jsdom for browser emulation
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
@@ -139,15 +148,20 @@ window.onload = function() {
 				// mesh the keyboard:
 				let dummyInput = 'askdjf ,asdhflkas r;we f;akdn.adh ;o wh;fa he;qw e.fkahsd ;vbawe.kguday;f vas.,mdb kaery kejraerga';
 				map.focus();
-				for (let i = 0; i < dummyInput.length; i++)
-				{
-					console.debug('sending input key: ' + dummyInput.charCodeAt(i));
+				let timeStart = new Date().getTime();
+				let inputIndex = 0;
+				while (true) {
+					let now = new Date().getTime();
+					if (timeStart + typing_duration < now)
+						break;
+					console.debug('sending input key: ' + dummyInput.charCodeAt(inputIndex));
 					window.app.socket.sendMessage(
 						'key' +
 						' type=' + 'input' +
-						' char=' + dummyInput.charCodeAt(i) + ' key=0\n'
+						' char=' + dummyInput.charCodeAt(inputIndex) + ' key=0\n'
 					);
-					await sleep(30);
+					inputIndex = (inputIndex + 1) % dummyInput.length;
+					await sleep(typing_speed);
 				}
 			}
 			else
