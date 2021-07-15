@@ -304,7 +304,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('exist');
 	});
 
-	it('Apply bitmap fill', function() {
+	it.skip('Apply bitmap fill', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 defs clipPath')
 			.should('not.exist');
 
@@ -326,7 +326,7 @@ describe('Change shape properties via mobile wizard.', function() {
 			.should('exist');
 	});
 
-	it('Apply pattern fill', function() {
+	it.skip('Apply pattern fill', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g svg g.Page g g#id1 defs clipPath')
 			.should('not.exist');
 
