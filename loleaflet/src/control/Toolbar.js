@@ -40,6 +40,11 @@ L.Map.include({
 		var that = this;
 
 		var fontcombobox = $(nodeSelector);
+		if (!fontcombobox.hasClass('select2')) {
+			fontcombobox.select2({
+				placeholder: _('Font')
+			});
+		}
 
 		var createSelector = function() {
 			var commandValues = that.getToolbarCommandValues('.uno:CharFontName');
