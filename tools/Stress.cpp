@@ -229,7 +229,8 @@ void Stress::defineOptions(OptionSet& optionSet)
 
     optionSet.addOption(Option("help", "", "Display help information on command line arguments.")
                         .required(false).repeatable(false));
-    optionSet.addOption(Option("bench", "", "Performance benchmark. The argument is a document URL to load.")
+    optionSet.addOption(Option("bench", "", "Performance benchmark. The argument is a document(s) URL to load.\
+                                            \ni.e: loolstress --bench [options] doc1 doc2...")
                         .required(false).repeatable(false));
     optionSet.addOption(Option("iter", "", "Number of iterations to use for Benchmarking.")
                         .required(false).repeatable(false)
@@ -254,8 +255,11 @@ void Stress::handleOption(const std::string& optionName,
         HelpFormatter helpFormatter(options());
 
         helpFormatter.setCommand(commandName());
-        helpFormatter.setUsage("OPTIONS");
-        helpFormatter.setHeader("Collabora Online tool.");
+        helpFormatter.setUsage("[OPTIONS] <tracefile | doc | url>");
+        helpFormatter.setHeader("Collabora Online tool.\
+                                \nTo replay, tool takes trace file path/url as an argument.\
+                                \nFor benchmarking, tool needs the document path/url on which operations will be performed.");
+        helpFormatter.setFooter("Note: For this tool to work correctly Collabora Online server must already be running");
         helpFormatter.format(std::cerr);
         std::exit(EX_OK);
     }
