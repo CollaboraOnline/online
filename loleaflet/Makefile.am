@@ -723,6 +723,14 @@ check-local: $(MOCHA_TS_JS_FILES)
 
 SSL_FLAG = `xmllint --xpath 'string(/config/ssl/enable)' $(abs_top_builddir)/loolwsd.xml`
 
+# the delay (in miliseconds) between each emulated key stroke for each view
+typing_speed=100
+# The duration of the typing (in miliseconds)
+typing_duration=30000
+# By default 6 views are spawned in the document.
+single_view="false"
+# --inspect flag for the first view. Ideally should be used with single_view=true
+node_inspect="false"
 perf-test:
 	@echo "Running perf tests..."
 	@mkdir -p $(abs_top_builddir)/test/data
@@ -730,18 +738,6 @@ perf-test:
 		echo 'Making fresh copy of the perf-test-edit.odt document'; \
 		cp $(abs_top_srcdir)/test/data/perf-test.odt $(abs_top_builddir)/test/data/perf-test-edit.odt; \
 	fi
-	for a in 2 3 4 5 6; do \
-		$(NODE) $(abs_srcdir)/test/load.js $(SSL_FLAG) $(abs_top_builddir) $(abs_top_builddir)/test/data/perf-test-edit.odt testEdit_$$a & \
-	done
-	$(NODE) $(abs_srcdir)/test/load.js $(SSL_FLAG) $(abs_top_builddir) $(abs_top_builddir)/test/data/perf-test-edit.odt testEdit_1
-
-new-perf-test:
-	@echo "Running new perf tests..."
-	@mkdir -p $(abs_top_builddir)/test/data
-	@if [ ! -f $(abs_top_srcdir)/test/data/perf-test-edit.odt -o "`md5sum <$(abs_top_srcdir)/test/data/perf-test.odt`" != "`md5sum <$(abs_top_srcdir)/test/data/perf-test-edit.odt`" ]; then \
-		echo 'Making fresh copy of the perf-test-edit.odt document'; \
-		cp $(abs_top_srcdir)/test/data/perf-test.odt $(abs_top_builddir)/test/data/perf-test-edit.odt; \
-	fi
-	$(NODE) $(abs_srcdir)/test/bootstrap.js $(SSL_FLAG) $(abs_top_builddir) $(abs_srcdir)
+	$(NODE) $(abs_srcdir)/test/bootstrap.js $(SSL_FLAG) $(abs_top_builddir) $(abs_srcdir) $(typing_speed) $(single_view) $(typing_duration) $(node_inspect)
 # for now - unwinding ts and js deps for different targets is a real pain.
 .NOTPARALLEL:
