@@ -15,6 +15,21 @@
 # 3) Uses './g review' to submit a pull request against <branch>.
 #
 
+# not_in_standard_branches $BRANCH $REMOTE
+not_in_standard_branches() {
+    # e.g., with $1 = co-4-2, and $2 = origin
+    # check for origin/co-4-2 branch
+    if ! git rev-parse --quiet --verify $2/$1 >/dev/null; then
+        return 1 # indicate failure - there's a top-level branch named that way
+    fi
+    # check for origin/distro/*/co-4-2 branches
+    local distro_branch
+    for distro_branch in $(git branch --remotes --list "$2/distro/*/$1"); do
+        return 2 # indicate failure - there's a distro branch named that way
+    done
+    return 0
+}
+
 if [ -z "$(type -p gh)" ]; then
     echo "'gh' not found, install it from <https://github.com/cli/cli/blob/trunk/docs/install_linux.md>."
     exit 1
@@ -38,6 +53,12 @@ if [ "$1" == "review" ]; then
     if [ -n "$2" ]; then
         REMOTE_BRANCH=private/$USER/$2
         CUSTOM_BRANCH=y
+    elif [ "$TRACKED_BRANCH" != "$BRANCH" ]; then
+        if $(not_in_standard_branches "$BRANCH" "$REMOTE"); then
+            # there's no top-level or distro-specific remote branch named as local branch: use its name
+            REMOTE_BRANCH=private/$USER/$BRANCH
+            CUSTOM_BRANCH=y
+        fi
     fi
 
     # So that we have an up to date view on what remote branches exist.
