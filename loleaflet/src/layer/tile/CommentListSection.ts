@@ -97,7 +97,6 @@ class CommentSection {
 
 		// For setting some css styles.
 		if (app.file.fileBasedView && (<any>window).mode.isMobile()) {
-			this.map.uiManager.mobileWizard._showSlideSorter();
 			this.map.uiManager.mobileWizard._hideSlideSorter();
 		}
 	}
