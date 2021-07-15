@@ -4897,7 +4897,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_syncTileContainerSize: function () {
-		if (this._docType === 'presentation') {
+		if (this._docType === 'presentation' || this._docType === 'drawing') {
 			this.onResizeImpress();
 		}
 
