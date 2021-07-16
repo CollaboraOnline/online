@@ -1805,6 +1805,40 @@ L.TileLayer = L.GridLayer.extend({
 		this._map.fire('search', {originalPhrase: originalPhrase, count: 0});
 	},
 
+	_getSearchResultRectangles: function (obj, results) {
+		for (var i = 0; i < obj.searchResultSelection.length; i++) {
+			results.push({
+				part: parseInt(obj.searchResultSelection[i].part),
+				rectangles: this._twipsRectanglesToPixelBounds(obj.searchResultSelection[i].rectangles),
+				twipsRectangles: obj.searchResultSelection[i].rectangles
+			});
+		}
+	},
+
+	_getSearchResultRectanglesFileBasedView: function (obj, results) {
+		var additionPerPart = this._partHeightTwips + this._spaceBetweenParts;
+
+		for (var i = 0; i < obj.searchResultSelection.length; i++) {
+			var rectangles = obj.searchResultSelection[i].rectangles;
+			var part = parseInt(obj.searchResultSelection[i].part);
+			rectangles = rectangles.split(',');
+			rectangles = rectangles.map(function(element, index) {
+				element = parseInt(element);
+				if (index < 2)
+					element += additionPerPart * part;
+				return element;
+			});
+
+			rectangles = String(rectangles[0]) + ', ' + String(rectangles[1]) + ', ' + String(rectangles[2]) + ', ' + String(rectangles[3]);
+
+			results.push({
+				part: parseInt(obj.searchResultSelection[i].part),
+				rectangles: this._twipsRectanglesToPixelBounds(rectangles),
+				twipsRectangles: rectangles
+			});
+		}
+	},
+
 	_onSearchResultSelection: function (textMsg) {
 		this._searchRequested = false;
 		textMsg = textMsg.substring(23);
@@ -1813,20 +1847,22 @@ L.TileLayer = L.GridLayer.extend({
 		var count = obj.searchResultSelection.length;
 		var highlightAll = obj.highlightAll;
 		var results = [];
-		for (var i = 0; i < obj.searchResultSelection.length; i++) {
-			results.push({
-				part: parseInt(obj.searchResultSelection[i].part),
-				rectangles: this._twipsRectanglesToPixelBounds(obj.searchResultSelection[i].rectangles),
-				twipsRectangles: obj.searchResultSelection[i].rectangles
-			});
-		}
+
+		if (!app.file.fileBasedView)
+			this._getSearchResultRectangles(obj, results);
+		else
+			this._getSearchResultRectanglesFileBasedView(obj, results);
+
 		// do not cache search results if there is only one result.
 		// this way regular searches works fine
 		if (count > 1)
 		{
 			this._clearSearchResults();
 			this._searchResults = results;
-			this._map.setPart(results[0].part); // go to first result.
+			if (!app.file.fileBasedView)
+				this._map.setPart(results[0].part); // go to first result.
+			else
+				this._map._docLayer._preview._scrollViewToPartPosition(results[0].part);
 		} else if (count === 1) {
 			this._lastSearchResult = results[0];
 		}
@@ -1942,6 +1978,19 @@ L.TileLayer = L.GridLayer.extend({
 			var rectangles = rectArray.map(function (rect) {
 				return rect.getPointArray();
 			});
+
+			if (app.file.fileBasedView && this._lastSearchResult) {
+				// We rely on that _lastSearchResult has been updated before this function is called.
+				var additionPerPart = this._partHeightTwips + this._spaceBetweenParts;
+				for (var i = 0; i < rectangles.length; i++) {
+					for (var j = 0; j < rectangles[i].length; j++) {
+						rectangles[i][j].y += additionPerPart * this._lastSearchResult.part;
+					}
+				}
+				this._map._docLayer._preview._scrollViewToPartPosition(this._lastSearchResult.part);
+				this._updateFileBasedView();
+				setTimeout(function () {app.sectionContainer.requestReDraw();}, 100);
+			}
 
 			var docLayer = this;
 			var pointSet = CPolyUtil.rectanglesToPointSet(rectangles,
