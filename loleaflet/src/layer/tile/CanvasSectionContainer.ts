@@ -149,7 +149,6 @@ class CanvasSectionObject {
 	myTopLeft: Array<number> = null;
 	documentTopLeft: Array<number> = null; // Document top left will be updated by container.
 	containerObject: CanvasSectionContainer = null;
-	dpiScale: number = null;
 	name: string = null;
 	backgroundColor: string = null; // Defult is null (container's background color will be used).
 	backgroundOpacity: number = 1; // Valid when backgroundColor is valid.
@@ -244,7 +243,6 @@ class CanvasSectionContainer {
 		This class should work also mouse & touch enabled (at the same time) devices. Users should be able to use both.
 	*/
 
-	private dpiScale: number = window.devicePixelRatio;
 	private sections: Array<any> = new Array(0);
 	private documentTopLeft: Array<number> = [0, 0];
 	private documentBottomRight: Array<number> = [0, 0];
@@ -445,7 +443,7 @@ class CanvasSectionContainer {
 			x = e.clientX - rect.left;
 			y = e.clientY - rect.top;
 		}
-		return [Math.round(x * this.dpiScale), Math.round(y * this.dpiScale)];
+		return [Math.round(x * app.dpiScale), Math.round(y * app.dpiScale)];
 	}
 
 	private convertPointToCanvasLocale (point: Array<number>): Array<number> {
@@ -455,7 +453,7 @@ class CanvasSectionContainer {
 		x = point[0] - rect.left;
 		y = point[1] - rect.top;
 
-		return [Math.round(x * this.dpiScale), Math.round(y * this.dpiScale)];
+		return [Math.round(x * app.dpiScale), Math.round(y * app.dpiScale)];
 	}
 
 	getSectionWithName (name: string): CanvasSectionObject {
@@ -1187,28 +1185,24 @@ class CanvasSectionContainer {
 		if (!newHeight)
 			newHeight = cRect.bottom - cRect.top;
 
-		this.dpiScale = window.devicePixelRatio;
 		app.dpiScale = window.devicePixelRatio;
 		app.roundedDpiScale = Math.round(window.devicePixelRatio);
 
-		newWidth = Math.floor(newWidth * this.dpiScale);
-		newHeight = Math.floor(newHeight * this.dpiScale);
+		newWidth = Math.floor(newWidth * app.dpiScale);
+		newHeight = Math.floor(newHeight * app.dpiScale);
 
 		this.canvas.width = newWidth;
 		this.canvas.height = newHeight;
 
 		// CSS pixels can be fractional, but need to round to the same real pixels
-		var cssWidth: number = newWidth / this.dpiScale; // NB. beware
-		var cssHeight: number = newHeight / this.dpiScale;
+		var cssWidth: number = newWidth / app.dpiScale; // NB. beware
+		var cssHeight: number = newHeight / app.dpiScale;
 		this.canvas.style.width = cssWidth.toFixed(4) + 'px';
 		this.canvas.style.height = cssHeight.toFixed(4) + 'px';
 
 		this.clearMousePositions();
 		this.right = this.canvas.width;
 		this.bottom = this.canvas.height;
-		for (var i: number = 0; i < this.sections.length; i++) {
-			this.sections[i].dpiScale = this.dpiScale;
-		}
 
 		this.reNewAllSections();
 	}
@@ -1268,7 +1262,7 @@ class CanvasSectionContainer {
 		if (maxX === -Infinity)
 			return 0; // There is nothing on the left of this section.
 		else
-			return maxX + Math.round(this.dpiScale); // Don't overlap with the section on the left.
+			return maxX + app.roundedDpiScale; // Don't overlap with the section on the left.
 	}
 
 	// Find the right most point from a position with same zIndex.
@@ -1288,7 +1282,7 @@ class CanvasSectionContainer {
 		if (minX === Infinity)
 			return this.right; // There is nothing on the right of this section.
 		else
-			return minX - Math.round(this.dpiScale); // Don't overlap with the section on the right.
+			return minX - app.roundedDpiScale; // Don't overlap with the section on the right.
 	}
 
 	// Find the top most point from a position with same zIndex.
@@ -1307,7 +1301,7 @@ class CanvasSectionContainer {
 		if (maxY === -Infinity)
 			return 0; // There is nothing on the left of this section.
 		else
-			return maxY + Math.round(this.dpiScale); // Don't overlap with the section on the top.
+			return maxY + app.roundedDpiScale; // Don't overlap with the section on the top.
 	}
 
 	// Find the bottom most point from a position with same zIndex.
@@ -1326,7 +1320,7 @@ class CanvasSectionContainer {
 		if (minY === Infinity)
 			return this.bottom; // There is nothing on the left of this section.
 		else
-			return minY - Math.round(this.dpiScale); // Don't overlap with the section on the bottom.
+			return minY - app.roundedDpiScale; // Don't overlap with the section on the bottom.
 	}
 
 	createUpdateSingleDivElement (section: CanvasSectionObject) {
@@ -1339,10 +1333,10 @@ class CanvasSectionContainer {
 		}
 		element.style.position = 'fixed';
 		element.style.zIndex = '0';
-		element.style.left = String(bcr.left + Math.round(section.myTopLeft[0] / this.dpiScale)) + 'px';
-		element.style.top = String(bcr.top + Math.round(section.myTopLeft[1] / this.dpiScale)) + 'px';
-		element.style.width = String(Math.round(section.size[0] / this.dpiScale)) + 'px';
-		element.style.height = String(Math.round(section.size[1] / this.dpiScale)) + 'px';
+		element.style.left = String(bcr.left + Math.round(section.myTopLeft[0] / app.dpiScale)) + 'px';
+		element.style.top = String(bcr.top + Math.round(section.myTopLeft[1] / app.dpiScale)) + 'px';
+		element.style.width = String(Math.round(section.size[0] / app.dpiScale)) + 'px';
+		element.style.height = String(Math.round(section.size[1] / app.dpiScale)) + 'px';
 	}
 
 	createUpdateDivElements () {
@@ -1409,13 +1403,13 @@ class CanvasSectionContainer {
 					}
 					else {
 						if (targetEdge === 'top')
-							return targetSection.myTopLeft[1] - Math.round(this.dpiScale);
+							return targetSection.myTopLeft[1] - app.roundedDpiScale;
 						else if (targetEdge === 'bottom')
-							return targetSection.myTopLeft[1] + targetSection.size[1] + Math.round(this.dpiScale);
+							return targetSection.myTopLeft[1] + targetSection.size[1] + app.roundedDpiScale;
 						else if (targetEdge === 'left')
-							return targetSection.myTopLeft[0] - Math.round(this.dpiScale);
+							return targetSection.myTopLeft[0] - app.roundedDpiScale;
 						else if (targetEdge === 'right')
-							return targetSection.myTopLeft[0] + targetSection.size[0] + Math.round(this.dpiScale);
+							return targetSection.myTopLeft[0] + targetSection.size[0] + app.roundedDpiScale;
 					}
 				}
 				else {
@@ -1537,7 +1531,7 @@ class CanvasSectionContainer {
 	}
 
 	private drawSectionBorders () {
-		this.context.lineWidth = 2 * this.dpiScale;
+		this.context.lineWidth = 2 * app.dpiScale;
 		this.context.strokeStyle = 'blue';
 		for (var i: number = 0; i < this.sections.length; i++) {
 			var section = this.sections[i];
@@ -1624,7 +1618,7 @@ class CanvasSectionContainer {
 			this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 		}
 
-		this.context.font = String(20 * this.dpiScale) + "px Verdana";
+		this.context.font = String(20 * app.dpiScale) + "px Verdana";
 		for (var i: number = 0; i < this.sections.length; i++) {
 			if (this.sections[i].isLocated && this.sections[i].showSection && (!this.sections[i].documentObject || this.sections[i].isVisible)) {
 				this.context.translate(this.sections[i].myTopLeft[0], this.sections[i].myTopLeft[1]);
@@ -1638,7 +1632,7 @@ class CanvasSectionContainer {
 				this.sections[i].onDraw(frameCount, elapsedTime);
 
 				if (this.sections[i].borderColor) { // If section's border is set, draw its borders after section's "onDraw" function is called.
-					this.context.lineWidth = this.dpiScale;
+					this.context.lineWidth = app.dpiScale;
 					this.context.strokeStyle = this.sections[i].borderColor;
 					this.context.strokeRect(0.5, 0.5, this.sections[i].size[0], this.sections[i].size[1]);
 				}
@@ -1800,7 +1794,6 @@ class CanvasSectionContainer {
 		newSection.context = this.context;
 		newSection.documentTopLeft = this.documentTopLeft;
 		newSection.containerObject = this;
-		newSection.dpiScale = this.dpiScale;
 		newSection.sectionProperties.section = newSection;
 		this.sections.push(newSection);
 		this.addSectionFunctions(newSection);

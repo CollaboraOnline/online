@@ -3,7 +3,7 @@
  * L.Control.RowHeader
 */
 
-/* global _UNO */
+/* global _UNO app */
 L.Control.RowHeader = L.Control.Header.extend({
 	name: L.CSections.RowHeader.name,
 	anchor: [[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']],
@@ -26,7 +26,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._setConverter();
 		this._isColumn = false;
 		this._current = -1;
-		this._resizeHandleSize = 15 * this.dpiScale;
+		this._resizeHandleSize = 15 * app.dpiScale;
 		this._selection = {start: -1, end: -1};
 		this._mouseOverEntry = null;
 		this._lastMouseOverIndex = undefined;
@@ -102,16 +102,16 @@ L.Control.RowHeader = L.Control.Header.extend({
 		var handleSize = this._resizeHandleSize;
 		if (entry.isCurrent && entry.size > 2 * handleSize && !this.inResize()) {
 			var center = startY + entry.size - handleSize / 2;
-			var x = 2 * this.dpiScale;
-			var w = this.size[0] - 4 * this.dpiScale;
-			var size = 2 * this.dpiScale;
-			var offset = 1 *this.dpiScale;
+			var x = 2 * app.dpiScale;
+			var w = this.size[0] - 4 * app.dpiScale;
+			var size = 2 * app.dpiScale;
+			var offset = 1 *app.dpiScale;
 
 			this.context.fillStyle = '#BBBBBB';
 			this.context.beginPath();
-			this.context.fillRect(x + 2 * this.dpiScale, center - size - offset, w - 4 * this.dpiScale, size);
+			this.context.fillRect(x + 2 * app.dpiScale, center - size - offset, w - 4 * app.dpiScale, size);
 			this.context.beginPath();
-			this.context.fillRect(x + 2 * this.dpiScale, center + offset, w - 4 * this.dpiScale, size);
+			this.context.fillRect(x + 2 * app.dpiScale, center + offset, w - 4 * app.dpiScale, size);
 		}
 
 		// draw text content
@@ -119,11 +119,11 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this.context.font = this.getFont();
 		this.context.textAlign = 'center';
 		this.context.textBaseline = 'middle';
-		this.context.fillText(content, this.size[0] / 2, entry.pos - (entry.size / 2) + Math.round(this.dpiScale));
+		this.context.fillText(content, this.size[0] / 2, entry.pos - (entry.size / 2) + app.roundedDpiScale);
 
 		// draw row borders.
 		this.context.strokeStyle = this._borderColor;
-		this.context.lineWidth = this.dpiScale;
+		this.context.lineWidth = app.dpiScale;
 		this.context.strokeRect(0.5, startY - 0.5, this.size[0], entry.size);
 	},
 
@@ -138,8 +138,8 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 		var rect = this._canvas.getBoundingClientRect();
 
-		var rowStart = (entry.pos - entry.size) / this.dpiScale;
-		var rowEnd = entry.pos / this.dpiScale;
+		var rowStart = (entry.pos - entry.size) / app.dpiScale;
+		var rowEnd = entry.pos / app.dpiScale;
 
 		var left = rect.left;
 		var right = rect.right;
@@ -201,7 +201,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 			}
 
 			height += dragDistance[1];
-			height /= this.dpiScale;
+			height /= app.dpiScale;
 			height = this._map._docLayer._pixelsToTwips({x: 0, y: height}).y;
 
 			var command = {

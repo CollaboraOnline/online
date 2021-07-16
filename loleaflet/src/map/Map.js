@@ -871,8 +871,8 @@ L.Map = L.Evented.extend({
 
 	getPixelBoundsCore: function (center, zoom) {
 		var bounds = this.getPixelBounds(center, zoom);
-		bounds.min = bounds.min.multiplyBy(L.Util.getDpiScaleFactor(true));
-		bounds.max = bounds.max.multiplyBy(L.Util.getDpiScaleFactor(true));
+		bounds.min = bounds.min.multiplyBy(app.dpiScale);
+		bounds.max = bounds.max.multiplyBy(app.dpiScale);
 		return bounds;
 	},
 

@@ -16,7 +16,6 @@ class Cursor {
 	header: boolean = false;
 	headerName: string;
 	headerTimeout: number = 3000;
-	dpiScale: number = 1;
 
 	private position: CPoint;
 	private size: CPoint;
@@ -37,7 +36,6 @@ class Cursor {
 		this.header = options.header !== undefined ? options.header : this.header;
 		this.headerName = options.headerName !== undefined ? options.headerName : this.headerName;
 		this.headerTimeout = options.headerTimeout !== undefined ? options.headerTimeout : this.headerTimeout;
-		this.dpiScale = options.dpiScale !== undefined ? options.dpiScale : this.dpiScale;
 
 		this.position = position;
 		this.size = size;
@@ -139,7 +137,7 @@ class Cursor {
 		var splitPos = new CPoint(0, 0);
 		if (inDocCursor && spCxt) {
 			splitPos = CPoint.fromCompat(
-				spCxt.getSplitPos()).multiplyBy(this.dpiScale);
+				spCxt.getSplitPos()).multiplyBy(app.dpiScale);
 			if (this.position.x <= splitPos.x && this.position.x >= 0) {
 				origin.x = 0;
 				paneSize.x = splitPos.x;
@@ -178,8 +176,8 @@ class Cursor {
 
 		var tileSectionPos = this.map._docLayer.getTileSectionPos();
 		// Compute tile-section offset in css pixels.
-		var pos = canvasOffset.add(tileSectionPos)._divideBy(this.dpiScale)._round();
-		var size = this.size.divideBy(this.dpiScale)._round();
+		var pos = canvasOffset.add(tileSectionPos)._divideBy(app.dpiScale)._round();
+		var size = this.size.divideBy(app.dpiScale)._round();
 		this.setSize(size);
 		this.setPos(pos);
 		this.showCursorHeader();

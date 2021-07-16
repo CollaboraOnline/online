@@ -338,7 +338,7 @@ class Comment {
 		}
 		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
-			this.size = [Math.round(this.sectionProperties.imgSize[0] * this.dpiScale), Math.round(this.sectionProperties.imgSize[1] * this.dpiScale)];
+			this.size = [Math.round(this.sectionProperties.imgSize[0] * app.dpiScale), Math.round(this.sectionProperties.imgSize[1] * app.dpiScale)];
 			this.setPosition(Math.round(this.sectionProperties.data.rectangle[0] * ratio), Math.round(this.sectionProperties.data.rectangle[1] * ratio));
 		}
 	}
@@ -359,21 +359,21 @@ class Comment {
 		if (this.sectionProperties.docLayer._docType === 'text') {
 			this.sectionProperties.usedTextColor = this.sectionProperties.highlightedTextColor;
 
-			var x: number = Math.round(this.position[0] / this.dpiScale);
-			var y: number = Math.round(this.position[1] / this.dpiScale);
+			var x: number = Math.round(this.position[0] / app.dpiScale);
+			var y: number = Math.round(this.position[1] / app.dpiScale);
 			this.containerObject.getSectionWithName(L.CSections.Scroll.name).onScrollTo({x: x, y: y});
 		}
 		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
 			this.backgroundColor = '#777777'; //background: rgba(119, 119, 119, 0.25);
 			this.backgroundOpacity = 0.25;
 
-			var x: number = Math.round(this.position[0] / this.dpiScale);
-			var y: number = Math.round(this.position[1] / this.dpiScale);
+			var x: number = Math.round(this.position[0] / app.dpiScale);
+			var y: number = Math.round(this.position[1] / app.dpiScale);
 			this.containerObject.getSectionWithName(L.CSections.Scroll.name).onScrollTo({x: x, y: y});
 		}
 		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
-			var x: number = Math.round(this.position[0] / this.dpiScale);
-			var y: number = Math.round(this.position[1] / this.dpiScale);
+			var x: number = Math.round(this.position[0] / app.dpiScale);
+			var y: number = Math.round(this.position[1] / app.dpiScale);
 			this.containerObject.getSectionWithName(L.CSections.Scroll.name).onScrollTo({x: x, y: y});
 		}
 
@@ -507,7 +507,7 @@ class Comment {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
 			var originalSize = [Math.round((this.sectionProperties.data.cellPos[2]) * ratio), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
 
-			var pos: Array<number> = [Math.round((this.myTopLeft[0] + originalSize[0] - 3) / this.dpiScale), Math.round(this.myTopLeft[1] / this.dpiScale)];
+			var pos: Array<number> = [Math.round((this.myTopLeft[0] + originalSize[0] - 3) / app.dpiScale), Math.round(this.myTopLeft[1] / app.dpiScale)];
 			this.sectionProperties.container.style.transform = 'translate3d(' + pos[0] + 'px, ' + pos[1] + 'px, 0px)';
 			this.sectionProperties.commentListSection.selectedComment = this;
 		}

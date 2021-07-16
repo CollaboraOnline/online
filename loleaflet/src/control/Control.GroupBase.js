@@ -3,7 +3,7 @@
  * L.Control.GroupBase
 */
 
-/* global $ */
+/* global $ app */
 
 /*
 	This file is Calc only. This is the base class for Control.RowGroup and Control.ColumnGroup files.
@@ -25,7 +25,7 @@ L.Control.GroupBase = L.Class.extend({
 		var fontFamily = L.DomUtil.getStyle(elem, 'font-family');
 		var fontSize = parseInt(L.DomUtil.getStyle(elem, 'font-size'));
 		this._getFont = function() {
-			return Math.round(fontSize * this.dpiScale) + 'px ' + fontFamily;
+			return Math.round(fontSize * app.dpiScale) + 'px ' + fontFamily;
 		};
 		L.DomUtil.remove(elem);
 	},

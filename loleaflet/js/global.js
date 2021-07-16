@@ -3,7 +3,8 @@
 
 window.app = { // Shouldn't have any functions defined.
 	definitions: {}, // Class instances are created using definitions under this variable.
-	dpiScale: 1, roundedDpiScale: 1,
+	dpiScale: window.devicePixelRatio,
+	roundedDpiScale: Math.round(window.devicePixelRatio),
 	file: {
 		editComment: false,
 		readOnly: true,

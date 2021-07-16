@@ -31,8 +31,8 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 		this._groups = null;
 
 		// group control styles
-		this._groupHeadSize = Math.round(12 * this.dpiScale);
-		this._levelSpacing = Math.round(this.dpiScale);
+		this._groupHeadSize = Math.round(12 * app.dpiScale);
+		this._levelSpacing = app.roundedDpiScale;
 
 		this._map.on('sheetgeometrychanged', this.update, this);
 		this._map.on('viewrowcolumnheaders', this.update, this);
@@ -83,7 +83,7 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 			this.context.fillStyle = this.backgroundColor;
 			this.context.fillRect(startX, startY, this._groupHeadSize, this._groupHeadSize);
 			this.context.strokeStyle = 'black';
-			this.context.lineWidth = this.dpiScale;
+			this.context.lineWidth = app.dpiScale;
 			this.context.strokeRect(startX + 0.5, startY + 0.5, this._groupHeadSize, this._groupHeadSize);
 		}
 
@@ -91,17 +91,17 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 			//draw tail
 			startX += this._groupHeadSize * 0.5;
 			this.context.strokeStyle = 'black';
-			this.context.lineWidth = this.dpiScale;
+			this.context.lineWidth = app.dpiScale;
 			this.context.beginPath();
 			this.context.moveTo(startX + 0.5, startY + this._groupHeadSize + 0.5);
-			this.context.lineTo(startX + 0.5, endY - Math.round(this.dpiScale) + 0.5);
-			this.context.lineTo(startX + this._groupHeadSize / 2, endY - Math.round(this.dpiScale) + 0.5);
+			this.context.lineTo(startX + 0.5, endY - app.roundedDpiScale + 0.5);
+			this.context.lineTo(startX + this._groupHeadSize / 2, endY - app.roundedDpiScale + 0.5);
 			this.context.stroke();
 			startX -= this._groupHeadSize * 0.5;
 			if (startY > this._cornerHeaderHeight) {
 				// draw '-'
 				this.context.moveTo(startX + this._groupHeadSize * 0.25, startY + this._groupHeadSize / 2 + 0.5);
-				this.context.lineTo(startX + this._groupHeadSize * 0.75 + Math.round(this.dpiScale), startY + this._groupHeadSize / 2 + 0.5);
+				this.context.lineTo(startX + this._groupHeadSize * 0.75 + app.roundedDpiScale, startY + this._groupHeadSize / 2 + 0.5);
 				this.context.stroke();
 			}
 		}
@@ -110,10 +110,10 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 			this.context.beginPath();
 
 			this.context.moveTo(startX + this._groupHeadSize * 0.25, startY + this._groupHeadSize / 2 + 0.5);
-			this.context.lineTo(startX + this._groupHeadSize * 0.75 + Math.round(this.dpiScale), startY + this._groupHeadSize / 2 + 0.5);
+			this.context.lineTo(startX + this._groupHeadSize * 0.75 + app.roundedDpiScale, startY + this._groupHeadSize / 2 + 0.5);
 
 			this.context.moveTo(startX + this._groupHeadSize * 0.50 + 0.5, startY + this._groupHeadSize * 0.25);
-			this.context.lineTo(startX + this._groupHeadSize * 0.50 + 0.5, startY + this._groupHeadSize * 0.75 + Math.round(this.dpiScale));
+			this.context.lineTo(startX + this._groupHeadSize * 0.50 + 0.5, startY + this._groupHeadSize * 0.75 + app.roundedDpiScale);
 
 			this.context.stroke();
 		}
@@ -128,14 +128,14 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 		var startY = Math.round((this._cornerHeaderHeight - ctrlHeadSize) * 0.5);
 
 		ctx.strokeStyle = 'black';
-		ctx.lineWidth = this.dpiScale;
+		ctx.lineWidth = app.dpiScale;
 		ctx.strokeRect(startX + 0.5, startY + 0.5, ctrlHeadSize, ctrlHeadSize);
 		// draw level number
 		ctx.fillStyle = this._textColor;
 		ctx.font = this._getFont();
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
-		ctx.fillText(level + 1, startX + (ctrlHeadSize / 2), startY + (ctrlHeadSize / 2) + 2 * this.dpiScale);
+		ctx.fillText(level + 1, startX + (ctrlHeadSize / 2), startY + (ctrlHeadSize / 2) + 2 * app.dpiScale);
 	},
 
 	// Handle user interaction.
