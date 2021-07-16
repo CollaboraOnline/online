@@ -127,9 +127,7 @@ describe('Delete Objects', function() {
 			.should('exist');
 
 		cy.get('.leaflet-control-buttons-disabled > .leaflet-interactive')
-			.trigger('pointerdown', eventOptions)
-			.wait(1000)
-			.trigger('pointerup', eventOptions);
+			.trigger('pointerdown', eventOptions);
 
 		cy.wait(1000);
 
