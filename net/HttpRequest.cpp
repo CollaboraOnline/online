@@ -557,7 +557,8 @@ int64_t Response::readData(const char* p, int64_t len)
                     if (chunkLen >= std::numeric_limits<int64_t>::max() / 16)
                     {
                         // Would not fit into chunkLen.
-                        return len - available;
+                        LOG_ERR("Unexpected chunk length: " << chunkLen);
+                        return -1;
                     }
                     chunkLen = chunkLen * 16 + digit;
                 }
