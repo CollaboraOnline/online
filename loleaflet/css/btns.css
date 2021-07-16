@@ -5,6 +5,7 @@
 }
 
 .loleaflet-annotation-edit #annotation-cancel,
+.ui-pushbutton.jsdialog:not(#ok),
 .ui-button-box.jsdialog #cancel,
 .ui-button-box.autofilter #cancel,
 .cell.jsdialog > button:not(#ok),
@@ -27,6 +28,8 @@
 	border-radius: 3px;
 	margin: 5px;
 	vertical-align: middle;
+	display: flex;
+	align-items: center;
 }
 
 .loleaflet-annotation-edit .annotation-button,
@@ -63,4 +66,12 @@
 	color: var(--gray-light-txt--color) !important;
 	background-color: #fafafa !important;
 	border-color: #ccc !important;
+}
+
+.jsdialog.ui-pushbutton img {
+	margin: 0px 5px 0px 0px;
+}
+
+.ui-button-box .jsdialog.ui-pushbutton {
+	display: initial !important;
 }
