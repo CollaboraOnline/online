@@ -403,7 +403,7 @@ endif
 $(SYSTEM_STAMP): ${top_srcdir}/loolwsd-systemplate-setup $(CLEANUP_DEPS)
 	$(SET_CAPS_COMMAND)
 	$(CLEANUP_COMMAND)
-	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@" && \
+	if test "z@SYSTEMPLATE_PATH@" != "z"; then chmod u+w -R "@SYSTEMPLATE_PATH@" ; rm -rf "@SYSTEMPLATE_PATH@" && \
 	${top_srcdir}/loolwsd-systemplate-setup "@SYSTEMPLATE_PATH@" "@LO_PATH@" && touch $@; fi
 
 @JAILS_PATH@:
