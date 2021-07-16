@@ -5,7 +5,7 @@
 * Abstract class, basis for ColumnHeader and RowHeader controls.
 * Used only in spreadsheets, implements the row/column headers.
 */
-/* global $ L */
+/* global $ L app */
 
 L.Control.Header = L.Class.extend({
 
@@ -35,11 +35,11 @@ L.Control.Header = L.Class.extend({
 		var map = this._map;
 		var zoomScale = map.getZoomScale(map.getZoom(),	map.options.defaultZoom);
 		if (zoomScale < 0.68)
-			return Math.round(8 * this.dpiScale);
+			return Math.round(8 * app.dpiScale);
 		else if (zoomScale < 0.8)
-			return Math.round(10 * this.dpiScale);
+			return Math.round(10 * app.dpiScale);
 		else
-			return Math.round(12 * this.dpiScale);
+			return Math.round(12 * app.dpiScale);
 	},
 
 	_initHeaderEntryHoverStyles: function (className) {
@@ -203,7 +203,7 @@ L.Control.Header = L.Class.extend({
 	_getHorzLatLng: function (start, offset, e) {
 		var size = this._map.getSize();
 		var drag = this._map.mouseEventToContainerPoint(e);
-		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / this._dpiScale;
+		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / app.dpiScale;
 		var ypos = Math.max(drag.y, entryStart);
 		return [
 			this._map.unproject(new L.Point(0, ypos)),
@@ -299,7 +299,7 @@ L.Control.Header = L.Class.extend({
 	_getVertLatLng: function (start, offset, e) {
 		var size = this._map.getSize();
 		var drag = this._map.mouseEventToContainerPoint(e);
-		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / this._dpiScale;
+		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / app.dpiScale;
 		var xpos = Math.max(drag.x, entryStart);
 		return [
 			this._map.unproject(new L.Point(xpos, 0)),
@@ -427,7 +427,7 @@ L.Control.Header = L.Class.extend({
 		var x = this._isColumn ? (this._dragEntry.pos + this._dragDistance[0]): this.size[0];
 		var y = this._isColumn ? this.size[1]: (this._dragEntry.pos + this._dragDistance[1]);
 
-		this.context.lineWidth = this.dpiScale;
+		this.context.lineWidth = app.dpiScale;
 		this.context.strokeStyle = 'darkblue';
 		this.context.beginPath();
 		this.context.moveTo(x, y);
@@ -529,7 +529,6 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 		console.assert(map && _isColumn !== undefined, 'map and isCol required');
 		this._map = map;
 		this._isColumn = _isColumn;
-		this._dpiScale = L.Util.getDpiScaleFactor(true);
 		console.assert(this._map._docLayer.sheetGeometry, 'no sheet geometry data-structure found!');
 		var sheetGeom = this._map._docLayer.sheetGeometry;
 		this._dimGeom = this._isColumn ? sheetGeom.getColumnsGeometry() : sheetGeom.getRowsGeometry();
@@ -590,7 +589,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 
 		if (splitPosContext) {
 
-			splitPos = (this._isColumn ? splitPosContext.getSplitPos().x : splitPosContext.getSplitPos().y) * this._dpiScale;
+			splitPos = (this._isColumn ? splitPosContext.getSplitPos().x : splitPosContext.getSplitPos().y) * app.dpiScale;
 			var splitIndex = this._dimGeom.getIndexFromPos(splitPos + 1, 'corepixels');
 
 			if (splitIndex) {

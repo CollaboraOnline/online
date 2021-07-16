@@ -3,7 +3,7 @@
 * Control.ColumnHeader
 */
 
-/* global _UNO */
+/* global _UNO app */
 L.Control.ColumnHeader = L.Control.Header.extend({
 	name: L.CSections.ColumnHeader.name,
 	anchor: [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, 'right', 'left']],
@@ -25,7 +25,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._isColumn = true;
 		this._setConverter();
 		this._current = -1;
-		this._resizeHandleSize = 15 * this.dpiScale;
+		this._resizeHandleSize = 15 * app.dpiScale;
 		this._selection = {start: -1, end: -1};
 		this._mouseOverEntry = null;
 		this._lastMouseOverIndex = undefined;
@@ -103,16 +103,16 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var handleSize = this._resizeHandleSize;
 		if (entry.isCurrent && entry.size > 2 * handleSize && !this.inResize()) {
 			var center = startX + entry.size - handleSize / 2;
-			var y = 2 * this.dpiScale;
-			var h = this.size[1] - 4 * this.dpiScale;
-			var size = 2 * this.dpiScale;
-			var offset = 1 * this.dpiScale;
+			var y = 2 * app.dpiScale;
+			var h = this.size[1] - 4 * app.dpiScale;
+			var size = 2 * app.dpiScale;
+			var offset = 1 * app.dpiScale;
 
 			this.context.fillStyle = '#BBBBBB';
 			this.context.beginPath();
-			this.context.fillRect(center - size - offset, y + 2 * this.dpiScale, size, h - 4 * this.dpiScale);
+			this.context.fillRect(center - size - offset, y + 2 * app.dpiScale, size, h - 4 * app.dpiScale);
 			this.context.beginPath();
-			this.context.fillRect(center + offset, y + 2 * this.dpiScale, size, h - 4 * this.dpiScale);
+			this.context.fillRect(center + offset, y + 2 * app.dpiScale, size, h - 4 * app.dpiScale);
 		}
 
 		// draw text content
@@ -128,7 +128,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		// draw column borders.
 		this.context.strokeStyle = this._borderColor;
-		this.context.lineWidth = this.dpiScale;
+		this.context.lineWidth = app.dpiScale;
 		this.context.strokeRect(startX - 0.5, 0.5, entry.size, this.size[1]);
 	},
 
@@ -143,8 +143,8 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		var rect = this._canvas.getBoundingClientRect();
 
-		var colStart = (entry.pos - entry.size) / this.dpiScale;
-		var colEnd = entry.pos / this.dpiScale;
+		var colStart = (entry.pos - entry.size) / app.dpiScale;
+		var colEnd = entry.pos / app.dpiScale;
 
 		var left = rect.left + colStart;
 		var right = rect.left + colEnd;
@@ -206,7 +206,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 			}
 
 			width += dragDistance[0];
-			width /= this.dpiScale;
+			width /= app.dpiScale;
 			width = this._map._docLayer._pixelsToTwips({x: width, y: 0}).x;
 
 			var command = {

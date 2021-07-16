@@ -175,14 +175,12 @@ L.Map.include({
 			maxHeight = Math.round(tileHeight * maxWidth / tileWidth);
 		}
 
-		var dpiscale = L.getDpiScaleFactor();
-
 		if (fetchThumbnail) {
 			this._addPreviewToQueue(part, 'tile ' +
 							'nviewid=0' + ' ' +
 							'part=' + part + ' ' +
-							'width=' + maxWidth * dpiscale + ' ' +
-							'height=' + maxHeight * dpiscale + ' ' +
+							'width=' + maxWidth * app.roundedDpiScale + ' ' +
+							'height=' + maxHeight * app.roundedDpiScale + ' ' +
 							'tileposx=' + tilePosX + ' ' +
 							'tileposy=' + tilePosY + ' ' +
 							'tilewidth=' + tileWidth + ' ' +
@@ -203,13 +201,11 @@ L.Map.include({
 		this._docPreviews[id] = {id: id, part: part, width: width, height: height, tilePosX: tilePosX,
 			tilePosY: tilePosY, tileWidth: tileWidth, tileHeight: tileHeight, autoUpdate: autoUpdate, invalid: false};
 
-		var dpiscale = L.getDpiScaleFactor();
-
 		this._addPreviewToQueue(part, 'tile ' +
 							'nviewid=0' + ' ' +
 							'part=' + part + ' ' +
-							'width=' + width * dpiscale + ' ' +
-							'height=' + height * dpiscale + ' ' +
+							'width=' + width * app.roundedDpiScale + ' ' +
+							'height=' + height * app.roundedDpiScale + ' ' +
 							'tileposx=' + tilePosX + ' ' +
 							'tileposy=' + tilePosY + ' ' +
 							'tilewidth=' + tileWidth + ' ' +

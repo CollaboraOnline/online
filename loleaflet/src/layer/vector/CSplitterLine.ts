@@ -51,12 +51,11 @@ class CSplitterLine extends CRectangle {
 		var docLayer = this.map._docLayer;
 		var mapSize = this.map.getPixelBoundsCore().getSize();
 		mapSize.round();
-		var dpiScale = Math.round(docLayer._painter.getDpiScale());
 		var splitPos = docLayer._painter.getSplitPos();
 		splitPos.round();
 
 		// For making splitlines appear symmetric w.r.t. headers/grid.
-		var thickup = Math.ceil(this.thickness / 2) + dpiScale;
+		var thickup = Math.ceil(this.thickness / 2) + app.dpiScale;
 		var thickdown = Math.ceil(this.thickness / 2);
 
 		// Let the lines be long enough so as to cover the map area at the

@@ -223,8 +223,7 @@ L.Control.LokDialog = L.Control.extend({
 			y = 0;
 
 		// pre-multiplied by the scale factor
-		var dpiscale = L.getDpiScaleFactor();
-		return [x * dpiscale, y * dpiscale, width * dpiscale, height * dpiscale].join(',');
+		return [x * app.roundedDpiScale, y * app.roundedDpiScale, width * app.roundedDpiScale, height * app.roundedDpiScale].join(',');
 	},
 
 	_sendPaintWindowRect: function(id, x, y, width, height) {
@@ -252,9 +251,8 @@ L.Control.LokDialog = L.Control.extend({
 		if (!rectangle)
 			return; // Don't request rendering an empty area.
 
-		var dpiscale = L.getDpiScaleFactor();
 		//console.log('_sendPaintWindow: rectangle: ' + rectangle + ', dpiscale: ' + dpiscale);
-		app.socket.sendMessage('paintwindow ' + id + ' rectangle=' + rectangle + ' dpiscale=' + dpiscale);
+		app.socket.sendMessage('paintwindow ' + id + ' rectangle=' + rectangle + ' dpiscale=' + app.roundedDpiScale);
 
 		if (this._map._docLayer && this._map._docLayer._debug)
 			this._debugPaintWindow(id, rectangle);
@@ -734,8 +732,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_setCanvasWidthHeight: function(canvas, width, height) {
-		var scale = L.getDpiScaleFactor();
-		var newWidth = width * scale;
+		var newWidth = width * app.roundedDpiScale;
 		var changed = false;
 		if (canvas.width != newWidth) {
 			L.DomUtil.setStyle(canvas, 'width', width + 'px');
@@ -743,7 +740,7 @@ L.Control.LokDialog = L.Control.extend({
 			changed = true;
 		}
 
-		var newHeight = height * scale;
+		var newHeight = height * app.roundedDpiScale;
 		if (canvas.height != newHeight) {
 			L.DomUtil.setStyle(canvas, 'height', height + 'px');
 			canvas.height = newHeight;

@@ -150,18 +150,6 @@ L.Util = {
 	// minimal image URI, set to an image when disposing to flush memory
 	emptyImageUrl: 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
 
-	getDpiScaleFactor: function(useExactDPR) {
-		var dpiScale = window.devicePixelRatio ? window.devicePixelRatio : 1;
-		if (!useExactDPR)
-			dpiScale = Math.ceil(dpiScale);
-
-		if (dpiScale == 1 && L.Browser.retina) {
-			dpiScale = 2;
-		}
-
-		return dpiScale;
-	},
-
 	toggleFullScreen: function() {
 		if (!document.fullscreenElement &&
 			!document.mozFullscreenElement &&
@@ -292,7 +280,6 @@ L.bind = L.Util.bind;
 L.stamp = L.Util.stamp;
 L.setOptions = L.Util.setOptions;
 L.round = L.Util.round;
-L.getDpiScaleFactor = L.Util.getDpiScaleFactor;
 L.toggleFullScreen = L.Util.toggleFullScreen;
 L.isEmpty = L.Util.isEmpty;
 L.mm100thToInch = L.Util.mm100thToInch;

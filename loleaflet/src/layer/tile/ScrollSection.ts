@@ -51,10 +51,6 @@ class ScrollSection {
 	}
 
 	public onInitialize () {
-		this.sectionProperties.roundedDpi = Math.round(this.dpiScale);
-		if (this.sectionProperties.roundedDpi === 0)
-			this.sectionProperties.roundedDpi = 1;
-
 		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 		this.sectionProperties.defaultCursorStyle = this.sectionProperties.mapPane.style.cursor;
 
@@ -65,9 +61,9 @@ class ScrollSection {
 
 		this.sectionProperties.previousDragDistance = null;
 
-		this.sectionProperties.usableThickness = 20 * this.sectionProperties.roundedDpi;
-		this.sectionProperties.scrollBarThickness = 6 * this.sectionProperties.roundedDpi;
-		this.sectionProperties.edgeOffset = 10 * this.sectionProperties.roundedDpi;
+		this.sectionProperties.usableThickness = 20 * app.roundedDpiScale;
+		this.sectionProperties.scrollBarThickness = 6 * app.roundedDpiScale;
+		this.sectionProperties.edgeOffset = 10 * app.roundedDpiScale;
 
 		this.sectionProperties.drawVerticalScrollBar = false;
 		this.sectionProperties.drawHorizontalScrollBar = false;
@@ -78,10 +74,10 @@ class ScrollSection {
 		this.sectionProperties.mouseIsOnVerticalScrollBar = false;
 		this.sectionProperties.mouseIsOnHorizontalScrollBar = false;
 
-		this.sectionProperties.minimumScrollSize = 80 * this.sectionProperties.roundedDpi;
+		this.sectionProperties.minimumScrollSize = 80 * app.roundedDpiScale;
 
-		this.sectionProperties.circleSliderRadius = 24 * this.sectionProperties.roundedDpi; // Radius of the mobile vertical circular slider.
-		this.sectionProperties.arrowCornerLength = 10 * this.sectionProperties.roundedDpi; // Corner length of the arrows inside circular slider.
+		this.sectionProperties.circleSliderRadius = 24 * app.roundedDpiScale; // Radius of the mobile vertical circular slider.
+		this.sectionProperties.arrowCornerLength = 10 * app.roundedDpiScale; // Corner length of the arrows inside circular slider.
 
 		// Opacity.
 		this.sectionProperties.alphaWhenVisible = 0.5; // Scroll bar is visible but not being used.
@@ -179,7 +175,7 @@ class ScrollSection {
 			var splitPos = {x: 0, y: 0};
 			if (splitPanesContext) {
 				splitPos = splitPanesContext.getSplitPos().clone();
-				splitPos.y = Math.round(splitPos.y * this.dpiScale);
+				splitPos.y = Math.round(splitPos.y * app.dpiScale);
 			}
 
 			this.sectionProperties.yOffset += splitPos.y;
@@ -230,7 +226,7 @@ class ScrollSection {
 		else {
 			var splitPanesContext: any = this.map.getSplitPanesContext();
 			var splitPos: any = splitPanesContext.getSplitPos().clone();
-			splitPos.x = Math.round(splitPos.x * this.dpiScale);
+			splitPos.x = Math.round(splitPos.x * app.dpiScale);
 			this.sectionProperties.xOffset += splitPos.x;
 			return result - splitPos.x - this.sectionProperties.horizontalScrollRightOffset;
 		}
@@ -294,7 +290,7 @@ class ScrollSection {
 		this.context.fillStyle = '#7E8182';
 		this.context.beginPath();
 		var x: number = circleStartX - this.sectionProperties.arrowCornerLength * 0.5;
-		var y: number = circleStartY - 5 * this.sectionProperties.roundedDpi;
+		var y: number = circleStartY - 5 * app.roundedDpiScale;
 		this.context.moveTo(x, y);
 		x += this.sectionProperties.arrowCornerLength;
 		this.context.lineTo(x, y);
@@ -307,7 +303,7 @@ class ScrollSection {
 		this.context.fill();
 
 		x = circleStartX - this.sectionProperties.arrowCornerLength * 0.5;
-		y = circleStartY + 5 * this.sectionProperties.roundedDpi;
+		y = circleStartY + 5 * app.roundedDpiScale;
 		this.context.moveTo(x, y);
 		x += this.sectionProperties.arrowCornerLength;
 		this.context.lineTo(x, y);
@@ -337,9 +333,9 @@ class ScrollSection {
 
 		var startX = this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
 
-		this.context.fillRect(startX + this.sectionProperties.roundedDpi, scrollProps.startY - this.sectionProperties.roundedDpi, this.sectionProperties.roundedDpi * 4, this.sectionProperties.roundedDpi);
+		this.context.fillRect(startX + app.roundedDpiScale, scrollProps.startY - app.roundedDpiScale, app.roundedDpiScale * 4, app.roundedDpiScale);
         this.context.fillRect(startX, scrollProps.startY, this.sectionProperties.scrollBarThickness, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness);
-        this.context.fillRect(startX + this.sectionProperties.roundedDpi, scrollProps.startY + scrollProps.scrollSize - this.sectionProperties.scrollBarThickness, this.sectionProperties.roundedDpi * 4, this.sectionProperties.roundedDpi);
+        this.context.fillRect(startX + app.roundedDpiScale, scrollProps.startY + scrollProps.scrollSize - this.sectionProperties.scrollBarThickness, app.roundedDpiScale * 4, app.roundedDpiScale);
 
 		this.context.globalAlpha = 1.0;
 	}
@@ -529,7 +525,7 @@ class ScrollSection {
 		}
 
 		if (go) {
-			this.map.scroll(0, offset / this.dpiScale, {});
+			this.map.scroll(0, offset / app.dpiScale, {});
 			this.onUpdateScrollOffset();
 		}
 	}
@@ -551,7 +547,7 @@ class ScrollSection {
 		}
 
 		if (go) {
-			this.map.scroll(offset / this.dpiScale, 0, {});
+			this.map.scroll(offset / app.dpiScale, 0, {});
 			this.onUpdateScrollOffset();
 		}
 	}

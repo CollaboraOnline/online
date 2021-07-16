@@ -70,7 +70,7 @@ class TilesSection {
 		var halfExtraSize = this.sectionProperties.osCanvasExtraSize / 2; // This is always an integer.
 		var spCxt = this.sectionProperties.docLayer.getSplitPanesContext();
 		if (spCxt) {
-			var splitPos = spCxt.getSplitPos().multiplyBy(this.dpiScale);
+			var splitPos = spCxt.getSplitPos().multiplyBy(app.dpiScale);
 			if (paneBounds.min.x) { // pane can move in x direction.
 				extendedBounds.min.x = Math.max(splitPos.x, extendedBounds.min.x - halfExtraSize);
 				extendedBounds.max.x += halfExtraSize;

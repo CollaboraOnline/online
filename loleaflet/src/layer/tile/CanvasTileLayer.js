@@ -44,10 +44,9 @@ var CStyleData = L.Class.extend({
 // on canvas using polygons (CPolygon).
 var CSelections = L.Class.extend({
 
-	initialize: function (pointSet, canvasOverlay, dpiScale, selectionsDataDiv, map, isView, viewId) {
+	initialize: function (pointSet, canvasOverlay, selectionsDataDiv, map, isView, viewId) {
 		this._pointSet = pointSet ? pointSet : new CPointSet();
 		this._overlay = canvasOverlay;
-		this._dpiScale = dpiScale;
 		this._styleData = new CStyleData(selectionsDataDiv);
 		this._map = map;
 		this._name = 'selections' + (isView ? '-viewid-' + viewId : '');
@@ -94,7 +93,7 @@ var CSelections = L.Class.extend({
 				fillColor: fillColor,
 				fillOpacity: opacity,
 				opacity: opacity,
-				weight: Math.round(weight * this._dpiScale)
+				weight: Math.round(weight * app.dpiScale)
 			};
 			this._cellSelection = new CCellSelection(this._pointSet, attributes);
 			this._overlay.initPathGroup(this._cellSelection);
@@ -197,9 +196,6 @@ L.TileSectionManager = L.Class.extend({
 
 		this._sectionContainer.onResize(mapSize.x, mapSize.y);
 
-		var dpiScale = L.getDpiScaleFactor(true /* useExactDPR */);
-		this._dpiScale = dpiScale;
-
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		this._splitPos = splitPanesContext ?
 			splitPanesContext.getSplitPos() : new L.Point(0, 0);
@@ -255,14 +251,10 @@ L.TileSectionManager = L.Class.extend({
 		this.stopUpdates();
 	},
 
-	getDpiScale: function () {
-		return this._tilesSection.dpiScale;
-	},
-
 	getSplitPos: function () {
 		var splitPanesContext = this._layer.getSplitPanesContext();
 		return splitPanesContext ?
-			splitPanesContext.getSplitPos().multiplyBy(this.getDpiScale()) :
+			splitPanesContext.getSplitPos().multiplyBy(app.dpiScale) :
 			new L.Point(0, 0);
 	},
 
@@ -495,7 +487,7 @@ L.TileSectionManager = L.Class.extend({
 		if (splitPanesContext) {
 			var splitPos = splitPanesContext.getSplitPos();
 			this.context.strokeStyle = 'red';
-			this.context.strokeRect(0, 0, splitPos.x * this.dpiScale, splitPos.y * this.dpiScale);
+			this.context.strokeRect(0, 0, splitPos.x * app.dpiScale, splitPos.y * app.dpiScale);
 		}
 	},
 
@@ -556,8 +548,8 @@ L.TileSectionManager = L.Class.extend({
 		// Assumes paneBounds is the bounds of the free pane.
 		var paneSize = paneBounds.getSize();
 		var newPaneCenter = new L.Point(
-			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) / (2 * scale)) * scale / this._tilesSection.dpiScale,
-			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) / (2 * scale)) * scale / this._tilesSection.dpiScale);
+			(docTopLeft.x - splitPos.x + (paneSize.x + splitPos.x) / (2 * scale)) * scale / app.dpiScale,
+			(docTopLeft.y - splitPos.y + (paneSize.y + splitPos.y) / (2 * scale)) * scale / app.dpiScale);
 
 		return {
 			topLeft: docTopLeft,
@@ -649,7 +641,7 @@ L.TileSectionManager = L.Class.extend({
 
 	_calcZoomFrameParams: function (zoom, newCenter) {
 		this._zoomFrameScale = this._calcZoomFrameScale(zoom);
-		this._newCenter = this._layer._map.project(newCenter).multiplyBy(this._tilesSection.dpiScale); // in core pixels
+		this._newCenter = this._layer._map.project(newCenter).multiplyBy(app.dpiScale); // in core pixels
 	},
 
 	setWaitForTiles: function (wait) {
@@ -2402,10 +2394,10 @@ L.CanvasTileLayer = L.Layer.extend({
 				cellViewCursorMarker = new CCellCursor(this._cellViewCursors[viewId].corePixelBounds, {
 					fill: false,
 					color: backgroundColor,
-					weight: 2 * (this._painter ? this._painter._dpiScale : 1),
+					weight: 2 * app.dpiScale,
 					toCompatUnits: function (corePx) {
 						return this._map.unproject(L.point(corePx)
-							.divideBy(this._painter._dpiScale));
+							.divideBy(app.dpiScale));
 					}.bind(this)
 				});
 				this._cellViewCursors[viewId].marker = cellViewCursorMarker;
@@ -2768,7 +2760,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (!this._referenceMarkerStart.isDragged) {
 					this._map.addLayer(this._referenceMarkerStart);
 					var sizeStart = this._referenceMarkerStart._icon.getBoundingClientRect();
-					var posStart = this._referencesAll[i].mark.getBounds().getTopLeft().divideBy(this._painter.getDpiScale());
+					var posStart = this._referencesAll[i].mark.getBounds().getTopLeft().divideBy(app.dpiScale);
 					posStart = posStart.subtract(new L.Point(sizeStart.width / 2, sizeStart.height / 2));
 					posStart = this._map.unproject(posStart);
 					this._referenceMarkerStart.setLatLng(posStart);
@@ -2777,7 +2769,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (!this._referenceMarkerEnd.isDragged) {
 					this._map.addLayer(this._referenceMarkerEnd);
 					var sizeEnd = this._referenceMarkerEnd._icon.getBoundingClientRect();
-					var posEnd = this._referencesAll[i].mark.getBounds().getBottomRight().divideBy(this._painter.getDpiScale());
+					var posEnd = this._referencesAll[i].mark.getBounds().getBottomRight().divideBy(app.dpiScale);
 					posEnd = posEnd.subtract(new L.Point(sizeEnd.width / 2, sizeEnd.height / 2));
 					posEnd = this._map.unproject(posEnd);
 					this._referenceMarkerEnd.setLatLng(posEnd);
@@ -2819,7 +2811,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					pointerEvents: 'none',
 					fillColor: '#' + strColor,
 					fillOpacity: 0.25,
-					weight: 2 * (this._painter ? this._painter._dpiScale : 1),
+					weight: 2 * app.dpiScale,
 					opacity: 0.25});
 
 				references.push({mark: reference, part: part});
@@ -3273,10 +3265,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var cursorSize = this._cursorCorePixels.getSize();
 
 		if (!this._cursorMarker) {
-			this._cursorMarker = new Cursor(cursorPos, cursorSize, this._map, {
-				blink: true,
-				dpiScale: this._painter.getDpiScale()
-			});
+			this._cursorMarker = new Cursor(cursorPos, cursorSize, this._map, { blink: true });
 		} else {
 			this._cursorMarker.setPositionSize(cursorPos, cursorSize);
 		}
@@ -3414,8 +3403,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					header: true, // we want a 'hat' to our view cursors (which will contain view user names)
 					headerTimeout: 3000, // hide after some interval
 					zIndex: viewId,
-					headerName: this._map.getViewName(viewId),
-					dpiScale: this._painter.getDpiScale()
+					headerName: this._map.getViewName(viewId)
 				};
 				viewCursorMarker = new Cursor(viewCursorPos, pixBounds.getSize(), this._map, viewCursorOptions);
 				this._viewCursors[viewId].marker = viewCursorMarker;
@@ -3483,9 +3471,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				// change previous selections
 				viewSelection.setPointSet(viewPointSet);
 			} else {
-				var scale = (this._painter ? this._painter._dpiScale : 1);
 				viewSelection = new CSelections(viewPointSet, this._canvasOverlay,
-					scale, this._selectionsDataDiv, this._map, true, viewId);
+					this._selectionsDataDiv, this._map, true, viewId);
 				this._viewSelections[viewId].selection = viewSelection;
 			}
 		}
@@ -4008,8 +3995,7 @@ L.CanvasTileLayer = L.Layer.extend({
 						pointerEvents: 'none',
 						fill: false,
 						color: cursorStyle.getPropValue('border-top-color'),
-						weight: Math.round(weight *
-							(this._painter ? this._painter._dpiScale : 1))
+						weight: Math.round(weight * app.dpiScale)
 					});
 				if (!this._cellCursorMarker) {
 					this._map.fire('error', {msg: 'Cell Cursor marker initialization', cmd: 'cellCursor', kind: 'failed', id: 1});
@@ -4849,7 +4835,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_getUIWidth: function () {
 		var section = this._painter._sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
 		if (section) {
-			return Math.round(section.size[0] / section.dpiScale);
+			return Math.round(section.size[0] / app.dpiScale);
 		}
 		else {
 			return 0;
@@ -4859,7 +4845,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_getUIHeight: function () {
 		var section = this._painter._sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name);
 		if (section) {
-			return Math.round(section.size[1] / section.dpiScale);
+			return Math.round(section.size[1] / app.dpiScale);
 		}
 		else {
 			return 0;
@@ -4869,7 +4855,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_getGroupWidth: function () {
 		var section = this._painter._sectionContainer.getSectionWithName(L.CSections.RowGroup.name);
 		if (section) {
-			return Math.round(section.size[0] / section.dpiScale);
+			return Math.round(section.size[0] / app.dpiScale);
 		}
 		else {
 			return 0;
@@ -4879,7 +4865,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_getGroupHeight: function () {
 		var section = this._painter._sectionContainer.getSectionWithName(L.CSections.ColumnGroup.name);
 		if (section) {
-			return Math.round(section.size[1] / section.dpiScale);
+			return Math.round(section.size[1] / app.dpiScale);
 		}
 		else {
 			return 0;
@@ -4889,7 +4875,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_getTilesSectionRectangle: function () {
 		var section = app.sectionContainer.getSectionWithName(L.CSections.Tiles.name);
 		if (section) {
-			return L.LOUtil.createRectangle(section.myTopLeft[0] / section.dpiScale, section.myTopLeft[1] / section.dpiScale, section.size[0] / section.dpiScale, section.size[1] / section.dpiScale);
+			return L.LOUtil.createRectangle(section.myTopLeft[0] / app.dpiScale, section.myTopLeft[1] / app.dpiScale, section.size[0] / app.dpiScale, section.size[1] / app.dpiScale);
 		}
 		else {
 			return L.LOUtil.createRectangle(0, 0, 0, 0);
@@ -4975,7 +4961,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._initContainer();
 		this._getToolbarCommandsValues();
 		this._selections = new CSelections(undefined, this._canvasOverlay,
-			this._painter._dpiScale, this._selectionsDataDiv, this._map, false);
+			this._selectionsDataDiv, this._map, false);
 		this._references = new CReferences(this._canvasOverlay);
 		this._referencesAll = [];
 
@@ -5207,11 +5193,11 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_corePixelsToCss: function (corePixels) {
-		return corePixels.divideBy(this._painter._dpiScale);
+		return corePixels.divideBy(app.dpiScale);
 	},
 
 	_cssPixelsToCore: function (cssPixels) {
-		return cssPixels.multiplyBy(this._painter._dpiScale);
+		return cssPixels.multiplyBy(app.dpiScale);
 	},
 
 	_cssBoundsToCore: function (bounds) {
@@ -5241,17 +5227,15 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_twipsToCssPixels: function (twips) {
-		var scale = (this._painter ? this._painter._dpiScale : 1);
 		return new L.Point(
-			(twips.x / this._tileWidthTwips) * (this._tileSize / scale),
-			(twips.y / this._tileHeightTwips) * (this._tileSize / scale));
+			(twips.x / this._tileWidthTwips) * (this._tileSize / app.dpiScale),
+			(twips.y / this._tileHeightTwips) * (this._tileSize / app.dpiScale));
 	},
 
 	_cssPixelsToTwips: function (pixels) {
-		var scale = (this._painter ? this._painter._dpiScale : 1);
 		return new L.Point(
-			((pixels.x * scale) / this._tileSize) * this._tileWidthTwips,
-			((pixels.y * scale) / this._tileSize) * this._tileHeightTwips);
+			((pixels.x * app.dpiScale) / this._tileSize) * this._tileWidthTwips,
+			((pixels.y * app.dpiScale) / this._tileSize) * this._tileHeightTwips);
 	},
 
 	_twipsToLatLng: function (twips, zoom) {
@@ -6204,7 +6188,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					fillOpacity: this._splittersStyleData.getFloatPropValue('opacity'),
 					thickness: Math.round(
 						this._splittersStyleData.getFloatPropWithoutUnit('border-top-width')
-						* this._painter._dpiScale),
+						* app.dpiScale),
 					isHoriz: true
 				});
 
@@ -6227,7 +6211,7 @@ L.CanvasTileLayer = L.Layer.extend({
 					fillOpacity: this._splittersStyleData.getFloatPropValue('opacity'),
 					thickness: Math.round(
 						this._splittersStyleData.getFloatPropWithoutUnit('border-top-width')
-						* this._painter._dpiScale),
+						* app.dpiScale),
 					isHoriz: false
 				});
 

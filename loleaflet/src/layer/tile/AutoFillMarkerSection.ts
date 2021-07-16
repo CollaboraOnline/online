@@ -46,10 +46,10 @@ class AutoFillMarkerSection {
 
 	public onInitialize () {
 		if ((<any>window).mode.isDesktop()) {
-			this.size = [Math.round(8 * this.dpiScale), Math.round(8 * this.dpiScale)];
+			this.size = [Math.round(8 * app.dpiScale), Math.round(8 * app.dpiScale)];
 		}
 		else {
-			this.size = [Math.round(16 * this.dpiScale), Math.round(16 * this.dpiScale)];
+			this.size = [Math.round(16 * app.dpiScale), Math.round(16 * app.dpiScale)];
 		}
 	}
 
@@ -78,8 +78,8 @@ class AutoFillMarkerSection {
 		if (this.map._docLayer.getSplitPanesContext())
 			splitPosCore = this.map._docLayer.getSplitPanesContext().getSplitPos();
 
-		splitPosCore.x *= this.dpiScale;
-		splitPosCore.y *= this.dpiScale;
+		splitPosCore.x *= app.dpiScale;
+		splitPosCore.y *= app.dpiScale;
 
 		if (position[0] <= splitPosCore.x)
 			position[0] += this.documentTopLeft[0];
