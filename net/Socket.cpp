@@ -124,6 +124,8 @@ SocketPoll::SocketPoll(const std::string& threadName)
       _runOnClientThread(false),
       _owner(std::this_thread::get_id())
 {
+    ProfileZone profileZone("SocketPoll::SocketPoll");
+
     // Create the wakeup fd.
     if (
 #if !MOBILEAPP
