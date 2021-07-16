@@ -392,7 +392,12 @@ L.Map.Keyboard = L.Handler.extend({
 				keyEventFn('input', charCode, unoKeyCode);
 			}
 			else if (ev.type === 'keyup') {
-				keyEventFn('up', charCode, unoKeyCode);
+				if ((this.handleOnKeyDownKeys[keyCode] && charCode === 0) ||
+				    (this.modifier)) {
+					keyEventFn('up', charCode, unoKeyCode);
+				} else {
+					// was handled as textinput
+				}
 			}
 			if (keyCode === 9) {
 				// tab would change focus to other DOM elements
