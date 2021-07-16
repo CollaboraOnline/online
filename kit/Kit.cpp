@@ -2009,6 +2009,8 @@ public:
     // returns the number of events signalled
     int kitPoll(int timeoutMicroS)
     {
+        ProfileZone profileZone("KitSocketPoll::kitPoll");
+
         if (SigUtil::getTerminationFlag())
         {
             LOG_TRC("Termination of unipoll mainloop flagged");
