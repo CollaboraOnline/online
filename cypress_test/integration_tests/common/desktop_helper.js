@@ -276,6 +276,8 @@ function insertMultipleComment(numberOfComments) {
 
 		cy.get('#menu-insert').click().get('#menu-insertcomment').click();
 
+		cy.wait(100);
+
 		cy.get('.loleaflet-annotation-table').should('exist');
 
 		cy.get('#annotation-modify-textarea-new').type('some text' + n);
