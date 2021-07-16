@@ -114,7 +114,7 @@ describe('Comment Scrolling',function() {
 
 		//scroll down
 		cy.get('.leaflet-control-scroll-down').should('exist');
-		cy.get('.leaflet-control-scroll-down').click().wait(300);
+		cy.get('.leaflet-control-scroll-down').click().wait(1000);
 		cy.get('#PageStatus').should('contain','Slide 3 of 3');
 	});
 

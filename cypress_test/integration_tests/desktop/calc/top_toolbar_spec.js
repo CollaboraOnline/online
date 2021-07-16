@@ -337,6 +337,8 @@ describe('Top toolbar tests.', function() {
 
 		calcHelper.selectEntireSheet();
 
+		helper.waitUntilIdle('#copy-paste-container');
+
 		cy.get('#copy-paste-container table td font')
 		    .should('have.attr', 'face', 'Alef');
 	});
