@@ -25,6 +25,12 @@
 	margin-left: -30px;
 }
 
+.sidebar.ui-expander {
+	display: flex;
+	justify-content: space-between;
+	width: 280px;
+}
+
 .sidebar.ui-drawing-area {
 	max-width: 330px;
 }
