@@ -825,8 +825,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		data.children = [{text: data.text}].concat(data.children);
 		builder._expanderHandler(parentContainer, data, builder, function() {});
 
+		var expander = $(parentContainer).children('#' + data.id);
 		if (data.hidden === 'true' || data.hidden === true)
-			$(parentContainer).children('#' + data.id).hide();
+			expander.hide();
+
+		if (data.command) {
+			var iconParent = expander.children('.ui-expander').get(0);
+			var icon = L.DomUtil.create('div', 'ui-expander-icon-right ' + builder.options.cssClass, iconParent);
+			builder._controlHandlers['toolitem'](icon, {type: 'toolitem', command: data.command}, builder);
+		}
 
 		return false;
 	},
@@ -2228,7 +2235,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			});
 		}
 
-		$(div).on('click.toolbutton',function () {
+		$(div).on('click.toolbutton',function (e) {
 			if (!$(div).hasClass('disabled')) {
 				builder.refreshSidebar = true;
 				if (data.postmessage)
@@ -2238,6 +2245,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				else
 					builder.callback('toolbox', 'click', parentContainer, data.command, builder);
 			}
+			e.stopPropagation();
 		});
 
 		if (data.enabled === 'false' || data.enabled === false)
