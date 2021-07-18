@@ -126,7 +126,8 @@ protected:
 
         {
             std::ostringstream oss;
-            oss << "Fake wopi host request URI [" << uriReq.toString() << "]:\n";
+            oss << "Fake wopi host " << request.getMethod() << " request URI [" << uriReq.toString()
+                << "]:\n";
             for (const auto& pair : request)
             {
                 oss << '\t' << pair.first << ": " << pair.second << " / ";
