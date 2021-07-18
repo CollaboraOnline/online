@@ -66,25 +66,30 @@ public:
             LOG_TST("assertPutFileRequest: returning 404 to simulate PutFile failure");
             return Util::make_unique<http::Response>(http::StatusLine(404));
         }
+        else if (_phase == Phase::WaitSecondPutFile)
+        {
+            // This during closing the document.
+            LOG_TST("assertPutFileRequest: Second PutFile, which will succeed");
+            LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitSecondPutFile",
+                               _phase == Phase::WaitSecondPutFile);
 
-        // This during closing the document.
-        LOG_TST("assertPutFileRequest: Second PutFile, which will succeed");
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitSecondPutFile",
-                           _phase == Phase::WaitSecondPutFile);
+            // the document is modified
+            LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
 
-        // the document is modified
-        LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
+            // Triggered while closing.
+            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsAutosave"));
 
-        // Triggered while closing.
-        LOK_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsAutosave"));
+            passTest("Document uploaded on closing as expected.");
 
-        passTest("Document uploaded on closing as expected.");
+            LOG_TST("WaitSecondPutFile => Polling");
+            _phase = Phase::Polling; // To detect multiple uploads after the last successful one.
 
-        LOG_TST("WaitSecondPutFile => Polling");
-        _phase = Phase::Polling; // To detect multiple uploads after the last successful one.
+            // Success.
+            return Util::make_unique<http::Response>(http::StatusLine(200));
+        }
 
-        // Success.
-        return Util::make_unique<http::Response>(http::StatusLine(200));
+        failTest("Unexpected Phase in PutFile: " + std::to_string(static_cast<int>(_phase)));
+        return nullptr;
     }
 
     /// The document is loaded.
