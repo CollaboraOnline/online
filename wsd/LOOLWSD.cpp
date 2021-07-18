@@ -4232,8 +4232,20 @@ int LOOLWSD::innerMain()
     LOG_INF("Stopping server socket listening. ShutdownRequestFlag: " <<
             SigUtil::getShutdownRequestFlag() << ", TerminationFlag: " << SigUtil::getTerminationFlag());
 
-    // Wait until documents are saved and sessions closed.
-    srv.stop();
+    if (!UnitWSD::isUnitTesting())
+    {
+        // When running unit-tests the listening port will
+        // get recycled and another test will be listening.
+        // This is very problematic if a DocBroker here is
+        // saving and uploading before shutting down, because
+        // the test that gets the same port will receive this
+        // unexpected upload and fail.
+
+        // Otherwise, in production, we should probably respond
+        // with some error that we are recycling. But for now,
+        // don't change the behavior and stop listening.
+        srv.stop();
+    }
 
     // atexit handlers tend to free Admin before Documents
     LOG_INF("Exiting. Cleaning up lingering documents.");
@@ -4246,6 +4258,7 @@ int LOOLWSD::innerMain()
     }
 #endif
 
+    // Wait until documents are saved and sessions closed.
     // Don't stop the DocBroker, they will exit.
     constexpr size_t sleepMs = 500;
     constexpr size_t count = (COMMAND_TIMEOUT_MS * 6) / sleepMs;
@@ -4311,6 +4324,11 @@ int LOOLWSD::innerMain()
 #endif
 
     srv.stopPrisoners();
+
+    if (UnitWSD::isUnitTesting())
+    {
+        srv.stop();
+    }
 
     // Terminate child processes
     LOG_INF("Requesting child processes to terminate.");
