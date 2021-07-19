@@ -1246,24 +1246,24 @@ app.definitions.Socket = L.Class.extend({
 			if (command.type === 'text') {
 				docLayer = new L.WriterTileLayer('', {
 					permission: this._map.options.permission,
-					tileWidthTwips: tileWidthTwips / window.devicePixelRatio,
-					tileHeightTwips: tileHeightTwips / window.devicePixelRatio,
+					tileWidthTwips: tileWidthTwips / app.dpiScale,
+					tileHeightTwips: tileHeightTwips / app.dpiScale,
 					docType: command.type
 				});
 			}
 			else if (command.type === 'spreadsheet') {
 				docLayer = new L.CalcTileLayer('', {
 					permission: this._map.options.permission,
-					tileWidthTwips: tileWidthTwips / window.devicePixelRatio,
-					tileHeightTwips: tileHeightTwips / window.devicePixelRatio,
+					tileWidthTwips: tileWidthTwips / app.dpiScale,
+					tileHeightTwips: tileHeightTwips / app.dpiScale,
 					docType: command.type
 				});
 			}
 			else if (command.type === 'presentation' || command.type === 'drawing') {
 				docLayer = new L.ImpressTileLayer('', {
 					permission: this._map.options.permission,
-					tileWidthTwips: tileWidthTwips / window.devicePixelRatio,
-					tileHeightTwips: tileHeightTwips / window.devicePixelRatio,
+					tileWidthTwips: tileWidthTwips / app.dpiScale,
+					tileHeightTwips: tileHeightTwips / app.dpiScale,
 					docType: command.type
 				});
 			}

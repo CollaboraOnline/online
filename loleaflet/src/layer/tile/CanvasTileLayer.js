@@ -4272,10 +4272,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		var oldSize = e ? e.oldSize : this._map.getSize();
 		var newSize = e ? e.newSize : this._map.getSize();
 
-		newSize.x *= window.devicePixelRatio;
-		newSize.y *= window.devicePixelRatio;
-		oldSize.x *= window.devicePixelRatio;
-		oldSize.y *= window.devicePixelRatio;
+		newSize.x *= app.dpiScale;
+		newSize.y *= app.dpiScale;
+		oldSize.x *= app.dpiScale;
+		oldSize.y *= app.dpiScale;
 
 		if (this.isWriter() && newSize.x - oldSize.x === 0) { return; }
 
@@ -4478,8 +4478,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		return paneRects.map(function (pxBound) {
 			return new L.LatLngBounds(
-				map.unproject(pxBound.getTopLeft().divideBy(window.devicePixelRatio)),
-				map.unproject(pxBound.getBottomRight().divideBy(window.devicePixelRatio))
+				map.unproject(pxBound.getTopLeft().divideBy(app.dpiScale)),
+				map.unproject(pxBound.getBottomRight().divideBy(app.dpiScale))
 			);
 		});
 	},

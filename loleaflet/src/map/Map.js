@@ -498,13 +498,13 @@ L.Map = L.Evented.extend({
 		var cssBoundsSize = cssBounds.getSize();
 
 		var topLeftCell = sheetGeom.getCellFromPos(
-			cssBounds.getTopLeft().multiplyBy(window.devicePixelRatio), 'corepixels');
+			cssBounds.getTopLeft().multiplyBy(app.dpiScale), 'corepixels');
 		var newTopLeftPx = sheetGeom.getCellRect(topLeftCell.x, topLeftCell.y, zoomScaleAbs)
-			.getTopLeft().divideBy(window.devicePixelRatio);
+			.getTopLeft().divideBy(app.dpiScale);
 
 		var cursorInBounds = calcLayer._cursorCorePixels ?
 			cssBounds.contains(
-				L.point(calcLayer._cursorCorePixels.getTopLeft().divideBy(window.devicePixelRatio))) : false;
+				L.point(calcLayer._cursorCorePixels.getTopLeft().divideBy(app.dpiScale))) : false;
 
 		var cursorActive = calcLayer.isCursorVisible();
 		if (cursorActive && cursorInBounds) {
@@ -512,14 +512,14 @@ L.Map = L.Evented.extend({
 			var cursorCenter = calcLayer._corePixelsToTwips(cursorBounds.getCenter());
 			var newCursorCenter = sheetGeom.getTileTwipsAtZoom(cursorCenter, zoomScaleAbs);
 			// convert to css pixels at zoomScale.
-			newCursorCenter._multiplyBy(zoomScaleAbs / 15 / window.devicePixelRatio)._round();
+			newCursorCenter._multiplyBy(zoomScaleAbs / 15 / app.dpiScale)._round();
 			var newBounds = new L.Bounds(newTopLeftPx, newTopLeftPx.add(cssBoundsSize));
 
 			if (!newBounds.contains(newCursorCenter)) {
 				var margin = 10;
 				var diffX = 0;
 				var diffY = 0;
-				var docSize = sheetGeom.getSize('corepixels').divideBy(window.devicePixelRatio);
+				var docSize = sheetGeom.getSize('corepixels').divideBy(app.dpiScale);
 				if (newCursorCenter.x < newBounds.min.x) {
 					diffX = Math.max(0, newCursorCenter.x - margin) - newBounds.min.x;
 				} else if (newCursorCenter.x > newBounds.max.x) {

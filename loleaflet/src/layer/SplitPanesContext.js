@@ -3,7 +3,7 @@
  * SplitPanesContext stores positions/sizes/objects related to split panes.
  */
 
-/* global */
+/* global app */
 
 L.SplitPanesContext = L.Class.extend({
 
@@ -30,12 +30,12 @@ L.SplitPanesContext = L.Class.extend({
 	},
 
 	getMaxSplitPosX: function () {
-		var rawMax = Math.floor(window.devicePixelRatio * this._map.getSize().x * this.options.maxHorizontalSplitPercent / 100);
+		var rawMax = Math.floor(app.dpiScale * this._map.getSize().x * this.options.maxHorizontalSplitPercent / 100);
 		return this._docLayer.getSnapDocPosX(rawMax);
 	},
 
 	getMaxSplitPosY: function () {
-		var rawMax = Math.floor(window.devicePixelRatio * this._map.getSize().y * this.options.maxVerticalSplitPercent / 100);
+		var rawMax = Math.floor(app.dpiScale * this._map.getSize().y * this.options.maxVerticalSplitPercent / 100);
 		return this._docLayer.getSnapDocPosY(rawMax);
 	},
 
@@ -48,7 +48,7 @@ L.SplitPanesContext = L.Class.extend({
 	},
 
 	getSplitPos: function () {
-		return this._splitPos.divideBy(window.devicePixelRatio);
+		return this._splitPos.divideBy(app.dpiScale);
 	},
 
 	justifySplitPos: function (split, isHoriz) {

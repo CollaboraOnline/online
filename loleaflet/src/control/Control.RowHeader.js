@@ -8,14 +8,13 @@ L.Control.RowHeader = L.Control.Header.extend({
 	name: L.CSections.RowHeader.name,
 	anchor: [[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']],
 	position: [0, 0], // This section's myTopLeft is placed according to corner header and row group sections.
-	size: [48 * window.devicePixelRatio, 0], // No initial height is necessary.
+	size: [48 * app.dpiScale, 0], // No initial height is necessary.
 	expand: ['top', 'bottom'], // Expand vertically.
 	processingOrder: L.CSections.RowHeader.processingOrder,
 	drawingOrder: L.CSections.RowHeader.drawingOrder,
 	zIndex: L.CSections.RowHeader.zIndex,
 	interactable: true,
 	sectionProperties: {},
-	_headerWidth: 48 * window.devicePixelRatio, // This value is static.
 
 	options: {
 		cursor: 'row-resize'
