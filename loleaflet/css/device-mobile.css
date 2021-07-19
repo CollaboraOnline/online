@@ -751,6 +751,31 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 #mobile-wizard.busypopup {
 	border-radius: 16px 16px 0 0;
 }
+#mobile-wizard.busypopup.snackbar {
+	height: 48px !important;
+	margin: 16px !important;
+	background-color: #565f77;
+	width: auto;
+	border-radius: 4px;
+}
+#mobile-wizard.busypopup.snackbar #busylabel {
+	color: white !important;
+	font-size: 14px !important;
+	margin: 0 !important;
+	text-align: left;
+	padding-left: 8px;
+}
+#mobile-wizard.busypopup.snackbar #busylabel:after {
+	/* This will come from JS */
+	content: 'RETRY';
+	color: #c8e7f9ff;
+	text-align: right;
+	padding-right: 8px;
+	float: right;
+}
+#mobile-wizard.busypopup.snackbar #busyspinner {
+	display: none;
+}
 .busypopup #mobile-wizard-content {
 	height: 100%;
 	display: flex;
