@@ -15,6 +15,9 @@
 #include <string>
 #include <vector>
 
+#include "Log.hpp"
+#include "Protocol.hpp"
+
 /// Thread-safe message queue (FIFO).
 template <typename T>
 class MessageQueueBase
@@ -109,6 +112,17 @@ public:
 protected:
     virtual void put_impl(const Payload& value)
     {
+        StringVector tokens = Util::tokenize(value.data(), value.size());
+        if (tokens[1] == "textinput")
+        {
+            const std::string newMsg = combineTextInput(tokens);
+            if (!newMsg.empty())
+            {
+                _queue.push_back(Payload(newMsg.data(), newMsg.data() + newMsg.size()));
+                return;
+            }
+        }
+
         _queue.push_back(value);
     }
 
@@ -133,6 +147,60 @@ protected:
     std::unique_lock<std::mutex> getLock() { return std::unique_lock<std::mutex>(_mutex); }
 
     std::vector<Payload>& getQueue() { return _queue; }
+
+    /// Search the queue for a previous textinput message and if found, remove it and combine its
+    /// input with that in the current textinput message. We check that there aren't any interesting
+    /// messages inbetween that would make it wrong to merge the textinput messages.
+    ///
+    /// @return New message to put into the queue. If empty, use what we got.
+    std::string combineTextInput(const StringVector& tokens)
+    {
+        std::string id;
+        std::string text;
+        if (!LOOLProtocol::getTokenString(tokens, "id", id) ||
+            !LOOLProtocol::getTokenString(tokens, "text", text))
+            return std::string();
+
+        int i = getQueue().size() - 1;
+        while (i >= 0)
+        {
+            auto& it = getQueue()[i];
+
+            const std::string queuedMessage(it.data(), it.size());
+            StringVector queuedTokens = Util::tokenize(it.data(), it.size());
+
+            // If any messages of these types are present before the current ("textinput") message,
+            // no combination is possible.
+            if (queuedTokens.size() == 1 ||
+                queuedTokens[1] == "key" ||
+                queuedTokens[1] == "mouse" ||
+                queuedTokens[1] == "removetextcontext" ||
+                queuedTokens[1] == "windowkey" ||
+                (queuedTokens[0] != tokens[0] && queuedTokens[1] == "textinput"))
+                return std::string();
+
+            std::string queuedId;
+            std::string queuedText;
+            if (queuedTokens[1] == "textinput" &&
+                LOOLProtocol::getTokenString(queuedTokens, "id", queuedId) &&
+                queuedId == id &&
+                LOOLProtocol::getTokenString(queuedTokens, "text", queuedText))
+            {
+                // Remove the queued textinput message and combine it with the current one
+                getQueue().erase(getQueue().begin() + i);
+
+                std::string newMsg = queuedTokens[0] + " textinput id=" + id + " text=" + queuedText + text;
+
+                LOG_TRC("Combined [" << queuedMessage << "] with current message to [" << newMsg << "]");
+
+                return newMsg;
+            }
+
+            --i;
+        }
+
+        return std::string();
+    }
 
 private:
     std::vector<Payload> _queue;

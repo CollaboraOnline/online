@@ -66,22 +66,18 @@ public:
 
         static const char *commands[] = {
             "key type=up char=0 key=17",
-            "textinput id=0 type=input text=%E3%84%98",
-            "textinput id=0 type=end text=%E3%84%98",
+            "textinput id=0 text=%E3%84%98",
             "key type=up char=0 key=519",
 
-            "textinput id=0 type=input text=%E3%84%9C",
-            "textinput id=0 type=end text=%E3%84%9C",
+            "textinput id=0 text=%E3%84%9C",
             "key type=up char=0 key=522",
 
-            "textinput id=0 type=input text=%CB%8B",
-            "textinput id=0 type=end text=%CB%8B",
+            "textinput id=0 text=%CB%8B",
             "key type=up char=0 key=260",
 
             // replace with the complete character
             "removetextcontext id=0 before=3 after=0",
-            "textinput id=0 type=input text=%E6%B8%AC",
-            "textinput id=0 type=end text=%E6%B8%AC",
+            "textinput id=0 text=%E6%B8%AC",
             "key type=up char=0 key=259"
         };
         static const unsigned char correct[] = {
