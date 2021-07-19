@@ -1646,24 +1646,30 @@ std::string DocumentBroker::getWriteableSessionId() const
 {
     assertCorrectThread();
 
+    // Consider each session once, starting from the last.
     std::string savingSessionId;
-    for (auto& sessionIt : _sessions)
+    for (std::size_t index = _sessionsByTime.size() - 1; index < _sessionsByTime.size(); --index)
     {
-        // Save the document using an editable and loaded session, or first ...
-        if (savingSessionId.empty()
-            || (!sessionIt.second->isReadOnly() && sessionIt.second->isViewLoaded()
-                && !sessionIt.second->inWaitDisconnected()))
+        std::shared_ptr<ClientSession> session = _sessionsByTime[index].lock();
+        if (session)
         {
-            savingSessionId = sessionIt.second->getId();
-        }
+            // Save the document using an editable and loaded session, or first ...
+            if (savingSessionId.empty() || (!session->isReadOnly() && session->isViewLoaded() &&
+                                            !session->inWaitDisconnected()))
+            {
+                savingSessionId = session->getId();
+            }
 
-        // or if any of the sessions is document owner, use that.
-        if (sessionIt.second->isDocumentOwner())
-        {
-            savingSessionId = sessionIt.second->getId();
-            break;
+            // or if any of the sessions is document owner, use that.
+            if (session->isDocumentOwner())
+            {
+                savingSessionId = session->getId();
+                break;
+            }
         }
     }
+
+    LOG_TRC("getWriteableSessionId: " << savingSessionId);
     return savingSessionId;
 }
 
@@ -1907,6 +1913,7 @@ std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSessi
 
     // Add and attach the session.
     _sessions.emplace(session->getId(), session);
+    _sessionsByTime.emplace_back(session);
     session->setState(ClientSession::SessionState::LOADING);
 
     const std::size_t count = _sessions.size();
@@ -2055,6 +2062,19 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
     }
 }
 
+void DocumentBroker::cleanupSessionByTime(const std::string& id)
+{
+    // Remove invalid sessions and the one given.
+    _sessionsByTime.erase(std::remove_if(_sessionsByTime.begin(), _sessionsByTime.end(),
+                                         [id](std::weak_ptr<ClientSession>& weak_session)
+                                         {
+                                             const std::shared_ptr<ClientSession> session =
+                                                 weak_session.lock();
+                                             return !session || session->getId() == id;
+                                         }),
+                          _sessionsByTime.end());
+}
+
 void DocumentBroker::finalRemoveSession(const std::string& id)
 {
     assertCorrectThread();
@@ -2064,6 +2084,8 @@ void DocumentBroker::finalRemoveSession(const std::string& id)
         if (it != _sessions.end())
         {
             const bool readonly = (it->second ? it->second->isReadOnly() : false);
+
+            cleanupSessionByTime(id);
 
             // Remove. The caller must have a reference to the session
             // in question, lest we destroy from underneath them.

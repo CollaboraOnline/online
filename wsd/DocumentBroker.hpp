@@ -570,6 +570,9 @@ private:
     /// a convert-to request or doctored to look like one.
     virtual bool isConvertTo() const { return false; }
 
+    /// Remove from _sessionsByTime all invalid sessions (if any) and the given one.
+    void cleanupSessionByTime(const std::string& id);
+
 private:
     /// Request manager.
     /// Encapsulates common fields for
@@ -1083,6 +1086,9 @@ private:
 
     /// All session of this DocBroker by ID.
     SessionMap<ClientSession> _sessions;
+
+    /// The Sessions, in the order they were added in.
+    std::vector<std::weak_ptr<ClientSession>> _sessionsByTime;
 
     /// If we set the user-requested initial (on load) settings to be forced.
     std::set<std::string> _isInitialStateSet;
