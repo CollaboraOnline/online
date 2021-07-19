@@ -361,7 +361,7 @@ L.Control.Header = L.Class.extend({
 			var end = entry.pos;
 			var start = end - entry.size;
 			if (position >= start && position < end) {
-				var resizeAreaStart = Math.max(start, end - 3 * that.dpiScale);
+				var resizeAreaStart = Math.max(start, end - 3 * app.dpiScale);
 				if (entry.isCurrent || window.mode.isMobile()) {
 					resizeAreaStart = end - that._resizeHandleSize;
 				}
