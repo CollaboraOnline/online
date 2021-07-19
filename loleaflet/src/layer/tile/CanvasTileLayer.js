@@ -5465,8 +5465,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (this._selectedPart !== partToSelect) {
 				this._selectedPart = partToSelect;
 				this._preview._scrollToPart();
-				this.highlightCurrentPart(partToSelect);
 			}
+			this.highlightCurrentPart(partToSelect);
 		}
 
 		for (var i = 0; i < this._tiles.length; i++) {
