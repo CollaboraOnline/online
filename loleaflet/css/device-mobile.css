@@ -70,6 +70,8 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 #toolbar-hamburger {
 	width: 36px;
 	height: 36px;
+	position: relative;
+	z-index: 1002;
 }
 #toolbar-hamburger.menuwizard-opened {
 	width: 36px;

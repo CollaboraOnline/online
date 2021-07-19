@@ -541,8 +541,6 @@ L.Control.MobileWizard = L.Control.extend({
 				$('#mobile-wizard-titlebar').hide();
 			}
 
-			this._updateMapSize();
-
 			this._inBuilding = false;
 		}
 	},
