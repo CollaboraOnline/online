@@ -204,9 +204,6 @@ bool ClientSession::staleWaitDisconnect(const std::chrono::steady_clock::time_po
 
 void ClientSession::rotateClipboardKey(bool notifyClient)
 {
-    if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
-        return;
-
     if (_state == SessionState::WAIT_DISCONNECT)
         return;
 
@@ -221,9 +218,6 @@ void ClientSession::rotateClipboardKey(bool notifyClient)
 
 std::string ClientSession::getClipboardURI(bool encode)
 {
-    if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
-        return std::string();
-
     std::string encodedFrom;
     Poco::URI wopiSrc = getDocumentBroker()->getPublicUri();
     wopiSrc.setQueryParameters(Poco::URI::QueryParameters());

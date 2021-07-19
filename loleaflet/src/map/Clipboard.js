@@ -358,9 +358,6 @@ L.Clipboard = L.Class.extend({
 			return true;
 		}
 
-		if (this._map['wopi'].DisableCopy)
-			return true;
-
 		// Do we have a remote Online we can suck rich data from ?
 		if (meta !== '')
 		{
@@ -687,18 +684,9 @@ L.Clipboard = L.Class.extend({
 			return false;
 		}
 
-		if (this._map['wopi'].DisableCopy) {
+		if (this._map['wopi'].DisableCopy && (cmd === '.uno:Copy' || cmd === '.uno:Cut')) {
 			// perform internal operations
-
-			if (cmd === '.uno:Copy' || cmd === '.uno:Cut') {
-				app.socket.sendMessage('uno ' + cmd);
-			} else if (cmd === '.uno:Paste') {
-				var dummyEvent = {preventDefault: function() {}};
-				this.paste(dummyEvent);
-			} else {
-				return false;
-			}
-
+			app.socket.sendMessage('uno ' + cmd);
 			return true;
 		}
 
@@ -765,14 +753,6 @@ L.Clipboard = L.Class.extend({
 
 		if (this._map._activeDialog)
 			ev.usePasteKeyEvent = true;
-
-		if (this._map['wopi'].DisableCopy)
-		{
-			ev.preventDefault();
-			this._doInternalPaste(this._map, ev.usePasteKeyEvent);
-
-			return false;
-		}
 
 		var that = this;
 		if (L.Browser.isInternetExplorer)
