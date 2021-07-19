@@ -43,9 +43,15 @@
 	max-width: 330px;
 }
 
+.sidebar.ui-expander-label {
+	color: var(--gray-light-txt--color);
+	font-size: 11px;
+	line-height: 23px;
+	font-weight: bold;
+}
+
 .sidebar.ui-expander-label.expanded {
 	padding-left: 14px;
-	color: var(--gray-light-txt--color);
 	font-size: 11px;
 	line-height: 23px;
 	font-weight: bold;
