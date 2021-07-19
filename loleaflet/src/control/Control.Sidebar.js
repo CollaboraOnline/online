@@ -6,6 +6,10 @@
 /* global $ */
 L.Control.Sidebar = L.Control.extend({
 
+	options: {
+		animSpeed: 1000 /* Default speed: to be used on load */
+	},
+
 	container: null,
 	builder: null,
 
@@ -107,13 +111,13 @@ L.Control.Sidebar = L.Control.extend({
 				var wrapper = document.getElementById('sidebar-dock-wrapper');
 
 				wrapper.style.maxHeight = document.getElementById('document-container').getBoundingClientRect().height + 'px';
-				if (wrapper.style.display === 'none')
-					$('#sidebar-dock-wrapper').show();
 
 				var sidebarWidth = wrapper.getBoundingClientRect().width;
 				this.map.dialog._resizeCalcInputBar(sidebarWidth);
 
 				this.builder.build(this.container, [sidebarData]);
+				if (wrapper.style.display === 'none')
+					$('#sidebar-dock-wrapper').show(this.options.animSpeed);
 
 				if (window.initSidebarState)
 					this.map.uiManager.setSavedState('ShowSidebar', true);

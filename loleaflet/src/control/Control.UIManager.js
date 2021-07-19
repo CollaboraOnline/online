@@ -61,7 +61,7 @@ L.Control.UIManager = L.Control.extend({
 			this.map.jsdialog = L.control.jsDialog();
 			this.map.addControl(this.map.jsdialog);
 
-			this.map.sidebar = L.control.sidebar();
+			this.map.sidebar = L.control.sidebar({animSpeed: 200});
 			this.map.addControl(this.map.sidebar);
 		}
 
