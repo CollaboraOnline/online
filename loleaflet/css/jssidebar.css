@@ -33,10 +33,6 @@
 	min-width: auto;
 }
 
-.ui-expander + .sidebar.ui-expander-content {
-	margin-left: -30px;
-}
-
 .sidebar.ui-expander {
 	display: flex;
 	justify-content: space-between;
