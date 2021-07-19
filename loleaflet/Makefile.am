@@ -527,6 +527,7 @@ $(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 \
 	$(DIST_FOLDER)/bundle.js
 	@echo "Generating loleaflet.html..."
 	@m4 -PE -DDEBUG=$(IS_DEBUG) \
+		-DENABLE_FEEDBACK=$(ENABLE_FEEDBACK) \
 		-DIOSAPP=$(ENABLE_IOSAPP) \
 		-DGTKAPP=$(ENABLE_GTKAPP) \
 		-DANDROIDAPP=$(ENABLE_ANDROIDAPP) \
