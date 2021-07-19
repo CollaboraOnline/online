@@ -41,16 +41,16 @@ L.Map.Feedback = L.Handler.extend({
 	onMessage: function (e) {
 		var data = e.data;
 
-		if (data == 'show') {
+		if (data == 'feedback-show') {
 			this._iframeDialog.show();
 		}
-		else if (data == 'never') {
+		else if (data == 'feedback-never') {
 			window.localStorage.removeItem('WSDFeedbackEnabled');
 			this._iframeDialog.remove();
-		} else if (data == 'later') {
+		} else if (data == 'feedback-later') {
 			this._iframeDialog.remove();
 			setTimeout(L.bind(this.onFeedback, this), this._map.options.feedbackTimeout);
-		} else if (data == 'submit') {
+		} else if (data == 'feedback-submit') {
 			window.localStorage.removeItem('WSDFeedbackEnabled');
 			this._iframeDialog.remove();
 		}
