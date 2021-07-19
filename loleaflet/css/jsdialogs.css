@@ -126,16 +126,18 @@ td.jsdialog > [id^='table-box'] {
 }
 
 .ui-expander-label::before,
-.ui-treeview-expandable > .ui-treeview-expander::before {
-	content: '>';
+.ui-treeview-expandable.collapsed > .ui-treeview-expander::before {
+	content: 'V';
 	color: transparent;
-	margin-right: 5px;
+	margin-right: 7px;
 	background: transparent url('images/lc_menu_chevron.svg') no-repeat center right;
+	filter: brightness(0.5);
 }
 
 .ui-expander-label.expanded::before,
-.ui-treeview-expandable.collapsed > .ui-treeview-expander::before  {
+.ui-treeview-expandable:not(.collapsed) > .ui-treeview-expander::before  {
 	content: 'V';
+	color: transparent;
 	margin: 0px;
 	position: absolute;
 	transform: rotate(90deg);
