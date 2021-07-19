@@ -8,7 +8,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 	name: L.CSections.ColumnHeader.name,
 	anchor: [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, 'right', 'left']],
 	position: [0, 0], // This section's myTopLeft is placed according to corner header and column group sections.
-	size: [0, 19 * window.devicePixelRatio], // No initial width is necessary.
+	size: [0, 19 * app.dpiScale], // No initial width is necessary.
 	expand: ['right'], // Expand horizontally.
 	processingOrder: L.CSections.ColumnHeader.processingOrder,
 	drawingOrder: L.CSections.ColumnHeader.drawingOrder,
@@ -39,8 +39,6 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		this._initHeaderEntryHoverStyles('spreadsheet-header-column-hover');
 		this._initHeaderEntrySelectedStyles('spreadsheet-header-column-selected');
 		this._initHeaderEntryResizeStyles('spreadsheet-header-column-resize');
-
-		this._headerHeight = 19 * window.devicePixelRatio;
 
 		this._menuItem = {
 			'.uno:InsertColumnsBefore': {

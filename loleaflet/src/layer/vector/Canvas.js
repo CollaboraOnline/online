@@ -30,7 +30,7 @@ L.Canvas = L.Renderer.extend({
 		var b = this._bounds,
 		    container = this._container,
 		    size = b.getSize(),
-		    m = window.devicePixelRatio;
+		    m = window.app.dpiScale;
 
 		L.DomUtil.setPosition(container, b.min);
 
