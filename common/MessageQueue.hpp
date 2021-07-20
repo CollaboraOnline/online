@@ -15,23 +15,22 @@
 #include <vector>
 
 /// Thread-safe message queue (FIFO).
-template <typename T>
-class MessageQueueBase
+class MessageQueue
 {
 public:
-    typedef T Payload;
+    typedef std::vector<char> Payload;
 
-    MessageQueueBase()
+    MessageQueue()
     {
     }
 
-    virtual ~MessageQueueBase()
+    virtual ~MessageQueue()
     {
         clear();
     }
 
-    MessageQueueBase(const MessageQueueBase&) = delete;
-    MessageQueueBase& operator=(const MessageQueueBase&) = delete;
+    MessageQueue(const MessageQueue&) = delete;
+    MessageQueue& operator=(const MessageQueue&) = delete;
 
     /// Thread safe insert the message.
     void put(const Payload& value)
@@ -106,8 +105,6 @@ protected:
 private:
     std::vector<Payload> _queue;
 };
-
-typedef MessageQueueBase<std::vector<char>> MessageQueue;
 
 /// MessageQueue specialized for priority handling of tiles.
 class TileQueue : public MessageQueue
