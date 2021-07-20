@@ -118,13 +118,13 @@ L.Control.StatusBar = L.Control.extend({
 			}
 		}
 		else if (id === 'zoomin' && this.map.getZoom() < this.map.getMaxZoom()) {
-			this.map.zoomIn(1);
+			this.map.zoomIn(1, null, true /* animate? */);
 		}
 		else if (id === 'zoomout' && this.map.getZoom() > this.map.getMinZoom()) {
-			this.map.zoomOut(1);
+			this.map.zoomOut(1, null, true /* animate? */);
 		}
 		else if (item.scale) {
-			this.map.setZoom(item.scale);
+			this.map.setZoom(item.scale, null, true /* animate? */);
 		}
 		else if (id === 'zoomreset') {
 			this.map.setZoom(this.map.options.zoom);

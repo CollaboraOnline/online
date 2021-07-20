@@ -477,7 +477,7 @@ L.Map = L.Evented.extend({
 		return Math.pow(1.2, (zoom - this.options.zoom));
 	},
 
-	setDesktopCalcViewOnZoom: function (zoom) {
+	setDesktopCalcViewOnZoom: function (zoom, animate) {
 		var calcLayer = this._docLayer;
 		if (!calcLayer.options.sheetGeometryDataEnabled || !calcLayer.sheetGeometry)
 			return false;
@@ -541,18 +541,24 @@ L.Map = L.Evented.extend({
 
 		this._ignoreCursorUpdate = true;
 		var thisObj = this;
-		this._docLayer.runZoomAnimation(zoom, newPinchCenterLatLng,
-			// mapUpdater
-			function() {
-				thisObj._resetView(L.latLng(newCenterLatLng), thisObj._limitZoom(zoom));
-			},
-			// runAtFinish
-			function() {
-				thisObj._ignoreCursorUpdate = false;
-				if (cursorActive) {
-					calcLayer.activateCursor();
-				}
-			});
+		var mapUpdater = function() {
+			thisObj._resetView(L.latLng(newCenterLatLng), thisObj._limitZoom(zoom));
+		};
+		var runAtFinish = function() {
+			thisObj._ignoreCursorUpdate = false;
+			if (cursorActive) {
+				calcLayer.activateCursor();
+			}
+		};
+
+		if (animate) {
+			this._docLayer.runZoomAnimation(zoom, newPinchCenterLatLng,
+				mapUpdater,
+				runAtFinish);
+		} else {
+			mapUpdater();
+			runAtFinish();
+		}
 	},
 
 	ignoreCursorUpdate: function () {
@@ -584,7 +590,7 @@ L.Map = L.Evented.extend({
 		}
 	},
 
-	setZoom: function (zoom, options) {
+	setZoom: function (zoom, options, animate) {
 
 		if (this._docLayer instanceof L.CanvasTileLayer) {
 			if (!zoom)
@@ -604,13 +610,15 @@ L.Map = L.Evented.extend({
 			// we want it to be glued to the row/column headers instead of being centered
 			this._docLayer._checkSpreadSheetBounds(zoom);
 			if (window.mode.isDesktop()) {
-				return this.setDesktopCalcViewOnZoom(zoom);
+				return this.setDesktopCalcViewOnZoom(zoom, animate);
 			}
 		}
 
 		this._docLayer.setZoomChanged(true);
 		var thisObj = this;
 		var cssBounds = this.getPixelBounds();
+		var mapUpdater;
+		var runAtFinish;
 		if (this._docLayer && this._docLayer._visibleCursor && this.getBounds().contains(this._docLayer._visibleCursor.getCenter())) {
 			// Calculate new center after zoom. The intent is that the caret
 			// position stays the same.
@@ -618,44 +626,58 @@ L.Map = L.Evented.extend({
 			var caretPos = this._docLayer._visibleCursor.getCenter();
 			var newCenter = new L.LatLng(curCenter.lat + (caretPos.lat - curCenter.lat) * (1.0 - zoomScale),
 						     curCenter.lng + (caretPos.lng - curCenter.lng) * (1.0 - zoomScale));
-			this._docLayer.runZoomAnimation(zoom,
-				// pinchCenter
-				new L.LatLng(
-					// Use the current y-center if there is a top margin.
-					cssBounds.min.y < 0 ? curCenter.lat : caretPos.lat,
-					// Use the current x-center if there is a left margin.
-					cssBounds.min.x < 0 ? curCenter.lng : caretPos.lng),
-				// mapUpdater
-				function() {
-					thisObj.setView(newCenter, zoom, {zoom: options});
-				},
-				// runAtFinish
-				function() {
-					thisObj._docLayer.setZoomChanged(false);
-				});
+
+			mapUpdater = function() {
+				thisObj.setView(newCenter, zoom, {zoom: options});
+			};
+			runAtFinish = function() {
+				thisObj._docLayer.setZoomChanged(false);
+			};
+
+			if (animate) {
+				this._docLayer.runZoomAnimation(zoom,
+					// pinchCenter
+					new L.LatLng(
+						// Use the current y-center if there is a top margin.
+						cssBounds.min.y < 0 ? curCenter.lat : caretPos.lat,
+						// Use the current x-center if there is a left margin.
+						cssBounds.min.x < 0 ? curCenter.lng : caretPos.lng),
+					mapUpdater,
+					runAtFinish);
+			} else {
+				mapUpdater();
+				runAtFinish();
+			}
 
 			return;
 		}
 
-		this._docLayer.runZoomAnimation(zoom,
-			// pinchCenter
-			curCenter,
-			// mapUpdater
-			function() {
-				thisObj.setView(curCenter, zoom, {zoom: options});
-			},
-			// runAtFinish
-			function() {
-				thisObj._docLayer.setZoomChanged(false);
-			});
+		mapUpdater = function() {
+			thisObj.setView(curCenter, zoom, {zoom: options});
+		};
+
+		runAtFinish = function() {
+			thisObj._docLayer.setZoomChanged(false);
+		};
+
+		if (animate) {
+			this._docLayer.runZoomAnimation(zoom,
+				// pinchCenter
+				curCenter,
+				mapUpdater,
+				runAtFinish);
+		} else {
+			mapUpdater();
+			runAtFinish();
+		}
 	},
 
-	zoomIn: function (delta, options) {
-		return this.setZoom(this._zoom + (delta || 1), options);
+	zoomIn: function (delta, options, animate) {
+		return this.setZoom(this._zoom + (delta || 1), options, animate);
 	},
 
-	zoomOut: function (delta, options) {
-		return this.setZoom(this._zoom - (delta || 1), options);
+	zoomOut: function (delta, options, animate) {
+		return this.setZoom(this._zoom - (delta || 1), options, animate);
 	},
 
 	setZoomAround: function (latlng, zoom, options) {

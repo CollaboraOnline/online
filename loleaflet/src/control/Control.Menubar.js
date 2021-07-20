@@ -1537,11 +1537,11 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'selectbackground') {
 			L.DomUtil.get('selectbackground').click();
 		} else if (id === 'zoomin' && this._map.getZoom() < this._map.getMaxZoom()) {
-			this._map.zoomIn(1);
+			this._map.zoomIn(1, null, true /* animate? */);
 		} else if (id === 'showresolved') {
 			this._map.showResolvedComments(!$(itNode).hasClass('lo-menu-item-checked'));
 		} else if (id === 'zoomout' && this._map.getZoom() > this._map.getMinZoom()) {
-			this._map.zoomOut(1);
+			this._map.zoomOut(1, null, true /* animate? */);
 		} else if (id === 'zoomreset') {
 			this._map.setZoom(this._map.options.zoom);
 		} else if (id === 'fullscreen') {
