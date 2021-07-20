@@ -1958,7 +1958,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var icon = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-icon', parentContainer);
 		var img = L.DomUtil.create('img', builder.options.cssClass, icon);
-		img.src = entry.image;
+		if (entry.image)
+			img.src = entry.image;
 		img.alt = entry.text;
 
 		var text = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-text', parentContainer);
