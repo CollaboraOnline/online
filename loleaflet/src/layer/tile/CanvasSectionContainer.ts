@@ -1575,51 +1575,10 @@ class CanvasSectionContainer {
 		this.context.translate(section.myTopLeft[0], section.myTopLeft[1]);
 	}
 
-	private clearNonDocContentArea() {
-		// Assumes origin is at canvas's (0, 0).
-		// Document content area is not necessarily the tile section area
-		// or what is represented by map's getPixelBoundsCore().
-
-		this.context.fillStyle = this.clearColor;
-		var tileSection = this.getSectionWithName(L.CSections.Tiles.name);
-
-		if (!tileSection) {
-			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-			this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-			return;
-		}
-
-		// compute topleft and bottom right of "tile content area" in absolute canvas coordinates.
-		var contentTopLeft: Array<number> = [
-			this.documentTopLeft[0] >= 0 ? tileSection.myTopLeft[0] : tileSection.myTopLeft[0] - this.documentTopLeft[0],
-			this.documentTopLeft[1] >= 0 ? tileSection.myTopLeft[1] : tileSection.myTopLeft[1] - this.documentTopLeft[1]];
-
-		var contentBottomRight: Array<number> = [
-			tileSection.myTopLeft[0] + this.documentBottomRight[0] - this.documentTopLeft[0],
-			tileSection.myTopLeft[1] + this.documentBottomRight[1] - this.documentTopLeft[1]];
-		if (this.documentTopLeft[0] < 0)
-			contentBottomRight[0] += this.documentTopLeft[0];
-		if (this.documentTopLeft[1] < 0)
-			contentBottomRight[1] += this.documentTopLeft[1];
-
-		// top margin
-		this.context.fillRect(0, 0, this.canvas.width, contentTopLeft[1]);
-		// bottom margin
-		this.context.fillRect(0, contentBottomRight[1], this.canvas.width, this.canvas.height - contentBottomRight[1]);
-		// left margin
-		this.context.fillRect(0, contentTopLeft[1], contentTopLeft[0], contentBottomRight[1] - contentTopLeft[1]);
-		// right margin
-		this.context.fillRect(contentBottomRight[0], contentTopLeft[1],
-			this.canvas.width - contentBottomRight[0], contentBottomRight[1] - contentTopLeft[1]);
-
-	}
-
 	private drawSections (frameCount: number = null, elapsedTime: number = null) {
 		this.context.setTransform(1, 0, 0, 1, 0, 0);
 
-		if (this.zoomChanged) {
-			this.clearNonDocContentArea();
-		} else {
+		if (!this.zoomChanged) {
 			this.context.fillStyle = this.clearColor;
 			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 			this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
