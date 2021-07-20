@@ -3795,7 +3795,8 @@ public:
     void stop()
     {
         _acceptPoll.joinThread();
-        LOOLWSD::WebServerPoll->joinThread();
+        if (LOOLWSD::WebServerPoll)
+            LOOLWSD::WebServerPoll->joinThread();
     }
 
     void dumpState(std::ostream& os)
