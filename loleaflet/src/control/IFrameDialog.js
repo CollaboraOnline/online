@@ -25,6 +25,7 @@ L.IFrameDialog = L.Class.extend({
 		cssVar = cssVar.replace(/\s/g, '');
 		url += '?'+this._isMobile;
 		url += cssVar;
+		url += window.app.socket.WSDServer.Hash;
 		this._iframe.src = url;
 	},
 
