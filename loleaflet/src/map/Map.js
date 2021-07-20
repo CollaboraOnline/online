@@ -618,6 +618,7 @@ L.Map = L.Evented.extend({
 		}
 
 		this._docLayer.setZoomChanged(true);
+		var thisObj = this;
 		var cssBounds = this.getPixelBounds();
 		if (this._docLayer && this._docLayer._visibleCursor && this.getBounds().contains(this._docLayer._visibleCursor.getCenter())) {
 			// Calculate new center after zoom. The intent is that the caret
@@ -626,10 +627,11 @@ L.Map = L.Evented.extend({
 			var caretPos = this._docLayer._visibleCursor.getCenter();
 			var newCenter = new L.LatLng(curCenter.lat + (caretPos.lat - curCenter.lat) * (1.0 - zoomScale),
 						     curCenter.lng + (caretPos.lng - curCenter.lng) * (1.0 - zoomScale));
-			var thisObj = this;
 			this._docLayer.runZoomAnimation(zoom,
 				// pinchCenter
-				new L.LatLng(caretPos.lat,
+				new L.LatLng(
+					// Use the current y-center if there is a top margin.
+					cssBounds.min.y < 0 ? curCenter.lat : caretPos.lat,
 					// Use the current x-center if there is a left margin.
 					cssBounds.min.x < 0 ? curCenter.lng : caretPos.lng),
 				// mapUpdater
@@ -644,9 +646,17 @@ L.Map = L.Evented.extend({
 			return;
 		}
 
-		var retValue = this.setView(curCenter, zoom, {zoom: options});
-		this._docLayer.setZoomChanged(false);
-		return retValue;
+		this._docLayer.runZoomAnimation(zoom,
+			// pinchCenter
+			curCenter,
+			// mapUpdater
+			function() {
+				thisObj.setView(curCenter, zoom, {zoom: options});
+			},
+			// runAtFinish
+			function() {
+				thisObj._docLayer.setZoomChanged(false);
+			});
 	},
 
 	zoomIn: function (delta, options) {
