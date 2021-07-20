@@ -373,7 +373,7 @@ private:
     MessageQueue _inQueue; //< The incoming message queue.
     std::condition_variable _inCv; //< The incoming queue cond_var.
     std::mutex _inMutex; //< The incoming queue lock.
-    MessageQueueBase<std::vector<char>> _outQueue; //< The outgoing message queue.
+    MessageQueue _outQueue; //< The outgoing message queue.
     std::mutex _outMutex; //< The outgoing queue lock.
     std::condition_variable _disconnectCv; //< Traps disconnections.
     std::mutex _disconnectMutex; //< The disconnection event lock.
