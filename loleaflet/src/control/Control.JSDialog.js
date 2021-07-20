@@ -35,6 +35,15 @@ L.Control.JSDialog = L.Control.extend({
 		return builder;
 	},
 
+	close: function(id, sendCloseEvent) {
+		if (id && this.dialogs[id]) {
+			if (this.dialogs[id].isPopup)
+				this.closePopover(id, sendCloseEvent);
+			else
+				this.closeDialog(id);
+		}
+	},
+
 	closeDialog: function(id) {
 		var builder = this.clearDialog(id);
 		builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
@@ -60,27 +69,18 @@ L.Control.JSDialog = L.Control.extend({
 		var data = e.data;
 		var isModalPopup = data.type === 'modalpopup';
 
-		var close = function() {
-			if (data.id && that.dialogs[data.id]) {
-				if (that.dialogs[data.id].isPopup)
-					that.closePopover(data.id, false);
-				else
-					that.closeDialog(data.id);
-			}
-		};
-
 		if (data.action === 'fadeout')
 		{
 			if (data.id && this.dialogs[data.id]) {
 				var container = this.dialogs[data.id].container;
 				L.DomUtil.addClass(container, 'fadeout');
-				container.onanimationend = close;
+				container.onanimationend = function() { that.close(data.id); };
 			}
 			return;
 		}
 		else if (data.action === 'close')
 		{
-			close();
+			this.close(data.id);
 			return;
 		}
 
@@ -293,7 +293,7 @@ L.Control.JSDialog = L.Control.extend({
 			var dialogs = Object.keys(this.dialogs);
 			if (dialogs.length) {
 				var lastKey = dialogs[dialogs.length - 1];
-				this.closeDialog(lastKey);
+				this.close(lastKey, true);
 				this.map.focus();
 				return true;
 			}
