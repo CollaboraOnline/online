@@ -774,3 +774,19 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 		height: 100%;
 	}
 }
+
+#toolbar-down .freemium-disabled .w2ui-tb-image {
+	overflow: visible;
+}
+#toolbar-down .freemium-disabled .w2ui-icon:before {
+	display: block;
+	content: '';
+	width: 18px;
+	height: 18px;
+	background: url('images/lc_freeemiumlock.svg') no-repeat center -15px /16px white;
+	box-shadow: 0 0 1px 0 #0b87e7,0 0 3px 0 #00000075;
+	border-radius: 18px;
+	position: relative;
+	margin-left: 16px;
+	margin-top: -5px;
+}
