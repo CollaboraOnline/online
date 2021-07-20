@@ -433,7 +433,7 @@ L.Map.Keyboard = L.Handler.extend({
 				keyEventFn('input', charCode, unoKeyCode);
 			}
 			else if (key in this._zoomKeys) {
-				map.setZoom(map.getZoom() + (ev.shiftKey ? 3 : 1) * this._zoomKeys[key]);
+				map.setZoom(map.getZoom() + (ev.shiftKey ? 3 : 1) * this._zoomKeys[key], null, true /* animate? */);
 			}
 		}
 
