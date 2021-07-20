@@ -330,11 +330,22 @@ namespace Log
          * after chroot can cause file creation inside the jail instead of outside
          * */
         channel->open();
-        auto& logger = Poco::Logger::create(Static.getName(), channel, Poco::Message::PRIO_TRACE);
-        Static.setLogger(&logger);
+
+        try
+        {
+            auto& logger = Poco::Logger::create(Static.getName(), channel, Poco::Message::PRIO_TRACE);
+            Static.setLogger(&logger);
+        }
+        catch (ExistsException&)
+        {
+            auto& logger = Poco::Logger::get(Static.getName());
+            Static.setLogger(&logger);
+        }
+
+        auto logger = Static.getLogger();
 
         const std::string level = logLevel.empty() ? std::string("trace") : logLevel;
-        logger.setLevel(level);
+        logger->setLevel(level);
         Static.setLevel(level);
 
         const std::time_t t = std::time(nullptr);
@@ -350,7 +361,7 @@ namespace Log
             oss << " Local time: " << buf << '.';
         }
 
-        oss <<  " Log level is [" << logger.getLevel() << "].";
+        oss <<  " Log level is [" << logger->getLevel() << "].";
         LOG_INF(oss.str());
     }
 
