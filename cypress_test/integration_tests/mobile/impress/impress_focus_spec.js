@@ -81,7 +81,7 @@ describe('Impress focus tests', function() {
 		impressHelper.typeTextAndVerify('Bazinga Impress');
 	});
 
-	it('Single-click to edit', function() {
+	it.skip('Single-click to edit', function() {
 
 		mobileHelper.enableEditingMobile();
 
