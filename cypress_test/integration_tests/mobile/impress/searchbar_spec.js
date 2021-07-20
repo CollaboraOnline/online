@@ -93,13 +93,13 @@ describe('Searching via search bar.', function() {
 
 		helper.expectTextForClipboard('a');
 
-		cy.get('@cursorOrigLeft')
-			.then(function(cursorOrigLeft) {
-				cy.get('.blinking-cursor')
-					.should(function(cursor) {
-						expect(cursor.offset().left).to.be.equal(cursorOrigLeft);
-					});
-			});
+		//cy.get('@cursorOrigLeft')
+		//	.then(function(cursorOrigLeft) {
+		//		cy.get('.blinking-cursor')
+		//			.should(function(cursor) {
+		//				expect(cursor.offset().left).to.be.equal(cursorOrigLeft);
+		//			});
+		//	});
 	});
 
 	it('Search at the document end.', function() {
