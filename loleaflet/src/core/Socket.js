@@ -926,7 +926,11 @@ app.definitions.Socket = L.Class.extend({
 					} catch (error) {
 						console.warn('Cannot activate map');
 					}
-				}, 1000);
+				// .5, 2, 4.5, 8, 12.5, 18, 24.5, 32, 40.5 seconds
+				}, 500 * this.ReconnectCount * this.ReconnectCount); // Exponential back-off.
+
+
+				this._map.fire('error', {msg: errorMessages.docunloading});
 			}
 
 			if (passwordNeeded) {
