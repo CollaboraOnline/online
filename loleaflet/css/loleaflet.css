@@ -23,7 +23,6 @@
 	width: 1px;
 }
 #document-container {
-	border-top: 1px solid var(--gray-color);
 	background: #DFDFDF;
 	position: relative;
 	margin: 0;
