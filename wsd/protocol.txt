@@ -70,9 +70,9 @@ TRACEEVENT name=<name> ph=<letter> ts=<timestamp> <more parameters>... [ args=<J
 
     'i': An "Instant" event.
 
-    'b', 'e': The begin and end of an "Async" event. In addition to
+    'S', 'F': The start and finish of an "Async" event. In addition to
     the name, the messages have an "id" parameter, a unique number
-    that must be the same for the 'b' and 'e' messages.
+    that must be the same for the 'S' and 'F' messages.
 
     'X': A "complete" event. The "dur" parameter is the duration
     between the beginning of the thing being timed and the time when
