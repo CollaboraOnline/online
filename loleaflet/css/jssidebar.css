@@ -80,6 +80,10 @@ td.jsdialog .jsdialog.cell.sidebar {
 	width: auto;
 }
 
+.sidebar.jsdialog.checkbutton {
+	font-size: 13px;
+}
+
 .sidebar .menu-entry-icon {
 	width: 24px;
 	height: 24px;
