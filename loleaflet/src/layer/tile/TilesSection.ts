@@ -181,13 +181,15 @@ class TilesSection {
 		}
 
 		if (app.file.fileBasedView) {
-            var tileSize = this.sectionProperties.docLayer._tileSize;
+			var tileSize = this.sectionProperties.docLayer._tileSize;
 			var ratio = tileSize / this.sectionProperties.docLayer._tileHeightTwips;
 			var partHeightPixels = Math.round((this.sectionProperties.docLayer._partHeightTwips + this.sectionProperties.docLayer._spaceBetweenParts) * ratio);
 
 			offset.y = tile.coords.part * partHeightPixels + tile.coords.y - this.documentTopLeft[1];
+			extendedOffset.y = offset.y + halfExtraSize;
 
 			this.context.drawImage(tile.el, offset.x, offset.y, tileSize, tileSize);
+			this.oscCtxs[0].drawImage(tile.el, extendedOffset.x, extendedOffset.y, tileSize, tileSize);
 		}
 		else {
 			this.context.drawImage(tile.el, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
