@@ -14,7 +14,8 @@
 	vertical-align: middle;
 }
 
-#sidebar-dock-wrapper {
+#document-container:not(.mobile) + #sidebar-dock-wrapper {
+	width: 322px;
 	padding: 0;
 	border-left: 1px solid var(--gray-color) !important;
 	margin-top: 0px !important;
