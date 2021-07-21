@@ -122,6 +122,90 @@ public:
         return TestResult::Ok;
     }
 
+    TestResult testMessageQueueMerging()
+    {
+        MessageQueue queue;
+
+        queue.put("child-foo textinput id=0 text=a");
+        queue.put("child-foo textinput id=0 text=b");
+
+        MessageQueue::Payload v;
+        v = queue.get();
+
+        if (!queue.isEmpty())
+        {
+            LOG_ERR("Merge of textinput messages did not happen");
+            return TestResult::Failed;
+        }
+
+        std::string s;
+        s = std::string(v.data(), v.size());
+
+        if (s != "child-foo textinput id=0 text=ab")
+        {
+            LOG_ERR("Merge of textinput messages produced unexpected result '" << s << "'");
+            return TestResult::Failed;
+        }
+
+        queue.put("child-foo textinput id=0 text=a");
+        queue.put("child-bar textinput id=0 text=b");
+
+        v = queue.get();
+        if (queue.isEmpty())
+        {
+            LOG_ERR("Merge of textinput messages for different clients that should not have happened");
+            return TestResult::Failed;
+        }
+
+        v = queue.get();
+        if (!queue.isEmpty())
+        {
+            LOG_ERR("MessageQueue contains more than was put into it");
+            return TestResult::Failed;
+        }
+
+        queue.put("child-foo textinput id=0 text=a");
+        queue.put("child-foo key type=input char=97 key=0");
+        queue.put("child-foo textinput id=0 text=b");
+
+        v = queue.get();
+        v = queue.get();
+        if (queue.isEmpty())
+        {
+            LOG_ERR("Merge of textinput messages with a key message inbetween that should not have happened");
+            return TestResult::Failed;
+        }
+        v = queue.get();
+        if (!queue.isEmpty())
+        {
+            LOG_ERR("MessageQueue contains more than was put into it");
+            return TestResult::Failed;
+        }
+
+        queue.put("child-foo textinput id=0 text=abcdef");
+        queue.put("child-foo removetextcontext id=0 before=1 after=0");
+        queue.put("child-foo removetextcontext id=0 before=1 after=0");
+
+        v = queue.get();
+        v = queue.get();
+
+        if (!queue.isEmpty())
+        {
+            LOG_ERR("Merge of removetextcontext messages did not happen");
+            return TestResult::Failed;
+        }
+
+        s = std::string(v.data(), v.size());
+
+        if (s != "child-foo removetextcontext id=0 before=2 after=0")
+        {
+            LOG_ERR("Merge of removetextcontext messages produced unexpected result '" << s << "'");
+            return TestResult::Failed;
+        }
+
+        return TestResult::Ok;
+    }
+
     TestResult testCalcTyping()
     {
         const char* testname = "calcMultiViewEdit ";
@@ -293,6 +377,11 @@ public:
         res = testWriterTyping();
         if (res != TestResult::Ok)
             return res;
+
+        res = testMessageQueueMerging();
+        if (res != TestResult::Ok)
+            return res;
+
 //        res = testCalcTyping();
         return res;
     }
