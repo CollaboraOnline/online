@@ -149,16 +149,17 @@ protected:
             // If any messages of these types are present before the current ("textinput") message,
             // no combination is possible.
             if (queuedTokens.size() == 1 ||
-                queuedTokens[1] == "key" ||
-                queuedTokens[1] == "mouse" ||
-                queuedTokens[1] == "removetextcontext" ||
-                queuedTokens[1] == "windowkey" ||
-                (queuedTokens[0] != tokens[0] && queuedTokens[1] == "textinput"))
+                (queuedTokens[0] == tokens[0] &&
+                 (queuedTokens[1] == "key" ||
+                  queuedTokens[1] == "mouse" ||
+                  queuedTokens[1] == "removetextcontext" ||
+                  queuedTokens[1] == "windowkey")))
                 return std::string();
 
             std::string queuedId;
             std::string queuedText;
-            if (queuedTokens[1] == "textinput" &&
+            if (queuedTokens[0] == tokens[0] &&
+                queuedTokens[1] == "textinput" &&
                 LOOLProtocol::getTokenString(queuedTokens, "id", queuedId) &&
                 queuedId == id &&
                 LOOLProtocol::getTokenString(queuedTokens, "text", queuedText))
@@ -207,17 +208,18 @@ protected:
             // If any messages of these types are present before the current (removetextcontext)
             // message, no combination is possible.
             if (queuedTokens.size() == 1 ||
-                queuedTokens[1] == "key" ||
-                queuedTokens[1] == "mouse" ||
-                queuedTokens[1] == "textinput" ||
-                queuedTokens[1] == "windowkey" ||
-                (queuedTokens[0] != tokens[0] && queuedTokens[1] == "removetextcontext"))
+                (queuedTokens[0] == tokens[0] &&
+                 (queuedTokens[1] == "key" ||
+                  queuedTokens[1] == "mouse" ||
+                  queuedTokens[1] == "textinput" ||
+                  queuedTokens[1] == "windowkey")))
                 return std::string();
 
             std::string queuedId;
             int queuedBefore;
             int queuedAfter;
-            if (queuedTokens[1] == "removetextcontext" &&
+            if (queuedTokens[0] == tokens[0] &&
+                queuedTokens[1] == "removetextcontext" &&
                 LOOLProtocol::getTokenStringFromMessage(queuedMessage, "id", queuedId) &&
                 queuedId == id &&
                 LOOLProtocol::getTokenIntegerFromMessage(queuedMessage, "before", queuedBefore) &&
