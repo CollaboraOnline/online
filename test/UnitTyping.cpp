@@ -65,26 +65,32 @@ public:
 
         std::shared_ptr<LOOLWebSocket> socket = helpers::loadDocAndGetSocket(uri, documentURL, testname);
 
+        // We input two Bopomofo (Mandarin Phonetic Symbols) characters and a grave accent using
+        // textinput messages and then delete them and then input a fourth character. Apparently
+        // this is supposed to mimic what happens when input is coming from an IME for Traditional
+        // Chinese? Unclear whether the 'key' messages here really match what the JS generates in
+        // such a case.
         static const char *commands[] = {
             "key type=up char=0 key=17",
-            "textinput id=0 type=input text=%E3%84%98",
-            "textinput id=0 type=end text=%E3%84%98",
+            // BOPOMOFO LETTER C
+            "textinput id=0 text=%E3%84%98",
             "key type=up char=0 key=519",
 
-            "textinput id=0 type=input text=%E3%84%9C",
-            "textinput id=0 type=end text=%E3%84%9C",
+            // BOPOMOFO LETTER E
+            "textinput id=0 text=%E3%84%9C",
             "key type=up char=0 key=522",
 
-            "textinput id=0 type=input text=%CB%8B",
-            "textinput id=0 type=end text=%CB%8B",
+            // MODIFIER LETTER GRAVE ACCENT
+            // Huh?
+            "textinput id=0 text=%CB%8B",
             "key type=up char=0 key=260",
 
             // replace with the complete character
             "removetextcontext id=0 before=3 after=0",
-            "textinput id=0 type=input text=%E6%B8%AC",
-            "textinput id=0 type=end text=%E6%B8%AC",
+            "textinput id=0 text=%E6%B8%AC",
             "key type=up char=0 key=259"
         };
+        // CJK UNIFIED IDEOGRAPH-6E2C
         static const unsigned char correct[] = {
             0xe6, 0xb8, 0xac
         };
