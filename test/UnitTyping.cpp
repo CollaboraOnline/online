@@ -109,10 +109,11 @@ public:
         const std::string result
             = getResponseString(socket, response, testname, std::chrono::seconds(5));
 
-        LOG_TRC("length " << result.length() << " vs. " << (responseLen + 4));
+        // The result string should contain "textselectioncontent:\n" followed by the UTF-8 bytes
+        LOG_TRC("length " << result.length() << " vs. " << (responseLen + 1 + sizeof(correct)));
         if (strncmp(result.c_str(), response, responseLen) ||
-            result.length() < responseLen + 4 ||
-            strncmp(result.c_str() + responseLen + 1, (const char *)correct, 3))
+            result.length() != responseLen + 1 + sizeof(correct) ||
+            memcmp(result.c_str() + responseLen + 1, (const char *)correct, sizeof(correct)))
         {
             LOK_ASSERT_FAIL("Error: wrong textselectioncontent:\n" + Util::dumpHex(result));
             return TestResult::Failed;
