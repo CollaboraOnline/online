@@ -30,6 +30,10 @@
 }
 
 .sidebar.ui-listbox {
+	font-size: 13px;
+	height: 28px;
+	box-sizing: border-box;
+	padding: 0 14px 0 4px;
 	min-width: auto;
 }
 
@@ -76,13 +80,6 @@ td.jsdialog .jsdialog.cell.sidebar {
 	width: auto;
 }
 
-.sidebar.jsdialog.ui-listbox {
-	font-size: 13px;
-	height: 28px;
-	box-sizing: border-box;
-	padding: 0.3em 1.2em 0.3em 0.2em;
-}
-
 .sidebar .menu-entry-icon {
 	width: 24px;
 	height: 24px;
@@ -99,4 +96,9 @@ td.jsdialog .jsdialog.cell.sidebar {
 	border-color: #cccccc;
 	background-color: #eeeeee;
 	border-radius: 4px;
+}
+
+.sidebar #font select,
+.sidebar #fontsizecombobox select {
+	margin: 0;
 }

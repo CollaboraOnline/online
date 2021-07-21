@@ -332,6 +332,14 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	background-color: #F1F1F1;
 }
 
+.ui-listbox option {
+	font-weight: normal;
+	display: block;
+	white-space: nowrap;
+	min-height: 1.2em;
+	padding: 0 5px;
+}
+
 .ui-listbox::-ms-expand {
 	display: none;
 }
@@ -345,7 +353,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	height: 11px;
 	position: relative;
 	top: 1px;
-	left: -18px;
+	left: -16px;
 	cursor: pointer;
 	pointer-events: none;
 }
