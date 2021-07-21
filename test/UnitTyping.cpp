@@ -149,6 +149,7 @@ public:
 
         queue.put("child-foo textinput id=0 text=a");
         queue.put("child-bar textinput id=0 text=b");
+        queue.put("child-foo textinput id=0 text=c");
 
         v = queue.get();
         if (queue.isEmpty())
@@ -157,10 +158,25 @@ public:
             return TestResult::Failed;
         }
 
+        // Verify that the earlier textinput was removed and its contents merged with the later one
+        s = std::string(v.data(), v.size());
+        if (s != "child-bar textinput id=0 text=b")
+        {
+            LOG_ERR("Merge of textinput messages done incorrectly");
+            return TestResult::Failed;
+        }
+
         v = queue.get();
         if (!queue.isEmpty())
         {
-            LOG_ERR("MessageQueue contains more than was put into it");
+            LOG_ERR("Merge of textinput messages did not happen");
+            return TestResult::Failed;
+        }
+
+        s = std::string(v.data(), v.size());
+        if (s != "child-foo textinput id=0 text=ac")
+        {
+            LOG_ERR("Merge of textinput messages done incorrectly");
             return TestResult::Failed;
         }
 
