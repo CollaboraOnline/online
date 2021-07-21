@@ -588,7 +588,16 @@ class Comment {
 				this.onSaveComment(e);
 			}
 			else {
-				this.onCancelClick(e);
+				if (!this.containerObject.testing)
+					this.onCancelClick(e);
+				else {
+					var insertButton = document.getElementById('menu-insertcomment');
+					if (insertButton) {
+						if (window.getComputedStyle(insertButton).display === 'none') {
+							this.onCancelClick(e);
+						}
+					}
+				}
 			}
 		}
 	}
