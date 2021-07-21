@@ -8,9 +8,9 @@
 }
 
 .sidebar .ui-content .unobutton {
+	margin: 0px;
 	width: 24px;
 	height: 24px;
-	margin-right: 5px;
 	vertical-align: middle;
 }
 
@@ -89,6 +89,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 .sidebar #resetattr,
 .sidebar #FormatPaintbrush{
 	border: 1px solid transparent;
+	margin-right: 5px;
 }
 .sidebar.unotoolbutton:hover,
 .sidebar #resetattr:hover,
