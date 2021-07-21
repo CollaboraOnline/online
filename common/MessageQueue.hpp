@@ -98,6 +98,15 @@ protected:
                 return;
             }
         }
+        else if (tokens[1] == "removetextcontext")
+        {
+            const std::string newMsg = combineRemoveText(tokens);
+            if (!newMsg.empty())
+            {
+                _queue.push_back(Payload(newMsg.data(), newMsg.data() + newMsg.size()));
+                return;
+            }
+        }
 
         _queue.emplace_back(value);
     }
@@ -158,6 +167,68 @@ protected:
                 getQueue().erase(getQueue().begin() + i);
 
                 std::string newMsg = queuedTokens[0] + " textinput id=" + id + " text=" + queuedText + text;
+
+                LOG_TRC("Combined [" << queuedMessage << "] with current message to [" << newMsg << "]");
+
+                return newMsg;
+            }
+
+            --i;
+        }
+
+        return std::string();
+    }
+
+    /// Search the queue for a previous removetextcontext message (which actually means "remove text
+    /// content", the word "context" is becaue of some misunderstanding lost in history) and if
+    /// found, remove it and combine its input with that in the current removetextcontext message.
+    /// We check that there aren't any interesting messages inbetween that would make it wrong to
+    /// merge the removetextcontext messages.
+    ///
+    /// @return New message to put into the queue. If empty, use what we got.
+    std::string combineRemoveText(const StringVector& tokens)
+    {
+        std::string id;
+        int before;
+        int after;
+        if (!LOOLProtocol::getTokenString(tokens, "id", id) ||
+            !LOOLProtocol::getTokenInteger(tokens, "before", before) ||
+            !LOOLProtocol::getTokenInteger(tokens, "after", after))
+            return std::string();
+
+        int i = getQueue().size() - 1;
+        while (i >= 0)
+        {
+            auto& it = getQueue()[i];
+
+            const std::string queuedMessage(it.data(), it.size());
+            StringVector queuedTokens = Util::tokenize(it.data(), it.size());
+
+            // If any messages of these types are present before the current (removetextcontext)
+            // message, no combination is possible.
+            if (queuedTokens.size() == 1 ||
+                queuedTokens[1] == "key" ||
+                queuedTokens[1] == "mouse" ||
+                queuedTokens[1] == "textinput" ||
+                queuedTokens[1] == "windowkey" ||
+                (queuedTokens[0] != tokens[0] && queuedTokens[1] == "removetextcontext"))
+                return std::string();
+
+            std::string queuedId;
+            int queuedBefore;
+            int queuedAfter;
+            if (queuedTokens[1] == "removetextcontext" &&
+                LOOLProtocol::getTokenStringFromMessage(queuedMessage, "id", queuedId) &&
+                queuedId == id &&
+                LOOLProtocol::getTokenIntegerFromMessage(queuedMessage, "before", queuedBefore) &&
+                LOOLProtocol::getTokenIntegerFromMessage(queuedMessage, "after", queuedAfter))
+            {
+                // Remove the queued removetextcontext message and combine it with the current one
+                getQueue().erase(getQueue().begin() + i);
+
+                std::string newMsg = queuedTokens[0] + " removetextcontext id=" + id +
+                    " before=" + std::to_string(queuedBefore + before) +
+                    " after=" + std::to_string(queuedAfter + after);
 
                 LOG_TRC("Combined [" << queuedMessage << "] with current message to [" << newMsg << "]");
 
