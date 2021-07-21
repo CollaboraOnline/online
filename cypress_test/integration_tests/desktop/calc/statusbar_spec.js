@@ -49,7 +49,7 @@ describe('Statubar tests.', function() {
 			.should('have.text', '\u00a0Select multiple cells\u00a0');
 	});
 
-	it('Text editing mode.', function() {
+	it.skip('Text editing mode.', function() {
 		cy.get('#InsertMode')
 			.should('have.text', '\u00a0Insert mode: inactive\u00a0');
 
