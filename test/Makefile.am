@@ -295,3 +295,5 @@ all-local: unittest
 	@UNITTEST=1 ${top_builddir}/test/unittest
 	echo "Done test all-local"
 	$(CLEANUP_COMMAND)
+
+.PRECIOUS: $(TEST_LOGS)
