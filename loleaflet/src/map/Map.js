@@ -592,6 +592,10 @@ L.Map = L.Evented.extend({
 
 	setZoom: function (zoom, options, animate) {
 
+		// do not animate zoom when in a cypress test.
+		if (animate && L.Browser.cypressTest)
+			animate = false;
+
 		if (this._docLayer instanceof L.CanvasTileLayer) {
 			if (!zoom)
 				zoom = this._clientZoom || this.options.zoom;
