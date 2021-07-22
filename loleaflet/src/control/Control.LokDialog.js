@@ -1395,14 +1395,14 @@ L.Control.LokDialog = L.Control.extend({
 		$(canvas).show();
 	},
 
-	_resizeCalcInputBar: function(offset) {
-		if (this._calcInputBar && !this._calcInputBar.isPainting && offset !== 0) {
+	_resizeCalcInputBar: function() {
+		if (this._calcInputBar && !this._calcInputBar.isPainting) {
 			var id = this._calcInputBar.id;
 			var calcInputbar = L.DomUtil.get('calc-inputbar');
 			if (calcInputbar) {
 				var calcInputbarContainer = calcInputbar.children[0];
 				if (calcInputbarContainer) {
-					var width = calcInputbarContainer.clientWidth + offset;
+					var width = calcInputbarContainer.clientWidth;
 					var height = calcInputbarContainer.clientHeight;
 					if (width !== 0 && height !== 0) {
 						console.log('_resizeCalcInputBar: id: ' + id + ', width: ' + width + ', height: ' + height);

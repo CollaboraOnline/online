@@ -33,7 +33,7 @@ L.Control.Sidebar = L.Control.extend({
 	closeSidebar: function() {
 		$('#sidebar-dock-wrapper').hide();
 		this.map._onResize();
-		this.map.dialog._resizeCalcInputBar(0);
+		this.map.dialog._resizeCalcInputBar();
 
 		if (!this.map.editorHasFocus()) {
 			this.map.fire('editorgotfocus');
@@ -112,8 +112,7 @@ L.Control.Sidebar = L.Control.extend({
 
 				wrapper.style.maxHeight = document.getElementById('document-container').getBoundingClientRect().height + 'px';
 
-				var sidebarWidth = wrapper.getBoundingClientRect().width;
-				this.map.dialog._resizeCalcInputBar(sidebarWidth);
+				this.map.dialog._resizeCalcInputBar();
 
 				this.builder.build(this.container, [sidebarData]);
 				if (wrapper.style.display === 'none')
