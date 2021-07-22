@@ -113,8 +113,7 @@
 .notebookbar-shortcuts-bar .unotoolbutton.notebookbar .unobutton {
 	width: 16px !important;
 	height: 16px !important;
-	margin-right: 0px;
-	margin-left: 4px;
+	margin: 0 !important;
 }
 
 .notebookbar-shortcuts-bar #Save,
