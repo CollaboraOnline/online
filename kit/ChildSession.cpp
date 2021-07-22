@@ -870,6 +870,8 @@ void ChildSession::dumpRecordedUnoCommands()
 {
     std::atomic<char*>* recordedCommands = unoCommandsRecorder.getRecordedCommands();
 
+    Log::signalLog("List of last UNO commands:\n");
+
     for (int i = 0; i < unoCommandsRecorder.NUM_UNO_COMMANDS; i++)
     {
         // Set the slot to null to prevent other threads from deleting
