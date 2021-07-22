@@ -2844,7 +2844,7 @@ private:
             "\r\n"
             << xml;
 
-        LOG_ERR("Sending back: " << oss.str());
+        LOG_TRC("Sending back discovery.xml: " << oss.str());
         socket->send(oss.str());
         socket->shutdown();
         LOG_INF("Sent discovery.xml successfully.");
