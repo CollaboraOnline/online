@@ -100,7 +100,6 @@ class ScrollSection {
 
 		this.sectionProperties.animatingVerticalScrollBar = false;
 		this.sectionProperties.animatingHorizontalScrollBar = false;
-
 	}
 
 	public completePendingScroll() {
@@ -218,6 +217,13 @@ class ScrollSection {
 		var result: any = {};
 		result.scrollLength = this.getVerticalScrollLength(); // The length of the railway that the scroll bar moves on up & down.
 		result.scrollSize = this.calculateVerticalScrollSize(result.scrollLength); // Size of the scroll bar.
+
+		if (result.scrollSize < this.sectionProperties.minimumScrollSize) {
+			var diff: number = this.sectionProperties.minimumScrollSize - result.scrollSize;
+			result.scrollLength -= diff;
+			result.scrollSize = this.sectionProperties.minimumScrollSize;
+		}
+
 		result.ratio = app.view.size.pixels[1] / result.scrollLength; // 1px scrolling = xpx document height.
 		result.startY = Math.round(this.documentTopLeft[1] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.yOffset);
 
@@ -274,6 +280,13 @@ class ScrollSection {
 		var result: any = {};
 		result.scrollLength = this.getHorizontalScrollLength(); // The length of the railway that the scroll bar moves on left & right.
 		result.scrollSize = this.calculateHorizontalScrollSize(result.scrollLength); // Width of the scroll bar.
+
+		if (result.scrollSize < this.sectionProperties.minimumScrollSize) {
+			var diff: number = this.sectionProperties.minimumScrollSize - result.scrollSize;
+			result.scrollLength -= diff;
+			result.scrollSize = this.sectionProperties.minimumScrollSize;
+		}
+
 		result.ratio = app.view.size.pixels[0] / result.scrollLength;
 		result.startX = Math.round(this.documentTopLeft[0] / result.ratio + this.sectionProperties.scrollBarThickness * 0.5 + this.sectionProperties.xOffset);
 
@@ -338,9 +351,6 @@ class ScrollSection {
 	private drawVerticalScrollBar () {
 		var scrollProps: any = this.getVerticalScrollProperties();
 
-		if (scrollProps.scrollSize < this.sectionProperties.minimumScrollSize)
-			scrollProps.scrollSize = this.sectionProperties.minimumScrollSize;
-
 		if (this.sectionProperties.animatingVerticalScrollBar)
 			this.context.globalAlpha = this.sectionProperties.currentAlpha;
 		else
@@ -357,9 +367,6 @@ class ScrollSection {
 
 	private drawHorizontalScrollBar () {
 		var scrollProps: any = this.getHorizontalScrollProperties();
-
-		if (scrollProps.scrollSize < this.sectionProperties.minimumScrollSize)
-			scrollProps.scrollSize = this.sectionProperties.minimumScrollSize;
 
 		if (this.sectionProperties.animatingHorizontalScrollBar)
 			this.context.globalAlpha = this.sectionProperties.currentAlpha;
@@ -529,9 +536,8 @@ class ScrollSection {
 	public scrollVerticalWithOffset (offset: number) {
         var go = true;
 		if (offset > 0) {
-            var props = this.getVerticalScrollProperties();
-            if (props.startY + offset + props.scrollSize > props.scrollLength)
-                offset = props.scrollLength - props.startY - props.scrollSize;
+            if (this.documentTopLeft[1] + offset > this.sectionProperties.yMax)
+                offset = this.sectionProperties.yMax - this.documentTopLeft[1];
             if (offset < 0)
                 go = false;
 		}
@@ -551,9 +557,8 @@ class ScrollSection {
 	public scrollHorizontalWithOffset (offset: number) {
 		var go = true;
 		if (offset > 0) {
-            var props = this.getHorizontalScrollProperties();
-            if (props.startX + offset + props.scrollSize > props.scrollLength)
-                offset = props.scrollLength - props.startX - props.scrollSize;
+            if (this.documentTopLeft[0] + offset > this.sectionProperties.xMax)
+				offset = this.sectionProperties.xMax - this.documentTopLeft[0];
             if (offset < 0)
                 go = false;
 		}
