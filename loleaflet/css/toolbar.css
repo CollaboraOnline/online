@@ -412,6 +412,13 @@ button.leaflet-control-search-next
 	font-family: var(--loleaflet-font);
 	font-size: 12px;
 }
+.select2-container--default .select2-selection--single,
+.sidebar.jsdialog.ui-listbox {
+	background-color: var(--gray-lighter-bg-color);
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+	line-height: 24px;
+}
 .styles-select {
 	width: 150px !important;
 }
