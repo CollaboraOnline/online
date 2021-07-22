@@ -2914,6 +2914,7 @@ private:
         httpResponse.setBody(xml, "text/xml");
         httpResponse.set("Last-Modified", Util::getHttpTimeNow());
         httpResponse.set("X-Content-Type-Options", "nosniff");
+        LOG_TRC("Sending back discovery.xml: " << xml);
         socket->sendAndShutdown(httpResponse);
         LOG_INF("Sent discovery.xml successfully.");
     }
@@ -4448,14 +4449,14 @@ void LOOLWSD::cleanup()
         JWTAuth::cleanup();
 
 #if ENABLE_SSL
-        // Finally, we no longer need SSL.
-        if (LOOLWSD::isSSLEnabled())
-        {
-            Poco::Net::uninitializeSSL();
-            Poco::Crypto::uninitializeCrypto();
-            ssl::Manager::uninitializeClientContext();
-            ssl::Manager::uninitializeServerContext();
-        }
+    // Finally, we no longer need SSL.
+    if (LOOLWSD::isSSLEnabled())
+    {
+        Poco::Net::uninitializeSSL();
+        Poco::Crypto::uninitializeCrypto();
+        ssl::Manager::uninitializeClientContext();
+        ssl::Manager::uninitializeServerContext();
+    }
 #endif
 #endif
 
