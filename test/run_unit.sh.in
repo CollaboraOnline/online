@@ -19,6 +19,11 @@ jails_path="@JAILS_PATH@"
 lo_path="@LO_PATH@"
 valgrind_cmd="valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes"
 verbose=''
+capabilities="@ENABLE_SETCAP@"
+
+if test "h$capabilities" != "htrue"; then
+    capabilities=false
+fi
 
 # Note that these options are used by commands in the Makefile that
 # Automake generates. Don't be mislead by 'git grep' not showing any
