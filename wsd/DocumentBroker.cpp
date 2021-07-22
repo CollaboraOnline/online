@@ -488,7 +488,7 @@ void DocumentBroker::pollThread()
 #endif
         if (_sessions.empty() && (isLoaded() || _docState.isMarkedToDestroy()))
         {
-            if (isAsyncSaveInProgress())
+            if (_saveManager.isSaving() || isAsyncSaveInProgress())
             {
                 LOG_DBG("Don't terminate dead DocumentBroker: async saving in progress for docKey [" << getDocKey() << "].");
                 continue;
@@ -1105,7 +1105,8 @@ bool DocumentBroker::attemptLock(const ClientSession& session, std::string& fail
 DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
 {
     // When destroying, we might have to force uploading if always_save_on_exit=true.
-    if (isMarkedToDestroy())
+    // If unloadRequested is set, assume we will unload after uploading and exit.
+    if (isMarkedToDestroy() || _docState.isUnloadRequested())
     {
         static const bool always_save
             = LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
@@ -1559,6 +1560,13 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
 
         broadcastLastModificationTime();
 
+        if (_docState.isUnloadRequested())
+        {
+            // We just uploaded, flag to destroy if unload is requested.
+            _docState.markToDestroy();
+            LOG_TRC("Unload requested after uploading, marking to destroy.");
+        }
+
         // If marked to destroy, then this was the last session.
         if (_docState.isMarkedToDestroy() || _sessions.empty())
         {
@@ -1962,11 +1970,7 @@ std::size_t DocumentBroker::removeSession(const std::string& id)
         }
         std::shared_ptr<ClientSession> session = it->second;
 
-        // Last view going away, can destroy.
-        if (_sessions.size() <= 1)
-            _docState.markToDestroy();
-        else
-            assert(!_docState.isMarkedToDestroy());
+        const bool isLastSession = (_sessions.size() == 1);
 
         const bool lastEditableSession = (!session->isReadOnly() || session->isAllowChangeComments()) && !haveAnotherEditableSession(id);
         static const bool dontSaveIfUnmodified = !LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
@@ -2003,6 +2007,28 @@ std::size_t DocumentBroker::removeSession(const std::string& id)
         // If last editable, save and don't remove until after uploading to storage.
         if (!lastEditableSession || !autoSave(isPossiblyModified(), dontSaveIfUnmodified))
             disconnectSessionInternal(id);
+
+        // Last view going away; can destroy?
+        if (isLastSession)
+        {
+            if (_saveManager.isSaving() || isAsyncSaveInProgress())
+            {
+                // Don't destroy just yet, wait until save and upload are done.
+                // Notice that the save and/or upload could have been triggered
+                // earlier, and not necessarily here when removing this last session.
+                _docState.setUnloadRequested();
+                LOG_DBG("Removing last session and will unload after saving. Setting "
+                        "UnloadRequested flag.");
+            }
+            else if (_sessions.empty())
+            {
+                // Nothing to save, and we were the last.
+                _docState.markToDestroy();
+                LOG_DBG("No more sessions after removing last. Setting MarkToDestroy flag.");
+            }
+        }
+        else
+            assert(!_docState.isMarkedToDestroy());
     }
     catch (const std::exception& ex)
     {
@@ -2026,6 +2052,16 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
 #if !MOBILEAPP
             LOOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
 #endif
+
+            if (_docState.isUnloadRequested())
+            {
+                // We must be the last session, flag to destroy if unload is requested.
+                assert(_sessions.size() == 1 && "Unload-requested with multiple sessions.");
+                _docState.markToDestroy();
+                LOG_TRC("Unload requested while disconnecting session ["
+                        << id << "], having " << _sessions.size()
+                        << " sessions, marking to destroy.");
+            }
 
             LOG_TRC("Disconnect session internal " << id <<
                     " destroy? " << _docState.isMarkedToDestroy() <<
@@ -2137,6 +2173,9 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
 {
     try
     {
+        _docState.resetUnloadRequested(); // We can't unload, if it was requested.
+        LOG_TRC("Creating new session. Resetting UnloadRequested flag.");
+
         // Now we have a DocumentBroker and we're ready to process client commands.
         if (ws)
         {
@@ -3197,6 +3236,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  doc activity: " << DocumentState::toString(_docState.activity());
     if (_docState.activity() == DocumentState::Activity::Rename)
         os << "\n  (new name: " << _renameFilename << ')';
+    os << "\n  unload requested: " << _docState.isUnloadRequested();
     os << "\n  last saved: " << Util::getSteadyClockAsString(_storageManager.getLastUploadTime());
     os << "\n  last save request: "
        << Util::getSteadyClockAsString(_saveManager.lastSaveRequestTime());
