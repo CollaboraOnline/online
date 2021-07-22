@@ -53,7 +53,7 @@ class ChildProcess : public WSProcess
 {
 public:
     /// @param pid is the process ID of the child.
-    /// @param socket is the underlying Socket to the child.
+    /// @param socket is the underlying Sockeet to the child.
     ChildProcess(const pid_t pid,
                  const std::string& jailId,
                  const std::shared_ptr<StreamSocket>& socket,
@@ -980,6 +980,7 @@ private:
             , _activity(Activity::None)
             , _closeRequested(false)
             , _loaded(false)
+            , _unloadRequested(false)
             , _interactive(false)
         {
         }
@@ -1028,11 +1029,17 @@ private:
         void setInteractive(bool value) { _interactive = value; }
         bool isInteractive() const { return _interactive; }
 
+        /// Flag to unload the document. May be reset when a new view is opened.
+        void setUnloadRequested() { _unloadRequested = true; }
+        void resetUnloadRequested() { _unloadRequested = false; }
+        bool isUnloadRequested() const { return _unloadRequested; }
+
     private:
         Status _status;
         Activity _activity;
         std::atomic<bool> _closeRequested; //< Owner-Termination flag.
         std::atomic<bool> _loaded; //< If the document ever loaded (check isLive to see if it still is).
+        std::atomic<bool> _unloadRequested; //< Unload-Requested flag, which may be reset.
         bool _interactive; //< If the document has interactive dialogs before load
     };
 
