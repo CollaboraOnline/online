@@ -2249,7 +2249,10 @@ private:
         {
             std::unique_lock<std::mutex> lock = docBroker->getLock();
             docBroker->assertCorrectThread();
-            docBroker->stop("docisdisconnected");
+            if (docBroker->isAsyncSaveInProgress())
+                LOG_DBG("Don't stop DocumentBroker on disconnect: async saving in progress.");
+            else
+                docBroker->stop("docisdisconnected");
         }
     }
 

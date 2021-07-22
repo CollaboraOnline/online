@@ -327,6 +327,8 @@ public:
     /// and receives save notification. Otherwise, false.
     bool autoSave(const bool force, const bool dontSaveIfUnmodified = true);
 
+    bool isAsyncSaveInProgress() const;
+
     Poco::URI getPublicUri() const { return _uriPublic; }
     const std::string& getJailId() const { return _jailId; }
     const std::string& getDocKey() const { return _docKey; }
