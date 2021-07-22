@@ -482,6 +482,12 @@ void DocumentBroker::pollThread()
 #endif
         if (_sessions.empty() && (isLoaded() || _docState.isMarkedToDestroy()))
         {
+            if (isAsyncSaveInProgress())
+            {
+                LOG_DBG("Don't terminate dead DocumentBroker: async saving in progress for docKey [" << getDocKey() << "].");
+                continue;
+            }
+
             // If all sessions have been removed, no reason to linger.
             LOG_INF("Terminating dead DocumentBroker for docKey [" << getDocKey() << "].");
             stop("dead");
@@ -3096,6 +3102,16 @@ void DocumentBroker::dumpState(std::ostream& os)
             proxy->dumpProxyState(os);
     }
 #endif
+}
+
+bool DocumentBroker::isAsyncSaveInProgress() const
+{
+    if (!_storage)
+        return false;
+
+    StorageBase::AsyncUpload::State state = _storage->queryLocalFileToStorageAsyncUploadState().state();
+
+    return state == StorageBase::AsyncUpload::State::Running;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
