@@ -684,6 +684,10 @@ app.definitions.Socket = L.Class.extend({
 					showMsgAndReload = true;
 				}
 			}
+			else if (textMsg.startsWith('reloadafterrename')) {
+				msg = _('Reloading the document after rename');
+				showMsgAndReload = true;
+			}
 
 			if (showMsgAndReload) {
 				if (this._map._docLayer) {
@@ -1103,7 +1107,6 @@ app.definitions.Socket = L.Class.extend({
 	_renameOrSaveAsCallback: function(textMsg, command) {
 		this._map.hideBusy();
 		if (command !== undefined && command.url !== undefined && command.url !== '') {
-			this.close();
 			var url = command.url;
 			var accessToken = this._getParameterByName(url, 'access_token');
 			var accessTokenTtl = this._getParameterByName(url, 'access_token_ttl');
@@ -1127,19 +1130,6 @@ app.definitions.Socket = L.Class.extend({
 			var docUrl = url.split('?')[0];
 			this._map.options.doc = docUrl;
 			this._map.options.previousWopiSrc = this._map.options.wopiSrc; // After save-as op, we may connect to another server, then code will think that server has restarted. In this case, we don't want to reload the page (detect the file name is different).
-			this._map.options.wopiSrc = encodeURIComponent(docUrl);
-			window.wopiSrc = this._map.options.wopiSrc;
-			window.docURL = this._map.options.doc;
-
-			// if this is save-as, we need to load the document with edit permission
-			// otherwise the user has to close the doc then re-open it again
-			// in order to be able to edit.
-			if (textMsg.startsWith('saveas:'))
-				this._map.options.permission = 'edit';
-			this._map.loadDocument();
-			this._map.sendInitUNOCommands();
-
-
 			if (textMsg.startsWith('renamefile:')) {
 				this._map.fire('postMessage', {
 					msgId: 'File_Rename',
@@ -1148,6 +1138,13 @@ app.definitions.Socket = L.Class.extend({
 					}
 				});
 			} else if (textMsg.startsWith('saveas:')) {
+				// if this is save-as, we need to load the document with edit permission
+				// otherwise the user has to close the doc then re-open it again
+				// in order to be able to edit.
+				this._map.options.permission = 'edit';
+				this.close();
+				this._map.loadDocument();
+				this._map.sendInitUNOCommands();
 				this._map.fire('postMessage', {
 					msgId: 'Action_Save_Resp',
 					args: {
