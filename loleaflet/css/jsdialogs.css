@@ -346,7 +346,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 .ui-listbox-arrow {
 	content: '';
-	background: url('images/jquery-ui-lightness/ui-icons_222222_256x240.png') no-repeat #F1F1F1;
+	background: url('images/jquery-ui-lightness/ui-icons_222222_256x240.png') no-repeat transparent;
 	background-position: -67px -18px;
 	display: inline-block;
 	width: 11px;
