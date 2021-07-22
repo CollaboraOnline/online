@@ -1514,10 +1514,10 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
             std::string encodedName;
             Poco::URI::encode(filename, "", encodedName);
             const std::string filenameAnonym = LOOLWSD::anonymizeUrl(filename);
-
             std::ostringstream oss;
             oss << "renamefile: " << "filename=" << encodedName << " url=" << url;
             broadcastMessage(oss.str());
+            broadcastMessage("close: reloadafterrename");
         }
         else
         {
