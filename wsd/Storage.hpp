@@ -626,6 +626,14 @@ public:
     /// Total time taken for making WOPI calls during saving.
     std::chrono::milliseconds getWopiSaveDuration() const { return _wopiSaveDuration; }
 
+    virtual AsyncUpload queryLocalFileToStorageAsyncUploadState() override
+    {
+        if (_uploadHttpSession)
+            return AsyncUpload(AsyncUpload::State::Running, UploadResult(UploadResult::Result::OK));
+        else
+            return AsyncUpload(AsyncUpload::State::None, UploadResult(UploadResult::Result::OK));
+    }
+
 protected:
     struct WopiUploadDetails
     {
