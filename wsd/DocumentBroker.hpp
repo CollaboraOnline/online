@@ -975,6 +975,7 @@ private:
             , _activity(Activity::None)
             , _closeRequested(false)
             , _loaded(false)
+            , _unloadRequested(false)
         {
         }
 
@@ -1019,11 +1020,17 @@ private:
         void setCloseRequested() { _closeRequested = true; }
         bool isCloseRequested() const { return _closeRequested; }
 
+        /// Flag to unload the document. May be reset when a new view is opened.
+        void setUnloadRequested() { _unloadRequested = true; }
+        void resetUnloadRequested() { _unloadRequested = false; }
+        bool isUnloadRequested() const { return _unloadRequested; }
+
     private:
         Status _status;
         Activity _activity;
         std::atomic<bool> _closeRequested; //< Owner-Termination flag.
         std::atomic<bool> _loaded; //< If the document ever loaded (check isLive to see if it still is).
+        std::atomic<bool> _unloadRequested; //< Unload-Requested flag, which may be reset.
     };
 
     /// Transition to a given activity. Returns false if an activity exists.
