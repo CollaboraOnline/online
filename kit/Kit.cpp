@@ -1951,6 +1951,11 @@ public:
         return _tileQueue && !_tileQueue->isEmpty();
     }
 
+    bool isLoading() const
+    {
+        return _isLoading;
+    }
+
     void drainQueue(const std::chrono::steady_clock::time_point &/*now*/)
     {
         try
@@ -2251,7 +2256,7 @@ public:
     {
 //      SigUtil::checkDumpGlobalState(dump_kit_state); - disable for now.
 
-        if (_document)
+        if (_document && !_document->isLoading())
             _document->drainQueue(now);
     }
 
