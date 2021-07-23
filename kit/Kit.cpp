@@ -1567,6 +1567,11 @@ public:
         ProcessToIdleDeadline = std::chrono::steady_clock::now() - std::chrono::milliseconds(10);
     }
 
+    bool isLoading() const
+    {
+        return _isLoading;
+    }
+
     void drainQueue()
     {
         try
@@ -2008,7 +2013,7 @@ public:
     {
         SigUtil::checkDumpGlobalState(dump_kit_state);
 
-        if (_document)
+        if (_document && !_document->isLoading())
             _document->drainQueue();
     }
 
