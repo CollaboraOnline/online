@@ -140,6 +140,16 @@ L.Clipboard = L.Class.extend({
 		));
 	},
 
+	// used for DisableCopy mode to fill the clipboard
+	_getDisabledCopyStubHtml: function() {
+		var lang = 'en_US'; // FIXME: l10n
+		return this._substProductName(this._originWrapBody(
+		    '  <body lang="' + lang + '" dir="ltr">\n' +
+		    '    <p>' + _('Copying from the document disabled') + '</p>\n' +
+		    '  </body>\n', true
+		));
+	},
+
 	_getMetaOrigin: function (html) {
 		var match = '<meta name="origin" content="';
 		var start = html.indexOf(match);
@@ -712,7 +722,22 @@ L.Clipboard = L.Class.extend({
 		if (this._downloadProgressStatus() === 'downloadButton')
 			this._stopHideDownload(); // Terminate pending confirmation
 
-		var preventDefault = this._map['wopi'].DisableCopy === true ? true : this.populateClipboard(ev);
+		var preventDefault = true;
+
+		if (this._map['wopi'].DisableCopy === true)
+		{
+			var text = this._getDisabledCopyStubHtml();
+			var plainText = this.stripHTML(text);
+			if (ev.clipboardData) {
+				console.log('Copying disabled: put stub message on the clipboard');
+				ev.clipboardData.setData('text/plain', plainText ? plainText: ' ');
+				ev.clipboardData.setData('text/html', text);
+				this._clipboardSerial++;
+			}
+		} else {
+			preventDefault = this.populateClipboard(ev);
+		}
+
 		app.socket.sendMessage('uno .uno:' + unoName);
 		if (preventDefault) {
 			ev.preventDefault();
