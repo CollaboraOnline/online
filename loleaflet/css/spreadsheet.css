@@ -20,15 +20,15 @@
 }
 
 .spreadsheet-tab {
-	margin: 0 8px 0 0 !important;
-	padding: 4px 9px 2px !important;
+	margin: 5px 4px 0px 0px !important;
+	padding: 6px 9px 4px !important;
 	text-decoration: none;
 
 	font: 12px/1.5 var(--loleaflet-font);
 	display: inline-block;
-	border: 1px solid rgba(var(--green0-txt-primary-color),0.3);
-	background-color: rgba(var(--green0-txt-primary-color),0.1);
-	color: black;
+	border: 1px solid darkgrey;
+	background-color: lightgrey;
+	color: var(--gray-light-txt--color);
 }
 
 .spreadsheet-tab.spreadsheet-tab-selected {
@@ -36,8 +36,8 @@
 	color: black !important;
 	padding-top: 12px !important;
 	padding-bottom: 5px;
-	border: 1px solid rgba(var(--green0-txt-primary-color),0.5);
-	border-top: 0px;
+	margin-top: 2px;
+	border: 1px solid #dfdfdf;
 }
 
 #first-tab-drop-site {
