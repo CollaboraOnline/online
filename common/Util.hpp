@@ -1168,6 +1168,26 @@ int main(int argc, char**argv)
     /// conversion from steady_clock for debugging / tracing
     std::string getSteadyClockAsString(const std::chrono::steady_clock::time_point &time);
 
+    /// Automatically execute code at end of current scope.
+    /// Used for exception-safe code.
+    class ScopeGuard
+    {
+    public:
+        template <typename T>
+        explicit ScopeGuard(T const &func) : m_func(func) {}
+
+        ~ScopeGuard()
+        {
+            if (m_func)
+                m_func();
+        }
+    private:
+        ScopeGuard(const ScopeGuard &) = delete;
+        ScopeGuard &operator=(const ScopeGuard &) = delete;
+
+        std::function<void()> m_func;
+    };
+
     /**
      * Avoid using the configuration layer and rely on defaults which is only useful for special
      * test tool targets (typically fuzzing) where start-up speed is critical.
