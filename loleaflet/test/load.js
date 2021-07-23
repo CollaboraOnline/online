@@ -40,6 +40,16 @@ let typing_duration = 5000;
 if (process.argv.length > 8) {
 	typing_duration = parseInt(process.argv[8]);
 }
+
+let record_stats = false;
+if (process.argv.length > 9) {
+	record_stats = process.argv[9] === 'true';
+}
+
+let single_view = false;
+if (process.argv.length > 10) {
+	single_view = process.argv[10] === 'true';
+}
 // jsdom for browser emulation
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
@@ -110,6 +120,47 @@ function sleep(ms)
 	return new Promise(r => setTimeout(r, ms));
 }
 var docLoaded = false;
+window.perfTests = record_stats;
+processedTiles = [];
+
+function dumpStats() {
+	let len = processedTiles.length;
+	let skipFirst = Math.floor(len * 0.1);
+	let delays = [];
+	const bucketCount = 10;
+	let buckets = new Array(bucketCount).fill(0);
+	const bucketSize = 20;
+	for (let i = skipFirst; i < len; ++i) {
+		let delay = processedTiles[i] - processedTiles[i-1];
+		delays.push(delay);
+		buckets[Math.min(Math.trunc(delay / bucketSize), bucketCount-1)]++;
+	}
+	let output = '';
+	let now = new Date();
+	output += now.getTime() + '\n';
+	output += now.toUTCString() + '\n';
+	let delayList = `Delay list=${delays.join()}`;
+	output += delayList;
+	output += '\n';
+	for (var i = 0; i < bucketCount; i++) {
+		if (i == bucketCount - 1)
+			output += `>${i * 20}ms     \t=${buckets[i]} elements\n`;
+		else
+			output += `${i * 20}-${(i+1)*20}ms     \t=${buckets[i]} elements\n`;
+	}
+	output += '\n';
+	output += `Bucket count=${buckets.length}\n`;
+	output += `Bucket size=${bucketSize}ms\n`;
+	output += `Num of samples=${delays.length}\n`;
+	output += `Delay between each event=${typing_speed}ms\n`;
+	output += `Duration=${typing_duration}ms\n`;
+	output += `Single view=${single_view}\n`;
+	fs.writeFile(top_builddir + '/loleaflet/test/tilestats.txt', output, function (err) {
+		if (err) console.log('tilestats: error dumping stats to file!', err);
+		else console.log('tilestats: finished dumping the stats to file!');
+	});
+}
+
 window.onload = function() {
 	console.debug('socket ' + window.socket);
 	map = window.socket._map;
@@ -150,6 +201,11 @@ window.onload = function() {
 				map.focus();
 				let timeStart = new Date().getTime();
 				let inputIndex = 0;
+				if (record_stats) {
+					console.log('tilestats: recording tile delays starting in one second..');
+					await sleep(1000);
+					console.log('tilestats: recording started..');
+				}
 				while (true) {
 					let now = new Date().getTime();
 					if (timeStart + typing_duration < now)
@@ -163,9 +219,19 @@ window.onload = function() {
 					inputIndex = (inputIndex + 1) % dummyInput.length;
 					await sleep(typing_speed);
 				}
+				if (record_stats) {
+					console.log('tilestats: recording ended..');
+					record_stats = false;
+					dumpStats();
+				}
 			}
 			else
 				console.debug('No bookmark to jump to');
 		}, 500);
+	});
+	map.on('tilearrived', () => {
+		if (record_stats) {
+			processedTiles.push(new Date().getTime());
+		}
 	});
 };
