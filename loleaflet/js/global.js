@@ -23,7 +23,10 @@ window.app = { // Shouldn't have any functions defined.
 				},
 				visible: false,
 			}
-		}
+		},
+		writer: {
+			pageRectangleList: [] // Array of arrays: [x, y, w, h] (as usual) // twips only. Pixels will be calculated on the fly. Corresponding pixels may change too ofte
+		},
 	},
 	view: {
 		size: {

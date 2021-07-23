@@ -132,6 +132,16 @@ namespace LOKitHelper
             }
         }
 
+        if (type == LOK_DOCTYPE_TEXT)
+        {
+            std::string rectangles = loKitDocument->pClass->getPartPageRectangles(loKitDocument);
+
+            std::string::iterator end_pos = std::remove(rectangles.begin(), rectangles.end(), ' ');
+            rectangles.erase(end_pos, rectangles.end());
+
+            oss << " pagerectangles=" << rectangles.c_str();
+        }
+
         return oss.str();
     }
 }
