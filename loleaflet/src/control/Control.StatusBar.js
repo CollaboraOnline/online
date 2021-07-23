@@ -185,7 +185,7 @@ L.Control.StatusBar = L.Control.extend({
 				name: 'actionbar',
 				items: [
 					{type: 'html',  id: 'search',
-					html: '<div style="padding: 3px 5px 3px 10px;" class="loleaflet-font">' +
+					html: '<div style="padding: 3px 5px 4px 10px;" class="loleaflet-font">' +
 					'<label for="search-input" class="visuallyhidden" aria-hidden="false">Search:</label>' +
 					'<input size="15" id="search-input" placeholder="' + _('Search') + '"' +
 					'style="padding: 3px; border-radius: 2px; border: 1px solid silver"/>' +
