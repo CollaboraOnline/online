@@ -1536,6 +1536,13 @@ app.definitions.Socket = L.Class.extend({
 			else if (tokens[i].substring(0, 9) === 'username=') {
 				command.username = tokens[i].substring(9);
 			}
+			else if (tokens[i].startsWith('pagerectangles=')) {
+				command.pageRectangleList = tokens[i].substring(15).split(';');
+				command.pageRectangleList = command.pageRectangleList.map(function(element) {
+					element = element.split(',');
+					return [parseInt(element[0]), parseInt(element[1]), parseInt(element[2]), parseInt(element[3])];
+				});
+			}
 		}
 		if (command.tileWidth && command.tileHeight && this._map._docLayer) {
 			var defaultZoom = this._map.options.zoom;

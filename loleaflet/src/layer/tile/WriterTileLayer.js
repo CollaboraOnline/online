@@ -151,6 +151,7 @@ L.WriterTileLayer = L.CanvasTileLayer.extend({
 		this._parts = 1;
 		this._currentPage = command.selectedPart;
 		this._pages = command.parts;
+		app.file.writer.pageRectangleList = command.pageRectangleList.slice(); // Copy the array.
 		this._map.fire('pagenumberchanged', {
 			currentPage: this._currentPage,
 			pages: this._pages,
