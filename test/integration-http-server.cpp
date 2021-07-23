@@ -59,6 +59,12 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     void testConvertToWithForwardedIP_Allow();
     void testConvertToWithForwardedIP_DenyMulti();
 
+protected:
+    void assertHTTPFilesExist(const Poco::URI& uri,
+                              Poco::RegularExpression& expr,
+                              const std::string& html,
+                              const std::string& mimetype = std::string());
+
 public:
     HTTPServerTest()
         : _uri(helpers::getTestServerURI())
@@ -151,10 +157,7 @@ void HTTPServerTest::testLoleafletPost()
     LOK_ASSERT(html.find(_uri.getHost()) != std::string::npos);
 }
 
-namespace
-{
-
-void assertHTTPFilesExist(const Poco::URI& uri, Poco::RegularExpression& expr, const std::string& html, const std::string& mimetype = std::string())
+void HTTPServerTest::assertHTTPFilesExist(const Poco::URI& uri, Poco::RegularExpression& expr, const std::string& html, const std::string& mimetype)
 {
     Poco::RegularExpression::MatchVec matches;
     bool found = false;
@@ -187,8 +190,6 @@ void assertHTTPFilesExist(const Poco::URI& uri, Poco::RegularExpression& expr, c
     }
 
     LOK_ASSERT_MESSAGE("No match found", found);
-}
-
 }
 
 void HTTPServerTest::testScriptsAndLinksGet()
