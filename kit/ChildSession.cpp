@@ -56,7 +56,8 @@ using Poco::URI;
 using namespace LOOLProtocol;
 
 bool ChildSession::NoCapsForKit = false;
-UnoCommandsRecorder ChildSession::unoCommandsRecorder;
+int ChildSession::CurrentPos = 0;
+std::shared_ptr<UnoCommandsRecorder>ChildSession::UnoCommandsRecorders[ChildSession::NUM_UNO_RECORDERS];
 
 namespace {
 
@@ -86,7 +87,7 @@ std::string formatUnoCommandInfo(const std::string& sessionId, const std::string
     unoCommandInfo.push_back(')');
     unoCommandInfo.append(" : ");
     unoCommandInfo.append(Util::eliminatePrefix(unoCommand,".uno:"));
-    unoCommandInfo.append(" - ");
+    unoCommandInfo.append("\t-\t");
     unoCommandInfo.append(recorded_time);
     unoCommandInfo.push_back('\n');
 
@@ -109,6 +110,8 @@ ChildSession::ChildSession(
     _isDocLoaded(false),
     _copyToClipboard(false)
 {
+    unoCommandsRecorder = std::make_shared<UnoCommandsRecorder>();
+    registerUnoCommandsRecorder(unoCommandsRecorder);
     SigUtil::registerUnoCommandInfoHandler(&ChildSession::dumpRecordedUnoCommands);
     LOG_INF("ChildSession ctor [" << getName() << "]. JailRoot: [" << _jailRoot << "].");
 }
@@ -868,44 +871,54 @@ bool ChildSession::getStatus(const char* /*buffer*/, int /*length*/)
 
 void ChildSession::dumpRecordedUnoCommands()
 {
-    std::atomic<char*>* recordedCommands = unoCommandsRecorder.getRecordedCommands();
+    // Clean formatiing around the unoCommand dump to see the commands distinct and clear
+    Log::signalLog("\n------------------------------\n");
 
-    for (int i = 0; i < unoCommandsRecorder.NUM_UNO_COMMANDS; i++)
+    for (auto& unoCommandRecorder : UnoCommandsRecorders)
     {
-        // Set the slot to null to prevent other threads from deleting
-        // the command in future( while recording new command)
-        char * unoCommandInfo = recordedCommands[i].exchange(nullptr);
-
-        // If the slot is already empty or signal handlers reentry
-        if(unoCommandInfo != nullptr)
-            Log::signalLog(unoCommandInfo);
+        if (unoCommandRecorder != nullptr)
+        {
+            UnoCommandsRecorder::UnoCommands& unoCommands = unoCommandRecorder->getRecordedCommands();
+            for (auto& unoCommand : unoCommands)
+            {
+                if (unoCommand != nullptr)
+                    Log::signalLog(unoCommand);
+            }
+            Log::signalLog("\n------------------------------\n");
+        }
     }
 }
+
+void ChildSession::registerUnoCommandsRecorder(std::shared_ptr<UnoCommandsRecorder> recorder)
+{
+    UnoCommandsRecorders[CurrentPos] = recorder;
+    CurrentPos = (CurrentPos+1) % NUM_UNO_RECORDERS;
+}
+
 
 UnoCommandsRecorder::UnoCommandsRecorder() :
     _currentpos(0)
 {
     for (int i = 0; i < NUM_UNO_COMMANDS; i++)
     {
-        _unocommands[i].store(nullptr);
+        _unocommands[i] = nullptr;
     }
 }
 
 void UnoCommandsRecorder::addUnoCommandInfo(const std::string& unoCommandInfo)
 {
-    // Create a new C string on heap with the contents of unoCommandInfo
-    char* command = new char[unoCommandInfo.length()+1];
-    strncpy(command, unoCommandInfo.c_str(), unoCommandInfo.length()+1);
+    char* newCommand = strdup(unoCommandInfo.c_str());
 
-    unsigned long long currentIndex = _currentpos.fetch_add(1);
+    char* oldCommand = _unocommands[_currentpos];
 
-    char* oldCommand = _unocommands[currentIndex % NUM_UNO_COMMANDS].exchange(command);
+    _unocommands[_currentpos] = newCommand;
 
-    delete[] oldCommand;
+    _currentpos = (_currentpos + 1) % NUM_UNO_COMMANDS;
 
+    free(oldCommand);
 }
 
-std::atomic<char*>* UnoCommandsRecorder::getRecordedCommands()
+UnoCommandsRecorder::UnoCommands& UnoCommandsRecorder::getRecordedCommands()
 {
     return _unocommands;
 }
@@ -1680,7 +1693,7 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const Stri
         return false;
     }
 
-    unoCommandsRecorder.addUnoCommandInfo(formatUnoCommandInfo(getId(), tokens[1]));
+    unoCommandsRecorder->addUnoCommandInfo(formatUnoCommandInfo(getId(), tokens[1]));
 
     // we need to get LOK_CALLBACK_UNO_COMMAND_RESULT callback when saving
     const bool bNotify = (tokens[1] == ".uno:Save" ||

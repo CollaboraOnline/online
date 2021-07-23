@@ -188,18 +188,20 @@ public:
 
 class UnoCommandsRecorder
 {
-public:
     static const int NUM_UNO_COMMANDS = 4;
+
+public:
+
+    typedef char* UnoCommands[NUM_UNO_COMMANDS];
 
     UnoCommandsRecorder();
 
     void addUnoCommandInfo(const std::string& unoCommandInfo);
-    std::atomic<char*>* getRecordedCommands();
+    UnoCommands& getRecordedCommands();
 
 private:
-    std::atomic<char*> _unocommands[NUM_UNO_COMMANDS];
-    std::atomic<unsigned long long> _currentpos;
-
+    UnoCommands _unocommands;
+    std::size_t _currentpos;
 };
 
 /// Represents a session to the WSD process, in a Kit process. Note that this is not a singleton.
@@ -329,6 +331,7 @@ private:
     virtual bool _handleInput(const char* buffer, int length) override;
 
     static void dumpRecordedUnoCommands();
+    void registerUnoCommandsRecorder(std::shared_ptr<UnoCommandsRecorder> recorder);
 
     std::shared_ptr<lok::Document> getLOKitDocument() const
     {
@@ -384,7 +387,12 @@ private:
 
     std::vector<uint64_t> _pixmapCache;
 
-    static UnoCommandsRecorder unoCommandsRecorder;
+    std::shared_ptr<UnoCommandsRecorder> unoCommandsRecorder;
+
+    // Bookeeping of last n uno commands of ChildSessions
+    static const int NUM_UNO_RECORDERS = 50;
+    static int CurrentPos;
+    static std::shared_ptr<UnoCommandsRecorder> UnoCommandsRecorders[NUM_UNO_RECORDERS];
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
