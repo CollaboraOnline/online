@@ -10,6 +10,7 @@ const typing_speed = process.argv[5];
 const single_view = process.argv[6];
 const typing_duration = process.argv[7];
 const inspect = process.argv[8];
+const recordStats = process.argv[9];
 /* dont use the default port (9980)*/
 const port = '9999';
 let args = [
@@ -52,12 +53,12 @@ let execArgs = [];
 if (inspect === 'true')
 	execArgs.push('--inspect');
 childNodes.push(
-	fork(`${srcdir}/test/load.js`, [ssl_flag, top_builddir, `${top_builddir}/test/data/perf-test-edit.odt`, `testEdit_1`, `${port}`, `${typing_speed}`, `${typing_duration}`], {execArgv: execArgs})
+	fork(`${srcdir}/test/load.js`, [ssl_flag, top_builddir, `${top_builddir}/test/data/perf-test-edit.odt`, `testEdit_1`, `${port}`, `${typing_speed}`, `${typing_duration}`, `${recordStats}`, `${single_view}`], {execArgv: execArgs})
 );
 if(single_view !== "true") {
 	for (let i = 2; i <= 6; i++) {
 		childNodes.push(
-			fork(`${srcdir}/test/load.js`, [ssl_flag, top_builddir, `${top_builddir}/test/data/perf-test-edit.odt`, `testEdit_${i}`, `${port}`, `${typing_speed}`, `${typing_duration}`])
+			fork(`${srcdir}/test/load.js`, [ssl_flag, top_builddir, `${top_builddir}/test/data/perf-test-edit.odt`, `testEdit_${i}`, `${port}`, `${typing_speed}`, `${typing_duration}`, 'false', 'false'])
 		);
 	}
 }

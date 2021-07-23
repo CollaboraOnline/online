@@ -1432,6 +1432,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		// 'tile:' is the most common message type; keep this the first.
 		if (textMsg.startsWith('tile:')) {
 			this._onTileMsg(textMsg, img);
+			if (window.perfTests) {
+				this._map.fire('tilearrived');
+			}
 		}
 		else if (textMsg.startsWith('commandvalues:')) {
 			this._onCommandValuesMsg(textMsg);

@@ -732,6 +732,9 @@ typing_duration=30000
 single_view="false"
 # --inspect flag for the first view. Ideally should be used with single_view=true
 node_inspect="false"
+# Record tile stats and dump it into the file "test/tilestats.txt"
+# Pipe it with | grep "tilestats"
+record_stats="false"
 perf-test:
 	@echo "Running perf tests..."
 	@mkdir -p $(abs_top_builddir)/test/data
@@ -739,6 +742,6 @@ perf-test:
 		echo 'Making fresh copy of the perf-test-edit.odt document'; \
 		cp $(abs_top_srcdir)/test/data/perf-test.odt $(abs_top_builddir)/test/data/perf-test-edit.odt; \
 	fi
-	$(NODE) $(abs_srcdir)/test/bootstrap.js $(SSL_FLAG) $(abs_top_builddir) $(abs_srcdir) $(typing_speed) $(single_view) $(typing_duration) $(node_inspect)
+	$(NODE) $(abs_srcdir)/test/bootstrap.js $(SSL_FLAG) $(abs_top_builddir) $(abs_srcdir) $(typing_speed) $(single_view) $(typing_duration) $(node_inspect) ${record_stats}
 # for now - unwinding ts and js deps for different targets is a real pain.
 .NOTPARALLEL:
