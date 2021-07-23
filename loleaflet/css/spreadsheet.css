@@ -7,7 +7,7 @@
 	width: 100%;
 	white-space: nowrap;
 	text-align: left;
-	background-color: var(--gray-light-bg-color);
+	background-color: transparent;
 	vertical-align: middle;
 }
 
@@ -20,15 +20,15 @@
 }
 
 .spreadsheet-tab {
-	margin: 5px 3px 0px 0px !important;
-	padding: 8px 9px 5px !important;
+	margin: 5px 4px 0px 0px !important;
+	padding: 6px 9px 4px !important;
 	text-decoration: none;
 
 	font: 12px/1.5 var(--loleaflet-font);
 	display: inline-block;
 	border: 1px solid darkgrey;
 	background-color: lightgrey;
-	color: black;
+	color: var(--gray-light-txt--color);
 }
 
 .spreadsheet-tab.spreadsheet-tab-selected {
@@ -38,7 +38,6 @@
 	padding-bottom: 5px;
 	margin-top: 2px;
 	border: 1px solid #dfdfdf;
-	border-top: 0px;
 }
 
 #first-tab-drop-site {
