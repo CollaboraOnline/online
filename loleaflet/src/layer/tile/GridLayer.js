@@ -368,9 +368,15 @@ L.GridLayer = L.Layer.extend({
 		var factor = Math.pow(1.2, (this._map.options.zoom - this._tileZoom));
 		this._tileWidthTwips = Math.round(this.options.tileWidthTwips * factor);
 		this._tileHeightTwips = Math.round(this.options.tileHeightTwips * factor);
+
 		app.tile.size.twips = [this._tileWidthTwips, this._tileHeightTwips];
+		app.tile.size.pixels = [this._tileSize ? this._tileSize: 256, this._tileSize ? this._tileSize: 256];
+
 		app.file.size.pixels = [Math.round(app.tile.size.pixels[0] * (app.file.size.twips[0] / app.tile.size.twips[0])), Math.round(app.tile.size.pixels[1] * (app.file.size.twips[1] / app.tile.size.twips[1]))];
 		app.view.size.pixels = app.file.size.pixels.slice();
+
+		app.twipsToPixels = app.tile.size.pixels[0] / app.tile.size.twips[0];
+		app.pixelsToTwips = app.tile.size.twips[0] / app.tile.size.pixels[0];
 	},
 
 	_updateMaxBounds: function (sizeChanged, options, zoom) {
@@ -472,7 +478,7 @@ L.GridLayer = L.Layer.extend({
 		    tileSize = this._tileSize = this._getTileSize(),
 		    tileZoom = this._tileZoom;
 
-		app.tile.size.pixels = [this._tileSize, this._tileSize];
+		app.tile.size.pixels = [this._tileSize ? this._tileSize: 256, this._tileSize ? this._tileSize: 256];
 		if (this._tileWidthTwips === undefined) {
 			this._tileWidthTwips = this.options.tileWidthTwips;
 			app.tile.size.twips[0] = this.options.tileWidthTwips;
@@ -481,6 +487,9 @@ L.GridLayer = L.Layer.extend({
 			this._tileHeightTwips = this.options.tileHeightTwips;
 			app.tile.size.twips[1] = this.options.tileHeightTwips;
 		}
+
+		app.twipsToPixels = app.tile.size.pixels[0] / app.tile.size.twips[0];
+		app.pixelsToTwips = app.tile.size.twips[0] / app.tile.size.pixels[0];
 
 		var bounds = this._map.getPixelWorldBounds(this._tileZoom);
 		if (bounds) {
