@@ -45,6 +45,10 @@ class TilesSection {
 
 		this.sectionProperties.docLayer = this.map._docLayer;
 		this.sectionProperties.tsManager = this.sectionProperties.docLayer._painter;
+		this.sectionProperties.pageBackgroundInnerMargin = 20; // In core pixels. We don't want backgrounds to have exact same borders with tiles for not making them visible when tiles are rendered.
+		this.sectionProperties.pageBackgroundBorderColor = 'lightgrey';
+		this.sectionProperties.pageBackgroundTextColor = 'grey';
+		this.sectionProperties.pageBackgroundFont = String(40 * app.roundedDpiScale) + 'px Arial';
 	}
 
 	public onInitialize () {
@@ -261,6 +265,57 @@ class TilesSection {
 		return allTilesLoaded;
 	}
 
+	private drawPageBackgroundWriter (ctx: any, rectangle: any, pageNumber: number) {
+		rectangle = [Math.round(rectangle[0] * app.twipsToPixels), Math.round(rectangle[1] * app.twipsToPixels), Math.round(rectangle[2] * app.twipsToPixels), Math.round(rectangle[3] * app.twipsToPixels)];
+
+		this.context.strokeRect(rectangle[0] - ctx.viewBounds.min.x + this.sectionProperties.pageBackgroundInnerMargin,
+								rectangle[1] - ctx.viewBounds.min.y + this.sectionProperties.pageBackgroundInnerMargin,
+								rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
+								rectangle[3] - this.sectionProperties.pageBackgroundInnerMargin);
+
+		this.context.fillText(String(pageNumber),
+								Math.round((2 * rectangle[0] + rectangle[2]) * 0.5) - ctx.viewBounds.min.x,
+								Math.round((2 * rectangle[1] + rectangle[3]) * 0.5) - ctx.viewBounds.min.y,
+								rectangle[2] * 0.4);
+	}
+
+	private drawPageBackgrounds (ctx: any) {
+		if (this.map._docLayer._docType !== 'text')
+			return; // For now, Writer only. This may change in the near future.
+
+		/* Note: Probably, Calc won't need this function but in case this is activated for Calc:
+				* If the font change of context affects Calc drawings (headers etc), then one should set the font there.
+				* Creating a temp variable like "oldFont" here is not a good solution in that case.
+		*/
+
+		if (!this.containerObject.getDocumentAnchorSection())
+			return;
+
+		this.context.fillStyle = this.sectionProperties.pageBackgroundTextColor;
+		this.context.strokeStyle = this.sectionProperties.pageBackgroundBorderColor;
+		this.context.lineWidth = app.roundedDpiScale;
+
+        this.context.font = this.sectionProperties.pageBackgroundFont;
+
+		if (this.map._docLayer._docType === 'text') {
+			var viewRectangleTwips = [this.documentTopLeft[0], this.documentTopLeft[1], this.containerObject.getDocumentAnchorSection().size[0], this.containerObject.getDocumentAnchorSection().size[1]];
+			viewRectangleTwips = viewRectangleTwips.map(function(element: number) {
+				return Math.round(element * app.pixelsToTwips);
+			});
+
+			for (var i: number = 0; i < app.file.writer.pageRectangleList.length; i++) {
+				var rectangle: any = app.file.writer.pageRectangleList[i];
+				if (
+					(rectangle[1] > viewRectangleTwips[1] && rectangle[1] < viewRectangleTwips[1] + viewRectangleTwips[3])
+					|| (rectangle[1] + rectangle[3] > viewRectangleTwips[1] && rectangle[1] + rectangle[3] < viewRectangleTwips[1] + viewRectangleTwips[3])
+					|| (rectangle[1] < viewRectangleTwips[1] && rectangle[1] + rectangle[3] > viewRectangleTwips[1] + viewRectangleTwips[3])
+					) {
+						this.drawPageBackgroundWriter(ctx, rectangle.slice(), i + 1);
+					}
+			}
+		}
+	}
+
 	public onDraw () {
 		if (this.containerObject.isInZoomAnimation())
 			return;
@@ -270,6 +325,8 @@ class TilesSection {
 
 		// Calculate all this here intead of doing it per tile.
 		var ctx = this.sectionProperties.tsManager._paintContext();
+
+		this.drawPageBackgrounds(ctx);
 
 		if (this.sectionProperties.tsManager.waitForTiles()) {
 			if (!this.haveAllTilesInView(zoom, part, ctx))
