@@ -1179,6 +1179,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		app.tile.size.twips = [this._tileWidthTwips, this._tileHeightTwips];
 		app.file.size.pixels = [Math.round(app.tile.size.pixels[0] * (app.file.size.twips[0] / app.tile.size.twips[0])), Math.round(app.tile.size.pixels[1] * (app.file.size.twips[1] / app.tile.size.twips[1]))];
 		app.view.size.pixels = app.file.size.pixels.slice();
+
+		app.twipsToPixels = app.tile.size.pixels[0] / app.tile.size.twips[0];
+		app.pixelsToTwips = app.tile.size.twips[0] / app.tile.size.pixels[0];
 	},
 
 	_checkSpreadSheetBounds: function (newZoom) {
@@ -1235,6 +1238,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._tileHeightTwips = this.options.tileHeightTwips;
 			app.tile.size.twips[1] = this.options.tileHeightTwips;
 		}
+
+		app.twipsToPixels = app.tile.size.pixels[0] / app.tile.size.twips[0];
+		app.pixelsToTwips = app.tile.size.twips[0] / app.tile.size.pixels[0];
 
 		var bounds = this._map.getPixelWorldBounds(this._tileZoom);
 		if (bounds) {

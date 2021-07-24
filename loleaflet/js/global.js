@@ -5,6 +5,8 @@ window.app = { // Shouldn't have any functions defined.
 	definitions: {}, // Class instances are created using definitions under this variable.
 	dpiScale: window.devicePixelRatio,
 	roundedDpiScale: Math.round(window.devicePixelRatio),
+	twipsToPixels: 0, // Twips to pixels multiplier.
+	pixelsToTwips: 0, // Pixels to twips multiplier.
 	file: {
 		editComment: false,
 		readOnly: true,
