@@ -3,7 +3,10 @@
 
 window.app = { // Shouldn't have any functions defined.
 	definitions: {}, // Class instances are created using definitions under this variable.
-	dpiScale: 1, roundedDpiScale: 1,
+	dpiScale: 1,
+	roundedDpiScale: 1,
+	twipsToPixels: 0, // Twips to pixels multiplier.
+	pixelsToTwips: 0, // Pixels to twips multiplier.
 	file: {
 		editComment: false,
 		readOnly: true,
