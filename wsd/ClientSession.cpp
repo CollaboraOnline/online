@@ -218,6 +218,9 @@ void ClientSession::rotateClipboardKey(bool notifyClient)
 
 std::string ClientSession::getClipboardURI(bool encode)
 {
+    if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
+        return std::string();
+
     std::string encodedFrom;
     Poco::URI wopiSrc = getDocumentBroker()->getPublicUri();
     wopiSrc.setQueryParameters(Poco::URI::QueryParameters());
@@ -294,6 +297,23 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
 
     if (type != DocumentBroker::CLIP_REQUEST_SET)
     {
+        if (_wopiFileInfo && _wopiFileInfo->getDisableCopy())
+        {
+            // Unsupported clipboard request.
+            LOG_ERR("Unsupported Clipboard Request from socket #" << socket->getFD()
+                                                                  << ". Terminating connection.");
+            std::ostringstream oss;
+            oss << "HTTP/1.1 403 Forbidden\r\n"
+                << "Date: " << Util::getHttpTimeNow() << "\r\n"
+                << "User-Agent: " << WOPI_AGENT_STRING << "\r\n"
+                << "Content-Length: 0\r\n"
+                << "\r\n";
+            socket->send(oss.str());
+            socket->closeConnection(); // Shutdown socket.
+            socket->ignoreInput();
+            return;
+        }
+
         LOG_TRC("Session [" << getId() << "] sending getclipboard" + specific);
         docBroker->forwardToChild(getId(), "getclipboard" + specific);
         _clipSockets.push_back(socket);
