@@ -118,18 +118,7 @@ class ScrollSection {
 	}
 
 	public onScrollBy (e: any) {
-		e.y *= (-1);
-		var y = '+=' + e.y;
-		if (e.y < 0) {
-			y = '-=' + Math.abs(e.y);
-		}
-		e.x *= (-1);
-		var x = '+=' + e.x;
-		if (e.x < 0) {
-			x = '-=' + Math.abs(e.x);
-		}
-
-		this.onScrollTo({x: x, y: y});
+		this.map.panBy(new L.Point(e.x, e.y), {animate: false});
 	}
 
 	public onScrollVelocity (e: any) {
