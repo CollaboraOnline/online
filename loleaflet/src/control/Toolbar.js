@@ -63,12 +63,7 @@ L.Map.include({
 				option.value = data[i];
 				fontcombobox.append(option);
 			}
-			fontcombobox.on('change', function(e) {
-				var item = that._getCurrentFontName();
-				if (!item) return;
-				if (e.target.value.toLowerCase() === item.toLowerCase()) return;
-				if (e.target.value) that.onFontSelect(e);
-			});
+			fontcombobox.on('select2:select', that.onFontSelect.bind(that));
 
 			fontcombobox.val(that._getCurrentFontName()).trigger('change');
 		};
