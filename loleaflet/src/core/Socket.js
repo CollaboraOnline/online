@@ -1388,10 +1388,18 @@ app.definitions.Socket = L.Class.extend({
 		this._map['wopi'].resetAppLoaded();
 		this._map.fire('docloaded', {status: false});
 
-		if (!this._reconnecting) {
-			this._reconnecting = true;
-			this._map._activate();
-		}
+		// We need to make sure that the message slurping processes the
+		// events first, because there could have been a message like
+		// "close: idle" from the server.
+		// Without the timeout, we'd immediately reconnect (because the
+		// "close: idle" was not processed yet).
+		var that = this;
+		setTimeout(function () {
+			if (!that._reconnecting) {
+				that._reconnecting = true;
+				that._map._activate();
+			}
+		}, 1 /* ms */);
 	},
 
 	parseServerCmd: function (msg) {
