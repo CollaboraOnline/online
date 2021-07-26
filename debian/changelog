@@ -1,3 +1,9 @@
+loolwsd (4.2.18-1) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-4.2.18-1
+
+ -- Aron Budea <aron.budea@collabora.com>  Mon, 26 Jul 2021 17:30:00 +0100
+
 loolwsd (4.2.17-2) unstable; urgency=medium
 
   * https://github.com/CollaboraOnline/online/releases/tag/cp-4.2.17-2
