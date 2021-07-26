@@ -1113,3 +1113,12 @@ input[type='checkbox'][disabled] {
 #mobile-wizard #popup-XLineStyle #valueset img {
 	width: auto;
 }
+
+/* Paragraph properties */
+#mobile-wizard #ParaspaceDecrease + #image6,
+#mobile-wizard #aboveparaspacing + #image7,
+#mobile-wizard #HangingIndent + #image8,
+#mobile-wizard #beforetextindent + #image9,
+#mobile-wizard #aftertextindent + #image10 {
+	display: none;
+}
