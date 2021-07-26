@@ -1389,8 +1389,21 @@ app.definitions.Socket = L.Class.extend({
 		this._map.fire('docloaded', {status: false});
 
 		if (!this._reconnecting) {
-			this._reconnecting = true;
-			this._map._activate();
+			// Prevent reconnecting at the same time.
+			var min = 500;
+			var max = 2000;
+			var timeoutMs = Math.floor(Math.random() * (max - min) + min);
+
+			var that = this;
+			clearTimeout(vex.timer);
+			vex.timer = setInterval(function () {
+				clearTimeout(vex.timer);
+
+				if (!that._reconnecting) {
+					that._reconnecting = true;
+					that._map._activate();
+				}
+			}, timeoutMs);
 		}
 	},
 
