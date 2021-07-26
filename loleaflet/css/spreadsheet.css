@@ -34,9 +34,6 @@
 .spreadsheet-tab.spreadsheet-tab-selected {
 	background: transparent !important;
 	color: black !important;
-	padding-top: 12px !important;
-	padding-bottom: 5px;
-	margin-top: 2px;
 	border: 1px solid #dfdfdf;
 }
 
