@@ -185,32 +185,13 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	border: none;
 }
 
-.spreadsheet-tab{
-	background-color: #eaf5ff;
-	color: #4c4c4c;
-	border-radius: 3px;
-	border-color: #fbfbfb;
-	padding-top: 2px;
-	padding-bottom: 6px;
-	margin-top: 4px;
-}
-
 .spreadsheet-tab-selected{
 	color: #0b87e7 !important;
 	border-color: #0b87e7;
-	border-top-left-radius: 0px;
-	border-top-right-radius: 0px;
-	margin-top: 2px;
-	padding-top: 5px;
-	padding-bottom: 7px;
-}
-
-.spreadsheet-tabs-container {
-	left: 28px;
 }
 
 #tb_spreadsheet-toolbar_item_insertsheet {
-	padding-left: 3px;
+	padding: 0 7px 0 12px;
 }
 
 .spreadsheet-tab-scroll {
@@ -218,6 +199,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	scrollbar-width: none; /*css draft (firefox only)*/
 	-ms-scrollbar: none; /*ie*/
 	-webkit-overflow-scrolling: touch;
+	margin: 0;
 }
 
 .spreadsheet-tabs-container, #spreadsheet-toolbar{
