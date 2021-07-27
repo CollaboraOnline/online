@@ -26,10 +26,14 @@ L.Map.Feedback = L.Handler.extend({
 
 	onFeedback: function () {
 		if (window.localStorage.getItem('WSDFeedbackEnabled')) {
-			if (this._iframeDialog && this._iframeDialog.hasLoaded())
-				this._iframeDialog.remove();
+			if (this._map.shouldWelcome())
+				setTimeout(L.bind(this.onFeedback, this), 3000);
+			 else {
+				if (this._iframeDialog && this._iframeDialog.hasLoaded())
+					this._iframeDialog.remove();
 
-			this._iframeDialog = L.iframeDialog(window.feebackLocation);
+				this._iframeDialog = L.iframeDialog(window.feebackLocation);
+			}
 		}
 	},
 
