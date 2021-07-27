@@ -64,7 +64,7 @@ L.Control.MobileWizard = L.Control.extend({
 		$('#mobile-wizard-titlebar').css('top', '0px');
 		$('#mobile-wizard').removeClass('menuwizard');
 		$('#mobile-wizard').removeClass('funcwizard');
-		$('#mobile-wizard').removeClass('busypopup');
+		$('#mobile-wizard').removeClass('popup');
 		this._isTabMode = false;
 		this._currentPath = [];
 		this._tabs = [];
@@ -513,7 +513,7 @@ L.Control.MobileWizard = L.Control.extend({
 				// force hide scroll indicator while its showing/hidding is not fixed
 				$('#mobile-wizard-scroll-indicator').hide();
 
-				$('#mobile-wizard').addClass('busypopup');
+				$('#mobile-wizard').addClass('popup');
 				$('#mobile-wizard-titlebar').hide();
 			}
 
