@@ -512,8 +512,14 @@ app.definitions.Socket = L.Class.extend({
 
 			if (oldId && oldVersion && sameFile) {
 				if (this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) {
-					alert(_('Server is now reachable. We have to refresh the page now.'));
-					window.location.reload();
+					var reloadMessage = _('Server is now reachable. We have to refresh the page now.');
+					if (window.mode.isMobile()) {
+						this._map.uiManager.showSnackbar(reloadMessage, _('RELOAD'), function() {window.location.reload();});
+						setTimeout(window.location.reload, 5000);
+					} else {
+						alert(reloadMessage);
+						window.location.reload();
+					}
 				}
 			}
 
@@ -1101,7 +1107,7 @@ app.definitions.Socket = L.Class.extend({
 			}
 		}
 		else if (textMsg.startsWith('jsdialog:')) {
-			this._onJSDialog(textMsg);
+			this._onJSDialog(textMsg, e.callback);
 		}
 		else if (textMsg.startsWith('hyperlinkclicked:')) {
 			this._onHyperlinkClickedMsg(textMsg);
@@ -1289,7 +1295,7 @@ app.definitions.Socket = L.Class.extend({
 		}
 	},
 
-	_onJSDialog: function(textMsg) {
+	_onJSDialog: function(textMsg, callback) {
 		var msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
 
 		if (msgData.children && !L.Util.isArray(msgData.children)) {
@@ -1326,8 +1332,8 @@ app.definitions.Socket = L.Class.extend({
 		if (window.mode.isMobile()) {
 			if (msgData.type == 'borderwindow')
 				return;
-			if (msgData.enabled || msgData.type === 'modalpopup') {
-				this._map.fire('mobilewizard', {data: msgData});
+			if (msgData.enabled || msgData.type === 'modalpopup' || msgData.type === 'snackbar') {
+				this._map.fire('mobilewizard', {data: msgData, callback: callback});
 			} else {
 				this._map.fire('closemobilewizard');
 			}
