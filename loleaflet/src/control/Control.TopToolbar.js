@@ -148,7 +148,6 @@ L.Control.TopToolbar = L.Control.extend({
 						edata.isCancelled = true;
 					} else {
 						$.extend(edata, { onComplete: function (e) {
-							$('#fontsizes-select').select2({ dropdownAutoWidth: true, width: 'auto'});
 							e.item.html = undefined;
 						}});
 					}

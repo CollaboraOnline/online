@@ -121,23 +121,33 @@ L.Map.include({
 			22, 24, 26, 28, 32, 36, 40, 44, 48, 54, 60, 66, 72, 80, 88, 96];
 
 		var fontsizecombobox = $(nodeSelector);
+		if (!fontsizecombobox.hasClass('select2')) {
+			fontsizecombobox.select2({
+				dropdownAutoWidth: true,
+				width: 'auto',
+				placeholder: _('Font Size'),
+				//Allow manually entered font size.
+				createTag: function(query) {
+					return {
+						id: query.term,
+						text: query.term,
+						tag: true
+					};
+				},
+				tags: true,
+				sorter: function(data) { return data.sort(function(a, b) {
+					return parseFloat(a.text) - parseFloat(b.text);
+				});}
+			});
+		}
 
-		fontsizecombobox.select2({
-			data: data,
-			placeholder: ' ',
-			//Allow manually entered font size.
-			createTag: function(query) {
-				return {
-					id: query.term,
-					text: query.term,
-					tag: true
-				};
-			},
-			tags: true,
-			sorter: function(data) { return data.sort(function(a, b) {
-				return parseFloat(a.text) - parseFloat(b.text);
-			});}
-		});
+		fontsizecombobox.empty();
+		for (var i = 0; i < data.length; ++i) {
+			var option = document.createElement('option');
+			option.text = data[i];
+			option.value = data[i];
+			fontsizecombobox.append(option);
+		}
 		fontsizecombobox.off('select2:select', this.onFontSizeSelect.bind(this)).on('select2:select', this.onFontSizeSelect.bind(this));
 
 		var onCommandStateChanged = function(e) {
