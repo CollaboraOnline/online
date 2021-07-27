@@ -5,7 +5,7 @@
 
 L.Map.mergeOptions({
 	feedback: true,
-	feedbackTimeout: 2000
+	feedbackTimeout: 30000
 });
 
 L.Map.Feedback = L.Handler.extend({
