@@ -3,6 +3,7 @@
  * L.Map.Feedback.
  */
 
+/* global vex */
 L.Map.mergeOptions({
 	feedback: true,
 	feedbackTimeout: 30000
@@ -24,7 +25,22 @@ L.Map.Feedback = L.Handler.extend({
 		setTimeout(L.bind(this.onFeedback, this), this._map.options.feedbackTimeout);
 	},
 
+	isWelcomeOpen: function () {
+		for (var id in vex.getAll()) {
+			var options = vex.getById(id).options;
+			if (options.className.match(/welcome/g)) {
+				return true;
+			}
+		}
+		return false;
+	},
+
 	onFeedback: function () {
+		if (this.isWelcomeOpen()) {
+			setTimeout(L.bind(this.onFeedback, this), this._map.options.feedbackTimeout);
+			return;
+		}
+
 		if (window.localStorage.getItem('WSDFeedbackEnabled')) {
 			if (this._iframeDialog && this._iframeDialog.hasLoaded())
 				this._iframeDialog.remove();
