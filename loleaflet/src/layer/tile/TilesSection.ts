@@ -279,9 +279,36 @@ class TilesSection {
 								rectangle[2] * 0.4);
 	}
 
+	private drawPageBackgroundFileBasedView (ctx: any, top: number, bottom: number) {
+		var partHeightPixels: number = Math.round(this.map._docLayer._partHeightTwips * app.twipsToPixels);
+		var gap: number = Math.round(this.map._docLayer._spaceBetweenParts * app.twipsToPixels);
+		var partWidthPixels: number = Math.round(this.map._docLayer._partWidthTwips * app.twipsToPixels);
+		var startY: number = (partHeightPixels + gap) * (top > 0 ? top -1: 0);
+		var rectangle: Array<number>;
+		if (bottom >= this.map._docLayer._parts)
+			bottom = this.map._docLayer._parts - 1;
+
+		for (var i: number = 0; i <= bottom - top; i++) {
+			rectangle = [0, startY, partWidthPixels, partHeightPixels];
+
+			this.context.strokeRect(
+				rectangle[0] - ctx.viewBounds.min.x + this.sectionProperties.pageBackgroundInnerMargin,
+				rectangle[1] - ctx.viewBounds.min.y + this.sectionProperties.pageBackgroundInnerMargin,
+				rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
+				rectangle[3] - this.sectionProperties.pageBackgroundInnerMargin);
+
+			this.context.fillText(String(i + top + 1),
+				Math.round((2 * rectangle[0] + rectangle[2]) * 0.5) - ctx.viewBounds.min.x,
+				Math.round((2 * rectangle[1] + rectangle[3]) * 0.5) - ctx.viewBounds.min.y,
+				rectangle[2] * 0.4);
+
+			startY += partHeightPixels + gap;
+		}
+	}
+
 	private drawPageBackgrounds (ctx: any) {
-		if (this.map._docLayer._docType !== 'text')
-			return; // For now, Writer only. This may change in the near future.
+		if (this.map._docLayer._docType !== 'text' && !app.file.fileBasedView)
+			return; // For now, Writer and PDF view only.
 
 		/* Note: Probably, Calc won't need this function but in case this is activated for Calc:
 				* If the font change of context affects Calc drawings (headers etc), then one should set the font there.
@@ -313,6 +340,15 @@ class TilesSection {
 						this.drawPageBackgroundWriter(ctx, rectangle.slice(), i + 1);
 					}
 			}
+		}
+		else if (app.file.fileBasedView) { // Writer and fileBasedView can not be "true" at the same time.
+			// PDF view supports only same-sized pages for now. So we can use simple math instead of a loop.
+			var partHeightPixels: number = Math.round((this.map._docLayer._partHeightTwips + this.map._docLayer._spaceBetweenParts) * app.twipsToPixels);
+			var visibleBounds: Array<number> = this.containerObject.getDocumentBounds();
+			var topVisible: number = Math.floor(visibleBounds[1] / partHeightPixels);
+			var bottomVisible: number = Math.ceil(visibleBounds[3] / partHeightPixels);
+			if (!isNaN(partHeightPixels) && partHeightPixels > 0)
+				this.drawPageBackgroundFileBasedView(ctx, topVisible, bottomVisible);
 		}
 	}
 
