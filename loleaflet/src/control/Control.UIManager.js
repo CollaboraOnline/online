@@ -587,6 +587,37 @@ L.Control.UIManager = L.Control.extend({
 		this.map.fire('hidebusy');
 	},
 
+	// Snack bar
+
+	showSnackbar: function(label, action, callback) {
+		var json = {
+			id: 'snackbar',
+			jsontype: 'dialog',
+			type: 'snackbar',
+			children: [
+				{
+					type: 'container',
+					children: [
+						{id: 'label', type: 'fixedtext', text: label},
+						{id: 'button', type: 'pushbutton', text: action}
+					]
+				}
+			]
+		};
+
+		var builderCallback = function(objectType, eventType, object, data) {
+			console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
+
+			if (object.id === 'button' && objectType === 'pushbutton' && eventType === 'click') {
+				if (callback)
+					callback();
+			}
+		};
+
+		if (app.socket)
+			app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json), callback: builderCallback});
+	},
+
 	// Helper functions
 
 	moveObjectVertically: function(obj, diff) {
