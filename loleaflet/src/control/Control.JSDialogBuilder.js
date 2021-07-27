@@ -1341,15 +1341,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var wrapper = L.DomUtil.create('div', '', parentContainer); // need for freemium overlay
 		var pushbutton = L.DomUtil.create('button', 'ui-pushbutton ' + builder.options.cssClass, wrapper);
 		pushbutton.id = data.id;
+		var pushbuttonText = builder._customPushButtonTextForId(data.id) !== '' ? builder._customPushButtonTextForId(data.id) : builder._cleanText(data.text);
 
-		if (data.image) {
+		if (data.image && pushbuttonText !== '') {
 			var image = L.DomUtil.create('img', '', pushbutton);
 			image.src = data.image;
+			var text = L.DomUtil.create('span', '', pushbutton);
+			text.innerText = pushbuttonText;
+		} else if (data.image) {
+			var image = L.DomUtil.create('img', '', pushbutton);
+			image.src = data.image;
+		} else {
+			pushbutton.innerText = pushbuttonText;
 		}
-
-		var text = L.DomUtil.create('span', '', pushbutton);
-		var customText = builder._customPushButtonTextForId(data.id);
-		text.innerHTML = customText !== '' ? customText : builder._cleanText(data.text);
 
 		if (data.enabled === 'false' || data.enabled === false)
 			$(pushbutton).prop('disabled', true);
