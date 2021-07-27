@@ -498,14 +498,12 @@ app.definitions.Socket = L.Class.extend({
 			if (oldId && oldVersion && sameFile) {
 				if (this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) {
 					var reloadMessage = _('Server is now reachable. We have to refresh the page now.');
-					if (window.mode.isMobile()) {
+					if (window.mode.isMobile())
 						reloadMessage = _('Server is now reachable...');
-						this._map.uiManager.showSnackbar(reloadMessage, _('RELOAD'), function() {window.location.reload();});
-						setTimeout(window.location.reload, 5000);
-					} else {
-						alert(reloadMessage);
-						window.location.reload();
-					}
+
+					var reloadFunc = function() { window.location.reload(); };
+					this._map.uiManager.showSnackbar(reloadMessage, _('RELOAD'), reloadFunc);
+					setTimeout(reloadFunc, 5000);
 				}
 			}
 
@@ -1362,7 +1360,7 @@ app.definitions.Socket = L.Class.extend({
 		} else if (msgData.jsontype === 'autofilter') {
 			this._map.fire('autofilterdropdown', msgData);
 		} else if (msgData.jsontype === 'dialog') {
-			this._map.fire('jsdialog', {data: msgData});
+			this._map.fire('jsdialog', {data: msgData, callback: callback});
 		} else if (msgData.jsontype === 'notebookbar') {
 			if (msgData.children) {
 				for (var i = 0; i < msgData.children.length; i++) {
@@ -1434,6 +1432,8 @@ app.definitions.Socket = L.Class.extend({
 				that._map._activate();
 			}
 		}, 1 /* ms */);
+
+		this._map.uiManager.showSnackbar(_('The server has been disconnected.'));
 	},
 
 	parseServerCmd: function (msg) {
