@@ -328,10 +328,6 @@ app.definitions.Socket = L.Class.extend({
 					break;
 				}
 			}
-			var asyncEvent = this.createAsyncTraceEvent('loleaflet._emitSlurpedEvents-to-idle',
-								    {'_slurpQueue.length' : String(queueLength)});
-			if (asyncEvent)
-				setTimeout(function() { asyncEvent.finish(); }, 0);
 		}
 		finally {
 			if (completeEventWholeFunction)
