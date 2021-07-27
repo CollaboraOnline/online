@@ -767,8 +767,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 #mobile-wizard.popup.landscape #mobile-wizard-content {
 	flex-direction: row;
 }
-#mobile-wizard.popup #busylabel,
-#mobile-wizard.popup.snackbar #label {
+#mobile-wizard.popup #busylabel {
 	border-bottom: none !important;
 	font-size: 100% !important;
 	margin: 20px !important;
@@ -779,24 +778,6 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 #mobile-wizard.popup.snackbar {
 	height: 48px !important;
 	margin: 16px 5% !important;
-	background-color: #565f77;
 	width: 90%;
-	border-radius: 4px;
 	position: absolute;
-}
-#mobile-wizard.popup.snackbar #label {
-	color: white !important;
-	font-size: 14px !important;
-	margin: 0 !important;
-	padding-left: 8px;
-	flex: min-content;
-}
-#mobile-wizard.popup.snackbar #button {
-	padding-right: 8px;
-	background: none;
-	border: none;
-	margin: 0;
-}
-#mobile-wizard.popup.snackbar #button span {
-	color: #c8e7f9ff !important;
 }

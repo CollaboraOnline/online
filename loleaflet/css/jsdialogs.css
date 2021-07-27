@@ -34,8 +34,6 @@
 	border: 1px solid #a4a4a4 !important;
 	border-radius: 4px;
 	box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
-	min-width: 200px;
-	min-height: 100px;
 }
 
 .jsdialog-container .ui-dialog-content {
@@ -740,6 +738,8 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 /* busy popup */
 
 #busypopup.jsdialog-container {
+	min-width: 200px;
+	min-height: 100px;
 	background: white;
 }
 
@@ -928,6 +928,38 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .spinner-img.drawing-doctype #spinner-paper-linearGradient stop:nth-child(2) {
 	stop-color: rgba(var(--yellow0-txt-primary-color));
 	stop-opacity: 0.2;
+}
+
+/* snackbar */
+#mobile-wizard.popup.snackbar,
+.snackbar.jsdialog-container .ui-dialog-content {
+	min-width: 200px;
+	background-color: #565f77 !important;
+	border-radius: 4px !important;
+}
+
+#mobile-wizard.popup.snackbar #label,
+.snackbar.jsdialog-container #label {
+	color: white !important;
+	font-size: 14px !important;
+	margin: 0px !important;
+	border-bottom: none !important;
+	padding-left: 8px;
+	flex: min-content;
+}
+
+#mobile-wizard.popup.snackbar #button,
+.snackbar.jsdialog-container #button.ui-pushbutton.jsdialog {
+	padding-right: 8px;
+	background-color: transparent !important;
+	border: none !important;
+	margin: 0 !important;
+}
+
+#mobile-wizard.popup.snackbar #button span,
+.snackbar.jsdialog-container #button span {
+	color: #c8e7f9ff !important;
+	font-weight: bold;
 }
 
 /* toolbuttons */
