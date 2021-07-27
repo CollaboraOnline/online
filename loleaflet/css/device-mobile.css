@@ -795,50 +795,52 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 #mobile-wizard.popup {
 	border-radius: 16px 16px 0 0;
 }
-#mobile-wizard.popup.snackbar {
-	height: 48px !important;
-	margin: 16px !important;
-	background-color: #565f77;
-	width: auto;
-	border-radius: 4px;
-}
-#mobile-wizard.popup.snackbar #busylabel {
-	color: white !important;
-	font-size: 14px !important;
-	margin: 0 !important;
-	text-align: left;
-	padding-left: 8px;
-}
-#mobile-wizard.popup.snackbar #busylabel:after {
-	/* This will come from JS */
-	content: 'RETRY';
-	color: #c8e7f9ff;
-	text-align: right;
-	padding-right: 8px;
-	float: right;
-}
-#mobile-wizard.popup.snackbar #busyspinner {
-	display: none;
-}
-.popup #mobile-wizard-content {
+#mobile-wizard.popup #mobile-wizard-content {
 	height: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-wrap: wrap;
 }
-.popup.potrait #mobile-wizard-content {
+#mobile-wizard.popup.potrait #mobile-wizard-content {
 	flex-direction: column;
 }
 #mobile-wizard.popup.landscape {
 	height: 75% !important;
 }
-.popup.landscape #mobile-wizard-content {
+#mobile-wizard.popup.landscape #mobile-wizard-content {
 	flex-direction: row;
 }
-.popup #busylabel {
+#mobile-wizard.popup #busylabel,
+#mobile-wizard.popup.snackbar #label {
 	border-bottom: none !important;
 	font-size: 100% !important;
 	margin: 20px !important;
 	width: 100%;
+}
+
+/* snackbar */
+#mobile-wizard.popup.snackbar {
+	height: 48px !important;
+	margin: 16px 5% !important;
+	background-color: #565f77;
+	width: 90%;
+	border-radius: 4px;
+	position: absolute;
+}
+#mobile-wizard.popup.snackbar #label {
+	color: white !important;
+	font-size: 14px !important;
+	margin: 0 !important;
+	padding-left: 8px;
+	flex: min-content;
+}
+#mobile-wizard.popup.snackbar #button {
+	padding-right: 8px;
+	background: none;
+	border: none;
+	margin: 0;
+}
+#mobile-wizard.popup.snackbar #button span {
+	color: #c8e7f9ff !important;
 }

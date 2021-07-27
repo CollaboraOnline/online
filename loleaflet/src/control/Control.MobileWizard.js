@@ -6,7 +6,8 @@
 /* global app $ w2ui */
 L.Control.MobileWizard = L.Control.extend({
 	options: {
-		maxHeight: '45vh'
+		maxHeight: '45vh',
+		snackbarTimeout: 6000
 	},
 
 	_builder: null,
@@ -65,6 +66,7 @@ L.Control.MobileWizard = L.Control.extend({
 		$('#mobile-wizard').removeClass('menuwizard');
 		$('#mobile-wizard').removeClass('funcwizard');
 		$('#mobile-wizard').removeClass('popup');
+		$('#mobile-wizard').removeClass('snackbar');
 		this._isTabMode = false;
 		this._currentPath = [];
 		this._tabs = [];
@@ -79,6 +81,9 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_showWizard: function(ContentsLength) {
+		if (this.snackBarTimout)
+			clearTimeout(this.snackBarTimout);
+
 		var docType = this._map.getDocType();
 		//console.log('ContentsLength: ' + ContentsLength + ' | docType: ' + docType + '$(#mobile-wizard-content).scrollTop();'  + 'this._isTabMode: ' + this._isTabMode + ' | _tabs: ' + this._tabs);
 		var maxScrolled = 52;
@@ -387,6 +392,7 @@ L.Control.MobileWizard = L.Control.extend({
 	},
 
 	_onMobileWizard: function(data) {
+		var callback = data.callback;
 		data = data.data;
 		if (data) {
 			if (data.jsontype === 'autofilter' && (data.visible === 'false' || data.visible === false))
@@ -394,7 +400,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 			this._inBuilding = true;
 
-			var isPopup = data.type === 'modalpopup';
+			var isPopup = data.type === 'modalpopup' || data.type === 'snackbar';
 			var isSidebar = (data.children && data.children.length >= 1 &&
 					 data.children[0].type == 'deck');
 
@@ -472,7 +478,7 @@ L.Control.MobileWizard = L.Control.extend({
 				history.pushState({context: 'mobile-wizard', level: 0}, 'mobile-wizard-level-0');
 			}
 
-			this._builder = L.control.mobileWizardBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'mobile-wizard'});
+			this._builder = L.control.mobileWizardBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'mobile-wizard', callback: callback});
 			this._builder.build(this.content.get(0), [data]);
 			if (window.ThisIsTheAndroidApp)
 				window.postMobileMessage('hideProgressbar');
@@ -515,6 +521,12 @@ L.Control.MobileWizard = L.Control.extend({
 
 				$('#mobile-wizard').addClass('popup');
 				$('#mobile-wizard-titlebar').hide();
+
+				if (data.type === 'snackbar') {
+					var that = this;
+					$('#mobile-wizard').addClass('snackbar');
+					this.snackBarTimout = setTimeout(function () { that._hideWizard(); }, this.options.snackbarTimeout);
+				}
 			}
 
 			this._inBuilding = false;
