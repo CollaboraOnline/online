@@ -5,6 +5,9 @@
 
 /* global Hammer */
 L.Control.JSDialog = L.Control.extend({
+	options: {
+		snackbarTimeout: 6000
+	},
 	dialogs: {},
 	draggingObject: null,
 
@@ -78,7 +81,9 @@ L.Control.JSDialog = L.Control.extend({
 		var posX = 0;
 		var posY = 0;
 		var data = e.data;
-		var isModalPopup = data.type === 'modalpopup';
+		var callback = e.callback;
+		var isSnackbar = data.type === 'snackbar';
+		var isModalPopup = data.type === 'modalpopup' || isSnackbar;
 
 		if (data.action === 'fadeout')
 		{
@@ -117,6 +122,8 @@ L.Control.JSDialog = L.Control.extend({
 			L.DomUtil.create('span', 'ui-button-icon ui-icon ui-icon-closethick', button);
 		} else {
 			L.DomUtil.addClass(container, 'modalpopup');
+			if (isSnackbar)
+				L.DomUtil.addClass(container, 'snackbar');
 		}
 
 		var tabs = L.DomUtil.create('div', 'jsdialog-tabs', container);
@@ -127,9 +134,9 @@ L.Control.JSDialog = L.Control.extend({
 			tabs: tabs
 		};
 
-		var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'jsdialog'});
+		var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'jsdialog', callback: callback});
 
-		if (isModalPopup) {
+		if (isModalPopup && !isSnackbar) {
 			var overlay = L.DomUtil.create('div', builder.options.cssClass + ' jsdialog-overlay ' + (data.cancellable ? 'cancellable' : ''), document.body);
 			overlay.id = data.id + '-overlay';
 			if (data.cancellable)
@@ -182,6 +189,9 @@ L.Control.JSDialog = L.Control.extend({
 				posX -= posX + content.clientWidth - window.innerWidth;
 			if (posY + content.clientHeight > window.innerHeight)
 				posY -= posY + content.clientHeight - window.innerHeight;
+		} else if (isSnackbar) {
+			posX = window.innerWidth/2 - container.offsetWidth/2;
+			posY = window.innerHeight - container.offsetHeight - 40;
 		} else if (posX === 0 && posY === 0) {
 			posX = window.innerWidth/2 - container.offsetWidth/2;
 			posY = window.innerHeight/2 - container.offsetHeight/2;
@@ -201,6 +211,10 @@ L.Control.JSDialog = L.Control.extend({
 		this.updatePosition(container, posX, posY);
 		if (toRemove)
 			L.DomUtil.remove(toRemove);
+
+		if (isSnackbar) {
+			setTimeout(function () { that.closePopover(data.id, false); }, this.options.snackbarTimeout);
+		}
 	},
 
 	onJSUpdate: function (e) {

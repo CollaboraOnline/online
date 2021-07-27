@@ -612,6 +612,18 @@ L.Control.UIManager = L.Control.extend({
 	// Snack bar
 
 	showSnackbar: function(label, action, callback) {
+		if (!app.socket)
+			return;
+
+		var closeJson = {
+			id: 'snackbar',
+			jsontype: 'dialog',
+			type: 'snackbar',
+			action: 'fadeout'
+		};
+
+		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(closeJson)});
+
 		var json = {
 			id: 'snackbar',
 			jsontype: 'dialog',
@@ -621,7 +633,7 @@ L.Control.UIManager = L.Control.extend({
 					type: 'container',
 					children: [
 						{id: 'label', type: 'fixedtext', text: label},
-						{id: 'button', type: 'pushbutton', text: action}
+						action ? {id: 'button', type: 'pushbutton', text: action} : {}
 					]
 				}
 			]
@@ -636,8 +648,7 @@ L.Control.UIManager = L.Control.extend({
 			}
 		};
 
-		if (app.socket)
-			app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json), callback: builderCallback});
+		app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json), callback: builderCallback});
 	},
 
 	// Helper functions
