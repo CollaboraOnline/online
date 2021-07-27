@@ -500,6 +500,7 @@ app.definitions.Socket = L.Class.extend({
 				if (this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) {
 					var reloadMessage = _('Server is now reachable. We have to refresh the page now.');
 					if (window.mode.isMobile()) {
+						reloadMessage = _('Server is now reachable...');
 						this._map.uiManager.showSnackbar(reloadMessage, _('RELOAD'), function() {window.location.reload();});
 						setTimeout(window.location.reload, 5000);
 					} else {
