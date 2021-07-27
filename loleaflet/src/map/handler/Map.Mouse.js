@@ -3,6 +3,8 @@
  * L.Map.Mouse is handling mouse interaction with the document
  */
 
+/* global app */
+
 L.Map.mergeOptions({
 	mouse: true
 });
@@ -182,8 +184,12 @@ L.Map.Mouse = L.Handler.extend({
 				this._mouseEventsQueue = [];
 			}
 			if (!this._map.dragging.enabled()) {
-				mousePos = docLayer._latLngToTwips(e.latlng);
-				docLayer._postMouseEvent('move', mousePos.x, mousePos.y, 1, buttons, modifier);
+				mousePos = [e.containerPoint.x * app.dpiScale, e.containerPoint.y * app.dpiScale];
+				var docTopLeft = app.sectionContainer.getDocumentTopLeft();
+				mousePos = [mousePos[0] + docTopLeft[0], mousePos[1] + docTopLeft[1]];
+				mousePos = [Math.round(mousePos[0] * app.pixelsToTwips), Math.round(mousePos[1] * app.pixelsToTwips)];
+
+				docLayer._postMouseEvent('move', mousePos[0], mousePos[1], 1, buttons, modifier);
 
 				for (key in docLayer._selectionHandles) {
 					handle = docLayer._selectionHandles[key];
