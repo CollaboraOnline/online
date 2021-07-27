@@ -681,7 +681,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 
 #busypopup #busylabel,
-.busypopup  #busylabel {
+.popup  #busylabel {
 	margin: 20px;
 	text-align: center;
 	font-size: 100%;
@@ -689,7 +689,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 
 #busypopup #spinner-paper-g,
-.busypopup #spinner-paper-g {
+.popup #spinner-paper-g {
 	-webkit-animation-iteration-count: infinite;
 	animation-iteration-count: infinite;
 	animation-direction: normal;
