@@ -41,7 +41,7 @@ L.Control.Tabs = L.Control.extend({
 		var tableCell = document.getElementById('tb_spreadsheet-toolbar_right');
 		tableCell.style.verticalAlign = 'middle';
 		this._tabsCont = L.DomUtil.create('div', 'spreadsheet-tabs-container', tableCell);
-
+		var that = this;
 		function areTabsMultiple() {
 			var numItems = $('.spreadsheet-tab').length;
 			if (numItems === 1) {
@@ -68,6 +68,9 @@ L.Control.Tabs = L.Control.extend({
 			'.uno:Show': {
 				name: _UNO('.uno:Show', 'spreadsheet', true),
 				callback: (this._showSheet).bind(this),
+				visible: function() {
+					return that._map.hasAnyHiddenPart();
+				}
 			},
 			'.uno:Hide': {
 				name: _UNO('.uno:Hide', 'spreadsheet', true),
@@ -135,17 +138,27 @@ L.Control.Tabs = L.Control.extend({
 				ssTabScroll.id = 'spreadsheet-tab-scroll';
 
 				var menuItemMobile = {};
-				if (parts === 1) {
+				Object.assign(menuItemMobile,
+					{
+						'insertsheetbefore' : this._menuItem['insertsheetbefore'],
+						'insertsheetafter'  :   this._menuItem['insertsheetafter'],
+						'.uno:Name' : this._menuItem['.uno:Name'],
+					}
+				);
+				if (this._map.hasAnyHiddenPart()) {
+					Object.assign(menuItemMobile, {
+						'.uno:Show' : this._menuItem['.uno:Show'],
+					});
+				}
+				if (this._map.getNumberOfVisibleParts() !== 1) {
 					Object.assign(menuItemMobile,
 						{
-							'insertsheetbefore' : this._menuItem['insertsheetbefore'],
-							'insertsheetafter'  :   this._menuItem['insertsheetafter'],
-							'.uno:Name' : this._menuItem['.uno:Name'],
-							'.uno:Show' : this._menuItem['.uno:Show'],
+							'.uno:Remove': this._menuItem['.uno:Remove'],
+							'.uno:Hide': this._menuItem['.uno:Hide'],
+							'movesheetleft': this._menuItem['movesheetleft'],
+							'movesheetright': this._menuItem['movesheetright'],
 						}
 					);
-				} else {
-					menuItemMobile = this._menuItem;
 				}
 
 				if (window.mode.isMobile()) {
