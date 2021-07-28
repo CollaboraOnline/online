@@ -75,3 +75,7 @@
 .ui-button-box .jsdialog.ui-pushbutton {
 	display: initial !important;
 }
+
+.jsdialog.ui-button-box-right {
+	display: flex;
+}
