@@ -363,15 +363,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	cursor: auto;
 }
 
-/* button box */
-
-.jsdialog.ui-button-box-right {
-	float: right;
-}
-
-.jsdialog.ui-button-box-left {
-	float: left;
-}
+/* buttons: btns.css */
 
 /* Icon View */
 

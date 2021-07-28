@@ -76,6 +76,13 @@
 	display: initial !important;
 }
 
+/* button box */
+
 .jsdialog.ui-button-box-right {
 	display: flex;
+	float: right;
+}
+
+.jsdialog.ui-button-box-left {
+	float: left;
 }
