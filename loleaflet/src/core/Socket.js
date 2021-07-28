@@ -926,7 +926,7 @@ app.definitions.Socket = L.Class.extend({
 				}, 500 * this.ReconnectCount * this.ReconnectCount); // Exponential back-off.
 
 
-				this._map.fire('error', {msg: errorMessages.docunloading});
+				this._map.fire('showbusy', {label: errorMessages.docunloading});
 			}
 
 			if (passwordNeeded) {
