@@ -675,6 +675,11 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	margin: -20px auto 0px;
 }
 
+#busypopup #busyspinner svg {
+	display: block;
+	margin: auto;
+}
+
 #busypopup #busylabel {
 	margin: 20px;
 	text-align: center;
