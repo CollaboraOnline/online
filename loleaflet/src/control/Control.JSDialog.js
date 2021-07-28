@@ -75,6 +75,8 @@ L.Control.JSDialog = L.Control.extend({
 				var container = this.dialogs[data.id].container;
 				L.DomUtil.addClass(container, 'fadeout');
 				container.onanimationend = function() { that.close(data.id); };
+				// be sure it will be removed
+				setTimeout(function() { that.close(data.id); }, 700);
 			}
 			return;
 		}
