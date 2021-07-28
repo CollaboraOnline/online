@@ -24,7 +24,7 @@ errorMessages.faileddocloading = _('Failed to load the document. Please ensure t
 errorMessages.invalidLink = _('Invalid link: \'%url\'');
 errorMessages.leaving = _('You are leaving the editor, are you sure you want to visit %url?');
 errorMessages.docloadtimeout = _('Failed to load the document. This document is either malformed or is taking more resources than allowed. Please contact the administrator.');
-errorMessages.docunloading = _('We are in the process of cleaning up this document from the last session, please be patient and try again later.');
+errorMessages.docunloading = _('Cleaning up the document from the last session.');
 
 if (window.ThisIsAMobileApp) {
 	errorMessages.storage = {
