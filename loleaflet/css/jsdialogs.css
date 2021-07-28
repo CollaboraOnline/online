@@ -858,9 +858,9 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 /* dialog/popup fade animation */
 
 .fadeout {
-	animation: fade 1s;
-	-webkit-animation: fade 1s;
-	-moz-animation: fade 1s;
+	animation: fade 0.7s;
+	-webkit-animation: fade 0.7s;
+	-moz-animation: fade 0.7s;
 }
 
 @keyframes fade {
