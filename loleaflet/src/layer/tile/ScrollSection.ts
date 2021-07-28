@@ -121,7 +121,31 @@ class ScrollSection {
 	}
 
 	public onScrollBy (e: any) {
-		this.map.panBy(new L.Point(e.x, e.y), {animate: false});
+		if (this.map._docLayer._docType !== 'spreadsheet')
+			this.map.panBy(new L.Point(e.x, e.y), {animate: false});
+		else {
+			// For Calc, top position shouldn't be below zero, for others, we can activate a similar check if needed (while keeping in mind that top position may be below zero for others).
+			var docTopLef = this.containerObject.getDocumentTopLeft();
+
+			// Some early exits.
+			if (e.y < 0 && docTopLef[1] === 0) // Don't scroll to negative values.
+				return;
+
+			if (e.x < 0 && docTopLef[0] === 0)
+				return;
+
+			var diff = Math.round(e.y * app.dpiScale);
+
+			if (docTopLef[1] + diff < 0) {
+				e.y = Math.round(-1 * docTopLef[1] / app.dpiScale);
+			}
+
+			diff = Math.round(e.x * app.dpiScale);
+			if (docTopLef[0] + diff < 0) {
+				e.x = Math.round(-1 * docTopLef[0] / app.dpiScale);
+			}
+			this.map.panBy(new L.Point(e.x, e.y), {animate: false});
+		}
 	}
 
 	public onScrollVelocity (e: any) {
