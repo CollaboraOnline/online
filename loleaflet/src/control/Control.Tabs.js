@@ -94,8 +94,18 @@ L.Control.Tabs = L.Control.extend({
 			// no blacklisting available for this context menu so only add when needed
 			this._menuItem['.uno:Move'] = {
 				name: _UNO('.uno:Move', 'spreadsheet', true),
-				callback: function() {this._map.sendUnoCommand('.uno:Move');}.bind(this)
+				callback: function() {this._map.sendUnoCommand('.uno:Move');}.bind(this),
+				visible: areTabsMultiple
 			};
+
+			this._menuItem['.uno:CopyTab'] = {
+				name: _UNO('.uno:CopyTab', 'spreadsheet', true),
+				callback: function() {this._map.sendUnoCommand('.uno:Move');}.bind(this),
+				visible: function() {
+					return !areTabsMultiple();
+				}
+			};
+
 			L.installContextMenu({
 				selector: '.spreadsheet-tab',
 				className: 'loleaflet-font',
