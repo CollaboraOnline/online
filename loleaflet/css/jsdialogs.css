@@ -954,6 +954,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	border-bottom: none !important;
 	padding-left: 8px;
 	flex: min-content;
+	text-transform: inherit;
 }
 
 #mobile-wizard.popup.snackbar #button,
