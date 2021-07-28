@@ -614,7 +614,7 @@ L.Control.UIManager = L.Control.extend({
 				{
 					type: 'container',
 					children: [
-						{id: 'label', type: 'fixedtext', text: label},
+						action ? {id: 'label', type: 'fixedtext', text: label} : {id: 'label-no-action', type: 'fixedtext', text: label},
 						action ? {id: 'button', type: 'pushbutton', text: action} : {}
 					]
 				}
