@@ -71,46 +71,6 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		this._cellCursorXY = {x: -1, y: -1};
 	},
 
-	isCurrentCellCommentShown: function () {
-		// I think this function is not used any more. Needs to be confirmed.
-		var annotations = this._annotations[this._selectedPart];
-		for (var key in annotations) {
-			var annotation = annotations[key]._annotation;
-			if (this._cellCursor.contains(annotation._data.cellPos)) {
-				return this._map.hasLayer(annotation) && annotation.isVisible();
-			}
-		}
-		return false;
-	},
-
-	showAnnotationFromCurrentCell: function() {
-		// I think this function is not used any more. Needs to be confirmed.
-		var annotations = this._annotations[this._selectedPart];
-		for (var key in annotations) {
-			var annotation = annotations[key]._annotation;
-			if (this._cellCursor.intersects(annotation._data.cellPos)) {
-				if (window.mode.isMobile()) {
-					this._openCommentWizard(annotation);
-				} else {
-					this._map.addLayer(annotation);
-					annotation.show();
-				}
-			}
-		}
-	},
-
-	hideAnnotationFromCurrentCell: function() {
-		// I think this function is not used any more. Needs to be confirmed.
-		var annotations = this._annotations[this._selectedPart];
-		for (var key in annotations) {
-			var annotation = annotations[key]._annotation;
-			if (this._cellCursor.contains(annotation._data.cellPos)) {
-				annotation.hide();
-				this._map.removeLayer(annotation);
-			}
-		}
-	},
-
 	isHiddenPart: function (part) {
 		if (!this._hiddenParts)
 			return false;
@@ -1177,7 +1137,7 @@ L.SheetGeometry = L.Class.extend({
 		}
 
 		return new L.Point(this._columns.getTileTwipsPosFromPrint(point.x),
-				this._rows.getTileTwipsPosFromPrint(point.y));
+			this._rows.getTileTwipsPosFromPrint(point.y));
 	},
 
 	// accepts a point in tile-twips coordinates and returns the equivalent point

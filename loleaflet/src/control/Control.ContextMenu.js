@@ -52,7 +52,7 @@ L.Control.ContextMenu = L.Control.extend({
 				   'SpellCheckIgnore'],
 
 			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable',
-				      'FormatCellDialog', 'ShowNote', 'HideNote', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize'],
+				      'FormatCellDialog', 'DeleteNote', 'SetAnchorToCell', 'SetAnchorToCellResize'],
 
 			presentation: ['SetDefault'],
 			drawing: []
@@ -145,11 +145,7 @@ L.Control.ContextMenu = L.Control.extend({
 				build: function() {
 					return {
 						callback: function(key) {
-							if (map.getDocType() == 'spreadsheet' && key == '.uno:ShowNote') {
-								map._docLayer.showAnnotationFromCurrentCell();
-							} else if (map.getDocType() == 'spreadsheet' && key == '.uno:HideNote') {
-								map._docLayer.hideAnnotationFromCurrentCell();
-							} else if (map._clip === undefined || !map._clip.filterExecCopyPaste(key)) {
+							if (map._clip === undefined || !map._clip.filterExecCopyPaste(key)) {
 								map.sendUnoCommand(key);
 								// For spelling context menu we need to remove selection
 								if (spellingContextMenu)
@@ -230,11 +226,6 @@ L.Control.ContextMenu = L.Control.extend({
 
 				if (window.mode.isMobile() && this.options.mobileBlackList.indexOf(commandName) !== -1)
 					continue;
-
-				if (this._map.getDocType() == 'spreadsheet' && commandName == 'ShowNote') {
-					if (this._map._docLayer.isCurrentCellCommentShown())
-						item.command = '.uno:HideNote';
-				}
 
 				if (hasParam || commandName === 'None' || commandName === 'FontDialogForParagraph' || commandName === 'Delete') {
 					itemName = window.removeAccessKey(item.text);
