@@ -99,18 +99,6 @@ L.Control.UIManager = L.Control.extend({
 			}, 700);
 		};
 
-		var closeBusyPopup = function() {
-			clearTimeout(this.busyPopupTimer);
-			var json = {
-				id: 'busypopup',
-				jsontype: 'dialog',
-				type: 'modalpopup',
-				action: 'close'
-			};
-			if (app.socket)
-				app.socket._onMessage({textMsg: 'jsdialog: ' + JSON.stringify(json)});
-		};
-
 		var fadeoutBusyPopup = function() {
 			clearTimeout(this.busyPopupTimer);
 			var json = {
@@ -124,7 +112,7 @@ L.Control.UIManager = L.Control.extend({
 		};
 
 		this.map.on('showbusy', function(e) {
-			closeBusyPopup();
+			fadeoutBusyPopup();
 			openBusyPopup(e.label);
 		});
 
