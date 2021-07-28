@@ -947,7 +947,9 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 
 #mobile-wizard.popup.snackbar #label,
-.snackbar.jsdialog-container #label {
+.snackbar.jsdialog-container #label,
+#mobile-wizard.popup.snackbar #label-no-action,
+.snackbar.jsdialog-container #label-no-action {
 	color: white !important;
 	font-size: 14px !important;
 	margin: 0px !important;
@@ -955,6 +957,12 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	padding-left: 8px;
 	flex: min-content;
 	text-transform: inherit;
+}
+
+#mobile-wizard.popup.snackbar #label-no-action,
+.snackbar.jsdialog-container #label-no-action {
+	padding-right: 8px;
+	text-align: center;
 }
 
 #mobile-wizard.popup.snackbar #button,
