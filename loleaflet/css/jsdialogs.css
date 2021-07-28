@@ -946,6 +946,10 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	border-radius: 4px !important;
 }
 
+.snackbar.jsdialog-container .lokdialog.ui-dialog-content.ui-widget-content {
+	border-radius: 0 !important;
+}
+
 #mobile-wizard.popup.snackbar #label,
 .snackbar.jsdialog-container #label,
 #mobile-wizard.popup.snackbar #label-no-action,
