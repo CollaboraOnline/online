@@ -2146,7 +2146,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			id = id.replace(/\./g, '-');
 			div.id = id;
 
-			var icon = data.icon ? data.icon : builder._createIconURL(data.command);
+			if (builder.options.cssClass.includes('sidebar') && parentContainer.attributes.class.textContent.includes('ui-expander-icon-right')) {
+				var icon = builder._createIconURL('morebutton');
+			} else {
+				var icon = data.icon ? data.icon : builder._createIconURL(data.command);
+			}
 			var buttonId = id + 'img';
 
 			button = L.DomUtil.create('img', 'ui-content unobutton', div);

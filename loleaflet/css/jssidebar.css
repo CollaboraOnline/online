@@ -42,6 +42,7 @@
 	display: flex;
 	justify-content: space-between;
 	width: 280px;
+	align-items: center;
 }
 
 .sidebar.ui-drawing-area {
@@ -107,4 +108,19 @@ td.jsdialog .jsdialog.cell.sidebar {
 .sidebar #font select,
 .sidebar #fontsizecombobox select {
 	margin: 0;
+}
+
+.ui-expander.jsdialog.sidebar .ui-expander-icon-right,
+.ui-expander.jsdialog.sidebar .ui-expander-icon-right * {
+	display: block;
+	width: 10px;
+	height: 10px;
+}
+
+.ui-expander.jsdialog.sidebar .ui-expander-icon-right img {
+	filter: brightness(2);
+}
+
+.ui-expander.jsdialog.sidebar .ui-expander-icon-right:hover img {
+	filter: none;
 }
