@@ -911,8 +911,10 @@ app.definitions.Socket = L.Class.extend({
 				this._map._active = false;
 
 				clearTimeout(vex.timer);
-				if (this.ReconnectCount++ >= 10)
+				if (this.ReconnectCount++ >= 10) {
+					this._map.fire('error', {msg: errorMessages.docunloadinggiveup});
 					return; // Give up.
+				}
 
 				map = this._map;
 				vex.timer = setInterval(function() {
@@ -925,8 +927,9 @@ app.definitions.Socket = L.Class.extend({
 				// .5, 2, 4.5, 8, 12.5, 18, 24.5, 32, 40.5 seconds
 				}, 500 * this.ReconnectCount * this.ReconnectCount); // Exponential back-off.
 
-
-				this._map.fire('error', {msg: errorMessages.docunloading});
+				if (this.ReconnectCount > 1) {
+					this._map.fire('error', {msg: errorMessages.docunloadingretry});
+				}
 			}
 
 			if (passwordNeeded) {
