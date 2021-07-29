@@ -189,6 +189,7 @@ namespace {
 
 SocketPoll::SocketPoll(const std::string& threadName)
     : _name(threadName),
+      _pollStartIndex(0),
       _stop(false),
       _threadStarted(0),
       _threadFinished(false),
@@ -440,30 +441,60 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
     std::chrono::steady_clock::time_point newNow =
         std::chrono::steady_clock::now();
 
-    for (int i = static_cast<int>(size) - 1; i >= 0; --i)
+    if (size > 0)
     {
-        SocketDisposition disposition(_pollSockets[i]);
-        try
+        // We use the _pollStartIndex to start the polling at a different index each time. Do some
+        // sanity check first to handle the case where we removed one or several sockets last time.
+        if (_pollStartIndex > size - 1)
+            _pollStartIndex = size - 1;
+
+        std::vector<int> toErase;
+
+        LOG_DBG("Starting handling poll results of " << _name << " at index " << _pollStartIndex << " (of " << size << ")");
+
+        size_t i = _pollStartIndex;
+        size_t previ = size;
+        while (previ != _pollStartIndex)
         {
-            _pollSockets[i]->handlePoll(disposition, newNow,
-                                        _pollFds[i].revents);
+            SocketDisposition disposition(_pollSockets[i]);
+            try
+            {
+                _pollSockets[i]->handlePoll(disposition, newNow,
+                                            _pollFds[i].revents);
+            }
+            catch (const std::exception& exc)
+            {
+                LOG_ERR("Error while handling poll for socket #" <<
+                        _pollFds[i].fd << " at " << i << " in " << _name << ": " << exc.what());
+                disposition.setClosed();
+                rc = -1;
+            }
+
+            if (!disposition.isContinue())
+                toErase.push_back(i);
+
+            disposition.execute();
+
+            previ = i;
+            if (i == 0)
+                i = size - 1;
+            else
+                i--;
         }
-        catch (const std::exception& exc)
+        if (!toErase.empty())
         {
-            LOG_ERR("Error while handling poll for socket #" <<
-                    _pollFds[i].fd << " in " << _name << ": " << exc.what());
-            disposition.setClosed();
-            rc = -1;
+            std::sort(toErase.begin(), toErase.end(), [](int a, int b) { return a > b; });
+            for (int eraseIndex : toErase)
+            {
+                LOG_DBG("Removing socket #" << _pollFds[eraseIndex].fd << " (at " << eraseIndex << " of " <<
+                        _pollSockets.size() << ") from " << _name);
+                _pollSockets.erase(_pollSockets.begin() + eraseIndex);
+            }
         }
 
-        if (!disposition.isContinue())
-        {
-            LOG_DBG("Removing socket #" << _pollFds[i].fd << " (of " <<
-                    _pollSockets.size() << ") from " << _name);
-            _pollSockets.erase(_pollSockets.begin() + i);
-        }
-
-        disposition.execute();
+        // In case we remved sockets the new _pollStartIndex might be out of bounds, but we check it
+        // before using it above anyway.
+        _pollStartIndex = (_pollStartIndex + 1) % size;
     }
 
     return rc;
