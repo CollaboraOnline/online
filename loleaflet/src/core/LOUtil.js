@@ -155,6 +155,32 @@ L.LOUtil = {
 		return -1;
 	},
 
+	_doRectanglesIntersect: function (rectangle1, rectangle2) { // Format: (x, y, w, h).
+		// Don't use equality in comparison, that's not an intersection.
+		if (Math.abs((rectangle1[0] + rectangle1[2] * 0.5) - (rectangle2[0] + rectangle2[2] * 0.5)) < rectangle1[2] + rectangle2[2]) {
+			if (Math.abs((rectangle1[1] + rectangle1[3] * 0.5) - (rectangle2[1] + rectangle2[3] * 0.5)) < rectangle1[3] + rectangle2[3])
+				return true;
+			else
+				return false;
+		}
+		else
+			return false;
+	},
+
+	// Returns the intersecting area of 2 rectangles. Rectangle format: (x, y, w, h). Return format is the same or null.
+	_getIntersectionRectangle: function (rectangle1, rectangle2) {
+		if (this._doRectanglesIntersect(rectangle1, rectangle2)) {
+			var x = (rectangle1[0] > rectangle2[0] ? rectangle1[0]: rectangle2[0]);
+			var y = (rectangle1[1] > rectangle2[1] ? rectangle1[1]: rectangle2[1]);
+			var w = (rectangle1[0] + rectangle1[2] < rectangle2[0] + rectangle2[2] ? rectangle1[0] + rectangle1[2] - x: rectangle2[0] + rectangle2[2] - x);
+			var h = (rectangle1[1] + rectangle1[3] < rectangle2[1] + rectangle2[3] ? rectangle1[1] + rectangle1[3] - y: rectangle2[1] + rectangle2[3] - y);
+
+			return [x, y, w, h];
+		}
+		else
+			return null;
+	},
+
 	/// Create a rectangle object which is working with core pixels.
 	/// x1 and y1 should always <= x2 and y2. In other words width >= 0 && height >= 0 must be provided.
 	/// This class doesn't check for above conditions. There is a isValid function for use when needed.
