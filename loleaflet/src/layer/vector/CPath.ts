@@ -24,6 +24,8 @@ abstract class CPath extends CEventsHandler {
 	fixed: boolean = false; // CPath coordinates are the same as overlay section coordinates.
 	cursorType: string;
 	thickness: number = 2;
+	viewId: number = -1;
+	groupType: PathGroupType = PathGroupType.Other;
 	toCompatUnits: Function;
 
 	radius: number = 0;
@@ -51,10 +53,21 @@ abstract class CPath extends CEventsHandler {
 		this.point = options.point !== undefined ? options.point : this.point;
 		this.toCompatUnits = options.toCompatUnits !== undefined ? options.toCompatUnits : this.toCompatUnits;
 
+		this.viewId = CPath.getViewId(options);
+		if (options.groupType !== undefined)
+			this.groupType = options.groupType;
+
 		CPath.countObjects += 1;
 		this.id = CPath.countObjects;
 		this.zIndex = this.id;
 		this.addSupportedEvents(['popupopen', 'popupclose']);
+	}
+
+	static getViewId(options: any): number {
+		if (options.viewId === undefined || options.viewId === null) // Own cell cursor/selection
+			return -1;
+		else
+			return parseInt(options.viewId);
 	}
 
 	setStyleOptions(options: any) {
@@ -315,6 +328,14 @@ abstract class CPath extends CEventsHandler {
 	}
 
 };
+
+// This also defines partial rendering order.
+enum PathGroupType {
+	CellSelection, // bottom.
+	TextSelection,
+	CellCursor,
+	Other  // top.
+}
 
 class CPathGroup {
 	private paths: CPath[];

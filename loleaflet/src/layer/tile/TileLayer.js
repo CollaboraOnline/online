@@ -6,7 +6,7 @@
 // Implement String::startsWith which is non-portable (Firefox only, it seems)
 // See http://stackoverflow.com/questions/646628/how-to-check-if-a-string-startswith-another-string#4579228
 
-/* global app vex $ L _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CBounds CCellCursor CCellSelection */
+/* global app vex $ L _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CBounds CCellCursor CCellSelection PathGroupType */
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
 	String.prototype.startsWith = function (str) {
@@ -104,6 +104,8 @@ var CSelections = L.Class.extend({
 			var opacity = this._styleData.getFloatPropValue('opacity');
 			var weight = this._styleData.getFloatPropWithoutUnit('border-top-width');
 			var attributes = this._isText ? {
+				viewId: this._isView ? this._viewId : undefined,
+				groupType: PathGroupType.TextSelection,
 				name: this._name,
 				pointerEvents: 'none',
 				fillColor: fillColor,
@@ -114,6 +116,7 @@ var CSelections = L.Class.extend({
 				fill: true,
 				weight: 1.0
 			} : {
+				viewId: this._isView ? this._viewId : undefined,
 				name: this._name,
 				pointerEvents: 'none',
 				color: fillColor,
@@ -1672,6 +1675,7 @@ L.TileLayer = L.GridLayer.extend({
 			if (!cellViewCursorMarker) {
 				var backgroundColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
 				cellViewCursorMarker = new CCellCursor(this._cellViewCursors[viewId].corePixelBounds, {
+					viewId: viewId,
 					fill: false,
 					color: backgroundColor,
 					weight: 2 * (this._painter ? this._painter._dpiScale : 1),
@@ -2956,7 +2960,7 @@ L.TileLayer = L.GridLayer.extend({
 				viewSelection.setPointSet(viewPointSet);
 			} else {
 				viewSelection = new CSelections(viewPointSet, this._canvasOverlay,
-					this._painter._dpiScale, this._selectionsDataDiv, this._map, true, viewId, true);
+					this._painter._dpiScale, this._selectionsDataDiv, this._map, true /* isView */, viewId, true /* isText */);
 				this._viewSelections[viewId].selection = viewSelection;
 			}
 		}

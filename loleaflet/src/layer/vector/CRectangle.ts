@@ -51,6 +51,8 @@ class CCellCursor extends CPathGroup {
 		this.options = options;
 		this.options.lineJoin = 'miter';
 		this.options.lineCap = 'butt';
+		this.options.viewId = CPath.getViewId(options);
+		this.options.groupType = PathGroupType.CellCursor;
 
 		this.setBounds(bounds);
 	}
@@ -126,6 +128,8 @@ class CCellSelection extends CPathGroup {
 		this.options = options;
 		this.options.lineJoin = 'miter';
 		this.options.lineCap = 'butt';
+		this.options.viewId = CPath.getViewId(options);
+		this.options.groupType = PathGroupType.CellSelection;
 
 		this.setPointSet(pointSet);
 	}
