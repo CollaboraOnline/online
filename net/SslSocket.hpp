@@ -44,7 +44,7 @@ public:
             throw std::runtime_error("Failed to create SSL.");
         }
 
-        if (!SSL_set_tlsext_host_name(_ssl, hostname.c_str()))
+        if (!hostname.empty() && !SSL_set_tlsext_host_name(_ssl, hostname.c_str()))
             LOG_WRN("Failed to set hostname for Server Name Indication [" << hostname << ']');
 
         SSL_set_bio(_ssl, _bio, _bio);
