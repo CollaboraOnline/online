@@ -358,6 +358,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				}
 			}
 			$(contentDivs[t]).show();
+			$(window).resize();
 			builder.wizard.selectedTab(tabIds[t]);
 		};
 	},
