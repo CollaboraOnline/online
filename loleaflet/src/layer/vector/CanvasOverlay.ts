@@ -187,6 +187,43 @@ class CanvasOverlay {
 		return spc ? spc.intersectsVisible(queryBounds) : this.bounds.intersects(queryBounds);
 	}
 
+	private static renderOrderComparator(a: CPath, b: CPath): number {
+		if (a.viewId === -1 && b.viewId === -1) {
+			// Both are 'own' / 'self' paths.
+
+			// Both paths are part of the same group, use their zindex to break the tie.
+			if (a.groupType === b.groupType)
+				return a.zIndex - b.zIndex;
+
+			return a.groupType - b.groupType;
+
+		} else if (a.viewId === -1) {
+			// a is an 'own' path and b is not => draw a on top of b.
+			return 1;
+
+		} else if (b.viewId === -1) {
+			// b is an 'own' path and a is not => draw b on top of a.
+			return -1;
+
+		}
+
+		// Both a and b belong to other views.
+
+		if (a.viewId === b.viewId) {
+			// Both belong to the same view.
+
+			// Both paths are part of the same group, use their zindex to break the tie.
+			if (a.groupType === b.groupType)
+				return a.zIndex - b.zIndex;
+
+			return a.groupType - b.groupType;
+
+		}
+
+		// a and b belong to different views.
+		return a.viewId - b.viewId;
+	}
+
 	private draw(paintArea?: CBounds) {
 		if (this.tsManager && this.tsManager.waitForTiles()) {
 			// don't paint anything till tiles arrive for new zoom.
@@ -198,11 +235,8 @@ class CanvasOverlay {
 			orderedPaths.push(path);
 		});
 
-		// Sort in ascending order w.r.t zIndex.
-		// TODO: cache this operation away whenever possible.
-		orderedPaths.sort((a: CPath, b: CPath): number => {
-			return a.zIndex - b.zIndex;
-		});
+		// Sort them w.r.t. rendering order.
+		orderedPaths.sort(CanvasOverlay.renderOrderComparator);
 
 		var renderer = this;
 		orderedPaths.forEach((path: CPath) => {
