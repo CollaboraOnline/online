@@ -5484,20 +5484,28 @@ L.CanvasTileLayer = L.Layer.extend({
 				}
 			}
 			if (!found)
-				parts.push({part: queue[i].part, tileCount: 0});
+				parts.push({part: queue[i].part});
 			found = false;
 		}
 
-		var maxTileCount = 0;
+		var ratio = this._tileSize / this._tileHeightTwips;
+		var partHeightPixels = Math.round((this._partHeightTwips + this._spaceBetweenParts) * ratio);
+		var partWidthPixels = Math.round(this._partWidthTwips * ratio);
+
+		var rectangle;
+		var maxArea = -1;
 		var mostVisiblePart = 0;
+		var docBoundsRectangle = app.sectionContainer.getDocumentBounds();
+		docBoundsRectangle[2] = docBoundsRectangle[2] - docBoundsRectangle[0];
+		docBoundsRectangle[3] = docBoundsRectangle[3] - docBoundsRectangle[1];
 		for (i = 0; i < parts.length; i++) {
-			for (var j = 0; j < queue.length; j++) {
-				if (queue[j].part === parts[i].part)
-					parts[i].tileCount++;
-			}
-			if (parts[i].tileCount > maxTileCount) {
-				maxTileCount = parts[i].tileCount;
-				mostVisiblePart = parts[i].part;
+			rectangle = [0, partHeightPixels * parts[i].part, partWidthPixels, partHeightPixels];
+			rectangle = L.LOUtil._getIntersectionRectangle(rectangle, docBoundsRectangle);
+			if (rectangle) {
+				if (rectangle[2] * rectangle[3] > maxArea) {
+					maxArea = rectangle[2] * rectangle[3];
+					mostVisiblePart = parts[i].part;
+				}
 			}
 		}
 		return mostVisiblePart;
