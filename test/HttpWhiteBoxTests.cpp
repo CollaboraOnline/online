@@ -23,6 +23,7 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE(HttpWhiteBoxTests);
 
     CPPUNIT_TEST(testStatusLineParserValidComplete);
+    CPPUNIT_TEST(testStatusLineParserValidComplete_NoReason);
     CPPUNIT_TEST(testStatusLineParserValidIncomplete);
     CPPUNIT_TEST(testStatusLineSerialize);
 
@@ -34,6 +35,7 @@ class HttpWhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST_SUITE_END();
 
     void testStatusLineParserValidComplete();
+    void testStatusLineParserValidComplete_NoReason();
     void testStatusLineParserValidIncomplete();
     void testStatusLineSerialize();
     void testHeader();
@@ -63,6 +65,28 @@ void HttpWhiteBoxTests::testStatusLineParserValidComplete()
     LOK_ASSERT_EQUAL(expReasonPhrase, statusLine.reasonPhrase());
 }
 
+void HttpWhiteBoxTests::testStatusLineParserValidComplete_NoReason()
+{
+    const unsigned expVersionMajor = 1;
+    const unsigned expVersionMinor = 1;
+    const std::string expVersion
+        = "HTTP/" + std::to_string(expVersionMajor) + '.' + std::to_string(expVersionMinor);
+    const unsigned expStatusCode = 101;
+    const std::string expReasonPhrase;
+    const std::string data
+        = expVersion + ' ' + std::to_string(expStatusCode) + ' ' + expReasonPhrase + "\r\n";
+
+    http::StatusLine statusLine;
+
+    int64_t len = data.size();
+    LOK_ASSERT_EQUAL(http::FieldParseState::Valid, statusLine.parse(data.c_str(), len));
+    LOK_ASSERT_EQUAL(expVersion, statusLine.httpVersion());
+    LOK_ASSERT_EQUAL(expVersionMajor, statusLine.versionMajor());
+    LOK_ASSERT_EQUAL(expVersionMinor, statusLine.versionMinor());
+    LOK_ASSERT_EQUAL(expStatusCode, statusLine.statusCode());
+    LOK_ASSERT_EQUAL(expReasonPhrase, statusLine.reasonPhrase());
+}
+
 void HttpWhiteBoxTests::testStatusLineParserValidIncomplete()
 {
     const unsigned expVersionMajor = 1;
@@ -72,7 +96,7 @@ void HttpWhiteBoxTests::testStatusLineParserValidIncomplete()
     const unsigned expStatusCode = 101;
     const std::string expReasonPhrase = "Something Something";
     const std::string data
-        = expVersion + ' ' + std::to_string(expStatusCode) + ' ' + expReasonPhrase + "\r\n";
+        = expVersion + ' ' + std::to_string(expStatusCode) + "    " + expReasonPhrase + "\r\n";
 
     http::StatusLine statusLine;
 
