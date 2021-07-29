@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData CPoint $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CBounds CCellCursor CCellSelection */
+/* global app L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData CPoint $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CBounds CCellCursor CCellSelection PathGroupType */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -89,6 +89,8 @@ var CSelections = L.Class.extend({
 			var opacity = this._styleData.getFloatPropValue('opacity');
 			var weight = this._styleData.getFloatPropWithoutUnit('border-top-width');
 			var attributes = this._isText ? {
+				viewId: this._isView ? this._viewId : undefined,
+				groupType: PathGroupType.TextSelection,
 				name: this._name,
 				pointerEvents: 'none',
 				fillColor: fillColor,
@@ -99,6 +101,7 @@ var CSelections = L.Class.extend({
 				fill: true,
 				weight: 1.0
 			} : {
+				viewId: this._isView ? this._viewId : undefined,
 				name: this._name,
 				pointerEvents: 'none',
 				color: fillColor,
@@ -2405,6 +2408,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!cellViewCursorMarker) {
 				var backgroundColor = L.LOUtil.rgbToHex(this._map.getViewColor(viewId));
 				cellViewCursorMarker = new CCellCursor(this._cellViewCursors[viewId].corePixelBounds, {
+					viewId: viewId,
 					fill: false,
 					color: backgroundColor,
 					weight: 2 * app.dpiScale,
@@ -3544,7 +3548,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				viewSelection.setPointSet(viewPointSet);
 			} else {
 				viewSelection = new CSelections(viewPointSet, this._canvasOverlay,
-					this._selectionsDataDiv, this._map, true, viewId, true);
+					this._selectionsDataDiv, this._map, true /* isView */, viewId, true /* isText */);
 				this._viewSelections[viewId].selection = viewSelection;
 			}
 		}
