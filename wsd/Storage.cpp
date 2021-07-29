@@ -1225,6 +1225,8 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth,
             httpHeader.set("X-LOOL-WOPI-IsModifiedByUser", isUserModified() ? "true" : "false");
             httpHeader.set("X-LOOL-WOPI-IsAutosave", isAutosave() ? "true" : "false");
             httpHeader.set("X-LOOL-WOPI-IsExitSave", isExitSave() ? "true" : "false");
+            if (isExitSave())
+                httpHeader.set("Connection", "close"); // Don't maintain the socket if we are exiting.
             if (!getExtendedData().empty())
                 httpHeader.set("X-LOOL-WOPI-ExtendedData", getExtendedData());
 
