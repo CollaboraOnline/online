@@ -2778,7 +2778,8 @@ w2utils.event = {
                 ['CC0814', 'E69138', 'F1C232', '6AA84F', '45818E', '3D85C6', '674EA7', 'A54D79'],
                 ['99050C', 'B45F17', 'BF901F', '37761D', '124F5C', '0A5394', '351C75', '741B47'],
                 // ['660205', '783F0B', '7F6011', '274E12', '0C343D', '063762', '20124D', '4C1030'],
-                ['F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2'] // custom colors (up to 4)
+                ['F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2'], // custom colors (up to 4)
+                ['F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2'], // recent colors (up to 8)
             ];
         }
         var pal = $.fn.w2colorPalette;
@@ -2807,6 +2808,14 @@ w2utils.event = {
         } else { // only refresh contents
             $('#w2ui-overlay .w2ui-color').parent().html(getColorHTML(options));
         }
+        function colorExist(color, colorRow) {
+            for (var i=0; i < colorRow.length; i++) {
+                if (color === colorRow[i]) {
+                    return true;
+                }
+            }
+            return false;
+        }
         // bind events
         $('#w2ui-overlay .color')
             .off('.w2color')
@@ -2814,6 +2823,10 @@ w2utils.event = {
                 var color = $(event.originalEvent.target).attr('name');
                 index = $(event.originalEvent.target).attr('index').split(':');
                 $(el).data('_color', color);
+                var recentRow = $.fn.w2colorPalette[pal.length - 1];
+                if (!colorExist(color,recentRow)) {
+                    $.fn.w2colorPalette[pal.length - 1].unshift(color);
+                }
             })
             .on('mouseup.w2color', function () {
                 setTimeout(function () {
@@ -2837,7 +2850,10 @@ w2utils.event = {
                     $(this).w2tag('Invalid color.');
                     return;
                 }
-                $.fn.w2colorPalette[pal.length - 1].unshift(tmp.toUpperCase());
+                var customColorRow = $.fn.w2colorPalette[pal.length - 2];
+                if (!colorExist(tmp, customColorRow )) {
+                    $.fn.w2colorPalette[pal.length - 2].unshift(tmp.toUpperCase());
+                }
                 $(el).w2color(options, callBack);
                 setTimeout(function() { $('#w2ui-overlay input')[0].focus(); }, 100);
             })
@@ -2872,7 +2888,7 @@ w2utils.event = {
             var color = options.color;
             var html  = '<div class="w2ui-color" onmousedown="event.stopPropagation(); event.preventDefault()">'+ // prevent default is needed otherwiser selection gets unselected
                         '<table cellspacing="5"><tbody>';
-            for (var i = 0; i < pal.length - 1; i++) {
+            for (var i = 0; i < pal.length - 2; i++) {
                 html += '<tr>';
                 for (var j = 0; j < pal[i].length; j++) {
                     html += '<td>'+
@@ -2885,14 +2901,27 @@ w2utils.event = {
                 html += '</tr>';
                 if (i < 2) html += '<tr><td style="height: 8px" colspan="8"></td></tr>';
             }
-            var tmp = pal[pal.length - 1];
+            var tmp1 = pal[pal.length - 2];
+            var tmp2 = pal[pal.length - 1];
             html += '<tr><td style="height: 8px" colspan="8"></td></tr>'+
                     '<tr>'+
                     '   <td colspan="4" style="text-align: left"><input placeholder="#FFF000" style="margin-left: 1px; width: 74px" maxlength="7"/></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp[0] +';" name="'+ tmp[0] +'" index="8:0">'+ (options.color == tmp[0] ? '&#149;' : '&#160;') +'</div></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp[1] +';" name="'+ tmp[1] +'" index="8:0">'+ (options.color == tmp[1] ? '&#149;' : '&#160;') +'</div></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp[2] +';" name="'+ tmp[2] +'" index="8:0">'+ (options.color == tmp[2] ? '&#149;' : '&#160;') +'</div></td>'+
-                    '   <td><div class="color" style="background-color: #'+ tmp[3] +';" name="'+ tmp[3] +'" index="8:0">'+ (options.color == tmp[3] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" style="background-color: #'+ tmp1[0] +';" name="'+ tmp1[0] +'" index="8:0">'+ (options.color == tmp1[0] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" style="background-color: #'+ tmp1[1] +';" name="'+ tmp1[1] +'" index="8:0">'+ (options.color == tmp1[1] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" style="background-color: #'+ tmp1[2] +';" name="'+ tmp1[2] +'" index="8:0">'+ (options.color == tmp1[2] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" style="background-color: #'+ tmp1[3] +';" name="'+ tmp1[3] +'" index="8:0">'+ (options.color == tmp1[3] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '</tr>'+
+                    '<tr><td style="height: 4px" colspan="8"></td></tr>' +
+                    '<tr><td style="text-align: left;" colspan="8"><span style="margin-left: 1px;">Recent</span></td></tr>' +
+                    '<tr>'+
+                    '   <td><div class="color" style="background-color: #'+ tmp2[0] +';" name="'+ tmp2[0] +'" index="8:0">'+ (options.color == tmp2[0] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" style="background-color: #'+ tmp2[1] +';" name="'+ tmp2[1] +'" index="8:0">'+ (options.color == tmp2[1] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" style="background-color: #'+ tmp2[2] +';" name="'+ tmp2[2] +'" index="8:0">'+ (options.color == tmp2[2] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" style="background-color: #'+ tmp2[3] +';" name="'+ tmp2[3] +'" index="8:0">'+ (options.color == tmp2[3] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" style="background-color: #'+ tmp2[4] +';" name="'+ tmp2[4] +'" index="8:0">'+ (options.color == tmp2[4] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" style="background-color: #'+ tmp2[5] +';" name="'+ tmp2[5] +'" index="8:0">'+ (options.color == tmp2[5] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" style="background-color: #'+ tmp2[6] +';" name="'+ tmp2[6] +'" index="8:0">'+ (options.color == tmp2[6] ? '&#149;' : '&#160;') +'</div></td>'+
+                    '   <td><div class="color" style="background-color: #'+ tmp2[7] +';" name="'+ tmp2[7] +'" index="8:0">'+ (options.color == tmp2[7] ? '&#149;' : '&#160;') +'</div></td>'+
                     '</tr>'+
                     '<tr><td style="height: 4px" colspan="8"></td></tr>';
             html += '</tbody></table></div>';
