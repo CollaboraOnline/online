@@ -53,6 +53,9 @@ constexpr std::chrono::microseconds WebSocketHandler::PingFrequencyMicroS;
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
 
+#ifdef __linux__
+#define HAVE_ABSTRACT_UNIX_SOCKETS
+#endif
 #define SOCKET_ABSTRACT_UNIX_NAME "0loolwsd-"
 
 int Socket::createSocket(Socket::Type type)
@@ -518,7 +521,7 @@ void SocketPoll::insertNewUnixSocket(
     struct sockaddr_un addrunix;
     std::memset(&addrunix, 0, sizeof(addrunix));
     addrunix.sun_family = AF_UNIX;
-#ifdef __linux__
+#ifdef HAVE_ABSTRACT_UNIX_SOCKETS
     addrunix.sun_path[0] = '\0'; // abstract name
 #else
     addrunix.sun_path[0] = '0';
@@ -959,7 +962,7 @@ std::string LocalServerSocket::bind()
         std::memset(&addrunix, 0, sizeof(addrunix));
         addrunix.sun_family = AF_UNIX;
         std::memcpy(addrunix.sun_path, socketAbstractUnixName.c_str(), socketAbstractUnixName.length());
-#ifdef __linux__
+#ifdef HAVE_ABSTRACT_UNIX_SOCKETS
         addrunix.sun_path[0] = '\0'; // abstract name
 #endif
 
