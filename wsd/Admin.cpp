@@ -362,7 +362,7 @@ bool AdminSocketHandler::handleInitialRequest(
     const std::string& requestURI = request.getURI();
     StringVector pathTokens(Util::tokenize(requestURI, '/'));
 
-    if (request.find("Upgrade") != request.end() && Util::iequal(request["Upgrade"], "websocket"))
+    if (request.has("Upgrade") && Util::iequal(request["Upgrade"], "websocket"))
     {
         Admin &admin = Admin::instance();
         auto handler = std::make_shared<AdminSocketHandler>(&admin, socketWeak, request);
