@@ -1999,7 +1999,8 @@ L.TileLayer = L.GridLayer.extend({
 	_onTextSelectionMsg: function (textMsg) {
 
 		var rectArray = this._getTextSelectionRectangles(textMsg);
-		var isTextSelection = this.isCursorVisible();
+		var inTextSearch = $('input#search-input').is(':focus');
+		var isTextSelection = this.isCursorVisible() || inTextSearch;
 		if (rectArray.length) {
 
 			var rectangles = rectArray.map(function (rect) {
