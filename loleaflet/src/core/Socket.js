@@ -749,6 +749,7 @@ app.definitions.Socket = L.Class.extend({
 			var dialogOpened = vex.dialog.open(dialogOptions);
 
 			if (textMsg === 'idle' || textMsg === 'oom') {
+				this._map._textInput.hideCursor();
 				dialogOpened.contentEl.onclick = restartConnectionFn;
 				$('.vex-overlay').addClass('loleaflet-user-idle-overlay');
 			}
