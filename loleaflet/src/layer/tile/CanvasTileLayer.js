@@ -497,21 +497,6 @@ L.TileSectionManager = L.Class.extend({
 		this._sectionContainer.requestReDraw();
 	},
 
-	clearTilesSection: function () {
-		this._sectionContainer.setPenPosition(this._tilesSection);
-		var size = this._map.getPixelBoundsCore().getSize();
-		this._tilesSection.context.fillStyle = this._sectionContainer.getClearColor();
-		this._tilesSection.context.fillRect(0, 0, size.x, size.y);
-	},
-
-	paintOverlayArea: function(coords) {
-		var tileTopLeft = coords.getPos();
-		var tileSize = this._layer._getTileSize();
-		var tileBounds = new L.Bounds(tileTopLeft,
-			tileTopLeft.add(new L.Point(tileSize, tileSize)));
-		this._layer._canvasOverlay.paintRegion(tileBounds);
-	},
-
 	update: function () {
 		this._sectionContainer.requestReDraw();
 	},
