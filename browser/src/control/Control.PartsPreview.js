@@ -212,9 +212,6 @@ L.Control.PartsPreview = L.Control.extend({
 					// but would cause PgUp/Down to not work on desktop in slide sorter
 					document.activeElement.blur();
 				}
-				setTimeout(function() {
-					app.sectionContainer.requestReDraw();
-				}, 100);
 			}
 		}, this);
 
