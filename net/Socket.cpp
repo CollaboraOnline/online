@@ -975,9 +975,19 @@ std::string LocalServerSocket::bind()
     } while (rc < 0 && errno == EADDRINUSE);
 
     if (rc >= 0)
+    {
+        _name = std::string(&addrunix.sun_path[0]);
         return std::string(&addrunix.sun_path[1]);
+    }
 
     return std::string();
+}
+
+LocalServerSocket::~LocalServerSocket()
+{
+#ifndef HAVE_ABSTRACT_UNIX_SOCKETS
+    ::unlink(_name.c_str());
+#endif
 }
 
 // For a verbose life, tweak here:
