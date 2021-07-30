@@ -138,7 +138,7 @@ describe('Apply font on selected text.', function() {
 
 		helper.clickOnIdle('#tb_editbar_item_backcolor');
 
-		cy.get('.color[name="FF011B"]')
+		cy.get('.color[name="FF011B"]').eq(0)
 			.should('have.text', '•    ');
 	});
 
