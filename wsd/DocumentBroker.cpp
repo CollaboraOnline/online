@@ -508,7 +508,7 @@ void DocumentBroker::pollThread()
     {
         std::stringstream state;
         dumpState(state);
-        LOG_ERR("DocumentBroker stopping although modified " << state.str());
+        LOG_WRN("DocumentBroker stopping although flagged as modified " << state.str());
     }
 
     // Flush socket data first.
@@ -3242,7 +3242,7 @@ void DocumentBroker::dumpState(std::ostream& os)
        << Util::getSteadyClockAsString(_saveManager.lastSaveRequestTime());
     os << "\n  last save response: "
        << Util::getSteadyClockAsString(_saveManager.lastSaveResponseTime());
-    os << "\n  last storage save was successful: " << isLastStorageUploadSuccessful();
+    os << "\n  last storage upload was successful: " << isLastStorageUploadSuccessful();
     os << "\n  last modified: " << Util::getHttpTime(_storageManager.getLastModifiedTime());
     os << "\n  file last modified: " << Util::getHttpTime(_saveManager.getLastModifiedTime());
     os << "\n  isSaving now: " << std::boolalpha << _saveManager.isSaving();
