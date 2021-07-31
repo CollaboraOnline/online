@@ -147,9 +147,16 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	coordsIntersectVisible: function (coords) {
-		var ctx = this._paintContext();
-		var tileBounds = new L.Bounds(new L.Point(coords.x, coords.y), new L.Point(coords.x + ctx.tileSize.x, coords.y + ctx.tileSize.y));
-		return tileBounds.intersectsAny(ctx.paneBoundsList);
+		if (!app.file.fileBasedView) {
+			var ctx = this._paintContext();
+			var tileBounds = new L.Bounds(new L.Point(coords.x, coords.y), new L.Point(coords.x + ctx.tileSize.x, coords.y + ctx.tileSize.y));
+			return tileBounds.intersectsAny(ctx.paneBoundsList);
+		}
+		else {
+			var ratio = this._layer._tileSize / this._layer._tileHeightTwips;
+			var partHeightPixels = Math.round((this._layer._partHeightTwips + this._layer._spaceBetweenParts) * ratio);
+			return L.LOUtil._doRectanglesIntersect(app.file.viewedRectangle, [coords.x, coords.y + partHeightPixels * coords.part, app.tile.size.pixels[0], app.tile.size.pixels[1]]);
+		}
 	},
 
 	_addTilesSection: function () {
