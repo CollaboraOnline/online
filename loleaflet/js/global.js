@@ -14,6 +14,7 @@ window.app = { // Shouldn't have any functions defined.
 			pixels: [0, 0], // This can change according to the zoom level and document's size.
 			twips: [0, 0]
 		},
+		viewedRectangle: [0, 0, 0, 0], // Visible part of the file (x, y, w, h).
 		fileBasedView: false, // (draw-impress only) Default is false. For read-only documents, user can view all parts at once. In that case, this variable is set to "true".
 		calc: {
 			cellCursor: {
