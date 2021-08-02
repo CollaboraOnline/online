@@ -50,6 +50,16 @@ let single_view = false;
 if (process.argv.length > 10) {
 	single_view = process.argv[10] === 'true';
 }
+/*
+global.console = {
+  log: () => {},
+  error: () => {},
+  warn: () => {},
+  info: () => {},
+  debug: () => {},
+  log2: () => {}
+};
+*/
 // jsdom for browser emulation
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
@@ -79,18 +89,19 @@ data = data.replace(/%FRAME_ANCESTORS%/g, '');
 data = data.replace(/%SOCKET_PROXY%/g, 'false');
 data = data.replace(/%UI_DEFAULTS%/g, '{}');
 
-window = new JSDOM(data,
-		   { runScripts: 'dangerously',
-		     pretendToBeVisual: true,
-		     includeNodeLocations: true,
-		     url: 'file:///tmp/notthere/loleaflet.html?file_path=file:///' + to_load,
-		     resources: 'usable',
-		     beforeParse(window) {
-			     console.debug('Before script parsing');
-		     },
-		     done(errors, window) {
-			     console.debug('Errors ' + errors);
-		     }
+window = new JSDOM(data, { 
+				runScripts: 'dangerously',
+				verbose: false,
+				pretendToBeVisual: false,
+				includeNodeLocations: false,
+				url: 'file:///tmp/notthere/loleaflet.html?file_path=file:///' + to_load,
+				resources: 'usable',
+				beforeParse(window) {
+					console.debug('Before script parsing');
+				},
+				done(errors, window) {
+					console.debug('Errors ' + errors);
+				}
 		   }).window;
 
 // Make it possible to mock sizing properties
@@ -120,8 +131,8 @@ function sleep(ms)
 	return new Promise(r => setTimeout(r, ms));
 }
 var docLoaded = false;
-window.perfTests = record_stats;
 processedTiles = [];
+let socketMessageCount = 0;
 
 function dumpStats() {
 	let len = processedTiles.length;
@@ -154,6 +165,7 @@ function dumpStats() {
 	output += `Num of samples=${delays.length}\n`;
 	output += `Delay between each event=${typing_speed}ms\n`;
 	output += `Duration=${typing_duration}ms\n`;
+	output += `Total num of incoming socket messages=${socketMessageCount}\n`;
 	output += `Single view=${single_view}\n`;
 	fs.writeFile(top_builddir + '/loleaflet/test/tilestats.txt', output, function (err) {
 		if (err) console.log('tilestats: error dumping stats to file!', err);
@@ -165,6 +177,36 @@ window.onload = function() {
 	console.debug('socket ' + window.socket);
 	map = window.socket._map;
 
+	// no need to slurp since there's no actual layout rendering
+	var original = window.socket._onMessage.bind(window.socket);
+	var injectedOnMessage = function(e) {
+		if (record_stats)
+			socketMessageCount++;
+		window.socket._extractTextImg(e);
+		let textMsg = e.textMsg;
+		if (!single_view) {
+			if (!textMsg) return;
+			if (textMsg.indexOf('.uno:ModifiedStatus') >= 0)
+				map.fire('docloaded');
+			if (!record_stats) return;
+		}
+		// processing images takes significant amount of cpu time on JSDOM
+		if (textMsg.startsWith('tile:')) {
+			if (record_stats) {
+				processedTiles.push(new Date().getTime());
+			}
+			var command = window.socket.parseServerCmd(textMsg);
+			let sendMsg = `tileprocessed tile=0:${command.x}:${command.y}:${command.tileWidth}:${command.tileHeight}:0`;
+			window.socket._doSend(sendMsg);
+			return;
+		}
+		if (!single_view && !record_stats)
+			return;
+		original(e);
+	}
+	window.socket.socket.onmessage = injectedOnMessage.bind(window.socket);
+	window.socket._emitSlurpedEvents = function() {}
+	clearTimeout(window.socket._slurpTimer);
 	console.debug('Initialize / size map pieces ' + map);
 
 	// Force some sizes onto key pieces:
@@ -199,39 +241,38 @@ window.onload = function() {
 				// mesh the keyboard:
 				let dummyInput = 'askdjf ,asdhflkas r;we f;akdn.adh ;o wh;fa he;qw e.fkahsd ;vbawe.kguday;f vas.,mdb kaery kejraerga';
 				map.focus();
-				let timeStart = new Date().getTime();
 				let inputIndex = 0;
 				if (record_stats) {
 					console.log('tilestats: recording tile delays starting in one second..');
 					await sleep(1000);
 					console.log('tilestats: recording started..');
 				}
-				while (true) {
+				let timeStart = new Date().getTime();
+				let typing = setInterval(() => {
 					let now = new Date().getTime();
-					if (timeStart + typing_duration < now)
-						break;
-					console.debug('sending input key: ' + dummyInput.charCodeAt(inputIndex));
-					window.app.socket.sendMessage(
-						'key' +
-						' type=' + 'input' +
-						' char=' + dummyInput.charCodeAt(inputIndex) + ' key=0\n'
-					);
+					if (timeStart + typing_duration < now) {
+						if (record_stats) {
+							console.log('tilestats: recording ended..');
+							record_stats = false;
+							dumpStats();
+						}
+						clearInterval(typing);
+					}
+					console.debug('sending input text= ' + dummyInput[inputIndex]);
+					if (dummyInput.charCodeAt(inputIndex) === 32) { // space
+						window.socket._doSend(
+							'key' +
+							' type=' + 'input' +
+							' char=' + dummyInput.charCodeAt(inputIndex) + ' key=0\n'
+						);
+					} else {
+						window.socket._doSend(`textinput id=0 text=${dummyInput[inputIndex]}`);
+					}
 					inputIndex = (inputIndex + 1) % dummyInput.length;
-					await sleep(typing_speed);
-				}
-				if (record_stats) {
-					console.log('tilestats: recording ended..');
-					record_stats = false;
-					dumpStats();
-				}
+				}, typing_speed);
 			}
 			else
 				console.debug('No bookmark to jump to');
 		}, 500);
-	});
-	map.on('tilearrived', () => {
-		if (record_stats) {
-			processedTiles.push(new Date().getTime());
-		}
 	});
 };
