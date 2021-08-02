@@ -1130,6 +1130,8 @@ app.definitions.Socket = L.Class.extend({
 			var docUrl = url.split('?')[0];
 			this._map.options.doc = docUrl;
 			this._map.options.previousWopiSrc = this._map.options.wopiSrc; // After save-as op, we may connect to another server, then code will think that server has restarted. In this case, we don't want to reload the page (detect the file name is different).
+			this._map.options.wopiSrc = encodeURIComponent(docUrl);
+
 			if (textMsg.startsWith('renamefile:')) {
 				this._map.fire('postMessage', {
 					msgId: 'File_Rename',
