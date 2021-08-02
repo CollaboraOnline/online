@@ -161,6 +161,14 @@ class TilesSection {
 		}
 	}
 
+	pdfViewDrawTileBorders (tile: any, offset: any, tileSize: number) {
+		this.context.strokeStyle = 'red';
+		this.context.strokeRect(offset.x, offset.y, tileSize, tileSize);
+		this.context.font = '20px Verdana';
+		this.context.fillStyle = 'black';
+		this.context.fillText(tile.coords.x + ' ' + tile.coords.y + ' ' + tile.coords.part + ' ' + (tile.loaded ? 'y': 'n'), Math.round(offset.x + tileSize * 0.5), Math.round(offset.y + tileSize * 0.5));
+	}
+
 	paintSimple (tile: any, ctx: any, async: boolean) {
 		ctx.viewBounds.round();
 		var offset = new L.Point(tile.coords.getPos().x - ctx.viewBounds.min.x, tile.coords.getPos().y - ctx.viewBounds.min.y);
@@ -184,6 +192,7 @@ class TilesSection {
 			offset.y = tile.coords.part * partHeightPixels + tile.coords.y - this.documentTopLeft[1];
 
 			this.context.drawImage(tile.el, offset.x, offset.y, tileSize, tileSize);
+			//this.pdfViewDrawTileBorders(tile, offset, tileSize);
 		}
 		else {
 			this.context.drawImage(tile.el, offset.x, offset.y, ctx.tileSize.x, ctx.tileSize.y);
