@@ -991,7 +991,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 #mobile-wizard.popup.snackbar #button span,
 .snackbar.jsdialog-container #button span {
-	color: #c8e7f9ff !important;
+	color: #c8e7f9ff;
 	font-weight: bold;
 }
 
