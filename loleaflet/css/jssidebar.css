@@ -97,9 +97,13 @@ td.jsdialog .jsdialog.cell.sidebar {
 	border: 1px solid transparent;
 	margin-right: 5px;
 }
+#table-textorientbox.sidebar .jsdialog .radiobutton {
+	border: 1px solid transparent;
+}
 .sidebar.unotoolbutton:hover,
 .sidebar #resetattr:hover,
-.sidebar #FormatPaintbrush:hover {
+.sidebar #FormatPaintbrush:hover,
+#table-textorientbox.sidebar .jsdialog .radiobutton:hover {
 	border-color: #cccccc;
 	background-color: #eeeeee;
 	border-radius: 4px;
@@ -123,4 +127,10 @@ td.jsdialog .jsdialog.cell.sidebar {
 
 .ui-expander.jsdialog.sidebar .ui-expander-icon-right:hover img {
 	filter: none;
+}
+
+#table-textorientbox.sidebar .jsdialog input[type='radio'] {
+	background: none !important;
+	width: auto;
+	height: auto;
 }
