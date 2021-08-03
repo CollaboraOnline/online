@@ -282,6 +282,7 @@ class CanvasSectionContainer {
 	private drawingEnabled: boolean = true;
 	private dirty: boolean = false;
 	private sectionsDirty: boolean = false;
+	private paintedEver: boolean = false;
 
 	// For window sections.
 	private windowSectionList: Array<CanvasSectionObject> = [];
@@ -329,6 +330,12 @@ class CanvasSectionContainer {
 
 		if (disableDrawing)
 			this.disableDrawing();
+	}
+
+	private clearCanvas() {
+		this.context.fillStyle = this.clearColor;
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 
 	getContext () {
@@ -1241,6 +1248,11 @@ class CanvasSectionContainer {
 		this.canvas.style.width = cssWidth.toFixed(4) + 'px';
 		this.canvas.style.height = cssHeight.toFixed(4) + 'px';
 
+		// Avoid black default background if canvas was never painted
+		// since construction.
+		if (!this.paintedEver)
+			this.clearCanvas();
+
 		this.clearMousePositions();
 		this.right = this.canvas.width;
 		this.bottom = this.canvas.height;
@@ -1398,7 +1410,7 @@ class CanvasSectionContainer {
 		this.applyDrawingOrders();
 		if (this.testing)
 			this.createUpdateDivElements();
-		if (redraw)
+		if (redraw && this.drawingAllowed())
 			this.drawSections();
 	}
 
@@ -1616,9 +1628,7 @@ class CanvasSectionContainer {
 		this.context.setTransform(1, 0, 0, 1, 0, 0);
 
 		if (!this.zoomChanged) {
-			this.context.fillStyle = this.clearColor;
-			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-			this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+			this.clearCanvas();
 		}
 
 		this.context.font = String(20 * this.dpiScale) + "px Verdana";
@@ -1643,6 +1653,8 @@ class CanvasSectionContainer {
 				this.context.translate(-this.sections[i].myTopLeft[0], -this.sections[i].myTopLeft[1]);
 			}
 		}
+
+		this.paintedEver = true;
 		//this.drawSectionBorders();
 	}
 
