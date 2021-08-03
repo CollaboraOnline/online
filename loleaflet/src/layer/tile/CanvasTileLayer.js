@@ -2109,7 +2109,9 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._prevCellCursorXY = new L.Point(-1, -1);
 		}
 
-		if (textMsg.match('EMPTY') || !this._map.isPermissionEdit()) {
+		var empty = textMsg.match('EMPTY');
+
+		if (empty || !this._map.isPermissionEdit()) {
 			app.file.calc.cellCursor.visible = false;
 			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._cellCursor = L.LatLngBounds.createDefault();
@@ -2177,6 +2179,11 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// Remove input help if there is any:
 		this._removeInputHelpMarker();
+
+		if (!empty && !this._gotFirstCellCursor) {
+			this._gotFirstCellCursor = true;
+			this._update();
+		}
 	},
 
 	_removeInputHelpMarker: function() {
@@ -4416,12 +4423,16 @@ L.CanvasTileLayer = L.Layer.extend({
 	// hence we need to request an updated cell cursor position for this level.
 	_onCellCursorShift: function (force) {
 		if ((this._cellCursorMarker && !this.options.sheetGeometryDataEnabled) || force) {
-			app.socket.sendMessage('commandvalues command=.uno:CellCursor'
-			                     + '?outputHeight=' + this._tileWidthPx
-			                     + '&outputWidth=' + this._tileHeightPx
-			                     + '&tileHeight=' + this._tileWidthTwips
-			                     + '&tileWidth=' + this._tileHeightTwips);
+			this.requestCellCursor();
 		}
+	},
+
+	requestCellCursor: function() {
+		app.socket.sendMessage('commandvalues command=.uno:CellCursor'
+			+ '?outputHeight=' + this._tileWidthPx
+			+ '&outputWidth=' + this._tileHeightPx
+			+ '&tileHeight=' + this._tileWidthTwips
+			+ '&tileWidth=' + this._tileHeightTwips);
 	},
 
 	_invalidatePreviews: function () {
@@ -5666,6 +5677,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!map || this._documentInfo === '') {
 			return;
 		}
+
+		// Calc: do not set view area too early after load and before we get the cursor position.
+		if (this.isCalc() && !this._gotFirstCellCursor)
+			return;
 
 		if (app.file.fileBasedView) {
 			this._updateFileBasedView();
