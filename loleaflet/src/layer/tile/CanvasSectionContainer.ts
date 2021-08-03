@@ -277,6 +277,7 @@ class CanvasSectionContainer {
 	private documentAnchor: Array<number> = null; // This is the point where document starts inside canvas element. Initial value shouldn't be [0, 0].
 	// Above 2 properties can be used with documentBounds.
 	private drawingPaused: number = 0;
+	private drawingEnabled: boolean = true;
 	private dirty: boolean = false;
 	private sectionsDirty: boolean = false;
 
@@ -293,7 +294,7 @@ class CanvasSectionContainer {
 	private stoppingFunctionList: Array<EventListener>; // Event listeners need to be removed from the canvas object. So we keep track of their functions.
 	private stoppingEventTypes: Array<string>; // Events those stop the animation.
 
-	constructor (canvasDOMElement: HTMLCanvasElement) {
+	constructor (canvasDOMElement: HTMLCanvasElement, disableDrawing?: boolean) {
 		this.canvas = canvasDOMElement;
 		this.context = canvasDOMElement.getContext('2d', { alpha: false , desynchronized: true });
 		this.context.setTransform(1,0,0,1,0,0);
@@ -323,6 +324,9 @@ class CanvasSectionContainer {
 		document.body.appendChild(tempElement);
 		this.scrollLineHeight = parseInt(window.getComputedStyle(tempElement).fontSize);
 		document.body.removeChild(tempElement); // Remove the temporary element.
+
+		if (disableDrawing)
+			this.disableDrawing();
 	}
 
 	getContext () {
@@ -372,11 +376,32 @@ class CanvasSectionContainer {
 		return this.zoomChanged;
 	}
 
-	isDrawingPaused (): boolean {
-		return this.drawingPaused > 0;
+	drawingAllowed (): boolean {
+		return this.drawingEnabled && this.drawingPaused <= 0;
+	}
+
+	// This is used for making sure rendering does not happen for multiple runs of
+	// Socket._emitSlurpedEvents(). Currently this is used in Calc to disable rendering
+	// from docload till we get tiles of the correct view area to render.
+	// After calling this, only enableDrawing() can undo this call.
+	disableDrawing () {
+		this.drawingEnabled = false;
+	}
+
+	enableDrawing () {
+		if (this.drawingEnabled)
+			return;
+
+		this.drawingEnabled = true;
+		if (this.drawingPaused === 0) {
+			// Trigger a forced repaint as drawing is not paused currently.
+			this.dirty = true;
+			this.paintOnResumeOrEnable();
+		}
 	}
 
 	pauseDrawing () {
+
 		if (this.drawingPaused++ === 0) {
 			this.dirty = false;
 		}
@@ -385,28 +410,32 @@ class CanvasSectionContainer {
 	// set topLevel if we are sure that we are the top of call nesting
 	// eg. in a browser event handler. Avoids JS exceptions poisoning
 	// the count, since we have no RAII helpers here.
-	resumeDrawing(topLevel: boolean) {
+	resumeDrawing(topLevel?: boolean) {
 		var wasNonZero: boolean = this.drawingPaused !== 0;
 		if (topLevel)
 		   this.drawingPaused = 0;
-		else
+		else if (this.drawingPaused > 0)  // ensure non-negative value.
 		   this.drawingPaused--;
 
-		if (wasNonZero && this.drawingPaused === 0) {
-			if (this.sectionsDirty) {
-				this.updateBoundSectionLists();
-				this.reNewAllSections(false);
-				this.sectionsDirty = false;
-			}
+		if (this.drawingEnabled && wasNonZero && this.drawingPaused === 0) {
+			this.paintOnResumeOrEnable();
+		}
+	}
 
-			var scrollSection = <any>this.getSectionWithName(L.CSections.Scroll.name)
-			if (scrollSection)
-				scrollSection.completePendingScroll(); // No painting, only dirtying.
+	private paintOnResumeOrEnable() {
+		if (this.sectionsDirty) {
+			this.updateBoundSectionLists();
+			this.reNewAllSections(false);
+			this.sectionsDirty = false;
+		}
 
-			if (this.dirty) {
-				this.requestReDraw();
-				this.dirty = false;
-			}
+		var scrollSection = <any>this.getSectionWithName(L.CSections.Scroll.name)
+		if (scrollSection)
+			scrollSection.completePendingScroll(); // No painting, only dirtying.
+
+		if (this.dirty) {
+			this.requestReDraw();
+			this.dirty = false;
 		}
 	}
 
@@ -594,7 +623,7 @@ class CanvasSectionContainer {
 	}
 
 	requestReDraw() {
-		if (this.isDrawingPaused()) {
+		if (!this.drawingAllowed()) {
 			// Someone requested a redraw, but we're paused => schedule a redraw.
 			this.setDirty();
 			return;
@@ -1764,7 +1793,7 @@ class CanvasSectionContainer {
 		this.sections.push(newSection);
 		this.addSectionFunctions(newSection);
 		newSection.onInitialize();
-		if (!this.isDrawingPaused()) {
+		if (this.drawingAllowed()) {
 			this.updateBoundSectionLists();
 			this.reNewAllSections();
 		}
@@ -1790,7 +1819,7 @@ class CanvasSectionContainer {
 		}
 
 		if (found) {
-			if (this.isDrawingPaused())
+			if (!this.drawingAllowed())
 			    this.sectionsDirty = true;
 			else {
 			    this.updateBoundSectionLists();
