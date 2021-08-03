@@ -110,7 +110,7 @@ class ScrollSection {
 	}
 
 	public onScrollTo (e: any, force: boolean = false) {
-		if (!force && this.containerObject.isDrawingPaused()) {
+		if (!force && !this.containerObject.drawingAllowed()) {
 			// Only remember the last scroll-to position.
 			this.pendingScrollEvent = e;
 			return;

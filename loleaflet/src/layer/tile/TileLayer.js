@@ -1437,8 +1437,10 @@ L.TileLayer = L.GridLayer.extend({
 		this._removeInputHelpMarker();
 
 		if (!empty && !this._gotFirstCellCursor) {
+			// Drawing is disabled from CalcTileLayer construction, enable it now.
 			this._gotFirstCellCursor = true;
 			this._update();
+			this.enableDrawing();
 		}
 	},
 
