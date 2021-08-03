@@ -46,7 +46,7 @@ L.TileSectionManager = L.Class.extend({
 		this._oscCtxs = [];
 		this._tilesSection = null; // Shortcut.
 
-		this._sectionContainer = new CanvasSectionContainer(this._canvas);
+		this._sectionContainer = new CanvasSectionContainer(this._canvas, this._layer.isCalc() /* disableDrawing? */);
 
 		if (this._layer.isCalc())
 			this._sectionContainer.setClearColor('white');
@@ -729,6 +729,11 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	resumeDrawing: function (topLevel) {
 		if (this._painter && this._painter._sectionContainer)
 			this._painter._sectionContainer.resumeDrawing(topLevel);
+	},
+
+	enableDrawing: function () {
+		if (this._painter && this._painter._sectionContainer)
+			this._painter._sectionContainer.enableDrawing();
 	},
 
 	_getUIWidth: function () {
