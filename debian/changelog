@@ -1,3 +1,9 @@
+loolwsd (6.4.10-7) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-6.4.10-7
+
+ -- Jan Holesovsky <kendy@collabora.com>  Tue, 03 Aug 2021 15:10:00 +0100
+
 loolwsd (6.4.10-6) unstable; urgency=medium
 
   * https://github.com/CollaboraOnline/online/releases/tag/cp-6.4.10-6
