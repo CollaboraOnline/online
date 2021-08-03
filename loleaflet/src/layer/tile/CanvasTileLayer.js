@@ -5510,37 +5510,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		return false;
 	},
 
-	// In file based view, all parts may be drawn, not only selected part.
-	_getTileInfoForFileBasedView: function (currentX, currentY, zoom, partHeightPixels, queue) {
-		var yMin = currentY;
-		var yMax = yMin + this._tileSize;
-
-		var parts = [];
-		for (var i = 0; i < this._parts; i++) {
-			var partMin = i * partHeightPixels;
-			var partMax = (i + 1) * partHeightPixels;
-			if ((yMin >= partMin && yMin <= partMax) || (yMax >= partMin && yMax <= partMax)) {
-				parts.push(i);
-			}
-		}
-
-		for (i = 0; i < parts.length; i++) {
-			var yMinLocal = yMin - parts[i] * partHeightPixels;
-			if (yMinLocal >= 0) {
-				yMinLocal = yMinLocal - yMinLocal % this._tileSize;
-				if (!this._doesQueueIncludeTileInfo(queue, parts[i], currentX, yMinLocal))
-					queue.push(new L.TileCoordData(currentX, yMinLocal, zoom, parts[i]));
-			}
-
-			var yMaxLocal = yMax - parts[i] * partHeightPixels;
-			if (yMaxLocal >= 0) {
-				yMaxLocal = yMaxLocal - yMaxLocal % this._tileSize;
-				if (!this._doesQueueIncludeTileInfo(queue, parts[i], currentX, yMaxLocal))
-					queue.push(new L.TileCoordData(currentX, yMaxLocal, zoom, parts[i]));
-			}
-		}
-	},
-
 	_sortFileBasedQueue: function (queue) {
 		for (var i = 0; i < queue.length - 1; i++) {
 			for (var j = i + 1; j < queue.length; j++) {
@@ -5606,47 +5575,60 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var ratio = this._tileSize * relScale / this._tileHeightTwips;
 		var partHeightPixels = Math.round((this._partHeightTwips + this._spaceBetweenParts) * ratio);
+		var partWidthPixels = Math.round((this._partWidthTwips) * ratio);
 
-		var topLeft = zoomFrameBounds ? [ zoomFrameBounds.min.x, zoomFrameBounds.min.y ] :  app.sectionContainer.getDocumentTopLeft();
-		var bottomRight = zoomFrameBounds ? [ zoomFrameBounds.max.x, zoomFrameBounds.max.y ] : app.sectionContainer.getDocumentBottomRight();
-
-		topLeft = [topLeft[0] - topLeft[0] % this._tileSize, topLeft[1] - topLeft[1] % this._tileSize];
-		bottomRight = [bottomRight[0] - bottomRight[0] % this._tileSize, bottomRight[1] - bottomRight[1] % this._tileSize];
-
-		var currentX = topLeft[0];
-		var currentY = topLeft[1];
+		var intersectionAreaRectangle = L.LOUtil._getIntersectionRectangle(app.file.viewedRectangle, [0, 0, partWidthPixels, partHeightPixels * this._parts]);
 
 		var queue = [];
-		while (currentY <= bottomRight[1]) {
-			if (currentX > bottomRight[0]) {
-				currentX = topLeft[0];
-				currentY += this._tileSize;
+
+		if (intersectionAreaRectangle) {
+			var minLocalX = Math.floor(intersectionAreaRectangle[0] / app.tile.size.pixels[0]) * app.tile.size.pixels[0];
+			var maxLocalX = Math.floor((intersectionAreaRectangle[0] + intersectionAreaRectangle[2]) / app.tile.size.pixels[0]) * app.tile.size.pixels[0];
+
+			var startPart = Math.floor(intersectionAreaRectangle[1] / partHeightPixels);
+			var startY = app.file.viewedRectangle[1] - startPart * partHeightPixels;
+			startY = Math.floor(startY / app.tile.size.pixels[1]) * app.tile.size.pixels[1];
+
+			var endPart = Math.ceil((intersectionAreaRectangle[1] + intersectionAreaRectangle[3]) / partHeightPixels);
+			var endY = app.file.viewedRectangle[1] + app.file.viewedRectangle[3] - endPart * partHeightPixels;
+			endY = Math.floor(endY / app.tile.size.pixels[1]) * app.tile.size.pixels[1];
+
+			var vTileCountPerPart = Math.ceil(partHeightPixels / app.tile.size.pixels[1]);
+
+			for (var i = startPart; i < endPart; i++) {
+				for (var j = minLocalX; j <= maxLocalX; j += app.tile.size.pixels[0]) {
+					for (var k = 0; k <= vTileCountPerPart * app.tile.size.pixels[0]; k += app.tile.size.pixels[1])
+						if ((i !== startPart || k >= startY) && (i !== endPart || k <= endY))
+							queue.push(new L.TileCoordData(j, k, zoom, i));
+				}
 			}
 
-			this._getTileInfoForFileBasedView(currentX, currentY, zoom, partHeightPixels, queue);
-			currentX += this._tileSize;
-		}
+			this._sortFileBasedQueue(queue);
 
-		this._sortFileBasedQueue(queue);
-		var skipChange = checkOnly && zoomFrameBounds;
-
-		if (!skipChange && queue.length > 0) {
-			var partToSelect = this._getMostVisiblePart(queue);
-			if (this._selectedPart !== partToSelect) {
-				this._selectedPart = partToSelect;
-				this._preview._scrollToPart();
+			if (queue.length > 0) {
+				var partToSelect = this._getMostVisiblePart(queue);
+				if (this._selectedPart !== partToSelect) {
+					this._selectedPart = partToSelect;
+					this._preview._scrollToPart();
+					this.highlightCurrentPart(partToSelect);
+				}
 			}
-			this.highlightCurrentPart(partToSelect);
-		}
 
-		for (var i = 0; !skipChange && i < this._tiles.length; i++) {
-			this._tiles[i].current = false; // Visible ones's "current" property will be set to true below.
-		}
+			for (i = 0; i < this._tiles.length; i++) {
+				this._tiles[i].current = false; // Visible ones's "current" property will be set to true below.
+			}
 
-		for (i = 0; !skipChange && i < queue.length; i++) {
-			var tempTile = this._tiles[this._tileCoordsToKey(queue[i])];
-			if (tempTile && tempTile.loaded)
-				tempTile.current = true;
+			var allNewTiles = true;
+			for (i = 0; i < queue.length; i++) {
+				var tempTile = this._tiles[this._tileCoordsToKey(queue[i])];
+				if (tempTile && tempTile.loaded) {
+					tempTile.current = true;
+					allNewTiles = false;
+				}
+			}
+
+			if (allNewTiles && !checkOnly)
+				this._cancelTiles();
 		}
 
 		if (checkOnly) {
@@ -6443,6 +6425,8 @@ L.TilesPreFetcher = L.Class.extend({
 	},
 
 	preFetchTiles: function (forceBorderCalc, immediate) {
+		if (app.file.fileBasedView && this._docLayer)
+			this._docLayer._updateFileBasedView();
 
 		if (this._docLayer._emptyTilesCount > 0 || !this._map || !this._docLayer) {
 			return;
