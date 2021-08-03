@@ -1348,6 +1348,10 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			return;
 		}
 
+		// Calc: do not set view area too early after load and before we get the cursor position.
+		if (this.isCalc() && !this._gotFirstCellCursor)
+			return;
+
 		if (app.file.fileBasedView) {
 			this._updateFileBasedView();
 			return;
