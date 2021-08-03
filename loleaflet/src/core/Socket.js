@@ -343,7 +343,7 @@ app.definitions.Socket = L.Class.extend({
 			if (this._map) {
 				if (this._map._docLayer) {
 					// Resume with redraw if dirty due to previous _onMessage() calls.
-					this._map._docLayer.resumeDrawing();
+					this._map._docLayer.resumeDrawing(true);
 				}
 				// Let other layers / overlays catch up.
 				this._map.fire('messagesdone');
