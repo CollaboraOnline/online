@@ -30,6 +30,7 @@ window.app = { // Shouldn't have any functions defined.
 		},
 	},
 	view: {
+		commentHasFocus: false,
 		size: {
 			pixels: [0, 0] // This can be larger than the document's size.
 		}

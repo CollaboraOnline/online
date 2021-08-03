@@ -4071,10 +4071,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var hasTunneledDialogOpened = this._map.dialog ? this._map.dialog.hasOpenedDialog() : false;
 			var hasJSDialogOpened = this._map.jsdialog ? this._map.jsdialog.hasDialogOpened() : false;
-			var isEditingAnnotation = this.editedAnnotation &&
-				(this._map.hasLayer(this.editedAnnotation) || this._map.hasLayer(this.editedAnnotation.annotation));
+
 			var isAnyInputFocused = $('input:focus').length > 0;
-			var dontFocusDocument = hasTunneledDialogOpened || hasJSDialogOpened || isEditingAnnotation || isAnyInputFocused;
+			var dontFocusDocument = hasTunneledDialogOpened || hasJSDialogOpened || app.view.commentHasFocus || isAnyInputFocused;
 
 			// when the cell cursor is moving, the user is in the document,
 			// and the focus should leave the cell input bar

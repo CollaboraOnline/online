@@ -684,6 +684,7 @@ class Comment {
 				}
 			}
 		}
+		app.view.commentHasFocus = false;
 	}
 
 	public onLostFocusReply (e: any) {
@@ -693,12 +694,14 @@ class Comment {
 		else {
             this.sectionProperties.nodeReply.style.display = 'none';
         }
+		app.view.commentHasFocus = false;
 	}
 
 	public focus () {
 		this.sectionProperties.container.classList.add('annotation-active');
 		this.sectionProperties.nodeModifyText.focus();
 		this.sectionProperties.nodeReplyText.focus();
+		app.view.commentHasFocus = true;
 	}
 
 	public reply () {
