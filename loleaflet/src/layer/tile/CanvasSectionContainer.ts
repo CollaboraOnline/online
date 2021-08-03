@@ -276,7 +276,7 @@ class CanvasSectionContainer {
 	private documentAnchorSectionName: string = null; // This section's top left point declares the point where document starts.
 	private documentAnchor: Array<number> = null; // This is the point where document starts inside canvas element. Initial value shouldn't be [0, 0].
 	// Above 2 properties can be used with documentBounds.
-	private drawingPaused: boolean = false;
+	private drawingPaused: number = 0;
 	private dirty: boolean = false;
 	private sectionsDirty: boolean = false;
 
@@ -373,18 +373,26 @@ class CanvasSectionContainer {
 	}
 
 	isDrawingPaused (): boolean {
-		return this.drawingPaused;
+		return this.drawingPaused > 0;
 	}
 
 	pauseDrawing () {
-		if (!this.drawingPaused) {
+		if (this.drawingPaused++ === 0) {
 			this.dirty = false;
-			this.drawingPaused = true;
 		}
 	}
 
-	resumeDrawing() {
-		if (this.drawingPaused) {
+	// set topLevel if we are sure that we are the top of call nesting
+	// eg. in a browser event handler. Avoids JS exceptions poisoning
+	// the count, since we have no RAII helpers here.
+	resumeDrawing(topLevel: boolean) {
+		var wasNonZero: boolean = this.drawingPaused !== 0;
+		if (topLevel)
+		   this.drawingPaused = 0;
+		else
+		   this.drawingPaused--;
+
+		if (wasNonZero && this.drawingPaused === 0) {
 			if (this.sectionsDirty) {
 				this.updateBoundSectionLists();
 				this.reNewAllSections(false);
@@ -395,7 +403,6 @@ class CanvasSectionContainer {
 			if (scrollSection)
 				scrollSection.completePendingScroll(); // No painting, only dirtying.
 
-			this.drawingPaused = false;
 			if (this.dirty) {
 				this.requestReDraw();
 				this.dirty = false;
@@ -587,7 +594,7 @@ class CanvasSectionContainer {
 	}
 
 	requestReDraw() {
-		if (this.drawingPaused) {
+		if (this.isDrawingPaused()) {
 			// Someone requested a redraw, but we're paused => schedule a redraw.
 			this.setDirty();
 			return;
@@ -1824,7 +1831,7 @@ class CanvasSectionContainer {
 		}
 
 		if (found) {
-			if (this.drawingPaused)
+			if (this.isDrawingPaused())
 			    this.sectionsDirty = true;
 			else {
 			    this.updateBoundSectionLists();
