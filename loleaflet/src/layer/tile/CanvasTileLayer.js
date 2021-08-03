@@ -707,9 +707,9 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			this._painter._sectionContainer.pauseDrawing();
 	},
 
-	resumeDrawing: function () {
+	resumeDrawing: function (topLevel) {
 		if (this._painter && this._painter._sectionContainer)
-			this._painter._sectionContainer.resumeDrawing();
+			this._painter._sectionContainer.resumeDrawing(topLevel);
 	},
 
 	_getUIWidth: function () {
