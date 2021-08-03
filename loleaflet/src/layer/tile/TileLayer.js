@@ -1372,7 +1372,9 @@ L.TileLayer = L.GridLayer.extend({
 			this._prevCellCursorXY = new L.Point(-1, -1);
 		}
 
-		if (textMsg.match('EMPTY') || !this._map.isPermissionEdit()) {
+		var empty = textMsg.match('EMPTY');
+
+		if (empty || !this._map.isPermissionEdit()) {
 			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._cellCursor = L.LatLngBounds.createDefault();
 			this._cellCursorXY = new L.Point(-1, -1);
@@ -1433,6 +1435,11 @@ L.TileLayer = L.GridLayer.extend({
 
 		// Remove input help if there is any:
 		this._removeInputHelpMarker();
+
+		if (!empty && !this._gotFirstCellCursor) {
+			this._gotFirstCellCursor = true;
+			this._update();
+		}
 	},
 
 	_removeInputHelpMarker: function() {
@@ -3822,12 +3829,16 @@ L.TileLayer = L.GridLayer.extend({
 	// hence we need to request an updated cell cursor position for this level.
 	_onCellCursorShift: function (force) {
 		if ((this._cellCursorMarker && !this.options.sheetGeometryDataEnabled) || force) {
-			app.socket.sendMessage('commandvalues command=.uno:CellCursor'
-			                     + '?outputHeight=' + this._tileWidthPx
-			                     + '&outputWidth=' + this._tileHeightPx
-			                     + '&tileHeight=' + this._tileWidthTwips
-			                     + '&tileWidth=' + this._tileHeightTwips);
+			this.requestCellCursor();
 		}
+	},
+
+	requestCellCursor: function() {
+		app.socket.sendMessage('commandvalues command=.uno:CellCursor'
+			+ '?outputHeight=' + this._tileWidthPx
+			+ '&outputWidth=' + this._tileHeightPx
+			+ '&tileHeight=' + this._tileWidthTwips
+			+ '&tileWidth=' + this._tileHeightTwips);
 	},
 
 	_invalidatePreviews: function () {
