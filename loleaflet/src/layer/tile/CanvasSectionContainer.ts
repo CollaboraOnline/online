@@ -1833,8 +1833,12 @@ class CanvasSectionContainer {
 		}
 
 		if (found) {
-			this.updateBoundSectionLists();
-			this.reNewAllSections();
+			if (this.drawingPaused)
+			    this.sectionsDirty = true;
+			else {
+			    this.updateBoundSectionLists();
+			    this.reNewAllSections();
+			}
 			return true;
 		}
 		else {
