@@ -352,6 +352,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 .unotoolbutton.disabled img, .mobile-wizard-widebutton.disabled img {
 	-webkit-filter: grayscale(90%) brightness(120%);
 	filter: grayscale(90%) brightness(120%);
+	opacity: 0.75;
 }
 
 #mobile-wizard-content .ui-content > table > tr > td > table > table > tr:first-child > td > img{
