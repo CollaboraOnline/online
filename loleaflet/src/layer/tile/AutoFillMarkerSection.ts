@@ -138,8 +138,6 @@ class AutoFillMarkerSection {
 		point[1] = this.sectionProperties.dragStartPosition[1] + dragDistance[1];
 		pos = this.sectionProperties.docLayer._corePixelsToTwips(new L.Point(point[0], point[1]));
 
-		this.sectionProperties.docLayer._postMouseEvent('move', pos.x, pos.y, 1, 1, 0);
-
 		this.map.scrollingIsHandled = true;
 		this.stopPropagating(); // Stop propagating to sections.
 		e.stopPropagation(); // Stop native event.
