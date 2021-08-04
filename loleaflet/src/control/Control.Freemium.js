@@ -98,8 +98,8 @@ L.Map.include({
 		else if (item.uno) { // in classic mode uno commands are stored as uno in menus
 			if (typeof item.uno === 'string')
 				command = item.uno;
-			else if (this.Freemium.freemiumDenyList.includes(item.uno.textCommand)
-			|| this.Freemium.freemiumDenyList.includes(item.uno.objectCommand)) // some unos have multiple commands
+			else if (this.Freemium.freemiumDenyList.indexOf(item.uno.textCommand) >= 0
+			|| this.Freemium.freemiumDenyList.indexOf(item.uno.objectCommand) >= 0) // some unos have multiple commands
 				return true;
 		}
 		else if (item.id)
@@ -107,7 +107,7 @@ L.Map.include({
 		else if (item.unosheet)
 			command = item.unosheet;
 
-		if (this.Freemium.freemiumDenyList.includes(command))
+		if (this.Freemium.freemiumDenyList.indexOf(command) >= 0)
 			return true;
 
 		return false;
