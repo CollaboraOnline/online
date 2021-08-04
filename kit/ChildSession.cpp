@@ -1193,10 +1193,12 @@ bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const St
     char       **pOutStreams = nullptr;
 
     bool hasMimeRequest = tokens.size() > 1;
+    std::string token;
     if (hasMimeRequest)
     {
         pMimeTypes = pOneType;
-        pMimeTypes[0] = tokens[1].c_str();
+        token = tokens[1];
+        pMimeTypes[0] = token.c_str();
         pMimeTypes[1] = nullptr;
     }
 
