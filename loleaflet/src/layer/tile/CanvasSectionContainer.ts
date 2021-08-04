@@ -553,6 +553,29 @@ class CanvasSectionContainer {
 			return false;
 	}
 
+	// For window sections, there is a "targetSection" property in CanvasSectionContainer.
+	// Because a window section is above all sections and cover entire canvas, it may need to act according to the actual target of the event.
+	// In this case, "targetSection" property gives the window section the first target of the event.
+	// This (below) function gives the window section if a section will sooner or later get the event.
+	// But this function cannot know if the event will be stopped by a prior section before the event reaches the section specified with the "sectionName" variable.
+	// This function doesn't neither check the "interactable" property of the section in question ("sectionName"). Though that check can be added here, as an optional one.
+	public targetBoundSectionListContains (sectionName: string): boolean {
+		if (!this.targetSection)
+			return false;
+		else {
+			var section: CanvasSectionObject = this.getSectionWithName(this.targetSection);
+			if (section && section.boundsList) {
+				for (var i: number = 0; i < section.boundsList.length; i++) {
+					if (section.boundsList[i].name === sectionName)
+						return true;
+				}
+				return false;
+			}
+			else
+				return false;
+		}
+	}
+
 	public setDocumentBounds (points: Array<number>) {
 		this.documentTopLeft[0] = Math.round(points[0]);
 		this.documentTopLeft[1] = Math.round(points[1]);
