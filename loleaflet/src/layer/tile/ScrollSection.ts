@@ -158,6 +158,16 @@ class ScrollSection {
 			this.map.isAutoScrolling = true;
 			this.autoScrollTimer = setInterval(L.bind(function() {
 				this.onScrollBy({x: e.vx, y: e.vy});
+				// Unfortunately, dragging outside the map doesn't work for the map element.
+				// We will keep this until we remove leaflet.
+				if (L.Map.THIS.mouse && L.Map.THIS.mouse._mouseDown && this.containerObject.targetBoundSectionListContains(L.CSections.Tiles.name) && (<any>window).mode.isDesktop() && this.containerObject.draggingSomething && L.Map.THIS._docLayer._docType === 'spreadsheet') {
+					var temp = this.containerObject.positionOnMouseDown;
+					var tempPos = [temp[0] * app.dpiScale, temp[1] * app.dpiScale];
+					var docTopLeft = app.sectionContainer.getDocumentTopLeft();
+					tempPos = [tempPos[0] + docTopLeft[0], tempPos[1] + docTopLeft[1]];
+					tempPos = [Math.round(tempPos[0] * app.pixelsToTwips), Math.round(tempPos[1] * app.pixelsToTwips)];
+					L.Map.THIS._docLayer._postMouseEvent('move', tempPos[0], tempPos[1], 1, 1, 0);
+				}
 			}, this), 100);
 		}
 	}
@@ -673,11 +683,23 @@ class ScrollSection {
 			this.stopPropagating(); // Don't propagate to bound sections.
 			this.sectionProperties.clickScrollVertical = false;
 		}
-
-		if (this.sectionProperties.clickScrollHorizontal) {
+		else if (this.sectionProperties.clickScrollHorizontal) {
 			e.stopPropagation(); // Don't propagate to map.
 			this.stopPropagating(); // Don't propagate to bound sections.
 			this.sectionProperties.clickScrollHorizontal = false;
+		}
+
+		// Unfortunately, dragging outside the map doesn't work for the map element.
+		// We will keep this until we remove leaflet.
+		else if (L.Map.THIS.mouse && L.Map.THIS.mouse._mouseDown && this.containerObject.targetBoundSectionListContains(L.CSections.Tiles.name) && (<any>window).mode.isDesktop() && this.containerObject.draggingSomething && L.Map.THIS._docLayer._docType === 'spreadsheet') {
+			var temp = this.containerObject.positionOnMouseUp;
+			var tempPos = [temp[0] * app.dpiScale, temp[1] * app.dpiScale];
+			var docTopLeft = app.sectionContainer.getDocumentTopLeft();
+			tempPos = [tempPos[0] + docTopLeft[0], tempPos[1] + docTopLeft[1]];
+			tempPos = [Math.round(tempPos[0] * app.pixelsToTwips), Math.round(tempPos[1] * app.pixelsToTwips)];
+			this.onScrollVelocity({ vx: 0, vy: 0 }); // Cancel auto scrolling.
+			L.Map.THIS.mouse._mouseDown = false;
+			L.Map.THIS._docLayer._postMouseEvent('buttonup', tempPos[0], tempPos[1], 1, 1, 0);
 		}
 
 		this.sectionProperties.previousDragDistance = null;
