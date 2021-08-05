@@ -293,6 +293,9 @@ L.Control.PartsPreview = L.Control.extend({
 
 	_scrollToPart: function() {
 		var partNo = this._map.getCurrentPartNumber();
+		if (app.file.fileBasedView) {
+			this._scrollViewToPartPosition(partNo);
+		}
 		//var sliderSize, nodePos, nodeOffset, nodeMargin;
 		var node = this._partsPreviewCont.children[partNo];
 
@@ -332,7 +335,7 @@ L.Control.PartsPreview = L.Control.extend({
 		if (viewHeight > partHeightPixels && partNumber > 0)
 			scrollTop -= Math.round((viewHeight - partHeightPixels) * 0.5);
 
-		scrollTop = Math.round(scrollTop / app.sectionContainer.dpiScale);
+		scrollTop = Math.round(scrollTop / app.dpiScale);
 		app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).onScrollTo({x: 0, y: scrollTop});
 	},
 

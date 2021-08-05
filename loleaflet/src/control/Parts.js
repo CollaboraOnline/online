@@ -33,6 +33,15 @@ L.Map.include({
 
 		this.fire('scrolltopart');
 
+		this.fire('updateparts', {
+			selectedPart: docLayer._selectedPart,
+			selectedParts: docLayer._selectedParts,
+			parts: docLayer._parts,
+			docType: docLayer._docType
+		});
+
+		if (app.file.fileBasedView) return;
+
 		docLayer._selectedParts.push(docLayer._selectedPart);
 
 		if (docLayer.isCursorVisible()) {
@@ -45,13 +54,6 @@ L.Map.include({
 		if (!external) {
 			app.socket.sendMessage('setclientpart part=' + docLayer._selectedPart);
 		}
-
-		this.fire('updateparts', {
-			selectedPart: docLayer._selectedPart,
-			selectedParts: docLayer._selectedParts,
-			parts: docLayer._parts,
-			docType: docLayer._docType
-		});
 
 		docLayer.eachView(docLayer._viewCursors, docLayer._onUpdateViewCursor, docLayer);
 		docLayer.eachView(docLayer._cellViewCursors, docLayer._onUpdateCellViewCursor, docLayer);
