@@ -1160,5 +1160,6 @@ global.onCommandStateChanged = onCommandStateChanged;
 global.processStateChangedCommand = processStateChangedCommand;
 global.showColorPicker = showColorPicker;
 global.getColorPickerHTML = getColorPickerHTML;
+global.onUpdateParts = onUpdateParts;
 
 }(window));
