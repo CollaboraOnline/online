@@ -31,10 +31,22 @@ L.Map.include({
 			return;
 		}
 
+		this.fire('updateparts', {
+			selectedPart: docLayer._selectedPart,
+			selectedParts: docLayer._selectedParts,
+			parts: docLayer._parts,
+			docType: docLayer._docType
+		});
+
+		if (app.file.fileBasedView)
+		{
+			docLayer._preview._scrollViewToPartPosition(docLayer._selectedPart);
+			return;
+		}
+
 		this.fire('scrolltopart');
 
 		docLayer._selectedParts.push(docLayer._selectedPart);
-
 		if (docLayer.isCursorVisible()) {
 			// a click outside the slide to clear any selection
 			app.socket.sendMessage('resetselection');
@@ -45,13 +57,6 @@ L.Map.include({
 		if (!external) {
 			app.socket.sendMessage('setclientpart part=' + docLayer._selectedPart);
 		}
-
-		this.fire('updateparts', {
-			selectedPart: docLayer._selectedPart,
-			selectedParts: docLayer._selectedParts,
-			parts: docLayer._parts,
-			docType: docLayer._docType
-		});
 
 		docLayer.eachView(docLayer._viewCursors, docLayer._onUpdateViewCursor, docLayer);
 
