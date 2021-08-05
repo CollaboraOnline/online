@@ -1372,9 +1372,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._prevCellCursorXY = new L.Point(-1, -1);
 		}
 
-		var empty = textMsg.match('EMPTY');
-
-		if (empty || !this._map.isPermissionEdit()) {
+		if (textMsg.match('EMPTY') || !this._map.isPermissionEdit()) {
 			this._cellCursorTwips = new L.Bounds(new L.Point(0, 0), new L.Point(0, 0));
 			this._cellCursor = L.LatLngBounds.createDefault();
 			this._cellCursorXY = new L.Point(-1, -1);
@@ -1435,13 +1433,6 @@ L.TileLayer = L.GridLayer.extend({
 
 		// Remove input help if there is any:
 		this._removeInputHelpMarker();
-
-		if (!empty && !this._gotFirstCellCursor) {
-			// Drawing is disabled from CalcTileLayer construction, enable it now.
-			this._gotFirstCellCursor = true;
-			this._update();
-			this.enableDrawing();
-		}
 	},
 
 	_removeInputHelpMarker: function() {

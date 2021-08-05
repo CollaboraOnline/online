@@ -779,6 +779,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 	_onCellCursorMsg: function (textMsg) {
 		L.CanvasTileLayer.prototype._onCellCursorMsg.call(this, textMsg);
 		this._refreshRowColumnHeaders();
+		if (!this._gotFirstCellCursor && !textMsg.match('EMPTY')) {
+			// Drawing is disabled from CalcTileLayer construction, enable it now.
+			this._gotFirstCellCursor = true;
+			this._update();
+			this.enableDrawing();
+		}
 	},
 
 	_getEditCursorRectangle: function (msgObj) {
