@@ -372,7 +372,7 @@ class TilesSection {
 		}
 
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
-			this.oscCtxs[i].fillStyle = 'white';
+			this.oscCtxs[i].fillStyle = this.containerObject.getClearColor();
 			this.oscCtxs[i].fillRect(0, 0, this.offscreenCanvases[i].width, this.offscreenCanvases[i].height);
 		}
 
