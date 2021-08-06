@@ -66,11 +66,9 @@ window.app = { // Shouldn't have any functions defined.
 	// except in tile debug mode (Ctrl-Shift-Alt-d)
 	console.log2 = console.log;
 	console.logException = function (err) {
+		var log = 'jsexception ' + JSON.stringify(err, null, 2) + '\n';
 		console.log2(err);
-		setTimeout(function() {
-			var log = 'jsexception ' + JSON.stringify(err, null, 2) + '\n';
-			global.logServer(log);
-		}, 0);
+		global.logServer(log);
 	};
 
 	if (global.loleafletLogging !== 'true') {
