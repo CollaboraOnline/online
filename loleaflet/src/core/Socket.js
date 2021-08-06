@@ -327,7 +327,7 @@ app.definitions.Socket = L.Class.extend({
 					{
 						// unpleasant - but stops this one problem
 						// event stopping an unknown number of others.
-						console.logException('Exception ' + e + ' emitting event ' + evt.data);
+						console.log2('Exception ' + e + ' emitting event ' + evt.data);
 					}
 					finally {
 						if (completeEventOneMessage)
