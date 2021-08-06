@@ -41,12 +41,12 @@
 .sidebar.ui-expander {
 	display: flex;
 	justify-content: space-between;
-	width: 280px;
+	width: 290px;
 	align-items: center;
 }
 
 .sidebar.ui-drawing-area {
-	max-width: 280px;
+	max-width: 290px;
 }
 
 .sidebar.ui-expander-label {
