@@ -109,7 +109,6 @@
       <proto type="string" default="all" desc="Protocol to use IPv4, IPv6 or all for both">all</proto>
       <listen type="string" default="any" desc="Listen address that loolwsd binds to. Can be 'any' or 'loopback'.">any</listen>
       <service_root type="path" default="" desc="Prefix all the pages, websockets, etc. with this path."></service_root>
-      <proxy_prefix type="bool" default="false" desc="Enable a ProxyPrefix to be passed int through which to redirect requests"></proxy_prefix>
       <post_allow desc="Allow/deny client IP address for POST(REST)." allow="true">
         <host desc="The IPv4 private 192.168 block as plain IPv4 dotted decimal addresses.">192\.168\.[0-9]{1,3}\.[0-9]{1,3}</host>
         <host desc="Ditto, but as IPv4-mapped IPv6 addresses">::ffff:192\.168\.[0-9]{1,3}\.[0-9]{1,3}</host>
@@ -123,6 +122,9 @@
       </post_allow>
       <frame_ancestors desc="Specify who is allowed to embed the LO Online iframe (loolwsd and WOPI host are always allowed). Separate multiple hosts by space."></frame_ancestors>
       <connection_timeout_secs desc="Specifies the connection, send, recv timeout in seconds for connections initiated by loolwsd (such as WOPI connections)." type="int" default="30"></connection_timeout_secs>
+
+      <!-- this setting radically changes how online works, it should not be used in a production environment -->
+      <proxy_prefix type="bool" default="false" desc="Enable a ProxyPrefix to be passed int through which to redirect requests"></proxy_prefix>
     </net>
 
     <ssl desc="SSL settings">
