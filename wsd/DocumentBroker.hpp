@@ -403,7 +403,7 @@ public:
 
     bool isMarkedToDestroy() const { return _docState.isMarkedToDestroy() || _stop; }
 
-    bool handleInput(const std::vector<char>& payload);
+    virtual bool handleInput(const std::vector<char>& payload);
 
     /// Forward a message from client session to its respective child session.
     bool forwardToChild(const std::string& viewId, const std::string& message);
@@ -1126,11 +1126,29 @@ private:
 };
 
 #if !MOBILEAPP
-class ConvertToBroker final : public DocumentBroker
+class StatelessBatchBroker : public DocumentBroker
+{
+protected:
+    std::shared_ptr<ClientSession> _clientSession;
+
+public:
+    StatelessBatchBroker(const std::string& uri,
+                   const Poco::URI& uriPublic,
+                   const std::string& docKey)
+        : DocumentBroker(ChildType::Batch, uri, uriPublic, docKey)
+    {}
+
+    virtual ~StatelessBatchBroker()
+    {}
+
+    /// Cleanup path and its parent
+    static void removeFile(const std::string &uri);
+};
+
+class ConvertToBroker final : public StatelessBatchBroker
 {
     const std::string _format;
     const std::string _sOptions;
-    std::shared_ptr<ClientSession> _clientSession;
 
 public:
     /// Construct DocumentBroker with URI and docKey
@@ -1144,21 +1162,54 @@ public:
     /// Move socket to this broker for response & do conversion
     bool startConversion(SocketDisposition &disposition, const std::string &id);
 
-    /// Called when removed from the DocBrokers list
-    void dispose() override;
-
     /// When the load completes - lets start saving
     void setLoaded() override;
+
+    /// Called when removed from the DocBrokers list
+    void dispose() override;
 
     /// How many live conversions are running.
     static std::size_t getInstanceCount();
 
-    /// Cleanup path and its parent
-    static void removeFile(const std::string &uri);
-
 private:
     bool isConvertTo() const override { return true; }
 };
+
+class RenderSearchResultBroker final : public StatelessBatchBroker
+{
+    std::shared_ptr<std::vector<char>> _pSearchResultContent;
+    std::vector<char> _aResposeData;
+    std::shared_ptr<StreamSocket> _socket;
+
+public:
+    RenderSearchResultBroker(std::string const& uri,
+                             Poco::URI const& uriPublic,
+                             std::string const& docKey,
+                             std::shared_ptr<std::vector<char>> const& pSearchResultContent);
+
+    virtual ~RenderSearchResultBroker();
+
+    void setResponseSocket(std::shared_ptr<StreamSocket> const & socket)
+    {
+        _socket = socket;
+    }
+
+    /// Execute command(s) and move the socket to this broker
+    bool executeCommand(SocketDisposition& disposition, std::string const& id);
+
+    /// Override method to start executing when the document is loaded
+    void setLoaded() override;
+
+    /// Called when removed from the DocBrokers list
+    void dispose() override;
+
+    /// Override to filter out the data that is returned by a command
+    bool handleInput(const std::vector<char>& payload) override;
+
+    /// How many instances are running.
+    static std::size_t getInstanceCount();
+};
+
 #endif
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -33,6 +33,7 @@ noinst_LTLIBRARIES = \
 	unit-load-torture.la \
 	unit-rendering-options.la \
 	unit-password-protected.la \
+	unit-render-search-result.la \
 	unit-render-shape.la \
 	unit-each-view.la \
 	unit-session.la \
@@ -199,6 +200,8 @@ unit_rendering_options_la_SOURCES = UnitRenderingOptions.cpp
 unit_rendering_options_la_LIBADD = $(CPPUNIT_LIBS)
 unit_password_protected_la_SOURCES = UnitPasswordProtected.cpp
 unit_password_protected_la_LIBADD = $(CPPUNIT_LIBS)
+unit_render_search_result_la_SOURCES = UnitRenderSearchResult.cpp
+unit_render_search_result_la_LIBADD = $(CPPUNIT_LIBS)
 unit_render_shape_la_SOURCES = UnitRenderShape.cpp
 unit_render_shape_la_LIBADD = $(CPPUNIT_LIBS)
 unit_each_view_la_SOURCES = UnitEachView.cpp
@@ -254,6 +257,7 @@ TESTS = \
 	unit-load-torture.la \
 	unit-rendering-options.la \
 	unit-password-protected.la \
+	unit-render-search-result.la \
 	unit-render-shape.la \
 	unit-each-view.la \
 	unit-session.la \
