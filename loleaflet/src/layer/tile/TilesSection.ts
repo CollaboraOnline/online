@@ -364,11 +364,14 @@ class TilesSection {
 		// Calculate all this here intead of doing it per tile.
 		var ctx = this.sectionProperties.tsManager._paintContext();
 
-		this.drawPageBackgrounds(ctx);
-
 		if (this.sectionProperties.tsManager.waitForTiles()) {
 			if (!this.haveAllTilesInView(zoom, part, ctx))
 				return;
+		} else {
+			// Don't show page border and page numbers (drawn by drawPageBackgrounds) if zoom is changing
+			// after a zoom animation.
+			if (!this.containerObject.isZoomChanged())
+				this.drawPageBackgrounds(ctx);
 		}
 
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
