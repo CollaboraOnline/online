@@ -636,7 +636,7 @@ public:
         if (!_filename.empty())
         {
             LOG_TRC("Remove un-handled temporary file '" << _filename << '\'');
-            ConvertToBroker::removeFile(_filename);
+            StatelessBatchBroker::removeFile(_filename);
         }
     }
 
@@ -676,6 +676,84 @@ public:
         fileStream.open(_filename);
         StreamCopier::copyStream(stream, fileStream);
         fileStream.close();
+    }
+};
+
+class RenderSearchResultPartHandler : public PartHandler
+{
+private:
+    std::string _filename;
+    std::shared_ptr<std::vector<char>> _pSearchResultContent;
+
+public:
+    std::string getFilename() const { return _filename; }
+
+    /// Afterwards someone else is responsible for cleaning that up.
+    void takeFile() { _filename.clear(); }
+
+    const std::shared_ptr<std::vector<char>>& getSearchResultContent() const
+    {
+        return _pSearchResultContent;
+    }
+
+    RenderSearchResultPartHandler() = default;
+
+    virtual ~RenderSearchResultPartHandler()
+    {
+        if (!_filename.empty())
+        {
+            LOG_TRC("Remove un-handled temporary file '" << _filename << '\'');
+            StatelessBatchBroker::removeFile(_filename);
+        }
+    }
+
+    virtual void handlePart(const MessageHeader& header, std::istream& stream) override
+    {
+        // Extract filename and put it to a temporary directory.
+        std::string label;
+        NameValueCollection content;
+        if (header.has("Content-Disposition"))
+        {
+            MessageHeader::splitParameters(header.get("Content-Disposition"), label, content);
+        }
+
+        std::string name = content.get("name", "");
+        if (name == "document")
+        {
+            std::string filename = content.get("filename", "");
+
+            const Path filenameParam(filename);
+
+            // The temporary directory is child-root/<JAIL_TMP_INCOMING_PATH>.
+            // Always create a random sub-directory to avoid file-name collision.
+            Path tempPath = Path::forDirectory(
+                FileUtil::createRandomTmpDir(LOOLWSD::ChildRoot + JailUtil::JAIL_TMP_INCOMING_PATH)
+                + '/');
+
+            LOG_TRC("Created temporary render-search-result file path: " << tempPath.toString());
+
+            // Prevent user inputting anything funny here.
+            // A "filename" should always be a filename, not a path
+
+            if (filenameParam.getFileName() == "callback:")
+                tempPath.setFileName("incoming_file"); // A sensible name.
+            else
+                tempPath.setFileName(filenameParam.getFileName()); //TODO: Sanitize.
+            _filename = tempPath.toString();
+
+            // Copy the stream to _filename.
+            std::ofstream fileStream;
+            fileStream.open(_filename);
+            StreamCopier::copyStream(stream, fileStream);
+            fileStream.close();
+        }
+        else if (name == "result")
+        {
+            // Copy content from the stream into a std::vector<char>
+            _pSearchResultContent = std::make_shared<std::vector<char>>(
+                                       std::istreambuf_iterator<char>(stream),
+                                       std::istreambuf_iterator<char>());
+        }
     }
 };
 
@@ -3333,6 +3411,42 @@ private:
                 httpResponse.set("Content-Length", "0");
                 socket->sendAndShutdown(httpResponse);
             }
+            return;
+        }
+        else if (requestDetails.equals(1, "render-search-result"))
+        {
+            RenderSearchResultPartHandler handler;
+            HTMLForm form(request, message, handler);
+
+            const std::string fromPath = handler.getFilename();
+
+            LOG_INF("Create render-search-result POST command handler");
+
+            if (fromPath.empty())
+                return;
+
+            Poco::URI uriPublic = DocumentBroker::sanitizeURI(fromPath);
+            const std::string docKey = DocumentBroker::getDocKey(uriPublic);
+
+            // This lock could become a bottleneck.
+            // In that case, we can use a pool and index by publicPath.
+            std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+
+            LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+            auto docBroker = std::make_shared<RenderSearchResultBroker>(fromPath, uriPublic, docKey, handler.getSearchResultContent());
+            handler.takeFile();
+
+            cleanupDocBrokers();
+
+            DocBrokers.emplace(docKey, docBroker);
+            LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+
+            if (!docBroker->executeCommand(disposition, _id))
+            {
+                LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
+                cleanupDocBrokers();
+            }
+
             return;
         }
 
