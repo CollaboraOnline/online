@@ -36,7 +36,7 @@ L.Map = L.Evented.extend({
 		markerZoomAnimation: true,
 		//defaultZoom:
 		//The zoom level at which the tile size in twips equals the default size (3840 x 3840).
-        	//Unless you know what you are doing, this should not be modified.
+		//Unless you know what you are doing, this should not be modified.
 		defaultZoom: 10,
 		// 15 = 1440 twips-per-inch / 96 dpi.
 		// Chosen to match previous hardcoded value of 3840 for
@@ -45,9 +45,9 @@ L.Map = L.Evented.extend({
 		// 256x256 pixels tile). Unless you know what you are doing, this should not be modified;
 		// this means twips value for 256 pixels at 96dpi.
 		tileWidthTwips: window.tileSize * 15,
-		// tileHeightTwips : 
-		// Default tile height in twips (how much of the document is covered vertically in a 
-		// 256x256 pixels tile).Unless you know what you are doing, this should not be modified; 
+		// tileHeightTwips :
+		// Default tile height in twips (how much of the document is covered vertically in a
+		// 256x256 pixels tile).Unless you know what you are doing, this should not be modified;
 		// this means twips value for 256 pixels at 96dpi.
 		tileHeightTwips: window.tileSize * 15,
 		urlPrefix: 'lool',
