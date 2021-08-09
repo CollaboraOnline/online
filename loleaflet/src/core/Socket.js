@@ -497,7 +497,9 @@ app.definitions.Socket = L.Class.extend({
 						this._map.uiManager.showSnackbar(reloadMessage, _('RELOAD'), function() {window.location.reload();});
 						setTimeout(window.location.reload, 5000);
 					} else {
-						alert(reloadMessage);
+						if (!this._map.options.wopi)
+							alert(reloadMessage);
+
 						window.location.reload();
 					}
 				}
