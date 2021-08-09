@@ -510,7 +510,7 @@ app.definitions.Socket = L.Class.extend({
 
 			this.WSDServer = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 
-			if (oldId && oldVersion && sameFile) {
+			if (!this._map.options.wopi && oldId && oldVersion && sameFile) {
 				if (this.WSDServer.Id !== oldId || this.WSDServer.Version !== oldVersion) {
 					var reloadMessage = _('Server is now reachable. We have to refresh the page now.');
 					if (window.mode.isMobile())
