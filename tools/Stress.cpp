@@ -46,6 +46,7 @@ private:
 protected:
     void defineOptions(Poco::Util::OptionSet& options) override;
     void handleOption(const std::string& name, const std::string& value) override;
+    int processArgs(const std::vector<std::string>& args);
     int  main(const std::vector<std::string>& args) override;
 };
 
@@ -286,6 +287,11 @@ int Stress::main(const std::vector<std::string>& args)
         return EX_NOINPUT;
     }
 
+#if 0
+    // temporary socketpoll hook
+    return Stress::processArgs(args);
+#endif
+
     std::vector<std::shared_ptr<Worker>> workers;
 
     for (size_t i = 0; i < args.size(); ++i)
@@ -346,5 +352,94 @@ int Stress::main(const std::vector<std::string>& args)
 }
 
 POCO_APP_MAIN(Stress)
+
+
+#include "Socket.hpp"
+#include "WebSocketHandler.hpp"
+#if ENABLE_SSL
+#  include <SslSocket.hpp>
+#endif
+
+class StressSocketHandler : public WebSocketHandler
+{
+    bool _connecting;
+    std::string _uri;
+    std::string _trace;
+public:
+
+    StressSocketHandler(const std::string &uri, const std::string &trace) :
+        WebSocketHandler(true, true),
+        _connecting(true),
+        _uri(uri),
+        _trace(trace)
+    {
+        std::cerr << "Attempt connect to " << uri << " for trace " << _trace << "\n";
+        sendMessage("load url=" + uri);
+    }
+    int getPollEvents(std::chrono::steady_clock::time_point now,
+                      int64_t &timeoutMaxMicroS) override
+    {
+        if (_connecting)
+        {
+            std::cerr << "Waiting for outbound connection to " << _uri <<
+                " to complete for trace " << _trace << "\n";
+            return POLLOUT;
+        }
+        else
+            return WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
+    }
+
+    void performWrites(std::size_t capacity) override
+    {
+        std::cerr << "Outbound websocket - connected\n";
+        _connecting = false;
+        return WebSocketHandler::performWrites(capacity);
+    }
+
+    void onDisconnect() override
+    {
+        std::cerr << "Websocket " << _uri << " dis-connected, re-trying in 20 seconds\n";
+        WebSocketHandler::onDisconnect();
+    }
+};
+
+// Run me something like:
+// touch /tmp/test.txt /tmp/trace.txt
+// ./loolstress ws://localhost:9980 /tmp/test.txt /tmp/trace.txt
+int Stress::processArgs(const std::vector<std::string>& args)
+{
+    TerminatingPoll poll("stress replay");
+
+    if (!UnitWSD::init(UnitWSD::UnitType::Tool, ""))
+        throw std::runtime_error("Failed to init unit test pieces.");
+
+    std::string server = args[0];
+
+    if (!strncmp(server.c_str(), "http", 4))
+    {
+        std::cerr << "Server should be wss:// or ws:// URL not " << server << "\n";
+        return -1;
+    }
+
+    for (size_t i = 1; i < args.size() - 1; i += 2)
+    {
+        std::cerr << "Connect to " << server << "\n";
+        std::string file, wrap;
+        std::string fileabs = Poco::Path(args[i]).makeAbsolute().toString();
+        Poco::URI::encode("file://" + fileabs, ":/?", file);
+        Poco::URI::encode(file, ":/?", wrap); // double encode.
+        std::string uri = server + "/lool/" + wrap + "/ws";
+        auto handler = std::make_shared<StressSocketHandler>(fileabs, args[i+1]);
+        poll.insertNewWebSocketSync(Poco::URI(uri), handler);
+        // FIXME: we need a sensible protocol handler to drive the actual trace replay ...
+    }
+
+    while (poll.continuePolling())
+    {
+        poll.poll(TerminatingPoll::DefaultPollTimeoutMicroS);
+    }
+
+    return 0;
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
