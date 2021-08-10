@@ -1493,7 +1493,17 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         {
             // encode the name
             const std::string& filename = uploadResult.getSaveAsName();
-            const std::string url = Poco::URI(uploadResult.getSaveAsUrl()).toString();
+            auto uri = Poco::URI(uploadResult.getSaveAsUrl());
+
+            // Remove the access_token, which belongs to the renaming user.
+            Poco::URI::QueryParameters queryParams = uri.getQueryParameters();
+            queryParams.erase(std::remove_if(queryParams.begin(), queryParams.end(),
+                                             [](const std::pair<std::string, std::string>& pair)
+                                             { return pair.first == "access_token"; }),
+                              queryParams.end());
+            uri.setQueryParameters(queryParams);
+
+            const std::string url = uri.toString();
             std::string encodedName;
             Poco::URI::encode(filename, "", encodedName);
             const std::string filenameAnonym = LOOLWSD::anonymizeUrl(filename);
