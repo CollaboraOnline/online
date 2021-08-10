@@ -359,7 +359,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	color: #222;
 	border: none;
 	border-radius: 2px;
-	width: 240px;
+	min-width: 240px;
 }
 
 .loleaflet-annotation-content {
@@ -405,6 +405,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	overflow-x: hidden;
 	height: 50px;
 	width: 95%;
+	min-width: 240px;
 	box-sizing: border-box;
 }
 
