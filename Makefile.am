@@ -228,10 +228,7 @@ loolconvert_SOURCES = tools/Tool.cpp
 loolstress_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\" ${include_paths}
 loolstress_SOURCES = tools/Stress.cpp \
                      common/DummyTraceEventEmitter.cpp \
-                     common/Protocol.cpp \
-                     common/StringVector.cpp \
-                     common/Log.cpp \
-                     common/Util.cpp
+                     $(shared_sources)
 
 loolconfig_SOURCES = tools/Config.cpp \
 		     common/DummyTraceEventEmitter.cpp \
