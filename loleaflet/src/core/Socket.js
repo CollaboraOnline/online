@@ -1119,18 +1119,6 @@ app.definitions.Socket = L.Class.extend({
 		this._map.hideBusy();
 		if (command !== undefined && command.url !== undefined && command.url !== '') {
 			var url = command.url;
-			var accessToken = this._getParameterByName(url, 'access_token');
-			var accessTokenTtl = this._getParameterByName(url, 'access_token_ttl');
-
-			if (accessToken !== undefined) {
-				if (accessTokenTtl === undefined) {
-					accessTokenTtl = 0;
-				}
-				this._map.options.docParams = { 'access_token': accessToken, 'access_token_ttl': accessTokenTtl };
-			}
-			else {
-				this._map.options.docParams = {};
-			}
 
 			var reuseCookies = this._getParameterByName(url, 'reuse_cookies');
 			if (reuseCookies !== '') {
@@ -1151,6 +1139,19 @@ app.definitions.Socket = L.Class.extend({
 					}
 				});
 			} else if (textMsg.startsWith('saveas:')) {
+				var accessToken = this._getParameterByName(url, 'access_token');
+				var accessTokenTtl = this._getParameterByName(url, 'access_token_ttl');
+
+				if (accessToken !== undefined) {
+					if (accessTokenTtl === undefined) {
+						accessTokenTtl = 0;
+					}
+					this._map.options.docParams = { 'access_token': accessToken, 'access_token_ttl': accessTokenTtl };
+				}
+				else {
+					this._map.options.docParams = {};
+				}
+
 				// if this is save-as, we need to load the document with edit permission
 				// otherwise the user has to close the doc then re-open it again
 				// in order to be able to edit.
