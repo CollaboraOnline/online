@@ -1068,7 +1068,7 @@ function editorUpdate(e) { // eslint-disable-line no-unused-vars
 
 		docLayer._followUser = false;
 		docLayer._followEditor = true;
-		if (editorId !== -1 && editorId !== docLayer.viewId) {
+		if (editorId !== -1 && editorId !== docLayer._viewId) {
 			map._goToViewId(editorId);
 			docLayer._followThis = editorId;
 		}
