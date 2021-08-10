@@ -104,9 +104,22 @@ td.jsdialog .jsdialog.cell.sidebar {
 .sidebar #resetattr:hover,
 .sidebar #FormatPaintbrush:hover,
 #table-textorientbox.sidebar .jsdialog .radiobutton:hover {
-	border-color: #cccccc;
-	background-color: #eeeeee;
-	border-radius: 4px;
+	border-color: var(--gray-light-txt--color);
+	background-color: var(--gray-light-bg-color);
+	border-radius: 0.1px;
+}
+
+.sidebar.unotoolbutton.selected {
+	background-color: var(--gray-light-bg-color);
+	outline: 2px solid var(--gray-light-bg-color);
+	color: var(--gray-light-txt--color);
+}
+
+.sidebar.unotoolbutton.selected:hover {
+	background-color: var(--gray-light-bg-color);
+	outline: 1px solid var(--gray-light-bg-color);
+	color: var(--gray-light-txt--color);
+	border-radius: 0.1px;
 }
 
 .sidebar #font select,
@@ -133,4 +146,17 @@ td.jsdialog .jsdialog.cell.sidebar {
 	background: none !important;
 	width: auto;
 	height: auto;
+}
+
+.jsdialog.ui-separator.horizontal {
+	padding-top: 0;
+}
+
+#spacinglabel {
+	padding-top: 0px;
+}
+
+
+#indentlabel {
+	padding-top: 8px;
 }
