@@ -1114,7 +1114,7 @@ private:
         std::vector<int> viewIds(viewCount);
         getLOKitDocument()->getViewIds(viewIds.data(), viewCount);
 
-        const std::map<int, UserInfo> viewInfoMap = _sessionUserInfo;
+        const std::map<int, UserInfo> viewInfoMap = getViewInfo();
 
         const std::map<std::string, int> viewColorsMap = getViewColors();
 
