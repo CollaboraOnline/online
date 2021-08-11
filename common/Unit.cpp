@@ -51,6 +51,9 @@ UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibP
         case UnitType::Kit:
             symbol = "unit_create_kit";
             break;
+        case UnitType::Tool:
+            symbol = "unit_create_tool";
+            break;
     }
     CreateUnitHooksFunction* createHooks;
     createHooks = reinterpret_cast<CreateUnitHooksFunction *>(dlsym(dlHandle, symbol));
@@ -115,6 +118,9 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
             break;
         case UnitType::Kit:
             Global = new UnitKit();
+            break;
+        case UnitType::Tool:
+            Global = new UnitTool();
             break;
         default:
             assert(false);

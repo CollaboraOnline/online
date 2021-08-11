@@ -122,7 +122,8 @@ public:
     enum class UnitType
     {
         Wsd,
-        Kit
+        Kit,
+        Tool
     };
     /// Load unit test hook shared library from this path
     static bool init(UnitType type, const std::string& unitLibPath);
@@ -441,6 +442,15 @@ public:
     {
         return nullptr;
     }
+};
+
+/// Derive your Tool unit test / hooks from me.
+class UnitTool : public UnitBase
+{
+public:
+    explicit UnitTool(std::string testname = std::string())
+        : UnitBase(testname) {}
+    virtual ~UnitTool() {}
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
