@@ -369,6 +369,11 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	width: 240px;
 }
 
+.annotation-active .loleaflet-annotation-content-wrapper {
+	min-width: 240px;
+	width: auto;
+}
+
 .loleaflet-annotation-content {
 	margin: 3px;
 	line-height: 1.4;
@@ -485,7 +490,7 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	background-color: white;
 	overflow-x: hidden;
 	height: 50px;
-	width: 95%;
+	width: 100%;
 	box-sizing: border-box;
 }
 
