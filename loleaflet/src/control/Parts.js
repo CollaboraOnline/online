@@ -31,18 +31,23 @@ L.Map.include({
 			return;
 		}
 
+		if (app.file.fileBasedView)
+		{
+			docLayer._selectedPart = docLayer._prevSelectedPart;
+			if (typeof(part) !== 'number') {
+				docLayer._preview._scrollViewByDirection(part);
+				return;
+			}
+			docLayer._preview._scrollViewToPartPosition(docLayer._selectedPart);
+			return;
+		}
+
 		this.fire('updateparts', {
 			selectedPart: docLayer._selectedPart,
 			selectedParts: docLayer._selectedParts,
 			parts: docLayer._parts,
 			docType: docLayer._docType
 		});
-
-		if (app.file.fileBasedView)
-		{
-			docLayer._preview._scrollViewToPartPosition(docLayer._selectedPart);
-			return;
-		}
 
 		this.fire('scrolltopart');
 
