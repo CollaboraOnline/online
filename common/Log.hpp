@@ -299,7 +299,7 @@ namespace Log
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (log_.trace() && !Log::isShutdownCalled())                                              \
+        if (!Log::isShutdownCalled() && log_.trace())                                              \
         {                                                                                          \
             LOG_BODY_(log_, TRACE, "TRC", X, true);                                                \
         }                                                                                          \
@@ -309,7 +309,7 @@ namespace Log
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (log_.trace() && !Log::isShutdownCalled())                                              \
+        if (!Log::isShutdownCalled() && log_.trace())                                              \
         {                                                                                          \
             LOG_BODY_(log_, TRACE, "TRC", X, false);                                               \
         }                                                                                          \
@@ -319,7 +319,7 @@ namespace Log
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (log_.debug() && !Log::isShutdownCalled())                                              \
+        if (!Log::isShutdownCalled() && log_.debug())                                              \
         {                                                                                          \
             LOG_BODY_(log_, DEBUG, "DBG", X, true);                                                \
         }                                                                                          \
@@ -329,7 +329,7 @@ namespace Log
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (log_.information() && !Log::isShutdownCalled())                                        \
+        if (!Log::isShutdownCalled() && log_.information())                                        \
         {                                                                                          \
             LOG_BODY_(log_, INFORMATION, "INF", X, true);                                          \
         }                                                                                          \
@@ -339,7 +339,7 @@ namespace Log
     do                                                                                             \
     {                                                                                              \
         auto& log_ = Log::logger();                                                                \
-        if (log_.information() && !Log::isShutdownCalled())                                        \
+        if (!Log::isShutdownCalled() && log_.information())                                        \
         {                                                                                          \
             LOG_BODY_(log_, INFORMATION, "INF", X, false);                                         \
         }                                                                                          \
