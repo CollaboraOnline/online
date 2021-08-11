@@ -327,6 +327,8 @@ L.Control.PartsPreview = L.Control.extend({
 
 	// This is used with fileBasedView.
 	_scrollViewToPartPosition: function (partNumber) {
+		if (this._map._docLayer && this._map._docLayer._isZooming)
+			return;
 		var ratio = this._map._docLayer._tileSize / this._map._docLayer._tileHeightTwips;
 		var partHeightPixels = Math.round((this._map._docLayer._partHeightTwips + this._map._docLayer._spaceBetweenParts) * ratio);
 		var scrollTop = partHeightPixels * partNumber;
