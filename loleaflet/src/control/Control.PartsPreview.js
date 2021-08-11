@@ -341,6 +341,15 @@ L.Control.PartsPreview = L.Control.extend({
 		app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).onScrollTo({x: 0, y: scrollTop});
 	},
 
+	_scrollViewByDirection: function(buttonType) {
+		if (this._map._docLayer && this._map._docLayer._isZooming)
+			return;
+		var viewHeight = app.sectionContainer.getViewSize()[1];
+		if (buttonType === 'prev')
+			viewHeight *= -1;
+		app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).onScrollBy({x: 0, y: viewHeight});
+	},
+
 	_setPart: function (e) {
 		var part = this._findClickedPart(e.target.parentNode);
 		if (part !== null) {

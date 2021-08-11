@@ -5602,6 +5602,8 @@ L.CanvasTileLayer = L.Layer.extend({
 	_updateFileBasedView: function (checkOnly) {
 		if (this._partHeightTwips === 0) // This is true before status message is handled.
 			return [];
+		if (this._isZooming)
+			return [];
 
 		var zoom = Math.round(this._map.getZoom());
 
