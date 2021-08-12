@@ -1153,7 +1153,15 @@ private:
         _response.reset(new Response(onFinished));
 
         _request = std::move(req);
-        _request.set("Host", host() + ':' + port()); // Make sure the host is set.
+
+        std::string host = _host;
+
+        if (_port != "80" && _port != "443")
+        {
+            host.append(":");
+            host.append(_port);
+        }
+        _request.set("Host", host); // Make sure the host is set.
         _request.set("Date", Util::getHttpTimeNow());
         _request.set("User-Agent", HTTP_AGENT_STRING);
     }
