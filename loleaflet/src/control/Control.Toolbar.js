@@ -970,6 +970,12 @@ function onUpdateParts(e) {
 		}
 	}
 
+	if (app.file.fileBasedView) {
+		toolbar.enable('prev');
+		toolbar.enable('next');
+		return;
+	}
+
 	if (e.docType !== 'spreadsheet') {
 		if (current === 0) {
 			toolbar.disable('prev');
