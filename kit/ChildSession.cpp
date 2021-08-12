@@ -2935,6 +2935,8 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_INVALIDATE_SHEET_GEOMETRY:
         sendTextFrame("invalidatesheetgeometry: " + payload);
         break;
+    case LOK_CALLBACK_DOCUMENT_BACKGROUND_COLOR:
+        sendTextFrame("documentbackgroundcolor: " + payload);
     default:
         LOG_ERR("Unknown callback event (" << lokCallbackTypeToString(type) << "): " << payload);
     }
