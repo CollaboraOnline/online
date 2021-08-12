@@ -406,14 +406,8 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 		else if (!this.modifier && (keyCode === 33 || keyCode === 34) && ev.type === 'keydown') {
 			if (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') {
-				var partToSelect = this._map._docLayer._selectedPart;
-				partToSelect = keyCode === 33 ? partToSelect - 1 : partToSelect + 1;
-				if (partToSelect > -1 && partToSelect < this._map._docLayer._parts) {
-					this._map._docLayer._preview._scrollViewToPartPosition(partToSelect);
-					setTimeout(function () {
-						app.sectionContainer.requestReDraw();
-					}, 300);
-				}
+				var partToSelect = keyCode === 33 ? 'prev' : 'next';
+				this._map._docLayer._preview._scrollViewByDirection(partToSelect);
 			}
 			return;
 		}
