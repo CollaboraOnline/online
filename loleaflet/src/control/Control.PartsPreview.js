@@ -345,8 +345,18 @@ L.Control.PartsPreview = L.Control.extend({
 		if (this._map._docLayer && this._map._docLayer._isZooming)
 			return;
 		var viewHeight = app.sectionContainer.getViewSize()[1];
-		if (buttonType === 'prev')
+		if (buttonType === 'prev') {
+			if (this._map.getCurrentPartNumber() == 0) {
+				this._scrollViewToPartPosition(0);
+				return;
+			}
 			viewHeight *= -1;
+		} else if (buttonType === 'next') {
+			if (this._map._docLayer._parts == this._map.getCurrentPartNumber() + 1) {
+				this._scrollViewToPartPosition(this._map.getCurrentPartNumber());
+				return;
+			}
+		}
 		app.sectionContainer.getSectionWithName(L.CSections.Scroll.name).onScrollBy({x: 0, y: viewHeight});
 	},
 
