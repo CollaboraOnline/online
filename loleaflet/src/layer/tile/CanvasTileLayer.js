@@ -49,7 +49,7 @@ L.TileSectionManager = L.Class.extend({
 		this._sectionContainer = new CanvasSectionContainer(this._canvas, this._layer.isCalc() /* disableDrawing? */);
 
 		if (this._layer.isCalc())
-			this._sectionContainer.setClearColor('white');
+			this._sectionContainer.setClearColor('white'); // will be overridden by 'documentbackgroundcolor' msg.
 
 		app.sectionContainer = this._sectionContainer;
 		if (L.Browser.cypressTest) // If cypress is active, create test divs.

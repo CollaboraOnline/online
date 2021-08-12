@@ -931,6 +931,12 @@ L.TileLayer = L.GridLayer.extend({
 			obj = JSON.parse(textMsg.substring('redlinetablechanged:'.length + 1));
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
 		}
+		else if (textMsg.startsWith('documentbackgroundcolor:')) {
+			if (this.isCalc()) {
+				var bgColor = textMsg.substring('documentbackgroundcolor:'.length + 1).trim();
+				app.sectionContainer.setClearColor('#' + bgColor);
+			}
+		}
 	},
 
 	_onTabStopListUpdate: function (textMsg) {
