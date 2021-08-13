@@ -42,13 +42,6 @@ L.Map.include({
 			return;
 		}
 
-		this.fire('updateparts', {
-			selectedPart: docLayer._selectedPart,
-			selectedParts: docLayer._selectedParts,
-			parts: docLayer._parts,
-			docType: docLayer._docType
-		});
-
 		this.fire('scrolltopart');
 
 		docLayer._selectedParts.push(docLayer._selectedPart);
@@ -62,6 +55,13 @@ L.Map.include({
 		if (!external) {
 			app.socket.sendMessage('setclientpart part=' + docLayer._selectedPart);
 		}
+
+		this.fire('updateparts', {
+			selectedPart: docLayer._selectedPart,
+			selectedParts: docLayer._selectedParts,
+			parts: docLayer._parts,
+			docType: docLayer._docType
+		});
 
 		docLayer.eachView(docLayer._viewCursors, docLayer._onUpdateViewCursor, docLayer);
 
