@@ -364,11 +364,19 @@ L.TileSectionManager = L.Class.extend({
 		canvasOverlay.setOverlaySection(this._sectionContainer.getSectionWithName(L.CSections.Overlays.name));
 	},
 
+	shouldDrawCalcGrid: function () {
+		var defaultBG = 'ffffff';
+		return (this._layer.coreDocBGColor === defaultBG);
+	},
+
 	_onDrawGridSection: function () {
 		if (this.containerObject.isInZoomAnimation() || this.sectionProperties.tsManager.waitForTiles())
 			return;
-		// grid-section's onDrawArea is TileSectionManager's _drawGridSectionArea().
-		this.onDrawArea();
+
+		if (this.sectionProperties.tsManager.shouldDrawCalcGrid()) {
+			// grid-section's onDrawArea is TileSectionManager's _drawGridSectionArea().
+			this.onDrawArea();
+		}
 	},
 
 	_drawGridSectionArea: function (repaintArea, paneTopLeft, canvasCtx) {
@@ -1669,8 +1677,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else if (textMsg.startsWith('documentbackgroundcolor:')) {
 			if (this.isCalc()) {
-				var bgColor = textMsg.substring('documentbackgroundcolor:'.length + 1).trim();
-				app.sectionContainer.setClearColor('#' + bgColor);
+				this.coreDocBGColor = textMsg.substring('documentbackgroundcolor:'.length + 1).trim();
+				app.sectionContainer.setClearColor('#' + this.coreDocBGColor);
 			}
 		}
 	},
