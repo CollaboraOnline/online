@@ -933,8 +933,8 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('documentbackgroundcolor:')) {
 			if (this.isCalc()) {
-				var bgColor = textMsg.substring('documentbackgroundcolor:'.length + 1).trim();
-				app.sectionContainer.setClearColor('#' + bgColor);
+				this.coreDocBGColor = textMsg.substring('documentbackgroundcolor:'.length + 1).trim();
+				app.sectionContainer.setClearColor('#' + this.coreDocBGColor);
 			}
 		}
 	},
