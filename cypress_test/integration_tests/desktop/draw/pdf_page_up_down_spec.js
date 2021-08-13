@@ -13,7 +13,7 @@ describe('PDF View Tests', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it('PDF page down', { env: { 'pdf-view': true } }, function() {
+	it.skip('PDF page down', { env: { 'pdf-view': true } }, function() {
 		cy.get('#map').type('{pagedown}');
 		cy.get('#preview-frame-part-1').should('have.attr', 'style', 'border: 2px solid darkgrey;');
 
