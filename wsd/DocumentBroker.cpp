@@ -184,6 +184,7 @@ DocumentBroker::DocumentBroker(ChildType type,
     _stop(false),
     _closeReason("stopped"),
     _lockCtx(new LockContext()),
+    _lastEditingSessionId(),
     _tileVersion(0),
     _debugRenderedTileCount(0),
     _wopiDownloadDuration(0),
@@ -1746,11 +1747,14 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
         return false;
     }
 
-    // Remember the last save time, since this is the predicate.
-    LOG_TRC("Checking to autosave [" << _docKey << "].");
-
     // Which session to use when auto saving ?
-    const std::string savingSessionId = getWriteableSessionId();
+    // Prefer the last editing view, if still valid, otherwise, find the first writable sessionId.
+    const std::string savingSessionId = (_sessions.find(_lastEditingSessionId) != _sessions.end())
+                                            ? _lastEditingSessionId
+                                            : getWriteableSessionId();
+
+    // Remember the last save time, since this is the predicate.
+    LOG_TRC("Checking to autosave [" << _docKey << "] using session [" << savingSessionId << ']');
 
     bool sent = false;
     if (force)
