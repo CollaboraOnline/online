@@ -420,6 +420,13 @@ public:
 
     void updateLastActivityTime();
 
+    /// This updates the editing sessionId which is used for auto-saving.
+    void updateEditingSessionId(const std::string& viewId)
+    {
+        if (_lastEditingSessionId != viewId)
+            _lastEditingSessionId = viewId;
+    }
+
     /// Sends the .uno:Save command to LoKit.
     bool sendUnoSave(const std::string& sessionId, bool dontTerminateEdit = true,
                      bool dontSaveIfUnmodified = true, bool isAutosave = false,
@@ -1110,6 +1117,7 @@ private:
     std::unique_ptr<LockContext> _lockCtx;
     std::string _renameFilename; //< The new filename to rename to.
     std::string _renameSessionId; //< The sessionId used for renaming.
+    std::string _lastEditingSessionId; //< The last session edited, for auto-saving.
 
     /// Versioning is used to prevent races between
     /// painting and invalidation.
