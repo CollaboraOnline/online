@@ -485,6 +485,12 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // Keep track of timestamps of incoming client messages that indicate user activity.
         updateLastActivityTime();
         docBroker->updateLastActivityTime();
+
+        if (!isReadOnly() && isViewLoaded())
+        {
+            assert(!inWaitDisconnected() && "A loaded view can't also be waiting disconnection.");
+            docBroker->updateEditingSessionId(getId());
+        }
     }
     if (tokens.equals(0, "loolclient"))
     {
