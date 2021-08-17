@@ -1,21 +1,24 @@
+# phlostically <phlostically@mailinator.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-16 22:52+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-03-10 10:02+0000\n"
+"Last-Translator: phlostically <phlostically@mailinator.com>\n"
+"Language-Team: Esperanto <https://hosted.weblate.org/projects/"
+"collabora-online/app-store-descriptions/eo/>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.5.2-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
 msgid "Collabora Office: LibreOffice, OpenOffice & more"
-msgstr ""
+msgstr "Collabora Office: LibreOffice, OpenOffice & plu"
 
 #. Short description - 80 chars limit
 #: descriptions/google-play.html%2Bhtml.body.p:9-1
@@ -23,28 +26,30 @@ msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
+"LbreOffice-baza redaktilo kongrua kun Microsoft Office, LibreOffice, "
+"OpenOffice."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:14-5
 msgid "Major upgrade to the new 6.4 core."
-msgstr ""
+msgstr "Grava ĝisdatigo al la nova kerno de versio 6.4."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:15-5
 msgid "Improved MS Office interoperability."
-msgstr ""
+msgstr "Plibonigita kongrueco kun MS Office."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:16-5
 msgid "Better keyboard, mouse and trackpad support on Chromebooks."
-msgstr ""
+msgstr "Pli bona subteno de klavaroj, musoj, kaj tuŝplatoj ĉe Chromebook."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:17-5
 msgid "New tablet UI featuring a notebookbar."
-msgstr ""
+msgstr "Nova fasado por tabulkomputiloj kun notlibra breto."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:18-5
 msgid "Numerous fixes and improvements all over the place."
-msgstr ""
+msgstr "Multaj korektoj kaj plibonigoj en la tuta aplikaĵo."
