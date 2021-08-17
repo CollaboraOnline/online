@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-04-01 08:26+0000\n"
-"Last-Translator: wxf26054 <wxf26054@live.cn>\n"
+"PO-Revision-Date: 2021-07-21 23:07+0000\n"
+"Last-Translator: Zhou Nan <zhounan@nfschina.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.6-dev\n"
+"X-Generator: Weblate 4.7.2-dev\n"
 "X-Pootle-Path: /zh_CN/libo_online/loleaflet-ui-zh_CN.po\n"
 "X-Pootle-Revision: 3938267\n"
 
@@ -199,7 +199,7 @@ msgstr "刷新日志"
 
 #: admin/admin.strings.js:49
 msgid "Channel Filter:"
-msgstr ""
+msgstr "信道滤波器："
 
 #: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:381
 #: src/control/Control.StatusBar.js:330
@@ -225,7 +225,7 @@ msgstr "更新日志级别"
 
 #: admin/admin.strings.js:55
 msgid "Version Information"
-msgstr ""
+msgstr "版本信息"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -1088,7 +1088,7 @@ msgstr "表格(~T)"
 #: src/control/Control.NotebookbarWriter.js:54
 #: src/control/Control.NotebookbarCalc.js:48
 msgid "~Draw"
-msgstr ""
+msgstr "下拉（~D）"
 
 #: src/control/Control.NotebookbarWriter.js:60
 #: src/control/Control.NotebookbarCalc.js:54
@@ -1112,13 +1112,12 @@ msgid "See history"
 msgstr "查看历史记录"
 
 #: src/control/Control.NotebookbarWriter.js:131
-#, fuzzy
 msgid "ODF Text Document (.odt)"
-msgstr "ODF 文本文档 (.odt)"
+msgstr "ODF 文本文档（.odt）"
 
 #: src/control/Control.NotebookbarWriter.js:173
 msgid "EPUB Document (.epub)"
-msgstr ""
+msgstr "EPUB 文档（.epub）"
 
 #: src/control/Control.NotebookbarWriter.js:517
 msgid "Text Body"
@@ -1133,9 +1132,8 @@ msgid "~Data"
 msgstr "数据(~D)"
 
 #: src/control/Control.NotebookbarCalc.js:125
-#, fuzzy
 msgid "ODF Spreadsheet (.ods)"
-msgstr "ODF 电子表格 (.ods)"
+msgstr "ODF 电子表格 （.ods）"
 
 #: src/control/Control.NotebookbarCalc.js:131
 msgid "CSV File (.csv)"
@@ -1143,40 +1141,39 @@ msgstr "CSV文件(.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:416
 msgid "General"
-msgstr ""
+msgstr "常规"
 
 #: src/control/Control.NotebookbarCalc.js:417
 msgid "Number"
-msgstr ""
+msgstr "号码"
 
 #: src/control/Control.NotebookbarCalc.js:418
 msgid "Percent"
-msgstr ""
+msgstr "百分比"
 
 #: src/control/Control.NotebookbarCalc.js:419
-#, fuzzy
 msgid "Currency"
-msgstr "当前"
+msgstr "货币"
 
 #: src/control/Control.NotebookbarCalc.js:420
 msgid "Date"
-msgstr ""
+msgstr "日期"
 
 #: src/control/Control.NotebookbarCalc.js:421
 msgid "Time"
-msgstr ""
+msgstr "时间"
 
 #: src/control/Control.NotebookbarCalc.js:422
 msgid "Scientific"
-msgstr ""
+msgstr "科学的"
 
 #: src/control/Control.NotebookbarCalc.js:423
 msgid "Fraction"
-msgstr ""
+msgstr "派别"
 
 #: src/control/Control.NotebookbarCalc.js:424
 msgid "Boolean Value"
-msgstr ""
+msgstr "布尔值"
 
 #: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:809
 msgid "Text"
@@ -1184,7 +1181,7 @@ msgstr "文本"
 
 #: src/control/Control.NotebookbarCalc.js:558
 msgid "Default"
-msgstr ""
+msgstr "默认"
 
 #: src/control/Control.NotebookbarCalc.js:563
 msgid "Heading 1"
@@ -1241,7 +1238,7 @@ msgstr "ODF 演示文稿 (.odp)"
 
 #: src/control/Control.NotebookbarDraw.js:206
 msgid "Image (.png)"
-msgstr ""
+msgstr "图片（.png）"
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
