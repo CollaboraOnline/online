@@ -1,15 +1,14 @@
-# Eloy Crespo <eloy.crespo@collabora.com>, 2020.
 # Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-16 22:52+0200\n"
-"PO-Revision-Date: 2020-11-21 11:28+0000\n"
+"PO-Revision-Date: 2020-11-23 22:02+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
-"Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
-"app-store-descriptions/es/>\n"
-"Language: es\n"
+"Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
+"app-store-descriptions/ca/>\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,7 +18,7 @@ msgstr ""
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
 msgid "Collabora Office: LibreOffice, OpenOffice & more"
-msgstr "Collabora Office: LibreOffice, OpenOffice y más"
+msgstr "Collabora Office: LibreOffice, OpenOffice i més"
 
 #. Short description - 80 chars limit
 #: descriptions/google-play.html%2Bhtml.body.p:9-1
@@ -27,31 +26,32 @@ msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
-"Editor basado en LibreOffice para documentos de Microsoft Office, "
-"LibreOffice y OpenOffice."
+"Editor basat en el LibreOffice per a documents de l'Office i l'Open/"
+"LibreOffice."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:14-5
 msgid "Major upgrade to the new 6.4 core."
-msgstr "Actualización importante al nuevo núcleo 6.4."
+msgstr "Actualització important al nou nucli 6.4."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:15-5
 msgid "Improved MS Office interoperability."
-msgstr "Interoperatividad con MS Office mejorada."
+msgstr "Interoperativitat millorada amb el MS Office."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:16-5
 msgid "Better keyboard, mouse and trackpad support on Chromebooks."
 msgstr ""
-"Mejor interacción con el teclado, el ratón y el panel táctil en Chromebooks."
+"Millor interacció amb el teclat, el ratolí i el ratolí tàctil de les "
+"Chromebooks."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:17-5
 msgid "New tablet UI featuring a notebookbar."
-msgstr "Nueva interfaz de usuario para tabletas con omnibarra."
+msgstr "Interfície nova per a tauletes, amb barra de fitxes."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:18-5
 msgid "Numerous fixes and improvements all over the place."
-msgstr "Numerosas correcciones y mejoras en toda la aplicación."
+msgstr "Nombroses correccions i millores en tota l'aplicació."
