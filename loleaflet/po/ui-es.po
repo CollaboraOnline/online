@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-05-18 22:33+0000\n"
+"PO-Revision-Date: 2021-07-15 16:02+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.7.2-dev\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-ui-es.po\n"
 "X-Pootle-Revision: 3939976\n"
 
@@ -1266,25 +1266,27 @@ msgstr "No se pudo bloquear el documento."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Introduzca un nombre de archivo"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "nombre de archivo"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Este documento contiene formato o contenido que quizá no podrá guardarse en "
+"el formato de archivo actual."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Guardar en formato ODF"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Continuar editando"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1481,9 +1483,8 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Se produjo un problema al conectar con %productName: "
 
 #: src/core/Socket.js:510
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Se reinició el servidor. La página debe actualizarse ahora."
+msgstr "El servidor es ahora accesible. La página debe actualizarse ahora."
 
 #: src/core/Socket.js:528
 msgid "Served by:"
@@ -1580,7 +1581,7 @@ msgstr "Conectando…"
 
 #: src/core/Socket.js:1069
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "Se está cambiando el nombre del archivo y se recargará pronto"
 
 #: src/core/Socket.js:1352
 msgid ""
