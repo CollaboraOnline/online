@@ -1,10 +1,10 @@
-# Matthaiks <kitynska@gmail.com>, 2020.
+# Matthaiks <kitynska@gmail.com>, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-03 14:47+0200\n"
-"PO-Revision-Date: 2020-12-09 14:29+0000\n"
+"PO-Revision-Date: 2021-06-03 23:31+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/pl/>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -38,7 +38,7 @@ msgstr "Duże uaktualnienie do nowej gałęzi 6.4."
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:15-5
 msgid "Improved MS Office interoperability."
-msgstr "Poprawiona interoperacyjność MS Office."
+msgstr "Poprawiona interoperacyjność z MS Office."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:16-5
@@ -65,38 +65,41 @@ msgid ""
 "The new 6.4.9 version is faster, easier to use with an improved and more "
 "beautiful UI and with the following features:"
 msgstr ""
+"Nowa wersja 6.4.9 jest szybsza, łatwiejsza w użyciu wraz z ulepszonym i "
+"piękniejszym interfejsem oraz z następującymi funkcjami:"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:24-2
 msgid "Import and comment PDF Files"
-msgstr ""
+msgstr "Importowanie i komentowanie plików PDF"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:25-2
 msgid "Import of CSV files"
-msgstr ""
+msgstr "Importowanie plików CSV"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:26-2
 msgid "Add and edit Fontwork text art"
-msgstr ""
+msgstr "Dodawanie i edytowanie tekstu grafiki Fontwork"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:27-2
 msgid "Open Draw files"
-msgstr ""
+msgstr "Otwieranie plików Draw"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:28-2
 msgid "Run VBA compatible macros"
-msgstr ""
+msgstr "Uruchamianie makr zgodnych z VBA"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:29-2
 msgid "Freeze rows and columns in spreadsheets"
-msgstr ""
+msgstr "Przytwierdzanie wierszy i kolumn w arkuszach kalkulacyjnych"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:30-2
 msgid "New move/copy/delete sheet dialog in Calc"
 msgstr ""
+"Nowe okno dialogowe przenoszenia/kopiowania/usuwania arkusza w programie Calc"
