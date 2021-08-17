@@ -18,4 +18,9 @@
     <string name="later">Позже</string>
     <string name="rate_now">Оценить сейчас</string>
     <string name="file_chromeos_read_only">Этот файл нельзя сохранить в этом месте; он открыт только для чтения. Переместите его в файлы Play, чтобы получить полный доступ для чтения и записи.</string>
+    <string name="ask_for_convert_odf">Подтвердить формат файла</string>
+    <string name="use_odf">Использовать формат ODF</string>
+    <string name="use_text">Использовать текстовый формат</string>
+    <string name="cant_open_the_document">Не удалось открыть документ</string>
+    <string name="convert_odf_message">Этот документ может содержать форматирование или содержимое, которые не могут быть сохранены в выбранном формате файла \"Текст\".</string>
 </resources>
