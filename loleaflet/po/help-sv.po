@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2020-10-08 12:25+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2021-08-17 22:17+0000\n"
+"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "help/sv/>\n"
 "Language: sv\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.8-dev\n"
 "X-Pootle-Path: /sv/libo_online/loleaflet-help-sv.po\n"
 "X-Pootle-Revision: 2330087\n"
 
@@ -1186,9 +1186,8 @@ msgid "Select objects in the reverse order in which they were created"
 msgstr "Markera objekt i omvänd ordning mot när de skapades"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:207-18
-#, fuzzy
 msgid "Move to next text object on slide"
-msgstr "Flytta till nästa textobjekt på bilden / teckningssidan"
+msgstr "Flytta till nästa textobjekt på bilden"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:208-18
 msgid "Select all in slide"
@@ -1220,19 +1219,18 @@ msgstr "Samarbetsredigering"
 
 #: html/loleaflet-help.html%2Bdiv.p:272-5
 #: html/loleaflet-help.html%2Bdiv.h3:316-5
-#, fuzzy
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr "<span class=\"productname\">%productName</span> Hjälp"
+msgstr "<span class=\"productname\">%productName</span> användargränssnitt"
 
 #: html/loleaflet-help.html%2Bdiv.p:273-5
 #: html/loleaflet-help.html%2Bdiv.h3:336-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "Öppna, stänga, spara, skriva ut och ladda ner dokument"
 
 #: html/loleaflet-help.html%2Bdiv.p:274-5
 #: html/loleaflet-help.html%2Bdiv.h3:344-5
 msgid "Editing documents"
-msgstr ""
+msgstr "Redigera dokument"
 
 #: html/loleaflet-help.html%2Bdiv.p:275-5
 #: html/loleaflet-help.html%2Bdiv.div.p:281-9
@@ -1241,34 +1239,32 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.h3:410-5
 #: html/loleaflet-help.html%2Bdiv.div.h3:490-5
 msgid "Advanced features"
-msgstr ""
+msgstr "Avancerade funktioner"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:277-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:395-5
-#, fuzzy
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr "<span class=\"productname\">%productName</span> Hjälp"
+msgstr "<span class=\"productname\">%productName</span> kalkylblad"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:278-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:397-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "Redigera kalkylblad"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:279-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:400-5
 msgid "Formulas"
-msgstr ""
+msgstr "Formler"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:280-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:406-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "Formatera kalkylblad"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:284-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:443-5
-#, fuzzy
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr "<span class=\"productname\">%productName</span> Hjälp"
+msgstr "<span class=\"productname\">%productName</span> textdokument"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:285-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:445-5
@@ -1278,7 +1274,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.p:286-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:448-5
 msgid "Context menus"
-msgstr ""
+msgstr "Kontextmenyer"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:287-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:458-5
@@ -1287,19 +1283,18 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:290-9
 #: html/loleaflet-help.html%2Bdiv.div.h2:477-5
-#, fuzzy
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr "<span class=\"productname\">%productName</span> Hjälp"
+msgstr "<span class=\"productname\">%productName</span> presentationer"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:291-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:479-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "Redigera presentationer"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:292-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:482-5
 msgid "Slide show"
-msgstr ""
+msgstr "Bildspel"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:293-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:486-5
@@ -1309,26 +1304,26 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.p:296-5
 #: html/loleaflet-help.html%2Bdiv.h2:499-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "Vanliga frågor"
 
 #: html/loleaflet-help.html%2Bdiv.p:297-5
 msgid "General"
-msgstr ""
+msgstr "Allmän"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:299-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:530-5
 msgid "Text documents"
-msgstr ""
+msgstr "Textdokument"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:302-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:594-5
 msgid "Spreadsheets"
-msgstr ""
+msgstr "Kalkylark"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:305-9
 #: html/loleaflet-help.html%2Bdiv.div.h3:622-5
 msgid "Presentations"
-msgstr ""
+msgstr "Presentationer"
 
 #: html/loleaflet-help.html%2Bdiv.p:307-5
 msgid ""
@@ -1410,11 +1405,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:326-11
 msgid "Search backwards"
-msgstr ""
+msgstr "Sök bakåt"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:327-11
 msgid "Search forward"
-msgstr ""
+msgstr "Sök framåt"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:328-11
 msgid "Cancel the search (appears only when a text has been searched)"
@@ -1493,7 +1488,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:346-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "Kopiera och klistra in"
 
 #: html/loleaflet-help.html%2Bdiv.p:347-5
 msgid ""
@@ -1524,7 +1519,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:349-5
 msgid "Document repair"
-msgstr ""
+msgstr "Dokumentreparation"
 
 #: html/loleaflet-help.html%2Bdiv.p:350-5
 msgid ""
@@ -1550,7 +1545,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:354-5
 msgid "Inactive document"
-msgstr ""
+msgstr "Inaktivt dokument"
 
 #: html/loleaflet-help.html%2Bdiv.p:355-5
 msgid ""
@@ -1569,7 +1564,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:358-5
 msgid "Pasting"
-msgstr ""
+msgstr "Klistrar in"
 
 #: html/loleaflet-help.html%2Bdiv.p:359-5
 msgid ""
@@ -1607,7 +1602,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:366-5
 msgid "Adding charts"
-msgstr ""
+msgstr "Lägger till diagram"
 
 #: html/loleaflet-help.html%2Bdiv.p:367-5
 msgid ""
@@ -1653,7 +1648,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:380-5
 msgid "Handling images"
-msgstr ""
+msgstr "Hantera bilder"
 
 #: html/loleaflet-help.html%2Bdiv.p:381-5
 msgid ""
@@ -1701,7 +1696,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:389-5
 msgid "Spellchecking"
-msgstr ""
+msgstr "Stavningskontroll"
 
 #: html/loleaflet-help.html%2Bdiv.p:390-5
 msgid ""
@@ -1948,7 +1943,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:467-5
 msgid "Other advanced features"
-msgstr ""
+msgstr "Andra avancerade funktioner"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:468-5
 msgid ""
@@ -2073,19 +2068,19 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:503-11
 msgid ""
 "Text documents: Microsoft formats DOC, DOCX, RTF. OpenDocument Format ODT"
-msgstr ""
+msgstr "Textdokument: Microsoft format DOC, DOCX, RTF. OpenDocument Format ODT"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:504-11
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
-msgstr ""
+msgstr "Kalkylark: Microsoft -format XLS, XLSX, OpenDocument Format ODS"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:505-11
 msgid "Presentations: Microsoft formats PPT, PPTX, OpenDocument Format ODP"
-msgstr ""
+msgstr "Presentationer: Microsoft format PPT, PPTX, OpenDocument Format ODP"
 
 #: html/loleaflet-help.html%2Bdiv.h4:507-5
 msgid "How do I save a document with another name?"
-msgstr ""
+msgstr "Hur sparar jag ett dokument med ett annat namn?"
 
 #: html/loleaflet-help.html%2Bdiv.ol.li.p:509-11
 msgid "Hover the mouse on the document name in the menu bar."
@@ -2097,7 +2092,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.p:512-5
 msgid "A copy of the document is saved with the new name in the same folder."
-msgstr ""
+msgstr "En kopia av dokumentet sparas med det nya namnet i samma mapp."
 
 #: html/loleaflet-help.html%2Bdiv.h4:513-5
 msgid ""
@@ -2118,6 +2113,8 @@ msgid ""
 "Can <span class=\"productname\">%productName</span> open a password-"
 "protected document?"
 msgstr ""
+"Kan <span class=\"productname\">%productName</span> öppna ett "
+"lösenordsskyddat dokument?"
 
 #: html/loleaflet-help.html%2Bdiv.p:516-5
 msgid ""
@@ -2128,7 +2125,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:517-5
 msgid "How can I check spelling in my language?"
-msgstr ""
+msgstr "Hur kan jag kontrollera stavningen på mitt språk?"
 
 #: html/loleaflet-help.html%2Bdiv.p:518-5
 msgid ""
@@ -2139,7 +2136,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:519-5
 msgid "How can I remove the red wavy lines in my document?"
-msgstr ""
+msgstr "Hur kan jag ta bort de röda vågiga linjerna i mitt dokument?"
 
 #: html/loleaflet-help.html%2Bdiv.p:520-5
 msgid ""
@@ -2149,7 +2146,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:521-5
 msgid "What is the blue wavy underline in some words in the text?"
-msgstr ""
+msgstr "Vad är den blå vågiga understrykningen i vissa ord i texten?"
 
 #: html/loleaflet-help.html%2Bdiv.p:522-5
 msgid ""
@@ -2161,7 +2158,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.h4:523-5
 msgid "Is here a thesaurus?"
-msgstr ""
+msgstr "Finns det här en synonymordbok?"
 
 #: html/loleaflet-help.html%2Bdiv.p:524-5
 msgid ""
@@ -2206,6 +2203,7 @@ msgstr ""
 msgid ""
 "How can I insert a currency, copyright or trademark symbol in the document?"
 msgstr ""
+"Hur kan jag infoga en valuta, upphovsrätt eller varumärkesymbol i dokumentet?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:536-5
 msgid ""
@@ -2363,11 +2361,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.p:578-5
 msgid "Directly:"
-msgstr ""
+msgstr "Direkt:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:580-11
 msgid "Select the text with the existing format"
-msgstr ""
+msgstr "Markera texten med det befintliga formatet"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:581-11
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:612-11
@@ -2379,7 +2377,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:582-11
 msgid "Select the text you want to apply the new format."
-msgstr ""
+msgstr "Markera den text du vill använda det nya formatet."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:584-5
 msgid "Applying a paragraph style:"
@@ -2422,7 +2420,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:597-5
 msgid "How can I import CSV data?"
-msgstr ""
+msgstr "Hur kan jag importera CSV-data?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:599-11
 msgid ""
@@ -2486,7 +2484,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:617-5
 msgid "How do I rename a sheet?"
-msgstr ""
+msgstr "Hur byter jag namn på ett ark?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:618-5
 msgid ""
@@ -2497,12 +2495,12 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:623-5
 msgid "How can I run my slide show?"
-msgstr ""
+msgstr "Hur kan jag köra mitt bildspel?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:625-11
 msgid ""
 "Open the presentation in <span class=\"productname\">%productName</span>"
-msgstr ""
+msgstr "Öppna presentationen i <span class=\"productname\">%productName</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:626-11
 msgid ""
