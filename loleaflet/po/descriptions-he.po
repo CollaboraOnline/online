@@ -1,10 +1,10 @@
-# Yaron Shahrabani <sh.yaron@gmail.com>, 2020.
+# Yaron Shahrabani <sh.yaron@gmail.com>, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-03 14:47+0200\n"
-"PO-Revision-Date: 2020-12-10 08:58+0000\n"
+"PO-Revision-Date: 2021-06-03 23:31+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/he/>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -64,38 +64,40 @@ msgid ""
 "The new 6.4.9 version is faster, easier to use with an improved and more "
 "beautiful UI and with the following features:"
 msgstr ""
+"גרסה 6.4.9 החדשה היא מהירה ופשוטה יותר לשימוש ומנשק המשתמש בה משופר ומסוגל "
+"ליכולות הבאות:"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:24-2
 msgid "Import and comment PDF Files"
-msgstr ""
+msgstr "לייבא ולהוסיף הערות על קובצי PDF"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:25-2
 msgid "Import of CSV files"
-msgstr ""
+msgstr "לייבא קובצי CSV"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:26-2
 msgid "Add and edit Fontwork text art"
-msgstr ""
+msgstr "להוסיף ולערוך אומנות טקסטואלית של עבודת גופנים (Fontwork)"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:27-2
 msgid "Open Draw files"
-msgstr ""
+msgstr "לפתוח קובצי Draw"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:28-2
 msgid "Run VBA compatible macros"
-msgstr ""
+msgstr "להריץ תסריטי מאקרו תומכי VBA"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:29-2
 msgid "Freeze rows and columns in spreadsheets"
-msgstr ""
+msgstr "להקפיא שורות ועמודות בגיליונות נתונים"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:30-2
 msgid "New move/copy/delete sheet dialog in Calc"
-msgstr ""
+msgstr "חלונית העברה/העתקה/מחיקה ב־Calc"
