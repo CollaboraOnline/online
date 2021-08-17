@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-16 22:52+0200\n"
-"PO-Revision-Date: 2020-11-16 22:37+0000\n"
+"PO-Revision-Date: 2020-12-09 14:29+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/pl/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
 msgid "Collabora Office: LibreOffice, OpenOffice & more"
-msgstr "Collabora Office: LibreOffice, OpenOffice i nie tylko"
+msgstr "Collabora Office: LibreOffice, OpenOffice, więcej"
 
 #. Short description - 80 chars limit
 #: descriptions/google-play.html%2Bhtml.body.p:9-1
@@ -27,7 +27,7 @@ msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
-"Bazujący na LibreOffice edytor dokumentów Microsoft Office, LibreOffice i "
+"Bazujący na LibreOffice edytor dokumentów MS Office, LibreOffice i "
 "OpenOffice."
 
 #. Release notes
