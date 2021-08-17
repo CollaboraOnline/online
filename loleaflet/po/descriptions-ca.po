@@ -1,4 +1,5 @@
 # Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020.
+# Weblate <noreply@weblate.org>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
