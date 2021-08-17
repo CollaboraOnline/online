@@ -27,8 +27,7 @@ msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
-"עורך מבוסס LibreOffice עבור מסמכי Microsoft Office,‏ LibreOffice "
-"ו־OpenOffice."
+"עורך מבוסס LibreOffice עבור מסמכי Microsoft Office,‏ LibreOffice ו־OpenOffice."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:14-5
