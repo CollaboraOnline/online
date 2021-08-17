@@ -1,21 +1,24 @@
+# Stratos Kostidis <petros8280@hotmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-16 22:52+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-02-05 18:41+0000\n"
+"Last-Translator: Stratos Kostidis <petros8280@hotmail.com>\n"
+"Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
+"app-store-descriptions/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.5-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
 msgid "Collabora Office: LibreOffice, OpenOffice & more"
-msgstr ""
+msgstr "Collabora Office: LibreOffice, OpenOffice & άλλες"
 
 #. Short description - 80 chars limit
 #: descriptions/google-play.html%2Bhtml.body.p:9-1
@@ -23,28 +26,32 @@ msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
+"Επεξεργαστής με βάση LibreOffice για Microsoft Office, LibreOffice & "
+"OpenOffice."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:14-5
 msgid "Major upgrade to the new 6.4 core."
-msgstr ""
+msgstr "Σημαντική αναβάθμιση στον νέο 6,4 πυρήνα."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:15-5
 msgid "Improved MS Office interoperability."
-msgstr ""
+msgstr "Βελτιωμένη διαλειτουργικότητα του MS Office."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:16-5
 msgid "Better keyboard, mouse and trackpad support on Chromebooks."
 msgstr ""
+"Καλύτερη υποστήριξη πληκτρολογίου, ποντικιού και επιφάνειας αφής στα "
+"Chromebook."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:17-5
 msgid "New tablet UI featuring a notebookbar."
-msgstr ""
+msgstr "Νέα διεπαφή χρήστη tablet με γραμμή σημειωματάριων."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:18-5
 msgid "Numerous fixes and improvements all over the place."
-msgstr ""
+msgstr "Πολυάριθμες διορθώσεις και βελτιώσεις σε όλη την εφαρμογή."
