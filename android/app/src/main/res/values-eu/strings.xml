@@ -2,7 +2,7 @@
 <resources>
     <string name="title_activity_show_html">Honi buruz</string>
     <string name="directory_not_saved">Direktorioa ez da gorde.</string>
-    <string name="bmp_null">BMPa baliogabea da.</string>
+    <string name="bmp_null">Bmp-a nulua da!</string>
     <string name="unable_to_go_further">Ezin da urrunago joan.</string>
     <string name="share_document">Partekatu dokumentua</string>
     <string name="reason_required_to_read_documents">Biltegiratze-baimena behar da zure dokumentuak irakurtzeko.</string>
@@ -67,7 +67,7 @@
     <string name="sort_largest">Handiena lehena</string>
     <string name="sort_smallest">Txikiena lehena</string>
     <string name="sort">Ordenatu:</string>
-    <string name="filter">Iragazi:</string>
+    <string name="filter">Iragazi honen arabera</string>
     <string name="default_document_name">izengabea</string>
     <string name="new_spreadsheet">Kalkulu-orri berria</string>
     <string name="new_presentation">Aurkezpen berria</string>
@@ -112,4 +112,7 @@
     <string name="theme_system_default">Sistemak lehenetsia</string>
     <string name="choose_theme">Aukeratu gaia</string>
     <string name="theme">Gaia</string>
+    <string name="pref_user_name_guest">Erabiltzaile gonbidatua</string>
+    <string name="pref_user_name_info">Iruzkin bat gehitzerakoan erabiltzen da</string>
+    <string name="pref_user_name">Erabiltzaile-izena</string>
 </resources>
