@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-05-14 09:00+0000\n"
-"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
+"PO-Revision-Date: 2021-07-29 05:37+0000\n"
+"Last-Translator: Mehmet Sait Gülmez <cenggulmez.65@gmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.7.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1264,11 +1264,11 @@ msgstr "Belge kilitlenemedi."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Bir dosya adı girin"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "dosya adı"
 
 #: src/control/Permission.js:123
 msgid ""
@@ -1278,11 +1278,11 @@ msgstr ""
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "ODF olarak kaydet"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Düzenleyeme devam et"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
