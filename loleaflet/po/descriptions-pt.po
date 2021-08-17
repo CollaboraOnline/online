@@ -4,10 +4,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-03 14:47+0200\n"
-"PO-Revision-Date: 2021-04-23 22:09+0000\n"
+"PO-Revision-Date: 2021-06-08 00:26+0000\n"
 "Last-Translator: Sérgio Morais <lalocas@protonmail.com>\n"
-"Language-Team: Portuguese <https://hosted.weblate.org/projects/collabora-"
-"online/app-store-descriptions/pt/>\n"
+"Language-Team: Portuguese <https://hosted.weblate.org/projects/"
+"collabora-online/app-store-descriptions/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -63,38 +63,40 @@ msgid ""
 "The new 6.4.9 version is faster, easier to use with an improved and more "
 "beautiful UI and with the following features:"
 msgstr ""
+"A nova versão 6.4.9 é mais rápida, mais fácil de usar, com uma interface "
+"melhorada, mais bonita e com as seguintes funcionalidades:"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:24-2
 msgid "Import and comment PDF Files"
-msgstr ""
+msgstr "Importar e comentar ficheiros PDF"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:25-2
 msgid "Import of CSV files"
-msgstr ""
+msgstr "Importar ficheiros CSV"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:26-2
 msgid "Add and edit Fontwork text art"
-msgstr ""
+msgstr "Adicionar e editar arte de texto de Fontwork"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:27-2
 msgid "Open Draw files"
-msgstr ""
+msgstr "Abrir ficheiros Draw"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:28-2
 msgid "Run VBA compatible macros"
-msgstr ""
+msgstr "Executar macros compatíveis com VBA"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:29-2
 msgid "Freeze rows and columns in spreadsheets"
-msgstr ""
+msgstr "Congelar filas e colunas em folhas de cálculo"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:30-2
 msgid "New move/copy/delete sheet dialog in Calc"
-msgstr ""
+msgstr "Novo diálogo de mover/copiar/apagar folha em Calc"
