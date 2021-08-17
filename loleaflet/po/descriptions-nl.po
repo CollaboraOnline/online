@@ -43,7 +43,8 @@ msgstr "Verbeterde MS Office interoperabiliteit."
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:16-5
 msgid "Better keyboard, mouse and trackpad support on Chromebooks."
-msgstr "Betere ondersteuning voor toetsenbord, muis en trackpad op Chromebooks."
+msgstr ""
+"Betere ondersteuning voor toetsenbord, muis en trackpad op Chromebooks."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:17-5
