@@ -456,12 +456,12 @@ function expectTextForClipboard(expectedPlainText, frameId) {
 	}, frameId);
 
 	doIfInCalc(function() {
-		cy.customGet('#copy-paste-container pre')
+		cy.customGet('#copy-paste-container pre', frameId)
 			.should('have.text', expectedPlainText);
 	}, frameId);
 
 	doIfInImpress(function() {
-		cy.customGet('#copy-paste-container pre')
+		cy.customGet('#copy-paste-container pre', frameId)
 			.should('have.text', expectedPlainText);
 	}, frameId);
 }
