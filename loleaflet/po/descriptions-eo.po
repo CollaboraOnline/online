@@ -4,16 +4,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-03 14:47+0200\n"
-"PO-Revision-Date: 2021-03-10 10:02+0000\n"
+"PO-Revision-Date: 2021-06-03 23:31+0000\n"
 "Last-Translator: phlostically <phlostically@mailinator.com>\n"
-"Language-Team: Esperanto <https://hosted.weblate.org/projects/collabora-"
-"online/app-store-descriptions/eo/>\n"
+"Language-Team: Esperanto <https://hosted.weblate.org/projects/"
+"collabora-online/app-store-descriptions/eo/>\n"
 "Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5.2-dev\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -64,38 +64,40 @@ msgid ""
 "The new 6.4.9 version is faster, easier to use with an improved and more "
 "beautiful UI and with the following features:"
 msgstr ""
+"La nova versio 6.4.9 estas pli rapida, pli facile uzebla pro plibonigita kaj "
+"pli bela fasado kaj kun la jenaj funkcioj:"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:24-2
 msgid "Import and comment PDF Files"
-msgstr ""
+msgstr "Enporti kaj prikomenti PDF-dosierojn"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:25-2
 msgid "Import of CSV files"
-msgstr ""
+msgstr "Enporti CVS-dosierojn"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:26-2
 msgid "Add and edit Fontwork text art"
-msgstr ""
+msgstr "Aldoni kaj reedakti tekstan arton Fontwork"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:27-2
 msgid "Open Draw files"
-msgstr ""
+msgstr "Malfermi dosierojn de Draw"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:28-2
 msgid "Run VBA compatible macros"
-msgstr ""
+msgstr "Ruli VBA-kongruajn makroojn"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:29-2
 msgid "Freeze rows and columns in spreadsheets"
-msgstr ""
+msgstr "Ŝlosi vicojn kaj kolumnojn en kalkultabeloj"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:30-2
 msgid "New move/copy/delete sheet dialog in Calc"
-msgstr ""
+msgstr "Nova dialogo por movi/kopii/forigi folion en Calc"
