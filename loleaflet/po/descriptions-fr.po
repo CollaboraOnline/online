@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-16 22:52+0200\n"
-"PO-Revision-Date: 2020-11-19 07:28+0000\n"
+"PO-Revision-Date: 2020-11-19 23:09+0000\n"
 "Last-Translator: William Gathoye <william+weblate@gathoye.be>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/fr/>\n"
@@ -27,28 +27,31 @@ msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
+"Éditeur basé sur LibreOffice pour documents Microsoft Office, LibreOffice et "
+"OpenOffice."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:14-5
 msgid "Major upgrade to the new 6.4 core."
-msgstr ""
+msgstr "Mise à niveau majeure basée sur le nouveau cœur en version 6.4."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:15-5
 msgid "Improved MS Office interoperability."
-msgstr ""
+msgstr "Interopérabilité améliorée avec MS Office."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:16-5
 msgid "Better keyboard, mouse and trackpad support on Chromebooks."
 msgstr ""
+"Meilleure prise en charge des clavier, souris et trackpad des Chromebooks."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:17-5
 msgid "New tablet UI featuring a notebookbar."
-msgstr ""
+msgstr "Nouvelle interface à onglets en mode tablette."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:18-5
 msgid "Numerous fixes and improvements all over the place."
-msgstr ""
+msgstr "De nombreux correctifs et améliorations à tous les endroits."
