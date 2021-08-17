@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-06-29 13:40+0000\n"
+"PO-Revision-Date: 2021-07-29 17:39+0000\n"
 "Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt_BR/>\n"
-"Language: \n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.7.1-dev\n"
+"X-Generator: Weblate 4.7.2-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1268,25 +1268,27 @@ msgstr "Não foi possível bloquear o documento."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Insira nome de arquivo"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "nome de arquivo"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Este documento pode conter formatação ou conteúdo que não irá ser salvo no "
+"formato atual."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Salvar como ODF"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Continue editando"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1482,9 +1484,8 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Opa, há um problema de conexão com %productName: "
 
 #: src/core/Socket.js:510
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "O servidor foi reiniciado. Temos que atualizar a página agora."
+msgstr "O servidor está agora acessível. É necessário atualizar a página."
 
 #: src/core/Socket.js:528
 msgid "Served by:"
