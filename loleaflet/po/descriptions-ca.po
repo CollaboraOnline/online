@@ -1,12 +1,13 @@
 # Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020, 2021.
 # Weblate <noreply@weblate.org>, 2020.
+# Joan Montané <joan@montane.cat>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-03 14:47+0200\n"
-"PO-Revision-Date: 2021-06-08 00:26+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2021-06-09 09:33+0000\n"
+"Last-Translator: Joan Montané <joan@montane.cat>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/ca/>\n"
 "Language: ca\n"
@@ -63,11 +64,13 @@ msgid ""
 "The new 6.4.9 version is faster, easier to use with an improved and more "
 "beautiful UI and with the following features:"
 msgstr ""
+"La nova versió 6.4.9 és més ràpida, fàcil d'usar, té una interfície d'usuari "
+"millorada i incorpora les funcionalitats següents:"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:24-2
 msgid "Import and comment PDF Files"
-msgstr ""
+msgstr "Permet importar i comentar fitxers PDF"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:25-2
@@ -97,4 +100,4 @@ msgstr "Immobilització de files i columnes als fulls de càlcul"
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:30-2
 msgid "New move/copy/delete sheet dialog in Calc"
-msgstr ""
+msgstr "Un nou diàleg per a moure, copiar i suprimir fulls del Calc"
