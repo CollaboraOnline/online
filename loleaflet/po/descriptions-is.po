@@ -1,0 +1,55 @@
+# Sveinn í Felli <sv1@fellsnet.is>, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-16 22:52+0200\n"
+"PO-Revision-Date: 2020-12-11 11:29+0000\n"
+"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
+"Language-Team: Icelandic <https://hosted.weblate.org/projects/"
+"collabora-online/app-store-descriptions/is/>\n"
+"Language: is\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
+"X-Generator: Weblate 4.4-dev\n"
+
+#. App name - 50 chars limit
+#: descriptions/google-play.html%2Bhtml.body.h3:5-1
+msgid "Collabora Office: LibreOffice, OpenOffice & more"
+msgstr "Collabora Office: LibreOffice, OpenOffice & fleira"
+
+#. Short description - 80 chars limit
+#: descriptions/google-play.html%2Bhtml.body.p:9-1
+msgid ""
+"LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
+"docs."
+msgstr ""
+"LibreOffice-ritill fyrir Microsoft Office, LibreOffice og OpenOffice skjöl."
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:14-5
+msgid "Major upgrade to the new 6.4 core."
+msgstr "Meginuppfærsla í nýja 6.4 kjarnann."
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:15-5
+msgid "Improved MS Office interoperability."
+msgstr "Bætt samhæfni við MS Office."
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:16-5
+msgid "Better keyboard, mouse and trackpad support on Chromebooks."
+msgstr ""
+"Betri stuðningur við lyklaborð, mýs og snertiplatta á Chromebook-tölvum."
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:17-5
+msgid "New tablet UI featuring a notebookbar."
+msgstr "Nýtt viðmót fyrir spjaldtölvur sem sýnir flipastiku."
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:18-5
+msgid "Numerous fixes and improvements all over the place."
+msgstr "Fjöldi lagfæringa og endurbóta á mörgum atriðum."
