@@ -1,12 +1,13 @@
 # Cor Nouws <cno@nouenoff.nl>, 2020, 2021.
 # Weblate <noreply@weblate.org>, 2020.
+# Andras Timar <andras.timar@collabora.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-03 14:47+0200\n"
-"PO-Revision-Date: 2021-06-03 23:31+0000\n"
-"Last-Translator: Cor Nouws <cno@nouenoff.nl>\n"
+"PO-Revision-Date: 2021-06-09 09:33+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/nl/>\n"
 "Language: nl\n"
@@ -58,10 +59,6 @@ msgstr "Talloze foutcorrecties en verbeteringen op diverse plaatsen."
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.p:21-1
-#, fuzzy
-#| msgid ""
-#| "The new 6.4.9 version is faster, easier to use with an improved and more "
-#| "beautiful UI and with the folling features:"
 msgid ""
 "The new 6.4.9 version is faster, easier to use with an improved and more "
 "beautiful UI and with the following features:"

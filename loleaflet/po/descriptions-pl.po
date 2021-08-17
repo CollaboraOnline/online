@@ -1,11 +1,12 @@
 # Matthaiks <kitynska@gmail.com>, 2020, 2021.
+# Andras Timar <andras.timar@collabora.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-03 14:47+0200\n"
-"PO-Revision-Date: 2021-06-03 23:31+0000\n"
-"Last-Translator: Matthaiks <kitynska@gmail.com>\n"
+"PO-Revision-Date: 2021-06-09 09:33+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/pl/>\n"
 "Language: pl\n"
@@ -57,10 +58,6 @@ msgstr "Liczne poprawki i ulepszenia w każdym miejscu."
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.p:21-1
-#, fuzzy
-#| msgid ""
-#| "The new 6.4.9 version is faster, easier to use with an improved and more "
-#| "beautiful UI and with the folling features:"
 msgid ""
 "The new 6.4.9 version is faster, easier to use with an improved and more "
 "beautiful UI and with the following features:"

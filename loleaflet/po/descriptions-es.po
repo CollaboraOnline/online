@@ -1,12 +1,13 @@
 # Eloy Crespo <eloy.crespo@collabora.com>, 2020.
 # Adolfo Jayme Barrientos <fitojb@ubuntu.com>, 2020, 2021.
+# Andras Timar <andras.timar@collabora.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-03 14:47+0200\n"
-"PO-Revision-Date: 2021-06-08 00:26+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2021-06-09 09:33+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/es/>\n"
 "Language: es\n"
@@ -58,10 +59,6 @@ msgstr "Numerosas correcciones y mejoras en toda la aplicación."
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.p:21-1
-#, fuzzy
-#| msgid ""
-#| "The new 6.4.9 version is faster, easier to use with an improved and more "
-#| "beautiful UI and with the folling features:"
 msgid ""
 "The new 6.4.9 version is faster, easier to use with an improved and more "
 "beautiful UI and with the following features:"
