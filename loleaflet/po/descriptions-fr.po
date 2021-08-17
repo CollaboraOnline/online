@@ -1,12 +1,13 @@
 # William Gathoye <william+weblate@gathoye.be>, 2020.
 # Weblate <noreply@weblate.org>, 2020.
+# Andras Timar <andras.timar@collabora.com>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-16 22:52+0200\n"
-"PO-Revision-Date: 2020-11-19 23:09+0000\n"
-"Last-Translator: William Gathoye <william+weblate@gathoye.be>\n"
+"PO-Revision-Date: 2020-11-21 11:28+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/fr/>\n"
 "Language: fr\n"
@@ -27,8 +28,8 @@ msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
-"Éditeur basé sur LibreOffice pour documents Microsoft Office, LibreOffice et "
-"OpenOffice."
+"Éditeur basé sur LibreOffice pour documents MS Office, LibreOffice et "
+"OpenOffice"
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:14-5
