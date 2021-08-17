@@ -1,0 +1,54 @@
+# liimee <alt3753.7@gmail.com>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-16 22:52+0200\n"
+"PO-Revision-Date: 2021-05-21 00:57+0000\n"
+"Last-Translator: liimee <alt3753.7@gmail.com>\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/"
+"collabora-online/app-store-descriptions/id/>\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.7-dev\n"
+
+#. App name - 50 chars limit
+#: descriptions/google-play.html%2Bhtml.body.h3:5-1
+msgid "Collabora Office: LibreOffice, OpenOffice & more"
+msgstr ""
+
+#. Short description - 80 chars limit
+#: descriptions/google-play.html%2Bhtml.body.p:9-1
+msgid ""
+"LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
+"docs."
+msgstr ""
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:14-5
+msgid "Major upgrade to the new 6.4 core."
+msgstr ""
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:15-5
+msgid "Improved MS Office interoperability."
+msgstr "Interoperabilitas MS Office ditingkatkan."
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:16-5
+msgid "Better keyboard, mouse and trackpad support on Chromebooks."
+msgstr ""
+"Dukungan lebih baik untuk papan ketik, tetikus dan trackpad untuk Chromebook."
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:17-5
+msgid "New tablet UI featuring a notebookbar."
+msgstr ""
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:18-5
+msgid "Numerous fixes and improvements all over the place."
+msgstr "Beberapa perbaikan serta peningkatan pada seluruh tempat."
