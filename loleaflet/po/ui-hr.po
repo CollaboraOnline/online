@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-05-17 08:32+0000\n"
+"PO-Revision-Date: 2021-07-27 12:32+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
 "Language-Team: Croatian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hr/>\n"
-"Language: \n"
+"Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.7.2-dev\n"
 "X-Pootle-Path: /hr/libo_online/loleaflet-ui-hr.po\n"
 "X-Pootle-Revision: 3937859\n"
 
@@ -1264,25 +1264,27 @@ msgstr "Dokument se ne može zaključati."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Upiši ime datoteke"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "ime datoteke"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Ovaj dokument možda sadrži formatiranje ili sadržaj koji se ne može spremiti "
+"u trenutačnom formatu datoteke."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Spremi kao ODF format"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Nastavi s uređivanjem"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1478,9 +1480,8 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Ups, postoji problem s povezivanjem na %productName: "
 
 #: src/core/Socket.js:510
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Poslužitelj je ponovo pokrenut. Moramo aktualizirati stranicu."
+msgstr "Poslužitelj je sada dostupan. Moramo aktualizirati stranicu."
 
 #: src/core/Socket.js:528
 msgid "Served by:"
@@ -1580,7 +1581,7 @@ msgstr "Povezivanje …"
 
 #: src/core/Socket.js:1069
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "Dokument se preimenuje i uskoro će se ponovo učitati"
 
 #: src/core/Socket.js:1352
 msgid ""
