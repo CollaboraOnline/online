@@ -1,25 +1,21 @@
-# Pedro Silva <pedro.silva@collabora.com>, 2020.
-# Weblate <noreply@weblate.org>, 2020.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-16 22:52+0200\n"
-"PO-Revision-Date: 2020-11-26 10:28+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
-"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
-"collabora-online/app-store-descriptions/pt_BR/>\n"
-"Language: pt_BR\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.4-dev\n"
+"X-Generator: Translate Toolkit 2.5.0\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
 msgid "Collabora Office: LibreOffice, OpenOffice & more"
-msgstr "Collabora Office: LibreOffice, OpenOffice etc"
+msgstr ""
 
 #. Short description - 80 chars limit
 #: descriptions/google-play.html%2Bhtml.body.p:9-1
@@ -27,29 +23,28 @@ msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
-"Baseado em LibreOffice for MS Office, LibreOffice e documentos OpenOffice."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:14-5
 msgid "Major upgrade to the new 6.4 core."
-msgstr "Grande atualização para o novo núcleo 6.4."
+msgstr ""
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:15-5
 msgid "Improved MS Office interoperability."
-msgstr "Interoperabilidade aprimorada para documentos Microsoft Office."
+msgstr ""
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:16-5
 msgid "Better keyboard, mouse and trackpad support on Chromebooks."
-msgstr "Melhor suporte para teclado, mouse e trackpad em Chromebooks."
+msgstr ""
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:17-5
 msgid "New tablet UI featuring a notebookbar."
-msgstr "Novo interface de usuário para tablet expondo a nova notebookbar."
+msgstr ""
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:18-5
 msgid "Numerous fixes and improvements all over the place."
-msgstr "Inúmeras correções e melhorias."
+msgstr ""

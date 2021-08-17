@@ -1,0 +1,92 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-03 14:47+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Translate Toolkit 2.5.0\n"
+
+#. App name - 50 chars limit
+#: descriptions/google-play.html%2Bhtml.body.h3:5-1
+msgid "Collabora Office: LibreOffice, OpenOffice & more"
+msgstr ""
+
+#. Short description - 80 chars limit
+#: descriptions/google-play.html%2Bhtml.body.p:9-1
+msgid ""
+"LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
+"docs."
+msgstr ""
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:14-5
+msgid "Major upgrade to the new 6.4 core."
+msgstr ""
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:15-5
+msgid "Improved MS Office interoperability."
+msgstr ""
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:16-5
+msgid "Better keyboard, mouse and trackpad support on Chromebooks."
+msgstr ""
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:17-5
+msgid "New tablet UI featuring a notebookbar."
+msgstr ""
+
+#. Release notes
+#: descriptions/google-play.html%2Bhtml.body.ul.li:18-5
+msgid "Numerous fixes and improvements all over the place."
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.p:21-1
+msgid ""
+"The new 6.4.9 version is faster, easier to use with an improved and more "
+"beautiful UI and with the following features:"
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.ul.li:24-2
+msgid "Import and comment PDF Files"
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.ul.li:25-2
+msgid "Import of CSV files"
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.ul.li:26-2
+msgid "Add and edit Fontwork text art"
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.ul.li:27-2
+msgid "Open Draw files"
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.ul.li:28-2
+msgid "Run VBA compatible macros"
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.ul.li:29-2
+msgid "Freeze rows and columns in spreadsheets"
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.ul.li:30-2
+msgid "New move/copy/delete sheet dialog in Calc"
+msgstr ""
