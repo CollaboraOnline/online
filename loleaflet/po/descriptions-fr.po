@@ -1,4 +1,4 @@
-# William Gathoye <william+weblate@gathoye.be>, 2020.
+# William Gathoye <william+weblate@gathoye.be>, 2020, 2021.
 # Weblate <noreply@weblate.org>, 2020.
 # Andras Timar <andras.timar@collabora.com>, 2020.
 # J. Lavoie <j.lavoie@net-c.ca>, 2021.
@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-03 14:47+0200\n"
-"PO-Revision-Date: 2021-05-21 00:57+0000\n"
-"Last-Translator: Louis Morel <louismorel03@outlook.fr>\n"
+"PO-Revision-Date: 2021-06-03 23:31+0000\n"
+"Last-Translator: William Gathoye <william+weblate@gathoye.be>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/fr/>\n"
 "Language: fr\n"
@@ -69,38 +69,42 @@ msgid ""
 "The new 6.4.9 version is faster, easier to use with an improved and more "
 "beautiful UI and with the following features:"
 msgstr ""
+"La nouvelle version 6.4.9 est plus rapide et plus facile à utiliser grâce à "
+"son interface améliorée et à l'ajout des fonctionnalités suivantes :"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:24-2
 msgid "Import and comment PDF Files"
 msgstr ""
+"Importation des fichiers PDF et gestion des commentaires dans ces mêmes "
+"fichiers"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:25-2
 msgid "Import of CSV files"
-msgstr ""
+msgstr "Importation des fichiers CSV"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:26-2
 msgid "Add and edit Fontwork text art"
-msgstr ""
+msgstr "Ajout et modification de texte Fontwork"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:27-2
 msgid "Open Draw files"
-msgstr ""
+msgstr "Ouverture des fichiers Draw"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:28-2
 msgid "Run VBA compatible macros"
-msgstr ""
+msgstr "Prise en charge des macros VBA compatibles"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:29-2
 msgid "Freeze rows and columns in spreadsheets"
-msgstr ""
+msgstr "Fixation des lignes et colonnes dans les feuilles de calculs"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:30-2
 msgid "New move/copy/delete sheet dialog in Calc"
-msgstr ""
+msgstr "Nouvelle boîte de dialogue de déplacement/copie/suppression dans Calc"
