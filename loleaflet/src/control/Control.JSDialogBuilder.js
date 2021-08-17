@@ -832,7 +832,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (data.command) {
 			var iconParent = expander.children('.ui-expander').get(0);
 			var icon = L.DomUtil.create('div', 'ui-expander-icon-right ' + builder.options.cssClass, iconParent);
-			builder._controlHandlers['toolitem'](icon, {type: 'toolitem', command: data.command}, builder);
+			builder._controlHandlers['toolitem'](icon, {type: 'toolitem', command: data.command, icon: builder._createIconURL('morebutton')}, builder);
 		}
 
 		return false;
@@ -2146,11 +2146,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			id = id.replace(/\./g, '-');
 			div.id = id;
 
-			if (builder.options.cssClass.includes('sidebar') && parentContainer.attributes.class.textContent.includes('ui-expander-icon-right')) {
-				var icon = builder._createIconURL('morebutton');
-			} else {
-				var icon = data.icon ? data.icon : builder._createIconURL(data.command);
-			}
+			var icon = data.icon ? data.icon : builder._createIconURL(data.command);
 			var buttonId = id + 'img';
 
 			button = L.DomUtil.create('img', 'ui-content unobutton', div);
