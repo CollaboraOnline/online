@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-11-16 22:52+0200\n"
+"POT-Creation-Date: 2021-06-03 14:47+0200\n"
 "PO-Revision-Date: 2021-05-21 00:57+0000\n"
 "Last-Translator: Louis Morel <louismorel03@outlook.fr>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
@@ -58,3 +58,49 @@ msgstr "Nouvelle interface à onglets en mode tablette."
 #: descriptions/google-play.html%2Bhtml.body.ul.li:18-5
 msgid "Numerous fixes and improvements all over the place."
 msgstr "De nombreux correctifs et améliorations à tous les endroits."
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.p:21-1
+#, fuzzy
+#| msgid ""
+#| "The new 6.4.9 version is faster, easier to use with an improved and more "
+#| "beautiful UI and with the folling features:"
+msgid ""
+"The new 6.4.9 version is faster, easier to use with an improved and more "
+"beautiful UI and with the following features:"
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.ul.li:24-2
+msgid "Import and comment PDF Files"
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.ul.li:25-2
+msgid "Import of CSV files"
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.ul.li:26-2
+msgid "Add and edit Fontwork text art"
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.ul.li:27-2
+msgid "Open Draw files"
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.ul.li:28-2
+msgid "Run VBA compatible macros"
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.ul.li:29-2
+msgid "Freeze rows and columns in spreadsheets"
+msgstr ""
+
+#. Release notes 6.4.9
+#: descriptions/google-play.html%2Bhtml.body.ul.li:30-2
+msgid "New move/copy/delete sheet dialog in Calc"
+msgstr ""
