@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-03-25 00:12+0000\n"
+"PO-Revision-Date: 2021-07-31 19:50+0000\n"
 "Last-Translator: Gontzal Manuel Pujana Onaindia <thadahdenyse@gmail.com>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
 "ui/eu/>\n"
-"Language: \n"
+"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5.2-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 "X-Pootle-Path: /eu/libo_online/loleaflet-ui-eu.po\n"
 "X-Pootle-Revision: 3939192\n"
 
@@ -229,7 +229,7 @@ msgstr "Eguneratu egunkari-mailak"
 
 #: admin/admin.strings.js:55
 msgid "Version Information"
-msgstr ""
+msgstr "Bertsioaren informazioa"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -1118,13 +1118,12 @@ msgid "See history"
 msgstr "Ikusi historia"
 
 #: src/control/Control.NotebookbarWriter.js:131
-#, fuzzy
 msgid "ODF Text Document (.odt)"
 msgstr "ODF testu dokumentua (.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:173
 msgid "EPUB Document (.epub)"
-msgstr ""
+msgstr "EPUB dokumentua (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:517
 msgid "Text Body"
@@ -1139,7 +1138,6 @@ msgid "~Data"
 msgstr "~Datuak"
 
 #: src/control/Control.NotebookbarCalc.js:125
-#, fuzzy
 msgid "ODF Spreadsheet (.ods)"
 msgstr "ODF kalkulu-orria (.ods)"
 
@@ -1149,40 +1147,39 @@ msgstr "CSV fitxategia (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:416
 msgid "General"
-msgstr ""
+msgstr "Orokorra"
 
 #: src/control/Control.NotebookbarCalc.js:417
 msgid "Number"
-msgstr ""
+msgstr "Zenbakia"
 
 #: src/control/Control.NotebookbarCalc.js:418
 msgid "Percent"
-msgstr ""
+msgstr "Ehunekoa"
 
 #: src/control/Control.NotebookbarCalc.js:419
-#, fuzzy
 msgid "Currency"
-msgstr "Unekoa"
+msgstr "Moneta"
 
 #: src/control/Control.NotebookbarCalc.js:420
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: src/control/Control.NotebookbarCalc.js:421
 msgid "Time"
-msgstr ""
+msgstr "Denbora"
 
 #: src/control/Control.NotebookbarCalc.js:422
 msgid "Scientific"
-msgstr ""
+msgstr "Zientifikoa"
 
 #: src/control/Control.NotebookbarCalc.js:423
 msgid "Fraction"
-msgstr ""
+msgstr "Zatikia"
 
 #: src/control/Control.NotebookbarCalc.js:424
 msgid "Boolean Value"
-msgstr ""
+msgstr "Balio boolearra"
 
 #: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:809
 msgid "Text"
@@ -1190,27 +1187,27 @@ msgstr "Testua"
 
 #: src/control/Control.NotebookbarCalc.js:558
 msgid "Default"
-msgstr ""
+msgstr "Lehenetsia"
 
 #: src/control/Control.NotebookbarCalc.js:563
 msgid "Heading 1"
-msgstr ""
+msgstr "1. izenburua"
 
 #: src/control/Control.NotebookbarCalc.js:568
 msgid "Heading 2"
-msgstr ""
+msgstr "2. izenburua"
 
 #: src/control/Control.NotebookbarCalc.js:579
 msgid "Good"
-msgstr ""
+msgstr "Ona"
 
 #: src/control/Control.NotebookbarCalc.js:584
 msgid "Neutral"
-msgstr ""
+msgstr "Neutroa"
 
 #: src/control/Control.NotebookbarCalc.js:589
 msgid "Bad"
-msgstr ""
+msgstr "Txarra"
 
 #: src/control/Control.NotebookbarCalc.js:651
 msgid "Insert Rows Above"
@@ -1241,13 +1238,12 @@ msgid "Start Presentation"
 msgstr "Hasi aurkezpena"
 
 #: src/control/Control.NotebookbarImpress.js:205
-#, fuzzy
 msgid "ODF Presentation (.odp)"
 msgstr "ODF aurkezpena (.odp)"
 
 #: src/control/Control.NotebookbarDraw.js:206
 msgid "Image (.png)"
-msgstr ""
+msgstr "Irudia (.png)"
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
@@ -1268,25 +1264,27 @@ msgstr "Dokumentua ezin izan da blokeatu."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Sartu fitxategi izena"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "fitxategi izena"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Dokumentu honek uneko fitxategi formatuan gorde ezin den formatua edo edukia "
+"izan dezake."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Gorde ODF formatu gisa"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Jarraitu editatzen"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1483,7 +1481,7 @@ msgstr "Arazo bat dago %productName-rekin konektatzean: "
 
 #: src/core/Socket.js:510
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr ""
+msgstr "Zerbitzaria eskuragarri dago orain. Orria freskatu behar da orain."
 
 #: src/core/Socket.js:528
 msgid "Served by:"
@@ -1582,7 +1580,7 @@ msgstr "Konektatzen..."
 
 #: src/core/Socket.js:1069
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "Dokumentua izena aldatzen ari da eta laster berriro kargatuko da"
 
 #: src/core/Socket.js:1352
 msgid ""
@@ -1826,6 +1824,13 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
+"<p>Zure arakatzaileak oso sarbide mugatua du arbelera, beraz, erabili "
+"teklatu lasterbide hauek:</p><table class=\"warn-copy-paste\""
+"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
+"n><kbd>V</kbd></td></tr><tr><td>Kopiatu</td><td>Ebaki</td><td>Itsatsi</td></t"
+"r></table>"
 
 #: src/map/Clipboard.js:909
 msgid ""

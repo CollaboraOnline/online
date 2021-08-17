@@ -19,4 +19,8 @@
     <string name="ask_for_copy">Dokumentu hau soilik irakurtzeko da. Editatzeko kopia bat egin nahi duzu\?</string>
     <string name="edit_copy">Editatu kopia bat</string>
     <string name="view_only">Ikusi soilik</string>
+    <string name="convert_odf_message">Dokumentu honek hautatutako \"Testu\" fitxategi formatuan gorde ezin den formatu edo edukia izan dezake.</string>
+    <string name="ask_for_convert_odf">Berretsi fitxategi formatua</string>
+    <string name="use_odf">Erabili ODF formatua</string>
+    <string name="use_text">Erabili testu formatua</string>
 </resources>
