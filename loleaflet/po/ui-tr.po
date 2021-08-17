@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2021-07-29 05:37+0000\n"
-"Last-Translator: Mehmet Sait Gülmez <cenggulmez.65@gmail.com>\n"
+"PO-Revision-Date: 2021-07-29 17:39+0000\n"
+"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
 "Language: tr\n"
@@ -1275,6 +1275,8 @@ msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Bu belge, geçerli dosya biçiminde kaydedilemeyen biçimlendirme veya içerik "
+"içerebilir."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
@@ -1282,7 +1284,7 @@ msgstr "ODF olarak kaydet"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr "Düzenleyeme devam et"
+msgstr "Düzenlemeye devam et"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1479,9 +1481,8 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "%productName'e bağlanırken hata oluştu: "
 
 #: src/core/Socket.js:510
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Sunucu yeniden başlatıldı. Şimdi sayfayı yenilemeliyiz."
+msgstr "Sunucuya artık erişilebilir. Şimdi sayfayı yenilemeliyiz."
 
 #: src/core/Socket.js:528
 msgid "Served by:"
@@ -1578,7 +1579,7 @@ msgstr "Bağlanıyor..."
 
 #: src/core/Socket.js:1069
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "Belge yeniden adlandırılıyor ve kısa süre içinde yeniden yüklenecek"
 
 #: src/core/Socket.js:1352
 msgid ""
