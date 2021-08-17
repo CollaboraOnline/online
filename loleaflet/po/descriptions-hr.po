@@ -5,10 +5,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-11-16 22:52+0200\n"
-"PO-Revision-Date: 2020-11-19 07:28+0000\n"
+"PO-Revision-Date: 2020-12-05 22:26+0000\n"
 "Last-Translator: Milo Ivir <mail@milotype.de>\n"
-"Language-Team: Croatian <https://hosted.weblate.org/projects/collabora-"
-"online/app-store-descriptions/hr/>\n"
+"Language-Team: Croatian <https://hosted.weblate.org/projects/"
+"collabora-online/app-store-descriptions/hr/>\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
 msgid "Collabora Office: LibreOffice, OpenOffice & more"
-msgstr "Collabora Office: LibreOffice, OpenOffice i još više"
+msgstr "Collabora Office: LibreOffice, OpenOffice i više"
 
 #. Short description - 80 chars limit
 #: descriptions/google-play.html%2Bhtml.body.p:9-1
@@ -28,7 +28,7 @@ msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
 msgstr ""
-"LibreOffice-bazirani uređivač za Microsoft Office, LibreOffice i OpenOffice "
+"LibreOffice-bazirani uređivač za MS Office, LibreOffice i OpenOffice "
 "dokumente."
 
 #. Release notes
@@ -50,9 +50,9 @@ msgstr ""
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:17-5
 msgid "New tablet UI featuring a notebookbar."
-msgstr ""
+msgstr "Novo korisničko sučelje s trakom kartica za tablete."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:18-5
 msgid "Numerous fixes and improvements all over the place."
-msgstr ""
+msgstr "Brojni popravci i poboljšanja."
