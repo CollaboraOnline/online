@@ -109,4 +109,7 @@
     <string name="theme_system_default">Systemets standard</string>
     <string name="choose_theme">Välj tema</string>
     <string name="theme">Tema</string>
+    <string name="pref_user_name_guest">Gästanvändare</string>
+    <string name="pref_user_name_info">Används när du lägger till en kommentar</string>
+    <string name="pref_user_name">Användarnamn</string>
 </resources>

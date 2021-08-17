@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-29 15:44+0200\n"
-"PO-Revision-Date: 2020-10-08 21:00+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2021-08-17 22:17+0000\n"
+"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 "X-Pootle-Path: /sv/libo_online/loleaflet-ui-sv.po\n"
 "X-Pootle-Revision: 3938166\n"
 
@@ -227,7 +227,7 @@ msgstr "Uppdatera loggnivåer"
 
 #: admin/admin.strings.js:55
 msgid "Version Information"
-msgstr ""
+msgstr "Version Information"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -500,17 +500,16 @@ msgid "Open menu"
 msgstr "Öppna meny"
 
 #: src/control/Control.JSDialogBuilder.js:2354
-#, fuzzy
 msgid "reply"
-msgstr "Svara"
+msgstr "svara"
 
 #: src/control/Control.JSDialogBuilder.js:2357
 msgid "replies"
-msgstr ""
+msgstr "svar"
 
 #: src/control/Control.JSDialogBuilder.js:2405
 msgid "Insert Comment"
-msgstr ""
+msgstr "Infoga kommentar"
 
 #: src/control/Control.JSDialogBuilder.js:2815
 msgid "Cell borders"
@@ -525,9 +524,8 @@ msgid "Columns"
 msgstr "Kolumner"
 
 #: src/control/Control.JSDialogBuilder.js:3080
-#, fuzzy
 msgid "Insert Table"
-msgstr "Infoga tabell"
+msgstr "Infoga Tabell"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
@@ -659,7 +657,7 @@ msgstr "Visa linjal"
 #: src/control/Control.NotebookbarWriter.js:1036
 #: src/control/Control.NotebookbarWriter.js:1037
 msgid "Show Status Bar"
-msgstr ""
+msgstr "Visa statusfältet"
 
 #: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:312
 #: src/control/Control.Menubar.js:431 src/control/Control.Menubar.js:547
@@ -767,7 +765,7 @@ msgstr "Excel Kalkylark (.xlsx)"
 
 #: src/control/Control.Menubar.js:514
 msgid "CSV file (.csv)"
-msgstr ""
+msgstr "CSV-fil (.csv)"
 
 #: src/control/Control.Menubar.js:715 src/control/Control.Menubar.js:768
 #: src/control/Control.Menubar.js:823 src/control/Control.Menubar.js:868
@@ -907,7 +905,7 @@ msgstr "Antal bilder"
 
 #: src/control/Control.StatusBar.js:449
 msgid "Select multiple cells"
-msgstr ""
+msgstr "Markera flera celler"
 
 #: src/control/Control.StatusBar.js:452
 msgid "Insert mode: inactive"
@@ -927,11 +925,11 @@ msgstr "Infoga blad efter detta"
 
 #: src/control/Control.Tabs.js:68
 msgid "Move Sheet Left"
-msgstr ""
+msgstr "Flytta blad åt vänster"
 
 #: src/control/Control.Tabs.js:72
 msgid "Move Sheet Right"
-msgstr ""
+msgstr "Flytta blad åt höger"
 
 #: src/control/Control.Tabs.js:251
 msgid "Are you sure you want to delete sheet, %sheet% ?"
@@ -1109,23 +1107,22 @@ msgstr "~Hjälp"
 #: src/control/Control.NotebookbarImpress.js:178
 #: src/control/Control.NotebookbarDraw.js:173
 msgid "Share"
-msgstr ""
+msgstr "Dela"
 
 #: src/control/Control.NotebookbarWriter.js:112
 #: src/control/Control.NotebookbarCalc.js:105
 #: src/control/Control.NotebookbarImpress.js:185
 #: src/control/Control.NotebookbarDraw.js:180
 msgid "See history"
-msgstr ""
+msgstr "Se historik"
 
 #: src/control/Control.NotebookbarWriter.js:131
-#, fuzzy
 msgid "ODF Text Document (.odt)"
 msgstr "ODF textdokument (.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:173
 msgid "EPUB Document (.epub)"
-msgstr ""
+msgstr "EPUB dokument (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:517
 msgid "Text Body"
@@ -1133,57 +1130,55 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:520
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
 msgstr "~Data"
 
 #: src/control/Control.NotebookbarCalc.js:125
-#, fuzzy
 msgid "ODF Spreadsheet (.ods)"
 msgstr "ODF-kalkylblad (.ods)"
 
 #: src/control/Control.NotebookbarCalc.js:131
 msgid "CSV File (.csv)"
-msgstr ""
+msgstr "CSV fil (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:416
 msgid "General"
-msgstr ""
+msgstr "Allmän"
 
 #: src/control/Control.NotebookbarCalc.js:417
 msgid "Number"
-msgstr ""
+msgstr "Nummer"
 
 #: src/control/Control.NotebookbarCalc.js:418
 msgid "Percent"
-msgstr ""
+msgstr "Procent"
 
 #: src/control/Control.NotebookbarCalc.js:419
-#, fuzzy
 msgid "Currency"
-msgstr "Aktuell"
+msgstr "Valuta"
 
 #: src/control/Control.NotebookbarCalc.js:420
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #: src/control/Control.NotebookbarCalc.js:421
 msgid "Time"
-msgstr ""
+msgstr "Tid"
 
 #: src/control/Control.NotebookbarCalc.js:422
 msgid "Scientific"
-msgstr ""
+msgstr "Vetenskaplig"
 
 #: src/control/Control.NotebookbarCalc.js:423
 msgid "Fraction"
-msgstr ""
+msgstr "Fraktion"
 
 #: src/control/Control.NotebookbarCalc.js:424
 msgid "Boolean Value"
-msgstr ""
+msgstr "Boolskt värde"
 
 #: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:809
 msgid "Text"
@@ -1191,27 +1186,27 @@ msgstr "Text"
 
 #: src/control/Control.NotebookbarCalc.js:558
 msgid "Default"
-msgstr ""
+msgstr "Standard"
 
 #: src/control/Control.NotebookbarCalc.js:563
 msgid "Heading 1"
-msgstr ""
+msgstr "Rubrik 1"
 
 #: src/control/Control.NotebookbarCalc.js:568
 msgid "Heading 2"
-msgstr ""
+msgstr "Rubrik 2"
 
 #: src/control/Control.NotebookbarCalc.js:579
 msgid "Good"
-msgstr ""
+msgstr "Bra"
 
 #: src/control/Control.NotebookbarCalc.js:584
 msgid "Neutral"
-msgstr ""
+msgstr "Neutral"
 
 #: src/control/Control.NotebookbarCalc.js:589
 msgid "Bad"
-msgstr ""
+msgstr "Dålig"
 
 #: src/control/Control.NotebookbarCalc.js:651
 msgid "Insert Rows Above"
@@ -1242,13 +1237,12 @@ msgid "Start Presentation"
 msgstr "Starta presentation"
 
 #: src/control/Control.NotebookbarImpress.js:205
-#, fuzzy
 msgid "ODF Presentation (.odp)"
 msgstr "ODF-presentation (.odp)"
 
 #: src/control/Control.NotebookbarDraw.js:206
 msgid "Image (.png)"
-msgstr ""
+msgstr "Bild (.png)"
 
 #: src/control/Parts.js:414
 msgid "Show Selected Sheets"
@@ -1268,11 +1262,11 @@ msgstr "Dokumentet kunde inte låsas."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Ange ett filnamn"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "filnamn"
 
 #: src/control/Permission.js:123
 msgid ""
@@ -1282,11 +1276,11 @@ msgstr ""
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Spara som ODF format"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Fortsätt redigera"
 
 #: src/control/Ruler.js:369
 msgid "Left Margin"
@@ -1480,9 +1474,8 @@ msgstr ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:68
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Oj, det är problem med att ansluta dokumentet"
+msgstr "Oj, det är problem med att ansluta %productName: "
 
 #: src/core/Socket.js:510
 msgid "Server is now reachable. We have to refresh the page now."
@@ -1767,7 +1760,7 @@ msgstr "Funktioner"
 
 #: src/layer/tile/CanvasTileLayer.js:4841
 msgid "No Comments"
-msgstr ""
+msgstr "Inga kommentarer"
 
 #: src/layer/tile/CanvasTileLayer.js:5097
 msgid "Modify"
@@ -1779,7 +1772,7 @@ msgstr "Ta bort"
 
 #: src/layer/tile/CanvasTileLayer.js:5115
 msgid "Remove Thread"
-msgstr ""
+msgstr "Ta bort tråd"
 
 #: src/layer/tile/CanvasTileLayer.js:5121
 msgid "Resolve"
@@ -1795,7 +1788,7 @@ msgstr ""
 
 #: src/layer/tile/CanvasTileLayer.js:5127
 msgid "Resolve Thread"
-msgstr ""
+msgstr "Lös tråd"
 
 #: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
