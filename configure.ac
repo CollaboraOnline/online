@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.63])
 
-AC_INIT([loolwsd], [21.06.1], [https://github.com/CollaboraOnline/online/issues], [loolwsd], [https://collaboraonline.github.io/])
+AC_INIT([loolwsd], [21.06.1.0], [https://github.com/CollaboraOnline/online/issues], [loolwsd], [https://collaboraonline.github.io/])
 LT_INIT([shared, disable-static, dlopen])
 
 AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
@@ -16,6 +16,7 @@ m4_if(m4_esyscmd_s([uname -s]),Darwin,[m4_define([PKG_CHECK_MODULES],[])],[])
 LOOLWSD_VERSION_MAJOR=`echo $VERSION | awk -F. '{print $1}'`
 LOOLWSD_VERSION_MINOR=`echo $VERSION | awk -F. '{print $2}'`
 LOOLWSD_VERSION_MICRO=`echo $VERSION | awk -F. '{print $3}'`
+LOOLWSD_VERSION_NANO=`echo $VERSION | awk -F. '{print $4}'`
 
 ANDROID_PACKAGE_VERSIONCODE=
 if test "$enable_androidapp" = "yes"; then
@@ -26,7 +27,8 @@ if test "$enable_androidapp" = "yes"; then
     else
         LOOLWSD_VERSION_MAJOR=`echo $with_android_package_versioncode | awk -F. '{print $1}'`
         LOOLWSD_VERSION_MINOR=`echo $with_android_package_versioncode | awk -F. '{print $2}'`
-        LOOLWSD_VERSION_MICRO=`echo $with_android_package_versioncode | awk -F. '{print $3}' | awk -F- '{print $1}'`
+        LOOLWSD_VERSION_MICRO=`echo $with_android_package_versioncode | awk -F. '{print $3}'`
+        LOOLWSD_VERSION_NANO=`echo $with_android_package_versioncode | awk -F. '{print $4}' | awk -F- '{print $1}'`
 
         ANDROID_PACKAGE_VERSIONCODE=`echo $with_android_package_versioncode | awk -F- '{print $2}'`
         AC_MSG_RESULT([$ANDROID_PACKAGE_VERSIONCODE])
@@ -34,11 +36,12 @@ if test "$enable_androidapp" = "yes"; then
 fi
 AC_SUBST(ANDROID_PACKAGE_VERSIONCODE)
 
-LOOLWSD_VERSION="$LOOLWSD_VERSION_MAJOR.$LOOLWSD_VERSION_MINOR.$LOOLWSD_VERSION_MICRO"
+LOOLWSD_VERSION="$LOOLWSD_VERSION_MAJOR.$LOOLWSD_VERSION_MINOR.$LOOLWSD_VERSION_MICRO.$LOOLWSD_VERSION_NANO"
 
 AC_SUBST([LOOLWSD_VERSION_MAJOR])
 AC_SUBST([LOOLWSD_VERSION_MINOR])
 AC_SUBST([LOOLWSD_VERSION_MICRO])
+AC_SUBST([LOOLWSD_VERSION_NANO])
 AC_SUBST([LOOLWSD_VERSION])
 
 AC_DEFINE_UNQUOTED([LOOLWSD_VERSION],[["$LOOLWSD_VERSION"]],[Collabora Online WebSocket server version])
