@@ -41,31 +41,14 @@ L.Clipboard = L.Class.extend({
 
 		var that = this;
 		var beforeSelect = function(ev) { return that._beforeSelect(ev); };
-		if (L.Browser.isInternetExplorer)
-		{
-			document.addEventListener('cut',   function(ev)   { return that.cut(ev); });
-			document.addEventListener('copy',  function(ev)   { return that.copy(ev); });
-			document.addEventListener('paste', function(ev)   { return that.paste(ev); });
-			document.addEventListener('beforecut', beforeSelect);
-			document.addEventListener('beforecopy', beforeSelect);
-			document.addEventListener('beforepaste', function(ev) { return that._beforePasteIE(ev); });
-		}
-		else
-		{
-			document.oncut = function(ev)   { return that.cut(ev); };
-			document.oncopy = function(ev)  { return that.copy(ev); };
-			document.onpaste = function(ev) { return that.paste(ev); };
-			document.onbeforecut = beforeSelect;
-			document.onbeforecopy = beforeSelect;
-			document.onbeforepaste = beforeSelect;
-		}
-	},
 
-	compatRemoveNode: function(node) {
-		if (L.Browser.isInternetExplorer)
-			node.removeNode(true);
-		else // standard
-			node.parentNode.removeChild(node);
+		document.oncut = function(ev)   { return that.cut(ev); };
+		document.oncopy = function(ev)  { return that.copy(ev); };
+		document.onpaste = function(ev) { return that.paste(ev); };
+		document.onbeforecut = beforeSelect;
+		document.onbeforecopy = beforeSelect;
+		document.onbeforepaste = beforeSelect;
+		
 	},
 
 	// We can do a much better job when we fetch text/plain too.
@@ -75,7 +58,7 @@ L.Clipboard = L.Class.extend({
 		// attempt to cleanup unwanted elements
 		var styles = tmp.querySelectorAll('style');
 		for (var i = 0; i < styles.length; i++) {
-			this.compatRemoveNode(styles[i]);
+			styles[i].parentNode.removeChild(styles[i]);
 		}
 		return tmp.textContent.trim() || tmp.innerText.trim() || '';
 	},
@@ -487,15 +470,6 @@ L.Clipboard = L.Class.extend({
 	populateClipboard: function(ev) {
 		this._checkSelection();
 
-		if (L.Browser.isInternetExplorer)
-		{
-			var that = this;
-			setTimeout(function() { that._resetDiv(); }, 0);
-			this._clipboardSerial++; // we have no way of knowing of course.
-			// We let the browser copy from our div.
-			return false;
-		}
-
 		var text = this._getHtmlForClipboard();
 		//this._stopHideDownload(); - this confuses the browser ruins copy/cut on iOS
 
@@ -562,13 +536,8 @@ L.Clipboard = L.Class.extend({
 	},
 
 	_beforeSelectImpl: function(operation) {
-		if (L.Browser.isInternetExplorer && operation != 'paste')
-			// We need populate our content into the div for
-			// the browser to copy.
-			this._dummyDiv.innerHTML = this._getHtmlForClipboard();
-		else
-			// We need some spaces in there ...
-			this._resetDiv();
+		// We need some spaces in there ...
+		this._resetDiv();
 
 		var sel = document.getSelection();
 		if (!sel)
@@ -576,19 +545,6 @@ L.Clipboard = L.Class.extend({
 
 		var selected = false;
 		var selectRange;
-		if (L.Browser.isInternetExplorer && operation != 'paste')
-		{
-			this._dummyDiv.focus();
-
-			if (document.body.createTextRange) // Internet Explorer
-			{
-				console.log('Legacy IE11 selection');
-				selectRange = document.body.createTextRange();
-				selectRange.moveToElementText(this._dummyDiv);
-				selectRange.select();
-				selected = true;
-			}
-		}
 
 		if (!selected)
 		{
@@ -639,9 +595,6 @@ L.Clipboard = L.Class.extend({
 	_execCopyCutPaste: function(operation, cmd) {
 		var serial = this._clipboardSerial;
 
-		// try a direct execCommand.
-		if (L.Browser.isInternetExplorer && operation != 'paste')
-			this._beforeSelectImpl(operation);
 		this._unoCommandForCopyCutPaste = cmd;
 		if (document.execCommand(operation) &&
 		    serial !== this._clipboardSerial) {
@@ -780,25 +733,8 @@ L.Clipboard = L.Class.extend({
 			ev.usePasteKeyEvent = true;
 
 		var that = this;
-		if (L.Browser.isInternetExplorer)
-		{
-			var active = document.activeElement;
-			// Can't get HTML until it is pasted ... so quick timeout
-			setTimeout(function() {
-				that.dataTransferToDocument(null, /* preferInternal = */ true, that._dummyDiv.innerHTML);
-				// attempt to restore focus.
-				if (active == null)
-					that._map.focus();
-				else
-					active.focus();
-				that._map._textInput._abortComposition(ev);
-				that._clipboardSerial++;
-			}, 0 /* ASAP */);
-			return false;
-		}
 
-
-		if (ev.clipboardData) { // Standard
+		if (ev.clipboardData) {
 			ev.preventDefault();
 			var usePasteKeyEvent = ev.usePasteKeyEvent;
 			// Always capture the html content separate as we may lose it when we
