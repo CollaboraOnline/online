@@ -18,12 +18,22 @@
 }
 
 .sidebar.spinfield {
-	max-width: 100px;
+	max-width: 104px;
 	border: 1px solid #CCC;
-	padding: 0.2em 0 0.2em 0.2em;
+	padding: 4px 0 4px 4px;
 	border-radius: 3px;
 	height: 28px;
 	box-sizing: border-box;
+	margin-right: 1px;
+}
+.sidebar.spinfield:hover {
+	border: 1px solid var(--gray-color);
+}
+
+.spinfieldunit {
+	font-size: 12px;
+	color: var(--gray-light-txt--color);
+	margin: 5px;
 }
 
 .sidebar.ui-listbox {
