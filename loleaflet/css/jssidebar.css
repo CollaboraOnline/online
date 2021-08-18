@@ -8,7 +8,7 @@
 }
 
 .sidebar .ui-content .unobutton {
-	margin: 0px;
+	margin: 0;
 	width: 24px;
 	height: 24px;
 	vertical-align: middle;
@@ -18,7 +18,7 @@
 	width: 322px;
 	padding: 0;
 	border-left: 1px solid var(--gray-color) !important;
-	margin-top: 0px !important;
+	margin-top: 0 !important;
 }
 
 .sidebar.spinfield {
@@ -153,7 +153,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 }
 
 #spacinglabel {
-	padding-top: 0px;
+	padding-top: 0;
 }
 
 
