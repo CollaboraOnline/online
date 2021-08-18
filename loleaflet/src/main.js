@@ -95,7 +95,7 @@ window.bundlejsLoaded = true;
 ////// Unsuported Browser Warning /////
 		
 if (L.Browser.isInternetExplorer) {
-	vex.dialog.alert('Warning! The browser you are using is not supported');
+	vex.dialog.alert('Warning! The browser you are using is not supported.');
 }
 
 }(window));
