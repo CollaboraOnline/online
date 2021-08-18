@@ -4,6 +4,8 @@
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function (global) {
 
+
+
 var wopiParams;
 var wopiSrc = getParameterByName('WOPISrc');
 
@@ -89,5 +91,15 @@ window.addEventListener('beforeunload', function () {
 
 window.docPermission = permission;
 window.bundlejsLoaded = true;
+
+
+var isInternetExplorer = (navigator.userAgent.toLowerCase().indexOf('msie') != -1 ||
+			navigator.userAgent.toLowerCase().indexOf('trident') != -1);
+		
+if (isInternetExplorer) {
+	if (window.confirm('Warning! The browser you are using is not supported. Click confirm to see more')) {
+		window.location.href='https://github.com/CollaboraOnline/online/issues/2685'; // TODO: add link for support
+	}
+}
 
 }(window));
