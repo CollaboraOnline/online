@@ -532,10 +532,10 @@ L.Clipboard = L.Class.extend({
 		if (this._isAnyInputFieldSelected())
 			return;
 
-		this._beforeSelectImpl(ev.type);
+		this._beforeSelectImpl();
 	},
 
-	_beforeSelectImpl: function(operation) {
+	_beforeSelectImpl: function() {
 		// We need some spaces in there ...
 		this._resetDiv();
 
@@ -731,8 +731,6 @@ L.Clipboard = L.Class.extend({
 
 		if (this._map._activeDialog)
 			ev.usePasteKeyEvent = true;
-
-		var that = this;
 
 		if (ev.clipboardData) {
 			ev.preventDefault();
