@@ -1,7 +1,3 @@
-.sidebar.cell {
-	display: inline-flex;
-}
-
 .sidebar * {
 	font-family: var(--jquery-ui-font);
 	text-transform: none !important;
