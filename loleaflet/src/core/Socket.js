@@ -386,16 +386,10 @@ app.definitions.Socket = L.Class.extend({
 		e.imgBytes = new Uint8Array(e.data);
 
 		// search for the first newline which marks the end of the message
-		if (L.Browser.isInternetExplorer) {
-			index = 0;
-			while (index < e.imgBytes.length && e.imgBytes[index] !== 10) {
-				index++;
-			}
-		} else {
-			index = e.imgBytes.indexOf(10);
-			if (index < 0)
-				index = e.imgBytes.length;
-		}
+		index = e.imgBytes.indexOf(10);
+		if (index < 0)
+			index = e.imgBytes.length;
+		
 		e.textMsg = String.fromCharCode.apply(null, e.imgBytes.subarray(0, index));
 
 		e.imgIndex = index + 1;
