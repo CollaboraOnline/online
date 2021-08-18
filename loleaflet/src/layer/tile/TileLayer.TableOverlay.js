@@ -148,7 +148,7 @@ L.CanvasTileLayer.include({
 		this._clearTableMarkers();
 
 		// Create markers
-		if (this._currentTableData.rows && this._currentTableData.rows.entries.length > 0 && this._currentTableData.columns && this._currentTableData.columns.entries.length > 0) {
+		if (this._currentTableData.rows && this._currentTableData.columns) {
 			this._tablePositionColumnOffset = parseInt(this._currentTableData.columns.tableOffset);
 			this._tablePositionRowOffset = parseInt(this._currentTableData.rows.tableOffset);
 			var firstRowPosition = parseInt(this._currentTableData.rows.left) + this._tablePositionRowOffset;
