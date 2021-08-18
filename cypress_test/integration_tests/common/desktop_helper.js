@@ -270,17 +270,47 @@ function deleteImage() {
 		.should('not.exist');
 }
 
-function insertMultipleComment(numberOfComments) {
-	numberOfComments = numberOfComments || 1;
+function insertMultipleComment(docType, numberOfComments = 1) {
+	var mode = Cypress.env('USER_INTERFACE');
+
+	cy.get('#toolbar-up .w2ui-scroll-right').then($button => {
+		if ($button.is(':visible'))	{
+			$button.click();
+		}
+	});
+
+	if (mode === 'notebookbar') {
+		cy.wait(500);
+
+		cy.get('#Insert-tab-label').then($button => {
+			if (!$button.hasClass('selected')) {
+				$button.click();
+			}
+		});
+	}
+
+	if	(docType === 'writer') {
+		cy.get('#toolbar-up .w2ui-scroll-right').click();
+	}
+
 	for (var n=0;n<numberOfComments;n++) {
 
-		cy.get('#menu-insert').click().get('#menu-insertcomment').click();
+		actionOnSelector('insertAnnotation', (selector) => {
+			(docType === 'calc' && mode === 'notebookbar') ?
+				selector = selector.split('.')[0] : '';
+
+			cy.wait(500);
+
+			cy.get(selector).click();
+		});
 
 		cy.wait(100);
 
 		cy.get('.loleaflet-annotation-table').should('exist');
 
 		cy.get('#annotation-modify-textarea-new').type('some text' + n);
+
+		cy.wait(500);
 
 		cy.get('#annotation-save-new').click();
 	}
