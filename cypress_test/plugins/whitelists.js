@@ -3,6 +3,9 @@ var notebookbarOnlyList = [
 	'desktop/calc/cell_appearance_spec.js',
 	'desktop/writer/table_operation_spec.js',
 	'desktop/impress/table_operation_spec.js',
+	'desktop/writer/annotation_spec.js',
+	'desktop/calc/annotation_spec.js',
+	'desktop/impress/annotation_spec.js',
 ];
 
 module.exports.notebookbarOnlyList = notebookbarOnlyList;

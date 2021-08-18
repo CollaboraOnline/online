@@ -211,6 +211,7 @@ function dblclickOnSelectedShape() {
 
 //add multiple slides
 function addSlide(numberOfSlides) {
+	helper.waitUntilIdle('#tb_presentation-toolbar_item_insertpage');
 	var insertSlideButton = cy.get('#tb_presentation-toolbar_item_insertpage');
 	for (let i=0;i<numberOfSlides;i++) {
 		insertSlideButton.should('not.have.class', 'disabled')
