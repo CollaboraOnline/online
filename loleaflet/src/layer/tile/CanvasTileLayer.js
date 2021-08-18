@@ -22,6 +22,7 @@ L.TileCoordData = L.Class.extend({
 		return this.x + ':' + this.y + ':' + this.z + ':' + this.part;
 	},
 
+	// Test comment.
 	toString: function () {
 		return '{ left : ' + this.x + ', top : ' + this.y +
 			', z : ' + this.z + ', part : ' + this.part + ' }';
