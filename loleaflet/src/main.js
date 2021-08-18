@@ -1,9 +1,8 @@
 /* -*- js-indent-level: 8 -*- */
 /* global errorMessages getParameterByName accessToken accessTokenTTL accessHeader reuseCookies */
-/* global app vex host serviceRoot idleTimeoutSecs outOfFocusTimeoutSecs*/
+/* global app L vex host serviceRoot idleTimeoutSecs outOfFocusTimeoutSecs */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function (global) {
-
 
 
 var wopiParams;
@@ -94,14 +93,9 @@ window.bundlejsLoaded = true;
 
 
 ////// Unsuported Browser Warning /////
-
-var isInternetExplorer = (navigator.userAgent.toLowerCase().indexOf('msie') != -1 ||
-			navigator.userAgent.toLowerCase().indexOf('trident') != -1);
 		
-if (isInternetExplorer) {
-	if (window.confirm('Warning! The browser you are using is not supported. Click confirm to see more')) {
-		window.location.href='https://github.com/CollaboraOnline/online/issues/2685'; // TODO: add link for support
-	}
+if (L.Browser.isInternetExplorer) {
+	vex.dialog.alert('Warning! The browser you are using is not supported');
 }
 
 }(window));
