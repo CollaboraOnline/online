@@ -93,6 +93,8 @@ window.docPermission = permission;
 window.bundlejsLoaded = true;
 
 
+////// Unsuported Browser Warning /////
+
 var isInternetExplorer = (navigator.userAgent.toLowerCase().indexOf('msie') != -1 ||
 			navigator.userAgent.toLowerCase().indexOf('trident') != -1);
 		
