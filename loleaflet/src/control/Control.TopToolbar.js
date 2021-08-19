@@ -75,43 +75,8 @@ L.Control.TopToolbar = L.Control.extend({
 		this.map.focus();
 	},
 
-	_updateVisibilityForToolbar: function(toolbar, context) {
-		if (!toolbar)
-			return;
-
-		var toShow = [];
-		var toHide = [];
-
-		toolbar.items.forEach(function(item) {
-			if (window.ThisIsTheiOSApp && window.mode.isTablet() && item.iosapptablet === false) {
-				toHide.push(item.id);
-			}
-			else if (((window.mode.isMobile() && item.mobile === false) || (window.mode.isTablet() && item.tablet === false) || (window.mode.isDesktop() && item.desktop === false) || (!window.ThisIsAMobileApp && item.mobilebrowser === false)) && !item.hidden) {
-				toHide.push(item.id);
-			}
-			else if (((window.mode.isMobile() && item.mobile === true) || (window.mode.isTablet() && item.tablet === true) || (window.mode.isDesktop() && item.desktop === true) || (window.ThisIsAMobileApp && item.mobilebrowser === true)) && item.hidden) {
-				toShow.push(item.id);
-			}
-
-			if (context && item.context) {
-				if (item.context.indexOf(context) >= 0)
-					toShow.push(item.id);
-				else
-					toHide.push(item.id);
-			} else if (!context && item.context) {
-				toHide.push(item.id);
-			}
-		});
-
-		console.log('explicitly hiding: ' + toHide);
-		console.log('explicitly showing: ' + toShow);
-
-		toHide.forEach(function(item) { toolbar.hide(item); });
-		toShow.forEach(function(item) { toolbar.show(item); });
-	},
-
 	onContextChange: function(event) {
-		this._updateVisibilityForToolbar(w2ui['editbar'], event.context);
+		window.updateVisibilityForToolbar(w2ui['editbar'], event.context);
 	},
 
 	// mobile:false means hide it both for normal Online used from a mobile phone browser, and in a mobile app on a mobile phone
@@ -409,7 +374,7 @@ L.Control.TopToolbar = L.Control.extend({
 			break;
 		}
 
-		this._updateVisibilityForToolbar(w2ui['editbar']);
+		window.updateVisibilityForToolbar(w2ui['editbar']);
 
 		if (toolbarUp)
 			toolbarUp.refresh();

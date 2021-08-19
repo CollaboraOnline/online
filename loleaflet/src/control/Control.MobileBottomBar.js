@@ -19,6 +19,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 		this.create();
 
 		map.on('commandstatechanged', window.onCommandStateChanged);
+		map.on('contextchange', this.onContextChange, this);
 	},
 
 	getToolItems: function(docType) {
@@ -131,7 +132,17 @@ L.Control.MobileBottomBar = L.Control.extend({
 				this.map.disableFreemiumItem(it, $('#tb_editbar_item_'+ it.id)[0], $('#tb_editbar_item_'+ it.id)[0]);
 			}
 		}
-	}
+
+		this._updateToolbarsVisibility();
+	},
+
+	_updateToolbarsVisibility: function(context) {
+		window.updateVisibilityForToolbar(w2ui['editbar'], context);
+	},
+
+	onContextChange: function(event) {
+		this._updateToolbarsVisibility(event.context);
+	},
 });
 
 L.control.mobileBottomBar = function (docType) {

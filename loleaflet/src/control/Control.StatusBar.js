@@ -14,6 +14,7 @@ L.Control.StatusBar = L.Control.extend({
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('commandvalues', this.onCommandValues, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
+		map.on('contextchange', this.onContextChange, this);
 		this.create();
 
 		$(window).resize(function() {
@@ -62,34 +63,12 @@ L.Control.StatusBar = L.Control.extend({
 		return text;
 	},
 
-	_updateVisibilityForToolbar: function(toolbar) {
-		if (!toolbar)
-			return;
-
-		var toShow = [];
-		var toHide = [];
-
-		toolbar.items.forEach(function(item) {
-			if (window.ThisIsTheiOSApp && window.mode.isTablet() && item.iosapptablet === false) {
-				toHide.push(item.id);
-			}
-			else if (((window.mode.isMobile() && item.mobile === false) || (window.mode.isTablet() && item.tablet === false) || (window.mode.isDesktop() && item.desktop === false) || (!window.ThisIsAMobileApp && item.mobilebrowser === false)) && !item.hidden) {
-				toHide.push(item.id);
-			}
-			else if (((window.mode.isMobile() && item.mobile === true) || (window.mode.isTablet() && item.tablet === true) || (window.mode.isDesktop() && item.desktop === true) || (window.ThisIsAMobileApp && item.mobilebrowser === true)) && item.hidden) {
-				toShow.push(item.id);
-			}
-		});
-
-		console.log('explicitly hiding: ' + toHide);
-		console.log('explicitly showing: ' + toShow);
-
-		toHide.forEach(function(item) { toolbar.hide(item); });
-		toShow.forEach(function(item) { toolbar.show(item); });
+	_updateToolbarsVisibility: function(context) {
+		window.updateVisibilityForToolbar(w2ui['actionbar'], context);
 	},
 
-	_updateToolbarsVisibility: function() {
-		this._updateVisibilityForToolbar(w2ui['actionbar']);
+	onContextChange: function(event) {
+		this._updateToolbarsVisibility(event.context);
 	},
 
 	onClick: function(e, id, item, subItem) {
