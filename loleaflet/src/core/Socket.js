@@ -53,14 +53,7 @@ app.definitions.Socket = L.Class.extend({
 			try {
 				this.socket = window.createWebSocket(this.getWebSocketBaseURI(map));
 			} catch (e) {
-				// On IE 11 there is a limitation on the number of WebSockets open to a single domain (6 by default and can go to 128).
-				// Detect this and hint the user.
-				var msgHint = '';
-				var isIE11 = !!window.MSInputMethodContext && !!document.documentMode; // https://stackoverflow.com/questions/21825157/internet-explorer-11-detection
-				if (isIE11)
-					msgHint = _('IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections');
-
-				this._map.fire('error', {msg: _('Oops, there is a problem connecting to %productName: ').replace('%productName', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition')) + e + msgHint, cmd: 'socket', kind: 'failed', id: 3});
+				this._map.fire('error', {msg: _('Oops, there is a problem connecting to %productName: ').replace('%productName', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition')) + e, cmd: 'socket', kind: 'failed', id: 3});
 				return;
 			}
 		}
