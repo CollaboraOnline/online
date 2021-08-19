@@ -55,10 +55,6 @@ class Cursor {
 		this.visible = true;
 		this.domAttached = true;
 
-		var isIE11 = !!window.MSInputMethodContext && !!(<any>document).documentMode;
-		if (!isIE11)
-			this.onFocusBlur(new FocusEvent('focus'));
-
 		this.update();
 		if (this.map._docLayer.isCalc())
 			this.map.on('splitposchanged move', this.update, this);
