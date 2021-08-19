@@ -1,6 +1,6 @@
 /* -*- js-indent-level: 8 -*- */
 /* global errorMessages getParameterByName accessToken accessTokenTTL accessHeader reuseCookies */
-/* global app L vex host serviceRoot idleTimeoutSecs outOfFocusTimeoutSecs */
+/* global app L vex host serviceRoot idleTimeoutSecs outOfFocusTimeoutSecs _ */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function (global) {
 
@@ -95,7 +95,7 @@ window.bundlejsLoaded = true;
 ////// Unsuported Browser Warning /////
 		
 if (L.Browser.isInternetExplorer) {
-	vex.dialog.alert('Warning! The browser you are using is not supported.');
+	vex.dialog.alert(_('Warning! The browser you are using is not supported.'));
 }
 
 }(window));
