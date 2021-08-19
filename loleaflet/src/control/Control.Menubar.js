@@ -1772,15 +1772,6 @@ L.Control.Menubar = L.Control.extend({
 		if (menuItem.id === 'changesmenu' && this._map['wopi'].HideChangeTrackingControls)
 			return false;
 
-		// polyfill endsWidth for IE11
-		if (!String.prototype.endsWith) {
-			String.prototype.endsWith = function(search, thisLen) {
-				if (thisLen === undefined || thisLen > this.length) {
-					thisLen = this.length;
-				}
-				return this.substring(thisLen - search.length, thisLen) === search;
-			};
-		}
 
 		// Keep track of all 'downloadas-' options and register them as
 		// export formats with docLayer which can then be publicly accessed unlike
