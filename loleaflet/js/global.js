@@ -358,55 +358,10 @@ window.app = { // Shouldn't have any functions defined.
 		};
 		this.onmessage = function() {
 		};
-		// IE11 compatibility ...
-		if (!!window.MSInputMethodContext && !!document.documentMode) {
-			this.decoder = {};
-			this.decoder.decode = function(bytes) {
-				var decoded = '';
-				var code = 0;
-				for (var i = 0; i < bytes.length;) {
-					var b = bytes[i];
-					var seqLen = 1;
-					// get bits off the top.
-					if (b <= 0x7f)
-						code = b & 0xff;
-					else if (b <= 0xdf) {
-						code = b & 0x1f;
-						seqLen = 2;
-					} else if (b <= 0xef) {
-						code = b & 0x0f;
-						seqLen = 3;
-					} else if (b <= 0xf7) {
-						code = b & 0x07;
-						seqLen = 4;
-					}
-					var left = bytes.length - i;
-					if (left >= seqLen) {
-						for (var j = 1; j < seqLen; ++j)
-							code = (code << 6) | (bytes[i + j] & 0x3f);
-					} else { // skip to end
-						seqLen = left;
-						code = 0xfffd;
-					}
-					if (code <= 0xFFFF)
-						decoded += String.fromCharCode(code);
-					else
-						decoded += String.fromCharCode(((code - 0x10000) >> 10) + 0xD800,
-									       ((code - 0x10000) % 0x400) + 0xDC00);
-					i += seqLen;
-				}
-				return decoded;
-			};
-			this.doSlice = function(bytes,start,end) {
-				var data = new Uint8Array(end - start + 1);
-				for (var i = 0; i <= (end - start); ++i)
-					data[i] = bytes[start + i];
-				return data;
-			};
-		} else {
-			this.decoder = new TextDecoder();
-			this.doSlice = function(bytes,start,end) { return bytes.slice(start,end); };
-		}
+		
+		this.decoder = new TextDecoder();
+		this.doSlice = function(bytes,start,end) { return bytes.slice(start,end); };
+		
 		this.decode = function(bytes,start,end) {
 			return this.decoder.decode(this.doSlice(bytes, start,end));
 		};
