@@ -2817,14 +2817,7 @@ w2utils.event = {
         } else { // only refresh contents
             $('#w2ui-overlay .w2ui-color').parent().html(getColorHTML(options));
         }
-        function colorExist(color, colorRow) {
-            for (var i=0; i < colorRow.length; i++) {
-                if (color === colorRow[i]) {
-                    return true;
-                }
-            }
-            return false;
-        }
+
         // bind events
         $('#w2ui-overlay .color')
             .off('.w2color')
@@ -2833,10 +2826,11 @@ w2utils.event = {
                 index = $(event.originalEvent.target).attr('index').split(':');
                 $(el).data('_color', color);
                 var recentRow = $.fn.w2colorPalette[pal.length - 1];
-                if (!colorExist(color,recentRow)) {
-                    recentRow.unshift(color);
-                    localStorage.setItem('recentColor', JSON.stringify(recentRow));
+                if (recentRow.indexOf(color) !== -1) {
+                    recentRow.splice(recentRow.indexOf(color), 1);
                 }
+                recentRow.unshift(color);
+                localStorage.setItem('recentColor', JSON.stringify(recentRow));
             })
             .on('mouseup.w2color', function () {
                 setTimeout(function () {
@@ -2861,10 +2855,11 @@ w2utils.event = {
                     return;
                 }
                 var customColorRow = $.fn.w2colorPalette[pal.length - 2];
-                if (!colorExist(tmp, customColorRow )) {
-                    customColorRow.unshift(tmp.toUpperCase());
-                    localStorage.setItem('customColor', JSON.stringify(customColorRow));
+                if (customColorRow.indexOf(tmp) !== -1) {
+                    customColorRow.splice(customColorRow.indexOf(tmp), 1);
                 }
+                customColorRow.unshift(tmp.toUpperCase());
+                localStorage.setItem('customColor', JSON.stringify(customColorRow));
                 $(el).w2color(options, callBack);
                 setTimeout(function() { $('#w2ui-overlay input')[0].focus(); }, 100);
             })
