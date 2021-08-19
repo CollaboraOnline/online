@@ -12,3 +12,5 @@
 	border-top: none;
 	z-index: auto;
 }
+
+.w2ui-icon.fold{ background: url('images/fold.svg') no-repeat center center / 19px !important; opacity: 0.8; filter: alpha(opacity=80);}
