@@ -7,7 +7,7 @@ newPRWelcomeComment: |
   - Check out our [contributing guidelines](https://github.com/CollaboraOnline/online/blob/master/CONTRIBUTING.md).
   - Connect with us through one of [our communication channels](https://collaboraonline.github.io/post/communicate/).
   - Click on the details link next to the failing CI checks, if any, to see an explanation on how to fix it.
-  - Feel free to ping @mrkara or the mentor of the easyHack you are solving if you need help.
+  - Feel free to ping @pedropintosilva or the mentor of the easyHack you are solving if you need help.
 
 # Configuration for first-pr-merge - https://github.com/behaviorbot/first-pr-merge
 
