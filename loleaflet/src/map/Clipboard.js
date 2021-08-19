@@ -513,18 +513,6 @@ L.Clipboard = L.Class.extend({
 		return false;
 	},
 
-	// only used by IE.
-	_beforePasteIE: function(ev) {
-		console.log('IE11 work ...');
-
-		if (this._isAnyInputFieldSelected())
-			return;
-
-		this._beforeSelect(ev);
-		this._dummyDiv.focus();
-		// Now wait for the paste ...
-	},
-
 	// Does the selection of text before an event comes in
 	_beforeSelect: function(ev) {
 		console.log('Got event ' + ev.type + ' setting up selection');
