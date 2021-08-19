@@ -373,7 +373,7 @@ L.Control.TopToolbar = L.Control.extend({
 					data: data,
 					placeholder: _UNO('.uno:LayoutStatus', 'presentation')
 				});
-				$('#styles-select').on('select2:select', this.onStyleSelect, this);
+				$('#styles-select').on('select2:select', this.onStyleSelect.bind(this));
 			}
 
 			if (toolbarUp) {
