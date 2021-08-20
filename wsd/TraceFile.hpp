@@ -85,13 +85,13 @@ class TraceFileWriter
 {
 public:
     TraceFileWriter(const std::string& path,
-                    const bool recordOugoing,
+                    const bool recordOutgoing,
                     const bool compress,
                     const bool takeSnapshot,
                     const std::vector<std::string>& filters) :
         _epochStart(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now()
                                                             .time_since_epoch()).count()),
-        _recordOutgoing(recordOugoing),
+        _recordOutgoing(recordOutgoing),
         _compress(compress),
         _takeSnapshot(takeSnapshot),
         _path(Poco::Path(path).parent().toString()),
