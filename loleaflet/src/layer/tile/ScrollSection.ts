@@ -438,8 +438,7 @@ class ScrollSection {
 	}
 
 	private hideVerticalScrollBar () {
-		if (this.sectionProperties.mouseIsOnVerticalScrollBar && this.documentTopLeft[1] < 0) {
-			this.sectionProperties.drawVerticalScrollBar = false;
+		if (this.sectionProperties.mouseIsOnVerticalScrollBar) {
 			this.sectionProperties.mouseIsOnVerticalScrollBar = false;
 			this.sectionProperties.mapPane.style.cursor = this.sectionProperties.defaultCursorStyle;
 
