@@ -699,8 +699,10 @@ public:
         return _work.size();
     }
 
-    void pushWorkUnlocked(const ThreadFn &fn)
+    void pushWork(const ThreadFn &fn)
     {
+        std::unique_lock< std::mutex > lock(_mutex);
+        assert(_working == 0);
         _work.push(fn);
     }
 
@@ -713,7 +715,11 @@ public:
         _working++;
         lock.unlock();
 
-        fn();
+        try {
+            fn();
+        } catch(...) {
+            LOG_ERR("Exception in thread pool execution.");
+        }
 
         lock.lock();
         _working--;
@@ -1139,7 +1145,7 @@ public:
                 renderingIds.push_back(wireId);
 
                 // Queue to be executed later in parallel inside 'run'
-                _pngPool.pushWorkUnlocked([=,&output,&pixmap,&tiles,&renderedTiles](){
+                _pngPool.pushWork([=,&output,&pixmap,&tiles,&renderedTiles](){
                         PngCache::CacheData data(new std::vector< char >() );
                         data->reserve(pixmapWidth * pixmapHeight * 1);
 
