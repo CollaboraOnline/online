@@ -53,6 +53,8 @@ L.Map = L.Evented.extend({
 		urlPrefix: 'lool',
 		wopiSrc: '',
 		cursorURL: L.LOUtil.getURL('cursors'),
+		// cursorURL
+		// The path (local to the server) where custom cursor files are stored.
 	},
 
 	// Control.UIManager instance, set in main.js
