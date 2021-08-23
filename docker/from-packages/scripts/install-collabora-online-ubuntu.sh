@@ -32,23 +32,24 @@ fi
 # Add Collabora repos
 if [ "$type" == "cool" ] && [ -n ${secret_key+set} ]; then
     echo "Based on the provided build arguments Collabora Online from customer repo will be used."
-    echo "deb https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/${version:-6.4}/customer-ubuntu1804-${secret_key} /" >> /etc/apt/sources.list.d/collabora.list
+    echo "deb [signed-by=/usr/share/keyrings/collaboraonline-release-keyring.gpg] https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/${version:-6.4}/customer-ubuntu1804-${secret_key} /" >> /etc/apt/sources.list.d/collabora.list
 elif [ "$type" == "key" ]; then
     echo "Based on the provided build arguments license key enabled Collabora Online will be used."
-    echo "deb https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/${version:-6.4}-key /" >> /etc/apt/sources.list.d/collabora.list
+    echo "deb [signed-by=/usr/share/keyrings/collaboraonline-release-keyring.gpg] https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/${version:-6.4}-key /" >> /etc/apt/sources.list.d/collabora.list
 else
     echo "Based on the provided build arguments Collabora Online Development Edition will be used."
     if [ $(uname -i) == "aarch64" ]; then
-        echo "deb https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/CODE-arm64-ubuntu1804 /" >> /etc/apt/sources.list.d/collabora.list
+        echo "deb [signed-by=/usr/share/keyrings/collaboraonline-release-keyring.gpg] https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/CODE-arm64-ubuntu1804 /" >> /etc/apt/sources.list.d/collabora.list
     else
-        echo "deb https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/CODE-ubuntu1804 /" > /etc/apt/sources.list.d/collabora.list
+        echo "deb [signed-by=/usr/share/keyrings/collaboraonline-release-keyring.gpg] https://collaboraoffice.com/${repo:-repos}/CollaboraOnline/CODE-ubuntu1804 /" > /etc/apt/sources.list.d/collabora.list
     fi
 fi
 
 if [ "$repo" == "repos-snapshot" ]; then
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E79CEF780135B53B
+    curl https://www.collaboraoffice.com/downloads/gpg/collaboraonline-snapshot-keyring.gpg --output /usr/share/keyrings/collaboraonline-snapshot-keyring.gpg
+    sed -i "s/collaboraonline-release-keyring/collaboraonline-snapshot-keyring/" /etc/apt/sources.list.d/collabora.list
 else
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0C54D189F4BA284D
+    curl https://www.collaboraoffice.com/downloads/gpg/collaboraonline-release-keyring.gpg --output /usr/share/keyrings/collaboraonline-release-keyring.gpg
 fi
 apt-get update
 
