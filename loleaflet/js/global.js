@@ -104,6 +104,8 @@ window.app = { // Shouldn't have any functions defined.
 	var ua = navigator.userAgent.toLowerCase(),
 	    uv = navigator.vendor.toLowerCase(),
 	    doc = document.documentElement,
+		// doc
+		// Document URL, the server should be able to access the document.
 
 	    ie = 'ActiveXObject' in window,
 
@@ -821,6 +823,8 @@ window.app = { // Shouldn't have any functions defined.
 			if (global.socket.readyState === 1) {
 				var ProtocolVersionNumber = '0.1';
 				var timestamp = global.getParameterByName('timestamp');
+				// timestamp
+				// A timestamp of the last modification to the document.
 				var msg = 'load url=' + encodeURIComponent(global.docURL);
 
 				var now0 = Date.now();

@@ -95,6 +95,8 @@ function onClick(e, id, item) {
 		}
 	}
 	else if (id === 'print') {
+		// print
+		// Whether the print handler is active (for Chrome).
 		map.print();
 	}
 	else if (id === 'save') {
