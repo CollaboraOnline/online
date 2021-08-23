@@ -73,8 +73,52 @@ namespace Util
 
 #endif
 
+    /// Convert unsigned char data to hex.
+    /// @buffer can be either std::vector<char> or std::string.
+    /// @offset the offset within the buffer to start from.
+    /// @length is the number of bytes to convert.
+    template <typename T>
+    inline std::string dataToHexString(const T& buffer, const std::size_t offset,
+                                       const std::size_t length)
+    {
+        char scratch[64];
+        std::stringstream os;
+
+        for (unsigned int i = 0; i < length; i++)
+        {
+            if ((offset + i) >= buffer.size())
+                break;
+
+            sprintf(scratch, "%.2x", static_cast<unsigned char>(buffer[offset + i]));
+            os << scratch;
+        }
+
+        return os.str();
+    }
+
     /// Hex to unsigned char
-    bool dataFromHexString(const std::string& hexString, std::vector<unsigned char>& data);
+    template <typename T>
+    bool dataFromHexString(const std::string& hexString, T& data)
+    {
+        if (hexString.length() % 2 != 0)
+        {
+            return false;
+        }
+
+        data.clear();
+        std::stringstream stream;
+        unsigned value;
+        for (unsigned long offset = 0; offset < hexString.size(); offset += 2)
+        {
+            stream.clear();
+            stream << std::hex << hexString.substr(offset, 2);
+            stream >> value;
+            data.push_back(static_cast<typename T::value_type>(value));
+        }
+
+        return true;
+    }
+
     /// Encode an integral ID into a string, with padding support.
     std::string encodeId(const std::uint64_t number, const int padding = 5);
     /// Decode an integral ID from a string.

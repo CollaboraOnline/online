@@ -7,6 +7,8 @@
 
 #include <config.h>
 
+#include <cppunit/TestAssert.h>
+#include <cstddef>
 #include <test/lokassert.hpp>
 
 #include <Auth.hpp>
@@ -55,6 +57,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testTime);
     CPPUNIT_TEST(testBufferClass);
     CPPUNIT_TEST(testStringVector);
+    CPPUNIT_TEST(testHexify);
     CPPUNIT_TEST(testRequestDetails_DownloadURI);
     CPPUNIT_TEST(testRequestDetails_loleafletURI);
     CPPUNIT_TEST(testRequestDetails_local);
@@ -89,6 +92,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testTime();
     void testBufferClass();
     void testStringVector();
+    void testHexify();
     void testRequestDetails_DownloadURI();
     void testRequestDetails_loleafletURI();
     void testRequestDetails_local();
@@ -1194,6 +1198,27 @@ void WhiteBoxTests::testStringVector()
         CPPUNIT_ASSERT(tokens.getNameIntegerPair(2, name, value));
         CPPUNIT_ASSERT_EQUAL(std::string("a"), name);
         CPPUNIT_ASSERT_EQUAL(11, value);
+    }
+}
+
+void WhiteBoxTests::testHexify()
+{
+    const std::string s1 = "some ascii text with !@#$%^&*()_+/-\\|";
+    const auto hex = Util::dataToHexString(s1, 0, s1.size());
+    std::string decoded;
+    CPPUNIT_ASSERT(Util::dataFromHexString(hex, decoded));
+    CPPUNIT_ASSERT_EQUAL(s1, decoded);
+
+    for (std::size_t randStrLen = 1; randStrLen < 129; ++randStrLen)
+    {
+        const auto s2 = Util::rng::getBytes(randStrLen);
+        CPPUNIT_ASSERT_EQUAL(randStrLen, s2.size());
+        const auto hex2 = Util::dataToHexString(s2, 0, s2.size());
+        CPPUNIT_ASSERT_EQUAL(randStrLen * 2, hex2.size());
+        std::vector<char> decoded2;
+        CPPUNIT_ASSERT(Util::dataFromHexString(hex2, decoded2));
+        CPPUNIT_ASSERT_EQUAL(randStrLen, decoded2.size());
+        CPPUNIT_ASSERT_EQUAL(s2, decoded2);
     }
 }
 

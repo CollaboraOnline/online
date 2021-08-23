@@ -285,27 +285,6 @@ namespace Util
 
 #endif
 
-    bool dataFromHexString(const std::string& hexString, std::vector<unsigned char>& data)
-    {
-        if (hexString.length() % 2 != 0)
-        {
-            return false;
-        }
-
-        data.clear();
-        std::stringstream stream;
-        unsigned value;
-        for (unsigned long offset = 0; offset < hexString.size(); offset += 2)
-        {
-            stream.clear();
-            stream << std::hex << hexString.substr(offset, 2);
-            stream >> value;
-            data.push_back(static_cast<unsigned char>(value));
-        }
-
-        return true;
-    }
-
     std::string encodeId(const std::uint64_t number, const int padding)
     {
         std::ostringstream oss;
