@@ -211,6 +211,9 @@ app.definitions.Socket = L.Class.extend({
 			msg += ' deviceFormFactor=' + window.deviceFormFactor;
 		}
 		if (this._map.options.renderingOptions) {
+			// renderingOptions
+			// Enables the continuous, web view, of the document, 
+			// see the UNO commands below for this parameter.
 			var options = {
 				'rendering': this._map.options.renderingOptions
 			};
@@ -527,6 +530,8 @@ app.definitions.Socket = L.Class.extend({
 
 			if (!window.ThisIsAMobileApp) {
 				var idUri = this._map.options.server + this._map.options.serviceRoot + '/hosting/discovery';
+				// server
+				// The websocket server hosting loolwsd using the ws: protocol. Example: wss://localhost:9980
 				idUri = idUri.replace(/^ws:/, 'http:');
 				idUri = idUri.replace(/^wss:/, 'https:');
 				$('#loolwsd-id').html(_('Served by:') + ' <a target="_blank" href="' + idUri + '">' + this.WSDServer.Id + '</a>');

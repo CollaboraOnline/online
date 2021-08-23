@@ -109,6 +109,9 @@ L.Map = L.Evented.extend({
 		Cursor.imagePath = options.cursorURL;
 
 		if (options.webserver === undefined) {
+			// webserver
+			// The webserver access to hosting loolwsd. Normally it is derived from 'server'
+			// but can be overridden with an own value in case of proxying. Example: http://localhost:9980
 			var protocol = window.location.protocol === 'file:' ? 'https:' : window.location.protocol;
 			options.webserver = options.server.replace(/^(ws|wss):/i, protocol);
 		}

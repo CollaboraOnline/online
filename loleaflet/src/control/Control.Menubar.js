@@ -1522,6 +1522,8 @@ L.Control.Menubar = L.Control.extend({
 		} else if (id === 'shareas') {
 			this._map.openShare();
 		} else if (id === 'print') {
+			// print
+			// Whether the print handler is active (for Chrome).
 			this._map.print();
 		} else if (id.startsWith('downloadas-')) {
 			var format = id.substring('downloadas-'.length);
