@@ -46,6 +46,8 @@ class CommentSection {
 	anchor: Array<any> = new Array(0);
 	documentObject: boolean = false;
 	position: Array<number> = [0, 0];
+	canCollapse: boolean = true;
+	isCollapsed: boolean = false;
 	size: Array<number> = [0, 0];
 	expand: Array<string> = ['bottom'];
 	isLocated: boolean = false;
@@ -190,6 +192,28 @@ class CommentSection {
 		else {
 			this.showCommentListPanel();
 		}
+	}
+
+	public setCollapsed() {
+		this.isCollapsed = true;
+
+		if ((<any>window).mode.isMobile()
+			|| this.sectionProperties.docLayer._docType === 'spreadsheet'
+			|| this.sectionProperties.commentList.length === 0)
+			return;
+
+		this.size[0] = 70 * app.dpiScale;
+	}
+
+	public setExpanded() {
+		this.isCollapsed = false;
+
+		if ((<any>window).mode.isMobile()
+			|| this.sectionProperties.docLayer._docType === 'spreadsheet'
+			|| this.sectionProperties.commentList.length === 0)
+			return;
+
+		this.size[0] = 300 * app.dpiScale;
 	}
 
 	public hideAllComments () {
