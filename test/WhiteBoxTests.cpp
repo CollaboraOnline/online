@@ -61,6 +61,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testRequestDetails_DownloadURI);
     CPPUNIT_TEST(testRequestDetails_loleafletURI);
     CPPUNIT_TEST(testRequestDetails_local);
+    CPPUNIT_TEST(testRequestDetails_local_hexified);
     CPPUNIT_TEST(testRequestDetails);
     CPPUNIT_TEST(testUIDefaults);
     CPPUNIT_TEST(testCSSVars);
@@ -96,6 +97,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testRequestDetails_DownloadURI();
     void testRequestDetails_loleafletURI();
     void testRequestDetails_local();
+    void testRequestDetails_local_hexified();
     void testRequestDetails();
     void testUIDefaults();
     void testCSSVars();
@@ -1432,6 +1434,135 @@ void WhiteBoxTests::testRequestDetails_local()
             std::string(
                 "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%2Fdata%2Fhello-world.odt"),
             details[1]);
+        LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
+        LOK_ASSERT_EQUAL(std::string("write"), details[3]); // SessionId, since the real SessionId is blank.
+        LOK_ASSERT_EQUAL(std::string("2"), details[4]); // Command, since SessionId was blank.
+
+        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string("write"), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "write"));
+        LOK_ASSERT_EQUAL(std::string("2"), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Command, "2"));
+        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+    }
+}
+
+void WhiteBoxTests::testRequestDetails_local_hexified()
+{
+    static const std::string Root = "localhost:9980";
+
+    static const std::string ProxyPrefix
+        = "http://localhost/nextcloud/apps/richdocuments/proxy.php?req=";
+
+    static const std::string docUri = "file:///home/ash/prj/lo/online/test/data/hello-world.odt";
+    static const std::string fileUrl =
+        "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%2Fdata%2Fhello-world.odt";
+
+    const std::string fileUrlHex = "0x" + Util::dataToHexString(fileUrl, 0, fileUrl.size());
+
+    {
+        const std::string URI = "/lool/" + fileUrlHex + "/ws/open/open/0";
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        request.setHost(Root);
+        request.set("User-Agent", WOPI_AGENT_STRING);
+        request.set("ProxyPrefix", ProxyPrefix);
+
+        RequestDetails details(request, "");
+        LOK_ASSERT_EQUAL(true, details.isProxy());
+        LOK_ASSERT_EQUAL(ProxyPrefix, details.getProxyPrefix());
+
+        LOK_ASSERT_EQUAL(Root, details.getHostUntrusted());
+        LOK_ASSERT_EQUAL(false, details.isWebSocket());
+        LOK_ASSERT_EQUAL(true, details.isGet());
+
+        LOK_ASSERT_EQUAL(docUri, details.getLegacyDocumentURI());
+        LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
+
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(6), details.size());
+        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
+        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(fileUrlHex, details[1]);
+        LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
+        LOK_ASSERT_EQUAL(std::string("open"), details[3]);
+        LOK_ASSERT_EQUAL(std::string("open"), details[4]);
+        LOK_ASSERT_EQUAL(std::string("0"), details[5]);
+
+        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string("open"), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "open"));
+        LOK_ASSERT_EQUAL(std::string("open"), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Command, "open"));
+        LOK_ASSERT_EQUAL(std::string("0"), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Serial, "0"));
+    }
+
+    {
+        // Blank entries are skipped.
+        static const std::string URI = "/lool/" + fileUrlHex + "/ws//write/2";
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        request.setHost(Root);
+        request.set("User-Agent", WOPI_AGENT_STRING);
+        request.set("ProxyPrefix", ProxyPrefix);
+
+        RequestDetails details(request, "");
+        LOK_ASSERT_EQUAL(true, details.isProxy());
+        LOK_ASSERT_EQUAL(ProxyPrefix, details.getProxyPrefix());
+
+        LOK_ASSERT_EQUAL(Root, details.getHostUntrusted());
+        LOK_ASSERT_EQUAL(false, details.isWebSocket());
+        LOK_ASSERT_EQUAL(true, details.isGet());
+
+        LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
+
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
+        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
+        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(fileUrlHex, details[1]);
+        LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
+        LOK_ASSERT_EQUAL(std::string("write"), details[3]); // SessionId, since the real SessionId is blank.
+        LOK_ASSERT_EQUAL(std::string("2"), details[4]); // Command, since SessionId was blank.
+
+        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string("write"), details.getField(RequestDetails::Field::SessionId));
+        LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "write"));
+        LOK_ASSERT_EQUAL(std::string("2"), details.getField(RequestDetails::Field::Command));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Command, "2"));
+        LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Serial));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Serial, ""));
+    }
+
+    {
+        // Apparently, the initial / can be missing -- all the tests do that.
+        static const std::string URI = "lool/" + fileUrlHex + "/ws//write/2";
+
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
+                                       Poco::Net::HTTPMessage::HTTP_1_1);
+        request.setHost(Root);
+        request.set("User-Agent", WOPI_AGENT_STRING);
+        request.set("ProxyPrefix", ProxyPrefix);
+
+        RequestDetails details(request, "");
+        LOK_ASSERT_EQUAL(true, details.isProxy());
+        LOK_ASSERT_EQUAL(ProxyPrefix, details.getProxyPrefix());
+
+        LOK_ASSERT_EQUAL(Root, details.getHostUntrusted());
+        LOK_ASSERT_EQUAL(false, details.isWebSocket());
+        LOK_ASSERT_EQUAL(true, details.isGet());
+
+        LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
+
+        LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
+        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
+        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(fileUrlHex, details[1]);
         LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
         LOK_ASSERT_EQUAL(std::string("write"), details[3]); // SessionId, since the real SessionId is blank.
         LOK_ASSERT_EQUAL(std::string("2"), details[4]); // Command, since SessionId was blank.
