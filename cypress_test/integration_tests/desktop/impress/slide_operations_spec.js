@@ -15,18 +15,14 @@ describe('Slide operations', function() {
 	});
 
 	it('Add slides', function() {
-		cy.get('#tb_presentation-toolbar_item_insertpage')
-			.should('not.have.class', 'disabled')
-			.click();
+		helper.clickOnIdle('#tb_presentation-toolbar_item_insertpage');
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 	});
 
 	it('Remove slides', function() {
 		// Add slides
-		cy.get('#tb_presentation-toolbar_item_insertpage')
-			.should('not.have.class', 'disabled')
-			.click();
+		helper.clickOnIdle('#tb_presentation-toolbar_item_insertpage');
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 
@@ -45,9 +41,7 @@ describe('Slide operations', function() {
 	});
 
 	it('Duplicate slide', function() {
-		cy.get('#tb_presentation-toolbar_item_duplicatepage')
-			.should('not.have.class', 'disabled')
-			.click();
+		helper.clickOnIdle('#tb_presentation-toolbar_item_duplicatepage');
 
 		impressHelper.assertNumberOfSlidePreviews(2);
 
