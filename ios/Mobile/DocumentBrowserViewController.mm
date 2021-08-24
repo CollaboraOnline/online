@@ -34,6 +34,24 @@
     // Do any additional setup after loading the view, typically from a nib.
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+#if 0
+    NSLog(@"Contents of NSHomeDirectory:");
+    auto enumerator = [[NSFileManager defaultManager] enumeratorAtPath:NSHomeDirectory()];
+    NSString *file;
+    while ((file = [enumerator nextObject])) {
+        NSString *suffix = @"";
+        if ([enumerator fileAttributes][NSFileType] == NSFileTypeRegular)
+            suffix = [NSString stringWithFormat:@"  %@", [enumerator fileAttributes][NSFileSize]];
+        else if ([enumerator fileAttributes][NSFileType] == NSFileTypeDirectory)
+            suffix = @"/";
+        NSLog(@"%@%@%@", [NSString stringWithFormat:@"%*s", (int)[enumerator level] * 2, ""], [file lastPathComponent], suffix);
+    }
+#endif
+}
+
 - (void)documentBrowser:(UIDocumentBrowserViewController *)controller didRequestDocumentCreationWithHandler:(void (^)(NSURL * _Nullable, UIDocumentBrowserImportMode))importHandler {
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     TemplateCollectionViewController *templateCollectionViewController = [storyBoard instantiateViewControllerWithIdentifier:@"TemplateCollectionViewController"];

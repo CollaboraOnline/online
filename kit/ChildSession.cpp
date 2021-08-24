@@ -2721,6 +2721,9 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
                    forSaveOperation:UIDocumentSaveForOverwriting
                   completionHandler:^(BOOL success) {
                         LOG_TRC("ChildSession::loKitCallback() save completion handler gets " << (success?"YES":"NO"));
+                        if (![[NSFileManager defaultManager] removeItemAtURL:document->copyFileURL error:nil]) {
+                            LOG_SYS("Could not remove copy of document at " << [[document->copyFileURL path] UTF8String]);
+                        }
                     }];
 #elif defined(__ANDROID__)
                 postDirectMessage("SAVE " + payload);

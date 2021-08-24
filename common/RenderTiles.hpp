@@ -544,7 +544,7 @@ namespace RenderTiles
             const int offsetX = positionX * pixelWidth;
             const int offsetY = positionY * pixelHeight;
 
-            NSString *mmapFileBaseName = [NSString stringWithFormat:@"%d.bmp", bmpId];
+            NSString *mmapFileBaseName = [NSString stringWithFormat:@"tiles/%d.bmp", bmpId];
             NSURL *mmapFileURL = [[NSFileManager.defaultManager temporaryDirectory] URLByAppendingPathComponent:mmapFileBaseName];
 
             int fd = open([[mmapFileURL path] UTF8String], O_RDWR|O_CREAT, 0666);
