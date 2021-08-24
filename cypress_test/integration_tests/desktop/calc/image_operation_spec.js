@@ -15,6 +15,7 @@ describe('Image Operation Tests', function() {
 	});
 
 	it('Insert Image',function() {
+		cy.wait(1000);
 		insertImage();
 	});
 

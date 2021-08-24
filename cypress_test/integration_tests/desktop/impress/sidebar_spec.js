@@ -40,6 +40,7 @@ describe('Sidebar Tests', function() {
 			.should('not.be.visible');
 
 		cy.get('#fillstyle select')
+			.wait(1000)
 			.select('Gradient');
 
 		cy.get('#fillattr2')
