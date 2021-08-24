@@ -140,6 +140,17 @@ void RequestDetails::processURI()
     _fields[Field::Type] = _uriString.substr(off, posDocUri - off); // The first is always the type.
     std::string uriRes = _uriString.substr(posDocUri + 1);
 
+    // Decode hexified component, if any.
+    if (Util::startsWith(uriRes, "0x"))
+    {
+        // Find the end.
+        const auto end = uriRes.find_first_of('/');
+
+        std::string encoded;
+        Util::dataFromHexString(uriRes.substr(2, end - 2), encoded);
+        uriRes = encoded + uriRes.substr(end); // Reconstruct.
+    }
+
     const auto posLastWS = uriRes.rfind("/ws");
     // DocumentURI is the second segment in lool URIs.
     if (_pathSegs.equals(0, "lool"))
