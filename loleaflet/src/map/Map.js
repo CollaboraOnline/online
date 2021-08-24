@@ -285,7 +285,9 @@ L.Map = L.Evented.extend({
 				}
 			} else if (this._docLayer) {
 				// remove the comments and changes
-				app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).clearList();
+				var commentSection = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
+				if (commentSection)
+					commentSection.clearList();
 			}
 
 			this.initializeModificationIndicator();

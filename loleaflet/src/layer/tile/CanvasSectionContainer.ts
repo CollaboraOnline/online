@@ -160,6 +160,9 @@ class CanvasSectionObject {
 	isVisible: boolean = false; // Is section visible on the viewed area of the document? This property is valid for document objects. This is managed by the section container.
 	showSection: boolean = true; // Show / hide section.
 	position: Array<number> = new Array(0);
+	minSize: Array<number> = new Array(0); // Try to provide minimal size by collapsing other sections
+	canCollapse: boolean = false;
+	isCollapsed: boolean = false;
 	size: Array<number> = new Array(0);
 	expand: Array<string> = new Array(0);
 	isLocated: boolean = false; // location and size of the section computed yet ?
@@ -199,6 +202,8 @@ class CanvasSectionObject {
 	resetAnimation: Function; // Do not implement this. This function is added by section container.
 	getTestDiv: Function; // Do not implement this. This function is added by section container.
 	setPosition: Function; // Document objects only. Do not implement this. This function is added by section container.
+	setCollapsed: Function; // collapse the section to provide more space for other sections
+	setExpanded: Function; // allow to use more space
 
 	constructor (options: any) {
 		this.name = options.name;
@@ -1393,9 +1398,50 @@ class CanvasSectionContainer {
 		}
 	}
 
+	// applies minimal size by collapsing other sections if there is space missing
+	// returns true if sections should be relocated
+	private applySectionsSizeRequirements() : boolean {
+		var ret = false;
+
+		for (var i: number = 0; i < this.sections.length; i++) {
+			if (this.sections[i].minSize && this.sections[i].minSize.length) {
+				if (this.sections[i].minSize[0] > this.sections[i].size[0]) {
+					var neededSpace = this.sections[i].minSize[0] - this.sections[i].size[0];
+					for (var j: number = 0; j < this.sections.length && neededSpace > 0; j++) {
+						if (this.sections[j].isLocated &&
+							this.sections[j].zIndex === this.sections[i].zIndex &&
+							this.sections[j].name !== this.sections[i].name &&
+							this.sections[j].canCollapse) {
+
+							neededSpace -= this.sections[j].size[0];
+							this.sections[j].setCollapsed();
+							neededSpace += this.sections[j].size[0];
+
+							ret = true;
+						}
+					}
+				} else {
+
+				}
+			}
+		}
+
+		return ret;
+	}
+
 	public reNewAllSections(redraw: boolean = true) {
 		this.orderSections();
+
+		for (var i: number = 0; i < this.sections.length; i++) {
+			if (this.sections[i].setExpanded)
+				this.sections[i].setExpanded();
+		}
+
 		this.locateSections();
+
+		if (this.applySectionsSizeRequirements())
+			this.locateSections();
+
 		for (var i: number = 0; i < this.sections.length; i++) {
 			this.sections[i].onResize();
 		}

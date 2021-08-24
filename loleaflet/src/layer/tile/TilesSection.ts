@@ -18,6 +18,7 @@ class TilesSection {
 	boundToSection: string = null;
 	anchor: Array<any> = new Array(0);
 	position: Array<number> = new Array(0);
+	minSize: Array<number> = new Array(0);
 	size: Array<number> = new Array(0);
 	expand: Array<string> = new Array(0);
 	isLocated: boolean = false;
@@ -35,6 +36,7 @@ class TilesSection {
 		// Below anchor list may be expanded. For example, Writer may have ruler section. Then ruler section should also be added here.
 		this.anchor = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, 'right', 'left']];
 		this.position = [0, 0]; // This section's myTopLeft will be anchored to other sections^. No initial position is needed.
+		this.minSize = [1000, 0];
 		this.size = [0, 0]; // Going to be expanded, no initial width or height is necessary.
 		this.expand = ['top', 'left', 'bottom', 'right'];
 		this.processingOrder = L.CSections.Tiles.processingOrder;
