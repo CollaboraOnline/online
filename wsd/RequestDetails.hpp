@@ -85,6 +85,9 @@
  *       |--------documentURI---------|            |-------WOPISrc------|        |--------------compat--------------|
  *                            |options|                                               |sessionId| |command| |serial|
  *       |---------------------------LegacyDocumentURI---------------------------|
+ *
+ * Alternatively, the LegacyDocumentURI (encoded) could be hexified, as follows:
+ * /lool/0x123456789/ws?WOPISrc=<encoded-document-URI>&compat=/ws[/<sessionId>/<command>/<serial>]
  */
 class RequestDetails
 {
