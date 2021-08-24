@@ -24,6 +24,7 @@ DESKTOP_TEST_FOLDER = $(abs_srcdir)/integration_tests/desktop
 DESKTOP_DATA_FOLDER = $(abs_srcdir)/data/desktop/
 DESKTOP_DATA_WORKDIR = $(abs_builddir)/workdir/data/desktop/
 DESKTOP_TRACK_FOLDER=$(abs_builddir)/workdir/track/desktop
+DESKTOP_NB_TRACK_FOLDER=$(abs_builddir)/workdir/track/notebookbar
 
 MOBILE_USER_AGENT = "cypress-mobile"
 MOBILE_TEST_FOLDER = $(abs_srcdir)/integration_tests/mobile
@@ -76,6 +77,9 @@ MOBILE_TEST_FILES_DONE= \
 DESKTOP_TEST_FILES_DONE= \
 	$(foreach test_file,$(DESKTOP_TEST_FILES),$(DESKTOP_TRACK_FOLDER)/$(test_file).done)
 
+DESKTOP_NB_TEST_FILES_DONE= \
+	$(foreach test_file,$(DESKTOP_TEST_FILES),$(DESKTOP_NB_TRACK_FOLDER)/$(test_file).done)
+
 MULTIUSER_TESTS_DONE= \
 	$(MULTIUSER_TRACK_FOLDER)/multiuser_tests.done
 
@@ -83,6 +87,11 @@ check-local: do-check
 	$(if $(wildcard $(ERROR_LOG)),$(error CypressError: some tests failed!))
 
 do-check: $(DESKTOP_TEST_FILES_DONE) $(MOBILE_TEST_FILES_DONE) $(MULTIUSER_TESTS_DONE)
+	@$(KILL_COMMAND) || true
+	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
+	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
+
+check-notebookbar: $(DESKTOP_NB_TEST_FILES_DONE)
 	@$(KILL_COMMAND) || true
 	$(if $(HEADLESS_BUILD),@pkill Xvfb,)
 	$(if $(wildcard $(ERROR_LOG)),@cat $(ERROR_LOG))
@@ -111,6 +120,17 @@ $(DESKTOP_TEST_FILES_DONE): $(PID_FILE)
 		@mkdir -p $(dir $@) && touch $@\
 		,\
 		@$(foreach done_file,$(DESKTOP_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
+	)
+
+$(DESKTOP_NB_TEST_FILES_DONE): export USER_INTERFACE = notebookbar
+$(DESKTOP_NB_TEST_FILES_DONE): $(PID_FILE)
+	$(if $(PARALLEL_BUILD),\
+		$(call run_desktop_tests,$(subst $(DESKTOP_NB_TRACK_FOLDER)/,,$(basename $@)),$(basename $@).log),\
+		$(call run_desktop_tests))
+	$(if $(PARALLEL_BUILD),\
+		@mkdir -p $(dir $@) && touch $@\
+		,\
+		@$(foreach done_file,$(DESKTOP_NB_TEST_FILES_DONE),mkdir -p $(dir $(done_file)) && touch $(done_file) &&) true\
 	)
 
 $(MULTIUSER_TESTS_DONE): $(PID_FILE) $(MOBILE_TEST_FILES_DONE)
