@@ -196,6 +196,11 @@ class CommentSection {
 
 	public setCollapsed() {
 		this.isCollapsed = true;
+		this.removeHighlighters();
+		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
+			if (this.sectionProperties.commentList[i].sectionProperties.data.id !== 'new')
+				this.sectionProperties.commentList[i].setCollapsed();
+		}
 
 		if ((<any>window).mode.isMobile()
 			|| this.sectionProperties.docLayer._docType === 'spreadsheet'
@@ -207,6 +212,10 @@ class CommentSection {
 
 	public setExpanded() {
 		this.isCollapsed = false;
+		this.removeHighlighters();
+		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
+			this.sectionProperties.commentList[i].setExpanded();
+		}
 
 		if ((<any>window).mode.isMobile()
 			|| this.sectionProperties.docLayer._docType === 'spreadsheet'
@@ -1317,7 +1326,7 @@ class CommentSection {
 		for (var i = 0; i < subList.length; i++) {
 			lastY = subList[i].sectionProperties.data.anchorPix[1] > lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY;
 
-			if (selectedComment)
+			if (selectedComment && !this.sectionProperties.selectedComment.isCollapsed)
 				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - 60, y: Math.round(lastY / app.dpiScale)});
 			else
 				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)});
