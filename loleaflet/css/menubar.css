@@ -52,9 +52,7 @@
 	/* half of #document-name-input height: */
 	top: -9px;
 }
-.main-nav.readonly #document-titlebar {
-	top: 1px;
-}
+
 .main-nav.readonly #table-optionstoolboxdown {
 	display: none;
 }
@@ -67,8 +65,8 @@
 	z-index: 12;
 }
 .main-nav.readonly {
-	top: -1px; /*update .main-nav.readonly #document-titlebar*/
 	position: relative;
+	border-bottom: 1px solid var(--gray-light-bg-color);
 }
 .main-nav.hasnotebookbar:not(.readonly) {
 	background: var(--gray-light-bg-color);
