@@ -36,6 +36,7 @@ class Comment {
 	setPosition: Function; // Implemented by section container. Document objects only.
 	map: any;
 	pendingInit: boolean = true;
+	isCollapsed: boolean = false;
 
 	constructor (data: any, options: any, commentListSectionPointer: any) {
 		this.map = L.Map.THIS;
@@ -61,10 +62,12 @@ class Comment {
 		this.sectionProperties.data = data;
 		this.sectionProperties.annotationMarker = null;
 		this.sectionProperties.wrapper = null;
+		this.sectionProperties.collapsed = null;
 		this.sectionProperties.container = null;
 		this.sectionProperties.author = null;
 		this.sectionProperties.resolvedTextElement = null;
 		this.sectionProperties.authorAvatarImg = null;
+		this.sectionProperties.authorCollapsedAvatarImg = null;
 		this.sectionProperties.authorAvatartdImg = null;
 		this.sectionProperties.contentAuthor = null;
 		this.sectionProperties.contentDate = null;
@@ -193,6 +196,8 @@ class Comment {
 			this.sectionProperties.wrapper = L.DomUtil.create('div', 'loleaflet-annotation-content-wrapper' + mobileClass, this.sectionProperties.container);
 		}
 
+		this.sectionProperties.collapsed = L.DomUtil.create('div', 'loleaflet-annotation-collapsed' + mobileClass, this.sectionProperties.container);
+
 		document.getElementById('document-container').appendChild(this.sectionProperties.container);
 	}
 
@@ -218,7 +223,14 @@ class Comment {
 		imgAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
 		imgAuthor.onerror = function () { imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg')); };
 
+		var imgCollapsedAuthor = L.DomUtil.create('img', 'avatar-img', this.sectionProperties.collapsed);
+		imgCollapsedAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg'));
+		imgCollapsedAuthor.setAttribute('width', this.sectionProperties.imgSize[0]);
+		imgCollapsedAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
+		imgCollapsedAuthor.onerror = function () { imgCollapsedAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg')); };
+
 		this.sectionProperties.authorAvatarImg = imgAuthor;
+		this.sectionProperties.authorCollapsedAvatarImg = imgCollapsedAuthor;
 		this.sectionProperties.authorAvatartdImg = tdImg;
 		this.sectionProperties.contentAuthor = L.DomUtil.create('div', 'loleaflet-annotation-content-author', tdAuthor);
 		this.sectionProperties.contentDate = L.DomUtil.create('div', 'loleaflet-annotation-date', tdAuthor);
@@ -293,6 +305,7 @@ class Comment {
 
 		this.updateResolvedField(this.sectionProperties.data.resolved);
 		this.sectionProperties.authorAvatarImg.setAttribute('src', this.sectionProperties.data.avatar);
+		this.sectionProperties.authorCollapsedAvatarImg.setAttribute('src', this.sectionProperties.data.avatar);
 
 		if (!this.sectionProperties.data.avatar) {
 			$(this.sectionProperties.authorAvatarImg).css('padding-top', '4px');
@@ -532,6 +545,8 @@ class Comment {
 		var authorImageHeight = Math.round(this.sectionProperties.imgSize[1] * scaleFactor);
 		this.sectionProperties.authorAvatarImg.setAttribute('width', authorImageWidth);
 		this.sectionProperties.authorAvatarImg.setAttribute('height', authorImageHeight);
+		this.sectionProperties.authorCollapsedAvatarImg.setAttribute('width', authorImageWidth);
+		this.sectionProperties.authorCollapsedAvatarImg.setAttribute('height', authorImageHeight);
 	}
 
 	private update () {
@@ -906,4 +921,16 @@ class Comment {
 	public onMultiTouchStart () {}
 	public onMultiTouchMove () {}
 	public onMultiTouchEnd () {}
+
+	public setCollapsed() {
+		this.isCollapsed = true;
+		this.sectionProperties.collapsed.style.display = '';
+		this.sectionProperties.wrapper.style.display = 'none';
+	}
+
+	public setExpanded() {
+		this.isCollapsed = false;
+		this.sectionProperties.collapsed.style.display = 'none';
+		this.sectionProperties.wrapper.style.display = '';
+	}
 }
