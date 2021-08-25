@@ -30,6 +30,16 @@
 #tb_actionbar_item_LanguageStatus .w2ui-tb-caption{
 	float: none;
 }
+#toolbar-down.readonly #tb_actionbar_item_InsertMode,
+#toolbar-down.readonly #tb_actionbar_item_InsertMode + td[id^='tb_actionbar_item_break'],
+#toolbar-down.readonly #tb_actionbar_item_StatusSelectionMode,
+#toolbar-down.readonly #tb_actionbar_item_StatusSelectionMode + td[id^='tb_actionbar_item_break'],
+#toolbar-down.readonly #tb_actionbar_item_LanguageStatus .w2ui-button .w2ui-tb-down {
+	display: none;
+}
+#toolbar-down.readonly #tb_actionbar_item_LanguageStatus .w2ui-button {
+	border-color: transparent !important;
+}
 #tb_actionbar_item_StateTableCellMenu .w2ui-tb-down {
 	padding: 4px;
 }
