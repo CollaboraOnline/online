@@ -37,6 +37,10 @@
 	justify-content: flex-start;
 }
 
+.readonly .document-title {
+	justify-content: flex-end;
+}
+
 #document-titlebar {
 	position: relative;
 	display: inline-table; /*new*/
@@ -46,6 +50,11 @@
 	z-index: 1000;
 	width: calc(100% - 890px);
 	right: 0px;
+}
+
+.readonly #document-titlebar {
+	float: right;
+	margin-right: 52px;
 }
 
 .main-nav.hasnotebookbar:not(.readonly) #document-titlebar {
