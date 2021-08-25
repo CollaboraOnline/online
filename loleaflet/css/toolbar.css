@@ -33,7 +33,8 @@
 #tb_actionbar_item_StateTableCellMenu .w2ui-tb-down {
 	padding: 4px;
 }
-#InsertMode.insert-mode-false {
+#InsertMode.insert-mode-false,
+#PermissionMode.status-readonly-mode {
 	background-color: var(--gray-light-txt--color);
 	color: white;
 }
