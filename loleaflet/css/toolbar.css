@@ -265,6 +265,11 @@ w2ui-toolbar {
 	text-align: left;
 }
 
+.readonly #document-name-input.editable:focus {
+	flex: 1;
+	text-align: center;
+}
+
 #document-name-input.editable:hover:not(:focus) {
 	border: none;
 	box-shadow: 0 0 0.1px 1px #d7d7d7, 0 0 3px 2px #f0f0f0;
