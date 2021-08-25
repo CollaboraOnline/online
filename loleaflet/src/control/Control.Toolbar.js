@@ -1038,8 +1038,10 @@ function onUpdatePermission(e) {
 					toolbar.enable(items[idx].id);
 				}
 				$('.main-nav').removeClass('readonly');
+				$('#toolbar-down').removeClass('readonly');
 			} else if (!alwaysEnable) {
 				$('.main-nav').addClass('readonly');
+				$('#toolbar-down').addClass('readonly');
 				toolbar.disable(items[idx].id);
 			}
 		}
