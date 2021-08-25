@@ -1407,6 +1407,7 @@ app.definitions.Socket = L.Class.extend({
 		setTimeout(function () {
 			if (!that._reconnecting) {
 				that._reconnecting = true;
+				that._map.showBusy(_('Reconnecting...'), false);
 				that._map._activate();
 			}
 		}, 1 /* ms */);
