@@ -296,10 +296,18 @@ td[id^='tb_editbar_item_sidebar']{
 	display: none;
 }
 
+.main-nav:not(.hasnotebookbar) ~ #closebuttonwrapper {
+	height: 38px;
+}
+
 #closebutton {
 	width: 100%;
 	height: 100%;
 	background: url('images/closedoc.svg') no-repeat 6px 4px/24px !important;
+}
+
+.main-nav:not(.hasnotebookbar) ~ #closebuttonwrapper #closebutton {
+	background: url('images/closedoc.svg') no-repeat center/24px !important;
 }
 
 #closebutton:hover {
