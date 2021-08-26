@@ -196,7 +196,7 @@ class Comment {
 			this.sectionProperties.wrapper = L.DomUtil.create('div', 'loleaflet-annotation-content-wrapper' + mobileClass, this.sectionProperties.container);
 		}
 
-		this.sectionProperties.collapsed = L.DomUtil.create('div', 'loleaflet-annotation-collapsed' + mobileClass, this.sectionProperties.container);
+		this.sectionProperties.collapsed = L.DomUtil.create('div', 'loleaflet-annotation-collapsed', this.sectionProperties.container);
 
 		document.getElementById('document-container').appendChild(this.sectionProperties.container);
 	}
@@ -213,6 +213,7 @@ class Comment {
 		this.updateResolvedField(this.sectionProperties.data.resolved);
 
 		var tr = L.DomUtil.create('tr', '', tbody);
+		this.sectionProperties.authorRow = tr;
 		tr.id = 'author table row ' + this.sectionProperties.data.id;
 		var tdImg = L.DomUtil.create('td', 'loleaflet-annotation-img', tr);
 		var tdAuthor = L.DomUtil.create('td', 'loleaflet-annotation-author', tr);
@@ -237,7 +238,7 @@ class Comment {
 	}
 
 	private createMenu () {
-		var tdMenu = L.DomUtil.create('td', 'loleaflet-annotation-menubar', document.getElementById('author table row ' + this.sectionProperties.data.id));
+		var tdMenu = L.DomUtil.create('td', 'loleaflet-annotation-menubar', this.sectionProperties.authorRow);
 		this.sectionProperties.menu = L.DomUtil.create('div', this.sectionProperties.data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
 		this.sectionProperties.menu.id = 'comment-annotation-menu-' + this.sectionProperties.data.id;
 		this.sectionProperties.menu.onclick = this.menuOnMouseClick.bind(this);
@@ -252,10 +253,10 @@ class Comment {
 	}
 
 	private createTrackChangeButtons () {
-		var tdAccept = L.DomUtil.create('td', 'loleaflet-annotation-menubar', document.getElementById('author table row ' + this.sectionProperties.data.id));
+		var tdAccept = L.DomUtil.create('td', 'loleaflet-annotation-menubar', this.sectionProperties.authorRow);
 		var acceptButton = this.sectionProperties.acceptButton = L.DomUtil.create('button', 'loleaflet-redline-accept-button', tdAccept);
 
-		var tdReject = L.DomUtil.create('td', 'loleaflet-annotation-menubar', document.getElementById('author table row ' + this.sectionProperties.data.id));
+		var tdReject = L.DomUtil.create('td', 'loleaflet-annotation-menubar', this.sectionProperties.authorRow);
 		var rejectButton = this.sectionProperties.rejectButton = L.DomUtil.create('button', 'loleaflet-redline-reject-button', tdReject);
 
 		acceptButton.dataset.title = _('Accept change');

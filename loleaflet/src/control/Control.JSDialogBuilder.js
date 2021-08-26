@@ -1964,19 +1964,24 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_createComment: function(container, data, isRoot) {
-		// This function changes the container of the comment div for mobile wizard view.
-		// First, remove comment from its container.
-		if (data.annotation.sectionProperties.wrapper) {
-			if (data.annotation.sectionProperties.wrapper.parentElement) {
-				data.annotation.sectionProperties.wrapper.parentElement.removeChild(data.annotation.sectionProperties.wrapper);
-			}
-		}
+		// Create annotation copy and add it into the container.
 
-		data.annotation.sectionProperties.menu.isRoot = isRoot;
-		// Now, add it into the container.
-		container.appendChild(data.annotation.sectionProperties.wrapper);
+		var annotation = new app.definitions.Comment(data.data, data.id === 'new' ? {noMenu: true} : {}, this);
+		annotation.context = data.annotation.containerObject.context;
+		annotation.documentTopLeft = data.annotation.containerObject.documentTopLeft;
+		annotation.containerObject = data.annotation.containerObject;
+		annotation.sectionProperties.section = annotation;
+		annotation.sectionProperties.commentListSection = data.annotation.sectionProperties.commentListSection;
+		data.annotation.containerObject.addSectionFunctions(annotation);
+		annotation.onInitialize();
 
-		$(container).find('.loleaflet-annotation-menubar')[0].style.display = 'block';
+		annotation.sectionProperties.menu.isRoot = isRoot;
+
+		container.appendChild(annotation.sectionProperties.container);
+
+		annotation.show();
+		annotation.update();
+		annotation.setExpanded();
 
 		var replyCountNode = document.getElementById('reply-count-node-' + data.id);
 		if (replyCountNode)
@@ -2002,7 +2007,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var container = document.getElementById(data.id);
 		if (!container)
-			container = L.DomUtil.create('div',  'ui-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', mainContainer);
+			container = L.DomUtil.create('div',  'ui-header loleaflet-annotation-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', mainContainer);
 
 		container.annotation = data.annotation;
 		container.id = data.id;
@@ -2043,27 +2048,29 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (builder.wizard) {
 				$(container).find('.loleaflet-annotation-menubar')[0].style.display = 'none';
 
-				var arrowSpan = document.getElementById('arrow span ' + data.id);
+				var arrowSpan = container.querySelector('[id=\'arrow span ' + data.id + '\']');
 
 				if (!arrowSpan)
-					arrowSpan = L.DomUtil.create('span','sub-menu-arrow',$(container).find('.loleaflet-annotation-content-wrapper')[0]);
+					arrowSpan = L.DomUtil.create('span','sub-menu-arrow', $(container).find('.loleaflet-annotation-content-wrapper')[0]);
 
 				arrowSpan.style.display = 'block';
 				arrowSpan.innerHTML = '>';
 				arrowSpan.style.padding = '0px';
 				arrowSpan.id = 'arrow span ' + data.id;
 
-				container.onclick = function() {
+				$(container).find('.loleaflet-annotation')[0].onclick = function() {
 					builder.wizard.goLevelDown(mainContainer);
 					childContainer.style.display = 'block';
-					builder.build(childContainer, data.children);
+					if (!childContainer.childNodes.length)
+						builder.build(childContainer, data.children);
 				};
 
 				var backButton = document.getElementById('mobile-wizard-back');
 
 				backButton.onclick = function () {
 					if (backButton.className !== 'close-button') {
-						builder.build(mainContainer, data);
+						if (!mainContainer.childNodes.length)
+							builder.build(mainContainer, data);
 						if (data.type === 'rootcomment') {
 							var temp = document.getElementById('comment-thread' + data.id);
 							if (temp)
