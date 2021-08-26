@@ -589,7 +589,9 @@ static IMP standardImpOfInputAccessoryView = nil;
 
     // deallocateDocumentDataForMobileAppDocId(self.document->appDocId);
 
-    [[NSFileManager defaultManager] removeItemAtURL:self.document->copyFileURL error:nil];
+    if (![[NSFileManager defaultManager] removeItemAtURL:self.document->copyFileURL error:nil]) {
+        LOG_SYS("Could not remove copy of document at " << [[self.document->copyFileURL path] UTF8String]);
+    }
 
     // The dismissViewControllerAnimated must be done on the main queue.
     dispatch_async(dispatch_get_main_queue(),

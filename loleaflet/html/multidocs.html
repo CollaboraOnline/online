@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<!-- Proof of concept of running multiple instance of loleaflet.html
+     at the same time (each one in a different iframe).
+
+     To open the first document add the path into the input and click
+     open. That will open an iframe containing the document as well as
+     adding the document name to the left side menu.
+
+     To open another document press the 'Add new document' link, which is
+     the first link on the left side menu.
+
+     To switch between the documents click on their names on the left side menu.
+     That will keep the other documents opened, but not in focus.
+
+     To test this, do 'make run', and then in your browser open:
+     https://localhost:9980/loleaflet/dist/multidocs.html?file_path=/opt/libreoffice/online/test/data/hello-world.ods
+-->
+
+<meta name="robots" content="noindex">
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Multiple docs opened in parallel</title>
+    <style>
+      html, body, .container {
+        height: 100%;
+      }
+      html, body, .container, ul, li, iframe {
+        margin: 0;
+        padding: 0;
+        border: 0;
+      }
+      ul {
+        list-style: none;
+      }
+      nav {
+        width: 20rem;
+        flex-direction: column;
+        padding: 1rem;
+      }
+      .container, nav {
+        display: flex;
+      }
+      .link {
+        margin-bottom: 0.25rem;
+      }
+      .link a {
+        color: rgb(107, 114, 128);      
+        text-decoration: none;
+        font-size: 1.25rem;
+        line-height: 1.75rem;
+      }
+      .link:not(.open-doc) a:hover {
+        border-bottom: 2px solid rgb(17, 24, 39);
+      }
+      .open-doc {
+        color: rgb(17, 24, 39);
+        font-weight: 800;
+        border-bottom: 1px solid rgb(229, 231, 235);
+      }
+      .open-doc a:hover {
+        opacity: 0.9;
+      }
+      .doc .selected {
+        border-bottom: 2px solid rgb(107, 114, 128);
+      }
+      main {
+        width: 100%;
+        display: flex;
+      }
+      iframe {
+        width: 100%;
+        margin: 1rem;
+        border: 1px solid rgb(107, 114, 128);
+      }
+      .overlay {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow-y: auto;
+        z-index: 99;
+        background: rgb(243, 244, 246);
+        display: flex;
+        justify-content: center;
+        align-items: center;  
+      }
+      .modal {
+        max-width: 30rem;
+        background: #FFF;
+        padding: 2rem;
+        font-weight: 800;
+        border: 1px solid rgb(229, 231, 235);
+      }
+      .modal input {
+        display: block;
+        width: 100%;
+        margin: 1rem 0;
+      }
+      iframe, .overlay, .hidden {
+        display: none;
+      }
+      iframe.opened {
+        display: block;
+      }
+      .overlay.opened {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="overlay opened">
+        <div class="modal">
+          <p>What file do you want to open? (enter absolute file path)</p>
+
+          <form>
+            <input type="text" name="path"
+                               pattern="(.+)\.[0-9a-zA-Z]{2,5}$"
+                               required="required"
+                               placeholder="/home/your-username/Documents/Spreadsheet.ods" />
+
+            <button type="submit">Open</button>
+            <a href="#" class="js-cancel hidden">Cancel</a>
+          </form>
+        </div>
+      </div>
+
+      <nav>
+        <ul>
+          <li class="link open-doc">
+            <a href="#">Add new Document</a>
+          </li>
+          <!-- Sample document 
+          <li id="doc-link-111" class="link doc">
+            <a href="#" class="selected">Doc-111.ods</a>
+          </li>
+          -->
+        </ul>
+      </nav>
+
+      <main>
+
+        <!-- doc iframes go here -->
+
+        <!-- Sample iframe: <iframe id="doc-111">Content iframe 111</iframe> -->
+
+      </main>
+    </div>
+
+
+    <script id="jsbin-javascript">
+      (function() {
+        var openedDocs = {};
+        var id = 0;
+        
+        // this function will create an iframe
+        function openDocument(path) {
+          var fileName = path.split('\\').pop().split('/').pop();
+          
+          // add menu link
+          var liEl = document.createElement('li');
+          liEl.id = 'doc-link-' + id;
+          liEl.classList.add('link');
+          liEl.classList.add('doc');
+          var aEl = document.createElement('a');
+          aEl.dataset.iframeId = id;
+          aEl.setAttribute('href', '#');
+          aEl.textContent = fileName;
+          liEl.appendChild(aEl);
+          document.querySelector('nav ul').appendChild(liEl);
+          
+          // add iframe
+          var docEl = document.createElement('iframe');
+          docEl.id = 'doc-' + id;
+          docEl.setAttribute('src', getIframeSrc(path));
+          document.querySelector('main').appendChild(docEl);
+          
+          openedDocs[path] = { fileName: fileName, id: id };
+          
+          setActiveDocument(id);
+          
+          id++;
+        }
+        
+        function getIframeSrc(path) {
+          var query = '?';
+          query += 'file_path=file://' + path;
+          query += '&NotWOPIButIframe=true';
+
+          var editorPath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1) + 'loleaflet.html';
+          var src = window.location.protocol + '//' + window.location.host + editorPath + query;
+          
+          return src;
+        }
+        
+        function setActiveDocument(id) {
+          // remove selected status from previous active document
+          var currentActiveDoc = document.querySelector('.doc .selected');
+          
+          if (currentActiveDoc) {
+            currentActiveDoc.classList.remove('selected');      
+          }
+          
+          var currentActiveIframe = document.querySelector('iframe.opened');
+          
+          if (currentActiveIframe) {
+            currentActiveIframe.classList.remove('opened');
+          }
+          
+          // add selected status to new document
+          document.querySelector('#doc-link-' + id + ' a').classList.add('selected');
+          
+          // set selected status to current opened document iframe
+          document.querySelector('#doc-' + id).classList.add('opened');
+        }
+        
+        function toggleModal() {
+          if (Object.keys(openedDocs).length > 0) {
+            document.querySelector('.js-cancel').classList.remove('hidden');
+          }
+          
+          var overlayEl = document.querySelector('.overlay');
+          var operation = overlayEl.classList.contains('opened') ? 'remove' : 'add';
+          
+          overlayEl.classList[operation]('opened');
+        }
+        
+        function onFormSubmit(formEl) {
+          return function (evt) {
+            evt.preventDefault();
+            
+            var pathEl = formEl.querySelector('[name=path]');
+            var path = pathEl.value;
+            pathEl.value = '';
+            
+            // already opened
+            if (openedDocs[path]) {
+              alert('already opened');
+              return;
+            }
+            
+            openDocument(path);
+            
+            toggleModal();      
+          }
+        }
+        
+        function onToggleModal(evt) {
+          evt.preventDefault();
+          toggleModal();
+        }
+        
+        function onMenuItemClick(evt) {
+          evt.preventDefault();
+          
+          var el = evt.target;
+          
+          if (el.classList.contains('selected') || el.nodeName !== 'A') {
+            return;
+          }
+          
+          var id = el.parentElement.id;
+          
+          if (id) {
+            id = id.replace('doc-link-', '');
+            setActiveDocument(id);
+          }
+        }
+
+        function load() {
+          var formEl = document.querySelector('.modal form');
+          
+          formEl.addEventListener('submit', onFormSubmit(formEl));
+          
+          document.querySelector('.open-doc a').addEventListener('click', onToggleModal);
+          document.querySelector('.js-cancel').addEventListener('click', onToggleModal);
+          
+          document.querySelector('nav ul').addEventListener('click', onMenuItemClick);
+        }
+        
+        window.onload = load;
+        
+      }());
+    </script>
+  </body>
+</html>
