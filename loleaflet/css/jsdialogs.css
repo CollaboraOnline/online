@@ -227,15 +227,13 @@ input[type='checkbox'].autofilter, .jsdialog input[type='checkbox'] {
 	appearance: none;
 	width: 20px;
 	height: 20px;
-	background: #f4f4f4;
+	background: url('images/lc_checkboxoff.svg') no-repeat center;
 	margin: 1px 8px;
-	box-shadow: inset 0px 0px 0px 1px gray;
 }
 
 input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:checked {
 	border-color: transparent;
-	background: url('images/popup_select_current.svg') no-repeat center;
-	box-shadow: none;
+	background-image: url('images/lc_checkbox.svg');
 }
 
 .ui-textarea.jsdialog {
@@ -434,7 +432,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 #mobile-wizard #toggle_all.checkbutton + #select_current,
 .autofilter-container #select_current {
-	background: url('images/popup_select_current.svg') no-repeat center;
+	background: url('images/lc_checkbox.svg') no-repeat center;
 }
 
 .autofilter-container #select_current {
@@ -446,7 +444,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 #mobile-wizard #toggle_all.checkbutton + #select_current + #unselect_current,
 .autofilter-container #unselect_current {
-	background: url('images/popup_unselect_current.svg') no-repeat center;
+	background: url('images/lc_checkboxoff.svg') no-repeat center;
 }
 
 .autofilter-container #unselect_current {
