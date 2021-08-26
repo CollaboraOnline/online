@@ -366,6 +366,9 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	padding: 0px !important;
 	border-top: 1px solid #bbbbbb !important;
 }
+#formulabar > .w2ui-scroll-wrapper {
+	height: 38px !important;
+}
 #tb_actionbar_item_fullscreen{display: none;}
 #toolbar-down {
 	height: 34px !important;
