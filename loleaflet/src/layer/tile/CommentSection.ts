@@ -925,7 +925,13 @@ class Comment {
 
 	public setCollapsed() {
 		this.isCollapsed = true;
-		this.sectionProperties.collapsed.style.display = '';
+
+		var isRootComment = this.sectionProperties.data.parent === '0';
+		if (isRootComment)
+			this.sectionProperties.collapsed.style.display = '';
+		else
+			this.sectionProperties.collapsed.style.display = 'none';
+
 		this.sectionProperties.wrapper.style.display = 'none';
 	}
 
