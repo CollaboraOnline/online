@@ -560,6 +560,12 @@ class CommentSection {
 				$(this.sectionProperties.selectedComment.sectionProperties.container).addClass('annotation-active');
 
 			this.update();
+
+			if (annotation.isCollapsed) {
+				var commentsData = this.map._docLayer.getCommentWizardStructure();
+				commentsData.popupParent = this.sectionProperties.selectedComment.sectionProperties.container.id;
+				this.map.fire('mobilewizardpopup', {data: commentsData});
+			}
 		}
 	}
 

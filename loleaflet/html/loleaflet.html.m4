@@ -229,10 +229,10 @@ m4_ifelse(MOBILEAPP,[true],
     <div id="toolbar-search" style="display: none"></div>
     <div id="mobile-wizard" style="display: none">
       <div id="mobile-wizard-tabs"></div>
-      <table id="mobile-wizard-titlebar" width="100%">
+      <table id="mobile-wizard-titlebar" class="mobile-wizard-titlebar" width="100%">
         <tr>
-          <td id="mobile-wizard-back"></td>
-          <td id="mobile-wizard-title" class="ui-widget"></td>
+          <td id="mobile-wizard-back" class="mobile-wizard-back"></td>
+          <td id="mobile-wizard-title" class="mobile-wizard-title ui-widget"></td>
         </tr>
       </table>
       <div id="mobile-wizard-content"></div>

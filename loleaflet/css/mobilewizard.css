@@ -10,7 +10,7 @@ span.menu-entry-icon img {
 	margin: 4px !important;
 }
 
-#mobile-wizard.menuwizard #mobile-wizard-back.close-button{
+#mobile-wizard.menuwizard .mobile-wizard-back.close-button{
 	visibility: hidden !important;
 }
 
@@ -22,7 +22,7 @@ span.menu-entry-icon img {
 	border-radius: 0 0 0 15px !important;
 }
 
-#mobile-wizard.menuwizard #mobile-wizard-titlebar{
+#mobile-wizard.menuwizard .mobile-wizard-titlebar{
 	border: none !important;
 }
 span#main-menu-btn-icon {
@@ -246,15 +246,15 @@ p.mobile-wizard.ui-combobox-text.selected {
 	float: left;
 	margin-bottom: 4%;
 }
-.menuwizard #mobile-wizard-back {
+.menuwizard .mobile-wizard-back {
 	background-position-x: 22px;
 	width: 52px;
 }
-#mobile-wizard-back.close-button {
+.mobile-wizard-back.close-button {
 	transform: rotate(-90deg);
 	background-position-x: center;
 }
-#mobile-wizard-back {
+.mobile-wizard-back {
 	background-image: url('images/lc_closedocmobile.svg');
 	background-repeat: no-repeat;
 	width: 48px;
@@ -283,7 +283,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	color: #212121;
 }
 
-#mobile-wizard-titlebar {
+.mobile-wizard-titlebar {
 	background-color: white;
 	top: 63px;
 	height: 48px;
@@ -1035,6 +1035,8 @@ input[type='checkbox'][disabled] {
 	width: -webkit-fill-available !important;
 	width: -moz-available !important;
 }
+
+#mobile-wizard-popup .ui-header[id^='comment'],
 #mobile-wizard .ui-header[id^='comment'] {
 	padding: 5px 10px 10px !important;
 	display: table;
@@ -1052,19 +1054,24 @@ input[type='checkbox'][disabled] {
 	width: initial !important;
 }
 
+#mobile-wizard-popup .loleaflet-annotation-content,
 #mobile-wizard .loleaflet-annotation-content {
 	margin: 3px 3px 3px 38px;
 	padding: 0px 10px;
 }
 
+#mobile-wizard-popup .loleaflet-annotation-content-author,
 #mobile-wizard .loleaflet-annotation-content-author {
 	font-weight: bold;
 }
+
+#mobile-wizard-popup .loleaflet-annotation-author *,
 #mobile-wizard .loleaflet-annotation-author * {
 	color: var(--gray-light-txt--color) !important;
 	font-size: 11px;
 }
 
+#mobile-wizard-popup .loleaflet-annotation-reply-count,
 #mobile-wizard .loleaflet-annotation-reply-count {
 	grid-column: 2;
 	grid-row: 1;
@@ -1075,26 +1082,38 @@ input[type='checkbox'][disabled] {
 	color: #636363;
 }
 
+#mobile-wizard-popup .loleaflet-annotation-table,
 #mobile-wizard .loleaflet-annotation-table {
 	grid-column: 1 / 2;
 	grid-row: 1;
 }
 
+#mobile-wizard-popup .loleaflet-dont-break,
 #mobile-wizard .loleaflet-dont-break {
 	grid-column: 1 / 2;
 	grid-row: 2;
 }
 
+#mobile-wizard-popup .loleaflet-annotation-content-wrapper,
+#mobile-wizard-popup .loleaflet-annotation-redline-content-wrapper,
 #mobile-wizard .loleaflet-annotation-content-wrapper,
 #mobile-wizard .loleaflet-annotation-redline-content-wrapper {
 	display: grid !important;
 }
 
+#mobile-wizard-popup .loleaflet-annotation-content-wrapper {
+	width: 100% !important;
+	width: -webkit-fill-available !important;
+	width: -moz-available !important;
+}
+
+#mobile-wizard-popup .sub-menu-arrow,
 #mobile-wizard .sub-menu-arrow {
 	grid-column: 2;
 	grid-row: 1;
 }
 
+#mobile-wizard-popup .empty-comment-wizard-container,
 #mobile-wizard .empty-comment-wizard-container {
 	height: 100%;
 	margin: 0;
@@ -1105,6 +1124,7 @@ input[type='checkbox'][disabled] {
 	background: var(--gray-light-bg-color);
 }
 
+#mobile-wizard-popup .empty-comment-wizard-img,
 #mobile-wizard .empty-comment-wizard-img {
 	width: 78px;
 	flex: 2;
@@ -1112,6 +1132,7 @@ input[type='checkbox'][disabled] {
 	opacity: 0.5;
 }
 
+#mobile-wizard-popup .empty-comment-wizard,
 #mobile-wizard .empty-comment-wizard {
 	flex: 1;
 	font-size: xx-large;
@@ -1120,6 +1141,7 @@ input[type='checkbox'][disabled] {
 	padding-bottom: 32px;
 }
 
+#mobile-wizard-popup .empty-comment-wizard-link,
 #mobile-wizard .empty-comment-wizard-link{
 	color: #0b87e7;
 	display: flex;
@@ -1128,6 +1150,16 @@ input[type='checkbox'][disabled] {
 	padding-top: 16px;
 	text-decoration: none;
 }
+
+.ui-explorable-entry .loleaflet-annotation {
+	position: relative !important;
+	z-index: auto;
+}
+
+.ui-explorable-entry .loleaflet-annotation-header {
+	height: auto !important;
+}
+
 /* Fontwork property panel */
 #ExtrusionToggle.mobile-wizard {
 	display: inline-table
@@ -1187,4 +1219,9 @@ input[type='checkbox'][disabled] {
 #mobile-wizard #beforetextindent + #image9,
 #mobile-wizard #aftertextindent + #image10 {
 	display: none;
+}
+
+/* Mobile wizard popup */
+#mobile-wizard-popup .lokdialog.ui-dialog-content {
+	overflow-x: hidden;
 }
