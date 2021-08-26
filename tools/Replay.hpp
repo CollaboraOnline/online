@@ -147,7 +147,7 @@ protected:
 
             const std::chrono::microseconds::rep deltaCurrent = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - epochCurrent).count();
             const unsigned deltaFile = rec.getTimestampNs() - epochFile;
-            const unsigned delay = (_ignoreTiming ? 0 : deltaFile - deltaCurrent);
+            const int delay = (_ignoreTiming ? 0 : deltaFile - deltaCurrent);
             if (delay > 0)
             {
                 if (delay > 1e6)
