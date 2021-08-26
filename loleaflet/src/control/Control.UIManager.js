@@ -63,6 +63,8 @@ L.Control.UIManager = L.Control.extend({
 
 			this.map.sidebar = L.control.sidebar({animSpeed: 200});
 			this.map.addControl(this.map.sidebar);
+
+			this.map.addControl(L.control.mobileWizardPopup());
 		}
 
 		setupToolbar(this.map);

@@ -322,6 +322,7 @@ LOLEAFLET_JS_LST =\
 	src/control/Control.JSDialogBuilder.js \
 	src/control/Control.MobileWizardBuilder.js \
 	src/control/Control.MobileWizard.js \
+	src/control/Control.MobileWizardPopup.js \
 	src/control/Control.LanguageDialog.js \
 	src/control/Control.Attribution.js \
 	src/control/Control.MobileSlide.js \
@@ -670,6 +671,7 @@ pot:
 		src/control/Control.MobileBottomBar.js \
 		src/control/Control.MobileTopBar.js \
 		src/control/Control.MobileWizard.js \
+		src/control/Control.MobileWizardPopup.js \
 		src/control/Control.PresentationBar.js \
 		src/control/Control.Scroll.Annotation.js \
 		src/control/Control.SearchBar.js \
