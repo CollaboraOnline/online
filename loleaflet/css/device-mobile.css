@@ -160,6 +160,10 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	display: none;
 }
 
+#formulabar > .w2ui-scroll-wrapper {
+	height: 32px !important;
+}
+
 #tb_formulabar_item_address, #tb_formulabar_item_item_2, #tb_formulabar_item_functiondialog {
 	vertical-align: middle;
 }
