@@ -5101,6 +5101,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		map.on('dragstart', this._onDragStart, this);
 		map.on('requestloksession', this._onRequestLOKSession, this);
 		map.on('error', this._mapOnError, this);
+		// autoFitWidth
+		// Whether the document is automatically zoomed so that the width fits the viewing area when the window is resized. 
+		// The document will not be zoomed in more than map.options.zoom.
 		if (map.options.autoFitWidth !== false) {
 			// always true since autoFitWidth is never set
 			map.on('resize', this._fitWidthZoom, this);

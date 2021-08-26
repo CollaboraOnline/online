@@ -25,6 +25,8 @@ if (reuseCookies !== '') {
 }
 
 var filePath = getParameterByName('file_path');
+// permission
+// The document's permission.
 var permission = getParameterByName('permission') || 'edit';
 var timestamp = getParameterByName('timestamp');
 // Should the document go inactive or not
@@ -57,6 +59,9 @@ var map = L.map('map', {
 	docParams: docParams,
 	permission: permission,
 	timestamp: timestamp,
+	// documentContainer
+	// An outer div, containing the map div
+	// that is used internally for the creation of the toolbar.
 	documentContainer: 'document-container',
 	debug: debugMode,
 	// the wopi and wopiSrc properties are in sync: false/true : empty/non-empty
