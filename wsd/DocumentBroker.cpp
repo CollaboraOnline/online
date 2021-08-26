@@ -1749,9 +1749,13 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 
     // Which session to use when auto saving ?
     // Prefer the last editing view, if still valid, otherwise, find the first writable sessionId.
-    const std::string savingSessionId = (_sessions.find(_lastEditingSessionId) != _sessions.end())
-                                            ? _lastEditingSessionId
-                                            : getWriteableSessionId();
+    // Note: a loaded view cannot be disconnecting.
+    const auto itLastEditingSession = _sessions.find(_lastEditingSessionId);
+    const std::string savingSessionId =
+        (itLastEditingSession != _sessions.end() && itLastEditingSession->second->isReadOnly() &&
+         itLastEditingSession->second->isViewLoaded())
+            ? _lastEditingSessionId
+            : getWriteableSessionId();
 
     // Remember the last save time, since this is the predicate.
     LOG_TRC("Checking to autosave [" << _docKey << "] using session [" << savingSessionId << ']');
