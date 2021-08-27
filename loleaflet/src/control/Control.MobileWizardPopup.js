@@ -10,6 +10,7 @@
 /* global app $ */
 L.Control.MobileWizardPopup = L.Control.extend({
 	_builder: null,
+	_overlay: null,
 	_inMainMenu: true,
 	_isActive: false,
 	_inBuilding: false,
@@ -29,15 +30,23 @@ L.Control.MobileWizardPopup = L.Control.extend({
 		this.map = map;
 
 		map.on('mobilewizardpopup', this._onMobileWizardPopup, this);
+		window.addEventListener('resize', this._hideWizard.bind(this));
+	},
+
+	removeContainer: function () {
+		L.DomUtil.remove(this._overlay);
+		L.DomUtil.remove(this._container);
 	},
 
 	onRemove: function() {
+		this.removeContainer();
+
 		this.map.off('mobilewizardpopup', this._onMobileWizardPopup, this);
+		window.removeEventListener('resize', this._hideWizard.bind(this));
 	},
 
 	_hideWizard: function () {
-		L.DomUtil.remove(this._overlay);
-		L.DomUtil.remove(this._container);
+		this.removeContainer();
 
 		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
 		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).update();
@@ -141,6 +150,8 @@ L.Control.MobileWizardPopup = L.Control.extend({
 	},
 
 	_onMobileWizardPopup: function(data) {
+		this.removeContainer();
+
 		var callback = data.callback;
 		data = data.data;
 		if (data) {
@@ -156,6 +167,7 @@ L.Control.MobileWizardPopup = L.Control.extend({
 
 			this._container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', document.body);
 			this._container.id = 'mobile-wizard-popup';
+			this._container.style.visibility = 'hidden';
 			if (data.collapsed && (data.collapsed === 'true' || data.collapsed === true))
 				L.DomUtil.addClass(this._container, 'collapsed');
 
@@ -172,6 +184,7 @@ L.Control.MobileWizardPopup = L.Control.extend({
 
 			var content = L.DomUtil.create('div', 'lokdialog ui-dialog-content', this._container);
 			this.content = content;
+			this.content.style.maxHeight = (that.map._container.getBoundingClientRect().height - 50) + 'px';
 
 			var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'jsdialog'});
 
@@ -184,18 +197,29 @@ L.Control.MobileWizardPopup = L.Control.extend({
 			if (!this.content.querySelector('.ui-explorable-entry'))
 				this.titlebar.style.display = 'none';
 
+			var isCommentWizard = data.children && data.children.length && data.children[0].type == 'comment';
+
 			var posX = 0;
 			var posY = 0;
 			var setupPosition = function () {
 				if (data.popupParent) {
 					var parent = L.DomUtil.get(data.popupParent);
-					posX = parent.getBoundingClientRect().left;
-					posY = parent.getBoundingClientRect().bottom + 5;
+					posX = parent.getBoundingClientRect().left - content.clientWidth + 10;
+					posY = parent.getBoundingClientRect().bottom - 10;
 
-					if (posX + content.clientWidth > window.innerWidth)
-						posX -= posX + content.clientWidth - window.innerWidth + 20;
-					if (posY + content.clientHeight > window.innerHeight)
+					if (posX < 0)
+						posX = 20;
+					if (posY + content.clientHeight > window.innerHeight) {
 						posY -= posY + content.clientHeight - window.innerHeight + 20;
+
+						if (isCommentWizard) {
+							(new L.PosAnimation()).run(parent,
+								{
+									x: parent.getBoundingClientRect().left,
+									y: posY - that.map._container.getBoundingClientRect().top - 40
+								});
+						}
+					}
 				} else {
 					posX = window.innerWidth/2 - this._container.offsetWidth/2;
 					posY = window.innerHeight/2 - this._container.offsetHeight/2;
@@ -206,13 +230,12 @@ L.Control.MobileWizardPopup = L.Control.extend({
 
 			this._container.style.marginLeft = posX + 'px';
 			this._container.style.marginTop = posY + 'px';
-			content.style.minWidth = '300px';
-			content.style.minHeight = '300px';
 
 			setTimeout(function () {
 				setupPosition();
 				that._container.style.marginLeft = posX + 'px';
 				that._container.style.marginTop = posY + 'px';
+				that._container.style.visibility = '';
 			}, 200);
 		}
 	},
