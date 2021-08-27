@@ -632,7 +632,6 @@ class Comment {
 		L.DomEvent.stopPropagation(e);
 		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
 			this.sectionProperties.data.reply = this.sectionProperties.data.text;
-			this.show();
 			this.sectionProperties.commentListSection.saveReply(this);
 		} else {
 			this.sectionProperties.data.reply = this.sectionProperties.nodeReplyText.value;

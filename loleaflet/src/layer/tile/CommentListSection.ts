@@ -525,7 +525,10 @@ class CommentSection {
 					anchorPos: [annotation.sectionProperties.data.anchorPos[0], annotation.sectionProperties.data.anchorPos[1]],
 				};
 
-				this.newAnnotationVex(this.add(replyAnnotation, true), annotation.onReplyClick, /* isMod */ false);
+				var replyAnnotationSection = new app.definitions.Comment(replyAnnotation, replyAnnotation.id === 'new' ? {noMenu: true} : {}, this);
+				replyAnnotationSection.name += '-reply';
+
+				this.newAnnotationVex(replyAnnotationSection, annotation.onReplyClick, /* isMod */ false);
 			}
 		}
 		else {
