@@ -243,7 +243,7 @@ describe('Change table properties / layout via mobile wizard.', function() {
 			.should('have.attr', 'height', '125');
 	});
 
-	it('Change column width.', function() {
+	it.skip('Change column width.', function() {
 		before('table_properties.odt');
 
 		openTablePanel();
