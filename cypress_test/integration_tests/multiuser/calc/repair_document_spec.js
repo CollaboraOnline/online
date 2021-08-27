@@ -41,6 +41,8 @@ describe('Repair Document', function() {
 		//assert data in iframe1
 		cy.customGet('.leaflet-layer', frameId1).click();
 
+		cy.wait(1000);
+
 		calcHelper.dblClickOnFirstCell(frameId1);
 
 		helper.selectAllText(frameId1);
@@ -51,6 +53,8 @@ describe('Repair Document', function() {
 
 		//assert data in frame2
 		cy.customGet('.leaflet-layer', frameId2).click();
+
+		cy.wait(1000);
 
 		calcHelper.dblClickOnFirstCell(frameId2);
 
