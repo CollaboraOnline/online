@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
-describe('Sidebar visibility: user-1.', function() {
+describe.skip('Sidebar visibility: user-1.', function() {
 	var testFileName = 'sidebar_visibility.odt';
 
 	beforeEach(function() {

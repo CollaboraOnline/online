@@ -15,6 +15,8 @@ describe('Sheet operations: user-2.', function() {
 
 	it('Insert/delete sheet.', function() {
 		// user-1 loads the same document
+		cy.get('#toolbar-down .w2ui-scroll-right')
+			.click();
 
 		cy.get('#tb_actionbar_item_userlist')
 			.should('be.visible');
