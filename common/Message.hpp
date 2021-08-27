@@ -31,7 +31,6 @@ public:
         _data(copyDataAfterOffset(message.data(), message.size(), _forwardToken.size())),
         _tokens(Util::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
-        _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
         _type(detectType())
     {
         LOG_TRC("Message " << abbr());
@@ -47,7 +46,6 @@ public:
         _data(copyDataAfterOffset(message.data(), message.size(), _forwardToken.size())),
         _tokens(Util::tokenize(message.data() + _forwardToken.size(), message.size() - _forwardToken.size())),
         _id(makeId(dir)),
-        _firstLine(LOOLProtocol::getFirstLine(message)),
         _type(detectType())
     {
         _data.reserve(std::max(reserve, message.size()));
@@ -63,7 +61,6 @@ public:
         _data(copyDataAfterOffset(p, len, _forwardToken.size())),
         _tokens(Util::tokenize(_data.data(), _data.size())),
         _id(makeId(dir)),
-        _firstLine(LOOLProtocol::getFirstLine(_data.data(), _data.size())),
         _type(detectType())
     {
         LOG_TRC("Message " << abbr());
@@ -76,8 +73,16 @@ public:
     const std::string& forwardToken() const { return _forwardToken; }
     std::string firstToken() const { return _tokens[0]; }
     bool firstTokenMatches(const std::string& target) const { return _tokens[0] == target; }
-    const std::string& firstLine() const { return _firstLine; }
     std::string operator[](size_t index) const { return _tokens[index]; }
+
+    std::string firstLine()
+    {
+        if (_firstLine.empty())
+        {
+            _firstLine = LOOLProtocol::getFirstLine(_data.data(), _data.size());
+        }
+        return _firstLine;
+    }
 
     bool getTokenInteger(const std::string& name, int& value)
     {
@@ -119,7 +124,7 @@ public:
         if (func(_data))
         {
             // Check - just the body.
-            assert(_firstLine == LOOLProtocol::getFirstLine(_data.data(), _data.size()));
+            assert(firstLine() == LOOLProtocol::getFirstLine(_data.data(), _data.size()));
             assert(_type == detectType());
         }
     }
@@ -180,7 +185,7 @@ private:
     std::vector<char> _data;
     const StringVector _tokens;
     const std::string _id;
-    const std::string _firstLine;
+    std::string _firstLine;
     const Type _type;
 };
 
