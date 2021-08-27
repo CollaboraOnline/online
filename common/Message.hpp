@@ -75,7 +75,7 @@ public:
     bool firstTokenMatches(const std::string& target) const { return _tokens[0] == target; }
     std::string operator[](size_t index) const { return _tokens[index]; }
 
-    std::string firstLine()
+    const std::string& firstLine()
     {
         if (_firstLine.empty())
         {
