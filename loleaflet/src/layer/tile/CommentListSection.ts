@@ -242,7 +242,7 @@ class CommentSection {
 		this.containerObject.applyDrawingOrders();
 	}
 
-	private createCommentStructureWriter (menuStructure: any) {
+	private createCommentStructureWriter (menuStructure: any, threadOnly: any) {
 		var rootComment, lastChild, comment;
 		var commentList = this.sectionProperties.commentList;
 		var showResolved = this.sectionProperties.showResolved;
@@ -284,17 +284,22 @@ class CommentSection {
 						children: commentThread
 					};
 
-					menuStructure['children'].push(rootComment);
+					var matchingThread = threadOnly && threadOnly.sectionProperties.data.id === commentThread[0].data.id;
+					if (matchingThread)
+						menuStructure['children'] = commentThread;
+					else if (!threadOnly)
+						menuStructure['children'].push(rootComment);
 				}
 			}
 		}
 	}
 
-	public createCommentStructureImpress (menuStructure: any) {
+	public createCommentStructureImpress (menuStructure: any, threadOnly: any) {
 		var rootComment;
 
 		for (var i in this.sectionProperties.commentList) {
-			if (this.sectionProperties.commentList[i].sectionProperties.partIndex === this.sectionProperties.docLayer._selectedPart || app.file.fileBasedView) {
+			var matchingThread = !threadOnly || (threadOnly && threadOnly.sectionProperties.data.id === this.sectionProperties.commentList[i].sectionProperties.data.id);
+			if (matchingThread && (this.sectionProperties.commentList[i].sectionProperties.partIndex === this.sectionProperties.docLayer._selectedPart || app.file.fileBasedView)) {
 				rootComment = {
 					id: 'comment' + this.sectionProperties.commentList[i].sectionProperties.data.id,
 					enable: true,
@@ -309,13 +314,14 @@ class CommentSection {
 		}
 	}
 
-	public createCommentStructureCalc (menuStructure: any) {
+	public createCommentStructureCalc (menuStructure: any, threadOnly: any) {
 		var rootComment;
 		var commentList = this.sectionProperties.commentList;
 		var selectedTab = this.sectionProperties.docLayer._selectedPart;
 
 		for (var i: number = 0; i < commentList.length; i++) {
-			if (parseInt(commentList[i].sectionProperties.data.tab) === selectedTab) {
+			var matchingThread = !threadOnly || (threadOnly && threadOnly.sectionProperties.data.id === commentList[i].sectionProperties.data.id);
+			if (parseInt(commentList[i].sectionProperties.data.tab) === selectedTab && matchingThread) {
 				rootComment = {
 					id: 'comment' + commentList[i].sectionProperties.data.id,
 					enable: true,
@@ -330,15 +336,16 @@ class CommentSection {
 		}
 	}
 
-	public createCommentStructure (menuStructure: any) {
+	// threadOnly - takes annotation indicating which thread will be generated
+	public createCommentStructure (menuStructure: any, threadOnly: any) {
 		if (this.sectionProperties.docLayer._docType === 'text') {
-			this.createCommentStructureWriter(menuStructure);
+			this.createCommentStructureWriter(menuStructure, threadOnly);
 		}
 		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
-			this.createCommentStructureImpress(menuStructure);
+			this.createCommentStructureImpress(menuStructure, threadOnly);
 		}
 		else if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
-			this.createCommentStructureCalc(menuStructure);
+			this.createCommentStructureCalc(menuStructure, threadOnly);
 		}
 	}
 
@@ -565,7 +572,7 @@ class CommentSection {
 			this.update();
 
 			if (annotation.isCollapsed) {
-				var commentsData = this.map._docLayer.getCommentWizardStructure();
+				var commentsData = this.map._docLayer.getCommentWizardStructure(undefined, annotation); // thread only
 				commentsData.popupParent = this.sectionProperties.selectedComment.sectionProperties.container.id;
 				this.map.fire('mobilewizardpopup', {data: commentsData});
 			}

@@ -1151,6 +1151,8 @@ input[type='checkbox'][disabled] {
 	text-decoration: none;
 }
 
+#mobile-wizard-popup .loleaflet-annotation,
+#mobile-wizard .loleaflet-annotation,
 .ui-explorable-entry .loleaflet-annotation {
 	position: relative !important;
 	z-index: auto;

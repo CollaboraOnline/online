@@ -4795,7 +4795,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._debugTypeTimeoutId = setTimeout(L.bind(this._debugTypeTimeout, this), 50);
 	},
 
-	getCommentWizardStructure: function(menuStructure) {
+	/// onlyThread - takes annotation indicating which thread will be generated
+	getCommentWizardStructure: function(menuStructure, onlyThread) {
 		var customTitleBar = L.DomUtil.create('div');
 		var title = L.DomUtil.create('span', '', customTitleBar);
 		title.innerText = _('Comment');
@@ -4818,7 +4819,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				menuStructure['customTitle'] = customTitleBar;
 		}
 
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).createCommentStructure(menuStructure);
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).createCommentStructure(menuStructure, onlyThread);
 
 		if (menuStructure.children.length === 0) {
 			var noComments = {
