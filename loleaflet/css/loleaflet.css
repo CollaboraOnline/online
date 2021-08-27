@@ -25,6 +25,10 @@
 	position: absolute;
 	width: 1px;
 }
+#document-container.readonly {
+	top: 36px;
+	position: fixed;
+}
 #document-container {
 	background: #DFDFDF;
 	position: relative;
