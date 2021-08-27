@@ -5038,7 +5038,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map.invalidateSize();
 			}
 
-			if (!heightIncreased)
+			if (!heightIncreased && window.mode.isMobile())
 				this._onUpdateCursor(true);
 
 			this._fitWidthZoom();
