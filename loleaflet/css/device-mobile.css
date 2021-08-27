@@ -159,15 +159,6 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 }
 
 /* Related to selectionMarkers.css */
-#tb_formulabar_item_formula, #tb_formulabar_item_address {
-	height: 54px !important;
-}
-#tb_formulabar_item_formula > div, #tb_formulabar_item_address > div {
-	margin-top: -16px;
-}
-#tb_formulabar_item_functiondialog > div {
-	margin-top: -20px;
-}
 .inputbar_multiline #tb_formulabar_item_formula > div,
 .inputbar_multiline #tb_formulabar_item_address > div {
 	margin-top: 0px;
@@ -397,12 +388,10 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	transform: rotate(180deg);
 }
 #addressInput{
-	width: 60px !important;
-	border: 1px solid #bbbbbb;
-	border-bottom: none;
-	border-top: none;
-	border-left: none;
-	height: 35px !important;
+	width: 50px;
+	height: 23px;
+	text-align: center;
+	border-color: #808080 !important;
 }
 .w2ui-icon.equal, .w2ui-icon.autosum{width: 38px !important;}
 #formulaInput{
