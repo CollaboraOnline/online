@@ -56,6 +56,7 @@ L.Control.MobileTopBar = L.Control.extend({
 				{type: 'button',  id: 'mobile_wizard', img: 'mobile_wizard', disabled: true},
 				{type: 'button',  id: 'insertion_mobile_wizard', img: 'insertion_mobile_wizard', disabled: true},
 				{type: 'button',  id: 'comment_wizard', img: 'viewcomments'},
+				{type: 'button', id: 'fullscreen-' + docType, img: 'fullscreen-presentation', hint: _UNO('.uno:FullScreen', docType)},
 				{type: 'drop', id: 'userlist', img: 'users', hidden: true, html: L.control.createUserListWidget()},
 			];
 		}
@@ -144,7 +145,7 @@ L.Control.MobileTopBar = L.Control.extend({
 			// Call global onClick handler
 			window.onClick(e, id, item);
 		}
-		else if (id === 'fullscreen') {
+		else if (id === 'fullscreen-drawing') {
 			if (item.checked) {
 				toolbar.uncheck(id);
 			}
