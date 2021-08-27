@@ -77,12 +77,10 @@ public:
 
     const std::string& firstLine()
     {
-        if (_firstLine.empty())
-        {
-            _firstLine = LOOLProtocol::getFirstLine(_data.data(), _data.size());
-        }
+        assignFirstLineIfEmpty();
         return _firstLine;
     }
+
 
     bool getTokenInteger(const std::string& name, int& value)
     {
@@ -121,10 +119,12 @@ public:
     /// Allows some in-line re-writing of the message
     void rewriteDataBody(const std::function<bool (std::vector<char> &)>& func)
     {
+        // Make sure _firstLine is assigned before we change _data
+        assignFirstLineIfEmpty();
         if (func(_data))
         {
             // Check - just the body.
-            assert(firstLine() == LOOLProtocol::getFirstLine(_data.data(), _data.size()));
+            assert(_firstLine == LOOLProtocol::getFirstLine(_data.data(), _data.size()));
             assert(_type == detectType());
         }
     }
@@ -136,6 +136,14 @@ private:
     {
         static std::atomic<unsigned> Counter;
         return (dir == Dir::In ? 'i' : 'o') + std::to_string(++Counter);
+    }
+
+    void assignFirstLineIfEmpty()
+    {
+        if(_firstLine.empty())
+        {
+            _firstLine = LOOLProtocol::getFirstLine(_data.data(), _data.size());
+        }
     }
 
     Type detectType() const
