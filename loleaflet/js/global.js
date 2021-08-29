@@ -786,6 +786,11 @@ window.app = { // Shouldn't have any functions defined.
 		global.docURL = filePath;
 	}
 
+	// Form a valid URL to the host with the given path.
+	global.makeURL = function (path) {
+		return global.webserver + global.serviceRoot + path;
+	};
+
 	if (window.ThisIsAMobileApp) {
 		global.socket = new global.FakeWebSocket();
 		window.TheFakeWebSocket = global.socket;
