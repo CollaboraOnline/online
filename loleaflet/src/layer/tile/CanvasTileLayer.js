@@ -1875,8 +1875,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._map.options.wopiSrc != '') {
 			wopiSrc = '?WOPISrc=' + this._map.options.wopiSrc;
 		}
-		var url = this._map.options.webserver + this._map.options.serviceRoot + '/' + this._map.options.urlPrefix + '/' +
-			encodeURIComponent(this._map.options.doc) + '/download/' + command.downloadid + wopiSrc;
+		var url = window.makeURL('/' + this._map.options.urlPrefix + '/' +
+						encodeURIComponent(this._map.options.doc) + '/download/' +
+						command.downloadid + wopiSrc);
 
 		this._map.hideBusy();
 		if (this._map['wopi'].DownloadAsPostMessage) {
