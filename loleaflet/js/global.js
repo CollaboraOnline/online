@@ -771,7 +771,7 @@ window.app = { // Shouldn't have any functions defined.
 	var wopiSrc = global.getParameterByName('WOPISrc');
 	if (wopiSrc != '') {
 		global.docURL = decodeURIComponent(wopiSrc);
-		wopiSrc = '?WOPISrc=' + wopiSrc + '&compat=/ws';
+		wopiSrc = '?WOPISrc=' + wopiSrc + '&compat=';
 		if (global.accessToken !== '') {
 			wopiParams = { 'access_token': global.accessToken, 'access_token_ttl': global.accessTokenTTL };
 		}
@@ -802,14 +802,39 @@ window.app = { // Shouldn't have any functions defined.
 		return global.webserver + global.serviceRoot + path;
 	};
 
+	// Encode a string to hex.
+	global.hexEncode = function (string) {
+		var bytes = new TextEncoder().encode(string);
+		var hex = '0x';
+		for (i = 0; i < bytes.length; ++i) {
+			hex += bytes[i].toString(16);
+		}
+		return hex;
+	};
+
+	// Decode hexified string back to plain text.
+	global.hexDecode = function (hex) {
+		if (hex.startsWith('0x'))
+			hex = hex.substr(2);
+		var bytes = new Uint8Array(hex.length / 2);
+		for (i = 0; i < bytes.length; i++) {
+			bytes[i] = parseInt(hex.substr(i * 2, 2), 16);
+		}
+		return new TextDecoder().decode(bytes);
+	};
+
 	if (window.ThisIsAMobileApp) {
 		global.socket = new global.FakeWebSocket();
 		window.TheFakeWebSocket = global.socket;
 	} else {
 		// The URL may already contain a query (e.g., 'http://server.tld/foo/wopi/files/bar?desktop=baz') - then just append more params
 		var docParamsPart = docParams ? (global.docURL.includes('?') ? '&' : '?') + docParams : '';
-		var websocketURI = global.host + global.serviceRoot + '/lool/' + encodeURIComponent(global.docURL + docParamsPart) + '/ws' + wopiSrc;
+		var websocketURI = global.host + global.serviceRoot + '/lool/';
+		var encodedDocUrl = encodeURIComponent(global.docURL + docParamsPart) + '/ws' + wopiSrc;
+		if (global.hexifyUrl)
+			encodedDocUrl = global.hexEncode(encodedDocUrl);
 
+		websocketURI += encodedDocUrl + '/ws';
 		try {
 			global.socket = global.createWebSocket(websocketURI);
 		} catch (err) {

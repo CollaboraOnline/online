@@ -260,6 +260,7 @@ m4_ifelse(MOBILEAPP,[true],
 m4_ifelse(MOBILEAPP,[true],
      [window.host = '';
       window.serviceRoot = '';
+      window.hexifyUrl = false;
       window.versionPath = '%VERSION%';
       window.accessToken = '';
       window.accessTokenTTL = '';
@@ -278,6 +279,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.uiDefaults = {};],
      [window.host = '%HOST%';
       window.serviceRoot = '%SERVICE_ROOT%';
+      window.hexifyUrl = %HEXIFY_URL%;
       window.versionPath = '%VERSION%';
       window.accessToken = '%ACCESS_TOKEN%';
       window.accessTokenTTL = '%ACCESS_TOKEN_TTL%';
