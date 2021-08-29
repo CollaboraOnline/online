@@ -523,9 +523,10 @@ app.definitions.Socket = L.Class.extend({
 			}
 
 			if (!window.ThisIsAMobileApp) {
-				var idUri = this._map.options.server + this._map.options.serviceRoot + '/hosting/discovery';
-				idUri = idUri.replace(/^ws:/, 'http:');
-				idUri = idUri.replace(/^wss:/, 'https:');
+				var idUri = window.makeURL('/hosting/discovery');
+				console.assert(idUri.startsWith('http'), 'Invalid URL from makeURL: ' + idUri);
+				idUri = idUri.replace(/^ws:/, 'http:'); //TODO: Remove.
+				idUri = idUri.replace(/^wss:/, 'https:'); //TODO: Remove.
 				$('#loolwsd-id').html(_('Served by:') + ' <a target="_blank" href="' + idUri + '">' + this.WSDServer.Id + '</a>');
 			}
 
