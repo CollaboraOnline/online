@@ -766,6 +766,17 @@ window.app = { // Shouldn't have any functions defined.
 		}
 	};
 
+	// Some global variables are defined in loleaflet.html, among them:
+	// global.host: the host URL, with ws(s):// protocol
+	// global.serviceRoot:
+
+	// Setup global.webserver: the host URL, with http(s):// protocol (used to fetch files).
+	if (global.webserver === undefined) {
+		var protocol = window.location.protocol === 'file:' ? 'https:' : window.location.protocol;
+		global.webserver = global.host.replace(/^(ws|wss):/i, protocol);
+		global.webserver = global.webserver.replace(/\/*$/, ''); // Remove trailing slash.
+	}
+
 	var docParams, wopiParams;
 	var filePath = global.getParameterByName('file_path');
 	var wopiSrc = global.getParameterByName('WOPISrc');
