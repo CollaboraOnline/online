@@ -116,7 +116,8 @@ L.Map = L.Evented.extend({
 		// we are adding components like '/insertfile' at the end which would
 		// lead to URL's of the form <webserver>//insertfile/...
 		options.webserver = options.webserver.replace(/\/*$/, '');
-		window.webserver = options.webserver;
+		console.assert(options.webserver === window.webserver,
+				{ 'options.webserver': options.webserver, 'window.webserver': window.webserver });
 		/* private members */
 		this._handlers = [];
 		this._layers = {};
