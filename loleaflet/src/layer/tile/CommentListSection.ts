@@ -247,6 +247,11 @@ class CommentSection {
 		var commentList = this.sectionProperties.commentList;
 		var showResolved = this.sectionProperties.showResolved;
 
+		if (threadOnly) {
+			if (threadOnly.sectionProperties.data.parent !== '0')
+				threadOnly = commentList[this.getIndexOf(threadOnly.sectionProperties.data.parent)];
+		}
+
 		for (var i = 0; i < commentList.length; i++) {
 			if (commentList[i].sectionProperties.data.parent === '0') {
 
@@ -542,6 +547,7 @@ class CommentSection {
 			annotation.reply();
 			this.select(annotation);
 			annotation.focus();
+			this.map.fire('mobilewizardpopupresize');
 		}
 	}
 
@@ -553,6 +559,7 @@ class CommentSection {
 			annotation.edit();
 			this.select(annotation);
 			annotation.focus();
+			this.map.fire('mobilewizardpopupresize');
 		}
 	}
 
@@ -571,11 +578,8 @@ class CommentSection {
 
 			this.update();
 
-			if (annotation.isCollapsed) {
-				var commentsData = this.map._docLayer.getCommentWizardStructure(undefined, annotation); // thread only
-				commentsData.popupParent = this.sectionProperties.selectedComment.sectionProperties.container.id;
-				this.map.fire('mobilewizardpopup', {data: commentsData});
-			}
+			if (!(<any>window).mode.isMobile() && annotation.isCollapsed)
+				this.openMobileWizardPopup(annotation);
 		}
 	}
 
@@ -1002,8 +1006,12 @@ class CommentSection {
 				this.map.focus();
 			}
 			annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj[dataroot].id)];
-			if (!(<any>window).mode.isMobile())
+			if (!(<any>window).mode.isMobile()) {
 				this.layout();
+				var newAnnotation = this.sectionProperties.commentList[this.getIndexOf(obj[dataroot].id)];
+				if (newAnnotation.sectionProperties.data.parent !== '0' && this.isCollapsed)
+					this.openMobileWizardPopup(annotation);
+			}
 		} else if (action === 'Remove') {
 			if ((<any>window).mode.isMobile() && obj[dataroot].id === annotation.sectionProperties.data.id) {
 				var child = this.sectionProperties.commentList[this.getIndexOf(obj[dataroot].id) + 1];
@@ -1015,12 +1023,16 @@ class CommentSection {
 			id = obj[dataroot].id;
 			var removed = this.getComment(id);
 			if (removed) {
+				var parent = this.sectionProperties.commentList[this.getRootIndexOf(removed.sectionProperties.data.id)];
 				this.adjustParentRemove(removed);
 				this.removeItem(id);
 				if (this.sectionProperties.selectedComment === removed) {
 					this.unselect();
 				} else {
 					this.layout();
+				}
+				if (!(<any>window).mode.isMobile() && this.isCollapsed) {
+					this.openMobileWizardPopup(parent);
 				}
 			}
 		} else if (action === 'Modify') {
@@ -1041,11 +1053,16 @@ class CommentSection {
 				modified.setData(modifiedObj);
 				modified.update();
 				this.update();
+				if (!(<any>window).mode.isMobile() && this.isCollapsed) {
+					var parent = this.sectionProperties.commentList[this.getRootIndexOf(modified.sectionProperties.data.id)];
+					this.openMobileWizardPopup(parent);
+				}
 			}
 		} else if (action === 'Resolve') {
 			id = obj[dataroot].id;
 			var resolved = this.getComment(id);
 			if (resolved) {
+				var parent = this.sectionProperties.commentList[this.getRootIndexOf(resolved.sectionProperties.data.id)];
 				var resolvedObj;
 				if (changetrack) {
 					if (!this.adjustRedLine(obj.redline)) {
@@ -1061,6 +1078,9 @@ class CommentSection {
 				resolved.update();
 				this.showHideComment(resolved);
 				this.update();
+				if (!(<any>window).mode.isMobile() && this.isCollapsed) {
+					this.openMobileWizardPopup(parent);
+				}
 			}
 		}
 		if ((<any>window).mode.isMobile()) {
@@ -1495,6 +1515,21 @@ class CommentSection {
 
 	private update () {
 		this.layout();
+	}
+
+	private openMobileWizardPopup (annotation: any) {
+		if (!annotation) {
+			this.map.fire('mobilewizardpopupclose');
+			return;
+		}
+
+		var commentsData = this.map._docLayer.getCommentWizardStructure(undefined, annotation); // thread only
+		if (commentsData.children.length) {
+			commentsData.popupParent = annotation.sectionProperties.container.id;
+			this.map.fire('mobilewizardpopup', {data: commentsData});
+		} else {
+			this.map.fire('mobilewizardpopupclose');
+		}
 	}
 
 	// Returns the root comment index of given id

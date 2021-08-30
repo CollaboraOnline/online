@@ -30,6 +30,8 @@ L.Control.MobileWizardPopup = L.Control.extend({
 		this.map = map;
 
 		map.on('mobilewizardpopup', this._onMobileWizardPopup, this);
+		map.on('mobilewizardpopupresize', this._onResizeRequest, this);
+		map.on('mobilewizardpopupclose', this._hideWizard, this);
 		window.addEventListener('resize', this._hideWizard.bind(this));
 	},
 
@@ -42,6 +44,8 @@ L.Control.MobileWizardPopup = L.Control.extend({
 		this.removeContainer();
 
 		this.map.off('mobilewizardpopup', this._onMobileWizardPopup, this);
+		this.map.off('mobilewizardpopupresize', this._onResizeRequest, this);
+		this.map.off('mobilewizardpopupclose', this._hideWizard, this);
 		window.removeEventListener('resize', this._hideWizard.bind(this));
 	},
 
@@ -49,7 +53,7 @@ L.Control.MobileWizardPopup = L.Control.extend({
 		this.removeContainer();
 
 		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).update();
+		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).layout();
 	},
 
 	_setTitle: function(title) {
@@ -149,6 +153,26 @@ L.Control.MobileWizardPopup = L.Control.extend({
 		}
 	},
 
+	_onResizeRequest: function() {
+		if (!this._container)
+			return;
+
+		var posX = this._container.getBoundingClientRect().right;
+		var posY = this._container.getBoundingClientRect().bottom;
+
+		if (posX > window.innerWidth) {
+			var diff = posX - window.innerWidth + 20;
+			posX = this._container.getBoundingClientRect().left - diff;
+			this._container.style.marginLeft = posX + 'px';
+		}
+
+		if (posY > window.innerHeight) {
+			diff = posY - window.innerHeight + 20;
+			posY = this._container.getBoundingClientRect().top - diff;
+			this._container.style.marginTop = posY + 'px';
+		}
+	},
+
 	_onMobileWizardPopup: function(data) {
 		this.removeContainer();
 
@@ -202,7 +226,7 @@ L.Control.MobileWizardPopup = L.Control.extend({
 			var posX = 0;
 			var posY = 0;
 			var setupPosition = function () {
-				if (data.popupParent) {
+				if (data.popupParent && L.DomUtil.get(data.popupParent)) {
 					var parent = L.DomUtil.get(data.popupParent);
 					posX = parent.getBoundingClientRect().left - content.clientWidth + 10;
 					posY = parent.getBoundingClientRect().bottom - 10;
