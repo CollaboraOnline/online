@@ -1314,12 +1314,12 @@ fi
 AC_DEFINE_UNQUOTED([PURCHASE_LINK],["$PURCHASE_LINK"],[Default value of freemium.purchase_link])
 AC_SUBST(PURCHASE_LINK)
 
-PURCHASE_DISCRIPTION=
+PURCHASE_DESCRIPTION=
 if test "$enable_freemium" = "yes"; then
-    PURCHASE_DISCRIPTION="Head over to the subscription page and discover all the features:"
+    PURCHASE_DESCRIPTION="Head over to the subscription page and discover all the features:"
 fi
-AC_DEFINE_UNQUOTED([PURCHASE_DISCRIPTION],["$PURCHASE_DISCRIPTION"],[Default value of freemium.purchase_discription])
-AC_SUBST(PURCHASE_DISCRIPTION)
+AC_DEFINE_UNQUOTED([PURCHASE_DESCRIPTION],["$PURCHASE_DESCRIPTION"],[Default value of freemium.purchase_description])
+AC_SUBST(PURCHASE_DESCRIPTION)
 
 WRITER_SUBSCRIPTION_HIGHLIGHTS=
 if test "$enable_freemium" = "yes"; then
@@ -1355,11 +1355,11 @@ if test "$enable_freemium" = "yes"; then
         <disabled_commands desc=\"List of commands to disable the functionality.\" default=\"$DISABLED_COMMANDS\">$DISABLED_COMMANDS</disabled_commands>
         <purchase_title desc=\"Title to show user when prompting the subscription popup\" default=\"$PURCHASE_TITLE\">$PURCHASE_TITLE</purchase_title>
         <purchase_link desc=\"Link from where user can buy the subscription\" default=\"$PURCHASE_LINK\">$PURCHASE_LINK</purchase_link>
-        <purchase_discription desc=\"Discription about the subscription\" default=\"$PURCHASE_DISCRIPTION\">$PURCHASE_DISCRIPTION</purchase_discription>
-        <writer_subscription_highlights desc=\"Short note about Writer benifits of subscription\" default=\"$WRITER_SUBSCRIPTION_HIGHLIGHTS\">$WRITER_SUBSCRIPTION_HIGHLIGHTS</writer_subscription_highlights>
-        <calc_subscription_highlights desc=\"Short note about Calc benifits of subscription\" default=\"$CALC_SUBSCRIPTION_HIGHLIGHTS\">$CALC_SUBSCRIPTION_HIGHLIGHTS</calc_subscription_highlights>
-        <impress_subscription_highlights desc=\"Short note about Impress benifits of subscription\" default=\"$IMPRESS_SUBSCRIPTION_HIGHLIGHTS\">$IMPRESS_SUBSCRIPTION_HIGHLIGHTS</impress_subscription_highlights>
-        <draw_subscription_highlights desc=\"Short note about Draw benifits of subscription\" default=\"$DRAW_SUBSCRIPTION_HIGHLIGHTS\">$DRAW_SUBSCRIPTION_HIGHLIGHTS</draw_subscription_highlights>
+        <purchase_description desc=\"Description about the subscription\" default=\"$PURCHASE_DESCRIPTION\">$PURCHASE_DESCRIPTION</purchase_description>
+        <writer_subscription_highlights desc=\"Short note about Writer benefits of subscription\" default=\"$WRITER_SUBSCRIPTION_HIGHLIGHTS\">$WRITER_SUBSCRIPTION_HIGHLIGHTS</writer_subscription_highlights>
+        <calc_subscription_highlights desc=\"Short note about Calc benefits of subscription\" default=\"$CALC_SUBSCRIPTION_HIGHLIGHTS\">$CALC_SUBSCRIPTION_HIGHLIGHTS</calc_subscription_highlights>
+        <impress_subscription_highlights desc=\"Short note about Impress benefits of subscription\" default=\"$IMPRESS_SUBSCRIPTION_HIGHLIGHTS\">$IMPRESS_SUBSCRIPTION_HIGHLIGHTS</impress_subscription_highlights>
+        <draw_subscription_highlights desc=\"Short note about Draw benefits of subscription\" default=\"$DRAW_SUBSCRIPTION_HIGHLIGHTS\">$DRAW_SUBSCRIPTION_HIGHLIGHTS</draw_subscription_highlights>
     </freemium>"
 fi
 

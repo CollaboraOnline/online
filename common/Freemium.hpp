@@ -32,7 +32,7 @@ public:
 
     static std::string getFreemiumPurchaseTitle() { return config::getString("freemium.purchase_title", ""); }
     static std::string getFreemiumPurchaseLink() { return config::getString("freemium.purchase_link", ""); }
-    static std::string getFreemiumPurchaseDiscription() { return config::getString("freemium.purchase_discription", ""); }
+    static std::string getFreemiumPurchaseDescription() { return config::getString("freemium.purchase_description", ""); }
     static std::string getWriterHighlights() { return config::getString("freemium.writer_subscription_highlights", ""); }
     static std::string getCalcHighlights() { return config::getString("freemium.calc_subscription_highlights", ""); }
     static std::string getImpressHighlights() { return config::getString("freemium.impress_subscription_highlights", ""); }
