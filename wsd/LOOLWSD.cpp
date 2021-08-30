@@ -1035,7 +1035,7 @@ void LOOLWSD::initialize(Application& self)
             { "freemium.disabled_commands", DISABLED_COMMANDS },
             { "freemium.purchase_title", PURCHASE_TITLE },
             { "freemium.purchase_link", PURCHASE_LINK },
-            { "freemium.purchase_discription", PURCHASE_DISCRIPTION },
+            { "freemium.purchase_description", PURCHASE_DESCRIPTION },
             { "freemium.writer_subscription_highlights", WRITER_SUBSCRIPTION_HIGHLIGHTS },
             { "freemium.calc_subscription_highlights", CALC_SUBSCRIPTION_HIGHLIGHTS },
             { "freemium.impress_subscription_highlights", IMPRESS_SUBSCRIPTION_HIGHLIGHTS },
