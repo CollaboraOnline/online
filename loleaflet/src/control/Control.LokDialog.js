@@ -1161,7 +1161,7 @@ L.Control.LokDialog = L.Control.extend({
 		}, this);
 
 		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
-			L.DomEvent.stop(e);
+			L.DomEvent.preventDefault(e);
 
 			if (this._map.uiManager.isUIBlocked())
 				return;
