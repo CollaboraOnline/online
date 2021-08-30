@@ -110,7 +110,7 @@ L.Map = L.Evented.extend({
 
 		if (options.webserver === undefined) {
 			var protocol = window.location.protocol === 'file:' ? 'https:' : window.location.protocol;
-			options.webserver = options.server.replace(/^(ws|wss):/i, protocol);
+			options.webserver = window.host.replace(/^(ws|wss):/i, protocol);
 		}
 
 		// we are adding components like '/insertfile' at the end which would

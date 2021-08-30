@@ -18,7 +18,7 @@ L.Map.FileInserter = L.Handler.extend({
 		this._toInsertURL = {};
 		this._toInsertBackground = {};
 		var parser = document.createElement('a');
-		parser.href = map.options.server;
+		parser.href = window.host;
 	},
 
 	getWopiUrl: function (map) {
