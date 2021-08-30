@@ -1125,7 +1125,7 @@ L.TileLayer = L.GridLayer.extend({
 	_onDownloadAsMsg: function (textMsg) {
 		var command = app.socket.parseServerCmd(textMsg);
 		var parser = document.createElement('a');
-		parser.href = this._map.options.server;
+		parser.href = window.host;
 
 		var wopiSrc = '';
 		if (this._map.options.wopiSrc != '') {
