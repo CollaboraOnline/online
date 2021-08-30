@@ -108,16 +108,6 @@ L.Map = L.Evented.extend({
 
 		Cursor.imagePath = options.cursorURL;
 
-		if (options.webserver === undefined) {
-			var protocol = window.location.protocol === 'file:' ? 'https:' : window.location.protocol;
-			options.webserver = window.host.replace(/^(ws|wss):/i, protocol);
-		}
-
-		// we are adding components like '/insertfile' at the end which would
-		// lead to URL's of the form <webserver>//insertfile/...
-		options.webserver = options.webserver.replace(/\/*$/, '');
-		console.assert(options.webserver === window.webserver,
-				{ 'options.webserver': options.webserver, 'window.webserver': window.webserver });
 		/* private members */
 		this._handlers = [];
 		this._layers = {};
