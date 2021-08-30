@@ -229,6 +229,8 @@ class Comment {
 		imgCollapsedAuthor.setAttribute('width', this.sectionProperties.imgSize[0]);
 		imgCollapsedAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
 		imgCollapsedAuthor.onerror = function () { imgCollapsedAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg')); };
+		this.sectionProperties.replyCountNode = L.DomUtil.create('div', 'loleaflet-annotation-reply-count-collapsed', this.sectionProperties.collapsed);
+		this.sectionProperties.replyCountNode.style.display = 'none';
 
 		this.sectionProperties.authorAvatarImg = imgAuthor;
 		this.sectionProperties.authorCollapsedAvatarImg = imgCollapsedAuthor;

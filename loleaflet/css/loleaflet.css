@@ -361,6 +361,20 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	line-height: 1.4;
 }
 
+.loleaflet-annotation-reply-count-collapsed {
+	background-color: #aaaaaa;
+	color: white;
+	font-weight: bold;
+	font-size: 10pt;
+	border-radius: 50%;
+	z-index: 10;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	left: 30px;
+	top: 0px;
+}
+
 .loleaflet-dont-break {
 	/* These are technically the same, but use both */
 	overflow-wrap: break-word;

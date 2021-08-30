@@ -625,7 +625,7 @@ class CommentSection {
 		if (this.sectionProperties.selectedComment === annotation) {
 			this.unselect();
 		} else {
-			this.layout();
+			this.update();
 		}
 		this.map.focus();
 	}
@@ -815,7 +815,7 @@ class CommentSection {
 	}
 
 	public onResize () {
-		this.layout();
+		this.update();
 		// When window is resized, it may mean that comment wizard is closed. So we hide the highlights.
 		this.removeHighlighters();
 		this.containerObject.requestReDraw();
@@ -835,7 +835,7 @@ class CommentSection {
 				this.sectionProperties.selectedComment.hide();
 		}
 
-		this.layout();
+		this.update();
 	}
 
 	private showHideComments () {
@@ -857,7 +857,6 @@ class CommentSection {
 				annotation.show();
 				annotation.update();
 			}
-			this.layout();
 			this.update();
 		}
 		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
@@ -865,14 +864,12 @@ class CommentSection {
 				if (!annotation.isContainerVisible()) {
 					annotation.show();
 					annotation.update();
-					this.layout();
 					this.update();
 				}
 			}
 			else {
 				annotation.hide();
 				annotation.update();
-				this.layout();
 				this.update();
 			}
 		}
@@ -1007,7 +1004,7 @@ class CommentSection {
 			}
 			annotation = this.sectionProperties.commentList[this.getRootIndexOf(obj[dataroot].id)];
 			if (!(<any>window).mode.isMobile()) {
-				this.layout();
+				this.update();
 				var newAnnotation = this.sectionProperties.commentList[this.getIndexOf(obj[dataroot].id)];
 				if (newAnnotation.sectionProperties.data.parent !== '0' && this.isCollapsed)
 					this.openMobileWizardPopup(annotation);
@@ -1029,7 +1026,7 @@ class CommentSection {
 				if (this.sectionProperties.selectedComment === removed) {
 					this.unselect();
 				} else {
-					this.layout();
+					this.update();
 				}
 				if (!(<any>window).mode.isMobile() && this.isCollapsed) {
 					this.openMobileWizardPopup(parent);
@@ -1514,6 +1511,7 @@ class CommentSection {
 	}
 
 	private update () {
+		this.updateReplyCount();
 		this.layout();
 	}
 
@@ -1529,6 +1527,28 @@ class CommentSection {
 			this.map.fire('mobilewizardpopup', {data: commentsData});
 		} else {
 			this.map.fire('mobilewizardpopupclose');
+		}
+	}
+
+	private updateReplyCount() {
+		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
+			var comment = this.sectionProperties.commentList[i]
+			var replyCount = 0;
+
+			for (var j = 0; j < this.sectionProperties.commentList.length; j++) {
+				var anotherComment = this.sectionProperties.commentList[j];
+				if (this.getRootIndexOf(anotherComment.sectionProperties.data.id) === i
+					&& anotherComment.sectionProperties.data.resolved !== 'true')
+					replyCount++;
+			}
+
+			if (replyCount > 1) {
+				comment.sectionProperties.replyCountNode.innerText = replyCount;
+				comment.sectionProperties.replyCountNode.style.display = '';
+			} else {
+				comment.sectionProperties.replyCountNode.innerText = '';
+				comment.sectionProperties.replyCountNode.style.display = 'none';
+			}
 		}
 	}
 
@@ -1561,7 +1581,6 @@ class CommentSection {
 			}
 			this.sectionProperties.commentList[idx].update();
 		}
-		this.layout();
 		this.update();
 	}
 
@@ -1617,7 +1636,7 @@ class CommentSection {
 
 			this.orderCommentList();
 			this.checkSize();
-			this.layout();
+			this.update();
 		}
 
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
@@ -1647,7 +1666,7 @@ class CommentSection {
 
 			this.orderCommentList();
 			this.checkSize();
-			this.layout();
+			this.update();
 		}
 
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
