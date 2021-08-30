@@ -11,7 +11,7 @@ L.Map.include({
 		freemiumDenyList: [],
 		freemiumPurchaseTitle: '',
 		freemiumPurchaseLink: '',
-		freemiumPurchaseDiscription: '',
+		freemiumPurchaseDescription: '',
 		writerHighlights: '',
 		calcHighlights: '',
 		impressHighlights: '',
@@ -23,7 +23,7 @@ L.Map.include({
 		this.Freemium.freemiumDenyList = freemiumInfo['FreemiumDenyList'];
 		this.Freemium.freemiumPurchaseTitle = _(freemiumInfo['FreemiumPurchaseTitle']);
 		this.Freemium.freemiumPurchaseLink = _(freemiumInfo['FreemiumPurchaseLink']);
-		this.Freemium.freemiumPurchaseDiscription = _(freemiumInfo['FreemiumPurchaseDiscription']);
+		this.Freemium.freemiumPurchaseDescription = _(freemiumInfo['FreemiumPurchaseDescription']);
 		this.Freemium.writerHighlights = _(freemiumInfo['WriterHighlights']);
 		this.Freemium.calcHighlights = _(freemiumInfo['CalcHighlights']);
 		this.Freemium.impressHighlights = _(freemiumInfo['ImpressHighlights']);
@@ -67,7 +67,7 @@ L.Map.include({
 				'<div class="item illustration"></div>',
 				'<div class="item">',
 				'<h1>' + this.Freemium.freemiumPurchaseTitle + '</h1>',
-				'<p>' + this.Freemium.freemiumPurchaseDiscription + '<p>',
+				'<p>' + this.Freemium.freemiumPurchaseDescription + '<p>',
 				'<ul>',
 				'<li>' + this.Freemium.writerHighlights + '</li>',
 				'<li>' + this.Freemium.calcHighlights + '</li>',

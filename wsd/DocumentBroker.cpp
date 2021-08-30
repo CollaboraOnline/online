@@ -795,7 +795,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     freemiumInfo->set("FreemiumDenyList", Freemium::FreemiumManager::getFreemiumDenyList());
     freemiumInfo->set("FreemiumPurchaseTitle", Freemium::FreemiumManager::getFreemiumPurchaseTitle());
     freemiumInfo->set("FreemiumPurchaseLink", Freemium::FreemiumManager::getFreemiumPurchaseLink());
-    freemiumInfo->set("FreemiumPurchaseDiscription", Freemium::FreemiumManager::getFreemiumPurchaseDiscription());
+    freemiumInfo->set("FreemiumPurchaseDescription", Freemium::FreemiumManager::getFreemiumPurchaseDescription());
     freemiumInfo->set("WriterHighlights", Freemium::FreemiumManager::getWriterHighlights());
     freemiumInfo->set("CalcHighlights", Freemium::FreemiumManager::getCalcHighlights());
     freemiumInfo->set("ImpressHighlights", Freemium::FreemiumManager::getImpressHighlights());
