@@ -219,7 +219,9 @@ protected:
                     }
                     else
                     {
-                        std::cout << "ERROR: Doc [" << uri << "] does not exist.\n";
+                        // There is one EndSession record for each session that edited the same
+                        // document. We have removed the item from the _sessions map already for the
+                        // first EndSession record.
                     }
                 }
             }
