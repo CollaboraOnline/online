@@ -153,24 +153,27 @@ L.Control.MobileWizardPopup = L.Control.extend({
 		}
 	},
 
+	/// used for comments, when we extend popup's content
 	_onResizeRequest: function() {
-		if (!this._container)
-			return;
+		var that = this;
+		setTimeout(function () {
+			if (!that._container || !that._popupParent)
+				return;
 
-		var posX = this._container.getBoundingClientRect().right;
-		var posY = this._container.getBoundingClientRect().bottom;
+			var bottomY = that._container.getBoundingClientRect().bottom;
 
-		if (posX > window.innerWidth) {
-			var diff = posX - window.innerWidth + 20;
-			posX = this._container.getBoundingClientRect().left - diff;
-			this._container.style.marginLeft = posX + 'px';
-		}
+			if (bottomY > that.map._container.getBoundingClientRect().bottom) {
+				var diff = bottomY - that.map._container.getBoundingClientRect().bottom + 40;
 
-		if (posY > window.innerHeight) {
-			diff = posY - window.innerHeight + 20;
-			posY = this._container.getBoundingClientRect().top - diff;
-			this._container.style.marginTop = posY + 'px';
-		}
+				(new L.PosAnimation()).run(that._popupParent,
+					{
+						x: that._popupParent.getBoundingClientRect().left,
+						y: that._popupParent.getBoundingClientRect().top - diff
+					});
+			}
+
+			that._container.style.marginLeft = (15 - that._container.clientWidth) + 'px';
+		}, 100);
 	},
 
 	_onMobileWizardPopup: function(data) {
@@ -189,7 +192,17 @@ L.Control.MobileWizardPopup = L.Control.extend({
 			this._currentPath = [];
 			this._tabs = [];
 
-			this._container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', document.body);
+			var parent = null;
+			if (data.popupParent) {
+				parent = L.DomUtil.get(data.popupParent);
+				this._popupParent = parent;
+			}
+			if (!parent)
+				parent = document.body;
+
+			var isCommentWizard = data.children && data.children.length && data.children[0].type == 'comment';
+
+			this._container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', parent);
 			this._container.id = 'mobile-wizard-popup';
 			this._container.style.visibility = 'hidden';
 			if (data.collapsed && (data.collapsed === 'true' || data.collapsed === true))
@@ -212,7 +225,11 @@ L.Control.MobileWizardPopup = L.Control.extend({
 
 			var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'jsdialog'});
 
-			this._overlay = L.DomUtil.create('div', builder.options.cssClass + ' jsdialog-overlay cancellable', document.body);
+			var overlayParent = document.body;
+			if (isCommentWizard)
+				overlayParent = that.map._container;
+
+			this._overlay = L.DomUtil.create('div', builder.options.cssClass + ' jsdialog-overlay cancellable', overlayParent);
 			this._overlay.onclick = function () { that._hideWizard(); };
 
 			this._builder = L.control.mobileWizardBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'mobile-wizard', callback: callback});
@@ -221,26 +238,30 @@ L.Control.MobileWizardPopup = L.Control.extend({
 			if (!this.content.querySelector('.ui-explorable-entry'))
 				this.titlebar.style.display = 'none';
 
-			var isCommentWizard = data.children && data.children.length && data.children[0].type == 'comment';
-
 			var posX = 0;
 			var posY = 0;
 			var setupPosition = function () {
-				if (data.popupParent && L.DomUtil.get(data.popupParent)) {
-					var parent = L.DomUtil.get(data.popupParent);
-					posX = parent.getBoundingClientRect().left - content.clientWidth + 10;
-					posY = parent.getBoundingClientRect().bottom - 10;
+				if (data.popupParent && parent != document.body) {
+					// TODO: handle general case
 
-					if (posX < 0)
-						posX = 20;
-					if (posY + content.clientHeight > window.innerHeight) {
-						posY -= posY + content.clientHeight - window.innerHeight + 20;
+					if (isCommentWizard) {
+						that._container.style.zIndex = -1;
+						that._overlay.style.zIndex = 10;
 
-						if (isCommentWizard) {
+						posY = 15;
+						posX = 15 - content.clientWidth;
+
+						// be sure it is fully visible
+						var absolutePosY = parent.getBoundingClientRect().top + posY;
+						var diffY = 0;
+						if (absolutePosY + content.clientHeight > window.innerHeight)
+							diffY = absolutePosY + content.clientHeight - that.map._container.getBoundingClientRect().bottom + 20;
+
+						if (diffY) {
 							(new L.PosAnimation()).run(parent,
 								{
 									x: parent.getBoundingClientRect().left,
-									y: posY - that.map._container.getBoundingClientRect().top - 40
+									y: absolutePosY - diffY - that.map._container.getBoundingClientRect().top
 								});
 						}
 					}
