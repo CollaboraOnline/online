@@ -309,7 +309,7 @@ class CommentSection {
 					id: 'comment' + this.sectionProperties.commentList[i].sectionProperties.data.id,
 					enable: true,
 					data: this.sectionProperties.commentList[i].sectionProperties.data,
-					type: 'rootcomment',
+					type: threadOnly ? 'comment' : 'rootcomment',
 					text: this.sectionProperties.commentList[i].sectionProperties.data.text,
 					annotation: this.sectionProperties.commentList[i],
 					children: []
@@ -331,7 +331,7 @@ class CommentSection {
 					id: 'comment' + commentList[i].sectionProperties.data.id,
 					enable: true,
 					data: commentList[i].sectionProperties.data,
-					type: 'rootcomment',
+					type: threadOnly ? 'comment' : 'rootcomment',
 					text: commentList[i].sectionProperties.data.text,
 					annotation: commentList[i],
 					children: []
