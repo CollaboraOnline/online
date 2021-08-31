@@ -808,6 +808,12 @@ window.app = { // Shouldn't have any functions defined.
 		global.docURL = filePath;
 	}
 
+	// Form a valid WS URL to the host with the given path.
+	global.makeWsUrl = function (path) {
+		console.assert(global.host.startsWith('ws'), 'host is not ws: ' + global.host);
+		return global.host + global.serviceRoot + path;
+	};
+
 	// Form a valid HTTP URL to the host with the given path.
 	global.makeHttpUrl = function (path) {
 		console.assert(global.webserver.startsWith('http'), 'webserver is not http: ' + global.webserver);
@@ -841,7 +847,7 @@ window.app = { // Shouldn't have any functions defined.
 	} else {
 		// The URL may already contain a query (e.g., 'http://server.tld/foo/wopi/files/bar?desktop=baz') - then just append more params
 		var docParamsPart = docParams ? (global.docURL.includes('?') ? '&' : '?') + docParams : '';
-		var websocketURI = global.host + global.serviceRoot + '/lool/';
+		var websocketURI = global.makeWsUrl('/lool/');
 		var encodedDocUrl = encodeURIComponent(global.docURL + docParamsPart) + '/ws' + wopiSrc;
 		if (global.hexifyUrl)
 			encodedDocUrl = global.hexEncode(encodedDocUrl);

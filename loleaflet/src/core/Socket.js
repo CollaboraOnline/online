@@ -34,7 +34,7 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	getWebSocketBaseURI: function(map) {
-		return window.host + window.serviceRoot + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws';
+		return window.makeWsUrl('/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws');
 	},
 
 	connect: function(socket) {
