@@ -927,7 +927,7 @@ class Comment {
 	public setCollapsed() {
 		this.isCollapsed = true;
 
-		var isRootComment = this.sectionProperties.data.parent === '0';
+		var isRootComment = this.sectionProperties.docLayer._docType !== 'text' || this.sectionProperties.data.parent === '0';
 		if (isRootComment)
 			this.sectionProperties.collapsed.style.display = '';
 		else
