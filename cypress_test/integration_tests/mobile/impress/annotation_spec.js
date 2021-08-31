@@ -30,7 +30,7 @@ describe('Annotation tests.', function() {
 
 		mobileHelper.openCommentWizard();
 
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
+		cy.get('#mobile-wizard .wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
 
 		cy.get('.leaflet-marker-icon.annotation-marker')
@@ -57,10 +57,10 @@ describe('Annotation tests.', function() {
 		cy.get('.vex-dialog-button-primary')
 			.click();
 
-		cy.get('.wizard-comment-box.loleaflet-annotation-content-wrapper')
+		cy.get('#mobile-wizard .wizard-comment-box.loleaflet-annotation-content-wrapper')
 			.should('exist');
 
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
+		cy.get('#mobile-wizard .wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'modified some text');
 	});
 
@@ -70,12 +70,12 @@ describe('Annotation tests.', function() {
 		cy.get('.leaflet-marker-icon.annotation-marker')
 			.should('be.visible');
 
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
+		cy.get('#mobile-wizard .wizard-comment-box .loleaflet-annotation-content')
 			.should('have.text', 'some text');
 
 		mobileHelper.selectAnnotationMenuItem('Remove');
 
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
+		cy.get('#mobile-wizard .wizard-comment-box .loleaflet-annotation-content')
 			.should('not.exist');
 
 		cy.get('.leaflet-marker-icon.annotation-marker')
@@ -103,7 +103,7 @@ describe('Annotation tests.', function() {
 		cy.get('.loleaflet-annotation-content-wrapper.wizard-comment-box')
 			.should('not.exist');
 
-		cy.get('.wizard-comment-box .loleaflet-annotation-content')
+		cy.get('#mobile-wizard .wizard-comment-box .loleaflet-annotation-content')
 			.should('not.exist');
 	});
 });

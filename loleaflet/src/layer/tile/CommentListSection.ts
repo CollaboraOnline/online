@@ -195,6 +195,9 @@ class CommentSection {
 	}
 
 	public setCollapsed() {
+		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
+			return;
+
 		this.isCollapsed = true;
 		this.removeHighlighters();
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
@@ -547,7 +550,8 @@ class CommentSection {
 			annotation.reply();
 			this.select(annotation);
 			annotation.focus();
-			this.map.fire('mobilewizardpopupresize');
+			if (this.isCollapsed)
+				this.map.fire('mobilewizardpopupresize');
 		}
 	}
 
@@ -559,7 +563,8 @@ class CommentSection {
 			annotation.edit();
 			this.select(annotation);
 			annotation.focus();
-			this.map.fire('mobilewizardpopupresize');
+			if (this.isCollapsed)
+				this.map.fire('mobilewizardpopupresize');
 		}
 	}
 
@@ -578,7 +583,7 @@ class CommentSection {
 
 			this.update();
 
-			if (!(<any>window).mode.isMobile() && annotation.isCollapsed)
+			if (!(<any>window).mode.isMobile() && annotation.isCollapsed && this.sectionProperties.docLayer._docType !== 'spreadsheet')
 				this.openMobileWizardPopup(annotation);
 		}
 	}
