@@ -1026,6 +1026,7 @@ void LOOLWSD::innerInitialize(Application& self)
             { "admin_console.enable_pam", "false" },
             { "child_root_path", "jails" },
             { "file_server_root_path", "loleaflet/.." },
+            { "hexify_embedded_urls", "false" },
             { "lo_jail_subpath", "lo" },
             { "logging.protocol", "false" },
             { "logging.anonymize.filenames", "false" }, // Deprecated.
