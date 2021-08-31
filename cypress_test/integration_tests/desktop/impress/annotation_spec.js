@@ -41,15 +41,15 @@ describe('Annotation Tests', function() {
 
 		cy.get('#annotation-content-area-1').should('contain','some text0');
 
-		cy.get('#comment-annotation-menu-1').click();
+		cy.get('#mobile-wizard-popup .loleaflet-annotation-menu').click();
 
 		cy.contains('.context-menu-item','Modify').click();
 
-		cy.get('#annotation-modify-textarea-1').type('some other text, ');
+		cy.get('#mobile-wizard-popup #annotation-modify-textarea-1').type('some other text, ');
 
-		cy.get('#annotation-save-1').click();
+		cy.get('#mobile-wizard-popup #annotation-save-1').click();
 
-		cy.get('#annotation-content-area-1').should('contain','some other text, some text0');
+		cy.get('#mobile-wizard-popup #annotation-content-area-1').should('contain','some other text, some text0');
 
 		cy.get('.leaflet-marker-icon').should('exist');
 	});
@@ -61,7 +61,7 @@ describe('Annotation Tests', function() {
 
 		cy.get('.loleaflet-annotation-content > div').should('contain','some text');
 
-		cy.get('.loleaflet-annotation-menu').click();
+		cy.get('#mobile-wizard-popup .loleaflet-annotation-menu').click();
 
 		cy.contains('.context-menu-item','Remove')
 			.click();
@@ -76,13 +76,13 @@ describe('Annotation Tests', function() {
 
 		cy.get('.loleaflet-annotation-content > div').should('contain','some text');
 
-		cy.get('#comment-annotation-menu-1').click();
+		cy.get('#mobile-wizard-popup .loleaflet-annotation-menu').click();
 
 		cy.contains('.context-menu-item','Reply').click();
 
-		cy.get('#annotation-reply-textarea-1').type('some reply text');
+		cy.get('#mobile-wizard-popup #annotation-reply-textarea-1').type('some reply text');
 
-		cy.get('#annotation-reply-1').click();
+		cy.get('#mobile-wizard-popup #annotation-reply-1').click();
 
 		cy.get('.loleaflet-annotation-content > div').should('include.text','some reply text');
 	});
@@ -112,6 +112,7 @@ describe('Comment Scrolling',function() {
 		insertMultipleComment('impress');
 		addSlide(2);
 		insertMultipleComment('impress');
+		cy.get('.jsdialog-overlay').click({force: true});
 		cy.get('.leaflet-control-scroll-up').should('exist');
 		cy.get('.leaflet-control-scroll-up').click().wait(300);
 		cy.get('#PageStatus').should('contain','Slide 1 of 3');
@@ -129,6 +130,7 @@ describe('Comment Scrolling',function() {
 
 		//scroll up
 		addSlide(1);
+		cy.get('.jsdialog-overlay').click({force: true});
 		cy.get('.leaflet-control-scroll-up').should('exist');
 		cy.get('.leaflet-control-scroll-up').click().wait(300);
 		cy.get('#PageStatus').should('contain','Slide 2 of 3');

@@ -1982,6 +1982,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		annotation.show();
 		annotation.update();
 		annotation.setExpanded();
+		annotation.hideMarker();
+		annotation.sectionProperties.annotationMarker = null;
 
 		var replyCountNode = document.getElementById('reply-count-node-' + data.id);
 		if (replyCountNode)

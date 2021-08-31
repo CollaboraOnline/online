@@ -286,7 +286,7 @@ function selectHamburgerMenuItem(menuItems) {
 function selectAnnotationMenuItem(menuItem) {
 	cy.log('Selecting annotation menu item - start.');
 
-	cy.get('.wizard-comment-box .loleaflet-annotation-menu')
+	cy.get('#mobile-wizard .wizard-comment-box .loleaflet-annotation-menu')
 		.click({force: true});
 
 	cy.get('.context-menu-list')
