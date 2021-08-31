@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-29 15:44+0200\n"
+"POT-Creation-Date: 2021-08-31 09:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,10 +136,10 @@ msgstr "Graf an CPU"
 msgid "Network Graph"
 msgstr "Graf an lìonraidh"
 
-#: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:243
+#: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:248
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/control/Control.NotebookbarDraw.js:24 src/layer/marker/Annotation.js:280
-#: src/layer/tile/CanvasTileLayer.js:1451
+#: src/control/Control.NotebookbarDraw.js:24
+#: src/layer/tile/CommentSection.js:99
 msgid "Save"
 msgstr "Sàbhail"
 
@@ -210,7 +210,7 @@ msgstr "Ath-nuadhaich"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:381
+#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:369
 #: src/control/Control.StatusBar.js:330
 msgid "None"
 msgstr "Chan eil gin"
@@ -224,7 +224,7 @@ msgid "Log Levels"
 msgstr ""
 
 #: admin/admin.strings.js:53 src/control/Control.AlertDialog.js:25
-#: src/control/Parts.js:413 src/control/Signing.js:608
+#: src/control/Parts.js:409 src/control/Signing.js:608
 msgid "Close"
 msgstr "Dùin"
 
@@ -262,18 +262,18 @@ msgstr ""
 "A bheil thu cinnteach gu bheil thu airson crìoch a chur air an t-seisean seo?"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1566
-#: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:253
-#: src/control/Control.Tabs.js:270 src/control/Toolbar.js:813
+#: src/control/Control.Menubar.js:1571
+#: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
+#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:849
 msgid "OK"
 msgstr ""
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1567
+#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1572
 #: src/control/Control.MobileTopBar.js:44
-#: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:254
-#: src/control/Control.Tabs.js:271 src/control/Toolbar.js:814
-#: src/layer/marker/Annotation.js:204 src/layer/tile/CanvasTileLayer.js:1452
+#: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:850
+#: src/layer/tile/CommentSection.js:98 src/layer/tile/CommentSection.js:101
 msgid "Cancel"
 msgstr "Sguir dheth"
 
@@ -349,17 +349,17 @@ msgstr ""
 msgid "Open link"
 msgstr "Fosgail an ceangal"
 
-#: src/control/Control.AlertDialog.js:89
+#: src/control/Control.AlertDialog.js:91
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr ""
 "Thachair am frithealaiche ri mearachd %0 nuair a bha e a’ parsadh na h-"
 "àithne %1."
 
-#: src/control/Control.ContextMenu.js:184
+#: src/control/Control.ContextMenu.js:180
 msgid "Delete"
 msgstr ""
 
-#: src/control/Control.ContextMenu.js:268
+#: src/control/Control.ContextMenu.js:259
 msgid "Paste Special"
 msgstr "Cuir ann air dòigh shònraichte"
 
@@ -376,10 +376,9 @@ msgid "Index"
 msgstr "Clàr-amais"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2363
-#: src/layer/tile/CanvasTileLayer.js:4814
-#: src/layer/tile/CanvasTileLayer.js:4824
-#: src/layer/tile/CanvasTileLayer.js:5150
+#: src/control/Control.JSDialogBuilder.js:2027
+#: src/layer/tile/CanvasTileLayer.js:4787
+#: src/layer/tile/CanvasTileLayer.js:4797
 msgid "Comment"
 msgstr "Beachd"
 
@@ -407,138 +406,115 @@ msgstr ""
 msgid "Confirm copy to clipboard"
 msgstr ""
 
-#: src/control/Control.DownloadProgress.js:221
-msgid "Start upload"
-msgstr ""
-
-#: src/control/Control.DownloadProgress.js:327
-msgid "Start cross copy/paste"
-msgstr ""
-
 #: src/control/Control.FormulaBar.js:34
 #, fuzzy
 msgid "Function Wizard"
 msgstr "Foincsean"
 
-#: src/control/Control.MobileWizardBuilder.js:518
+#: src/control/Control.MobileWizardBuilder.js:500
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.MobileWizardBuilder.js:520
+#: src/control/Control.MobileWizardBuilder.js:502
 msgid "Gradient Start"
 msgstr ""
 
-#: src/control/Control.MobileWizardBuilder.js:522
+#: src/control/Control.MobileWizardBuilder.js:504
 msgid "Gradient End"
 msgstr ""
 
-#: src/control/Control.MobileWizardBuilder.js:590
-msgid "Line style:"
-msgstr ""
-
-#: src/control/Control.JSDialogBuilder.js:384
+#: src/control/Control.JSDialogBuilder.js:372
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:387
+#: src/control/Control.JSDialogBuilder.js:375
 msgid "Linear"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:390
+#: src/control/Control.JSDialogBuilder.js:378
 msgid "Axial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:393
+#: src/control/Control.JSDialogBuilder.js:381
 msgid "Radial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:396
+#: src/control/Control.JSDialogBuilder.js:384
 msgid "Ellipsoid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:400
+#: src/control/Control.JSDialogBuilder.js:388
 msgid "Quadratic"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:403
+#: src/control/Control.JSDialogBuilder.js:391
 msgid "Square"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:406
+#: src/control/Control.JSDialogBuilder.js:394
 msgid "Fixed size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1514
+#: src/control/Control.JSDialogBuilder.js:1205
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1517
+#: src/control/Control.JSDialogBuilder.js:1208
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1648
+#: src/control/Control.JSDialogBuilder.js:1211
+msgid "Color"
+msgstr ""
+
+#: src/control/Control.JSDialogBuilder.js:1335
 #, fuzzy
 msgid "Select range"
 msgstr "Diùlt an t-atharrachadh"
 
-#: src/control/Control.JSDialogBuilder.js:1682
+#: src/control/Control.JSDialogBuilder.js:1373
 #: src/control/Control.NotebookbarBuilder.js:235
 #, fuzzy
 msgid "Font Name"
 msgstr "Cruth-clò"
 
-#: src/control/Control.JSDialogBuilder.js:1684
+#: src/control/Control.JSDialogBuilder.js:1375
 #, fuzzy
 msgid "Font Size"
 msgstr "Gun soidhneadh"
 
-#: src/control/Control.JSDialogBuilder.js:1686
-#: src/control/Control.TopToolbar.js:498
+#: src/control/Control.JSDialogBuilder.js:1377
+#: src/control/Control.TopToolbar.js:505
 msgid "Style"
 msgstr "Stoidhle"
 
-#: src/control/Control.JSDialogBuilder.js:2294
-#: src/layer/marker/Annotation.js:241
-msgid "Accept change"
-msgstr "Gabh ris an atharrachadh"
-
-#: src/control/Control.JSDialogBuilder.js:2299
-#: src/layer/marker/Annotation.js:242
-msgid "Reject change"
-msgstr "Diùlt an t-atharrachadh"
-
-#: src/control/Control.JSDialogBuilder.js:2308
-#: src/layer/marker/Annotation.js:260
-msgid "Open menu"
-msgstr "Fosgail an clàr-taice"
-
-#: src/control/Control.JSDialogBuilder.js:2354
+#: src/control/Control.JSDialogBuilder.js:2013
 #, fuzzy
 msgid "reply"
 msgstr "Freagair"
 
-#: src/control/Control.JSDialogBuilder.js:2357
+#: src/control/Control.JSDialogBuilder.js:2016
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2405
+#: src/control/Control.JSDialogBuilder.js:2086
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2815
+#: src/control/Control.JSDialogBuilder.js:2517
 #, fuzzy
 msgid "Cell borders"
 msgstr "Iomallan"
 
-#: src/control/Control.JSDialogBuilder.js:3059
+#: src/control/Control.JSDialogBuilder.js:2705
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3060
+#: src/control/Control.JSDialogBuilder.js:2706
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3080
+#: src/control/Control.JSDialogBuilder.js:2726
 #, fuzzy
 msgid "Insert Table"
 msgstr "Cuir a-steach clàr"
@@ -547,12 +523,12 @@ msgstr "Cuir a-steach clàr"
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:491
 #: src/control/Control.Menubar.js:699 src/control/Control.StatusBar.js:506
-#: src/control/Control.NotebookbarBuilder.js:705
-#: src/control/Control.NotebookbarBuilder.js:707
-#: src/control/Control.NotebookbarBuilder.js:709
-#: src/control/Control.NotebookbarBuilder.js:733
-#: src/control/Control.NotebookbarBuilder.js:768
-#: src/control/Control.NotebookbarBuilder.js:785
+#: src/control/Control.NotebookbarBuilder.js:711
+#: src/control/Control.NotebookbarBuilder.js:713
+#: src/control/Control.NotebookbarBuilder.js:715
+#: src/control/Control.NotebookbarBuilder.js:739
+#: src/control/Control.NotebookbarBuilder.js:774
+#: src/control/Control.NotebookbarBuilder.js:791
 msgid "None (Do not check spelling)"
 msgstr "Chan eil gin (Na dearbhaich an litreachadh)"
 
@@ -591,7 +567,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:167
 #: src/control/Control.NotebookbarCalc.js:163
 #: src/control/Control.NotebookbarImpress.js:243
-#: src/control/Control.NotebookbarDraw.js:219
+#: src/control/Control.NotebookbarDraw.js:212
 msgid "PDF Document (.pdf)"
 msgstr "Sgrìobhainn PDF (.pdf)"
 
@@ -638,12 +614,12 @@ msgstr "Dùin an sgrìobhainn"
 #: src/control/Control.NotebookbarCalc.js:170
 #: src/control/Control.NotebookbarImpress.js:249
 #: src/control/Control.NotebookbarImpress.js:250
-#: src/control/Control.NotebookbarDraw.js:225
-#: src/control/Control.NotebookbarDraw.js:226
-#: src/control/Control.NotebookbarBuilder.js:698
-#: src/control/Control.NotebookbarBuilder.js:728
-#: src/control/Control.NotebookbarBuilder.js:763
-#: src/control/Control.NotebookbarBuilder.js:780
+#: src/control/Control.NotebookbarDraw.js:218
+#: src/control/Control.NotebookbarDraw.js:219
+#: src/control/Control.NotebookbarBuilder.js:704
+#: src/control/Control.NotebookbarBuilder.js:734
+#: src/control/Control.NotebookbarBuilder.js:769
+#: src/control/Control.NotebookbarBuilder.js:786
 msgid "Repair"
 msgstr "Càirich"
 
@@ -656,15 +632,15 @@ msgstr "Càirich"
 #: src/control/Control.NotebookbarCalc.js:746
 #: src/control/Control.NotebookbarImpress.js:980
 #: src/control/Control.NotebookbarImpress.js:981
-#: src/control/Control.NotebookbarDraw.js:696
-#: src/control/Control.NotebookbarDraw.js:697
+#: src/control/Control.NotebookbarDraw.js:689
+#: src/control/Control.NotebookbarDraw.js:690
 msgid "Reset zoom"
 msgstr "Ath-shuidhich an sùm"
 
 #: src/control/Control.Menubar.js:67
 #: src/control/Control.NotebookbarWriter.js:1025
 #: src/control/Control.NotebookbarWriter.js:1026
-#: src/control/Control.NotebookbarBuilder.js:684
+#: src/control/Control.NotebookbarBuilder.js:690
 msgid "Show Ruler"
 msgstr ""
 
@@ -727,7 +703,7 @@ msgstr "Mu dhèidhinn"
 
 #: src/control/Control.Menubar.js:262 src/control/Control.Menubar.js:390
 #: src/control/Control.Menubar.js:500 src/control/Control.Menubar.js:711
-#: src/map/Map.js:405
+#: src/map/Map.js:416
 msgid "Last modification"
 msgstr "An t-atharrachadh mu dheireadh"
 
@@ -762,7 +738,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:403 src/control/Control.Menubar.js:782
 #: src/control/Control.Menubar.js:833
 #: src/control/Control.NotebookbarImpress.js:211
-#: src/control/Control.NotebookbarDraw.js:200
+#: src/control/Control.NotebookbarDraw.js:193
 #, fuzzy
 msgid "ODF Drawing (.odg)"
 msgstr "Taisbeanadh ODF (.odp)"
@@ -799,19 +775,19 @@ msgstr ""
 msgid "Reset to Default Language"
 msgstr "Aisig an cànan bunaiteach"
 
-#: src/control/Control.Menubar.js:1471
+#: src/control/Control.Menubar.js:1476
 #, fuzzy
 msgid "Insert Shape"
 msgstr "Cuir a-steach cruthan"
 
-#: src/control/Control.Menubar.js:1564
+#: src/control/Control.Menubar.js:1569
 msgid "Are you sure you want to delete this slide?"
 msgstr ""
 "A bheil thu cinnteach gu bheil thu airson an t-sleamhnag seo a sguabadh às?"
 
 #: src/control/Control.MobileBottomBar.js:27
-#: src/control/Control.MobileBottomBar.js:56
-#: src/control/Control.MobileBottomBar.js:92
+#: src/control/Control.MobileBottomBar.js:55
+#: src/control/Control.MobileBottomBar.js:84
 #, fuzzy
 msgid "Show the search bar"
 msgstr "Sguir dhen lorg"
@@ -939,28 +915,28 @@ msgstr ""
 msgid "Selection mode: inactive"
 msgstr ""
 
-#: src/control/Control.Tabs.js:47
+#: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
 msgstr "Cuir a-steach siota roimhe"
 
-#: src/control/Control.Tabs.js:50
+#: src/control/Control.Tabs.js:57
 msgid "Insert sheet after this"
 msgstr "Cuir a-steach siota ’na dhèidh"
 
-#: src/control/Control.Tabs.js:68
+#: src/control/Control.Tabs.js:81
 msgid "Move Sheet Left"
 msgstr ""
 
-#: src/control/Control.Tabs.js:72
+#: src/control/Control.Tabs.js:86
 msgid "Move Sheet Right"
 msgstr ""
 
-#: src/control/Control.Tabs.js:251
+#: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet% ?"
 msgstr ""
 "A bheil thu cinnteach gu bheil thu airson an siota %sheet% a sguabadh às?"
 
-#: src/control/Control.Tabs.js:268
+#: src/control/Control.Tabs.js:320
 msgid "Enter new sheet name"
 msgstr "Cuir a-steach ainm ùr an t-siota"
 
@@ -988,24 +964,24 @@ msgstr ""
 msgid "Default Style"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:178
+#: src/control/Control.TopToolbar.js:177
 msgid "Borders"
 msgstr "Iomallan"
 
-#: src/control/Control.TopToolbar.js:241
+#: src/control/Control.TopToolbar.js:240
 msgid "Insert table"
 msgstr "Cuir a-steach clàr"
 
-#: src/control/Control.TopToolbar.js:245
-#: src/control/Control.NotebookbarBuilder.js:534
+#: src/control/Control.TopToolbar.js:244
+#: src/control/Control.NotebookbarBuilder.js:539
 msgid "Insert Local Image"
 msgstr "Cuir a-steach dealbh ionadail"
 
-#: src/control/Control.TopToolbar.js:249
+#: src/control/Control.TopToolbar.js:248
 msgid "Insert shapes"
 msgstr "Cuir a-steach cruthan"
 
-#: src/control/Control.TopToolbar.js:251
+#: src/control/Control.TopToolbar.js:250
 msgid "Insert connectors"
 msgstr ""
 
@@ -1041,23 +1017,23 @@ msgstr "Lean ris an deasaiche an-còmhaidh"
 msgid "Current"
 msgstr "Làithreach"
 
-#: src/control/Control.Notebookbar.js:237
+#: src/control/Control.Notebookbar.js:242
 #: src/control/Control.NotebookbarImpress.js:18
 #: src/control/Control.NotebookbarDraw.js:18
-#: src/control/Control.NotebookbarBuilder.js:681
-#: src/control/Control.NotebookbarBuilder.js:722
-#: src/control/Control.NotebookbarBuilder.js:750
-#: src/control/Control.NotebookbarBuilder.js:775
+#: src/control/Control.NotebookbarBuilder.js:687
+#: src/control/Control.NotebookbarBuilder.js:728
+#: src/control/Control.NotebookbarBuilder.js:756
+#: src/control/Control.NotebookbarBuilder.js:781
 msgid "Menu"
 msgstr ""
 
-#: src/control/Control.Notebookbar.js:255
+#: src/control/Control.Notebookbar.js:260
 #: src/control/Control.NotebookbarImpress.js:36
 #: src/control/Control.NotebookbarDraw.js:36
 msgid "Undo"
 msgstr ""
 
-#: src/control/Control.Notebookbar.js:261
+#: src/control/Control.Notebookbar.js:266
 #: src/control/Control.NotebookbarImpress.js:42
 #: src/control/Control.NotebookbarDraw.js:42
 msgid "Redo"
@@ -1066,21 +1042,21 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:12
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarImpress.js:91
-#: src/control/Control.NotebookbarDraw.js:86
+#: src/control/Control.NotebookbarDraw.js:79
 msgid "~File"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:17
 #: src/control/Control.NotebookbarCalc.js:17
 #: src/control/Control.NotebookbarImpress.js:96
-#: src/control/Control.NotebookbarDraw.js:91
+#: src/control/Control.NotebookbarDraw.js:84
 msgid "~Home"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:23
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarImpress.js:102
-#: src/control/Control.NotebookbarDraw.js:97
+#: src/control/Control.NotebookbarDraw.js:90
 #, fuzzy
 msgid "~Insert"
 msgstr "Cuir a-steach clàr"
@@ -1088,7 +1064,7 @@ msgstr "Cuir a-steach clàr"
 #: src/control/Control.NotebookbarWriter.js:28
 #: src/control/Control.NotebookbarCalc.js:28
 #: src/control/Control.NotebookbarImpress.js:107
-#: src/control/Control.NotebookbarDraw.js:102
+#: src/control/Control.NotebookbarDraw.js:95
 msgid "~Layout"
 msgstr ""
 
@@ -1099,7 +1075,7 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:38
 #: src/control/Control.NotebookbarCalc.js:38
 #: src/control/Control.NotebookbarImpress.js:112
-#: src/control/Control.NotebookbarDraw.js:107
+#: src/control/Control.NotebookbarDraw.js:100
 #, fuzzy
 msgid "~Review"
 msgstr "Foir-shealladh"
@@ -1107,13 +1083,13 @@ msgstr "Foir-shealladh"
 #: src/control/Control.NotebookbarWriter.js:43
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarImpress.js:117
-#: src/control/Control.NotebookbarDraw.js:112
+#: src/control/Control.NotebookbarDraw.js:105
 msgid "Format"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:48
 #: src/control/Control.NotebookbarImpress.js:122
-#: src/control/Control.NotebookbarDraw.js:117
+#: src/control/Control.NotebookbarDraw.js:110
 msgid "~Table"
 msgstr ""
 
@@ -1125,21 +1101,21 @@ msgstr ""
 #: src/control/Control.NotebookbarWriter.js:60
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarImpress.js:134
-#: src/control/Control.NotebookbarDraw.js:129
+#: src/control/Control.NotebookbarDraw.js:122
 msgid "~Help"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:105
 #: src/control/Control.NotebookbarCalc.js:98
 #: src/control/Control.NotebookbarImpress.js:178
-#: src/control/Control.NotebookbarDraw.js:173
+#: src/control/Control.NotebookbarDraw.js:166
 msgid "Share"
 msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:112
 #: src/control/Control.NotebookbarCalc.js:105
 #: src/control/Control.NotebookbarImpress.js:185
-#: src/control/Control.NotebookbarDraw.js:180
+#: src/control/Control.NotebookbarDraw.js:173
 msgid "See history"
 msgstr ""
 
@@ -1210,7 +1186,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:809
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:845
 msgid "Text"
 msgstr ""
 
@@ -1277,11 +1253,11 @@ msgstr "Comhair an teacsa"
 msgid "ODF Presentation (.odp)"
 msgstr "Taisbeanadh ODF (.odp)"
 
-#: src/control/Control.NotebookbarDraw.js:206
+#: src/control/Control.NotebookbarDraw.js:199
 msgid "Image (.png)"
 msgstr ""
 
-#: src/control/Parts.js:414
+#: src/control/Parts.js:410
 msgid "Show Selected Sheets"
 msgstr ""
 
@@ -1319,20 +1295,20 @@ msgstr ""
 msgid "Continue editing"
 msgstr ""
 
-#: src/control/Ruler.js:369
+#: src/control/Ruler.js:360
 msgid "Left Margin"
 msgstr "Marghan clì"
 
-#: src/control/Ruler.js:370
+#: src/control/Ruler.js:361
 msgid "Right Margin"
 msgstr "Marghan deas"
 
-#: src/control/Ruler.js:629
+#: src/control/Ruler.js:624
 #, fuzzy
 msgid "Insert tabstop"
 msgstr "Cuir a-steach clàr"
 
-#: src/control/Ruler.js:636
+#: src/control/Ruler.js:631
 #, fuzzy
 msgid "Delete tabstop"
 msgstr "Cuir a-steach clàr"
@@ -1465,40 +1441,40 @@ msgstr ""
 msgid "Signed but not all files are signed"
 msgstr "Air a shoidhneadh ach cha deach gach faidhle a shoidhneadh"
 
-#: src/control/Toolbar.js:52
+#: src/control/Toolbar.js:45
 msgid "Font"
 msgstr "Cruth-clò"
 
-#: src/control/Toolbar.js:207 src/control/Toolbar.js:219
+#: src/control/Toolbar.js:220 src/control/Toolbar.js:232
 msgid "Downloading..."
 msgstr "'Ga luchdadh a-nuas ..."
 
-#: src/control/Toolbar.js:235 src/map/Map.js:1566
+#: src/control/Toolbar.js:248
 msgid "Saving..."
 msgstr "’Ga shàbhaladh..."
 
-#: src/control/Toolbar.js:246
+#: src/control/Toolbar.js:259
 msgid "Renaming..."
 msgstr "A’ cur ainm ùr air…"
 
-#: src/control/Toolbar.js:624
+#: src/control/Toolbar.js:637
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 
-#: src/control/Toolbar.js:674
+#: src/control/Toolbar.js:687
 msgid "This version of %productName is powered by"
 msgstr "An tionndadh seo de %productName le cumhachd"
 
-#: src/control/Toolbar.js:684
+#: src/control/Toolbar.js:697
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:807
+#: src/control/Toolbar.js:843
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:810
+#: src/control/Toolbar.js:846
 msgid "Link"
 msgstr ""
 
@@ -1520,48 +1496,56 @@ msgstr ""
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Ìoc, tha duilgheadas leis a’ cheangal ris an sgrìobhainn"
 
-#: src/core/Socket.js:510
+#: src/core/Socket.js:509
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr ""
 
-#: src/core/Socket.js:528
+#: src/core/Socket.js:511
+msgid "Server is now reachable..."
+msgstr ""
+
+#: src/core/Socket.js:514
+msgid "RELOAD"
+msgstr ""
+
+#: src/core/Socket.js:532
 msgid "Served by:"
 msgstr ""
 
-#: src/core/Socket.js:533
+#: src/core/Socket.js:537
 msgid "Unsupported server version."
 msgstr "Chan eil taic ri tionndadh an fhrithealaiche."
 
-#: src/core/Socket.js:631
+#: src/core/Socket.js:641
 msgid "Session terminated by document owner"
 msgstr "Chuir sealbhadair na sgrìobhainn crìoch air an t-seisean"
 
-#: src/core/Socket.js:636
+#: src/core/Socket.js:646
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Sgrìobhainn neo-ghnìomhach - dèan briogadh airson ath-luchdadh is leantainn "
 "air an deasachadh"
 
-#: src/core/Socket.js:638
+#: src/core/Socket.js:648
 #, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Sgrìobhainn neo-ghnìomhach - dèan briogadh airson ath-luchdadh is leantainn "
 "air an deasachadh"
 
-#: src/core/Socket.js:646
+#: src/core/Socket.js:656
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Tha am frithealaiche a’ dùnadh airson obair-ghlèidhidh (fèin-sàbhaladh)"
 
-#: src/core/Socket.js:650
+#: src/core/Socket.js:660
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ìoc, tha duilgheadas leis a’ cheangal ris an sgrìobhainn"
 
-#: src/core/Socket.js:654
+#: src/core/Socket.js:664
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 
-#: src/core/Socket.js:682
+#: src/core/Socket.js:692
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1569,7 +1553,7 @@ msgstr ""
 "Chaidh an sgrìobhainn san stòras atharrachadh. A’ luchdadh na sgrìobhainne "
 "ùr. Tha an tionndadh agad ri fhaighinn mar lèirmheas."
 
-#: src/core/Socket.js:688
+#: src/core/Socket.js:698
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1577,7 +1561,7 @@ msgstr ""
 "Ag aiseag an t-seann-lèirmheis. Gheibhear cothrom air atharraichean nach "
 "deach a shàbhaladh ann an eachdraidh nan tionndadh."
 
-#: src/core/Socket.js:808
+#: src/core/Socket.js:818
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1585,53 +1569,69 @@ msgstr ""
 "Chaidh an sgrìobhainn atharrachadh san stòras. Dè nì sinn leis na h-"
 "atharraichean agad nach deach an sàbhaladh?"
 
-#: src/core/Socket.js:812
+#: src/core/Socket.js:822
 msgid "Discard"
 msgstr "Tilg air falbh"
 
-#: src/core/Socket.js:817
+#: src/core/Socket.js:827
 msgid "Overwrite"
 msgstr "Sgrìobh thairis"
 
-#: src/core/Socket.js:822
+#: src/core/Socket.js:832
 msgid "Save to new file"
 msgstr "Sàbhail ann am faidhle ùr"
 
-#: src/core/Socket.js:892
+#: src/core/Socket.js:902
 msgid "Document requires password to view."
 msgstr "Feumar facal-faire mus fhaicear an sgrìobhainn."
 
-#: src/core/Socket.js:895
+#: src/core/Socket.js:905
 msgid "Document requires password to modify."
 msgstr "Feumar facal-faire mus urrainnear an sgrìobhainn atharrachadh."
 
-#: src/core/Socket.js:897
+#: src/core/Socket.js:907
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Briog air “Sguir dheth” airson a shealltainn a-mhàin."
 
-#: src/core/Socket.js:901
+#: src/core/Socket.js:911
 msgid "Wrong password provided. Please try again."
 msgstr "Tha am facal-faire cearr. Feuch ris a-rithist."
 
-#: src/core/Socket.js:1051 src/map/Map.js:1569
+#: src/core/Socket.js:1009
+msgid "Someone"
+msgstr ""
+
+#: src/core/Socket.js:1011
+msgid " saved this document as "
+msgstr ""
+
+#: src/core/Socket.js:1011
+msgid ". Do you want to join?"
+msgstr ""
+
+#: src/core/Socket.js:1020
 msgid "Loading..."
 msgstr "’Ga luchdadh..."
 
-#: src/core/Socket.js:1051
+#: src/core/Socket.js:1020
 msgid "Connecting..."
 msgstr "A’ dèanamh ceangal..."
 
-#: src/core/Socket.js:1069
+#: src/core/Socket.js:1038
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1352
+#: src/core/Socket.js:1389
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
 "Tha seo a’ cur nàire oirnn ach chan urrainn dhuinn do cheangal ris an "
 "sgrìobhainn agad. Feuch ri a-rithist."
+
+#: src/core/Socket.js:1401
+msgid "The server has been disconnected."
+msgstr ""
 
 #: src/errormessages.js:13
 msgid ""
@@ -1803,60 +1803,48 @@ msgstr ""
 msgid "Uploading file to server failed, the file is too large."
 msgstr ""
 
-#: src/layer/marker/Annotation.js:283 src/layer/tile/CanvasTileLayer.js:5103
+#: src/layer/tile/CommentSection.js:102
 msgid "Reply"
 msgstr "Freagair"
 
-#: src/layer/tile/CanvasTileLayer.js:1865
+#: src/layer/tile/CommentSection.js:164
+msgid "Open menu"
+msgstr "Fosgail an clàr-taice"
+
+#: src/layer/tile/CommentSection.js:177 src/layer/tile/CommentSection.js:178
+msgid "Accept change"
+msgstr "Gabh ris an atharrachadh"
+
+#: src/layer/tile/CommentSection.js:182 src/layer/tile/CommentSection.js:183
+msgid "Reject change"
+msgstr "Diùlt an t-atharrachadh"
+
+#: src/layer/tile/CanvasTileLayer.js:1760
 #, fuzzy
 msgid "Functions"
 msgstr "Foincsean"
 
-#: src/layer/tile/CanvasTileLayer.js:4841
+#: src/layer/tile/CanvasTileLayer.js:4814
 msgid "No Comments"
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:5097
-msgid "Modify"
-msgstr "Atharraich"
-
-#: src/layer/tile/CanvasTileLayer.js:5109
-msgid "Remove"
-msgstr "Thoir air falbh"
-
-#: src/layer/tile/CanvasTileLayer.js:5115
-msgid "Remove Thread"
-msgstr ""
-
-#: src/layer/tile/CanvasTileLayer.js:5121
-msgid "Resolve"
-msgstr ""
-
-#: src/layer/tile/CanvasTileLayer.js:5121
-msgid "Unresolve"
-msgstr ""
-
-#: src/layer/tile/CanvasTileLayer.js:5127
-msgid "Unresolve Thread"
-msgstr ""
-
-#: src/layer/tile/CanvasTileLayer.js:5127
-msgid "Resolve Thread"
-msgstr ""
-
-#: src/map/Clipboard.js:138
+#: src/map/Clipboard.js:121
 msgid "To paste outside %productName, please first click the 'download' button"
 msgstr ""
 
-#: src/map/Clipboard.js:290
+#: src/map/Clipboard.js:131
+msgid "Copying from the document disabled"
+msgstr ""
+
+#: src/map/Clipboard.js:284
 msgid "Failed to download clipboard, please re-copy"
 msgstr ""
 
-#: src/map/Clipboard.js:886
+#: src/map/Clipboard.js:852
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:888
+#: src/map/Clipboard.js:854
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -1866,7 +1854,7 @@ msgid ""
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
 
-#: src/map/Clipboard.js:909
+#: src/map/Clipboard.js:875
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -1875,28 +1863,28 @@ msgid ""
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
 
-#: src/map/Clipboard.js:925
+#: src/map/Clipboard.js:891
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
 msgstr ""
 
-#: src/map/Map.js:230
+#: src/map/Map.js:240
 msgid "Initializing..."
 msgstr "’Ga thòiseachadh..."
 
-#: src/map/Map.js:440
+#: src/map/Map.js:451
 #, javascript-format
 msgid "%d seconds ago"
 msgstr ""
 
-#: src/map/Map.js:443
+#: src/map/Map.js:454
 #, javascript-format
 msgid "%d minutes ago"
 msgstr ""
 
-#: src/map/Map.js:1420
+#: src/map/Map.js:1474
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 "Sgrìobhainn neo-ghnìomhach - dèan briogadh airson leantainn air an deasachadh"
@@ -1928,6 +1916,12 @@ msgstr "A’ cruthachadh faidhle ùr de theamplaid…"
 #: src/map/handler/Map.WOPI.js:404
 msgid "Creating copy..."
 msgstr "A’ cruthachadh an lethbhric…"
+
+#~ msgid "Modify"
+#~ msgstr "Atharraich"
+
+#~ msgid "Remove"
+#~ msgstr "Thoir air falbh"
 
 #, fuzzy
 #~ msgid ""
