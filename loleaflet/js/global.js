@@ -797,8 +797,9 @@ window.app = { // Shouldn't have any functions defined.
 		global.docURL = filePath;
 	}
 
-	// Form a valid URL to the host with the given path.
-	global.makeURL = function (path) {
+	// Form a valid HTTP URL to the host with the given path.
+	global.makeHttpUrl = function (path) {
+		console.assert(global.webserver.startsWith('http'), 'webserver is not http: ' + global.webserver);
 		return global.webserver + global.serviceRoot + path;
 	};
 
