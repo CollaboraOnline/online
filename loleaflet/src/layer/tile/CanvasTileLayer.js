@@ -1875,7 +1875,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this._map.options.wopiSrc != '') {
 			wopiSrc = '?WOPISrc=' + this._map.options.wopiSrc;
 		}
-		var url = window.makeURL('/' + this._map.options.urlPrefix + '/' +
+		var url = window.makeHttpUrl('/' + this._map.options.urlPrefix + '/' +
 						encodeURIComponent(this._map.options.doc) + '/download/' +
 						command.downloadid + wopiSrc);
 
