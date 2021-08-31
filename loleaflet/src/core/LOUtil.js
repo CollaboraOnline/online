@@ -83,8 +83,7 @@ L.LOUtil = {
 		if (window.host === '' && window.serviceRoot === '')
 			return path; // mobile
 
-		var realHost = window.host.replace(/^ws/i, 'http');
-		var url = realHost + window.serviceRoot + '/loleaflet/' + window.versionPath;
+		var url = window.makeHttpUrl('/loleaflet/' + window.versionPath);
 		if (path.substr(0,1) !== '/')
 			url += '/';
 		url += path;

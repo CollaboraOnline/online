@@ -71,7 +71,7 @@ L.Clipboard = L.Class.extend({
 	},
 
 	getMetaBase: function() {
-		return window.webserver + window.serviceRoot;
+		return window.makeHttpUrl('');
 	},
 
 	getMetaPath: function(idx) {
