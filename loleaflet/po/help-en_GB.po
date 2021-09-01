@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-31 09:51+0200\n"
-"PO-Revision-Date: 2021-05-14 09:00+0000\n"
+"PO-Revision-Date: 2021-09-01 18:50+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
 "collabora-online/help/en_GB/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 "X-Pootle-Path: /en_GB/libo_online/loleaflet-help-en_GB.po\n"
 "X-Pootle-Revision: 830635\n"
 
@@ -1030,55 +1030,59 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Navigating in Spreadsheets"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Moves the cursor to the first cell in the sheet (A1)."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "Moves the cursor to the last cell on the sheet that contains data."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-18
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Moves the cursor to the first cell of the current row."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Moves the cursor to the last cell of the current row."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
 msgstr ""
+"Selects cells from the current cell to the first cell of the current row."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
 msgstr ""
+"Selects cells from the current cell to the last cell of the current row."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
+"Selects cells from the current cell up to one page in the current column or "
+"extends the existing selection one page up."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-164
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-18
 msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
+"Selects cells from the current cell down to one page in the current column "
+"or extends the existing selection one page down."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-168
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
 msgid ""
@@ -1086,11 +1090,13 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"Moves the cursor to the left edge of the current data range. If the column "
+"to the left of the cell that contains the cursor is empty, the cursor moves "
+"to the next column to the left that contains data"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-245
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
 msgid ""
@@ -1098,11 +1104,13 @@ msgid ""
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
+"Moves the cursor to the right edge of the current data range. If the column "
+"to the right of the cell that contains the cursor is empty, the cursor moves "
+"to the next column to the right that contains data."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-18
 msgid ""
@@ -1110,11 +1118,13 @@ msgid ""
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
+"Moves the cursor to the top edge of the current data range. If the row above "
+"the cell that contains the cursor is empty, the cursor moves up to the next "
+"row that contains data."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-221
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Up"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-18
 msgid ""
@@ -1122,9 +1132,11 @@ msgid ""
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"Moves the cursor to the bottom edge of the current data range. If the row "
+"below the cell that contains the cursor is empty, the cursor moves down to "
+"the next row that contains data."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-226
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
 
@@ -1135,33 +1147,34 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
+"Selects all cells containing data from the current cell to the end of the "
+"continuous range of data cells, in the direction of the arrow pressed. If "
+"used to select rows and columns together, a rectangular cell range is "
+"selected."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-272
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Arrow"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Arrow Up"
+"--plus\">+</span><kbd>Arrow"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Moves one sheet to the left."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-73
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "Moves one screen page to the right."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-80
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
 msgid ""
@@ -1169,15 +1182,17 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
+"Adds the previous sheet to the current selection of sheets. If all the "
+"sheets in a spreadsheet are selected, this shortcut key combination only "
+"selects the previous sheet. Makes the previous sheet the current sheet."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-260
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Up"
 msgstr ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"--plus\">+</span><kbd>Page Up"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
 msgid ""
@@ -1185,15 +1200,17 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"Adds the next sheet to the current selection of sheets. If all the sheets in "
+"a spreadsheet are selected, this shortcut key combination only selects the "
+"next sheet. Makes the next sheet the current sheet."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-248
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Down"
 msgstr ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"--plus\">+</span><kbd>Page Down"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""
@@ -1201,40 +1218,41 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"where (*) is the multiplication sign on the numeric key pad. Selects the "
+"data range that contains the cursor. A range is a contiguous cell range that "
+"contains data and is bounded by empty row and columns."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
 msgstr ""
+"where (/) is the division sign on the numeric key pad. Selects the matrix "
+"formula range that contains the cursor."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-158
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "Insert cells (as in menu Insert - Cells)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-85
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "Delete cells (as in menu Edit - Delete Cells)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-90
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"
