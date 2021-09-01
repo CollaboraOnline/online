@@ -15,6 +15,8 @@
 
 #ifdef IOS
 #import "CODocument.h"
+#import <set>
+#import <string>
 #endif
 
 // On iOS at least we want to be able to have several documents open in the same app process.
@@ -22,7 +24,7 @@
 // It is somewhat complicated to make sure we access the same LibreOfficeKit object for the document
 // in both the iOS-specific Objective-C++ code and in the mostly generic Online C++ code.
 
-// We pass around a numeric ever-increasing document identifier that gets biumped for each document
+// We pass around a numeric ever-increasing document identifier that gets bumped for each document
 // the system asks the app to open.
 
 // For iOS, it is the static std::atomic<unsigned> appDocIdCounter in CODocument.mm.
@@ -32,13 +34,14 @@
 // and opening of several documents in sequence very quickly might cause discrepancies, so it is
 // better to usea different counter to be sure. Patches to use just one counter welcome.
 
-struct DocumentData
+class DocumentData
 {
-    lok::Document *loKitDocument;
+private:
 #ifdef IOS
-    CODocument *coDocument;
+    std::set<std::string> inFlightTiles;
 #endif
 
+public:
     DocumentData() :
         loKitDocument(nullptr)
 #ifdef IOS
@@ -46,10 +49,20 @@ struct DocumentData
 #endif
     {
     }
-};
 
-DocumentData &allocateDocumentDataForMobileAppDocId(unsigned docId);
-DocumentData &getDocumentDataForMobileAppDocId(unsigned docId);
-void deallocateDocumentDataForMobileAppDocId(unsigned docId);
+    lok::Document *loKitDocument;
+
+    static DocumentData &allocate(unsigned docId);
+    static DocumentData &get(unsigned docId);
+    static void deallocate(unsigned docId);
+
+#ifdef IOS
+    CODocument *coDocument;
+
+    static int numberOfInFlightTiles(unsigned docId);
+    static void addInFlightTile(unsigned docId, const std::string& tileURL);
+    static void removeInFlightTile(unsigned docId, const std::string& tileURL);
+#endif
+};
 
 #endif

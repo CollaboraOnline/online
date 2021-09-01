@@ -2716,7 +2716,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             if (!success.isEmpty() && success.toString() == "true")
             {
 #if defined(IOS)
-                CODocument *document = getDocumentDataForMobileAppDocId(_docManager->getMobileAppDocId()).coDocument;
+                CODocument *document = DocumentData::get(_docManager->getMobileAppDocId()).coDocument;
                 [document saveToURL:[document fileURL]
                    forSaveOperation:UIDocumentSaveForOverwriting
                   completionHandler:^(BOOL success) {
