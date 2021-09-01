@@ -568,7 +568,7 @@ public:
         }
 
 #ifdef IOS
-        deallocateDocumentDataForMobileAppDocId(_mobileAppDocId);
+        DocumentData::deallocate(_mobileAppDocId);
 #endif
     }
 
@@ -760,7 +760,7 @@ public:
         };
 
         if (!RenderTiles::doRender(_loKitDocument, tileCombined, _pngCache, _pngPool, combined,
-                                   blenderFunc, postMessageFunc))
+                                   blenderFunc, postMessageFunc, _mobileAppDocId))
         {
             LOG_DBG("All tiles skipped, not producing empty tilecombine: message");
             return;
@@ -1309,7 +1309,7 @@ private:
             LOG_DBG("Returned lokit::documentLoad(" << FileUtil::anonymizeUrl(pURL) << ") in "
                                                     << elapsed);
 #ifdef IOS
-            getDocumentDataForMobileAppDocId(_mobileAppDocId).loKitDocument = _loKitDocument.get();
+            DocumentData::get(_mobileAppDocId).loKitDocument = _loKitDocument.get();
 #endif
             if (!_loKitDocument || !_loKitDocument->get())
             {
