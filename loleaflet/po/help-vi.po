@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-31 09:51+0200\n"
-"PO-Revision-Date: 2021-05-14 09:00+0000\n"
+"PO-Revision-Date: 2021-09-01 18:50+0000\n"
 "Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/help/vi/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1023,42 +1023,43 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Điều hướng trong Trang tính"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Di chuyển con trỏ đến ô đầu tiên trong trang tính (A1)."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "Di chuyển con trỏ đến ô cuối cùng có chứa dữ liệu trên trang tính."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-18
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Di chuyển con trỏ đến ô đầu tiên của dòng hiện tại."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Di chuyển con trỏ đến ô cuối cùng của dòng hiện tại."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
-msgstr ""
+msgstr "Chọn các ô từ ô hiện tại đến ô đầu tiên của hàng hiện tại."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
-msgstr ""
+msgstr "Chọn các ô từ ô hiện tại đến ô cuối cùng của hàng hiện tại."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
+"Chọn các ô từ ô hiện tại tối đa lên một trang trong cột hiện tại hoặc mở "
+"rộng sự lựa chọn hiện tại lên một trang."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-164
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
 
@@ -1067,9 +1068,10 @@ msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
+"Chọn các ô từ ô hiện tại tối đa xuống một trang trong cột hiện tại hoặc mở "
+"rộng sự lựa chọn hiện tại xuống một trang."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-168
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
 
