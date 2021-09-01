@@ -507,7 +507,8 @@ namespace RenderTiles
                                             size_t pixmapWidth, size_t pixmapHeight,
                                             int pixelWidth, int pixelHeight,
                                             LibreOfficeKitTileMode mode)>& blendWatermark,
-                  const std::function<void (const char *buffer, size_t length)>& outputMessage)
+                  const std::function<void (const char *buffer, size_t length)>& outputMessage,
+                  unsigned mobileAppDocId)
     {
         auto& tiles = tileCombined.getTiles();
 
@@ -618,17 +619,22 @@ namespace RenderTiles
                        pixmap.data() + (offsetY + y) * pixmapWidth * 4 + offsetX * 4,
                        pixelWidth * 4);
 
+            std::string tileURL([[mmapFileURL absoluteString] UTF8String]);
+
+            DocumentData::addInFlightTile(mobileAppDocId, tileURL);
+
             if (munmap(mmapMemory, mmapFileSize) == -1)
             {
                 LOG_SYS("Could not unmap file " << [[mmapFileURL path] UTF8String]);
                 return false;
             }
 
-            std::string tileMsg = tiles[i].serialize("tile:", ADD_DEBUG_RENDERID) + std::string([[mmapFileURL absoluteString] UTF8String]);
+            std::string tileMsg = tiles[i].serialize("tile:", ADD_DEBUG_RENDERID) + tileURL;
             outputMessage(tileMsg.c_str(), tileMsg.length());
         }
 
 #else
+        (void) mobileAppDocId;
 
         const auto mode = static_cast<LibreOfficeKitTileMode>(document->getTileMode());
 

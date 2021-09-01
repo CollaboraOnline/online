@@ -365,7 +365,7 @@ static IMP standardImpOfInputAccessoryView = nil;
             self.slideshowFile = FileUtil::createRandomTmpDir() + "/slideshow.svg";
             self.slideshowURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:self.slideshowFile.c_str()] isDirectory:NO];
 
-            getDocumentDataForMobileAppDocId(self.document->appDocId).loKitDocument->saveAs([[self.slideshowURL absoluteString] UTF8String], "svg", nullptr);
+            DocumentData::get(self.document->appDocId).loKitDocument->saveAs([[self.slideshowURL absoluteString] UTF8String], "svg", nullptr);
 
             // Add a new full-screen WebView displaying the slideshow.
 
@@ -419,7 +419,7 @@ static IMP standardImpOfInputAccessoryView = nil;
 
             std::string printFile = FileUtil::createRandomTmpDir() + "/print.pdf";
             NSURL *printURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:printFile.c_str()] isDirectory:NO];
-            getDocumentDataForMobileAppDocId(self.document->appDocId).loKitDocument->saveAs([[printURL absoluteString] UTF8String], "pdf", nullptr);
+            DocumentData::get(self.document->appDocId).loKitDocument->saveAs([[printURL absoluteString] UTF8String], "pdf", nullptr);
 
             UIPrintInteractionController *pic = [UIPrintInteractionController sharedPrintController];
             UIPrintInfo *printInfo = [UIPrintInfo printInfo];
@@ -502,7 +502,7 @@ static IMP standardImpOfInputAccessoryView = nil;
 
                 std::remove([[downloadAsTmpURL path] UTF8String]);
 
-                getDocumentDataForMobileAppDocId(self.document->appDocId).loKitDocument->saveAs([[downloadAsTmpURL absoluteString] UTF8String], [format UTF8String], nullptr);
+                DocumentData::get(self.document->appDocId).loKitDocument->saveAs([[downloadAsTmpURL absoluteString] UTF8String], [format UTF8String], nullptr);
 
                 // Then verify that it indeed was saved, and then use an
                 // UIDocumentPickerViewController to ask the user where to store the exported
@@ -535,6 +535,9 @@ static IMP standardImpOfInputAccessoryView = nil;
 
             if (unlink([[tile path] UTF8String]) == -1) {
                 LOG_SYS("Could not unlink tile " << [[tile path] UTF8String]);
+            } else {
+                const std::string tileURL = std::string([[tile absoluteString] UTF8String]);
+                DocumentData::removeInFlightTile(self.document->appDocId, tileURL);
             }
             return;
         }
@@ -587,7 +590,7 @@ static IMP standardImpOfInputAccessoryView = nil;
     // Close one end of the socket pair, that will wake up the forwarding thread above
     fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
 
-    // deallocateDocumentDataForMobileAppDocId(self.document->appDocId);
+    // DocumentData::deallocate(self.document->appDocId);
 
     if (![[NSFileManager defaultManager] removeItemAtURL:self.document->copyFileURL error:nil]) {
         LOG_SYS("Could not remove copy of document at " << [[self.document->copyFileURL path] UTF8String]);
