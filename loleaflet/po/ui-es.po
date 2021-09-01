@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-31 09:51+0200\n"
-"PO-Revision-Date: 2021-07-15 16:02+0000\n"
+"PO-Revision-Date: 2021-09-01 18:50+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7.2-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-ui-es.po\n"
 "X-Pootle-Revision: 3939976\n"
 
@@ -1464,11 +1464,11 @@ msgstr "El servidor es ahora accesible. La página debe actualizarse ahora."
 
 #: src/core/Socket.js:511
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "El servidor es ahora accesible…"
 
 #: src/core/Socket.js:514
 msgid "RELOAD"
-msgstr ""
+msgstr "RECARGAR"
 
 #: src/core/Socket.js:532
 msgid "Served by:"
@@ -1557,15 +1557,15 @@ msgstr "Se proporcionó una contraseña incorrecta. Inténtelo de nuevo."
 
 #: src/core/Socket.js:1009
 msgid "Someone"
-msgstr ""
+msgstr "Alguien"
 
 #: src/core/Socket.js:1011
 msgid " saved this document as "
-msgstr ""
+msgstr " guardó este documento como "
 
 #: src/core/Socket.js:1011
 msgid ". Do you want to join?"
-msgstr ""
+msgstr ". ¿Quiere incorporarse?"
 
 #: src/core/Socket.js:1020
 msgid "Loading..."
@@ -1587,7 +1587,7 @@ msgstr "Se produjo un error de conexión con el documento. Inténtelo de nuevo."
 
 #: src/core/Socket.js:1401
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Se ha desconectado el servidor."
 
 #: src/errormessages.js:13
 msgid ""
@@ -1792,7 +1792,7 @@ msgstr "Para pegar fuera de %productName, primero pulse en el botón «Descargar
 
 #: src/map/Clipboard.js:131
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Se desactivó la copia desde el documento"
 
 #: src/map/Clipboard.js:284
 msgid "Failed to download clipboard, please re-copy"
