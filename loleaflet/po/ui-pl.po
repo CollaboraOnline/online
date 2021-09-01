@@ -13,18 +13,18 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-31 09:51+0200\n"
-"PO-Revision-Date: 2021-06-29 20:22+0000\n"
+"PO-Revision-Date: 2021-09-01 18:50+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<"
-"12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) ||"
-" (n%100>=12 && n%100<=14) ? 2 : 3);\n"
-"X-Generator: Weblate 4.7.1-dev\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -459,7 +459,7 @@ msgstr "Do"
 
 #: src/control/Control.JSDialogBuilder.js:1211
 msgid "Color"
-msgstr ""
+msgstr "Kolor"
 
 #: src/control/Control.JSDialogBuilder.js:1335
 msgid "Select range"
@@ -1465,11 +1465,11 @@ msgstr "Serwer jest teraz osiągalny. Teraz musimy odświeżyć stronę."
 
 #: src/core/Socket.js:511
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "Serwer jest teraz osiągalny..."
 
 #: src/core/Socket.js:514
 msgid "RELOAD"
-msgstr ""
+msgstr "PRZEŁADUJ"
 
 #: src/core/Socket.js:532
 msgid "Served by:"
@@ -1558,15 +1558,15 @@ msgstr "Błędne hasło. Proszę spróbować ponownie."
 
 #: src/core/Socket.js:1009
 msgid "Someone"
-msgstr ""
+msgstr "Ktoś"
 
 #: src/core/Socket.js:1011
 msgid " saved this document as "
-msgstr ""
+msgstr " zapisał ten dokument jako "
 
 #: src/core/Socket.js:1011
 msgid ". Do you want to join?"
-msgstr ""
+msgstr ". Chcesz dołączyć?"
 
 #: src/core/Socket.js:1020
 msgid "Loading..."
@@ -1591,7 +1591,7 @@ msgstr ""
 
 #: src/core/Socket.js:1401
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Serwer został odłączony."
 
 #: src/errormessages.js:13
 msgid ""
@@ -1791,7 +1791,7 @@ msgstr "Aby wkleić poza %productName, najpierw kliknij przycisk 'Pobierz'"
 
 #: src/map/Clipboard.js:131
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Kopiowanie z dokumentu wyłączone"
 
 #: src/map/Clipboard.js:284
 msgid "Failed to download clipboard, please re-copy"
