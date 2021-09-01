@@ -39,12 +39,9 @@ void DocumentData::deallocate(unsigned docId)
 {
     assert(idToDocDataMap.find(docId) != idToDocDataMap.end());
     DocumentData &d = get(docId);
-#if 0
-    if (d.inFlightTiles.size() > 0)
-        NSLog(@"==== Leftover tiles:");
+#ifdef IOS
     for (const auto& tile : d.inFlightTiles)
     {
-        NSLog(@"     %s", tile.c_str());
         if (unlink([[[NSURL URLWithString:[NSString stringWithUTF8String:tile.c_str()]] path] UTF8String]) == -1 && errno != ENOENT) {
             LOG_SYS("Could not unlink tile " << tile);
         }
