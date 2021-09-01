@@ -3,17 +3,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-31 09:51+0200\n"
-"PO-Revision-Date: 2021-08-15 11:32+0000\n"
-"Last-Translator: Tymofii Lytvynenko <till.svit@gmail.com>\n"
+"PO-Revision-Date: 2021-09-01 18:50+0000\n"
+"Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/help/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 "X-Pootle-Path: /uk/libo_online/loleaflet-help-uk.po\n"
 "X-Pootle-Revision: 3023426\n"
 
@@ -1029,55 +1029,58 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Навігація в електронних таблицях"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Переміщує курсор до першої комірки аркуша (A1)."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "Переміщує курсор до останньої комірки аркуша, що містить дані."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-18
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Переміщує курсор до першої комірки поточного рядка."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Переміщує курсор до останньої комірки поточного рядка."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
-msgstr ""
+msgstr "Виділяє комірки від поточної комірки до першої комірки поточного рядка."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
 msgstr ""
+"Виділяє комірки від поточної комірки до останньої комірки поточного рядка."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
+"Виділяє клітинки від поточної комірки вгору до однієї сторінки в поточному "
+"стовпці або розширює наявну виділену сторінку на одну сторінку вгору."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-164
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-18
 msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
+"Виділяє клітинки від поточної комірки вниз до однієї сторінки у поточному "
+"стовпці або розширює наявну виділену сторінку на одну сторінку вниз."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-168
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
 msgid ""
@@ -1085,11 +1088,13 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"Переміщує курсор до лівого краю поточного діапазону даних. Якщо стовпець "
+"ліворуч від комірки, що містить курсор, порожній, курсор переміщається до "
+"наступного стовпця ліворуч, який містить дані"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-245
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Стрілка вліво"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
 msgid ""
@@ -1097,11 +1102,13 @@ msgid ""
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
+"Переміщує курсор до правого краю поточного діапазону даних. Якщо стовпець "
+"праворуч від комірки, що містить курсор, порожній, курсор переміщається до "
+"наступного стовпця праворуч, який містить дані."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Стрілка вправо"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-18
 msgid ""
@@ -1109,9 +1116,11 @@ msgid ""
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
+"Переміщує курсор до верхнього краю поточного діапазону даних. Якщо рядок над "
+"коміркою, що містить курсор, порожній, курсор переміщається вгору до "
+"наступного рядка, який містить дані."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-221
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Стрілка вгору"
 
@@ -1121,11 +1130,13 @@ msgid ""
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"Переміщує курсор до нижнього краю поточного діапазону даних. Якщо рядок під "
+"коміркою, що містить курсор, порожній, курсор переміщується вниз до "
+"наступного рядка, який містить дані."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-226
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Стрілка вниз"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-18
 msgid ""
@@ -1134,33 +1145,34 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
+"Вибирає всі комірки, що містять дані, від поточної комірки до кінця "
+"безперервного діапазону комірок даних у напрямку натиснутої стрілки. Якщо "
+"застосовується для вибору рядків і стовпців разом, вибирається прямокутний "
+"діапазон комірок."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-272
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Arrow"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Стрілка вгору"
+"--plus\">+</span><kbd>Стрілка"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Переміщує один аркуш ліворуч."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-73
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "Переміщує одну сторінку екрана праворуч."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-80
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
 msgid ""
@@ -1168,15 +1180,17 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
+"Додає попередній аркуш до поточних вибраних аркушів. Якщо вибрано всі аркуші "
+"в електронній таблиці, ця комбінація клавіш вибирає лише попередній аркуш. "
+"Робить попередній аркуш поточним аркушем."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-260
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Up"
 msgstr ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"--plus\">+</span><kbd>Page Up"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
 msgid ""
@@ -1184,15 +1198,17 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"Додає наступний аркуш до поточних вибраних аркушів. Якщо вибрано всі аркуші "
+"електронної таблиці, ця комбінація клавіш вибирає лише наступний аркуш. "
+"Зробить наступний аркуш поточним аркушем."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-248
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Down"
 msgstr ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"--plus\">+</span><kbd>Page Down"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""
@@ -1200,40 +1216,41 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"де (*) — знак множення на цифровій клавіатурі. Вибирає діапазон даних, що "
+"містить курсор. Діапазон — це суміжний діапазон комірок, який містить дані "
+"та обмежений порожнім рядком і стовпцями."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
 msgstr ""
+"де (/) — знак ділення на цифровій клавіатурі. Вибирає діапазон матричних "
+"формул, який містить курсор."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-158
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "Вставити комірки (як у меню Вставити - Комірки)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-85
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Клавіша плюс"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "Видалити комірки (як у меню Редагувати - Видалити комірки)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-90
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Клавіша мінус"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"

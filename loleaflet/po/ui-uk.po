@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-31 09:51+0200\n"
-"PO-Revision-Date: 2021-06-29 20:22+0000\n"
+"PO-Revision-Date: 2021-09-01 18:50+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.7.1-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 "X-Pootle-Path: /uk/libo_online/loleaflet-ui-uk.po\n"
 "X-Pootle-Revision: 3938227\n"
 
@@ -1460,11 +1460,11 @@ msgstr "Сервер тепер доступний. Ми мусимо онови
 
 #: src/core/Socket.js:511
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "Сервер уже доступний..."
 
 #: src/core/Socket.js:514
 msgid "RELOAD"
-msgstr ""
+msgstr "ПЕРЕЗАВАНТАЖИТИ"
 
 #: src/core/Socket.js:532
 msgid "Served by:"
@@ -1553,15 +1553,15 @@ msgstr "Надано неправильний пароль. Спробуйте �
 
 #: src/core/Socket.js:1009
 msgid "Someone"
-msgstr ""
+msgstr "Хтось"
 
 #: src/core/Socket.js:1011
 msgid " saved this document as "
-msgstr ""
+msgstr " зберігає цей документ як "
 
 #: src/core/Socket.js:1011
 msgid ". Do you want to join?"
-msgstr ""
+msgstr ". Бажаєте приєднатися?"
 
 #: src/core/Socket.js:1020
 msgid "Loading..."
@@ -1585,7 +1585,7 @@ msgstr ""
 
 #: src/core/Socket.js:1401
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Сервер від'єднано."
 
 #: src/errormessages.js:13
 msgid ""
@@ -1788,7 +1788,7 @@ msgstr ""
 
 #: src/map/Clipboard.js:131
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Копіювання з документа вимкнено"
 
 #: src/map/Clipboard.js:284
 msgid "Failed to download clipboard, please re-copy"
