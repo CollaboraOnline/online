@@ -556,7 +556,8 @@ class CommentSection {
 	}
 
 	public modify (annotation: any) {
-		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet()) {
+		var newAnnotationInCollapsedMode = this.isCollapsed && annotation.isCollapsed;
+		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet() || newAnnotationInCollapsedMode) {
 			var that = this;
 			this.newAnnotationVex(annotation, function(annotation: any) { that.save(annotation); }, /* isMod */ true);
 		} else {
@@ -901,6 +902,10 @@ class CommentSection {
 
 		this.orderCommentList();
 		this.checkSize();
+
+		if (this.isCollapsed)
+			annotation.setCollapsed();
+
 		return annotation;
 	}
 

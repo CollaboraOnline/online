@@ -270,7 +270,7 @@ function deleteImage() {
 		.should('not.exist');
 }
 
-function insertMultipleComment(docType, numberOfComments = 1) {
+function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) {
 	var mode = Cypress.env('USER_INTERFACE');
 
 	cy.get('#toolbar-up .w2ui-scroll-right').then($button => {
@@ -308,11 +308,17 @@ function insertMultipleComment(docType, numberOfComments = 1) {
 
 		cy.get('.loleaflet-annotation-table').should('exist');
 
-		cy.get('#annotation-modify-textarea-new').type('some text' + n);
+		if (isMobile) {
+			cy.get('#new-mobile-comment-input-area').type('some text' + n);
 
-		cy.wait(500);
+			cy.get('.vex-dialog-button-primary').click();
+		} else {
+			cy.get('#annotation-modify-textarea-new').type('some text' + n);
 
-		cy.get('#annotation-save-new').click();
+			cy.wait(500);
+
+			cy.get('#annotation-save-new').click();
+		}
 	}
 }
 

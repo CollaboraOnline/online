@@ -9,6 +9,7 @@ describe('Annotation Tests', function() {
 	var testFileName = 'comment_switching.odp';
 
 	beforeEach(function() {
+		cy.viewport(1500, 600);
 		helper.beforeAll(testFileName, 'impress');
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
@@ -41,6 +42,89 @@ describe('Annotation Tests', function() {
 
 		cy.get('#annotation-content-area-1').should('contain','some text0');
 
+		cy.get('.loleaflet-annotation-content-wrapper:visible .loleaflet-annotation-menu').click();
+
+		cy.contains('.context-menu-item','Modify').click();
+
+		cy.get('#annotation-modify-textarea-1').type('some other text, ');
+
+		cy.get('#annotation-save-1').click();
+
+		cy.get('#annotation-content-area-1').should('contain','some other text, some text0');
+
+		cy.get('.leaflet-marker-icon').should('exist');
+	});
+
+	it('Remove',function() {
+		insertMultipleComment('impress');
+
+		cy.get('.leaflet-marker-icon').should('exist');
+
+		cy.get('.loleaflet-annotation-content > div').should('contain','some text');
+
+		cy.get('.loleaflet-annotation-content-wrapper:visible .loleaflet-annotation-menu').click();
+
+		cy.contains('.context-menu-item','Remove')
+			.click();
+
+		cy.get('.leaflet-marker-icon').should('not.exist');
+	});
+
+	it('Reply',function() {
+		insertMultipleComment('impress');
+
+		cy.get('.leaflet-marker-icon').should('exist');
+
+		cy.get('.loleaflet-annotation-content > div').should('contain','some text');
+
+		cy.get('.loleaflet-annotation-content-wrapper:visible .loleaflet-annotation-menu').click();
+
+		cy.contains('.context-menu-item','Reply').click();
+
+		cy.get('#annotation-reply-textarea-1').type('some reply text');
+
+		cy.get('#annotation-reply-1').click();
+
+		cy.get('.loleaflet-annotation-content > div').should('include.text','some reply text');
+	});
+});
+
+describe('Collapsed Annotation Tests', function() {
+	var testFileName = 'comment_switching.odp';
+
+	beforeEach(function() {
+		helper.beforeAll(testFileName, 'impress');
+
+		if (Cypress.env('INTEGRATION') === 'nextcloud') {
+			desktopHelper.hideSidebarIfVisible();
+		} else if (Cypress.env('USER_INTERFACE') === 'notebookbar') {
+			cy.get('#ModifyPage').click();
+		} else {
+			desktopHelper.hideSidebar();
+		}
+
+		desktopHelper.selectZoomLevel('50');
+	});
+
+	afterEach(function() {
+		helper.afterAll(testFileName, this.currentTest.state);
+	});
+
+
+	it('Insert', function() {
+		insertMultipleComment('impress', 1, true);
+		cy.get('.leaflet-marker-icon').should('exist');
+		cy.get('.loleaflet-annotation-content > div')
+			.should('contain','some text');
+	});
+
+	it('Modify', function() {
+		insertMultipleComment('impress', 1, true);
+
+		cy.get('.leaflet-marker-icon').should('exist');
+
+		cy.get('#annotation-content-area-1').should('contain','some text0');
+
 		cy.get('#mobile-wizard-popup .loleaflet-annotation-menu').click();
 
 		cy.contains('.context-menu-item','Modify').click();
@@ -55,7 +139,7 @@ describe('Annotation Tests', function() {
 	});
 
 	it('Remove',function() {
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, true);
 
 		cy.get('.leaflet-marker-icon').should('exist');
 
@@ -70,7 +154,7 @@ describe('Annotation Tests', function() {
 	});
 
 	it('Reply',function() {
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, true);
 
 		cy.get('.leaflet-marker-icon').should('exist');
 
@@ -102,16 +186,16 @@ describe('Comment Scrolling',function() {
 	it('no comment or one comment', function() {
 		cy.wait(1000);
 		cy.get('.leaflet-control-scroll-down').should('not.exist');
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, true);
 		cy.get('.leaflet-marker-icon').should('exist');
 	});
 
 	it('omit slides without comments', function() {
 		cy.wait(1000);
 		//scroll up
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, true);
 		addSlide(2);
-		insertMultipleComment('impress');
+		insertMultipleComment('impress', 1, true);
 		cy.get('.jsdialog-overlay').click({force: true});
 		cy.get('.leaflet-control-scroll-up').should('exist');
 		cy.get('.leaflet-control-scroll-up').click().wait(300);
@@ -126,7 +210,7 @@ describe('Comment Scrolling',function() {
 
 	it('switch to previous or next slide',function() {
 		addSlide(1);
-		insertMultipleComment('impress', 2);
+		insertMultipleComment('impress', 2, true);
 
 		//scroll up
 		addSlide(1);

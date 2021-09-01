@@ -272,7 +272,7 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Insert comment.', function() {
-		desktopHelper.insertMultipleComment('writer');
+		desktopHelper.insertMultipleComment('writer', 1, true);
 
 		cy.get('.loleaflet-annotation-content-wrapper').should('exist');
 
