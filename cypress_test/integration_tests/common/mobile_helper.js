@@ -50,8 +50,7 @@ function enableEditingMobile() {
 	// In writer, we should have the blinking cursor visible
 	// after stepping into editing mode.
 	helper.doIfInWriter(function() {
-		cy.get('.blinking-cursor')
-			.should('be.visible');
+		cy.get('.blinking-cursor', { timeout: 200 }).should('be.visible');
 	});
 
 	cy.log('Enabling editing mode - end.');

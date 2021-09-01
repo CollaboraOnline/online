@@ -70,7 +70,10 @@ describe('Track Changes', function() {
 
 		confirmChange('Accept All');
 
+		cy.log('Typing into document - ctrl + a.');
 		helper.typeIntoDocument('{ctrl}a');
+		cy.log('Typing into document - leftarrow.');
+		helper.typeIntoDocument('{leftarrow}');
 
 		helper.textSelectionShouldNotExist();
 	});

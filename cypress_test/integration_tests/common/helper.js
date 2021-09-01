@@ -373,6 +373,8 @@ function selectAllText() {
 	cy.log('Select all text - start');
 
 	typeIntoDocument('{ctrl}a');
+	cy.log('wait after selecting');
+	cy.wait(100);
 
 	textSelectionShouldExist();
 
