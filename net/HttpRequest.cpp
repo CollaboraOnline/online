@@ -17,6 +17,7 @@
 #include <fstream>
 #include <memory>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <sys/types.h>
 #include <netdb.h>
@@ -650,7 +651,7 @@ std::shared_ptr<Session> Session::create(std::string host, Protocol protocol, in
     if (!net::parseUri(host, scheme, hostname, portString))
     {
         LOG_ERR("Invalid URI [" << host << "] to http::Session::create.");
-        return nullptr;
+        throw std::runtime_error("Invalid URI [" + host + "] to http::Session::create.");
     }
 
     scheme = Util::toLower(std::move(scheme));
