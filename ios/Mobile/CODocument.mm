@@ -71,7 +71,7 @@ static std::atomic<unsigned> appDocIdCounter(1);
 
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"loleaflet" withExtension:@"html"];
     NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
-    allocateDocumentDataForMobileAppDocId(appDocId).coDocument = self;
+    DocumentData::allocate(appDocId).coDocument = self;
     components.queryItems = @[ [NSURLQueryItem queryItemWithName:@"file_path" value:[copyFileURL absoluteString]],
                                [NSURLQueryItem queryItemWithName:@"closebutton" value:@"1"],
                                [NSURLQueryItem queryItemWithName:@"permission" value:@"edit"],
