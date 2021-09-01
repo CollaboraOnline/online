@@ -466,6 +466,9 @@ app.definitions.Socket = L.Class.extend({
 			console.log('Failed to load image ' + img + ' fun ' + err);
 			e.imageIsComplete = true;
 			that._queueSlurpEventEmission();
+			if (window.ThisIsTheiOSApp) {
+				window.webkit.messageHandlers.lool.postMessage('REMOVE ' + e.image.src, '*');
+			}
 			if (e.image.completeTraceEvent)
 				e.image.completeTraceEvent.abort();
 		};
