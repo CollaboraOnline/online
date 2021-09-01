@@ -284,6 +284,21 @@ static IMP standardImpOfInputAccessoryView = nil;
 
         LOG_TRC("To Online: " << [subBody UTF8String]);
 
+#if 0
+        static int n = 0;
+
+        if ((n++ % 10) == 0) {
+            auto enumerator = [[NSFileManager defaultManager] enumeratorAtPath:NSHomeDirectory()];
+            NSString *file;
+            long long total = 0;
+            while ((file = [enumerator nextObject])) {
+                if ([enumerator fileAttributes][NSFileType] == NSFileTypeRegular)
+                    total += [[enumerator fileAttributes][NSFileSize] longLongValue];
+            }
+            NSLog(@"==== Total size of app home directory: %lld", total);
+        }
+#endif
+
         if ([message.body isEqualToString:@"HULLO"]) {
             // Now we know that the JS has started completely
 

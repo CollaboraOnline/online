@@ -41,14 +41,18 @@
     NSLog(@"Contents of NSHomeDirectory:");
     auto enumerator = [[NSFileManager defaultManager] enumeratorAtPath:NSHomeDirectory()];
     NSString *file;
+    long long total = 0;
     while ((file = [enumerator nextObject])) {
         NSString *suffix = @"";
-        if ([enumerator fileAttributes][NSFileType] == NSFileTypeRegular)
+        if ([enumerator fileAttributes][NSFileType] == NSFileTypeRegular) {
             suffix = [NSString stringWithFormat:@"  %@", [enumerator fileAttributes][NSFileSize]];
-        else if ([enumerator fileAttributes][NSFileType] == NSFileTypeDirectory)
+            total += [[enumerator fileAttributes][NSFileSize] longLongValue];
+        } else if ([enumerator fileAttributes][NSFileType] == NSFileTypeDirectory) {
             suffix = @"/";
+        }
         NSLog(@"%@%@%@", [NSString stringWithFormat:@"%*s", (int)[enumerator level] * 2, ""], [file lastPathComponent], suffix);
     }
+    NSLog(@"==== Total size of app home directory: %lld", total);
 #endif
 }
 
