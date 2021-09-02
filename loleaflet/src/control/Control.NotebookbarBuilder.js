@@ -457,6 +457,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					}
 				});
 			});
+			builder._preventDocumentLosingFocusOnClick(div);
 		}
 
 		return false;
@@ -469,6 +470,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).click(function () {
 			builder.map.showHyperlinkDialog();
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_headerFooterControl: function(parentContainer, data, builder) {
@@ -482,6 +484,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				builder.callback('toolbutton', 'click', control.button, command, builder);
 			}
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_insertTextBoxControl: function(parentContainer, data, builder) {
@@ -491,6 +494,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).click(function () {
 			builder.map.sendUnoCommand(data.command + '?CreateDirectly:bool=true');
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_showResolvedAnnotationsControl: function(parentContainer, data, builder) {
@@ -503,6 +507,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			val = (val === 'true' || val === true);
 			builder.map.showResolvedComments(!val);
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_onlineHelpControl: function(parentContainer, data, builder) {
@@ -512,6 +517,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).click(function () {
 			L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_insertTableControl: function(parentContainer, data, builder) {
@@ -529,6 +535,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				});
 			}
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_shapesControl: function(parentContainer, data, builder) {
@@ -550,6 +557,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				});
 			}
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_conditionalFormatControl: function(parentContainer, data, builder) {
@@ -566,6 +574,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				});
 			}
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_borderStyleControl: function(parentContainer, data, builder) {
@@ -582,6 +591,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				});
 			}
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_insertGraphicControl: function(parentContainer, data, builder) {
@@ -608,12 +618,14 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				L.DomUtil.get('insertgraphic').click();
 			}
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_insertAnnotationControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {builder.map.insertComment();});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_clipboardButtonControl: function(parentContainer, data, builder) {
@@ -625,6 +637,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				builder.map._clip.filterExecCopyPaste(data.command);
 			});
 		}
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_lineSpacingControl: function(parentContainer, data, builder) {
@@ -657,6 +670,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				}
 			});
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_symbolControl: function(parentContainer, data, builder) {
@@ -666,6 +680,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).click(function () {
 			builder.map.sendUnoCommand('.uno:InsertSymbol');
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_startPresentationControl: function(parentContainer, data, builder) {
@@ -675,6 +690,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).click(function () {
 			builder.map.fire('fullscreen');
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_saveControl: function(parentContainer, data, builder) {
@@ -690,6 +706,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 				}
 			}
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_saveAsControl: function(parentContainer, data, builder) {
@@ -700,6 +717,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).click(function () {
 			builder.map.openSaveAs();
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_shareAsControl: function(parentContainer, data, builder) {
@@ -709,6 +727,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).click(function () {
 			builder.map.openShare();
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_printControl: function(parentContainer, data, builder) {
@@ -719,6 +738,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).click(function () {
 			builder.map.print();
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_revHistoryControl: function(parentContainer, data, builder) {
@@ -728,6 +748,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).click(function () {
 			builder.map.openRevisionHistory();
 		});
+		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
 	_menubarControl: function(parentContainer, data, builder) {
