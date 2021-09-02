@@ -1127,14 +1127,8 @@ L.TileLayer = L.GridLayer.extend({
 		var parser = document.createElement('a');
 		parser.href = window.host;
 
-		var wopiSrc = '';
-		console.assert(this._map.options.wopiSrc === window.wopiSrc, 'wopiSrc mismatch!: ' + this._map.options.wopiSrc + ' != ' + window.wopiSrc);
-		if (this._map.options.wopiSrc != '') {
-			wopiSrc = '?WOPISrc=' + this._map.options.wopiSrc;
-		}
-		var url = window.makeHttpUrl('/' + this._map.options.urlPrefix + '/' +
-						encodeURIComponent(this._map.options.doc) + '/download/' +
-						command.downloadid + wopiSrc);
+		var url = window.makeHttpUrlWopiSrc('/' + this._map.options.urlPrefix + '/',
+						this._map.options.doc, '/download/' + command.downloadid);
 
 		this._map.hideBusy();
 		if (this._map['wopi'].DownloadAsPostMessage) {
@@ -1146,9 +1140,10 @@ L.TileLayer = L.GridLayer.extend({
 				// due to a pdf.js issue - https://github.com/mozilla/pdf.js/issues/5397
 				// open the pdf file in a new tab so that that user can print it directly in the browser's
 				// pdf viewer
-				var param = wopiSrc !== '' ? '&' : '?';
-				param += 'attachment=0';
-				window.open(url + param, '_blank');
+				url = window.makeHttpUrlWopiSrc('/' + this._map.options.urlPrefix + '/',
+								this._map.options.doc, '/download/' + command.downloadid,
+									'attachment=0');
+				window.open(url, '_blank');
 			}
 			else {
 				this._map.fire('filedownloadready', {url: url});
