@@ -1472,7 +1472,7 @@ void WhiteBoxTests::testRequestDetails_local_hexified()
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(6), details.size());
         LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
         LOK_ASSERT(details.equals(0, "lool"));
-        LOK_ASSERT_EQUAL(fileUrlHex, details[1]);
+        LOK_ASSERT_EQUAL(fileUrl, details[1]);
         LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
         LOK_ASSERT_EQUAL(std::string("open"), details[3]);
         LOK_ASSERT_EQUAL(std::string("open"), details[4]);
@@ -1511,7 +1511,7 @@ void WhiteBoxTests::testRequestDetails_local_hexified()
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
         LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
         LOK_ASSERT(details.equals(0, "lool"));
-        LOK_ASSERT_EQUAL(fileUrlHex, details[1]);
+        LOK_ASSERT_EQUAL(fileUrl, details[1]);
         LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
         LOK_ASSERT_EQUAL(std::string("write"), details[3]); // SessionId, since the real SessionId is blank.
         LOK_ASSERT_EQUAL(std::string("2"), details[4]); // Command, since SessionId was blank.
@@ -1549,7 +1549,7 @@ void WhiteBoxTests::testRequestDetails_local_hexified()
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
         LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
         LOK_ASSERT(details.equals(0, "lool"));
-        LOK_ASSERT_EQUAL(fileUrlHex, details[1]);
+        LOK_ASSERT_EQUAL(fileUrl, details[1]);
         LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
         LOK_ASSERT_EQUAL(std::string("write"), details[3]); // SessionId, since the real SessionId is blank.
         LOK_ASSERT_EQUAL(std::string("2"), details[4]); // Command, since SessionId was blank.
