@@ -22,13 +22,7 @@ L.Map.FileInserter = L.Handler.extend({
 	},
 
 	getWopiUrl: function (map) {
-		var wopiSrc = '';
-		console.assert(map.options.wopiSrc === window.wopiSrc, 'wopiSrc mismatch!: ' + map.options.wopiSrc + ' != ' + window.wopiSrc);
-		if (map.options.wopiSrc != '') {
-			wopiSrc = '?WOPISrc=' + map.options.wopiSrc;
-		}
-		return window.makeHttpUrl('/' + map.options.urlPrefix +
-			'/' + encodeURIComponent(map.options.doc) + '/insertfile' + wopiSrc);
+		return window.makeHttpUrlWopiSrc('/' + map.options.urlPrefix + '/', map.options.doc, '/insertfile');
 	},
 
 	addHooks: function () {
