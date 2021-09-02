@@ -820,6 +820,8 @@ window.app = { // Shouldn't have any functions defined.
 		global.socket.onopen = function () {
 			if (global.socket.readyState === 1) {
 				var ProtocolVersionNumber = '0.1';
+				// timestamp
+				// A timestamp of the last modification to the document.
 				var timestamp = global.getParameterByName('timestamp');
 				var msg = 'load url=' + encodeURIComponent(global.docURL);
 
