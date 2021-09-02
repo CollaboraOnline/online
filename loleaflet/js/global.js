@@ -768,10 +768,9 @@ window.app = { // Shouldn't have any functions defined.
 
 	var docParams, wopiParams;
 	var filePath = global.getParameterByName('file_path');
-	var wopiSrc = global.getParameterByName('WOPISrc');
-	if (wopiSrc != '') {
-		global.docURL = decodeURIComponent(wopiSrc);
-		wopiSrc = '?WOPISrc=' + wopiSrc + '&compat=';
+	global.wopiSrc = global.getParameterByName('WOPISrc');
+	if (global.wopiSrc != '') {
+		global.docURL = decodeURIComponent(global.wopiSrc);
 		if (global.accessToken !== '') {
 			wopiParams = { 'access_token': global.accessToken, 'access_token_ttl': global.accessTokenTTL };
 		}
@@ -801,6 +800,20 @@ window.app = { // Shouldn't have any functions defined.
 	global.makeWsUrl = function (path) {
 		console.assert(global.host.startsWith('ws'), 'host is not ws: ' + global.host);
 		return global.host + global.serviceRoot + path;
+	};
+
+	// Form a valid WS URL to the host with the given path.
+	global.makeWsUrlWopiSrc = function (path, docUrlParams) {
+		var websocketURI = global.makeWsUrl(path);
+		var wopiSrc = '';
+		if (global.wopiSrc != '') {
+			wopiSrc = '?WOPISrc=' + global.wopiSrc + '&compat=';
+		}
+
+		var encodedDocUrl = encodeURIComponent(docUrlParams) + '/ws' + wopiSrc;
+		if (global.hexifyUrl)
+			encodedDocUrl = global.hexEncode(encodedDocUrl);
+		return websocketURI + encodedDocUrl + '/ws';
 	};
 
 	// Form a valid HTTP URL to the host with the given path.
@@ -837,7 +850,7 @@ window.app = { // Shouldn't have any functions defined.
 		// The URL may already contain a query (e.g., 'http://server.tld/foo/wopi/files/bar?desktop=baz') - then just append more params
 		var docParamsPart = docParams ? ((global.docURL.indexOf('?') >= 0) ? '&' : '?') + docParams : '';
 		var websocketURI = global.makeWsUrl('/lool/');
-		var encodedDocUrl = encodeURIComponent(global.docURL + docParamsPart) + '/ws' + wopiSrc;
+		var encodedDocUrl = encodeURIComponent(global.docURL + docParamsPart) + '/ws' + '?WOPISrc=' + global.wopiSrc + '&compat=';
 		if (global.hexifyUrl)
 			encodedDocUrl = global.hexEncode(encodedDocUrl);
 
