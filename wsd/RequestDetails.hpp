@@ -122,6 +122,7 @@ private:
     std::map<Field, std::string> _fields;
     std::map<std::string, std::string> _docUriParams;
 
+    void dehexify();
     void processURI();
 
 public:
