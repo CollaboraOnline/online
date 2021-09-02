@@ -223,6 +223,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		L.ColorPicker.ID = 0;
 	},
 
+	_preventDocumentLosingFocusOnClick: function(div) {
+		$(div).on('mousedown',function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+		});
+	},
+
 	_toolitemHandler: function(parentContainer, data, builder) {
 		if (data.command || data.postmessage) {
 			var handler = builder._toolitemHandlers[data.command];
@@ -1974,6 +1981,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
 				builder.callback('iconview', 'activate', parentData, entry.row, builder);
 			});
+			builder._preventDocumentLosingFocusOnClick(parentContainer);
 		}
 	},
 
@@ -2473,7 +2481,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			controls['arrow'] = arrow;
 		}
 
-		$(div).on('click.toolbutton',function () {
+		$(div).on('click.toolbutton',function (e) {
 			if (!$(div).hasClass('disabled')) {
 				builder.refreshSidebar = true;
 				if (data.postmessage)
@@ -2481,7 +2489,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				else
 					builder.callback('toolbutton', 'click', button, data.command, builder);
 			}
+			e.preventDefault();
+			e.stopPropagation();
 		});
+
+		builder._preventDocumentLosingFocusOnClick(div);
 
 		if (data.enabled === 'false' || data.enabled === false)
 			$(button).prop('disabled', true);
@@ -2673,6 +2685,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		$(sectionTitle).click(function () {
 			builder.callback('toolbutton', 'click', sectionTitle, data.command, builder);
 		});
+		builder._preventDocumentLosingFocusOnClick(sectionTitle);
 		return false;
 	},
 
