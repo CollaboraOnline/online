@@ -505,11 +505,11 @@ void AdminModel::modificationAlert(const std::string& docKey, pid_t pid, bool va
 void AdminModel::addDocument(const std::string& docKey, pid_t pid,
                              const std::string& filename, const std::string& sessionId,
                              const std::string& userName, const std::string& userId,
-                             const int smapsFD)
+                             const int smapsFD, const std::string& wopiHost)
 {
     assertCorrectThread();
 
-    const auto ret = _documents.emplace(docKey, std::unique_ptr<Document>(new Document(docKey, pid, filename)));
+    const auto ret = _documents.emplace(docKey, std::unique_ptr<Document>(new Document(docKey, pid, filename, wopiHost)));
     ret.first->second->setProcSMapsFD(smapsFD);
     ret.first->second->takeSnapshot();
     ret.first->second->addView(sessionId, userName, userId);
@@ -549,6 +549,8 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
     {
         oss << _documents.begin()->second->getMemoryDirty();
     }
+
+    oss << ' ' << wopiHost;
 
     notify(oss.str());
 }
@@ -768,6 +770,7 @@ std::string AdminModel::getDocuments() const
                 << "\"pid\"" << ':' << it.second->getPid() << ','
                 << "\"docKey\"" << ':' << '"' << it.second->getDocKey() << '"' << ','
                 << "\"fileName\"" << ':' << '"' << encodedFilename << '"' << ','
+                << "\"wopiHost\"" << ':' << '"' << it.second -> getHostName() << '"' << ','
                 << "\"activeViews\"" << ':' << it.second->getActiveViews() << ','
                 << "\"memory\"" << ':' << it.second->getMemoryDirty() << ','
                 << "\"elapsedTime\"" << ':' << it.second->getElapsedTime() << ','
