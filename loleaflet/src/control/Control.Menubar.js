@@ -4,6 +4,45 @@
 */
 
 /* global app $ _ _UNO vex L */
+L.Control.MenubarShortcuts = {
+	shortcuts: {
+		SAVE: 'Ctrl + S',
+		UNDO: 'Ctrl + Z',
+		REDO: 'Ctrl + Y',
+		PRINT: 'Ctrl + P',
+		CUT: 'Ctrl + X',
+		COPY: 'Ctrl + C',
+		PASTE: 'Ctrl + V',
+		SELECT_ALL: 'Ctrl + A',
+		COMMENT: 'Ctrl + Alt + C',
+		FOOTNOTE: 'Ctrl + Alt + F',
+		ENDNOTE: 'Ctrl + Alt + D',
+		BOLD: 'Ctrl + B',
+		ITALIC: 'Ctrl + I',
+		UNDERLINE: 'Ctrl + U',
+		DOUBLE_UNDERLINE: 'Ctrl + D',
+		STRIKETHROUGH: 'Ctrl + Alt + 5',
+		SUPERSCRIPT: 'Ctrl + Shift + P',
+		SUBSCRIPT: 'Ctrl + Shift + B',
+		LEFT: 'Ctrl + L',
+		CENTERED: 'Ctrl + E',
+		RIGHT: 'Ctrl + R',
+		JUSTIFIED: 'Ctrl + J',
+		KEYBOARD_SHORTCUTS: 'Ctrl + Shift + ?'
+	},
+
+	addShortcut: function (text, shortcut) {
+		var newText = _(text).replace('~', '') + ' (' + _(shortcut).replace('~', '') + ')';
+
+		// sometimes ''.toLocaleString() doesn't correctly translate the shortcut
+		if (window.lang && window.lang.toLowerCase() === 'de') {
+			newText = newText.replace('Ctrl', 'Strg');
+		}
+
+		return newText;
+	}
+};
+
 L.Control.Menubar = L.Control.extend({
 	// TODO: Some mechanism to stop the need to copy duplicate menus (eg. Help, eg: mobiledrawing)
 	options: {
@@ -16,7 +55,7 @@ L.Control.Menubar = L.Control.extend({
 		],
 		text:  [
 			{name: _UNO('.uno:PickList', 'text'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save', 'text'), id: 'save', type: 'action'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Save', 'text'), L.Control.MenubarShortcuts.shortcuts.SAVE), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'text'), id: 'saveas', type: 'action'},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
@@ -29,18 +68,18 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('EPUB (.epub)'), id: 'downloadas-epub', type: 'action'}]},
 				{name: _('Sign document'), id: 'signdocument', type: 'action'},
 				{type: 'separator'},
-				{name: _UNO('.uno:Print', 'text'), id: 'print', type: 'action'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Print', 'text'), L.Control.MenubarShortcuts.shortcuts.PRINT), id: 'print', type: 'action'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'text'), id: 'editmenu', type: 'menu', menu: [
-				{uno: '.uno:Undo'},
-				{uno: '.uno:Redo'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Undo', 'text'), L.Control.MenubarShortcuts.shortcuts.UNDO), uno: '.uno:Undo'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Redo', 'text'), L.Control.MenubarShortcuts.shortcuts.REDO), uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:Cut'},
-				{uno: '.uno:Copy'},
-				{uno: '.uno:Paste'},
-				{uno: '.uno:SelectAll'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Cut', 'text'), L.Control.MenubarShortcuts.shortcuts.CUT), uno: '.uno:Cut'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Copy', 'text'), L.Control.MenubarShortcuts.shortcuts.COPY), uno: '.uno:Copy'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Paste', 'text'), L.Control.MenubarShortcuts.shortcuts.PASTE), uno: '.uno:Paste'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:SelectAll', 'text'), L.Control.MenubarShortcuts.shortcuts.SELECT_ALL), uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'},
 				{type: 'separator'},
@@ -76,7 +115,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:InsertMenu', 'text'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'text'), id: 'insertgraphicremote', type: 'action'},
-				{name: _UNO('.uno:InsertAnnotation', 'text'), id: 'insertcomment', type: 'action'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:InsertAnnotation', 'text'), L.Control.MenubarShortcuts.shortcuts.COMMENT), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater'},
 				{type: 'separator'},
@@ -96,8 +135,8 @@ L.Control.Menubar = L.Control.extend({
 					{name: _UNO('.uno:InsertPageFooter', 'text'), type: 'menu', menu: [
 						{name: _('All'), disabled: true, id: 'insertfooter', tag: '_ALL_', uno: '.uno:InsertPageFooter?'}]}
 				]},
-				{uno: '.uno:InsertFootnote'},
-				{uno: '.uno:InsertEndnote'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:InsertFootnote', 'text'), L.Control.MenubarShortcuts.shortcuts.FOOTNOTE), uno: '.uno:InsertFootnote'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:InsertEndnote', 'text'), L.Control.MenubarShortcuts.shortcuts.ENDNOTE), uno: '.uno:InsertEndnote'},
 				{type: 'separator'},
 				{uno: '.uno:InsertPagebreak'},
 				{name: _UNO('.uno:InsertColumnBreak', 'spreadsheet'), uno: '.uno:InsertColumnBreak'},
@@ -122,15 +161,15 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{name: _UNO('.uno:FormatMenu', 'text'), id: 'format', type: 'menu', menu: [
 				{name: _UNO('.uno:FormatTextMenu', 'text'), type: 'menu', menu: [
-					{uno: '.uno:Bold'},
-					{uno: '.uno:Italic'},
-					{uno: '.uno:Underline'},
-					{uno: '.uno:UnderlineDouble'},
-					{uno: '.uno:Strikeout'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Bold', 'text'), L.Control.MenubarShortcuts.shortcuts.BOLD), uno: '.uno:Bold'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Italic', 'text'), L.Control.MenubarShortcuts.shortcuts.ITALIC), uno: '.uno:Italic'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Underline', 'text'), L.Control.MenubarShortcuts.shortcuts.UNDERLINE), uno: '.uno:Underline'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:UnderlineDouble', 'text'), L.Control.MenubarShortcuts.shortcuts.DOUBLE_UNDERLINE), uno: '.uno:UnderlineDouble'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Strikeout', 'text'), L.Control.MenubarShortcuts.shortcuts.STRIKETHROUGH), uno: '.uno:Strikeout'},
 					{uno: '.uno:Overline'},
 					{type: 'separator'},
-					{uno: '.uno:SuperScript'},
-					{uno: '.uno:SubScript'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:SuperScript', 'text'), L.Control.MenubarShortcuts.shortcuts.SUPERSCRIPT), uno: '.uno:SuperScript'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:SubScript', 'text'), L.Control.MenubarShortcuts.shortcuts.SUBSCRIPT), uno: '.uno:SubScript'},
 					{type: 'separator'},
 					{uno: '.uno:Shadowed'},
 					{uno: '.uno:OutlineFont'},
@@ -161,10 +200,10 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:IncrementIndent'},
 					{uno: '.uno:DecrementIndent'}]},
 				{name: _UNO('.uno:TextAlign', 'text'), type: 'menu', menu: [
-					{uno: '.uno:CommonAlignLeft'},
-					{uno: '.uno:CommonAlignHorizontalCenter'},
-					{uno: '.uno:CommonAlignRight'},
-					{uno: '.uno:CommonAlignJustified'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:CommonAlignLeft', 'text'), L.Control.MenubarShortcuts.shortcuts.LEFT), uno: '.uno:CommonAlignLeft'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:CommonAlignHorizontalCenter', 'text'), L.Control.MenubarShortcuts.shortcuts.CENTERED), uno: '.uno:CommonAlignHorizontalCenter'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:CommonAlignRight', 'text'), L.Control.MenubarShortcuts.shortcuts.RIGHT), uno: '.uno:CommonAlignRight'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:CommonAlignJustified', 'text'), L.Control.MenubarShortcuts.shortcuts.JUSTIFIED), uno: '.uno:CommonAlignJustified'},
 					{type: 'separator'},
 					{uno: '.uno:CommonAlignTop'},
 					{uno: '.uno:CommonAlignVerticalCenter'},
@@ -254,7 +293,7 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
-				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{name: L.Control.MenubarShortcuts.addShortcut(_('Keyboard shortcuts'), L.Control.MenubarShortcuts.shortcuts.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
@@ -264,7 +303,7 @@ L.Control.Menubar = L.Control.extend({
 
 		presentation: [
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Save', 'presentation'), L.Control.MenubarShortcuts.shortcuts.SAVE), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
 				{name: _('Save Comments'), id: 'savecomments', type: 'action'},
 				{name: _('Share...'), id:'shareas', type: 'action'},
@@ -276,18 +315,18 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('PowerPoint Presentation (.pptx)'), id: 'downloadas-pptx', type: 'action'},
 				]},
 				{type: 'separator'},
-				{name: _UNO('.uno:Print', 'presentation'), id: 'print', type: 'action'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Print', 'presentation'), L.Control.MenubarShortcuts.shortcuts.PRINT), id: 'print', type: 'action'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'presentation'), id: 'editmenu', type: 'menu', menu: [
-				{uno: '.uno:Undo'},
-				{uno: '.uno:Redo'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Undo', 'presentation'), L.Control.MenubarShortcuts.shortcuts.UNDO), uno: '.uno:Undo'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Redo', 'presentation'), L.Control.MenubarShortcuts.shortcuts.REDO), uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:Cut'},
-				{uno: '.uno:Copy'},
-				{uno: '.uno:Paste'},
-				{uno: '.uno:SelectAll'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Cut', 'presentation'), L.Control.MenubarShortcuts.shortcuts.CUT), uno: '.uno:Cut'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Copy', 'presentation'), L.Control.MenubarShortcuts.shortcuts.COPY), uno: '.uno:Copy'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Paste', 'presentation'), L.Control.MenubarShortcuts.shortcuts.PASTE), uno: '.uno:Paste'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:SelectAll', 'presentation'), L.Control.MenubarShortcuts.shortcuts.SELECT_ALL), uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
@@ -312,7 +351,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:SelectBackground', 'presentation'), id: 'selectbackground', type: 'action'},
-				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:InsertAnnotation', 'presentation'), L.Control.MenubarShortcuts.shortcuts.COMMENT), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater'},
 				{type: 'separator'},
@@ -382,7 +421,7 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
-				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{name: L.Control.MenubarShortcuts.addShortcut(_('Keyboard shortcuts'), L.Control.MenubarShortcuts.shortcuts.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
@@ -392,7 +431,7 @@ L.Control.Menubar = L.Control.extend({
 
 		drawing: [
 			{name: _UNO('.uno:PickList', 'presentation'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save', 'presentation'), id: 'save', type: 'action'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Save', 'presentation'), L.Control.MenubarShortcuts.shortcuts.SAVE), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'presentation'), id: 'saveas', type: 'action'},
 				{name: _('Save Comments'), id: 'savecomments', type: 'action'},
 				{name: _('Share...'), id:'shareas', type: 'action'},
@@ -406,14 +445,14 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'presentation'), id: 'editmenu', type: 'menu', menu: [
-				{uno: '.uno:Undo'},
-				{uno: '.uno:Redo'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Undo', 'presentation'), L.Control.MenubarShortcuts.shortcuts.UNDO), uno: '.uno:Undo'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Redo', 'presentation'), L.Control.MenubarShortcuts.shortcuts.REDO), uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:Cut'},
-				{uno: '.uno:Copy'},
-				{uno: '.uno:Paste'},
-				{uno: '.uno:SelectAll'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Cut', 'presentation'), L.Control.MenubarShortcuts.shortcuts.CUT), uno: '.uno:Cut'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Copy', 'presentation'), L.Control.MenubarShortcuts.shortcuts.COPY), uno: '.uno:Copy'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Paste', 'presentation'), L.Control.MenubarShortcuts.shortcuts.PASTE), uno: '.uno:Paste'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:SelectAll', 'presentation'), L.Control.MenubarShortcuts.shortcuts.SELECT_ALL), uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
@@ -431,7 +470,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:SelectBackground', 'presentation'), id: 'selectbackground', type: 'action'},
-				{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:InsertAnnotation', 'presentation'), L.Control.MenubarShortcuts.shortcuts.COMMENT), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{type: 'separator'},
 				{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
@@ -492,7 +531,7 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{name: _UNO('.uno:HelpMenu', 'presentation'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
-				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{name: L.Control.MenubarShortcuts.addShortcut(_('Keyboard shortcuts'), L.Control.MenubarShortcuts.shortcuts.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
@@ -502,7 +541,7 @@ L.Control.Menubar = L.Control.extend({
 
 		spreadsheet: [
 			{name: _UNO('.uno:PickList', 'spreadsheet'), id: 'file', type: 'menu', menu: [
-				{name: _UNO('.uno:Save', 'spreadsheet'), id: 'save', type: 'action'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Save', 'spreadsheet'), L.Control.MenubarShortcuts.shortcuts.SAVE), id: 'save', type: 'action'},
 				{name: _UNO('.uno:SaveAs', 'spreadsheet'), id: 'saveas', type: 'action'},
 				{name: _('Share...'), id:'shareas', type: 'action'},
 				{name: _('See revision history'), id: 'rev-history', type: 'action'},
@@ -513,18 +552,18 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Excel Spreadsheet (.xlsx)'), id: 'downloadas-xlsx', type: 'action'},
 					{name: _('CSV file (.csv)'), id: 'downloadas-csv', type: 'action'}]},
 				{type: 'separator'},
-				{name: _UNO('.uno:Print', 'spreadsheet'), id: 'print', type: 'action'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Print', 'spreadsheet'), L.Control.MenubarShortcuts.shortcuts.PRINT), id: 'print', type: 'action'},
 				{name: _('Close document'), id: 'closedocument', type: 'action'}
 			]},
 			{name: _UNO('.uno:EditMenu', 'spreadsheet'), id: 'editmenu', type: 'menu', menu: [
-				{uno: '.uno:Undo'},
-				{uno: '.uno:Redo'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Undo', 'text'), L.Control.MenubarShortcuts.shortcuts.UNDO), uno: '.uno:Undo'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Redo', 'text'), L.Control.MenubarShortcuts.shortcuts.REDO), uno: '.uno:Redo'},
 				{name: _('Repair'), id: 'repair',  type: 'action'},
 				{type: 'separator'},
-				{uno: '.uno:Cut'},
-				{uno: '.uno:Copy'},
-				{uno: '.uno:Paste'},
-				{uno: '.uno:SelectAll'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Cut', 'text'), L.Control.MenubarShortcuts.shortcuts.CUT), uno: '.uno:Cut'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Copy', 'text'), L.Control.MenubarShortcuts.shortcuts.COPY), uno: '.uno:Copy'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Paste', 'text'), L.Control.MenubarShortcuts.shortcuts.PASTE), uno: '.uno:Paste'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:SelectAll', 'text'), L.Control.MenubarShortcuts.shortcuts.SELECT_ALL), uno: '.uno:SelectAll'},
 				{type: 'separator'},
 				{uno: '.uno:SearchDialog'}
 			]},
@@ -547,7 +586,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
 				{name: _UNO('.uno:InsertGraphic', 'spreadsheet'), id: 'insertgraphicremote', type: 'action'},
 				{name: _UNO('.uno:DataDataPilotRun', 'spreadsheet'), uno: '.uno:DataDataPilotRun'},
-				{name: _UNO('.uno:InsertAnnotation', 'spreadsheet'), id: 'insertcomment', type: 'action'},
+				{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:InsertAnnotation', 'spreadsheet'), L.Control.MenubarShortcuts.shortcuts.COMMENT), id: 'insertcomment', type: 'action'},
 				{uno: '.uno:InsertObjectChart'},
 				{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater'},
 				{uno: '.uno:FunctionDialog'},
@@ -563,15 +602,15 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{name: _UNO('.uno:FormatMenu', 'spreadsheet'), id: 'format', type: 'menu', menu: [
 				{name: _UNO('.uno:FormatTextMenu', 'spreadsheet'), type: 'menu', menu: [
-					{uno: '.uno:Bold'},
-					{uno: '.uno:Italic'},
-					{uno: '.uno:Underline'},
-					{uno: '.uno:UnderlineDouble'},
-					{uno: '.uno:Strikeout'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Bold', 'spreadsheet'), L.Control.MenubarShortcuts.shortcuts.BOLD), uno: '.uno:Bold'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Italic', 'spreadsheet'), L.Control.MenubarShortcuts.shortcuts.ITALIC), uno: '.uno:Italic'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Underline', 'spreadsheet'), L.Control.MenubarShortcuts.shortcuts.UNDERLINE), uno: '.uno:Underline'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:UnderlineDouble', 'spreadsheet'), L.Control.MenubarShortcuts.shortcuts.DOUBLE_UNDERLINE), uno: '.uno:UnderlineDouble'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:Strikeout', 'spreadsheet'), L.Control.MenubarShortcuts.shortcuts.STRIKETHROUGH), uno: '.uno:Strikeout'},
 					{uno: '.uno:Overline'},
 					{type: 'separator'},
-					{uno: '.uno:SuperScript'},
-					{uno: '.uno:SubScript'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:SuperScript', 'spreadsheet'), L.Control.MenubarShortcuts.shortcuts.SUPERSCRIPT), uno: '.uno:SuperScript'},
+					{name: L.Control.MenubarShortcuts.addShortcut(_UNO('.uno:SubScript', 'spreadsheet'), L.Control.MenubarShortcuts.shortcuts.SUBSCRIPT), uno: '.uno:SubScript'},
 					{type: 'separator'},
 					{uno: '.uno:Shadowed'},
 					{uno: '.uno:OutlineFont'},
@@ -703,7 +742,7 @@ L.Control.Menubar = L.Control.extend({
 			]},
 			{name: _UNO('.uno:HelpMenu', 'spreadsheet'), id: 'help', type: 'menu', menu: [
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
-				{name: _('Keyboard shortcuts'), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
+				{name: L.Control.MenubarShortcuts.addShortcut(_('Keyboard shortcuts'), L.Control.MenubarShortcuts.shortcuts.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
 				{name: _('About'), id: 'about', type: 'action'}]
