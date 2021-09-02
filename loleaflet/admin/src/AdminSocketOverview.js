@@ -76,7 +76,7 @@ function createDocumentUserListElement(cell, doc) {
 	}
 }
 
-function upsertDocsTable(doc, sName, socket) {
+function upsertDocsTable(doc, sName, socket, wopiHost) {
 	var add = false;
 	var row = document.getElementById('doc' + doc['pid']);
 	if (row === undefined || row === null) {
@@ -104,6 +104,11 @@ function upsertDocsTable(doc, sName, socket) {
 			});
 		dialog.open();
 	};
+
+	var wopiHostCell = document.createElement('td');
+	wopiHostCell.innerText = wopiHost;
+	if (add === true) { row.appendChild(wopiHostCell); } else { row.cells[0] = wopiHostCell; }
+	wopiHostCell.className = 'has-text-left';
 
 	if (add === true) {
 		var userInfoCell = document.createElement('td');
@@ -162,7 +167,7 @@ function upsertDocsTable(doc, sName, socket) {
 	}
 }
 
-function upsertUsersTable(docPid, sName, userList) {
+function upsertUsersTable(docPid, sName, userList, wopiHost) {
 	for (var i = 0; i < userList.length; i++) {
 		var encodedUId = encodeURI(userList[i]['userId']);
 		var row = document.getElementById('usr' + encodedUId);
@@ -171,6 +176,10 @@ function upsertUsersTable(docPid, sName, userList) {
 			row = document.createElement('tr');
 			row.id = 'usr' + encodedUId;
 			document.getElementById('userlist').appendChild(row);
+
+			var wopiHostCell = document.createElement('td');
+			wopiHostCell.innerText = wopiHost;
+			row.appendChild(wopiHostCell);
 
 			var userNameCell = document.createElement('td');
 			userNameCell.innerText = userList[i]['userName'];
@@ -257,8 +266,8 @@ var AdminSocketOverview = AdminSocketBase.extend({
 
 			for (var i = 0; i < docList.length; i++) {
 				sName = decodeURI(docList[i]['fileName']);
-				upsertUsersTable(docList[i]['pid'], sName, docList[i]['views']);
-				upsertDocsTable(docList[i], sName, this.socket);
+				upsertUsersTable(docList[i]['pid'], sName, docList[i]['views'], docList[i]['wopiHost']);
+				upsertDocsTable(docList[i], sName, this.socket, docList[i]['wopiHost']);
 			}
 		}
 		else if (textMsg.startsWith('resetidle')) {
@@ -277,14 +286,18 @@ var AdminSocketOverview = AdminSocketBase.extend({
 				'encodedUId': encodeURI(docProps[4]),
 				'userId': docProps[4],
 				'memory': docProps[5],
+				'wopiHost': docProps[6],
 				'elapsedTime': '0',
 				'idleTime': '0',
 				'modified': 'No',
 				'views': [{ 'sessionid': docProps[2], 'userName': decodeURI(docProps[3]) }]
 			};
 
-			upsertDocsTable(docProps, docProps['sName'], this.socket);
-			upsertUsersTable(docProps['pid'], docProps['sName'], [docProps]);
+			if (typeof docProps['wopiHost'] === 'undefined') {
+				docProps['wopiHost'] = '';
+			}
+			upsertDocsTable(docProps, docProps['sName'], this.socket, docProps['wopiHost']);
+			upsertUsersTable(docProps['pid'], docProps['sName'], [docProps], docProps['wopiHost']);
 			document.getElementById('active_docs_count').innerText = String(parseInt(document.getElementById('active_docs_count').innerText) + 1);
 			document.getElementById('active_users_count').innerText = String(parseInt(document.getElementById('active_users_count')) + 1);
 		}

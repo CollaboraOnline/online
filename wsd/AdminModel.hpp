@@ -134,11 +134,12 @@ class Document
     Document& operator = (const Document &) = delete;
 
 public:
-    Document(std::string docKey, pid_t pid, std::string filename)
+    Document(std::string docKey, pid_t pid, std::string filename, std::string wopiHost)
         : _docKey(std::move(docKey))
         , _pid(pid)
         , _activeViews(0)
         , _filename(std::move(filename))
+        , _wopiHost(std::move(wopiHost))
         , _memoryDirty(0)
         , _lastJiffy(0)
         , _lastCpuPercentage(0)
@@ -169,6 +170,8 @@ public:
     pid_t getPid() const { return _pid; }
 
     std::string getFilename() const { return _filename; }
+
+    std::string getHostName() const { return _wopiHost; }
 
     bool isExpired() const { return _end != 0 && std::time(nullptr) >= _end; }
 
@@ -232,6 +235,8 @@ private:
     unsigned _activeViews;
     /// Hosted filename
     std::string _filename;
+
+    std::string _wopiHost;
     /// The dirty (ie. un-shared) memory of the document's Kit process.
     size_t _memoryDirty;
     /// Last noted Jiffy count
@@ -353,7 +358,7 @@ public:
 
     void addDocument(const std::string& docKey, pid_t pid, const std::string& filename,
                      const std::string& sessionId, const std::string& userName, const std::string& userId,
-                     const int smapsFD);
+                     const int smapsFD, const std::string& URI);
 
     void removeDocument(const std::string& docKey, const std::string& sessionId);
     void removeDocument(const std::string& docKey);
