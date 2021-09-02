@@ -23,6 +23,7 @@ L.Map.FileInserter = L.Handler.extend({
 
 	getWopiUrl: function (map) {
 		var wopiSrc = '';
+		console.assert(map.options.wopiSrc === window.wopiSrc, 'wopiSrc mismatch!: ' + map.options.wopiSrc + ' != ' + window.wopiSrc);
 		if (map.options.wopiSrc != '') {
 			wopiSrc = '?WOPISrc=' + map.options.wopiSrc;
 		}

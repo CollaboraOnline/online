@@ -1872,6 +1872,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		parser.href = window.host;
 
 		var wopiSrc = '';
+		console.assert(this._map.options.wopiSrc === window.wopiSrc, 'wopiSrc mismatch!: ' + this._map.options.wopiSrc + ' != ' + window.wopiSrc);
 		if (this._map.options.wopiSrc != '') {
 			wopiSrc = '?WOPISrc=' + this._map.options.wopiSrc;
 		}
