@@ -490,6 +490,7 @@ app.definitions.Socket = L.Class.extend({
 				oldId = this.WSDServer.Id;
 				oldVersion = this.WSDServer.Version;
 
+				console.assert(map.options.wopiSrc === window.wopiSrc, 'wopiSrc mismatch!: ' + map.options.wopiSrc + ' != ' + window.wopiSrc);
 				// If another file is opened, we will not refresh the page.
 				if (this._map.options.previousWopiSrc && this._map.options.wopiSrc) {
 					if (this._map.options.previousWopiSrc !== this._map.options.wopiSrc)
@@ -524,7 +525,6 @@ app.definitions.Socket = L.Class.extend({
 
 			if (!window.ThisIsAMobileApp) {
 				var idUri = window.makeHttpUrl('/hosting/discovery');
-				console.assert(idUri.startsWith('http'), 'Invalid URL from makeHttpUrl: ' + idUri);
 				$('#loolwsd-id').html(_('Served by:') + ' <a target="_blank" href="' + idUri + '">' + this.WSDServer.Id + '</a>');
 			}
 
@@ -1139,6 +1139,8 @@ app.definitions.Socket = L.Class.extend({
 			this._map.options.doc = docUrl;
 			this._map.options.previousWopiSrc = this._map.options.wopiSrc; // After save-as op, we may connect to another server, then code will think that server has restarted. In this case, we don't want to reload the page (detect the file name is different).
 			this._map.options.wopiSrc = encodeURIComponent(docUrl);
+			window.wopiSrc = this._map.options.wopiSrc;
+			window.docURL = this._map.options.doc;
 
 			if (textMsg.startsWith('renamefile:')) {
 				this._map.fire('postMessage', {
