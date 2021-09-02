@@ -813,24 +813,44 @@ window.app = { // Shouldn't have any functions defined.
 		return global.host + global.serviceRoot + path;
 	};
 
-	// Form a valid WS URL to the host with the given path.
-	global.makeWsUrlWopiSrc = function (path, docUrlParams) {
-		var websocketURI = global.makeWsUrl(path);
+	// Form a URI from the docUrl and wopiSrc and encodes.
+	// The docUrlParams, suffix, and wopiSrc are optionally hexified.
+	global.makeDocAndWopiSrcUrl = function (root, docUrlParams, suffix, wopiSrcParam) {
 		var wopiSrc = '';
 		if (global.wopiSrc != '') {
 			wopiSrc = '?WOPISrc=' + global.wopiSrc + '&compat=';
+			if (wopiSrcParam && wopiSrcParam.length > 0)
+				wopiSrc += '&' + wopiSrcParam;
+		}
+		else if (wopiSrcParam && wopiSrcParam.length > 0) {
+			wopiSrc = '?' + wopiSrcParam;
 		}
 
-		var encodedDocUrl = encodeURIComponent(docUrlParams) + '/ws' + wopiSrc;
+		suffix = suffix || '/ws';
+		var encodedDocUrl = encodeURIComponent(docUrlParams) + suffix + wopiSrc;
 		if (global.hexifyUrl)
 			encodedDocUrl = global.hexEncode(encodedDocUrl);
-		return websocketURI + encodedDocUrl + '/ws';
+		return root + encodedDocUrl + '/ws';
+	};
+
+	// Form a valid WS URL to the host with the given path and
+	// encode the document URL and params.
+	global.makeWsUrlWopiSrc = function (path, docUrlParams, suffix, wopiSrcParam) {
+		var websocketURI = global.makeWsUrl(path);
+		return global.makeDocAndWopiSrcUrl(websocketURI, docUrlParams, suffix, wopiSrcParam);
 	};
 
 	// Form a valid HTTP URL to the host with the given path.
 	global.makeHttpUrl = function (path) {
 		console.assert(global.webserver.startsWith('http'), 'webserver is not http: ' + global.webserver);
 		return global.webserver + global.serviceRoot + path;
+	};
+
+	// Form a valid HTTP URL to the host with the given path and
+	// encode the document URL and params.
+	global.makeHttpUrlWopiSrc = function (path, docUrlParams, suffix, wopiSrcParam) {
+		var httpURI = window.makeHttpUrl(path);
+		return global.makeDocAndWopiSrcUrl(httpURI, docUrlParams, suffix, wopiSrcParam);
 	};
 
 	// Encode a string to hex.
@@ -860,12 +880,7 @@ window.app = { // Shouldn't have any functions defined.
 	} else {
 		// The URL may already contain a query (e.g., 'http://server.tld/foo/wopi/files/bar?desktop=baz') - then just append more params
 		var docParamsPart = docParams ? (global.docURL.includes('?') ? '&' : '?') + docParams : '';
-		var websocketURI = global.makeWsUrl('/lool/');
-		var encodedDocUrl = encodeURIComponent(global.docURL + docParamsPart) + '/ws' + '?WOPISrc=' + global.wopiSrc + '&compat=';
-		if (global.hexifyUrl)
-			encodedDocUrl = global.hexEncode(encodedDocUrl);
-
-		websocketURI += encodedDocUrl + '/ws';
+		var websocketURI = global.makeWsUrlWopiSrc('/lool/', global.docURL + docParamsPart);
 		try {
 			global.socket = global.createWebSocket(websocketURI);
 		} catch (err) {

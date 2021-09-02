@@ -34,7 +34,7 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	getWebSocketBaseURI: function(map) {
-		return window.makeWsUrl('/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws');
+		return window.makeWsUrlWopiSrc('/lool/', map.options.doc + '?' + $.param(map.options.docParams));
 	},
 
 	connect: function(socket) {
@@ -50,13 +50,8 @@ app.definitions.Socket = L.Class.extend({
 		} else if (window.ThisIsAMobileApp) {
 			// We have already opened the FakeWebSocket over in global.js
 		} else	{
-			var wopiSrc = '';
-			if (map.options.wopiSrc != '') {
-				wopiSrc = '?WOPISrc=' + map.options.wopiSrc + '&compat=/ws';
-			}
-
 			try {
-				this.socket = window.createWebSocket(this.getWebSocketBaseURI(map) + wopiSrc);
+				this.socket = window.createWebSocket(this.getWebSocketBaseURI(map));
 			} catch (e) {
 				// On IE 11 there is a limitation on the number of WebSockets open to a single domain (6 by default and can go to 128).
 				// Detect this and hint the user.
