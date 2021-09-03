@@ -44,6 +44,8 @@ describe('Impress focus tests', function() {
 		cy.document().its('activeElement.tagName')
 			.should('be.eq', 'BODY');
 
+		cy.wait(1000);
+
 		// Shape selection.
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 			.should('exist');
