@@ -399,7 +399,40 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 .annotation-active .loleaflet-annotation-collapsed {
 	box-shadow: 0 0 3px 5px white, 0 0 1px 5px grey;
 }
+
+.jsdialog-container.loleaflet-annotation-collapsed.modalpopup {
+	border-radius: 8px !important;
+	border: 1px solid var(--gray-color) !important;
+	background: white !important;
 }
+
+.jsdialog-container.loleaflet-annotation-collapsed.modalpopup .lokdialog.ui-dialog-content {
+	background-color: transparent !important;
+}
+
+.jsdialog-container.loleaflet-annotation-collapsed.modalpopup .loleaflet-annotation {
+	margin-bottom: 16px;
+}
+
+.jsdialog-container.loleaflet-annotation-collapsed.modalpopup .loleaflet-annotation:last-of-type {
+	margin-bottom: 8px;
+}
+
+.jsdialog-container.loleaflet-annotation-collapsed.modalpopup .loleaflet-annotation:first-of-type {
+	margin-top: 8px;
+}
+
+.jsdialog-container.loleaflet-annotation-collapsed.modalpopup .loleaflet-annotation-content-wrapper {
+	box-shadow: none;
+	border-bottom: 1px solid var(--gray-light-bg-color) !important;
+	border-radius: 0 !important;
+	background: white;
+}
+
+.jsdialog-container.loleaflet-annotation-collapsed.modalpopup [id^='comment-container-']:last-child > .loleaflet-annotation-content-wrapper{
+	border-width: 0 !important;
+}
+
 
 .loleaflet-dont-break {
 	/* These are technically the same, but use both */
