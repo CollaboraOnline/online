@@ -57,6 +57,8 @@ describe('Track Changes', function() {
 	it('Accept All', function() {
 		helper.typeIntoDocument('Hello World');
 
+		cy.wait(1000);
+
 		enableRecord();
 
 		helper.selectAllText();
@@ -77,6 +79,8 @@ describe('Track Changes', function() {
 
 	it('Reject All',function() {
 		helper.typeIntoDocument('Hello World');
+
+		cy.wait(1000);
 
 		enableRecord();
 

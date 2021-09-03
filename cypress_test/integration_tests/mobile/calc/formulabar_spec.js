@@ -70,7 +70,7 @@ describe('Formula bar tests.', function() {
 
 		cy.get('#calc-inputbar .lokdialog-cursor')
 			.should(function(cursor) {
-				expect(cursor.offset().left).to.be.equal(103);
+				expect(cursor.offset().left).to.be.equal(93);
 			});
 	});
 
@@ -157,7 +157,7 @@ describe('Formula bar tests.', function() {
 			});
 
 		// Switch to multiline mode.
-		var arrowPos = [250, 10];
+		var arrowPos = [255, 10];
 		cy.get('#calc-inputbar')
 			.click(arrowPos[0], arrowPos[1]);
 
