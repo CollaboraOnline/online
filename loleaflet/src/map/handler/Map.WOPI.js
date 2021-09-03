@@ -8,7 +8,7 @@ L.Map.WOPI = L.Handler.extend({
 	// If the CheckFileInfo call fails on server side, we won't have any PostMessageOrigin.
 	// So use '*' because we still needs to send 'close' message to the parent frame which
 	// wouldn't be possible otherwise.
-	PostMessageOrigin: '*',
+	PostMessageOrigin: window.postmessageOriginExt || '*',
 	BaseFileName: '',
 	BreadcrumbDocName: '',
 	DocumentLoadedTime: false,
