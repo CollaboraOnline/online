@@ -682,13 +682,15 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     LOG_TRC("ui_defaults=" << uiDefaults);
     const std::string cssVars = form.get("css_variables", "");
     LOG_TRC("css_variables=" << cssVars);
-
+    const std::string postMessageOrigin = form.get("postmessage_origin", "");
+    LOG_TRC("postmessage_origin" << postMessageOrigin);
     // Escape bad characters in access token.
     // This is placed directly in javascript in loleaflet.html, we need to make sure
     // that no one can do anything nasty with their clever inputs.
-    std::string escapedAccessToken, escapedAccessHeader;
+    std::string escapedAccessToken, escapedAccessHeader, escapedPostmessageOrigin;
     Poco::URI::encode(accessToken, "'", escapedAccessToken);
     Poco::URI::encode(accessHeader, "'", escapedAccessHeader);
+    Poco::URI::encode(postMessageOrigin, "'", escapedPostmessageOrigin);
 
     unsigned long tokenTtl = 0;
     if (!accessToken.empty())
@@ -725,6 +727,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%VERSION%"), std::string(LOOLWSD_VERSION_HASH));
     Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
     Poco::replaceInPlace(preprocess, std::string("%UI_DEFAULTS%"), uiDefaultsToJSON(uiDefaults, userInterfaceMode));
+    Poco::replaceInPlace(preprocess, std::string("%POSTMESSAGE_ORIGIN%"), escapedPostmessageOrigin);
 
     const auto& config = Application::instance().config();
     std::string protocolDebug = "false";
