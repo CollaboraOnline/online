@@ -202,7 +202,7 @@ L.Control.MobileWizardPopup = L.Control.extend({
 
 			var isCommentWizard = data.children && data.children.length && data.children[0].type == 'comment';
 
-			this._container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', parent);
+			this._container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container loleaflet-annotation-collapsed', parent);
 			this._container.id = 'mobile-wizard-popup';
 			this._container.style.visibility = 'hidden';
 			if (data.collapsed && (data.collapsed === 'true' || data.collapsed === true))
