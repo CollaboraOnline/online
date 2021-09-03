@@ -2778,9 +2778,21 @@ w2utils.event = {
                 ['CC0814', 'E69138', 'F1C232', '6AA84F', '45818E', '3D85C6', '674EA7', 'A54D79'],
                 ['99050C', 'B45F17', 'BF901F', '37761D', '124F5C', '0A5394', '351C75', '741B47'],
                 // ['660205', '783F0B', '7F6011', '274E12', '0C343D', '063762', '20124D', '4C1030'],
-                ['F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2'], // custom colors (up to 4)
-                ['F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2'], // recent colors (up to 8)
             ];
+            var customColorRow = localStorage.customColor;
+            var recentRow = localStorage.recentColor;
+
+            if (typeof customColorRow !== 'undefined') {
+                $.fn.w2colorPalette.push(JSON.parse(customColorRow));
+            } else {
+                $.fn.w2colorPalette.push(['F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2']);  // custom colors (up to 4)
+            }
+
+            if (typeof recentRow !== 'undefined') {
+                $.fn.w2colorPalette.push(JSON.parse(recentRow));
+            } else {
+                $.fn.w2colorPalette.push(['F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2', 'F2F2F2']); // recent colors (up to 8)
+            }
         }
         var pal = $.fn.w2colorPalette;
         if (typeof options == 'string') options = {
@@ -2808,14 +2820,7 @@ w2utils.event = {
         } else { // only refresh contents
             $('#w2ui-overlay .w2ui-color').parent().html(getColorHTML(options));
         }
-        function colorExist(color, colorRow) {
-            for (var i=0; i < colorRow.length; i++) {
-                if (color === colorRow[i]) {
-                    return true;
-                }
-            }
-            return false;
-        }
+
         // bind events
         $('#w2ui-overlay .color')
             .off('.w2color')
@@ -2824,9 +2829,11 @@ w2utils.event = {
                 index = $(event.originalEvent.target).attr('index').split(':');
                 $(el).data('_color', color);
                 var recentRow = $.fn.w2colorPalette[pal.length - 1];
-                if (!colorExist(color,recentRow)) {
-                    $.fn.w2colorPalette[pal.length - 1].unshift(color);
+                if (recentRow.indexOf(color) !== -1) {
+                    recentRow.splice(recentRow.indexOf(color), 1);
                 }
+                recentRow.unshift(color);
+                localStorage.setItem('recentColor', JSON.stringify(recentRow));
             })
             .on('mouseup.w2color', function () {
                 setTimeout(function () {
@@ -2851,9 +2858,11 @@ w2utils.event = {
                     return;
                 }
                 var customColorRow = $.fn.w2colorPalette[pal.length - 2];
-                if (!colorExist(tmp, customColorRow )) {
-                    $.fn.w2colorPalette[pal.length - 2].unshift(tmp.toUpperCase());
+                if (customColorRow.indexOf(tmp) !== -1) {
+                    customColorRow.splice(customColorRow.indexOf(tmp), 1);
                 }
+                customColorRow.unshift(tmp.toUpperCase());
+                localStorage.setItem('customColor', JSON.stringify(customColorRow));
                 $(el).w2color(options, callBack);
                 setTimeout(function() { $('#w2ui-overlay input')[0].focus(); }, 100);
             })
