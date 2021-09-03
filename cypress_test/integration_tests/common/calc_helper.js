@@ -13,6 +13,10 @@ function clickFormulaBar() {
 	// canvas, which is accurately sized.
 	// N.B. Setting the width of the inputbar_container
 	// is futile because it messes the size of the canvas.
+	helper.doIfOnMobile(function() {
+		helper.waitUntilIdle('.inputbar_container');
+	});
+
 	cy.get('.inputbar_canvas')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);

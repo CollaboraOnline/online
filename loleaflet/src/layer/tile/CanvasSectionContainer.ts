@@ -1380,7 +1380,7 @@ class CanvasSectionContainer {
 			document.body.appendChild(element);
 		}
 		element.style.position = 'fixed';
-		element.style.zIndex = '0';
+		element.style.zIndex = '-1';
 		element.style.left = String(bcr.left + Math.round(section.myTopLeft[0] / app.dpiScale)) + 'px';
 		element.style.top = String(bcr.top + Math.round(section.myTopLeft[1] / app.dpiScale)) + 'px';
 		element.style.width = String(Math.round(section.size[0] / app.dpiScale)) + 'px';
