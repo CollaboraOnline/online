@@ -39,46 +39,10 @@ void DocumentData::deallocate(unsigned docId)
 {
     assert(idToDocDataMap.find(docId) != idToDocDataMap.end());
     DocumentData &d = get(docId);
-#ifdef IOS
-    for (const auto& tile : d.inFlightTiles)
-    {
-        if (unlink([[[NSURL URLWithString:[NSString stringWithUTF8String:tile.c_str()]] path] UTF8String]) == -1 && errno != ENOENT) {
-            LOG_SYS("Could not unlink tile " << tile);
-        }
-    }
-#endif
     auto p = idToDocDataMap.find(docId);
     delete p->second;
     idToDocDataMap.erase(docId);
 }
-
-#ifdef IOS
-
-int DocumentData::numberOfInFlightTiles(unsigned docId)
-{
-    const std::lock_guard<std::mutex> lock(idToDocDataMapMutex);
-
-    assert(idToDocDataMap.find(docId) != idToDocDataMap.end());
-    return idToDocDataMap[docId]->inFlightTiles.size();
-}
-
-void DocumentData::addInFlightTile(unsigned docId, const std::string& tileURL)
-{
-    const std::lock_guard<std::mutex> lock(idToDocDataMapMutex);
-
-    assert(idToDocDataMap.find(docId) != idToDocDataMap.end());
-    idToDocDataMap[docId]->inFlightTiles.insert(tileURL);
-}
-
-void DocumentData::removeInFlightTile(unsigned docId, const std::string& tileURL)
-{
-    const std::lock_guard<std::mutex> lock(idToDocDataMapMutex);
-
-    assert(idToDocDataMap.find(docId) != idToDocDataMap.end());
-    idToDocDataMap[docId]->inFlightTiles.erase(tileURL);
-}
-
-#endif
 
 #endif
 

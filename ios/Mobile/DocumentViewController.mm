@@ -537,24 +537,6 @@ static IMP standardImpOfInputAccessoryView = nil;
                                  completion:nil];
                 return;
             }
-        } else if ([message.body hasPrefix:@"REMOVE "]) {
-            // Sent from the img element's onload event handler. Remove tile file once it has been loaded.
-            NSArray<NSString*> *messageBodyItems = [message.body componentsSeparatedByString:@" "];
-            assert([messageBodyItems count] == 2);
-            NSURL *tile = [NSURL URLWithString:messageBodyItems[1]];
-
-            // For some reason tunnelled dialogs still use PNG tiles inside data: URLs and not BMP
-            // files pointed to by file: URLs. Guard against getting REMOVE messages for such.
-            if (![[tile scheme] isEqualToString:@"file"])
-                return;
-
-            if (unlink([[tile path] UTF8String]) == -1) {
-                LOG_SYS("Could not unlink tile " << [[tile path] UTF8String]);
-            } else {
-                const std::string tileURL = std::string([[tile absoluteString] UTF8String]);
-                DocumentData::removeInFlightTile(self.document->appDocId, tileURL);
-            }
-            return;
         }
 
         const char *buf = [message.body UTF8String];
