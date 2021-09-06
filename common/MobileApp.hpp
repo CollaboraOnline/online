@@ -37,10 +37,6 @@
 class DocumentData
 {
 private:
-#ifdef IOS
-    std::set<std::string> inFlightTiles;
-#endif
-
 public:
     DocumentData() :
         loKitDocument(nullptr)
@@ -58,10 +54,6 @@ public:
 
 #ifdef IOS
     CODocument *coDocument;
-
-    static int numberOfInFlightTiles(unsigned docId);
-    static void addInFlightTile(unsigned docId, const std::string& tileURL);
-    static void removeInFlightTile(unsigned docId, const std::string& tileURL);
 #endif
 };
 
