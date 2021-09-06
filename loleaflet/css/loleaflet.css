@@ -577,6 +577,12 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	transition: all 0.1s ease 0.5s;
 	visibility: visible;
 }
+.loleaflet-annotation-collapsed [data-title]:hover:after {
+	position: static;
+	float: right;
+	margin-top: 22px;
+	margin-right: 8px;
+}
 [data-title]:after {
 	content: attr(data-title);
 	font-size: 1em !important;
