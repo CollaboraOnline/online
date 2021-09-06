@@ -34,6 +34,7 @@
 		BE5EB5DC2140480B00E0826C /* ICU.dat in Resources */ = {isa = PBXBuildFile; fileRef = BE5EB5DB2140480B00E0826C /* ICU.dat */; };
 		BE6362C22153B5B500F4237E /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE6362C12153B5B500F4237E /* CoreServices.framework */; };
 		BE7228E22417BC9F000ADABD /* StringVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE7228E02417BC9F000ADABD /* StringVector.cpp */; };
+		BE7B6A0326E62C1800517092 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE7B6A0226E62C1800517092 /* AVFoundation.framework */; };
 		BE7D6A6B23FAA8B500C2E605 /* loolkitconfig.xcu in Resources */ = {isa = PBXBuildFile; fileRef = BE7D6A6A23FAA8B500C2E605 /* loolkitconfig.xcu */; };
 		BE80E43221AD92F700859C97 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = BE80E43121AD92F600859C97 /* Fonts */; };
 		BE80E45821B68F5700859C97 /* TemplateCollectionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE80E45721B68F5700859C97 /* TemplateCollectionViewController.mm */; };
@@ -604,6 +605,7 @@
 		BE6C48672524A19C0066A166 /* vclxdevice.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = vclxdevice.cxx; path = "../../ios-device/toolkit/source/awt/vclxdevice.cxx"; sourceTree = "<group>"; };
 		BE7228E02417BC9F000ADABD /* StringVector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringVector.cpp; sourceTree = "<group>"; };
 		BE7228E12417BC9F000ADABD /* StringVector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringVector.hpp; sourceTree = "<group>"; };
+		BE7B6A0226E62C1800517092 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BE7D6A2123FA9C2300C2E605 /* winreg.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = winreg.cxx; path = "../../ios-device/configmgr/source/winreg.cxx"; sourceTree = "<group>"; };
 		BE7D6A2223FA9C2300C2E605 /* propertynode.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = propertynode.hxx; path = "../../ios-device/configmgr/source/propertynode.hxx"; sourceTree = "<group>"; };
 		BE7D6A2323FA9C2300C2E605 /* childaccess.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = childaccess.hxx; path = "../../ios-device/configmgr/source/childaccess.hxx"; sourceTree = "<group>"; };
@@ -1491,6 +1493,7 @@
 			files = (
 				BE512CBA2518DE6E00921C15 /* libsqlite3.tbd in Frameworks */,
 				BE6362C22153B5B500F4237E /* CoreServices.framework in Frameworks */,
+				BE7B6A0326E62C1800517092 /* AVFoundation.framework in Frameworks */,
 				BEA2835A21470A1C00848631 /* WebKit.framework in Frameworks */,
 				BE00F8B7213ED573001CE2D4 /* libz.tbd in Frameworks */,
 				BE00F8B5213ED543001CE2D4 /* libiconv.tbd in Frameworks */,
@@ -1534,6 +1537,7 @@
 		BE00F8B3213ED542001CE2D4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BE7B6A0226E62C1800517092 /* AVFoundation.framework */,
 				BE512CB92518DE6400921C15 /* libsqlite3.tbd */,
 				BE6362C12153B5B500F4237E /* CoreServices.framework */,
 				BEA2835921470A1C00848631 /* WebKit.framework */,

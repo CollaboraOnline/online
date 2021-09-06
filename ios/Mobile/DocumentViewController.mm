@@ -17,6 +17,8 @@
 #import <sys/stat.h>
 
 #import "ios.h"
+#import "AppDelegate.h"
+
 #import "FakeSocket.hpp"
 #import "LOOLWSD.hpp"
 #import "Log.hpp"
@@ -288,14 +290,49 @@ static IMP standardImpOfInputAccessoryView = nil;
         static int n = 0;
 
         if ((n++ % 10) == 0) {
-            auto enumerator = [[NSFileManager defaultManager] enumeratorAtPath:NSHomeDirectory()];
-            NSString *file;
-            long long total = 0;
-            while ((file = [enumerator nextObject])) {
-                if ([enumerator fileAttributes][NSFileType] == NSFileTypeRegular)
-                    total += [[enumerator fileAttributes][NSFileSize] longLongValue];
+            if (![speechSynthesizer isSpeaking]) {
+                auto enumerator = [[NSFileManager defaultManager] enumeratorAtPath:NSHomeDirectory()];
+                NSString *file;
+                long long total = 0;
+                while ((file = [enumerator nextObject])) {
+                    if ([enumerator fileAttributes][NSFileType] == NSFileTypeRegular)
+                        total += [[enumerator fileAttributes][NSFileSize] longLongValue];
+                }
+                static NSString *lastSentence = @"";
+                NSString *sentence;
+                constexpr auto MEG = 1000000;
+                constexpr auto HUNDREDMEG = 100 * MEG;
+                constexpr auto ONEGIG = 1000 * MEG;
+                switch (total / ONEGIG) {
+                case 0:
+                    switch (llround((double)total / HUNDREDMEG)) {
+                    case 0:
+                        sentence = [NSString stringWithFormat:@"%lld meg", llround((double)total / MEG)];
+                        break;
+                    case 10:
+                        sentence = @"one gig";
+                        break;
+                    default:
+                        sentence = [NSString stringWithFormat:@"%lld meg", llround((double)total / HUNDREDMEG) * 100];
+                    }
+                    break;
+                default:
+                    switch (llround((double)(total % ONEGIG) / HUNDREDMEG)) {
+                    case 0:
+                        sentence = [NSString stringWithFormat:@"%lld gig", llround((double)total / ONEGIG)];
+                        break;
+                    default:
+                        sentence = [NSString stringWithFormat:@"%lld.%lld gig", llround((double)total / ONEGIG), llround((double)(total % ONEGIG) / HUNDREDMEG)];
+                    }
+                }
+                if (![lastSentence isEqualToString:sentence]) {
+                    AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:sentence];
+                    utterance.rate = 0.7;
+                    utterance.postUtteranceDelay = 0.2;
+                    [speechSynthesizer speakUtterance:utterance];
+                    lastSentence = sentence;
+                }
             }
-            NSLog(@"==== Total size of app home directory: %lld", total);
         }
 #endif
 

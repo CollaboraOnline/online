@@ -31,6 +31,8 @@
 
 NSString *app_locale;
 
+AVSpeechSynthesizer *speechSynthesizer;
+
 static void download(NSURL *source, NSURL *destination) {
     [[[NSURLSession sharedSession] downloadTaskWithURL:source
                                      completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
@@ -232,6 +234,8 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
         app_locale = [NSString stringWithUTF8String:lang];
     else
         app_locale = [[NSLocale preferredLanguages] firstObject];
+
+    speechSynthesizer = [[AVSpeechSynthesizer alloc] init];
 
     lo_kit = lok_init_2(nullptr, nullptr);
 
