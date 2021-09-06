@@ -408,7 +408,7 @@ app.definitions.Socket = L.Class.extend({
 	_extractImage: function(e) {
 		var img;
 		if (window.ThisIsTheiOSApp) {
-			// In the iOS app, the native code sends us the URL of the BMP for the tile after the newline
+			// In the iOS app, the native code sends us the PNG tile already as a data: URL after the newline
 			var newlineIndex = e.textMsg.indexOf('\n');
 			if (newlineIndex > 0) {
 				img = e.textMsg.substring(newlineIndex+1);
@@ -455,9 +455,6 @@ app.definitions.Socket = L.Class.extend({
 		e.image = new Image();
 		e.image.onload = function() {
 			e.imageIsComplete = true;
-			if (window.ThisIsTheiOSApp) {
-				window.webkit.messageHandlers.lool.postMessage('REMOVE ' + e.image.src, '*');
-			}
 			that._queueSlurpEventEmission();
 			if (e.image.completeTraceEvent)
 				e.image.completeTraceEvent.finish();
@@ -466,9 +463,6 @@ app.definitions.Socket = L.Class.extend({
 			console.log('Failed to load image ' + img + ' fun ' + err);
 			e.imageIsComplete = true;
 			that._queueSlurpEventEmission();
-			if (window.ThisIsTheiOSApp) {
-				window.webkit.messageHandlers.lool.postMessage('REMOVE ' + e.image.src, '*');
-			}
 			if (e.image.completeTraceEvent)
 				e.image.completeTraceEvent.abort();
 		};

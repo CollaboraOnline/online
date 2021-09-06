@@ -290,16 +290,6 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
     if (user_name == nullptr)
         user_name = [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] UTF8String];
 
-    // Remove any leftover tile .bmp files by removing the whole folder
-    NSURL *tileFolderURL = [[[NSFileManager defaultManager] temporaryDirectory] URLByAppendingPathComponent:@"tiles"];
-    if (![[NSFileManager defaultManager] removeItemAtURL:tileFolderURL error:nil]) {
-        NSLog(@"Could not remove tile bitmap folder %@", tileFolderURL);
-    }
-
-    if (![[NSFileManager defaultManager] createDirectoryAtURL:tileFolderURL withIntermediateDirectories:YES attributes:nil error:nil]) {
-        NSLog(@"Could not create tile bitmap folder %@", tileFolderURL);
-    }
-
     fakeSocketSetLoggingCallback([](const std::string& line)
                                  {
                                      LOG_INF_NOFILE(line);
