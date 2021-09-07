@@ -299,7 +299,7 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
     }
 
     if (![[NSFileManager defaultManager] createDirectoryAtURL:tempFolderURL withIntermediateDirectories:YES attributes:nil error:nil]) {
-        NSLog(@"Could not create tile bitmap folder %@", tempFolderURL);
+        NSLog(@"Could not create tmp folder %@", tempFolderURL);
     }
 
     fakeSocketSetLoggingCallback([](const std::string& line)
