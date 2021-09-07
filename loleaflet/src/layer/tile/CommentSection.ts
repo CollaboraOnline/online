@@ -35,6 +35,7 @@ class Comment {
 	stopPropagating: Function; // Implemented by section container.
 	setPosition: Function; // Implemented by section container. Document objects only.
 	map: any;
+	pendingInit: boolean = true;
 
 	constructor (data: any, options: any, commentListSectionPointer: any) {
 		this.map = L.Map.THIS;
@@ -97,8 +98,13 @@ class Comment {
 		this.sectionProperties.isRemoved = false;
 	}
 
-	public onInitialize () {
-		this.createContainerAndWrapper();
+	// Do pending initialization if necessary.
+	private doPendingInitializationInView (force: boolean = false) {
+		if (!this.pendingInit)
+			return;
+
+		if (!force && !this.convertRectanglesToCoreCoordinates())
+			return;
 
 		this.createAuthorTable();
 
@@ -161,6 +167,15 @@ class Comment {
 		}
 
 		this.update();
+
+		this.pendingInit = false;
+	}
+
+	public onInitialize () {
+		this.createContainerAndWrapper();
+		this.sectionProperties.container.style.visibility = 'hidden';
+
+		this.doPendingInitializationInView();
 	}
 
 	private createContainerAndWrapper () {
@@ -381,10 +396,25 @@ class Comment {
 		this.sectionProperties.isHighlighted = true;
 	}
 
+	private static doesRectIntersectView(pos: number[], size: number[], viewContext: any): boolean {
+		var paneBoundsList = <any[]>viewContext.paneBoundsList;
+		var endPos = [pos[0] + size[0], pos[1] + size[1]];
+		for (var i = 0; i < paneBoundsList.length; ++i) {
+			var paneBounds = paneBoundsList[i];
+			var rectInvisible = (endPos[0] < paneBounds.min.x || endPos[1] < paneBounds.min.y ||
+				pos[0] > paneBounds.max.x || pos[1] > paneBounds.max.y);
+			if (!rectInvisible)
+				return true;
+		}
+		return false;
+	}
+
 	// This is for svg elements that will be bound to document-container.
-	private convertRectanglesToCoreCoordinates () {
+	private convertRectanglesToCoreCoordinates () : boolean {
 		var rectangles = this.sectionProperties.data.rectangles;
 		var originals = this.sectionProperties.data.rectanglesOriginal;
+		var viewContext = this.map.getTileSectionMgr()._paintContext();
+		var intersectsVisibleArea = false;
 
 		if (rectangles) {
 			var documentAnchorSection = this.containerObject.getDocumentAnchorSection();
@@ -392,17 +422,31 @@ class Comment {
 
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
 			for (var i = 0; i < rectangles.length; i++) {
-				rectangles[i][0] = Math.round(originals[i][0] * ratio) + diff[0];
-				rectangles[i][1] = Math.round(originals[i][1] * ratio) + diff[1];
-				rectangles[i][2] = Math.round(originals[i][2] * ratio);
-				rectangles[i][3] = Math.round(originals[i][3] * ratio);
+				var pos = [
+					Math.round(originals[i][0] * ratio),
+					Math.round(originals[i][1] * ratio)
+				];
+				var size = [
+					Math.round(originals[i][2] * ratio),
+					Math.round(originals[i][3] * ratio)
+				];
+
+				if (!intersectsVisibleArea && Comment.doesRectIntersectView(pos, size, viewContext))
+					intersectsVisibleArea = true;
+
+				rectangles[i][0] = pos[0] + diff[0];
+				rectangles[i][1] = pos[1] + diff[1];
+				rectangles[i][2] = size[0];
+				rectangles[i][3] = size[1];
 			}
 		}
+
+		return intersectsVisibleArea;
 	}
 
 	private updatePosition () {
-		this.convertRectanglesToCoreCoordinates();
-		this.setPositionAndSize();
+		if (this.convertRectanglesToCoreCoordinates())
+			this.setPositionAndSize();
 	}
 
 	private updateAnnotationMarker () {
@@ -489,6 +533,7 @@ class Comment {
 	}
 
 	private show () {
+		this.doPendingInitializationInView(true /* force */);
 		this.showMarker();
 
 		// On mobile, container shouldn't be 'document-container', but it is 'document-container' on initialization. So we hide the comment until comment wizard is opened.
@@ -626,6 +671,7 @@ class Comment {
 	}
 
 	public edit () {
+		this.doPendingInitializationInView(true /* force */);
 		this.sectionProperties.nodeModify.style.display = '';
 		this.sectionProperties.nodeReply.style.display = 'none';
 		this.sectionProperties.container.style.visibility = '';
@@ -804,6 +850,7 @@ class Comment {
 	}
 
 	public onNewDocumentTopLeft () {
+		this.doPendingInitializationInView();
 		this.updatePosition();
 	}
 
