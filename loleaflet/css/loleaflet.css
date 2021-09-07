@@ -342,6 +342,19 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	z-index: 10;
 }
 
+.loleaflet-annotation:not(annotation-active) .loleaflet-annotation-collapsed{
+	position: absolute;
+	left: 24px;
+}
+.loleaflet-annotation.annotation-active .loleaflet-annotation-collapsed{
+	position: absolute;
+	left: 0 !important;
+}
+
+#document-container > .loleaflet-annotation:hover .loleaflet-annotation-collapsed{
+	box-shadow: 0 0 3px 0 rgb(0 0 0 / 50%), 0 0 10px 4px rgb(0 0 0 / 10%);
+}
+
 .loleaflet-annotation-content-wrapper, .loleaflet-annotation-redline-content-wrapper {
 	padding: 8px;
 	font-family: var(--loleaflet-font) !important;
