@@ -1041,7 +1041,7 @@ L.Control.Menubar = L.Control.extend({
 		commandStates: {},
 
 		// Only these menu options will be visible in readonly mode
-		allowedReadonlyMenus: ['file', 'downloadas', 'view', 'help'],
+		allowedReadonlyMenus: ['file', 'downloadas', 'view', 'insert', 'help'],
 
 		allowedViewModeActions: [
 			'savecomments', 'shareas', 'print', // file menu
