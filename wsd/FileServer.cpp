@@ -674,6 +674,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     LOG_TRC("css_variables=" << cssVars);
     const std::string postMessageOrigin = form.get("postmessage_origin", "");
     LOG_TRC("postmessage_origin" << postMessageOrigin);
+    const std::string theme = form.get("theme", "");
+    LOG_TRC("theme=" << theme);
+
     // Escape bad characters in access token.
     // This is placed directly in javascript in loleaflet.html, we need to make sure
     // that no one can do anything nasty with their clever inputs.
@@ -729,8 +732,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         LOOLWSD::getConfigValue<bool>("hexify_embedded_urls", false) ? "true" : "false";
     Poco::replaceInPlace(preprocess, std::string("%HEXIFY_URL%"), hexifyEmbeddedUrls);
 
-    static const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.css\">");
-    static const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");
+    std::string themePreFix = (theme == "nextcloud") ? theme + "/" : "";
+    static const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/" + themePreFix + "%s.css\">");
+    static const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/" + themePreFix+ "%s.js\"></script>");
 
     std::string brandCSS(Poco::format(linkCSS, responseRoot, std::string(BRANDING)));
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
