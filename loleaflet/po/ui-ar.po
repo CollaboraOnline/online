@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-31 09:51+0200\n"
-"PO-Revision-Date: 2021-03-17 14:18+0000\n"
-"Last-Translator: abidin toumi <abidin24@disroot.org>\n"
+"PO-Revision-Date: 2021-09-02 21:56+0000\n"
+"Last-Translator: ButterflyOfFire <ButterflyOfFire@protonmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
-"Language: \n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.5.2-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 "X-Pootle-Path: /ar/libo_online/loleaflet-ui-ar.po\n"
 "X-Pootle-Revision: 3937633\n"
 
@@ -755,9 +755,8 @@ msgstr ""
 #: src/control/Control.Menubar.js:715 src/control/Control.Menubar.js:768
 #: src/control/Control.Menubar.js:823 src/control/Control.Menubar.js:868
 #: src/control/Control.StatusBar.js:190
-#, fuzzy
 msgid "Search"
-msgstr "ابحث عن:"
+msgstr "البحث"
 
 #: src/control/Control.Menubar.js:760
 msgid "Page Setup"
@@ -779,9 +778,8 @@ msgstr "أمتأكد من حذف هذه الشريحة؟"
 #: src/control/Control.MobileBottomBar.js:27
 #: src/control/Control.MobileBottomBar.js:55
 #: src/control/Control.MobileBottomBar.js:84
-#, fuzzy
 msgid "Show the search bar"
-msgstr "ألغِ البحث"
+msgstr "إظهار شريط البحث"
 
 #: src/control/Control.MobileTopBar.js:43
 msgid "Accept"
@@ -800,14 +798,12 @@ msgid "Scroll down annotations"
 msgstr "مرّر التعليقات التوضيحية لأسفل"
 
 #: src/control/Control.SearchBar.js:20
-#, fuzzy
 msgid "Hide the search bar"
-msgstr "ألغِ البحث"
+msgstr "إخفاء شريط البحث"
 
 #: src/control/Control.SearchBar.js:31
-#, fuzzy
 msgid "Clear the search field"
-msgstr "ألغِ البحث"
+msgstr "امسح حقل البحث"
 
 #: src/control/Control.SheetsBar.js:27
 msgid "Scroll to the first sheet"
