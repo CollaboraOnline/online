@@ -411,23 +411,25 @@ class Comment {
 	}
 
 	// This is for svg elements that will be bound to document-container.
+	// This also returns whether any rectangle has an intersection with the visible area/panes.
 	private convertRectanglesToCoreCoordinates () : boolean {
 		var rectangles = this.sectionProperties.data.rectangles;
 		var originals = this.sectionProperties.data.rectanglesOriginal;
 		var viewContext = this.map.getTileSectionMgr()._paintContext();
 		var intersectsVisibleArea = false;
+		var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+		var pos: number[], size: number[];
 
 		if (rectangles) {
 			var documentAnchorSection = this.containerObject.getDocumentAnchorSection();
 			var diff = [documentAnchorSection.myTopLeft[0] - this.documentTopLeft[0], documentAnchorSection.myTopLeft[1] - this.documentTopLeft[1]];
 
-			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
 			for (var i = 0; i < rectangles.length; i++) {
-				var pos = [
+				pos = [
 					Math.round(originals[i][0] * ratio),
 					Math.round(originals[i][1] * ratio)
 				];
-				var size = [
+				size = [
 					Math.round(originals[i][2] * ratio),
 					Math.round(originals[i][3] * ratio)
 				];
@@ -440,6 +442,20 @@ class Comment {
 				rectangles[i][2] = size[0];
 				rectangles[i][3] = size[1];
 			}
+		} else if (this.sectionProperties.data.trackchange && this.sectionProperties.data.anchorPos) {
+			// For redline comments there are no 'rectangles' or 'rectangleOriginal' properties in sectionProperties.data
+			// So use the comment rectangle stored in anchorPos (in display? twips).
+			var anchorPos = this.sectionProperties.data.anchorPos;
+			pos = [
+				Math.round(anchorPos[0] * ratio),
+				Math.round(anchorPos[1] * ratio)
+			];
+			size = [
+				Math.round(anchorPos[2] * ratio),
+				Math.round(anchorPos[3] * ratio)
+			];
+
+			intersectsVisibleArea = Comment.doesRectIntersectView(pos, size, viewContext);
 		}
 
 		return intersectsVisibleArea;
