@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-31 09:51+0200\n"
-"PO-Revision-Date: 2021-06-29 20:22+0000\n"
+"PO-Revision-Date: 2021-09-02 13:44+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 4.7.1-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 "X-Pootle-Path: /he/libo_online/loleaflet-ui-he.po\n"
 "X-Pootle-Revision: 3939478\n"
 
@@ -1454,11 +1454,11 @@ msgstr "השרת זמין כעת. עלינו לרענן את העמוד."
 
 #: src/core/Socket.js:511
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "השרת נגיש כרגע…"
 
 #: src/core/Socket.js:514
 msgid "RELOAD"
-msgstr ""
+msgstr "רענון"
 
 #: src/core/Socket.js:532
 msgid "Served by:"
@@ -1540,15 +1540,15 @@ msgstr "הססמה שסופקה שגויה. נא לנסות שוב."
 
 #: src/core/Socket.js:1009
 msgid "Someone"
-msgstr ""
+msgstr "מישהו"
 
 #: src/core/Socket.js:1011
 msgid " saved this document as "
-msgstr ""
+msgstr " שמר את המסמך הזה בתור "
 
 #: src/core/Socket.js:1011
 msgid ". Do you want to join?"
-msgstr ""
+msgstr ". מעניין אותך להצטרף?"
 
 #: src/core/Socket.js:1020
 msgid "Loading..."
@@ -1570,7 +1570,7 @@ msgstr "ובכן, לא נעים, לא הצלחנו להתחבר למסמך של�
 
 #: src/core/Socket.js:1401
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "השרת התנתק."
 
 #: src/errormessages.js:13
 msgid ""
@@ -1759,7 +1759,7 @@ msgstr "כדי להדביק מחוץ ל־%productName, יש ללחוץ על תח
 
 #: src/map/Clipboard.js:131
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "הושבתה העתקה מהמסמך"
 
 #: src/map/Clipboard.js:284
 msgid "Failed to download clipboard, please re-copy"
