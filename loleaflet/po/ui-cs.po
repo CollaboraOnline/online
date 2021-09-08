@@ -12,17 +12,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-31 09:51+0200\n"
-"PO-Revision-Date: 2021-07-01 22:49+0000\n"
+"PO-Revision-Date: 2021-09-02 21:56+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <="
-" 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 4.8-dev\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -457,7 +457,7 @@ msgstr "Do"
 
 #: src/control/Control.JSDialogBuilder.js:1211
 msgid "Color"
-msgstr ""
+msgstr "Barva"
 
 #: src/control/Control.JSDialogBuilder.js:1335
 msgid "Select range"
@@ -1457,15 +1457,15 @@ msgstr "Došlo k problému při připojování k %productName: "
 
 #: src/core/Socket.js:509
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Server je nyní dostupný. Nyní je nutné stránku obnovit."
+msgstr "Server je nyní dostupný. Stránku je nutné obnovit."
 
 #: src/core/Socket.js:511
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "Server je nyní dostupný..."
 
 #: src/core/Socket.js:514
 msgid "RELOAD"
-msgstr ""
+msgstr "Znovu načíst"
 
 #: src/core/Socket.js:532
 msgid "Served by:"
@@ -1557,15 +1557,15 @@ msgstr "Chybné heslo. Zkuste ho zadat znovu."
 
 #: src/core/Socket.js:1009
 msgid "Someone"
-msgstr ""
+msgstr "Někdo"
 
 #: src/core/Socket.js:1011
 msgid " saved this document as "
-msgstr ""
+msgstr " tento dokument uložil jako "
 
 #: src/core/Socket.js:1011
 msgid ". Do you want to join?"
-msgstr ""
+msgstr ". Přejete si se přidat?"
 
 #: src/core/Socket.js:1020
 msgid "Loading..."
@@ -1588,7 +1588,7 @@ msgstr ""
 
 #: src/core/Socket.js:1401
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Server byl odpojen."
 
 #: src/errormessages.js:13
 msgid ""
@@ -1785,7 +1785,7 @@ msgstr "Při vkládání mimo %productName nejprve klikněte na tlačítko Stáh
 
 #: src/map/Clipboard.js:131
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Kopírování z dokumentu zakázáno"
 
 #: src/map/Clipboard.js:284
 msgid "Failed to download clipboard, please re-copy"
