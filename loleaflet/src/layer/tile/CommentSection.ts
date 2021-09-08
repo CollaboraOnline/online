@@ -106,31 +106,6 @@ class Comment {
 		if (!force && !this.convertRectanglesToCoreCoordinates())
 			return;
 
-		this.createAuthorTable();
-
-		if (this.sectionProperties.data.trackchange && !this.map.isPermissionReadOnly()) {
-			this.createTrackChangeButtons();
-		}
-
-		if (this.sectionProperties.noMenu !== true && (this.map.isPermissionEditForComments() || this.map.isPermissionEdit())) {
-			this.createMenu();
-		}
-
-		if (this.sectionProperties.data.trackchange) {
-			this.sectionProperties.captionNode = L.DomUtil.create('div', 'loleaflet-annotation-caption', this.sectionProperties.wrapper);
-			this.sectionProperties.captionText = L.DomUtil.create('div', '', this.sectionProperties.captionNode);
-		}
-
-		this.sectionProperties.contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content loleaflet-dont-break', this.sectionProperties.wrapper);
-		this.sectionProperties.contentNode.id = 'annotation-content-area-' + this.sectionProperties.data.id;
-		this.sectionProperties.nodeModify = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeModifyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeModify);
-		this.sectionProperties.nodeModifyText.id = 'annotation-modify-textarea-' + this.sectionProperties.data.id;
-		this.sectionProperties.contentText = L.DomUtil.create('div', '', this.sectionProperties.contentNode);
-		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeReplyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeReply);
-		this.sectionProperties.nodeReplyText.id = 'annotation-reply-textarea-' + this.sectionProperties.data.id;
-
 		var button = L.DomUtil.create('div', '', this.sectionProperties.nodeModify);
 		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'blur', this.onLostFocus, this);
 		L.DomEvent.on(this.sectionProperties.nodeReplyText, 'blur', this.onLostFocusReply, this);
@@ -175,6 +150,32 @@ class Comment {
 
 	public onInitialize () {
 		this.createContainerAndWrapper();
+
+		this.createAuthorTable();
+
+		if (this.sectionProperties.data.trackchange && !this.map.isPermissionReadOnly()) {
+			this.createTrackChangeButtons();
+		}
+
+		if (this.sectionProperties.noMenu !== true && (this.map.isPermissionEditForComments() || this.map.isPermissionEdit())) {
+			this.createMenu();
+		}
+
+		if (this.sectionProperties.data.trackchange) {
+			this.sectionProperties.captionNode = L.DomUtil.create('div', 'loleaflet-annotation-caption', this.sectionProperties.wrapper);
+			this.sectionProperties.captionText = L.DomUtil.create('div', '', this.sectionProperties.captionNode);
+		}
+
+		this.sectionProperties.contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content loleaflet-dont-break', this.sectionProperties.wrapper);
+		this.sectionProperties.contentNode.id = 'annotation-content-area-' + this.sectionProperties.data.id;
+		this.sectionProperties.nodeModify = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeModifyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeModify);
+		this.sectionProperties.nodeModifyText.id = 'annotation-modify-textarea-' + this.sectionProperties.data.id;
+		this.sectionProperties.contentText = L.DomUtil.create('div', '', this.sectionProperties.contentNode);
+		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeReplyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeReply);
+		this.sectionProperties.nodeReplyText.id = 'annotation-reply-textarea-' + this.sectionProperties.data.id;
+
 		this.sectionProperties.container.style.visibility = 'hidden';
 
 		this.doPendingInitializationInView();
@@ -484,6 +485,8 @@ class Comment {
 	public updateScaling (scaleFactor: number, initialLayoutData: any) {
 		if ((<any>window).mode.isDesktop())
 			return;
+
+		this.doPendingInitializationInView();
 
 		var wrapperWidth = Math.round(initialLayoutData.wrapperWidth * scaleFactor);
 		this.sectionProperties.wrapper.style.width = wrapperWidth + 'px';
