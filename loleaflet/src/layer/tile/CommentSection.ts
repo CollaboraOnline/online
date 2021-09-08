@@ -98,7 +98,9 @@ class Comment {
 		this.sectionProperties.isRemoved = false;
 	}
 
-	// Do pending initialization if necessary.
+	// Comments import can be costly if the document has a lot of them. If they are all imported/initialized
+	// when online gets comments message from core, the initial doc render is delayed. To avoid that we do
+	// lazy import of each comment when it needs to be shown (based on its coordinates).
 	private doPendingInitializationInView (force: boolean = false) {
 		if (!this.pendingInit)
 			return;
