@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online - Help\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-31 09:51+0200\n"
-"PO-Revision-Date: 2021-05-15 10:32+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2021-09-02 13:44+0000\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/help/sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:19-5
@@ -1035,42 +1035,43 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Krmarjenje po preglednicah"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Premakne kazalec v prvo celico v delovnem listu (A1)."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "Premakne kazalec v zadnjo celico na delovnem listu, ki vsebuje podatke."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-18
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Premakne kazalec v prvo celico v trenutni vrstici."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Premakne kazalec v zadnjo celico v trenutni vrstici."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
-msgstr ""
+msgstr "Izbere celice od trenutne celice do prve celice trenutne vrstice."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
-msgstr ""
+msgstr "Izbere celice od trenutne celice do zadnje celice v trenutni vrstici."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
+"Izbere celice od trenutne celice do ene strani v trenutnem stolpcu ali "
+"razširi obstoječi izbor eno stran navzgor."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-164
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 msgstr "Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>prejšnja stran"
 
@@ -1079,9 +1080,10 @@ msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
+"Izbere celice od trenutne celice navzdol do ene strani v trenutnem stolpcu "
+"ali razširi obstoječi izbor eno stran navzdol."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-168
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 msgstr "Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>naslednja stran"
 
@@ -1091,11 +1093,13 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"Premakne kazalec na levi rob trenutnega obsega podatkov. Če je stolpec na "
+"levi strani celice, ki vsebuje kazalec, prazen, se kazalec pomakne na "
+"naslednji stolpec na levi, ki vsebuje podatke."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-245
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
-msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>vnašalka"
+msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka levo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
 msgid ""
@@ -1103,11 +1107,13 @@ msgid ""
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
+"Premakne kazalec na desni rob trenutnega obsega podatkov. Če je stolpec na "
+"desni strani celice, ki vsebuje kazalec, prazen, se kazalec pomakne na "
+"naslednji stolpec na desni, ki vsebuje podatke."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
-msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>vnašalka"
+msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka desno"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-18
 msgid ""
@@ -1115,9 +1121,11 @@ msgid ""
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
+"Premakne kazalec na zgornji rob trenutnega obsega podatkov. Če je vrstica "
+"nad celico, ki vsebuje kazalec, prazna, se kazalec pomakne v naslednjo "
+"vrstico navzgor, ki vsebuje podatke."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-221
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
 msgstr ""
 "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka navzgor"
@@ -1128,11 +1136,14 @@ msgid ""
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"Premakne kazalec na spodnji rob trenutnega obsega podatkov. Če je vrstica "
+"pod celico, ki vsebuje kazalec, prazna, se kazalec pomakne v naslednjo "
+"vrstico navzdol, ki vsebuje podatke."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-226
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
-msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>vnašalka"
+msgstr ""
+"Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>smerna tipka navzdol"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-18
 msgid ""
@@ -1141,33 +1152,33 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
+"Izbere vse celice, ki vsebujejo podatke od trenutne celice do konca zveznega "
+"obsega podatkovnih celic, v smeri pritisnjene smerne tipke. Če to uporabite "
+"za izbiranje vrstic in stolpcev hkrati, je izbran pravokotni obseg celic."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-272
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Arrow"
 msgstr ""
 "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>dvigalka</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>smerna tipka navzgor"
+"class=\"kbd--plus\">+</span><kbd>smerna tipka"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Premakne en delovni list na levo."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-73
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>prejšnja stran"
+msgstr "Izmenjalka</kbd><span class=\"kbd--plus\">+</span><kbd>prejšnja stran"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "Premakne eno stran zaslona na desno."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-80
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>naslednja stran"
+msgstr "Izmenjalka</kbd><span class=\"kbd--plus\">+</span><kbd>naslednja stran"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
 msgid ""
@@ -1175,15 +1186,17 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
+"Doda predhodni delovni list v trenutni izbor delovnih listov. Če so izbrani "
+"vsi delovni listi preglednice, ta kombinacija tipk samo izbere predhodni "
+"delovni list. Predhodni delovni list postane trenutni delovni list."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-260
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Up"
 msgstr ""
 "Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>krmilka</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>brisalka"
+"class=\"kbd--plus\">+</span><kbd>prejšnja stran"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
 msgid ""
@@ -1191,15 +1204,17 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"Doda naslednji delovni list v trenutni izbor delovnih listov. Če so izbrani "
+"vsi delovni listi preglednice, ta kombinacija tipk samo izbere naslednji "
+"delovni list. Naslednji delovni list postane trenutni delovni list."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-248
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Down"
 msgstr ""
 "Dvigalka</kbd><span class=\"kbd--plus\">+</span><kbd>krmilka</kbd><span "
-"class=\"kbd--plus\">+</span><kbd>brisalka"
+"class=\"kbd--plus\">+</span><kbd>naslednja stran"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""
@@ -1207,40 +1222,41 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"kjer je (*) znak za množenje na numerični tipkovnici. Izbere obseg podatkov, "
+"ki vsebuje kazalec. Obseg je zvezen obseg celic, ki vsebujejo podatke in ki "
+"je obkrožen s praznimi vrsticami in stolpci."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
-msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>*"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
 msgstr ""
+"kjer je (/) znak za deljenje na numerični tipkovnici. Izbere obseg matrične "
+"formule, ki vsebuje kazalec."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-158
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
-msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "Vstavi celice (kot menijski ukaz Vstavi > Celice)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-85
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
-msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>tipka plus"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "Izbriši celice (kot menijski ukaz Uredi > Izbriši celice)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-90
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
-msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>vnašalka"
+msgstr "Krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>tipka minus"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"

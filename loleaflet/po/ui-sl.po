@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-31 09:51+0200\n"
-"PO-Revision-Date: 2021-07-05 22:35+0000\n"
+"PO-Revision-Date: 2021-09-02 13:44+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:6
@@ -1459,11 +1459,11 @@ msgstr "Strežnik je zdaj dosegljiv. Zdaj moramo osvežiti stran."
 
 #: src/core/Socket.js:511
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "Strežnik je zdaj dosegljiv ..."
 
 #: src/core/Socket.js:514
 msgid "RELOAD"
-msgstr ""
+msgstr "PONOVNO NALOŽI"
 
 #: src/core/Socket.js:532
 msgid "Served by:"
@@ -1553,15 +1553,15 @@ msgstr "Vnesli ste napačno geslo. Poskusite znova."
 
 #: src/core/Socket.js:1009
 msgid "Someone"
-msgstr ""
+msgstr "Nekdo"
 
 #: src/core/Socket.js:1011
 msgid " saved this document as "
-msgstr ""
+msgstr " je dokument shranil kot "
 
 #: src/core/Socket.js:1011
 msgid ". Do you want to join?"
-msgstr ""
+msgstr ". Ali se želite pridružiti?"
 
 #: src/core/Socket.js:1020
 msgid "Loading..."
@@ -1584,7 +1584,7 @@ msgstr "Žal se ni mogoče povezati z vašim dokumentom. Prosimo, poskusite znov
 
 #: src/core/Socket.js:1401
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Strežnik ni več povezan."
 
 #: src/errormessages.js:13
 msgid ""
@@ -1785,7 +1785,7 @@ msgstr ""
 
 #: src/map/Clipboard.js:131
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Kopiranje iz dokumenta je onemogočeno"
 
 #: src/map/Clipboard.js:284
 msgid "Failed to download clipboard, please re-copy"
