@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-31 09:51+0200\n"
-"PO-Revision-Date: 2021-05-18 13:32+0000\n"
+"PO-Revision-Date: 2021-09-08 21:20+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 "X-Pootle-Path: /ast/libo_online/loleaflet-ui-ast.po\n"
 "X-Pootle-Revision: 3937643\n"
 
@@ -1144,7 +1144,7 @@ msgstr "Hora"
 
 #: src/control/Control.NotebookbarCalc.js:422
 msgid "Scientific"
-msgstr ""
+msgstr "Científicu"
 
 #: src/control/Control.NotebookbarCalc.js:423
 msgid "Fraction"
@@ -1160,15 +1160,15 @@ msgstr "Testu"
 
 #: src/control/Control.NotebookbarCalc.js:558
 msgid "Default"
-msgstr ""
+msgstr "Predetermináu"
 
 #: src/control/Control.NotebookbarCalc.js:563
 msgid "Heading 1"
-msgstr ""
+msgstr "Títulu 1"
 
 #: src/control/Control.NotebookbarCalc.js:568
 msgid "Heading 2"
-msgstr ""
+msgstr "Títulu 2"
 
 #: src/control/Control.NotebookbarCalc.js:579
 msgid "Good"
@@ -1238,11 +1238,11 @@ msgstr "Nun pudo bloquiase'l documentu."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Introduz un nome de ficheru"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "nome de ficheru"
 
 #: src/control/Permission.js:123
 msgid ""
@@ -1727,7 +1727,7 @@ msgstr "Refugar cambéu"
 
 #: src/layer/tile/CanvasTileLayer.js:1760
 msgid "Functions"
-msgstr ""
+msgstr "Funciones"
 
 #: src/layer/tile/CanvasTileLayer.js:4814
 msgid "No Comments"
