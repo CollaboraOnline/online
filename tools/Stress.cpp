@@ -360,8 +360,12 @@ POCO_APP_MAIN(Stress)
 #  include <SslSocket.hpp>
 #endif
 
+// Avoid a MessageHandler for now.
 class StressSocketHandler : public WebSocketHandler
 {
+    TraceFileReader _reader;
+    TraceFileRecord _next;
+    std::chrono::steady_clock::time_point _start;
     bool _connecting;
     std::string _uri;
     std::string _trace;
@@ -369,13 +373,17 @@ public:
 
     StressSocketHandler(const std::string &uri, const std::string &trace) :
         WebSocketHandler(true, true),
+        _reader(trace),
         _connecting(true),
         _uri(uri),
         _trace(trace)
     {
         std::cerr << "Attempt connect to " << uri << " for trace " << _trace << "\n";
+        getNextRecord();
+        _start = std::chrono::steady_clock::now();
         sendMessage("load url=" + uri);
     }
+
     int getPollEvents(std::chrono::steady_clock::time_point now,
                       int64_t &timeoutMaxMicroS) override
     {
@@ -385,8 +393,56 @@ public:
                 " to complete for trace " << _trace << "\n";
             return POLLOUT;
         }
-        else
-            return WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
+
+        int events = WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
+
+        int64_t nextTime = -1;
+        while (nextTime <= 0) {
+            nextTime = std::chrono::duration_cast<std::chrono::microseconds>(
+                std::chrono::nanoseconds(_next.getTimestampNs() - _reader.getEpochStart())
+                + now - _start).count();
+            if (nextTime <= 0)
+            {
+                sendTraceMessage();
+                events = WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
+            }
+        }
+
+        std::cerr << "next event in " << nextTime << " us\n";
+        if (nextTime < timeoutMaxMicroS)
+            timeoutMaxMicroS = nextTime;
+
+        return events;
+    }
+
+    bool getNextRecord()
+    {
+        bool found = false;
+        while (!found) {
+            _next = _reader.getNextRecord();
+            switch (_next.getDir()) {
+            case TraceFileRecord::Direction::Invalid:
+            case TraceFileRecord::Direction::Incoming:
+                // FIXME: need to subset output quite a bit.
+                found = true;
+                break;
+            default:
+                found = false;
+                break;
+            }
+        }
+        return _next.getDir () != TraceFileRecord::Direction::Invalid;
+    }
+
+    void sendTraceMessage()
+    {
+        std::cerr << "Send: " << _next.getPayload() << "\n";
+
+        // FIXME: viewport translation of events etc. ?
+        sendMessage(_next.getPayload());
+
+        if (!getNextRecord())
+            shutdown();
     }
 
     void performWrites(std::size_t capacity) override
@@ -400,6 +456,14 @@ public:
     {
         std::cerr << "Websocket " << _uri << " dis-connected, re-trying in 20 seconds\n";
         WebSocketHandler::onDisconnect();
+    }
+
+    void handleMessage(const std::vector<char> &data) override
+    {
+        const std::string firstLine = LOOLProtocol::getFirstLine(data.data(), data.size());
+        StringVector tokens = Util::tokenize(firstLine);
+        std::cerr << "Got a message ! " << firstLine << "\n";
+        // FIXME: implement code to respond to tile rendered events with tileprocessed etc.
     }
 };
 
@@ -429,6 +493,7 @@ int Stress::processArgs(const std::vector<std::string>& args)
         Poco::URI::encode("file://" + fileabs, ":/?", file);
         Poco::URI::encode(file, ":/?", wrap); // double encode.
         std::string uri = server + "/lool/" + wrap + "/ws";
+
         auto handler = std::make_shared<StressSocketHandler>(fileabs, args[i+1]);
         poll.insertNewWebSocketSync(Poco::URI(uri), handler);
         // FIXME: we need a sensible protocol handler to drive the actual trace replay ...
