@@ -625,7 +625,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:FormatLine'},
 				{uno: '.uno:FormatArea'}
 			]},
-			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), type: 'menu', menu: [
+			{name: _UNO('.uno:SheetMenu', 'spreadsheet'), id: 'sheet', type: 'menu', menu: [
 				{uno: '.uno:InsertCell'},
 				{name: _UNO('.uno:InsertRowsMenu', 'spreadsheet'), type: 'menu', menu: [
 					{uno: '.uno:InsertRowsBefore'},
