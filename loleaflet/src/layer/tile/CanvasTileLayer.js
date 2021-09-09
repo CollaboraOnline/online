@@ -216,7 +216,10 @@ L.TileSectionManager = L.Class.extend({
 
 	shouldDrawCalcGrid: function () {
 		var defaultBG = 'ffffff';
-		return (this._layer.coreDocBGColor === defaultBG);
+		if (this._layer.coreDocBGColor)
+			return (this._layer.coreDocBGColor === defaultBG);
+		else
+			return true;
 	},
 
 	_onDrawGridSection: function () {
