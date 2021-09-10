@@ -394,6 +394,116 @@ class TilesSection {
 		}.bind(this));
 	}
 
+	private forEachTileInArea(area: any, zoom: number, part: number, ctx: any,
+		callback: (tile: any, coords: any) => boolean) {
+		var docLayer = this.sectionProperties.docLayer;
+		var tileRange = docLayer._pxBoundsToTileRange(area);
+
+		for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
+			for (var i = tileRange.min.x; i <= tileRange.max.x; ++i) {
+				var coords = new L.TileCoordData(
+					i * ctx.tileSize.x,
+					j * ctx.tileSize.y,
+					zoom,
+					part);
+
+				var key = coords.key();
+				var tile = docLayer._tiles[key];
+				callback(tile, coords);
+			}
+		}
+	}
+
+	// Called by tsManager to draw a zoom animation frame.
+	public drawZoomFrame(ctx?: any) {
+		var tsManager = this.sectionProperties.tsManager;
+		if (!tsManager._inZoomAnim)
+			return;
+
+		var scale = tsManager._zoomFrameScale;
+		if (!scale || !tsManager._newCenter)
+			return;
+
+		ctx = ctx || this.sectionProperties.tsManager._paintContext();
+		var docLayer = this.sectionProperties.docLayer;
+		var zoom = Math.round(this.map.getZoom());
+		var part = docLayer._selectedPart;
+		var splitPos = ctx.splitPos;
+
+		this.containerObject.setPenPosition(this);
+		var viewSize = ctx.viewBounds.getSize();
+		// clear the document area first.
+		this.context.fillStyle = this.containerObject.getClearColor();
+		this.context.fillRect(0, 0, viewSize.x, viewSize.y);
+
+		var paneBoundsList = ctx.paneBoundsList;
+
+		for (var k = 0; k < paneBoundsList.length ; ++k) {
+			var paneBounds = paneBoundsList[k];
+			var paneSize = paneBounds.getSize();
+
+			// Calculate top-left in doc core-pixels for the frame.
+			var docPos = tsManager._getZoomDocPos(tsManager._newCenter, paneBounds, splitPos, scale, false /* findFreePaneCenter? */);
+
+			var destPos = new L.Point(0, 0);
+			var docAreaSize = paneSize.divideBy(scale);
+			if (paneBoundsList.length > 1) {
+				if (paneBounds.min.x) {
+					// Pane is free to move in X direction.
+					destPos.x = splitPos.x;
+					paneSize.x -= splitPos.x;
+				} else {
+					// Pane is fixed in X direction.
+					docAreaSize.x = paneSize.x;
+				}
+
+				if (paneBounds.min.y) {
+					// Pane is free to move in Y direction.
+					destPos.y = splitPos.y;
+					paneSize.y -= splitPos.y;
+				} else {
+					// Pane is fixed in Y direction.
+					docAreaSize.y = paneSize.y;
+				}
+			}
+
+			var docRange = new L.Bounds(docPos.topLeft, docPos.topLeft.add(docAreaSize));
+			var canvasContext = this.context;
+
+			this.forEachTileInArea(docRange, zoom, part, ctx, function (tile: any, coords: any): boolean {
+				if (!tile || !tile.loaded || !docLayer._isValidTile(coords))
+					return false;
+
+				var tileBounds = new L.Bounds(tile.coords.getPos(), tile.coords.getPos().add(ctx.tileSize));
+				var crop = new L.Bounds(tileBounds.min, tileBounds.max);
+				crop.min.x = Math.max(docRange.min.x, tileBounds.min.x);
+				crop.min.y = Math.max(docRange.min.y, tileBounds.min.y);
+				crop.max.x = Math.min(docRange.max.x, tileBounds.max.x);
+				crop.max.y = Math.min(docRange.max.y, tileBounds.max.y);
+
+				var cropWidth = crop.max.x - crop.min.x;
+				var cropHeight = crop.max.y - crop.min.y;
+
+				var tileOffset = crop.min.subtract(tileBounds.min);
+				var paneOffset = crop.min.subtract(docRange.min.subtract(destPos));
+				if (cropWidth && cropHeight) {
+					canvasContext.drawImage(tile.el,
+						tileOffset.x, tileOffset.y, // source x, y
+						cropWidth, cropHeight, // source size
+						// Destination x, y, w, h (In non-Chrome browsers it leaves lines without the 0.5 correction).
+						Math.floor(paneOffset.x * scale) + 0.5, // Destination x
+						Math.floor(paneOffset.y * scale) + 0.5, // Destination y
+						Math.floor(cropWidth * scale) + 1.5,    // Destination width
+						Math.floor(cropHeight * scale) + 1.5);  // Destination height
+				}
+
+				return true;
+			}); // end of forEachTileInArea call.
+
+		} // End of pane bounds list loop.
+
+	}
+
 	public onMouseWheel () { return; }
 	public onMouseMove () { return; }
 	public onMouseDown () { return; }
