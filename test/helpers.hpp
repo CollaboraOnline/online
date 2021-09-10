@@ -188,12 +188,16 @@ pocoGet(const Poco::URI& uri)
     }
 
     std::string responseString;
-    if (response->hasContentLength() && response->getContentLength() > 0)
+    try
     {
         std::ostringstream outputStringStream;
         Poco::StreamCopier::copyStream(rs, outputStringStream);
         responseString = outputStringStream.str();
         LOG_DBG("pocoGet [" << uri.toString() << "]: " << responseString);
+    }
+    catch (const std::exception& ex)
+    {
+        LOG_ERR("Exception while reading Poco stream: " << ex.what());
     }
 
     return std::make_pair(response, responseString);
