@@ -399,8 +399,8 @@ public:
         int64_t nextTime = -1;
         while (nextTime <= 0) {
             nextTime = std::chrono::duration_cast<std::chrono::microseconds>(
-                std::chrono::nanoseconds(_next.getTimestampNs() - _reader.getEpochStart())
-                + now - _start).count();
+                std::chrono::microseconds(_next.getTimestampUs() - _reader.getEpochStart())
+                + _start - now).count();
             if (nextTime <= 0)
             {
                 sendTraceMessage();

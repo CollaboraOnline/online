@@ -38,7 +38,7 @@ public:
 
     TraceFileRecord() :
         _dir(Direction::Invalid),
-        _timestampNs(0),
+        _timestampUs(0),
         _pid(0)
     {
     }
@@ -55,9 +55,9 @@ public:
 
     Direction getDir() const { return _dir; }
 
-    void setTimestampNs(unsigned timestampNs) { _timestampNs = timestampNs; }
+    void setTimestampUs(unsigned timestampUs) { _timestampUs = timestampUs; }
 
-    unsigned getTimestampNs() const { return _timestampNs; }
+    unsigned getTimestampUs() const { return _timestampUs; }
 
     void setPid(unsigned pid) { _pid = pid; }
 
@@ -73,7 +73,7 @@ public:
 
 private:
     Direction _dir;
-    unsigned _timestampNs;
+    unsigned _timestampUs;
     unsigned _pid;
     std::string _sessionId;
     std::string _payload;
@@ -441,8 +441,8 @@ private:
         _indexIn = advance(-1, TraceFileRecord::Direction::Incoming);
         _indexOut = advance(-1, TraceFileRecord::Direction::Outgoing);
 
-        _epochStart = _records[0].getTimestampNs();
-        _epochEnd = _records[_records.size() - 1].getTimestampNs();
+        _epochStart = _records[0].getTimestampUs();
+        _epochEnd = _records[_records.size() - 1].getTimestampUs();
     }
 
     static bool extractRecord(const std::string& s, TraceFileRecord& rec)
@@ -462,7 +462,7 @@ private:
             switch (record)
             {
                 case 0:
-                    rec.setTimestampNs(std::atoi(s.substr(pos, next - pos).c_str()));
+                    rec.setTimestampUs(std::atol(s.substr(pos, next - pos).c_str()));
                     break;
                 case 1:
                     rec.setPid(std::atoi(s.substr(pos, next - pos).c_str()));
