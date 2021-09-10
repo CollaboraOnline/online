@@ -45,6 +45,7 @@ L.TileSectionManager = L.Class.extend({
 		var mapSize = this._map.getPixelBoundsCore().getSize();
 		this._oscCtxs = [];
 		this._tilesSection = null; // Shortcut.
+		this._drawDebugZoomFrames = false;
 
 		this._sectionContainer = new CanvasSectionContainer(this._canvas, this._layer.isCalc() /* disableDrawing? */);
 
@@ -400,11 +401,9 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	_viewReset: function () {
-		var ctx = this._paintContext();
-		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
-			this._tilesSection.oscCtxs[i].fillStyle = this._sectionContainer.getClearColor();
-			this._tilesSection.oscCtxs[i].fillRect(0, 0, this._tilesSection.offscreenCanvases[i].width, this._tilesSection.offscreenCanvases[i].height);
-		}
+		if (this._sectionContainer.isInZoomAnimation())
+			return;
+		this._tilesSection.clearOffScreenCanvases();
 	},
 
 	_getZoomDocPos: function (pinchCenter, paneBounds, splitPos, scale, findFreePaneCenter) {
@@ -516,6 +515,16 @@ L.TileSectionManager = L.Class.extend({
 					destPos.x, destPos.y,
 					// destWidth, destHeight
 					paneSize.x, paneSize.y);
+				var cx = painter._tilesSection.context;
+				if (painter._drawDebugZoomFrames) {
+					cx.beginPath();
+					if (painter._sectionContainer.isInZoomAnimation())
+						cx.strokeStyle = 'red';
+					cx.moveTo(destPos.x, destPos.y);
+					cx.lineTo(destPos.x + paneSize.x, destPos.y + paneSize.y);
+					cx.lineWidth = 5;
+					cx.stroke();
+				}
 			}
 
 			canvasOverlay.onDraw();
@@ -556,7 +565,6 @@ L.TileSectionManager = L.Class.extend({
 		if (!this._inZoomAnim) {
 			this._sectionContainer.setInZoomAnimation(true);
 			this._inZoomAnim = true;
-			this._layer._prefetchTilesSync();
 			// Start RAF loop for zoom-animation
 			this._zoomAnimation();
 		}
@@ -584,9 +592,12 @@ L.TileSectionManager = L.Class.extend({
 		// Calculate the final center at final zoom in advance.
 		var newMapCenter = this._getZoomMapCenter(zoom);
 		var newMapCenterLatLng = map.unproject(newMapCenter, zoom);
+
+		painter._sectionContainer.setZoomChanged(true);
+		painter.setWaitForTiles(true);
 		// Fetch tiles for the new zoom and center as we start final animation.
-		// But this does not update the map.
-		this._layer._update(newMapCenterLatLng, zoom);
+		// But those tiles are only painted after finishing the animation.
+		mapUpdater(newMapCenterLatLng);
 
 		var stopAnimation = false;
 		var waitForTiles = false;
@@ -605,17 +616,9 @@ L.TileSectionManager = L.Class.extend({
 			if (stopAnimation) {
 				stopAnimation = false;
 				cancelAnimationFrame(painter._zoomRAF);
-				painter._calcZoomFrameParams(zoom, newCenter);
-				// Draw one last frame at final zoom.
-				painter.rafFunc(undefined, true /* final? */);
 				painter._zoomFrameScale = undefined;
 				painter._sectionContainer.setInZoomAnimation(false);
 				painter._inZoomAnim = false;
-
-				painter._sectionContainer.setZoomChanged(true);
-				painter.setWaitForTiles(true);
-				// Set view and paint the tiles if all available.
-				mapUpdater(newMapCenterLatLng);
 				waitForTiles = true;
 				return;
 			}

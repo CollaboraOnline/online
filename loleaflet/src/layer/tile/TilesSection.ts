@@ -287,10 +287,7 @@ class TilesSection {
 				return;
 		}
 
-		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
-			this.oscCtxs[i].fillStyle = this.containerObject.getClearColor();
-			this.oscCtxs[i].fillRect(0, 0, this.offscreenCanvases[i].width, this.offscreenCanvases[i].height);
-		}
+		this.clearOffScreenCanvases(ctx);
 
 		var docLayer = this.sectionProperties.docLayer;
 		var tileSection = this;
@@ -306,6 +303,16 @@ class TilesSection {
 			doneTiles.add(coords.key());
 			return true; // continue with remaining tiles.
 		});
+	}
+
+	public clearOffScreenCanvases(ctx: any) {
+		if (!ctx)
+			ctx = this.sectionProperties.tsManager._paintContext();
+
+		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
+			this.oscCtxs[i].fillStyle = this.containerObject.getClearColor();
+			this.oscCtxs[i].fillRect(0, 0, this.offscreenCanvases[i].width, this.offscreenCanvases[i].height);
+		}
 	}
 
 	public onMouseWheel () {}
