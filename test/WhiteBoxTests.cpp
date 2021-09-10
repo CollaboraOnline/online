@@ -7,9 +7,9 @@
 
 #include <config.h>
 
+#include <test/lokassert.hpp>
 #include <cppunit/TestAssert.h>
 #include <cstddef>
-#include <test/lokassert.hpp>
 
 #include <Auth.hpp>
 #include <ChildSession.hpp>
