@@ -301,7 +301,7 @@ public:
     {
         for (const auto& pair : _headers)
         {
-            if (pair.first == key)
+            if (Util::iequal(pair.first, key))
                 return true;
         }
 
@@ -316,7 +316,7 @@ public:
         // probably not be faster but would add complexity.
         for (const auto& pair : _headers)
         {
-            if (pair.first == key)
+            if (Util::iequal(pair.first, key))
                 return pair.second;
         }
 
@@ -776,6 +776,14 @@ public:
         _header.setContentLength(_body.size()); // Always set it, even if 0.
         if (!_body.empty()) // Type is only meaningful if there is a body.
             _header.setContentType(std::move(contentType));
+    }
+
+    /// Append a chunk to the body. Must have Transfer-Encoding: chunked.
+    void appendChunk(const std::string& chunk)
+    {
+        std::stringstream ss;
+        ss << std::hex << chunk.size() << "\r\n" << chunk << "\r\n";
+        _body.append(ss.str());
     }
 
     /// Handles incoming data (from the Server) in the Client.

@@ -49,8 +49,10 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testInvalidURI);
     CPPUNIT_TEST(testSimpleGet);
     CPPUNIT_TEST(testSimpleGetSync);
+    CPPUNIT_TEST(testChunkedGetSync);
     CPPUNIT_TEST(test500GetStatuses); // Slow.
 #ifdef ENABLE_EXTERNAL_REGRESSION_CHECK
+    CPPUNIT_TEST(testChunkedGetSync_External);
     CPPUNIT_TEST(testSimplePost_External);
 #endif
     CPPUNIT_TEST(testTimeout);
@@ -62,7 +64,9 @@ class HttpRequestTests final : public CPPUNIT_NS::TestFixture
     void testInvalidURI();
     void testSimpleGet();
     void testSimpleGetSync();
+    void testChunkedGetSync();
     void test500GetStatuses();
+    void testChunkedGetSync_External();
     void testSimplePost_External();
     void testTimeout();
     void testOnFinished_Complete();
@@ -267,6 +271,79 @@ void HttpRequestTests::testSimpleGetSync()
         LOK_ASSERT_EQUAL(body, httpResponse->getBody());
     }
 }
+
+void HttpRequestTests::testChunkedGetSync()
+{
+    constexpr auto testname = "chunkedGetSync";
+
+    const auto data = Util::rng::getHardRandomHexString(Util::rng::getNext() % 1024);
+    const auto body = std::string(data.data(), data.size());
+    const std::string URL = "/echo/chunked/" + body;
+    TST_LOG("Requesting URI: [" << URL << ']');
+
+    const auto pocoResponse = helpers::pocoGet(Poco::URI(_localUri + URL));
+
+    http::Request httpRequest(URL);
+
+    auto httpSession = http::Session::create(_localUri);
+    httpSession->setTimeout(std::chrono::seconds(5));
+
+    for (int i = 0; i < 5; ++i)
+    {
+        TST_LOG("Request #" << i);
+        const std::shared_ptr<const http::Response> httpResponse
+            = httpSession->syncRequest(httpRequest);
+        LOK_ASSERT(httpResponse->done());
+        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+
+        LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
+        LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
+        LOK_ASSERT_EQUAL(200U, httpResponse->statusLine().statusCode());
+        LOK_ASSERT(httpResponse->statusLine().statusCategory()
+                   == http::StatusLine::StatusCodeClass::Successful);
+        LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
+        LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
+
+        LOK_ASSERT_EQUAL(pocoResponse.second, httpResponse->getBody());
+        LOK_ASSERT_EQUAL(body, httpResponse->getBody());
+    }
+}
+
+void HttpRequestTests::testChunkedGetSync_External()
+{
+    constexpr auto testname = "chunkedGetSync_External";
+
+    const std::string hostname = "http://anglesharp.azurewebsites.net";
+    const std::string URL = "/Chunked";
+    TST_LOG("Requesting URI: [" << hostname << URL << ']');
+
+    const auto pocoResponse = helpers::pocoGet(Poco::URI(hostname + URL));
+
+    http::Request httpRequest(URL);
+
+    auto httpSession = http::Session::create(hostname);
+    httpSession->setTimeout(std::chrono::seconds(5));
+
+    for (int i = 0; i < 5; ++i)
+    {
+        TST_LOG("Request #" << i);
+        const std::shared_ptr<const http::Response> httpResponse
+            = httpSession->syncRequest(httpRequest);
+        LOK_ASSERT(httpResponse->done());
+        LOK_ASSERT(httpResponse->state() == http::Response::State::Complete);
+
+        LOK_ASSERT(!httpResponse->statusLine().httpVersion().empty());
+        LOK_ASSERT(!httpResponse->statusLine().reasonPhrase().empty());
+        LOK_ASSERT_EQUAL(200U, httpResponse->statusLine().statusCode());
+        LOK_ASSERT(httpResponse->statusLine().statusCategory()
+                   == http::StatusLine::StatusCodeClass::Successful);
+        LOK_ASSERT_EQUAL(std::string("HTTP/1.1"), httpResponse->statusLine().httpVersion());
+        LOK_ASSERT_EQUAL(std::string("OK"), httpResponse->statusLine().reasonPhrase());
+
+        LOK_ASSERT_EQUAL(pocoResponse.second, httpResponse->getBody());
+    }
+}
+
 
 /// Compare the response from Poco with ours.
 /// @checkReasonPhrase controls whether we compare the Reason Phrase too or not.
