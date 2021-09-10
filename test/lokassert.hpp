@@ -7,10 +7,12 @@
 
 #pragma once
 
+#include <vector>
+#include <ostream>
+inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v);
+
 #include "testlog.hpp"
-
 #include <assert.h>
-
 #include <cppunit/extensions/HelperMacros.h>
 
 inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
