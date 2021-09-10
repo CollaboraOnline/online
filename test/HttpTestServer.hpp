@@ -115,7 +115,32 @@ private:
             {
                 http::Response response(http::StatusLine(200));
                 if (Util::startsWith(request.getUrl(), "/echo/"))
-                    response.setBody(request.getUrl().substr(sizeof("/echo")));
+                {
+                    if (Util::startsWith(request.getUrl(), "/echo/chunked/"))
+                    {
+                        response.set("transfer-encoding", "chunked");
+                        std::string body = request.getUrl().substr(sizeof("/echo/chunked"));
+                        while (!body.empty())
+                        {
+                            if (body.size() < 5)
+                            {
+                                response.appendChunk(body);
+                                break;
+                            }
+
+                            const auto half = body.size() / 2;
+                            const auto size = (Util::rng::getNext() % half) + 1; // 0-size means the end.
+
+                            const auto chunk = body.substr(0, size);
+                            response.appendChunk(chunk);
+                            body = body.substr(size);
+                        }
+
+                        response.appendChunk(std::string()); // Empty chunk to end.
+                    }
+                    else
+                        response.setBody(request.getUrl().substr(sizeof("/echo")));
+                }
                 else
                     response.setBody("You have reached HttpTestServer " + request.getUrl());
                 socket->send(response);
