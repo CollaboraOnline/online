@@ -419,13 +419,15 @@ else
   OUTPUT_TO_FILE=false
 endif
 
-run: all @JAILS_PATH@
+setup-wsd: all @JAILS_PATH@
 	@echo "Launching loolwsd"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	@cp $(abs_top_srcdir)/test/data/hello.ods $(abs_top_srcdir)/test/data/hello-world.ods
 	@cp $(abs_top_srcdir)/test/data/hello.odp $(abs_top_srcdir)/test/data/hello-world.odp
 	@echo
+
+run: setup-wsd
 	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			  --o:security.capabilities="$(CAPABILITIES)" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
@@ -437,13 +439,7 @@ run: all @JAILS_PATH@
 			  --o:trace_event[@enable]=true
 
 if ENABLE_DEBUG
-run-one: all @JAILS_PATH@
-	@echo "Launching loolwsd"
-	@fc-cache "@LO_PATH@"/share/fonts/truetype
-	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
-	@cp $(abs_top_srcdir)/test/data/hello.ods $(abs_top_srcdir)/test/data/hello-world.ods
-	@cp $(abs_top_srcdir)/test/data/hello.odp $(abs_top_srcdir)/test/data/hello-world.odp
-	@echo
+run-one: setup-wsd
 	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			  --o:security.capabilities="$(CAPABILITIES)" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
@@ -464,12 +460,19 @@ sync-calc:
 sync-impress:
 	browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odp"
 
-run-valgrind: all @JAILS_PATH@
+run-trace: setup-wsd
+	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
+			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
+			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
+			  --o:ssl.ca_file_path="$(abs_top_srcdir)/etc/ca-chain.cert.pem" \
+			  --o:admin_console.username=admin --o:admin_console.password=admin \
+			  --o:logging.file[@enable]=false --o:logging.level=trace \
+                          --o:trace[@enable]=true --o:trace.path=${builddir}/trace.txt.gz \
+                          --o:trace.outgoing.record=false
+
+run-valgrind: setup-wsd
 	@echo "Launching loolwsd under valgrind (but not forkit/loolkit, yet)"
-	@fc-cache "@LO_PATH@"/share/fonts/truetype
-	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
-	@cp $(abs_top_srcdir)/test/data/hello.ods $(abs_top_srcdir)/test/data/hello-world.ods
-	@cp $(abs_top_srcdir)/test/data/hello.odp $(abs_top_srcdir)/test/data/hello-world.odp
 	valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
 		./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
@@ -479,12 +482,8 @@ run-valgrind: all @JAILS_PATH@
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
 			  --o:logging.file[@enable]=false --o:logging.level=trace
 
-run-gdb: all @JAILS_PATH@
+run-gdb: setup-wsd
 	@echo "Launching loolwsd under gdb"
-	@fc-cache "@LO_PATH@"/share/fonts/truetype
-	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
-	@cp $(abs_top_srcdir)/test/data/hello.ods $(abs_top_srcdir)/test/data/hello-world.ods
-	@cp $(abs_top_srcdir)/test/data/hello.odp $(abs_top_srcdir)/test/data/hello-world.odp
 	$(RUN_GDB) \
 		./loolwsd --o:security.capabilities="false" \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" \
@@ -495,12 +494,8 @@ run-gdb: all @JAILS_PATH@
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
 			  --o:logging.file[@enable]=false --o:logging.level=error
 
-run-callgrind: all @JAILS_PATH@
+run-callgrind: setup-wsd
 	@echo "Launching loolwsd under valgrind's callgrind"
-	@fc-cache "@LO_PATH@"/share/fonts/truetype
-	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
-	@cp $(abs_top_srcdir)/test/data/hello.ods $(abs_top_srcdir)/test/data/hello-world.ods
-	@cp $(abs_top_srcdir)/test/data/hello.odp $(abs_top_srcdir)/test/data/hello-world.odp
 	valgrind --tool=callgrind --simulate-cache=yes --dump-instr=yes --num-callers=50 --error-limit=no --trace-children=yes \
 		./loolwsd --o:security.capabilities="false" \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" \
@@ -511,12 +506,8 @@ run-callgrind: all @JAILS_PATH@
 			  --o:admin_console.username=admin --o:admin_console.password=admin \
 			  --o:logging.file[@enable]=false --o:logging.level=error
 
-run-strace: all @JAILS_PATH@
+run-strace: setup-wsd
 	@echo "Launching loolwsd under strace"
-	@fc-cache "@LO_PATH@"/share/fonts/truetype
-	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
-	@cp $(abs_top_srcdir)/test/data/hello.ods $(abs_top_srcdir)/test/data/hello-world.ods
-	@cp $(abs_top_srcdir)/test/data/hello.odp $(abs_top_srcdir)/test/data/hello-world.odp
 	strace -o strace.log -f -tt -s 256 \
 		./loolwsd --o:security.capabilities="false" \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" \
@@ -533,7 +524,7 @@ SYSTEM_STAMP =
 
 endif
 
-.PHONY: cleanup
+.PHONY: cleanup setup-wsd
 
 if ENABLE_LIBFUZZER
 ALL_LOCAL_DEPS=
