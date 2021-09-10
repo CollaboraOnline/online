@@ -603,59 +603,12 @@ L.TileSectionManager = L.Class.extend({
 	_zoomAnimation: function () {
 		var painter = this;
 		var ctx = this._paintContext();
-		var paneBoundsList = ctx.paneBoundsList;
-		var splitPos = ctx.splitPos;
 		var canvasOverlay = this._layer._canvasOverlay;
 
 		var rafFunc = function (timeStamp, final) {
-			painter._sectionContainer.setPenPosition(painter._tilesSection);
-			for (var i = 0; i < paneBoundsList.length; ++i) {
-				var paneBounds = paneBoundsList[i];
-				var paneSize = paneBounds.getSize();
-				var extendedBounds = painter._tilesSection.extendedPaneBounds(paneBounds);
-				var paneBoundsOffset = paneBounds.min.subtract(extendedBounds.min);
-				var scale = painter._zoomFrameScale;
-
-				// Top left in document coordinates.
-				var docPos = painter._getZoomDocPos(painter._newCenter, paneBounds, splitPos, scale, false /* findFreePaneCenter? */);
-				var docTopLeft = docPos.topLeft;
-
-				// Top left position in the offscreen canvas.
-				var sourceTopLeft = docTopLeft.subtract(paneBounds.min).add(paneBoundsOffset);
-
-				var destPos = new L.Point(0, 0);
-				if (paneBoundsList.length > 1) {
-					// Has freeze-panes, so recalculate the main canvas position to draw the pane
-					// and compute the adjusted paneSizes.
-					if (paneBounds.min.x) {
-						// Pane is free to move in X direction.
-						destPos.x = splitPos.x * scale;
-						paneSize.x -= (splitPos.x * (scale - 1));
-					} else {
-						// Pane is fixed in X direction.
-						paneSize.x += (splitPos.x * (scale - 1));
-					}
-
-					if (paneBounds.min.y) {
-						// Pane is free to move in Y direction.
-						destPos.y = splitPos.y * scale;
-						paneSize.y -= (splitPos.y * (scale - 1));
-					} else {
-						// Pane is fixed in Y direction.
-						paneSize.y += (splitPos.y * (scale - 1));
-					}
-				}
-
-				painter._tilesSection.context.drawImage(painter._tilesSection.offscreenCanvases[i],
-					sourceTopLeft.x, sourceTopLeft.y,
-					// sourceWidth, sourceHeight
-					paneSize.x / scale, paneSize.y / scale,
-					// destX, destY
-					destPos.x, destPos.y,
-					// destWidth, destHeight
-					paneSize.x, paneSize.y);
-			}
-
+			// TODO: Draw grids if Calc.
+			// draw zoom frame directly from the tiles.
+			painter._tilesSection.drawZoomFrame(ctx);
 			canvasOverlay.onDraw();
 
 			if (!final)
@@ -694,7 +647,6 @@ L.TileSectionManager = L.Class.extend({
 		if (!this._inZoomAnim) {
 			this._sectionContainer.setInZoomAnimation(true);
 			this._inZoomAnim = true;
-			this._layer._prefetchTilesSync();
 			// Start RAF loop for zoom-animation
 			this._zoomAnimation();
 		}
@@ -712,8 +664,7 @@ L.TileSectionManager = L.Class.extend({
 		// the final integral zoom, but maintain the same center.
 		var steps = 10;
 		var stepId = 0;
-		// This buys us time till new tiles arrive.
-		var intervalGap = 20;
+
 		var startZoom = this._zoomFrameScale;
 		var endZoom = this._calcZoomFrameScale(zoom);
 		var painter = this;
@@ -722,14 +673,14 @@ L.TileSectionManager = L.Class.extend({
 		// Calculate the final center at final zoom in advance.
 		var newMapCenter = this._getZoomMapCenter(zoom);
 		var newMapCenterLatLng = map.unproject(newMapCenter, zoom);
-		// Fetch tiles for the new zoom and center as we start final animation.
-		// But this does not update the map.
-		this._layer._update(newMapCenterLatLng, zoom);
+		painter._sectionContainer.setZoomChanged(true);
 
 		var stopAnimation = false;
 		var waitForTiles = false;
 		var waitTries = 30;
-		var intervalId = setInterval(function () {
+		var finishingRAF = undefined;
+
+		var finishAnimation = function () {
 
 			if (stepId < steps) {
 				// continue animating till we reach "close" to 'final zoom'.
@@ -737,7 +688,6 @@ L.TileSectionManager = L.Class.extend({
 				stepId += 1;
 				if (stepId >= steps)
 					stopAnimation = true;
-				return;
 			}
 
 			if (stopAnimation) {
@@ -750,12 +700,10 @@ L.TileSectionManager = L.Class.extend({
 				painter._sectionContainer.setInZoomAnimation(false);
 				painter._inZoomAnim = false;
 
-				painter._sectionContainer.setZoomChanged(true);
 				painter.setWaitForTiles(true);
 				// Set view and paint the tiles if all available.
 				mapUpdater(newMapCenterLatLng);
 				waitForTiles = true;
-				return;
 			}
 
 			if (waitForTiles) {
@@ -763,7 +711,7 @@ L.TileSectionManager = L.Class.extend({
 				if (waitTries <= 0 || painter._tilesSection.haveAllTilesInView()) {
 					// All done.
 					waitForTiles = false;
-					clearInterval(intervalId);
+					cancelAnimationFrame(finishingRAF);
 					painter.setWaitForTiles(false);
 					painter._sectionContainer.setZoomChanged(false);
 					map.enableTextInput();
@@ -773,12 +721,16 @@ L.TileSectionManager = L.Class.extend({
 					painter._finishingZoom = false;
 					// Run the finish callback.
 					runAtFinish();
+					return;
 				}
 				else
 					waitTries -= 1;
 			}
 
-		}, intervalGap);
+			finishingRAF = requestAnimationFrame(finishAnimation);
+		};
+
+		finishAnimation();
 	},
 
 	getTileSectionPos : function () {
