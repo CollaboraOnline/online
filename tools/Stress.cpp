@@ -436,18 +436,25 @@ public:
 
     void sendTraceMessage()
     {
+        if (_next.getDir() == TraceFileRecord::Direction::Invalid)
+            return; // shutting down
+
         std::cerr << "Send: " << _next.getPayload() << "\n";
 
         // FIXME: viewport translation of events etc. ?
         sendMessage(_next.getPayload());
 
         if (!getNextRecord())
+        {
+            std::cerr << "Shutdown\n";
             shutdown();
+        }
     }
 
     void performWrites(std::size_t capacity) override
     {
-        std::cerr << "Outbound websocket - connected\n";
+        if (_connecting)
+            std::cerr << "Outbound websocket - connected\n";
         _connecting = false;
         return WebSocketHandler::performWrites(capacity);
     }
