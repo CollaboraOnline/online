@@ -26,6 +26,7 @@
 
 #include "Replay.hpp"
 #include <TraceFile.hpp>
+#include <wsd/TileDesc.hpp>
 #include <test/helpers.hpp>
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
@@ -287,7 +288,7 @@ int Stress::main(const std::vector<std::string>& args)
         return EX_NOINPUT;
     }
 
-#if 0
+#if 1
     // temporary socketpoll hook
     return Stress::processArgs(args);
 #endif
@@ -408,7 +409,7 @@ public:
             }
         }
 
-        std::cerr << "next event in " << nextTime << " us\n";
+//        std::cerr << "next event in " << nextTime << " us\n";
         if (nextTime < timeoutMaxMicroS)
             timeoutMaxMicroS = nextTime;
 
@@ -434,23 +435,6 @@ public:
         return _next.getDir () != TraceFileRecord::Direction::Invalid;
     }
 
-    void sendTraceMessage()
-    {
-        if (_next.getDir() == TraceFileRecord::Direction::Invalid)
-            return; // shutting down
-
-        std::cerr << "Send: " << _next.getPayload() << "\n";
-
-        // FIXME: viewport translation of events etc. ?
-        sendMessage(_next.getPayload());
-
-        if (!getNextRecord())
-        {
-            std::cerr << "Shutdown\n";
-            shutdown();
-        }
-    }
-
     void performWrites(std::size_t capacity) override
     {
         if (_connecting)
@@ -465,12 +449,54 @@ public:
         WebSocketHandler::onDisconnect();
     }
 
+    // send outgoing messages
+    void sendTraceMessage()
+    {
+        if (_next.getDir() == TraceFileRecord::Direction::Invalid)
+            return; // shutting down
+
+        std::string msg = rewriteMessage(_next.getPayload());
+        if (!msg.empty())
+        {
+            std::cerr << "Send: '" << msg << "'\n";
+            sendMessage(msg);
+        }
+
+        if (!getNextRecord())
+        {
+            std::cerr << "Shutdown\n";
+            shutdown();
+        }
+    }
+
+    std::string rewriteMessage(const std::string &msg)
+    {
+        const std::string firstLine = LOOLProtocol::getFirstLine(msg);
+        StringVector tokens = Util::tokenize(firstLine);
+
+        // we create our own tileprocessed responses
+        if (tokens.equals(0, "tileprocessed")) {
+            return "";
+        }
+
+        // FIXME: translate mouse events relative to view-port etc.
+        return msg;
+    }
+
+    // handle incoming messages
     void handleMessage(const std::vector<char> &data) override
     {
         const std::string firstLine = LOOLProtocol::getFirstLine(data.data(), data.size());
         StringVector tokens = Util::tokenize(firstLine);
         std::cerr << "Got a message ! " << firstLine << "\n";
-        // FIXME: implement code to respond to tile rendered events with tileprocessed etc.
+        if (tokens.equals(0, "tile:")) {
+            // eg. tileprocessed tile=0:9216:0:3072:3072:0
+            TileDesc desc = TileDesc::parse(tokens);
+            sendMessage("tileprocessed tile=" + desc.generateID());
+        }
+
+        // FIXME: implement code to send new view-ports based
+        // on cursor position etc.
     }
 };
 
