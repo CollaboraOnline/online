@@ -475,13 +475,24 @@ public:
         const std::string firstLine = LOOLProtocol::getFirstLine(msg);
         StringVector tokens = Util::tokenize(firstLine);
 
-        // we create our own tileprocessed responses
-        if (tokens.equals(0, "tileprocessed")) {
-            return "";
+        std::string out = msg;
+
+        if (tokens.equals(0, "tileprocessed"))
+            out = ""; // we do this accurately below
+
+        else if (tokens.equals(0, "load")) {
+            std::string url = tokens[1];
+            assert(!strncmp(url.c_str(), "url=", 4));
+
+            // load url=file%3A%2F%2F%2Ftmp%2Fhello-world.odt deviceFormFactor=desktop
+            out = "load url=" + _uri; // already encoded
+            for (size_t i = 2; i < tokens.size(); ++i)
+                out += " " + tokens[i];
+            std::cerr << "msg " << out << "\n";
         }
 
         // FIXME: translate mouse events relative to view-port etc.
-        return msg;
+        return out;
     }
 
     // handle incoming messages
@@ -528,7 +539,7 @@ int Stress::processArgs(const std::vector<std::string>& args)
         Poco::URI::encode(file, ":/?", wrap); // double encode.
         std::string uri = server + "/lool/" + wrap + "/ws";
 
-        auto handler = std::make_shared<StressSocketHandler>(fileabs, args[i+1]);
+        auto handler = std::make_shared<StressSocketHandler>(file, args[i+1]);
         poll.insertNewWebSocketSync(Poco::URI(uri), handler);
     }
 
