@@ -294,11 +294,14 @@ namespace SigUtil
         LOG_INF("Backtrace not available on Android.");
 #endif
 
+#if !ENABLE_DEBUG
         if (std::getenv("LOOL_DEBUG"))
+#endif
         {
             Log::signalLog(FatalGdbString);
-            LOG_ERR("Sleeping 30s to allow debugging.");
-            sleep(30);
+            LOG_ERR("Sleeping 60s to allow debugging: attach " << getpid());
+            std::cerr << "Sleeping 60s to allow debugging: attach " << getpid() << "\n";
+            sleep(60);
         }
     }
 
