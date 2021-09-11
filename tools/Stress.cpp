@@ -406,6 +406,7 @@ public:
             {
                 sendTraceMessage();
                 events = WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
+                break;
             }
         }
 
@@ -529,13 +530,13 @@ int Stress::processArgs(const std::vector<std::string>& args)
 
         auto handler = std::make_shared<StressSocketHandler>(fileabs, args[i+1]);
         poll.insertNewWebSocketSync(Poco::URI(uri), handler);
-        // FIXME: we need a sensible protocol handler to drive the actual trace replay ...
     }
 
-    while (poll.continuePolling())
-    {
+    do {
+
         poll.poll(TerminatingPoll::DefaultPollTimeoutMicroS);
-    }
+
+    } while (poll.continuePolling() && poll.getSocketCount() > 0);
 
     return 0;
 }
