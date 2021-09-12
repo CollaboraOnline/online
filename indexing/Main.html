@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="SearchApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search - Proof of Concept</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-resource.min.js"></script>
+    <script src="Main.js"></script>
+</head>
+
+<body ng-controller="SearchMainController">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form class="row g-1 justify-content-md-center">
+                    <div class="col-sm-6">
+                        <input class="form-control" type="text" ng-model="searchString" placeholder="Search string..." >
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" ng-click="searchClicked()" ng-disabled="searchDisabled()" class="btn btn-primary mb-3">Search</button>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" ng-click="reindexClicked()" class="btn btn-primary">Re-index Documents</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row" ng-show="searchResult.length > 0">
+            <div class="col"><b>Search Result</b></div>
+            <table class="table table-vcenter table-striped table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th class="col-xs-6">Filename</th>
+                    <th class="col-xs-6">Image</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                     <tr class="table-repeat" ng-repeat="result in searchResult">
+                        <td><a href="{{result.href}}">{{result.filename}}</td>
+                        <td><img data-ng-src="data:image/png;base64,{{result.image}}"/></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" ng-click="clearSearchResults()" class="btn btn-primary">Clear</button>
+        </div>
+        <div class="row" ng-show="searchResult.length == 0">
+            <table class="table table-vcenter table-striped table-hover table-bordered">
+                <thead>
+                <tr>
+                    <th class="col-xs-6">Filename</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                     <tr class="table-repeat" ng-repeat="document in documents">
+                        <td><a href="{{document.href}}">{{document.name}}</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <p>Status: {{status}}</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+Searching and indexing example APP
+**********************************
+
+Main.js and Main.html - HTML/JS client side
+Server.py - HTTP Server and server side processing via. REST API
+
+Configuration
+*************
+
+Open "Server.py" and change the COOL and Solr server URL ("coolServerUrl" and "solrServerUrl") if they are different 
+than localhost and default ports.
+
+The "documentPath" constant is the root location of the documents (relative where Server.py was started). 
+
+The "solrCollectionName" constant is the collection name where Solr should store the indices. 
+
+The "coolInstance" is the URL to the COOL instance, which is used to open a document.
+
+The collection needs to be created in Solr, if it doesn't yet exists with (from Solr root):
+./bin/solr create -c <collection name>
+
+For exmaple:
+./bin/solr create -c documents
+
+HTTP Server
+***********
+
+Run http server on locally with:
+"python Server.py 8000 127.0.0.1"
+
+Then connect from the web browser to "http::/localhost:8000"
+
+First time - run "Re-Index Documents" or nothing will be found
