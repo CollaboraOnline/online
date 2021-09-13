@@ -47,7 +47,7 @@
 #include <Unit.hpp>
 #include <Clipboard.hpp>
 #include <string>
-#include <Freemium.hpp>
+#include <CommandControl.hpp>
 
 using Poco::JSON::Object;
 using Poco::JSON::Parser;
@@ -2570,7 +2570,7 @@ bool ChildSession::updateFreemiumStatus(const char* /*buffer*/, int /*length*/, 
         return false;
     }
 
-    getLOKitDocument()->setFreemiumDenyList(Freemium::FreemiumManager::getFreemiumDenyListString().c_str());
+    getLOKitDocument()->setFreemiumDenyList(CommandControl::FreemiumManager::getFreemiumDenyListString().c_str());
     getLOKitDocument()->setFreemiumView(_viewId, status == "true");
     return true;
 }
