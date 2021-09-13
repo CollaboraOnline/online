@@ -96,7 +96,9 @@ L.Control.AlertDialog = L.Control.extend({
 				}
 			});
 		} else if (e.kind == 'freemiumdeny') {
-			this._map.openSubscriptionPopup();
+			this._map.openSubscriptionPopup(e.cmd);
+		} else if (e.kind == 'restricted') {
+			//do nothing
 		} else if (e.cmd && e.kind) {
 			var msg = _('The server encountered a %0 error while parsing the %1 command.');
 			msg = msg.replace('%0', e.kind);

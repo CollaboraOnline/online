@@ -303,6 +303,12 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         return updateFreemiumStatus(buffer, length, tokens);
 #endif
     }
+    else if (tokens.equals(0, "restrictionstatus"))
+    {
+#ifdef ENABLE_FEATURE_RESTRICTION
+        return updateRestrictionStatus(buffer, length, tokens);
+#endif
+    }
     else
     {
         // All other commands are such that they always require a LibreOfficeKitDocument session,
@@ -2689,6 +2695,22 @@ bool ChildSession::updateFreemiumStatus(const char* /*buffer*/, int /*length*/, 
 
     getLOKitDocument()->setFreemiumDenyList(CommandControl::FreemiumManager::getFreemiumDenyListString().c_str());
     getLOKitDocument()->setFreemiumView(_viewId, status == "true");
+    return true;
+}
+#endif
+
+#ifdef ENABLE_FEATURE_RESTRICTION
+bool ChildSession::updateRestrictionStatus(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
+{
+    std::string status;
+    if (tokens.size() < 2 || !getTokenString(tokens[1], "isRestrictedUser", status))
+    {
+        sendTextFrameAndLogError("error: cmd=restrictionstatus kind=failure");
+        return false;
+    }
+
+    getLOKitDocument()->setRestrictedCommandList(CommandControl::RestrictionManager::getRestrictedCommandListString().c_str());
+    getLOKitDocument()->setRestrictedView(_viewId, status == "true");
     return true;
 }
 #endif

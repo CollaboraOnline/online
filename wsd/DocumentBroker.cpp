@@ -783,6 +783,18 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     session->sendMessage("freemium: " + freemiumInfoString);
 #endif
 
+#ifdef ENABLE_FEATURE_RESTRICTION
+    Object::Ptr restrictionInfo = new Object();
+    restrictionInfo->set("IsRestrictedUser", CommandControl::RestrictionManager::isRestrictedUser());
+    restrictionInfo->set("RestrictedCommandList", CommandControl::RestrictionManager::getRestrictedCommandList());
+
+    std::ostringstream ossRestrictionInfo;
+    restrictionInfo->stringify(ossRestrictionInfo);
+    const std::string restrictionInfoString = ossRestrictionInfo.str();
+    LOG_TRC("Sending freemium info to client: " << restrictionInfoString);
+    session->sendMessage("restrictedCommands: " + restrictionInfoString);
+#endif
+
 #if ENABLE_SUPPORT_KEY
     if (!LOOLWSD::OverrideWatermark.empty())
         watermarkText = LOOLWSD::OverrideWatermark;

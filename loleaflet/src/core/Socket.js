@@ -376,7 +376,7 @@ app.definitions.Socket = L.Class.extend({
 		index = e.imgBytes.indexOf(10);
 		if (index < 0)
 			index = e.imgBytes.length;
-		
+
 		e.textMsg = String.fromCharCode.apply(null, e.imgBytes.subarray(0, index));
 
 		e.imgIndex = index + 1;
@@ -1057,6 +1057,12 @@ app.definitions.Socket = L.Class.extend({
 			// Handle freemium related messages
 			var freemiumInfo = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
 			this._map._setFreemiumProps(freemiumInfo);
+			return;
+		}
+		else if (textMsg.startsWith('restrictedCommands: ')) {
+			// Handle restriction related messages
+			var restrictionInfo = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+			this._map._setRestrictions(restrictionInfo);
 			return;
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {

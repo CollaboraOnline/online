@@ -910,6 +910,10 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
     JsonUtil::findJSONValue(object, "IsUserFreemium", booleanFlag);
     CommandControl::FreemiumManager::setFreemiumUser(booleanFlag);
 
+    booleanFlag = false;
+    JsonUtil::findJSONValue(object, "IsUserRestricted", booleanFlag);
+    CommandControl::RestrictionManager::setRestrictedUser(booleanFlag);
+
     if (JsonUtil::findJSONValue(object, "DisableChangeTrackingRecord", booleanFlag))
         _disableChangeTrackingRecord = (booleanFlag ? WOPIFileInfo::TriState::True : WOPIFileInfo::TriState::False);
     if (JsonUtil::findJSONValue(object, "DisableChangeTrackingShow", booleanFlag))

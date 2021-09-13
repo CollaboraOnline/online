@@ -321,6 +321,9 @@ private:
 #ifdef ENABLE_FREEMIUM
     bool updateFreemiumStatus(const char* buffer, int length, const StringVector& tokens);
 #endif
+#ifdef ENABLE_FEATURE_RESTRICTION
+    bool updateRestrictionStatus(const char* /*buffer*/, int /*length*/, const StringVector& tokens);
+#endif
     bool formFieldEvent(const char* buffer, int length, const StringVector& tokens);
     bool renderSearchResult(const char* buffer, int length, const StringVector& tokens);
 
