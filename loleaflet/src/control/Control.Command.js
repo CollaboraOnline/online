@@ -91,25 +91,12 @@ L.Map.include({
 	},
 
 	isFreemiumDeniedItem: function(item) {
+		var commands = this._extractCommand(item);
 
-		var command = '';
-		if (item.command) // in notebookbar uno commands are stored as command
-			command = item.command;
-		else if (item.uno) { // in classic mode uno commands are stored as uno in menus
-			if (typeof item.uno === 'string')
-				command = item.uno;
-			else if (this.Freemium.freemiumDenyList.indexOf(item.uno.textCommand) >= 0
-			|| this.Freemium.freemiumDenyList.indexOf(item.uno.objectCommand) >= 0) // some unos have multiple commands
+		for (var i in commands) {
+			if (this.Freemium.freemiumDenyList.indexOf(commands[i]) >= 0)
 				return true;
 		}
-		else if (item.id)
-			command = item.id;
-		else if (item.unosheet)
-			command = item.unosheet;
-
-		if (this.Freemium.freemiumDenyList.indexOf(command) >= 0)
-			return true;
-
 		return false;
 	},
 
@@ -117,4 +104,20 @@ L.Map.include({
 		return this.Freemium.isFreemiumUser;
 	},
 
+	_extractCommand: function(item) {
+		if (item.command) // in notebookbar uno commands are stored as command
+			return [item.command];
+		else if (item.uno) { // in classic mode uno commands are stored as uno in menus
+			if (typeof item.uno === 'string')
+				return [item.uno];
+			return [item.uno.textCommand , item.uno.objectCommand]; // some unos have multiple commands
+		}
+		else if (item.id)
+			return [item.id];
+		else if (item.unosheet)
+			return [item.unosheet];
+		else if (typeof item === 'string')
+			return [item];
+		return '';
+	}
 });

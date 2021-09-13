@@ -10,9 +10,9 @@
 #include <vector>
 #include "ConfigUtil.hpp"
 #include "Util.hpp"
-#include "Freemium.hpp"
+#include "CommandControl.hpp"
 
-namespace Freemium
+namespace CommandControl
 {
 
 bool FreemiumManager::_isFreemiumUser = false;
@@ -58,6 +58,6 @@ const std::string FreemiumManager::getFreemiumDenyListString()
 
     return FreemiumDenyListString;
 }
-} // namespace Freemium
+} // namespace CommandControl
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
