@@ -341,6 +341,10 @@ AC_ARG_ENABLE([freemium],
               AS_HELP_STRING([--enable-freemium],
                              [Enable freemium model.]))
 
+AC_ARG_ENABLE([feature-restriction],
+              AS_HELP_STRING([--enable-feature-restriction],
+                             [Enable control over which uno-commands/feature to disable.]))
+
 
 # Handle options
 AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
@@ -1379,6 +1383,17 @@ fi
 
 AC_SUBST(FREEMIUM_CONFIGURATION)
 AM_SUBST_NOTMAKE(FREEMIUM_CONFIGURATION)
+
+AS_IF([test "$enable_feature_restriction" = "yes"],
+    [AC_DEFINE([ENABLE_FEATURE_RESTRICTION],1,[Whether to compile and enable feature restrictions])])
+
+FEATURE_RESTRICTION_CONFIGURATION=
+if test "$enable_feature_restriction" = "yes"; then
+    FEATURE_RESTRICTION_CONFIGURATION="<restricted_commands dec=\"List of uno commands to be disabled\"></restricted_commands>"
+fi
+
+AC_SUBST(FEATURE_RESTRICTION_CONFIGURATION)
+AM_SUBST_NOTMAKE(FEATURE_RESTRICTION_CONFIGURATION)
 
 AC_MSG_RESULT([$ALLOWED_LANGUAGES])
 AC_SUBST(ALLOWED_LANGUAGES)

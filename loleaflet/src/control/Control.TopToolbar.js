@@ -289,6 +289,13 @@ L.Control.TopToolbar = L.Control.extend({
 				if (event.target === 'insertshapes' || event.target === 'insertconnectors')
 					window.insertShapes(event.target);
 
+				if (that.map.isRestrictedUser()) {
+					for (var i = 0; i < this.items.length; i++) {
+						var it = this.items[i];
+						that.map.hideRestrictedItems(it, $('#tb_editbar_item_'+ it.id)[0], $('#tb_editbar_item_'+ it.id)[0]);
+					}
+				}
+
 				if (that.map.isFreemiumUser()) {
 					for (var i = 0; i < this.items.length; i++) {
 						var it = this.items[i];

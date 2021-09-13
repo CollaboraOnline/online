@@ -1122,6 +1122,9 @@ void LOOLWSD::innerInitialize(Application& self)
             { "freemium.impress_subscription_highlights", IMPRESS_SUBSCRIPTION_HIGHLIGHTS },
             { "freemium.draw_subscription_highlights", DRAW_SUBSCRIPTION_HIGHLIGHTS },
 #endif
+#ifdef ENABLE_FEATURE_RESTRICTION
+            { "restricted_commands", "" },
+#endif
             { "user_interface.mode", USER_INTERFACE_MODE }
           };
 

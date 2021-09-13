@@ -1888,6 +1888,7 @@ L.Control.Menubar = L.Control.extend({
 				$(aItem).css('display', 'none');
 			}
 
+			this._map.hideRestrictedItems(menu[i], aItem, aItem);
 			this._map.disableFreemiumItem(menu[i], aItem, aItem);
 			itemList.push(liItem);
 		}

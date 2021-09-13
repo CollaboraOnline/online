@@ -54,7 +54,9 @@ L.Map.include({
 		}
 	},
 
-	openSubscriptionPopup: function() {
+	openSubscriptionPopup: function(cmd) {
+		if (this.isRestrictedUser() && this.isRestrictedItem(cmd))
+			return;
 		var freemiumOnMobile = '';
 
 		if (window.mode.isMobile()) {
@@ -102,6 +104,38 @@ L.Map.include({
 
 	isFreemiumUser: function() {
 		return this.Freemium.isFreemiumUser;
+	},
+
+	Restriction: {
+		isRestrictedUser: false,
+		restrictedCommandList: [],
+	},
+
+	_setRestrictions: function(restrictionInfo) {
+		this.Restriction.isRestrictedUser = !!restrictionInfo['IsRestrictedUser'];
+		this.Restriction.restrictedCommandList = restrictionInfo['RestrictedCommandList'];
+	},
+
+	isRestrictedUser: function() {
+		return this.Restriction.isRestrictedUser;
+	},
+
+	hideRestrictedItems: function(item, DOMParentElement, buttonToDisable) {
+		if (this.isRestrictedUser() && this.isRestrictedItem(item)) {
+			$(buttonToDisable).addClass('restricted-item');
+			console.log();
+		}
+
+	},
+
+	isRestrictedItem: function(item) {
+		var commands = this._extractCommand(item);
+
+		for (var i in commands) {
+			if (this.Restriction.restrictedCommandList.indexOf(commands[i]) >= 0)
+				return true;
+		}
+		return false;
 	},
 
 	_extractCommand: function(item) {

@@ -359,6 +359,10 @@
 	opacity: 1;
 }
 
+.restricted-item {
+	display: none !important;
+}
+
 .unotoolbutton.notebookbar.disabled img, .mobile-wizard-widebutton.disabled img {
 	-webkit-filter: grayscale(100%) brightness(100%);
 	filter: grayscale(100%) brightness(100%);
