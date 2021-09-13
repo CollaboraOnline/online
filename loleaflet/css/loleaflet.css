@@ -207,7 +207,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	border-collapse: collapse;
 	width: 100%;
 	border-top: none;
-	z-index: 11;
+	z-index: 11 !important;
 	border-bottom: 1px solid var(--gray-color);
 }
 
