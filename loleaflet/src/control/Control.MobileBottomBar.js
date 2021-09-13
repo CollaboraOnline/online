@@ -126,9 +126,16 @@ L.Control.MobileBottomBar = L.Control.extend({
 			}
 		});
 
-		if (this.map.isFreemiumUser()) {
+		if (this.map.isRestrictedUser()) {
 			for (var i = 0; i < toolItems.length; i++) {
 				var it = toolItems[i];
+				this.map.hideRestrictedItems(it, $('#tb_editbar_item_'+ it.id)[0], $('#tb_editbar_item_'+ it.id)[0]);
+			}
+		}
+
+		if (this.map.isFreemiumUser()) {
+			for (i = 0; i < toolItems.length; i++) {
+				it = toolItems[i];
 				this.map.disableFreemiumItem(it, $('#tb_editbar_item_'+ it.id)[0], $('#tb_editbar_item_'+ it.id)[0]);
 			}
 		}
