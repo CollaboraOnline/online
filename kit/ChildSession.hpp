@@ -305,6 +305,9 @@ private:
 #ifdef ENABLE_FREEMIUM
     bool updateFreemiumStatus(const char* buffer, int length, const StringVector& tokens);
 #endif
+#ifdef ENABLE_FEATURE_RESTRICTION
+    bool updateRestrictionStatus(const char* /*buffer*/, int /*length*/, const StringVector& tokens);
+#endif
 
     void rememberEventsForInactiveUser(const int type, const std::string& payload);
     bool formFieldEvent(const char* buffer, int length, const StringVector& tokens);

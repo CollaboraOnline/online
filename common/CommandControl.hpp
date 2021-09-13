@@ -38,6 +38,24 @@ public:
     static std::string getImpressHighlights() { return config::getString("freemium.impress_subscription_highlights", ""); }
     static std::string getDrawHighlights() { return config::getString("freemium.draw_subscription_highlights", ""); }
 };
+
+class RestrictionManager
+{
+    static std::vector<std::string> RestrictedCommandList;
+    static bool _isRestrictedUser;
+    static std::string RestrictedCommandListString;
+
+    static void generateRestrictedCommandList();
+
+public:
+    RestrictionManager();
+    static const std::vector<std::string>& getRestrictedCommandList();
+    static const std::string getRestrictedCommandListString();
+
+    static bool isRestrictedUser() { return _isRestrictedUser; }
+
+    static void setRestrictedUser(bool isRestrictedUser) { _isRestrictedUser = isRestrictedUser; }
+};
 } // namespace CommandControl
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
