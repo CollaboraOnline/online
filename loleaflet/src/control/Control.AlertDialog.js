@@ -85,7 +85,9 @@ L.Control.AlertDialog = L.Control.extend({
 				}
 			});
 		} else if (e.kind == 'freemiumdeny') {
-			this._map.openSubscriptionPopup();
+			this._map.openSubscriptionPopup(e.cmd);
+		} else if (e.kind == 'restricted') {
+			//do nothing
 		} else if (e.cmd && e.kind) {
 			this._map.fire('hidebusy');
 
