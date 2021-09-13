@@ -10,5 +10,5 @@
 
 #toolbar-wrapper.mobile{
 	border-top: none;
-	z-index: auto;
+	z-index: auto !important;
 }
