@@ -848,6 +848,21 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 			// Center the view w.r.t the new map-pane position using the current zoom.
 			this._map.setView(this._map.getCenter());
+
+			// We want to keep cursor visible when we show the keyboard on mobile device or tablet
+			var isTabletOrMobile = window.mode.isMobile() || window.mode.isTablet();
+			var hasVisibleCursor = this._map._docLayer._visibleCursor
+				&& this._map._docLayer._cursorMarker && this._map._docLayer._cursorMarker.isDomAttached();
+			if (!heightIncreased && isTabletOrMobile && this._map._docLoaded && hasVisibleCursor) {
+				var cursorPos = this._map._docLayer._visibleCursor.getSouthWest();
+				var centerOffset = this._map._getCenterOffset(cursorPos);
+				var viewHalf = this._map.getSize()._divideBy(2);
+				var cursorPositionInView =
+					centerOffset.x > -viewHalf.x && centerOffset.x < viewHalf.x &&
+					centerOffset.y > -viewHalf.y && centerOffset.y < viewHalf.y;
+				if (!cursorPositionInView)
+					this._map.panTo(cursorPos);
+			}
 		}
 	},
 
