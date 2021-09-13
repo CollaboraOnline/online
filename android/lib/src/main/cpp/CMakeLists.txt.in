@@ -6,7 +6,7 @@ add_library(androidapp SHARED
             ../../../../../common/Authorization.cpp
             ../../../../../common/ConfigUtil.cpp
             ../../../../../common/FileUtil.cpp
-            ../../../../../common/Freemium.cpp
+            ../../../../../common/CommandControl.cpp
             ../../../../../common/Log.cpp
             ../../../../../common/MessageQueue.cpp
             ../../../../../common/TraceEvent.cpp
@@ -17,7 +17,7 @@ add_library(androidapp SHARED
             ../../../../../common/SpookyV2.cpp
             ../../../../../common/Unit.cpp
             ../../../../../common/Util.cpp
-            ../../../../../common/Freemium.cpp
+            ../../../../../common/CommandControl.cpp
             ../../../../../kit/ChildSession.cpp
             ../../../../../kit/Kit.cpp
             ../../../../../net/FakeSocket.cpp
