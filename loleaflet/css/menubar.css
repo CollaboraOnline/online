@@ -429,3 +429,6 @@
 .sidebar .freemium-disabled button:hover ~ .freemium-overlay {
 	box-shadow: 0 0 4px 0 #0b87e7;
 }
+.restricted-item {
+	display: none !important;
+}
