@@ -166,7 +166,7 @@ L.Control.UIManager = L.Control.extend({
 			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
 
-			if ((window.mode.isTablet() || window.mode.isDesktop())) {
+			if ((window.mode.isTablet() || window.mode.isDesktop()) && window.docPermission === 'edit') {
 				var showRuler = this.getSavedStateOrDefault('ShowRuler');
 				var interactiveRuler = this.map.isPermissionEdit();
 				L.control.ruler({position:'topleft', interactive:interactiveRuler, showruler: showRuler}).addTo(this.map);
