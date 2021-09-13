@@ -11,7 +11,7 @@
 #include <vector>
 #include "ConfigUtil.hpp"
 
-namespace Freemium
+namespace CommandControl
 {
 class FreemiumManager
 {
@@ -38,6 +38,6 @@ public:
     static std::string getImpressHighlights() { return config::getString("freemium.impress_subscription_highlights", ""); }
     static std::string getDrawHighlights() { return config::getString("freemium.draw_subscription_highlights", ""); }
 };
-} // namespace Freemium
+} // namespace CommandControl
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
