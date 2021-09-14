@@ -24,6 +24,8 @@
 #include <common/SigUtil.hpp>
 
 UnitBase *UnitBase::Global = nullptr;
+UnitKit *GlobalKit = nullptr;
+UnitWSD *GlobalWSD = nullptr;
 char * UnitBase::UnitLibPath;
 static std::thread TimeoutThread;
 static std::atomic<bool> TimeoutThreadRunning(false);
@@ -82,8 +84,9 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
 
     if (!unitLibPath.empty())
     {
-        Global = linkAndCreateUnit(type, unitLibPath);
+        rememberGlobalInstance(type, linkAndCreateUnit(type, unitLibPath));
         LOG_DBG(Global->_testname << ": Initializing");
+
         if (Global && type == UnitType::Kit)
         {
             TimeoutThreadMutex.lock();
@@ -111,10 +114,10 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
         switch (type)
         {
         case UnitType::Wsd:
-            Global = new UnitWSD();
+            rememberGlobalInstance(UnitType::Wsd, new UnitWSD());
             break;
         case UnitType::Kit:
-            Global = new UnitKit();
+            rememberGlobalInstance(UnitType::Kit, new UnitKit());
             break;
         default:
             assert(false);
@@ -126,6 +129,24 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
         Global->_type = type;
 
     return Global != nullptr;
+}
+
+void UnitBase::rememberGlobalInstance(UnitType type, UnitBase* instance)
+{
+    Global = instance;
+
+    switch (type)
+    {
+    case UnitType::Wsd:
+        GlobalWSD = static_cast<UnitWSD*>(instance);
+        break;
+    case UnitType::Kit:
+        GlobalKit = static_cast<UnitKit*>(instance);
+        break;
+    default:
+        assert(false);
+        break;
+    }
 }
 
 bool UnitBase::isUnitTesting()
@@ -185,6 +206,12 @@ void UnitWSD::lookupTile(int part, int width, int height, int tilePosX, int tile
     }
 }
 
+UnitWSD& UnitWSD::get()
+{
+    assert(GlobalWSD && GlobalWSD->_type == UnitType::Wsd);
+    return *GlobalWSD;
+}
+
 UnitKit::UnitKit(std::string testname)
     : UnitBase(std::move(testname))
 {
@@ -192,6 +219,22 @@ UnitKit::UnitKit(std::string testname)
 
 UnitKit::~UnitKit()
 {
+}
+
+UnitKit& UnitKit::get()
+{
+#if MOBILEAPP
+    if (!GlobalKit)
+        GlobalKit = new UnitKit();
+#endif
+
+    assert(GlobalKit);
+
+#if !MOBILEAPP && !defined(KIT_IN_PROCESS)
+    assert(GlobalKit->_type == UnitType::Kit);
+#endif
+
+    return *GlobalKit;
 }
 
 void UnitBase::exitTest(TestResult result)
@@ -236,6 +279,11 @@ void UnitBase::returnValue(int &retValue)
     TimeoutThreadMutex.unlock();
     if (TimeoutThread.joinable())
         TimeoutThread.join();
+
+    if (Global == GlobalKit)
+        GlobalKit = nullptr;
+    if (Global == GlobalWSD)
+        GlobalWSD = nullptr;
 
     delete Global;
     Global = nullptr;
