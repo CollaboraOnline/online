@@ -126,5 +126,3 @@ target_link_libraries(androidapp
                       ${POCOLIB_ABI}/libPocoFoundation@POCODEBUG@.a
                       "${CMAKE_CURRENT_SOURCE_DIR}/lib/${ANDROID_ABI}/liblo-native-code.so"
 )
-
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O1")
