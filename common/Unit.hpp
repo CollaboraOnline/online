@@ -255,6 +255,9 @@ private:
         return false;
     }
 
+    /// setup global instance for get() method
+    static void rememberGlobalInstance(UnitType type, UnitBase* instance);
+
     void *_dlHandle;
     static char *UnitLibPath;
     bool _setRetValue;
@@ -279,11 +282,7 @@ public:
 
     virtual ~UnitWSD();
 
-    static UnitWSD& get()
-    {
-        assert(Global && Global->_type == UnitType::Wsd);
-        return *static_cast<UnitWSD *>(Global);
-    }
+    static UnitWSD& get();
 
     enum class TestRequest
     {
@@ -402,14 +401,7 @@ class UnitKit : public UnitBase
 public:
     explicit UnitKit(std::string testname = std::string());
     virtual ~UnitKit();
-    static UnitKit& get()
-    {
-        assert(Global);
-#if !MOBILEAPP && !defined(KIT_IN_PROCESS)
-        assert(Global->_type == UnitType::Kit);
-#endif
-        return *static_cast<UnitKit *>(Global);
-    }
+    static UnitKit& get();
 
     // ---------------- ForKit hooks ----------------
 
