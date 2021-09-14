@@ -600,27 +600,43 @@ public class LibreOfficeUIActivity extends AppCompatActivity implements Settings
      * @param extension is required to know what template should be used when creating the document
      */
     private void createNewFile(final Uri uri, final String extension) {
-        InputStream templateFileStream = null;
-        OutputStream newFileStream = null;
+        // this might require a network operation
+        // in this case we need to do it in a seperate thread
+        // to avoid exception
+        class CreateThread extends Thread {
+            @Override
+            public void run() {
+                InputStream templateFileStream = null;
+                OutputStream newFileStream = null;
+                try {
+                    //read the template and copy it to the new file
+                    templateFileStream = getAssets().open("templates/untitled." + extension);
+                    newFileStream = getContentResolver().openOutputStream(uri);
+                    byte[] buffer = new byte[1024];
+                    int length;
+                    while ((length = templateFileStream.read(buffer)) > 0) {
+                        newFileStream.write(buffer, 0, length);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        //close the streams
+                        templateFileStream.close();
+                        newFileStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        CreateThread thread = new CreateThread();
+        thread.run();
         try {
-            //read the template and copy it to the new file
-            templateFileStream = getAssets().open("templates/untitled." + extension);
-            newFileStream = getContentResolver().openOutputStream(uri);
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = templateFileStream.read(buffer)) > 0) {
-                newFileStream.write(buffer, 0, length);
-            }
-        } catch (IOException e) {
+            thread.join();
+        } catch (Exception e)
+        {
             e.printStackTrace();
-        } finally {
-            try {
-                //close the streams
-                templateFileStream.close();
-                newFileStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 
