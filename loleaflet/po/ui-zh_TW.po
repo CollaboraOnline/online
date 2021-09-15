@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-31 09:51+0200\n"
+"POT-Creation-Date: 2021-09-15 17:22+0200\n"
 "PO-Revision-Date: 2020-07-08 12:37+0000\n"
 "Last-Translator: Andrew Lee (李健秋) <alee@collabora.com>\n"
 "Language-Team: Chinese (Traditional) <https://weblate.documentfoundation.org/"
@@ -67,12 +67,12 @@ msgid "Documents open"
 msgstr "開啟的文件"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
-#: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
+#: admin/src/AdminSocketOverview.js:122 admin/src/AdminSocketOverview.js:341
 #, fuzzy
 msgid " user(s)."
 msgstr "0 位使用者"
 
-#: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
+#: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:195
 #, fuzzy
 msgid " document(s) open."
 msgstr "開啟的文件"
@@ -118,115 +118,119 @@ msgid "Modified"
 msgstr "最後修改"
 
 #: admin/admin.strings.js:29
+msgid "WOPI host"
+msgstr ""
+
+#: admin/admin.strings.js:30
 msgid "Kill"
 msgstr "截殺"
 
-#: admin/admin.strings.js:30
+#: admin/admin.strings.js:31
 msgid "Graphs"
 msgstr "圖表"
 
-#: admin/admin.strings.js:31
+#: admin/admin.strings.js:32
 msgid "Memory Graph"
 msgstr "記憶體圖表"
 
-#: admin/admin.strings.js:32
+#: admin/admin.strings.js:33
 msgid "CPU Graph"
 msgstr "CPU 圖表"
 
-#: admin/admin.strings.js:33
+#: admin/admin.strings.js:34
 msgid "Network Graph"
 msgstr "網路圖表"
 
-#: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:248
+#: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:248
 #: src/control/Control.NotebookbarImpress.js:24
 #: src/control/Control.NotebookbarDraw.js:24
-#: src/layer/tile/CommentSection.js:99
+#: src/layer/tile/CommentSection.js:100
 msgid "Save"
 msgstr "儲存"
 
-#: admin/admin.strings.js:35
+#: admin/admin.strings.js:36
 msgid "Cache size of memory statistics"
 msgstr "記憶體統計資料的快取大小"
 
-#: admin/admin.strings.js:36
+#: admin/admin.strings.js:37
 msgid "Time interval of memory statistics (in ms)"
 msgstr "記憶體統計的時間間隔（單位毫秒）"
 
-#: admin/admin.strings.js:37
+#: admin/admin.strings.js:38
 msgid "Cache size of CPU statistics"
 msgstr "CPU 統計資料的快取大小"
 
-#: admin/admin.strings.js:38
+#: admin/admin.strings.js:39
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "CPU 統計資料的時間間隔（單位毫秒）"
 
-#: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
+#: admin/admin.strings.js:40 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
 msgstr ""
 
-#: admin/admin.strings.js:40
+#: admin/admin.strings.js:41
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr "最大文件的程序虛擬記憶 (單位 MB) - 僅能減少"
 
-#: admin/admin.strings.js:41
+#: admin/admin.strings.js:42
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr "最大文件的程序堆疊記憶 (單位 KB) - 僅能減少"
 
-#: admin/admin.strings.js:42
+#: admin/admin.strings.js:43
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr "寫入磁碟的最大允許檔案大小 (單位 MB) - 僅能減少"
 
-#: admin/admin.strings.js:43
+#: admin/admin.strings.js:44
 msgid "Documents:"
 msgstr "文件："
 
-#: admin/admin.strings.js:44
+#: admin/admin.strings.js:45
 msgid "Expired:"
 msgstr "逾期："
 
-#: admin/admin.strings.js:45
+#: admin/admin.strings.js:46
 msgid "Refresh"
 msgstr "重整"
 
-#: admin/admin.strings.js:46
+#: admin/admin.strings.js:47
 msgid "Shutdown Server"
 msgstr "關閉伺服器"
 
-#: admin/admin.strings.js:47
+#: admin/admin.strings.js:48
 msgid "Server uptime"
 msgstr "伺服器 uptime"
 
-#: admin/admin.strings.js:48
+#: admin/admin.strings.js:49
 msgid "Refresh Log"
 msgstr "重新整理紀錄"
 
-#: admin/admin.strings.js:49
+#: admin/admin.strings.js:50
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:369
-#: src/control/Control.StatusBar.js:330
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:376
+#: src/control/Control.StatusBar.js:331
 msgid "None"
 msgstr "無"
 
-#: admin/admin.strings.js:51
+#: admin/admin.strings.js:52
 msgid "Set Log Levels"
 msgstr "設定紀錄層級"
 
-#: admin/admin.strings.js:52
+#: admin/admin.strings.js:53
 msgid "Log Levels"
 msgstr "紀錄層級"
 
-#: admin/admin.strings.js:53 src/control/Control.AlertDialog.js:25
+#: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
 #: src/control/Parts.js:409 src/control/Signing.js:608
 msgid "Close"
 msgstr "關閉"
 
-#: admin/admin.strings.js:54
+#: admin/admin.strings.js:55
 msgid "Update Log Levels"
 msgstr "更新紀錄層級"
 
-#: admin/admin.strings.js:55
+#: admin/admin.strings.js:56
 msgid "Version Information"
 msgstr ""
 
@@ -266,15 +270,15 @@ msgstr "確定"
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:850
-#: src/layer/tile/CommentSection.js:98 src/layer/tile/CommentSection.js:101
+#: src/layer/tile/CommentSection.js:99 src/layer/tile/CommentSection.js:102
 msgid "Cancel"
 msgstr "取消"
 
-#: admin/src/AdminSocketOverview.js:377
+#: admin/src/AdminSocketOverview.js:390
 msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "無法透過不安全的連線設定 jwt 身分核對 Cookie"
 
-#: admin/src/AdminSocketOverview.js:381
+#: admin/src/AdminSocketOverview.js:394
 msgid "Failed to authenticate this session over protocol %0"
 msgstr "無法透過 %0 協定進行此作業階段的身分核對"
 
@@ -338,11 +342,16 @@ msgstr "無色彩"
 msgid "Automatic color"
 msgstr "自動色彩"
 
-#: src/control/Control.AlertDialog.js:67
+#: src/control/Control.AlertDialog.js:67 src/control/Control.StatusBar.js:340
+#: src/control/Control.StatusBar.js:379 src/control/Control.StatusBar.js:403
+msgid "Edit"
+msgstr "編輯"
+
+#: src/control/Control.AlertDialog.js:77
 msgid "Open link"
 msgstr "開啟連結"
 
-#: src/control/Control.AlertDialog.js:91
+#: src/control/Control.AlertDialog.js:101
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "伺服器在解析 %1 指令時遭遇 %0 錯誤。"
 
@@ -367,9 +376,9 @@ msgid "Index"
 msgstr "索引"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2027
-#: src/layer/tile/CanvasTileLayer.js:4787
-#: src/layer/tile/CanvasTileLayer.js:4797
+#: src/control/Control.JSDialogBuilder.js:2039
+#: src/layer/tile/CanvasTileLayer.js:4801
+#: src/layer/tile/CanvasTileLayer.js:4811
 msgid "Comment"
 msgstr "評註"
 
@@ -413,94 +422,94 @@ msgstr "漸層起始"
 msgid "Gradient End"
 msgstr "漸層終止"
 
-#: src/control/Control.JSDialogBuilder.js:372
+#: src/control/Control.JSDialogBuilder.js:379
 msgid "Solid"
 msgstr "實心"
 
-#: src/control/Control.JSDialogBuilder.js:375
+#: src/control/Control.JSDialogBuilder.js:382
 msgid "Linear"
 msgstr "線形"
 
-#: src/control/Control.JSDialogBuilder.js:378
+#: src/control/Control.JSDialogBuilder.js:385
 msgid "Axial"
 msgstr "軸向"
 
-#: src/control/Control.JSDialogBuilder.js:381
+#: src/control/Control.JSDialogBuilder.js:388
 msgid "Radial"
 msgstr "放射"
 
-#: src/control/Control.JSDialogBuilder.js:384
+#: src/control/Control.JSDialogBuilder.js:391
 msgid "Ellipsoid"
 msgstr "橢圓體"
 
-#: src/control/Control.JSDialogBuilder.js:388
+#: src/control/Control.JSDialogBuilder.js:395
 msgid "Quadratic"
 msgstr "立方形"
 
-#: src/control/Control.JSDialogBuilder.js:391
+#: src/control/Control.JSDialogBuilder.js:398
 msgid "Square"
 msgstr "正方形"
 
-#: src/control/Control.JSDialogBuilder.js:394
+#: src/control/Control.JSDialogBuilder.js:401
 msgid "Fixed size"
 msgstr "固定大小"
 
-#: src/control/Control.JSDialogBuilder.js:1205
+#: src/control/Control.JSDialogBuilder.js:1212
 msgid "From"
 msgstr "從"
 
-#: src/control/Control.JSDialogBuilder.js:1208
+#: src/control/Control.JSDialogBuilder.js:1215
 msgid "To"
 msgstr "到"
 
-#: src/control/Control.JSDialogBuilder.js:1211
+#: src/control/Control.JSDialogBuilder.js:1218
 msgid "Color"
 msgstr "色彩"
 
-#: src/control/Control.JSDialogBuilder.js:1335
+#: src/control/Control.JSDialogBuilder.js:1342
 msgid "Select range"
 msgstr "選取範圍"
 
-#: src/control/Control.JSDialogBuilder.js:1373
+#: src/control/Control.JSDialogBuilder.js:1384
 #: src/control/Control.NotebookbarBuilder.js:235
 msgid "Font Name"
 msgstr "字型名稱"
 
-#: src/control/Control.JSDialogBuilder.js:1375
+#: src/control/Control.JSDialogBuilder.js:1386
 msgid "Font Size"
 msgstr "字型大小"
 
-#: src/control/Control.JSDialogBuilder.js:1377
+#: src/control/Control.JSDialogBuilder.js:1388
 #: src/control/Control.TopToolbar.js:505
 msgid "Style"
 msgstr "樣式"
 
-#: src/control/Control.JSDialogBuilder.js:2013
+#: src/control/Control.JSDialogBuilder.js:2025
 #, fuzzy
 msgid "reply"
 msgstr "回覆"
 
-#: src/control/Control.JSDialogBuilder.js:2016
+#: src/control/Control.JSDialogBuilder.js:2028
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2086
+#: src/control/Control.JSDialogBuilder.js:2098
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2517
+#: src/control/Control.JSDialogBuilder.js:2533
 msgid "Cell borders"
 msgstr "儲存格邊框"
 
-#: src/control/Control.JSDialogBuilder.js:2705
+#: src/control/Control.JSDialogBuilder.js:2722
 msgid "Rows"
 msgstr "列"
 
-#: src/control/Control.JSDialogBuilder.js:2706
+#: src/control/Control.JSDialogBuilder.js:2723
 msgid "Columns"
 msgstr "欄"
 
-#: src/control/Control.JSDialogBuilder.js:2726
+#: src/control/Control.JSDialogBuilder.js:2743
 #, fuzzy
 msgid "Insert Table"
 msgstr "插入表格"
@@ -508,13 +517,13 @@ msgstr "插入表格"
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:491
-#: src/control/Control.Menubar.js:699 src/control/Control.StatusBar.js:506
-#: src/control/Control.NotebookbarBuilder.js:711
-#: src/control/Control.NotebookbarBuilder.js:713
-#: src/control/Control.NotebookbarBuilder.js:715
-#: src/control/Control.NotebookbarBuilder.js:739
-#: src/control/Control.NotebookbarBuilder.js:774
-#: src/control/Control.NotebookbarBuilder.js:791
+#: src/control/Control.Menubar.js:699 src/control/Control.StatusBar.js:528
+#: src/control/Control.NotebookbarBuilder.js:731
+#: src/control/Control.NotebookbarBuilder.js:733
+#: src/control/Control.NotebookbarBuilder.js:735
+#: src/control/Control.NotebookbarBuilder.js:759
+#: src/control/Control.NotebookbarBuilder.js:794
+#: src/control/Control.NotebookbarBuilder.js:811
 msgid "None (Do not check spelling)"
 msgstr "無 (不檢查拼字)"
 
@@ -602,10 +611,10 @@ msgstr "關閉文件"
 #: src/control/Control.NotebookbarImpress.js:250
 #: src/control/Control.NotebookbarDraw.js:218
 #: src/control/Control.NotebookbarDraw.js:219
-#: src/control/Control.NotebookbarBuilder.js:704
-#: src/control/Control.NotebookbarBuilder.js:734
-#: src/control/Control.NotebookbarBuilder.js:769
-#: src/control/Control.NotebookbarBuilder.js:786
+#: src/control/Control.NotebookbarBuilder.js:724
+#: src/control/Control.NotebookbarBuilder.js:754
+#: src/control/Control.NotebookbarBuilder.js:789
+#: src/control/Control.NotebookbarBuilder.js:806
 msgid "Repair"
 msgstr "修復"
 
@@ -626,7 +635,7 @@ msgstr "重設遠近"
 #: src/control/Control.Menubar.js:67
 #: src/control/Control.NotebookbarWriter.js:1025
 #: src/control/Control.NotebookbarWriter.js:1026
-#: src/control/Control.NotebookbarBuilder.js:690
+#: src/control/Control.NotebookbarBuilder.js:710
 msgid "Show Ruler"
 msgstr "顯示尺規"
 
@@ -689,7 +698,7 @@ msgstr "關於"
 
 #: src/control/Control.Menubar.js:262 src/control/Control.Menubar.js:390
 #: src/control/Control.Menubar.js:500 src/control/Control.Menubar.js:711
-#: src/map/Map.js:416
+#: src/map/Map.js:408
 msgid "Last modification"
 msgstr "上次修改"
 
@@ -757,7 +766,7 @@ msgstr "搜尋"
 msgid "Page Setup"
 msgstr "頁面設定"
 
-#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:505
+#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:527
 msgid "Reset to Default Language"
 msgstr "重設回預設語言"
 
@@ -823,75 +832,87 @@ msgstr "插入工作表"
 msgid "Cancel the search"
 msgstr "取消搜尋"
 
-#: src/control/Control.StatusBar.js:295
+#: src/control/Control.StatusBar.js:296
 msgid "Number of Sheets"
 msgstr "工作表數量"
 
-#: src/control/Control.StatusBar.js:300
+#: src/control/Control.StatusBar.js:301
 msgid "Selected range of cells"
 msgstr "所選的儲存格範圍"
 
-#: src/control/Control.StatusBar.js:305 src/control/Control.StatusBar.js:354
+#: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:362
 msgid "Entering text mode"
 msgstr "輸入文字模式"
 
-#: src/control/Control.StatusBar.js:314 src/control/Control.StatusBar.js:359
+#: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:367
 msgid "Selection Mode"
 msgstr "選取模式"
 
-#: src/control/Control.StatusBar.js:319
+#: src/control/Control.StatusBar.js:320
 msgid "Choice of functions"
 msgstr "函式選擇"
 
-#: src/control/Control.StatusBar.js:323
+#: src/control/Control.StatusBar.js:324
 msgid "Average"
 msgstr "平均值"
 
-#: src/control/Control.StatusBar.js:324
+#: src/control/Control.StatusBar.js:325
 msgid "CountA"
 msgstr "全計數"
 
-#: src/control/Control.StatusBar.js:325
+#: src/control/Control.StatusBar.js:326
 msgid "Count"
 msgstr "數計數"
 
-#: src/control/Control.StatusBar.js:326
+#: src/control/Control.StatusBar.js:327
 msgid "Maximum"
 msgstr "最大"
 
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.StatusBar.js:328
 msgid "Minimum"
 msgstr "最小"
 
-#: src/control/Control.StatusBar.js:328
+#: src/control/Control.StatusBar.js:329
 msgid "Sum"
 msgstr "總和"
 
-#: src/control/Control.StatusBar.js:329
+#: src/control/Control.StatusBar.js:330
 msgid "Selection count"
 msgstr "選取計數"
 
-#: src/control/Control.StatusBar.js:344
+#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:340
+#: src/control/Control.StatusBar.js:378 src/control/Control.StatusBar.js:379
+#: src/control/Control.StatusBar.js:402 src/control/Control.StatusBar.js:403
+msgid "Permission Mode"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
+#: src/control/Control.StatusBar.js:402
+#, fuzzy
+msgid "Read-only"
+msgstr "唯讀"
+
+#: src/control/Control.StatusBar.js:352
 msgid "Number of Pages"
 msgstr "頁數"
 
-#: src/control/Control.StatusBar.js:349
+#: src/control/Control.StatusBar.js:357
 msgid "Word Counter"
 msgstr "字數統計"
 
-#: src/control/Control.StatusBar.js:376
+#: src/control/Control.StatusBar.js:391
 msgid "Number of Slides"
 msgstr "投影片數"
 
-#: src/control/Control.StatusBar.js:449
+#: src/control/Control.StatusBar.js:471
 msgid "Select multiple cells"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:452
+#: src/control/Control.StatusBar.js:474
 msgid "Insert mode: inactive"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:465
+#: src/control/Control.StatusBar.js:487
 msgid "Selection mode: inactive"
 msgstr ""
 
@@ -950,7 +971,7 @@ msgid "Insert table"
 msgstr "插入表格"
 
 #: src/control/Control.TopToolbar.js:244
-#: src/control/Control.NotebookbarBuilder.js:539
+#: src/control/Control.NotebookbarBuilder.js:548
 msgid "Insert Local Image"
 msgstr "插入本機影像"
 
@@ -997,10 +1018,10 @@ msgstr "目前"
 #: src/control/Control.Notebookbar.js:242
 #: src/control/Control.NotebookbarImpress.js:18
 #: src/control/Control.NotebookbarDraw.js:18
-#: src/control/Control.NotebookbarBuilder.js:687
-#: src/control/Control.NotebookbarBuilder.js:728
-#: src/control/Control.NotebookbarBuilder.js:756
-#: src/control/Control.NotebookbarBuilder.js:781
+#: src/control/Control.NotebookbarBuilder.js:707
+#: src/control/Control.NotebookbarBuilder.js:748
+#: src/control/Control.NotebookbarBuilder.js:776
+#: src/control/Control.NotebookbarBuilder.js:801
 msgid "Menu"
 msgstr ""
 
@@ -1450,7 +1471,7 @@ msgstr "插入超連結"
 msgid "Link"
 msgstr "連結"
 
-#: src/core/Socket.js:66
+#: src/core/Socket.js:61
 msgid ""
 "IE11 has reached its maximum number of connections. Please see this document "
 "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
@@ -1461,133 +1482,133 @@ msgstr ""
 "previous-versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
-#: src/core/Socket.js:68
+#: src/core/Socket.js:63
 #, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr "糟糕…連接文件時發生了問題"
 
-#: src/core/Socket.js:509
+#: src/core/Socket.js:502
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr ""
 
-#: src/core/Socket.js:511
+#: src/core/Socket.js:504
 msgid "Server is now reachable..."
 msgstr ""
 
-#: src/core/Socket.js:514
+#: src/core/Socket.js:507
 msgid "RELOAD"
 msgstr ""
 
-#: src/core/Socket.js:532
+#: src/core/Socket.js:523
 msgid "Served by:"
 msgstr "服務提供者："
 
-#: src/core/Socket.js:537
+#: src/core/Socket.js:528
 msgid "Unsupported server version."
 msgstr "未支援的伺服器版本。"
 
-#: src/core/Socket.js:641
+#: src/core/Socket.js:632
 msgid "Session terminated by document owner"
 msgstr "作業階段由文件擁有者終止"
 
-#: src/core/Socket.js:646
+#: src/core/Socket.js:637
 msgid "Idle document - please click to reload and resume editing"
 msgstr "閒置文件 - 請點按以重新載入並繼續編輯"
 
-#: src/core/Socket.js:648
+#: src/core/Socket.js:639
 #, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "閒置文件 - 請點按以重新載入並繼續編輯"
 
-#: src/core/Socket.js:656
+#: src/core/Socket.js:647
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "伺服器正在關機作維護（自動存檔中）"
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:651
 msgid "Oops, there is a problem connecting the document"
 msgstr "糟糕…連接文件時發生了問題"
 
-#: src/core/Socket.js:664
+#: src/core/Socket.js:655
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 
-#: src/core/Socket.js:692
+#: src/core/Socket.js:683
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr "儲存空間內的文件已經變更。載入新文件中。您的版本會以修訂形式存在。"
 
-#: src/core/Socket.js:698
+#: src/core/Socket.js:689
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr "還原舊的版本。任何尚未儲存的變更都會放在版本歷史中。"
 
-#: src/core/Socket.js:818
+#: src/core/Socket.js:809
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr "儲存位置中的文件已經變更。對於您尚未儲存的變更，您希望怎麼處理？"
 
-#: src/core/Socket.js:822
+#: src/core/Socket.js:813
 msgid "Discard"
 msgstr "放棄"
 
-#: src/core/Socket.js:827
+#: src/core/Socket.js:818
 msgid "Overwrite"
 msgstr "覆蓋"
 
-#: src/core/Socket.js:832
+#: src/core/Socket.js:823
 msgid "Save to new file"
 msgstr "儲存為新檔案"
 
-#: src/core/Socket.js:902
+#: src/core/Socket.js:893
 msgid "Document requires password to view."
 msgstr "文件需要密碼才能檢視。"
 
-#: src/core/Socket.js:905
+#: src/core/Socket.js:896
 msgid "Document requires password to modify."
 msgstr "文件需要密碼才能修改。"
 
-#: src/core/Socket.js:907
+#: src/core/Socket.js:898
 msgid "Hit Cancel to open in view-only mode."
 msgstr "點按「取消」以唯讀模式開啟。"
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:902
 msgid "Wrong password provided. Please try again."
 msgstr "提供的密碼錯誤。請重試。"
 
-#: src/core/Socket.js:1009
+#: src/core/Socket.js:1000
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1011
+#: src/core/Socket.js:1002
 msgid " saved this document as "
 msgstr ""
 
-#: src/core/Socket.js:1011
+#: src/core/Socket.js:1002
 msgid ". Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1020
+#: src/core/Socket.js:1011
 msgid "Loading..."
 msgstr "載入中..."
 
-#: src/core/Socket.js:1020
+#: src/core/Socket.js:1011
 msgid "Connecting..."
 msgstr "連接中..."
 
-#: src/core/Socket.js:1038
+#: src/core/Socket.js:1029
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1389
+#: src/core/Socket.js:1382
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "啊，這尷尬了... 我們沒辦法連接您的文件。請重試一次。"
 
-#: src/core/Socket.js:1401
+#: src/core/Socket.js:1394
 msgid "The server has been disconnected."
 msgstr ""
 
@@ -1726,28 +1747,28 @@ msgstr "檔案上傳至伺服器失敗，找不到檔案。"
 msgid "Uploading file to server failed, the file is too large."
 msgstr "檔案上傳至伺服器失敗，檔案過大。"
 
-#: src/layer/tile/CommentSection.js:102
+#: src/layer/tile/CommentSection.js:103
 msgid "Reply"
 msgstr "回覆"
 
-#: src/layer/tile/CommentSection.js:164
+#: src/layer/tile/CommentSection.js:166
 msgid "Open menu"
 msgstr "開啟選單"
 
-#: src/layer/tile/CommentSection.js:177 src/layer/tile/CommentSection.js:178
+#: src/layer/tile/CommentSection.js:179 src/layer/tile/CommentSection.js:180
 msgid "Accept change"
 msgstr "接受更改"
 
-#: src/layer/tile/CommentSection.js:182 src/layer/tile/CommentSection.js:183
+#: src/layer/tile/CommentSection.js:184 src/layer/tile/CommentSection.js:185
 msgid "Reject change"
 msgstr "拒絕更改"
 
-#: src/layer/tile/CanvasTileLayer.js:1760
+#: src/layer/tile/CanvasTileLayer.js:1777
 #, fuzzy
 msgid "Functions"
 msgstr "函式精靈"
 
-#: src/layer/tile/CanvasTileLayer.js:4814
+#: src/layer/tile/CanvasTileLayer.js:4828
 msgid "No Comments"
 msgstr ""
 
@@ -1795,41 +1816,41 @@ msgid ""
 "one</p>"
 msgstr "<p>因為有大量複製/貼上操作而已經啟動下載。請先等候目前下載完成，或是在開始新的下載前先將它取消</p>"
 
-#: src/map/Map.js:240
+#: src/map/Map.js:232
 msgid "Initializing..."
 msgstr "初始化中..."
 
-#: src/map/Map.js:451
+#: src/map/Map.js:443
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "%d 秒前"
 
-#: src/map/Map.js:454
+#: src/map/Map.js:446
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "%d 分鐘前"
 
-#: src/map/Map.js:1474
+#: src/map/Map.js:1466
 msgid "Inactive document - please click to resume editing"
 msgstr "非使用中文件 - 請點按按鍵繼續編輯"
 
-#: src/map/handler/Map.FileInserter.js:105
+#: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
 msgstr "檔案類型：%0 由於沒有檔名而無法上傳至伺服器"
 
-#: src/map/handler/Map.FileInserter.js:107
+#: src/map/handler/Map.FileInserter.js:102
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
 msgstr "檔案類型：%0 由於檔案空白而無法上傳至伺服器"
 
-#: src/map/handler/Map.FileInserter.js:138
+#: src/map/handler/Map.FileInserter.js:133
 msgid "Uploading..."
 msgstr "上傳中..."
 
-#: src/map/handler/Map.FileInserter.js:152
+#: src/map/handler/Map.FileInserter.js:147
 msgid "Uploading file to server failed with status: %0"
 msgstr "檔案上傳至伺服器失敗，狀態：%0"
 
@@ -1881,9 +1902,6 @@ msgstr "製作副本中..."
 
 #~ msgid "Documents"
 #~ msgstr "文件"
-
-#~ msgid "Edit"
-#~ msgstr "編輯"
 
 #~ msgid "First sheet"
 #~ msgstr "第一個工作表"

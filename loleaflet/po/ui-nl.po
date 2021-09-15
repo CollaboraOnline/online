@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-31 09:51+0200\n"
+"POT-Creation-Date: 2021-09-15 17:22+0200\n"
 "PO-Revision-Date: 2021-06-03 23:31+0000\n"
 "Last-Translator: Cor Nouws <cno@nouenoff.nl>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
@@ -66,11 +66,11 @@ msgid "Documents open"
 msgstr "Geopende documenten"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
-#: admin/src/AdminSocketOverview.js:117 admin/src/AdminSocketOverview.js:328
+#: admin/src/AdminSocketOverview.js:122 admin/src/AdminSocketOverview.js:341
 msgid " user(s)."
 msgstr " gebruiker(s)."
 
-#: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:186
+#: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:195
 msgid " document(s) open."
 msgstr " geopende document(en)."
 
@@ -115,120 +115,124 @@ msgid "Modified"
 msgstr "Gewijzigd"
 
 #: admin/admin.strings.js:29
+msgid "WOPI host"
+msgstr ""
+
+#: admin/admin.strings.js:30
 msgid "Kill"
 msgstr "Beëindigen"
 
-#: admin/admin.strings.js:30
+#: admin/admin.strings.js:31
 msgid "Graphs"
 msgstr "Diagram"
 
-#: admin/admin.strings.js:31
+#: admin/admin.strings.js:32
 msgid "Memory Graph"
 msgstr "Geheugengrafiek"
 
-#: admin/admin.strings.js:32
+#: admin/admin.strings.js:33
 msgid "CPU Graph"
 msgstr "CPU-grafiek"
 
-#: admin/admin.strings.js:33
+#: admin/admin.strings.js:34
 msgid "Network Graph"
 msgstr "Netwerkgrafiek"
 
-#: admin/admin.strings.js:34 src/control/Control.Notebookbar.js:248
+#: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:248
 #: src/control/Control.NotebookbarImpress.js:24
 #: src/control/Control.NotebookbarDraw.js:24
-#: src/layer/tile/CommentSection.js:99
+#: src/layer/tile/CommentSection.js:100
 msgid "Save"
 msgstr "Opslaan"
 
-#: admin/admin.strings.js:35
+#: admin/admin.strings.js:36
 msgid "Cache size of memory statistics"
 msgstr "Cachegrootte van geheugenstatistieken"
 
-#: admin/admin.strings.js:36
+#: admin/admin.strings.js:37
 msgid "Time interval of memory statistics (in ms)"
 msgstr "Tijdsinterval van een geheugenstatistiek (in ms)"
 
-#: admin/admin.strings.js:37
+#: admin/admin.strings.js:38
 msgid "Cache size of CPU statistics"
 msgstr "Cachegrootte van CPU-statistieken"
 
-#: admin/admin.strings.js:38
+#: admin/admin.strings.js:39
 msgid "Time interval of CPU statistics (in ms)"
 msgstr "Tijdsinterval van CPU-statistieken (in ms)"
 
-#: admin/admin.strings.js:39 admin/src/AdminSocketOverview.js:91
+#: admin/admin.strings.js:40 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
 msgstr "Beëindig sessie."
 
-#: admin/admin.strings.js:40
+#: admin/admin.strings.js:41
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
 "Maximaal virtueel geheugen (in MB) voor document-bewerking - alleen "
 "verkleinen"
 
-#: admin/admin.strings.js:41
+#: admin/admin.strings.js:42
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
 "Maximaal stack geheugen (in KB) voor het document-proces - alleen verkleinen"
 
-#: admin/admin.strings.js:42
+#: admin/admin.strings.js:43
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
 msgstr ""
 "Maximale grootte (in MB) van bestanden die naar schrijf mogen worden "
 "geschreven - alleen verkleinen"
 
-#: admin/admin.strings.js:43
+#: admin/admin.strings.js:44
 msgid "Documents:"
 msgstr "Documenten:"
 
-#: admin/admin.strings.js:44
+#: admin/admin.strings.js:45
 msgid "Expired:"
 msgstr "Verlopen:"
 
-#: admin/admin.strings.js:45
+#: admin/admin.strings.js:46
 msgid "Refresh"
 msgstr "Vernieuwen"
 
-#: admin/admin.strings.js:46
+#: admin/admin.strings.js:47
 msgid "Shutdown Server"
 msgstr "Zet de server uit"
 
-#: admin/admin.strings.js:47
+#: admin/admin.strings.js:48
 msgid "Server uptime"
 msgstr "Server in bedrijf"
 
-#: admin/admin.strings.js:48
+#: admin/admin.strings.js:49
 msgid "Refresh Log"
 msgstr "Aanmelding vernieuwen"
 
-#: admin/admin.strings.js:49
+#: admin/admin.strings.js:50
 msgid "Channel Filter:"
 msgstr "Kanaal filter:"
 
-#: admin/admin.strings.js:50 src/control/Control.JSDialogBuilder.js:369
-#: src/control/Control.StatusBar.js:330
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:376
+#: src/control/Control.StatusBar.js:331
 msgid "None"
 msgstr "Geen"
 
-#: admin/admin.strings.js:51
+#: admin/admin.strings.js:52
 msgid "Set Log Levels"
 msgstr "Inlogniveau instellen"
 
-#: admin/admin.strings.js:52
+#: admin/admin.strings.js:53
 msgid "Log Levels"
 msgstr "Inlogniveaus"
 
-#: admin/admin.strings.js:53 src/control/Control.AlertDialog.js:25
+#: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
 #: src/control/Parts.js:409 src/control/Signing.js:608
 msgid "Close"
 msgstr "Sluiten"
 
-#: admin/admin.strings.js:54
+#: admin/admin.strings.js:55
 msgid "Update Log Levels"
 msgstr "Inlogniveaus bijwerken"
 
-#: admin/admin.strings.js:55
+#: admin/admin.strings.js:56
 msgid "Version Information"
 msgstr "Versie-informatie"
 
@@ -268,15 +272,15 @@ msgstr "OK"
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:850
-#: src/layer/tile/CommentSection.js:98 src/layer/tile/CommentSection.js:101
+#: src/layer/tile/CommentSection.js:99 src/layer/tile/CommentSection.js:102
 msgid "Cancel"
 msgstr "Annuleren"
 
-#: admin/src/AdminSocketOverview.js:377
+#: admin/src/AdminSocketOverview.js:390
 msgid "Failed to set jwt authentication cookie over insecure connection"
 msgstr "Kan jwt-verificatiecookie niet instellen via een onveilige verbinding"
 
-#: admin/src/AdminSocketOverview.js:381
+#: admin/src/AdminSocketOverview.js:394
 msgid "Failed to authenticate this session over protocol %0"
 msgstr "Kan deze sessie niet verifiëren via protocol %0"
 
@@ -340,11 +344,16 @@ msgstr "Geen kleur"
 msgid "Automatic color"
 msgstr "Automatische kleur"
 
-#: src/control/Control.AlertDialog.js:67
+#: src/control/Control.AlertDialog.js:67 src/control/Control.StatusBar.js:340
+#: src/control/Control.StatusBar.js:379 src/control/Control.StatusBar.js:403
+msgid "Edit"
+msgstr "Bewerken"
+
+#: src/control/Control.AlertDialog.js:77
 msgid "Open link"
 msgstr "Koppeling openen"
 
-#: src/control/Control.AlertDialog.js:91
+#: src/control/Control.AlertDialog.js:101
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr ""
 "De server ondervond een %0-fout tijdens het uitvoeren van de %1-opdracht."
@@ -370,9 +379,9 @@ msgid "Index"
 msgstr "Index"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2027
-#: src/layer/tile/CanvasTileLayer.js:4787
-#: src/layer/tile/CanvasTileLayer.js:4797
+#: src/control/Control.JSDialogBuilder.js:2039
+#: src/layer/tile/CanvasTileLayer.js:4801
+#: src/layer/tile/CanvasTileLayer.js:4811
 msgid "Comment"
 msgstr "Opmerking"
 
@@ -416,106 +425,106 @@ msgstr "Kleurverloop beginkleur"
 msgid "Gradient End"
 msgstr "Kleurverloop eindkleur"
 
-#: src/control/Control.JSDialogBuilder.js:372
+#: src/control/Control.JSDialogBuilder.js:379
 msgid "Solid"
 msgstr "Vast"
 
-#: src/control/Control.JSDialogBuilder.js:375
+#: src/control/Control.JSDialogBuilder.js:382
 msgid "Linear"
 msgstr "Lineair"
 
-#: src/control/Control.JSDialogBuilder.js:378
+#: src/control/Control.JSDialogBuilder.js:385
 msgid "Axial"
 msgstr "Axiaal"
 
-#: src/control/Control.JSDialogBuilder.js:381
+#: src/control/Control.JSDialogBuilder.js:388
 msgid "Radial"
 msgstr "Radiaal"
 
-#: src/control/Control.JSDialogBuilder.js:384
+#: src/control/Control.JSDialogBuilder.js:391
 msgid "Ellipsoid"
 msgstr "Ellipsoide"
 
-#: src/control/Control.JSDialogBuilder.js:388
+#: src/control/Control.JSDialogBuilder.js:395
 msgid "Quadratic"
 msgstr "Kwadratisch"
 
-#: src/control/Control.JSDialogBuilder.js:391
+#: src/control/Control.JSDialogBuilder.js:398
 msgid "Square"
 msgstr "Vierkant"
 
-#: src/control/Control.JSDialogBuilder.js:394
+#: src/control/Control.JSDialogBuilder.js:401
 msgid "Fixed size"
 msgstr "Vaste afmeting"
 
-#: src/control/Control.JSDialogBuilder.js:1205
+#: src/control/Control.JSDialogBuilder.js:1212
 msgid "From"
 msgstr "Van"
 
-#: src/control/Control.JSDialogBuilder.js:1208
+#: src/control/Control.JSDialogBuilder.js:1215
 msgid "To"
 msgstr "tot"
 
-#: src/control/Control.JSDialogBuilder.js:1211
+#: src/control/Control.JSDialogBuilder.js:1218
 msgid "Color"
 msgstr "Kleur"
 
-#: src/control/Control.JSDialogBuilder.js:1335
+#: src/control/Control.JSDialogBuilder.js:1342
 msgid "Select range"
 msgstr "Bereik selecteren"
 
-#: src/control/Control.JSDialogBuilder.js:1373
+#: src/control/Control.JSDialogBuilder.js:1384
 #: src/control/Control.NotebookbarBuilder.js:235
 msgid "Font Name"
 msgstr "Naam lettertype"
 
-#: src/control/Control.JSDialogBuilder.js:1375
+#: src/control/Control.JSDialogBuilder.js:1386
 msgid "Font Size"
 msgstr "Lettergrootte"
 
-#: src/control/Control.JSDialogBuilder.js:1377
+#: src/control/Control.JSDialogBuilder.js:1388
 #: src/control/Control.TopToolbar.js:505
 msgid "Style"
 msgstr "Opmaakprofiel"
 
-#: src/control/Control.JSDialogBuilder.js:2013
+#: src/control/Control.JSDialogBuilder.js:2025
 msgid "reply"
 msgstr "Beantwoorden"
 
-#: src/control/Control.JSDialogBuilder.js:2016
+#: src/control/Control.JSDialogBuilder.js:2028
 msgid "replies"
 msgstr "Antwoorden"
 
-#: src/control/Control.JSDialogBuilder.js:2086
+#: src/control/Control.JSDialogBuilder.js:2098
 msgid "Insert Comment"
 msgstr "Notitie invoegen"
 
-#: src/control/Control.JSDialogBuilder.js:2517
+#: src/control/Control.JSDialogBuilder.js:2533
 msgid "Cell borders"
 msgstr "Celranden"
 
-#: src/control/Control.JSDialogBuilder.js:2705
+#: src/control/Control.JSDialogBuilder.js:2722
 msgid "Rows"
 msgstr "Rijen"
 
-#: src/control/Control.JSDialogBuilder.js:2706
+#: src/control/Control.JSDialogBuilder.js:2723
 msgid "Columns"
 msgstr "Kolommen"
 
-#: src/control/Control.JSDialogBuilder.js:2726
+#: src/control/Control.JSDialogBuilder.js:2743
 msgid "Insert Table"
 msgstr "Tabel invoegen"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:491
-#: src/control/Control.Menubar.js:699 src/control/Control.StatusBar.js:506
-#: src/control/Control.NotebookbarBuilder.js:711
-#: src/control/Control.NotebookbarBuilder.js:713
-#: src/control/Control.NotebookbarBuilder.js:715
-#: src/control/Control.NotebookbarBuilder.js:739
-#: src/control/Control.NotebookbarBuilder.js:774
-#: src/control/Control.NotebookbarBuilder.js:791
+#: src/control/Control.Menubar.js:699 src/control/Control.StatusBar.js:528
+#: src/control/Control.NotebookbarBuilder.js:731
+#: src/control/Control.NotebookbarBuilder.js:733
+#: src/control/Control.NotebookbarBuilder.js:735
+#: src/control/Control.NotebookbarBuilder.js:759
+#: src/control/Control.NotebookbarBuilder.js:794
+#: src/control/Control.NotebookbarBuilder.js:811
 msgid "None (Do not check spelling)"
 msgstr "Geen (geen spellingcontrole)"
 
@@ -603,10 +612,10 @@ msgstr "Document sluiten"
 #: src/control/Control.NotebookbarImpress.js:250
 #: src/control/Control.NotebookbarDraw.js:218
 #: src/control/Control.NotebookbarDraw.js:219
-#: src/control/Control.NotebookbarBuilder.js:704
-#: src/control/Control.NotebookbarBuilder.js:734
-#: src/control/Control.NotebookbarBuilder.js:769
-#: src/control/Control.NotebookbarBuilder.js:786
+#: src/control/Control.NotebookbarBuilder.js:724
+#: src/control/Control.NotebookbarBuilder.js:754
+#: src/control/Control.NotebookbarBuilder.js:789
+#: src/control/Control.NotebookbarBuilder.js:806
 msgid "Repair"
 msgstr "Herstellen"
 
@@ -627,7 +636,7 @@ msgstr "Zoom herstellen"
 #: src/control/Control.Menubar.js:67
 #: src/control/Control.NotebookbarWriter.js:1025
 #: src/control/Control.NotebookbarWriter.js:1026
-#: src/control/Control.NotebookbarBuilder.js:690
+#: src/control/Control.NotebookbarBuilder.js:710
 msgid "Show Ruler"
 msgstr "Toon liniaal"
 
@@ -690,7 +699,7 @@ msgstr "Over"
 
 #: src/control/Control.Menubar.js:262 src/control/Control.Menubar.js:390
 #: src/control/Control.Menubar.js:500 src/control/Control.Menubar.js:711
-#: src/map/Map.js:416
+#: src/map/Map.js:408
 msgid "Last modification"
 msgstr "Laatste aanpassing"
 
@@ -756,7 +765,7 @@ msgstr "Zoeken"
 msgid "Page Setup"
 msgstr "Pagina-instellingen"
 
-#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:505
+#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:527
 msgid "Reset to Default Language"
 msgstr "Herstellen naar standaard taal"
 
@@ -822,75 +831,87 @@ msgstr "Blad invoegen"
 msgid "Cancel the search"
 msgstr "Zoekopdracht annuleren"
 
-#: src/control/Control.StatusBar.js:295
+#: src/control/Control.StatusBar.js:296
 msgid "Number of Sheets"
 msgstr "Aantal bladen"
 
-#: src/control/Control.StatusBar.js:300
+#: src/control/Control.StatusBar.js:301
 msgid "Selected range of cells"
 msgstr "Geselecteerd cellenbereik"
 
-#: src/control/Control.StatusBar.js:305 src/control/Control.StatusBar.js:354
+#: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:362
 msgid "Entering text mode"
 msgstr "Tekstmodus activeren"
 
-#: src/control/Control.StatusBar.js:314 src/control/Control.StatusBar.js:359
+#: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:367
 msgid "Selection Mode"
 msgstr "Selectie modus"
 
-#: src/control/Control.StatusBar.js:319
+#: src/control/Control.StatusBar.js:320
 msgid "Choice of functions"
 msgstr "Lijst met functies"
 
-#: src/control/Control.StatusBar.js:323
+#: src/control/Control.StatusBar.js:324
 msgid "Average"
 msgstr "Gemiddelde"
 
-#: src/control/Control.StatusBar.js:324
+#: src/control/Control.StatusBar.js:325
 msgid "CountA"
 msgstr "AantalA"
 
-#: src/control/Control.StatusBar.js:325
+#: src/control/Control.StatusBar.js:326
 msgid "Count"
 msgstr "Aantal"
 
-#: src/control/Control.StatusBar.js:326
+#: src/control/Control.StatusBar.js:327
 msgid "Maximum"
 msgstr "Maximum"
 
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.StatusBar.js:328
 msgid "Minimum"
 msgstr "Minimum"
 
-#: src/control/Control.StatusBar.js:328
+#: src/control/Control.StatusBar.js:329
 msgid "Sum"
 msgstr "Som"
 
-#: src/control/Control.StatusBar.js:329
+#: src/control/Control.StatusBar.js:330
 msgid "Selection count"
 msgstr "Selectie tellen"
 
-#: src/control/Control.StatusBar.js:344
+#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:340
+#: src/control/Control.StatusBar.js:378 src/control/Control.StatusBar.js:379
+#: src/control/Control.StatusBar.js:402 src/control/Control.StatusBar.js:403
+msgid "Permission Mode"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
+#: src/control/Control.StatusBar.js:402
+#, fuzzy
+msgid "Read-only"
+msgstr "alleen-lezen"
+
+#: src/control/Control.StatusBar.js:352
 msgid "Number of Pages"
 msgstr "Aantal pagina's"
 
-#: src/control/Control.StatusBar.js:349
+#: src/control/Control.StatusBar.js:357
 msgid "Word Counter"
 msgstr "Aantal woorden"
 
-#: src/control/Control.StatusBar.js:376
+#: src/control/Control.StatusBar.js:391
 msgid "Number of Slides"
 msgstr "Aantal dia's"
 
-#: src/control/Control.StatusBar.js:449
+#: src/control/Control.StatusBar.js:471
 msgid "Select multiple cells"
 msgstr "Meedere cellen selecteren"
 
-#: src/control/Control.StatusBar.js:452
+#: src/control/Control.StatusBar.js:474
 msgid "Insert mode: inactive"
 msgstr "Insert modus: inactief"
 
-#: src/control/Control.StatusBar.js:465
+#: src/control/Control.StatusBar.js:487
 msgid "Selection mode: inactive"
 msgstr "Selectie modus: inactief"
 
@@ -951,7 +972,7 @@ msgid "Insert table"
 msgstr "Tabel invoegen"
 
 #: src/control/Control.TopToolbar.js:244
-#: src/control/Control.NotebookbarBuilder.js:539
+#: src/control/Control.NotebookbarBuilder.js:548
 msgid "Insert Local Image"
 msgstr "Locale afbeelding invoegen"
 
@@ -998,10 +1019,10 @@ msgstr "Huidig"
 #: src/control/Control.Notebookbar.js:242
 #: src/control/Control.NotebookbarImpress.js:18
 #: src/control/Control.NotebookbarDraw.js:18
-#: src/control/Control.NotebookbarBuilder.js:687
-#: src/control/Control.NotebookbarBuilder.js:728
-#: src/control/Control.NotebookbarBuilder.js:756
-#: src/control/Control.NotebookbarBuilder.js:781
+#: src/control/Control.NotebookbarBuilder.js:707
+#: src/control/Control.NotebookbarBuilder.js:748
+#: src/control/Control.NotebookbarBuilder.js:776
+#: src/control/Control.NotebookbarBuilder.js:801
 msgid "Menu"
 msgstr "Menu"
 
@@ -1442,7 +1463,7 @@ msgstr "Hyperlink invoegen"
 msgid "Link"
 msgstr "Koppeling"
 
-#: src/core/Socket.js:66
+#: src/core/Socket.js:61
 msgid ""
 "IE11 has reached its maximum number of connections. Please see this document "
 "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
@@ -1454,56 +1475,56 @@ msgstr ""
 "com/en-us/previous-versions/windows/internet-explorer/ie-developer/"
 "general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
-#: src/core/Socket.js:68
+#: src/core/Socket.js:63
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Oeps, er is een probleem met het verbinden met %productName: "
 
-#: src/core/Socket.js:509
+#: src/core/Socket.js:502
 #, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Server is opnieuw gestart. De pagina moet ververst worden."
 
-#: src/core/Socket.js:511
+#: src/core/Socket.js:504
 msgid "Server is now reachable..."
 msgstr ""
 
-#: src/core/Socket.js:514
+#: src/core/Socket.js:507
 msgid "RELOAD"
 msgstr ""
 
-#: src/core/Socket.js:532
+#: src/core/Socket.js:523
 msgid "Served by:"
 msgstr "Bediend door:"
 
-#: src/core/Socket.js:537
+#: src/core/Socket.js:528
 msgid "Unsupported server version."
 msgstr "Niet-ondersteunde serverversie."
 
-#: src/core/Socket.js:641
+#: src/core/Socket.js:632
 msgid "Session terminated by document owner"
 msgstr "Sessie beëindigd door document-eigenaar"
 
-#: src/core/Socket.js:646
+#: src/core/Socket.js:637
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Niet actief document - klik om het bewerken te hervatten"
 
-#: src/core/Socket.js:648
+#: src/core/Socket.js:639
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "Niet actief document - tap om het bewerken te hervatten"
 
-#: src/core/Socket.js:656
+#: src/core/Socket.js:647
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server wordt afgesloten voor onderhoud (automatische-opslag)"
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:651
 msgid "Oops, there is a problem connecting the document"
 msgstr "Oeps, er is een probleem met de toegang tot het document"
 
-#: src/core/Socket.js:664
+#: src/core/Socket.js:655
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Server niet beschikbaar, automatisch herstarten. Even geduld a.u.b."
 
-#: src/core/Socket.js:692
+#: src/core/Socket.js:683
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1511,7 +1532,7 @@ msgstr ""
 "Het document is in de opslag gewijzigd. Het document opnieuw laden. Uw "
 "versie is beschikbaar als revisie."
 
-#: src/core/Socket.js:698
+#: src/core/Socket.js:689
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1519,7 +1540,7 @@ msgstr ""
 "Oudere revisie herstellen. Niet-opgeslagen wijzigingen zijn beschikbaar in "
 "de versiegeschiedenis"
 
-#: src/core/Socket.js:818
+#: src/core/Socket.js:809
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1527,59 +1548,59 @@ msgstr ""
 "Document is gewijzigd tijdens opslag. Wat zou wilt u doen met uw niet-"
 "opgeslagen wijzigingen?"
 
-#: src/core/Socket.js:822
+#: src/core/Socket.js:813
 msgid "Discard"
 msgstr "Verwerpen"
 
-#: src/core/Socket.js:827
+#: src/core/Socket.js:818
 msgid "Overwrite"
 msgstr "Overschrijven"
 
-#: src/core/Socket.js:832
+#: src/core/Socket.js:823
 msgid "Save to new file"
 msgstr "Als nieuw bestand opslaan"
 
-#: src/core/Socket.js:902
+#: src/core/Socket.js:893
 msgid "Document requires password to view."
 msgstr "Er is een wachtwoord nodig om dit document te bekijken."
 
-#: src/core/Socket.js:905
+#: src/core/Socket.js:896
 msgid "Document requires password to modify."
 msgstr "Er is een wachtwoord nodig om dit document te bewerken."
 
-#: src/core/Socket.js:907
+#: src/core/Socket.js:898
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Klik Cancel om het in alleen-lezen modus te openen."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:902
 msgid "Wrong password provided. Please try again."
 msgstr "Verkeer wachtwoord ingevoerd. Probeer aub opnieuw."
 
-#: src/core/Socket.js:1009
+#: src/core/Socket.js:1000
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1011
+#: src/core/Socket.js:1002
 msgid " saved this document as "
 msgstr ""
 
-#: src/core/Socket.js:1011
+#: src/core/Socket.js:1002
 msgid ". Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1020
+#: src/core/Socket.js:1011
 msgid "Loading..."
 msgstr "Laden…"
 
-#: src/core/Socket.js:1020
+#: src/core/Socket.js:1011
 msgid "Connecting..."
 msgstr "Bezig met verbinden..."
 
-#: src/core/Socket.js:1038
+#: src/core/Socket.js:1029
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1389
+#: src/core/Socket.js:1382
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1587,7 +1608,7 @@ msgstr ""
 "Ach, dit is vervelend. We kunnen geen verbinding maken met uw document. "
 "Probeer het aub opnieuw."
 
-#: src/core/Socket.js:1401
+#: src/core/Socket.js:1394
 msgid "The server has been disconnected."
 msgstr ""
 
@@ -1765,27 +1786,27 @@ msgstr ""
 "Het uploaden van het document naar de server is niet gelukt, het bestand is "
 "te groot."
 
-#: src/layer/tile/CommentSection.js:102
+#: src/layer/tile/CommentSection.js:103
 msgid "Reply"
 msgstr "Beantwoorden"
 
-#: src/layer/tile/CommentSection.js:164
+#: src/layer/tile/CommentSection.js:166
 msgid "Open menu"
 msgstr "Menu openen"
 
-#: src/layer/tile/CommentSection.js:177 src/layer/tile/CommentSection.js:178
+#: src/layer/tile/CommentSection.js:179 src/layer/tile/CommentSection.js:180
 msgid "Accept change"
 msgstr "Wijziging accepteren"
 
-#: src/layer/tile/CommentSection.js:182 src/layer/tile/CommentSection.js:183
+#: src/layer/tile/CommentSection.js:184 src/layer/tile/CommentSection.js:185
 msgid "Reject change"
 msgstr "Wijziging verwerpen"
 
-#: src/layer/tile/CanvasTileLayer.js:1760
+#: src/layer/tile/CanvasTileLayer.js:1777
 msgid "Functions"
 msgstr "Functies"
 
-#: src/layer/tile/CanvasTileLayer.js:4814
+#: src/layer/tile/CanvasTileLayer.js:4828
 msgid "No Comments"
 msgstr "Geen notities"
 
@@ -1846,25 +1867,25 @@ msgstr ""
 "<p>Er is al een download gestart voor een grote kopieer/plak-actie. Wacht "
 "tot die gereed is of annuleer die voor u een nieuwe start</p>"
 
-#: src/map/Map.js:240
+#: src/map/Map.js:232
 msgid "Initializing..."
 msgstr "Initialiseren…"
 
-#: src/map/Map.js:451
+#: src/map/Map.js:443
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "%d seconden geleden"
 
-#: src/map/Map.js:454
+#: src/map/Map.js:446
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "%d minuten geleden"
 
-#: src/map/Map.js:1474
+#: src/map/Map.js:1466
 msgid "Inactive document - please click to resume editing"
 msgstr "Niet actief document - klik om het bewerken te hervatten"
 
-#: src/map/handler/Map.FileInserter.js:105
+#: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
@@ -1872,7 +1893,7 @@ msgstr ""
 "Bestand van het type: %0 kan niet geüpload worden naar de server omdat het "
 "bestand geen naam heeft"
 
-#: src/map/handler/Map.FileInserter.js:107
+#: src/map/handler/Map.FileInserter.js:102
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
@@ -1880,11 +1901,11 @@ msgstr ""
 "Bestand van het type: %0 kan niet geüpload worden naar de server omdat het "
 "bestand leeg is"
 
-#: src/map/handler/Map.FileInserter.js:138
+#: src/map/handler/Map.FileInserter.js:133
 msgid "Uploading..."
 msgstr "Bezig met laden…"
 
-#: src/map/handler/Map.FileInserter.js:152
+#: src/map/handler/Map.FileInserter.js:147
 msgid "Uploading file to server failed with status: %0"
 msgstr "Het uploaden van het bestand naar de server is mislukt met status: %0"
 
@@ -1974,9 +1995,6 @@ msgstr "Kopie maken..."
 
 #~ msgid "Documents"
 #~ msgstr "Documenten"
-
-#~ msgid "Edit"
-#~ msgstr "Bewerken"
 
 #~ msgid "First sheet"
 #~ msgstr "Eerste werkblad"
