@@ -1127,7 +1127,7 @@ class CommentSection {
 		comment.anchorPos = this.stringToRectangles(comment.anchorPos || comment.rectangle || comment.cellPos)[0];
 		comment.anchorPix = this.numberArrayToCorePixFromTwips(comment.anchorPos, 0, 2);
 		comment.parthash = comment.parthash ? comment.parthash: null;
-		comment.tab = comment.tab ? comment.tab: null;
+		comment.tab = (comment.tab || comment.tab === 0) ? comment.tab: null;
 
 		if (comment.rectangle) {
 			comment.rectangle = this.stringToRectangles(comment.rectangle)[0]; // This is the position of the marker (Impress & Draw).
