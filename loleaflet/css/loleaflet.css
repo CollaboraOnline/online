@@ -437,6 +437,7 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 
 .jsdialog-container.loleaflet-annotation-collapsed.modalpopup .loleaflet-annotation-content-wrapper {
 	box-shadow: none;
+	border-width: 0px 0px 1px !important;
 	border-bottom: 1px solid var(--gray-light-bg-color) !important;
 	border-radius: 0 !important;
 	background: white;
