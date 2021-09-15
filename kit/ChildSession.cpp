@@ -300,13 +300,13 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     else if (tokens.equals(0, "freemiumstatus"))
     {
 #ifdef ENABLE_FREEMIUM
-        return updateFreemiumStatus(buffer, length, tokens);
+        return updateBlockingCommandStatus(buffer, length, tokens, "freemium");
 #endif
     }
     else if (tokens.equals(0, "restrictionstatus"))
     {
 #ifdef ENABLE_FEATURE_RESTRICTION
-        return updateRestrictionStatus(buffer, length, tokens);
+        return updateBlockingCommandStatus(buffer, length, tokens, "restricted");
 #endif
     }
     else
@@ -2683,34 +2683,26 @@ int ChildSession::getSpeed()
     return _cursorInvalidatedEvent.size();
 }
 
-#ifdef ENABLE_FREEMIUM
-bool ChildSession::updateFreemiumStatus(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
+#if defined(ENABLE_FEATURE_RESTRICTION) || defined(ENABLE_FREEMIUM)
+bool ChildSession::updateBlockingCommandStatus(const char* /*buffer*/, int /*length*/, const StringVector& tokens, std::string type)
 {
     std::string status;
-    if (tokens.size() < 2 || !getTokenString(tokens[1], "isFreemiumUser", status))
+    if (tokens.size() < 2 || (type == "freemium" && !getTokenString(tokens[1], "isFreemiumUser", status)))
     {
         sendTextFrameAndLogError("error: cmd=freemiumstatus kind=failure");
         return false;
     }
-
-    getLOKitDocument()->setFreemiumDenyList(CommandControl::FreemiumManager::getFreemiumDenyListString().c_str());
-    getLOKitDocument()->setFreemiumView(_viewId, status == "true");
-    return true;
-}
-#endif
-
-#ifdef ENABLE_FEATURE_RESTRICTION
-bool ChildSession::updateRestrictionStatus(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
-{
-    std::string status;
-    if (tokens.size() < 2 || !getTokenString(tokens[1], "isRestrictedUser", status))
+    else if (tokens.size() < 2 || (type == "restricted" && !getTokenString(tokens[1], "isRestrictedUser", status)))
     {
         sendTextFrameAndLogError("error: cmd=restrictionstatus kind=failure");
         return false;
     }
 
-    getLOKitDocument()->setRestrictedCommandList(CommandControl::RestrictionManager::getRestrictedCommandListString().c_str());
-    getLOKitDocument()->setRestrictedView(_viewId, status == "true");
+    if(type == "freemium")
+        getLOKitDocument()->setBlockedCommandList((type + '-' + CommandControl::FreemiumManager::getFreemiumDenyListString()).c_str());
+    else if(type == "restricted")
+        getLOKitDocument()->setBlockedCommandList((type + '-' + CommandControl::RestrictionManager::getRestrictedCommandListString()).c_str());
+    getLOKitDocument()->setBlockedCommandView(_viewId, type.c_str(), status == "true");
     return true;
 }
 #endif
