@@ -302,11 +302,8 @@ private:
     bool exportSignAndUploadDocument(const char* buffer, int length, const StringVector& tokens);
     bool renderShapeSelection(const char* buffer, int length, const StringVector& tokens);
     bool removeTextContext(const char* /*buffer*/, int /*length*/, const StringVector& tokens);
-#ifdef ENABLE_FREEMIUM
-    bool updateFreemiumStatus(const char* buffer, int length, const StringVector& tokens);
-#endif
-#ifdef ENABLE_FEATURE_RESTRICTION
-    bool updateRestrictionStatus(const char* /*buffer*/, int /*length*/, const StringVector& tokens);
+#if defined(ENABLE_FREEMIUM) || defined(ENABLE_FEATURE_RESTRICTION)
+    bool updateBlockingCommandStatus(const char* buffer, int length, const StringVector& tokens, std::string type);
 #endif
 
     void rememberEventsForInactiveUser(const int type, const std::string& payload);
