@@ -570,7 +570,7 @@ class CommentSection {
 	}
 
 	public select (annotation: any) {
-		if (annotation) {
+		if (annotation && annotation !== this.sectionProperties.selectedComment) {
 			// Select the root comment
 			var idx = this.getRootIndexOf(annotation.sectionProperties.data.id);
 
@@ -1105,8 +1105,14 @@ class CommentSection {
 
 	public selectById (commentId: any) {
 		var idx = this.getRootIndexOf(commentId);
-		this.sectionProperties.selectedComment = this.sectionProperties.commentList[idx];
+		var annotation = this.sectionProperties.commentList[idx];
+		var justOpened = annotation !== this.sectionProperties.selectedComment;
+		this.sectionProperties.selectedComment = annotation;
 		this.update();
+
+		if (justOpened && !(<any>window).mode.isMobile() && annotation.isCollapsed
+			&& this.sectionProperties.docLayer._docType !== 'spreadsheet')
+				this.openMobileWizardPopup(annotation);
 	}
 
 	public stringToRectangles (str: string) {
