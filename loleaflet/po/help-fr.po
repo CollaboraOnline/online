@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-08-31 09:51+0200\n"
-"PO-Revision-Date: 2021-07-03 17:33+0000\n"
-"Last-Translator: K. Herbert <herbert.ka@mailo.com>\n"
+"PO-Revision-Date: 2021-09-15 07:35+0000\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "help/fr/>\n"
 "Language: fr\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /fr/libo_online/loleaflet-help-fr.po\n"
 "X-Pootle-Revision: 3339432\n"
 
@@ -1036,39 +1036,48 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Naviguer dans les feuilles de calcul"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Déplace le curseur vers la première cellule de la feuille (A1)."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
 msgstr ""
+"Déplace le curseur vers la dernière cellule de la feuille qui contient des "
+"données."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-18
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Déplace le curseur vers la première cellule de la ligne actuelle."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Déplace le curseur vers la dernière cellule de la ligne actuelle."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
 msgstr ""
+"Sélectionne les cellules de la cellule actuelle à la première cellule de la "
+"ligne actuelle."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
 msgstr ""
+"Sélectionne les cellules de la cellule actuelle à la dernière cellule de la "
+"ligne actuelle."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
+"Sélectionne les cellules à partir de la cellule actuelle jusqu'à une page "
+"dans la colonne actuelle ou étend la sélection existante d'une page vers le "
+"haut."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-164
 #, fuzzy
@@ -1080,6 +1089,8 @@ msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
+"Sélectionne les cellules de la cellule actuelle jusqu'à une page de la "
+"colonne actuelle ou étend la sélection existante d'une page vers le bas."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-168
 #, fuzzy
@@ -1092,6 +1103,9 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"Déplace le curseur vers le bord gauche de la plage de données actuelle. Si "
+"la colonne située à gauche de la cellule contenant le curseur est vide, le "
+"curseur se déplace vers la colonne suivante à gauche contenant des données"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-245
 #, fuzzy
@@ -1104,6 +1118,9 @@ msgid ""
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
+"Déplace le curseur vers le bord droit de la plage de données actuelle. Si la "
+"colonne à droite de la cellule qui contient le curseur est vide, le curseur "
+"se déplace vers la prochaine colonne à droite qui contient des données."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-249
 #, fuzzy
@@ -1116,6 +1133,9 @@ msgid ""
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
+"Déplace le curseur vers le bord supérieur de la plage de données actuelle. "
+"Si la ligne au-dessus de la cellule qui contient le curseur est vide, le "
+"curseur se déplace vers la ligne suivante qui contient des données."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-221
 #, fuzzy
@@ -1128,6 +1148,9 @@ msgid ""
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"Déplace le curseur vers le bord inférieur de la plage de données actuelle. "
+"Si la ligne située sous la cellule qui contient le curseur est vide, le "
+"curseur se déplace vers la ligne suivante qui contient des données."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-226
 #, fuzzy
@@ -1141,6 +1164,11 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
+"Sélectionne toutes les cellules contenant des données depuis la cellule "
+"actuelle jusqu'à la fin de la plage continue de cellules de données, dans le "
+"sens de la flèche actionnée. Si elle est utilisée pour sélectionner des "
+"lignes et des colonnes ensemble, une plage rectangulaire de cellules est "
+"sélectionnée."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-272
 #, fuzzy
@@ -1153,7 +1181,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Déplace une feuille vers la gauche."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-73
 #, fuzzy
@@ -1162,7 +1190,7 @@ msgstr "Maj</kbd><span class=\"kbd--plus\">+</span><kbd>Page précédente"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "Déplace une page d'écran vers la droite."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-80
 #, fuzzy
@@ -1175,6 +1203,10 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
+"Ajoute la feuille précédente à la sélection actuelle de feuilles. Si toutes "
+"les feuilles d'une feuille de calcul sont sélectionnées, cette combinaison "
+"de touches de raccourci ne sélectionne que la feuille précédente. Fait de la "
+"feuille précédente la feuille courante."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-260
 #, fuzzy
@@ -1191,6 +1223,10 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"Ajoute la feuille suivante à la sélection actuelle de feuilles. Si toutes "
+"les feuilles d'une feuille de calcul sont sélectionnées, cette combinaison "
+"de touches de raccourci sélectionne uniquement la feuille suivante. Fait de "
+"la feuille suivante la feuille en cours."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-248
 #, fuzzy
@@ -1207,6 +1243,10 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"où (*) est le signe de multiplication du pavé numérique. Sélectionne la "
+"plage de données qui contient le curseur. Une plage est une plage de "
+"cellules contigües qui contient des données et qui est délimitée par des "
+"lignes et des colonnes vides."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-249
 #, fuzzy
@@ -1218,6 +1258,8 @@ msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
 msgstr ""
+"où (/) est le signe de division du pavé numérique. Sélectionne la plage de "
+"formule de matrice qui contient le curseur."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-158
 #, fuzzy
@@ -1226,7 +1268,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "Insérer des cellules (comme dans le menu Insertion - Cellules)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-85
 #, fuzzy
@@ -1236,6 +1278,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
 msgstr ""
+"Supprimer des cellules (comme dans le menu Édition - Supprimer les cellules)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-90
 #, fuzzy
