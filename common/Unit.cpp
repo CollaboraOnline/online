@@ -78,35 +78,36 @@ UnitBase *UnitBase::linkAndCreateUnit(UnitType type, const std::string &unitLibP
 bool UnitBase::init(UnitType type, const std::string &unitLibPath)
 {
 #if !MOBILEAPP
-    assert(!Global);
+    assert(!get(type));
 #else
     // The LOOLWSD initialization is called in a loop on mobile, allow reuse
-    if (Global)
+    if (get(type))
         return true;
 #endif
 
     if (!unitLibPath.empty())
     {
-        rememberGlobalInstance(type, linkAndCreateUnit(type, unitLibPath));
-        LOG_DBG(Global->_testname << ": Initializing");
+        UnitBase* instance = linkAndCreateUnit(type, unitLibPath);
+        rememberInstance(type, instance);
+        LOG_DBG(instance->_testname << ": Initializing");
 
-        if (Global && type == UnitType::Kit)
+        if (instance && type == UnitType::Kit)
         {
             TimeoutThreadMutex.lock();
-            TimeoutThread = std::thread([]{
+            TimeoutThread = std::thread([instance]{
                     TimeoutThreadRunning = true;
                     Util::setThreadName("unit timeout");
 
-                    if (TimeoutThreadMutex.try_lock_for(Global->_timeoutMilliSeconds))
+                    if (TimeoutThreadMutex.try_lock_for(instance->_timeoutMilliSeconds))
                     {
-                        LOG_DBG(Global->_testname << ": Unit test finished in time");
+                        LOG_DBG(instance->_testname << ": Unit test finished in time");
                         TimeoutThreadMutex.unlock();
                     }
                     else
                     {
-                        LOG_ERR(Global->_testname << ": Unit test timeout after "
-                                                  << Global->_timeoutMilliSeconds);
-                        Global->timeout();
+                        LOG_ERR(instance->_testname << ": Unit test timeout after "
+                                                  << instance->_timeoutMilliSeconds);
+                        instance->timeout();
                     }
                     TimeoutThreadRunning = false;
                 });
@@ -117,10 +118,10 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
         switch (type)
         {
         case UnitType::Wsd:
-            rememberGlobalInstance(UnitType::Wsd, new UnitWSD());
+            rememberInstance(UnitType::Wsd, new UnitWSD());
             break;
         case UnitType::Kit:
-            rememberGlobalInstance(UnitType::Kit, new UnitKit());
+            rememberInstance(UnitType::Kit, new UnitKit());
             break;
         case UnitType::Tool:
             Global = new UnitTool();
@@ -131,14 +132,31 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
         }
     }
 
-    if (Global)
-        Global->_type = type;
-
-    return Global != nullptr;
+    return get(type) != nullptr;
 }
 
-void UnitBase::rememberGlobalInstance(UnitType type, UnitBase* instance)
+UnitBase* UnitBase::get(UnitType type)
 {
+    switch (type)
+    {
+    case UnitType::Wsd:
+        return GlobalWSD;
+        break;
+    case UnitType::Kit:
+        return GlobalKit;
+        break;
+    default:
+        assert(false);
+        break;
+    }
+
+    return nullptr;
+}
+
+void UnitBase::rememberInstance(UnitType type, UnitBase* instance)
+{
+    assert(instance->_type == type);
+
     Global = instance;
 
     switch (type)
@@ -177,7 +195,7 @@ UnitBase::~UnitBase()
 }
 
 UnitWSD::UnitWSD(std::string testname)
-    : UnitBase(std::move(testname))
+    : UnitBase(std::move(testname), UnitType::Wsd)
     , _hasKitHooks(false)
 {
 }
@@ -214,12 +232,12 @@ void UnitWSD::lookupTile(int part, int width, int height, int tilePosX, int tile
 
 UnitWSD& UnitWSD::get()
 {
-    assert(GlobalWSD && GlobalWSD->_type == UnitType::Wsd);
+    assert(GlobalWSD);
     return *GlobalWSD;
 }
 
 UnitKit::UnitKit(std::string testname)
-    : UnitBase(std::move(testname))
+    : UnitBase(std::move(testname), UnitType::Kit)
 {
 }
 
@@ -235,11 +253,6 @@ UnitKit& UnitKit::get()
 #endif
 
     assert(GlobalKit);
-
-#if !MOBILEAPP && !defined(KIT_IN_PROCESS)
-    assert(GlobalKit->_type == UnitType::Kit);
-#endif
-
     return *GlobalKit;
 }
 
@@ -287,13 +300,23 @@ void UnitBase::returnValue(int &retValue)
     if (TimeoutThread.joinable())
         TimeoutThread.join();
 
-    if (Global == GlobalKit)
-        GlobalKit = nullptr;
-    if (Global == GlobalWSD)
-        GlobalWSD = nullptr;
-
-    delete Global;
     Global = nullptr;
+}
+
+void UnitKit::returnValue(int &retValue)
+{
+    UnitBase::returnValue(retValue);
+
+    delete GlobalKit;
+    GlobalKit = nullptr;
+}
+
+void UnitWSD::returnValue(int &retValue)
+{
+    UnitBase::returnValue(retValue);
+
+    delete GlobalWSD;
+    GlobalWSD = nullptr;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
