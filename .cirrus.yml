@@ -11,8 +11,8 @@ task:
     - env ASSUME_ALWAYS_YES=yes pkg install -y gmake pkgconf poco cppunit autotools coreutils libreoffice pango git bash npm
     - mkdir libreoffice-src
     - cd libreoffice-src
-    - fetch http://arrowd.name/libreoffice-include.tar.xz
-    - tar -xvf libreoffice-include.tar.xz
+    - fetch https://github.com/CollaboraOnline/online/releases/download/for-code-assets/LibreOfficeKit-includes-co-2021.tar.gz
+    - tar -xzf LibreOfficeKit-includes-co-2021.tar.gz
   build_script:
     - mkdir .git/hooks
     - pw useradd -n lool -d /tmp/loolhome -m
