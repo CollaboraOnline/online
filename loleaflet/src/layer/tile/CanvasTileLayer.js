@@ -828,7 +828,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			tileContainer.style.height = rectangle.getPxHeight() + 'px';
 
 			var newSize = this._getRealMapSize();
-			var heightIncreased = oldSize < newSize.y;
+			var heightIncreased = oldSize.y < newSize.y;
 
 			if (this._docType === 'spreadsheet') {
 				if (this._painter._sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
@@ -841,8 +841,13 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				this._map.invalidateSize();
 			}
 
-			if (!heightIncreased && window.mode.isMobile())
-				this._onUpdateCursor(true);
+			if (window.mode.isMobile()) {
+				if (heightIncreased) {
+					// if the keyboard is hidden - be sure we setup correct state in TextInput
+					this._map.focus(false);
+				} else
+					this._onUpdateCursor(true);
+			}
 
 			this._fitWidthZoom();
 
