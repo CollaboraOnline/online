@@ -88,6 +88,7 @@ data = data.replace(/%PROTOCOL_DEBUG%/g, 'true');
 data = data.replace(/%FRAME_ANCESTORS%/g, '');
 data = data.replace(/%SOCKET_PROXY%/g, 'false');
 data = data.replace(/%UI_DEFAULTS%/g, '{}');
+data = data.replace(/%HEXIFY_URL%/g, '""');
 
 window = new JSDOM(data, { 
 				runScripts: 'dangerously',
