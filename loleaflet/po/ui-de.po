@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-15 17:22+0200\n"
-"PO-Revision-Date: 2021-09-15 07:35+0000\n"
-"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"PO-Revision-Date: 2021-09-16 11:11+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -118,7 +118,7 @@ msgstr "Geändert"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "WOPI-Host"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -349,7 +349,7 @@ msgstr "Automatische Farbe"
 #: src/control/Control.AlertDialog.js:67 src/control/Control.StatusBar.js:340
 #: src/control/Control.StatusBar.js:379 src/control/Control.StatusBar.js:403
 msgid "Edit"
-msgstr ""
+msgstr "Bearbeiten"
 
 #: src/control/Control.AlertDialog.js:77
 msgid "Open link"
