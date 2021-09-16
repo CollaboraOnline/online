@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-15 17:22+0200\n"
-"PO-Revision-Date: 2021-07-29 17:39+0000\n"
-"Last-Translator: Pedro Silva <pedro.silva@collabora.com>\n"
+"PO-Revision-Date: 2021-09-16 12:04+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt_BR/>\n"
-"Language: \n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.7.2-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -118,7 +118,7 @@ msgstr "Modificado"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "Servidor WOPI"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -350,7 +350,7 @@ msgstr "Cor automática"
 #: src/control/Control.AlertDialog.js:67 src/control/Control.StatusBar.js:340
 #: src/control/Control.StatusBar.js:379 src/control/Control.StatusBar.js:403
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #: src/control/Control.AlertDialog.js:77
 msgid "Open link"
@@ -469,7 +469,7 @@ msgstr "Para"
 
 #: src/control/Control.JSDialogBuilder.js:1218
 msgid "Color"
-msgstr ""
+msgstr "Cor"
 
 #: src/control/Control.JSDialogBuilder.js:1342
 msgid "Select range"
@@ -885,11 +885,10 @@ msgstr "Contagem da seleção"
 #: src/control/Control.StatusBar.js:378 src/control/Control.StatusBar.js:379
 #: src/control/Control.StatusBar.js:402 src/control/Control.StatusBar.js:403
 msgid "Permission Mode"
-msgstr ""
+msgstr "Modo de permissão"
 
 #: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
 #: src/control/Control.StatusBar.js:402
-#, fuzzy
 msgid "Read-only"
 msgstr "Somente de leitura"
 
@@ -1486,11 +1485,11 @@ msgstr "O servidor está agora acessível. É necessário atualizar a página."
 
 #: src/core/Socket.js:504
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "O servidor está agora acessível..."
 
 #: src/core/Socket.js:507
 msgid "RELOAD"
-msgstr ""
+msgstr "RECARREGAR"
 
 #: src/core/Socket.js:523
 msgid "Served by:"
@@ -1579,7 +1578,7 @@ msgstr "Senha inválida. Tente novamente."
 
 #: src/core/Socket.js:1000
 msgid "Someone"
-msgstr ""
+msgstr "Alguém"
 
 #: src/core/Socket.js:1002
 msgid " saved this document as "
