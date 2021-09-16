@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-15 17:22+0200\n"
-"PO-Revision-Date: 2021-09-01 18:50+0000\n"
+"PO-Revision-Date: 2021-09-15 21:51+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /uk/libo_online/loleaflet-ui-uk.po\n"
 "X-Pootle-Revision: 3938227\n"
 
@@ -117,7 +117,7 @@ msgstr "Змінено"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "Вузол WOPI"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -881,11 +881,10 @@ msgstr "Кількість виділень"
 #: src/control/Control.StatusBar.js:378 src/control/Control.StatusBar.js:379
 #: src/control/Control.StatusBar.js:402 src/control/Control.StatusBar.js:403
 msgid "Permission Mode"
-msgstr ""
+msgstr "Режим дозволів"
 
 #: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
 #: src/control/Control.StatusBar.js:402
-#, fuzzy
 msgid "Read-only"
 msgstr "Лише читання"
 
