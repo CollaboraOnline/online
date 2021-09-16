@@ -58,6 +58,13 @@ class UnitBase
     friend UnitWSD;
     friend UnitKit;
 
+public:
+    enum class UnitType
+    {
+        Wsd,
+        Kit
+    };
+
 protected:
     // ---------------- Helper API ----------------
     /// After this time we invoke 'timeout' default 30 seconds
@@ -104,12 +111,12 @@ protected:
     }
 
     /// Construct a UnitBase instance with a default name.
-    explicit UnitBase(std::string name)
+    explicit UnitBase(std::string name, UnitType type)
         : _dlHandle(nullptr)
         , _setRetValue(false)
         , _retValue(0)
         , _timeoutMilliSeconds(30000)
-        , _type(UnitType::Wsd)
+        , _type(type)
         , _testname(std::move(name))
         , _socketPoll(std::make_shared<SocketPoll>(_testname))
     {
@@ -118,11 +125,6 @@ protected:
     virtual ~UnitBase();
 
 public:
-    enum class UnitType
-    {
-        Wsd,
-        Kit
-    };
     /// Load unit test hook shared library from this path
     static bool init(UnitType type, const std::string& unitLibPath);
 
@@ -251,8 +253,10 @@ private:
         return false;
     }
 
+    static UnitBase* get(UnitType type);
+
     /// setup global instance for get() method
-    static void rememberGlobalInstance(UnitType type, UnitBase* instance);
+    static void rememberInstance(UnitType type, UnitBase* instance);
 
     void *_dlHandle;
     static char *UnitLibPath;
@@ -279,6 +283,8 @@ public:
     virtual ~UnitWSD();
 
     static UnitWSD& get();
+
+    virtual void returnValue(int& /* retValue */);
 
     enum class TestRequest
     {
@@ -391,6 +397,8 @@ public:
     explicit UnitKit(std::string testname = std::string());
     virtual ~UnitKit();
     static UnitKit& get();
+
+    virtual void returnValue(int& /* retValue */);
 
     // ---------------- ForKit hooks ----------------
 
