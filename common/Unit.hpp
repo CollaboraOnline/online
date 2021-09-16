@@ -59,6 +59,14 @@ class UnitBase
     friend UnitWSD;
     friend UnitKit;
 
+public:
+    enum class UnitType
+    {
+        Wsd,
+        Kit,
+        Tool
+    };
+
 protected:
     // ---------------- Helper API ----------------
     /// After this time we invoke 'timeout' default 30 seconds
@@ -105,12 +113,12 @@ protected:
     }
 
     /// Construct a UnitBase instance with a default name.
-    explicit UnitBase(std::string name)
+    explicit UnitBase(std::string name, UnitType type)
         : _dlHandle(nullptr)
         , _setRetValue(false)
         , _retValue(0)
         , _timeoutMilliSeconds(std::chrono::seconds(30))
-        , _type(UnitType::Wsd)
+        , _type(type)
         , _testname(std::move(name))
         , _socketPoll(std::make_shared<SocketPoll>(_testname))
     {
@@ -119,12 +127,6 @@ protected:
     virtual ~UnitBase();
 
 public:
-    enum class UnitType
-    {
-        Wsd,
-        Kit,
-        Tool
-    };
     /// Load unit test hook shared library from this path
     static bool init(UnitType type, const std::string& unitLibPath);
 
@@ -255,8 +257,10 @@ private:
         return false;
     }
 
+    static UnitBase* get(UnitType type);
+
     /// setup global instance for get() method
-    static void rememberGlobalInstance(UnitType type, UnitBase* instance);
+    static void rememberInstance(UnitType type, UnitBase* instance);
 
     void *_dlHandle;
     static char *UnitLibPath;
@@ -283,6 +287,8 @@ public:
     virtual ~UnitWSD();
 
     static UnitWSD& get();
+
+    virtual void returnValue(int& /* retValue */);
 
     enum class TestRequest
     {
@@ -403,6 +409,8 @@ public:
     virtual ~UnitKit();
     static UnitKit& get();
 
+    virtual void returnValue(int& /* retValue */);
+
     // ---------------- ForKit hooks ----------------
 
     /// main-loop reached, time for testing
@@ -441,7 +449,7 @@ class UnitTool : public UnitBase
 {
 public:
     explicit UnitTool(std::string testname = std::string())
-        : UnitBase(testname) {}
+        : UnitBase(testname, UnitType::Tool) {}
     virtual ~UnitTool() {}
 };
 
