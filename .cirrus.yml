@@ -8,7 +8,7 @@ task:
     - env ASSUME_ALWAYS_YES=yes pkg update -f
     - env ASSUME_ALWAYS_YES=yes pkg remove -y python27 python2 python37
     - env ASSUME_ALWAYS_YES=yes pkg install -y python3 python38 py38-polib py38-lxml
-    - env ASSUME_ALWAYS_YES=yes pkg install -y gmake pkgconf poco cppunit autotools coreutils git bash npm libpng
+    - env ASSUME_ALWAYS_YES=yes pkg install -y gmake pkgconf poco cppunit autotools coreutils git bash npm png
     - mkdir libreoffice-src
     - cd libreoffice-src
     - fetch https://github.com/CollaboraOnline/online/releases/download/for-code-assets/LibreOfficeKit-includes-co-2021.tar.gz
