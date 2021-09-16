@@ -6,7 +6,7 @@ metadata:
 spec:
   rules:
   - host: {{ .Values.hosts.host }}
-  - http:
+    http:
       paths:
       - path: "/"
         pathType: Prefix
