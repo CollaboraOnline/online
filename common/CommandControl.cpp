@@ -7,7 +7,7 @@
 
 #include <config.h>
 #include <string>
-#include <vector>
+#include <unordered_set>
 #include "ConfigUtil.hpp"
 #include "Util.hpp"
 #include "CommandControl.hpp"
@@ -16,7 +16,7 @@ namespace CommandControl
 {
 
 bool FreemiumManager::_isFreemiumUser = false;
-std::vector<std::string> FreemiumManager::FreemiumDenyList;
+std::unordered_set<std::string> FreemiumManager::FreemiumDenyList;
 std::string FreemiumManager::FreemiumDenyListString;
 
 FreemiumManager::FreemiumManager() {}
@@ -37,13 +37,13 @@ void FreemiumManager::generateDenyList()
         command = Util::trim_whitespace(commandList[i]);
         if(!command.empty())
         {
-            FreemiumDenyList.emplace_back(command);
+            FreemiumDenyList.emplace(command);
         }
     }
 #endif
 }
 
-const std::vector<std::string>& FreemiumManager::getFreemiumDenyList()
+const std::unordered_set<std::string>& FreemiumManager::getFreemiumDenyList()
 {
     if (FreemiumDenyList.empty())
         generateDenyList();
@@ -61,7 +61,7 @@ const std::string FreemiumManager::getFreemiumDenyListString()
 
 
 bool RestrictionManager::_isRestrictedUser = false;
-std::vector<std::string> RestrictionManager::RestrictedCommandList;
+std::unordered_set<std::string> RestrictionManager::RestrictedCommandList;
 std::string RestrictionManager::RestrictedCommandListString;
 
 RestrictionManager::RestrictionManager() {}
@@ -81,13 +81,13 @@ void RestrictionManager::generateRestrictedCommandList()
         command = Util::trim_whitespace(commandList[i]);
         if(!command.empty())
         {
-            RestrictedCommandList.emplace_back(command);
+            RestrictedCommandList.emplace(command);
         }
     }
 #endif
 }
 
-const std::vector<std::string>& RestrictionManager::getRestrictedCommandList()
+const std::unordered_set<std::string>& RestrictionManager::getRestrictedCommandList()
 {
     if (RestrictedCommandList.empty())
         generateRestrictedCommandList();

@@ -49,7 +49,7 @@ L.Map.include({
 
 			$(DOMParentElement).click(function(event) {
 				event.stopPropagation();
-				that.openSubscriptionPopup();
+				that.openSubscriptionPopup('');
 			});
 		}
 	},

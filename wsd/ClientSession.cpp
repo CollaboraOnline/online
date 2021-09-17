@@ -1017,11 +1017,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         return attemptLock(docBroker);
     }
-    else if (tokens.equals(0, "freemiumstatus"))
-    {
-        return forwardToChild(std::string(buffer, length), docBroker);
-    }
-    else if (tokens.equals(0, "restrictionstatus"))
+    else if (tokens.equals(0, "blockingcommandstatus"))
     {
         return forwardToChild(std::string(buffer, length), docBroker);
     }

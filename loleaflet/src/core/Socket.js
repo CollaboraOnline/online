@@ -1065,6 +1065,12 @@ app.definitions.Socket = L.Class.extend({
 			this._map._setRestrictions(restrictionInfo);
 			return;
 		}
+		else if (textMsg.startsWith('blockedcommand: ')) {
+			var blockedInfo = app.socket.parseServerCmd(textMsg.substring(16));
+			if (blockedInfo.errorKind === 'freemiumdeny')
+				this._map.openSubscriptionPopup(blockedInfo.errorCmd);
+			return;
+		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {
 
 			if (imgBytes !== undefined) {
