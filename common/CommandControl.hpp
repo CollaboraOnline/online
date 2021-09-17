@@ -8,14 +8,14 @@
 #pragma once
 
 #include <string>
-#include <vector>
+#include <unordered_set>
 #include "ConfigUtil.hpp"
 
 namespace CommandControl
 {
 class FreemiumManager
 {
-    static std::vector<std::string> FreemiumDenyList;
+    static std::unordered_set<std::string> FreemiumDenyList;
     static bool _isFreemiumUser;
     static std::string FreemiumDenyListString;
 
@@ -23,7 +23,7 @@ class FreemiumManager
 
 public:
     FreemiumManager();
-    static const std::vector<std::string>& getFreemiumDenyList();
+    static const std::unordered_set<std::string>& getFreemiumDenyList();
     static const std::string getFreemiumDenyListString();
 
     static bool isFreemiumUser() { return _isFreemiumUser; }
@@ -41,7 +41,7 @@ public:
 
 class RestrictionManager
 {
-    static std::vector<std::string> RestrictedCommandList;
+    static std::unordered_set<std::string> RestrictedCommandList;
     static bool _isRestrictedUser;
     static std::string RestrictedCommandListString;
 
@@ -49,7 +49,7 @@ class RestrictionManager
 
 public:
     RestrictionManager();
-    static const std::vector<std::string>& getRestrictedCommandList();
+    static const std::unordered_set<std::string>& getRestrictedCommandList();
     static const std::string getRestrictedCommandListString();
 
     static bool isRestrictedUser() { return _isRestrictedUser; }

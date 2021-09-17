@@ -303,7 +303,8 @@ private:
     bool renderShapeSelection(const char* buffer, int length, const StringVector& tokens);
     bool removeTextContext(const char* /*buffer*/, int /*length*/, const StringVector& tokens);
 #if defined(ENABLE_FREEMIUM) || defined(ENABLE_FEATURE_RESTRICTION)
-    bool updateBlockingCommandStatus(const char* buffer, int length, const StringVector& tokens, std::string type);
+    bool updateBlockingCommandStatus(const char* buffer, int length, const StringVector& tokens);
+    std::string getBlockedCommandType(std::string command);
 #endif
 
     void rememberEventsForInactiveUser(const int type, const std::string& payload);
