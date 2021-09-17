@@ -297,16 +297,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
         // Just ignore these.
         // FIXME: We probably should do something for "canceltiles" at least?
     }
-    else if (tokens.equals(0, "freemiumstatus"))
+    else if (tokens.equals(0, "blockingcommandstatus"))
     {
-#ifdef ENABLE_FREEMIUM
-        return updateBlockingCommandStatus(buffer, length, tokens, "freemium");
-#endif
-    }
-    else if (tokens.equals(0, "restrictionstatus"))
-    {
-#ifdef ENABLE_FEATURE_RESTRICTION
-        return updateBlockingCommandStatus(buffer, length, tokens, "restricted");
+#if defined(ENABLE_FREEMIUM) || defined(ENABLE_FEATURE_RESTRICTION)
+        return updateBlockingCommandStatus(buffer, length, tokens);
 #endif
     }
     else
@@ -2684,26 +2678,41 @@ int ChildSession::getSpeed()
 }
 
 #if defined(ENABLE_FEATURE_RESTRICTION) || defined(ENABLE_FREEMIUM)
-bool ChildSession::updateBlockingCommandStatus(const char* /*buffer*/, int /*length*/, const StringVector& tokens, std::string type)
+bool ChildSession::updateBlockingCommandStatus(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
-    std::string status;
-    if (tokens.size() < 2 || (type == "freemium" && !getTokenString(tokens[1], "isFreemiumUser", status)))
-    {
-        sendTextFrameAndLogError("error: cmd=freemiumstatus kind=failure");
-        return false;
-    }
-    else if (tokens.size() < 2 || (type == "restricted" && !getTokenString(tokens[1], "isRestrictedUser", status)))
+    std::string freemiumStatus, restrictedStatus;
+    if (tokens.size() < 2 || !getTokenString(tokens[1], "isRestrictedUser", restrictedStatus))
     {
         sendTextFrameAndLogError("error: cmd=restrictionstatus kind=failure");
         return false;
     }
+    else if (tokens.size() < 2 || !getTokenString(tokens[2], "isFreemiumUser", freemiumStatus))
+    {
+        sendTextFrameAndLogError("error: cmd=freemiumstatus kind=failure");
+        return false;
+    }
+    std::string blockedCommands = "";
+    if (restrictedStatus == "true")
+        blockedCommands += CommandControl::RestrictionManager::getRestrictedCommandListString();
+    if (freemiumStatus == "true")
+        blockedCommands += blockedCommands.empty() ? CommandControl::FreemiumManager::getFreemiumDenyListString() :
+                            " " + CommandControl::FreemiumManager::getFreemiumDenyListString();
 
-    if(type == "freemium")
-        getLOKitDocument()->setBlockedCommandList((type + '-' + CommandControl::FreemiumManager::getFreemiumDenyListString()).c_str());
-    else if(type == "restricted")
-        getLOKitDocument()->setBlockedCommandList((type + '-' + CommandControl::RestrictionManager::getRestrictedCommandListString()).c_str());
-    getLOKitDocument()->setBlockedCommandView(_viewId, type.c_str(), status == "true");
+    getLOKitDocument()->setBlockedCommandList(_viewId, blockedCommands.c_str());
     return true;
+}
+
+std::string ChildSession::getBlockedCommandType(std::string command)
+{
+    if(CommandControl::RestrictionManager::getRestrictedCommandList().find(command)
+    != CommandControl::RestrictionManager::getRestrictedCommandList().end())
+        return "restricted";
+
+    if(CommandControl::FreemiumManager::getFreemiumDenyList().find(command)
+    != CommandControl::FreemiumManager::getFreemiumDenyList().end())
+        return "freemiumdeny";
+
+    return "";
 }
 #endif
 
@@ -3011,6 +3020,20 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_DOCUMENT_BACKGROUND_COLOR:
         sendTextFrame("documentbackgroundcolor: " + payload);
+        break;
+    case LOK_COMMAND_BLOCKED:
+        {
+#if defined(ENABLE_FREEMIUM) || defined(ENABLE_FEATURE_RESTRICTION)
+            LOG_INF("COMMAND_BLOCKED: " << payload);
+            Parser parser;
+            Poco::Dynamic::Var var = parser.parse(payload);
+            Object::Ptr object = var.extract<Object::Ptr>();
+
+            std::string cmd = object->get("cmd").toString();
+            sendTextFrame("blockedcommand: cmd=" + cmd +
+                    " kind=" + getBlockedCommandType(cmd) + " code=" + object->get("code").toString());
+#endif
+        }
         break;
     default:
         LOG_ERR("Unknown callback event (" << lokCallbackTypeToString(type) << "): " << payload);

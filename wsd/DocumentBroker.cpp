@@ -767,7 +767,11 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 #ifdef ENABLE_FREEMIUM
     Object::Ptr freemiumInfo = new Object();
     freemiumInfo->set("IsFreemiumUser", CommandControl::FreemiumManager::isFreemiumUser());
-    freemiumInfo->set("FreemiumDenyList", CommandControl::FreemiumManager::getFreemiumDenyList());
+
+    // Poco:Dynamic:Var does not support std::unordred_set so converted to std::vector
+    std::vector<std::string> freemiumDenyList(CommandControl::FreemiumManager::getFreemiumDenyList().begin(),
+                                                CommandControl::FreemiumManager::getFreemiumDenyList().end());
+    freemiumInfo->set("FreemiumDenyList", freemiumDenyList);
     freemiumInfo->set("FreemiumPurchaseTitle", CommandControl::FreemiumManager::getFreemiumPurchaseTitle());
     freemiumInfo->set("FreemiumPurchaseLink", CommandControl::FreemiumManager::getFreemiumPurchaseLink());
     freemiumInfo->set("FreemiumPurchaseDescription", CommandControl::FreemiumManager::getFreemiumPurchaseDescription());
@@ -786,7 +790,11 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 #ifdef ENABLE_FEATURE_RESTRICTION
     Object::Ptr restrictionInfo = new Object();
     restrictionInfo->set("IsRestrictedUser", CommandControl::RestrictionManager::isRestrictedUser());
-    restrictionInfo->set("RestrictedCommandList", CommandControl::RestrictionManager::getRestrictedCommandList());
+
+    // Poco:Dynamic:Var does not support std::unordred_set so converted to std::vector
+    std::vector<std::string> restrictedCommandList(CommandControl::RestrictionManager::getRestrictedCommandList().begin(),
+                                                CommandControl::RestrictionManager::getRestrictedCommandList().end());
+    restrictionInfo->set("RestrictedCommandList", restrictedCommandList);
 
     std::ostringstream ossRestrictionInfo;
     restrictionInfo->stringify(ossRestrictionInfo);
