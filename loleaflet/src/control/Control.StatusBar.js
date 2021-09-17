@@ -260,6 +260,7 @@ L.Control.StatusBar = L.Control.extend({
 	onDocLayerInit: function () {
 		var statusbar = w2ui['actionbar'];
 		var docType = this.map.getDocType();
+		var isReadOnly = this.map.isPermissionReadOnly();
 
 		switch (docType) {
 		case 'spreadsheet':
@@ -309,7 +310,14 @@ L.Control.StatusBar = L.Control.extend({
 							{id: '1', text: _('None')}
 						], tablet: false
 					},
-					{type: 'break', id: 'break9', mobile: false}
+					{type: 'break', id: 'break9', mobile: false},
+					{
+						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
+						html: '<div id="PermissionMode" class="loleaflet-font ' +
+						(isReadOnly
+							? ' status-readonly-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Read-only') + ' </div>'
+							: ' status-edit-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Edit') + ' </div>')
+					}
 				]);
 			}
 			break;
@@ -341,7 +349,14 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'menu-radio', id: 'LanguageStatus',
 						mobile: false
 					},
-					{type: 'break', id: 'break8', mobile: false}
+					{type: 'break', id: 'break8', mobile: false},
+					{
+						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
+						html: '<div id="PermissionMode" class="loleaflet-font ' +
+						(isReadOnly
+							? ' status-readonly-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Read-only') + ' </div>'
+							: ' status-edit-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Edit') + ' </div>')
+					}
 				]);
 			}
 			break;
@@ -358,7 +373,14 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'menu-radio', id: 'LanguageStatus',
 						mobile: false
 					},
-					{type: 'break', id: 'break8', mobile: false}
+					{type: 'break', id: 'break8', mobile: false},
+					{
+						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
+						html: '<div id="PermissionMode" class="loleaflet-font ' +
+						(isReadOnly
+							? ' status-readonly-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Read-only') + ' </div>'
+							: ' status-edit-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Edit') + ' </div>')
+					}
 				]);
 			}
 

@@ -986,7 +986,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
              tokens[0] == "exportsignanduploaddocument" ||
              tokens[0] == "rendershapeselection" ||
              tokens[0] == "resizewindow" ||
-             tokens[0] == "removetextcontext")
+             tokens[0] == "removetextcontext" ||
+             tokens[0] == "rendersearchresult")
     {
         if (tokens.equals(0, "key"))
             _keyEvents++;
@@ -1260,7 +1261,7 @@ bool ClientSession::filterMessage(const std::string& message) const
     {
         // By default, don't allow anything
         allowed = false;
-        if (tokens.equals(0, "userinactive") || tokens.equals(0, "useractive") || tokens.equals(0, "saveas"))
+        if (tokens.equals(0, "userinactive") || tokens.equals(0, "useractive") || tokens.equals(0, "saveas") || tokens.equals(0, "rendersearchresult"))
         {
             allowed = true;
         }

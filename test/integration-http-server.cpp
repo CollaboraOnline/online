@@ -46,6 +46,7 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testConvertToWithForwardedIP_Deny);
     CPPUNIT_TEST(testConvertToWithForwardedIP_Allow);
     CPPUNIT_TEST(testConvertToWithForwardedIP_DenyMulti);
+    CPPUNIT_TEST(testRenderSearchResult);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -58,6 +59,7 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
     void testConvertToWithForwardedIP_Deny();
     void testConvertToWithForwardedIP_Allow();
     void testConvertToWithForwardedIP_DenyMulti();
+    void testRenderSearchResult();
 
 protected:
     void assertHTTPFilesExist(const Poco::URI& uri,
@@ -482,6 +484,48 @@ void HTTPServerTest::testConvertToWithForwardedIP_DenyMulti()
     {
         LOK_ASSERT_FAIL(exc.displayText() + ": " + (exc.nested() ? exc.nested()->displayText() : ""));
     }
+}
+
+void HTTPServerTest::testRenderSearchResult()
+{
+    const char* testname = "testRenderSearchResult";
+    const std::string srcPathDoc = FileUtil::getTempFileCopyPath(TDOC, "RenderSearchResultTest.odt", testname);
+    const std::string srcPathXml = FileUtil::getTempFileCopyPath(TDOC, "RenderSearchResultFragment.xml", testname);
+    std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
+    session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
+
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/render-search-result");
+    Poco::Net::HTMLForm form;
+    form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
+    form.addPart("document", new Poco::Net::FilePartSource(srcPathDoc));
+    form.addPart("result", new Poco::Net::FilePartSource(srcPathXml));
+    form.prepareSubmit(request);
+    try
+    {
+        form.write(session->sendRequest(request));
+    }
+    catch (const std::exception& ex)
+    {
+        // In case the server is still starting up.
+        sleep(5);
+        form.write(session->sendRequest(request));
+    }
+
+    Poco::Net::HTTPResponse response;
+    std::stringstream actualStream;
+    std::istream& responseStream = session->receiveResponse(response);
+    Poco::StreamCopier::copyStream(responseStream, actualStream);
+
+    // Remove the temp files.
+    FileUtil::removeFile(srcPathDoc);
+    FileUtil::removeFile(srcPathXml);
+
+    std::string actualString = actualStream.str();
+
+    LOK_ASSERT(actualString.size() >= 100);
+    LOK_ASSERT_EQUAL(actualString[1], 'P');
+    LOK_ASSERT_EQUAL(actualString[2], 'N');
+    LOK_ASSERT_EQUAL(actualString[3], 'G');
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(HTTPServerTest);

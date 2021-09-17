@@ -343,7 +343,8 @@ bool ChildSession::_handleInput(const char *buffer, int length)
                tokens.equals(0, "completefunction")||
                tokens.equals(0, "formfieldevent") ||
                tokens.equals(0, "traceeventrecording") ||
-               tokens.equals(0, "sallogoverride"));
+               tokens.equals(0, "sallogoverride") ||
+               tokens.equals(0, "rendersearchresult"));
 
         std::string pzName("ChildSession::_handleInput:" + tokens[0]);
         ProfileZone pz(pzName.c_str());
@@ -533,6 +534,10 @@ bool ChildSession::_handleInput(const char *buffer, int length)
             {
                 getLOKit()->setOption("sallogoverride", tokens[1].c_str());
             }
+        }
+        else if (tokens.equals(0, "rendersearchresult"))
+        {
+            return renderSearchResult(buffer, length, tokens);
         }
         else
         {
@@ -1657,6 +1662,61 @@ bool ChildSession::formFieldEvent(const char* buffer, int length, const StringVe
 
     return true;
 }
+
+bool ChildSession::renderSearchResult(const char* buffer, int length, const StringVector& /*tokens*/)
+{
+    std::string sContent(buffer, length);
+    std::string sCommand("rendersearchresult ");
+    std::string sArguments = sContent.substr(sCommand.size());
+
+    if (sArguments.empty())
+    {
+        sendTextFrameAndLogError("error: cmd=rendersearchresult kind=syntax");
+        return false;
+    }
+
+    getLOKitDocument()->setView(_viewId);
+
+    const auto eTileMode = static_cast<LibreOfficeKitTileMode>(getLOKitDocument()->getTileMode());
+
+    unsigned char* pBitmapBuffer = nullptr;
+
+    int nWidth = 0;
+    int nHeight = 0;
+    size_t nByteSize = 0;
+
+    bool bSuccess = getLOKitDocument()->renderSearchResult(sArguments.c_str(), &pBitmapBuffer, &nWidth, &nHeight, &nByteSize);
+
+    if (bSuccess && nByteSize > 0)
+    {
+        std::vector<char> aOutput;
+        aOutput.reserve(nByteSize * 3 / 4); // reserve 75% of original size
+
+        if (Png::encodeBufferToPNG(pBitmapBuffer, nWidth, nHeight, aOutput, eTileMode))
+        {
+            static const std::string aHeader = "rendersearchresult:";
+            size_t nResponseSize = aHeader.size() + aOutput.size();
+            std::vector<char> aResponse(nResponseSize);
+            std::copy(aHeader.begin(), aHeader.end(), aResponse.begin());
+            std::copy(aOutput.begin(), aOutput.end(), aResponse.begin() + aHeader.size());
+            sendBinaryFrame(aResponse.data(), aResponse.size());
+        }
+        else
+        {
+            sendTextFrameAndLogError("error: cmd=rendersearchresult kind=failure");
+        }
+    }
+    else
+    {
+        sendTextFrameAndLogError("error: cmd=rendersearchresult kind=failure");
+    }
+
+    if (pBitmapBuffer)
+        free(pBitmapBuffer);
+
+    return true;
+}
+
 
 bool ChildSession::completeFunction(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
@@ -2793,11 +2853,14 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
             if (!success.isEmpty() && success.toString() == "true")
             {
 #if defined(IOS)
-                CODocument *document = getDocumentDataForMobileAppDocId(_docManager->getMobileAppDocId()).coDocument;
+                CODocument *document = DocumentData::get(_docManager->getMobileAppDocId()).coDocument;
                 [document saveToURL:[document fileURL]
                    forSaveOperation:UIDocumentSaveForOverwriting
                   completionHandler:^(BOOL success) {
                         LOG_TRC("ChildSession::loKitCallback() save completion handler gets " << (success?"YES":"NO"));
+                        if (![[NSFileManager defaultManager] removeItemAtURL:document->copyFileURL error:nil]) {
+                            LOG_SYS("Could not remove copy of document at " << [[document->copyFileURL path] UTF8String]);
+                        }
                     }];
 #elif defined(__ANDROID__)
                 postDirectMessage("SAVE " + payload);
@@ -2932,13 +2995,11 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_INVALIDATE_SHEET_GEOMETRY:
         sendTextFrame("invalidatesheetgeometry: " + payload);
         break;
-
-#if !ENABLE_DEBUG
-    // we want a compilation-time failure in the debug builds; but ERR in the
-    // log in the release ones
+    case LOK_CALLBACK_DOCUMENT_BACKGROUND_COLOR:
+        sendTextFrame("documentbackgroundcolor: " + payload);
+        break;
     default:
         LOG_ERR("Unknown callback event (" << lokCallbackTypeToString(type) << "): " << payload);
-#endif
     }
 }
 

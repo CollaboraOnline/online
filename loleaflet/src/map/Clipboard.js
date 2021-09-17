@@ -71,7 +71,7 @@ L.Clipboard = L.Class.extend({
 	},
 
 	getMetaBase: function() {
-		return this._map.options.webserver + this._map.options.serviceRoot;
+		return window.makeHttpUrl('');
 	},
 
 	getMetaPath: function(idx) {
@@ -511,18 +511,6 @@ L.Clipboard = L.Class.extend({
 		    return true;
 
 		return false;
-	},
-
-	// only used by IE.
-	_beforePasteIE: function(ev) {
-		console.log('IE11 work ...');
-
-		if (this._isAnyInputFieldSelected())
-			return;
-
-		this._beforeSelect(ev);
-		this._dummyDiv.focus();
-		// Now wait for the paste ...
 	},
 
 	// Does the selection of text before an event comes in

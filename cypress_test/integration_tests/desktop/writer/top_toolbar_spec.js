@@ -272,25 +272,11 @@ describe('Top toolbar tests.', function() {
 	});
 
 	it('Insert comment.', function() {
-		cy.get('#toolbar-up .w2ui-scroll-right')
-			.click();
+		desktopHelper.insertMultipleComment('writer');
 
-		mode === 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-right').click() : '';
+		cy.get('.loleaflet-annotation-content-wrapper').should('exist');
 
-		desktopHelper.actionOnSelector('insertAnnotation', (selector) => { cy.get(selector).click(); });
-
-		// Comment insertion dialog is opened
-		cy.get('.loleaflet-annotation-table')
-			.should('exist');
-
-		// Add some comment
-		cy.get('#annotation-modify-textarea-new').type('some text');
-
-		cy.get('#annotation-save-new').click();
-
-		cy.get('#comment-container-1').should('exist');
-
-		cy.get('#annotation-content-area-1').should('have.text', 'some text');
+		cy.get('#annotation-content-area-1').should('contain','some text0');
 	});
 
 	it('Insert table.', function() {

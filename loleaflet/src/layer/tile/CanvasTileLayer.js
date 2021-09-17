@@ -213,7 +213,7 @@ L.TileSectionManager = L.Class.extend({
 		this._sectionContainer = new CanvasSectionContainer(this._canvas, this._layer.isCalc() /* disableDrawing? */);
 
 		if (this._layer.isCalc())
-			this._sectionContainer.setClearColor('white');
+			this._sectionContainer.setClearColor('white'); // will be overridden by 'documentbackgroundcolor' msg.
 
 		app.sectionContainer = this._sectionContainer;
 		if (L.Browser.cypressTest) // If cypress is active, create test divs.
@@ -364,11 +364,22 @@ L.TileSectionManager = L.Class.extend({
 		canvasOverlay.setOverlaySection(this._sectionContainer.getSectionWithName(L.CSections.Overlays.name));
 	},
 
+	shouldDrawCalcGrid: function () {
+		var defaultBG = 'ffffff';
+		if (this._layer.coreDocBGColor)
+			return (this._layer.coreDocBGColor === defaultBG);
+		else
+			return true;
+	},
+
 	_onDrawGridSection: function () {
 		if (this.containerObject.isInZoomAnimation() || this.sectionProperties.tsManager.waitForTiles())
 			return;
-		// grid-section's onDrawArea is TileSectionManager's _drawGridSectionArea().
-		this.onDrawArea();
+
+		if (this.sectionProperties.tsManager.shouldDrawCalcGrid()) {
+			// grid-section's onDrawArea is TileSectionManager's _drawGridSectionArea().
+			this.onDrawArea();
+		}
 	},
 
 	_drawGridSectionArea: function (repaintArea, paneTopLeft, canvasCtx) {
@@ -1667,6 +1678,12 @@ L.CanvasTileLayer = L.Layer.extend({
 			obj = JSON.parse(textMsg.substring('redlinetablechanged:'.length + 1));
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
 		}
+		else if (textMsg.startsWith('documentbackgroundcolor:')) {
+			if (this.isCalc()) {
+				this.coreDocBGColor = textMsg.substring('documentbackgroundcolor:'.length + 1).trim();
+				app.sectionContainer.setClearColor('#' + this.coreDocBGColor);
+			}
+		}
 	},
 
 	_onTabStopListUpdate: function (textMsg) {
@@ -1855,14 +1872,10 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onDownloadAsMsg: function (textMsg) {
 		var command = app.socket.parseServerCmd(textMsg);
 		var parser = document.createElement('a');
-		parser.href = this._map.options.server;
+		parser.href = window.host;
 
-		var wopiSrc = '';
-		if (this._map.options.wopiSrc != '') {
-			wopiSrc = '?WOPISrc=' + this._map.options.wopiSrc;
-		}
-		var url = this._map.options.webserver + this._map.options.serviceRoot + '/' + this._map.options.urlPrefix + '/' +
-			encodeURIComponent(this._map.options.doc) + '/download/' + command.downloadid + wopiSrc;
+		var url = window.makeHttpUrlWopiSrc('/' + this._map.options.urlPrefix + '/',
+			this._map.options.doc, '/download/' + command.downloadid);
 
 		this._map.hideBusy();
 		if (this._map['wopi'].DownloadAsPostMessage) {
@@ -1874,9 +1887,10 @@ L.CanvasTileLayer = L.Layer.extend({
 				// due to a pdf.js issue - https://github.com/mozilla/pdf.js/issues/5397
 				// open the pdf file in a new tab so that that user can print it directly in the browser's
 				// pdf viewer
-				var param = wopiSrc !== '' ? '&' : '?';
-				param += 'attachment=0';
-				window.open(url + param, '_blank');
+				url = window.makeHttpUrlWopiSrc('/' + this._map.options.urlPrefix + '/',
+					this._map.options.doc, '/download/' + command.downloadid,
+					'attachment=0');
+				window.open(url, '_blank');
 			}
 			else {
 				this._map.fire('filedownloadready', {url: url});
@@ -5024,7 +5038,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map.invalidateSize();
 			}
 
-			if (!heightIncreased)
+			if (!heightIncreased && window.mode.isMobile())
 				this._onUpdateCursor(true);
 
 			this._fitWidthZoom();
@@ -5587,6 +5601,8 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_updateFileBasedView: function (checkOnly) {
 		if (this._partHeightTwips === 0) // This is true before status message is handled.
+			return [];
+		if (this._isZooming)
 			return [];
 
 		var zoom = Math.round(this._map.getZoom());

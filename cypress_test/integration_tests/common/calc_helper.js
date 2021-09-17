@@ -13,6 +13,10 @@ function clickFormulaBar() {
 	// canvas, which is accurately sized.
 	// N.B. Setting the width of the inputbar_container
 	// is futile because it messes the size of the canvas.
+	helper.doIfOnMobile(function() {
+		helper.waitUntilIdle('.inputbar_container');
+	});
+
 	cy.get('.inputbar_canvas')
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
@@ -34,21 +38,32 @@ function clickFormulaBar() {
 //              one makes the document to step in cell editing.
 // dblClick - to do a double click or not. The result of double click is that the cell
 //            editing it triggered both on desktop and mobile.
-function clickOnFirstCell(firstClick = true, dblClick = false) {
+function clickOnFirstCell(firstClick = true, dblClick = false, frameId) {
 	cy.log('Clicking on first cell - start.');
 	cy.log('Param - firstClick: ' + firstClick);
 	cy.log('Param - dblClick: ' + dblClick);
 
 	// Use the tile's edge to find the first cell's position
-	cy.get('#map')
+	cy.customGet('#map', frameId)
 		.then(function(items) {
 			expect(items).to.have.lengthOf(1);
 			var XPos = items[0].getBoundingClientRect().left + 10;
 			var YPos = items[0].getBoundingClientRect().top + 10;
 			if (dblClick) {
-				cy.get('body')
-					.click(XPos, YPos)
-					.dblclick(XPos, YPos);
+				if (frameId) {
+					cy.get(frameId)
+						.then(($iframe) => {
+							const $body = $iframe.contents().find('body');
+
+							cy.wrap($body)
+								.click(XPos, YPos)
+								.dblclick(XPos, YPos);
+						});
+				} else {
+					cy.get('body')
+						.click(XPos, YPos)
+						.dblclick(XPos, YPos);
+				}
 			} else {
 				cy.get('body')
 					.click(XPos, YPos);
@@ -57,13 +72,13 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 
 	if (firstClick && !dblClick) {
 		cy.wait(1000);
-		cy.get('#test-div-overlay-cell-cursor-border-0')
+		cy.customGet('#test-div-overlay-cell-cursor-border-0', frameId)
 			.should(function (elem) {
 				expect(helper.Bounds.parseBoundsJson(elem.text()).left).to.be.equal(0);
 				expect(helper.Bounds.parseBoundsJson(elem.text()).top).to.be.equal(0);
 			});
 	} else {
-		cy.get('.cursor-overlay .blinking-cursor')
+		cy.customGet('.cursor-overlay .blinking-cursor', frameId)
 			.should('be.visible');
 
 		helper.doIfOnDesktop(function() {
@@ -71,15 +86,15 @@ function clickOnFirstCell(firstClick = true, dblClick = false) {
 		});
 	}
 
-	cy.get('input#addressInput')
+	cy.customGet('input#addressInput', frameId)
 		.should('have.prop', 'value', 'A1');
 
 	cy.log('Clicking on first cell - end.');
 }
 
 // Double click on the A1 cell.
-function dblClickOnFirstCell() {
-	clickOnFirstCell(false, true);
+function dblClickOnFirstCell(frameId) {
+	clickOnFirstCell(false, true, frameId);
 }
 
 // Type some text into the formula bar.

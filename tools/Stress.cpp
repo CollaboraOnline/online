@@ -26,6 +26,7 @@
 
 #include "Replay.hpp"
 #include <TraceFile.hpp>
+#include <wsd/TileDesc.hpp>
 #include <test/helpers.hpp>
 
 int ClientPortNumber = DEFAULT_CLIENT_PORT_NUMBER;
@@ -287,7 +288,7 @@ int Stress::main(const std::vector<std::string>& args)
         return EX_NOINPUT;
     }
 
-#if 0
+#if 1
     // temporary socketpoll hook
     return Stress::processArgs(args);
 #endif
@@ -360,8 +361,12 @@ POCO_APP_MAIN(Stress)
 #  include <SslSocket.hpp>
 #endif
 
+// Avoid a MessageHandler for now.
 class StressSocketHandler : public WebSocketHandler
 {
+    TraceFileReader _reader;
+    TraceFileRecord _next;
+    std::chrono::steady_clock::time_point _start;
     bool _connecting;
     std::string _uri;
     std::string _trace;
@@ -369,13 +374,17 @@ public:
 
     StressSocketHandler(const std::string &uri, const std::string &trace) :
         WebSocketHandler(true, true),
+        _reader(trace),
         _connecting(true),
         _uri(uri),
         _trace(trace)
     {
         std::cerr << "Attempt connect to " << uri << " for trace " << _trace << "\n";
+        getNextRecord();
+        _start = std::chrono::steady_clock::now();
         sendMessage("load url=" + uri);
     }
+
     int getPollEvents(std::chrono::steady_clock::time_point now,
                       int64_t &timeoutMaxMicroS) override
     {
@@ -385,13 +394,52 @@ public:
                 " to complete for trace " << _trace << "\n";
             return POLLOUT;
         }
-        else
-            return WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
+
+        int events = WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
+
+        int64_t nextTime = -1;
+        while (nextTime <= 0) {
+            nextTime = std::chrono::duration_cast<std::chrono::microseconds>(
+                std::chrono::microseconds(_next.getTimestampUs() - _reader.getEpochStart())
+                + _start - now).count();
+            if (nextTime <= 0)
+            {
+                sendTraceMessage();
+                events = WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
+                break;
+            }
+        }
+
+//        std::cerr << "next event in " << nextTime << " us\n";
+        if (nextTime < timeoutMaxMicroS)
+            timeoutMaxMicroS = nextTime;
+
+        return events;
+    }
+
+    bool getNextRecord()
+    {
+        bool found = false;
+        while (!found) {
+            _next = _reader.getNextRecord();
+            switch (_next.getDir()) {
+            case TraceFileRecord::Direction::Invalid:
+            case TraceFileRecord::Direction::Incoming:
+                // FIXME: need to subset output quite a bit.
+                found = true;
+                break;
+            default:
+                found = false;
+                break;
+            }
+        }
+        return _next.getDir () != TraceFileRecord::Direction::Invalid;
     }
 
     void performWrites(std::size_t capacity) override
     {
-        std::cerr << "Outbound websocket - connected\n";
+        if (_connecting)
+            std::cerr << "Outbound websocket - connected\n";
         _connecting = false;
         return WebSocketHandler::performWrites(capacity);
     }
@@ -400,6 +448,67 @@ public:
     {
         std::cerr << "Websocket " << _uri << " dis-connected, re-trying in 20 seconds\n";
         WebSocketHandler::onDisconnect();
+    }
+
+    // send outgoing messages
+    void sendTraceMessage()
+    {
+        if (_next.getDir() == TraceFileRecord::Direction::Invalid)
+            return; // shutting down
+
+        std::string msg = rewriteMessage(_next.getPayload());
+        if (!msg.empty())
+        {
+            std::cerr << "Send: '" << msg << "'\n";
+            sendMessage(msg);
+        }
+
+        if (!getNextRecord())
+        {
+            std::cerr << "Shutdown\n";
+            shutdown();
+        }
+    }
+
+    std::string rewriteMessage(const std::string &msg)
+    {
+        const std::string firstLine = LOOLProtocol::getFirstLine(msg);
+        StringVector tokens = Util::tokenize(firstLine);
+
+        std::string out = msg;
+
+        if (tokens.equals(0, "tileprocessed"))
+            out = ""; // we do this accurately below
+
+        else if (tokens.equals(0, "load")) {
+            std::string url = tokens[1];
+            assert(!strncmp(url.c_str(), "url=", 4));
+
+            // load url=file%3A%2F%2F%2Ftmp%2Fhello-world.odt deviceFormFactor=desktop
+            out = "load url=" + _uri; // already encoded
+            for (size_t i = 2; i < tokens.size(); ++i)
+                out += " " + tokens[i];
+            std::cerr << "msg " << out << "\n";
+        }
+
+        // FIXME: translate mouse events relative to view-port etc.
+        return out;
+    }
+
+    // handle incoming messages
+    void handleMessage(const std::vector<char> &data) override
+    {
+        const std::string firstLine = LOOLProtocol::getFirstLine(data.data(), data.size());
+        StringVector tokens = Util::tokenize(firstLine);
+        std::cerr << "Got a message ! " << firstLine << "\n";
+        if (tokens.equals(0, "tile:")) {
+            // eg. tileprocessed tile=0:9216:0:3072:3072:0
+            TileDesc desc = TileDesc::parse(tokens);
+            sendMessage("tileprocessed tile=" + desc.generateID());
+        }
+
+        // FIXME: implement code to send new view-ports based
+        // on cursor position etc.
     }
 };
 
@@ -429,15 +538,16 @@ int Stress::processArgs(const std::vector<std::string>& args)
         Poco::URI::encode("file://" + fileabs, ":/?", file);
         Poco::URI::encode(file, ":/?", wrap); // double encode.
         std::string uri = server + "/lool/" + wrap + "/ws";
-        auto handler = std::make_shared<StressSocketHandler>(fileabs, args[i+1]);
+
+        auto handler = std::make_shared<StressSocketHandler>(file, args[i+1]);
         poll.insertNewWebSocketSync(Poco::URI(uri), handler);
-        // FIXME: we need a sensible protocol handler to drive the actual trace replay ...
     }
 
-    while (poll.continuePolling())
-    {
+    do {
+
         poll.poll(TerminatingPoll::DefaultPollTimeoutMicroS);
-    }
+
+    } while (poll.continuePolling() && poll.getSocketCount() > 0);
 
     return 0;
 }

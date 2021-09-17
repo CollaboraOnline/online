@@ -38,7 +38,7 @@ public:
 
     TraceFileRecord() :
         _dir(Direction::Invalid),
-        _timestampNs(0),
+        _timestampUs(0),
         _pid(0)
     {
     }
@@ -55,9 +55,9 @@ public:
 
     Direction getDir() const { return _dir; }
 
-    void setTimestampNs(unsigned timestampNs) { _timestampNs = timestampNs; }
+    void setTimestampUs(unsigned timestampUs) { _timestampUs = timestampUs; }
 
-    unsigned getTimestampNs() const { return _timestampNs; }
+    unsigned getTimestampUs() const { return _timestampUs; }
 
     void setPid(unsigned pid) { _pid = pid; }
 
@@ -73,7 +73,7 @@ public:
 
 private:
     Direction _dir;
-    unsigned _timestampNs;
+    unsigned _timestampUs;
     unsigned _pid;
     std::string _sessionId;
     std::string _payload;
@@ -85,16 +85,17 @@ class TraceFileWriter
 {
 public:
     TraceFileWriter(const std::string& path,
-                    const bool recordOugoing,
+                    const bool recordOutgoing,
                     const bool compress,
                     const bool takeSnapshot,
                     const std::vector<std::string>& filters) :
         _epochStart(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now()
                                                             .time_since_epoch()).count()),
-        _recordOutgoing(recordOugoing),
+        _recordOutgoing(recordOutgoing),
         _compress(compress),
         _takeSnapshot(takeSnapshot),
         _path(Poco::Path(path).parent().toString()),
+        _lastTime(_epochStart),
         _filter(true),
         _stream(processPath(path), compress ? std::ios::binary : std::ios::out),
         _deflater(_stream, Poco::DeflatingStreamBuf::STREAM_GZIP)
@@ -256,12 +257,14 @@ private:
     {
         Util::assertIsLocked(_mutex);
 
-        const Poco::Int64 usec = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono
-                                        ::system_clock::now().time_since_epoch()).count() - _epochStart;
+        const int64_t usec = std::chrono::duration_cast<std::chrono::microseconds>(
+            std::chrono::system_clock::now().time_since_epoch()).count();
+        const int64_t deltaT = usec - _lastTime;
+        _lastTime = usec;
         if (_compress)
         {
             _deflater.write(&delim, 1);
-            _deflater << usec;
+            _deflater << "+" << deltaT;
             _deflater.write(&delim, 1);
             _deflater << id;
             _deflater.write(&delim, 1);
@@ -273,7 +276,7 @@ private:
         else
         {
             _stream.write(&delim, 1);
-            _stream << usec;
+            _stream << "+" << deltaT;
             _stream.write(&delim, 1);
             _stream << id;
             _stream.write(&delim, 1);
@@ -331,6 +334,7 @@ private:
     const bool _compress;
     const bool _takeSnapshot;
     const std::string _path;
+    int64_t _lastTime;;
     Util::RegexListMatcher _filter;
     std::ofstream _stream;
     Poco::DeflatingOutputStream _deflater;
@@ -406,6 +410,7 @@ private:
         _records.clear();
 
         std::string line;
+        unsigned lastTime = 0;
         for (;;)
         {
             if (_compressed)
@@ -423,7 +428,7 @@ private:
             }
 
             TraceFileRecord rec;
-            if (extractRecord(line, rec))
+            if (extractRecord(line, lastTime, rec))
                 _records.push_back(rec);
             else
                 fprintf(stderr, "Invalid trace file record, expected 4 tokens. [%s]\n", line.c_str());
@@ -441,11 +446,11 @@ private:
         _indexIn = advance(-1, TraceFileRecord::Direction::Incoming);
         _indexOut = advance(-1, TraceFileRecord::Direction::Outgoing);
 
-        _epochStart = _records[0].getTimestampNs();
-        _epochEnd = _records[_records.size() - 1].getTimestampNs();
+        _epochStart = _records[0].getTimestampUs();
+        _epochEnd = _records[_records.size() - 1].getTimestampUs();
     }
 
-    static bool extractRecord(const std::string& s, TraceFileRecord& rec)
+    static bool extractRecord(const std::string& s, unsigned &lastTime, TraceFileRecord& rec)
     {
         if (s.length() < 1)
             return false;
@@ -462,7 +467,13 @@ private:
             switch (record)
             {
                 case 0:
-                    rec.setTimestampNs(std::atoi(s.substr(pos, next - pos).c_str()));
+                    if (s[pos] == '+') { // incremental timestamps
+                        unsigned time = std::atol(s.substr(pos, next - pos).c_str());
+                        rec.setTimestampUs(lastTime + time);
+                        lastTime += time;
+                    }
+                    else
+                        rec.setTimestampUs(std::atol(s.substr(pos, next - pos).c_str()));
                     break;
                 case 1:
                     rec.setPid(std::atoi(s.substr(pos, next - pos).c_str()));

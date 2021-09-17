@@ -636,7 +636,7 @@ public:
         if (!_filename.empty())
         {
             LOG_TRC("Remove un-handled temporary file '" << _filename << '\'');
-            ConvertToBroker::removeFile(_filename);
+            StatelessBatchBroker::removeFile(_filename);
         }
     }
 
@@ -676,6 +676,84 @@ public:
         fileStream.open(_filename);
         StreamCopier::copyStream(stream, fileStream);
         fileStream.close();
+    }
+};
+
+class RenderSearchResultPartHandler : public PartHandler
+{
+private:
+    std::string _filename;
+    std::shared_ptr<std::vector<char>> _pSearchResultContent;
+
+public:
+    std::string getFilename() const { return _filename; }
+
+    /// Afterwards someone else is responsible for cleaning that up.
+    void takeFile() { _filename.clear(); }
+
+    const std::shared_ptr<std::vector<char>>& getSearchResultContent() const
+    {
+        return _pSearchResultContent;
+    }
+
+    RenderSearchResultPartHandler() = default;
+
+    virtual ~RenderSearchResultPartHandler()
+    {
+        if (!_filename.empty())
+        {
+            LOG_TRC("Remove un-handled temporary file '" << _filename << '\'');
+            StatelessBatchBroker::removeFile(_filename);
+        }
+    }
+
+    virtual void handlePart(const MessageHeader& header, std::istream& stream) override
+    {
+        // Extract filename and put it to a temporary directory.
+        std::string label;
+        NameValueCollection content;
+        if (header.has("Content-Disposition"))
+        {
+            MessageHeader::splitParameters(header.get("Content-Disposition"), label, content);
+        }
+
+        std::string name = content.get("name", "");
+        if (name == "document")
+        {
+            std::string filename = content.get("filename", "");
+
+            const Path filenameParam(filename);
+
+            // The temporary directory is child-root/<JAIL_TMP_INCOMING_PATH>.
+            // Always create a random sub-directory to avoid file-name collision.
+            Path tempPath = Path::forDirectory(
+                FileUtil::createRandomTmpDir(LOOLWSD::ChildRoot + JailUtil::JAIL_TMP_INCOMING_PATH)
+                + '/');
+
+            LOG_TRC("Created temporary render-search-result file path: " << tempPath.toString());
+
+            // Prevent user inputting anything funny here.
+            // A "filename" should always be a filename, not a path
+
+            if (filenameParam.getFileName() == "callback:")
+                tempPath.setFileName("incoming_file"); // A sensible name.
+            else
+                tempPath.setFileName(filenameParam.getFileName()); //TODO: Sanitize.
+            _filename = tempPath.toString();
+
+            // Copy the stream to _filename.
+            std::ofstream fileStream;
+            fileStream.open(_filename);
+            StreamCopier::copyStream(stream, fileStream);
+            fileStream.close();
+        }
+        else if (name == "result")
+        {
+            // Copy content from the stream into a std::vector<char>
+            _pSearchResultContent = std::make_shared<std::vector<char>>(
+                                       std::istreambuf_iterator<char>(stream),
+                                       std::istreambuf_iterator<char>());
+        }
     }
 };
 
@@ -948,6 +1026,7 @@ void LOOLWSD::innerInitialize(Application& self)
             { "admin_console.enable_pam", "false" },
             { "child_root_path", "jails" },
             { "file_server_root_path", "loleaflet/.." },
+            { "hexify_embedded_urls", "false" },
             { "lo_jail_subpath", "lo" },
             { "logging.protocol", "false" },
             { "logging.anonymize.filenames", "false" }, // Deprecated.
@@ -1038,7 +1117,7 @@ void LOOLWSD::innerInitialize(Application& self)
             { "freemium.disabled_commands", DISABLED_COMMANDS },
             { "freemium.purchase_title", PURCHASE_TITLE },
             { "freemium.purchase_link", PURCHASE_LINK },
-            { "freemium.purchase_discription", PURCHASE_DISCRIPTION },
+            { "freemium.purchase_description", PURCHASE_DESCRIPTION },
             { "freemium.writer_subscription_highlights", WRITER_SUBSCRIPTION_HIGHLIGHTS },
             { "freemium.calc_subscription_highlights", CALC_SUBSCRIPTION_HIGHLIGHTS },
             { "freemium.impress_subscription_highlights", IMPRESS_SUBSCRIPTION_HIGHLIGHTS },
@@ -2013,15 +2092,28 @@ bool LOOLWSD::createForKit()
     std::unique_lock<std::mutex> newChildrenLock(NewChildrenMutex);
 
     StringVector args;
-#ifdef STRACE_LOOLFORKIT
-    // if you want to use this, you need to setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/strace
+    std::string parentPath = Path(Application::instance().commandPath()).parent().toString();
+
+#if STRACE_LOOLFORKIT
+    // if you want to use this, you need to sudo setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/strace
     args.push_back("-o");
     args.push_back("strace.log");
     args.push_back("-f");
     args.push_back("-tt");
     args.push_back("-s");
     args.push_back("256");
-    args.push_back(Path(Application::instance().commandPath()).parent().toString() + "loolforkit");
+    args.push_back(parentPath + "loolforkit");
+#elif VALGRIND_LOOLFORKIT
+    NoCapsForKit = true;
+    NoSeccomp = true;
+//    args.push_back("--log-file=valgrind.log");
+//    args.push_back("--track-fds=all");
+    args.push_back("--trace-children=yes");
+    args.push_back("--error-limit=no");
+    args.push_back("--num-callers=128");
+    std::string nocapsCopy = parentPath + "loolforkit-nocaps";
+    FileUtil::copy(parentPath + "loolforkit", nocapsCopy, true, true);
+    args.push_back(nocapsCopy);
 #endif
     args.push_back("--losubpath=" + std::string(LO_JAIL_SUBPATH));
     args.push_back("--systemplate=" + SysTemplate);
@@ -2059,10 +2151,12 @@ bool LOOLWSD::createForKit()
         args.push_back("--singlekit");
 #endif
 
-#ifdef STRACE_LOOLFORKIT
-    std::string forKitPath = "strace";
+#if STRACE_LOOLFORKIT
+    std::string forKitPath = "/usr/bin/strace";
+#elif VALGRIND_LOOLFORKIT
+    std::string forKitPath = "/usr/bin/valgrind";
 #else
-    std::string forKitPath = Path(Application::instance().commandPath()).parent().toString() + "loolforkit";
+    std::string forKitPath = parentPath + "loolforkit";
 #endif
 
     // Always reap first, in case we haven't done so yet.
@@ -3318,6 +3412,42 @@ private:
                 httpResponse.set("Content-Length", "0");
                 socket->sendAndShutdown(httpResponse);
             }
+            return;
+        }
+        else if (requestDetails.equals(1, "render-search-result"))
+        {
+            RenderSearchResultPartHandler handler;
+            HTMLForm form(request, message, handler);
+
+            const std::string fromPath = handler.getFilename();
+
+            LOG_INF("Create render-search-result POST command handler");
+
+            if (fromPath.empty())
+                return;
+
+            Poco::URI uriPublic = DocumentBroker::sanitizeURI(fromPath);
+            const std::string docKey = DocumentBroker::getDocKey(uriPublic);
+
+            // This lock could become a bottleneck.
+            // In that case, we can use a pool and index by publicPath.
+            std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
+
+            LOG_DBG("New DocumentBroker for docKey [" << docKey << "].");
+            auto docBroker = std::make_shared<RenderSearchResultBroker>(fromPath, uriPublic, docKey, handler.getSearchResultContent());
+            handler.takeFile();
+
+            cleanupDocBrokers();
+
+            DocBrokers.emplace(docKey, docBroker);
+            LOG_TRC("Have " << DocBrokers.size() << " DocBrokers after inserting [" << docKey << "].");
+
+            if (!docBroker->executeCommand(disposition, _id))
+            {
+                LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
+                cleanupDocBrokers();
+            }
+
             return;
         }
 

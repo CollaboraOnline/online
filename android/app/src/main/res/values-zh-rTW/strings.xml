@@ -110,4 +110,7 @@
     <string name="theme_system_default">系統預設</string>
     <string name="choose_theme">選擇佈景主題</string>
     <string name="theme">佈景主題</string>
+    <string name="pref_user_name_guest">來賓使用者</string>
+    <string name="pref_user_name_info">新增評註時使用</string>
+    <string name="pref_user_name">使用者名稱</string>
 </resources>

@@ -31,10 +31,20 @@ L.Map.include({
 			return;
 		}
 
+		if (app.file.fileBasedView)
+		{
+			docLayer._selectedPart = docLayer._prevSelectedPart;
+			if (typeof(part) !== 'number') {
+				docLayer._preview._scrollViewByDirection(part);
+				return;
+			}
+			docLayer._preview._scrollViewToPartPosition(docLayer._selectedPart);
+			return;
+		}
+
 		this.fire('scrolltopart');
 
 		docLayer._selectedParts.push(docLayer._selectedPart);
-
 		if (docLayer.isCursorVisible()) {
 			// a click outside the slide to clear any selection
 			app.socket.sendMessage('resetselection');

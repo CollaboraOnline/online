@@ -224,6 +224,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		L.ColorPicker.ID = 0;
 	},
 
+	_preventDocumentLosingFocusOnClick: function(div) {
+		$(div).on('mousedown',function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+		});
+	},
+
 	_toolitemHandler: function(parentContainer, data, builder) {
 		if (data.command || data.postmessage) {
 			var handler = builder._toolitemHandlers[data.command];
@@ -1341,15 +1348,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var wrapper = L.DomUtil.create('div', '', parentContainer); // need for freemium overlay
 		var pushbutton = L.DomUtil.create('button', 'ui-pushbutton ' + builder.options.cssClass, wrapper);
 		pushbutton.id = data.id;
+		var pushbuttonText = builder._customPushButtonTextForId(data.id) !== '' ? builder._customPushButtonTextForId(data.id) : builder._cleanText(data.text);
 
-		if (data.image) {
+		if (data.image && pushbuttonText !== '') {
 			var image = L.DomUtil.create('img', '', pushbutton);
 			image.src = data.image;
+			var text = L.DomUtil.create('span', '', pushbutton);
+			text.innerText = pushbuttonText;
+		} else if (data.image) {
+			var image = L.DomUtil.create('img', '', pushbutton);
+			image.src = data.image;
+		} else {
+			pushbutton.innerText = pushbuttonText;
 		}
-
-		var text = L.DomUtil.create('span', '', pushbutton);
-		var customText = builder._customPushButtonTextForId(data.id);
-		text.innerHTML = customText !== '' ? customText : builder._cleanText(data.text);
 
 		if (data.enabled === 'false' || data.enabled === false)
 			$(pushbutton).prop('disabled', true);
@@ -1708,6 +1719,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$('#' + parentData.id + ' .ui-treeview-entry').removeClass('selected');
 				builder.callback('iconview', 'activate', parentData, entry.row, builder);
 			});
+			builder._preventDocumentLosingFocusOnClick(parentContainer);
 		}
 	},
 
@@ -2248,8 +2260,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				else
 					builder.callback('toolbox', 'click', parentContainer, data.command, builder);
 			}
+			e.preventDefault();
 			e.stopPropagation();
 		});
+
+		builder._preventDocumentLosingFocusOnClick(div);
 
 		if (data.enabled === 'false' || data.enabled === false)
 			$(button).prop('disabled', true);
@@ -2445,6 +2460,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		$(sectionTitle).click(function () {
 			builder.callback('toolbutton', 'click', sectionTitle, data.command, builder);
 		});
+		builder._preventDocumentLosingFocusOnClick(sectionTitle);
 		return false;
 	},
 
@@ -2605,6 +2621,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					}
 				});
 			});
+			builder._preventDocumentLosingFocusOnClick(div);
 		}
 
 		return false;
@@ -2684,10 +2701,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 							 data.command.startsWith('.uno:InsertPageFooter')) &&
 							data.checked && data.checked === true) {
 						return;
-					} else if (data.command === '.uno:ShowNote') {
-						builder.map._docLayer.showAnnotationFromCurrentCell();
-					} else if (data.command === '.uno:HideNote') {
-						builder.map._docLayer.hideAnnotationFromCurrentCell();
 					}
 					builder.map.sendUnoCommand(data.command);
 				}

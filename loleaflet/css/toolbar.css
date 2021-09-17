@@ -30,10 +30,21 @@
 #tb_actionbar_item_LanguageStatus .w2ui-tb-caption{
 	float: none;
 }
+#toolbar-down.readonly #tb_actionbar_item_InsertMode,
+#toolbar-down.readonly #tb_actionbar_item_InsertMode + td[id^='tb_actionbar_item_break'],
+#toolbar-down.readonly #tb_actionbar_item_StatusSelectionMode,
+#toolbar-down.readonly #tb_actionbar_item_StatusSelectionMode + td[id^='tb_actionbar_item_break'],
+#toolbar-down.readonly #tb_actionbar_item_LanguageStatus .w2ui-button .w2ui-tb-down {
+	display: none;
+}
+#toolbar-down.readonly #tb_actionbar_item_LanguageStatus .w2ui-button {
+	border-color: transparent !important;
+}
 #tb_actionbar_item_StateTableCellMenu .w2ui-tb-down {
 	padding: 4px;
 }
-#InsertMode.insert-mode-false {
+#InsertMode.insert-mode-false,
+#PermissionMode.status-readonly-mode {
 	background-color: var(--gray-light-txt--color);
 	color: white;
 }
@@ -265,6 +276,11 @@ w2ui-toolbar {
 	text-align: left;
 }
 
+.readonly #document-name-input.editable:focus {
+	flex: 1;
+	text-align: center;
+}
+
 #document-name-input.editable:hover:not(:focus) {
 	border: none;
 	box-shadow: 0 0 0.1px 1px #d7d7d7, 0 0 3px 2px #f0f0f0;
@@ -296,10 +312,18 @@ td[id^='tb_editbar_item_sidebar']{
 	display: none;
 }
 
+.main-nav:not(.hasnotebookbar) ~ #closebuttonwrapper {
+	height: 38px;
+}
+
 #closebutton {
 	width: 100%;
 	height: 100%;
 	background: url('images/closedoc.svg') no-repeat 6px 4px/24px !important;
+}
+
+.main-nav:not(.hasnotebookbar) ~ #closebuttonwrapper #closebutton {
+	background: url('images/closedoc.svg') no-repeat center/24px !important;
 }
 
 #closebutton:hover {

@@ -35,6 +35,7 @@ class Comment {
 	stopPropagating: Function; // Implemented by section container.
 	setPosition: Function; // Implemented by section container. Document objects only.
 	map: any;
+	pendingInit: boolean = true;
 
 	constructor (data: any, options: any, commentListSectionPointer: any) {
 		this.map = L.Map.THIS;
@@ -97,33 +98,15 @@ class Comment {
 		this.sectionProperties.isRemoved = false;
 	}
 
-	public onInitialize () {
-		this.createContainerAndWrapper();
+	// Comments import can be costly if the document has a lot of them. If they are all imported/initialized
+	// when online gets comments message from core, the initial doc render is delayed. To avoid that we do
+	// lazy import of each comment when it needs to be shown (based on its coordinates).
+	private doPendingInitializationInView (force: boolean = false) {
+		if (!this.pendingInit)
+			return;
 
-		this.createAuthorTable();
-
-		if (this.sectionProperties.data.trackchange && !this.map.isPermissionReadOnly()) {
-			this.createTrackChangeButtons();
-		}
-
-		if (this.sectionProperties.noMenu !== true && (this.map.isPermissionEditForComments() || this.map.isPermissionEdit())) {
-			this.createMenu();
-		}
-
-		if (this.sectionProperties.data.trackchange) {
-			this.sectionProperties.captionNode = L.DomUtil.create('div', 'loleaflet-annotation-caption', this.sectionProperties.wrapper);
-			this.sectionProperties.captionText = L.DomUtil.create('div', '', this.sectionProperties.captionNode);
-		}
-
-		this.sectionProperties.contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content loleaflet-dont-break', this.sectionProperties.wrapper);
-		this.sectionProperties.contentNode.id = 'annotation-content-area-' + this.sectionProperties.data.id;
-		this.sectionProperties.nodeModify = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeModifyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeModify);
-		this.sectionProperties.nodeModifyText.id = 'annotation-modify-textarea-' + this.sectionProperties.data.id;
-		this.sectionProperties.contentText = L.DomUtil.create('div', '', this.sectionProperties.contentNode);
-		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeReplyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeReply);
-		this.sectionProperties.nodeReplyText.id = 'annotation-reply-textarea-' + this.sectionProperties.data.id;
+		if (!force && !this.convertRectanglesToCoreCoordinates())
+			return;
 
 		var button = L.DomUtil.create('div', '', this.sectionProperties.nodeModify);
 		L.DomEvent.on(this.sectionProperties.nodeModifyText, 'blur', this.onLostFocus, this);
@@ -161,6 +144,41 @@ class Comment {
 		}
 
 		this.update();
+
+		this.pendingInit = false;
+	}
+
+	public onInitialize () {
+		this.createContainerAndWrapper();
+
+		this.createAuthorTable();
+
+		if (this.sectionProperties.data.trackchange && !this.map.isPermissionReadOnly()) {
+			this.createTrackChangeButtons();
+		}
+
+		if (this.sectionProperties.noMenu !== true && (this.map.isPermissionEditForComments() || this.map.isPermissionEdit())) {
+			this.createMenu();
+		}
+
+		if (this.sectionProperties.data.trackchange) {
+			this.sectionProperties.captionNode = L.DomUtil.create('div', 'loleaflet-annotation-caption', this.sectionProperties.wrapper);
+			this.sectionProperties.captionText = L.DomUtil.create('div', '', this.sectionProperties.captionNode);
+		}
+
+		this.sectionProperties.contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content loleaflet-dont-break', this.sectionProperties.wrapper);
+		this.sectionProperties.contentNode.id = 'annotation-content-area-' + this.sectionProperties.data.id;
+		this.sectionProperties.nodeModify = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeModifyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeModify);
+		this.sectionProperties.nodeModifyText.id = 'annotation-modify-textarea-' + this.sectionProperties.data.id;
+		this.sectionProperties.contentText = L.DomUtil.create('div', '', this.sectionProperties.contentNode);
+		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeReplyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeReply);
+		this.sectionProperties.nodeReplyText.id = 'annotation-reply-textarea-' + this.sectionProperties.data.id;
+
+		this.sectionProperties.container.style.visibility = 'hidden';
+
+		this.doPendingInitializationInView();
 	}
 
 	private createContainerAndWrapper () {
@@ -381,28 +399,73 @@ class Comment {
 		this.sectionProperties.isHighlighted = true;
 	}
 
+	private static doesRectIntersectView(pos: number[], size: number[], viewContext: any): boolean {
+		var paneBoundsList = <any[]>viewContext.paneBoundsList;
+		var endPos = [pos[0] + size[0], pos[1] + size[1]];
+		for (var i = 0; i < paneBoundsList.length; ++i) {
+			var paneBounds = paneBoundsList[i];
+			var rectInvisible = (endPos[0] < paneBounds.min.x || endPos[1] < paneBounds.min.y ||
+				pos[0] > paneBounds.max.x || pos[1] > paneBounds.max.y);
+			if (!rectInvisible)
+				return true;
+		}
+		return false;
+	}
+
 	// This is for svg elements that will be bound to document-container.
-	private convertRectanglesToCoreCoordinates () {
+	// This also returns whether any rectangle has an intersection with the visible area/panes.
+	private convertRectanglesToCoreCoordinates () : boolean {
 		var rectangles = this.sectionProperties.data.rectangles;
 		var originals = this.sectionProperties.data.rectanglesOriginal;
+		var viewContext = this.map.getTileSectionMgr()._paintContext();
+		var intersectsVisibleArea = false;
+		var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
+		var pos: number[], size: number[];
 
 		if (rectangles) {
 			var documentAnchorSection = this.containerObject.getDocumentAnchorSection();
 			var diff = [documentAnchorSection.myTopLeft[0] - this.documentTopLeft[0], documentAnchorSection.myTopLeft[1] - this.documentTopLeft[1]];
 
-			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
 			for (var i = 0; i < rectangles.length; i++) {
-				rectangles[i][0] = Math.round(originals[i][0] * ratio) + diff[0];
-				rectangles[i][1] = Math.round(originals[i][1] * ratio) + diff[1];
-				rectangles[i][2] = Math.round(originals[i][2] * ratio);
-				rectangles[i][3] = Math.round(originals[i][3] * ratio);
+				pos = [
+					Math.round(originals[i][0] * ratio),
+					Math.round(originals[i][1] * ratio)
+				];
+				size = [
+					Math.round(originals[i][2] * ratio),
+					Math.round(originals[i][3] * ratio)
+				];
+
+				if (!intersectsVisibleArea && Comment.doesRectIntersectView(pos, size, viewContext))
+					intersectsVisibleArea = true;
+
+				rectangles[i][0] = pos[0] + diff[0];
+				rectangles[i][1] = pos[1] + diff[1];
+				rectangles[i][2] = size[0];
+				rectangles[i][3] = size[1];
 			}
+		} else if (this.sectionProperties.data.trackchange && this.sectionProperties.data.anchorPos) {
+			// For redline comments there are no 'rectangles' or 'rectangleOriginal' properties in sectionProperties.data
+			// So use the comment rectangle stored in anchorPos (in display? twips).
+			var anchorPos = this.sectionProperties.data.anchorPos;
+			pos = [
+				Math.round(anchorPos[0] * ratio),
+				Math.round(anchorPos[1] * ratio)
+			];
+			size = [
+				Math.round(anchorPos[2] * ratio),
+				Math.round(anchorPos[3] * ratio)
+			];
+
+			intersectsVisibleArea = Comment.doesRectIntersectView(pos, size, viewContext);
 		}
+
+		return intersectsVisibleArea;
 	}
 
 	private updatePosition () {
-		this.convertRectanglesToCoreCoordinates();
-		this.setPositionAndSize();
+		if (this.convertRectanglesToCoreCoordinates())
+			this.setPositionAndSize();
 	}
 
 	private updateAnnotationMarker () {
@@ -438,6 +501,8 @@ class Comment {
 	public updateScaling (scaleFactor: number, initialLayoutData: any) {
 		if ((<any>window).mode.isDesktop())
 			return;
+
+		this.doPendingInitializationInView();
 
 		var wrapperWidth = Math.round(initialLayoutData.wrapperWidth * scaleFactor);
 		this.sectionProperties.wrapper.style.width = wrapperWidth + 'px';
@@ -489,6 +554,7 @@ class Comment {
 	}
 
 	private show () {
+		this.doPendingInitializationInView(true /* force */);
 		this.showMarker();
 
 		// On mobile, container shouldn't be 'document-container', but it is 'document-container' on initialization. So we hide the comment until comment wizard is opened.
@@ -626,6 +692,7 @@ class Comment {
 	}
 
 	public edit () {
+		this.doPendingInitializationInView(true /* force */);
 		this.sectionProperties.nodeModify.style.display = '';
 		this.sectionProperties.nodeReply.style.display = 'none';
 		this.sectionProperties.container.style.visibility = '';
@@ -804,6 +871,7 @@ class Comment {
 	}
 
 	public onNewDocumentTopLeft () {
+		this.doPendingInitializationInView();
 		this.updatePosition();
 	}
 

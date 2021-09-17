@@ -162,8 +162,16 @@ constexpr std::chrono::seconds HttpRequestTests::DefTimeoutSeconds;
 
 void HttpRequestTests::testInvalidURI()
 {
-    // Cannot create from a blank URI.
-    LOK_ASSERT(http::Session::createHttp(std::string()) == nullptr);
+    try
+    {
+        // Cannot create from a blank URI.
+        http::Session::createHttp(std::string());
+        LOK_ASSERT_FAIL("Exception expected from http::Session::createHttp for invalid URI");
+    }
+    catch (const std::exception& ex)
+    {
+        // Pass.
+    }
 }
 
 void HttpRequestTests::testBadResponse()

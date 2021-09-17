@@ -284,6 +284,21 @@ static IMP standardImpOfInputAccessoryView = nil;
 
         LOG_TRC("To Online: " << [subBody UTF8String]);
 
+#if 0
+        static int n = 0;
+
+        if ((n++ % 10) == 0) {
+            auto enumerator = [[NSFileManager defaultManager] enumeratorAtPath:NSHomeDirectory()];
+            NSString *file;
+            long long total = 0;
+            while ((file = [enumerator nextObject])) {
+                if ([enumerator fileAttributes][NSFileType] == NSFileTypeRegular)
+                    total += [[enumerator fileAttributes][NSFileSize] longLongValue];
+            }
+            NSLog(@"==== Total size of app home directory: %lld", total);
+        }
+#endif
+
         if ([message.body isEqualToString:@"HULLO"]) {
             // Now we know that the JS has started completely
 
@@ -365,7 +380,7 @@ static IMP standardImpOfInputAccessoryView = nil;
             self.slideshowFile = FileUtil::createRandomTmpDir() + "/slideshow.svg";
             self.slideshowURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:self.slideshowFile.c_str()] isDirectory:NO];
 
-            getDocumentDataForMobileAppDocId(self.document->appDocId).loKitDocument->saveAs([[self.slideshowURL absoluteString] UTF8String], "svg", nullptr);
+            DocumentData::get(self.document->appDocId).loKitDocument->saveAs([[self.slideshowURL absoluteString] UTF8String], "svg", nullptr);
 
             // Add a new full-screen WebView displaying the slideshow.
 
@@ -419,7 +434,7 @@ static IMP standardImpOfInputAccessoryView = nil;
 
             std::string printFile = FileUtil::createRandomTmpDir() + "/print.pdf";
             NSURL *printURL = [NSURL fileURLWithPath:[NSString stringWithUTF8String:printFile.c_str()] isDirectory:NO];
-            getDocumentDataForMobileAppDocId(self.document->appDocId).loKitDocument->saveAs([[printURL absoluteString] UTF8String], "pdf", nullptr);
+            DocumentData::get(self.document->appDocId).loKitDocument->saveAs([[printURL absoluteString] UTF8String], "pdf", nullptr);
 
             UIPrintInteractionController *pic = [UIPrintInteractionController sharedPrintController];
             UIPrintInfo *printInfo = [UIPrintInfo printInfo];
@@ -502,7 +517,7 @@ static IMP standardImpOfInputAccessoryView = nil;
 
                 std::remove([[downloadAsTmpURL path] UTF8String]);
 
-                getDocumentDataForMobileAppDocId(self.document->appDocId).loKitDocument->saveAs([[downloadAsTmpURL absoluteString] UTF8String], [format UTF8String], nullptr);
+                DocumentData::get(self.document->appDocId).loKitDocument->saveAs([[downloadAsTmpURL absoluteString] UTF8String], [format UTF8String], nullptr);
 
                 // Then verify that it indeed was saved, and then use an
                 // UIDocumentPickerViewController to ask the user where to store the exported
@@ -522,21 +537,6 @@ static IMP standardImpOfInputAccessoryView = nil;
                                  completion:nil];
                 return;
             }
-        } else if ([message.body hasPrefix:@"REMOVE "]) {
-            // Sent from the img element's onload event handler. Remove tile file once it has been loaded.
-            NSArray<NSString*> *messageBodyItems = [message.body componentsSeparatedByString:@" "];
-            assert([messageBodyItems count] == 2);
-            NSURL *tile = [NSURL URLWithString:messageBodyItems[1]];
-
-            // For some reason tunnelled dialogs still use PNG tiles inside data: URLs and not BMP
-            // files pointed to by file: URLs. Guard against getting REMOVE messages for such.
-            if (![[tile scheme] isEqualToString:@"file"])
-                return;
-
-            if (unlink([[tile path] UTF8String]) == -1) {
-                LOG_SYS("Could not unlink tile " << [[tile path] UTF8String]);
-            }
-            return;
         }
 
         const char *buf = [message.body UTF8String];
@@ -587,9 +587,11 @@ static IMP standardImpOfInputAccessoryView = nil;
     // Close one end of the socket pair, that will wake up the forwarding thread above
     fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
 
-    // deallocateDocumentDataForMobileAppDocId(self.document->appDocId);
+    // DocumentData::deallocate(self.document->appDocId);
 
-    [[NSFileManager defaultManager] removeItemAtURL:self.document->copyFileURL error:nil];
+    if (![[NSFileManager defaultManager] removeItemAtURL:self.document->copyFileURL error:nil]) {
+        LOG_SYS("Could not remove copy of document at " << [[self.document->copyFileURL path] UTF8String]);
+    }
 
     // The dismissViewControllerAnimated must be done on the main queue.
     dispatch_async(dispatch_get_main_queue(),

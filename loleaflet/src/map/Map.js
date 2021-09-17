@@ -53,6 +53,8 @@ L.Map = L.Evented.extend({
 		urlPrefix: 'lool',
 		wopiSrc: '',
 		cursorURL: L.LOUtil.getURL('cursors'),
+		// cursorURL
+		// The path (local to the server) where custom cursor files are stored.
 	},
 
 	// Control.UIManager instance, set in main.js
@@ -106,14 +108,6 @@ L.Map = L.Evented.extend({
 
 		Cursor.imagePath = options.cursorURL;
 
-		if (options.webserver === undefined) {
-			var protocol = window.location.protocol === 'file:' ? 'https:' : window.location.protocol;
-			options.webserver = options.server.replace(/^(ws|wss):/i, protocol);
-		}
-
-		// we are adding components like '/insertfile' at the end which would
-		// lead to URL's of the form <webserver>//insertfile/...
-		options.webserver = options.webserver.replace(/\/*$/, '');
 		/* private members */
 		this._handlers = [];
 		this._layers = {};

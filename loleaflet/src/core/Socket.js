@@ -34,7 +34,7 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	getWebSocketBaseURI: function(map) {
-		return map.options.server + map.options.serviceRoot + '/lool/' + encodeURIComponent(map.options.doc + '?' + $.param(map.options.docParams)) + '/ws';
+		return window.makeWsUrlWopiSrc('/lool/', map.options.doc + '?' + $.param(map.options.docParams));
 	},
 
 	connect: function(socket) {
@@ -50,22 +50,10 @@ app.definitions.Socket = L.Class.extend({
 		} else if (window.ThisIsAMobileApp) {
 			// We have already opened the FakeWebSocket over in global.js
 		} else	{
-			var wopiSrc = '';
-			if (map.options.wopiSrc != '') {
-				wopiSrc = '?WOPISrc=' + map.options.wopiSrc + '&compat=/ws';
-			}
-
 			try {
-				this.socket = window.createWebSocket(this.getWebSocketBaseURI(map) + wopiSrc);
+				this.socket = window.createWebSocket(this.getWebSocketBaseURI(map));
 			} catch (e) {
-				// On IE 11 there is a limitation on the number of WebSockets open to a single domain (6 by default and can go to 128).
-				// Detect this and hint the user.
-				var msgHint = '';
-				var isIE11 = !!window.MSInputMethodContext && !!document.documentMode; // https://stackoverflow.com/questions/21825157/internet-explorer-11-detection
-				if (isIE11)
-					msgHint = _('IE11 has reached its maximum number of connections. Please see this document to increase this limit if needed: https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections');
-
-				this._map.fire('error', {msg: _('Oops, there is a problem connecting to %productName: ').replace('%productName', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition')) + e + msgHint, cmd: 'socket', kind: 'failed', id: 3});
+				this._map.fire('error', {msg: _('Oops, there is a problem connecting to %productName: ').replace('%productName', (typeof brandProductName !== 'undefined' ? brandProductName : 'Collabora Online Development Edition')) + e, cmd: 'socket', kind: 'failed', id: 3});
 				return;
 			}
 		}
@@ -408,7 +396,7 @@ app.definitions.Socket = L.Class.extend({
 	_extractImage: function(e) {
 		var img;
 		if (window.ThisIsTheiOSApp) {
-			// In the iOS app, the native code sends us the URL of the BMP for the tile after the newline
+			// In the iOS app, the native code sends us the PNG tile already as a data: URL after the newline
 			var newlineIndex = e.textMsg.indexOf('\n');
 			if (newlineIndex > 0) {
 				img = e.textMsg.substring(newlineIndex+1);
@@ -455,9 +443,6 @@ app.definitions.Socket = L.Class.extend({
 		e.image = new Image();
 		e.image.onload = function() {
 			e.imageIsComplete = true;
-			if (window.ThisIsTheiOSApp) {
-				window.webkit.messageHandlers.lool.postMessage('REMOVE ' + e.image.src, '*');
-			}
 			that._queueSlurpEventEmission();
 			if (e.image.completeTraceEvent)
 				e.image.completeTraceEvent.finish();
@@ -495,6 +480,7 @@ app.definitions.Socket = L.Class.extend({
 				oldId = this.WSDServer.Id;
 				oldVersion = this.WSDServer.Version;
 
+				console.assert(map.options.wopiSrc === window.wopiSrc, 'wopiSrc mismatch!: ' + map.options.wopiSrc + ' != ' + window.wopiSrc);
 				// If another file is opened, we will not refresh the page.
 				if (this._map.options.previousWopiSrc && this._map.options.wopiSrc) {
 					if (this._map.options.previousWopiSrc !== this._map.options.wopiSrc)
@@ -526,9 +512,7 @@ app.definitions.Socket = L.Class.extend({
 			}
 
 			if (!window.ThisIsAMobileApp) {
-				var idUri = this._map.options.server + this._map.options.serviceRoot + '/hosting/discovery';
-				idUri = idUri.replace(/^ws:/, 'http:');
-				idUri = idUri.replace(/^wss:/, 'https:');
+				var idUri = window.makeHttpUrl('/hosting/discovery');
 				$('#loolwsd-id').html(_('Served by:') + ' <a target="_blank" href="' + idUri + '">' + this.WSDServer.Id + '</a>');
 			}
 
@@ -699,6 +683,10 @@ app.definitions.Socket = L.Class.extend({
 					this._map.fire('postMessage', {msgId: 'App_VersionRestore', args: {Status: 'Pre_Restore_Ack'}});
 					showMsgAndReload = true;
 				}
+			}
+			else if (textMsg.startsWith('reloadafterrename')) {
+				msg = _('Reloading the document after rename');
+				showMsgAndReload = true;
 			}
 
 			if (showMsgAndReload) {
@@ -1119,7 +1107,6 @@ app.definitions.Socket = L.Class.extend({
 	_renameOrSaveAsCallback: function(textMsg, command) {
 		this._map.hideBusy();
 		if (command !== undefined && command.url !== undefined && command.url !== '') {
-			this.close();
 			var url = command.url;
 			var accessToken = this._getParameterByName(url, 'access_token');
 			var accessTokenTtl = this._getParameterByName(url, 'access_token_ttl');
@@ -1145,15 +1132,6 @@ app.definitions.Socket = L.Class.extend({
 			this._map.options.previousWopiSrc = this._map.options.wopiSrc; // After save-as op, we may connect to another server, then code will think that server has restarted. In this case, we don't want to reload the page (detect the file name is different).
 			this._map.options.wopiSrc = encodeURIComponent(docUrl);
 
-			// if this is save-as, we need to load the document with edit permission
-			// otherwise the user has to close the doc then re-open it again
-			// in order to be able to edit.
-			if (textMsg.startsWith('saveas:'))
-				this._map.options.permission = 'edit';
-			this._map.loadDocument();
-			this._map.sendInitUNOCommands();
-
-
 			if (textMsg.startsWith('renamefile:')) {
 				this._map.fire('postMessage', {
 					msgId: 'File_Rename',
@@ -1162,6 +1140,13 @@ app.definitions.Socket = L.Class.extend({
 					}
 				});
 			} else if (textMsg.startsWith('saveas:')) {
+				// if this is save-as, we need to load the document with edit permission
+				// otherwise the user has to close the doc then re-open it again
+				// in order to be able to edit.
+				this._map.options.permission = 'edit';
+				this.close();
+				this._map.loadDocument();
+				this._map.sendInitUNOCommands();
 				this._map.fire('postMessage', {
 					msgId: 'Action_Save_Resp',
 					args: {

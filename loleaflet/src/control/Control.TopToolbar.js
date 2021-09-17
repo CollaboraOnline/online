@@ -127,7 +127,6 @@ L.Control.TopToolbar = L.Control.extend({
 						edata.isCancelled = true;
 					} else {
 						$.extend(edata, { onComplete: function (e) {
-							$('#fontsizes-select').select2({ dropdownAutoWidth: true, width: 'auto'});
 							e.item.html = undefined;
 						}});
 					}
@@ -358,7 +357,7 @@ L.Control.TopToolbar = L.Control.extend({
 			if (toolbarUp) {
 				toolbarUp.show('resetimpress', 'breaksidebar', 'modifypage',
 					'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
-					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor',
+					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable',  'insertannotation', 'backcolor',
 					'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel');
 			}
 			break;

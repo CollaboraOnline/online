@@ -39,6 +39,8 @@ describe('Sidebar Tests', function() {
 		cy.get('#fillattr2')
 			.should('not.be.visible');
 
+		helper.waitUntilIdle('#fillstyle');
+
 		cy.get('#fillstyle select')
 			.select('Gradient');
 

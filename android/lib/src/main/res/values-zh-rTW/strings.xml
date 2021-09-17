@@ -19,4 +19,8 @@
     <string name="view_only">僅檢視</string>
     <string name="restarting">正在重新啟動……</string>
     <string name="cant_open_the_document">無法開啟文件</string>
+    <string name="convert_odf_message">此文件可能包含無法以目前選取的檔案格式「文字」所儲存的格式或內容。</string>
+    <string name="ask_for_convert_odf">確認檔案格式</string>
+    <string name="use_odf">使用 ODF 格式</string>
+    <string name="use_text">使用文字格式</string>
 </resources>

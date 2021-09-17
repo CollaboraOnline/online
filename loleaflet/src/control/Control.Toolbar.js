@@ -970,6 +970,12 @@ function onUpdateParts(e) {
 		}
 	}
 
+	if (app.file.fileBasedView) {
+		toolbar.enable('prev');
+		toolbar.enable('next');
+		return;
+	}
+
 	if (e.docType !== 'spreadsheet') {
 		if (current === 0) {
 			toolbar.disable('prev');
@@ -1038,8 +1044,10 @@ function onUpdatePermission(e) {
 					toolbar.enable(items[idx].id);
 				}
 				$('.main-nav').removeClass('readonly');
+				$('#toolbar-down').removeClass('readonly');
 			} else if (!alwaysEnable) {
 				$('.main-nav').addClass('readonly');
+				$('#toolbar-down').addClass('readonly');
 				toolbar.disable(items[idx].id);
 			}
 		}
@@ -1199,6 +1207,6 @@ global.onCommandStateChanged = onCommandStateChanged;
 global.processStateChangedCommand = processStateChangedCommand;
 global.showColorPicker = showColorPicker;
 global.getColorPickerHTML = getColorPickerHTML;
-global.updateVisibilityForToolbar = updateVisibilityForToolbar;
+global.onUpdateParts = onUpdateParts;
 
 }(window));

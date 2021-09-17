@@ -990,7 +990,7 @@ L.Control.LokDialog = L.Control.extend({
 		}, this);
 
 		L.DomEvent.on(canvas, 'mousedown mouseup', function(e) {
-			L.DomEvent.stop(e);
+			L.DomEvent.preventDefault(e);
 
 			if (this._map.uiManager.isUIBlocked())
 				return;
@@ -1459,21 +1459,11 @@ L.Control.LokDialog = L.Control.extend({
 		var containerLeft = dialogContainer.getBoundingClientRect().left + dialogContainer.ownerDocument.defaultView.pageXOffset;
 		var grandParentID = dialogContainer.parentNode.id;
 
-		var isIE11 = !!window.MSInputMethodContext && !!document.documentMode; // https://stackoverflow.com/questions/21825157/internet-explorer-11-detection
-
 		if (grandParentID.indexOf('calc-inputbar') >= 0) {
 			// This is the calculator input bar.
 			L.DomUtil.setStyle(floatingCanvas, 'left', (containerLeft + left) + 'px');
 			L.DomUtil.setStyle(floatingCanvas, 'top', (containerTop + 20) + 'px');
-		}
-		else if (isIE11)
-		{
-			// child positions are relative to their container.
-			L.DomUtil.setStyle(floatingCanvas, 'left', (containerLeft + left) + 'px');
-			L.DomUtil.setStyle(floatingCanvas, 'top', (containerTop + top) + 'px');
-		}
-		else
-		{
+		} else {
 			// Add header height..
 			var addition = 40;
 			L.DomUtil.setStyle(floatingCanvas, 'left', left + 'px');

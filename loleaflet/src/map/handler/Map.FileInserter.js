@@ -18,16 +18,11 @@ L.Map.FileInserter = L.Handler.extend({
 		this._toInsertURL = {};
 		this._toInsertBackground = {};
 		var parser = document.createElement('a');
-		parser.href = map.options.server;
+		parser.href = window.host;
 	},
 
 	getWopiUrl: function (map) {
-		var wopiSrc = '';
-		if (map.options.wopiSrc != '') {
-			wopiSrc = '?WOPISrc=' + map.options.wopiSrc;
-		}
-		return map.options.webserver + map.options.serviceRoot + '/' + map.options.urlPrefix +
-			'/' + encodeURIComponent(map.options.doc) + '/insertfile' + wopiSrc;
+		return window.makeHttpUrlWopiSrc('/' + map.options.urlPrefix + '/', map.options.doc, '/insertfile');
 	},
 
 	addHooks: function () {

@@ -358,55 +358,10 @@ window.app = { // Shouldn't have any functions defined.
 		};
 		this.onmessage = function() {
 		};
-		// IE11 compatibility ...
-		if (!!window.MSInputMethodContext && !!document.documentMode) {
-			this.decoder = {};
-			this.decoder.decode = function(bytes) {
-				var decoded = '';
-				var code = 0;
-				for (var i = 0; i < bytes.length;) {
-					var b = bytes[i];
-					var seqLen = 1;
-					// get bits off the top.
-					if (b <= 0x7f)
-						code = b & 0xff;
-					else if (b <= 0xdf) {
-						code = b & 0x1f;
-						seqLen = 2;
-					} else if (b <= 0xef) {
-						code = b & 0x0f;
-						seqLen = 3;
-					} else if (b <= 0xf7) {
-						code = b & 0x07;
-						seqLen = 4;
-					}
-					var left = bytes.length - i;
-					if (left >= seqLen) {
-						for (var j = 1; j < seqLen; ++j)
-							code = (code << 6) | (bytes[i + j] & 0x3f);
-					} else { // skip to end
-						seqLen = left;
-						code = 0xfffd;
-					}
-					if (code <= 0xFFFF)
-						decoded += String.fromCharCode(code);
-					else
-						decoded += String.fromCharCode(((code - 0x10000) >> 10) + 0xD800,
-									       ((code - 0x10000) % 0x400) + 0xDC00);
-					i += seqLen;
-				}
-				return decoded;
-			};
-			this.doSlice = function(bytes,start,end) {
-				var data = new Uint8Array(end - start + 1);
-				for (var i = 0; i <= (end - start); ++i)
-					data[i] = bytes[start + i];
-				return data;
-			};
-		} else {
-			this.decoder = new TextDecoder();
-			this.doSlice = function(bytes,start,end) { return bytes.slice(start,end); };
-		}
+		
+		this.decoder = new TextDecoder();
+		this.doSlice = function(bytes,start,end) { return bytes.slice(start,end); };
+		
 		this.decode = function(bytes,start,end) {
 			return this.decoder.decode(this.doSlice(bytes, start,end));
 		};
@@ -766,12 +721,22 @@ window.app = { // Shouldn't have any functions defined.
 		}
 	};
 
+	// Some global variables are defined in loleaflet.html, among them:
+	// global.host: the host URL, with ws(s):// protocol
+	// global.serviceRoot: an optional root path on the server, typically blank.
+
+	// Setup global.webserver: the host URL, with http(s):// protocol (used to fetch files).
+	if (global.webserver === undefined) {
+		var protocol = window.location.protocol === 'file:' ? 'https:' : window.location.protocol;
+		global.webserver = global.host.replace(/^(ws|wss):/i, protocol);
+		global.webserver = global.webserver.replace(/\/*$/, ''); // Remove trailing slash.
+	}
+
 	var docParams, wopiParams;
 	var filePath = global.getParameterByName('file_path');
-	var wopiSrc = global.getParameterByName('WOPISrc');
-	if (wopiSrc != '') {
-		global.docURL = decodeURIComponent(wopiSrc);
-		wopiSrc = '?WOPISrc=' + wopiSrc + '&compat=/ws';
+	global.wopiSrc = global.getParameterByName('WOPISrc');
+	if (global.wopiSrc != '') {
+		global.docURL = decodeURIComponent(global.wopiSrc);
 		if (global.accessToken !== '') {
 			wopiParams = { 'access_token': global.accessToken, 'access_token_ttl': global.accessTokenTTL };
 		}
@@ -797,14 +762,80 @@ window.app = { // Shouldn't have any functions defined.
 		global.docURL = filePath;
 	}
 
+	// Form a valid WS URL to the host with the given path.
+	global.makeWsUrl = function (path) {
+		console.assert(global.host.startsWith('ws'), 'host is not ws: ' + global.host);
+		return global.host + global.serviceRoot + path;
+	};
+
+	// Form a URI from the docUrl and wopiSrc and encodes.
+	// The docUrlParams, suffix, and wopiSrc are optionally hexified.
+	global.makeDocAndWopiSrcUrl = function (root, docUrlParams, suffix, wopiSrcParam) {
+		var wopiSrc = '';
+		if (global.wopiSrc != '') {
+			wopiSrc = '?WOPISrc=' + global.wopiSrc + '&compat=';
+			if (wopiSrcParam && wopiSrcParam.length > 0)
+				wopiSrc += '&' + wopiSrcParam;
+		}
+		else if (wopiSrcParam && wopiSrcParam.length > 0) {
+			wopiSrc = '?' + wopiSrcParam;
+		}
+
+		suffix = suffix || '/ws';
+		var encodedDocUrl = encodeURIComponent(docUrlParams) + suffix + wopiSrc;
+		if (global.hexifyUrl)
+			encodedDocUrl = global.hexEncode(encodedDocUrl);
+		return root + encodedDocUrl + '/ws';
+	};
+
+	// Form a valid WS URL to the host with the given path and
+	// encode the document URL and params.
+	global.makeWsUrlWopiSrc = function (path, docUrlParams, suffix, wopiSrcParam) {
+		var websocketURI = global.makeWsUrl(path);
+		return global.makeDocAndWopiSrcUrl(websocketURI, docUrlParams, suffix, wopiSrcParam);
+	};
+
+	// Form a valid HTTP URL to the host with the given path.
+	global.makeHttpUrl = function (path) {
+		console.assert(global.webserver.startsWith('http'), 'webserver is not http: ' + global.webserver);
+		return global.webserver + global.serviceRoot + path;
+	};
+
+	// Form a valid HTTP URL to the host with the given path and
+	// encode the document URL and params.
+	global.makeHttpUrlWopiSrc = function (path, docUrlParams, suffix, wopiSrcParam) {
+		var httpURI = window.makeHttpUrl(path);
+		return global.makeDocAndWopiSrcUrl(httpURI, docUrlParams, suffix, wopiSrcParam);
+	};
+
+	// Encode a string to hex.
+	global.hexEncode = function (string) {
+		var bytes = new TextEncoder().encode(string);
+		var hex = '0x';
+		for (i = 0; i < bytes.length; ++i) {
+			hex += bytes[i].toString(16);
+		}
+		return hex;
+	};
+
+	// Decode hexified string back to plain text.
+	global.hexDecode = function (hex) {
+		if (hex.startsWith('0x'))
+			hex = hex.substr(2);
+		var bytes = new Uint8Array(hex.length / 2);
+		for (i = 0; i < bytes.length; i++) {
+			bytes[i] = parseInt(hex.substr(i * 2, 2), 16);
+		}
+		return new TextDecoder().decode(bytes);
+	};
+
 	if (window.ThisIsAMobileApp) {
 		global.socket = new global.FakeWebSocket();
 		window.TheFakeWebSocket = global.socket;
 	} else {
 		// The URL may already contain a query (e.g., 'http://server.tld/foo/wopi/files/bar?desktop=baz') - then just append more params
 		var docParamsPart = docParams ? (global.docURL.includes('?') ? '&' : '?') + docParams : '';
-		var websocketURI = global.host + global.serviceRoot + '/lool/' + encodeURIComponent(global.docURL + docParamsPart) + '/ws' + wopiSrc;
-
+		var websocketURI = global.makeWsUrlWopiSrc('/lool/', global.docURL + docParamsPart);
 		try {
 			global.socket = global.createWebSocket(websocketURI);
 		} catch (err) {

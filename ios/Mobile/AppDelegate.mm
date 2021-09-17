@@ -290,6 +290,18 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
     if (user_name == nullptr)
         user_name = [[[NSUserDefaults standardUserDefaults] stringForKey:@"userName"] UTF8String];
 
+    // Remove any leftover allegedly temporary folders with copies of documents left behind from
+    // previous instances of the app that were killed while editing, various random files that for
+    // instance NSS seems to love to create, etc, by removing the whole tmp folder.
+    NSURL *tempFolderURL = [[NSFileManager defaultManager] temporaryDirectory];
+    if (![[NSFileManager defaultManager] removeItemAtURL:tempFolderURL error:nil]) {
+        NSLog(@"Could not remove tmp folder %@", tempFolderURL);
+    }
+
+    if (![[NSFileManager defaultManager] createDirectoryAtURL:tempFolderURL withIntermediateDirectories:YES attributes:nil error:nil]) {
+        NSLog(@"Could not create tmp folder %@", tempFolderURL);
+    }
+
     fakeSocketSetLoggingCallback([](const std::string& line)
                                  {
                                      LOG_INF_NOFILE(line);

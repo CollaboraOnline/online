@@ -15,7 +15,7 @@ module.exports.list = {
 	bulletList: ['#DefaultBullet', '#tb_editbar_item_defaultbullet'],
 	incrementIndent: ['#IncrementIndent', '#tb_editbar_item_incrementindent'],
 	decrementIndent: ['#DecrementIndent', '#tb_editbar_item_decrementindent'],
-	insertAnnotation: ['#InsertAnnotation', '#tb_editbar_item_insertannotation'],
+	insertAnnotation: ['#InsertAnnotation.unospan-Insert', '#tb_editbar_item_insertannotation'],
 	insertTable: ['#InsertTable', '#tb_editbar_item_inserttable'],
 	insertGraphic: ['#InsertGraphic', '#tb_editbar_item_insertgraphic'],
 	clearFormat: ['#clearFormatting', '#tb_editbar_item_reset'],

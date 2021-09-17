@@ -7,6 +7,7 @@
 
 #include <config.h>
 
+#include "LOOLWSD.hpp"
 #include "RequestDetails.hpp"
 #include "common/Log.hpp"
 
@@ -72,6 +73,7 @@ RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::strin
 
     // re-writes ServiceRoot out of request
     _uriString = request.getURI().substr(serviceRoot.length());
+    dehexify();
     request.setURI(_uriString);
     const std::string &method = request.getMethod();
     _isGet = method == "GET";
@@ -99,8 +101,36 @@ RequestDetails::RequestDetails(const std::string &mobileURI)
 {
     _isMobile = true;
     _uriString = mobileURI;
-
+    dehexify();
     processURI();
+}
+
+void RequestDetails::dehexify()
+{
+    // For now, we only hexify lool/ URLs.
+    constexpr auto Prefix = "lool/0x";
+    constexpr auto PrefixLen = sizeof(Prefix) - 1;
+
+    const auto hexPos = _uriString.find(Prefix);
+    if (hexPos != std::string::npos)
+    {
+        // The start of the hex token.
+        const auto start = hexPos + PrefixLen;
+        // Find the next '/' after the hex token.
+        const auto end = _uriString.find_first_of('/', start);
+
+        std::string res = _uriString.substr(0, start - 2); // The prefix, without '0x'.
+
+        const std::string encoded =
+            _uriString.substr(start, (end == std::string::npos) ? end : end - start);
+        std::string decoded;
+        Util::dataFromHexString(encoded, decoded);
+        res += decoded;
+
+        res += _uriString.substr(end); // Concatinate the remainder.
+
+        _uriString = res; // Replace the original uri with the decoded one.
+    }
 }
 
 void RequestDetails::processURI()

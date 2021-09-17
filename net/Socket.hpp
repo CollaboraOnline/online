@@ -862,6 +862,9 @@ private:
     int _wakeup[2];
     /// The sockets we're controlling
     std::vector<std::shared_ptr<Socket>> _pollSockets;
+    /// We start handling the poll results of the above sockets at a different index each time, to
+    /// not arbitrarily prioritize some
+    size_t _pollStartIndex;
     /// Protects _newSockets and _newCallbacks
     std::mutex _mutex;
     std::vector<std::shared_ptr<Socket>> _newSockets;

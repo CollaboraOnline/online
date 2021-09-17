@@ -809,7 +809,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     freemiumInfo->set("FreemiumDenyList", Freemium::FreemiumManager::getFreemiumDenyList());
     freemiumInfo->set("FreemiumPurchaseTitle", Freemium::FreemiumManager::getFreemiumPurchaseTitle());
     freemiumInfo->set("FreemiumPurchaseLink", Freemium::FreemiumManager::getFreemiumPurchaseLink());
-    freemiumInfo->set("FreemiumPurchaseDiscription", Freemium::FreemiumManager::getFreemiumPurchaseDiscription());
+    freemiumInfo->set("FreemiumPurchaseDescription", Freemium::FreemiumManager::getFreemiumPurchaseDescription());
     freemiumInfo->set("WriterHighlights", Freemium::FreemiumManager::getWriterHighlights());
     freemiumInfo->set("CalcHighlights", Freemium::FreemiumManager::getCalcHighlights());
     freemiumInfo->set("ImpressHighlights", Freemium::FreemiumManager::getImpressHighlights());
@@ -1514,10 +1514,10 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
             std::string encodedName;
             Poco::URI::encode(filename, "", encodedName);
             const std::string filenameAnonym = LOOLWSD::anonymizeUrl(filename);
-
             std::ostringstream oss;
             oss << "renamefile: " << "filename=" << encodedName << " url=" << url;
             broadcastMessage(oss.str());
+            broadcastMessage("close: reloadafterrename");
         }
         else
         {
@@ -1927,8 +1927,12 @@ std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSessi
 
 #if !MOBILEAPP
     // Tell the admin console about this new doc
+    std::string wopiHost = _storage->getUri().Poco::URI::getHost();
+    if (wopiHost.std::string::empty()) {
+        wopiHost = "";
+    }
     Admin::instance().addDoc(_docKey, getPid(), getFilename(), id, session->getUserName(),
-                             session->getUserId(), _childProcess->getSMapsFD());
+                             session->getUserId(), _childProcess->getSMapsFD(), wopiHost);
     Admin::instance().setDocWopiDownloadDuration(_docKey, _wopiDownloadDuration);
 #endif
 
@@ -2923,21 +2927,31 @@ void DocumentBroker::getIOStats(uint64_t &sent, uint64_t &recv)
 }
 
 #if !MOBILEAPP
-static std::atomic<std::size_t> NumConverters;
+
+void StatelessBatchBroker::removeFile(const std::string &uriOrig)
+{
+    // Remove and report errors on failure.
+    FileUtil::removeFile(uriOrig);
+    const std::string dir = Poco::Path(uriOrig).parent().toString();
+    if (FileUtil::isEmptyDirectory(dir))
+        FileUtil::removeFile(dir);
+}
+
+static std::atomic<std::size_t> gConvertToBrokerInstanceCouter;
 
 std::size_t ConvertToBroker::getInstanceCount()
 {
-    return NumConverters;
+    return gConvertToBrokerInstanceCouter;
 }
 
 ConvertToBroker::ConvertToBroker(const std::string& uri,
                                  const Poco::URI& uriPublic,
                                  const std::string& docKey,
                                  const std::string& format,
-                                 const std::string& sOptions) :
-    DocumentBroker(ChildType::Batch, uri, uriPublic, docKey),
-    _format(format),
-    _sOptions(sOptions)
+                                 const std::string& sOptions)
+    : StatelessBatchBroker(uri, uriPublic, docKey)
+    , _format(format)
+    , _sOptions(sOptions)
 {
     LOG_TRC("Created ConvertToBroker: uri: [" << uri << "], uriPublic: [" << uriPublic.toString()
                                               << "], docKey: [" << docKey << "], format: ["
@@ -2946,8 +2960,11 @@ ConvertToBroker::ConvertToBroker(const std::string& uri,
     static const std::chrono::seconds limit_convert_secs(
         LOOLWSD::getConfigValue<int>("per_document.limit_convert_secs", 100));
     _limitLifeSeconds = limit_convert_secs;
-    ++NumConverters;
+    ++gConvertToBrokerInstanceCouter;
 }
+
+ConvertToBroker::~ConvertToBroker()
+{}
 
 bool ConvertToBroker::startConversion(SocketDisposition &disposition, const std::string &id)
 {
@@ -2989,26 +3006,10 @@ void ConvertToBroker::dispose()
 {
     if (!_uriOrig.empty())
     {
-        NumConverters--;
+        gConvertToBrokerInstanceCouter--;
         removeFile(_uriOrig);
         _uriOrig.clear();
     }
-}
-
-ConvertToBroker::~ConvertToBroker()
-{
-    // Calling a virtual function from a dtor
-    // is only valid if there are no inheritors.
-    dispose();
-}
-
-void ConvertToBroker::removeFile(const std::string &uriOrig)
-{
-    // Remove and report errors on failure.
-    FileUtil::removeFile(uriOrig);
-    const std::string dir = Poco::Path(uriOrig).parent().toString();
-    if (FileUtil::isEmptyDirectory(dir))
-        FileUtil::removeFile(dir);
 }
 
 void ConvertToBroker::setLoaded()
@@ -3035,6 +3036,122 @@ void ConvertToBroker::setLoaded()
 
     _clientSession->handleMessage(saveasRequest);
 }
+
+
+static std::atomic<std::size_t> gRenderSearchResultBrokerInstanceCouter;
+
+std::size_t RenderSearchResultBroker::getInstanceCount()
+{
+    return gRenderSearchResultBrokerInstanceCouter;
+}
+
+RenderSearchResultBroker::RenderSearchResultBroker(
+                            std::string const& uri,
+                            Poco::URI const& uriPublic,
+                            std::string const& docKey,
+                            std::shared_ptr<std::vector<char>> const& pSearchResultContent)
+    : StatelessBatchBroker(uri, uriPublic, docKey)
+    , _pSearchResultContent(pSearchResultContent)
+{
+    LOG_TRC("Created RenderSearchResultBroker: uri: [" << uri << "], uriPublic: [" << uriPublic.toString()
+                                              << "], docKey: [" << docKey << "].");
+    gConvertToBrokerInstanceCouter++;
+}
+
+RenderSearchResultBroker::~RenderSearchResultBroker()
+{}
+
+bool RenderSearchResultBroker::executeCommand(SocketDisposition& disposition, std::string const& id)
+{
+    std::shared_ptr<RenderSearchResultBroker> docBroker = std::static_pointer_cast<RenderSearchResultBroker>(shared_from_this());
+
+    const bool isReadOnly = true;
+
+    std::shared_ptr<ProtocolHandlerInterface> emptyProtocolHandler;
+    RequestDetails requestDetails("render-search-result");
+    _clientSession = std::make_shared<ClientSession>(emptyProtocolHandler, id, docBroker, getPublicUri(), isReadOnly, requestDetails);
+    _clientSession->construct();
+
+    if (!_clientSession)
+        return false;
+
+    docBroker->setupTransfer(disposition, [docBroker] (std::shared_ptr<Socket>const & moveSocket)
+    {
+        docBroker->setResponseSocket(std::static_pointer_cast<StreamSocket>(moveSocket));
+
+        // First add and load the session.
+        docBroker->addSession(docBroker->_clientSession);
+
+        // Load the document manually.
+        std::string encodedFrom;
+        Poco::URI::encode(docBroker->getPublicUri().getPath(), "", encodedFrom);
+        // add batch mode, no interactive dialogs
+        const std::string _load = "load url=" + encodedFrom + " batch=true";
+        std::vector<char> loadRequest(_load.begin(), _load.end());
+        docBroker->_clientSession->handleMessage(loadRequest);
+    });
+
+    return true;
+}
+
+void RenderSearchResultBroker::setLoaded()
+{
+    DocumentBroker::setLoaded();
+
+    // Send the rendersearchresult request ...
+    const std::string renderSearchResultCmd = "rendersearchresult ";
+    std::vector<char> renderSearchResultRequest(renderSearchResultCmd.begin(), renderSearchResultCmd.end());
+    renderSearchResultRequest.resize(renderSearchResultCmd.size() + _pSearchResultContent->size());
+    std::copy(_pSearchResultContent->begin(), _pSearchResultContent->end(), renderSearchResultRequest.begin() + renderSearchResultCmd.size());
+    _clientSession->handleMessage(renderSearchResultRequest);
+}
+
+void RenderSearchResultBroker::dispose()
+{
+    if (!_uriOrig.empty())
+    {
+        gRenderSearchResultBrokerInstanceCouter--;
+        removeFile(_uriOrig);
+        _uriOrig.clear();
+    }
+}
+
+bool RenderSearchResultBroker::handleInput(const std::vector<char>& payload)
+{
+    bool bResult = DocumentBroker::handleInput(payload);
+
+    if (bResult)
+    {
+        auto message = std::make_shared<Message>(payload.data(), payload.size(), Message::Dir::Out);
+        auto const& messageData = message->data();
+
+        static std::string commandString = "rendersearchresult:";
+        static std::vector<char> commandStringVector(commandString.begin(), commandString.end());
+
+        if (messageData.size() >= commandStringVector.size())
+        {
+           bool bEquals = std::equal(commandStringVector.begin(), commandStringVector.end(),
+                                      messageData.begin());
+            if (bEquals)
+            {
+                _aResposeData.resize(messageData.size() - commandStringVector.size());
+                std::copy(messageData.begin() + commandStringVector.size(), messageData.end(), _aResposeData.begin());
+
+                std::string aDataString(_aResposeData.data(), _aResposeData.size());
+                // really not ideal that the response works only with std::string
+                http::Response httpResponse(http::StatusLine(200));
+                httpResponse.setBody(aDataString, "image/png");
+                httpResponse.set("Connection", "close");
+                _socket->sendAndShutdown(httpResponse);
+
+                removeSession(_clientSession->getId());
+                stop("Finished RenderSearchResult handler.");
+            }
+        }
+    }
+    return bResult;
+}
+
 #endif
 
 std::vector<std::shared_ptr<ClientSession>> DocumentBroker::getSessionsTestOnlyUnsafe()

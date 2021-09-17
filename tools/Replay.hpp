@@ -146,8 +146,8 @@ protected:
             }
 
             const std::chrono::microseconds::rep deltaCurrent = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - epochCurrent).count();
-            const unsigned deltaFile = rec.getTimestampNs() - epochFile;
-            const unsigned delay = (_ignoreTiming ? 0 : deltaFile - deltaCurrent);
+            const unsigned deltaFile = rec.getTimestampUs() - epochFile;
+            const int delay = (_ignoreTiming ? 0 : deltaFile - deltaCurrent);
             if (delay > 0)
             {
                 if (delay > 1e6)
@@ -219,7 +219,9 @@ protected:
                     }
                     else
                     {
-                        std::cout << "ERROR: Doc [" << uri << "] does not exist.\n";
+                        // There is one EndSession record for each session that edited the same
+                        // document. We have removed the item from the _sessions map already for the
+                        // first EndSession record.
                     }
                 }
             }
@@ -262,7 +264,7 @@ protected:
             }
 
             epochCurrent = std::chrono::steady_clock::now();
-            epochFile = rec.getTimestampNs();
+            epochFile = rec.getTimestampUs();
         }
     }
 

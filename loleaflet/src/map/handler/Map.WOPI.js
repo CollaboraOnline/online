@@ -8,7 +8,7 @@ L.Map.WOPI = L.Handler.extend({
 	// If the CheckFileInfo call fails on server side, we won't have any PostMessageOrigin.
 	// So use '*' because we still needs to send 'close' message to the parent frame which
 	// wouldn't be possible otherwise.
-	PostMessageOrigin: '*',
+	PostMessageOrigin: window.postmessageOriginExt || '*',
 	BaseFileName: '',
 	BreadcrumbDocName: '',
 	DocumentLoadedTime: false,
@@ -376,6 +376,12 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId == 'Action_InsertGraphic') {
 			if (msg.Values) {
 				this._map.insertURL(msg.Values.url);
+			}
+		}
+		else if (msg.MessageId == 'Action_Paste') {
+			if (msg.Values && msg.Values.Mimetype && msg.Values.Data) {
+				var blob = new Blob(['paste mimetype=' + msg.Values.Mimetype + '\n', msg.Values.Data]);
+				app.socket.sendMessage(blob);
 			}
 		}
 		else if (msg.MessageId === 'Action_ShowBusy') {

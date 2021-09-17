@@ -260,10 +260,12 @@ m4_ifelse(MOBILEAPP,[true],
 m4_ifelse(MOBILEAPP,[true],
      [window.host = '';
       window.serviceRoot = '';
+      window.hexifyUrl = false;
       window.versionPath = '%VERSION%';
       window.accessToken = '';
       window.accessTokenTTL = '';
       window.accessHeader = '';
+      window.postMessageOriginExt = '';
       window.loleafletLogging = 'true';
       window.enableWelcomeMessage = false;
       window.enableWelcomeMessageButton = false;
@@ -277,10 +279,12 @@ m4_ifelse(MOBILEAPP,[true],
       window.uiDefaults = {};],
      [window.host = '%HOST%';
       window.serviceRoot = '%SERVICE_ROOT%';
+      window.hexifyUrl = %HEXIFY_URL%;
       window.versionPath = '%VERSION%';
       window.accessToken = '%ACCESS_TOKEN%';
       window.accessTokenTTL = '%ACCESS_TOKEN_TTL%';
       window.accessHeader = '%ACCESS_HEADER%';
+      window.postMessageOriginExt = '%POSTMESSAGE_ORIGIN%';
       window.loleafletLogging = '%LOLEAFLET_LOGGING%';
       window.enableWelcomeMessage = %ENABLE_WELCOME_MSG%;
       window.enableWelcomeMessageButton = %ENABLE_WELCOME_MSG_BTN%;
