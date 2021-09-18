@@ -8,6 +8,7 @@
 #pragma once
 
 #include <Poco/Net/HTTPRequest.h>
+#include <Poco/URI.h>
 
 #include <common/StringVector.hpp>
 #include <common/Util.hpp>
@@ -221,6 +222,9 @@ public:
         oss << "\nfull URI: " << _uriString;
         return oss.str();
     }
+
+    /// Sanitize the given URI.
+    static Poco::URI sanitizeURI(const std::string& uri);
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
