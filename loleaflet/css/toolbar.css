@@ -773,6 +773,9 @@ button.leaflet-control-search-next
 .w2ui-icon.aligntop{ background: url('images/lc_aligntop.svg') no-repeat center !important; }
 .w2ui-icon.alignvcenter{ background: url('images/lc_alignvcenter.svg') no-repeat center !important; }
 .w2ui-icon.alignbottom{ background: url('images/lc_alignbottom.svg') no-repeat center !important; }
+.w2ui-icon.cellverttop{ background: url('images/lc_cellverttop.svg') no-repeat center !important; }
+.w2ui-icon.cellvertcenter{ background: url('images/lc_cellvertcenter.svg') no-repeat center !important; }
+.w2ui-icon.cellvertbottom{ background: url('images/lc_cellvertbottom.svg') no-repeat center !important; }
 .w2ui-icon.linespacing, .w2ui-icon.spacepara1{ background: url('images/lc_linespacing.svg') no-repeat center !important; }
 .w2ui-icon.spacepara15{ background: url('images/lc_spacepara15.svg') no-repeat center !important; }
 .w2ui-icon.spacepara2{ background: url('images/lc_spacepara2.svg') no-repeat center !important; }
@@ -806,6 +809,8 @@ button.leaflet-control-search-next
 .w2ui-icon.insertobjectchart{ background: url('images/lc_drawchart.svg') no-repeat center !important; }
 .w2ui-icon.insertrowsafter{ background: url('images/lc_insertrowsafter.svg') no-repeat center !important; }
 .w2ui-icon.insertcolumnsafter{ background: url('images/lc_insertcolumnsafter.svg') no-repeat center !important; }
+.w2ui-icon.insertcolumnsbefore{ background: url('images/lc_insertcolumnsbefore.svg') no-repeat center !important; }
+.w2ui-icon.insertrowsbefore{ background: url('images/lc_insertrowsbefore.svg') no-repeat center !important; }
 .w2ui-icon.autosum{ background: url('images/lc_autosum.svg') no-repeat center !important; }
 .w2ui-icon.orientation{ background: url('images/lc_orientation.svg') no-repeat center !important; }
 
