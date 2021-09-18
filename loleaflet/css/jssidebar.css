@@ -44,11 +44,61 @@
 	min-width: auto;
 }
 
+.sidebar.jsdialog.menubutton,
+.sidebar.jsdialog.ui-listbox option,
+.sidebar.jsdialog.ui-listbox {
+	width: 150px;
+}
+
+#fontnamecombobox > .sidebar.jsdialog.ui-listbox,
+#applystyle > .sidebar.jsdialog.ui-listbox {
+	width: 172px;
+}
+
+#gradientstyle > .sidebar.jsdialog.ui-listbox {
+	width: 104px;
+}
+
+.sidebar.jsdialog.row > table.sidebar.jsdialog.ui-grid {
+	width: 290px;
+}
+
+#table-grid3.sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.jsdialog.ui-grid > tr.sidebar.jsdialog > td.sidebar.jsdialog > .sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.jsdialog.ui-grid {
+	width: 10px;
+}
+
+#fontsizecombobox > .sidebar.jsdialog.ui-listbox {
+	width: 86px;
+}
+
 .sidebar.ui-expander {
 	display: flex;
 	justify-content: space-between;
 	width: 290px;
 	align-items: center;
+}
+
+#selectcolor {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.sidebar.jsdialog.cell > #table-box3,
+.sidebar.jsdialog.cell > #table-box4 {
+	width: 290px;
+	display: flex;
+	justify-content: flex-end;
+}
+
+#settransparency, #fontheight,
+.sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.ui-grid > tr.sidebar > td.sidebar:last-child,
+.sidebar.jsdialog.cell > #table-box3 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child,
+.sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child,
+.sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:nth-child(4),
+td.sidebar.jsdialog > #table-box1 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:nth-child(2),
+td.sidebar.jsdialog > #table-box2 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child {
+	display: flex;
+	justify-content: flex-end;
 }
 
 .sidebar.ui-drawing-area {
@@ -165,4 +215,59 @@ td.jsdialog .jsdialog.cell.sidebar {
 
 #indentlabel {
 	padding-top: 8px;
+}
+
+.spinfieldcontainer {
+	margin-right: 10px;
+}
+
+#settransparency {
+	margin-right: 5px;
+}
+
+#fillattrhb {
+	margin-left: 4px;
+	position: relative;
+	left: 38px;
+}
+
+#fillgrad1 {
+	padding-top: 4px;
+	width: 160px;
+	position: relative;
+	left: -7px;
+}
+
+#fillgrad2 {
+	padding-top: 4px;
+	width: 160px;
+	position: relative;
+	left: -11px;
+}
+
+#fillgrad2 > img,
+#fillgrad2 > span {
+	width: 38px;
+	height: 15px;
+}
+
+#orientationcontrol,
+#misc_label {
+	visibility: hidden;
+	height: 16px;
+}
+
+#fliplabel {
+	position: relative;
+	bottom: 26px;
+}
+
+#rotationlabel {
+	position: relative;
+	bottom: 15px;
+}
+
+#ratio {
+	position: relative;
+	left: 163px;
 }
