@@ -87,46 +87,6 @@ void DocumentBroker::broadcastLastModificationTime(
     broadcastMessage(message);
 }
 
-Poco::URI DocumentBroker::sanitizeURI(const std::string& uri)
-{
-    // The URI of the document should be url-encoded.
-#if !MOBILEAPP
-    std::string decodedUri;
-    Poco::URI::decode(uri, decodedUri);
-    Poco::URI uriPublic(decodedUri);
-#else
-    Poco::URI uriPublic(uri);
-#endif
-
-    if (uriPublic.isRelative() || uriPublic.getScheme() == "file")
-    {
-        // TODO: Validate and limit access to local paths!
-        uriPublic.normalize();
-    }
-
-    if (uriPublic.getPath().empty())
-    {
-        throw std::runtime_error("Invalid URI.");
-    }
-
-    // We decoded access token before embedding it in loleaflet.html
-    // So, we need to decode it now to get its actual value
-    Poco::URI::QueryParameters queryParams = uriPublic.getQueryParameters();
-    for (auto& param: queryParams)
-    {
-        // look for encoded query params (access token as of now)
-        if (param.first == "access_token")
-        {
-            std::string decodedToken;
-            Poco::URI::decode(param.second, decodedToken);
-            param.second = decodedToken;
-        }
-    }
-
-    uriPublic.setQueryParameters(queryParams);
-    return uriPublic;
-}
-
 std::string DocumentBroker::getDocKey(const Poco::URI& uri)
 {
     // If multiple host-names are used to access us, then

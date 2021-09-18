@@ -231,7 +231,10 @@ public:
         Interactive, Batch
     };
 
-    static Poco::URI sanitizeURI(const std::string& uri);
+    static Poco::URI sanitizeURI(const std::string& uri)
+    {
+        return RequestDetails::sanitizeURI(uri);
+    }
 
     /// Returns a document-specific key based
     /// on the URI of the document.
