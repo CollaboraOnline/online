@@ -2,11 +2,12 @@
 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path
 	 class="icn icn--negative-color" 
-     d="M 4 4 L 20 20 L 4 4 z "
+     d="m20 20 -16-16"
 	 fill="none"
 	 stroke="#ed3d3d" 
 	 stroke-linecap="round" 
 	 stroke-linejoin="round"
+	 stroke-width="2"
      />
   <path
 	 class="icn icn--negative-color" 
@@ -15,5 +16,6 @@
 	 stroke="#ed3d3d" 
 	 stroke-linecap="round" 
 	 stroke-linejoin="round"
+	 stroke-width="2"
      />
 </svg>
