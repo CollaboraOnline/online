@@ -26,6 +26,40 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
     return os;
 }
 
+template <typename T, typename U>
+inline std::string lokFormatAssertEq(const T& expected, const U& actual)
+{
+    std::ostringstream oss;
+    oss << "Expected [" << (expected) << "] but got [" << (actual) << ']';
+    return oss.str();
+}
+
+template <>
+std::string inline lokFormatAssertEq(const std::string& expected, const std::string& actual)
+{
+    std::ostringstream oss;
+    oss << '\n';
+    oss << "Expected: [" << expected << "]\n";
+    oss << "Actual:   [" << actual << "]\n";
+    oss << "          [";
+
+    const auto minSize = std::min(expected.size(), actual.size());
+    for (std::size_t i = 0; i < minSize; ++i)
+    {
+        oss << (expected[i] == actual[i] ? ' ' : '^');
+    }
+
+    const auto maxSize = std::max(expected.size(), actual.size());
+    for (std::size_t i = minSize; i < maxSize; ++i)
+    {
+        oss << '^';
+    }
+
+    oss << "]\n";
+
+    return oss.str();
+}
+
 #ifdef LOK_ABORT_ON_ASSERTION
 #define LOK_ASSERT_IMPL(X) assert(X);
 #else
@@ -48,8 +82,8 @@ inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v)
     {                                                                                              \
         if (!((expected) == (actual)))                                                             \
         {                                                                                          \
-            TST_LOG_NAME("unittest", "ERROR: Assertion failure: Expected ["                        \
-                                         << (expected) << "] but got [" << (actual) << ']');       \
+            TST_LOG_NAME("unittest",                                                               \
+                         "ERROR: Assertion failure: " << lokFormatAssertEq(expected, actual));     \
             LOK_ASSERT_IMPL((expected) == (actual));                                               \
             CPPUNIT_ASSERT_EQUAL((expected), (actual));                                            \
         }                                                                                          \
