@@ -420,6 +420,7 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	margin: 0px;
 }
 
+#tb_actionbar_item_acceptformula .w2ui-tb-image, #tb_actionbar_item_cancelformula .w2ui-tb-image,
 #tb_actionbar_item_undo .w2ui-tb-image, #tb_actionbar_item_redo .w2ui-tb-image, #tb_actionbar_item_mobile_wizard .w2ui-tb-image, #tb_actionbar_item_prev  .w2ui-tb-image, #tb_actionbar_item_next  .w2ui-tb-image, #tb_actionbar_item_insertion_mobile_wizard .w2ui-tb-image, #tb_actionbar_item_insertcomment .w2ui-tb-image, #tb_actionbar_item_fullscreen-presentation .w2ui-tb-image{
 	min-width: 38px;
 }
