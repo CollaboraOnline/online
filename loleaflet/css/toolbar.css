@@ -800,10 +800,14 @@ button.leaflet-control-search-next
 .w2ui-icon.setborderstyle{ background: url('images/lc_setborderstyle.svg') no-repeat center !important; }
 .w2ui-icon.togglemergecells{ background: url('images/lc_togglemergecells.svg') no-repeat center !important; }
 .w2ui-icon.wraptext{ background: url('images/lc_wraptext.svg') no-repeat center !important; }
+.w2ui-icon.numberformatstandard{ background: url('images/lc_numberformatstandard.svg') no-repeat center !important; }
 .w2ui-icon.numberformatcurrency{ background: url('images/lc_numberformatcurrency.svg') no-repeat center !important; }
 .w2ui-icon.numberformatpercent{ background: url('images/lc_numberformatpercent.svg') no-repeat center !important; }
 .w2ui-icon.numberformatdecimal{ background: url('images/lc_numberformatdecimal.svg') no-repeat center !important; }
 .w2ui-icon.numberformatdate{ background: url('images/lc_numberformatdate.svg') no-repeat center !important; }
+.w2ui-icon.numberformattime{ background: url('images/lc_numberformattime.svg') no-repeat center !important; }
+.w2ui-icon.numberformatscientific{ background: url('images/lc_numberformatscientific.svg') no-repeat center !important; }
+.w2ui-icon.numberformatthousands{ background: url('images/lc_numberformatthousands.svg') no-repeat center !important; }
 .w2ui-icon.numberformatincdecimals{ background: url('images/lc_numberformatincdecimals.svg') no-repeat center !important; }
 .w2ui-icon.numberformatdecdecimals{ background: url('images/lc_numberformatdecdecimals.svg') no-repeat center !important; }
 .w2ui-icon.insertobjectchart{ background: url('images/lc_drawchart.svg') no-repeat center !important; }
@@ -813,6 +817,12 @@ button.leaflet-control-search-next
 .w2ui-icon.insertrowsbefore{ background: url('images/lc_insertrowsbefore.svg') no-repeat center !important; }
 .w2ui-icon.autosum{ background: url('images/lc_autosum.svg') no-repeat center !important; }
 .w2ui-icon.orientation{ background: url('images/lc_orientation.svg') no-repeat center !important; }
+.w2ui-icon.deleterows{ background: url('images/lc_deleterows.svg') no-repeat center !important; }
+.w2ui-icon.hiderow{ background: url('images/lc_hiderow.svg') no-repeat center !important; }
+.w2ui-icon.showrow{ background: url('images/lc_showrow.svg') no-repeat center !important; }
+.w2ui-icon.deletecolumns{ background: url('images/lc_deletecolumns.svg') no-repeat center !important; }
+.w2ui-icon.hidecolumn{ background: url('images/lc_hidecolumn.svg') no-repeat center !important; }
+.w2ui-icon.showcolumn{ background: url('images/lc_showcolumn.svg') no-repeat center !important; }
 
 .w2ui-icon.functiondialog{ background: url('images/lc_functiondialog.svg') no-repeat center !important; }
 .w2ui-icon.accepttrackedchanges{ background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important; }
