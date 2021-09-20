@@ -270,8 +270,7 @@
 .hasnotebookbar .ui-content.unotoolbutton.selected:hover,
 .unotoolbutton.notebookbar:hover,
 .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline):hover {
-	outline: 1px solid var(--gray-color);
-	border-radius: 0.1px;
+	box-shadow: 0 0 0 1px var(--gray-color);
 }
 
 /* avoid bug with arrow in new line when window is small */
@@ -335,12 +334,6 @@
 	width: 18px !important;
 	height: 18px !important;
 	padding: 4px;
-}
-.unotoolbutton.notebookbar:not(.disabled):hover, #clearFormatting.notebookbar div img:hover, #FormatPaintbrush.notebookbar div img:hover {
-	background-color: #e6e6e6b0;
-	cursor: pointer;
-	outline: 1px solid var(--gray-color);
-	border-radius: 0.1px;
 }
 
 .unotoolbutton.notebookbar .unobutton.selected + .ui-content.unolabel {
