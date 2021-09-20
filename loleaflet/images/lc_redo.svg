@@ -6,6 +6,7 @@
      stroke="#1e8bcd" 
 	 stroke-linecap="round" 
 	 stroke-linejoin="round"
+	 stroke-width="2"
      >
       <path d="m 15.3,14.5 5,-5 -5,-5" />
       <path d="m 20.3,9.5 h -11.5 c -3,0 -5.5,2.5 -5.5,5.5 0,3 2.5,5.5 5.5,5.5" />

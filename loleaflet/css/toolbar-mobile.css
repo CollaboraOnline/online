@@ -7,7 +7,9 @@
 		top: -1px;
 	}
 }
-
+#tb_actionbar_item_redo.disabled, #tb_actionbar_item_undo.disabled, #tb_actionbar_item_mobile_wizard.disabled, #tb_actionbar_item_insertion_mobile_wizard.disabled {
+	display: none;
+}
 #toolbar-wrapper.mobile{
 	border-top: none;
 	z-index: auto !important;
