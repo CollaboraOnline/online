@@ -793,7 +793,7 @@ button.leaflet-control-search-next
 .w2ui-icon.insertgraphic{ background: url('images/lc_gallery.svg') no-repeat center !important; }
 .w2ui-icon.link{ background: url('images/lc_inserthyperlink.svg') no-repeat center !important; }
 .w2ui-icon.insertsymbol{ background: url('images/lc_insertsymbol.svg') no-repeat center !important; }
-.w2ui-icon.edit{ background: url('images/lc_editdoc.svg') no-repeat center !important; }
+/* .w2ui-icon.edit{ background: url('images/lc_editdoc.svg') no-repeat center !important; } */
 .w2ui-icon.fold{ background: url('images/fold.svg') no-repeat center center / 19px !important; opacity: 0.8; filter: alpha(opacity=80);}
 .w2ui-icon.unfold{ background: url('images/unfold.svg') no-repeat center center/ 19px !important; opacity: 0.8; filter: alpha(opacity=80);}
 .w2ui-icon.hamburger{ background: url('images/hamburger.svg') no-repeat center !important; }
@@ -823,6 +823,12 @@ button.leaflet-control-search-next
 .w2ui-icon.deletecolumns{ background: url('images/lc_deletecolumns.svg') no-repeat center !important; }
 .w2ui-icon.hidecolumn{ background: url('images/lc_hidecolumn.svg') no-repeat center !important; }
 .w2ui-icon.showcolumn{ background: url('images/lc_showcolumn.svg') no-repeat center !important; }
+.w2ui-icon.entirerow{ background: url('images/lc_entirerow.svg') no-repeat center !important; }
+.w2ui-icon.setoptimalrowheight{ background: url('images/lc_setoptimalrowheight.svg') no-repeat center !important; }
+.w2ui-icon.setoptimalcolumnwidth{ background: url('images/lc_setoptimalcolumnwidth.svg') no-repeat center !important; }
+.w2ui-icon.entirecell{ background: url('images/lc_entirecell.svg') no-repeat center !important; }
+.w2ui-icon.entirecolumn{ background: url('images/lc_entirecolumn.svg') no-repeat center !important; }
+.w2ui-icon.selecttable{ background: url('images/lc_selecttable.svg') no-repeat center !important; }
 
 .w2ui-icon.functiondialog{ background: url('images/lc_functiondialog.svg') no-repeat center !important; }
 .w2ui-icon.accepttrackedchanges{ background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important; }
