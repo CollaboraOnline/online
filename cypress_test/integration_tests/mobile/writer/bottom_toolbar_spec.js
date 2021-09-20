@@ -66,7 +66,7 @@ describe('Pushing bottom toolbar items.', function() {
 			.should('exist');
 	});
 
-	it('Apply strikeout.', function() {
+	it.skip('Apply strikeout.', function() {
 		cy.get('#tb_editbar_item_strikeout div table')
 			.should('not.have.class', 'checked');
 
@@ -112,7 +112,7 @@ describe('Pushing bottom toolbar items.', function() {
 			.should('have.attr', 'style', 'background: #ff00ff');
 	});
 
-	it('Apply left / right paragraph alignment.', function() {
+	it.skip('Apply left / right paragraph alignment.', function() {
 		cy.get('#tb_editbar_item_rightpara div table')
 			.should('not.have.class', 'checked');
 
@@ -142,7 +142,7 @@ describe('Pushing bottom toolbar items.', function() {
 			.should('have.attr', 'align', 'left');
 	});
 
-	it('Apply center paragraph alignment.', function() {
+	it.skip('Apply center paragraph alignment.', function() {
 		cy.get('#tb_editbar_item_centerpara div table')
 			.should('not.have.class', 'checked');
 
@@ -158,7 +158,7 @@ describe('Pushing bottom toolbar items.', function() {
 			.should('have.attr', 'align', 'center');
 	});
 
-	it('Apply justify paragraph alignment.', function() {
+	it.skip('Apply justify paragraph alignment.', function() {
 		cy.get('#tb_editbar_item_justifypara div table')
 			.should('not.have.class', 'checked');
 

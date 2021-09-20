@@ -1208,5 +1208,5 @@ global.processStateChangedCommand = processStateChangedCommand;
 global.showColorPicker = showColorPicker;
 global.getColorPickerHTML = getColorPickerHTML;
 global.updateVisibilityForToolbar = updateVisibilityForToolbar;
-
+global.onUpdateParts = onUpdateParts;
 }(window));
