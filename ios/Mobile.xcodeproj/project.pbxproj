@@ -1193,6 +1193,22 @@
 		BEBA767A25EFC52100D33B57 /* salgdicommon.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = salgdicommon.hxx; path = "../../ios-device/vcl/inc/quartz/salgdicommon.hxx"; sourceTree = "<group>"; };
 		BEBF3EAE246EB1C800415E87 /* RequestDetails.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RequestDetails.hpp; sourceTree = "<group>"; };
 		BEBF3EAF246EB1C800415E87 /* RequestDetails.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestDetails.cpp; sourceTree = "<group>"; };
+		BEC465F226F1F60D0073AD28 /* b3dpolygontools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b3dpolygontools.cxx; path = "../../ios-device/basegfx/source/polygon/b3dpolygontools.cxx"; sourceTree = "<group>"; };
+		BEC465F326F1F60E0073AD28 /* b2dpolypolygontools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b2dpolypolygontools.cxx; path = "../../ios-device/basegfx/source/polygon/b2dpolypolygontools.cxx"; sourceTree = "<group>"; };
+		BEC465F426F1F60E0073AD28 /* b2dpolygon.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b2dpolygon.cxx; path = "../../ios-device/basegfx/source/polygon/b2dpolygon.cxx"; sourceTree = "<group>"; };
+		BEC465F526F1F60E0073AD28 /* b2dpolypolygoncutter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b2dpolypolygoncutter.cxx; path = "../../ios-device/basegfx/source/polygon/b2dpolypolygoncutter.cxx"; sourceTree = "<group>"; };
+		BEC465F626F1F60E0073AD28 /* b2dsvgpolypolygon.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b2dsvgpolypolygon.cxx; path = "../../ios-device/basegfx/source/polygon/b2dsvgpolypolygon.cxx"; sourceTree = "<group>"; };
+		BEC465F726F1F60E0073AD28 /* WaveLine.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WaveLine.cxx; path = "../../ios-device/basegfx/source/polygon/WaveLine.cxx"; sourceTree = "<group>"; };
+		BEC465F826F1F60E0073AD28 /* b2dpolygoncutandtouch.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b2dpolygoncutandtouch.cxx; path = "../../ios-device/basegfx/source/polygon/b2dpolygoncutandtouch.cxx"; sourceTree = "<group>"; };
+		BEC465F926F1F60E0073AD28 /* b3dpolygon.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b3dpolygon.cxx; path = "../../ios-device/basegfx/source/polygon/b3dpolygon.cxx"; sourceTree = "<group>"; };
+		BEC465FA26F1F60E0073AD28 /* b3dpolypolygon.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b3dpolypolygon.cxx; path = "../../ios-device/basegfx/source/polygon/b3dpolypolygon.cxx"; sourceTree = "<group>"; };
+		BEC465FB26F1F60E0073AD28 /* b2dpolygontools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b2dpolygontools.cxx; path = "../../ios-device/basegfx/source/polygon/b2dpolygontools.cxx"; sourceTree = "<group>"; };
+		BEC465FC26F1F60E0073AD28 /* b2dpolygontriangulator.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b2dpolygontriangulator.cxx; path = "../../ios-device/basegfx/source/polygon/b2dpolygontriangulator.cxx"; sourceTree = "<group>"; };
+		BEC465FD26F1F60E0073AD28 /* b3dpolypolygontools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b3dpolypolygontools.cxx; path = "../../ios-device/basegfx/source/polygon/b3dpolypolygontools.cxx"; sourceTree = "<group>"; };
+		BEC465FE26F1F60E0073AD28 /* b2dlinegeometry.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b2dlinegeometry.cxx; path = "../../ios-device/basegfx/source/polygon/b2dlinegeometry.cxx"; sourceTree = "<group>"; };
+		BEC465FF26F1F60E0073AD28 /* b2dtrapezoid.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b2dtrapezoid.cxx; path = "../../ios-device/basegfx/source/polygon/b2dtrapezoid.cxx"; sourceTree = "<group>"; };
+		BEC4660026F1F60E0073AD28 /* b2dpolypolygon.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b2dpolypolygon.cxx; path = "../../ios-device/basegfx/source/polygon/b2dpolypolygon.cxx"; sourceTree = "<group>"; };
+		BEC4660126F1F60E0073AD28 /* b2dpolygonclipper.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = b2dpolygonclipper.cxx; path = "../../ios-device/basegfx/source/polygon/b2dpolygonclipper.cxx"; sourceTree = "<group>"; };
 		BECBD30323D7152900DA5582 /* SlsFramePainter.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlsFramePainter.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsFramePainter.cxx"; sourceTree = "<group>"; };
 		BECBD30423D7152900DA5582 /* SlideSorterView.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SlideSorterView.cxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlideSorterView.cxx"; sourceTree = "<group>"; };
 		BECBD30523D7152900DA5582 /* SlsFramePainter.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SlsFramePainter.hxx; path = "../../ios-device/sd/source/ui/slidesorter/view/SlsFramePainter.hxx"; sourceTree = "<group>"; };
@@ -2380,6 +2396,7 @@
 		BE6362BE2153A79200F4237E /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				BEC465F026F1F5DD0073AD28 /* basegfx */,
 				BEA8CDC12199AC7A009FE17E /* comphelper */,
 				BE7D6A2023FA9BFB00C2E605 /* configmgr */,
 				BE80E43321B5629300859C97 /* cppuhelper */,
@@ -3385,6 +3402,37 @@
 				BEBA767625EFC52100D33B57 /* utils.h */,
 			);
 			name = quartz;
+			sourceTree = "<group>";
+		};
+		BEC465F026F1F5DD0073AD28 /* basegfx */ = {
+			isa = PBXGroup;
+			children = (
+				BEC465F126F1F5E60073AD28 /* polygon */,
+			);
+			name = basegfx;
+			sourceTree = "<group>";
+		};
+		BEC465F126F1F5E60073AD28 /* polygon */ = {
+			isa = PBXGroup;
+			children = (
+				BEC465FE26F1F60E0073AD28 /* b2dlinegeometry.cxx */,
+				BEC465F426F1F60E0073AD28 /* b2dpolygon.cxx */,
+				BEC4660126F1F60E0073AD28 /* b2dpolygonclipper.cxx */,
+				BEC465F826F1F60E0073AD28 /* b2dpolygoncutandtouch.cxx */,
+				BEC465FB26F1F60E0073AD28 /* b2dpolygontools.cxx */,
+				BEC465FC26F1F60E0073AD28 /* b2dpolygontriangulator.cxx */,
+				BEC4660026F1F60E0073AD28 /* b2dpolypolygon.cxx */,
+				BEC465F526F1F60E0073AD28 /* b2dpolypolygoncutter.cxx */,
+				BEC465F326F1F60E0073AD28 /* b2dpolypolygontools.cxx */,
+				BEC465F626F1F60E0073AD28 /* b2dsvgpolypolygon.cxx */,
+				BEC465FF26F1F60E0073AD28 /* b2dtrapezoid.cxx */,
+				BEC465F926F1F60E0073AD28 /* b3dpolygon.cxx */,
+				BEC465F226F1F60D0073AD28 /* b3dpolygontools.cxx */,
+				BEC465FA26F1F60E0073AD28 /* b3dpolypolygon.cxx */,
+				BEC465FD26F1F60E0073AD28 /* b3dpolypolygontools.cxx */,
+				BEC465F726F1F60E0073AD28 /* WaveLine.cxx */,
+			);
+			name = polygon;
 			sourceTree = "<group>";
 		};
 		BECBD30123D7150100DA5582 /* slidesorter */ = {
