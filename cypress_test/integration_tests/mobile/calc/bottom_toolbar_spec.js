@@ -68,7 +68,7 @@ describe('Interact with bottom toolbar.', function() {
 			.should('exist');
 	});
 
-	it('Apply strikeout.', function() {
+	it.skip('Apply strikeout.', function() {
 		before('bottom_toolbar.ods');
 
 		cy.get('.w2ui-tb-image.w2ui-icon.strikeout')
@@ -157,7 +157,7 @@ describe('Interact with bottom toolbar.', function() {
 		});
 	});
 
-	it('Insert row after.', function() {
+	it.skip('Insert row after.', function() {
 		before('bottom_toolbar2.ods');
 
 		cy.get('.w2ui-tb-image.w2ui-icon.insertrowsafter')
@@ -181,7 +181,7 @@ describe('Interact with bottom toolbar.', function() {
 			.should('contain.text', '2');
 	});
 
-	it('Insert column after.', function() {
+	it.skip('Insert column after.', function() {
 		before('bottom_toolbar2.ods');
 
 		cy.get('.w2ui-tb-image.w2ui-icon.insertcolumnsafter')
