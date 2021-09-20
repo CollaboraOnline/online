@@ -149,7 +149,7 @@ void Document::updateMemoryDirty()
 void Document::setLastJiffies(size_t newJ)
 {
     const auto now = std::chrono::steady_clock::now();
-    if (_lastJiffy)
+    if (_lastJiffy && now != _lastJiffyTime)
         _lastCpuPercentage = (100 * 1000 * (newJ - _lastJiffy) / ::sysconf(_SC_CLK_TCK))
                             / std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastJiffyTime).count();
     _lastJiffy = newJ;
