@@ -5584,19 +5584,22 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	_updateFileBasedView: function (checkOnly) {
+	_updateFileBasedView: function (checkOnly, zoomFrameBounds) {
 		if (this._partHeightTwips === 0) // This is true before status message is handled.
 			return [];
 		if (this._isZooming)
 			return [];
+
+		if (!checkOnly)
+			console.assert(!zoomFrameBounds, 'zoomFrameBounds must only be supplied when checkOnly is true');
 
 		var zoom = Math.round(this._map.getZoom());
 
 		var ratio = this._tileSize / this._tileHeightTwips;
 		var partHeightPixels = Math.round((this._partHeightTwips + this._spaceBetweenParts) * ratio);
 
-		var topLeft = app.sectionContainer.getDocumentTopLeft();
-		var bottomRight = app.sectionContainer.getDocumentBottomRight();
+		var topLeft = zoomFrameBounds ? [ zoomFrameBounds.min.x, zoomFrameBounds.min.y ] :  app.sectionContainer.getDocumentTopLeft();
+		var bottomRight = zoomFrameBounds ? [ zoomFrameBounds.max.x, zoomFrameBounds.max.y ] : app.sectionContainer.getDocumentBottomRight();
 
 		topLeft = [topLeft[0] - topLeft[0] % this._tileSize, topLeft[1] - topLeft[1] % this._tileSize];
 		bottomRight = [bottomRight[0] - bottomRight[0] % this._tileSize, bottomRight[1] - bottomRight[1] % this._tileSize];
@@ -5617,7 +5620,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._sortFileBasedQueue(queue);
 
-		if (queue.length > 0) {
+		if (!zoomFrameBounds && queue.length > 0) {
 			var partToSelect = this._getMostVisiblePart(queue);
 			if (this._selectedPart !== partToSelect) {
 				this._selectedPart = partToSelect;
@@ -5626,11 +5629,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			this.highlightCurrentPart(partToSelect);
 		}
 
-		for (var i = 0; i < this._tiles.length; i++) {
+		for (var i = 0; !zoomFrameBounds && i < this._tiles.length; i++) {
 			this._tiles[i].current = false; // Visible ones's "current" property will be set to true below.
 		}
 
-		for (i = 0; i < queue.length; i++) {
+		for (i = 0; !zoomFrameBounds && i < queue.length; i++) {
 			var tempTile = this._tiles[this._tileCoordsToKey(queue[i])];
 			if (tempTile && tempTile.loaded)
 				tempTile.current = true;
