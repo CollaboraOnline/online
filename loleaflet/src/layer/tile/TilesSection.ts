@@ -468,6 +468,9 @@ class TilesSection {
 			}
 
 			var docRange = new L.Bounds(docPos.topLeft, docPos.topLeft.add(docAreaSize));
+			if (tsManager._calcGridSection) {
+				tsManager._calcGridSection.onDrawArea(docRange, docRange.min.subtract(destPos), this.context);
+			}
 			var canvasContext = this.context;
 
 			this.forEachTileInArea(docRange, zoom, part, ctx, function (tile: any, coords: any): boolean {
