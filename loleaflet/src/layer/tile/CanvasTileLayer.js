@@ -1235,7 +1235,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 	},
 
-	_updateFileBasedView: function (checkOnly) {
+	_updateFileBasedView: function (checkOnly, zoomFrameBounds) {
 		if (this._partHeightTwips === 0) // This is true before status message is handled.
 			return [];
 		if (this._isZooming)
@@ -1246,8 +1246,15 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		var ratio = this._tileSize / this._tileHeightTwips;
 		var partHeightPixels = Math.round((this._partHeightTwips + this._spaceBetweenParts) * ratio);
 		var partWidthPixels = Math.round((this._partWidthTwips) * ratio);
+		var viewRectangle = app.file.viewedRectangle;
+		if (zoomFrameBounds) {
+			var topLeft = new L.Point(viewRectangle[0], viewRectangle[1]);
+			var viewBounds = new L.Bounds(topLeft, topLeft.add(new L.Point(viewRectangle[2], viewRectangle[3])));
+			viewBounds.extend(zoomFrameBounds.min).extend(zoomFrameBounds.max);
+			viewRectangle = [viewBounds.min.x, viewBounds.min.y, viewBounds.max.x - viewBounds.min.x, viewBounds.max.y - viewBounds.min.y];
+		}
 
-		var intersectionAreaRectangle = L.LOUtil._getIntersectionRectangle(app.file.viewedRectangle, [0, 0, partWidthPixels, partHeightPixels * this._parts]);
+		var intersectionAreaRectangle = L.LOUtil._getIntersectionRectangle(viewRectangle, [0, 0, partWidthPixels, partHeightPixels * this._parts]);
 
 		var queue = [];
 
@@ -1256,11 +1263,11 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			var maxLocalX = Math.floor((intersectionAreaRectangle[0] + intersectionAreaRectangle[2]) / app.tile.size.pixels[0]) * app.tile.size.pixels[0];
 
 			var startPart = Math.floor(intersectionAreaRectangle[1] / partHeightPixels);
-			var startY = app.file.viewedRectangle[1] - startPart * partHeightPixels;
+			var startY = viewRectangle[1] - startPart * partHeightPixels;
 			startY = Math.floor(startY / app.tile.size.pixels[1]) * app.tile.size.pixels[1];
 
 			var endPart = Math.ceil((intersectionAreaRectangle[1] + intersectionAreaRectangle[3]) / partHeightPixels);
-			var endY = app.file.viewedRectangle[1] + app.file.viewedRectangle[3] - endPart * partHeightPixels;
+			var endY = viewRectangle[1] + viewRectangle[3] - endPart * partHeightPixels;
 			endY = Math.floor(endY / app.tile.size.pixels[1]) * app.tile.size.pixels[1];
 
 			var vTileCountPerPart = Math.ceil(partHeightPixels / app.tile.size.pixels[1]);

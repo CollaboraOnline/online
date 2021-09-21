@@ -311,6 +311,19 @@ class TilesSection {
 	private forEachTileInArea(area: any, zoom: number, part: number, ctx: any,
 		callback: (tile: any, coords: any) => boolean) {
 		var docLayer = this.sectionProperties.docLayer;
+
+		if (app.file.fileBasedView) {
+			var coordList: Array<any> = docLayer._updateFileBasedView(true, area);
+
+			for (var k: number = 0; k < coordList.length; k++) {
+				var key = coordList[k].key();
+				var tile = docLayer._tiles[key];
+				callback(tile, coordList[k])
+			}
+
+			return;
+		}
+
 		var tileRange = docLayer._pxBoundsToTileRange(area);
 
 		for (var j = tileRange.min.y; j <= tileRange.max.y; ++j) {
@@ -391,7 +404,14 @@ class TilesSection {
 				if (!tile || !tile.loaded || !docLayer._isValidTile(coords))
 					return false;
 
-				var tileBounds = new L.Bounds(tile.coords.getPos(), tile.coords.getPos().add(ctx.tileSize));
+				var tileCoords = tile.coords.getPos();
+				if (app.file.fileBasedView) {
+					var ratio = ctx.tileSize.y / docLayer._tileHeightTwips;
+					var partHeightPixels = Math.round((docLayer._partHeightTwips + docLayer._spaceBetweenParts) * ratio);
+					tileCoords.y = tile.coords.part * partHeightPixels + tileCoords.y;
+				}
+				var tileBounds = new L.Bounds(tileCoords, tileCoords.add(ctx.tileSize));
+
 				var crop = new L.Bounds(tileBounds.min, tileBounds.max);
 				crop.min.x = Math.max(docRange.min.x, tileBounds.min.x);
 				crop.min.y = Math.max(docRange.min.y, tileBounds.min.y);
