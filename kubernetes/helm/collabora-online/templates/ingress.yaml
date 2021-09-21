@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: {{ .Values.global.ingress.name }}
   namespace: {{ .Values.namespace.collabora }}
+  annotations:
+    nginx.ingress.kubernetes.io/upstream-hash-by: "$arg_WOPISrc"
 spec:
   rules:
   - host: {{ .Values.hosts.host }}
