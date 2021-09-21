@@ -358,13 +358,12 @@ app.definitions.Socket = L.Class.extend({
 	// buffer of web-socket messages in the client that we can't
 	// process so - slurp and the emit at idle - its faster to delay!
 	_slurpMessage: function(e) {
-		var that = this;
 		if (!this._slurpQueue || !this._slurpQueue.length) {
 			this._queueSlurpEventEmission();
-			that._slurpQueue = [];
+			this._slurpQueue = [];
 		}
 		this._extractTextImg(e);
-		that._slurpQueue.push(e);
+		this._slurpQueue.push(e);
 	},
 
 	// make profiling easier
