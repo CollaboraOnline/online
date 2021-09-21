@@ -684,6 +684,18 @@ a.leaflet-control-zoom-in {
 	margin: 0px !important;
 	float: left;
 }
+#selectcolor.mobile-wizard.toolbox.level-1 {
+	display: block;
+}
+#fillgrad1.ui-explorable-entry.level-1.mobile-wizard,
+#fillgrad2.ui-explorable-entry.level-1.mobile-wizard,
+#ratio.checkbutton, input#ratio {
+	width: 100%;
+	left: 0px;
+}
+#fliplabel.mobile-wizard.ui-text {
+	bottom: 0px;
+}
 .unotoolbutton.mobile-wizard.ui-content.unospan-wrapoptions.has-label, #aligntoolbar, #aligntoolbar2 {
 	text-align: center;
 }
