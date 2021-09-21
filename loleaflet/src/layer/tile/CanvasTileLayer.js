@@ -188,6 +188,7 @@ L.TileSectionManager = L.Class.extend({
 			onDraw: that._onDrawGridSection,
 			onDrawArea: that._drawGridSectionArea
 		}, 'tiles'); // Its size and position will be copied from 'tiles' section.
+		this._calcGridSection = this._sectionContainer.getSectionWithName(L.CSections.CalcGrid.name);
 	},
 
 	_addOverlaySection: function () {
@@ -238,8 +239,12 @@ L.TileSectionManager = L.Class.extend({
 			return;
 
 		var context = canvasCtx ? canvasCtx : this.context;
+		var tsManager = this.sectionProperties.tsManager;
 		context.strokeStyle = this.sectionProperties.strokeStyle;
 		context.lineWidth = 1.0;
+		var scale = 1.0;
+		if (tsManager._inZoomAnim && tsManager._zoomFrameScale)
+			scale = tsManager._zoomFrameScale;
 
 		var ctx = this.sectionProperties.tsManager._paintContext();
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
@@ -279,8 +284,8 @@ L.TileSectionManager = L.Class.extend({
 				this.sectionProperties.docLayer.sheetGeometry._columns.forEachInCorePixelRange(
 					repaintArea.min.x, repaintArea.max.x,
 					function(pos) {
-						context.moveTo(pos - paneOffset.x - 0.5, miny - paneOffset.y + 0.5);
-						context.lineTo(pos - paneOffset.x - 0.5, maxy - paneOffset.y - 0.5);
+						context.moveTo(Math.floor(scale * (pos - paneOffset.x)) - 0.5, Math.floor(scale * (miny - paneOffset.y)) + 0.5);
+						context.lineTo(Math.floor(scale * (pos - paneOffset.x)) - 0.5, Math.floor(scale * (maxy - paneOffset.y)) - 0.5);
 						context.stroke();
 					});
 
@@ -288,8 +293,8 @@ L.TileSectionManager = L.Class.extend({
 				this.sectionProperties.docLayer.sheetGeometry._rows.forEachInCorePixelRange(
 					miny, maxy,
 					function(pos) {
-						context.moveTo(repaintArea.min.x - paneOffset.x + 0.5, pos - paneOffset.y - 0.5);
-						context.lineTo(repaintArea.max.x - paneOffset.x - 0.5, pos - paneOffset.y - 0.5);
+						context.moveTo(Math.floor(scale * (repaintArea.min.x - paneOffset.x)) + 0.5, Math.floor(scale * (pos - paneOffset.y)) - 0.5);
+						context.lineTo(Math.floor(scale * (repaintArea.max.x - paneOffset.x)) - 0.5, Math.floor(scale * (pos - paneOffset.y)) - 0.5);
 						context.stroke();
 					});
 
@@ -472,9 +477,10 @@ L.TileSectionManager = L.Class.extend({
 		var canvasOverlay = this._layer._canvasOverlay;
 
 		var rafFunc = function (timeStamp, final) {
-			// TODO: Draw grids if Calc.
-			// draw zoom frame directly from the tiles.
+			// Draw zoom frame with grids and directly from the tiles.
+			// This will clear the doc area first.
 			painter._tilesSection.drawZoomFrame(ctx);
+			// Draw the overlay objects.
 			canvasOverlay.onDraw();
 
 			if (!final)
