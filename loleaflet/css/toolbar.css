@@ -879,6 +879,32 @@ button.leaflet-control-search-next
 .w2ui-icon.freezepanescolumn{ background: url('images/lc_freezepanescolumn.svg') no-repeat center !important; }
 .w2ui-icon.freezepanesrow{ background: url('images/lc_freezepanesrow.svg') no-repeat center !important; }
 
+.w2ui-icon.flipvertical { background: url('images/lc_flipvertical.svg') no-repeat center !important; }
+.w2ui-icon.fliphorizontal { background: url('images/lc_fliphorizontal.svg') no-repeat center !important; }
+
+.w2ui-icon.wrapmenu { background: url('images/lc_wrapmenu.svg') no-repeat center !important; }
+.w2ui-icon.wrapoff { background: url('images/lc_wrapoff.svg') no-repeat center !important; }
+.w2ui-icon.wrapon { background: url('images/lc_wrapon.svg') no-repeat center !important; }
+.w2ui-icon.wrapideal { background: url('images/lc_wrapideal.svg') no-repeat center !important; }
+.w2ui-icon.wrapleft { background: url('images/lc_wrapleft.svg') no-repeat center !important; }
+.w2ui-icon.wrapright { background: url('images/lc_wrapright.svg') no-repeat center !important; }
+.w2ui-icon.wrapthrough { background: url('images/lc_wrapthrough.svg') no-repeat center !important; }
+.w2ui-icon.wrapthroughtransparencytoggle { background: url('images/lc_wrapthroughtransparencytoggle.svg') no-repeat center !important; }
+.w2ui-icon.wrapcontour { background: url('images/lc_wrapcontour.svg') no-repeat center !important; }
+.w2ui-icon.wrapanchoronly { background: url('images/lc_wrapanchoronly.svg') no-repeat center !important; }
+
+.w2ui-icon.objectalignleft { background: url('images/lc_objectalignleft.svg') no-repeat center !important; }
+.w2ui-icon.aligncenter { background: url('images/lc_aligncenter.svg') no-repeat center !important; }
+.w2ui-icon.objectalignright { background: url('images/lc_objectalignright.svg') no-repeat center !important; }
+.w2ui-icon.alignup { background: url('images/lc_alignup.svg') no-repeat center !important; }
+.w2ui-icon.alignmiddle { background: url('images/lc_alignmiddle.svg') no-repeat center !important; }
+.w2ui-icon.aligndown { background: url('images/lc_aligndown.svg') no-repeat center !important; }
+
+.w2ui-icon.arrangemenu { background: url('images/lc_arrangemenu.svg') no-repeat center !important; }
+.w2ui-icon.bringtofront { background: url('images/lc_bringtofront.svg') no-repeat center !important; }
+.w2ui-icon.objectforwardone { background: url('images/lc_objectforwardone.svg') no-repeat center !important; }
+.w2ui-icon.objectbackone { background: url('images/lc_objectbackone.svg') no-repeat center !important; }
+.w2ui-icon.sendtoback { background: url('images/lc_sendtoback.svg') no-repeat center !important; }
 
 .w2ui-icon.vereign{ background: url('images/vereign.png') no-repeat center !important; }
 
