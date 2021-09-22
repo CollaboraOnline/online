@@ -1236,21 +1236,29 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		}
 	},
 
-	_updateFileBasedView: function (checkOnly, zoomFrameBounds) {
+	_updateFileBasedView: function (checkOnly, zoomFrameBounds, forZoom) {
 		if (this._partHeightTwips === 0) // This is true before status message is handled.
 			return [];
 		if (this._isZooming)
 			return [];
 
-		var zoom = Math.round(this._map.getZoom());
+		if (!checkOnly) {
+			// zoomFrameBounds and forZoom params were introduced to work in checkOnly mode.
+			console.assert(zoomFrameBounds === undefined, 'zoomFrameBounds should only be set in checkOnly mode');
+			console.assert(forZoom === undefined, 'forZoom should only be set in checkOnly mode');
+		}
 
-		var ratio = this._tileSize / this._tileHeightTwips;
+		var zoom = forZoom || Math.round(this._map.getZoom());
+		var currZoom = Math.round(this._map.getZoom());
+		var relScale = currZoom == zoom ? 1 : this._map.getZoomScale(zoom, currZoom);
+
+		var ratio = this._tileSize * relScale / this._tileHeightTwips;
 		var partHeightPixels = Math.round((this._partHeightTwips + this._spaceBetweenParts) * ratio);
 		var partWidthPixels = Math.round((this._partWidthTwips) * ratio);
 		var viewRectangle = app.file.viewedRectangle;
 		if (zoomFrameBounds) {
-			var topLeft = new L.Point(viewRectangle[0], viewRectangle[1]);
-			var viewBounds = new L.Bounds(topLeft, topLeft.add(new L.Point(viewRectangle[2], viewRectangle[3])));
+			var topLeft = new L.Point(relScale * viewRectangle[0], relScale * viewRectangle[1]);
+			var viewBounds = new L.Bounds(topLeft, topLeft.add(new L.Point(relScale * viewRectangle[2], relScale * viewRectangle[3])));
 			viewBounds.extend(zoomFrameBounds.min).extend(zoomFrameBounds.max);
 			viewRectangle = [viewBounds.min.x, viewBounds.min.y, viewBounds.max.x - viewBounds.min.x, viewBounds.max.y - viewBounds.min.y];
 		}
@@ -1283,7 +1291,9 @@ L.CanvasTileLayer = L.TileLayer.extend({
 
 			this._sortFileBasedQueue(queue);
 
-			if (queue.length > 0) {
+			var skipChange = checkOnly && zoomFrameBounds;
+
+			if (queue.length > 0 && !skipChange) {
 				var partToSelect = this._getMostVisiblePart(queue);
 				if (this._selectedPart !== partToSelect) {
 					this._selectedPart = partToSelect;
@@ -1292,12 +1302,12 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				}
 			}
 
-			for (i = 0; i < this._tiles.length; i++) {
+			for (i = 0; !skipChange && i < this._tiles.length; i++) {
 				this._tiles[i].current = false; // Visible ones's "current" property will be set to true below.
 			}
 
 			var allNewTiles = true;
-			for (i = 0; i < queue.length; i++) {
+			for (i = 0; !skipChange && i < queue.length; i++) {
 				var tempTile = this._tiles[this._tileCoordsToKey(queue[i])];
 				if (tempTile && tempTile.loaded) {
 					tempTile.current = true;
