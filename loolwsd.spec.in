@@ -33,7 +33,7 @@ BuildRequires:  libpcap kernel-headers python3-polib python3-lxml
 BuildRequires:  libcap-progs linux-glibc-devel systemd-rpm-macros python3-polib python3-lxml
 %endif
 
-Requires:       collaboraoffice collaboraoffice-ure collaboraofficebasis-core collaboraofficebasis-writer collaboraofficebasis-impress collaboraofficebasis-graphicfilter collaboraofficebasis-en-US collaboraofficebasis-calc collaboraofficebasis-ooofonts collaboraofficebasis-images collaboraofficebasis-draw collaboraofficebasis-extension-pdf-import collaboraofficebasis-ooolinguistic
+Requires:       collaboraoffice collaboraoffice-ure collaboraofficebasis-core collaboraofficebasis-writer collaboraofficebasis-impress collaboraofficebasis-graphicfilter collaboraofficebasis-en-US collaboraofficebasis-calc collaboraofficebasis-ooofonts collaboraofficebasis-images collaboraofficebasis-draw collaboraofficebasis-extension-pdf-import collaboraofficebasis-ooolinguistic collaboraofficebasis-math
 Requires(post): coreutils grep sed cpio
 %if 0%{?rhel}
 # loolwsd dependencies
