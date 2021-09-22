@@ -637,8 +637,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 		var content = [
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:PageDialog'),
-				'command': '.uno:PageDialog'
+				'text': _UNO('.uno:PageFormatDialog'),
+				'command': '.uno:PageFormatDialog'
 			},
 			{
 				'type': 'container',
