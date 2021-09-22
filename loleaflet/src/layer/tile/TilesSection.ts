@@ -474,7 +474,7 @@ class TilesSection {
 		var docLayer = this.sectionProperties.docLayer;
 		var targetZoom = this.map.getScaleZoom(frameScale, areaZoom);
 		var bestZoomLevel = targetZoom;
-		var missingAreaScoreAtBestZL = Infinity; // Lower the better.
+		var availAreaScoreAtBestZL = -Infinity; // Higher the better.
 		var area = area.clone();
 		if (area.min.x < 0)
 			area.min.x = 0;
@@ -484,7 +484,7 @@ class TilesSection {
 		var minZoom = <number> this.map.options.minZoom;
 		var maxZoom = <number> this.map.options.maxZoom;
 		for (var zoom = minZoom; zoom <= maxZoom; ++zoom) {
-			var missingAreaScore = 0; // Lower the better.
+			var availAreaScore = 0; // Higher the better.
 			var hasTiles = false;
 
 			// To scale up missing-area scores to maxZoom as we need an
@@ -496,10 +496,8 @@ class TilesSection {
 			var relScale = this.map.getZoomScale(zoom, areaZoom);
 
 			this.forEachTileInArea(areaAtZoom, zoom, part, ctx, function(tile, coords) {
-				if (!tile || !tile.loaded) {
+				if (tile && tile.el) {
 					var tilePos = coords.getPos();
-					if (tilePos.x < 0 || tilePos.y < 0)
-						return true;
 
 					if (app.file.fileBasedView) {
 						var ratio = ctx.tileSize.y * relScale / docLayer._tileHeightTwips;
@@ -510,25 +508,28 @@ class TilesSection {
 					var tileBounds = new L.Bounds(tilePos, tilePos.add(ctx.tileSize));
 					var interFrac = TilesSection.getTileIntersectionAreaFraction(tileBounds, areaAtZoom);
 
-					// Add to score how much of tile area is missing with a correction factor
-					// to make area scores comparable b/w zoom levels.
-					missingAreaScore += interFrac;
-
-				} else if (!hasTiles) {
-					hasTiles = true;
+					// Add to score how much of tile area is available.
+					availAreaScore += interFrac;
+					if (!hasTiles)
+						hasTiles = true;
 				}
+
 				return true;
 			});
 
-			missingAreaScore = hasTiles ? Math.round(missingAreaScore * dimensionCorrection /* width */ * dimensionCorrection /* height */ / 100) : Infinity;
+			// Scale up with a correction factor to make area scores comparable b/w zoom levels.
+			availAreaScore = hasTiles ? Math.round(availAreaScore
+				* dimensionCorrection /* width */
+				* dimensionCorrection /* height */
+				/ 10 /* resolution control */) : -Infinity;
 
-			console.log('DEBUG: zoom:' + zoom + ' missingAreaScore = ' + missingAreaScore);
+			console.log('DEBUG: zoom:' + zoom + ' availAreaScore = ' + availAreaScore);
 
 			// Accept this zoom if it has a lower missing-area score
 			// In case of a tie we prefer tiles from a zoom level closer to targetZoom.
-			if (missingAreaScore < missingAreaScoreAtBestZL ||
-				(missingAreaScore == missingAreaScoreAtBestZL && Math.abs(targetZoom - bestZoomLevel) > Math.abs(targetZoom - zoom))) {
-				missingAreaScoreAtBestZL = missingAreaScore;
+			if (availAreaScore > availAreaScoreAtBestZL ||
+				(availAreaScore == availAreaScoreAtBestZL && Math.abs(targetZoom - bestZoomLevel) > Math.abs(targetZoom - zoom))) {
+				availAreaScoreAtBestZL = availAreaScore;
 				bestZoomLevel = zoom;
 			}
 		}
