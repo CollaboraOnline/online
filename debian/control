@@ -22,7 +22,8 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
  collaboraofficebasis6.2-en-us,
  collaboraofficebasis6.2-draw,
  collaboraofficebasis6.2-extension-pdf-import,
- collaboraofficebasis6.2-ooolinguistic
+ collaboraofficebasis6.2-ooolinguistic,
+ collaboraofficebasis6.2-math
 Description: Collabora Online WebSocket Daemon
  LOOLWSD is a daemon that talks to web browser clients and provides LibreOffice
  services.
