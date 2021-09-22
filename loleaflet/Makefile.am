@@ -203,8 +203,8 @@ LOLEAFLET_JS_LST =\
 	src/core/Events.js \
 	src/core/Socket.js \
 	src/core/Matrix.js \
-	src/geometry/Point.js \
-	src/geometry/Bounds.js \
+	src/geometry/Point.ts \
+	src/geometry/Bounds.ts \
 	src/geometry/Transformation.js \
 	src/dom/DomUtil.js src/geo/LatLng.js \
 	src/geo/LatLngBounds.js \
