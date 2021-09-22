@@ -428,7 +428,8 @@ L.TileSectionManager = L.Class.extend({
 			center.y = pinchCenter.y;
 
 		var xMin = 0;
-		if (paneBounds.min.x < 0)
+		var hasXMargin = !this._layer.isCalc();
+		if (hasXMargin)
 			xMin = -Infinity;
 		else if (paneBounds.min.x > 0)
 			xMin = splitPos.x;
