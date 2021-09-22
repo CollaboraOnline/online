@@ -5585,18 +5585,27 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
-	_updateFileBasedView: function (checkOnly, zoomFrameBounds) {
+	_updateFileBasedView: function (checkOnly, zoomFrameBounds, forZoom) {
 		if (this._partHeightTwips === 0) // This is true before status message is handled.
 			return [];
 		if (this._isZooming)
 			return [];
 
-		if (!checkOnly)
-			console.assert(!zoomFrameBounds, 'zoomFrameBounds must only be supplied when checkOnly is true');
+		if (!checkOnly) {
+			// zoomFrameBounds and forZoom params were introduced to work only in checkOnly mode.
+			console.assert(zoomFrameBounds === undefined, 'zoomFrameBounds must only be supplied when checkOnly is true');
+			console.assert(forZoom === undefined, 'forZoom must only be supplied when checkOnly is true');
+		}
 
-		var zoom = Math.round(this._map.getZoom());
+		if (forZoom !== undefined) {
+			console.assert(zoomFrameBounds, 'zoomFrameBounds must be valid when forZoom is specified');
+		}
 
-		var ratio = this._tileSize / this._tileHeightTwips;
+		var zoom = forZoom || Math.round(this._map.getZoom());
+		var currZoom = Math.round(this._map.getZoom());
+		var relScale = currZoom == zoom ? 1 : this._map.getZoomScale(zoom, currZoom);
+
+		var ratio = this._tileSize * relScale / this._tileHeightTwips;
 		var partHeightPixels = Math.round((this._partHeightTwips + this._spaceBetweenParts) * ratio);
 
 		var topLeft = zoomFrameBounds ? [ zoomFrameBounds.min.x, zoomFrameBounds.min.y ] :  app.sectionContainer.getDocumentTopLeft();
@@ -5620,8 +5629,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		this._sortFileBasedQueue(queue);
+		var skipChange = checkOnly && zoomFrameBounds;
 
-		if (!zoomFrameBounds && queue.length > 0) {
+		if (!skipChange && queue.length > 0) {
 			var partToSelect = this._getMostVisiblePart(queue);
 			if (this._selectedPart !== partToSelect) {
 				this._selectedPart = partToSelect;
@@ -5630,11 +5640,11 @@ L.CanvasTileLayer = L.Layer.extend({
 			this.highlightCurrentPart(partToSelect);
 		}
 
-		for (var i = 0; !zoomFrameBounds && i < this._tiles.length; i++) {
+		for (var i = 0; !skipChange && i < this._tiles.length; i++) {
 			this._tiles[i].current = false; // Visible ones's "current" property will be set to true below.
 		}
 
-		for (i = 0; !zoomFrameBounds && i < queue.length; i++) {
+		for (i = 0; !skipChange && i < queue.length; i++) {
 			var tempTile = this._tiles[this._tileCoordsToKey(queue[i])];
 			if (tempTile && tempTile.loaded)
 				tempTile.current = true;
