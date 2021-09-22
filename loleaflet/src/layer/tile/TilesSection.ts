@@ -419,12 +419,18 @@ class TilesSection {
 		var docLayer = this.sectionProperties.docLayer;
 
 		if (app.file.fileBasedView) {
-			var coordList: Array<any> = docLayer._updateFileBasedView(true, area);
+			var coordList: Array<any> = docLayer._updateFileBasedView(true, area, zoom);
 
 			for (var k: number = 0; k < coordList.length; k++) {
-				var key = coordList[k].key();
+				var coords = coordList[k];
+				var key = coords.key();
 				var tile = docLayer._tiles[key];
-				callback(tile, coordList[k]);
+				if (!tile) {
+					var img = docLayer._tileCache[key];
+					if (img)
+						tile = { el: img, loaded: true, coords: coords };
+				}
+				callback(tile, coords);
 			}
 
 			return;
@@ -465,6 +471,7 @@ class TilesSection {
 		areaZoom: number, part: number, ctx: any): number {
 
 		var frameScale = this.sectionProperties.tsManager._zoomFrameScale;
+		var docLayer = this.sectionProperties.docLayer;
 		var targetZoom = this.map.getScaleZoom(frameScale, areaZoom);
 		var bestZoomLevel = targetZoom;
 		var missingAreaScoreAtBestZL = Infinity; // Lower the better.
@@ -486,12 +493,19 @@ class TilesSection {
 
 			// Compute area for zoom-level 'zoom'.
 			var areaAtZoom = this.scaleBoundsForZoom(area, zoom, areaZoom);
+			var relScale = this.map.getZoomScale(zoom, areaZoom);
 
 			this.forEachTileInArea(areaAtZoom, zoom, part, ctx, function(tile, coords) {
 				if (!tile || !tile.loaded) {
 					var tilePos = coords.getPos();
 					if (tilePos.x < 0 || tilePos.y < 0)
 						return true;
+
+					if (app.file.fileBasedView) {
+						var ratio = ctx.tileSize.y * relScale / docLayer._tileHeightTwips;
+						var partHeightPixels = Math.round((docLayer._partHeightTwips + docLayer._spaceBetweenParts) * ratio);
+						tilePos.y = coords.part * partHeightPixels + tilePos.y;
+					}
 
 					var tileBounds = new L.Bounds(tilePos, tilePos.add(ctx.tileSize));
 					var interFrac = TilesSection.getTileIntersectionAreaFraction(tileBounds, areaAtZoom);
