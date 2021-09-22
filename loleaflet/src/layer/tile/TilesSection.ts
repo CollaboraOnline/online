@@ -308,6 +308,26 @@ class TilesSection {
 		});
 	}
 
+	// Return the fraction of intersection area with area1.
+	static getTileIntersectionAreaFraction(tileBounds: any, viewBounds: any): number {
+
+		var size = tileBounds.getSize();
+		if (size.x <= 0 || size.y <= 0)
+			return 0;
+
+		var intersection = new L.Bounds(
+			new L.Point(
+				Math.max(tileBounds.min.x, viewBounds.min.x),
+				Math.max(tileBounds.min.y, viewBounds.min.y)),
+			new L.Point(
+				Math.min(tileBounds.max.x, viewBounds.max.x),
+				Math.min(tileBounds.max.y, viewBounds.max.y))
+		);
+
+		var interSize = intersection.getSize();
+		return Math.max(0, interSize.x) * Math.max(0, interSize.y) / (size.x * size.y);
+	}
+
 	private forEachTileInArea(area: any, zoom: number, part: number, ctx: any,
 		callback: (tile: any, coords: any) => boolean) {
 		var docLayer = this.sectionProperties.docLayer;
@@ -318,7 +338,7 @@ class TilesSection {
 			for (var k: number = 0; k < coordList.length; k++) {
 				var key = coordList[k].key();
 				var tile = docLayer._tiles[key];
-				callback(tile, coordList[k])
+				callback(tile, coordList[k]);
 			}
 
 			return;
@@ -336,9 +356,84 @@ class TilesSection {
 
 				var key = coords.key();
 				var tile = docLayer._tiles[key];
+				if (!tile) {
+					var img = docLayer._tileCache[key];
+					if (img)
+						tile = { el: img, loaded: true, coords: coords };
+				}
 				callback(tile, coords);
 			}
 		}
+	}
+
+	/**
+	 * Used for rendering a zoom-out frame, to determine which zoom level tiles
+	 * to use for rendering.
+	 *
+	 * @param area specifies the document area in core-pixels at the current
+	 * zoom level.
+	 *
+	 * @returns the zoom-level with maximum tile content.
+	 */
+	private zoomLevelWithMaxContentInArea(area: any,
+		areaZoom: number, part: number, ctx: any): number {
+
+		var frameScale = this.sectionProperties.tsManager._zoomFrameScale;
+		var targetZoom = this.map.getScaleZoom(frameScale, areaZoom);
+		var bestZoomLevel = targetZoom;
+		var missingAreaScoreAtBestZL = Infinity; // Lower the better.
+		var area = area.clone();
+		if (area.min.x < 0)
+			area.min.x = 0;
+		if (area.min.y < 0)
+			area.min.y = 0;
+
+		var minZoom = <number>this.map.options.minZoom;
+		var maxZoom = <number>this.map.options.maxZoom;
+		for (var zoom = minZoom; zoom <= maxZoom; ++zoom) {
+			var missingAreaScore = 0; // Lower the better.
+			var hasTiles = false;
+
+			// To scale up missing-area scores to maxZoom as we need an
+			// good resolution integer score at the end.
+			var dimensionCorrection = this.map.zoomToFactor(maxZoom - zoom + this.map.options.zoom);
+
+			// Compute area for zoom-level 'zoom'.
+			var areaAtZoom = this.scaleBoundsForZoom(area, zoom, areaZoom);
+
+			this.forEachTileInArea(areaAtZoom, zoom, part, ctx, function(tile, coords) {
+				if (!tile || !tile.loaded) {
+					var tilePos = coords.getPos();
+					if (tilePos.x < 0 || tilePos.y < 0)
+						return true;
+
+					var tileBounds = new L.Bounds(tilePos, tilePos.add(ctx.tileSize));
+					var interFrac = TilesSection.getTileIntersectionAreaFraction(tileBounds, areaAtZoom);
+
+					// Add to score how much of tile area is missing with a correction factor
+					// to make area scores comparable b/w zoom levels.
+					missingAreaScore += interFrac;
+
+				} else if (!hasTiles) {
+					hasTiles = true;
+				}
+				return true;
+			});
+
+			missingAreaScore = hasTiles ? Math.round(missingAreaScore * dimensionCorrection /* width */ * dimensionCorrection /* height */ / 100) : Infinity;
+
+			console.log('DEBUG: zoom:' + zoom + ' missingAreaScore = ' + missingAreaScore);
+
+			// Accept this zoom if it has a lower missing-area score
+			// In case of a tie we prefer tiles from a zoom level closer to targetZoom.
+			if (missingAreaScore < missingAreaScoreAtBestZL ||
+				(missingAreaScore == missingAreaScoreAtBestZL && Math.abs(targetZoom - bestZoomLevel) > Math.abs(targetZoom - zoom))) {
+				missingAreaScoreAtBestZL = missingAreaScore;
+				bestZoomLevel = zoom;
+			}
+		}
+
+		return bestZoomLevel;
 	}
 
 	// Called by tsManager to draw a zoom animation frame.
@@ -400,29 +495,38 @@ class TilesSection {
 			}
 			var canvasContext = this.context;
 
-			this.forEachTileInArea(docRange, zoom, part, ctx, function (tile: any, coords: any): boolean {
+			var bestZoomSrc = zoom;
+			if (scale < 1.0 && !docLayer.sheetGeometry) {
+				bestZoomSrc = this.zoomLevelWithMaxContentInArea(docRange, zoom, part, ctx);
+				console.log('DEBUG: bestZoomSrc = ' + bestZoomSrc);
+			}
+
+			var docRangeScaled = (bestZoomSrc == zoom) ? docRange : this.scaleBoundsForZoom(docRange, bestZoomSrc, zoom);
+			var relScale = (bestZoomSrc == zoom) ? 1 : this.map.getZoomScale(bestZoomSrc, zoom);
+
+			this.forEachTileInArea(docRangeScaled, bestZoomSrc, part, ctx, function (tile: any, coords: any): boolean {
 				if (!tile || !tile.loaded || !docLayer._isValidTile(coords))
 					return false;
 
 				var tileCoords = tile.coords.getPos();
 				if (app.file.fileBasedView) {
-					var ratio = ctx.tileSize.y / docLayer._tileHeightTwips;
+					var ratio = ctx.tileSize.y * relScale / docLayer._tileHeightTwips;
 					var partHeightPixels = Math.round((docLayer._partHeightTwips + docLayer._spaceBetweenParts) * ratio);
 					tileCoords.y = tile.coords.part * partHeightPixels + tileCoords.y;
 				}
 				var tileBounds = new L.Bounds(tileCoords, tileCoords.add(ctx.tileSize));
 
 				var crop = new L.Bounds(tileBounds.min, tileBounds.max);
-				crop.min.x = Math.max(docRange.min.x, tileBounds.min.x);
-				crop.min.y = Math.max(docRange.min.y, tileBounds.min.y);
-				crop.max.x = Math.min(docRange.max.x, tileBounds.max.x);
-				crop.max.y = Math.min(docRange.max.y, tileBounds.max.y);
+				crop.min.x = Math.max(docRangeScaled.min.x, tileBounds.min.x);
+				crop.min.y = Math.max(docRangeScaled.min.y, tileBounds.min.y);
+				crop.max.x = Math.min(docRangeScaled.max.x, tileBounds.max.x);
+				crop.max.y = Math.min(docRangeScaled.max.y, tileBounds.max.y);
 
 				var cropWidth = crop.max.x - crop.min.x;
 				var cropHeight = crop.max.y - crop.min.y;
 
 				var tileOffset = crop.min.subtract(tileBounds.min);
-				var paneOffset = crop.min.subtract(docRange.min.subtract(destPos));
+				var paneOffset = crop.min.divideBy(relScale).subtract(docRange.min.subtract(destPos));
 				if (cropWidth && cropHeight) {
 					canvasContext.drawImage(tile.el,
 						tileOffset.x, tileOffset.y, // source x, y
@@ -430,8 +534,8 @@ class TilesSection {
 						// Destination x, y, w, h (In non-Chrome browsers it leaves lines without the 0.5 correction).
 						Math.floor(paneOffset.x * scale) + 0.5, // Destination x
 						Math.floor(paneOffset.y * scale) + 0.5, // Destination y
-						Math.floor(cropWidth * scale) + 1.5,    // Destination width
-						Math.floor(cropHeight * scale) + 1.5);  // Destination height
+						Math.floor((cropWidth / relScale) * scale) + 1.5,    // Destination width
+						Math.floor((cropHeight / relScale) * scale) + 1.5);  // Destination height
 				}
 
 				return true;
@@ -439,6 +543,21 @@ class TilesSection {
 
 		} // End of pane bounds list loop.
 
+	}
+
+	private scaleBoundsForZoom(corePxBounds: any, toZoom: number, fromZoom: number) {
+		var docLayer = this.sectionProperties.docLayer;
+		if (docLayer.sheetGeometry) {
+			// FIXME: use sheet-geometry to transform the bounds.
+			return corePxBounds;
+		}
+
+		var convScale = this.map.getZoomScale(toZoom, fromZoom);
+
+		return new L.Bounds(
+			corePxBounds.min.multiplyBy(convScale),
+			corePxBounds.max.multiplyBy(convScale)
+		);
 	}
 
 	public onMouseWheel () {}
