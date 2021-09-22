@@ -208,6 +208,8 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (!this._map.touchGesture.enabled()) {
 			this._map.touchGesture.enable();
 		}
+
+		window.IgnorePanning = undefined;
 	},
 
 	_onPress: function (e) {
