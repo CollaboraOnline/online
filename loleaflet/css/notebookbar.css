@@ -128,6 +128,21 @@
 	align-content: center;
 }
 
+.text-color-indicator.hasnotebookbar #Save img.savemodified {
+	filter: hue-rotate(135deg);
+}
+
+.presentation-color-indicator.hasnotebookbar #Save img.savemodified{
+	filter: hue-rotate(315deg);
+}
+
+.spreadsheet-color-indicator.hasnotebookbar #Save img.savemodified{
+	filter: hue-rotate(225deg);
+}
+
+.drawing-color-indicator.hasnotebookbar #Save img.savemodified{
+	filter: hue-rotate(305deg);
+}
 /* Hamburger icon: from shortcutsbar (notebookbar) */
 .hasnotebookbar #shortcuts-menubar-icon,
 .hasnotebookbar #shortcuts-menubar-icon:before,
