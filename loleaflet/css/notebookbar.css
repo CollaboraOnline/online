@@ -119,8 +119,11 @@
 .notebookbar-shortcuts-bar #Redo {
 	height: 27px;
 	width: 24px;
-	display: inline-block;
+	display: flex;
 	margin: 0px !important;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 }
 
 .text-color-indicator.hasnotebookbar #Save img.savemodified {
