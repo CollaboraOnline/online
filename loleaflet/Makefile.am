@@ -214,6 +214,7 @@ LOLEAFLET_JS_LST =\
 	src/map/Map.js \
 	src/map/Clipboard.js \
 	src/layer/Layer.js \
+	src/layer/tile/SheetGeometry.ts \
 	src/layer/tile/CanvasSectionProps.js \
 	src/layer/tile/CanvasSectionContainer.ts \
 	src/layer/tile/CommentSection.ts \
