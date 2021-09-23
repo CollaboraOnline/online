@@ -1,14 +1,63 @@
-<?xml-stylesheet type="text/css" href="icons.css" ?>
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-  <g id="symbol"
-	 class="icn icn--highlight-color-line"  
-	 fill="none" 
-	 stroke="#1e8bcd" 
-	 stroke-linecap="round" 
-	 stroke-linejoin="round"
-	 stroke-width="2"
-	 >
-      <path d="m 8.5,14.5 -5,-5 5,-5" />
-      <path d="M 3.5,9.5 H 15 c 3,0 5.5,2.5 5.5,5.5 0,3 -2.5,5.5 -5.5,5.5" />
-  </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 24 24"
+   version="1.1"
+   id="svg6"
+   sodipodi:docname="lc_undo.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)">
+  <metadata
+     id="metadata12">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs10" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1019"
+     id="namedview8"
+     showgrid="false"
+     inkscape:zoom="23.625"
+     inkscape:cx="12"
+     inkscape:cy="12"
+     inkscape:window-x="0"
+     inkscape:window-y="32"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg6"
+     inkscape:document-rotation="0" />
+  <path
+     d="m4 9v2h12a4 4 0 0 1 4 4 4 4 0 0 1 -4 4c-.554 0-1 .446-1 1s.446 1 1 1a6 6 0 0 0 6-6 6 6 0 0 0 -6-6z"
+     fill="#4d82b8"
+     id="path4"
+     style="fill:#83beec;fill-opacity:1" />
+  <path
+     d="m9 4-6 6 6 6"
+     fill="none"
+     stroke="#4d82b8"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     stroke-width="2"
+     id="path2"
+     style="stroke:#1e8bcd;stroke-opacity:1" />
 </svg>
