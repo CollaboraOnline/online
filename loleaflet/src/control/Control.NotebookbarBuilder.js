@@ -893,7 +893,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			subIndicatorsText: '&#8250;'
 		});
 
-		$(menuHtml[0]).children('a').html('<span id="shortcuts-menubar-icon"></span>');
+		$(menuHtml[0]).children('a').html('<img class="ui-content unobutton" src="images/lc_hamburger.svg" id="Hamburgerimg" alt="Menu">');
 		$(menuHtml[0]).children('a').click(function () {
 			$(control.container).smartmenus('menuHideAll');
 		});
