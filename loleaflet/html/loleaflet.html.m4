@@ -214,7 +214,7 @@ m4_ifelse(MOBILEAPP,[true],
       <div id="document-container" class="readonly">
         <div id="map"></div>
       </div>
-      <div id="sidebar-dock-wrapper" style="display: inline-block;">
+      <div id="sidebar-dock-wrapper" style="display: none;">
         <div id="sidebar-panel"></div>
       </div>
     </div>
