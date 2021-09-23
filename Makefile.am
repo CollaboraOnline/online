@@ -38,8 +38,7 @@ dist_doc_DATA = wsd/README \
                 wsd/README.vars \
                 wsd/protocol.txt \
                 wsd/reference.md \
-                wsd/metrics.txt \
-                EULA
+                wsd/metrics.txt
 
 loolwsddatadir = @LOOLWSD_DATADIR@
 
