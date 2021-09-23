@@ -228,6 +228,16 @@
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<!--
+	     Why not use LOOLWSD_VERSION (surrounded by atsigns) here, you ask? Because in case one
+	     build has been approved for release on the App Store, when you want to release a
+	     following version, it has to have a different version number here in Info.plist. And we
+	     don't necessarily want to bump the version number in configure.ac for something that
+	     perhaps is just a minor iOS-specific fix.
+
+	     Also, even if currently the version in configure.ac is just three numbers, that might
+	     change. This CFBundleShortVersionString must, however, be three numbers.
+	-->
 	<key>CFBundleShortVersionString</key>
 	<string>21.6.1</string>
 	<key>CFBundleVersion</key>
