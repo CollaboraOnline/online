@@ -139,27 +139,19 @@
 	filter: hue-rotate(305deg);
 }
 /* Hamburger icon: from shortcutsbar (notebookbar) */
-.hasnotebookbar.text-color-indicator #shortcuts-menubar-icon,
-.hasnotebookbar.text-color-indicator #shortcuts-menubar-icon:before,
-.hasnotebookbar.text-color-indicator #shortcuts-menubar-icon:after {
+.hasnotebookbar.text-color-indicator #shortcuts-menubar-icon {
 	background: rgb(3, 105, 163);
 	background: rgb(var(--blue1-txt-primary-color));
 }
-.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon,
-.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon:before,
-.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-icon:after {
+.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-iconr {
 	background: rgb(16, 104, 2);
 	background: rgb(var(--green0-txt-primary-color));
 }
-.hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon,
-.hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon:before,
-.hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon:after {
+.hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon {
 	background: rgb(163, 62, 3);
 	background: rgb(var(--orange1-txt-primary-color));
 }
-.hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon,
-.hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon:before,
-.hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon:after {
+.hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon {
 	background: rgb(135, 105, 0);
 	background: rgb(var(--yellow0-txt-primary-color));
 }
@@ -176,6 +168,12 @@
 	cursor: pointer;
 	border: none;
 	height: 27px;
+	width: 24px;
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 }
 
 .hasnotebookbar #shortcuts-menubar-icon {
@@ -188,27 +186,19 @@
 	transition: all 0.25s;
 }
 
-.hasnotebookbar #shortcuts-menubar-icon:before,
-.hasnotebookbar #shortcuts-menubar-icon:after {
-	position: absolute;
-	top: 52%;
-	left: 0px;
-	height: 1px;
-	width: 16px;
-	-webkit-transition: all 0.25s;
-	transition: all 0.25s;
+.hasnotebookbar.spreadsheet-color-indicator #table-shortcutstoolbox {
+	-webkit-filter: hue-rotate(290deg);
+	filter: hue-rotate(290deg);
 }
 
-.hasnotebookbar #shortcuts-menubar-icon:before {
-	content: '';
-	top: -6px;
-	left: 0;
+.hasnotebookbar.presentation-color-indicator #table-shortcutstoolbox{
+	-webkit-filter: hue-rotate(190deg);
+	filter: hue-rotate(190deg);
 }
 
-.hasnotebookbar #shortcuts-menubar-icon:after {
-	content: '';
-	top: 6px;
-	left: 0;
+.hasnotebookbar.drawing-color-indicator #table-shortcutstoolbox {
+	-webkit-filter: hue-rotate(210deg);
+	filter: hue-rotate(210deg);
 }
 
 /* options section */
