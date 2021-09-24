@@ -32,10 +32,33 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		this.map.off('jsdialogupdate', this.onJSUpdate, this);
 	},
 
+	countVisible: function(elements) {
+		var count = 0;
+		for (var i in elements) {
+			if (elements[i].visible !== false)
+				count++;
+		}
+		return count;
+	},
+
+	removeSubMenuData: function(data) {
+		if (data.children && data.children.length !== 1) {
+			for (var i in data.children) {
+				if (data.children[i].type === 'dockingwindow') {
+					data.children.splice(i);
+				}
+			}
+		}
+	},
+
 	onAutofilterDropdown: function(data) {
-		var isSubMenu = data.children && data.children.length && data.children[0].children &&
-						data.children[0].children.length &&
-						data.children[0].children[0].children.length === 1;
+		this.removeSubMenuData(data);
+
+		var hasElements = data.children && data.children.length && data.children[0].children &&
+			data.children[0].children.length;
+		var visibleElements = hasElements ? this.countVisible(data.children[0].children[0].children) : 0;
+
+		var isSubMenu = visibleElements < 3;
 
 		if (!isSubMenu && this.container) {
 			L.DomUtil.remove(this.container);
@@ -141,6 +164,8 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		var height = $(mainContainer).height();
 		if (top + height > $('#document-container').height()) {
 			var newTopPosition = top - height;
+			if (newTopPosition < 0)
+				newTopPosition = 0;
 			L.DomUtil.setStyle(mainContainer, 'margin-top', newTopPosition + 'px');
 			this.position.y = newTopPosition;
 		}
@@ -148,6 +173,8 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		var width = $(mainContainer).width();
 		if (left + width > $('#document-container').width()) {
 			var newLeftPosition = left - width;
+			if (newTopPosition < 0)
+				newTopPosition = 0;
 			L.DomUtil.setStyle(mainContainer, 'margin-left', newLeftPosition + 'px');
 			this.position.x = newLeftPosition;
 		}

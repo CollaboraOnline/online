@@ -429,6 +429,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return builder._gridHandler(parentContainer, data, builder);
 		}
 
+		if (!parentContainer.id)
+			parentContainer.id = data.id;
+
 		return true;
 	},
 
@@ -475,6 +478,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var processedChildren = [];
 
 		var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-grid', parentContainer);
+		table.id = data.id;
+
 		for (var row = 0; row < rows; row++) {
 			var rowNode = L.DomUtil.create('tr', builder.options.cssClass, table);
 			for (var col = 0; col < cols; col++) {
@@ -2819,6 +2824,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var control = parent.querySelector('[id=\'' + data.id + '\']');
 			if (control)
 				L.DomUtil.addClass(control, 'hidden');
+			else if (parent.id === data.id)
+				L.DomUtil.addClass(parent, 'hidden');
 		}
 	},
 
