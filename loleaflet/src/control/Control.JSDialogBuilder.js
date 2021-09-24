@@ -508,6 +508,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_buttonBox: function(parentContainer, data, builder) {
 		var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-button-box '
 												+ (data.layoutstyle ? data.layoutstyle : ''), parentContainer);
+		container.id = data.id;
 
 		var leftAlignButtons = [];
 		var rightAlignButton = [];
