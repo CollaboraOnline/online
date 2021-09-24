@@ -91,6 +91,15 @@ L.Control.Sidebar = L.Control.extend({
 		if (!this.container)
 			return;
 
+		// Panels share the same name for main containers, do not execute actions for them
+		// if panel has to be shown or hidden, full update will appear
+		if (data.data && (data.data.control_id === 'contents' ||
+			data.data.control_id === 'Panel' ||
+			data.data.control_id === 'titlebar')) {
+			console.log('Ignored action: ' + data.data.action_type + ' for control: ' + data.data.control_id);
+			return;
+		}
+
 		this.builder.executeAction(this.container, data.data);
 	},
 

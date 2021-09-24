@@ -88,7 +88,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		this._controlHandlers['container'] = this._containerHandler;
 		this._controlHandlers['dialog'] = this._containerHandler;
 		this._controlHandlers['window'] = this._containerHandler;
-		this._controlHandlers['borderwindow'] = this._containerHandler;
+		this._controlHandlers['borderwindow'] = this._borderwindowHandler;
 		this._controlHandlers['control'] = this._containerHandler;
 		this._controlHandlers['scrollbar'] = this._ignoreHandler;
 		this._controlHandlers['toolbox'] = this._toolboxHandler;
@@ -424,6 +424,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
+	_borderwindowHandler: function(parentContainer, data, builder) {
+		if (data.visible === false) {
+			for (var i in data.children)
+				data.children[i].visible = false;
+		}
+
+		return builder._containerHandler(parentContainer, data, builder);
+	},
+
 	_containerHandler: function(parentContainer, data, builder) {
 		if (data.cols && data.rows) {
 			return builder._gridHandler(parentContainer, data, builder);
@@ -683,6 +692,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var expander = L.DomUtil.create('div', 'ui-expander ' + builder.options.cssClass, container);
 				var label = L.DomUtil.create('span', 'ui-expander-label ' + builder.options.cssClass, expander);
 				label.innerText = builder._cleanText(data.children[0].text);
+				label.id = data.children[0].id;
+				if (data.children[0].visible === false)
+					L.DomUtil.addClass(label, 'hidden');
+				builder.postProcess(expander, data.children[0]);
 
 				if (data.children.length > 1)
 					$(label).addClass('expanded');
@@ -801,12 +814,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_frameHandler: function(parentContainer, data, builder) {
 		if (data.children.length > 1) {
-			var frame = L.DomUtil.create('div', 'ui-frame ' + builder.options.cssClass, parentContainer);
-			frame.id = data.id;
+			var container = L.DomUtil.create('div', 'ui-frame-container ' + builder.options.cssClass, parentContainer);
+			container.id = data.id;
+
+			var frame = L.DomUtil.create('div', 'ui-frame ' + builder.options.cssClass, container);
 			var label = L.DomUtil.create('span', 'ui-frame-label ' + builder.options.cssClass, frame);
 			label.innerText = builder._cleanText(data.children[0].text);
+			label.id = data.children[0].id;
+			if (data.children[0].visible === false)
+				L.DomUtil.addClass(label, 'hidden');
+			builder.postProcess(frame, data.children[0]);
 
-			var frameChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, parentContainer);
+			var frameChildren = L.DomUtil.create('div', 'ui-expander-content ' + builder.options.cssClass, container);
 			$(frameChildren).addClass('expanded');
 
 			var children = [];
@@ -834,8 +853,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_panelHandler: function(parentContainer, data, builder) {
+		// we want to show the contents always, hidden property decides if we collapse the panel
+		if (data.children && data.children.length)
+			data.children[0].visible = true;
+
 		data.type = 'expander';
 		data.children = [{text: data.text}].concat(data.children);
+		data.id = data.id + 'PanelExpander';
 		builder._expanderHandler(parentContainer, data, builder, function() {});
 
 		var expander = $(parentContainer).children('#' + data.id);
