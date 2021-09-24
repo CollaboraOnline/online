@@ -48,6 +48,7 @@
     "jsdom": "^16.4.0"
   },
   "scripts": {
-    "test": "mocha 'mocha_tests/**/*.js'"
+    "test": "mocha 'mocha_tests/**/*.js'",
+    "test-single": "mocha"
   }
 }
