@@ -741,6 +741,9 @@ $(abs_srcdir)/admin/jsconfig.json:
 
 jsconfig: $(abs_srcdir)/jsconfig.json $(abs_srcdir)/admin/jsconfig.json
 
+build-tests: $(MOCHA_TS_JS_FILES)
+	@echo "Build of mocha test finished."
+
 check-local: $(MOCHA_TS_JS_FILES)
 	@echo "Running mocha tests..."
 	@$(NODE) node_modules/mocha/bin/mocha "$(srcdir)/mocha_tests/**/*.js"
