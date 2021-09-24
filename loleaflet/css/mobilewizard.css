@@ -999,7 +999,7 @@ input[type='checkbox'][disabled] {
 	margin: 10px 5% !important;
 }
 
-#label9, #documentlabel-mobile {
+#mobile-wizard #label9, #documentlabel-mobile {
 	border: none;
 	font-size: 15pt;
 }

@@ -719,6 +719,16 @@ L.Control.MobileWizard = L.Control.extend({
 		if (!this.content.get(0))
 			return;
 
+		// Panels share the same name for main containers, do not execute actions for them
+		// if panel has to be shown or hidden, full update will appear
+		if (data.data && data.jsontype === 'sidebar' &&
+			(data.data.control_id === 'contents' ||
+			data.data.control_id === 'Panel' ||
+			data.data.control_id === 'titlebar')) {
+			console.log('Ignored action: ' + data.data.action_type + ' for control: ' + data.data.control_id);
+			return;
+		}
+
 		this._builder.executeAction(this.content.get(0), data.data);
 	},
 });

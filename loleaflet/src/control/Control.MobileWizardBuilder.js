@@ -590,6 +590,10 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 	},
 
 	_panelHandler: function(parentContainer, data, builder) {
+		// we want to show the contents always, hidden property decides if we collapse the panel
+		if (data.children && data.children.length)
+			data.children[0].visible = true;
+
 		var content = data.children;
 
 		var iconPath = null;
