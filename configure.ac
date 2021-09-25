@@ -943,7 +943,7 @@ AS_IF([test -n "$with_cppunit_libs"],
       [LDFLAGS="$LDFLAGS -L${with_cppunit_libs}"])
 
 AS_IF([test `uname -s` = Linux -o `uname -s` = FreeBSD],
-      [AS_IF([test -n "$with_poco_libs"],
+      [AS_IF([test -n "$with_poco_libs" -a -f "$with_poco_libs/libPocoFoundation.so"],
              [LDFLAGS="$LDFLAGS -Wl,-rpath,${with_poco_libs}"])])
 
 AS_IF([test `uname -s` = Linux -o `uname -s` = FreeBSD],
