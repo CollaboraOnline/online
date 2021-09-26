@@ -8,9 +8,10 @@
 #include <config.h>
 
 #include <string>
-#include <test/lokassert.hpp>
 
 #include <net/HttpRequest.hpp>
+
+#include <test/lokassert.hpp>
 
 #include <chrono>
 #include <fstream>
