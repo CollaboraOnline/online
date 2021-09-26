@@ -32,7 +32,9 @@ man_MANS = man/loolwsd.1 \
            man/loolconvert.1 \
            man/loolconfig.1 \
            man/loolwsd-systemplate-setup.1 \
-           man/loolwsd-generate-proof-key.1
+           man/loolwsd-generate-proof-key.1 \
+           man/loolmount.1
+
 
 dist_doc_DATA = wsd/README \
                 wsd/README.vars \
