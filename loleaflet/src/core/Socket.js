@@ -548,21 +548,34 @@ app.definitions.Socket = L.Class.extend({
 		else if (textMsg.startsWith('perm:')) {
 			var perm = textMsg.substring('perm:'.length).trim();
 
-			if (this._map._docLayer) {
-				this._map.setPermission(perm);
-			}
-			else {
+			// Never make the permission more permissive than it originally was.
+			if (this._map.options.permission == 'edit')
+			{
 				this._map.options.permission = perm;
 			}
 
-			app.file.readOnly = perm === 'readonly' ? true: false;
+			if (this._map._docLayer) {
+				this._map.setPermission(this._map.options.permission);
+			}
+
+			app.file.readOnly = this._map.options.permission === 'readonly';
 			return;
 		}
 		else if (textMsg.startsWith('filemode:')) {
 			var json = JSON.parse(textMsg.substring('filemode:'.length).trim());
 
-			app.file.readOnly = json.readOnly;
-			app.file.editComment = json.editComment;
+			// Never make the permission more permissive than it originally was.
+			if (this._map.options.permission == 'edit' && json.readOnly)
+			{
+				this._map.options.permission = 'readonly';
+			}
+
+			if (this._map._docLayer) {
+				this._map.setPermission(this._map.options.permission);
+			}
+
+			app.file.readOnly = this._map.options.permission === 'readonly';
+			app.file.editComment = json.editComment; // Allowed even in readonly mode.
 		}
 		else if (textMsg.startsWith('lockfailed:')) {
 			this._map.onLockFailed(textMsg.substring('lockfailed:'.length).trim());
