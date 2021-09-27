@@ -438,7 +438,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			return builder._gridHandler(parentContainer, data, builder);
 		}
 
-		if (!parentContainer.id)
+		if (parentContainer && !parentContainer.id)
 			parentContainer.id = data.id;
 
 		return true;
@@ -2841,7 +2841,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	postProcess: function(parent, data) {
-		if (!data || !data.id || data.id === '')
+		if (!parent || !data || !data.id || data.id === '')
 			return;
 
 		if (data.visible === 'false' || data.visible === false) {
