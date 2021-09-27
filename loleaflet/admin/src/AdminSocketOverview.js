@@ -299,7 +299,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			upsertDocsTable(docProps, docProps['sName'], this.socket, docProps['wopiHost']);
 			upsertUsersTable(docProps['pid'], docProps['sName'], [docProps], docProps['wopiHost']);
 			document.getElementById('active_docs_count').innerText = String(parseInt(document.getElementById('active_docs_count').innerText) + 1);
-			document.getElementById('active_users_count').innerText = String(parseInt(document.getElementById('active_users_count')) + 1);
+			document.getElementById('active_users_count').innerText = String(parseInt(document.getElementById('active_users_count').innerText) + 1);
 		}
 		else if (textMsg.startsWith('mem_consumed') ||
 			textMsg.startsWith('active_docs_count') ||
