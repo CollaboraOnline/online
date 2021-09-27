@@ -4,7 +4,14 @@ var assert = require('assert').strict;
 
 describe('SheetGeometry tests', function () {
 
-    testData.forEach(function(testDataForZoom) {
+    // To debug tests for some/one particular zoom levels, add to this array.
+    var runOnlyForZooms: number[] = [];
+    var runTestData = testData;
+    if (runOnlyForZooms.length) {
+        runTestData = testData.filter(testDataForZoom => runOnlyForZooms.includes(testDataForZoom.zoom));
+    }
+
+    runTestData.forEach(function(testDataForZoom) {
 
         describe('Document zoom level = ' + testDataForZoom.zoom, function () {
             testsForDocZoom(testDataForZoom);
@@ -19,10 +26,18 @@ function zoomToAbsScale(level: number): number {
 
 function testsForDocZoom(testDataForZoom: TestDataForZoom) {
     var tileSizePx = 256;
+    // Important: this mirrors how it is done in CanvasTileLayer.js
     var tileWidthTwips = Math.round(tileSizePx * 15 / zoomToAbsScale(testDataForZoom.zoom));
     var tileHeightTwips = tileWidthTwips;
 
-    testDataForZoom.partsTestData.forEach(function(partTestData) {
+    // To debug tests for some/one particular part levels, add to this array.
+    var runOnlyForParts: number[] = [];
+    var runPartsData = testDataForZoom.partsTestData;
+    if (runOnlyForParts.length) {
+        runPartsData = testDataForZoom.partsTestData.filter(partTestData => runOnlyForParts.includes(partTestData.part));
+    }
+
+    runPartsData.forEach(function(partTestData) {
         var part = partTestData.part;
         var partTestDesc = ' part#' + part + ' - ' + partTestData.description;
         var sg = new cool.SheetGeometry(partTestData.sheetgeometrymsg,
