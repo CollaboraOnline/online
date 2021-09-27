@@ -386,7 +386,7 @@ class TilesSection {
 
 		var frameScale = this.sectionProperties.tsManager._zoomFrameScale;
 		var docLayer = this.sectionProperties.docLayer;
-		var targetZoom = this.map.getScaleZoom(frameScale, areaZoom);
+		var targetZoom = Math.round(this.map.getScaleZoom(frameScale, areaZoom));
 		var bestZoomLevel = targetZoom;
 		var availAreaScoreAtBestZL = -Infinity; // Higher the better.
 		var area = area.clone();
@@ -407,6 +407,7 @@ class TilesSection {
 
 			// Compute area for zoom-level 'zoom'.
 			var areaAtZoom = this.scaleBoundsForZoom(area, zoom, areaZoom);
+			//console.log('DEBUG:: areaAtZoom = ' + areaAtZoom);
 			var relScale = this.map.getZoomScale(zoom, areaZoom);
 
 			this.forEachTileInArea(areaAtZoom, zoom, part, ctx, function(tile, coords) {
@@ -511,13 +512,20 @@ class TilesSection {
 			var canvasContext = this.context;
 
 			var bestZoomSrc = zoom;
-			if (scale < 1.0 && !docLayer.sheetGeometry) {
+			var sheetGeometry = docLayer.sheetGeometry;
+			var useSheetGeometry = false;
+			if (scale < 1.0) {
+				useSheetGeometry = !!sheetGeometry;
 				bestZoomSrc = this.zoomLevelWithMaxContentInArea(docRange, zoom, part, ctx);
 				console.log('DEBUG: bestZoomSrc = ' + bestZoomSrc);
 			}
 
 			var docRangeScaled = (bestZoomSrc == zoom) ? docRange : this.scaleBoundsForZoom(docRange, bestZoomSrc, zoom);
+			var destPosScaled = (bestZoomSrc == zoom) ? destPos : this.scalePosForZoom(destPos, bestZoomSrc, zoom);
 			var relScale = (bestZoomSrc == zoom) ? 1 : this.map.getZoomScale(bestZoomSrc, zoom);
+
+			var toScaleAbs = relScale * docLayer._tileSize * 15.0 / docLayer._tileWidthTwips;
+			toScaleAbs = docLayer._tileSize * 15.0 / Math.round(15.0 * docLayer._tileSize / toScaleAbs);
 
 			this.forEachTileInArea(docRangeScaled, bestZoomSrc, part, ctx, function (tile: any, coords: any): boolean {
 				if (!tile || !tile.loaded || !docLayer._isValidTile(coords))
@@ -541,16 +549,17 @@ class TilesSection {
 				var cropHeight = crop.max.y - crop.min.y;
 
 				var tileOffset = crop.min.subtract(tileBounds.min);
-				var paneOffset = crop.min.divideBy(relScale).subtract(docRange.min.subtract(destPos));
+				var paneOffset = crop.min.subtract(docRangeScaled.min.subtract(destPosScaled));
 				if (cropWidth && cropHeight) {
 					canvasContext.drawImage(tile.el,
 						tileOffset.x, tileOffset.y, // source x, y
 						cropWidth, cropHeight, // source size
 						// Destination x, y, w, h (In non-Chrome browsers it leaves lines without the 0.5 correction).
-						Math.floor(paneOffset.x * scale) + 0.5, // Destination x
-						Math.floor(paneOffset.y * scale) + 0.5, // Destination y
+						Math.floor(paneOffset.x / relScale * scale) + 0.5, // Destination x
+						Math.floor(paneOffset.y / relScale * scale) + 0.5, // Destination y
+
 						Math.floor((cropWidth / relScale) * scale) + 1.5,    // Destination width
-						Math.floor((cropHeight / relScale) * scale) + 1.5);  // Destination height
+						Math.floor((cropHeight / relScale) * scale) + 1.5);    // Destination height
 				}
 
 				return true;
@@ -560,14 +569,33 @@ class TilesSection {
 
 	}
 
-	private scaleBoundsForZoom(corePxBounds: any, toZoom: number, fromZoom: number) {
+	private scalePosForZoom(pos: any, toZoom: number, fromZoom: number): any {
 		var docLayer = this.sectionProperties.docLayer;
+		var convScale = this.map.getZoomScale(toZoom, fromZoom);
+
 		if (docLayer.sheetGeometry) {
-			// FIXME: use sheet-geometry to transform the bounds.
-			return corePxBounds;
+			var toScale = convScale * docLayer._tileSize * 15.0 / docLayer._tileWidthTwips;
+			toScale = docLayer._tileSize * 15.0 / Math.round(15.0 * docLayer._tileSize / toScale);
+			var posScaled = docLayer.sheetGeometry.getCorePixelsAtZoom(pos, toScale);
+			return posScaled;
 		}
 
+		return pos.multiplyBy(convScale);
+	}
+
+	private scaleBoundsForZoom(corePxBounds: any, toZoom: number, fromZoom: number) {
+		var docLayer = this.sectionProperties.docLayer;
 		var convScale = this.map.getZoomScale(toZoom, fromZoom);
+
+		if (docLayer.sheetGeometry) {
+
+			var topLeft = this.scalePosForZoom(corePxBounds.min, toZoom, fromZoom);
+			var size = corePxBounds.getSize().multiplyBy(convScale);
+			return new L.Bounds(
+				topLeft,
+				topLeft.add(size)
+			);
+		}
 
 		return new L.Bounds(
 			corePxBounds.min.multiplyBy(convScale),
