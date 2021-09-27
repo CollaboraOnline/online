@@ -14,7 +14,13 @@
 #import "AppDelegate.h"
 #import "L10n.h"
 
-char* app_translate(const char *id, const char *catalog)
+char *app_translate(
+#if (LIBO_VERSION_MAJOR > 7 && LIBO_VERSION_MAJOR < 21) || (LIBO_VERSION_MAJOR == 7 && LIBO_VERSION_MINOR >= 3)
+                    TranslateId id,
+#else
+                    const char *id,
+#endif
+                    const char *catalog)
 {
     LanguageTag tag(OUString::fromUtf8([app_locale UTF8String]));
     std::locale locale = Translate::Create(catalog, tag);
