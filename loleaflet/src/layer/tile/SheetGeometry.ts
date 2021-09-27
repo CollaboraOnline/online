@@ -482,15 +482,6 @@ export class SheetDimension {
 		var invisibleSpanList = this._hidden.union(this._filtered); // this._hidden is not modified.
 		this._visibleSizes = this._sizes.applyZeroValues(invisibleSpanList); // this._sizes is not modified.
 		this._updatePositions();
-		this._addGeneralVariables();
-	}
-
-	private _addGeneralVariables() {
-		for (var i = 0; i < this._visibleSizes._spanlist.length; i++) {
-			this._visibleSizes._spanlist[i].start = i > 0 ? this._visibleSizes._spanlist[i - 1].index + 1 : 0;
-			this._visibleSizes._spanlist[i].end = this._visibleSizes._spanlist[i].index; // Todo: Remove data duplication by renaming "index & value" to "end & size" or vice versa.
-			this._visibleSizes._spanlist[i].size = this._visibleSizes._spanlist[i].value;
-		}
 	}
 
 	private _updatePositions() {
@@ -607,7 +598,7 @@ export class SheetDimension {
 
 	public forEachInRange(start: number, end: number, callback: ((dimIndex: number, posSize: DimensionPosSize) => void)): void {
 
-		this._visibleSizes.forEachSpanInRange(start, end, function (span: any) {
+		this._visibleSizes.forEachSpanInRange(start, end, function (span: SpanViewData) {
 			var first = Math.max(span.start, start);
 			var last = Math.min(span.end, end);
 			for (var index = first; index <= last; ++index) {
@@ -903,10 +894,12 @@ export interface SpanData {
 	index: number;
 	value: number;
 	data?: any;
+}
 
-	start?: number;
-	end?: number;
-	size?: number;
+interface SpanViewData extends SpanData {
+	start: number;
+	end: number;
+	size: number;
 }
 
 interface ParsedSpan {
@@ -1046,7 +1039,7 @@ class SpanList {
 		return this._getSpanData(spanid);
 	}
 
-	public getSpanDataByCustomDataField(value: number, fieldName: string): SpanData {
+	public getSpanDataByCustomDataField(value: number, fieldName: string): SpanViewData {
 
 		if (typeof value != 'number' || typeof fieldName != 'string' || !fieldName) {
 			return undefined;
@@ -1060,7 +1053,7 @@ class SpanList {
 		return this._getSpanData(spanid);
 	}
 
-	public forEachSpanInRange(start: number, end: number, callback: ((span: SpanData) => void)) {
+	public forEachSpanInRange(start: number, end: number, callback: ((span: SpanViewData) => void)) {
 
 		if (typeof start != 'number' || typeof end != 'number' ||
 			typeof callback != 'function' || start > end) {
@@ -1079,23 +1072,23 @@ class SpanList {
 		}
 	}
 
-	public forEachSpan(callback: ((span: SpanData) => void)) {
+	public forEachSpan(callback: ((span: SpanViewData) => void)) {
 		for (var id = 0; id < this._spanlist.length; ++id) {
 			callback(this._getSpanData(id));
 		}
 	}
 
-	private _getSpanData(spanid: number): SpanData {
+	private _getSpanData(spanid: number): SpanViewData {
 		// TODO: Check if data is changed by the callers. If not, return the pointer instead.
 		var span = this._spanlist[spanid];
-		var clone: SpanData = {
+		var clone: SpanViewData = {
 			index: span.index,
 			value: span.value,
 			data: span.data,
 
-			start: span.start,
-			end: span.end,
-			size: span.size
+			start: spanid > 0 ? this._spanlist[spanid - 1].index + 1: 0,
+			end: span.index,
+			size: span.value
 		};
 
 		return clone;
