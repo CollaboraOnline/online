@@ -247,7 +247,7 @@ bool SocketPoll::startThread()
         }
     }
     else
-        LOG_ERR("SocketPoll [" << _name << "] thread is already started.");
+        LOG_TRC("SocketPoll [" << _name << "] thread is already started.");
 
     return false;
 }
