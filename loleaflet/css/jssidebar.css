@@ -90,6 +90,15 @@
 	justify-content: flex-end;
 }
 
+#table-box4.sidebar.jsdialog.vertical {
+	width: auto;
+}
+
+div#negativenumbersred.checkbutton.jsdialog.sidebar,
+div#thousandseparator.checkbutton.jsdialog.sidebar {
+	height: 24px;
+}
+
 #settransparency, #fontheight,
 .sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.ui-grid > tr.sidebar > td.sidebar:last-child,
 .sidebar.jsdialog.cell > #table-box3 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child,
