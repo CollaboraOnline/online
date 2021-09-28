@@ -486,34 +486,34 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	padding-top: 10px;
 }
 
-#wordslabel,
-#inclspaceslabel,
-#exclspaceslabel,
-#cjkcharsft,
-#wordslabel2,
-#inclspaceslabel2,
-#exclspaceslabel2,
-#cjkcharsft2
+#mobile-wizard #wordslabel,
+#mobile-wizard #inclspaceslabel,
+#mobile-wizard #exclspaceslabel,
+#mobile-wizard #cjkcharsft,
+#mobile-wizard #wordslabel2,
+#mobile-wizard #inclspaceslabel2,
+#mobile-wizard #exclspaceslabel2,
+#mobile-wizard #cjkcharsft2
 {
-	float: left;
-	clear: left;
-	width: 70%;
+	float: left !important;
+	clear: left !important;
+	width: 70% !important;
 	color: #636363 !important;
 }
 
-#selectwords,
-#selectchars,
-#selectcharsnospaces,
-#selectcjkchars,
-#docwords,
-#docchars,
-#doccharsnospaces,
-#doccjkchars
+#mobile-wizard #selectwords,
+#mobile-wizard #selectchars,
+#mobile-wizard #selectcharsnospaces,
+#mobile-wizard #selectcjkchars,
+#mobile-wizard #docwords,
+#mobile-wizard #docchars,
+#mobile-wizard #doccharsnospaces,
+#mobile-wizard #doccjkchars
 {
-	float: right;
-	clear: right;
-	width: 20%;
-	border-bottom: none;
+	float: right !important;
+	clear: right !important;
+	width: 20% !important;
+	border-bottom: none !important;
 	color: #636363 !important;
 }
 
