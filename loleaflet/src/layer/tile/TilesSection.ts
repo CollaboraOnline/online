@@ -524,8 +524,6 @@ class TilesSection {
 				* dimensionCorrection /* height */
 				/ 10 /* resolution control */) : -Infinity;
 
-			console.log('DEBUG: zoom:' + zoom + ' availAreaScore = ' + availAreaScore);
-
 			// Accept this zoom if it has a lower missing-area score
 			// In case of a tie we prefer tiles from a zoom level closer to targetZoom.
 			if (availAreaScore > availAreaScoreAtBestZL ||
@@ -603,7 +601,6 @@ class TilesSection {
 			if (scale < 1.0) {
 				useSheetGeometry = !!sheetGeometry;
 				bestZoomSrc = this.zoomLevelWithMaxContentInArea(docRange, zoom, part, ctx);
-				console.log('DEBUG: bestZoomSrc = ' + bestZoomSrc);
 			}
 
 			var docRangeScaled = (bestZoomSrc == zoom) ? docRange : this.scaleBoundsForZoom(docRange, bestZoomSrc, zoom);
