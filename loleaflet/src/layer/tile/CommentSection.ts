@@ -623,7 +623,8 @@ class Comment {
 
 	private onMouseClick (e: any) {
 		if (((<any>window).mode.isMobile() || (<any>window).mode.isTablet())
-			&& this.map.getDocType() == 'spreadsheet') {
+			&& this.map.getDocType() == 'spreadsheet'
+			&& !this.map.uiManager.mobileWizard.isOpen()) {
 			this.hide();
 		}
 		L.DomEvent.stopPropagation(e);
