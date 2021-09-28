@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".LOActivity">
 
-    <WebView
+    <org.libreoffice.androidlib.COWebView
         android:id="@+id/browser"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
