@@ -244,10 +244,17 @@ td.jsdialog .jsdialog.cell.sidebar {
 }
 
 #fillgrad1 {
-	padding-top: 4px;
+	padding: 4px 10px;
 	width: 160px;
 	position: relative;
 	left: -7px;
+}
+
+#LB_SHADOW_COLOR, #LB_GLOW_COLOR {
+	padding: 4px 10px;
+	width: 130px;
+	position: relative;
+	left: -11px;
 }
 
 #fillgrad2 {
@@ -282,4 +289,11 @@ td.jsdialog .jsdialog.cell.sidebar {
 #ratio {
 	position: relative;
 	left: 163px;
+}
+
+button#button2.ui-pushbutton.jsdialog.sidebar {
+	width: 151px;
+	padding: 4px;
+	position: relative;
+	left: -10px;
 }
