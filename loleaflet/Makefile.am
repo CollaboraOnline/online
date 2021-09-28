@@ -31,7 +31,7 @@ DIRECTORY_TS = $(srcdir)/src/layer/tile $(srcdir)/src/control # Add ts directori
 SRC_TS_ALL := $(foreach dir, $(DIRECTORY_TS), $(wildcard $(dir)/*.ts))
 SRC_TS_JS_FILES := $(SRC_TS_ALL:.ts=.js)
 
-$(SRC_TS_ALL:.ts=.js): $(SRC_TS_ALL:.ts=.ts)
+$(SRC_TS_JS_FILES): %.js: %.ts
 	$(builddir)/node_modules/typescript/bin/tsc $(@:.js=.ts) --outfile $@ --module none --lib dom,es2016 --target ES5
 
 MOCHA_DIR = $(srcdir)/mocha_tests
