@@ -26,6 +26,7 @@
 UnitBase *UnitBase::Global = nullptr;
 UnitKit *GlobalKit = nullptr;
 UnitWSD *GlobalWSD = nullptr;
+UnitTool *GlobalTool = nullptr;
 char * UnitBase::UnitLibPath;
 static std::thread TimeoutThread;
 static std::atomic<bool> TimeoutThreadRunning(false);
@@ -124,7 +125,7 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
             rememberInstance(UnitType::Kit, new UnitKit());
             break;
         case UnitType::Tool:
-            Global = new UnitTool();
+            rememberInstance(UnitType::Tool, new UnitTool());
             break;
         default:
             assert(false);
@@ -144,6 +145,9 @@ UnitBase* UnitBase::get(UnitType type)
         break;
     case UnitType::Kit:
         return GlobalKit;
+        break;
+    case UnitType::Tool:
+        return GlobalTool;
         break;
     default:
         assert(false);
@@ -166,6 +170,9 @@ void UnitBase::rememberInstance(UnitType type, UnitBase* instance)
         break;
     case UnitType::Kit:
         GlobalKit = static_cast<UnitKit*>(instance);
+        break;
+    case UnitType::Tool:
+        GlobalTool = static_cast<UnitTool*>(instance);
         break;
     default:
         assert(false);
