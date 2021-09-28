@@ -211,6 +211,30 @@ export class SheetGeometry {
 			this._rows.getTileTwipsAtZoom(point.y, zoomScale));
 	}
 
+	// accepts a point in core-pixel coordinates at current zoom
+	// and returns the equivalent point in core-pixels at the given zoomScale.
+	public getCorePixelsAtZoom(point: Point, zoomScale: number): Point {
+		if (!(point instanceof L.Point)) {
+			console.error('Bad argument type, expected L.Point');
+			return point;
+		}
+
+		return new L.Point(this._columns.getCorePixelsAtZoom(point.x, zoomScale),
+			this._rows.getCorePixelsAtZoom(point.y, zoomScale));
+	}
+
+	// accepts a point in core-pixel coordinates at *given* zoomScale
+	// and returns the equivalent point in core-pixels at the current zoom.
+	public getCorePixelsFromZoom(point: Point, zoomScale: number): Point {
+		if (!(point instanceof L.Point)) {
+			console.error('Bad argument type, expected L.Point');
+			return point;
+		}
+
+		return new L.Point(this._columns.getCorePixelsFromZoom(point.x, zoomScale),
+			this._rows.getCorePixelsFromZoom(point.y, zoomScale));
+	}
+
 	// accepts a point in print twips coordinates and returns the equivalent point
 	// in tile-twips.
 	public getTileTwipsPointFromPrint(point: Point): Point {
@@ -734,6 +758,84 @@ export class SheetDimension {
 
 		var posPT = this.getPrintTwipsPosFromTile(posTT);
 		return this.getTileTwipsPosFromPrint(posPT, zoomScale);
+	}
+
+	// Accepts a position in core-pixels at current zoom and returns corresponding
+	// core-pixels position at the given zoomScale.
+	public getCorePixelsAtZoom(posCP: number, zoomScale: number): number {
+		if (typeof posCP !== 'number' || typeof zoomScale !== 'number') {
+			console.error('Wrong argument types');
+			return;
+		}
+
+		var posCPZ = 0; // Position in core-pixels at zoomScale.
+		var posCPRem = posCP; // Unconverted core-pixels position at current zoom.
+		this._visibleSizes.forEachSpan(function (span) {
+			var elementCount = span.end - span.start + 1;
+			var sizeOneCP = span.data.sizecore;
+			var sizeOneCPZ = Math.floor(span.size / 15.0 * zoomScale);
+			var sizeCP = sizeOneCP * elementCount;
+			var sizeCPZ = sizeOneCPZ * elementCount;
+
+			if (posCPRem < sizeOneCP) {
+				// Done converting. FIXME: make this callback return false to end the forEachSpan when done.
+				return;
+			}
+
+			if (posCPRem >= sizeCP) {
+				// Whole span can be converted.
+				posCPRem -= sizeCP;
+				posCPZ += sizeCPZ;
+				return;
+			}
+
+			// Only part of the span can be converted.
+			// sizeOneCP <= posCPRem < sizeCP.
+			var elems = Math.floor(posCPRem / sizeOneCP);
+			posCPRem -= (elems * sizeOneCP);
+			posCPZ += (elems * sizeOneCPZ);
+		});
+
+		return posCPZ + (posCPRem * zoomScale / this._coreZoomFactor);
+	}
+
+	// Accepts a position in core-pixels at *given* zoomScale and returns corresponding
+	// core-pixels position at the current zoom.
+	public getCorePixelsFromZoom(posCPZ: number, zoomScale: number): number {
+		if (typeof posCPZ !== 'number' || typeof zoomScale !== 'number') {
+			console.error('Wrong argument types');
+			return;
+		}
+
+		var posCP = 0; // Position in core-pixels at current zoom.
+		var posCPZRem = posCPZ; // Unconverted core-pixels position at zoomScale.
+		this._visibleSizes.forEachSpan(function (span) {
+			var elementCount = span.end - span.start + 1;
+			var sizeOneCP = span.data.sizecore;
+			var sizeOneCPZ = Math.floor(span.size / 15.0 * zoomScale);
+			var sizeCP = sizeOneCP * elementCount;
+			var sizeCPZ = sizeOneCPZ * elementCount;
+
+			if (posCPZRem < sizeOneCPZ) {
+				// Done converting.
+				return;
+			}
+
+			if (posCPZRem >= sizeCPZ) {
+				// Whole span can be converted.
+				posCPZRem -= sizeCPZ;
+				posCP += sizeCP;
+				return;
+			}
+
+			// Only part of the span can be converted.
+			// sizeOneCPZ <= posCPZRem < sizeCPZ.
+			var elems = Math.floor(posCPZRem / sizeOneCPZ);
+			posCPZRem -= (elems * sizeOneCPZ);
+			posCP += (elems * sizeOneCP);
+		});
+
+		return posCP + (posCPZRem * this._coreZoomFactor / zoomScale);
 	}
 
 	// Accepts a position in print twips and returns the corresponding position in tile twips.
