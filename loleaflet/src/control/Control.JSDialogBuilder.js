@@ -2113,7 +2113,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		}
 
-		container.addEventListener('click', function() {
+		$(container).find('.loleaflet-annotation')[0].addEventListener('click', function() {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hightlightComment(data.annotation);
 		});
 		return false;
