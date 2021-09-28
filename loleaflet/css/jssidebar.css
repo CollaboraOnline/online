@@ -83,9 +83,12 @@
 	justify-content: flex-end;
 }
 
+.sidebar.jsdialog.cell > #table-box3 {
+	width: 290px;
+}
+
 .sidebar.jsdialog.cell > #table-box3,
 .sidebar.jsdialog.cell > #table-box4 {
-	width: 290px;
 	display: flex;
 	justify-content: flex-end;
 }
