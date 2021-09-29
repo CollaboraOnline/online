@@ -7,14 +7,14 @@
 // regime the renders will be incorrect. At least in Calc it is possible to have pixel
 // coordinates greater than this limit at higher zooms near the bottom of the sheet.
 class OverlayTransform {
-	private translationAmount: CPoint;
-	private scaleAmount: CPoint;
+	private translationAmount: cool.Point;
+	private scaleAmount: cool.Point;
 
 	// This does not support a stack of transforms and hence only allows a single
 	// scaling and translation operation.
 	constructor() {
-		this.translationAmount = new CPoint(0, 0);
-		this.scaleAmount = new CPoint(1, 1);
+		this.translationAmount = new cool.Point(0, 0);
+		this.scaleAmount = new cool.Point(1, 1);
 	}
 
 	translate(x: number, y: number) {
@@ -34,15 +34,15 @@ class OverlayTransform {
 		this.scaleAmount.y = 1;
 	}
 
-	applyToPoint(point: CPoint): CPoint {
+	applyToPoint(point: cool.Point): cool.Point {
 		// 'scale first then translation' model.
-		return new CPoint(
+		return new cool.Point(
 			point.x * this.scaleAmount.x - this.translationAmount.x,
 			point.y * this.scaleAmount.y - this.translationAmount.y);
 	}
 
-	applyToBounds(bounds: CBounds): CBounds {
-		return new CBounds(
+	applyToBounds(bounds: cool.Bounds): cool.Bounds {
+		return new cool.Bounds(
 			this.applyToPoint(bounds.min),
 			this.applyToPoint(bounds.max)
 		);
@@ -55,7 +55,7 @@ class CanvasOverlay {
 	private map: any;
 	private ctx: CanvasRenderingContext2D;
 	private paths: Map<number, any>;
-	private bounds: CBounds;
+	private bounds: cool.Bounds;
 	private tsManager: any;
 	private overlaySection: any;
 	private transform: OverlayTransform;
@@ -86,7 +86,7 @@ class CanvasOverlay {
 	}
 
 	onMouseMove(position: Array<number>) {
-		var mousePos = new CPoint(position[0], position[1]);
+		var mousePos = new cool.Point(position[0], position[1]);
 		var overlaySectionBounds = this.bounds.clone();
 		var splitPos = this.tsManager.getSplitPos();
 		if (mousePos.x > splitPos.x)
@@ -150,15 +150,15 @@ class CanvasOverlay {
 		}.bind(this));
 	}
 
-	updatePath(path: CPath, oldBounds: CBounds) {
+	updatePath(path: CPath, oldBounds: cool.Bounds) {
 		this.redraw(path, oldBounds);
 	}
 
-	updateStyle(path: CPath, oldBounds: CBounds) {
+	updateStyle(path: CPath, oldBounds: cool.Bounds) {
 		this.redraw(path, oldBounds);
 	}
 
-	paintRegion(paintArea: CBounds) {
+	paintRegion(paintArea: cool.Bounds) {
 		this.draw(paintArea);
 	}
 
@@ -173,7 +173,7 @@ class CanvasOverlay {
 		return this.intersectsVisible(pathBounds);
 	}
 
-	private intersectsVisible(queryBounds: CBounds): boolean {
+	private intersectsVisible(queryBounds: cool.Bounds): boolean {
 		this.updateCanvasBounds();
 		var spc = this.getSplitPanesContext();
 		return spc ? spc.intersectsVisible(queryBounds) : this.bounds.intersects(queryBounds);
@@ -216,7 +216,7 @@ class CanvasOverlay {
 		return a.viewId - b.viewId;
 	}
 
-	private draw(paintArea?: CBounds) {
+	private draw(paintArea?: cool.Bounds) {
 		if (this.tsManager && this.tsManager.waitForTiles()) {
 			// don't paint anything till tiles arrive for new zoom.
 			return;
@@ -237,7 +237,7 @@ class CanvasOverlay {
 		});
 	}
 
-	private redraw(path: CPath, oldBounds: CBounds) {
+	private redraw(path: CPath, oldBounds: cool.Bounds) {
 		if (this.tsManager && this.tsManager.waitForTiles()) {
 			// don't paint anything till tiles arrive for new zoom.
 			return;
@@ -255,16 +255,16 @@ class CanvasOverlay {
 
 	private updateCanvasBounds() {
 		var viewBounds: any = this.map.getPixelBoundsCore();
-		this.bounds = new CBounds(new CPoint(viewBounds.min.x, viewBounds.min.y), new CPoint(viewBounds.max.x, viewBounds.max.y));
+		this.bounds = new cool.Bounds(new cool.Point(viewBounds.min.x, viewBounds.min.y), new cool.Point(viewBounds.max.x, viewBounds.max.y));
 	}
 
-	getBounds(): CBounds {
+	getBounds(): cool.Bounds {
 		this.updateCanvasBounds();
 		return this.bounds;
 	}
 
 	// Applies canvas translation so that polygons/circles can be drawn using core-pixel coordinates.
-	private ctStart(clipArea?: CBounds, paneBounds?: CBounds, fixed?: boolean) {
+	private ctStart(clipArea?: cool.Bounds, paneBounds?: cool.Bounds, fixed?: boolean) {
 		this.updateCanvasBounds();
 		this.transform.reset();
 		this.ctx.save();
@@ -275,7 +275,6 @@ class CanvasOverlay {
 		if (this.tsManager._inZoomAnim && !fixed) {
 			// zoom-animation is in progress : so draw overlay on main canvas
 			// at the current frame's zoom level.
-			paneBounds = CBounds.fromCompat(paneBounds);
 
 			var splitPos = this.tsManager.getSplitPos();
 			var scale = this.tsManager._zoomFrameScale;
@@ -290,14 +289,14 @@ class CanvasOverlay {
 			var leftMin = paneBounds.min.x < 0 ? -Infinity : 0;
 			var topMin = paneBounds.min.y < 0 ? -Infinity : 0;
 			// Compute the new top left in core pixels that ties with the origin of overlay canvas section.
-			var newTopLeft = new CPoint(
+			var newTopLeft = new cool.Point(
 				Math.max(leftMin,
 					-splitPos.x - 1 + (center.x - (center.x - paneBounds.min.x) / scale)),
 				Math.max(topMin,
 					-splitPos.y - 1 + (center.y - (center.y - paneBounds.min.y) / scale)));
 
 			// Compute clip area which needs to be applied after setting the transformation.
-			var clipTopLeft = new CPoint(0, 0);
+			var clipTopLeft = new cool.Point(0, 0);
 			// Original pane size.
 			var paneSize = paneBounds.getSize();
 			var clipSize = paneSize.clone();
@@ -313,7 +312,7 @@ class CanvasOverlay {
 				clipSize.y = (paneSize.y - splitPos.y * (scale - 1)) / scale;
 			}
 			// Force clip area to the zoom frame area of the pane specified.
-			clipArea = new CBounds(
+			clipArea = new cool.Bounds(
 				clipTopLeft,
 				clipTopLeft.add(clipSize));
 
@@ -326,7 +325,7 @@ class CanvasOverlay {
 			this.transform.scale(scale, scale);
 
 			if (clipArea) {
-				clipArea = new CBounds(
+				clipArea = new cool.Bounds(
 					clipArea.min.divideBy(scale),
 					clipArea.max.divideBy(scale)
 				);
@@ -352,11 +351,11 @@ class CanvasOverlay {
 		this.ctx.restore();
 	}
 
-	updatePoly(path: CPath, closed: boolean = false, clipArea?: CBounds, paneBounds?: CBounds) {
+	updatePoly(path: CPath, closed: boolean = false, clipArea?: cool.Bounds, paneBounds?: cool.Bounds) {
 		var i: number;
 		var j: number;
 		var len2: number;
-		var part: CPoint;
+		var part: cool.Point;
 		var parts = path.getParts();
 		var len: number = parts.length;
 
@@ -381,7 +380,7 @@ class CanvasOverlay {
 		this.ctEnd();
 	}
 
-	updateCircle(path: CPath, clipArea?: CBounds, paneBounds?: CBounds) {
+	updateCircle(path: CPath, clipArea?: cool.Bounds, paneBounds?: cool.Bounds) {
 		if (path.empty())
 			return;
 

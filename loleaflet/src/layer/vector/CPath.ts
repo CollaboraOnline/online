@@ -29,7 +29,7 @@ abstract class CPath extends CEventsHandler {
 
 	radius: number = 0;
 	radiusY: number = 0;
-	point: CPoint;
+	point: cool.Point;
 	zIndex: number = 0;
 
 	static countObjects: number = 0;
@@ -146,15 +146,15 @@ abstract class CPath extends CEventsHandler {
 		this.underMouse = isUnder;
 	}
 
-	onMouseEnter(position: CPoint) {
+	onMouseEnter(position: cool.Point) {
 		this.fire('mouseenter', {position: position});
 	}
 
-	onMouseLeave(position: CPoint) {
+	onMouseLeave(position: cool.Point) {
 		this.fire('mouseleave', {position: position});
 	}
 
-	redraw(oldBounds: CBounds) {
+	redraw(oldBounds: cool.Bounds) {
 		if (this.renderer)
 			this.renderer.updatePath(this, oldBounds);
 	}
@@ -167,13 +167,13 @@ abstract class CPath extends CEventsHandler {
 		}
 	}
 
-	updatePathAllPanes(paintArea?: CBounds) {
+	updatePathAllPanes(paintArea?: cool.Bounds) {
 		var viewBounds = this.renderer.getBounds().clone();
 
 		if (this.fixed) {
 			// Ignore freeze-panes.
-			var fixedMapArea = new CBounds(
-				new CPoint(0, 0),
+			var fixedMapArea = new cool.Bounds(
+				new cool.Point(0, 0),
 				viewBounds.getSize()
 			)
 			this.updatePath(fixedMapArea, fixedMapArea);
@@ -182,7 +182,7 @@ abstract class CPath extends CEventsHandler {
 		}
 
 		var splitPanesContext = this.renderer.getSplitPanesContext();
-		var paneBoundsList: Array<CBounds> = splitPanesContext ?
+		var paneBoundsList: Array<cool.Bounds> = splitPanesContext ?
 			splitPanesContext.getPxBoundList() :
 			[viewBounds];
 
@@ -207,7 +207,7 @@ abstract class CPath extends CEventsHandler {
 		this.updateTestData();
 	}
 
-	updatePath(paintArea?: CBounds, paneBounds?: CBounds) {
+	updatePath(paintArea?: cool.Bounds, paneBounds?: cool.Bounds) {
 		// Overridden in implementations.
 	}
 
@@ -223,7 +223,7 @@ abstract class CPath extends CEventsHandler {
 		}
 	}
 
-	getBounds(): CBounds {
+	getBounds(): cool.Bounds {
 		// Overridden in implementations.
 		return undefined;
 	}
@@ -233,9 +233,9 @@ abstract class CPath extends CEventsHandler {
 		return true;
 	}
 
-	getParts(): Array<Array<CPoint>> {
+	getParts(): Array<Array<cool.Point>> {
 		// Overridden in implementations.
-		return Array<Array<CPoint>>();
+		return Array<Array<cool.Point>>();
 	}
 
 	clickTolerance(): number {

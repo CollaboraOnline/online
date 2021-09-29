@@ -2,7 +2,7 @@
 
 // Type of the data passed to event handlers.
 interface EventData {
-	position?: CPoint;
+	position?: cool.Point;
 }
 
 // Used as base class for classes that needs to setup

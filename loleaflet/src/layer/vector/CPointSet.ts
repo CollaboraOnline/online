@@ -7,10 +7,10 @@
  */
 
 class CPointSet {
-	private points: Array<CPoint>;
+	private points: Array<cool.Point>;
 	private pointSets: Array<CPointSet>;
 
-	static fromPointArray(array: Array<CPoint>) {
+	static fromPointArray(array: Array<cool.Point>) {
 		var ps = new CPointSet();
 		ps.points = array;
 		return ps;
@@ -32,7 +32,7 @@ class CPointSet {
 			(this.pointSets === undefined && this.points.length == 0));
 	}
 
-	getPointArray(): Array<CPoint> {
+	getPointArray(): Array<cool.Point> {
 		return this.points;
 	}
 
@@ -40,7 +40,7 @@ class CPointSet {
 		return this.pointSets;
 	}
 
-	setPointArray(array: Array<CPoint>) {
+	setPointArray(array: Array<cool.Point>) {
 		this.points = array;
 		this.pointSets = undefined;
 	}
@@ -52,7 +52,7 @@ class CPointSet {
 
 	// This is used in CCellSelection to draw multiple polygons based on a "inner" point-set
 	// where we need to apply an additive offset to each point in the pointSet w.r.t each polygon's centroid.
-	applyOffset(offset: CPoint, centroidSymmetry: boolean = false, preRound: boolean = true) {
+	applyOffset(offset: cool.Point, centroidSymmetry: boolean = false, preRound: boolean = true) {
 		CPointSet.applyOffsetImpl(this, offset, centroidSymmetry, preRound);
 	}
 
@@ -79,12 +79,12 @@ class CPointSet {
 		return newPointSet;
 	}
 
-	private static applyOffsetImpl(pointSet: CPointSet, offset: CPoint, centroidSymmetry: boolean, preRound: boolean) {
+	private static applyOffsetImpl(pointSet: CPointSet, offset: cool.Point, centroidSymmetry: boolean, preRound: boolean) {
 		if (pointSet.empty())
 			return;
 
 		if (pointSet.isFlat()) {
-			let refPoint = new CPoint(Infinity, Infinity);
+			let refPoint = new cool.Point(Infinity, Infinity);
 			if (centroidSymmetry) {
 				refPoint.x = 0;
 				refPoint.y = 0;

@@ -92,7 +92,7 @@ export class Bounds {
 		return new Bounds(this.min, this.max);
 	}
 
-	public getCenter(round: boolean): Point {
+	public getCenter(round?: boolean): Point {
 		return PointConstruct(
 			(this.min.x + this.max.x) / 2,
 			(this.min.y + this.max.y) / 2, round);

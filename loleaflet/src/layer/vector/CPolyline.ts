@@ -13,9 +13,9 @@ class CPolyline extends CPath {
 	private smoothFactor: number = 1.0;
 	protected noClip: boolean = false;
 	private pointSet: CPointSet;
-	private bounds: CBounds;
-	protected rings: Array<Array<CPoint>>;
-	protected parts: Array<Array<CPoint>>;
+	private bounds: cool.Bounds;
+	protected rings: Array<Array<cool.Point>>;
+	protected parts: Array<Array<cool.Point>>;
 
 	constructor(pointSet: CPointSet, options: any) {
 		super(options);
@@ -28,11 +28,11 @@ class CPolyline extends CPath {
 	}
 
 	setPointSet(pointSet: CPointSet) {
-		var oldBounds: CBounds;
+		var oldBounds: cool.Bounds;
 		if (this.bounds)
 			oldBounds = this.bounds.clone();
 		else
-			oldBounds = new CBounds();
+			oldBounds = new cool.Bounds(undefined);
 
 		this.pointSet = pointSet;
 		this.updateRingsBounds();
@@ -47,29 +47,29 @@ class CPolyline extends CPath {
 	}
 
 	updateRingsBounds() {
-		this.rings = new Array<Array<CPoint>>();
-		var bounds = this.bounds = new CBounds();
+		this.rings = new Array<Array<cool.Point>>();
+		var bounds = this.bounds = new cool.Bounds(undefined);
 
 		if (this.pointSet.empty()) {
 			return;
 		}
 
-		CPolyline.calcRingsBounds(this.pointSet, this.rings, (pt: CPoint) => {
+		CPolyline.calcRingsBounds(this.pointSet, this.rings, (pt: cool.Point) => {
 			bounds.extend(pt);
 		});
 	}
 
 	// Converts the point-set datastructure into an array of point-arrays each of which is called a 'ring'.
 	// While doing that it also computes the bounds too.
-	private static calcRingsBounds(pset: CPointSet, rings: Array<Array<CPoint>>, updateBounds: (pt: CPoint) => void) {
+	private static calcRingsBounds(pset: CPointSet, rings: Array<Array<cool.Point>>, updateBounds: (pt: cool.Point) => void) {
 		if (pset.isFlat()) {
 			var srcArray = pset.getPointArray();
 			if (srcArray === undefined) {
 				rings.push([]);
 				return;
 			}
-			var array = Array<CPoint>(srcArray.length);
-			srcArray.forEach((pt: CPoint, index: number) => {
+			var array = Array<cool.Point>(srcArray.length);
+			srcArray.forEach((pt: cool.Point, index: number) => {
 				array[index] = pt.clone();
 				updateBounds(pt);
 			})
@@ -86,7 +86,7 @@ class CPolyline extends CPath {
 		}
 	}
 
-	private static getPoints(pset: CPointSet): Array<CPoint> {
+	private static getPoints(pset: CPointSet): Array<cool.Point> {
 		if (pset.isFlat()) {
 			var parray = pset.getPointArray();
 			return parray === undefined ? [] : parray;
@@ -100,13 +100,13 @@ class CPolyline extends CPath {
 		return [];
 	}
 
-	getCenter(): CPoint {
+	getCenter(): cool.Point {
 		var i: number;
 		var halfDist: number;
 		var segDist: number;
 		var dist: number;
-		var p1: CPoint;
-		var p2: CPoint;
+		var p1: cool.Point;
+		var p2: cool.Point;
 		var ratio: number;
 		var points = CPolyline.getPoints(this.pointSet);
 		var len = points.length;
@@ -125,7 +125,7 @@ class CPolyline extends CPath {
 
 			if (dist > halfDist) {
 				ratio = (dist - halfDist) / segDist;
-				return new CPoint(
+				return new cool.Point(
 					p2.x - ratio * (p2.x - p1.x),
 					p2.y - ratio * (p2.y - p1.y)
 				);
@@ -133,21 +133,21 @@ class CPolyline extends CPath {
 		}
 	}
 
-	getBounds(): CBounds {
+	getBounds(): cool.Bounds {
 		return this.bounds;
 	}
 
-	getHitBounds(): CBounds {
+	getHitBounds(): cool.Bounds {
 		if (!this.bounds.isValid())
 			return this.bounds;
 
 		// add clicktolerance for hit detection/etc.
 		var w = this.clickTolerance();
-		var p = new CPoint(w, w);
-		return new CBounds(this.bounds.getTopLeft().subtract(p), this.bounds.getBottomRight().add(p));
+		var p = new cool.Point(w, w);
+		return new cool.Bounds(this.bounds.getTopLeft().subtract(p), this.bounds.getBottomRight().add(p));
 	}
 
-	updatePath(paintArea?: CBounds, paneBounds?: CBounds) {
+	updatePath(paintArea?: cool.Bounds, paneBounds?: cool.Bounds) {
 		this.clipPoints(paintArea);
 		this.simplifyPoints();
 
@@ -155,13 +155,13 @@ class CPolyline extends CPath {
 	}
 
 	// clip polyline by renderer bounds so that we have less to render for performance
-	clipPoints(paintArea?: CBounds) {
+	clipPoints(paintArea?: cool.Bounds) {
 		if (this.noClip) {
 			this.parts = this.rings;
 			return;
 		}
 
-		this.parts = new Array<Array<CPoint>>();
+		this.parts = new Array<Array<cool.Point>>();
 
 		var parts = this.parts;
 		var bounds = paintArea ? paintArea : this.renderer.getBounds();
@@ -170,8 +170,8 @@ class CPolyline extends CPath {
 		var k: number;
 		var len: number;
 		var len2: number;
-		var segment: Array<CPoint>;
-		var points: Array<CPoint>;
+		var segment: Array<cool.Point>;
+		var points: Array<cool.Point>;
 
 		for (i = 0, k = 0, len = this.rings.length; i < len; i++) {
 			points = this.rings[i];
@@ -203,7 +203,7 @@ class CPolyline extends CPath {
 		}
 	}
 
-	getParts(): Array<Array<CPoint>> {
+	getParts(): Array<Array<cool.Point>> {
 		return this.parts;
 	}
 
