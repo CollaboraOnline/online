@@ -163,8 +163,8 @@ export class Point {
 
 	public toString(): string {
 		return 'Point(' +
-			L.Util.formatNum(this.x) + ', ' +
-			L.Util.formatNum(this.y) + ')';
+			Point.formatNum(this.x) + ', ' +
+			Point.formatNum(this.y) + ')';
 	}
 
 	public static toPoint(x: PointConvertable | number, y?: number, round?: boolean): Point {
@@ -172,7 +172,7 @@ export class Point {
 			return x;
 		}
 
-		if (L.Util.isArray(x)) {
+		if (Array.isArray(x)) {
 			var arr = x as Array<number>;
 			return new Point(arr[0], arr[1]);
 		}
@@ -190,6 +190,11 @@ export class Point {
 
 		x = <number>x;
 		return new Point(x, y, round);
+	}
+
+	private static formatNum(num: number): number {
+		var pow = Math.pow(10, 5);
+		return Math.round(num * pow) / pow;
 	}
 }
 
