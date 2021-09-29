@@ -6,7 +6,10 @@
 
 var isIE11_ = !!window.MSInputMethodContext && !!document.documentMode;
 
-if (isIE11_) {
+var match = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./);
+var firefoxVer = match ? parseInt(match[1]) : 69;
+
+if (isIE11_ || firefoxVer < 69) {
     (function (global, factory) {
         typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
         typeof define === 'function' && define.amd ? define(factory) :
