@@ -24,6 +24,7 @@
 #include <Poco/Util/Option.h>
 #include <Poco/Util/OptionSet.h>
 
+#include <net/Ssl.hpp>
 #include "Replay.hpp"
 #include <TraceFile.hpp>
 #include <wsd/TileDesc.hpp>
@@ -521,6 +522,14 @@ int Stress::processArgs(const std::vector<std::string>& args)
 
     if (!UnitWSD::init(UnitWSD::UnitType::Tool, ""))
         throw std::runtime_error("Failed to init unit test pieces.");
+
+    ssl::Manager::initializeClientContext("", "", "", "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH",
+                                          ssl::CertificateVerification::Disabled);
+    if (!ssl::Manager::isClientContextInitialized())
+    {
+        std::cerr << "Failed to initialize Client SSL.\n";
+        return -1;
+    }
 
     std::string server = args[0];
 
