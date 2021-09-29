@@ -6,7 +6,7 @@
 
 namespace CPolyUtil {
 
-	export function rectanglesToPointSet(rectangles: Array<Array<CPoint>>, unitConverter: (point: CPoint) => CPoint): CPointSet {
+	export function rectanglesToPointSet(rectangles: Array<Array<cool.Point>>, unitConverter: (point: cool.Point) => cool.Point): CPointSet {
 		/* An Implementation based on O'ROURKE, Joseph. "Uniqueness of orthogonal connect-the-dots."
 		   Machine Intelligence and Pattern Recognition. Vol. 6. North-Holland, 1988. 97-104.
 		   http://www.science.smith.edu/~jorourke/Papers/OrthoConnect.pdf
@@ -28,7 +28,7 @@ namespace CPolyUtil {
 			}
 		}
 
-		var points = new Map<CPoint, CPoint>();
+		var points = new Map<cool.Point, cool.Point>();
 		for (i = 0; i < rectangles.length; i++) {
 			for (j = 0; j < rectangles[i].length; j++) {
 				if (points.has(rectangles[i][j])) {
@@ -40,17 +40,17 @@ namespace CPolyUtil {
 			}
 		}
 
-		function getKeys(points: Map<CPoint, CPoint>): Array<CPoint> {
-			var keys: Array<CPoint> = [];
-			points.forEach((_: CPoint, key: CPoint) => {
+		function getKeys(points: Map<cool.Point, cool.Point>): Array<cool.Point> {
+			var keys: Array<cool.Point> = [];
+			points.forEach((_: cool.Point, key: cool.Point) => {
 				keys.push(key);
 			});
 			return keys;
 		}
 
-		// CPoint comparison function for sorting a list of CPoints w.r.t x-coordinate.
+		// cool.Point comparison function for sorting a list of CPoints w.r.t x-coordinate.
 		// When the points have same x-coordinate break tie based on y-coordinates.
-		function xThenY(ap: CPoint, bp: CPoint): number {
+		function xThenY(ap: cool.Point, bp: cool.Point): number {
 			if (ap.x < bp.x || (ap.x === bp.x && ap.y < bp.y)) {
 				return -1;
 			}
@@ -62,9 +62,9 @@ namespace CPolyUtil {
 			}
 		}
 
-		// CPoint comparison function for sorting a list of CPoints w.r.t y-coordinate.
+		// cool.Point comparison function for sorting a list of CPoints w.r.t y-coordinate.
 		// When the points have same y-coordinate break tie based on x-coordinates.
-		function yThenX(ap: CPoint, bp: CPoint): number {
+		function yThenX(ap: cool.Point, bp: cool.Point): number {
 
 			if (ap.y < bp.y || (ap.y === bp.y && ap.x < bp.x)) {
 				return -1;
@@ -80,8 +80,8 @@ namespace CPolyUtil {
 		var sortX = getKeys(points).sort(xThenY);
 		var sortY = getKeys(points).sort(yThenX);
 
-		var edgesH = new Map<CPoint, CPoint>();
-		var edgesV = new Map<CPoint, CPoint>();
+		var edgesH = new Map<cool.Point, cool.Point>();
+		var edgesV = new Map<cool.Point, cool.Point>();
 
 		var len = getKeys(points).length;
 		i = 0;
@@ -108,7 +108,7 @@ namespace CPolyUtil {
 		var edgesHKeys = getKeys(edgesH);
 
 		while (edgesHKeys.length > 0) {
-			var p: Array<[CPoint, number]> = [[edgesHKeys[0], 0]];
+			var p: Array<[cool.Point, number]> = [[edgesHKeys[0], 0]];
 			while (true) {
 				var curr = p[p.length - 1][0];
 				var e = p[p.length - 1][1];
@@ -127,7 +127,7 @@ namespace CPolyUtil {
 					break;
 				}
 			}
-			var polygon = new Array<CPoint>();
+			var polygon = new Array<cool.Point>();
 			for (i = 0; i < p.length; i++) {
 				polygon.push(unitConverter(points.get(p[i][0])));
 				edgesH.delete(p[i][0]);

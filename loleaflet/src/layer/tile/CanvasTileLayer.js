@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData CPoint $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CBounds CCellCursor CCellSelection PathGroupType */
+/* global app L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -782,7 +782,7 @@ L.TileSectionManager = L.Class.extend({
 	},
 
 	getTileSectionPos : function () {
-		return new CPoint(this._tilesSection.myTopLeft[0], this._tilesSection.myTopLeft[1]);
+		return new L.Point(this._tilesSection.myTopLeft[0], this._tilesSection.myTopLeft[1]);
 	}
 });
 
@@ -2288,7 +2288,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._visibleCursor = new L.LatLngBounds(
 			this._twipsToLatLng(recCursor.getTopLeft(), this._map.getZoom()),
 			this._twipsToLatLng(recCursor.getBottomRight(), this._map.getZoom()));
-		this._cursorCorePixels = CBounds.fromCompat(this._twipsToCorePixelsBounds(recCursor));
+		this._cursorCorePixels = this._twipsToCorePixelsBounds(recCursor);
 
 		var cursorPos = this._visibleCursor.getNorthWest();
 		var docLayer = this._map._docLayer;
@@ -2360,7 +2360,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._viewCursors[viewId].bounds = new L.LatLngBounds(
 			this._twipsToLatLng(rectangle.getTopLeft(), this._map.getZoom()),
 			this._twipsToLatLng(rectangle.getBottomRight(), this._map.getZoom())),
-		this._viewCursors[viewId].corepxBounds = CBounds.fromCompat(this._twipsToCorePixelsBounds(rectangle));
+		this._viewCursors[viewId].corepxBounds = this._twipsToCorePixelsBounds(rectangle);
 		this._viewCursors[viewId].part = parseInt(obj.part);
 
 		// FIXME. Server not sending view visible cursor

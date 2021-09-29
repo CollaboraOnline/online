@@ -12,7 +12,7 @@ class CSplitterLine extends CRectangle {
 	private inactive: boolean;
 
 	constructor(map: any, options: any) {
-		super(new CBounds(), options);
+		super(new cool.Bounds(undefined), options);
 
 		this.fixed = true;
 		this.stroke = false;
@@ -47,7 +47,7 @@ class CSplitterLine extends CRectangle {
 		this.setBounds(newBounds);
 	}
 
-	private computeBounds(): CBounds {
+	private computeBounds(): cool.Bounds {
 		var docLayer = this.map._docLayer;
 		var mapSize = this.map.getPixelBoundsCore().getSize();
 		mapSize.round();
@@ -62,15 +62,15 @@ class CSplitterLine extends CRectangle {
 		// highest possible zoom level. This makes splitter's
 		// zoom animation easier.
 		var maxZoom : number = this.map.zoomToFactor(this.map.options.maxZoom);
-		var start = new CPoint(
+		var start = new cool.Point(
 			this.isHoriz ? splitPos.x - thickup: 0,
 			this.isHoriz ? 0 : splitPos.y - thickup);
-		var end = new CPoint(
+		var end = new cool.Point(
 			this.isHoriz ? splitPos.x + thickdown : mapSize.x * maxZoom,
 			this.isHoriz ? mapSize.y * maxZoom : splitPos.y + thickdown)
 			._round();
 
 		this.inactive = this.isHoriz ? !splitPos.x : !splitPos.y;
-		return new CBounds(start, end);
+		return new cool.Bounds(start, end);
 	}
 }

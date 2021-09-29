@@ -220,8 +220,6 @@ LOLEAFLET_JS_LST =\
 	src/layer/tile/CommentListSection.ts \
 	src/layer/tile/TilesSection.ts \
 	src/layer/tile/AutoFillMarkerSection.ts \
-	src/layer/vector/CPoint.ts \
-	src/layer/vector/CBounds.ts \
 	src/layer/vector/CEventsHandler.ts \
 	src/layer/vector/CPointSet.ts \
 	src/layer/vector/CPath.ts \

@@ -13,12 +13,12 @@ class CPolygon extends CPolyline {
 			this.fill = true;
 	}
 
-	getCenter(): CPoint {
+	getCenter(): cool.Point {
 		var i: number;
 		var j: number;
 		var len: number;
-		var p1: CPoint;
-		var p2: CPoint;
+		var p1: cool.Point;
+		var p2: cool.Point;
 		var f: number;
 		var area: number;
 		var x: number;
@@ -39,10 +39,10 @@ class CPolygon extends CPolyline {
 			area += f * 3;
 		}
 
-		return new CPoint(x / area, y / area);
+		return new cool.Point(x / area, y / area);
 	}
 
-	updatePath(paintArea?: CBounds, paneBounds?: CBounds) {
+	updatePath(paintArea?: cool.Bounds, paneBounds?: cool.Bounds) {
 
 		this.parts = this.rings;
 
@@ -59,9 +59,9 @@ class CPolygon extends CPolyline {
 		this.renderer.updatePoly(this, true /* closed? */, paintArea, paneBounds);
 	}
 
-	anyRingBoundContains(corePxPoint: CPoint): boolean {
+	anyRingBoundContains(corePxPoint: cool.Point): boolean {
 		for (var i = 0; i < this.rings.length; ++i) {
-			var ringBound = new CBounds();
+			var ringBound = new cool.Bounds(undefined);
 			var ring = this.rings[i];
 			for (var pointIdx = 0; pointIdx < ring.length; ++pointIdx) {
 				ringBound.extend(ring[pointIdx]);

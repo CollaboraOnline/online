@@ -17,8 +17,8 @@ class Cursor {
 	headerName: string;
 	headerTimeout: number = 3000;
 
-	private position: CPoint;
-	private size: CPoint;
+	private position: cool.Point;
+	private size: cool.Point;
 	private container: HTMLDivElement;
 	private cursorHeader: HTMLDivElement;
 	private cursor: HTMLDivElement;
@@ -28,7 +28,7 @@ class Cursor {
 	private domAttached: boolean = false;
 
 	// position and size should be in core pixels.
-	constructor(position: CPoint, size: CPoint, map: any, options: any) {
+	constructor(position: cool.Point, size: cool.Point, map: any, options: any) {
 		this.opacity = options.opacity !== undefined ? options.opacity : this.opacity;
 		this.zIndex = options.zIndex !== undefined ? options.zIndex : this.zIndex;
 		this.blink = options.blink !== undefined ? options.blink : this.blink;
@@ -109,13 +109,13 @@ class Cursor {
 	}
 
 	// position and size should be in core pixels.
-	setPositionSize(position: CPoint, size: CPoint) {
+	setPositionSize(position: cool.Point, size: cool.Point) {
 		this.position = position;
 		this.size = size;
 		this.update();
 	}
 
-	getPosition(): CPoint {
+	getPosition(): cool.Point {
 		return this.position;
 	}
 
@@ -123,17 +123,16 @@ class Cursor {
 		if (!this.container || !this.map)
 			return;
 
-		var docBounds = CBounds.fromCompat(this.map.getCorePxDocBounds());
+		var docBounds = <cool.Bounds>this.map.getCorePxDocBounds();
 		var inDocCursor = docBounds.contains(this.position);
 		// Calculate position and size in CSS pixels.
-		var viewBounds = CBounds.fromCompat(this.map.getPixelBoundsCore());
+		var viewBounds = <cool.Bounds>(this.map.getPixelBoundsCore());
 		var spCxt = this.map.getSplitPanesContext();
 		var origin = viewBounds.min.clone();
 		var paneSize = viewBounds.getSize();
-		var splitPos = new CPoint(0, 0);
+		var splitPos = new cool.Point(0, 0);
 		if (inDocCursor && spCxt) {
-			splitPos = CPoint.fromCompat(
-				spCxt.getSplitPos()).multiplyBy(app.dpiScale);
+			splitPos = spCxt.getSplitPos().multiplyBy(app.dpiScale);
 			if (this.position.x <= splitPos.x && this.position.x >= 0) {
 				origin.x = 0;
 				paneSize.x = splitPos.x;
@@ -153,11 +152,11 @@ class Cursor {
 		var canvasOffset = this.position.subtract(origin);
 
 		if (inDocCursor) {
-			var cursorOffset = new CPoint(
+			var cursorOffset = new cool.Point(
 				origin.x ? canvasOffset.x - splitPos.x : canvasOffset.x,
 				origin.y ? canvasOffset.y - splitPos.y : canvasOffset.y);
-			var paneBounds = new CBounds(new CPoint(0, 0), paneSize);
-			var cursorBounds = new CBounds(cursorOffset, cursorOffset.add(this.size));
+			var paneBounds = new cool.Bounds(new cool.Point(0, 0), paneSize);
+			var cursorBounds = new cool.Bounds(cursorOffset, cursorOffset.add(this.size));
 
 			if (!paneBounds.contains(cursorBounds)) {
 				this.container.style.visibility = 'hidden';
@@ -229,7 +228,7 @@ class Cursor {
 			.disableScrollPropagation(this.container);
 	}
 
-	private setPos(pos: CPoint) {
+	private setPos(pos: cool.Point) {
 		this.container.style.top = pos.y + 'px';
 		this.container.style.left = pos.x + 'px';
 		this.container.style.zIndex = this.zIndex + '';
@@ -241,12 +240,12 @@ class Cursor {
 		}
 	}
 
-	private setSize(size: CPoint) {
+	private setSize(size: cool.Point) {
 		this.cursor.style.height = size.y + 'px';
 		this.container.style.top = '-' + (this.container.clientHeight - size.y - 2) / 2 + 'px';
 	}
 
-	static hotSpot = new Map<string, CPoint>([['fill', new CPoint(7, 16)]]);
+	static hotSpot = new Map<string, cool.Point>([['fill', new cool.Point(7, 16)]]);
 
 	static customCursors = [
 		'fill'
@@ -262,7 +261,7 @@ class Cursor {
 		var customCursor;
 
 		if (Cursor.isCustomCursor(cursorName)) {
-			var cursorHotSpot = Cursor.hotSpot.get(cursorName) || new CPoint(0, 0);
+			var cursorHotSpot = Cursor.hotSpot.get(cursorName) || new cool.Point(0, 0);
 			customCursor = L.Browser.ie ? // IE10 does not like item with left/top position in the url list
 				'url(' + Cursor.imagePath + '/' + cursorName + '.cur), default' :
 				'url(' + Cursor.imagePath + '/' + cursorName + '.png) ' + cursorHotSpot.x + ' ' + cursorHotSpot.y + ', default';
