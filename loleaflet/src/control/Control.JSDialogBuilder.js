@@ -1987,6 +1987,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 	},
 
+	_scrollIntoViewBlockOption: function(option) {
+		if (option === 'nearest' || option === 'center') {
+			// compatibility with older firefox
+			var match = window.navigator.userAgent.match(/Firefox\/([0-9]+)\./);
+			var firefoxVer = match ? parseInt(match[1]) : 58;
+			var blockOption = firefoxVer >= 58 ? option : 'start';
+			return blockOption;
+		}
+
+		return option;
+	},
+
 	_iconViewControl: function (parentContainer, data, builder) {
 		var container = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview', parentContainer);
 		container.id = data.id;
@@ -2001,8 +2013,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var firstSelected = $(container).children('.selected').get(0);
+		var blockOption = builder._scrollIntoViewBlockOption('nearest');
 		if (firstSelected)
-			firstSelected.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'nearest'});
+			firstSelected.scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
 
 		return false;
 	},
@@ -3076,7 +3089,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var entry = $(control).children().eq(pos);
 
 			entry.addClass('selected');
-			$(entry).get(0).scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'nearest'});
+			var blockOption = this._scrollIntoViewBlockOption('nearest');
+			$(entry).get(0).scrollIntoView({behavior: 'smooth', block: blockOption, inline: 'nearest'});
 
 			break;
 		}
