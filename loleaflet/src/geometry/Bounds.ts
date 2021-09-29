@@ -130,7 +130,7 @@ export class Bounds {
 
 		var bounds: Bounds;
 		var point: Point;
-		if (L.Util.isArray(obj) || obj instanceof L.Point) {
+		if (Array.isArray(obj) || obj instanceof L.Point) {
 			point = toPoint(<PointConvertable>obj);
 		} else {
 			bounds = Bounds.toBounds(obj);
