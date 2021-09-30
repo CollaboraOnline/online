@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 /*
  * CRectangle extends CPolygon and creates a rectangle of given bounds.
  */
@@ -24,8 +22,8 @@ class CRectangle extends CPolygon {
 
 function getOptionsClone(baseOpts: any): any {
 	// TODO: implement polyfill for Object.assign() instead.
-	let newOpt: any = {};
-	for (let prop in baseOpts) {
+	const newOpt: any = {};
+	for (const prop in baseOpts) {
 		if (Object.prototype.hasOwnProperty.call(baseOpts, prop)) {
 			newOpt[prop] = baseOpts[prop];
 		}
@@ -58,22 +56,22 @@ class CCellCursor extends CPathGroup {
 	}
 
 	setBounds(bounds: cool.Bounds) {
-		let cellBounds = new cool.Bounds(
+		const cellBounds = new cool.Bounds(
 			bounds.min.subtract(new cool.Point(0.5, 0.5)),
 			bounds.max.subtract(new cool.Point(0.5, 0.5))
 		);
 
 		// Compute bounds for border path.
-		let boundsForBorder: cool.Bounds[] = [];
+		const boundsForBorder: cool.Bounds[] = [];
 		for (let idx = 0; idx < this.cursorWeight; ++idx) {
-			let pixels = idx; // device pixels from real cell-border.
+			const pixels = idx; // device pixels from real cell-border.
 			boundsForBorder.push(new cool.Bounds(
 				cellBounds.min.add(new cool.Point(pixels, pixels)),
 				cellBounds.max.subtract(new cool.Point(pixels, pixels))
 			));
 		}
 
-		let boundsForContrastBorder = new cool.Bounds(
+		const boundsForContrastBorder = new cool.Bounds(
 			cellBounds.min.add(new cool.Point(this.cursorWeight, this.cursorWeight)),
 			cellBounds.max.subtract(new cool.Point(this.cursorWeight, this.cursorWeight)));
 
@@ -82,20 +80,20 @@ class CCellCursor extends CPathGroup {
 			// Update the border path.
 			this.borderPaths.forEach(function (borderPath, index) {
 				borderPath.setBounds(boundsForBorder[index]);
-			})
+			});
 			// Update constrast path
 			this.innerContrastBorder.setBounds(boundsForContrastBorder);
 
 		} else {
 			for (let index = 0; index < this.cursorWeight; ++index) {
-				let borderOpt = getOptionsClone(this.options);
+				const borderOpt = getOptionsClone(this.options);
 				borderOpt.name += '-border-' + index;
-				let borderPath = new CRectangle(boundsForBorder[index], borderOpt);
+				const borderPath = new CRectangle(boundsForBorder[index], borderOpt);
 				this.borderPaths.push(borderPath);
 				this.push(borderPath);
 			}
 
-			let contrastBorderOpt = getOptionsClone(this.options);
+			const contrastBorderOpt = getOptionsClone(this.options);
 			contrastBorderOpt.name += '-contrast-border';
 			contrastBorderOpt.color = 'white';
 			this.innerContrastBorder = new CRectangle(boundsForContrastBorder, contrastBorderOpt);
@@ -109,7 +107,7 @@ class CCellCursor extends CPathGroup {
 		// forward to the innermost black border rectangle.
 		console.assert(this.borderPaths && this.borderPaths.length, 'borders not setup yet!');
 
-		return this.borderPaths[0].bindPopup(content, options)
+		return this.borderPaths[0].bindPopup(content, options);
 	}
 }
 
@@ -137,42 +135,42 @@ class CCellSelection extends CPathGroup {
 	// This method is used to create/update the internal CPaths with the correct positions and dimensions
 	// using CPointSet data-structure.
 	setPointSet(pointSet: CPointSet) {
-		let outerPointSet = pointSet;
+		const outerPointSet = pointSet;
 		outerPointSet.applyOffset(new cool.Point(0.5, 0.5), false /* centroidSymmetry */, true /* preRound */);
 
-		let borderPointSets: CPointSet[] = [];
+		const borderPointSets: CPointSet[] = [];
 
 		for (let idx = 0; idx < this.selectionWeight; ++idx) {
-			let pixels = idx; // device pixels from real cell-border.
-			let borderPset = outerPointSet.clone();
+			const pixels = idx; // device pixels from real cell-border.
+			const borderPset = outerPointSet.clone();
 			borderPset.applyOffset(new cool.Point(-pixels, -pixels), true /* centroidSymmetry */, false /* preRound */);
 			borderPointSets.push(borderPset);
 		}
-		let contrastBorderPointSet = outerPointSet.clone();
-		contrastBorderPointSet.applyOffset(new cool.Point(-this.selectionWeight, -this.selectionWeight), true /* centroidSymmetry */, false /* preRound */)
+		const contrastBorderPointSet = outerPointSet.clone();
+		contrastBorderPointSet.applyOffset(new cool.Point(-this.selectionWeight, -this.selectionWeight), true /* centroidSymmetry */, false /* preRound */);
 
 		if (this.borderPaths && this.innerContrastBorder) {
 			console.assert(this.borderPaths.length === this.selectionWeight);
 			// Update the border path.
 			this.borderPaths.forEach(function (borderPath, index) {
 				borderPath.setPointSet(borderPointSets[index]);
-			})
+			});
 			this.innerContrastBorder.setPointSet(contrastBorderPointSet);
 
 		} else {
 			this.borderPaths = [];
 			for (let index = 0; index < this.selectionWeight; ++index) {
-				let borderOpt = getOptionsClone(this.options);
+				const borderOpt = getOptionsClone(this.options);
 				borderOpt.fillColor = undefined;
 				borderOpt.fillOpacity = undefined;
 				borderOpt.fill = false;
 				borderOpt.name += '-border-' + index;
-				let borderPath = new CPolygon(borderPointSets[index], borderOpt);
+				const borderPath = new CPolygon(borderPointSets[index], borderOpt);
 				this.borderPaths.push(borderPath);
 				this.push(borderPath);
 			}
 
-			let contrastBorderOpt = getOptionsClone(this.options);
+			const contrastBorderOpt = getOptionsClone(this.options);
 			contrastBorderOpt.name += '-contrast-border';
 			contrastBorderOpt.color = 'white';
 			contrastBorderOpt.fill = true;
