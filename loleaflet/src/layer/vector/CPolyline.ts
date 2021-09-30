@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 /*
  * CPolyline implements polyline vector layer (a set of points connected with lines).
  * This class implements basic line drawing and CPointSet datastructure which is to be used
@@ -72,7 +70,7 @@ class CPolyline extends CPath {
 			srcArray.forEach((pt: cool.Point, index: number) => {
 				array[index] = pt.clone();
 				updateBounds(pt);
-			})
+			});
 
 			rings.push(array);
 			return;
@@ -210,4 +208,4 @@ class CPolyline extends CPath {
 	empty(): boolean {
 		return this.pointSet.empty();
 	}
-};
+}
