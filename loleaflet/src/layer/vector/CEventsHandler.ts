@@ -1,9 +1,10 @@
-/* eslint-disable */
 
 // Type of the data passed to event handlers.
 interface EventData {
 	position?: cool.Point;
 }
+
+type EventHandlerType = (data: EventData) => void;
 
 // Used as base class for classes that needs to setup
 // event handlers for real or synthetic events.
@@ -16,12 +17,12 @@ abstract class CEventsHandler {
 		'mouseleave'
 	];
 
-	private handlers = new Map<string, Set<Function>>();
+	private handlers = new Map<string, Set<EventHandlerType>>();
 
 	constructor() {
 		var handlers = this.handlers;
 		this.supportedEventNames.forEach(function (eName) {
-			handlers.set(eName, new Set<Function>());
+			handlers.set(eName, new Set<EventHandlerType>());
 		});
 	}
 
@@ -32,11 +33,11 @@ abstract class CEventsHandler {
 				continue;
 
 			this.supportedEventNames.push(eName);
-			this.handlers.set(eName, new Set<Function>());
+			this.handlers.set(eName, new Set<EventHandlerType>());
 		}
 	}
 
-	on(eventName: string, handler: Function): boolean {
+	on(eventName: string, handler: EventHandlerType): boolean {
 		var handlerSet = this.handlers.get(eventName);
 		if (handlerSet === undefined) {
 			console.warn('Unknown event type: ' + eventName + ' used to register a handler');
@@ -46,7 +47,7 @@ abstract class CEventsHandler {
 		handlerSet.add(handler);
 	}
 
-	off(eventName: string, handler: Function): boolean {
+	off(eventName: string, handler: EventHandlerType): boolean {
 		var handlerSet = this.handlers.get(eventName);
 		if (handlerSet === undefined) {
 			console.warn('Unknown event type: ' + eventName + ' used to unregister a handler');
@@ -69,9 +70,8 @@ abstract class CEventsHandler {
 			return false;
 		}
 
-		var that = this;
-		handlerSet.forEach(function (handler) {
-			handler.call(that, eventData);
-		});
+		handlerSet.forEach(function (handler: EventHandlerType) {
+			handler.call(this, eventData);
+		}, this);
 	}
 }
