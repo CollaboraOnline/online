@@ -1,4 +1,4 @@
-/* eslint-disable */ /* -*- tab-width: 4 -*- */
+/* -*- tab-width: 4 -*- */
 /* See CanvasSectionContainer.ts for explanations. */
 
 declare var L: any;
@@ -273,14 +273,14 @@ class TilesSection {
 		rectangle = [Math.round(rectangle[0] * app.twipsToPixels), Math.round(rectangle[1] * app.twipsToPixels), Math.round(rectangle[2] * app.twipsToPixels), Math.round(rectangle[3] * app.twipsToPixels)];
 
 		this.context.strokeRect(rectangle[0] - ctx.viewBounds.min.x + this.sectionProperties.pageBackgroundInnerMargin,
-								rectangle[1] - ctx.viewBounds.min.y + this.sectionProperties.pageBackgroundInnerMargin,
-								rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
-								rectangle[3] - this.sectionProperties.pageBackgroundInnerMargin);
+			rectangle[1] - ctx.viewBounds.min.y + this.sectionProperties.pageBackgroundInnerMargin,
+			rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
+			rectangle[3] - this.sectionProperties.pageBackgroundInnerMargin);
 
 		this.context.fillText(String(pageNumber),
-								Math.round((2 * rectangle[0] + rectangle[2]) * 0.5) - ctx.viewBounds.min.x,
-								Math.round((2 * rectangle[1] + rectangle[3]) * 0.5) - ctx.viewBounds.min.y,
-								rectangle[2] * 0.4);
+			Math.round((2 * rectangle[0] + rectangle[2]) * 0.5) - ctx.viewBounds.min.x,
+			Math.round((2 * rectangle[1] + rectangle[3]) * 0.5) - ctx.viewBounds.min.y,
+			rectangle[2] * 0.4);
 	}
 
 	private drawPageBackgroundFileBasedView (ctx: any, top: number, bottom: number) {
@@ -326,7 +326,7 @@ class TilesSection {
 		this.context.strokeStyle = this.sectionProperties.pageBackgroundBorderColor;
 		this.context.lineWidth = app.roundedDpiScale;
 
-        this.context.font = this.sectionProperties.pageBackgroundFont;
+		this.context.font = this.sectionProperties.pageBackgroundFont;
 
 		if (this.map._docLayer._docType === 'text') {
 			var viewRectangleTwips = [this.documentTopLeft[0], this.documentTopLeft[1], this.containerObject.getDocumentAnchorSection().size[0], this.containerObject.getDocumentAnchorSection().size[1]];
@@ -336,13 +336,12 @@ class TilesSection {
 
 			for (var i: number = 0; i < app.file.writer.pageRectangleList.length; i++) {
 				var rectangle: any = app.file.writer.pageRectangleList[i];
-				if (
-					(rectangle[1] > viewRectangleTwips[1] && rectangle[1] < viewRectangleTwips[1] + viewRectangleTwips[3])
-					|| (rectangle[1] + rectangle[3] > viewRectangleTwips[1] && rectangle[1] + rectangle[3] < viewRectangleTwips[1] + viewRectangleTwips[3])
-					|| (rectangle[1] < viewRectangleTwips[1] && rectangle[1] + rectangle[3] > viewRectangleTwips[1] + viewRectangleTwips[3])
-					) {
-						this.drawPageBackgroundWriter(ctx, rectangle.slice(), i + 1);
-					}
+				if ((rectangle[1] > viewRectangleTwips[1] && rectangle[1] < viewRectangleTwips[1] + viewRectangleTwips[3]) ||
+					(rectangle[1] + rectangle[3] > viewRectangleTwips[1] && rectangle[1] + rectangle[3] < viewRectangleTwips[1] + viewRectangleTwips[3]) ||
+					(rectangle[1] < viewRectangleTwips[1] && rectangle[1] + rectangle[3] > viewRectangleTwips[1] + viewRectangleTwips[3])) {
+
+					this.drawPageBackgroundWriter(ctx, rectangle.slice(), i + 1);
+				}
 			}
 		}
 		else if (app.file.fileBasedView) { // Writer and fileBasedView can not be "true" at the same time.
@@ -369,11 +368,10 @@ class TilesSection {
 		if (this.sectionProperties.tsManager.waitForTiles()) {
 			if (!this.haveAllTilesInView(zoom, part, ctx))
 				return;
-		} else {
+		} else if (!this.containerObject.isZoomChanged()) {
 			// Don't show page border and page numbers (drawn by drawPageBackgrounds) if zoom is changing
 			// after a zoom animation.
-			if (!this.containerObject.isZoomChanged())
-				this.drawPageBackgrounds(ctx);
+			this.drawPageBackgrounds(ctx);
 		}
 
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
@@ -382,7 +380,6 @@ class TilesSection {
 		}
 
 		var docLayer = this.sectionProperties.docLayer;
-		var tileSection = this;
 		var doneTiles = new Set();
 		this.forEachTileInView(zoom, part, ctx, function (tile: any, coords: any): boolean {
 			if (doneTiles.has(coords.key()))
@@ -390,29 +387,29 @@ class TilesSection {
 
 			// Ensure tile is loaded and is within document bounds.
 			if (tile && tile.loaded && docLayer._isValidTile(coords)) {
-				tileSection.paint(tile, ctx, false /* async? */);
+				this.paint(tile, ctx, false /* async? */);
 			}
 			doneTiles.add(coords.key());
 			return true; // continue with remaining tiles.
-		});
+		}.bind(this));
 	}
 
-	public onMouseWheel () {}
-	public onMouseMove () {}
-	public onMouseDown () {}
-	public onMouseUp () {}
-	public onMouseEnter () {}
-	public onMouseLeave () {}
-	public onClick () {}
-	public onDoubleClick () {}
-	public onContextMenu () {}
-	public onLongPress () {}
-	public onMultiTouchStart () {}
-	public onMultiTouchMove () {}
-	public onMultiTouchEnd () {}
-	public onNewDocumentTopLeft () {}
+	public onMouseWheel () { return; }
+	public onMouseMove () { return; }
+	public onMouseDown () { return; }
+	public onMouseUp () { return; }
+	public onMouseEnter () { return; }
+	public onMouseLeave () { return; }
+	public onClick () { return; }
+	public onDoubleClick () { return; }
+	public onContextMenu () { return; }
+	public onLongPress () { return; }
+	public onMultiTouchStart () { return; }
+	public onMultiTouchMove () { return; }
+	public onMultiTouchEnd () { return; }
+	public onNewDocumentTopLeft () { return; }
 }
 
 L.getNewTilesSection = function () {
 	return new TilesSection();
-}
+};
