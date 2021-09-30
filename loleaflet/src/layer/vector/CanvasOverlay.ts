@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 // OverlayTransform is used by CanvasOverlay to apply transformations
 // to points/bounds before drawing is done.
 // The reason why we cannot use canvasRenderingContext2D.transform() is it
@@ -71,6 +69,7 @@ class CanvasOverlay {
 	}
 
 	onInitialize() {
+		return;
 	}
 
 	onResize() {
@@ -230,11 +229,10 @@ class CanvasOverlay {
 		// Sort them w.r.t. rendering order.
 		orderedPaths.sort(CanvasOverlay.renderOrderComparator);
 
-		var renderer = this;
 		orderedPaths.forEach((path: CPath) => {
-			if (renderer.isVisible(path))
+			if (this.isVisible(path))
 				path.updatePathAllPanes(paintArea);
-		});
+		}, this);
 	}
 
 	private redraw(path: CPath, oldBounds: cool.Bounds) {
@@ -438,4 +436,4 @@ class CanvasOverlay {
 	getMap(): any {
 		return this.map;
 	}
-};
+}
