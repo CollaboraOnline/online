@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 /*
  * CPolyUtil contains utility functions for polygons.
  */
