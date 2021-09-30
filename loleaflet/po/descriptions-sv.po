@@ -1,11 +1,12 @@
 # Luna Jernberg <droidbittin@gmail.com>, 2021.
+# Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-03 14:47+0200\n"
-"PO-Revision-Date: 2021-08-17 22:18+0000\n"
-"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
+"PO-Revision-Date: 2021-09-30 22:47+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "app-store-descriptions/sv/>\n"
 "Language: sv\n"
@@ -13,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #. App name - 50 chars limit
 #: descriptions/google-play.html%2Bhtml.body.h3:5-1
@@ -25,32 +26,32 @@ msgstr "Collabora Office: LibreOffice, OpenOffice & mer"
 msgid ""
 "LibreOffice based editor for Microsoft Office, LibreOffice and OpenOffice "
 "docs."
-msgstr ""
+msgstr "Ordbehandlare baserad på LibreOfffice-teknologi."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:14-5
 msgid "Major upgrade to the new 6.4 core."
-msgstr ""
+msgstr "Stor uppgradering till den nya 6.4-kärnan."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:15-5
 msgid "Improved MS Office interoperability."
-msgstr ""
+msgstr "Förbättrad kompatibilitet med MS Office-dokument."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:16-5
 msgid "Better keyboard, mouse and trackpad support on Chromebooks."
-msgstr ""
+msgstr "Bättre stöd för tangentbord, mus och styrplatta på Chromebooks."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:17-5
 msgid "New tablet UI featuring a notebookbar."
-msgstr ""
+msgstr "Nytt användargränssnitt för surfplattor, nu med ett bandmeny."
 
 #. Release notes
 #: descriptions/google-play.html%2Bhtml.body.ul.li:18-5
 msgid "Numerous fixes and improvements all over the place."
-msgstr ""
+msgstr "Många korrigeringar och förbättringar överallt."
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.p:21-1
@@ -58,38 +59,41 @@ msgid ""
 "The new 6.4.9 version is faster, easier to use with an improved and more "
 "beautiful UI and with the following features:"
 msgstr ""
+"Den nya 6.4.9-versionen är snabbare och enklare att använda med ett "
+"förbättrat och mer tilltalande användargränssnitt och med följande "
+"funktioner:"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:24-2
 msgid "Import and comment PDF Files"
-msgstr ""
+msgstr "Importera och kommentera PDF-dokument"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:25-2
 msgid "Import of CSV files"
-msgstr ""
+msgstr "Import av CSV-filer"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:26-2
 msgid "Add and edit Fontwork text art"
-msgstr ""
+msgstr "Lägg till och redigera Fontwork-illustrationer"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:27-2
 msgid "Open Draw files"
-msgstr ""
+msgstr "Öppna Draw-filer"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:28-2
 msgid "Run VBA compatible macros"
-msgstr ""
+msgstr "Köra VBA -kompatibla makron"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:29-2
 msgid "Freeze rows and columns in spreadsheets"
-msgstr ""
+msgstr "Fixera rader och kolumner i kalkylblad"
 
 #. Release notes 6.4.9
 #: descriptions/google-play.html%2Bhtml.body.ul.li:30-2
 msgid "New move/copy/delete sheet dialog in Calc"
-msgstr ""
+msgstr "Ny dialogruta för att flytta/kopiera/ta bort ark i Calc"
