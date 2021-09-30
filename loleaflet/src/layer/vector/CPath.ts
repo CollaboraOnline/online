@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 declare var L: any;
 
 /*
@@ -8,7 +6,7 @@ declare var L: any;
  */
 
 abstract class CPath extends CEventsHandler {
-	name: string = "";
+	name: string = '';
 	stroke: boolean = true;
 	color: string = '#3388ff';
 	weight: number = 3;
@@ -25,7 +23,7 @@ abstract class CPath extends CEventsHandler {
 	thickness: number = 2;
 	viewId: number = -1;
 	groupType: PathGroupType = PathGroupType.Other;
-	toCompatUnits: Function;
+	toCompatUnits: (from: cool.PointConvertable) => any;
 
 	radius: number = 0;
 	radiusY: number = 0;
@@ -175,7 +173,7 @@ abstract class CPath extends CEventsHandler {
 			var fixedMapArea = new cool.Bounds(
 				new cool.Point(0, 0),
 				viewBounds.getSize()
-			)
+			);
 			this.updatePath(fixedMapArea, fixedMapArea);
 			this.updateTestData();
 			return;
@@ -319,14 +317,14 @@ abstract class CPath extends CEventsHandler {
 		if (!this.getMap().hasLayer(this.popup)) {
 			if (!e.position)
 				e.position = this.getBounds().getCenter();
-			var latlngPos = this.toCompatUnits([e.position.x, e.position.y])
+			var latlngPos = this.toCompatUnits([e.position.x, e.position.y]);
 			this.popup.setLatLng(latlngPos);
 			this.getMap().openPopup(this.popup);
 			this.delayClosePopup({});
 		}
 	}
 
-};
+}
 
 // This also defines partial rendering order.
 enum PathGroupType {
