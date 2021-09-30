@@ -1993,7 +1993,10 @@ bool LOOLWSD::checkAndRestoreForKit()
 
 void LOOLWSD::doHousekeeping()
 {
-    LOOLWSD::PrisonerPoll->wakeup();
+    if (LOOLWSD::PrisonerPoll)
+    {
+        LOOLWSD::PrisonerPoll->wakeup();
+    }
 }
 
 void LOOLWSD::closeDocument(const std::string& docKey, const std::string& message)
