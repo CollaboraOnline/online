@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 /*
  * CPointSet is a recursive datastructure used to represent a set of points connected by lines.
  * This is used by CPolyline and hence CPolygon classes to represent set of disconnected/disjoint
@@ -61,7 +59,7 @@ class CPointSet {
 	}
 
 	private static cloneImpl(source: CPointSet): CPointSet {
-		let newPointSet = new CPointSet();
+		const newPointSet = new CPointSet();
 
 		if (source.points) {
 			newPointSet.points = [];
@@ -71,7 +69,7 @@ class CPointSet {
 		} else if (source.pointSets) {
 			newPointSet.pointSets = [];
 			source.pointSets.forEach(function (childPointSet) {
-				let clonedChild = CPointSet.cloneImpl(childPointSet);
+				const clonedChild = CPointSet.cloneImpl(childPointSet);
 				newPointSet.pointSets.push(clonedChild);
 			});
 		}
@@ -84,7 +82,7 @@ class CPointSet {
 			return;
 
 		if (pointSet.isFlat()) {
-			let refPoint = new cool.Point(Infinity, Infinity);
+			const refPoint = new cool.Point(Infinity, Infinity);
 			if (centroidSymmetry) {
 				refPoint.x = 0;
 				refPoint.y = 0;
@@ -115,6 +113,6 @@ class CPointSet {
 		// not flat so recurse.
 		pointSet.pointSets.forEach(function(childPointSet) {
 			CPointSet.applyOffsetImpl(childPointSet, offset, centroidSymmetry, preRound);
-		})
+		});
 	}
-};
+}
