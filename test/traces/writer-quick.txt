@@ -1,0 +1,145 @@
+~+42~8OA2W8oMcgbJB52v~067~NewSession: file:///opt/libreoffice/online/test/data/hello-world.odt
+>+44603>8OA2W8oMcgbJB52v>067>loolclient 0.1 1633108557894 517.3000000119209
+>+931>8OA2W8oMcgbJB52v>067>load url=file%3A%2F%2F%2Fopt%2Flibreoffice%2Fonline%2Ftest%2Fdata%2Fhello-world.odt deviceFormFactor=desktop spellOnline=true
+>+1507608>8OA2W8oMcgbJB52v>067>commandvalues command=.uno:StyleApply
+>+872>8OA2W8oMcgbJB52v>067>commandvalues command=.uno:CharFontName
+>+1681>8OA2W8oMcgbJB52v>067>commandvalues command=.uno:AcceptTrackedChanges
+>+1875>8OA2W8oMcgbJB52v>067>requestloksession
+>+69204>8OA2W8oMcgbJB52v>067>commandvalues command=.uno:LanguageStatus
+>+3696>8OA2W8oMcgbJB52v>067>commandvalues command=.uno:ViewAnnotations
+>+828>8OA2W8oMcgbJB52v>067>commandvalues command=.uno:StyleApply
+>+2174>8OA2W8oMcgbJB52v>067>commandvalues command=.uno:CharFontName
+>+86348>8OA2W8oMcgbJB52v>067>freemiumstatus isFreemiumUser=false
+>+15288>8OA2W8oMcgbJB52v>067>clientvisiblearea x=-2640 y=-3720 width=18090 height=23850 splitx=0 splity=0
+>+921>8OA2W8oMcgbJB52v>067>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3072 tiletwipheight=3072
+>+1343>8OA2W8oMcgbJB52v>067>canceltiles
+>+550>8OA2W8oMcgbJB52v>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288 tileposy=0,0,0,0,0,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360 tilewidth=3072 tileheight=3072
+>+60612>8OA2W8oMcgbJB52v>067>clientvisiblearea x=-2640 y=-3255 width=18090 height=22920 splitx=0 splity=0
+>+5524>8OA2W8oMcgbJB52v>067>canceltiles
+>+1220>8OA2W8oMcgbJB52v>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288 tileposy=0,0,0,0,0,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360 tilewidth=3072 tileheight=3072
+>+20371>8OA2W8oMcgbJB52v>067>mouse type=move x=5580 y=23.99997 count=1 buttons=0 modifier=0
+>+91702>8OA2W8oMcgbJB52v>067>canceltiles
+>+1359>8OA2W8oMcgbJB52v>067>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288 tileposy=0,0,0,0,0,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360 tilewidth=3072 tileheight=3072
+>+604668>8OA2W8oMcgbJB52v>067>mouse type=move x=3720 y=2483.99997 count=1 buttons=0 modifier=0
+>+117154>8OA2W8oMcgbJB52v>067>mouse type=move x=3720 y=2483.99997 count=1 buttons=0 modifier=0
+>+45339>8OA2W8oMcgbJB52v>067>mouse type=buttondown x=3720 y=2483.99997 count=1 buttons=1 modifier=0
+>+1599>8OA2W8oMcgbJB52v>067>mouse type=buttonup x=3720 y=2483.99997 count=1 buttons=1 modifier=0
+>+626788>8OA2W8oMcgbJB52v>067>key type=input char=13 key=1280
+>+15450>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1280
+>+289132>8OA2W8oMcgbJB52v>067>textinput id=0 text=H
+>+50504>8OA2W8oMcgbJB52v>067>key type=up char=0 key=4615
+>+23849>8OA2W8oMcgbJB52v>067>textinput id=0 text=e
+>+113463>8OA2W8oMcgbJB52v>067>textinput id=0 text=l
+>+101033>8OA2W8oMcgbJB52v>067>textinput id=0 text=l
+>+106944>8OA2W8oMcgbJB52v>067>textinput id=0 text=o
+>+63852>8OA2W8oMcgbJB52v>067>key type=input char=32 key=0
+>+1154>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1284
+>+134406>8OA2W8oMcgbJB52v>067>textinput id=0 text=w
+>+74373>8OA2W8oMcgbJB52v>067>textinput id=0 text=o
+>+45836>8OA2W8oMcgbJB52v>067>textinput id=0 text=r
+>+44339>8OA2W8oMcgbJB52v>067>textinput id=0 text=l
+>+41436>8OA2W8oMcgbJB52v>067>textinput id=0 text=d
+>+22027>8OA2W8oMcgbJB52v>067>key type=input char=13 key=1280
+>+68572>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1280
+>+74034>8OA2W8oMcgbJB52v>067>textinput id=0 text=T
+>+48684>8OA2W8oMcgbJB52v>067>textinput id=0 text=h
+>+43466>8OA2W8oMcgbJB52v>067>textinput id=0 text=i
+>+24174>8OA2W8oMcgbJB52v>067>textinput id=0 text=s
+>+28355>8OA2W8oMcgbJB52v>067>key type=input char=32 key=0
+>+800>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1284
+>+54696>8OA2W8oMcgbJB52v>067>textinput id=0 text=i
+>+37600>8OA2W8oMcgbJB52v>067>textinput id=0 text=s
+>+39283>8OA2W8oMcgbJB52v>067>key type=input char=32 key=0
+>+952>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1284
+>+199378>8OA2W8oMcgbJB52v>067>textinput id=0 text=a
+>+17700>8OA2W8oMcgbJB52v>067>textinput id=0 text=v
+>+17458>8OA2W8oMcgbJB52v>067>textinput id=0 text=e
+>+32857>8OA2W8oMcgbJB52v>067>textinput id=0 text=r
+>+56900>8OA2W8oMcgbJB52v>067>textinput id=0 text=y
+>+28944>8OA2W8oMcgbJB52v>067>key type=input char=32 key=0
+>+1160>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1284
+>+91294>8OA2W8oMcgbJB52v>067>textinput id=0 text=q
+>+42036>8OA2W8oMcgbJB52v>067>textinput id=0 text=u
+>+33793>8OA2W8oMcgbJB52v>067>textinput id=0 text=i
+>+21962>8OA2W8oMcgbJB52v>067>textinput id=0 text=c
+>+74919>8OA2W8oMcgbJB52v>067>textinput id=0 text=k
+>+33927>8OA2W8oMcgbJB52v>067>key type=input char=32 key=0
+>+907>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1284
+>+79538>8OA2W8oMcgbJB52v>067>textinput id=0 text=t
+>+107795>8OA2W8oMcgbJB52v>067>textinput id=0 text=r
+>+38493>8OA2W8oMcgbJB52v>067>textinput id=0 text=a
+>+57713>8OA2W8oMcgbJB52v>067>textinput id=0 text=c
+>+24905>8OA2W8oMcgbJB52v>067>textinput id=0 text=e
+>+24321>8OA2W8oMcgbJB52v>067>key type=input char=13 key=1280
+>+77647>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1280
+>+15526>8OA2W8oMcgbJB52v>067>textinput id=0 text=a
+>+10248>8OA2W8oMcgbJB52v>067>textinput id=0 text=s
+>+7515>8OA2W8oMcgbJB52v>067>textinput id=0 text=l
+>+9413>8OA2W8oMcgbJB52v>067>textinput id=0 text=k
+>+23953>8OA2W8oMcgbJB52v>067>textinput id=0 text=j
+>+19007>8OA2W8oMcgbJB52v>067>textinput id=0 text=f
+>+21441>8OA2W8oMcgbJB52v>067>textinput id=0 text=h
+>+21849>8OA2W8oMcgbJB52v>067>textinput id=0 text=l
+>+7920>8OA2W8oMcgbJB52v>067>textinput id=0 text=k
+>+11305>8OA2W8oMcgbJB52v>067>textinput id=0 text=a
+>+22241>8OA2W8oMcgbJB52v>067>textinput id=0 text=s
+>+24735>8OA2W8oMcgbJB52v>067>textinput id=0 text=d
+>+2199>8OA2W8oMcgbJB52v>067>key type=input char=32 key=0
+>+855>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1284
+>+9062>8OA2W8oMcgbJB52v>067>textinput id=0 text=f
+>+8011>8OA2W8oMcgbJB52v>067>textinput id=0 text=h
+>+21903>8OA2W8oMcgbJB52v>067>textinput id=0 text=l
+>+7833>8OA2W8oMcgbJB52v>067>textinput id=0 text=k
+>+26294>8OA2W8oMcgbJB52v>067>textinput id=0 text=a
+>+3162>8OA2W8oMcgbJB52v>067>textinput id=0 text=s
+>+22360>8OA2W8oMcgbJB52v>067>textinput id=0 text=d
+>+2436>8OA2W8oMcgbJB52v>067>textinput id=0 text=h
+>+28347>8OA2W8oMcgbJB52v>067>textinput id=0 text=f
+>+2400>8OA2W8oMcgbJB52v>067>key type=input char=32 key=0
+>+939>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1284
+>+22505>8OA2W8oMcgbJB52v>067>textinput id=0 text=l
+>+29609>8OA2W8oMcgbJB52v>067>textinput id=0 text=k
+>+2747>8OA2W8oMcgbJB52v>067>textinput id=0 text=a
+>+5879>8OA2W8oMcgbJB52v>067>textinput id=0 text=s
+>+29117>8OA2W8oMcgbJB52v>067>textinput id=0 text=j
+>+24978>8OA2W8oMcgbJB52v>067>textinput id=0 text=d
+>+26192>8OA2W8oMcgbJB52v>067>textinput id=0 text=f
+>+3399>8OA2W8oMcgbJB52v>067>key type=input char=32 key=0
+>+3521>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1284
+>+1269>8OA2W8oMcgbJB52v>067>textinput id=0 text=h
+>+19045>8OA2W8oMcgbJB52v>067>textinput id=0 text=l
+>+12686>8OA2W8oMcgbJB52v>067>textinput id=0 text=k
+>+23534>8OA2W8oMcgbJB52v>067>textinput id=0 text=s
+>+3158>8OA2W8oMcgbJB52v>067>textinput id=0 text=a
+>+22247>8OA2W8oMcgbJB52v>067>textinput id=0 text=d
+>+9441>8OA2W8oMcgbJB52v>067>textinput id=0 text=h
+>+15239>8OA2W8oMcgbJB52v>067>textinput id=0 text=f
+>+18092>8OA2W8oMcgbJB52v>067>key type=input char=32 key=0
+>+790>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1284
+>+23326>8OA2W8oMcgbJB52v>067>textinput id=0 text=l
+>+2659>8OA2W8oMcgbJB52v>067>textinput id=0 text=k
+>+7401>8OA2W8oMcgbJB52v>067>textinput id=0 text=s
+>+5126>8OA2W8oMcgbJB52v>067>textinput id=0 text=a
+>+23581>8OA2W8oMcgbJB52v>067>textinput id=0 text=d
+>+10545>8OA2W8oMcgbJB52v>067>textinput id=0 text=f
+>+7393>8OA2W8oMcgbJB52v>067>key type=input char=32 key=0
+>+1018>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1284
+>+31362>8OA2W8oMcgbJB52v>067>textinput id=0 text=h
+>+8316>8OA2W8oMcgbJB52v>067>textinput id=0 text=k
+>+24881>8OA2W8oMcgbJB52v>067>textinput id=0 text=j
+>+2073>8OA2W8oMcgbJB52v>067>textinput id=0 text=s
+>+2240>8OA2W8oMcgbJB52v>067>textinput id=0 text=a
+>+25441>8OA2W8oMcgbJB52v>067>textinput id=0 text=d
+>+2955>8OA2W8oMcgbJB52v>067>textinput id=0 text=f
+>+22344>8OA2W8oMcgbJB52v>067>key type=input char=32 key=0
+>+1516>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1284
+>+15317>8OA2W8oMcgbJB52v>067>textinput id=0 text=s
+>+11546>8OA2W8oMcgbJB52v>067>textinput id=0 text=d
+>+5090>8OA2W8oMcgbJB52v>067>textinput id=0 text=a
+>+25053>8OA2W8oMcgbJB52v>067>textinput id=0 text=k
+>+22688>8OA2W8oMcgbJB52v>067>textinput id=0 text=f
+>+24426>8OA2W8oMcgbJB52v>067>textinput id=0 text=s
+>+5118>8OA2W8oMcgbJB52v>067>textinput id=0 text=a
+>+70922>8OA2W8oMcgbJB52v>067>key type=input char=13 key=1280
+>+46504>8OA2W8oMcgbJB52v>067>key type=up char=0 key=1280
+~+13037~8OA2W8oMcgbJB52v~067~EndSession: file:///opt/libreoffice/online/test/data/hello-world.odt
