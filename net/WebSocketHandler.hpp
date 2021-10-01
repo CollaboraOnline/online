@@ -355,6 +355,7 @@ private:
                     _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
                         (std::chrono::steady_clock::now() - _lastPingSentTime).count();
                     LOG_TRC('#' << socket->getFD() << ": Pong received: " << _pingTimeUs << " microseconds");
+                    gotPing(code, _pingTimeUs);
                 }
                 break;
             case WSOpCode::Ping:
@@ -366,6 +367,7 @@ private:
                     _pingTimeUs = std::chrono::duration_cast<std::chrono::microseconds>
                                             (now - _lastPingSentTime).count();
                     sendPong(now, &ctrlPayload[0], payloadLen, socket);
+                    gotPing(code, _pingTimeUs);
                 }
                 break;
             case WSOpCode::Close:
@@ -533,10 +535,11 @@ private:
         _lastPingSentTime = now;
     }
 
+public:
     void sendPing(std::chrono::steady_clock::time_point now,
                   const std::shared_ptr<StreamSocket>& socket)
     {
-        assert(!_isClient);
+//        assert(!_isClient);
         sendPingOrPong(now, "", 1, WSOpCode::Ping, socket);
     }
 
@@ -948,6 +951,10 @@ protected:
             return socket->processInputEnabled();
 
         return false;
+    }
+
+    virtual void gotPing(WSOpCode /* code */, int /* pingTimeUs */)
+    {
     }
 };
 
