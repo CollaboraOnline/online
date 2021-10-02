@@ -499,7 +499,7 @@ public:
         int64_t nextTime = -1;
         while (nextTime <= 0) {
             nextTime = std::chrono::duration_cast<std::chrono::microseconds>(
-                std::chrono::microseconds(_next.getTimestampUs() - _reader.getEpochStart())
+                std::chrono::microseconds((_next.getTimestampUs() - _reader.getEpochStart()) * TRACE_MULTIPLIER)
                 + _start - now).count();
             if (nextTime <= 0)
             {
