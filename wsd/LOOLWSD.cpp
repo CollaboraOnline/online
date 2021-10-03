@@ -4171,20 +4171,29 @@ int LOOLWSD::innerMain()
         }
         else
         {
-            const int timeoutMs = ChildSpawnTimeoutMs * (LOOLWSD::NoCapsForKit ? 150 : 50);
-            const auto timeout = std::chrono::milliseconds(timeoutMs);
-            LOG_TRC("Waiting for a new child for a max of " << timeout);
-            if (!NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
+            int retry = (LOOLWSD::NoCapsForKit ? 150 : 50);
+            const auto timeout = std::chrono::milliseconds(ChildSpawnTimeoutMs);
+            while (retry-- > 0 && !SigUtil::getShutdownRequestFlag())
             {
-                const char* msg = "Failed to fork child processes.";
-                LOG_FTL(msg);
-                std::cerr << "FATAL: " << msg << std::endl;
-                throw std::runtime_error(msg);
+                LOG_INF("Waiting for a new child for a max of " << timeout);
+                if (NewChildrenCV.wait_for(lock, timeout, []() { return !NewChildren.empty(); }))
+                {
+                    break;
+                }
             }
         }
 
         // Check we have at least one.
         LOG_TRC("Have " << NewChildren.size() << " new children.");
+        if (NewChildren.empty())
+        {
+            if (SigUtil::getShutdownRequestFlag())
+                LOG_FTL("Shutdown requested while starting up. Exiting.");
+            else
+                LOG_FTL("No child process could be created. Exiting.");
+            Util::forcedExit(EX_SOFTWARE);
+        }
+
         assert(NewChildren.size() > 0);
     }
 #endif
