@@ -1344,6 +1344,11 @@ int main(int argc, char**argv)
      */
     int safe_atoi(const char* p, int len);
 
+    /// Close logs and forcefully exit with the given exit code.
+    /// This calls std::_Exit, which terminates the program without cleaning up
+    /// static instances (i.e. anything registered with `atexit' or `on_exit').
+    void forcedExit(int code) __attribute__ ((__noreturn__));
+
 } // end namespace Util
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
