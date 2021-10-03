@@ -19,6 +19,7 @@ namespace SigUtil
     bool getShutdownRequestFlag();
 
     /// Get the flag to stop pump loops forcefully.
+    /// If this returns true, getShutdownRequestFlag() must also return true.
     bool getTerminationFlag();
     /// Set the flag to stop pump loops forcefully.
     void setTerminationFlag();
