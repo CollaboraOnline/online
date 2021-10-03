@@ -1091,6 +1091,12 @@ namespace Util
 
         return multiplier * ret;
     }
+
+    void forcedExit(int code)
+    {
+        Log::shutdown();
+        std::_Exit(code);
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
