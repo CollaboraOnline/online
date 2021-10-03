@@ -4372,6 +4372,10 @@ int LOOLWSD::innerMain()
     JailUtil::cleanupJails(ChildRoot);
 #endif // !MOBILEAPP
 
+    // At least on centos7, Poco deadlocks while
+    // cleaning up its SSL context singleton.
+    Util::forcedExit(EX_OK);
+
     return EX_OK;
 }
 
