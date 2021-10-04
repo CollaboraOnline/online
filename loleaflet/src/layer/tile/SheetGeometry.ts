@@ -423,24 +423,24 @@ export class SheetDimension {
 
 		var regenerateVisibleSizes = false;
 		var loadsOK = true;
-		if (jsonObject.sizes) {
+		if (jsonObject.sizes !== undefined) {
 			loadsOK = this._sizes.load(jsonObject.sizes);
 			regenerateVisibleSizes = true;
 		}
 
-		if (jsonObject.hidden) {
+		if (jsonObject.hidden !== undefined) {
 			var thisLoadOK = this._hidden.load(jsonObject.hidden);
 			loadsOK = loadsOK && thisLoadOK;
 			regenerateVisibleSizes = true;
 		}
 
-		if (jsonObject.filtered) {
+		if (jsonObject.filtered !== undefined) {
 			thisLoadOK = this._filtered.load(jsonObject.filtered);
 			loadsOK = loadsOK && thisLoadOK;
 			regenerateVisibleSizes = true;
 		}
 
-		if (jsonObject.groups) {
+		if (jsonObject.groups !== undefined) {
 			thisLoadOK = this._outlines.load(jsonObject.groups);
 			loadsOK = loadsOK && thisLoadOK;
 		}

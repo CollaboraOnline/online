@@ -2,7 +2,7 @@
 
 var assert = require('assert').strict;
 
-describe('SheetGeometry tests', function () {
+describe('SheetGeometry public methods tests', function () {
 
     // To debug tests for some/one particular zoom levels, add to this array.
     var runOnlyForZooms: number[] = [];
@@ -18,6 +18,45 @@ describe('SheetGeometry tests', function () {
         });
     });
 
+});
+
+describe('SheetGeometry bugfix tests', function () {
+
+    describe('update: On ungroup groups key will have an empty string - should not skip parsing', function () {
+        var sgObj = {
+            commandName: ".uno:SheetGeometryData",
+            maxtiledcolumn: "1023",
+            maxtiledrow: "500000",
+            columns: {
+                sizes: "1280:1023 ",
+                hidden: "0:1023 ",
+                filtered: "0:1023 ",
+                groups: ""
+            },
+            rows: {
+                sizes: "256:1048575 ",
+                hidden: "0:1048575 ",
+                filtered: "0:1048575 ",
+                groups: "10:14:0:1, 13:9:0:1, 17:4:1:1, "
+            }
+        };
+
+        var tileSizePx = 256;
+        // Important: this mirrors how it is done in CanvasTileLayer.js
+        var tileWidthTwips = Math.round(tileSizePx * 15 / zoomToAbsScale(10));
+        var tileHeightTwips = tileWidthTwips;
+
+        var sg = new cool.SheetGeometry(sgObj, tileWidthTwips, tileHeightTwips, tileSizePx, 0);
+        it('correctness of getRowGroupLevels() before ungroup', function () {
+            assert.equal(sg.getRowGroupLevels(), 3);
+        });
+
+        it('correctness of getRowGroupLevels() after ungroup', function () {
+            sgObj.rows.groups = "";
+            sg.update(sgObj, true, 0);
+            assert.equal(sg.getRowGroupLevels(), 0);
+        });
+    });
 });
 
 function zoomToAbsScale(level: number): number {
