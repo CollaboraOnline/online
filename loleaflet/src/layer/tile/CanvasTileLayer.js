@@ -5028,6 +5028,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var newSize = this._getRealMapSize();
 			var heightIncreased = oldSize.y < newSize.y;
+			var widthIncreased = oldSize.x < newSize.x;
 
 			if (this._docType === 'spreadsheet') {
 				if (this._painter._sectionContainer.doesSectionExist(L.CSections.RowHeader.name)) {
@@ -5068,6 +5069,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (!cursorPositionInView)
 					this._map.panTo(cursorPos);
 			}
+
+			if (heightIncreased || widthIncreased)
+				this._painter._sectionContainer.requestReDraw();
 		}
 	},
 
