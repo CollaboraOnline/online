@@ -304,7 +304,6 @@ namespace SigUtil
             sleep(60);
             LOG_ERR("Finished sleeping to allow debugging of: " << getpid());
             std::cerr << "Finished sleeping to allow debugging of: " << getpid() << "\n";
-            std::cerr << "Sleeping 60s to allow debugging: attach " << getpid() << "\n";
         }
     }
 
