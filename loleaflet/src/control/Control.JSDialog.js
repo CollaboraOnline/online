@@ -99,6 +99,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', document.body);
 		container.id = data.id;
+		container.style.visibility = 'hidden';
 		if (data.collapsed && (data.collapsed === 'true' || data.collapsed === true))
 			L.DomUtil.addClass(container, 'collapsed');
 
@@ -212,6 +213,7 @@ L.Control.JSDialog = L.Control.extend({
 		setTimeout(function () {
 			setupPosition();
 			that.updatePosition(container, posX, posY);
+			container.style.visibility = '';
 		}, 200);
 
 		if (isSnackbar) {
