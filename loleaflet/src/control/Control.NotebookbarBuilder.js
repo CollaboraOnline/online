@@ -706,7 +706,9 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			text: [
 				{id: 'nb-hamburger', name: _('Menu'), type: 'menu', menu: [
 					{uno: '.uno:SelectAll'},
+				].concat(window.ThisIsAMobileApp ? [] : [
 					{name: _UNO('.uno:FullScreen', 'text'), id: 'fullscreen', type: 'action'},
+				]).concat([
 					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
 					{type: 'separator'},
 					{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
@@ -742,7 +744,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 						{name: _UNO('.uno:AutoFormatMenu', 'text'), type: 'menu', menu: [
 							{uno: '.uno:OnlineAutoFormat'}]}
 					]}
-				]}
+				])}
 			],
 			spreadsheet: [
 				{id: 'nb-hamburger', name: _('Menu'), type: 'menu', menu: [
