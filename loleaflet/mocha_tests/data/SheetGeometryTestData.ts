@@ -53,7 +53,7 @@ interface PartTestData {
 
     cellRectData: CellTest;
 
-    sheetgeometrymsg: any;
+    sheetgeometrymsg: cool.SheetGeometryCoreData;
 };
 
 interface TestDataForZoom {
