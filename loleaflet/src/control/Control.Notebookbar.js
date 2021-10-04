@@ -248,12 +248,14 @@ L.Control.Notebookbar = L.Control.extend({
 						'text': _('Save'),
 						'command': '.uno:Save'
 					},
+				].concat(window.ThisIsAMobileApp ? [] : [
 					{
 						'id': 'fullscreen',
 						'type': 'toolitem',
 						'text': _UNO('.uno:FullScreen'),
 						'command': '.uno:FullScreen'
 					},
+				]).concat([
 					{
 						'id': 'undo',
 						'type': 'toolitem',
@@ -266,7 +268,7 @@ L.Control.Notebookbar = L.Control.extend({
 						'text': _('Redo'),
 						'command': '.uno:Redo'
 					}
-				]
+				])
 			}
 		];
 	},
