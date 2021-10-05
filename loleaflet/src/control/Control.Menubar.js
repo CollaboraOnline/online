@@ -683,7 +683,7 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:DeleteRowbreak'},
 					{uno: '.uno:DeleteColumnbreak'}]}
 			]},
-			{name: _UNO('.uno:DataMenu', 'spreadsheet'), type: 'menu', menu: [
+			{name: _UNO('.uno:DataMenu', 'spreadsheet'), id: 'data', type: 'menu', menu: [
 				{uno: '.uno:DataSort'},
 				{uno: '.uno:SortAscending'},
 				{uno: '.uno:SortDescending'},
