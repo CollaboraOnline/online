@@ -87,6 +87,8 @@ L.Control.MobileTopBar = L.Control.extend({
 			}
 		});
 
+		this.map.uiManager.enableTooltip(toolbar);
+
 		toolbar.bind('touchstart', function(e) {
 			w2ui['actionbar'].touchStarted = true;
 			var touchEvent = e.originalEvent;
