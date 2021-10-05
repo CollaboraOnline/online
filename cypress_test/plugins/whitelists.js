@@ -3,6 +3,7 @@ var notebookbarOnlyList = [
 	'desktop/calc/cell_appearance_spec.js',
 	'desktop/writer/table_operation_spec.js',
 	'desktop/impress/table_operation_spec.js',
+	'desktop/calc/autofilter_spec.js',
 ];
 
 module.exports.notebookbarOnlyList = notebookbarOnlyList;
