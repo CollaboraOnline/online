@@ -3459,8 +3459,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map._textInput.showCursor();
 			}
 
+			var hasMobileWizardOpened = this._map.uiManager.mobileWizard ? this._map.uiManager.mobileWizard.isOpen() : false;
 			// Don't show the keyboard when the Wizard is visible.
-			if (!window.mobileWizard && !window.pageMobileWizard && !window.insertionMobileWizard) {
+			if (!window.mobileWizard && !window.pageMobileWizard && !window.insertionMobileWizard && !hasMobileWizardOpened) {
 				// If the user is editing, show the keyboard, but don't change
 				// anything if nothing is changed.
 
@@ -5039,7 +5040,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				this._map.invalidateSize();
 			}
 
-			if (window.mode.isMobile()) {
+			var hasMobileWizardOpened = this._map.uiManager.mobileWizard ? this._map.uiManager.mobileWizard.isOpen() : false;
+			if (window.mode.isMobile() && !hasMobileWizardOpened) {
 				if (heightIncreased) {
 					// if the keyboard is hidden - be sure we setup correct state in TextInput
 					this._map.focus(false);
