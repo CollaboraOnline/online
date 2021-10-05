@@ -230,7 +230,8 @@ public:
                 }
             }
 
-            writeLocked(id, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Incoming));
+            if (!LOOLProtocol::matchPrefix("tileprocessed ", data))
+                writeLocked(id, sessionId, data, static_cast<char>(TraceFileRecord::Direction::Incoming));
         }
     }
 
