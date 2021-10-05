@@ -799,7 +799,8 @@ L.CanvasTileLayer = L.TileLayer.extend({
 				this._map.invalidateSize();
 			}
 
-			if (window.mode.isMobile()) {
+			var hasMobileWizardOpened = this._map.uiManager.mobileWizard ? this._map.uiManager.mobileWizard.isOpen() : false;
+			if (window.mode.isMobile() && !hasMobileWizardOpened) {
 				if (heightIncreased) {
 					// if the keyboard is hidden - be sure we setup correct state in TextInput
 					this._map.setAcceptInput(false);
