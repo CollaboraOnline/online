@@ -845,6 +845,7 @@ button.leaflet-control-search-next
 .w2ui-icon.search{ background: url('images/sc_recsearch.svg') no-repeat center !important; }
 .w2ui-icon.next{ background: url('images/lc_downsearch.svg') no-repeat center !important; }
 .w2ui-icon.presentation{ background: url('images/lc_dia.svg') no-repeat center !important; }
+.w2ui-icon.sign{ background: url('images/lc_docsign.svg') no-repeat center !important; }
 .w2ui-icon.prev{ background: url('images/lc_upsearch.svg') no-repeat center !important; }
 .w2ui-icon.save{ background: url('images/lc_save.svg') no-repeat center !important; }
 .w2ui-icon.saveas{ background: url('images/lc_saveas.svg') no-repeat center !important; }
