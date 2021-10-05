@@ -638,11 +638,10 @@ L.Map.include({
 		}
 
 		if (statusText) {
-			this.fire('infobar', {
-				msg: statusText,
-				action: null,
-				actionLabel: null
-			});
+			if (!window.mode.isMobile())
+				w2ui['actionbar'].insert('prev', {type: 'button',  id: 'signstatus', img: 'sign', hint: statusText});
+			else
+				w2ui['actionbar'].insert('undo', {type: 'button',  id: 'signstatus', img: 'sign', hint: statusText});
 		}
 
 		adjustUIState();
