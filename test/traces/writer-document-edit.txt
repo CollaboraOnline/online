@@ -1,0 +1,1216 @@
+~+27510497~ObOgeUSNlVNMdCb6~001~NewSession: file:///home/ezinne/collaboraOnline/test/data/hello-world.odt?permission=edit
+>+42657>ObOgeUSNlVNMdCb6>001>loolclient 0.1 1633467192206 11012454.7
+>+1616>ObOgeUSNlVNMdCb6>001>load url=file%3A%2F%2F%2Fhome%2Fezinne%2FcollaboraOnline%2Ftest%2Fdata%2Fhello-world.odt part=0 lang=en-US deviceFormFactor=desktop
+>+549>ObOgeUSNlVNMdCb6>001>useractive
+>+442>ObOgeUSNlVNMdCb6>001>commandvalues command=.uno:ViewAnnotations
+>+10831>ObOgeUSNlVNMdCb6>001>requestloksession
+>+1253370>ObOgeUSNlVNMdCb6>001>canceltiles
+>+141>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
+>+764>ObOgeUSNlVNMdCb6>001>requestloksession
+>+116>ObOgeUSNlVNMdCb6>001>commandvalues command=.uno:LanguageStatus
+>+252>ObOgeUSNlVNMdCb6>001>commandvalues command=.uno:ViewAnnotations
+>+280>ObOgeUSNlVNMdCb6>001>commandvalues command=.uno:StyleApply
+>+266>ObOgeUSNlVNMdCb6>001>commandvalues command=.uno:CharFontName
+>+266>ObOgeUSNlVNMdCb6>001>canceltiles
+>+1316>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
+>+1052>ObOgeUSNlVNMdCb6>001>freemiumstatus isFreemiumUser=false
+>+212>ObOgeUSNlVNMdCb6>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
+>+247>ObOgeUSNlVNMdCb6>001>clientvisiblearea x=-5025 y=0 width=22860 height=13215 splitx=0 splity=0
+>+236>ObOgeUSNlVNMdCb6>001>mouse type=move x=3150 y=2220 count=1 buttons=0 modifier=0
+>+262>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3150 y=2220 count=1 buttons=1 modifier=0
+>+243>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3150 y=2220 count=1 buttons=1 modifier=0
+>+2257054>ObOgeUSNlVNMdCb6>001>mouse type=move x=2700 y=1380 count=1 buttons=0 modifier=0
+>+3473>ObOgeUSNlVNMdCb6>001>mouse type=move x=2700 y=1785 count=1 buttons=0 modifier=0
+>+325680>ObOgeUSNlVNMdCb6>001>mouse type=move x=2775 y=1695 count=1 buttons=0 modifier=0
+>+513>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2775 y=1695 count=1 buttons=1 modifier=0
+>+417>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2775 y=1695 count=1 buttons=1 modifier=0
+>+2484282>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+561>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+531>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+462>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+837843>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+451>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+451>ObOgeUSNlVNMdCb6>001>textinput id=0 text=N
+>+516>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+569>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+991402>ObOgeUSNlVNMdCb6>001>textinput id=0 text=o
+>+354>ObOgeUSNlVNMdCb6>001>textinput id=0 text=w
+>+429>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+410>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+329>ObOgeUSNlVNMdCb6>001>textinput id=0 text=i
+>+497597>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+478>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+350>ObOgeUSNlVNMdCb6>001>textinput id=0 text=c
+>+324>ObOgeUSNlVNMdCb6>001>textinput id=0 text=a
+>+509360>ObOgeUSNlVNMdCb6>001>textinput id=0 text=n
+>+320>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+314>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+53042>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+682072>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+186>ObOgeUSNlVNMdCb6>001>textinput id=0 text=s
+>+152>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+740037>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+442>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+398>ObOgeUSNlVNMdCb6>001>textinput id=0 text=m
+>+293>ObOgeUSNlVNMdCb6>001>textinput id=0 text=a
+>+322>ObOgeUSNlVNMdCb6>001>textinput id=0 text=n
+>+191525>ObOgeUSNlVNMdCb6>001>textinput id=0 text=y
+>+333990>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+732>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+658041>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+401>ObOgeUSNlVNMdCb6>001>textinput id=0 text=h
+>+373>ObOgeUSNlVNMdCb6>001>textinput id=0 text=i
+>+72108>ObOgeUSNlVNMdCb6>001>textinput id=0 text=n
+>+637646>ObOgeUSNlVNMdCb6>001>textinput id=0 text=g
+>+862482>ObOgeUSNlVNMdCb6>001>textinput id=0 text=s
+>+628>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+492>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+70947>ObOgeUSNlVNMdCb6>001>textinput id=0 text=a
+>+520076>ObOgeUSNlVNMdCb6>001>textinput id=0 text=n
+>+262>ObOgeUSNlVNMdCb6>001>textinput id=0 text=d
+>+87922>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+384>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+703283>ObOgeUSNlVNMdCb6>001>textinput id=0 text=f
+>+354>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+74967>ObOgeUSNlVNMdCb6>001>textinput id=0 text=a
+>+613523>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+367>ObOgeUSNlVNMdCb6>001>textinput id=0 text=u
+>+700487>ObOgeUSNlVNMdCb6>001>textinput id=0 text=r
+>+663>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+221>ObOgeUSNlVNMdCb6>001>textinput id=0 text=s
+>+1312604>ObOgeUSNlVNMdCb6>001>key type=input char=46 key=0
+>+476>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=190
+>+578743>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+108564>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+112073>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+69069>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+819836>ObOgeUSNlVNMdCb6>001>textinput id=0 text=1
+>+270365>ObOgeUSNlVNMdCb6>001>key type=input char=46 key=0
+>+310>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=190
+>+446312>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+342>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+909043>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+143367>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+272891>ObOgeUSNlVNMdCb6>001>textinput id=0 text=T
+>+110346>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+113624>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+53567>ObOgeUSNlVNMdCb6>001>textinput id=0 text=h
+>+255871>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+619582>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+405>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+437>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+14138>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+574176>ObOgeUSNlVNMdCb6>001>textinput id=0 text=B
+>+581386>ObOgeUSNlVNMdCb6>001>textinput id=0 text=O
+>+346>ObOgeUSNlVNMdCb6>001>textinput id=0 text=L
+>+721764>ObOgeUSNlVNMdCb6>001>textinput id=0 text=D
+>+900874>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+473>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+117327>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+91244>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+225582>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+283389>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+473647>ObOgeUSNlVNMdCb6>001>textinput id=0 text=x
+>+568>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+645044>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+331>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+1762214>ObOgeUSNlVNMdCb6>001>mouse type=move x=2655 y=2565 count=1 buttons=0 modifier=0
+>+566800>ObOgeUSNlVNMdCb6>001>mouse type=move x=2760 y=2640 count=1 buttons=0 modifier=0
+>+282233>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2760 y=2640 count=1 buttons=1 modifier=0
+>+738>ObOgeUSNlVNMdCb6>001>mouse type=move x=2745 y=2640 count=1 buttons=1 modifier=0
+>+17104>ObOgeUSNlVNMdCb6>001>mouse type=move x=2685 y=2640 count=1 buttons=1 modifier=0
+>+19375>ObOgeUSNlVNMdCb6>001>mouse type=move x=2640 y=2640 count=1 buttons=1 modifier=0
+>+14303>ObOgeUSNlVNMdCb6>001>mouse type=move x=2580 y=2640 count=1 buttons=1 modifier=0
+>+25055>ObOgeUSNlVNMdCb6>001>mouse type=move x=2475 y=2640 count=1 buttons=1 modifier=0
+>+6587>ObOgeUSNlVNMdCb6>001>mouse type=move x=2445 y=2640 count=1 buttons=1 modifier=0
+>+17250>ObOgeUSNlVNMdCb6>001>mouse type=move x=2370 y=2640 count=1 buttons=1 modifier=0
+>+15250>ObOgeUSNlVNMdCb6>001>mouse type=move x=2310 y=2640 count=1 buttons=1 modifier=0
+>+592162>ObOgeUSNlVNMdCb6>001>mouse type=move x=2265 y=2640 count=1 buttons=1 modifier=0
+>+446>ObOgeUSNlVNMdCb6>001>mouse type=move x=2205 y=2640 count=1 buttons=1 modifier=0
+>+374>ObOgeUSNlVNMdCb6>001>mouse type=move x=2175 y=2640 count=1 buttons=1 modifier=0
+>+437>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+510>ObOgeUSNlVNMdCb6>001>mouse type=move x=2145 y=2640 count=1 buttons=1 modifier=0
+>+261>ObOgeUSNlVNMdCb6>001>mouse type=move x=2115 y=2640 count=1 buttons=1 modifier=0
+>+196>ObOgeUSNlVNMdCb6>001>mouse type=move x=2100 y=2640 count=1 buttons=1 modifier=0
+>+203>ObOgeUSNlVNMdCb6>001>mouse type=move x=2070 y=2640 count=1 buttons=1 modifier=0
+>+305>ObOgeUSNlVNMdCb6>001>mouse type=move x=2055 y=2640 count=1 buttons=1 modifier=0
+>+225>ObOgeUSNlVNMdCb6>001>mouse type=move x=2040 y=2640 count=1 buttons=1 modifier=0
+>+423>ObOgeUSNlVNMdCb6>001>mouse type=move x=2025 y=2640 count=1 buttons=1 modifier=0
+>+303>ObOgeUSNlVNMdCb6>001>mouse type=move x=2010 y=2640 count=1 buttons=1 modifier=0
+>+430>ObOgeUSNlVNMdCb6>001>mouse type=move x=1980 y=2655 count=1 buttons=1 modifier=0
+>+130654>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+682123>ObOgeUSNlVNMdCb6>001>mouse type=move x=1995 y=2655 count=1 buttons=1 modifier=0
+>+317>ObOgeUSNlVNMdCb6>001>mouse type=move x=2025 y=2655 count=1 buttons=1 modifier=0
+>+296>ObOgeUSNlVNMdCb6>001>mouse type=move x=2040 y=2655 count=1 buttons=1 modifier=0
+>+275>ObOgeUSNlVNMdCb6>001>mouse type=move x=2070 y=2655 count=1 buttons=1 modifier=0
+>+286>ObOgeUSNlVNMdCb6>001>mouse type=move x=2085 y=2655 count=1 buttons=1 modifier=0
+>+297>ObOgeUSNlVNMdCb6>001>mouse type=move x=2100 y=2655 count=1 buttons=1 modifier=0
+>+402>ObOgeUSNlVNMdCb6>001>mouse type=move x=2130 y=2655 count=1 buttons=1 modifier=0
+>+307>ObOgeUSNlVNMdCb6>001>mouse type=move x=2145 y=2655 count=1 buttons=1 modifier=0
+>+289>ObOgeUSNlVNMdCb6>001>mouse type=move x=2160 y=2655 count=1 buttons=1 modifier=0
+>+283>ObOgeUSNlVNMdCb6>001>mouse type=move x=2190 y=2655 count=1 buttons=1 modifier=0
+>+278>ObOgeUSNlVNMdCb6>001>mouse type=move x=2205 y=2655 count=1 buttons=1 modifier=0
+>+333>ObOgeUSNlVNMdCb6>001>mouse type=move x=2220 y=2655 count=1 buttons=1 modifier=0
+>+4679>ObOgeUSNlVNMdCb6>001>mouse type=move x=2250 y=2655 count=1 buttons=1 modifier=0
+>+122169>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+603390>ObOgeUSNlVNMdCb6>001>mouse type=move x=2235 y=2655 count=1 buttons=1 modifier=0
+>+398>ObOgeUSNlVNMdCb6>001>mouse type=move x=2205 y=2655 count=1 buttons=1 modifier=0
+>+483>ObOgeUSNlVNMdCb6>001>mouse type=move x=2205 y=2685 count=1 buttons=1 modifier=0
+>+396>ObOgeUSNlVNMdCb6>001>mouse type=move x=2175 y=2685 count=1 buttons=1 modifier=0
+>+415>ObOgeUSNlVNMdCb6>001>mouse type=move x=2160 y=2685 count=1 buttons=1 modifier=0
+>+113331>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+42071>ObOgeUSNlVNMdCb6>001>mouse type=move x=2145 y=2685 count=1 buttons=1 modifier=0
+>+82484>ObOgeUSNlVNMdCb6>001>mouse type=move x=2130 y=2685 count=1 buttons=1 modifier=0
+>+174932>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2130 y=2685 count=1 buttons=1 modifier=0
+>+450756>ObOgeUSNlVNMdCb6>001>mouse type=move x=2895 y=570 count=1 buttons=0 modifier=0
+>+615478>ObOgeUSNlVNMdCb6>001>uno .uno:Bold
+>+323429>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+737705>ObOgeUSNlVNMdCb6>001>mouse type=move x=3720 y=2580 count=1 buttons=0 modifier=0
+>+282>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3720 y=2580 count=1 buttons=1 modifier=0
+>+263>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3720 y=2580 count=1 buttons=1 modifier=0
+>+856768>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+91241>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+932290>ObOgeUSNlVNMdCb6>001>textinput id=0 text=2
+>+1168672>ObOgeUSNlVNMdCb6>001>key type=input char=46 key=0
+>+424>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=190
+>+303772>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+279>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+426627>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+622633>ObOgeUSNlVNMdCb6>001>textinput id=0 text=h
+>+488>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+495>ObOgeUSNlVNMdCb6>001>textinput id=0 text=n
+>+155252>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+339>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+452736>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+277>ObOgeUSNlVNMdCb6>001>textinput id=0 text=h
+>+63813>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+551321>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+377>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+417>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+16508>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+762306>ObOgeUSNlVNMdCb6>001>textinput id=0 text=I
+>+451>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+398>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+422>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+383>ObOgeUSNlVNMdCb6>001>textinput id=0 text=a
+>+210635>ObOgeUSNlVNMdCb6>001>textinput id=0 text=l
+>+509737>ObOgeUSNlVNMdCb6>001>textinput id=0 text=i
+>+229>ObOgeUSNlVNMdCb6>001>textinput id=0 text=c
+>+211150>ObOgeUSNlVNMdCb6>001>textinput id=0 text=s
+>+2140106>ObOgeUSNlVNMdCb6>001>mouse type=move x=3135 y=2850 count=1 buttons=0 modifier=0
+>+115851>ObOgeUSNlVNMdCb6>001>mouse type=move x=3135 y=2865 count=1 buttons=0 modifier=0
+>+271672>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+784>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+333202>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+154329>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+380617>ObOgeUSNlVNMdCb6>001>textinput id=0 text=x
+>+439682>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+1367974>ObOgeUSNlVNMdCb6>001>mouse type=move x=3015 y=3150 count=1 buttons=0 modifier=0
+>+435406>ObOgeUSNlVNMdCb6>001>mouse type=move x=3045 y=2985 count=1 buttons=0 modifier=0
+>+116371>ObOgeUSNlVNMdCb6>001>mouse type=move x=3045 y=2970 count=1 buttons=0 modifier=0
+>+216139>ObOgeUSNlVNMdCb6>001>mouse type=move x=3045 y=2955 count=1 buttons=0 modifier=0
+>+266996>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3045 y=2955 count=1 buttons=1 modifier=0
+>+876>ObOgeUSNlVNMdCb6>001>mouse type=move x=3030 y=2955 count=1 buttons=1 modifier=0
+>+29747>ObOgeUSNlVNMdCb6>001>mouse type=move x=3015 y=2955 count=1 buttons=1 modifier=0
+>+4890>ObOgeUSNlVNMdCb6>001>mouse type=move x=2970 y=2955 count=1 buttons=1 modifier=0
+>+30397>ObOgeUSNlVNMdCb6>001>mouse type=move x=2910 y=2955 count=1 buttons=1 modifier=0
+>+23829>ObOgeUSNlVNMdCb6>001>mouse type=move x=2880 y=2955 count=1 buttons=1 modifier=0
+>+27268>ObOgeUSNlVNMdCb6>001>mouse type=move x=2865 y=2955 count=1 buttons=1 modifier=0
+>+32588>ObOgeUSNlVNMdCb6>001>mouse type=move x=2835 y=2955 count=1 buttons=1 modifier=0
+>+706279>ObOgeUSNlVNMdCb6>001>mouse type=move x=2820 y=2955 count=1 buttons=1 modifier=0
+>+429>ObOgeUSNlVNMdCb6>001>mouse type=move x=2820 y=3000 count=1 buttons=1 modifier=0
+>+380>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+389>ObOgeUSNlVNMdCb6>001>mouse type=move x=2790 y=3000 count=1 buttons=1 modifier=0
+>+378>ObOgeUSNlVNMdCb6>001>mouse type=move x=2760 y=3015 count=1 buttons=1 modifier=0
+>+388>ObOgeUSNlVNMdCb6>001>mouse type=move x=2745 y=3015 count=1 buttons=1 modifier=0
+>+524>ObOgeUSNlVNMdCb6>001>mouse type=move x=2745 y=3045 count=1 buttons=1 modifier=0
+>+459>ObOgeUSNlVNMdCb6>001>mouse type=move x=2715 y=3045 count=1 buttons=1 modifier=0
+>+382>ObOgeUSNlVNMdCb6>001>mouse type=move x=2685 y=3045 count=1 buttons=1 modifier=0
+>+351>ObOgeUSNlVNMdCb6>001>mouse type=move x=2655 y=3045 count=1 buttons=1 modifier=0
+>+349>ObOgeUSNlVNMdCb6>001>mouse type=move x=2640 y=3045 count=1 buttons=1 modifier=0
+>+343>ObOgeUSNlVNMdCb6>001>mouse type=move x=2625 y=3045 count=1 buttons=1 modifier=0
+>+349>ObOgeUSNlVNMdCb6>001>mouse type=move x=2625 y=3075 count=1 buttons=1 modifier=0
+>+370>ObOgeUSNlVNMdCb6>001>mouse type=move x=2595 y=3075 count=1 buttons=1 modifier=0
+>+346>ObOgeUSNlVNMdCb6>001>mouse type=move x=2595 y=3105 count=1 buttons=1 modifier=0
+>+365>ObOgeUSNlVNMdCb6>001>mouse type=move x=2565 y=3105 count=1 buttons=1 modifier=0
+>+412>ObOgeUSNlVNMdCb6>001>mouse type=move x=2535 y=3105 count=1 buttons=1 modifier=0
+>+457>ObOgeUSNlVNMdCb6>001>mouse type=move x=2505 y=3105 count=1 buttons=1 modifier=0
+>+772039>ObOgeUSNlVNMdCb6>001>mouse type=move x=2505 y=3075 count=1 buttons=1 modifier=0
+>+316>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+206>ObOgeUSNlVNMdCb6>001>mouse type=move x=2505 y=3060 count=1 buttons=1 modifier=0
+>+225>ObOgeUSNlVNMdCb6>001>mouse type=move x=2505 y=3045 count=1 buttons=1 modifier=0
+>+218>ObOgeUSNlVNMdCb6>001>mouse type=move x=2505 y=3030 count=1 buttons=1 modifier=0
+>+255>ObOgeUSNlVNMdCb6>001>mouse type=move x=2505 y=3015 count=1 buttons=1 modifier=0
+>+311>ObOgeUSNlVNMdCb6>001>mouse type=move x=2505 y=3000 count=1 buttons=1 modifier=0
+>+493>ObOgeUSNlVNMdCb6>001>mouse type=move x=2505 y=2985 count=1 buttons=1 modifier=0
+>+348>ObOgeUSNlVNMdCb6>001>mouse type=move x=2505 y=2970 count=1 buttons=1 modifier=0
+>+207>ObOgeUSNlVNMdCb6>001>mouse type=move x=2505 y=2955 count=1 buttons=1 modifier=0
+>+223>ObOgeUSNlVNMdCb6>001>mouse type=move x=2490 y=2955 count=1 buttons=1 modifier=0
+>+28075>ObOgeUSNlVNMdCb6>001>mouse type=move x=2475 y=2955 count=1 buttons=1 modifier=0
+>+49776>ObOgeUSNlVNMdCb6>001>mouse type=move x=2460 y=2955 count=1 buttons=1 modifier=0
+>+58168>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+485025>ObOgeUSNlVNMdCb6>001>mouse type=move x=2460 y=2925 count=1 buttons=1 modifier=0
+>+418>ObOgeUSNlVNMdCb6>001>mouse type=move x=2460 y=2925 count=1 buttons=1 modifier=0
+>+310>ObOgeUSNlVNMdCb6>001>mouse type=move x=2460 y=2895 count=1 buttons=1 modifier=0
+>+521>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2460 y=2895 count=1 buttons=1 modifier=0
+>+290115>ObOgeUSNlVNMdCb6>001>mouse type=move x=3855 y=210 count=1 buttons=0 modifier=0
+>+450415>ObOgeUSNlVNMdCb6>001>mouse type=move x=4035 y=45 count=1 buttons=0 modifier=0
+>+201010>ObOgeUSNlVNMdCb6>001>mouse type=move x=3975 y=15 count=1 buttons=0 modifier=0
+>+960284>ObOgeUSNlVNMdCb6>001>uno .uno:Italic
+>+133064>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+791236>ObOgeUSNlVNMdCb6>001>mouse type=move x=3900 y=3285 count=1 buttons=0 modifier=0
+>+261923>ObOgeUSNlVNMdCb6>001>mouse type=move x=3900 y=2940 count=1 buttons=0 modifier=0
+>+149749>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3900 y=2940 count=1 buttons=1 modifier=0
+>+2052>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3900 y=2940 count=1 buttons=1 modifier=0
+>+1145049>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+100566>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+1099733>ObOgeUSNlVNMdCb6>001>textinput id=0 text=3
+>+310690>ObOgeUSNlVNMdCb6>001>key type=input char=46 key=0
+>+421>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=190
+>+295912>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+321>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+769687>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+369>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+311>ObOgeUSNlVNMdCb6>001>textinput id=0 text=U
+>+377>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+281>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+251112>ObOgeUSNlVNMdCb6>001>textinput id=0 text=n
+>+1005449>ObOgeUSNlVNMdCb6>001>textinput id=0 text=d
+>+196064>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+218763>ObOgeUSNlVNMdCb6>001>textinput id=0 text=r
+>+685044>ObOgeUSNlVNMdCb6>001>textinput id=0 text=l
+>+370>ObOgeUSNlVNMdCb6>001>textinput id=0 text=i
+>+83991>ObOgeUSNlVNMdCb6>001>textinput id=0 text=n
+>+493798>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+15497>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+442>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+896612>ObOgeUSNlVNMdCb6>001>textinput id=0 text=a
+>+298>ObOgeUSNlVNMdCb6>001>textinput id=0 text=n
+>+422>ObOgeUSNlVNMdCb6>001>textinput id=0 text=d
+>+378>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+379>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+611766>ObOgeUSNlVNMdCb6>001>textinput id=0 text=s
+>+105157>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+557088>ObOgeUSNlVNMdCb6>001>textinput id=0 text=r
+>+221>ObOgeUSNlVNMdCb6>001>textinput id=0 text=i
+>+151703>ObOgeUSNlVNMdCb6>001>textinput id=0 text=k
+>+557693>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+32195>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+797363>ObOgeUSNlVNMdCb6>001>mouse type=move x=3930 y=2895 count=1 buttons=0 modifier=0
+>+385>ObOgeUSNlVNMdCb6>001>textinput id=0 text=r
+>+411>ObOgeUSNlVNMdCb6>001>textinput id=0 text=o
+>+537981>ObOgeUSNlVNMdCb6>001>textinput id=0 text=u
+>+228>ObOgeUSNlVNMdCb6>001>textinput id=0 text=g
+>+42585>ObOgeUSNlVNMdCb6>001>textinput id=0 text=h
+>+526818>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+692>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+363>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+781134>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+260698>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+425253>ObOgeUSNlVNMdCb6>001>textinput id=0 text=x
+>+692125>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+1026>ObOgeUSNlVNMdCb6>001>textinput id=0 text=s
+>+1875789>ObOgeUSNlVNMdCb6>001>mouse type=move x=4185 y=3510 count=1 buttons=0 modifier=0
+>+715983>ObOgeUSNlVNMdCb6>001>mouse type=move x=3900 y=3255 count=1 buttons=0 modifier=0
+>+316586>ObOgeUSNlVNMdCb6>001>mouse type=move x=3885 y=3255 count=1 buttons=0 modifier=0
+>+816743>ObOgeUSNlVNMdCb6>001>mouse type=move x=4335 y=3285 count=1 buttons=0 modifier=0
+>+533559>ObOgeUSNlVNMdCb6>001>mouse type=move x=4320 y=3285 count=1 buttons=0 modifier=0
+>+100383>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=4320 y=3285 count=1 buttons=1 modifier=0
+>+4636>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=4320 y=3285 count=1 buttons=1 modifier=0
+>+210564>ObOgeUSNlVNMdCb6>001>mouse type=move x=4350 y=4035 count=1 buttons=0 modifier=0
+>+447865>ObOgeUSNlVNMdCb6>001>removetextcontext id=0 before=1 after=0
+>+984463>ObOgeUSNlVNMdCb6>001>mouse type=move x=3450 y=3210 count=1 buttons=0 modifier=0
+>+801083>ObOgeUSNlVNMdCb6>001>mouse type=move x=3795 y=3300 count=1 buttons=0 modifier=0
+>+182948>ObOgeUSNlVNMdCb6>001>mouse type=move x=3795 y=3270 count=1 buttons=0 modifier=0
+>+183928>ObOgeUSNlVNMdCb6>001>mouse type=move x=3780 y=3270 count=1 buttons=0 modifier=0
+>+133171>ObOgeUSNlVNMdCb6>001>mouse type=move x=3765 y=3270 count=1 buttons=0 modifier=0
+>+214903>ObOgeUSNlVNMdCb6>001>mouse type=move x=3750 y=3270 count=1 buttons=0 modifier=0
+>+217814>ObOgeUSNlVNMdCb6>001>mouse type=move x=3735 y=3270 count=1 buttons=0 modifier=0
+>+130096>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3735 y=3270 count=1 buttons=1 modifier=0
+>+876>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3735 y=3270 count=1 buttons=1 modifier=0
+>+489657>ObOgeUSNlVNMdCb6>001>textinput id=0 text=h
+>+829740>ObOgeUSNlVNMdCb6>001>mouse type=move x=6435 y=3060 count=1 buttons=0 modifier=0
+>+348373>ObOgeUSNlVNMdCb6>001>mouse type=move x=5400 y=3390 count=1 buttons=0 modifier=0
+>+502041>ObOgeUSNlVNMdCb6>001>removetextcontext id=0 before=1 after=0
+>+182777>ObOgeUSNlVNMdCb6>001>removetextcontext id=0 before=1 after=0
+>+808251>ObOgeUSNlVNMdCb6>001>textinput id=0 text=h
+>+1445243>ObOgeUSNlVNMdCb6>001>textinput id=0 text=r
+>+1095024>ObOgeUSNlVNMdCb6>001>mouse type=move x=5430 y=2925 count=1 buttons=0 modifier=0
+>+692471>ObOgeUSNlVNMdCb6>001>mouse type=move x=5280 y=3180 count=1 buttons=0 modifier=0
+>+119427>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=5280 y=3180 count=1 buttons=1 modifier=0
+>+3322>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=5280 y=3180 count=1 buttons=1 modifier=0
+>+1640841>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+126350>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+2101115>ObOgeUSNlVNMdCb6>001>mouse type=move x=2550 y=3255 count=1 buttons=0 modifier=0
+>+199707>ObOgeUSNlVNMdCb6>001>mouse type=move x=2580 y=3255 count=1 buttons=0 modifier=0
+>+232906>ObOgeUSNlVNMdCb6>001>mouse type=move x=2595 y=3255 count=1 buttons=0 modifier=0
+>+584441>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2595 y=3255 count=1 buttons=1 modifier=0
+>+742>ObOgeUSNlVNMdCb6>001>mouse type=move x=2565 y=3255 count=1 buttons=1 modifier=0
+>+25813>ObOgeUSNlVNMdCb6>001>mouse type=move x=2535 y=3255 count=1 buttons=1 modifier=0
+>+43637>ObOgeUSNlVNMdCb6>001>mouse type=move x=2445 y=3255 count=1 buttons=1 modifier=0
+>+25492>ObOgeUSNlVNMdCb6>001>mouse type=move x=2415 y=3255 count=1 buttons=1 modifier=0
+>+4727>ObOgeUSNlVNMdCb6>001>mouse type=move x=2385 y=3255 count=1 buttons=1 modifier=0
+>+31564>ObOgeUSNlVNMdCb6>001>mouse type=move x=2355 y=3255 count=1 buttons=1 modifier=0
+>+696153>ObOgeUSNlVNMdCb6>001>mouse type=move x=2325 y=3255 count=1 buttons=1 modifier=0
+>+248>ObOgeUSNlVNMdCb6>001>mouse type=move x=2295 y=3255 count=1 buttons=1 modifier=0
+>+288>ObOgeUSNlVNMdCb6>001>mouse type=move x=2265 y=3255 count=1 buttons=1 modifier=0
+>+336>ObOgeUSNlVNMdCb6>001>mouse type=move x=2235 y=3255 count=1 buttons=1 modifier=0
+>+319>ObOgeUSNlVNMdCb6>001>mouse type=move x=2205 y=3255 count=1 buttons=1 modifier=0
+>+295>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+554>ObOgeUSNlVNMdCb6>001>mouse type=move x=2175 y=3255 count=1 buttons=1 modifier=0
+>+260>ObOgeUSNlVNMdCb6>001>mouse type=move x=2145 y=3255 count=1 buttons=1 modifier=0
+>+255>ObOgeUSNlVNMdCb6>001>mouse type=move x=2130 y=3255 count=1 buttons=1 modifier=0
+>+254>ObOgeUSNlVNMdCb6>001>mouse type=move x=2115 y=3255 count=1 buttons=1 modifier=0
+>+250>ObOgeUSNlVNMdCb6>001>mouse type=move x=2085 y=3255 count=1 buttons=1 modifier=0
+>+278>ObOgeUSNlVNMdCb6>001>mouse type=move x=2070 y=3255 count=1 buttons=1 modifier=0
+>+405>ObOgeUSNlVNMdCb6>001>mouse type=move x=2055 y=3255 count=1 buttons=1 modifier=0
+>+850>ObOgeUSNlVNMdCb6>001>mouse type=move x=2025 y=3255 count=1 buttons=1 modifier=0
+>+614>ObOgeUSNlVNMdCb6>001>mouse type=move x=2010 y=3255 count=1 buttons=1 modifier=0
+>+541>ObOgeUSNlVNMdCb6>001>mouse type=move x=1980 y=3255 count=1 buttons=1 modifier=0
+>+420>ObOgeUSNlVNMdCb6>001>mouse type=move x=1965 y=3255 count=1 buttons=1 modifier=0
+>+454>ObOgeUSNlVNMdCb6>001>mouse type=move x=1950 y=3255 count=1 buttons=1 modifier=0
+>+280>ObOgeUSNlVNMdCb6>001>mouse type=move x=1920 y=3255 count=1 buttons=1 modifier=0
+>+384>ObOgeUSNlVNMdCb6>001>mouse type=move x=1905 y=3255 count=1 buttons=1 modifier=0
+>+362>ObOgeUSNlVNMdCb6>001>mouse type=move x=1875 y=3255 count=1 buttons=1 modifier=0
+>+360>ObOgeUSNlVNMdCb6>001>mouse type=move x=1860 y=3255 count=1 buttons=1 modifier=0
+>+8720>ObOgeUSNlVNMdCb6>001>mouse type=move x=1845 y=3255 count=1 buttons=1 modifier=0
+>+692836>ObOgeUSNlVNMdCb6>001>mouse type=move x=1830 y=3255 count=1 buttons=1 modifier=0
+>+383>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+305>ObOgeUSNlVNMdCb6>001>mouse type=move x=1815 y=3255 count=1 buttons=1 modifier=0
+>+245>ObOgeUSNlVNMdCb6>001>mouse type=move x=1800 y=3255 count=1 buttons=1 modifier=0
+>+243>ObOgeUSNlVNMdCb6>001>mouse type=move x=1800 y=3225 count=1 buttons=1 modifier=0
+>+259>ObOgeUSNlVNMdCb6>001>mouse type=move x=1770 y=3210 count=1 buttons=1 modifier=0
+>+254>ObOgeUSNlVNMdCb6>001>mouse type=move x=1770 y=3195 count=1 buttons=1 modifier=0
+>+256>ObOgeUSNlVNMdCb6>001>mouse type=move x=1755 y=3165 count=1 buttons=1 modifier=0
+>+375>ObOgeUSNlVNMdCb6>001>mouse type=move x=1755 y=3150 count=1 buttons=1 modifier=0
+>+314>ObOgeUSNlVNMdCb6>001>mouse type=move x=1755 y=3120 count=1 buttons=1 modifier=0
+>+253>ObOgeUSNlVNMdCb6>001>mouse type=move x=1740 y=3120 count=1 buttons=1 modifier=0
+>+613222>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+322>ObOgeUSNlVNMdCb6>001>mouse type=move x=1725 y=3120 count=1 buttons=1 modifier=0
+>+465>ObOgeUSNlVNMdCb6>001>mouse type=move x=1725 y=3135 count=1 buttons=1 modifier=0
+>+444>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=1725 y=3135 count=1 buttons=1 modifier=0
+>+342143>ObOgeUSNlVNMdCb6>001>mouse type=move x=2655 y=405 count=1 buttons=0 modifier=0
+>+721981>ObOgeUSNlVNMdCb6>001>uno .uno:Underline
+>+1022841>ObOgeUSNlVNMdCb6>001>mouse type=move x=4575 y=3255 count=1 buttons=0 modifier=0
+>+506110>ObOgeUSNlVNMdCb6>001>mouse type=move x=4335 y=3270 count=1 buttons=0 modifier=0
+>+351533>ObOgeUSNlVNMdCb6>001>mouse type=move x=4335 y=3225 count=1 buttons=0 modifier=0
+>+414767>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=4335 y=3225 count=1 buttons=1 modifier=0
+>+693>ObOgeUSNlVNMdCb6>001>mouse type=move x=4260 y=3225 count=1 buttons=1 modifier=0
+>+16361>ObOgeUSNlVNMdCb6>001>mouse type=move x=4125 y=3225 count=1 buttons=1 modifier=0
+>+23150>ObOgeUSNlVNMdCb6>001>mouse type=move x=4020 y=3225 count=1 buttons=1 modifier=0
+>+21585>ObOgeUSNlVNMdCb6>001>mouse type=move x=3915 y=3225 count=1 buttons=1 modifier=0
+>+24301>ObOgeUSNlVNMdCb6>001>mouse type=move x=3885 y=3225 count=1 buttons=1 modifier=0
+>+503737>ObOgeUSNlVNMdCb6>001>mouse type=move x=3870 y=3225 count=1 buttons=1 modifier=0
+>+446>ObOgeUSNlVNMdCb6>001>mouse type=move x=3870 y=3195 count=1 buttons=1 modifier=0
+>+365>ObOgeUSNlVNMdCb6>001>mouse type=move x=3840 y=3195 count=1 buttons=1 modifier=0
+>+349>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+347>ObOgeUSNlVNMdCb6>001>mouse type=move x=3840 y=3165 count=1 buttons=1 modifier=0
+>+315>ObOgeUSNlVNMdCb6>001>mouse type=move x=3825 y=3165 count=1 buttons=1 modifier=0
+>+291>ObOgeUSNlVNMdCb6>001>mouse type=move x=3825 y=3150 count=1 buttons=1 modifier=0
+>+271>ObOgeUSNlVNMdCb6>001>mouse type=move x=3795 y=3150 count=1 buttons=1 modifier=0
+>+250>ObOgeUSNlVNMdCb6>001>mouse type=move x=3765 y=3150 count=1 buttons=1 modifier=0
+>+245>ObOgeUSNlVNMdCb6>001>mouse type=move x=3750 y=3150 count=1 buttons=1 modifier=0
+>+282>ObOgeUSNlVNMdCb6>001>mouse type=move x=3720 y=3150 count=1 buttons=1 modifier=0
+>+296>ObOgeUSNlVNMdCb6>001>mouse type=move x=3660 y=3150 count=1 buttons=1 modifier=0
+>+233>ObOgeUSNlVNMdCb6>001>mouse type=move x=3630 y=3180 count=1 buttons=1 modifier=0
+>+235>ObOgeUSNlVNMdCb6>001>mouse type=move x=3600 y=3225 count=1 buttons=1 modifier=0
+>+240>ObOgeUSNlVNMdCb6>001>mouse type=move x=3555 y=3225 count=1 buttons=1 modifier=0
+>+233>ObOgeUSNlVNMdCb6>001>mouse type=move x=3525 y=3255 count=1 buttons=1 modifier=0
+>+230>ObOgeUSNlVNMdCb6>001>mouse type=move x=3495 y=3285 count=1 buttons=1 modifier=0
+>+21046>ObOgeUSNlVNMdCb6>001>mouse type=move x=3465 y=3315 count=1 buttons=1 modifier=0
+>+570276>ObOgeUSNlVNMdCb6>001>mouse type=move x=3435 y=3345 count=1 buttons=1 modifier=0
+>+222>ObOgeUSNlVNMdCb6>001>mouse type=move x=3405 y=3345 count=1 buttons=1 modifier=0
+>+630>ObOgeUSNlVNMdCb6>001>mouse type=move x=3405 y=3375 count=1 buttons=1 modifier=0
+>+438>ObOgeUSNlVNMdCb6>001>mouse type=move x=3375 y=3405 count=1 buttons=1 modifier=0
+>+433>ObOgeUSNlVNMdCb6>001>mouse type=move x=3345 y=3405 count=1 buttons=1 modifier=0
+>+407>ObOgeUSNlVNMdCb6>001>mouse type=move x=3345 y=3435 count=1 buttons=1 modifier=0
+>+434>ObOgeUSNlVNMdCb6>001>mouse type=move x=3315 y=3435 count=1 buttons=1 modifier=0
+>+392>ObOgeUSNlVNMdCb6>001>mouse type=move x=3285 y=3435 count=1 buttons=1 modifier=0
+>+478>ObOgeUSNlVNMdCb6>001>mouse type=move x=3285 y=3480 count=1 buttons=1 modifier=0
+>+461>ObOgeUSNlVNMdCb6>001>mouse type=move x=3255 y=3480 count=1 buttons=1 modifier=0
+>+404>ObOgeUSNlVNMdCb6>001>mouse type=move x=3225 y=3480 count=1 buttons=1 modifier=0
+>+467>ObOgeUSNlVNMdCb6>001>mouse type=move x=3210 y=3480 count=1 buttons=1 modifier=0
+>+470>ObOgeUSNlVNMdCb6>001>mouse type=move x=3195 y=3480 count=1 buttons=1 modifier=0
+>+453>ObOgeUSNlVNMdCb6>001>mouse type=move x=3195 y=3465 count=1 buttons=1 modifier=0
+>+431>ObOgeUSNlVNMdCb6>001>mouse type=move x=3195 y=3435 count=1 buttons=1 modifier=0
+>+461>ObOgeUSNlVNMdCb6>001>mouse type=move x=3195 y=3420 count=1 buttons=1 modifier=0
+>+8187>ObOgeUSNlVNMdCb6>001>mouse type=move x=3195 y=3390 count=1 buttons=1 modifier=0
+>+110281>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+638157>ObOgeUSNlVNMdCb6>001>mouse type=move x=3195 y=3375 count=1 buttons=1 modifier=0
+>+302>ObOgeUSNlVNMdCb6>001>mouse type=move x=3195 y=3360 count=1 buttons=1 modifier=0
+>+291>ObOgeUSNlVNMdCb6>001>mouse type=move x=3195 y=3345 count=1 buttons=1 modifier=0
+>+276>ObOgeUSNlVNMdCb6>001>mouse type=move x=3180 y=3345 count=1 buttons=1 modifier=0
+>+400>ObOgeUSNlVNMdCb6>001>mouse type=move x=3180 y=3330 count=1 buttons=1 modifier=0
+>+322>ObOgeUSNlVNMdCb6>001>mouse type=move x=3180 y=3315 count=1 buttons=1 modifier=0
+>+767>ObOgeUSNlVNMdCb6>001>mouse type=move x=3180 y=3300 count=1 buttons=1 modifier=0
+>+685>ObOgeUSNlVNMdCb6>001>mouse type=move x=3210 y=3285 count=1 buttons=1 modifier=0
+>+2268>ObOgeUSNlVNMdCb6>001>mouse type=move x=3240 y=3285 count=1 buttons=1 modifier=0
+>+11778>ObOgeUSNlVNMdCb6>001>mouse type=move x=3240 y=3240 count=1 buttons=1 modifier=0
+>+22141>ObOgeUSNlVNMdCb6>001>mouse type=move x=3270 y=3210 count=1 buttons=1 modifier=0
+>+27858>ObOgeUSNlVNMdCb6>001>mouse type=move x=3315 y=3180 count=1 buttons=1 modifier=0
+>+641638>ObOgeUSNlVNMdCb6>001>mouse type=move x=3330 y=3150 count=1 buttons=1 modifier=0
+>+256>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+225>ObOgeUSNlVNMdCb6>001>mouse type=move x=3360 y=3150 count=1 buttons=1 modifier=0
+>+215>ObOgeUSNlVNMdCb6>001>mouse type=move x=3390 y=3120 count=1 buttons=1 modifier=0
+>+229>ObOgeUSNlVNMdCb6>001>mouse type=move x=3420 y=3120 count=1 buttons=1 modifier=0
+>+262>ObOgeUSNlVNMdCb6>001>mouse type=move x=3435 y=3120 count=1 buttons=1 modifier=0
+>+271>ObOgeUSNlVNMdCb6>001>mouse type=move x=3435 y=3135 count=1 buttons=1 modifier=0
+>+267>ObOgeUSNlVNMdCb6>001>mouse type=move x=3435 y=3150 count=1 buttons=1 modifier=0
+>+278>ObOgeUSNlVNMdCb6>001>mouse type=move x=3435 y=3180 count=1 buttons=1 modifier=0
+>+435>ObOgeUSNlVNMdCb6>001>mouse type=move x=3435 y=3195 count=1 buttons=1 modifier=0
+>+376>ObOgeUSNlVNMdCb6>001>mouse type=move x=3435 y=3225 count=1 buttons=1 modifier=0
+>+307>ObOgeUSNlVNMdCb6>001>mouse type=move x=3435 y=3255 count=1 buttons=1 modifier=0
+>+237>ObOgeUSNlVNMdCb6>001>mouse type=move x=3405 y=3285 count=1 buttons=1 modifier=0
+>+232>ObOgeUSNlVNMdCb6>001>mouse type=move x=3375 y=3285 count=1 buttons=1 modifier=0
+>+205>ObOgeUSNlVNMdCb6>001>mouse type=move x=3375 y=3315 count=1 buttons=1 modifier=0
+>+293>ObOgeUSNlVNMdCb6>001>mouse type=move x=3345 y=3315 count=1 buttons=1 modifier=0
+>+252>ObOgeUSNlVNMdCb6>001>mouse type=move x=3300 y=3345 count=1 buttons=1 modifier=0
+>+6148>ObOgeUSNlVNMdCb6>001>mouse type=move x=3270 y=3375 count=1 buttons=1 modifier=0
+>+819106>ObOgeUSNlVNMdCb6>001>mouse type=move x=3240 y=3375 count=1 buttons=1 modifier=0
+>+348>ObOgeUSNlVNMdCb6>001>mouse type=move x=3225 y=3375 count=1 buttons=1 modifier=0
+>+610>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+529>ObOgeUSNlVNMdCb6>001>mouse type=move x=3195 y=3375 count=1 buttons=1 modifier=0
+>+338>ObOgeUSNlVNMdCb6>001>mouse type=move x=3195 y=3360 count=1 buttons=1 modifier=0
+>+401>ObOgeUSNlVNMdCb6>001>mouse type=move x=3195 y=3345 count=1 buttons=1 modifier=0
+>+377>ObOgeUSNlVNMdCb6>001>mouse type=move x=3180 y=3345 count=1 buttons=1 modifier=0
+>+332>ObOgeUSNlVNMdCb6>001>mouse type=move x=3180 y=3330 count=1 buttons=1 modifier=0
+>+489>ObOgeUSNlVNMdCb6>001>mouse type=move x=3165 y=3330 count=1 buttons=1 modifier=0
+>+383>ObOgeUSNlVNMdCb6>001>mouse type=move x=3150 y=3330 count=1 buttons=1 modifier=0
+>+343>ObOgeUSNlVNMdCb6>001>mouse type=move x=3135 y=3330 count=1 buttons=1 modifier=0
+>+131840>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+635600>ObOgeUSNlVNMdCb6>001>mouse type=move x=3135 y=3315 count=1 buttons=1 modifier=0
+>+220>ObOgeUSNlVNMdCb6>001>mouse type=move x=3135 y=3300 count=1 buttons=1 modifier=0
+>+179>ObOgeUSNlVNMdCb6>001>mouse type=move x=3135 y=3285 count=1 buttons=1 modifier=0
+>+358977>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3135 y=3285 count=1 buttons=1 modifier=0
+>+451824>ObOgeUSNlVNMdCb6>001>mouse type=move x=4275 y=1080 count=1 buttons=0 modifier=0
+>+200154>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520 tileposy=15360,15360,15360,15360 tilewidth=3840 tileheight=3840
+>+514620>ObOgeUSNlVNMdCb6>001>uno .uno:Strikeout
+>+110390>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+788387>ObOgeUSNlVNMdCb6>001>mouse type=move x=5670 y=3480 count=1 buttons=0 modifier=0
+>+249070>ObOgeUSNlVNMdCb6>001>mouse type=move x=5565 y=3135 count=1 buttons=0 modifier=0
+>+116679>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=5565 y=3135 count=1 buttons=1 modifier=0
+>+624>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=5565 y=3135 count=1 buttons=1 modifier=0
+>+1048919>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+119329>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+1377896>ObOgeUSNlVNMdCb6>001>textinput id=0 text=4
+>+590200>ObOgeUSNlVNMdCb6>001>key type=input char=46 key=0
+>+333>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=190
+>+57171434>ObOgeUSNlVNMdCb6>001>mouse type=move x=4140 y=255 count=1 buttons=0 modifier=0
+>+332218>ObOgeUSNlVNMdCb6>001>mouse type=move x=5430 y=120 count=1 buttons=0 modifier=0
+>+1049099>ObOgeUSNlVNMdCb6>001>mouse type=move x=1830 y=4095 count=1 buttons=0 modifier=0
+>+788920>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+114899>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+142372>ObOgeUSNlVNMdCb6>001>textinput id=0 text=T
+>+98302>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+90270>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+106086>ObOgeUSNlVNMdCb6>001>textinput id=0 text=h
+>+798683>ObOgeUSNlVNMdCb6>001>textinput id=0 text=i
+>+636287>ObOgeUSNlVNMdCb6>001>textinput id=0 text=s
+>+624>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+214>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+526110>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+40356>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+518907>ObOgeUSNlVNMdCb6>001>textinput id=0 text=x
+>+421>ObOgeUSNlVNMdCb6>001>textinput id=0 text=t
+>+615946>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+650>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+274>ObOgeUSNlVNMdCb6>001>textinput id=0 text=w
+>+273>ObOgeUSNlVNMdCb6>001>textinput id=0 text=i
+>+196175>ObOgeUSNlVNMdCb6>001>textinput id=0 text=l
+>+407154>ObOgeUSNlVNMdCb6>001>textinput id=0 text=l
+>+319>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+453>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+1117469>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+1420000>ObOgeUSNlVNMdCb6>001>removetextcontext id=0 before=1 after=0
+>+520063>ObOgeUSNlVNMdCb6>001>textinput id=0 text=b
+>+469002>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+341>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+490>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+743588>ObOgeUSNlVNMdCb6>001>textinput id=0 text=i
+>+42489>ObOgeUSNlVNMdCb6>001>textinput id=0 text=n
+>+664685>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+716>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+562886>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+19147>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+225942>ObOgeUSNlVNMdCb6>001>textinput id=0 text=U
+>+437431>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+180>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+8787>ObOgeUSNlVNMdCb6>001>textinput id=0 text=p
+>+608148>ObOgeUSNlVNMdCb6>001>textinput id=0 text=p
+>+255>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+24047>ObOgeUSNlVNMdCb6>001>textinput id=0 text=r
+>+625443>ObOgeUSNlVNMdCb6>001>textinput id=0 text=c
+>+475294>ObOgeUSNlVNMdCb6>001>textinput id=0 text=a
+>+284>ObOgeUSNlVNMdCb6>001>textinput id=0 text=s
+>+49270>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+1731268>ObOgeUSNlVNMdCb6>001>mouse type=move x=4560 y=3465 count=1 buttons=0 modifier=0
+>+812239>ObOgeUSNlVNMdCb6>001>key type=input char=44 key=0
+>+840>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1291
+>+238465>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+3712>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+1251617>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+107187>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+1405859>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+133268>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+80728>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+123723>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+212213>ObOgeUSNlVNMdCb6>001>textinput id=0 text=T
+>+214386>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+90819>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+72314>ObOgeUSNlVNMdCb6>001>textinput id=0 text=h
+>+241895>ObOgeUSNlVNMdCb6>001>textinput id=0 text=i
+>+680116>ObOgeUSNlVNMdCb6>001>textinput id=0 text=s
+>+191296>ObOgeUSNlVNMdCb6>001>textinput id=0 text=s
+>+1461408>ObOgeUSNlVNMdCb6>001>removetextcontext id=0 before=1 after=0
+>+329406>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+631>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+173762>ObOgeUSNlVNMdCb6>001>textinput id=0 text=w
+>+557684>ObOgeUSNlVNMdCb6>001>textinput id=0 text=i
+>+444>ObOgeUSNlVNMdCb6>001>textinput id=0 text=l
+>+24248>ObOgeUSNlVNMdCb6>001>textinput id=0 text=l
+>+582351>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+512>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+332>ObOgeUSNlVNMdCb6>001>textinput id=0 text=b
+>+332>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+627963>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+416>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+594>ObOgeUSNlVNMdCb6>001>textinput id=0 text=i
+>+56294>ObOgeUSNlVNMdCb6>001>textinput id=0 text=n
+>+663870>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+555>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+618>ObOgeUSNlVNMdCb6>001>textinput id=0 text=l
+>+1014>ObOgeUSNlVNMdCb6>001>textinput id=0 text=o
+>+946638>ObOgeUSNlVNMdCb6>001>textinput id=0 text=w
+>+482932>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+212055>ObOgeUSNlVNMdCb6>001>textinput id=0 text=r
+>+538621>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+488>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+423>ObOgeUSNlVNMdCb6>001>textinput id=0 text=c
+>+141319>ObOgeUSNlVNMdCb6>001>textinput id=0 text=a
+>+623825>ObOgeUSNlVNMdCb6>001>textinput id=0 text=s
+>+609>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+1067898>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+148692>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+488366>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+94283>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+384400>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+100530>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+243330>ObOgeUSNlVNMdCb6>001>textinput id=0 text=T
+>+191663>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+70740>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+133694>ObOgeUSNlVNMdCb6>001>textinput id=0 text=h
+>+700574>ObOgeUSNlVNMdCb6>001>textinput id=0 text=i
+>+535>ObOgeUSNlVNMdCb6>001>textinput id=0 text=s
+>+356>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+367>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+404397>ObOgeUSNlVNMdCb6>001>textinput id=0 text=w
+>+319>ObOgeUSNlVNMdCb6>001>textinput id=0 text=i
+>+257938>ObOgeUSNlVNMdCb6>001>textinput id=0 text=l
+>+552202>ObOgeUSNlVNMdCb6>001>textinput id=0 text=l
+>+460>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+373>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+437>ObOgeUSNlVNMdCb6>001>textinput id=0 text=b
+>+139980>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+839442>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+301>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+386>ObOgeUSNlVNMdCb6>001>textinput id=0 text=i
+>+360>ObOgeUSNlVNMdCb6>001>textinput id=0 text=n
+>+154498>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+328>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+520617>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+303>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+329>ObOgeUSNlVNMdCb6>001>textinput id=0 text=C
+>+64024>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+90580>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+111713>ObOgeUSNlVNMdCb6>001>textinput id=0 text=a
+>+396808>ObOgeUSNlVNMdCb6>001>textinput id=0 text=m
+>+510077>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+1073657>ObOgeUSNlVNMdCb6>001>textinput id=0 text=l
+>+490>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+289>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+308>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+571876>ObOgeUSNlVNMdCb6>001>textinput id=0 text=c
+>+195>ObOgeUSNlVNMdCb6>001>textinput id=0 text=a
+>+235770>ObOgeUSNlVNMdCb6>001>textinput id=0 text=s
+>+507470>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+1094177>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+294797>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+2772648>ObOgeUSNlVNMdCb6>001>mouse type=move x=4065 y=4215 count=1 buttons=0 modifier=0
+>+865861>ObOgeUSNlVNMdCb6>001>mouse type=move x=3945 y=4065 count=1 buttons=0 modifier=0
+>+333540>ObOgeUSNlVNMdCb6>001>mouse type=move x=3885 y=4080 count=1 buttons=0 modifier=0
+>+118262>ObOgeUSNlVNMdCb6>001>mouse type=move x=3855 y=4080 count=1 buttons=0 modifier=0
+>+132897>ObOgeUSNlVNMdCb6>001>mouse type=move x=3840 y=4080 count=1 buttons=0 modifier=0
+>+216079>ObOgeUSNlVNMdCb6>001>mouse type=move x=3825 y=4080 count=1 buttons=0 modifier=0
+>+482957>ObOgeUSNlVNMdCb6>001>mouse type=move x=3360 y=4200 count=1 buttons=0 modifier=0
+>+199359>ObOgeUSNlVNMdCb6>001>mouse type=move x=3360 y=4140 count=1 buttons=0 modifier=0
+>+666505>ObOgeUSNlVNMdCb6>001>mouse type=move x=5100 y=3225 count=1 buttons=0 modifier=0
+>+316016>ObOgeUSNlVNMdCb6>001>mouse type=move x=4335 y=3645 count=1 buttons=0 modifier=0
+>+300115>ObOgeUSNlVNMdCb6>001>mouse type=move x=4710 y=3510 count=1 buttons=0 modifier=0
+>+376527>ObOgeUSNlVNMdCb6>001>mouse type=move x=4680 y=3540 count=1 buttons=0 modifier=0
+>+141609>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=4680 y=3540 count=1 buttons=1 modifier=0
+>+1099>ObOgeUSNlVNMdCb6>001>mouse type=move x=3735 y=3195 count=1 buttons=1 modifier=0
+>+14772>ObOgeUSNlVNMdCb6>001>mouse type=move x=3360 y=3120 count=1 buttons=1 modifier=0
+>+20558>ObOgeUSNlVNMdCb6>001>mouse type=move x=3015 y=3090 count=1 buttons=1 modifier=0
+>+15918>ObOgeUSNlVNMdCb6>001>mouse type=move x=2910 y=3090 count=1 buttons=1 modifier=0
+>+673951>ObOgeUSNlVNMdCb6>001>mouse type=move x=2850 y=3090 count=1 buttons=1 modifier=0
+>+582>ObOgeUSNlVNMdCb6>001>mouse type=move x=2820 y=3090 count=1 buttons=1 modifier=0
+>+522>ObOgeUSNlVNMdCb6>001>mouse type=move x=2775 y=3090 count=1 buttons=1 modifier=0
+>+478>ObOgeUSNlVNMdCb6>001>mouse type=move x=2760 y=3060 count=1 buttons=1 modifier=0
+>+472>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+205>ObOgeUSNlVNMdCb6>001>mouse type=move x=2730 y=3060 count=1 buttons=1 modifier=0
+>+177>ObOgeUSNlVNMdCb6>001>mouse type=move x=2730 y=3075 count=1 buttons=1 modifier=0
+>+173>ObOgeUSNlVNMdCb6>001>mouse type=move x=2730 y=3090 count=1 buttons=1 modifier=0
+>+266>ObOgeUSNlVNMdCb6>001>mouse type=move x=2760 y=3150 count=1 buttons=1 modifier=0
+>+277>ObOgeUSNlVNMdCb6>001>mouse type=move x=2790 y=3195 count=1 buttons=1 modifier=0
+>+286>ObOgeUSNlVNMdCb6>001>mouse type=move x=2820 y=3225 count=1 buttons=1 modifier=0
+>+491>ObOgeUSNlVNMdCb6>001>mouse type=move x=2865 y=3225 count=1 buttons=1 modifier=0
+>+575>ObOgeUSNlVNMdCb6>001>mouse type=move x=2895 y=3255 count=1 buttons=1 modifier=0
+>+564>ObOgeUSNlVNMdCb6>001>mouse type=move x=2925 y=3255 count=1 buttons=1 modifier=0
+>+403>ObOgeUSNlVNMdCb6>001>mouse type=move x=2955 y=3285 count=1 buttons=1 modifier=0
+>+604>ObOgeUSNlVNMdCb6>001>mouse type=move x=3000 y=3360 count=1 buttons=1 modifier=0
+>+449>ObOgeUSNlVNMdCb6>001>mouse type=move x=3030 y=3360 count=1 buttons=1 modifier=0
+>+540>ObOgeUSNlVNMdCb6>001>mouse type=move x=3060 y=3390 count=1 buttons=1 modifier=0
+>+334>ObOgeUSNlVNMdCb6>001>mouse type=move x=3105 y=3465 count=1 buttons=1 modifier=0
+>+421>ObOgeUSNlVNMdCb6>001>mouse type=move x=3135 y=3495 count=1 buttons=1 modifier=0
+>+386>ObOgeUSNlVNMdCb6>001>mouse type=move x=3165 y=3525 count=1 buttons=1 modifier=0
+>+503>ObOgeUSNlVNMdCb6>001>mouse type=move x=3195 y=3555 count=1 buttons=1 modifier=0
+>+743716>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+446>ObOgeUSNlVNMdCb6>001>mouse type=move x=3210 y=3570 count=1 buttons=1 modifier=0
+>+325>ObOgeUSNlVNMdCb6>001>mouse type=move x=3225 y=3570 count=1 buttons=1 modifier=0
+>+343>ObOgeUSNlVNMdCb6>001>mouse type=move x=3255 y=3570 count=1 buttons=1 modifier=0
+>+250>ObOgeUSNlVNMdCb6>001>mouse type=move x=3270 y=3570 count=1 buttons=1 modifier=0
+>+199>ObOgeUSNlVNMdCb6>001>mouse type=move x=3300 y=3570 count=1 buttons=1 modifier=0
+>+237>ObOgeUSNlVNMdCb6>001>mouse type=move x=3300 y=3600 count=1 buttons=1 modifier=0
+>+161>ObOgeUSNlVNMdCb6>001>mouse type=move x=3315 y=3600 count=1 buttons=1 modifier=0
+>+152>ObOgeUSNlVNMdCb6>001>mouse type=move x=3330 y=3600 count=1 buttons=1 modifier=0
+>+329>ObOgeUSNlVNMdCb6>001>mouse type=move x=3345 y=3600 count=1 buttons=1 modifier=0
+>+36398>ObOgeUSNlVNMdCb6>001>mouse type=move x=3360 y=3600 count=1 buttons=1 modifier=0
+>+445437>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+68073>ObOgeUSNlVNMdCb6>001>mouse type=move x=3375 y=3600 count=1 buttons=1 modifier=0
+>+51252>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+48611>ObOgeUSNlVNMdCb6>001>mouse type=move x=3390 y=3600 count=1 buttons=1 modifier=0
+>+69146>ObOgeUSNlVNMdCb6>001>mouse type=move x=3405 y=3600 count=1 buttons=1 modifier=0
+>+197282>ObOgeUSNlVNMdCb6>001>mouse type=move x=3420 y=3600 count=1 buttons=1 modifier=0
+>+49997>ObOgeUSNlVNMdCb6>001>mouse type=move x=3435 y=3600 count=1 buttons=1 modifier=0
+>+344045>ObOgeUSNlVNMdCb6>001>mouse type=move x=3450 y=3600 count=1 buttons=1 modifier=0
+>+859>ObOgeUSNlVNMdCb6>001>mouse type=move x=3465 y=3600 count=1 buttons=1 modifier=0
+>+109758>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+245499>ObOgeUSNlVNMdCb6>001>mouse type=move x=3480 y=3600 count=1 buttons=1 modifier=0
+>+116911>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3480 y=3600 count=1 buttons=1 modifier=0
+>+599685>ObOgeUSNlVNMdCb6>001>mouse type=move x=4440 y=1395 count=1 buttons=0 modifier=0
+>+633808>ObOgeUSNlVNMdCb6>001>mouse type=move x=5235 y=0 count=1 buttons=0 modifier=0
+>+4967485>ObOgeUSNlVNMdCb6>001>mouse type=move x=2970 y=795 count=1 buttons=0 modifier=0
+>+616160>ObOgeUSNlVNMdCb6>001>mouse type=move x=2880 y=1545 count=1 buttons=0 modifier=0
+>+415944>ObOgeUSNlVNMdCb6>001>mouse type=move x=2835 y=1575 count=1 buttons=0 modifier=0
+>+618029>ObOgeUSNlVNMdCb6>001>mouse type=move x=4755 y=1995 count=1 buttons=0 modifier=0
+>+1412348>ObOgeUSNlVNMdCb6>001>uno .uno:FontColor {"FontColor":{"type":"long","value":16167531}}
+>+1201422>ObOgeUSNlVNMdCb6>001>mouse type=move x=4095 y=3915 count=1 buttons=0 modifier=0
+>+567405>ObOgeUSNlVNMdCb6>001>mouse type=move x=3900 y=4170 count=1 buttons=0 modifier=0
+>+211360>ObOgeUSNlVNMdCb6>001>mouse type=move x=3900 y=4155 count=1 buttons=0 modifier=0
+>+1175>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3900 y=4155 count=1 buttons=1 modifier=0
+>+850>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3900 y=4155 count=1 buttons=1 modifier=0
+>+1168773>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3900 y=4155 count=1 buttons=2 modifier=0
+>+387>ObOgeUSNlVNMdCb6>001>mouse type=move x=3810 y=4155 count=1 buttons=1 modifier=0
+>+16504>ObOgeUSNlVNMdCb6>001>mouse type=move x=3675 y=4155 count=1 buttons=1 modifier=0
+>+17016>ObOgeUSNlVNMdCb6>001>mouse type=move x=3465 y=4155 count=1 buttons=1 modifier=0
+>+15467>ObOgeUSNlVNMdCb6>001>mouse type=move x=3330 y=4155 count=1 buttons=1 modifier=0
+>+16961>ObOgeUSNlVNMdCb6>001>mouse type=move x=3225 y=4155 count=1 buttons=1 modifier=0
+>+16595>ObOgeUSNlVNMdCb6>001>mouse type=move x=3135 y=4155 count=1 buttons=1 modifier=0
+>+16740>ObOgeUSNlVNMdCb6>001>mouse type=move x=3090 y=4155 count=1 buttons=1 modifier=0
+>+33334>ObOgeUSNlVNMdCb6>001>mouse type=move x=3060 y=4155 count=1 buttons=1 modifier=0
+>+33608>ObOgeUSNlVNMdCb6>001>mouse type=move x=3045 y=4155 count=1 buttons=1 modifier=0
+>+33425>ObOgeUSNlVNMdCb6>001>mouse type=move x=3015 y=4155 count=1 buttons=1 modifier=0
+>+216264>ObOgeUSNlVNMdCb6>001>mouse type=move x=3000 y=4155 count=1 buttons=1 modifier=0
+>+16677>ObOgeUSNlVNMdCb6>001>mouse type=move x=3000 y=4140 count=1 buttons=1 modifier=0
+>+32965>ObOgeUSNlVNMdCb6>001>mouse type=move x=3000 y=4110 count=1 buttons=1 modifier=0
+>+16544>ObOgeUSNlVNMdCb6>001>mouse type=move x=2970 y=4110 count=1 buttons=1 modifier=0
+>+33106>ObOgeUSNlVNMdCb6>001>mouse type=move x=2970 y=4080 count=1 buttons=1 modifier=0
+>+33555>ObOgeUSNlVNMdCb6>001>mouse type=move x=2970 y=4065 count=1 buttons=1 modifier=0
+>+16691>ObOgeUSNlVNMdCb6>001>mouse type=move x=2955 y=4065 count=1 buttons=1 modifier=0
+>+33104>ObOgeUSNlVNMdCb6>001>mouse type=move x=2925 y=4065 count=1 buttons=1 modifier=0
+>+67099>ObOgeUSNlVNMdCb6>001>mouse type=move x=2910 y=4065 count=1 buttons=1 modifier=0
+>+50724>ObOgeUSNlVNMdCb6>001>mouse type=move x=2895 y=4065 count=1 buttons=1 modifier=0
+>+66178>ObOgeUSNlVNMdCb6>001>mouse type=move x=2880 y=4065 count=1 buttons=1 modifier=0
+>+117325>ObOgeUSNlVNMdCb6>001>mouse type=move x=2865 y=4065 count=1 buttons=1 modifier=0
+>+116100>ObOgeUSNlVNMdCb6>001>mouse type=move x=2850 y=4065 count=1 buttons=1 modifier=0
+>+349270>ObOgeUSNlVNMdCb6>001>mouse type=move x=2835 y=4065 count=1 buttons=1 modifier=0
+>+99971>ObOgeUSNlVNMdCb6>001>mouse type=move x=2820 y=4065 count=1 buttons=1 modifier=0
+>+100743>ObOgeUSNlVNMdCb6>001>mouse type=move x=2805 y=4065 count=1 buttons=1 modifier=0
+>+253215>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2805 y=4065 count=1 buttons=2 modifier=0
+>+480589>ObOgeUSNlVNMdCb6>001>mouse type=move x=4665 y=825 count=1 buttons=0 modifier=0
+>+449550>ObOgeUSNlVNMdCb6>001>mouse type=move x=5940 y=15 count=1 buttons=0 modifier=0
+>+1251588>ObOgeUSNlVNMdCb6>001>mouse type=move x=5985 y=15 count=1 buttons=0 modifier=0
+>+1208435>ObOgeUSNlVNMdCb6>001>uno .uno:BackColor {"BackColor":{"type":"long","value":130389}}
+>+1357845>ObOgeUSNlVNMdCb6>001>mouse type=move x=3195 y=4365 count=1 buttons=0 modifier=0
+>+382869>ObOgeUSNlVNMdCb6>001>mouse type=move x=3060 y=4050 count=1 buttons=0 modifier=0
+>+214509>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3060 y=4050 count=1 buttons=1 modifier=0
+>+419>ObOgeUSNlVNMdCb6>001>mouse type=move x=3090 y=4050 count=1 buttons=1 modifier=0
+>+16647>ObOgeUSNlVNMdCb6>001>mouse type=move x=3450 y=3945 count=1 buttons=1 modifier=0
+>+21575>ObOgeUSNlVNMdCb6>001>mouse type=move x=3630 y=3915 count=1 buttons=1 modifier=0
+>+17335>ObOgeUSNlVNMdCb6>001>mouse type=move x=3870 y=3915 count=1 buttons=1 modifier=0
+>+707255>ObOgeUSNlVNMdCb6>001>mouse type=move x=3930 y=3915 count=1 buttons=1 modifier=0
+>+511>ObOgeUSNlVNMdCb6>001>mouse type=move x=3960 y=3915 count=1 buttons=1 modifier=0
+>+409>ObOgeUSNlVNMdCb6>001>mouse type=move x=4005 y=3915 count=1 buttons=1 modifier=0
+>+341>ObOgeUSNlVNMdCb6>001>mouse type=move x=4035 y=3915 count=1 buttons=1 modifier=0
+>+386>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+326>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=4035 y=3915 count=1 buttons=1 modifier=0
+>+168909>ObOgeUSNlVNMdCb6>001>mouse type=move x=4920 y=1680 count=1 buttons=0 modifier=0
+>+878677>ObOgeUSNlVNMdCb6>001>mouse type=move x=5565 y=105 count=1 buttons=0 modifier=0
+>+621044>ObOgeUSNlVNMdCb6>001>mouse type=move x=3795 y=4485 count=1 buttons=0 modifier=0
+>+9176>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3795 y=4485 count=1 buttons=1 modifier=0
+>+295>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3795 y=4485 count=1 buttons=1 modifier=0
+>+1392400>ObOgeUSNlVNMdCb6>001>mouse type=move x=4185 y=4605 count=1 buttons=0 modifier=0
+>+250474>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=4185 y=4605 count=1 buttons=1 modifier=0
+>+837>ObOgeUSNlVNMdCb6>001>mouse type=move x=3930 y=4605 count=1 buttons=1 modifier=0
+>+17511>ObOgeUSNlVNMdCb6>001>mouse type=move x=3690 y=4650 count=1 buttons=1 modifier=0
+>+20874>ObOgeUSNlVNMdCb6>001>mouse type=move x=3420 y=4680 count=1 buttons=1 modifier=0
+>+10779>ObOgeUSNlVNMdCb6>001>mouse type=move x=3345 y=4680 count=1 buttons=1 modifier=0
+>+694953>ObOgeUSNlVNMdCb6>001>mouse type=move x=3210 y=4680 count=1 buttons=1 modifier=0
+>+714>ObOgeUSNlVNMdCb6>001>mouse type=move x=3180 y=4680 count=1 buttons=1 modifier=0
+>+279>ObOgeUSNlVNMdCb6>001>mouse type=move x=3150 y=4680 count=1 buttons=1 modifier=0
+>+289>ObOgeUSNlVNMdCb6>001>mouse type=move x=3135 y=4680 count=1 buttons=1 modifier=0
+>+282>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+228>ObOgeUSNlVNMdCb6>001>mouse type=move x=3120 y=4680 count=1 buttons=1 modifier=0
+>+293>ObOgeUSNlVNMdCb6>001>mouse type=move x=3090 y=4680 count=1 buttons=1 modifier=0
+>+199>ObOgeUSNlVNMdCb6>001>mouse type=move x=3090 y=4665 count=1 buttons=1 modifier=0
+>+159>ObOgeUSNlVNMdCb6>001>mouse type=move x=3060 y=4665 count=1 buttons=1 modifier=0
+>+177>ObOgeUSNlVNMdCb6>001>mouse type=move x=3030 y=4665 count=1 buttons=1 modifier=0
+>+179>ObOgeUSNlVNMdCb6>001>mouse type=move x=3015 y=4665 count=1 buttons=1 modifier=0
+>+355>ObOgeUSNlVNMdCb6>001>mouse type=move x=3000 y=4665 count=1 buttons=1 modifier=0
+>+346>ObOgeUSNlVNMdCb6>001>mouse type=move x=2970 y=4665 count=1 buttons=1 modifier=0
+>+370>ObOgeUSNlVNMdCb6>001>mouse type=move x=2955 y=4665 count=1 buttons=1 modifier=0
+>+311>ObOgeUSNlVNMdCb6>001>mouse type=move x=2940 y=4665 count=1 buttons=1 modifier=0
+>+2675>ObOgeUSNlVNMdCb6>001>mouse type=move x=2925 y=4665 count=1 buttons=1 modifier=0
+>+559662>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+967>ObOgeUSNlVNMdCb6>001>mouse type=move x=2925 y=4650 count=1 buttons=1 modifier=0
+>+452>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2925 y=4650 count=1 buttons=1 modifier=0
+>+385>ObOgeUSNlVNMdCb6>001>mouse type=move x=2880 y=4650 count=1 buttons=0 modifier=0
+>+633728>ObOgeUSNlVNMdCb6>001>mouse type=move x=3930 y=1365 count=1 buttons=0 modifier=0
+>+284790>ObOgeUSNlVNMdCb6>001>mouse type=move x=4800 y=150 count=1 buttons=0 modifier=0
+>+1256067>ObOgeUSNlVNMdCb6>001>mouse type=move x=5805 y=90 count=1 buttons=0 modifier=0
+>+2803130>ObOgeUSNlVNMdCb6>001>uno .uno:FontColor {"FontColor":{"type":"long","value":10470888}}
+>+922936>ObOgeUSNlVNMdCb6>001>mouse type=move x=4500 y=4365 count=1 buttons=0 modifier=0
+>+41052>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=4500 y=4365 count=1 buttons=1 modifier=0
+>+1735>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=4500 y=4365 count=1 buttons=1 modifier=0
+>+2941078>ObOgeUSNlVNMdCb6>001>mouse type=move x=5430 y=615 count=1 buttons=0 modifier=0
+>+218428>ObOgeUSNlVNMdCb6>001>mouse type=move x=6195 y=30 count=1 buttons=0 modifier=0
+>+683865>ObOgeUSNlVNMdCb6>001>mouse type=move x=3990 y=3255 count=1 buttons=0 modifier=0
+>+429214>ObOgeUSNlVNMdCb6>001>mouse type=move x=4140 y=4425 count=1 buttons=0 modifier=0
+>+316461>ObOgeUSNlVNMdCb6>001>mouse type=move x=4200 y=4740 count=1 buttons=0 modifier=0
+>+316335>ObOgeUSNlVNMdCb6>001>mouse type=move x=4200 y=4695 count=1 buttons=0 modifier=0
+>+151662>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=4200 y=4695 count=1 buttons=1 modifier=0
+>+821>ObOgeUSNlVNMdCb6>001>mouse type=move x=3690 y=4635 count=1 buttons=1 modifier=0
+>+16115>ObOgeUSNlVNMdCb6>001>mouse type=move x=3285 y=4605 count=1 buttons=1 modifier=0
+>+29333>ObOgeUSNlVNMdCb6>001>mouse type=move x=2730 y=4605 count=1 buttons=1 modifier=0
+>+10108>ObOgeUSNlVNMdCb6>001>mouse type=move x=2625 y=4605 count=1 buttons=1 modifier=0
+>+17468>ObOgeUSNlVNMdCb6>001>mouse type=move x=2355 y=4605 count=1 buttons=1 modifier=0
+>+582180>ObOgeUSNlVNMdCb6>001>mouse type=move x=2220 y=4605 count=1 buttons=1 modifier=0
+>+328>ObOgeUSNlVNMdCb6>001>mouse type=move x=2070 y=4605 count=1 buttons=1 modifier=0
+>+278>ObOgeUSNlVNMdCb6>001>mouse type=move x=1980 y=4605 count=1 buttons=1 modifier=0
+>+234>ObOgeUSNlVNMdCb6>001>mouse type=move x=1905 y=4605 count=1 buttons=1 modifier=0
+>+207>ObOgeUSNlVNMdCb6>001>mouse type=move x=1800 y=4605 count=1 buttons=1 modifier=0
+>+190>ObOgeUSNlVNMdCb6>001>mouse type=move x=1695 y=4605 count=1 buttons=1 modifier=0
+>+417>ObOgeUSNlVNMdCb6>001>mouse type=move x=1635 y=4605 count=1 buttons=1 modifier=0
+>+325>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+916>ObOgeUSNlVNMdCb6>001>mouse type=move x=1605 y=4605 count=1 buttons=1 modifier=0
+>+565>ObOgeUSNlVNMdCb6>001>mouse type=move x=1575 y=4605 count=1 buttons=1 modifier=0
+>+615>ObOgeUSNlVNMdCb6>001>mouse type=move x=1560 y=4605 count=1 buttons=1 modifier=0
+>+394>ObOgeUSNlVNMdCb6>001>mouse type=move x=1530 y=4605 count=1 buttons=1 modifier=0
+>+528>ObOgeUSNlVNMdCb6>001>mouse type=move x=1515 y=4605 count=1 buttons=1 modifier=0
+>+367>ObOgeUSNlVNMdCb6>001>mouse type=move x=1500 y=4605 count=1 buttons=1 modifier=0
+>+548>ObOgeUSNlVNMdCb6>001>mouse type=move x=1470 y=4590 count=1 buttons=1 modifier=0
+>+473>ObOgeUSNlVNMdCb6>001>mouse type=move x=1440 y=4560 count=1 buttons=1 modifier=0
+>+1239>ObOgeUSNlVNMdCb6>001>mouse type=move x=1440 y=4530 count=1 buttons=1 modifier=0
+>+19305>ObOgeUSNlVNMdCb6>001>mouse type=move x=1410 y=4500 count=1 buttons=1 modifier=0
+>+656052>ObOgeUSNlVNMdCb6>001>mouse type=move x=1335 y=4470 count=1 buttons=1 modifier=0
+>+276>ObOgeUSNlVNMdCb6>001>mouse type=move x=1260 y=4440 count=1 buttons=1 modifier=0
+>+253>ObOgeUSNlVNMdCb6>001>mouse type=move x=1200 y=4395 count=1 buttons=1 modifier=0
+>+324>ObOgeUSNlVNMdCb6>001>mouse type=move x=1125 y=4395 count=1 buttons=1 modifier=0
+>+551>ObOgeUSNlVNMdCb6>001>mouse type=move x=1095 y=4395 count=1 buttons=1 modifier=0
+>+410>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+215>ObOgeUSNlVNMdCb6>001>mouse type=move x=1095 y=4365 count=1 buttons=1 modifier=0
+>+216>ObOgeUSNlVNMdCb6>001>mouse type=move x=1065 y=4365 count=1 buttons=1 modifier=0
+>+225>ObOgeUSNlVNMdCb6>001>mouse type=move x=1065 y=4335 count=1 buttons=1 modifier=0
+>+144>ObOgeUSNlVNMdCb6>001>mouse type=move x=1035 y=4335 count=1 buttons=1 modifier=0
+>+142>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=1035 y=4335 count=1 buttons=1 modifier=0
+>+752235>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+349>ObOgeUSNlVNMdCb6>001>mouse type=move x=5535 y=30 count=1 buttons=0 modifier=0
+>+578>ObOgeUSNlVNMdCb6>001>mouse type=move x=6210 y=30 count=1 buttons=0 modifier=0
+>+996275>ObOgeUSNlVNMdCb6>001>mouse type=move x=6255 y=0 count=1 buttons=0 modifier=0
+>+480>ObOgeUSNlVNMdCb6>001>uno .uno:LeftPara
+>+2912374>ObOgeUSNlVNMdCb6>001>uno .uno:CenterPara
+>+119070>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+1223370>ObOgeUSNlVNMdCb6>001>mouse type=move x=5055 y=3540 count=1 buttons=0 modifier=0
+>+385195>ObOgeUSNlVNMdCb6>001>mouse type=move x=4935 y=4050 count=1 buttons=0 modifier=0
+>+1033203>ObOgeUSNlVNMdCb6>001>mouse type=move x=5310 y=3930 count=1 buttons=0 modifier=0
+>+450061>ObOgeUSNlVNMdCb6>001>mouse type=move x=4125 y=4260 count=1 buttons=0 modifier=0
+>+882085>ObOgeUSNlVNMdCb6>001>uno .uno:Undo
+>+488429>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+928411>ObOgeUSNlVNMdCb6>001>mouse type=move x=3825 y=5115 count=1 buttons=0 modifier=0
+>+99615>ObOgeUSNlVNMdCb6>001>mouse type=move x=5355 y=4575 count=1 buttons=0 modifier=0
+>+113057>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=5355 y=4575 count=1 buttons=1 modifier=0
+>+385>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=5355 y=4575 count=1 buttons=1 modifier=0
+>+1369887>ObOgeUSNlVNMdCb6>001>mouse type=move x=5040 y=5355 count=1 buttons=0 modifier=0
+>+581271>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+96869>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+99124>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+78414>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+92106>ObOgeUSNlVNMdCb6>001>key type=input char=13 key=5376
+>+573520>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=5376
+>+543558>ObOgeUSNlVNMdCb6>001>mouse type=move x=4080 y=6915 count=1 buttons=0 modifier=0
+>+778036>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+40351>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+460381>ObOgeUSNlVNMdCb6>001>textinput id=0 text=S
+>+223578>ObOgeUSNlVNMdCb6>001>key type=input char=0 key=20
+>+94206>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=20
+>+172355>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+263033>ObOgeUSNlVNMdCb6>001>textinput id=0 text=a
+>+453894>ObOgeUSNlVNMdCb6>001>textinput id=0 text=s
+>+245>ObOgeUSNlVNMdCb6>001>textinput id=0 text=e
+>+815439>ObOgeUSNlVNMdCb6>001>removetextcontext id=0 before=1 after=0
+>+1338810>ObOgeUSNlVNMdCb6>001>textinput id=0 text=o
+>+237367>ObOgeUSNlVNMdCb6>001>textinput id=0 text=n
+>+487406>ObOgeUSNlVNMdCb6>001>key type=input char=32 key=0
+>+409>ObOgeUSNlVNMdCb6>001>key type=up char=0 key=1284
+>+542262>ObOgeUSNlVNMdCb6>001>textinput id=0 text=2
+>+874556>ObOgeUSNlVNMdCb6>001>mouse type=move x=2730 y=5655 count=1 buttons=0 modifier=0
+>+133227>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2730 y=5655 count=1 buttons=1 modifier=0
+>+1472>ObOgeUSNlVNMdCb6>001>mouse type=move x=2640 y=5625 count=1 buttons=1 modifier=0
+>+17569>ObOgeUSNlVNMdCb6>001>mouse type=move x=2535 y=5595 count=1 buttons=1 modifier=0
+>+14861>ObOgeUSNlVNMdCb6>001>mouse type=move x=2370 y=5595 count=1 buttons=1 modifier=0
+>+16425>ObOgeUSNlVNMdCb6>001>mouse type=move x=2295 y=5595 count=1 buttons=1 modifier=0
+>+16431>ObOgeUSNlVNMdCb6>001>mouse type=move x=2220 y=5595 count=1 buttons=1 modifier=0
+>+455979>ObOgeUSNlVNMdCb6>001>mouse type=move x=2190 y=5595 count=1 buttons=1 modifier=0
+>+324>ObOgeUSNlVNMdCb6>001>mouse type=move x=2160 y=5565 count=1 buttons=1 modifier=0
+>+405>ObOgeUSNlVNMdCb6>001>mouse type=move x=2130 y=5535 count=1 buttons=1 modifier=0
+>+403>ObOgeUSNlVNMdCb6>001>mouse type=move x=2115 y=5535 count=1 buttons=1 modifier=0
+>+395>ObOgeUSNlVNMdCb6>001>mouse type=move x=2085 y=5535 count=1 buttons=1 modifier=0
+>+465>ObOgeUSNlVNMdCb6>001>mouse type=move x=2085 y=5505 count=1 buttons=1 modifier=0
+>+676>ObOgeUSNlVNMdCb6>001>mouse type=move x=1920 y=5445 count=1 buttons=1 modifier=0
+>+422>ObOgeUSNlVNMdCb6>001>mouse type=move x=1785 y=5445 count=1 buttons=1 modifier=0
+>+392>ObOgeUSNlVNMdCb6>001>mouse type=move x=1680 y=5445 count=1 buttons=1 modifier=0
+>+463>ObOgeUSNlVNMdCb6>001>mouse type=move x=1620 y=5445 count=1 buttons=1 modifier=0
+>+404>ObOgeUSNlVNMdCb6>001>mouse type=move x=1590 y=5445 count=1 buttons=1 modifier=0
+>+425>ObOgeUSNlVNMdCb6>001>mouse type=move x=1560 y=5445 count=1 buttons=1 modifier=0
+>+673>ObOgeUSNlVNMdCb6>001>mouse type=move x=1545 y=5445 count=1 buttons=1 modifier=0
+>+735697>ObOgeUSNlVNMdCb6>001>mouse type=move x=1530 y=5445 count=1 buttons=1 modifier=0
+>+397>ObOgeUSNlVNMdCb6>001>mouse type=move x=1515 y=5445 count=1 buttons=1 modifier=0
+>+316>ObOgeUSNlVNMdCb6>001>mouse type=move x=1485 y=5445 count=1 buttons=1 modifier=0
+>+308>ObOgeUSNlVNMdCb6>001>mouse type=move x=1470 y=5445 count=1 buttons=1 modifier=0
+>+411>ObOgeUSNlVNMdCb6>001>mouse type=move x=1455 y=5445 count=1 buttons=1 modifier=0
+>+347>ObOgeUSNlVNMdCb6>001>mouse type=move x=1425 y=5445 count=1 buttons=1 modifier=0
+>+210>ObOgeUSNlVNMdCb6>001>mouse type=move x=1410 y=5445 count=1 buttons=1 modifier=0
+>+253>ObOgeUSNlVNMdCb6>001>mouse type=move x=1380 y=5445 count=1 buttons=1 modifier=0
+>+211>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=1380 y=5445 count=1 buttons=1 modifier=0
+>+190>ObOgeUSNlVNMdCb6>001>mouse type=move x=1620 y=5760 count=1 buttons=0 modifier=0
+>+114611>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+805290>ObOgeUSNlVNMdCb6>001>mouse type=move x=6585 y=465 count=1 buttons=0 modifier=0
+>+1967553>ObOgeUSNlVNMdCb6>001>mouse type=move x=5355 y=30 count=1 buttons=0 modifier=0
+>+803166>ObOgeUSNlVNMdCb6>001>uno .uno:FontColor {"FontColor":{"type":"long","value":0}}
+>+563368>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520 tileposy=15360,15360,15360,15360 tilewidth=3840 tileheight=3840
+>+546455>ObOgeUSNlVNMdCb6>001>mouse type=move x=2520 y=5745 count=1 buttons=0 modifier=0
+>+382159>ObOgeUSNlVNMdCb6>001>mouse type=move x=4035 y=5265 count=1 buttons=0 modifier=0
+>+347400>ObOgeUSNlVNMdCb6>001>mouse type=move x=8115 y=75 count=1 buttons=0 modifier=0
+>+322330>ObOgeUSNlVNMdCb6>001>mouse type=move x=2415 y=105 count=1 buttons=0 modifier=0
+>+265746>ObOgeUSNlVNMdCb6>001>mouse type=move x=3150 y=0 count=1 buttons=0 modifier=0
+>+624670>ObOgeUSNlVNMdCb6>001>uno .uno:Bold
+>+2328825>ObOgeUSNlVNMdCb6>001>uno .uno:CenterPara
+>+116389>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+2421233>ObOgeUSNlVNMdCb6>001>uno .uno:Undo
+>+127914>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+1487254>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2160 y=5415 count=1 buttons=1 modifier=0
+>+210>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2160 y=5415 count=1 buttons=1 modifier=0
+>+193>ObOgeUSNlVNMdCb6>001>mouse type=move x=2160 y=5415 count=1 buttons=0 modifier=0
+>+206495>ObOgeUSNlVNMdCb6>001>mouse type=move x=1095 y=5415 count=1 buttons=0 modifier=0
+>+583664>ObOgeUSNlVNMdCb6>001>mouse type=move x=1410 y=5460 count=1 buttons=0 modifier=0
+>+101770>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=1410 y=5460 count=1 buttons=1 modifier=0
+>+1618>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=1410 y=5460 count=1 buttons=1 modifier=0
+>+696461>ObOgeUSNlVNMdCb6>001>mouse type=move x=6555 y=315 count=1 buttons=0 modifier=0
+>+411245>ObOgeUSNlVNMdCb6>001>mouse type=move x=6615 y=30 count=1 buttons=0 modifier=0
+>+606597>ObOgeUSNlVNMdCb6>001>uno .uno:CenterPara
+>+3660738>ObOgeUSNlVNMdCb6>001>uno .uno:RightPara
+>+229883>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520 tileposy=15360,15360,15360,15360 tilewidth=3840 tileheight=3840
+>+1559753>ObOgeUSNlVNMdCb6>001>uno .uno:JustifyPara
+>+4016356>ObOgeUSNlVNMdCb6>001>uno .uno:CenterPara
+>+949627>ObOgeUSNlVNMdCb6>001>mouse type=move x=9075 y=90 count=1 buttons=0 modifier=0
+>+1146238>ObOgeUSNlVNMdCb6>001>uno .uno:LeftPara
+>+3352056>ObOgeUSNlVNMdCb6>001>mouse type=move x=1155 y=2925 count=1 buttons=0 modifier=0
+>+615666>ObOgeUSNlVNMdCb6>001>mouse type=move x=2670 y=5490 count=1 buttons=0 modifier=0
+>+399326>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2670 y=5490 count=1 buttons=1 modifier=0
+>+670>ObOgeUSNlVNMdCb6>001>mouse type=move x=2505 y=5385 count=1 buttons=1 modifier=0
+>+26670>ObOgeUSNlVNMdCb6>001>mouse type=move x=2220 y=5175 count=1 buttons=1 modifier=0
+>+9520>ObOgeUSNlVNMdCb6>001>mouse type=move x=2160 y=5115 count=1 buttons=1 modifier=0
+>+18103>ObOgeUSNlVNMdCb6>001>mouse type=move x=2085 y=5040 count=1 buttons=1 modifier=0
+>+40381>ObOgeUSNlVNMdCb6>001>mouse type=move x=2055 y=4980 count=1 buttons=1 modifier=0
+>+9513>ObOgeUSNlVNMdCb6>001>mouse type=move x=2025 y=4950 count=1 buttons=1 modifier=0
+>+14370>ObOgeUSNlVNMdCb6>001>mouse type=move x=2025 y=4905 count=1 buttons=1 modifier=0
+>+17627>ObOgeUSNlVNMdCb6>001>mouse type=move x=2025 y=4875 count=1 buttons=1 modifier=0
+>+13186>ObOgeUSNlVNMdCb6>001>mouse type=move x=2025 y=4845 count=1 buttons=1 modifier=0
+>+33228>ObOgeUSNlVNMdCb6>001>mouse type=move x=1950 y=4755 count=1 buttons=1 modifier=0
+>+539694>ObOgeUSNlVNMdCb6>001>mouse type=move x=1890 y=4650 count=1 buttons=1 modifier=0
+>+552>ObOgeUSNlVNMdCb6>001>mouse type=move x=1845 y=4545 count=1 buttons=1 modifier=0
+>+431>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+434>ObOgeUSNlVNMdCb6>001>mouse type=move x=1815 y=4485 count=1 buttons=1 modifier=0
+>+348>ObOgeUSNlVNMdCb6>001>mouse type=move x=1755 y=4380 count=1 buttons=1 modifier=0
+>+410>ObOgeUSNlVNMdCb6>001>mouse type=move x=1755 y=4335 count=1 buttons=1 modifier=0
+>+458>ObOgeUSNlVNMdCb6>001>mouse type=move x=1710 y=4335 count=1 buttons=1 modifier=0
+>+387>ObOgeUSNlVNMdCb6>001>mouse type=move x=1710 y=4305 count=1 buttons=1 modifier=0
+>+296>ObOgeUSNlVNMdCb6>001>mouse type=move x=1710 y=4275 count=1 buttons=1 modifier=0
+>+363>ObOgeUSNlVNMdCb6>001>mouse type=move x=1710 y=4260 count=1 buttons=1 modifier=0
+>+436>ObOgeUSNlVNMdCb6>001>mouse type=move x=1710 y=4245 count=1 buttons=1 modifier=0
+>+547>ObOgeUSNlVNMdCb6>001>mouse type=move x=1695 y=4245 count=1 buttons=1 modifier=0
+>+532>ObOgeUSNlVNMdCb6>001>mouse type=move x=1695 y=4215 count=1 buttons=1 modifier=0
+>+546>ObOgeUSNlVNMdCb6>001>mouse type=move x=1665 y=4215 count=1 buttons=1 modifier=0
+>+445>ObOgeUSNlVNMdCb6>001>mouse type=move x=1650 y=4215 count=1 buttons=1 modifier=0
+>+20480>ObOgeUSNlVNMdCb6>001>mouse type=move x=1635 y=4215 count=1 buttons=1 modifier=0
+>+778534>ObOgeUSNlVNMdCb6>001>mouse type=move x=1620 y=4215 count=1 buttons=1 modifier=0
+>+680>ObOgeUSNlVNMdCb6>001>mouse type=move x=1590 y=4215 count=1 buttons=1 modifier=0
+>+419>ObOgeUSNlVNMdCb6>001>mouse type=move x=1575 y=4215 count=1 buttons=1 modifier=0
+>+474>ObOgeUSNlVNMdCb6>001>mouse type=move x=1560 y=4185 count=1 buttons=1 modifier=0
+>+318>ObOgeUSNlVNMdCb6>001>mouse type=move x=1530 y=4185 count=1 buttons=1 modifier=0
+>+280>ObOgeUSNlVNMdCb6>001>mouse type=move x=1530 y=4155 count=1 buttons=1 modifier=0
+>+516>ObOgeUSNlVNMdCb6>001>mouse type=move x=1530 y=4125 count=1 buttons=1 modifier=0
+>+427>ObOgeUSNlVNMdCb6>001>mouse type=move x=1500 y=4125 count=1 buttons=1 modifier=0
+>+439>ObOgeUSNlVNMdCb6>001>mouse type=move x=1500 y=4095 count=1 buttons=1 modifier=0
+>+288>ObOgeUSNlVNMdCb6>001>mouse type=move x=1440 y=4095 count=1 buttons=1 modifier=0
+>+350>ObOgeUSNlVNMdCb6>001>mouse type=move x=1380 y=4035 count=1 buttons=1 modifier=0
+>+398>ObOgeUSNlVNMdCb6>001>mouse type=move x=1335 y=4035 count=1 buttons=1 modifier=0
+>+369>ObOgeUSNlVNMdCb6>001>mouse type=move x=1305 y=4035 count=1 buttons=1 modifier=0
+>+448>ObOgeUSNlVNMdCb6>001>mouse type=move x=1290 y=4035 count=1 buttons=1 modifier=0
+>+440>ObOgeUSNlVNMdCb6>001>mouse type=move x=1275 y=4035 count=1 buttons=1 modifier=0
+>+646>ObOgeUSNlVNMdCb6>001>mouse type=move x=1245 y=4035 count=1 buttons=1 modifier=0
+>+467>ObOgeUSNlVNMdCb6>001>mouse type=move x=1230 y=4035 count=1 buttons=1 modifier=0
+>+541>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=1230 y=4035 count=1 buttons=1 modifier=0
+>+632004>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+313>ObOgeUSNlVNMdCb6>001>mouse type=move x=1275 y=4035 count=1 buttons=0 modifier=0
+>+257>ObOgeUSNlVNMdCb6>001>mouse type=move x=9390 y=1080 count=1 buttons=0 modifier=0
+>+554024>ObOgeUSNlVNMdCb6>001>mouse type=move x=10245 y=120 count=1 buttons=0 modifier=0
+>+1025516>ObOgeUSNlVNMdCb6>001>uno .uno:DefaultNumbering
+>+124341>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+747888>ObOgeUSNlVNMdCb6>001>mouse type=move x=5715 y=2010 count=1 buttons=0 modifier=0
+>+718771>ObOgeUSNlVNMdCb6>001>mouse type=move x=6540 y=2640 count=1 buttons=0 modifier=0
+>+152286>ObOgeUSNlVNMdCb6>001>mouse type=move x=6540 y=2670 count=1 buttons=0 modifier=0
+>+275587>ObOgeUSNlVNMdCb6>001>mouse type=move x=6540 y=2685 count=1 buttons=0 modifier=0
+>+501520>ObOgeUSNlVNMdCb6>001>mouse type=move x=6540 y=2700 count=1 buttons=0 modifier=0
+>+93393>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=6540 y=2700 count=1 buttons=1 modifier=0
+>+442>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=6540 y=2700 count=1 buttons=1 modifier=0
+>+1638397>ObOgeUSNlVNMdCb6>001>mouse type=move x=14340 y=2055 count=1 buttons=0 modifier=0
+>+356021>ObOgeUSNlVNMdCb6>001>mouse type=move x=14025 y=30 count=1 buttons=0 modifier=0
+>+4095304>ObOgeUSNlVNMdCb6>001>mouse type=move x=16395 y=195 count=1 buttons=0 modifier=0
+>+22399483>ObOgeUSNlVNMdCb6>001>mouse type=move x=3060 y=5055 count=1 buttons=0 modifier=0
+>+411955>ObOgeUSNlVNMdCb6>001>mouse type=move x=4065 y=5190 count=1 buttons=0 modifier=0
+>+141684>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=4065 y=5190 count=1 buttons=1 modifier=0
+>+569>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=4065 y=5190 count=1 buttons=1 modifier=0
+>+971954>ObOgeUSNlVNMdCb6>001>mouse type=move x=3360 y=5685 count=1 buttons=0 modifier=0
+>+132993>ObOgeUSNlVNMdCb6>001>mouse type=move x=3360 y=5670 count=1 buttons=0 modifier=0
+>+44024>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3360 y=5670 count=1 buttons=1 modifier=0
+>+427>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3360 y=5670 count=1 buttons=1 modifier=0
+>+3923937>ObOgeUSNlVNMdCb6>001>mouse type=move x=2415 y=5760 count=1 buttons=0 modifier=0
+>+167178>ObOgeUSNlVNMdCb6>001>mouse type=move x=2400 y=5760 count=1 buttons=0 modifier=0
+>+83326>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2400 y=5760 count=1 buttons=1 modifier=0
+>+835>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2400 y=5760 count=1 buttons=1 modifier=0
+>+1280673>ObOgeUSNlVNMdCb6>001>mouse type=move x=7965 y=1290 count=1 buttons=0 modifier=0
+>+149935>ObOgeUSNlVNMdCb6>001>mouse type=move x=9105 y=525 count=1 buttons=0 modifier=0
+>+9484738>ObOgeUSNlVNMdCb6>001>mouse type=move x=2700 y=6525 count=1 buttons=0 modifier=0
+>+77853>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2700 y=6525 count=1 buttons=1 modifier=0
+>+1473>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2700 y=6525 count=1 buttons=1 modifier=0
+>+291568>ObOgeUSNlVNMdCb6>001>textinput id=0 text=j
+>+967068>ObOgeUSNlVNMdCb6>001>textinput id=0 text=j
+>+258388>ObOgeUSNlVNMdCb6>001>removetextcontext id=0 before=1 after=0
+>+1264555>ObOgeUSNlVNMdCb6>001>removetextcontext id=0 before=1 after=0
+>+2601995>ObOgeUSNlVNMdCb6>001>mouse type=move x=2700 y=6240 count=1 buttons=0 modifier=0
+>+11453>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2700 y=6240 count=1 buttons=1 modifier=0
+>+352>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2700 y=6240 count=1 buttons=1 modifier=0
+>+2426169>ObOgeUSNlVNMdCb6>001>mouse type=move x=-2025 y=195 count=1 buttons=0 modifier=0
+>+8948138>ObOgeUSNlVNMdCb6>001>mouse type=move x=1860 y=6495 count=1 buttons=0 modifier=0
+>+2384055>ObOgeUSNlVNMdCb6>001>textinput id=0 text=v
+>+1596327>ObOgeUSNlVNMdCb6>001>removetextcontext id=0 before=1 after=0
+>+4081659>ObOgeUSNlVNMdCb6>001>mouse type=move x=2520 y=6555 count=1 buttons=0 modifier=0
+>+489415>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2520 y=6555 count=1 buttons=4 modifier=0
+>+1310>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2520 y=6555 count=1 buttons=4 modifier=0
+>+4258788>ObOgeUSNlVNMdCb6>001>mouse type=move x=3075 y=4680 count=1 buttons=0 modifier=0
+>+917145>ObOgeUSNlVNMdCb6>001>textinput id=0 text=v
+>+1351290>ObOgeUSNlVNMdCb6>001>removetextcontext id=0 before=1 after=0
+>+2528660>ObOgeUSNlVNMdCb6>001>mouse type=move x=3030 y=6420 count=1 buttons=0 modifier=0
+>+28648>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3030 y=6420 count=1 buttons=1 modifier=0
+>+378>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3030 y=6420 count=1 buttons=1 modifier=0
+>+604723>ObOgeUSNlVNMdCb6>001>mouse type=move x=8475 y=2055 count=1 buttons=0 modifier=0
+>+277980>ObOgeUSNlVNMdCb6>001>mouse type=move x=10785 y=15 count=1 buttons=0 modifier=0
+>+1056491>ObOgeUSNlVNMdCb6>001>mouse type=move x=8460 y=735 count=1 buttons=0 modifier=0
+>+671194>ObOgeUSNlVNMdCb6>001>mouse type=move x=13455 y=15 count=1 buttons=0 modifier=0
+>+848444>ObOgeUSNlVNMdCb6>001>clientvisiblearea x=-2775 y=0 width=18360 height=13215 splitx=0 splity=0
+>+3037>ObOgeUSNlVNMdCb6>001>canceltiles
+>+225>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
+>+48841>ObOgeUSNlVNMdCb6>001>canceltiles
+>+577>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
+>+792700>ObOgeUSNlVNMdCb6>001>mouse type=move x=15960 y=90 count=1 buttons=0 modifier=0
+>+7369277>ObOgeUSNlVNMdCb6>001>mouse type=move x=15540 y=5505 count=1 buttons=0 modifier=0
+>+904781>ObOgeUSNlVNMdCb6>001>uno .uno:InsertAnnotation {"Text":{"type":"string","value":"Comment"},"Author":{"type":"string","value":"LocalUser#0"}}
+>+30248>ObOgeUSNlVNMdCb6>001>clientvisiblearea x=-5025 y=0 width=22860 height=13215 splitx=0 splity=0
+>+123293>ObOgeUSNlVNMdCb6>001>clientvisiblearea x=-2775 y=0 width=18360 height=13215 splitx=0 splity=0
+>+386>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=3840,3840,3840 tilewidth=3840 tileheight=3840
+>+1743>ObOgeUSNlVNMdCb6>001>freemiumstatus isFreemiumUser=false
+>+79474>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=3840,3840,3840 tilewidth=3840 tileheight=3840
+>+1055096>ObOgeUSNlVNMdCb6>001>mouse type=move x=13215 y=1515 count=1 buttons=0 modifier=0
+>+670756>ObOgeUSNlVNMdCb6>001>mouse type=move x=15105 y=60 count=1 buttons=0 modifier=0
+>+1497808>ObOgeUSNlVNMdCb6>001>mouse type=move x=14430 y=45 count=1 buttons=0 modifier=0
+>+1597929>ObOgeUSNlVNMdCb6>001>mouse type=move x=14760 y=15 count=1 buttons=0 modifier=0
+>+3705>ObOgeUSNlVNMdCb6>001>uno .uno:BasicShapes.quadrat
+>+881495>ObOgeUSNlVNMdCb6>001>mouse type=move x=1695 y=7200 count=1 buttons=0 modifier=0
+>+636949>ObOgeUSNlVNMdCb6>001>mouse type=move x=2475 y=6975 count=1 buttons=0 modifier=0
+>+561>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2475 y=6975 count=1 buttons=1 modifier=0
+>+346>ObOgeUSNlVNMdCb6>001>mouse type=move x=2565 y=7035 count=1 buttons=1 modifier=0
+>+297>ObOgeUSNlVNMdCb6>001>mouse type=move x=2955 y=7290 count=1 buttons=1 modifier=0
+>+2763>ObOgeUSNlVNMdCb6>001>mouse type=move x=3570 y=7605 count=1 buttons=1 modifier=0
+>+2119>ObOgeUSNlVNMdCb6>001>mouse type=move x=4125 y=7875 count=1 buttons=1 modifier=0
+>+891>ObOgeUSNlVNMdCb6>001>mouse type=move x=4530 y=8010 count=1 buttons=1 modifier=0
+>+892>ObOgeUSNlVNMdCb6>001>mouse type=move x=4845 y=8160 count=1 buttons=1 modifier=0
+>+405>ObOgeUSNlVNMdCb6>001>mouse type=move x=5055 y=8295 count=1 buttons=1 modifier=0
+>+245>ObOgeUSNlVNMdCb6>001>mouse type=move x=5115 y=8325 count=1 buttons=1 modifier=0
+>+262>ObOgeUSNlVNMdCb6>001>mouse type=move x=5145 y=8355 count=1 buttons=1 modifier=0
+>+247>ObOgeUSNlVNMdCb6>001>mouse type=move x=5190 y=8355 count=1 buttons=1 modifier=0
+>+231>ObOgeUSNlVNMdCb6>001>mouse type=move x=5205 y=8355 count=1 buttons=1 modifier=0
+>+313>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=5205 y=8355 count=1 buttons=1 modifier=0
+>+656062>ObOgeUSNlVNMdCb6>001>mouse type=move x=8055 y=3090 count=1 buttons=0 modifier=0
+>+709094>ObOgeUSNlVNMdCb6>001>rendershapeselection mimetype=image/svg+xml
+>+1289>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+1458387>ObOgeUSNlVNMdCb6>001>mouse type=move x=8820 y=3270 count=1 buttons=0 modifier=0
+>+325>ObOgeUSNlVNMdCb6>001>mouse type=move x=8025 y=5190 count=1 buttons=0 modifier=0
+>+243>ObOgeUSNlVNMdCb6>001>mouse type=move x=7935 y=4935 count=1 buttons=0 modifier=0
+>+255>ObOgeUSNlVNMdCb6>001>mouse type=move x=7755 y=4815 count=1 buttons=0 modifier=0
+>+253>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=7755 y=4815 count=1 buttons=1 modifier=0
+>+398>ObOgeUSNlVNMdCb6>001>mouse type=move x=7635 y=4875 count=1 buttons=1 modifier=0
+>+907>ObOgeUSNlVNMdCb6>001>mouse type=move x=7470 y=4995 count=1 buttons=1 modifier=0
+>+569>ObOgeUSNlVNMdCb6>001>mouse type=move x=6930 y=5370 count=1 buttons=1 modifier=0
+>+532>ObOgeUSNlVNMdCb6>001>mouse type=move x=6450 y=5685 count=1 buttons=1 modifier=0
+>+377>ObOgeUSNlVNMdCb6>001>mouse type=move x=6030 y=6000 count=1 buttons=1 modifier=0
+>+3280>ObOgeUSNlVNMdCb6>001>mouse type=move x=5685 y=6300 count=1 buttons=1 modifier=0
+>+558>ObOgeUSNlVNMdCb6>001>mouse type=move x=5580 y=6405 count=1 buttons=1 modifier=0
+>+195>ObOgeUSNlVNMdCb6>001>mouse type=move x=5520 y=6480 count=1 buttons=1 modifier=0
+>+248>ObOgeUSNlVNMdCb6>001>mouse type=move x=5445 y=6540 count=1 buttons=1 modifier=0
+>+294>ObOgeUSNlVNMdCb6>001>mouse type=move x=5415 y=6585 count=1 buttons=1 modifier=0
+>+326589>ObOgeUSNlVNMdCb6>001>mouse type=move x=5385 y=6585 count=1 buttons=1 modifier=0
+>+450>ObOgeUSNlVNMdCb6>001>mouse type=move x=5385 y=6615 count=1 buttons=1 modifier=0
+>+1367949>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=5385 y=6615 count=1 buttons=1 modifier=0
+>+272>ObOgeUSNlVNMdCb6>001>mouse type=move x=8190 y=4260 count=1 buttons=0 modifier=0
+>+723007>ObOgeUSNlVNMdCb6>001>mouse type=move x=7710 y=4890 count=1 buttons=0 modifier=0
+>+438424>ObOgeUSNlVNMdCb6>001>mouse type=move x=7725 y=4890 count=1 buttons=0 modifier=0
+>+540588>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+544>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=7800 y=4890 count=1 buttons=1 modifier=0
+>+539>ObOgeUSNlVNMdCb6>001>mouse type=move x=7665 y=5010 count=1 buttons=1 modifier=0
+>+389>ObOgeUSNlVNMdCb6>001>mouse type=move x=7515 y=5145 count=1 buttons=1 modifier=0
+>+374>ObOgeUSNlVNMdCb6>001>mouse type=move x=7380 y=5250 count=1 buttons=1 modifier=0
+>+622>ObOgeUSNlVNMdCb6>001>mouse type=move x=7320 y=5310 count=1 buttons=1 modifier=0
+>+422>ObOgeUSNlVNMdCb6>001>mouse type=move x=7275 y=5340 count=1 buttons=1 modifier=0
+>+312946>ObOgeUSNlVNMdCb6>001>mouse type=move x=7245 y=5340 count=1 buttons=1 modifier=0
+>+574>ObOgeUSNlVNMdCb6>001>mouse type=move x=7245 y=5370 count=1 buttons=1 modifier=0
+>+305>ObOgeUSNlVNMdCb6>001>mouse type=move x=7230 y=5370 count=1 buttons=1 modifier=0
+>+297>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=7230 y=5370 count=1 buttons=1 modifier=0
+>+492190>ObOgeUSNlVNMdCb6>001>mouse type=move x=6540 y=7605 count=1 buttons=0 modifier=0
+>+451>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=6540 y=7605 count=1 buttons=1 modifier=0
+>+321>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=6540 y=7605 count=1 buttons=1 modifier=0
+>+1098339>ObOgeUSNlVNMdCb6>001>mouse type=move x=6405 y=7755 count=1 buttons=0 modifier=0
+>+561>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=6405 y=7755 count=1 buttons=1 modifier=0
+>+378>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=6405 y=7755 count=1 buttons=1 modifier=0
+>+475549>ObOgeUSNlVNMdCb6>001>rendershapeselection mimetype=image/svg+xml
+>+527>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+831813>ObOgeUSNlVNMdCb6>001>mouse type=move x=7740 y=4980 count=1 buttons=0 modifier=0
+>+1178671>ObOgeUSNlVNMdCb6>001>uno .uno:MoveShapeHandle {"HandleNum":{"type":"long","value":"2"},"NewPosX":{"type":"long","value":6330},"NewPosY":{"type":"long","value":6060}}
+>+444854>ObOgeUSNlVNMdCb6>001>mouse type=move x=5250 y=6930 count=1 buttons=0 modifier=0
+>+616094>ObOgeUSNlVNMdCb6>001>mouse type=move x=5685 y=6900 count=1 buttons=0 modifier=0
+>+656488>ObOgeUSNlVNMdCb6>001>mouse type=move x=5625 y=6915 count=1 buttons=0 modifier=0
+>+282>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=5625 y=6915 count=1 buttons=1 modifier=0
+>+381>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=5625 y=6915 count=1 buttons=1 modifier=0
+>+551215>ObOgeUSNlVNMdCb6>001>rendershapeselection mimetype=image/svg+xml
+>+242061>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+391>ObOgeUSNlVNMdCb6>001>mouse type=move x=6000 y=6255 count=1 buttons=0 modifier=0
+>+1224290>ObOgeUSNlVNMdCb6>001>uno .uno:TransformDialog  {"TransformPosX":{"type":"long","value":1767},"TransformPosY":{"type":"long","value":7650}}
+>+332142>ObOgeUSNlVNMdCb6>001>mouse type=move x=10785 y=1125 count=1 buttons=0 modifier=0
+>+11600>ObOgeUSNlVNMdCb6>001>rendershapeselection mimetype=image/svg+xml
+>+708546>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+402>ObOgeUSNlVNMdCb6>001>mouse type=move x=12615 y=75 count=1 buttons=0 modifier=0
+>+2856936>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520 tileposy=15360,15360,15360,15360 tilewidth=3840 tileheight=3840
+>+7344812>ObOgeUSNlVNMdCb6>001>clientvisiblearea x=-2775 y=0 width=18360 height=13200 splitx=0 splity=0
+>+446>ObOgeUSNlVNMdCb6>001>mouse type=move x=13635 y=690 count=1 buttons=0 modifier=0
+>+1149484>ObOgeUSNlVNMdCb6>001>mouse type=move x=8595 y=2850 count=1 buttons=0 modifier=0
+>+296772>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=8595 y=2850 count=1 buttons=1 modifier=0
+>+977>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=8595 y=2850 count=1 buttons=1 modifier=0
+>+118651>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+927734>ObOgeUSNlVNMdCb6>001>mouse type=move x=3000 y=8475 count=1 buttons=0 modifier=0
+>+197857>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3000 y=8475 count=1 buttons=1 modifier=0
+>+272>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3000 y=8475 count=1 buttons=1 modifier=0
+>+895182>ObOgeUSNlVNMdCb6>001>mouse type=move x=2025 y=6870 count=1 buttons=0 modifier=0
+>+504>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2025 y=6870 count=1 buttons=1 modifier=0
+>+510>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2025 y=6870 count=1 buttons=1 modifier=0
+>+600602>ObOgeUSNlVNMdCb6>001>rendershapeselection mimetype=image/svg+xml
+>+484>ObOgeUSNlVNMdCb6>001>mouse type=move x=2475 y=4125 count=1 buttons=0 modifier=0
+>+468>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+564567>ObOgeUSNlVNMdCb6>001>mouse type=move x=2490 y=4125 count=1 buttons=0 modifier=0
+>+188>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2490 y=4125 count=1 buttons=1 modifier=0
+>+172>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2490 y=4125 count=1 buttons=1 modifier=0
+>+257839>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+362>ObOgeUSNlVNMdCb6>001>mouse type=move x=3855 y=3450 count=1 buttons=0 modifier=0
+>+318961>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3855 y=3450 count=2 buttons=1 modifier=0
+>+305>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3855 y=3450 count=2 buttons=1 modifier=0
+>+314353>ObOgeUSNlVNMdCb6>001>mouse type=move x=2445 y=2955 count=1 buttons=0 modifier=0
+>+342766>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2445 y=2955 count=2 buttons=1 modifier=0
+>+434>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2445 y=2955 count=2 buttons=1 modifier=0
+>+573075>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2445 y=2955 count=1 buttons=1 modifier=0
+>+440>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2445 y=2955 count=1 buttons=1 modifier=0
+>+1002065>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+982>ObOgeUSNlVNMdCb6>001>mouse type=move x=3630 y=1020 count=1 buttons=0 modifier=0
+>+1149713>ObOgeUSNlVNMdCb6>001>mouse type=move x=3825 y=1215 count=1 buttons=0 modifier=0
+>+451>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3825 y=1215 count=2 buttons=1 modifier=0
+>+511>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3825 y=1215 count=2 buttons=1 modifier=0
+>+1050706>ObOgeUSNlVNMdCb6>001>mouse type=move x=2745 y=1485 count=1 buttons=0 modifier=0
+>+282>ObOgeUSNlVNMdCb6>001>mouse type=move x=2745 y=1470 count=1 buttons=0 modifier=0
+>+442279>ObOgeUSNlVNMdCb6>001>mouse type=move x=2745 y=1470 count=1 buttons=0 modifier=0
+>+311>ObOgeUSNlVNMdCb6>001>mouse type=move x=2745 y=1455 count=1 buttons=0 modifier=0
+>+453>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2745 y=1455 count=2 buttons=1 modifier=0
+>+404>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2745 y=1455 count=2 buttons=1 modifier=0
+>+274923>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+123740>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+371868>ObOgeUSNlVNMdCb6>001>mouse type=move x=3840 y=4020 count=1 buttons=0 modifier=0
+>+407>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3840 y=4020 count=1 buttons=1 modifier=0
+>+343>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3840 y=4020 count=1 buttons=1 modifier=0
+>+318009>ObOgeUSNlVNMdCb6>001>mouse type=move x=2670 y=4890 count=1 buttons=0 modifier=0
+>+578542>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2670 y=4890 count=1 buttons=1 modifier=0
+>+278>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2670 y=4890 count=1 buttons=1 modifier=0
+>+259196>ObOgeUSNlVNMdCb6>001>mouse type=move x=2910 y=5460 count=1 buttons=0 modifier=0
+>+481784>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2910 y=5460 count=1 buttons=1 modifier=0
+>+489>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2910 y=5460 count=1 buttons=1 modifier=0
+>+140055>ObOgeUSNlVNMdCb6>001>mouse type=move x=1635 y=5775 count=1 buttons=0 modifier=0
+>+1049044>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=1635 y=5775 count=1 buttons=1 modifier=0
+>+717>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=1635 y=5775 count=1 buttons=1 modifier=0
+>+372>ObOgeUSNlVNMdCb6>001>mouse type=move x=2520 y=6495 count=1 buttons=0 modifier=0
+>+219>ObOgeUSNlVNMdCb6>001>mouse type=move x=2535 y=6360 count=1 buttons=0 modifier=0
+>+224>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2535 y=6360 count=1 buttons=1 modifier=0
+>+231>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2535 y=6360 count=1 buttons=1 modifier=0
+>+208>ObOgeUSNlVNMdCb6>001>mouse type=move x=2340 y=4950 count=1 buttons=0 modifier=0
+>+976357>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=2340 y=4950 count=2 buttons=1 modifier=0
+>+377>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=2340 y=4950 count=2 buttons=1 modifier=0
+>+607>ObOgeUSNlVNMdCb6>001>mouse type=move x=3285 y=3450 count=1 buttons=0 modifier=0
+>+65419>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3285 y=3450 count=1 buttons=1 modifier=0
+>+423>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3285 y=3450 count=1 buttons=1 modifier=0
+>+93567>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+532836>ObOgeUSNlVNMdCb6>001>mouse type=move x=3165 y=3390 count=1 buttons=0 modifier=0
+>+464>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=3165 y=3390 count=2 buttons=1 modifier=0
+>+544>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=3165 y=3390 count=2 buttons=1 modifier=0
+>+139583>ObOgeUSNlVNMdCb6>001>gettextselection mimetype=text/html
+>+59590>ObOgeUSNlVNMdCb6>001>mouse type=move x=5940 y=840 count=1 buttons=0 modifier=0
+>+724049>ObOgeUSNlVNMdCb6>001>mouse type=move x=5400 y=195 count=1 buttons=0 modifier=0
+>+4597917>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520 tileposy=15360,15360,15360,15360 tilewidth=3840 tileheight=3840
+>+3640140>ObOgeUSNlVNMdCb6>001>mouse type=move x=6930 y=5295 count=1 buttons=0 modifier=0
+>+274065>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=6930 y=5295 count=1 buttons=1 modifier=0
+>+500>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=6930 y=5295 count=1 buttons=1 modifier=0
+>+356627>ObOgeUSNlVNMdCb6>001>mouse type=move x=4530 y=6495 count=1 buttons=0 modifier=0
+>+192187>ObOgeUSNlVNMdCb6>001>mouse type=move x=4530 y=6885 count=1 buttons=0 modifier=0
+>+420560>ObOgeUSNlVNMdCb6>001>mouse type=buttondown x=4530 y=6495 count=1 buttons=1 modifier=0
+>+370>ObOgeUSNlVNMdCb6>001>mouse type=buttonup x=4530 y=6495 count=1 buttons=1 modifier=0
+>+53994>ObOgeUSNlVNMdCb6>001>mouse type=move x=-750 y=615 count=1 buttons=0 modifier=0
+>+186052>ObOgeUSNlVNMdCb6>001>mouse type=move x=-1260 y=285 count=1 buttons=0 modifier=0
+>+424733>ObOgeUSNlVNMdCb6>001>mouse type=move x=-2265 y=0 count=1 buttons=0 modifier=0
+>+341530>ObOgeUSNlVNMdCb6>001>mouse type=move x=-2295 y=0 count=1 buttons=0 modifier=0
+>+2261064>ObOgeUSNlVNMdCb6>001>mouse type=move x=9030 y=8235 count=1 buttons=0 modifier=0
+~+8127647~ObOgeUSNlVNMdCb6~001~EndSession: file:///home/ezinne/collaboraOnline/test/data/hello-world.odt?permission=edit
+~+3638~ObOgeUSNlVNMdCb6~001~EndSession: file:///home/ezinne/collaboraOnline/test/data/hello-world.odt?permission=edit
