@@ -22,6 +22,10 @@ describe('Repair Document', function() {
 		//wait for the popup to disappear
 		cy.wait(5000);
 
+		cy.customGet('.leaflet-layer', frameId2)
+			.click('center', {force:true})
+			.wait(500);
+
 		calcHelper.dblClickOnFirstCell(frameId2);
 
 		helper.clearAllText(frameId2);
@@ -36,31 +40,27 @@ describe('Repair Document', function() {
 		cy.iframe(frameId2).contains('.leaflet-popup-content table tbody tr','Undo').eq(0)
 			.click();
 
-		cy.customGet('.leaflet-popup-content > input', frameId2).click();
-
-		//assert data in iframe1
-		cy.customGet('.leaflet-layer', frameId1).click();
-
-		cy.wait(1000);
-
-		calcHelper.dblClickOnFirstCell(frameId1);
-
-		helper.selectAllText(frameId1);
-
-		helper.expectTextForClipboard('Hello World', frameId1);
-
-		helper.typeIntoDocument('{end}{enter}', frameId1);
-
-		//assert data in frame2
-		cy.customGet('.leaflet-layer', frameId2).click();
-
-		cy.wait(1000);
+		cy.customGet('.leaflet-popup-content > input', frameId2)
+			.click()
+			.wait(500);
 
 		calcHelper.dblClickOnFirstCell(frameId2);
 
 		helper.selectAllText(frameId2);
 
 		helper.expectTextForClipboard('Hello World', frameId2);
+
+		cy.customGet('.leaflet-layer', frameId1)
+			.click('center', {force:true})
+			.wait(500);
+
+		helper.typeIntoDocument('{end}{enter}', frameId1);
+
+		calcHelper.dblClickOnFirstCell(frameId1);
+
+		helper.selectAllText(frameId1);
+
+		helper.expectTextForClipboard('Hello World', frameId1);
 	}
 
 	it('Repair by user-2', function() {

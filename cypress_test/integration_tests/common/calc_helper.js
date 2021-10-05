@@ -57,6 +57,7 @@ function clickOnFirstCell(firstClick = true, dblClick = false, frameId) {
 
 							cy.wrap($body)
 								.click(XPos, YPos)
+								.wait(500)
 								.dblclick(XPos, YPos);
 						});
 				} else {
