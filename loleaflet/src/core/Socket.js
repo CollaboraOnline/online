@@ -1296,9 +1296,9 @@ app.definitions.Socket = L.Class.extend({
 			this._map._docLayer._resetClientVisArea();
 			this._map._docLayer._requestNewTiles();
 			this._map.fire('statusindicator', {statusType: 'reconnected'});
-			this._map.setPermission(this._map.options.permission);
 			this._map._isNotebookbarLoadedOnCore = false;
 			this._map.fire('changeuimode', {mode: window.userInterfaceMode, force: true});
+			this._map.setPermission(this._map.options.permission);
 		}
 
 		this._map.fire('docloaded', {status: true});
