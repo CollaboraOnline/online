@@ -6151,7 +6151,7 @@ w2utils.event = {
                     html = '<td width="100%" id="tb_'+ this.name +'_item_'+ it.id +'" align="right"></td>';
                 } else {
                     html = '<td id="tb_'+ this.name + '_item_'+ it.id +'" style="'+ (it.hidden ? 'display: none' : '') +'" '+
-                        '    class="'+ (it.disabled ? 'disabled' : '') +'" valign="middle">'+ html +
+                        '    class="'+ (it.disabled ? 'disabled' : '') +'" valign="middle" title="'+ (it.hint ? it.hint : "") +'">' + html +
                         '</td>';
                 }
                 if (this.get(id, true) == this.items.length-1) {

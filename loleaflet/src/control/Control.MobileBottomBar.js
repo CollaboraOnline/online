@@ -35,7 +35,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor'), freemiumUno: '.uno:BackgroundColor'},
 				{type: 'break'},
 				{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'), freemiumUno: '.uno:TextAlign',
-					items: [                
+					items: [
 						{id: 'leftpara', text: _UNO('.uno:LeftPara', 'text', true), img: 'alignleft', uno: '.uno:LeftPara'},
 						{id: 'centerpara', text: _UNO('.uno:CenterPara', 'text', true), img: 'alignhorizontal', uno: '.uno:CenterPara'},
 						{id: 'rightpara', text: _UNO('.uno:RightPara', 'text', true), img: 'alignright', uno: '.uno:RightPara'},
@@ -53,7 +53,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _UNO('.uno:DecrementIndent', '', true), uno: '.uno:DecrementIndent', disabled: true},
 				{type: 'break', context: ['Table']},
 				{type: 'menu', id: 'insertrowsbefore', img: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore'), freemiumUno: '.uno:InsertRowsBefore', context: ['Table'],
-					items: [                
+					items: [
 						{id: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore', 'text', true), img: 'insertrowsbefore', uno: '.uno:InsertRowsBefore'},
 						{id: 'insertrowsafter', hint: _UNO('.uno:InsertRowsAfter', 'text', true), img: 'insertrowsafter', uno: '.uno:InsertRowsAfter'},
 						{id: 'deleterows', hint: _UNO('.uno:DeleteRows', 'text', true), img: 'deleterows', uno: '.uno:DeleteRows'},
@@ -63,9 +63,9 @@ L.Control.MobileBottomBar = L.Control.extend({
 						{id: 'selecttable', hint: _UNO('.uno:SelectTable', 'text', true), img: 'selecttable', uno: '.uno:SelectTable'},
 						{type: 'break'},
 						{id: 'setoptimalrowheight', hint: _UNO('.uno:SetOptimalRowHeight', 'text', true), img: 'setoptimalrowheight', uno: '.uno:SetOptimalRowHeight'},
-					]},   
+					]},
 				{type: 'menu', id: 'insertcolumnsbefore', img: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore'), freemiumUno: '.uno:InsertColumnsBefore', context: ['Table'],
-					items: [                
+					items: [
 						{id: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore', 'text', true), img: 'insertcolumnsbefore', uno: '.uno:InsertColumnsBefore'},
 						{id: 'insertcolumnsafter', hint: _UNO('.uno:InsertColumnsAfter', 'text', true), img: 'insertcolumnsafter', uno: '.uno:InsertColumnsAfter'},
 						{id: 'deletecolumns', hint: _UNO('.uno:DeleteColumns', 'text', true), img: 'deletecolumns', uno: '.uno:DeleteColumns'},
@@ -80,7 +80,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _UNO('.uno:ToggleMergeCells', 'text', true), uno: '.uno:ToggleMergeCells', context: ['Table']},
 				{type: 'break', context: ['Graphic']},
 				{type: 'menu', id: 'wrapmenu', img: 'wrapmenu', hint: _UNO('.uno:WrapMenu'), freemiumUno: '.uno:WrapMenu', context: ['Graphic'],
-					items: [                
+					items: [
 						{id: 'wrapoff', hint: _UNO('.uno:WrapOff', 'text', true), img: 'wrapoff', uno: '.uno:WrapOff'},
 						{id: 'wrapon', hint: _UNO('.uno:WrapOn', 'text', true), img: 'wrapon', uno: '.uno:WrapOn'},
 						{id: 'wrapideal', hint: _UNO('.uno:WrapIdeal', 'text', true), img: 'wrapideal', uno: '.uno:WrapIdeal'},
@@ -95,7 +95,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 					]},
 				{type: 'break', context: ['Graphic']},
 				{type: 'menu', id: 'aligncenter', img: 'aligncenter', hint: _UNO('.uno:AlignCenter'), freemiumUno: '.uno:AlignCenter', context: ['Graphic'],
-					items: [                
+					items: [
 						{id: 'objectalignleft', hint: _UNO('.uno:ObjectAlignLeft', 'text', true), img: 'objectalignleft', uno: '.uno:ObjectAlignLeft'},
 						{id: 'aligncenter', hint: _UNO('.uno:AlignCenter', 'text', true), img: 'aligncenter', uno: '.uno:AlignCenter'},
 						{id: 'objectalignright', hint: _UNO('.uno:ObjectAlignRight', 'text', true), img: 'objectalignright', uno: '.uno:ObjectAlignRight'},
@@ -105,7 +105,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 						{id: 'aligndown', hint: _UNO('.uno:AlignDown', 'text', true), img: 'aligndown', uno: '.uno:AlignDown'},
 					]},
 				{type: 'menu', id: 'arrangemenu', img: 'arrangemenu', hint: _UNO('.uno:ArrangeMenu'), freemiumUno: '.uno:ArrangeMenu', context: ['Graphic'],
-					items: [                
+					items: [
 						{id: 'bringtofront', hint: _UNO('.uno:BringToFront', 'text', true), img: 'bringtofront', uno: '.uno:BringToFront'},
 						{type: 'break'},
 						{id: 'objectforwardone', hint: _UNO('.uno:ObjectForwardOne', 'text', true), img: 'objectforwardone', uno: '.uno:ObjectForwardOne'},
@@ -128,7 +128,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor'), freemiumUno: '.uno:BackgroundColor'},
 				{type: 'break'},
 				{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'), freemiumUno: '.uno:TextAlign',
-					items: [                
+					items: [
 						{id: 'alignleft', hint: _UNO('.uno:AlignLeft', 'spreadsheet', true), img: 'alignleft', uno: '.uno:AlignLeft'},
 						{id: 'alignhorizontalcenter', hint: _UNO('.uno:AlignHorizontalCenter', 'spreadsheet', true), img: 'alignhorizontal', uno: '.uno:AlignHorizontalCenter'},
 						{id: 'alignright', hint: _UNO('.uno:AlignRight', 'spreadsheet', true), img: 'alignright', uno: '.uno:AlignRight'},
@@ -141,7 +141,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'wraptext',  img: 'wraptext', hint: _UNO('.uno:WrapText', 'spreadsheet', true), uno: '.uno:WrapText', disabled: true},
 				{type: 'break'},
 				{type: 'menu', id: 'insertrowsbefore', img: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore'), freemiumUno: '.uno:InsertRowsBefore',
-					items: [                
+					items: [
 						{id: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore', 'spreadsheet', true), img: 'insertrowsbefore', uno: '.uno:InsertRowsBefore'},
 						{id: 'insertrowsafter', hint: _UNO('.uno:InsertRowsAfter', 'spreadsheet', true), img: 'insertrowsafter', uno: '.uno:InsertRowsAfter'},
 						{id: 'deleterows', hint: _UNO('.uno:DeleteRows', 'spreadsheet', true), img: 'deleterows', uno: '.uno:DeleteRows'},
@@ -150,9 +150,9 @@ L.Control.MobileBottomBar = L.Control.extend({
 						{id: 'showrow', hint: _UNO('.uno:ShowRow', 'spreadsheet', true), img: 'showrow', uno: '.uno:ShowRow'},
 						{type: 'break'},
 						{id: 'freezepanesrow', hint: _UNO('.uno:FreezePanesRow', 'spreadsheet', true), img: 'freezepanesrow', uno: '.uno:FreezePanesRow'},
-					]},   
+					]},
 				{type: 'menu', id: 'insertcolumnsbefore', img: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore'), freemiumUno: '.uno:InsertColumnsBefore',
-					items: [                
+					items: [
 						{id: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore', 'spreadsheet', true), img: 'insertcolumnsbefore', uno: '.uno:InsertColumnsBefore'},
 						{id: 'insertcolumnsafter', hint: _UNO('.uno:InsertColumnsAfter', 'spreadsheet', true), img: 'insertcolumnsafter', uno: '.uno:InsertColumnsAfter'},
 						{id: 'deletecolumns', hint: _UNO('.uno:DeleteColumns', 'spreadsheet', true), img: 'deletecolumns', uno: '.uno:DeleteColumns'},
@@ -161,7 +161,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 						{id: 'showcolumn', hint: _UNO('.uno:ShowColumn', 'spreadsheet', true), img: 'showcolumn', uno: '.uno:ShowColumn'},
 						{type: 'break'},
 						{id: 'freezepanescolumn', hint: _UNO('.uno:FreezePanesColumn', 'spreadsheet', true), img: 'freezepanescolumn', uno: '.uno:FreezePanesColumn'},
-					]},                  
+					]},
 				{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _UNO('.uno:ToggleMergeCells', 'spreadsheet', true), uno: '.uno:ToggleMergeCells', disabled: true},
 				{type: 'break'},
 				{type: 'drop', id: 'conditionalformaticonset',  img: 'conditionalformatdialog', hint: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet', true), html: window.getConditionalFormatMenuHtml(), uno: '.uno:ConditionalFormatMenu'},
@@ -169,7 +169,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'sortdescending',  img: 'sortdescending', hint: _UNO('.uno:SortDescending', 'spreadsheet', true), uno: '.uno:SortDescending'},
 				{type: 'break'},
 				{type: 'menu', id: 'numberformatstandard', img: 'numberformatstandard', hint: _UNO('.uno:NumberFormatStandard'), freemiumUno: '.uno:NumberFormatStandard',
-					items: [                
+					items: [
 						{id: 'numberformatstandard', hint: _UNO('.uno:NumberFormatStandard', 'spreadsheet', true), img: 'numberformatstandard', uno: '.uno:NumberFormatStandard'},
 						{id: 'numberformatdecimal', hint: _UNO('.uno:NumberFormatDecimal', 'spreadsheet', true), img: 'numberformatdecimal', uno: '.uno:NumberFormatDecimal'},
 						{id: 'numberformatpercent', hint: _UNO('.uno:NumberFormatPercent', 'spreadsheet', true), img: 'numberformatpercent', uno: '.uno:NumberFormatPercent'},
@@ -179,7 +179,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 						{id: 'numberformatscientific', hint: _UNO('.uno:NumberFormatScientific', 'spreadsheet', true), img: 'numberformatscientific', uno: '.uno:NumberFormatScientific'},
 						{type: 'break'},
 						{id: 'numberformatthousands', hint: _UNO('.uno:NumberFormatThousands', 'spreadsheet', true), img: 'numberformatthousands', uno: '.uno:NumberFormatThousands'},
-					]},  
+					]},
 				{type: 'button',  id: 'numberformatincdecimals',  img: 'numberformatincdecimals', hint: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), uno: '.uno:NumberFormatIncDecimals', disabled: true},
 				{type: 'button',  id: 'numberformatdecdecimals',  img: 'numberformatdecdecimals', hint: _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet', true), uno: '.uno:NumberFormatDecDecimals', disabled: true},
 			];
@@ -195,7 +195,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor'), freemiumUno: '.uno:BackgroundColor'},
 				{type: 'break'},
 				{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'), freemiumUno: '.uno:TextAlign',
-					items: [                
+					items: [
 						{id: 'leftpara', hint: _UNO('.uno:LeftPara', '', true), img: 'alignleft',
 							uno: {textCommand: '.uno:LeftPara', objectCommand: '.uno:ObjectAlignLeft'}},
 						{id: 'centerpara', hint: _UNO('.uno:CenterPara', '', true), img: 'alignhorizontal',
@@ -212,7 +212,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'defaultbullet',  img: 'bullet', hint: _UNO('.uno:DefaultBullet', '', true), uno: '.uno:DefaultBullet', disabled: true},
 				{type: 'break', context: ['Table']},
 				{type: 'menu', id: 'insertrowsbefore', img: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore'), freemiumUno: '.uno:InsertRowsBefore', context: ['Table'],
-					items: [                
+					items: [
 						{id: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore', 'presentation', true), img: 'insertrowsbefore', uno: '.uno:InsertRowsBefore'},
 						{id: 'insertrowsafter', hint: _UNO('.uno:InsertRowsAfter', 'presentation', true), img: 'insertrowsafter', uno: '.uno:InsertRowsAfter'},
 						{id: 'deleterows', hint: _UNO('.uno:DeleteRows', 'presentation', true), img: 'deleterows', uno: '.uno:DeleteRows'},
@@ -221,9 +221,9 @@ L.Control.MobileBottomBar = L.Control.extend({
 						{id: 'selecttable', hint: _UNO('.uno:SelectTable', 'presentation', true), img: 'selecttable', uno: '.uno:SelectTable'},
 						{type: 'break'},
 						{id: 'setoptimalrowheight', hint: _UNO('.uno:SetOptimalRowHeight', 'presentation', true), img: 'setoptimalrowheight', uno: '.uno:SetOptimalRowHeight'},
-					]},   
+					]},
 				{type: 'menu', id: 'insertcolumnsbefore', img: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore'), freemiumUno: '.uno:InsertColumnsBefore', context: ['Table'],
-					items: [                
+					items: [
 						{id: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore', 'presentation', true), img: 'insertcolumnsbefore', uno: '.uno:InsertColumnsBefore'},
 						{id: 'insertcolumnsafter', hint: _UNO('.uno:InsertColumnsAfter', 'presentation', true), img: 'insertcolumnsafter', uno: '.uno:InsertColumnsAfter'},
 						{id: 'deletecolumns', hint: _UNO('.uno:DeleteColumns', 'presentation', true), img: 'deletecolumns', uno: '.uno:DeleteColumns'},
@@ -252,6 +252,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				window.hideTooltip(this, e.target);
 			},
 		});
+		this.map.uiManager.enableTooltip(toolbar);
 
 		toolbar.bind('touchstart', function(e) {
 			w2ui['editbar'].touchStarted = true;
