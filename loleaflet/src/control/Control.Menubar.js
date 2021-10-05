@@ -646,7 +646,7 @@ L.Control.Menubar = L.Control.extend({
 				{type: 'separator'},
 				{uno: '.uno:Delete'}
 			]},
-			{name: _UNO('.uno:DataMenu', 'spreadsheet'), type: 'menu', menu: [
+			{name: _UNO('.uno:DataMenu', 'spreadsheet'), id: 'data', type: 'menu', menu: [
 				{uno: '.uno:DataSort'},
 				{uno: '.uno:SortAscending'},
 				{uno: '.uno:SortDescending'},
