@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-15 17:22+0200\n"
-"PO-Revision-Date: 2021-06-09 10:46+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2021-09-20 17:51+0000\n"
+"Last-Translator: george kitsoukakis <norhorn@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
 "ui/el/>\n"
-"Language: \n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-ui-el.po\n"
 "X-Pootle-Revision: 3940107\n"
 
@@ -886,7 +886,6 @@ msgstr ""
 
 #: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
 #: src/control/Control.StatusBar.js:402
-#, fuzzy
 msgid "Read-only"
 msgstr "Μόνο για ανάγνωση"
 
@@ -1263,25 +1262,27 @@ msgstr "Το έγγραφο δεν μπόρεσε να κλειδωθεί."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Εισαγάγετε όνομα αρχείου"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "όνομα αρχείου"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Αυτό το έγγραφο μπορεί να περιέχει μορφοποίηση ή περιεχόμενο που δεν μπορεί "
+"να αποθηκευτεί στην τρέχουσα μορφή αρχείου."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Αποθήκευση ως ODF"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Συνέχεια επεξεργασίας"
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
@@ -1483,17 +1484,16 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Όπα, υπάρχει πρόβλημα σύνδεσης με το %productName: "
 
 #: src/core/Socket.js:502
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Έχει γίνει επανεκκίνηση του διακομιστή. Ανανεώστε τη σελίδα."
+msgstr "Η σύνδεση με το διακομιστή αποκαταστάθηκε. Ανανεώστε τη σελίδα."
 
 #: src/core/Socket.js:504
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "Η σύνδεση με το διακομιστή αποκαταστάθηκε..."
 
 #: src/core/Socket.js:507
 msgid "RELOAD"
-msgstr ""
+msgstr "ΑΝΑΝΕΩΣΗ"
 
 #: src/core/Socket.js:523
 msgid "Served by:"
@@ -1586,15 +1586,15 @@ msgstr "Εσφαλμένος κωδικός πρόσβασης. Παρακαλο
 
 #: src/core/Socket.js:1000
 msgid "Someone"
-msgstr ""
+msgstr "Κάποιος"
 
 #: src/core/Socket.js:1002
 msgid " saved this document as "
-msgstr ""
+msgstr " αποθήκευσε το έγγραφο ως "
 
 #: src/core/Socket.js:1002
 msgid ". Do you want to join?"
-msgstr ""
+msgstr ". Θέλετε να συμμετέχετε;"
 
 #: src/core/Socket.js:1011
 msgid "Loading..."
@@ -1606,7 +1606,7 @@ msgstr "Συνδέεται..."
 
 #: src/core/Socket.js:1029
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "Το έγγραφο μετονομάστηκε και θα γίνει ανανέωση σύντομα"
 
 #: src/core/Socket.js:1382
 msgid ""
@@ -1618,7 +1618,7 @@ msgstr ""
 
 #: src/core/Socket.js:1394
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Ο διακομιστής έχει αποσυνδεθεί."
 
 #: src/errormessages.js:13
 msgid ""
@@ -1829,7 +1829,7 @@ msgstr "Για επικόλληση εκτός του %productName, πατήστ
 
 #: src/map/Clipboard.js:131
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Έχει απενεργοποιηθεί η αντιγραφή από το έγγραφο"
 
 #: src/map/Clipboard.js:284
 msgid "Failed to download clipboard, please re-copy"

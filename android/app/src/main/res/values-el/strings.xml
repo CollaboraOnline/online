@@ -112,4 +112,7 @@
     <string name="theme_system_default">Προεπιλεγμένο σύστημα</string>
     <string name="choose_theme">Επιλέξτε θέμα</string>
     <string name="theme">Θέμα</string>
+    <string name="pref_user_name">Όνομα Χρήστη</string>
+    <string name="pref_user_name_guest">Επισκέπτης</string>
+    <string name="pref_user_name_info">Χρησιμοποιείται κατά την εισαγωγή σχολίου</string>
 </resources>
