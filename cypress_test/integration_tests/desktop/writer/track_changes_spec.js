@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 
 describe('Track Changes', function () {
-	var testFileName = 'shape_operations.odt';
+	var testFileName = 'track_changes.odt';
 
 	beforeEach(function () {
 		helper.beforeAll(testFileName, 'writer');
@@ -60,6 +60,8 @@ describe('Track Changes', function () {
 
 		confirmChange('Accept All');
 
+		cy.wait(200);
+
 		helper.typeIntoDocument('{ctrl}a');
 
 		helper.textSelectionShouldNotExist();
@@ -74,9 +76,13 @@ describe('Track Changes', function () {
 		helper.clearAllText();
 
 		//if we don't wait , the test will fail in CLI
-		cy.wait(400);
+		cy.wait(600);
+
+		helper.selectAllText();
 
 		confirmChange('Reject All');
+
+		cy.wait(200);
 
 		cy.get('.leaflet-layer').click();
 
