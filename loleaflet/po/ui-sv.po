@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-15 17:22+0200\n"
-"PO-Revision-Date: 2021-08-17 22:17+0000\n"
-"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
+"PO-Revision-Date: 2021-09-30 12:38+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /sv/libo_online/loleaflet-ui-sv.po\n"
 "X-Pootle-Revision: 3938166\n"
 
@@ -68,7 +68,7 @@ msgstr "Öppna dokument"
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:122 admin/src/AdminSocketOverview.js:341
 msgid " user(s)."
-msgstr " användare"
+msgstr " användare."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:195
 msgid " document(s) open."
@@ -116,7 +116,7 @@ msgstr "Ändrad"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "WOPI-värd"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -205,7 +205,7 @@ msgstr "Uppdatera logg"
 
 #: admin/admin.strings.js:50
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Kanalfilter:"
 
 #: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:376
 #: src/control/Control.StatusBar.js:331
@@ -243,7 +243,7 @@ msgstr "Skickat"
 
 #: admin/src/AdminSocketBase.js:60
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "Tjänsten har stängts av eller startas om, ladda om sidan."
 
 #: admin/src/AdminSocketBase.js:70
 msgid "Connection error"
@@ -424,7 +424,7 @@ msgstr "Toning slutfärg"
 
 #: src/control/Control.JSDialogBuilder.js:379
 msgid "Solid"
-msgstr "Solid"
+msgstr "Stabil"
 
 #: src/control/Control.JSDialogBuilder.js:382
 msgid "Linear"
@@ -530,7 +530,7 @@ msgstr "Inget (gör ingen stavningskontroll)"
 #: src/control/Control.Menubar.js:719 src/control/Control.Menubar.js:772
 #: src/control/Control.Menubar.js:827 src/control/Control.Menubar.js:872
 msgid "Share..."
-msgstr "Dela"
+msgstr "Dela ..."
 
 #: src/control/Control.Menubar.js:22 src/control/Control.Menubar.js:271
 #: src/control/Control.Menubar.js:400 src/control/Control.Menubar.js:508
@@ -581,7 +581,7 @@ msgstr "Word-dokument (.docx)"
 #: src/control/Control.Menubar.js:28 src/control/Control.Menubar.js:730
 #: src/control/Control.NotebookbarWriter.js:137
 msgid "Rich Text (.rtf)"
-msgstr "Rich Text (.rtf)"
+msgstr "RTF (.rtf)"
 
 #: src/control/Control.Menubar.js:29 src/control/Control.Menubar.js:731
 msgid "EPUB (.epub)"
@@ -711,12 +711,12 @@ msgstr "ODF-presentation (.odp)"
 #: src/control/Control.Menubar.js:275 src/control/Control.Menubar.js:780
 #: src/control/Control.NotebookbarImpress.js:224
 msgid "PowerPoint 2003 Presentation (.ppt)"
-msgstr "PowerPoint 2003 Presentation (.ppt)"
+msgstr "PowerPoint 2003-presentation (.ppt)"
 
 #: src/control/Control.Menubar.js:276 src/control/Control.Menubar.js:781
 #: src/control/Control.NotebookbarImpress.js:230
 msgid "PowerPoint Presentation (.pptx)"
-msgstr "PowerPoint Presentation (.pptx)"
+msgstr "PowerPoint-presentation (.pptx)"
 
 #: src/control/Control.Menubar.js:371 src/control/Control.Menubar.js:816
 #: src/control/Control.PresentationBar.js:57
@@ -880,13 +880,12 @@ msgstr "Antal i markering"
 #: src/control/Control.StatusBar.js:378 src/control/Control.StatusBar.js:379
 #: src/control/Control.StatusBar.js:402 src/control/Control.StatusBar.js:403
 msgid "Permission Mode"
-msgstr ""
+msgstr "Behörighetsläge"
 
 #: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
 #: src/control/Control.StatusBar.js:402
-#, fuzzy
 msgid "Read-only"
-msgstr "Skrivskyddad"
+msgstr "Skrivskyddat"
 
 #: src/control/Control.StatusBar.js:352
 msgid "Number of Pages"
@@ -906,11 +905,11 @@ msgstr "Markera flera celler"
 
 #: src/control/Control.StatusBar.js:474
 msgid "Insert mode: inactive"
-msgstr ""
+msgstr "Infogaläge: inaktivt"
 
 #: src/control/Control.StatusBar.js:487
 msgid "Selection mode: inactive"
-msgstr ""
+msgstr "Urvalsläge: inaktivt"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
@@ -952,8 +951,8 @@ msgstr "Nästa bild"
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
-"Funktionen Ångra/Gör om har hamnat i konflikt mellan flera användare. "
-"Vänligen använd dokumentåterställning för att lösa problemet."
+"Funktionen Ångra/Gör om har hamnat i konflikt mellan flera användare. Använd "
+"dokumentåterställning för att lösa problemet"
 
 #: src/control/Control.TopToolbar.js:122
 #: src/control/Control.NotebookbarWriter.js:513
@@ -979,7 +978,7 @@ msgstr "Infoga form"
 
 #: src/control/Control.TopToolbar.js:250
 msgid "Insert connectors"
-msgstr ""
+msgstr "Infoga kopplingar"
 
 #: src/control/Control.UserList.js:10
 msgid "%user has joined"
@@ -1123,7 +1122,7 @@ msgstr "EPUB dokument (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:517
 msgid "Text Body"
-msgstr ""
+msgstr "Brödtext"
 
 #: src/control/Control.NotebookbarWriter.js:520
 msgid "Title"
@@ -1270,6 +1269,8 @@ msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Dokumentet kan innehålla formatering eller innehåll som inte kan sparas i "
+"det aktuella filformatet."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
@@ -1301,7 +1302,7 @@ msgstr "Ange PIN-kod"
 
 #: src/control/Signing.js:214
 msgid "Error at login."
-msgstr "Inloggningsfel"
+msgstr "Inloggningsfel."
 
 #: src/control/Signing.js:227
 msgid "Please scan the code"
@@ -1309,7 +1310,7 @@ msgstr "Vänligen skanna koden"
 
 #: src/control/Signing.js:242
 msgid "Couldn't get the QR code image."
-msgstr "Kunde inte komma åt QR-koden"
+msgstr "Kunde inte komma åt QR-koden."
 
 #: src/control/Signing.js:269
 msgid "Error when trying to restore access to identity."
@@ -1476,15 +1477,15 @@ msgstr "Oj, det är problem med att ansluta %productName: "
 
 #: src/core/Socket.js:502
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr ""
+msgstr "Tjänsten är tillgänlig igen. Vi uppdaterar sidan nu."
 
 #: src/core/Socket.js:504
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "Tjänsten är tillgänglig igen ..."
 
 #: src/core/Socket.js:507
 msgid "RELOAD"
-msgstr ""
+msgstr "LADDA OM"
 
 #: src/core/Socket.js:523
 msgid "Served by:"
@@ -1518,7 +1519,7 @@ msgstr "Oj, det är problem med att ansluta dokumentet"
 
 #: src/core/Socket.js:655
 msgid "Server is down, restarting automatically. Please wait."
-msgstr ""
+msgstr "Tjänsten är nere och startas om automatiskt. Vänta lite."
 
 #: src/core/Socket.js:683
 msgid ""
@@ -1574,15 +1575,15 @@ msgstr "Felaktigt lösenord. Försök igen."
 
 #: src/core/Socket.js:1000
 msgid "Someone"
-msgstr ""
+msgstr "Någon"
 
 #: src/core/Socket.js:1002
 msgid " saved this document as "
-msgstr ""
+msgstr " sparade dokumentet som "
 
 #: src/core/Socket.js:1002
 msgid ". Do you want to join?"
-msgstr ""
+msgstr ". Vill du vara med?"
 
 #: src/core/Socket.js:1011
 msgid "Loading..."
@@ -1594,7 +1595,7 @@ msgstr "Ansluter..."
 
 #: src/core/Socket.js:1029
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "Dokumentet byter namn och laddas snart om"
 
 #: src/core/Socket.js:1382
 msgid ""
@@ -1604,7 +1605,7 @@ msgstr "Kan inte ansluta till ditt dokument. Vänligen försök igen."
 
 #: src/core/Socket.js:1394
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Tjänsten är bortkopplad."
 
 #: src/errormessages.js:13
 msgid ""
@@ -1717,7 +1718,7 @@ msgstr ""
 #: src/errormessages.js:32 src/errormessages.js:40
 msgid "Document cannot be saved due to expired or invalid access token."
 msgstr ""
-"Dokumentet kan inte sparas på grund av utgången eller ogiltig behörighet"
+"Dokumentet kan inte sparas på grund av utgången eller ogiltig behörighet."
 
 #: src/errormessages.js:33
 msgid "Document cannot be saved."
@@ -1803,7 +1804,7 @@ msgstr ""
 
 #: src/map/Clipboard.js:131
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Kopiering från dokumentet är inaktiverad"
 
 #: src/map/Clipboard.js:284
 msgid "Failed to download clipboard, please re-copy"
@@ -1823,6 +1824,12 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
+"<p>Din webbläsare har begränsad tillgång till urklipp, så använd därför "
+"dessa kortkommandon:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Kopiera</"
+"td><td>Klipp ut</td><td>Klistra in</td></tr></table>"
 
 #: src/map/Clipboard.js:875
 msgid ""
@@ -1833,10 +1840,10 @@ msgid ""
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
 "<p>Om du vill dela större delar av ditt dokument med andra program krävs att "
-"du hämtar dem till din enhet. För att göra det tryck på knappen  \"Starta "
+"du hämtar dem till din enhet. För att göra det tryck på knappen \"Starta "
 "nedladdning\" nedan. När nedladdningen är klar klickar du på \"Bekräfta "
-"kopiering till urklipp\".</p><p>Om du kopierar mellan dokument i %"
-"productName behöver du inte hämta till din enhet.</p>"
+"kopiering till urklipp\".</p><p>Om du kopierar mellan dokument i "
+"%productName behöver du inte hämta till din enhet.</p>"
 
 #: src/map/Clipboard.js:891
 msgid ""
@@ -1864,7 +1871,7 @@ msgstr "För %d minuter sedan"
 
 #: src/map/Map.js:1466
 msgid "Inactive document - please click to resume editing"
-msgstr "Inaktivt dokument - klicka för att fortsätta redigera."
+msgstr "Inaktivt dokument - klicka för att fortsätta redigera"
 
 #: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
@@ -1894,7 +1901,7 @@ msgstr "Skapar en ny fil baserat på mall..."
 
 #: src/map/handler/Map.WOPI.js:404
 msgid "Creating copy..."
-msgstr "Skapar kopia"
+msgstr "Skapar kopia ..."
 
 #~ msgid "Start upload"
 #~ msgstr "Starta uppladdning"
