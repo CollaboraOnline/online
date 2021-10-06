@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-15 17:22+0200\n"
-"PO-Revision-Date: 2021-09-07 21:48+0000\n"
+"PO-Revision-Date: 2021-09-23 11:24+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /ca/libo_online/loleaflet-ui-ca.po\n"
 "X-Pootle-Revision: 3939538\n"
 
@@ -116,7 +116,7 @@ msgstr "Modificat"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "Amfitrió WOPI"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -883,11 +883,10 @@ msgstr "Recompte de la selecció"
 #: src/control/Control.StatusBar.js:378 src/control/Control.StatusBar.js:379
 #: src/control/Control.StatusBar.js:402 src/control/Control.StatusBar.js:403
 msgid "Permission Mode"
-msgstr ""
+msgstr "Mode de permisos"
 
 #: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
 #: src/control/Control.StatusBar.js:402
-#, fuzzy
 msgid "Read-only"
 msgstr "Només de lectura"
 
@@ -1573,7 +1572,7 @@ msgstr "Cal introduir la contrasenya per a modificar el document."
 
 #: src/core/Socket.js:898
 msgid "Hit Cancel to open in view-only mode."
-msgstr "Premeu Cancel·la per a obrir-lo en el mode de només lectura."
+msgstr "Premeu Cancel·la per a obrir-lo en el mode només de lectura."
 
 #: src/core/Socket.js:902
 msgid "Wrong password provided. Please try again."
@@ -1699,7 +1698,7 @@ msgid ""
 "not corrupted, and try again."
 msgstr ""
 "No s'ha pogut carregar el document. Assegureu-vos que el tipus de fitxer és "
-"suportat i no estigui malmès, i torneu a intentar-ho més tard."
+"compatible i no estigui malmès, i torneu a intentar-ho més tard."
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
