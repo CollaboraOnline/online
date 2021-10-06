@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-15 17:22+0200\n"
-"PO-Revision-Date: 2021-09-07 06:58+0000\n"
+"PO-Revision-Date: 2021-09-20 15:37+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/ui/is/>\n"
-"Language: \n"
+"Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /is/libo_online/loleaflet-ui-is.po\n"
 "X-Pootle-Revision: 3937885\n"
 
@@ -116,7 +116,7 @@ msgstr "Breytt"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "WOPI-hýsing"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -878,11 +878,10 @@ msgstr "Fjöldi í vali"
 #: src/control/Control.StatusBar.js:378 src/control/Control.StatusBar.js:379
 #: src/control/Control.StatusBar.js:402 src/control/Control.StatusBar.js:403
 msgid "Permission Mode"
-msgstr ""
+msgstr "Heimildahamur"
 
 #: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
 #: src/control/Control.StatusBar.js:402
-#, fuzzy
 msgid "Read-only"
 msgstr "Aðeins lesanlegt"
 
