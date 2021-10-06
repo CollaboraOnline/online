@@ -1409,10 +1409,13 @@ class CommentSection {
 				this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1];
 				yOrigin = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1] - this.documentTopLeft[1];
 				var tempCrd: Array<number> = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix;
-				this.showArrow([tempCrd[0], tempCrd[1]], [x, tempCrd[1]]);
+				var resolved:string = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.resolved;
+				if (resolved === 'false'|| this.sectionProperties.showResolved)
+					this.showArrow([tempCrd[0], tempCrd[1]], [x, tempCrd[1]]);
 			}
 			else {
 				this.hideArrow();
+				app.sectionContainer.requestReDraw();
 			}
 
 			var lastY = 0;
