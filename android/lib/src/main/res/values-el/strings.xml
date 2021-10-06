@@ -19,4 +19,8 @@
     <string name="view_only">Μόνο προβολή</string>
     <string name="restarting">Επανεκκίνηση...</string>
     <string name="cant_open_the_document">Το έγγραφο δεν μπορεί να ανοίξει</string>
+    <string name="ask_for_convert_odf">Επιβεβαίωση μορφής αρχείου</string>
+    <string name="use_odf">Χρήση μορφής ODF</string>
+    <string name="use_text">Χρήση μορφής κειμένου</string>
+    <string name="convert_odf_message">Αυτό το έγγραφο μπορεί να περιέχει μορφοποίηση ή περιεχόμενο που δεν μπορεί να αποθηκευτεί στην τρέχουσα επιλεγμένη μορφή αρχείου \"Κείμενο\".</string>
 </resources>
