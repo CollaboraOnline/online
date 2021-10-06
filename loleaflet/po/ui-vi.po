@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-15 17:22+0200\n"
-"PO-Revision-Date: 2021-09-01 18:50+0000\n"
+"PO-Revision-Date: 2021-09-18 21:37+0000\n"
 "Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/vi/>\n"
-"Language: \n"
+"Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -114,7 +114,7 @@ msgstr "Đã chỉnh sửa"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "Máy chủ WOPI"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -340,7 +340,7 @@ msgstr "Màu tự động"
 #: src/control/Control.AlertDialog.js:67 src/control/Control.StatusBar.js:340
 #: src/control/Control.StatusBar.js:379 src/control/Control.StatusBar.js:403
 msgid "Edit"
-msgstr ""
+msgstr "Chỉnh sửa"
 
 #: src/control/Control.AlertDialog.js:77
 msgid "Open link"
@@ -875,11 +875,10 @@ msgstr "Số lượng lựa chọn"
 #: src/control/Control.StatusBar.js:378 src/control/Control.StatusBar.js:379
 #: src/control/Control.StatusBar.js:402 src/control/Control.StatusBar.js:403
 msgid "Permission Mode"
-msgstr ""
+msgstr "Chế độ quyền"
 
 #: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
 #: src/control/Control.StatusBar.js:402
-#, fuzzy
 msgid "Read-only"
 msgstr "Chỉ đọc"
 
