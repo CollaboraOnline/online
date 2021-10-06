@@ -294,9 +294,10 @@ class Comment {
 		this.sectionProperties.contentAuthor.innerText = this.sectionProperties.data.author;
 
 		this.updateResolvedField(this.sectionProperties.data.resolved);
-		this.sectionProperties.authorAvatarImg.setAttribute('src', this.sectionProperties.data.avatar);
-
-		if (!this.sectionProperties.data.avatar) {
+		if (this.sectionProperties.data.avatar) {
+			this.sectionProperties.authorAvatarImg.setAttribute('src', this.sectionProperties.data.avatar);
+		}
+		else {
 			$(this.sectionProperties.authorAvatarImg).css('padding-top', '4px');
 		}
 		var user = this.map.getViewId(this.sectionProperties.data.author);
