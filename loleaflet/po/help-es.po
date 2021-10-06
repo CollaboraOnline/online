@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-15 17:22+0200\n"
-"PO-Revision-Date: 2021-05-15 10:32+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2021-09-27 23:29+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "help/es/>\n"
 "Language: es\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /es/libo_online/loleaflet-help-es.po\n"
 "X-Pootle-Revision: 3713610\n"
 
@@ -675,7 +675,7 @@ msgstr "Desplazar el cursor entre el texto y el pie de página"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:88-82
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
-msgstr "Ctrl + Av Pág"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Av Pág"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-18
 msgid "Extend the selection down one page"
@@ -683,7 +683,7 @@ msgstr "Ampliar la selección una página hacia abajo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:89-79
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
-msgstr "Mayús + Av Pág"
+msgstr "Mayús</kbd><span class=\"kbd--plus\">+</span><kbd>Av Pág"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:90-18
 msgid "Delete to beginning of word"
@@ -691,7 +691,7 @@ msgstr "Eliminar hasta el principio de una palabra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:90-72
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace"
-msgstr "Ctrl + Retroceso"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Retroceso"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:91-18
 msgid "Delete to end of word"
@@ -699,7 +699,7 @@ msgstr "Eliminar hasta el final de una palabra"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:91-66
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
-msgstr "Ctrl + Supr"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Supr"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:92-18
 msgid "Delete to beginning of sentence"
@@ -709,7 +709,9 @@ msgstr "Eliminar hasta el principio de una frase"
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Backspace"
-msgstr "Ctrl + Mayús + Retroceso"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Mayús</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Retroceso"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:93-18
 msgid "Delete to end of sentence"
@@ -719,7 +721,9 @@ msgstr "Eliminar hasta el final de una frase"
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Del"
-msgstr "Ctrl + Mayús + Supr"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Mayús</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Supr"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:95-9
 msgid "Shortcut Keys for Tables"
@@ -757,7 +761,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-18
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
-msgstr "Ctrl + Tab"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
 msgid ""
@@ -771,7 +775,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
-msgstr "Alt + ↑, ↓, ← o →"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>↑, ↓, ← o →"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-113
 msgid ""
@@ -784,7 +788,9 @@ msgstr ""
 msgid ""
 "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Arrow Keys"
-msgstr "Alt + Mayús + ↑, ↓, ← o →"
+msgstr ""
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Mayús</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>↑, ↓, ← o →"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:102-161
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
@@ -796,7 +802,9 @@ msgstr ""
 msgid ""
 "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>Arrow Keys"
-msgstr "Alt + Ctrl + ↑, ↓, ← o →"
+msgstr ""
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>↑, ↓, ← o →"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:103-160
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:104-208
@@ -808,41 +816,45 @@ msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow "
 "Keys"
-msgstr "Ctrl + Alt + Mayús + ↑, ↓, ← o →"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>Mayús</kbd><span class=\"kbd--plus\">+</span><kbd>↑, ↓, ←"
+" o →"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
-msgstr "Alt + Ins"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Ins"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
 "Tras 3 segundos en el modo de inserción, oprimir las flechas inserta filas/"
-"columnas. Mantenga oprimida Ctrl para insertar celdas"
+"columnas. <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd> ↑, ↓, ← o "
+"→</kbd> inserta celdas"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
-msgstr "Alt + Supr"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Supr"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
 "Tras 3 segundos en el modo de eliminación, oprimir las flechas elimina filas/"
-"columnas. Mantenga oprimida Ctrl para combinar la celda actual con una "
-"adyacente"
+"columnas. <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>↑, ↓, ← o →</"
+"kbd> combina la celda actual con una adyacente"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Del"
-msgstr "Mayús + Ctrl + Supr"
+msgstr ""
+"Mayús</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Supr"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td.p:107-177
 msgid ""
@@ -887,7 +899,9 @@ msgstr "Insertar una nota al pie"
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>F"
-msgstr "Ctrl + Alt + F"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>F"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:115-18
 msgid "Insert endnote"
@@ -897,7 +911,9 @@ msgstr "Insertar una nota final"
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>D"
-msgstr "Ctrl + Alt + D"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>D"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:116-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:161-18
@@ -909,7 +925,9 @@ msgstr "Insertar un comentario"
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>C"
-msgstr "Ctrl + Alt + C"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>C"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:118-18
 msgid "Insert soft hyphen"
@@ -917,7 +935,7 @@ msgstr "Insertar un guion discrecional"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:118-63
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-"
-msgstr "Ctrl + -"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:119-18
 msgid "Insert non-breaking hyphen"
@@ -927,7 +945,9 @@ msgstr "Insertar un guion indivisible"
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>-"
-msgstr "Ctrl + Mayús + -"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Mayús</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>-"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:121-18
 msgid "Insert non-breaking space"
@@ -937,7 +957,9 @@ msgstr "Insertar un espacio indivisible"
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Space"
-msgstr "Ctrl + Mayús + Espacio"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Mayús</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Espacio"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-18
 msgid "Insert line break"
@@ -945,7 +967,7 @@ msgstr "Insertar un salto de renglón"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:122-62
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
-msgstr "Mayús + Intro"
+msgstr "Mayús</kbd><span class=\"kbd--plus\">+</span><kbd>Intro"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:123-18
 msgid "Manual page break"
@@ -955,7 +977,7 @@ msgstr "Salto de página manual"
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:231-78
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:288-85
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
-msgstr "Ctrl + Intro"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Intro"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:124-18
 msgid "Column break (in multicolumnar text)"
@@ -965,7 +987,9 @@ msgstr "Salto de columna (en textos dispuestos en varias columnas)"
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Enter"
-msgstr "Ctrl + Mayús + Intro"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Mayús</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Intro"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-18
 msgid ""
@@ -977,7 +1001,7 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:125-119
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-155
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
-msgstr "Alt + Intro"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Intro"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:126-18
 msgid ""
@@ -989,33 +1013,35 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Navegar por las hojas de cálculo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Mueve el cursor a la primera celda de la hoja (A1)."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "Mueve el cursor a la última celda con datos de la hoja."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-18
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Mueve el cursor a la primera celda de la fila actual."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Mueve el cursor a la última celda de la fila actual."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
 msgstr ""
+"Selecciona todas las celdas entre la actual y la primera de la fila actual."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
 msgstr ""
+"Selecciona todas las celdas entre la actual y la última de la fila actual."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
@@ -1024,9 +1050,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-164
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Mayús + Re Pág"
+msgstr "Mayús</kbd><span class=\"kbd--plus\">+</span><kbd>Re Pág"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-18
 msgid ""
@@ -1035,9 +1060,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-168
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Mayús + Av Pág"
+msgstr "Mayús</kbd><span class=\"kbd--plus\">+</span><kbd>Av Pág"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
 msgid ""
@@ -1045,11 +1069,13 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"Mueve el cursor al extremo izquierdo del intervalo de datos actual. Si la "
+"columna a la izquierda de la celda con el cursor está vacía, el cursor se "
+"mueve a la siguiente columna que contenga datos."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-245
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
-msgstr "Ctrl + Intro"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>←"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
 msgid ""
@@ -1057,11 +1083,13 @@ msgid ""
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
+"Mueve el cursor al extremo derecho del intervalo de datos actual. Si la "
+"columna a la derecha de la celda con el cursor está vacía, el cursor se "
+"mueve a la siguiente columna que contenga datos."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
-msgstr "Ctrl + Intro"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>→"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-18
 msgid ""
@@ -1069,11 +1097,13 @@ msgid ""
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
+"Mueve el cursor al extremo superior del intervalo de datos actual. Si la "
+"fila que hay encima de la celda con el cursor está vacía, el cursor se "
+"moverá a la siguiente fila que contenga datos."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-221
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
-msgstr "Ctrl + ↑"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>↑"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-18
 msgid ""
@@ -1081,11 +1111,13 @@ msgid ""
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"Mueve el cursor al extremo inferior del intervalo de datos actual. Si la "
+"fila que hay debajo de la celda con el cursor está vacía, el cursor se "
+"moverá a la siguiente fila que contenga datos."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-226
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
-msgstr "Ctrl + Intro"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>↓"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-18
 msgid ""
@@ -1094,31 +1126,34 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
+"Selecciona todas las celdas con datos, desde la actual hasta la última del "
+"intervalo de celdas con datos contiguas, en la dirección de la flecha "
+"presionada. Si se utiliza para seleccionar tanto filas como columnas, se "
+"selecciona un intervalo de celdas rectangular."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-272
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Arrow"
-msgstr "Ctrl + Mayús + ↑"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Mayús</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>↑"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Se mueve una hoja hacia la izquierda."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-73
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Mayús + Re Pág"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Re Pág"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "Se mueve una página en pantalla hacia la derecha."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-80
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Mayús + Av Pág"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Av Pág"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
 msgid ""
@@ -1126,13 +1161,17 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
+"Suma la hoja anterior a la selección de hojas actual. Si se seleccionan "
+"todas las hojas de un libro, esta combinación de teclas selecciona solo la "
+"hoja previa. Hace que la hoja anterior sea la actual."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-260
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Up"
-msgstr "Mayús + Ctrl + Supr"
+msgstr ""
+"Mayús</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Re Pág"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
 msgid ""
@@ -1140,13 +1179,17 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"Suma la hoja siguiente a la selección de hojas actual. Si se seleccionan "
+"todas las hojas de un libro, esta combinación de teclas selecciona solo la "
+"próxima hoja. Hace que la próxima hoja sea la actual."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-248
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Down"
-msgstr "Mayús + Ctrl + Supr"
+msgstr ""
+"Mayús</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Av Pág"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""
@@ -1154,40 +1197,41 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"donde «*» es el signo de multiplicación del teclado numérico. Selecciona el "
+"intervalo de datos que contiene el cursor. Un intervalo es un área de celdas "
+"contiguas que contiene datos y está flanqueado por filas y columnas vacías."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
-msgstr "Ctrl + Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
 msgstr ""
+"donde «/» es el signo de división del teclado numérico. Selecciona el "
+"intervalo de la fórmula matricial que contiene el cursor."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-158
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
-msgstr "Ctrl + Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "Inserta celdas (como el menú Insertar ▸ Celdas)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-85
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
-msgstr "Ctrl + P"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>+"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "Elimina celdas (como el menú Editar ▸ Eliminar celdas)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-90
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
-msgstr "Ctrl + Intro"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>-"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"
@@ -1727,15 +1771,17 @@ msgid ""
 "paste via the context menu is required."
 msgstr ""
 "Se admite el corte y la copia de contenido enriquecido, no solo dentro de un "
-"documento dado, mas también entre otros documentos de <span class=\""
-"productname\">%productName</span>, incluso entre aquellos alojados en otras "
-"instalaciones del programa. En estos casos, los usuarios de PC pueden cortar "
-"o copiar elementos tales como imágenes y contenido mixto directamente "
-"mediante atajos de teclado (<kbd>Ctrl</kbd> + <kbd>X</kbd>, <kbd>Ctrl</kbd> +"
-" <kbd>C</kbd>, <kbd>Ctrl</kbd> + <kbd>V</kbd>). Por motivos de seguridad es "
-"menester utilizar <kbd>Ctrl</kbd> + <kbd>V</kbd> para pegar en PC, pero "
-"puede emplearse el menú contextual para cortar y copiar. En Android e iOS "
-"puede seleccionar texto con un toque doble y, a continuación, un toque "
+"documento dado, mas también entre otros documentos de <span class="
+"\"productname\">%productName</span>, incluso entre aquellos alojados en "
+"otras instalaciones del programa. En estos casos, los usuarios de PC pueden "
+"cortar o copiar elementos tales como imágenes y contenido mixto directamente "
+"mediante atajos de teclado (<kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>). Por motivos de seguridad es menester utilizar "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> para pegar en "
+"PC, pero puede emplearse el menú contextual para cortar y copiar. En Android "
+"e iOS puede seleccionar texto con un toque doble y, a continuación, un toque "
 "prolongado para acceder a las acciones Cortar/Copiar/Pegar del menú "
 "contextual."
 
@@ -1841,8 +1887,9 @@ msgid ""
 "<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>V</kbd>"
 msgstr ""
-"Puede pegar texto sin formato mediante el atajo de teclado <kbd>Ctrl</kbd> + "
-"<kbd>Mayús</kbd> + <kbd>V</kbd>"
+"Puede pegar texto sin formato mediante el atajo de teclado <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Mayús</kbd><span class=\"kbd--"
+"plus\">+</span><kbd>V</kbd>"
 
 #: html/loleaflet-help.html%2Bdiv.p:385-5
 msgid ""
@@ -2085,9 +2132,10 @@ msgstr ""
 "columnas, filas y hojas de cálculo sirviéndose directamente de los menús, "
 "las barras de herramientas y los menús contextuales. El formato directo solo "
 "se aplica al objeto seleccionado. Para dar formato a una celda utilice el "
-"menú u oprima <kbd>Ctrl</kbd> + <kbd>1</kbd>. El cuadro de diálogo muestra "
-"posibilidades de formato numérico complejas, así como opciones de tipo de "
-"letra, bordes complejos, fondo, protección de celdas y otros parámetros."
+"menú u oprima <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>. "
+"El cuadro de diálogo muestra posibilidades de formato numérico complejas, "
+"así como opciones de tipo de letra, bordes complejos, fondo, protección de "
+"celdas y otros parámetros."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:435-5
 msgid ""
@@ -3044,11 +3092,11 @@ msgid ""
 ">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> dialog "
 "opens to let you describe the precise format of the CSV data."
 msgstr ""
-"Para pegar el contenido del portapapeles, vaya a <span class=\"ui\""
-">Editar</span> ▸ <span class=\"ui\">Pegar</span> u oprima <kbd>Ctrl</kbd> + "
-"<kbd>V</kbd>. Se abrirá el cuadro de diálogo <span class=\"ui\">Importación "
-"de texto</span>, donde puede especificar a detalle el formato de los datos "
-"CSV."
+"Para pegar el contenido del portapapeles, vaya a <span class=\"ui\">Editar</"
+"span> ▸ <span class=\"ui\">Pegar</span> u oprima <kbd>Ctrl</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd>. Se abrirá el cuadro de diálogo <span "
+"class=\"ui\">Importación de texto</span>, donde puede especificar a detalle "
+"el formato de los datos CSV."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:629-11
 msgid ""
