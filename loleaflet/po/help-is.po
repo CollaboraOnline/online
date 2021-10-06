@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-15 17:22+0200\n"
-"PO-Revision-Date: 2021-06-10 16:33+0000\n"
+"PO-Revision-Date: 2021-09-20 17:51+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/help/is/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /is/libo_online/loleaflet-help-is.po\n"
 "X-Pootle-Revision: 2357047\n"
 
@@ -1029,33 +1029,33 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Flakka um í töflureikni"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Færir músabendilinn á fyrsta reitinn á blaðinu (A1)."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "Færir músabendilinn á síðasta reitinn á blaðinu sem inniheldur gögn."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-18
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Færir músabendilinn á fyrsta reitinn í núverandi röð."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Færir músabendilinn á síðasta reitinn í núverandi röð."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
-msgstr ""
+msgstr "Velur reiti frá núverandi reit að fyrsta reitnum í núverandi röð."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
-msgstr ""
+msgstr "Velur reiti frá núverandi reit að síðasta reitnum í núverandi röð."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
@@ -1064,7 +1064,6 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-164
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>SíðaUpp"
 
@@ -1075,7 +1074,6 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-168
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>SíðaNiður"
 
@@ -1087,9 +1085,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-245
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Vinstri ör"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
 msgid ""
@@ -1099,9 +1096,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Hægri ör"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-18
 msgid ""
@@ -1111,9 +1107,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-221
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>ÖrUpp"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Upp ör"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-18
 msgid ""
@@ -1123,9 +1118,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-226
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Niður ör"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-18
 msgid ""
@@ -1136,31 +1130,28 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-272
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Arrow"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>ÖrUpp"
+"--plus\">+</span><kbd>Ör"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Færir eitt blað til vinstri."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-73
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>SíðaUpp"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>SíðaUpp"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "Færir eina skjásíðu til hægri."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-80
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>SíðaNiður"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>SíðaNiður"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
 msgid ""
@@ -1170,13 +1161,12 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-260
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Up"
 msgstr ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Eyða (Del)"
+"--plus\">+</span><kbd>SíðaUpp"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
 msgid ""
@@ -1186,13 +1176,12 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-248
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Down"
 msgstr ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Eyða (Del)"
+"--plus\">+</span><kbd>SíðaNiður"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""
@@ -1202,9 +1191,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
@@ -1213,27 +1201,24 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-158
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "Setja inn reiti (eins og í valmyndinni Setja inn - Setja inn reiti)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-85
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plús-lykill"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "Eyða reitum (eins og í valmyndinni Breyta - Eyða reitum)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-90
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Mínus-lykill"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"
@@ -1368,7 +1353,7 @@ msgstr "Fara og velja texta að enda textareits"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:226-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "Flýtilyklar á skyggnu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:228-18
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:285-18
@@ -1400,7 +1385,7 @@ msgstr "Fara á næsta textahlut á skyggnu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:232-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "Velja allt á skyggnu"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:283-9
 msgid "Draw page keyboard shortcuts"
@@ -1621,7 +1606,7 @@ msgstr "Leita áfram"
 
 #: html/loleaflet-help.html%2Bdiv.ul.li.p:352-11
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr ""
+msgstr "Hætta við leitina (birtist aðeins þegar leitað hefur verið að texta)"
 
 #: html/loleaflet-help.html%2Bdiv.p:354-5
 msgid ""
@@ -1938,6 +1923,7 @@ msgstr ""
 msgid ""
 "Formulas are entered in the formula bar. Enter '=' and insert the formula."
 msgstr ""
+"Formúlur eru settar inn í formúluslánni. Skrifaðu '=' og settu inn formúluna."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:426-5
 msgid "All spreadsheets functions and mathematical rules applies."
@@ -2329,6 +2315,11 @@ msgid ""
 "your changes, you must either undo them, or use the <span class=\"ui\">"
 "Revision History </span> in the <span class=\"ui\">File</span> menu."
 msgstr ""
+"<span class=\"productname\">%productName</span> vistar skjalið reglulega í "
+"bakgrunni, þú getur ekki bara lokað forritinu án þess að vista skjalið. Til "
+"að hætta við breytingar, þarftu annað hvort að afturkalla þær eða nota <span "
+"class=\"ui\">Breytingaskrá</span> í <span class=\"ui\""
+">Skrá</span>-valmyndinni."
 
 #: html/loleaflet-help.html%2Bdiv.h4:539-5
 msgid ""
@@ -2358,6 +2349,9 @@ msgid ""
 ">Languages</span> and select the language for the whole document. Optionally "
 "you can set languages for the selected text and for the current paragraph."
 msgstr ""
+"Farðu í valmyndina <span class=\"ui\">Verkfæri</span> → <span class=\"ui\""
+">Tungumál</span> og veldu tungumálið sem á að gilda fyrir allt skjalið. Eins "
+"er hægt að velja tungumál fyrir valinn texta eða núverandi málsgrein."
 
 #: html/loleaflet-help.html%2Bdiv.h4:543-5
 msgid "How can I remove the red wavy lines in my document?"
@@ -2368,6 +2362,8 @@ msgid ""
 "Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\">"
 "Automatic Spell Checking</span>."
 msgstr ""
+"Farðu í valmyndina <span class=\"ui\">Verkfæri</span> og taktu merkið úr "
+"reitnum <span class=\"ui\">Sjálfvirk yfirferð stafsetningar</span>."
 
 #: html/loleaflet-help.html%2Bdiv.h4:545-5
 msgid "What is the blue wavy underline in some words in the text?"
@@ -2397,6 +2393,8 @@ msgid ""
 "What are the blue <span class=\"blue\">¶</span> symbol and how can I remove "
 "from my text document?"
 msgstr ""
+"Hvað eru þessi <span class=\"blue\">¶</span> tákn og hvernig get ég fjarlægt "
+"þau úr textaskjalinu mínu?"
 
 #: html/loleaflet-help.html%2Bdiv.p:551-5
 msgid ""
@@ -2405,6 +2403,10 @@ msgid ""
 "document display, choose menu <span class=\"ui\">View</span> → <span class=\""
 "ui\">Formatting mark</span>."
 msgstr ""
+"Táknið <span class=\"blue\">¶</span> er svokallað sniðmerki. Það hjálpar til "
+"við breytingar og hliðjöfnun texta og kemur ekki fram við prentun. Til að "
+"víxla því af og á við birtingu skjals, farðu í valmyndina <span class=\"ui\""
+">Skoða</span> → <span class=\"ui\">Sniðmerki</span>."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:555-5
 msgid "How do I get a word count of my document?"
@@ -2439,7 +2441,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:562-11
 msgid "Place the cursor in the position to insert the character."
-msgstr ""
+msgstr "Settu bendilinn inn á staðinn þar sem setja skal inn staftáknið."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:564-9
 msgid ""
@@ -2480,18 +2482,19 @@ msgstr ""
 #: html/loleaflet-help.html%2Bdiv.div.p:572-5
 msgid "With track changes enabled your document is shown the following manner:"
 msgstr ""
+"Þegar rakning breytinga er virk birtist það í skjalinu á eftirfarandi hátt:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:574-11
 msgid "Deletions are marked with colored strike-through characters."
-msgstr ""
+msgstr "Eyðingar eru merktar með lituðum gegnumstrikuðum stöfum."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:575-11
 msgid "Additions are marked with colored underlined characters."
-msgstr ""
+msgstr "Viðbætur eru merktar með lituðum undirstrikuðum stöfum."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:576-11
 msgid "All changes are marked with a vertical bar in the right margin."
-msgstr ""
+msgstr "Allar breytingar eru merktar með lóðréttum reitum í hægri spássíu."
 
 #: html/loleaflet-help.html%2Bdiv.div.ul.li.p:577-11
 msgid "Changes are displayed as comment in the right of the document area."
@@ -2542,6 +2545,8 @@ msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and "
 "select the <span class=\"ui\">Page</span> tab"
 msgstr ""
+"Veldu <span class=\"ui\">Sníða</span> → <span class=\"ui\">Síða</span> og "
+"farðu á flipann <span class=\"ui\">Síða</span>"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:589-11
 msgid "Set the page margins in the dialog."
@@ -2598,7 +2603,7 @@ msgstr "Beint:"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:604-11
 msgid "Select the text with the existing format"
-msgstr ""
+msgstr "Veldu textann með fyrirliggjandi sniðinu"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:605-11
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p.img:636-11
@@ -2607,6 +2612,9 @@ msgid ""
 "alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to "
 "a paint bucket."
 msgstr ""
+"Smelltu á táknið til að klóna snið <img style=\"height:0.6cm;width:0.6cm;\" "
+"alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. Músarbendilinn breytist þá "
+"í málningarfötu."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:606-11
 msgid "Select the text you want to apply the new format."
@@ -2693,10 +2701,11 @@ msgstr "Hvernig get ég afritað snið í fyrirliggjandi reitum yfir í nýja re
 #: html/loleaflet-help.html%2Bdiv.div.p:633-5
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
 msgstr ""
+"Það er einfalt að gera með því að nota málunartáknið í verkfærastikunni."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:635-11
 msgid "Format the source cell with the font, color background and more."
-msgstr ""
+msgstr "Sníddu til upprunareitinn með letri, bakgrunnslit og fleiru."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:637-11
 msgid "Select the cells you want to format. Release the mouse button."
@@ -2714,6 +2723,11 @@ msgid ""
 "or spreadsheet cell and choose <span class=\"ui\">Format</span> → <span "
 "class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
 msgstr ""
+"Bein snið er þegar breytingum á sniði er beitt beint á valið efni í "
+"málsgrein eða töflureiknireit, þannig að það yfirskrifi úthlutaðan stíl. Til "
+"að endurheimta viðkomandi stíl skal velja viðkomandi texta eða "
+"töflureiknireit og velja <span class=\"ui\">Sníða</span> → <span class=\"ui\""
+">Hreinsa handvirk snið</span> eða nota hnappinn á verkfærastikunni."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:641-5
 msgid "How do I rename a sheet?"
@@ -2725,6 +2739,9 @@ msgid ""
 "right mouse button) over the sheet tab in the bottom. Enter the new sheet "
 "name in the dialog that follows."
 msgstr ""
+"Breyttu nafni blaðs í töflureiknisskjali með samhengisvalmynd (með því að "
+"hægri-smella) á blaðflipanum neðst. Settu inn nýtt heiti á blaðið í "
+"samskiptaglugganum sem opnast."
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:647-5
 msgid "How can I run my slide show?"
