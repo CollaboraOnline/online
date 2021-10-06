@@ -10,7 +10,7 @@
     <string name="about_moreinfo">Mer information</string>
     <string name="about_license">Visa licens</string>
     <string name="pref_viewmode_summary">Visa filer i ett rutnät eller i en lista.</string>
-    <string name="pref_show_hidden_files_summary">Aktivera visning av dolda filer/mappar.</string>
+    <string name="pref_show_hidden_files_summary">Aktivera visning av dolda filer/mappar</string>
     <string name="pref_show_hidden_files">Dolda filer/mappar</string>
     <string name="file_exists_warning">En fil med det här namnet existerar redan och kommer att skrivas över.</string>
     <string name="app_vendor">Denna utgåva tillhandahölls av $VENDOR.</string>
@@ -51,7 +51,7 @@
     <string name="owncloud_unspecified_error">Ospecificerat fel vid anslutning till molnservern. Kontrollera din konfiguration och/eller försök senare.</string>
     <string name="owncloud_unauthorized">Det går inte att logga in på molnservern. Kontrollera din konfiguration.</string>
     <string name="owncloud_wrong_connection">Det går inte att ansluta till molnservern. Kontrollera din konfiguration.</string>
-    <string name="usb_connected_configure">USB är ansluten, konfigurera din enhet</string>
+    <string name="usb_connected_configure">USB är ansluten, konfigurera din enhet.</string>
     <string name="remote_server">Fjärrserver</string>
     <string name="otg_file_system">OTG-enhet (experimentell)</string>
     <string name="external_sd_file_system">Extern SD</string>
