@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Track Changes', function() {
-	var testFileName = 'focus.odt';
+	var testFileName = 'track_changes.odt';
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
