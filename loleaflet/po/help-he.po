@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-09-15 17:22+0200\n"
-"PO-Revision-Date: 2021-06-29 06:33+0000\n"
+"PO-Revision-Date: 2021-09-16 10:58+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "help/he/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /he/libo_online/loleaflet-help-he.po\n"
 "X-Pootle-Revision: 3930691\n"
 
@@ -785,14 +785,13 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
 "מוסיף טאב עצירה (רק בטבלאות). בהתאם למנהל החלונות שבשימוש, יכול להיות שיוחלף "
-"ב־Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab."
+"ב־<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd>."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -1020,33 +1019,33 @@ msgstr "הוספת פסקה חדשה ללא מספור בתוך רשימה. לא
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "ניווט בגיליונות נתונים"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "מעביר את הסמן לתא הראשון בגיליון (A1)."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "מעביר את הסמן לתא האחרון בגיליון שמכיל נתונים."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-18
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "מעביר את הסמן לתא הראשון בשורה הנוכחית."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "מעביר את הסמן לתא האחרון בשורה הנוכחית."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
-msgstr ""
+msgstr "בוחר תאים מהתא הנוכחי עד התא הראשון בשורה הנוכחית."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
-msgstr ""
+msgstr "בוחר תאים מהתא הנוכחי עד התא האחרון בשורה הנוכחית."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
@@ -1055,9 +1054,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-164
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-18
 msgid ""
@@ -1066,9 +1064,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-168
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
 msgid ""
@@ -1078,9 +1075,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-245
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ שמאלה"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
 msgid ""
@@ -1090,9 +1086,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ ימינה"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-18
 msgid ""
@@ -1102,7 +1097,6 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-221
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ למעלה"
 
@@ -1114,9 +1108,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-226
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>חץ למטה"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-18
 msgid ""
@@ -1127,31 +1120,28 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-272
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Arrow"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>חץ למעלה"
+"--plus\">+</span><kbd>חץ"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-73
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-80
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
 msgid ""
@@ -1161,13 +1151,12 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-260
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Up"
 msgstr ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"--plus\">+</span><kbd>Page Up"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-18
 msgid ""
@@ -1177,13 +1166,12 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-248
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Down"
 msgstr ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"--plus\">+</span><kbd>Page Down"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""
@@ -1193,9 +1181,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
@@ -1204,27 +1191,24 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-158
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-85
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>מקש פלוס"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-90
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>מקש מינוס"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"
@@ -2739,7 +2723,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:641-5
 msgid "How do I rename a sheet?"
-msgstr ""
+msgstr "איך אפשר לשנות שם של גיליון?"
 
 #: html/loleaflet-help.html%2Bdiv.div.p:642-5
 msgid ""
@@ -2770,11 +2754,11 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h4:652-5
 msgid "How can I change the line, area and position of a shape in my slides?"
-msgstr ""
+msgstr "איך אפשר לשנות את הקו, השטח והמיקום של הצורה בשקופיות שלי?"
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:654-11
 msgid "Select the shape in your slide. A set of handles shows."
-msgstr ""
+msgstr "נא לבחור את הצורה במצגת שלך. תופיע ערכה של ידיות."
 
 #: html/loleaflet-help.html%2Bdiv.div.ol.li.p:656-9
 msgid ""
