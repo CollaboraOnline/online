@@ -590,7 +590,7 @@ L.Map.include({
 			showCloseButton: !hasDismissBtn,
 			escapeButtonCloses: false,
 			overlayClosesOnClick: false,
-			className: 'vex-theme-plain vex-welcome-mobile',
+			className: !window.mode.isMobile() ? 'vex-theme-plain' : 'vex-theme-plain vex-welcome-mobile',
 			closeAllOnPopState: false,
 			focusFirstInput: false, // Needed to avoid auto-scroll to the bottom
 			buttons: !hasDismissBtn ? {} : [
