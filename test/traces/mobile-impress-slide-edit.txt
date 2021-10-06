@@ -1,0 +1,772 @@
+~+8318092~DW8PH2N5nawTjbK1~02a~NewSession: http://192.168.43.203/index.php/apps/richdocuments/wopi/files/292_oct4ei0irh8v?access_token=Kk2IUh6a50ifXtCKP12MLcOAVeUR182g&access_token_ttl=0&reuse_cookies=oc_sessionPassphrase%3DhBjpSAe5Sz1Au6DKpxJR%252FpdgUgLLaqKeytBJ0KuvQqkvHgZVNDgLQA1AUJs2MdPqXf%252BAKj2R6Vx98RGy4vfi01ri7U6IAhJR78eV9R9HUUhhlCWGGHqmN7e5GMEKMdQc%3Anc_sameSiteCookielax%3Dtrue%3Anc_sameSiteCookiestrict%3Dtrue%3Aoct4ei0irh8v%3D9726ce1592f64a8968c31b0570c3e8b7%3Anc_username%3Dadmin%3Anc_token%3DjUqRcTzLqBRhJbzUWmzqKvJG4Mx19J0B%3Anc_session_id%3D9726ce1592f64a8968c31b0570c3e8b7
+>+780808>DW8PH2N5nawTjbK1>02a>loolclient 0.1 1633529275783 3444.2000000029802
+>+1043>DW8PH2N5nawTjbK1>02a>load url=http%3A%2F%2F192.168.43.203%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F292_oct4ei0irh8v lang=en deviceFormFactor=mobile
+>+13405655>DW8PH2N5nawTjbK1>02a>commandvalues command=.uno:StyleApply
+>+271>DW8PH2N5nawTjbK1>02a>commandvalues command=.uno:CharFontName
+>+213>DW8PH2N5nawTjbK1>02a>commandvalues command=.uno:AcceptTrackedChanges
+>+30151>DW8PH2N5nawTjbK1>02a>commandvalues command=.uno:LanguageStatus
+>+2492>DW8PH2N5nawTjbK1>02a>commandvalues command=.uno:ViewAnnotations
+>+1689>DW8PH2N5nawTjbK1>02a>commandvalues command=.uno:StyleApply
+>+2324>DW8PH2N5nawTjbK1>02a>commandvalues command=.uno:CharFontName
+>+135357>DW8PH2N5nawTjbK1>02a>freemiumstatus isFreemiumUser=false
+>+258>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=0 y=0 width=0 height=0 splitx=0 splity=0
+>+333>DW8PH2N5nawTjbK1>02a>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=1920 tiletwipheight=1920
+>+385>DW8PH2N5nawTjbK1>02a>canceltiles
+>+219>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=1920 tileheight=1920
+>+45300>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+10169>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+7887>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+13687>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+463612>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=0 y=0 width=5385 height=8625 splitx=0 splity=0
+>+599>DW8PH2N5nawTjbK1>02a>canceltiles
+>+160>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760,7680,7680,7680 tilewidth=1920 tileheight=1920
+>+968>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-134 y=-7077 width=16079 height=23066 splitx=0 splity=0
+>+474>DW8PH2N5nawTjbK1>02a>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=5733 tiletwipheight=5733
+>+488>DW8PH2N5nawTjbK1>02a>canceltiles
+>+1613>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+539177>DW8PH2N5nawTjbK1>02a>canceltiles
+>+668>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+380087>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+221>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+309>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+245>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+280>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+92055>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+970>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+362>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+16545>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+2449631>DW8PH2N5nawTjbK1>02a>setclientpart part=2
+>+710>DW8PH2N5nawTjbK1>02a>canceltiles
+>+419>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1327>DW8PH2N5nawTjbK1>02a>selectclientpart part=2 how=1
+>+381895>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+297>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+719>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+75474>DW8PH2N5nawTjbK1>02a>requestloksession
+>+355529>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-134 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+417552>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+281>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+1325218>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=8565.023171249999 y=4401.512272828125 count=1 buttons=1 modifier=0
+>+416>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=8565.023171249999 y=4401.512272828125 count=1 buttons=1 modifier=0
+>+38714>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=8475.569425476562 y=4446.272625539062 count=2 buttons=1 modifier=0
+>+1352>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=8475.569425476562 y=4446.272625539062 count=2 buttons=1 modifier=0
+>+413299>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-134 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+559516>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+370211>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+1002267>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+388>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-134 y=0 width=16079 height=5643 splitx=0 splity=0
+>+569>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0 tileposy=0 tilewidth=5733 tileheight=5733
+>+716>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0 tileposy=0 tilewidth=5733 tileheight=5733
+>+528890>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-134 y=-851 width=16079 height=10660 splitx=0 splity=0
+>+513>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0 tileposy=0 tilewidth=5733 tileheight=5733
+>+610138>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0 tileposy=0 tilewidth=5733 tileheight=5733
+>+2082809>DW8PH2N5nawTjbK1>02a>uno .uno:InsertObjectChart
+>+605>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-134 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+834>DW8PH2N5nawTjbK1>02a>canceltiles
+>+617>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1671>DW8PH2N5nawTjbK1>02a>canceltiles
+>+2420>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+559372>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+509514>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+516>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+669009>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+1679378>DW8PH2N5nawTjbK1>02a>uno .uno:MoveShapeHandle {"HandleNum":{"type":"long","value":"5"},"NewPosX":{"type":"long","value":7089.034372875},"NewPosY":{"type":"long","value":5520.539006226562}}
+>+831195>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+388>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+1133143>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+675335>DW8PH2N5nawTjbK1>02a>uno .uno:InsertPage
+>+339>DW8PH2N5nawTjbK1>02a>setclientpart part=3
+>+430>DW8PH2N5nawTjbK1>02a>canceltiles
+>+195>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=3 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+513729>DW8PH2N5nawTjbK1>02a>freemiumstatus isFreemiumUser=false
+>+335>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+198>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+302>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+466>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+500911>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+308>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+247262>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+359>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+505>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+445>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+9835>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+251759>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+443>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=8274.360339984374 y=4334.369661070313 count=1 buttons=1 modifier=0
+>+367>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=8274.360339984374 y=4334.369661070313 count=1 buttons=1 modifier=0
+>+784414>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+487>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+529>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+989476>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+783>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+1013396>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-851 width=16079 height=10660 splitx=0 splity=0
+>+383>DW8PH2N5nawTjbK1>02a>canceltiles
+>+226249>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=3 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1210>DW8PH2N5nawTjbK1>02a>canceltiles
+>+1013>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=3 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+725>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+1287959>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+399>DW8PH2N5nawTjbK1>02a>canceltiles
+>+182>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=3 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+2060>DW8PH2N5nawTjbK1>02a>canceltiles
+>+225>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=3 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1228879>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+771>DW8PH2N5nawTjbK1>02a>canceltiles
+>+460>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=3 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+3761>DW8PH2N5nawTjbK1>02a>canceltiles
+>+356>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=3 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+3270999>DW8PH2N5nawTjbK1>02a>uno .uno:InsertAnnotation {"Text":{"type":"string","value":"Big commen"},"Author":{"type":"string","value":"admin"}}
+>+500430>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+501088>DW8PH2N5nawTjbK1>02a>freemiumstatus isFreemiumUser=false
+>+202>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-851 width=16079 height=10660 splitx=0 splity=0
+>+360>DW8PH2N5nawTjbK1>02a>canceltiles
+>+146>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=3 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1878>DW8PH2N5nawTjbK1>02a>canceltiles
+>+161>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=3 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1335>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+853065>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+5002308>DW8PH2N5nawTjbK1>02a>uno .uno:InsertTable?Columns=2&Rows=2
+>+37307>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+622109>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+337680>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+650255>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+1249370>DW8PH2N5nawTjbK1>02a>uno .uno:InsertPage
+>+436>DW8PH2N5nawTjbK1>02a>setclientpart part=4
+>+1650>DW8PH2N5nawTjbK1>02a>canceltiles
+>+158>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=4 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1212667>DW8PH2N5nawTjbK1>02a>freemiumstatus isFreemiumUser=false
+>+167>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+217>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+572461>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+2209>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+432>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+969>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+401>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+34859>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+292792>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+1376>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+276>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+24310>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+2411>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+3292>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+732082>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+431>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+454478>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-851 width=16079 height=10660 splitx=0 splity=0
+>+2797>DW8PH2N5nawTjbK1>02a>canceltiles
+>+522>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=4 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+685>DW8PH2N5nawTjbK1>02a>canceltiles
+>+769>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=4 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1872941>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+284122>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+459>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=4 width=256 height=256 tileposx=0,5733,11466 tileposy=0,0,0 tilewidth=5733 tileheight=5733
+>+840>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=4 width=256 height=256 tileposx=0,5733,11466 tileposy=0,0,0 tilewidth=5733 tileheight=5733
+>+615675>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+901>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=4 width=256 height=256 tileposx=5733,11466 tileposy=0,0 tilewidth=5733 tileheight=5733
+>+1215>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=4 width=256 height=256 tileposx=5733,11466 tileposy=0,0 tilewidth=5733 tileheight=5733
+>+404439>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=0 y=-985 width=12944 height=10929 splitx=0 splity=0
+>+344>DW8PH2N5nawTjbK1>02a>jserror {
+>+1741868>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+476>DW8PH2N5nawTjbK1>02a>jserror {
+>+204006>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+1127520>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+22449>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=0 y=-985 width=12944 height=10929 splitx=0 splity=0
+>+7618>DW8PH2N5nawTjbK1>02a>jserror {
+>+1811568>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+511>DW8PH2N5nawTjbK1>02a>jserror {
+>+140749>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+883375>DW8PH2N5nawTjbK1>02a>uno .uno:SetHyperlink {"Hyperlink.Text":{"type":"string","value":"hellotext"},"Hyperlink.URL":{"type":"string","value":"http://www.youtube.com"}}
+>+67959>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+384020>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+820727>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+1629780>DW8PH2N5nawTjbK1>02a>uno .uno:MoveShapeHandle {"HandleNum":{"type":"long","value":"6"},"NewPosX":{"type":"long","value":6105.103365867188},"NewPosY":{"type":"long","value":447.890625}}
+>+36593>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+548071>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+506200>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+1740864>DW8PH2N5nawTjbK1>02a>uno .uno:InsertPage
+>+546>DW8PH2N5nawTjbK1>02a>setclientpart part=5
+>+531>DW8PH2N5nawTjbK1>02a>canceltiles
+>+259>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+399315>DW8PH2N5nawTjbK1>02a>freemiumstatus isFreemiumUser=false
+>+263>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+398>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+361>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+392>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+440>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+374356>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+1748938>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+447>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+610>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+377>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+483>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+759>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+510>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+2753>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+548>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+381>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+589515>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+294>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+291288>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+1410887>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=8229.633489492187 y=4670.0785096875 count=1 buttons=1 modifier=0
+>+896>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=8229.633489492187 y=4670.0785096875 count=1 buttons=1 modifier=0
+>+861>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=8542.721577304688 y=4602.937286390625 count=2 buttons=1 modifier=0
+>+722>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=8542.721577304688 y=4602.937286390625 count=2 buttons=1 modifier=0
+>+480890>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+554>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,5733,11466,0 tileposy=0,0,0,5733 tilewidth=5733 tileheight=5733
+>+434>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,5733,11466,0 tileposy=0,0,0,5733 tilewidth=5733 tileheight=5733
+>+8509>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+482>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,5733,11466,0 tileposy=0,0,0,5733 tilewidth=5733 tileheight=5733
+>+204178>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,5733,11466,0 tileposy=0,0,0,5733 tilewidth=5733 tileheight=5733
+>+325842>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+902803>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+421>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+549>DW8PH2N5nawTjbK1>02a>canceltiles
+>+386>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1661>DW8PH2N5nawTjbK1>02a>canceltiles
+>+227>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+433335>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+368>DW8PH2N5nawTjbK1>02a>textinput id=0 text=h
+>+357873>DW8PH2N5nawTjbK1>02a>textinput id=0 text=e
+>+238272>DW8PH2N5nawTjbK1>02a>textinput id=0 text=l
+>+282166>DW8PH2N5nawTjbK1>02a>textinput id=0 text=l
+>+509811>DW8PH2N5nawTjbK1>02a>textinput id=0 text=o
+>+1752>DW8PH2N5nawTjbK1>02a>textinput id=0 text=%20
+>+365125>DW8PH2N5nawTjbK1>02a>textinput id=0 text=h
+>+239>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+340>DW8PH2N5nawTjbK1>02a>textinput id=0 text=y
+>+279519>DW8PH2N5nawTjbK1>02a>textinput id=0 text=p
+>+243518>DW8PH2N5nawTjbK1>02a>textinput id=0 text=e
+>+197015>DW8PH2N5nawTjbK1>02a>textinput id=0 text=r
+>+781187>DW8PH2N5nawTjbK1>02a>textinput id=0 text=link
+>+1229768>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+41294>DW8PH2N5nawTjbK1>02a>key type=input char=13 key=1280
+>+10750>DW8PH2N5nawTjbK1>02a>key type=up char=0 key=1280
+>+1073584>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+463470>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=0 width=16079 height=5643 splitx=0 splity=0
+>+139295>DW8PH2N5nawTjbK1>02a>canceltiles
+>+147>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,5733,11466 tileposy=0,0,0 tilewidth=5733 tileheight=5733
+>+1038>DW8PH2N5nawTjbK1>02a>canceltiles
+>+302>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,5733,11466 tileposy=0,0,0 tilewidth=5733 tileheight=5733
+>+219034>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-851 width=16079 height=10660 splitx=0 splity=0
+>+288>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,5733,11466 tileposy=0,0,0 tilewidth=5733 tileheight=5733
+>+220488>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,5733,11466 tileposy=0,0,0 tilewidth=5733 tileheight=5733
+>+1311326>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+409343>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+614363>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=0 y=-985 width=12944 height=10929 splitx=0 splity=0
+>+366>DW8PH2N5nawTjbK1>02a>jserror {
+>+4711302>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+973>DW8PH2N5nawTjbK1>02a>jserror {
+>+270786>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=0 y=-985 width=12944 height=10929 splitx=0 splity=0
+>+17861>DW8PH2N5nawTjbK1>02a>jserror {
+>+1246297>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+1241>DW8PH2N5nawTjbK1>02a>jserror {
+>+622>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+919313>DW8PH2N5nawTjbK1>02a>uno .uno:SetHyperlink {"Hyperlink.Text":{"type":"string","value":"Link"},"Hyperlink.URL":{"type":"string","value":"http://www.youtube.com"}}
+>+277005>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+234797>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+16188>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+700648>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+267165>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+449941>DW8PH2N5nawTjbK1>02a>key type=input char=13 key=1280
+>+833>DW8PH2N5nawTjbK1>02a>key type=up char=0 key=1280
+>+1124805>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+409875>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=11092.157295679686 y=846.47404603125 count=1 buttons=1 modifier=0
+>+266>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=11092.157295679686 y=846.47404603125 count=1 buttons=1 modifier=0
+>+42418>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+401915>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+913483>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+792938>DW8PH2N5nawTjbK1>02a>textinput id=0 text=s
+>+180835>DW8PH2N5nawTjbK1>02a>textinput id=0 text=l
+>+174263>DW8PH2N5nawTjbK1>02a>textinput id=0 text=i
+>+340989>DW8PH2N5nawTjbK1>02a>textinput id=0 text=d
+>+500966>DW8PH2N5nawTjbK1>02a>textinput id=0 text=e
+>+386>DW8PH2N5nawTjbK1>02a>textinput id=0 text=%20
+>+952348>DW8PH2N5nawTjbK1>02a>textinput id=0 text=4
+>+1013059>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+532480>DW8PH2N5nawTjbK1>02a>uno .uno:InsertPage
+>+13606>DW8PH2N5nawTjbK1>02a>resetselection
+>+1026>DW8PH2N5nawTjbK1>02a>setclientpart part=6
+>+50673>DW8PH2N5nawTjbK1>02a>canceltiles
+>+2681>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+652789>DW8PH2N5nawTjbK1>02a>freemiumstatus isFreemiumUser=false
+>+350>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+317>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+372>DW8PH2N5nawTjbK1>02a>canceltiles
+>+950>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+523>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+307>DW8PH2N5nawTjbK1>02a>canceltiles
+>+775>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+464>DW8PH2N5nawTjbK1>02a>canceltiles
+>+486>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+3238>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+2019509>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+288>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+306>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+261>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+314>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+620409>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+506>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+1871>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+395>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+588>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+418>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+522>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+318>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+929968>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=12478.692348281249 y=887.7660233203125 count=1 buttons=1 modifier=0
+>+491>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=12478.692348281249 y=887.7660233203125 count=1 buttons=1 modifier=0
+>+798444>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+347145>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+306231>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+314656>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-851 width=16079 height=10660 splitx=0 splity=0
+>+2848>DW8PH2N5nawTjbK1>02a>canceltiles
+>+760>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1375>DW8PH2N5nawTjbK1>02a>canceltiles
+>+1652>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1066089>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+1968508>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-8420 width=16079 height=25799 splitx=0 splity=0
+>+3515833>DW8PH2N5nawTjbK1>02a>uno .uno:CalloutShapes.round-callout
+>+1670>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+1416215>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+612>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+393992>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+1739537>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=12433.966169624999 y=5207.211028195313 count=1 buttons=1 modifier=0
+>+207054>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=12433.966169624999 y=5207.211028195313 count=1 buttons=1 modifier=0
+>+1080755>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+563214>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+168>DW8PH2N5nawTjbK1>02a>uno .uno:InsertPage
+>+160>DW8PH2N5nawTjbK1>02a>setclientpart part=7
+>+161>DW8PH2N5nawTjbK1>02a>canceltiles
+>+150>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+2012198>DW8PH2N5nawTjbK1>02a>freemiumstatus isFreemiumUser=false
+>+420>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+470>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+531>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+435>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+273308>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+494159>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+351>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+473>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+417>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+274951>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+295>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+130328>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=12344.512423851562 y=3953.900459742187 count=1 buttons=1 modifier=0
+>+473>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=12344.512423851562 y=3953.900459742187 count=1 buttons=1 modifier=0
+>+984691>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+577>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+614>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+541>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+1062>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+591>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+855795>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-851 width=16079 height=10660 splitx=0 splity=0
+>+620>DW8PH2N5nawTjbK1>02a>canceltiles
+>+2246>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+662>DW8PH2N5nawTjbK1>02a>canceltiles
+>+1095>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+681>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+3638590>DW8PH2N5nawTjbK1>02a>uno .uno:Text?CreateDirectly:bool=true
+>+15553>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+404198>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+489762>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+977535>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+1196809>DW8PH2N5nawTjbK1>02a>uno .uno:MoveShapeHandle {"HandleNum":{"type":"long","value":"3"},"NewPosX":{"type":"long","value":7927.6640625},"NewPosY":{"type":"long","value":6708.274714476562}}
+>+41614>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+174274>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+582208>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=8229.633489492187 y=4940.21119921875 count=1 buttons=1 modifier=0
+>+385>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=8229.633489492187 y=4940.21119921875 count=1 buttons=1 modifier=0
+>+561958>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+359>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=8207.269728328125 y=5029.7332483125 count=1 buttons=1 modifier=0
+>+7059>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=8207.269728328125 y=5029.7332483125 count=1 buttons=1 modifier=0
+>+482>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=7938.9078191718745 y=4962.592025015625 count=2 buttons=1 modifier=0
+>+450>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=7938.9078191718745 y=4962.592025015625 count=2 buttons=1 modifier=0
+>+1542420>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-1971 width=16079 height=12854 splitx=0 splity=0
+>+445>DW8PH2N5nawTjbK1>02a>canceltiles
+>+203>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1396>DW8PH2N5nawTjbK1>02a>canceltiles
+>+535>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+413617>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+332>DW8PH2N5nawTjbK1>02a>canceltiles
+>+666>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+7699>DW8PH2N5nawTjbK1>02a>canceltiles
+>+395>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+474600>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+673844>DW8PH2N5nawTjbK1>02a>textinput id=0 text=t
+>+215550>DW8PH2N5nawTjbK1>02a>textinput id=0 text=g
+>+192246>DW8PH2N5nawTjbK1>02a>textinput id=0 text=g
+>+429230>DW8PH2N5nawTjbK1>02a>textinput id=0 text=h
+>+184538>DW8PH2N5nawTjbK1>02a>textinput id=0 text=j
+>+84833>DW8PH2N5nawTjbK1>02a>textinput id=0 text=j
+>+396053>DW8PH2N5nawTjbK1>02a>textinput id=0 text=h
+>+565>DW8PH2N5nawTjbK1>02a>textinput id=0 text=h
+>+167487>DW8PH2N5nawTjbK1>02a>textinput id=0 text=h
+>+395530>DW8PH2N5nawTjbK1>02a>textinput id=0 text=h
+>+614384>DW8PH2N5nawTjbK1>02a>uno .uno:InsertPage
+>+374>DW8PH2N5nawTjbK1>02a>resetselection
+>+449>DW8PH2N5nawTjbK1>02a>setclientpart part=8
+>+21704>DW8PH2N5nawTjbK1>02a>canceltiles
+>+2151>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=8 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+494187>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+570>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+784>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=8 width=256 height=256 tileposx=0,0 tileposy=0,5733 tilewidth=5733 tileheight=5733
+>+798>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=8 width=256 height=256 tileposx=11466,5733,11466 tileposy=0,5733,5733 tilewidth=5733 tileheight=5733
+>+1182>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=8 width=256 height=256 tileposx=0,0 tileposy=0,5733 tilewidth=5733 tileheight=5733
+>+436>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=8 width=256 height=256 tileposx=11466,5733,11466 tileposy=0,5733,5733 tilewidth=5733 tileheight=5733
+>+24326>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+369434>DW8PH2N5nawTjbK1>02a>freemiumstatus isFreemiumUser=false
+>+288>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+626>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+720>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+841953>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+326>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+514>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+355>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+1331413>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-851 width=16079 height=10660 splitx=0 splity=0
+>+1804>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+707>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+6237>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+521>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+393>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+966>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+568>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+499976>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+812328>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+1619097>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+929705>DW8PH2N5nawTjbK1>02a>uno .uno:FontworkGalleryFloater
+>+848>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+813>DW8PH2N5nawTjbK1>02a>canceltiles
+>+388>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=8 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+3221>DW8PH2N5nawTjbK1>02a>canceltiles
+>+376>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=8 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+2141104>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-851 width=16079 height=10660 splitx=0 splity=0
+>+1538576>DW8PH2N5nawTjbK1>02a>dialogevent 7 {"id":"ctlFavoriteswin", "cmd": "select", "data": "2", "type": "iconview"}
+>+3306206>DW8PH2N5nawTjbK1>02a>windowcommand 7 close
+>+1136>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=12612.873661171876 y=6353.570734874999 count=1 buttons=1 modifier=0
+>+935>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=12612.873661171876 y=6353.570734874999 count=1 buttons=1 modifier=0
+>+1012>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+73254>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+458592>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+861507>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+12309>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=11159.247952125 y=5141.63621278125 count=1 buttons=1 modifier=0
+>+518402>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=11159.247952125 y=5141.63621278125 count=1 buttons=1 modifier=0
+>+700>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=11025.067355859375 y=5074.494989484375 count=2 buttons=1 modifier=0
+>+358017>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=11025.067355859375 y=5074.494989484375 count=2 buttons=1 modifier=0
+>+1220972>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+348036>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=12031.423664203125 y=3596.3438199609377 count=1 buttons=1 modifier=0
+>+444>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=12031.423664203125 y=3596.3438199609377 count=1 buttons=1 modifier=0
+>+243245>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+402>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-1971 width=16079 height=12854 splitx=0 splity=0
+>+475>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=8 width=256 height=256 tileposx=11466,0,5733,11466 tileposy=0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+533>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=8 width=256 height=256 tileposx=11466,0,5733,11466 tileposy=0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+661546>DW8PH2N5nawTjbK1>02a>textinput id=0 text=h
+>+395>DW8PH2N5nawTjbK1>02a>textinput id=0 text=h
+>+343954>DW8PH2N5nawTjbK1>02a>textinput id=0 text=j
+>+463294>DW8PH2N5nawTjbK1>02a>textinput id=0 text=g
+>+1742>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+507>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+354>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-7525 width=16079 height=24007 splitx=0 splity=0
+>+126261>DW8PH2N5nawTjbK1>02a>canceltiles
+>+392>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=8 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+197660>DW8PH2N5nawTjbK1>02a>canceltiles
+>+764>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=8 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+583572>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+2095146>DW8PH2N5nawTjbK1>02a>uno .uno:RightPara
+>+1123048>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+625813>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=9571.4416468125 y=4311.205608937499 count=1 buttons=1 modifier=0
+>+1025>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=9571.4416468125 y=4311.205608937499 count=1 buttons=1 modifier=0
+>+3161936>DW8PH2N5nawTjbK1>02a>uno .uno:InsertPage
+>+402>DW8PH2N5nawTjbK1>02a>setclientpart part=9
+>+373>DW8PH2N5nawTjbK1>02a>canceltiles
+>+157>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+525>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+598793>DW8PH2N5nawTjbK1>02a>freemiumstatus isFreemiumUser=false
+>+281>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+371>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+724748>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+539>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=9437.260378710936 y=954.12402028125 count=1 buttons=1 modifier=0
+>+464>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=9437.260378710936 y=954.12402028125 count=1 buttons=1 modifier=0
+>+409253>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+4532>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+1002391>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+324>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+261>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+227>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+396>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+778>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+444>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+449393>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+361>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=9 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=9 broadcast=no
+>+601>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-1971 width=16079 height=12854 splitx=0 splity=0
+>+434>DW8PH2N5nawTjbK1>02a>canceltiles
+>+616>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+658>DW8PH2N5nawTjbK1>02a>canceltiles
+>+703>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+440144>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=9 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=9 broadcast=no
+>+576>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+748>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=9 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=9 broadcast=no
+>+563160>DW8PH2N5nawTjbK1>02a>removetextcontext id=0 before=0 after=1
+>+491677>DW8PH2N5nawTjbK1>02a>textinput id=0 text=o
+>+4134>DW8PH2N5nawTjbK1>02a>textinput id=0 text=r
+>+422086>DW8PH2N5nawTjbK1>02a>textinput id=0 text=k
+>+547106>DW8PH2N5nawTjbK1>02a>textinput id=0 text=a
+>+200711>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=9 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=9 broadcast=no
+>+471>DW8PH2N5nawTjbK1>02a>textinput id=0 text=h
+>+280091>DW8PH2N5nawTjbK1>02a>textinput id=0 text=i
+>+264647>DW8PH2N5nawTjbK1>02a>textinput id=0 text=n
+>+742069>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=7044.369017765624 y=5926.0748990625 count=1 buttons=1 modifier=0
+>+380>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=7044.369017765624 y=5926.0748990625 count=1 buttons=1 modifier=0
+>+581250>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+379>DW8PH2N5nawTjbK1>02a>canceltiles
+>+198>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+693>DW8PH2N5nawTjbK1>02a>canceltiles
+>+618>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+326398>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+311>DW8PH2N5nawTjbK1>02a>canceltiles
+>+563>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+453>DW8PH2N5nawTjbK1>02a>canceltiles
+>+810>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+557>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+588>DW8PH2N5nawTjbK1>02a>canceltiles
+>+788>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+4780>DW8PH2N5nawTjbK1>02a>canceltiles
+>+970>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+839>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=9 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=9 broadcast=no
+>+262267>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+480>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,0 tileposy=0,5733 tilewidth=5733 tileheight=5733
+>+533>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=11466,5733,11466 tileposy=0,5733,5733 tilewidth=5733 tileheight=5733
+>+21362>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,0 tileposy=0,5733 tilewidth=5733 tileheight=5733
+>+1156>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=11466,5733,11466 tileposy=0,5733,5733 tilewidth=5733 tileheight=5733
+>+309256>DW8PH2N5nawTjbK1>02a>resetselection
+>+344>DW8PH2N5nawTjbK1>02a>setclientpart part=6
+>+315>DW8PH2N5nawTjbK1>02a>canceltiles
+>+876>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+997>DW8PH2N5nawTjbK1>02a>selectclientpart part=6 how=1
+>+427761>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=6530.0096772421875 y=9753.930964476562 count=1 buttons=1 modifier=0
+>+345>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=6530.0096772421875 y=9753.930964476562 count=1 buttons=1 modifier=0
+>+337>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-7525 width=16079 height=24007 splitx=0 splity=0
+>+368>DW8PH2N5nawTjbK1>02a>canceltiles
+>+170>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1541>DW8PH2N5nawTjbK1>02a>canceltiles
+>+177>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1281042>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+200232>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=9 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=9 broadcast=no
+>+372>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=9 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=9 broadcast=no
+>+395544>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+909>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=11466,0,5733,11466 tileposy=0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+2455>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=11466,0,5733,11466 tileposy=0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1369745>DW8PH2N5nawTjbK1>02a>uno .uno:InsertPage
+>+502>DW8PH2N5nawTjbK1>02a>setclientpart part=7
+>+493>DW8PH2N5nawTjbK1>02a>canceltiles
+>+218>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+479545>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+296>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+311>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+300>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=9 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=9 broadcast=no
+>+887229>DW8PH2N5nawTjbK1>02a>freemiumstatus isFreemiumUser=false
+>+237>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+239>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+289739>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+489>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+2073>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=9593.804736140624 y=1469.6602382109377 count=1 buttons=1 modifier=0
+>+7902>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=9593.804736140624 y=1469.6602382109377 count=1 buttons=1 modifier=0
+>+33505>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+2650>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+344041>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+260>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+460>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=9817.439794804686 y=1133.9527780546873 count=2 buttons=1 modifier=0
+>+507>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=9817.439794804686 y=1133.9527780546873 count=2 buttons=1 modifier=0
+>+481>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+461>DW8PH2N5nawTjbK1>02a>canceltiles
+>+856>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+519>DW8PH2N5nawTjbK1>02a>canceltiles
+>+786>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+372897>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+278>DW8PH2N5nawTjbK1>02a>canceltiles
+>+159>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+911>DW8PH2N5nawTjbK1>02a>canceltiles
+>+202>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+994>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+414581>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+258>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+369443>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+1142>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+330>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+319>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+372>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+893>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+652>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+286642>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=9 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=9 broadcast=no
+>+633022>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=10890.886042968748 y=1380.138144328125 count=1 buttons=1 modifier=0
+>+483>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=10890.886042968748 y=1380.138144328125 count=1 buttons=1 modifier=0
+>+795759>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=11025.067355859375 y=1335.3777916171875 count=1 buttons=1 modifier=0
+>+756>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=11025.067355859375 y=1335.3777916171875 count=1 buttons=1 modifier=0
+>+690007>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+267462>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-1971 width=16079 height=12854 splitx=0 splity=0
+>+492>DW8PH2N5nawTjbK1>02a>canceltiles
+>+918>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+449>DW8PH2N5nawTjbK1>02a>canceltiles
+>+1046>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+455>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+545370>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+381>DW8PH2N5nawTjbK1>02a>canceltiles
+>+182>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+1569>DW8PH2N5nawTjbK1>02a>canceltiles
+>+180>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+520953>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-1971 width=16079 height=12854 splitx=0 splity=0
+>+332>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0 tileposy=0,0,0,5733 tilewidth=5733 tileheight=5733
+>+4780>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0 tileposy=0,0,0,5733 tilewidth=5733 tileheight=5733
+>+851890>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+366380>DW8PH2N5nawTjbK1>02a>textinput id=0 text=g
+>+602763>DW8PH2N5nawTjbK1>02a>textinput id=0 text=u
+>+236032>DW8PH2N5nawTjbK1>02a>textinput id=0 text=l
+>+469285>DW8PH2N5nawTjbK1>02a>textinput id=0 text=s
+>+546735>DW8PH2N5nawTjbK1>02a>textinput id=0 text=h
+>+438938>DW8PH2N5nawTjbK1>02a>textinput id=0 text=s
+>+511996>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=8721.6297406875 y=5881.313202679687 count=1 buttons=1 modifier=0
+>+396>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=8721.6297406875 y=5881.313202679687 count=1 buttons=1 modifier=0
+>+629776>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=9370.170394101562 y=5679.888144328125 count=1 buttons=1 modifier=0
+>+527>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=9370.170394101562 y=5679.888144328125 count=1 buttons=1 modifier=0
+>+599>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=9370.170394101562 y=5679.888144328125 count=2 buttons=1 modifier=0
+>+632>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=9370.170394101562 y=5679.888144328125 count=2 buttons=1 modifier=0
+>+1355>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+511>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+489>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+558>DW8PH2N5nawTjbK1>02a>canceltiles
+>+215>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+2128>DW8PH2N5nawTjbK1>02a>canceltiles
+>+681>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+896301>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+279713>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=8430.904742203125 y=4088.184294796875 count=1 buttons=1 modifier=0
+>+393>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=8430.904742203125 y=4088.184294796875 count=1 buttons=1 modifier=0
+>+2306>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=8788.719725296874 y=4065.8034242109375 count=2 buttons=1 modifier=0
+>+437>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=8788.719725296874 y=4065.8034242109375 count=2 buttons=1 modifier=0
+>+1451817>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=5702.560860445312 y=4065.8034242109375 count=1 buttons=1 modifier=0
+>+353>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=5702.560860445312 y=4065.8034242109375 count=1 buttons=1 modifier=0
+>+505>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=5165.83771396875 y=4155.32551809375 count=1 buttons=1 modifier=0
+>+463>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=5165.83771396875 y=4155.32551809375 count=1 buttons=1 modifier=0
+>+518>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=5165.83771396875 y=4155.32551809375 count=2 buttons=1 modifier=0
+>+496>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=5165.83771396875 y=4155.32551809375 count=2 buttons=1 modifier=0
+>+213346>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+792747>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=5031.656759390625 y=4781.9814741562495 count=1 buttons=1 modifier=0
+>+509>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=5031.656759390625 y=4781.9814741562495 count=1 buttons=1 modifier=0
+>+329140>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=5322.3821161875 y=4938.644746546875 count=2 buttons=1 modifier=0
+>+339>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=5322.3821161875 y=4938.644746546875 count=2 buttons=1 modifier=0
+>+423>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=5635.470562312499 y=4826.741826867187 count=1 buttons=1 modifier=8192
+>+477>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=5635.470562312499 y=4826.741826867187 count=1 buttons=1 modifier=8192
+>+1965696>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=4606.750806328125 y=2902.0149496406248 count=1 buttons=1 modifier=0
+>+433>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=4606.750806328125 y=2902.0149496406248 count=1 buttons=1 modifier=0
+>+396>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=4293.662360203125 y=2521.5457483125 count=1 buttons=1 modifier=0
+>+389>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=4293.662360203125 y=2521.5457483125 count=1 buttons=1 modifier=0
+>+346>DW8PH2N5nawTjbK1>02a>mouse type=buttondown x=4293.662360203125 y=2521.5457483125 count=2 buttons=1 modifier=0
+>+355>DW8PH2N5nawTjbK1>02a>mouse type=buttonup x=4293.662360203125 y=2521.5457483125 count=2 buttons=1 modifier=0
+>+185356>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+562586>DW8PH2N5nawTjbK1>02a>rendershapeselection mimetype=image/svg+xml
+>+391312>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+408>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-1971 width=16079 height=12854 splitx=0 splity=0
+>+422>DW8PH2N5nawTjbK1>02a>canceltiles
+>+179>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+697>DW8PH2N5nawTjbK1>02a>canceltiles
+>+490>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+363137>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+594006>DW8PH2N5nawTjbK1>02a>textinput id=0 text=g
+>+507>DW8PH2N5nawTjbK1>02a>textinput id=0 text=h
+>+551943>DW8PH2N5nawTjbK1>02a>textinput id=0 text=j
+>+323>DW8PH2N5nawTjbK1>02a>removetextcontext id=0 before=1 after=0
+>+744800>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+195715>DW8PH2N5nawTjbK1>02a>textinput id=0 text=h
+>+439>DW8PH2N5nawTjbK1>02a>textinput id=0 text=g
+>+314162>DW8PH2N5nawTjbK1>02a>textinput id=0 text=g
+>+434691>DW8PH2N5nawTjbK1>02a>key type=input char=13 key=1280
+>+277>DW8PH2N5nawTjbK1>02a>key type=up char=0 key=1280
+>+423802>DW8PH2N5nawTjbK1>02a>textinput id=0 text=y
+>+447845>DW8PH2N5nawTjbK1>02a>textinput id=0 text=t
+>+246>DW8PH2N5nawTjbK1>02a>textinput id=0 text=g
+>+499247>DW8PH2N5nawTjbK1>02a>key type=input char=13 key=1280
+>+370>DW8PH2N5nawTjbK1>02a>key type=up char=0 key=1280
+>+798829>DW8PH2N5nawTjbK1>02a>textinput id=0 text=r
+>+444>DW8PH2N5nawTjbK1>02a>textinput id=0 text=f
+>+421>DW8PH2N5nawTjbK1>02a>textinput id=0 text=g
+>+1044053>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+232586>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=0 width=16079 height=6763 splitx=0 splity=0
+>+10625>DW8PH2N5nawTjbK1>02a>canceltiles
+>+527>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+2417>DW8PH2N5nawTjbK1>02a>canceltiles
+>+621>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+519530>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-851 width=16079 height=10660 splitx=0 splity=0
+>+2824>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=5733,11466,0,5733,11466 tileposy=0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+2069>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=5733,11466,0,5733,11466 tileposy=0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+4860986>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+12499384>DW8PH2N5nawTjbK1>02a>getchildid
+>+10344>DW8PH2N5nawTjbK1>02a>insertfile name=http%3A%2F%2F192.168.43.203%2Findex.php%2Fapps%2Frichdocuments%2Fassets%2Fg172Vdl525wRmyAlJ1fU2jhFRZQD4XeRHxKWnspcIpEQRlvo2YFdtARHHwbUz69U type=graphicurl
+>+683915>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-717 width=16079 height=10346 splitx=0 splity=0
+>+425>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,0,5733 tileposy=0,0,5733,5733 tilewidth=5733 tileheight=5733
+>+5455>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=11466 tileposy=5733 tilewidth=5733 tileheight=5733
+>+387>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,5733,0,5733 tileposy=0,0,5733,5733 tilewidth=5733 tileheight=5733
+>+267>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=11466 tileposy=5733 tilewidth=5733 tileheight=5733
+>+357574>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-6270 width=16079 height=21499 splitx=0 splity=0
+>+296830>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+3022781>DW8PH2N5nawTjbK1>02a>setclientpart part=8
+>+552>DW8PH2N5nawTjbK1>02a>canceltiles
+>+297>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=8 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+832>DW8PH2N5nawTjbK1>02a>selectclientpart part=8 how=1
+>+746611>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+638>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+692>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+1490>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+465>DW8PH2N5nawTjbK1>02a>gettextselection mimetype=text/html
+>+436322>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+352>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+527839>DW8PH2N5nawTjbK1>02a>uno .uno:InsertPage
+>+442>DW8PH2N5nawTjbK1>02a>setclientpart part=9
+>+419>DW8PH2N5nawTjbK1>02a>canceltiles
+>+148>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+572>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+324>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=10 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=10 broadcast=no
+>+1585668>DW8PH2N5nawTjbK1>02a>freemiumstatus isFreemiumUser=false
+>+281>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+321>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=0 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=0 broadcast=no
+>+315275>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=1 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=1 broadcast=no
+>+308>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=2 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=2 broadcast=no
+>+610502>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=3 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=3 broadcast=no
+>+354>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=4 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=4 broadcast=no
+>+557>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=5 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=5 broadcast=no
+>+289>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=6 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=6 broadcast=no
+>+312>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-7077 width=16079 height=23066 splitx=0 splity=0
+>+286>DW8PH2N5nawTjbK1>02a>canceltiles
+>+647>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+442>DW8PH2N5nawTjbK1>02a>canceltiles
+>+621>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+491338>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=7 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=7 broadcast=no
+>+245>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+573440>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+242>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+213>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=9 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=9 broadcast=no
+>+299>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=9 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=9 broadcast=no
+>+884>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+327>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=9 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=9 broadcast=no
+>+251>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=10 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=10 broadcast=no
+>+1071609>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=9 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=9 broadcast=no
+>+2861989>DW8PH2N5nawTjbK1>02a>downloadas name=slideshow.svg id=slideshow format=svg options=
+>+35262>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-8196 width=16079 height=25306 splitx=0 splity=0
+>+1747>DW8PH2N5nawTjbK1>02a>canceltiles
+>+3529>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+4030>DW8PH2N5nawTjbK1>02a>canceltiles
+>+5767>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+580668>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-9450 width=16079 height=27814 splitx=0 splity=0
+>+2436>DW8PH2N5nawTjbK1>02a>canceltiles
+>+9707>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+382659>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-10167 width=16079 height=29247 splitx=0 splity=0
+>+482>DW8PH2N5nawTjbK1>02a>canceltiles
+>+773>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+614>DW8PH2N5nawTjbK1>02a>canceltiles
+>+834>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+405299>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-1926 width=16079 height=12810 splitx=0 splity=0
+>+1090>DW8PH2N5nawTjbK1>02a>canceltiles
+>+470>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+3511>DW8PH2N5nawTjbK1>02a>canceltiles
+>+395>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+344949>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-9450 width=16079 height=27814 splitx=0 splity=0
+>+4405>DW8PH2N5nawTjbK1>02a>canceltiles
+>+3281>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+194327>DW8PH2N5nawTjbK1>02a>canceltiles
+>+169>DW8PH2N5nawTjbK1>02a>tilecombine nviewid=0 part=9 width=256 height=256 tileposx=0,5733,11466,0,5733,11466 tileposy=0,0,0,5733,5733,5733 tilewidth=5733 tileheight=5733
+>+10097023>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-8331 width=16079 height=25575 splitx=0 splity=0
+>+5529836>DW8PH2N5nawTjbK1>02a>tile nviewid=0 part=8 width=120 height=68 tileposx=0 tileposy=0 tilewidth=15875 tileheight=8930 id=8 broadcast=no
+>+717045>DW8PH2N5nawTjbK1>02a>clientvisiblearea x=-90 y=-7077 width=16079 height=23066 splitx=0 splity=0
+~+3236666~DW8PH2N5nawTjbK1~02a~EndSession: http://192.168.43.203/index.php/apps/richdocuments/wopi/files/292_oct4ei0irh8v?access_token=Kk2IUh6a50ifXtCKP12MLcOAVeUR182g&access_token_ttl=0&reuse_cookies=oc_sessionPassphrase%3DhBjpSAe5Sz1Au6DKpxJR%252FpdgUgLLaqKeytBJ0KuvQqkvHgZVNDgLQA1AUJs2MdPqXf%252BAKj2R6Vx98RGy4vfi01ri7U6IAhJR78eV9R9HUUhhlCWGGHqmN7e5GMEKMdQc%3Anc_sameSiteCookielax%3Dtrue%3Anc_sameSiteCookiestrict%3Dtrue%3Aoct4ei0irh8v%3D9726ce1592f64a8968c31b0570c3e8b7%3Anc_username%3Dadmin%3Anc_token%3DjUqRcTzLqBRhJbzUWmzqKvJG4Mx19J0B%3Anc_session_id%3D9726ce1592f64a8968c31b0570c3e8b7

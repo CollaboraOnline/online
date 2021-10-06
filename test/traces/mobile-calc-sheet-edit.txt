@@ -1,0 +1,541 @@
+~+4317830~JAS3oubZPeri3ovV~001~NewSession: http://192.168.43.203/index.php/apps/richdocuments/wopi/files/272_oct4ei0irh8v?access_token=Oe88ccIVEJWNVU272BYBiKblSJWvltsh&access_token_ttl=0&reuse_cookies=oc_sessionPassphrase%3DhBjpSAe5Sz1Au6DKpxJR%252FpdgUgLLaqKeytBJ0KuvQqkvHgZVNDgLQA1AUJs2MdPqXf%252BAKj2R6Vx98RGy4vfi01ri7U6IAhJR78eV9R9HUUhhlCWGGHqmN7e5GMEKMdQc%3Anc_sameSiteCookielax%3Dtrue%3Anc_sameSiteCookiestrict%3Dtrue%3Aoct4ei0irh8v%3D9726ce1592f64a8968c31b0570c3e8b7%3Anc_username%3Dadmin%3Anc_token%3DjUqRcTzLqBRhJbzUWmzqKvJG4Mx19J0B%3Anc_session_id%3D9726ce1592f64a8968c31b0570c3e8b7&permission=edit
+>+21559>JAS3oubZPeri3ovV>001>loolclient 0.1 1633527981617 390760.200000003
+>+819>JAS3oubZPeri3ovV>001>load url=http%3A%2F%2F192.168.43.203%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F272_oct4ei0irh8v part=6 lang=en deviceFormFactor=mobile
+>+486>JAS3oubZPeri3ovV>001>useractive
+>+245>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotations
+>+1112136>JAS3oubZPeri3ovV>001>requestloksession
+>+947760>JAS3oubZPeri3ovV>001>canceltiles
+>+116>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
+>+554>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
+>+172>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+367>JAS3oubZPeri3ovV>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=1920 tiletwipheight=1920
+>+305>JAS3oubZPeri3ovV>001>canceltiles
+>+1171>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
+>+1574>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,1598,56 dpiscale=2
+>+2194194>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+693>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+709>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+606>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+602>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+589>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+500>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+1491>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+2938>JAS3oubZPeri3ovV>001>resizewindow 2 size=273,29
+>+775769>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
+>+446>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=8910 splitx=0 splity=0
+>+595>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,1920,3840 tileposy=7680,7680,7680 tilewidth=1920 tileheight=1920
+>+693697>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
+>+393>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+135249>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+726691>JAS3oubZPeri3ovV>001>requestloksession
+>+1945418>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+1057>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3279.42444 y=1317.47955 count=1 buttons=1 modifier=0
+>+993>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3279.42444 y=1317.47955 count=1 buttons=1 modifier=0
+>+129212>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+269340>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,322,48 dpiscale=2
+>+386>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+1050826>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+1107591>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=5760,5760,5760,5760,5760 tileposy=0,1920,3840,5760,7680 tilewidth=1920 tileheight=1920
+>+1538551>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+1702>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=7680,7680,7680,7680,7680 tileposy=0,1920,3840,5760,7680 tilewidth=1920 tileheight=1920
+>+1536476>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+712855>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,1920,3840,5760,7680 tileposy=9600,9600,9600,9600,9600 tilewidth=1920 tileheight=1920
+>+1393896>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+551667>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,1920,3840,5760,7680 tileposy=11520,11520,11520,11520,11520 tilewidth=1920 tileheight=1920
+>+63585>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+653491>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3556.539465 y=1489.871985 count=1 buttons=1 modifier=0
+>+831>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3556.539465 y=1489.871985 count=1 buttons=1 modifier=0
+>+928>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=9600,9600,9600,9600 tileposy=0,1920,3840,5760 tilewidth=1920 tileheight=1920
+>+989>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=9600 tileposy=11520 tilewidth=1920 tileheight=1920
+>+139435>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+1058>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+675780>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=9600 tileposy=7680 tilewidth=1920 tileheight=1920
+>+21689>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+1104730>JAS3oubZPeri3ovV>001>textinput id=0 text=1
+>+44102>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+153363>JAS3oubZPeri3ovV>001>textinput id=0 text=2
+>+25609>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+463401>JAS3oubZPeri3ovV>001>key type=input char=13 key=1280
+>+2385>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+447>JAS3oubZPeri3ovV>001>key type=up char=0 key=1280
+>+947419>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,454,48 dpiscale=2
+>+298297>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+4414155>JAS3oubZPeri3ovV>001>uno .uno:InsertObjectChart
+>+91737>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=5760,7680,9600 tileposy=0,0,0 tilewidth=1920 tileheight=1920
+>+1029>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=9600 tileposy=9600 tilewidth=1920 tileheight=1920
+>+275952>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+634>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,322,48 dpiscale=2
+>+311955>JAS3oubZPeri3ovV>001>rendershapeselection mimetype=image/svg+xml
+>+447>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+428>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+1212711>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,-42,544,102 dpiscale=2
+>+1803099>JAS3oubZPeri3ovV>001>uno .uno:MoveShapeHandle {"HandleNum":{"type":"long","value":"5"},"NewPosX":{"type":"long","value":4095.79056},"NewPosY":{"type":"long","value":2561.702265}}
+>+1552899>JAS3oubZPeri3ovV>001>rendershapeselection mimetype=image/svg+xml
+>+213561>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,-42,544,102 dpiscale=2
+>+301>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+2447078>JAS3oubZPeri3ovV>001>uno .uno:TransformDialog  {"TransformPosX":{"type":"long","value":830},"TransformPosY":{"type":"long","value":1412}}
+>+29639>JAS3oubZPeri3ovV>001>rendershapeselection mimetype=image/svg+xml
+>+371990>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+2111>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,-42,544,102 dpiscale=2
+>+1515681>JAS3oubZPeri3ovV>001>uno .uno:MoveShapeHandle {"HandleNum":{"type":"long","value":"5"},"NewPosX":{"type":"long","value":3451.685025},"NewPosY":{"type":"long","value":2741.5896599999996}}
+>+31956>JAS3oubZPeri3ovV>001>rendershapeselection mimetype=image/svg+xml
+>+425635>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+1396>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,-42,544,102 dpiscale=2
+>+1452501>JAS3oubZPeri3ovV>001>uno .uno:TransformDialog  {"TransformPosX":{"type":"long","value":516},"TransformPosY":{"type":"long","value":1322}}
+>+142311>JAS3oubZPeri3ovV>001>rendershapeselection mimetype=image/svg+xml
+>+588278>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+580>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,-42,544,102 dpiscale=2
+>+1211460>JAS3oubZPeri3ovV>001>uno .uno:MoveShapeHandle {"HandleNum":{"type":"long","value":"5"},"NewPosX":{"type":"long","value":1833.93219},"NewPosY":{"type":"long","value":2434.281915}}
+>+27316>JAS3oubZPeri3ovV>001>rendershapeselection mimetype=image/svg+xml
+>+509723>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+2006>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,-42,544,102 dpiscale=2
+>+1852660>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+816>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3788.71719 y=1092.62031 count=1 buttons=1 modifier=0
+>+620>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3788.71719 y=1092.62031 count=1 buttons=1 modifier=0
+>+369288>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+409964>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+341516>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+648>JAS3oubZPeri3ovV>001>mouse type=buttondown x=1586.775285 y=3678.50418 count=1 buttons=1 modifier=0
+>+705>JAS3oubZPeri3ovV>001>mouse type=buttonup x=1586.775285 y=3678.50418 count=1 buttons=1 modifier=0
+>+346619>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+1117129>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,322,48 dpiscale=2
+>+537>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+496>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+335>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+518>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+480>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+606>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+4154>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+425>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+284781>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+475072>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+266556>JAS3oubZPeri3ovV>001>resetselection
+>+275>JAS3oubZPeri3ovV>001>setclientpart part=5
+>+177948>JAS3oubZPeri3ovV>001>commandvalues command=.uno:SheetGeometryData?columns=1&rows=1&sizes=1&hidden=1&filtered=1&groups=1
+>+655>JAS3oubZPeri3ovV>001>canceltiles
+>+229>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
+>+6631>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=2310 width=4650 height=2955 splitx=0 splity=0
+>+529>JAS3oubZPeri3ovV>001>canceltiles
+>+1036>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,1920,3840,0,1920,3840 tileposy=1920,1920,1920,3840,3840,3840 tilewidth=1920 tileheight=1920
+>+524>JAS3oubZPeri3ovV>001>canceltiles
+>+1162>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,1920,3840,0,1920,3840 tileposy=1920,1920,1920,3840,3840,3840 tilewidth=1920 tileheight=1920
+>+3123092>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+26480>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+33145>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
+>+304016>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
+>+299>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=2310 width=4650 height=1620 splitx=0 splity=0
+>+417>JAS3oubZPeri3ovV>001>canceltiles
+>+149>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,1920,3840,0,1920,3840 tileposy=1920,1920,1920,3840,3840,3840 tilewidth=1920 tileheight=1920
+>+1400>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,322,48 dpiscale=2
+>+374>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
+>+373>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=1620 splitx=0 splity=0
+>+332>JAS3oubZPeri3ovV>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=1920 tiletwipheight=1920
+>+321>JAS3oubZPeri3ovV>001>canceltiles
+>+464>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,1920,3840 tileposy=0,0,0 tilewidth=1920 tileheight=1920
+>+682>JAS3oubZPeri3ovV>001>canceltiles
+>+1279>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,1920,3840 tileposy=0,0,0 tilewidth=1920 tileheight=1920
+>+540582>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+497467>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+4630986>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=5760 tileposy=0 tilewidth=1920 tileheight=1920
+>+3064>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,1920,3840,5760 tileposy=7680,7680,7680,7680 tilewidth=1920 tileheight=1920
+>+45953>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+1213180>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=5760,5760,5760 tileposy=1920,3840,5760 tilewidth=1920 tileheight=1920
+>+1003>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,1920 tileposy=9600,9600 tilewidth=1920 tileheight=1920
+>+56783>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+248525>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=7680,7680 tileposy=0,1920 tilewidth=1920 tileheight=1920
+>+325>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=3840,5760,7680 tileposy=9600,9600,9600 tilewidth=1920 tileheight=1920
+>+112926>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+1218643>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=7680,7680,7680 tileposy=3840,5760,7680 tilewidth=1920 tileheight=1920
+>+804>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,1920 tileposy=11520,11520 tilewidth=1920 tileheight=1920
+>+44270>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+112758>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=9600 tileposy=0 tilewidth=1920 tileheight=1920
+>+698>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=3840,5760,7680,9600 tileposy=11520,11520,11520,11520 tilewidth=1920 tileheight=1920
+>+87411>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+827455>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=9600,9600,9600,9600,9600 tileposy=1920,3840,5760,7680,9600 tilewidth=1920 tileheight=1920
+>+184084>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+972147>JAS3oubZPeri3ovV>001>getchildid
+>+13470>JAS3oubZPeri3ovV>001>insertfile name=http%3A%2F%2F192.168.43.203%2Findex.php%2Fapps%2Frichdocuments%2Fassets%2FyqxWheRgmmh7U9cFHX8eJVNHx7UnBFBT9iPbJaVuwyMzHIGcNxlttlyw1Mnflq1W type=graphicurl
+>+356042>JAS3oubZPeri3ovV>001>rendershapeselection mimetype=image/svg+xml
+>+378032>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+507>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+1580485>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,-42,544,102 dpiscale=2
+>+341519>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+627212>JAS3oubZPeri3ovV>001>setclientpart part=2
+>+761>JAS3oubZPeri3ovV>001>commandvalues command=.uno:SheetGeometryData?columns=1&rows=1&sizes=1&hidden=1&filtered=1&groups=1
+>+562>JAS3oubZPeri3ovV>001>canceltiles
+>+212>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
+>+1109747>JAS3oubZPeri3ovV>001>rendershapeselection mimetype=image/svg+xml
+>+441289>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+3407>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
+>+772>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
+>+437>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+898>JAS3oubZPeri3ovV>001>canceltiles
+>+403>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
+>+421685>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+889749>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+3169>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,-42,544,102 dpiscale=2
+>+637074>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
+>+264>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=3675 splitx=0 splity=0
+>+522>JAS3oubZPeri3ovV>001>canceltiles
+>+174>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920 tilewidth=1920 tileheight=1920
+>+665010>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+410>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+1247>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+444>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+397>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+407>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+349>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+119841>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+4920154>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=5760 tileposy=0 tilewidth=1920 tileheight=1920
+>+928>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0,1920,3840,5760 tileposy=3840,3840,3840,3840 tilewidth=1920 tileheight=1920
+>+818215>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=5760 tileposy=1920 tilewidth=1920 tileheight=1920
+>+1069>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0,1920,3840,5760 tileposy=5760,5760,5760,5760 tilewidth=1920 tileheight=1920
+>+715678>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=7680,7680,7680,7680,0 tileposy=0,1920,3840,5760,7680 tilewidth=1920 tileheight=1920
+>+819931>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=1920,3840,5760,7680,9600 tileposy=7680,7680,7680,7680,7680 tilewidth=1920 tileheight=1920
+>+920436>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=9600,9600,9600,9600 tileposy=0,1920,3840,5760 tilewidth=1920 tileheight=1920
+>+614478>JAS3oubZPeri3ovV>001>uno .uno:SetHyperlink {"Hyperlink.Text":{"type":"string","value":"Link\t\t\t\t\t"},"Hyperlink.URL":{"type":"string","value":"http://www.youtube.com"}}
+>+768984>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+1058>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+924667>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+506679>JAS3oubZPeri3ovV>001>resetselection
+>+361>JAS3oubZPeri3ovV>001>setclientpart part=1
+>+391>JAS3oubZPeri3ovV>001>commandvalues command=.uno:SheetGeometryData?columns=1&rows=1&sizes=1&hidden=1&filtered=1&groups=1
+>+36640>JAS3oubZPeri3ovV>001>canceltiles
+>+166>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920 tilewidth=1920 tileheight=1920
+>+777207>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+258729>JAS3oubZPeri3ovV>001>commandvalues command=.uno:SheetGeometryData?rows=1&sizes=1
+>+191488>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
+>+201488>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
+>+624>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
+>+6511>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+440>JAS3oubZPeri3ovV>001>canceltiles
+>+197>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
+>+2380>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+1042572>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+123723>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+275573>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+368>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
+>+205>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=3675 splitx=0 splity=0
+>+3915676>JAS3oubZPeri3ovV>001>uno .uno:ArrowShapes.circular-arrow
+>+1051677>JAS3oubZPeri3ovV>001>rendershapeselection mimetype=image/svg+xml
+>+465>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+2912>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+1169560>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=5760 tileposy=0 tilewidth=1920 tileheight=1920
+>+260>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=0,1920,3840,5760 tileposy=7680,7680,7680,7680 tilewidth=1920 tileheight=1920
+>+1077524>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,-42,544,102 dpiscale=2
+>+622>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=5760 tileposy=0 tilewidth=1920 tileheight=1920
+>+649>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=0,1920,3840,5760 tileposy=7680,7680,7680,7680 tilewidth=1920 tileheight=1920
+>+3560>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+639>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+384>JAS3oubZPeri3ovV>001>mouse type=buttondown x=2448.07914 y=4975.193474999999 count=1 buttons=1 modifier=0
+>+381>JAS3oubZPeri3ovV>001>mouse type=buttonup x=2448.07914 y=4975.193474999999 count=1 buttons=1 modifier=0
+>+443>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=5760,5760,5760 tileposy=1920,3840,5760 tilewidth=1920 tileheight=1920
+>+403>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=0,1920 tileposy=9600,9600 tilewidth=1920 tileheight=1920
+>+729417>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+312612>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=7680,7680 tileposy=0,1920 tilewidth=1920 tileheight=1920
+>+461>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=3840,5760,7680 tileposy=9600,9600,9600 tilewidth=1920 tileheight=1920
+>+1024152>JAS3oubZPeri3ovV>001>setclientpart part=0
+>+958>JAS3oubZPeri3ovV>001>commandvalues command=.uno:SheetGeometryData?columns=1&rows=1&sizes=1&hidden=1&filtered=1&groups=1
+>+560>JAS3oubZPeri3ovV>001>canceltiles
+>+249>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
+>+412495>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+348470>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+1381>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+724050>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=1920,3840,0,1920,3840 tileposy=3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
+>+835>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=1920,3840,0,1920,3840 tileposy=3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
+>+1305>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+583>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+511522>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
+>+580>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
+>+331>JAS3oubZPeri3ovV>001>canceltiles
+>+1876>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
+>+2194801>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+533>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+489>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+420>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+402>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+348>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+301>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+588>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
+>+349>JAS3oubZPeri3ovV>001>uno .uno:Insert {"Name":{"type":"string","value":""},"Index":{"type":"long","value":9}}
+>+1556076>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
+>+652>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
+>+354>JAS3oubZPeri3ovV>001>commandvalues command=.uno:SheetGeometryData
+>+541>JAS3oubZPeri3ovV>001>canceltiles
+>+782>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
+>+1219>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,322,48 dpiscale=2
+>+424400>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+544021>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+4970094>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=5760 tileposy=0 tilewidth=1920 tileheight=1920
+>+879>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,1920,3840,5760 tileposy=7680,7680,7680,7680 tilewidth=1920 tileheight=1920
+>+87417>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+422122>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=5760,5760,5760 tileposy=1920,3840,5760 tilewidth=1920 tileheight=1920
+>+434>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,1920 tileposy=9600,9600 tilewidth=1920 tileheight=1920
+>+32364>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+889832>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=7680,7680 tileposy=0,1920 tilewidth=1920 tileheight=1920
+>+598>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=3840,5760,7680 tileposy=9600,9600,9600 tilewidth=1920 tileheight=1920
+>+639>JAS3oubZPeri3ovV>001>uno .uno:AlignTop
+>+44285>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+6269>JAS3oubZPeri3ovV>001>commandvalues command=.uno:SheetGeometryData?rows=1&sizes=1
+>+988>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
+>+552029>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=7680 tileposy=0 tilewidth=1920 tileheight=1920
+>+412>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=7680,7680,7680 tileposy=3840,5760,7680 tilewidth=1920 tileheight=1920
+>+669>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0 tileposy=11520 tilewidth=1920 tileheight=1920
+>+374>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+54241>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+670597>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=1920,3840,5760,7680,9600 tileposy=11520,11520,11520,11520,11520 tilewidth=1920 tileheight=1920
+>+47497>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+22837>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+549010>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+464273>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=5760 tileposy=0 tilewidth=1920 tileheight=1920
+>+603>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=9600,9600,9600 tileposy=0,1920,3840 tilewidth=1920 tileheight=1920
+>+218682>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=9600 tileposy=7680 tilewidth=1920 tileheight=1920
+>+400387>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+70671>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+471988>JAS3oubZPeri3ovV>001>textinput id=0 text=4
+>+117866>JAS3oubZPeri3ovV>001>textinput id=0 text=5
+>+28758>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+25122>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+653827>JAS3oubZPeri3ovV>001>key type=input char=13 key=1280
+>+302>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+173>JAS3oubZPeri3ovV>001>key type=up char=0 key=1280
+>+375327>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,454,48 dpiscale=2
+>+759947>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+537>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+869414>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+363>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+248>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+173514>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
+>+429>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,1920 tileposy=0,0 tilewidth=1920 tileheight=1920
+>+605>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+2225985>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+3990664>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=5760,7680 tileposy=0,0 tilewidth=1920 tileheight=1920
+>+929>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,1920,3840 tileposy=11520,11520,11520 tilewidth=1920 tileheight=1920
+>+1229699>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+21867>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=9600 tileposy=0 tilewidth=1920 tileheight=1920
+>+3715>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=9600 tileposy=5760 tilewidth=1920 tileheight=1920
+>+791356>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+2253627>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3077.20527 y=103.23852 count=1 buttons=1 modifier=0
+>+1191>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3077.20527 y=103.23852 count=1 buttons=1 modifier=0
+>+2072858>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+321>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3024.778065 y=395.55588 count=1 buttons=1 modifier=0
+>+243>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3024.778065 y=395.55588 count=1 buttons=1 modifier=0
+>+214>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+203>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,322,48 dpiscale=2
+>+716310>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+380>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3099.674145 y=702.86385 count=1 buttons=1 modifier=0
+>+273>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3099.674145 y=702.86385 count=1 buttons=1 modifier=0
+>+252153>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+2076304>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+854>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+594305>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+682133>JAS3oubZPeri3ovV>001>textinput id=0 text=4
+>+661072>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+750239>JAS3oubZPeri3ovV>001>key type=input char=13 key=1280
+>+1561>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+1317>JAS3oubZPeri3ovV>001>key type=up char=0 key=1280
+>+453265>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,454,48 dpiscale=2
+>+950175>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+412762>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+791>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+699>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+388923>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+2064551>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+2765334>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=5760,7680,9600 tileposy=0,0,0 tilewidth=1920 tileheight=1920
+>+613496>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+1536527>JAS3oubZPeri3ovV>001>textinput id=0 text=8
+>+44614>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+116014>JAS3oubZPeri3ovV>001>textinput id=0 text=9
+>+40961>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+443213>JAS3oubZPeri3ovV>001>textinput id=0 text=9
+>+47632>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+740641>JAS3oubZPeri3ovV>001>key type=input char=13 key=1280
+>+392>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+420>JAS3oubZPeri3ovV>001>key type=up char=0 key=1280
+>+326971>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,454,48 dpiscale=2
+>+1015435>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+502663>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+618>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3661.39389 y=1362.451635 count=1 buttons=1 modifier=0
+>+608>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3661.39389 y=1362.451635 count=1 buttons=1 modifier=0
+>+53474>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,322,48 dpiscale=2
+>+865830>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3601.4772 y=1265.012505 count=1 buttons=1 modifier=0
+>+965>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3601.4772 y=1265.012505 count=1 buttons=1 modifier=0
+>+94999>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,322,48 dpiscale=2
+>+282355>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+668202>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+611187>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+824150>JAS3oubZPeri3ovV>001>textinput id=0 text=2
+>+27960>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+143421>JAS3oubZPeri3ovV>001>textinput id=0 text=3
+>+24976>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+695350>JAS3oubZPeri3ovV>001>textinput id=0 text=3
+>+643>JAS3oubZPeri3ovV>001>textinput id=0 text=3
+>+33130>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+336674>JAS3oubZPeri3ovV>001>key type=input char=13 key=1280
+>+429>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+373>JAS3oubZPeri3ovV>001>key type=up char=0 key=1280
+>+586182>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,454,48 dpiscale=2
+>+1257858>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+3936462>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=5760,7680 tileposy=0,0 tilewidth=1920 tileheight=1920
+>+1038>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=5760,7680,9600 tileposy=11520,11520,11520 tilewidth=1920 tileheight=1920
+>+37584>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+675431>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=9600 tileposy=0 tilewidth=1920 tileheight=1920
+>+621>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=9600 tileposy=9600 tilewidth=1920 tileheight=1920
+>+28398>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
+>+380599>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+704>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3758.758845 y=1040.15304 count=1 buttons=1 modifier=0
+>+813>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3758.758845 y=1040.15304 count=1 buttons=1 modifier=0
+>+65793>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,454,48 dpiscale=2
+>+314418>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+1065268>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
+>+407176>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+1217337>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+386>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3691.352235 y=1212.545475 count=1 buttons=1 modifier=0
+>+435>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3691.352235 y=1212.545475 count=1 buttons=1 modifier=0
+>+57092>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+7930972>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3713.82111 y=1309.98459 count=1 buttons=1 modifier=0
+>+1119>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3713.82111 y=1309.98459 count=1 buttons=1 modifier=0
+>+1036>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3608.96667 y=1429.9095149999998 count=1 buttons=1 modifier=0
+>+932>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3608.96667 y=1429.9095149999998 count=1 buttons=1 modifier=0
+>+13050>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+405915>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3601.4772 y=1549.8344399999999 count=1 buttons=1 modifier=8192
+>+451>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3601.4772 y=1549.8344399999999 count=1 buttons=1 modifier=8192
+>+761881>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,454,48 dpiscale=2
+>+815052>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3766.248315 y=2456.767725 count=1 buttons=1 modifier=0
+>+268>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3766.248315 y=2456.767725 count=1 buttons=1 modifier=0
+>+436641>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+457>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3668.883825 y=2374.3194599999997 count=1 buttons=1 modifier=0
+>+478>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3668.883825 y=2374.3194599999997 count=1 buttons=1 modifier=0
+>+546>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3623.946075 y=2561.702265 count=1 buttons=1 modifier=0
+>+454>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3623.946075 y=2561.702265 count=1 buttons=1 modifier=0
+>+373376>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+635690>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,322,48 dpiscale=2
+>+348>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+629>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3631.435545 y=2696.61759 count=1 buttons=1 modifier=0
+>+539>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3631.435545 y=2696.61759 count=1 buttons=1 modifier=0
+>+404>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+591489>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
+>+51977>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,322,48 dpiscale=2
+>+446>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,322,48 dpiscale=2
+>+1743080>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3608.96667 y=1092.62031 count=1 buttons=1 modifier=0
+>+824>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3608.96667 y=1092.62031 count=1 buttons=1 modifier=0
+>+829>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+409376>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+411>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3601.4772 y=987.6857699999998 count=1 buttons=1 modifier=0
+>+459>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3601.4772 y=987.6857699999998 count=1 buttons=1 modifier=0
+>+419744>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=4,4,454,48 dpiscale=2
+>+357051>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+752>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3549.049995 y=1160.077965 count=1 buttons=1 modifier=0
+>+485>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3549.049995 y=1160.077965 count=1 buttons=1 modifier=0
+>+306328>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+808039>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+336708>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+227>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+214>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3668.883825 y=1160.077965 count=1 buttons=1 modifier=0
+>+224>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3668.883825 y=1160.077965 count=1 buttons=1 modifier=0
+>+14865>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
+>+282>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+5945969>JAS3oubZPeri3ovV>001>windowmouse id=2 type=buttondown x=35.330101013183594 y=33.91130065917969 count=1 buttons=1 modifier=0
+>+948>JAS3oubZPeri3ovV>001>windowmouse id=2 type=buttonup x=35.330101013183594 y=33.91130065917969 count=1 buttons=1 modifier=0
+>+751>JAS3oubZPeri3ovV>001>windowmouse id=2 type=buttondown x=35.330101013183594 y=33.91130065917969 count=1 buttons=1 modifier=0
+>+349>JAS3oubZPeri3ovV>001>windowmouse id=2 type=buttonup x=35.330101013183594 y=33.91130065917969 count=1 buttons=1 modifier=0
+>+1020828>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+861>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3758.758845 y=1197.554625 count=1 buttons=1 modifier=0
+>+767>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3758.758845 y=1197.554625 count=1 buttons=1 modifier=0
+>+1228444>JAS3oubZPeri3ovV>001>mouse type=buttondown x=3706.33164 y=1130.096745 count=1 buttons=1 modifier=0
+>+626>JAS3oubZPeri3ovV>001>mouse type=buttonup x=3706.33164 y=1130.096745 count=1 buttons=1 modifier=0
+>+160051>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+2398479>JAS3oubZPeri3ovV>001>uno .uno:Underline
+>+1344017>JAS3oubZPeri3ovV>001>uno .uno:Bold
+>+4184564>JAS3oubZPeri3ovV>001>uno .uno:Color {"Color":{"type":"long","value":4408131}}
+>+2767169>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=3675 splitx=0 splity=0
+>+934>JAS3oubZPeri3ovV>001>mouse type=buttondown x=1519.3689 y=1339.9658249999998 count=1 buttons=1 modifier=0
+>+1147>JAS3oubZPeri3ovV>001>mouse type=buttonup x=1519.3689 y=1339.9658249999998 count=1 buttons=1 modifier=0
+>+1020558>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+1047>JAS3oubZPeri3ovV>001>mouse type=buttondown x=1444.473045 y=1647.273555 count=1 buttons=1 modifier=0
+>+869>JAS3oubZPeri3ovV>001>mouse type=buttonup x=1444.473045 y=1647.273555 count=1 buttons=1 modifier=0
+>+161881>JAS3oubZPeri3ovV>001>mouse type=buttondown x=1586.775285 y=1797.1797149999998 count=1 buttons=1 modifier=0
+>+578>JAS3oubZPeri3ovV>001>mouse type=buttonup x=1586.775285 y=1797.1797149999998 count=1 buttons=1 modifier=0
+>+827>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+3008371>JAS3oubZPeri3ovV>001>textinput id=0 text=8
+>+512742>JAS3oubZPeri3ovV>001>textinput id=0 text=0
+>+939>JAS3oubZPeri3ovV>001>textinput id=0 text=0
+>+219517>JAS3oubZPeri3ovV>001>textinput id=0 text=0
+>+907539>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+996>JAS3oubZPeri3ovV>001>mouse type=buttondown x=1249.7433449999999 y=1070.134275 count=1 buttons=1 modifier=0
+>+870>JAS3oubZPeri3ovV>001>mouse type=buttonup x=1249.7433449999999 y=1070.134275 count=1 buttons=1 modifier=0
+>+713339>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+1552>JAS3oubZPeri3ovV>001>mouse type=buttondown x=1481.921085 y=1160.077965 count=1 buttons=1 modifier=0
+>+852>JAS3oubZPeri3ovV>001>mouse type=buttonup x=1481.921085 y=1160.077965 count=1 buttons=1 modifier=0
+>+876>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+1840379>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+1103>JAS3oubZPeri3ovV>001>mouse type=buttondown x=1961.255265 y=1182.56424 count=1 buttons=1 modifier=0
+>+1042>JAS3oubZPeri3ovV>001>mouse type=buttonup x=1961.255265 y=1182.56424 count=1 buttons=1 modifier=0
+>+201753>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+436>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+1638831>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+837>JAS3oubZPeri3ovV>001>mouse type=buttondown x=942.66999 y=1175.0688149999999 count=1 buttons=1 modifier=0
+>+925>JAS3oubZPeri3ovV>001>mouse type=buttonup x=942.66999 y=1175.0688149999999 count=1 buttons=1 modifier=0
+>+199457>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+1032>JAS3oubZPeri3ovV>001>mouse type=buttondown x=912.7115249999999 y=1167.5733899999998 count=1 buttons=1 modifier=0
+>+1932>JAS3oubZPeri3ovV>001>mouse type=buttonup x=912.7115249999999 y=1167.5733899999998 count=1 buttons=1 modifier=0
+>+1229335>JAS3oubZPeri3ovV>001>mouse type=buttondown x=658.065255 y=1085.1248999999998 count=1 buttons=1 modifier=0
+>+1303>JAS3oubZPeri3ovV>001>mouse type=buttonup x=658.065255 y=1085.1248999999998 count=1 buttons=1 modifier=0
+>+203288>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+231125>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+1973>JAS3oubZPeri3ovV>001>mouse type=buttondown x=717.981945 y=1077.6297 count=1 buttons=1 modifier=0
+>+1869>JAS3oubZPeri3ovV>001>mouse type=buttonup x=717.981945 y=1077.6297 count=1 buttons=1 modifier=0
+>+1617103>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+894>JAS3oubZPeri3ovV>001>mouse type=buttondown x=1818.9527849999997 y=343.08883499999996 count=1 buttons=1 modifier=0
+>+747>JAS3oubZPeri3ovV>001>mouse type=buttonup x=1818.9527849999997 y=343.08883499999996 count=1 buttons=1 modifier=0
+>+92887>JAS3oubZPeri3ovV>001>mouse type=buttondown x=2088.57834 y=597.9295349999999 count=1 buttons=1 modifier=0
+>+2118>JAS3oubZPeri3ovV>001>mouse type=buttonup x=2088.57834 y=597.9295349999999 count=1 buttons=1 modifier=0
+>+3123>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+2861514>JAS3oubZPeri3ovV>001>textinput id=0 text=8
+>+408970>JAS3oubZPeri3ovV>001>textinput id=0 text=9
+>+147382>JAS3oubZPeri3ovV>001>textinput id=0 text=9
+>+979558>JAS3oubZPeri3ovV>001>key type=input char=13 key=1280
+>+768>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+1053>JAS3oubZPeri3ovV>001>key type=up char=0 key=1280
+>+1431597>JAS3oubZPeri3ovV>001>key type=input char=13 key=1280
+>+868>JAS3oubZPeri3ovV>001>key type=up char=0 key=1280
+>+204595>JAS3oubZPeri3ovV>001>key type=input char=13 key=1280
+>+696>JAS3oubZPeri3ovV>001>key type=up char=0 key=1280
+>+1432084>JAS3oubZPeri3ovV>001>mouse type=buttondown x=2425.61028 y=2044.525455 count=1 buttons=1 modifier=0
+>+687>JAS3oubZPeri3ovV>001>mouse type=buttonup x=2425.61028 y=2044.525455 count=1 buttons=1 modifier=0
+>+1535985>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+934>JAS3oubZPeri3ovV>001>mouse type=buttondown x=2193.432765 y=1609.79691 count=1 buttons=1 modifier=0
+>+1017>JAS3oubZPeri3ovV>001>mouse type=buttonup x=2193.432765 y=1609.79691 count=1 buttons=1 modifier=0
+>+861>JAS3oubZPeri3ovV>001>mouse type=buttondown x=2081.08887 y=1512.357795 count=1 buttons=1 modifier=0
+>+1070>JAS3oubZPeri3ovV>001>mouse type=buttonup x=2081.08887 y=1512.357795 count=1 buttons=1 modifier=0
+>+1048>JAS3oubZPeri3ovV>001>mouse type=buttondown x=2320.75608 y=1362.451635 count=1 buttons=1 modifier=0
+>+1021>JAS3oubZPeri3ovV>001>mouse type=buttonup x=2320.75608 y=1362.451635 count=1 buttons=1 modifier=0
+>+684>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+1529650>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+853>JAS3oubZPeri3ovV>001>mouse type=buttondown x=2066.10969 y=1160.077965 count=1 buttons=1 modifier=0
+>+1100>JAS3oubZPeri3ovV>001>mouse type=buttonup x=2066.10969 y=1160.077965 count=1 buttons=1 modifier=0
+>+407159>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+835>JAS3oubZPeri3ovV>001>mouse type=buttondown x=1601.7544500000001 y=1130.096745 count=1 buttons=1 modifier=0
+>+838>JAS3oubZPeri3ovV>001>mouse type=buttonup x=1601.7544500000001 y=1130.096745 count=1 buttons=1 modifier=0
+>+827714>JAS3oubZPeri3ovV>001>mouse type=buttondown x=2126.02638 y=1527.34863 count=1 buttons=1 modifier=0
+>+1050>JAS3oubZPeri3ovV>001>mouse type=buttonup x=2126.02638 y=1527.34863 count=1 buttons=1 modifier=0
+>+296271>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+647409>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+1017>JAS3oubZPeri3ovV>001>mouse type=buttondown x=2006.192775 y=1280.003355 count=1 buttons=1 modifier=0
+>+2569>JAS3oubZPeri3ovV>001>mouse type=buttonup x=2006.192775 y=1280.003355 count=1 buttons=1 modifier=0
+>+226871>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+658171>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+873>JAS3oubZPeri3ovV>001>mouse type=buttondown x=1961.255265 y=1250.0221199999999 count=1 buttons=1 modifier=0
+>+740>JAS3oubZPeri3ovV>001>mouse type=buttonup x=1961.255265 y=1250.0221199999999 count=1 buttons=1 modifier=0
+>+882>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+70049>JAS3oubZPeri3ovV>001>mouse type=buttondown x=1893.84888 y=1280.003355 count=1 buttons=1 modifier=8192
+>+2217>JAS3oubZPeri3ovV>001>mouse type=buttonup x=1893.84888 y=1280.003355 count=1 buttons=1 modifier=8192
+>+538663>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
+>+529>JAS3oubZPeri3ovV>001>mouse type=buttondown x=2081.08887 y=1639.77813 count=1 buttons=1 modifier=0
+>+537>JAS3oubZPeri3ovV>001>mouse type=buttonup x=2081.08887 y=1639.77813 count=1 buttons=1 modifier=0
+>+62698>JAS3oubZPeri3ovV>001>mouse type=buttondown x=1766.5258049999998 y=1692.2456399999999 count=1 buttons=1 modifier=0
+>+1165>JAS3oubZPeri3ovV>001>mouse type=buttonup x=1766.5258049999998 y=1692.2456399999999 count=1 buttons=1 modifier=0
+>+5002>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
+>+4948779>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
+>+654>JAS3oubZPeri3ovV>001>mouse type=buttondown x=1818.9527849999997 y=1250.0221199999999 count=1 buttons=1 modifier=0
+>+556>JAS3oubZPeri3ovV>001>mouse type=buttonup x=1818.9527849999997 y=1250.0221199999999 count=1 buttons=1 modifier=0
