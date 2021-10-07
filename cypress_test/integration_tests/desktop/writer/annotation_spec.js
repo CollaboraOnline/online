@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach beforeEach */
+/* global describe it Cypress cy require afterEach beforeEach */
 
 var helper = require('../../common/helper');
 var { insertMultipleComment, hideSidebar } = require('../../common/desktop_helper');
@@ -9,7 +9,19 @@ describe('Annotation Tests', function() {
 	beforeEach(function() {
 		cy.viewport(1400, 600);
 		helper.beforeAll(testFileName, 'writer');
-		hideSidebar();
+		var mode = Cypress.env('USER_INTERFACE');
+		if (mode === 'notebookbar') {
+			cy.get('#Sidebar')
+				.should('have.class', 'selected');
+
+			cy.get('#Sidebar')
+				.click();
+
+			cy.get('#Sidebar')
+				.should('not.have.class', 'selected');
+		} else {
+			hideSidebar();
+		}
 	});
 
 	afterEach(function() {
