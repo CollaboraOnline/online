@@ -666,7 +666,7 @@ L.TileSectionManager = L.Class.extend({
 		}
 	},
 
-	zoomStepEnd: function (zoom, newCenter, mapUpdater, runAtFinish) {
+	zoomStepEnd: function (zoom, newCenter, mapUpdater, runAtFinish, noGap) {
 
 		if (!this._inZoomAnim || this._finishingZoom)
 			return;
@@ -677,7 +677,7 @@ L.TileSectionManager = L.Class.extend({
 		// Do a another animation from current non-integral log-zoom to
 		// the final integral zoom, but maintain the same center.
 		var steps = 10;
-		var stepId = 0;
+		var stepId = noGap ? steps : 0;
 
 		var startZoom = this._zoomFrameScale;
 		var endZoom = this._calcZoomFrameScale(zoom);
@@ -689,7 +689,7 @@ L.TileSectionManager = L.Class.extend({
 		var newMapCenterLatLng = map.unproject(newMapCenter, zoom);
 		painter._sectionContainer.setZoomChanged(true);
 
-		var stopAnimation = false;
+		var stopAnimation = noGap ? true : false;
 		var waitForTiles = false;
 		var waitTries = 30;
 		var finishingRAF = undefined;
@@ -5213,8 +5213,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._painter.zoomStep(zoom, newCenter);
 	},
 
-	zoomStepEnd: function (zoom, newCenter, mapUpdater, runAtFinish) {
-		this._painter.zoomStepEnd(zoom, newCenter, mapUpdater, runAtFinish);
+	zoomStepEnd: function (zoom, newCenter, mapUpdater, runAtFinish, noGap) {
+		this._painter.zoomStepEnd(zoom, newCenter, mapUpdater, runAtFinish, noGap);
 	},
 
 	preZoomAnimation: function () {
