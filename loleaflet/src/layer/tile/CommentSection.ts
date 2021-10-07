@@ -127,6 +127,8 @@ class Comment {
 
 		var events = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'keydown', 'keypress', 'keyup', 'touchstart', 'touchmove', 'touchend'];
 		L.DomEvent.on(this.sectionProperties.container, 'click', this.onMouseClick, this);
+		L.DomEvent.on(this.sectionProperties.container, 'keydown', this.onEscKey, this);
+
 		for (var it = 0; it < events.length; it++) {
 			L.DomEvent.on(this.sectionProperties.container, events[it], L.DomEvent.stopPropagation, this);
 		}
@@ -630,6 +632,14 @@ class Comment {
 		}
 		L.DomEvent.stopPropagation(e);
 		this.sectionProperties.commentListSection.click(this);
+	}
+
+	private onEscKey (e: any) {
+		if ((<any>window).mode.isDesktop()) {
+			if (e.keyCode === 27) {
+				this.onCancelClick(e);
+			}
+		}
 	}
 
 	public onReplyClick (e: any) {
