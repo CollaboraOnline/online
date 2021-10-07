@@ -21,7 +21,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		var commentList = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).sectionProperties.commentList;
 		var comment = null;
 
-		for (var i = 0; i < commentList; i++) {
+		for (var i = 0; i < commentList.length; i++) {
 			if (this._cellCursorTwips.contains(commentList[i].sectionProperties.data.cellPos)) {
 				comment = commentList[i];
 				break;
