@@ -289,7 +289,7 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 		});
 	}
 
-	if	(docType === 'writer') {
+	if	(docType === 'writer' && mode !== 'notebookbar') {
 		cy.get('#toolbar-up .w2ui-scroll-right').click();
 	}
 
