@@ -336,7 +336,8 @@ class CanvasSectionContainer {
 	}
 
 	private clearCanvas() {
-		this.context.fillStyle = this.clearColor;
+		let bgColor = getComputedStyle(document.documentElement).getPropertyValue('--gray-lighter-bg-color') || this.clearColor;
+		this.context.fillStyle = bgColor;
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 		this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 	}
