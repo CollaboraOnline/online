@@ -5,7 +5,11 @@
 
 L.Map.mergeOptions({
 	scrollHandler: true,
-	wheelDebounceTime: 40
+	wheelDebounceTime: 40,
+	// Max idle time w.r.t ctrl+wheel events before invoking "zoomStepEnd".
+	wheelZoomStepEndAfter: 500,
+	// Step size in zoom level(log scale) for ctrl + wheel zoom animation.
+	zoomLevelStepSize: 0.3,
 });
 
 L.Map.Scroll = L.Handler.extend({
@@ -73,10 +77,13 @@ L.Map.Scroll = L.Handler.extend({
 	_onWheelScroll: function (e) {
 		var delta =  -1 * e.deltaY; // L.DomEvent.getWheelDelta(e);
 		var debounce = this._map.options.wheelDebounceTime;
+		var hasMargins = !this._map._docLayer.isCalc();
 
 		this._delta = delta;
-		this._lastMousePos = this._map.mouseEventToContainerPoint(e);
-
+		// We can't use mouse pos as center for docs with margins
+		// Due to the lack of margins data the zoom-frame will have offsets and
+		// there will be a jump when map zoom is set after drawing the final frame.
+		this._zoomCenter = hasMargins ? this._map.getCenter() : this._map.mouseEventToLatLng(e);
 		if (!this._startTime) {
 			this._startTime = +new Date();
 		}
@@ -104,25 +111,85 @@ L.Map.Scroll = L.Handler.extend({
 	},
 
 	_performZoom: function () {
-		var map = this._map,
-		    delta = this._delta,
-		    zoom = map.getZoom();
+		var lastScrollTime = this._zoomScrollTime;
+		this._zoomScrollTime = new Date();
+		var map = this._map;
+		var mapZoom = map.getZoom();
 
+		var newAnimation = !lastScrollTime ||
+			(this._zoomScrollTime - lastScrollTime) > this._map.options.wheelZoomStepEndAfter;
+
+		if (newAnimation && this._inZoomAnimation) {
+			// Animation is on-going. Send this frame request to the ongoing one?
+			this._zoomScrollTime = undefined;
+			return;
+		}
+
+		var delta = this._delta;
 		map.stop(); // stop panning and fly animations if any
 
+		// Restrict delta to { -1, 0, 1 }
 		delta = delta > 0 ? Math.ceil(delta) : Math.floor(delta);
 		delta = Math.max(Math.min(delta, 1), -1);
-		delta = map._limitZoom(zoom + delta) - zoom;
 
 		this._delta = 0;
 		this._startTime = null;
 
 		if (!delta) { return; }
 
-		if (map.options.scrollWheelZoom === 'center') {
-			map.setZoom(zoom + delta);
-		} else { // eslint-disable-next-line no-lonely-if
-			map.setZoomAround(this._lastMousePos, zoom + delta);
+		// Compute current zoom-frame's level.
+		var prevZoom = newAnimation ? mapZoom : this._zoom;
+		this._zoom = map._limitZoom(prevZoom + delta);
+		if (newAnimation && this._zoom === mapZoom) {
+			// We hit limits, don't start a new animation.
+			this._zoomScrollTime = undefined;
+			return;
 		}
-	}
+
+		this._stopZoomInterpolateRAFAt = this._zoomScrollTime.valueOf() + this._map.options.wheelZoomStepEndAfter;
+
+		if (newAnimation) {
+			this._inZoomAnimation = true;
+			this._map._docLayer.preZoomAnimation();
+			this._zoomInterpolateRAF = requestAnimationFrame(this._zoomInterpolateRAFFunc.bind(this));
+		}
+	},
+
+	// RAF function that generates intermediate zoom-levels between scroll events.
+	_zoomInterpolateRAFFunc: function () {
+		var lastZoom = this._lastFrameZoom || this._map.getZoom();
+		var toZoom = this._zoom; // This can vary while RAF is running.
+		var step = this._map.options.zoomLevelStepSize;
+		var zoomOut = toZoom < lastZoom;
+		var frameZoom = zoomOut ? Math.max(toZoom, lastZoom - step) :
+			Math.min(toZoom, lastZoom + step);
+
+		if (frameZoom !== toZoom)
+			this._map._docLayer.zoomStep(frameZoom, this._zoomCenter);
+
+		this._lastFrameZoom = frameZoom;
+		var now = (new Date()).valueOf();
+		if (now < this._stopZoomInterpolateRAFAt)
+			this._zoomInterpolateRAF = requestAnimationFrame(this._zoomInterpolateRAFFunc.bind(this));
+		else
+			this._stopZoomAnimation();
+	},
+
+	_stopZoomAnimation: function () {
+		cancelAnimationFrame(this._zoomInterpolateRAF); // Already cancelled by now ?
+		var zoom = this._zoom;
+		var lastCenter = new L.LatLng(this._zoomCenter.lat, this._zoomCenter.lng);
+		var map = this._map;
+		map._docLayer.zoomStepEnd(zoom, lastCenter,
+			// mapUpdater
+			function (newMapCenter) {
+				map.setView(newMapCenter || lastCenter, zoom);
+			},
+			// showMarkers
+			function () {
+				map._docLayer.postZoomAnimation();
+				this._inZoomAnimation = false;
+			}.bind(this),
+			true /* noGap */);
+	},
 });
