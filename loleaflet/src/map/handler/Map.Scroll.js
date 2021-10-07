@@ -3,6 +3,7 @@
  * L.Handler.Scroll is used by L.Map to enable mouse scroll wheel zoom on the map.
  */
 
+/* global app */
 L.Map.mergeOptions({
 	scrollHandler: true,
 	wheelDebounceTime: 40,
@@ -77,13 +78,32 @@ L.Map.Scroll = L.Handler.extend({
 	_onWheelScroll: function (e) {
 		var delta =  -1 * e.deltaY; // L.DomEvent.getWheelDelta(e);
 		var debounce = this._map.options.wheelDebounceTime;
-		var hasMargins = !this._map._docLayer.isCalc();
 
 		this._delta = delta;
-		// We can't use mouse pos as center for docs with margins
-		// Due to the lack of margins data the zoom-frame will have offsets and
-		// there will be a jump when map zoom is set after drawing the final frame.
-		this._zoomCenter = hasMargins ? this._map.getCenter() : this._map.mouseEventToLatLng(e);
+		var viewCenter = this._map.getCenter();
+		var mousePos = this._map.mouseEventToLatLng(e);
+
+		var docLayer = this._map._docLayer;
+		if (docLayer.isCalc()) {
+			this._zoomCenter = mousePos;
+		} else if (docLayer.isWriter()) {
+			// Preserve the y coordinate position of the document where the mouse is.
+			// Also preserve x coordinate if the current view does not have margins.
+			//  If view has margins, we cannot center w.r.t arbitary position in the page because
+			//  writer will eventually re-adjust page to the view's center after setting map zoom.
+			var part = docLayer._currentPage;
+			var rectangle = app.file.writer.pageRectangleList[part];
+			var minX = Math.round(rectangle[0] * app.twipsToPixels);
+			var maxX = minX + Math.round(rectangle[2] * app.twipsToPixels);
+			var viewBounds = this._map.getPixelBoundsCore();
+			var useMouseXCenter = viewBounds.min.x >= 0 && viewBounds.max.x <= maxX;
+
+			this._zoomCenter = new L.LatLng(mousePos.lat, useMouseXCenter ? mousePos.lng : viewCenter.lng);
+
+		} else {
+			this._zoomCenter = viewCenter;
+		}
+
 		if (!this._startTime) {
 			this._startTime = +new Date();
 		}
