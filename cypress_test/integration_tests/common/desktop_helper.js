@@ -1,6 +1,6 @@
 /* global cy  require Cypress expect */
 
-const { clickOnIdle } = require('./helper');
+const { clickOnIdle, typeIntoDocument } = require('./helper');
 
 // Make the sidebar visible by clicking on the corresponding toolbar item.
 // We assume that the sidebar is hidden, when this method is called.
@@ -334,6 +334,27 @@ function actionOnSelector(name,func) {
 	});
 }
 
+
+//type represent horizontal/vertical scrollbar
+//arr : In both cypress GUI and CLI the scrollposition are slightly different
+//so we are passing both in array and assert using oneOf
+function assertScrollbarPosition(type, arr) {
+	cy.wait(500);
+
+	cy.get('#test-div-' + type + '-scrollbar')
+		.then(function($item) {
+			const x = parseInt($item.text());
+			expect(x).to.be.oneOf(arr);
+		});
+}
+
+function pressKey(n, key) {
+	for (let i=0; i<n; i++) {
+		typeIntoDocument('{' + key + '}');
+		cy.wait(500);
+	}
+}
+
 module.exports.showSidebar = showSidebar;
 module.exports.hideSidebar = hideSidebar;
 module.exports.showStatusBarIfHidden = showStatusBarIfHidden;
@@ -351,3 +372,5 @@ module.exports.insertImage = insertImage;
 module.exports.deleteImage = deleteImage;
 module.exports.insertMultipleComment = insertMultipleComment;
 module.exports.actionOnSelector = actionOnSelector;
+module.exports.assertScrollbarPosition = assertScrollbarPosition;
+module.exports.pressKey = pressKey;

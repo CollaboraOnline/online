@@ -389,6 +389,19 @@ class ScrollSection {
 		this.context.fillRect(startX, scrollProps.startY, this.sectionProperties.scrollBarThickness, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness);
 
 		this.context.globalAlpha = 1.0;
+
+		if (this.containerObject.testing) {
+			var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-vertical-scrollbar');
+			if (!element) {
+				element = document.createElement('div');
+				element.id = 'test-div-vertical-scrollbar';
+				document.body.appendChild(element);
+			}
+			element.textContent = String(scrollProps.startY);
+			element.style.display = 'none';
+			element.style.position = 'fixed';
+			element.style.zIndex = '-1';
+		}
 	}
 
 	private drawHorizontalScrollBar () {
@@ -406,6 +419,20 @@ class ScrollSection {
 		this.context.fillRect(scrollProps.startX, startY, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness, this.sectionProperties.scrollBarThickness);
 
 		this.context.globalAlpha = 1.0;
+
+		if (this.containerObject.testing) {
+			var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-horizontal-scrollbar');
+			if (!element) {
+				element = document.createElement('div');
+				element.id = 'test-div-horizontal-scrollbar';
+				document.body.appendChild(element);
+			}
+			element.textContent = String(scrollProps.startX);
+			element.style.display = 'none';
+			element.style.position = 'fixed';
+			element.style.zIndex = '-1';
+		}
+
 	}
 
 	private calculateCurrentAlpha (elapsedTime: number) {
