@@ -3408,6 +3408,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._replayPrintTwipsMsg('invalidatecursor');
 	},
 
+	_isAnyInputFocused: function() {
+		return $('input:focus').length > 0;
+	},
+
 	// enable or disable blinking cursor and  the cursor overlay depending on
 	// the state of the document (if the falgs are set)
 	_updateCursorAndOverlay: function (/*update*/) {
@@ -3443,7 +3447,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		} else {
 			this._map._textInput.hideCursor();
 			// Maintain input if a dialog or search-box has the focus.
-			if (this._map.editorHasFocus() && !isAnyVexDialogActive() && !this._map.isSearching())
+			if (this._map.editorHasFocus() && !isAnyVexDialogActive() && !this._map.isSearching()
+				&& !this._isAnyInputFocused())
 				this._map.focus(false);
 		}
 	},
@@ -3952,7 +3957,9 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onUpdateGraphicSelection: function () {
 		if (this._graphicSelection && !this._isEmptyRectangle(this._graphicSelection)) {
 			// Hide the keyboard on graphic selection, unless cursor is visible.
-			this._map.focus(this.isCursorVisible());
+			// Don't interrupt editing in dialogs
+			if (!this._isAnyInputFocused())
+				this._map.focus(this.isCursorVisible());
 
 			if (this._graphicMarker) {
 				this._graphicMarker.removeEventParent(this._map);
@@ -4079,8 +4086,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			var hasTunneledDialogOpened = this._map.dialog ? this._map.dialog.hasOpenedDialog() : false;
 			var hasJSDialogOpened = this._map.jsdialog ? this._map.jsdialog.hasDialogOpened() : false;
 
-			var isAnyInputFocused = $('input:focus').length > 0;
-			var dontFocusDocument = hasTunneledDialogOpened || hasJSDialogOpened || app.view.commentHasFocus || isAnyInputFocused;
+			var dontFocusDocument = hasTunneledDialogOpened || hasJSDialogOpened || app.view.commentHasFocus || this._isAnyInputFocused();
 
 			// when the cell cursor is moving, the user is in the document,
 			// and the focus should leave the cell input bar
