@@ -9,10 +9,6 @@ ports:
   - port: 5900
     onOpen: ignore
 
-vscode:
-  extensions:
-    - ms-vscode.cpptools@0.26.2:Pq/tmf2WN3SanVzB4xZc1g==
-
 github:
   prebuilds:
     # enable for the master/default branch (defaults to true)
