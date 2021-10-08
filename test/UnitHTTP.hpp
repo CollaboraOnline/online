@@ -18,7 +18,7 @@
 #include <Poco/Version.h>
 
 #include "Common.hpp"
-#include <LOOLWebSocket.hpp>
+#include <tools/LOOLWebSocket.hpp>
 
 using Poco::Net::SocketAddress;
 using Poco::Net::HTTPServerParams;

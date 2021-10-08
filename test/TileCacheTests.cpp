@@ -17,7 +17,6 @@
 
 #include <Common.hpp>
 #include <Protocol.hpp>
-#include <LOOLWebSocket.hpp>
 #include <MessageQueue.hpp>
 #include <Png.hpp>
 #include <TileCache.hpp>

@@ -15,15 +15,12 @@
 #include <memory>
 #include <string>
 
-#include <LOOLWebSocket.hpp>
 #include "net/Socket.hpp"
 
 class UnitBase;
 class UnitWSD;
 class UnitKit;
 class UnitTimeout;
-class UnitHTTPServerRequest;
-class UnitHTTPServerResponse;
 
 class WebSocketHandler;
 
@@ -295,10 +292,7 @@ public:
         Client,
         Prisoner
     };
-    /// Simulate an incoming request
-    static void testHandleRequest(TestRequest type,
-                                  UnitHTTPServerRequest& request,
-                                  UnitHTTPServerResponse& response);
+
     /// Do we have hooks for the Kit too
     bool hasKitHooks() { return _hasKitHooks; }
     /// set in your unit if you want to be injected into the kit too.

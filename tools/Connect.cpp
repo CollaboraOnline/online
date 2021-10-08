@@ -31,7 +31,7 @@
 
 #include <Common.hpp>
 #include <Protocol.hpp>
-#include <LOOLWebSocket.hpp>
+#include "LOOLWebSocket.hpp"
 #include <Log.hpp>
 #include <Util.hpp>
 

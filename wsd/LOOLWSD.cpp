@@ -131,7 +131,6 @@ using Poco::Net::PartHandler;
 #include "Storage.hpp"
 #include "TraceFile.hpp"
 #include <Unit.hpp>
-#include <UnitHTTP.hpp>
 #include "UserMessages.hpp"
 #include <Util.hpp>
 #include <common/ConfigUtil.hpp>
@@ -4510,18 +4509,6 @@ int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 }
 
 #if !MOBILEAPP
-
-void UnitWSD::testHandleRequest(TestRequest type, UnitHTTPServerRequest& /* request */, UnitHTTPServerResponse& /* response */)
-{
-    switch (type)
-    {
-    case TestRequest::Client:
-        break;
-    default:
-        assert(false);
-        break;
-    }
-}
 
 std::vector<std::shared_ptr<DocumentBroker>> LOOLWSD::getBrokersTestOnly()
 {

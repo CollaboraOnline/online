@@ -13,7 +13,6 @@
 
 #include <Common.hpp>
 #include <Protocol.hpp>
-#include <LOOLWebSocket.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
 
