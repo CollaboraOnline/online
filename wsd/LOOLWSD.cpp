@@ -2058,18 +2058,14 @@ void PrisonPoll::wakeupHook()
 #if FUZZER
             if (!LOOLWSD::FuzzFileName.empty())
             {
-                std::unique_ptr<Replay> replay(new Replay(
+                StressSocketHandler::replaySync(
 #if ENABLE_SSL
-                        "https://127.0.0.1:" + std::to_string(ClientPortNumber),
+                        "wss://127.0.0.1:" + std::to_string(ClientPortNumber),
 #else
-                        "http://127.0.0.1:" + std::to_string(ClientPortNumber),
+                        "ws://127.0.0.1:" + std::to_string(ClientPortNumber),
 #endif
-                        LOOLWSD::FuzzFileName));
-
-                std::thread replayThread([&replay]{ replay->run(); });
-
-                // block until the replay finishes
-                replayThread.join();
+                        "" /* FIXME: what local path are these traces replayed into ? */,
+                        LOOLWSD::FuzzFileName);
 
                 LOG_INF("Setting TerminationFlag");
                 SigUtil::setTerminationFlag();
@@ -2206,10 +2202,6 @@ void LOOLWSD::sendMessageToForKit(const std::string& message)
 }
 
 #endif // !MOBILEAPP
-
-#ifdef FUZZER
-std::mutex Connection::Mutex;
-#endif
 
 /// Find the DocumentBroker for the given docKey, if one exists.
 /// Otherwise, creates and adds a new one to DocBrokers.

@@ -7,282 +7,305 @@
 
 #pragma once
 
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPResponse.h>
+#include <math.h>
+#include <chrono>
+#include <cstring>
 
-#include <LOOLWebSocket.hpp>
+#include "Socket.hpp"
+#include "WebSocketHandler.hpp"
+#include <net/Ssl.hpp>
+#if ENABLE_SSL
+#  include <SslSocket.hpp>
+#endif
 
-#include "TraceFile.hpp"
-#include <test/helpers.hpp>
+#include <TraceFile.hpp>
+#include <wsd/TileDesc.hpp>
 
-/// Connection class with WSD.
-class Connection
-{
-public:
-    static
-    std::shared_ptr<Connection> create(const std::string& serverURI, const std::string& documentURL, const std::string& sessionId)
+// store buckets of latency
+struct Histogram {
+    const size_t incLowMs = 10;
+    const size_t maxLowMs = incLowMs * 10;
+    const size_t incHighMs = 100;
+    const size_t maxHighMs = incHighMs * 10;
+    size_t _items;
+    size_t _tooLong;
+    std::vector<size_t> _buckets;
+
+    Histogram() : _items(0), _tooLong(0), _buckets(20)
     {
-        try
+    }
+
+    void addTime(size_t ms)
+    {
+        if (ms < maxLowMs)
+            _buckets[ms/incLowMs]++;
+        else if (ms < maxHighMs)
+            _buckets[(ms - maxLowMs) / maxHighMs]++;
+        else
+            _tooLong++;
+        _items++;
+    }
+
+    void dump(const char *legend)
+    {
+        size_t max = 0;
+        ssize_t firstBucket = -1;
+        for (size_t i = 0; i < _buckets.size(); ++i)
         {
-            Poco::URI uri(serverURI);
-
-            std::unique_lock<std::mutex> lock(Mutex);
-
-            // Load a document and get its status.
-            std::cout << "NewSession [" << sessionId << "]: " << uri.toString() << "... ";
-
-            std::string encodedUri;
-            Poco::URI::encode(documentURL, ":/?", encodedUri);
-            Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/lool/" + encodedUri + "/ws");
-            Poco::Net::HTTPResponse response;
-            std::shared_ptr<LOOLWebSocket> ws = helpers::connectLOKit(uri, request, response, sessionId + ' ');
-            std::cout << "Connected to " << serverURI << ".\n";
-            return std::shared_ptr<Connection>(new Connection(documentURL, sessionId, ws));
+            size_t n = _buckets[i];
+            if (n > 0 && firstBucket < 0)
+                firstBucket = i;
+            max = std::max(max, n);
         }
-        catch (const std::exception& exc)
+        if (firstBucket < 0 || max == 0)
+            return;
+
+        size_t last; // ignore
+        for (last = _buckets.size()-1; last > 0; --last)
+            if (_buckets[last] > 0)
+                break;
+
+        std::cout << legend << " " << _items << " items, max #: " << max << " too long: " << _tooLong << "\n";
+
+        const double chrsPerFreq = 60.0 / max;
+        for (size_t i = firstBucket; i <= last; ++i)
         {
-            std::cout << "ERROR while connecting to [" << serverURI << "]: " << exc.what() << std::endl;
-            return nullptr;
+            int chrs = ::ceil(chrsPerFreq * _buckets[i]);
+            int ms = i < 10 ? (incLowMs * (i+1)) : (maxLowMs + (i+1-10) * incHighMs);
+            std::cout << "< " << std::setw(4) << ms << " ms |" << std::string(chrs, '-') << "| " << _buckets[i] << "\n";
         }
     }
-
-    const std::string& getName() const { return _name; }
-    std::shared_ptr<LOOLWebSocket> getWS() const { return _ws; };
-
-    /// Send a command to the server.
-    bool send(const std::string& data) const
-    {
-        try
-        {
-            helpers::sendTextFrame(_ws, data, _name);
-            return true;
-        }
-        catch (const std::exception& exc)
-        {
-            std::cout << "Error in " << _name << " while sending ["
-                      << data << "]: " << exc.what() << std::endl;
-        }
-
-        return false;
-    }
-
-    /// Poll socket until expected prefix is fetched, or timeout.
-    std::vector<char> recv(const std::string& prefix)
-    {
-        return helpers::getResponseMessage(_ws, prefix, _name);
-    }
-
-    /// Request loading the document and wait for completion.
-    bool load()
-    {
-        send("load url=" + _documentURL);
-        return helpers::isDocumentLoaded(_ws, _name);
-    }
-
-private:
-    Connection(const std::string& documentURL, const std::string& sessionId, std::shared_ptr<LOOLWebSocket>& ws) :
-        _documentURL(documentURL),
-        _sessionId(sessionId),
-        _name(sessionId + ' '),
-        _ws(ws)
-    {
-    }
-
-private:
-    const std::string _documentURL;
-    const std::string _sessionId;
-    const std::string _name;
-    std::shared_ptr<LOOLWebSocket> _ws;
-    static std::mutex Mutex;
 };
 
-/// Main thread class to replay a trace file.
-class Replay : public Poco::Runnable
+struct Stats {
+    Stats() :
+        _start(std::chrono::steady_clock::now()),
+        _tileCount(0)
+    {
+    }
+    std::chrono::steady_clock::time_point _start;
+    size_t _tileCount;
+    Histogram _pingLatency;
+    Histogram _tileLatency;
+    void dump()
+    {
+        const auto now = std::chrono::steady_clock::now();
+        const size_t runMs = std::chrono::duration_cast<std::chrono::milliseconds>(now - _start).count();
+        std::cout << "Stress run took " << runMs << " ms\n";
+        std::cout << "  tiles: " << _tileCount << " => TPS: " << ((_tileCount * 1000.0)/runMs) << "\n";
+        _pingLatency.dump("ping latency:");
+        _tileLatency.dump("tile latency:");
+    }
+};
+
+// Avoid a MessageHandler for now.
+class StressSocketHandler : public WebSocketHandler
 {
+    TraceFileReader _reader;
+    TraceFileRecord _next;
+    std::chrono::steady_clock::time_point _start;
+    std::chrono::steady_clock::time_point _nextPing;
+    bool _connecting;
+    std::string _uri;
+    std::string _trace;
+
+    std::shared_ptr<Stats> _stats;
+    std::chrono::steady_clock::time_point _lastTile;
+
 public:
 
-    Replay(const std::string& serverUri, const std::string& uri, bool ignoreTiming = true) :
-        _serverUri(serverUri),
+    StressSocketHandler(const std::shared_ptr<Stats> stats,
+                        const std::string &uri, const std::string &trace) :
+        WebSocketHandler(true, true),
+        _reader(trace),
+        _connecting(true),
         _uri(uri),
-        _ignoreTiming(ignoreTiming)
+        _trace(trace),
+        _stats(stats)
     {
+        std::cerr << "Attempt connect to " << uri << " for trace " << _trace << "\n";
+        getNextRecord();
+        _start = std::chrono::steady_clock::now();
+        _nextPing = _start + std::chrono::milliseconds((long)(std::rand() * 1000.0) / RAND_MAX);
+        _lastTile = _start;
+        sendMessage("load url=" + uri);
     }
 
-    void run() override
+    void gotPing(WSOpCode /* code */, int pingTimeUs) override
     {
-        try
-        {
-            replay();
-        }
-        catch (const Poco::Exception &e)
-        {
-            std::cout << "Error: " << e.name() << ' ' << e.message() << std::endl;
-        }
-        catch (const std::exception &e)
-        {
-            std::cout << "Error: " << e.what() << std::endl;
-        }
+        if (_stats)
+            _stats->_pingLatency.addTime(pingTimeUs/1000);
     }
 
-protected:
-
-    void replay()
+    int getPollEvents(std::chrono::steady_clock::time_point now,
+                      int64_t &timeoutMaxMicroS) override
     {
-        TraceFileReader traceFile(_uri);
-
-        Poco::Int64 epochFile(traceFile.getEpochStart());
-        auto epochCurrent = std::chrono::steady_clock::now();
-
-        const Poco::Int64 replayDuration = (traceFile.getEpochEnd() - epochFile);
-        std::cout << "Replaying file [" << _uri << "] of " << replayDuration / 1000000. << " second length." << std::endl;
-
-        for (;;)
+        if (_connecting)
         {
-            const TraceFileRecord rec = traceFile.getNextRecord();
-            if (rec.getDir() == TraceFileRecord::Direction::Invalid)
+            std::cerr << "Waiting for outbound connection to " << _uri <<
+                " to complete for trace " << _trace << "\n";
+            return POLLOUT;
+        }
+
+        int events = WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
+
+        if (now >= _nextPing)
+        {
+            // ping more frequently
+            sendPing(now, getSocket().lock());
+            _nextPing += std::chrono::seconds(1);
+        }
+
+        int64_t nextTime = -1;
+        while (nextTime <= 0) {
+            nextTime = std::chrono::duration_cast<std::chrono::microseconds>(
+                std::chrono::microseconds((_next.getTimestampUs() - _reader.getEpochStart()) * TRACE_MULTIPLIER)
+                + _start - now).count();
+            if (nextTime <= 0)
             {
-                // End of trace file.
+                sendTraceMessage();
+                events = WebSocketHandler::getPollEvents(now, timeoutMaxMicroS);
                 break;
             }
+        }
 
-            const std::chrono::microseconds::rep deltaCurrent = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - epochCurrent).count();
-            const unsigned deltaFile = rec.getTimestampUs() - epochFile;
-            const int delay = (_ignoreTiming ? 0 : deltaFile - deltaCurrent);
-            if (delay > 0)
-            {
-                if (delay > 1e6)
-                {
-                    std::cout << "Sleeping for " << delay / 1000 << " ms.\n";
-                }
+//        std::cerr << "next event in " << nextTime << " us\n";
+        if (nextTime < timeoutMaxMicroS)
+            timeoutMaxMicroS = nextTime;
 
-                std::this_thread::sleep_for(std::chrono::microseconds(delay));
+        return events;
+    }
+
+    bool getNextRecord()
+    {
+        bool found = false;
+        while (!found) {
+            _next = _reader.getNextRecord();
+            switch (_next.getDir()) {
+            case TraceFileRecord::Direction::Invalid:
+            case TraceFileRecord::Direction::Incoming:
+                // FIXME: need to subset output quite a bit.
+                found = true;
+                break;
+            default:
+                found = false;
+                break;
             }
+        }
+        return _next.getDir () != TraceFileRecord::Direction::Invalid;
+    }
 
-            std::cout << rec.toString() << std::endl;
+    void performWrites(std::size_t capacity) override
+    {
+        if (_connecting)
+            std::cerr << "Outbound websocket - connected\n";
+        _connecting = false;
+        return WebSocketHandler::performWrites(capacity);
+    }
 
-            if (rec.getDir() == TraceFileRecord::Direction::Event)
-            {
-                // Meta info about an event.
-                static const std::string NewSession("NewSession: ");
-                static const std::string EndSession("EndSession: ");
+    void onDisconnect() override
+    {
+        std::cerr << "Websocket " << _uri << " dis-connected, re-trying in 20 seconds\n";
+        WebSocketHandler::onDisconnect();
+    }
 
-                if (rec.getPayload().find(NewSession) == 0)
-                {
-                    const std::string uriOrig = rec.getPayload().substr(NewSession.size());
-                    std::string uri;
-                    Poco::URI::decode(uriOrig, uri);
-                    auto it = _sessions.find(uri);
-                    if (it != _sessions.end())
-                    {
-                        // Add a new session.
-                        if (it->second.find(rec.getSessionId()) != it->second.end())
-                        {
-                            std::cout << "ERROR: session [" << rec.getSessionId() << "] already exists on doc [" << uri << "]\n";
-                        }
-                        else
-                        {
-                            std::shared_ptr<Connection> connection = Connection::create(_serverUri, uri, rec.getSessionId());
-                            if (connection)
-                            {
-                                it->second.emplace(rec.getSessionId(), connection);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        std::cout << "New Document: " << uri << '\n';
-                        _childToDoc.emplace(rec.getPid(), uri);
-                        std::shared_ptr<Connection> connection = Connection::create(_serverUri, uri, rec.getSessionId());
-                        if (connection)
-                        {
-                            _sessions[uri].emplace(rec.getSessionId(), connection);
-                        }
-                    }
-                }
-                else if (rec.getPayload().find(EndSession) == 0)
-                {
-                    const std::string uriOrig = rec.getPayload().substr(EndSession.size());
-                    std::string uri;
-                    Poco::URI::decode(uriOrig, uri);
-                    auto it = _sessions.find(uri);
-                    if (it != _sessions.end())
-                    {
-                        std::cout << "EndSession [" << rec.getSessionId() << "]: " << uri << '\n';
+    // send outgoing messages
+    void sendTraceMessage()
+    {
+        if (_next.getDir() == TraceFileRecord::Direction::Invalid)
+            return; // shutting down
 
-                        it->second.erase(rec.getSessionId());
-                        if (it->second.empty())
-                        {
-                            std::cout << "End Doc [" << uri << "].\n";
-                            _sessions.erase(it);
-                            _childToDoc.erase(rec.getPid());
-                        }
-                    }
-                    else
-                    {
-                        // There is one EndSession record for each session that edited the same
-                        // document. We have removed the item from the _sessions map already for the
-                        // first EndSession record.
-                    }
-                }
-            }
-            else if (rec.getDir() == TraceFileRecord::Direction::Incoming)
-            {
-                auto docIt = _childToDoc.find(rec.getPid());
-                if (docIt != _childToDoc.end())
-                {
-                    const auto& uri = docIt->second;
-                    auto it = _sessions.find(uri);
-                    if (it != _sessions.end())
-                    {
-                        const auto sessionIt = it->second.find(rec.getSessionId());
-                        if (sessionIt != it->second.end())
-                        {
-                            // Send the command.
-                            if (!sessionIt->second->send(rec.getPayload()))
-                            {
-                                it->second.erase(sessionIt);
-                            }
-                        }
-                        else
-                        {
-                            std::cout << "ERROR: Session [" << rec.getSessionId() << "] does not exist.\n";
-                        }
-                    }
-                    else
-                    {
-                        std::cout << "ERROR: Doc [" << uri << "] does not exist.\n";
-                    }
-                }
-                else
-                {
-                    std::cout << "ERROR: Unknown PID [" << rec.getPid() << "] maps to no active document.\n";
-                }
-            }
-            else
-            {
-                std::cout << "ERROR: Unknown trace file direction [" << static_cast<char>(rec.getDir()) << "].\n";
-            }
+        std::string msg = rewriteMessage(_next.getPayload());
+        if (!msg.empty())
+        {
+            std::cerr << "Send: '" << msg << "'\n";
+            sendMessage(msg);
+        }
 
-            epochCurrent = std::chrono::steady_clock::now();
-            epochFile = rec.getTimestampUs();
+        if (!getNextRecord())
+        {
+            std::cerr << "Shutdown\n";
+            shutdown();
         }
     }
 
-    const std::string& getServerUri() const { return _serverUri; }
-    const std::string& getUri() const { return _uri; }
+    std::string rewriteMessage(const std::string &msg)
+    {
+        const std::string firstLine = LOOLProtocol::getFirstLine(msg);
+        StringVector tokens = Util::tokenize(firstLine);
 
-private:
-    const std::string _serverUri;
-    const std::string _uri;
+        std::string out = msg;
 
-    /// Should we ignore timing that is saved in the trace file?
-    bool _ignoreTiming;
+        if (tokens.equals(0, "tileprocessed"))
+            out = ""; // we do this accurately below
 
-    /// LOK child process PID to Doc URI map.
-    std::map<unsigned, std::string> _childToDoc;
+        else if (tokens.equals(0, "load")) {
+            std::string url = tokens[1];
+            assert(!strncmp(url.c_str(), "url=", 4));
 
-    /// Doc URI to _sessions map. _sessions are maps of SessionID to Connection.
-    std::map<std::string, std::map<std::string, std::shared_ptr<Connection>>> _sessions;
+            // load url=file%3A%2F%2F%2Ftmp%2Fhello-world.odt deviceFormFactor=desktop
+            out = "load url=" + _uri; // already encoded
+            for (size_t i = 2; i < tokens.size(); ++i)
+                out += " " + tokens[i];
+            std::cerr << "msg " << out << "\n";
+        }
+
+        // FIXME: translate mouse events relative to view-port etc.
+        return out;
+    }
+
+    // handle incoming messages
+    void handleMessage(const std::vector<char> &data) override
+    {
+        const auto now = std::chrono::steady_clock::now();
+
+        const std::string firstLine = LOOLProtocol::getFirstLine(data.data(), data.size());
+        StringVector tokens = Util::tokenize(firstLine);
+        std::cerr << "Got a message ! " << firstLine << "\n";
+
+        if (tokens.equals(0, "tile:")) {
+            // accumulate latencies
+            if (_stats) {
+                _stats->_tileLatency.addTime(std::chrono::duration_cast<std::chrono::milliseconds>(now - _lastTile).count());
+                _stats->_tileCount++;
+            }
+            _lastTile = now;
+
+            // eg. tileprocessed tile=0:9216:0:3072:3072:0
+            TileDesc desc = TileDesc::parse(tokens);
+            sendMessage("tileprocessed tile=" + desc.generateID());
+        }
+
+        // FIXME: implement code to send new view-ports based
+        // on cursor position etc.
+    }
+
+    static void addPollFor(SocketPoll &poll, const std::string &server,
+                           const std::string &filePath, const std::string &tracePath,
+                           const std::shared_ptr<Stats> &optStats = nullptr)
+    {
+        std::string file, wrap;
+        std::string fileabs = Poco::Path(filePath).makeAbsolute().toString();
+        Poco::URI::encode("file://" + fileabs, ":/?", file);
+        Poco::URI::encode(file, ":/?", wrap); // double encode.
+        std::string uri = server + "/lool/" + wrap + "/ws";
+
+        auto handler = std::make_shared<StressSocketHandler>(optStats, file, tracePath);
+        poll.insertNewWebSocketSync(Poco::URI(uri), handler);
+    }
+
+    /// Attach to @server, load @filePath and replace @tracePath
+    static void replaySync(const std::string &server,
+                           const std::string &filePath,
+                           const std::string &tracePath)
+    {
+        TerminatingPoll poll("replay");
+
+        addPollFor(poll, server, filePath, tracePath);
+        do {
+            poll.poll(TerminatingPoll::DefaultPollTimeoutMicroS);
+        } while (poll.continuePolling() && poll.getSocketCount() > 0);
+    }
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
