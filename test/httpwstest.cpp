@@ -24,7 +24,6 @@
 
 #include <Common.hpp>
 #include <Protocol.hpp>
-#include <LOOLWebSocket.hpp>
 
 #include "lokassert.hpp"
 #include <countloolkits.hpp>

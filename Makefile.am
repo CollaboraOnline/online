@@ -268,13 +268,11 @@ shared_headers = common/Common.hpp \
                  common/FileUtil.hpp \
                  common/JailUtil.hpp \
                  common/Log.hpp \
-                 common/LOOLWebSocket.hpp \
                  common/Protocol.hpp \
                  common/StringVector.hpp \
                  common/Seccomp.hpp \
                  common/Session.hpp \
                  common/Unit.hpp \
-                 common/UnitHTTP.hpp \
                  common/Util.hpp \
                  common/ConfigUtil.hpp \
                  common/Authorization.hpp \
@@ -314,6 +312,8 @@ kit_headers = kit/ChildSession.hpp \
               kit/Watermark.hpp
 
 noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
+                 tools/LOOLWebSocket.hpp \
+                 test/UnitHTTP.hpp \
                  test/HttpTestServer.hpp \
                  test/WopiTestServer.hpp \
                  test/countloolkits.hpp \

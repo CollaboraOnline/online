@@ -28,7 +28,7 @@
 #include <Common.hpp>
 #include "Socket.hpp"
 #include "common/FileUtil.hpp"
-#include <LOOLWebSocket.hpp>
+#include <tools/LOOLWebSocket.hpp>
 #include <common/ConfigUtil.hpp>
 #include <common/Util.hpp>
 #include <net/WebSocketSession.hpp>

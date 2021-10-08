@@ -21,7 +21,7 @@ noinst_LTLIBRARIES = \
 	unit-convert.la unit-typing.la unit-copy-paste.la \
 	unit-timeout.la unit-prefork.la unit-storage.la \
 	unit-admin.la unit-tilecache.la \
-	unit-fuzz.la unit-oob.la unit-http.la unit-oauth.la \
+	unit-fuzz.la unit-http.la unit-oauth.la \
 	unit-wopi.la unit-wopi-saveas.la \
 	unit-wopi-async-upload-close.la unit-wopi-async-upload-modify.la \
 	unit-wopi-async-upload-modifyclose.la \
@@ -139,7 +139,6 @@ unit_crash_la_SOURCES = UnitClient.cpp httpcrashtest.cpp
 unit_crash_la_LIBADD = $(CPPUNIT_LIBS)
 
 # unit test modules:
-unit_oob_la_SOURCES = UnitOOB.cpp
 unit_http_la_SOURCES = UnitHTTP.cpp
 unit_http_la_LIBADD = $(CPPUNIT_LIBS)
 unit_fuzz_la_SOURCES = UnitFuzz.cpp
@@ -239,8 +238,6 @@ check-local:
 	./fakesockettest
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 
-# FIXME 2: unit-oob.la fails with symbol undefined:
-# UnitWSD::testHandleRequest(UnitWSD::TestRequest, UnitHTTPServerRequest&, UnitHTTPServerResponse&) ,
 TESTS = \
 	unit-base.la unit-tiletest.la \
 	unit-integration.la unit-httpws.la unit-crash.la \

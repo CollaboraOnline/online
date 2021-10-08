@@ -33,7 +33,6 @@
 #include <UserMessages.hpp>
 #include <Util.hpp>
 #include <Protocol.hpp>
-#include <LOOLWebSocket.hpp>
 #include <test.hpp>
 #include <helpers.hpp>
 #include <countloolkits.hpp>

@@ -23,6 +23,7 @@
 #include <sys/mount.h>
 #endif
 
+#include <fcntl.h>
 #include <chrono>
 #include <cstdio>
 #include <cstdlib>
