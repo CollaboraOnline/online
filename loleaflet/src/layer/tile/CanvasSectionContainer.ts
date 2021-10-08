@@ -1035,7 +1035,7 @@ class CanvasSectionContainer {
 					section = this.findSectionContainingPoint(this.mousePosition);
 				}
 
-				if (section) {
+				if (section && section.boundsList) {
 					if (section.name !== this.sectionUnderMouse) {
 						if (this.sectionUnderMouse !== null) {
 							var previousSection: CanvasSectionObject = this.getSectionWithName(this.sectionUnderMouse);
