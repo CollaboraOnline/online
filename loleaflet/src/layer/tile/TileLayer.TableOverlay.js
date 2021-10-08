@@ -137,11 +137,24 @@ L.CanvasTileLayer.include({
 		this._map.removeLayer(this._tableMoveMarker);
 	},
 
+	_updateTableMoveMarkerVisibility: function() {
+		if (this._map._docLayer._cursorMarker && this._map._docLayer._cursorMarker.isVisible())
+			this._map.removeLayer(this._tableMoveMarker);
+		else if (this._currentTableData
+			&& this._currentTableMarkerJson === this._lastTableMarkerJson
+			&& this._currentTableData.rows && this._currentTableData.columns
+			&& this._map.getDocType() === 'presentation' && this._currentTableData.rectangle
+			&& !this._map.hasLayer(this._tableMoveMarker))
+			this._map.addLayer(this._tableMoveMarker);
+	},
+
 	_updateTableMarkers: function() {
 		if (this._currentTableData === undefined)
 			return; // not writer, no table selected yet etc.
-		if (this._currentTableMarkerJson === this._lastTableMarkerJson)
+		if (this._currentTableMarkerJson === this._lastTableMarkerJson) {
+			this._updateTableMoveMarkerVisibility(); // cursor might be shown, then it doesn't work
 			return; // identical table setup.
+		}
 		this._lastTableMarkerJson = this._currentTableMarkerJson;
 
 		// Clean-up first
@@ -218,6 +231,8 @@ L.CanvasTileLayer.include({
 				movePosition = movePosition.subtract(new L.Point(markerRect.width + 4, markerRect.height + 4));
 				movePosition = this._map.unproject(movePosition);
 				this._tableMoveMarker.setLatLng(movePosition);
+
+				this._updateTableMoveMarkerVisibility();
 			}
 		}
 	},
