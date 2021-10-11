@@ -1607,14 +1607,6 @@ L.CanvasTileLayer = L.TileLayer.extend({
 			// We have all necessary tiles in the tile array, schedule a paint.
 			this._painter.update();
 		}
-
-		if (typeof (this._prevSelectedPart) === 'number' &&
-			this._prevSelectedPart !== this._selectedPart
-			&& this._docType === 'spreadsheet') {
-			this._map.fire('updatescrolloffset', { x: 0, y: 0, updateHeaders: false });
-			this._map.scrollTop(0);
-			this._map.scrollLeft(0);
-		}
 	},
 
 	_tileReady: function (coords, err, tile) {
