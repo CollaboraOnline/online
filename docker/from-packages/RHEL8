@@ -39,4 +39,4 @@ EXPOSE 9980
 USER 998
 
 # Entry point
-CMD bash start-collabora-online.sh
+CMD ["/start-collabora-online.sh"]
