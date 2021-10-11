@@ -368,6 +368,10 @@ class TilesSection {
 		if (this.containerObject.isInZoomAnimation())
 			return;
 
+		if (this.containerObject.testing) {
+			this.containerObject.createUpdateSingleDivElement(this);
+		}
+
 		var zoom = Math.round(this.map.getZoom());
 		var part = this.sectionProperties.docLayer._selectedPart;
 

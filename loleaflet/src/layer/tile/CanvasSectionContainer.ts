@@ -1415,6 +1415,15 @@ class CanvasSectionContainer {
 		element.style.top = String(bcr.top + Math.round(section.myTopLeft[1] / app.dpiScale)) + 'px';
 		element.style.width = String(Math.round(section.size[0] / app.dpiScale)) + 'px';
 		element.style.height = String(Math.round(section.size[1] / app.dpiScale)) + 'px';
+		if (section.name === 'tiles') {
+			// For tiles section add document coordinates of top and left too.
+			element.innerText = JSON.stringify({
+				top: Math.round(section.documentTopLeft[1]),
+				left: Math.round(section.documentTopLeft[0]),
+				width: Math.round(section.size[0]),
+				height: Math.round(section.size[1])
+			});
+		}
 	}
 
 	createUpdateDivElements () {
