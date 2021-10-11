@@ -1063,9 +1063,13 @@ class Bounds {
 	}
 
 	set(top, left, width, height) {
+		/** @type {number} */
 		this.top = top;
+		/** @type {number} */
 		this.left = left;
+		/** @type {number} */
 		this.width = width;
+		/** @type {number} */
 		this.height = height;
 	}
 
@@ -1074,6 +1078,15 @@ class Bounds {
 			&& this.left !== undefined
 			&& this.width !== undefined
 			&& this.height !== undefined);
+	}
+
+	/**
+	 * Checks whether "other" bounds lies within self bounds.
+	 * @param {Bounds} other
+	 */
+	contains(other) {
+		return (other.top >= this.top && other.bottom <= this.bottom &&
+			other.left >= this.left && other.right <= this.right);
 	}
 
 	get right() {
@@ -1100,19 +1113,21 @@ class Bounds {
 	}
 }
 
-// Used to get the bounds of overlay items from the JSON text inside its
+// Used to get the bounds of canvas section/overlay items from the JSON text inside its
 // test div element.
 // Parameters:
 // itemDivId - The id of the test div element corresponding to the overlay item.
 // bounds - A Bounds object in which this function stores the bounds of the overlay item.
 //          The bounds unit is core pixels in document coordinates.
-function getOverlayItemBounds(itemDivId, bounds) {
+function getItemBounds(itemDivId, bounds) {
 	cy.get(itemDivId)
 		.should(function (itemDiv) {
 			bounds.parseSetJson(itemDiv.text());
 			expect(bounds.isValid()).to.be.true;
 		});
 }
+
+var getOverlayItemBounds = getItemBounds;
 
 // This ensures that the overlay item has the expected bounds via its test div element.
 // Parameters:
@@ -1214,6 +1229,7 @@ module.exports.getCursorPos = getCursorPos;
 module.exports.textSelectionShouldExist = textSelectionShouldExist;
 module.exports.textSelectionShouldNotExist = textSelectionShouldNotExist;
 module.exports.Bounds = Bounds;
+module.exports.getItemBounds = getItemBounds;
 module.exports.getOverlayItemBounds = getOverlayItemBounds;
 module.exports.overlayItemHasBounds = overlayItemHasBounds;
 module.exports.overlayItemHasDifferentBoundsThan = overlayItemHasDifferentBoundsThan;
