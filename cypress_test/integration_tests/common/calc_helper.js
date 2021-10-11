@@ -1,4 +1,4 @@
-/* global cy expect Cypress require */
+/* global cy expect Cypress require expect */
 
 var helper = require('./helper');
 
@@ -199,6 +199,19 @@ function selectFirstColumn() {
 		.should('have.prop', 'value', 'A1:A1048576');
 }
 
+function ensureViewContainsCellCursor() {
+	var sheetViewBounds = new helper.Bounds();
+	var sheetCursorBounds = new helper.Bounds();
+
+	helper.getOverlayItemBounds('#test-div-overlay-cell-cursor-border-0', sheetCursorBounds);
+	helper.getItemBounds('#test-div-tiles', sheetViewBounds);
+
+	cy.wrap(null).should(function () {
+		cy.log('ensureViewContainsCellCursor: cursor-area is ' + sheetCursorBounds.toString() + ' view-area is ' + sheetViewBounds.toString());
+		expect(sheetViewBounds.contains(sheetCursorBounds)).to.equal(true, 'view-area must contain cursor-area');
+	});
+}
+
 module.exports.clickOnFirstCell = clickOnFirstCell;
 module.exports.dblClickOnFirstCell = dblClickOnFirstCell;
 module.exports.clickFormulaBar = clickFormulaBar;
@@ -206,3 +219,4 @@ module.exports.typeIntoFormulabar = typeIntoFormulabar;
 module.exports.removeTextSelection = removeTextSelection;
 module.exports.selectEntireSheet = selectEntireSheet;
 module.exports.selectFirstColumn = selectFirstColumn;
+module.exports.ensureViewContainsCellCursor = ensureViewContainsCellCursor;
