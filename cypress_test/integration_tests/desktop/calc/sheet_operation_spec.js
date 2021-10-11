@@ -1,6 +1,7 @@
 /* global describe it cy beforeEach require afterEach */
 
 var helper = require('../../common/helper');
+var calcHelper = require('../../common/calc_helper');
 
 describe('Sheet Operations.', function () {
 	var testFileName = 'sheet_operation.ods';
@@ -40,6 +41,33 @@ describe('Sheet Operations.', function () {
 		cy.get('#tb_spreadsheet-toolbar_item_insertsheet').click();
 
 		assertNumberofSheets(2);
+	});
+
+	it('Switching sheet sets the view that contains cell-cursor', function () {
+		assertNumberofSheets(1);
+
+		helper.typeIntoInputField('input#addressInput', 'A1');
+		cy.wait(500);
+
+		calcHelper.ensureViewContainsCellCursor();
+
+		cy.get('#tb_spreadsheet-toolbar_item_insertsheet').click();
+		assertNumberofSheets(2);
+
+		cy.get('#spreadsheet-tab1').click();
+		cy.wait(500);
+
+		calcHelper.ensureViewContainsCellCursor();
+
+		helper.typeIntoInputField('input#addressInput', 'A200');
+		cy.wait(500);
+
+		calcHelper.ensureViewContainsCellCursor();
+
+		cy.get('#spreadsheet-tab0').click();
+		cy.wait(500);
+
+		calcHelper.ensureViewContainsCellCursor();
 	});
 
 	it('Insert sheet before', function () {
