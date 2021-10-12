@@ -1228,12 +1228,14 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth,
 
         http::Header& httpHeader = httpRequest.header();
 
+        // must include this header except for SaveAs
+        if (!isSaveAs && lockCtx._supportsLocks)
+            httpHeader.set("X-WOPI-Lock", lockCtx._lockToken);
+
         if (!isSaveAs && !isRename)
         {
             // normal save
             httpHeader.set("X-WOPI-Override", "PUT");
-            if (lockCtx._supportsLocks)
-                httpHeader.set("X-WOPI-Lock", lockCtx._lockToken);
             httpHeader.set("X-LOOL-WOPI-IsModifiedByUser", isUserModified() ? "true" : "false");
             httpHeader.set("X-LOOL-WOPI-IsAutosave", isAutosave() ? "true" : "false");
             httpHeader.set("X-LOOL-WOPI-IsExitSave", isExitSave() ? "true" : "false");
