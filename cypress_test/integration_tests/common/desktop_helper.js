@@ -273,6 +273,9 @@ function deleteImage() {
 function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) {
 	var mode = Cypress.env('USER_INTERFACE');
 
+	if (docType === 'calc') {
+		cy.wait(1000);
+	}
 	cy.get('#toolbar-up .w2ui-scroll-right').then($button => {
 		if ($button.is(':visible'))	{
 			$button.click();
