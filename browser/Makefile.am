@@ -144,7 +144,8 @@ COOL_CSS_LST =\
 	$(srcdir)/css/jssidebar.css \
 	$(srcdir)/css/override-vex.css \
 	$(srcdir)/css/override-smartmenus.css \
-	$(srcdir)/css/jquery-ui-lightness.css
+	$(srcdir)/css/jquery-ui-lightness.css \
+	$(srcdir)/css/infobar.css
 
 if ENABLE_FEEDBACK
 COOL_CSS_LST += $(srcdir)/css/iframedialog.css
@@ -364,6 +365,7 @@ COOL_JS_LST =\
 if ENABLE_FEEDBACK
 COOL_JS_LST +=\
 	src/control/IFrameDialog.js \
+	src/map/handler/Map.Infobar.js \
 	src/map/handler/Map.Feedback.js
 endif
 
