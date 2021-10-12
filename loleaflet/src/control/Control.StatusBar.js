@@ -81,8 +81,8 @@ L.Control.StatusBar = L.Control.extend({
 			}
 		});
 
-		console.log('explicitly hiding: ' + toHide);
-		console.log('explicitly showing: ' + toShow);
+		// console.log('explicitly hiding: ' + toHide);
+		// console.log('explicitly showing: ' + toShow);
 
 		toHide.forEach(function(item) { toolbar.hide(item); });
 		toShow.forEach(function(item) { toolbar.show(item); });

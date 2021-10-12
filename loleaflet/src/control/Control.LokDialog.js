@@ -277,7 +277,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogMsg: function(e) {
-		console.log('onDialogMsg: id: ' + e.id + ', winType: ' + e.winType + ', action: ' + e.action + ', size: ' + e.size + ', rectangle: ' + e.rectangle);
+		// console.log('onDialogMsg: id: ' + e.id + ', winType: ' + e.winType + ', action: ' + e.action + ', size: ' + e.size + ', rectangle: ' + e.rectangle);
 		if (e.winType != undefined &&
 		    e.winType !== 'dialog' &&
 		    e.winType !== 'calc-input-win' &&
@@ -866,8 +866,8 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_launchCalcInputBar: function(id, left, top, width, height, textLines) {
-		console.log('_launchCalcInputBar: start: id: ' + id + ', left: ' + left + ', top: ' + top
-			+ ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
+		// console.log('_launchCalcInputBar: start: id: ' + id + ', left: ' + left + ', top: ' + top
+		// 	+ ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
 		if (!this._calcInputBar || this._calcInputBar.id !== id) {
 			if (this._calcInputBar)
 				$('#' + this._calcInputBar.strId).remove();
@@ -877,7 +877,7 @@ L.Control.LokDialog = L.Control.extend({
 			this._adjustCalcInputBar(id, left, top, width, height, textLines);
 		}
 
-		console.log('_launchCalcInputBar: end');
+		// console.log('_launchCalcInputBar: end');
 	},
 
 	_adjustCalcInputBar: function(id, left, top, width, height, textLines) {
@@ -915,7 +915,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_createCalcInputbar: function(id, left, top, width, height, textLines) {
-		console.log('_createCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
+		// console.log('_createCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
 		var strId = this._toStrId(id);
 
 		$('#calc-inputbar-wrapper').css({display: 'block'});
@@ -990,7 +990,7 @@ L.Control.LokDialog = L.Control.extend({
 		this._postLaunch(id, container, handles);
 		this._setupCalcInputBarGestures(id, handles, startHandle, endHandle);
 
-		console.log('_createCalcInputBar: end');
+		// console.log('_createCalcInputBar: end');
 	},
 
 	_launchSidebar: function(id, width, height) {
