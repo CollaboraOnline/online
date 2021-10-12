@@ -269,7 +269,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogMsg: function(e) {
-		console.log('onDialogMsg: id: ' + e.id + ', winType: ' + e.winType + ', action: ' + e.action + ', size: ' + e.size + ', rectangle: ' + e.rectangle);
+		// console.log('onDialogMsg: id: ' + e.id + ', winType: ' + e.winType + ', action: ' + e.action + ', size: ' + e.size + ', rectangle: ' + e.rectangle);
 		if (e.winType != undefined &&
 		    e.winType !== 'dialog' &&
 		    e.winType !== 'calc-input-win' &&
@@ -832,8 +832,8 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_launchCalcInputBar: function(id, left, top, width, height, textLines) {
-		console.log('_launchCalcInputBar: start: id: ' + id + ', left: ' + left + ', top: ' + top
-			+ ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
+		// console.log('_launchCalcInputBar: start: id: ' + id + ', left: ' + left + ', top: ' + top
+		// 	+ ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
 		if (!this._calcInputBar || this._calcInputBar.id !== id) {
 			if (this._calcInputBar)
 				$('#' + this._calcInputBar.strId).remove();
@@ -843,7 +843,7 @@ L.Control.LokDialog = L.Control.extend({
 			this._adjustCalcInputBar(id, left, top, width, height, textLines);
 		}
 
-		console.log('_launchCalcInputBar: end');
+		// console.log('_launchCalcInputBar: end');
 	},
 
 	_adjustCalcInputBar: function(id, left, top, width, height, textLines) {
@@ -853,19 +853,19 @@ L.Control.LokDialog = L.Control.extend({
 			var oldY = this._calcInputBar.top;
 			var delta = height - oldHeight;
 			if (delta !== 0 || oldX !== left || oldY !== top) {
-				console.log('_adjustCalcInputBar: start: id: ' + id + ', height: ' + oldHeight + ' -> ' + height);
+				// console.log('_adjustCalcInputBar: start: id: ' + id + ', height: ' + oldHeight + ' -> ' + height);
 
 				// Recreate the input-bar.
 				$('#' + this._calcInputBar.strId).remove();
 				this._createCalcInputbar(id, left, top, width, height, textLines);
 
-				console.log('_adjustCalcInputBarHeight: end');
+				// console.log('_adjustCalcInputBarHeight: end');
 			}
 
 			var oldWidth = this._calcInputBar.width;
 			delta = width - oldWidth;
 			if (delta !== 0) {
-				console.log('_adjustCalcInputBar: start: id: ' + id + ', width: ' + oldWidth + ' -> ' + width);
+				// console.log('_adjustCalcInputBar: start: id: ' + id + ', width: ' + oldWidth + ' -> ' + width);
 
 				var strId = this._toStrId(id);
 
@@ -881,7 +881,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_createCalcInputbar: function(id, left, top, width, height, textLines) {
-		console.log('_createCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
+		// console.log('_createCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
 		var strId = this._toStrId(id);
 
 		$('#calc-inputbar-wrapper').css({display: 'block'});
@@ -955,7 +955,7 @@ L.Control.LokDialog = L.Control.extend({
 		this._postLaunch(id, container, handles);
 		this._setupCalcInputBarGestures(id, handles, startHandle, endHandle);
 
-		console.log('_createCalcInputBar: end');
+		// console.log('_createCalcInputBar: end');
 	},
 
 	_postLaunch: function(id, panelContainer, panelCanvas) {
@@ -1196,7 +1196,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_postWindowGestureEvent: function(winid, type, x, y, offset) {
-		console.log('x ' + x + ' y ' + y + ' o ' + offset);
+		// console.log('x ' + x + ' y ' + y + ' o ' + offset);
 		app.socket.sendMessage('windowgesture id=' + winid +  ' type=' + type +
 		                              ' x=' + x + ' y=' + y + ' offset=' + offset);
 		// Keep map active while user is playing with dialog.
@@ -1204,14 +1204,14 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onCalcInputBarClose: function(dialogId) {
-		console.log('_onCalcInputBarClose: start: id: ' + dialogId);
+		// console.log('_onCalcInputBarClose: start: id: ' + dialogId);
 		$('#' + this._calcInputBar.strId).remove();
 		this._map.focus();
 		delete this._dialogs[dialogId];
 		this._calcInputBar = null;
 
 		$('#calc-inputbar-wrapper').css({display: ''});
-		console.log('_onCalcInputBarClose: end');
+		// console.log('_onCalcInputBarClose: end');
 	},
 
 	_closeChildWindows: function(dialogId) {
@@ -1326,7 +1326,7 @@ L.Control.LokDialog = L.Control.extend({
 			// resize the input bar to the correct size
 			// the input bar is rendered only if when the size is the expected one
 			if (correctWidth !== 0 && that._calcInputBar.width !== correctWidth) {
-				console.log('_paintDialog: correct width: ' + correctWidth + ', _calcInputBar width: ' + that._calcInputBar.width);
+				// console.log('_paintDialog: correct width: ' + correctWidth + ', _calcInputBar width: ' + that._calcInputBar.width);
 				that._dialogs[parentId].isPainting = false;
 				app.socket.sendMessage('resizewindow ' + parentId + ' size=' + correctWidth + ',' + that._calcInputBar.height);
 				return;
@@ -1405,7 +1405,7 @@ L.Control.LokDialog = L.Control.extend({
 					var width = calcInputbarContainer.clientWidth;
 					var height = calcInputbarContainer.clientHeight;
 					if (width !== 0 && height !== 0) {
-						console.log('_resizeCalcInputBar: id: ' + id + ', width: ' + width + ', height: ' + height);
+						// console.log('_resizeCalcInputBar: id: ' + id + ', width: ' + width + ', height: ' + height);
 						app.socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
 					}
 				}
