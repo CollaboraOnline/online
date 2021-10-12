@@ -5,12 +5,31 @@
 
 L.Map.Infobar = L.Handler.extend({
 
+	initialize: function (map) {
+		L.Handler.prototype.initialize.call(this, map);
+		map.on('updateviewslist', this.onUpdateList, this);
+	},
+
+	onUpdateList: function () {
+		var docLayer = this._map._docLayer || {};
+		var viewInfo = this._map._viewInfo[docLayer._viewId];
+
+		if (viewInfo && !this.enabled() && viewInfo.userextrainfo &&
+		    viewInfo.userextrainfo.is_admin) {
+			this.enable();
+		}
+	},
+
 	addHooks: function () {
+		this._map.off('updateviewslist', this.onUpdateList, this);
 		L.DomEvent.on(window, 'message', this.onMessage, this);
 
 		var url = window.feedbackLocation.replace(/feedback.html/g, 'updatecheck.html');
 		this.remove();
-		this._iframeInfobar = L.iframeDialog(url);
+
+		this._iframeInfobar = L.iframeDialog(url, null,
+						     L.DomUtil.get('main-document-content'),
+						     options);
 	},
 
 	removeHooks: function () {
