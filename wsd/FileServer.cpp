@@ -1064,8 +1064,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_MACROS_EXECUTION%"), enableMacrosExecution);
 
 #ifdef ENABLE_FEEDBACK
-    StringVector tokens = Util::tokenize(std::string(FEEDBACK_LOCATION), ' ');
-    Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_LOCATION%"), tokens.size() > 0 ? tokens[0] : "");
+    Poco::URI uriFeedback(FEEDBACK_LOCATION);
+    Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_LOCATION%"), std::string(FEEDBACK_LOCATION));
 #endif
 
     const std::string mimeType = "text/html";
@@ -1075,7 +1075,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     std::ostringstream cspOss;
     cspOss << "Content-Security-Policy: default-src 'none'; "
 #ifdef ENABLE_FEEDBACK
-        "frame-src 'self' " << FEEDBACK_LOCATION << " blob: " << documentSigningURL << "; "
+        "frame-src 'self' " << uriFeedback.getHost() << " blob: " << documentSigningURL << "; "
 #else
         "frame-src 'self' blob: " << documentSigningURL << "; "
 #endif
