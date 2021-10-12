@@ -298,10 +298,8 @@ class CanvasSectionContainer {
 	private stoppingEventTypes: Array<string>; // Events those stop the animation.
 
 	constructor (canvasDOMElement: HTMLCanvasElement, disableDrawing?: boolean) {
-		const isDesktop : boolean = (window as any).mode.isDesktop();
 		this.canvas = canvasDOMElement;
-		// on mobile desynchronized causes flickering when showing/hiding keyboard
-		this.context = canvasDOMElement.getContext('2d', { alpha: false , desynchronized: isDesktop });
+		this.context = canvasDOMElement.getContext('2d', { alpha: false });
 		this.context.setTransform(1,0,0,1,0,0);
 		document.addEventListener('mousemove', this.onMouseMove.bind(this));
 		this.canvas.onmousedown = this.onMouseDown.bind(this);
