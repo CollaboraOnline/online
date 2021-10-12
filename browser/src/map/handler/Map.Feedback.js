@@ -113,6 +113,6 @@ L.Map.Feedback = L.Handler.extend({
 		}
 	}
 });
-if (window.feebackLocation && window.isLocalStorageAllowed) {
+if (window.feedbackLocation && window.isLocalStorageAllowed) {
 	L.Map.addInitHook('addHandler', 'feedback', L.Map.Feedback);
 }
