@@ -1,7 +1,5 @@
 declare var L: any;
 
-var L = L || {}; // For mocha tests.
-
 namespace cool {
 
 export type GeometryUnit = 'corepixels' | 'tiletwips' | 'printtwips';
