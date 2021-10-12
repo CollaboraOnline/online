@@ -19,7 +19,7 @@ m4_ifelse(IOSAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(GTKAPP,[true],[m4_define([MOBILEAPP],[true])])
 m4_ifelse(ANDROIDAPP,[true],[m4_define([MOBILEAPP],[true])])
 
-m4_ifelse(ENABLE_FEEDBACK,[true],[  window.feebackLocation = '%FEEDBACK_LOCATION%';])
+m4_ifelse(ENABLE_FEEDBACK,[true],[  window.feedbackLocation = '%FEEDBACK_LOCATION%';])
 
 m4_ifelse(MOBILEAPP,[],
   // Start listening for Host_PostmessageReady message and save the
