@@ -1,7 +1,5 @@
 declare var L: any;
 
-var L = L || {}; // For mocha tests.
-
 namespace cool {
 
 function PointConstruct(x: number, y: number, round?: boolean): Point {

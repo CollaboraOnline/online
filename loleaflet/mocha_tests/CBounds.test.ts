@@ -1,3 +1,4 @@
+/// <reference path="./refs/globals.ts"/>
 /// <reference path="../src/geometry/Point.ts" />
 /// <reference path="../src/geometry/Bounds.ts" />
 

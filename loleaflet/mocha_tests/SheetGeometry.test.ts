@@ -1,3 +1,4 @@
+/// <reference path="./refs/globals.ts"/>
 /// <reference path="./data/SheetGeometryTestData.ts" />
 
 var assert = require('assert').strict;
