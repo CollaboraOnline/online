@@ -47,7 +47,7 @@ class TilesSection {
 
 		this.sectionProperties.docLayer = this.map._docLayer;
 		this.sectionProperties.tsManager = this.sectionProperties.docLayer._painter;
-		this.sectionProperties.pageBackgroundInnerMargin = 20; // In core pixels. We don't want backgrounds to have exact same borders with tiles for not making them visible when tiles are rendered.
+		this.sectionProperties.pageBackgroundInnerMargin = 0; // In core pixels. We don't want backgrounds to have exact same borders with tiles for not making them visible when tiles are rendered.
 		this.sectionProperties.pageBackgroundBorderColor = 'lightgrey';
 		this.sectionProperties.pageBackgroundTextColor = 'grey';
 		this.sectionProperties.pageBackgroundFont = String(40 * app.roundedDpiScale) + 'px Arial';
