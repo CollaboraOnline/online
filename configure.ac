@@ -104,6 +104,10 @@ AC_ARG_ENABLE([debug],
               AS_HELP_STRING([--enable-debug],
                              [Enable debugging, link with debugging version of Poco libraries]))
 
+AC_ARG_ENABLE([bundle],
+              AS_HELP_STRING([--enable-bundle],
+                             [Enable creating bundled JS and CSS even with --enable-debug]))
+
 AC_ARG_ENABLE([debug-protocol],
     AS_HELP_STRING([--disable-debug-protocol],
         [Disables JS protocol logging by default, otherwise it is slaved to enable-debug.])
@@ -345,6 +349,7 @@ AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
 
 ENABLE_DEBUG=false
 ENABLE_DEBUG_PROTOCOL=false
+ENABLE_BUNDLE=true
 LOOLWSD_LOGLEVEL="warning"
 LOOLWSD_LOG_TO_FILE="false"
 LOOLWSD_LOGFILE="/var/log/loolwsd.log"
@@ -353,6 +358,7 @@ LOOLWSD_ANONYMIZE_USER_DATA=false
 LOLEAFLET_LOGGING="false"
 debug_msg="secure mode: product build"
 anonym_msg=""
+bundle_msg="using uglified bundled JS and CSS"
 if test "$enable_debug" = "yes"; then
    AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces])
    ENABLE_DEBUG=true
@@ -364,10 +370,15 @@ if test "$enable_debug" = "yes"; then
    LOOLWSD_ANONYMIZE_USER_DATA=false
    LOLEAFLET_LOGGING="true"
    debug_msg="low security debugging mode"
+   if test "$enable_bundle" != "yes"; then
+      ENABLE_BUNDLE=false
+      bundle_msg="using individual JS and CSS files"
+   fi
 else
     AC_DEFINE([ENABLE_DEBUG],0,[Whether to compile in some extra debugging support code and disable some security pieces])
 fi
 AC_SUBST(ENABLE_DEBUG)
+AC_SUBST(ENABLE_BUNDLE)
 AC_SUBST(LOOLWSD_LOGLEVEL)
 AC_SUBST(LOOLWSD_LOG_TO_FILE)
 AC_SUBST(LOLEAFLET_LOGGING)
@@ -1459,15 +1470,16 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
       [
        echo "
 Configuration:
-    LOKit path              ${lokit_msg}
-    LO path                 $LO_PATH
-    LO integration tests    ${lo_msg}
-    SSL support             $ssl_msg
-    Debug & low security    $debug_msg
-    Anonymization           $anonym_msg
-    Set capabilities        $setcap_msg
-    Browsersync             $browsersync_msg
-    cypress                 $cypress_msg
+    LOKit path                ${lokit_msg}
+    LO path                   $LO_PATH
+    LO integration tests      ${lo_msg}
+    SSL support               $ssl_msg
+    Debug & low security      $debug_msg
+    Uglification and bundling $bundle_msg
+    Anonymization             $anonym_msg
+    Set capabilities          $setcap_msg
+    Browsersync               $browsersync_msg
+    cypress                   $cypress_msg
 
     \$ make # to compile"
 if test -n "$with_lo_path"; then
