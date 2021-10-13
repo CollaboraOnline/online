@@ -819,7 +819,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     // Document signing: if endpoint URL is configured, whitelist that for
     // iframe purposes.
     std::ostringstream cspOss;
-    cspOss << "Content-Security-Policy: default-src 'none'; "
+    cspOss << "Content-Security-Policy: default-src 'none'; img-src 'self' data: https://www.collaboraoffice.com/;"
 #ifdef ENABLE_FEEDBACK
         "frame-src 'self' " << FEEDBACK_LOCATION << " blob: " << documentSigningURL << "; "
 #else
