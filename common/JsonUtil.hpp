@@ -7,9 +7,11 @@
 
 #pragma once
 
+#include <cassert>
 #include <cstddef>
 #include <set>
 #include <string>
+#include <vector>
 
 #include <Poco/JSON/Object.h>
 #include <Poco/JSON/Parser.h>
@@ -131,6 +133,92 @@ bool findJSONValue(Poco::JSON::Object::Ptr &object, const std::string& key, T& v
 
     LOG_INF("Missing JSON property [" << key << "] will default to [" << value << "].");
     return false;
+}
+
+static char getEscapementChar(char ch)
+{
+    switch (ch)
+    {
+        case '\b':
+            return 'b';
+        case '\t':
+            return 't';
+        case '\n':
+            return 'n';
+        case '\f':
+            return 'f';
+        case '\r':
+            return 'r';
+        default:
+            return ch;
+    }
+}
+
+static void writeEscapedSequence(uint32_t ch, std::vector<char>& buf)
+{
+    switch (ch)
+    {
+        case '\b':
+        case '\t':
+        case '\n':
+        case '\f':
+        case '\r':
+        case '"':
+        case '/':
+        case '\\':
+            buf.push_back('\\');
+            buf.push_back(getEscapementChar(ch));
+            break;
+        // Special processing of U+2028 and U+2029, which are valid JSON, but invalid JavaScript
+        // Write them in escaped '\u2028' or '\u2029' form
+        case 0x2028:
+        case 0x2029:
+            buf.push_back('\\');
+            buf.push_back('u');
+            buf.push_back('2');
+            buf.push_back('0');
+            buf.push_back('2');
+            buf.push_back(ch == 0x2028 ? '8' : '9');
+            break;
+        default:
+            assert(!"Unexpected character passed to writeEscapedSequence");
+    }
+}
+
+inline std::string escapeJSONValue(std::string val)
+{
+    std::vector<char> buf;
+    buf.reserve(val.size());
+    for (size_t i = 0; i < val.size(); ++i)
+    {
+        const char ch = val[i];
+        switch(ch)
+        {
+            case '\b':
+            case '\t':
+            case '\n':
+            case '\f':
+            case '\r':
+            case '"':
+            case '/':
+            case '\\':
+                writeEscapedSequence(ch, buf);
+                break;
+            case '\xE2': // Special processing of U+2028 and U+2029
+                if (i + 2 < val.size() && val[i + 1] == '\x80'
+                    && (val[i + 2] == '\xA8' || val[i + 2] == '\xA9'))
+                {
+                    writeEscapedSequence(val[i + 2] == '\xA8' ? 0x2028 : 0x2029, buf);
+                    i += 2;
+                    break;
+                }
+                // Fallthrough...
+            default:
+                buf.push_back(ch);
+                break;
+        }
+    }
+    return std::string(buf.data(), buf.size());
 }
 
 } // end namespace JsonUtil
