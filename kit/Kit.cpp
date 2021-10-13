@@ -61,6 +61,7 @@
 #include <MobileApp.hpp>
 #include <FileUtil.hpp>
 #include <common/JailUtil.hpp>
+#include <common/JsonUtil.hpp>
 #include "KitHelper.hpp"
 #include "Kit.hpp"
 #include <Protocol.hpp>
@@ -1144,9 +1145,9 @@ private:
             }
             else
             {
-                oss << "\"userid\":\"" << itView->second.getUserId() << "\",";
+                oss << "\"userid\":\"" << JsonUtil::escapeJSONValue(itView->second.getUserId()) << "\",";
                 const std::string username = itView->second.getUserName();
-                oss << "\"username\":\"" << username << "\",";
+                oss << "\"username\":\"" << JsonUtil::escapeJSONValue(username) << "\",";
                 if (!itView->second.getUserExtraInfo().empty())
                     oss << "\"userextrainfo\":" << itView->second.getUserExtraInfo() << ',';
                 const bool readonly = itView->second.isReadOnly();
