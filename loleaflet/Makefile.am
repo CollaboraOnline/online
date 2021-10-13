@@ -3,8 +3,8 @@ CTAGS = ctags
 BUILT_SOURCES = node_modules
 
 L10N_PO = $(wildcard $(srcdir)/po/*.po)
-BUNDLE ?= $(if $(filter true,$(ENABLE_DEBUG)),DEBUG,RELEASE)
-IS_DEBUG = $(if $(filter DEBUG,$(BUNDLE)),true,)
+IS_BUNDLE = $(if $(filter true,$(ENABLE_BUNDLE)),true,)
+IS_SEPARATE = $(if $(filter false,$(ENABLE_BUNDLE)),true,)
 
 DIST_FOLDER ?= $(builddir)/dist
 TYPESCRIPT_JS_DIR = $(builddir)/typescript_js
@@ -159,7 +159,7 @@ LOLEAFLET_CSS_M4 = $(strip $(foreach file,$(LOLEAFLET_CSS),$(notdir $(file))))
 $(eval $(call file_targets,$(LOLEAFLET_CSS)))
 
 NODE_MODULES_JS =\
-	$(if $(IS_DEBUG),node_modules/hammerjs/hammer.js,node_modules/hammerjs/hammer.min.js) \
+	$(if $(IS_SEPARATE),node_modules/hammerjs/hammer.js,node_modules/hammerjs/hammer.min.js) \
 	node_modules/jquery/dist/jquery.js \
 	node_modules/jquery-mousewheel/jquery.mousewheel.js \
 	node_modules/jquery-contextmenu/dist/jquery.contextMenu.js \
@@ -385,12 +385,12 @@ COMMA := ,
 EMPTY :=
 SPACE := $(EMPTY) $(EMPTY)
 LOLEAFLET_VERSION = $(shell cd $(srcdir) && git log -1 --pretty=format:"%h")
-INTERMEDIATE_DIR ?= $(if $(IS_DEBUG),$(abs_builddir)/debug,$(abs_builddir)/release)
+INTERMEDIATE_DIR ?= $(if $(IS_SEPARATE),$(abs_builddir)/debug,$(abs_builddir)/release)
 
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' -not -path './node_modules/*' | sed 's/.\///')
 
 define bundle_loleaflet
-	$(if $(IS_DEBUG),\
+	$(if $(IS_SEPARATE),\
 		@touch $@,
 		@m4 -PE -DIOSAPP=$(ENABLE_IOSAPP) \
 			-DGTKAPP=$(ENABLE_GTKAPP) \
@@ -403,22 +403,22 @@ define bundle_loleaflet
 endef
 
 define prereq_loleaflet
-	$(if $(IS_DEBUG),$(LOLEAFLET_JS_DST),$(LOLEAFLET_JS_SRC))
+	$(if $(IS_SEPARATE),$(LOLEAFLET_JS_DST),$(LOLEAFLET_JS_SRC))
 endef
 
 define bundle_css
-	$(if $(IS_DEBUG),\
+	$(if $(IS_SEPARATE),\
 		@touch $@,\
 		@echo "Uglify loleaflet css files..."
 		@$(NODE) node_modules/uglifycss/uglifycss $(LOLEAFLET_CSS) > $@)
 endef
 
 define prereq_css
-	$(if $(IS_DEBUG),$(LOLEAFLET_CSS_DST),$(LOLEAFLET_CSS))
+	$(if $(IS_SEPARATE),$(LOLEAFLET_CSS_DST),$(LOLEAFLET_CSS))
 endef
 
 define bundle_all
-	$(if $(IS_DEBUG),\
+	$(if $(IS_SEPARATE),\
 		@touch $@,\
 		@echo "Uglify loleaflet js files..."
 		@m4 -PE -DL10N_IOS_ALL_JS=$(L10N_IOS_ALL_JS) \
@@ -432,12 +432,12 @@ define bundle_all
 endef
 
 define prereq_all
-	$(if $(IS_DEBUG),$(NODE_MODULES_JS_DST) $(LOLEAFLET_LIBS_JS_DST),\
+	$(if $(IS_SEPARATE),$(NODE_MODULES_JS_DST) $(LOLEAFLET_LIBS_JS_DST),\
 		$(NODE_MODULES_JS_SRC) $(LOLEAFLET_LIBS_JS_SRC))
 endef
 
 define global_file
-	$(if $(IS_DEBUG),
+	$(if $(IS_SEPARATE),
 		@cp $< $@,
 		@echo "Uglify global.js file..."
 		@$(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@)
@@ -486,7 +486,7 @@ endif
 
 $(DIST_FOLDER)/admin-bundle.js: $(LOLEAFLET_ADMIN_DST) \
 	$(INTERMEDIATE_DIR)/admin-src.js
-	@NODE_PATH=$(abs_builddir)/node_modules:$(INTERMEDIATE_DIR) $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css $(if $(IS_DEBUG),--debug,-g uglifyify) -o $@ $(srcdir)/admin/main-admin.js
+	@NODE_PATH=$(abs_builddir)/node_modules:$(INTERMEDIATE_DIR) $(NODE) node_modules/browserify/bin/cmd.js -g browserify-css $(if $(IS_SEPARATE),--debug,-g uglifyify) -o $@ $(srcdir)/admin/main-admin.js
 
 $(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_TS_JS) $(LOLEAFLET_ADMIN_JS)
 	@mkdir -p $(dir $@)
@@ -526,7 +526,7 @@ $(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 \
 	$(DIST_FOLDER)/global.js \
 	$(DIST_FOLDER)/bundle.js
 	@echo "Generating loleaflet.html..."
-	@m4 -PE -DDEBUG=$(IS_DEBUG) \
+	m4 -PE -DBUNDLE=$(IS_BUNDLE) \
 		-DENABLE_FEEDBACK=$(ENABLE_FEEDBACK) \
 		-DIOSAPP=$(ENABLE_IOSAPP) \
 		-DGTKAPP=$(ENABLE_GTKAPP) \

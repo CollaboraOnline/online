@@ -117,8 +117,8 @@ window.isLocalStorageAllowed = (function() {
 })();
 </script>
 
-m4_dnl In the debug case, just write all the .css files here
-m4_ifelse(DEBUG,[true],
+m4_ifelse(BUNDLE,[],
+  <!-- Using individual CSS files -->
   m4_foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/loleaflet/%VERSION%/])][fileCSS" />
 ]),
   [<!-- Dynamically load the bundle.css -->
@@ -298,6 +298,8 @@ m4_ifelse(MOBILEAPP,[true],
       window.socketProxy = %SOCKET_PROXY%;
       window.tileSize = 256;
       window.uiDefaults = %UI_DEFAULTS%;])
+
+// This is GLOBAL_JS:
 m4_syscmd([cat ]GLOBAL_JS)m4_dnl
 
 m4_ifelse(IOSAPP,[true],
@@ -328,15 +330,20 @@ document.getElementsByTagName("head")[[0]].appendChild(brandingLink);
 </script>
 
 m4_ifelse(MOBILEAPP,[true],
-  m4_ifelse(DEBUG,[true],m4_foreachq([fileJS],[LOLEAFLET_JS],
+  <!-- This is for a mobile app so the script files are in the same folder -->
+  m4_ifelse(BUNDLE,[],m4_foreachq([fileJS],[LOLEAFLET_JS],
   [    <script src="fileJS" defer></script>
   ]),
   [    <script src="bundle.js" defer></script>
   ]),
-  m4_ifelse(DEBUG,[true],m4_foreachq([fileJS],[LOLEAFLET_JS],
-  [    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/fileJS" defer></script>
-  ]),
-  [    <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/bundle.js" defer></script>
+  m4_ifelse(BUNDLE,[],
+      <!-- Using indivisual JS files -->
+      m4_foreachq([fileJS],[LOLEAFLET_JS],
+      [ <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/fileJS" defer></script>
+      ]),
+  [
+       <!-- Using bundled JS files -->
+       <script src="%SERVICE_ROOT%/loleaflet/%VERSION%/bundle.js" defer></script>
   ])
 )m4_dnl
     <!--%BRANDING_JS%--> <!-- logo onclick handler -->
