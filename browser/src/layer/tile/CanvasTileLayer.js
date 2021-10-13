@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L CanvasSectionContainer CanvasOverlay CSplitterLine CStyleData $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType */
+/* global app L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CStyleData $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -47,6 +47,7 @@ var CSelections = L.Class.extend({
 	initialize: function (pointSet, canvasOverlay, selectionsDataDiv, map, isView, viewId, isText) {
 		this._pointSet = pointSet ? pointSet : new CPointSet();
 		this._overlay = canvasOverlay;
+		this._darkOverlay = new CDarkOverlay(canvasOverlay);
 		this._styleData = new CStyleData(selectionsDataDiv);
 		this._map = map;
 		this._name = 'selections' + (isView ? '-viewid-' + viewId : '');
@@ -131,6 +132,22 @@ var CSelections = L.Class.extend({
 			this._overlay.removePath(this._selection);
 		else
 			this._overlay.removePathGroup(this._selection);
+	},
+
+	hasObjectFocusDarkOverlay : function() {
+		return this._darkOverlay.hasObjectFocusDarkOverlay();
+	},
+
+	addObjectFocusDarkOverlay : function(bounds) {
+		if (!this.hasObjectFocusDarkOverlay()) {
+			this._darkOverlay.show(bounds);
+		}
+	},
+
+	removeObjectFocusDarkOverlay: function() {
+		if (this.hasObjectFocusDarkOverlay()) {
+			this._darkOverlay.remove();
+		}
 	}
 });
 
@@ -1988,6 +2005,26 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._graphicSelection.extraInfo = extraInfo;
 	},
 
+	renderDarkOverlay: function () {
+		var zoom = this._map.getZoom();
+
+		var northEastTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getNorthEast(), zoom);
+		//var eastTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getNorthEast(), zoom).x;
+		var southWestTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getSouthWest(), zoom);
+		//var westTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getSouthWest(), zoom).x;
+
+		var northCore = this._twipsToCorePixels(northEastTwips).y;
+		var eastCore = this._twipsToCorePixels(northEastTwips).x;
+		var southCore = this._twipsToCorePixels(southWestTwips).y;
+		var westCore = this._twipsToCorePixels(southWestTwips).x;
+
+		//this._map.addObjectFocusDarkOverlay(xTwips, yTwips, wTwips, hTwips);
+		this._cellCSelections.addObjectFocusDarkOverlay(new CBounds(
+			new CPoint(eastCore, northCore),
+			new CPoint(westCore, southCore)
+		));
+	},
+
 	_onGraphicSelectionMsg: function (textMsg) {
 		if (this._map.hyperlinkPopup !== null) {
 			this._closeURLPopUp();
@@ -1996,23 +2033,23 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._resetSelectionRanges();
 		}
 		else if (textMsg.match('INPLACE EXIT')) {
-			this._map.removeObjectFocusDarkOverlay();
+
+			this._cellCSelections.removeObjectFocusDarkOverlay();
+			//this._map.removeObjectFocusDarkOverlay();
 		}
 		else if (textMsg.match('INPLACE')) {
-			if (!this._map.hasObjectFocusDarkOverlay()) {
+			if (!this._cellCSelections.hasObjectFocusDarkOverlay()) {
+				//if (!this._map.hasObjectFocusDarkOverlay()) {
 				textMsg = '[' + textMsg.substr('graphicselection:'.length) + ']';
 				try {
 					var msgData = JSON.parse(textMsg);
 					if (msgData.length > 1)
 						this._extractAndSetGraphicSelection(msgData);
-				} catch (error) { console.warn('cannot parse graphicselection command'); }
-
-				var xTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getNorthWest()).x;
-				var yTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getNorthWest()).y;
-				var wTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getSouthEast()).x - xTwips;
-				var hTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getSouthEast()).y - yTwips;
-
-				this._map.addObjectFocusDarkOverlay(xTwips, yTwips, wTwips, hTwips);
+				}
+				catch (error) {
+					console.warn('cannot parse graphicselection command');
+				}
+				this.renderDarkOverlay();
 
 				this._graphicSelection = new L.LatLngBounds(new L.LatLng(0, 0), new L.LatLng(0, 0));
 				this._onUpdateGraphicSelection();
@@ -2022,6 +2059,12 @@ L.CanvasTileLayer = L.Layer.extend({
 			textMsg = '[' + textMsg.substr('graphicselection:'.length) + ']';
 			msgData = JSON.parse(textMsg);
 			this._extractAndSetGraphicSelection(msgData);
+
+			// Update the dark overlay on zooming & scrolling
+			if (this._cellCSelections.hasObjectFocusDarkOverlay()) {
+				this._cellCSelections.removeObjectFocusDarkOverlay();
+				this.renderDarkOverlay();
+			}
 
 			this._graphicSelectionAngle = (msgData.length > 4) ? msgData[4] : 0;
 
@@ -4549,6 +4592,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_getGraphicSelectionRectangle: function (rectangle) {
+		//todo fix usages due to CDarkOverlay implementation
 		if (!(rectangle instanceof L.Bounds) || !this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
 			return rectangle;
 		}
@@ -5454,6 +5498,12 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_twipsToCorePixels: function (twips) {
 		return new L.Point(
+			twips.x / this._tileWidthTwips * this._tileSize,
+			twips.y / this._tileHeightTwips * this._tileSize);
+	},
+
+	_twipsToCPoints: function (twips) {
+		return new CPoint(
 			twips.x / this._tileWidthTwips * this._tileSize,
 			twips.y / this._tileHeightTwips * this._tileSize);
 	},
