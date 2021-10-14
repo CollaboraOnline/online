@@ -484,7 +484,8 @@ app.definitions.Socket = L.Class.extend({
 				oldId = this.WSDServer.Id;
 				oldVersion = this.WSDServer.Version;
 
-				console.assert(map.options.wopiSrc === window.wopiSrc, 'wopiSrc mismatch!: ' + map.options.wopiSrc + ' != ' + window.wopiSrc);
+				console.assert(this._map.options.wopiSrc === window.wopiSrc,
+						'wopiSrc mismatch!: ' + this._map.options.wopiSrc + ' != ' + window.wopiSrc);
 				// If another file is opened, we will not refresh the page.
 				if (this._map.options.previousWopiSrc && this._map.options.wopiSrc) {
 					if (this._map.options.previousWopiSrc !== this._map.options.wopiSrc)
