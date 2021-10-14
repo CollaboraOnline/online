@@ -283,6 +283,12 @@ class TilesSection {
 			rectangle[1] - ctx.viewBounds.min.y + this.sectionProperties.pageBackgroundInnerMargin,
 			rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
 			rectangle[3] - this.sectionProperties.pageBackgroundInnerMargin);
+
+		this.context.fillStyle = '#FFFFFF'; // paint the background white
+		this.context.fillRect(rectangle[0] - ctx.viewBounds.min.x + this.sectionProperties.pageBackgroundInnerMargin,
+			rectangle[1] - ctx.viewBounds.min.y + this.sectionProperties.pageBackgroundInnerMargin,
+			rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
+			rectangle[3] - this.sectionProperties.pageBackgroundInnerMargin);
 	}
 
 	private drawPageBackgroundFileBasedView (ctx: any, top: number, bottom: number) {
