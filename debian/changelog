@@ -1,25 +1,5 @@
-loolwsd (1.8.2-1) unstable; urgency=medium
+loolwsd (21.06.2.0-1) unstable; urgency=medium
 
-  * Fix crash in Impress.
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-21.06.2-0
 
- -- Jan Holesovsky <kendy@collabora.com>  Thu, 11 Aug 2016 16:46:00 +0100
-
-loolwsd (1.8.0-1) unstable; urgency=medium
-
-  [ Tor Lillqvist ]
-  * Back to packaging this for Debian.
-
-  [ Jan Holesovsky ]
-  * Update to match Collabora Office 5.1
-
- -- Jan Holesovsky <kendy@collabora.com>  Fri, 05 Aug 2016 16:51:54 +0100
-
-loolwsd (1.0.0-1) unstable; urgency=low
-
-  * Initial release
-
-  * Local Variables:
-  * Mode: fundamental
-  * End:
-
- -- Tor Lillqvist <tml@collabora.com>  Fri, 15 May 2015 11:10:20 +0300
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 14 Oct 2021 15:40:00 +0100
