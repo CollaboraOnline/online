@@ -50,17 +50,17 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
 
             continue;
         }
-        else if (Util::startsWith(keyValue[0], "Text"))
+        else if (keyValue.startsWith(0, "Text"))
         {
             currentDef = &textDefs;
             key = keyValue[0].substr(4);
         }
-        else if (Util::startsWith(keyValue[0], "Spreadsheet"))
+        else if (keyValue.startsWith(0, "Spreadsheet"))
         {
             currentDef = &spreadsheetDefs;
             key = keyValue[0].substr(11);
         }
-        else if (Util::startsWith(keyValue[0], "Presentation"))
+        else if (keyValue.startsWith(0, "Presentation"))
         {
             currentDef = &presentationDefs;
             key = keyValue[0].substr(12);

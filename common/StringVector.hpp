@@ -136,6 +136,33 @@ public:
         return _string.compare(token._index, token._length, string, N) == 0;
     }
 
+    // Checks if the token text at index starts with the given string
+    template <std::size_t N>
+    bool startsWith(std::size_t index, const char (&string)[N]) const
+    {
+        if (index >= _tokens.size())
+        {
+            return false;
+        }
+
+        const StringToken& token = _tokens[index];
+        const auto len = N - 1; // we don't want to compare the '\0'
+        return token._length >= len && _string.compare(token._index, len, string) == 0;
+    }
+
+    // Checks if the token text starts with the given string
+    template <std::size_t N>
+    bool startsWith(const StringToken& token, const char (&string)[N]) const
+    {
+        if (token._index >= _tokens.size())
+        {
+            return false;
+        }
+
+        const auto len = N - 1; // we don't want to compare the '\0'
+        return token._length >= len && _string.compare(token._index, len, string) == 0;
+    }
+
     /// Compares the nth token with the mth token from another StringVector.
     bool equals(std::size_t index, const StringVector& other, std::size_t otherIndex);
 
