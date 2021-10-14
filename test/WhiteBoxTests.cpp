@@ -72,6 +72,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testParseUrl);
     CPPUNIT_TEST(testSafeAtoi);
     CPPUNIT_TEST(testBytesToHex);
+    CPPUNIT_TEST(testJsonUtilEscapeJSONValue);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -108,6 +109,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testParseUrl();
     void testSafeAtoi();
     void testBytesToHex();
+    void testJsonUtilEscapeJSONValue();
 };
 
 void WhiteBoxTests::testLOOLProtocolFunctions()
@@ -2228,6 +2230,13 @@ void WhiteBoxTests::testBytesToHex()
         const std::string s = Util::hexStringToBytes(hex);
         LOK_ASSERT_EQUAL(d, s);
     }
+}
+
+void WhiteBoxTests::testJsonUtilEscapeJSONValue()
+{
+    const std::string in = "domain\\username";
+    const std::string expected = "domain\\\\username";
+    LOK_ASSERT_EQUAL(JsonUtil::escapeJSONValue(in), expected);
 }
 
 CPPUNIT_TEST_SUITE_REGISTRATION(WhiteBoxTests);
