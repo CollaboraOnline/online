@@ -19,7 +19,6 @@
 #include <Poco/RegularExpression.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/URI.h>
-#include <Poco/Timestamp.h>
 #include <Poco/Util/LayeredConfiguration.h>
 #include <sstream>
 
