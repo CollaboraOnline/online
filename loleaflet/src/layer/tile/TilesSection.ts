@@ -49,8 +49,6 @@ class TilesSection {
 		this.sectionProperties.tsManager = this.sectionProperties.docLayer._painter;
 		this.sectionProperties.pageBackgroundInnerMargin = 0; // In core pixels. We don't want backgrounds to have exact same borders with tiles for not making them visible when tiles are rendered.
 		this.sectionProperties.pageBackgroundBorderColor = 'lightgrey';
-		this.sectionProperties.pageBackgroundTextColor = 'grey';
-		this.sectionProperties.pageBackgroundFont = String(40 * app.roundedDpiScale) + 'px Arial';
 	}
 
 	public onInitialize () {
@@ -285,11 +283,6 @@ class TilesSection {
 			rectangle[1] - ctx.viewBounds.min.y + this.sectionProperties.pageBackgroundInnerMargin,
 			rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
 			rectangle[3] - this.sectionProperties.pageBackgroundInnerMargin);
-
-		this.context.fillText(String(pageNumber),
-			Math.round((2 * rectangle[0] + rectangle[2]) * 0.5) - ctx.viewBounds.min.x,
-			Math.round((2 * rectangle[1] + rectangle[3]) * 0.5) - ctx.viewBounds.min.y,
-			rectangle[2] * 0.4);
 	}
 
 	private drawPageBackgroundFileBasedView (ctx: any, top: number, bottom: number) {
@@ -310,11 +303,6 @@ class TilesSection {
 				rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
 				rectangle[3] - this.sectionProperties.pageBackgroundInnerMargin);
 
-			this.context.fillText(String(i + top + 1),
-				Math.round((2 * rectangle[0] + rectangle[2]) * 0.5) - ctx.viewBounds.min.x,
-				Math.round((2 * rectangle[1] + rectangle[3]) * 0.5) - ctx.viewBounds.min.y,
-				rectangle[2] * 0.4);
-
 			startY += partHeightPixels + gap;
 		}
 	}
@@ -331,11 +319,9 @@ class TilesSection {
 		if (!this.containerObject.getDocumentAnchorSection())
 			return;
 
-		this.context.fillStyle = this.sectionProperties.pageBackgroundTextColor;
 		this.context.strokeStyle = this.sectionProperties.pageBackgroundBorderColor;
 		this.context.lineWidth = app.roundedDpiScale;
 
-		this.context.font = this.sectionProperties.pageBackgroundFont;
 
 		if (this.map._docLayer._docType === 'text') {
 			var viewRectangleTwips = [this.documentTopLeft[0], this.documentTopLeft[1], this.containerObject.getDocumentAnchorSection().size[0], this.containerObject.getDocumentAnchorSection().size[1]];
