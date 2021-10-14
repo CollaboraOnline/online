@@ -1591,7 +1591,7 @@ public:
                 {
                     renderCombinedTiles(tokens);
                 }
-                else if (Util::startsWith(tokens[0], "child-"))
+                else if (tokens.startsWith(0, "child-"))
                 {
                     forwardToChild(tokens[0], input);
                 }
@@ -2183,10 +2183,10 @@ protected:
             for (const auto& token : tokens)
             {
                 // Don't log user-data, there are anonymized versions that get logged instead.
-                if (Util::startsWith(tokens.getParam(token), "jail") ||
-                    Util::startsWith(tokens.getParam(token), "author") ||
-                    Util::startsWith(tokens.getParam(token), "name") ||
-                    Util::startsWith(tokens.getParam(token), "url"))
+                if (tokens.startsWith(token, "jail") ||
+                    tokens.startsWith(token, "author") ||
+                    tokens.startsWith(token, "name") ||
+                    tokens.startsWith(token, "url"))
                     continue;
 
                 logger << tokens.getParam(token) << ' ';

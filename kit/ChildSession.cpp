@@ -1750,7 +1750,7 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const Stri
     const bool bNotify = (tokens[1] == ".uno:Save" ||
                           tokens[1] == ".uno:Undo" ||
                           tokens[1] == ".uno:Redo" ||
-                          Util::startsWith(tokens[1], "vnd.sun.star.script:"));
+                          tokens.startsWith(1, "vnd.sun.star.script:"));
 
     getLOKitDocument()->setView(_viewId);
 
