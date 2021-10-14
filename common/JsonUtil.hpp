@@ -188,7 +188,7 @@ static void writeEscapedSequence(uint32_t ch, std::vector<char>& buf)
 inline std::string escapeJSONValue(std::string val)
 {
     std::vector<char> buf;
-    buf.reserve(val.size());
+    buf.reserve(val.size() + 10); // some small initial extra space for escaping
     for (size_t i = 0; i < val.size(); ++i)
     {
         const char ch = val[i];
