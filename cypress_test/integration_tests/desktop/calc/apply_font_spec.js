@@ -9,6 +9,8 @@ describe('Apply font changes.', function() {
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
 
+		cy.wait(1000);
+
 		calcHelper.clickOnFirstCell();
 	});
 

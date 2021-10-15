@@ -9,6 +9,8 @@ describe('Change cell appearance.', function() {
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
+
+		cy.wait(1000);
 	});
 
 	afterEach(function() {

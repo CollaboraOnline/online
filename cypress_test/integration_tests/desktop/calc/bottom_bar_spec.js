@@ -8,6 +8,8 @@ describe('Calc bottom bar tests.', function() {
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'calc');
+
+		cy.wait(1000);
 	});
 
 	afterEach(function() {
@@ -17,6 +19,10 @@ describe('Calc bottom bar tests.', function() {
 	it('Bottom tool bar.', function() {
 		cy.get('#map').focus();
 		calcHelper.clickOnFirstCell();
+
+		cy.get('#toolbar-down .w2ui-scroll-right')
+			.click();
+
 		cy.get('#tb_actionbar_item_StateTableCellMenu .w2ui-button').click();
 		// If it clicks, it passes.
 		cy.contains('.w2ui-drop-menu .menu-text', 'CountA').click();

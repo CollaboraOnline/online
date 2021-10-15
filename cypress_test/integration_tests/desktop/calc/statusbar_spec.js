@@ -13,6 +13,8 @@ describe('Statubar tests.', function() {
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showStatusBarIfHidden ();
 		}
+
+		cy.wait(1000);
 	});
 
 	afterEach(function() {
