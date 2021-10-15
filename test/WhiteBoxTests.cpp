@@ -1162,6 +1162,31 @@ void WhiteBoxTests::testStringVector()
     CPPUNIT_ASSERT(vector.equals(0, vector2, 0));
     CPPUNIT_ASSERT(!vector.equals(0, vector2, 1));
 
+    // Test stringEquals().
+    StringVector vector3;
+    vector3.push_back("hello, world");
+    vector3.push_back("goodbye, world");
+
+    CPPUNIT_ASSERT(vector3.startsWith(0, "hello"));
+    CPPUNIT_ASSERT(vector3.startsWith(0, "hello, world"));
+    CPPUNIT_ASSERT(!vector3.startsWith(0, "hello, world!"));
+    CPPUNIT_ASSERT(!vector3.startsWith(0, "hello, world! super long text"));
+    CPPUNIT_ASSERT(vector3.startsWith(1, "goodbye"));
+    CPPUNIT_ASSERT(!vector3.startsWith(1, "hello"));
+
+    // Test stringEquals(), StringToken argument version
+    StringToken hello = *vector3.begin();
+    StringToken goodbye = *std::next(vector3.begin());
+    StringToken unrelated(50, 10); // out of vector3 range
+
+    CPPUNIT_ASSERT(vector3.startsWith(hello, "hello"));
+    CPPUNIT_ASSERT(vector3.startsWith(hello, "hello, world"));
+    CPPUNIT_ASSERT(!vector3.startsWith(hello, "hello, world!"));
+    CPPUNIT_ASSERT(!vector3.startsWith(hello, "hello, world! super long text"));
+    CPPUNIT_ASSERT(vector3.startsWith(goodbye, "goodbye"));
+    CPPUNIT_ASSERT(!vector3.startsWith(goodbye, "hello"));
+    CPPUNIT_ASSERT(!vector3.startsWith(unrelated, "hello"));
+
     {
         StringVector tokens;
         tokens.push_back("a=1");

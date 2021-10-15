@@ -154,7 +154,7 @@ public:
     template <std::size_t N>
     bool startsWith(const StringToken& token, const char (&string)[N]) const
     {
-        if (token._index >= _tokens.size())
+        if (token._index >= _string.size())
         {
             return false;
         }
