@@ -164,7 +164,7 @@ L.Control.MobileWizard = L.Control.extend({
 		if (window.pageMobileWizard === true)
 			window.pageMobilewizard = false;
 
-		if (this._map.getDocType() === 'presentation')
+		if (this._map.getDocType() === 'presentation' || this._map.getDocType() === 'drawing')
 			this._hideSlideSorter();
 
 		if (window.commentWizard === true)
