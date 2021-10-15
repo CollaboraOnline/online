@@ -1,18 +1,34 @@
-/* -*- js-indent-level: 8 -*- */
+declare var L: any;
+declare var app: any;
+
+namespace cool {
+
+export type SplitPanesOptions = {
+	maxHorizontalSplitPercent: number;
+	maxVerticalSplitPercent: number;
+}
+
+export type PaneStatus = {
+	xFixed: boolean;
+	yFixed: boolean;
+}
+
 /*
  * SplitPanesContext stores positions/sizes/objects related to split panes.
  */
+export class SplitPanesContext {
 
-/* global app */
-
-L.SplitPanesContext = L.Class.extend({
-
-	options: {
+	private static options: SplitPanesOptions = {
 		maxHorizontalSplitPercent: 70,
 		maxVerticalSplitPercent: 70,
-	},
+	};
 
-	initialize: function (docLayer, createSplitters) {
+	protected _docLayer: any;
+	protected _map: any;
+	protected _splitPos: Point;
+
+	// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+	constructor(docLayer: any, createSplitters: boolean = false) {
 		console.assert(docLayer, 'no docLayer!');
 		console.assert(docLayer._map, 'no map!');
 
@@ -20,38 +36,42 @@ L.SplitPanesContext = L.Class.extend({
 		this._map = docLayer._map;
 		this._setDefaults();
 
-		if (createSplitters === true) {
+		if (createSplitters) {
 			this.updateSplitters();
 		}
-	},
+	}
 
-	_setDefaults: function () {
-		this._splitPos = new L.Point(0, 0);
-	},
+	protected _setDefaults(): void {
+		this._splitPos = new Point(0, 0);
+	}
 
-	getMaxSplitPosX: function () {
-		var rawMax = Math.floor(app.dpiScale * this._map.getSize().x * this.options.maxHorizontalSplitPercent / 100);
+	public get options(): SplitPanesOptions {
+		return SplitPanesContext.options;
+	}
+
+	public getMaxSplitPosX(): number {
+		const rawMax = Math.floor(app.dpiScale * this._map.getSize().x * this.options.maxHorizontalSplitPercent / 100);
 		return this._docLayer.getSnapDocPosX(rawMax);
-	},
+	}
 
-	getMaxSplitPosY: function () {
-		var rawMax = Math.floor(app.dpiScale * this._map.getSize().y * this.options.maxVerticalSplitPercent / 100);
+	public getMaxSplitPosY(): number {
+		const rawMax = Math.floor(app.dpiScale * this._map.getSize().y * this.options.maxVerticalSplitPercent / 100);
 		return this._docLayer.getSnapDocPosY(rawMax);
-	},
+	}
 
-	setSplitPos: function (splitX, splitY, forceUpdate) {
+	public setSplitPos(splitX: number, splitY: number, forceUpdate: boolean = false): void {
 
 		var xchanged = this.setHorizSplitPos(splitX, forceUpdate, true /* noFire */);
 		var ychanged = this.setVertSplitPos(splitY, forceUpdate, true /* noFire */);
 		if (xchanged || ychanged)
 			this._map.fire('splitposchanged');
-	},
+	}
 
-	getSplitPos: function () {
-		return this._splitPos.divideBy(app.dpiScale);
-	},
+	public getSplitPos(): Point {
+		return this._splitPos.divideBy(app.dpiScale as number);
+	}
 
-	justifySplitPos: function (split, isHoriz) {
+	public justifySplitPos(split: number, isHoriz: boolean): number {
 		if (split <= 0) {
 			return 0;
 		}
@@ -63,9 +83,9 @@ L.SplitPanesContext = L.Class.extend({
 
 		return isHoriz ? this._docLayer.getSnapDocPosX(split) :
 			this._docLayer.getSnapDocPosY(split);
-	},
+	}
 
-	setHorizSplitPos: function (splitX, forceUpdate, noFire) {
+	public setHorizSplitPos(splitX: number, forceUpdate: boolean, noFire: boolean): boolean {
 
 		console.assert(typeof splitX === 'number', 'splitX must be a number');
 
@@ -89,9 +109,9 @@ L.SplitPanesContext = L.Class.extend({
 			this._map.fire('splitposchanged');
 
 		return changed;
-	},
+	}
 
-	setVertSplitPos: function (splitY, forceUpdate, noFire) {
+	public setVertSplitPos(splitY: number, forceUpdate: boolean, noFire: boolean): boolean {
 
 		console.assert(typeof splitY === 'number', 'splitY must be a number');
 
@@ -115,23 +135,23 @@ L.SplitPanesContext = L.Class.extend({
 			this._map.fire('splitposchanged');
 
 		return changed;
-	},
+	}
 
-	updateSplitters: function () {
+	public updateSplitters(): void {
 		this._updateXSplitter();
 		this._updateYSplitter();
-	},
+	}
 
-	_updateXSplitter: function () {
+	private _updateXSplitter(): void {
 		this._docLayer.updateHorizPaneSplitter();
-	},
+	}
 
-	_updateYSplitter: function () {
+	private _updateYSplitter(): void {
 		this._docLayer.updateVertPaneSplitter();
-	},
+	}
 
-	getPanesProperties: function () {
-		var paneStatusList = [];
+	public getPanesProperties(): PaneStatus[] {
+		var paneStatusList: PaneStatus[] = [];
 		if (this._splitPos.x && this._splitPos.y) {
 			// top-left pane
 			paneStatusList.push({
@@ -163,71 +183,71 @@ L.SplitPanesContext = L.Class.extend({
 		});
 
 		return paneStatusList;
-	},
+	}
 
 	// returns all the pane rectangles for the provided full-map area (all in core pixels).
-	getPxBoundList: function (pxBounds) {
+	public getPxBoundList(pxBounds?: Bounds): Bounds[] {
 		if (!pxBounds) {
-			pxBounds = this._map.getPixelBoundsCore();
+			pxBounds = this._map.getPixelBoundsCore() as Bounds;
 		}
 		var topLeft = pxBounds.getTopLeft();
 		var bottomRight = pxBounds.getBottomRight();
-		var boundList = [];
+		var boundList: Bounds[] = [];
 
 		if (this._splitPos.x && this._splitPos.y) {
 			// top-left pane
-			boundList.push(new L.Bounds(
-				new L.Point(0, 0),
+			boundList.push(new Bounds(
+				new Point(0, 0),
 				this._splitPos
 			));
 		}
 
 		if (this._splitPos.y) {
 			// top-right pane or top half pane
-			boundList.push(new L.Bounds(
-				new L.Point(topLeft.x + this._splitPos.x, 0),
-				new L.Point(bottomRight.x, this._splitPos.y)
+			boundList.push(new Bounds(
+				new Point(topLeft.x + this._splitPos.x, 0),
+				new Point(bottomRight.x, this._splitPos.y)
 			));
 		}
 
 		if (this._splitPos.x) {
 			// bottom-left pane or left half pane
-			boundList.push(new L.Bounds(
-				new L.Point(0, topLeft.y + this._splitPos.y),
-				new L.Point(this._splitPos.x, bottomRight.y)
+			boundList.push(new Bounds(
+				new Point(0, topLeft.y + this._splitPos.y),
+				new Point(this._splitPos.x, bottomRight.y)
 			));
 		}
 
 		if (!boundList.length) {
 			// the full pane (when there are no split-panes active)
-			boundList.push(new L.Bounds(
+			boundList.push(new Bounds(
 				topLeft,
 				bottomRight
 			));
 		} else {
 			// bottom-right/bottom-half/right-half pane
-			boundList.push(new L.Bounds(
+			boundList.push(new Bounds(
 				topLeft.add(this._splitPos),
 				bottomRight
 			));
 		}
 
 		return boundList;
-	},
+	}
 
-	getTwipsBoundList: function (pxBounds) {
+	public getTwipsBoundList(pxBounds: Bounds): Bounds[] {
 		var bounds = this.getPxBoundList(pxBounds);
 		var docLayer = this._docLayer;
 		return bounds.map(function (bound) {
-			return new L.Bounds(
-				docLayer._corePixelsToTwips(bound.min),
-				docLayer._corePixelsToTwips(bound.max)
+			return new Bounds(
+				docLayer._corePixelsToTwips(bound.min) as Point,
+				docLayer._corePixelsToTwips(bound.max) as Point
 			);
 		});
-	},
+	}
 
-	intersectsVisible: function (areaPx) {
-		var pixBounds = this._map.getPixelBoundsCore();
+	public intersectsVisible(areaPx: Bounds): boolean {
+		var pixBounds = this._map.getPixelBoundsCore() as Bounds;
 		var boundList = this.getPxBoundList(pixBounds);
 		for (var i = 0; i < boundList.length; ++i) {
 			if (areaPx.intersects(boundList[i])) {
@@ -236,5 +256,9 @@ L.SplitPanesContext = L.Class.extend({
 		}
 
 		return false;
-	},
-});
+	}
+}
+
+}
+
+L.SplitPanesContext = cool.SplitPanesContext;
