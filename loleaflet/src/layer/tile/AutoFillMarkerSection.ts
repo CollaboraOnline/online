@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* See CanvasSectionContainer.ts for explanations. */
 
 declare var L: any;
@@ -27,8 +26,8 @@ class AutoFillMarkerSection {
 	zIndex: number = L.CSections.AutoFillMarker.zIndex;
 	interactable: boolean = true;
 	sectionProperties: any = {};
-	stopPropagating: Function; // Implemented by section container.
-	setPosition: Function; // Implemented by section container. Document objects only.
+	stopPropagating: () => void; // Implemented by section container.
+	setPosition: (x: number, y: number) => void; // Implemented by section container. Document objects only.
 	map: any;
 	cursorBorderWidth: number = 2;
 	selectionBorderWidth: number = 1;
@@ -63,7 +62,7 @@ class AutoFillMarkerSection {
 	}
 
 	public onResize () {
-
+		return;
 	}
 
 	private setMarkerPosition () {
@@ -225,12 +224,12 @@ class AutoFillMarkerSection {
 		this.setMarkerPosition();
 	}
 
-	public onMouseWheel () {}
-	public onClick () {}
-	public onDoubleClick () {}
-	public onContextMenu () {}
-	public onLongPress () {}
-	public onMultiTouchStart () {}
-	public onMultiTouchMove () {}
-	public onMultiTouchEnd () {}
-}
+	public onMouseWheel () { return; }
+	public onClick () { return; }
+	public onDoubleClick () { return; }
+	public onContextMenu () { return; }
+	public onLongPress () { return; }
+	public onMultiTouchStart () { return; }
+	public onMultiTouchMove () { return; }
+	public onMultiTouchEnd () { return; }
+};
