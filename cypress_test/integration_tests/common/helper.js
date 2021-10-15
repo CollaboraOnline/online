@@ -430,7 +430,7 @@ function clearAllText(frameId) {
 	selectAllText(frameId);
 
 	// Then remove
-	typeIntoDocument('{del}',frameId);
+	typeIntoDocument('{backspace}',frameId);
 
 	textSelectionShouldNotExist(frameId);
 
