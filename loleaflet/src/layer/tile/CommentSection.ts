@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* See CanvasSectionContainer.ts for explanations. */
 
 declare var L: any;
@@ -32,8 +31,13 @@ class Comment {
 	zIndex: number = L.CSections.Comment.zIndex;
 	interactable: boolean = true;
 	sectionProperties: any = {};
-	stopPropagating: Function; // Implemented by section container.
-	setPosition: Function; // Implemented by section container. Document objects only.
+
+	// Implemented by section container.
+	stopPropagating: () => void;
+
+	// Implemented by section container. Document objects only.
+	setPosition: (x: number, y: number) => void;
+
 	map: any;
 	pendingInit: boolean = true;
 	isCollapsed: boolean = false;
@@ -683,7 +687,7 @@ class Comment {
 				this.onSaveComment(e);
 			}
 			else {
-				if (!this.containerObject.testing)
+				if (!this.containerObject.testing) // eslint-disable-line no-lonely-if
 					this.onCancelClick(e);
 				else {
 					var insertButton = document.getElementById('menu-insertcomment');
@@ -703,8 +707,8 @@ class Comment {
 			this.onReplyClick(e);
 		}
 		else {
-            this.sectionProperties.nodeReply.style.display = 'none';
-        }
+			this.sectionProperties.nodeReply.style.display = 'none';
+		}
 		app.view.commentHasFocus = false;
 	}
 
@@ -782,12 +786,12 @@ class Comment {
 	}
 
 	private doesRectangleContainPoint (rectangle: any, point: Array<number>): boolean {
-        if (point[0] >= rectangle[0] && point[0] <= rectangle[0] + rectangle[2]) {
-            if (point[1] >= rectangle[1] && point[1] <= rectangle[1] + rectangle[3]) {
-                return true;
-            }
-        }
-        return false;
+		if (point[0] >= rectangle[0] && point[0] <= rectangle[0] + rectangle[2]) {
+			if (point[1] >= rectangle[1] && point[1] <= rectangle[1] + rectangle[3]) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public onClick (point: Array<number>, e: MouseEvent) {
@@ -821,11 +825,11 @@ class Comment {
 
 				for (var i: number = 0; i < this.sectionProperties.data.rectangles.length;i ++) {
 					var x = rectangles[i][0] - this.myTopLeft[0];
-                    var y = rectangles[i][1] - this.myTopLeft[1];
-                    var w = rectangles[i][2] > 3 ? rectangles[i][2]: 3;
-                    var h = rectangles[i][3];
+					var y = rectangles[i][1] - this.myTopLeft[1];
+					var w = rectangles[i][2] > 3 ? rectangles[i][2]: 3;
+					var h = rectangles[i][3];
 
-                    this.context.fillRect(x, y, w , h);
+					this.context.fillRect(x, y, w , h);
 				}
 
 				this.context.globalAlpha = 1;
@@ -833,7 +837,9 @@ class Comment {
 		}
 	}
 
-	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {}
+	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
+		return;
+	}
 
 	public onMouseUp (point: Array<number>, e: MouseEvent) {
 		// Hammer.js doesn't fire onClick event after touchEnd event.
@@ -848,7 +854,9 @@ class Comment {
 		}
 	}
 
-	public onMouseDown (point: Array<number>, e: MouseEvent) {}
+	public onMouseDown (point: Array<number>, e: MouseEvent) {
+		return;
+	}
 
 	private calcContinueWithMouseEvent (): boolean {
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet') {
@@ -914,30 +922,29 @@ class Comment {
 			this.sectionProperties.commentListSection.sectionProperties.selectedComment = null;
 
 		this.sectionProperties.commentListSection.hideArrow();
-		var that = this;
 		var container = this.sectionProperties.container;
 		if (container && container.parentElement) {
-			that.hideMarker();
+			this.hideMarker();
 			var c: number = 0;
-            while (c < 10) {
-                try {
-                    container.parentElement.removeChild(container);
-                    break;
-                }
-                catch (e) {
-                    c++;
-                }
-            }
+			while (c < 10) {
+				try {
+					container.parentElement.removeChild(container);
+					break;
+				}
+				catch (e) {
+					c++;
+				}
+			}
 		}
 	}
 
-	public onMouseWheel () {}
-	public onDoubleClick () {}
-	public onContextMenu () {}
-	public onLongPress () {}
-	public onMultiTouchStart () {}
-	public onMultiTouchMove () {}
-	public onMultiTouchEnd () {}
+	public onMouseWheel () { return; }
+	public onDoubleClick () { return; }
+	public onContextMenu () { return; }
+	public onLongPress () { return; }
+	public onMultiTouchStart () { return; }
+	public onMultiTouchMove () { return; }
+	public onMultiTouchEnd () { return; }
 
 	public setCollapsed() {
 		this.isCollapsed = true;
@@ -956,4 +963,5 @@ class Comment {
 		this.sectionProperties.collapsed.style.display = 'none';
 		this.sectionProperties.wrapper.style.display = '';
 	}
-}
+};
+
