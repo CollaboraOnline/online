@@ -2008,20 +2008,12 @@ L.CanvasTileLayer = L.Layer.extend({
 	renderDarkOverlay: function () {
 		var zoom = this._map.getZoom();
 
-		var northEastTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getNorthEast(), zoom);
-		//var eastTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getNorthEast(), zoom).x;
-		var southWestTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getSouthWest(), zoom);
-		//var westTwips = this._map._docLayer._latLngToTwips(this._graphicSelection.getSouthWest(), zoom).x;
+		var northEastPoint = this._latLngToCPoints(this._graphicSelection.getNorthEast(), zoom);
+		var southWestPoint = this._latLngToCPoints(this._graphicSelection.getSouthWest(), zoom);
 
-		var northCore = this._twipsToCorePixels(northEastTwips).y;
-		var eastCore = this._twipsToCorePixels(northEastTwips).x;
-		var southCore = this._twipsToCorePixels(southWestTwips).y;
-		var westCore = this._twipsToCorePixels(southWestTwips).x;
-
-		//this._map.addObjectFocusDarkOverlay(xTwips, yTwips, wTwips, hTwips);
 		this._cellCSelections.addObjectFocusDarkOverlay(new CBounds(
-			new CPoint(eastCore, northCore),
-			new CPoint(westCore, southCore)
+			northEastPoint,
+			southWestPoint
 		));
 	},
 
@@ -2035,11 +2027,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		else if (textMsg.match('INPLACE EXIT')) {
 
 			this._cellCSelections.removeObjectFocusDarkOverlay();
-			//this._map.removeObjectFocusDarkOverlay();
 		}
 		else if (textMsg.match('INPLACE')) {
 			if (!this._cellCSelections.hasObjectFocusDarkOverlay()) {
-				//if (!this._map.hasObjectFocusDarkOverlay()) {
 				textMsg = '[' + textMsg.substr('graphicselection:'.length) + ']';
 				try {
 					var msgData = JSON.parse(textMsg);
@@ -4592,7 +4582,6 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_getGraphicSelectionRectangle: function (rectangle) {
-		//todo fix usages due to CDarkOverlay implementation
 		if (!(rectangle instanceof L.Bounds) || !this.options.printTwipsMsgsEnabled || !this.sheetGeometry) {
 			return rectangle;
 		}
@@ -5541,6 +5530,11 @@ L.CanvasTileLayer = L.Layer.extend({
 	_latLngToTwips: function (latLng, zoom) {
 		var pixels = this._map.project(latLng, zoom);
 		return this._cssPixelsToTwips(pixels);
+	},
+
+	_latLngToCPoints: function(latLng, zoom) {
+		var pixels = this._map.project(latLng, zoom);
+		return new CPoint (pixels.x * app.dpiScale, pixels.y * app.dpiScale);
 	},
 
 	_twipsToPixels: function (twips) { // css pixels
