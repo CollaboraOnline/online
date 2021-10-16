@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* See CanvasSectionContainer.ts for explanations. */
 
 L.Map.include({
@@ -57,8 +56,12 @@ class CommentSection {
 	zIndex: number = L.CSections.CommentList.zIndex;
 	interactable: boolean = false;
 	sectionProperties: any = {};
-	stopPropagating: Function; // Implemented by section container.
-	setPosition: Function; // Implemented by section container. Document objects only.
+
+	// Implemented by section container.
+	stopPropagating: () => void;
+
+	// Implemented by section container. Document objects only.
+	setPosition: (x: number, y: number) => void;
 	map: any;
 
 	constructor () {
@@ -85,8 +88,7 @@ class CommentSection {
 		this.map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
 
 		this.map.on('zoomend', function() {
-			var that = this;
-			that.layout(true);
+			this.layout(true);
 		}, this);
 
 		this.backgroundColor = this.containerObject.getClearColor();
@@ -358,7 +360,6 @@ class CommentSection {
 	}
 
 	public newAnnotationVex (comment: any, addCommentFn: any, isMod: any) {
-		var that = this;
 		var commentData = comment.sectionProperties.data;
 
 		var dialog = vex.dialog.open({
@@ -379,12 +380,12 @@ class CommentSection {
 
 					addCommentFn.call(annotation, annotation, comment);
 					if (!isMod)
-						that.containerObject.removeSection(annotation);
+						this.containerObject.removeSection(annotation);
 				}
 				else {
-					that.cancel(comment);
+					this.cancel(comment);
 				}
-			}
+			}.bind(this)
 		});
 
 		var tagTd = 'td',
@@ -558,8 +559,9 @@ class CommentSection {
 	public modify (annotation: any) {
 		var newAnnotationInCollapsedMode = this.isCollapsed && annotation.isCollapsed;
 		if ((<any>window).mode.isMobile() || (<any>window).mode.isTablet() || newAnnotationInCollapsedMode) {
-			var that = this;
-			this.newAnnotationVex(annotation, function(annotation: any) { that.save(annotation); }, /* isMod */ true);
+			this.newAnnotationVex(annotation, function(annotation: any) {
+				this.save(annotation);
+			}.bind(this), /* isMod */ true);
 		} else {
 			annotation.edit();
 			this.select(annotation);
@@ -740,7 +742,6 @@ class CommentSection {
 	}
 
 	private initializeContextMenus () {
-		var that = this;
 		var docLayer = this.sectionProperties.docLayer;
 		L.installContextMenu({
 			selector: '.loleaflet-annotation-menu',
@@ -752,42 +753,42 @@ class CommentSection {
 						modify: {
 							name: _('Modify'),
 							callback: function (key: any, options: any) {
-								that.modify.call(that, options.$trigger[0].annotation);
-							}
+								this.modify.call(this, options.$trigger[0].annotation);
+							}.bind(this)
 						},
 						reply: (docLayer._docType !== 'text' && docLayer._docType !== 'presentation') ? undefined : {
 							name: _('Reply'),
 							callback: function (key: any, options: any) {
-								that.reply.call(that, options.$trigger[0].annotation);
-							}
+								this.reply.call(this, options.$trigger[0].annotation);
+							}.bind(this)
 						},
 						remove: {
 							name: _('Remove'),
 							callback: function (key: any, options: any) {
-								that.remove.call(that, options.$trigger[0].annotation.sectionProperties.data.id);
-							}
+								this.remove.call(this, options.$trigger[0].annotation.sectionProperties.data.id);
+							}.bind(this)
 						},
 						removeThread: docLayer._docType !== 'text' || $trigger[0].isRoot === true ? undefined : {
 							name: _('Remove Thread'),
 							callback: function (key: any, options: any) {
-								that.removeThread.call(that, options.$trigger[0].annotation.sectionProperties.data.id);
-							}
+								this.removeThread.call(this, options.$trigger[0].annotation.sectionProperties.data.id);
+							}.bind(this)
 						},
 						resolve: docLayer._docType !== 'text' ? undefined : {
 							name: $trigger[0].annotation.sectionProperties.data.resolved === 'false' ? _('Resolve') : _('Unresolve'),
 							callback: function (key: any, options: any) {
-								that.resolve.call(that, options.$trigger[0].annotation);
-							}
+								this.resolve.call(this, options.$trigger[0].annotation);
+							}.bind(this)
 						},
 						resolveThread: docLayer._docType !== 'text' || $trigger[0].isRoot === true ? undefined : {
-							name: that.isThreadResolved($trigger[0].annotation) ? _('Unresolve Thread') : _('Resolve Thread'),
+							name: this.isThreadResolved($trigger[0].annotation) ? _('Unresolve Thread') : _('Resolve Thread'),
 							callback: function (key: any, options: any) {
-								that.resolveThread.call(that, options.$trigger[0].annotation);
-							}
+								this.resolveThread.call(this, options.$trigger[0].annotation);
+							}.bind(this)
 						}
 					},
 				};
-			},
+			}.bind(this),
 			events: {
 				show: function (options: any) {
 					options.$trigger[0].annotation.sectionProperties.contextMenu = true;
@@ -805,8 +806,8 @@ class CommentSection {
 				modify: {
 					name: _('Comment'),
 					callback: function (key: any, options: any) {
-						that.modify.call(that, options.$trigger[0].annotation);
-					}
+						this.modify.call(this, options.$trigger[0].annotation);
+					}.bind(this)
 				}
 			},
 			events: {
@@ -828,11 +829,11 @@ class CommentSection {
 	}
 
 	public onDraw () {
-
+		return;
 	}
 
 	public onMouseMove (point: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
-
+		return;
 	}
 
 	public onNewDocumentTopLeft () {
@@ -1110,9 +1111,10 @@ class CommentSection {
 		this.sectionProperties.selectedComment = annotation;
 		this.update();
 
-		if (justOpened && !(<any>window).mode.isMobile() && annotation.isCollapsed
-			&& this.sectionProperties.docLayer._docType !== 'spreadsheet')
-				this.openMobileWizardPopup(annotation);
+		if (justOpened && !(<any>window).mode.isMobile() && annotation.isCollapsed &&
+			this.sectionProperties.docLayer._docType !== 'spreadsheet') {
+			this.openMobileWizardPopup(annotation);
+		}
 	}
 
 	public stringToRectangles (str: string) {
@@ -1510,22 +1512,21 @@ class CommentSection {
 			}
 		}
 
-        lastY += this.containerObject.documentTopLeft[1];
-        if (lastY > app.file.size.pixels[1])
-            app.view.size.pixels[1] = lastY;
-        else
-            app.view.size.pixels[1] = app.file.size.pixels[1];
+		lastY += this.containerObject.documentTopLeft[1];
+		if (lastY > app.file.size.pixels[1])
+			app.view.size.pixels[1] = lastY;
+		else
+			app.view.size.pixels[1] = app.file.size.pixels[1];
 	}
 
 	private layout (zoom: any = null) {
 		if (zoom)
 			this.doLayout();
 		else if (!this.sectionProperties.layoutTimer) {
-			var that = this;
-			that.sectionProperties.layoutTimer = setTimeout(function() {
-				delete that.sectionProperties.layoutTimer;
-				that.doLayout();
-			}, 10 /* ms */);
+			this.sectionProperties.layoutTimer = setTimeout(function() {
+				delete this.sectionProperties.layoutTimer;
+				this.doLayout();
+			}.bind(this), 10 /* ms */);
 		} // else - avoid excessive re-layout
 	}
 
@@ -1551,7 +1552,7 @@ class CommentSection {
 
 	private updateReplyCount() {
 		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
-			var comment = this.sectionProperties.commentList[i]
+			var comment = this.sectionProperties.commentList[i];
 			var replyCount = 0;
 
 			for (var j = 0; j < this.sectionProperties.commentList.length; j++) {
@@ -1722,16 +1723,16 @@ class CommentSection {
 		this.checkSize();
 	}
 
-	public onMouseUp () {}
-	public onMouseDown () {}
-	public onMouseEnter () {}
-	public onMouseLeave () {}
-	public onMouseWheel () {}
-	public onClick () {}
-	public onDoubleClick () {}
-	public onContextMenu () {}
-	public onLongPress () {}
-	public onMultiTouchStart () {}
-	public onMultiTouchMove () {}
-	public onMultiTouchEnd () {}
-}
+	public onMouseUp () { return; }
+	public onMouseDown () { return; }
+	public onMouseEnter () { return; }
+	public onMouseLeave () { return; }
+	public onMouseWheel () { return; }
+	public onClick () { return; }
+	public onDoubleClick () { return; }
+	public onContextMenu () { return; }
+	public onLongPress () { return; }
+	public onMultiTouchStart () { return; }
+	public onMultiTouchMove () { return; }
+	public onMultiTouchEnd () { return; }
+};
