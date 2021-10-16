@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* See CanvasSectionContainer.ts for explanations. */
 
 // We are using typescript without modules and compile files individually for now. Typescript needs to know about global definitions.
@@ -28,9 +27,16 @@ class ScrollSection {
 	isAnimating: boolean = false; // This variable is set by the CanvasSectionContainer class.
 	windowSection = true; // This section covers the entire canvas.
 	sectionProperties: any = {};
-	stopPropagating: Function; // Implemented by container.
-	startAnimating: Function; // Implemented by container.
-	resetAnimation: Function; // Implemented by container.
+
+	// Implemented by container.
+	stopPropagating: () => void;
+
+	// Implemented by container.
+	startAnimating: (options: any) => boolean;
+
+	// Implemented by container.
+	resetAnimation: () => void;
+
 	map: any;
 	autoScrollTimer: any;
 	pendingScrollEvent: any = null;
@@ -101,7 +107,7 @@ class ScrollSection {
 
 	public completePendingScroll() {
 		if (this.pendingScrollEvent) {
-			this.onScrollTo(this.pendingScrollEvent, true /* force */)
+			this.onScrollTo(this.pendingScrollEvent, true /* force */);
 			this.pendingScrollEvent = null;
 		}
 	}
@@ -233,7 +239,7 @@ class ScrollSection {
 	}
 
 	public getVerticalScrollProperties () :any {
-		this.calculateYMinMax()
+		this.calculateYMinMax();
 		var result: any = {};
 		result.scrollLength = this.getVerticalScrollLength(); // The length of the railway that the scroll bar moves on up & down.
 		result.scrollSize = this.calculateVerticalScrollSize(result.scrollLength); // Size of the scroll bar.
@@ -296,7 +302,7 @@ class ScrollSection {
 	}
 
 	public getHorizontalScrollProperties () :any {
-		this.calculateXMinMax()
+		this.calculateXMinMax();
 		var result: any = {};
 		result.scrollLength = this.getHorizontalScrollLength(); // The length of the railway that the scroll bar moves on left & right.
 		result.scrollSize = this.calculateHorizontalScrollSize(result.scrollLength); // Width of the scroll bar.
@@ -380,7 +386,7 @@ class ScrollSection {
 
 		var startX = this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
 
-        this.context.fillRect(startX, scrollProps.startY, this.sectionProperties.scrollBarThickness, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness);
+		this.context.fillRect(startX, scrollProps.startY, this.sectionProperties.scrollBarThickness, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness);
 
 		this.context.globalAlpha = 1.0;
 	}
@@ -554,12 +560,12 @@ class ScrollSection {
 	}
 
 	public scrollVerticalWithOffset (offset: number) {
-        var go = true;
+		var go = true;
 		if (offset > 0) {
-            if (this.documentTopLeft[1] + offset > this.sectionProperties.yMax)
-                offset = this.sectionProperties.yMax - this.documentTopLeft[1];
-            if (offset < 0)
-                go = false;
+			if (this.documentTopLeft[1] + offset > this.sectionProperties.yMax)
+				offset = this.sectionProperties.yMax - this.documentTopLeft[1];
+			if (offset < 0)
+				go = false;
 		}
 		else {
 			if (this.documentTopLeft[1] + offset < this.sectionProperties.yMin)
@@ -577,10 +583,10 @@ class ScrollSection {
 	public scrollHorizontalWithOffset (offset: number) {
 		var go = true;
 		if (offset > 0) {
-            if (this.documentTopLeft[0] + offset > this.sectionProperties.xMax)
+			if (this.documentTopLeft[0] + offset > this.sectionProperties.xMax)
 				offset = this.sectionProperties.xMax - this.documentTopLeft[0];
-            if (offset < 0)
-                go = false;
+			if (offset < 0)
+				go = false;
 		}
 		else {
 			if (this.documentTopLeft[0] + offset < this.sectionProperties.xMin)
@@ -742,18 +748,18 @@ class ScrollSection {
 		}
 	}
 
-	public onMouseEnter () {}
-	public onClick () {}
-	public onDoubleClick () {}
-	public onContextMenu () {}
-	public onLongPress () {}
-	public onMultiTouchStart () {}
-	public onMultiTouchMove () {}
-	public onMultiTouchEnd () {}
-	public onResize () {}
-	public onNewDocumentTopLeft () {}
+	public onMouseEnter () { return; }
+	public onClick () { return; }
+	public onDoubleClick () { return; }
+	public onContextMenu () { return; }
+	public onLongPress () { return; }
+	public onMultiTouchStart () { return; }
+	public onMultiTouchMove () { return; }
+	public onMultiTouchEnd () { return; }
+	public onResize () { return; }
+	public onNewDocumentTopLeft () { return; }
 }
 
 L.getNewScrollSection = function () {
 	return new ScrollSection();
-}
+};
