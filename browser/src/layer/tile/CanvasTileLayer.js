@@ -2008,10 +2008,10 @@ L.CanvasTileLayer = L.Layer.extend({
 	renderDarkOverlay: function () {
 		var zoom = this._map.getZoom();
 
-		var northEastPoint = this._latLngToCPoints(this._graphicSelection.getNorthEast(), zoom);
-		var southWestPoint = this._latLngToCPoints(this._graphicSelection.getSouthWest(), zoom);
+		var northEastPoint = this._latLngToCorePixels(this._graphicSelection.getNorthEast(), zoom);
+		var southWestPoint = this._latLngToCorePixels(this._graphicSelection.getSouthWest(), zoom);
 
-		this._cellCSelections.addObjectFocusDarkOverlay(new CBounds(
+		this._cellCSelections.addObjectFocusDarkOverlay(new L.Bounds(
 			northEastPoint,
 			southWestPoint
 		));
@@ -5491,12 +5491,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			twips.y / this._tileHeightTwips * this._tileSize);
 	},
 
-	_twipsToCPoints: function (twips) {
-		return new CPoint(
-			twips.x / this._tileWidthTwips * this._tileSize,
-			twips.y / this._tileHeightTwips * this._tileSize);
-	},
-
 	_twipsToCorePixelsBounds: function (twips) {
 		return new L.Bounds(
 			this._twipsToCorePixels(twips.min),
@@ -5532,9 +5526,11 @@ L.CanvasTileLayer = L.Layer.extend({
 		return this._cssPixelsToTwips(pixels);
 	},
 
-	_latLngToCPoints: function(latLng, zoom) {
+	_latLngToCorePixels: function(latLng, zoom) {
 		var pixels = this._map.project(latLng, zoom);
-		return new CPoint (pixels.x * app.dpiScale, pixels.y * app.dpiScale);
+		return new L.Point (
+			pixels.x * app.dpiScale,
+			pixels.y * app.dpiScale);
 	},
 
 	_twipsToPixels: function (twips) { // css pixels
