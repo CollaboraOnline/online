@@ -29,9 +29,11 @@ ENV LC_CTYPE C.UTF-8
 
 # Setup scripts for Collabora Online
 ADD /scripts/install-collabora-online-ubuntu.sh /
-ADD /scripts/start-collabora-online.sh /
 RUN bash install-collabora-online-ubuntu.sh
 RUN rm -rf /install-collabora-online-ubuntu.sh
+
+# Start script for Collabora Online
+ADD /scripts/start-collabora-online.sh /
 
 EXPOSE 9980
 
