@@ -40,7 +40,7 @@ var CStyleData = L.Class.extend({
 	}
 });
 
-// CSelections is used to add/modify/clear selections (text/cell-area(s))
+// CSelections is used to add/modify/clear selections (text/cell-area(s)/ole)
 // on canvas using polygons (CPolygon).
 var CSelections = L.Class.extend({
 
@@ -2011,7 +2011,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var northEastPoint = this._latLngToCorePixels(this._graphicSelection.getNorthEast(), zoom);
 		var southWestPoint = this._latLngToCorePixels(this._graphicSelection.getSouthWest(), zoom);
 
-		this._cellCSelections.addObjectFocusDarkOverlay(new L.Bounds(
+		this._oleCSelections.addObjectFocusDarkOverlay(new L.Bounds(
 			northEastPoint,
 			southWestPoint
 		));
@@ -2026,10 +2026,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 		else if (textMsg.match('INPLACE EXIT')) {
 
-			this._cellCSelections.removeObjectFocusDarkOverlay();
+			this._oleCSelections.removeObjectFocusDarkOverlay();
 		}
 		else if (textMsg.match('INPLACE')) {
-			if (!this._cellCSelections.hasObjectFocusDarkOverlay()) {
+			if (!this._oleCSelections.hasObjectFocusDarkOverlay()) {
 				textMsg = '[' + textMsg.substr('graphicselection:'.length) + ']';
 				try {
 					var msgData = JSON.parse(textMsg);
@@ -2051,8 +2051,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._extractAndSetGraphicSelection(msgData);
 
 			// Update the dark overlay on zooming & scrolling
-			if (this._cellCSelections.hasObjectFocusDarkOverlay()) {
-				this._cellCSelections.removeObjectFocusDarkOverlay();
+			if (this._oleCSelections.hasObjectFocusDarkOverlay()) {
+				this._oleCSelections.removeObjectFocusDarkOverlay();
 				this.renderDarkOverlay();
 			}
 
@@ -3238,6 +3238,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._textCSelections.clear();
 		// hide the cell selection
 		this._cellCSelections.clear();
+		// hide the ole selection
+		this._oleCSelections.clear();
 		// hide the selection handles
 		this._onUpdateTextSelection();
 		// hide the graphic selection
@@ -5168,6 +5170,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._selectionsDataDiv, this._map, false /* isView */, undefined, true /* isText */);
 		this._cellCSelections = new CSelections(undefined, this._canvasOverlay,
 			this._selectionsDataDiv, this._map, false /* isView */, undefined, false /* isText */);
+		this._oleCSelections = new CSelections(undefined, this._canvasOverlay,
+			this._selectionsDataDiv, this._map, false /* isView */, undefined, false /* isText */);
 		this._references = new CReferences(this._canvasOverlay);
 		this._referencesAll = [];
 
@@ -5273,6 +5277,10 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (!this._textCSelections.empty()) {
 			this._textCSelections.clear();
+		}
+
+		if (!this._oleCSelections.empty()) {
+			this._oleCSelections.clear();
 		}
 
 		if (this._cursorMarker && this._cursorMarker.isDomAttached()) {
