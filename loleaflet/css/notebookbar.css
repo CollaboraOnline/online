@@ -183,7 +183,7 @@
 	transition: all 0.25s;
 }
 
-.hasnotebookbar.spreadsheet-color-indicator #table-shortcutstoolbox {
+.hasnotebookbar.spreadsheet-color-indicator #table-shortcutstoolbox .unotoolbutton:not(.integrator-shortcut){
 	-webkit-filter: hue-rotate(290deg);
 	filter: hue-rotate(290deg);
 }
