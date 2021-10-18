@@ -38,9 +38,9 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
         std::string key;
 
         // detect the UIMode or component
-        if (keyValue[0] == "UIMode")
+        if (keyValue.equals(0, "UIMode"))
         {
-            if (keyValue[1] == "classic" || keyValue[1] == "notebookbar")
+            if (keyValue.equals(1, "classic") || keyValue.equals(1, "notebookbar"))
             {
                 json.set("uiMode", keyValue[1]);
                 uiMode = keyValue[1];
@@ -77,7 +77,7 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
         if (key == "Ruler" || key == "Sidebar" || key == "Statusbar")
         {
             bool value(true);
-            if (keyValue[1] == "false" || keyValue[1] == "False" || keyValue[1] == "0")
+            if (keyValue.equals(1, "false") || keyValue.equals(1, "False") || keyValue.equals(1, "0"))
                 value = false;
 
             currentDef->set("Show" + key, value);

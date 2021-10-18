@@ -1747,22 +1747,22 @@ bool ChildSession::unoCommand(const char* /*buffer*/, int /*length*/, const Stri
     unoCommandsRecorder.addUnoCommandInfo(formatUnoCommandInfo(getId(), tokens[1]));
 
     // we need to get LOK_CALLBACK_UNO_COMMAND_RESULT callback when saving
-    const bool bNotify = (tokens[1] == ".uno:Save" ||
-                          tokens[1] == ".uno:Undo" ||
-                          tokens[1] == ".uno:Redo" ||
+    const bool bNotify = (tokens.equals(1, ".uno:Save") ||
+                          tokens.equals(1, ".uno:Undo") ||
+                          tokens.equals(1, ".uno:Redo") ||
                           tokens.startsWith(1, "vnd.sun.star.script:"));
 
     getLOKitDocument()->setView(_viewId);
 
     if (tokens.size() == 2)
     {
-        if (tokens[1] == ".uno:fakeDiskFull")
+        if (tokens.equals(1, ".uno:fakeDiskFull"))
         {
             _docManager->alertAllUsers("internal", "diskfull");
         }
         else
         {
-            if (tokens[1] == ".uno:Copy" || tokens[1] == ".uno:CopyHyperlinkLocation")
+            if (tokens.equals(1, ".uno:Copy") || tokens.equals(1, ".uno:CopyHyperlinkLocation"))
                 _copyToClipboard = true;
 
             getLOKitDocument()->postUnoCommand(tokens[1].c_str(), nullptr, bNotify);
@@ -1997,9 +1997,9 @@ bool ChildSession::sendWindowCommand(const char* /*buffer*/, int /*length*/, con
 
     getLOKitDocument()->setView(_viewId);
 
-    if (tokens.size() > 2 && tokens[2] == "close")
+    if (tokens.size() > 2 && tokens.equals(2, "close"))
         getLOKitDocument()->postWindow(winId, LOK_WINDOW_CLOSE, nullptr);
-    else if (tokens.size() > 3 && tokens[2] == "paste")
+    else if (tokens.size() > 3 && tokens.equals(2, "paste"))
         getLOKitDocument()->postWindow(winId, LOK_WINDOW_PASTE, tokens[3].c_str());
 
     return true;
