@@ -585,6 +585,7 @@ L.TileSectionManager = L.Class.extend({
 					painter.setWaitForTiles(false);
 					painter._sectionContainer.setZoomChanged(false);
 					map.enableTextInput();
+					map.focus(map.canAcceptKeyboardInput());
 					// Paint everything.
 					painter._sectionContainer.requestReDraw();
 					// Don't let a subsequent pinchZoom start before finishing all steps till this point.
@@ -598,7 +599,6 @@ L.TileSectionManager = L.Class.extend({
 			}
 
 			finishingRAF = requestAnimationFrame(finishAnimation);
-
 		};
 		finishAnimation();
 	},
