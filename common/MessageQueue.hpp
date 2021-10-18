@@ -89,7 +89,7 @@ protected:
     virtual void put_impl(const Payload& value)
     {
         StringVector tokens = Util::tokenize(value.data(), value.size());
-        if (tokens[1] == "textinput")
+        if (tokens.equals(1, "textinput"))
         {
             const std::string newMsg = combineTextInput(tokens);
             if (!newMsg.empty())
@@ -98,7 +98,7 @@ protected:
                 return;
             }
         }
-        else if (tokens[1] == "removetextcontext")
+        else if (tokens.equals(1, "removetextcontext"))
         {
             const std::string newMsg = combineRemoveText(tokens);
             if (!newMsg.empty())
@@ -149,17 +149,17 @@ protected:
             // If any messages of these types are present before the current ("textinput") message,
             // no combination is possible.
             if (queuedTokens.size() == 1 ||
-                (queuedTokens[0] == tokens[0] &&
-                 (queuedTokens[1] == "key" ||
-                  queuedTokens[1] == "mouse" ||
-                  queuedTokens[1] == "removetextcontext" ||
-                  queuedTokens[1] == "windowkey")))
+                (queuedTokens.equals(0, tokens, 0) &&
+                 (queuedTokens.equals(1, "key") ||
+                  queuedTokens.equals(1, "mouse") ||
+                  queuedTokens.equals(1, "removetextcontext") ||
+                  queuedTokens.equals(1, "windowkey"))))
                 return std::string();
 
             std::string queuedId;
             std::string queuedText;
-            if (queuedTokens[0] == tokens[0] &&
-                queuedTokens[1] == "textinput" &&
+            if (queuedTokens.equals(0, tokens, 0) &&
+                queuedTokens.equals(1, "textinput") &&
                 LOOLProtocol::getTokenString(queuedTokens, "id", queuedId) &&
                 queuedId == id &&
                 LOOLProtocol::getTokenString(queuedTokens, "text", queuedText))
@@ -208,18 +208,18 @@ protected:
             // If any messages of these types are present before the current (removetextcontext)
             // message, no combination is possible.
             if (queuedTokens.size() == 1 ||
-                (queuedTokens[0] == tokens[0] &&
-                 (queuedTokens[1] == "key" ||
-                  queuedTokens[1] == "mouse" ||
-                  queuedTokens[1] == "textinput" ||
-                  queuedTokens[1] == "windowkey")))
+                (queuedTokens.equals(0, tokens, 0) &&
+                 (queuedTokens.equals(1, "key") ||
+                  queuedTokens.equals(1, "mouse") ||
+                  queuedTokens.equals(1, "textinput") ||
+                  queuedTokens.equals(1, "windowkey"))))
                 return std::string();
 
             std::string queuedId;
             int queuedBefore;
             int queuedAfter;
-            if (queuedTokens[0] == tokens[0] &&
-                queuedTokens[1] == "removetextcontext" &&
+            if (queuedTokens.equals(0, tokens, 0) &&
+                queuedTokens.equals(1, "removetextcontext") &&
                 LOOLProtocol::getTokenStringFromMessage(queuedMessage, "id", queuedId) &&
                 queuedId == id &&
                 LOOLProtocol::getTokenIntegerFromMessage(queuedMessage, "before", queuedBefore) &&

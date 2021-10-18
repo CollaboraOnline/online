@@ -962,38 +962,38 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     {
         return forwardToChild(std::string(buffer, length), docBroker);
     }
-    else if (tokens[0] == "outlinestate" ||
-             tokens[0] == "downloadas" ||
-             tokens[0] == "getchildid" ||
-             tokens[0] == "gettextselection" ||
-             tokens[0] == "paste" ||
-             tokens[0] == "insertfile" ||
-             tokens[0] == "key" ||
-             tokens[0] == "textinput" ||
-             tokens[0] == "windowkey" ||
-             tokens[0] == "mouse" ||
-             tokens[0] == "windowmouse" ||
-             tokens[0] == "windowgesture" ||
-             tokens[0] == "requestloksession" ||
-             tokens[0] == "resetselection" ||
-             tokens[0] == "saveas" ||
-             tokens[0] == "selectgraphic" ||
-             tokens[0] == "selecttext" ||
-             tokens[0] == "windowselecttext" ||
-             tokens[0] == "setpage" ||
-             tokens[0] == "uno" ||
-             tokens[0] == "useractive" ||
-             tokens[0] == "userinactive" ||
-             tokens[0] == "paintwindow" ||
-             tokens[0] == "windowcommand" ||
-             tokens[0] == "signdocument" ||
-             tokens[0] == "asksignaturestatus" ||
-             tokens[0] == "uploadsigneddocument" ||
-             tokens[0] == "exportsignanduploaddocument" ||
-             tokens[0] == "rendershapeselection" ||
-             tokens[0] == "resizewindow" ||
-             tokens[0] == "removetextcontext" ||
-             tokens[0] == "rendersearchresult")
+    else if (tokens.equals(0, "outlinestate") ||
+             tokens.equals(0, "downloadas") ||
+             tokens.equals(0, "getchildid") ||
+             tokens.equals(0, "gettextselection") ||
+             tokens.equals(0, "paste") ||
+             tokens.equals(0, "insertfile") ||
+             tokens.equals(0, "key") ||
+             tokens.equals(0, "textinput") ||
+             tokens.equals(0, "windowkey") ||
+             tokens.equals(0, "mouse") ||
+             tokens.equals(0, "windowmouse") ||
+             tokens.equals(0, "windowgesture") ||
+             tokens.equals(0, "requestloksession") ||
+             tokens.equals(0, "resetselection") ||
+             tokens.equals(0, "saveas") ||
+             tokens.equals(0, "selectgraphic") ||
+             tokens.equals(0, "selecttext") ||
+             tokens.equals(0, "windowselecttext") ||
+             tokens.equals(0, "setpage") ||
+             tokens.equals(0, "uno") ||
+             tokens.equals(0, "useractive") ||
+             tokens.equals(0, "userinactive") ||
+             tokens.equals(0, "paintwindow") ||
+             tokens.equals(0, "windowcommand") ||
+             tokens.equals(0, "signdocument") ||
+             tokens.equals(0, "asksignaturestatus") ||
+             tokens.equals(0, "uploadsigneddocument") ||
+             tokens.equals(0, "exportsignanduploaddocument") ||
+             tokens.equals(0, "rendershapeselection") ||
+             tokens.equals(0, "resizewindow") ||
+             tokens.equals(0, "removetextcontext") ||
+             tokens.equals(0, "rendersearchresult"))
     {
         if (tokens.equals(0, "key"))
             _keyEvents++;
@@ -1426,7 +1426,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 #endif
 
     const auto& tokens = payload->tokens();
-    if (tokens[0] == "unocommandresult:")
+    if (tokens.equals(0, "unocommandresult:"))
     {
         const std::string stringMsg(buffer, length);
         LOG_INF(getName() << ": Command: " << stringMsg);
@@ -1463,7 +1463,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             LOG_WRN("Expected json unocommandresult. Ignoring: " << stringMsg);
         }
     }
-    else if (tokens[0] == "error:")
+    else if (tokens.equals(0, "error:"))
     {
         std::string errorCommand;
         std::string errorKind;
@@ -1504,13 +1504,13 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             }
         }
     }
-    else if (tokens[0] == "curpart:" && tokens.size() == 2)
+    else if (tokens.equals(0, "curpart:") && tokens.size() == 2)
     {
         //TODO: Should forward to client?
         int curPart;
         return getTokenInteger(tokens[1], "part", curPart);
     }
-    else if (tokens[0] == "setpart:" && tokens.size() == 2)
+    else if (tokens.equals(0, "setpart:") && tokens.size() == 2)
     {
         if(!_isTextDocument)
         {
@@ -1530,7 +1530,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
          }
     }
 #if !MOBILEAPP
-    else if (tokens.size() == 3 && tokens[0] == "saveas:")
+    else if (tokens.size() == 3 && tokens.equals(0, "saveas:"))
     {
 
         std::string encodedURL;
@@ -1685,12 +1685,12 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 }
             }
         }
-    } else if (tokens[0] == "textselectioncontent:") {
+    } else if (tokens.equals(0, "textselectioncontent:")) {
 
         postProcessCopyPayload(payload);
         return forwardToClient(payload);
 
-    } else if (tokens[0] == "clipboardcontent:") {
+    } else if (tokens.equals(0, "clipboardcontent:")) {
 
 #if !MOBILEAPP // Most likely nothing of this makes sense in a mobile app
 
@@ -1745,13 +1745,13 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 #endif
         _clipSockets.clear();
         return true;
-    } else if (tokens[0] == "disconnected:") {
+    } else if (tokens.equals(0, "disconnected:")) {
 
         LOG_INF("End of disconnection handshake for " << getId());
         docBroker->finalRemoveSession(getId());
         return true;
     }
-    else if (tokens[0] == "formfieldbutton:") {
+    else if (tokens.equals(0, "formfieldbutton:")) {
         // Do not send redundant messages
         if (_lastSentFormFielButtonMessage == firstLine)
             return true;
@@ -1760,15 +1760,15 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
 
     if (!isDocPasswordProtected())
     {
-        if (tokens[0] == "tile:")
+        if (tokens.equals(0, "tile:"))
         {
             assert(false && "Tile traffic should go through the DocumentBroker-LoKit WS.");
         }
-        else if (tokens[0] == "jsdialog:" && _state == ClientSession::SessionState::LOADING)
+        else if (tokens.equals(0, "jsdialog:") && _state == ClientSession::SessionState::LOADING)
         {
             docBroker->setInteractive(true);
         }
-        else if (tokens[0] == "status:")
+        else if (tokens.equals(0, "status:"))
         {
             setState(ClientSession::SessionState::LIVE);
             docBroker->setInteractive(false);
@@ -1812,7 +1812,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             // Forward the status response to the client.
             return forwardToClient(payload);
         }
-        else if (tokens[0] == "commandvalues:")
+        else if (tokens.equals(0, "commandvalues:"))
         {
             const std::string stringMsg(buffer, length);
             const std::size_t index = stringMsg.find_first_of('{');
@@ -1831,7 +1831,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 }
             }
         }
-        else if (tokens[0] == "invalidatetiles:")
+        else if (tokens.equals(0, "invalidatetiles:"))
         {
             assert(firstLine.size() == static_cast<std::string::size_type>(length));
 
@@ -1841,7 +1841,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             handleTileInvalidation(firstLine, docBroker);
             return ret;
         }
-        else if (tokens[0] == "invalidatecursor:")
+        else if (tokens.equals(0, "invalidatecursor:"))
         {
             assert(firstLine.size() == static_cast<std::string::size_type>(length));
 
@@ -1870,7 +1870,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
                 LOG_ERR("Unable to parse " << firstLine);
             }
         }
-        else if (tokens[0] == "renderfont:")
+        else if (tokens.equals(0, "renderfont:"))
         {
             std::string font, text;
             if (tokens.size() < 3 ||
