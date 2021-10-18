@@ -315,6 +315,7 @@ L.Control.Notebookbar = L.Control.extend({
 				icon: button.imgurl,
 				command: button.unoCommand,
 				postmessage: button.unoCommand ? undefined : true,
+				cssClass: 'integrator-shortcut'
 			}
 		);
 
