@@ -189,7 +189,11 @@ L.Clipboard = L.Class.extend({
 		for (var t = 0; t < types.length; ++t) {
 			if (types[t] === 'Files')
 				continue; // images handled elsewhere.
-			var data = new Blob([dataTransfer.getData(types[t])]);
+			var dataStr = dataTransfer.getData(types[t]);
+			// Avoid types that has no content.
+			if (!dataStr.length)
+				continue;
+			var data = new Blob([dataStr]);
 			console.log('type ' + types[t] + ' length ' + data.size +
 				    ' -> 0x' + data.size.toString(16) + '\n');
 			content.push((types[t] === 'text' ? 'text/plain' : types[t]) + '\n');
