@@ -112,11 +112,7 @@
 	margin: 0 !important;
 }
 
-.notebookbar-shortcuts-bar #Save,
-.notebookbar-shortcuts-bar #Presentation,
-.notebookbar-shortcuts-bar #FullScreen,
-.notebookbar-shortcuts-bar #Undo,
-.notebookbar-shortcuts-bar #Redo {
+.notebookbar-shortcuts-bar .notebookbar.unotoolbutton {
 	height: 27px;
 	width: 24px;
 	display: flex;
