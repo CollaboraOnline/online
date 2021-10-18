@@ -24,10 +24,24 @@ L.Map.Infobar = L.Handler.extend({
 		this._map.off('updateviewslist', this.onUpdateList, this);
 		L.DomEvent.on(window, 'message', this.onMessage, this);
 
-		var url = window.feedbackLocation.replace(/feedback.html/g, 'updatecheck.html');
+		var url = window.feedbackLocation.replace(/Rate\/feedback.html/g, '/UpdateCheck/updatecheck.html');
 		this.remove();
 
-		this._iframeInfobar = L.iframeDialog(url, null,
+		var loolwsdHash = document.querySelector('#loolwsd-version a') || {};
+		var lokitHash = document.querySelector('#lokit-version a') || {};
+
+		loolwsdHash = loolwsdHash ? loolwsdHash.innerText : '';
+		lokitHash = lokitHash ? lokitHash.innerText : '';
+
+		var params = [{ 'loolwsd_git_hash': loolwsdHash },
+			      { 'lokit_git_hash': lokitHash }];
+
+		var options = {
+			prefix: 'div-infobar',
+			method: 'post'
+		};
+
+		this._iframeInfobar = L.iframeDialog(url, params,
 						     L.DomUtil.get('main-document-content'),
 						     options);
 	},
