@@ -1162,7 +1162,7 @@ void WhiteBoxTests::testStringVector()
     CPPUNIT_ASSERT(vector.equals(0, vector2, 0));
     CPPUNIT_ASSERT(!vector.equals(0, vector2, 1));
 
-    // Test stringEquals().
+    // Test startsWith().
     StringVector vector3;
     vector3.push_back("hello, world");
     vector3.push_back("goodbye, world");
@@ -1174,7 +1174,7 @@ void WhiteBoxTests::testStringVector()
     CPPUNIT_ASSERT(vector3.startsWith(1, "goodbye"));
     CPPUNIT_ASSERT(!vector3.startsWith(1, "hello"));
 
-    // Test stringEquals(), StringToken argument version
+    // Test startsWith(), StringToken argument version
     StringToken hello = *vector3.begin();
     StringToken goodbye = *std::next(vector3.begin());
     StringToken unrelated(50, 10); // out of vector3 range
