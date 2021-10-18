@@ -117,6 +117,8 @@ public class LOActivity extends AppCompatActivity {
     private boolean isDocEditable = false;
     private boolean isDocDebuggable = BuildConfig.DEBUG;
     private boolean documentLoaded = false;
+    private boolean modifiedStatus = false;
+    private boolean shouldCopyTempBack = false;
 
     private ClipboardManager clipboardManager;
     private ClipData clipData;
@@ -527,6 +529,11 @@ public class LOActivity extends AppCompatActivity {
     private void copyTempBackToIntent() {
         if (!isDocEditable || mTempFile == null || getIntent().getData() == null || !getIntent().getData().getScheme().equals(ContentResolver.SCHEME_CONTENT))
             return;
+        // no need to write back unmodified file
+        // this will prevent file from updating the modification time.
+        if (!shouldCopyTempBack) {
+            return;
+        }
 
         ContentResolver contentResolver = getContentResolver();
         InputStream inputStream = null;
@@ -554,6 +561,7 @@ public class LOActivity extends AppCompatActivity {
                 }
 
                 Log.i(TAG, "Success copying " + bytes + " bytes from " + mTempFile + " to " + uri);
+                shouldCopyTempBack = modifiedStatus;
             } finally {
                 if (inputStream != null)
                     inputStream.close();
@@ -956,6 +964,19 @@ public class LOActivity extends AppCompatActivity {
                     }
                 }
             });
+        } else if (message.startsWith("'statechanged: .uno:ModifiedStatus=")) {
+            final String modifiedStatusString = "'statechanged: .uno:ModifiedStatus=";
+            int start = modifiedStatusString.length();
+            int end = message.indexOf("'", start);
+            try {
+                modifiedStatus = Boolean.parseBoolean(message.substring(start, end));
+                // dont set it to false just yet because we may not write it back by the time .uno:Save is processed and set it to false
+                if (modifiedStatus)
+                    shouldCopyTempBack = true;
+            } catch (Exception e) {
+                // better be safe than sorry
+                shouldCopyTempBack = true;
+            }
         }
     }
 
