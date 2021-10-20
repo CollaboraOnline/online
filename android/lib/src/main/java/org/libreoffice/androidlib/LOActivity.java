@@ -543,6 +543,11 @@ public class LOActivity extends AppCompatActivity {
             try {
                 inputStream = new FileInputStream(mTempFile);
 
+                int len = inputStream.available();
+                if (len <= 0)
+                    // empty for some reason & do not write it back
+                    return;
+
                 Uri uri = getIntent().getData();
                 try {
                     outputStream = contentResolver.openOutputStream(uri, "wt");
