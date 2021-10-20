@@ -5,14 +5,23 @@
 
 L.IFrameDialog = L.Class.extend({
 
+	options: {
+		prefix: 'iframe-none',
+		method: 'get'
+	},
+
 	initialize: function (url, options) {
 		L.setOptions(this, options);
 
-		this._container = L.DomUtil.create('div', 'iframe-dialog-wrap', document.body);
+		this._container = L.DomUtil.create('div', this.options.prefix + '-wrap', document.body);
 		this._container.style.display = 'none';
-		this._content = L.DomUtil.create('div', 'iframe-dialog-content', this._container);
-		this._iframe = L.DomUtil.create('iframe', 'iframe-dialog-modal', this._content);
-		this._iframe.id = 'iframe-feedback';
+		this._content = L.DomUtil.create('div', this.options.prefix + '-content', this._container);
+		this._iframe = L.DomUtil.create('iframe', this.options.prefix + '-modal', this._content);
+
+		if (this.options.id) {
+			this._iframe.id = this.options.id;
+		}
+
 		this._iframe.src = url;
 	},
 
@@ -24,7 +33,7 @@ L.IFrameDialog = L.Class.extend({
 	},
 
 	hasLoaded: function () {
-		return document.body.querySelector('.iframe-dialog-wrap');
+		return document.body.querySelector('.' + this.options.prefix + '-wrap');
 	},
 
 	show: function () {
