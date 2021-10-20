@@ -310,25 +310,28 @@ public:
     /// Return true if extension is marked as view action in discovery.xml.
     static bool IsViewFileExtension(const std::string& extension)
     {
-#if MOBILEAPP
-        (void) extension;
-        return false; // mark everything editable on mobile
-#else
         std::string lowerCaseExtension = extension;
         std::transform(lowerCaseExtension.begin(), lowerCaseExtension.end(), lowerCaseExtension.begin(), ::tolower);
-        return EditFileExtensions.find(lowerCaseExtension) == EditFileExtensions.end();
+#if MOBILEAPP
+        if (lowerCaseExtension == "pdf")
+            return true; // true for only pdf - it is not editable
+        return false; // mark everything else editable on mobile
+#else
+            return EditFileExtensions.find(lowerCaseExtension) == EditFileExtensions.end();
 #endif
     }
 
     /// Return true if extension is marked as view_comment action in discovery.xml.
     static bool IsViewWithCommentsFileExtension(const std::string& extension)
     {
-#if MOBILEAPP
-        (void) extension;
-        return false; // mark everything editable on mobile
-#else
+
         std::string lowerCaseExtension = extension;
         std::transform(lowerCaseExtension.begin(), lowerCaseExtension.end(), lowerCaseExtension.begin(), ::tolower);
+#if MOBILEAPP
+        if (lowerCaseExtension == "pdf")
+            return true; // true for only pdf - it is not editable
+        return false; // mark everything else editable on mobile
+#else
         return ViewWithCommentsFileExtensions.find(lowerCaseExtension) != ViewWithCommentsFileExtensions.end();
 #endif
     }
