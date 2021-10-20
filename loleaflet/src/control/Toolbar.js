@@ -326,7 +326,8 @@ L.Map.include({
 		// app.socket.emitInstantTraceEvent('loleaflet-unocommand:' + command);
 
 		var isAllowedInReadOnly = false;
-		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog', '.uno:EditAnnotation', '.uno:InsertAnnotation', '.uno:DeleteAnnotation'];
+		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog', '.uno:EditAnnotation',
+			'.uno:InsertAnnotation', '.uno:DeleteAnnotation', '.uno:Signature'];
 
 		for (var i in allowedCommands) {
 			if (allowedCommands[i] === command) {
