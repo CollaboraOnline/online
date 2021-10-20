@@ -29,7 +29,10 @@ endif
 
 DIRECTORY_TS = $(srcdir)/src/layer/tile $(srcdir)/src/control # Add ts directories here.
 SRC_TS_ALL := $(foreach dir, $(DIRECTORY_TS), $(wildcard $(dir)/*.ts))
-SRC_TS_JS_FILES := $(SRC_TS_ALL:.ts=.js)
+SRC_TS_JS_FILES = $(SRC_TS_ALL:.ts=.js) $(srcdir)/src/layer/vector/CanvasOverlay.js
+SRC_TS_JS_DST = $(patsubst $(srcdir)/%.js,$(DIST_FOLDER)/%.js,$(SRC_TS_JS_FILES))
+
+GENERATED_JS_FILES = $(if $(IS_DEBUG),$(SRC_TS_JS_DST),$(SRC_TS_JS_FILES))
 
 $(SRC_TS_JS_FILES): %.js: %.ts
 	$(builddir)/node_modules/typescript/bin/tsc $(@:.js=.ts) --outfile $@ --module none --lib dom,es2016 --target ES5
@@ -39,13 +42,6 @@ MOCHA_TS_FILES = $(wildcard $(MOCHA_DIR)/*.ts)
 MOCHA_TS_JS_FILES := $(MOCHA_TS_FILES:.ts=.js)
 $(MOCHA_TS_JS_FILES): %.js: %.ts
 	$(builddir)/node_modules/typescript/bin/tsc $< --outfile $@ --module none --lib dom,es2016 --target ES5
-
-SRC_TS = $(srcdir)/src/layer/vector/CanvasOverlay.ts
-SRC_TS_JS = $(srcdir)/src/layer/vector/CanvasOverlay.js
-SRC_TS_JS_DST = $(patsubst $(srcdir)/%.js,$(DIST_FOLDER)/%.js,$(SRC_TS_JS_FILES)) $(DIST_FOLDER)/src/layer/vector/CanvasOverlay.js
-
-$(srcdir)/src/layer/vector/CanvasOverlay.js: $(srcdir)/src/layer/vector/*.ts $(srcdir)/src/layer/marker/*.ts
-	$(builddir)/node_modules/typescript/bin/tsc $(srcdir)/src/layer/vector/CanvasOverlay.ts --outfile $(srcdir)/src/layer/vector/CanvasOverlay.js --module none --lib dom,es2016 --target ES5
 
 JQUERY_LIGHTNESS_IMAGE_PATH = $(srcdir)/images/jquery-ui-lightness
 JQUERY_LIGHTNESS_IMAGES = $(wildcard $(JQUERY_LIGHTNESS_IMAGE_PATH)/*.png)
@@ -451,7 +447,7 @@ $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 build-loleaflet: \
 	$(LOLEAFLET_L10N_DST) \
 	$(L10N_JSON) \
-	$(SRC_TS_JS_DST) \
+	$(GENERATED_JS_FILES) \
 	$(LOLEAFLET_IMAGES_DST) \
 	$(LOLEAFLET_IMAGES_CUSTOM_DST) \
 	$(JQUERY_LIGHTNESS_DIST_IMAGES) \
@@ -482,7 +478,7 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(LOLEAFLET_ADMIN_TS_JS) $(LOLEAFLET_ADMIN_JS)
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/admin/src --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc
 	@awk 'FNR == 1 {print ""} 1' $(LOLEAFLET_ADMIN_TS_JS) $(patsubst %.js,$(srcdir)/%.js,$(LOLEAFLET_ADMIN_JS)) > $@
 
-$(INTERMEDIATE_DIR)/loleaflet-src.js: $(call prereq_loleaflet)
+$(INTERMEDIATE_DIR)/loleaflet-src.js: $(GENERATED_JS_FILES) $(call prereq_loleaflet)
 	@mkdir -p $(dir $@)
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 	@echo "Checking for loleaflet JS errors..."
