@@ -13,19 +13,6 @@ L.IFrameDialog = L.Class.extend({
 		this._content = L.DomUtil.create('div', 'iframe-dialog-content', this._container);
 		this._iframe = L.DomUtil.create('iframe', 'iframe-dialog-modal', this._content);
 		this._iframe.id = 'iframe-feedback';
-		this._isMobile = false;
-		if (window.mode.isMobile()) {
-			this._isMobile = true;
-		}
-		console.debug(options);
-
-		console.debug('Getting co-bg-color: ');
-		var cssVar = getComputedStyle(document.documentElement).getPropertyValue('--co-primary-element');
-		console.debug(cssVar);
-		cssVar = cssVar.replace(/\s/g, '');
-		url += '?'+this._isMobile;
-		url += cssVar;
-		url += window.app.socket.WSDServer.Hash;
 		this._iframe.src = url;
 	},
 

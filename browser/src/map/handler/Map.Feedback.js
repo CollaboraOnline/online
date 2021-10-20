@@ -83,7 +83,21 @@ L.Map.Feedback = L.Handler.extend({
 		if (this._iframeDialog && this._iframeDialog.hasLoaded())
 			this._iframeDialog.remove();
 
-		this._iframeDialog = L.iframeDialog(window.feebackLocation);
+		/*this._isMobile = false;
+		  if (window.mode.isMobile()) {
+		  this._isMobile = true;
+		  }
+		  console.debug(options);
+
+		  console.debug('Getting co-bg-color: ');
+		  var cssVar = getComputedStyle(document.documentElement).getPropertyValue('--co-primary-element');
+		  console.debug(cssVar);
+		  cssVar = cssVar.replace(/\s/g, '');
+		  url += '?'+this._isMobile;
+		  url += cssVar;
+		  url += window.app.socket.WSDServer.Hash;*/
+
+		this._iframeDialog = L.iframeDialog(window.feedbackLocation);
 	},
 
 	onError: function () {
