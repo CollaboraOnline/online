@@ -100,6 +100,16 @@ class ScrollSection {
 
 		this.sectionProperties.animatingVerticalScrollBar = false;
 		this.sectionProperties.animatingHorizontalScrollBar = false;
+
+		this.sectionProperties.pointerSyncWithVerticalScrollBar = true;
+		this.sectionProperties.pointerSyncWithHorizontalScrollBar = true;
+		// When user moves the pointer outside of the scroll area, we don't want to let them scroll the document.
+		// Because in that case, mouse pointer is not parallel with the scroll bar.
+		// We wait for the user to move the pointer to a position parallel with the scroll bar.
+		// When user does it, we again let the scroll bar work. But if we let the scroll bar work as soon as it sees the pointer,
+		// feature becomes fragile. That 1 pixel of intersection may be broken easily.
+		// So, when the pointer is de-sync with the scroll bar, we will put a spacer to force the pointer go inside into the allowed area a bit more.
+		this.sectionProperties.pointerReCaptureSpacer = 30 * this.sectionProperties.roundedDpi;
 	}
 
 	public completePendingScroll() {
@@ -598,6 +608,61 @@ class ScrollSection {
 		}
 	}
 
+	private isMouseInsideDocumentAnchor (point: Array<number>): boolean {
+		var docSection = this.containerObject.getDocumentAnchorSection();
+		return this.containerObject.doesSectionIncludePoint(docSection, point);
+	}
+
+	private isMousePointerSycnWithVerticalScrollBar (scrollProps: any, position: Array<number>): boolean {
+		// Keep this desktop-only for now.
+		if (!(<any>window).mode.isDesktop())
+			return true;
+
+		var spacer = 0;
+		if (!this.sectionProperties.pointerSyncWithVerticalScrollBar) {
+			spacer = this.sectionProperties.pointerReCaptureSpacer;
+		}
+
+		// Scrolling is enabled only when mouse pointer is inside between start point and end point of the scroll bar.
+		// Check if the mouse pointer is below the start point of the scroll bar.
+		var pointerIsSyncWithScrollBar = scrollProps.startY + spacer < position[1];
+
+		if (pointerIsSyncWithScrollBar) {
+			// Check if the mouse is above the end point of the scroll bar.
+			pointerIsSyncWithScrollBar = scrollProps.startY + scrollProps.scrollSize - this.sectionProperties.scrollBarThickness - spacer > position[1];
+		}
+
+		pointerIsSyncWithScrollBar = pointerIsSyncWithScrollBar || (this.isMouseInsideDocumentAnchor(position) && spacer === 0);
+
+		this.sectionProperties.pointerSyncWithVerticalScrollBar = pointerIsSyncWithScrollBar;
+		return pointerIsSyncWithScrollBar;
+	}
+
+	private isMousePointerSycnWithHorizontalScrollBar (scrollProps: any, position: Array<number>): boolean {
+		// Keep this desktop-only for now.
+		if (!(<any>window).mode.isDesktop())
+			return true;
+
+		var spacer = 0;
+		if (!this.sectionProperties.pointerSyncWithHorizontalScrollBar) {
+			spacer = this.sectionProperties.pointerReCaptureSpacer;
+		}
+
+		// Scrolling is enabled only when mouse pointer is inside between start point and end point of the scroll bar.
+		// Check if the mouse pointer is on the right of the start point of the scroll bar.
+		var pointerIsSyncWithScrollBar = scrollProps.startX + spacer < position[0];
+
+		if (pointerIsSyncWithScrollBar) {
+			// Check if the mouse is on the left of the end point of the scroll bar.
+			pointerIsSyncWithScrollBar = scrollProps.startX + scrollProps.scrollSize - this.sectionProperties.scrollBarThickness - spacer > position[0];
+		}
+
+		pointerIsSyncWithScrollBar = pointerIsSyncWithScrollBar || (this.isMouseInsideDocumentAnchor(position) && spacer === 0);
+
+		this.sectionProperties.pointerSyncWithHorizontalScrollBar = pointerIsSyncWithScrollBar;
+		return pointerIsSyncWithScrollBar;
+	}
+
 	public onMouseMove (position: Array<number>, dragDistance: Array<number>, e: MouseEvent) {
 		if (this.sectionProperties.clickScrollVertical && this.containerObject.draggingSomething) {
 			if (!this.sectionProperties.previousDragDistance) {
@@ -607,11 +672,15 @@ class ScrollSection {
 			this.showVerticalScrollBar();
 
 			var scrollProps: any = this.getVerticalScrollProperties();
+
 			var diffY: number = dragDistance[1] - this.sectionProperties.previousDragDistance[1];
 			var actualDistance = scrollProps.ratio * diffY;
 
-			this.scrollVerticalWithOffset(actualDistance);
+			if (this.isMousePointerSycnWithVerticalScrollBar(scrollProps, position))
+				this.scrollVerticalWithOffset(actualDistance);
+
 			this.sectionProperties.previousDragDistance[1] = dragDistance[1];
+
 			e.stopPropagation(); // Don't propagate to map.
 			this.stopPropagating(); // Don't propagate to bound sections.
 		}
@@ -624,10 +693,11 @@ class ScrollSection {
 
 			var scrollProps: any = this.getHorizontalScrollProperties();
 			var diffX: number = dragDistance[0] - this.sectionProperties.previousDragDistance[0];
-			var percentage: number = diffX / scrollProps.scrollLength;
-			var actualDistance = app.view.size.pixels[0] * percentage;
+			var actualDistance = scrollProps.ratio * diffX;
 
-			this.scrollHorizontalWithOffset(actualDistance);
+			if (this.isMousePointerSycnWithHorizontalScrollBar(scrollProps, position))
+				this.scrollHorizontalWithOffset(actualDistance);
+
 			this.sectionProperties.previousDragDistance[0] = dragDistance[0];
 			e.stopPropagation(); // Don't propagate to map.
 			this.stopPropagating(); // Don't propagate to bound sections.
@@ -714,11 +784,13 @@ class ScrollSection {
 			e.stopPropagation(); // Don't propagate to map.
 			this.stopPropagating(); // Don't propagate to bound sections.
 			this.sectionProperties.clickScrollVertical = false;
+			this.sectionProperties.pointerSyncWithVerticalScrollBar = true; // Default.
 		}
 		else if (this.sectionProperties.clickScrollHorizontal) {
 			e.stopPropagation(); // Don't propagate to map.
 			this.stopPropagating(); // Don't propagate to bound sections.
 			this.sectionProperties.clickScrollHorizontal = false;
+			this.sectionProperties.pointerSyncWithHorizontalScrollBar = true; // Default.
 		}
 
 		// Unfortunately, dragging outside the map doesn't work for the map element.
