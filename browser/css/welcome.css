@@ -1,0 +1,17 @@
+.iframe-welcome-wrap {
+	position: absolute;
+	z-index: 1106;
+	left: calc(50% - 225px);
+	top: calc(50% - 315px);
+}
+
+.iframe-welcome-modal {
+	height: 424px;
+	width: 448px;
+	border: 1px solid gray;
+	box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+	-moz-box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+	border-radius: 3px;
+	background: white;
+}
