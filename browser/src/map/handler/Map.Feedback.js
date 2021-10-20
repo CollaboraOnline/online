@@ -83,21 +83,17 @@ L.Map.Feedback = L.Handler.extend({
 		if (this._iframeDialog && this._iframeDialog.hasLoaded())
 			this._iframeDialog.remove();
 
-		/*this._isMobile = false;
-		  if (window.mode.isMobile()) {
-		  this._isMobile = true;
-		  }
-		  console.debug(options);
+		var cssVar = getComputedStyle(document.documentElement).getPropertyValue('--co-primary-element');
+		var params = [{ mobile : window.mode.isMobile() },
+			      { cssvar : cssVar},
+			      { wsdhash : window.app.socket.WSDServer.Hash }];
 
-		  console.debug('Getting co-bg-color: ');
-		  var cssVar = getComputedStyle(document.documentElement).getPropertyValue('--co-primary-element');
-		  console.debug(cssVar);
-		  cssVar = cssVar.replace(/\s/g, '');
-		  url += '?'+this._isMobile;
-		  url += cssVar;
-		  url += window.app.socket.WSDServer.Hash;*/
+		var options = {
+			prefix: 'iframe-dialog',
+			id: 'iframe-feedback',
+		};
 
-		this._iframeDialog = L.iframeDialog(window.feedbackLocation);
+		this._iframeDialog = L.iframeDialog(window.feedbackLocation, params, null, options);
 	},
 
 	onError: function () {
@@ -124,6 +120,9 @@ L.Map.Feedback = L.Handler.extend({
 			window.localStorage.setItem('WSDFeedbackEnabled', 'false');
 			window.localStorage.removeItem('WSDFeedbackCount');
 			this._iframeDialog.remove();
+		} else if (data == 'iframe-feedback-load' && !this._iframeDialog.isVisible()) {
+			this._iframeDialog.remove();
+			setTimeout(L.bind(this.onFeedback, this), this._map.options.feedbackTimeout);
 		}
 	}
 });
