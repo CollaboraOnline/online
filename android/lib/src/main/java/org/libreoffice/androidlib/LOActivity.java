@@ -480,6 +480,8 @@ public class LOActivity extends AppCompatActivity {
                 // K-9 mail uses the first, GMail uses the second variant.
                 if ("text/comma-separated-values".equals(intentType) || "text/csv".equals(intentType))
                     suffix = ".csv";
+                else if ("application/pdf".equals(intentType))
+                    suffix = ".pdf";
                 try {
                     try {
                         Uri uri = mActivity.getIntent().getData();
