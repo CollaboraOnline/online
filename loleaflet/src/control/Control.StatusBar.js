@@ -153,6 +153,9 @@ L.Control.StatusBar = L.Control.extend({
 		else if (id === 'userlist') {
 			this.map.fire('openuserlist');
 		}
+		else if (id === 'signstatus') {
+			this.map.sendUnoCommand('.uno:Signature');
+		}
 	},
 
 	create: function() {
