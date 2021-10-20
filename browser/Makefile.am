@@ -147,7 +147,8 @@ COOL_CSS_LST =\
 	$(srcdir)/css/infobar.css
 
 if ENABLE_FEEDBACK
-COOL_CSS_LST += $(srcdir)/css/iframedialog.css
+COOL_CSS_LST += $(srcdir)/css/iframedialog.css \
+	$(srcdir)/css/welcome.css
 endif
 
 COOL_CSS = $(filter %,$(COOL_CSS_LST))
@@ -365,7 +366,8 @@ if ENABLE_FEEDBACK
 COOL_JS_LST +=\
 	src/control/IFrameDialog.js \
 	src/map/handler/Map.Infobar.js \
-	src/map/handler/Map.Feedback.js
+	src/map/handler/Map.Feedback.js \
+	src/map/handler/Map.Welcome.js
 endif
 
 COOL_JS_LST +=\
