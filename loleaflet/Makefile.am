@@ -29,13 +29,21 @@ endif
 
 DIRECTORY_TS = $(srcdir)/src/layer/tile $(srcdir)/src/control # Add ts directories here.
 SRC_TS_ALL := $(foreach dir, $(DIRECTORY_TS), $(wildcard $(dir)/*.ts))
-SRC_TS_JS_FILES = $(SRC_TS_ALL:.ts=.js) $(srcdir)/src/layer/vector/CanvasOverlay.js
+SRC_TS_JS_FILES = $(SRC_TS_ALL:.ts=.js)
 SRC_TS_JS_DST = $(patsubst $(srcdir)/%.js,$(DIST_FOLDER)/%.js,$(SRC_TS_JS_FILES))
 
-GENERATED_JS_FILES = $(if $(IS_DEBUG),$(SRC_TS_JS_DST),$(SRC_TS_JS_FILES))
+SRC_TS_JS_FILES_WITH_DEPS = $(srcdir)/src/layer/vector/CanvasOverlay.js
+SRC_TS_JS_DST_WITH_DEPS = $(patsubst $(srcdir)/%.js,$(DIST_FOLDER)/%.js,$(SRC_TS_JS_FILES_WITH_DEPS))
 
+GENERATED_JS_FILES = $(if $(IS_DEBUG),$(SRC_TS_JS_DST) $(SRC_TS_JS_DST_WITH_DEPS),$(SRC_TS_JS_FILES) $(SRC_TS_JS_FILES_WITH_DEPS))
+
+## Compilation of typescript files without dependencies.
 $(SRC_TS_JS_FILES): %.js: %.ts
 	$(builddir)/node_modules/typescript/bin/tsc $(@:.js=.ts) --outfile $@ --module none --lib dom,es2016 --target ES5
+
+## Individual rules for typescript files with dependencies.
+$(srcdir)/src/layer/vector/CanvasOverlay.js: $(wildcard $(srcdir)/src/layer/vector/*.ts) $(wildcard $(srcdir)/src/layer/marker/*.ts)
+	$(builddir)/node_modules/typescript/bin/tsc $(srcdir)/src/layer/vector/CanvasOverlay.ts --outfile $(srcdir)/src/layer/vector/CanvasOverlay.js --module none --lib dom,es2016 --target ES5
 
 MOCHA_DIR = $(srcdir)/mocha_tests
 MOCHA_TS_FILES = $(wildcard $(MOCHA_DIR)/*.ts)
