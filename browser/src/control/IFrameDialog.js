@@ -11,8 +11,9 @@ L.IFrameDialog = L.Class.extend({
 	},
 
 	initialize: function (url, params, element, options) {
-		var content, form, iframe;
+		var content, form;
 
+		this._loading = false;
 		L.setOptions(this, options);
 
 		this._container = L.DomUtil.create('div', this.options.prefix + '-wrap');
@@ -23,11 +24,11 @@ L.IFrameDialog = L.Class.extend({
 
 		this.fillParams(url, params, form);
 
-		iframe = L.DomUtil.create('iframe', this.options.prefix + '-modal', content);
-		iframe.name = form.target;
+		this._iframe = L.DomUtil.create('iframe', this.options.prefix + '-modal', content);
+		this._iframe.name = form.target;
 
 		if (this.options.id) {
-			iframe.id = this.options.id;
+			this._iframe.id = this.options.id;
 		}
 
 		if (element) {
@@ -37,6 +38,7 @@ L.IFrameDialog = L.Class.extend({
 		}
 
 		form.submit();
+		this._iframe.addEventListener('load', L.bind(this.onLoad, this));
 	},
 
 	fillParams: function (url, params, form) {
@@ -56,13 +58,25 @@ L.IFrameDialog = L.Class.extend({
 		}
 	},
 
+	onLoad: function () {
+		var msg = this.options.prefix + '-load';
+		var that = this;
+		this._loading = true;
+		setTimeout(function () {
+			if (!that.isVisible()) {
+				window.postMessage(msg);
+			}
+		}, 500);
+	},
+
 	remove: function () {
+		L.DomEvent.off(this._iframe, 'load', this.onLoad, this);
 		L.DomUtil.remove(this._container);
-		this._container = null;
+		this._container = this._iframe = null;
 	},
 
 	hasLoaded: function () {
-		return this.queryContainer();
+		return this.queryContainer() && this._loading;
 	},
 
 	queryContainer: function () {
