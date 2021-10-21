@@ -13,6 +13,7 @@
 #include <cstdio>
 #include <map>
 #include <set>
+#include <unordered_map>
 #include <unordered_set>
 #include <string>
 #include <utility>
@@ -28,7 +29,7 @@
 #include "FileUtil.hpp"
 #include "RequestDetails.hpp"
 #include "WebSocketHandler.hpp"
-
+#include "QuarantineUtil.hpp"
 class ChildProcess;
 class TraceFileWriter;
 class DocumentBroker;
@@ -259,6 +260,8 @@ public:
     static bool IsProxyPrefixEnabled;
     static std::atomic<unsigned> NumConnections;
     static std::unique_ptr<TraceFileWriter> TraceDumper;
+    static std::unordered_map<std::string, std::vector<std::string>> QuarantineMap;
+    static std::string QuarantinePath;
 #if !MOBILEAPP
     static std::unique_ptr<ClipboardCache> SavedClipboards;
 #endif
