@@ -212,7 +212,7 @@ class CommentSection {
 			|| this.sectionProperties.commentList.length === 0)
 			return;
 
-		this.size[0] = 70 * app.dpiScale;
+		this.size[0] = 1 * app.dpiScale;
 	}
 
 	public setExpanded() {
@@ -1486,6 +1486,9 @@ class CommentSection {
 			if (this.containerObject.getDocumentAnchorSection().size[0] > app.file.size.pixels[0]) {
 				x = topRight[0] - Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0]) * 0.5);
 			}
+
+			if (this.isCollapsed)
+				x -= 70;
 
 			if (this.sectionProperties.selectedComment) {
 				selectedIndex = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
