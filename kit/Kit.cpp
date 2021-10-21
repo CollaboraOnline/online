@@ -2511,10 +2511,10 @@ void lokit_main(
                     return false;
                 }
 
-                // Hard-random tmpdir inside the jail for added sercurity.
+                // tmpdir inside the jail for added sercurity.
                 const std::string tempRoot = Poco::Path(childRoot, "tmp").toString();
-                Poco::File(tempRoot).createDirectories();
-                const std::string tmpSubDir = FileUtil::createRandomTmpDir(tempRoot);
+                const std::string tmpSubDir = Poco::Path(tempRoot, "lool-" + jailId).toString();
+                Poco::File(tmpSubDir).createDirectories();
                 const std::string jailTmpDir = Poco::Path(jailPath, "tmp").toString();
                 LOG_INF("Mounting random temp dir " << tmpSubDir << " -> " << jailTmpDir);
                 if (!JailUtil::bind(tmpSubDir, jailTmpDir))
