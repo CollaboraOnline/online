@@ -62,7 +62,16 @@ L.IFrameDialog = L.Class.extend({
 	},
 
 	hasLoaded: function () {
+		return this.queryContainer();
+	},
+
+	queryContainer: function () {
 		return document.body.querySelector('.' + this.options.prefix + '-wrap');
+	},
+
+	isVisible: function () {
+		var elem = this.queryContainer();
+		return elem && elem.style.display !== 'none';
 	},
 
 	show: function () {
