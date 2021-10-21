@@ -708,6 +708,7 @@ pot:
 		src/map/Clipboard.js \
 		src/map/Map.js \
 		src/map/handler/Map.FileInserter.js \
+		src/map/handler/Map.Keyboard.js \
 		src/map/handler/Map.WOPI.js
 
 	html2po --pot --input=html/loleaflet-help.html --output=po/templates/loleaflet-help.pot --duplicates=merge
