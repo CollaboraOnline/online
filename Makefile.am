@@ -130,7 +130,8 @@ loolwsd_sources = common/Crypto.cpp \
                   wsd/RequestDetails.cpp \
                   wsd/Storage.cpp \
                   wsd/TileCache.cpp \
-                  wsd/ProofKey.cpp
+                  wsd/ProofKey.cpp \
+                  wsd/QuarantineUtil.cpp
 
 loolwsd_json = $(patsubst %.cpp,%.cmd,$(loolwsd_sources))
 
@@ -259,7 +260,8 @@ wsd_headers = wsd/Admin.hpp \
               wsd/TileCache.hpp \
               wsd/TileDesc.hpp \
               wsd/TraceFile.hpp \
-              wsd/UserMessages.hpp
+              wsd/UserMessages.hpp \
+              wsd/QuarantineUtil.hpp
 
 shared_headers = common/Common.hpp \
                  common/Clipboard.hpp \
