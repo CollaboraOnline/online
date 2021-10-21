@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.63])
 
-AC_INIT([loolwsd], [4.2.18], [libreoffice@lists.freedesktop.org])
+AC_INIT([loolwsd], [4.2.19], [libreoffice@lists.freedesktop.org])
 LT_INIT([shared, disable-static, dlopen])
 
 AM_INIT_AUTOMAKE([1.10 subdir-objects tar-pax -Wno-portability])
