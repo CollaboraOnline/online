@@ -12,7 +12,6 @@ L.Map.mergeOptions({
 L.Map.Feedback = L.Handler.extend({
 
 	addHooks: function () {
-		window.localStorage.setItem('WSDFeedbackEnabled', 'true');
 		this._map.on('docloaded', this.onDocLoaded, this);
 		L.DomEvent.on(window, 'message', this.onMessage, this);
 	},
@@ -41,8 +40,8 @@ L.Map.Feedback = L.Handler.extend({
 			return;
 		}
 
-		if (window.localStorage.getItem('WSDFeedbackEnabled')) {
-			if (this._map.shouldWelcome())
+		if (window.localStorage.getItem('WSDFeedbackEnabled') !== 'false') {
+			if (this._map.welcome && this._map.welcome.isVisible())
 				setTimeout(L.bind(this.onFeedback, this), 3000);
 			else {
 				this.showFeedbackDialog();
@@ -69,13 +68,13 @@ L.Map.Feedback = L.Handler.extend({
 			this._iframeDialog.show();
 		}
 		else if (data == 'feedback-never') {
-			window.localStorage.removeItem('WSDFeedbackEnabled');
+			window.localStorage.setItem('WSDFeedbackEnabled', 'false');
 			this._iframeDialog.remove();
 		} else if (data == 'feedback-later') {
 			this._iframeDialog.remove();
 			setTimeout(L.bind(this.onFeedback, this), this._map.options.feedbackTimeout);
 		} else if (data == 'feedback-submit') {
-			window.localStorage.removeItem('WSDFeedbackEnabled');
+			window.localStorage.setItem('WSDFeedbackEnabled', 'false');
 			this._iframeDialog.remove();
 		}
 	}
