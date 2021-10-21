@@ -650,7 +650,7 @@ libs:
 	&& $(call npm_source,$(NODE_MODULES_SRC))
 
 pot:
-	xgettext --from-code=UTF-8 --keyword=_ --output=po/templates/loleaflet-ui.pot \
+	xgettext --from-code=UTF-8 --language=JavaScript --keyword=_ --output=po/templates/loleaflet-ui.pot \
 		admin/admin.strings.js \
 		admin/src/AdminSocketAnalytics.js \
 		admin/src/AdminSocketBase.js \
@@ -659,39 +659,32 @@ pot:
 		admin/src/Util.js \
 		src/control/ColorPicker.js \
 		src/control/Control.AlertDialog.js \
+		src/control/Control.Command.js \
 		src/control/Control.ContextMenu.js \
 		src/control/Control.DocumentRepair.js \
 		src/control/Control.DownloadProgress.js \
 		src/control/Control.FormulaBar.js \
-		src/control/Control.JSDialog.js \
-		src/control/Control.MobileWizardBuilder.js \
 		src/control/Control.JSDialogBuilder.js \
 		src/control/Control.LanguageDialog.js \
 		src/control/Control.Menubar.js \
 		src/control/Control.MobileBottomBar.js \
 		src/control/Control.MobileTopBar.js \
-		src/control/Control.MobileWizard.js \
-		src/control/Control.MobileWizardPopup.js \
+		src/control/Control.MobileWizardBuilder.js \
+		src/control/Control.Notebookbar.js \
+		src/control/Control.NotebookbarBuilder.js \
+		src/control/Control.NotebookbarCalc.js \
+		src/control/Control.NotebookbarDraw.js \
+		src/control/Control.NotebookbarImpress.js \
+		src/control/Control.NotebookbarWriter.js \
 		src/control/Control.PresentationBar.js \
 		src/control/Control.Scroll.Annotation.js \
 		src/control/Control.SearchBar.js \
 		src/control/Control.SheetsBar.js \
-		src/control/Control.SigningBar.js \
 		src/control/Control.StatusBar.js \
 		src/control/Control.Tabs.js \
 		src/control/Control.Toolbar.js \
 		src/control/Control.TopToolbar.js \
 		src/control/Control.UserList.js \
-		src/control/Control.UIManager.js \
-		src/control/Control.DocumentNameInput.js \
-		src/control/Control.Notebookbar.js \
-		src/control/Control.NotebookbarWriter.js \
-		src/control/Control.NotebookbarCalc.js \
-		src/control/Control.NotebookbarImpress.js \
-		src/control/Control.NotebookbarDraw.js \
-		src/control/Control.NotebookbarBuilder.js \
-		src/control/Control.AutofilterDropdown.js \
-		src/control/Control.Sidebar.js \
 		src/control/Parts.js \
 		src/control/Permission.js \
 		src/control/Ruler.js \
@@ -699,12 +692,10 @@ pot:
 		src/control/Toolbar.js \
 		src/core/Socket.js \
 		src/errormessages.js \
-		src/layer/tile/CommentSection.js \
-		src/layer/marker/TextInput.js \
-		src/layer/tile/CalcTileLayer.js \
 		src/layer/tile/CanvasTileLayer.js \
-		src/layer/tile/ImpressTileLayer.js \
-		src/layer/tile/WriterTileLayer.js \
+		src/layer/tile/CommentListSection.ts \
+		src/layer/tile/CommentSection.ts \
+		src/main.js \
 		src/map/Clipboard.js \
 		src/map/Map.js \
 		src/map/handler/Map.FileInserter.js \
