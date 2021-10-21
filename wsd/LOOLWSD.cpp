@@ -811,6 +811,8 @@ static std::string UnitTestLibrary;
 
 unsigned int LOOLWSD::NumPreSpawnedChildren = 0;
 std::unique_ptr<TraceFileWriter> LOOLWSD::TraceDumper;
+std::unordered_map<std::string, std::vector<std::string>> LOOLWSD::QuarantineMap;
+std::string LOOLWSD::QuarantinePath;
 #if !MOBILEAPP
 std::unique_ptr<ClipboardCache> LOOLWSD::SavedClipboards;
 #endif
@@ -1043,7 +1045,9 @@ void LOOLWSD::initialize(Application& self)
             { "freemium.impress_subscription_highlights", IMPRESS_SUBSCRIPTION_HIGHLIGHTS },
             { "freemium.draw_subscription_highlights", DRAW_SUBSCRIPTION_HIGHLIGHTS },
 #endif
-            { "user_interface.mode", USER_INTERFACE_MODE }
+            { "user_interface.mode", USER_INTERFACE_MODE },
+            {"quarantine_files.limit_dir_size_mb", "250"},
+            {"quarantine_files.max_versions_to_maintain", "2"}
           };
 
     // Set default values, in case they are missing from the config file.
@@ -1372,6 +1376,14 @@ void LOOLWSD::initialize(Application& self)
     LOG_DBG("FileServerRoot before config: " << FileServerRoot);
     FileServerRoot = getPathFromConfig("file_server_root_path");
     LOG_DBG("FileServerRoot after config: " << FileServerRoot);
+
+    //creating quarantine directory
+    QuarantinePath = FileServerRoot + "quarantine/";
+    Poco::File p(QuarantinePath);
+    p.createDirectories();
+    LOG_INF("Created quarantine directory " + p.path());
+
+    Quarantine::createQuarantineMap();
 
     WelcomeFilesRoot = getPathFromConfig("welcome.path");
     if (!getConfigValue<bool>(conf, "welcome.enable", true))

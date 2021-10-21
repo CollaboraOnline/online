@@ -144,6 +144,7 @@ namespace FileUtil
         bool isDirectory() const { return S_ISDIR(_sb.st_mode); }
         bool isFile() const { return S_ISREG(_sb.st_mode); }
         bool isLink() const { return S_ISLNK(_sb.st_mode); }
+        std::size_t hardLinkCount() const { return _sb.st_nlink; }
 
         /// Returns the filesize in bytes.
         std::size_t size() const { return _sb.st_size; }

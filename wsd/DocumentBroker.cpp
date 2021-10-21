@@ -33,6 +33,7 @@
 #include "TileCache.hpp"
 #include "ProxyProtocol.hpp"
 #include "Util.hpp"
+#include "QuarantineUtil.hpp"
 #include <common/Log.hpp>
 #include <common/Message.hpp>
 #include <common/Clipboard.hpp>
@@ -1141,6 +1142,9 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     // DocBroker will have to decide to upload or skip.
     const std::string oldName = _storage->getRootFilePathToUpload();
     const std::string newName = _storage->getRootFilePathUploading();
+
+    Quarantine::quarantineFile(this, _storage->getFileInfo().getFilename() + TO_UPLOAD_SUFFIX);
+
     if (rename(oldName.c_str(), newName.c_str()) < 0)
     {
         // It's not an error if there was no file to rename, when the document isn't modified.
