@@ -211,6 +211,11 @@
     <monitors desc="Addresses of servers we connect to on start for monitoring">
     </monitors>
 
+    <quarantine_files desc="Files are stored here to be examined later in cases of crashes or similar situation.">
+        <limit_dir_size_mb desc="Maximum directory size. On exceeding the specified limit, older files will be deleted." default="250" type="uint"></limit_dir_size_mb>
+        <max_versions_to_maintain desc="How many versions of the same file to keep." default="2" type="uint"></max_versions_to_maintain>
+    </quarantine_files>
+
     @FREEMIUM_CONFIGURATION@
 
     @FEATURE_RESTRICTION_CONFIGURATION@
