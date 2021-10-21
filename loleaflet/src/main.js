@@ -91,8 +91,8 @@ window.docPermission = permission;
 window.bundlejsLoaded = true;
 
 
-////// Unsuported Browser Warning /////
-		
+////// Unsupported Browser Warning /////
+
 if (L.Browser.isInternetExplorer) {
 	vex.dialog.alert(_('Warning! The browser you are using is not supported.'));
 }
