@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-15 17:22+0200\n"
+"POT-Creation-Date: 2021-10-21 11:51+0200\n"
 "PO-Revision-Date: 2021-09-20 17:51+0000\n"
 "Last-Translator: george kitsoukakis <norhorn@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Translate Toolkit 2.5.0\n"
 "X-Pootle-Path: /el/libo_online/loleaflet-help-el.po\n"
 "X-Pootle-Revision: 830229\n"
 
@@ -1064,9 +1064,12 @@ msgstr ""
 "γραμμής."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
+#, fuzzy
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
 msgstr ""
+"Επιλέγει τα κελιά από το τρέχων κελί έως το πρώτο κελί της επιλεγμένης "
+"γραμμής."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
