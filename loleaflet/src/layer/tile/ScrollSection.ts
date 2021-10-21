@@ -640,6 +640,36 @@ class ScrollSection {
 		}
 	}
 
+	/*
+		When user presses the button while the mouse pointer is on the railway of the scroll bar but not on the scroll bar directly,
+		we quickly scroll the document to that position.
+	*/
+	private quickScrollVertical (point: Array<number>) {
+		// Desktop only for now.
+		if (!(<any>window).mode.isDesktop())
+			return;
+
+		var props = this.getVerticalScrollProperties();
+		var midY = (props.startY + props.startY + props.scrollSize - this.sectionProperties.scrollBarThickness) * 0.5;
+		var offset = Math.round((point[1] - midY) * props.ratio);
+		this.scrollVerticalWithOffset(offset);
+	}
+
+	/*
+		When user presses the button while the mouse pointer is on the railway of the scroll bar but not on the scroll bar directly,
+		we quickly scroll the document to that position.
+	*/
+	private quickScrollHorizontal (point: Array<number>) {
+		// Desktop only for now.
+		if (!(<any>window).mode.isDesktop())
+			return;
+
+		var props = this.getHorizontalScrollProperties();
+		var midX = (props.startX + props.startX + props.scrollSize - this.sectionProperties.scrollBarThickness) * 0.5;
+		var offset = Math.round((point[0] - midX) * props.ratio);
+		this.scrollHorizontalWithOffset(offset);
+	}
+
 	public onMouseDown (point: Array<number>, e: MouseEvent) {
 		this.onMouseMove(point, null, e);
 		this.isMouseOnScrollBar(point);
@@ -649,6 +679,7 @@ class ScrollSection {
 				if (point[1] > this.sectionProperties.yOffset) {
 					this.sectionProperties.clickScrollVertical = true;
 					this.map.scrollingIsHandled = true;
+					this.quickScrollVertical(point);
 					e.stopPropagation(); // Don't propagate to map.
 					this.stopPropagating(); // Don't propagate to bound sections.
 				}
@@ -666,6 +697,7 @@ class ScrollSection {
 				if (point[0] >= this.sectionProperties.xOffset && point[0] <= this.size[0] - this.sectionProperties.horizontalScrollRightOffset) {
 					this.sectionProperties.clickScrollHorizontal = true;
 					this.map.scrollingIsHandled = true;
+					this.quickScrollHorizontal(point);
 					e.stopPropagation(); // Don't propagate to map.
 					this.stopPropagating(); // Don't propagate to bound sections.
 				}
