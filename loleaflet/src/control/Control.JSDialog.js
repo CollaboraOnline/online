@@ -57,6 +57,11 @@ L.Control.JSDialog = L.Control.extend({
 			menubutton.click();
 	},
 
+	setTabs: function() {
+		// TODO
+		console.warn('jsdialogs: tabs are not implemented');
+	},
+
 	onJSDialog: function(e) {
 		var that = this;
 		var posX = 0;
