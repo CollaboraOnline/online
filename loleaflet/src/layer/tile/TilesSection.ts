@@ -47,8 +47,9 @@ class TilesSection {
 
 		this.sectionProperties.docLayer = this.map._docLayer;
 		this.sectionProperties.tsManager = this.sectionProperties.docLayer._painter;
-		this.sectionProperties.pageBackgroundInnerMargin = 20; // In core pixels. We don't want backgrounds to have exact same borders with tiles for not making them visible when tiles are rendered.
+		this.sectionProperties.pageBackgroundInnerMargin = 0; // In core pixels. We don't want backgrounds to have exact same borders with tiles for not making them visible when tiles are rendered.
 		this.sectionProperties.pageBackgroundBorderColor = 'lightgrey';
+		this.sectionProperties.pageBackgroundFillColorWriter = 'white';
 		this.sectionProperties.pageBackgroundTextColor = 'grey';
 		this.sectionProperties.pageBackgroundFont = String(40 * app.roundedDpiScale) + 'px Arial';
 	}
@@ -281,11 +282,13 @@ class TilesSection {
 	private drawPageBackgroundWriter (ctx: any, rectangle: any, pageNumber: number) {
 		rectangle = [Math.round(rectangle[0] * app.twipsToPixels), Math.round(rectangle[1] * app.twipsToPixels), Math.round(rectangle[2] * app.twipsToPixels), Math.round(rectangle[3] * app.twipsToPixels)];
 
-		this.context.strokeRect(rectangle[0] - ctx.viewBounds.min.x + this.sectionProperties.pageBackgroundInnerMargin,
+		this.context.fillStyle = this.sectionProperties.pageBackgroundFillColorWriter;
+		this.context.fillRect(rectangle[0] - ctx.viewBounds.min.x + this.sectionProperties.pageBackgroundInnerMargin,
 			rectangle[1] - ctx.viewBounds.min.y + this.sectionProperties.pageBackgroundInnerMargin,
 			rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
 			rectangle[3] - this.sectionProperties.pageBackgroundInnerMargin);
 
+		this.context.fillStyle = this.sectionProperties.pageBackgroundTextColor;
 		this.context.fillText(String(pageNumber),
 			Math.round((2 * rectangle[0] + rectangle[2]) * 0.5) - ctx.viewBounds.min.x,
 			Math.round((2 * rectangle[1] + rectangle[3]) * 0.5) - ctx.viewBounds.min.y,
