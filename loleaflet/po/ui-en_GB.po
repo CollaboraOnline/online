@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-21 11:51+0200\n"
-"PO-Revision-Date: 2021-09-16 10:58+0000\n"
+"PO-Revision-Date: 2021-10-22 13:43+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_GB/>\n"
-"Language: \n"
+"Language: en_GB\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1520,7 +1520,7 @@ msgstr ""
 
 #: src/core/Socket.js:700
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "Reloading the document after rename"
 
 #: src/core/Socket.js:819
 msgid ""
@@ -1591,9 +1591,8 @@ msgstr ""
 "again."
 
 #: src/core/Socket.js:1424
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "Connecting..."
+msgstr "Reconnecting..."
 
 #: src/core/Socket.js:1429
 msgid "The server has been disconnected."
@@ -1701,13 +1700,15 @@ msgstr ""
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "Cleaning up the document from the last session."
 
 #: src/errormessages.js:28
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
 msgstr ""
+"We are in the process of cleaning up this document from the last session, "
+"please try again later."
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -1901,6 +1902,10 @@ msgid ""
 "more options</p><p class=\"vex-footnote\">Close popup to ignore paste "
 "special</p>"
 msgstr ""
+"<p>Your browser has very limited access to the clipboard</p><p>Please press "
+"now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
+"more options</p><p class=\"vex-footnote\">Close popup to ignore paste "
+"special</p>"
 
 #: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
