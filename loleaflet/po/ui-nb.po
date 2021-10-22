@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-21 11:51+0200\n"
-"PO-Revision-Date: 2021-02-11 11:50+0000\n"
+"PO-Revision-Date: 2021-10-22 13:43+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "collabora-online/ui/nb_NO/>\n"
-"Language: \n"
+"Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.5-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /nb/libo_online/loleaflet-ui-nb.po\n"
 "X-Pootle-Revision: 3938025\n"
 
@@ -116,7 +116,7 @@ msgstr "Endret"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "WOPI-vert"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -230,7 +230,7 @@ msgstr "Oppdater loggnivåer"
 
 #: admin/admin.strings.js:56
 msgid "Version Information"
-msgstr ""
+msgstr "Versjonsinfo"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -493,7 +493,7 @@ msgstr "Svar"
 
 #: src/control/Control.JSDialogBuilder.js:2151
 msgid "Insert Comment"
-msgstr ""
+msgstr "Sett inn kommentar"
 
 #: src/control/Control.JSDialogBuilder.js:2590
 msgid "Cell borders"
@@ -880,7 +880,7 @@ msgstr "Utvalgsteller"
 #: src/control/Control.StatusBar.js:357 src/control/Control.StatusBar.js:358
 #: src/control/Control.StatusBar.js:381 src/control/Control.StatusBar.js:382
 msgid "Permission Mode"
-msgstr ""
+msgstr "Tilgangsmodus"
 
 #: src/control/Control.StatusBar.js:318 src/control/Control.StatusBar.js:357
 #: src/control/Control.StatusBar.js:381
@@ -1121,7 +1121,7 @@ msgstr "ODF-tekstdokument (.odt)"
 
 #: src/control/Control.NotebookbarWriter.js:173
 msgid "EPUB Document (.epub)"
-msgstr ""
+msgstr "EPUB-dokument (.epub)"
 
 #: src/control/Control.NotebookbarWriter.js:517
 msgid "Text Body"
@@ -1147,15 +1147,15 @@ msgstr "CSV-fil (.csv)"
 
 #: src/control/Control.NotebookbarCalc.js:416
 msgid "General"
-msgstr ""
+msgstr "Generelt"
 
 #: src/control/Control.NotebookbarCalc.js:417
 msgid "Number"
-msgstr ""
+msgstr "Nummer"
 
 #: src/control/Control.NotebookbarCalc.js:418
 msgid "Percent"
-msgstr ""
+msgstr "Prosent"
 
 #: src/control/Control.NotebookbarCalc.js:419
 #, fuzzy
@@ -1164,15 +1164,15 @@ msgstr "Gjeldende"
 
 #: src/control/Control.NotebookbarCalc.js:420
 msgid "Date"
-msgstr ""
+msgstr "Dato"
 
 #: src/control/Control.NotebookbarCalc.js:421
 msgid "Time"
-msgstr ""
+msgstr "Tid"
 
 #: src/control/Control.NotebookbarCalc.js:422
 msgid "Scientific"
-msgstr ""
+msgstr "Vitenskapelig"
 
 #: src/control/Control.NotebookbarCalc.js:423
 msgid "Fraction"
@@ -1180,7 +1180,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:424
 msgid "Boolean Value"
-msgstr ""
+msgstr "Boolsk verdi"
 
 #: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:855
 msgid "Text"
@@ -1188,27 +1188,27 @@ msgstr "Tekst"
 
 #: src/control/Control.NotebookbarCalc.js:558
 msgid "Default"
-msgstr ""
+msgstr "Forvalg"
 
 #: src/control/Control.NotebookbarCalc.js:563
 msgid "Heading 1"
-msgstr ""
+msgstr "Overskrift 1"
 
 #: src/control/Control.NotebookbarCalc.js:568
 msgid "Heading 2"
-msgstr ""
+msgstr "Overskrift 2"
 
 #: src/control/Control.NotebookbarCalc.js:579
 msgid "Good"
-msgstr ""
+msgstr "Bra"
 
 #: src/control/Control.NotebookbarCalc.js:584
 msgid "Neutral"
-msgstr ""
+msgstr "Nøytral"
 
 #: src/control/Control.NotebookbarCalc.js:589
 msgid "Bad"
-msgstr ""
+msgstr "Dårlig"
 
 #: src/control/Control.NotebookbarCalc.js:651
 msgid "Insert Rows Above"
@@ -1245,7 +1245,7 @@ msgstr "ODF-presentasjon (.odp)"
 
 #: src/control/Control.NotebookbarDraw.js:199
 msgid "Image (.png)"
-msgstr ""
+msgstr "Bilde (.png)"
 
 #: src/control/Parts.js:420
 msgid "Show Selected Sheets"
@@ -1264,12 +1264,13 @@ msgid "The document could not be locked."
 msgstr "Dokumentet kan ikke låses."
 
 #: src/control/Permission.js:108
+#, fuzzy
 msgid "Enter a file name"
-msgstr ""
+msgstr "Skriv inn et filnavn"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "filnavn"
 
 #: src/control/Permission.js:123
 msgid ""
@@ -1279,11 +1280,11 @@ msgstr ""
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Lagre som ODF-format"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Fortsett å redigere"
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
@@ -1803,7 +1804,7 @@ msgstr "Funksjoner"
 
 #: src/layer/tile/CanvasTileLayer.js:4801
 msgid "No Comments"
-msgstr ""
+msgstr "Ingen kommentarer"
 
 #: src/map/Clipboard.js:120
 msgid "To paste outside %productName, please first click the 'download' button"
