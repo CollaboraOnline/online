@@ -297,8 +297,6 @@ class TilesSection {
 		var partWidthPixels: number = Math.round(this.map._docLayer._partWidthTwips * app.twipsToPixels);
 		var startY: number = (partHeightPixels + gap) * (top > 0 ? top -1: 0);
 		var rectangle: Array<number>;
-		if (bottom >= this.map._docLayer._parts)
-			bottom = this.map._docLayer._parts - 1;
 
 		for (var i: number = 0; i <= bottom - top; i++) {
 			rectangle = [0, startY, partWidthPixels, partHeightPixels];
@@ -358,6 +356,11 @@ class TilesSection {
 			var visibleBounds: Array<number> = this.containerObject.getDocumentBounds();
 			var topVisible: number = Math.floor(visibleBounds[1] / partHeightPixels);
 			var bottomVisible: number = Math.ceil(visibleBounds[3] / partHeightPixels);
+
+			// Check existence of pages.
+			topVisible = topVisible >= 0 ? topVisible : 0;
+			bottomVisible = bottomVisible < this.map._docLayer._parts ? bottomVisible : this.map._docLayer._parts - 1;
+
 			if (!isNaN(partHeightPixels) && partHeightPixels > 0)
 				this.drawPageBackgroundFileBasedView(ctx, topVisible, bottomVisible);
 		}
