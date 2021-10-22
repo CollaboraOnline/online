@@ -1,3 +1,6 @@
+<!DOCTYPE html>
+<html>
+<body onload="onLoaded()">
 <div id="user-welcome">
 	<div class="slider">
 		<div class="slides">
@@ -33,7 +36,7 @@
 				<h2 id="welcome-slide3-heading-2"></h2>
 				<p id="welcome-slide3-content"></p>
 				<div id="user-welcome--buttons">
-					<button id='welcome-button-close' type="button" class="ui-pushbutton jsdialog" onclick="vex.closeAll()"></button>
+					<button id='welcome-button-close' type="button" class="ui-pushbutton jsdialog" onclick="onClose()"></button>
 				</div>
 			</div>
 		</div>
@@ -43,3 +46,18 @@
 	</div>
 	<a id="view-supported-versions" href="https://www.collaboraoffice.com/subscriptions/" target="_blank"></a>
 </div>
+<script>
+  function onLoaded() {
+      if (window.parent !== window.self) {
+	  window.parent.postMessage('welcome-show', '*');
+      }
+  }
+
+  function onClose() {
+      if (window.parent !== window.self) {
+	  window.parent.postMessage('welcome-close', '*');
+      }
+  }
+</script>
+</body>
+</html>
