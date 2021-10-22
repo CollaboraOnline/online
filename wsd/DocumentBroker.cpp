@@ -98,6 +98,7 @@ std::string DocumentBroker::getDocKey(const Poco::URI& uri)
     // work. Worse, saving overwrites one another.
     std::string docKey;
     Poco::URI::encode(uri.getPath(), "", docKey);
+    LOG_INF("DocKey from URI [" << uri.getPath() << "] => [" << docKey << ']');
     return docKey;
 }
 

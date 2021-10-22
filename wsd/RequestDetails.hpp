@@ -131,6 +131,9 @@ public:
     RequestDetails(Poco::Net::HTTPRequest &request, const std::string& serviceRoot);
     RequestDetails(const std::string &mobileURI);
 
+    /// Decode and sanitize a URI.
+    static Poco::URI sanitizeURI(const std::string& uri);
+
     // matches the WOPISrc if used. For load balancing
     // must be 2nd element in the path after /lool/<here>
     std::string getLegacyDocumentURI() const { return getField(Field::LegacyDocumentURI); }
@@ -222,9 +225,6 @@ public:
         oss << "\nfull URI: " << _uriString;
         return oss.str();
     }
-
-    /// Sanitize the given URI.
-    static Poco::URI sanitizeURI(const std::string& uri);
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

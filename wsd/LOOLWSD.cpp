@@ -2974,7 +2974,7 @@ private:
             return;
         }
 
-        const auto docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(WOPISrc));
+        const auto docKey = DocumentBroker::getDocKey(RequestDetails::sanitizeURI(WOPISrc));
 
         std::shared_ptr<DocumentBroker> docBroker;
         {
@@ -3245,7 +3245,7 @@ private:
             LOG_INF("Conversion request for URI [" << fromPath << "] format [" << format << "].");
             if (!fromPath.empty() && !format.empty())
             {
-                Poco::URI uriPublic = DocumentBroker::sanitizeURI(fromPath);
+                Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
                 const std::string docKey = DocumentBroker::getDocKey(uriPublic);
 
                 std::string options;
@@ -3293,7 +3293,7 @@ private:
 
                 // Validate the docKey
                 const std::string decodedUri = requestDetails.getDocumentURI();
-                const std::string docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
+                const std::string docKey = DocumentBroker::getDocKey(RequestDetails::sanitizeURI(decodedUri));
 
                 std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
                 auto docBrokerIt = DocBrokers.find(docKey);
@@ -3337,7 +3337,7 @@ private:
 
             // 1. Validate the dockey
             const std::string decodedUri = requestDetails.getDocumentURI();
-            const std::string docKey = DocumentBroker::getDocKey(DocumentBroker::sanitizeURI(decodedUri));
+            const std::string docKey = DocumentBroker::getDocKey(RequestDetails::sanitizeURI(decodedUri));
 
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
             auto docBrokerIt = DocBrokers.find(docKey);
@@ -3424,7 +3424,7 @@ private:
             if (fromPath.empty())
                 return;
 
-            Poco::URI uriPublic = DocumentBroker::sanitizeURI(fromPath);
+            Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
             const std::string docKey = DocumentBroker::getDocKey(uriPublic);
 
             // This lock could become a bottleneck.
@@ -3460,11 +3460,9 @@ private:
         //FIXME: The DocumentURI includes the WOPISrc, which makes it potentially invalid URI.
         const std::string url = requestDetails.getLegacyDocumentURI();
 
-        LOG_INF("URL [" << url << "].");
-        const auto uriPublic = DocumentBroker::sanitizeURI(url);
-        LOG_INF("URI [" << uriPublic.getPath() << "].");
+        LOG_INF("URL [" << url << "] for Proxy request.");
+        const auto uriPublic = RequestDetails::sanitizeURI(url);
         const auto docKey = DocumentBroker::getDocKey(uriPublic);
-        LOG_INF("DocKey [" << docKey << "].");
         const std::string fileId = Util::getFilenameFromURL(docKey);
         Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 
@@ -3561,11 +3559,9 @@ private:
 #endif
             }
 
-            LOG_INF("URL [" << url << "].");
-            const auto uriPublic = DocumentBroker::sanitizeURI(url);
-            LOG_INF("URI [" << uriPublic.getPath() << "].");
+            LOG_INF("URL [" << url << "] for WS Request.");
+            const auto uriPublic = RequestDetails::sanitizeURI(url);
             const auto docKey = DocumentBroker::getDocKey(uriPublic);
-            LOG_INF("DocKey [" << docKey << "].");
             const std::string fileId = Util::getFilenameFromURL(docKey);
             Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 

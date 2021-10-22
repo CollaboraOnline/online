@@ -276,6 +276,8 @@ Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
     }
 
     uriPublic.setQueryParameters(queryParams);
+
+    LOG_DBG("Sanitized URI [" << uri << "] to [" << uriPublic.toString() << ']');
     return uriPublic;
 }
 
