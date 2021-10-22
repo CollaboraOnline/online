@@ -937,7 +937,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			if (builder.wizard) {
-				builder.wizard.setTabs(tabsContainer);
+				builder.wizard.setTabs(tabsContainer, builder);
 
 				for (var t = 0; t < tabs.length; t++) {
 					// to get capture of 't' right has to be a sub fn.
@@ -1024,7 +1024,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		if (builder.wizard) {
-			builder.wizard.setTabs(tabsContainer);
+			builder.wizard.setTabs(tabsContainer, builder);
 
 			for (var t = 0; t < tabs.length; t++) {
 				// to get capture of 't' right has to be a sub fn.
