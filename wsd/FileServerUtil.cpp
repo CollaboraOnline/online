@@ -28,6 +28,7 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
     Poco::JSON::Object textDefs;
     Poco::JSON::Object spreadsheetDefs;
     Poco::JSON::Object presentationDefs;
+    Poco::JSON::Object drawingDefs;
 
     uiMode = "";
     StringVector tokens(Util::tokenize(uiDefaults, ';'));
@@ -65,6 +66,11 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
             currentDef = &presentationDefs;
             key = keyValue[0].substr(12);
         }
+        else if (Util::startsWith(keyValue[0], "Drawing"))
+        {
+            currentDef = &drawingDefs;
+            key = keyValue[0].substr(7);
+        }
         else
         {
             LOG_ERR("unknown UI default's component " << keyValue[0]);
@@ -97,6 +103,9 @@ std::string FileServerRequestHandler::uiDefaultsToJSON(const std::string& uiDefa
 
     if (presentationDefs.size() > 0)
         json.set("presentation", presentationDefs);
+
+    if (drawingDefs.size() > 0)
+        json.set("drawing", drawingDefs);
 
     std::ostringstream oss;
     Poco::JSON::Stringifier::stringify(json, oss);
