@@ -65,9 +65,20 @@ L.Control.JSDialog = L.Control.extend({
 		}
 	},
 
-	setTabs: function() {
-		// TODO
-		console.warn('jsdialogs: tabs are not implemented');
+	setTabs: function(tabs, builder) {
+		var dialog = this.dialogs[builder.windowId.toString()];
+		if (dialog) {
+			var tabsContainer = dialog.tabs;
+
+			while (tabsContainer.firstChild)
+				tabsContainer.removeChild(tabsContainer.firstChild);
+
+			tabsContainer.appendChild(tabs);
+		}
+	},
+
+	selectedTab: function() {
+		// nothing to do here
 	},
 
 	onJSDialog: function(e) {
@@ -96,10 +107,11 @@ L.Control.JSDialog = L.Control.extend({
 			return;
 		}
 
+		var toRemove = null;
 		if (this.dialogs[data.id]) {
 			posX = this.dialogs[data.id].startX;
 			posY = this.dialogs[data.id].startY;
-			L.DomUtil.remove(this.dialogs[data.id].container);
+			toRemove = this.dialogs[data.id].container;
 		}
 
 		container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', document.body);
@@ -120,7 +132,13 @@ L.Control.JSDialog = L.Control.extend({
 				L.DomUtil.addClass(container, 'snackbar');
 		}
 
+		var tabs = L.DomUtil.create('div', 'jsdialog-tabs', container);
 		var content = L.DomUtil.create('div', 'lokdialog ui-dialog-content ui-widget-content', container);
+
+		// required to exist before builder was launched (for setTabs)
+		this.dialogs[data.id] = {
+			tabs: tabs
+		};
 
 		var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'jsdialog', callback: callback});
 
@@ -204,6 +222,7 @@ L.Control.JSDialog = L.Control.extend({
 		this.dialogs[data.id] = {
 			container: container,
 			builder: builder,
+			tabs: tabs,
 			startX: posX,
 			startY: posY,
 			clickToClose: clickToCloseId ? L.DomUtil.get(clickToCloseId) : null,
@@ -219,6 +238,8 @@ L.Control.JSDialog = L.Control.extend({
 			setupPosition();
 			that.updatePosition(container, posX, posY);
 			container.style.visibility = '';
+			if (toRemove)
+				L.DomUtil.remove(toRemove);
 		}, 200);
 
 		if (isSnackbar) {

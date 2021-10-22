@@ -697,6 +697,10 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	z-index: 1105;
 }
 
+.lokdialog_container.ui-dialog.ui-widget-content.jsdialog-container {
+	background-color: var(--white-bg-color) !important;
+}
+
 .lokdialog.ui-dialog-content.ui-widget-content {
 	padding: 0px;
 	overflow: auto;
