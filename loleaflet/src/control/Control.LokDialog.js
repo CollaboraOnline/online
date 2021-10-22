@@ -1606,7 +1606,8 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_resizeSidebar: function(strId, width) {
-		document.getElementById('sidebar-dock-wrapper').style.minWidth = String(width) + 'px';
+		var minWidth = width > 0 ? width + 10 : width; // we need some space for scrollbar
+		document.getElementById('sidebar-dock-wrapper').style.minWidth = String(minWidth) + 'px';
 		this._currentDeck.width = width;
 		var deckOffset = 0;
 		var sidebar = L.DomUtil.get(strId);
