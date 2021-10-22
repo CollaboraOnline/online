@@ -241,6 +241,10 @@ private:
     /// If this session is read-only because of failed lock, try to unlock and make it read-write.
     bool attemptLock(const std::shared_ptr<DocumentBroker>& docBroker);
 
+    /// Removes the <meta name="origin" ...> tag which was added in
+    /// ClientSession::postProcessCopyPayload().
+    static void preProcessSetClipboardPayload(std::string& payload);
+
 private:
     std::weak_ptr<DocumentBroker> _docBroker;
 
