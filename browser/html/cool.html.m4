@@ -24,11 +24,17 @@ m4_ifelse(ENABLE_FEEDBACK,[true],[  window.feedbackLocation = '%FEEDBACK_LOCATIO
 m4_ifelse(MOBILEAPP,[],
   // Start listening for Host_PostmessageReady message and save the
   // result for future
-  window.WOPIpostMessageReady = false;
-  var PostMessageReadyListener = function(e) {
+    window.WOPIpostMessageReady = false;
+    var PostMessageReadyListener = function(e) {
     if (!(e && e.data))
         return;
-    var msg = JSON.parse(e.data);
+
+    try {
+        var msg = JSON.parse(e.data);
+    } catch (err) {
+        return;
+    }
+
     if (msg.MessageId === 'Host_PostmessageReady') {
       window.WOPIPostmessageReady = true;
       window.removeEventListener('message', PostMessageReadyListener, false);
