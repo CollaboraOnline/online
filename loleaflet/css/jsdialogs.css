@@ -28,6 +28,7 @@
 .jsdialog-container {
 	position: absolute;
 	z-index: 1105;
+	max-width: 90%;
 }
 
 .jsdialog-container.modalpopup {
@@ -107,6 +108,46 @@ td.jsdialog > [id^='table-box'] {
 
 .jsdialog.ui-grid {
 	border-spacing: 0px;
+}
+
+/* Tabs */
+.jsdialog-tabs {
+	display: inline-flex;
+	width: 100%;
+	background: white;
+	background: var(--white-bg-color);
+}
+
+.jsdialog-tabs .ui-tabs.jsdialog {
+	display: inline-block;
+}
+
+.ui-tab.jsdialog {
+	float: left;
+	font-size: 12pt;
+	font-family: var(--loleaflet-font);
+	line-height: normal;
+	color: dimgray;
+	color: var(--gray-light-txt--color);
+	height: 32px;
+	display: flex;
+	align-items: center;
+	padding: 0px 1em;
+}
+
+.ui-tab.hidden.jsdialog {
+	display: none;
+}
+
+.ui-tab.selected.jsdialog {
+	background: var(--gray-light-bg-color);
+	color: var(--gray-light-txt--color);
+}
+
+.ui-tab.jsdialog:hover {
+	cursor: pointer;
+	background: var(--gray-light-bg-color);
+	color: var(--gray-light-txt--color);
 }
 
 /* Expander */
