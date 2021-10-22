@@ -57,9 +57,20 @@ L.Control.JSDialog = L.Control.extend({
 			menubutton.click();
 	},
 
-	setTabs: function() {
-		// TODO
-		console.warn('jsdialogs: tabs are not implemented');
+	setTabs: function(tabs, builder) {
+		var dialog = this.dialogs[builder.windowId.toString()];
+		if (dialog) {
+			var tabsContainer = dialog.tabs;
+
+			while (tabsContainer.firstChild)
+				tabsContainer.removeChild(tabsContainer.firstChild);
+
+			tabsContainer.appendChild(tabs);
+		}
+	},
+
+	selectedTab: function() {
+		// nothing to do here
 	},
 
 	onJSDialog: function(e) {
@@ -86,10 +97,11 @@ L.Control.JSDialog = L.Control.extend({
 			return;
 		}
 
+		var toRemove = null;
 		if (this.dialogs[data.id]) {
 			posX = this.dialogs[data.id].startX;
 			posY = this.dialogs[data.id].startY;
-			L.DomUtil.remove(this.dialogs[data.id].container);
+			toRemove = this.dialogs[data.id].container;
 		}
 
 		container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', document.body);
@@ -107,7 +119,13 @@ L.Control.JSDialog = L.Control.extend({
 			L.DomUtil.addClass(container, 'modalpopup');
 		}
 
+		var tabs = L.DomUtil.create('div', 'jsdialog-tabs', container);
 		var content = L.DomUtil.create('div', 'lokdialog ui-dialog-content ui-widget-content', container);
+
+		// required to exist before builder was launched (for setTabs)
+		this.dialogs[data.id] = {
+			tabs: tabs
+		};
 
 		var builder = new L.control.jsDialogBuilder({windowId: data.id, mobileWizard: this, map: this.map, cssClass: 'jsdialog'});
 
@@ -172,6 +190,7 @@ L.Control.JSDialog = L.Control.extend({
 		this.dialogs[data.id] = {
 			container: container,
 			builder: builder,
+			tabs: tabs,
 			startX: posX,
 			startY: posY,
 			popupParent: parent,
@@ -180,6 +199,8 @@ L.Control.JSDialog = L.Control.extend({
 		};
 
 		this.updatePosition(container, posX, posY);
+		if (toRemove)
+			L.DomUtil.remove(toRemove);
 	},
 
 	onJSUpdate: function (e) {
