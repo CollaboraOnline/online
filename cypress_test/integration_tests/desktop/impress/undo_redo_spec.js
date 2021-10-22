@@ -47,7 +47,21 @@ describe('Editing Operations', function() {
 	it('Repair Document', function() {
 		helper.typeIntoDocument('Hello World');
 
-		helper.selectAllText();
+		helper.typeIntoDocument('{esc}');
+
+		cy.wait(1000);
+
+		impressHelper.selectTextShapeInTheCenter();
+
+		impressHelper.selectTextOfShape();
+
+		cy.wait(1000);
+
+		helper.typeIntoDocument('Overwrite Text');
+
+		helper.typeIntoDocument('{esc}');
+
+		cy.wait(1000);
 
 		cy.get('#menu-editmenu').click()
 			.get('#menu-repair').click();
@@ -67,6 +81,6 @@ describe('Editing Operations', function() {
 
 		helper.selectAllText();
 
-		helper.expectTextForClipboard('Hello Worl');
+		helper.expectTextForClipboard('Hello World');
 	});
 });
