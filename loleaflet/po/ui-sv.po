@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-21 11:51+0200\n"
+"POT-Creation-Date: 2021-10-22 15:46+0200\n"
 "PO-Revision-Date: 2021-09-30 12:38+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
@@ -139,9 +139,10 @@ msgid "Network Graph"
 msgstr "Nätverksdiagram"
 
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:248
-#: src/control/Control.NotebookbarImpress.js:24
 #: src/control/Control.NotebookbarDraw.js:24
-#: src/layer/tile/CommentSection.js:88
+#: src/control/Control.NotebookbarImpress.js:24
+#: src/layer/tile/CommentListSection.ts:371
+#: src/layer/tile/CommentSection.ts:122
 msgid "Save"
 msgstr "Spara"
 
@@ -265,11 +266,12 @@ msgid "OK"
 msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1613
-#: src/control/Control.MobileTopBar.js:43
+#: src/control/Control.Command.js:90 src/control/Control.LanguageDialog.js:86
+#: src/control/Control.Menubar.js:1613 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:860
-#: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
+#: src/layer/tile/CommentListSection.ts:372
+#: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -355,6 +357,10 @@ msgstr "Öppna länk"
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Servern stötte på ett %0-fel vid utförandet av kommandot %1."
 
+#: src/control/Control.Command.js:89
+msgid "Unlock"
+msgstr ""
+
 #: src/control/Control.ContextMenu.js:180
 msgid "Delete"
 msgstr "Radera"
@@ -379,6 +385,7 @@ msgstr "Förteckning"
 #: src/control/Control.JSDialogBuilder.js:2090
 #: src/layer/tile/CanvasTileLayer.js:4774
 #: src/layer/tile/CanvasTileLayer.js:4784
+#: src/layer/tile/CommentListSection.ts:807
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -409,18 +416,6 @@ msgstr "Bekräfta kopiering till urklipp"
 #: src/control/Control.FormulaBar.js:34
 msgid "Function Wizard"
 msgstr "Funktionsguide"
-
-#: src/control/Control.MobileWizardBuilder.js:500
-msgid "Background Color"
-msgstr "Bakgrundsfärg"
-
-#: src/control/Control.MobileWizardBuilder.js:502
-msgid "Gradient Start"
-msgstr "Toning startfärg"
-
-#: src/control/Control.MobileWizardBuilder.js:504
-msgid "Gradient End"
-msgstr "Toning slutfärg"
 
 #: src/control/Control.JSDialogBuilder.js:379
 msgid "Solid"
@@ -515,13 +510,14 @@ msgstr "Infoga Tabell"
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:277
 #: src/control/Control.Menubar.js:279 src/control/Control.Menubar.js:281
 #: src/control/Control.Menubar.js:417 src/control/Control.Menubar.js:530
-#: src/control/Control.Menubar.js:738 src/control/Control.StatusBar.js:507
+#: src/control/Control.Menubar.js:738
 #: src/control/Control.NotebookbarBuilder.js:733
 #: src/control/Control.NotebookbarBuilder.js:735
 #: src/control/Control.NotebookbarBuilder.js:737
 #: src/control/Control.NotebookbarBuilder.js:761
 #: src/control/Control.NotebookbarBuilder.js:796
 #: src/control/Control.NotebookbarBuilder.js:813
+#: src/control/Control.StatusBar.js:507
 msgid "None (Do not check spelling)"
 msgstr "Inget (gör ingen stavningskontroll)"
 
@@ -557,10 +553,10 @@ msgstr "Exportera som"
 #: src/control/Control.Menubar.js:441 src/control/Control.Menubar.js:549
 #: src/control/Control.Menubar.js:765 src/control/Control.Menubar.js:817
 #: src/control/Control.Menubar.js:871 src/control/Control.Menubar.js:917
-#: src/control/Control.NotebookbarWriter.js:167
 #: src/control/Control.NotebookbarCalc.js:163
-#: src/control/Control.NotebookbarImpress.js:243
 #: src/control/Control.NotebookbarDraw.js:212
+#: src/control/Control.NotebookbarImpress.js:243
+#: src/control/Control.NotebookbarWriter.js:167
 msgid "PDF Document (.pdf)"
 msgstr "PDF-dokument (.pdf)"
 
@@ -601,39 +597,39 @@ msgstr "Stäng dokument"
 #: src/control/Control.Menubar.js:450 src/control/Control.Menubar.js:561
 #: src/control/Control.Menubar.js:775 src/control/Control.Menubar.js:826
 #: src/control/Control.Menubar.js:877 src/control/Control.Menubar.js:925
-#: src/control/Control.NotebookbarWriter.js:185
-#: src/control/Control.NotebookbarWriter.js:186
-#: src/control/Control.NotebookbarCalc.js:169
-#: src/control/Control.NotebookbarCalc.js:170
-#: src/control/Control.NotebookbarImpress.js:249
-#: src/control/Control.NotebookbarImpress.js:250
-#: src/control/Control.NotebookbarDraw.js:218
-#: src/control/Control.NotebookbarDraw.js:219
 #: src/control/Control.NotebookbarBuilder.js:726
 #: src/control/Control.NotebookbarBuilder.js:756
 #: src/control/Control.NotebookbarBuilder.js:791
 #: src/control/Control.NotebookbarBuilder.js:808
+#: src/control/Control.NotebookbarCalc.js:169
+#: src/control/Control.NotebookbarCalc.js:170
+#: src/control/Control.NotebookbarDraw.js:218
+#: src/control/Control.NotebookbarDraw.js:219
+#: src/control/Control.NotebookbarImpress.js:249
+#: src/control/Control.NotebookbarImpress.js:250
+#: src/control/Control.NotebookbarWriter.js:185
+#: src/control/Control.NotebookbarWriter.js:186
 msgid "Repair"
 msgstr "Reparera"
 
 #: src/control/Control.Menubar.js:104 src/control/Control.Menubar.js:338
 #: src/control/Control.Menubar.js:464 src/control/Control.Menubar.js:575
-#: src/control/Control.StatusBar.js:184
-#: src/control/Control.NotebookbarWriter.js:975
-#: src/control/Control.NotebookbarWriter.js:976
 #: src/control/Control.NotebookbarCalc.js:745
 #: src/control/Control.NotebookbarCalc.js:746
-#: src/control/Control.NotebookbarImpress.js:980
-#: src/control/Control.NotebookbarImpress.js:981
 #: src/control/Control.NotebookbarDraw.js:689
 #: src/control/Control.NotebookbarDraw.js:690
+#: src/control/Control.NotebookbarImpress.js:980
+#: src/control/Control.NotebookbarImpress.js:981
+#: src/control/Control.NotebookbarWriter.js:975
+#: src/control/Control.NotebookbarWriter.js:976
+#: src/control/Control.StatusBar.js:184
 msgid "Reset zoom"
 msgstr "Återställ zoomning"
 
 #: src/control/Control.Menubar.js:106
+#: src/control/Control.NotebookbarBuilder.js:712
 #: src/control/Control.NotebookbarWriter.js:1025
 #: src/control/Control.NotebookbarWriter.js:1026
-#: src/control/Control.NotebookbarBuilder.js:712
 msgid "Show Ruler"
 msgstr "Visa linjal"
 
@@ -729,8 +725,8 @@ msgstr "Presentera den aktuella bilden"
 
 #: src/control/Control.Menubar.js:442 src/control/Control.Menubar.js:821
 #: src/control/Control.Menubar.js:872
-#: src/control/Control.NotebookbarImpress.js:211
 #: src/control/Control.NotebookbarDraw.js:193
+#: src/control/Control.NotebookbarImpress.js:211
 msgid "ODF Drawing (.odg)"
 msgstr "ODF Ritning (.odg)"
 
@@ -783,6 +779,256 @@ msgstr "Visa sökningsbalken"
 #: src/control/Control.MobileTopBar.js:42
 msgid "Accept"
 msgstr "Acceptera"
+
+#: src/control/Control.MobileWizardBuilder.js:500
+msgid "Background Color"
+msgstr "Bakgrundsfärg"
+
+#: src/control/Control.MobileWizardBuilder.js:502
+msgid "Gradient Start"
+msgstr "Toning startfärg"
+
+#: src/control/Control.MobileWizardBuilder.js:504
+msgid "Gradient End"
+msgstr "Toning slutfärg"
+
+#: src/control/Control.Notebookbar.js:242
+#: src/control/Control.NotebookbarBuilder.js:707
+#: src/control/Control.NotebookbarBuilder.js:750
+#: src/control/Control.NotebookbarBuilder.js:778
+#: src/control/Control.NotebookbarBuilder.js:803
+#: src/control/Control.NotebookbarDraw.js:18
+#: src/control/Control.NotebookbarImpress.js:18
+msgid "Menu"
+msgstr "Meny"
+
+#: src/control/Control.Notebookbar.js:262
+#: src/control/Control.NotebookbarDraw.js:36
+#: src/control/Control.NotebookbarImpress.js:36
+msgid "Undo"
+msgstr "Ångra"
+
+#: src/control/Control.Notebookbar.js:268
+#: src/control/Control.NotebookbarDraw.js:42
+#: src/control/Control.NotebookbarImpress.js:42
+msgid "Redo"
+msgstr "Gör om"
+
+#: src/control/Control.NotebookbarBuilder.js:548
+#: src/control/Control.TopToolbar.js:222
+msgid "Insert Local Image"
+msgstr "Lägg in lokal bild"
+
+#: src/control/Control.NotebookbarCalc.js:12
+#: src/control/Control.NotebookbarDraw.js:79
+#: src/control/Control.NotebookbarImpress.js:91
+#: src/control/Control.NotebookbarWriter.js:12
+msgid "~File"
+msgstr "~Arkiv"
+
+#: src/control/Control.NotebookbarCalc.js:17
+#: src/control/Control.NotebookbarDraw.js:84
+#: src/control/Control.NotebookbarImpress.js:96
+#: src/control/Control.NotebookbarWriter.js:17
+msgid "~Home"
+msgstr "~Hem"
+
+#: src/control/Control.NotebookbarCalc.js:23
+#: src/control/Control.NotebookbarDraw.js:90
+#: src/control/Control.NotebookbarImpress.js:102
+#: src/control/Control.NotebookbarWriter.js:23
+msgid "~Insert"
+msgstr "~Infoga"
+
+#: src/control/Control.NotebookbarCalc.js:28
+#: src/control/Control.NotebookbarDraw.js:95
+#: src/control/Control.NotebookbarImpress.js:107
+#: src/control/Control.NotebookbarWriter.js:28
+msgid "~Layout"
+msgstr "~Layout"
+
+#: src/control/Control.NotebookbarCalc.js:33
+msgid "~Data"
+msgstr "~Data"
+
+#: src/control/Control.NotebookbarCalc.js:38
+#: src/control/Control.NotebookbarDraw.js:100
+#: src/control/Control.NotebookbarImpress.js:112
+#: src/control/Control.NotebookbarWriter.js:38
+msgid "~Review"
+msgstr "~Granska"
+
+#: src/control/Control.NotebookbarCalc.js:43
+#: src/control/Control.NotebookbarDraw.js:105
+#: src/control/Control.NotebookbarImpress.js:117
+#: src/control/Control.NotebookbarWriter.js:43
+msgid "Format"
+msgstr "Format"
+
+#: src/control/Control.NotebookbarCalc.js:48
+#: src/control/Control.NotebookbarWriter.js:54
+msgid "~Draw"
+msgstr "~Rita"
+
+#: src/control/Control.NotebookbarCalc.js:54
+#: src/control/Control.NotebookbarDraw.js:122
+#: src/control/Control.NotebookbarImpress.js:134
+#: src/control/Control.NotebookbarWriter.js:60
+msgid "~Help"
+msgstr "~Hjälp"
+
+#: src/control/Control.NotebookbarCalc.js:98
+#: src/control/Control.NotebookbarDraw.js:166
+#: src/control/Control.NotebookbarImpress.js:178
+#: src/control/Control.NotebookbarWriter.js:105
+msgid "Share"
+msgstr "Dela"
+
+#: src/control/Control.NotebookbarCalc.js:105
+#: src/control/Control.NotebookbarDraw.js:173
+#: src/control/Control.NotebookbarImpress.js:185
+#: src/control/Control.NotebookbarWriter.js:112
+msgid "See history"
+msgstr "Se historik"
+
+#: src/control/Control.NotebookbarCalc.js:125
+msgid "ODF Spreadsheet (.ods)"
+msgstr "ODF-kalkylblad (.ods)"
+
+#: src/control/Control.NotebookbarCalc.js:131
+msgid "CSV File (.csv)"
+msgstr "CSV fil (.csv)"
+
+#: src/control/Control.NotebookbarCalc.js:416
+msgid "General"
+msgstr "Allmän"
+
+#: src/control/Control.NotebookbarCalc.js:417
+msgid "Number"
+msgstr "Nummer"
+
+#: src/control/Control.NotebookbarCalc.js:418
+msgid "Percent"
+msgstr "Procent"
+
+#: src/control/Control.NotebookbarCalc.js:419
+msgid "Currency"
+msgstr "Valuta"
+
+#: src/control/Control.NotebookbarCalc.js:420
+msgid "Date"
+msgstr "Datum"
+
+#: src/control/Control.NotebookbarCalc.js:421
+msgid "Time"
+msgstr "Tid"
+
+#: src/control/Control.NotebookbarCalc.js:422
+msgid "Scientific"
+msgstr "Vetenskaplig"
+
+#: src/control/Control.NotebookbarCalc.js:423
+msgid "Fraction"
+msgstr "Fraktion"
+
+#: src/control/Control.NotebookbarCalc.js:424
+msgid "Boolean Value"
+msgstr "Boolskt värde"
+
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:855
+msgid "Text"
+msgstr "Text"
+
+#: src/control/Control.NotebookbarCalc.js:558
+msgid "Default"
+msgstr "Standard"
+
+#: src/control/Control.NotebookbarCalc.js:563
+msgid "Heading 1"
+msgstr "Rubrik 1"
+
+#: src/control/Control.NotebookbarCalc.js:568
+msgid "Heading 2"
+msgstr "Rubrik 2"
+
+#: src/control/Control.NotebookbarCalc.js:579
+msgid "Good"
+msgstr "Bra"
+
+#: src/control/Control.NotebookbarCalc.js:584
+msgid "Neutral"
+msgstr "Neutral"
+
+#: src/control/Control.NotebookbarCalc.js:589
+msgid "Bad"
+msgstr "Dålig"
+
+#: src/control/Control.NotebookbarCalc.js:651
+msgid "Insert Rows Above"
+msgstr "Infoga rader ovan"
+
+#: src/control/Control.NotebookbarCalc.js:656
+msgid "Insert Columns Before"
+msgstr "Infoga kolumner före"
+
+#: src/control/Control.NotebookbarCalc.js:661
+msgid "Delete Rows"
+msgstr "Ta bort rader"
+
+#: src/control/Control.NotebookbarCalc.js:671
+msgid "Insert Rows Below"
+msgstr "Infoga rader nedan"
+
+#: src/control/Control.NotebookbarCalc.js:676
+msgid "Insert Columns After"
+msgstr "Infoga kolumner efter"
+
+#: src/control/Control.NotebookbarCalc.js:681
+msgid "Delete Columns"
+msgstr "Ta bort kolumner"
+
+#: src/control/Control.NotebookbarDraw.js:110
+#: src/control/Control.NotebookbarImpress.js:122
+#: src/control/Control.NotebookbarWriter.js:48
+msgid "~Table"
+msgstr "~Tabell"
+
+#: src/control/Control.NotebookbarDraw.js:199
+msgid "Image (.png)"
+msgstr "Bild (.png)"
+
+#: src/control/Control.NotebookbarImpress.js:30
+msgid "Start Presentation"
+msgstr "Starta presentation"
+
+#: src/control/Control.NotebookbarImpress.js:205
+msgid "ODF Presentation (.odp)"
+msgstr "ODF-presentation (.odp)"
+
+#: src/control/Control.NotebookbarWriter.js:33
+msgid "Reference~s"
+msgstr "Referen~ser"
+
+#: src/control/Control.NotebookbarWriter.js:131
+msgid "ODF Text Document (.odt)"
+msgstr "ODF textdokument (.odt)"
+
+#: src/control/Control.NotebookbarWriter.js:173
+msgid "EPUB Document (.epub)"
+msgstr "EPUB dokument (.epub)"
+
+#: src/control/Control.NotebookbarWriter.js:513
+#: src/control/Control.TopToolbar.js:101
+msgid "Default Style"
+msgstr "Standardstil"
+
+#: src/control/Control.NotebookbarWriter.js:517
+msgid "Text Body"
+msgstr "Brödtext"
+
+#: src/control/Control.NotebookbarWriter.js:520
+msgid "Title"
+msgstr "Titel"
 
 #: src/control/Control.PresentationBar.js:100
 msgid "Are you sure you want to delete this page?"
@@ -954,11 +1200,6 @@ msgstr ""
 "Funktionen Ångra/Gör om har hamnat i konflikt mellan flera användare. Använd "
 "dokumentåterställning för att lösa problemet"
 
-#: src/control/Control.TopToolbar.js:101
-#: src/control/Control.NotebookbarWriter.js:513
-msgid "Default Style"
-msgstr "Standardstil"
-
 #: src/control/Control.TopToolbar.js:155
 msgid "Borders"
 msgstr "Kanter"
@@ -966,11 +1207,6 @@ msgstr "Kanter"
 #: src/control/Control.TopToolbar.js:218
 msgid "Insert table"
 msgstr "Infoga tabell"
-
-#: src/control/Control.TopToolbar.js:222
-#: src/control/Control.NotebookbarBuilder.js:548
-msgid "Insert Local Image"
-msgstr "Lägg in lokal bild"
 
 #: src/control/Control.TopToolbar.js:226
 msgid "Insert shapes"
@@ -1011,234 +1247,6 @@ msgstr "Följ alltid den som skriver"
 #: src/control/Control.UserList.js:253
 msgid "Current"
 msgstr "Aktuell"
-
-#: src/control/Control.Notebookbar.js:242
-#: src/control/Control.NotebookbarImpress.js:18
-#: src/control/Control.NotebookbarDraw.js:18
-#: src/control/Control.NotebookbarBuilder.js:707
-#: src/control/Control.NotebookbarBuilder.js:750
-#: src/control/Control.NotebookbarBuilder.js:778
-#: src/control/Control.NotebookbarBuilder.js:803
-msgid "Menu"
-msgstr "Meny"
-
-#: src/control/Control.Notebookbar.js:262
-#: src/control/Control.NotebookbarImpress.js:36
-#: src/control/Control.NotebookbarDraw.js:36
-msgid "Undo"
-msgstr "Ångra"
-
-#: src/control/Control.Notebookbar.js:268
-#: src/control/Control.NotebookbarImpress.js:42
-#: src/control/Control.NotebookbarDraw.js:42
-msgid "Redo"
-msgstr "Gör om"
-
-#: src/control/Control.NotebookbarWriter.js:12
-#: src/control/Control.NotebookbarCalc.js:12
-#: src/control/Control.NotebookbarImpress.js:91
-#: src/control/Control.NotebookbarDraw.js:79
-msgid "~File"
-msgstr "~Arkiv"
-
-#: src/control/Control.NotebookbarWriter.js:17
-#: src/control/Control.NotebookbarCalc.js:17
-#: src/control/Control.NotebookbarImpress.js:96
-#: src/control/Control.NotebookbarDraw.js:84
-msgid "~Home"
-msgstr "~Hem"
-
-#: src/control/Control.NotebookbarWriter.js:23
-#: src/control/Control.NotebookbarCalc.js:23
-#: src/control/Control.NotebookbarImpress.js:102
-#: src/control/Control.NotebookbarDraw.js:90
-msgid "~Insert"
-msgstr "~Infoga"
-
-#: src/control/Control.NotebookbarWriter.js:28
-#: src/control/Control.NotebookbarCalc.js:28
-#: src/control/Control.NotebookbarImpress.js:107
-#: src/control/Control.NotebookbarDraw.js:95
-msgid "~Layout"
-msgstr "~Layout"
-
-#: src/control/Control.NotebookbarWriter.js:33
-msgid "Reference~s"
-msgstr "Referen~ser"
-
-#: src/control/Control.NotebookbarWriter.js:38
-#: src/control/Control.NotebookbarCalc.js:38
-#: src/control/Control.NotebookbarImpress.js:112
-#: src/control/Control.NotebookbarDraw.js:100
-msgid "~Review"
-msgstr "~Granska"
-
-#: src/control/Control.NotebookbarWriter.js:43
-#: src/control/Control.NotebookbarCalc.js:43
-#: src/control/Control.NotebookbarImpress.js:117
-#: src/control/Control.NotebookbarDraw.js:105
-msgid "Format"
-msgstr "Format"
-
-#: src/control/Control.NotebookbarWriter.js:48
-#: src/control/Control.NotebookbarImpress.js:122
-#: src/control/Control.NotebookbarDraw.js:110
-msgid "~Table"
-msgstr "~Tabell"
-
-#: src/control/Control.NotebookbarWriter.js:54
-#: src/control/Control.NotebookbarCalc.js:48
-msgid "~Draw"
-msgstr "~Rita"
-
-#: src/control/Control.NotebookbarWriter.js:60
-#: src/control/Control.NotebookbarCalc.js:54
-#: src/control/Control.NotebookbarImpress.js:134
-#: src/control/Control.NotebookbarDraw.js:122
-msgid "~Help"
-msgstr "~Hjälp"
-
-#: src/control/Control.NotebookbarWriter.js:105
-#: src/control/Control.NotebookbarCalc.js:98
-#: src/control/Control.NotebookbarImpress.js:178
-#: src/control/Control.NotebookbarDraw.js:166
-msgid "Share"
-msgstr "Dela"
-
-#: src/control/Control.NotebookbarWriter.js:112
-#: src/control/Control.NotebookbarCalc.js:105
-#: src/control/Control.NotebookbarImpress.js:185
-#: src/control/Control.NotebookbarDraw.js:173
-msgid "See history"
-msgstr "Se historik"
-
-#: src/control/Control.NotebookbarWriter.js:131
-msgid "ODF Text Document (.odt)"
-msgstr "ODF textdokument (.odt)"
-
-#: src/control/Control.NotebookbarWriter.js:173
-msgid "EPUB Document (.epub)"
-msgstr "EPUB dokument (.epub)"
-
-#: src/control/Control.NotebookbarWriter.js:517
-msgid "Text Body"
-msgstr "Brödtext"
-
-#: src/control/Control.NotebookbarWriter.js:520
-msgid "Title"
-msgstr "Titel"
-
-#: src/control/Control.NotebookbarCalc.js:33
-msgid "~Data"
-msgstr "~Data"
-
-#: src/control/Control.NotebookbarCalc.js:125
-msgid "ODF Spreadsheet (.ods)"
-msgstr "ODF-kalkylblad (.ods)"
-
-#: src/control/Control.NotebookbarCalc.js:131
-msgid "CSV File (.csv)"
-msgstr "CSV fil (.csv)"
-
-#: src/control/Control.NotebookbarCalc.js:416
-msgid "General"
-msgstr "Allmän"
-
-#: src/control/Control.NotebookbarCalc.js:417
-msgid "Number"
-msgstr "Nummer"
-
-#: src/control/Control.NotebookbarCalc.js:418
-msgid "Percent"
-msgstr "Procent"
-
-#: src/control/Control.NotebookbarCalc.js:419
-msgid "Currency"
-msgstr "Valuta"
-
-#: src/control/Control.NotebookbarCalc.js:420
-msgid "Date"
-msgstr "Datum"
-
-#: src/control/Control.NotebookbarCalc.js:421
-msgid "Time"
-msgstr "Tid"
-
-#: src/control/Control.NotebookbarCalc.js:422
-msgid "Scientific"
-msgstr "Vetenskaplig"
-
-#: src/control/Control.NotebookbarCalc.js:423
-msgid "Fraction"
-msgstr "Fraktion"
-
-#: src/control/Control.NotebookbarCalc.js:424
-msgid "Boolean Value"
-msgstr "Boolskt värde"
-
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:855
-msgid "Text"
-msgstr "Text"
-
-#: src/control/Control.NotebookbarCalc.js:558
-msgid "Default"
-msgstr "Standard"
-
-#: src/control/Control.NotebookbarCalc.js:563
-msgid "Heading 1"
-msgstr "Rubrik 1"
-
-#: src/control/Control.NotebookbarCalc.js:568
-msgid "Heading 2"
-msgstr "Rubrik 2"
-
-#: src/control/Control.NotebookbarCalc.js:579
-msgid "Good"
-msgstr "Bra"
-
-#: src/control/Control.NotebookbarCalc.js:584
-msgid "Neutral"
-msgstr "Neutral"
-
-#: src/control/Control.NotebookbarCalc.js:589
-msgid "Bad"
-msgstr "Dålig"
-
-#: src/control/Control.NotebookbarCalc.js:651
-msgid "Insert Rows Above"
-msgstr "Infoga rader ovan"
-
-#: src/control/Control.NotebookbarCalc.js:656
-msgid "Insert Columns Before"
-msgstr "Infoga kolumner före"
-
-#: src/control/Control.NotebookbarCalc.js:661
-msgid "Delete Rows"
-msgstr "Ta bort rader"
-
-#: src/control/Control.NotebookbarCalc.js:671
-msgid "Insert Rows Below"
-msgstr "Infoga rader nedan"
-
-#: src/control/Control.NotebookbarCalc.js:676
-msgid "Insert Columns After"
-msgstr "Infoga kolumner efter"
-
-#: src/control/Control.NotebookbarCalc.js:681
-msgid "Delete Columns"
-msgstr "Ta bort kolumner"
-
-#: src/control/Control.NotebookbarImpress.js:30
-msgid "Start Presentation"
-msgstr "Starta presentation"
-
-#: src/control/Control.NotebookbarImpress.js:205
-msgid "ODF Presentation (.odp)"
-msgstr "ODF-presentation (.odp)"
-
-#: src/control/Control.NotebookbarDraw.js:199
-msgid "Image (.png)"
-msgstr "Bild (.png)"
 
 #: src/control/Parts.js:420
 msgid "Show Selected Sheets"
@@ -1779,22 +1787,6 @@ msgstr "Kunde inte uppladda filen till servern eftersom filen inte hittades."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Kunde inte uppladda filen till servern eftersom filen är för stor."
 
-#: src/layer/tile/CommentSection.js:91
-msgid "Reply"
-msgstr "Svara"
-
-#: src/layer/tile/CommentSection.js:180
-msgid "Open menu"
-msgstr "Öppna meny"
-
-#: src/layer/tile/CommentSection.js:193 src/layer/tile/CommentSection.js:194
-msgid "Accept change"
-msgstr "Godkänn ändring"
-
-#: src/layer/tile/CommentSection.js:198 src/layer/tile/CommentSection.js:199
-msgid "Reject change"
-msgstr "Avslå ändring"
-
 #: src/layer/tile/CanvasTileLayer.js:1743
 msgid "Functions"
 msgstr "Funktioner"
@@ -1802,6 +1794,56 @@ msgstr "Funktioner"
 #: src/layer/tile/CanvasTileLayer.js:4801
 msgid "No Comments"
 msgstr "Inga kommentarer"
+
+#: src/layer/tile/CommentListSection.ts:754
+msgid "Modify"
+msgstr "Ändra"
+
+#: src/layer/tile/CommentListSection.ts:760
+#: src/layer/tile/CommentSection.ts:125
+msgid "Reply"
+msgstr "Svara"
+
+#: src/layer/tile/CommentListSection.ts:766
+msgid "Remove"
+msgstr "Ta bort"
+
+#: src/layer/tile/CommentListSection.ts:772
+msgid "Remove Thread"
+msgstr "Ta bort tråd"
+
+#: src/layer/tile/CommentListSection.ts:778
+msgid "Resolve"
+msgstr "Lös"
+
+#: src/layer/tile/CommentListSection.ts:778
+msgid "Unresolve"
+msgstr ""
+
+#: src/layer/tile/CommentListSection.ts:784
+#, fuzzy
+msgid "Unresolve Thread"
+msgstr "Lös tråd"
+
+#: src/layer/tile/CommentListSection.ts:784
+msgid "Resolve Thread"
+msgstr "Lös tråd"
+
+#: src/layer/tile/CommentSection.ts:253
+msgid "Open menu"
+msgstr "Öppna meny"
+
+#: src/layer/tile/CommentSection.ts:270 src/layer/tile/CommentSection.ts:271
+msgid "Accept change"
+msgstr "Godkänn ändring"
+
+#: src/layer/tile/CommentSection.ts:277 src/layer/tile/CommentSection.ts:278
+msgid "Reject change"
+msgstr "Avslå ändring"
+
+#: src/main.js:97
+msgid "Warning! The browser you are using is not supported."
+msgstr ""
 
 #: src/map/Clipboard.js:120
 msgid "To paste outside %productName, please first click the 'download' button"
@@ -1938,21 +1980,6 @@ msgstr "Skapar kopia ..."
 
 #~ msgid "Line style:"
 #~ msgstr "Stil för linje"
-
-#~ msgid "Modify"
-#~ msgstr "Ändra"
-
-#~ msgid "Remove"
-#~ msgstr "Ta bort"
-
-#~ msgid "Remove Thread"
-#~ msgstr "Ta bort tråd"
-
-#~ msgid "Resolve"
-#~ msgstr "Lös"
-
-#~ msgid "Resolve Thread"
-#~ msgstr "Lös tråd"
 
 #~ msgid "~Sheet"
 #~ msgstr "~Blad"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-21 11:51+0200\n"
+"POT-Creation-Date: 2021-10-22 15:46+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,9 +141,10 @@ msgid "Network Graph"
 msgstr "Graf an lìonraidh"
 
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:248
-#: src/control/Control.NotebookbarImpress.js:24
 #: src/control/Control.NotebookbarDraw.js:24
-#: src/layer/tile/CommentSection.js:88
+#: src/control/Control.NotebookbarImpress.js:24
+#: src/layer/tile/CommentListSection.ts:371
+#: src/layer/tile/CommentSection.ts:122
 msgid "Save"
 msgstr "Sàbhail"
 
@@ -273,11 +274,12 @@ msgid "OK"
 msgstr ""
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1613
-#: src/control/Control.MobileTopBar.js:43
+#: src/control/Control.Command.js:90 src/control/Control.LanguageDialog.js:86
+#: src/control/Control.Menubar.js:1613 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:860
-#: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
+#: src/layer/tile/CommentListSection.ts:372
+#: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Sguir dheth"
 
@@ -364,6 +366,10 @@ msgstr ""
 "Thachair am frithealaiche ri mearachd %0 nuair a bha e a’ parsadh na h-"
 "àithne %1."
 
+#: src/control/Control.Command.js:89
+msgid "Unlock"
+msgstr ""
+
 #: src/control/Control.ContextMenu.js:180
 msgid "Delete"
 msgstr ""
@@ -388,6 +394,7 @@ msgstr "Clàr-amais"
 #: src/control/Control.JSDialogBuilder.js:2090
 #: src/layer/tile/CanvasTileLayer.js:4774
 #: src/layer/tile/CanvasTileLayer.js:4784
+#: src/layer/tile/CommentListSection.ts:807
 msgid "Comment"
 msgstr "Beachd"
 
@@ -419,18 +426,6 @@ msgstr ""
 #, fuzzy
 msgid "Function Wizard"
 msgstr "Foincsean"
-
-#: src/control/Control.MobileWizardBuilder.js:500
-msgid "Background Color"
-msgstr ""
-
-#: src/control/Control.MobileWizardBuilder.js:502
-msgid "Gradient Start"
-msgstr ""
-
-#: src/control/Control.MobileWizardBuilder.js:504
-msgid "Gradient End"
-msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:379
 msgid "Solid"
@@ -531,13 +526,14 @@ msgstr "Cuir a-steach clàr"
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:277
 #: src/control/Control.Menubar.js:279 src/control/Control.Menubar.js:281
 #: src/control/Control.Menubar.js:417 src/control/Control.Menubar.js:530
-#: src/control/Control.Menubar.js:738 src/control/Control.StatusBar.js:507
+#: src/control/Control.Menubar.js:738
 #: src/control/Control.NotebookbarBuilder.js:733
 #: src/control/Control.NotebookbarBuilder.js:735
 #: src/control/Control.NotebookbarBuilder.js:737
 #: src/control/Control.NotebookbarBuilder.js:761
 #: src/control/Control.NotebookbarBuilder.js:796
 #: src/control/Control.NotebookbarBuilder.js:813
+#: src/control/Control.StatusBar.js:507
 msgid "None (Do not check spelling)"
 msgstr "Chan eil gin (Na dearbhaich an litreachadh)"
 
@@ -573,10 +569,10 @@ msgstr ""
 #: src/control/Control.Menubar.js:441 src/control/Control.Menubar.js:549
 #: src/control/Control.Menubar.js:765 src/control/Control.Menubar.js:817
 #: src/control/Control.Menubar.js:871 src/control/Control.Menubar.js:917
-#: src/control/Control.NotebookbarWriter.js:167
 #: src/control/Control.NotebookbarCalc.js:163
-#: src/control/Control.NotebookbarImpress.js:243
 #: src/control/Control.NotebookbarDraw.js:212
+#: src/control/Control.NotebookbarImpress.js:243
+#: src/control/Control.NotebookbarWriter.js:167
 msgid "PDF Document (.pdf)"
 msgstr "Sgrìobhainn PDF (.pdf)"
 
@@ -617,39 +613,39 @@ msgstr "Dùin an sgrìobhainn"
 #: src/control/Control.Menubar.js:450 src/control/Control.Menubar.js:561
 #: src/control/Control.Menubar.js:775 src/control/Control.Menubar.js:826
 #: src/control/Control.Menubar.js:877 src/control/Control.Menubar.js:925
-#: src/control/Control.NotebookbarWriter.js:185
-#: src/control/Control.NotebookbarWriter.js:186
-#: src/control/Control.NotebookbarCalc.js:169
-#: src/control/Control.NotebookbarCalc.js:170
-#: src/control/Control.NotebookbarImpress.js:249
-#: src/control/Control.NotebookbarImpress.js:250
-#: src/control/Control.NotebookbarDraw.js:218
-#: src/control/Control.NotebookbarDraw.js:219
 #: src/control/Control.NotebookbarBuilder.js:726
 #: src/control/Control.NotebookbarBuilder.js:756
 #: src/control/Control.NotebookbarBuilder.js:791
 #: src/control/Control.NotebookbarBuilder.js:808
+#: src/control/Control.NotebookbarCalc.js:169
+#: src/control/Control.NotebookbarCalc.js:170
+#: src/control/Control.NotebookbarDraw.js:218
+#: src/control/Control.NotebookbarDraw.js:219
+#: src/control/Control.NotebookbarImpress.js:249
+#: src/control/Control.NotebookbarImpress.js:250
+#: src/control/Control.NotebookbarWriter.js:185
+#: src/control/Control.NotebookbarWriter.js:186
 msgid "Repair"
 msgstr "Càirich"
 
 #: src/control/Control.Menubar.js:104 src/control/Control.Menubar.js:338
 #: src/control/Control.Menubar.js:464 src/control/Control.Menubar.js:575
-#: src/control/Control.StatusBar.js:184
-#: src/control/Control.NotebookbarWriter.js:975
-#: src/control/Control.NotebookbarWriter.js:976
 #: src/control/Control.NotebookbarCalc.js:745
 #: src/control/Control.NotebookbarCalc.js:746
-#: src/control/Control.NotebookbarImpress.js:980
-#: src/control/Control.NotebookbarImpress.js:981
 #: src/control/Control.NotebookbarDraw.js:689
 #: src/control/Control.NotebookbarDraw.js:690
+#: src/control/Control.NotebookbarImpress.js:980
+#: src/control/Control.NotebookbarImpress.js:981
+#: src/control/Control.NotebookbarWriter.js:975
+#: src/control/Control.NotebookbarWriter.js:976
+#: src/control/Control.StatusBar.js:184
 msgid "Reset zoom"
 msgstr "Ath-shuidhich an sùm"
 
 #: src/control/Control.Menubar.js:106
+#: src/control/Control.NotebookbarBuilder.js:712
 #: src/control/Control.NotebookbarWriter.js:1025
 #: src/control/Control.NotebookbarWriter.js:1026
-#: src/control/Control.NotebookbarBuilder.js:712
 msgid "Show Ruler"
 msgstr ""
 
@@ -746,8 +742,8 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:442 src/control/Control.Menubar.js:821
 #: src/control/Control.Menubar.js:872
-#: src/control/Control.NotebookbarImpress.js:211
 #: src/control/Control.NotebookbarDraw.js:193
+#: src/control/Control.NotebookbarImpress.js:211
 #, fuzzy
 msgid "ODF Drawing (.odg)"
 msgstr "Taisbeanadh ODF (.odp)"
@@ -804,6 +800,268 @@ msgstr "Sguir dhen lorg"
 #: src/control/Control.MobileTopBar.js:42
 msgid "Accept"
 msgstr "Gabh ris"
+
+#: src/control/Control.MobileWizardBuilder.js:500
+msgid "Background Color"
+msgstr ""
+
+#: src/control/Control.MobileWizardBuilder.js:502
+msgid "Gradient Start"
+msgstr ""
+
+#: src/control/Control.MobileWizardBuilder.js:504
+msgid "Gradient End"
+msgstr ""
+
+#: src/control/Control.Notebookbar.js:242
+#: src/control/Control.NotebookbarBuilder.js:707
+#: src/control/Control.NotebookbarBuilder.js:750
+#: src/control/Control.NotebookbarBuilder.js:778
+#: src/control/Control.NotebookbarBuilder.js:803
+#: src/control/Control.NotebookbarDraw.js:18
+#: src/control/Control.NotebookbarImpress.js:18
+msgid "Menu"
+msgstr ""
+
+#: src/control/Control.Notebookbar.js:262
+#: src/control/Control.NotebookbarDraw.js:36
+#: src/control/Control.NotebookbarImpress.js:36
+msgid "Undo"
+msgstr ""
+
+#: src/control/Control.Notebookbar.js:268
+#: src/control/Control.NotebookbarDraw.js:42
+#: src/control/Control.NotebookbarImpress.js:42
+msgid "Redo"
+msgstr ""
+
+#: src/control/Control.NotebookbarBuilder.js:548
+#: src/control/Control.TopToolbar.js:222
+msgid "Insert Local Image"
+msgstr "Cuir a-steach dealbh ionadail"
+
+#: src/control/Control.NotebookbarCalc.js:12
+#: src/control/Control.NotebookbarDraw.js:79
+#: src/control/Control.NotebookbarImpress.js:91
+#: src/control/Control.NotebookbarWriter.js:12
+msgid "~File"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:17
+#: src/control/Control.NotebookbarDraw.js:84
+#: src/control/Control.NotebookbarImpress.js:96
+#: src/control/Control.NotebookbarWriter.js:17
+msgid "~Home"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:23
+#: src/control/Control.NotebookbarDraw.js:90
+#: src/control/Control.NotebookbarImpress.js:102
+#: src/control/Control.NotebookbarWriter.js:23
+#, fuzzy
+msgid "~Insert"
+msgstr "Cuir a-steach clàr"
+
+#: src/control/Control.NotebookbarCalc.js:28
+#: src/control/Control.NotebookbarDraw.js:95
+#: src/control/Control.NotebookbarImpress.js:107
+#: src/control/Control.NotebookbarWriter.js:28
+msgid "~Layout"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:33
+msgid "~Data"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:38
+#: src/control/Control.NotebookbarDraw.js:100
+#: src/control/Control.NotebookbarImpress.js:112
+#: src/control/Control.NotebookbarWriter.js:38
+#, fuzzy
+msgid "~Review"
+msgstr "Foir-shealladh"
+
+#: src/control/Control.NotebookbarCalc.js:43
+#: src/control/Control.NotebookbarDraw.js:105
+#: src/control/Control.NotebookbarImpress.js:117
+#: src/control/Control.NotebookbarWriter.js:43
+msgid "Format"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:48
+#: src/control/Control.NotebookbarWriter.js:54
+msgid "~Draw"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:54
+#: src/control/Control.NotebookbarDraw.js:122
+#: src/control/Control.NotebookbarImpress.js:134
+#: src/control/Control.NotebookbarWriter.js:60
+msgid "~Help"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:98
+#: src/control/Control.NotebookbarDraw.js:166
+#: src/control/Control.NotebookbarImpress.js:178
+#: src/control/Control.NotebookbarWriter.js:105
+msgid "Share"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:105
+#: src/control/Control.NotebookbarDraw.js:173
+#: src/control/Control.NotebookbarImpress.js:185
+#: src/control/Control.NotebookbarWriter.js:112
+msgid "See history"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:125
+#, fuzzy
+msgid "ODF Spreadsheet (.ods)"
+msgstr "Cliath-dhuilleag ODF (*.ods)"
+
+#: src/control/Control.NotebookbarCalc.js:131
+msgid "CSV File (.csv)"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:416
+msgid "General"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:417
+msgid "Number"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:418
+msgid "Percent"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:419
+#, fuzzy
+msgid "Currency"
+msgstr "Làithreach"
+
+#: src/control/Control.NotebookbarCalc.js:420
+msgid "Date"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:421
+msgid "Time"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:422
+msgid "Scientific"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:423
+msgid "Fraction"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:424
+msgid "Boolean Value"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:855
+msgid "Text"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:558
+msgid "Default"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:563
+msgid "Heading 1"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:568
+msgid "Heading 2"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:579
+msgid "Good"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:584
+msgid "Neutral"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:589
+msgid "Bad"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:651
+#, fuzzy
+msgid "Insert Rows Above"
+msgstr "Cuir a-steach clàr"
+
+#: src/control/Control.NotebookbarCalc.js:656
+#, fuzzy
+msgid "Insert Columns Before"
+msgstr "Cuir a-steach siota roimhe"
+
+#: src/control/Control.NotebookbarCalc.js:661
+#, fuzzy
+msgid "Delete Rows"
+msgstr "Cuir a-steach clàr"
+
+#: src/control/Control.NotebookbarCalc.js:671
+#, fuzzy
+msgid "Insert Rows Below"
+msgstr "Cuir a-steach siota"
+
+#: src/control/Control.NotebookbarCalc.js:676
+#, fuzzy
+msgid "Insert Columns After"
+msgstr "Cuir a-steach siota ’na dhèidh"
+
+#: src/control/Control.NotebookbarCalc.js:681
+msgid "Delete Columns"
+msgstr ""
+
+#: src/control/Control.NotebookbarDraw.js:110
+#: src/control/Control.NotebookbarImpress.js:122
+#: src/control/Control.NotebookbarWriter.js:48
+msgid "~Table"
+msgstr ""
+
+#: src/control/Control.NotebookbarDraw.js:199
+msgid "Image (.png)"
+msgstr ""
+
+#: src/control/Control.NotebookbarImpress.js:30
+#, fuzzy
+msgid "Start Presentation"
+msgstr "Comhair an teacsa"
+
+#: src/control/Control.NotebookbarImpress.js:205
+#, fuzzy
+msgid "ODF Presentation (.odp)"
+msgstr "Taisbeanadh ODF (.odp)"
+
+#: src/control/Control.NotebookbarWriter.js:33
+msgid "Reference~s"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:131
+#, fuzzy
+msgid "ODF Text Document (.odt)"
+msgstr "Sgrìobhainn teacsa ODF (.odt)"
+
+#: src/control/Control.NotebookbarWriter.js:173
+msgid "EPUB Document (.epub)"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:513
+#: src/control/Control.TopToolbar.js:101
+msgid "Default Style"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:517
+msgid "Text Body"
+msgstr ""
+
+#: src/control/Control.NotebookbarWriter.js:520
+msgid "Title"
+msgstr ""
 
 #: src/control/Control.PresentationBar.js:100
 msgid "Are you sure you want to delete this page?"
@@ -980,11 +1238,6 @@ msgstr ""
 "Còmhstri neo-dhèanamh/ath-dhèanamh eadar iomadh cleachdaiche. Cleachd gleus "
 "càradh sgrìobhainnean airson a rèiteachadh."
 
-#: src/control/Control.TopToolbar.js:101
-#: src/control/Control.NotebookbarWriter.js:513
-msgid "Default Style"
-msgstr ""
-
 #: src/control/Control.TopToolbar.js:155
 msgid "Borders"
 msgstr "Iomallan"
@@ -992,11 +1245,6 @@ msgstr "Iomallan"
 #: src/control/Control.TopToolbar.js:218
 msgid "Insert table"
 msgstr "Cuir a-steach clàr"
-
-#: src/control/Control.TopToolbar.js:222
-#: src/control/Control.NotebookbarBuilder.js:548
-msgid "Insert Local Image"
-msgstr "Cuir a-steach dealbh ionadail"
 
 #: src/control/Control.TopToolbar.js:226
 msgid "Insert shapes"
@@ -1037,246 +1285,6 @@ msgstr "Lean ris an deasaiche an-còmhaidh"
 #: src/control/Control.UserList.js:253
 msgid "Current"
 msgstr "Làithreach"
-
-#: src/control/Control.Notebookbar.js:242
-#: src/control/Control.NotebookbarImpress.js:18
-#: src/control/Control.NotebookbarDraw.js:18
-#: src/control/Control.NotebookbarBuilder.js:707
-#: src/control/Control.NotebookbarBuilder.js:750
-#: src/control/Control.NotebookbarBuilder.js:778
-#: src/control/Control.NotebookbarBuilder.js:803
-msgid "Menu"
-msgstr ""
-
-#: src/control/Control.Notebookbar.js:262
-#: src/control/Control.NotebookbarImpress.js:36
-#: src/control/Control.NotebookbarDraw.js:36
-msgid "Undo"
-msgstr ""
-
-#: src/control/Control.Notebookbar.js:268
-#: src/control/Control.NotebookbarImpress.js:42
-#: src/control/Control.NotebookbarDraw.js:42
-msgid "Redo"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:12
-#: src/control/Control.NotebookbarCalc.js:12
-#: src/control/Control.NotebookbarImpress.js:91
-#: src/control/Control.NotebookbarDraw.js:79
-msgid "~File"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:17
-#: src/control/Control.NotebookbarCalc.js:17
-#: src/control/Control.NotebookbarImpress.js:96
-#: src/control/Control.NotebookbarDraw.js:84
-msgid "~Home"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:23
-#: src/control/Control.NotebookbarCalc.js:23
-#: src/control/Control.NotebookbarImpress.js:102
-#: src/control/Control.NotebookbarDraw.js:90
-#, fuzzy
-msgid "~Insert"
-msgstr "Cuir a-steach clàr"
-
-#: src/control/Control.NotebookbarWriter.js:28
-#: src/control/Control.NotebookbarCalc.js:28
-#: src/control/Control.NotebookbarImpress.js:107
-#: src/control/Control.NotebookbarDraw.js:95
-msgid "~Layout"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:33
-msgid "Reference~s"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:38
-#: src/control/Control.NotebookbarCalc.js:38
-#: src/control/Control.NotebookbarImpress.js:112
-#: src/control/Control.NotebookbarDraw.js:100
-#, fuzzy
-msgid "~Review"
-msgstr "Foir-shealladh"
-
-#: src/control/Control.NotebookbarWriter.js:43
-#: src/control/Control.NotebookbarCalc.js:43
-#: src/control/Control.NotebookbarImpress.js:117
-#: src/control/Control.NotebookbarDraw.js:105
-msgid "Format"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:48
-#: src/control/Control.NotebookbarImpress.js:122
-#: src/control/Control.NotebookbarDraw.js:110
-msgid "~Table"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:54
-#: src/control/Control.NotebookbarCalc.js:48
-msgid "~Draw"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:60
-#: src/control/Control.NotebookbarCalc.js:54
-#: src/control/Control.NotebookbarImpress.js:134
-#: src/control/Control.NotebookbarDraw.js:122
-msgid "~Help"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:105
-#: src/control/Control.NotebookbarCalc.js:98
-#: src/control/Control.NotebookbarImpress.js:178
-#: src/control/Control.NotebookbarDraw.js:166
-msgid "Share"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:112
-#: src/control/Control.NotebookbarCalc.js:105
-#: src/control/Control.NotebookbarImpress.js:185
-#: src/control/Control.NotebookbarDraw.js:173
-msgid "See history"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:131
-#, fuzzy
-msgid "ODF Text Document (.odt)"
-msgstr "Sgrìobhainn teacsa ODF (.odt)"
-
-#: src/control/Control.NotebookbarWriter.js:173
-msgid "EPUB Document (.epub)"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:517
-msgid "Text Body"
-msgstr ""
-
-#: src/control/Control.NotebookbarWriter.js:520
-msgid "Title"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:33
-msgid "~Data"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:125
-#, fuzzy
-msgid "ODF Spreadsheet (.ods)"
-msgstr "Cliath-dhuilleag ODF (*.ods)"
-
-#: src/control/Control.NotebookbarCalc.js:131
-msgid "CSV File (.csv)"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:416
-msgid "General"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:417
-msgid "Number"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:418
-msgid "Percent"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:419
-#, fuzzy
-msgid "Currency"
-msgstr "Làithreach"
-
-#: src/control/Control.NotebookbarCalc.js:420
-msgid "Date"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:421
-msgid "Time"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:422
-msgid "Scientific"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:423
-msgid "Fraction"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:424
-msgid "Boolean Value"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:855
-msgid "Text"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:558
-msgid "Default"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:563
-msgid "Heading 1"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:568
-msgid "Heading 2"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:579
-msgid "Good"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:584
-msgid "Neutral"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:589
-msgid "Bad"
-msgstr ""
-
-#: src/control/Control.NotebookbarCalc.js:651
-#, fuzzy
-msgid "Insert Rows Above"
-msgstr "Cuir a-steach clàr"
-
-#: src/control/Control.NotebookbarCalc.js:656
-#, fuzzy
-msgid "Insert Columns Before"
-msgstr "Cuir a-steach siota roimhe"
-
-#: src/control/Control.NotebookbarCalc.js:661
-#, fuzzy
-msgid "Delete Rows"
-msgstr "Cuir a-steach clàr"
-
-#: src/control/Control.NotebookbarCalc.js:671
-#, fuzzy
-msgid "Insert Rows Below"
-msgstr "Cuir a-steach siota"
-
-#: src/control/Control.NotebookbarCalc.js:676
-#, fuzzy
-msgid "Insert Columns After"
-msgstr "Cuir a-steach siota ’na dhèidh"
-
-#: src/control/Control.NotebookbarCalc.js:681
-msgid "Delete Columns"
-msgstr ""
-
-#: src/control/Control.NotebookbarImpress.js:30
-#, fuzzy
-msgid "Start Presentation"
-msgstr "Comhair an teacsa"
-
-#: src/control/Control.NotebookbarImpress.js:205
-#, fuzzy
-msgid "ODF Presentation (.odp)"
-msgstr "Taisbeanadh ODF (.odp)"
-
-#: src/control/Control.NotebookbarDraw.js:199
-msgid "Image (.png)"
-msgstr ""
 
 #: src/control/Parts.js:420
 msgid "Show Selected Sheets"
@@ -1830,22 +1838,6 @@ msgstr ""
 msgid "Uploading file to server failed, the file is too large."
 msgstr ""
 
-#: src/layer/tile/CommentSection.js:91
-msgid "Reply"
-msgstr "Freagair"
-
-#: src/layer/tile/CommentSection.js:180
-msgid "Open menu"
-msgstr "Fosgail an clàr-taice"
-
-#: src/layer/tile/CommentSection.js:193 src/layer/tile/CommentSection.js:194
-msgid "Accept change"
-msgstr "Gabh ris an atharrachadh"
-
-#: src/layer/tile/CommentSection.js:198 src/layer/tile/CommentSection.js:199
-msgid "Reject change"
-msgstr "Diùlt an t-atharrachadh"
-
 #: src/layer/tile/CanvasTileLayer.js:1743
 #, fuzzy
 msgid "Functions"
@@ -1853,6 +1845,55 @@ msgstr "Foincsean"
 
 #: src/layer/tile/CanvasTileLayer.js:4801
 msgid "No Comments"
+msgstr ""
+
+#: src/layer/tile/CommentListSection.ts:754
+msgid "Modify"
+msgstr "Atharraich"
+
+#: src/layer/tile/CommentListSection.ts:760
+#: src/layer/tile/CommentSection.ts:125
+msgid "Reply"
+msgstr "Freagair"
+
+#: src/layer/tile/CommentListSection.ts:766
+msgid "Remove"
+msgstr "Thoir air falbh"
+
+#: src/layer/tile/CommentListSection.ts:772
+msgid "Remove Thread"
+msgstr ""
+
+#: src/layer/tile/CommentListSection.ts:778
+msgid "Resolve"
+msgstr ""
+
+#: src/layer/tile/CommentListSection.ts:778
+msgid "Unresolve"
+msgstr ""
+
+#: src/layer/tile/CommentListSection.ts:784
+msgid "Unresolve Thread"
+msgstr ""
+
+#: src/layer/tile/CommentListSection.ts:784
+msgid "Resolve Thread"
+msgstr ""
+
+#: src/layer/tile/CommentSection.ts:253
+msgid "Open menu"
+msgstr "Fosgail an clàr-taice"
+
+#: src/layer/tile/CommentSection.ts:270 src/layer/tile/CommentSection.ts:271
+msgid "Accept change"
+msgstr "Gabh ris an atharrachadh"
+
+#: src/layer/tile/CommentSection.ts:277 src/layer/tile/CommentSection.ts:278
+msgid "Reject change"
+msgstr "Diùlt an t-atharrachadh"
+
+#: src/main.js:97
+msgid "Warning! The browser you are using is not supported."
 msgstr ""
 
 #: src/map/Clipboard.js:120
@@ -1963,12 +2004,6 @@ msgstr "A’ cruthachadh an lethbhric…"
 #~ "https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/"
 #~ "ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-"
 #~ "connections"
-
-#~ msgid "Modify"
-#~ msgstr "Atharraich"
-
-#~ msgid "Remove"
-#~ msgstr "Thoir air falbh"
 
 #, fuzzy
 #~ msgid ""

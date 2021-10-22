@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-21 11:51+0200\n"
+"POT-Creation-Date: 2021-10-22 15:46+0200\n"
 "PO-Revision-Date: 2021-07-31 19:50+0000\n"
 "Last-Translator: Gontzal Manuel Pujana Onaindia <thadahdenyse@gmail.com>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
@@ -139,9 +139,10 @@ msgid "Network Graph"
 msgstr "Sarearen diagrama"
 
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:248
-#: src/control/Control.NotebookbarImpress.js:24
 #: src/control/Control.NotebookbarDraw.js:24
-#: src/layer/tile/CommentSection.js:88
+#: src/control/Control.NotebookbarImpress.js:24
+#: src/layer/tile/CommentListSection.ts:371
+#: src/layer/tile/CommentSection.ts:122
 msgid "Save"
 msgstr "Gorde"
 
@@ -267,11 +268,12 @@ msgid "OK"
 msgstr "Ados"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
-#: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1613
-#: src/control/Control.MobileTopBar.js:43
+#: src/control/Control.Command.js:90 src/control/Control.LanguageDialog.js:86
+#: src/control/Control.Menubar.js:1613 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:860
-#: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
+#: src/layer/tile/CommentListSection.ts:372
+#: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Utzi"
 
@@ -356,6 +358,10 @@ msgstr "Ireki esteka"
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Zerbitzariak %0 errore bat aurkitu du %1 komandoa analizatzean."
 
+#: src/control/Control.Command.js:89
+msgid "Unlock"
+msgstr ""
+
 #: src/control/Control.ContextMenu.js:180
 msgid "Delete"
 msgstr "Ezabatu"
@@ -380,6 +386,7 @@ msgstr "Aurkibidea"
 #: src/control/Control.JSDialogBuilder.js:2090
 #: src/layer/tile/CanvasTileLayer.js:4774
 #: src/layer/tile/CanvasTileLayer.js:4784
+#: src/layer/tile/CommentListSection.ts:807
 msgid "Comment"
 msgstr "Iruzkina"
 
@@ -410,18 +417,6 @@ msgstr "Baieztatu arbelera kopiatzea"
 #: src/control/Control.FormulaBar.js:34
 msgid "Function Wizard"
 msgstr "Funtzioen morroia"
-
-#: src/control/Control.MobileWizardBuilder.js:500
-msgid "Background Color"
-msgstr "Atzeko planoaren kolorea"
-
-#: src/control/Control.MobileWizardBuilder.js:502
-msgid "Gradient Start"
-msgstr "Gradientearen hasiera"
-
-#: src/control/Control.MobileWizardBuilder.js:504
-msgid "Gradient End"
-msgstr "Gradientearen amaiera"
 
 #: src/control/Control.JSDialogBuilder.js:379
 msgid "Solid"
@@ -516,13 +511,14 @@ msgstr "Txertatu taula"
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:277
 #: src/control/Control.Menubar.js:279 src/control/Control.Menubar.js:281
 #: src/control/Control.Menubar.js:417 src/control/Control.Menubar.js:530
-#: src/control/Control.Menubar.js:738 src/control/Control.StatusBar.js:507
+#: src/control/Control.Menubar.js:738
 #: src/control/Control.NotebookbarBuilder.js:733
 #: src/control/Control.NotebookbarBuilder.js:735
 #: src/control/Control.NotebookbarBuilder.js:737
 #: src/control/Control.NotebookbarBuilder.js:761
 #: src/control/Control.NotebookbarBuilder.js:796
 #: src/control/Control.NotebookbarBuilder.js:813
+#: src/control/Control.StatusBar.js:507
 msgid "None (Do not check spelling)"
 msgstr "Bat ere ez (ez zuzendu ortografia)"
 
@@ -558,10 +554,10 @@ msgstr "Esportatu honela:"
 #: src/control/Control.Menubar.js:441 src/control/Control.Menubar.js:549
 #: src/control/Control.Menubar.js:765 src/control/Control.Menubar.js:817
 #: src/control/Control.Menubar.js:871 src/control/Control.Menubar.js:917
-#: src/control/Control.NotebookbarWriter.js:167
 #: src/control/Control.NotebookbarCalc.js:163
-#: src/control/Control.NotebookbarImpress.js:243
 #: src/control/Control.NotebookbarDraw.js:212
+#: src/control/Control.NotebookbarImpress.js:243
+#: src/control/Control.NotebookbarWriter.js:167
 msgid "PDF Document (.pdf)"
 msgstr "PDF Dokumentua (.pdf)"
 
@@ -602,39 +598,39 @@ msgstr "Itxi dokumentua"
 #: src/control/Control.Menubar.js:450 src/control/Control.Menubar.js:561
 #: src/control/Control.Menubar.js:775 src/control/Control.Menubar.js:826
 #: src/control/Control.Menubar.js:877 src/control/Control.Menubar.js:925
-#: src/control/Control.NotebookbarWriter.js:185
-#: src/control/Control.NotebookbarWriter.js:186
-#: src/control/Control.NotebookbarCalc.js:169
-#: src/control/Control.NotebookbarCalc.js:170
-#: src/control/Control.NotebookbarImpress.js:249
-#: src/control/Control.NotebookbarImpress.js:250
-#: src/control/Control.NotebookbarDraw.js:218
-#: src/control/Control.NotebookbarDraw.js:219
 #: src/control/Control.NotebookbarBuilder.js:726
 #: src/control/Control.NotebookbarBuilder.js:756
 #: src/control/Control.NotebookbarBuilder.js:791
 #: src/control/Control.NotebookbarBuilder.js:808
+#: src/control/Control.NotebookbarCalc.js:169
+#: src/control/Control.NotebookbarCalc.js:170
+#: src/control/Control.NotebookbarDraw.js:218
+#: src/control/Control.NotebookbarDraw.js:219
+#: src/control/Control.NotebookbarImpress.js:249
+#: src/control/Control.NotebookbarImpress.js:250
+#: src/control/Control.NotebookbarWriter.js:185
+#: src/control/Control.NotebookbarWriter.js:186
 msgid "Repair"
 msgstr "Konpondu"
 
 #: src/control/Control.Menubar.js:104 src/control/Control.Menubar.js:338
 #: src/control/Control.Menubar.js:464 src/control/Control.Menubar.js:575
-#: src/control/Control.StatusBar.js:184
-#: src/control/Control.NotebookbarWriter.js:975
-#: src/control/Control.NotebookbarWriter.js:976
 #: src/control/Control.NotebookbarCalc.js:745
 #: src/control/Control.NotebookbarCalc.js:746
-#: src/control/Control.NotebookbarImpress.js:980
-#: src/control/Control.NotebookbarImpress.js:981
 #: src/control/Control.NotebookbarDraw.js:689
 #: src/control/Control.NotebookbarDraw.js:690
+#: src/control/Control.NotebookbarImpress.js:980
+#: src/control/Control.NotebookbarImpress.js:981
+#: src/control/Control.NotebookbarWriter.js:975
+#: src/control/Control.NotebookbarWriter.js:976
+#: src/control/Control.StatusBar.js:184
 msgid "Reset zoom"
 msgstr "Berrezarri zooma"
 
 #: src/control/Control.Menubar.js:106
+#: src/control/Control.NotebookbarBuilder.js:712
 #: src/control/Control.NotebookbarWriter.js:1025
 #: src/control/Control.NotebookbarWriter.js:1026
-#: src/control/Control.NotebookbarBuilder.js:712
 msgid "Show Ruler"
 msgstr "Erakutsi erregela"
 
@@ -730,8 +726,8 @@ msgstr "Aurkeztu uneko diapositiba"
 
 #: src/control/Control.Menubar.js:442 src/control/Control.Menubar.js:821
 #: src/control/Control.Menubar.js:872
-#: src/control/Control.NotebookbarImpress.js:211
 #: src/control/Control.NotebookbarDraw.js:193
+#: src/control/Control.NotebookbarImpress.js:211
 msgid "ODF Drawing (.odg)"
 msgstr "ODF marrazkia (.odg)"
 
@@ -784,6 +780,256 @@ msgstr "Erakutsi bilaketa-barra"
 #: src/control/Control.MobileTopBar.js:42
 msgid "Accept"
 msgstr "Onartu"
+
+#: src/control/Control.MobileWizardBuilder.js:500
+msgid "Background Color"
+msgstr "Atzeko planoaren kolorea"
+
+#: src/control/Control.MobileWizardBuilder.js:502
+msgid "Gradient Start"
+msgstr "Gradientearen hasiera"
+
+#: src/control/Control.MobileWizardBuilder.js:504
+msgid "Gradient End"
+msgstr "Gradientearen amaiera"
+
+#: src/control/Control.Notebookbar.js:242
+#: src/control/Control.NotebookbarBuilder.js:707
+#: src/control/Control.NotebookbarBuilder.js:750
+#: src/control/Control.NotebookbarBuilder.js:778
+#: src/control/Control.NotebookbarBuilder.js:803
+#: src/control/Control.NotebookbarDraw.js:18
+#: src/control/Control.NotebookbarImpress.js:18
+msgid "Menu"
+msgstr "Menua"
+
+#: src/control/Control.Notebookbar.js:262
+#: src/control/Control.NotebookbarDraw.js:36
+#: src/control/Control.NotebookbarImpress.js:36
+msgid "Undo"
+msgstr "Desegin"
+
+#: src/control/Control.Notebookbar.js:268
+#: src/control/Control.NotebookbarDraw.js:42
+#: src/control/Control.NotebookbarImpress.js:42
+msgid "Redo"
+msgstr "Berregin"
+
+#: src/control/Control.NotebookbarBuilder.js:548
+#: src/control/Control.TopToolbar.js:222
+msgid "Insert Local Image"
+msgstr "Txertatu irudi lokala"
+
+#: src/control/Control.NotebookbarCalc.js:12
+#: src/control/Control.NotebookbarDraw.js:79
+#: src/control/Control.NotebookbarImpress.js:91
+#: src/control/Control.NotebookbarWriter.js:12
+msgid "~File"
+msgstr "~Fitxategia"
+
+#: src/control/Control.NotebookbarCalc.js:17
+#: src/control/Control.NotebookbarDraw.js:84
+#: src/control/Control.NotebookbarImpress.js:96
+#: src/control/Control.NotebookbarWriter.js:17
+msgid "~Home"
+msgstr "~Hasiera"
+
+#: src/control/Control.NotebookbarCalc.js:23
+#: src/control/Control.NotebookbarDraw.js:90
+#: src/control/Control.NotebookbarImpress.js:102
+#: src/control/Control.NotebookbarWriter.js:23
+msgid "~Insert"
+msgstr "T~xertatu"
+
+#: src/control/Control.NotebookbarCalc.js:28
+#: src/control/Control.NotebookbarDraw.js:95
+#: src/control/Control.NotebookbarImpress.js:107
+#: src/control/Control.NotebookbarWriter.js:28
+msgid "~Layout"
+msgstr "~Diseinua"
+
+#: src/control/Control.NotebookbarCalc.js:33
+msgid "~Data"
+msgstr "~Datuak"
+
+#: src/control/Control.NotebookbarCalc.js:38
+#: src/control/Control.NotebookbarDraw.js:100
+#: src/control/Control.NotebookbarImpress.js:112
+#: src/control/Control.NotebookbarWriter.js:38
+msgid "~Review"
+msgstr "~Berrikusi"
+
+#: src/control/Control.NotebookbarCalc.js:43
+#: src/control/Control.NotebookbarDraw.js:105
+#: src/control/Control.NotebookbarImpress.js:117
+#: src/control/Control.NotebookbarWriter.js:43
+msgid "Format"
+msgstr "Formatua"
+
+#: src/control/Control.NotebookbarCalc.js:48
+#: src/control/Control.NotebookbarWriter.js:54
+msgid "~Draw"
+msgstr "~Marraztu"
+
+#: src/control/Control.NotebookbarCalc.js:54
+#: src/control/Control.NotebookbarDraw.js:122
+#: src/control/Control.NotebookbarImpress.js:134
+#: src/control/Control.NotebookbarWriter.js:60
+msgid "~Help"
+msgstr "~Laguntza"
+
+#: src/control/Control.NotebookbarCalc.js:98
+#: src/control/Control.NotebookbarDraw.js:166
+#: src/control/Control.NotebookbarImpress.js:178
+#: src/control/Control.NotebookbarWriter.js:105
+msgid "Share"
+msgstr "Partekatu"
+
+#: src/control/Control.NotebookbarCalc.js:105
+#: src/control/Control.NotebookbarDraw.js:173
+#: src/control/Control.NotebookbarImpress.js:185
+#: src/control/Control.NotebookbarWriter.js:112
+msgid "See history"
+msgstr "Ikusi historia"
+
+#: src/control/Control.NotebookbarCalc.js:125
+msgid "ODF Spreadsheet (.ods)"
+msgstr "ODF kalkulu-orria (.ods)"
+
+#: src/control/Control.NotebookbarCalc.js:131
+msgid "CSV File (.csv)"
+msgstr "CSV fitxategia (.csv)"
+
+#: src/control/Control.NotebookbarCalc.js:416
+msgid "General"
+msgstr "Orokorra"
+
+#: src/control/Control.NotebookbarCalc.js:417
+msgid "Number"
+msgstr "Zenbakia"
+
+#: src/control/Control.NotebookbarCalc.js:418
+msgid "Percent"
+msgstr "Ehunekoa"
+
+#: src/control/Control.NotebookbarCalc.js:419
+msgid "Currency"
+msgstr "Moneta"
+
+#: src/control/Control.NotebookbarCalc.js:420
+msgid "Date"
+msgstr "Data"
+
+#: src/control/Control.NotebookbarCalc.js:421
+msgid "Time"
+msgstr "Denbora"
+
+#: src/control/Control.NotebookbarCalc.js:422
+msgid "Scientific"
+msgstr "Zientifikoa"
+
+#: src/control/Control.NotebookbarCalc.js:423
+msgid "Fraction"
+msgstr "Zatikia"
+
+#: src/control/Control.NotebookbarCalc.js:424
+msgid "Boolean Value"
+msgstr "Balio boolearra"
+
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:855
+msgid "Text"
+msgstr "Testua"
+
+#: src/control/Control.NotebookbarCalc.js:558
+msgid "Default"
+msgstr "Lehenetsia"
+
+#: src/control/Control.NotebookbarCalc.js:563
+msgid "Heading 1"
+msgstr "1. izenburua"
+
+#: src/control/Control.NotebookbarCalc.js:568
+msgid "Heading 2"
+msgstr "2. izenburua"
+
+#: src/control/Control.NotebookbarCalc.js:579
+msgid "Good"
+msgstr "Ona"
+
+#: src/control/Control.NotebookbarCalc.js:584
+msgid "Neutral"
+msgstr "Neutroa"
+
+#: src/control/Control.NotebookbarCalc.js:589
+msgid "Bad"
+msgstr "Txarra"
+
+#: src/control/Control.NotebookbarCalc.js:651
+msgid "Insert Rows Above"
+msgstr "Txertatu errenkadak gainean"
+
+#: src/control/Control.NotebookbarCalc.js:656
+msgid "Insert Columns Before"
+msgstr "Txertatu zutabeak aurrean"
+
+#: src/control/Control.NotebookbarCalc.js:661
+msgid "Delete Rows"
+msgstr "Ezabatu errenkadak"
+
+#: src/control/Control.NotebookbarCalc.js:671
+msgid "Insert Rows Below"
+msgstr "Txertatu errenkadak azpian"
+
+#: src/control/Control.NotebookbarCalc.js:676
+msgid "Insert Columns After"
+msgstr "Txertatu zutabeak atzean"
+
+#: src/control/Control.NotebookbarCalc.js:681
+msgid "Delete Columns"
+msgstr "Ezabatu zutabeak"
+
+#: src/control/Control.NotebookbarDraw.js:110
+#: src/control/Control.NotebookbarImpress.js:122
+#: src/control/Control.NotebookbarWriter.js:48
+msgid "~Table"
+msgstr "~Taula"
+
+#: src/control/Control.NotebookbarDraw.js:199
+msgid "Image (.png)"
+msgstr "Irudia (.png)"
+
+#: src/control/Control.NotebookbarImpress.js:30
+msgid "Start Presentation"
+msgstr "Hasi aurkezpena"
+
+#: src/control/Control.NotebookbarImpress.js:205
+msgid "ODF Presentation (.odp)"
+msgstr "ODF aurkezpena (.odp)"
+
+#: src/control/Control.NotebookbarWriter.js:33
+msgid "Reference~s"
+msgstr "E~rreferentziak"
+
+#: src/control/Control.NotebookbarWriter.js:131
+msgid "ODF Text Document (.odt)"
+msgstr "ODF testu dokumentua (.odt)"
+
+#: src/control/Control.NotebookbarWriter.js:173
+msgid "EPUB Document (.epub)"
+msgstr "EPUB dokumentua (.epub)"
+
+#: src/control/Control.NotebookbarWriter.js:513
+#: src/control/Control.TopToolbar.js:101
+msgid "Default Style"
+msgstr "Estilo lehenetsia"
+
+#: src/control/Control.NotebookbarWriter.js:517
+msgid "Text Body"
+msgstr "Testuaren gorputza"
+
+#: src/control/Control.NotebookbarWriter.js:520
+msgid "Title"
+msgstr "Izenburua"
 
 #: src/control/Control.PresentationBar.js:100
 msgid "Are you sure you want to delete this page?"
@@ -956,11 +1202,6 @@ msgstr ""
 "Hainbat erabiltzaileen arteko desegin/berrekin talka. Erabili dokumentu-"
 "konponketa ebazteko."
 
-#: src/control/Control.TopToolbar.js:101
-#: src/control/Control.NotebookbarWriter.js:513
-msgid "Default Style"
-msgstr "Estilo lehenetsia"
-
 #: src/control/Control.TopToolbar.js:155
 msgid "Borders"
 msgstr "Ertzak"
@@ -968,11 +1209,6 @@ msgstr "Ertzak"
 #: src/control/Control.TopToolbar.js:218
 msgid "Insert table"
 msgstr "Txertatu taula"
-
-#: src/control/Control.TopToolbar.js:222
-#: src/control/Control.NotebookbarBuilder.js:548
-msgid "Insert Local Image"
-msgstr "Txertatu irudi lokala"
 
 #: src/control/Control.TopToolbar.js:226
 msgid "Insert shapes"
@@ -1013,234 +1249,6 @@ msgstr "Jarraitu beti editoreari"
 #: src/control/Control.UserList.js:253
 msgid "Current"
 msgstr "Unekoa"
-
-#: src/control/Control.Notebookbar.js:242
-#: src/control/Control.NotebookbarImpress.js:18
-#: src/control/Control.NotebookbarDraw.js:18
-#: src/control/Control.NotebookbarBuilder.js:707
-#: src/control/Control.NotebookbarBuilder.js:750
-#: src/control/Control.NotebookbarBuilder.js:778
-#: src/control/Control.NotebookbarBuilder.js:803
-msgid "Menu"
-msgstr "Menua"
-
-#: src/control/Control.Notebookbar.js:262
-#: src/control/Control.NotebookbarImpress.js:36
-#: src/control/Control.NotebookbarDraw.js:36
-msgid "Undo"
-msgstr "Desegin"
-
-#: src/control/Control.Notebookbar.js:268
-#: src/control/Control.NotebookbarImpress.js:42
-#: src/control/Control.NotebookbarDraw.js:42
-msgid "Redo"
-msgstr "Berregin"
-
-#: src/control/Control.NotebookbarWriter.js:12
-#: src/control/Control.NotebookbarCalc.js:12
-#: src/control/Control.NotebookbarImpress.js:91
-#: src/control/Control.NotebookbarDraw.js:79
-msgid "~File"
-msgstr "~Fitxategia"
-
-#: src/control/Control.NotebookbarWriter.js:17
-#: src/control/Control.NotebookbarCalc.js:17
-#: src/control/Control.NotebookbarImpress.js:96
-#: src/control/Control.NotebookbarDraw.js:84
-msgid "~Home"
-msgstr "~Hasiera"
-
-#: src/control/Control.NotebookbarWriter.js:23
-#: src/control/Control.NotebookbarCalc.js:23
-#: src/control/Control.NotebookbarImpress.js:102
-#: src/control/Control.NotebookbarDraw.js:90
-msgid "~Insert"
-msgstr "T~xertatu"
-
-#: src/control/Control.NotebookbarWriter.js:28
-#: src/control/Control.NotebookbarCalc.js:28
-#: src/control/Control.NotebookbarImpress.js:107
-#: src/control/Control.NotebookbarDraw.js:95
-msgid "~Layout"
-msgstr "~Diseinua"
-
-#: src/control/Control.NotebookbarWriter.js:33
-msgid "Reference~s"
-msgstr "E~rreferentziak"
-
-#: src/control/Control.NotebookbarWriter.js:38
-#: src/control/Control.NotebookbarCalc.js:38
-#: src/control/Control.NotebookbarImpress.js:112
-#: src/control/Control.NotebookbarDraw.js:100
-msgid "~Review"
-msgstr "~Berrikusi"
-
-#: src/control/Control.NotebookbarWriter.js:43
-#: src/control/Control.NotebookbarCalc.js:43
-#: src/control/Control.NotebookbarImpress.js:117
-#: src/control/Control.NotebookbarDraw.js:105
-msgid "Format"
-msgstr "Formatua"
-
-#: src/control/Control.NotebookbarWriter.js:48
-#: src/control/Control.NotebookbarImpress.js:122
-#: src/control/Control.NotebookbarDraw.js:110
-msgid "~Table"
-msgstr "~Taula"
-
-#: src/control/Control.NotebookbarWriter.js:54
-#: src/control/Control.NotebookbarCalc.js:48
-msgid "~Draw"
-msgstr "~Marraztu"
-
-#: src/control/Control.NotebookbarWriter.js:60
-#: src/control/Control.NotebookbarCalc.js:54
-#: src/control/Control.NotebookbarImpress.js:134
-#: src/control/Control.NotebookbarDraw.js:122
-msgid "~Help"
-msgstr "~Laguntza"
-
-#: src/control/Control.NotebookbarWriter.js:105
-#: src/control/Control.NotebookbarCalc.js:98
-#: src/control/Control.NotebookbarImpress.js:178
-#: src/control/Control.NotebookbarDraw.js:166
-msgid "Share"
-msgstr "Partekatu"
-
-#: src/control/Control.NotebookbarWriter.js:112
-#: src/control/Control.NotebookbarCalc.js:105
-#: src/control/Control.NotebookbarImpress.js:185
-#: src/control/Control.NotebookbarDraw.js:173
-msgid "See history"
-msgstr "Ikusi historia"
-
-#: src/control/Control.NotebookbarWriter.js:131
-msgid "ODF Text Document (.odt)"
-msgstr "ODF testu dokumentua (.odt)"
-
-#: src/control/Control.NotebookbarWriter.js:173
-msgid "EPUB Document (.epub)"
-msgstr "EPUB dokumentua (.epub)"
-
-#: src/control/Control.NotebookbarWriter.js:517
-msgid "Text Body"
-msgstr "Testuaren gorputza"
-
-#: src/control/Control.NotebookbarWriter.js:520
-msgid "Title"
-msgstr "Izenburua"
-
-#: src/control/Control.NotebookbarCalc.js:33
-msgid "~Data"
-msgstr "~Datuak"
-
-#: src/control/Control.NotebookbarCalc.js:125
-msgid "ODF Spreadsheet (.ods)"
-msgstr "ODF kalkulu-orria (.ods)"
-
-#: src/control/Control.NotebookbarCalc.js:131
-msgid "CSV File (.csv)"
-msgstr "CSV fitxategia (.csv)"
-
-#: src/control/Control.NotebookbarCalc.js:416
-msgid "General"
-msgstr "Orokorra"
-
-#: src/control/Control.NotebookbarCalc.js:417
-msgid "Number"
-msgstr "Zenbakia"
-
-#: src/control/Control.NotebookbarCalc.js:418
-msgid "Percent"
-msgstr "Ehunekoa"
-
-#: src/control/Control.NotebookbarCalc.js:419
-msgid "Currency"
-msgstr "Moneta"
-
-#: src/control/Control.NotebookbarCalc.js:420
-msgid "Date"
-msgstr "Data"
-
-#: src/control/Control.NotebookbarCalc.js:421
-msgid "Time"
-msgstr "Denbora"
-
-#: src/control/Control.NotebookbarCalc.js:422
-msgid "Scientific"
-msgstr "Zientifikoa"
-
-#: src/control/Control.NotebookbarCalc.js:423
-msgid "Fraction"
-msgstr "Zatikia"
-
-#: src/control/Control.NotebookbarCalc.js:424
-msgid "Boolean Value"
-msgstr "Balio boolearra"
-
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:855
-msgid "Text"
-msgstr "Testua"
-
-#: src/control/Control.NotebookbarCalc.js:558
-msgid "Default"
-msgstr "Lehenetsia"
-
-#: src/control/Control.NotebookbarCalc.js:563
-msgid "Heading 1"
-msgstr "1. izenburua"
-
-#: src/control/Control.NotebookbarCalc.js:568
-msgid "Heading 2"
-msgstr "2. izenburua"
-
-#: src/control/Control.NotebookbarCalc.js:579
-msgid "Good"
-msgstr "Ona"
-
-#: src/control/Control.NotebookbarCalc.js:584
-msgid "Neutral"
-msgstr "Neutroa"
-
-#: src/control/Control.NotebookbarCalc.js:589
-msgid "Bad"
-msgstr "Txarra"
-
-#: src/control/Control.NotebookbarCalc.js:651
-msgid "Insert Rows Above"
-msgstr "Txertatu errenkadak gainean"
-
-#: src/control/Control.NotebookbarCalc.js:656
-msgid "Insert Columns Before"
-msgstr "Txertatu zutabeak aurrean"
-
-#: src/control/Control.NotebookbarCalc.js:661
-msgid "Delete Rows"
-msgstr "Ezabatu errenkadak"
-
-#: src/control/Control.NotebookbarCalc.js:671
-msgid "Insert Rows Below"
-msgstr "Txertatu errenkadak azpian"
-
-#: src/control/Control.NotebookbarCalc.js:676
-msgid "Insert Columns After"
-msgstr "Txertatu zutabeak atzean"
-
-#: src/control/Control.NotebookbarCalc.js:681
-msgid "Delete Columns"
-msgstr "Ezabatu zutabeak"
-
-#: src/control/Control.NotebookbarImpress.js:30
-msgid "Start Presentation"
-msgstr "Hasi aurkezpena"
-
-#: src/control/Control.NotebookbarImpress.js:205
-msgid "ODF Presentation (.odp)"
-msgstr "ODF aurkezpena (.odp)"
-
-#: src/control/Control.NotebookbarDraw.js:199
-msgid "Image (.png)"
-msgstr "Irudia (.png)"
 
 #: src/control/Parts.js:420
 msgid "Show Selected Sheets"
@@ -1790,22 +1798,6 @@ msgid "Uploading file to server failed, the file is too large."
 msgstr ""
 "Huts egin du fitxategia zerbitzarira kargatzeak, fitxategia handiegia da."
 
-#: src/layer/tile/CommentSection.js:91
-msgid "Reply"
-msgstr "Erantzun"
-
-#: src/layer/tile/CommentSection.js:180
-msgid "Open menu"
-msgstr "Ireki menua"
-
-#: src/layer/tile/CommentSection.js:193 src/layer/tile/CommentSection.js:194
-msgid "Accept change"
-msgstr "Onartu aldaketa"
-
-#: src/layer/tile/CommentSection.js:198 src/layer/tile/CommentSection.js:199
-msgid "Reject change"
-msgstr "Ukatu aldaketa"
-
 #: src/layer/tile/CanvasTileLayer.js:1743
 msgid "Functions"
 msgstr "Funtzioak"
@@ -1813,6 +1805,55 @@ msgstr "Funtzioak"
 #: src/layer/tile/CanvasTileLayer.js:4801
 msgid "No Comments"
 msgstr "Iruzkinik gabe"
+
+#: src/layer/tile/CommentListSection.ts:754
+msgid "Modify"
+msgstr "Aldatu"
+
+#: src/layer/tile/CommentListSection.ts:760
+#: src/layer/tile/CommentSection.ts:125
+msgid "Reply"
+msgstr "Erantzun"
+
+#: src/layer/tile/CommentListSection.ts:766
+msgid "Remove"
+msgstr "Kendu"
+
+#: src/layer/tile/CommentListSection.ts:772
+msgid "Remove Thread"
+msgstr "Kendu haria"
+
+#: src/layer/tile/CommentListSection.ts:778
+msgid "Resolve"
+msgstr "Ebatzi"
+
+#: src/layer/tile/CommentListSection.ts:778
+msgid "Unresolve"
+msgstr "Konpondu gabe"
+
+#: src/layer/tile/CommentListSection.ts:784
+msgid "Unresolve Thread"
+msgstr "Konpondu gabeko haria"
+
+#: src/layer/tile/CommentListSection.ts:784
+msgid "Resolve Thread"
+msgstr "Konpondu haria"
+
+#: src/layer/tile/CommentSection.ts:253
+msgid "Open menu"
+msgstr "Ireki menua"
+
+#: src/layer/tile/CommentSection.ts:270 src/layer/tile/CommentSection.ts:271
+msgid "Accept change"
+msgstr "Onartu aldaketa"
+
+#: src/layer/tile/CommentSection.ts:277 src/layer/tile/CommentSection.ts:278
+msgid "Reject change"
+msgstr "Ukatu aldaketa"
+
+#: src/main.js:97
+msgid "Warning! The browser you are using is not supported."
+msgstr ""
 
 #: src/map/Clipboard.js:120
 msgid "To paste outside %productName, please first click the 'download' button"
@@ -1945,27 +1986,6 @@ msgstr "Kopia sortzen..."
 
 #~ msgid "Line style:"
 #~ msgstr "Marra-estiloa:"
-
-#~ msgid "Modify"
-#~ msgstr "Aldatu"
-
-#~ msgid "Remove"
-#~ msgstr "Kendu"
-
-#~ msgid "Remove Thread"
-#~ msgstr "Kendu haria"
-
-#~ msgid "Resolve"
-#~ msgstr "Ebatzi"
-
-#~ msgid "Unresolve"
-#~ msgstr "Konpondu gabe"
-
-#~ msgid "Unresolve Thread"
-#~ msgstr "Konpondu gabeko haria"
-
-#~ msgid "Resolve Thread"
-#~ msgstr "Konpondu haria"
 
 #~ msgid "~Sheet"
 #~ msgstr "~Orria"
