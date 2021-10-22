@@ -324,6 +324,7 @@ void ClientSession::handleClipboardRequest(DocumentBroker::ClipboardRequest     
         LOG_TRC("Session [" << getId() << "] sending setclipboard");
         if (data.get())
         {
+            preProcessSetClipboardPayload(*data);
             docBroker->forwardToChild(getId(), "setclipboard\n" + *data);
 
             // FIXME: work harder for error detection ?
@@ -1390,6 +1391,8 @@ void ClientSession::writeQueuedMessages(std::size_t capacity)
 }
 
 // NB. also see loleaflet/src/map/Clipboard.js that does this in JS for stubs.
+// See also ClientSession::preProcessSetClipboardPayload() which removes the
+// <meta name="origin"...>  tag added here.
 void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& payload)
 {
     // Insert our meta origin if we can
@@ -2296,6 +2299,30 @@ void ClientSession::traceTileBySend(const TileDesc& tile, bool deduplicated)
     // Record that the tile is sent
     if (!deduplicated)
         addTileOnFly(tile);
+}
+
+// This removes the <meta name="origin" ...> tag which was added in
+// ClientSession::postProcessCopyPayload(), else the payload parsing
+// in ChildSession::setClipboard() will fail.
+// To see why, refer
+// 1. ChildSession::getClipboard() where the data for various
+//    flavours along with flavour-type and length fields are packed into the payload.
+// 2. The clipboard payload parsing code in ClipboardData::read().
+void ClientSession::preProcessSetClipboardPayload(std::string& payload)
+{
+    std::size_t start = payload.find("<meta name=\"origin\" content=\"");
+    if (start != std::string::npos)
+    {
+        std::size_t end = payload.find("\"/>\n", start);
+        if (end == std::string::npos)
+        {
+            LOG_DBG("Found unbalanced <meta name=\"origin\".../> tag in setclipboard payload.");
+            return;
+        }
+
+        std::size_t len = end - start + 4;
+        payload.erase(start, len);
+    }
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
