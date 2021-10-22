@@ -412,6 +412,14 @@ L.Map.Keyboard = L.Handler.extend({
 			}
 			return;
 		}
+		else if (!this.modifier && (keyCode === 35 || keyCode === 36) && ev.type === 'keydown') {
+			if (this._map._docLayer._docType === 'drawing' && app.file.fileBasedView === true) {
+				var partToSelect = keyCode === 36 ? 0 : this._map._docLayer._parts -1;
+				//this._map._selectedPart = partToSelect;
+				this._map._docLayer._preview._scrollViewToPartPosition(partToSelect);
+			}
+			return;
+		}
 		else if (ev.type === 'keydown') {
 			var key = ev.keyCode;
 			var map = this._map;
