@@ -15,6 +15,8 @@ L.Map.Welcome = L.Handler.extend({
 		this._map.on('statusindicator', this.onStatusIndicator, this);
 
 		this._url = window.feedbackLocation.replace(/Rate\/feedback.html/g, 'Welcome/welcome.html');
+		this._retries = 2;
+		this._fallback = false;
 	},
 
 	addHooks: function () {
@@ -83,10 +85,24 @@ L.Map.Welcome = L.Handler.extend({
 			localStorage.setItem('WSDWelcomeVersion', app.socket.WSDServer.Version);
 			this.remove();
 		} else if (data == 'iframe-welcome-load' && !this._iframeWelcome.isVisible()) {
-			var currentDate = new Date();
-			localStorage.setItem('WSDWelcomeDisabled', 'true');
-			localStorage.setItem('WSDWelcomeDisabledDate', currentDate.toDateString());
-			this.remove();
+			if (this._retries-- > 0) {
+				this.remove();
+				setTimeout(L.bind(this.showWelcomeDialog, this), 200);
+			} else if (this._fallback) {
+				var currentDate = new Date();
+				localStorage.setItem('WSDWelcomeDisabled', 'true');
+				localStorage.setItem('WSDWelcomeDisabledDate', currentDate.toDateString());
+				this._iframeWelcome.show();
+			} else {
+				// fallback
+				var welcomeLocation = 'welcome/welcome-' + String.locale + '.html';
+				if (window.socketProxy)
+					welcomeLocation = window.makeWsUrl('/loleaflet/dist/' + welcomeLocation);
+
+				this._url = welcomeLocation;
+				this._fallback = true;
+				setTimeout(L.bind(this.showWelcomeDialog, this), 200);
+			}
 		}
 	}
 });
