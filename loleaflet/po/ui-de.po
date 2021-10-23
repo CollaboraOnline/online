@@ -12,11 +12,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-22 15:46+0200\n"
-"PO-Revision-Date: 2021-09-16 11:11+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2021-10-23 16:43+0000\n"
+"Last-Translator: FW <weblate.scordium@slmail.me>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -364,7 +364,7 @@ msgstr ""
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "Entsperren"
 
 #: src/control/Control.ContextMenu.js:180
 msgid "Delete"
@@ -1135,7 +1135,6 @@ msgstr ""
 
 #: src/control/Control.StatusBar.js:318 src/control/Control.StatusBar.js:357
 #: src/control/Control.StatusBar.js:381
-#, fuzzy
 msgid "Read-only"
 msgstr "Schreibgeschützt"
 
@@ -1547,7 +1546,7 @@ msgstr ""
 
 #: src/core/Socket.js:700
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "Nach der Umbennenung wird das Dokument neu geladen"
 
 #: src/core/Socket.js:819
 msgid ""
@@ -1619,7 +1618,6 @@ msgstr ""
 "versuchen Sie es erneut."
 
 #: src/core/Socket.js:1424
-#, fuzzy
 msgid "Reconnecting..."
 msgstr "Verbinden …"
 
@@ -1735,7 +1733,7 @@ msgstr ""
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "Das Dokument der letzten Sitzung  wird bereinigt."
 
 #: src/errormessages.js:28
 msgid ""
@@ -1922,8 +1920,8 @@ msgstr ""
 "freigeben möchten, müssen Sie diese zuerst auf Ihr Gerät herunterladen. "
 "Klicken Sie dazu unten auf die Schaltfläche „Herunterladen starten“ und "
 "anschließend auf „Kopie in Zwischenablage bestätigen“.</p><p>Wenn Sie "
-"zwischen Dokumenten in %productName kopieren möchten, brauschen Sie nichts "
-"herunterladen.</p>"
+"zwischen Dokumenten in %productName hin- und her kopieren möchten, brauchen "
+"Sie nichts herunterladen.</p>"
 
 #: src/map/Clipboard.js:882
 msgid ""
