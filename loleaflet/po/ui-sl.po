@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-22 15:46+0200\n"
-"PO-Revision-Date: 2021-09-18 21:37+0000\n"
+"PO-Revision-Date: 2021-10-23 16:43+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 4.9-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -359,7 +359,7 @@ msgstr "Strežnik je naletel na napako %0 pri razčlenjevanju ukaza %1."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "Odkleni"
 
 #: src/control/Control.ContextMenu.js:180
 msgid "Delete"
@@ -1533,7 +1533,7 @@ msgstr ""
 
 #: src/core/Socket.js:700
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "Ponovno nalaganje dokumenta po preimenovanju"
 
 #: src/core/Socket.js:819
 msgid ""
@@ -1603,9 +1603,8 @@ msgid ""
 msgstr "Žal se ni mogoče povezati z vašim dokumentom. Prosimo, poskusite znova."
 
 #: src/core/Socket.js:1424
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "Povezovanje ..."
+msgstr "Ponovno povezovanje ..."
 
 #: src/core/Socket.js:1429
 msgid "The server has been disconnected."
@@ -1712,13 +1711,15 @@ msgstr ""
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "Čiščenje dokumenta od zadnje seje."
 
 #: src/errormessages.js:28
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
 msgstr ""
+"V teku je postopek čiščenja tega dokumenta od zadnje seje, poskusite znova "
+"kasneje."
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -1843,7 +1844,7 @@ msgstr "Zavrni spremembo"
 
 #: src/main.js:97
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "Pozor! Brskalnik, ki ga uporabljate, ni podprt."
 
 #: src/map/Clipboard.js:120
 msgid "To paste outside %productName, please first click the 'download' button"
@@ -1951,6 +1952,10 @@ msgid ""
 "more options</p><p class=\"vex-footnote\">Close popup to ignore paste "
 "special</p>"
 msgstr ""
+"<p>Vaš brskalnik ima zelo omejen dostop do odložišča.</p><p>Zdaj pritisnite: "
+"<kbd>krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>, da vidite "
+"več možnosti.</p><p class=\"vex-footnote\">Zaprite pojavno okno, da prezrete "
+"posebno lepljenje.</p>"
 
 #: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
