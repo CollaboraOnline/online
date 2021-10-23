@@ -14,16 +14,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-22 15:46+0200\n"
-"PO-Revision-Date: 2021-09-01 18:50+0000\n"
-"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
+"PO-Revision-Date: 2021-10-23 16:43+0000\n"
+"Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -349,7 +349,7 @@ msgstr "Otomatik renk"
 #: src/control/Control.AlertDialog.js:67 src/control/Control.StatusBar.js:319
 #: src/control/Control.StatusBar.js:358 src/control/Control.StatusBar.js:382
 msgid "Edit"
-msgstr ""
+msgstr "Düzenle"
 
 #: src/control/Control.AlertDialog.js:77
 msgid "Open link"
@@ -361,7 +361,7 @@ msgstr "Sunucu %1 komutunu ayrıştırırken %0 hatasıyla karşılaştı."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "Kilidi Aç"
 
 #: src/control/Control.ContextMenu.js:180
 msgid "Delete"
