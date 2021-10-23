@@ -60,6 +60,17 @@ describe('Editing Operations', function() {
 	});
 
 	it('Repair Document', function() {
+		// End text edit, so 'Hello World' text is added to Undo stack
+		helper.typeIntoDocument('{esc}');
+
+		// Overwrite the text in the shape with text 'Overwrite'
+		impressHelper.selectTextShapeInTheCenter();
+		impressHelper.selectTextOfShape();
+		cy.wait(1000);
+		helper.typeIntoDocument('Overwrite');
+		helper.typeIntoDocument('{esc}');
+
+		// Now trigger the "repair" function and revert to the first change
 		cy.get('#toolbar-hamburger')
 			.click()
 			.get('.menu-entry-icon.editmenu').parent()
@@ -74,12 +85,10 @@ describe('Editing Operations', function() {
 
 		cy.get('.leaflet-popup-content > input').click();
 
+		// Check the text in the shape reverted to "Hello World"
 		impressHelper.selectTextShapeInTheCenter();
-
 		impressHelper.selectTextOfShape();
-
 		cy.wait(1000);
-
-		helper.expectTextForClipboard('Hello Worl');
+		helper.expectTextForClipboard('Hello World');
 	});
 });
