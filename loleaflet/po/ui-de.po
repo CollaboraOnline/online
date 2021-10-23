@@ -13,7 +13,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-22 15:46+0200\n"
 "PO-Revision-Date: 2021-10-23 16:43+0000\n"
-"Last-Translator: FW <weblate.scordium@slmail.me>\n"
+"Last-Translator: Lars Kirschmann <lars.kirschmann@icloud.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -1131,7 +1131,7 @@ msgstr "Anzahl der Auswahl"
 #: src/control/Control.StatusBar.js:357 src/control/Control.StatusBar.js:358
 #: src/control/Control.StatusBar.js:381 src/control/Control.StatusBar.js:382
 msgid "Permission Mode"
-msgstr ""
+msgstr "Berechtigungsmodus"
 
 #: src/control/Control.StatusBar.js:318 src/control/Control.StatusBar.js:357
 #: src/control/Control.StatusBar.js:381
