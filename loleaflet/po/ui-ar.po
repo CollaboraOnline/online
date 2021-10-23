@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-22 15:46+0200\n"
-"PO-Revision-Date: 2021-09-02 21:56+0000\n"
-"Last-Translator: ButterflyOfFire <ButterflyOfFire@protonmail.com>\n"
+"PO-Revision-Date: 2021-10-23 16:43+0000\n"
+"Last-Translator: abidin toumi <abidin24@disroot.org>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
-"Language: \n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /ar/libo_online/loleaflet-ui-ar.po\n"
 "X-Pootle-Revision: 3937633\n"
 
@@ -167,7 +167,7 @@ msgstr "إحصائيّات الفترة الزمنية للمعالج (بالم�
 
 #: admin/admin.strings.js:40 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr "أقتل الجلسة."
+msgstr "أنه الجلسة."
 
 #: admin/admin.strings.js:41
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -202,13 +202,12 @@ msgid "Server uptime"
 msgstr ""
 
 #: admin/admin.strings.js:49
-#, fuzzy
 msgid "Refresh Log"
-msgstr "أنعش"
+msgstr "أنعش السجل"
 
 #: admin/admin.strings.js:50
 msgid "Channel Filter:"
-msgstr ""
+msgstr "مرشح القناة:"
 
 #: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:376
 #: src/control/Control.StatusBar.js:310
