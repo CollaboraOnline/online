@@ -929,7 +929,13 @@ L.Socket = L.Class.extend({
 		this._handlingDelayedMessages = true;
 		if (this._map._docLayer) {
 			for (var k = 0; k < messages.length; ++k) {
-				this._map._docLayer._onMessage(messages[k]);
+				try {
+					this._map._docLayer._onMessage(messages[k]);
+				} catch (e) {
+					// unpleasant - but stops this one problem
+					// event stopping an unknown number of others.
+					console.log2('Exception ' + e + ' emitting event ' + messages[k]);
+				}
 			}
 		}
 		this._handlingDelayedMessages = false;
