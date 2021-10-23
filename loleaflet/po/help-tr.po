@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-22 15:46+0200\n"
-"PO-Revision-Date: 2021-10-23 16:43+0000\n"
+"PO-Revision-Date: 2021-10-25 15:01+0000\n"
 "Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "help/tr/>\n"
@@ -1192,15 +1192,17 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"Geçerli sayfa seçimine sonraki sayfayı ekler. Bir elektronik tablodaki tüm "
+"sayfalar seçilirse, bu kısayol tuş bileşimi yalnızca sonraki sayfayı seçer. "
+"Sonraki sayfayı geçerli sayfa yapar."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:148-248
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Down"
 msgstr ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"--plus\">+</span><kbd>Page Down"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""
@@ -1208,40 +1210,41 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"(*) sayısal tuş takımındaki çarpma işaretidir. İmleci içeren veri aralığını "
+"seçer. Aralık, veri içeren ve boş satır ve sütunlarla sınırlanan bitişik bir "
+"hücre aralığıdır."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
 msgstr ""
+"(/) sayısal tuş takımındaki bölme işaretidir. İmleci içeren matris formül "
+"aralığını seçer."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-158
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "Hücreleri ekle (Ekle - Hücreler menüsünde olduğu gibi)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-85
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Artı tuşu"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "Hücreleri sil (Düzenle - Hücreleri Sil menüsünde olduğu gibi)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-90
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Artı tuşu"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"
