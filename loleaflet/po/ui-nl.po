@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-22 15:46+0200\n"
-"PO-Revision-Date: 2021-06-03 23:31+0000\n"
-"Last-Translator: Cor Nouws <cno@nouenoff.nl>\n"
+"PO-Revision-Date: 2021-10-25 15:01+0000\n"
+"Last-Translator: sebastiaanveld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-ui-nl.po\n"
 "X-Pootle-Revision: 3939479\n"
 
@@ -116,7 +116,7 @@ msgstr "Gewijzigd"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "WOPI server"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -362,7 +362,7 @@ msgstr ""
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "Ontgrendelen"
 
 #: src/control/Control.ContextMenu.js:180
 msgid "Delete"
@@ -1129,13 +1129,12 @@ msgstr "Selectie tellen"
 #: src/control/Control.StatusBar.js:357 src/control/Control.StatusBar.js:358
 #: src/control/Control.StatusBar.js:381 src/control/Control.StatusBar.js:382
 msgid "Permission Mode"
-msgstr ""
+msgstr "Machtigingsmodus"
 
 #: src/control/Control.StatusBar.js:318 src/control/Control.StatusBar.js:357
 #: src/control/Control.StatusBar.js:381
-#, fuzzy
 msgid "Read-only"
-msgstr "alleen-lezen"
+msgstr "Alleen lezen"
 
 #: src/control/Control.StatusBar.js:331
 msgid "Number of Pages"
@@ -1272,25 +1271,27 @@ msgstr "Document kan niet worden beveiligd."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Geef een bestandsnaam op"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "Bestandsnaam"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Dit document kan formattering of inhoud bevatten dat in het huidige "
+"bestandsformaat niet kan worden opgeslagen."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Opslaan als ODF formaat"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Verder met bewerken"
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
@@ -1476,17 +1477,16 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Oeps, er is een probleem met het verbinden met %productName: "
 
 #: src/core/Socket.js:494
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Server is opnieuw gestart. De pagina moet ververst worden."
+msgstr "Server is nu bereikbaar. We moeten de pagina nu bijwerken."
 
 #: src/core/Socket.js:496
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "Server is nu bereikbaar..."
 
 #: src/core/Socket.js:499
 msgid "RELOAD"
-msgstr ""
+msgstr "OPNIEUW LADEN"
 
 #: src/core/Socket.js:515
 msgid "Served by:"
@@ -1538,7 +1538,7 @@ msgstr ""
 
 #: src/core/Socket.js:700
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "Document opnieuw laden na hernoemen"
 
 #: src/core/Socket.js:819
 msgid ""
@@ -1578,15 +1578,15 @@ msgstr "Verkeer wachtwoord ingevoerd. Probeer aub opnieuw."
 
 #: src/core/Socket.js:1017
 msgid "Someone"
-msgstr ""
+msgstr "Iemand"
 
 #: src/core/Socket.js:1019
 msgid " saved this document as "
-msgstr ""
+msgstr " document opslaan als "
 
 #: src/core/Socket.js:1019
 msgid ". Do you want to join?"
-msgstr ""
+msgstr ". Wil je meedoen?"
 
 #: src/core/Socket.js:1028
 msgid "Loading..."
@@ -1598,7 +1598,7 @@ msgstr "Bezig met verbinden..."
 
 #: src/core/Socket.js:1046
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "Het document wordt hernoemd en zal binnenkort opnieuw worden geladen"
 
 #: src/core/Socket.js:1407
 msgid ""
@@ -1609,13 +1609,12 @@ msgstr ""
 "Probeer het aub opnieuw."
 
 #: src/core/Socket.js:1424
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "Bezig met verbinden..."
+msgstr "Opnieuw verbinden..."
 
 #: src/core/Socket.js:1429
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "De verbinding met de server is verbroken."
 
 #: src/errormessages.js:13
 msgid ""
@@ -1721,13 +1720,15 @@ msgstr ""
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "Document van de vorige sessie opruimen."
 
 #: src/errormessages.js:28
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
 msgstr ""
+"We zijn bezig met het opruimen van het document van de vorige sessie, "
+"probeer het alstublieft later opnieuw."
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -1856,7 +1857,7 @@ msgstr "Wijziging verwerpen"
 
 #: src/main.js:97
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "Waarschuwing! De browser die u gebruikt wordt niet ondersteund."
 
 #: src/map/Clipboard.js:120
 msgid "To paste outside %productName, please first click the 'download' button"
@@ -1864,7 +1865,7 @@ msgstr "Klik eerst op de knop 'download', om buiten %productName te plakken"
 
 #: src/map/Clipboard.js:130
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Kopiëren van het document is uitgeschakeld"
 
 #: src/map/Clipboard.js:287
 msgid "Failed to download clipboard, please re-copy"
@@ -1964,6 +1965,10 @@ msgid ""
 "more options</p><p class=\"vex-footnote\">Close popup to ignore paste "
 "special</p>"
 msgstr ""
+"<p>Uw browser het beperkt toegang tot het klembord</p><p>Druk alstublieft op:"
+" <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> om meer "
+"mogelijkheden te zien</p><p class=\"vex-footnote\">Sluit de pop-up om "
+"plakken speciaal te negeren</p>"
 
 #: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
