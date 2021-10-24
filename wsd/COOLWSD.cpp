@@ -1135,7 +1135,7 @@ void COOLWSD::innerInitialize(Application& self)
 #ifdef ENABLE_FEATURE_RESTRICTION
             { "restricted_commands", "" },
 #endif
-            { "user_interface.mode", USER_INTERFACE_MODE },
+            { "user_interface.mode", "notebookbar" },
             { "quarantine_files[@enable]", "false" },
             { "quarantine_files.limit_dir_size_mb", "250" },
             { "quarantine_files.max_versions_to_maintain", "2" },
