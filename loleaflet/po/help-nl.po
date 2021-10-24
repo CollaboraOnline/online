@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-22 15:46+0200\n"
-"PO-Revision-Date: 2021-04-17 22:21+0000\n"
-"Last-Translator: Cor Nouws <cno@nouenoff.nl>\n"
+"PO-Revision-Date: 2021-10-25 15:01+0000\n"
+"Last-Translator: sebastiaanveld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "help/nl/>\n"
 "Language: nl\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /nl/libo_online/loleaflet-help-nl.po\n"
 "X-Pootle-Revision: 832994\n"
 
@@ -773,14 +773,14 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl+Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
-"Voegt een tabstop in (alleen in tabellen). Afhankelijk van de gebruikte "
-"Windowmanager moet misschien Alt+Tab worden gebruikt."
+"Voeg een tab stop in (alleen in tabellen). Afhankelijk van de gebruikte "
+"Vensterbeheerder moet wellicht <kbd>Alt</kbd><span class=\"kbd--plus\""
+">+</span><kbd>Tab</kbd> worden gebruikt."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -826,27 +826,26 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt+Insert"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
-"3 seconden in modus Invoegen, pijltoetsen voegen rij/kolom in, Ctrl+"
-"pijltoetsen voegen cel in"
+"3 seconden in Invoeg modus, Pijltoetsen voegen rij/kolom in, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Pijltoetsen</kbd> voegen cel in"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt+Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 seconden in modus Verwijderen, pijltoetsen verwijderen rij/kolom, Ctrl+"
-"pijltoetsen voegen cel samen met naastliggende cel"
+"3 seconden in Verwijder modus, Pijltoetsen verwijderen rij/kolom,  "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pijltoetsen</kbd> "
+"voegen cel samen met naastgelegen cel"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
@@ -999,55 +998,60 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Navigeren in Werkbladen"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Verplaatst de cursor naar de eerste cel in het werkblad (A1)."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
 msgstr ""
+"Verplaatst de cursor naar de laatste cel op het werkblad dat gegevens bevat."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:134-18
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Verplaatst de cursor naar de eerste cel van de huidige rij."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Verplaatst de cursor naar de laatste cel van de huidige rij."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:136-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
 msgstr ""
+"Selecteert cellen van de huidige cel tot de eerste cel van de huidige rij."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
 msgstr ""
+"Selecteert cellen van de huidige cel tot de laatste cel van de huidige rij."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
+"Selecteert cellen van de huidige cel tot bovenaan de huidige pagina in de "
+"huidige kolom of breid de selectie uit tot een pagina hoger."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:138-164
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Shift+PageUp"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-18
 msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
+"Selecteert cellen van de huidige cel tot onderaan de huidige pagina in de "
+"huidige kolom of breid de selectie uit tot een pagina lager."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:139-168
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Shift+PageDown"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
 msgid ""
@@ -1055,11 +1059,14 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"Verplaatst de cursor naar de linkerzijde van het huidige gegevensbereik. "
+"Wanneer de kolom aan de linkerzijde van de cel waarin de cursor zich bevind "
+"leeg is, dan verplaatst de cursor zich naar de volgende kolom aan de "
+"linkerzijde die gegevens bevat"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-245
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
-msgstr "Ctrl+Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl links"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
 msgid ""
@@ -1067,11 +1074,14 @@ msgid ""
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
+"Verplaatst de cursor naar de rechterzijde van het huidige gegevensbereik. "
+"Wanneer de kolom aan de rechterzijde van de cel waarin de cursor zich bevind "
+"leeg is, dan verplaatst de cursor zich naar de volgende kolom aan de "
+"rechterzijde die gegevens bevat"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
-msgstr "Ctrl+Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl rechts"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-18
 msgid ""
@@ -1079,11 +1089,13 @@ msgid ""
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
+"Verplaatst de cursor naar de bovenzijde van het huidige gegevensbereik. "
+"Wanneer de rij boven de cel waarin de cursor zich bevind leeg is, dan "
+"verplaatst de cursor zich naar de volgende rij die gegevens bevat"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-221
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
-msgstr "Ctrl+Pijl omhoog"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl omhoog"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-18
 msgid ""
@@ -1091,11 +1103,13 @@ msgid ""
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"Verplaatst de cursor naar de onderzijde van het huidige gegevensbereik. "
+"Wanneer de rij onder de cel waarin de cursor zich bevind leeg is, dan "
+"verplaatst de cursor zich naar de volgende rij die gegevens bevat"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-226
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
-msgstr "Ctrl+Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pijl omlaag"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-18
 msgid ""
@@ -1104,31 +1118,34 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
+"Selecteert alle cellen die gegevens bevatten vanaf de huidige cel to het "
+"eind van de het gegevensbereik van cellen, in de richting van de ingedrukte "
+"pijl toets. Wanneer gebruikt om rijen en kolommen samen te selecteren, wordt "
+"een rechthoekig cel bereik geselecteerd."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:144-272
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Arrow"
-msgstr "Ctrl+Shift+Pijl omhoog"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Pijl"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Hiermee verplaatst u één werkblad naar links."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:145-73
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Shift+PageUp"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "Hiermee verplaatst u één werkblad naar rechts."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:146-80
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Shift+PageDown"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:147-18
 msgid ""
