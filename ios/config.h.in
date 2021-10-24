@@ -121,9 +121,6 @@
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
-/* Which user interface mode should be activated */
-#define USER_INTERFACE_MODE "classic"
-
 /* Default value of per_documents.document_signing_url */
 #define VEREIGN_URL ""
 
