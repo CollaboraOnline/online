@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-22 15:46+0200\n"
-"PO-Revision-Date: 2021-10-23 16:43+0000\n"
-"Last-Translator: Lars Kirschmann <lars.kirschmann@icloud.com>\n"
+"PO-Revision-Date: 2021-10-25 15:01+0000\n"
+"Last-Translator: FW <weblate.scordium@slmail.me>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -1733,13 +1733,15 @@ msgstr ""
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
-msgstr "Das Dokument der letzten Sitzung  wird bereinigt."
+msgstr "Das Dokument der letzten Sitzung wird bereinigt."
 
 #: src/errormessages.js:28
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
 msgstr ""
+"Wir bereinigen gerade dieses Dokument der letzten Sitzung, bitte versuchen "
+"Sie es später noch einmal."
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -1869,7 +1871,7 @@ msgstr "Änderung verwerfen"
 
 #: src/main.js:97
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "Achtung! Der von Ihnen benutzte Browser wird nicht unterstützt."
 
 #: src/map/Clipboard.js:120
 msgid "To paste outside %productName, please first click the 'download' button"
