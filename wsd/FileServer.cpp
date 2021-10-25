@@ -35,6 +35,8 @@
 #include <Poco/Runnable.h>
 #include <Poco/StreamCopier.h>
 #include <Poco/URI.h>
+#include <Poco/JSON/Object.h>
+#include "Exceptions.hpp"
 
 #include "Auth.hpp"
 #include <Common.hpp>
@@ -265,6 +267,203 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
     return true;
 }
 
+#if ENABLE_DEBUG
+    // Represents basic file's attributes.
+    // Used for localFile
+    class LocalFileInfo
+    {
+        public:
+
+            // Everytime we get new request of CheckFileInfo
+            // we create a LocalFileInfo object of the new file and add
+            // it to static vector so that we can use/update the file info
+            // when we get GetFile and PutFile request
+            static std::vector<LocalFileInfo> fileInfoVec;
+
+            // Attributes of file
+            std::string fileName;
+            std::string localPath;
+            std::string size;
+
+            // Last modified time of the file
+            std::chrono::system_clock::time_point fileLastModifiedTime;
+
+
+            enum class LOOLStatusCode
+            {
+                DocChanged = 1010  // Document changed externally in storage
+            };
+
+        LocalFileInfo(){};
+
+        LocalFileInfo(std::string lpath, std::string fName)
+        {
+            fileName = fName;
+            localPath = lpath;
+            const FileUtil::Stat stat(localPath);
+            size = std::to_string(stat.size());
+            fileLastModifiedTime = stat.modifiedTimepoint();
+        }
+
+        //Returns index if object with attribute localPath found in
+        //the vector else returns -1
+        static int getIndex(std::string lpath)
+        {
+            auto it = std::find_if(fileInfoVec.begin(), fileInfoVec.end(), [&lpath](const LocalFileInfo& obj)
+            {
+                return obj.localPath == lpath;
+            });
+
+            if (it != fileInfoVec.end())
+            {
+                int index = std::distance(fileInfoVec.begin(), it);
+                return index;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+    };
+    std::atomic<unsigned> lastLocalId;
+    std::vector<LocalFileInfo> LocalFileInfo::fileInfoVec;
+
+    //handles request starts with /wopi/files
+    void handleWopiRequest(const HTTPRequest& request,
+                        const Poco::Path path,
+                        Poco::MemoryInputStream& message,
+                        const std::shared_ptr<StreamSocket>& socket)
+    {
+        const std::string prefix = "/wopi/files";
+        const std::string suffix = "/contents";
+        std::string localPath;
+        if (Util::endsWith(path.toString(), suffix))
+        {
+            localPath = path.toString().substr(prefix.length(), path.toString().length() - prefix.length() - suffix.length());
+        }
+        else
+        {
+            localPath = path.toString().substr(prefix.length());
+        }
+        if (!Poco::File(localPath).exists())
+        {
+            LOG_ERR("Local file URI [" << localPath << "] invalid or doesn't exist.");
+            throw BadRequestException("Invalid URI: " + localPath);
+        }
+        if (request.getMethod() == "GET" && !Util::endsWith(path.toString(), suffix))
+        {
+            LocalFileInfo localFile;
+            if (!LocalFileInfo::fileInfoVec.empty())
+            {
+                int index = LocalFileInfo::getIndex(localPath);
+                if (index == -1)
+                {
+                    LocalFileInfo fileInfo(localPath, path.getFileName());
+                    LocalFileInfo::fileInfoVec.emplace_back(fileInfo);
+                    localFile = fileInfo;
+                }
+                 else
+                {
+                    localFile = LocalFileInfo::fileInfoVec[index];
+                }
+            }
+            else
+            {
+                LocalFileInfo fileInfo(localPath, path.getFileName());
+                LocalFileInfo::fileInfoVec.emplace_back(fileInfo);
+                localFile = fileInfo;
+            }
+            std::string userId = std::to_string(lastLocalId++);
+            std::string userNameString = "LocalUser#" + userId;
+            Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
+            fileInfo->set("BaseFileName", localFile.fileName);
+            fileInfo->set("Size", localFile.size);
+            fileInfo->set("Version", "1.0");
+            fileInfo->set("OwnerId", "test");
+            fileInfo->set("UserId", userId);
+            fileInfo->set("UserFriendlyName", userNameString);
+            fileInfo->set("UserCanWrite", "true");
+            fileInfo->set("PostMessageOrigin", "localhost");
+            fileInfo->set("LastModifiedTime", Util::getIso8601FracformatTime(localFile.fileLastModifiedTime));
+            fileInfo->set("EnableOwnerTermination", "true");
+
+            std::ostringstream jsonStream;
+            fileInfo->stringify(jsonStream);
+            std::string responseString = jsonStream.str();
+
+            const std::string mimeType = "application/json; charset=utf-8";
+
+            std::ostringstream oss;
+            oss << "HTTP/1.1 200 OK\r\n"
+                "Last-Modified: " << Util::getHttpTime(localFile.fileLastModifiedTime) << "\r\n"
+                "User-Agent: " WOPI_AGENT_STRING "\r\n"
+                "Content-Length: " << responseString.size() << "\r\n"
+                "Content-Type: " << mimeType << "\r\n"
+                "\r\n"
+                << responseString;
+
+            socket->send(oss.str());
+            return;
+        }
+        else if(request.getMethod() == "GET" && Util::endsWith(path.toString(), suffix))
+        {
+            LocalFileInfo localFile = LocalFileInfo::fileInfoVec[LocalFileInfo::getIndex(localPath)];
+            auto ss = std::ostringstream{};
+            std::ifstream inputFile(localFile.localPath);
+            ss << inputFile.rdbuf();
+            const std::string content = ss.str();
+            const std::string mimeType = "text/plain; charset=utf-8";
+            std::ostringstream oss;
+            oss << "HTTP/1.1 200 OK\r\n"
+                "Last-Modified: " << Util::getHttpTime(localFile.fileLastModifiedTime) << "\r\n"
+                "User-Agent: " WOPI_AGENT_STRING "\r\n"
+                "Content-Length: " << localFile.size << "\r\n"
+                "Content-Type: " << mimeType << "\r\n"
+                "\r\n"
+                << content;
+
+            socket->send(oss.str());
+            return;
+        }
+        else if (request.getMethod() == "POST" && Util::endsWith(path.toString(), suffix))
+        {
+            int i = LocalFileInfo::getIndex(localPath);
+            std::string wopiTimestamp = request.get("X-LOOL-WOPI-Timestamp", std::string());
+            if (!wopiTimestamp.empty())
+            {
+                const std::string fileModifiedTime = Util::getIso8601FracformatTime(LocalFileInfo::fileInfoVec[i].fileLastModifiedTime);
+                if (wopiTimestamp != fileModifiedTime)
+                {
+                    http::Response httpResponse(http::StatusLine(409));
+                    httpResponse.setBody(
+                        "{\"LOOLStatusCode\":" +
+                        std::to_string(static_cast<int>(LocalFileInfo::LOOLStatusCode::DocChanged)) + '}');
+                    socket->send(httpResponse);
+                    return;
+                }
+            }
+
+            std::streamsize size = request.getContentLength();
+            char buffer[size];
+            message.read(buffer, size);
+            LocalFileInfo::fileInfoVec[i].fileLastModifiedTime = std::chrono::system_clock::now();
+
+            std::ofstream outfile;
+            outfile.open(LocalFileInfo::fileInfoVec[i].localPath, std::ofstream::binary);
+            outfile.write(buffer, size);
+            outfile.close();
+
+            const std::string body = "{\"LastModifiedTime\": \"" +
+                                        Util::getIso8601FracformatTime(LocalFileInfo::fileInfoVec[i].fileLastModifiedTime) +
+                                        "\" }";
+            http::Response httpResponse(http::StatusLine(200));
+            httpResponse.setBody(body);
+            socket->send(httpResponse);
+            return;
+        }
+    }
+#endif
+
 void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
                                              const RequestDetails &requestDetails,
                                              Poco::MemoryInputStream& message,
@@ -296,6 +495,13 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         std::string endPoint = requestSegments[requestSegments.size() - 1];
         const auto& config = Application::instance().config();
 
+#if ENABLE_DEBUG
+        const Poco::Path path = requestUri.getPath();
+        if (Util::startsWith(path.toString(), std::string("/wopi/files"))) {
+            handleWopiRequest(request, path, message, socket);
+            return;
+        }
+#endif
         if (request.getMethod() == HTTPRequest::HTTP_POST && endPoint == "logging.html")
         {
             const std::string loleafletLogging = config.getString("loleaflet_logging", "false");
