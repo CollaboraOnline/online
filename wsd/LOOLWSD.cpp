@@ -19,7 +19,7 @@
 #define LOOLWSD_TEST_METRICS "/lool/getMetrics"
 
 /* Default loleaflet UI used in the start test URI */
-#define LOOLWSD_TEST_LOLEAFLET_UI "/loleaflet/" LOOLWSD_VERSION_HASH "/loleaflet.html"
+#define LOOLWSD_TEST_LOLEAFLET_UI "/loleaflet/" LOOLWSD_VERSION_HASH "/debug.html"
 
 /* Default document used in the start test URI */
 #define LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER  "test/data/hello-world.odt"
@@ -790,7 +790,7 @@ inline std::string getLaunchURI(const std::string &document)
     oss << getLaunchBase();
     oss << LOOLWSD::ServiceRoot;
     oss << LOOLWSD_TEST_LOLEAFLET_UI;
-    oss << "?file_path=file://";
+    oss << "?file_path=";
     oss << DEBUG_ABSSRCDIR "/";
     oss << document;
 
@@ -2681,7 +2681,7 @@ private:
             {
                 // Unit testing, nothing to do here
             }
-            else if (requestDetails.equals(RequestDetails::Field::Type, "loleaflet"))
+            else if (requestDetails.equals(RequestDetails::Field::Type, "loleaflet") || requestDetails.equals(RequestDetails::Field::Type, "wopi"))
             {
                 // File server
                 assert(socket && "Must have a valid socket");

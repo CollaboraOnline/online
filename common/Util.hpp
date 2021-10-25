@@ -529,6 +529,12 @@ namespace Util
         return false;
     }
 
+    /// Return true iff s ends with t.
+    inline bool endsWith(const std::string& s, const std::string& t)
+    {
+        return equal(t.rbegin(), t.rend(), s.rbegin());
+    }
+
     /// Tokenize delimited values until we hit new-line or the end.
     inline void tokenize(const char* data, const std::size_t size, const char delimiter,
                          std::vector<StringToken>& tokens)
