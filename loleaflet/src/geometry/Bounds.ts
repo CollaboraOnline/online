@@ -236,6 +236,18 @@ export class Bounds {
 		return this.min.equals(bounds.min) && this.max.equals(bounds.max);
 	}
 
+	public toRectangle(): number[] {
+		return [
+			this.min.x, this.min.y,
+			this.max.x - this.min.x,
+			this.max.y - this.min.y
+		];
+	}
+
+	public toCoreString(): string {
+		return this.min.x + ', ' + this.min.y + ', ' + (this.max.x - this.min.x) + ', ' + (this.max.y - this.min.y);
+	}
+
 	public static toBounds(a: Bounds | PointConvertable | PointConvertable[], b?: PointConvertable): Bounds {
 		if (!a || a instanceof Bounds) {
 			return <Bounds>a;

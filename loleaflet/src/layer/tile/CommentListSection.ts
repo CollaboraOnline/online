@@ -1726,6 +1726,12 @@ class CommentSection {
 		this.checkSize();
 	}
 
+	public onCommentsDataUpdate() {
+		for (var i: number = this.sectionProperties.commentList.length -1; i > -1; i--) {
+			this.sectionProperties.commentList[i].onCommentDataUpdate();
+		}
+	}
+
 	public onMouseUp () { return; }
 	public onMouseDown () { return; }
 	public onMouseEnter () { return; }
