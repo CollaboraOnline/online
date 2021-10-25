@@ -220,6 +220,18 @@ L.Bounds.prototype = {
 	equals: function (bounds) { // (Bounds) -> Boolean
 		return this.min.equals(bounds.min) && this.max.equals(bounds.max);
 	},
+
+	toRectangle: function () { // () -> Number[]
+		return [
+			this.min.x, this.min.y,
+			this.max.x - this.min.x,
+			this.max.y - this.min.y
+		];
+	},
+
+	toCoreString: function () { // () -> String
+		return this.min.x + ', ' + this.min.y + ', ' + (this.max.x - this.min.x) + ', ' + (this.max.y - this.min.y);
+	}
 };
 
 L.bounds = function (a, b) { // (Bounds) or (Point, Point) or (Point[])

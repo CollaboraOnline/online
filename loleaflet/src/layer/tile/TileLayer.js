@@ -921,6 +921,12 @@ L.TileLayer = L.GridLayer.extend({
 		}
 		else if (textMsg.startsWith('comment:')) {
 			var obj = JSON.parse(textMsg.substring('comment:'.length + 1));
+			if (obj.comment.cellPos) {
+				// cellPos is in print-twips so convert to display twips.
+				var cellPos = L.Bounds.parse(obj.comment.cellPos);
+				cellPos = this._convertToTileTwipsSheetArea(cellPos);
+				obj.comment.cellPos = cellPos.toCoreString();
+			}
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).onACKComment(obj);
 		}
 		else if (textMsg.startsWith('redlinetablemodified:')) {
@@ -1400,7 +1406,7 @@ L.TileLayer = L.GridLayer.extend({
 			this._cellCursorPixels = L.LOUtil.createRectangle(start.x, start.y, offsetPixels.x, offsetPixels.y);
 			app.file.calc.cellCursor.address = [parseInt(strTwips[4]), parseInt(strTwips[5])];
 			app.file.calc.cellCursor.rectangle.pixels = [Math.round(start.x), Math.round(start.y), Math.round(offsetPixels.x), Math.round(offsetPixels.y)];
-			app.file.calc.cellCursor.rectangle.twips = [parseInt(strTwips[0]), parseInt(strTwips[1]), parseInt(strTwips[2]), parseInt(strTwips[3])];
+			app.file.calc.cellCursor.rectangle.twips = this._cellCursorTwips.toRectangle();
 			app.file.calc.cellCursor.visible = true;
 			if (autofillMarkerSection)
 				autofillMarkerSection.calculatePositionViaCellCursor([this._cellCursorPixels.getX2(), this._cellCursorPixels.getY2()]);

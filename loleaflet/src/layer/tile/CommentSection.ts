@@ -467,8 +467,8 @@ class Comment {
 	}
 
 	private updatePosition () {
-		if (this.convertRectanglesToCoreCoordinates())
-			this.setPositionAndSize();
+		this.convertRectanglesToCoreCoordinates();
+		this.setPositionAndSize();
 	}
 
 	private updateAnnotationMarker () {
@@ -876,6 +876,11 @@ class Comment {
 	}
 
 	public onNewDocumentTopLeft () {
+		this.doPendingInitializationInView();
+		this.updatePosition();
+	}
+
+	public onCommentDataUpdate() {
 		this.doPendingInitializationInView();
 		this.updatePosition();
 	}
