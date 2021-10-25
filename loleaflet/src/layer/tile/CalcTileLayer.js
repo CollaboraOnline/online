@@ -714,10 +714,9 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).clearList();
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
 		} else if (values.commentsPos) {
+			var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
 			for (var index in values.commentsPos) {
 				comment = values.commentsPos[index];
-
-				var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
 				if (section)
 				{
 					var commentObject;
@@ -733,6 +732,10 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 						commentObject.sectionProperties.data.cellPos = section.stringToRectangles(comment.cellPos)[0];
 				}
 			}
+
+			if (section)
+				section.onCommentsDataUpdate();
+
 		} else {
 			L.CanvasTileLayer.prototype._onCommandValuesMsg.call(this, textMsg);
 		}
