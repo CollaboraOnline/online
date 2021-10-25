@@ -1126,7 +1126,7 @@ public:
             {
                 assert (len <= ssize_t(sizeof(buf)));
                 _bytesRecvd += len;
-                _inBuffer.insert(_inBuffer.end(), &buf[0], &buf[len]);
+                _inBuffer.append(&buf[0], len);
             }
             // else poll will handle errors.
         }
@@ -1149,7 +1149,7 @@ public:
             assert(len == available);
             _bytesRecvd += len;
             assert(_inBuffer.size() == 0);
-            _inBuffer.insert(_inBuffer.end(), buf.data(), buf.data() + len);
+            _inBuffer.append(buf.data(), len);
         }
 #endif
 
@@ -1209,7 +1209,7 @@ public:
         if (toErase < count)
             LOG_ERR('#' << getFD() << ": attempted to remove: " << count << " which is > size: " << _inBuffer.size() << " clamped to " << toErase);
         if (toErase > 0)
-            _inBuffer.erase(_inBuffer.begin(), _inBuffer.begin() + count);
+            _inBuffer.eraseFirst(count);
     }
 
     /// Compacts chunk headers away leaving just the data we want
@@ -1230,10 +1230,7 @@ public:
         recv = _bytesRecvd;
     }
 
-    std::vector<char>& getInBuffer()
-    {
-        return _inBuffer;
-    }
+    Buffer& getInBuffer() { return _inBuffer; }
 
     Buffer& getOutBuffer()
     {
@@ -1513,7 +1510,7 @@ private:
     /// Client handling the actual data.
     std::shared_ptr<ProtocolHandlerInterface> _socketHandler;
 
-    std::vector<char> _inBuffer;
+    Buffer _inBuffer;
     Buffer _outBuffer;
 
     uint64_t _bytesSent;

@@ -326,7 +326,7 @@ private:
             std::vector<char> ctrlPayload;
 
             readPayload(data, payloadLen, mask, ctrlPayload);
-            socket->getInBuffer().erase(socket->getInBuffer().begin(), socket->getInBuffer().begin() + headerLen + payloadLen);
+            socket->getInBuffer().eraseFirst(headerLen + payloadLen);
             LOG_TRC('#' << socket->getFD() << ": Incoming WebSocket frame code " << static_cast<unsigned>(code) <<
                 ", fin? " << fin << ", mask? " << hasMask << ", payload length: " << payloadLen <<
                 ", residual socket data: " << socket->getInBuffer().size() << " bytes.");
@@ -877,7 +877,7 @@ protected:
         assert(socket && "socket must be valid");
         assert(_isClient && "Upgrade handshakes are finished by clients.");
 
-        std::vector<char>& data = socket->getInBuffer();
+        Buffer& data = socket->getInBuffer();
 
         LOG_TRC('#' << socket->getFD() << " Incoming client websocket upgrade response: "
                     << std::string(data.data(), data.size()));

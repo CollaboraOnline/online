@@ -106,7 +106,7 @@ void DocumentBroker::handleProxyRequest(
 bool ProxyProtocolHandler::parseEmitIncoming(
     const std::shared_ptr<StreamSocket> &socket)
 {
-    std::vector<char> &in = socket->getInBuffer();
+    Buffer& in = socket->getInBuffer();
 
 #if 0 // protocol debugging.
     std::stringstream oss;
@@ -150,14 +150,14 @@ bool ProxyProtocolHandler::parseEmitIncoming(
         // far from efficient:
         std::vector<char> data;
         data.insert(data.begin(), in.begin(), in.begin() + len + 1);
-        in.erase(in.begin(), in.begin() + len);
+        in.eraseFirst(len);
 
         if (in.size() < 1 || in[0] != '\n')
         {
             LOG_ERR("Missing final newline");
             return false;
         }
-        in.erase(in.begin(), in.begin() + 1);
+        in.eraseFirst(1);
 
         if (serial != _inSerial + 1)
             LOG_ERR("Serial mismatch " << serial << " vs. " << (_inSerial + 1));

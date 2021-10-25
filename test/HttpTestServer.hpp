@@ -45,7 +45,7 @@ private:
 
         LOG_TRC('#' << socket->getFD() << " handleIncomingMessage.");
 
-        std::vector<char>& data = socket->getInBuffer();
+        Buffer& data = socket->getInBuffer();
         LOG_TRC('#' << socket->getFD() << " handleIncomingMessage: buffer has ["
                     << std::string(data.data(), data.size()));
 
@@ -69,7 +69,7 @@ private:
         assert(read > 0 && "Must have read some data!");
 
         // Remove consumed data.
-        data.erase(data.begin(), data.begin() + read);
+        data.eraseFirst(read);
 
         LOG_TRC('#' << socket->getFD() << " handleIncomingMessage: removed " << read
                     << " bytes to have " << data.size() << " in the buffer.");
