@@ -38,6 +38,10 @@ public class COWebView extends WebView {
      * */
     @Override
     public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        return new BaseInputConnection(this, false);
+        // TODO FIXME
+        //return new BaseInputConnection(this, false);
+        // ^ caused a regression on inserting special characters like Non-English ones
+
+        return super.onCreateInputConnection(outAttrs);
     }
 }
