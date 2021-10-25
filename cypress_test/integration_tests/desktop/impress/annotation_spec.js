@@ -177,6 +177,13 @@ describe('Comment Scrolling',function() {
 
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'impress');
+
+		if (Cypress.env('USER_INTERFACE') === 'notebookbar') {
+			cy.get('#ModifyPage').click();
+		} else {
+			desktopHelper.hideSidebar();
+		}
+		desktopHelper.selectZoomLevel('50');
 	});
 
 	afterEach(function() {
