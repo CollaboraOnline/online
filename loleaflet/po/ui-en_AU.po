@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-22 15:46+0200\n"
 "PO-Revision-Date: 2021-10-25 15:01+0000\n"
-"Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: English (Australia) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_AU/>\n"
 "Language: en_AU\n"
@@ -1839,7 +1839,7 @@ msgstr "Warning! The browser you are using is not supported."
 
 #: src/map/Clipboard.js:120
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr "To paste outside %productName, please first click the 'download' button"
+msgstr "To paste outside %productName, please first click the ‘download’ button"
 
 #: src/map/Clipboard.js:130
 msgid "Copying from the document disabled"
