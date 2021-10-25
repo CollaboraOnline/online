@@ -32,6 +32,8 @@ describe('Repair Document', function() {
 
 		helper.typeIntoDocument('Hello{enter}', frameId2);
 
+		cy.wait(1000);
+
 		cy.customGet('#menu-editmenu', frameId2).click()
 			.customGet('#menu-repair', frameId2).click();
 
