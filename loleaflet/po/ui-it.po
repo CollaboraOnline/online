@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-22 15:46+0200\n"
-"PO-Revision-Date: 2021-04-14 20:26+0000\n"
+"PO-Revision-Date: 2021-10-25 15:01+0000\n"
 "Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/collabora-online/"
 "ui/it/>\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.6-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -212,7 +212,7 @@ msgstr "Aggiorna registro"
 
 #: admin/admin.strings.js:50
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Filtro del canale:"
 
 #: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:376
 #: src/control/Control.StatusBar.js:310
@@ -487,9 +487,8 @@ msgid "Style"
 msgstr "Stile"
 
 #: src/control/Control.JSDialogBuilder.js:2076
-#, fuzzy
 msgid "reply"
-msgstr "Rispondi"
+msgstr "risposta"
 
 #: src/control/Control.JSDialogBuilder.js:2079
 msgid "replies"
@@ -512,7 +511,6 @@ msgid "Columns"
 msgstr "Colonne"
 
 #: src/control/Control.JSDialogBuilder.js:2801
-#, fuzzy
 msgid "Insert Table"
 msgstr "Inserisci tabella"
 
@@ -911,7 +909,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:416
 msgid "General"
-msgstr ""
+msgstr "Generale"
 
 #: src/control/Control.NotebookbarCalc.js:417
 msgid "Number"
@@ -1480,9 +1478,8 @@ msgid "Link"
 msgstr "Collegamento"
 
 #: src/core/Socket.js:56
-#, fuzzy
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "Si è verificato un problema di connessione con il documento"
+msgstr "Si è verificato un problema di connessione con il documento: "
 
 #: src/core/Socket.js:494
 msgid "Server is now reachable. We have to refresh the page now."
