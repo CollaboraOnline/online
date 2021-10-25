@@ -1230,14 +1230,14 @@ private:
         LOG_TRC('#' << socket->getFD() << " handleIncomingMessage.");
 
         bool close = false;
-        std::vector<char>& data = socket->getInBuffer();
+        Buffer& data = socket->getInBuffer();
 
         // Consume the incoming data by parsing and processing the body.
         const int64_t read = _response->readData(data.data(), data.size());
         if (read > 0)
         {
             // Remove consumed data.
-            data.erase(data.begin(), data.begin() + read);
+            data.eraseFirst(read);
             close = !isConnected();
         }
         else if (read < 0)

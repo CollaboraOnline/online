@@ -77,7 +77,7 @@ private:
             return;
         }
 
-        std::vector<char>& in = socket->getInBuffer();
+        Buffer& in = socket->getInBuffer();
         LOG_TRC('#' << socket->getFD() << " handling incoming " << in.size() << " bytes.");
 
         // Find the end of the header, if any.

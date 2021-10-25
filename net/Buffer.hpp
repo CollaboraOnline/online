@@ -30,6 +30,9 @@ public:
     {
     }
 
+    typedef std::vector<char>::iterator iterator;
+    typedef std::vector<char>::const_iterator const_iterator;
+
     std::size_t size() const { return _size; }
     bool empty() const { return _size == 0; }
 
@@ -92,6 +95,43 @@ public:
             os << prefix << "Buffer size: " << _size << " offset: " << _offset << '\n';
         if (_buffer.size() > 0)
             Util::dumpHex(os, _buffer, legend, prefix);
+    }
+
+    // various std::vector API compatibility functions
+
+    void clear()
+    {
+        _buffer.clear();
+        _offset = 0;
+        _size = 0;
+    }
+
+    iterator begin() { return _buffer.begin() + _offset; }
+
+    const_iterator begin() const { return _buffer.begin() + _offset; }
+
+    iterator end() { return _buffer.end(); }
+
+    const_iterator end() const { return _buffer.end(); }
+
+    char operator[](int index) const { return _buffer[_offset + index]; }
+
+    char& operator[](int index) { return _buffer[_offset + index]; }
+
+    const char* data() const { return _buffer.data() + _offset; }
+
+    char* data() { return _buffer.data() + _offset; }
+
+    iterator erase(iterator first, iterator last)
+    {
+        if (first == begin())
+        {
+            eraseFirst(last - begin());
+            return begin();
+        }
+        iterator ret = _buffer.erase(first, last);
+        _size = _buffer.size() - _offset;
+        return ret;
     }
 };
 
