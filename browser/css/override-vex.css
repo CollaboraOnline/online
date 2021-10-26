@@ -57,6 +57,14 @@
 .vex-open .cool-user-idle .vex-dialog-buttons {
 	display: none !important;
 }
+.vex-open .loleaflet-user-idle .title {
+	font-size: 2rem;
+	margin: 0;
+}
+.vex-open .loleaflet-user-idle .content {
+	font-size: 20px;
+	margin: 0;
+}
 
 .vex.vex-theme-plain, .vex.vex-theme-bottom-right-corner{
 	z-index: 2001 !important;
