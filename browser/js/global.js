@@ -360,10 +360,10 @@ window.app = { // Shouldn't have any functions defined.
 		};
 		this.onmessage = function() {
 		};
-		
+
 		this.decoder = new TextDecoder();
 		this.doSlice = function(bytes,start,end) { return bytes.slice(start,end); };
-		
+
 		this.decode = function(bytes,start,end) {
 			return this.decoder.decode(this.doSlice(bytes, start,end));
 		};
