@@ -2986,7 +2986,7 @@ private:
             return;
         }
 
-        const auto docKey = DocumentBroker::getDocKey(RequestDetails::sanitizeURI(WOPISrc));
+        const auto docKey = RequestDetails::getDocKey(WOPISrc);
 
         std::shared_ptr<DocumentBroker> docBroker;
         {
@@ -3258,7 +3258,7 @@ private:
             if (!fromPath.empty() && !format.empty())
             {
                 Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
-                const std::string docKey = DocumentBroker::getDocKey(uriPublic);
+                const std::string docKey = RequestDetails::getDocKey(uriPublic);
 
                 std::string options;
                 const bool fullSheetPreview
@@ -3305,7 +3305,7 @@ private:
 
                 // Validate the docKey
                 const std::string decodedUri = requestDetails.getDocumentURI();
-                const std::string docKey = DocumentBroker::getDocKey(RequestDetails::sanitizeURI(decodedUri));
+                const std::string docKey = RequestDetails::getDocKey(decodedUri);
 
                 std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
                 auto docBrokerIt = DocBrokers.find(docKey);
@@ -3349,7 +3349,7 @@ private:
 
             // 1. Validate the dockey
             const std::string decodedUri = requestDetails.getDocumentURI();
-            const std::string docKey = DocumentBroker::getDocKey(RequestDetails::sanitizeURI(decodedUri));
+            const std::string docKey = RequestDetails::getDocKey(decodedUri);
 
             std::unique_lock<std::mutex> docBrokersLock(DocBrokersMutex);
             auto docBrokerIt = DocBrokers.find(docKey);
@@ -3437,7 +3437,7 @@ private:
                 return;
 
             Poco::URI uriPublic = RequestDetails::sanitizeURI(fromPath);
-            const std::string docKey = DocumentBroker::getDocKey(uriPublic);
+            const std::string docKey = RequestDetails::getDocKey(uriPublic);
 
             // This lock could become a bottleneck.
             // In that case, we can use a pool and index by publicPath.
@@ -3474,7 +3474,7 @@ private:
 
         LOG_INF("URL [" << url << "] for Proxy request.");
         const auto uriPublic = RequestDetails::sanitizeURI(url);
-        const auto docKey = DocumentBroker::getDocKey(uriPublic);
+        const auto docKey = RequestDetails::getDocKey(uriPublic);
         const std::string fileId = Util::getFilenameFromURL(docKey);
         Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 
@@ -3573,7 +3573,7 @@ private:
 
             LOG_INF("URL [" << url << "] for WS Request.");
             const auto uriPublic = RequestDetails::sanitizeURI(url);
-            const auto docKey = DocumentBroker::getDocKey(uriPublic);
+            const auto docKey = RequestDetails::getDocKey(uriPublic);
             const std::string fileId = Util::getFilenameFromURL(docKey);
             Util::mapAnonymized(fileId, fileId); // Identity mapping, since fileId is already obfuscated
 

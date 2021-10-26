@@ -281,4 +281,19 @@ Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
     return uriPublic;
 }
 
+std::string RequestDetails::getDocKey(const Poco::URI& uri)
+{
+    // If multiple host-names are used to access us, then
+    // they must be aliases. Permission to access aliased hosts
+    // is checked at the point of accepting incoming connections.
+    // At this point storing the hostname artificially discriminates
+    // between aliases and forces same document (when opened from
+    // alias hosts) to load as separate documents and sharing doesn't
+    // work. Worse, saving overwrites one another.
+    std::string docKey;
+    Poco::URI::encode(uri.getPath(), "", docKey);
+    LOG_INF("DocKey from URI [" << uri.toString() << "] => [" << docKey << ']');
+    return docKey;
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

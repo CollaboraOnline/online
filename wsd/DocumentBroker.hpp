@@ -231,10 +231,6 @@ public:
         Interactive, Batch
     };
 
-    /// Returns a document-specific key based
-    /// on the URI of the document.
-    static std::string getDocKey(const Poco::URI& uri);
-
     /// Dummy document broker that is marked to destroy.
     DocumentBroker();
 

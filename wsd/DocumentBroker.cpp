@@ -88,21 +88,6 @@ void DocumentBroker::broadcastLastModificationTime(
     broadcastMessage(message);
 }
 
-std::string DocumentBroker::getDocKey(const Poco::URI& uri)
-{
-    // If multiple host-names are used to access us, then
-    // they must be aliases. Permission to access aliased hosts
-    // is checked at the point of accepting incoming connections.
-    // At this point storing the hostname artificially discriminates
-    // between aliases and forces same document (when opened from
-    // alias hosts) to load as separate documents and sharing doesn't
-    // work. Worse, saving overwrites one another.
-    std::string docKey;
-    Poco::URI::encode(uri.getPath(), "", docKey);
-    LOG_INF("DocKey from URI [" << uri.getPath() << "] => [" << docKey << ']');
-    return docKey;
-}
-
 /// The Document Broker Poll - one of these in a thread per document
 class DocumentBroker::DocumentBrokerPoll final : public TerminatingPoll
 {
