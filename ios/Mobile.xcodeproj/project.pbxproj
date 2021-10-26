@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BE00F8A021396585001CE2D4 /* loleaflet.html in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89621396585001CE2D4 /* loleaflet.html */; };
+		BE00F8A021396585001CE2D4 /* cool.html in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89621396585001CE2D4 /* cool.html */; };
 		BE00F8A121396585001CE2D4 /* bundle.css in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89721396585001CE2D4 /* bundle.css */; };
 		BE00F8A321396585001CE2D4 /* bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89921396585001CE2D4 /* bundle.js */; };
 		BE00F8A721396585001CE2D4 /* loleaflet-help.html in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89D21396585001CE2D4 /* loleaflet-help.html */; };
@@ -76,7 +76,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BE00F89621396585001CE2D4 /* loleaflet.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = loleaflet.html; path = ../../../loleaflet/dist/loleaflet.html; sourceTree = "<group>"; };
+		BE00F89621396585001CE2D4 /* cool.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = cool.html; path = ../../../loleaflet/dist/cool.html; sourceTree = "<group>"; };
 		BE00F89721396585001CE2D4 /* bundle.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = bundle.css; path = ../../../loleaflet/dist/bundle.css; sourceTree = "<group>"; };
 		BE00F89921396585001CE2D4 /* bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = ../../../loleaflet/dist/bundle.js; sourceTree = "<group>"; };
 		BE00F89D21396585001CE2D4 /* loleaflet-help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "loleaflet-help.html"; path = "../../../loleaflet/dist/loleaflet-help.html"; sourceTree = "<group>"; };
@@ -1526,7 +1526,7 @@
 				BE00F89921396585001CE2D4 /* bundle.js */,
 				BE00F89E21396585001CE2D4 /* images */,
 				BE00F89D21396585001CE2D4 /* loleaflet-help.html */,
-				BE00F89621396585001CE2D4 /* loleaflet.html */,
+				BE00F89621396585001CE2D4 /* cool.html */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -3636,7 +3636,7 @@
 				BE18C7DE226DE09A001AD27E /* Branding in Resources */,
 				BE8D85D5214055F3009F1860 /* unorc in Resources */,
 				BE8D85D1214055F3009F1860 /* services.rdb in Resources */,
-				BE00F8A021396585001CE2D4 /* loleaflet.html in Resources */,
+				BE00F8A021396585001CE2D4 /* cool.html in Resources */,
 				BE8D85CA214055F3009F1860 /* offapi.rdb in Resources */,
 				BE8D773A2136762600AC58EA /* Assets.xcassets in Resources */,
 				BE8D85CC214055F3009F1860 /* config in Resources */,
