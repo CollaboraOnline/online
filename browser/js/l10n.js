@@ -240,7 +240,9 @@ if (!browserless && typeof XMLHttpRequest === undef_type && typeof ActiveXObject
 }
 
 String_ctr[$default_locale] = String_ctr[$default_locale] || "";
-String_ctr[$locale] = nav && (nav.language || nav.userLanguage) || "";
+var lang = nav && (nav.language || nav.userLanguage) || "";
+String_ctr[$locale] = lang;
+document.documentElement.lang = lang;
 
 if (!browserless || typeof document !== undef_type) {
 	var
