@@ -1425,11 +1425,11 @@ L.Map = L.Evented.extend({
 
 		var message = '';
 		if (!map['wopi'].DisableInactiveMessages) {
-			message = _('Inactive document - please click to resume editing');
+			message = _('<h3 class="title">Inactive document</h3><p class="content">please click to resume editing</p>');
 		}
 
 		vex.open({
-			content: message,
+			unsafeContent: message,
 			contentClassName: 'cool-user-idle',
 			afterOpen: function() {
 				var $vexContent = $(this.contentEl);
