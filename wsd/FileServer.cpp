@@ -939,8 +939,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%HEXIFY_URL%"), hexifyEmbeddedUrls);
 
     std::string themePreFix = (theme == "nextcloud") ? theme + "/" : "";
-    static const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/" + themePreFix + "%s.css\">");
-    static const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/" + themePreFix+ "%s.js\"></script>");
+    const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/" + themePreFix + "%s.css\">");
+    const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/" + themePreFix + "%s.js\"></script>");
 
     std::string brandCSS(Poco::format(linkCSS, responseRoot, std::string(BRANDING)));
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
