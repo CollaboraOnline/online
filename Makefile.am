@@ -455,13 +455,13 @@ run-one: setup-wsd
 endif
 
 sync-writer:
-	browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odt"
+	browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odt"
 
 sync-calc:
-	browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.ods"
+	browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.ods"
 
 sync-impress:
-	browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/loleaflet.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odp"
+	browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odp"
 
 run-trace: setup-wsd
 	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \

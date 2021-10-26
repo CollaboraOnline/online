@@ -723,7 +723,7 @@ window.app = { // Shouldn't have any functions defined.
 		}
 	};
 
-	// Some global variables are defined in loleaflet.html, among them:
+	// Some global variables are defined in cool.html, among them:
 	// global.host: the host URL, with ws(s):// protocol
 	// global.serviceRoot: an optional root path on the server, typically blank.
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<!-- Proof of concept of running multiple instance of loleaflet.html
+<!-- Proof of concept of running multiple instance of cool.html
      at the same time (each one in a different iframe).
 
      To open the first document add the path into the input and click
@@ -192,7 +192,7 @@
           query += 'file_path=file://' + path;
           query += '&NotWOPIButIframe=true';
 
-          var editorPath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1) + 'loleaflet.html';
+          var editorPath = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1) + 'cool.html';
           var src = window.location.protocol + '//' + window.location.host + editorPath + query;
           
           return src;

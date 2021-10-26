@@ -825,7 +825,7 @@ public class LOActivity extends AppCompatActivity {
         createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad, uiMode, userName);
 
         // trigger the load of the document
-        String finalUrlToLoad = "file:///android_asset/dist/loleaflet.html?file_path=" +
+        String finalUrlToLoad = "file:///android_asset/dist/cool.html?file_path=" +
                 urlToLoad + "&closebutton=1";
 
         // set the language

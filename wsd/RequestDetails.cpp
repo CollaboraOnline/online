@@ -261,7 +261,7 @@ Poco::URI RequestDetails::sanitizeURI(const std::string& uri)
         throw std::runtime_error("Invalid URI.");
     }
 
-    // We decoded access token before embedding it in loleaflet.html
+    // We decoded access token before embedding it in cool.html
     // So, we need to decode it now to get its actual value
     Poco::URI::QueryParameters queryParams = uriPublic.getQueryParameters();
     for (auto& param : queryParams)

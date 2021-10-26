@@ -45,12 +45,12 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser) 
 	if (subFolder === undefined) {
 		URI += '/loleaflet/' +
 			Cypress.env('WSD_VERSION_HASH') +
-			'/loleaflet.html?lang=en-US&file_path=file://' +
+			'/cool.html?lang=en-US&file_path=file://' +
 			Cypress.env('DATA_WORKDIR') + fileName;
 	} else {
 		URI += '/loleaflet/' +
 			Cypress.env('WSD_VERSION_HASH') +
-			'/loleaflet.html?lang=en-US&file_path=file://' +
+			'/cool.html?lang=en-US&file_path=file://' +
 			Cypress.env('DATA_WORKDIR') + subFolder + '/' + fileName;
 	}
 

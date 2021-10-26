@@ -468,7 +468,7 @@ build-loleaflet: \
 	$(DIST_FOLDER)/device-tablet.css \
 	$(DIST_FOLDER)/device-desktop.css \
 	$(DIST_FOLDER)/bundle.js \
-	$(DIST_FOLDER)/loleaflet.html
+	$(DIST_FOLDER)/cool.html
 	@echo "build loleaflet completed"
 if ENABLE_ANDROIDAPP
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/branding.css" "$(APP_BRANDING_DIR)/branding.js" $(DIST_FOLDER)/ ; else touch $(DIST_FOLDER)/branding.css ; fi
@@ -518,13 +518,13 @@ $(DIST_FOLDER)/global.js: $(srcdir)/js/global.js
 	@mkdir -p $(dir $@)
 	$(call global_file)
 
-$(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 \
+$(DIST_FOLDER)/cool.html: $(srcdir)/html/cool.html.m4 \
 	$(LOLEAFLET_HTML_DST) \
 	$(LOLEAFLET_WELCOME_DST) \
 	$(DIST_FOLDER)/bundle.css \
 	$(DIST_FOLDER)/global.js \
 	$(DIST_FOLDER)/bundle.js
-	@echo "Generating loleaflet.html..."
+	@echo "Generating cool.html..."
 	m4 -PE -DBUNDLE=$(IS_BUNDLE) \
 		-DENABLE_FEEDBACK=$(ENABLE_FEEDBACK) \
 		-DIOSAPP=$(ENABLE_IOSAPP) \
@@ -537,7 +537,7 @@ $(DIST_FOLDER)/loleaflet.html: $(srcdir)/html/loleaflet.html.m4 \
 		$(LOLEAFLET_LIBS_JS) \
 		$(patsubst %.ts,%.js,$(LOLEAFLET_JS_WEBORDER)))" \
 		-DVENDOR="$(VENDOR)" \
-		$(srcdir)/html/loleaflet.html.m4 > $@
+		$(srcdir)/html/cool.html.m4 > $@
 
 node_modules: package.json archived-packages
 	@npm install

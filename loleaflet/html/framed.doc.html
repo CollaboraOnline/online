@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<!-- Proof of concept of running loleaflet.html in an iframe. Also
+<!-- Proof of concept of running cool.html in an iframe. Also
      shows how to, from outside the iframe, invoke Python scripting in
      the underlying LibreOffice instance that manipulates the document
      being edited.
@@ -207,7 +207,7 @@
         query = window.location.search + '&';
       query += 'NotWOPIButIframe=true';
 
-      var path = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1) + 'loleaflet.html';
+      var path = window.location.pathname.substr(0, window.location.pathname.lastIndexOf('/') + 1) + 'cool.html';
       var uriBase = window.location.protocol + '//' + window.location.host + path + query;
       var iframe = document.getElementById("frame");
       iframe.src = uriBase;

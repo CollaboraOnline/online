@@ -1053,7 +1053,7 @@ void LOOLWSD::innerInitialize(Application& self)
             { "logging.file[@enable]", "false" },
             { "logging.level", "trace" },
             { "logging.lokit_sal_log", "-INFO-WARN" },
-            { "loleaflet_html", "loleaflet.html" },
+            { "loleaflet_html", "cool.html" },
             { "loleaflet_logging", "false" },
             { "mount_jail_tree", "true" },
             { "net.connection_timeout_secs", "30" },
@@ -3724,7 +3724,7 @@ private:
         }
 
         const auto& config = Application::instance().config();
-        const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
+        const std::string loleafletHtml = config.getString("loleaflet_html", "cool.html");
 
         const std::string action = "action";
         const std::string favIconUrl = "favIconUrl";
