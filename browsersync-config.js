@@ -64,7 +64,7 @@ module.exports = {
     "reloadThrottle": 0,
     "plugins": [],
     "injectChanges": true,
-    "startPath": "loleaflet/04597b4ec/loleaflet.html?file_path=./test/data/hello-world.odt",
+    "startPath": "loleaflet/04597b4ec/cool.html?file_path=./test/data/hello-world.odt",
     "minify": true,
     "host": null,
     "localOnly": false,

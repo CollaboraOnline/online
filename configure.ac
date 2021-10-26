@@ -1251,7 +1251,7 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
               (cd "$APP_BRANDING_DIR" && tar cf - .) | (cd ios/Mobile/Branding && tar xf -)
           else
               # A Branding/branding.css file must exist, it is
-              # referenced unconditionally in loleaflet.html in the
+              # referenced unconditionally in cool.html in the
               # iOS app.
               touch ios/Mobile/Branding/branding.css
           fi

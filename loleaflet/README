@@ -83,9 +83,9 @@ Note that this will, by default, set the loolwsd's file server's root to the par
 which means you can access all the files in loleaflet using /loleaflet/ path. It is advised to set
 file_server_root_path manually for more control. See wsd/README for more information.
 
-* open dist/loleaflet.html through loolwsd's fileserver
+* open dist/cool.html through loolwsd's fileserver
 
-    https://localhost:9980/loleaflet/dist/loleaflet.html?file_path=file:///PATH/TO_DOC&host=wss://localhost:9980
+    https://localhost:9980/loleaflet/dist/cool.html?file_path=file:///PATH/TO_DOC&host=wss://localhost:9980
 
 and you should see the document in the browser.
 Note that accessing local storage is disabled by default for security reasons. You need to explicitly enable it
@@ -114,7 +114,7 @@ make sync-[writer|calc|impress]
 Your browser will open example document and now you can edit .css files and see the result without server restart.
 
 To run another document use:
-browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/loleaflet.html?file_path=file:///path/to/the/file.ods"
+browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/cool.html?file_path=file:///path/to/the/file.ods"
 
 Admin Panel
 -----------
