@@ -8,6 +8,7 @@ ESLINT_BINARY = $(abs_builddir)/node_modules/eslint/bin/eslint.js
 WAIT_ON_BINARY = $(abs_builddir)/node_modules/wait-on/bin/wait-on
 GET_PORT_BINARY = $(abs_builddir)/node_modules/get-port-cli/cli.js
 NPM_INSTALLED = $(abs_builddir)/workdir/npm_installed
+CAPABILITIES = $(if @ENABLE_SETCAP@,true,false)
 
 PARALLEL_SCRIPT = $(abs_srcdir)/run_parallel.sh
 
@@ -162,6 +163,7 @@ define start_loolwsd
 	@mkdir -p $(dir $(LOOLWSD_OUTPUT))
 	../loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			--o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
+			--o:security.capabilities="$(CAPABILITIES)" \
 			--disable-ssl \
 			--o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			--o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
