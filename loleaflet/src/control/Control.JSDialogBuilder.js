@@ -3099,7 +3099,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	setupStandardButtonHandler: function(button, response, builder) {
 		$(button).unbind('click');
 		$(button).click(function () {
-			builder.callback('responsebutton', 'click', {id: button.get(0).id }, response, builder);
+			builder.callback('responsebutton', 'click', {id: button.id }, response, builder);
 		});
 	},
 
@@ -3192,7 +3192,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					for (var i in childData.responses) {
 						var buttonId = childData.responses[i].id;
 						var response = childData.responses[i].response;
-						var button = $('#' + buttonId);
+						var button = parent.querySelector('[id=\'' + buttonId + '\']');
 						if (button)
 							this.setupStandardButtonHandler(button, response, this);
 					}
