@@ -134,12 +134,25 @@ public:
     /// Decode and sanitize a URI.
     static Poco::URI sanitizeURI(const std::string& uri);
 
+    /// Returns a document-specific key, based
+    /// on the URI of the document (aka the wopiSrc).
+    static std::string getDocKey(const Poco::URI& uri);
+
+    /// Sanitize the URI and return the document-specific key.
+    static std::string getDocKey(const std::string& uri) { return getDocKey(sanitizeURI(uri)); }
+
     // matches the WOPISrc if used. For load balancing
     // must be 2nd element in the path after /lool/<here>
     std::string getLegacyDocumentURI() const { return getField(Field::LegacyDocumentURI); }
 
     /// The DocumentURI, decoded. Doesn't contain WOPISrc or any other appendages.
     std::string getDocumentURI() const { return getField(Field::DocumentURI); }
+
+    /// The DocumentURI, decoded and sanitized. Doesn't contain WOPISrc or any other appendages.
+    std::string getDocumentURISanitized() const
+    {
+        return sanitizeURI(getField(Field::DocumentURI)).toString();
+    }
 
     const std::map<std::string, std::string>& getDocumentURIParams() const { return _docUriParams; }
 
