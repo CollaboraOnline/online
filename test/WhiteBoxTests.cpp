@@ -1304,7 +1304,7 @@ void WhiteBoxTests::testRequestDetails_loleafletURI()
 
     static const std::string URI
         = "/loleaflet/49c225146/"
-          "loleaflet.html?WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%"
+          "cool.html?WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%"
           "2Frichdocuments%2Fwopi%2Ffiles%2F593_ocqiesh0cngs&title=empty.odt&lang=en-us&"
           "closebutton=1&revisionhistory=1";
 
@@ -1325,7 +1325,7 @@ void WhiteBoxTests::testRequestDetails_loleafletURI()
     LOK_ASSERT(details.equals(RequestDetails::Field::Type, "loleaflet"));
     LOK_ASSERT(details.equals(0, "loleaflet"));
     LOK_ASSERT_EQUAL(std::string("49c225146"), details[1]);
-    LOK_ASSERT_EQUAL(std::string("loleaflet.html"), details[2]);
+    LOK_ASSERT_EQUAL(std::string("cool.html"), details[2]);
     LOK_ASSERT_EQUAL(std::string("WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%"
                                  "2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F593_ocqiesh0cngs&"
                                  "title=empty.odt&lang=en-us&closebutton=1&revisionhistory=1"),

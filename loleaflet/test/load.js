@@ -64,7 +64,7 @@ global.console = {
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
-var data = fs.readFileSync(top_builddir + '/loleaflet/dist/loleaflet.html', {encoding: 'utf8'});
+var data = fs.readFileSync(top_builddir + '/loleaflet/dist/cool.html', {encoding: 'utf8'});
 
 data = data.replace(/%SERVICE_ROOT%\/loleaflet\/%VERSION%/g, top_builddir + '/loleaflet/dist');
 data = data.replace(/%SERVICE_ROOT%/g, '');
@@ -95,7 +95,7 @@ window = new JSDOM(data, {
 				verbose: false,
 				pretendToBeVisual: false,
 				includeNodeLocations: false,
-				url: 'file:///tmp/notthere/loleaflet.html?file_path=file:///' + to_load,
+				url: 'file:///tmp/notthere/cool.html?file_path=file:///' + to_load,
 				resources: 'usable',
 				beforeParse(window) {
 					console.debug('Before script parsing');

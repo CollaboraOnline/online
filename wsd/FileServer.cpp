@@ -551,7 +551,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (FileHash.find(relPath) == FileHash.end())
             throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
 
-        const std::string loleafletHtml = config.getString("loleaflet_html", "loleaflet.html");
+        const std::string loleafletHtml = config.getString("loleaflet_html", "cool.html");
         if (endPoint == loleafletHtml ||
                 endPoint == "help-localizations.json" ||
                 endPoint == "localizations.json" ||
@@ -865,9 +865,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     LOG_DBG("Preprocessing file: " << relPath);
     std::string preprocess = *getUncompressedFile(relPath);
 
-    // We need to pass certain parameters from the loleaflet html GET URI
+    // We need to pass certain parameters from the cool html GET URI
     // to the embedded document URI. Here we extract those params
-    // from the GET URI and set them in the generated html (see loleaflet.html.m4).
+    // from the GET URI and set them in the generated html (see cool.html.m4).
     HTMLForm form(request, message);
     const std::string accessToken = form.get("access_token", "");
     const std::string accessTokenTtl = form.get("access_token_ttl", "");
@@ -884,7 +884,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     LOG_TRC("theme=" << theme);
 
     // Escape bad characters in access token.
-    // This is placed directly in javascript in loleaflet.html, we need to make sure
+    // This is placed directly in javascript in cool.html, we need to make sure
     // that no one can do anything nasty with their clever inputs.
     std::string escapedAccessToken, escapedAccessHeader, escapedPostmessageOrigin;
     Poco::URI::encode(accessToken, "'", escapedAccessToken);
