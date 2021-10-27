@@ -95,7 +95,7 @@ class Comment {
 
 		if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
 			this.sectionProperties.parthash = this.sectionProperties.data.parthash;
-			this.sectionProperties.partIndex = this.sectionProperties.docLayer._partHashes.indexOf(this.sectionProperties.parthash);
+			this.sectionProperties.partIndex = this.sectionProperties.docLayer._partHashes.indexOf(String(this.sectionProperties.parthash));
 		}
 
 		this.sectionProperties.isHighlighted = false;
