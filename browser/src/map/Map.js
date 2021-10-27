@@ -1425,7 +1425,8 @@ L.Map = L.Evented.extend({
 
 		var message = '';
 		if (!map['wopi'].DisableInactiveMessages) {
-			message = _('<h3 class="title">Inactive document</h3><p class="content">please click to resume editing</p>');
+			message = '<h3 class="title">' + vex._escapeHtml(_('Inactive document')) + '</h3>';
+			message += '<p class="content">' + vex._escapeHtml(_('Please click to resume editing')) + '</p>';
 		}
 
 		vex.open({
