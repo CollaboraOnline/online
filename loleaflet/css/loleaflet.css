@@ -614,7 +614,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 .lokdialog_container.ui-dialog.ui-widget-content.jsdialog-container {
-	background-color: var(--white-bg-color) !important;
+	background: white !important;
 }
 
 .lokdialog.ui-dialog-content.ui-widget-content {
