@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
-describe('Apply paragraph properties.', function() {
+describe.skip('Apply paragraph properties.', function() {
 	var testFileName = 'apply_paragraph_properties.odt';
 
 	beforeEach(function() {

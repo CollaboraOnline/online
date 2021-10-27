@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
-describe('Spell checking menu.', function() {
+describe.skip('Spell checking menu.', function() {
 	var testFileName = 'spellchecking.odt';
 
 	beforeEach(function() {

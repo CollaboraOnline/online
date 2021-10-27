@@ -67,7 +67,7 @@ describe('Track Changes', function () {
 		helper.textSelectionShouldNotExist();
 	});
 
-	it('Reject All', function () {
+	it.skip('Reject All', function () {
 
 		helper.typeIntoDocument('Hello World');
 
