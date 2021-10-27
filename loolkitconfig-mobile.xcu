@@ -29,5 +29,11 @@
 <!-- On mobile UI there should be no tunnelled dialogs. But if there are some, by mistake, at least they should not have a non-working Help button -->
 <item oor:path="/org.openoffice.Office.Common/Help"><prop oor:name="HelpRootURL" oor:op="fuse"><value></value></prop></item>
 
+<!-- Don't show the document boundaries by default, gh#3491.  Using many names so that it works with all kinds of the builds. -->
+<item oor:path="/org.openoffice.Office.UI/ColorScheme/ColorSchemes/org.openoffice.Office.UI:ColorScheme['Collabora Office']/DocBoundaries"><prop oor:name="IsVisible" oor:op="fuse"><value>false</value></prop></item>
+<item oor:path="/org.openoffice.Office.UI/ColorScheme/ColorSchemes/org.openoffice.Office.UI:ColorScheme['Collabora OfficeDev']/DocBoundaries"><prop oor:name="IsVisible" oor:op="fuse"><value>false</value></prop></item>
+<item oor:path="/org.openoffice.Office.UI/ColorScheme/ColorSchemes/org.openoffice.Office.UI:ColorScheme['LibreOffice']/DocBoundaries"><prop oor:name="IsVisible" oor:op="fuse"><value>false</value></prop></item>
+<item oor:path="/org.openoffice.Office.UI/ColorScheme/ColorSchemes/org.openoffice.Office.UI:ColorScheme['LibreOfficeDev']/DocBoundaries"><prop oor:name="IsVisible" oor:op="fuse"><value>false</value></prop></item>
+
 </oor:items>
 
