@@ -186,6 +186,26 @@ L.Control.UIManager = L.Control.extend({
 		this.map.on('changeuimode', this.onChangeUIMode, this);
 	},
 
+	initializeSidebar: function() {
+		// Hide the sidebar on start if saved state or UIDefault is set.
+		if (window.mode.isDesktop() && !window.ThisIsAMobileApp) {
+			var showSidebar = this.getSavedStateOrDefault('ShowSidebar');
+
+			if (showSidebar === false)
+				app.socket.sendMessage('uno .uno:SidebarHide');
+		}
+		else if (window.mode.isChromebook()) {
+			// HACK - currently the sidebar shows when loaded,
+			// with the exception of mobile phones & tablets - but
+			// there, it does not show only because they start
+			// with read/only mode which hits an early exit in
+			// _launchSidebar() in Control.LokDialog.js
+			// So for the moment, let's just hide it on
+			// Chromebooks early
+			app.socket.sendMessage('uno .uno:SidebarHide');
+		}
+	},
+
 	removeClassicUI: function() {
 		if (this.map.menubar)
 		{
@@ -276,6 +296,8 @@ L.Control.UIManager = L.Control.extend({
 			this.addNotebookbarUI();
 			break;
 		}
+
+		this.initializeSidebar();
 	},
 
 	// UI modification
