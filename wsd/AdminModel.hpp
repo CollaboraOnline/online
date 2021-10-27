@@ -219,9 +219,9 @@ public:
     void setProcSMapsFD(const int smapsFD) { _procSMaps = fdopen(smapsFD, "r"); }
     bool hasMemDirtyChanged() const { return _hasMemDirtyChanged; }
     void setMemDirtyChanged(bool changeStatus) { _hasMemDirtyChanged = changeStatus; }
-    time_t getBadBehaviorDetectionTime(){ return _badBehaviorDetectionTime; }
+    time_t getBadBehaviorDetectionTime() const { return _badBehaviorDetectionTime; }
     void setBadBehaviorDetectionTime(time_t badBehaviorDetectionTime){ _badBehaviorDetectionTime = badBehaviorDetectionTime;}
-    time_t getAbortTime(){ return _abortTime; }
+    time_t getAbortTime() const { return _abortTime; }
     void setAbortTime(time_t abortTime) { _abortTime = abortTime; }
 
     std::string to_string() const;
