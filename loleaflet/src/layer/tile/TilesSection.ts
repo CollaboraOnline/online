@@ -288,11 +288,9 @@ class TilesSection {
 			rectangle[2] - this.sectionProperties.pageBackgroundInnerMargin,
 			rectangle[3] - this.sectionProperties.pageBackgroundInnerMargin);
 
-		this.context.fillStyle = this.sectionProperties.pageBackgroundTextColor;
-		this.context.fillText(String(pageNumber),
-			Math.round((2 * rectangle[0] + rectangle[2]) * 0.5) - ctx.viewBounds.min.x,
-			Math.round((2 * rectangle[1] + rectangle[3]) * 0.5) - ctx.viewBounds.min.y,
-			rectangle[2] * 0.4);
+		// We don't want to render page numbers to the background of pages any more. In this case we could set pageBackgroundFillColorWriter value once for all pages. I'll keep it for now.
+		//this.context.fillStyle = this.sectionProperties.pageBackgroundTextColor;
+		//this.context.fillText(String(pageNumber), Math.round((2 * rectangle[0] + rectangle[2]) * 0.5) - ctx.viewBounds.min.x, Math.round((2 * rectangle[1] + rectangle[3]) * 0.5) - ctx.viewBounds.min.y, rectangle[2] * 0.4);
 	}
 
 	private drawPageBackgroundFileBasedView (ctx: any, top: number, bottom: number) {
