@@ -7,11 +7,22 @@ L.Map.include({
 	setPermission: function (perm) {
 		var button = $('#mobile-edit-button');
 		button.off('click');
-		button.hide();
+		// app.file.fileBasedView is new view that has continuous scrolling
+		// used for PDF and we dont permit editing for PDFs
+		// this._isFilePlainText() is a check for plain text files and even on desktop browser
+		// we warn the user about loosing the rich formatting and offer an option to
+		// save as ODF instead of plain text format
+		//
+		// For mobile we need to display the edit button for all the cases except for PDF
+		// we offer save-as to another place where the user can edit the document
+		if (!app.file.fileBasedView && (this._isFilePlainText() || window.mode.isMobile() || window.mode.isTablet())) {
+			button.show();
+		} else {
+			button.hide();
+		}
 		var that = this;
 		if (perm === 'edit') {
 			if (this._isFilePlainText() || window.mode.isMobile() || window.mode.isTablet()) {
-				button.show();
 				button.on('click', function () {
 					that._switchToEditMode();
 				});
