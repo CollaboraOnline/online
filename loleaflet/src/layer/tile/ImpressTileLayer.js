@@ -74,7 +74,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 		comment.anchorPos = [docTopLeft[0], docTopLeft[1]];
 		comment.rectangle = [docTopLeft[0], docTopLeft[1], 566, 566];
 
-		comment.partHash = this._partHashes[this._selectedPart];
+		comment.parthash = this._partHashes[this._selectedPart];
 		var annotation = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).add(comment);
 		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).modify(annotation);
 	},
