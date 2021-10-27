@@ -473,7 +473,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var rows = builder._getGridRows(data.children);
 		var cols = builder._getGridColumns(data.children);
 
+		var processedChildren = [];
+
 		var table = L.DomUtil.create('table', builder.options.cssClass + ' ui-grid', parentContainer);
+		table.id = data.id;
+
 		for (var row = 0; row < rows; row++) {
 			var rowNode = L.DomUtil.create('tr', builder.options.cssClass, table);
 			for (var col = 0; col < cols; col++) {
@@ -485,7 +489,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						$(colNode).attr('colspan', parseInt(child.width));
 
 					builder.build(colNode, [child], false, false);
+
+					processedChildren.push(child);
 				}
+			}
+		}
+
+		for (var i = 0; i < data.children.length; i++) {
+			child = data.children[i];
+			if (processedChildren.indexOf(child) === -1) {
+				rowNode = L.DomUtil.create('tr', builder.options.cssClass, table);
+				colNode = L.DomUtil.create('td', builder.options.cssClass, rowNode);
+				builder.build(colNode, [child], false, false);
+				processedChildren.push(child);
 			}
 		}
 
