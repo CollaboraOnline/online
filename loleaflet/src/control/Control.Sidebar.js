@@ -40,8 +40,10 @@ L.Control.Sidebar = L.Control.extend({
 			this.map.focus();
 		}
 
-		if (window.initSidebarState)
+		if (window.initSidebarState) {
 			this.map.uiManager.setSavedState('ShowSidebar', false);
+			window.initSidebarState = false;
+		}
 	},
 
 	onJSUpdate: function (e) {
@@ -127,8 +129,10 @@ L.Control.Sidebar = L.Control.extend({
 				if (wrapper.style.display === 'none')
 					$('#sidebar-dock-wrapper').show(this.options.animSpeed);
 
-				if (window.initSidebarState)
+				if (window.initSidebarState) {
 					this.map.uiManager.setSavedState('ShowSidebar', true);
+					window.initSidebarState = false;
+				}
 			} else {
 				this.closeSidebar();
 			}
