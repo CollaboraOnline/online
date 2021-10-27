@@ -80,10 +80,10 @@ var AdminSocketSettings = AdminSocketBase.extend({
 			var h = loolwsdVersionObj.Hash;
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				h = '<a target="_blank" href="https://github.com/CollaboraOnline/online/commits/' + h + '">' + h + '</a>';
-				$('#loolwsd-version').html(loolwsdVersionObj.Version.replace('.0.','-') + ' (git hash: ' + h + ')');
+				$('#loolwsd-version').html(loolwsdVersionObj.Version + ' (git hash: ' + h + ')');
 			}
 			else {
-				$('#loolwsd-version').text(loolwsdVersionObj.Version.replace('.0.','-'));
+				$('#loolwsd-version').text(loolwsdVersionObj.Version);
 			}
 		}
 		else if (textMsg.startsWith('lokitversion ')) {
@@ -93,7 +93,7 @@ var AdminSocketSettings = AdminSocketBase.extend({
 				h = '<a target="_blank" href="https://hub.libreoffice.org/git-core/' + h + '">' + h + '</a>';
 			}
 			$('#lokit-version').html(lokitVersionObj.ProductName + ' ' +
-			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension.replace('.0.','-') +
+			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension +
 			                         ' (git hash: ' + h + ')');
 		}
 	},
