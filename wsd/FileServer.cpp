@@ -1075,7 +1075,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     std::ostringstream cspOss;
     cspOss << "Content-Security-Policy: default-src 'none'; "
 #ifdef ENABLE_FEEDBACK
-        "frame-src 'self' " << uriFeedback.getHost() << " blob: " << documentSigningURL << "; "
+        "frame-src 'self' " << uriFeedback.getAuthority() << " blob: " << documentSigningURL << "; "
 #else
         "frame-src 'self' blob: " << documentSigningURL << "; "
 #endif
