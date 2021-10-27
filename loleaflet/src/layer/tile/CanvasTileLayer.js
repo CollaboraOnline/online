@@ -5115,6 +5115,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		map.on('error', this._mapOnError, this);
 		if (map.options.autoFitWidth !== false) {
 			// always true since autoFitWidth is never set
+			// autoFitWidth:
+			// Whether the document is automatically zoomed so that the width fits the viewing area
+			// When the window is resized. The document will not be zoomed in more than map.options.zoom.
 			map.on('resize', this._fitWidthZoom, this);
 		}
 		// Retrieve the initial cell cursor position (as LOK only sends us an
