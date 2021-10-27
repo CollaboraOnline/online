@@ -296,26 +296,7 @@ L.Map = L.Evented.extend({
 			if (this._docLayer && !this._docLoadedOnce &&
 				(this._docLayer._docType === 'spreadsheet' || this._docLayer._docType === 'text' || this._docLayer._docType === 'presentation')) {
 				// Let the first page finish loading then load the sidebar.
-				var map = this;
-				setTimeout(function () {
-					// Hide the sidebar on start if saved state or UIDefault is set.
-					if (window.mode.isDesktop() && !window.ThisIsAMobileApp) {
-						var showSidebar = map.uiManager.getSavedStateOrDefault('ShowSidebar');
-
-						if (showSidebar === false)
-							app.socket.sendMessage('uno .uno:SidebarHide');
-					}
-					else if (window.mode.isChromebook()) {
-						// HACK - currently the sidebar shows when loaded,
-						// with the exception of mobile phones & tablets - but
-						// there, it does not show only because they start
-						// with read/only mode which hits an early exit in
-						// _launchSidebar() in Control.LokDialog.js
-						// So for the moment, let's just hide it on
-						// Chromebooks early
-						app.socket.sendMessage('uno .uno:SidebarHide');
-					}
-				}, 200);
+				setTimeout(this.uiManager.initializeSidebar.bind(this.uiManager), 200);
 			}
 
 			// We have loaded.
