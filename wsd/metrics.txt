@@ -29,6 +29,7 @@ KITS
     kit_unassigned_count – number of running kit processes that are not assigned to documents.
     kit_assigned_count – number of running kit processes that are assigned to documents.
     kit_segfault_count - number of kit processes terminated with SIGSEGV or SIGBUS signals since the start of application.
+    kit_lost_terminated_count - number of kit processes that were lost by loolwsd and were terminated by cleanup mechanism.
     kit_thread_count_total - total number of threads in all running kit processes.
     kit_thread_count_average – average number of threads per running kit process.
     kit_thread_count_min - minimum from the number of threads in each running kit process.
@@ -41,6 +42,12 @@ KITS
     kit_cpu_time_average_seconds – average between the CPU time each running kit process used.
     kit_cpu_time_min_seconds – minimum from the CPU time each running kit process used.
     kit_cpu_time_max_seconds - maximum from the CPU time each running kit process used.
+
+RESOURCE CONSUMING DOCUMENTS (See config.per_document.cleanup section in loolwsd.xml)
+
+    document_resource_consuming_count - number of active documents that were detected as resource consuming.
+    document_resource_consuming_abort_started_count - number of resource consuming documents for which the termination process started (SIGABRT/SIGKILL signal was sent to the associated kit process) but they are still considered active by loolwsd. This is relevant because it shows how many resource consuming docs possibly could not be terminated or for which the termination process is too long.
+    document_resource_consuming_aborted_count - number of terminated resource consuming documents.
 
 DOCUMENT VIEWS
 
