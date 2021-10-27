@@ -118,6 +118,10 @@ td.jsdialog > [id^='table-box'] {
 	background: var(--white-bg-color);
 }
 
+.jsdialog-tabs:empty {
+	display: none;
+}
+
 .jsdialog-tabs .ui-tabs.jsdialog {
 	display: inline-block;
 }
