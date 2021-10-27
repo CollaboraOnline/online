@@ -741,13 +741,14 @@ void AdminModel::cleanupResourceConsumingDocs()
                     else
                         LOG_ERR("Cannot " << (doc->getAbortTime() ? "kill" : "abort") << " resource consuming doc [" << doc->getDocKey() << "]");
                     if (!doc->getAbortTime())
-                        doc->setAbortTime(time_t(nullptr));
+                        doc->setAbortTime(std::time(nullptr));
                 }
             }
             else if (doc->getBadBehaviorDetectionTime())
             {
                 doc->setBadBehaviorDetectionTime(0);
-                LOG_WRN("Removed doc [" << doc->getDocKey() << "] from resource consuming monitoring list");
+                LOG_WRN("Removed doc [" << doc->getDocKey() << "] from resource consuming monitoring list: idle="
+                        << idleTime << " s, memory=" << memDirty << " KB, CPU=" << cpuPercentage << "%.");
             }
         }
     }
@@ -994,6 +995,10 @@ public:
 
 struct DocumentAggregateStats
 {
+    DocumentAggregateStats()
+    : _resConsCount(0), _resConsAbortCount(0), _resConsAbortPendingCount(0)
+    {}
+
     void Update(const Document &d, bool active)
     {
         _kitUsedMemory.Update(d.getMemoryDirty() * 1024, active);
@@ -1009,6 +1014,19 @@ struct DocumentAggregateStats
         //View load duration
         for (const auto& v : d.getViews())
             _viewLoadDuration.Update(v.second.getLoadDuration().count(), active);
+
+        if (d.getBadBehaviorDetectionTime())
+        {
+            if (active)
+                _resConsCount ++;
+        }
+        if (d.getAbortTime())
+        {
+            if (active)
+                _resConsAbortPendingCount ++;
+            else
+                _resConsAbortCount ++;
+        }
     }
 
     ActiveExpiredStats _kitUsedMemory;
@@ -1021,6 +1039,10 @@ struct DocumentAggregateStats
     ActiveExpiredStats _wopiDownloadDuration;
     ActiveExpiredStats _wopiUploadDuration;
     ActiveExpiredStats _viewLoadDuration;
+
+    int _resConsCount;
+    int _resConsAbortCount;
+    int _resConsAbortPendingCount;
 };
 
 struct KitProcStats
@@ -1096,6 +1118,11 @@ void AdminModel::getMetrics(std::ostringstream &oss)
     PrintKitAggregateMetrics(oss, "thread_count", "", kitStats._threadCount);
     PrintKitAggregateMetrics(oss, "memory_used", "bytes", docStats._kitUsedMemory._active);
     PrintKitAggregateMetrics(oss, "cpu_time", "seconds", kitStats._cpuTime);
+    oss << std::endl;
+
+    oss << "document_resource_consuming_count " << docStats._resConsCount << std::endl;
+    oss << "document_resource_consuming_abort_started_count " << docStats._resConsAbortPendingCount << std::endl;
+    oss << "document_resource_consuming_aborted_count " << docStats._resConsAbortCount << std::endl;
     oss << std::endl;
 
     PrintDocActExpMetrics(oss, "views_all_count", "", docStats._viewsCount);
