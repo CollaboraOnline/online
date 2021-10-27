@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var writerHelper = require('../../common/writer_helper');
 
-describe('Apply font changes.', function() {
+describe.skip('Apply font changes.', function() {
 	var testFileName = 'apply_font.odt';
 
 	beforeEach(function() {

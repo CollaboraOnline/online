@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
-describe('Pushing bottom toolbar items.', function() {
+describe.skip('Pushing bottom toolbar items.', function() {
 	var testFileName = 'bottom_toolbar.odt';
 
 	beforeEach(function() {

@@ -13,10 +13,13 @@ function selectAllTextOfDoc() {
 	cy.log('Select all text of Writer document - start.');
 
 	// Remove selection if exist
+	cy.wait(500);
+
 	cy.get('.leaflet-marker-pane')
 		.then(function(body) {
 			if (body.find('.leaflet-selection-marker-start').length !== 0) {
 				helper.typeIntoDocument('{downarrow}');
+				cy.wait(1000);
 			}
 		});
 

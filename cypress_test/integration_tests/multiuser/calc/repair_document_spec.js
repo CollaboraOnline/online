@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe('Repair Document', function() {
+describe.skip('Repair Document', function() {
 	var testFileName = 'repair_doc.ods';
 
 	beforeEach(function() {
@@ -44,7 +44,7 @@ describe('Repair Document', function() {
 
 		cy.customGet('.leaflet-popup-content > input', frameId2)
 			.click()
-			.wait(500);
+			.wait(1000);
 
 		calcHelper.dblClickOnFirstCell(frameId2);
 
