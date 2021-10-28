@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-15 17:22+0200\n"
+"POT-Creation-Date: 2021-10-28 15:03+0200\n"
 "PO-Revision-Date: 2021-09-27 23:29+0000\n"
 "Last-Translator: Lars Kirschmann <lars.kirschmann@icloud.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Translate Toolkit 2.5.0\n"
 "X-Pootle-Path: /de/libo_online/loleaflet-help-de.po\n"
 "X-Pootle-Revision: 3254192\n"
 
@@ -1089,11 +1089,15 @@ msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 msgstr "Umschalt</kbd><span class=\"kbd--plus\">+</span><kbd>Bild nach unten"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-18
+#, fuzzy
 msgid ""
 "Moves the cursor to the left edge of the current data range. If the column "
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"Bewegt den Cursor zum rechten Rand des aktuellen Datenbereichs. Wenn die "
+"Spalte rechts von der Zelle, die den Cursor enthält, leer ist, springt der "
+"Cursor nach rechts in die nächste Spalte, die Daten enthält."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-245
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
@@ -1130,11 +1134,15 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
 msgstr "Strg</kbd><span class=\"kbd--plus\">+</span><kbd>Pfeil nach oben"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-18
+#, fuzzy
 msgid ""
 "Moves the cursor to the bottom edge of the current data range. If the row "
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"Bewegt den Cursor zum oberen Rand des aktuellen Datenbereichs. Wenn die "
+"Zeile über der Zelle, die den Cursor enthält, leer ist, springt der Cursor "
+"nach oben in die nächste Zeile, die Daten enthält."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:143-226
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
@@ -2143,13 +2151,14 @@ msgstr ""
 msgid ""
 "The formula language should be extremely familiar to any spreadsheet user, "
 "and is specified in great detail in the <a href=\"https://www.oasis-open.org/"
-"committees/download.php/16826/openformula-spec-20060221.html\">OASIS "
-"OpenFormula specification</a>."
+"committees/download.php/16826/openformula-spec-20060221.html\" target=\""
+"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 msgstr ""
 "Die Formelsprache sollte jedem Tabellenbenutzer sehr vertraut sein und wird "
 "in der <a href=\"https://www.oasis-open.org/committees/download.php/16826/"
-"openformula-spec-20060221.html\">OASIS OpenFormula-Spezifikation "
-"(englisch)</a> ausführlich beschrieben."
+"openformula-spec-20060221.html\" target=\"_blank\" rel=\"noopener "
+"noreferrer\">OASIS OpenFormula-Spezifikation (englisch)</a> ausführlich "
+"beschrieben."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:431-5
 msgid ""
