@@ -280,7 +280,7 @@ var AdminSocketOverview = AdminSocketBase.extend({
 			docProps = textMsg.trim().split(' ');
 			docProps = {
 				'pid': docProps[0],
-				'sName': docProps[1],
+				'sName': decodeURI(docProps[1]),
 				'sessionid': docProps[2],
 				'userName': decodeURI(docProps[3]),
 				'encodedUId': encodeURI(docProps[4]),
