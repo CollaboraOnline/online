@@ -674,6 +674,7 @@ pot:
 		src/control/Control.NotebookbarDraw.js \
 		src/control/Control.NotebookbarImpress.js \
 		src/control/Control.NotebookbarWriter.js \
+		src/control/Control.PartsPreview.js \
 		src/control/Control.PresentationBar.js \
 		src/control/Control.Scroll.Annotation.js \
 		src/control/Control.SearchBar.js \

@@ -3,7 +3,7 @@
  * L.Control.PartsPreview
  */
 
-/* global app $ Hammer w2ui */
+/* global _ app $ Hammer w2ui */
 L.Control.PartsPreview = L.Control.extend({
 	options: {
 		fetchThumbnail: true,
@@ -177,6 +177,7 @@ L.Control.PartsPreview = L.Control.extend({
 
 		var imgClassName = 'preview-img ' + this.options.imageClass;
 		var img = L.DomUtil.create('img', imgClassName, frame);
+		img.setAttribute('alt', _('preview of page ') + String(i + 1));
 		img.hash = hashCode;
 		img.src = 'images/preview_placeholder.png';
 		img.fetched = false;
