@@ -1755,7 +1755,7 @@ L.Control.Menubar = L.Control.extend({
 		$(aItem).data('id', 'document-logo');
 		$(aItem).data('type', 'action');
 		aItem.setAttribute('role', 'img');
-		aItem.setAttribute('aria-label', 'file type icon');
+		aItem.setAttribute('aria-label', _('file type icon'));
 
 		this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
 

@@ -43,6 +43,7 @@ L.Control.FormulaBar = L.Control.extend({
 			}
 		});
 		this.map.uiManager.enableTooltip(toolbar);
+		document.getElementById('addressInput').setAttribute('aria-label', _('cell address'));
 
 		toolbar.bind('touchstart', function(e) {
 			w2ui['formulabar'].touchStarted = true;
