@@ -361,9 +361,7 @@ L.Control.Ruler = L.Control.extend({
 			var rMarginTooltipText = _('Right Margin');
 
 			this._lMarginDrag.dataset.title = lMarginTooltipText;
-			this._lMarginDrag.setAttribute('aria-label', lMarginTooltipText);
 			this._rMarginDrag.dataset.title = rMarginTooltipText;
-			this._rMarginDrag.setAttribute('aria-label', rMarginTooltipText);
 		}
 
 		this._lMarginMarker.style.width = (this.options.DraggableConvertRatio*lMargin) + 'px';
