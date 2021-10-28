@@ -1137,6 +1137,7 @@ L.Control.Menubar = L.Control.extend({
 			return;
 
 		var liItem = L.DomUtil.create('li', '');
+		liItem.setAttribute('role', 'menuitem');
 		liItem.id = 'menu-' + e.id;
 		if (this._map.isPermissionReadOnly()) {
 			L.DomUtil.addClass(liItem, 'readonly');
@@ -1146,17 +1147,20 @@ L.Control.Menubar = L.Control.extend({
 		$(aItem).data('id', e.id);
 		$(aItem).data('type', 'action');
 		$(aItem).data('postmessage', 'true');
+		aItem.tabIndex = 0;
 		this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
 	},
 
 	_createUnoMenuItem: function (caption, command, tag) {
 		var liItem, aItem;
 		liItem = L.DomUtil.create('li', '');
+		liItem.setAttribute('role', 'menuitem');
 		aItem = L.DomUtil.create('a', '', liItem);
 		$(aItem).text(caption);
 		$(aItem).data('type', 'unocommand');
 		$(aItem).data('uno', command);
 		$(aItem).data('tag', tag);
+		aItem.tabIndex = 0;
 		return liItem;
 	},
 
@@ -1220,6 +1224,15 @@ L.Control.Menubar = L.Control.extend({
 		}
 	},
 
+	_addTabIndexPropsToMainMenu: function () {
+		var mainMenu = document.getElementById('main-menu');
+		for (var i = 0; i < mainMenu.children.length; i++) {
+			if (mainMenu.children[i].children[0].getAttribute('aria-haspopup') === 'true') {
+				mainMenu.children[i].children[0].tabIndex = 0;
+			}
+		}
+	},
+
 	_onRefresh: function() {
 		// clear initial menu
 		L.DomUtil.removeChildNodes(this._menubarCont);
@@ -1252,7 +1265,8 @@ L.Control.Menubar = L.Control.extend({
 		});
 		$('#main-menu').attr('tabindex', 0);
 
-
+		document.getElementById('main-menu').setAttribute('role', 'menubar');
+		this._addTabIndexPropsToMainMenu();
 		this._createFileIcon();
 	},
 
@@ -1736,9 +1750,12 @@ L.Control.Menubar = L.Control.extend({
 
 		var liItem = L.DomUtil.create('li', '');
 		liItem.id = 'document-header';
+		liItem.setAttribute('role', 'menuitem');
 		var aItem = L.DomUtil.create('div', iconClass, liItem);
 		$(aItem).data('id', 'document-logo');
 		$(aItem).data('type', 'action');
+		aItem.setAttribute('role', 'img');
+		aItem.setAttribute('aria-label', 'file type icon');
 
 		this._menubarCont.insertBefore(liItem, this._menubarCont.firstChild);
 
@@ -1851,6 +1868,7 @@ L.Control.Menubar = L.Control.extend({
 				continue;
 
 			var liItem = L.DomUtil.create('li', '');
+			liItem.setAttribute('role', 'menuitem');
 			if (menu[i].id) {
 				liItem.id = 'menu-' + menu[i].id;
 				if (menu[i].id === 'closedocument' && this._map.isPermissionReadOnly()) {
@@ -1876,17 +1894,21 @@ L.Control.Menubar = L.Control.extend({
 				for (var idx in subitemList) {
 					ulItem.appendChild(subitemList[idx]);
 				}
+				aItem.tabIndex = 0;
 			} else if (menu[i].type === 'unocommand' || menu[i].uno !== undefined) {
 				$(aItem).data('type', 'unocommand');
 				$(aItem).data('uno', menu[i].uno);
 				$(aItem).data('tag', menu[i].tag);
+				aItem.tabIndex = 0;
 			} else if (menu[i].type === 'separator') {
 				$(aItem).addClass('separator');
+				aItem.tabIndex = -1;
 			} else if (menu[i].type === 'action') {
 				if (menu[i].id == 'feedback' && !this._map.feedback)
 					continue;
 				$(aItem).data('type', 'action');
 				$(aItem).data('id', menu[i].id);
+				aItem.tabIndex = 0;
 			}
 
 			if (menu[i].hidden == true)
