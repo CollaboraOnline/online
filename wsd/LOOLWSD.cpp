@@ -1279,7 +1279,7 @@ void LOOLWSD::innerInitialize(Application& self)
     }
 #endif
 
-    if (AnonymizeUserData && LogLevel == "trace")
+    if (AnonymizeUserData && LogLevel == "trace" && !CleanupOnly)
     {
         if (getConfigValue<bool>(conf, "logging.anonymize.allow_logging_user_data", false))
         {
