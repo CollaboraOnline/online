@@ -158,6 +158,7 @@ L.Control.UIManager = L.Control.extend({
 
 			// remove unused elements
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
+			document.getElementById('selectbackground').parentNode.removeChild(document.getElementById('selectbackground'));
 		}
 
 		if (this.map.isPresentationOrDrawing()) {
