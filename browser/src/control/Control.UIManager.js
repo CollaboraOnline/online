@@ -170,6 +170,7 @@ L.Control.UIManager = L.Control.extend({
 			// remove unused elements
 			L.DomUtil.remove(L.DomUtil.get('spreadsheet-toolbar'));
 			L.DomUtil.remove(L.DomUtil.get('presentation-controls-wrapper'));
+			document.getElementById('selectbackground').parentNode.removeChild(document.getElementById('selectbackground'));
 
 			if ((window.mode.isTablet() || window.mode.isDesktop()) && window.docPermission === 'edit') {
 				var showRuler = this.getSavedStateOrDefault('ShowRuler');
