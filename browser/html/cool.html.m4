@@ -200,7 +200,7 @@ m4_ifelse(MOBILEAPP,[true],
     </script>
 
     <input id="insertgraphic" aria-labelledby="menu-insertgraphic" type="file" accept="image/*" style="position: fixed; top: -100em">
-    <input id="selectbackground" type="file" accept="image/*" style="position: fixed; top: -100em">
+    <input id="selectbackground" aria-labelledby="menu-selectbackground" type="file" accept="image/*" style="position: fixed; top: -100em">
 
     <div id="closebuttonwrapper">
       <div class="closebuttonimage" id="closebutton"></div>
