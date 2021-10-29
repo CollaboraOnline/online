@@ -1460,7 +1460,11 @@ L.Map = L.Evented.extend({
 			},
 			showCloseButton: false
 		});
+
 		$('.vex-overlay').addClass('loleaflet-user-idle-overlay');
+		if (message === '')
+			$('.loleaflet-user-idle').css('display', 'none');
+
 		this._doclayer && this._docLayer._onMessage('textselection:', null);
 		// console.debug('_dim: sending userinactive');
 		map.fire('postMessage', {msgId: 'User_Idle'});

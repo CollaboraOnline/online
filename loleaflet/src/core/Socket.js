@@ -761,6 +761,9 @@ app.definitions.Socket = L.Class.extend({
 				this._map._textInput.hideCursor();
 				dialogOpened.contentEl.onclick = restartConnectionFn;
 				$('.vex-overlay').addClass('loleaflet-user-idle-overlay');
+
+				if (message === '')
+					$('.loleaflet-user-idle').css('display', 'none');
 			}
 
 			if (postMsgData['Reason']) {
