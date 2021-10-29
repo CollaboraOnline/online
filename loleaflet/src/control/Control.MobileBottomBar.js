@@ -116,6 +116,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				window.hideTooltip(this, e.target);
 			},
 		});
+		this.map.uiManager.enableTooltip(toolbar);
 
 		toolbar.bind('touchstart', function(e) {
 			w2ui['editbar'].touchStarted = true;
