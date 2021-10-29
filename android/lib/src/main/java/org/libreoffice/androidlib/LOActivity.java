@@ -530,47 +530,57 @@ public class LOActivity extends AppCompatActivity {
         if (!isDocEditable || mTempFile == null || getIntent().getData() == null || !getIntent().getData().getScheme().equals(ContentResolver.SCHEME_CONTENT))
             return;
 
-        ContentResolver contentResolver = getContentResolver();
-        InputStream inputStream = null;
-        OutputStream outputStream = null;
-
+        final ContentResolver contentResolver = getContentResolver();
         try {
-            try {
-                inputStream = new FileInputStream(mTempFile);
+            Thread copyThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    InputStream inputStream = null;
+                    OutputStream outputStream = null;
+                    try {
+                        try {
+                            inputStream = new FileInputStream(mTempFile);
 
-                int len = inputStream.available();
-                if (len <= 0)
-                    // empty for some reason & do not write it back
-                    return;
+                            int len = inputStream.available();
+                            if (len <= 0)
+                                // empty for some reason & do not write it back
+                                return;
 
-                Uri uri = getIntent().getData();
-                try {
-                    outputStream = contentResolver.openOutputStream(uri, "wt");
+                            Uri uri = getIntent().getData();
+                            try {
+                                outputStream = contentResolver.openOutputStream(uri, "wt");
+                            }
+                            catch (FileNotFoundException e) {
+                                Log.i(TAG, "failed with the 'wt' mode, trying without: " + e.getMessage());
+                                outputStream = contentResolver.openOutputStream(uri);
+                            }
+
+                            byte[] buffer = new byte[1024];
+                            int length;
+                            long bytes = 0;
+                            while ((length = inputStream.read(buffer)) != -1) {
+                                outputStream.write(buffer, 0, length);
+                                bytes += length;
+                            }
+
+                            Log.i(TAG, "Success copying " + bytes + " bytes from " + mTempFile + " to " + uri);
+                        } finally {
+                            if (inputStream != null)
+                                inputStream.close();
+                            if (outputStream != null)
+                                outputStream.close();
+                        }
+                    } catch (FileNotFoundException e) {
+                        Log.e(TAG, "file not found: " + e.getMessage());
+                    } catch (Exception e) {
+                        Log.e(TAG, "exception: " + e.getMessage());
+                    }
                 }
-                catch (FileNotFoundException e) {
-                    Log.i(TAG, "failed with the 'wt' mode, trying without: " + e.getMessage());
-                    outputStream = contentResolver.openOutputStream(uri);
-                }
-
-                byte[] buffer = new byte[1024];
-                int length;
-                long bytes = 0;
-                while ((length = inputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, length);
-                    bytes += length;
-                }
-
-                Log.i(TAG, "Success copying " + bytes + " bytes from " + mTempFile + " to " + uri);
-            } finally {
-                if (inputStream != null)
-                    inputStream.close();
-                if (outputStream != null)
-                    outputStream.close();
-            }
-        } catch (FileNotFoundException e) {
-            Log.e(TAG, "file not found: " + e.getMessage());
+            });
+            copyThread.start();
+            copyThread.join();
         } catch (Exception e) {
-            Log.e(TAG, "exception: " + e.getMessage());
+            Log.i(TAG, "copyTempBackToIntent: " + e.getMessage());
         }
     }
 
