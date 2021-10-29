@@ -1,8 +1,11 @@
 .iframe-welcome-wrap {
 	position: absolute;
 	z-index: 1106;
-	left: calc(50% - 225px);
-	top: calc(50% - 315px);
+	display: flex;
+	width: 100%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
 }
 
 .iframe-welcome-modal {
