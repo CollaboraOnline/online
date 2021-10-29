@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Track Changes', function () {
+describe.skip('Track Changes', function () {
 	var testFileName = 'track_changes.odt';
 
 	beforeEach(function () {

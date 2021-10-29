@@ -121,7 +121,7 @@ describe('Delete Objects', function() {
 
 		cy.get('#ok').click();
 
-		cy.wait(200);
+		cy.wait(1000);
 
 		cy.get('.leaflet-control-buttons-disabled path.leaflet-interactive')
 			.should('exist');
