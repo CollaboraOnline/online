@@ -28,7 +28,6 @@
 .jsdialog-container {
 	position: absolute;
 	z-index: 1105;
-	max-width: 90%;
 }
 
 .jsdialog-container.modalpopup {
@@ -224,6 +223,7 @@ td.jsdialog > [id^='table-box'] {
 	border-radius: 2px;
 	overflow-y: auto;
 	overflow-x: hidden;
+	max-width: 1000px;
 }
 
 .ui-treeview.disabled {
