@@ -35,7 +35,7 @@ describe('Sidebar Tests', function() {
 			.should('be.visible');
 	});
 
-	it('Set gradient background color', function() {
+	it.only('Set gradient background color', function() {
 		cy.get('#fillattr2')
 			.should('not.be.visible');
 
@@ -49,6 +49,8 @@ describe('Sidebar Tests', function() {
 
 		cy.get('#fillattr3')
 			.should('be.visible');
+
+		helper.waitUntilIdle('#fillattr2');
 
 		cy.get('#fillattr2')
 			.click();

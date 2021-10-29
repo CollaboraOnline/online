@@ -61,6 +61,8 @@ describe('Sheet Operations.', function () {
 
 		calcHelper.ensureViewContainsCellCursor();
 
+		helper.waitUntilIdle('#spreadsheet-tab0');
+
 		cy.get('#spreadsheet-tab0').click();
 
 		calcHelper.ensureViewContainsCellCursor();
