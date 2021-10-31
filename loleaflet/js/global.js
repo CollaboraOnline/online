@@ -746,15 +746,6 @@ window.app = { // Shouldn't have any functions defined.
 			wopiParams = { 'access_header': global.accessHeader };
 		}
 
-		if (global.reuseCookies !== '') {
-			if (wopiParams) {
-				wopiParams['reuse_cookies'] = global.reuseCookies;
-			}
-			else {
-				wopiParams = { 'reuse_cookies': global.reuseCookies };
-			}
-		}
-
 		if (wopiParams) {
 			docParams = Object.keys(wopiParams).map(function(key) {
 				return encodeURIComponent(key) + '=' + encodeURIComponent(wopiParams[key]);

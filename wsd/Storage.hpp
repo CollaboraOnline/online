@@ -272,35 +272,27 @@ public:
     std::string getFileExtension() const { return Poco::Path(_fileInfo.getFilename()).getExtension(); }
 
     /// Update the locking state (check-in/out) of the associated file
-    virtual bool updateLockState(const Authorization& auth, const std::string& cookies,
-                                 LockContext& lockCtx, bool lock)
-        = 0;
+    virtual bool updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock) = 0;
 
     /// Returns a local file path for the given URI.
     /// If necessary copies the file locally first.
-    virtual std::string downloadStorageFileToLocal(const Authorization& auth,
-                                                   const std::string& cookies, LockContext& lockCtx,
-                                                   const std::string& templateUri)
-        = 0;
+    virtual std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
+                                                   const std::string& templateUri) = 0;
 
     /// Writes the contents of the file back to the source.
-    /// @param cookies A string representing key=value pairs that are set as cookies.
     /// @param savedFile When the operation was saveAs, this is the path to the file that was saved.
-    virtual UploadResult
-    uploadLocalFileToStorage(const Authorization& auth, const std::string& cookies,
-                             LockContext& lockCtx, const std::string& saveAsPath,
-                             const std::string& saveAsFilename, const bool isRename)
-        = 0;
+    virtual UploadResult uploadLocalFileToStorage(const Authorization& auth, LockContext& lockCtx,
+                                                  const std::string& saveAsPath,
+                                                  const std::string& saveAsFilename,
+                                                  const bool isRename) = 0;
 
     /// The asynchronous upload completion callback function.
     using AsyncUploadCallback = std::function<void(const AsyncUpload&)>;
 
     /// Writes the contents of the file back to the source asynchronously, if possible.
-    /// @param cookies A string representing key=value pairs that are set as cookies.
     /// @param savedFile When the operation was saveAs, this is the path to the file that was saved.
     /// @param asyncUploadCallback Used to communicate the result back to the caller.
-    virtual void uploadLocalFileToStorageAsync(const Authorization& auth,
-                                               const std::string& cookies, LockContext& lockCtx,
+    virtual void uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
                                                const std::string& saveAsPath,
                                                const std::string& saveAsFilename,
                                                const bool isRename, SocketPoll&,
@@ -308,7 +300,7 @@ public:
     {
         // By default do a synchronous save.
         const UploadResult res =
-            uploadLocalFileToStorage(auth, cookies, lockCtx, saveAsPath, saveAsFilename, isRename);
+            uploadLocalFileToStorage(auth, lockCtx, saveAsPath, saveAsFilename, isRename);
         if (asyncUploadCallback)
             asyncUploadCallback(AsyncUpload(AsyncUpload::State::Complete, res));
     }
@@ -438,17 +430,16 @@ public:
     /// obtained using getFileInfo method
     std::unique_ptr<LocalFileInfo> getLocalFileInfo();
 
-    bool updateLockState(const Authorization&, const std::string&, LockContext&, bool) override
+    bool updateLockState(const Authorization&, LockContext&, bool) override
     {
         return true;
     }
 
-    std::string downloadStorageFileToLocal(const Authorization& auth,
-                                           const std::string& /*cookies*/, LockContext& lockCtx,
+    std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
                                            const std::string& templateUri) override;
 
-    UploadResult uploadLocalFileToStorage(const Authorization& auth, const std::string& /*cookies*/,
-                                          LockContext& lockCtx, const std::string& saveAsPath,
+    UploadResult uploadLocalFileToStorage(const Authorization& auth, LockContext& lockCtx,
+                                          const std::string& saveAsPath,
                                           const std::string& saveAsFilename,
                                           const bool isRename) override;
 
@@ -469,14 +460,10 @@ public:
                 const std::string& jailPath)
         : StorageBase(uri, localStorePath, jailPath)
         , _wopiSaveDuration(std::chrono::milliseconds::zero())
-        , _reuseCookies(false)
     {
-        const auto& app = Poco::Util::Application::instance();
-        _reuseCookies = app.config().getBool("storage.wopi.reuse_cookies", false);
         LOG_INF("WopiStorage ctor with localStorePath: ["
                 << localStorePath << "], jailPath: [" << jailPath << "], uri: ["
-                << LOOLWSD::anonymizeUrl(uri.toString()) << "], reuseCookies: [" << _reuseCookies
-                << "].");
+                << LOOLWSD::anonymizeUrl(uri.toString()) << ']');
     }
 
     class WOPIFileInfo
@@ -596,34 +583,32 @@ public:
     /// Also extracts the basic file information from the response
     /// which can then be obtained using getFileInfo()
     /// Also sets up the locking context for future operations.
-    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Authorization& auth,
-                                                  const std::string& cookies, LockContext& lockCtx);
+    std::unique_ptr<WOPIFileInfo> getWOPIFileInfo(const Authorization& auth, LockContext& lockCtx);
     /// Implementation of getWOPIFileInfo for specific URI
-    std::unique_ptr<WOPIFileInfo> getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& auth,
-                                                  const std::string& cookies, LockContext& lockCtx,
-                                                  unsigned redirectLimit);
+    std::unique_ptr<WOPIFileInfo> getWOPIFileInfoForUri(Poco::URI uriObject,
+                                                        const Authorization& auth,
+                                                        LockContext& lockCtx,
+                                                        unsigned redirectLimit);
 
     /// Update the locking state (check-in/out) of the associated file
-    bool updateLockState(const Authorization& auth, const std::string& cookies,
-                         LockContext& lockCtx, bool lock) override;
+    bool updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock) override;
 
     /// uri format: http://server/<...>/wopi*/files/<id>/content
-    std::string downloadStorageFileToLocal(const Authorization& auth,
-                                           const std::string& /*cookies*/, LockContext& lockCtx,
+    std::string downloadStorageFileToLocal(const Authorization& auth, LockContext& lockCtx,
                                            const std::string& templateUri) override;
 
-    UploadResult uploadLocalFileToStorage(const Authorization& auth, const std::string& /*cookies*/,
-                                          LockContext& lockCtx, const std::string& saveAsPath,
+    UploadResult uploadLocalFileToStorage(const Authorization& auth, LockContext& lockCtx,
+                                          const std::string& saveAsPath,
                                           const std::string& saveAsFilename,
                                           const bool isRename) override;
 
-    void uploadLocalFileToStorageAsync(const Authorization& auth, const std::string& cookies,
-                                       LockContext& lockCtx, const std::string& saveAsPath,
+    void uploadLocalFileToStorageAsync(const Authorization& auth, LockContext& lockCtx,
+                                       const std::string& saveAsPath,
                                        const std::string& saveAsFilename, const bool isRename,
                                        SocketPoll& socketPoll,
                                        const AsyncUploadCallback& asyncUploadCallback) override;
 
-    /// Total time taken for making WOPI calls during saving.
+    /// Total time taken for making WOPI calls during uploading.
     std::chrono::milliseconds getWopiSaveDuration() const { return _wopiSaveDuration; }
 
     virtual AsyncUpload queryLocalFileToStorageAsyncUploadState() override
@@ -654,17 +639,15 @@ private:
     /// Initialize an HTTPRequest instance with the common settings and headers.
     /// Older Poco versions don't support copying HTTPRequest objects, so we can't generate them.
     void initHttpRequest(Poco::Net::HTTPRequest& request, const Poco::URI& uri,
-                         const Authorization& auth, const std::string& cookies) const;
+                         const Authorization& auth) const;
 
     /// Create an http::Request with the common headers.
-    http::Request initHttpRequest(const Poco::URI& uri, const Authorization& auth,
-                                  const std::string& cookies) const;
+    http::Request initHttpRequest(const Poco::URI& uri, const Authorization& auth) const;
 
     /// Download the document from the given URI.
     /// Does not add authorization tokens or any other logic.
     std::string downloadDocument(const Poco::URI& uriObject, const std::string& uriAnonym,
-                                 const Authorization& auth, const std::string& cookies,
-                                 unsigned redirectLimit);
+                                 const Authorization& auth, unsigned redirectLimit);
 
 private:
     /// A URl provided by the WOPI host to use for GetFile.
@@ -675,9 +658,6 @@ private:
 
     /// The http::Session used for uploading asynchronously.
     std::shared_ptr<http::Session> _uploadHttpSession;
-
-    /// Whether or not to re-use cookies from the browser for the WOPI requests.
-    bool _reuseCookies;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

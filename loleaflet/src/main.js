@@ -1,5 +1,5 @@
 /* -*- js-indent-level: 8 -*- */
-/* global errorMessages getParameterByName accessToken accessTokenTTL accessHeader reuseCookies */
+/* global errorMessages getParameterByName accessToken accessTokenTTL accessHeader */
 /* global app L vex host idleTimeoutSecs outOfFocusTimeoutSecs _ */
 /*eslint indent: [error, "tab", { "outerIIFEBody": 0 }]*/
 (function (global) {
@@ -13,15 +13,6 @@ if (wopiSrc !== '' && accessToken !== '') {
 }
 else if (wopiSrc !== '' && accessHeader !== '') {
 	wopiParams = { 'access_header': accessHeader };
-}
-
-if (reuseCookies !== '') {
-	if (wopiParams) {
-		wopiParams['reuse_cookies'] = reuseCookies;
-	}
-	else {
-		wopiParams = { 'reuse_cookies': reuseCookies };
-	}
 }
 
 var filePath = getParameterByName('file_path');

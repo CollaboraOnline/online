@@ -794,20 +794,6 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%FEEDBACK_LOCATION%"), tokens.size() > 0 ? tokens[0] : "");
 #endif
 
-    // Capture cookies so we can optionally reuse them for the storage requests.
-    {
-        NameValueCollection cookies;
-        request.getCookies(cookies);
-        std::ostringstream cookieTokens;
-        for (auto it = cookies.begin(); it != cookies.end(); it++)
-            cookieTokens << (*it).first << '=' << (*it).second << (std::next(it) != cookies.end() ? ":" : "");
-
-        const std::string cookiesString = cookieTokens.str();
-        if (!cookiesString.empty())
-            LOG_DBG("Captured cookies: " << cookiesString);
-        Poco::replaceInPlace(preprocess, std::string("%REUSE_COOKIES%"), cookiesString);
-    }
-
     const std::string mimeType = "text/html";
 
     // Document signing: if endpoint URL is configured, whitelist that for

@@ -1141,11 +1141,6 @@ app.definitions.Socket = L.Class.extend({
 		if (command !== undefined && command.url !== undefined && command.url !== '') {
 			var url = command.url;
 
-			var reuseCookies = this._getParameterByName(url, 'reuse_cookies');
-			if (reuseCookies !== '') {
-				this._map.options.docParams['reuse_cookies'] = reuseCookies;
-			}
-
 			// setup for loading the new document, and trigger the load
 			var docUrl = url.split('?')[0];
 			this._map.options.doc = docUrl;
