@@ -625,8 +625,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     if (wopiStorage != nullptr)
     {
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo = wopiStorage->getWOPIFileInfo(
-            session->getAuthorization(), session->getCookies(), *_lockCtx);
+        std::unique_ptr<WopiStorage::WOPIFileInfo> wopifileinfo =
+            wopiStorage->getWOPIFileInfo(session->getAuthorization(), *_lockCtx);
 
         checkFileInfoCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - start);
@@ -847,8 +847,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     if (!_storage->isDownloaded())
     {
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-        std::string localPath = _storage->downloadStorageFileToLocal(
-            session->getAuthorization(), session->getCookies(), *_lockCtx, templateSource);
+        std::string localPath = _storage->downloadStorageFileToLocal(session->getAuthorization(),
+                                                                     *_lockCtx, templateSource);
 
         getFileCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - start);
@@ -858,7 +858,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         // Only lock the document on storage for editing sessions
         // FIXME: why not lock before downloadStorageFileToLocal? Would also prevent race conditions
         if (!session->isReadOnly() &&
-            !_storage->updateLockState(session->getAuthorization(), session->getCookies(), *_lockCtx, true))
+            !_storage->updateLockState(session->getAuthorization(), *_lockCtx, true))
         {
             LOG_ERR("Failed to lock!");
             session->setLockFailed(_lockCtx->_lockFailureReason);
@@ -1063,8 +1063,7 @@ void DocumentBroker::endRenameFileCommand()
 
 bool DocumentBroker::attemptLock(const ClientSession& session, std::string& failReason)
 {
-    const bool bResult = _storage->updateLockState(session.getAuthorization(), session.getCookies(),
-                                                  *_lockCtx, true);
+    const bool bResult = _storage->updateLockState(session.getAuthorization(), *_lockCtx, true);
     if (!bResult)
         failReason = _lockCtx->_lockFailureReason;
     return bResult;
@@ -1393,9 +1392,8 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
         }
     };
 
-    _storage->uploadLocalFileToStorageAsync(session->getAuthorization(), session->getCookies(),
-                                            *_lockCtx, saveAsPath, saveAsFilename, isRename, *_poll,
-                                            asyncUploadCallback);
+    _storage->uploadLocalFileToStorageAsync(session->getAuthorization(), *_lockCtx, saveAsPath,
+                                            saveAsFilename, isRename, *_poll, asyncUploadCallback);
 }
 
 void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResult& uploadResult)
@@ -1696,7 +1694,7 @@ void DocumentBroker::refreshLock()
     else
     {
         std::shared_ptr<ClientSession> session = it->second;
-        if (!session || !_storage->updateLockState(session->getAuthorization(), session->getCookies(), *_lockCtx, true))
+        if (!session || !_storage->updateLockState(session->getAuthorization(), *_lockCtx, true))
             LOG_ERR("Failed to refresh lock");
     }
 }
@@ -2058,7 +2056,7 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
             if (_docState.isMarkedToDestroy() && // last session to remove; FIXME: Editable?
                 _lockCtx->_isLocked && _storage)
             {
-                if (!_storage->updateLockState(it->second->getAuthorization(), it->second->getCookies(), *_lockCtx, false))
+                if (!_storage->updateLockState(it->second->getAuthorization(), *_lockCtx, false))
                     LOG_ERR("Failed to unlock!");
             }
 

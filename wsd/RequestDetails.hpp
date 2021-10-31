@@ -50,14 +50,13 @@
  *
  * Example:
  *  /lool/http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F165_ocgdpzbkm39u%3F
- *  access_token%3DODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ%26access_token_ttl%3D0%26reuse_cookies%3DXCookieName%253DXCookieValue%253
- *  ASuperCookieName%253DBAZINGA/ws?WOPISrc=http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2F
+ *  access_token%3DODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ%26access_token_ttl%3D0/ws?
+ *  WOPISrc=http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2F
  *  files%2F165_ocgdpzbkm39u&compat=/ws/1c99a7bcdbf3209782d7eb38512e6564/write/2
  *  Where:
  *      encoded-document-URI+options:
  *          http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F165_ocgdpzbkm39u%3F
- *          access_token%3DODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ%26access_token_ttl%3D0%26reuse_cookies%3DXCookieName%253DXCookieValue%253
- *          ASuperCookieName%253DBAZINGA
+ *          access_token%3DODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ%26access_token_ttl%3D0
  *      encoded-document-URI:
  *          http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F165_ocgdpzbkm39u
  *      sessionId:
@@ -69,7 +68,7 @@
  *  In decoded form:
  *      document-URI+options:
  *          http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/165_ocgdpzbkm39u?access_token=
- *          ODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ&access_token_ttl=0&reuse_cookies=XCookieName%3DXCookieValue%3ASuperCookieName%3DBAZINGA
+ *          ODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ&access_token_ttl=0
  *      document-URI:
  *          http://localhost/owncloud/index.php/apps/richdocuments/wopi/files/165_ocgdpzbkm39u
  *

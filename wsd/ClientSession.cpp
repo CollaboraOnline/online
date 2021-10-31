@@ -78,17 +78,6 @@ ClientSession::ClientSession(
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
                                    << "], current number of connections: " << curConnections);
 
-    for (const auto& param : _uriPublic.getQueryParameters())
-    {
-        if (param.first == "reuse_cookies")
-        {
-            // Cache the cookies to avoid re-parsing the URI again.
-            _cookies = param.second;
-            LOG_INF("ClientSession [" << getName() << "] has cookies: [" << _cookies << "].");
-            break;
-        }
-    }
-
     // populate with random values.
     for (auto it : _clipboardKeys)
         rotateClipboardKey(false);
