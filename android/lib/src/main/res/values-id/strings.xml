@@ -18,4 +18,7 @@
     <string name="view_only">Hanya tilik</string>
     <string name="restarting">Memulai ulang...</string>
     <string name="cant_open_the_document">Tidak dapat membuka dokumen</string>
+    <string name="use_odf">Gunakan format ODF</string>
+    <string name="use_text">Gunakan Format Teks</string>
+    <string name="ask_for_convert_odf">Konfirmasi Format File</string>
 </resources>

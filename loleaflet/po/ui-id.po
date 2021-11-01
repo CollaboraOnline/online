@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-22 15:46+0200\n"
-"PO-Revision-Date: 2021-05-21 12:28+0000\n"
-"Last-Translator: Rizal Muttaqin <riz_17_oke@yahoo.co.id>\n"
+"PO-Revision-Date: 2021-11-01 09:23+0000\n"
+"Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -118,7 +118,7 @@ msgstr "Diubah"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "host WOPI"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -350,7 +350,7 @@ msgstr "Warna otomatis"
 #: src/control/Control.AlertDialog.js:67 src/control/Control.StatusBar.js:319
 #: src/control/Control.StatusBar.js:358 src/control/Control.StatusBar.js:382
 msgid "Edit"
-msgstr ""
+msgstr "Sunting"
 
 #: src/control/Control.AlertDialog.js:77
 msgid "Open link"
@@ -362,7 +362,7 @@ msgstr "Peladen mengalami kesalahan %0 saat mem-parsing perintah %1."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "Buka"
 
 #: src/control/Control.ContextMenu.js:180
 msgid "Delete"
@@ -462,7 +462,7 @@ msgstr "Ke"
 
 #: src/control/Control.JSDialogBuilder.js:1248
 msgid "Color"
-msgstr ""
+msgstr "Warna"
 
 #: src/control/Control.JSDialogBuilder.js:1372
 msgid "Select range"
@@ -1129,11 +1129,10 @@ msgstr "Cacah pilihan"
 #: src/control/Control.StatusBar.js:357 src/control/Control.StatusBar.js:358
 #: src/control/Control.StatusBar.js:381 src/control/Control.StatusBar.js:382
 msgid "Permission Mode"
-msgstr ""
+msgstr "Mode Izin"
 
 #: src/control/Control.StatusBar.js:318 src/control/Control.StatusBar.js:357
 #: src/control/Control.StatusBar.js:381
-#, fuzzy
 msgid "Read-only"
 msgstr "Hanya baca"
 
@@ -1270,25 +1269,27 @@ msgstr "Dokumen tidak dapat dikunci."
 
 #: src/control/Permission.js:108
 msgid "Enter a file name"
-msgstr ""
+msgstr "Masukkan nama file"
 
 #: src/control/Permission.js:109
 msgid "filename"
-msgstr ""
+msgstr "nama file"
 
 #: src/control/Permission.js:123
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
+"Dokumen ini mungkin berisi pemformatan atau konten yang tidak dapat disimpan "
+"dalam format file saat ini."
 
 #: src/control/Permission.js:134
 msgid "Save as ODF format"
-msgstr ""
+msgstr "Simpan sebagai format ODF"
 
 #: src/control/Permission.js:135
 msgid "Continue editing"
-msgstr ""
+msgstr "Lanjutkan pengeditan"
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
@@ -1472,17 +1473,17 @@ msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Ups, ada masalah saat menghubungkan %productName: "
 
 #: src/core/Socket.js:494
-#, fuzzy
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Server telah dimulai ulang. Kita harus menyegarkan halaman sekarang."
+msgstr ""
+"Server sekarang dapat dijangkau. Kita harus me-refresh halaman sekarang."
 
 #: src/core/Socket.js:496
 msgid "Server is now reachable..."
-msgstr ""
+msgstr "Server sekarang dapat dijangkau..."
 
 #: src/core/Socket.js:499
 msgid "RELOAD"
-msgstr ""
+msgstr "MUAT ULANG"
 
 #: src/core/Socket.js:515
 msgid "Served by:"
@@ -1537,7 +1538,7 @@ msgstr ""
 
 #: src/core/Socket.js:700
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "Memuat ulang dokumen setelah mengganti nama"
 
 #: src/core/Socket.js:819
 msgid ""
@@ -1577,15 +1578,15 @@ msgstr "Sandi salah. Harap coba lagi."
 
 #: src/core/Socket.js:1017
 msgid "Someone"
-msgstr ""
+msgstr "Seseorang"
 
 #: src/core/Socket.js:1019
 msgid " saved this document as "
-msgstr ""
+msgstr " simpan dokumen ini sebagai "
 
 #: src/core/Socket.js:1019
 msgid ". Do you want to join?"
-msgstr ""
+msgstr ". Apakah Anda ingin bergabung?"
 
 #: src/core/Socket.js:1028
 msgid "Loading..."
@@ -1597,7 +1598,7 @@ msgstr "Menghubungkan..."
 
 #: src/core/Socket.js:1046
 msgid "The document is being renamed and will reload shortly"
-msgstr ""
+msgstr "Dokumen sedang diganti namanya dan akan segera dimuat ulang"
 
 #: src/core/Socket.js:1407
 msgid ""
@@ -1608,13 +1609,12 @@ msgstr ""
 "lagi."
 
 #: src/core/Socket.js:1424
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "Menghubungkan..."
+msgstr "Menghubungkan ulang..."
 
 #: src/core/Socket.js:1429
 msgid "The server has been disconnected."
-msgstr ""
+msgstr "Server telah terputus."
 
 #: src/errormessages.js:13
 msgid ""
@@ -1718,13 +1718,15 @@ msgstr ""
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "Membersihkan dokumen dari sesi terakhir."
 
 #: src/errormessages.js:28
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
 msgstr ""
+"Kami sedang dalam proses membersihkan dokumen ini dari sesi terakhir, "
+"silakan coba lagi nanti."
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -1848,7 +1850,7 @@ msgstr "Tolak Perubahan"
 
 #: src/main.js:97
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "Peringatan! Browser yang Anda gunakan tidak didukung."
 
 #: src/map/Clipboard.js:120
 msgid "To paste outside %productName, please first click the 'download' button"
@@ -1856,7 +1858,7 @@ msgstr "Untuk menempel di luar %productName, silakan klik dulu tombol 'unduh'"
 
 #: src/map/Clipboard.js:130
 msgid "Copying from the document disabled"
-msgstr ""
+msgstr "Menyalin dari dokumen dinonaktifkan"
 
 #: src/map/Clipboard.js:287
 msgid "Failed to download clipboard, please re-copy"
@@ -1956,6 +1958,10 @@ msgid ""
 "more options</p><p class=\"vex-footnote\">Close popup to ignore paste "
 "special</p>"
 msgstr ""
+"<p> Browser Anda memiliki akses yang sangat terbatas ke clipboard</"
+"p><p>Silakan tekan: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
+"kbd> untuk melihat lebih banyak opsi</p><p class=\"vex-footnote\"> Tutup "
+"popup untuk mengabaikan paste special</p>"
 
 #: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."

@@ -128,4 +128,7 @@
     <string name="theme_system_default">Baku sistem</string>
     <string name="theme_dark">Gelap</string>
     <string name="theme_light">Terang</string>
+    <string name="pref_user_name">Nama Pengguna</string>
+    <string name="pref_user_name_info">Digunakan saat menambahkan komentar</string>
+    <string name="pref_user_name_guest">Pengguna Tamu</string>
 </resources>

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-22 15:46+0200\n"
-"PO-Revision-Date: 2021-04-26 23:46+0000\n"
+"PO-Revision-Date: 2021-11-01 09:23+0000\n"
 "Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/help/id/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /id/libo_online/loleaflet-help-id.po\n"
 "X-Pootle-Revision: 3755739\n"
 
@@ -787,15 +787,14 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
 "Sisip posisi tab (hanya dalam tabel). Bergantung kepada Manajer Jendela yang "
-"dipakai, Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab mungkin dipakai "
-"sebagai gantinya."
+"dipakai, <kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> "
+"mungkin dipakai sebagai gantinya."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -859,15 +858,14 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 detik dalam mode Hapus, Tombol Panah menghapus baris/kolom, Ctrl</kbd><"
-"span class=\"kbd--plus\">+</span><kbd>Tombol Panah menggabung sel dengan "
-"tetangganya"
+"3 detik dalam mode Hapus, Tombol Panah menghapus baris/kolom, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Tombol Panah</kbd> menggabung sel "
+"dengan tetangganya"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
@@ -1037,7 +1035,7 @@ msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Memindahkan kursor ke sel pertama di lembar (A1)."
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
