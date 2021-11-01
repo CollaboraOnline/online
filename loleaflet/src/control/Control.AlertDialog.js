@@ -53,7 +53,6 @@ L.Control.AlertDialog = L.Control.extend({
 				messageText = window.errorMessages.invalidLink;
 			}
 
-			messageText = messageText.replace('%url?', '?');
 			var containerWithLink = document.createElement('div');
 			containerWithLink.innerHTML = messageText;
 			var externalUrl = document.createElement('p');
