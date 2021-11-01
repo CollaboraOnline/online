@@ -146,6 +146,18 @@ mobile and desktop tests, that's why there are two separate commands
 for them and there is no option to open all the tests in the
 test runner.
 
+Running tests to update the help dialog screenshots
+--------------------
+There are two spec files which you can to update the screenshots in help dialog
+1. cypress_test/integration_tests/desktop/writer/help_dialog_update_spec.js
+2. cypress_test/integration_tests/desktop/calc/help_dialog_update_spec.js
+
+You can run the specfile individually using:
+    1. cd cypress_test && make UPDATE_SCREENSHOT=true check-desktop spec=writer/help_dialog_update_spec.js
+    2. cd cypress_test && make UPDATE_SCREENSHOT=true check-desktop spec=calc/help_dialog_update_spec.js
+
+If UPDATE_SCREENSHOT is true then only cypress will run the spec file and replace the original screenshot with new screenshot, the default value of UPDATE_SCREENSHOT is false
+
 Interference testing
 --------------------
 

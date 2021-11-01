@@ -101,6 +101,11 @@ function pickTests(filename, foundTests) {
 			testsToRun = [];
 		}
 	}
+
+	if (!process.env.UPDATE_SCREENSHOT) {
+		testsToRun = removeBlacklistedTest(filename, testsToRun, blacklists.updateScreenshotList);
+	}
+
 	return testsToRun;
 }
 
