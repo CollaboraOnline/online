@@ -864,6 +864,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 
 		var docType = builder.map.getDocType();
 		var menuHtml = menubar._createMenu(menu[docType]);
+		document.getElementById('Menubar').setAttribute('role', 'menu');
 
 		$(control.container).html(menuHtml);
 
