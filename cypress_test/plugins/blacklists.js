@@ -197,6 +197,12 @@ var nextcloudOnlyList = [
 	['mobile/impress/nextcloud_spec.js', []],
 ];
 
+var updateScreenshotList = [
+	['desktop/writer/help_dialog_update_spec.js', []],
+	['desktop/calc/help_dialog_update_spec.js', []],
+];
+
 module.exports.nextcloudBlackList = nextcloudBlackList;
 module.exports.nextcloudOnlyList = nextcloudOnlyList;
 module.exports.phpProxyBlackList = phpProxyBlackList;
+module.exports.updateScreenshotList = updateScreenshotList;
