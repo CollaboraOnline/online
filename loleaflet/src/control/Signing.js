@@ -609,6 +609,7 @@ L.Map.include({
 	},
 	onChangeSignStatus: function(signstatus) {
 		var statusText = '';
+		var statusIcon = '';
 		// This is meant to be in sync with core.git
 		// include/sfx2/signaturestate.hxx, SignatureState.
 		switch (signstatus) {
@@ -617,31 +618,36 @@ L.Map.include({
 			break;
 		case '1':
 			statusText = _('This document is digitally signed and the signature is valid.');
+			statusIcon = 'sign_ok';
 			currentDocumentSigningStatus = _('Signed and validated');
 			break;
 		case '2':
 			statusText = _('This document has an invalid signature.');
+			statusIcon = 'sign_not_ok';
 			currentDocumentSigningStatus = _('Signature broken');
 			break;
 		case '3':
 			statusText = _('The signature was valid, but the document has been modified');
+			statusIcon = 'sign_not_ok';
 			currentDocumentSigningStatus = _('Signed but document modified');
 			break;
 		case '4':
 			statusText = _('The signature is OK, but the certificate could not be validated.');
+			statusIcon = 'sign_not_ok';
 			currentDocumentSigningStatus = _('Signed but not validated');
 			break;
 		case '5':
 			statusText = _('The signature is OK, but the document is only partially signed');
+			statusIcon = 'sign_not_ok';
 			currentDocumentSigningStatus = _('Signed but not all files are signed');
 			break;
 		}
 
 		if (statusText) {
 			if (!window.mode.isMobile())
-				w2ui['actionbar'].insert('prev', {type: 'button',  id: 'signstatus', img: 'sign', hint: statusText});
+				w2ui['actionbar'].insert('prev', {type: 'button',  id: 'signstatus', img: statusIcon, hint: statusText});
 			else
-				w2ui['actionbar'].insert('undo', {type: 'button',  id: 'signstatus', img: 'sign', hint: statusText});
+				w2ui['actionbar'].insert('undo', {type: 'button',  id: 'signstatus', img: statusIcon, hint: statusText});
 		}
 
 		adjustUIState();
