@@ -545,7 +545,7 @@ L.Map.include({
 			map._doVexOpenHelpFile(window.HelpFile, id, map);
 			return;
 		}
-		var helpLocation = 'loleaflet-help.html';
+		var helpLocation = 'cool-help.html';
 		if (window.socketProxy)
 			helpLocation = window.makeWsUrl('/loleaflet/dist/' + helpLocation);
 		$.get(helpLocation, function(data) {

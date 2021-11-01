@@ -10,7 +10,7 @@
 		BE00F8A021396585001CE2D4 /* cool.html in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89621396585001CE2D4 /* cool.html */; };
 		BE00F8A121396585001CE2D4 /* bundle.css in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89721396585001CE2D4 /* bundle.css */; };
 		BE00F8A321396585001CE2D4 /* bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89921396585001CE2D4 /* bundle.js */; };
-		BE00F8A721396585001CE2D4 /* loleaflet-help.html in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89D21396585001CE2D4 /* loleaflet-help.html */; };
+		BE00F8A721396585001CE2D4 /* cool-help.html in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89D21396585001CE2D4 /* cool-help.html */; };
 		BE00F8A821396585001CE2D4 /* images in Resources */ = {isa = PBXBuildFile; fileRef = BE00F89E21396585001CE2D4 /* images */; };
 		BE00F8B5213ED543001CE2D4 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BE00F8B4213ED543001CE2D4 /* libiconv.tbd */; };
 		BE00F8B7213ED573001CE2D4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BE00F8B6213ED573001CE2D4 /* libz.tbd */; };
@@ -79,7 +79,7 @@
 		BE00F89621396585001CE2D4 /* cool.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = cool.html; path = ../../../loleaflet/dist/cool.html; sourceTree = "<group>"; };
 		BE00F89721396585001CE2D4 /* bundle.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = bundle.css; path = ../../../loleaflet/dist/bundle.css; sourceTree = "<group>"; };
 		BE00F89921396585001CE2D4 /* bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = ../../../loleaflet/dist/bundle.js; sourceTree = "<group>"; };
-		BE00F89D21396585001CE2D4 /* loleaflet-help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "loleaflet-help.html"; path = "../../../loleaflet/dist/loleaflet-help.html"; sourceTree = "<group>"; };
+		BE00F89D21396585001CE2D4 /* cool-help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "cool-help.html"; path = "../../../loleaflet/dist/cool-help.html"; sourceTree = "<group>"; };
 		BE00F89E21396585001CE2D4 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../loleaflet/dist/images; sourceTree = "<group>"; };
 		BE00F8B4213ED543001CE2D4 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		BE00F8B6213ED573001CE2D4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -1525,7 +1525,7 @@
 				BECD983F24336DD400016117 /* device-tablet.css */,
 				BE00F89921396585001CE2D4 /* bundle.js */,
 				BE00F89E21396585001CE2D4 /* images */,
-				BE00F89D21396585001CE2D4 /* loleaflet-help.html */,
+				BE00F89D21396585001CE2D4 /* cool-help.html */,
 				BE00F89621396585001CE2D4 /* cool.html */,
 			);
 			path = Resources;
@@ -3628,7 +3628,7 @@
 				BE00F8A821396585001CE2D4 /* images in Resources */,
 				BE5EB5DC2140480B00E0826C /* ICU.dat in Resources */,
 				BE8D85CE214055F3009F1860 /* oovbaapi.rdb in Resources */,
-				BE00F8A721396585001CE2D4 /* loleaflet-help.html in Resources */,
+				BE00F8A721396585001CE2D4 /* cool-help.html in Resources */,
 				BE8D773D2136762600AC58EA /* LaunchScreen.storyboard in Resources */,
 				BE00F8A121396585001CE2D4 /* bundle.css in Resources */,
 				BE7D6A6B23FAA8B500C2E605 /* loolkitconfig.xcu in Resources */,
