@@ -11,12 +11,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-22 15:46+0200\n"
+"POT-Creation-Date: 2021-11-01 10:26+0100\n"
 "PO-Revision-Date: 2021-11-01 09:23+0000\n"
 "Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: id\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -213,7 +213,7 @@ msgid "Channel Filter:"
 msgstr "Filter Saluran:"
 
 #: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:376
-#: src/control/Control.StatusBar.js:310
+#: src/control/Control.StatusBar.js:313
 msgid "None"
 msgstr "Nihil"
 
@@ -265,7 +265,7 @@ msgstr "Anda yakin ingin mengakhiri sesi ini?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1612
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:859
+#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:860
 msgid "OK"
 msgstr "OK"
 
@@ -273,7 +273,7 @@ msgstr "OK"
 #: src/control/Control.Command.js:90 src/control/Control.LanguageDialog.js:86
 #: src/control/Control.Menubar.js:1613 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:860
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
 #: src/layer/tile/CommentListSection.ts:372
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
@@ -347,16 +347,16 @@ msgstr "Tanpa warna"
 msgid "Automatic color"
 msgstr "Warna otomatis"
 
-#: src/control/Control.AlertDialog.js:67 src/control/Control.StatusBar.js:319
-#: src/control/Control.StatusBar.js:358 src/control/Control.StatusBar.js:382
+#: src/control/Control.AlertDialog.js:66 src/control/Control.StatusBar.js:322
+#: src/control/Control.StatusBar.js:361 src/control/Control.StatusBar.js:385
 msgid "Edit"
 msgstr "Sunting"
 
-#: src/control/Control.AlertDialog.js:77
+#: src/control/Control.AlertDialog.js:76
 msgid "Open link"
 msgstr "Buka tautan"
 
-#: src/control/Control.AlertDialog.js:99
+#: src/control/Control.AlertDialog.js:98
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Peladen mengalami kesalahan %0 saat mem-parsing perintah %1."
 
@@ -386,8 +386,8 @@ msgstr "indeks"
 
 #: src/control/Control.DocumentRepair.js:48
 #: src/control/Control.JSDialogBuilder.js:2090
-#: src/layer/tile/CanvasTileLayer.js:4774
-#: src/layer/tile/CanvasTileLayer.js:4784
+#: src/layer/tile/CanvasTileLayer.js:4780
+#: src/layer/tile/CanvasTileLayer.js:4790
 #: src/layer/tile/CommentListSection.ts:807
 msgid "Comment"
 msgstr "Komentar"
@@ -520,7 +520,7 @@ msgstr "Sisip Tabel"
 #: src/control/Control.NotebookbarBuilder.js:761
 #: src/control/Control.NotebookbarBuilder.js:796
 #: src/control/Control.NotebookbarBuilder.js:813
-#: src/control/Control.StatusBar.js:507
+#: src/control/Control.StatusBar.js:510
 msgid "None (Do not check spelling)"
 msgstr "Tidak (Jangan periksa ejaan)"
 
@@ -625,7 +625,7 @@ msgstr "Perbaiki"
 #: src/control/Control.NotebookbarImpress.js:981
 #: src/control/Control.NotebookbarWriter.js:975
 #: src/control/Control.NotebookbarWriter.js:976
-#: src/control/Control.StatusBar.js:184
+#: src/control/Control.StatusBar.js:187
 msgid "Reset zoom"
 msgstr "Reset zum"
 
@@ -695,7 +695,7 @@ msgstr "Ihwal"
 
 #: src/control/Control.Menubar.js:301 src/control/Control.Menubar.js:429
 #: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:750
-#: src/map/Map.js:410
+#: src/map/Map.js:409
 msgid "Last modification"
 msgstr "Modifikasi terakhir"
 
@@ -753,7 +753,7 @@ msgstr "Berkas CSV (.csv)"
 
 #: src/control/Control.Menubar.js:754 src/control/Control.Menubar.js:807
 #: src/control/Control.Menubar.js:862 src/control/Control.Menubar.js:907
-#: src/control/Control.StatusBar.js:169
+#: src/control/Control.StatusBar.js:172
 msgid "Search"
 msgstr "Cari"
 
@@ -761,7 +761,7 @@ msgstr "Cari"
 msgid "Page Setup"
 msgstr "Pengaturan Halaman"
 
-#: src/control/Control.Menubar.js:1163 src/control/Control.StatusBar.js:506
+#: src/control/Control.Menubar.js:1163 src/control/Control.StatusBar.js:509
 msgid "Reset to Default Language"
 msgstr "Kembalikan ke Bahasa Bawaan"
 
@@ -938,7 +938,7 @@ msgstr "Pecahan"
 msgid "Boolean Value"
 msgstr "Nilai Boolean"
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:855
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:856
 msgid "Text"
 msgstr "Teks"
 
@@ -1073,90 +1073,90 @@ msgstr "Gulir ke lembar terakhir"
 msgid "Insert sheet"
 msgstr "Sisipkan lembar"
 
-#: src/control/Control.StatusBar.js:175
+#: src/control/Control.StatusBar.js:178
 msgid "Cancel the search"
 msgstr "Batalkan pencarian"
 
-#: src/control/Control.StatusBar.js:275
+#: src/control/Control.StatusBar.js:278
 msgid "Number of Sheets"
 msgstr "Jumlah Lembar"
 
-#: src/control/Control.StatusBar.js:280
+#: src/control/Control.StatusBar.js:283
 msgid "Selected range of cells"
 msgstr "Pilih rentang sel"
 
-#: src/control/Control.StatusBar.js:285 src/control/Control.StatusBar.js:341
+#: src/control/Control.StatusBar.js:288 src/control/Control.StatusBar.js:344
 msgid "Entering text mode"
 msgstr "Masuk ke mode teks"
 
-#: src/control/Control.StatusBar.js:294 src/control/Control.StatusBar.js:346
+#: src/control/Control.StatusBar.js:297 src/control/Control.StatusBar.js:349
 msgid "Selection Mode"
 msgstr "Mode Seleksi"
 
-#: src/control/Control.StatusBar.js:299
+#: src/control/Control.StatusBar.js:302
 msgid "Choice of functions"
 msgstr "Pilih Fungsi"
 
-#: src/control/Control.StatusBar.js:303
+#: src/control/Control.StatusBar.js:306
 msgid "Average"
 msgstr "Rerata"
 
-#: src/control/Control.StatusBar.js:304
+#: src/control/Control.StatusBar.js:307
 msgid "CountA"
 msgstr "HitungA"
 
-#: src/control/Control.StatusBar.js:305
+#: src/control/Control.StatusBar.js:308
 msgid "Count"
 msgstr "Menghitung"
 
-#: src/control/Control.StatusBar.js:306
+#: src/control/Control.StatusBar.js:309
 msgid "Maximum"
 msgstr "Maksimum"
 
-#: src/control/Control.StatusBar.js:307
+#: src/control/Control.StatusBar.js:310
 msgid "Minimum"
 msgstr "Minimum"
 
-#: src/control/Control.StatusBar.js:308
+#: src/control/Control.StatusBar.js:311
 msgid "Sum"
 msgstr "Jumlah"
 
-#: src/control/Control.StatusBar.js:309
+#: src/control/Control.StatusBar.js:312
 msgid "Selection count"
 msgstr "Cacah pilihan"
 
-#: src/control/Control.StatusBar.js:318 src/control/Control.StatusBar.js:319
-#: src/control/Control.StatusBar.js:357 src/control/Control.StatusBar.js:358
-#: src/control/Control.StatusBar.js:381 src/control/Control.StatusBar.js:382
+#: src/control/Control.StatusBar.js:321 src/control/Control.StatusBar.js:322
+#: src/control/Control.StatusBar.js:360 src/control/Control.StatusBar.js:361
+#: src/control/Control.StatusBar.js:384 src/control/Control.StatusBar.js:385
 msgid "Permission Mode"
 msgstr "Mode Izin"
 
-#: src/control/Control.StatusBar.js:318 src/control/Control.StatusBar.js:357
-#: src/control/Control.StatusBar.js:381
+#: src/control/Control.StatusBar.js:321 src/control/Control.StatusBar.js:360
+#: src/control/Control.StatusBar.js:384
 msgid "Read-only"
 msgstr "Hanya baca"
 
-#: src/control/Control.StatusBar.js:331
+#: src/control/Control.StatusBar.js:334
 msgid "Number of Pages"
 msgstr "Nomor Halaman"
 
-#: src/control/Control.StatusBar.js:336
+#: src/control/Control.StatusBar.js:339
 msgid "Word Counter"
 msgstr "Penjumlah Kata"
 
-#: src/control/Control.StatusBar.js:370
+#: src/control/Control.StatusBar.js:373
 msgid "Number of Slides"
 msgstr "Nomor Salindia"
 
-#: src/control/Control.StatusBar.js:450
+#: src/control/Control.StatusBar.js:453
 msgid "Select multiple cells"
 msgstr "Pilih beberapa sel"
 
-#: src/control/Control.StatusBar.js:453
+#: src/control/Control.StatusBar.js:456
 msgid "Insert mode: inactive"
 msgstr "Mode sisip: tidak aktif"
 
-#: src/control/Control.StatusBar.js:466
+#: src/control/Control.StatusBar.js:469
 msgid "Selection mode: inactive"
 msgstr "Mode pemilihan: tidak aktif"
 
@@ -1447,24 +1447,24 @@ msgstr "Menyimpan..."
 msgid "Renaming..."
 msgstr "Mengganti nama..."
 
-#: src/control/Toolbar.js:647
+#: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr "Mohon maaf, informasi tentang pembaruan terakhir tidak tersedia."
 
-#: src/control/Toolbar.js:697
+#: src/control/Toolbar.js:698
 msgid "This version of %productName is powered by"
 msgstr "Versi %productName ini ditenagai oleh"
 
-#: src/control/Toolbar.js:707
+#: src/control/Toolbar.js:708
 msgid "\"Slow Proxy\""
 msgstr "\"Proksi Lambat\""
 
-#: src/control/Toolbar.js:853
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Sisipkan pranala"
 
-#: src/control/Toolbar.js:856
+#: src/control/Toolbar.js:857
 msgid "Link"
 msgstr "Tautan"
 
@@ -1600,7 +1600,7 @@ msgstr "Menghubungkan..."
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokumen sedang diganti namanya dan akan segera dimuat ulang"
 
-#: src/core/Socket.js:1407
+#: src/core/Socket.js:1413
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1608,11 +1608,11 @@ msgstr ""
 "Aduh, ini memalukan, kami tidak bisa menyambung ke dokumen Anda. Harap coba "
 "lagi."
 
-#: src/core/Socket.js:1424
+#: src/core/Socket.js:1430
 msgid "Reconnecting..."
 msgstr "Menghubungkan ulang..."
 
-#: src/core/Socket.js:1429
+#: src/core/Socket.js:1435
 msgid "The server has been disconnected."
 msgstr "Server telah terputus."
 
@@ -1705,7 +1705,9 @@ msgid "Invalid link: '%url'"
 msgstr "Tautan tidak valid: '%url'"
 
 #: src/errormessages.js:25
-msgid "You are leaving the editor, are you sure you want to visit %url?"
+#, fuzzy
+msgid ""
+"You are leaving the editor, are you sure you want to visit the following URL?"
 msgstr "Anda akan meninggalkan editor, apa Anda yakin akan mengunjungi %url?"
 
 #: src/errormessages.js:26
@@ -1795,11 +1797,11 @@ msgstr "Mengunggah berkas ke peladen gagal, berkas tidak ditemukan."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Gagal mengunggah berkas ke server, ukuran berkas terlalu besar."
 
-#: src/layer/tile/CanvasTileLayer.js:1743
+#: src/layer/tile/CanvasTileLayer.js:1749
 msgid "Functions"
 msgstr "Fungsi"
 
-#: src/layer/tile/CanvasTileLayer.js:4801
+#: src/layer/tile/CanvasTileLayer.js:4807
 msgid "No Comments"
 msgstr "Tidak ada komentar"
 
@@ -1914,17 +1916,17 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Menginisialisasi..."
 
-#: src/map/Map.js:445
+#: src/map/Map.js:444
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "%d detik yang lalu"
 
-#: src/map/Map.js:448
+#: src/map/Map.js:447
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "%d menit yang lalu"
 
-#: src/map/Map.js:1468
+#: src/map/Map.js:1467
 msgid "Inactive document - please click to resume editing"
 msgstr "Dokumen tidak aktif - silakan klik untuk melanjutkan pengeditan"
 
@@ -1958,10 +1960,10 @@ msgid ""
 "more options</p><p class=\"vex-footnote\">Close popup to ignore paste "
 "special</p>"
 msgstr ""
-"<p> Browser Anda memiliki akses yang sangat terbatas ke clipboard</"
-"p><p>Silakan tekan: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
-"kbd> untuk melihat lebih banyak opsi</p><p class=\"vex-footnote\"> Tutup "
-"popup untuk mengabaikan paste special</p>"
+"<p> Browser Anda memiliki akses yang sangat terbatas ke clipboard</p><p>"
+"Silakan tekan: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> "
+"untuk melihat lebih banyak opsi</p><p class=\"vex-footnote\"> Tutup popup "
+"untuk mengabaikan paste special</p>"
 
 #: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."

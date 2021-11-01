@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-22 15:46+0200\n"
+"POT-Creation-Date: 2021-11-01 10:26+0100\n"
 "PO-Revision-Date: 2021-07-09 21:37+0000\n"
 "Last-Translator: phlostically <phlostically@mailinator.com>\n"
 "Language-Team: Esperanto <https://hosted.weblate.org/projects/"
@@ -207,7 +207,7 @@ msgid "Channel Filter:"
 msgstr "Kanala Filtrilo:"
 
 #: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:376
-#: src/control/Control.StatusBar.js:310
+#: src/control/Control.StatusBar.js:313
 msgid "None"
 msgstr "Neniu"
 
@@ -259,7 +259,7 @@ msgstr "Ĉe vi certe volas fini ĉi tiun seancon?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1612
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:859
+#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:860
 msgid "OK"
 msgstr "Bone"
 
@@ -267,7 +267,7 @@ msgstr "Bone"
 #: src/control/Control.Command.js:90 src/control/Control.LanguageDialog.js:86
 #: src/control/Control.Menubar.js:1613 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:860
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
 #: src/layer/tile/CommentListSection.ts:372
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
@@ -341,16 +341,16 @@ msgstr "Sen koloro"
 msgid "Automatic color"
 msgstr "Aŭtomata koloro"
 
-#: src/control/Control.AlertDialog.js:67 src/control/Control.StatusBar.js:319
-#: src/control/Control.StatusBar.js:358 src/control/Control.StatusBar.js:382
+#: src/control/Control.AlertDialog.js:66 src/control/Control.StatusBar.js:322
+#: src/control/Control.StatusBar.js:361 src/control/Control.StatusBar.js:385
 msgid "Edit"
 msgstr "Redakti"
 
-#: src/control/Control.AlertDialog.js:77
+#: src/control/Control.AlertDialog.js:76
 msgid "Open link"
 msgstr "Malfermi ligilon"
 
-#: src/control/Control.AlertDialog.js:99
+#: src/control/Control.AlertDialog.js:98
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "La servilo trafis eraron %0 analizante la komandon %1."
 
@@ -380,8 +380,8 @@ msgstr "Indekso"
 
 #: src/control/Control.DocumentRepair.js:48
 #: src/control/Control.JSDialogBuilder.js:2090
-#: src/layer/tile/CanvasTileLayer.js:4774
-#: src/layer/tile/CanvasTileLayer.js:4784
+#: src/layer/tile/CanvasTileLayer.js:4780
+#: src/layer/tile/CanvasTileLayer.js:4790
 #: src/layer/tile/CommentListSection.ts:807
 msgid "Comment"
 msgstr "Komento"
@@ -514,7 +514,7 @@ msgstr "Enmeti tabelon"
 #: src/control/Control.NotebookbarBuilder.js:761
 #: src/control/Control.NotebookbarBuilder.js:796
 #: src/control/Control.NotebookbarBuilder.js:813
-#: src/control/Control.StatusBar.js:507
+#: src/control/Control.StatusBar.js:510
 msgid "None (Do not check spelling)"
 msgstr "Neniu (Ne kontroli literumadon)"
 
@@ -619,7 +619,7 @@ msgstr "Ripari"
 #: src/control/Control.NotebookbarImpress.js:981
 #: src/control/Control.NotebookbarWriter.js:975
 #: src/control/Control.NotebookbarWriter.js:976
-#: src/control/Control.StatusBar.js:184
+#: src/control/Control.StatusBar.js:187
 msgid "Reset zoom"
 msgstr "Reagordi zomon"
 
@@ -689,7 +689,7 @@ msgstr "Pri"
 
 #: src/control/Control.Menubar.js:301 src/control/Control.Menubar.js:429
 #: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:750
-#: src/map/Map.js:410
+#: src/map/Map.js:409
 msgid "Last modification"
 msgstr "Lasta ŝanĝo"
 
@@ -747,7 +747,7 @@ msgstr "Kome disigita dosiero (.csv)"
 
 #: src/control/Control.Menubar.js:754 src/control/Control.Menubar.js:807
 #: src/control/Control.Menubar.js:862 src/control/Control.Menubar.js:907
-#: src/control/Control.StatusBar.js:169
+#: src/control/Control.StatusBar.js:172
 msgid "Search"
 msgstr "Serĉi"
 
@@ -755,7 +755,7 @@ msgstr "Serĉi"
 msgid "Page Setup"
 msgstr "Agordi paĝon"
 
-#: src/control/Control.Menubar.js:1163 src/control/Control.StatusBar.js:506
+#: src/control/Control.Menubar.js:1163 src/control/Control.StatusBar.js:509
 msgid "Reset to Default Language"
 msgstr "Reagordi al apriora lingvo"
 
@@ -932,7 +932,7 @@ msgstr "Frakcio"
 msgid "Boolean Value"
 msgstr "Buleaĵo"
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:855
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:856
 msgid "Text"
 msgstr "Teksto"
 
@@ -1067,91 +1067,91 @@ msgstr "Rulumi al la lasta folio"
 msgid "Insert sheet"
 msgstr "Enmeti folion"
 
-#: src/control/Control.StatusBar.js:175
+#: src/control/Control.StatusBar.js:178
 msgid "Cancel the search"
 msgstr "Nuligi serĉon"
 
-#: src/control/Control.StatusBar.js:275
+#: src/control/Control.StatusBar.js:278
 msgid "Number of Sheets"
 msgstr "Nombro da folioj"
 
-#: src/control/Control.StatusBar.js:280
+#: src/control/Control.StatusBar.js:283
 msgid "Selected range of cells"
 msgstr "Elektita ĉelaro"
 
-#: src/control/Control.StatusBar.js:285 src/control/Control.StatusBar.js:341
+#: src/control/Control.StatusBar.js:288 src/control/Control.StatusBar.js:344
 msgid "Entering text mode"
 msgstr "Eniras en teksta reĝimo"
 
-#: src/control/Control.StatusBar.js:294 src/control/Control.StatusBar.js:346
+#: src/control/Control.StatusBar.js:297 src/control/Control.StatusBar.js:349
 msgid "Selection Mode"
 msgstr "Elekta reĝimo"
 
-#: src/control/Control.StatusBar.js:299
+#: src/control/Control.StatusBar.js:302
 msgid "Choice of functions"
 msgstr "Elekti funkciojn"
 
-#: src/control/Control.StatusBar.js:303
+#: src/control/Control.StatusBar.js:306
 msgid "Average"
 msgstr "Averaĝo"
 
-#: src/control/Control.StatusBar.js:304
+#: src/control/Control.StatusBar.js:307
 msgid "CountA"
 msgstr "NombroA"
 
-#: src/control/Control.StatusBar.js:305
+#: src/control/Control.StatusBar.js:308
 msgid "Count"
 msgstr "Nombri"
 
-#: src/control/Control.StatusBar.js:306
+#: src/control/Control.StatusBar.js:309
 msgid "Maximum"
 msgstr "Maksimumo"
 
-#: src/control/Control.StatusBar.js:307
+#: src/control/Control.StatusBar.js:310
 msgid "Minimum"
 msgstr "Minimumo"
 
-#: src/control/Control.StatusBar.js:308
+#: src/control/Control.StatusBar.js:311
 msgid "Sum"
 msgstr "Sumo"
 
-#: src/control/Control.StatusBar.js:309
+#: src/control/Control.StatusBar.js:312
 msgid "Selection count"
 msgstr "Nombro de la elektaĵo"
 
-#: src/control/Control.StatusBar.js:318 src/control/Control.StatusBar.js:319
-#: src/control/Control.StatusBar.js:357 src/control/Control.StatusBar.js:358
-#: src/control/Control.StatusBar.js:381 src/control/Control.StatusBar.js:382
+#: src/control/Control.StatusBar.js:321 src/control/Control.StatusBar.js:322
+#: src/control/Control.StatusBar.js:360 src/control/Control.StatusBar.js:361
+#: src/control/Control.StatusBar.js:384 src/control/Control.StatusBar.js:385
 msgid "Permission Mode"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:318 src/control/Control.StatusBar.js:357
-#: src/control/Control.StatusBar.js:381
+#: src/control/Control.StatusBar.js:321 src/control/Control.StatusBar.js:360
+#: src/control/Control.StatusBar.js:384
 #, fuzzy
 msgid "Read-only"
 msgstr "Nurlega"
 
-#: src/control/Control.StatusBar.js:331
+#: src/control/Control.StatusBar.js:334
 msgid "Number of Pages"
 msgstr "Nombro da paĝoj"
 
-#: src/control/Control.StatusBar.js:336
+#: src/control/Control.StatusBar.js:339
 msgid "Word Counter"
 msgstr "Vortnombrilo"
 
-#: src/control/Control.StatusBar.js:370
+#: src/control/Control.StatusBar.js:373
 msgid "Number of Slides"
 msgstr "Nombro da lumbildoj"
 
-#: src/control/Control.StatusBar.js:450
+#: src/control/Control.StatusBar.js:453
 msgid "Select multiple cells"
 msgstr "Elekti plurajn ĉelojn"
 
-#: src/control/Control.StatusBar.js:453
+#: src/control/Control.StatusBar.js:456
 msgid "Insert mode: inactive"
 msgstr "Enmeta reĝimo: ne aktiva"
 
-#: src/control/Control.StatusBar.js:466
+#: src/control/Control.StatusBar.js:469
 msgid "Selection mode: inactive"
 msgstr "Elekta reĝimo: ne aktiva"
 
@@ -1443,24 +1443,24 @@ msgstr "Konservas..."
 msgid "Renaming..."
 msgstr "Renomi..."
 
-#: src/control/Toolbar.js:647
+#: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr "Ni bedaŭras, ke ne disponeblas la informo pri la lastaj ĝisdatigoj."
 
-#: src/control/Toolbar.js:697
+#: src/control/Toolbar.js:698
 msgid "This version of %productName is powered by"
 msgstr "Ĉi tiu versio de %productName estas povigita de"
 
-#: src/control/Toolbar.js:707
+#: src/control/Toolbar.js:708
 msgid "\"Slow Proxy\""
 msgstr "\"Malrapida prokurilo\""
 
-#: src/control/Toolbar.js:853
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Enmeti hiperligilon"
 
-#: src/control/Toolbar.js:856
+#: src/control/Toolbar.js:857
 msgid "Link"
 msgstr "Ligilo"
 
@@ -1593,18 +1593,18 @@ msgid "The document is being renamed and will reload shortly"
 msgstr ""
 "La nomo de ĉi tiu dokumento estas ŝanĝata; la dokumento baldaŭ reŝargiĝos"
 
-#: src/core/Socket.js:1407
+#: src/core/Socket.js:1413
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Bedaŭrinde ni ne povas konekti al via dokumento. Bonvolu reprovi."
 
-#: src/core/Socket.js:1424
+#: src/core/Socket.js:1430
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "Konektas..."
 
-#: src/core/Socket.js:1429
+#: src/core/Socket.js:1435
 msgid "The server has been disconnected."
 msgstr ""
 
@@ -1696,7 +1696,9 @@ msgid "Invalid link: '%url'"
 msgstr "Nevalida ligilo: '%url'"
 
 #: src/errormessages.js:25
-msgid "You are leaving the editor, are you sure you want to visit %url?"
+#, fuzzy
+msgid ""
+"You are leaving the editor, are you sure you want to visit the following URL?"
 msgstr "Vi lasas la redaktilon. Ĉu vi certas, ke vi volas viziti al %url?"
 
 #: src/errormessages.js:26
@@ -1783,11 +1785,11 @@ msgstr "Malsukcesis alŝuti dosieron al servilo, dosiero ne trovita."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Malsukcesis alŝuti dosieron al servilo, la dosiero estas tro granda."
 
-#: src/layer/tile/CanvasTileLayer.js:1743
+#: src/layer/tile/CanvasTileLayer.js:1749
 msgid "Functions"
 msgstr "Funkcioj"
 
-#: src/layer/tile/CanvasTileLayer.js:4801
+#: src/layer/tile/CanvasTileLayer.js:4807
 msgid "No Comments"
 msgstr "Neniu Komento"
 
@@ -1901,17 +1903,17 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Pravalorizas..."
 
-#: src/map/Map.js:445
+#: src/map/Map.js:444
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "antaŭ %d sekundoj"
 
-#: src/map/Map.js:448
+#: src/map/Map.js:447
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "antaŭ %d minutoj"
 
-#: src/map/Map.js:1468
+#: src/map/Map.js:1467
 msgid "Inactive document - please click to resume editing"
 msgstr "Neaktiva dokumento - bonvolu alklaki por daŭrigi redakti"
 

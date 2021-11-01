@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-22 15:46+0200\n"
+"POT-Creation-Date: 2021-11-01 10:26+0100\n"
 "PO-Revision-Date: 2021-04-20 20:35+0000\n"
 "Last-Translator: Quentin PAGÈS <quentinantonin@free.fr>\n"
 "Language-Team: Occitan <https://hosted.weblate.org/projects/collabora-online/"
@@ -212,7 +212,7 @@ msgid "Channel Filter:"
 msgstr "Filtre de canal :"
 
 #: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:376
-#: src/control/Control.StatusBar.js:310
+#: src/control/Control.StatusBar.js:313
 msgid "None"
 msgstr "Pas cap"
 
@@ -264,7 +264,7 @@ msgstr "Sètz segur que volètz suprimir aquesta session ?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1612
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:859
+#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:860
 msgid "OK"
 msgstr "D’acòrdi"
 
@@ -272,7 +272,7 @@ msgstr "D’acòrdi"
 #: src/control/Control.Command.js:90 src/control/Control.LanguageDialog.js:86
 #: src/control/Control.Menubar.js:1613 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:860
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
 #: src/layer/tile/CommentListSection.ts:372
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
@@ -348,16 +348,16 @@ msgstr "Cap de color"
 msgid "Automatic color"
 msgstr "Color automatica"
 
-#: src/control/Control.AlertDialog.js:67 src/control/Control.StatusBar.js:319
-#: src/control/Control.StatusBar.js:358 src/control/Control.StatusBar.js:382
+#: src/control/Control.AlertDialog.js:66 src/control/Control.StatusBar.js:322
+#: src/control/Control.StatusBar.js:361 src/control/Control.StatusBar.js:385
 msgid "Edit"
 msgstr "Editar"
 
-#: src/control/Control.AlertDialog.js:77
+#: src/control/Control.AlertDialog.js:76
 msgid "Open link"
 msgstr "Dobrir lo ligam"
 
-#: src/control/Control.AlertDialog.js:99
+#: src/control/Control.AlertDialog.js:98
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Lo servidor a rescontrat una error %0 en analisant la comanda %1."
 
@@ -387,8 +387,8 @@ msgstr "Indèx"
 
 #: src/control/Control.DocumentRepair.js:48
 #: src/control/Control.JSDialogBuilder.js:2090
-#: src/layer/tile/CanvasTileLayer.js:4774
-#: src/layer/tile/CanvasTileLayer.js:4784
+#: src/layer/tile/CanvasTileLayer.js:4780
+#: src/layer/tile/CanvasTileLayer.js:4790
 #: src/layer/tile/CommentListSection.ts:807
 msgid "Comment"
 msgstr "Comentari"
@@ -521,7 +521,7 @@ msgstr "Inserir un tablèu"
 #: src/control/Control.NotebookbarBuilder.js:761
 #: src/control/Control.NotebookbarBuilder.js:796
 #: src/control/Control.NotebookbarBuilder.js:813
-#: src/control/Control.StatusBar.js:507
+#: src/control/Control.StatusBar.js:510
 msgid "None (Do not check spelling)"
 msgstr "Non (pas de verificacion ortografica)"
 
@@ -626,7 +626,7 @@ msgstr "Reparar"
 #: src/control/Control.NotebookbarImpress.js:981
 #: src/control/Control.NotebookbarWriter.js:975
 #: src/control/Control.NotebookbarWriter.js:976
-#: src/control/Control.StatusBar.js:184
+#: src/control/Control.StatusBar.js:187
 msgid "Reset zoom"
 msgstr "Reïnicializar lo zoom"
 
@@ -696,7 +696,7 @@ msgstr "A prepaus"
 
 #: src/control/Control.Menubar.js:301 src/control/Control.Menubar.js:429
 #: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:750
-#: src/map/Map.js:410
+#: src/map/Map.js:409
 msgid "Last modification"
 msgstr "Darrièra modificacion"
 
@@ -754,7 +754,7 @@ msgstr "Fichièr CSV (.csv)"
 
 #: src/control/Control.Menubar.js:754 src/control/Control.Menubar.js:807
 #: src/control/Control.Menubar.js:862 src/control/Control.Menubar.js:907
-#: src/control/Control.StatusBar.js:169
+#: src/control/Control.StatusBar.js:172
 msgid "Search"
 msgstr "Recercar"
 
@@ -762,7 +762,7 @@ msgstr "Recercar"
 msgid "Page Setup"
 msgstr "Configuracion de la pagina"
 
-#: src/control/Control.Menubar.js:1163 src/control/Control.StatusBar.js:506
+#: src/control/Control.Menubar.js:1163 src/control/Control.StatusBar.js:509
 msgid "Reset to Default Language"
 msgstr "Restablir la lenga per defaut"
 
@@ -940,7 +940,7 @@ msgstr "Fraccion"
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:855
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:856
 msgid "Text"
 msgstr "Tèxt"
 
@@ -1082,91 +1082,91 @@ msgstr ""
 msgid "Insert sheet"
 msgstr "Inserir un fuèlh"
 
-#: src/control/Control.StatusBar.js:175
+#: src/control/Control.StatusBar.js:178
 msgid "Cancel the search"
 msgstr "Anullar la recèrca"
 
-#: src/control/Control.StatusBar.js:275
+#: src/control/Control.StatusBar.js:278
 msgid "Number of Sheets"
 msgstr "Nombre de fuèlhs"
 
-#: src/control/Control.StatusBar.js:280
+#: src/control/Control.StatusBar.js:283
 msgid "Selected range of cells"
 msgstr "Plaja de cellulas seleccionadas"
 
-#: src/control/Control.StatusBar.js:285 src/control/Control.StatusBar.js:341
+#: src/control/Control.StatusBar.js:288 src/control/Control.StatusBar.js:344
 msgid "Entering text mode"
 msgstr "Entrada en mòde de tèxt"
 
-#: src/control/Control.StatusBar.js:294 src/control/Control.StatusBar.js:346
+#: src/control/Control.StatusBar.js:297 src/control/Control.StatusBar.js:349
 msgid "Selection Mode"
 msgstr "Mòde de seleccion"
 
-#: src/control/Control.StatusBar.js:299
+#: src/control/Control.StatusBar.js:302
 msgid "Choice of functions"
 msgstr "Causida de las foncions"
 
-#: src/control/Control.StatusBar.js:303
+#: src/control/Control.StatusBar.js:306
 msgid "Average"
 msgstr "Mejana"
 
-#: src/control/Control.StatusBar.js:304
+#: src/control/Control.StatusBar.js:307
 msgid "CountA"
 msgstr "NBVAL"
 
-#: src/control/Control.StatusBar.js:305
+#: src/control/Control.StatusBar.js:308
 msgid "Count"
 msgstr "NB"
 
-#: src/control/Control.StatusBar.js:306
+#: src/control/Control.StatusBar.js:309
 msgid "Maximum"
 msgstr "Maximum"
 
-#: src/control/Control.StatusBar.js:307
+#: src/control/Control.StatusBar.js:310
 msgid "Minimum"
 msgstr "Minimum"
 
-#: src/control/Control.StatusBar.js:308
+#: src/control/Control.StatusBar.js:311
 msgid "Sum"
 msgstr "Soma"
 
-#: src/control/Control.StatusBar.js:309
+#: src/control/Control.StatusBar.js:312
 msgid "Selection count"
 msgstr "Compte de la seleccion"
 
-#: src/control/Control.StatusBar.js:318 src/control/Control.StatusBar.js:319
-#: src/control/Control.StatusBar.js:357 src/control/Control.StatusBar.js:358
-#: src/control/Control.StatusBar.js:381 src/control/Control.StatusBar.js:382
+#: src/control/Control.StatusBar.js:321 src/control/Control.StatusBar.js:322
+#: src/control/Control.StatusBar.js:360 src/control/Control.StatusBar.js:361
+#: src/control/Control.StatusBar.js:384 src/control/Control.StatusBar.js:385
 msgid "Permission Mode"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:318 src/control/Control.StatusBar.js:357
-#: src/control/Control.StatusBar.js:381
+#: src/control/Control.StatusBar.js:321 src/control/Control.StatusBar.js:360
+#: src/control/Control.StatusBar.js:384
 #, fuzzy
 msgid "Read-only"
 msgstr "Lectura sola"
 
-#: src/control/Control.StatusBar.js:331
+#: src/control/Control.StatusBar.js:334
 msgid "Number of Pages"
 msgstr "Nombre de paginas"
 
-#: src/control/Control.StatusBar.js:336
+#: src/control/Control.StatusBar.js:339
 msgid "Word Counter"
 msgstr "Comptador de mot"
 
-#: src/control/Control.StatusBar.js:370
+#: src/control/Control.StatusBar.js:373
 msgid "Number of Slides"
 msgstr "Nombre de diapositivas"
 
-#: src/control/Control.StatusBar.js:450
+#: src/control/Control.StatusBar.js:453
 msgid "Select multiple cells"
 msgstr "Seleccionar mantuna cellula"
 
-#: src/control/Control.StatusBar.js:453
+#: src/control/Control.StatusBar.js:456
 msgid "Insert mode: inactive"
 msgstr "Mòde d’insercion : inactiu"
 
-#: src/control/Control.StatusBar.js:466
+#: src/control/Control.StatusBar.js:469
 msgid "Selection mode: inactive"
 msgstr "Mòde de seleccion : inactiu"
 
@@ -1456,24 +1456,24 @@ msgstr "Enregistrament..."
 msgid "Renaming..."
 msgstr ""
 
-#: src/control/Toolbar.js:647
+#: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 
-#: src/control/Toolbar.js:697
+#: src/control/Toolbar.js:698
 msgid "This version of %productName is powered by"
 msgstr ""
 
-#: src/control/Toolbar.js:707
+#: src/control/Toolbar.js:708
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:853
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:856
+#: src/control/Toolbar.js:857
 msgid "Link"
 msgstr ""
 
@@ -1599,18 +1599,18 @@ msgstr "Connexion..."
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1407
+#: src/core/Socket.js:1413
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
 
-#: src/core/Socket.js:1424
+#: src/core/Socket.js:1430
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "Connexion..."
 
-#: src/core/Socket.js:1429
+#: src/core/Socket.js:1435
 msgid "The server has been disconnected."
 msgstr ""
 
@@ -1683,7 +1683,8 @@ msgid "Invalid link: '%url'"
 msgstr ""
 
 #: src/errormessages.js:25
-msgid "You are leaving the editor, are you sure you want to visit %url?"
+msgid ""
+"You are leaving the editor, are you sure you want to visit the following URL?"
 msgstr ""
 
 #: src/errormessages.js:26
@@ -1757,12 +1758,12 @@ msgstr ""
 msgid "Uploading file to server failed, the file is too large."
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:1743
+#: src/layer/tile/CanvasTileLayer.js:1749
 #, fuzzy
 msgid "Functions"
 msgstr "Foncion"
 
-#: src/layer/tile/CanvasTileLayer.js:4801
+#: src/layer/tile/CanvasTileLayer.js:4807
 msgid "No Comments"
 msgstr ""
 
@@ -1861,17 +1862,17 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Inicializacion..."
 
-#: src/map/Map.js:445
+#: src/map/Map.js:444
 #, javascript-format
 msgid "%d seconds ago"
 msgstr ""
 
-#: src/map/Map.js:448
+#: src/map/Map.js:447
 #, javascript-format
 msgid "%d minutes ago"
 msgstr ""
 
-#: src/map/Map.js:1468
+#: src/map/Map.js:1467
 msgid "Inactive document - please click to resume editing"
 msgstr ""
 

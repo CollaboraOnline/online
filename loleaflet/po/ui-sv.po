@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-22 15:46+0200\n"
+"POT-Creation-Date: 2021-11-01 10:26+0100\n"
 "PO-Revision-Date: 2021-09-30 12:38+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
@@ -209,7 +209,7 @@ msgid "Channel Filter:"
 msgstr "Kanalfilter:"
 
 #: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:376
-#: src/control/Control.StatusBar.js:310
+#: src/control/Control.StatusBar.js:313
 msgid "None"
 msgstr "Ingen"
 
@@ -261,7 +261,7 @@ msgstr "Är du säker på att du vill avsluta sessionen?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1612
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:859
+#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:860
 msgid "OK"
 msgstr "OK"
 
@@ -269,7 +269,7 @@ msgstr "OK"
 #: src/control/Control.Command.js:90 src/control/Control.LanguageDialog.js:86
 #: src/control/Control.Menubar.js:1613 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:860
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
 #: src/layer/tile/CommentListSection.ts:372
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
@@ -344,16 +344,16 @@ msgstr "Ingen färg"
 msgid "Automatic color"
 msgstr "Automatisk färg"
 
-#: src/control/Control.AlertDialog.js:67 src/control/Control.StatusBar.js:319
-#: src/control/Control.StatusBar.js:358 src/control/Control.StatusBar.js:382
+#: src/control/Control.AlertDialog.js:66 src/control/Control.StatusBar.js:322
+#: src/control/Control.StatusBar.js:361 src/control/Control.StatusBar.js:385
 msgid "Edit"
 msgstr "Redigera"
 
-#: src/control/Control.AlertDialog.js:77
+#: src/control/Control.AlertDialog.js:76
 msgid "Open link"
 msgstr "Öppna länk"
 
-#: src/control/Control.AlertDialog.js:99
+#: src/control/Control.AlertDialog.js:98
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Servern stötte på ett %0-fel vid utförandet av kommandot %1."
 
@@ -383,8 +383,8 @@ msgstr "Förteckning"
 
 #: src/control/Control.DocumentRepair.js:48
 #: src/control/Control.JSDialogBuilder.js:2090
-#: src/layer/tile/CanvasTileLayer.js:4774
-#: src/layer/tile/CanvasTileLayer.js:4784
+#: src/layer/tile/CanvasTileLayer.js:4780
+#: src/layer/tile/CanvasTileLayer.js:4790
 #: src/layer/tile/CommentListSection.ts:807
 msgid "Comment"
 msgstr "Kommentar"
@@ -517,7 +517,7 @@ msgstr "Infoga Tabell"
 #: src/control/Control.NotebookbarBuilder.js:761
 #: src/control/Control.NotebookbarBuilder.js:796
 #: src/control/Control.NotebookbarBuilder.js:813
-#: src/control/Control.StatusBar.js:507
+#: src/control/Control.StatusBar.js:510
 msgid "None (Do not check spelling)"
 msgstr "Inget (gör ingen stavningskontroll)"
 
@@ -622,7 +622,7 @@ msgstr "Reparera"
 #: src/control/Control.NotebookbarImpress.js:981
 #: src/control/Control.NotebookbarWriter.js:975
 #: src/control/Control.NotebookbarWriter.js:976
-#: src/control/Control.StatusBar.js:184
+#: src/control/Control.StatusBar.js:187
 msgid "Reset zoom"
 msgstr "Återställ zoomning"
 
@@ -692,7 +692,7 @@ msgstr "Om"
 
 #: src/control/Control.Menubar.js:301 src/control/Control.Menubar.js:429
 #: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:750
-#: src/map/Map.js:410
+#: src/map/Map.js:409
 msgid "Last modification"
 msgstr "Senaste ändring"
 
@@ -750,7 +750,7 @@ msgstr "CSV-fil (.csv)"
 
 #: src/control/Control.Menubar.js:754 src/control/Control.Menubar.js:807
 #: src/control/Control.Menubar.js:862 src/control/Control.Menubar.js:907
-#: src/control/Control.StatusBar.js:169
+#: src/control/Control.StatusBar.js:172
 msgid "Search"
 msgstr "Sök"
 
@@ -758,7 +758,7 @@ msgstr "Sök"
 msgid "Page Setup"
 msgstr "Utskriftsformat"
 
-#: src/control/Control.Menubar.js:1163 src/control/Control.StatusBar.js:506
+#: src/control/Control.Menubar.js:1163 src/control/Control.StatusBar.js:509
 msgid "Reset to Default Language"
 msgstr "Återställ till standardspråk"
 
@@ -935,7 +935,7 @@ msgstr "Fraktion"
 msgid "Boolean Value"
 msgstr "Boolskt värde"
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:855
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:856
 msgid "Text"
 msgstr "Text"
 
@@ -1070,90 +1070,90 @@ msgstr "Bläddra till det sista bladet"
 msgid "Insert sheet"
 msgstr "Infoga blad"
 
-#: src/control/Control.StatusBar.js:175
+#: src/control/Control.StatusBar.js:178
 msgid "Cancel the search"
 msgstr "Avbryt sökning"
 
-#: src/control/Control.StatusBar.js:275
+#: src/control/Control.StatusBar.js:278
 msgid "Number of Sheets"
 msgstr "Antal kalkylblad"
 
-#: src/control/Control.StatusBar.js:280
+#: src/control/Control.StatusBar.js:283
 msgid "Selected range of cells"
 msgstr "Markerat cellområde"
 
-#: src/control/Control.StatusBar.js:285 src/control/Control.StatusBar.js:341
+#: src/control/Control.StatusBar.js:288 src/control/Control.StatusBar.js:344
 msgid "Entering text mode"
 msgstr "Textläge aktiverat"
 
-#: src/control/Control.StatusBar.js:294 src/control/Control.StatusBar.js:346
+#: src/control/Control.StatusBar.js:297 src/control/Control.StatusBar.js:349
 msgid "Selection Mode"
 msgstr "Markeringsläge"
 
-#: src/control/Control.StatusBar.js:299
+#: src/control/Control.StatusBar.js:302
 msgid "Choice of functions"
 msgstr "Urval av funktioner"
 
-#: src/control/Control.StatusBar.js:303
+#: src/control/Control.StatusBar.js:306
 msgid "Average"
 msgstr "Medelvärde"
 
-#: src/control/Control.StatusBar.js:304
+#: src/control/Control.StatusBar.js:307
 msgid "CountA"
 msgstr "AntalA"
 
-#: src/control/Control.StatusBar.js:305
+#: src/control/Control.StatusBar.js:308
 msgid "Count"
 msgstr "Antal"
 
-#: src/control/Control.StatusBar.js:306
+#: src/control/Control.StatusBar.js:309
 msgid "Maximum"
 msgstr "Max"
 
-#: src/control/Control.StatusBar.js:307
+#: src/control/Control.StatusBar.js:310
 msgid "Minimum"
 msgstr "Min"
 
-#: src/control/Control.StatusBar.js:308
+#: src/control/Control.StatusBar.js:311
 msgid "Sum"
 msgstr "Summa"
 
-#: src/control/Control.StatusBar.js:309
+#: src/control/Control.StatusBar.js:312
 msgid "Selection count"
 msgstr "Antal i markering"
 
-#: src/control/Control.StatusBar.js:318 src/control/Control.StatusBar.js:319
-#: src/control/Control.StatusBar.js:357 src/control/Control.StatusBar.js:358
-#: src/control/Control.StatusBar.js:381 src/control/Control.StatusBar.js:382
+#: src/control/Control.StatusBar.js:321 src/control/Control.StatusBar.js:322
+#: src/control/Control.StatusBar.js:360 src/control/Control.StatusBar.js:361
+#: src/control/Control.StatusBar.js:384 src/control/Control.StatusBar.js:385
 msgid "Permission Mode"
 msgstr "Behörighetsläge"
 
-#: src/control/Control.StatusBar.js:318 src/control/Control.StatusBar.js:357
-#: src/control/Control.StatusBar.js:381
+#: src/control/Control.StatusBar.js:321 src/control/Control.StatusBar.js:360
+#: src/control/Control.StatusBar.js:384
 msgid "Read-only"
 msgstr "Skrivskyddat"
 
-#: src/control/Control.StatusBar.js:331
+#: src/control/Control.StatusBar.js:334
 msgid "Number of Pages"
 msgstr "Antal sidor"
 
-#: src/control/Control.StatusBar.js:336
+#: src/control/Control.StatusBar.js:339
 msgid "Word Counter"
 msgstr "Antal ord"
 
-#: src/control/Control.StatusBar.js:370
+#: src/control/Control.StatusBar.js:373
 msgid "Number of Slides"
 msgstr "Antal bilder"
 
-#: src/control/Control.StatusBar.js:450
+#: src/control/Control.StatusBar.js:453
 msgid "Select multiple cells"
 msgstr "Markera flera celler"
 
-#: src/control/Control.StatusBar.js:453
+#: src/control/Control.StatusBar.js:456
 msgid "Insert mode: inactive"
 msgstr "Infogaläge: inaktivt"
 
-#: src/control/Control.StatusBar.js:466
+#: src/control/Control.StatusBar.js:469
 msgid "Selection mode: inactive"
 msgstr "Urvalsläge: inaktivt"
 
@@ -1444,26 +1444,26 @@ msgstr "Sparar..."
 msgid "Renaming..."
 msgstr "Byter namn..."
 
-#: src/control/Toolbar.js:647
+#: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 "Vi är ledsna, informationen om de senaste uppdateringarna är inte "
 "tillgänglig."
 
-#: src/control/Toolbar.js:697
+#: src/control/Toolbar.js:698
 msgid "This version of %productName is powered by"
 msgstr "Denna version av %productName drivs av"
 
-#: src/control/Toolbar.js:707
+#: src/control/Toolbar.js:708
 msgid "\"Slow Proxy\""
 msgstr "\"Långsam proxy\""
 
-#: src/control/Toolbar.js:853
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Lägg in hyperlänk"
 
-#: src/control/Toolbar.js:856
+#: src/control/Toolbar.js:857
 msgid "Link"
 msgstr "Länk"
 
@@ -1597,18 +1597,18 @@ msgstr "Ansluter..."
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokumentet byter namn och laddas snart om"
 
-#: src/core/Socket.js:1407
+#: src/core/Socket.js:1413
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Kan inte ansluta till ditt dokument. Vänligen försök igen."
 
-#: src/core/Socket.js:1424
+#: src/core/Socket.js:1430
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "Ansluter..."
 
-#: src/core/Socket.js:1429
+#: src/core/Socket.js:1435
 msgid "The server has been disconnected."
 msgstr "Tjänsten är bortkopplad."
 
@@ -1698,7 +1698,9 @@ msgid "Invalid link: '%url'"
 msgstr "Ogiltig länk: '%url'"
 
 #: src/errormessages.js:25
-msgid "You are leaving the editor, are you sure you want to visit %url?"
+#, fuzzy
+msgid ""
+"You are leaving the editor, are you sure you want to visit the following URL?"
 msgstr ""
 "Du lämnar redigeringsprogrammet, är du säker att du vill gå till '%url'?"
 
@@ -1787,11 +1789,11 @@ msgstr "Kunde inte uppladda filen till servern eftersom filen inte hittades."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Kunde inte uppladda filen till servern eftersom filen är för stor."
 
-#: src/layer/tile/CanvasTileLayer.js:1743
+#: src/layer/tile/CanvasTileLayer.js:1749
 msgid "Functions"
 msgstr "Funktioner"
 
-#: src/layer/tile/CanvasTileLayer.js:4801
+#: src/layer/tile/CanvasTileLayer.js:4807
 msgid "No Comments"
 msgstr "Inga kommentarer"
 
@@ -1909,17 +1911,17 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Initierar..."
 
-#: src/map/Map.js:445
+#: src/map/Map.js:444
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "För %d sekunder sedan"
 
-#: src/map/Map.js:448
+#: src/map/Map.js:447
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "För %d minuter sedan"
 
-#: src/map/Map.js:1468
+#: src/map/Map.js:1467
 msgid "Inactive document - please click to resume editing"
 msgstr "Inaktivt dokument - klicka för att fortsätta redigera"
 
