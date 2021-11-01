@@ -2,11 +2,11 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 # Translators:
 # Andras Timar <andras.timar@collabora.com>, 2020
 # Marc Rodrigues <info@sustain-release.de>, 2020
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -1705,8 +1705,8 @@ msgid "Invalid link: '%url'"
 msgstr "Ungültiger Link: '%url'"
 
 #: src/errormessages.js:25
-msgid "You are leaving the editor, are you sure you want to visit %url?"
-msgstr "Sie verlassen den Editor, möchten Sie wirklich auf %url zugreifen?"
+msgid "You are leaving the editor, are you sure you want to visit the following URL?"
+msgstr "Sie verlassen den Editor, sind Sie sicher, dass Sie die folgende URL besuchen möchten?"
 
 #: src/errormessages.js:26
 msgid ""
