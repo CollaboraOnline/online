@@ -700,11 +700,11 @@ pot:
 		src/map/handler/Map.Keyboard.js \
 		src/map/handler/Map.WOPI.js
 
-	html2po --pot --input=html/loleaflet-help.html --output=po/templates/loleaflet-help.pot --duplicates=merge
+	html2po --pot --input=html/cool-help.html --output=po/templates/cool-help.pot --duplicates=merge
 
 l10n: pot
 	for i in po/ui-*.po; do pot2po --input=po/templates/loleaflet-ui.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
-	for i in po/help-*.po; do pot2po --input=po/templates/loleaflet-help.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
+	for i in po/help-*.po; do pot2po --input=po/templates/cool-help.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
 
 clean-local:
 	@rm -rf $(DIST_FOLDER)
