@@ -14,6 +14,7 @@ L.Control.StatusBar = L.Control.extend({
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('commandvalues', this.onCommandValues, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
+		map.on('updatepermission', this.onPermissionChanged, this);
 		this.create();
 
 		$(window).resize(function() {
@@ -337,10 +338,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'break', id: 'break9', mobile: false},
 					{
 						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
-						html: '<div id="PermissionMode" class="loleaflet-font ' +
-						(isReadOnly
-							? ' status-readonly-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Read-only') + ' </div>'
-							: ' status-edit-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Edit') + ' </div>')
+						html: this._getPermissionModeHtml(isReadOnly)
 					}
 				]);
 			}
@@ -376,10 +374,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'break', id: 'break8', mobile: false},
 					{
 						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
-						html: '<div id="PermissionMode" class="loleaflet-font ' +
-						(isReadOnly
-							? ' status-readonly-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Read-only') + ' </div>'
-							: ' status-edit-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Edit') + ' </div>')
+						html: this._getPermissionModeHtml(isReadOnly)
 					}
 				]);
 			}
@@ -400,10 +395,7 @@ L.Control.StatusBar = L.Control.extend({
 					{type: 'break', id: 'break8', mobile: false},
 					{
 						type: 'html', id: 'PermissionMode', mobile: false, tablet: false,
-						html: '<div id="PermissionMode" class="loleaflet-font ' +
-						(isReadOnly
-							? ' status-readonly-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Read-only') + ' </div>'
-							: ' status-edit-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Edit') + ' </div>')
+						html: this._getPermissionModeHtml(isReadOnly)
 					}
 				]);
 			}
@@ -444,6 +436,18 @@ L.Control.StatusBar = L.Control.extend({
 		}
 
 		this.map._onGotFocus();
+	},
+
+	_getPermissionModeHtml: function(isReadOnly) {
+		return '<div id="PermissionMode" class="loleaflet-font ' +
+			(isReadOnly
+				? ' status-readonly-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Read-only') + ' </div>'
+				: ' status-edit-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Edit') + ' </div>');
+	},
+
+	onPermissionChanged: function(event) {
+		var isReadOnly = event.perm === 'readonly';
+		$('#PermissionMode').parent().html(this._getPermissionModeHtml(isReadOnly));
 	},
 
 	onCommandStateChanged: function(e) {
