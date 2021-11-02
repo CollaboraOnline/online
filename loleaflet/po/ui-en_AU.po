@@ -7,11 +7,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-01 10:26+0100\n"
-"PO-Revision-Date: 2021-10-25 15:01+0000\n"
-"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
+"PO-Revision-Date: 2021-11-02 08:36+0000\n"
+"Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (Australia) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_AU/>\n"
-"Language: \n"
+"Language: en_AU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1693,10 +1693,10 @@ msgid "Invalid link: '%url'"
 msgstr "Invalid link: '%url'"
 
 #: src/errormessages.js:25
-#, fuzzy
 msgid ""
 "You are leaving the editor, are you sure you want to visit the following URL?"
-msgstr "You are leaving the editor, are you sure you want to visit %url?"
+msgstr ""
+"You are leaving the editor, are you sure you want to visit the following URL?"
 
 #: src/errormessages.js:26
 msgid ""
