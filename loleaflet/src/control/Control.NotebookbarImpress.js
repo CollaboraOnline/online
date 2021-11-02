@@ -922,7 +922,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:InsertPage', 'presentation'),
+				'text': _UNO('.uno:InsertSlide', 'presentation'),
 				'command': '.uno:InsertPage'
 			},
 			{
@@ -933,7 +933,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:DuplicatePage', 'presentation'),
+								'text': _UNO('.uno:DuplicateSlide', 'presentation'),
 								'command': '.uno:DuplicatePage'
 							}
 						]
@@ -977,7 +977,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 							{
 								'id': 'zoomreset',
 								'type': 'menubartoolitem',
-								'text': _('Reset zoom'),
+								'text': _('Reset Zoom'),
 								'command': _('Reset zoom')
 							}
 						]
