@@ -825,7 +825,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     // Document signing: if endpoint URL is configured, whitelist that for
     // iframe purposes.
     std::ostringstream cspOss;
-    cspOss << "Content-Security-Policy: default-src 'none'; img-src 'self' data: https://www.collaboraoffice.com/;"
+    cspOss << "Content-Security-Policy: default-src 'none'; "
 #ifdef ENABLE_FEEDBACK
         "frame-src 'self' " << FEEDBACK_LOCATION << " blob: " << documentSigningURL << "; "
 #else
@@ -862,19 +862,21 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         }
     }
 
+    std::string imgSrc = "img-src 'self' data: https://www.collaboraoffice.com/";
     if (!frameAncestors.empty())
     {
         LOG_TRC("Allowed frame ancestors: " << frameAncestors);
         // X-Frame-Options supports only one ancestor, ignore that
         //(it's deprecated anyway and CSP works in all major browsers)
-        cspOss << "img-src 'self' data: " << frameAncestors << "; "
+        // frame anchestors are also allowed for img-src in order to load the views avatars
+        cspOss << imgSrc << frameAncestors << "; "
                 << "frame-ancestors " << frameAncestors;
         Poco::replaceInPlace(preprocess, std::string("%FRAME_ANCESTORS%"), frameAncestors);
     }
     else
     {
         LOG_TRC("Denied all frame ancestors");
-        cspOss << "img-src 'self' data: none;";
+        cspOss << imgSrc << "; ";
     }
 
     cspOss << "\r\n";
