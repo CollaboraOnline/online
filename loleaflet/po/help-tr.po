@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-01 10:26+0200\n"
-"PO-Revision-Date: 2021-10-25 15:01+0000\n"
-"Last-Translator: PhD. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>\n"
+"PO-Revision-Date: 2021-11-02 08:36+0000\n"
+"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "help/tr/>\n"
 "Language: tr\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /tr/libo_online/loleaflet-help-tr.po\n"
 "X-Pootle-Revision: 828276\n"
 
@@ -1244,7 +1244,7 @@ msgstr "Hücreleri sil (Düzenle - Hücreleri Sil menüsünde olduğu gibi)"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-90
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Artı tuşu"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Eksi tuşu"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"
