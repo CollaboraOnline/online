@@ -300,7 +300,7 @@ L.Control.Tabs = L.Control.extend({
 		var map = this._map;
 		var nPos = this._tabForContextMenu;
 		vex.dialog.confirm({
-			message: _('Are you sure you want to delete sheet, %sheet% ?').replace('%sheet%', $('#spreadsheet-tab' + this._tabForContextMenu).text()),
+			message: _('Are you sure you want to delete sheet, %sheet%?').replace('%sheet%', $('#spreadsheet-tab' + this._tabForContextMenu).text()),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
 				$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
