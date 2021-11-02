@@ -566,7 +566,12 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	_insertAnnotationControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 		$(control.container).unbind('click.toolbutton');
-		$(control.container).click(function () {builder.map.insertComment();});
+		$(control.container).click(function () {
+			var docLayer = builder.map._docLayer;
+			if (!(docLayer._docType === 'spreadsheet' && docLayer._hasActiveSelection)) {
+				builder.map.insertComment();
+			}
+		});
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
