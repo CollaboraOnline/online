@@ -627,7 +627,7 @@ L.Map.include({
 			currentDocumentSigningStatus = _('Signature broken');
 			break;
 		case '3':
-			statusText = _('The signature was valid, but the document has been modified');
+			statusText = _('The signature was valid, but the document has been modified.');
 			statusIcon = 'sign_not_ok';
 			currentDocumentSigningStatus = _('Signed but document modified');
 			break;
@@ -637,9 +637,14 @@ L.Map.include({
 			currentDocumentSigningStatus = _('Signed but not validated');
 			break;
 		case '5':
-			statusText = _('The signature is OK, but the document is only partially signed');
+			statusText = _('The signature is OK, but the document is only partially signed.');
 			statusIcon = 'sign_not_ok';
 			currentDocumentSigningStatus = _('Signed but not all files are signed');
+			break;
+		case '6':
+			statusText = _('The signature is OK, but the certificate could not be validated and the document is only partially signed.');
+			statusIcon = 'sign_not_ok';
+			currentDocumentSigningStatus = _('Signed but not validated and not all files are signed');
 			break;
 		}
 
