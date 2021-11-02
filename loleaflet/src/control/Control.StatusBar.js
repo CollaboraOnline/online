@@ -11,6 +11,7 @@ L.Control.StatusBar = L.Control.extend({
 
 	onAdd: function (map) {
 		this.map = map;
+		this.languages = [];
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('commandvalues', this.onCommandValues, this);
 		map.on('commandstatechanged', this.onCommandStateChanged, this);
@@ -459,13 +460,24 @@ L.Control.StatusBar = L.Control.extend({
 			this.updateToolbarItem(statusbar, 'StatusDocPos', $('#StatusDocPos').html(state ? state : '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp').parent().html());
 		}
 		else if (commandName === '.uno:LanguageStatus') {
+			state = state.replaceAll('{', '').replaceAll('}', '');
 			var code = state;
 			var language = _(state);
 			var split = code.split(';');
+
 			if (split.length > 1) {
 				language = _(split[0]);
 				code = split[1];
 			}
+
+			if (language === code) {
+				// only code was sent, try to use cached translation
+				for (var i in this.languages) {
+					if (this.languages[i].neutral.indexOf(code) >= 0)
+						language = this.languages[i].translated;
+				}
+			}
+
 			w2ui['actionbar'].set('LanguageStatus', {text: language, selected: language});
 		}
 		else if (commandName === '.uno:RowColSelCount') {
@@ -529,11 +541,15 @@ L.Control.StatusBar = L.Control.extend({
 			var constNone = 'Default_LANGUAGE_NONE';
 			var resetLang = _('Reset to Default Language');
 			var noneLang = _('None (Do not check spelling)');
-			var languages = [];
+
+			// remember translations for state changed handler
+			this.languages = [];
+			var that = this;
+
 			e.commandValues.forEach(function (language) {
-				languages.push({ translated: _(language.split(';')[0]), neutral: language });
+				that.languages.push({ translated: _(language.split(';')[0]), neutral: language });
 			});
-			languages.sort(function (a, b) {
+			this.languages.sort(function (a, b) {
 				return a.translated < b.translated ? -1 : a.translated > b.translated ? 1 : 0;
 			});
 
@@ -543,9 +559,9 @@ L.Control.StatusBar = L.Control.extend({
 			 uno: constLang + constNone });
 
 
-			for (var lang in languages) {
-				translated = languages[lang].translated;
-				neutral = languages[lang].neutral;
+			for (var lang in this.languages) {
+				translated = this.languages[lang].translated;
+				neutral = this.languages[lang].neutral;
 				var splitNeutral = neutral.split(';');
 				toolbaritems.push({ id: neutral, text: translated, uno: constLang + encodeURIComponent('Default_' + splitNeutral[0]) });
 			}
