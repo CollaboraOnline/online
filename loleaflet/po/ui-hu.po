@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-01 10:26+0100\n"
-"PO-Revision-Date: 2021-10-23 16:43+0000\n"
+"PO-Revision-Date: 2021-11-02 08:36+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1706,10 +1706,9 @@ msgid "Invalid link: '%url'"
 msgstr "Érvénytelen hivatkozás: „%url”"
 
 #: src/errormessages.js:25
-#, fuzzy
 msgid ""
 "You are leaving the editor, are you sure you want to visit the following URL?"
-msgstr "Elhagyja a szerkesztőt, biztos, hogy át akar lépni ide: %url?"
+msgstr "Elhagyja a szerkesztőt, biztos, hogy át akar lépni az alábbi URL-re?"
 
 #: src/errormessages.js:26
 msgid ""
