@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-01 10:26+0100\n"
+"POT-Creation-Date: 2021-11-02 09:39+0100\n"
 "PO-Revision-Date: 2021-09-23 11:24+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
@@ -1345,7 +1345,7 @@ msgstr ""
 msgid "Type:"
 msgstr "Triba:"
 
-#: src/control/Signing.js:361 src/control/Signing.js:659
+#: src/control/Signing.js:361 src/control/Signing.js:670
 msgid "Document uploaded."
 msgstr ""
 
@@ -1385,49 +1385,59 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: src/control/Signing.js:616
+#: src/control/Signing.js:617
 msgid "Not Signed"
 msgstr "Non robláu"
 
-#: src/control/Signing.js:619
+#: src/control/Signing.js:620
 msgid "This document is digitally signed and the signature is valid."
 msgstr "Esti documentu roblóse dixitalmente y la robla ye válida."
 
-#: src/control/Signing.js:620
+#: src/control/Signing.js:622
 msgid "Signed and validated"
 msgstr "Robláu y validáu"
 
-#: src/control/Signing.js:623
+#: src/control/Signing.js:625
 msgid "This document has an invalid signature."
 msgstr "Esti documentu tien una robla que nun val."
 
-#: src/control/Signing.js:624
+#: src/control/Signing.js:627
 msgid "Signature broken"
 msgstr ""
 
-#: src/control/Signing.js:627
-msgid "The signature was valid, but the document has been modified"
-msgstr ""
-
-#: src/control/Signing.js:628
-msgid "Signed but document modified"
-msgstr ""
-
-#: src/control/Signing.js:631
-msgid "The signature is OK, but the certificate could not be validated."
+#: src/control/Signing.js:630
+msgid "The signature was valid, but the document has been modified."
 msgstr ""
 
 #: src/control/Signing.js:632
+msgid "Signed but document modified"
+msgstr ""
+
+#: src/control/Signing.js:635
+msgid "The signature is OK, but the certificate could not be validated."
+msgstr ""
+
+#: src/control/Signing.js:637
 #, fuzzy
 msgid "Signed but not validated"
 msgstr "Robláu y validáu"
 
-#: src/control/Signing.js:635
-msgid "The signature is OK, but the document is only partially signed"
+#: src/control/Signing.js:640
+msgid "The signature is OK, but the document is only partially signed."
 msgstr ""
 
-#: src/control/Signing.js:636
+#: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
+msgstr ""
+
+#: src/control/Signing.js:645
+msgid ""
+"The signature is OK, but the certificate could not be validated and the "
+"document is only partially signed."
+msgstr ""
+
+#: src/control/Signing.js:647
+msgid "Signed but not validated and not all files are signed"
 msgstr ""
 
 #: src/control/Toolbar.js:45
@@ -1888,7 +1898,7 @@ msgstr "Cargando…"
 msgid "Uploading file to server failed with status: %0"
 msgstr ""
 
-#: src/map/handler/Map.Keyboard.js:477
+#: src/map/handler/Map.Keyboard.js:485
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "

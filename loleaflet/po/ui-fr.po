@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-01 10:26+0100\n"
+"POT-Creation-Date: 2021-11-02 09:39+0100\n"
 "PO-Revision-Date: 2021-10-23 16:43+0000\n"
 "Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
@@ -1350,7 +1350,7 @@ msgstr "Sélectionner le type de document à télécharger"
 msgid "Type:"
 msgstr "Type :"
 
-#: src/control/Signing.js:361 src/control/Signing.js:659
+#: src/control/Signing.js:361 src/control/Signing.js:670
 msgid "Document uploaded."
 msgstr "Document téléversé."
 
@@ -1390,50 +1390,62 @@ msgstr "s.o."
 msgid "Login"
 msgstr "Connexion"
 
-#: src/control/Signing.js:616
+#: src/control/Signing.js:617
 msgid "Not Signed"
 msgstr "Non signé"
 
-#: src/control/Signing.js:619
+#: src/control/Signing.js:620
 msgid "This document is digitally signed and the signature is valid."
 msgstr "Ce document est signé numériquement et la signature est valide."
 
-#: src/control/Signing.js:620
+#: src/control/Signing.js:622
 msgid "Signed and validated"
 msgstr "Signé et validé"
 
-#: src/control/Signing.js:623
+#: src/control/Signing.js:625
 msgid "This document has an invalid signature."
 msgstr "Ce document a une signature invalide."
 
-#: src/control/Signing.js:624
+#: src/control/Signing.js:627
 msgid "Signature broken"
 msgstr "Signature corrompue"
 
-#: src/control/Signing.js:627
-msgid "The signature was valid, but the document has been modified"
+#: src/control/Signing.js:630
+#, fuzzy
+msgid "The signature was valid, but the document has been modified."
 msgstr "La signature est valide, mais le document a été modifié"
 
-#: src/control/Signing.js:628
+#: src/control/Signing.js:632
 msgid "Signed but document modified"
 msgstr "Signé mais le document est modifié"
 
-#: src/control/Signing.js:631
+#: src/control/Signing.js:635
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr "La signature est correcte mais le certificat n'a pas pu être validé."
 
-#: src/control/Signing.js:632
+#: src/control/Signing.js:637
 msgid "Signed but not validated"
 msgstr "Signé mais non validé"
 
-#: src/control/Signing.js:635
-msgid "The signature is OK, but the document is only partially signed"
+#: src/control/Signing.js:640
+#, fuzzy
+msgid "The signature is OK, but the document is only partially signed."
 msgstr ""
 "La signature est correcte, mais le document est seulement partiellement signé"
 
-#: src/control/Signing.js:636
+#: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
 msgstr "Signé mais tous les fichiers ne sont pas signés"
+
+#: src/control/Signing.js:645
+msgid ""
+"The signature is OK, but the certificate could not be validated and the "
+"document is only partially signed."
+msgstr ""
+
+#: src/control/Signing.js:647
+msgid "Signed but not validated and not all files are signed"
+msgstr ""
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -1969,7 +1981,7 @@ msgstr "Téléversement…"
 msgid "Uploading file to server failed with status: %0"
 msgstr "Le téléversement sur le serveur a échoué avec le statut : %0"
 
-#: src/map/handler/Map.Keyboard.js:477
+#: src/map/handler/Map.Keyboard.js:485
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "

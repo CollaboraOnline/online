@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-01 10:26+0100\n"
+"POT-Creation-Date: 2021-11-02 09:39+0100\n"
 "PO-Revision-Date: 2021-08-15 11:32+0000\n"
 "Last-Translator: Artem <Localizer_in_Russian@protonmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
@@ -1350,7 +1350,7 @@ msgstr "Выберите тип документа для загрузки"
 msgid "Type:"
 msgstr "Тип:"
 
-#: src/control/Signing.js:361 src/control/Signing.js:659
+#: src/control/Signing.js:361 src/control/Signing.js:670
 msgid "Document uploaded."
 msgstr "Документ загружен."
 
@@ -1390,49 +1390,61 @@ msgstr "N/A"
 msgid "Login"
 msgstr "Имя пользователя"
 
-#: src/control/Signing.js:616
+#: src/control/Signing.js:617
 msgid "Not Signed"
 msgstr "Не подписано"
 
-#: src/control/Signing.js:619
+#: src/control/Signing.js:620
 msgid "This document is digitally signed and the signature is valid."
 msgstr "Документ подписан, цифровая подпись верна."
 
-#: src/control/Signing.js:620
+#: src/control/Signing.js:622
 msgid "Signed and validated"
 msgstr "Подписано и подтверждено"
 
-#: src/control/Signing.js:623
+#: src/control/Signing.js:625
 msgid "This document has an invalid signature."
 msgstr "Подпись документа недействительна."
 
-#: src/control/Signing.js:624
+#: src/control/Signing.js:627
 msgid "Signature broken"
 msgstr "Подпись сломана"
 
-#: src/control/Signing.js:627
-msgid "The signature was valid, but the document has been modified"
+#: src/control/Signing.js:630
+#, fuzzy
+msgid "The signature was valid, but the document has been modified."
 msgstr "Подпись была верна, но документ был изменён"
 
-#: src/control/Signing.js:628
+#: src/control/Signing.js:632
 msgid "Signed but document modified"
 msgstr "Подписано, но документ изменён"
 
-#: src/control/Signing.js:631
+#: src/control/Signing.js:635
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr "Подпись корректная, но сертификат не может быть подтверждён."
 
-#: src/control/Signing.js:632
+#: src/control/Signing.js:637
 msgid "Signed but not validated"
 msgstr "Подписано, но не подтверждено"
 
-#: src/control/Signing.js:635
-msgid "The signature is OK, but the document is only partially signed"
+#: src/control/Signing.js:640
+#, fuzzy
+msgid "The signature is OK, but the document is only partially signed."
 msgstr "Подпись верна, но документ подписан только частично"
 
-#: src/control/Signing.js:636
+#: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
 msgstr "Подписано, но не все файлы подписаны"
+
+#: src/control/Signing.js:645
+msgid ""
+"The signature is OK, but the certificate could not be validated and the "
+"document is only partially signed."
+msgstr ""
+
+#: src/control/Signing.js:647
+msgid "Signed but not validated and not all files are signed"
+msgstr ""
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -1954,7 +1966,7 @@ msgstr "Выгрузка…"
 msgid "Uploading file to server failed with status: %0"
 msgstr "Загрузка файла на сервер не удалась, результат: %0"
 
-#: src/map/handler/Map.Keyboard.js:477
+#: src/map/handler/Map.Keyboard.js:485
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "

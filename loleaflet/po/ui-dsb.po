@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-01 10:26+0100\n"
+"POT-Creation-Date: 2021-11-02 09:39+0100\n"
 "PO-Revision-Date: 2020-10-08 21:00+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Lower Sorbian <https://hosted.weblate.org/projects/"
@@ -1351,7 +1351,7 @@ msgstr "Wubjeŕśo dokumentowy typ za nagraśe"
 msgid "Type:"
 msgstr "Typ:"
 
-#: src/control/Signing.js:361 src/control/Signing.js:659
+#: src/control/Signing.js:361 src/control/Signing.js:670
 msgid "Document uploaded."
 msgstr "Dokument jo se nagrał."
 
@@ -1391,49 +1391,61 @@ msgstr "ND"
 msgid "Login"
 msgstr "Pśizjawjenje"
 
-#: src/control/Signing.js:616
+#: src/control/Signing.js:617
 msgid "Not Signed"
 msgstr "Njesigněrowany"
 
-#: src/control/Signing.js:619
+#: src/control/Signing.js:620
 msgid "This document is digitally signed and the signature is valid."
 msgstr "Dokument jo digitalnje signěrowany a signatura jo płaśiwa."
 
-#: src/control/Signing.js:620
+#: src/control/Signing.js:622
 msgid "Signed and validated"
 msgstr "Signěrowany a wobkšuśony"
 
-#: src/control/Signing.js:623
+#: src/control/Signing.js:625
 msgid "This document has an invalid signature."
 msgstr "Toś ten dokument ma njepłaśiwu signaturu."
 
-#: src/control/Signing.js:624
+#: src/control/Signing.js:627
 msgid "Signature broken"
 msgstr "Signatura jo wobškóźona"
 
-#: src/control/Signing.js:627
-msgid "The signature was valid, but the document has been modified"
+#: src/control/Signing.js:630
+#, fuzzy
+msgid "The signature was valid, but the document has been modified."
 msgstr "Signatura jo była płaśiwa, ale dokument jo se změnił"
 
-#: src/control/Signing.js:628
+#: src/control/Signing.js:632
 msgid "Signed but document modified"
 msgstr "Signěrowany, ale dokument jo změnjony"
 
-#: src/control/Signing.js:631
+#: src/control/Signing.js:635
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr "Signatura jo w pórěźe, ale certifikat njedajo se pśeglědowaś."
 
-#: src/control/Signing.js:632
+#: src/control/Signing.js:637
 msgid "Signed but not validated"
 msgstr "Signěrowany, ale njewobkšuśony"
 
-#: src/control/Signing.js:635
-msgid "The signature is OK, but the document is only partially signed"
+#: src/control/Signing.js:640
+#, fuzzy
+msgid "The signature is OK, but the document is only partially signed."
 msgstr "Signatura jo w pórědku, ale dokument jo jano signěrowany pó źělach"
 
-#: src/control/Signing.js:636
+#: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
 msgstr "Signěrowany, ale nic wšykne dataje su signěrowane"
+
+#: src/control/Signing.js:645
+msgid ""
+"The signature is OK, but the certificate could not be validated and the "
+"document is only partially signed."
+msgstr ""
+
+#: src/control/Signing.js:647
+msgid "Signed but not validated and not all files are signed"
+msgstr ""
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -1951,7 +1963,7 @@ msgstr "Nagrawa se..."
 msgid "Uploading file to server failed with status: %0"
 msgstr "Nagrawanje dataje na serwer njejo se raźiło ze statusom %0"
 
-#: src/map/handler/Map.Keyboard.js:477
+#: src/map/handler/Map.Keyboard.js:485
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "

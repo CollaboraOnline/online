@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-01 10:26+0100\n"
+"POT-Creation-Date: 2021-11-02 09:39+0100\n"
 "PO-Revision-Date: 2020-07-08 12:37+0000\n"
 "Last-Translator: Andrew Lee (李健秋) <alee@collabora.com>\n"
 "Language-Team: Chinese (Traditional) <https://weblate.documentfoundation.org/"
@@ -1358,7 +1358,7 @@ msgstr "選取要上傳的文件類型"
 msgid "Type:"
 msgstr "類型："
 
-#: src/control/Signing.js:361 src/control/Signing.js:659
+#: src/control/Signing.js:361 src/control/Signing.js:670
 msgid "Document uploaded."
 msgstr "文件已上傳。"
 
@@ -1398,49 +1398,61 @@ msgstr "無法使用"
 msgid "Login"
 msgstr "登入"
 
-#: src/control/Signing.js:616
+#: src/control/Signing.js:617
 msgid "Not Signed"
 msgstr "未簽署"
 
-#: src/control/Signing.js:619
+#: src/control/Signing.js:620
 msgid "This document is digitally signed and the signature is valid."
 msgstr "此文件已數位簽署，且簽章有效。"
 
-#: src/control/Signing.js:620
+#: src/control/Signing.js:622
 msgid "Signed and validated"
 msgstr "已簽署和驗證"
 
-#: src/control/Signing.js:623
+#: src/control/Signing.js:625
 msgid "This document has an invalid signature."
 msgstr "此文件有簽章無效。"
 
-#: src/control/Signing.js:624
+#: src/control/Signing.js:627
 msgid "Signature broken"
 msgstr "簽章損毀"
 
-#: src/control/Signing.js:627
-msgid "The signature was valid, but the document has been modified"
+#: src/control/Signing.js:630
+#, fuzzy
+msgid "The signature was valid, but the document has been modified."
 msgstr "簽章有效，但文件已被修改"
 
-#: src/control/Signing.js:628
+#: src/control/Signing.js:632
 msgid "Signed but document modified"
 msgstr "已簽署但文件已修改"
 
-#: src/control/Signing.js:631
+#: src/control/Signing.js:635
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr "簽章沒有問題，但憑證無法通過驗證。"
 
-#: src/control/Signing.js:632
+#: src/control/Signing.js:637
 msgid "Signed but not validated"
 msgstr "已簽署但驗證未過"
 
-#: src/control/Signing.js:635
-msgid "The signature is OK, but the document is only partially signed"
+#: src/control/Signing.js:640
+#, fuzzy
+msgid "The signature is OK, but the document is only partially signed."
 msgstr "簽章沒有問題，但文件僅部分有簽署"
 
-#: src/control/Signing.js:636
+#: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
 msgstr "有簽署但非所有檔案皆簽署"
+
+#: src/control/Signing.js:645
+msgid ""
+"The signature is OK, but the certificate could not be validated and the "
+"document is only partially signed."
+msgstr ""
+
+#: src/control/Signing.js:647
+msgid "Signed but not validated and not all files are signed"
+msgstr ""
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -1905,7 +1917,7 @@ msgstr "上傳中..."
 msgid "Uploading file to server failed with status: %0"
 msgstr "檔案上傳至伺服器失敗，狀態：%0"
 
-#: src/map/handler/Map.Keyboard.js:477
+#: src/map/handler/Map.Keyboard.js:485
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "

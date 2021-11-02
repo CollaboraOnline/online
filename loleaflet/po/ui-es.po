@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-01 10:26+0100\n"
+"POT-Creation-Date: 2021-11-02 09:39+0100\n"
 "PO-Revision-Date: 2021-09-23 11:24+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
@@ -1348,7 +1348,7 @@ msgstr "Seleccione el tipo de documento que cargar"
 msgid "Type:"
 msgstr "Tipo:"
 
-#: src/control/Signing.js:361 src/control/Signing.js:659
+#: src/control/Signing.js:361 src/control/Signing.js:670
 msgid "Document uploaded."
 msgstr "Documento cargado."
 
@@ -1388,49 +1388,61 @@ msgstr "N/D"
 msgid "Login"
 msgstr "Acceso"
 
-#: src/control/Signing.js:616
+#: src/control/Signing.js:617
 msgid "Not Signed"
 msgstr "No firmado"
 
-#: src/control/Signing.js:619
+#: src/control/Signing.js:620
 msgid "This document is digitally signed and the signature is valid."
 msgstr "Este documento está firmado digitalmente y la firma es válida."
 
-#: src/control/Signing.js:620
+#: src/control/Signing.js:622
 msgid "Signed and validated"
 msgstr "Firmado y validado"
 
-#: src/control/Signing.js:623
+#: src/control/Signing.js:625
 msgid "This document has an invalid signature."
 msgstr "Este documento contiene una firma no válida."
 
-#: src/control/Signing.js:624
+#: src/control/Signing.js:627
 msgid "Signature broken"
 msgstr "Firma dañada"
 
-#: src/control/Signing.js:627
-msgid "The signature was valid, but the document has been modified"
+#: src/control/Signing.js:630
+#, fuzzy
+msgid "The signature was valid, but the document has been modified."
 msgstr "La firma era válida pero se modificó el documento"
 
-#: src/control/Signing.js:628
+#: src/control/Signing.js:632
 msgid "Signed but document modified"
 msgstr "Firmado pero con modificaciones"
 
-#: src/control/Signing.js:631
+#: src/control/Signing.js:635
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr "La firma es correcta pero no se pudo validar el certificado."
 
-#: src/control/Signing.js:632
+#: src/control/Signing.js:637
 msgid "Signed but not validated"
 msgstr "Firmado pero no validado"
 
-#: src/control/Signing.js:635
-msgid "The signature is OK, but the document is only partially signed"
+#: src/control/Signing.js:640
+#, fuzzy
+msgid "The signature is OK, but the document is only partially signed."
 msgstr "La firma es correcta pero el documento se ha firmado solo parcialmente"
 
-#: src/control/Signing.js:636
+#: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
 msgstr "Firmado pero no todos los archivos tienen firma"
+
+#: src/control/Signing.js:645
+msgid ""
+"The signature is OK, but the certificate could not be validated and the "
+"document is only partially signed."
+msgstr ""
+
+#: src/control/Signing.js:647
+msgid "Signed but not validated and not all files are signed"
+msgstr ""
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -1955,7 +1967,7 @@ msgstr "Cargando…"
 msgid "Uploading file to server failed with status: %0"
 msgstr "Falló la carga del archivo en el servidor con el estado: %0"
 
-#: src/map/handler/Map.Keyboard.js:477
+#: src/map/handler/Map.Keyboard.js:485
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "

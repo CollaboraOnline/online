@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-01 10:26+0100\n"
+"POT-Creation-Date: 2021-11-02 09:39+0100\n"
 "PO-Revision-Date: 2021-09-20 17:51+0000\n"
 "Last-Translator: george kitsoukakis <norhorn@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
@@ -1348,7 +1348,7 @@ msgstr "Επιλέξτε τον τύπο εγγράφου για ανέβασμ�
 msgid "Type:"
 msgstr "Τύπος:"
 
-#: src/control/Signing.js:361 src/control/Signing.js:659
+#: src/control/Signing.js:361 src/control/Signing.js:670
 msgid "Document uploaded."
 msgstr "Το έγγραφο ανέβηκε."
 
@@ -1388,52 +1388,64 @@ msgstr "Δ/Υ"
 msgid "Login"
 msgstr "Σύνδεση"
 
-#: src/control/Signing.js:616
+#: src/control/Signing.js:617
 msgid "Not Signed"
 msgstr "Μη υπογεγραμμένο"
 
-#: src/control/Signing.js:619
+#: src/control/Signing.js:620
 msgid "This document is digitally signed and the signature is valid."
 msgstr ""
 "Αυτό το έγγραφο είναι ψηφιακά υπογεγραμμένο και η υπογραφή είναι έγκυρη."
 
-#: src/control/Signing.js:620
+#: src/control/Signing.js:622
 msgid "Signed and validated"
 msgstr "Υπογεγραμμένο και επικυρωμένο"
 
-#: src/control/Signing.js:623
+#: src/control/Signing.js:625
 msgid "This document has an invalid signature."
 msgstr "Αυτό το έγγραφο έχει άκυρη υπογραφή."
 
-#: src/control/Signing.js:624
+#: src/control/Signing.js:627
 msgid "Signature broken"
 msgstr "Αλλοιωμένη υπογραφή"
 
-#: src/control/Signing.js:627
-msgid "The signature was valid, but the document has been modified"
+#: src/control/Signing.js:630
+#, fuzzy
+msgid "The signature was valid, but the document has been modified."
 msgstr "Η υπογραφή ήταν έγκυρη, αλλά το έγγραφο έχει τροποποιηθεί"
 
-#: src/control/Signing.js:628
+#: src/control/Signing.js:632
 msgid "Signed but document modified"
 msgstr "Υπογεγραμμένο, αλλά το έγγραφο τροποποιήθηκε"
 
-#: src/control/Signing.js:631
+#: src/control/Signing.js:635
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr ""
 "Η υπογραφή είναι εντάξει, αλλά το πιστοποιητικό δεν μπόρεσε να επικυρωθεί."
 
-#: src/control/Signing.js:632
+#: src/control/Signing.js:637
 msgid "Signed but not validated"
 msgstr "Υπογεγραμμένο αλλά μη επικυρωμένο"
 
-#: src/control/Signing.js:635
-msgid "The signature is OK, but the document is only partially signed"
+#: src/control/Signing.js:640
+#, fuzzy
+msgid "The signature is OK, but the document is only partially signed."
 msgstr ""
 "Η υπογραφή είναι εντάξει, αλλά το έγγραφο είναι μόνο μερικώς υπογεγραμμένο"
 
-#: src/control/Signing.js:636
+#: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
 msgstr "Υπογεγραμμένο, αλλά δεν έχουν υπογραφεί όλα τα αρχεία"
+
+#: src/control/Signing.js:645
+msgid ""
+"The signature is OK, but the certificate could not be validated and the "
+"document is only partially signed."
+msgstr ""
+
+#: src/control/Signing.js:647
+msgid "Signed but not validated and not all files are signed"
+msgstr ""
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -1976,7 +1988,7 @@ msgstr "Αποστολή…"
 msgid "Uploading file to server failed with status: %0"
 msgstr "Αποτυχία αποστολής αρχείου στον διακομιστή με κατάσταση: %0"
 
-#: src/map/handler/Map.Keyboard.js:477
+#: src/map/handler/Map.Keyboard.js:485
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
