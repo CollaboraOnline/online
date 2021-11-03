@@ -76,7 +76,7 @@ class CommentSection {
 		this.sectionProperties.marginY = 10 * app.dpiScale;
 		this.sectionProperties.offset = 5 * app.dpiScale;
 		this.sectionProperties.layoutTimer = null;
-		this.sectionProperties.width = Math.round(300 * app.dpiScale); // Configurable variable.
+		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
 		this.sectionProperties.scrollAnnotation = null; // For impress, when 1 or more comments exist.
 	}
 
@@ -211,8 +211,6 @@ class CommentSection {
 			|| this.sectionProperties.docLayer._docType === 'spreadsheet'
 			|| this.sectionProperties.commentList.length === 0)
 			return;
-
-		this.size[0] = 1 * app.dpiScale;
 	}
 
 	public setExpanded() {
@@ -226,8 +224,6 @@ class CommentSection {
 			|| this.sectionProperties.docLayer._docType === 'spreadsheet'
 			|| this.sectionProperties.commentList.length === 0)
 			return;
-
-		this.size[0] = 300 * app.dpiScale;
 	}
 
 	public hideAllComments () {
@@ -1483,8 +1479,12 @@ class CommentSection {
 			var yOrigin = null;
 			var selectedIndex = null;
 			var x = topRight[0];
-			if (this.containerObject.getDocumentAnchorSection().size[0] > app.file.size.pixels[0]) {
+			var commentWidth = 300;
+			var availableSpace = this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0];
+			if (availableSpace > commentWidth * 2) {
 				x = topRight[0] - Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0]) * 0.5);
+			} else if (!this.isCollapsed) {
+				x -= commentWidth;
 			}
 
 			if (this.isCollapsed)
