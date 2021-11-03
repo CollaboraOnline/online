@@ -16,7 +16,7 @@
      LibreOffice core.) The parameters are then in our JavaScript
      passed on to the Python script that acts on the document open in
      the iframe. The Python script returns a value, which gets passed
-     to loleaflet in a unocommandresult: message, and passed on to the
+     to cool in a unocommandresult: message, and passed on to the
      event listener on this page, which writes it to the output field.
 
      The other forms call other Python functions in other files. (In
@@ -25,7 +25,7 @@
      in a Calc document being edited.
 
      To test this, do 'make run', and then in your browser open:
-     https://localhost:9980/loleaflet/dist/framed.html?file_path=/opt/libreoffice/online/test/data/hello-world.ods
+     https://localhost:9980/browser/dist/framed.html?file_path=/opt/libreoffice/online/test/data/hello-world.ods
 -->
 
 <html>
@@ -201,7 +201,7 @@
 
     <!-- 127.0.0.2 allows us to test CSS issues -->
     <script>
-      var uriBase = document.location.protocol + "//127.0.0.2:9980/loleaflet/42/cool.html" + window.location.search;
+      var uriBase = document.location.protocol + "//127.0.0.2:9980/browser/42/cool.html" + window.location.search;
       var iframe = document.getElementById("frame");
       iframe.src = uriBase + "&NotWOPIButIframe=true";
       var msg = document.getElementById("link");
