@@ -24,7 +24,7 @@
 	padding: 6px 9px 4px !important;
 	text-decoration: none;
 
-	font: 12px/1.5 var(--loleaflet-font);
+	font: 12px/1.5 var(--cool-font);
 	display: inline-block;
 	border: 1px solid darkgrey;
 	background-color: lightgrey;
@@ -85,7 +85,7 @@
 
 .spreadsheet-header-corner-styles {
 	border: 1px solid darkgray;
-	font: 12px/1.5 var(--loleaflet-font);
+	font: 12px/1.5 var(--cool-font);
 	color: black;
 	background-color: #f1f4f7;
 	cursor: pointer;
@@ -118,7 +118,7 @@
 
 .spreadsheet-header-column {
 	border: 1px solid darkgray;
-	font: 12px/1.5 var(--loleaflet-font);
+	font: 12px/1.5 var(--cool-font);
 	color: black;
 	background-color: #f1f4f7;
 	cursor: pointer;
@@ -160,7 +160,7 @@
 
 .spreadsheet-header-row {
 	border: 1px solid darkgray;
-	font: 12px/1.5 var(--loleaflet-font);
+	font: 12px/1.5 var(--cool-font);
 	color: black;
 	background-color: #f1f4f7;
 	cursor: pointer;
