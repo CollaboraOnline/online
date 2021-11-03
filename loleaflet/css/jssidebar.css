@@ -15,6 +15,7 @@
 	padding: 0;
 	border-left: 1px solid var(--gray-color) !important;
 	margin-top: 0 !important;
+	box-sizing: border-box;
 }
 
 .sidebar.spinfield {
@@ -103,12 +104,10 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 }
 
 #settransparency, #fontheight,
-.sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.ui-grid > tr.sidebar > td.sidebar:last-child,
+#document-container:not(.presentation-doctype) ~ #sidebar-dock-wrapper .sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.ui-grid > tr.sidebar > td.sidebar:last-child,
 .sidebar.jsdialog.cell > #table-box3 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child,
 .sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child,
-.sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:nth-child(4),
-td.sidebar.jsdialog > #table-box1 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:nth-child(2),
-td.sidebar.jsdialog > #table-box2 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child {
+.sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:nth-child(4) {
 	display: flex;
 	justify-content: flex-end;
 }
@@ -296,4 +295,13 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	padding: 4px;
 	position: relative;
 	left: -10px;
+}
+
+#writedirection, #backgroundcolor, #table-indentfieldbox * {
+	justify-content: end;
+	margin-right: 0;
+}
+
+.sidebar .spinfieldcontainer input {
+	width: calc(100% - 28px);
 }
