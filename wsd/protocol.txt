@@ -236,7 +236,7 @@ tile part=<partNumber> width=<width> height=<height> tileposx=<xpos> tileposy=<y
     Note: id must be echoed back in the response verbatim. It and the
     following parameter, broadcast, are used when rendering slide
     previews of presentation documents, and not for anything else. It
-    is only useful to loleaflet and will break it if not returned in
+    is only useful to browser and will break it if not returned in
     the response.
 
 tilecombine <parameters>
@@ -598,13 +598,13 @@ perm: <permission>
 wopi: <JSON>
 
      Sent only in case storage is WOPI. Contains WOPI related
-     capabilities/information for loleaflet to act accordingly.
+     capabilities/information for browser to act accordingly.
 
      Properties mentioned:
      + PostMessageOrigin: See WOPI specs for more information
-     + HideSaveOption: (boolean): If loleaflet should hide the save options
-     + HidePrintOption: (boolean): If loleaflet should hide print options
-     + HideExportOption: (boolean): If loleaflet should hide the export options
+     + HideSaveOption: (boolean): If browser should hide the save options
+     + HidePrintOption: (boolean): If browser should hide print options
+     + HideExportOption: (boolean): If browser should hide the export options
        this implies 'Download as' options in file menu
 
 versionrestore: <action>
