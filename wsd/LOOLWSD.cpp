@@ -1458,12 +1458,15 @@ void LOOLWSD::innerInitialize(Application& self)
     LOG_DBG("FileServerRoot after config: " << FileServerRoot);
 
     //creating quarantine directory
-    QuarantinePath = FileServerRoot + "quarantine/";
-    Poco::File p(QuarantinePath);
-    p.createDirectories();
-    LOG_INF("Created quarantine directory " + p.path());
+    if(getConfigValue<bool>(conf, "quarantine_files[@enable]", false))
+    {
+        QuarantinePath = getPathFromConfig("quarantine_files.path");
+        Poco::File p(QuarantinePath);
+        p.createDirectories();
+        LOG_INF("Created quarantine directory " + p.path());
 
-    Quarantine::createQuarantineMap();
+        Quarantine::createQuarantineMap();
+    }
 
     WelcomeFilesRoot = getPathFromConfig("welcome.path");
     if (!getConfigValue<bool>(conf, "welcome.enable", true))
