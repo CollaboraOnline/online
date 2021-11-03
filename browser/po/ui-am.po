@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
 "X-Generator: Weblate 4.4-dev\n"
-"X-Pootle-Path: /am/libo_online/loleaflet-ui-am.po\n"
+"X-Pootle-Path: /am/libo_online/cool-ui-am.po\n"
 "X-Pootle-Revision: 3937618\n"
 
 #: admin/admin.strings.js:6
