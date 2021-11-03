@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=(n==0) ? 0 : (n==1) ? 1 : (n==2) ? 2 : "
 "(n==3) ? 3 :(n==6) ? 4 : 5;\n"
 "X-Generator: Weblate 4.4-dev\n"
-"X-Pootle-Path: /cy/libo_online/loleaflet-ui-cy.po\n"
+"X-Pootle-Path: /cy/libo_online/cool-ui-cy.po\n"
 "X-Pootle-Revision: 3938471\n"
 
 #: admin/admin.strings.js:6
