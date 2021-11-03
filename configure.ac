@@ -138,7 +138,7 @@ AC_ARG_WITH([app-branding],
               AS_HELP_STRING([--with-app-branding=<path>],
                              [Point to a directory containing a branding.css file and possibly other files it references,
                               to be bundled and used by the iOS app. The directory structure is copied to
-                              "loleaflet/dist/branding" and that directory ends upp in the app bundle as "branding".]))
+                              "browser/dist/branding" and that directory ends upp in the app bundle as "branding".]))
 
 AC_ARG_ENABLE([gtkapp],
               AS_HELP_STRING([--enable-gtkapp],
@@ -1117,14 +1117,14 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
 
 AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD" -o `uname -s` = "Darwin"],
       # We need npm and node unconditionally only on Linux, both in the normal Online case, and when
-      # only building loleaflet for the iOS app. When building the iOS app itself on macOS, this is
-      # optional. If node and npm are not available, loleaflet will have to be built on a Linux box.
+      # only building cool for the iOS app. When building the iOS app itself on macOS, this is
+      # optional. If node and npm are not available, cool will have to be built on a Linux box.
       [AC_PATH_PROG(NODE, node, no)
        if test "$NODE" = "no"; then
            if test `uname -s` = "Darwin"; then
-               AC_MSG_WARN([The loleaflet bits will have to be built on a Linux machine and copied over])
+               AC_MSG_WARN([The cool bits will have to be built on a Linux machine and copied over])
            else
-               AC_MSG_ERROR([node required to build loleaflet, but not installed])
+               AC_MSG_ERROR([node required to build cool, but not installed])
            fi
        else
            NODE_VER=`node --version | sed 's/^v//' | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
@@ -1136,7 +1136,7 @@ AS_IF([test `uname -s` = "Linux" -o `uname -s` = "FreeBSD" -o `uname -s` = "Darw
        if test "$NODE" != "no"; then
            AC_PATH_PROG(NPM, npm, no)
            if test "$NPM" = "no"; then
-               AC_MSG_ERROR([npm required to build loleaflet, but not installed])
+               AC_MSG_ERROR([npm required to build cool, but not installed])
            else
                NPM_VER=`npm -v | awk -F. '{ print (($1 * 100) + $2) * 100 + $3;}'`
                if test "$NPM_VER" -lt 50000; then
@@ -1188,12 +1188,12 @@ fi
 AC_SUBST(ENABLE_SETCAP)
 
 AC_CONFIG_LINKS([discovery.xml:discovery.xml])
-AC_CONFIG_LINKS([loleaflet/package.json:loleaflet/package.json])
+AC_CONFIG_LINKS([browser/package.json:browser/package.json])
 AC_CONFIG_LINKS([cypress_test/package.json:cypress_test/package.json])
 AC_CONFIG_LINKS([cypress_test/cypress.json:cypress_test/cypress.json])
 AC_CONFIG_COMMANDS_PRE([
 if test "$srcdir" != '.'; then
-   dst_dirs="cypress_test/plugins cypress_test/eslint_plugin loleaflet/archived-packages"
+   dst_dirs="cypress_test/plugins cypress_test/eslint_plugin browser/archived-packages"
    src_dir=
    dir_name=
    for dst_dir in $dst_dirs
@@ -1404,8 +1404,8 @@ AC_CONFIG_FILES([Makefile
                  cypress_test/Makefile
                  gtk/Makefile
                  test/Makefile
-                 loleaflet/Makefile
-                 loleaflet/npm-shrinkwrap.json
+                 browser/Makefile
+                 browser/npm-shrinkwrap.json
                  loolkitconfig.xcu
                  loolwsd.spec
                  loolwsd.xml
