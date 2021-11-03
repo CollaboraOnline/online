@@ -801,6 +801,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 #endif
 
     // Capture cookies so we can optionally reuse them for the storage requests.
+    std::string cookiesString;
+    if (config.getBool("storage.wopi.reuse_cookies", false))
     {
         NameValueCollection cookies;
         request.getCookies(cookies);
@@ -808,11 +810,12 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         for (auto it = cookies.begin(); it != cookies.end(); it++)
             cookieTokens << (*it).first << '=' << (*it).second << (std::next(it) != cookies.end() ? ":" : "");
 
-        const std::string cookiesString = cookieTokens.str();
+        cookiesString = cookieTokens.str();
         if (!cookiesString.empty())
             LOG_DBG("Captured cookies: " << cookiesString);
-        Poco::replaceInPlace(preprocess, std::string("%REUSE_COOKIES%"), cookiesString);
     }
+
+    Poco::replaceInPlace(preprocess, std::string("%REUSE_COOKIES%"), cookiesString);
 
     const std::string mimeType = "text/html";
 
