@@ -202,6 +202,7 @@ class CommentSection {
 
 		this.isCollapsed = true;
 		this.removeHighlighters();
+		this.unselect();
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
 			if (this.sectionProperties.commentList[i].sectionProperties.data.id !== 'new')
 				this.sectionProperties.commentList[i].setCollapsed();
