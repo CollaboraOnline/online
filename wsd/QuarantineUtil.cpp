@@ -19,11 +19,14 @@
 
 namespace Quarantine
 {
+    bool isQuarantineEnabled()
+    {
+        return LOOLWSD::getConfigValue<bool>("quarantine_files[@enable]", false);
+    }
+
     void createQuarantineMap()
     {
-        bool enable = LOOLWSD::getConfigValue<bool>("quarantine_files[@enable]", false);
-
-        if (!enable)
+        if (!isQuarantineEnabled())
             return;
 
         std::vector<std::string> files;
@@ -48,9 +51,7 @@ namespace Quarantine
 
     void removeQuarantine()
     {
-        bool enable = LOOLWSD::getConfigValue<bool>("quarantine_files[@enable]", false);
-
-        if (!enable)
+        if (!isQuarantineEnabled())
             return;
 
         FileUtil::removeFile(LOOLWSD::QuarantinePath, true);
@@ -61,10 +62,9 @@ namespace Quarantine
     // because they are originally stored in jails
     std::size_t quarantineSize()
     {
-        bool enable = LOOLWSD::getConfigValue<bool>("quarantine_files[@enable]", false);
-
-        if (!enable)
+        if (!isQuarantineEnabled())
             return 0;
+
         std::vector<std::string> files;
         Poco::File(LOOLWSD::QuarantinePath).list(files);
         std::size_t size = 0;
@@ -80,9 +80,7 @@ namespace Quarantine
 
     void makeQuarantineSpace()
     {
-        bool enable = LOOLWSD::getConfigValue<bool>("quarantine_files[@enable]", false);
-
-        if (!enable)
+        if (!isQuarantineEnabled())
             return;
 
         std::size_t sizeLimit = LOOLWSD::getConfigValue<std::size_t>("quarantine_files.limit_dir_size_mb", 0)*1024*1024;
@@ -110,9 +108,7 @@ namespace Quarantine
 
     void clearOldQuarantineVersions(std::string Wopiscr)
     {
-        bool enable = LOOLWSD::getConfigValue<bool>("quarantine_files[@enable]", false);
-
-        if (!enable)
+        if (!isQuarantineEnabled())
             return;
 
         std::size_t maxVersionCount = LOOLWSD::getConfigValue<std::size_t>("quarantine_files.max_versions_to_maintain", 2);
@@ -128,9 +124,7 @@ namespace Quarantine
 
     bool quarantineFile(DocumentBroker* docBroker, std::string docName)
     {
-        bool enable = LOOLWSD::getConfigValue<bool>("quarantine_files[@enable]", false);
-
-        if (!enable)
+        if (!isQuarantineEnabled())
             return false;
 
         std::string docKey;
