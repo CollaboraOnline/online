@@ -35,7 +35,7 @@
 
 using namespace LOOLProtocol;
 
-static constexpr int SYNTHETIC_LOLEAFLET_PID_OFFSET = 10000000;
+static constexpr int SYNTHETIC_COOL_PID_OFFSET = 10000000;
 
 using Poco::Path;
 
@@ -90,10 +90,10 @@ ClientSession::ClientSession(
     TraceEvent::emitOneRecordingIfEnabled("{\"name\":\"process_name\",\"ph\":\"M\",\"args\":{\"name\":\""
                                           "loleaflet-" + id
                                           + "\"},\"pid\":"
-                                          + std::to_string(getpid() + SYNTHETIC_LOLEAFLET_PID_OFFSET)
+                                          + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
                                           + ",\"tid\":1},\n");
     TraceEvent::emitOneRecordingIfEnabled("{\"name\":\"thread_name\",\"ph\":\"M\",\"args\":{\"name\":\"JS\"},\"pid\":"
-                                          + std::to_string(getpid() + SYNTHETIC_LOLEAFLET_PID_OFFSET)
+                                          + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
                                           + ",\"tid\":1},\n");
 }
 
@@ -408,7 +408,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                                                           + ",\"ts\":"
                                                           + std::to_string(ts + _performanceCounterEpoch)
                                                           + ",\"pid\":"
-                                                          + std::to_string(getpid() + SYNTHETIC_LOLEAFLET_PID_OFFSET)
+                                                          + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
                                                           + ",\"tid\":1},\n");
                     }
                     else if ((ph == "S" || ph == "F") &&
@@ -423,7 +423,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                                                           + ",\"ts\":"
                                                           + std::to_string(ts + _performanceCounterEpoch)
                                                           + ",\"pid\":"
-                                                          + std::to_string(getpid() + SYNTHETIC_LOLEAFLET_PID_OFFSET)
+                                                          + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
                                                           + ",\"tid\":1"
                                                             ",\"id\":"
                                                           + std::to_string(id)
@@ -439,7 +439,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                                                           + ",\"ts\":"
                                                           + std::to_string(ts + _performanceCounterEpoch)
                                                           + ",\"pid\":"
-                                                          + std::to_string(getpid() + SYNTHETIC_LOLEAFLET_PID_OFFSET)
+                                                          + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
                                                           + ",\"tid\":1"
                                                             ",\"dur\":"
                                                           + std::to_string(dur)

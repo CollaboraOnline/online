@@ -205,7 +205,7 @@ Admin Panel
 -----------
 
 You can access the admin panel by directly accessing the admin.html file
-from loleaflet directory. See browser/README for more details.
+from browser directory. See browser/README for more details.
 
 Websocket connections to admin console can be made at path: /adminws/ on the
 same url and port as loolwsd is running on. However, one needs a JWT token to
