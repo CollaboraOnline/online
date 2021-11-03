@@ -52,11 +52,11 @@ Requires:       fontconfig libbz2-1 libexpat1 libfreetype6 libpng16-16 libuuid1 
 %endif
 
 %if 0%{?name_suffix:1}
-Provides:       loleaflet = 1.5.8, loolwsd
+Provides:       cool = 1.5.8, loolwsd
 %else
-Provides:       loleaflet = 1.5.8
+Provides:       cool = 1.5.8
 %endif
-Obsoletes:      loleaflet <= 1.5.8
+Obsoletes:      cool <= 1.5.8
 
 %description
 
@@ -114,7 +114,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /usr/bin/loolmount
 /usr/share/loolwsd/discovery.xml
 /usr/share/loolwsd/favicon.ico
-/usr/share/loolwsd/loleaflet
+/usr/share/loolwsd/browser
 /usr/share/doc/loolwsd/README
 /usr/share/doc/loolwsd/README.vars
 /usr/share/doc/loolwsd/metrics.txt
