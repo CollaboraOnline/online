@@ -418,7 +418,7 @@ L.Control.StatusBar = L.Control.extend({
 	},
 
 	_getPermissionModeHtml: function(isReadOnly) {
-		return '<div id="PermissionMode" class="loleaflet-font ' +
+		return '<div id="PermissionMode" class="cool-font ' +
 			(isReadOnly
 				? ' status-readonly-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Read-only') + ' </div>'
 				: ' status-edit-mode" title="' + _('Permission Mode') + '" style="padding: 5px 5px;"> ' + _('Edit') + ' </div>');
