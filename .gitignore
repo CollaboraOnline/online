@@ -60,15 +60,15 @@ loolwsd.log
 *.lo
 *.mo
 
-# loleaflet
-loleaflet/debug
-loleaflet/release
-loleaflet/npm-shrinkwrap.json
-loleaflet/jsconfig.json
-loleaflet/admin/jsconfig.json
-loleaflet/dist
-loleaflet/compilets
-loleaflet/typescript_js
+# browser
+browser/debug
+browser/release
+browser/npm-shrinkwrap.json
+browser/jsconfig.json
+browser/admin/jsconfig.json
+browser/dist
+browser/compilets
+browser/typescript_js
 
 connect
 lokitclient
