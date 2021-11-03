@@ -1546,7 +1546,7 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/,
 {
     bool success = true;
 
-    // default values for compatibility reasons with older loleaflets
+    // default values for compatibility reasons with older cools
     int buttons = 1; // left button
     int modifier = 0;
 
@@ -1582,11 +1582,11 @@ bool ChildSession::mouseEvent(const char* /*buffer*/, int /*length*/,
         success = false;
     }
 
-    // compatibility with older loleaflets
+    // compatibility with older cools
     if (success && tokens.size() > counter && !getTokenInteger(tokens[counter++], "buttons", buttons))
         success = false;
 
-    // compatibility with older loleaflets
+    // compatibility with older cools
     if (success && tokens.size() > counter && !getTokenInteger(tokens[counter++], "modifier", modifier))
         success = false;
 
