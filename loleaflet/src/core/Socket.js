@@ -502,7 +502,10 @@ app.definitions.Socket = L.Class.extend({
 						reloadMessage = _('Server is now reachable...');
 
 					var reloadFunc = function() { window.location.reload(); };
-					this._map.uiManager.showSnackbar(reloadMessage, _('RELOAD'), reloadFunc);
+					if (!this._map['wopi'].DisableInactiveMessages)
+						this._map.uiManager.showSnackbar(reloadMessage, _('RELOAD'), reloadFunc);
+					else
+						this._map.fire('postMessage', {msgId: 'Reloading', args: {Reason: 'Reconnected'}});
 					setTimeout(reloadFunc, 5000);
 				}
 			}
@@ -1433,7 +1436,8 @@ app.definitions.Socket = L.Class.extend({
 			}
 		}, 1 /* ms */);
 
-		this._map.uiManager.showSnackbar(_('The server has been disconnected.'));
+		if (!this._map['wopi'].DisableInactiveMessages)
+			this._map.uiManager.showSnackbar(_('The server has been disconnected.'));
 	},
 
 	parseServerCmd: function (msg) {
