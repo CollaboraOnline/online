@@ -88,7 +88,7 @@ ClientSession::ClientSession(
     // Emit metadata Trace Events for the synthetic pid used for the Trace Events coming in from the
     // client's cool, and for its dummy thread.
     TraceEvent::emitOneRecordingIfEnabled("{\"name\":\"process_name\",\"ph\":\"M\",\"args\":{\"name\":\""
-                                          "loleaflet-" + id
+                                          "cool-" + id
                                           + "\"},\"pid\":"
                                           + std::to_string(getpid() + SYNTHETIC_COOL_PID_OFFSET)
                                           + ",\"tid\":1},\n");
@@ -367,7 +367,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 static bool warnedOnce = false;
                 if (!warnedOnce)
                 {
-                    LOG_WRN("For some reason the _performanceCounterEpoch is still zero, ignoring TRACEEVENT from loleaflet as the timestamp would be garbage");
+                    LOG_WRN("For some reason the _performanceCounterEpoch is still zero, ignoring TRACEEVENT from cool as the timestamp would be garbage");
                     warnedOnce = true;
                 }
                 return false;
@@ -376,7 +376,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                 static bool warnedOnce = false;
                 if (!warnedOnce)
                 {
-                    LOG_WRN("For some reason the _performanceCounterEpoch is bogus, ignoring TRACEEVENT from loleaflet as the timestamp would be garbage");
+                    LOG_WRN("For some reason the _performanceCounterEpoch is bogus, ignoring TRACEEVENT from cool as the timestamp would be garbage");
                     warnedOnce = true;
                 }
                 return false;
