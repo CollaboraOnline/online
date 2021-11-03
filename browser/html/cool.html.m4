@@ -119,7 +119,7 @@ window.isLocalStorageAllowed = (function() {
 
 m4_ifelse(BUNDLE,[],
   <!-- Using individual CSS files -->
-  m4_foreachq([fileCSS],[LOLEAFLET_CSS],[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][fileCSS" />
+  m4_foreachq([fileCSS],[COOL_CSS],[<link rel="stylesheet" href="][m4_ifelse(MOBILEAPP,[],[%SERVICE_ROOT%/browser/%VERSION%/])][fileCSS" />
 ]),
   [<!-- Dynamically load the bundle.css -->
 <script>
@@ -329,14 +329,14 @@ document.getElementsByTagName("head")[[0]].appendChild(brandingLink);
 
 m4_ifelse(MOBILEAPP,[true],
   <!-- This is for a mobile app so the script files are in the same folder -->
-  m4_ifelse(BUNDLE,[],m4_foreachq([fileJS],[LOLEAFLET_JS],
+  m4_ifelse(BUNDLE,[],m4_foreachq([fileJS],[COOL_JS],
   [    <script src="fileJS" defer></script>
   ]),
   [    <script src="bundle.js" defer></script>
   ]),
   m4_ifelse(BUNDLE,[],
       <!-- Using indivisual JS files -->
-      m4_foreachq([fileJS],[LOLEAFLET_JS],
+      m4_foreachq([fileJS],[COOL_JS],
       [ <script src="%SERVICE_ROOT%/browser/%VERSION%/fileJS" defer></script>
       ]),
   [
