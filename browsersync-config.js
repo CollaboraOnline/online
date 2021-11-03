@@ -16,7 +16,7 @@ module.exports = {
     "ui": {
         "port": 3001
     },
-    "files": ["loleaflet/dist/**/*.css", "loleaflet/dist/**/*.js", "loleaflet/dist/*.html"],
+    "files": ["browser/dist/**/*.css", "browser/dist/**/*.js", "browser/dist/*.html"],
     "watchEvents": [
         "change"
     ],
@@ -64,7 +64,7 @@ module.exports = {
     "reloadThrottle": 0,
     "plugins": [],
     "injectChanges": true,
-    "startPath": "loleaflet/04597b4ec/cool.html?file_path=./test/data/hello-world.odt",
+    "startPath": "browser/04597b4ec/cool.html?file_path=./test/data/hello-world.odt",
     "minify": true,
     "host": null,
     "localOnly": false,
