@@ -789,7 +789,7 @@ L.Map = L.Evented.extend({
 		}
 
 		// Check for the special proof-of-concept case where no WOPI is involved but we
-		// still run loleaflet in an iframe of its own and thus need to receive the
+		// still run browser in an iframe of its own and thus need to receive the
 		// postMessage things.
 		if (name === 'wopi' && this.options['notWopiButIframe']) {
 			handler.addHooks();
