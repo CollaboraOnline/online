@@ -61,7 +61,7 @@ std::map<std::string, std::pair<std::string, std::string>> FileServerRequestHand
 
 /// Place from where we serve the welcome-<lang>.html; defaults to
 /// welcome.html if no lang matches.
-#define WELCOME_ENDPOINT "/loleaflet/dist/welcome"
+#define WELCOME_ENDPOINT "/browser/dist/welcome"
 
 namespace {
 
@@ -259,7 +259,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
 
     Poco::Net::HTTPCookie cookie("jwt", jwtToken);
     // bundlify appears to add an extra /dist -> dist/dist/admin
-    cookie.setPath(LOOLWSD::ServiceRoot + "/loleaflet/dist/");
+    cookie.setPath(LOOLWSD::ServiceRoot + "/browser/dist/");
     cookie.setSecure(LOOLWSD::isSSLEnabled() ||
                      LOOLWSD::isSSLTermination());
     response.addCookie(cookie);
@@ -480,7 +480,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         LOG_TRC("Fileserver request: " << requestUri.toString());
         requestUri.normalize(); // avoid .'s and ..'s
 
-        if (requestUri.getPath().find("loleaflet/" LOOLWSD_VERSION_HASH "/") == std::string::npos)
+        if (requestUri.getPath().find("browser/" LOOLWSD_VERSION_HASH "/") == std::string::npos)
         {
             LOG_WRN("client - server version mismatch, disabling browser cache. Expected: " LOOLWSD_VERSION_HASH);
             noCache = true;
@@ -643,7 +643,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             if (std::getenv("LOOL_SERVE_FROM_FS"))
             {
                 // Useful to not serve from memory sometimes especially during cool development
-                // Avoids having to restart cool everytime you make a change in loleaflet
+                // Avoids having to restart cool everytime you make a change in cool
                 const std::string filePath = Poco::Path(LOOLWSD::FileServerRoot, relPath).absolute().toString();
                 HttpHelper::sendFileAndShutdown(socket, filePath, mimeType, &response, noCache);
                 return;
@@ -802,7 +802,7 @@ void FileServerRequestHandler::initialize()
 {
     // cool files
     try {
-        readDirToHash(LOOLWSD::FileServerRoot, "/loleaflet/dist");
+        readDirToHash(LOOLWSD::FileServerRoot, "/browser/dist");
     } catch (...) {
         LOG_ERR("Failed to read from directory " << LOOLWSD::FileServerRoot);
     }
@@ -840,7 +840,7 @@ std::string FileServerRequestHandler::getRequestPathname(const HTTPRequest& requ
     if (gitHashRe.extract(path, gitHash))
     {
         // Convert version back to a real file name.
-        Poco::replaceInPlace(path, std::string("/loleaflet" + gitHash), std::string("/loleaflet/dist/"));
+        Poco::replaceInPlace(path, std::string("/browser" + gitHash), std::string("/browser/dist/"));
     }
 
     return path;
@@ -942,8 +942,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%HEXIFY_URL%"), hexifyEmbeddedUrls);
 
     std::string themePreFix = (theme == "nextcloud") ? theme + "/" : "";
-    const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/" + themePreFix + "%s.css\">");
-    const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/" + themePreFix + "%s.js\"></script>");
+    const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/browser/" LOOLWSD_VERSION_HASH "/" + themePreFix + "%s.css\">");
+    const std::string scriptJS("<script src=\"%s/browser/" LOOLWSD_VERSION_HASH "/" + themePreFix + "%s.js\"></script>");
 
     std::string brandCSS(Poco::format(linkCSS, responseRoot, std::string(BRANDING)));
     std::string brandJS(Poco::format(scriptJS, responseRoot, std::string(BRANDING)));
@@ -1159,7 +1159,7 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     ServerURL cnxDetails(requestDetails);
     std::string responseRoot = cnxDetails.getResponseRoot();
 
-    static const std::string scriptJS("<script src=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");
+    static const std::string scriptJS("<script src=\"%s/browser/" LOOLWSD_VERSION_HASH "/%s.js\"></script>");
     static const std::string footerPage("<footer class=\"footer has-text-centered\"><strong>Key:</strong> %s &nbsp;&nbsp;<strong>Expiry Date:</strong> %s</footer>");
 
     const std::string relPath = getRequestPathname(request);
