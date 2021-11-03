@@ -66,23 +66,23 @@ L.Control.Ruler = L.Control.extend({
 		// First line indentation..
 		this._firstLineMarker = document.createElement('div');
 		this._firstLineMarker.id = 'lo-fline-marker';
-		this._firstLineMarker.classList.add('loleaflet-ruler-indentation-marker-down');
+		this._firstLineMarker.classList.add('cool-ruler-indentation-marker-down');
 		this._rFace.appendChild(this._firstLineMarker);
 
 		// Paragraph indentation..
 		this._pStartMarker = document.createElement('div');
 		this._pStartMarker.id = 'lo-pstart-marker';
-		this._pStartMarker.classList.add('loleaflet-ruler-indentation-marker-up');
+		this._pStartMarker.classList.add('cool-ruler-indentation-marker-up');
 		this._rFace.appendChild(this._pStartMarker);
 
 		// Paragraph end..
 		this._pEndMarker = document.createElement('div');
 		this._pEndMarker.id = 'lo-pend-marker';
-		this._pEndMarker.classList.add('loleaflet-ruler-indentation-marker-up');
+		this._pEndMarker.classList.add('cool-ruler-indentation-marker-up');
 		this._rFace.appendChild(this._pEndMarker);
 
 		// While one of the markers is being dragged, a vertical line should be visible in order to indicate the new position of the marker..
-		this._markerVerticalLine = L.DomUtil.create('div', 'loleaflet-ruler-indentation-marker-center');
+		this._markerVerticalLine = L.DomUtil.create('div', 'cool-ruler-indentation-marker-center');
 		this._rFace.appendChild(this._markerVerticalLine);
 
 		var self = this;
@@ -146,21 +146,21 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 	_initLayout: function() {
-		this._rWrapper = L.DomUtil.create('div', 'loleaflet-ruler leaflet-bar leaflet-control leaflet-control-custom');
+		this._rWrapper = L.DomUtil.create('div', 'cool-ruler leaflet-bar leaflet-control leaflet-control-custom');
 		// We start it hidden rather than not initialzing at all.
 		// It is due to rulerupdate command that comes from LOK.
 		// If we delay its initialization, we can't calculate its margins and have to wait for another rulerupdate message to arrive.
 		if (!this.options.showruler) {
 			L.DomUtil.setStyle(this._rWrapper, 'display', 'none');
 		}
-		this._rFace = L.DomUtil.create('div', 'loleaflet-ruler-face', this._rWrapper);
-		this._rMarginWrapper = L.DomUtil.create('div', 'loleaflet-ruler-marginwrapper', this._rFace);
+		this._rFace = L.DomUtil.create('div', 'cool-ruler-face', this._rWrapper);
+		this._rMarginWrapper = L.DomUtil.create('div', 'cool-ruler-marginwrapper', this._rFace);
 		// BP => Break Points
-		this._rBPWrapper = L.DomUtil.create('div', 'loleaflet-ruler-breakwrapper', this._rFace);
-		this._rBPContainer = L.DomUtil.create('div', 'loleaflet-ruler-breakcontainer', this._rBPWrapper);
+		this._rBPWrapper = L.DomUtil.create('div', 'cool-ruler-breakwrapper', this._rFace);
+		this._rBPContainer = L.DomUtil.create('div', 'cool-ruler-breakcontainer', this._rBPWrapper);
 
 		// Tab stops
-		this._rTSContainer = L.DomUtil.create('div', 'loleaflet-ruler-tabstopcontainer', this._rMarginWrapper);
+		this._rTSContainer = L.DomUtil.create('div', 'cool-ruler-tabstopcontainer', this._rMarginWrapper);
 		L.DomEvent.on(this._rTSContainer, 'mousedown', this._initiateTabstopDrag, this);
 
 		var self = this;
@@ -301,9 +301,9 @@ L.Control.Ruler = L.Control.extend({
 		// least in the US. (The ruler unit to use doesn't seem to be stored in the document
 		// at least for .odt?)
 		for (var num = 0; num <= (this.options.pageWidth / 1000) + 1; num++) {
-			var marker = L.DomUtil.create('div', 'loleaflet-ruler-maj', this._rBPContainer);
+			var marker = L.DomUtil.create('div', 'cool-ruler-maj', this._rBPContainer);
 			// The - 1 is to compensate for the left and right .5px borders of
-			// loleaflet-ruler-maj in leaflet.css.
+			// cool-ruler-maj in leaflet.css.
 			marker.style.width = this.options.DraggableConvertRatio*1000 - 1 + 'px';
 			if (this.options.displayNumber) {
 				if (numCounter !== 0)
@@ -324,16 +324,16 @@ L.Control.Ruler = L.Control.extend({
 			var currentTabstop = this.options.tabs[tabstopIndex];
 			switch (currentTabstop.style) {
 			case 0:
-				markerClass = 'loleaflet-ruler-tabstop-left';
+				markerClass = 'cool-ruler-tabstop-left';
 				break;
 			case 1:
-				markerClass = 'loleaflet-ruler-tabstop-right';
+				markerClass = 'cool-ruler-tabstop-right';
 				break;
 			case 2:
-				markerClass = 'loleaflet-ruler-tabstop-center';
+				markerClass = 'cool-ruler-tabstop-center';
 				break;
 			case 3:
-				markerClass = 'loleaflet-ruler-tabstop-decimal';
+				markerClass = 'cool-ruler-tabstop-decimal';
 				break;
 			}
 			if (markerClass != null) {
@@ -351,12 +351,12 @@ L.Control.Ruler = L.Control.extend({
 
 		if (!this.options.marginSet) {
 			this.options.marginSet = true;
-			this._lMarginMarker = L.DomUtil.create('div', 'loleaflet-ruler-margin loleaflet-ruler-left', this._rFace);
-			this._rMarginMarker =  L.DomUtil.create('div', 'loleaflet-ruler-margin loleaflet-ruler-right', this._rFace);
-			this._lMarginDrag = L.DomUtil.create('div', 'loleaflet-ruler-drag loleaflet-ruler-left', this._rMarginWrapper);
-			this._lToolTip = L.DomUtil.create('div', 'loleaflet-ruler-ltooltip', this._lMarginDrag);
-			this._rMarginDrag = L.DomUtil.create('div', 'loleaflet-ruler-drag loleaflet-ruler-right', this._rMarginWrapper);
-			this._rToolTip = L.DomUtil.create('div', 'loleaflet-ruler-rtooltip', this._rMarginDrag);
+			this._lMarginMarker = L.DomUtil.create('div', 'cool-ruler-margin cool-ruler-left', this._rFace);
+			this._rMarginMarker =  L.DomUtil.create('div', 'cool-ruler-margin cool-ruler-right', this._rFace);
+			this._lMarginDrag = L.DomUtil.create('div', 'cool-ruler-drag cool-ruler-left', this._rMarginWrapper);
+			this._lToolTip = L.DomUtil.create('div', 'cool-ruler-ltooltip', this._lMarginDrag);
+			this._rMarginDrag = L.DomUtil.create('div', 'cool-ruler-drag cool-ruler-right', this._rMarginWrapper);
+			this._rToolTip = L.DomUtil.create('div', 'cool-ruler-rtooltip', this._rMarginDrag);
 			var lMarginTooltipText = _('Left Margin');
 			var rMarginTooltipText = _('Right Margin');
 
@@ -525,7 +525,7 @@ L.Control.Ruler = L.Control.extend({
 		this._initialposition = e.clientX;
 		this._lastposition = this._initialposition;
 
-		if (L.DomUtil.hasClass(dragableElem, 'loleaflet-ruler-right')) {
+		if (L.DomUtil.hasClass(dragableElem, 'cool-ruler-right')) {
 			L.DomUtil.addClass(this._rMarginDrag, 'leaflet-drag-moving');
 			this._rFace.style.cursor = 'w-resize';
 		}
@@ -617,8 +617,8 @@ L.Control.Ruler = L.Control.extend({
 		this.currentPositionInTwips = position;
 		this.currentTabStopIndex = tabstopNumber;
 		$.contextMenu({
-			selector: '.loleaflet-ruler-tabstopcontainer',
-			className: 'loleaflet-font',
+			selector: '.cool-ruler-tabstopcontainer',
+			className: 'cool-font',
 			items: {
 				inserttabstop: {
 					name: _('Insert tabstop'),

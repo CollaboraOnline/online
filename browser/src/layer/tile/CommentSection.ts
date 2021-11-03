@@ -171,18 +171,18 @@ class Comment {
 		}
 
 		if (this.sectionProperties.data.trackchange) {
-			this.sectionProperties.captionNode = L.DomUtil.create('div', 'loleaflet-annotation-caption', this.sectionProperties.wrapper);
+			this.sectionProperties.captionNode = L.DomUtil.create('div', 'cool-annotation-caption', this.sectionProperties.wrapper);
 			this.sectionProperties.captionText = L.DomUtil.create('div', '', this.sectionProperties.captionNode);
 		}
 
-		this.sectionProperties.contentNode = L.DomUtil.create('div', 'loleaflet-annotation-content loleaflet-dont-break', this.sectionProperties.wrapper);
+		this.sectionProperties.contentNode = L.DomUtil.create('div', 'cool-annotation-content cool-dont-break', this.sectionProperties.wrapper);
 		this.sectionProperties.contentNode.id = 'annotation-content-area-' + this.sectionProperties.data.id;
-		this.sectionProperties.nodeModify = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeModifyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeModify);
+		this.sectionProperties.nodeModify = L.DomUtil.create('div', 'cool-annotation-edit' + ' modify-annotation', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeModifyText = L.DomUtil.create('textarea', 'cool-annotation-textarea', this.sectionProperties.nodeModify);
 		this.sectionProperties.nodeModifyText.id = 'annotation-modify-textarea-' + this.sectionProperties.data.id;
 		this.sectionProperties.contentText = L.DomUtil.create('div', '', this.sectionProperties.contentNode);
-		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'loleaflet-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
-		this.sectionProperties.nodeReplyText = L.DomUtil.create('textarea', 'loleaflet-annotation-textarea', this.sectionProperties.nodeReply);
+		this.sectionProperties.nodeReply = L.DomUtil.create('div', 'cool-annotation-edit' + ' reply-annotation', this.sectionProperties.wrapper);
+		this.sectionProperties.nodeReplyText = L.DomUtil.create('textarea', 'cool-annotation-textarea', this.sectionProperties.nodeReply);
 		this.sectionProperties.nodeReplyText.id = 'annotation-reply-textarea-' + this.sectionProperties.data.id;
 
 		this.sectionProperties.container.style.visibility = 'hidden';
@@ -193,29 +193,29 @@ class Comment {
 	}
 
 	private createContainerAndWrapper () {
-		this.sectionProperties.container = L.DomUtil.create('div', 'loleaflet-annotation');
+		this.sectionProperties.container = L.DomUtil.create('div', 'cool-annotation');
 		this.sectionProperties.container.id = 'comment-container-' + this.sectionProperties.data.id;
 
 		var mobileClass = (<any>window).mode.isMobile() ? ' wizard-comment-box': '';
 
 		if (this.sectionProperties.data.trackchange) {
-			this.sectionProperties.wrapper = L.DomUtil.create('div', 'loleaflet-annotation-redline-content-wrapper' + mobileClass, this.sectionProperties.container);
+			this.sectionProperties.wrapper = L.DomUtil.create('div', 'cool-annotation-redline-content-wrapper' + mobileClass, this.sectionProperties.container);
 		} else {
-			this.sectionProperties.wrapper = L.DomUtil.create('div', 'loleaflet-annotation-content-wrapper' + mobileClass, this.sectionProperties.container);
+			this.sectionProperties.wrapper = L.DomUtil.create('div', 'cool-annotation-content-wrapper' + mobileClass, this.sectionProperties.container);
 		}
 
-		this.sectionProperties.collapsed = L.DomUtil.create('div', 'loleaflet-annotation-collapsed', this.sectionProperties.container);
+		this.sectionProperties.collapsed = L.DomUtil.create('div', 'cool-annotation-collapsed', this.sectionProperties.container);
 
 		document.getElementById('document-container').appendChild(this.sectionProperties.container);
 	}
 
 	private createAuthorTable () {
-		this.sectionProperties.author = L.DomUtil.create('table', 'loleaflet-annotation-table', this.sectionProperties.wrapper);
+		this.sectionProperties.author = L.DomUtil.create('table', 'cool-annotation-table', this.sectionProperties.wrapper);
 
 		var tbody = L.DomUtil.create('tbody', '', this.sectionProperties.author);
 		var rowResolved = L.DomUtil.create('tr', '', tbody);
-		var tdResolved = L.DomUtil.create('td', 'loleaflet-annotation-resolved', rowResolved);
-		var pResolved = L.DomUtil.create('div', 'loleaflet-annotation-content-resolved', tdResolved);
+		var tdResolved = L.DomUtil.create('td', 'cool-annotation-resolved', rowResolved);
+		var pResolved = L.DomUtil.create('div', 'cool-annotation-content-resolved', tdResolved);
 		this.sectionProperties.resolvedTextElement = pResolved;
 
 		this.updateResolvedField(this.sectionProperties.data.resolved);
@@ -223,8 +223,8 @@ class Comment {
 		var tr = L.DomUtil.create('tr', '', tbody);
 		this.sectionProperties.authorRow = tr;
 		tr.id = 'author table row ' + this.sectionProperties.data.id;
-		var tdImg = L.DomUtil.create('td', 'loleaflet-annotation-img', tr);
-		var tdAuthor = L.DomUtil.create('td', 'loleaflet-annotation-author', tr);
+		var tdImg = L.DomUtil.create('td', 'cool-annotation-img', tr);
+		var tdAuthor = L.DomUtil.create('td', 'cool-annotation-author', tr);
 		var imgAuthor = L.DomUtil.create('img', 'avatar-img', tdImg);
 
 		imgAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg'));
@@ -237,19 +237,19 @@ class Comment {
 		imgCollapsedAuthor.setAttribute('width', this.sectionProperties.imgSize[0]);
 		imgCollapsedAuthor.setAttribute('height', this.sectionProperties.imgSize[1]);
 		imgCollapsedAuthor.onerror = function () { imgCollapsedAuthor.setAttribute('src', L.LOUtil.getImageURL('user.svg')); };
-		this.sectionProperties.replyCountNode = L.DomUtil.create('div', 'loleaflet-annotation-reply-count-collapsed', this.sectionProperties.collapsed);
+		this.sectionProperties.replyCountNode = L.DomUtil.create('div', 'cool-annotation-reply-count-collapsed', this.sectionProperties.collapsed);
 		this.sectionProperties.replyCountNode.style.display = 'none';
 
 		this.sectionProperties.authorAvatarImg = imgAuthor;
 		this.sectionProperties.authorCollapsedAvatarImg = imgCollapsedAuthor;
 		this.sectionProperties.authorAvatartdImg = tdImg;
-		this.sectionProperties.contentAuthor = L.DomUtil.create('div', 'loleaflet-annotation-content-author', tdAuthor);
-		this.sectionProperties.contentDate = L.DomUtil.create('div', 'loleaflet-annotation-date', tdAuthor);
+		this.sectionProperties.contentAuthor = L.DomUtil.create('div', 'cool-annotation-content-author', tdAuthor);
+		this.sectionProperties.contentDate = L.DomUtil.create('div', 'cool-annotation-date', tdAuthor);
 	}
 
 	private createMenu () {
-		var tdMenu = L.DomUtil.create('td', 'loleaflet-annotation-menubar', this.sectionProperties.authorRow);
-		this.sectionProperties.menu = L.DomUtil.create('div', this.sectionProperties.data.trackchange ? 'loleaflet-annotation-menu-redline' : 'loleaflet-annotation-menu', tdMenu);
+		var tdMenu = L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
+		this.sectionProperties.menu = L.DomUtil.create('div', this.sectionProperties.data.trackchange ? 'cool-annotation-menu-redline' : 'cool-annotation-menu', tdMenu);
 		this.sectionProperties.menu.id = 'comment-annotation-menu-' + this.sectionProperties.data.id;
 		this.sectionProperties.menu.onclick = this.menuOnMouseClick.bind(this);
 		var divMenuTooltipText = _('Open menu');
@@ -263,11 +263,11 @@ class Comment {
 	}
 
 	private createTrackChangeButtons () {
-		var tdAccept = L.DomUtil.create('td', 'loleaflet-annotation-menubar', this.sectionProperties.authorRow);
-		var acceptButton = this.sectionProperties.acceptButton = L.DomUtil.create('button', 'loleaflet-redline-accept-button', tdAccept);
+		var tdAccept = L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
+		var acceptButton = this.sectionProperties.acceptButton = L.DomUtil.create('button', 'cool-redline-accept-button', tdAccept);
 
-		var tdReject = L.DomUtil.create('td', 'loleaflet-annotation-menubar', this.sectionProperties.authorRow);
-		var rejectButton = this.sectionProperties.rejectButton = L.DomUtil.create('button', 'loleaflet-redline-reject-button', tdReject);
+		var tdReject = L.DomUtil.create('td', 'cool-annotation-menubar', this.sectionProperties.authorRow);
+		var rejectButton = this.sectionProperties.rejectButton = L.DomUtil.create('button', 'cool-redline-reject-button', tdReject);
 
 		acceptButton.dataset.title = _('Accept change');
 		acceptButton.setAttribute('aria-label', _('Accept change'));

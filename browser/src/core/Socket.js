@@ -733,7 +733,7 @@ app.definitions.Socket = L.Class.extend({
 
 			var dialogOptions = {
 				message: message,
-				contentClassName: 'loleaflet-user-idle'
+				contentClassName: 'cool-user-idle'
 			};
 
 			var restartConnectionFn;
@@ -757,10 +757,10 @@ app.definitions.Socket = L.Class.extend({
 				var dialogOpened = vex.dialog.open(dialogOptions);
 				this._map._textInput.hideCursor();
 				dialogOpened.contentEl.onclick = restartConnectionFn;
-				$('.vex-overlay').addClass('loleaflet-user-idle-overlay');
+				$('.vex-overlay').addClass('cool-user-idle-overlay');
 
 				if (message === '')
-					$('.loleaflet-user-idle').css('display', 'none');
+					$('.cool-user-idle').css('display', 'none');
 			}
 
 			if (postMsgData['Reason']) {

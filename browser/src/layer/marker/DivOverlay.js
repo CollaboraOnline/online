@@ -94,7 +94,7 @@ L.DivOverlay = L.Layer.extend({
 	},
 
 	_initLayout: function () {
-		this._container = L.DomUtil.create('div', 'loleaflet-div-layer');
+		this._container = L.DomUtil.create('div', 'cool-div-layer');
 		L.DomEvent.on(this._container, 'mouseover', this._fireMouseEvents, this);
 		L.DomEvent.on(this._container, 'mouseout', this._fireMouseEvents, this);
 		L.DomUtil.setOpacity(this._container, this.options.opacity);

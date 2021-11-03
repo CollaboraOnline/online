@@ -1822,7 +1822,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			elem = L.DomUtil.create('div', 'layout ' +
-				(data.entries[index].selected ? ' loleaflet-context-down' : ''), parentContainer);
+				(data.entries[index].selected ? ' cool-context-down' : ''), parentContainer);
 			$(elem).data('id', data.entries[index].id);
 			$(elem).click(function () {
 				builder.callback('valueset', 'selected', { id: data.id }, $(this).data('id'), builder);
@@ -2065,7 +2065,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var container = document.getElementById(data.id);
 		if (!container)
-			container = L.DomUtil.create('div',  'ui-header loleaflet-annotation-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', mainContainer);
+			container = L.DomUtil.create('div',  'ui-header cool-annotation-header level-' + builder._currentDepth + ' ' + builder.options.cssClass + ' ui-widget', mainContainer);
 
 		container.annotation = data.annotation;
 		container.id = data.id;
@@ -2078,7 +2078,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var replyCountNode = document.getElementById('reply-count-node-' + data.id);
 
 				if (!replyCountNode)
-					replyCountNode = L.DomUtil.create('div','loleaflet-annotation-reply-count loleaflet-annotation-content', $(container).find('.loleaflet-annotation-content-wrapper')[0]);
+					replyCountNode = L.DomUtil.create('div','cool-annotation-reply-count cool-annotation-content', $(container).find('.cool-annotation-content-wrapper')[0]);
 
 				replyCountNode.id = 'reply-count-node-' + data.id;
 				replyCountNode.style.display = 'block';
@@ -2104,19 +2104,19 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(childContainer).hide();
 
 			if (builder.wizard) {
-				$(container).find('.loleaflet-annotation-menubar')[0].style.display = 'none';
+				$(container).find('.cool-annotation-menubar')[0].style.display = 'none';
 
 				var arrowSpan = container.querySelector('[id=\'arrow span ' + data.id + '\']');
 
 				if (!arrowSpan)
-					arrowSpan = L.DomUtil.create('span','sub-menu-arrow', $(container).find('.loleaflet-annotation-content-wrapper')[0]);
+					arrowSpan = L.DomUtil.create('span','sub-menu-arrow', $(container).find('.cool-annotation-content-wrapper')[0]);
 
 				arrowSpan.style.display = 'block';
 				arrowSpan.innerHTML = '>';
 				arrowSpan.style.padding = '0px';
 				arrowSpan.id = 'arrow span ' + data.id;
 
-				$(container).find('.loleaflet-annotation')[0].onclick = function() {
+				$(container).find('.cool-annotation')[0].onclick = function() {
 					builder.wizard.goLevelDown(mainContainer);
 					childContainer.style.display = 'block';
 					if (!childContainer.childNodes.length)
@@ -2139,7 +2139,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		}
 
-		$(container).find('.loleaflet-annotation')[0].addEventListener('click', function() {
+		$(container).find('.cool-annotation')[0].addEventListener('click', function() {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).hightlightComment(data.annotation);
 		});
 		return false;

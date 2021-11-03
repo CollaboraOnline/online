@@ -323,7 +323,7 @@ L.Map.include({
 
 	sendUnoCommand: function (command, json) {
 		// To exercise the Trace Event functionality, uncomment this
-		// app.socket.emitInstantTraceEvent('loleaflet-unocommand:' + command);
+		// app.socket.emitInstantTraceEvent('cool-unocommand:' + command);
 
 		var isAllowedInReadOnly = false;
 		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog', '.uno:EditAnnotation',
@@ -682,7 +682,7 @@ L.Map.include({
 
 		// Just as a test to exercise the Async Trace Event functionality, uncomment this
 		// line and the asyncTraceEvent.finish() below.
-		// var asyncTraceEvent = app.socket.createAsyncTraceEvent('loleaflet-showLOAboutDialog');
+		// var asyncTraceEvent = app.socket.createAsyncTraceEvent('cool-showLOAboutDialog');
 
 		// Move the div sitting in 'body' as vex-content and make it visible
 		var content = $('#about-dialog').clone().css({display: 'block'});
