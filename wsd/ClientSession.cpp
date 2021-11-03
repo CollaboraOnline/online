@@ -86,7 +86,7 @@ ClientSession::ClientSession(
     setState(SessionState::DETACHED);
 
     // Emit metadata Trace Events for the synthetic pid used for the Trace Events coming in from the
-    // client's loleaflet, and for its dummy thread.
+    // client's cool, and for its dummy thread.
     TraceEvent::emitOneRecordingIfEnabled("{\"name\":\"process_name\",\"ph\":\"M\",\"args\":{\"name\":\""
                                           "loleaflet-" + id
                                           + "\"},\"pid\":"
@@ -519,7 +519,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         sendTextFrame("lokitversion " + LOOLWSD::LOKitVersion);
 
         // If Trace Event generation and logging is enabled (whether it can be turned on), tell it
-        // to loleaflet
+        // to cool
         if (LOOLWSD::EnableTraceEventLogging)
             sendTextFrame("enabletraceeventlogging yes");
 
@@ -1368,7 +1368,7 @@ void ClientSession::writeQueuedMessages(std::size_t capacity)
     LOG_TRC(getName() << " ClientSession: performed write, wrote " << wrote << " bytes.");
 }
 
-// NB. also see loleaflet/src/map/Clipboard.js that does this in JS for stubs.
+// NB. also see browser/src/map/Clipboard.js that does this in JS for stubs.
 // See also ClientSession::preProcessSetClipboardPayload() which removes the
 // <meta name="origin"...>  tag added here.
 void ClientSession::postProcessCopyPayload(const std::shared_ptr<Message>& payload)
