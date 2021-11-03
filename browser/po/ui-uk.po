@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
 "4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.9-dev\n"
-"X-Pootle-Path: /uk/libo_online/loleaflet-ui-uk.po\n"
+"X-Pootle-Path: /uk/libo_online/cool-ui-uk.po\n"
 "X-Pootle-Revision: 3938227\n"
 
 #: admin/admin.strings.js:6

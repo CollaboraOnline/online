@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.2.5\n"
-"X-Pootle-Path: /uz/libo_online/loleaflet-ui-uz.po\n"
+"X-Pootle-Path: /uz/libo_online/cool-ui-uz.po\n"
 "X-Pootle-Revision: 3938237\n"
 
 #: admin/admin.strings.js:6
