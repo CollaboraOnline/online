@@ -13,13 +13,13 @@
 #define LOOLWSD_TEST_HOST "localhost"
 
 /* Default cool UI used in the admin console URI */
-#define LOOLWSD_TEST_ADMIN_CONSOLE "/loleaflet/dist/admin/admin.html"
+#define LOOLWSD_TEST_ADMIN_CONSOLE "/browser/dist/admin/admin.html"
 
 /* Default cool UI used in for monitoring URI */
 #define LOOLWSD_TEST_METRICS "/lool/getMetrics"
 
 /* Default cool UI used in the start test URI */
-#define LOOLWSD_TEST_LOLEAFLET_UI "/loleaflet/" LOOLWSD_VERSION_HASH "/debug.html"
+#define LOOLWSD_TEST_LOLEAFLET_UI "/browser/" LOOLWSD_VERSION_HASH "/debug.html"
 
 /* Default document used in the start test URI */
 #define LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER  "test/data/hello-world.odt"
@@ -1026,7 +1026,7 @@ void LOOLWSD::innerInitialize(Application& self)
         = { { "allowed_languages", "de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru" },
             { "admin_console.enable_pam", "false" },
             { "child_root_path", "jails" },
-            { "file_server_root_path", "loleaflet/.." },
+            { "file_server_root_path", "browser/.." },
             { "hexify_embedded_urls", "false" },
             { "lo_jail_subpath", "lo" },
             { "logging.protocol", "false" },
@@ -1114,7 +1114,7 @@ void LOOLWSD::innerInitialize(Application& self)
             { "trace[@enable]", "false" },
             { "welcome.enable", ENABLE_WELCOME_MESSAGE },
             { "welcome.enable_button", ENABLE_WELCOME_MESSAGE_BUTTON },
-            { "welcome.path", "loleaflet/welcome" },
+            { "welcome.path", "browser/welcome" },
 #ifdef ENABLE_FREEMIUM
             { "freemium.disabled_commands", DISABLED_COMMANDS },
             { "freemium.purchase_title", PURCHASE_TITLE },
@@ -1642,7 +1642,7 @@ void LOOLWSD::innerInitialize(Application& self)
 
 #if ENABLE_DEBUG
     std::string postMessageURI =
-        getServiceURI("/loleaflet/dist/framed.doc.html?file_path="
+        getServiceURI("/browser/dist/framed.doc.html?file_path="
                       DEBUG_ABSSRCDIR "/" LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC);
     std::cerr << "\nLaunch one of these in your browser:\n\n"
               << "    Writer:      " << getLaunchURI(LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER) << '\n'
@@ -2702,7 +2702,7 @@ private:
             {
                 // Unit testing, nothing to do here
             }
-            else if (requestDetails.equals(RequestDetails::Field::Type, "loleaflet") || requestDetails.equals(RequestDetails::Field::Type, "wopi"))
+            else if (requestDetails.equals(RequestDetails::Field::Type, "browser") || requestDetails.equals(RequestDetails::Field::Type, "wopi"))
             {
                 // File server
                 assert(socket && "Must have a valid socket");
@@ -3731,7 +3731,7 @@ private:
         const std::string urlsrc = "urlsrc";
 
         const std::string rootUriValue = "%SRV_URI%";
-        const std::string uriBaseValue = rootUriValue + "/loleaflet/" LOOLWSD_VERSION_HASH "/";
+        const std::string uriBaseValue = rootUriValue + "/browser/" LOOLWSD_VERSION_HASH "/";
         const std::string uriValue = uriBaseValue + loleafletHtml + '?';
 
         InputSource inputSrc(discoveryPath);
