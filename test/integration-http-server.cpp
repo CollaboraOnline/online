@@ -37,8 +37,8 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE(HTTPServerTest);
 
-    CPPUNIT_TEST(testLoleafletGet);
-    CPPUNIT_TEST(testLoleafletPost);
+    CPPUNIT_TEST(testCoolGet);
+    CPPUNIT_TEST(testCoolPost);
     CPPUNIT_TEST(testScriptsAndLinksGet);
     CPPUNIT_TEST(testScriptsAndLinksPost);
     CPPUNIT_TEST(testConvertTo);
@@ -50,8 +50,8 @@ class HTTPServerTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE_END();
 
-    void testLoleafletGet();
-    void testLoleafletPost();
+    void testCoolGet();
+    void testCoolPost();
     void testScriptsAndLinksGet();
     void testScriptsAndLinksPost();
     void testConvertTo();
@@ -117,7 +117,7 @@ public:
     }
 };
 
-void HTTPServerTest::testLoleafletGet()
+void HTTPServerTest::testCoolGet()
 {
     const auto pathAndQuery = "/browser/dist/cool.html?access_token=111111111";
     const std::shared_ptr<const http::Response> httpResponse
@@ -137,7 +137,7 @@ void HTTPServerTest::testLoleafletGet()
     LOK_ASSERT(html.find(std::string(LOOLWSD_VERSION_HASH)) != std::string::npos);
 }
 
-void HTTPServerTest::testLoleafletPost()
+void HTTPServerTest::testCoolPost()
 {
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
 
