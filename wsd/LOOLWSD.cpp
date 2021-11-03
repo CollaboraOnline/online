@@ -1047,7 +1047,8 @@ void LOOLWSD::initialize(Application& self)
 #endif
             { "user_interface.mode", USER_INTERFACE_MODE },
             {"quarantine_files.limit_dir_size_mb", "250"},
-            {"quarantine_files.max_versions_to_maintain", "2"}
+            {"quarantine_files.max_versions_to_maintain", "2"},
+            {"quarantine_files.path", "quarantine"}
           };
 
     // Set default values, in case they are missing from the config file.
@@ -1381,6 +1382,9 @@ void LOOLWSD::initialize(Application& self)
     if(getConfigValue<bool>(conf, "quarantine_files[@enable]", false))
     {
         QuarantinePath = getPathFromConfig("quarantine_files.path");
+        if (QuarantinePath[QuarantinePath.size() - 1] != '/')
+            QuarantinePath += '/';
+
         Poco::File p(QuarantinePath);
         p.createDirectories();
         LOG_INF("Created quarantine directory " + p.path());
