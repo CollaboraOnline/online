@@ -1464,7 +1464,7 @@ L.Map = L.Evented.extend({
 
 		$('.vex-overlay').addClass('cool-user-idle-overlay');
 		if (message === '')
-			$('.loleaflet-user-idle').css('display', 'none');
+			$('.cool-user-idle').css('display', 'none');
 
 		this._doclayer && this._docLayer._onMessage('textselection:', null);
 		// console.debug('_dim: sending userinactive');
