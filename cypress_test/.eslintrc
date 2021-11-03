@@ -1,5 +1,5 @@
 {
-  "extends": "../loleaflet/.eslintrc",
+  "extends": "../browser/.eslintrc",
   "plugins": ["cypress-rules"],
   "rules": {
       "cypress-rules/no-get-contains-chain": 2,
