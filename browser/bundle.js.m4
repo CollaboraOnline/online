@@ -14,9 +14,9 @@ m4_syscmd([cat ]fileNode)
 ])
 
 m4_dnl imported libraries
-m4_foreachq([fileLib],[LOLEAFLET_LIBS_JS],[
+m4_foreachq([fileLib],[COOL_LIBS_JS],[
 m4_syscmd([cat ]fileLib)
 ])
 
-m4_dnl bundled loleaflet
-m4_syscmd([cat ]LOLEAFLET_JS)
+m4_dnl bundled cool
+m4_syscmd([cat ]COOL_JS)
