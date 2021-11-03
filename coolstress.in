@@ -11,4 +11,4 @@ pkgdatadir="$(datadir)/@PACKAGE@"
 abs_top_builddir="@abs_top_builddir@"
 abs_top_srcdir="@abs_top_srcdir@"
 
-node --inspect $abs_top_srcdir/loleaflet/test/load.js "$abs_top_srcdir" "$abs_top_builddir" $*
+node --inspect $abs_top_srcdir/browser/test/load.js "$abs_top_srcdir" "$abs_top_builddir" $*
