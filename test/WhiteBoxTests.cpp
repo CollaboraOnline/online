@@ -59,7 +59,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testStringVector);
     CPPUNIT_TEST(testHexify);
     CPPUNIT_TEST(testRequestDetails_DownloadURI);
-    CPPUNIT_TEST(testRequestDetails_loleafletURI);
+    CPPUNIT_TEST(testRequestDetails_coolURI);
     CPPUNIT_TEST(testRequestDetails_local);
     CPPUNIT_TEST(testRequestDetails_local_hexified);
     CPPUNIT_TEST(testRequestDetails);
@@ -96,7 +96,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testStringVector();
     void testHexify();
     void testRequestDetails_DownloadURI();
-    void testRequestDetails_loleafletURI();
+    void testRequestDetails_coolURI();
     void testRequestDetails_local();
     void testRequestDetails_local_hexified();
     void testRequestDetails();
@@ -1298,7 +1298,7 @@ void WhiteBoxTests::testRequestDetails_DownloadURI()
     }
 }
 
-void WhiteBoxTests::testRequestDetails_loleafletURI()
+void WhiteBoxTests::testRequestDetails_coolURI()
 {
     static const std::string Root = "localhost:9980";
 
