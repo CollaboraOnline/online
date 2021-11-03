@@ -141,12 +141,10 @@ LOLEAFLET_CSS_LST =\
 	$(srcdir)/css/toolbar.css \
 	$(srcdir)/css/toolbar-mobile.css \
 	$(srcdir)/css/partsPreviewControl.css \
-	$(srcdir)/css/sidebar.css \
 	$(srcdir)/css/searchControl.css \
 	$(srcdir)/css/impress.css \
 	$(srcdir)/css/impress-mobile.css \
 	$(srcdir)/css/spreadsheet.css \
-	$(srcdir)/css/writer.css \
 	$(srcdir)/css/writer-mobile.css \
 	$(srcdir)/css/editor.css \
 	$(builddir)/node_modules/jquery-contextmenu/dist/jquery.contextMenu.css \
