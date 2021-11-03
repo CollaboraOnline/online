@@ -1256,7 +1256,7 @@ void WhiteBoxTests::testRequestDetails_DownloadURI()
     static const std::string Root = "localhost:9980";
 
     {
-        static const std::string URI = "/loleaflet/49c225146/src/map/Clipboard.js";
+        static const std::string URI = "/browser/49c225146/src/map/Clipboard.js";
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
                                        Poco::Net::HTTPMessage::HTTP_1_1);
@@ -1267,10 +1267,10 @@ void WhiteBoxTests::testRequestDetails_DownloadURI()
         // LOK_ASSERT_EQUAL(URI, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
-        LOK_ASSERT_EQUAL(std::string("loleaflet"), details[0]);
-        LOK_ASSERT_EQUAL(std::string("loleaflet"), details.getField(RequestDetails::Field::Type));
-        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "loleaflet"));
-        LOK_ASSERT(details.equals(0, "loleaflet"));
+        LOK_ASSERT_EQUAL(std::string("browser"), details[0]);
+        LOK_ASSERT_EQUAL(std::string("browser"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "browser"));
+        LOK_ASSERT(details.equals(0, "browser"));
         LOK_ASSERT_EQUAL(std::string("49c225146"), details[1]);
         LOK_ASSERT_EQUAL(std::string("src"), details[2]);
         LOK_ASSERT_EQUAL(std::string("map"), details[3]);
@@ -1278,7 +1278,7 @@ void WhiteBoxTests::testRequestDetails_DownloadURI()
     }
 
     {
-        static const std::string URI = "/loleaflet/49c225146/select2.css";
+        static const std::string URI = "/browser/49c225146/select2.css";
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
                                        Poco::Net::HTTPMessage::HTTP_1_1);
@@ -1289,10 +1289,10 @@ void WhiteBoxTests::testRequestDetails_DownloadURI()
         // LOK_ASSERT_EQUAL(URI, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(3), details.size());
-        LOK_ASSERT_EQUAL(std::string("loleaflet"), details[0]);
-        LOK_ASSERT_EQUAL(std::string("loleaflet"), details.getField(RequestDetails::Field::Type));
-        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "loleaflet"));
-        LOK_ASSERT(details.equals(0, "loleaflet"));
+        LOK_ASSERT_EQUAL(std::string("browser"), details[0]);
+        LOK_ASSERT_EQUAL(std::string("browser"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "browser"));
+        LOK_ASSERT(details.equals(0, "browser"));
         LOK_ASSERT_EQUAL(std::string("49c225146"), details[1]);
         LOK_ASSERT_EQUAL(std::string("select2.css"), details[2]);
     }
@@ -1303,7 +1303,7 @@ void WhiteBoxTests::testRequestDetails_loleafletURI()
     static const std::string Root = "localhost:9980";
 
     static const std::string URI
-        = "/loleaflet/49c225146/"
+        = "/browser/49c225146/"
           "cool.html?WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%"
           "2Frichdocuments%2Fwopi%2Ffiles%2F593_ocqiesh0cngs&title=empty.odt&lang=en-us&"
           "closebutton=1&revisionhistory=1";
@@ -1320,10 +1320,10 @@ void WhiteBoxTests::testRequestDetails_loleafletURI()
     LOK_ASSERT_EQUAL(wopiSrc, details.getField(RequestDetails::Field::WOPISrc));
 
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(4), details.size());
-    LOK_ASSERT_EQUAL(std::string("loleaflet"), details[0]);
-    LOK_ASSERT_EQUAL(std::string("loleaflet"), details.getField(RequestDetails::Field::Type));
-    LOK_ASSERT(details.equals(RequestDetails::Field::Type, "loleaflet"));
-    LOK_ASSERT(details.equals(0, "loleaflet"));
+    LOK_ASSERT_EQUAL(std::string("browser"), details[0]);
+    LOK_ASSERT_EQUAL(std::string("browser"), details.getField(RequestDetails::Field::Type));
+    LOK_ASSERT(details.equals(RequestDetails::Field::Type, "browser"));
+    LOK_ASSERT(details.equals(0, "browser"));
     LOK_ASSERT_EQUAL(std::string("49c225146"), details[1]);
     LOK_ASSERT_EQUAL(std::string("cool.html"), details[2]);
     LOK_ASSERT_EQUAL(std::string("WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%"

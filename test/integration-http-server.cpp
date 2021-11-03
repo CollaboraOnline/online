@@ -119,7 +119,7 @@ public:
 
 void HTTPServerTest::testLoleafletGet()
 {
-    const auto pathAndQuery = "/loleaflet/dist/cool.html?access_token=111111111";
+    const auto pathAndQuery = "/browser/dist/cool.html?access_token=111111111";
     const std::shared_ptr<const http::Response> httpResponse
         = http::get(_uri.toString(), pathAndQuery);
 
@@ -141,7 +141,7 @@ void HTTPServerTest::testLoleafletPost()
 {
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/loleaflet/dist/cool.html");
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/browser/dist/cool.html");
     Poco::Net::HTMLForm form;
     form.set("access_token", "2222222222");
     form.prepareSubmit(request);
@@ -198,7 +198,7 @@ void HTTPServerTest::testScriptsAndLinksGet()
 {
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/loleaflet/dist/cool.html");
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/browser/dist/cool.html");
     session->sendRequest(request);
 
     Poco::Net::HTTPResponse response;
@@ -219,7 +219,7 @@ void HTTPServerTest::testScriptsAndLinksPost()
 {
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/loleaflet/dist/cool.html");
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/browser/dist/cool.html");
     std::string body;
     request.setContentLength((int) body.length());
     session->sendRequest(request) << body;
