@@ -3,14 +3,14 @@ ETAGS=ctags -e
 if ENABLE_MOBILEAPP
 
 if ENABLE_GTKAPP
-SUBDIRS = gtk loleaflet
+SUBDIRS = gtk browser
 else
-SUBDIRS = loleaflet
+SUBDIRS = browser
 endif
 
 else
 
-SUBDIRS = . loleaflet test cypress_test
+SUBDIRS = . browser test cypress_test
 
 export ENABLE_DEBUG
 
@@ -86,7 +86,7 @@ endif
 
 loolwsd_fuzzer_CPPFLAGS = -DKIT_IN_PROCESS=1 -DFUZZER=1 -DTDOC=\"$(abs_top_srcdir)/test/data\" $(AM_CPPFLAGS)
 
-AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes --exclude=loleaflet *
+AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes --exclude=browser *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
 
 shared_sources = common/FileUtil.cpp \
@@ -138,7 +138,7 @@ loolwsd_json = $(patsubst %.cpp,%.cmd,$(loolwsd_sources))
 loolwsd_SOURCES = $(loolwsd_sources) \
                   $(shared_sources)
 
-EXTRA_loolwsd_DEPENDENCIES = loleaflet/node_modules
+EXTRA_loolwsd_DEPENDENCIES = browser/node_modules
 
 noinst_PROGRAMS = clientnb \
                   connect \
@@ -455,13 +455,13 @@ run-one: setup-wsd
 endif
 
 sync-writer:
-	browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odt"
+	browser-sync start --config browsersync-config.js --startPath "browser/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odt"
 
 sync-calc:
-	browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.ods"
+	browser-sync start --config browsersync-config.js --startPath "browser/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.ods"
 
 sync-impress:
-	browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odp"
+	browser-sync start --config browsersync-config.js --startPath "browser/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odp"
 
 run-trace: setup-wsd
 	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
@@ -584,5 +584,5 @@ $(abs_srcdir)/compile_commands.json: $(JSON_COMPILE_SRC)
 
 compile_commands: $(abs_srcdir)/compile_commands.json
 
-loleaflet/node_modules: loleaflet/package.json loleaflet/archived-packages
-	@cd loleaflet && npm install
+browser/node_modules: browser/package.json browser/archived-packages
+	@cd browser && npm install
