@@ -3724,7 +3724,7 @@ private:
         }
 
         const auto& config = Application::instance().config();
-        const std::string loleafletHtml = config.getString("loleaflet_html", "cool.html");
+        const std::string coolHtml = config.getString("loleaflet_html", "cool.html");
 
         const std::string action = "action";
         const std::string favIconUrl = "favIconUrl";
@@ -3732,7 +3732,7 @@ private:
 
         const std::string rootUriValue = "%SRV_URI%";
         const std::string uriBaseValue = rootUriValue + "/browser/" LOOLWSD_VERSION_HASH "/";
-        const std::string uriValue = uriBaseValue + loleafletHtml + '?';
+        const std::string uriValue = uriBaseValue + coolHtml + '?';
 
         InputSource inputSrc(discoveryPath);
         DOMParser parser;
