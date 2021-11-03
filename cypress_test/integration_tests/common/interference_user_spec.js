@@ -18,7 +18,7 @@ describe('Interfering second user.', function() {
 			// Wait for the user-1 to open the document
 			cy.visit('http://admin:admin@localhost:' +
 				Cypress.env('SERVER_PORT') +
-				'/loleaflet/dist/admin/admin.html');
+				'/browser/dist/admin/admin.html');
 
 			cy.get('#uptime')
 				.should('not.have.text', '0');
@@ -69,7 +69,7 @@ describe('Interfering second user.', function() {
 			// If there is no more document we can assume the test is finished.
 			cy.visit('http://admin:admin@localhost:' +
 				Cypress.env('SERVER_PORT') +
-				'/loleaflet/dist/admin/admin.html');
+				'/browser/dist/admin/admin.html');
 
 			cy.get('#uptime')
 				.should('not.have.text', '0');
