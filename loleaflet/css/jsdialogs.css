@@ -90,7 +90,7 @@ td.jsdialog .jsdialog.cell,
 	padding: 4px;
 }
 
-.jsdialog.vertical {
+.jsdialog.vertical:not(.sidebar) {
 	width: max-content;
 }
 
