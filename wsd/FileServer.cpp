@@ -383,7 +383,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             fileInfo->set("UserId", userId);
             fileInfo->set("UserFriendlyName", userNameString);
             fileInfo->set("UserCanWrite", "true");
-            fileInfo->set("PostMessageOrigin", "localhost");
+            fileInfo->set("PostMessageOrigin", "https://localhost:9980");
             fileInfo->set("LastModifiedTime", Util::getIso8601FracformatTime(localFile.fileLastModifiedTime));
             fileInfo->set("EnableOwnerTermination", "true");
 
