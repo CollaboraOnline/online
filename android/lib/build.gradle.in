@@ -295,11 +295,11 @@ preBuild.dependsOn 'createRCfiles',
         'createFullConfig',
         'copyBrandTheme'
 
-task generateLoleafletDebugAssets(type: Exec) {
+task generateCoolDebugAssets(type: Exec) {
 	commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", "DIST_FOLDER=${project.getProjectDir()}/src/debug/assets/dist", 'BUNDLE=DEBUG'
 }
 
-task generateLoleafletReleaseAssets(type: Exec) {
+task generateCoolReleaseAssets(type: Exec) {
 	commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", "DIST_FOLDER=${project.getProjectDir()}/src/release/assets/dist", 'BUNDLE=RELEASE'
 }
 
@@ -307,6 +307,6 @@ afterEvaluate {
 	if (!file("${liboBrandingDir}").exists()) {
 		copyBrandTheme.enabled = false
 	}
-	generateDebugAssets.dependsOn copyDocTemplates, copyKitConfig, generateLoleafletDebugAssets
-	generateReleaseAssets.dependsOn copyDocTemplates, copyKitConfig, generateLoleafletReleaseAssets
+	generateDebugAssets.dependsOn copyDocTemplates, copyKitConfig, generateCoolDebugAssets
+	generateReleaseAssets.dependsOn copyDocTemplates, copyKitConfig, generateCoolReleaseAssets
 }
