@@ -44,7 +44,7 @@ def extractFromPo(poFile, stringIds, untranslated):
 def parseUnocommandsJS(onlineDir):
     strings = {}
 
-    f = open(onlineDir + '/loleaflet/src/unocommands.js', 'r')
+    f = open(onlineDir + '/browser/src/unocommands.js', 'r')
     for line in f:
         line = line.decode('utf-8')
         m = re.match(r"\t([^:]*):.*", line)
@@ -148,7 +148,7 @@ if __name__ == "__main__":
 
 # Online UI
 
-    poFile = onlineDir + '/loleaflet/po/ui-' + lang.replace("-", "_") + '.po'
+    poFile = onlineDir + '/browser/po/ui-' + lang.replace("-", "_") + '.po'
     po = polib.pofile(poFile,
                       autodetect_encoding=False,
                       encoding="utf-8",
@@ -161,7 +161,7 @@ if __name__ == "__main__":
 # Online help (keyboard shortcuts)
 
     poFile = (onlineDir
-              + '/loleaflet/po/help-'
+              + '/browser/po/help-'
               + lang.replace("-", "_")
               + '.po')
     po = polib.pofile(poFile,
