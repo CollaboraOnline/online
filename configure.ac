@@ -361,7 +361,7 @@ LOOLWSD_LOG_TO_FILE="false"
 LOOLWSD_LOGFILE="/var/log/loolwsd.log"
 LOOLWSD_TRACEEVENTFILE="/var/log/loolwsd.trace.json"
 LOOLWSD_ANONYMIZE_USER_DATA=false
-LOLEAFLET_LOGGING="false"
+COOL_LOGGING="false"
 debug_msg="secure mode: product build"
 anonym_msg=""
 bundle_msg="using uglified bundled JS and CSS"
@@ -374,7 +374,7 @@ if test "$enable_debug" = "yes"; then
    LOOLWSD_LOGFILE="/tmp/loolwsd.log"
    LOOLWSD_TRACEEVENTFILE="/tmp/loolwsd.trace.json"
    LOOLWSD_ANONYMIZE_USER_DATA=false
-   LOLEAFLET_LOGGING="true"
+   COOL_LOGGING="true"
    debug_msg="low security debugging mode"
    if test "$enable_bundle" != "yes"; then
       ENABLE_BUNDLE=false
@@ -387,7 +387,7 @@ AC_SUBST(ENABLE_DEBUG)
 AC_SUBST(ENABLE_BUNDLE)
 AC_SUBST(LOOLWSD_LOGLEVEL)
 AC_SUBST(LOOLWSD_LOG_TO_FILE)
-AC_SUBST(LOLEAFLET_LOGGING)
+AC_SUBST(COOL_LOGGING)
 
 if test "$enable_debug_protocol" = no; then
    ENABLE_DEBUG_PROTOCOL=false
