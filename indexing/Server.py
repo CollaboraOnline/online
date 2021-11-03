@@ -17,7 +17,7 @@ coolServerUrl = "http://localhost:9980"
 solrServerUrl = "http://localhost:8983"
 
 documentPath = "Docs/"
-coolInstance = coolServerUrl + "/loleaflet/f6d368a0a/cool.html"
+coolInstance = coolServerUrl + "/browser/f6d368a0a/cool.html"
 solrCollectionName = "documents"
 
 # Templates
