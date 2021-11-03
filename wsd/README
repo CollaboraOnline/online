@@ -74,7 +74,7 @@ You can just do:
 
     make run
 
-and follow the link that recommends (see loleaflet/README for more info).
+and follow the link that recommends (see browser/README for more info).
 
 Again, ${MASTER} is location of the LibreOffice source tree with a built
 LibreOffice.  This is work in progress, and consequently needs the latest
@@ -119,14 +119,14 @@ can specify the root of this fileserver using the --o:file_server_root_path
 flag in loolwsd commandline.  By default, if you do not specify this
 flag, the parent directory of loolwsd/ is assumed to be the
 file_server_root_path. So, for development purposes, you can access the
-leaflet files (using /loleaflet/), but it is advised to explicitly set
+leaflet files (using /browser/), but it is advised to explicitly set
 the file_server_root_path to prevent any unwanted files from reading,
 especially when lool is deployed for normal public usage on servers.
 
 Please note that it is necessary that all the leaflet files that are
-meant to be served is under a directory named 'loleaflet'. Since, the
-loleaflet files, in lool git repo, are itself in a directory named
-'loleaflet', this would work out of the box for development purposes.
+meant to be served is under a directory named 'browser'. Since, the
+browser files, in lool git repo, are itself in a directory named
+'browser', this would work out of the box for development purposes.
 
 If you run loolwsd on HTTPS, you have to set up your own private key
 and certificates (in PEM format only). The name and location of key,
@@ -205,13 +205,13 @@ Admin Panel
 -----------
 
 You can access the admin panel by directly accessing the admin.html file
-from loleaflet directory. See loleaflet/README for more details.
+from loleaflet directory. See browser/README for more details.
 
 Websocket connections to admin console can be made at path: /adminws/ on the
 same url and port as loolwsd is running on. However, one needs a JWT token to
 authenticate to the admin console websocket. This is stored as a cookie with
 `Path: /adminws/` when user successfully authenticates when trying to access
-/loleaflet/dist/admin/admin*html files (HTTP Basic authentication). Token
+/browser/dist/admin/admin*html files (HTTP Basic authentication). Token
 is expired after every half an hour, so websocket connection to admin console
 must be established within this period.
 
