@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-28 15:03+0200\n"
+"POT-Creation-Date: 2021-11-03 16:37+0100\n"
 "PO-Revision-Date: 2021-07-31 19:50+0000\n"
 "Last-Translator: Gontzal Manuel Pujana Onaindia <thadahdenyse@gmail.com>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
@@ -209,8 +209,8 @@ msgstr "Freskatu egunkaria"
 msgid "Channel Filter:"
 msgstr "Kanalaren iragazkia:"
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:387
-#: src/control/Control.StatusBar.js:331
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr "Bat ere ez"
 
@@ -262,7 +262,7 @@ msgstr "Ziur zaude saio hau itxi nahi duzula?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:849
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
 msgid "OK"
 msgstr "Ados"
 
@@ -270,7 +270,7 @@ msgstr "Ados"
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -278,7 +278,8 @@ msgstr "Utzi"
 
 #: admin/src/AdminSocketOverview.js:390
 msgid "Failed to set jwt authentication cookie over insecure connection"
-msgstr "Ezin izan da jwt autentifikazio-cookiea ezarri segurua ez den konexioan"
+msgstr ""
+"Ezin izan da jwt autentifikazio-cookiea ezarri segurua ez den konexioan"
 
 #: admin/src/AdminSocketOverview.js:394
 msgid "Failed to authenticate this session over protocol %0"
@@ -344,11 +345,11 @@ msgstr "Kolorerik ez"
 msgid "Automatic color"
 msgstr "Kolore automatikoa"
 
-#: src/control/Control.AlertDialog.js:67
+#: src/control/Control.AlertDialog.js:66
 msgid "Open link"
 msgstr "Ireki esteka"
 
-#: src/control/Control.AlertDialog.js:91
+#: src/control/Control.AlertDialog.js:90
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Zerbitzariak %0 errore bat aurkitu du %1 komandoa analizatzean."
 
@@ -373,7 +374,7 @@ msgid "Index"
 msgstr "Aurkibidea"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2313 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "Iruzkina"
@@ -414,112 +415,112 @@ msgstr "Hasi kopiatze/itsaste gurutzatua"
 msgid "Function Wizard"
 msgstr "Funtzioen morroia"
 
-#: src/control/Control.JSDialogBuilder.js:390
+#: src/control/Control.JSDialogBuilder.js:391
 msgid "Solid"
 msgstr "Solidoa"
 
-#: src/control/Control.JSDialogBuilder.js:393
+#: src/control/Control.JSDialogBuilder.js:394
 msgid "Linear"
 msgstr "Lineala"
 
-#: src/control/Control.JSDialogBuilder.js:396
+#: src/control/Control.JSDialogBuilder.js:397
 msgid "Axial"
 msgstr "Axiala"
 
-#: src/control/Control.JSDialogBuilder.js:399
+#: src/control/Control.JSDialogBuilder.js:400
 msgid "Radial"
 msgstr "Erradiala"
 
-#: src/control/Control.JSDialogBuilder.js:402
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Ellipsoid"
 msgstr "Elipsoidea"
 
-#: src/control/Control.JSDialogBuilder.js:406
+#: src/control/Control.JSDialogBuilder.js:407
 msgid "Quadratic"
 msgstr "Kuadratikoa"
 
-#: src/control/Control.JSDialogBuilder.js:409
+#: src/control/Control.JSDialogBuilder.js:410
 msgid "Square"
 msgstr "Karratua"
 
-#: src/control/Control.JSDialogBuilder.js:412
+#: src/control/Control.JSDialogBuilder.js:413
 msgid "Fixed size"
 msgstr "Tamaina finkoa"
 
-#: src/control/Control.JSDialogBuilder.js:1483
+#: src/control/Control.JSDialogBuilder.js:1500
 msgid "From"
 msgstr "Hemendik:"
 
-#: src/control/Control.JSDialogBuilder.js:1486
+#: src/control/Control.JSDialogBuilder.js:1503
 msgid "To"
 msgstr "Hona:"
 
-#: src/control/Control.JSDialogBuilder.js:1617
+#: src/control/Control.JSDialogBuilder.js:1634
 msgid "Select range"
 msgstr "Hautatu barrutia"
 
-#: src/control/Control.JSDialogBuilder.js:1648
+#: src/control/Control.JSDialogBuilder.js:1665
 #: src/control/Control.NotebookbarBuilder.js:234
 msgid "Font Name"
 msgstr "Letra-izena"
 
-#: src/control/Control.JSDialogBuilder.js:1650
+#: src/control/Control.JSDialogBuilder.js:1667
 msgid "Font Size"
 msgstr "Letra-tamaina"
 
-#: src/control/Control.JSDialogBuilder.js:1652
+#: src/control/Control.JSDialogBuilder.js:1669
 #: src/control/Control.TopToolbar.js:505
 msgid "Style"
 msgstr "Estiloa"
 
-#: src/control/Control.JSDialogBuilder.js:2299
+#: src/control/Control.JSDialogBuilder.js:2328
 msgid "reply"
 msgstr "erantzuna"
 
-#: src/control/Control.JSDialogBuilder.js:2302
+#: src/control/Control.JSDialogBuilder.js:2331
 msgid "replies"
 msgstr "erantzunak"
 
-#: src/control/Control.JSDialogBuilder.js:2372
+#: src/control/Control.JSDialogBuilder.js:2401
 msgid "Insert Comment"
 msgstr "Txertatu iruzkina"
 
-#: src/control/Control.JSDialogBuilder.js:2773
+#: src/control/Control.JSDialogBuilder.js:2802
 msgid "Cell borders"
 msgstr "Gelaxka-ertzak"
 
-#: src/control/Control.JSDialogBuilder.js:2817
+#: src/control/Control.JSDialogBuilder.js:2846
 msgid "Background Color"
 msgstr "Atzeko planoaren kolorea"
 
-#: src/control/Control.JSDialogBuilder.js:2819
+#: src/control/Control.JSDialogBuilder.js:2848
 msgid "Gradient Start"
 msgstr "Gradientearen hasiera"
 
-#: src/control/Control.JSDialogBuilder.js:2821
+#: src/control/Control.JSDialogBuilder.js:2850
 msgid "Gradient End"
 msgstr "Gradientearen amaiera"
 
-#: src/control/Control.JSDialogBuilder.js:3001
+#: src/control/Control.JSDialogBuilder.js:3030
 msgid "Rows"
 msgstr "Errenkadak"
 
-#: src/control/Control.JSDialogBuilder.js:3002
+#: src/control/Control.JSDialogBuilder.js:3031
 msgid "Columns"
 msgstr "Zutabeak"
 
-#: src/control/Control.JSDialogBuilder.js:3022
+#: src/control/Control.JSDialogBuilder.js:3051
 msgid "Insert Table"
 msgstr "Txertatu taula"
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3080
 msgid "Line style:"
 msgstr "Marra-estiloa:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:491
-#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:528
+#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:535
 #: src/control/Control.NotebookbarBuilder.js:790
 #: src/control/Control.NotebookbarBuilder.js:792
 #: src/control/Control.NotebookbarBuilder.js:794
@@ -614,7 +615,7 @@ msgstr "Konpondu"
 
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:299
 #: src/control/Control.Menubar.js:425 src/control/Control.Menubar.js:536
-#: src/control/Control.StatusBar.js:205
+#: src/control/Control.StatusBar.js:209
 msgid "Reset zoom"
 msgstr "Berrezarri zooma"
 
@@ -737,7 +738,7 @@ msgstr "CSV fitxategia (.csv)"
 
 #: src/control/Control.Menubar.js:743 src/control/Control.Menubar.js:792
 #: src/control/Control.Menubar.js:843 src/control/Control.Menubar.js:891
-#: src/control/Control.StatusBar.js:190
+#: src/control/Control.StatusBar.js:194
 msgid "Search"
 msgstr "Bilatu"
 
@@ -745,7 +746,7 @@ msgstr "Bilatu"
 msgid "Page Setup"
 msgstr "Orrialde-konfigurazioa"
 
-#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:527
+#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:534
 msgid "Reset to Default Language"
 msgstr "Leheneratu hizkuntza lehenetsira"
 
@@ -807,96 +808,92 @@ msgstr "Korritu azken orrira"
 msgid "Insert sheet"
 msgstr "Txertatu orria"
 
-#: src/control/Control.StatusBar.js:196
+#: src/control/Control.StatusBar.js:200
 msgid "Cancel the search"
 msgstr "Utzi bilaketa"
 
-#: src/control/Control.StatusBar.js:296
+#: src/control/Control.StatusBar.js:300
 msgid "Number of Sheets"
 msgstr "Orri kopurua"
 
-#: src/control/Control.StatusBar.js:301
+#: src/control/Control.StatusBar.js:305
 msgid "Selected range of cells"
 msgstr "Hautatutako gelaxka-area"
 
-#: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:362
+#: src/control/Control.StatusBar.js:310 src/control/Control.StatusBar.js:363
 msgid "Entering text mode"
 msgstr "Testu modura sartzen"
 
-#: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:367
+#: src/control/Control.StatusBar.js:319 src/control/Control.StatusBar.js:368
 msgid "Selection Mode"
 msgstr "Hautapen modua"
 
-#: src/control/Control.StatusBar.js:320
+#: src/control/Control.StatusBar.js:324
 msgid "Choice of functions"
 msgstr "Funtzioen aukera"
 
-#: src/control/Control.StatusBar.js:324
+#: src/control/Control.StatusBar.js:328
 msgid "Average"
 msgstr "Batez bestekoa"
 
-#: src/control/Control.StatusBar.js:325
+#: src/control/Control.StatusBar.js:329
 msgid "CountA"
 msgstr "KontagailuaA"
 
-#: src/control/Control.StatusBar.js:326
+#: src/control/Control.StatusBar.js:330
 msgid "Count"
 msgstr "Zenbatu"
 
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.StatusBar.js:331
 msgid "Maximum"
 msgstr "Gehienezkoa"
 
-#: src/control/Control.StatusBar.js:328
+#: src/control/Control.StatusBar.js:332
 msgid "Minimum"
 msgstr "Gutxienekoa"
 
-#: src/control/Control.StatusBar.js:329
+#: src/control/Control.StatusBar.js:333
 msgid "Sum"
 msgstr "Batuketa"
 
-#: src/control/Control.StatusBar.js:330
+#: src/control/Control.StatusBar.js:334
 msgid "Selection count"
 msgstr "Hautapenaren kontaketa"
 
-#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:340
-#: src/control/Control.StatusBar.js:378 src/control/Control.StatusBar.js:379
-#: src/control/Control.StatusBar.js:402 src/control/Control.StatusBar.js:403
+#: src/control/Control.StatusBar.js:353
+msgid "Number of Pages"
+msgstr "Orrialde kopurua"
+
+#: src/control/Control.StatusBar.js:358
+msgid "Word Counter"
+msgstr "Hitz kontatzailea"
+
+#: src/control/Control.StatusBar.js:389
+msgid "Number of Slides"
+msgstr "Diapositiba kopurua"
+
+#: src/control/Control.StatusBar.js:444 src/control/Control.StatusBar.js:445
 msgid "Permission Mode"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
-#: src/control/Control.StatusBar.js:402
+#: src/control/Control.StatusBar.js:444
 #, fuzzy
 msgid "Read-only"
 msgstr "Irakurtzeko soilik"
 
-#: src/control/Control.StatusBar.js:340 src/control/Control.StatusBar.js:379
-#: src/control/Control.StatusBar.js:403
+#: src/control/Control.StatusBar.js:445
 msgid "Edit"
 msgstr "Editatu"
 
-#: src/control/Control.StatusBar.js:352
-msgid "Number of Pages"
-msgstr "Orrialde kopurua"
-
-#: src/control/Control.StatusBar.js:357
-msgid "Word Counter"
-msgstr "Hitz kontatzailea"
-
-#: src/control/Control.StatusBar.js:391
-msgid "Number of Slides"
-msgstr "Diapositiba kopurua"
-
-#: src/control/Control.StatusBar.js:471
+#: src/control/Control.StatusBar.js:478
 msgid "Select multiple cells"
 msgstr "Hautatu gelaxka anitz"
 
-#: src/control/Control.StatusBar.js:474
+#: src/control/Control.StatusBar.js:481
 msgid "Insert mode: inactive"
 msgstr "Txertatzeko modua: inaktiboa"
 
-#: src/control/Control.StatusBar.js:487
+#: src/control/Control.StatusBar.js:494
 msgid "Selection mode: inactive"
 msgstr "Hautaketa modua: inaktiboa"
 
@@ -1161,7 +1158,7 @@ msgstr "Zatikia"
 msgid "Boolean Value"
 msgstr "Balio boolearra"
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:845
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
 msgid "Text"
 msgstr "Testua"
 
@@ -1229,28 +1226,28 @@ msgstr "Irudia (.png)"
 msgid "Show Selected Sheets"
 msgstr "Erakutsi orri hautatuak"
 
-#: src/control/Permission.js:49
+#: src/control/Permission.js:60
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr ""
 "Dokumentua ezin izan da blokeatu, eta irakurtzeko moduan solik ireki da."
 
-#: src/control/Permission.js:51 src/control/Permission.js:68
+#: src/control/Permission.js:62 src/control/Permission.js:79
 msgid "Server returned this reason:"
 msgstr "Zerbitzariak honako arrazoia itzuli du:"
 
-#: src/control/Permission.js:66
+#: src/control/Permission.js:77
 msgid "The document could not be locked."
 msgstr "Dokumentua ezin izan da blokeatu."
 
-#: src/control/Permission.js:108
+#: src/control/Permission.js:119
 msgid "Enter a file name"
 msgstr "Sartu fitxategi izena"
 
-#: src/control/Permission.js:109
+#: src/control/Permission.js:120
 msgid "filename"
 msgstr "fitxategi izena"
 
-#: src/control/Permission.js:123
+#: src/control/Permission.js:134
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
@@ -1258,11 +1255,11 @@ msgstr ""
 "Dokumentu honek uneko fitxategi formatuan gorde ezin den formatua edo edukia "
 "izan dezake."
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:145
 msgid "Save as ODF format"
 msgstr "Gorde ODF formatu gisa"
 
-#: src/control/Permission.js:135
+#: src/control/Permission.js:146
 msgid "Continue editing"
 msgstr "Jarraitu editatzen"
 
@@ -1322,7 +1319,7 @@ msgstr "Hautatu kargatuko den dokumentu mota"
 msgid "Type:"
 msgstr "Mota:"
 
-#: src/control/Signing.js:361 src/control/Signing.js:659
+#: src/control/Signing.js:361 src/control/Signing.js:665
 msgid "Document uploaded."
 msgstr "Dokumentua kargatu da."
 
@@ -1362,47 +1359,47 @@ msgstr "E/E"
 msgid "Login"
 msgstr "Saio-hasiera"
 
-#: src/control/Signing.js:616
+#: src/control/Signing.js:617
 msgid "Not Signed"
 msgstr "Sinatu gabea"
 
-#: src/control/Signing.js:619
+#: src/control/Signing.js:620
 msgid "This document is digitally signed and the signature is valid."
 msgstr "Dokumentu honek sinadura digitala du eta sinadura baliozkoa da."
 
-#: src/control/Signing.js:620
+#: src/control/Signing.js:622
 msgid "Signed and validated"
 msgstr "Sinatua eta balioztatua"
 
-#: src/control/Signing.js:623
+#: src/control/Signing.js:625
 msgid "This document has an invalid signature."
 msgstr "Dokumentu honek baliogabeko sinadura du."
 
-#: src/control/Signing.js:624
+#: src/control/Signing.js:627
 msgid "Signature broken"
 msgstr "Sinadura hautsia"
 
-#: src/control/Signing.js:627
+#: src/control/Signing.js:630
 msgid "The signature was valid, but the document has been modified"
 msgstr "Sinadura baliozkoa da, baina dokumentua aldatua izan da"
 
-#: src/control/Signing.js:628
+#: src/control/Signing.js:632
 msgid "Signed but document modified"
 msgstr "Sinatua baina dokumentua aldatua"
 
-#: src/control/Signing.js:631
+#: src/control/Signing.js:635
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr "Sinadura ongi dago, baina ziurtagiria ezin izan da balioztatu."
 
-#: src/control/Signing.js:632
+#: src/control/Signing.js:637
 msgid "Signed but not validated"
 msgstr "Sinatua baina balioztatu gabea"
 
-#: src/control/Signing.js:635
+#: src/control/Signing.js:640
 msgid "The signature is OK, but the document is only partially signed"
 msgstr "Sinadura ondo dago, baina dokumentua partzialki sinatuta dago."
 
-#: src/control/Signing.js:636
+#: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
 msgstr "Sinatua baina fitxategi guztiak ez daude sinatuta"
 
@@ -1422,24 +1419,24 @@ msgstr "Gordetzen..."
 msgid "Renaming..."
 msgstr "Izena aldatzen..."
 
-#: src/control/Toolbar.js:637
+#: src/control/Toolbar.js:638
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr "Barkatu, azken eguneraketei buruzko informazioa ezin izan da eskuratu."
 
-#: src/control/Toolbar.js:687
+#: src/control/Toolbar.js:688
 msgid "This version of %productName is powered by"
 msgstr "%productName bertsio honen oinarria"
 
-#: src/control/Toolbar.js:697
+#: src/control/Toolbar.js:698
 msgid "\"Slow Proxy\""
 msgstr "\"Proxy motela\""
 
-#: src/control/Toolbar.js:843
+#: src/control/Toolbar.js:844
 msgid "Insert hyperlink"
 msgstr "Txertatu hiperesteka"
 
-#: src/control/Toolbar.js:846
+#: src/control/Toolbar.js:847
 msgid "Link"
 msgstr "Esteka"
 
@@ -1451,8 +1448,8 @@ msgid ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
 "IE11 nabigatzailea bere konexio kopuru maximora iritsi da. Begiratu honako "
-"dokumentua muga hori handitzeko, behar baduzu: https://docs.microsoft.com/"
-"en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
+"dokumentua muga hori handitzeko, behar baduzu: https://docs.microsoft.com/en-"
+"us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:63
@@ -1467,46 +1464,46 @@ msgstr "Zerbitzaria eskuragarri dago orain. Orria freskatu behar da orain."
 msgid "Server is now reachable..."
 msgstr ""
 
-#: src/core/Socket.js:503
+#: src/core/Socket.js:506
 msgid "RELOAD"
 msgstr ""
 
-#: src/core/Socket.js:523
+#: src/core/Socket.js:524
 msgid "Served by:"
 msgstr "Zerbitzaria:"
 
-#: src/core/Socket.js:528
+#: src/core/Socket.js:529
 msgid "Unsupported server version."
 msgstr "Euskarririk gabeko zerbitzari bertsioa."
 
-#: src/core/Socket.js:645
+#: src/core/Socket.js:646
 msgid "Session terminated by document owner"
 msgstr "Dokumentuaren jabeak saioa amaitu du"
 
-#: src/core/Socket.js:650
+#: src/core/Socket.js:651
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Dokumentu inaktiboa - egin klik birkargatzeko eta edizioa berrasteko"
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:653
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Dokumentu inaktiboa - hatzarekin sakatu birkargatzeko eta edizioa berrasteko"
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:661
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Zerbitzaria mantentzerako itzaltzen ari da (automatikoki gordetzen)"
 
-#: src/core/Socket.js:664
+#: src/core/Socket.js:665
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ene, arazo bat dago dokumentuarekin konektatzean"
 
-#: src/core/Socket.js:668
+#: src/core/Socket.js:669
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 "Zerbitzaria ez dago erabilgarri, automatikoki berrabiarazten. Itxaron "
 "mesedez."
 
-#: src/core/Socket.js:696
+#: src/core/Socket.js:697
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1514,7 +1511,7 @@ msgstr ""
 "Dokumentua biltegian aldatu da. Dokumentu berria kargatzen. Zure bertsioa "
 "berrikusketa gisa dago eskuragarri."
 
-#: src/core/Socket.js:702
+#: src/core/Socket.js:703
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1522,11 +1519,11 @@ msgstr ""
 "Aurreko bertsioa berreskuratzen. Gorde gabeko aldaketak bertsioen "
 "historialean aurkitu ahal izango dira."
 
-#: src/core/Socket.js:708
+#: src/core/Socket.js:709
 msgid "Reloading the document after rename"
 msgstr ""
 
-#: src/core/Socket.js:824
+#: src/core/Socket.js:828
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1534,59 +1531,59 @@ msgstr ""
 "Dokumentua aldatu egin da biltegian. Ez egin nahi duzu gorde ez diren "
 "aldaketekin?"
 
-#: src/core/Socket.js:828
+#: src/core/Socket.js:832
 msgid "Discard"
 msgstr "Baztertu"
 
-#: src/core/Socket.js:833
+#: src/core/Socket.js:837
 msgid "Overwrite"
 msgstr "Gainidatzi"
 
-#: src/core/Socket.js:838
+#: src/core/Socket.js:842
 msgid "Save to new file"
 msgstr "Gorde fitxategi berrian"
 
-#: src/core/Socket.js:908
+#: src/core/Socket.js:912
 msgid "Document requires password to view."
 msgstr "Dokumentua ikusteko pasahitza behar da."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:915
 msgid "Document requires password to modify."
 msgstr "Dokumentua aldatzeko pasahitza behar da."
 
-#: src/core/Socket.js:913
+#: src/core/Socket.js:917
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Sakatu utzi soilik-ikusi moduan irekitzeko."
 
-#: src/core/Socket.js:917
+#: src/core/Socket.js:921
 msgid "Wrong password provided. Please try again."
 msgstr "Pasahitz okerra. Saiatu berriro."
 
-#: src/core/Socket.js:1022
+#: src/core/Socket.js:1026
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1028
 msgid " saved this document as "
 msgstr ""
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1028
 msgid ". Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1033
+#: src/core/Socket.js:1037
 msgid "Loading..."
 msgstr "Kargatzen..."
 
-#: src/core/Socket.js:1033
+#: src/core/Socket.js:1037
 msgid "Connecting..."
 msgstr "Konektatzen..."
 
-#: src/core/Socket.js:1051
+#: src/core/Socket.js:1055
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokumentua izena aldatzen ari da eta laster berriro kargatuko da"
 
-#: src/core/Socket.js:1413
+#: src/core/Socket.js:1417
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1594,10 +1591,14 @@ msgstr ""
 "Tira, hau lotsagarria da, ezin dugu zure dokumentuarekin konektatu. Saiatu "
 "berriro."
 
-#: src/core/Socket.js:1430
+#: src/core/Socket.js:1434
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "Konektatzen..."
+
+#: src/core/Socket.js:1440
+msgid "The server has been disconnected."
+msgstr ""
 
 #: src/errormessages.js:13
 msgid ""
@@ -1689,7 +1690,9 @@ msgid "Invalid link: '%url'"
 msgstr "Baliogabeko esteka: '%url'"
 
 #: src/errormessages.js:25
-msgid "You are leaving the editor, are you sure you want to visit %url?"
+#, fuzzy
+msgid ""
+"You are leaving the editor, are you sure you want to visit the following URL?"
 msgstr "Editorea uzten ari zara, ziur zaude %url bisitatu nahi duzula?"
 
 #: src/errormessages.js:26
@@ -1860,12 +1863,11 @@ msgid ""
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
 "<p>Zure arakatzaileak oso sarbide mugatua du arbelera, beraz, erabili "
-"teklatu lasterbide hauek:</p><table class=\"warn-copy-paste\""
-"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
-"n><kbd>V</kbd></td></tr><tr><td>Kopiatu</td><td>Ebaki</td><td>Itsatsi</td></t"
-"r></table>"
+"teklatu lasterbide hauek:</p><table class=\"warn-copy-paste"
+"\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></"
+"td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></"
+"td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></"
+"tr><tr><td>Kopiatu</td><td>Ebaki</td><td>Itsatsi</td></tr></table>"
 
 #: src/map/Clipboard.js:945
 msgid ""
@@ -1913,7 +1915,8 @@ msgstr "Dokumentu ez aktiboa - Egin klik edizioari berrekiteko"
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "%0 motako fitxategia ezin izan da zerbitzarira kargatu, ez baitu izenik"
+msgstr ""
+"%0 motako fitxategia ezin izan da zerbitzarira kargatu, ez baitu izenik"
 
 #: src/map/handler/Map.FileInserter.js:102
 #, javascript-format
@@ -1936,6 +1939,9 @@ msgstr "Fitxategi berria sortzen txantiloitik..."
 #: src/map/handler/Map.WOPI.js:410
 msgid "Creating copy..."
 msgstr "Kopia sortzen..."
+
+#~ msgid "You are leaving the editor, are you sure you want to visit %url?"
+#~ msgstr "Editorea uzten ari zara, ziur zaude %url bisitatu nahi duzula?"
 
 #~ msgid "Color"
 #~ msgstr "Kolorea"
@@ -1964,13 +1970,12 @@ msgstr "Kopia sortzen..."
 #~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 #~ msgstr ""
 #~ "<p>Zure nabigatzaileak arbelaren erabilera mugatua egin dezake. Erabili "
-#~ "honako laster-teklak:<ul><li><b>Ctrl+C</b>: "
-#~ "Kopiatzeko.</li><li><b>Ctrl+X</b>: Mozteko.</li><li><b>Ctrl+V</b>: "
-#~ "Itsasteko.</li></ul></p>"
+#~ "honako laster-teklak:<ul><li><b>Ctrl+C</b>: Kopiatzeko.</li><li><b>Ctrl"
+#~ "+X</b>: Mozteko.</li><li><b>Ctrl+V</b>: Itsasteko.</li></ul></p>"
 
 #~ msgid ""
-#~ "The Personal edition is supported by volunteers and intended for individual "
-#~ "use."
+#~ "The Personal edition is supported by volunteers and intended for "
+#~ "individual use."
 #~ msgstr ""
 #~ "Edizio pertsonala boluntarioen lanari esker garatzen da eta banakako "
 #~ "erabilerarako dago pentsatua."

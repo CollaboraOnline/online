@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-28 15:03+0200\n"
+"POT-Creation-Date: 2021-11-03 16:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -206,8 +206,8 @@ msgstr ""
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:387
-#: src/control/Control.StatusBar.js:331
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr ""
 
@@ -259,7 +259,7 @@ msgstr "Сессияны аяқтауды шынымен қалайсыз ба?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:849
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
 msgid "OK"
 msgstr ""
 
@@ -267,7 +267,7 @@ msgstr ""
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -341,11 +341,11 @@ msgstr ""
 msgid "Automatic color"
 msgstr ""
 
-#: src/control/Control.AlertDialog.js:67
+#: src/control/Control.AlertDialog.js:66
 msgid "Open link"
 msgstr ""
 
-#: src/control/Control.AlertDialog.js:91
+#: src/control/Control.AlertDialog.js:90
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr ""
 
@@ -370,7 +370,7 @@ msgid "Index"
 msgstr ""
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2313 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "Түсіндірме"
@@ -412,115 +412,115 @@ msgstr ""
 msgid "Function Wizard"
 msgstr "Функция"
 
-#: src/control/Control.JSDialogBuilder.js:390
+#: src/control/Control.JSDialogBuilder.js:391
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:393
+#: src/control/Control.JSDialogBuilder.js:394
 msgid "Linear"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:396
+#: src/control/Control.JSDialogBuilder.js:397
 msgid "Axial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:399
+#: src/control/Control.JSDialogBuilder.js:400
 msgid "Radial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:402
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Ellipsoid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:406
+#: src/control/Control.JSDialogBuilder.js:407
 msgid "Quadratic"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:409
+#: src/control/Control.JSDialogBuilder.js:410
 msgid "Square"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:412
+#: src/control/Control.JSDialogBuilder.js:413
 msgid "Fixed size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1483
+#: src/control/Control.JSDialogBuilder.js:1500
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1486
+#: src/control/Control.JSDialogBuilder.js:1503
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1617
+#: src/control/Control.JSDialogBuilder.js:1634
 msgid "Select range"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1648
+#: src/control/Control.JSDialogBuilder.js:1665
 #: src/control/Control.NotebookbarBuilder.js:234
 #, fuzzy
 msgid "Font Name"
 msgstr "Қаріп"
 
-#: src/control/Control.JSDialogBuilder.js:1650
+#: src/control/Control.JSDialogBuilder.js:1667
 #, fuzzy
 msgid "Font Size"
 msgstr "Қаріп"
 
-#: src/control/Control.JSDialogBuilder.js:1652
+#: src/control/Control.JSDialogBuilder.js:1669
 #: src/control/Control.TopToolbar.js:505
 msgid "Style"
 msgstr "Стилі"
 
-#: src/control/Control.JSDialogBuilder.js:2299
+#: src/control/Control.JSDialogBuilder.js:2328
 msgid "reply"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2302
+#: src/control/Control.JSDialogBuilder.js:2331
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2372
+#: src/control/Control.JSDialogBuilder.js:2401
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2773
+#: src/control/Control.JSDialogBuilder.js:2802
 msgid "Cell borders"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2817
+#: src/control/Control.JSDialogBuilder.js:2846
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2819
+#: src/control/Control.JSDialogBuilder.js:2848
 msgid "Gradient Start"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2821
+#: src/control/Control.JSDialogBuilder.js:2850
 msgid "Gradient End"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3001
+#: src/control/Control.JSDialogBuilder.js:3030
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3002
+#: src/control/Control.JSDialogBuilder.js:3031
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3022
+#: src/control/Control.JSDialogBuilder.js:3051
 #, fuzzy
 msgid "Insert Table"
 msgstr "Кестені кірістіру"
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3080
 msgid "Line style:"
 msgstr ""
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:491
-#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:528
+#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:535
 #: src/control/Control.NotebookbarBuilder.js:790
 #: src/control/Control.NotebookbarBuilder.js:792
 #: src/control/Control.NotebookbarBuilder.js:794
@@ -615,7 +615,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:299
 #: src/control/Control.Menubar.js:425 src/control/Control.Menubar.js:536
-#: src/control/Control.StatusBar.js:205
+#: src/control/Control.StatusBar.js:209
 msgid "Reset zoom"
 msgstr "Масштабты тастау"
 
@@ -740,7 +740,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:743 src/control/Control.Menubar.js:792
 #: src/control/Control.Menubar.js:843 src/control/Control.Menubar.js:891
-#: src/control/Control.StatusBar.js:190
+#: src/control/Control.StatusBar.js:194
 #, fuzzy
 msgid "Search"
 msgstr "Іздеу:"
@@ -749,7 +749,7 @@ msgstr "Іздеу:"
 msgid "Page Setup"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:527
+#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:534
 msgid "Reset to Default Language"
 msgstr ""
 
@@ -816,98 +816,94 @@ msgstr ""
 msgid "Insert sheet"
 msgstr "Кестені кірістіру"
 
-#: src/control/Control.StatusBar.js:196
+#: src/control/Control.StatusBar.js:200
 msgid "Cancel the search"
 msgstr "Іздеуді тоқтату"
 
-#: src/control/Control.StatusBar.js:296
+#: src/control/Control.StatusBar.js:300
 #, fuzzy
 msgid "Number of Sheets"
 msgstr "Көрулер саны"
 
-#: src/control/Control.StatusBar.js:301
+#: src/control/Control.StatusBar.js:305
 msgid "Selected range of cells"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:362
+#: src/control/Control.StatusBar.js:310 src/control/Control.StatusBar.js:363
 msgid "Entering text mode"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:367
+#: src/control/Control.StatusBar.js:319 src/control/Control.StatusBar.js:368
 msgid "Selection Mode"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:320
+#: src/control/Control.StatusBar.js:324
 msgid "Choice of functions"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:324
+#: src/control/Control.StatusBar.js:328
 msgid "Average"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:325
+#: src/control/Control.StatusBar.js:329
 msgid "CountA"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:326
+#: src/control/Control.StatusBar.js:330
 msgid "Count"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.StatusBar.js:331
 msgid "Maximum"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:328
+#: src/control/Control.StatusBar.js:332
 msgid "Minimum"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:329
+#: src/control/Control.StatusBar.js:333
 msgid "Sum"
 msgstr "Қосынды"
 
-#: src/control/Control.StatusBar.js:330
+#: src/control/Control.StatusBar.js:334
 msgid "Selection count"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:340
-#: src/control/Control.StatusBar.js:378 src/control/Control.StatusBar.js:379
-#: src/control/Control.StatusBar.js:402 src/control/Control.StatusBar.js:403
-msgid "Permission Mode"
-msgstr ""
-
-#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
-#: src/control/Control.StatusBar.js:402
-msgid "Read-only"
-msgstr ""
-
-#: src/control/Control.StatusBar.js:340 src/control/Control.StatusBar.js:379
-#: src/control/Control.StatusBar.js:403
-msgid "Edit"
-msgstr "Түзету"
-
-#: src/control/Control.StatusBar.js:352
+#: src/control/Control.StatusBar.js:353
 #, fuzzy
 msgid "Number of Pages"
 msgstr "Көрулер саны"
 
-#: src/control/Control.StatusBar.js:357
+#: src/control/Control.StatusBar.js:358
 msgid "Word Counter"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:391
+#: src/control/Control.StatusBar.js:389
 #, fuzzy
 msgid "Number of Slides"
 msgstr "Көрулер саны"
 
-#: src/control/Control.StatusBar.js:471
+#: src/control/Control.StatusBar.js:444 src/control/Control.StatusBar.js:445
+msgid "Permission Mode"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:444
+msgid "Read-only"
+msgstr ""
+
+#: src/control/Control.StatusBar.js:445
+msgid "Edit"
+msgstr "Түзету"
+
+#: src/control/Control.StatusBar.js:478
 msgid "Select multiple cells"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:474
+#: src/control/Control.StatusBar.js:481
 msgid "Insert mode: inactive"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:487
+#: src/control/Control.StatusBar.js:494
 msgid "Selection mode: inactive"
 msgstr ""
 
@@ -1175,7 +1171,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:845
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
 msgid "Text"
 msgstr ""
 
@@ -1249,37 +1245,37 @@ msgstr ""
 msgid "Show Selected Sheets"
 msgstr ""
 
-#: src/control/Permission.js:49
+#: src/control/Permission.js:60
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr ""
 
-#: src/control/Permission.js:51 src/control/Permission.js:68
+#: src/control/Permission.js:62 src/control/Permission.js:79
 msgid "Server returned this reason:"
 msgstr ""
 
-#: src/control/Permission.js:66
+#: src/control/Permission.js:77
 msgid "The document could not be locked."
 msgstr ""
 
-#: src/control/Permission.js:108
+#: src/control/Permission.js:119
 msgid "Enter a file name"
 msgstr ""
 
-#: src/control/Permission.js:109
+#: src/control/Permission.js:120
 msgid "filename"
 msgstr ""
 
-#: src/control/Permission.js:123
+#: src/control/Permission.js:134
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:145
 msgid "Save as ODF format"
 msgstr ""
 
-#: src/control/Permission.js:135
+#: src/control/Permission.js:146
 msgid "Continue editing"
 msgstr ""
 
@@ -1341,7 +1337,7 @@ msgstr ""
 msgid "Type:"
 msgstr ""
 
-#: src/control/Signing.js:361 src/control/Signing.js:659
+#: src/control/Signing.js:361 src/control/Signing.js:665
 msgid "Document uploaded."
 msgstr ""
 
@@ -1381,47 +1377,47 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
-#: src/control/Signing.js:616
+#: src/control/Signing.js:617
 msgid "Not Signed"
 msgstr ""
 
-#: src/control/Signing.js:619
+#: src/control/Signing.js:620
 msgid "This document is digitally signed and the signature is valid."
 msgstr ""
 
-#: src/control/Signing.js:620
+#: src/control/Signing.js:622
 msgid "Signed and validated"
 msgstr ""
 
-#: src/control/Signing.js:623
+#: src/control/Signing.js:625
 msgid "This document has an invalid signature."
 msgstr ""
 
-#: src/control/Signing.js:624
+#: src/control/Signing.js:627
 msgid "Signature broken"
 msgstr ""
 
-#: src/control/Signing.js:627
+#: src/control/Signing.js:630
 msgid "The signature was valid, but the document has been modified"
 msgstr ""
 
-#: src/control/Signing.js:628
+#: src/control/Signing.js:632
 msgid "Signed but document modified"
 msgstr ""
 
-#: src/control/Signing.js:631
+#: src/control/Signing.js:635
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr ""
 
-#: src/control/Signing.js:632
+#: src/control/Signing.js:637
 msgid "Signed but not validated"
 msgstr ""
 
-#: src/control/Signing.js:635
+#: src/control/Signing.js:640
 msgid "The signature is OK, but the document is only partially signed"
 msgstr ""
 
-#: src/control/Signing.js:636
+#: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
 msgstr ""
 
@@ -1441,24 +1437,24 @@ msgstr "Сақтау..."
 msgid "Renaming..."
 msgstr ""
 
-#: src/control/Toolbar.js:637
+#: src/control/Toolbar.js:638
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 
-#: src/control/Toolbar.js:687
+#: src/control/Toolbar.js:688
 msgid "This version of %productName is powered by"
 msgstr "%productName бұл нұсқасын ұсынған"
 
-#: src/control/Toolbar.js:697
+#: src/control/Toolbar.js:698
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:843
+#: src/control/Toolbar.js:844
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:846
+#: src/control/Toolbar.js:847
 msgid "Link"
 msgstr ""
 
@@ -1482,124 +1478,128 @@ msgstr ""
 msgid "Server is now reachable..."
 msgstr ""
 
-#: src/core/Socket.js:503
+#: src/core/Socket.js:506
 msgid "RELOAD"
 msgstr ""
 
-#: src/core/Socket.js:523
+#: src/core/Socket.js:524
 msgid "Served by:"
 msgstr ""
 
-#: src/core/Socket.js:528
+#: src/core/Socket.js:529
 msgid "Unsupported server version."
 msgstr "Сервердің нұсқасына қолдау жоқ."
 
-#: src/core/Socket.js:645
+#: src/core/Socket.js:646
 msgid "Session terminated by document owner"
 msgstr ""
 
-#: src/core/Socket.js:650
+#: src/core/Socket.js:651
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:653
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:661
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
 
-#: src/core/Socket.js:664
+#: src/core/Socket.js:665
 msgid "Oops, there is a problem connecting the document"
 msgstr ""
 
-#: src/core/Socket.js:668
+#: src/core/Socket.js:669
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 
-#: src/core/Socket.js:696
+#: src/core/Socket.js:697
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
 
-#: src/core/Socket.js:702
+#: src/core/Socket.js:703
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
 
-#: src/core/Socket.js:708
+#: src/core/Socket.js:709
 msgid "Reloading the document after rename"
 msgstr ""
 
-#: src/core/Socket.js:824
+#: src/core/Socket.js:828
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
 
-#: src/core/Socket.js:828
+#: src/core/Socket.js:832
 msgid "Discard"
 msgstr ""
 
-#: src/core/Socket.js:833
+#: src/core/Socket.js:837
 msgid "Overwrite"
 msgstr ""
 
-#: src/core/Socket.js:838
+#: src/core/Socket.js:842
 msgid "Save to new file"
 msgstr ""
 
-#: src/core/Socket.js:908
+#: src/core/Socket.js:912
 msgid "Document requires password to view."
 msgstr "Құжат оны қарау үшін парольді талап етеді."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:915
 msgid "Document requires password to modify."
 msgstr "Құжат оны түзету үшін парольді талап етеді."
 
-#: src/core/Socket.js:913
+#: src/core/Socket.js:917
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Тек қарауға ашу үшін Бас тарту басыңыз."
 
-#: src/core/Socket.js:917
+#: src/core/Socket.js:921
 msgid "Wrong password provided. Please try again."
 msgstr "Көрсетілген пароль қате. Қайтадан көріңіз."
 
-#: src/core/Socket.js:1022
+#: src/core/Socket.js:1026
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1028
 msgid " saved this document as "
 msgstr ""
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1028
 msgid ". Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1033
+#: src/core/Socket.js:1037
 msgid "Loading..."
 msgstr "Жүктелуде..."
 
-#: src/core/Socket.js:1033
+#: src/core/Socket.js:1037
 msgid "Connecting..."
 msgstr ""
 
-#: src/core/Socket.js:1051
+#: src/core/Socket.js:1055
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1413
+#: src/core/Socket.js:1417
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Құжатқа байланысу сәтсіз аяқталды. Қайтадан көріңіз."
 
-#: src/core/Socket.js:1430
+#: src/core/Socket.js:1434
 msgid "Reconnecting..."
+msgstr ""
+
+#: src/core/Socket.js:1440
+msgid "The server has been disconnected."
 msgstr ""
 
 #: src/errormessages.js:13
@@ -1673,7 +1673,8 @@ msgid "Invalid link: '%url'"
 msgstr ""
 
 #: src/errormessages.js:25
-msgid "You are leaving the editor, are you sure you want to visit %url?"
+msgid ""
+"You are leaving the editor, are you sure you want to visit the following URL?"
 msgstr ""
 
 #: src/errormessages.js:26

@@ -2,16 +2,16 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-28 15:03+0200\n"
+"POT-Creation-Date: 2021-11-03 16:37+0100\n"
 "PO-Revision-Date: 2021-09-18 21:37+0000\n"
 "Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
-"Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
-"collabora-online/ui/vi/>\n"
+"Language-Team: Vietnamese <https://hosted.weblate.org/projects/collabora-"
+"online/ui/vi/>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -203,8 +203,8 @@ msgstr "Tải lại nhật kí"
 msgid "Channel Filter:"
 msgstr "Bộ lọc kệnh:"
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:387
-#: src/control/Control.StatusBar.js:331
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr "Không có"
 
@@ -256,7 +256,7 @@ msgstr "Bạn có chắc chắn muốn kết thúc phiên này không?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:849
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
 msgid "OK"
 msgstr "Đồng ý"
 
@@ -264,7 +264,7 @@ msgstr "Đồng ý"
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -338,11 +338,11 @@ msgstr "Không màu"
 msgid "Automatic color"
 msgstr "Màu tự động"
 
-#: src/control/Control.AlertDialog.js:67
+#: src/control/Control.AlertDialog.js:66
 msgid "Open link"
 msgstr "Mở đường dẫn"
 
-#: src/control/Control.AlertDialog.js:91
+#: src/control/Control.AlertDialog.js:90
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Máy chủ gặp lỗi %0 khi phân tích cú pháp lệnh %1."
 
@@ -367,7 +367,7 @@ msgid "Index"
 msgstr "Chỉ mục"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2313 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "Chú thích"
@@ -408,112 +408,112 @@ msgstr "Bắt đầu sao chép/ dán chéo"
 msgid "Function Wizard"
 msgstr "Chèn hàm"
 
-#: src/control/Control.JSDialogBuilder.js:390
+#: src/control/Control.JSDialogBuilder.js:391
 msgid "Solid"
 msgstr "Đậm"
 
-#: src/control/Control.JSDialogBuilder.js:393
+#: src/control/Control.JSDialogBuilder.js:394
 msgid "Linear"
 msgstr "Tuyến tính"
 
-#: src/control/Control.JSDialogBuilder.js:396
+#: src/control/Control.JSDialogBuilder.js:397
 msgid "Axial"
 msgstr "Trục"
 
-#: src/control/Control.JSDialogBuilder.js:399
+#: src/control/Control.JSDialogBuilder.js:400
 msgid "Radial"
 msgstr "Xuyên tâm"
 
-#: src/control/Control.JSDialogBuilder.js:402
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Ellipsoid"
 msgstr "Elip-soi"
 
-#: src/control/Control.JSDialogBuilder.js:406
+#: src/control/Control.JSDialogBuilder.js:407
 msgid "Quadratic"
 msgstr "Phương trình bậc hai"
 
-#: src/control/Control.JSDialogBuilder.js:409
+#: src/control/Control.JSDialogBuilder.js:410
 msgid "Square"
 msgstr "Ô vuông"
 
-#: src/control/Control.JSDialogBuilder.js:412
+#: src/control/Control.JSDialogBuilder.js:413
 msgid "Fixed size"
 msgstr "Kích thước cố định"
 
-#: src/control/Control.JSDialogBuilder.js:1483
+#: src/control/Control.JSDialogBuilder.js:1500
 msgid "From"
 msgstr "Từ"
 
-#: src/control/Control.JSDialogBuilder.js:1486
+#: src/control/Control.JSDialogBuilder.js:1503
 msgid "To"
 msgstr "Đến"
 
-#: src/control/Control.JSDialogBuilder.js:1617
+#: src/control/Control.JSDialogBuilder.js:1634
 msgid "Select range"
 msgstr "Chọn phạm vi"
 
-#: src/control/Control.JSDialogBuilder.js:1648
+#: src/control/Control.JSDialogBuilder.js:1665
 #: src/control/Control.NotebookbarBuilder.js:234
 msgid "Font Name"
 msgstr "Tên phông chữ"
 
-#: src/control/Control.JSDialogBuilder.js:1650
+#: src/control/Control.JSDialogBuilder.js:1667
 msgid "Font Size"
 msgstr "Cỡ phông chữ"
 
-#: src/control/Control.JSDialogBuilder.js:1652
+#: src/control/Control.JSDialogBuilder.js:1669
 #: src/control/Control.TopToolbar.js:505
 msgid "Style"
 msgstr "Kiểu"
 
-#: src/control/Control.JSDialogBuilder.js:2299
+#: src/control/Control.JSDialogBuilder.js:2328
 msgid "reply"
 msgstr "Phản hồi"
 
-#: src/control/Control.JSDialogBuilder.js:2302
+#: src/control/Control.JSDialogBuilder.js:2331
 msgid "replies"
 msgstr "Phản hồi"
 
-#: src/control/Control.JSDialogBuilder.js:2372
+#: src/control/Control.JSDialogBuilder.js:2401
 msgid "Insert Comment"
 msgstr "Chèn bình luận"
 
-#: src/control/Control.JSDialogBuilder.js:2773
+#: src/control/Control.JSDialogBuilder.js:2802
 msgid "Cell borders"
 msgstr "Đường viền ô"
 
-#: src/control/Control.JSDialogBuilder.js:2817
+#: src/control/Control.JSDialogBuilder.js:2846
 msgid "Background Color"
 msgstr "Màu nền"
 
-#: src/control/Control.JSDialogBuilder.js:2819
+#: src/control/Control.JSDialogBuilder.js:2848
 msgid "Gradient Start"
 msgstr "Bắt đầu chuyển màu"
 
-#: src/control/Control.JSDialogBuilder.js:2821
+#: src/control/Control.JSDialogBuilder.js:2850
 msgid "Gradient End"
 msgstr "Kết thúc chuyển màu"
 
-#: src/control/Control.JSDialogBuilder.js:3001
+#: src/control/Control.JSDialogBuilder.js:3030
 msgid "Rows"
 msgstr "Hàng"
 
-#: src/control/Control.JSDialogBuilder.js:3002
+#: src/control/Control.JSDialogBuilder.js:3031
 msgid "Columns"
 msgstr "Cột"
 
-#: src/control/Control.JSDialogBuilder.js:3022
+#: src/control/Control.JSDialogBuilder.js:3051
 msgid "Insert Table"
 msgstr "Chèn bảng"
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3080
 msgid "Line style:"
 msgstr "Kiểu dòng:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:491
-#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:528
+#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:535
 #: src/control/Control.NotebookbarBuilder.js:790
 #: src/control/Control.NotebookbarBuilder.js:792
 #: src/control/Control.NotebookbarBuilder.js:794
@@ -608,7 +608,7 @@ msgstr "Sửa"
 
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:299
 #: src/control/Control.Menubar.js:425 src/control/Control.Menubar.js:536
-#: src/control/Control.StatusBar.js:205
+#: src/control/Control.StatusBar.js:209
 msgid "Reset zoom"
 msgstr "Đặt lại thu phóng"
 
@@ -731,7 +731,7 @@ msgstr "Tài liệu CSV (.csv)"
 
 #: src/control/Control.Menubar.js:743 src/control/Control.Menubar.js:792
 #: src/control/Control.Menubar.js:843 src/control/Control.Menubar.js:891
-#: src/control/Control.StatusBar.js:190
+#: src/control/Control.StatusBar.js:194
 msgid "Search"
 msgstr "Tìm kiếm"
 
@@ -739,7 +739,7 @@ msgstr "Tìm kiếm"
 msgid "Page Setup"
 msgstr "Thiết lập trang"
 
-#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:527
+#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:534
 msgid "Reset to Default Language"
 msgstr "Đặt lại về ngôn ngữ mặc định"
 
@@ -801,95 +801,91 @@ msgstr "Cuộn đến trang cuối cùng"
 msgid "Insert sheet"
 msgstr "Chèn trang tính"
 
-#: src/control/Control.StatusBar.js:196
+#: src/control/Control.StatusBar.js:200
 msgid "Cancel the search"
 msgstr "Hủy tìm kiếm"
 
-#: src/control/Control.StatusBar.js:296
+#: src/control/Control.StatusBar.js:300
 msgid "Number of Sheets"
 msgstr "Số trang tính"
 
-#: src/control/Control.StatusBar.js:301
+#: src/control/Control.StatusBar.js:305
 msgid "Selected range of cells"
 msgstr "Phạm vi ô đã chọn"
 
-#: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:362
+#: src/control/Control.StatusBar.js:310 src/control/Control.StatusBar.js:363
 msgid "Entering text mode"
 msgstr "Vào chế độ văn bản"
 
-#: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:367
+#: src/control/Control.StatusBar.js:319 src/control/Control.StatusBar.js:368
 msgid "Selection Mode"
 msgstr "Chế độ lựa chọn"
 
-#: src/control/Control.StatusBar.js:320
+#: src/control/Control.StatusBar.js:324
 msgid "Choice of functions"
 msgstr "Lựa chọn chức năng"
 
-#: src/control/Control.StatusBar.js:324
+#: src/control/Control.StatusBar.js:328
 msgid "Average"
 msgstr "Trung bình"
 
-#: src/control/Control.StatusBar.js:325
+#: src/control/Control.StatusBar.js:329
 msgid "CountA"
 msgstr "Đếm A"
 
-#: src/control/Control.StatusBar.js:326
+#: src/control/Control.StatusBar.js:330
 msgid "Count"
 msgstr "Đếm"
 
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.StatusBar.js:331
 msgid "Maximum"
 msgstr "Tối đa"
 
-#: src/control/Control.StatusBar.js:328
+#: src/control/Control.StatusBar.js:332
 msgid "Minimum"
 msgstr "Tối thiểu"
 
-#: src/control/Control.StatusBar.js:329
+#: src/control/Control.StatusBar.js:333
 msgid "Sum"
 msgstr "Tổng"
 
-#: src/control/Control.StatusBar.js:330
+#: src/control/Control.StatusBar.js:334
 msgid "Selection count"
 msgstr "Số lượng lựa chọn"
 
-#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:340
-#: src/control/Control.StatusBar.js:378 src/control/Control.StatusBar.js:379
-#: src/control/Control.StatusBar.js:402 src/control/Control.StatusBar.js:403
-msgid "Permission Mode"
-msgstr "Chế độ quyền"
-
-#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
-#: src/control/Control.StatusBar.js:402
-msgid "Read-only"
-msgstr "Chỉ đọc"
-
-#: src/control/Control.StatusBar.js:340 src/control/Control.StatusBar.js:379
-#: src/control/Control.StatusBar.js:403
-msgid "Edit"
-msgstr "Chỉnh sửa"
-
-#: src/control/Control.StatusBar.js:352
+#: src/control/Control.StatusBar.js:353
 msgid "Number of Pages"
 msgstr "Số trang"
 
-#: src/control/Control.StatusBar.js:357
+#: src/control/Control.StatusBar.js:358
 msgid "Word Counter"
 msgstr "Bộ đếm từ"
 
-#: src/control/Control.StatusBar.js:391
+#: src/control/Control.StatusBar.js:389
 msgid "Number of Slides"
 msgstr "Số lượng trang chiếu"
 
-#: src/control/Control.StatusBar.js:471
+#: src/control/Control.StatusBar.js:444 src/control/Control.StatusBar.js:445
+msgid "Permission Mode"
+msgstr "Chế độ quyền"
+
+#: src/control/Control.StatusBar.js:444
+msgid "Read-only"
+msgstr "Chỉ đọc"
+
+#: src/control/Control.StatusBar.js:445
+msgid "Edit"
+msgstr "Chỉnh sửa"
+
+#: src/control/Control.StatusBar.js:478
 msgid "Select multiple cells"
 msgstr "Chọn nhiều ô"
 
-#: src/control/Control.StatusBar.js:474
+#: src/control/Control.StatusBar.js:481
 msgid "Insert mode: inactive"
 msgstr "Chế độ chèn: không hoạt động"
 
-#: src/control/Control.StatusBar.js:487
+#: src/control/Control.StatusBar.js:494
 msgid "Selection mode: inactive"
 msgstr "Chế độ lựa chọn: không hoạt động"
 
@@ -1154,7 +1150,7 @@ msgstr "Phân số"
 msgid "Boolean Value"
 msgstr "Giá trị boolean"
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:845
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
 msgid "Text"
 msgstr "Bản văn"
 
@@ -1222,27 +1218,27 @@ msgstr "Hình ảnh (.png)"
 msgid "Show Selected Sheets"
 msgstr "Hiển thị Trang tính đã Chọn"
 
-#: src/control/Permission.js:49
+#: src/control/Permission.js:60
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr "Không thể khóa tài liệu và được mở ở chế độ chỉ đọc."
 
-#: src/control/Permission.js:51 src/control/Permission.js:68
+#: src/control/Permission.js:62 src/control/Permission.js:79
 msgid "Server returned this reason:"
 msgstr "Máy chủ trả về lý do này:"
 
-#: src/control/Permission.js:66
+#: src/control/Permission.js:77
 msgid "The document could not be locked."
 msgstr "Không thể khóa tài liệu."
 
-#: src/control/Permission.js:108
+#: src/control/Permission.js:119
 msgid "Enter a file name"
 msgstr "Nhập tên tệp"
 
-#: src/control/Permission.js:109
+#: src/control/Permission.js:120
 msgid "filename"
 msgstr "tên tệp"
 
-#: src/control/Permission.js:123
+#: src/control/Permission.js:134
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
@@ -1250,11 +1246,11 @@ msgstr ""
 "Tài liệu này có thể chứa căn chỉnh hoặc nội dung không thể được lưu ở định "
 "dạng tệp hiện tại."
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:145
 msgid "Save as ODF format"
 msgstr "Lưu dưới định dạng ODF"
 
-#: src/control/Permission.js:135
+#: src/control/Permission.js:146
 msgid "Continue editing"
 msgstr "Tiếp tục chỉnh sửa"
 
@@ -1314,7 +1310,7 @@ msgstr "Chọn loại tài liệu để tải lên"
 msgid "Type:"
 msgstr "Kiểu:"
 
-#: src/control/Signing.js:361 src/control/Signing.js:659
+#: src/control/Signing.js:361 src/control/Signing.js:665
 msgid "Document uploaded."
 msgstr "Tài liệu đã tải lên."
 
@@ -1354,47 +1350,47 @@ msgstr "N/A"
 msgid "Login"
 msgstr "Đăng nhập"
 
-#: src/control/Signing.js:616
+#: src/control/Signing.js:617
 msgid "Not Signed"
 msgstr "Chưa ký"
 
-#: src/control/Signing.js:619
+#: src/control/Signing.js:620
 msgid "This document is digitally signed and the signature is valid."
 msgstr "Tài liệu này được ký điện tử và chữ ký hợp lệ."
 
-#: src/control/Signing.js:620
+#: src/control/Signing.js:622
 msgid "Signed and validated"
 msgstr "Đã ký và xác thực"
 
-#: src/control/Signing.js:623
+#: src/control/Signing.js:625
 msgid "This document has an invalid signature."
 msgstr "Tài liệu này có chữ ký không hợp lệ."
 
-#: src/control/Signing.js:624
+#: src/control/Signing.js:627
 msgid "Signature broken"
 msgstr "Chữ ký bị hỏng"
 
-#: src/control/Signing.js:627
+#: src/control/Signing.js:630
 msgid "The signature was valid, but the document has been modified"
 msgstr "Chữ ký hợp lệ, nhưng tài liệu đã được sửa đổi"
 
-#: src/control/Signing.js:628
+#: src/control/Signing.js:632
 msgid "Signed but document modified"
 msgstr "Đã ký nhưng tài liệu đã được sửa đổi"
 
-#: src/control/Signing.js:631
+#: src/control/Signing.js:635
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr "Chữ ký được xác nhận, nhưng không thể xác thực chứng chỉ."
 
-#: src/control/Signing.js:632
+#: src/control/Signing.js:637
 msgid "Signed but not validated"
 msgstr "Đã ký nhưng chưa được xác thực"
 
-#: src/control/Signing.js:635
+#: src/control/Signing.js:640
 msgid "The signature is OK, but the document is only partially signed"
 msgstr "Chữ ký được xác nhận, nhưng tài liệu chỉ được ký một phần"
 
-#: src/control/Signing.js:636
+#: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
 msgstr "Đã ký nhưng không phải tất cả các tệp đều được ký"
 
@@ -1414,25 +1410,25 @@ msgstr "Đang lưu..."
 msgid "Renaming..."
 msgstr "Đang đổi tên..."
 
-#: src/control/Toolbar.js:637
+#: src/control/Toolbar.js:638
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 "Chúng tôi rất tiếc, thông tin về các bản cập nhật mới nhất không có sẵn."
 
-#: src/control/Toolbar.js:687
+#: src/control/Toolbar.js:688
 msgid "This version of %productName is powered by"
 msgstr "Phiên bản %productName này được cung cấp bởi"
 
-#: src/control/Toolbar.js:697
+#: src/control/Toolbar.js:698
 msgid "\"Slow Proxy\""
 msgstr "\"Proxy chậm\""
 
-#: src/control/Toolbar.js:843
+#: src/control/Toolbar.js:844
 msgid "Insert hyperlink"
 msgstr "Chèn siêu liên kết"
 
-#: src/control/Toolbar.js:846
+#: src/control/Toolbar.js:847
 msgid "Link"
 msgstr "Liên kết"
 
@@ -1445,8 +1441,8 @@ msgid ""
 msgstr ""
 "IE11 đã đạt đến số lượng kết nối tối đa. Vui lòng xem tài liệu này để tăng "
 "giới hạn này nếu cần: https://docs.microsoft.com/en-us/previous-versions/"
-"windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85"
-")#websocket-maximum-server-connections"
+"windows/internet-explorer/ie-developer/general-info/"
+"ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:63
 msgid "Oops, there is a problem connecting to %productName: "
@@ -1462,45 +1458,45 @@ msgstr ""
 msgid "Server is now reachable..."
 msgstr "Máy chủ bây giờ đã có thể kết nối đến được..."
 
-#: src/core/Socket.js:503
+#: src/core/Socket.js:506
 msgid "RELOAD"
 msgstr "TẢI LẠI"
 
-#: src/core/Socket.js:523
+#: src/core/Socket.js:524
 msgid "Served by:"
 msgstr "Phục vụ bởi:"
 
-#: src/core/Socket.js:528
+#: src/core/Socket.js:529
 msgid "Unsupported server version."
 msgstr "Phiên bản máy chủ không được hỗ trợ."
 
-#: src/core/Socket.js:645
+#: src/core/Socket.js:646
 msgid "Session terminated by document owner"
 msgstr "Phiên bị chấm dứt bởi chủ sở hữu tài liệu"
 
-#: src/core/Socket.js:650
+#: src/core/Socket.js:651
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Tài liệu không hoạt động - vui lòng nhấp để tải lại và tiếp tục chỉnh sửa"
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:653
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Tài liệu không hoạt động - vui lòng nhấn để tải lại và tiếp tục chỉnh sửa"
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:661
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Máy chủ đang ngừng hoạt động để bảo trì (tự động lưu)"
 
-#: src/core/Socket.js:664
+#: src/core/Socket.js:665
 msgid "Oops, there is a problem connecting the document"
 msgstr "Rất tiếc, đã xảy ra sự cố khi kết nối tài liệu"
 
-#: src/core/Socket.js:668
+#: src/core/Socket.js:669
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Máy chủ không hoạt động, tự động khởi động lại. Xin vui lòng chờ đợi."
 
-#: src/core/Socket.js:696
+#: src/core/Socket.js:697
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1508,7 +1504,7 @@ msgstr ""
 "Tài liệu đã thay đổi trong bộ nhớ. Đang tải tài liệu mới. Phiên bản của bạn "
 "có sẵn dưới dạng bản sửa đổi."
 
-#: src/core/Socket.js:702
+#: src/core/Socket.js:703
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1516,11 +1512,11 @@ msgstr ""
 "Khôi phục bản sửa đổi cũ hơn. Mọi thay đổi chưa được lưu sẽ có sẵn trong "
 "lịch sử phiên bản"
 
-#: src/core/Socket.js:708
+#: src/core/Socket.js:709
 msgid "Reloading the document after rename"
 msgstr ""
 
-#: src/core/Socket.js:824
+#: src/core/Socket.js:828
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1528,68 +1524,72 @@ msgstr ""
 "Tài liệu đã được thay đổi trong bộ nhớ. Bạn muốn làm gì với những thay đổi "
 "chưa được lưu của mình?"
 
-#: src/core/Socket.js:828
+#: src/core/Socket.js:832
 msgid "Discard"
 msgstr "Hủy bỏ"
 
-#: src/core/Socket.js:833
+#: src/core/Socket.js:837
 msgid "Overwrite"
 msgstr "Ghi đè"
 
-#: src/core/Socket.js:838
+#: src/core/Socket.js:842
 msgid "Save to new file"
 msgstr "Lưu vào tệp mới"
 
-#: src/core/Socket.js:908
+#: src/core/Socket.js:912
 msgid "Document requires password to view."
 msgstr "Tài liệu yêu cầu mật khẩu để xem."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:915
 msgid "Document requires password to modify."
 msgstr "Tài liệu yêu cầu mật khẩu để sửa đổi."
 
-#: src/core/Socket.js:913
+#: src/core/Socket.js:917
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Nhấn Hủy để mở ở chế độ chỉ xem."
 
-#: src/core/Socket.js:917
+#: src/core/Socket.js:921
 msgid "Wrong password provided. Please try again."
 msgstr "Đã cung cấp sai mật khẩu. Vui lòng thử lại."
 
-#: src/core/Socket.js:1022
+#: src/core/Socket.js:1026
 msgid "Someone"
 msgstr "Ai đó"
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1028
 msgid " saved this document as "
 msgstr " đã lưu tài liệu này dưới dạng "
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1028
 msgid ". Do you want to join?"
 msgstr ". Bạn có muốn tham gia không?"
 
-#: src/core/Socket.js:1033
+#: src/core/Socket.js:1037
 msgid "Loading..."
 msgstr "Đang tải..."
 
-#: src/core/Socket.js:1033
+#: src/core/Socket.js:1037
 msgid "Connecting..."
 msgstr "Đang kết nối..."
 
-#: src/core/Socket.js:1051
+#: src/core/Socket.js:1055
 msgid "The document is being renamed and will reload shortly"
 msgstr "Tài liệu đang được đổi tên và sắp tải lại"
 
-#: src/core/Socket.js:1413
+#: src/core/Socket.js:1417
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Chúng tôi không thể kết nối với tài liệu của bạn. Vui lòng thử lại."
 
-#: src/core/Socket.js:1430
+#: src/core/Socket.js:1434
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "Đang kết nối..."
+
+#: src/core/Socket.js:1440
+msgid "The server has been disconnected."
+msgstr "Máy chủ đã bị ngắt kết nối."
 
 #: src/errormessages.js:13
 msgid ""
@@ -1680,7 +1680,9 @@ msgid "Invalid link: '%url'"
 msgstr "Liên kết không hợp lệ: '%url'"
 
 #: src/errormessages.js:25
-msgid "You are leaving the editor, are you sure you want to visit %url?"
+#, fuzzy
+msgid ""
+"You are leaving the editor, are you sure you want to visit the following URL?"
 msgstr ""
 "Bạn đang rời khỏi trình chỉnh sửa, bạn có chắc chắn muốn truy cập %url không?"
 
@@ -1848,12 +1850,11 @@ msgid ""
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
 "<p>Trình duyệt của bạn có quyền truy cập rất giới hạn vào bộ nhớ tạm, vậy "
-"nên hãy sử dụng các tổ hợp phím tắt sau:</p><table class=\"warn-copy-paste\""
-"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd></td></tr><tr><td>Sao "
-"chép</td><td>Cắt</td><td>Dán</td></tr></table>"
+"nên hãy sử dụng các tổ hợp phím tắt sau:</p><table class=\"warn-copy-paste"
+"\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></"
+"td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></"
+"td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></"
+"tr><tr><td>Sao chép</td><td>Cắt</td><td>Dán</td></tr></table>"
 
 #: src/map/Clipboard.js:945
 msgid ""
@@ -1925,11 +1926,13 @@ msgstr "Tạo tệp mới từ mẫu..."
 msgid "Creating copy..."
 msgstr "Đang tạo bản sao ..."
 
+#~ msgid "You are leaving the editor, are you sure you want to visit %url?"
+#~ msgstr ""
+#~ "Bạn đang rời khỏi trình chỉnh sửa, bạn có chắc chắn muốn truy cập %url "
+#~ "không?"
+
 #~ msgid "Color"
 #~ msgstr "Màu"
-
-#~ msgid "The server has been disconnected."
-#~ msgstr "Máy chủ đã bị ngắt kết nối."
 
 #~ msgid "Emphasis"
 #~ msgstr "Nhấn mạnh"
@@ -1960,10 +1963,10 @@ msgstr "Đang tạo bản sao ..."
 #~ "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
 #~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 #~ msgstr ""
-#~ "<p> Trình duyệt của bạn có quyền truy cập rất hạn chế vào khay nhớ tạm, vì "
-#~ "vậy hãy sử dụng các phím tắt sau: <ul> <li> <b> Ctrl + C </b>: Để sao chép. "
-#~ "</li> <li> <b> Ctrl + X </b>: Để cắt. </li> <li> <b> Ctrl + V </b>: Để dán. "
-#~ "</li></ul> </p>"
+#~ "<p> Trình duyệt của bạn có quyền truy cập rất hạn chế vào khay nhớ tạm, "
+#~ "vì vậy hãy sử dụng các phím tắt sau: <ul> <li> <b> Ctrl + C </b>: Để sao "
+#~ "chép. </li> <li> <b> Ctrl + X </b>: Để cắt. </li> <li> <b> Ctrl + V </b>: "
+#~ "Để dán. </li></ul> </p>"
 
 #~ msgid "Subtitle"
 #~ msgstr "Phụ đề"

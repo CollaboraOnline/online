@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-28 15:03+0200\n"
+"POT-Creation-Date: 2021-11-03 16:37+0100\n"
 "PO-Revision-Date: 2020-08-30 15:35+0000\n"
 "Last-Translator: 김주현 <kjh000121@gmail.com>\n"
 "Language-Team: Korean <https://weblate.documentfoundation.org/projects/"
@@ -210,8 +210,8 @@ msgstr "새로 고침"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:387
-#: src/control/Control.StatusBar.js:331
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr "없음"
 
@@ -263,7 +263,7 @@ msgstr "이 세션을 정말 종료하겠습니까?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:849
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
 msgid "OK"
 msgstr "확인"
 
@@ -271,7 +271,7 @@ msgstr "확인"
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -346,11 +346,11 @@ msgstr "색 없음"
 msgid "Automatic color"
 msgstr "색 없음"
 
-#: src/control/Control.AlertDialog.js:67
+#: src/control/Control.AlertDialog.js:66
 msgid "Open link"
 msgstr "링크 열기"
 
-#: src/control/Control.AlertDialog.js:91
+#: src/control/Control.AlertDialog.js:90
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "서버에서 %1 명령을 구문 분석하는 동안 %0 오류가 발생했습니다."
 
@@ -375,7 +375,7 @@ msgid "Index"
 msgstr "차례"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2313 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "추가 설명"
@@ -416,116 +416,116 @@ msgstr "교차 복사/붙여넣기 시작"
 msgid "Function Wizard"
 msgstr "함수 마법사"
 
-#: src/control/Control.JSDialogBuilder.js:390
+#: src/control/Control.JSDialogBuilder.js:391
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:393
+#: src/control/Control.JSDialogBuilder.js:394
 msgid "Linear"
 msgstr "선"
 
-#: src/control/Control.JSDialogBuilder.js:396
+#: src/control/Control.JSDialogBuilder.js:397
 msgid "Axial"
 msgstr "축"
 
-#: src/control/Control.JSDialogBuilder.js:399
+#: src/control/Control.JSDialogBuilder.js:400
 msgid "Radial"
 msgstr "방사형"
 
-#: src/control/Control.JSDialogBuilder.js:402
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Ellipsoid"
 msgstr "타원체"
 
-#: src/control/Control.JSDialogBuilder.js:406
+#: src/control/Control.JSDialogBuilder.js:407
 msgid "Quadratic"
 msgstr "입방형"
 
-#: src/control/Control.JSDialogBuilder.js:409
+#: src/control/Control.JSDialogBuilder.js:410
 msgid "Square"
 msgstr "정방형"
 
-#: src/control/Control.JSDialogBuilder.js:412
+#: src/control/Control.JSDialogBuilder.js:413
 msgid "Fixed size"
 msgstr "고정 크기"
 
-#: src/control/Control.JSDialogBuilder.js:1483
+#: src/control/Control.JSDialogBuilder.js:1500
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1486
+#: src/control/Control.JSDialogBuilder.js:1503
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1617
+#: src/control/Control.JSDialogBuilder.js:1634
 #, fuzzy
 msgid "Select range"
 msgstr "변경 사항 거부"
 
-#: src/control/Control.JSDialogBuilder.js:1648
+#: src/control/Control.JSDialogBuilder.js:1665
 #: src/control/Control.NotebookbarBuilder.js:234
 msgid "Font Name"
 msgstr "글꼴 이름"
 
-#: src/control/Control.JSDialogBuilder.js:1650
+#: src/control/Control.JSDialogBuilder.js:1667
 msgid "Font Size"
 msgstr "글꼴 크기"
 
-#: src/control/Control.JSDialogBuilder.js:1652
+#: src/control/Control.JSDialogBuilder.js:1669
 #: src/control/Control.TopToolbar.js:505
 msgid "Style"
 msgstr "스타일"
 
-#: src/control/Control.JSDialogBuilder.js:2299
+#: src/control/Control.JSDialogBuilder.js:2328
 #, fuzzy
 msgid "reply"
 msgstr "답변"
 
-#: src/control/Control.JSDialogBuilder.js:2302
+#: src/control/Control.JSDialogBuilder.js:2331
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2372
+#: src/control/Control.JSDialogBuilder.js:2401
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2773
+#: src/control/Control.JSDialogBuilder.js:2802
 #, fuzzy
 msgid "Cell borders"
 msgstr "테두리"
 
-#: src/control/Control.JSDialogBuilder.js:2817
+#: src/control/Control.JSDialogBuilder.js:2846
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2819
+#: src/control/Control.JSDialogBuilder.js:2848
 msgid "Gradient Start"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2821
+#: src/control/Control.JSDialogBuilder.js:2850
 msgid "Gradient End"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3001
+#: src/control/Control.JSDialogBuilder.js:3030
 msgid "Rows"
 msgstr "열"
 
-#: src/control/Control.JSDialogBuilder.js:3002
+#: src/control/Control.JSDialogBuilder.js:3031
 msgid "Columns"
 msgstr "행"
 
-#: src/control/Control.JSDialogBuilder.js:3022
+#: src/control/Control.JSDialogBuilder.js:3051
 #, fuzzy
 msgid "Insert Table"
 msgstr "표 삽입"
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3080
 msgid "Line style:"
 msgstr "줄 양식:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:491
-#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:528
+#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:535
 #: src/control/Control.NotebookbarBuilder.js:790
 #: src/control/Control.NotebookbarBuilder.js:792
 #: src/control/Control.NotebookbarBuilder.js:794
@@ -620,7 +620,7 @@ msgstr "복구"
 
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:299
 #: src/control/Control.Menubar.js:425 src/control/Control.Menubar.js:536
-#: src/control/Control.StatusBar.js:205
+#: src/control/Control.StatusBar.js:209
 msgid "Reset zoom"
 msgstr "배율 초기화"
 
@@ -745,7 +745,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:743 src/control/Control.Menubar.js:792
 #: src/control/Control.Menubar.js:843 src/control/Control.Menubar.js:891
-#: src/control/Control.StatusBar.js:190
+#: src/control/Control.StatusBar.js:194
 msgid "Search"
 msgstr "검색"
 
@@ -753,7 +753,7 @@ msgstr "검색"
 msgid "Page Setup"
 msgstr "페이지 설정"
 
-#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:527
+#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:534
 msgid "Reset to Default Language"
 msgstr "기본 언어로 다시 설정"
 
@@ -816,96 +816,92 @@ msgstr ""
 msgid "Insert sheet"
 msgstr "시트 삽입"
 
-#: src/control/Control.StatusBar.js:196
+#: src/control/Control.StatusBar.js:200
 msgid "Cancel the search"
 msgstr "검색 취소"
 
-#: src/control/Control.StatusBar.js:296
+#: src/control/Control.StatusBar.js:300
 msgid "Number of Sheets"
 msgstr "시트 수"
 
-#: src/control/Control.StatusBar.js:301
+#: src/control/Control.StatusBar.js:305
 msgid "Selected range of cells"
 msgstr "선택한 셀 범위"
 
-#: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:362
+#: src/control/Control.StatusBar.js:310 src/control/Control.StatusBar.js:363
 msgid "Entering text mode"
 msgstr "텍스트 모드로 들어가기"
 
-#: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:367
+#: src/control/Control.StatusBar.js:319 src/control/Control.StatusBar.js:368
 msgid "Selection Mode"
 msgstr "선택 모드"
 
-#: src/control/Control.StatusBar.js:320
+#: src/control/Control.StatusBar.js:324
 msgid "Choice of functions"
 msgstr "함수 선택"
 
-#: src/control/Control.StatusBar.js:324
+#: src/control/Control.StatusBar.js:328
 msgid "Average"
 msgstr "평균"
 
-#: src/control/Control.StatusBar.js:325
+#: src/control/Control.StatusBar.js:329
 msgid "CountA"
 msgstr "CountA"
 
-#: src/control/Control.StatusBar.js:326
+#: src/control/Control.StatusBar.js:330
 msgid "Count"
 msgstr "수"
 
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.StatusBar.js:331
 msgid "Maximum"
 msgstr "Maximum"
 
-#: src/control/Control.StatusBar.js:328
+#: src/control/Control.StatusBar.js:332
 msgid "Minimum"
 msgstr "Minimum"
 
-#: src/control/Control.StatusBar.js:329
+#: src/control/Control.StatusBar.js:333
 msgid "Sum"
 msgstr "합계"
 
-#: src/control/Control.StatusBar.js:330
+#: src/control/Control.StatusBar.js:334
 msgid "Selection count"
 msgstr "선택 수"
 
-#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:340
-#: src/control/Control.StatusBar.js:378 src/control/Control.StatusBar.js:379
-#: src/control/Control.StatusBar.js:402 src/control/Control.StatusBar.js:403
+#: src/control/Control.StatusBar.js:353
+msgid "Number of Pages"
+msgstr "페이지 수"
+
+#: src/control/Control.StatusBar.js:358
+msgid "Word Counter"
+msgstr "단어 수"
+
+#: src/control/Control.StatusBar.js:389
+msgid "Number of Slides"
+msgstr "슬라이드 수"
+
+#: src/control/Control.StatusBar.js:444 src/control/Control.StatusBar.js:445
 msgid "Permission Mode"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
-#: src/control/Control.StatusBar.js:402
+#: src/control/Control.StatusBar.js:444
 #, fuzzy
 msgid "Read-only"
 msgstr "읽기 전용"
 
-#: src/control/Control.StatusBar.js:340 src/control/Control.StatusBar.js:379
-#: src/control/Control.StatusBar.js:403
+#: src/control/Control.StatusBar.js:445
 msgid "Edit"
 msgstr "수정"
 
-#: src/control/Control.StatusBar.js:352
-msgid "Number of Pages"
-msgstr "페이지 수"
-
-#: src/control/Control.StatusBar.js:357
-msgid "Word Counter"
-msgstr "단어 수"
-
-#: src/control/Control.StatusBar.js:391
-msgid "Number of Slides"
-msgstr "슬라이드 수"
-
-#: src/control/Control.StatusBar.js:471
+#: src/control/Control.StatusBar.js:478
 msgid "Select multiple cells"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:474
+#: src/control/Control.StatusBar.js:481
 msgid "Insert mode: inactive"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:487
+#: src/control/Control.StatusBar.js:494
 msgid "Selection mode: inactive"
 msgstr ""
 
@@ -948,7 +944,9 @@ msgstr "다음 슬라이드"
 #: src/control/Control.Toolbar.js:1020
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr "여러 사용자에 의한 실행 취소/다시 실행이 서로 충돌했습니다. 이 문제를 해결하려면 문서 복구를 사용하십시오."
+msgstr ""
+"여러 사용자에 의한 실행 취소/다시 실행이 서로 충돌했습니다. 이 문제를 해결하"
+"려면 문서 복구를 사용하십시오."
 
 #: src/control/Control.TopToolbar.js:122
 #: src/control/Control.NotebookbarWriter.js:537
@@ -1174,7 +1172,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:845
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
 msgid "Text"
 msgstr "문자"
 
@@ -1250,38 +1248,38 @@ msgstr ""
 msgid "Show Selected Sheets"
 msgstr ""
 
-#: src/control/Permission.js:49
+#: src/control/Permission.js:60
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr ""
 
-#: src/control/Permission.js:51 src/control/Permission.js:68
+#: src/control/Permission.js:62 src/control/Permission.js:79
 msgid "Server returned this reason:"
 msgstr ""
 
-#: src/control/Permission.js:66
+#: src/control/Permission.js:77
 #, fuzzy
 msgid "The document could not be locked."
 msgstr "문서를 저장할 수 없습니다."
 
-#: src/control/Permission.js:108
+#: src/control/Permission.js:119
 msgid "Enter a file name"
 msgstr ""
 
-#: src/control/Permission.js:109
+#: src/control/Permission.js:120
 msgid "filename"
 msgstr ""
 
-#: src/control/Permission.js:123
+#: src/control/Permission.js:134
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:145
 msgid "Save as ODF format"
 msgstr ""
 
-#: src/control/Permission.js:135
+#: src/control/Permission.js:146
 msgid "Continue editing"
 msgstr ""
 
@@ -1343,7 +1341,7 @@ msgstr "업로드할 문서 유형 선택"
 msgid "Type:"
 msgstr "유형:"
 
-#: src/control/Signing.js:361 src/control/Signing.js:659
+#: src/control/Signing.js:361 src/control/Signing.js:665
 msgid "Document uploaded."
 msgstr "문서가 업로드되었습니다."
 
@@ -1383,47 +1381,47 @@ msgstr "해당 없음"
 msgid "Login"
 msgstr "로그인"
 
-#: src/control/Signing.js:616
+#: src/control/Signing.js:617
 msgid "Not Signed"
 msgstr "서명안됨"
 
-#: src/control/Signing.js:619
+#: src/control/Signing.js:620
 msgid "This document is digitally signed and the signature is valid."
 msgstr "이 문서는 전자 서명 되었으며, 서명이 유효합니다."
 
-#: src/control/Signing.js:620
+#: src/control/Signing.js:622
 msgid "Signed and validated"
 msgstr "서명되고 유효함"
 
-#: src/control/Signing.js:623
+#: src/control/Signing.js:625
 msgid "This document has an invalid signature."
 msgstr "이 문서에는 유효하지 않은 서명이 포함되어 있습니다."
 
-#: src/control/Signing.js:624
+#: src/control/Signing.js:627
 msgid "Signature broken"
 msgstr "서명이 깨졌습니다"
 
-#: src/control/Signing.js:627
+#: src/control/Signing.js:630
 msgid "The signature was valid, but the document has been modified"
 msgstr "서명은 유효하지만, 문서가 수정되었습니다."
 
-#: src/control/Signing.js:628
+#: src/control/Signing.js:632
 msgid "Signed but document modified"
 msgstr "서명되었으나 문서가 수정되었습니다"
 
-#: src/control/Signing.js:631
+#: src/control/Signing.js:635
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr "서명은 문제 없으나, 인증서를 검증할 수 없습니다."
 
-#: src/control/Signing.js:632
+#: src/control/Signing.js:637
 msgid "Signed but not validated"
 msgstr "서명됨 그러나 유효하지 않음"
 
-#: src/control/Signing.js:635
+#: src/control/Signing.js:640
 msgid "The signature is OK, but the document is only partially signed"
 msgstr "서명은 문제 없지만, 문서는 일부만 서명되었습니다"
 
-#: src/control/Signing.js:636
+#: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
 msgstr "서명되었으나, 모든 파일이 서명되지 않았습니다"
 
@@ -1443,24 +1441,24 @@ msgstr "저장 중..."
 msgid "Renaming..."
 msgstr "이름 바꾸기..."
 
-#: src/control/Toolbar.js:637
+#: src/control/Toolbar.js:638
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 
-#: src/control/Toolbar.js:687
+#: src/control/Toolbar.js:688
 msgid "This version of %productName is powered by"
 msgstr "%productName 의 버전의 제공자"
 
-#: src/control/Toolbar.js:697
+#: src/control/Toolbar.js:698
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:843
+#: src/control/Toolbar.js:844
 msgid "Insert hyperlink"
 msgstr "하이퍼링크 삽입"
 
-#: src/control/Toolbar.js:846
+#: src/control/Toolbar.js:847
 msgid "Link"
 msgstr "링크"
 
@@ -1471,9 +1469,10 @@ msgid ""
 "versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
-"IE11의 최대 연결 수에 도달했습니다. 이 설정값을 변경하려면 다음 문서를 참고하십시오. https://docs.microsoft."
-"com/en-us/previous-versions/windows/internet-explorer/ie-developer/"
-"general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+"IE11의 최대 연결 수에 도달했습니다. 이 설정값을 변경하려면 다음 문서를 참고하"
+"십시오. https://docs.microsoft.com/en-us/previous-versions/windows/internet-"
+"explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-"
+"server-connections"
 
 #: src/core/Socket.js:63
 #, fuzzy
@@ -1488,139 +1487,152 @@ msgstr ""
 msgid "Server is now reachable..."
 msgstr ""
 
-#: src/core/Socket.js:503
+#: src/core/Socket.js:506
 msgid "RELOAD"
 msgstr ""
 
-#: src/core/Socket.js:523
+#: src/core/Socket.js:524
 msgid "Served by:"
 msgstr "서버제공자:"
 
-#: src/core/Socket.js:528
+#: src/core/Socket.js:529
 msgid "Unsupported server version."
 msgstr "지원하지 않는 서버 버전"
 
-#: src/core/Socket.js:645
+#: src/core/Socket.js:646
 msgid "Session terminated by document owner"
 msgstr "문서 소유자에 의해 세션이 만료되었습니다."
 
-#: src/core/Socket.js:650
+#: src/core/Socket.js:651
 msgid "Idle document - please click to reload and resume editing"
 msgstr "대기중인 문서 - 편집을 계속하려면 클릭하십시오.(새로 고침됨)"
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:653
 #, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "대기중인 문서 - 편집을 계속하려면 클릭하십시오.(새로 고침됨)"
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:661
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "유지보수를 위해 서버가 종료됩니다.(자동 저장됨)"
 
-#: src/core/Socket.js:664
+#: src/core/Socket.js:665
 msgid "Oops, there is a problem connecting the document"
 msgstr "문서를 여는데 문제가 발생했습니다."
 
-#: src/core/Socket.js:668
+#: src/core/Socket.js:669
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 
-#: src/core/Socket.js:696
+#: src/core/Socket.js:697
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
-msgstr "저장소의 문서가 변경되었습니다. 새 문서를 불러 옵니다. 작업한 내용은 개정 이력에서 확인할 수 있습니다."
+msgstr ""
+"저장소의 문서가 변경되었습니다. 새 문서를 불러 옵니다. 작업한 내용은 개정 이"
+"력에서 확인할 수 있습니다."
 
-#: src/core/Socket.js:702
+#: src/core/Socket.js:703
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
-msgstr "이전 버전으로 복구합니다. 저장되지 않은 변경 사항은 개정 내역에서 확인할 수 있습니다."
+msgstr ""
+"이전 버전으로 복구합니다. 저장되지 않은 변경 사항은 개정 내역에서 확인할 수 "
+"있습니다."
 
-#: src/core/Socket.js:708
+#: src/core/Socket.js:709
 msgid "Reloading the document after rename"
 msgstr ""
 
-#: src/core/Socket.js:824
+#: src/core/Socket.js:828
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
-msgstr "저장소에 있는 문서가 변경되었습니다. 변경 사항을 어떻게 처리하겠습니까?"
+msgstr ""
+"저장소에 있는 문서가 변경되었습니다. 변경 사항을 어떻게 처리하겠습니까?"
 
-#: src/core/Socket.js:828
+#: src/core/Socket.js:832
 msgid "Discard"
 msgstr "버리기"
 
-#: src/core/Socket.js:833
+#: src/core/Socket.js:837
 msgid "Overwrite"
 msgstr "덮어쓰기"
 
-#: src/core/Socket.js:838
+#: src/core/Socket.js:842
 msgid "Save to new file"
 msgstr "새 파일로 저장"
 
-#: src/core/Socket.js:908
+#: src/core/Socket.js:912
 msgid "Document requires password to view."
 msgstr "문서를 보려면 암호를 입력해야 합니다."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:915
 msgid "Document requires password to modify."
 msgstr "문서를 수정하려면 암호를 입력해야 합니다."
 
-#: src/core/Socket.js:913
+#: src/core/Socket.js:917
 msgid "Hit Cancel to open in view-only mode."
 msgstr "보기 전용 모드로 열려면 [취소]를 클릭하십시오."
 
-#: src/core/Socket.js:917
+#: src/core/Socket.js:921
 msgid "Wrong password provided. Please try again."
 msgstr "암호가 틀렸습니다. 다시 시도하십시오"
 
-#: src/core/Socket.js:1022
+#: src/core/Socket.js:1026
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1028
 msgid " saved this document as "
 msgstr ""
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1028
 msgid ". Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1033
+#: src/core/Socket.js:1037
 msgid "Loading..."
 msgstr "불러오는 중..."
 
-#: src/core/Socket.js:1033
+#: src/core/Socket.js:1037
 msgid "Connecting..."
 msgstr "연결하는 중.."
 
-#: src/core/Socket.js:1051
+#: src/core/Socket.js:1055
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1413
+#: src/core/Socket.js:1417
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "문서에 연결할 수 없습니다. 다시 시도하십시오."
 
-#: src/core/Socket.js:1430
+#: src/core/Socket.js:1434
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "연결하는 중.."
+
+#: src/core/Socket.js:1440
+msgid "The server has been disconnected."
+msgstr ""
 
 #: src/errormessages.js:13
 msgid ""
 "No disk space left on server, please contact the server administrator to "
 "continue."
-msgstr "서버에 남아있는 디스크 공간이 없으므로, 계속하려면 서버 관리자에게 문의하십시오."
+msgstr ""
+"서버에 남아있는 디스크 공간이 없으므로, 계속하려면 서버 관리자에게 문의하십시"
+"오."
 
 #: src/errormessages.js:14
 msgid ""
 "The host URL is empty. The loolwsd server is probably misconfigured, please "
 "contact the administrator."
-msgstr "호스트 URL이 비어 있습니다. loolwsd 서버가 잘못 구성된 것일 수 있습니다. 관리자에게 문의하십시오."
+msgstr ""
+"호스트 URL이 비어 있습니다. loolwsd 서버가 잘못 구성된 것일 수 있습니다. 관리"
+"자에게 문의하십시오."
 
 #: src/errormessages.js:15
 msgid ""
@@ -1629,8 +1641,9 @@ msgid ""
 "more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
-"지원되지 않는 {productname} 버전입니다. 기업용 배포에 적합하다는 인상을 피하기 위해 {docs} 문서 또는 "
-"{connections} 개 이상의 연결을 동시에 사용하는 경우에 이 메시지가 표시됩니다."
+"지원되지 않는 {productname} 버전입니다. 기업용 배포에 적합하다는 인상을 피하"
+"기 위해 {docs} 문서 또는 {connections} 개 이상의 연결을 동시에 사용하는 경우"
+"에 이 메시지가 표시됩니다."
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1641,55 +1654,71 @@ msgid ""
 "This service is limited to %0 documents, and %1 connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"이 서비스는 관리자에 의해 %0 문서, 총 %1 개의 연결로 제한되었습니다. 이 한도에 도달했습니다. 나중에 다시 시도 해주십시오."
+"이 서비스는 관리자에 의해 %0 문서, 총 %1 개의 연결로 제한되었습니다. 이 한도"
+"에 도달했습니다. 나중에 다시 시도 해주십시오."
 
 #: src/errormessages.js:18
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
-msgstr "서비스를 사용할 수 없습니다. 나중에 다시 시도하거나 이 문제가 지속되면 관리자에게 문의하십시오."
+msgstr ""
+"서비스를 사용할 수 없습니다. 나중에 다시 시도하거나 이 문제가 지속되면 관리자"
+"에게 문의하십시오."
 
 #: src/errormessages.js:19
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
-msgstr "인증되지 않은 WOPI 호스트입니다. 나중에 다시 시도하거나 이 문제가 지속되면 경우 관리자에게 문의하십시오."
+msgstr ""
+"인증되지 않은 WOPI 호스트입니다. 나중에 다시 시도하거나 이 문제가 지속되면 경"
+"우 관리자에게 문의하십시오."
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr "WOPISrc 매개 변수가 잘못되었거나 누락되었습니다. 지원팀에 문의하십시오."
+msgstr ""
+"WOPISrc 매개 변수가 잘못되었거나 누락되었습니다. 지원팀에 문의하십시오."
 
 #: src/errormessages.js:21
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
-msgstr "세션이 %time 내에 만료됩니다. 계속하려면 작업을 저장하고 세션(또는 웹페이지)를 새로 고침하십시오."
+msgstr ""
+"세션이 %time 내에 만료됩니다. 계속하려면 작업을 저장하고 세션(또는 웹페이지)"
+"를 새로 고침하십시오."
 
 #: src/errormessages.js:22
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
-msgstr "세션이 만료되었습니다. 이후의 변경 사항은 저장되지 않습니다. 계속하려면 세션(또는 웹페이지)를 새로 고침하십시오."
+msgstr ""
+"세션이 만료되었습니다. 이후의 변경 사항은 저장되지 않습니다. 계속하려면 세션"
+"(또는 웹페이지)를 새로 고침하십시오."
 
 #: src/errormessages.js:23
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
-msgstr "문서를 불러오지 못했습니다. 지원되는 파일 형식인지, 망가진 파일이 아닌지 확인하고 재시도하십시오."
+msgstr ""
+"문서를 불러오지 못했습니다. 지원되는 파일 형식인지, 망가진 파일이 아닌지 확인"
+"하고 재시도하십시오."
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
 msgstr "잘못된 바로가기: '%url'"
 
 #: src/errormessages.js:25
-msgid "You are leaving the editor, are you sure you want to visit %url?"
+#, fuzzy
+msgid ""
+"You are leaving the editor, are you sure you want to visit the following URL?"
 msgstr "편집기에서 나가면, %url 로 방문하겠습니까?"
 
 #: src/errormessages.js:26
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
-msgstr "문서 열기 실패하였습니다. 이 문서는 유효하지 않거나, 허용된 자원보다 많이 사용하려고 합니다. 관리자에게 연락하시기 바랍니다."
+msgstr ""
+"문서 열기 실패하였습니다. 이 문서는 유효하지 않거나, 허용된 자원보다 많이 사"
+"용하려고 합니다. 관리자에게 연락하시기 바랍니다."
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
@@ -1707,11 +1736,14 @@ msgstr "문서 열기 실패하였음."
 
 #: src/errormessages.js:33
 msgid "Save failed due to no disk space left. Document will now be read-only."
-msgstr "디스크 용량이 부족하여 저장이 실패하였습니다. 문서는 바로 읽기전용으로 전환합니다."
+msgstr ""
+"디스크 용량이 부족하여 저장이 실패하였습니다. 문서는 바로 읽기전용으로 전환합"
+"니다."
 
 #: src/errormessages.js:34 src/errormessages.js:42
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr "만료되었거나 유효하지 않은 액세스 토큰으로 인해 문서를 저장할 수 없습니다."
+msgstr ""
+"만료되었거나 유효하지 않은 액세스 토큰으로 인해 문서를 저장할 수 없습니다."
 
 #: src/errormessages.js:35
 msgid "Document cannot be saved."
@@ -1726,7 +1758,9 @@ msgstr "문서 이름을 변경할 수 없습니다."
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
-msgstr "저장소에서 문서를 읽지 못했습니다. 스토리지 서버(%storageserver) 관리자에게 문의하십시오."
+msgstr ""
+"저장소에서 문서를 읽지 못했습니다. 스토리지 서버(%storageserver) 관리자에게 "
+"문의하십시오."
 
 #: src/errormessages.js:41
 #, javascript-format
@@ -1735,20 +1769,24 @@ msgid ""
 "be read-only. Please contact the server (%storageserver) administrator to "
 "continue editing."
 msgstr ""
-"스토리지 서버에 남아있는 디스크 공간이 없기 때문에 문서 저장을 할 수 없습니다. 계속 편집하려면 서버(%storageserver) "
-"관리자에게 문의하십시오."
+"스토리지 서버에 남아있는 디스크 공간이 없기 때문에 문서 저장을 할 수 없습니"
+"다. 계속 편집하려면 서버(%storageserver) 관리자에게 문의하십시오."
 
 #: src/errormessages.js:43
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
-msgstr "문서를 저장할 수 없습니다. 사용 권한을 확인하거나 스토리지 서버 관리자에게 문의하십시오."
+msgstr ""
+"문서를 저장할 수 없습니다. 사용 권한을 확인하거나 스토리지 서버 관리자에게 문"
+"의하십시오."
 
 #: src/errormessages.js:44
 msgid ""
 "Document cannot be renamed. Check your permissions or contact the storage "
 "server administrator."
-msgstr "문서 이름을 다시 지을 수 없습니다. 사용 권한을 확인하거나 스토리지 서버 관리자에게 문의하십시오."
+msgstr ""
+"문서 이름을 다시 지을 수 없습니다. 사용 권한을 확인하거나 스토리지 서버 관리"
+"자에게 문의하십시오."
 
 #: src/errormessages.js:49
 msgid "Uploading file to server failed, file not found."
@@ -1852,8 +1890,8 @@ msgid ""
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
 msgstr ""
-"<p>대량의 복사/붙여넣기 작업에 따른 다운로드가 이미 시작되었습니다. 새 다운로드를 시작하기 전에 현재 다운로드를 기다리거나 취소하시기 "
-"바랍니다</p>"
+"<p>대량의 복사/붙여넣기 작업에 따른 다운로드가 이미 시작되었습니다. 새 다운로"
+"드를 시작하기 전에 현재 다운로드를 기다리거나 취소하시기 바랍니다</p>"
 
 #: src/map/Map.js:232
 msgid "Initializing..."
@@ -1901,6 +1939,9 @@ msgstr "템플릿으로 새로운 파일 만들기..."
 msgid "Creating copy..."
 msgstr "복사본 만드는 중..."
 
+#~ msgid "You are leaving the editor, are you sure you want to visit %url?"
+#~ msgstr "편집기에서 나가면, %url 로 방문하겠습니까?"
+
 #~ msgid "Color"
 #~ msgstr "색"
 
@@ -1909,8 +1950,9 @@ msgstr "복사본 만드는 중..."
 #~ "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
 #~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 #~ msgstr ""
-#~ "<p>브라우저가 클립보드 접근에 제한이 있으므로, 다음의 키보드 단축키를 이용하세요:<ul><li><b>Ctrl+C</b>: "
-#~ "복사.</li><li><b>Ctrl+X</b>: 잘라내기.</li><li><b>Ctrl+V</b>: 붙여넣기.</li></ul></p>"
+#~ "<p>브라우저가 클립보드 접근에 제한이 있으므로, 다음의 키보드 단축키를 이용"
+#~ "하세요:<ul><li><b>Ctrl+C</b>: 복사.</li><li><b>Ctrl+X</b>: 잘라내기.</"
+#~ "li><li><b>Ctrl+V</b>: 붙여넣기.</li></ul></p>"
 
 #~ msgid "Server is recycling and will be available shortly"
 #~ msgstr "서버를 재부팅하는 중으로 곧 사용이 가능합니다."

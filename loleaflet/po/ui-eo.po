@@ -2,16 +2,16 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-28 15:03+0200\n"
+"POT-Creation-Date: 2021-11-03 16:37+0100\n"
 "PO-Revision-Date: 2021-07-09 21:37+0000\n"
 "Last-Translator: phlostically <phlostically@mailinator.com>\n"
-"Language-Team: Esperanto <https://hosted.weblate.org/projects/"
-"collabora-online/ui/eo/>\n"
+"Language-Team: Esperanto <https://hosted.weblate.org/projects/collabora-"
+"online/ui/eo/>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -205,8 +205,8 @@ msgstr "Aktualigi protokolon"
 msgid "Channel Filter:"
 msgstr "Kanala Filtrilo:"
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:387
-#: src/control/Control.StatusBar.js:331
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr "Neniu"
 
@@ -258,7 +258,7 @@ msgstr "Ĉe vi certe volas fini ĉi tiun seancon?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:849
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
 msgid "OK"
 msgstr "Bone"
 
@@ -266,7 +266,7 @@ msgstr "Bone"
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -340,11 +340,11 @@ msgstr "Sen koloro"
 msgid "Automatic color"
 msgstr "Aŭtomata koloro"
 
-#: src/control/Control.AlertDialog.js:67
+#: src/control/Control.AlertDialog.js:66
 msgid "Open link"
 msgstr "Malfermi ligilon"
 
-#: src/control/Control.AlertDialog.js:91
+#: src/control/Control.AlertDialog.js:90
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "La servilo trafis eraron %0 analizante la komandon %1."
 
@@ -369,7 +369,7 @@ msgid "Index"
 msgstr "Indekso"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2313 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "Komento"
@@ -410,112 +410,112 @@ msgstr "Komenci kruce kopii/alglui"
 msgid "Function Wizard"
 msgstr "Funkcia asistanto"
 
-#: src/control/Control.JSDialogBuilder.js:390
+#: src/control/Control.JSDialogBuilder.js:391
 msgid "Solid"
 msgstr "Solida"
 
-#: src/control/Control.JSDialogBuilder.js:393
+#: src/control/Control.JSDialogBuilder.js:394
 msgid "Linear"
 msgstr "Linia"
 
-#: src/control/Control.JSDialogBuilder.js:396
+#: src/control/Control.JSDialogBuilder.js:397
 msgid "Axial"
 msgstr "Aksa"
 
-#: src/control/Control.JSDialogBuilder.js:399
+#: src/control/Control.JSDialogBuilder.js:400
 msgid "Radial"
 msgstr "Radiusa"
 
-#: src/control/Control.JSDialogBuilder.js:402
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Ellipsoid"
 msgstr "Elipsoida"
 
-#: src/control/Control.JSDialogBuilder.js:406
+#: src/control/Control.JSDialogBuilder.js:407
 msgid "Quadratic"
 msgstr "Kvadrata"
 
-#: src/control/Control.JSDialogBuilder.js:409
+#: src/control/Control.JSDialogBuilder.js:410
 msgid "Square"
 msgstr "Kvadrato"
 
-#: src/control/Control.JSDialogBuilder.js:412
+#: src/control/Control.JSDialogBuilder.js:413
 msgid "Fixed size"
 msgstr "Fiksita grando"
 
-#: src/control/Control.JSDialogBuilder.js:1483
+#: src/control/Control.JSDialogBuilder.js:1500
 msgid "From"
 msgstr "El"
 
-#: src/control/Control.JSDialogBuilder.js:1486
+#: src/control/Control.JSDialogBuilder.js:1503
 msgid "To"
 msgstr "Al"
 
-#: src/control/Control.JSDialogBuilder.js:1617
+#: src/control/Control.JSDialogBuilder.js:1634
 msgid "Select range"
 msgstr "Elekti amplekson"
 
-#: src/control/Control.JSDialogBuilder.js:1648
+#: src/control/Control.JSDialogBuilder.js:1665
 #: src/control/Control.NotebookbarBuilder.js:234
 msgid "Font Name"
 msgstr "Tiparnomo"
 
-#: src/control/Control.JSDialogBuilder.js:1650
+#: src/control/Control.JSDialogBuilder.js:1667
 msgid "Font Size"
 msgstr "Tipargrando"
 
-#: src/control/Control.JSDialogBuilder.js:1652
+#: src/control/Control.JSDialogBuilder.js:1669
 #: src/control/Control.TopToolbar.js:505
 msgid "Style"
 msgstr "Stilo"
 
-#: src/control/Control.JSDialogBuilder.js:2299
+#: src/control/Control.JSDialogBuilder.js:2328
 msgid "reply"
 msgstr "respondo"
 
-#: src/control/Control.JSDialogBuilder.js:2302
+#: src/control/Control.JSDialogBuilder.js:2331
 msgid "replies"
 msgstr "respondoj"
 
-#: src/control/Control.JSDialogBuilder.js:2372
+#: src/control/Control.JSDialogBuilder.js:2401
 msgid "Insert Comment"
 msgstr "Enmeti Komenton"
 
-#: src/control/Control.JSDialogBuilder.js:2773
+#: src/control/Control.JSDialogBuilder.js:2802
 msgid "Cell borders"
 msgstr "Ĉelaj borderoj"
 
-#: src/control/Control.JSDialogBuilder.js:2817
+#: src/control/Control.JSDialogBuilder.js:2846
 msgid "Background Color"
 msgstr "Fona koloro"
 
-#: src/control/Control.JSDialogBuilder.js:2819
+#: src/control/Control.JSDialogBuilder.js:2848
 msgid "Gradient Start"
 msgstr "Kolortransira komenco"
 
-#: src/control/Control.JSDialogBuilder.js:2821
+#: src/control/Control.JSDialogBuilder.js:2850
 msgid "Gradient End"
 msgstr "Kolortransira fino"
 
-#: src/control/Control.JSDialogBuilder.js:3001
+#: src/control/Control.JSDialogBuilder.js:3030
 msgid "Rows"
 msgstr "Vicoj"
 
-#: src/control/Control.JSDialogBuilder.js:3002
+#: src/control/Control.JSDialogBuilder.js:3031
 msgid "Columns"
 msgstr "Kolumnoj"
 
-#: src/control/Control.JSDialogBuilder.js:3022
+#: src/control/Control.JSDialogBuilder.js:3051
 msgid "Insert Table"
 msgstr "Enmeti tabelon"
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3080
 msgid "Line style:"
 msgstr "Linistilo:"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:491
-#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:528
+#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:535
 #: src/control/Control.NotebookbarBuilder.js:790
 #: src/control/Control.NotebookbarBuilder.js:792
 #: src/control/Control.NotebookbarBuilder.js:794
@@ -610,7 +610,7 @@ msgstr "Ripari"
 
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:299
 #: src/control/Control.Menubar.js:425 src/control/Control.Menubar.js:536
-#: src/control/Control.StatusBar.js:205
+#: src/control/Control.StatusBar.js:209
 msgid "Reset zoom"
 msgstr "Reagordi zomon"
 
@@ -733,7 +733,7 @@ msgstr "Kome disigita dosiero (.csv)"
 
 #: src/control/Control.Menubar.js:743 src/control/Control.Menubar.js:792
 #: src/control/Control.Menubar.js:843 src/control/Control.Menubar.js:891
-#: src/control/Control.StatusBar.js:190
+#: src/control/Control.StatusBar.js:194
 msgid "Search"
 msgstr "Serĉi"
 
@@ -741,7 +741,7 @@ msgstr "Serĉi"
 msgid "Page Setup"
 msgstr "Agordi paĝon"
 
-#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:527
+#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:534
 msgid "Reset to Default Language"
 msgstr "Reagordi al apriora lingvo"
 
@@ -803,96 +803,92 @@ msgstr "Rulumi al la lasta folio"
 msgid "Insert sheet"
 msgstr "Enmeti folion"
 
-#: src/control/Control.StatusBar.js:196
+#: src/control/Control.StatusBar.js:200
 msgid "Cancel the search"
 msgstr "Nuligi serĉon"
 
-#: src/control/Control.StatusBar.js:296
+#: src/control/Control.StatusBar.js:300
 msgid "Number of Sheets"
 msgstr "Nombro da folioj"
 
-#: src/control/Control.StatusBar.js:301
+#: src/control/Control.StatusBar.js:305
 msgid "Selected range of cells"
 msgstr "Elektita ĉelaro"
 
-#: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:362
+#: src/control/Control.StatusBar.js:310 src/control/Control.StatusBar.js:363
 msgid "Entering text mode"
 msgstr "Eniras en teksta reĝimo"
 
-#: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:367
+#: src/control/Control.StatusBar.js:319 src/control/Control.StatusBar.js:368
 msgid "Selection Mode"
 msgstr "Elekta reĝimo"
 
-#: src/control/Control.StatusBar.js:320
+#: src/control/Control.StatusBar.js:324
 msgid "Choice of functions"
 msgstr "Elekti funkciojn"
 
-#: src/control/Control.StatusBar.js:324
+#: src/control/Control.StatusBar.js:328
 msgid "Average"
 msgstr "Averaĝo"
 
-#: src/control/Control.StatusBar.js:325
+#: src/control/Control.StatusBar.js:329
 msgid "CountA"
 msgstr "NombroA"
 
-#: src/control/Control.StatusBar.js:326
+#: src/control/Control.StatusBar.js:330
 msgid "Count"
 msgstr "Nombri"
 
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.StatusBar.js:331
 msgid "Maximum"
 msgstr "Maksimumo"
 
-#: src/control/Control.StatusBar.js:328
+#: src/control/Control.StatusBar.js:332
 msgid "Minimum"
 msgstr "Minimumo"
 
-#: src/control/Control.StatusBar.js:329
+#: src/control/Control.StatusBar.js:333
 msgid "Sum"
 msgstr "Sumo"
 
-#: src/control/Control.StatusBar.js:330
+#: src/control/Control.StatusBar.js:334
 msgid "Selection count"
 msgstr "Nombro de la elektaĵo"
 
-#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:340
-#: src/control/Control.StatusBar.js:378 src/control/Control.StatusBar.js:379
-#: src/control/Control.StatusBar.js:402 src/control/Control.StatusBar.js:403
+#: src/control/Control.StatusBar.js:353
+msgid "Number of Pages"
+msgstr "Nombro da paĝoj"
+
+#: src/control/Control.StatusBar.js:358
+msgid "Word Counter"
+msgstr "Vortnombrilo"
+
+#: src/control/Control.StatusBar.js:389
+msgid "Number of Slides"
+msgstr "Nombro da lumbildoj"
+
+#: src/control/Control.StatusBar.js:444 src/control/Control.StatusBar.js:445
 msgid "Permission Mode"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
-#: src/control/Control.StatusBar.js:402
+#: src/control/Control.StatusBar.js:444
 #, fuzzy
 msgid "Read-only"
 msgstr "Nurlega"
 
-#: src/control/Control.StatusBar.js:340 src/control/Control.StatusBar.js:379
-#: src/control/Control.StatusBar.js:403
+#: src/control/Control.StatusBar.js:445
 msgid "Edit"
 msgstr "Redakti"
 
-#: src/control/Control.StatusBar.js:352
-msgid "Number of Pages"
-msgstr "Nombro da paĝoj"
-
-#: src/control/Control.StatusBar.js:357
-msgid "Word Counter"
-msgstr "Vortnombrilo"
-
-#: src/control/Control.StatusBar.js:391
-msgid "Number of Slides"
-msgstr "Nombro da lumbildoj"
-
-#: src/control/Control.StatusBar.js:471
+#: src/control/Control.StatusBar.js:478
 msgid "Select multiple cells"
 msgstr "Elekti plurajn ĉelojn"
 
-#: src/control/Control.StatusBar.js:474
+#: src/control/Control.StatusBar.js:481
 msgid "Insert mode: inactive"
 msgstr "Enmeta reĝimo: ne aktiva"
 
-#: src/control/Control.StatusBar.js:487
+#: src/control/Control.StatusBar.js:494
 msgid "Selection mode: inactive"
 msgstr "Elekta reĝimo: ne aktiva"
 
@@ -1157,7 +1153,7 @@ msgstr "Frakcio"
 msgid "Boolean Value"
 msgstr "Buleaĵo"
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:845
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
 msgid "Text"
 msgstr "Teksto"
 
@@ -1225,39 +1221,39 @@ msgstr "Bildo (.png)"
 msgid "Show Selected Sheets"
 msgstr "Montri elektitajn foliojn"
 
-#: src/control/Permission.js:49
+#: src/control/Permission.js:60
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr ""
 "Ne eblas ŝlosi la dokumenton, kaj ĝi estas malfermita en nurlega reĝimo."
 
-#: src/control/Permission.js:51 src/control/Permission.js:68
+#: src/control/Permission.js:62 src/control/Permission.js:79
 msgid "Server returned this reason:"
 msgstr "La servilo liveris ĉi tiun kialon:"
 
-#: src/control/Permission.js:66
+#: src/control/Permission.js:77
 msgid "The document could not be locked."
 msgstr "Ne povas ŝlosi la dokumenton."
 
-#: src/control/Permission.js:108
+#: src/control/Permission.js:119
 msgid "Enter a file name"
 msgstr "Tajpu dosiernomon"
 
-#: src/control/Permission.js:109
+#: src/control/Permission.js:120
 msgid "filename"
 msgstr "dosiernomo"
 
-#: src/control/Permission.js:123
+#: src/control/Permission.js:134
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
 "Ĉi tiu dokumento eble enhavas aĵojn ne konserveblajn laŭ la nuna dosierformo."
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:145
 msgid "Save as ODF format"
 msgstr "Konservi kiel ODF-dosieron"
 
-#: src/control/Permission.js:135
+#: src/control/Permission.js:146
 msgid "Continue editing"
 msgstr "Rekomenci redaktadon"
 
@@ -1317,7 +1313,7 @@ msgstr "Eleku tipon de dokumento alŝutota"
 msgid "Type:"
 msgstr "Tipo:"
 
-#: src/control/Signing.js:361 src/control/Signing.js:659
+#: src/control/Signing.js:361 src/control/Signing.js:665
 msgid "Document uploaded."
 msgstr "Alŝutis dokumenton."
 
@@ -1357,48 +1353,48 @@ msgstr "neaplikebla"
 msgid "Login"
 msgstr "Ensaluti"
 
-#: src/control/Signing.js:616
+#: src/control/Signing.js:617
 msgid "Not Signed"
 msgstr "Ne subskribita"
 
-#: src/control/Signing.js:619
+#: src/control/Signing.js:620
 msgid "This document is digitally signed and the signature is valid."
 msgstr "La dokumento estas cifere subskribita kaj la subskribo estas valida."
 
-#: src/control/Signing.js:620
+#: src/control/Signing.js:622
 msgid "Signed and validated"
 msgstr "Subskribita kaj validigita"
 
-#: src/control/Signing.js:623
+#: src/control/Signing.js:625
 msgid "This document has an invalid signature."
 msgstr "La dokumento havas nevalidan subskribon."
 
-#: src/control/Signing.js:624
+#: src/control/Signing.js:627
 msgid "Signature broken"
 msgstr "Difektita subskribo"
 
-#: src/control/Signing.js:627
+#: src/control/Signing.js:630
 msgid "The signature was valid, but the document has been modified"
 msgstr "La subskribo validas, sed la dokumento estas ŝanĝita"
 
-#: src/control/Signing.js:628
+#: src/control/Signing.js:632
 msgid "Signed but document modified"
 msgstr "Dokumento subskribita sed ŝanĝita"
 
-#: src/control/Signing.js:631
+#: src/control/Signing.js:635
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr "La subskribo estas en ordo, sed ne eblis validigi la atestilon."
 
-#: src/control/Signing.js:632
+#: src/control/Signing.js:637
 msgid "Signed but not validated"
 msgstr "Subskribita sed ne validigita"
 
-#: src/control/Signing.js:635
+#: src/control/Signing.js:640
 msgid "The signature is OK, but the document is only partially signed"
 msgstr ""
 "La subskribo estas en ordo, sed la dokumento estas nur parte subskribita"
 
-#: src/control/Signing.js:636
+#: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
 msgstr "Subskribita, sed ne ĉiuj dosieroj estas subskribitaj"
 
@@ -1418,24 +1414,24 @@ msgstr "Konservas..."
 msgid "Renaming..."
 msgstr "Renomi..."
 
-#: src/control/Toolbar.js:637
+#: src/control/Toolbar.js:638
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr "Ni bedaŭras, ke ne disponeblas la informo pri la lastaj ĝisdatigoj."
 
-#: src/control/Toolbar.js:687
+#: src/control/Toolbar.js:688
 msgid "This version of %productName is powered by"
 msgstr "Ĉi tiu versio de %productName estas povigita de"
 
-#: src/control/Toolbar.js:697
+#: src/control/Toolbar.js:698
 msgid "\"Slow Proxy\""
 msgstr "\"Malrapida prokurilo\""
 
-#: src/control/Toolbar.js:843
+#: src/control/Toolbar.js:844
 msgid "Insert hyperlink"
 msgstr "Enmeti hiperligilon"
 
-#: src/control/Toolbar.js:846
+#: src/control/Toolbar.js:847
 msgid "Link"
 msgstr "Ligilo"
 
@@ -1447,8 +1443,8 @@ msgid ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
 "IE11 atingis sian maksimuman nombron da konektoj. Bonvolu vidi ĉi tiun "
-"dokumenton por pliigi tiun limon se bezonatan: https://docs.microsoft.com/"
-"en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
+"dokumenton por pliigi tiun limon se bezonatan: https://docs.microsoft.com/en-"
+"us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:63
@@ -1463,43 +1459,43 @@ msgstr "La servilo estas nun atingebla. Ni devas reŝargi la paĝon nun."
 msgid "Server is now reachable..."
 msgstr ""
 
-#: src/core/Socket.js:503
+#: src/core/Socket.js:506
 msgid "RELOAD"
-msgstr ""
+msgstr "REŜARGI"
 
-#: src/core/Socket.js:523
+#: src/core/Socket.js:524
 msgid "Served by:"
 msgstr "Servita de:"
 
-#: src/core/Socket.js:528
+#: src/core/Socket.js:529
 msgid "Unsupported server version."
 msgstr "Nesubtenata servila versio."
 
-#: src/core/Socket.js:645
+#: src/core/Socket.js:646
 msgid "Session terminated by document owner"
 msgstr "Posedanto de la dokumento finis la seancon"
 
-#: src/core/Socket.js:650
+#: src/core/Socket.js:651
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Neaktiva dokumento - bonvolu alklaki por reŝargi kaj daŭrigi redakti"
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:653
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "Neaktiva dokumento - bonvolu alklaki por reŝargi kaj daŭrigi redakti"
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:661
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "La servilo aŭtomate malsaltiĝas por prizorgado"
 
-#: src/core/Socket.js:664
+#: src/core/Socket.js:665
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ho ve. Okazis problemo konekti al la dokumento"
 
-#: src/core/Socket.js:668
+#: src/core/Socket.js:669
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "La servilo estas haltigita kaj restartanta aŭtomate. Bonvolu atendi."
 
-#: src/core/Socket.js:696
+#: src/core/Socket.js:697
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1507,7 +1503,7 @@ msgstr ""
 "La dokumento ŝanĝiĝis en konservejo. Ŝargas la dokumenton. Via versio "
 "disponeblas kiel reviziaĵo."
 
-#: src/core/Socket.js:702
+#: src/core/Socket.js:703
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1515,11 +1511,11 @@ msgstr ""
 "Reŝtauras pli malnovan revizion. Eventualaj nekonservitaj ŝanĝoj disponeblos "
 "en versia historio"
 
-#: src/core/Socket.js:708
+#: src/core/Socket.js:709
 msgid "Reloading the document after rename"
 msgstr ""
 
-#: src/core/Socket.js:824
+#: src/core/Socket.js:828
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1527,69 +1523,73 @@ msgstr ""
 "Dokumento estas ŝanĝita en konservejo. Kion faru pri viaj nekonservitaj "
 "ŝanĝoj?"
 
-#: src/core/Socket.js:828
+#: src/core/Socket.js:832
 msgid "Discard"
 msgstr "Forĵeti"
 
-#: src/core/Socket.js:833
+#: src/core/Socket.js:837
 msgid "Overwrite"
 msgstr "Anstataŭigi"
 
-#: src/core/Socket.js:838
+#: src/core/Socket.js:842
 msgid "Save to new file"
 msgstr "Konservi al nova dosiero"
 
-#: src/core/Socket.js:908
+#: src/core/Socket.js:912
 msgid "Document requires password to view."
 msgstr "Pasvorto necesas por vidi dokumenton."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:915
 msgid "Document requires password to modify."
 msgstr "Pasvorto necesas por ŝanĝi dokumenton."
 
-#: src/core/Socket.js:913
+#: src/core/Socket.js:917
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Alklaku al Nuligi por malfermi en nurlega reĝimo."
 
-#: src/core/Socket.js:917
+#: src/core/Socket.js:921
 msgid "Wrong password provided. Please try again."
 msgstr "Malĝusta pasvorto. Bonvolu reprovi."
 
-#: src/core/Socket.js:1022
+#: src/core/Socket.js:1026
 msgid "Someone"
-msgstr ""
+msgstr "Iu"
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1028
 msgid " saved this document as "
-msgstr ""
+msgstr " konservis tiun dokumenton kiel "
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1028
 msgid ". Do you want to join?"
-msgstr ""
+msgstr ". Ĉu vi volas aliĝi?"
 
-#: src/core/Socket.js:1033
+#: src/core/Socket.js:1037
 msgid "Loading..."
 msgstr "Ŝargas..."
 
-#: src/core/Socket.js:1033
+#: src/core/Socket.js:1037
 msgid "Connecting..."
 msgstr "Konektas..."
 
-#: src/core/Socket.js:1051
+#: src/core/Socket.js:1055
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 "La nomo de ĉi tiu dokumento estas ŝanĝata; la dokumento baldaŭ reŝargiĝos"
 
-#: src/core/Socket.js:1413
+#: src/core/Socket.js:1417
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Bedaŭrinde ni ne povas konekti al via dokumento. Bonvolu reprovi."
 
-#: src/core/Socket.js:1430
+#: src/core/Socket.js:1434
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "Konektas..."
+
+#: src/core/Socket.js:1440
+msgid "The server has been disconnected."
+msgstr ""
 
 #: src/errormessages.js:13
 msgid ""
@@ -1679,7 +1679,9 @@ msgid "Invalid link: '%url'"
 msgstr "Nevalida ligilo: '%url'"
 
 #: src/errormessages.js:25
-msgid "You are leaving the editor, are you sure you want to visit %url?"
+#, fuzzy
+msgid ""
+"You are leaving the editor, are you sure you want to visit the following URL?"
 msgstr "Vi lasas la redaktilon. Ĉu vi certas, ke vi volas viziti al %url?"
 
 #: src/errormessages.js:26
@@ -1845,12 +1847,11 @@ msgid ""
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
 "<p>Via TTT-legilo havas tre limigitan atingon al la tondujo. Tial, uzu la "
-"jenajn klavkombinojn:</p><table class=\"warn-copy-paste\""
-"><tr><td><kbd>Stir</kbd><span class=\"kbd--plus\""
-">+</span><kbd>C</kbd></td><td><kbd>Stir</kbd><span class=\"kbd--plus\""
-">+</span><kbd>X</kbd></td><td><kbd>Stir</kbd><span class=\"kbd--plus\">+</spa"
-"n><kbd>V</kbd></td></tr><tr><td>Kopii</td><td>Eltondi</td><td>Alglui</td></tr"
-"></table>"
+"jenajn klavkombinojn:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Stir</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Stir</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Stir</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Kopii</"
+"td><td>Eltondi</td><td>Alglui</td></tr></table>"
 
 #: src/map/Clipboard.js:945
 msgid ""
@@ -1863,8 +1864,8 @@ msgstr ""
 "<p>Se vi volas kunhavigi pli grandajn elementojn el via dokumento kun aliaj "
 "aplikaĵoj, necesas unue elŝuti ilin al via ilo. Por fari tion, premu al la "
 "suba butono \"Komenci elŝuti\", kaj kiam kompleta klaku al \"Konfirmi la "
-"kopion en la tondujo\".</p><p>Se vi kopias kaj algluas inter dokumentoj en %"
-"productName, ne necesas elŝuti.</p>"
+"kopion en la tondujo\".</p><p>Se vi kopias kaj algluas inter dokumentoj en "
+"%productName, ne necesas elŝuti.</p>"
 
 #: src/map/Clipboard.js:961
 msgid ""
@@ -1923,6 +1924,9 @@ msgstr "Kreas novan dosieron el ŝablono..."
 msgid "Creating copy..."
 msgstr "Kreas kopion..."
 
+#~ msgid "You are leaving the editor, are you sure you want to visit %url?"
+#~ msgstr "Vi lasas la redaktilon. Ĉu vi certas, ke vi volas viziti al %url?"
+
 #~ msgid "Color"
 #~ msgstr "Koloro"
 
@@ -1955,18 +1959,19 @@ msgstr "Kreas kopion..."
 #~ "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
 #~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 #~ msgstr ""
-#~ "<p>Via TTT-legilo havas tre limigitan aliron al la tondujo, do uzu ĉi tiujn "
-#~ "fulmoklavojn:<ul><li><b>Stir+C</b>: Por kopii.</li><li><b>Stir+X</b>: Por "
-#~ "eltondi.</li><li><b>Stir+V</b>: Por alglui.</li></ul></p>"
+#~ "<p>Via TTT-legilo havas tre limigitan aliron al la tondujo, do uzu ĉi "
+#~ "tiujn fulmoklavojn:<ul><li><b>Stir+C</b>: Por kopii.</li><li><b>Stir+X</"
+#~ "b>: Por eltondi.</li><li><b>Stir+V</b>: Por alglui.</li></ul></p>"
 
 #~ msgid "Subtitle"
 #~ msgstr "Subtitolo"
 
 #~ msgid ""
-#~ "The Personal edition is supported by volunteers and intended for individual "
-#~ "use."
+#~ "The Personal edition is supported by volunteers and intended for "
+#~ "individual use."
 #~ msgstr ""
-#~ "La Personan eldonon subtenas volontuloj kaj ĝi celas por uzo de individuoj."
+#~ "La Personan eldonon subtenas volontuloj kaj ĝi celas por uzo de "
+#~ "individuoj."
 
 #~ msgid "Server is recycling and will be available shortly"
 #~ msgstr "La servilo cikle laboras kaj baldaŭ disponeblos"

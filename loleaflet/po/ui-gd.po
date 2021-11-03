@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-28 15:03+0200\n"
+"POT-Creation-Date: 2021-11-03 16:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -214,8 +214,8 @@ msgstr "Ath-nuadhaich"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:387
-#: src/control/Control.StatusBar.js:331
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr "Chan eil gin"
 
@@ -268,7 +268,7 @@ msgstr ""
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:849
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
 msgid "OK"
 msgstr ""
 
@@ -276,7 +276,7 @@ msgstr ""
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -350,11 +350,11 @@ msgstr ""
 msgid "Automatic color"
 msgstr ""
 
-#: src/control/Control.AlertDialog.js:67
+#: src/control/Control.AlertDialog.js:66
 msgid "Open link"
 msgstr "Fosgail an ceangal"
 
-#: src/control/Control.AlertDialog.js:91
+#: src/control/Control.AlertDialog.js:90
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr ""
 "Thachair am frithealaiche ri mearachd %0 nuair a bha e a’ parsadh na h-"
@@ -381,7 +381,7 @@ msgid "Index"
 msgstr "Clàr-amais"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2313 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "Beachd"
@@ -423,118 +423,118 @@ msgstr ""
 msgid "Function Wizard"
 msgstr "Foincsean"
 
-#: src/control/Control.JSDialogBuilder.js:390
+#: src/control/Control.JSDialogBuilder.js:391
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:393
+#: src/control/Control.JSDialogBuilder.js:394
 msgid "Linear"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:396
+#: src/control/Control.JSDialogBuilder.js:397
 msgid "Axial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:399
+#: src/control/Control.JSDialogBuilder.js:400
 msgid "Radial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:402
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Ellipsoid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:406
+#: src/control/Control.JSDialogBuilder.js:407
 msgid "Quadratic"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:409
+#: src/control/Control.JSDialogBuilder.js:410
 msgid "Square"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:412
+#: src/control/Control.JSDialogBuilder.js:413
 msgid "Fixed size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1483
+#: src/control/Control.JSDialogBuilder.js:1500
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1486
+#: src/control/Control.JSDialogBuilder.js:1503
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1617
+#: src/control/Control.JSDialogBuilder.js:1634
 #, fuzzy
 msgid "Select range"
 msgstr "Diùlt an t-atharrachadh"
 
-#: src/control/Control.JSDialogBuilder.js:1648
+#: src/control/Control.JSDialogBuilder.js:1665
 #: src/control/Control.NotebookbarBuilder.js:234
 #, fuzzy
 msgid "Font Name"
 msgstr "Cruth-clò"
 
-#: src/control/Control.JSDialogBuilder.js:1650
+#: src/control/Control.JSDialogBuilder.js:1667
 #, fuzzy
 msgid "Font Size"
 msgstr "Gun soidhneadh"
 
-#: src/control/Control.JSDialogBuilder.js:1652
+#: src/control/Control.JSDialogBuilder.js:1669
 #: src/control/Control.TopToolbar.js:505
 msgid "Style"
 msgstr "Stoidhle"
 
-#: src/control/Control.JSDialogBuilder.js:2299
+#: src/control/Control.JSDialogBuilder.js:2328
 #, fuzzy
 msgid "reply"
 msgstr "Freagair"
 
-#: src/control/Control.JSDialogBuilder.js:2302
+#: src/control/Control.JSDialogBuilder.js:2331
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2372
+#: src/control/Control.JSDialogBuilder.js:2401
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2773
+#: src/control/Control.JSDialogBuilder.js:2802
 #, fuzzy
 msgid "Cell borders"
 msgstr "Iomallan"
 
-#: src/control/Control.JSDialogBuilder.js:2817
+#: src/control/Control.JSDialogBuilder.js:2846
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2819
+#: src/control/Control.JSDialogBuilder.js:2848
 msgid "Gradient Start"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2821
+#: src/control/Control.JSDialogBuilder.js:2850
 msgid "Gradient End"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3001
+#: src/control/Control.JSDialogBuilder.js:3030
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3002
+#: src/control/Control.JSDialogBuilder.js:3031
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3022
+#: src/control/Control.JSDialogBuilder.js:3051
 #, fuzzy
 msgid "Insert Table"
 msgstr "Cuir a-steach clàr"
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3080
 msgid "Line style:"
 msgstr ""
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:238
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:491
-#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:528
+#: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:535
 #: src/control/Control.NotebookbarBuilder.js:790
 #: src/control/Control.NotebookbarBuilder.js:792
 #: src/control/Control.NotebookbarBuilder.js:794
@@ -629,7 +629,7 @@ msgstr "Càirich"
 
 #: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:299
 #: src/control/Control.Menubar.js:425 src/control/Control.Menubar.js:536
-#: src/control/Control.StatusBar.js:205
+#: src/control/Control.StatusBar.js:209
 msgid "Reset zoom"
 msgstr "Ath-shuidhich an sùm"
 
@@ -754,7 +754,7 @@ msgstr ""
 
 #: src/control/Control.Menubar.js:743 src/control/Control.Menubar.js:792
 #: src/control/Control.Menubar.js:843 src/control/Control.Menubar.js:891
-#: src/control/Control.StatusBar.js:190
+#: src/control/Control.StatusBar.js:194
 msgid "Search"
 msgstr "Lorg"
 
@@ -762,7 +762,7 @@ msgstr "Lorg"
 msgid "Page Setup"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:527
+#: src/control/Control.Menubar.js:1124 src/control/Control.StatusBar.js:534
 msgid "Reset to Default Language"
 msgstr "Aisig an cànan bunaiteach"
 
@@ -830,96 +830,92 @@ msgstr ""
 msgid "Insert sheet"
 msgstr "Cuir a-steach siota"
 
-#: src/control/Control.StatusBar.js:196
+#: src/control/Control.StatusBar.js:200
 msgid "Cancel the search"
 msgstr "Sguir dhen lorg"
 
-#: src/control/Control.StatusBar.js:296
+#: src/control/Control.StatusBar.js:300
 msgid "Number of Sheets"
 msgstr "Àireamh de shiotaichean"
 
-#: src/control/Control.StatusBar.js:301
+#: src/control/Control.StatusBar.js:305
 msgid "Selected range of cells"
 msgstr "An rainse de cheallan a thagh thu"
 
-#: src/control/Control.StatusBar.js:306 src/control/Control.StatusBar.js:362
+#: src/control/Control.StatusBar.js:310 src/control/Control.StatusBar.js:363
 msgid "Entering text mode"
 msgstr "A’ tòiseachadh modh an teacsa"
 
-#: src/control/Control.StatusBar.js:315 src/control/Control.StatusBar.js:367
+#: src/control/Control.StatusBar.js:319 src/control/Control.StatusBar.js:368
 msgid "Selection Mode"
 msgstr "Am modh taghaidh"
 
-#: src/control/Control.StatusBar.js:320
+#: src/control/Control.StatusBar.js:324
 msgid "Choice of functions"
 msgstr "Taghadh de dh’fhoincseanan"
 
-#: src/control/Control.StatusBar.js:324
+#: src/control/Control.StatusBar.js:328
 msgid "Average"
 msgstr "Cuibheas"
 
-#: src/control/Control.StatusBar.js:325
+#: src/control/Control.StatusBar.js:329
 msgid "CountA"
 msgstr "CountA"
 
-#: src/control/Control.StatusBar.js:326
+#: src/control/Control.StatusBar.js:330
 msgid "Count"
 msgstr "Cunnt"
 
-#: src/control/Control.StatusBar.js:327
+#: src/control/Control.StatusBar.js:331
 msgid "Maximum"
 msgstr "As motha"
 
-#: src/control/Control.StatusBar.js:328
+#: src/control/Control.StatusBar.js:332
 msgid "Minimum"
 msgstr "As lugha"
 
-#: src/control/Control.StatusBar.js:329
+#: src/control/Control.StatusBar.js:333
 msgid "Sum"
 msgstr "Suim"
 
-#: src/control/Control.StatusBar.js:330
+#: src/control/Control.StatusBar.js:334
 msgid "Selection count"
 msgstr "Cunnt an taghaidh"
 
-#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:340
-#: src/control/Control.StatusBar.js:378 src/control/Control.StatusBar.js:379
-#: src/control/Control.StatusBar.js:402 src/control/Control.StatusBar.js:403
+#: src/control/Control.StatusBar.js:353
+msgid "Number of Pages"
+msgstr "Àireamh nan duilleagan"
+
+#: src/control/Control.StatusBar.js:358
+msgid "Word Counter"
+msgstr "Cunntas nam faclan"
+
+#: src/control/Control.StatusBar.js:389
+msgid "Number of Slides"
+msgstr "Àireamh de shleamhnagan"
+
+#: src/control/Control.StatusBar.js:444 src/control/Control.StatusBar.js:445
 msgid "Permission Mode"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:339 src/control/Control.StatusBar.js:378
-#: src/control/Control.StatusBar.js:402
+#: src/control/Control.StatusBar.js:444
 #, fuzzy
 msgid "Read-only"
 msgstr "Ri leughadh a-mhàin"
 
-#: src/control/Control.StatusBar.js:340 src/control/Control.StatusBar.js:379
-#: src/control/Control.StatusBar.js:403
+#: src/control/Control.StatusBar.js:445
 msgid "Edit"
 msgstr "Deasaich"
 
-#: src/control/Control.StatusBar.js:352
-msgid "Number of Pages"
-msgstr "Àireamh nan duilleagan"
-
-#: src/control/Control.StatusBar.js:357
-msgid "Word Counter"
-msgstr "Cunntas nam faclan"
-
-#: src/control/Control.StatusBar.js:391
-msgid "Number of Slides"
-msgstr "Àireamh de shleamhnagan"
-
-#: src/control/Control.StatusBar.js:471
+#: src/control/Control.StatusBar.js:478
 msgid "Select multiple cells"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:474
+#: src/control/Control.StatusBar.js:481
 msgid "Insert mode: inactive"
 msgstr ""
 
-#: src/control/Control.StatusBar.js:487
+#: src/control/Control.StatusBar.js:494
 msgid "Selection mode: inactive"
 msgstr ""
 
@@ -1190,7 +1186,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:845
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
 msgid "Text"
 msgstr ""
 
@@ -1265,37 +1261,37 @@ msgstr ""
 msgid "Show Selected Sheets"
 msgstr ""
 
-#: src/control/Permission.js:49
+#: src/control/Permission.js:60
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr ""
 
-#: src/control/Permission.js:51 src/control/Permission.js:68
+#: src/control/Permission.js:62 src/control/Permission.js:79
 msgid "Server returned this reason:"
 msgstr ""
 
-#: src/control/Permission.js:66
+#: src/control/Permission.js:77
 msgid "The document could not be locked."
 msgstr ""
 
-#: src/control/Permission.js:108
+#: src/control/Permission.js:119
 msgid "Enter a file name"
 msgstr ""
 
-#: src/control/Permission.js:109
+#: src/control/Permission.js:120
 msgid "filename"
 msgstr ""
 
-#: src/control/Permission.js:123
+#: src/control/Permission.js:134
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:145
 msgid "Save as ODF format"
 msgstr ""
 
-#: src/control/Permission.js:135
+#: src/control/Permission.js:146
 msgid "Continue editing"
 msgstr ""
 
@@ -1335,7 +1331,8 @@ msgstr "Cha b’ urrainn dhuinn greim fhaighinn air dealbh a’ chòd QR."
 
 #: src/control/Signing.js:269
 msgid "Error when trying to restore access to identity."
-msgstr "Mearachd nuair a bha sinn airson inntrigeadh dhan dearbh-aithne aiseag."
+msgstr ""
+"Mearachd nuair a bha sinn airson inntrigeadh dhan dearbh-aithne aiseag."
 
 #: src/control/Signing.js:275
 msgid "PIN Code"
@@ -1357,7 +1354,7 @@ msgstr "Tagh seòrsa na sgrìobhainn a thèid a luchdadh suas"
 msgid "Type:"
 msgstr "Seòrsa:"
 
-#: src/control/Signing.js:361 src/control/Signing.js:659
+#: src/control/Signing.js:361 src/control/Signing.js:665
 msgid "Document uploaded."
 msgstr "Chaidh an sgrìobhainn a luchdadh suas."
 
@@ -1397,51 +1394,51 @@ msgstr "N/A"
 msgid "Login"
 msgstr "Clàraich a-steach"
 
-#: src/control/Signing.js:616
+#: src/control/Signing.js:617
 msgid "Not Signed"
 msgstr "Gun soidhneadh"
 
-#: src/control/Signing.js:619
+#: src/control/Signing.js:620
 msgid "This document is digitally signed and the signature is valid."
 msgstr ""
 "Tha soidhneadh digiteach aig an sgrìobhainn agus tha an soidhneadh dligheach."
 
-#: src/control/Signing.js:620
+#: src/control/Signing.js:622
 msgid "Signed and validated"
 msgstr "Air a shoidhneadh is air a dhearbhadh"
 
-#: src/control/Signing.js:623
+#: src/control/Signing.js:625
 msgid "This document has an invalid signature."
 msgstr "Tha soidhneadh mì-dhligheach aig an sgrìobhainn seo."
 
-#: src/control/Signing.js:624
+#: src/control/Signing.js:627
 msgid "Signature broken"
 msgstr "Tha an soidhneadh briste"
 
-#: src/control/Signing.js:627
+#: src/control/Signing.js:630
 msgid "The signature was valid, but the document has been modified"
 msgstr "Tha an soidhneadh dligheach ach chaidh an sgrìobhainn atharrachadh."
 
-#: src/control/Signing.js:628
+#: src/control/Signing.js:632
 msgid "Signed but document modified"
 msgstr "Air a shoidhneadh ach chaidh an sgrìobhainn atharrachadh"
 
-#: src/control/Signing.js:631
+#: src/control/Signing.js:635
 msgid "The signature is OK, but the certificate could not be validated."
 msgstr ""
 "Tha an soidhneadh ceart gu leòr ach cha b’ urrainn dhuinn an teisteanas a "
 "dhearbhadh."
 
-#: src/control/Signing.js:632
+#: src/control/Signing.js:637
 msgid "Signed but not validated"
 msgstr "Air a shoidhneadh ach gun dearbhadh"
 
-#: src/control/Signing.js:635
+#: src/control/Signing.js:640
 msgid "The signature is OK, but the document is only partially signed"
 msgstr ""
 "Tha an soidhneadh ceart ach cha deach an sgrìobhainn ach a leth-shoidhneadh"
 
-#: src/control/Signing.js:636
+#: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
 msgstr "Air a shoidhneadh ach cha deach gach faidhle a shoidhneadh"
 
@@ -1461,24 +1458,24 @@ msgstr "’Ga shàbhaladh..."
 msgid "Renaming..."
 msgstr "A’ cur ainm ùr air…"
 
-#: src/control/Toolbar.js:637
+#: src/control/Toolbar.js:638
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 
-#: src/control/Toolbar.js:687
+#: src/control/Toolbar.js:688
 msgid "This version of %productName is powered by"
 msgstr "An tionndadh seo de %productName le cumhachd"
 
-#: src/control/Toolbar.js:697
+#: src/control/Toolbar.js:698
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:843
+#: src/control/Toolbar.js:844
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:846
+#: src/control/Toolbar.js:847
 msgid "Link"
 msgstr ""
 
@@ -1490,10 +1487,9 @@ msgid ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
 "Tha uiread a cheanglaichean aig IE11 ’s a tha ceadaichte. Faic an "
-"sgrìobhainn seo ma tha thu airson a’ chrìoch seo a chur an àirde: "
-"https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/"
-"ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-"
-"connections"
+"sgrìobhainn seo ma tha thu airson a’ chrìoch seo a chur an àirde: https://"
+"docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-"
+"developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:63
 #, fuzzy
@@ -1508,48 +1504,49 @@ msgstr ""
 msgid "Server is now reachable..."
 msgstr ""
 
-#: src/core/Socket.js:503
+#: src/core/Socket.js:506
 msgid "RELOAD"
 msgstr ""
 
-#: src/core/Socket.js:523
+#: src/core/Socket.js:524
 msgid "Served by:"
 msgstr ""
 
-#: src/core/Socket.js:528
+#: src/core/Socket.js:529
 msgid "Unsupported server version."
 msgstr "Chan eil taic ri tionndadh an fhrithealaiche."
 
-#: src/core/Socket.js:645
+#: src/core/Socket.js:646
 msgid "Session terminated by document owner"
 msgstr "Chuir sealbhadair na sgrìobhainn crìoch air an t-seisean"
 
-#: src/core/Socket.js:650
+#: src/core/Socket.js:651
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Sgrìobhainn neo-ghnìomhach - dèan briogadh airson ath-luchdadh is leantainn "
 "air an deasachadh"
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:653
 #, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Sgrìobhainn neo-ghnìomhach - dèan briogadh airson ath-luchdadh is leantainn "
 "air an deasachadh"
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:661
 msgid "Server is shutting down for maintenance (auto-saving)"
-msgstr "Tha am frithealaiche a’ dùnadh airson obair-ghlèidhidh (fèin-sàbhaladh)"
+msgstr ""
+"Tha am frithealaiche a’ dùnadh airson obair-ghlèidhidh (fèin-sàbhaladh)"
 
-#: src/core/Socket.js:664
+#: src/core/Socket.js:665
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ìoc, tha duilgheadas leis a’ cheangal ris an sgrìobhainn"
 
-#: src/core/Socket.js:668
+#: src/core/Socket.js:669
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 
-#: src/core/Socket.js:696
+#: src/core/Socket.js:697
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1557,7 +1554,7 @@ msgstr ""
 "Chaidh an sgrìobhainn san stòras atharrachadh. A’ luchdadh na sgrìobhainne "
 "ùr. Tha an tionndadh agad ri fhaighinn mar lèirmheas."
 
-#: src/core/Socket.js:702
+#: src/core/Socket.js:703
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1565,11 +1562,11 @@ msgstr ""
 "Ag aiseag an t-seann-lèirmheis. Gheibhear cothrom air atharraichean nach "
 "deach a shàbhaladh ann an eachdraidh nan tionndadh."
 
-#: src/core/Socket.js:708
+#: src/core/Socket.js:709
 msgid "Reloading the document after rename"
 msgstr ""
 
-#: src/core/Socket.js:824
+#: src/core/Socket.js:828
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1577,59 +1574,59 @@ msgstr ""
 "Chaidh an sgrìobhainn atharrachadh san stòras. Dè nì sinn leis na h-"
 "atharraichean agad nach deach an sàbhaladh?"
 
-#: src/core/Socket.js:828
+#: src/core/Socket.js:832
 msgid "Discard"
 msgstr "Tilg air falbh"
 
-#: src/core/Socket.js:833
+#: src/core/Socket.js:837
 msgid "Overwrite"
 msgstr "Sgrìobh thairis"
 
-#: src/core/Socket.js:838
+#: src/core/Socket.js:842
 msgid "Save to new file"
 msgstr "Sàbhail ann am faidhle ùr"
 
-#: src/core/Socket.js:908
+#: src/core/Socket.js:912
 msgid "Document requires password to view."
 msgstr "Feumar facal-faire mus fhaicear an sgrìobhainn."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:915
 msgid "Document requires password to modify."
 msgstr "Feumar facal-faire mus urrainnear an sgrìobhainn atharrachadh."
 
-#: src/core/Socket.js:913
+#: src/core/Socket.js:917
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Briog air “Sguir dheth” airson a shealltainn a-mhàin."
 
-#: src/core/Socket.js:917
+#: src/core/Socket.js:921
 msgid "Wrong password provided. Please try again."
 msgstr "Tha am facal-faire cearr. Feuch ris a-rithist."
 
-#: src/core/Socket.js:1022
+#: src/core/Socket.js:1026
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1028
 msgid " saved this document as "
 msgstr ""
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1028
 msgid ". Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1033
+#: src/core/Socket.js:1037
 msgid "Loading..."
 msgstr "’Ga luchdadh..."
 
-#: src/core/Socket.js:1033
+#: src/core/Socket.js:1037
 msgid "Connecting..."
 msgstr "A’ dèanamh ceangal..."
 
-#: src/core/Socket.js:1051
+#: src/core/Socket.js:1055
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1413
+#: src/core/Socket.js:1417
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1637,10 +1634,14 @@ msgstr ""
 "Tha seo a’ cur nàire oirnn ach chan urrainn dhuinn do cheangal ris an "
 "sgrìobhainn agad. Feuch ri a-rithist."
 
-#: src/core/Socket.js:1430
+#: src/core/Socket.js:1434
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "A’ dèanamh ceangal..."
+
+#: src/core/Socket.js:1440
+msgid "The server has been disconnected."
+msgstr ""
 
 #: src/errormessages.js:13
 msgid ""
@@ -1717,9 +1718,9 @@ msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
-"Dh’fhalbh an ùine air an t-seisean agad. Ma dh’atharraicheas tu rudan, dh’"
-"fhaoidte nach dèid a shàbhaladh. Ath-nuadhaich an seisean (no duilleag-lìn) "
-"a leantainn air adhart."
+"Dh’fhalbh an ùine air an t-seisean agad. Ma dh’atharraicheas tu rudan, "
+"dh’fhaoidte nach dèid a shàbhaladh. Ath-nuadhaich an seisean (no duilleag-"
+"lìn) a leantainn air adhart."
 
 #: src/errormessages.js:23
 msgid ""
@@ -1734,7 +1735,9 @@ msgid "Invalid link: '%url'"
 msgstr "Ceangal mì-dhligheach: “%url”"
 
 #: src/errormessages.js:25
-msgid "You are leaving the editor, are you sure you want to visit %url?"
+#, fuzzy
+msgid ""
+"You are leaving the editor, are you sure you want to visit the following URL?"
 msgstr ""
 "Tha thu a’ fàgail an deasaiche, a bheil thu cinnteach gu bheil thu airson "
 "tadhal air %url?"
@@ -1964,6 +1967,11 @@ msgstr "A’ cruthachadh faidhle ùr de theamplaid…"
 msgid "Creating copy..."
 msgstr "A’ cruthachadh an lethbhric…"
 
+#~ msgid "You are leaving the editor, are you sure you want to visit %url?"
+#~ msgstr ""
+#~ "Tha thu a’ fàgail an deasaiche, a bheil thu cinnteach gu bheil thu airson "
+#~ "tadhal air %url?"
+
 #, fuzzy
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "
@@ -1971,10 +1979,10 @@ msgstr "A’ cruthachadh an lethbhric…"
 #~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 #~ msgstr ""
 #~ "<p>Chan eil làn chothrom aig a’ bhrabhsair agad air an stòr-bhòrd. B’ "
-#~ "fheàirrde dhut na h-ath-ghoiridean meur-chlàir a leanas a "
-#~ "chleachdadh:<ul><li><b>Ctrl+C</b>: Airson lethbhreac a "
-#~ "dhèanamh.</li><li><b>Ctrl+X</b>: Airson gearradh a "
-#~ "dhèanamh.</li><li><b>Ctrl+P</b>: Airson rud a chur ann.</li></ul></p>"
+#~ "fheàirrde dhut na h-ath-ghoiridean meur-chlàir a leanas a chleachdadh:"
+#~ "<ul><li><b>Ctrl+C</b>: Airson lethbhreac a dhèanamh.</li><li><b>Ctrl+X</"
+#~ "b>: Airson gearradh a dhèanamh.</li><li><b>Ctrl+P</b>: Airson rud a chur "
+#~ "ann.</li></ul></p>"
 
 #~ msgid "Server is recycling and will be available shortly"
 #~ msgstr ""
