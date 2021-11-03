@@ -91,10 +91,10 @@ describe('Annotation tests.', function() {
 		cy.contains('.menu-entry-with-icon', 'Comment')
 			.click();
 
-		cy.get('.loleaflet-annotation-table')
+		cy.get('.cool-annotation-table')
 			.should('exist');
 
-		cy.get('.loleaflet-annotation-textarea')
+		cy.get('.cool-annotation-textarea')
 			.should('have.text', '');
 
 		cy.get('.vex-dialog-button-primary')
@@ -103,10 +103,10 @@ describe('Annotation tests.', function() {
 		cy.get('.vex-dialog-button-secondary')
 			.click();
 
-		cy.get('#mobile-wizard .wizard-comment-box.loleaflet-annotation-content-wrapper')
+		cy.get('#mobile-wizard .wizard-comment-box.cool-annotation-content-wrapper')
 			.should('not.exist');
 
-		cy.get('#mobile-wizard .wizard-comment-box .loleaflet-annotation-content')
+		cy.get('#mobile-wizard .wizard-comment-box .cool-annotation-content')
 			.should('not.exist');
 	});
 
@@ -122,10 +122,10 @@ describe('Annotation tests.', function() {
 
 		cy.wait(1000);
 
-		cy.get('#mobile-wizard .wizard-comment-box .loleaflet-annotation-content-resolved')
+		cy.get('#mobile-wizard .wizard-comment-box .cool-annotation-content-resolved')
 			.should('exist');
 
-		cy.get('#mobile-wizard .wizard-comment-box .loleaflet-annotation-content-resolved')
+		cy.get('#mobile-wizard .wizard-comment-box .cool-annotation-content-resolved')
 			.should('have.text', 'Resolved');
 	});
 });

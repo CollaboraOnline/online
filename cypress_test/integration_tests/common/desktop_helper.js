@@ -309,7 +309,7 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 
 		cy.wait(100);
 
-		cy.get('.loleaflet-annotation-table').should('exist');
+		cy.get('.cool-annotation-table').should('exist');
 
 		if (isMobile) {
 			cy.get('#new-mobile-comment-input-area').type('some text' + n);
