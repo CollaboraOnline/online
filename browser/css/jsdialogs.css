@@ -128,7 +128,7 @@ td.jsdialog > [id^='table-box'] {
 .ui-tab.jsdialog {
 	float: left;
 	font-size: 12pt;
-	font-family: var(--loleaflet-font);
+	font-family: var(--cool-font);
 	line-height: normal;
 	color: dimgray;
 	color: var(--gray-light-txt--color);
