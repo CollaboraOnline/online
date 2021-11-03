@@ -76,7 +76,7 @@ else
 data = data.replace(/%ACCESS_TOKEN%/g, '');
 data = data.replace(/%ACCESS_TOKEN_TTL%/g, '0');
 data = data.replace(/%ACCESS_HEADER%/g, '');
-data = data.replace(/%LOLEAFLET_LOGGING%/g, 'true');
+data = data.replace(/%COOL_LOGGING%/g, 'true');
 data = data.replace(/%ENABLE_WELCOME_MSG%/g, 'false');
 data = data.replace(/%ENABLE_WELCOME_MSG%/g, 'false');
 data = data.replace(/%ENABLE_WELCOME_MSG_BTN%/g, 'false');

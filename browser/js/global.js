@@ -73,7 +73,7 @@ window.app = { // Shouldn't have any functions defined.
 		global.logServer(log);
 	};
 
-	if (global.loleafletLogging !== 'true') {
+	if (global.coolLogging !== 'true') {
 		var methods = ['warn', 'info', 'debug', 'trace', 'log', 'logException', 'assert', 'time', 'timeEnd'];
 		for (var i = 0; i < methods.length; i++) {
 			console[methods[i]] = function() {};
