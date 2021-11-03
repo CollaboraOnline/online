@@ -12,13 +12,13 @@
 /* Default host used in the start test URI */
 #define LOOLWSD_TEST_HOST "localhost"
 
-/* Default loleaflet UI used in the admin console URI */
+/* Default cool UI used in the admin console URI */
 #define LOOLWSD_TEST_ADMIN_CONSOLE "/loleaflet/dist/admin/admin.html"
 
-/* Default loleaflet UI used in for monitoring URI */
+/* Default cool UI used in for monitoring URI */
 #define LOOLWSD_TEST_METRICS "/lool/getMetrics"
 
-/* Default loleaflet UI used in the start test URI */
+/* Default cool UI used in the start test URI */
 #define LOOLWSD_TEST_LOLEAFLET_UI "/loleaflet/" LOOLWSD_VERSION_HASH "/debug.html"
 
 /* Default document used in the start test URI */
@@ -3761,7 +3761,7 @@ private:
             }
         }
 
-        // turn "images/img.svg" into "http://server.tld/loleaflet/12345abcd/images/img.svg"
+        // turn "images/img.svg" into "http://server.tld/browser/12345abcd/images/img.svg"
         listNodes = docXML->getElementsByTagName("app");
         for (unsigned long it = 0; it < listNodes->length(); ++it)
         {
@@ -3891,7 +3891,7 @@ class PrisonerSocketFactory final : public SocketFactory
 
 /// The main server thread.
 ///
-/// Waits for the connections from the loleaflets, and creates the
+/// Waits for the connections from the cools, and creates the
 /// websockethandlers accordingly.
 class LOOLWSDServer
 {

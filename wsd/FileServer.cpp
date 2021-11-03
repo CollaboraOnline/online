@@ -642,8 +642,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 #if ENABLE_DEBUG
             if (std::getenv("LOOL_SERVE_FROM_FS"))
             {
-                // Useful to not serve from memory sometimes especially during loleaflet development
-                // Avoids having to restart loolwsd everytime you make a change in loleaflet
+                // Useful to not serve from memory sometimes especially during cool development
+                // Avoids having to restart cool everytime you make a change in loleaflet
                 const std::string filePath = Poco::Path(LOOLWSD::FileServerRoot, relPath).absolute().toString();
                 HttpHelper::sendFileAndShutdown(socket, filePath, mimeType, &response, noCache);
                 return;
@@ -800,7 +800,7 @@ void FileServerRequestHandler::readDirToHash(const std::string &basePath, const 
 
 void FileServerRequestHandler::initialize()
 {
-    // loleaflet files
+    // cool files
     try {
         readDirToHash(LOOLWSD::FileServerRoot, "/loleaflet/dist");
     } catch (...) {

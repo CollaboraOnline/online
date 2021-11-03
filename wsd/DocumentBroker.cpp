@@ -714,7 +714,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 
         // Contains PostMessageOrigin property which is necessary to post messages to parent
         // frame. Important to send this message immediately and not enqueue it so that in case
-        // document load fails, loleaflet is able to tell its parent frame via PostMessage API.
+        // document load fails, cool is able to tell its parent frame via PostMessage API.
         session->sendMessage("wopi: " + wopiInfoString);
 
         // Mark the session as 'Document owner' if WOPI hosts supports it

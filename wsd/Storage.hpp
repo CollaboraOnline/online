@@ -550,7 +550,7 @@ public:
         bool _disableExport;
         /// If WOPI host has allowed the user to copy to/from the document
         bool _disableCopy;
-        /// If WOPI host has allowed the loleaflet to show texts on the overlay informing about inactivity, or if the integration is handling that.
+        /// If WOPI host has allowed the cool to show texts on the overlay informing about inactivity, or if the integration is handling that.
         bool _disableInactiveMessages;
         /// For the (mobile) integrations, to indicate that the downloading for printing, exporting or slideshows should be intercepted and sent as a postMessage instead of handling directly.
         bool _downloadAsPostMessage;

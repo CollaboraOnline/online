@@ -30,14 +30,14 @@
  * Example:
  *  convert-to
  *
- * loleaflet URI: used to load cool.html and other static files.
+ * cool URI: used to load cool.html and other static files.
  * Origin: the page where the document will be embedded.
  * Format:
- *  /loleaflet/<loolwsd-version-hash>/[path/]<filename>.<ext>[?WOPISrc=<encoded-document-URI>]
- * Identifier: /loleaflet/.
+ *  /browser/<loolwsd-version-hash>/[path/]<filename>.<ext>[?WOPISrc=<encoded-document-URI>]
+ * Identifier: /browser/.
  * Examples:
- *  /loleaflet/49c225146/src/map/Clipboard.js
- *  /loleaflet/49c225146/cool.html?WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F593_ocqiesh0cngs&title=empty.odt&lang=en-us&closebutton=1&revisionhistory=1
+ *  /browser/49c225146/src/map/Clipboard.js
+ *  /browser/49c225146/cool.html?WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F593_ocqiesh0cngs&title=empty.odt&lang=en-us&closebutton=1&revisionhistory=1
  *
  * lool URI: used to load the document.
  * Origin: cool.html
