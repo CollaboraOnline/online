@@ -4,7 +4,7 @@
 	text-transform: full-size-kana;
 }
 
-.loleaflet-annotation-edit #annotation-cancel,
+.cool-annotation-edit #annotation-cancel,
 .ui-pushbutton.jsdialog:not(#ok):not(.sidebar),
 .ui-button-box.jsdialog #cancel,
 .ui-button-box.autofilter #cancel,
@@ -33,7 +33,7 @@
 	justify-content: center;
 }
 
-.loleaflet-annotation-edit .annotation-button,
+.cool-annotation-edit .annotation-button,
 #annotation-reply,
 .ui-button-box.jsdialog #ok,
 .ui-button-box.autofilter #ok,

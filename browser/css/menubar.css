@@ -99,7 +99,7 @@
 }
 
 .lo-menu a, .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active {
-	font-family: var(--loleaflet-font);
+	font-family: var(--cool-font);
 	font-size: 12px;
 	line-height: 15px;
 }
