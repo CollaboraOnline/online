@@ -5160,7 +5160,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		map.setPermission(this.options.permission);
 
-		map.fire('statusindicator', {statusType: 'loleafletloaded'});
+		map.fire('statusindicator', {statusType: 'coolloaded'});
 
 		this._map.sendInitUNOCommands();
 
