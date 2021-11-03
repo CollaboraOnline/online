@@ -120,7 +120,7 @@ COOL_CSS_LST =\
 	$(srcdir)/css/leaflet-spinner.css \
 	$(srcdir)/css/selectionMarkers.css \
 	$(srcdir)/css/color-palette.css \
-	$(srcdir)/css/loleaflet.css \
+	$(srcdir)/css/cool.css \
 	$(srcdir)/css/toolbar.css \
 	$(srcdir)/css/toolbar-mobile.css \
 	$(srcdir)/css/partsPreviewControl.css \
@@ -388,7 +388,7 @@ INTERMEDIATE_DIR ?= $(if $(IS_SEPARATE),$(abs_builddir)/debug,$(abs_builddir)/re
 
 EXTRA_DIST = $(shell find . -type f -not -path './.git/*' -not -path './node_modules/*' | sed 's/.\///')
 
-define bundle_loleaflet
+define bundle_cool
 	$(if $(IS_SEPARATE),\
 		@touch $@,
 		@m4 -PE -DIOSAPP=$(ENABLE_IOSAPP) \
@@ -398,17 +398,17 @@ define bundle_loleaflet
 			-DVERSION=$(COOL_VERSION) \
 			-DCOPYRIGHT=$(srcdir)/src/copyright.js \
 			-DCOOL_JS=$(subst $(SPACE),$(COMMA),$(patsubst src/%.ts,$(DIST_FOLDER)/src/%.js,$(COOL_JS_WEBORDER))) \
-			$(srcdir)/loleaflet-src.js.m4 > $@)
+			$(srcdir)/cool-src.js.m4 > $@)
 endef
 
-define prereq_loleaflet
+define prereq_cool
 	$(if $(IS_SEPARATE),$(COOL_JS_DST),$(COOL_JS_SRC))
 endef
 
 define bundle_css
 	$(if $(IS_SEPARATE),\
 		@touch $@,\
-		@echo "Uglify loleaflet css files..."
+		@echo "Uglify cool css files..."
 		@$(NODE) node_modules/uglifycss/uglifycss $(COOL_CSS) > $@)
 endef
 
@@ -419,11 +419,11 @@ endef
 define bundle_all
 	$(if $(IS_SEPARATE),\
 		@touch $@,\
-		@echo "Uglify loleaflet js files..."
+		@echo "Uglify cool js files..."
 		@m4 -PE -DL10N_IOS_ALL_JS=$(L10N_IOS_ALL_JS) \
 			-DNODE_MODULES_JS=$(subst $(SPACE),$(COMMA),$(NODE_MODULES_JS)) \
 			-DCOOL_LIBS_JS=$(subst $(SPACE),$(COMMA),$(COOL_LIBS_JS_SRC)) \
-			-DCOOL_JS=$(INTERMEDIATE_DIR)/loleaflet-src.js \
+			-DCOOL_JS=$(INTERMEDIATE_DIR)/cool-src.js \
 			$(srcdir)/bundle.js.m4 > $(INTERMEDIATE_DIR)/bundle.js
 		@$(NODE) node_modules/uglify-js/bin/uglifyjs \
 			$(INTERMEDIATE_DIR)/bundle.js \
@@ -442,9 +442,9 @@ define global_file
 		@$(NODE) node_modules/uglify-js/bin/uglifyjs $< --output $@)
 endef
 
-.PHONY: build-loleaflet
+.PHONY: build-cool
 
-all-local: build-loleaflet
+all-local: build-cool
 
 if !ENABLE_MOBILEAPP
 ADMIN_BUNDLE = $(DIST_FOLDER)/admin-bundle.js
@@ -454,7 +454,7 @@ $(TYPESCRIPT_JS_DIR)/%.js: $(srcdir)/%.ts
 	@mkdir -p $(dir $@)
 	$(builddir)/node_modules/typescript/bin/tsc --outFile $@ $<
 
-build-loleaflet: \
+build-cool: \
 	$(COOL_L10N_DST) \
 	$(L10N_JSON) \
 	$(SRC_TS_JS_DST) \
@@ -469,7 +469,7 @@ build-loleaflet: \
 	$(DIST_FOLDER)/device-desktop.css \
 	$(DIST_FOLDER)/bundle.js \
 	$(DIST_FOLDER)/cool.html
-	@echo "build loleaflet completed"
+	@echo "build cool completed"
 if ENABLE_ANDROIDAPP
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)/branding.css" "$(APP_BRANDING_DIR)/branding.js" $(DIST_FOLDER)/ ; else touch $(DIST_FOLDER)/branding.css ; fi
 	@if test -d "$(APP_BRANDING_DIR)" ; then cp -a "$(APP_BRANDING_DIR)"/images/*.svg $(DIST_FOLDER)/images/ ; fi
@@ -493,16 +493,16 @@ $(INTERMEDIATE_DIR)/admin-src.js: $(COOL_ADMIN_TS_JS) $(COOL_ADMIN_JS)
 	@$(NODE) node_modules/eslint/bin/eslint.js --resolve-plugins-relative-to $(abs_builddir) --ignore-path $(srcdir)/.eslintignore --config $(srcdir)/.eslintrc --no-eslintrc $(srcdir)/admin/src
 	@awk 'FNR == 1 {print ""} 1' $(COOL_ADMIN_TS_JS) $(patsubst %.js,$(srcdir)/%.js,$(COOL_ADMIN_JS)) > $@
 
-$(INTERMEDIATE_DIR)/loleaflet-src.js: tscompile.done $(call prereq_loleaflet) $(COOL_JS_DST)
+$(INTERMEDIATE_DIR)/cool-src.js: tscompile.done $(call prereq_cool) $(COOL_JS_DST)
 	@mkdir -p $(dir $@)
 	$(abs_top_srcdir)/scripts/unocommands.py --check $(abs_top_srcdir)
 	@printf "Checking for obsolete JS build intermediates in this makefile... "
 	@if ! test "z$(COOL_ASSERT_INTERSECT)" == "z"; then echo; echo "Error: please remove obsolete files:"; echo "$(COOL_ASSERT_INTERSECT)"; exit 1; else echo "clean"; fi
-	@echo "Checking for loleaflet JS errors..."
+	@echo "Checking for cool JS errors..."
 	@$(NODE) node_modules/eslint/bin/eslint.js $(srcdir)/src --resolve-plugins-relative-to $(abs_builddir) \
 		$(srcdir)/js --ignore-path $(srcdir)/.eslintignore --no-eslintrc --config $(srcdir)/.eslintrc
-	@echo "Bundling loleaflet..."
-	$(call bundle_loleaflet)
+	@echo "Bundling cool..."
+	$(call bundle_cool)
 
 $(DIST_FOLDER)/bundle.css: $(call prereq_css)
 	@mkdir -p $(dir $@)
@@ -510,7 +510,7 @@ $(DIST_FOLDER)/bundle.css: $(call prereq_css)
 	@$(NODE) node_modules/stylelint/bin/stylelint.js --config $(srcdir)/.stylelintrc.json $(srcdir)/css/*.css
 	$(call bundle_css)
 
-$(DIST_FOLDER)/bundle.js: $(INTERMEDIATE_DIR)/loleaflet-src.js $(call prereq_all)
+$(DIST_FOLDER)/bundle.js: $(INTERMEDIATE_DIR)/cool-src.js $(call prereq_all)
 	@mkdir -p $(dir $@)
 	$(call bundle_all)
 
@@ -639,8 +639,8 @@ $(DIST_FOLDER)/admin/%: $(srcdir)/admin/%
 	@cp $< $@
 
 install-data-hook:
-	mkdir -p $(DESTDIR)$(pkgdatadir)/loleaflet; \
-	cp -ar dist/ $(DESTDIR)$(pkgdatadir)/loleaflet/;
+	mkdir -p $(DESTDIR)$(pkgdatadir)/browser; \
+	cp -ar dist/ $(DESTDIR)$(pkgdatadir)/browser/;
 
 libs:
 	@mkdir -p $(abs_srcdir)/libs
@@ -648,7 +648,7 @@ libs:
 	&& $(call npm_source,$(NODE_MODULES_SRC))
 
 pot:
-	xgettext --from-code=UTF-8 --language=JavaScript --keyword=_ --output=po/templates/loleaflet-ui.pot \
+	xgettext --from-code=UTF-8 --language=JavaScript --keyword=_ --output=po/templates/cool-ui.pot \
 		admin/admin.strings.js \
 		admin/src/AdminSocketAnalytics.js \
 		admin/src/AdminSocketBase.js \
@@ -703,7 +703,7 @@ pot:
 	html2po --pot --input=html/cool-help.html --output=po/templates/cool-help.pot --duplicates=merge
 
 l10n: pot
-	for i in po/ui-*.po; do pot2po --input=po/templates/loleaflet-ui.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
+	for i in po/ui-*.po; do pot2po --input=po/templates/cool-ui.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
 	for i in po/help-*.po; do pot2po --input=po/templates/cool-help.pot --template=$$i --output=$$i.new; mv $$i.new $$i;done
 
 clean-local:
@@ -713,7 +713,7 @@ clean-local:
 	@rm -f $(abs_srcdir)/jsconfig.json
 	@rm -f $(abs_srcdir)/admin/jsconfig.json
 
-CLEANFILES = tscompile.done $(INTERMEDIATE_DIR)/loleaflet-src.js $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/bundle.js $(INTERMEDIATE_DIR)/loleaflet-src.js
+CLEANFILES = tscompile.done $(INTERMEDIATE_DIR)/cool-src.js $(DIST_FOLDER)/bundle.css $(DIST_FOLDER)/bundle.js $(INTERMEDIATE_DIR)/cool-src.js
 
 ctags:
 	@$(CTAGS) --language-force=JavaScript $(COOL_JS_SRC) $(srcdir)/js/global.js
