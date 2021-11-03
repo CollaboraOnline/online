@@ -148,7 +148,9 @@ AC_ARG_ENABLE([gtkapp],
 
 AC_ARG_ENABLE(fuzzers,
     AS_HELP_STRING([--enable-fuzzers],
-        [Enables building libfuzzer targets for fuzz testing.])
+        [Enables building libfuzzer targets for fuzz testing. It is useful to enable this switch
+         only in a separate build tree, since the switch disables the creation of a loolwsd
+         binary.])
 )
 
 AC_ARG_ENABLE([androidapp],
