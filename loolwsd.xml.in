@@ -53,6 +53,7 @@
     </per_view>
 
     <loleaflet_html desc="Allows UI customization by replacing the single endpoint of loleaflet.html" type="string" default="loleaflet.html">loleaflet.html</loleaflet_html>
+    <ver_suffix desc="Appended to etags to allow easy refresh of changed files during development" type="string" default=""></ver_suffix>
 
     <logging>
         <color type="bool">true</color>

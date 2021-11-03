@@ -495,6 +495,9 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         std::string endPoint = requestSegments[requestSegments.size() - 1];
         const auto& config = Application::instance().config();
 
+        static std::string etagString = "\"" LOOLWSD_VERSION_HASH +
+            config.getString("ver_suffix", "") + "\"";
+
 #if ENABLE_DEBUG
         const Poco::Path path = requestUri.getPath();
         if (Util::startsWith(path.toString(), std::string("/wopi/files"))) {
@@ -616,7 +619,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             if (it != request.end())
             {
                 // if ETags match avoid re-sending the file.
-                if (!noCache && it->second == "\"" LOOLWSD_VERSION_HASH "\"")
+                if (!noCache && it->second == etagString)
                 {
                     // TESTME: harder ... - do we even want ETag support ?
                     std::ostringstream oss;
@@ -658,7 +661,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             {
                 // 60 * 60 * 24 * 128 (days) = 11059200
                 response.set("Cache-Control", "max-age=11059200");
-                response.set("ETag", "\"" LOOLWSD_VERSION_HASH "\"");
+                response.set("ETag", etagString);
             }
             response.setContentType(mimeType);
             response.add("X-Content-Type-Options", "nosniff");
