@@ -76,11 +76,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BE00F89621396585001CE2D4 /* cool.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = cool.html; path = ../../../loleaflet/dist/cool.html; sourceTree = "<group>"; };
-		BE00F89721396585001CE2D4 /* bundle.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = bundle.css; path = ../../../loleaflet/dist/bundle.css; sourceTree = "<group>"; };
-		BE00F89921396585001CE2D4 /* bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = ../../../loleaflet/dist/bundle.js; sourceTree = "<group>"; };
-		BE00F89D21396585001CE2D4 /* cool-help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "cool-help.html"; path = "../../../loleaflet/dist/cool-help.html"; sourceTree = "<group>"; };
-		BE00F89E21396585001CE2D4 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../loleaflet/dist/images; sourceTree = "<group>"; };
+		BE00F89621396585001CE2D4 /* cool.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = cool.html; path = ../../../browser/dist/cool.html; sourceTree = "<group>"; };
+		BE00F89721396585001CE2D4 /* bundle.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = bundle.css; path = ../../../browser/dist/bundle.css; sourceTree = "<group>"; };
+		BE00F89921396585001CE2D4 /* bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = ../../../browser/dist/bundle.js; sourceTree = "<group>"; };
+		BE00F89D21396585001CE2D4 /* cool-help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "cool-help.html"; path = "../../../browser/dist/cool-help.html"; sourceTree = "<group>"; };
+		BE00F89E21396585001CE2D4 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../../browser/dist/images; sourceTree = "<group>"; };
 		BE00F8B4213ED543001CE2D4 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		BE00F8B6213ED573001CE2D4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		BE017B6925AE879800244ED8 /* docfuncutil.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docfuncutil.cxx; path = "../../ios-device/sc/source/ui/docshell/docfuncutil.cxx"; sourceTree = "<group>"; };
@@ -1280,8 +1280,8 @@
 		BECBD41223D9C98400DA5582 /* svdedxv.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svdedxv.cxx; path = "../../ios-device/svx/source/svdraw/svdedxv.cxx"; sourceTree = "<group>"; };
 		BECBD41323D9C98400DA5582 /* clonelist.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = clonelist.cxx; path = "../../ios-device/svx/source/svdraw/clonelist.cxx"; sourceTree = "<group>"; };
 		BECBD41423D9C98500DA5582 /* svddrgmt.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = svddrgmt.cxx; path = "../../ios-device/svx/source/svdraw/svddrgmt.cxx"; sourceTree = "<group>"; };
-		BECD983E24336DD400016117 /* device-mobile.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "device-mobile.css"; path = "../../../loleaflet/dist/device-mobile.css"; sourceTree = "<group>"; };
-		BECD983F24336DD400016117 /* device-tablet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "device-tablet.css"; path = "../../../loleaflet/dist/device-tablet.css"; sourceTree = "<group>"; };
+		BECD983E24336DD400016117 /* device-mobile.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "device-mobile.css"; path = "../../../browser/dist/device-mobile.css"; sourceTree = "<group>"; };
+		BECD983F24336DD400016117 /* device-tablet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; name = "device-tablet.css"; path = "../../../browser/dist/device-tablet.css"; sourceTree = "<group>"; };
 		BEDCC84C2452F82800FB02BD /* MobileApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MobileApp.cpp; sourceTree = "<group>"; };
 		BEDCC84D2452F82800FB02BD /* MobileApp.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MobileApp.hpp; sourceTree = "<group>"; };
 		BEDCC8972456FFAC00FB02BD /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
