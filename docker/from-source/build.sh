@@ -117,7 +117,7 @@ fi
 mkdir -p "$INSTDIR"/opt/
 cp -a core/instdir "$INSTDIR"/opt/lokit
 
-##### loolwsd & loleaflet #####
+##### loolwsd & cool #####
 
 # build
 ( cd online && ./autogen.sh ) || exit 1
