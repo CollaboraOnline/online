@@ -296,11 +296,11 @@ preBuild.dependsOn 'createRCfiles',
         'copyBrandTheme'
 
 task generateLoleafletDebugAssets(type: Exec) {
-	commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../loleaflet", "DIST_FOLDER=${project.getProjectDir()}/src/debug/assets/dist", 'BUNDLE=DEBUG'
+	commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", "DIST_FOLDER=${project.getProjectDir()}/src/debug/assets/dist", 'BUNDLE=DEBUG'
 }
 
 task generateLoleafletReleaseAssets(type: Exec) {
-	commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../loleaflet", "DIST_FOLDER=${project.getProjectDir()}/src/release/assets/dist", 'BUNDLE=RELEASE'
+	commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", "DIST_FOLDER=${project.getProjectDir()}/src/release/assets/dist", 'BUNDLE=RELEASE'
 }
 
 afterEvaluate {
