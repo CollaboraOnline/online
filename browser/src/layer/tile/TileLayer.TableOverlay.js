@@ -264,7 +264,7 @@ L.CanvasTileLayer.include({
 
 		var delta1 = this._convertPixelToTwips(this._selectionHeaderDistanceFromTable);
 
-		// The 24 is the height and width of the .table-select-marker in loleaflet.css
+		// The 24 is the height and width of the .table-select-marker in cool.css
 		var height = 24;
 		var width = height;
 		var selectionMarkerNominalSize = this._convertPixelToTwips(width);

@@ -425,13 +425,13 @@ L.Control.UIManager = L.Control.extend({
 	// Ruler
 
 	showRuler: function() {
-		$('.loleaflet-ruler').show();
+		$('.cool-ruler').show();
 		$('#map').addClass('hasruler');
 		this.setSavedState('ShowRuler', true);
 	},
 
 	hideRuler: function() {
-		$('.loleaflet-ruler').hide();
+		$('.cool-ruler').hide();
 		$('#map').removeClass('hasruler');
 		this.setSavedState('ShowRuler', false);
 	},
@@ -444,7 +444,7 @@ L.Control.UIManager = L.Control.extend({
 	},
 
 	isRulerVisible: function() {
-		return $('.loleaflet-ruler').is(':visible');
+		return $('.cool-ruler').is(':visible');
 	},
 
 	isFullscreen: function() {

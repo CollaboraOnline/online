@@ -20,7 +20,7 @@ L.Control.SearchBar = L.Control.extend({
 				{type: 'button', id: 'hidesearchbar', img: 'unfold', hint: _('Hide the search bar')},
 				{
 					type: 'html', id: 'search',
-					html: '<div id="search-input-group" style="padding: 3px 10px;" class="loleaflet-font">' +
+					html: '<div id="search-input-group" style="padding: 3px 10px;" class="cool-font">' +
 						'    <label for="search-input">Search:</label>' +
 						'    <input size="10" id="search-input"' +
 						'style="padding: 2px; border-radius: 2px; border: 1px solid silver"/>' +

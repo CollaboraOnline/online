@@ -270,7 +270,7 @@ function getInsertTablePopupHtml() {
 	return '<div id="inserttable-wrapper">\
 					<div id="inserttable-popup" class="inserttable-pop ui-widget ui-corner-all">\
 						<div class="inserttable-grid"></div>\
-						<div id="inserttable-status" class="loleaflet-font" style="padding: 5px;"><br/></div>\
+						<div id="inserttable-status" class="cool-font" style="padding: 5px;"><br/></div>\
 					</div>\
 				</div>';
 }
@@ -489,7 +489,7 @@ function createShapesPanel(shapeType) {
 	var collection = shapes[shapeType];
 
 	for (var s in collection) {
-		var $rowHeader = $('<div/>').addClass('row-header loleaflet-font').append(_(s));
+		var $rowHeader = $('<div/>').addClass('row-header cool-font').append(_(s));
 		$grid.append($rowHeader);
 		var $row = $('<div/>').addClass('row');
 		$grid.append($row);
@@ -524,7 +524,7 @@ function insertShapes(shapeType) {
 	var collection = shapes[shapeType];
 
 	for (var s in collection) {
-		var $rowHeader = $('<div/>').addClass('row-header loleaflet-font').append(_(s));
+		var $rowHeader = $('<div/>').addClass('row-header cool-font').append(_(s));
 		$grid.append($rowHeader);
 
 		var rows = Math.ceil(collection[s].length / width);

@@ -1451,7 +1451,7 @@ L.Map = L.Evented.extend({
 
 		vex.open({
 			content: message,
-			contentClassName: 'loleaflet-user-idle',
+			contentClassName: 'cool-user-idle',
 			afterOpen: function() {
 				var $vexContent = $(this.contentEl);
 				$vexContent.bind('click.vex', function() {
@@ -1462,7 +1462,7 @@ L.Map = L.Evented.extend({
 			showCloseButton: false
 		});
 
-		$('.vex-overlay').addClass('loleaflet-user-idle-overlay');
+		$('.vex-overlay').addClass('cool-user-idle-overlay');
 		if (message === '')
 			$('.loleaflet-user-idle').css('display', 'none');
 
