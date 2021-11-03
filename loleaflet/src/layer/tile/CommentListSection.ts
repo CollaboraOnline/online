@@ -63,6 +63,9 @@ class CommentSection {
 	setPosition: (x: number, y: number) => void;
 	map: any;
 
+	// To associate comment id with its index in commentList array.
+	private idIndexMap: Map<any, number>;
+
 	constructor () {
 		this.map = L.Map.THIS;
 		this.anchor = ['top', 'right'];
@@ -77,6 +80,7 @@ class CommentSection {
 		this.sectionProperties.layoutTimer = null;
 		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
 		this.sectionProperties.scrollAnnotation = null; // For impress, when 1 or more comments exist.
+		this.idIndexMap = new Map<any, number>();
 	}
 
 	public onInitialize () {
@@ -468,6 +472,7 @@ class CommentSection {
 			if (annotation.sectionProperties.data.id === id) {
 				this.containerObject.removeSection(annotation.name);
 				this.sectionProperties.commentList.splice(i, 1);
+				this.updateIdIndexMap();
 				break;
 			}
 		}
@@ -732,12 +737,8 @@ class CommentSection {
 	}
 
 	public getIndexOf (id: any): number {
-		for (var index = 0; index < this.sectionProperties.commentList.length; index++) {
-			if (this.sectionProperties.commentList[index].sectionProperties.data.id === id) {
-				return index;
-			}
-		}
-		return -1;
+		const index = this.idIndexMap.get(id);
+		return (index === undefined) ? -1 : index;
 	}
 
 	public isThreadResolved (annotation: any) {
@@ -905,6 +906,7 @@ class CommentSection {
 
 			this.containerObject.addSection(annotation);
 			this.sectionProperties.commentList.splice(parentIdx + 1, 0, annotation);
+			this.updateIdIndexMap();
 
 			this.updateResolvedState(annotation);
 			this.showHideComment(annotation);
@@ -954,12 +956,8 @@ class CommentSection {
 	}
 
 	public getComment (id: any) {
-		for (var i = 0; i < this.sectionProperties.commentList.length; i++) {
-			if (this.sectionProperties.commentList[i].sectionProperties.data.id === id) {
-				return this.sectionProperties.commentList[i];
-			}
-		}
-		return null;
+		const index = this.getIndexOf(id);
+		return index == -1 ? null : this.sectionProperties.commentList[index];
 	}
 
 	// Adjust parent-child relationship, if required, after `comment` is added
@@ -1635,6 +1633,19 @@ class CommentSection {
 			return Math.abs(a.sectionProperties.data.anchorPos[1]) - Math.abs(b.sectionProperties.data.anchorPos[1]) ||
 				Math.abs(a.sectionProperties.data.anchorPos[0]) - Math.abs(b.sectionProperties.data.anchorPos[0]);
 		});
+
+		// idIndexMap is now invalid, update it.
+		this.updateIdIndexMap();
+	}
+
+	private updateIdIndexMap() {
+		this.idIndexMap.clear();
+		const commentList = this.sectionProperties.commentList;
+		for (var idx = 0; idx < commentList.length; idx++) {
+			const comment = commentList[idx];
+			console.assert(comment.sectionProperties && comment.sectionProperties.data, 'no sectionProperties.data!');
+			this.idIndexMap.set(comment.sectionProperties.data.id, idx);
+		}
 	}
 
 	private turnIntoAList (commentList: any) {
@@ -1668,6 +1679,7 @@ class CommentSection {
 				var commentSection = new app.definitions.Comment(comment, {}, this);
 				this.containerObject.addSection(commentSection);
 				this.sectionProperties.commentList.push(commentSection);
+				this.idIndexMap.set(commentSection.sectionProperties.data.id, i);
 				this.updateResolvedState(this.sectionProperties.commentList[i]);
 			}
 
@@ -1719,6 +1731,7 @@ class CommentSection {
 				this.sectionProperties.commentList.splice(i, 1);
 			}
 		}
+		this.updateIdIndexMap();
 		this.containerObject.resumeDrawing();
 
 		this.sectionProperties.selectedComment = null;
@@ -1734,6 +1747,7 @@ class CommentSection {
 				this.sectionProperties.commentList.splice(i, 1);
 			}
 		}
+		this.updateIdIndexMap();
 		this.containerObject.resumeDrawing();
 
 		this.sectionProperties.selectedComment = null;
