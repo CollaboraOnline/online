@@ -1046,9 +1046,10 @@ void LOOLWSD::initialize(Application& self)
             { "freemium.draw_subscription_highlights", DRAW_SUBSCRIPTION_HIGHLIGHTS },
 #endif
             { "user_interface.mode", USER_INTERFACE_MODE },
-            {"quarantine_files.limit_dir_size_mb", "250"},
-            {"quarantine_files.max_versions_to_maintain", "2"},
-            {"quarantine_files.path", "quarantine"}
+            { "quarantine_files[@enable]", "false" },
+            { "quarantine_files.limit_dir_size_mb", "250" },
+            { "quarantine_files.max_versions_to_maintain", "2" },
+            { "quarantine_files.path", "quarantine" }
           };
 
     // Set default values, in case they are missing from the config file.
