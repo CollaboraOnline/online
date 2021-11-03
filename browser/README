@@ -51,7 +51,7 @@ Just do:
 
     make
 
-Above step would create a non-minified bundle.js and admin-bundle.js without source-maps in dist/ for main loleaflet and admin console
+Above step would create a non-minified bundle.js and admin-bundle.js without source-maps in dist/ for main browser and admin console
 respectively.
 
 To build with debug-info, i.e with sourcemaps:
@@ -80,12 +80,12 @@ To see an example:
     ./loolwsd --o:sys_template_path=${SYSTEMPLATE} --o:child_root_path=${ROOTFORJAILS}
 
 Note that this will, by default, set the loolwsd's file server's root to the parent directory of loolwsd,
-which means you can access all the files in loleaflet using /loleaflet/ path. It is advised to set
+which means you can access all the files in browser using /browser/ path. It is advised to set
 file_server_root_path manually for more control. See wsd/README for more information.
 
 * open dist/cool.html through loolwsd's fileserver
 
-    https://localhost:9980/loleaflet/dist/cool.html?file_path=file:///PATH/TO_DOC&host=wss://localhost:9980
+    https://localhost:9980/browser/dist/cool.html?file_path=file:///PATH/TO_DOC&host=wss://localhost:9980
 
 and you should see the document in the browser.
 Note that accessing local storage is disabled by default for security reasons. You need to explicitly enable it
@@ -114,7 +114,7 @@ make sync-[writer|calc|impress]
 Your browser will open example document and now you can edit .css files and see the result without server restart.
 
 To run another document use:
-browser-sync start --config browsersync-config.js --startPath "loleaflet/96c23f663/cool.html?file_path=file:///path/to/the/file.ods"
+browser-sync start --config browsersync-config.js --startPath "browser/96c23f663/cool.html?file_path=file:///path/to/the/file.ods"
 
 Admin Panel
 -----------
@@ -124,7 +124,7 @@ console you need to ask for admin.html file from loolwsd which resides in dist/a
 
 For example:
 
-    https://localhost:9980/loleaflet/dist/admin/admin.html
+    https://localhost:9980/browser/dist/admin/admin.html
 
 It will ask for username and password which is set by the admin_console options of loolwsd. For example you can
 pass --o:admin_console.username=admin --o:admin_console.password=admin in command line, or set these values in
@@ -136,7 +136,7 @@ API & events
 ------------
 
 #######################################################################
-# See /loleaflet/reference.html for a better formatted documentation. #
+# See /browser/reference.html for a better formatted documentation. #
 # See /wsd/reference.md for the HTTP API documentation.               #
 #######################################################################
 
