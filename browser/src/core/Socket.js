@@ -285,7 +285,7 @@ app.definitions.Socket = L.Class.extend({
 
 	_emitSlurpedEvents: function() {
 		var queueLength = this._slurpQueue.length;
-		var completeEventWholeFunction = this.createCompleteTraceEvent('loleaflet._emitSlurpedEvents',
+		var completeEventWholeFunction = this.createCompleteTraceEvent('cool._emitSlurpedEvents',
 									       {'_slurpQueue.length' : String(queueLength)});
 		if (this._map && this._map._docLayer) {
 			this._map._docLayer.pauseDrawing();
@@ -305,7 +305,7 @@ app.definitions.Socket = L.Class.extend({
 						textMsg = evt.textMsg.replace(/\s+/g, '.');
 					}
 
-					var completeEventOneMessage = this.createCompleteTraceEvent('loleaflet._emitOneSlurpedEvent',
+					var completeEventOneMessage = this.createCompleteTraceEvent('cool._emitOneSlurpedEvent',
 												    { message: textMsg });
 					try {
 						// it is - are you ?
@@ -449,7 +449,7 @@ app.definitions.Socket = L.Class.extend({
 			if (e.image.completeTraceEvent)
 				e.image.completeTraceEvent.abort();
 		};
-		e.image.completeTraceEvent = this.createCompleteTraceEvent('loleaflet._extractTextImg');
+		e.image.completeTraceEvent = this.createCompleteTraceEvent('cool._extractTextImg');
 		e.image.src = img;
 	},
 
