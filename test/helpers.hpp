@@ -533,6 +533,9 @@ bool isDocumentLoaded(LOOLWebSocket& ws, const std::string& testname, bool isVie
 {
     const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
     std::chrono::seconds timeout(60);
+#if defined(__SANITIZE_ADDRESS__)
+    timeout = std::chrono::seconds(120);
+#endif
     const auto message = getResponseString(ws, prefix, testname, timeout);
     bool success = LOOLProtocol::matchPrefix(prefix, message);
     if (!success)
