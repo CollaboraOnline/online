@@ -507,8 +507,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 #endif
         if (request.getMethod() == HTTPRequest::HTTP_POST && endPoint == "logging.html")
         {
-            const std::string loleafletLogging = config.getString("loleaflet_logging", "false");
-            if (loleafletLogging != "false")
+            const std::string coolLogging = config.getString("loleaflet_logging", "false");
+            if (coolLogging != "false")
             {
                 LOG_ERR(message.rdbuf());
 
@@ -554,8 +554,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (FileHash.find(relPath) == FileHash.end())
             throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
 
-        const std::string loleafletHtml = config.getString("loleaflet_html", "cool.html");
-        if (endPoint == loleafletHtml ||
+        const std::string coolHtml = config.getString("loleaflet_html", "cool.html");
+        if (endPoint == coolHtml ||
                 endPoint == "help-localizations.json" ||
                 endPoint == "localizations.json" ||
                 endPoint == "locore-localizations.json" ||
@@ -972,8 +972,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("<!--%DOCUMENT_SIGNING_DIV%-->"), documentSigningDiv);
     Poco::replaceInPlace(preprocess, std::string("%DOCUMENT_SIGNING_URL%"), documentSigningURL);
 
-    const auto loleafletLogging = config.getString("loleaflet_logging", "false");
-    Poco::replaceInPlace(preprocess, std::string("%COOL_LOGGING%"), loleafletLogging);
+    const auto coolLogging = config.getString("loleaflet_logging", "false");
+    Poco::replaceInPlace(preprocess, std::string("%COOL_LOGGING%"), coolLogging);
     const std::string outOfFocusTimeoutSecs= config.getString("per_view.out_of_focus_timeout_secs", "60");
     Poco::replaceInPlace(preprocess, std::string("%OUT_OF_FOCUS_TIMEOUT_SECS%"), outOfFocusTimeoutSecs);
     const std::string idleTimeoutSecs= config.getString("per_view.idle_timeout_secs", "900");
