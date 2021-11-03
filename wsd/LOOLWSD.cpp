@@ -19,7 +19,7 @@
 #define LOOLWSD_TEST_METRICS "/lool/getMetrics"
 
 /* Default cool UI used in the start test URI */
-#define LOOLWSD_TEST_LOLEAFLET_UI "/browser/" LOOLWSD_VERSION_HASH "/debug.html"
+#define LOOLWSD_TEST_COOL_UI "/browser/" LOOLWSD_VERSION_HASH "/debug.html"
 
 /* Default document used in the start test URI */
 #define LOOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER  "test/data/hello-world.odt"
@@ -789,7 +789,7 @@ inline std::string getLaunchURI(const std::string &document)
 
     oss << getLaunchBase();
     oss << LOOLWSD::ServiceRoot;
-    oss << LOOLWSD_TEST_LOLEAFLET_UI;
+    oss << LOOLWSD_TEST_COOL_UI;
     oss << "?file_path=";
     oss << DEBUG_ABSSRCDIR "/";
     oss << document;
@@ -4134,7 +4134,7 @@ std::unique_ptr<LOOLWSDServer> LOOLWSD::Server;
 #if ENABLE_DEBUG
 std::string LOOLWSD::getServerURL()
 {
-    return getServiceURI(LOOLWSD_TEST_LOLEAFLET_UI);
+    return getServiceURI(LOOLWSD_TEST_COOL_UI);
 }
 #endif
 #endif
