@@ -104,7 +104,7 @@ private:
         bool secure = cookies[0].getSecure();
         std::string value = cookies[0].getValue();
         TestResult res = TestResult::Failed;
-        if (cookiePath.find_first_of("/loleaflet/dist/admin/") == 0 &&
+        if (cookiePath.find_first_of("/browser/dist/admin/") == 0 &&
             value != "" &&
             secure)
         {
@@ -404,7 +404,7 @@ private:
 
 public:
     UnitAdmin()
-        : _uri(helpers::getTestServerURI() + "/loleaflet/dist/admin/admin.html")
+        : _uri(helpers::getTestServerURI() + "/browser/dist/admin/admin.html")
     {
         setTimeout(std::chrono::seconds(60));
 
