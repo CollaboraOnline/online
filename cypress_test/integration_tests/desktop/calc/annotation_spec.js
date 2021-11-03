@@ -17,7 +17,7 @@ describe('Annotation Tests', function() {
 	it('Insert',function() {
 		insertMultipleComment('calc');
 
-		cy.get('.loleaflet-annotation').should('exist');
+		cy.get('.cool-annotation').should('exist');
 
 		cy.get('#comment-container-1').then(function (element) {
 			element[0].style.visibility = '';

@@ -274,7 +274,7 @@ describe('Top toolbar tests.', function() {
 	it('Insert comment.', function() {
 		desktopHelper.insertMultipleComment('writer', 1, true);
 
-		cy.get('.loleaflet-annotation-content-wrapper').should('exist');
+		cy.get('.cool-annotation-content-wrapper').should('exist');
 
 		cy.get('#annotation-content-area-1').should('contain','some text0');
 	});

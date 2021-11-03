@@ -286,7 +286,7 @@ function selectHamburgerMenuItem(menuItems) {
 function selectAnnotationMenuItem(menuItem) {
 	cy.log('Selecting annotation menu item - start.');
 
-	cy.get('#mobile-wizard .wizard-comment-box .loleaflet-annotation-menu')
+	cy.get('#mobile-wizard .wizard-comment-box .cool-annotation-menu')
 		.click({force: true});
 
 	cy.get('.context-menu-list')
@@ -336,7 +336,7 @@ function insertComment() {
 
 	cy.contains('.menu-entry-with-icon', 'Comment').click();
 
-	cy.get('.loleaflet-annotation-table').should('exist');
+	cy.get('.cool-annotation-table').should('exist');
 
 	cy.get('#new-mobile-comment-input-area').type('some text');
 
