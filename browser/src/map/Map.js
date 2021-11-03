@@ -1602,7 +1602,7 @@ L.Map = L.Evented.extend({
 		else if (e.statusType === 'setvalue') {
 			this._progressBar.setValue(e.value);
 		}
-		else if (e.statusType === 'finish' || e.statusType === 'loleafletloaded' || e.statusType === 'reconnected') {
+		else if (e.statusType === 'finish' || e.statusType === 'coolloaded' || e.statusType === 'reconnected') {
 			this.hideBusy();
 		}
 	},
