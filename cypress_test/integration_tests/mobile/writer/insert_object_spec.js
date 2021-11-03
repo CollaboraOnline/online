@@ -39,7 +39,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.click();
 
 		// Comment insertion dialog is opened
-		cy.get('.loleaflet-annotation-table').should('exist');
+		cy.get('.cool-annotation-table').should('exist');
 
 		// Add some comment
 		cy.get('#new-mobile-comment-input-area').type('some text');
