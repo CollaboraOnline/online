@@ -15,7 +15,7 @@
 .ui-tab.notebookbar {
 	float: left;
 	font-size: 12pt;
-	font-family: var(--loleaflet-font);
+	font-family: var(--cool-font);
 	line-height: normal;
 	color: dimgray;
 	color: var(--gray-light-txt--color);
@@ -302,7 +302,7 @@
 }
 
 .unotoolbutton.notebookbar .unolabel {
-	font-family: var(--loleaflet-font);
+	font-family: var(--cool-font);
 	color: var(--gray-light-txt--color);
 	padding: 0px 5px !important;
 }

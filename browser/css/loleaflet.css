@@ -1,8 +1,8 @@
 :root {
 	/*All used fonts (except w2ui)
 	----------------------------------*/
-	--loleaflet-font: 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
-	/*investigate what are the drawback in consisntly use --loleaflet-fonts
+	--cool-font: 'Segoe UI', Tahoma, Arial, Helvetica, sans-serif;
+	/*investigate what are the drawback in consisntly use --cool-fonts
 	for vex, jquery-ui and perhaps mobile*/
 	--mobile-font: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
 	--vex-font: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
@@ -68,7 +68,7 @@
 .bucket-cursor {
 	cursor: url('images/cursors/fill.png') 4 9, auto !important;/*setting coordinates to align the tip of the bucket icon */
 }
-.loleaflet-scrollbar-show {
+.cool-scrollbar-show {
 	opacity: 1 !important;
 	filter: 'alpha(opacity=100)' !important;
 	-ms-filter: 'alpha(opacity=100)' !important;
@@ -255,19 +255,19 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	transform: rotate(45deg);
 }
 
-.loleaflet-font {
-	font-family: var(--loleaflet-font) !important;
+.cool-font {
+	font-family: var(--cool-font) !important;
 	font-size: 12px !important;
 	font-weight: normal !important;
 }
 
-.loleaflet-character {
+.cool-character {
 	table-layout: fixed;
 	font: 17px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif;
 	text-align: center;
 }
 
-.loleaflet-character td {
+.cool-character td {
 	width: 20px;
 }
 
@@ -286,23 +286,23 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	outline: none;
 }
 
-.loleaflet-scrolled {
+.cool-scrolled {
 	overflow: auto;
 }
 
-.loleaflet-mobile-container {
+.cool-mobile-container {
 	top: 30px;
 	margin: 0;
 	width: 1px;
 	opacity: 0;
 }
 
-.loleaflet-context-down {
+.cool-context-down {
 	border: 1px solid #aaaaaa;
 	background-color: #dddddd;
 }
 
-.loleaflet-mobile-input {
+.cool-mobile-input {
 	width: 1px;
 	padding: 0px;
 	border: 0px;
@@ -311,7 +311,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 /* Important to override context-menu-icon's font-family here otherwise, jquery-contextmenu.css
  * will try to load its own font file which is not available in dist/ */
 .context-menu-icon::before {
-	font-family: var(--loleaflet-font) !important;
+	font-family: var(--cool-font) !important;
 	content: '\2713';
 	color: #000 !important;
 }
@@ -332,7 +332,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	border-color: transparent transparent transparent #fff;
 }
 
-.loleaflet-annotation {
+.cool-annotation {
 	position: absolute;
 	text-align: center;
 	user-select: text;
@@ -342,23 +342,23 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	z-index: 10;
 }
 
-.loleaflet-annotation:not(annotation-active) .loleaflet-annotation-collapsed{
+.cool-annotation:not(annotation-active) .cool-annotation-collapsed{
 	position: absolute;
 	left: 24px;
 }
-.loleaflet-annotation.annotation-active .loleaflet-annotation-collapsed{
+.cool-annotation.annotation-active .cool-annotation-collapsed{
 	position: absolute;
 	left: 0 !important;
 }
 
-#document-container > .loleaflet-annotation:hover .loleaflet-annotation-collapsed{
+#document-container > .cool-annotation:hover .cool-annotation-collapsed{
 	box-shadow: 0 0 3px 0 rgb(0 0 0 / 50%), 0 0 10px 4px rgb(0 0 0 / 10%);
 	cursor: pointer;
 }
 
-.loleaflet-annotation-content-wrapper, .loleaflet-annotation-redline-content-wrapper {
+.cool-annotation-content-wrapper, .cool-annotation-redline-content-wrapper {
 	padding: 8px;
-	font-family: var(--loleaflet-font) !important;
+	font-family: var(--cool-font) !important;
 	font-size: 13px;
 	text-align: left;
 	background-color: #EFEFEF; /* Fallback color for IE11. */
@@ -370,17 +370,17 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	width: 240px;
 }
 
-.annotation-active .loleaflet-annotation-content-wrapper {
+.annotation-active .cool-annotation-content-wrapper {
 	min-width: 240px;
 	width: auto;
 }
 
-.loleaflet-annotation-content {
+.cool-annotation-content {
 	margin: 3px;
 	line-height: 1.4;
 }
 
-.loleaflet-annotation-reply-count-collapsed {
+.cool-annotation-reply-count-collapsed {
 	background-color: var(--gray-light-txt--color);
 	color: white;
 	font-weight: bold;
@@ -394,20 +394,20 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	top: -6px;
 }
 
-nav.text-color-indicator ~ #main-document-content .loleaflet-annotation-reply-count-collapsed {
+nav.text-color-indicator ~ #main-document-content .cool-annotation-reply-count-collapsed {
 	background: rgb(var(--blue1-txt-primary-color));
 }
-nav.spreadsheet-color-indicator ~ #main-document-content .loleaflet-annotation-reply-count-collapsed {
+nav.spreadsheet-color-indicator ~ #main-document-content .cool-annotation-reply-count-collapsed {
 	background: rgb(var(--green0-txt-primary-color));
 }
-nav.presentation-color-indicator ~ #main-document-content .loleaflet-annotation-reply-count-collapsed {
+nav.presentation-color-indicator ~ #main-document-content .cool-annotation-reply-count-collapsed {
 	background: rgb(var(--orange1-txt-primary-color));
 }
-nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply-count-collapsed {
+nav.drawing-color-indicator ~ #main-document-content .cool-annotation-reply-count-collapsed {
 	background: rgb(var(--yellow0-txt-primary-color));
 }
 
-.loleaflet-annotation-collapsed {
+.cool-annotation-collapsed {
 	background: white;
 	border-radius: 50%;
 	width: 36px;
@@ -415,33 +415,33 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	box-shadow: 0 0 1px 0 rgba(0,0,0,0.5), 0 0 8px 2px rgba(0,0,0,0.1);
 }
 
-.annotation-active .loleaflet-annotation-collapsed {
+.annotation-active .cool-annotation-collapsed {
 	box-shadow: 0 0 3px 5px white, 0 0 1px 5px grey;
 }
 
-.jsdialog-container.loleaflet-annotation-collapsed.modalpopup {
+.jsdialog-container.cool-annotation-collapsed.modalpopup {
 	border-radius: 8px !important;
 	border: 1px solid var(--gray-color) !important;
 	background: white !important;
 }
 
-.jsdialog-container.loleaflet-annotation-collapsed.modalpopup .lokdialog.ui-dialog-content {
+.jsdialog-container.cool-annotation-collapsed.modalpopup .lokdialog.ui-dialog-content {
 	background-color: transparent !important;
 }
 
-.jsdialog-container.loleaflet-annotation-collapsed.modalpopup .loleaflet-annotation {
+.jsdialog-container.cool-annotation-collapsed.modalpopup .cool-annotation {
 	margin-bottom: 16px;
 }
 
-.jsdialog-container.loleaflet-annotation-collapsed.modalpopup .loleaflet-annotation:last-of-type {
+.jsdialog-container.cool-annotation-collapsed.modalpopup .cool-annotation:last-of-type {
 	margin-bottom: 8px;
 }
 
-.jsdialog-container.loleaflet-annotation-collapsed.modalpopup .loleaflet-annotation:first-of-type {
+.jsdialog-container.cool-annotation-collapsed.modalpopup .cool-annotation:first-of-type {
 	margin-top: 8px;
 }
 
-.jsdialog-container.loleaflet-annotation-collapsed.modalpopup .loleaflet-annotation-content-wrapper {
+.jsdialog-container.cool-annotation-collapsed.modalpopup .cool-annotation-content-wrapper {
 	box-shadow: none;
 	border-width: 0px 0px 1px !important;
 	border-bottom: 1px solid var(--gray-light-bg-color) !important;
@@ -449,12 +449,12 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	background: white;
 }
 
-.jsdialog-container.loleaflet-annotation-collapsed.modalpopup [id^='comment-container-']:last-child > .loleaflet-annotation-content-wrapper{
+.jsdialog-container.cool-annotation-collapsed.modalpopup [id^='comment-container-']:last-child > .cool-annotation-content-wrapper{
 	border-width: 0 !important;
 }
 
 
-.loleaflet-dont-break {
+.cool-dont-break {
 	/* These are technically the same, but use both */
 	overflow-wrap: break-word;
 	word-wrap: break-word;
@@ -469,23 +469,23 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	hyphens: auto;
 }
 
-.loleaflet-annotation-content-author {
+.cool-annotation-content-author {
 	margin: 0;
 	margin-top: 2px;
 	height: 18px;
 }
 
-.loleaflet-annotation-content-resolved {
+.cool-annotation-content-resolved {
 	color: green;
 }
 
-.loleaflet-annotation-edit {
+.cool-annotation-edit {
 	margin: 3px;
 	line-height: 1.4;
 }
 
-.loleaflet-annotation-textarea {
-	font-family: var(--loleaflet-font) !important;
+.cool-annotation-textarea {
+	font-family: var(--cool-font) !important;
 	font-size: 13px;
 	border: 1px solid #c8c8c8;
 	background-color: white;
@@ -495,20 +495,20 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	box-sizing: border-box;
 }
 
-.loleaflet-div-layer {
+.cool-div-layer {
 	position: absolute;
 	left: 0;
 	top: 0;
 }
 
-.loleaflet-annotation-table {
+.cool-annotation-table {
 	border-spacing: 0;
 	border-collapse: separate;
 	white-space: nowrap;
 	width: 100%;
 }
 
-.loleaflet-annotation-img {
+.cool-annotation-img {
 	max-width: 32px;
 	display: inline-block;
 	border: solid 2px;
@@ -516,10 +516,10 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	height: 32px;
 	width: 32px;
 }
-.loleaflet-annotation-img .avatar-img{
+.cool-annotation-img .avatar-img{
 	border: none;
 }
-.loleaflet-annotation-img > .avatar-img{
+.cool-annotation-img > .avatar-img{
 	display: block;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -545,7 +545,7 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	margin: auto;
 }
 
-.loleaflet-annotation-author {
+.cool-annotation-author {
 	padding-left: 10px;
 	padding-right: 10px;
 	vertical-align: top;
@@ -555,7 +555,7 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	max-width: 110px;
 }
 
-.loleaflet-annotation-menu, .loleaflet-annotation-menu-redline, .loleaflet-redline-accept-button, .loleaflet-redline-reject-button {
+.cool-annotation-menu, .cool-annotation-menu-redline, .cool-redline-accept-button, .cool-redline-reject-button {
 	margin: 0;
 	padding: 0;
 	width: 24px;
@@ -565,27 +565,27 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	display: inline-block;
 }
 
-.loleaflet-redline-accept-button {
+.cool-redline-accept-button {
 	background: url('images/lc_accepttrackedchanges.svg') no-repeat center !important;
 }
 
-.loleaflet-redline-reject-button {
+.cool-redline-reject-button {
 	background: url('images/lc_rejecttrackedchange.svg') no-repeat center !important;
 }
 
-.loleaflet-annotation-menu, .loleaflet-annotation-menu-redline {
+.cool-annotation-menu, .cool-annotation-menu-redline {
 	background: url('images/submenu.svg') no-repeat center/contain !important;
 }
 
-.loleaflet-annotation-menu:hover, .loleaflet-annotation-menu-redline:hover, .loleaflet-redline-accept-button:hover, .loleaflet-redline-reject-button:hover {
+.cool-annotation-menu:hover, .cool-annotation-menu-redline:hover, .cool-redline-accept-button:hover, .cool-redline-reject-button:hover {
 	border: 1px solid darkgrey;
 }
 
-.loleaflet-annotation-date {
+.cool-annotation-date {
 	font-size: 11px;
 }
 
-.loleaflet-annotation-menubar {
+.cool-annotation-menubar {
 	margin: 0;
 	padding: 0;
 	vertical-align: top;
@@ -597,7 +597,7 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	transition: all 0.1s ease 0.5s;
 	visibility: visible;
 }
-.loleaflet-annotation-collapsed [data-title]:hover:after {
+.cool-annotation-collapsed [data-title]:hover:after {
 	position: static;
 	float: right;
 	margin-top: 22px;
@@ -613,8 +613,8 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	border-color: #2a2a2a;
 	visibility: hidden;
 }
-.loleaflet-ruler-left[data-title]:after,
-.loleaflet-ruler-right[data-title]:after {
+.cool-ruler-left[data-title]:after,
+.cool-ruler-right[data-title]:after {
 	bottom: -2.8em;
 	left: auto;
 }
@@ -622,11 +622,11 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	position: relative;
 }
 
-.loleaflet-annotation-caption {
+.cool-annotation-caption {
 	font-weight: bold;
 }
 
-.loleaflet-bar {
+.cool-bar {
 	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
 	border-radius: 4px;
 	display: inline-block;
@@ -634,8 +634,8 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	vertical-align: middle;
 }
 
-.loleaflet-bar a,
-.loleaflet-bar a:hover {
+.cool-bar a,
+.cool-bar a:hover {
 	background-color: #fff;
 	border-bottom: 1px solid #ccc;
 	width: 30px;
@@ -647,28 +647,28 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	color: black;
 }
 
-.loleaflet-bar a:hover {
+.cool-bar a:hover {
 	background-color: #f4f4f4;
 }
 
-.loleaflet-bar a:first-child {
+.cool-bar a:first-child {
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
 }
 
-.loleaflet-bar a:last-child {
+.cool-bar a:last-child {
 	border-bottom-left-radius: 4px;
 	border-bottom-right-radius: 4px;
 	border-bottom: none;
 }
 
-.loleaflet-bar a.leaflet-disabled {
+.cool-bar a.leaflet-disabled {
 	cursor: default;
 	background-color: #f4f4f4;
 	color: #bbb;
 }
 
-.loleaflet-bar a {
+.cool-bar a {
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	display: block;
@@ -677,8 +677,8 @@ nav.drawing-color-indicator ~ #main-document-content .loleaflet-annotation-reply
 	line-height: 30px;
 }
 
-.loleaflet-control-scroll-up,
-.loleaflet-control-scroll-down {
+.cool-control-scroll-up,
+.cool-control-scroll-down {
 	font: bold 18px 'Lucida Console', Monaco, monospace;
 	text-indent: 1px;
 }

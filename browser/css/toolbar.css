@@ -21,7 +21,7 @@
 	display: block;
 }
 #toolbar-down *{
-	font-family: var(--loleaflet-font);
+	font-family: var(--cool-font);
 	max-height: 35px !important;
 }
 #tb_actionbar_item_LanguageStatus table table td:first-of-type{
@@ -428,13 +428,13 @@ button.leaflet-control-search-next
 /* select box */
 .select2-results__option {
 	padding: 5px;
-	font-family: var(--loleaflet-font);
+	font-family: var(--cool-font);
 	font-size: 12px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 .select2-selection__rendered {
-	font-family: var(--loleaflet-font);
+	font-family: var(--cool-font);
 	font-size: 12px;
 }
 .select2-container--default .select2-selection--single,
