@@ -27,20 +27,20 @@
 <div class="container">
 
 
-<h2>LOLeaflet API Reference</h2>
+<h2>COOL API Reference</h2>
 
 <div id="toc" class="clearfix">
  	<div class="toc-col last-col">
-		<h4 style="color:red;">LOLeaflet API</h4>
+		<h4 style="color:red;">COOL API</h4>
 		<ul>
-			<li><a href="#loleaflet-initialization">Initialization</a></li>
-			<li><a href="#loleaflet-general">General</a></li>
-			<li><a href="#loleaflet-toolbar">Toolbar</a></li>
-			<li><a href="#loleaflet-page">Page oriented</a></li>
-			<li><a href="#loleaflet-part">Part oriented</a></li>
-			<li><a href="#loleaflet-events">Events</a></li>
-			<li><a href="#loleaflet-object-values">Object values</a></li>
-			<li><a href="#loleaflet-uno-commands">Uno commands</a></li>
+			<li><a href="#cool-initialization">Initialization</a></li>
+			<li><a href="#cool-general">General</a></li>
+			<li><a href="#cool-toolbar">Toolbar</a></li>
+			<li><a href="#cool-page">Page oriented</a></li>
+			<li><a href="#cool-part">Part oriented</a></li>
+			<li><a href="#cool-events">Events</a></li>
+			<li><a href="#cool-object-values">Object values</a></li>
+			<li><a href="#cool-uno-commands">Uno commands</a></li>
 		</ul>
 	</div>
 </div>
@@ -48,11 +48,11 @@
 <!--<a href="#toc" id="back-to-top">&uarr;</a>-->
 
 <hr />
-<p>This reference reflects <strong>LOLeaflet master</strong>.</p>
+<p>This reference reflects <strong>COOL master</strong>.</p>
 
-<h2 id="loleaflet-loleaflet">LOLeaflet</h2>
+<h2 id="cool-cool">COOL</h2>
 
-<h3 id="loleaflet-initialization">Initialization</h3>
+<h3 id="cool-initialization">Initialization</h3>
 
 <h4>Usage example</h4>
 
@@ -83,7 +83,7 @@ var map = L.map('map', {
 
 <h4>Options</h4>
 
-<h5>These are the options intended to be used for loleaflet, using any additional options from Leaflet might cause some
+<h5>These are the options intended to be used for browser, using any additional options from Leaflet might cause some
 unexpected behaviour.</h5>
 
 <table data-id='map'>
@@ -136,7 +136,7 @@ unexpected behaviour.</h5>
 		<td><code><b>toolbarContainer</b></code></td>
 		<td><code>String / DOM element</code></td>
 		<td><code><span class="literal">undefined</span></code></td>
-		<td>A div used by the default toolbar elements (bold, italic, search, etc.) in loleaflet. If you implement
+		<td>A div used by the default toolbar elements (bold, italic, search, etc.) in browser. If you implement
            your own toolbar and use controls that do not require a toolbar (like the dialog or scroll control) you
           can ignore this.</td>
 	</tr>
@@ -196,7 +196,7 @@ unexpected behaviour.</h5>
 	</tr>
 </table>
 
-<h3 id="loleaflet-general">General</h3>
+<h3 id="cool-general">General</h3>
 
 <p>General methods for document interaction.</p>
 
@@ -376,7 +376,7 @@ unexpected behaviour.</h5>
 	</tr>
 </table>
 
-<h3 id="loleaflet-toolbar">Toolbar</h3>
+<h3 id="cool-toolbar">Toolbar</h3>
 
 <p>Toolbar methods.</p>
 
@@ -462,14 +462,14 @@ unexpected behaviour.</h5>
 	</tr>
 	<tr>
 		<td><code><b>sendUnoCommand</b>(
-			<nobr>&lt;<a href="#loleaflet-uno-commands">String</a>&gt; <i>unoCommand</i>,</nobr>
-			<nobr>&lt;<a href="#loleaflet-uno-commands">Object</a>&gt; <i>param</i>)</nobr></code></td>
+			<nobr>&lt;<a href="#cool-uno-commands">String</a>&gt; <i>unoCommand</i>,</nobr>
+			<nobr>&lt;<a href="#cool-uno-commands">Object</a>&gt; <i>param</i>)</nobr></code></td>
 		<td><code>undefined</code></td>
-        <td>Sends a <a href="#loleaflet-uno-commands">uno command</a> with the given parameter to LOKit.</td>
+        <td>Sends a <a href="#cool-uno-commands">uno command</a> with the given parameter to LOKit.</td>
 	</tr>
 </table>
 
-<h3 id="loleaflet-page">Page oriented</h3>
+<h3 id="cool-page">Page oriented</h3>
 
 <p>Methods for page oriented documents.</p>
 
@@ -498,7 +498,7 @@ unexpected behaviour.</h5>
 	</tr>
 </table>
 
-<h3 id="loleaflet-part">Part oriented</h3>
+<h3 id="cool-part">Part oriented</h3>
 
 <p>Methods for page oriented documents.</p>
 
@@ -527,7 +527,7 @@ unexpected behaviour.</h5>
 	</tr>
 </table>
 
-<h3 id="loleaflet-events">Events</h3>
+<h3 id="cool-events">Events</h3>
 
 <p>You can subscribe to the following events using <a href="#events">these methods</a>.</p>
 
@@ -1082,7 +1082,7 @@ The <code>id</code> property of ErrorEvent can have the following values:
 	</tr>
 </table>
 
-<h3 id="loleaflet-object-values">Object values</h3>
+<h3 id="cool-object-values">Object values</h3>
 
 <p>A list of possible values for different event object properties.</p>
 
@@ -1348,7 +1348,7 @@ The <code>id</code> property of ErrorEvent can have the following values:
 	</tr>
 </table>
 
-<h3 id="loleaflet-uno-commands">Uno command</h3>
+<h3 id="cool-uno-commands">Uno command</h3>
 
 <p>A list of common uno commands with their additional parameters.</p>
 <pre><code class="javascript">map.sendUnoCommand('.uno:Bold')</code></pre>
