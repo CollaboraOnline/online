@@ -64,9 +64,9 @@ global.console = {
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
-var data = fs.readFileSync(top_builddir + '/loleaflet/dist/cool.html', {encoding: 'utf8'});
+var data = fs.readFileSync(top_builddir + '/browser/dist/cool.html', {encoding: 'utf8'});
 
-data = data.replace(/%SERVICE_ROOT%\/loleaflet\/%VERSION%/g, top_builddir + '/loleaflet/dist');
+data = data.replace(/%SERVICE_ROOT%\/browser\/%VERSION%/g, top_builddir + '/browser/dist');
 data = data.replace(/%SERVICE_ROOT%/g, '');
 data = data.replace(/%VERSION%/g, 'dist');
 if (ssl_flag === 'true')
@@ -168,7 +168,7 @@ function dumpStats() {
 	output += `Duration=${typing_duration}ms\n`;
 	output += `Total num of incoming socket messages=${socketMessageCount}\n`;
 	output += `Single view=${single_view}\n`;
-	fs.writeFile(top_builddir + '/loleaflet/test/tilestats.txt', output, function (err) {
+	fs.writeFile(top_builddir + '/browser/test/tilestats.txt', output, function (err) {
 		if (err) console.log('tilestats: error dumping stats to file!', err);
 		else console.log('tilestats: finished dumping the stats to file!');
 	});
