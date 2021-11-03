@@ -31,7 +31,7 @@ L.Icon.Default = L.Icon.extend({
 
 L.Icon.Default.imagePath = (function () {
 	var scripts = document.getElementsByTagName('script'),
-	    leafletRe = /[\/^]loleaflet/;
+	    leafletRe = /[\/^]cool/;
 
 	var i, len, src, path;
 	for (i = 0, len = scripts.length; i < len; i++) {
