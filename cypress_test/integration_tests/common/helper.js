@@ -43,12 +43,12 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser) 
 	}
 
 	if (subFolder === undefined) {
-		URI += '/loleaflet/' +
+		URI += '/browser/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/cool.html?lang=en-US&file_path=file://' +
 			Cypress.env('DATA_WORKDIR') + fileName;
 	} else {
-		URI += '/loleaflet/' +
+		URI += '/browser/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/cool.html?lang=en-US&file_path=file://' +
 			Cypress.env('DATA_WORKDIR') + subFolder + '/' + fileName;
@@ -58,7 +58,7 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser) 
 		cy.viewport(2000,660);
 		var frameURI = 'http://localhost' +
 			':' + Cypress.env('SERVER_PORT') +
-			'/loleaflet/' +
+			'/browser/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/cypress-multiuser.html';
 
@@ -565,7 +565,7 @@ function afterAll(fileName, testState) {
 		// Make sure that the document is closed
 		cy.visit('http://admin:admin@localhost:' +
 			Cypress.env('SERVER_PORT') +
-			'/loleaflet/dist/admin/admin.html');
+			'/browser/dist/admin/admin.html');
 
 		// https://github.com/cypress-io/cypress/issues/9207
 		if (testState === 'failed') {
