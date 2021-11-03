@@ -283,7 +283,7 @@ Open the cypress_test/coverage/lcov-report/index.html
 file to get the summary report.
 
 The make command above touches the source files under
-loleaflet/dist/src folder, so after testing the coverage
+browser/dist/src folder, so after testing the coverage
 doing a clean build is a good idea (e.g. make clean).
 
 See also this link:
