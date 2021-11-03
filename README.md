@@ -38,7 +38,7 @@ This project has several components:
   * The client which lives in its own chroot and renders documents
 * **common/**
   * Shared code between these processes
-* **loleaflet/**
+* **browser/**
   * The client side JavaScript component
 * **test/**
   * C++ based unit tests
@@ -49,7 +49,7 @@ This project has several components:
 
 Please consult the README files in the component's directory for more details:
 - wsd/README
-- loleaflet/README
+- browser/README
 
 ## iOS and Android apps
 
