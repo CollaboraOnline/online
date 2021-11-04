@@ -388,11 +388,7 @@ L.Map = L.Evented.extend({
 				return;
 			}
 			var mainSpan = document.createElement('span');
-			var label = document.createTextNode(_('Last modification'));
-			var separator = document.createTextNode(': ');
 			this.lastModIndicator = document.createElement('span');
-			mainSpan.appendChild(label);
-			mainSpan.appendChild(separator);
 			mainSpan.appendChild(this.lastModIndicator);
 
 			this.updateModificationIndicator(this._lastmodtime);
@@ -422,12 +418,16 @@ L.Map = L.Evented.extend({
 				{ year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 
 			var elapsed = Date.now() - dateTime;
+			var lang = window.navigator.userLanguage || window.navigator.language;
+			var rtf1 = new Intl.RelativeTimeFormat(lang, { style: 'narrow' });
 			if (elapsed < 60000) {
-				dateValue = _('%d seconds ago').replace('%d', Math.round(elapsed / 1000));
+				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 1000), 'second');
 				timeout = 6000;
 			} else if (elapsed < 3600000) {
-				dateValue = _('%d minutes ago').replace('%d', Math.round(elapsed / 60000));
+				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 60000), 'minute');
 				timeout = 60000;
+			} else {
+				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 3600000), 'hour');
 			}
 
 			this.lastModIndicator.innerHTML = dateValue;
