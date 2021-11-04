@@ -71,6 +71,11 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		}
 
 		if (data.action === 'close') {
+			L.DomUtil.remove(this.container);
+			L.DomUtil.remove(this.subMenu);
+			this.container = null;
+			this.subMenu = null;
+
 			this.builder.setWindowId(null);
 			this.subMenuBuilder.setWindowId(null);
 			return;
