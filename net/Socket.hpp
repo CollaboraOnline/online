@@ -1112,10 +1112,14 @@ public:
                 len = readData(buf, sizeof(buf));
                 last_errno = errno;
 
-                LOG_TRC('#' << getFD() << ": Read incoming data " << len << " bytes in addition to "
-                            << _inBuffer.size() << " buffered bytes ("
-                            << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
-                            << ')');
+                if (len >= 0)
+                    // errno meaningless
+                    LOG_TRC('#' << getFD() << ": Read incoming data " << len << " bytes in addition to "
+                                << _inBuffer.size() << " buffered bytes");
+                else
+                    LOG_TRC('#' << getFD() << ": Reading incoming data failed ("
+                                << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
+                                << ')');
 
                 if (len < 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
                     LOG_SYS_ERRNO(last_errno, '#' << getFD() << ": Socket read returned " << len);
@@ -1366,10 +1370,14 @@ public:
                 len = writeData(_outBuffer.getBlock(), size);
                 last_errno = errno; // Save right after the syscall.
 
-                LOG_TRC('#' << getFD() << ": Wrote outgoing data " << len << " bytes of "
-                            << _outBuffer.size() << " buffered bytes ("
-                            << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
-                            << ')');
+                if (len >= 0)
+                    // errno meaningless
+                    LOG_TRC('#' << getFD() << ": Wrote outgoing data " << len << " bytes of "
+                                << _outBuffer.size() << " buffered bytes");
+                else
+                    LOG_TRC('#' << getFD() << ": Writing outgoing data failed ("
+                                << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
+                                << ')');
 
 #ifdef LOG_SOCKET_DATA
                 if (len > 0 && !_outBuffer.empty())
