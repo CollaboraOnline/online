@@ -19,6 +19,8 @@ describe('Annotation tests.', function() {
 
 
 	it('Saving comment.', function() {
+		cy.wait(1000);
+
 		mobileHelper.insertComment();
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
@@ -117,6 +119,8 @@ describe('Annotation tests.', function() {
 		cy.get('#annotation-content-area-1').should('have.text', 'some text');
 
 		mobileHelper.selectAnnotationMenuItem('Resolve');
+
+		cy.wait(1000);
 
 		cy.get('#mobile-wizard .wizard-comment-box .loleaflet-annotation-content-resolved')
 			.should('exist');
