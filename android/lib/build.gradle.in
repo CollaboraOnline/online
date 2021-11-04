@@ -4,12 +4,12 @@ apply plugin: 'com.android.library'
 apply from: 'libSettings.gradle'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildDir = "${rootProject.getBuildDir()}/lib"
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
