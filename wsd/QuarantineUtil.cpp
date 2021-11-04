@@ -155,7 +155,8 @@ namespace Quarantine
         }
         else
         {
-            LOG_ERR("Quarantining of file " + sourcefilePath + " filed");
+            std::string error(strerror(result_link));
+            LOG_ERR("Quarantining of file " + sourcefilePath + "to " + linkedFilePath + " failed. " + error);
             return false;
         }
 
