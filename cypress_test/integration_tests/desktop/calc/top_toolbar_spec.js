@@ -39,6 +39,33 @@ describe('Top toolbar tests.', function() {
 			.should('exist');
 	});
 
+	it('Clone Formatting.', function() {
+		helper.typeIntoDocument('{downarrow}');
+
+		// Apply bold and try to clone it to the whole word.
+		cy.get('#tb_editbar_item_bold')
+			.click();
+
+		cy.get('#tb_editbar_item_formatpaintbrush')
+			.click();
+
+		calcHelper.clickOnFirstCell(true,false);
+
+		helper.typeIntoDocument('{shift}{downarrow}');
+
+		cy.wait(1000);
+
+		cy.get('#copy-paste-container tbody')
+			.within(() => {
+				cy.get('tr').eq(0).within(() => {
+					cy.get('td b').should('exist');
+				});
+				cy.get('tr').eq(1).within(() => {
+					cy.get('td b').should('exist');
+				});
+			});
+	});
+
 	it('Print', function() {
 		// A new window should be opened with the PDF.
 		cy.window()
