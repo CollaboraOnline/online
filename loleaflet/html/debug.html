@@ -15,7 +15,7 @@
     <script>
         function constructWopiUrl() {
             var wopiUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?";
-            wopiUrl = wopiUrl.replace("debug.html", "loleaflet.html");
+            wopiUrl = wopiUrl.replace("debug.html", "cool.html");
             var wopiSrc = "https://localhost:9980/wopi/files/" + encodeURIComponent(window.location.search.substring(window.location.search.indexOf("=")+2));
             wopiUrl = wopiUrl + "WOPISrc=" + wopiSrc;
             return wopiUrl
