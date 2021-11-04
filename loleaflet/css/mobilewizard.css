@@ -653,9 +653,7 @@ a.leaflet-control-zoom-in {
 .mobile-wizard.ui-combobox-text.checked {
 	color: #0b87e7 !important;
 }
-#BackColor .w2ui-tb-caption > div, #FontColor .w2ui-tb-caption > div, #BackgroundColor .w2ui-tb-caption > div, #FrameLineColor div, #Color div{
-	border-radius: 100px !important;
-}
+
 #toolbar-down table.w2ui-button.checked .w2ui-tb-image{
 	-webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
 	filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
