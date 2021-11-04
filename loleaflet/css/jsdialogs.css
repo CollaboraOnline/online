@@ -688,6 +688,8 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	position: relative;
 	top: -6px;
 	border: 1px solid var(--gray-color);
+	border-radius: 7px;
+	outline: 1px solid white;
 }
 
 /* dropdown arrow */
