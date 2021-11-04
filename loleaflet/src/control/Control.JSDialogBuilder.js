@@ -2362,6 +2362,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return false;
 	},
 
+	setPickerOutline: function(bgColor) {
+		// Make sure the border around the color indicator is not too bright
+		// when the color is black so to avoid weird contast artifacts
+		if (bgColor) {
+			if (bgColor.style.backgroundColor == '#000000' || bgColor.style.backgroundColor == 'rgb(0, 0, 0)') {
+				bgColor.style.borderColor = '#6a6a6a';
+			} else {
+				bgColor.style.borderColor = 'var(--gray-color)';
+			}
+		}
+	},
+
 	_colorSampleControl: function (parentContainer, data, builder) {
 		var sampleSizeClass = 'color-sample-small';
 		if (data.size === 'big')
@@ -2666,6 +2678,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var updateFunction = function (color) {
 				selectedColor = builder._getCurrentColor(data, builder);
 				valueNode.style.backgroundColor = color ? color : selectedColor;
+				builder.setPickerOutline(valueNode);
 			};
 
 			updateFunction();
