@@ -4,13 +4,13 @@ apply plugin: 'com.android.application'
 apply from: 'appSettings.gradle'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildDir = "${rootProject.getBuildDir()}/app"
 
     defaultConfig {
         // applicationId, versionCode and versionName are defined in appSettings.gradle
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
 
         resValue "string", "app_name", "${liboAppName}"
         resValue "string", "vendor", "${liboVendor}"
