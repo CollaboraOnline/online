@@ -1,7 +1,7 @@
 /* global describe it Cypress cy require afterEach beforeEach */
 
 var helper = require('../../common/helper');
-var { insertMultipleComment, hideSidebar } = require('../../common/desktop_helper');
+var { insertMultipleComment, hideSidebar, selectZoomLevel } = require('../../common/desktop_helper');
 
 describe('Annotation Tests', function() {
 	var testFileName = 'annotation.odt';
@@ -22,6 +22,7 @@ describe('Annotation Tests', function() {
 		} else {
 			hideSidebar();
 		}
+		selectZoomLevel('50');
 	});
 
 	afterEach(function() {
