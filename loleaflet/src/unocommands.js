@@ -347,6 +347,7 @@ var unoCommandsArray = {
 	'PageDown':{text:{menu:_('Next Page'),},},
 	'PageFormatDialog':{spreadsheet:{context:_('Format Pa~ge...'),menu:_('~Page...'),},},
 	'PageMenu':{presentation:{menu:_('~Page'),},},
+	'SlideSetup':{presentation:{menu:_('Slide Properties'),},},
 	'PageSetup':{presentation:{menu:_('Page Properties...'),},},
 	'PageUp':{text:{menu:_('Previous Page'),},},
 	'ParaLeftToRight':{global:{menu:_('Left-To-Right'),},},

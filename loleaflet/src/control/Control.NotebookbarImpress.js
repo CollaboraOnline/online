@@ -672,7 +672,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:PageSetup', 'presentation'),
+				'text': _UNO('.uno:SlideSetup', 'presentation'),
 				'command': '.uno:PageSetup'
 			},
 			{
@@ -912,7 +912,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 		var content = [
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:PageSetup', 'presentation'),
+				'text': _UNO('.uno:SlideSetup', 'presentation'),
 				'command': '.uno:PageSetup'
 			},
 			{
