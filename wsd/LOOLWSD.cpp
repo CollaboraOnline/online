@@ -1089,6 +1089,7 @@ void LOOLWSD::innerInitialize(Application& self)
             { "security.capabilities", "true" },
             { "security.seccomp", "true" },
             { "security.jwt_expiry_secs", "1800" },
+            { "security.enable_metrics_unauthenticated", "false" },
             { "server_name", "" },
             { "ssl.ca_file_path", LOOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
             { "ssl.cert_file_path", LOOLWSD_CONFIGDIR "/cert.pem" },
@@ -2732,8 +2733,11 @@ private:
 
                 try
                 {
-                    if (!FileServerRequestHandler::isAdminLoggedIn(request, *response))
-                        throw Poco::Net::NotAuthenticatedException("Invalid admin login");
+                    /* WARNING: security point, we may skip authentication */
+                    bool skipAuthentication = LOOLWSD::getConfigValue<bool>("security.enable_metrics_unauthenticated", false);
+                    if (!skipAuthentication)
+                        if (!FileServerRequestHandler::isAdminLoggedIn(request, *response))
+                            throw Poco::Net::NotAuthenticatedException("Invalid admin login");
                 }
                 catch (const Poco::Net::NotAuthenticatedException& exc)
                 {
