@@ -188,6 +188,8 @@ class Comment {
 		this.sectionProperties.container.style.visibility = 'hidden';
 
 		this.doPendingInitializationInView();
+
+		this.setExpanded();
 	}
 
 	private createContainerAndWrapper () {

@@ -45,7 +45,6 @@ class CommentSection {
 	anchor: Array<any> = new Array(0);
 	documentObject: boolean = false;
 	position: Array<number> = [0, 0];
-	canCollapse: boolean = true;
 	isCollapsed: boolean = false;
 	size: Array<number> = [0, 0];
 	expand: Array<string> = ['bottom'];
@@ -81,6 +80,8 @@ class CommentSection {
 	}
 
 	public onInitialize () {
+		this.setExpanded();
+
 		this.map.on('RedlineAccept', this.onRedlineAccept, this);
 		this.map.on('RedlineReject', this.onRedlineReject, this);
 		this.map.on('updateparts', this.showHideComments, this);
@@ -88,6 +89,7 @@ class CommentSection {
 		this.map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
 
 		this.map.on('zoomend', function() {
+			this.checkCollapseState();
 			this.layout(true);
 		}, this);
 
@@ -103,6 +105,13 @@ class CommentSection {
 		if (app.file.fileBasedView && (<any>window).mode.isMobile()) {
 			this.map.uiManager.mobileWizard._hideSlideSorter();
 		}
+	}
+
+	private checkCollapseState() {
+		if (this.shouldCollapse())
+			this.setCollapsed();
+		else
+			this.setExpanded();
 	}
 
 	private findNextPartWithComment (currentPart: number) {
@@ -225,6 +234,12 @@ class CommentSection {
 			|| this.sectionProperties.docLayer._docType === 'spreadsheet'
 			|| this.sectionProperties.commentList.length === 0)
 			return;
+	}
+
+	public shouldCollapse () {
+		var commentWidth = 300;
+		var availableSpace = this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0];
+		return availableSpace < commentWidth * 2;
 	}
 
 	public hideAllComments () {
@@ -819,6 +834,7 @@ class CommentSection {
 	}
 
 	public onResize () {
+		this.checkCollapseState();
 		this.update();
 		// When window is resized, it may mean that comment wizard is closed. So we hide the highlights.
 		this.removeHighlighters();
@@ -1480,16 +1496,13 @@ class CommentSection {
 			var yOrigin = null;
 			var selectedIndex = null;
 			var x = topRight[0];
-			var commentWidth = 300;
+			var commentWidth = this.isCollapsed ? 70 : 300;
 			var availableSpace = this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0];
-			if (availableSpace > commentWidth * 2) {
-				x = topRight[0] - Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0]) * 0.5);
-			} else if (!this.isCollapsed) {
-				x -= commentWidth;
-			}
 
-			if (this.isCollapsed)
-				x -= 70;
+			if (availableSpace > commentWidth)
+				x = topRight[0] - Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0]) * 0.5);
+			else
+				x -= commentWidth;
 
 			if (this.sectionProperties.selectedComment) {
 				selectedIndex = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
