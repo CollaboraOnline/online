@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-03 16:37+0100\n"
+"POT-Creation-Date: 2021-11-05 17:05+0100\n"
 "PO-Revision-Date: 2020-03-12 11:37+0000\n"
 "Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
 "Language-Team: Finnish <https://weblate.documentfoundation.org/projects/"
@@ -210,7 +210,7 @@ msgstr "Päivitä"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:400
 #: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr "Ei mitään"
@@ -263,7 +263,7 @@ msgstr "Haluatko varmasti lopettaa tämän istunnon?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:860
 msgid "OK"
 msgstr "OK"
 
@@ -271,7 +271,7 @@ msgstr "OK"
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:861
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -375,7 +375,7 @@ msgid "Index"
 msgstr "Hakemisto"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2354 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "Huomautus"
@@ -416,111 +416,111 @@ msgstr "Aloita leikkaa/liitä ristiin"
 msgid "Function Wizard"
 msgstr "Funktioapuri"
 
-#: src/control/Control.JSDialogBuilder.js:391
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:394
+#: src/control/Control.JSDialogBuilder.js:406
 msgid "Linear"
 msgstr "Lineaarinen"
 
-#: src/control/Control.JSDialogBuilder.js:397
+#: src/control/Control.JSDialogBuilder.js:409
 msgid "Axial"
 msgstr "Aksiaalinen"
 
-#: src/control/Control.JSDialogBuilder.js:400
+#: src/control/Control.JSDialogBuilder.js:412
 msgid "Radial"
 msgstr "Radiaalinen"
 
-#: src/control/Control.JSDialogBuilder.js:403
+#: src/control/Control.JSDialogBuilder.js:415
 msgid "Ellipsoid"
 msgstr "Ellipsoidi"
 
-#: src/control/Control.JSDialogBuilder.js:407
+#: src/control/Control.JSDialogBuilder.js:419
 msgid "Quadratic"
 msgstr "Neliömäinen"
 
-#: src/control/Control.JSDialogBuilder.js:410
+#: src/control/Control.JSDialogBuilder.js:422
 msgid "Square"
 msgstr "Neliö"
 
-#: src/control/Control.JSDialogBuilder.js:413
+#: src/control/Control.JSDialogBuilder.js:425
 msgid "Fixed size"
 msgstr "Kiinteämittainen"
 
-#: src/control/Control.JSDialogBuilder.js:1500
+#: src/control/Control.JSDialogBuilder.js:1512
 msgid "From"
 msgstr "Aloitus"
 
-#: src/control/Control.JSDialogBuilder.js:1503
+#: src/control/Control.JSDialogBuilder.js:1515
 msgid "To"
 msgstr "Loppu"
 
-#: src/control/Control.JSDialogBuilder.js:1634
+#: src/control/Control.JSDialogBuilder.js:1646
 #, fuzzy
 msgid "Select range"
 msgstr "Hylkää muutos"
 
-#: src/control/Control.JSDialogBuilder.js:1665
+#: src/control/Control.JSDialogBuilder.js:1677
 #: src/control/Control.NotebookbarBuilder.js:234
 msgid "Font Name"
 msgstr "Kirjasinlaji"
 
-#: src/control/Control.JSDialogBuilder.js:1667
+#: src/control/Control.JSDialogBuilder.js:1679 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "Kirjasinkoko"
 
-#: src/control/Control.JSDialogBuilder.js:1669
-#: src/control/Control.TopToolbar.js:505
+#: src/control/Control.JSDialogBuilder.js:1681
+#: src/control/Control.TopToolbar.js:504
 msgid "Style"
 msgstr "Tyyli"
 
-#: src/control/Control.JSDialogBuilder.js:2328
+#: src/control/Control.JSDialogBuilder.js:2340
 #, fuzzy
 msgid "reply"
 msgstr "Vastaa"
 
-#: src/control/Control.JSDialogBuilder.js:2331
+#: src/control/Control.JSDialogBuilder.js:2343
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2401
+#: src/control/Control.JSDialogBuilder.js:2413
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2802
+#: src/control/Control.JSDialogBuilder.js:2814
 #, fuzzy
 msgid "Cell borders"
 msgstr "Reunat"
 
-#: src/control/Control.JSDialogBuilder.js:2846
+#: src/control/Control.JSDialogBuilder.js:2858
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2848
+#: src/control/Control.JSDialogBuilder.js:2860
 #, fuzzy
 msgid "Gradient Start"
 msgstr "Gradientti"
 
-#: src/control/Control.JSDialogBuilder.js:2850
+#: src/control/Control.JSDialogBuilder.js:2862
 #, fuzzy
 msgid "Gradient End"
 msgstr "Gradientti"
 
-#: src/control/Control.JSDialogBuilder.js:3030
+#: src/control/Control.JSDialogBuilder.js:3042
 msgid "Rows"
 msgstr "Rivejä"
 
-#: src/control/Control.JSDialogBuilder.js:3031
+#: src/control/Control.JSDialogBuilder.js:3043
 msgid "Columns"
 msgstr "Sarakkeita"
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3063
 #, fuzzy
 msgid "Insert Table"
 msgstr "Lisää taulukko"
 
-#: src/control/Control.JSDialogBuilder.js:3080
+#: src/control/Control.JSDialogBuilder.js:3092
 msgid "Line style:"
 msgstr "Viivatyylit:"
 
@@ -955,24 +955,24 @@ msgstr ""
 msgid "Default Style"
 msgstr "Oletustyyli"
 
-#: src/control/Control.TopToolbar.js:177
+#: src/control/Control.TopToolbar.js:176
 msgid "Borders"
 msgstr "Reunat"
 
-#: src/control/Control.TopToolbar.js:240
+#: src/control/Control.TopToolbar.js:239
 msgid "Insert table"
 msgstr "Lisää taulukko"
 
-#: src/control/Control.TopToolbar.js:244
+#: src/control/Control.TopToolbar.js:243
 #: src/control/Control.NotebookbarBuilder.js:607
 msgid "Insert Local Image"
 msgstr "Lisää paikallinen kuva"
 
-#: src/control/Control.TopToolbar.js:248
+#: src/control/Control.TopToolbar.js:247
 msgid "Insert shapes"
 msgstr "Lisää muotoja"
 
-#: src/control/Control.TopToolbar.js:250
+#: src/control/Control.TopToolbar.js:249
 msgid "Insert connectors"
 msgstr ""
 
@@ -1173,7 +1173,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:856
 msgid "Text"
 msgstr "Teksti"
 
@@ -1436,36 +1436,40 @@ msgstr "Digitaalisesti allekirjoitettu mutta vain jotkut tiedostot"
 msgid "Font"
 msgstr "Fontti"
 
-#: src/control/Toolbar.js:220 src/control/Toolbar.js:232
+#: src/control/Toolbar.js:230 src/control/Toolbar.js:242
 msgid "Downloading..."
 msgstr "Ladataan..."
 
-#: src/control/Toolbar.js:248
+#: src/control/Toolbar.js:258
 msgid "Saving..."
 msgstr "Tallennetaan..."
 
-#: src/control/Toolbar.js:259
+#: src/control/Toolbar.js:269
 msgid "Renaming..."
 msgstr "Nimetään uudelleen..."
 
-#: src/control/Toolbar.js:638
+#: src/control/Toolbar.js:561
+msgid "I understand the risks"
+msgstr ""
+
+#: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 
-#: src/control/Toolbar.js:688
+#: src/control/Toolbar.js:698
 msgid "This version of %productName is powered by"
 msgstr "Tämä versio %productName-tuotteesta perustuu tuotteeseen"
 
-#: src/control/Toolbar.js:698
+#: src/control/Toolbar.js:708
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:844
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Lisää hyperlinkki"
 
-#: src/control/Toolbar.js:847
+#: src/control/Toolbar.js:857
 msgid "Link"
 msgstr "Linkki"
 
@@ -1478,8 +1482,8 @@ msgid ""
 msgstr ""
 "IE11:n yhteyksien raja on saavutettu. Katso tästä miten rajaa voi "
 "tarvittaessa nostaa: https://docs.microsoft.com/en-us/previous-versions/"
-"windows/internet-explorer/ie-developer/general-info/"
-"ee330736(v=vs.85)#websocket-maximum-server-connections"
+"windows/internet-explorer/ie-developer/general-info/ee330736(v=vs.85"
+")#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:63
 #, fuzzy
@@ -1721,8 +1725,8 @@ msgstr "Virheellinen linkki: '%url'"
 msgid ""
 "You are leaving the editor, are you sure you want to visit the following URL?"
 msgstr ""
-"Olet poistumassa toimittimesta, oletko varma että haluat siirtyä sivulle "
-"%url ?"
+"Olet poistumassa toimittimesta, oletko varma että haluat siirtyä sivulle %"
+"url ?"
 
 #: src/errormessages.js:26
 msgid ""
@@ -1862,8 +1866,8 @@ msgstr ""
 #: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
 msgstr ""
-"Voidaksesi liitää %productName-tuotteen ulkopuolella, käytä ensin 'lataa'-"
-"nappia."
+"Voidaksesi liitää %productName-tuotteen ulkopuolella, käytä ensin "
+"'lataa'-nappia."
 
 #: src/map/Clipboard.js:148
 msgid "Copying from the document disabled"
@@ -1897,8 +1901,8 @@ msgid ""
 msgstr ""
 "<p>Jos haluat jakaa suurempia osia asiakirjasta muiden sovellusten kanssa "
 "sinun pitää ensin ladata ne laitteellesi. Paina \"Aloita lataus\" -nappia "
-"alla, ja kun tämä on suoritettu, paina \"Vahvista kopiointi leikepöydälle\"."
-"</p><p>Jos leikkaat ja liität asiakirjojen välissä %productName-tuotteen "
+"alla, ja kun tämä on suoritettu, paina \"Vahvista kopiointi leikepöydälle\""
+".</p><p>Jos leikkaat ja liität asiakirjojen välissä %productName-tuotteen "
 "sisällä, latausta ei tarvita.</p>"
 
 #: src/map/Clipboard.js:961

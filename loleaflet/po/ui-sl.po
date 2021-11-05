@@ -4,17 +4,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-03 16:37+0100\n"
+"POT-Creation-Date: 2021-11-05 17:05+0100\n"
 "PO-Revision-Date: 2021-09-18 21:37+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
-"Language-Team: Slovenian <https://hosted.weblate.org/projects/collabora-"
-"online/ui/sl/>\n"
+"Language-Team: Slovenian <https://hosted.weblate.org/projects/"
+"collabora-online/ui/sl/>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 4.9-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -207,7 +207,7 @@ msgstr "Osveži dnevnik"
 msgid "Channel Filter:"
 msgstr "Filter kanala:"
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:400
 #: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr "Brez"
@@ -260,7 +260,7 @@ msgstr "Ste prepričani, da želite zaključiti to sejo?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:860
 msgid "OK"
 msgstr "V redu"
 
@@ -268,7 +268,7 @@ msgstr "V redu"
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:861
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -372,7 +372,7 @@ msgid "Index"
 msgstr "Kazalo"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2354 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "Komentar"
@@ -413,105 +413,105 @@ msgstr "Začni križno kopirati/lepiti"
 msgid "Function Wizard"
 msgstr "Čarovnik za funkcije"
 
-#: src/control/Control.JSDialogBuilder.js:391
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Solid"
 msgstr "Polno"
 
-#: src/control/Control.JSDialogBuilder.js:394
+#: src/control/Control.JSDialogBuilder.js:406
 msgid "Linear"
 msgstr "Linearno"
 
-#: src/control/Control.JSDialogBuilder.js:397
+#: src/control/Control.JSDialogBuilder.js:409
 msgid "Axial"
 msgstr "Osno"
 
-#: src/control/Control.JSDialogBuilder.js:400
+#: src/control/Control.JSDialogBuilder.js:412
 msgid "Radial"
 msgstr "Radialno"
 
-#: src/control/Control.JSDialogBuilder.js:403
+#: src/control/Control.JSDialogBuilder.js:415
 msgid "Ellipsoid"
 msgstr "Elipsoidno"
 
-#: src/control/Control.JSDialogBuilder.js:407
+#: src/control/Control.JSDialogBuilder.js:419
 msgid "Quadratic"
 msgstr "Pravokotno"
 
-#: src/control/Control.JSDialogBuilder.js:410
+#: src/control/Control.JSDialogBuilder.js:422
 msgid "Square"
 msgstr "Kvadratno"
 
-#: src/control/Control.JSDialogBuilder.js:413
+#: src/control/Control.JSDialogBuilder.js:425
 msgid "Fixed size"
 msgstr "Fiksna velikost"
 
-#: src/control/Control.JSDialogBuilder.js:1500
+#: src/control/Control.JSDialogBuilder.js:1512
 msgid "From"
 msgstr "Od"
 
-#: src/control/Control.JSDialogBuilder.js:1503
+#: src/control/Control.JSDialogBuilder.js:1515
 msgid "To"
 msgstr "Do"
 
-#: src/control/Control.JSDialogBuilder.js:1634
+#: src/control/Control.JSDialogBuilder.js:1646
 msgid "Select range"
 msgstr "Izberite obseg"
 
-#: src/control/Control.JSDialogBuilder.js:1665
+#: src/control/Control.JSDialogBuilder.js:1677
 #: src/control/Control.NotebookbarBuilder.js:234
 msgid "Font Name"
 msgstr "Ime pisave"
 
-#: src/control/Control.JSDialogBuilder.js:1667
+#: src/control/Control.JSDialogBuilder.js:1679 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "Velikost pisave"
 
-#: src/control/Control.JSDialogBuilder.js:1669
-#: src/control/Control.TopToolbar.js:505
+#: src/control/Control.JSDialogBuilder.js:1681
+#: src/control/Control.TopToolbar.js:504
 msgid "Style"
 msgstr "Slog"
 
-#: src/control/Control.JSDialogBuilder.js:2328
+#: src/control/Control.JSDialogBuilder.js:2340
 msgid "reply"
 msgstr "odgovor"
 
-#: src/control/Control.JSDialogBuilder.js:2331
+#: src/control/Control.JSDialogBuilder.js:2343
 msgid "replies"
 msgstr "odgovorov"
 
-#: src/control/Control.JSDialogBuilder.js:2401
+#: src/control/Control.JSDialogBuilder.js:2413
 msgid "Insert Comment"
 msgstr "Vstavi komentar"
 
-#: src/control/Control.JSDialogBuilder.js:2802
+#: src/control/Control.JSDialogBuilder.js:2814
 msgid "Cell borders"
 msgstr "Obrobe celic"
 
-#: src/control/Control.JSDialogBuilder.js:2846
+#: src/control/Control.JSDialogBuilder.js:2858
 msgid "Background Color"
 msgstr "Barva ozadja"
 
-#: src/control/Control.JSDialogBuilder.js:2848
+#: src/control/Control.JSDialogBuilder.js:2860
 msgid "Gradient Start"
 msgstr "Začetek preliva"
 
-#: src/control/Control.JSDialogBuilder.js:2850
+#: src/control/Control.JSDialogBuilder.js:2862
 msgid "Gradient End"
 msgstr "Konec preliva"
 
-#: src/control/Control.JSDialogBuilder.js:3030
+#: src/control/Control.JSDialogBuilder.js:3042
 msgid "Rows"
 msgstr "Vrstice"
 
-#: src/control/Control.JSDialogBuilder.js:3031
+#: src/control/Control.JSDialogBuilder.js:3043
 msgid "Columns"
 msgstr "Stolpci"
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3063
 msgid "Insert Table"
 msgstr "Vstavi tabelo"
 
-#: src/control/Control.JSDialogBuilder.js:3080
+#: src/control/Control.JSDialogBuilder.js:3092
 msgid "Line style:"
 msgstr "Slog črte:"
 
@@ -942,24 +942,24 @@ msgstr ""
 msgid "Default Style"
 msgstr "Privzeti slog"
 
-#: src/control/Control.TopToolbar.js:177
+#: src/control/Control.TopToolbar.js:176
 msgid "Borders"
 msgstr "Obrobe"
 
-#: src/control/Control.TopToolbar.js:240
+#: src/control/Control.TopToolbar.js:239
 msgid "Insert table"
 msgstr "Vstavi tabelo"
 
-#: src/control/Control.TopToolbar.js:244
+#: src/control/Control.TopToolbar.js:243
 #: src/control/Control.NotebookbarBuilder.js:607
 msgid "Insert Local Image"
 msgstr "Vstavi krajevno sliko"
 
-#: src/control/Control.TopToolbar.js:248
+#: src/control/Control.TopToolbar.js:247
 msgid "Insert shapes"
 msgstr "Vstavi like"
 
-#: src/control/Control.TopToolbar.js:250
+#: src/control/Control.TopToolbar.js:249
 msgid "Insert connectors"
 msgstr "Vstavi konektorje"
 
@@ -1155,7 +1155,7 @@ msgstr "Ulomek"
 msgid "Boolean Value"
 msgstr "Logična vrednost"
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:856
 msgid "Text"
 msgstr "Besedilo"
 
@@ -1403,36 +1403,40 @@ msgstr "Podpisano, vendar vse datoteke niso podpisane"
 msgid "Font"
 msgstr "Pisava"
 
-#: src/control/Toolbar.js:220 src/control/Toolbar.js:232
+#: src/control/Toolbar.js:230 src/control/Toolbar.js:242
 msgid "Downloading..."
 msgstr "Prejemanje ..."
 
-#: src/control/Toolbar.js:248
+#: src/control/Toolbar.js:258
 msgid "Saving..."
 msgstr "Shranjevanje ..."
 
-#: src/control/Toolbar.js:259
+#: src/control/Toolbar.js:269
 msgid "Renaming..."
 msgstr "Preimenovanje ..."
 
-#: src/control/Toolbar.js:638
+#: src/control/Toolbar.js:561
+msgid "I understand the risks"
+msgstr "Razumem tveganje"
+
+#: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr "Žal podatki o najnovejših posodobitvah niso na voljo."
 
-#: src/control/Toolbar.js:688
+#: src/control/Toolbar.js:698
 msgid "This version of %productName is powered by"
 msgstr "To različico %productName poganja"
 
-#: src/control/Toolbar.js:698
+#: src/control/Toolbar.js:708
 msgid "\"Slow Proxy\""
 msgstr "»Počasno posredovanje«"
 
-#: src/control/Toolbar.js:844
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Vstavi hiperpovezavo"
 
-#: src/control/Toolbar.js:847
+#: src/control/Toolbar.js:857
 msgid "Link"
 msgstr "Povezava"
 
@@ -1444,8 +1448,8 @@ msgid ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
 "IE11 je dosegel največje število povezav. Po potrebi si oglejte naslednji "
-"dokument za povečanje te omejitve (v angl.): https://docs.microsoft.com/en-"
-"us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
+"dokument za povečanje te omejitve (v angl.): https://docs.microsoft.com/"
+"en-us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:63
@@ -1583,8 +1587,7 @@ msgstr ""
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
-msgstr ""
-"Žal se ni mogoče povezati z vašim dokumentom. Prosimo, poskusite znova."
+msgstr "Žal se ni mogoče povezati z vašim dokumentom. Prosimo, poskusite znova."
 
 #: src/core/Socket.js:1434
 #, fuzzy
@@ -1771,8 +1774,7 @@ msgstr ""
 
 #: src/errormessages.js:49
 msgid "Uploading file to server failed, file not found."
-msgstr ""
-"Nalaganje datoteke na strežnik je spodletelo, datoteke ni mogoče najti."
+msgstr "Nalaganje datoteke na strežnik je spodletelo, datoteke ni mogoče najti."
 
 #: src/errormessages.js:50
 msgid "Uploading file to server failed, the file is too large."
@@ -1859,11 +1861,12 @@ msgid ""
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
 "<p>Vaš brskalnik ima zelo omejen dostop do odložišča, zato uporabite te "
-"tipke za bližnjice:</p><table class=\"warn-copy-paste"
-"\"><tr><td><kbd>krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></"
-"td><td><kbd>krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></"
-"td><td><kbd>krmilka</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></"
-"td></tr><tr><td>Kopiraj</td><td>Izreži</td><td>Prilepi</td></tr></table>"
+"tipke za bližnjice:</p><table class=\"warn-copy-paste\""
+"><tr><td><kbd>krmilka</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd></td><td><kbd>krmilka</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd></td><td><kbd>krmilka</kbd><span class=\"kbd--plus\">+</"
+"span><kbd>V</kbd></td></tr><tr><td>Kopiraj</td><td>Izreži</td><td>Prilepi</td"
+"></tr></table>"
 
 #: src/map/Clipboard.js:945
 msgid ""
@@ -1962,9 +1965,6 @@ msgstr "Ustvarjanje kopije ..."
 
 #~ msgid "Remove Column Break"
 #~ msgstr "Odstrani prelom stolpca"
-
-#~ msgid "I understand the risks"
-#~ msgstr "Razumem tveganje"
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "

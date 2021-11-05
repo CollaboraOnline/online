@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-03 16:37+0100\n"
+"POT-Creation-Date: 2021-11-05 17:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -208,7 +208,7 @@ msgstr "ताजा गर्नुहोस्"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:400
 #: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr "कुनै पनि होइन"
@@ -261,7 +261,7 @@ msgstr "के तपाईँ यो सेसनलाई मेट्न च�
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:860
 msgid "OK"
 msgstr ""
 
@@ -269,7 +269,7 @@ msgstr ""
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:861
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -372,7 +372,7 @@ msgid "Index"
 msgstr "अनुक्रमणिका"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2354 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "टिप्पणी"
@@ -414,111 +414,111 @@ msgstr ""
 msgid "Function Wizard"
 msgstr "प्रकार्य"
 
-#: src/control/Control.JSDialogBuilder.js:391
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:394
+#: src/control/Control.JSDialogBuilder.js:406
 msgid "Linear"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:397
+#: src/control/Control.JSDialogBuilder.js:409
 msgid "Axial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:400
+#: src/control/Control.JSDialogBuilder.js:412
 msgid "Radial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:403
+#: src/control/Control.JSDialogBuilder.js:415
 msgid "Ellipsoid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:407
+#: src/control/Control.JSDialogBuilder.js:419
 msgid "Quadratic"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:410
+#: src/control/Control.JSDialogBuilder.js:422
 msgid "Square"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:413
+#: src/control/Control.JSDialogBuilder.js:425
 msgid "Fixed size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1500
+#: src/control/Control.JSDialogBuilder.js:1512
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1503
+#: src/control/Control.JSDialogBuilder.js:1515
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1634
+#: src/control/Control.JSDialogBuilder.js:1646
 #, fuzzy
 msgid "Select range"
 msgstr "परिवर्तनहरू अस्वीकार गर्नुहोस्"
 
-#: src/control/Control.JSDialogBuilder.js:1665
+#: src/control/Control.JSDialogBuilder.js:1677
 #: src/control/Control.NotebookbarBuilder.js:234
 #, fuzzy
 msgid "Font Name"
 msgstr "फन्ट"
 
-#: src/control/Control.JSDialogBuilder.js:1667
+#: src/control/Control.JSDialogBuilder.js:1679 src/control/Toolbar.js:123
 #, fuzzy
 msgid "Font Size"
 msgstr "हस्ताक्षर गरिएको छैन"
 
-#: src/control/Control.JSDialogBuilder.js:1669
-#: src/control/Control.TopToolbar.js:505
+#: src/control/Control.JSDialogBuilder.js:1681
+#: src/control/Control.TopToolbar.js:504
 msgid "Style"
 msgstr "शैली"
 
-#: src/control/Control.JSDialogBuilder.js:2328
+#: src/control/Control.JSDialogBuilder.js:2340
 #, fuzzy
 msgid "reply"
 msgstr "जवाफ दिनुहोस्"
 
-#: src/control/Control.JSDialogBuilder.js:2331
+#: src/control/Control.JSDialogBuilder.js:2343
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2401
+#: src/control/Control.JSDialogBuilder.js:2413
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2802
+#: src/control/Control.JSDialogBuilder.js:2814
 #, fuzzy
 msgid "Cell borders"
 msgstr "किनाराहरू"
 
-#: src/control/Control.JSDialogBuilder.js:2846
+#: src/control/Control.JSDialogBuilder.js:2858
 msgid "Background Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2848
+#: src/control/Control.JSDialogBuilder.js:2860
 msgid "Gradient Start"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2850
+#: src/control/Control.JSDialogBuilder.js:2862
 msgid "Gradient End"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3030
+#: src/control/Control.JSDialogBuilder.js:3042
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3031
+#: src/control/Control.JSDialogBuilder.js:3043
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3063
 #, fuzzy
 msgid "Insert Table"
 msgstr "तालिका घुसाउनुहोस्"
 
-#: src/control/Control.JSDialogBuilder.js:3080
+#: src/control/Control.JSDialogBuilder.js:3092
 msgid "Line style:"
 msgstr ""
 
@@ -948,32 +948,32 @@ msgstr "पछिल्लो स्लाइड"
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
 msgstr ""
-"धेरै प्रयोगकर्ताहरू सँग विवादास्पद अनडू/रिडू। कृपया समाधान गर्नको लागि कागजात मर्मत "
-"प्रयोग गर्नुहोस्"
+"धेरै प्रयोगकर्ताहरू सँग विवादास्पद अनडू/रिडू। कृपया समाधान गर्नको लागि कागजा"
+"त मर्मत प्रयोग गर्नुहोस्"
 
 #: src/control/Control.TopToolbar.js:122
 #: src/control/Control.NotebookbarWriter.js:537
 msgid "Default Style"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:177
+#: src/control/Control.TopToolbar.js:176
 msgid "Borders"
 msgstr "किनाराहरू"
 
-#: src/control/Control.TopToolbar.js:240
+#: src/control/Control.TopToolbar.js:239
 msgid "Insert table"
 msgstr "तालिका घुसाउनुहोस्"
 
-#: src/control/Control.TopToolbar.js:244
+#: src/control/Control.TopToolbar.js:243
 #: src/control/Control.NotebookbarBuilder.js:607
 msgid "Insert Local Image"
 msgstr "स्थानीय छवि सम्मिलित गर्नुहोस्"
 
-#: src/control/Control.TopToolbar.js:248
+#: src/control/Control.TopToolbar.js:247
 msgid "Insert shapes"
 msgstr "पाना घुसाउनुहोस्"
 
-#: src/control/Control.TopToolbar.js:250
+#: src/control/Control.TopToolbar.js:249
 msgid "Insert connectors"
 msgstr ""
 
@@ -1174,7 +1174,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:856
 msgid "Text"
 msgstr ""
 
@@ -1429,36 +1429,40 @@ msgstr "हस्ताक्षरित तर सबै फाईलहरू
 msgid "Font"
 msgstr "फन्ट"
 
-#: src/control/Toolbar.js:220 src/control/Toolbar.js:232
+#: src/control/Toolbar.js:230 src/control/Toolbar.js:242
 msgid "Downloading..."
 msgstr "डाउनलोड गर्दै..."
 
-#: src/control/Toolbar.js:248
+#: src/control/Toolbar.js:258
 msgid "Saving..."
 msgstr "सङ्ग्रह गर्दै..."
 
-#: src/control/Toolbar.js:259
+#: src/control/Toolbar.js:269
 msgid "Renaming..."
 msgstr "पुन: नामाकरण गर्दै"
 
-#: src/control/Toolbar.js:638
+#: src/control/Toolbar.js:561
+msgid "I understand the risks"
+msgstr ""
+
+#: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 
-#: src/control/Toolbar.js:688
+#: src/control/Toolbar.js:698
 msgid "This version of %productName is powered by"
 msgstr "द्वारा यो संस्करणको %productName संचालित छ"
 
-#: src/control/Toolbar.js:698
+#: src/control/Toolbar.js:708
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:844
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:847
+#: src/control/Toolbar.js:857
 msgid "Link"
 msgstr ""
 
@@ -1469,10 +1473,10 @@ msgid ""
 "versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
-"IE11 जडानको अधिकतम संख्या पुगेको छ। कृपया गति बढाउनु परेमा यो कागजात हेर्नुहोला: "
-"https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/"
-"ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-"
-"connections"
+"IE11 जडानको अधिकतम संख्या पुगेको छ। कृपया गति बढाउनु परेमा यो कागजात "
+"हेर्नुहोला: https://docs.microsoft.com/en-us/previous-versions/windows/"
+"internet-explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-"
+"maximum-server-connections"
 
 #: src/core/Socket.js:63
 #, fuzzy
@@ -1505,12 +1509,16 @@ msgstr "सेसन कागजात मालिक द्वारा स�
 
 #: src/core/Socket.js:651
 msgid "Idle document - please click to reload and resume editing"
-msgstr "निष्क्रिय कागजात - कृपया पुन: लोड गर्न र सम्पादन पुनः सुरु गर्न क्लिक गर्नुहोस्"
+msgstr ""
+"निष्क्रिय कागजात - कृपया पुन: लोड गर्न र सम्पादन पुनः सुरु गर्न क्लिक "
+"गर्नुहोस्"
 
 #: src/core/Socket.js:653
 #, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "निष्क्रिय कागजात - कृपया पुन: लोड गर्न र सम्पादन पुनः सुरु गर्न क्लिक गर्नुहोस्"
+msgstr ""
+"निष्क्रिय कागजात - कृपया पुन: लोड गर्न र सम्पादन पुनः सुरु गर्न क्लिक "
+"गर्नुहोस्"
 
 #: src/core/Socket.js:661
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -1529,15 +1537,16 @@ msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr ""
-"भण्डारणमा कागजात परिवर्तन भएको छ। नयाँ कागजात लोड गर्दै। तपाइँको संस्करण परिमार्जनको "
-"रूपमा उपलब्ध छ।"
+"भण्डारणमा कागजात परिवर्तन भएको छ। नयाँ कागजात लोड गर्दै। तपाइँको संस्करण "
+"परिमार्जनको रूपमा उपलब्ध छ।"
 
 #: src/core/Socket.js:703
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
-"पुरानो संशोधन पुनर्स्थापित गर्दै। कुनै बचत नगरिएको परिवर्तनहरु संस्करण इतिहासमा उपलब्ध हुनेछ"
+"पुरानो संशोधन पुनर्स्थापित गर्दै। कुनै बचत नगरिएको परिवर्तनहरु संस्करण "
+"इतिहासमा उपलब्ध हुनेछ"
 
 #: src/core/Socket.js:709
 msgid "Reloading the document after rename"
@@ -1608,7 +1617,8 @@ msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
-"खैर, यो लज्जास्पद छ, हामी तपाईंको कागजात सँग जोड्न सक्दैनौँ। कृपया पुन: प्रयास गर्नुहोस।"
+"खैर, यो लज्जास्पद छ, हामी तपाईंको कागजात सँग जोड्न सक्दैनौँ। कृपया पुन: प्रया"
+"स गर्नुहोस।"
 
 #: src/core/Socket.js:1434
 #, fuzzy
@@ -1624,15 +1634,16 @@ msgid ""
 "No disk space left on server, please contact the server administrator to "
 "continue."
 msgstr ""
-"सर्भरमा कुनै डिस्क स्पेस बाँकी छैन, कृपया जारी राख्न सर्भर प्रशासकलाई सम्पर्क गर्नुहोस्।"
+"सर्भरमा कुनै डिस्क स्पेस बाँकी छैन, कृपया जारी राख्न सर्भर प्रशासकलाई सम्पर्"
+"क गर्नुहोस्।"
 
 #: src/errormessages.js:14
 msgid ""
 "The host URL is empty. The loolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
-"होस्ट URL खाली छ। Loolwsd सर्भर शायद गलत कन्फिगर गरिएको छ, कृपया प्रशासकलाई सम्पर्क "
-"गर्नुहोस्।"
+"होस्ट URL खाली छ। Loolwsd सर्भर शायद गलत कन्फिगर गरिएको छ, कृपया प्रशासकलाई "
+"सम्पर्क गर्नुहोस्।"
 
 #: src/errormessages.js:15
 msgid ""
@@ -1641,9 +1652,9 @@ msgid ""
 "more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
-"यो {productname}को एक असमर्थित संस्करण हो। उद्यमहरूमा स्थापनाको लागि यो उपयुक्त छ "
-"भन्ने धारणाबाट बच्न {docs} कागजात अथवा {connections} जडानहरू भन्दा बढी समानान्तर "
-"प्रयोग भइरहेको अवस्थामा यो सन्देश देखिन्छ।"
+"यो {productname}को एक असमर्थित संस्करण हो। उद्यमहरूमा स्थापनाको लागि यो "
+"उपयुक्त छ भन्ने धारणाबाट बच्न {docs} कागजात अथवा {connections} जडानहरू भन्दा "
+"बढी समानान्तर प्रयोग भइरहेको अवस्थामा यो सन्देश देखिन्छ।"
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1654,24 +1665,24 @@ msgid ""
 "This service is limited to %0 documents, and %1 connections total by the "
 "admin. This limit has been reached. Please try again later."
 msgstr ""
-"यो सेवा व्यवस्थापक द्वारा कुल %0 कागजातहरूमा र %1 जडानहरुमा सीमित छ। यो सीमा पुग्यो। "
-"फेरी प्रयास गर्नु होला।"
+"यो सेवा व्यवस्थापक द्वारा कुल %0 कागजातहरूमा र %1 जडानहरुमा सीमित छ। यो सीमा "
+"पुग्यो। फेरी प्रयास गर्नु होला।"
 
 #: src/errormessages.js:18
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"सेवा अनुपलब्ध छ। कृपया पछि पुन: प्रयास गर्नुहोस् र यदि तपाईंको मुद्दा जारी रहन्छ भने "
-"प्रशासकलाई रिपोर्ट गर्नुहोस्।"
+"सेवा अनुपलब्ध छ। कृपया पछि पुन: प्रयास गर्नुहोस् र यदि तपाईंको मुद्दा जारी "
+"रहन्छ भने प्रशासकलाई रिपोर्ट गर्नुहोस्।"
 
 #: src/errormessages.js:19
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
 msgstr ""
-"अनधिकृत WOPI होस्ट। कृपया पछि पुन: प्रयास गर्नुहोस् र यदि तपाईंको मुद्दा जारी रहन्छ भने "
-"प्रशासकलाई रिपोर्ट गर्नुहोस्।"
+"अनधिकृत WOPI होस्ट। कृपया पछि पुन: प्रयास गर्नुहोस् र यदि तपाईंको मुद्दा जारी"
+" रहन्छ भने प्रशासकलाई रिपोर्ट गर्नुहोस्।"
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
@@ -1682,24 +1693,24 @@ msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
-"तपाईंको सेसन %time मा समाप्त हुनेछ। कृपया आफ्नो काम सुरक्षित गर्नुहोस् र जारी राख्न "
-"सेसन(वा वेबपेज) रिफ्रेस गर्नुहोस्।"
+"तपाईंको सेसन %time मा समाप्त हुनेछ। कृपया आफ्नो काम सुरक्षित गर्नुहोस् र जारी"
+" राख्न सेसन(वा वेबपेज) रिफ्रेस गर्नुहोस्।"
 
 #: src/errormessages.js:22
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
-"तपाइँको सेसन समाप्त भएको छ। कागजातमा थप परिवर्तनहरू सुरक्षित हुन सक्दछन्। कृपया जारी "
-"राख्न सेसन (वा वेबपेज) पुन: ताजा गर्नुहोस्।"
+"तपाइँको सेसन समाप्त भएको छ। कागजातमा थप परिवर्तनहरू सुरक्षित हुन सक्दछन्। "
+"कृपया जारी राख्न सेसन (वा वेबपेज) पुन: ताजा गर्नुहोस्।"
 
 #: src/errormessages.js:23
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
-"कागजात लोड गर्न असफल भयो। कृपया सुनिश्चित गर्नुहोस् कि फाइल प्रकार समर्थित छ र करप्ट "
-"छैन, र फेरि प्रयास गर्नुहोस्।"
+"कागजात लोड गर्न असफल भयो। कृपया सुनिश्चित गर्नुहोस् कि फाइल प्रकार समर्थित छ "
+"र करप्ट छैन, र फेरि प्रयास गर्नुहोस्।"
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
@@ -1709,7 +1720,8 @@ msgstr "अवैध लिङ्क: '%url'"
 #, fuzzy
 msgid ""
 "You are leaving the editor, are you sure you want to visit the following URL?"
-msgstr "तपाई सम्पादक छोड्दै हुनुहुन्छ, के तपाईं पक्का %url भ्रमण गर्न चाहनुहुन्छ?"
+msgstr ""
+"तपाई सम्पादक छोड्दै हुनुहुन्छ, के तपाईं पक्का %url भ्रमण गर्न चाहनुहुन्छ?"
 
 #: src/errormessages.js:26
 msgid ""
@@ -1753,8 +1765,8 @@ msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
 msgstr ""
-"भण्डारणबाट कागजात पढ्न असफल भयो। कृपया तपाईको भण्डारण सर्भर (%storageserver) लाई "
-"प्रशासकलाई सम्पर्क गर्नुहोस्।"
+"भण्डारणबाट कागजात पढ्न असफल भयो। कृपया तपाईको भण्डारण सर्भर (%storageserver) "
+"लाई प्रशासकलाई सम्पर्क गर्नुहोस्।"
 
 #: src/errormessages.js:41
 #, javascript-format
@@ -1763,24 +1775,25 @@ msgid ""
 "be read-only. Please contact the server (%storageserver) administrator to "
 "continue editing."
 msgstr ""
-"भण्डारण सर्भरमा डिस्क स्थान बाकी नभएर बचत विफल भयो। कागजात अब read-only मात्र "
-"हुनेछ। सम्पादन जारी राख्न कृपया सर्भर (%storageserver) प्रशासकलाई सम्पर्क गर्नुहोस्।"
+"भण्डारण सर्भरमा डिस्क स्थान बाकी नभएर बचत विफल भयो। कागजात अब read-only मात्"
+"र हुनेछ। सम्पादन जारी राख्न कृपया सर्भर (%storageserver) प्रशासकलाई सम्पर्क "
+"गर्नुहोस्।"
 
 #: src/errormessages.js:43
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"कागजात बचत गर्न सकिँदैन। आफ्नो अनुमति जाँच गर्नुहोस् वा भण्डारण सर्भर प्रशासकलाई सम्पर्क "
-"गर्नुहोस्।"
+"कागजात बचत गर्न सकिँदैन। आफ्नो अनुमति जाँच गर्नुहोस् वा भण्डारण सर्भर "
+"प्रशासकलाई सम्पर्क गर्नुहोस्।"
 
 #: src/errormessages.js:44
 msgid ""
 "Document cannot be renamed. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"कागजात पुन: नामाकरण गर्न सकिँदैन। तपाईंको अनुमति जाँच गर्नुहोस् वा भण्डारण सर्भर प्रशासक "
-"सम्पर्क गर्नुहोस्।"
+"कागजात पुन: नामाकरण गर्न सकिँदैन। तपाईंको अनुमति जाँच गर्नुहोस् वा भण्डारण "
+"सर्भर प्रशासक सम्पर्क गर्नुहोस्।"
 
 #: src/errormessages.js:49
 msgid "Uploading file to server failed, file not found."
