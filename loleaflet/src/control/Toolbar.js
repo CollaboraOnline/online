@@ -558,7 +558,7 @@ L.Map.include({
 		var w;
 		var iw = window.innerWidth;
 		var hasDismissBtn = window.enableWelcomeMessageButton;
-		var btnText = 'I understand the risks';
+		var btnText = _('I understand the risks');
 
 		if (iw < 768) {
 			w = iw - 30;
