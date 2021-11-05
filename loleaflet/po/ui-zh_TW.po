@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-03 16:37+0100\n"
+"POT-Creation-Date: 2021-11-05 17:05+0100\n"
 "PO-Revision-Date: 2020-07-08 12:37+0000\n"
 "Last-Translator: Andrew Lee (李健秋) <alee@collabora.com>\n"
 "Language-Team: Chinese (Traditional) <https://weblate.documentfoundation.org/"
@@ -208,7 +208,7 @@ msgstr "重新整理紀錄"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:400
 #: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr "無"
@@ -261,7 +261,7 @@ msgstr "您確定要終止本次的作業階段？"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:860
 msgid "OK"
 msgstr "確定"
 
@@ -269,7 +269,7 @@ msgstr "確定"
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:861
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -372,7 +372,7 @@ msgid "Index"
 msgstr "索引"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2354 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "評註"
@@ -413,107 +413,107 @@ msgstr "開始交叉複製/貼上"
 msgid "Function Wizard"
 msgstr "函式精靈"
 
-#: src/control/Control.JSDialogBuilder.js:391
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Solid"
 msgstr "實心"
 
-#: src/control/Control.JSDialogBuilder.js:394
+#: src/control/Control.JSDialogBuilder.js:406
 msgid "Linear"
 msgstr "線形"
 
-#: src/control/Control.JSDialogBuilder.js:397
+#: src/control/Control.JSDialogBuilder.js:409
 msgid "Axial"
 msgstr "軸向"
 
-#: src/control/Control.JSDialogBuilder.js:400
+#: src/control/Control.JSDialogBuilder.js:412
 msgid "Radial"
 msgstr "放射"
 
-#: src/control/Control.JSDialogBuilder.js:403
+#: src/control/Control.JSDialogBuilder.js:415
 msgid "Ellipsoid"
 msgstr "橢圓體"
 
-#: src/control/Control.JSDialogBuilder.js:407
+#: src/control/Control.JSDialogBuilder.js:419
 msgid "Quadratic"
 msgstr "立方形"
 
-#: src/control/Control.JSDialogBuilder.js:410
+#: src/control/Control.JSDialogBuilder.js:422
 msgid "Square"
 msgstr "正方形"
 
-#: src/control/Control.JSDialogBuilder.js:413
+#: src/control/Control.JSDialogBuilder.js:425
 msgid "Fixed size"
 msgstr "固定大小"
 
-#: src/control/Control.JSDialogBuilder.js:1500
+#: src/control/Control.JSDialogBuilder.js:1512
 msgid "From"
 msgstr "從"
 
-#: src/control/Control.JSDialogBuilder.js:1503
+#: src/control/Control.JSDialogBuilder.js:1515
 msgid "To"
 msgstr "到"
 
-#: src/control/Control.JSDialogBuilder.js:1634
+#: src/control/Control.JSDialogBuilder.js:1646
 msgid "Select range"
 msgstr "選取範圍"
 
-#: src/control/Control.JSDialogBuilder.js:1665
+#: src/control/Control.JSDialogBuilder.js:1677
 #: src/control/Control.NotebookbarBuilder.js:234
 msgid "Font Name"
 msgstr "字型名稱"
 
-#: src/control/Control.JSDialogBuilder.js:1667
+#: src/control/Control.JSDialogBuilder.js:1679 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "字型大小"
 
-#: src/control/Control.JSDialogBuilder.js:1669
-#: src/control/Control.TopToolbar.js:505
+#: src/control/Control.JSDialogBuilder.js:1681
+#: src/control/Control.TopToolbar.js:504
 msgid "Style"
 msgstr "樣式"
 
-#: src/control/Control.JSDialogBuilder.js:2328
+#: src/control/Control.JSDialogBuilder.js:2340
 #, fuzzy
 msgid "reply"
 msgstr "回覆"
 
-#: src/control/Control.JSDialogBuilder.js:2331
+#: src/control/Control.JSDialogBuilder.js:2343
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2401
+#: src/control/Control.JSDialogBuilder.js:2413
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2802
+#: src/control/Control.JSDialogBuilder.js:2814
 msgid "Cell borders"
 msgstr "儲存格邊框"
 
-#: src/control/Control.JSDialogBuilder.js:2846
+#: src/control/Control.JSDialogBuilder.js:2858
 msgid "Background Color"
 msgstr "背景色彩"
 
-#: src/control/Control.JSDialogBuilder.js:2848
+#: src/control/Control.JSDialogBuilder.js:2860
 msgid "Gradient Start"
 msgstr "漸層起始"
 
-#: src/control/Control.JSDialogBuilder.js:2850
+#: src/control/Control.JSDialogBuilder.js:2862
 msgid "Gradient End"
 msgstr "漸層終止"
 
-#: src/control/Control.JSDialogBuilder.js:3030
+#: src/control/Control.JSDialogBuilder.js:3042
 msgid "Rows"
 msgstr "列"
 
-#: src/control/Control.JSDialogBuilder.js:3031
+#: src/control/Control.JSDialogBuilder.js:3043
 msgid "Columns"
 msgstr "欄"
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3063
 #, fuzzy
 msgid "Insert Table"
 msgstr "插入表格"
 
-#: src/control/Control.JSDialogBuilder.js:3080
+#: src/control/Control.JSDialogBuilder.js:3092
 msgid "Line style:"
 msgstr "線條樣式:"
 
@@ -945,24 +945,24 @@ msgstr "多位使用者間取消動作/再次動作發生衝突。請使用文�
 msgid "Default Style"
 msgstr "預設樣式"
 
-#: src/control/Control.TopToolbar.js:177
+#: src/control/Control.TopToolbar.js:176
 msgid "Borders"
 msgstr "邊框"
 
-#: src/control/Control.TopToolbar.js:240
+#: src/control/Control.TopToolbar.js:239
 msgid "Insert table"
 msgstr "插入表格"
 
-#: src/control/Control.TopToolbar.js:244
+#: src/control/Control.TopToolbar.js:243
 #: src/control/Control.NotebookbarBuilder.js:607
 msgid "Insert Local Image"
 msgstr "插入本機影像"
 
-#: src/control/Control.TopToolbar.js:248
+#: src/control/Control.TopToolbar.js:247
 msgid "Insert shapes"
 msgstr "插入形狀"
 
-#: src/control/Control.TopToolbar.js:250
+#: src/control/Control.TopToolbar.js:249
 msgid "Insert connectors"
 msgstr ""
 
@@ -1163,7 +1163,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:856
 msgid "Text"
 msgstr "文字"
 
@@ -1417,36 +1417,40 @@ msgstr "有簽署但非所有檔案皆簽署"
 msgid "Font"
 msgstr "字型"
 
-#: src/control/Toolbar.js:220 src/control/Toolbar.js:232
+#: src/control/Toolbar.js:230 src/control/Toolbar.js:242
 msgid "Downloading..."
 msgstr "下載中..."
 
-#: src/control/Toolbar.js:248
+#: src/control/Toolbar.js:258
 msgid "Saving..."
 msgstr "儲存中..."
 
-#: src/control/Toolbar.js:259
+#: src/control/Toolbar.js:269
 msgid "Renaming..."
 msgstr "重新命名中..."
 
-#: src/control/Toolbar.js:638
+#: src/control/Toolbar.js:561
+msgid "I understand the risks"
+msgstr "我瞭解相關風險"
+
+#: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr "很抱歉，目前沒有最新更新的相關資訊。"
 
-#: src/control/Toolbar.js:688
+#: src/control/Toolbar.js:698
 msgid "This version of %productName is powered by"
 msgstr "此 %productName 版本源自"
 
-#: src/control/Toolbar.js:698
+#: src/control/Toolbar.js:708
 msgid "\"Slow Proxy\""
 msgstr "「緩慢代理」"
 
-#: src/control/Toolbar.js:844
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "插入超連結"
 
-#: src/control/Toolbar.js:847
+#: src/control/Toolbar.js:857
 msgid "Link"
 msgstr "連結"
 
@@ -1457,9 +1461,9 @@ msgid ""
 "versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
-"IE11 已達其最大連線數。請查看此文件視需要調高限制數：https://docs.microsoft."
-"com/en-us/previous-versions/windows/internet-explorer/ie-developer/general-"
-"info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+"IE11 已達其最大連線數。請查看此文件視需要調高限制數：https://docs.microsoft.com/en-us/"
+"previous-versions/windows/internet-explorer/ie-developer/general-info/"
+"ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:63
 #, fuzzy
@@ -1619,8 +1623,8 @@ msgid ""
 "more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
-"這是 {productname} 的未支援版本。為了避免這個版本被誤認為適合企業佈署的假象，"
-"此訊息會在同時間使用超過 {docs} 份文件或 {connections} 連線數時出現"
+"這是 {productname} 的未支援版本。為了避免這個版本被誤認為適合企業佈署的假象，此訊息會在同時間使用超過 {docs} 份文件或 "
+"{connections} 連線數時出現"
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1652,16 +1656,13 @@ msgstr "WOPISrc 參數錯誤或遺失，請聯絡支援單位。"
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
-msgstr ""
-"您的作業階段將在 %time 內過期。請儲存您的工作並重整作業階段（或網頁）來繼續。"
+msgstr "您的作業階段將在 %time 內過期。請儲存您的工作並重整作業階段（或網頁）來繼續。"
 
 #: src/errormessages.js:22
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
-msgstr ""
-"您的作業階段已過期。後續之文件變更可能無法儲存。請重整作業階段（或網頁）來繼"
-"續。"
+msgstr "您的作業階段已過期。後續之文件變更可能無法儲存。請重整作業階段（或網頁）來繼續。"
 
 #: src/errormessages.js:23
 msgid ""
@@ -1683,9 +1684,7 @@ msgstr "您正要離開編輯器，是否確定要造訪 %url？"
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
-msgstr ""
-"無法載入文件。這份文件可能格式錯誤，或是消耗比所允許還多的資源。請聯絡管理"
-"員。"
+msgstr "無法載入文件。這份文件可能格式錯誤，或是消耗比所允許還多的資源。請聯絡管理員。"
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
@@ -1722,8 +1721,7 @@ msgstr "無法重新命名文件。"
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
-msgstr ""
-"無法讀取儲存空間中的文件。請聯絡您的儲存空間伺服器 (%storageserver) 管理員。"
+msgstr "無法讀取儲存空間中的文件。請聯絡您的儲存空間伺服器 (%storageserver) 管理員。"
 
 #: src/errormessages.js:41
 #, javascript-format
@@ -1731,9 +1729,7 @@ msgid ""
 "Save failed due to no disk space left on storage server. Document will now "
 "be read-only. Please contact the server (%storageserver) administrator to "
 "continue editing."
-msgstr ""
-"由於儲存空間的伺服器磁碟空間不足而儲存失敗。文件現在只能唯讀。請聯絡伺服器 "
-"(%storageserver) 管理員以便繼續編輯。"
+msgstr "由於儲存空間的伺服器磁碟空間不足而儲存失敗。文件現在只能唯讀。請聯絡伺服器 (%storageserver) 管理員以便繼續編輯。"
 
 #: src/errormessages.js:43
 msgid ""
@@ -1842,18 +1838,15 @@ msgid ""
 "\"Confirm copy to clipboard\".</p><p>If you are copy and pasting between "
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
-"<p>如果您希望和其他應用程式分享您文件裡的大型元素，則需要先將內容下載至您的裝"
-"置中。如果要這麼做，請按下方的「開始下載」，完成後請按「確認複製到剪貼簿」。"
-"</p><p>如果您是打算在 %productName 下的文件間交叉複製貼上，則無需下載。</p>"
+"<p>如果您希望和其他應用程式分享您文件裡的大型元素，則需要先將內容下載至您的裝置中。如果要這麼做，請按下方的「開始下載」，完成後請按「確認複製到剪貼簿」"
+"。</p><p>如果您是打算在 %productName 下的文件間交叉複製貼上，則無需下載。</p>"
 
 #: src/map/Clipboard.js:961
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
-msgstr ""
-"<p>因為有大量複製/貼上操作而已經啟動下載。請先等候目前下載完成，或是在開始新"
-"的下載前先將它取消</p>"
+msgstr "<p>因為有大量複製/貼上操作而已經啟動下載。請先等候目前下載完成，或是在開始新的下載前先將它取消</p>"
 
 #: src/map/Map.js:232
 msgid "Initializing..."
@@ -1906,9 +1899,6 @@ msgstr "製作副本中..."
 
 #~ msgid "Color"
 #~ msgstr "色彩"
-
-#~ msgid "I understand the risks"
-#~ msgstr "我瞭解相關風險"
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "

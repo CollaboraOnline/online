@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-03 16:37+0100\n"
+"POT-Creation-Date: 2021-11-05 17:05+0100\n"
 "PO-Revision-Date: 2020-12-12 15:29+0000\n"
 "Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/collabora-online/"
@@ -207,7 +207,7 @@ msgstr "Obnoviť protokol"
 msgid "Channel Filter:"
 msgstr "Filter kanálu:"
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:400
 #: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr "Žiadne"
@@ -260,7 +260,7 @@ msgstr "Naozaj chcete túto reláciu ukončiť?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:860
 msgid "OK"
 msgstr "OK"
 
@@ -268,7 +268,7 @@ msgstr "OK"
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:861
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -372,7 +372,7 @@ msgid "Index"
 msgstr "Register"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2354 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "Poznámka"
@@ -413,106 +413,106 @@ msgstr "Začať kopírovanie / vkladanie"
 msgid "Function Wizard"
 msgstr "Sprievodca funkciou"
 
-#: src/control/Control.JSDialogBuilder.js:391
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Solid"
 msgstr "Jednofarebná"
 
-#: src/control/Control.JSDialogBuilder.js:394
+#: src/control/Control.JSDialogBuilder.js:406
 msgid "Linear"
 msgstr "Lineárna"
 
-#: src/control/Control.JSDialogBuilder.js:397
+#: src/control/Control.JSDialogBuilder.js:409
 msgid "Axial"
 msgstr "Axiálna"
 
-#: src/control/Control.JSDialogBuilder.js:400
+#: src/control/Control.JSDialogBuilder.js:412
 msgid "Radial"
 msgstr "Radiálna"
 
-#: src/control/Control.JSDialogBuilder.js:403
+#: src/control/Control.JSDialogBuilder.js:415
 msgid "Ellipsoid"
 msgstr "Oválna"
 
-#: src/control/Control.JSDialogBuilder.js:407
+#: src/control/Control.JSDialogBuilder.js:419
 msgid "Quadratic"
 msgstr "Kvadratická"
 
-#: src/control/Control.JSDialogBuilder.js:410
+#: src/control/Control.JSDialogBuilder.js:422
 msgid "Square"
 msgstr "Štvorcová"
 
-#: src/control/Control.JSDialogBuilder.js:413
+#: src/control/Control.JSDialogBuilder.js:425
 msgid "Fixed size"
 msgstr "Nemenná veľkosť"
 
-#: src/control/Control.JSDialogBuilder.js:1500
+#: src/control/Control.JSDialogBuilder.js:1512
 msgid "From"
 msgstr "Od"
 
-#: src/control/Control.JSDialogBuilder.js:1503
+#: src/control/Control.JSDialogBuilder.js:1515
 msgid "To"
 msgstr "Do"
 
-#: src/control/Control.JSDialogBuilder.js:1634
+#: src/control/Control.JSDialogBuilder.js:1646
 msgid "Select range"
 msgstr "Zvoliť rozsah"
 
-#: src/control/Control.JSDialogBuilder.js:1665
+#: src/control/Control.JSDialogBuilder.js:1677
 #: src/control/Control.NotebookbarBuilder.js:234
 msgid "Font Name"
 msgstr "Názov písma"
 
-#: src/control/Control.JSDialogBuilder.js:1667
+#: src/control/Control.JSDialogBuilder.js:1679 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "Veľkosť písma"
 
-#: src/control/Control.JSDialogBuilder.js:1669
-#: src/control/Control.TopToolbar.js:505
+#: src/control/Control.JSDialogBuilder.js:1681
+#: src/control/Control.TopToolbar.js:504
 msgid "Style"
 msgstr "Štýl"
 
-#: src/control/Control.JSDialogBuilder.js:2328
+#: src/control/Control.JSDialogBuilder.js:2340
 #, fuzzy
 msgid "reply"
 msgstr "Odpovedať"
 
-#: src/control/Control.JSDialogBuilder.js:2331
+#: src/control/Control.JSDialogBuilder.js:2343
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2401
+#: src/control/Control.JSDialogBuilder.js:2413
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2802
+#: src/control/Control.JSDialogBuilder.js:2814
 msgid "Cell borders"
 msgstr "Orámovanie buniek"
 
-#: src/control/Control.JSDialogBuilder.js:2846
+#: src/control/Control.JSDialogBuilder.js:2858
 msgid "Background Color"
 msgstr "Farba pozadia"
 
-#: src/control/Control.JSDialogBuilder.js:2848
+#: src/control/Control.JSDialogBuilder.js:2860
 msgid "Gradient Start"
 msgstr "Začiatok prechodu"
 
-#: src/control/Control.JSDialogBuilder.js:2850
+#: src/control/Control.JSDialogBuilder.js:2862
 msgid "Gradient End"
 msgstr "Koniec prechod"
 
-#: src/control/Control.JSDialogBuilder.js:3030
+#: src/control/Control.JSDialogBuilder.js:3042
 msgid "Rows"
 msgstr "Riadky"
 
-#: src/control/Control.JSDialogBuilder.js:3031
+#: src/control/Control.JSDialogBuilder.js:3043
 msgid "Columns"
 msgstr "Stĺpce"
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3063
 msgid "Insert Table"
 msgstr "Vložiť tabuľku"
 
-#: src/control/Control.JSDialogBuilder.js:3080
+#: src/control/Control.JSDialogBuilder.js:3092
 msgid "Line style:"
 msgstr "Štýl čiary:"
 
@@ -944,24 +944,24 @@ msgstr ""
 msgid "Default Style"
 msgstr "Predvolený štýl"
 
-#: src/control/Control.TopToolbar.js:177
+#: src/control/Control.TopToolbar.js:176
 msgid "Borders"
 msgstr "Orámovanie"
 
-#: src/control/Control.TopToolbar.js:240
+#: src/control/Control.TopToolbar.js:239
 msgid "Insert table"
 msgstr "Vložiť tabuľku"
 
-#: src/control/Control.TopToolbar.js:244
+#: src/control/Control.TopToolbar.js:243
 #: src/control/Control.NotebookbarBuilder.js:607
 msgid "Insert Local Image"
 msgstr "Vložiť lokálny obrázok"
 
-#: src/control/Control.TopToolbar.js:248
+#: src/control/Control.TopToolbar.js:247
 msgid "Insert shapes"
 msgstr "Vložiť útvary"
 
-#: src/control/Control.TopToolbar.js:250
+#: src/control/Control.TopToolbar.js:249
 msgid "Insert connectors"
 msgstr ""
 
@@ -1160,7 +1160,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:856
 msgid "Text"
 msgstr "Text"
 
@@ -1407,36 +1407,40 @@ msgstr "Podpísané, ale nie všetky súbory sú podpísané"
 msgid "Font"
 msgstr "Písmo"
 
-#: src/control/Toolbar.js:220 src/control/Toolbar.js:232
+#: src/control/Toolbar.js:230 src/control/Toolbar.js:242
 msgid "Downloading..."
 msgstr "Preberá sa…"
 
-#: src/control/Toolbar.js:248
+#: src/control/Toolbar.js:258
 msgid "Saving..."
 msgstr "Prebieha ukladanie..."
 
-#: src/control/Toolbar.js:259
+#: src/control/Toolbar.js:269
 msgid "Renaming..."
 msgstr "Premenovávanie..."
 
-#: src/control/Toolbar.js:638
+#: src/control/Toolbar.js:561
+msgid "I understand the risks"
+msgstr "Riziko beriem na vedomie"
+
+#: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr "Ľutujeme, informácie o najnovších aktualizáciách nie sú k dispozícii."
 
-#: src/control/Toolbar.js:688
+#: src/control/Toolbar.js:698
 msgid "This version of %productName is powered by"
 msgstr "Táto verzia of %productName bola vytvorená"
 
-#: src/control/Toolbar.js:698
+#: src/control/Toolbar.js:708
 msgid "\"Slow Proxy\""
 msgstr "\"Pomalé proxy\""
 
-#: src/control/Toolbar.js:844
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Vložiť hypertextový odkaz"
 
-#: src/control/Toolbar.js:847
+#: src/control/Toolbar.js:857
 msgid "Link"
 msgstr "Odkaz"
 
@@ -1663,8 +1667,8 @@ msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
-"Relácia sa ukončí o %time. Pre pokračovanie uložte dokumenty a reláciu "
-"(alebo webovú stránku) obnovte."
+"Relácia sa ukončí o %time. Pre pokračovanie uložte dokumenty a reláciu ("
+"alebo webovú stránku) obnovte."
 
 #: src/errormessages.js:22
 msgid ""
@@ -1832,8 +1836,7 @@ msgstr ""
 
 #: src/map/Clipboard.js:138
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr ""
-"Pre vkladanie mimo %ProductName najskôr kliknite na tlačidlo 'Stiahnuť'"
+msgstr "Pre vkladanie mimo %ProductName najskôr kliknite na tlačidlo 'Stiahnuť'"
 
 #: src/map/Clipboard.js:148
 msgid "Copying from the document disabled"
@@ -1867,8 +1870,8 @@ msgid ""
 msgstr ""
 "<p>Ak chcete zdieľať väčšie časti dokumentu s inou aplikáciou, je ho najskôr "
 "stiahnuť na vaše zariadenie. Na to slúži nižšie zobrazené tlačidlo „Spustiť "
-"preberanie\". Po skončení kliknite na „Potvrdiť kopírovanie do schránky\".</"
-"p><p>Keď kopírujete medzi dokumentami v rámci %ProductName, nič sťahovať "
+"preberanie\". Po skončení kliknite na „Potvrdiť kopírovanie do schránky\""
+".</p><p>Keď kopírujete medzi dokumentami v rámci %ProductName, nič sťahovať "
 "nepotrebujete.</p>"
 
 #: src/map/Clipboard.js:961
@@ -1946,9 +1949,6 @@ msgstr "Vytváranie kópie..."
 
 #~ msgid "Remove Column Break"
 #~ msgstr "Odstrániť zalomenie stĺpca"
-
-#~ msgid "I understand the risks"
-#~ msgstr "Riziko beriem na vedomie"
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "

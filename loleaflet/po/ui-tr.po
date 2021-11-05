@@ -2,18 +2,18 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 # Translators:
 # Andras Timar <andras.timar@collabora.com>, 2020
 # Muhammet Kara <muhammetk@gmail.com>, 2020
 # Açıkkaynak Yazılım <bilgi@acikkaynak.com.tr>, 2020
 # Dr. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>, 2020
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-03 16:37+0100\n"
+"POT-Creation-Date: 2021-11-05 17:05+0100\n"
 "PO-Revision-Date: 2021-09-01 18:50+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
@@ -210,7 +210,7 @@ msgstr "Günlüğü Tazele"
 msgid "Channel Filter:"
 msgstr "Kanal Filtresi:"
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:400
 #: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr "Hiçbiri"
@@ -263,7 +263,7 @@ msgstr "Bu oturumu kapatmak istediğinizden emin misiniz?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:860
 msgid "OK"
 msgstr "Tamam"
 
@@ -271,7 +271,7 @@ msgstr "Tamam"
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:861
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -374,7 +374,7 @@ msgid "Index"
 msgstr "Dizin"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2354 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "Yorum"
@@ -415,105 +415,105 @@ msgstr "Çapraz kopyala/yapıştırı başlat"
 msgid "Function Wizard"
 msgstr "İşlev Sihirbazı"
 
-#: src/control/Control.JSDialogBuilder.js:391
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Solid"
 msgstr "Katı"
 
-#: src/control/Control.JSDialogBuilder.js:394
+#: src/control/Control.JSDialogBuilder.js:406
 msgid "Linear"
 msgstr "Doğrusal"
 
-#: src/control/Control.JSDialogBuilder.js:397
+#: src/control/Control.JSDialogBuilder.js:409
 msgid "Axial"
 msgstr "Eksenel"
 
-#: src/control/Control.JSDialogBuilder.js:400
+#: src/control/Control.JSDialogBuilder.js:412
 msgid "Radial"
 msgstr "Dairesel"
 
-#: src/control/Control.JSDialogBuilder.js:403
+#: src/control/Control.JSDialogBuilder.js:415
 msgid "Ellipsoid"
 msgstr "Eliptik"
 
-#: src/control/Control.JSDialogBuilder.js:407
+#: src/control/Control.JSDialogBuilder.js:419
 msgid "Quadratic"
 msgstr "Karesel"
 
-#: src/control/Control.JSDialogBuilder.js:410
+#: src/control/Control.JSDialogBuilder.js:422
 msgid "Square"
 msgstr "Kare"
 
-#: src/control/Control.JSDialogBuilder.js:413
+#: src/control/Control.JSDialogBuilder.js:425
 msgid "Fixed size"
 msgstr "Sabit boyut"
 
-#: src/control/Control.JSDialogBuilder.js:1500
+#: src/control/Control.JSDialogBuilder.js:1512
 msgid "From"
 msgstr "Başlangıç"
 
-#: src/control/Control.JSDialogBuilder.js:1503
+#: src/control/Control.JSDialogBuilder.js:1515
 msgid "To"
 msgstr "Bitiş"
 
-#: src/control/Control.JSDialogBuilder.js:1634
+#: src/control/Control.JSDialogBuilder.js:1646
 msgid "Select range"
 msgstr "Aralığı seç"
 
-#: src/control/Control.JSDialogBuilder.js:1665
+#: src/control/Control.JSDialogBuilder.js:1677
 #: src/control/Control.NotebookbarBuilder.js:234
 msgid "Font Name"
 msgstr "Yazıtipi Adı"
 
-#: src/control/Control.JSDialogBuilder.js:1667
+#: src/control/Control.JSDialogBuilder.js:1679 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "Yazıtipi Boyutu"
 
-#: src/control/Control.JSDialogBuilder.js:1669
-#: src/control/Control.TopToolbar.js:505
+#: src/control/Control.JSDialogBuilder.js:1681
+#: src/control/Control.TopToolbar.js:504
 msgid "Style"
 msgstr "Biçem"
 
-#: src/control/Control.JSDialogBuilder.js:2328
+#: src/control/Control.JSDialogBuilder.js:2340
 msgid "reply"
 msgstr "yanıt"
 
-#: src/control/Control.JSDialogBuilder.js:2331
+#: src/control/Control.JSDialogBuilder.js:2343
 msgid "replies"
 msgstr "yanıt"
 
-#: src/control/Control.JSDialogBuilder.js:2401
+#: src/control/Control.JSDialogBuilder.js:2413
 msgid "Insert Comment"
 msgstr "Yorum Ekle"
 
-#: src/control/Control.JSDialogBuilder.js:2802
+#: src/control/Control.JSDialogBuilder.js:2814
 msgid "Cell borders"
 msgstr "Hücre kenarlıkları"
 
-#: src/control/Control.JSDialogBuilder.js:2846
+#: src/control/Control.JSDialogBuilder.js:2858
 msgid "Background Color"
 msgstr "Arkaplan Rengi"
 
-#: src/control/Control.JSDialogBuilder.js:2848
+#: src/control/Control.JSDialogBuilder.js:2860
 msgid "Gradient Start"
 msgstr "Gradyan Başlangıcı"
 
-#: src/control/Control.JSDialogBuilder.js:2850
+#: src/control/Control.JSDialogBuilder.js:2862
 msgid "Gradient End"
 msgstr "Gradyan Sonu"
 
-#: src/control/Control.JSDialogBuilder.js:3030
+#: src/control/Control.JSDialogBuilder.js:3042
 msgid "Rows"
 msgstr "Satırlar"
 
-#: src/control/Control.JSDialogBuilder.js:3031
+#: src/control/Control.JSDialogBuilder.js:3043
 msgid "Columns"
 msgstr "Sütunlar"
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3063
 msgid "Insert Table"
 msgstr "Tablo Ekle"
 
-#: src/control/Control.JSDialogBuilder.js:3080
+#: src/control/Control.JSDialogBuilder.js:3092
 msgid "Line style:"
 msgstr "Çizgi biçemi:"
 
@@ -945,24 +945,24 @@ msgstr ""
 msgid "Default Style"
 msgstr "Varsayılan Biçem"
 
-#: src/control/Control.TopToolbar.js:177
+#: src/control/Control.TopToolbar.js:176
 msgid "Borders"
 msgstr "Kenarlık"
 
-#: src/control/Control.TopToolbar.js:240
+#: src/control/Control.TopToolbar.js:239
 msgid "Insert table"
 msgstr "Tablo ekle"
 
-#: src/control/Control.TopToolbar.js:244
+#: src/control/Control.TopToolbar.js:243
 #: src/control/Control.NotebookbarBuilder.js:607
 msgid "Insert Local Image"
 msgstr "Yerel Resim Ekle"
 
-#: src/control/Control.TopToolbar.js:248
+#: src/control/Control.TopToolbar.js:247
 msgid "Insert shapes"
 msgstr "Şekil ekle"
 
-#: src/control/Control.TopToolbar.js:250
+#: src/control/Control.TopToolbar.js:249
 msgid "Insert connectors"
 msgstr "Bağlayıcıları ekle"
 
@@ -1158,7 +1158,7 @@ msgstr "Kesir"
 msgid "Boolean Value"
 msgstr "Boole Değeri"
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:856
 msgid "Text"
 msgstr "Metin"
 
@@ -1406,36 +1406,40 @@ msgstr "İmzalı fakat bütün dosyalar imzalı değil"
 msgid "Font"
 msgstr "Yazı tipi"
 
-#: src/control/Toolbar.js:220 src/control/Toolbar.js:232
+#: src/control/Toolbar.js:230 src/control/Toolbar.js:242
 msgid "Downloading..."
 msgstr "İndiriliyor..."
 
-#: src/control/Toolbar.js:248
+#: src/control/Toolbar.js:258
 msgid "Saving..."
 msgstr "Kaydediyor..."
 
-#: src/control/Toolbar.js:259
+#: src/control/Toolbar.js:269
 msgid "Renaming..."
 msgstr "Yeniden adlandırılıyor..."
 
-#: src/control/Toolbar.js:638
+#: src/control/Toolbar.js:561
+msgid "I understand the risks"
+msgstr "Risklerin farkındayım"
+
+#: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr "Üzgünüz, son güncellemeler hakkında bilgi mevcut değil."
 
-#: src/control/Toolbar.js:688
+#: src/control/Toolbar.js:698
 msgid "This version of %productName is powered by"
 msgstr "Bu %productName sürümüne güç verenler"
 
-#: src/control/Toolbar.js:698
+#: src/control/Toolbar.js:708
 msgid "\"Slow Proxy\""
 msgstr "\"Yavaş Vekil Sunucu\""
 
-#: src/control/Toolbar.js:844
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Köprü Ekle"
 
-#: src/control/Toolbar.js:847
+#: src/control/Toolbar.js:857
 msgid "Link"
 msgstr "Köprü"
 
@@ -1447,9 +1451,10 @@ msgid ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
 "IE11 izin verilen en fazla bağlantı sayısına ulaştı. Bu sayıyı artırmak için "
-"gerekli olması durumunda şu dokümandan faydalanabilirsiniz: https://docs."
-"microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/"
-"general-info/ee330736(v=vs.85)#websocket-maximum-server-connections"
+"gerekli olması durumunda şu dokümandan faydalanabilirsiniz: "
+"https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/"
+"ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-"
+"connections"
 
 #: src/core/Socket.js:63
 msgid "Oops, there is a problem connecting to %productName: "
@@ -1859,11 +1864,12 @@ msgid ""
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
 "<p>Tarayıcınızın panoya erişimi çok sınırlıdır, bu nedenle şu klavye "
-"kısayollarını kullanın:</p><table class=\"warn-copy-paste"
-"\"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></"
-"td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></"
-"td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></"
-"tr><tr><td>Kopyala</td><td>Kes</td><td>Yapıştır</td></tr></table>"
+"kısayollarını kullanın:</p><table class=\"warn-copy-paste\""
+"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
+"n><kbd>V</kbd></td></tr><tr><td>Kopyala</td><td>Kes</td><td>Yapıştır</td></tr"
+"></table>"
 
 #: src/map/Clipboard.js:945
 msgid ""
@@ -1963,9 +1969,6 @@ msgstr "Kopya oluşturuluyor..."
 
 #~ msgid "Remove Column Break"
 #~ msgstr "Sütun Kesmeyi Kaldır"
-
-#~ msgid "I understand the risks"
-#~ msgstr "Risklerin farkındayım"
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "

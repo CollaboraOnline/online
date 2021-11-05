@@ -2,16 +2,16 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-03 16:37+0100\n"
+"POT-Creation-Date: 2021-11-05 17:05+0100\n"
 "PO-Revision-Date: 2021-02-11 11:50+0000\n"
 "Last-Translator: 日陰のコスモス <baffclan@yahoo.co.jp>\n"
-"Language-Team: Japanese <https://hosted.weblate.org/projects/collabora-"
-"online/ui/ja/>\n"
+"Language-Team: Japanese <https://hosted.weblate.org/projects/"
+"collabora-online/ui/ja/>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -208,7 +208,7 @@ msgstr "更新"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:400
 #: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr "なし"
@@ -261,7 +261,7 @@ msgstr "本当にこのセッションを終了しますか？"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:860
 msgid "OK"
 msgstr "OK"
 
@@ -269,7 +269,7 @@ msgstr "OK"
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:861
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -372,7 +372,7 @@ msgid "Index"
 msgstr "目次"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2354 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "コメント"
@@ -413,106 +413,106 @@ msgstr ""
 msgid "Function Wizard"
 msgstr "関数ウィザード"
 
-#: src/control/Control.JSDialogBuilder.js:391
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Solid"
 msgstr "実線"
 
-#: src/control/Control.JSDialogBuilder.js:394
+#: src/control/Control.JSDialogBuilder.js:406
 msgid "Linear"
 msgstr "線形"
 
-#: src/control/Control.JSDialogBuilder.js:397
+#: src/control/Control.JSDialogBuilder.js:409
 msgid "Axial"
 msgstr "軸"
 
-#: src/control/Control.JSDialogBuilder.js:400
+#: src/control/Control.JSDialogBuilder.js:412
 msgid "Radial"
 msgstr "放射状"
 
-#: src/control/Control.JSDialogBuilder.js:403
+#: src/control/Control.JSDialogBuilder.js:415
 msgid "Ellipsoid"
 msgstr "楕円"
 
-#: src/control/Control.JSDialogBuilder.js:407
+#: src/control/Control.JSDialogBuilder.js:419
 msgid "Quadratic"
 msgstr "放物線"
 
-#: src/control/Control.JSDialogBuilder.js:410
+#: src/control/Control.JSDialogBuilder.js:422
 msgid "Square"
 msgstr "正方形"
 
-#: src/control/Control.JSDialogBuilder.js:413
+#: src/control/Control.JSDialogBuilder.js:425
 msgid "Fixed size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1500
+#: src/control/Control.JSDialogBuilder.js:1512
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1503
+#: src/control/Control.JSDialogBuilder.js:1515
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1634
+#: src/control/Control.JSDialogBuilder.js:1646
 msgid "Select range"
 msgstr "範囲を選択"
 
-#: src/control/Control.JSDialogBuilder.js:1665
+#: src/control/Control.JSDialogBuilder.js:1677
 #: src/control/Control.NotebookbarBuilder.js:234
 msgid "Font Name"
 msgstr "フォント名"
 
-#: src/control/Control.JSDialogBuilder.js:1667
+#: src/control/Control.JSDialogBuilder.js:1679 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "フォントサイズ"
 
-#: src/control/Control.JSDialogBuilder.js:1669
-#: src/control/Control.TopToolbar.js:505
+#: src/control/Control.JSDialogBuilder.js:1681
+#: src/control/Control.TopToolbar.js:504
 msgid "Style"
 msgstr "スタイル"
 
-#: src/control/Control.JSDialogBuilder.js:2328
+#: src/control/Control.JSDialogBuilder.js:2340
 #, fuzzy
 msgid "reply"
 msgstr "返信"
 
-#: src/control/Control.JSDialogBuilder.js:2331
+#: src/control/Control.JSDialogBuilder.js:2343
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2401
+#: src/control/Control.JSDialogBuilder.js:2413
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2802
+#: src/control/Control.JSDialogBuilder.js:2814
 msgid "Cell borders"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2846
+#: src/control/Control.JSDialogBuilder.js:2858
 msgid "Background Color"
 msgstr "背景色"
 
-#: src/control/Control.JSDialogBuilder.js:2848
+#: src/control/Control.JSDialogBuilder.js:2860
 msgid "Gradient Start"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2850
+#: src/control/Control.JSDialogBuilder.js:2862
 msgid "Gradient End"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:3030
+#: src/control/Control.JSDialogBuilder.js:3042
 msgid "Rows"
 msgstr "行"
 
-#: src/control/Control.JSDialogBuilder.js:3031
+#: src/control/Control.JSDialogBuilder.js:3043
 msgid "Columns"
 msgstr "列"
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3063
 msgid "Insert Table"
 msgstr "表の挿入"
 
-#: src/control/Control.JSDialogBuilder.js:3080
+#: src/control/Control.JSDialogBuilder.js:3092
 msgid "Line style:"
 msgstr ""
 
@@ -936,33 +936,31 @@ msgstr "次のスライド"
 #: src/control/Control.Toolbar.js:1020
 msgid ""
 "Conflict Undo/Redo with multiple users. Please use document repair to resolve"
-msgstr ""
-"複数のユーザーによる元に戻す・やり直しの処理が衝突しました。解決するにはド"
-"キュメントの修復を利用してください。"
+msgstr "複数のユーザーによる元に戻す・やり直しの処理が衝突しました。解決するにはドキュメントの修復を利用してください。"
 
 #: src/control/Control.TopToolbar.js:122
 #: src/control/Control.NotebookbarWriter.js:537
 msgid "Default Style"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:177
+#: src/control/Control.TopToolbar.js:176
 msgid "Borders"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:240
+#: src/control/Control.TopToolbar.js:239
 msgid "Insert table"
 msgstr "表の挿入"
 
-#: src/control/Control.TopToolbar.js:244
+#: src/control/Control.TopToolbar.js:243
 #: src/control/Control.NotebookbarBuilder.js:607
 msgid "Insert Local Image"
 msgstr ""
 
-#: src/control/Control.TopToolbar.js:248
+#: src/control/Control.TopToolbar.js:247
 msgid "Insert shapes"
 msgstr "シェイプの挿入"
 
-#: src/control/Control.TopToolbar.js:250
+#: src/control/Control.TopToolbar.js:249
 msgid "Insert connectors"
 msgstr "コネクターの挿入"
 
@@ -1160,7 +1158,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:856
 msgid "Text"
 msgstr ""
 
@@ -1407,36 +1405,40 @@ msgstr ""
 msgid "Font"
 msgstr "フォント"
 
-#: src/control/Toolbar.js:220 src/control/Toolbar.js:232
+#: src/control/Toolbar.js:230 src/control/Toolbar.js:242
 msgid "Downloading..."
 msgstr "ダウンロード中..."
 
-#: src/control/Toolbar.js:248
+#: src/control/Toolbar.js:258
 msgid "Saving..."
 msgstr "保存中..."
 
-#: src/control/Toolbar.js:259
+#: src/control/Toolbar.js:269
 msgid "Renaming..."
 msgstr ""
 
-#: src/control/Toolbar.js:638
+#: src/control/Toolbar.js:561
+msgid "I understand the risks"
+msgstr ""
+
+#: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 
-#: src/control/Toolbar.js:688
+#: src/control/Toolbar.js:698
 msgid "This version of %productName is powered by"
 msgstr "このバージョンの %productName は以下で動作しています"
 
-#: src/control/Toolbar.js:698
+#: src/control/Toolbar.js:708
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:844
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "ハイパーリンクの挿入"
 
-#: src/control/Toolbar.js:847
+#: src/control/Toolbar.js:857
 msgid "Link"
 msgstr ""
 
@@ -1501,17 +1503,13 @@ msgstr ""
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
-msgstr ""
-"ストレージでドキュメントが変更されました。新しいドキュメントを読み込んでいま"
-"す。今のバージョンはリビジョンとして参照できます。"
+msgstr "ストレージでドキュメントが変更されました。新しいドキュメントを読み込んでいます。今のバージョンはリビジョンとして参照できます。"
 
 #: src/core/Socket.js:703
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
-msgstr ""
-"以前のリビジョンを復元しています。 保存されていない変更はバージョン履歴で利用"
-"可能になります。"
+msgstr "以前のリビジョンを復元しています。 保存されていない変更はバージョン履歴で利用可能になります。"
 
 #: src/core/Socket.js:709
 msgid "Reloading the document after rename"
@@ -1579,8 +1577,7 @@ msgstr ""
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
-msgstr ""
-"ええ、困りましたね、ドキュメントに接続できませんでした。再度試みてください。"
+msgstr "ええ、困りましたね、ドキュメントに接続できませんでした。再度試みてください。"
 
 #: src/core/Socket.js:1434
 #, fuzzy
@@ -1595,17 +1592,13 @@ msgstr ""
 msgid ""
 "No disk space left on server, please contact the server administrator to "
 "continue."
-msgstr ""
-"サーバー上のディスクの空き容量がありません。継続するにはサーバー管理者に連絡"
-"してください。"
+msgstr "サーバー上のディスクの空き容量がありません。継続するにはサーバー管理者に連絡してください。"
 
 #: src/errormessages.js:14
 msgid ""
 "The host URL is empty. The loolwsd server is probably misconfigured, please "
 "contact the administrator."
-msgstr ""
-"ホストURLが空です。loolwsdサーバーの設定が誤っている可能性があります。管理者"
-"に連絡してください。"
+msgstr "ホストURLが空です。loolwsdサーバーの設定が誤っている可能性があります。管理者に連絡してください。"
 
 # TODO: デプロイメントの訳語。いまはこれでOK
 #: src/errormessages.js:15
@@ -1615,10 +1608,8 @@ msgid ""
 "more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
-"このバージョンの{productname}はサポートされていないバージョンです。企業でのデ"
-"プロイメントに適しているという印象を誤って与えることを避けるため、{docs}以上"
-"のドキュメントや{connections}以上のコネクションが同時に使用されている場合にこ"
-"のメッセージが表示されます。"
+"このバージョンの{productname}はサポートされていないバージョンです。企業でのデプロイメントに適しているという印象を誤って与えることを避けるため"
+"、{docs}以上のドキュメントや{connections}以上のコネクションが同時に使用されている場合にこのメッセージが表示されます。"
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1628,56 +1619,43 @@ msgstr "詳しいサポート情報"
 msgid ""
 "This service is limited to %0 documents, and %1 connections total by the "
 "admin. This limit has been reached. Please try again later."
-msgstr ""
-"このサーバーは管理者によってドキュメント数 %0 、コネクション数 %1 に制限され"
-"ています。制限に到達しました。後ほど再度試してください。"
+msgstr "このサーバーは管理者によってドキュメント数 %0 、コネクション数 %1 に制限されています。制限に到達しました。後ほど再度試してください。"
 
 #: src/errormessages.js:18
 msgid ""
 "Service is unavailable. Please try again later and report to your "
 "administrator if the issue persists."
-msgstr ""
-"サービスが利用できません。後ほど再度試して、問題があるようなら管理者に報告し"
-"てください。"
+msgstr "サービスが利用できません。後ほど再度試して、問題があるようなら管理者に報告してください。"
 
 #: src/errormessages.js:19
 msgid ""
 "Unauthorized WOPI host. Please try again later and report to your "
 "administrator if the issue persists."
-msgstr ""
-"認証されていないWOPIホストです。後ほど再度試して、問題があるようなら管理者に"
-"報告してください。"
+msgstr "認証されていないWOPIホストです。後ほど再度試して、問題があるようなら管理者に報告してください。"
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr ""
-"WOPISrcパラメータが間違っているか若しくは不足しています。サポートに連絡してく"
-"ださい。"
+msgstr "WOPISrcパラメータが間違っているか若しくは不足しています。サポートに連絡してください。"
 
 #: src/errormessages.js:21
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
-msgstr ""
-"セッションが %time 後に期限切れになります。継続するには作業を保存してセッショ"
-"ン（あるいはウェブページ）を再読込してください。"
+msgstr "セッションが %time 後に期限切れになります。継続するには作業を保存してセッション（あるいはウェブページ）を再読込してください。"
 
 #: src/errormessages.js:22
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
-"セッションが期限切れになりました。ドキュメントへの以降の変更は保存されないか"
-"もしれません。継続するにはセッション（またはウェブページ）を再読込してくださ"
-"い。"
+"セッションが期限切れになりました。ドキュメントへの以降の変更は保存されないかもしれません。継続するにはセッション（またはウェブページ）を再読込してください"
+"。"
 
 #: src/errormessages.js:23
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
-msgstr ""
-"ドキュメントの読み込みに失敗しました。ファイル形式がサポートされていること、"
-"ファイルが壊れていないことを確認した上で、再度試してください。"
+msgstr "ドキュメントの読み込みに失敗しました。ファイル形式がサポートされていること、ファイルが壊れていないことを確認した上で、再度試してください。"
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
@@ -1714,9 +1692,7 @@ msgstr ""
 
 #: src/errormessages.js:34 src/errormessages.js:42
 msgid "Document cannot be saved due to expired or invalid access token."
-msgstr ""
-"アクセストークンの有効期限が切れているか不正なためドキュメントが保存できませ"
-"んでした。"
+msgstr "アクセストークンの有効期限が切れているか不正なためドキュメントが保存できませんでした。"
 
 #: src/errormessages.js:35
 msgid "Document cannot be saved."
@@ -1731,9 +1707,7 @@ msgstr ""
 msgid ""
 "Failed to read document from storage. Please contact your storage server "
 "(%storageserver) administrator."
-msgstr ""
-"ストレージからドキュメントを読み込めませんでした。ストレージサーバー "
-"(%storageserver) 管理者に連絡してください。"
+msgstr "ストレージからドキュメントを読み込めませんでした。ストレージサーバー (%storageserver) 管理者に連絡してください。"
 
 #: src/errormessages.js:41
 #, javascript-format
@@ -1742,26 +1716,21 @@ msgid ""
 "be read-only. Please contact the server (%storageserver) administrator to "
 "continue editing."
 msgstr ""
-"ストレージサーバーの空き容量がないため保存に失敗しました。ドキュメントは読み"
-"取り専用になります。編集を続けるにはサーバー(%storageserver)管理者に連絡して"
-"ください。"
+"ストレージサーバーの空き容量がないため保存に失敗しました。ドキュメントは読み取り専用になります。編集を続けるにはサーバー(%storageserver)管"
+"理者に連絡してください。"
 
 #: src/errormessages.js:43
 msgid ""
 "Document cannot be saved. Check your permissions or contact the storage "
 "server administrator."
-msgstr ""
-"ドキュメントは保存できませんでした。権限を確認するかストレージサーバーの管理"
-"者に連絡してください。"
+msgstr "ドキュメントは保存できませんでした。権限を確認するかストレージサーバーの管理者に連絡してください。"
 
 #: src/errormessages.js:44
 #, fuzzy
 msgid ""
 "Document cannot be renamed. Check your permissions or contact the storage "
 "server administrator."
-msgstr ""
-"ドキュメントは保存できませんでした。権限を確認するかストレージサーバーの管理"
-"者に連絡してください。"
+msgstr "ドキュメントは保存できませんでした。権限を確認するかストレージサーバーの管理者に連絡してください。"
 
 #: src/errormessages.js:49
 msgid "Uploading file to server failed, file not found."

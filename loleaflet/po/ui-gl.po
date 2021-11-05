@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-03 16:37+0100\n"
+"POT-Creation-Date: 2021-11-05 17:05+0100\n"
 "PO-Revision-Date: 2020-09-23 07:49+0000\n"
 "Last-Translator: Xosé <xosecalvo@gmail.com>\n"
 "Language-Team: Galician <https://weblate.documentfoundation.org/projects/"
@@ -211,7 +211,7 @@ msgstr "Actualizar rexistro"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:400
 #: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr "Ningún"
@@ -264,7 +264,7 @@ msgstr "Confirma que desexa terminar esta sesión?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:860
 msgid "OK"
 msgstr "Aceptar"
 
@@ -272,7 +272,7 @@ msgstr "Aceptar"
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:861
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -377,7 +377,7 @@ msgid "Index"
 msgstr "Índice"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2354 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "Comentario"
@@ -418,107 +418,107 @@ msgstr "Iniciar copiar/pegar cruzado"
 msgid "Function Wizard"
 msgstr "Asistente de funcións"
 
-#: src/control/Control.JSDialogBuilder.js:391
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Solid"
 msgstr "Sólido"
 
-#: src/control/Control.JSDialogBuilder.js:394
+#: src/control/Control.JSDialogBuilder.js:406
 msgid "Linear"
 msgstr "Lineal"
 
-#: src/control/Control.JSDialogBuilder.js:397
+#: src/control/Control.JSDialogBuilder.js:409
 msgid "Axial"
 msgstr "Axial"
 
-#: src/control/Control.JSDialogBuilder.js:400
+#: src/control/Control.JSDialogBuilder.js:412
 msgid "Radial"
 msgstr "Radial"
 
-#: src/control/Control.JSDialogBuilder.js:403
+#: src/control/Control.JSDialogBuilder.js:415
 msgid "Ellipsoid"
 msgstr "Elipsoide"
 
-#: src/control/Control.JSDialogBuilder.js:407
+#: src/control/Control.JSDialogBuilder.js:419
 msgid "Quadratic"
 msgstr "Cuadrática"
 
-#: src/control/Control.JSDialogBuilder.js:410
+#: src/control/Control.JSDialogBuilder.js:422
 msgid "Square"
 msgstr "Cadrado"
 
-#: src/control/Control.JSDialogBuilder.js:413
+#: src/control/Control.JSDialogBuilder.js:425
 msgid "Fixed size"
 msgstr "Tamaño fixo"
 
-#: src/control/Control.JSDialogBuilder.js:1500
+#: src/control/Control.JSDialogBuilder.js:1512
 msgid "From"
 msgstr "De"
 
-#: src/control/Control.JSDialogBuilder.js:1503
+#: src/control/Control.JSDialogBuilder.js:1515
 msgid "To"
 msgstr "Até"
 
-#: src/control/Control.JSDialogBuilder.js:1634
+#: src/control/Control.JSDialogBuilder.js:1646
 msgid "Select range"
 msgstr "Seleccionar intervalo"
 
-#: src/control/Control.JSDialogBuilder.js:1665
+#: src/control/Control.JSDialogBuilder.js:1677
 #: src/control/Control.NotebookbarBuilder.js:234
 msgid "Font Name"
 msgstr "Nome do tipo de letra"
 
-#: src/control/Control.JSDialogBuilder.js:1667
+#: src/control/Control.JSDialogBuilder.js:1679 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "Tamaño do tipo de letra"
 
-#: src/control/Control.JSDialogBuilder.js:1669
-#: src/control/Control.TopToolbar.js:505
+#: src/control/Control.JSDialogBuilder.js:1681
+#: src/control/Control.TopToolbar.js:504
 msgid "Style"
 msgstr "Estilo"
 
-#: src/control/Control.JSDialogBuilder.js:2328
+#: src/control/Control.JSDialogBuilder.js:2340
 #, fuzzy
 msgid "reply"
 msgstr "Responder"
 
-#: src/control/Control.JSDialogBuilder.js:2331
+#: src/control/Control.JSDialogBuilder.js:2343
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2401
+#: src/control/Control.JSDialogBuilder.js:2413
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2802
+#: src/control/Control.JSDialogBuilder.js:2814
 msgid "Cell borders"
 msgstr "Bordos de cela"
 
-#: src/control/Control.JSDialogBuilder.js:2846
+#: src/control/Control.JSDialogBuilder.js:2858
 msgid "Background Color"
 msgstr "Cor do fondo"
 
-#: src/control/Control.JSDialogBuilder.js:2848
+#: src/control/Control.JSDialogBuilder.js:2860
 msgid "Gradient Start"
 msgstr "Inicio da gradación"
 
-#: src/control/Control.JSDialogBuilder.js:2850
+#: src/control/Control.JSDialogBuilder.js:2862
 msgid "Gradient End"
 msgstr "Final da gradación"
 
-#: src/control/Control.JSDialogBuilder.js:3030
+#: src/control/Control.JSDialogBuilder.js:3042
 msgid "Rows"
 msgstr "Filas"
 
-#: src/control/Control.JSDialogBuilder.js:3031
+#: src/control/Control.JSDialogBuilder.js:3043
 msgid "Columns"
 msgstr "Columnas"
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3063
 #, fuzzy
 msgid "Insert Table"
 msgstr "Inserir táboa"
 
-#: src/control/Control.JSDialogBuilder.js:3080
+#: src/control/Control.JSDialogBuilder.js:3092
 msgid "Line style:"
 msgstr "Estilo de liña:"
 
@@ -950,24 +950,24 @@ msgstr ""
 msgid "Default Style"
 msgstr "Estilo predeterminado"
 
-#: src/control/Control.TopToolbar.js:177
+#: src/control/Control.TopToolbar.js:176
 msgid "Borders"
 msgstr "Bordos"
 
-#: src/control/Control.TopToolbar.js:240
+#: src/control/Control.TopToolbar.js:239
 msgid "Insert table"
 msgstr "Inserir táboa"
 
-#: src/control/Control.TopToolbar.js:244
+#: src/control/Control.TopToolbar.js:243
 #: src/control/Control.NotebookbarBuilder.js:607
 msgid "Insert Local Image"
 msgstr "Inserir imaxe local"
 
-#: src/control/Control.TopToolbar.js:248
+#: src/control/Control.TopToolbar.js:247
 msgid "Insert shapes"
 msgstr "Inserir formas"
 
-#: src/control/Control.TopToolbar.js:250
+#: src/control/Control.TopToolbar.js:249
 msgid "Insert connectors"
 msgstr ""
 
@@ -1166,7 +1166,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:856
 msgid "Text"
 msgstr "Texto"
 
@@ -1414,38 +1414,42 @@ msgstr "Asinado mais non todos están asinados"
 msgid "Font"
 msgstr "Tipo de letra"
 
-#: src/control/Toolbar.js:220 src/control/Toolbar.js:232
+#: src/control/Toolbar.js:230 src/control/Toolbar.js:242
 msgid "Downloading..."
 msgstr "Descargando..."
 
-#: src/control/Toolbar.js:248
+#: src/control/Toolbar.js:258
 msgid "Saving..."
 msgstr "Gardando..."
 
-#: src/control/Toolbar.js:259
+#: src/control/Toolbar.js:269
 msgid "Renaming..."
 msgstr "A renomear..."
 
-#: src/control/Toolbar.js:638
+#: src/control/Toolbar.js:561
+msgid "I understand the risks"
+msgstr "Entendo os riscos"
+
+#: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 "Lamentámolo, mais a información sobre as actualizacións máis recentes non "
 "está dispoñíbel."
 
-#: src/control/Toolbar.js:688
+#: src/control/Toolbar.js:698
 msgid "This version of %productName is powered by"
 msgstr "Esta versión do %productName funciona grazas a"
 
-#: src/control/Toolbar.js:698
+#: src/control/Toolbar.js:708
 msgid "\"Slow Proxy\""
 msgstr "«Proxy lento»"
 
-#: src/control/Toolbar.js:844
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Inserir hiperligazón"
 
-#: src/control/Toolbar.js:847
+#: src/control/Toolbar.js:857
 msgid "Link"
 msgstr "Ligazón"
 
@@ -1457,8 +1461,8 @@ msgid ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
 "IE11 acadou o seu máximo número de conexións. Indique se este documento "
-"necesita aumentar este número: https://docs.microsoft.com/en-us/previous-"
-"versions/windows/internet-explorer/ie-developer/general-info/"
+"necesita aumentar este número: https://docs.microsoft.com/en-us/"
+"previous-versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:63
@@ -1875,8 +1879,8 @@ msgid ""
 msgstr ""
 "<p>Se desexa compartir elementos máis grandes do documento con outras "
 "aplicacións tenos que descargar primeiro no seu dispositivo. Para o facer, "
-"prema no botón «Iniciar a descarga» de embaixo e cando esta remate prema en "
-"«Confirmar o copiado ao portapapeis».</p><p>Se está copiando e pegando entre "
+"prema no botón «Iniciar a descarga» de embaixo e cando esta remate prema en «"
+"Confirmar o copiado ao portapapeis».</p><p>Se está copiando e pegando entre "
 "documentos de %productName non é preciso descargar.</p>"
 
 #: src/map/Clipboard.js:961
@@ -1886,8 +1890,8 @@ msgid ""
 "one</p>"
 msgstr ""
 "<p>Xa se iniciou unha descarga debida a unha operación de copiado/pegado "
-"grande. Agarde poloa descarga actual ou cancélea antes de iniciar unha nova</"
-"p>"
+"grande. Agarde poloa descarga actual ou cancélea antes de iniciar unha "
+"nova</p>"
 
 #: src/map/Map.js:232
 msgid "Initializing..."
@@ -1959,9 +1963,6 @@ msgstr "A crear unha copia..."
 
 #~ msgid "Remove Column Break"
 #~ msgstr "Retirar quebra de columna"
-
-#~ msgid "I understand the risks"
-#~ msgstr "Entendo os riscos"
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "

@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-03 16:37+0100\n"
+"POT-Creation-Date: 2021-11-05 17:05+0100\n"
 "PO-Revision-Date: 2021-09-30 12:38+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
@@ -172,8 +172,7 @@ msgstr ""
 
 #: admin/admin.strings.js:42
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
-"Maximalt stackminne för dokumentprocesser (i KB) - kan endast reduceras"
+msgstr "Maximalt stackminne för dokumentprocesser (i KB) - kan endast reduceras"
 
 #: admin/admin.strings.js:43
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
@@ -208,7 +207,7 @@ msgstr "Uppdatera logg"
 msgid "Channel Filter:"
 msgstr "Kanalfilter:"
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:400
 #: src/control/Control.StatusBar.js:335
 msgid "None"
 msgstr "Ingen"
@@ -261,7 +260,7 @@ msgstr "Är du säker på att du vill avsluta sessionen?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:850
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:860
 msgid "OK"
 msgstr "OK"
 
@@ -269,7 +268,7 @@ msgstr "OK"
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:851
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:861
 #: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
 #: src/layer/tile/TileLayer.js:581
 msgid "Cancel"
@@ -373,7 +372,7 @@ msgid "Index"
 msgstr "Förteckning"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2342 src/layer/tile/TileLayer.js:440
+#: src/control/Control.JSDialogBuilder.js:2354 src/layer/tile/TileLayer.js:440
 #: src/layer/tile/TileLayer.js:4192 src/layer/tile/TileLayer.js:4202
 msgid "Comment"
 msgstr "Kommentar"
@@ -414,105 +413,105 @@ msgstr "Starta kopiering"
 msgid "Function Wizard"
 msgstr "Funktionsguide"
 
-#: src/control/Control.JSDialogBuilder.js:391
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Solid"
 msgstr "Stabil"
 
-#: src/control/Control.JSDialogBuilder.js:394
+#: src/control/Control.JSDialogBuilder.js:406
 msgid "Linear"
 msgstr "Linjär"
 
-#: src/control/Control.JSDialogBuilder.js:397
+#: src/control/Control.JSDialogBuilder.js:409
 msgid "Axial"
 msgstr "Axial"
 
-#: src/control/Control.JSDialogBuilder.js:400
+#: src/control/Control.JSDialogBuilder.js:412
 msgid "Radial"
 msgstr "Radiell"
 
-#: src/control/Control.JSDialogBuilder.js:403
+#: src/control/Control.JSDialogBuilder.js:415
 msgid "Ellipsoid"
 msgstr "Ellipsoid"
 
-#: src/control/Control.JSDialogBuilder.js:407
+#: src/control/Control.JSDialogBuilder.js:419
 msgid "Quadratic"
 msgstr "Kvadratisk"
 
-#: src/control/Control.JSDialogBuilder.js:410
+#: src/control/Control.JSDialogBuilder.js:422
 msgid "Square"
 msgstr "Kvadrat"
 
-#: src/control/Control.JSDialogBuilder.js:413
+#: src/control/Control.JSDialogBuilder.js:425
 msgid "Fixed size"
 msgstr "Fixerad storlek"
 
-#: src/control/Control.JSDialogBuilder.js:1500
+#: src/control/Control.JSDialogBuilder.js:1512
 msgid "From"
 msgstr "Från"
 
-#: src/control/Control.JSDialogBuilder.js:1503
+#: src/control/Control.JSDialogBuilder.js:1515
 msgid "To"
 msgstr "Till"
 
-#: src/control/Control.JSDialogBuilder.js:1634
+#: src/control/Control.JSDialogBuilder.js:1646
 msgid "Select range"
 msgstr "Välj intervall"
 
-#: src/control/Control.JSDialogBuilder.js:1665
+#: src/control/Control.JSDialogBuilder.js:1677
 #: src/control/Control.NotebookbarBuilder.js:234
 msgid "Font Name"
 msgstr "Teckensnitt"
 
-#: src/control/Control.JSDialogBuilder.js:1667
+#: src/control/Control.JSDialogBuilder.js:1679 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "Teckensnittsstorlek"
 
-#: src/control/Control.JSDialogBuilder.js:1669
-#: src/control/Control.TopToolbar.js:505
+#: src/control/Control.JSDialogBuilder.js:1681
+#: src/control/Control.TopToolbar.js:504
 msgid "Style"
 msgstr "Format"
 
-#: src/control/Control.JSDialogBuilder.js:2328
+#: src/control/Control.JSDialogBuilder.js:2340
 msgid "reply"
 msgstr "svara"
 
-#: src/control/Control.JSDialogBuilder.js:2331
+#: src/control/Control.JSDialogBuilder.js:2343
 msgid "replies"
 msgstr "svar"
 
-#: src/control/Control.JSDialogBuilder.js:2401
+#: src/control/Control.JSDialogBuilder.js:2413
 msgid "Insert Comment"
 msgstr "Infoga kommentar"
 
-#: src/control/Control.JSDialogBuilder.js:2802
+#: src/control/Control.JSDialogBuilder.js:2814
 msgid "Cell borders"
 msgstr "Kantlinjer"
 
-#: src/control/Control.JSDialogBuilder.js:2846
+#: src/control/Control.JSDialogBuilder.js:2858
 msgid "Background Color"
 msgstr "Bakgrundsfärg"
 
-#: src/control/Control.JSDialogBuilder.js:2848
+#: src/control/Control.JSDialogBuilder.js:2860
 msgid "Gradient Start"
 msgstr "Toning startfärg"
 
-#: src/control/Control.JSDialogBuilder.js:2850
+#: src/control/Control.JSDialogBuilder.js:2862
 msgid "Gradient End"
 msgstr "Toning slutfärg"
 
-#: src/control/Control.JSDialogBuilder.js:3030
+#: src/control/Control.JSDialogBuilder.js:3042
 msgid "Rows"
 msgstr "Rader"
 
-#: src/control/Control.JSDialogBuilder.js:3031
+#: src/control/Control.JSDialogBuilder.js:3043
 msgid "Columns"
 msgstr "Kolumner"
 
-#: src/control/Control.JSDialogBuilder.js:3051
+#: src/control/Control.JSDialogBuilder.js:3063
 msgid "Insert Table"
 msgstr "Infoga Tabell"
 
-#: src/control/Control.JSDialogBuilder.js:3080
+#: src/control/Control.JSDialogBuilder.js:3092
 msgid "Line style:"
 msgstr "Stil för linje"
 
@@ -943,24 +942,24 @@ msgstr ""
 msgid "Default Style"
 msgstr "Standardstil"
 
-#: src/control/Control.TopToolbar.js:177
+#: src/control/Control.TopToolbar.js:176
 msgid "Borders"
 msgstr "Kanter"
 
-#: src/control/Control.TopToolbar.js:240
+#: src/control/Control.TopToolbar.js:239
 msgid "Insert table"
 msgstr "Infoga tabell"
 
-#: src/control/Control.TopToolbar.js:244
+#: src/control/Control.TopToolbar.js:243
 #: src/control/Control.NotebookbarBuilder.js:607
 msgid "Insert Local Image"
 msgstr "Lägg in lokal bild"
 
-#: src/control/Control.TopToolbar.js:248
+#: src/control/Control.TopToolbar.js:247
 msgid "Insert shapes"
 msgstr "Infoga form"
 
-#: src/control/Control.TopToolbar.js:250
+#: src/control/Control.TopToolbar.js:249
 msgid "Insert connectors"
 msgstr "Infoga kopplingar"
 
@@ -1156,7 +1155,7 @@ msgstr "Fraktion"
 msgid "Boolean Value"
 msgstr "Boolskt värde"
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:846
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:856
 msgid "Text"
 msgstr "Text"
 
@@ -1404,38 +1403,42 @@ msgstr "Signerat, men inte alla filer är signerade"
 msgid "Font"
 msgstr "Teckensnitt"
 
-#: src/control/Toolbar.js:220 src/control/Toolbar.js:232
+#: src/control/Toolbar.js:230 src/control/Toolbar.js:242
 msgid "Downloading..."
 msgstr "Hämtar..."
 
-#: src/control/Toolbar.js:248
+#: src/control/Toolbar.js:258
 msgid "Saving..."
 msgstr "Sparar..."
 
-#: src/control/Toolbar.js:259
+#: src/control/Toolbar.js:269
 msgid "Renaming..."
 msgstr "Byter namn..."
 
-#: src/control/Toolbar.js:638
+#: src/control/Toolbar.js:561
+msgid "I understand the risks"
+msgstr "Jag förstår riskerna"
+
+#: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 "Vi är ledsna, informationen om de senaste uppdateringarna är inte "
 "tillgänglig."
 
-#: src/control/Toolbar.js:688
+#: src/control/Toolbar.js:698
 msgid "This version of %productName is powered by"
 msgstr "Denna version av %productName drivs av"
 
-#: src/control/Toolbar.js:698
+#: src/control/Toolbar.js:708
 msgid "\"Slow Proxy\""
 msgstr "\"Långsam proxy\""
 
-#: src/control/Toolbar.js:844
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Lägg in hyperlänk"
 
-#: src/control/Toolbar.js:847
+#: src/control/Toolbar.js:857
 msgid "Link"
 msgstr "Länk"
 
@@ -1447,8 +1450,8 @@ msgid ""
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 msgstr ""
 "IE11 har nått sitt maximala antal anslutningar. Se detta dokument för att "
-"öka denna gräns vid behov: https://docs.microsoft.com/en-us/previous-"
-"versions/windows/internet-explorer/ie-developer/general-info/"
+"öka denna gräns vid behov: https://docs.microsoft.com/en-us/"
+"previous-versions/windows/internet-explorer/ie-developer/general-info/"
 "ee330736(v=vs.85)#websocket-maximum-server-connections"
 
 #: src/core/Socket.js:63
@@ -1600,8 +1603,7 @@ msgstr "Tjänsten är bortkopplad."
 msgid ""
 "No disk space left on server, please contact the server administrator to "
 "continue."
-msgstr ""
-"Inget utrymme kvar på servern, vänligen kontakta serveradministratören."
+msgstr "Inget utrymme kvar på servern, vänligen kontakta serveradministratören."
 
 #: src/errormessages.js:14
 msgid ""
@@ -1659,8 +1661,8 @@ msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
-"Din session löper ut om %time. Spara ditt arbete och uppdatera din session "
-"(eller webbsida) för att fortsätta."
+"Din session löper ut om %time. Spara ditt arbete och uppdatera din session ("
+"eller webbsida) för att fortsätta."
 
 #: src/errormessages.js:22
 msgid ""
@@ -1856,11 +1858,12 @@ msgid ""
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
 "<p>Din webbläsare har begränsad tillgång till urklipp, så använd därför "
-"dessa kortkommandon:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Kopiera</"
-"td><td>Klipp ut</td><td>Klistra in</td></tr></table>"
+"dessa kortkommandon:</p><table class=\"warn-copy-paste\""
+"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd></td></tr><tr><td>Kopiera</td><td>Klipp ut</td><td>"
+"Klistra in</td></tr></table>"
 
 #: src/map/Clipboard.js:945
 msgid ""
@@ -1873,8 +1876,8 @@ msgstr ""
 "<p>Om du vill dela större delar av ditt dokument med andra program krävs att "
 "du hämtar dem till din enhet. För att göra det tryck på knappen \"Starta "
 "nedladdning\" nedan. När nedladdningen är klar klickar du på \"Bekräfta "
-"kopiering till urklipp\".</p><p>Om du kopierar mellan dokument i "
-"%productName behöver du inte hämta till din enhet.</p>"
+"kopiering till urklipp\".</p><p>Om du kopierar mellan dokument i %"
+"productName behöver du inte hämta till din enhet.</p>"
 
 #: src/map/Clipboard.js:961
 msgid ""
@@ -1883,8 +1886,8 @@ msgid ""
 "one</p>"
 msgstr ""
 "<p>En hämtning på grund av en stor kopiera/klistra in aktivitet har redan "
-"startat. Avvakta pågående hämtning eller avbryt den innan du startar en ny</"
-"p>"
+"startat. Avvakta pågående hämtning eller avbryt den innan du startar en "
+"ny</p>"
 
 #: src/map/Map.js:232
 msgid "Initializing..."
@@ -1955,9 +1958,6 @@ msgstr "Skapar kopia ..."
 
 #~ msgid "Remove Column Break"
 #~ msgstr "Ta bort kolumnbrytning"
-
-#~ msgid "I understand the risks"
-#~ msgstr "Jag förstår riskerna"
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "
