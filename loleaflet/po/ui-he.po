@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-02 09:39+0100\n"
-"PO-Revision-Date: 2021-11-02 08:36+0000\n"
+"PO-Revision-Date: 2021-11-03 11:43+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1400,9 +1400,8 @@ msgid "Signature broken"
 msgstr "חתימה פגומה"
 
 #: src/control/Signing.js:630
-#, fuzzy
 msgid "The signature was valid, but the document has been modified."
-msgstr "החתימה תקינה אך המסמך נערך"
+msgstr "החתימה תקינה אך המסמך נערך."
 
 #: src/control/Signing.js:632
 msgid "Signed but document modified"
@@ -1417,9 +1416,8 @@ msgid "Signed but not validated"
 msgstr "חתום אך לא מאומת"
 
 #: src/control/Signing.js:640
-#, fuzzy
 msgid "The signature is OK, but the document is only partially signed."
-msgstr "החתימה תקינה אך המסמך חתום באופן חלקי בלבד"
+msgstr "החתימה תקינה אך המסמך חתום באופן חלקי בלבד."
 
 #: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
@@ -1429,11 +1427,11 @@ msgstr "חתום אבל לא כל הקבצים חתומים"
 msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
-msgstr ""
+msgstr "החתימה בסדר אך לא ניתן לתקף את האישור והמסמך חתום חלקית בלבד."
 
 #: src/control/Signing.js:647
 msgid "Signed but not validated and not all files are signed"
-msgstr ""
+msgstr "חתום אך לא תוקף ולא כל הקבצים חתומים"
 
 #: src/control/Toolbar.js:45
 msgid "Font"
