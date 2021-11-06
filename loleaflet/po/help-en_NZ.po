@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-02 09:39+0200\n"
-"PO-Revision-Date: 2021-09-01 18:50+0000\n"
-"Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
+"PO-Revision-Date: 2021-11-03 11:43+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: English (New Zealand) <https://hosted.weblate.org/projects/"
 "collabora-online/help/en_NZ/>\n"
 "Language: en_NZ\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 #: html/loleaflet-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -2112,7 +2112,6 @@ msgid "All spreadsheets functions and mathematical rules applies."
 msgstr "All spreadsheets functions and mathematical rules applies."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:428-5
-#, fuzzy
 msgid ""
 "The formula language should be extremely familiar to any spreadsheet user, "
 "and is specified in great detail in the <a href=\"https://www.oasis-open.org/"
@@ -2121,8 +2120,8 @@ msgid ""
 msgstr ""
 "The formula language should be extremely familiar to any spreadsheet user, "
 "and is specified in great detail in the <a href=\"https://www.oasis-open.org/"
-"committees/download.php/16826/openformula-spec-20060221.html\">OASIS "
-"OpenFormula specification</a>."
+"committees/download.php/16826/openformula-spec-20060221.html\" target="
+"\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:431-5
 msgid ""
