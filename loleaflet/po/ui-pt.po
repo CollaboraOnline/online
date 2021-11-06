@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-02 09:39+0100\n"
-"PO-Revision-Date: 2021-10-23 16:43+0000\n"
+"PO-Revision-Date: 2021-11-03 11:43+0000\n"
 "Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1407,9 +1407,8 @@ msgid "Signature broken"
 msgstr "Assinatura danificada"
 
 #: src/control/Signing.js:630
-#, fuzzy
 msgid "The signature was valid, but the document has been modified."
-msgstr "A assinatura era válida, mas o documento foi alterado"
+msgstr "A assinatura era válida, mas o documento foi alterado."
 
 #: src/control/Signing.js:632
 msgid "Signed but document modified"
@@ -1424,9 +1423,8 @@ msgid "Signed but not validated"
 msgstr "Assinado mas não validado"
 
 #: src/control/Signing.js:640
-#, fuzzy
 msgid "The signature is OK, but the document is only partially signed."
-msgstr "A assinatura está correta, mas apenas parte do documento está assinado"
+msgstr "A assinatura está correta, mas apenas parte do documento está assinado."
 
 #: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
@@ -1437,10 +1435,12 @@ msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"A assinatura está correta, mas não foi possível validar o certificado e o "
+"documento está apenas parcialmente assinado."
 
 #: src/control/Signing.js:647
 msgid "Signed but not validated and not all files are signed"
-msgstr ""
+msgstr "Assinado mas não validado e nem todos os ficheiros estão assinados"
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -1714,11 +1714,10 @@ msgid "Invalid link: '%url'"
 msgstr "Ligação inválida: '%url'"
 
 #: src/errormessages.js:25
-#, fuzzy
 msgid ""
 "You are leaving the editor, are you sure you want to visit the following URL?"
 msgstr ""
-"Está prestes a sair do editor, tem a certeza de que deseja visitar %url?"
+"Está prestes a sair do editor, tem a certeza que quer visitar o seguinte URL?"
 
 #: src/errormessages.js:26
 msgid ""
