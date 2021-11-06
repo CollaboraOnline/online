@@ -13,17 +13,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-02 09:39+0100\n"
-"PO-Revision-Date: 2021-11-02 08:36+0000\n"
+"PO-Revision-Date: 2021-11-03 11:43+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/pl/>\n"
-"Language: \n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<"
-"12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) ||"
-" (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
+"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
+"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 4.9-dev\n"
 
 #: admin/admin.strings.js:6
@@ -1411,9 +1411,8 @@ msgid "Signature broken"
 msgstr "Naruszono podpis"
 
 #: src/control/Signing.js:630
-#, fuzzy
 msgid "The signature was valid, but the document has been modified."
-msgstr "Podpis dokumentu był ważny, ale dokument został zmodyfikowany"
+msgstr "Podpis był ważny, ale dokument został zmodyfikowany."
 
 #: src/control/Signing.js:632
 msgid "Signed but document modified"
@@ -1428,9 +1427,8 @@ msgid "Signed but not validated"
 msgstr "Podpisano, ale nie zweryfikowano"
 
 #: src/control/Signing.js:640
-#, fuzzy
 msgid "The signature is OK, but the document is only partially signed."
-msgstr "Podpis jest prawidłowy, ale dokument jest podpisany tylko częściowo"
+msgstr "Podpis jest prawidłowy, ale dokument jest tylko częściowo podpisany."
 
 #: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
@@ -1441,10 +1439,12 @@ msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"Podpis jest prawidłowy, ale certyfikat nie mógł zostać zweryfikowany, a "
+"dokument jest tylko częściowo podpisany."
 
 #: src/control/Signing.js:647
 msgid "Signed but not validated and not all files are signed"
-msgstr ""
+msgstr "Podpisano, ale nie zweryfikowano i nie wszystkie pliki są podpisane"
 
 #: src/control/Toolbar.js:45
 msgid "Font"
