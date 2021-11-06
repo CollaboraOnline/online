@@ -21,6 +21,7 @@ L.Map = L.Evented.extend({
 	options: {
 		crs: L.CRS.Simple,
 		center: [0, 0],
+		docParams: {},
 		// Default zoom level in which the document will be loaded.
 		zoom: 10,
 		// These zoom values are on a logarithmic scale. Each step away from the default 10
