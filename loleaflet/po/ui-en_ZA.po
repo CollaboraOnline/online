@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-02 09:39+0100\n"
+"POT-Creation-Date: 2021-11-06 21:47+0100\n"
 "PO-Revision-Date: 2021-11-03 11:43+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (South Africa) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/en_ZA/>\n"
-"Language: en_ZA\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -141,7 +141,7 @@ msgstr "Network Graph"
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:248
 #: src/control/Control.NotebookbarDraw.js:24
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/layer/tile/CommentListSection.ts:371
+#: src/layer/tile/CommentListSection.ts:383
 #: src/layer/tile/CommentSection.ts:122
 msgid "Save"
 msgstr "Save"
@@ -206,8 +206,8 @@ msgstr "Refresh Log"
 msgid "Channel Filter:"
 msgstr "Channel Filter:"
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:376
-#: src/control/Control.StatusBar.js:313
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: src/control/Control.StatusBar.js:314
 msgid "None"
 msgstr "None"
 
@@ -268,7 +268,7 @@ msgstr "OK"
 #: src/control/Control.Menubar.js:1613 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
-#: src/layer/tile/CommentListSection.ts:372
+#: src/layer/tile/CommentListSection.ts:384
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Cancel"
@@ -341,8 +341,7 @@ msgstr "No colour"
 msgid "Automatic color"
 msgstr "Automatic colour"
 
-#: src/control/Control.AlertDialog.js:66 src/control/Control.StatusBar.js:322
-#: src/control/Control.StatusBar.js:361 src/control/Control.StatusBar.js:385
+#: src/control/Control.AlertDialog.js:66 src/control/Control.StatusBar.js:424
 msgid "Edit"
 msgstr "Edit"
 
@@ -379,10 +378,10 @@ msgid "Index"
 msgstr "Index"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2090
-#: src/layer/tile/CanvasTileLayer.js:4780
-#: src/layer/tile/CanvasTileLayer.js:4790
-#: src/layer/tile/CommentListSection.ts:807
+#: src/control/Control.JSDialogBuilder.js:2102
+#: src/layer/tile/CanvasTileLayer.js:4781
+#: src/layer/tile/CanvasTileLayer.js:4791
+#: src/layer/tile/CommentListSection.ts:819
 msgid "Comment"
 msgstr "Comment"
 
@@ -414,93 +413,93 @@ msgstr "Confirm copy to clipboard"
 msgid "Function Wizard"
 msgstr "Function Wizard"
 
-#: src/control/Control.JSDialogBuilder.js:379
+#: src/control/Control.JSDialogBuilder.js:391
 msgid "Solid"
 msgstr "Solid"
 
-#: src/control/Control.JSDialogBuilder.js:382
+#: src/control/Control.JSDialogBuilder.js:394
 msgid "Linear"
 msgstr "Linear"
 
-#: src/control/Control.JSDialogBuilder.js:385
+#: src/control/Control.JSDialogBuilder.js:397
 msgid "Axial"
 msgstr "Axial"
 
-#: src/control/Control.JSDialogBuilder.js:388
+#: src/control/Control.JSDialogBuilder.js:400
 msgid "Radial"
 msgstr "Radial"
 
-#: src/control/Control.JSDialogBuilder.js:391
+#: src/control/Control.JSDialogBuilder.js:403
 msgid "Ellipsoid"
 msgstr "Ellipsoid"
 
-#: src/control/Control.JSDialogBuilder.js:395
+#: src/control/Control.JSDialogBuilder.js:407
 msgid "Quadratic"
 msgstr "Quadratic"
 
-#: src/control/Control.JSDialogBuilder.js:398
+#: src/control/Control.JSDialogBuilder.js:410
 msgid "Square"
 msgstr "Square"
 
-#: src/control/Control.JSDialogBuilder.js:401
+#: src/control/Control.JSDialogBuilder.js:413
 msgid "Fixed size"
 msgstr "Fixed size"
 
-#: src/control/Control.JSDialogBuilder.js:1242
+#: src/control/Control.JSDialogBuilder.js:1254
 msgid "From"
 msgstr "From"
 
-#: src/control/Control.JSDialogBuilder.js:1245
+#: src/control/Control.JSDialogBuilder.js:1257
 msgid "To"
 msgstr "To"
 
-#: src/control/Control.JSDialogBuilder.js:1248
+#: src/control/Control.JSDialogBuilder.js:1260
 msgid "Color"
 msgstr "Colour"
 
-#: src/control/Control.JSDialogBuilder.js:1372
+#: src/control/Control.JSDialogBuilder.js:1384
 msgid "Select range"
 msgstr "Select range"
 
-#: src/control/Control.JSDialogBuilder.js:1415
+#: src/control/Control.JSDialogBuilder.js:1427
 #: src/control/Control.NotebookbarBuilder.js:235
 msgid "Font Name"
 msgstr "Font Name"
 
-#: src/control/Control.JSDialogBuilder.js:1417 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1429 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "Font Size"
 
-#: src/control/Control.JSDialogBuilder.js:1419
+#: src/control/Control.JSDialogBuilder.js:1431
 #: src/control/Control.TopToolbar.js:490
 msgid "Style"
 msgstr "Style"
 
-#: src/control/Control.JSDialogBuilder.js:2076
+#: src/control/Control.JSDialogBuilder.js:2088
 msgid "reply"
 msgstr "Reply"
 
-#: src/control/Control.JSDialogBuilder.js:2079
+#: src/control/Control.JSDialogBuilder.js:2091
 msgid "replies"
 msgstr "replies"
 
-#: src/control/Control.JSDialogBuilder.js:2151
+#: src/control/Control.JSDialogBuilder.js:2163
 msgid "Insert Comment"
 msgstr "Insert Comment"
 
-#: src/control/Control.JSDialogBuilder.js:2590
+#: src/control/Control.JSDialogBuilder.js:2614
 msgid "Cell borders"
 msgstr "Cell borders"
 
-#: src/control/Control.JSDialogBuilder.js:2780
+#: src/control/Control.JSDialogBuilder.js:2805
 msgid "Rows"
 msgstr "Rows"
 
-#: src/control/Control.JSDialogBuilder.js:2781
+#: src/control/Control.JSDialogBuilder.js:2806
 msgid "Columns"
 msgstr "Columns"
 
-#: src/control/Control.JSDialogBuilder.js:2801
+#: src/control/Control.JSDialogBuilder.js:2826
 msgid "Insert Table"
 msgstr "Insert Table"
 
@@ -508,13 +507,13 @@ msgstr "Insert Table"
 #: src/control/Control.Menubar.js:279 src/control/Control.Menubar.js:281
 #: src/control/Control.Menubar.js:417 src/control/Control.Menubar.js:530
 #: src/control/Control.Menubar.js:738
-#: src/control/Control.NotebookbarBuilder.js:733
-#: src/control/Control.NotebookbarBuilder.js:735
-#: src/control/Control.NotebookbarBuilder.js:737
-#: src/control/Control.NotebookbarBuilder.js:761
-#: src/control/Control.NotebookbarBuilder.js:796
-#: src/control/Control.NotebookbarBuilder.js:813
-#: src/control/Control.StatusBar.js:510
+#: src/control/Control.NotebookbarBuilder.js:738
+#: src/control/Control.NotebookbarBuilder.js:740
+#: src/control/Control.NotebookbarBuilder.js:742
+#: src/control/Control.NotebookbarBuilder.js:766
+#: src/control/Control.NotebookbarBuilder.js:801
+#: src/control/Control.NotebookbarBuilder.js:818
+#: src/control/Control.StatusBar.js:514
 msgid "None (Do not check spelling)"
 msgstr "None (Do not check spelling)"
 
@@ -594,10 +593,10 @@ msgstr "Close document"
 #: src/control/Control.Menubar.js:450 src/control/Control.Menubar.js:561
 #: src/control/Control.Menubar.js:775 src/control/Control.Menubar.js:826
 #: src/control/Control.Menubar.js:877 src/control/Control.Menubar.js:925
-#: src/control/Control.NotebookbarBuilder.js:726
-#: src/control/Control.NotebookbarBuilder.js:756
-#: src/control/Control.NotebookbarBuilder.js:791
-#: src/control/Control.NotebookbarBuilder.js:808
+#: src/control/Control.NotebookbarBuilder.js:731
+#: src/control/Control.NotebookbarBuilder.js:761
+#: src/control/Control.NotebookbarBuilder.js:796
+#: src/control/Control.NotebookbarBuilder.js:813
 #: src/control/Control.NotebookbarCalc.js:169
 #: src/control/Control.NotebookbarCalc.js:170
 #: src/control/Control.NotebookbarDraw.js:218
@@ -615,16 +614,15 @@ msgstr "Repair"
 #: src/control/Control.NotebookbarCalc.js:746
 #: src/control/Control.NotebookbarDraw.js:689
 #: src/control/Control.NotebookbarDraw.js:690
-#: src/control/Control.NotebookbarImpress.js:980
 #: src/control/Control.NotebookbarImpress.js:981
 #: src/control/Control.NotebookbarWriter.js:975
 #: src/control/Control.NotebookbarWriter.js:976
-#: src/control/Control.StatusBar.js:187
+#: src/control/Control.StatusBar.js:188
 msgid "Reset zoom"
 msgstr "Reset zoom"
 
 #: src/control/Control.Menubar.js:106
-#: src/control/Control.NotebookbarBuilder.js:712
+#: src/control/Control.NotebookbarBuilder.js:717
 #: src/control/Control.NotebookbarWriter.js:1025
 #: src/control/Control.NotebookbarWriter.js:1026
 msgid "Show Ruler"
@@ -689,7 +687,7 @@ msgstr "About"
 
 #: src/control/Control.Menubar.js:301 src/control/Control.Menubar.js:429
 #: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:750
-#: src/map/Map.js:409
+#: src/map/Map.js:391
 msgid "Last modification"
 msgstr "Last modification"
 
@@ -747,7 +745,7 @@ msgstr "CSV file (.csv)"
 
 #: src/control/Control.Menubar.js:754 src/control/Control.Menubar.js:807
 #: src/control/Control.Menubar.js:862 src/control/Control.Menubar.js:907
-#: src/control/Control.StatusBar.js:172
+#: src/control/Control.StatusBar.js:173
 msgid "Search"
 msgstr "Search"
 
@@ -755,7 +753,7 @@ msgstr "Search"
 msgid "Page Setup"
 msgstr "Page Setup"
 
-#: src/control/Control.Menubar.js:1163 src/control/Control.StatusBar.js:509
+#: src/control/Control.Menubar.js:1163 src/control/Control.StatusBar.js:513
 msgid "Reset to Default Language"
 msgstr "Reset to Default Language"
 
@@ -790,10 +788,10 @@ msgid "Gradient End"
 msgstr "Gradient End"
 
 #: src/control/Control.Notebookbar.js:242
-#: src/control/Control.NotebookbarBuilder.js:707
-#: src/control/Control.NotebookbarBuilder.js:750
-#: src/control/Control.NotebookbarBuilder.js:778
-#: src/control/Control.NotebookbarBuilder.js:803
+#: src/control/Control.NotebookbarBuilder.js:712
+#: src/control/Control.NotebookbarBuilder.js:755
+#: src/control/Control.NotebookbarBuilder.js:783
+#: src/control/Control.NotebookbarBuilder.js:808
 #: src/control/Control.NotebookbarDraw.js:18
 #: src/control/Control.NotebookbarImpress.js:18
 msgid "Menu"
@@ -1002,6 +1000,11 @@ msgstr "Start Presentation"
 msgid "ODF Presentation (.odp)"
 msgstr "ODF Presentation (.odp)"
 
+#: src/control/Control.NotebookbarImpress.js:980
+#, fuzzy
+msgid "Reset Zoom"
+msgstr "Reset zoom"
+
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
 msgstr "Reference~s"
@@ -1067,90 +1070,87 @@ msgstr "Scroll to the last sheet"
 msgid "Insert sheet"
 msgstr "Insert sheet"
 
-#: src/control/Control.StatusBar.js:178
+#: src/control/Control.StatusBar.js:179
 msgid "Cancel the search"
 msgstr "Cancel the search"
 
-#: src/control/Control.StatusBar.js:278
+#: src/control/Control.StatusBar.js:279
 msgid "Number of Sheets"
 msgstr "Number of Sheets"
 
-#: src/control/Control.StatusBar.js:283
+#: src/control/Control.StatusBar.js:284
 msgid "Selected range of cells"
 msgstr "Selected range of cells"
 
-#: src/control/Control.StatusBar.js:288 src/control/Control.StatusBar.js:344
+#: src/control/Control.StatusBar.js:289 src/control/Control.StatusBar.js:342
 msgid "Entering text mode"
 msgstr "Entering text mode"
 
-#: src/control/Control.StatusBar.js:297 src/control/Control.StatusBar.js:349
+#: src/control/Control.StatusBar.js:298 src/control/Control.StatusBar.js:347
 msgid "Selection Mode"
 msgstr "Selection Mode"
 
-#: src/control/Control.StatusBar.js:302
+#: src/control/Control.StatusBar.js:303
 msgid "Choice of functions"
 msgstr "Choice of functions"
 
-#: src/control/Control.StatusBar.js:306
+#: src/control/Control.StatusBar.js:307
 msgid "Average"
 msgstr "Average"
 
-#: src/control/Control.StatusBar.js:307
+#: src/control/Control.StatusBar.js:308
 msgid "CountA"
 msgstr "CountA"
 
-#: src/control/Control.StatusBar.js:308
+#: src/control/Control.StatusBar.js:309
 msgid "Count"
 msgstr "Count"
 
-#: src/control/Control.StatusBar.js:309
+#: src/control/Control.StatusBar.js:310
 msgid "Maximum"
 msgstr "Maximum"
 
-#: src/control/Control.StatusBar.js:310
+#: src/control/Control.StatusBar.js:311
 msgid "Minimum"
 msgstr "Minimum"
 
-#: src/control/Control.StatusBar.js:311
+#: src/control/Control.StatusBar.js:312
 msgid "Sum"
 msgstr "Sum"
 
-#: src/control/Control.StatusBar.js:312
+#: src/control/Control.StatusBar.js:313
 msgid "Selection count"
 msgstr "Selection count"
 
-#: src/control/Control.StatusBar.js:321 src/control/Control.StatusBar.js:322
-#: src/control/Control.StatusBar.js:360 src/control/Control.StatusBar.js:361
-#: src/control/Control.StatusBar.js:384 src/control/Control.StatusBar.js:385
-msgid "Permission Mode"
-msgstr "Permission Mode"
-
-#: src/control/Control.StatusBar.js:321 src/control/Control.StatusBar.js:360
-#: src/control/Control.StatusBar.js:384
-msgid "Read-only"
-msgstr "Read-only"
-
-#: src/control/Control.StatusBar.js:334
+#: src/control/Control.StatusBar.js:332
 msgid "Number of Pages"
 msgstr "Number of Pages"
 
-#: src/control/Control.StatusBar.js:339
+#: src/control/Control.StatusBar.js:337
 msgid "Word Counter"
 msgstr "Word Counter"
 
-#: src/control/Control.StatusBar.js:373
+#: src/control/Control.StatusBar.js:368
 msgid "Number of Slides"
 msgstr "Number of Slides"
 
-#: src/control/Control.StatusBar.js:453
+#: src/control/Control.StatusBar.js:423 src/control/Control.StatusBar.js:424
+msgid "Permission Mode"
+msgstr "Permission Mode"
+
+#: src/control/Control.StatusBar.js:423
+msgid "Read-only"
+msgstr "Read-only"
+
+#: src/control/Control.StatusBar.js:457
 msgid "Select multiple cells"
 msgstr "Select multiple cells"
 
-#: src/control/Control.StatusBar.js:456
+#: src/control/Control.StatusBar.js:460
 msgid "Insert mode: inactive"
 msgstr "Insert mode: inactive"
 
-#: src/control/Control.StatusBar.js:469
+#: src/control/Control.StatusBar.js:473
 msgid "Selection mode: inactive"
 msgstr "Selection mode: inactive"
 
@@ -1171,7 +1171,8 @@ msgid "Move Sheet Right"
 msgstr "Move Sheet Right"
 
 #: src/control/Control.Tabs.js:303
-msgid "Are you sure you want to delete sheet, %sheet% ?"
+#, fuzzy
+msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Are you sure you want to delete sheet, %sheet% ?"
 
 #: src/control/Control.Tabs.js:320
@@ -1248,27 +1249,27 @@ msgstr "Current"
 msgid "Show Selected Sheets"
 msgstr "Show Selected Sheets"
 
-#: src/control/Permission.js:49
+#: src/control/Permission.js:60
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr "The document could not be locked, and is opened in read-only mode."
 
-#: src/control/Permission.js:51 src/control/Permission.js:68
+#: src/control/Permission.js:62 src/control/Permission.js:79
 msgid "Server returned this reason:"
 msgstr "Server returned this reason:"
 
-#: src/control/Permission.js:66
+#: src/control/Permission.js:77
 msgid "The document could not be locked."
 msgstr "The document could not be locked."
 
-#: src/control/Permission.js:108
+#: src/control/Permission.js:119
 msgid "Enter a file name"
 msgstr "Enter a file name"
 
-#: src/control/Permission.js:109
+#: src/control/Permission.js:120
 msgid "filename"
 msgstr "filename"
 
-#: src/control/Permission.js:123
+#: src/control/Permission.js:134
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
@@ -1276,11 +1277,11 @@ msgstr ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:145
 msgid "Save as ODF format"
 msgstr "Save as ODF format"
 
-#: src/control/Permission.js:135
+#: src/control/Permission.js:146
 msgid "Continue editing"
 msgstr "Continue editing"
 
@@ -1452,6 +1453,10 @@ msgstr "Saving..."
 msgid "Renaming..."
 msgstr "Renaming..."
 
+#: src/control/Toolbar.js:561
+msgid "I understand the risks"
+msgstr "I understand the risks"
+
 #: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
@@ -1478,51 +1483,51 @@ msgstr "Link"
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Oops, there is a problem connecting the document "
 
-#: src/core/Socket.js:494
+#: src/core/Socket.js:491
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Server has been restarted. We have to refresh the page now."
 
-#: src/core/Socket.js:496
+#: src/core/Socket.js:493
 msgid "Server is now reachable..."
 msgstr "Server is now reachable..."
 
-#: src/core/Socket.js:499
+#: src/core/Socket.js:496
 msgid "RELOAD"
 msgstr "RELOAD"
 
-#: src/core/Socket.js:515
+#: src/core/Socket.js:512
 msgid "Served by:"
 msgstr "Served by:"
 
-#: src/core/Socket.js:520
+#: src/core/Socket.js:517
 msgid "Unsupported server version."
 msgstr "Unsupported server version."
 
-#: src/core/Socket.js:637
+#: src/core/Socket.js:634
 msgid "Session terminated by document owner"
 msgstr "Session terminated by document owner"
 
-#: src/core/Socket.js:642
+#: src/core/Socket.js:639
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Idle document - please click to reload and resume editing"
 
-#: src/core/Socket.js:644
+#: src/core/Socket.js:641
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "Idle document - please tap to reload and resume editing"
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:649
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server is shutting down for maintenance (auto-saving)"
 
-#: src/core/Socket.js:656
+#: src/core/Socket.js:653
 msgid "Oops, there is a problem connecting the document"
 msgstr "Oops, there is a problem connecting the document"
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:657
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Server is down, restarting automatically. Please wait."
 
-#: src/core/Socket.js:688
+#: src/core/Socket.js:685
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1530,7 +1535,7 @@ msgstr ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 
-#: src/core/Socket.js:694
+#: src/core/Socket.js:691
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1538,11 +1543,11 @@ msgstr ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 
-#: src/core/Socket.js:700
+#: src/core/Socket.js:697
 msgid "Reloading the document after rename"
 msgstr "Reloading the document after rename"
 
-#: src/core/Socket.js:819
+#: src/core/Socket.js:816
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1550,59 +1555,59 @@ msgstr ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 
-#: src/core/Socket.js:823
+#: src/core/Socket.js:820
 msgid "Discard"
 msgstr "Discard"
 
-#: src/core/Socket.js:828
+#: src/core/Socket.js:825
 msgid "Overwrite"
 msgstr "Overwrite"
 
-#: src/core/Socket.js:833
+#: src/core/Socket.js:830
 msgid "Save to new file"
 msgstr "Save to new file"
 
-#: src/core/Socket.js:903
+#: src/core/Socket.js:900
 msgid "Document requires password to view."
 msgstr "Document requires password to view."
 
-#: src/core/Socket.js:906
+#: src/core/Socket.js:903
 msgid "Document requires password to modify."
 msgstr "Document requires password to modify."
 
-#: src/core/Socket.js:908
+#: src/core/Socket.js:905
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Hit Cancel to open in view-only mode."
 
-#: src/core/Socket.js:912
+#: src/core/Socket.js:909
 msgid "Wrong password provided. Please try again."
 msgstr "Wrong password provided. Please try again."
 
-#: src/core/Socket.js:1017
+#: src/core/Socket.js:1014
 msgid "Someone"
 msgstr "Someone"
 
-#: src/core/Socket.js:1019
+#: src/core/Socket.js:1016
 msgid " saved this document as "
 msgstr " saved this document as "
 
-#: src/core/Socket.js:1019
+#: src/core/Socket.js:1016
 msgid ". Do you want to join?"
 msgstr ". Do you want to join?"
 
-#: src/core/Socket.js:1028
+#: src/core/Socket.js:1025
 msgid "Loading..."
 msgstr "Loading..."
 
-#: src/core/Socket.js:1028
+#: src/core/Socket.js:1025
 msgid "Connecting..."
 msgstr "Connecting..."
 
-#: src/core/Socket.js:1046
+#: src/core/Socket.js:1043
 msgid "The document is being renamed and will reload shortly"
 msgstr "The document is being renamed and will reload shortly"
 
-#: src/core/Socket.js:1413
+#: src/core/Socket.js:1405
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1610,11 +1615,11 @@ msgstr ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 
-#: src/core/Socket.js:1430
+#: src/core/Socket.js:1422
 msgid "Reconnecting..."
 msgstr "Reconnecting..."
 
-#: src/core/Socket.js:1435
+#: src/core/Socket.js:1427
 msgid "The server has been disconnected."
 msgstr "The server has been disconnected."
 
@@ -1796,60 +1801,60 @@ msgstr "Uploading file to server failed, file not found."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Uploading file to server failed, the file is too large."
 
-#: src/layer/tile/CanvasTileLayer.js:1749
+#: src/layer/tile/CanvasTileLayer.js:1750
 msgid "Functions"
 msgstr "Functions"
 
-#: src/layer/tile/CanvasTileLayer.js:4807
+#: src/layer/tile/CanvasTileLayer.js:4808
 msgid "No Comments"
 msgstr "No Comments"
 
-#: src/layer/tile/CommentListSection.ts:754
+#: src/layer/tile/CommentListSection.ts:766
 msgid "Modify"
 msgstr "Modify"
 
-#: src/layer/tile/CommentListSection.ts:760
+#: src/layer/tile/CommentListSection.ts:772
 #: src/layer/tile/CommentSection.ts:125
 msgid "Reply"
 msgstr "Reply"
 
-#: src/layer/tile/CommentListSection.ts:766
+#: src/layer/tile/CommentListSection.ts:778
 msgid "Remove"
 msgstr "Remove"
 
-#: src/layer/tile/CommentListSection.ts:772
+#: src/layer/tile/CommentListSection.ts:784
 msgid "Remove Thread"
 msgstr "Remove Thread"
 
-#: src/layer/tile/CommentListSection.ts:778
+#: src/layer/tile/CommentListSection.ts:790
 msgid "Resolve"
 msgstr "Resolve"
 
-#: src/layer/tile/CommentListSection.ts:778
+#: src/layer/tile/CommentListSection.ts:790
 msgid "Unresolve"
 msgstr "Unresolve"
 
-#: src/layer/tile/CommentListSection.ts:784
+#: src/layer/tile/CommentListSection.ts:796
 msgid "Unresolve Thread"
 msgstr "Unresolve Thread"
 
-#: src/layer/tile/CommentListSection.ts:784
+#: src/layer/tile/CommentListSection.ts:796
 msgid "Resolve Thread"
 msgstr "Resolve Thread"
 
-#: src/layer/tile/CommentSection.ts:253
+#: src/layer/tile/CommentSection.ts:255
 msgid "Open menu"
 msgstr "Open menu"
 
-#: src/layer/tile/CommentSection.ts:270 src/layer/tile/CommentSection.ts:271
+#: src/layer/tile/CommentSection.ts:272 src/layer/tile/CommentSection.ts:273
 msgid "Accept change"
 msgstr "Accept change"
 
-#: src/layer/tile/CommentSection.ts:277 src/layer/tile/CommentSection.ts:278
+#: src/layer/tile/CommentSection.ts:279 src/layer/tile/CommentSection.ts:280
 msgid "Reject change"
 msgstr "Reject change"
 
-#: src/main.js:97
+#: src/main.js:88
 msgid "Warning! The browser you are using is not supported."
 msgstr "Warning! The browser you are using is not supported."
 
@@ -1910,21 +1915,21 @@ msgstr ""
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
 
-#: src/map/Map.js:232
+#: src/map/Map.js:233
 msgid "Initializing..."
 msgstr "Initializing..."
 
-#: src/map/Map.js:444
+#: src/map/Map.js:426
 #, javascript-format
 msgid "%d seconds ago"
 msgstr "%d seconds ago"
 
-#: src/map/Map.js:447
+#: src/map/Map.js:429
 #, javascript-format
 msgid "%d minutes ago"
 msgstr "%d minutes ago"
 
-#: src/map/Map.js:1467
+#: src/map/Map.js:1449
 msgid "Inactive document - please click to resume editing"
 msgstr "Inactive document - please click to resume editing"
 
@@ -2010,9 +2015,6 @@ msgstr "Creating copy..."
 
 #~ msgid "Remove Column Break"
 #~ msgstr "Remove Column Break"
-
-#~ msgid "I understand the risks"
-#~ msgstr "I understand the risks"
 
 #~ msgid ""
 #~ "<p>Your browser has very limited access to the clipboard, so use these "
