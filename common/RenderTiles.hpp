@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "Png.hpp"
+#include "Delta.hpp"
 #include "Rectangle.hpp"
 #include "TileDesc.hpp"
 
@@ -537,15 +538,23 @@ namespace RenderTiles
 
                         PngCache::CacheData data(new std::vector< char >() );
                         data->reserve(pixmapWidth * pixmapHeight * 1);
-
-                        LOG_TRC("Encode a new png for tile #" << tileIndex);
-                        if (!Png::encodeSubBufferToPNG(pixmap.data(), offsetX, offsetY, pixelWidth, pixelHeight,
-                                                       pixmapWidth, pixmapHeight, *data, mode))
+#ifdef ENABLE_DELTAS
+                        // Can we create a delta ? - FIXME: PngCache of this ? ...
+                        static DeltaGenerator deltaGen;
+                        if (!deltaGen.createDelta(pixmap.data(), offsetX, offsetY, pixelWidth, pixelHeight,
+                                                  pixmapWidth, pixmapHeight,
+                                                  *data, wireId, oldWireId))
+#endif
                         {
-                            // FIXME: Return error.
-                            // sendTextFrameAndLogError("error: cmd=tile kind=failure");
-                            LOG_ERR("Failed to encode tile into PNG.");
-                            return;
+                            LOG_TRC("Encode a new png for tile #" << tileIndex);
+                            if (!Png::encodeSubBufferToPNG(pixmap.data(), offsetX, offsetY, pixelWidth, pixelHeight,
+                                                           pixmapWidth, pixmapHeight, *data, mode))
+                            {
+                                // FIXME: Return error.
+                                // sendTextFrameAndLogError("error: cmd=tile kind=failure");
+                                LOG_ERR("Failed to encode tile into PNG.");
+                                return;
+                            }
                         }
 
                         LOG_TRC("Tile " << tileIndex << " is " << data->size() << " bytes.");
