@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-02 09:39+0200\n"
-"PO-Revision-Date: 2021-05-14 09:00+0000\n"
+"PO-Revision-Date: 2021-11-03 11:43+0000\n"
 "Last-Translator: phlostically <phlostically@mailinator.com>\n"
 "Language-Team: Esperanto <https://hosted.weblate.org/projects/"
 "collabora-online/help/eo/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-help-eo.po\n"
 "X-Pootle-Revision: 2347824\n"
 
@@ -1089,9 +1089,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:140-245
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
-msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Eniga klavo"
+msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Sago maldekstren"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-18
 msgid ""
@@ -1101,9 +1100,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:141-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
-msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Eniga klavo"
+msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Sago dekstren"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-18
 msgid ""
@@ -1113,7 +1111,6 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:142-221
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
 msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Sago supren"
 
@@ -1204,9 +1201,8 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:149-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>*"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
@@ -1215,27 +1211,24 @@ msgid ""
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:150-158
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:151-85
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
-msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Plusklavo"
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
 msgstr ""
 
 #: html/loleaflet-help.html%2Bdiv.div.table.tr.td:152-90
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
-msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Eniga klavo"
+msgstr "Stir</kbd><span class=\"kbd--plus\">+</span><kbd>Minusklavo"
 
 #: html/loleaflet-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"
@@ -2097,7 +2090,6 @@ msgid "All spreadsheets functions and mathematical rules applies."
 msgstr "Aplikiĝas ĉiuj kalkultabelaj funkcioj kaj matematikaj reguloj."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:428-5
-#, fuzzy
 msgid ""
 "The formula language should be extremely familiar to any spreadsheet user, "
 "and is specified in great detail in the <a href=\"https://www.oasis-open.org/"
@@ -2106,8 +2098,8 @@ msgid ""
 msgstr ""
 "La formulara lingvo devus esti tre familiara al uzantoj de kalkultabeloj, "
 "kaj ĝi estas priskribita tre detale en la <a href=\"https://www.oasis-open."
-"org/committees/download.php/16826/openformula-spec-20060221.html\">specifo "
-"OASIS OpenFormula</a>."
+"org/committees/download.php/16826/openformula-spec-20060221.html\" target="
+"\"_blank\" rel=\"noopener noreferrer\">normo OASIS OpenFormula</a>."
 
 #: html/loleaflet-help.html%2Bdiv.div.p:431-5
 msgid ""

@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-02 09:39+0100\n"
-"PO-Revision-Date: 2021-07-09 21:37+0000\n"
+"PO-Revision-Date: 2021-11-03 11:43+0000\n"
 "Last-Translator: phlostically <phlostically@mailinator.com>\n"
 "Language-Team: Esperanto <https://hosted.weblate.org/projects/"
 "collabora-online/ui/eo/>\n"
-"Language: \n"
+"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /eo/libo_online/loleaflet-ui-eo.po\n"
 "X-Pootle-Revision: 3937773\n"
 
@@ -356,7 +356,7 @@ msgstr "La servilo trafis eraron %0 analizante la komandon %1."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "Malŝlosi"
 
 #: src/control/Control.ContextMenu.js:180
 msgid "Delete"
@@ -1127,7 +1127,6 @@ msgstr ""
 
 #: src/control/Control.StatusBar.js:321 src/control/Control.StatusBar.js:360
 #: src/control/Control.StatusBar.js:384
-#, fuzzy
 msgid "Read-only"
 msgstr "Nurlega"
 
@@ -1490,7 +1489,7 @@ msgstr ""
 
 #: src/core/Socket.js:499
 msgid "RELOAD"
-msgstr ""
+msgstr "REŜARGI"
 
 #: src/core/Socket.js:515
 msgid "Served by:"
@@ -1582,15 +1581,15 @@ msgstr "Malĝusta pasvorto. Bonvolu reprovi."
 
 #: src/core/Socket.js:1017
 msgid "Someone"
-msgstr ""
+msgstr "Iu"
 
 #: src/core/Socket.js:1019
 msgid " saved this document as "
-msgstr ""
+msgstr " konservis tiun dokumenton kiel "
 
 #: src/core/Socket.js:1019
 msgid ". Do you want to join?"
-msgstr ""
+msgstr ". Ĉu vi volas aliĝi?"
 
 #: src/core/Socket.js:1028
 msgid "Loading..."
@@ -1612,9 +1611,8 @@ msgid ""
 msgstr "Bedaŭrinde ni ne povas konekti al via dokumento. Bonvolu reprovi."
 
 #: src/core/Socket.js:1430
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "Konektas..."
+msgstr "Rekonektante…"
 
 #: src/core/Socket.js:1435
 msgid "The server has been disconnected."
