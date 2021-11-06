@@ -3,13 +3,26 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CStyleData $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType UNOKey UNOModifier */
+/* global app L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CStyleData $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType UNOKey UNOModifier Uint8ClampedArray Uint8Array */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
 	String.prototype.startsWith = function (str) {
 		return this.slice(0, str.length) === str;
 	};
+}
+
+// debugging aid.
+function hex2string(inData)
+{
+	var hexified = [];
+	var data = new Uint8Array(inData);
+	for (var i = 0; i < data.length; i++) {
+		var hex = data[i].toString(16);
+		var paddedHex = ('00' + hex).slice(-2);
+		hexified.push(paddedHex);
+	}
+	return hexified.join('');
 }
 
 // CStyleData is used to obtain CSS property values from style data
@@ -6433,6 +6446,91 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	_applyDelta: function(tile, delta) {
+		// 'Uint8Array' delta
+		var canvas = document.createElement('canvas');
+		canvas.width = window.tileSize;
+		canvas.height = window.tileSize;
+		var ctx = canvas.getContext('2d');
+
+		var oldImg = new Image();
+		oldImg.src = tile.el.src;
+		ctx.drawImage(oldImg, 0, 0);
+
+		// FIXME; can we operate directly on the image ?
+		var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+		var oldData = new Uint8ClampedArray(imgData.data);
+
+		var pixSize = canvas.width * canvas.height * 4;
+		var offset = 0;
+
+		console.log('Applying a delta of length ' + delta.length + ' pix size: ' + pixSize + '\nhex: ' + hex2string(delta));
+
+		// Green-tinge the old-Data ...
+		if (0)
+		{
+			for (var i = 0; i < pixSize; ++i)
+				oldData[i*4 + 1] = 128;
+		}
+
+		// wipe to grey.
+		if (0)
+		{
+			for (var i = 0; i < pixSize * 4; ++i)
+				imgData.data[i] = 128;
+		}
+
+		// Apply delta.
+		for (var i = 1; i < delta.length;)
+		{
+			switch (delta[i])
+			{
+			case 99: // 'c': // copy row
+				var count = delta[i+1];
+				var srcRow = delta[i+2];
+				var destRow = delta[i+3];
+				i+= 4;
+				console.log('copy ' + count + ' row(s) ' + srcRow + ' to ' + destRow);
+				for (var cnt = 0; cnt < count; ++cnt)
+				{
+					var src = (srcRow + cnt) * canvas.width * 4;
+					var dest = (destRow + cnt) * canvas.width * 4;
+					for (var j = 0; j < canvas.width * 4; ++j)
+					{
+						imgData.data[dest + j] = oldData[src + j];
+					}
+				}
+				break;
+			case 100: // 'd': // new run
+				destRow = delta[i+1];
+				var destCol = delta[i+2];
+				var span = delta[i+3];
+				offset = destRow * canvas.width * 4 + destCol * 4;
+				i += 4;
+				console.log('apply new span of size ' + span + ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
+				span *= 4;
+				imgData.data[offset + 1] = 256; // debug - greener start
+				while (span-- > 0) {
+					imgData.data[offset++] = delta[i++];
+				}
+				imgData.data[offset - 2] = 256; // debug - blue terminator
+				break;
+			default:
+				console.log('ERROR: Unknown code ' + delta[i] +
+					    ' at offset ' + i);
+				i = delta.length;
+				break;
+			}
+		}
+
+		ctx.putImageData(imgData, 0, 0);
+		// FIXME: grim ... can we take as BMP ? as a URL ?
+		// keep as getImageData instead ? and composite ?
+		tile.el.src = canvas.toDataURL('image/png');
+
+		console.log('set new image');
+	},
+
 	_onTileMsgFileBasedView: function (textMsg, img) {
 		var tileMsgObj = app.socket.parseServerCmd(textMsg);
 		var coords = this._tileMsgToCoords(tileMsgObj);
@@ -6524,13 +6622,16 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			tile.wireId = tileMsgObj.wireId;
 			if (this._map._canvasDevicePixelGrid)
-				// browser/test/pixel-test.png
+				// browser/test/pixel-test.png - debugging pixel alignment.
 				tile.el.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAIAAADTED8xAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5QEIChoQ0oROpwAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAACfklEQVR42u3dO67CQBBFwbnI+9/yJbCQLDIkPsZdFRAQjjiv3S8YZ63VNsl6aLvgop5+6vFzZ3QP/uQz2c0RIAAQAAzcASwAmAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACADGBnC8iQ5MABAACAB+zsVYjLZ9dOvd3zzg/QOYADByB/BvUCzBIAAQAFiCwQQAAYAAQAAgABAACAAEAAIAAYAAQAAgABAACAAEAAIAAYAAQAAwIgAXb2ECgABAAPDaI7SLsZhs+79kvX8AEwDsAM8DASzBIAAQAFiCwQQAAYAAQAAgABAAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAI4LSSOAQBgABAAPDVR9C2ToGxNkfww623bZL98/ilUzIBwA4wbCAgABAACAAswWACgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAAAjAESAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAQAAgABgABAACAAEAAIAAGAAEAAIAAQAAgABAACAAGAAEAAIAAQAAgAPiaJAEAAIAB48yNWW6fAWJsj4LRbb9sk++fxSxMA7AAMGwgCAAGAAMASDCYACAAEAAIAAYAAQAAgABAACAAEAAIAASAAR4AAQAAgABAACAAEANeW9e675sAEAAGAAODUO4AFgMnu7t9h2ahA0pgAAAAASUVORK5CYII=';
-			else {
+
+			else if (tile && img && !img.src)
+				this._applyDelta(tile, img);
+
+			else
 				tile.el = img;
-				tile.loaded = true;
-				this._tileReady(coords, null /* err */, tile);
-			}
+			tile.loaded = true;
+			this._tileReady(coords, null /* err */, tile);
 		}
 		L.Log.log(textMsg, 'INCOMING', key);
 
