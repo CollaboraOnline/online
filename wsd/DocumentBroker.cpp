@@ -2384,6 +2384,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
     }
 
     // Check which newly requested tiles need rendering.
+    const auto now = std::chrono::steady_clock::now();
     std::vector<TileDesc> tilesNeedsRendering;
     for (auto& tile : tileCombined.getTiles())
     {
@@ -2395,7 +2396,7 @@ void DocumentBroker::handleTileCombinedRequest(TileCombined& tileCombined,
             // Not cached, needs rendering.
             tilesNeedsRendering.push_back(tile);
             _debugRenderedTileCount++;
-            tileCache().registerTileBeingRendered(tile);
+            tileCache().subscribeToTileRendering(tile, session, now);
         }
     }
 
