@@ -1728,8 +1728,7 @@ void TileCacheTests::testTileProcessed()
 
     } while(gotTile);
 
-    LOK_ASSERT_MESSAGE("We expect two tiles at least!", arrivedTile > 1);
-    LOK_ASSERT_MESSAGE("We expect that wsd can't send all the tiles!", arrivedTile < 25);
+    LOK_ASSERT_EQUAL_MESSAGE("Expected exactly the requested number of tiles", 25, arrivedTile);
 
     for(std::string& tileID : tileIDs)
     {
