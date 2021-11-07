@@ -7,11 +7,11 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-06 21:47+0100\n"
-"PO-Revision-Date: 2021-09-23 11:24+0000\n"
-"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
+"PO-Revision-Date: 2021-11-07 22:01+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -361,7 +361,7 @@ msgstr ""
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "Desbloquear"
 
 #: src/control/Control.ContextMenu.js:180
 msgid "Delete"
@@ -1007,7 +1007,6 @@ msgid "ODF Presentation (.odp)"
 msgstr "Presentación ODF (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:980
-#, fuzzy
 msgid "Reset Zoom"
 msgstr "Restablecer escala"
 
@@ -1177,7 +1176,6 @@ msgid "Move Sheet Right"
 msgstr "Mover hoja a la derecha"
 
 #: src/control/Control.Tabs.js:303
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "¿Confirma que quiere eliminar la hoja «%sheet%»?"
 
@@ -1410,9 +1408,8 @@ msgid "Signature broken"
 msgstr "Firma dañada"
 
 #: src/control/Signing.js:630
-#, fuzzy
 msgid "The signature was valid, but the document has been modified."
-msgstr "La firma era válida pero se modificó el documento"
+msgstr "La firma era válida pero se modificó el documento."
 
 #: src/control/Signing.js:632
 msgid "Signed but document modified"
@@ -1427,9 +1424,8 @@ msgid "Signed but not validated"
 msgstr "Firmado pero no validado"
 
 #: src/control/Signing.js:640
-#, fuzzy
 msgid "The signature is OK, but the document is only partially signed."
-msgstr "La firma es correcta pero el documento se ha firmado solo parcialmente"
+msgstr "La firma es correcta pero el documento se ha firmado solo parcialmente."
 
 #: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
@@ -1440,10 +1436,12 @@ msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"La firma es correcta pero no se pudo validar el certificado y el documento "
+"se ha firmado solo parcialmente."
 
 #: src/control/Signing.js:647
 msgid "Signed but not validated and not all files are signed"
-msgstr ""
+msgstr "Firmado pero no validado y no todos los archivos tienen firma"
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -1554,7 +1552,7 @@ msgstr ""
 
 #: src/core/Socket.js:697
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "Recargar el documento después de cambiar el nombre"
 
 #: src/core/Socket.js:816
 msgid ""
@@ -1623,9 +1621,8 @@ msgid ""
 msgstr "Se produjo un error de conexión con el documento. Inténtelo de nuevo."
 
 #: src/core/Socket.js:1422
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "Conectando…"
+msgstr "Reconectando..."
 
 #: src/core/Socket.js:1427
 msgid "The server has been disconnected."
@@ -1724,10 +1721,10 @@ msgid "Invalid link: '%url'"
 msgstr "Enlace no válido: «%url»"
 
 #: src/errormessages.js:25
-#, fuzzy
 msgid ""
 "You are leaving the editor, are you sure you want to visit the following URL?"
-msgstr "Está por abandonar el editor. ¿Confirma que quiere visitar «%url»?"
+msgstr ""
+"Está por abandonar el editor. ¿Confirma que quiere visitar la siguiente URL?"
 
 #: src/errormessages.js:26
 msgid ""
@@ -1740,13 +1737,15 @@ msgstr ""
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "Limpieza del documento de la última sesión."
 
 #: src/errormessages.js:28
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
 msgstr ""
+"Estamos limpiando este documento de la última sesión, por favor inténtelo "
+"más tarde."
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -1871,7 +1870,7 @@ msgstr "Rechazar cambio"
 
 #: src/main.js:88
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "¡Advertencia! El navegador que está utilizando no es compatible."
 
 #: src/map/Clipboard.js:120
 msgid "To paste outside %productName, please first click the 'download' button"
@@ -1979,6 +1978,10 @@ msgid ""
 "more options</p><p class=\"vex-footnote\">Close popup to ignore paste "
 "special</p>"
 msgstr ""
+"<p>Su navegador tiene un acceso muy limitado al portapapeles</p><p>Por "
+"favor, pulse <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> "
+"para ver más opciones</p><p class=\"vex-footnote\">Cerrar ventana emergente "
+"para ignorar el especial de pegado</p>"
 
 #: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."

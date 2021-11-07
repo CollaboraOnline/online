@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-06 21:47+0100\n"
-"PO-Revision-Date: 2021-10-25 15:01+0000\n"
-"Last-Translator: sebastiaanveld <sebastiaan.veld@gmail.com>\n"
+"PO-Revision-Date: 2021-11-07 22:01+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1007,7 +1007,6 @@ msgid "ODF Presentation (.odp)"
 msgstr "ODF presentatie (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:980
-#, fuzzy
 msgid "Reset Zoom"
 msgstr "Zoom herstellen"
 
@@ -1177,7 +1176,6 @@ msgid "Move Sheet Right"
 msgstr "Blad naar rechts verplaatsen"
 
 #: src/control/Control.Tabs.js:303
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Weet u zeker dat u blad %sheet% wilt verwijderen?"
 
@@ -1411,9 +1409,8 @@ msgid "Signature broken"
 msgstr "Handtekening beschadigd"
 
 #: src/control/Signing.js:630
-#, fuzzy
 msgid "The signature was valid, but the document has been modified."
-msgstr "De handtekening is geldig, maar het document is gewijzigd"
+msgstr "De handtekening is geldig, maar het document is gewijzigd."
 
 #: src/control/Signing.js:632
 msgid "Signed but document modified"
@@ -1429,10 +1426,9 @@ msgid "Signed but not validated"
 msgstr "Ondertekend maar niet gevalideerd"
 
 #: src/control/Signing.js:640
-#, fuzzy
 msgid "The signature is OK, but the document is only partially signed."
 msgstr ""
-"De ondertekening is OK, maar het document is maar gedeeltelijk ondertekend"
+"De ondertekening is OK, maar het document is maar gedeeltelijk ondertekend."
 
 #: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
@@ -1443,10 +1439,13 @@ msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"De handtekening is OK, maar het certificaat kon niet gevalideerd worden en "
+"het document is slechts gedeeltelijk ondertekend."
 
 #: src/control/Signing.js:647
 msgid "Signed but not validated and not all files are signed"
 msgstr ""
+"Ondertekend maar niet gevalideerd en niet alle bestanden zijn ondertekend"
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -1724,7 +1723,6 @@ msgid "Invalid link: '%url'"
 msgstr "Ongeldige koppeling: '%url'"
 
 #: src/errormessages.js:25
-#, fuzzy
 msgid ""
 "You are leaving the editor, are you sure you want to visit the following URL?"
 msgstr "U verlaat de editor, weet u zeker dat u %url wilt bezoeken?"

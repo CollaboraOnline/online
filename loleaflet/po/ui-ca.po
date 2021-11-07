@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-06 21:47+0100\n"
-"PO-Revision-Date: 2021-10-21 10:21+0000\n"
-"Last-Translator: Joan Montané <joan@montane.cat>\n"
+"PO-Revision-Date: 2021-11-07 22:01+0000\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -361,7 +361,7 @@ msgstr "Aquest servidor ha trobat un error %0 en processar l'ordre %1."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "Desbloca"
 
 #: src/control/Control.ContextMenu.js:180
 msgid "Delete"
@@ -1007,7 +1007,6 @@ msgid "ODF Presentation (.odp)"
 msgstr "Presentació ODF (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:980
-#, fuzzy
 msgid "Reset Zoom"
 msgstr "Reinicia el zoom"
 
@@ -1177,7 +1176,6 @@ msgid "Move Sheet Right"
 msgstr "Mou el full cap a la dreta"
 
 #: src/control/Control.Tabs.js:303
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Esteu segur que voleu suprimir el full «%sheet%»?"
 
@@ -1410,9 +1408,8 @@ msgid "Signature broken"
 msgstr "La signatura és malmesa"
 
 #: src/control/Signing.js:630
-#, fuzzy
 msgid "The signature was valid, but the document has been modified."
-msgstr "La signatura era vàlida, però el document s'ha modificat"
+msgstr "La signatura era vàlida, però el document s'ha modificat."
 
 #: src/control/Signing.js:632
 msgid "Signed but document modified"
@@ -1427,10 +1424,9 @@ msgid "Signed but not validated"
 msgstr "Signat però no validat"
 
 #: src/control/Signing.js:640
-#, fuzzy
 msgid "The signature is OK, but the document is only partially signed."
 msgstr ""
-"La signatura és correcta, però el document només s'ha signat parcialment"
+"La signatura és correcta, però el document només s'ha signat parcialment."
 
 #: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
@@ -1441,10 +1437,12 @@ msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"La signatura és correcta, però no s'ha pogut validar el certificat i el "
+"document només s'ha signat parcialment."
 
 #: src/control/Signing.js:647
 msgid "Signed but not validated and not all files are signed"
-msgstr ""
+msgstr "Signat però no validat i no s'han signat tots els fitxers"
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -1726,10 +1724,10 @@ msgid "Invalid link: '%url'"
 msgstr "L'enllaç no és vàlid: «%url»"
 
 #: src/errormessages.js:25
-#, fuzzy
 msgid ""
 "You are leaving the editor, are you sure you want to visit the following URL?"
-msgstr "Esteu a punt d'abandonar l'editor. Segur que voleu visitar %url?"
+msgstr ""
+"Esteu a punt d'abandonar l'editor. Segur que voleu visitar la següent URL?"
 
 #: src/errormessages.js:26
 msgid ""
@@ -1871,7 +1869,7 @@ msgstr "Rebutja el canvi"
 
 #: src/main.js:88
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "Advertiment! El navegador que utilitzeu no és compatible."
 
 #: src/map/Clipboard.js:120
 msgid "To paste outside %productName, please first click the 'download' button"
