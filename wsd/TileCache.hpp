@@ -151,12 +151,6 @@ private:
     /// Lookup tile in our cache.
     TileCache::Tile findTile(const TileDesc &desc);
 
-    /// Lookup tile in our stream cache.
-    TileCache::Tile findStreamTile(StreamType type, const std::string &fileName);
-
-    /// Removes the named stream from the cache
-    void removeStream(StreamType type, const std::string& fileName);
-
     static std::string cacheFileName(const TileDesc& tileDesc);
     static bool parseCacheFileName(const std::string& fileName, int& part, int& width, int& height, int& tilePosX, int& tilePosY, int& tileWidth, int& tileHeight, int& nviewid);
 

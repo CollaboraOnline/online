@@ -364,16 +364,6 @@ std::pair<int, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string&
     return std::pair<int, Util::Rectangle>(-1, Util::Rectangle(0, 0, 0, 0));
 }
 
-void TileCache::removeStream(StreamType type, const std::string& fileName)
-{
-    auto it = _streamCache[type].find(fileName);
-    if (it != _streamCache[type].end())
-    {
-        LOG_INF("Removed file: " << fileName);
-        _streamCache[type].erase(it);
-    }
-}
-
 std::string TileCache::cacheFileName(const TileDesc& tile)
 {
     std::ostringstream oss;
