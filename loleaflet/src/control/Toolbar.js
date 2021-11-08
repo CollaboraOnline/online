@@ -580,7 +580,7 @@ L.Map.include({
 			containerDiv += data;
 			containerDiv += '</div>';
 			data = containerDiv;
-			btnText = 'Dismiss';
+			btnText = _('Dismiss');
 			hasDismissBtn = true;
 		}
 
@@ -595,7 +595,7 @@ L.Map.include({
 			closeAllOnPopState: false,
 			focusFirstInput: false, // Needed to avoid auto-scroll to the bottom
 			buttons: !hasDismissBtn ? {} : [
-				$.extend({}, vex.dialog.buttons.YES, { text: _(btnText) }),
+				$.extend({}, vex.dialog.buttons.YES, { text: btnText }),
 			],
 			afterOpen: function() {
 				var $vexContent = $(this.contentEl);
