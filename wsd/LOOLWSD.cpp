@@ -2363,7 +2363,7 @@ private:
             if (docBroker->isAsyncSaveInProgress())
                 LOG_DBG("Don't stop DocumentBroker on disconnect: async saving in progress.");
             else
-                docBroker->stop("docisdisconnected");
+                docBroker->stop("docdisconnected");
         }
     }
 
