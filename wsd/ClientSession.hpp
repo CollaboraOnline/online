@@ -82,12 +82,18 @@ public:
 
     bool sendTile(const std::string &header, const TileCache::Tile &tile)
     {
+        // FIXME: this needs to send deltas based on a wid parameter in a range
+        return sendBlob(header, tile->keyframe());
+    }
+
+    bool sendBlob(const std::string &header, const TileCache::Blob &blob)
+    {
         // FIXME: performance - optimize away this copy ...
         std::vector<char> output;
 
-        output.resize(header.size() + tile->size());
+        output.resize(header.size() + blob->size());
         std::memcpy(output.data(), header.data(), header.size());
-        std::memcpy(output.data() + header.size(), tile->data(), tile->size());
+        std::memcpy(output.data() + header.size(), blob->data(), blob->size());
 
         return sendBinaryFrame(output.data(), output.size());
     }

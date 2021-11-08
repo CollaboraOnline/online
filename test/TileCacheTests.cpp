@@ -248,7 +248,7 @@ void TileCacheTests::testSimple()
     // Find Tile
     tileData = tc.lookupTile(tile);
     LOK_ASSERT_MESSAGE("tile not found when expected", tileData);
-    LOK_ASSERT_MESSAGE("cached tile corrupted", data == *tileData);
+    LOK_ASSERT_MESSAGE("cached tile corrupted", data == *tileData->keyframe());
 
     // Invalidate Tiles
     tc.invalidateTiles("invalidatetiles: EMPTY", nviewid);
