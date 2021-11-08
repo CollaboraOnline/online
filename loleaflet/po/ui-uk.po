@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-06 21:47+0100\n"
+"POT-Creation-Date: 2021-11-08 09:39+0100\n"
 "PO-Revision-Date: 2021-11-07 22:01+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: uk\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.9-dev\n"
 "X-Pootle-Path: /uk/libo_online/loleaflet-ui-uk.po\n"
 "X-Pootle-Revision: 3938227\n"
@@ -142,7 +142,7 @@ msgstr "Графік мережі"
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:248
 #: src/control/Control.NotebookbarDraw.js:24
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/layer/tile/CommentListSection.ts:383
+#: src/layer/tile/CommentListSection.ts:387
 #: src/layer/tile/CommentSection.ts:122
 msgid "Save"
 msgstr "Зберегти"
@@ -271,7 +271,7 @@ msgstr "OK"
 #: src/control/Control.Menubar.js:1613 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
-#: src/layer/tile/CommentListSection.ts:384
+#: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Скасувати"
@@ -385,7 +385,7 @@ msgstr "Індекс"
 #: src/control/Control.JSDialogBuilder.js:2102
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
-#: src/layer/tile/CommentListSection.ts:819
+#: src/layer/tile/CommentListSection.ts:820
 msgid "Comment"
 msgstr "Коментар"
 
@@ -1460,6 +1460,10 @@ msgstr "Перейменування..."
 msgid "I understand the risks"
 msgstr "Я розумію ризики"
 
+#: src/control/Toolbar.js:583
+msgid "Dismiss"
+msgstr ""
+
 #: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
@@ -1817,36 +1821,36 @@ msgstr "Функції"
 msgid "No Comments"
 msgstr "Коментарі відсутні"
 
-#: src/layer/tile/CommentListSection.ts:766
+#: src/layer/tile/CommentListSection.ts:767
 msgid "Modify"
 msgstr "Змінити"
 
-#: src/layer/tile/CommentListSection.ts:772
+#: src/layer/tile/CommentListSection.ts:773
 #: src/layer/tile/CommentSection.ts:125
 msgid "Reply"
 msgstr "Відповідь"
 
-#: src/layer/tile/CommentListSection.ts:778
+#: src/layer/tile/CommentListSection.ts:779
 msgid "Remove"
 msgstr "Видалити"
 
-#: src/layer/tile/CommentListSection.ts:784
+#: src/layer/tile/CommentListSection.ts:785
 msgid "Remove Thread"
 msgstr "Вилучити ланцюжок"
 
-#: src/layer/tile/CommentListSection.ts:790
+#: src/layer/tile/CommentListSection.ts:791
 msgid "Resolve"
 msgstr "Вирішити"
 
-#: src/layer/tile/CommentListSection.ts:790
+#: src/layer/tile/CommentListSection.ts:791
 msgid "Unresolve"
 msgstr "Позначити не розв'язаним"
 
-#: src/layer/tile/CommentListSection.ts:796
+#: src/layer/tile/CommentListSection.ts:797
 msgid "Unresolve Thread"
 msgstr "Позначити ланцюжок не розв'язаним"
 
-#: src/layer/tile/CommentListSection.ts:796
+#: src/layer/tile/CommentListSection.ts:797
 msgid "Resolve Thread"
 msgstr "Позначити ланцюжок розв'язаним"
 

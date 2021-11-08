@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-06 21:47+0100\n"
+"POT-Creation-Date: 2021-11-08 09:39+0100\n"
 "PO-Revision-Date: 2021-04-26 23:46+0000\n"
 "Last-Translator: HelaBasa <R45XvezA@protonmail.ch>\n"
 "Language-Team: Sinhala <https://hosted.weblate.org/projects/collabora-online/"
@@ -139,7 +139,7 @@ msgstr ""
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:248
 #: src/control/Control.NotebookbarDraw.js:24
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/layer/tile/CommentListSection.ts:383
+#: src/layer/tile/CommentListSection.ts:387
 #: src/layer/tile/CommentSection.ts:122
 msgid "Save"
 msgstr ""
@@ -267,7 +267,7 @@ msgstr ""
 #: src/control/Control.Menubar.js:1613 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
-#: src/layer/tile/CommentListSection.ts:384
+#: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr ""
@@ -380,7 +380,7 @@ msgstr ""
 #: src/control/Control.JSDialogBuilder.js:2102
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
-#: src/layer/tile/CommentListSection.ts:819
+#: src/layer/tile/CommentListSection.ts:820
 msgid "Comment"
 msgstr ""
 
@@ -1450,6 +1450,10 @@ msgstr ""
 msgid "I understand the risks"
 msgstr ""
 
+#: src/control/Toolbar.js:583
+msgid "Dismiss"
+msgstr ""
+
 #: src/control/Toolbar.js:648
 msgid ""
 "We are sorry, the information about the latest updates is not available."
@@ -1759,36 +1763,36 @@ msgstr ""
 msgid "No Comments"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:766
+#: src/layer/tile/CommentListSection.ts:767
 msgid "Modify"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:772
+#: src/layer/tile/CommentListSection.ts:773
 #: src/layer/tile/CommentSection.ts:125
 msgid "Reply"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:778
+#: src/layer/tile/CommentListSection.ts:779
 msgid "Remove"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:784
+#: src/layer/tile/CommentListSection.ts:785
 msgid "Remove Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:790
+#: src/layer/tile/CommentListSection.ts:791
 msgid "Resolve"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:790
+#: src/layer/tile/CommentListSection.ts:791
 msgid "Unresolve"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:796
+#: src/layer/tile/CommentListSection.ts:797
 msgid "Unresolve Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:796
+#: src/layer/tile/CommentListSection.ts:797
 msgid "Resolve Thread"
 msgstr ""
 
