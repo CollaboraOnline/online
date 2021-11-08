@@ -144,19 +144,20 @@ namespace Quarantine
 
         int result_link = link(sourcefilePath.c_str(),linkedFilePath.c_str());
 
-        if(result_link == 0)
+        if (result_link == 0)
         {
             LOOLWSD::QuarantineMap[docBroker->getDocKey()].emplace_back(linkedFilePath);
             clearOldQuarantineVersions(docKey);
             makeQuarantineSpace();
 
-            LOG_INF("Quarantined " + sourcefilePath + " to " + linkedFilePath);
+            LOG_INF("Quarantined " << sourcefilePath << " to " << linkedFilePath);
             return true;
         }
         else
         {
-            std::string error(strerror(errno));
-            LOG_ERR("Quarantining of file " + sourcefilePath + " to " + linkedFilePath + " failed. " + error);
+            int saved_errno = errno;
+            LOG_ERR("Quarantining of file " << sourcefilePath << " to " << linkedFilePath << " failed: "
+                    << Util::symbolicErrno(saved_errno) << ": " << std::strerror(saved_errno));
             return false;
         }
 
