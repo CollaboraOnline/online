@@ -238,22 +238,31 @@ m4_ifelse(MOBILEAPP,[true],
       <div id="mobile-wizard-content"></div>
     </div>
 
-    <!-- Remove if you don't want the About dialog -->
-    <div id="about-dialog" style="display:none; text-align: center; user-select: text">
-      <h1 id="product-name">Collabora Online</h1>
-      <div id="product-logo"></div>
+		<!-- Remove if you don't want the About dialog -->
+    <div id="about-dialog" style="display:none; user-select: text">
+      <div id="about-dialog-header">
+        <fig id="integrator-logo"></fig>
+        <h1 id="product-name">Collabora Online</h1>
+      </div>
       <hr/>
-      <p id="product-string"></p>
-      <h3>LOOLWSD</h3>
-      <div id="loolwsd-version"></div>
-      <div id="loolwsd-id"></div>
-      <h3>LOKit</h3>
-      <div id="lokit-version"></div>
-      m4_ifelse(MOBILEAPP,[],[<div id="os-info" style="text-align:center"></div>])
-      <div id="slow-proxy"></div>
-      <p id="log-level-state">
-      <p id="trace-event-state">
-      <p>Copyright © _YEAR_, VENDOR.</p>
+      <div id="about-dialog-container">
+        <div id="about-dialog-logos">
+          <fig id="product-logo"></fig>
+          <fig id="lokit-logo"></fig>
+        </div>
+        <div id="about-dialog-info-container">
+          <div id="about-dialog-info">
+            <div> LOOLWSD version:</div>
+            <div id="loolwsd-version"></div>
+            <div id="loolwsd-id" style="visibility: hidden;"></div>
+            <div>LOKit version:</div>
+            <div id="lokit-version"></div>
+            m4_ifelse(MOBILEAPP,[],[<div id="os-info"></div>])
+            <div id="slow-proxy"></div>
+            <p>Copyright © _YEAR_, VENDOR.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script>
