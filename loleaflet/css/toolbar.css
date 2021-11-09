@@ -7,14 +7,13 @@
 	z-index: 999;
 	overflow: visible !important;
 	background-color: white;
-	border-bottom: 1px solid var(--gray-color);
 }
 
 #toolbar-down {
 	left: 0;
 	right: 0;
 	text-align: center;
-	padding: 0;
+	padding: 0 !important;
 	bottom: 0;
 	z-index: 11;
 	border-top: 1px solid #bbbbbb;
@@ -22,7 +21,6 @@
 }
 #toolbar-down *{
 	font-family: var(--loleaflet-font);
-	max-height: 35px !important;
 }
 #tb_actionbar_item_LanguageStatus table table td:first-of-type{
 	min-width: max-content !important;

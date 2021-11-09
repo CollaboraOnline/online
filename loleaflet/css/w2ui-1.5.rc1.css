@@ -2942,6 +2942,7 @@ button.w2ui-btn-small:focus:before {
   min-width: 24px;
   border: 1px solid transparent;
   background-color: transparent;
+  padding: 2px;
 }
 .w2ui-toolbar table.w2ui-button .w2ui-tb-image {
   width: 22px;

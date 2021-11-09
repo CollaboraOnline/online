@@ -3,9 +3,6 @@
 		border-radius: 0px;
 		border: 1px solid #bbbbbb !important;
 	}
-	#toolbar-up{
-		top: -1px;
-	}
 }
 #tb_actionbar_item_redo.disabled, #tb_actionbar_item_undo.disabled, #tb_actionbar_item_mobile_wizard.disabled, #tb_actionbar_item_insertion_mobile_wizard.disabled {
 	display: none;

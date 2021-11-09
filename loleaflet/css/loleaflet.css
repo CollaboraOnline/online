@@ -26,7 +26,7 @@
 	width: 1px;
 }
 #document-container.readonly.mobile.spreadsheet-doctype {
-	top: 36px;
+	top: 40px;
 	position: fixed;
 }
 #document-container {
@@ -204,7 +204,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 #toolbar-wrapper {
 	table-layout: fixed;
-	border-collapse: collapse;
+	border-spacing: 0;
 	width: 100%;
 	border-top: none;
 	z-index: 11 !important;
