@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Editing Operations', function() {
+describe.skip('Editing Operations', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function() {
