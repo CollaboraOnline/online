@@ -2053,7 +2053,6 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
 #if !MOBILEAPP
             LOOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
 #endif
-
             if (_docState.isUnloadRequested())
             {
                 // We must be the last session, flag to destroy if unload is requested.
@@ -2064,12 +2063,18 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
                         << " sessions, marking to destroy.");
             }
 
+            std::shared_ptr<ClientSession> session = it->second;
+            const bool lastEditableSession =
+                (!session->isReadOnly() || session->isAllowChangeComments()) &&
+                !haveAnotherEditableSession(id);
+
             LOG_TRC("Disconnect session internal " << id <<
+                    ", LastEditableSession: " << lastEditableSession <<
                     " destroy? " << _docState.isMarkedToDestroy() <<
                     " locked? " << _lockCtx->_isLocked);
 
-            if (_docState.isMarkedToDestroy() && // last session to remove; FIXME: Editable?
-                _lockCtx->_isLocked && _storage)
+            // Unlock the document, if last editable sessions, before we lose a token that can unlock.
+            if (lastEditableSession && _lockCtx->_isLocked && _storage)
             {
                 if (!_storage->updateLockState(it->second->getAuthorization(), it->second->getCookies(), *_lockCtx, false))
                     LOG_ERR("Failed to unlock!");
