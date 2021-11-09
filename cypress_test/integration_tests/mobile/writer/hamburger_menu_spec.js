@@ -164,7 +164,7 @@ describe('Trigger hamburger menu options.', function() {
 			.should('contain.text', 'q');
 	});
 
-	it('Repair.', function() {
+	it.skip('Repair.', function() {
 		// First change
 		helper.typeIntoDocument('q');
 

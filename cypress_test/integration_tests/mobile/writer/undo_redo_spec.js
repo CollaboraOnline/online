@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe('Editing Operations', function() {
+describe.skip('Editing Operations', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function() {

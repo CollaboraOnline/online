@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Repair Document', function() {
+describe.skip('Repair Document', function() {
 	var testFileName = 'repair_doc.odt';
 
 	beforeEach(function() {
