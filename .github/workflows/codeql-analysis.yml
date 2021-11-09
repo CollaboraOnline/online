@@ -13,6 +13,7 @@ on:
     branches: [master]
     paths-ignore:
       - '**/*w2ui-1.5.rc1.js'
+      - 'loleaflet/'
   schedule:
     - cron: '0 22 * * 3'
 
