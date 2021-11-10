@@ -119,13 +119,13 @@ can specify the root of this fileserver using the --o:file_server_root_path
 flag in loolwsd commandline.  By default, if you do not specify this
 flag, the parent directory of loolwsd/ is assumed to be the
 file_server_root_path. So, for development purposes, you can access the
-leaflet files (using /browser/), but it is advised to explicitly set
+COOL files (using /browser/), but it is advised to explicitly set
 the file_server_root_path to prevent any unwanted files from reading,
 especially when lool is deployed for normal public usage on servers.
 
-Please note that it is necessary that all the leaflet files that are
+Please note that it is necessary that all the COOL files that are
 meant to be served is under a directory named 'browser'. Since, the
-browser files, in lool git repo, are itself in a directory named
+COOL files, in the git repo, are itself in a directory named
 'browser', this would work out of the box for development purposes.
 
 If you run loolwsd on HTTPS, you have to set up your own private key
