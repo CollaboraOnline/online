@@ -5,15 +5,17 @@
 # or to provide custom queries or build logic.
 name: "CodeQL"
 
+# Ignore these from being scanned
+paths-ignore:
+  - '**/*w2ui-1.5.rc1.js'
+  - 'loleaflet/'
+
 on:
   push:
     branches: [master]
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [master]
-    paths-ignore:
-      - '**/*w2ui-1.5.rc1.js'
-      - 'loleaflet/'
   schedule:
     - cron: '0 22 * * 3'
 
