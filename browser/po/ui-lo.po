@@ -18,8 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.4-dev\n"
-"X-Pootle-Path: /lo/libo_online/cool-ui-lo.po\n"
-"X-Pootle-Revision: 3937965\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"

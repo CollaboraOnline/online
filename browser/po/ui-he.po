@@ -19,8 +19,6 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
 "X-Generator: Weblate 4.9-dev\n"
-"X-Pootle-Path: /he/libo_online/cool-ui-he.po\n"
-"X-Pootle-Revision: 3939478\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"

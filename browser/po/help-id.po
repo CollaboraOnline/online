@@ -13,8 +13,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Translate Toolkit 2.5.0\n"
-"X-Pootle-Path: /id/libo_online/loleaflet-help-id.po\n"
-"X-Pootle-Revision: 3755739\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"

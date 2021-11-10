@@ -11,8 +11,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Translate Toolkit 2.5.0\n"
-"X-Pootle-Path: /brx/libo_online/loleaflet-help-brx.po\n"
-"X-Pootle-Revision: 826933\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"

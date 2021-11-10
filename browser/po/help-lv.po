@@ -14,8 +14,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n % 10 == 0 || n % 100 >= 11 && n % 100 <= "
 "19) ? 0 : ((n % 10 == 1 && n % 100 != 11) ? 1 : 2);\n"
 "X-Generator: Translate Toolkit 2.5.0\n"
-"X-Pootle-Path: /lv/libo_online/loleaflet-help-lv.po\n"
-"X-Pootle-Revision: 3739888\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"

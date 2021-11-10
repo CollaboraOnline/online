@@ -19,8 +19,6 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n % 100 == 1) ? 0 : ((n % 100 == 2) ? 1 : "
 "((n % 100 == 3 || n % 100 == 4) ? 2 : 3));\n"
 "X-Generator: Weblate 4.3-dev\n"
-"X-Pootle-Path: /hsb/libo_online/cool-ui-hsb.po\n"
-"X-Pootle-Revision: 3938371\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
