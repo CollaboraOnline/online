@@ -2,12 +2,12 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 # Translators:
 # Andras Timar <andras.timar@collabora.com>, 2020
 # Szymon Kłos <eszkadev@gmail.com>, 2020
 # No Ne, 2020
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -1467,7 +1467,7 @@ msgstr "Rozumiem ryzyko"
 
 #: src/control/Toolbar.js:583
 msgid "Dismiss"
-msgstr ""
+msgstr "Odrzuć"
 
 #: src/control/Toolbar.js:648
 msgid ""

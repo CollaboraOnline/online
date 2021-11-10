@@ -2699,19 +2699,19 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h4:632-5
 msgid "How can I copy the formatting of existing cells to new ones?"
-msgstr ""
+msgstr "איך אפשר להעתיק את העיצוב של תאים קיימים לתאים חדשים?"
 
 #: html/cool-help.html%2Bdiv.div.p:633-5
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
-msgstr ""
+msgstr "אפשר לעשות זאת בקלות באמצעות כלי מברשת הצבע שבסרגל הכלים."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:635-11
 msgid "Format the source cell with the font, color background and more."
-msgstr ""
+msgstr "יש לעצב את תא המקור בגופן ובצבע הרקע הרצויים וכולי."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:637-11
 msgid "Select the cells you want to format. Release the mouse button."
-msgstr ""
+msgstr "לבחור את התאים שברצונך לעצב. לשחרר את כפתור העכבר."
 
 #: html/cool-help.html%2Bdiv.div.h4:639-5
 msgid "What is “Clear Direct Formatting” icon?"

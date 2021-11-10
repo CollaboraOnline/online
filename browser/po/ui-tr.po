@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 # Translators:
 # Andras Timar <andras.timar@collabora.com>, 2020
 # Muhammet Kara <muhammetk@gmail.com>, 2020
 # Açıkkaynak Yazılım <bilgi@acikkaynak.com.tr>, 2020
 # Dr. Ayhan YALÇINSOY <ayhanyalcinsoy@pisilinux.org>, 2020
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -1463,7 +1463,7 @@ msgstr "Risklerin farkındayım"
 
 #: src/control/Toolbar.js:583
 msgid "Dismiss"
-msgstr ""
+msgstr "Kapat"
 
 #: src/control/Toolbar.js:648
 msgid ""
