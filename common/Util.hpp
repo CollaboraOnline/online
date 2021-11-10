@@ -1332,6 +1332,29 @@ int main(int argc, char**argv)
         return std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now()).time_since_epoch().count();
     }
 
+    /// Convert a vector to a string. Useful for conversion in templates.
+    template <typename T> inline std::string toString(const T& x)
+    {
+        std::ostringstream oss;
+        oss << x;
+        return oss.str();
+    }
+
+    /// Convert a vector to a string. Useful for conversion in templates.
+    inline std::string toString(const std::vector<char>& x)
+    {
+        return std::string(x.data(), x.size());
+    }
+
+    /// No-op string conversion. Useful for conversion in templates.
+    inline std::string toString(const std::string& s) { return s; }
+
+    /// Create a string from a literal. Useful for conversion in templates.
+    template <std::size_t N> inline std::string toString(const char (&s)[N])
+    {
+        return std::string(s);
+    }
+
     /**
      * Constructs an object of type T and wraps it in a std::unique_ptr.
      *
