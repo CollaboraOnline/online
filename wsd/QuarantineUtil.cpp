@@ -90,19 +90,26 @@ namespace Quarantine
 
         std::sort(files.begin(), files.end());
 
+        std::size_t timeLimit = LOOLWSD::getConfigValue<std::size_t>("quarantine_files.expiry_min", 30);
+        const auto timeNow = std::chrono::system_clock::now();
+        const auto ts = std::chrono::duration_cast<std::chrono::seconds>(timeNow.time_since_epoch()).count();
+
         std::size_t currentSize = quarantineSize();
-        std::size_t index = 0;
-        while (currentSize >= sizeLimit && !files.empty())
+        auto index = files.begin();
+        while (index != files.end() && !files.empty())
         {
-            FileUtil::Stat file(LOOLWSD::QuarantinePath + files[index]);
-            if(file.hardLinkCount() != 1)
+            FileUtil::Stat file(LOOLWSD::QuarantinePath + *index);
+            const auto modifyTime = std::chrono::duration_cast<std::chrono::seconds>(file.modifiedTimepoint().time_since_epoch()).count();
+            bool isExpired = static_cast<std::size_t>(ts - modifyTime) > timeLimit * 60;
+
+            if ( (file.hardLinkCount() == 1) && (isExpired || (currentSize >= sizeLimit)) )
             {
-                index++;
-                continue;
+                currentSize -= file.size();
+                FileUtil::removeFile(LOOLWSD::QuarantinePath + *index, true);
+                files.erase(index);
             }
-            currentSize -= file.size();
-            FileUtil::removeFile(LOOLWSD::QuarantinePath + files[index], true);
-            files.erase(files.begin());
+            else
+                index++;
         }
     }
 
