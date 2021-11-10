@@ -51,13 +51,6 @@ Requires:       systemd libopenssl1_0_0 libpcre1 libz1 libcap2 libpng12-0 %{fill
 Requires:       fontconfig libbz2-1 libexpat1 libfreetype6 libpng16-16 libuuid1 openssh
 %endif
 
-%if 0%{?name_suffix:1}
-Provides:       cool = 1.5.8, loolwsd
-%else
-Provides:       cool = 1.5.8
-%endif
-Obsoletes:      cool <= 1.5.8
-
 %description
 
 %if 0%{?suse_version}
