@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe.skip('Editing Operations', function() {
+describe('Editing Operations', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function() {
@@ -20,7 +20,7 @@ describe.skip('Editing Operations', function() {
 
 		helper.selectAllText();
 
-		helper.expectTextForClipboard('\nHello Worl');
+		helper.expectTextForClipboard('\nHello \n');
 	}
 
 	it('Undo', function() {
@@ -38,16 +38,16 @@ describe.skip('Editing Operations', function() {
 	});
 
 	it('Repair Document', function() {
-		helper.typeIntoDocument('Hello');
+		helper.typeIntoDocument('Hello World');
 
 		cy.get('#menu-editmenu').click()
 			.get('#menu-repair').click();
 
 		cy.get('.leaflet-popup-content table').should('exist');
 
-		cy.contains('.leaflet-popup-content table tbody tr','Typing: “e”')
+		cy.contains('.leaflet-popup-content table tbody tr','Typing: “World”')
 			.dblclick();
 
-		helper.expectTextForClipboard('\nH');
+		helper.expectTextForClipboard('\nHello');
 	});
 });
