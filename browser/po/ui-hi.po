@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 09:39+0100\n"
+"POT-Creation-Date: 2021-11-10 20:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1526,46 +1526,46 @@ msgstr ""
 msgid "Server is now reachable..."
 msgstr ""
 
-#: src/core/Socket.js:496
+#: src/core/Socket.js:497
 msgid "RELOAD"
 msgstr ""
 
-#: src/core/Socket.js:512
+#: src/core/Socket.js:515
 msgid "Served by:"
 msgstr ""
 
-#: src/core/Socket.js:517
+#: src/core/Socket.js:520
 msgid "Unsupported server version."
 msgstr "असमर्थित सर्वर संस्करण"
 
-#: src/core/Socket.js:634
+#: src/core/Socket.js:637
 msgid "Session terminated by document owner"
 msgstr "सत्र दस्तावेज़ मालिक द्वारा खत्म कर दिया गया है"
 
-#: src/core/Socket.js:639
+#: src/core/Socket.js:642
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "निष्क्रिय दस्तावेज़ - फिर लोड करने आैर दुबारा संपादन करने के लिये क्लिक करें।"
 
-#: src/core/Socket.js:641
+#: src/core/Socket.js:644
 #, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "निष्क्रिय दस्तावेज़ - फिर लोड करने आैर दुबारा संपादन करने के लिये क्लिक करें।"
 
-#: src/core/Socket.js:649
+#: src/core/Socket.js:652
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "सर्वर रखरखाव के लिये बंद हो रहा है (अपने आप सहेज दिया जायेगा)"
 
-#: src/core/Socket.js:653
+#: src/core/Socket.js:656
 msgid "Oops, there is a problem connecting the document"
 msgstr "उफ़, दस्तावेज़ से संपर्क करने में कुछ गडबड है।"
 
-#: src/core/Socket.js:657
+#: src/core/Socket.js:660
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 
-#: src/core/Socket.js:685
+#: src/core/Socket.js:688
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1573,7 +1573,7 @@ msgstr ""
 "दस्तावेज़ भंडारण में बदल गया है। अब नया दस्तावेज़ खोला जा रहा है। आपका संस्"
 "करण संशोधन के रूप में उपलब्ध है।"
 
-#: src/core/Socket.js:691
+#: src/core/Socket.js:694
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1581,69 +1581,69 @@ msgstr ""
 "पुराना संशोधन खोला जा रहा है। कोइ भी ना सहेजा हुआ बदलाव संस्करण इतिहास मे "
 "उपलब्ध रहेगा।"
 
-#: src/core/Socket.js:697
+#: src/core/Socket.js:700
 msgid "Reloading the document after rename"
 msgstr ""
 
-#: src/core/Socket.js:816
+#: src/core/Socket.js:819
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
 
-#: src/core/Socket.js:820
+#: src/core/Socket.js:823
 msgid "Discard"
 msgstr ""
 
-#: src/core/Socket.js:825
+#: src/core/Socket.js:828
 msgid "Overwrite"
 msgstr ""
 
-#: src/core/Socket.js:830
+#: src/core/Socket.js:833
 msgid "Save to new file"
 msgstr ""
 
-#: src/core/Socket.js:900
+#: src/core/Socket.js:903
 msgid "Document requires password to view."
 msgstr "दस्तावेज़ को खोलने के लिये कूटशब्द चाहिये।"
 
-#: src/core/Socket.js:903
+#: src/core/Socket.js:906
 msgid "Document requires password to modify."
 msgstr "दस्तावेज़ को बदलने के लिये कूटशब्द चाहिये।"
 
-#: src/core/Socket.js:905
+#: src/core/Socket.js:908
 msgid "Hit Cancel to open in view-only mode."
 msgstr "केवल देकनें के लिये रद्द दबायें"
 
-#: src/core/Socket.js:909
+#: src/core/Socket.js:912
 msgid "Wrong password provided. Please try again."
 msgstr "गलत कूटशब्द दिया गया है। कृप्या फिर प्रयास करें।"
 
-#: src/core/Socket.js:1014
+#: src/core/Socket.js:1017
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1016
+#: src/core/Socket.js:1019
 msgid " saved this document as "
 msgstr ""
 
-#: src/core/Socket.js:1016
+#: src/core/Socket.js:1019
 msgid ". Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1025
+#: src/core/Socket.js:1028
 msgid "Loading..."
 msgstr "लोड कर रहा है..."
 
-#: src/core/Socket.js:1025
+#: src/core/Socket.js:1028
 msgid "Connecting..."
 msgstr "सर्वर से संपर्क हो रहा हैं ..."
 
-#: src/core/Socket.js:1043
+#: src/core/Socket.js:1046
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1405
+#: src/core/Socket.js:1408
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1651,12 +1651,12 @@ msgstr ""
 "बड़े ही दुःख की बात है की हम आपके दस्तवेज को नहीं खोल पा रहे हैंI कृपया पुनः "
 "प्रयास करें "
 
-#: src/core/Socket.js:1422
+#: src/core/Socket.js:1425
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "सर्वर से संपर्क हो रहा हैं ..."
 
-#: src/core/Socket.js:1427
+#: src/core/Socket.js:1431
 msgid "The server has been disconnected."
 msgstr ""
 
@@ -1968,7 +1968,7 @@ msgstr "अपलोडिंग ..."
 msgid "Uploading file to server failed with status: %0"
 msgstr ""
 
-#: src/map/handler/Map.Keyboard.js:485
+#: src/map/handler/Map.Keyboard.js:484
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "

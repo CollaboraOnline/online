@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 09:39+0100\n"
+"POT-Creation-Date: 2021-11-10 20:10+0100\n"
 "PO-Revision-Date: 2021-07-21 23:07+0000\n"
 "Last-Translator: Zhou Nan <zhounan@nfschina.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
@@ -1493,128 +1493,128 @@ msgstr ""
 msgid "Server is now reachable..."
 msgstr ""
 
-#: src/core/Socket.js:496
+#: src/core/Socket.js:497
 msgid "RELOAD"
 msgstr ""
 
-#: src/core/Socket.js:512
+#: src/core/Socket.js:515
 msgid "Served by:"
 msgstr "服务提供方:"
 
-#: src/core/Socket.js:517
+#: src/core/Socket.js:520
 msgid "Unsupported server version."
 msgstr "不被支持的服务器版本。"
 
-#: src/core/Socket.js:634
+#: src/core/Socket.js:637
 msgid "Session terminated by document owner"
 msgstr "会话已被文档所有者终止"
 
-#: src/core/Socket.js:639
+#: src/core/Socket.js:642
 msgid "Idle document - please click to reload and resume editing"
 msgstr "文档已暂停，请单击以重新加载并继续编辑"
 
-#: src/core/Socket.js:641
+#: src/core/Socket.js:644
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "文档已暂停，请点击屏幕以重新加载并继续编辑"
 
-#: src/core/Socket.js:649
+#: src/core/Socket.js:652
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "服务器将关闭以维护（自动保存中）"
 
-#: src/core/Socket.js:653
+#: src/core/Socket.js:656
 msgid "Oops, there is a problem connecting the document"
 msgstr "糟糕，连接到文件时出错"
 
-#: src/core/Socket.js:657
+#: src/core/Socket.js:660
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "服务器已关闭，将会自动重新启动。请稍候..."
 
-#: src/core/Socket.js:685
+#: src/core/Socket.js:688
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
 msgstr "文档已在服务器上被更改。正在加载新的文件，您编辑将作为更改历史保存。"
 
-#: src/core/Socket.js:691
+#: src/core/Socket.js:694
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr "恢复老版本。任何未保存的更改可在版本历史中查看"
 
-#: src/core/Socket.js:697
+#: src/core/Socket.js:700
 msgid "Reloading the document after rename"
 msgstr ""
 
-#: src/core/Socket.js:816
+#: src/core/Socket.js:819
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr "文档已在存储位置被更改。对于您尚未保存更改的文档，您打算怎么做？"
 
-#: src/core/Socket.js:820
+#: src/core/Socket.js:823
 msgid "Discard"
 msgstr "丢弃"
 
-#: src/core/Socket.js:825
+#: src/core/Socket.js:828
 msgid "Overwrite"
 msgstr "覆盖"
 
-#: src/core/Socket.js:830
+#: src/core/Socket.js:833
 msgid "Save to new file"
 msgstr "保存为新文档"
 
-#: src/core/Socket.js:900
+#: src/core/Socket.js:903
 msgid "Document requires password to view."
 msgstr "文档需要密码才能查看。"
 
-#: src/core/Socket.js:903
+#: src/core/Socket.js:906
 msgid "Document requires password to modify."
 msgstr "文档需要密码才能修改。"
 
-#: src/core/Socket.js:905
+#: src/core/Socket.js:908
 msgid "Hit Cancel to open in view-only mode."
 msgstr "点击“取消”在只读模式下打开。"
 
-#: src/core/Socket.js:909
+#: src/core/Socket.js:912
 msgid "Wrong password provided. Please try again."
 msgstr "密码错误。请重试。"
 
-#: src/core/Socket.js:1014
+#: src/core/Socket.js:1017
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1016
+#: src/core/Socket.js:1019
 msgid " saved this document as "
 msgstr ""
 
-#: src/core/Socket.js:1016
+#: src/core/Socket.js:1019
 msgid ". Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1025
+#: src/core/Socket.js:1028
 msgid "Loading..."
 msgstr "正在载入..."
 
-#: src/core/Socket.js:1025
+#: src/core/Socket.js:1028
 msgid "Connecting..."
 msgstr "正在连接..."
 
-#: src/core/Socket.js:1043
+#: src/core/Socket.js:1046
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1405
+#: src/core/Socket.js:1408
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "很抱歉，无法连接到您的文档。请重试。"
 
-#: src/core/Socket.js:1422
+#: src/core/Socket.js:1425
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "正在连接..."
 
-#: src/core/Socket.js:1427
+#: src/core/Socket.js:1431
 msgid "The server has been disconnected."
 msgstr ""
 
@@ -1904,7 +1904,7 @@ msgstr "正在上传..."
 msgid "Uploading file to server failed with status: %0"
 msgstr "向服务器上传文件失败，失败状态为 %0"
 
-#: src/map/handler/Map.Keyboard.js:485
+#: src/map/handler/Map.Keyboard.js:484
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "

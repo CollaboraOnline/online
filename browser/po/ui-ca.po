@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 09:39+0100\n"
+"POT-Creation-Date: 2021-11-10 20:10+0100\n"
 "PO-Revision-Date: 2021-11-07 22:01+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
@@ -1502,46 +1502,46 @@ msgstr "El servidor ara és accessible. Cal actualitzar la pàgina ara."
 msgid "Server is now reachable..."
 msgstr "El servidor ara és accessible..."
 
-#: src/core/Socket.js:496
+#: src/core/Socket.js:497
 msgid "RELOAD"
 msgstr "TORNA A CARREGAR"
 
-#: src/core/Socket.js:512
+#: src/core/Socket.js:515
 msgid "Served by:"
 msgstr "Servit per:"
 
-#: src/core/Socket.js:517
+#: src/core/Socket.js:520
 msgid "Unsupported server version."
 msgstr "No s'admet la versió del servidor."
 
-#: src/core/Socket.js:634
+#: src/core/Socket.js:637
 msgid "Session terminated by document owner"
 msgstr "El propietari del document ha finalitzat la sessió"
 
-#: src/core/Socket.js:639
+#: src/core/Socket.js:642
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Document inactiu; feu clic per a tornar a carregar-lo i continuar-ne l'edició"
 
-#: src/core/Socket.js:641
+#: src/core/Socket.js:644
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Document inactiu; toqueu per a tornar a carregar-lo i continuar-ne l'edició"
 
-#: src/core/Socket.js:649
+#: src/core/Socket.js:652
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
 "El servidor s'està tancant per manteniment (s'està desant automàticament)"
 
-#: src/core/Socket.js:653
+#: src/core/Socket.js:656
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ep, hi ha un problema en connectar al document"
 
-#: src/core/Socket.js:657
+#: src/core/Socket.js:660
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "El servidor és caigut; s'està reiniciant automàticament. Espereu."
 
-#: src/core/Socket.js:685
+#: src/core/Socket.js:688
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1549,7 +1549,7 @@ msgstr ""
 "El document ha canviat en l'emmagatzematge. S'està carregant el document "
 "nou. La vostra versió és disponible com a versió."
 
-#: src/core/Socket.js:691
+#: src/core/Socket.js:694
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1557,11 +1557,11 @@ msgstr ""
 "Restauració d'una versió anterior. Tots els canvis sense desar seran "
 "disponibles en l'historial de versions"
 
-#: src/core/Socket.js:697
+#: src/core/Socket.js:700
 msgid "Reloading the document after rename"
 msgstr "Recàrrega del document després de canviar-ne el nom"
 
-#: src/core/Socket.js:816
+#: src/core/Socket.js:819
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1569,59 +1569,59 @@ msgstr ""
 "S'ha modificat el document a l'emmagatzematge. Què voleu fer amb els canvis "
 "sense desar?"
 
-#: src/core/Socket.js:820
+#: src/core/Socket.js:823
 msgid "Discard"
 msgstr "Descarta'ls"
 
-#: src/core/Socket.js:825
+#: src/core/Socket.js:828
 msgid "Overwrite"
 msgstr "Sobreescriu-los"
 
-#: src/core/Socket.js:830
+#: src/core/Socket.js:833
 msgid "Save to new file"
 msgstr "Desa'ls en un fitxer nou"
 
-#: src/core/Socket.js:900
+#: src/core/Socket.js:903
 msgid "Document requires password to view."
 msgstr "Cal introduir la contrasenya per a visualitzar el document."
 
-#: src/core/Socket.js:903
+#: src/core/Socket.js:906
 msgid "Document requires password to modify."
 msgstr "Cal introduir la contrasenya per a modificar el document."
 
-#: src/core/Socket.js:905
+#: src/core/Socket.js:908
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Premeu Cancel·la per a obrir-lo en el mode només de lectura."
 
-#: src/core/Socket.js:909
+#: src/core/Socket.js:912
 msgid "Wrong password provided. Please try again."
 msgstr "Heu indicat una contrasenya errònia. Torneu-ho a intentar."
 
-#: src/core/Socket.js:1014
+#: src/core/Socket.js:1017
 msgid "Someone"
 msgstr "Algú"
 
-#: src/core/Socket.js:1016
+#: src/core/Socket.js:1019
 msgid " saved this document as "
 msgstr " ha desat aquest document com a "
 
-#: src/core/Socket.js:1016
+#: src/core/Socket.js:1019
 msgid ". Do you want to join?"
 msgstr ". Voleu incorporar-vos-hi?"
 
-#: src/core/Socket.js:1025
+#: src/core/Socket.js:1028
 msgid "Loading..."
 msgstr "S'està carregant..."
 
-#: src/core/Socket.js:1025
+#: src/core/Socket.js:1028
 msgid "Connecting..."
 msgstr "S'està connectant…"
 
-#: src/core/Socket.js:1043
+#: src/core/Socket.js:1046
 msgid "The document is being renamed and will reload shortly"
 msgstr "S'està canviant de nom el document i es recarregarà de seguida"
 
-#: src/core/Socket.js:1405
+#: src/core/Socket.js:1408
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1629,11 +1629,11 @@ msgstr ""
 "Això no hauria de passar. No podem connectar amb el vostre document. Torneu-"
 "ho a intentar."
 
-#: src/core/Socket.js:1422
+#: src/core/Socket.js:1425
 msgid "Reconnecting..."
 msgstr "S'està tornant a connectar…"
 
-#: src/core/Socket.js:1427
+#: src/core/Socket.js:1431
 msgid "The server has been disconnected."
 msgstr "S'ha desconnectat el servidor."
 
@@ -1970,7 +1970,7 @@ msgstr "S'està pujant..."
 msgid "Uploading file to server failed with status: %0"
 msgstr "Ha fallat la pujada del fitxer al servidor amb l'estat: %0"
 
-#: src/map/handler/Map.Keyboard.js:485
+#: src/map/handler/Map.Keyboard.js:484
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "

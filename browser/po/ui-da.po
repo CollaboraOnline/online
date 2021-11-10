@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 09:39+0100\n"
+"POT-Creation-Date: 2021-11-10 20:10+0100\n"
 "PO-Revision-Date: 2020-08-30 15:35+0000\n"
 "Last-Translator: SteenRønnow <steen.roennow@mail.dk>\n"
 "Language-Team: Danish <https://weblate.documentfoundation.org/projects/"
@@ -1508,45 +1508,45 @@ msgstr ""
 msgid "Server is now reachable..."
 msgstr ""
 
-#: src/core/Socket.js:496
+#: src/core/Socket.js:497
 msgid "RELOAD"
 msgstr ""
 
-#: src/core/Socket.js:512
+#: src/core/Socket.js:515
 msgid "Served by:"
 msgstr "Server drevet af:"
 
-#: src/core/Socket.js:517
+#: src/core/Socket.js:520
 msgid "Unsupported server version."
 msgstr "Ikke-understøttet serverversion."
 
-#: src/core/Socket.js:634
+#: src/core/Socket.js:637
 msgid "Session terminated by document owner"
 msgstr "Session afsluttet af dokumentejer"
 
-#: src/core/Socket.js:639
+#: src/core/Socket.js:642
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Ledigt dokument - klik venligst for at genindlæse og genoptage redigering"
 
-#: src/core/Socket.js:641
+#: src/core/Socket.js:644
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Ledigt dokument - tap venligst for at genindlæse og genoptage redigering"
 
-#: src/core/Socket.js:649
+#: src/core/Socket.js:652
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server lukker ned for vedligeholdelse (auto-gem)"
 
-#: src/core/Socket.js:653
+#: src/core/Socket.js:656
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ups, der er et problem med at forbinde til dokumentet"
 
-#: src/core/Socket.js:657
+#: src/core/Socket.js:660
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 
-#: src/core/Socket.js:685
+#: src/core/Socket.js:688
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1554,7 +1554,7 @@ msgstr ""
 "Dokumentet er ændret på lageret. Indlæser det nye dokument. Din version er "
 "tilgængelig som revision."
 
-#: src/core/Socket.js:691
+#: src/core/Socket.js:694
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1562,69 +1562,69 @@ msgstr ""
 "Gendanner ældre revision. Ikke-gemte ændringer vil være tilgængelige i "
 "versionshistorikken"
 
-#: src/core/Socket.js:697
+#: src/core/Socket.js:700
 msgid "Reloading the document after rename"
 msgstr ""
 
-#: src/core/Socket.js:816
+#: src/core/Socket.js:819
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr "Dokumentet i lageret er ændret. Hvad vil du gøre med dine ændringer?"
 
-#: src/core/Socket.js:820
+#: src/core/Socket.js:823
 msgid "Discard"
 msgstr "Kassér"
 
-#: src/core/Socket.js:825
+#: src/core/Socket.js:828
 msgid "Overwrite"
 msgstr "Overskriv"
 
-#: src/core/Socket.js:830
+#: src/core/Socket.js:833
 msgid "Save to new file"
 msgstr "Gem som en ny fil"
 
-#: src/core/Socket.js:900
+#: src/core/Socket.js:903
 msgid "Document requires password to view."
 msgstr "Dokumentet kræver et kodeord for at kunne ses."
 
-#: src/core/Socket.js:903
+#: src/core/Socket.js:906
 msgid "Document requires password to modify."
 msgstr "Dokumentet kræver et kodeord for at kunne ændres."
 
-#: src/core/Socket.js:905
+#: src/core/Socket.js:908
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Klik på Annuller for at for at åbne i skrivebeskyttet tilstand."
 
-#: src/core/Socket.js:909
+#: src/core/Socket.js:912
 msgid "Wrong password provided. Please try again."
 msgstr "Forkert adgangskode; prøv venligst igen:"
 
-#: src/core/Socket.js:1014
+#: src/core/Socket.js:1017
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1016
+#: src/core/Socket.js:1019
 msgid " saved this document as "
 msgstr ""
 
-#: src/core/Socket.js:1016
+#: src/core/Socket.js:1019
 msgid ". Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1025
+#: src/core/Socket.js:1028
 msgid "Loading..."
 msgstr "Indlæser..."
 
-#: src/core/Socket.js:1025
+#: src/core/Socket.js:1028
 msgid "Connecting..."
 msgstr "Forbinder..."
 
-#: src/core/Socket.js:1043
+#: src/core/Socket.js:1046
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1405
+#: src/core/Socket.js:1408
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1632,12 +1632,12 @@ msgstr ""
 "Øhh, det er pinligt, vi kan ikke komme i forbindelse med dit dokument. Prøv "
 "venligst igen."
 
-#: src/core/Socket.js:1422
+#: src/core/Socket.js:1425
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "Forbinder..."
 
-#: src/core/Socket.js:1427
+#: src/core/Socket.js:1431
 msgid "The server has been disconnected."
 msgstr ""
 
@@ -1970,7 +1970,7 @@ msgstr "Indlæser..."
 msgid "Uploading file to server failed with status: %0"
 msgstr "Upload af filen til serveren slog fejl med status: %0"
 
-#: src/map/handler/Map.Keyboard.js:485
+#: src/map/handler/Map.Keyboard.js:484
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "

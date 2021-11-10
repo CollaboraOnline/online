@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 09:39+0100\n"
+"POT-Creation-Date: 2021-11-10 20:10+0100\n"
 "PO-Revision-Date: 2021-09-18 21:37+0000\n"
 "Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
@@ -1496,45 +1496,45 @@ msgstr ""
 msgid "Server is now reachable..."
 msgstr "Máy chủ bây giờ đã có thể kết nối đến được..."
 
-#: src/core/Socket.js:496
+#: src/core/Socket.js:497
 msgid "RELOAD"
 msgstr "TẢI LẠI"
 
-#: src/core/Socket.js:512
+#: src/core/Socket.js:515
 msgid "Served by:"
 msgstr "Phục vụ bởi:"
 
-#: src/core/Socket.js:517
+#: src/core/Socket.js:520
 msgid "Unsupported server version."
 msgstr "Phiên bản máy chủ không được hỗ trợ."
 
-#: src/core/Socket.js:634
+#: src/core/Socket.js:637
 msgid "Session terminated by document owner"
 msgstr "Phiên bị chấm dứt bởi chủ sở hữu tài liệu"
 
-#: src/core/Socket.js:639
+#: src/core/Socket.js:642
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Tài liệu không hoạt động - vui lòng nhấp để tải lại và tiếp tục chỉnh sửa"
 
-#: src/core/Socket.js:641
+#: src/core/Socket.js:644
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Tài liệu không hoạt động - vui lòng nhấn để tải lại và tiếp tục chỉnh sửa"
 
-#: src/core/Socket.js:649
+#: src/core/Socket.js:652
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Máy chủ đang ngừng hoạt động để bảo trì (tự động lưu)"
 
-#: src/core/Socket.js:653
+#: src/core/Socket.js:656
 msgid "Oops, there is a problem connecting the document"
 msgstr "Rất tiếc, đã xảy ra sự cố khi kết nối tài liệu"
 
-#: src/core/Socket.js:657
+#: src/core/Socket.js:660
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Máy chủ không hoạt động, tự động khởi động lại. Xin vui lòng chờ đợi."
 
-#: src/core/Socket.js:685
+#: src/core/Socket.js:688
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1542,7 +1542,7 @@ msgstr ""
 "Tài liệu đã thay đổi trong bộ nhớ. Đang tải tài liệu mới. Phiên bản của bạn "
 "có sẵn dưới dạng bản sửa đổi."
 
-#: src/core/Socket.js:691
+#: src/core/Socket.js:694
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1550,11 +1550,11 @@ msgstr ""
 "Khôi phục bản sửa đổi cũ hơn. Mọi thay đổi chưa được lưu sẽ có sẵn trong "
 "lịch sử phiên bản"
 
-#: src/core/Socket.js:697
+#: src/core/Socket.js:700
 msgid "Reloading the document after rename"
 msgstr ""
 
-#: src/core/Socket.js:816
+#: src/core/Socket.js:819
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1562,70 +1562,70 @@ msgstr ""
 "Tài liệu đã được thay đổi trong bộ nhớ. Bạn muốn làm gì với những thay đổi "
 "chưa được lưu của mình?"
 
-#: src/core/Socket.js:820
+#: src/core/Socket.js:823
 msgid "Discard"
 msgstr "Hủy bỏ"
 
-#: src/core/Socket.js:825
+#: src/core/Socket.js:828
 msgid "Overwrite"
 msgstr "Ghi đè"
 
-#: src/core/Socket.js:830
+#: src/core/Socket.js:833
 msgid "Save to new file"
 msgstr "Lưu vào tệp mới"
 
-#: src/core/Socket.js:900
+#: src/core/Socket.js:903
 msgid "Document requires password to view."
 msgstr "Tài liệu yêu cầu mật khẩu để xem."
 
-#: src/core/Socket.js:903
+#: src/core/Socket.js:906
 msgid "Document requires password to modify."
 msgstr "Tài liệu yêu cầu mật khẩu để sửa đổi."
 
-#: src/core/Socket.js:905
+#: src/core/Socket.js:908
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Nhấn Hủy để mở ở chế độ chỉ xem."
 
-#: src/core/Socket.js:909
+#: src/core/Socket.js:912
 msgid "Wrong password provided. Please try again."
 msgstr "Đã cung cấp sai mật khẩu. Vui lòng thử lại."
 
-#: src/core/Socket.js:1014
+#: src/core/Socket.js:1017
 msgid "Someone"
 msgstr "Ai đó"
 
-#: src/core/Socket.js:1016
+#: src/core/Socket.js:1019
 msgid " saved this document as "
 msgstr " đã lưu tài liệu này dưới dạng "
 
-#: src/core/Socket.js:1016
+#: src/core/Socket.js:1019
 msgid ". Do you want to join?"
 msgstr ". Bạn có muốn tham gia không?"
 
-#: src/core/Socket.js:1025
+#: src/core/Socket.js:1028
 msgid "Loading..."
 msgstr "Đang tải..."
 
-#: src/core/Socket.js:1025
+#: src/core/Socket.js:1028
 msgid "Connecting..."
 msgstr "Đang kết nối..."
 
-#: src/core/Socket.js:1043
+#: src/core/Socket.js:1046
 msgid "The document is being renamed and will reload shortly"
 msgstr "Tài liệu đang được đổi tên và sắp tải lại"
 
-#: src/core/Socket.js:1405
+#: src/core/Socket.js:1408
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Chúng tôi không thể kết nối với tài liệu của bạn. Vui lòng thử lại."
 
-#: src/core/Socket.js:1422
+#: src/core/Socket.js:1425
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "Đang kết nối..."
 
-#: src/core/Socket.js:1427
+#: src/core/Socket.js:1431
 msgid "The server has been disconnected."
 msgstr "Máy chủ đã bị ngắt kết nối."
 
@@ -1962,7 +1962,7 @@ msgstr "Đang tải lên..."
 msgid "Uploading file to server failed with status: %0"
 msgstr "Tải tệp lên máy chủ không thành công với trạng thái: %0"
 
-#: src/map/handler/Map.Keyboard.js:485
+#: src/map/handler/Map.Keyboard.js:484
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-08 09:39+0100\n"
+"POT-Creation-Date: 2021-11-10 20:10+0100\n"
 "PO-Revision-Date: 2021-11-07 22:01+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
@@ -1498,44 +1498,44 @@ msgstr "Sunucuya artık erişilebilir. Şimdi sayfayı yenilemeliyiz."
 msgid "Server is now reachable..."
 msgstr "Sunucuya artık erişilebilir..."
 
-#: src/core/Socket.js:496
+#: src/core/Socket.js:497
 msgid "RELOAD"
 msgstr "YENİDEN YÜKLE"
 
-#: src/core/Socket.js:512
+#: src/core/Socket.js:515
 msgid "Served by:"
 msgstr "Hizmet veren:"
 
-#: src/core/Socket.js:517
+#: src/core/Socket.js:520
 msgid "Unsupported server version."
 msgstr "Desteklenmeyen sunucu sürümü."
 
-#: src/core/Socket.js:634
+#: src/core/Socket.js:637
 msgid "Session terminated by document owner"
 msgstr "Oturum belge sahibi tarafından sonlandırıldı"
 
-#: src/core/Socket.js:639
+#: src/core/Socket.js:642
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Belge boşta - lütfen düzenlemeye devam etmek için tıklayın"
 
-#: src/core/Socket.js:641
+#: src/core/Socket.js:644
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Boş belge - yeniden yüklemek ve düzenlemeye devam etmek için lütfen dokunun"
 
-#: src/core/Socket.js:649
+#: src/core/Socket.js:652
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Sunucu bakım için kapatılıyor (otomatik kaydetme etkin)"
 
-#: src/core/Socket.js:653
+#: src/core/Socket.js:656
 msgid "Oops, there is a problem connecting the document"
 msgstr "Belgeye bağlanırken hata oluştu"
 
-#: src/core/Socket.js:657
+#: src/core/Socket.js:660
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Sunucu çalışmıyor, otomatik olarak yeniden başlıyor. Lütfen bekleyin."
 
-#: src/core/Socket.js:685
+#: src/core/Socket.js:688
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1543,7 +1543,7 @@ msgstr ""
 "Belge depolandığı yerde değiştirildi. Yeni belge yükleniyor. Kendi "
 "sürümünüze farklı bir sürüm olarak ulaşılabilirsiniz."
 
-#: src/core/Socket.js:691
+#: src/core/Socket.js:694
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1551,11 +1551,11 @@ msgstr ""
 "Eski sürümü yükleniyor. Kaydedilmemiş değişiklikler sürüm geçmişinde "
 "bulunabilir"
 
-#: src/core/Socket.js:697
+#: src/core/Socket.js:700
 msgid "Reloading the document after rename"
 msgstr "Yeniden adlandırmadan sonra belge tekrar yükleniyor"
 
-#: src/core/Socket.js:816
+#: src/core/Socket.js:819
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1563,69 +1563,69 @@ msgstr ""
 "Belge kaydedildiği yerde değiştirildi. Kaydedilmemiş değişiklikleri ne "
 "yapmak istiyorsunuz?"
 
-#: src/core/Socket.js:820
+#: src/core/Socket.js:823
 msgid "Discard"
 msgstr "Kaydetme"
 
-#: src/core/Socket.js:825
+#: src/core/Socket.js:828
 msgid "Overwrite"
 msgstr "Üstüne yaz"
 
-#: src/core/Socket.js:830
+#: src/core/Socket.js:833
 msgid "Save to new file"
 msgstr "Yeni dosyaya kaydet"
 
-#: src/core/Socket.js:900
+#: src/core/Socket.js:903
 msgid "Document requires password to view."
 msgstr "Belgenin görüntülenebilmesi için bir parola gerekiyor."
 
-#: src/core/Socket.js:903
+#: src/core/Socket.js:906
 msgid "Document requires password to modify."
 msgstr "Belgenin düzenlenebilmesi için parola gerekiyor."
 
-#: src/core/Socket.js:905
+#: src/core/Socket.js:908
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Sadece görüntüleme kipinde açmak için İptal'e tıklayın."
 
-#: src/core/Socket.js:909
+#: src/core/Socket.js:912
 msgid "Wrong password provided. Please try again."
 msgstr "Hatalı parola. Lütfen tekrar deneyin."
 
-#: src/core/Socket.js:1014
+#: src/core/Socket.js:1017
 msgid "Someone"
 msgstr "Biri"
 
-#: src/core/Socket.js:1016
+#: src/core/Socket.js:1019
 msgid " saved this document as "
 msgstr " bu belgeyi şu şekilde kaydetti: "
 
-#: src/core/Socket.js:1016
+#: src/core/Socket.js:1019
 msgid ". Do you want to join?"
 msgstr ". Katılmak ister misiniz?"
 
-#: src/core/Socket.js:1025
+#: src/core/Socket.js:1028
 msgid "Loading..."
 msgstr "Yükleniyor..."
 
-#: src/core/Socket.js:1025
+#: src/core/Socket.js:1028
 msgid "Connecting..."
 msgstr "Bağlanıyor..."
 
-#: src/core/Socket.js:1043
+#: src/core/Socket.js:1046
 msgid "The document is being renamed and will reload shortly"
 msgstr "Belge yeniden adlandırılıyor ve kısa süre içinde yeniden yüklenecek"
 
-#: src/core/Socket.js:1405
+#: src/core/Socket.js:1408
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Utanç verici ama belgenize bağlanamadık. Lütfen tekrar deneyin."
 
-#: src/core/Socket.js:1422
+#: src/core/Socket.js:1425
 msgid "Reconnecting..."
 msgstr "Yeniden Bağlanıyor..."
 
-#: src/core/Socket.js:1427
+#: src/core/Socket.js:1431
 msgid "The server has been disconnected."
 msgstr "Sunucu bağlantısı kesildi."
 
@@ -1967,7 +1967,7 @@ msgstr "Yükleniyor..."
 msgid "Uploading file to server failed with status: %0"
 msgstr "Sunucuya dosya yükleme başarısız oldu. Durum: %0"
 
-#: src/map/handler/Map.Keyboard.js:485
+#: src/map/handler/Map.Keyboard.js:484
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
