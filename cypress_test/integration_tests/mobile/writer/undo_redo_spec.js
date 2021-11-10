@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-describe.skip('Editing Operations', function() {
+describe('Editing Operations', function() {
 	var testFileName = 'undo_redo.odt';
 
 	beforeEach(function() {
@@ -27,7 +27,7 @@ describe.skip('Editing Operations', function() {
 
 		helper.selectAllText();
 
-		helper.expectTextForClipboard('\nHello Worl');
+		helper.expectTextForClipboard('\nHello \n');
 	}
 
 	it('Undo', function() {
@@ -56,13 +56,13 @@ describe.skip('Editing Operations', function() {
 
 		cy.get('.leaflet-popup-content table').should('exist');
 
-		cy.contains('.leaflet-popup-content table tbody tr','Typing: “d”')
+		cy.contains('.leaflet-popup-content table tbody tr','Typing: “World”')
 			.click();
 
 		cy.get('.leaflet-popup-content > input').click();
 
 		helper.selectAllText();
 
-		helper.expectTextForClipboard('\nHello Worl');
+		helper.expectTextForClipboard('\nHello \n');
 	});
 });
