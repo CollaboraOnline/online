@@ -1175,10 +1175,10 @@ if test -n "$with_user_id"; then
 fi
 AC_DEFINE_UNQUOTED([COOL_USER_ID],["$COOL_USER_ID"],[The user-name which is allowed to run loolwsd and its tools])
 
-AM_CONDITIONAL([ENABLE_SETCAP], [test "$enable_setcap" != "no"])
+AM_CONDITIONAL([ENABLE_SETCAP], [test "$enable_setcap" != "no" -a `uname -s` = "Linux"])
 
 ENABLE_SETCAP=
-if test "$enable_setcap" != "no"; then
+if test "$enable_setcap" != "no" -a `uname -s` = "Linux"; then
     ENABLE_SETCAP=true
     setcap_msg="setcap enabled"
 else
