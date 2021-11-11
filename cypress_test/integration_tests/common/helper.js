@@ -113,7 +113,7 @@ function loadTestDocNextcloud(fileName, subFolder, subsequentLoad) {
 		.then(cy.wrap).as('richdocumentsIFrameGlobal');
 
 	cy.get('@richdocumentsIFrameGlobal')
-		.find('iframe#loleafletframe')
+		.find('iframe#coolframe')
 		.its('0.contentDocument').should('exist')
 		.its('body').should('not.be.undefined')
 		.then(cy.wrap).as('loleafletIFrameGlobal');
