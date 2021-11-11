@@ -94,7 +94,7 @@
         <path desc="Output path for the Trace Event file, to which they will be written if turned on at run-time" type="string" default="@LOOLWSD_TRACEEVENTFILE@">@LOOLWSD_TRACEEVENTFILE@</path>
     </trace_event>
 
-    <loleaflet_logging desc="Logging in the browser console" default="@COOL_LOGGING@">@COOL_LOGGING@</loleaflet_logging>
+    <browser_logging desc="Logging in the browser console" default="@BROWSER_LOGGING@">@BROWSER_LOGGING@</browser_logging>
 
     <trace desc="Dump commands and notifications for replay. When 'snapshot' is true, the source file is copied to the path first." enable="false">
         <path desc="Output path to hold trace file and docs. Use '%' for timestamp to avoid overwriting. For example: /some/path/to/looltrace-%.gz" compress="true" snapshot="false"></path>

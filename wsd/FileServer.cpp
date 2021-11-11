@@ -507,7 +507,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 #endif
         if (request.getMethod() == HTTPRequest::HTTP_POST && endPoint == "logging.html")
         {
-            const std::string coolLogging = config.getString("loleaflet_logging", "false");
+            const std::string coolLogging = config.getString("browser_logging", "false");
             if (coolLogging != "false")
             {
                 LOG_ERR(message.rdbuf());
@@ -971,8 +971,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("<!--%DOCUMENT_SIGNING_DIV%-->"), documentSigningDiv);
     Poco::replaceInPlace(preprocess, std::string("%DOCUMENT_SIGNING_URL%"), documentSigningURL);
 
-    const auto coolLogging = config.getString("loleaflet_logging", "false");
-    Poco::replaceInPlace(preprocess, std::string("%COOL_LOGGING%"), coolLogging);
+    const auto coolLogging = config.getString("browser_logging", "false");
+    Poco::replaceInPlace(preprocess, std::string("%BROWSER_LOGGING%"), coolLogging);
     const std::string outOfFocusTimeoutSecs= config.getString("per_view.out_of_focus_timeout_secs", "60");
     Poco::replaceInPlace(preprocess, std::string("%OUT_OF_FOCUS_TIMEOUT_SECS%"), outOfFocusTimeoutSecs);
     const std::string idleTimeoutSecs= config.getString("per_view.idle_timeout_secs", "900");

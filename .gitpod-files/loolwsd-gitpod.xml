@@ -68,7 +68,7 @@
         </anonymize>
     </logging>
 
-    <loleaflet_logging desc="Logging in the browser console" default="true">true</loleaflet_logging>
+    <browser_logging desc="Logging in the browser console" default="true">true</browser_logging>
 
     <trace desc="Dump commands and notifications for replay. When 'snapshot' is true, the source file is copied to the path first." enable="false">
         <path desc="Output path to hold trace file and docs. Use '%' for timestamp to avoid overwriting. For example: /some/path/to/looltrace-%.gz" compress="true" snapshot="false"></path>
