@@ -947,6 +947,10 @@ app.definitions.Socket = L.Class.extend({
 				vex.dialog.open({
 					message: msg,
 					input: '<input name="password" type="password" required />',
+					buttons: [
+						$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
+						$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
+					],
 					callback: L.bind(function(data) {
 						if (data) {
 							this._map._docPassword = data.password;
