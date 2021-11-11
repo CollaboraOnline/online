@@ -284,7 +284,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.accessTokenTTL = '%ACCESS_TOKEN_TTL%';
       window.accessHeader = '%ACCESS_HEADER%';
       window.postMessageOriginExt = '%POSTMESSAGE_ORIGIN%';
-      window.coolLogging = '%COOL_LOGGING%';
+      window.coolLogging = '%BROWSER_LOGGING%';
       window.enableWelcomeMessage = %ENABLE_WELCOME_MSG%;
       window.enableWelcomeMessageButton = %ENABLE_WELCOME_MSG_BTN%;
       window.userInterfaceMode = '%USER_INTERFACE_MODE%';
