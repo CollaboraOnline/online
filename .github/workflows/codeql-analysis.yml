@@ -3,12 +3,7 @@
 #
 # You may wish to alter this file to override the set of languages analyzed,
 # or to provide custom queries or build logic.
-name: "CodeQL"
-
-# Ignore these from being scanned
-paths-ignore:
-  - '**/*w2ui-1.5.rc1.js'
-  - 'loleaflet/'
+name: "CodeQL scanning - action"
 
 on:
   push:
@@ -16,6 +11,13 @@ on:
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [master]
+    # The paths-ignore here only defines that changes in these will not trigger
+    # the action at all; but to actually avoid scanning the content of these,
+    # see the .github/codeql/codeql-config.yml configuration file
+    paths-ignore:
+      - '**/*w2ui-1.5.rc1.js'
+      - 'loleaflet/'
+
   schedule:
     - cron: '0 22 * * 3'
 
@@ -46,6 +48,7 @@ jobs:
       uses: github/codeql-action/init@v1
       with:
         languages: ${{ matrix.language }}
+        config-file: ./.github/codeql/codeql-config.yml
         # If you wish to specify custom queries, you can do so here or in a config file.
         # By default, queries listed here will override any specified in a config file.
         # Prefix the list here with "+" to use these queries and those in the config file.
