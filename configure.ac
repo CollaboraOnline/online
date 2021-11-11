@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.63])
 
-AC_INIT([loolwsd], [21.11.0.0], [https://github.com/CollaboraOnline/online/issues], [loolwsd], [https://collaboraonline.github.io/])
+AC_INIT([loolwsd], [21.11.0.1], [https://github.com/CollaboraOnline/online/issues], [loolwsd], [https://collaboraonline.github.io/])
 LT_INIT([shared, disable-static, dlopen])
 
 AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])

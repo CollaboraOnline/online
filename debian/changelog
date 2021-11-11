@@ -1,3 +1,9 @@
+loolwsd (21.11.0.1-1) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-21.11.0-1
+
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 11 Nov 2021 15:40:00 +0100
+
 loolwsd (21.11.0.0-1) unstable; urgency=medium
 
   * https://github.com/CollaboraOnline/online/releases/tag/cp-21.11.0-0
