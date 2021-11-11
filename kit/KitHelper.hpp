@@ -66,6 +66,7 @@ namespace LOKitHelper
             std::ostringstream hposs;
             std::ostringstream sposs;
             std::ostringstream mposs;
+            std::ostringstream rtlposs;
             for (int i = 0; i < parts; ++i)
             {
                 ptrValue = loKitDocument->pClass->getPartInfo(loKitDocument, i);
@@ -89,6 +90,11 @@ namespace LOKitHelper
                         if (mposs.str().empty())
                             mposs << prop.second;
                     }
+                    else if (name == "rtllayout")
+                    {
+                        if (prop.second == "1")
+                            rtlposs << i << ",";
+                    }
                 }
             }
 
@@ -110,6 +116,13 @@ namespace LOKitHelper
             if (!masterpagecount.empty())
             {
                 oss << " masterpagecount=" << masterpagecount;
+            }
+
+            std::string rtlparts = rtlposs.str();
+            if (!rtlparts.empty())
+            {
+                rtlparts.pop_back(); // Remove last ','
+                oss << " rtlparts=" << rtlparts;
             }
 
             for (int i = 0; i < parts; ++i)
