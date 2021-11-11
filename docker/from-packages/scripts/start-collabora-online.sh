@@ -50,6 +50,11 @@ fi
 if test -n "${dictionaries}"; then
     perl -pi -e "s/<allowed_languages (.*)>.*<\/allowed_languages>/<allowed_languages \1>${dictionaries:-de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru}<\/allowed_languages>/" /etc/loolwsd/loolwsd.xml
 fi
+if test -n "${user_interface_mode}"; then
+    extra_params="${extra_params} --o:user_interface.mode=${user_interface_mode}"
+else
+    extra_params="${extra_params} --o:user_interface.mode=notebookbar"
+fi
 
 # Restart when /etc/loolwsd/loolwsd.xml changes
 [ -x /usr/bin/inotifywait -a /usr/bin/killall ] && (
