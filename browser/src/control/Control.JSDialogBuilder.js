@@ -375,6 +375,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		return text.replace('~', '');
 	},
 
+	_extractUnits: function(text) {
+		if (!text)
+			return '';
+
+		return text.replace(/[\d.-]/g, '').trim();
+	},
+
 	_cleanValueFromUnits: function(text) {
 		if (!text)
 			return '';
@@ -1290,10 +1297,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_formattedfieldControl: function(parentContainer, data, builder, customCallback) {
 		var value, units, controls;
 
-		// formatted control does not contain unit property
-		units = data.text.split(' ');
-		if (units.length == 2) {
-			data.unit = units[1];
+		if (!data.unit && data.text) {
+			var units = data.text.split(' ');
+			if (units.length == 2) {
+				data.unit = units[1];
+			}
+		}
+
+		if (!data.unit && data.text) {
+			data.unit = builder._extractUnits(data.text.toString());
 		}
 
 		controls = builder._controlHandlers['basespinfield'](parentContainer, data, builder, customCallback);
