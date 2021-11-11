@@ -1053,7 +1053,6 @@ void LOOLWSD::innerInitialize(Application& self)
             { "logging.file[@enable]", "false" },
             { "logging.level", "trace" },
             { "logging.lokit_sal_log", "-INFO-WARN" },
-            { "loleaflet_html", "cool.html" },
             { "loleaflet_logging", "false" },
             { "mount_jail_tree", "true" },
             { "net.connection_timeout_secs", "30" },
@@ -3723,16 +3722,13 @@ private:
             discoveryPath = LOOLWSD::FileServerRoot + "/discovery.xml";
         }
 
-        const auto& config = Application::instance().config();
-        const std::string coolHtml = config.getString("loleaflet_html", "cool.html");
-
         const std::string action = "action";
         const std::string favIconUrl = "favIconUrl";
         const std::string urlsrc = "urlsrc";
 
         const std::string rootUriValue = "%SRV_URI%";
         const std::string uriBaseValue = rootUriValue + "/browser/" LOOLWSD_VERSION_HASH "/";
-        const std::string uriValue = uriBaseValue + coolHtml + '?';
+        const std::string uriValue = uriBaseValue + "cool.html?";
 
         InputSource inputSrc(discoveryPath);
         DOMParser parser;

@@ -45,8 +45,6 @@
         <idle_timeout_secs desc="The maximum number of seconds before dimming and stopping updates when the user is no longer active (even if the browser is in focus). Defaults to 15 minutes." type="uint" default="900">900</idle_timeout_secs>
     </per_view>
 
-    <loleaflet_html desc="Allows UI customization by replacing the single endpoint of cool.html" type="string" default="cool.html">cool.html</loleaflet_html>
-
     <logging>
         <color type="bool">true</color>
         <level type="string" desc="Can be 0-8, or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace" default="trace">trace</level>
