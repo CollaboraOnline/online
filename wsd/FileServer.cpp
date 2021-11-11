@@ -554,8 +554,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         if (FileHash.find(relPath) == FileHash.end())
             throw Poco::FileNotFoundException("Invalid URI request: [" + requestUri.toString() + "].");
 
-        const std::string coolHtml = config.getString("loleaflet_html", "cool.html");
-        if (endPoint == coolHtml ||
+        if (endPoint == "cool.html" ||
                 endPoint == "help-localizations.json" ||
                 endPoint == "localizations.json" ||
                 endPoint == "locore-localizations.json" ||
