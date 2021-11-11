@@ -93,6 +93,7 @@ class CommentSection {
 		this.map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
 
 		this.map.on('zoomend', function() {
+			this.map.fire('mobilewizardpopupclose');
 			this.checkCollapseState();
 			this.layout(true);
 		}, this);
