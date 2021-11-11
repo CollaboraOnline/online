@@ -54,7 +54,8 @@ jobs:
         # Prefix the list here with "+" to use these queries and those in the config file.
         # queries: ./path/to/local/query, your-org/your-repo/queries@main
 
-    - name: Install dependencies
+    - if: matrix.language == 'cpp'
+      name: Install dependencies
       run: |
         sudo sh -c "echo deb-src http://archive.ubuntu.com/ubuntu/ focal main restricted >> /etc/apt/sources.list"
         sudo sh -c "echo deb-src http://archive.ubuntu.com/ubuntu/ focal-updates main restricted >> /etc/apt/sources.list"
@@ -64,17 +65,23 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y build-essential git libpoco-dev libcap-dev python3-polib npm libpng-dev python3-lxml libpam-dev
         sudo apt-get build-dep -y libreoffice
+
+    - if: matrix.language == 'python'
+      name: Install dependencies
+      run: |
         pip install lxml
         pip install polib
 
-    - name: Configure
+    - if: matrix.language == 'cpp'
+      name: Configure
       run: |
         cd .. && wget https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-2021-assets.tar.gz
         tar xvf core-co-2021-assets.tar.gz && rm core-co-2021-assets.tar.gz && export LOCOREPATH=$(pwd)
         cd online && ./autogen.sh
         ./configure --enable-silent-rules --with-lokit-path=${LOCOREPATH}/include --with-lo-path=${LOCOREPATH}/instdir --enable-debug --disable-setcap
 
-    - name: Build
+    - if: matrix.language == 'cpp'
+      name: Build
       run: make -j `nproc`
 
     - name: Perform CodeQL Analysis
