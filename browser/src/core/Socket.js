@@ -1643,6 +1643,13 @@ app.definitions.Socket = L.Class.extend({
 					command.selectedParts.push(parseInt(item));
 				});
 			}
+			else if (tokens[i].startsWith('rtlparts=')) {
+				var rtlParts = tokens[i].substring(9).split(',');
+				command.rtlParts = [];
+				rtlParts.forEach(function (item) {
+					command.rtlParts.push(parseInt(item));
+				});
+			}
 			else if (tokens[i].startsWith('hash=')) {
 				command.hash = tokens[i].substring('hash='.length);
 			}
