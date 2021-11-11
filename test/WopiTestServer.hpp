@@ -22,6 +22,7 @@
 #include <Poco/Timestamp.h>
 #include <Poco/Util/LayeredConfiguration.h>
 #include <sstream>
+#include <vector>
 
 class WopiTestServer : public UnitWSD
 {
@@ -34,8 +35,8 @@ private:
     /// The WOPISrc URL.
     std::string _wopiSrc;
 
-    /// Websocket to communicate.
-    std::unique_ptr<UnitWebSocket> _ws;
+    /// Websockets to communicate.
+    std::vector< std::unique_ptr<UnitWebSocket> > _wsList;
 
 protected:
 
@@ -47,7 +48,15 @@ protected:
 
     const std::string& getWopiSrc() const { return _wopiSrc; }
 
-    const std::unique_ptr<UnitWebSocket>& getWs() const { return _ws; }
+    const std::unique_ptr<UnitWebSocket>& getWs() const { return _wsList.at(0); }
+
+    const std::unique_ptr<UnitWebSocket>& getWsAt(int index) { return _wsList.at(index); }
+
+    void deleteSocketAt(int index)
+    {
+        std::unique_ptr<UnitWebSocket>& socket = _wsList.at(index);
+        socket.reset();
+    }
 
     const std::string& getFileContent() const { return _fileContent; }
 
@@ -81,8 +90,16 @@ public:
 
         LOG_TST("Connecting to the fake WOPI server: /lool/" << _wopiSrc << "/ws");
 
-        _ws.reset(new UnitWebSocket("/lool/" + _wopiSrc + "/ws"));
-        assert(_ws.get());
+        const auto& _ws = _wsList.emplace(_wsList.begin(), std::unique_ptr<UnitWebSocket>(new UnitWebSocket("/lool/" + _wopiSrc + "/ws")));
+        assert((*_ws).get());
+    }
+
+    void addWebSocket()
+    {
+        LOG_TST("Addigin additional socket to the fake WOPI server: /lool/" << _wopiSrc << "/ws");
+        const auto& _ws = _wsList.emplace(_wsList.end(), std::unique_ptr<UnitWebSocket>(new UnitWebSocket("/lool/" + _wopiSrc + "/ws")));
+
+        assert((*_ws).get());
     }
 
     virtual void assertCheckFileInfoRequest(const Poco::Net::HTTPRequest& /*request*/)
