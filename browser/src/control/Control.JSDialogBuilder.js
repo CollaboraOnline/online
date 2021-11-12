@@ -981,8 +981,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				for (var t = 0; t < tabs.length; t++) {
 					// to get capture of 't' right has to be a sub fn.
 					var fn = function(id) {
-						return function() {
-							builder._createTabClick(builder, id, tabs, contentDivs, tabIds)();
+						return function(event) {
+							builder._createTabClick(builder, id, tabs, contentDivs, tabIds)(event);
 							if (data.tabs[id].id - 1 >= 0)
 								builder.callback('tabcontrol', 'selecttab', tabsContainer, data.tabs[id].id - 1, builder);
 						};

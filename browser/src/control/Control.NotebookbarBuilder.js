@@ -342,7 +342,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 	// overriden
 	_createTabClick: function(builder, t, tabs, contentDivs, tabIds)
 	{
-		return function() {
+		return function(event) {
 			var tabIsSelected = $(tabs[t]).hasClass('selected');
 			var notebookbarIsCollapsed = builder.wizard.isCollapsed();
 
@@ -362,6 +362,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			$(contentDivs[t]).show();
 			$(window).resize();
 			builder.wizard.selectedTab(tabIds[t]);
+
+			// don't lose focus on tab change
+			event.preventDefault();
+			builder.map.focus();
 		};
 	},
 
