@@ -1065,7 +1065,7 @@ AS_IF([test "$ENABLE_IOSAPP" != "true" -a "$ENABLE_ANDROIDAPP" != "true"],
                         [],
                         [AC_MSG_ERROR([header Poco/Net/WebSocket.h not found, perhaps you want to use --with-poco-includes])])
        DISABLE_SECCOMP=
-       if test "$enable_seccomp" != "no"; then
+       if test "$enable_seccomp" != "no" -a `uname -s` = "Linux"; then
            AC_CHECK_HEADERS([linux/seccomp.h],
                             [],
                             [AC_MSG_ERROR([critical security header linux/seccomp.h not found. If kernel on target system does not support SECCOMP, you can use --disable-seccomp, but mind the security consequences.])])
