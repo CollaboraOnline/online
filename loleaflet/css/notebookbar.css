@@ -38,29 +38,28 @@
 	background: #fff;
 	box-shadow: 0 3px 0px 0px #fff, 0px -1px 8px -4px rgba(105, 105, 105, 0.4), -1px -15px 15px -4px rgb(77, 130, 184, 0.1);
 }
+.main-nav.hasnotebookbar .ui-tab.selected.notebookbar {
+	text-shadow: 0px 0px 1px #0004;
+}
 .main-nav.hasnotebookbar.text-color-indicator .ui-tab.selected.notebookbar{
 	color: rgb(3, 105, 163);
 	color: rgb(var(--blue1-txt-primary-color));
-	text-shadow: 0px 0px 0.2px rgb(3, 105, 163);
-	text-shadow: 0px 0px 0.2px rgb(var(--blue1-txt-primary-color));
+	box-shadow: -1px -1px 1px rgba(var(--blue1-txt-primary-color),0.3), 1px -1px 1px rgba(var(--blue1-txt-primary-color),0.3);
 }
 .main-nav.hasnotebookbar.spreadsheet-color-indicator .ui-tab.selected.notebookbar{
 	color: rgb(16, 104, 2);
 	color: rgb(var(--green0-txt-primary-color));
-	text-shadow: 0px 0px 0.2px rgb(16, 104, 2);
-	text-shadow: 0px 0px 0.2px rgb(var(--green0-txt-primary-color));
+	box-shadow: -1px -1px 1px rgba(var(--green0-txt-primary-color),0.3), 1px -1px 1px rgba(var(--green0-txt-primary-color),0.3);
 }
 .main-nav.hasnotebookbar.presentation-color-indicator .ui-tab.selected.notebookbar{
 	color: rgb(163, 62, 3);
 	color: rgb(var(--orange1-txt-primary-color));
-	text-shadow: 0px 0px 0.2px rgb(163, 62, 3);
-	text-shadow: 0px 0px 0.2px rgb(var(--orange1-txt-primary-color));
+	box-shadow: -1px -1px 1px rgba(var(--orange1-txt-primary-color),0.3), 1px -1px 1px rgba(var(--orange1-txt-primary-color),0.3);
 }
 .main-nav.hasnotebookbar.drawing-color-indicator .ui-tab.selected.notebookbar{
 	color: rgb(135, 105, 0);
 	color: rgb(var(--yellow0-txt-primary-color));
-	text-shadow: 0px 0px 0.2px rgb(135, 105, 0);
-	text-shadow: 0px 0px 0.2px rgb(var(--yellow0-txt-primary-color));
+	box-shadow: -1px -1px 1px rgba(var(--yellow0-txt-primary-color),0.3), 1px -1px 1px rgba(var(--yellow0-txt-primary-color),0.3);
 }
 .main-nav.hasnotebookbar.text-color-indicator .ui-tab.notebookbar:hover {
 	color: rgb(var(--blue1-txt-primary-color));
