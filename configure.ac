@@ -296,6 +296,10 @@ AC_ARG_WITH([sanitizer],
              AS_HELP_STRING([--with-sanitizer],
                            [Enable one or more compatible sanitizers. E.g. --with-sanitizer=address,undefined,leak]))
 
+AC_ARG_ENABLE([logging-test-asserts],
+                AS_HELP_STRING([--enable-logging-test-asserts],
+                            [Enable logging of passing test assertions.]))
+
 AC_ARG_WITH([compiler-plugins],
             AS_HELP_STRING([--with-compiler-plugins=<path>],
                 [Experimental! Unlikely to work for anyone except Noel! Enable compiler plugins that will perform additional checks during
@@ -352,6 +356,8 @@ LOOLWSD_ANONYMIZE_USER_DATA=false
 LOLEAFLET_LOGGING="false"
 debug_msg="secure mode: product build"
 anonym_msg=""
+LOK_LOG_ASSERTIONS=0
+log_asserts_msg="disabled"
 if test "$enable_debug" = "yes"; then
    AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces])
    ENABLE_DEBUG=true
@@ -363,6 +369,11 @@ if test "$enable_debug" = "yes"; then
    LOOLWSD_ANONYMIZE_USER_DATA=false
    LOLEAFLET_LOGGING="true"
    debug_msg="low security debugging mode"
+   if test "$enable_logging_test_asserts" != "no"; then
+      LOK_LOG_ASSERTIONS=1
+      log_asserts_msg="enabled"
+      AC_MSG_RESULT([Enabling logging of passing test assertions in debug build (default), override with --disable-logging-test-asserts])
+    fi
 else
     AC_DEFINE([ENABLE_DEBUG],0,[Whether to compile in some extra debugging support code and disable some security pieces])
 fi
@@ -401,6 +412,13 @@ if test "$enable_anonymization" = "yes" ; then
 fi
 AC_DEFINE_UNQUOTED([LOOLWSD_ANONYMIZE_USER_DATA],[$LOOLWSD_ANONYMIZE_USER_DATA],[Enable permanent anonymization in logs])
 AC_SUBST(LOOLWSD_ANONYMIZE_USER_DATA)
+
+if test "$enable_logging_test_asserts" = "yes" ; then
+   LOK_LOG_ASSERTIONS=1
+   log_asserts_msg="enabled"
+fi
+AC_DEFINE_UNQUOTED([LOK_LOG_ASSERTIONS],[$LOK_LOG_ASSERTIONS],[Enable logging of test assertions])
+AC_SUBST(LOK_LOG_ASSERTIONS)
 
 if test -z "$anonym_msg";  then
   anonym_msg="anonymization of user-data is disabled"
@@ -1422,15 +1440,16 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
       [
        echo "
 Configuration:
-    LOKit path              ${lokit_msg}
-    LO path                 $LO_PATH
-    LO integration tests    ${lo_msg}
-    SSL support             $ssl_msg
-    Debug & low security    $debug_msg
-    Anonymization           $anonym_msg
-    Set capabilities        $setcap_msg
-    Browsersync             $browsersync_msg
-    cypress                 $cypress_msg
+    LOKit path                ${lokit_msg}
+    LO path                   $LO_PATH
+    LO integration tests      ${lo_msg}
+    SSL support               $ssl_msg
+    Debug & low security      $debug_msg
+    Test assertion logging    $log_asserts_msg
+    Anonymization             $anonym_msg
+    Set capabilities          $setcap_msg
+    Browsersync               $browsersync_msg
+    cypress                   $cypress_msg
 
     \$ make # to compile"
 if test -n "$with_lo_path"; then
