@@ -105,6 +105,11 @@ L.Control.Sidebar = L.Control.extend({
 		this.builder.executeAction(this.container, data.data);
 	},
 
+	onResize: function() {
+		var wrapper = document.getElementById('sidebar-dock-wrapper');
+		wrapper.style.maxHeight = document.getElementById('document-container').getBoundingClientRect().height + 'px';
+	},
+
 	onSidebar: function(data) {
 		var sidebarData = data.data;
 		this.builder.setWindowId(sidebarData.id);
@@ -121,8 +126,7 @@ L.Control.Sidebar = L.Control.extend({
 			if (sidebarData.children.length) {
 				var wrapper = document.getElementById('sidebar-dock-wrapper');
 
-				wrapper.style.maxHeight = document.getElementById('document-container').getBoundingClientRect().height + 'px';
-
+				this.onResize();
 				this.map.dialog._resizeCalcInputBar();
 
 				this.builder.build(this.container, [sidebarData]);
