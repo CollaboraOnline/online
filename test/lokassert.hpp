@@ -66,6 +66,21 @@ std::string inline lokFormatAssertEq(const std::string& expected, const std::str
 #define LOK_ASSERT_IMPL(X)
 #endif //LOK_ABORT_ON_ASSERTION
 
+// When enabled, assertions that pass will be logged.
+// configure with --enable-logging-test-assert
+#if LOK_LOG_ASSERTIONS
+#define LOK_TRACE(X)                                                                               \
+    do                                                                                             \
+    {                                                                                              \
+        TST_LOG_NAME("unittest", X);                                                               \
+    } while (false)
+#else
+#define LOK_TRACE(X)                                                                               \
+    do                                                                                             \
+    {                                                                                              \
+    } while (false)
+#endif
+
 /// Assert the truth of a condition. WARNING: Multiple evaluations!
 #define LOK_ASSERT(condition)                                                                      \
     do                                                                                             \
@@ -76,6 +91,8 @@ std::string inline lokFormatAssertEq(const std::string& expected, const std::str
             LOK_ASSERT_IMPL(condition);                                                            \
             CPPUNIT_ASSERT(condition);                                                             \
         }                                                                                          \
+        else                                                                                       \
+            LOK_TRACE("PASS: " << (#condition));                                                   \
     } while (false)
 
 /// Assert the equality of two expressions. WARNING: Multiple evaluations!
@@ -99,6 +116,8 @@ std::string inline lokFormatAssertEq(const std::string& expected, const std::str
             LOK_ASSERT_IMPL((expected) == (actual));                                               \
             CPPUNIT_ASSERT_EQUAL_MESSAGE(msg##__LINE__, (expected), (actual));                     \
         }                                                                                          \
+        else                                                                                       \
+            LOK_TRACE("PASS: [" << (expected) << "] == [" << (actual) << ']');                     \
     } while (false)
 
 /// Assert the equality of two expressions, and a custom message, with guaranteed single evaluation.
@@ -131,17 +150,19 @@ std::string inline lokFormatAssertEq(const std::string& expected, const std::str
     {                                                                                              \
         if (!(condition))                                                                          \
         {                                                                                          \
-            TST_LOG_NAME("unittest", "ERROR: Assertion failure: " << (message) << ". Condition: "  \
-                                                                  << (#condition));                \
+            TST_LOG_NAME("unittest", "ERROR: Assertion failure: ["                                 \
+                                         << (message) << "] Condition: " << (#condition));         \
             LOK_ASSERT_IMPL(condition);                                                            \
             CPPUNIT_ASSERT_MESSAGE((message), (condition));                                        \
         }                                                                                          \
+        else                                                                                       \
+            LOK_TRACE("PASS: " << (#condition));                                                   \
     } while (false)
 
 #define LOK_ASSERT_FAIL(message)                                                                   \
     do                                                                                             \
     {                                                                                              \
         TST_LOG_NAME("unittest", "ERROR: Forced failure: " << (message));                          \
-        LOK_ASSERT_IMPL(!"Forced failure");                                                        \
+        LOK_ASSERT_IMPL(!"Forced failure: " #message);                                             \
         CPPUNIT_FAIL((message));                                                                   \
     } while (false)
