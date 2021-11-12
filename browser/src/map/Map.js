@@ -1289,33 +1289,14 @@ L.Map = L.Evented.extend({
 		L.Util.cancelAnimFrame(this._resizeRequest);
 		this._resizeRequest = L.Util.requestAnimFrame(
 			function () { this.invalidateSize({debounceMoveend: true}); }, this, false, this._container);
-		var deckOffset = 0;
-		var sidebarpanel = L.DomUtil.get('#sidebar-dock-wrapper');
-		if (sidebarpanel) {
-			var sidebar = sidebarpanel;
-			if (sidebar) {
-				sidebar.height = this._container.clientHeight - 10;
-				sidebar.style.height = sidebar.height + 'px';
-				deckOffset = sidebar.width;
-				// Fire the resize event to propagate the size change to WSD.
-				// .trigger isn't working, so doing it manually.
-				var event;
-				if (document.createEvent) {
-					event = document.createEvent('HTMLEvents');
-					event.initEvent('resize', true, true);
-				} else {
-					event = document.createEventObject();
-					event.eventType = 'resize';
-				}
 
-				event.eventName = 'resize';
-				if (document.createEvent) {
-					sidebar.dispatchEvent(event);
-				} else {
-					sidebar.fireEvent('on' + event.eventType, event);
-				}
-			}
-		}
+		if (this.sidebar)
+			this.sidebar.onResize();
+
+		var deckOffset = 0;
+		var sidebar = L.DomUtil.get('#sidebar-dock-wrapper');
+		if (sidebar)
+			deckOffset = sidebar.width;
 
 		this.showCalcInputBar(deckOffset);
 	},
