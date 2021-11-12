@@ -39,6 +39,7 @@ declare var app: any;
 			If none of them exists, canvas's top will be used as anchor.
 			Canvas's left will be used as horizontal anchor.
 		2- [["column header", "bottom", "ruler", "bottom", "top"], ["row header", "right", "left"]]
+		It is also possible to position a section's right edge anchor to another section's left edge by using a special option '-left'.
 
 	position: [0, 0] | [10, 50] | [x, y] // Related to anchor. Example 'bottom right': P(0, 0) is bottom right etc. myTopLeft is updated according to position and anchor.
 
@@ -160,6 +161,7 @@ class CanvasSectionObject {
 	position: Array<number> = new Array(0);
 	isCollapsed: boolean = false;
 	size: Array<number> = new Array(0);
+	origSizeHint: undefined | Array<number> = undefined; // This is used to preserve the original size provided on construct.
 	expand: Array<string> = new Array(0);
 	isLocated: boolean = false; // location and size of the section computed yet ?
 	processingOrder: number = null;
@@ -1547,6 +1549,11 @@ class CanvasSectionContainer {
 							return targetSection.myTopLeft[0] - app.roundedDpiScale;
 						else if (targetEdge === 'right')
 							return targetSection.myTopLeft[0] + targetSection.size[0] + app.roundedDpiScale;
+						else if (targetEdge === '-left') {
+							if (section.expand[0] === 'left' && section.origSizeHint)
+								section.size[0] = section.origSizeHint[0];
+							return targetSection.myTopLeft[0] - app.roundedDpiScale - section.size[0];
+						}
 					}
 				}
 				else {
@@ -1584,17 +1591,24 @@ class CanvasSectionContainer {
 	}
 
 	private locateSections () {
-		// Reset some values.
+
 		for (var i: number = 0; i < this.sections.length; i++) {
-			this.sections[i].isLocated = false;
-			this.sections[i].myTopLeft = null;
+			const section = this.sections[i];
+			// Reset some values.
+			section.isLocated = false;
+			section.myTopLeft = null;
+
+			// Preserve the original size hint
+			if (typeof section.origSizeHint === 'undefined') {
+				section.origSizeHint = [...section.size];
+			}
 		}
 
 		this.documentAnchor = null;
 		this.windowSectionList = [];
 
 		for (var i: number = 0; i < this.sections.length; i++) {
-			var section: CanvasSectionObject = this.sections[i];
+			const section: CanvasSectionObject = this.sections[i];
 
 			if (section.documentObject === true) { // "Document anchor" section should be processed before "document object" sections.
 				if (section.size && section.position) {
