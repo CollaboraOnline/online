@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it cy beforeEach expect require afterEach */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -33,15 +33,20 @@ describe('Scroll through document', function() {
 	});
 
 	it('Scrolling to left/right', function() {
-		desktopHelper.selectZoomLevel('150');
+		desktopHelper.selectZoomLevel('200');
 
-		helper.typeIntoDocument('{home}{end}{home}');
+		helper.typeIntoDocument('{home}');
 
-		desktopHelper.assertScrollbarPosition('horizontal', [62, 55]);
+		desktopHelper.assertScrollbarPosition('horizontal', [62, 55, 68]);
 
-		helper.typeIntoDocument('{end}{home}{end}');
+		helper.typeIntoDocument('{end}');
 
-		desktopHelper.assertScrollbarPosition('horizontal', [79, 67, 68]);
+		cy.wait(500);
+
+		cy.get('#test-div-horizontal-scrollbar')
+			.then(function($item) {
+				const x = parseInt($item.text());
+				expect(x).to.be.within(129, 155);
+			});
 	});
-
 });
