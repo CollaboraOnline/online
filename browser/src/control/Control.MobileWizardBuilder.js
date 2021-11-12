@@ -734,10 +734,14 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 				for (var i in childData.responses) {
 					var buttonId = childData.responses[i].id;
 					var response = childData.responses[i].response;
-					var button = $('#' + buttonId);
+					var button = parent.querySelector('[id=\'' + buttonId + '\']');
 					var isHelp = response === '-11' || response === -11 || buttonId === 'help';
-					if (button && isHelp)
-						button.hide();
+					var isClose = response === '7' || response === 7;
+					var isCancel = response === '0' || response === 0;
+					if (button && (isHelp || isClose || isCancel))
+						button.style.display = 'none';
+					else if (button)
+						this.setupStandardButtonHandler(button, response, this);
 				}
 			}
 		}
