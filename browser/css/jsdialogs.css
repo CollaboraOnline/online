@@ -355,6 +355,24 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .jsdialog input[type='radio'][disabled='disabled'] ~ label {
 	color: var(--gray-light-txt--color);
 }
+/* spinfield (number) */
+input[type='number'] {
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+	opacity: 0.5;
+	height: 28px;
+	margin: 0;
+}
+
+input[type='number']:hover::-webkit-inner-spin-button,
+input[type='number']:hover::-webkit-outer-spin-button {
+	opacity: 1;
+	cursor: pointer;
+}
 /* listbox */
 .jsdialog.ui-listbox {
 	-webkit-appearance: none;
