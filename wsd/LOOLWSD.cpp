@@ -4420,7 +4420,7 @@ void LOOLWSD::cleanup()
 int LOOLWSD::main(const std::vector<std::string>& /*args*/)
 {
 #if MOBILEAPP && !defined IOS
-    SigUtil::resetTerminationFlag();
+    SigUtil::resetTerminationFlags();
 #endif
 
     int returnValue;
