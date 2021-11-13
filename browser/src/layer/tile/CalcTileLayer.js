@@ -515,6 +515,81 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 	},
 
+	_adjustCanvasSectionsForLayoutChange: function () {
+
+		var sheetIsRTL = this._selectedPart in this._rtlParts;
+		if (sheetIsRTL && this._layoutIsRTL !== true) {
+			console.log('debug: in LTR -> RTL canvas section adjustments');
+			var sectionContainer = this._painter._sectionContainer;
+
+			var tilesSection = sectionContainer.getSectionWithName(L.CSections.Tiles.name);
+			var rowHeaderSection = sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
+			var columnHeaderSection = sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name);
+			var cornerHeaderSection = sectionContainer.getSectionWithName(L.CSections.CornerHeader.name);
+			var columnGroupSection = sectionContainer.getSectionWithName(L.CSections.ColumnGroup.name);
+			var rowGroupSection = sectionContainer.getSectionWithName(L.CSections.RowGroup.name);
+			var cornerGroupSection = sectionContainer.getSectionWithName(L.CSections.CornerGroup.name);
+			// Scroll section covers the entire document area, and needs RTL adjustments internally.
+
+			if (cornerGroupSection)
+				cornerGroupSection.anchor = ['top', 'right'];
+
+			if (rowGroupSection)
+				rowGroupSection.anchor = [[L.CSections.CornerGroup.name, 'bottom', 'top'], 'right'];
+
+			if (columnGroupSection)
+				columnGroupSection.anchor = ['top', [L.CSections.CornerGroup.name, '-left', 'right']];
+
+			cornerHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, '-left', 'right']];
+
+			rowHeaderSection.anchor = [[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, '-left', 'right']];
+
+			columnHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, '-left', 'right']];
+			columnHeaderSection.expand = ['left'];
+
+			tilesSection.anchor = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, '-left', 'right']];
+
+			this._layoutIsRTL = true;
+
+			sectionContainer.reNewAllSections(true);
+
+		} else if (!sheetIsRTL && this._layoutIsRTL === true) {
+
+			console.log('debug: in RTL -> LTR canvas section adjustments');
+			this._layoutIsRTL = false;
+			var sectionContainer = this._painter._sectionContainer;
+
+			var tilesSection = sectionContainer.getSectionWithName(L.CSections.Tiles.name);
+			var rowHeaderSection = sectionContainer.getSectionWithName(L.CSections.RowHeader.name);
+			var columnHeaderSection = sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name);
+			var cornerHeaderSection = sectionContainer.getSectionWithName(L.CSections.CornerHeader.name);
+			var columnGroupSection = sectionContainer.getSectionWithName(L.CSections.ColumnGroup.name);
+			var rowGroupSection = sectionContainer.getSectionWithName(L.CSections.RowGroup.name);
+			var cornerGroupSection = sectionContainer.getSectionWithName(L.CSections.CornerGroup.name);
+
+			if (cornerGroupSection)
+				cornerGroupSection.anchor = ['top', 'left'];
+
+			if (rowGroupSection)
+				rowGroupSection.anchor = [[L.CSections.CornerGroup.name, 'bottom', 'top'], 'left'];
+
+			if (columnGroupSection)
+				columnGroupSection.anchor = ['top', [L.CSections.CornerGroup.name, 'right', 'left']];
+
+			cornerHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']];
+
+			rowHeaderSection.anchor = [[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']];
+
+			columnHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, 'right', 'left']];
+			columnHeaderSection.expand = ['right'];
+
+			tilesSection.anchor = [[L.CSections.ColumnHeader.name, 'bottom', 'top'], [L.CSections.RowHeader.name, 'right', 'left']];
+
+			sectionContainer.reNewAllSections(true);
+
+		}
+	},
+
 	_handleSheetGeometryDataMsg: function (jsonMsgObj) {
 		if (!this.sheetGeometry) {
 			this._sheetGeomFirstWait = false;
@@ -536,6 +611,10 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._pixelsToTwips(this._map.getSize()));
 
 		this._addRemoveGroupSections();
+
+		console.log('debug: got sheetGeometry: this._rtlParts = ' + this._rtlParts + ' this._selectedPart = ' + this._selectedPart);
+
+		this._adjustCanvasSectionsForLayoutChange();
 
 		this._updateHeadersGridLines(undefined, true /* updateCols */,
 			true /* updateRows */);
