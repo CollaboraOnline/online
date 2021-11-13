@@ -21,12 +21,12 @@ namespace SigUtil
     /// Get the flag to stop pump loops forcefully.
     /// If this returns true, getShutdownRequestFlag() must also return true.
     bool getTerminationFlag();
-    /// Set the flag to stop pump loops forcefully.
+    /// Set the flag to stop pump loops forcefully and request shutting down.
     void setTerminationFlag();
 #if MOBILEAPP
-    /// Reset the flag to stop pump loops forcefully.
+    /// Reset the flags to stop pump loops forcefully.
     /// Only necessary in Mobile.
-    void resetTerminationFlag();
+    void resetTerminationFlags();
 #endif
 #else
     // In the mobile apps we have no need to shut down the app.
