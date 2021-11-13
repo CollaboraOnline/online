@@ -237,7 +237,7 @@ void TileCacheTests::testSimple()
     TileDesc tile(nviewid, part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, -1, 0, -1, false);
 
     // No Cache
-    TileCache::Tile tileData = tc.lookupTile(tile);
+    Tile tileData = tc.lookupTile(tile);
     LOK_ASSERT_MESSAGE("found tile when none was expected", !tileData);
 
     // Cache Tile

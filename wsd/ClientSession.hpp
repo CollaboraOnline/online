@@ -80,13 +80,13 @@ public:
         return true;
     }
 
-    bool sendTile(const std::string &header, const TileCache::Tile &tile)
+    bool sendTile(const std::string &header, const Tile &tile)
     {
         // FIXME: this needs to send deltas based on a wid parameter in a range
         return sendBlob(header, tile->keyframe());
     }
 
-    bool sendBlob(const std::string &header, const TileCache::Blob &blob)
+    bool sendBlob(const std::string &header, const Blob &blob)
     {
         // FIXME: performance - optimize away this copy ...
         std::vector<char> output;

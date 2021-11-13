@@ -54,6 +54,31 @@ struct TileDescCacheHasher final
     }
 };
 
+using BlobData = std::vector<char>;
+using Blob = std::shared_ptr<BlobData>;
+struct TileData
+{
+    TileData(TileWireId start, Blob &blob) :
+        _start(start), _deltas(1)
+    {
+        _deltas[0] = blob;
+    }
+    TileWireId _start;
+    std::vector<Blob> _deltas; // first item is a key-frame
+    size_t size()
+    {
+        size_t size = 0;
+        for (auto &b : _deltas)
+            size += b->size();
+        return size;
+    }
+    Blob keyframe()
+    {
+        return _deltas.size() > 0 ? _deltas[0] : nullptr;
+    }
+};
+using Tile = std::shared_ptr<TileData>;
+
 /// Handles the caching of tiles of one document.
 class TileCache
 {
@@ -62,31 +87,6 @@ class TileCache
     std::shared_ptr<TileBeingRendered> findTileBeingRendered(const TileDesc& tile);
 
 public:
-    using BlobData = std::vector<char>;
-    using Blob = std::shared_ptr<BlobData>;
-    struct TileData
-    {
-        TileData(TileWireId start, Blob &blob) :
-            _start(start), _deltas(1)
-        {
-            _deltas[0] = blob;
-        }
-        TileWireId _start;
-        std::vector<Blob> _deltas; // first item is a key-frame
-        size_t size()
-        {
-            size_t size = 0;
-            for (auto &b : _deltas)
-                size += b->size();
-            return size;
-        }
-        Blob keyframe()
-        {
-            return _deltas.size() > 0 ? _deltas[0] : nullptr;
-        }
-    };
-    using Tile = std::shared_ptr<TileData>;
-
     /// When the docURL is a non-file:// url, the timestamp has to be provided by the caller.
     /// For file:// url's, it's ignored.
     /// When it is missing for non-file:// url, it is assumed the document must be read, and no cached value used.
@@ -209,7 +209,7 @@ private:
     std::map<std::string, Blob> _streamCache[static_cast<int>(StreamType::Last)];
 };
 
-inline std::ostream& operator<< (std::ostream& os, const TileCache::Tile& tile)
+inline std::ostream& operator<< (std::ostream& os, const Tile& tile)
 {
     if (!tile)
         os << "nullptr";

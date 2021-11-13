@@ -230,7 +230,7 @@ void UnitWSD::configure(Poco::Util::LayeredConfiguration &config)
 
 void UnitWSD::lookupTile(int part, int width, int height, int tilePosX, int tilePosY,
                          int tileWidth, int tileHeight,
-                         std::shared_ptr<std::vector<char>> &tile)
+                         std::shared_ptr<TileData> &tile)
 {
     if (isUnitTesting())
     {

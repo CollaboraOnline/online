@@ -33,7 +33,7 @@ public:
 
     virtual void lookupTile(int part, int width, int height, int tilePosX, int tilePosY,
                             int tileWidth, int tileHeight,
-                            std::shared_ptr<std::vector<char>> &tile)
+                            std::shared_ptr<TileData> &tile)
     {
         // Call base to fire events.
         UnitWSD::lookupTile(part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, tile);
