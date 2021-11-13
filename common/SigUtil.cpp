@@ -60,13 +60,19 @@ namespace SigUtil
 
     void setTerminationFlag()
     {
+        // Set the forced-termination flag.
         TerminationFlag = true;
+#if !MOBILEAPP
+        // And request shutting down and wake-up the thread.
+        requestShutdown();
+#endif
     }
 
 #if MOBILEAPP
-    void resetTerminationFlag()
+    void resetTerminationFlags()
     {
         TerminationFlag = false;
+        ShutdownRequestFlag = false;
     }
 #endif
 #endif // !IOS
