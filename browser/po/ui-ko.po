@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-10 20:10+0100\n"
+"POT-Creation-Date: 2021-11-14 17:59+0100\n"
 "PO-Revision-Date: 2020-08-30 15:35+0000\n"
 "Last-Translator: 김주현 <kjh000121@gmail.com>\n"
 "Language-Team: Korean <https://weblate.documentfoundation.org/projects/"
@@ -143,7 +143,7 @@ msgstr "네트워크 그래프"
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:248
 #: src/control/Control.NotebookbarDraw.js:24
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/layer/tile/CommentListSection.ts:387
+#: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:122
 msgid "Save"
 msgstr "저장"
@@ -209,7 +209,7 @@ msgstr "새로 고침"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:395
 #: src/control/Control.StatusBar.js:314
 msgid "None"
 msgstr "없음"
@@ -263,6 +263,7 @@ msgstr "이 세션을 정말 종료하겠습니까?"
 #: src/control/Control.Menubar.js:1612
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:860
+#: src/core/Socket.js:951
 msgid "OK"
 msgstr "확인"
 
@@ -271,7 +272,7 @@ msgstr "확인"
 #: src/control/Control.Menubar.js:1613 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
-#: src/layer/tile/CommentListSection.ts:388
+#: src/core/Socket.js:952 src/layer/tile/CommentListSection.ts:389
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "취소"
@@ -382,10 +383,10 @@ msgid "Index"
 msgstr "차례"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2102
+#: src/control/Control.JSDialogBuilder.js:2114
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
-#: src/layer/tile/CommentListSection.ts:820
+#: src/layer/tile/CommentListSection.ts:821
 msgid "Comment"
 msgstr "추가 설명"
 
@@ -417,96 +418,96 @@ msgstr "클립보드로 복사 확인"
 msgid "Function Wizard"
 msgstr "함수 마법사"
 
-#: src/control/Control.JSDialogBuilder.js:391
+#: src/control/Control.JSDialogBuilder.js:398
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:394
+#: src/control/Control.JSDialogBuilder.js:401
 msgid "Linear"
 msgstr "선"
 
-#: src/control/Control.JSDialogBuilder.js:397
+#: src/control/Control.JSDialogBuilder.js:404
 msgid "Axial"
 msgstr "축"
 
-#: src/control/Control.JSDialogBuilder.js:400
+#: src/control/Control.JSDialogBuilder.js:407
 msgid "Radial"
 msgstr "방사형"
 
-#: src/control/Control.JSDialogBuilder.js:403
+#: src/control/Control.JSDialogBuilder.js:410
 msgid "Ellipsoid"
 msgstr "타원체"
 
-#: src/control/Control.JSDialogBuilder.js:407
+#: src/control/Control.JSDialogBuilder.js:414
 msgid "Quadratic"
 msgstr "입방형"
 
-#: src/control/Control.JSDialogBuilder.js:410
+#: src/control/Control.JSDialogBuilder.js:417
 msgid "Square"
 msgstr "정방형"
 
-#: src/control/Control.JSDialogBuilder.js:413
+#: src/control/Control.JSDialogBuilder.js:420
 msgid "Fixed size"
 msgstr "고정 크기"
 
-#: src/control/Control.JSDialogBuilder.js:1254
+#: src/control/Control.JSDialogBuilder.js:1261
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1257
+#: src/control/Control.JSDialogBuilder.js:1264
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1260
+#: src/control/Control.JSDialogBuilder.js:1267
 msgid "Color"
 msgstr "색"
 
-#: src/control/Control.JSDialogBuilder.js:1384
+#: src/control/Control.JSDialogBuilder.js:1396
 #, fuzzy
 msgid "Select range"
 msgstr "변경 사항 거부"
 
-#: src/control/Control.JSDialogBuilder.js:1427
+#: src/control/Control.JSDialogBuilder.js:1439
 #: src/control/Control.NotebookbarBuilder.js:235
 msgid "Font Name"
 msgstr "글꼴 이름"
 
-#: src/control/Control.JSDialogBuilder.js:1429 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1441 src/control/Toolbar.js:123
 msgid "Font Size"
 msgstr "글꼴 크기"
 
-#: src/control/Control.JSDialogBuilder.js:1431
+#: src/control/Control.JSDialogBuilder.js:1443
 #: src/control/Control.TopToolbar.js:490
 msgid "Style"
 msgstr "스타일"
 
-#: src/control/Control.JSDialogBuilder.js:2088
+#: src/control/Control.JSDialogBuilder.js:2100
 #, fuzzy
 msgid "reply"
 msgstr "답변"
 
-#: src/control/Control.JSDialogBuilder.js:2091
+#: src/control/Control.JSDialogBuilder.js:2103
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2163
+#: src/control/Control.JSDialogBuilder.js:2175
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2614
+#: src/control/Control.JSDialogBuilder.js:2626
 #, fuzzy
 msgid "Cell borders"
 msgstr "테두리"
 
-#: src/control/Control.JSDialogBuilder.js:2805
+#: src/control/Control.JSDialogBuilder.js:2817
 msgid "Rows"
 msgstr "열"
 
-#: src/control/Control.JSDialogBuilder.js:2806
+#: src/control/Control.JSDialogBuilder.js:2818
 msgid "Columns"
 msgstr "행"
 
-#: src/control/Control.JSDialogBuilder.js:2826
+#: src/control/Control.JSDialogBuilder.js:2838
 #, fuzzy
 msgid "Insert Table"
 msgstr "표 삽입"
@@ -515,12 +516,12 @@ msgstr "표 삽입"
 #: src/control/Control.Menubar.js:279 src/control/Control.Menubar.js:281
 #: src/control/Control.Menubar.js:417 src/control/Control.Menubar.js:530
 #: src/control/Control.Menubar.js:738
-#: src/control/Control.NotebookbarBuilder.js:738
-#: src/control/Control.NotebookbarBuilder.js:740
 #: src/control/Control.NotebookbarBuilder.js:742
-#: src/control/Control.NotebookbarBuilder.js:766
-#: src/control/Control.NotebookbarBuilder.js:801
-#: src/control/Control.NotebookbarBuilder.js:818
+#: src/control/Control.NotebookbarBuilder.js:744
+#: src/control/Control.NotebookbarBuilder.js:746
+#: src/control/Control.NotebookbarBuilder.js:770
+#: src/control/Control.NotebookbarBuilder.js:805
+#: src/control/Control.NotebookbarBuilder.js:822
 #: src/control/Control.StatusBar.js:514
 msgid "None (Do not check spelling)"
 msgstr "없음 (맞춤법 검사 안함)"
@@ -601,10 +602,10 @@ msgstr "문서 닫기"
 #: src/control/Control.Menubar.js:450 src/control/Control.Menubar.js:561
 #: src/control/Control.Menubar.js:775 src/control/Control.Menubar.js:826
 #: src/control/Control.Menubar.js:877 src/control/Control.Menubar.js:925
-#: src/control/Control.NotebookbarBuilder.js:731
-#: src/control/Control.NotebookbarBuilder.js:761
-#: src/control/Control.NotebookbarBuilder.js:796
-#: src/control/Control.NotebookbarBuilder.js:813
+#: src/control/Control.NotebookbarBuilder.js:735
+#: src/control/Control.NotebookbarBuilder.js:765
+#: src/control/Control.NotebookbarBuilder.js:800
+#: src/control/Control.NotebookbarBuilder.js:817
 #: src/control/Control.NotebookbarCalc.js:169
 #: src/control/Control.NotebookbarCalc.js:170
 #: src/control/Control.NotebookbarDraw.js:218
@@ -630,7 +631,7 @@ msgid "Reset zoom"
 msgstr "배율 초기화"
 
 #: src/control/Control.Menubar.js:106
-#: src/control/Control.NotebookbarBuilder.js:717
+#: src/control/Control.NotebookbarBuilder.js:721
 #: src/control/Control.NotebookbarWriter.js:1025
 #: src/control/Control.NotebookbarWriter.js:1026
 msgid "Show Ruler"
@@ -695,7 +696,6 @@ msgstr "정보"
 
 #: src/control/Control.Menubar.js:301 src/control/Control.Menubar.js:429
 #: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:750
-#: src/map/Map.js:391
 msgid "Last modification"
 msgstr "마지막 수정"
 
@@ -799,10 +799,10 @@ msgid "Gradient End"
 msgstr ""
 
 #: src/control/Control.Notebookbar.js:242
-#: src/control/Control.NotebookbarBuilder.js:712
-#: src/control/Control.NotebookbarBuilder.js:755
-#: src/control/Control.NotebookbarBuilder.js:783
-#: src/control/Control.NotebookbarBuilder.js:808
+#: src/control/Control.NotebookbarBuilder.js:716
+#: src/control/Control.NotebookbarBuilder.js:759
+#: src/control/Control.NotebookbarBuilder.js:787
+#: src/control/Control.NotebookbarBuilder.js:812
 #: src/control/Control.NotebookbarDraw.js:18
 #: src/control/Control.NotebookbarImpress.js:18
 msgid "Menu"
@@ -821,7 +821,7 @@ msgid "Redo"
 msgstr ""
 
 # local 로컬
-#: src/control/Control.NotebookbarBuilder.js:548
+#: src/control/Control.NotebookbarBuilder.js:552
 #: src/control/Control.TopToolbar.js:222
 msgid "Insert Local Image"
 msgstr "로컬 이미지 삽입"
@@ -1608,42 +1608,42 @@ msgstr "보기 전용 모드로 열려면 [취소]를 클릭하십시오."
 msgid "Wrong password provided. Please try again."
 msgstr "암호가 틀렸습니다. 다시 시도하십시오"
 
-#: src/core/Socket.js:1017
+#: src/core/Socket.js:1021
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1019
+#: src/core/Socket.js:1023
 msgid " saved this document as "
 msgstr ""
 
-#: src/core/Socket.js:1019
+#: src/core/Socket.js:1023
 msgid ". Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1028
+#: src/core/Socket.js:1032
 msgid "Loading..."
 msgstr "불러오는 중..."
 
-#: src/core/Socket.js:1028
+#: src/core/Socket.js:1032
 msgid "Connecting..."
 msgstr "연결하는 중.."
 
-#: src/core/Socket.js:1046
+#: src/core/Socket.js:1050
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1408
+#: src/core/Socket.js:1412
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "문서에 연결할 수 없습니다. 다시 시도하십시오."
 
-#: src/core/Socket.js:1425
+#: src/core/Socket.js:1429
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "연결하는 중.."
 
-#: src/core/Socket.js:1431
+#: src/core/Socket.js:1435
 msgid "The server has been disconnected."
 msgstr ""
 
@@ -1806,36 +1806,36 @@ msgstr "함수 마법사"
 msgid "No Comments"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:767
+#: src/layer/tile/CommentListSection.ts:768
 msgid "Modify"
 msgstr "수정"
 
-#: src/layer/tile/CommentListSection.ts:773
+#: src/layer/tile/CommentListSection.ts:774
 #: src/layer/tile/CommentSection.ts:125
 msgid "Reply"
 msgstr "답변"
 
-#: src/layer/tile/CommentListSection.ts:779
+#: src/layer/tile/CommentListSection.ts:780
 msgid "Remove"
 msgstr "제거하기"
 
-#: src/layer/tile/CommentListSection.ts:785
+#: src/layer/tile/CommentListSection.ts:786
 msgid "Remove Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:791
+#: src/layer/tile/CommentListSection.ts:792
 msgid "Resolve"
 msgstr "해결"
 
-#: src/layer/tile/CommentListSection.ts:791
+#: src/layer/tile/CommentListSection.ts:792
 msgid "Unresolve"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:797
+#: src/layer/tile/CommentListSection.ts:798
 msgid "Unresolve Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:797
+#: src/layer/tile/CommentListSection.ts:798
 msgid "Resolve Thread"
 msgstr ""
 
@@ -1903,17 +1903,11 @@ msgstr ""
 msgid "Initializing..."
 msgstr "초기화하는 중..."
 
-#: src/map/Map.js:426
-#, javascript-format
-msgid "%d seconds ago"
-msgstr "%d 초 전"
+#: src/map/Map.js:424 src/map/Map.js:427 src/map/Map.js:430
+msgid "Last saved:"
+msgstr ""
 
-#: src/map/Map.js:429
-#, javascript-format
-msgid "%d minutes ago"
-msgstr "%d 분 전"
-
-#: src/map/Map.js:1449
+#: src/map/Map.js:1430
 msgid "Inactive document - please click to resume editing"
 msgstr "비활성화된 문서 - 편집을 계속하려면 클릭하십시오."
 
@@ -1952,6 +1946,14 @@ msgstr "템플릿으로 새로운 파일 만들기..."
 #: src/map/handler/Map.WOPI.js:410
 msgid "Creating copy..."
 msgstr "복사본 만드는 중..."
+
+#, javascript-format
+#~ msgid "%d seconds ago"
+#~ msgstr "%d 초 전"
+
+#, javascript-format
+#~ msgid "%d minutes ago"
+#~ msgstr "%d 분 전"
 
 #~ msgid ""
 #~ "IE11 has reached its maximum number of connections. Please see this document "

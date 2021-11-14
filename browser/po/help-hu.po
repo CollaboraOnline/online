@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-10 20:10+0200\n"
+"POT-Creation-Date: 2021-11-14 17:59+0200\n"
 "PO-Revision-Date: 2021-11-14 16:57+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9.1-dev\n"
+"X-Generator: Translate Toolkit 2.5.0\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1098,11 +1098,15 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-18
+#, fuzzy
 msgid ""
 "Moves the cursor to the right edge of the current data range. If the column "
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
+"A kurzort az aktuális adattartomány bal szélére mozgatja. Ha a kurzort "
+"tartalmazó cellától balra lévő oszlop üres, a kurzor a balra következő, "
+"adatot tartalmazó oszlopba mozog."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-249
 #, fuzzy
@@ -1110,11 +1114,15 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-18
+#, fuzzy
 msgid ""
 "Moves the cursor to the top edge of the current data range. If the row above "
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
+"A kurzort az aktuális adattartomány bal szélére mozgatja. Ha a kurzort "
+"tartalmazó cellától balra lévő oszlop üres, a kurzor a balra következő, "
+"adatot tartalmazó oszlopba mozog."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-221
 #, fuzzy
@@ -1122,11 +1130,15 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Felfelé nyíl"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-18
+#, fuzzy
 msgid ""
 "Moves the cursor to the bottom edge of the current data range. If the row "
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"A kurzort az aktuális adattartomány bal szélére mozgatja. Ha a kurzort "
+"tartalmazó cellától balra lévő oszlop üres, a kurzor a balra következő, "
+"adatot tartalmazó oszlopba mozog."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-226
 #, fuzzy

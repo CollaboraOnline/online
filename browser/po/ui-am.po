@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-10 20:10+0100\n"
+"POT-Creation-Date: 2021-11-14 17:59+0100\n"
 "PO-Revision-Date: 2020-12-08 13:30+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Amharic <https://hosted.weblate.org/projects/collabora-online/"
@@ -143,7 +143,7 @@ msgstr "የ ኔትዎርክ ድጋፍ"
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:248
 #: src/control/Control.NotebookbarDraw.js:24
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/layer/tile/CommentListSection.ts:387
+#: src/layer/tile/CommentListSection.ts:388
 #: src/layer/tile/CommentSection.ts:122
 msgid "Save"
 msgstr "ማስቀመጫ"
@@ -209,7 +209,7 @@ msgstr "ማነቃቂያ"
 msgid "Channel Filter:"
 msgstr ""
 
-#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:388
+#: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:395
 #: src/control/Control.StatusBar.js:314
 msgid "None"
 msgstr "ምንም"
@@ -263,6 +263,7 @@ msgstr "በ እርግጥ ይህን ክፍል ጊዜ ማጥፋት ይፈልጋሉ
 #: src/control/Control.Menubar.js:1612
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:860
+#: src/core/Socket.js:951
 msgid "OK"
 msgstr "እሺ"
 
@@ -271,7 +272,7 @@ msgstr "እሺ"
 #: src/control/Control.Menubar.js:1613 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
-#: src/layer/tile/CommentListSection.ts:388
+#: src/core/Socket.js:952 src/layer/tile/CommentListSection.ts:389
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "መሰረዣ"
@@ -381,10 +382,10 @@ msgid "Index"
 msgstr "ማውጫ"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2102
+#: src/control/Control.JSDialogBuilder.js:2114
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
-#: src/layer/tile/CommentListSection.ts:820
+#: src/layer/tile/CommentListSection.ts:821
 msgid "Comment"
 msgstr "አስተያየት"
 
@@ -417,98 +418,98 @@ msgstr ""
 msgid "Function Wizard"
 msgstr "ተግባር"
 
-#: src/control/Control.JSDialogBuilder.js:391
+#: src/control/Control.JSDialogBuilder.js:398
 msgid "Solid"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:394
+#: src/control/Control.JSDialogBuilder.js:401
 msgid "Linear"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:397
+#: src/control/Control.JSDialogBuilder.js:404
 msgid "Axial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:400
+#: src/control/Control.JSDialogBuilder.js:407
 msgid "Radial"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:403
+#: src/control/Control.JSDialogBuilder.js:410
 msgid "Ellipsoid"
 msgstr "ኤሊፕሶዪድ"
 
-#: src/control/Control.JSDialogBuilder.js:407
+#: src/control/Control.JSDialogBuilder.js:414
 msgid "Quadratic"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:410
+#: src/control/Control.JSDialogBuilder.js:417
 msgid "Square"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:413
+#: src/control/Control.JSDialogBuilder.js:420
 msgid "Fixed size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1254
+#: src/control/Control.JSDialogBuilder.js:1261
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1257
+#: src/control/Control.JSDialogBuilder.js:1264
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1260
+#: src/control/Control.JSDialogBuilder.js:1267
 msgid "Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1384
+#: src/control/Control.JSDialogBuilder.js:1396
 #, fuzzy
 msgid "Select range"
 msgstr "ለውጡን አልቀበልም"
 
-#: src/control/Control.JSDialogBuilder.js:1427
+#: src/control/Control.JSDialogBuilder.js:1439
 #: src/control/Control.NotebookbarBuilder.js:235
 #, fuzzy
 msgid "Font Name"
 msgstr "ፊደል"
 
-#: src/control/Control.JSDialogBuilder.js:1429 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1441 src/control/Toolbar.js:123
 #, fuzzy
 msgid "Font Size"
 msgstr "ፊደል"
 
-#: src/control/Control.JSDialogBuilder.js:1431
+#: src/control/Control.JSDialogBuilder.js:1443
 #: src/control/Control.TopToolbar.js:490
 msgid "Style"
 msgstr "ዘዴ"
 
-#: src/control/Control.JSDialogBuilder.js:2088
+#: src/control/Control.JSDialogBuilder.js:2100
 #, fuzzy
 msgid "reply"
 msgstr "መመለሻ"
 
-#: src/control/Control.JSDialogBuilder.js:2091
+#: src/control/Control.JSDialogBuilder.js:2103
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2163
+#: src/control/Control.JSDialogBuilder.js:2175
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2614
+#: src/control/Control.JSDialogBuilder.js:2626
 #, fuzzy
 msgid "Cell borders"
 msgstr "ድንበሮች"
 
-#: src/control/Control.JSDialogBuilder.js:2805
+#: src/control/Control.JSDialogBuilder.js:2817
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2806
+#: src/control/Control.JSDialogBuilder.js:2818
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2826
+#: src/control/Control.JSDialogBuilder.js:2838
 #, fuzzy
 msgid "Insert Table"
 msgstr "ሰንጠረዥ ማስገቢያ"
@@ -517,12 +518,12 @@ msgstr "ሰንጠረዥ ማስገቢያ"
 #: src/control/Control.Menubar.js:279 src/control/Control.Menubar.js:281
 #: src/control/Control.Menubar.js:417 src/control/Control.Menubar.js:530
 #: src/control/Control.Menubar.js:738
-#: src/control/Control.NotebookbarBuilder.js:738
-#: src/control/Control.NotebookbarBuilder.js:740
 #: src/control/Control.NotebookbarBuilder.js:742
-#: src/control/Control.NotebookbarBuilder.js:766
-#: src/control/Control.NotebookbarBuilder.js:801
-#: src/control/Control.NotebookbarBuilder.js:818
+#: src/control/Control.NotebookbarBuilder.js:744
+#: src/control/Control.NotebookbarBuilder.js:746
+#: src/control/Control.NotebookbarBuilder.js:770
+#: src/control/Control.NotebookbarBuilder.js:805
+#: src/control/Control.NotebookbarBuilder.js:822
 #: src/control/Control.StatusBar.js:514
 msgid "None (Do not check spelling)"
 msgstr "ምንም (ፊደሉን አታርም)"
@@ -603,10 +604,10 @@ msgstr "ሰነድ መዝጊያ"
 #: src/control/Control.Menubar.js:450 src/control/Control.Menubar.js:561
 #: src/control/Control.Menubar.js:775 src/control/Control.Menubar.js:826
 #: src/control/Control.Menubar.js:877 src/control/Control.Menubar.js:925
-#: src/control/Control.NotebookbarBuilder.js:731
-#: src/control/Control.NotebookbarBuilder.js:761
-#: src/control/Control.NotebookbarBuilder.js:796
-#: src/control/Control.NotebookbarBuilder.js:813
+#: src/control/Control.NotebookbarBuilder.js:735
+#: src/control/Control.NotebookbarBuilder.js:765
+#: src/control/Control.NotebookbarBuilder.js:800
+#: src/control/Control.NotebookbarBuilder.js:817
 #: src/control/Control.NotebookbarCalc.js:169
 #: src/control/Control.NotebookbarCalc.js:170
 #: src/control/Control.NotebookbarDraw.js:218
@@ -632,7 +633,7 @@ msgid "Reset zoom"
 msgstr "እንደነበር መመለሻ ማሳያውን"
 
 #: src/control/Control.Menubar.js:106
-#: src/control/Control.NotebookbarBuilder.js:717
+#: src/control/Control.NotebookbarBuilder.js:721
 #: src/control/Control.NotebookbarWriter.js:1025
 #: src/control/Control.NotebookbarWriter.js:1026
 msgid "Show Ruler"
@@ -697,7 +698,6 @@ msgstr "ስለ"
 
 #: src/control/Control.Menubar.js:301 src/control/Control.Menubar.js:429
 #: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:750
-#: src/map/Map.js:391
 msgid "Last modification"
 msgstr "መጨረሻ የ ተሻሻለው"
 
@@ -802,10 +802,10 @@ msgid "Gradient End"
 msgstr ""
 
 #: src/control/Control.Notebookbar.js:242
-#: src/control/Control.NotebookbarBuilder.js:712
-#: src/control/Control.NotebookbarBuilder.js:755
-#: src/control/Control.NotebookbarBuilder.js:783
-#: src/control/Control.NotebookbarBuilder.js:808
+#: src/control/Control.NotebookbarBuilder.js:716
+#: src/control/Control.NotebookbarBuilder.js:759
+#: src/control/Control.NotebookbarBuilder.js:787
+#: src/control/Control.NotebookbarBuilder.js:812
 #: src/control/Control.NotebookbarDraw.js:18
 #: src/control/Control.NotebookbarImpress.js:18
 msgid "Menu"
@@ -823,7 +823,7 @@ msgstr ""
 msgid "Redo"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:548
+#: src/control/Control.NotebookbarBuilder.js:552
 #: src/control/Control.TopToolbar.js:222
 msgid "Insert Local Image"
 msgstr "የ አካባቢ ምስል ማስገቢያ"
@@ -1611,42 +1611,42 @@ msgstr "ይጫኑ መሰረዣ ለ መክፈት በ መመልከቻ-ብቻ ዘ�
 msgid "Wrong password provided. Please try again."
 msgstr "የ ተሳሳተ የ መግቢያ ቃል: እባክዎን እንደገና ይሞክሩ"
 
-#: src/core/Socket.js:1017
+#: src/core/Socket.js:1021
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1019
+#: src/core/Socket.js:1023
 msgid " saved this document as "
 msgstr ""
 
-#: src/core/Socket.js:1019
+#: src/core/Socket.js:1023
 msgid ". Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1028
+#: src/core/Socket.js:1032
 msgid "Loading..."
 msgstr "በመጫን ላይ..."
 
-#: src/core/Socket.js:1028
+#: src/core/Socket.js:1032
 msgid "Connecting..."
 msgstr "በ መገናኘት ላይ..."
 
-#: src/core/Socket.js:1046
+#: src/core/Socket.js:1050
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1408
+#: src/core/Socket.js:1412
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "ውይ! ይህ አሳፋሪ ነው: ከ እርስዎ ሰነድ ጋር መገናኘት አልቻልንም: እባክዎን ትንሽ ቆይተው እንደገና ይሞክሩ"
 
-#: src/core/Socket.js:1425
+#: src/core/Socket.js:1429
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "በ መገናኘት ላይ..."
 
-#: src/core/Socket.js:1431
+#: src/core/Socket.js:1435
 msgid "The server has been disconnected."
 msgstr ""
 
@@ -1819,36 +1819,36 @@ msgstr "ተግባር"
 msgid "No Comments"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:767
+#: src/layer/tile/CommentListSection.ts:768
 msgid "Modify"
 msgstr "ማሻሻያ"
 
-#: src/layer/tile/CommentListSection.ts:773
+#: src/layer/tile/CommentListSection.ts:774
 #: src/layer/tile/CommentSection.ts:125
 msgid "Reply"
 msgstr "መመለሻ"
 
-#: src/layer/tile/CommentListSection.ts:779
+#: src/layer/tile/CommentListSection.ts:780
 msgid "Remove"
 msgstr "ማስወገጃ"
 
-#: src/layer/tile/CommentListSection.ts:785
+#: src/layer/tile/CommentListSection.ts:786
 msgid "Remove Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:791
+#: src/layer/tile/CommentListSection.ts:792
 msgid "Resolve"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:791
+#: src/layer/tile/CommentListSection.ts:792
 msgid "Unresolve"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:797
+#: src/layer/tile/CommentListSection.ts:798
 msgid "Unresolve Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:797
+#: src/layer/tile/CommentListSection.ts:798
 msgid "Resolve Thread"
 msgstr ""
 
@@ -1914,17 +1914,11 @@ msgstr ""
 msgid "Initializing..."
 msgstr "በማስጀመር ላይ..."
 
-#: src/map/Map.js:426
-#, javascript-format
-msgid "%d seconds ago"
-msgstr "%d ሰከንዶች በፊት"
+#: src/map/Map.js:424 src/map/Map.js:427 src/map/Map.js:430
+msgid "Last saved:"
+msgstr ""
 
-#: src/map/Map.js:429
-#, javascript-format
-msgid "%d minutes ago"
-msgstr "%d ደቂቃዎች በፊት"
-
-#: src/map/Map.js:1449
+#: src/map/Map.js:1430
 msgid "Inactive document - please click to resume editing"
 msgstr "ንቁ ያልሆነ ሰነድ - እባክዎን ይጫኑ ማረም ለ መቀጠል"
 
@@ -1963,6 +1957,14 @@ msgstr "አዲስ ፋይል ከ ቴምፕሌት ውስጥ በ መፍጠር ላ�
 #: src/map/handler/Map.WOPI.js:410
 msgid "Creating copy..."
 msgstr "ኮፒ በ መፍጠር ላይ..."
+
+#, javascript-format
+#~ msgid "%d seconds ago"
+#~ msgstr "%d ሰከንዶች በፊት"
+
+#, javascript-format
+#~ msgid "%d minutes ago"
+#~ msgstr "%d ደቂቃዎች በፊት"
 
 #~ msgid "Server is recycling and will be available shortly"
 #~ msgstr "ሰርቨሩ በ መጫን ላይ ነው በ አጭር ጊዜ ውስጥ ዝግጁ ይሆናል:"
