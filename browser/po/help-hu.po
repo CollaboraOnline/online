@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-10 20:10+0200\n"
-"PO-Revision-Date: 2021-11-03 11:43+0000\n"
+"PO-Revision-Date: 2021-11-14 16:57+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/help/hu/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.9.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1079,7 +1079,6 @@ msgstr ""
 "egy oldallal lejjebb bővíti a meglévő kijelölést."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:139-168
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
 
@@ -1089,6 +1088,9 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"A kurzort az aktuális adattartomány bal szélére mozgatja. Ha a kurzort "
+"tartalmazó cellától balra lévő oszlop üres, a kurzor a balra következő, "
+"adatot tartalmazó oszlopba mozog."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-245
 #, fuzzy
