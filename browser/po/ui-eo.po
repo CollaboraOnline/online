@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-10 20:10+0100\n"
-"PO-Revision-Date: 2021-11-03 11:43+0000\n"
+"PO-Revision-Date: 2021-11-13 00:52+0000\n"
 "Last-Translator: phlostically <phlostically@mailinator.com>\n"
 "Language-Team: Esperanto <https://hosted.weblate.org/projects/"
 "collabora-online/ui/eo/>\n"
-"Language: \n"
+"Language: eo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.9.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1134,7 +1134,7 @@ msgstr "Nombro da lumbildoj"
 
 #: src/control/Control.StatusBar.js:423 src/control/Control.StatusBar.js:424
 msgid "Permission Mode"
-msgstr ""
+msgstr "Reĝimo de permesoj"
 
 #: src/control/Control.StatusBar.js:423
 msgid "Read-only"
@@ -1169,9 +1169,8 @@ msgid "Move Sheet Right"
 msgstr "Movi Folion Dekstren"
 
 #: src/control/Control.Tabs.js:303
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Ĉu vi certe volas forigi folion %sheet% ?"
+msgstr "Ĉu vi certe volas forigi la folion %sheet%?"
 
 #: src/control/Control.Tabs.js:320
 msgid "Enter new sheet name"
@@ -1401,9 +1400,8 @@ msgid "Signature broken"
 msgstr "Difektita subskribo"
 
 #: src/control/Signing.js:630
-#, fuzzy
 msgid "The signature was valid, but the document has been modified."
-msgstr "La subskribo validas, sed la dokumento estas ŝanĝita"
+msgstr "La subskribo validas, sed la dokumento estas ŝanĝita."
 
 #: src/control/Signing.js:632
 msgid "Signed but document modified"
@@ -1418,10 +1416,9 @@ msgid "Signed but not validated"
 msgstr "Subskribita sed ne validigita"
 
 #: src/control/Signing.js:640
-#, fuzzy
 msgid "The signature is OK, but the document is only partially signed."
 msgstr ""
-"La subskribo estas en ordo, sed la dokumento estas nur parte subskribita"
+"La subskribo estas en ordo, sed la dokumento estas nur parte subskribita."
 
 #: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
