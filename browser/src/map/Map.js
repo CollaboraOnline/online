@@ -414,12 +414,10 @@ L.Map = L.Evented.extend({
 
 		if (this.lastModIndicator !== null && this.lastModIndicator !== undefined) {
 			var dateTime = new Date(this._lastmodtime.replace(/,.*/, 'Z'));
-			var dateValue = dateTime.toLocaleDateString(String.locale,
-				{ year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+			var dateValue;
 
 			var elapsed = Date.now() - dateTime;
-			var lang = window.navigator.userLanguage || window.navigator.language;
-			var rtf1 = new Intl.RelativeTimeFormat(lang, { style: 'narrow' });
+			var rtf1 = new Intl.RelativeTimeFormat(String.locale, { style: 'narrow' });
 			if (elapsed < 60000) {
 				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 1000), 'second');
 				timeout = 6000;
