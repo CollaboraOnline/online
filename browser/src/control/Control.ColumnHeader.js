@@ -75,8 +75,9 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		if (!entry)
 			return;
 
+		var isRTL = this._map._docLayer.isLayoutRTL();
 		var content = this._colIndexToAlpha(entry.index + 1);
-		var startX = entry.pos - entry.size;
+		var startX = isRTL ? this.size[0] - entry.pos : entry.pos - entry.size;
 
 		if (entry.size <= 0)
 			return;
@@ -100,7 +101,7 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		// draw resize handle
 		var handleSize = this._resizeHandleSize;
 		if (entry.isCurrent && entry.size > 2 * handleSize && !this.inResize()) {
-			var center = startX + entry.size - handleSize / 2;
+			var center = isRTL ? startX + handleSize / 2 : startX + entry.size - handleSize / 2;
 			var y = 2 * app.dpiScale;
 			var h = this.size[1] - 4 * app.dpiScale;
 			var size = 2 * app.dpiScale;
@@ -122,7 +123,9 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		// the exact bounding box in html5's canvas, and the textBaseline
 		// 'middle' measures everything including the descent etc.
 		// '+ 1' looks visually fine, and seems safe enough
-		this.context.fillText(content, entry.pos - (entry.size / 2), (this.size[1] / 2) + 1);
+		this.context.fillText(content,
+			isRTL ? startX + (entry.size / 2) : entry.pos - (entry.size / 2),
+			(this.size[1] / 2) + 1);
 
 		// draw column borders.
 		this.context.strokeStyle = this._borderColor;
@@ -144,8 +147,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 		var colStart = (entry.pos - entry.size) / app.dpiScale;
 		var colEnd = entry.pos / app.dpiScale;
 
-		var left = rect.left + colStart;
-		var right = rect.left + colEnd;
+		var isRTL = this._map._docLayer.isLayoutRTL();
+
+		var left = isRTL ? rect.right - colEnd : rect.left + colStart;
+		var right = isRTL ? rect.right - colStart : rect.left + colEnd;
 		var top = rect.top;
 		var bottom = rect.bottom;
 		return {left: left, right: right, top: top, bottom: bottom};
@@ -203,7 +208,13 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 				width = 0;
 			}
 
-			width += dragDistance[0];
+			var isRTL = this._map._docLayer.isLayoutRTL();
+
+			if (isRTL)
+				width -= dragDistance[0];
+			else
+				width += dragDistance[0];
+
 			width /= app.dpiScale;
 			width = this._map._docLayer._pixelsToTwips({x: width, y: 0}).x;
 

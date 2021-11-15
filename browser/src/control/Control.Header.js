@@ -299,8 +299,9 @@ L.Control.Header = L.Class.extend({
 	_getVertLatLng: function (start, offset, e) {
 		var size = this._map.getSize();
 		var drag = this._map.mouseEventToContainerPoint(e);
-		var entryStart = (this._dragEntry.pos - this._dragEntry.size) / app.dpiScale;
-		var xpos = Math.max(drag.x, entryStart);
+		var isRTL = this._map._docLayer.isLayoutRTL();
+		var entryStart = (isRTL ? this.size[0] - this._dragEntry.pos + this._dragEntry.size : this._dragEntry.pos - this._dragEntry.size) / app.dpiScale;
+		var xpos = isRTL ? Math.min(drag.x, entryStart) : Math.max(drag.x, entryStart);
 		return [
 			this._map.unproject(new L.Point(xpos, 0)),
 			this._map.unproject(new L.Point(xpos, size.y)),
@@ -353,23 +354,25 @@ L.Control.Header = L.Class.extend({
 		if (!this._headerInfo)
 			return false;
 
-		var position = this._headerInfo._isColumn ? point[0]: point[1];
+		var isColumn = this._headerInfo._isColumn;
+		var position = isColumn ? point[0]: point[1];
 
-		var that = this;
 		var result = null;
+		var isRTL = isColumn && this._map._docLayer.isLayoutRTL();
 		this._headerInfo.forEachElement(function(entry) {
-			var end = entry.pos;
+			var end = isRTL ? this.size[0] - entry.pos + entry.size : entry.pos;
 			var start = end - entry.size;
 			if (position >= start && position < end) {
-				var resizeAreaStart = Math.max(start, end - 3 * app.dpiScale);
+				// NOTE: From a geometric perspective resizeAreaStart is really "resizeAreaEnd" in RTL case.
+				var resizeAreaStart = isRTL ? Math.min(start + 3 * app.dpiScale, end) : Math.max(start, end - 3 * app.dpiScale);
 				if (entry.isCurrent || window.mode.isMobile()) {
-					resizeAreaStart = end - that._resizeHandleSize;
+					resizeAreaStart = isRTL ? start + this._resizeHandleSize : end - this._resizeHandleSize;
 				}
-				var isMouseOverResizeArea = (position > resizeAreaStart);
+				var isMouseOverResizeArea = isRTL ? (position < resizeAreaStart) : (position > resizeAreaStart);
 				result = {entry: entry, hit: isMouseOverResizeArea};
 				return true;
 			}
-		});
+		}.bind(this));
 		return result;
 	},
 
@@ -424,7 +427,8 @@ L.Control.Header = L.Class.extend({
 			return;
 
 		this.containerObject.setPenPosition(this);
-		var x = this._isColumn ? (this._dragEntry.pos + this._dragDistance[0]): this.size[0];
+		var isRTL = this._map._docLayer.isLayoutRTL();
+		var x = this._isColumn ? ((isRTL ? this.size[0] - this._dragEntry.pos: this._dragEntry.pos) + this._dragDistance[0]): this.size[0];
 		var y = this._isColumn ? this.size[1]: (this._dragEntry.pos + this._dragDistance[1]);
 
 		this.context.lineWidth = app.dpiScale;
