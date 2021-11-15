@@ -125,21 +125,39 @@
 	flex-direction: column;
 }
 
-.text-color-indicator.hasnotebookbar #Save img.savemodified {
-	filter: hue-rotate(135deg);
+#Save.savemodified:after {
+	content: '';
+	display: block;
+	width: 4px;
+	height: 4px;
+	border-radius: 2px;
+	filter: none !important;
+	background: #f12131;
+	box-shadow: 0 0 2px 2px #efefef;
+	position: absolute;
+	top: 8px;
+	margin-left: 11px;
 }
 
-.presentation-color-indicator.hasnotebookbar #Save img.savemodified{
-	filter: hue-rotate(315deg);
+.hasnotebookbar.spreadsheet-color-indicator #table-shortcutstoolbox .unotoolbutton:not(.integrator-shortcut) img {
+	-webkit-filter: hue-rotate(290deg);
+	filter: hue-rotate(290deg);
 }
 
-.spreadsheet-color-indicator.hasnotebookbar #Save img.savemodified{
-	filter: hue-rotate(225deg);
+.hasnotebookbar.presentation-color-indicator #table-shortcutstoolbox .unotoolbutton:not(.integrator-shortcut) img {
+	-webkit-filter: hue-rotate(190deg);
+	filter: hue-rotate(190deg);
 }
 
-.drawing-color-indicator.hasnotebookbar #Save img.savemodified{
-	filter: hue-rotate(305deg);
+.hasnotebookbar.drawing-color-indicator #table-shortcutstoolbox .unotoolbutton:not(.integrator-shortcut) img {
+	-webkit-filter: hue-rotate(210deg);
+	filter: hue-rotate(210deg);
 }
+
+.hasnotebookbar #table-shortcutstoolbox .unotoolbutton.savemodified:not(.integrator-shortcut) img {
+	filter: hue-rotate(508deg) contrast(1.5);
+}
+
 /* Hamburger icon: from shortcutsbar (notebookbar) */
 .hasnotebookbar.text-color-indicator #shortcuts-menubar-icon {
 	background: rgb(3, 105, 163);
@@ -180,24 +198,6 @@
 	width: 16px;
 	-webkit-transition: all 0.25s;
 	transition: all 0.25s;
-}
-
-
-
-
-.hasnotebookbar.spreadsheet-color-indicator #table-shortcutstoolbox .unotoolbutton:not(.integrator-shortcut){
-	-webkit-filter: hue-rotate(290deg);
-	filter: hue-rotate(290deg);
-}
-
-.hasnotebookbar.presentation-color-indicator #table-shortcutstoolbox{
-	-webkit-filter: hue-rotate(190deg);
-	filter: hue-rotate(190deg);
-}
-
-.hasnotebookbar.drawing-color-indicator #table-shortcutstoolbox {
-	-webkit-filter: hue-rotate(210deg);
-	filter: hue-rotate(210deg);
 }
 
 /* options section */
