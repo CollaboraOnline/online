@@ -63,7 +63,7 @@ dnf clean all
 rm -rf /etc/loolwsd/proof_key*
 
 # Fix permissions
-# cf. start-collabora-online.sh that is run by lool user
+# cf. start-collabora-online.sh that is run by cool user
 # # Fix domain name resolution from jails
 # cp /etc/resolv.conf /etc/hosts /opt/cool/systemplate/etc/
 chown cool:cool /opt/cool/systemplate/etc/hosts /opt/cool/systemplate/etc/resolv.conf

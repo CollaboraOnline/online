@@ -10,7 +10,7 @@
 # Start the service loolwsd
 start() {
         echo -n $"Starting loolwsd server: "
-        su lool -c "/usr/bin/loolwsd --version --o:logging.file[@enable]=true" &
+        su cool -c "/usr/bin/loolwsd --version --o:logging.file[@enable]=true" &
         ### Create the lock file ###
         touch /var/lock/subsys/loolwsd
         success $"loolwsd server startup"

@@ -15,17 +15,17 @@ task:
     - tar -xzf LibreOfficeKit-includes-co-2021.tar.gz
   build_script:
     - mkdir .git/hooks
-    - pw useradd -n lool -d /tmp/loolhome -m
+    - pw useradd -n cool -d /tmp/loolhome -m
     - chmod -R o+rwx ./
-    - su -m lool -c './autogen.sh'
-    - 'su -m lool -c ''env HOME=/tmp/loolhome MAKE=gmake
+    - su -m cool -c './autogen.sh'
+    - 'su -m cool -c ''env HOME=/tmp/loolhome MAKE=gmake
         CPPFLAGS="-isystem /usr/local/include" CFLAGS="-I/usr/local/include"
         CXXFLAGS="-I/usr/local/include" LDFLAGS=-L/usr/local/lib ./configure
         --with-lo-path=/usr/local/lib/libreoffice/
         --with-lokit-path=./libreoffice-src/include
         --disable-seccomp --disable-setcap --enable-debug'' '
-    - su -m lool -c 'env HOME=/tmp/loolhome gmake -j`sysctl -n hw.ncpu`'
+    - su -m cool -c 'env HOME=/tmp/loolhome gmake -j`sysctl -n hw.ncpu`'
     - chown root ./loolmount
     - chmod +s ./loolmount
   test_script:
-#    - su -m lool -c 'env HOME=/tmp/loolhome gmake check'
+#    - su -m cool -c 'env HOME=/tmp/loolhome gmake check'
