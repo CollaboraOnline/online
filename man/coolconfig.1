@@ -1,4 +1,4 @@
-.TH COOLCONFIG "1" "May 2018" "coolconfig" "User Commands"
+.TH COOLCONFIG "1" "Nov 2021" "coolconfig" "User Commands"
 .SH NAME
 coolconfig \- Configuration tool for Collabora Online.
 .SH SYNOPSIS
@@ -7,6 +7,8 @@ coolconfig COMMAND [OPTIONS]
 Some options make sense only with a specific command.
 .PP
 .SS "Commands:"
+.PP
+anonymize [string\-1]...[string\-n]
 .PP
 set\-admin\-password
 .PP
@@ -23,5 +25,10 @@ update\-system\-template
 \fB\-\-pwd\-iterations\fR=\fInumber\fR   Number of iterations to do in PKDBF2 password hashing [set\-admin\-password].
 .PP
 \fB\-\-pwd\-hash\-length\fR=\fInumber\fR  Length of password hash to generate [set\-admin\-password].
+.PP
+\fB\-\-anonymization\-salt\fR=\fIsalt\fR Anonymize strings with the given 64-bit salt instead of the one in the config file [anonymize].
+.SH "ANONYMIZE"
+The \fBanonymize\fR command helps to read anonymized logs. If you know a document and/or a user had an issue, you can find their session in the logs by running this command with the username and/or document name and get the anonymized hash, which you use to search the logs with.
+.PP
 .SH "SEE ALSO"
 loolforkit(1), loolconvert(1), loolwsd(1), loolwsd-systemplate-setup(1), loolwsd-generate-proof-key(1), loolmount(1)
