@@ -124,7 +124,7 @@ private:
     LOOLWebSocket& _ws;
 };
 
-/// Program for interactive or scripted testing of a lool server.
+/// Program for interactive or scripted testing of a cool server.
 class Connect: public Poco::Util::Application
 {
 public:
@@ -192,7 +192,7 @@ protected:
             }
             else if (line == "exit")
             {
-                // While hacking on LOOL and editing input files for this program back and forth it
+                // While hacking on COOL and editing input files for this program back and forth it
                 // is a good idea to be able to add an enforced exit in the middle of the input
                 // file.
                 {
