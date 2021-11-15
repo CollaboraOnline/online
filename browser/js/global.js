@@ -828,7 +828,7 @@ window.app = { // Shouldn't have any functions defined.
 	} else {
 		// The URL may already contain a query (e.g., 'http://server.tld/foo/wopi/files/bar?desktop=baz') - then just append more params
 		var docParamsPart = docParams ? (global.docURL.includes('?') ? '&' : '?') + docParams : '';
-		var websocketURI = global.makeWsUrlWopiSrc('/lool/', global.docURL + docParamsPart);
+		var websocketURI = global.makeWsUrlWopiSrc('/cool/', global.docURL + docParamsPart);
 		try {
 			global.socket = global.createWebSocket(websocketURI);
 		} catch (err) {
