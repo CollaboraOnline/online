@@ -7,15 +7,15 @@ case "$1" in
 	setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit || true
 	setcap cap_sys_admin=ep /usr/bin/loolmount || true
 
-	adduser --quiet --system --group --home /opt/cool lool
-	chown lool: /etc/loolwsd/loolwsd.xml
+	adduser --quiet --system --group --home /opt/cool cool
+	chown cool: /etc/loolwsd/loolwsd.xml
 	chmod 640 /etc/loolwsd/loolwsd.xml
 
 	# We assume that the LibreOffice to be used is built TDF-style
 	# and installs in @LO_PATH@, and that /opt/cool is
 	# on the same file system
 
-	rm -rf /opt/lool
+	rm -rf /opt/cool
 	mkdir -p /opt/cool/child-roots
 	chown cool: /opt/cool
 	chown cool: /opt/cool/child-roots

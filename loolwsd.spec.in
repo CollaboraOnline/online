@@ -130,7 +130,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 %endif
 
 %config(noreplace) /etc/pam.d/loolwsd
-%config(noreplace) %attr(640, lool, root) /etc/loolwsd/loolwsd.xml
+%config(noreplace) %attr(640, cool, root) /etc/loolwsd/loolwsd.xml
 %config /etc/loolwsd/loolkitconfig.xcu
 %config(noreplace) /etc/nginx/snippets/loolwsd.conf
 %if 0%{?suse_version} > 0

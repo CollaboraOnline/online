@@ -7,7 +7,7 @@ EnvironmentFile=-/etc/sysconfig/loolwsd
 ExecStart=/usr/bin/loolwsd --version --o:sys_template_path=/opt/cool/systemplate --o:child_root_path=/opt/cool/child-roots --o:file_server_root_path=/usr/share/loolwsd
 KillSignal=SIGINT
 TimeoutStopSec=120
-User=lool
+User=cool
 KillMode=control-group
 Restart=always
 LimitNOFILE=infinity:infinity

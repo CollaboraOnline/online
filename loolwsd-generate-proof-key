@@ -23,7 +23,7 @@ if hash ssh-keygen 2>/dev/null; then
         exit $?
 	fi
     if id -u cool >/dev/null 2>&1; then
-        $SUDO chown lool: /etc/loolwsd/proof_key
+        $SUDO chown cool: /etc/loolwsd/proof_key
     else
         echo "User cool does not exist. Please reinstall loolwsd package, or in case of manual installation from source, create the cool user manually."
     fi
