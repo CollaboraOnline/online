@@ -65,7 +65,7 @@ rm -rf /etc/loolwsd/proof_key*
 # Fix permissions
 # cf. start-collabora-online.sh that is run by lool user
 # # Fix domain name resolution from jails
-# cp /etc/resolv.conf /etc/hosts /opt/lool/systemplate/etc/
-chown lool:lool /opt/lool/systemplate/etc/hosts /opt/lool/systemplate/etc/resolv.conf
+# cp /etc/resolv.conf /etc/hosts /opt/cool/systemplate/etc/
+chown cool:cool /opt/cool/systemplate/etc/hosts /opt/cool/systemplate/etc/resolv.conf
 # generated ssl cert/key and WOPI proof key go into /etc/loolwsd
-chown lool:lool /etc/loolwsd
+chown cool:cool /etc/loolwsd

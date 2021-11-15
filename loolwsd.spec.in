@@ -150,7 +150,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 getent group lool >/dev/null || groupadd -r lool
 getent passwd lool >/dev/null || useradd -g lool -r lool -d /opt/lool -s /bin/bash
 
-# for filename in `find /opt/lool/systemplate -type f`;do stripped=$(echo -ne $filename | sed -e "s|/opt/lool/systemplate||");rpm -qf --qf="%{NAME}\n" $stripped;done | grep -v devel | grep -v 32bit | grep -v -- -fonts | sort | uniq
+# for filename in `find /opt/cool/systemplate -type f`;do stripped=$(echo -ne $filename | sed -e "s|/opt/cool/systemplate||");rpm -qf --qf="%{NAME}\n" $stripped;done | grep -v devel | grep -v 32bit | grep -v -- -fonts | sort | uniq
 %triggerin -- expat fontconfig freetype freetype2 glibc glibc-locale kernel keyutils-libs krb5 krb5-libs libbz2-1 libcap libcap-ng libcap2 libexpat1 libfreetype6 libgcc libgcc_s1 libgcrypt libiscsi libpng libpng12 libpng12-0 libpng15-15 libpng16-16 libstdc++ libstdc++6 libuuid libuuid1 libz1 lsb nss-mdns nss-softokn-freebl pcre sssd sssd-client systemd-libs timezone tzdata zlib
 
 echo -ne "Triggered update of loolwsd systemplate..."
@@ -165,13 +165,13 @@ if [ $LOOLWSD_IS_ACTIVE == "1" ]; then systemctl stop loolwsd; fi
 loroot=/opt/collaboraoffice
 loolparent=`cd ${loroot} && cd .. && /bin/pwd`
 
-rm -rf ${loolparent}/lool
-mkdir -p ${loolparent}/lool/child-roots
-chown lool:lool ${loolparent}/lool
-chown lool:lool ${loolparent}/lool/child-roots
+rm -rf ${loolparent}/cool
+mkdir -p ${loolparent}/cool/child-roots
+chown lool:lool ${loolparent}/cool
+chown lool:lool ${loolparent}/cool/child-roots
 
 fc-cache ${loroot}/share/fonts/truetype
-loolwsd-systemplate-setup ${loolparent}/lool/systemplate ${loroot} >/dev/null 2>&1
+loolwsd-systemplate-setup ${loolparent}/cool/systemplate ${loroot} >/dev/null 2>&1
 loolwsd-generate-proof-key >/dev/null 2>&1
 
 %if 0%{?rhel} || 0%{?suse_version}

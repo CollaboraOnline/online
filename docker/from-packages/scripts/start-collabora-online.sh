@@ -4,14 +4,14 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 # Fix domain name resolution from jails
-cp /etc/resolv.conf /etc/hosts /opt/lool/systemplate/etc/
+cp /etc/resolv.conf /etc/hosts /opt/cool/systemplate/etc/
 
 if test "${DONT_GEN_SSL_CERT-set}" = set; then
 # Generate new SSL certificate instead of using the default
 mkdir -p /tmp/ssl/
 cd /tmp/ssl/
 mkdir -p certs/ca
-openssl rand -writerand /opt/lool/.rnd
+openssl rand -writerand /opt/cool/.rnd
 openssl genrsa -out certs/ca/root.key.pem 2048
 openssl req -x509 -new -nodes -key certs/ca/root.key.pem -days 9131 -out certs/ca/root.crt.pem -subj "/C=DE/ST=BW/L=Stuttgart/O=Dummy Authority/CN=Dummy Authority"
 mkdir -p certs/servers
@@ -67,4 +67,4 @@ fi
 loolwsd-generate-proof-key
 
 # Start loolwsd
-exec /usr/bin/loolwsd --version --o:sys_template_path=/opt/lool/systemplate --o:child_root_path=/opt/lool/child-roots --o:file_server_root_path=/usr/share/loolwsd --o:logging.color=false ${extra_params}
+exec /usr/bin/loolwsd --version --o:sys_template_path=/opt/cool/systemplate --o:child_root_path=/opt/cool/child-roots --o:file_server_root_path=/usr/share/loolwsd --o:logging.color=false ${extra_params}

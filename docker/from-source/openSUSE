@@ -24,8 +24,8 @@ RUN setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit 
     groupadd -r lool && \
     useradd -g lool -r lool -d /opt/lool -s /bin/bash && \
     rm -rf /opt/lool && \
-    mkdir -p /opt/lool/child-roots && \
-    loolwsd-systemplate-setup /opt/lool/systemplate /opt/lokit >/dev/null 2>&1 && \
+    mkdir -p /opt/cool/child-roots && \
+    loolwsd-systemplate-setup /opt/cool/systemplate /opt/lokit >/dev/null 2>&1 && \
     touch /var/log/loolwsd.log && \
     chown lool:lool /var/log/loolwsd.log && \
     chown -R lool:lool /opt/ && \
