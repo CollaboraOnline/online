@@ -587,3 +587,7 @@ compile_commands: $(abs_srcdir)/compile_commands.json
 
 browser/node_modules: browser/package.json browser/archived-packages
 	@cd browser && npm install
+
+install-exec-hook:
+	cd $(DESTDIR)$(bindir) && \
+	$(LN_S) coolconfig loolconfig
