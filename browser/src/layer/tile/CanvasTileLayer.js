@@ -403,6 +403,12 @@ L.TileSectionManager = L.Class.extend({
 			scale = tsManager._zoomFrameScale;
 
 		var ctx = this.sectionProperties.tsManager._paintContext();
+		var isRTL = this.sectionProperties.docLayer.isLayoutRTL();
+		var sectionWidth = this.size[0];
+		var xTransform = function (xcoord) {
+			return isRTL ? sectionWidth - xcoord : xcoord;
+		};
+
 		for (var i = 0; i < ctx.paneBoundsList.length; ++i) {
 			// co-ordinates of this pane in core document pixels
 			var paneBounds = ctx.paneBoundsList[i];
@@ -440,8 +446,9 @@ L.TileSectionManager = L.Class.extend({
 				this.sectionProperties.docLayer.sheetGeometry._columns.forEachInCorePixelRange(
 					repaintArea.min.x, repaintArea.max.x,
 					function(pos) {
-						context.moveTo(Math.floor(scale * (pos - paneOffset.x)) - 0.5, Math.floor(scale * (miny - paneOffset.y)) + 0.5);
-						context.lineTo(Math.floor(scale * (pos - paneOffset.x)) - 0.5, Math.floor(scale * (maxy - paneOffset.y)) - 0.5);
+						var xcoord = xTransform(Math.floor(scale * (pos - paneOffset.x)) - 0.5);
+						context.moveTo(xcoord, Math.floor(scale * (miny - paneOffset.y)) + 0.5);
+						context.lineTo(xcoord, Math.floor(scale * (maxy - paneOffset.y)) - 0.5);
 						context.stroke();
 					});
 
@@ -449,8 +456,12 @@ L.TileSectionManager = L.Class.extend({
 				this.sectionProperties.docLayer.sheetGeometry._rows.forEachInCorePixelRange(
 					miny, maxy,
 					function(pos) {
-						context.moveTo(Math.floor(scale * (repaintArea.min.x - paneOffset.x)) + 0.5, Math.floor(scale * (pos - paneOffset.y)) - 0.5);
-						context.lineTo(Math.floor(scale * (repaintArea.max.x - paneOffset.x)) - 0.5, Math.floor(scale * (pos - paneOffset.y)) - 0.5);
+						context.moveTo(
+							xTransform(Math.floor(scale * (repaintArea.min.x - paneOffset.x)) + 0.5),
+							Math.floor(scale * (pos - paneOffset.y)) - 0.5);
+						context.lineTo(
+							xTransform(Math.floor(scale * (repaintArea.max.x - paneOffset.x)) - 0.5),
+							Math.floor(scale * (pos - paneOffset.y)) - 0.5);
 						context.stroke();
 					});
 
