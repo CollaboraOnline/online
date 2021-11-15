@@ -80,7 +80,7 @@ static IMP standardImpOfInputAccessoryView = nil;
     WKUserContentController *userContentController = [[WKUserContentController alloc] init];
 
     [userContentController addScriptMessageHandler:self name:@"debug"];
-    [userContentController addScriptMessageHandler:self name:@"lool"];
+    [userContentController addScriptMessageHandler:self name:@"cool"];
     [userContentController addScriptMessageHandler:self name:@"error"];
 
     configuration.userContentController = userContentController;
@@ -196,7 +196,7 @@ static IMP standardImpOfInputAccessoryView = nil;
             [self.document closeWithCompletionHandler:^(BOOL success){
                     LOG_TRC("close completion handler gets " << (success?"YES":"NO"));
                     [self.webView.configuration.userContentController removeScriptMessageHandlerForName:@"debug"];
-                    [self.webView.configuration.userContentController removeScriptMessageHandlerForName:@"lool"];
+                    [self.webView.configuration.userContentController removeScriptMessageHandlerForName:@"cool"];
                     [self.webView.configuration.userContentController removeScriptMessageHandlerForName:@"error"];
                     self.webView.configuration.userContentController = nil;
                     [self.webView removeFromSuperview];
@@ -277,7 +277,7 @@ static IMP standardImpOfInputAccessoryView = nil;
         LOG_ERR("Error from WebView: " << [message.body UTF8String]);
     } else if ([message.name isEqualToString:@"debug"]) {
         std::cerr << "==> " << [message.body UTF8String] << std::endl;
-    } else if ([message.name isEqualToString:@"lool"]) {
+    } else if ([message.name isEqualToString:@"cool"]) {
         NSString *subBody = [message.body substringToIndex:std::min(100ul, ((NSString*)message.body).length)];
         if (subBody.length < ((NSString*)message.body).length)
             subBody = [subBody stringByAppendingString:@"..."];
@@ -387,7 +387,7 @@ static IMP standardImpOfInputAccessoryView = nil;
             WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
             WKUserContentController *userContentController = [[WKUserContentController alloc] init];
 
-            [userContentController addScriptMessageHandler:self name:@"lool"];
+            [userContentController addScriptMessageHandler:self name:@"cool"];
 
             configuration.userContentController = userContentController;
 
