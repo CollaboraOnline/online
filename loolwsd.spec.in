@@ -147,8 +147,8 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 %service_add_pre loolwsd.service
 %endif
 
-getent group lool >/dev/null || groupadd -r lool
-getent passwd lool >/dev/null || useradd -g lool -r lool -d /opt/lool -s /bin/bash
+getent group cool >/dev/null || groupadd -r cool
+getent passwd cool >/dev/null || useradd -g cool -r cool -d /opt/cool -s /bin/bash
 
 # for filename in `find /opt/cool/systemplate -type f`;do stripped=$(echo -ne $filename | sed -e "s|/opt/cool/systemplate||");rpm -qf --qf="%{NAME}\n" $stripped;done | grep -v devel | grep -v 32bit | grep -v -- -fonts | sort | uniq
 %triggerin -- expat fontconfig freetype freetype2 glibc glibc-locale kernel keyutils-libs krb5 krb5-libs libbz2-1 libcap libcap-ng libcap2 libexpat1 libfreetype6 libgcc libgcc_s1 libgcrypt libiscsi libpng libpng12 libpng12-0 libpng15-15 libpng16-16 libstdc++ libstdc++6 libuuid libuuid1 libz1 lsb nss-mdns nss-softokn-freebl pcre sssd sssd-client systemd-libs timezone tzdata zlib
