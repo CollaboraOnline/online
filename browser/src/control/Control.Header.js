@@ -428,14 +428,14 @@ L.Control.Header = L.Class.extend({
 
 		this.containerObject.setPenPosition(this);
 		var isRTL = this._map._docLayer.isLayoutRTL();
-		var x = this._isColumn ? ((isRTL ? this.size[0] - this._dragEntry.pos: this._dragEntry.pos) + this._dragDistance[0]): this.size[0];
+		var x = this._isColumn ? ((isRTL ? this.size[0] - this._dragEntry.pos: this._dragEntry.pos) + this._dragDistance[0]): (isRTL ? 0 : this.size[0]);
 		var y = this._isColumn ? this.size[1]: (this._dragEntry.pos + this._dragDistance[1]);
 
 		this.context.lineWidth = app.dpiScale;
 		this.context.strokeStyle = 'darkblue';
 		this.context.beginPath();
 		this.context.moveTo(x, y);
-		this.context.lineTo(this._isColumn ? x: this.containerObject.right, this._isColumn ? this.containerObject.bottom: y);
+		this.context.lineTo(this._isColumn ? x: (isRTL ? -this.myTopLeft[0]: this.containerObject.right), this._isColumn ? this.containerObject.bottom: y);
 		this.context.stroke();
 	},
 
