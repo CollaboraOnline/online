@@ -133,7 +133,7 @@ namespace Quarantine
         const auto timeNow = std::chrono::system_clock::now();
         const std::string ts = std::to_string(std::chrono::duration_cast<std::chrono::seconds>(timeNow.time_since_epoch()).count());
 
-        std::string sourcefilePath = LOOLWSD::ChildRoot + "tmp/lool-" + docBroker->getJailId() + "/user/docs/" + docBroker->getJailId() + "/" + docName;
+        std::string sourcefilePath = LOOLWSD::ChildRoot + "tmp/cool-" + docBroker->getJailId() + "/user/docs/" + docBroker->getJailId() + "/" + docName;
 
         std::string linkedFileName = ts + "_" + std::to_string(docBroker->getPid()) + "_" + docKey;
         std::string linkedFilePath = LOOLWSD::QuarantinePath + linkedFileName;

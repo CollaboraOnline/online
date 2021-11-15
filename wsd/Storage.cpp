@@ -549,7 +549,7 @@ void LockContext::initSupportsLocks()
 
     // first time token setup
     _supportsLocks = true;
-    _lockToken = "lool-lock" + Util::rng::getHexString(8);
+    _lockToken = "cool-lock" + Util::rng::getHexString(8);
 #endif
 }
 

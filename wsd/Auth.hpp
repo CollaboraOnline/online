@@ -59,7 +59,7 @@ private:
     const std::string _alg = "RS256";
     const std::string _typ = "JWT";
 
-    const std::string _iss = "lool";
+    const std::string _iss = "cool";
     const std::string _name;
     const std::string _sub;
     const std::string _aud;

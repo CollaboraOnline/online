@@ -197,7 +197,7 @@ public:
                 const std::string& jailPath) :
         _localStorePath(localStorePath),
         _jailPath(jailPath),
-        _fileInfo("", "lool", std::chrono::system_clock::time_point(), 0),
+        _fileInfo("", "cool", std::chrono::system_clock::time_point(), 0),
         _isDownloaded(false),
         _forceSave(false),
         _isUserModified(false),
