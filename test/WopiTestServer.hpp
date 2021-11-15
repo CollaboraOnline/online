@@ -87,16 +87,16 @@ public:
         _wopiSrc.clear();
         Poco::URI::encode(wopiURL.toString(), ":/?", _wopiSrc);
 
-        LOG_TST("Connecting to the fake WOPI server: /lool/" << _wopiSrc << "/ws");
+        LOG_TST("Connecting to the fake WOPI server: /cool/" << _wopiSrc << "/ws");
 
-        const auto& _ws = _wsList.emplace(_wsList.begin(), std::unique_ptr<UnitWebSocket>(new UnitWebSocket("/lool/" + _wopiSrc + "/ws")));
+        const auto& _ws = _wsList.emplace(_wsList.begin(), std::unique_ptr<UnitWebSocket>(new UnitWebSocket("/cool/" + _wopiSrc + "/ws")));
         assert((*_ws).get());
     }
 
     void addWebSocket()
     {
-        LOG_TST("Addigin additional socket to the fake WOPI server: /lool/" << _wopiSrc << "/ws");
-        const auto& _ws = _wsList.emplace(_wsList.end(), std::unique_ptr<UnitWebSocket>(new UnitWebSocket("/lool/" + _wopiSrc + "/ws")));
+        LOG_TST("Addigin additional socket to the fake WOPI server: /cool/" << _wopiSrc << "/ws");
+        const auto& _ws = _wsList.emplace(_wsList.end(), std::unique_ptr<UnitWebSocket>(new UnitWebSocket("/cool/" + _wopiSrc + "/ws")));
 
         assert((*_ws).get());
     }
@@ -300,7 +300,7 @@ protected:
 
             return true;
         }
-        else if (!Util::startsWith(uriReq.getPath(), "/lool/")) // Skip requests to the websrv.
+        else if (!Util::startsWith(uriReq.getPath(), "/cool/")) // Skip requests to the websrv.
         {
             // Complain if we are expected to handle something that we don't.
             LOG_TST("ERROR: Fake wopi host request, cannot handle request: " << uriReq.getPath());

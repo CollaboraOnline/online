@@ -204,7 +204,7 @@ UnitBase::TestResult UnitSession::testSlideShow()
         std::string encodedDoc;
         Poco::URI::encode(documentPath, ":/?", encodedDoc);
         const std::string ignoredSuffix = "%3FWOPISRC=madness"; // cf. iPhone.
-        const std::string path = "/lool/" + encodedDoc + "/download/" + downloadId + '/' + ignoredSuffix;
+        const std::string path = "/cool/" + encodedDoc + "/download/" + downloadId + '/' + ignoredSuffix;
         std::unique_ptr<Poco::Net::HTTPClientSession> session(
             helpers::createSession(Poco::URI(helpers::getTestServerURI())));
         Poco::Net::HTTPRequest requestSVG(Poco::Net::HTTPRequest::HTTP_GET, path);

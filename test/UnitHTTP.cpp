@@ -48,7 +48,7 @@ public:
 
             std::string sent = "Hello world test\n";
 
-            Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to/txt");
+            Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/convert-to/txt");
 
             switch(i)
             {
@@ -120,7 +120,7 @@ public:
 
         writeString(
             socket,
-            "POST /lool/convert-to/txt HTTP/1.1\r\n"
+            "POST /cool/convert-to/txt HTTP/1.1\r\n"
             "Host: localhost:9980\r\n"
             "User-Agent: looltests/1.2.3\r\n"
             "Accept: */*\r\n"

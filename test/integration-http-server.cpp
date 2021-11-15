@@ -247,7 +247,7 @@ void HTTPServerTest::testConvertTo()
 
     TST_LOG("Convert-to odt -> txt");
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to");
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/convert-to");
     Poco::Net::HTMLForm form;
     form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
     form.set("format", "txt");
@@ -293,7 +293,7 @@ void HTTPServerTest::testConvertTo2()
 
     TST_LOG("Convert-to #2 xlsx -> png");
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to");
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/convert-to");
     Poco::Net::HTMLForm form;
     form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
     form.set("format", "png");
@@ -340,7 +340,7 @@ void HTTPServerTest::testConvertToWithForwardedIP_Deny()
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to");
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/convert-to");
         LOK_ASSERT(!request.has("X-Forwarded-For"));
         request.add("X-Forwarded-For", getNotAllowedTestServerURI().getHost() + ", " + _uri.getHost());
         Poco::Net::HTMLForm form;
@@ -390,7 +390,7 @@ void HTTPServerTest::testConvertToWithForwardedIP_Allow()
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to");
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/convert-to");
         LOK_ASSERT(!request.has("X-Forwarded-For"));
         request.add("X-Forwarded-For", _uri.getHost() + ", " + _uri.getHost());
         Poco::Net::HTMLForm form;
@@ -448,7 +448,7 @@ void HTTPServerTest::testConvertToWithForwardedIP_DenyMulti()
         std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
         session->setTimeout(Poco::Timespan(TimeoutSeconds, 0));
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to");
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/convert-to");
         LOK_ASSERT(!request.has("X-Forwarded-For"));
         request.add("X-Forwarded-For", _uri.getHost() + ", "
                                        + getNotAllowedTestServerURI().getHost() + ", "
@@ -494,7 +494,7 @@ void HTTPServerTest::testRenderSearchResult()
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
     session->setTimeout(Poco::Timespan(10, 0)); // 10 seconds.
 
-    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/render-search-result");
+    Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/render-search-result");
     Poco::Net::HTMLForm form;
     form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
     form.addPart("document", new Poco::Net::FilePartSource(srcPathDoc));

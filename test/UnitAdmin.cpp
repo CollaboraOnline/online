@@ -125,7 +125,7 @@ private:
     {
         // try connecting without authentication; should result in NotAuthenticated
         HTTPResponse response;
-        HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/adminws/");
+        HTTPRequest request(HTTPRequest::HTTP_GET, "/cool/adminws/");
         std::unique_ptr<HTTPClientSession> session(UnitHTTP::createSession());
 
         _adminWs = std::make_shared<LOOLWebSocket>(*session, request, response);
@@ -156,7 +156,7 @@ private:
     {
         // try connecting with incorrect auth token; should result in InvalidToken
         HTTPResponse response;
-        HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/adminws/");
+        HTTPRequest request(HTTPRequest::HTTP_GET, "/cool/adminws/");
         std::unique_ptr<HTTPClientSession> session(UnitHTTP::createSession());
 
         _adminWs = std::make_shared<LOOLWebSocket>(*session, request, response);
@@ -187,7 +187,7 @@ private:
     {
         // Authenticate first
         HTTPResponse response;
-        HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/adminws/");
+        HTTPRequest request(HTTPRequest::HTTP_GET, "/cool/adminws/");
         std::unique_ptr<HTTPClientSession> session(UnitHTTP::createSession());
 
         _adminWs = std::make_shared<LOOLWebSocket>(*session, request, response);

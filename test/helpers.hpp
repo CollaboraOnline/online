@@ -122,7 +122,7 @@ inline void getDocumentPathAndURL(const std::string& docFilename, std::string& d
     std::string encodedUri;
     Poco::URI::encode("file://" + Poco::Path(documentPath).makeAbsolute().toString(), ":/?",
                       encodedUri);
-    documentURL = "lool/" + encodedUri + "/ws";
+    documentURL = "cool/" + encodedUri + "/ws";
     TST_LOG("Test file: " << documentPath);
 }
 
