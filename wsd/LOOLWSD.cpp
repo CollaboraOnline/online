@@ -16,7 +16,7 @@
 #define LOOLWSD_TEST_ADMIN_CONSOLE "/browser/dist/admin/admin.html"
 
 /* Default cool UI used in for monitoring URI */
-#define LOOLWSD_TEST_METRICS "/lool/getMetrics"
+#define LOOLWSD_TEST_METRICS "/cool/getMetrics"
 
 /* Default cool UI used in the start test URI */
 #define LOOLWSD_TEST_COOL_UI "/browser/" LOOLWSD_VERSION_HASH "/debug.html"
