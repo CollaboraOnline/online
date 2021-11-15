@@ -53,6 +53,9 @@ L.Control.JSDialog = L.Control.extend({
 	},
 
 	closePopover: function(id, sendCloseEvent) {
+		if (!id || !this.dialogs[id])
+			return;
+
 		L.DomUtil.remove(this.dialogs[id].overlay);
 		var clickToClose = this.dialogs[id].clickToClose;
 		var builder = this.clearDialog(id);
