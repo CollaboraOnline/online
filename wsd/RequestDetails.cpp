@@ -108,7 +108,7 @@ RequestDetails::RequestDetails(const std::string &mobileURI)
 void RequestDetails::dehexify()
 {
     // For now, we only hexify cool/ URLs.
-    constexpr auto Prefix = "lool/0x";
+    constexpr auto Prefix = "cool/0x";
     constexpr auto PrefixLen = sizeof(Prefix) - 1;
 
     const auto hexPos = _uriString.find(Prefix);

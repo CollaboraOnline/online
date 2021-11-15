@@ -219,7 +219,7 @@ std::string ClientSession::getClipboardURI(bool encode)
     Poco::URI::encode(wopiSrc.toString(), encodeChars, encodedFrom);
 
     std::string meta = _serverURL.getSubURLForEndpoint(
-        "/lool/clipboard?WOPISrc=" + encodedFrom +
+        "/cool/clipboard?WOPISrc=" + encodedFrom +
         "&ServerId=" + Util::getProcessIdentifier() +
         "&ViewId=" + std::to_string(getKitViewId()) +
         "&Tag=" + _clipboardKeys[0]);
