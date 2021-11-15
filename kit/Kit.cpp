@@ -2513,7 +2513,7 @@ void lokit_main(
 
                 // tmpdir inside the jail for added sercurity.
                 const std::string tempRoot = Poco::Path(childRoot, "tmp").toString();
-                const std::string tmpSubDir = Poco::Path(tempRoot, "lool-" + jailId).toString();
+                const std::string tmpSubDir = Poco::Path(tempRoot, "cool-" + jailId).toString();
                 Poco::File(tmpSubDir).createDirectories();
                 const std::string jailTmpDir = Poco::Path(jailPath, "tmp").toString();
                 LOG_INF("Mounting random temp dir " << tmpSubDir << " -> " << jailTmpDir);
