@@ -15,7 +15,7 @@ global:
     monitoring:
       activate: false
       port: 9980
-      path: "/lool/getMetrics"
+      path: "/cool/getMetrics"
     service:
       name: collabora-online
       type: ClusterIP
