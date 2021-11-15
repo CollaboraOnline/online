@@ -98,7 +98,7 @@ public:
         else
             session = new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
 
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to");
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/convert-to");
 
         try {
             Poco::Net::HTMLForm form;
