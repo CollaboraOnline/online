@@ -163,7 +163,7 @@ protected:
 #endif
         std::string encodedUri;
         URI::encode(args[0], ":/?", encodedUri);
-        HTTPRequest request(HTTPRequest::HTTP_GET, "/lool/" + encodedUri + "/ws");
+        HTTPRequest request(HTTPRequest::HTTP_GET, "/cool/" + encodedUri + "/ws");
         HTTPResponse response;
         LOOLWebSocket ws(cs, request, response);
 

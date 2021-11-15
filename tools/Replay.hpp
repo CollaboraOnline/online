@@ -288,7 +288,7 @@ public:
         std::string fileabs = Poco::Path(filePath).makeAbsolute().toString();
         Poco::URI::encode("file://" + fileabs, ":/?", file);
         Poco::URI::encode(file, ":/?", wrap); // double encode.
-        std::string uri = server + "/lool/" + wrap + "/ws";
+        std::string uri = server + "/cool/" + wrap + "/ws";
 
         auto handler = std::make_shared<StressSocketHandler>(optStats, file, tracePath);
         poll.insertNewWebSocketSync(Poco::URI(uri), handler);
