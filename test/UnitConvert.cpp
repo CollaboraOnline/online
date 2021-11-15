@@ -54,7 +54,7 @@ public:
 
     void sendConvertTo(std::unique_ptr<Poco::Net::HTTPClientSession>& session, const std::string& filename)
     {
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/lool/convert-to/pdf");
+        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/cool/convert-to/pdf");
         Poco::Net::HTMLForm form;
         form.setEncoding(Poco::Net::HTMLForm::ENCODING_MULTIPART);
         form.set("format", "txt");

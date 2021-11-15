@@ -445,7 +445,7 @@ void WhiteBoxTests::testTokenizer()
     LOK_ASSERT_EQUAL(std::string("XYZ"), tokens[2]);
 
     static const std::string URI
-        = "/lool/"
+        = "/cool/"
           "http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%"
           "2F593_ocqiesh0cngs%3Faccess_token%3DMN0KXXDv9GJ1wCCLnQcjVQT2T7WrfYpA%26access_token_ttl%"
           "3D0%26reuse_cookies%3Doc_sessionPassphrase%"
@@ -1340,7 +1340,7 @@ void WhiteBoxTests::testRequestDetails_local()
         = "http://localhost/nextcloud/apps/richdocuments/proxy.php?req=";
 
     {
-        static const std::string URI = "/lool/"
+        static const std::string URI = "/cool/"
                                        "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%"
                                        "2Fdata%2Fhello-world.odt/ws/open/open/0";
 
@@ -1387,7 +1387,7 @@ void WhiteBoxTests::testRequestDetails_local()
 
     {
         // Blank entries are skipped.
-        static const std::string URI = "/lool/"
+        static const std::string URI = "/cool/"
                                        "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%"
                                        "2Fdata%2Fhello-world.odt/ws//write/2";
 
@@ -1432,7 +1432,7 @@ void WhiteBoxTests::testRequestDetails_local()
 
     {
         // Apparently, the initial / can be missing -- all the tests do that.
-        static const std::string URI = "lool/"
+        static const std::string URI = "cool/"
                                        "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%"
                                        "2Fdata%2Fhello-world.odt/ws//write/2";
 
@@ -1490,7 +1490,7 @@ void WhiteBoxTests::testRequestDetails_local_hexified()
     const std::string fileUrlHex = "0x" + Util::dataToHexString(fileUrl, 0, fileUrl.size());
 
     {
-        const std::string URI = "/lool/" + fileUrlHex + "/ws/open/open/0";
+        const std::string URI = "/cool/" + fileUrlHex + "/ws/open/open/0";
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
                                        Poco::Net::HTTPMessage::HTTP_1_1);
@@ -1530,7 +1530,7 @@ void WhiteBoxTests::testRequestDetails_local_hexified()
 
     {
         // Blank entries are skipped.
-        static const std::string URI = "/lool/" + fileUrlHex + "/ws//write/2";
+        static const std::string URI = "/cool/" + fileUrlHex + "/ws//write/2";
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
                                        Poco::Net::HTTPMessage::HTTP_1_1);
@@ -1568,7 +1568,7 @@ void WhiteBoxTests::testRequestDetails_local_hexified()
 
     {
         // Apparently, the initial / can be missing -- all the tests do that.
-        static const std::string URI = "lool/" + fileUrlHex + "/ws//write/2";
+        static const std::string URI = "cool/" + fileUrlHex + "/ws//write/2";
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
                                        Poco::Net::HTTPMessage::HTTP_1_1);
@@ -1614,7 +1614,7 @@ void WhiteBoxTests::testRequestDetails()
 
     {
         static const std::string URI
-            = "/lool/"
+            = "/cool/"
               "http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%"
               "2Ffiles%"
               "2F593_ocqiesh0cngs%3Faccess_token%3DMN0KXXDv9GJ1wCCLnQcjVQT2T7WrfYpA%26access_token_"
@@ -1721,7 +1721,7 @@ void WhiteBoxTests::testRequestDetails()
 
     {
         static const std::string URI
-            = "/lool/"
+            = "/cool/"
               "http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%"
               "2F165_ocgdpzbkm39u%3Faccess_token%3DODhIXdJdbsVYQoKKCuaYofyzrovxD3MQ%26access_token_"
               "ttl%"
@@ -1797,7 +1797,7 @@ void WhiteBoxTests::testRequestDetails()
 
     {
         static const std::string URI
-            = "/lool/%2Ftmp%2Fslideshow_b8c3225b_setclientpart.odp/Ar3M1X89mVaryYkh/"
+            = "/cool/%2Ftmp%2Fslideshow_b8c3225b_setclientpart.odp/Ar3M1X89mVaryYkh/"
               "UjaCGP4cYHlU6TvUGdnFTPi8hjOS87uFym7ruWMq3F3jBr0kSPgVhbKz5CwUyV8R/slideshow.svg";
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, URI,
@@ -1841,7 +1841,7 @@ void WhiteBoxTests::testRequestDetails()
     }
 
     {
-        static const std::string URI = "/lool/"
+        static const std::string URI = "/cool/"
                                        "clipboard?WOPISrc=file%3A%2F%2F%2Ftmp%2Fcopypasteef324307_"
                                        "empty.ods&ServerId=7add98ed&ViewId=0&Tag=5f7972ce4e6a37dd";
 
@@ -1881,7 +1881,7 @@ void WhiteBoxTests::testRequestDetails()
 
     {
         static const std::string URI
-        = "/lool/"
+        = "/cool/"
           "https%3A%2F%2Fexample.com%3A8443%2Frest%2Ffiles%2Fwopi%2Ffiles%"
           "2F8ac75551de4d89e60002%3Faccess_header%3DAuthorization%253A%252520Bearer%"
           "252520poiuytrewq%25250D%25250A%25250D%25250AX-Requested-"
