@@ -8,8 +8,6 @@ class OverlayTransform {
 	private translationAmount: cool.Point;
 	private scaleAmount: cool.Point;
 
-	// This does not support a stack of transforms and hence only allows a single
-	// scaling and translation operation.
 	constructor() {
 		this.translationAmount = new cool.Point(0, 0);
 		this.scaleAmount = new cool.Point(1, 1);
@@ -47,6 +45,49 @@ class OverlayTransform {
 	}
 }
 
+// This allows the overlay section to use multiple transformations to be applied
+// one after the other on a point or bounds.
+class TransformationsList {
+	private list: OverlayTransform[];
+
+	constructor() {
+		this.list = [];
+	}
+
+	public add(tx: OverlayTransform) {
+		this.list.push(tx);
+	}
+
+	public addNew(translate: cool.Point, scale: cool.Point) {
+		const tx = new OverlayTransform();
+		tx.translate(translate.x, translate.y);
+		tx.scale(scale.x, scale.y);
+		this.add(tx);
+	}
+
+	public reset() {
+		this.list = [];
+	}
+
+	applyToPoint(point: cool.Point): cool.Point {
+		let tPoint = point.clone();
+		this.list.forEach((tx) => {
+			tPoint = tx.applyToPoint(tPoint);
+		});
+
+		return tPoint;
+	}
+
+	applyToBounds(bounds: cool.Bounds): cool.Bounds {
+		let tBounds = bounds.clone();
+		this.list.forEach((tx) => {
+			tBounds = tx.applyToBounds(tBounds);
+		});
+
+		return tBounds;
+	}
+}
+
 // CanvasOverlay handles CPath rendering and mouse events handling via overlay-section of the main canvas.
 // where overlays like cell-cursors, cell-selections, edit-cursors are instances of CPath or its subclasses.
 class CanvasOverlay {
@@ -56,7 +97,7 @@ class CanvasOverlay {
 	private bounds: cool.Bounds;
 	private tsManager: any;
 	private overlaySection: any;
-	private transform: OverlayTransform;
+	private transforms: TransformationsList;
 
 	constructor(mapObject: any, canvasContext: CanvasRenderingContext2D) {
 		this.map = mapObject;
@@ -64,7 +105,7 @@ class CanvasOverlay {
 		this.tsManager = this.map.getTileSectionMgr();
 		this.overlaySection = undefined;
 		this.paths = new Map<number, CPath>();
-		this.transform = new OverlayTransform();
+		this.transforms = new TransformationsList();
 		this.updateCanvasBounds();
 	}
 
@@ -264,11 +305,13 @@ class CanvasOverlay {
 	// Applies canvas translation so that polygons/circles can be drawn using core-pixel coordinates.
 	private ctStart(clipArea?: cool.Bounds, paneBounds?: cool.Bounds, fixed?: boolean) {
 		this.updateCanvasBounds();
-		this.transform.reset();
+		this.transforms.reset();
 		this.ctx.save();
 
 		if (!paneBounds)
 			paneBounds = this.bounds.clone();
+
+		const transform = new OverlayTransform();
 
 		if (this.tsManager._inZoomAnim && !fixed) {
 			// zoom-animation is in progress : so draw overlay on main canvas
@@ -314,13 +357,13 @@ class CanvasOverlay {
 				clipTopLeft,
 				clipTopLeft.add(clipSize));
 
-			this.transform.scale(scale, scale);
-			this.transform.translate(scale * newTopLeft.x, scale * newTopLeft.y);
+			transform.scale(scale, scale);
+			transform.translate(scale * newTopLeft.x, scale * newTopLeft.y);
 
 		} else if (this.tsManager._inZoomAnim && fixed) {
 
 			var scale = this.tsManager._zoomFrameScale;
-			this.transform.scale(scale, scale);
+			transform.scale(scale, scale);
 
 			if (clipArea) {
 				clipArea = new cool.Bounds(
@@ -330,18 +373,26 @@ class CanvasOverlay {
 			}
 
 		} else {
-			this.transform.translate(
+			transform.translate(
 				paneBounds.min.x ? this.bounds.min.x : 0,
 				paneBounds.min.y ? this.bounds.min.y : 0);
 		}
 
 		if (clipArea) {
 			this.ctx.beginPath();
-			clipArea = this.transform.applyToBounds(clipArea);
+			clipArea = transform.applyToBounds(clipArea);
 			var clipSize = clipArea.getSize();
 			this.ctx.rect(clipArea.min.x, clipArea.min.y, clipSize.x, clipSize.y);
 			this.ctx.clip();
 		}
+
+		this.transforms.add(transform);
+		if (this.map._docLayer.isCalc() && this.map._docLayer.isLayoutRTL()) {
+			const sectionWidth = this.overlaySection.size[0];
+			// Apply horizontal flip transformation.
+			this.transforms.addNew(new cool.Point(-sectionWidth, 0), new cool.Point(-1, 1));
+		}
+
 	}
 
 	// Undo the canvas translation done by ctStart().
@@ -365,7 +416,7 @@ class CanvasOverlay {
 
 		for (i = 0; i < len; i++) {
 			for (j = 0, len2 = parts[i].length; j < len2; j++) {
-				part = this.transform.applyToPoint(parts[i][j]);
+				part = this.transforms.applyToPoint(parts[i][j]);
 				this.ctx[j ? 'lineTo' : 'moveTo'](part.x, part.y);
 			}
 			if (closed) {
@@ -384,7 +435,7 @@ class CanvasOverlay {
 
 		this.ctStart(clipArea, paneBounds, path.fixed);
 
-		var point = this.transform.applyToPoint(path.point);
+		var point = this.transforms.applyToPoint(path.point);
 		var r: number = path.radius;
 		var s: number = (path.radiusY || r) / r;
 
