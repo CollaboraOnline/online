@@ -1552,7 +1552,7 @@ class CanvasSectionContainer {
 						else if (targetEdge === '-left') {
 							if (section.expand[0] === 'left' && section.origSizeHint)
 								section.size[0] = section.origSizeHint[0];
-							return targetSection.myTopLeft[0] - app.roundedDpiScale - section.size[0];
+							return targetSection.myTopLeft[0] - section.size[0];
 						}
 					}
 				}
