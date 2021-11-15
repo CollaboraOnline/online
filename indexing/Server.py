@@ -79,7 +79,7 @@ def callConvertToIndexingXml(filename, filepath):
     filesDict = {
         'data': (filepath, open(filepath, 'rb'), None, {})
     }
-    response = requests.post("{}/lool/convert-to/xml".format(coolServerUrl), files=filesDict)
+    response = requests.post("{}/cool/convert-to/xml".format(coolServerUrl), files=filesDict)
     if response.ok:
         return response.content
     return None
@@ -151,7 +151,7 @@ def callRenderImageService(resultJsonString):
         "document": (filename, open(documentPath + filename, 'rb'), None, {}),
         "result" : ("json", resultJsonProcessed, None, {})
     }
-    response = requests.post("{}/lool/render-search-result".format(coolServerUrl), files=filesDict)
+    response = requests.post("{}/cool/render-search-result".format(coolServerUrl), files=filesDict)
     return base64.b64encode(response.content)
 
 # HTTP Server - Handle HTTP requests
