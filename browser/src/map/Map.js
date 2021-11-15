@@ -51,7 +51,7 @@ L.Map = L.Evented.extend({
 		// 256x256 pixels tile).Unless you know what you are doing, this should not be modified;
 		// this means twips value for 256 pixels at 96dpi.
 		tileHeightTwips: window.tileSize * 15,
-		urlPrefix: 'lool',
+		urlPrefix: 'cool',
 		wopiSrc: '',
 		cursorURL: L.LOUtil.getURL('cursors'),
 		// cursorURL

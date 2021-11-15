@@ -1170,7 +1170,7 @@ AC_SUBST(LOOLWSD_CONFIGDIR)
 LOOLWSD_DATADIR=${datadir}/${PACKAGE}
 AC_SUBST(LOOLWSD_DATADIR)
 
-COOL_USER_ID="lool"
+COOL_USER_ID="cool"
 if test -n "$with_user_id"; then
    COOL_USER_ID="$with_user_id"
 fi
