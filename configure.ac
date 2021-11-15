@@ -63,6 +63,7 @@ AC_CONFIG_HEADERS([config.h])
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
+AC_PROG_LN_S
 
 AC_LANG_PUSH([C++])
 
