@@ -1364,8 +1364,8 @@ void WhiteBoxTests::testRequestDetails_local()
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(6), details.size());
-        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
-        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(
             std::string(
                 "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%2Fdata%2Fhello-world.odt"),
@@ -1375,8 +1375,8 @@ void WhiteBoxTests::testRequestDetails_local()
         LOK_ASSERT_EQUAL(std::string("open"), details[4]);
         LOK_ASSERT_EQUAL(std::string("0"), details[5]);
 
-        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
-        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
         LOK_ASSERT_EQUAL(std::string("open"), details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "open"));
         LOK_ASSERT_EQUAL(std::string("open"), details.getField(RequestDetails::Field::Command));
@@ -1410,8 +1410,8 @@ void WhiteBoxTests::testRequestDetails_local()
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
-        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
-        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(
             std::string(
                 "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%2Fdata%2Fhello-world.odt"),
@@ -1420,8 +1420,8 @@ void WhiteBoxTests::testRequestDetails_local()
         LOK_ASSERT_EQUAL(std::string("write"), details[3]); // SessionId, since the real SessionId is blank.
         LOK_ASSERT_EQUAL(std::string("2"), details[4]); // Command, since SessionId was blank.
 
-        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
-        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
         LOK_ASSERT_EQUAL(std::string("write"), details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "write"));
         LOK_ASSERT_EQUAL(std::string("2"), details.getField(RequestDetails::Field::Command));
@@ -1455,8 +1455,8 @@ void WhiteBoxTests::testRequestDetails_local()
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
-        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
-        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(
             std::string(
                 "file%3A%2F%2F%2Fhome%2Fash%2Fprj%2Flo%2Fonline%2Ftest%2Fdata%2Fhello-world.odt"),
@@ -1465,8 +1465,8 @@ void WhiteBoxTests::testRequestDetails_local()
         LOK_ASSERT_EQUAL(std::string("write"), details[3]); // SessionId, since the real SessionId is blank.
         LOK_ASSERT_EQUAL(std::string("2"), details[4]); // Command, since SessionId was blank.
 
-        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
-        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
         LOK_ASSERT_EQUAL(std::string("write"), details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "write"));
         LOK_ASSERT_EQUAL(std::string("2"), details.getField(RequestDetails::Field::Command));
@@ -1510,16 +1510,16 @@ void WhiteBoxTests::testRequestDetails_local_hexified()
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(6), details.size());
-        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
-        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(fileUrl, details[1]);
         LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
         LOK_ASSERT_EQUAL(std::string("open"), details[3]);
         LOK_ASSERT_EQUAL(std::string("open"), details[4]);
         LOK_ASSERT_EQUAL(std::string("0"), details[5]);
 
-        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
-        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
         LOK_ASSERT_EQUAL(std::string("open"), details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "open"));
         LOK_ASSERT_EQUAL(std::string("open"), details.getField(RequestDetails::Field::Command));
@@ -1549,15 +1549,15 @@ void WhiteBoxTests::testRequestDetails_local_hexified()
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
-        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
-        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(fileUrl, details[1]);
         LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
         LOK_ASSERT_EQUAL(std::string("write"), details[3]); // SessionId, since the real SessionId is blank.
         LOK_ASSERT_EQUAL(std::string("2"), details[4]); // Command, since SessionId was blank.
 
-        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
-        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
         LOK_ASSERT_EQUAL(std::string("write"), details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "write"));
         LOK_ASSERT_EQUAL(std::string("2"), details.getField(RequestDetails::Field::Command));
@@ -1587,15 +1587,15 @@ void WhiteBoxTests::testRequestDetails_local_hexified()
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
-        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
-        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(fileUrl, details[1]);
         LOK_ASSERT_EQUAL(std::string("ws"), details[2]);
         LOK_ASSERT_EQUAL(std::string("write"), details[3]); // SessionId, since the real SessionId is blank.
         LOK_ASSERT_EQUAL(std::string("2"), details[4]); // Command, since SessionId was blank.
 
-        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
-        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
         LOK_ASSERT_EQUAL(std::string("write"), details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "write"));
         LOK_ASSERT_EQUAL(std::string("2"), details.getField(RequestDetails::Field::Command));
@@ -1684,10 +1684,10 @@ void WhiteBoxTests::testRequestDetails()
         LOK_ASSERT_EQUAL(wopiSrc, details.getField(RequestDetails::Field::WOPISrc));
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(8), details.size());
-        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
-        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
-        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
-        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
+        LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(
             std::string(
                 "http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%"
@@ -1709,8 +1709,8 @@ void WhiteBoxTests::testRequestDetails()
         LOK_ASSERT_EQUAL(std::string("close"), details[6]);
         LOK_ASSERT_EQUAL(std::string("31"), details[7]);
 
-        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
-        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
         LOK_ASSERT_EQUAL(std::string("b26112ab1b6f2ed98ce1329f0f344791"), details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "b26112ab1b6f2ed98ce1329f0f344791"));
         LOK_ASSERT_EQUAL(std::string("close"), details.getField(RequestDetails::Field::Command));
@@ -1767,8 +1767,8 @@ void WhiteBoxTests::testRequestDetails()
         LOK_ASSERT_EQUAL(wopiSrc, details.getField(RequestDetails::Field::WOPISrc));
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(8), details.size());
-        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
-        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(
             std::string("http%3A%2F%2Flocalhost%2Fowncloud%2Findex.php%2Fapps%2Frichdocuments%"
                         "2Fwopi%2Ffiles%2F165_ocgdpzbkm39u%3Faccess_token%"
@@ -1785,8 +1785,8 @@ void WhiteBoxTests::testRequestDetails()
         LOK_ASSERT_EQUAL(std::string("write"), details[6]);
         LOK_ASSERT_EQUAL(std::string("2"), details[7]);
 
-        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
-        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
         LOK_ASSERT_EQUAL(std::string("1c99a7bcdbf3209782d7eb38512e6564"), details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, "1c99a7bcdbf3209782d7eb38512e6564"));
         LOK_ASSERT_EQUAL(std::string("write"), details.getField(RequestDetails::Field::Command));
@@ -1823,15 +1823,15 @@ void WhiteBoxTests::testRequestDetails()
         LOK_ASSERT_EQUAL(std::string(), details.getField(RequestDetails::Field::WOPISrc));
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(5), details.size());
-        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
-        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(std::string("%2Ftmp%2Fslideshow_b8c3225b_setclientpart.odp"), details[1]);
         LOK_ASSERT_EQUAL(std::string("Ar3M1X89mVaryYkh"), details[2]);
         LOK_ASSERT_EQUAL(std::string("UjaCGP4cYHlU6TvUGdnFTPi8hjOS87uFym7ruWMq3F3jBr0kSPgVhbKz5CwUyV8R"), details[3]);
         LOK_ASSERT_EQUAL(std::string("slideshow.svg"), details[4]);
 
-        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
-        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, ""));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Command));
@@ -1865,12 +1865,12 @@ void WhiteBoxTests::testRequestDetails()
         LOK_ASSERT_EQUAL(docUri, details.getDocumentURI());
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(3), details.size());
-        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
-        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT(details.equals(0, "cool"));
         LOK_ASSERT_EQUAL(std::string("clipboard"), details[1]);
 
-        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
-        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, ""));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Command));
@@ -1936,8 +1936,8 @@ void WhiteBoxTests::testRequestDetails()
         LOK_ASSERT_EQUAL(permission, it != params.end() ? it->second : "");
 
         LOK_ASSERT_EQUAL(static_cast<std::size_t>(11), details.size());
-        LOK_ASSERT_EQUAL(std::string("lool"), details[0]);
-        LOK_ASSERT(details.equals(0, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details[0]);
+        LOK_ASSERT(details.equals(0, "cool"));
 
         const std::string encodedDocUri
             = "https%3A%2F%2Fexample.com%3A8443%2Frest%2Ffiles%2Fwopi%2Ffiles%"
@@ -1950,8 +1950,8 @@ void WhiteBoxTests::testRequestDetails()
 
         LOK_ASSERT_EQUAL(encodedDocUri, details[1]);
 
-        LOK_ASSERT_EQUAL(std::string("lool"), details.getField(RequestDetails::Field::Type));
-        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "lool"));
+        LOK_ASSERT_EQUAL(std::string("cool"), details.getField(RequestDetails::Field::Type));
+        LOK_ASSERT(details.equals(RequestDetails::Field::Type, "cool"));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::SessionId));
         LOK_ASSERT(details.equals(RequestDetails::Field::SessionId, ""));
         LOK_ASSERT_EQUAL(std::string(""), details.getField(RequestDetails::Field::Command));

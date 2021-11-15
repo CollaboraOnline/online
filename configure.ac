@@ -191,7 +191,7 @@ AC_ARG_WITH([app-name],
                              [Set the user-visible name of the app you build.]))
 
 AC_ARG_WITH([user-id],
-              AS_HELP_STRING([--with-user-id=lool],
+              AS_HELP_STRING([--with-user-id=cool],
                              [Set the account name of the user required to run the app (outside debug mode).]))
 
 AC_ARG_WITH([icon-theme],
