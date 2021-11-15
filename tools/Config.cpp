@@ -37,10 +37,10 @@ using Poco::Util::XMLConfiguration;
 #define MIN_PWD_ITERATIONS 1000
 #define MIN_PWD_HASH_LENGTH 20
 
-class LoolConfig final: public XMLConfiguration
+class CoolConfig final: public XMLConfiguration
 {
 public:
-    LoolConfig()
+    CoolConfig()
         {}
 };
 
@@ -66,7 +66,7 @@ class Config: public Application
     // Display help information on the console
     void displayHelp();
 
-    LoolConfig _loolConfig;
+    CoolConfig _coolConfig;
 
     AdminConfig _adminConfig;
 
@@ -101,7 +101,7 @@ void Config::displayHelp()
     HelpFormatter helpFormatter(options());
     helpFormatter.setCommand(commandName());
     helpFormatter.setUsage("COMMAND [OPTIONS]");
-    helpFormatter.setHeader("loolconfig - Configuration tool for Collabora Online.\n"
+    helpFormatter.setHeader("coolconfig - Configuration tool for Collabora Online.\n"
                             "\n"
                             "Some options make sense only with a specific command.\n\n"
                             "Options:");
@@ -224,7 +224,7 @@ int Config::main(const std::vector<std::string>& args)
 
     int retval = EX_OK;
     bool changed = false;
-    _loolConfig.load(ConfigFile);
+    _coolConfig.load(ConfigFile);
 
     if (args[0] == "set-admin-password")
     {
@@ -289,10 +289,10 @@ int Config::main(const std::vector<std::string>& args)
         std::stringstream pwdConfigValue("pbkdf2.sha512.", std::ios_base::in | std::ios_base::out | std::ios_base::ate);
         pwdConfigValue << std::to_string(_adminConfig.getPwdIterations()) << '.';
         pwdConfigValue << saltHash << '.' << passwordHash;
-        _loolConfig.setString("admin_console.username", adminUser);
-        _loolConfig.setString("admin_console.secure_password[@desc]",
+        _coolConfig.setString("admin_console.username", adminUser);
+        _coolConfig.setString("admin_console.secure_password[@desc]",
                               "Salt and password hash combination generated using PBKDF2 with SHA512 digest.");
-        _loolConfig.setString("admin_console.secure_password", pwdConfigValue.str());
+        _coolConfig.setString("admin_console.secure_password", pwdConfigValue.str());
 
         changed = true;
 #else
@@ -324,7 +324,7 @@ int Config::main(const std::vector<std::string>& args)
                 else
                 {
                     std::cerr << "Valid for " << validDays << " days - setting to config\n";
-                    _loolConfig.setString("support_key", supportKeyString);
+                    _coolConfig.setString("support_key", supportKeyString);
                     changed = true;
                 }
             }
@@ -332,7 +332,7 @@ int Config::main(const std::vector<std::string>& args)
         else
         {
             std::cerr << "Removing empty support key\n";
-            _loolConfig.remove("support_key");
+            _coolConfig.remove("support_key");
             changed = true;
         }
     }
@@ -343,12 +343,12 @@ int Config::main(const std::vector<std::string>& args)
         {
             // args[1] = key
             // args[2] = value
-            if (_loolConfig.has(args[1]))
+            if (_coolConfig.has(args[1]))
             {
-                const std::string val = _loolConfig.getString(args[1]);
+                const std::string val = _coolConfig.getString(args[1]);
                 std::cout << "Previous value found in config file: \""  << val << '"' << std::endl;
                 std::cout << "Changing value to: \"" << args[2] << '"' << std::endl;
-                _loolConfig.setString(args[1], args[2]);
+                _coolConfig.setString(args[1], args[2]);
                 changed = true;
             }
             else
@@ -374,7 +374,7 @@ int Config::main(const std::vector<std::string>& args)
     {
         if (!AnonymizationSaltProvided)
         {
-            const std::string val = _loolConfig.getString("logging.anonymize.anonymization_salt");
+            const std::string val = _coolConfig.getString("logging.anonymize.anonymization_salt");
             AnonymizationSalt = std::stoull(val);
             std::cout << "Anonymization Salt: [" << AnonymizationSalt << "]." << std::endl;
         }
@@ -393,7 +393,7 @@ int Config::main(const std::vector<std::string>& args)
     if (changed)
     {
         std::cout << "Saving configuration to : " << ConfigFile << " ..." << std::endl;
-        _loolConfig.save(ConfigFile);
+        _coolConfig.save(ConfigFile);
         std::cout << "Saved" << std::endl;
     }
 

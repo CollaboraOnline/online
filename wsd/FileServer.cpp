@@ -137,7 +137,7 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
         return false;
     }
 
-    const char useLoolconfig[] = " Use loolconfig to configure the admin password.";
+    const char useCoolconfig[] = " Use coolconfig to configure the admin password.";
 
     // do we have secure_password?
     if (config.has("admin_console.secure_password"))
@@ -145,7 +145,7 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
         const std::string securePass = config.getString("admin_console.secure_password", "");
         if (securePass.empty())
         {
-            LOG_ERR("Admin Console secure password is empty, denying access." << useLoolconfig);
+            LOG_ERR("Admin Console secure password is empty, denying access." << useCoolconfig);
             return false;
         }
 
@@ -158,7 +158,7 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
             !tokens.equals(1, "sha512") ||
             !Util::dataFromHexString(tokens[3], saltData))
         {
-            LOG_ERR("Incorrect format detected for secure_password in config file." << useLoolconfig);
+            LOG_ERR("Incorrect format detected for secure_password in config file." << useCoolconfig);
             return false;
         }
 
@@ -189,7 +189,7 @@ bool isConfigAuthOk(const std::string& userProvidedUsr, const std::string& userP
     const std::string pass = config.getString("admin_console.password", "");
     if (pass.empty())
     {
-        LOG_ERR("Admin Console password is empty, denying access." << useLoolconfig);
+        LOG_ERR("Admin Console password is empty, denying access." << useCoolconfig);
         return false;
     }
 

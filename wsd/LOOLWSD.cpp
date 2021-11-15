@@ -1520,8 +1520,8 @@ void LOOLWSD::innerInitialize(Application& self)
 
     if (supportKeyString.empty())
     {
-        LOG_WRN("Support key not set, please use 'loolconfig set-support-key'.");
-        std::cerr << "Support key not set, please use 'loolconfig set-support-key'." << std::endl;
+        LOG_WRN("Support key not set, please use 'coolconfig set-support-key'.");
+        std::cerr << "Support key not set, please use 'coolconfig set-support-key'." << std::endl;
         LOOLWSD::OverrideWatermark = "Unsupported, the support key is missing.";
     }
     else
@@ -1530,8 +1530,8 @@ void LOOLWSD::innerInitialize(Application& self)
 
         if (!key.verify())
         {
-            LOG_WRN("Invalid support key, please use 'loolconfig set-support-key'.");
-            std::cerr << "Invalid support key, please use 'loolconfig set-support-key'." << std::endl;
+            LOG_WRN("Invalid support key, please use 'coolconfig set-support-key'.");
+            std::cerr << "Invalid support key, please use 'coolconfig set-support-key'." << std::endl;
             LOOLWSD::OverrideWatermark = "Unsupported, the support key is invalid.";
         }
         else
@@ -1539,8 +1539,8 @@ void LOOLWSD::innerInitialize(Application& self)
             int validDays =  key.validDaysRemaining();
             if (validDays <= 0)
             {
-                LOG_WRN("Your support key has expired, please ask for a new one, and use 'loolconfig set-support-key'.");
-                std::cerr << "Your support key has expired, please ask for a new one, and use 'loolconfig set-support-key'." << std::endl;
+                LOG_WRN("Your support key has expired, please ask for a new one, and use 'coolconfig set-support-key'.");
+                std::cerr << "Your support key has expired, please ask for a new one, and use 'coolconfig set-support-key'." << std::endl;
                 LOOLWSD::OverrideWatermark = "Unsupported, the support key has expired.";
             }
             else
