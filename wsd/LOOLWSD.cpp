@@ -2716,7 +2716,7 @@ private:
                 FileServerRequestHandler::handleRequest(request, requestDetails, message, socket);
                 socket->shutdown();
             }
-            else if (requestDetails.equals(RequestDetails::Field::Type, "lool") &&
+            else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                      requestDetails.equals(1, "adminws"))
             {
                 // Admin connections
@@ -2729,7 +2729,7 @@ private:
                         });
                 }
             }
-            else if (requestDetails.equals(RequestDetails::Field::Type, "lool") &&
+            else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                      requestDetails.equals(1, "getMetrics"))
             {
                 // See metrics.txt
@@ -2789,7 +2789,7 @@ private:
             else if (requestDetails.isGet("/robots.txt"))
                 handleRobotsTxtRequest(request, socket);
 
-            else if (requestDetails.equals(RequestDetails::Field::Type, "lool") &&
+            else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                      requestDetails.equals(1, "clipboard"))
             {
 //              Util::dumpHex(std::cerr, socket->getInBuffer(), "clipboard:\n"); // lots of data ...
@@ -2799,11 +2799,11 @@ private:
             else if (requestDetails.isProxy() && requestDetails.equals(2, "ws"))
                 handleClientProxyRequest(request, requestDetails, message, disposition);
 
-            else if (requestDetails.equals(RequestDetails::Field::Type, "lool") &&
+            else if (requestDetails.equals(RequestDetails::Field::Type, "cool") &&
                      requestDetails.equals(2, "ws") && requestDetails.isWebSocket())
                 handleClientWsUpgrade(request, requestDetails, disposition, socket);
 
-            else if (!requestDetails.isWebSocket() && requestDetails.equals(RequestDetails::Field::Type, "lool"))
+            else if (!requestDetails.isWebSocket() && requestDetails.equals(RequestDetails::Field::Type, "cool"))
             {
                 // All post requests have url prefix 'cool'.
                 handlePostRequest(requestDetails, request, message, disposition, socket);

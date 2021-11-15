@@ -1899,7 +1899,7 @@ std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSessi
     {
         LOG_ERR("Out of storage while loading document with URI [" << session->getPublicUri().toString() << "].");
 
-        // We use the same message as is sent when some of lool's own locations are full,
+        // We use the same message as is sent when some of cool's own locations are full,
         // even if in this case it might be a totally different location (file system, or
         // some other type of storage somewhere). This message is not sent to all clients,
         // though, just to all sessions of this document.
