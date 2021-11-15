@@ -27,13 +27,13 @@ RUN setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit 
     mkdir -p /opt/cool/child-roots && \
     loolwsd-systemplate-setup /opt/cool/systemplate /opt/lokit >/dev/null 2>&1 && \
     touch /var/log/loolwsd.log && \
-    chown lool:lool /var/log/loolwsd.log && \
-    chown -R lool:lool /opt/ && \
-    chown -R lool:lool /etc/loolwsd
+    chown cool:cool /var/log/loolwsd.log && \
+    chown -R cool:cool /opt/ && \
+    chown -R cool:cool /etc/loolwsd
 
 EXPOSE 9980
 
-# switch to lool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
+# switch to cool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
 USER 481
 
 CMD ["/start-collabora-online.sh"]

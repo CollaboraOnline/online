@@ -22,10 +22,10 @@ if hash ssh-keygen 2>/dev/null; then
     if [ $? -ne 0 ] ; then
         exit $?
 	fi
-    if id -u lool >/dev/null 2>&1; then
+    if id -u cool >/dev/null 2>&1; then
         $SUDO chown lool: /etc/loolwsd/proof_key
     else
-        echo "User lool does not exist. Please reinstall loolwsd package, or in case of manual installation from source, create the lool user manually."
+        echo "User lool does not exist. Please reinstall loolwsd package, or in case of manual installation from source, create the cool user manually."
     fi
 else
 	echo "ssh-keygen command not found. Please install openssh client tools."

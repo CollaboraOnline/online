@@ -167,8 +167,8 @@ loolparent=`cd ${loroot} && cd .. && /bin/pwd`
 
 rm -rf ${loolparent}/cool
 mkdir -p ${loolparent}/cool/child-roots
-chown lool:lool ${loolparent}/cool
-chown lool:lool ${loolparent}/cool/child-roots
+chown cool:cool ${loolparent}/cool
+chown cool:cool ${loolparent}/cool/child-roots
 
 fc-cache ${loroot}/share/fonts/truetype
 loolwsd-systemplate-setup ${loolparent}/cool/systemplate ${loroot} >/dev/null 2>&1
