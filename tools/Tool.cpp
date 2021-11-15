@@ -160,7 +160,7 @@ void Tool::displayHelp()
               << "  --extension=format          File format to convert to\n"
               << "  --outdir=directory          Output directory for converted files\n"
               << "  --parallelism=threads       Number of simultaneous threads to use\n"
-              << "  --server=uri                URI of LOOL server\n"
+              << "  --server=uri                URI of COOL server\n"
               << "  --no-check-certificate      Disable checking of SSL certificate\n"
               << "In addition, the options taken by the libreoffice command for its --convert-to\n"
               << "functionality can be used (but are ignored if irrelevant to this command)." << std::endl;

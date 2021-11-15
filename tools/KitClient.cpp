@@ -93,7 +93,7 @@ protected:
             if (tokens.equals(0, "?") || tokens.equals(0, "help"))
             {
                 std::cout <<
-                    "Commands mimic LOOL protocol but we talk directly to LOKit:" << std::endl <<
+                    "Commands mimic COOL protocol but we talk directly to LOKit:" << std::endl <<
                     "    status" << std::endl <<
                     "        calls LibreOfficeKitDocument::getDocumentType, getParts, getPartName, getDocumentSize" << std::endl <<
                     "    tile part pixelwidth pixelheight docposx docposy doctilewidth doctileheight" << std::endl <<

@@ -43,7 +43,7 @@ static int countLoolKitProcesses(const int expected,
             break;
         }
 
-        // Give polls in the lool processes time to time out etc
+        // Give polls in the cool processes time to time out etc
         std::this_thread::sleep_for(std::chrono::milliseconds(sleepMs));
 
         const int newCount = getLoolKitProcessCount();

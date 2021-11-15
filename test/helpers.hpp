@@ -47,7 +47,7 @@
 constexpr int COMMAND_RETRY_COUNT = 5;
 
 /// Common helper testing functions.
-/// Avoid the temptation to reuse from LOOL code!
+/// Avoid the temptation to reuse from COOL code!
 /// These are supposed to be testing the latter.
 namespace helpers
 {
