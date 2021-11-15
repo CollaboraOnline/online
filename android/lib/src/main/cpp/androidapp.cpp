@@ -196,7 +196,7 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
 
     if (string_value)
     {
-        LOG_DBG("From JS: lool: " << string_value);
+        LOG_DBG("From JS: cool: " << string_value);
 
         // we need a copy, because we can get a new one while we are still
         // taking down the old one
@@ -295,7 +295,7 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
         }
     }
     else
-        LOG_DBG("From JS: lool: some object");
+        LOG_DBG("From JS: cool: some object");
 }
 
 extern "C" jboolean libreofficekit_initialize(JNIEnv* env, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager);
