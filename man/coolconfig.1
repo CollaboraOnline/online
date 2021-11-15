@@ -1,0 +1,27 @@
+.TH COOLCONFIG "1" "May 2018" "coolconfig" "User Commands"
+.SH NAME
+coolconfig \- Configuration tool for Collabora Online.
+.SH SYNOPSIS
+coolconfig COMMAND [OPTIONS]
+.SH OPTIONS
+Some options make sense only with a specific command.
+.PP
+.SS "Commands:"
+.PP
+set\-admin\-password
+.PP
+set <key> <value>
+.PP
+update\-system\-template
+.SS "Options:"
+\fB\-h\fR, \fB\-\-help\fR                Show this usage information.
+.PP
+\fB\-\-config\-file\fR=\fIpath\fR        Specify configuration file path manually.
+.PP
+\fB\-\-pwd\-salt\-length\fR=\fInumber\fR  Length of the salt to use to hash password [set\-admin\-password].
+.PP
+\fB\-\-pwd\-iterations\fR=\fInumber\fR   Number of iterations to do in PKDBF2 password hashing [set\-admin\-password].
+.PP
+\fB\-\-pwd\-hash\-length\fR=\fInumber\fR  Length of password hash to generate [set\-admin\-password].
+.SH "SEE ALSO"
+loolforkit(1), loolconvert(1), loolwsd(1), loolwsd-systemplate-setup(1), loolwsd-generate-proof-key(1), loolmount(1)

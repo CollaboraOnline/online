@@ -205,7 +205,7 @@
         <enable desc="Enable the admin console functionality" type="bool" default="true">true</enable>
         <enable_pam desc="Enable admin user authentication with PAM" type="bool" default="false">false</enable_pam>
         <username desc="The username of the admin console. Ignored if PAM is enabled."></username>
-        <password desc="The password of the admin console. Deprecated on most platforms. Instead, use PAM or loolconfig to set up a secure password."></password>
+        <password desc="The password of the admin console. Deprecated on most platforms. Instead, use PAM or coolconfig to set up a secure password."></password>
     </admin_console>
 
     <monitors desc="Addresses of servers we connect to on start for monitoring">

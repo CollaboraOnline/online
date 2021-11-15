@@ -17,7 +17,7 @@ export ENABLE_DEBUG
 bin_PROGRAMS = \
 	loolforkit \
 	loolmount \
-	loolconvert loolconfig
+	loolconvert coolconfig
 
 if ENABLE_LIBFUZZER
 else
@@ -30,7 +30,7 @@ dist_bin_SCRIPTS = loolwsd-systemplate-setup \
 man_MANS = man/loolwsd.1 \
            man/loolforkit.1 \
            man/loolconvert.1 \
-           man/loolconfig.1 \
+           man/coolconfig.1 \
            man/loolwsd-systemplate-setup.1 \
            man/loolwsd-generate-proof-key.1 \
            man/loolmount.1
@@ -81,7 +81,7 @@ AM_LDFLAGS += -lssl -lcrypto
 else
 loolwsd_fuzzer_LDADD = -lssl -lcrypto
 loolwsd_LDADD = -lssl -lcrypto
-loolconfig_LDADD = -lssl -lcrypto
+coolconfig_LDADD = -lssl -lcrypto
 endif
 
 loolwsd_fuzzer_CPPFLAGS = -DKIT_IN_PROCESS=1 -DFUZZER=1 -DTDOC=\"$(abs_top_srcdir)/test/data\" $(AM_CPPFLAGS)
@@ -232,7 +232,7 @@ loolstress_SOURCES = tools/Stress.cpp \
                      common/DummyTraceEventEmitter.cpp \
                      $(shared_sources)
 
-loolconfig_SOURCES = tools/Config.cpp \
+coolconfig_SOURCES = tools/Config.cpp \
 		     common/DummyTraceEventEmitter.cpp \
 		     common/Crypto.cpp \
 		     common/Log.cpp \
