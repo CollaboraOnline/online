@@ -171,7 +171,7 @@ void RequestDetails::processURI()
     std::string uriRes = _uriString.substr(posDocUri + 1);
 
     const auto posLastWS = uriRes.rfind("/ws");
-    // DocumentURI is the second segment in lool URIs.
+    // DocumentURI is the second segment in cool URIs.
     if (_pathSegs.equals(0, "lool"))
     {
         //FIXME: For historic reasons the DocumentURI includes the WOPISrc.

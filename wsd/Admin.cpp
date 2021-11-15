@@ -120,7 +120,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
     }
     else if (tokens.equals(0, "version"))
     {
-        // Send LOOL version information
+        // Send COOL version information
         sendTextFrame("loolserver " + Util::getVersionJSON());
         // Send LOKit version information
         sendTextFrame("lokitversion " + LOOLWSD::LOKitVersion);
@@ -746,7 +746,7 @@ void Admin::triggerMemoryCleanup(const size_t totalMem)
         return;
     }
 
-    LOG_TRC("Total memory consumed: " << totalMem << " KB. Configured LOOL memory proportion: " <<
+    LOG_TRC("Total memory consumed: " << totalMem << " KB. Configured COOL memory proportion: " <<
             memLimit << "% (" << static_cast<size_t>(_totalSysMemKb * memLimit / 100.) << " KB).");
 
     const double memToFreePercentage = (totalMem / static_cast<double>(_totalSysMemKb)) - memLimit / 100.;

@@ -39,7 +39,7 @@
  *  /browser/49c225146/src/map/Clipboard.js
  *  /browser/49c225146/cool.html?WOPISrc=http%3A%2F%2Flocalhost%2Fnextcloud%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F593_ocqiesh0cngs&title=empty.odt&lang=en-us&closebutton=1&revisionhistory=1
  *
- * lool URI: used to load the document.
+ * cool URI: used to load the document.
  * Origin: cool.html
  * Format:
  *  /cool/<encoded-document-URI+options>/ws?WOPISrc=<encoded-document-URI>&compat=/ws[/<sessionId>/<command>/<serial>]
