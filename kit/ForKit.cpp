@@ -456,7 +456,7 @@ int main(int argc, char** argv)
 {
     /*WARNING: PRIVILEGED CODE CHECKING START */
 
-    /*WARNING*/ // early check for avoiding the security check for username 'lool'
+    /*WARNING*/ // early check for avoiding the security check for username 'cool'
     /*WARNING*/ // (deliberately only this, not moving the entire parameter parsing here)
     /*WARNING*/ bool checkLoolUser = true;
     /*WARNING*/ std::string disableLoolUserChecking("--disable-lool-user-checking");
@@ -496,13 +496,13 @@ int main(int argc, char** argv)
     /*WARNING*/         return EX_SOFTWARE;
     /*WARNING*/     }
 
-    /*WARNING*/     LOG_ERR("Security: Check for the 'lool' username overridden on the command line.");
+    /*WARNING*/     LOG_ERR("Security: Check for the 'cool' username overridden on the command line.");
     /*WARNING*/ }
 
     /*WARNING: PRIVILEGED CODE CHECKING END */
 
     // Continue in privileged mode, but only if:
-    // * the user is 'lool' (privileged user)
+    // * the user is 'cool' (privileged user)
     // * the user is 'root', and --disable-lool-user-checking was provided
     // Alternatively allow running in non-privileged mode (with --nocaps), if:
     // * the user is a non-priviled user, the binary is not privileged
