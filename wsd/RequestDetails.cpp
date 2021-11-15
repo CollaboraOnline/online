@@ -107,7 +107,7 @@ RequestDetails::RequestDetails(const std::string &mobileURI)
 
 void RequestDetails::dehexify()
 {
-    // For now, we only hexify lool/ URLs.
+    // For now, we only hexify cool/ URLs.
     constexpr auto Prefix = "lool/0x";
     constexpr auto PrefixLen = sizeof(Prefix) - 1;
 
@@ -189,7 +189,7 @@ void RequestDetails::processURI()
         {
             end = (posLastWS != std::string::npos ? posLastWS : uriRes.find('/'));
             if (end == std::string::npos)
-                end = uriRes.find('?'); // e.g. /lool/clipboard?WOPISrc=file%3A%2F%2F%2Ftmp%2Fcopypasteef324307_empty.ods...
+                end = uriRes.find('?'); // e.g. /cool/clipboard?WOPISrc=file%3A%2F%2F%2Ftmp%2Fcopypasteef324307_empty.ods...
         }
 
         const std::string docUri = uriRes.substr(0, end);
