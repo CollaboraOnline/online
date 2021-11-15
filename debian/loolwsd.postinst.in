@@ -16,17 +16,17 @@ case "$1" in
 	# on the same file system
 
 	rm -rf /opt/lool
-	mkdir -p /opt/lool/child-roots
-	chown lool: /opt/lool
-	chown lool: /opt/lool/child-roots
+	mkdir -p /opt/cool/child-roots
+	chown cool: /opt/cool
+	chown cool: /opt/cool/child-roots
 
 	fc-cache @LO_PATH@/share/fonts/truetype
 
-	loolwsd-systemplate-setup /opt/lool/systemplate @LO_PATH@ >/dev/null 2>&1
+	loolwsd-systemplate-setup /opt/cool/systemplate @LO_PATH@ >/dev/null 2>&1
 	loolwsd-generate-proof-key >/dev/null 2>&1
     cat << EOF > /etc/apt/apt.conf.d/25loolwsd
 // Rebuild systemplate of @APP_NAME@
-DPkg::Post-Invoke { "echo Updating loolwsd systemplate;loolwsd-systemplate-setup /opt/lool/systemplate @LO_PATH@ >/dev/null 2>&1 || true"; };
+DPkg::Post-Invoke { "echo Updating loolwsd systemplate;loolwsd-systemplate-setup /opt/cool/systemplate @LO_PATH@ >/dev/null 2>&1 || true"; };
 EOF
 	;;
 
