@@ -92,6 +92,11 @@ class CommentSection {
 		this.map.on('AnnotationScrollUp', this.onAnnotationScrollUp, this);
 		this.map.on('AnnotationScrollDown', this.onAnnotationScrollDown, this);
 
+		this.map.on('commandstatechanged', function (event: any) {
+			if (event.commandName === '.uno:ShowResolvedAnnotations')
+				this.setViewResolved(event.state === 'true');
+		}, this);
+
 		this.map.on('zoomend', function() {
 			this.map.fire('mobilewizardpopupclose');
 			this.checkCollapseState();
