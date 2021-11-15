@@ -459,7 +459,7 @@ int main(int argc, char** argv)
     /*WARNING*/ // early check for avoiding the security check for username 'cool'
     /*WARNING*/ // (deliberately only this, not moving the entire parameter parsing here)
     /*WARNING*/ bool checkLoolUser = true;
-    /*WARNING*/ std::string disableLoolUserChecking("--disable-lool-user-checking");
+    /*WARNING*/ std::string disableLoolUserChecking("--disable-cool-user-checking");
     /*WARNING*/ for (int i = 1; checkLoolUser && (i < argc); ++i)
     /*WARNING*/ {
     /*WARNING*/     if (disableLoolUserChecking == argv[i])
@@ -469,7 +469,7 @@ int main(int argc, char** argv)
     /*WARNING*/ if (!hasCorrectUID("coolforkit"))
     /*WARNING*/ {
     /*WARNING*/     // don't allow if any capability is set (unless root; who runs this
-    /*WARNING*/     // as root or runs this in a container and provides --disable-lool-user-checking knows what they
+    /*WARNING*/     // as root or runs this in a container and provides --disable-cool-user-checking knows what they
     /*WARNING*/     // are doing)
     /*WARNING*/     if (hasUID("root"))
     /*WARNING*/     {
@@ -482,14 +482,14 @@ int main(int argc, char** argv)
     /*WARNING*/     else if (hasAnyCapability())
     /*WARNING*/     {
     /*WARNING*/         if (!checkLoolUser)
-    /*WARNING*/             LOG_FTL("Security: --disable-lool-user-checking failed, coolforkit has some capabilities set.");
+    /*WARNING*/             LOG_FTL("Security: --disable-cool-user-checking failed, coolforkit has some capabilities set.");
 
     /*WARNING*/         LOG_FTL("Aborting.");
     /*WARNING*/         return EX_SOFTWARE;
     /*WARNING*/     }
 
     /*WARNING*/     // even without the capabilities, don't run unless the user really knows
-    /*WARNING*/     // what they are doing, and provided a --disable-lool-user-checking
+    /*WARNING*/     // what they are doing, and provided a --disable-cool-user-checking
     /*WARNING*/     if (checkLoolUser)
     /*WARNING*/     {
     /*WARNING*/         LOG_FTL("Aborting.");
