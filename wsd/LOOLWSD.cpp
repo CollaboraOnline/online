@@ -30,8 +30,8 @@
 /* Default ciphers used, when not specified otherwise */
 #define DEFAULT_CIPHER_SET "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"
 
-// This is the main source for the loolwsd program. LOOL uses several loolwsd processes: one main
-// parent process that listens on the TCP port and accepts connections from LOOL clients, and a
+// This is the main source for the loolwsd program. COOL uses several loolwsd processes: one main
+// parent process that listens on the TCP port and accepts connections from COOL clients, and a
 // number of child processes, each which handles a viewing (editing) session for one document.
 
 #include <unistd.h>
@@ -1007,7 +1007,7 @@ void LOOLWSD::innerInitialize(Application& self)
 #if !MOBILEAPP
     if (geteuid() == 0 && CheckLoolUser)
     {
-        throw std::runtime_error("Do not run as root. Please run as lool user.");
+        throw std::runtime_error("Do not run as root. Please run as cool user.");
     }
 #endif
 

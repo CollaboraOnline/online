@@ -13,7 +13,7 @@
 #include <exception>
 #include <stdexcept>
 
-// Generic LOOL errors and base for others.
+// Generic COOL errors and base for others.
 class LoolException : public std::runtime_error
 {
 public:
