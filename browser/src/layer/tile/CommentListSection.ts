@@ -78,7 +78,7 @@ class CommentSection {
 		this.sectionProperties.marginY = 10 * app.dpiScale;
 		this.sectionProperties.offset = 5 * app.dpiScale;
 		this.sectionProperties.layoutTimer = null;
-		this.sectionProperties.width = Math.round(1 * app.dpiScale); // Configurable variable.
+		this.sectionProperties.width = Math.round(300 * app.dpiScale); // Configurable variable.
 		this.sectionProperties.scrollAnnotation = null; // For impress, when 1 or more comments exist.
 		this.idIndexMap = new Map<any, number>();
 	}
@@ -99,7 +99,11 @@ class CommentSection {
 
 		this.map.on('zoomend', function() {
 			this.map.fire('mobilewizardpopupclose');
-			this.checkCollapseState();
+
+			// when section size detected - request redraw
+			if (this.checkCollapseState())
+				setTimeout(this.updateSectionsSize.bind(this), 10);
+
 			this.layout(true);
 		}, this);
 
@@ -115,13 +119,15 @@ class CommentSection {
 		if (app.file.fileBasedView && (<any>window).mode.isMobile()) {
 			this.map.uiManager.mobileWizard._hideSlideSorter();
 		}
+
+		this.checkCollapseState();
 	}
 
 	private checkCollapseState() {
 		if (this.shouldCollapse())
-			this.setCollapsed();
+			return this.setCollapsed();
 		else
-			this.setExpanded();
+			return this.setExpanded();
 	}
 
 	private findNextPartWithComment (currentPart: number) {
@@ -156,14 +162,19 @@ class CommentSection {
 		}
 	}
 
+	private updateSectionsSize () {
+		this.containerObject.reNewAllSections(true);
+		this.sectionProperties.docLayer._syncTileContainerSize();
+
+		app.sectionContainer.requestReDraw();
+	}
+
 	private hideCommentListPanel () {
 		if (this.size[0] !== 0) {
 			this.size[0] = 0;
 
-			this.containerObject.reNewAllSections(true);
-			this.sectionProperties.docLayer._syncTileContainerSize();
-
-			app.sectionContainer.requestReDraw();
+			this.checkCollapseState();
+			this.updateSectionsSize();
 		}
 	}
 
@@ -171,10 +182,8 @@ class CommentSection {
 		if (this.size[0] !== this.sectionProperties.width) {
 			this.size[0] = this.sectionProperties.width;
 
-			this.containerObject.reNewAllSections(true);
-			this.sectionProperties.docLayer._syncTileContainerSize();
-
-			app.sectionContainer.requestReDraw();
+			this.checkCollapseState();
+			this.updateSectionsSize();
 		}
 	}
 
@@ -216,8 +225,11 @@ class CommentSection {
 	}
 
 	public setCollapsed() {
+		if (this.isCollapsed)
+			return false;
+
 		if (this.sectionProperties.docLayer._docType === 'spreadsheet')
-			return;
+			return false;
 
 		this.isCollapsed = true;
 		this.removeHighlighters();
@@ -230,10 +242,17 @@ class CommentSection {
 		if ((<any>window).mode.isMobile()
 			|| this.sectionProperties.docLayer._docType === 'spreadsheet'
 			|| this.sectionProperties.commentList.length === 0)
-			return;
+			return false;
+
+		this.size[0] = Math.round(1 * app.dpiScale);
+
+		return true;
 	}
 
 	public setExpanded() {
+		if (!this.isCollapsed)
+			return false;
+
 		this.isCollapsed = false;
 		this.removeHighlighters();
 		for (var i: number = 0; i < this.sectionProperties.commentList.length; i++) {
@@ -243,13 +262,17 @@ class CommentSection {
 		if ((<any>window).mode.isMobile()
 			|| this.sectionProperties.docLayer._docType === 'spreadsheet'
 			|| this.sectionProperties.commentList.length === 0)
-			return;
+			return false;
+
+		this.size[0] = Math.round(300 * app.dpiScale);
+
+		return true;
 	}
 
 	public shouldCollapse () {
 		var commentWidth = 300;
 		var availableSpace = this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0];
-		return availableSpace < commentWidth * 2;
+		return availableSpace < ((this.size[0] === 1 * app.dpiScale) ? commentWidth : 0);
 	}
 
 	public hideAllComments () {
@@ -1078,7 +1101,7 @@ class CommentSection {
 				modified.setData(modifiedObj);
 				modified.update();
 				this.update();
-				if (!(<any>window).mode.isMobile() && this.isCollapsed) {
+				if (!(<any>window).mode.isMobile() && this.isCollapsed && this.sectionProperties.selectedComment) {
 					var parent = this.sectionProperties.commentList[this.getRootIndexOf(modified.sectionProperties.data.id)];
 					this.openMobileWizardPopup(parent);
 				}
@@ -1500,13 +1523,12 @@ class CommentSection {
 			var yOrigin = null;
 			var selectedIndex = null;
 			var x = topRight[0];
-			var commentWidth = this.isCollapsed ? 70 : 300;
 			var availableSpace = this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0];
 
-			if (availableSpace > commentWidth)
+			if (!this.isCollapsed && availableSpace > 0)
 				x = topRight[0] - Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0]) * 0.5);
-			else
-				x -= commentWidth;
+			else if (this.isCollapsed)
+				x -= 70;
 
 			if (this.sectionProperties.selectedComment) {
 				selectedIndex = this.getRootIndexOf(this.sectionProperties.selectedComment.sectionProperties.data.id);
