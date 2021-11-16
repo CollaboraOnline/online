@@ -810,7 +810,7 @@ recv_bytes
 
     Queries for total memory or bandwidth being consumed by the server
     in kilobytes. For mem_consumed this includes processes - loolwsd,
-    loolforkit, and child processes hosting various documents. For
+    coolforkit, and child processes hosting various documents. For
     sent/recv_bytes this includes only external traffic.
 
 active_docs_count

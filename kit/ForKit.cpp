@@ -223,12 +223,12 @@ static bool haveCapability(cap_value_t capability)
     {
         if (cap_name)
         {
-            LOG_ERR("Capability " << cap_name << " is not set for the loolforkit program.");
+            LOG_ERR("Capability " << cap_name << " is not set for the coolforkit program.");
             cap_free(cap_name);
         }
         else
         {
-            LOG_ERR("Capability " << capability << " is not set for the loolforkit program.");
+            LOG_ERR("Capability " << capability << " is not set for the coolforkit program.");
         }
         return false;
     }
@@ -445,7 +445,7 @@ void forkLibreOfficeKit(const std::string& childRoot,
 #ifndef KIT_IN_PROCESS
 static void printArgumentHelp()
 {
-    std::cout << "Usage: loolforkit [OPTION]..." << std::endl;
+    std::cout << "Usage: coolforkit [OPTION]..." << std::endl;
     std::cout << "  Single-threaded process that spawns lok instances" << std::endl;
     std::cout << "  Note: Running this standalone is not possible. It is spawned by loolwsd" << std::endl;
     std::cout << "        and is controlled via a pipe." << std::endl;
@@ -466,7 +466,7 @@ int main(int argc, char** argv)
     /*WARNING*/         checkLoolUser = false;
     /*WARNING*/ }
 
-    /*WARNING*/ if (!hasCorrectUID("loolforkit"))
+    /*WARNING*/ if (!hasCorrectUID("coolforkit"))
     /*WARNING*/ {
     /*WARNING*/     // don't allow if any capability is set (unless root; who runs this
     /*WARNING*/     // as root or runs this in a container and provides --disable-lool-user-checking knows what they
@@ -482,7 +482,7 @@ int main(int argc, char** argv)
     /*WARNING*/     else if (hasAnyCapability())
     /*WARNING*/     {
     /*WARNING*/         if (!checkLoolUser)
-    /*WARNING*/             LOG_FTL("Security: --disable-lool-user-checking failed, loolforkit has some capabilities set.");
+    /*WARNING*/             LOG_FTL("Security: --disable-lool-user-checking failed, coolforkit has some capabilities set.");
 
     /*WARNING*/         LOG_FTL("Aborting.");
     /*WARNING*/         return EX_SOFTWARE;
@@ -588,7 +588,7 @@ int main(int argc, char** argv)
         {
             std::string version, hash;
             Util::getVersionInfo(version, hash);
-            std::cout << "loolforkit version details: " << version << " - " << hash << std::endl;
+            std::cout << "coolforkit version details: " << version << " - " << hash << std::endl;
             DisplayVersion = true;
         }
         else if (std::strstr(cmd, "--rlimits") == cmd)
@@ -664,7 +664,7 @@ int main(int argc, char** argv)
 
     if (!NoCapsForKit && !haveCorrectCapabilities())
     {
-        LOG_FTL("Capabilities are not set for the loolforkit program.");
+        LOG_FTL("Capabilities are not set for the coolforkit program.");
         LOG_FTL("Please make sure that the current partition was *not* mounted with the 'nosuid' option.");
         LOG_FTL("If you are on SLES11, please set 'file_caps=1' as kernel boot option.");
         return EX_SOFTWARE;

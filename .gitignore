@@ -73,7 +73,7 @@ browser/typescript_js
 connect
 lokitclient
 loolwsd
-loolforkit
+coolforkit
 loolmount
 loolmap
 loolconvert
@@ -81,7 +81,7 @@ loolsocketdump
 loolstress
 loolconfig
 coolconfig
-loolforkit-nocaps
+coolforkit-nocaps
 loadtest
 unittest
 loolwsd_fuzzer

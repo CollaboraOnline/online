@@ -15,7 +15,7 @@ SUBDIRS = . browser test cypress_test
 export ENABLE_DEBUG
 
 bin_PROGRAMS = \
-	loolforkit \
+	coolforkit \
 	loolmount \
 	loolconvert coolconfig
 
@@ -28,7 +28,7 @@ dist_bin_SCRIPTS = loolwsd-systemplate-setup \
                    loolwsd-generate-proof-key
 
 man_MANS = man/loolwsd.1 \
-           man/loolforkit.1 \
+           man/coolforkit.1 \
            man/loolconvert.1 \
            man/coolconfig.1 \
            man/loolwsd-systemplate-setup.1 \
@@ -171,17 +171,17 @@ lokitclient_SOURCES = common/Log.cpp \
                       common/TraceEvent.cpp \
                       common/Util.cpp
 
-loolforkit_sources = kit/ChildSession.cpp \
+coolforkit_sources = kit/ChildSession.cpp \
                      kit/ForKit.cpp \
                      kit/Kit.cpp
 
-loolforkit_json = $(patsubst %.cpp,%.cmd,$(loolforkit_sources))
+coolforkit_json = $(patsubst %.cpp,%.cmd,$(coolforkit_sources))
 
-loolforkit_SOURCES = $(loolforkit_sources) \
+coolforkit_SOURCES = $(coolforkit_sources) \
                      $(shared_sources)
 
 loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
-                         $(loolforkit_sources) \
+                         $(coolforkit_sources) \
                          $(shared_sources) \
                          kit/DummyLibreOfficeKit.cpp
 
@@ -190,7 +190,7 @@ admin_fuzzer_CPPFLAGS = \
 			$(AM_CPPFLAGS)
 admin_fuzzer_SOURCES = \
 		       $(loolwsd_sources) \
-		       $(loolforkit_sources) \
+		       $(coolforkit_sources) \
 		       $(shared_sources) \
 		       fuzzer/Admin.cpp
 admin_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
@@ -200,7 +200,7 @@ clientsession_fuzzer_CPPFLAGS = \
 				$(AM_CPPFLAGS)
 clientsession_fuzzer_SOURCES = \
 			       $(loolwsd_sources) \
-			       $(loolforkit_sources) \
+			       $(coolforkit_sources) \
 			       $(shared_sources) \
 			       fuzzer/ClientSession.cpp
 clientsession_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
@@ -210,7 +210,7 @@ httpresponse_fuzzer_CPPFLAGS = \
 				$(AM_CPPFLAGS)
 httpresponse_fuzzer_SOURCES = \
 			       $(loolwsd_sources) \
-			       $(loolforkit_sources) \
+			       $(coolforkit_sources) \
 			       $(shared_sources) \
 			       fuzzer/HttpResponse.cpp
 httpresponse_fuzzer_LDFLAGS = -fsanitize=fuzzer $(AM_LDFLAGS)
@@ -379,7 +379,7 @@ CAPABILITIES = $(if @ENABLE_SETCAP@,true,false)
 RUN_GDB = $(if $(GDB_FRONTEND),$(GDB_FRONTEND),gdb --tui --args)
 
 if ENABLE_SETCAP
-SET_CAPS_COMMAND=sudo @SETCAP@ cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep loolforkit && sudo @SETCAP@ cap_sys_admin=ep loolmount
+SET_CAPS_COMMAND=sudo @SETCAP@ cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep coolforkit && sudo @SETCAP@ cap_sys_admin=ep loolmount
 else
 SET_CAPS_COMMAND=echo "Skipping capability setting"
 endif
@@ -387,7 +387,7 @@ endif
 if ENABLE_LIBFUZZER
 CLEANUP_DEPS=
 else
-CLEANUP_DEPS=loolwsd loolmount loolforkit
+CLEANUP_DEPS=loolwsd loolmount coolforkit
 endif
 
 # Build loolwsd and loolmount first, so we can cleanup before updating
@@ -536,7 +536,7 @@ else
 ALL_LOCAL_DEPS=loolwsd
 endif
 
-# After building loolforkit, set its capabilities as required. Do it
+# After building coolforkit, set its capabilities as required. Do it
 # already after a plain 'make' to allow for testing without
 # installing. When building for packaging, no need for this, as the
 # capabilities won't survive packaging anyway. Instead, handle it when
@@ -564,7 +564,7 @@ CLANGXX_COMPILE_FLAGS=clang++ $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 
 JSON_COMPILE_FLAGS=$(subst ",\",$(subst \,\\,$(CLANGXX_COMPILE_FLAGS)))
 
-JSON_COMPILE_SRC = $(loolwsd_json) $(loolforkit_json) $(shared_json)
+JSON_COMPILE_SRC = $(loolwsd_json) $(coolforkit_json) $(shared_json)
 
 $(eval $(call file_targets,$(JSON_COMPILE_SRC)))
 

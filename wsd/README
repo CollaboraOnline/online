@@ -48,7 +48,7 @@ When building from a tarball less magic is needed.
 
 Run 'make check' after each commit.
 
-Note that the loolforkit program needs the CAP_SYS_CHROOT capability,
+Note that the coolforkit program needs the CAP_SYS_CHROOT capability,
 thus you will be asked the root password when running make as it
 invokes sudo to run /sbin/setcap.
 
@@ -235,7 +235,7 @@ or
 so that you have time to attach to the process.
 
 Then run loolwsd, and attach your debugger to the process you are
-interested in. Note that as the loolforkit executable file has
+interested in. Note that as the coolforkit executable file has
 capabilities set, so when debugging that you need to run the debugger
 with super-user privilege.
 
@@ -268,7 +268,7 @@ websocket.
 Architecture
 ------------
 
-There are three processes: LoolWSD, LoolForKit, and LoolKit.
+There are three processes: LoolWSD, CoolForKit, and LoolKit.
 
 WSD is the top-level server and is intended to run as a service.
 It is responsible for spawning ForKit and listening on public
