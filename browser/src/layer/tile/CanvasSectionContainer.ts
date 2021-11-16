@@ -1888,7 +1888,13 @@ class CanvasSectionContainer {
 			section.setPosition = function (x: number, y: number) {
 				x = Math.round(x);
 				y = Math.round(y);
-				section.myTopLeft[0] = section.containerObject.documentAnchor[0] + x - section.containerObject.documentTopLeft[0];
+				const docLayer = section.sectionProperties.docLayer;
+				const isRTL = docLayer.isCalc() && docLayer.isLayoutRTL();
+				let sectionXcoord = x - section.containerObject.documentTopLeft[0];
+				if (isRTL)
+					sectionXcoord = section.containerObject.getDocumentSize()[0] - sectionXcoord - section.size[0];
+
+				section.myTopLeft[0] = section.containerObject.documentAnchor[0] + sectionXcoord;
 				section.myTopLeft[1] = section.containerObject.documentAnchor[1] + y - section.containerObject.documentTopLeft[1];
 				section.position[0] = x;
 				section.position[1] = y;
