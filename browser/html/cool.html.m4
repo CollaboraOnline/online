@@ -257,7 +257,7 @@ m4_ifelse(MOBILEAPP,[true],
             <div id="loolwsd-id" style="visibility: hidden;"></div>
             <div>LOKit version:</div>
             <div id="lokit-version"></div>
-            m4_ifelse(MOBILEAPP,[],[<div id="os-info"></div>])
+            m4_ifelse(MOBILEAPP,[],[<div id="os-info"></div>],[<p></p>])
             <div id="slow-proxy"></div>
             <p>Copyright © _YEAR_, VENDOR.</p>
           </div>
