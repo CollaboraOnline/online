@@ -100,6 +100,25 @@ int mount_wrapper(const char *source, const char *target,
 
 int umount2(const char *target, int flags)
 {
+    struct statfs* mntbufs;
+    int numInfos = getmntinfo(&mntbufs, MNT_WAIT);
+    bool targetMounted = false;
+
+    for (int i = 0; i < numInfos; i++)
+    {
+        if (!strcmp(target, mntbufs[i].f_mntonname))
+        {
+            targetMounted = true;
+            break;
+        }
+    }
+
+    if (!targetMounted)
+    {
+        errno = EINVAL;
+        return -1;
+    }
+
     if(flags == MNT_DETACH)
         flags = 0;
 
