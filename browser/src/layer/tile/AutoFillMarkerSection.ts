@@ -32,6 +32,8 @@ class AutoFillMarkerSection {
 	cursorBorderWidth: number = 2;
 	selectionBorderWidth: number = 1;
 
+	isCalcRTL: () => boolean;
+
 	constructor () {
 		this.map = L.Map.THIS;
 
@@ -63,11 +65,6 @@ class AutoFillMarkerSection {
 
 	public onResize () {
 		return;
-	}
-
-	private isRTL (): boolean {
-		const docLayer = this.sectionProperties.docLayer;
-		return docLayer.isCalc() && docLayer.isLayoutRTL();
 	}
 
 	private setMarkerPosition () {
@@ -146,7 +143,7 @@ class AutoFillMarkerSection {
 		var translation = desktop ?
 			[this.size[0], this.size[1]] :
 			[Math.floor(this.size[0] * 0.5), Math.floor(this.size[1] * 0.5)];
-		const adjustForRTL = this.isRTL();
+		const adjustForRTL = this.isCalcRTL();
 		const transformX = (xcoord: number) => {
 			return adjustForRTL ? this.size[0] - xcoord : xcoord;
 		};
