@@ -199,7 +199,7 @@ namespace Log
         return buf + i;
     }
 
-    char* prefix(const Poco::DateTime& time, char* buffer, const char* level)
+    char* prefix(const Poco::LocalDateTime& time, char* buffer, const char* level)
     {
 #if defined(IOS) || defined(__FreeBSD__)
         // Don't bother with the "Source" which would be just "Mobile" always and non-informative as
@@ -265,10 +265,29 @@ namespace Log
         pos += 3;
         to_ascii_fixed<6>(pos, time.millisecond() * 1000 + time.microsecond());
         pos[6] = ' ';
-        pos[7] = '[';
-        pos[8] = ' ';
-        pos += 9;
+        pos += 7;
 
+        // Time zone differential
+        int tzd = time.tzd();
+        if (tzd < 0)
+        {
+            pos[0] = '-';
+            tzd = -tzd;
+        }
+        else
+        {
+            pos[0] = '+';
+        }
+        pos += 1;
+        tzd = (tzd / 36) - (tzd / 36) % 100 + ((tzd / 36) % 100) * 60 / 100;  // seconds to HHMM format
+        to_ascii_fixed<4>(pos, tzd);
+        pos[4] = ' ';
+        pos += 5;
+
+        // Thread name and log level
+        pos[0] = '[';
+        pos[1] = ' ';
+        pos += 2;
         pos = strcopy(Util::getThreadName(), pos);
         pos[0] = ' ';
         pos[1] = ']';
