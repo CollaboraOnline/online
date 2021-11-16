@@ -149,6 +149,12 @@ td.jsdialog .jsdialog.cell.sidebar {
 	width: auto;
 }
 
+.spreadsheet-document + #sidebar-dock-wrapper #ScAlignmentPropertyPanelPanelExpander #box3 > div:last-of-type,
+.presentation-doctype + #sidebar-dock-wrapper #ParaPropertyPanelPanelExpander #box1 > div:last-of-type,
+.drawing-doctype + #sidebar-dock-wrapper #ParaPropertyPanelPanelExpander #box1 > div:last-of-type {
+	display: table-row;
+}
+
 .sidebar.jsdialog.checkbutton {
 	font-size: 13px;
 }
