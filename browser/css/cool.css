@@ -841,7 +841,6 @@ nav.drawing-color-indicator ~ #main-document-content .cool-annotation-reply-coun
 	align-items: center;
 	justify-content: right;
 	flex-grow: 1;
-	background-image: url('images/toolbar-bg-logo.svg');
 	background-repeat: no-repeat;
 	background-size: 82px;
 	background-position: right center;
