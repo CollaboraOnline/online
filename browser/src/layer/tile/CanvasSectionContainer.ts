@@ -258,6 +258,9 @@ class CanvasSectionObject {
 	/// Document objects only. Do not implement this. This function is added by section container.
 	setPosition: (x: number, y: number) => void;
 
+	/// Do not implement this. This function is added by section container. This returns if Calc document is in RTL mode
+	isCalcRTL: () => boolean;
+
 	constructor (options: any) {
 		this.name = options.name;
 		this.backgroundColor = options.backgroundColor ? options.backgroundColor: null;
@@ -1883,16 +1886,27 @@ class CanvasSectionContainer {
 				return null;
 		};
 
+		section.isCalcRTL = function (): boolean {
+			const docLayer = section.sectionProperties.docLayer;
+			if (docLayer && docLayer.isCalc() && docLayer.isLayoutRTL())
+				return true;
+
+			return false;
+		};
+
 		// Only for document objects.
 		if (section.documentObject === true) {
 			section.setPosition = function (x: number, y: number) {
 				x = Math.round(x);
 				y = Math.round(y);
-				const docLayer = section.sectionProperties.docLayer;
-				const isRTL = docLayer.isCalc() && docLayer.isLayoutRTL();
 				let sectionXcoord = x - section.containerObject.documentTopLeft[0];
-				if (isRTL)
-					sectionXcoord = section.containerObject.getDocumentSize()[0] - sectionXcoord - section.size[0];
+				if (section.isCalcRTL()) {
+					console.log('DEBUG: setPosition: docSize = ' + section.containerObject.getDocumentSize()[0]);
+					// the document coordinates are not always in sync(fixing that is non-trivial!), so use the latest from map.
+					const docLayer = section.sectionProperties.docLayer;
+					const docSize = docLayer._map.getPixelBoundsCore().getSize();
+					sectionXcoord = docSize.x - sectionXcoord - section.size[0];
+				}
 
 				section.myTopLeft[0] = section.containerObject.documentAnchor[0] + sectionXcoord;
 				section.myTopLeft[1] = section.containerObject.documentAnchor[1] + y - section.containerObject.documentTopLeft[1];
