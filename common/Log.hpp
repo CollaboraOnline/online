@@ -18,7 +18,7 @@
 #include <sstream>
 #include <string>
 
-#include <Poco/DateTime.h>
+#include <Poco/LocalDateTime.h>
 #include <Poco/DateTimeFormat.h>
 #include <Poco/DateTimeFormatter.h>
 #include <Poco/Logger.h>
@@ -85,11 +85,11 @@ namespace Log
     /// Generates log entry prefix. Example follows (without the pipes).
     /// |wsd-07272-07298 2020-04-25 17:29:28.928697 [ websrv_poll ] TRC  |
     /// This is fully signal-safe. Buffer must be at least 128 bytes.
-    char* prefix(const Poco::DateTime& time, char* buffer, const char* level);
+    char* prefix(const Poco::LocalDateTime& time, char* buffer, const char* level);
     template <int Size> inline char* prefix(char buffer[Size], const char* level)
     {
         static_assert(Size >= 128, "Buffer size must be at least 128 bytes.");
-        return prefix(Poco::DateTime(), buffer, level);
+        return prefix(Poco::LocalDateTime(), buffer, level);
     }
 
     inline bool traceEnabled() { return logger().trace(); }
