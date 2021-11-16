@@ -37,6 +37,9 @@ class ScrollSection {
 	// Implemented by container.
 	resetAnimation: () => void;
 
+	// Implemented by container.
+	isCalcRTL: () => boolean;
+
 	map: any;
 	autoScrollTimer: any;
 	pendingScrollEvent: any = null;
@@ -57,6 +60,7 @@ class ScrollSection {
 	}
 
 	public onInitialize () {
+		this.sectionProperties.docLayer = this.map._docLayer;
 		this.sectionProperties.mapPane = (<HTMLElement>(document.querySelectorAll('.leaflet-map-pane')[0]));
 		this.sectionProperties.defaultCursorStyle = this.sectionProperties.mapPane.style.cursor;
 
@@ -392,7 +396,7 @@ class ScrollSection {
 
 		this.context.fillStyle = '#7E8182';
 
-		var startX = this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
+		var startX = this.isCalcRTL() ? this.sectionProperties.edgeOffset : this.size[0] - this.sectionProperties.scrollBarThickness - this.sectionProperties.edgeOffset;
 
 		this.context.fillRect(startX, scrollProps.startY, this.sectionProperties.scrollBarThickness, scrollProps.scrollSize - this.sectionProperties.scrollBarThickness);
 
@@ -560,8 +564,10 @@ class ScrollSection {
 	}
 
 	private isMouseOnScrollBar (point: Array<number>) {
+		const mirrorX = this.isCalcRTL();
 		if (this.documentTopLeft[1] >= 0) {
-			if (point[0] >= this.size[0] - this.sectionProperties.usableThickness) {
+			if ((!mirrorX && point[0] >= this.size[0] - this.sectionProperties.usableThickness)
+				|| (mirrorX && point[0] <= this.sectionProperties.usableThickness)) {
 				if (point[1] > this.sectionProperties.yOffset) {
 					this.showVerticalScrollBar();
 				}
@@ -791,8 +797,11 @@ class ScrollSection {
 		this.onMouseMove(point, null, e);
 		this.isMouseOnScrollBar(point);
 
+		const mirrorX = this.isCalcRTL();
+
 		if (this.documentTopLeft[1] >= 0) {
-			if (point[0] >= this.size[0] - this.sectionProperties.usableThickness) {
+			if ((!mirrorX && point[0] >= this.size[0] - this.sectionProperties.usableThickness)
+				|| (mirrorX && point[0] <= this.sectionProperties.usableThickness)) {
 				if (point[1] > this.sectionProperties.yOffset) {
 					this.sectionProperties.clickScrollVertical = true;
 					this.map.scrollingIsHandled = true;
