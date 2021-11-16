@@ -11,7 +11,8 @@ L.Control.UserList = L.Control.extend({
 		userLeftPopupMessage: '<div>' + _('%user has left') + '</div>',
 		nUsers: undefined,
 		oneUser: undefined,
-		noUser: undefined
+		noUser: undefined,
+		listUser: []
 	},
 
 	initialize: function () {
@@ -84,8 +85,10 @@ L.Control.UserList = L.Control.extend({
 
 		var iconTd = L.DomUtil.create('td', 'usercolor', content);
 		var nameTd = L.DomUtil.create('td', 'username cool-font', content);
+		this.options.listUser.push({viewId: viewId, userName: userName, extraInfo: extraInfo, color: color});
 
 		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
+			this.options.listUser.push({viewId: viewId, userName: userName, extraInfo: extraInfo, color: color});
 			var img = L.DomUtil.create('img', 'avatar-img', iconTd);
 			img.src = extraInfo.avatar;
 			var altImg = L.LOUtil.getImageURL('user.svg');
@@ -99,6 +102,61 @@ L.Control.UserList = L.Control.extend({
 		nameTd.textContent = userName;
 
 		return content;
+	},
+
+	findShowUser: function(id) {
+		var total = 0;
+		this.options.listUser.slice(-3).forEach(function(user) {
+			if (user.viewId == id) {
+				total += 1;
+			}
+		});
+
+		return total > 0;
+	},
+
+	renderUserAvatars: function() {
+		var self = this;
+
+		this.options.listUser.forEach(function(user) {
+			if (!self.findShowUser(user.viewId)) {
+				$('#user-top-' + user.viewId).remove();
+			}
+		});
+
+		this.options.listUser.slice(-3).forEach(function (user) {
+			if (!$('#user-top-' + user.viewId).length) {
+				$('#userListSummary').append('<p id="user-top-' + user.viewId + '" class="user-top" style="background-image:url(\'https://localhost:9980/loleaflet/81bf78491/images/lc_ellipse_branding.svg\');border-color:' + user.color + ';"></p>');
+			}
+		});
+		this.options.listUser.forEach(function (user) {	
+			var avatarElement = '<div class="user-item-wrapper" id="user-'+ user.viewId + '"><p class="user-item" style="background-image:url(\'https://localhost:9980/loleaflet/81bf78491/images/lc_ellipse_branding.svg\');border-color:' + user.color + '"></p><span> ' 
+			+ user.userName +'</span></div>';
+			if (!$('#user-' + user.viewId).length) {
+				$('#userListPopover').prepend(avatarElement);
+			}
+		});
+
+		self.renderFollowMainUserOption();
+	},
+
+	renderFollowMainUserOption: function() {
+		if ($('#follow-editor').length == 0) {
+			$('#userListPopover').append('<div id="follow-editor"><input type="checkbox" class="follow-editor-checkbox" name="alwaysFollow" onclick="editorUpdate(event)"/>' + _('Follow current editor') + '</div>');
+		}
+	},
+
+	removeUserFromList: function(viewId) {
+		var index = null;
+		this.options.listUser.forEach(function(item, idx) {
+			if (item.viewId == viewId) {
+				index = idx;
+			}
+		});
+		$('#user-top-' + viewId).remove();
+		$('#user-' + viewId).remove();
+		this.options.listUser.splice(index, 1);
+		this.renderUserAvatars();
 	},
 
 	updateUserListCount: function() {
@@ -206,6 +264,7 @@ L.Control.UserList = L.Control.extend({
 			var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(this.getUserItem(e.viewId, username, e.extraInfo, color)).parent().parent()[0].outerHTML;
 			userlistItem.html = newhtml;
 			this.updateUserListCount();
+			this.renderUserAvatars();
 		}
 	},
 
@@ -234,6 +293,7 @@ L.Control.UserList = L.Control.extend({
 		if (userlistItem !== null) {
 			userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
 			this.updateUserListCount();
+			this.removeUserFromList(e.viewId);
 		}
 	},
 });
