@@ -101,7 +101,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /usr/bin/loolwsd
 /usr/bin/loolwsd-systemplate-setup
 /usr/bin/loolwsd-generate-proof-key
-/usr/bin/loolforkit
+/usr/bin/coolforkit
 /usr/bin/loolconvert
 /usr/bin/coolconfig
 /usr/bin/loolconfig
@@ -115,7 +115,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /usr/share/doc/loolwsd/protocol.txt
 /usr/share/doc/loolwsd/reference.md
 /usr/share/man/man1/loolwsd.1.gz
-/usr/share/man/man1/loolforkit.1.gz
+/usr/share/man/man1/coolforkit.1.gz
 /usr/share/man/man1/loolconvert.1.gz
 /usr/share/man/man1/coolconfig.1.gz
 /usr/share/man/man1/loolwsd-systemplate-setup.1.gz
@@ -181,7 +181,7 @@ if [ $LOOLWSD_IS_ACTIVE == "1" ]; then systemctl start loolwsd; fi
 echo "   Done."
 
 %post
-setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit
+setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit
 setcap cap_sys_admin=ep /usr/bin/loolmount
 
 %if 0%{?rhel} >= 7

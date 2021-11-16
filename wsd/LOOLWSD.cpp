@@ -1932,7 +1932,7 @@ bool LOOLWSD::checkAndRestoreForKit()
         if (!SigUtil::getShutdownRequestFlag() && !SigUtil::getTerminationFlag() && !createForKit())
         {
             // Should never fail.
-            LOG_FTL("Setting ShutdownRequestFlag: Failed to spawn loolforkit.");
+            LOG_FTL("Setting ShutdownRequestFlag: Failed to spawn coolforkit.");
             SigUtil::requestShutdown();
         }
     }
@@ -2115,7 +2115,7 @@ bool LOOLWSD::createForKit()
     StringVector args;
     std::string parentPath = Path(Application::instance().commandPath()).parent().toString();
 
-#if STRACE_LOOLFORKIT
+#if STRACE_COOLFORKIT
     // if you want to use this, you need to sudo setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/strace
     args.push_back("-o");
     args.push_back("strace.log");
@@ -2123,8 +2123,8 @@ bool LOOLWSD::createForKit()
     args.push_back("-tt");
     args.push_back("-s");
     args.push_back("256");
-    args.push_back(parentPath + "loolforkit");
-#elif VALGRIND_LOOLFORKIT
+    args.push_back(parentPath + "coolforkit");
+#elif VALGRIND_COOLFORKIT
     NoCapsForKit = true;
     NoSeccomp = true;
 //    args.push_back("--log-file=valgrind.log");
@@ -2132,8 +2132,8 @@ bool LOOLWSD::createForKit()
     args.push_back("--trace-children=yes");
     args.push_back("--error-limit=no");
     args.push_back("--num-callers=128");
-    std::string nocapsCopy = parentPath + "loolforkit-nocaps";
-    FileUtil::copy(parentPath + "loolforkit", nocapsCopy, true, true);
+    std::string nocapsCopy = parentPath + "coolforkit-nocaps";
+    FileUtil::copy(parentPath + "coolforkit", nocapsCopy, true, true);
     args.push_back(nocapsCopy);
 #endif
     args.push_back("--losubpath=" + std::string(LO_JAIL_SUBPATH));
@@ -2172,12 +2172,12 @@ bool LOOLWSD::createForKit()
         args.push_back("--singlekit");
 #endif
 
-#if STRACE_LOOLFORKIT
+#if STRACE_COOLFORKIT
     std::string forKitPath = "/usr/bin/strace";
-#elif VALGRIND_LOOLFORKIT
+#elif VALGRIND_COOLFORKIT
     std::string forKitPath = "/usr/bin/valgrind";
 #else
-    std::string forKitPath = parentPath + "loolforkit";
+    std::string forKitPath = parentPath + "coolforkit";
 #endif
 
     // Always reap first, in case we haven't done so yet.
