@@ -723,3 +723,44 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	opacity: 1; /* opacity */
 	border-top-width: 3px; /* weight */
 }
+
+#about-dialog-container, #about-dialog-header {
+	display: flex;
+	flex-flow: row nowrap;
+	place-content: stretch flex-start;
+	align-items: stretch;
+}
+
+#about-dialog-logos {
+	flex-grow: 1;
+	flex-flow: column nowrap;
+	place-items: stretch;
+}
+
+#about-dialog-container *, #about-dialog-header * {
+	display: flex;
+}
+
+#integrator-logo {
+	align-items: center;
+	justify-content: center;
+	flex-grow: 0;
+}
+
+#product-logo {
+	align-items: center;
+	justify-content: right;
+	flex-grow: 1;
+	background-image: url('images/toolbar-bg-logo.svg');
+	background-repeat: no-repeat;
+	background-size: 82px;
+	background-position: right center;
+}
+#about-dialog-info-container {
+	align-items: center;
+	justify-content: left;
+	flex-grow: 1;
+}
+#about-dialog-info {
+	flex-direction: column;
+}
