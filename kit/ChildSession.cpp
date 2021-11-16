@@ -1372,7 +1372,9 @@ bool ChildSession::keyEvent(const char* /*buffer*/, int /*length*/,
                             const StringVector& tokens,
                             const LokEventTargetEnum target)
 {
-    int type, charcode, keycode;
+    int type = 0;
+    int charcode = 0;
+    int keycode = 0;
     unsigned winId = 0;
     unsigned counter = 1;
     unsigned expectedTokens = 4; // cmdname(key), type, char, key are strictly required
@@ -2337,8 +2339,8 @@ bool ChildSession::setClientPart(const char* /*buffer*/, int /*length*/, const S
 
 bool ChildSession::selectClientPart(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
-    int nPart;
-    int nSelect;
+    int nPart = 0;
+    int nSelect = 0;
     if (tokens.size() < 3 ||
         !getTokenInteger(tokens[1], "part", nPart) ||
         !getTokenInteger(tokens[2], "how", nSelect))
@@ -2371,7 +2373,7 @@ bool ChildSession::selectClientPart(const char* /*buffer*/, int /*length*/, cons
 
 bool ChildSession::moveSelectedClientParts(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
-    int nPosition;
+    int nPosition = 0;
     if (tokens.size() < 2 ||
         !getTokenInteger(tokens[1], "position", nPosition))
     {
