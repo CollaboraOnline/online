@@ -1049,14 +1049,14 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 }
 
 #userListHeader {
-	position: fixed;
-	z-index: 1050;
-	height: 38px;
+	position: relative;
 	background-color: transparent;
 	display: flex !important;
-	right: 80px;
-	top: 5px;
 	align-items: center;
+	font-family: var(--cool-font);
+	padding-right: 12px;
+	margin-right: 10px;
+	font-size: 12px;
 }
 
 #userListSummary {
@@ -1065,10 +1065,9 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 #userListPopover {
 	display: none;
 	position: absolute;
-	padding: 12px 16px;
 	z-index: 1;
-	top: 40px;
-	left: -140px;
+	top: 38px;
+	right: -10px;
 	color: #222;
 	background-color: #fff;
 	border-radius: 3px;
@@ -1108,7 +1107,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	font-family: var(--loleaflet-font);
+	font-family: var(--cool-font);
 	height: 32px;
 	padding: 6px 12px;
 	cursor: pointer;
@@ -1127,8 +1126,8 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 }
 
 .user-top {
-	width: 32px;
-	height: 32px;
+	width: 24px;
+	height: 24px;
 	background-color: white;
 	border-radius: 100%;
 	margin-right: -10px;
@@ -1150,7 +1149,6 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 
 #follow-editor {
 	cursor: pointer;
-	font-family: var(--loleaflet-font);
 	padding: 6px 8px;
 }
 
