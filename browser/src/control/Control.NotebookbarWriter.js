@@ -202,6 +202,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 
 	getHelpTab: function() {
 		var hasLatestUpdates = window.enableWelcomeMessage;
+		var hasFeedback = this._map.feedback;
 
 		var content = [
 			{
@@ -249,6 +250,18 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 									'type': 'bigtoolitem',
 									'text': _('Latest Updates'),
 									'command': '.uno:LatestUpdates'
+								}
+							]
+						} : {},
+					hasFeedback ?
+						{
+							'type': 'toolbox',
+							'children': [
+								{
+									'id': 'feedback',
+									'type': 'bigtoolitem',
+									'text': _('Send Feedback'),
+									'command': '.uno:Feedback'
 								}
 							]
 						} : {},
