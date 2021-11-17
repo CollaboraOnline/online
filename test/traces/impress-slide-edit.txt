@@ -1,5 +1,5 @@
 ~+3645721~HfMXF9jEpdKA03Ux~001~NewSession: file:///home/ezinne/collaboraOnline/test/data/hello-world.ods?permission=edit
->+89021>HfMXF9jEpdKA03Ux>001>loolclient 0.1 1633469218966 1362162
+>+89021>HfMXF9jEpdKA03Ux>001>coolclient 0.1 1633469218966 1362162
 >+1125>HfMXF9jEpdKA03Ux>001>load url=file%3A%2F%2F%2Fhome%2Fezinne%2FcollaboraOnline%2Ftest%2Fdata%2Fhello-world.ods part=29 lang=en-US deviceFormFactor=desktop
 >+565>HfMXF9jEpdKA03Ux>001>useractive
 >+254>HfMXF9jEpdKA03Ux>001>commandvalues command=.uno:ViewAnnotations
@@ -29,7 +29,7 @@
 >+669158>HfMXF9jEpdKA03Ux>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 ~+5140045~HfMXF9jEpdKA03Ux~001~EndSession: file:///home/ezinne/collaboraOnline/test/data/hello-world.ods?permission=edit
 ~+1977695~pHihGD0xXrR2Dt82~02d~NewSession: file:///home/ezinne/collaboraOnline/test/data/hello-world.odp
->+16115>pHihGD0xXrR2Dt82>02d>loolclient 0.1 1633469231881 6651.39999999851
+>+16115>pHihGD0xXrR2Dt82>02d>coolclient 0.1 1633469231881 6651.39999999851
 >+801>pHihGD0xXrR2Dt82>02d>load url=file%3A%2F%2F%2Fhome%2Fezinne%2FcollaboraOnline%2Ftest%2Fdata%2Fhello-world.odp deviceFormFactor=desktop
 >+15311158>pHihGD0xXrR2Dt82>02d>commandvalues command=.uno:StyleApply
 >+358>pHihGD0xXrR2Dt82>02d>commandvalues command=.uno:CharFontName
@@ -1654,7 +1654,7 @@
 ~+2205427~pHihGD0xXrR2Dt82~02d~EndSession: file:///home/ezinne/collaboraOnline/test/data/hello-world.odp
 ~+2583~pHihGD0xXrR2Dt82~02d~EndSession: file:///home/ezinne/collaboraOnline/test/data/hello-world.odp
 ~+324199~AUTT5BSR07Ovh3kp~1d5~NewSession: file:///home/ezinne/collaboraOnline/test/data/hello-world.odp?permission=edit
->+138595>AUTT5BSR07Ovh3kp>1d5>loolclient 0.1 1633469783655 558425
+>+138595>AUTT5BSR07Ovh3kp>1d5>coolclient 0.1 1633469783655 558425
 >+2190>AUTT5BSR07Ovh3kp>1d5>load url=file%3A%2F%2F%2Fhome%2Fezinne%2FcollaboraOnline%2Ftest%2Fdata%2Fhello-world.odp part=2 lang=en-US deviceFormFactor=desktop
 >+680>AUTT5BSR07Ovh3kp>1d5>useractive
 >+289>AUTT5BSR07Ovh3kp>1d5>commandvalues command=.uno:ViewAnnotations

@@ -178,7 +178,7 @@ app.definitions.Socket = L.Class.extend({
 		var now0 = Date.now();
 		var now1 = performance.now();
 		var now2 = Date.now();
-		this._doSend('loolclient ' + this.ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
+		this._doSend('coolclient ' + this.ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
 
 		var msg = 'load url=' + encodeURIComponent(this._map.options.doc);
 		if (this._map._docLayer) {

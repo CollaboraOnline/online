@@ -1,5 +1,5 @@
 ~+5456130~5F60VM3GSNLKvaFE~001~NewSession: file:///home/ezinne/collaboraOnline/test/data/hello-world.ods?permission=edit
->+3998>5F60VM3GSNLKvaFE>001>loolclient 0.1 1633468593835 737030.6000000015
+>+3998>5F60VM3GSNLKvaFE>001>coolclient 0.1 1633468593835 737030.6000000015
 >+1289>5F60VM3GSNLKvaFE>001>load url=file%3A%2F%2F%2Fhome%2Fezinne%2FcollaboraOnline%2Ftest%2Fdata%2Fhello-world.ods part=0 lang=en-US deviceFormFactor=desktop
 >+884>5F60VM3GSNLKvaFE>001>useractive
 >+538>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotations

@@ -1,5 +1,5 @@
 ~47488902~SH1x9l8hEeFGasMA~044~NewSession: file:///data/opt/libreoffice/online/test/data/hello-world.odt
->47509418>SH1x9l8hEeFGasMA>044>loolclient 0.1 1631286699427 500.89999997615814
+>47509418>SH1x9l8hEeFGasMA>044>coolclient 0.1 1631286699427 500.89999997615814
 >47509906>SH1x9l8hEeFGasMA>044>load url=file%3A%2F%2F%2Fdata%2Fopt%2Flibreoffice%2Fonline%2Ftest%2Fdata%2Fhello-world.odt deviceFormFactor=desktop
 >48789266>SH1x9l8hEeFGasMA>044>commandvalues command=.uno:StyleApply
 >48789484>SH1x9l8hEeFGasMA>044>commandvalues command=.uno:CharFontName

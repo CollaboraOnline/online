@@ -151,7 +151,7 @@ load [part=<partNumber>] url=<url> [timestamp=<time>] [lang=<locale>] [deviceFor
 
     options are the whole rest of the line, not URL-encoded, and must be valid JSON.
 
-loolclient <major.minor[-patch]> [ <timestamp> <perfcounter> ]
+coolclient <major.minor[-patch]> [ <timestamp> <perfcounter> ]
 
     Upon connection, a client must announce the version number it supports.
     major: an integer that must always match between client and server,

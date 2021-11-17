@@ -1,5 +1,5 @@
 ~+410457598~Zpw35k42cC20faEL~001~NewSession: file:///home/ezinne/collaboraOnline/test/data/hello-world.odp?permission=edit
->+314681>Zpw35k42cC20faEL>001>loolclient 0.1 1633523664199 2739409
+>+314681>Zpw35k42cC20faEL>001>coolclient 0.1 1633523664199 2739409
 >+2998>Zpw35k42cC20faEL>001>load url=file%3A%2F%2F%2Fhome%2Fezinne%2FcollaboraOnline%2Ftest%2Fdata%2Fhello-world.odp part=0 lang=en-US deviceFormFactor=desktop
 >+605>Zpw35k42cC20faEL>001>useractive
 >+314>Zpw35k42cC20faEL>001>commandvalues command=.uno:ViewAnnotations

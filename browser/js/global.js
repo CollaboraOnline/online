@@ -850,7 +850,7 @@ window.app = { // Shouldn't have any functions defined.
 				var now0 = Date.now();
 				var now1 = performance.now();
 				var now2 = Date.now();
-				global.socket.send('loolclient ' + ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
+				global.socket.send('coolclient ' + ProtocolVersionNumber + ' ' + ((now0 + now2) / 2) + ' ' + now1);
 
 				if (window.ThisIsAMobileApp) {
 					msg += ' lang=' + window.LANG;

@@ -471,11 +471,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             docBroker->updateEditingSessionId(getId());
         }
     }
-    if (tokens.equals(0, "loolclient"))
+    if (tokens.equals(0, "coolclient"))
     {
         if (tokens.size() < 2)
         {
-            sendTextFrameAndLogError("error: cmd=loolclient kind=badprotocolversion");
+            sendTextFrameAndLogError("error: cmd=coolclient kind=badprotocolversion");
             return false;
         }
 
@@ -483,7 +483,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         if (std::get<0>(versionTuple) != ProtocolMajorVersionNumber ||
             std::get<1>(versionTuple) != ProtocolMinorVersionNumber)
         {
-            sendTextFrameAndLogError("error: cmd=loolclient kind=badprotocolversion");
+            sendTextFrameAndLogError("error: cmd=coolclient kind=badprotocolversion");
             return false;
         }
 

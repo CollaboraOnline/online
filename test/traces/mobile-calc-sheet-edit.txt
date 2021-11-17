@@ -1,5 +1,5 @@
 ~+4317830~JAS3oubZPeri3ovV~001~NewSession: http://192.168.43.203/index.php/apps/richdocuments/wopi/files/272_oct4ei0irh8v?access_token=Oe88ccIVEJWNVU272BYBiKblSJWvltsh&access_token_ttl=0&reuse_cookies=oc_sessionPassphrase%3DhBjpSAe5Sz1Au6DKpxJR%252FpdgUgLLaqKeytBJ0KuvQqkvHgZVNDgLQA1AUJs2MdPqXf%252BAKj2R6Vx98RGy4vfi01ri7U6IAhJR78eV9R9HUUhhlCWGGHqmN7e5GMEKMdQc%3Anc_sameSiteCookielax%3Dtrue%3Anc_sameSiteCookiestrict%3Dtrue%3Aoct4ei0irh8v%3D9726ce1592f64a8968c31b0570c3e8b7%3Anc_username%3Dadmin%3Anc_token%3DjUqRcTzLqBRhJbzUWmzqKvJG4Mx19J0B%3Anc_session_id%3D9726ce1592f64a8968c31b0570c3e8b7&permission=edit
->+21559>JAS3oubZPeri3ovV>001>loolclient 0.1 1633527981617 390760.200000003
+>+21559>JAS3oubZPeri3ovV>001>coolclient 0.1 1633527981617 390760.200000003
 >+819>JAS3oubZPeri3ovV>001>load url=http%3A%2F%2F192.168.43.203%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F272_oct4ei0irh8v part=6 lang=en deviceFormFactor=mobile
 >+486>JAS3oubZPeri3ovV>001>useractive
 >+245>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotations

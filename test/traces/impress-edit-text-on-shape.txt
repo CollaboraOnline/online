@@ -1,5 +1,5 @@
 ~+6208712~PWIVlapU4Fw7Ez98~02f~NewSession: http://192.168.43.203/index.php/apps/richdocuments/wopi/files/760_ochktq4im2gx?access_token=oaudfVoJwVNbRqpBdU0HtPUDdoScSdTk&access_token_ttl=0&reuse_cookies=nc_sameSiteCookielax%3Dtrue%3Anc_sameSiteCookiestrict%3Dtrue%3Anc_username%3Dadmin%3Aoc_sessionPassphrase%3DgZgSQ65a8q73cEngOcX8HLqAmo1U2hlTXY7lDdrXrwwydgPYmONNpf6J9rYgldQ2Mdd6iQ4Kc75B7cTuntV4xePJK4QbCbsckDvu8QsR1XIqy7xpsuWI3fjDMxEdRREX%3Aochktq4im2gx%3Decq8t8a5in907u8qajfepnfh6v%3Anc_token%3DHrzA0S5LdKUYETFCaBn%252FOUK%252FDlmG8Py1%3Anc_session_id%3Decq8t8a5in907u8qajfepnfh6v
->+6474>PWIVlapU4Fw7Ez98>02f>loolclient 0.1 1635751167668 1298.800000000745
+>+6474>PWIVlapU4Fw7Ez98>02f>coolclient 0.1 1635751167668 1298.800000000745
 >+1088>PWIVlapU4Fw7Ez98>02f>load url=http%3A%2F%2F192.168.43.203%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F760_ochktq4im2gx lang=en-GB deviceFormFactor=desktop
 >+7258330>PWIVlapU4Fw7Ez98>02f>commandvalues command=.uno:StyleApply
 >+628>PWIVlapU4Fw7Ez98>02f>commandvalues command=.uno:CharFontName
