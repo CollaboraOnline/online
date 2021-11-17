@@ -1,5 +1,5 @@
 ~+8318092~DW8PH2N5nawTjbK1~02a~NewSession: http://192.168.43.203/index.php/apps/richdocuments/wopi/files/292_oct4ei0irh8v?access_token=Kk2IUh6a50ifXtCKP12MLcOAVeUR182g&access_token_ttl=0&reuse_cookies=oc_sessionPassphrase%3DhBjpSAe5Sz1Au6DKpxJR%252FpdgUgLLaqKeytBJ0KuvQqkvHgZVNDgLQA1AUJs2MdPqXf%252BAKj2R6Vx98RGy4vfi01ri7U6IAhJR78eV9R9HUUhhlCWGGHqmN7e5GMEKMdQc%3Anc_sameSiteCookielax%3Dtrue%3Anc_sameSiteCookiestrict%3Dtrue%3Aoct4ei0irh8v%3D9726ce1592f64a8968c31b0570c3e8b7%3Anc_username%3Dadmin%3Anc_token%3DjUqRcTzLqBRhJbzUWmzqKvJG4Mx19J0B%3Anc_session_id%3D9726ce1592f64a8968c31b0570c3e8b7
->+780808>DW8PH2N5nawTjbK1>02a>loolclient 0.1 1633529275783 3444.2000000029802
+>+780808>DW8PH2N5nawTjbK1>02a>coolclient 0.1 1633529275783 3444.2000000029802
 >+1043>DW8PH2N5nawTjbK1>02a>load url=http%3A%2F%2F192.168.43.203%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F292_oct4ei0irh8v lang=en deviceFormFactor=mobile
 >+13405655>DW8PH2N5nawTjbK1>02a>commandvalues command=.uno:StyleApply
 >+271>DW8PH2N5nawTjbK1>02a>commandvalues command=.uno:CharFontName

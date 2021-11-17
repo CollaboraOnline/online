@@ -1,5 +1,5 @@
 ~+3899922~rnNQ1evUuCr9d6Wp~001~NewSession: http://192.168.43.203/index.php/apps/richdocuments/wopi/files/738_ochktq4im2gx?access_token=phOsedYfDYdNbiRDpgPgOe3cS8dE4Xto&access_token_ttl=0&reuse_cookies=nc_sameSiteCookielax%3Dtrue%3Anc_sameSiteCookiestrict%3Dtrue%3Anc_username%3Dadmin%3Aoc_sessionPassphrase%3DgZgSQ65a8q73cEngOcX8HLqAmo1U2hlTXY7lDdrXrwwydgPYmONNpf6J9rYgldQ2Mdd6iQ4Kc75B7cTuntV4xePJK4QbCbsckDvu8QsR1XIqy7xpsuWI3fjDMxEdRREX%3Aochktq4im2gx%3Decq8t8a5in907u8qajfepnfh6v%3Anc_token%3DHrzA0S5LdKUYETFCaBn%252FOUK%252FDlmG8Py1%3Anc_session_id%3Decq8t8a5in907u8qajfepnfh6v&permission=edit
->+2047>rnNQ1evUuCr9d6Wp>001>loolclient 0.1 1635750622254 2217465.3
+>+2047>rnNQ1evUuCr9d6Wp>001>coolclient 0.1 1635750622254 2217465.3
 >+1158>rnNQ1evUuCr9d6Wp>001>load url=http%3A%2F%2F192.168.43.203%2Findex.php%2Fapps%2Frichdocuments%2Fwopi%2Ffiles%2F738_ochktq4im2gx part=0 lang=en-GB deviceFormFactor=desktop
 >+394>rnNQ1evUuCr9d6Wp>001>useractive
 >+251>rnNQ1evUuCr9d6Wp>001>commandvalues command=.uno:ViewAnnotations

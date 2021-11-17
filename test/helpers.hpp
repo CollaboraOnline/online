@@ -998,7 +998,7 @@ inline void getServerVersion(LOOLWebSocket& socket,
                              int& major, int& minor,
                              const std::string& testname)
 {
-    const std::string clientVersion = "loolclient 0.1";
+    const std::string clientVersion = "coolclient 0.1";
     sendTextFrame(socket, clientVersion, testname);
     std::vector<char> loVersion = getResponseMessage(socket, "lokitversion", testname);
     std::string line = LOOLProtocol::getFirstLine(loVersion.data(), loVersion.size());

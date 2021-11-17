@@ -1,5 +1,5 @@
 ~+27510497~ObOgeUSNlVNMdCb6~001~NewSession: file:///home/ezinne/collaboraOnline/test/data/hello-world.odt?permission=edit
->+42657>ObOgeUSNlVNMdCb6>001>loolclient 0.1 1633467192206 11012454.7
+>+42657>ObOgeUSNlVNMdCb6>001>coolclient 0.1 1633467192206 11012454.7
 >+1616>ObOgeUSNlVNMdCb6>001>load url=file%3A%2F%2F%2Fhome%2Fezinne%2FcollaboraOnline%2Ftest%2Fdata%2Fhello-world.odt part=0 lang=en-US deviceFormFactor=desktop
 >+549>ObOgeUSNlVNMdCb6>001>useractive
 >+442>ObOgeUSNlVNMdCb6>001>commandvalues command=.uno:ViewAnnotations
