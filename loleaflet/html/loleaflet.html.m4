@@ -247,6 +247,7 @@ m4_ifelse(MOBILEAPP,[true],
       <hr/>
       <div id="about-dialog-container">
 	<div id="about-dialog-logos">
+	  <fig id="product-logo"></fig>
 	  <fig id="lokit-logo"></fig>
 	</div>
         <div id="about-dialog-info-container">
