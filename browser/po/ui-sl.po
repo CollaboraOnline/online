@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-17 13:48+0100\n"
-"PO-Revision-Date: 2021-11-07 22:01+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2021-11-18 08:06+0000\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.9.1-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:6
@@ -819,23 +819,23 @@ msgstr "Vstavi krajevno sliko"
 
 #: src/control/Control.NotebookbarBuilder.js:613
 msgid "Very Tight"
-msgstr ""
+msgstr "Zelo ozko"
 
 #: src/control/Control.NotebookbarBuilder.js:614
 msgid "Tight"
-msgstr ""
+msgstr "Ozko"
 
 #: src/control/Control.NotebookbarBuilder.js:615
 msgid "Normal"
-msgstr ""
+msgstr "Navadno"
 
 #: src/control/Control.NotebookbarBuilder.js:616
 msgid "Loose"
-msgstr ""
+msgstr "Široko"
 
 #: src/control/Control.NotebookbarBuilder.js:617
 msgid "Very Loose"
-msgstr ""
+msgstr "Zelo široko"
 
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarDraw.js:79
@@ -1953,15 +1953,15 @@ msgstr "Inicializacija ..."
 
 #: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428
 msgid "Last saved:"
-msgstr ""
+msgstr "Nazadnje shranjeno:"
 
 #: src/map/Map.js:1428
 msgid "Inactive document"
-msgstr ""
+msgstr "Nedejaven dokument"
 
 #: src/map/Map.js:1429
 msgid "Please click to resume editing"
-msgstr ""
+msgstr "Kliknite, da nadaljujete z urejanjem"
 
 #: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
