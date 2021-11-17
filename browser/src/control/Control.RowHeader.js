@@ -30,6 +30,7 @@ L.Control.RowHeader = L.Control.Header.extend({
 		this._mouseOverEntry = null;
 		this._lastMouseOverIndex = undefined;
 		this._hitResizeArea = false;
+		this.sectionProperties.docLayer = this._map._docLayer;
 
 		this._selectionBackgroundGradient = [ '#3465A4', '#729FCF', '#004586' ];
 
