@@ -24,8 +24,11 @@
         function constructWopiUrl() {
             var wopiUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?";
             wopiUrl = wopiUrl.replace("debug.html", "cool.html");
-            var wopiSrc = window.location.protocol + "//" + window.location.host + "/wopi/files/" + encodeURIComponent(window.location.search.substring(window.location.search.indexOf("=")+2));
-            wopiUrl = wopiUrl + "WOPISrc=" + wopiSrc;
+            var params = new URLSearchParams(window.location.search);
+            var filePath = params.get('file_path').substr(1);
+            params.delete('file_path');
+            var wopiSrc = window.location.protocol + "//" + window.location.host + "/wopi/files/" + encodeURIComponent(filePath);
+            wopiUrl = wopiUrl + "WOPISrc=" + wopiSrc + '&' + params.toString();
             return wopiUrl
         }
        var form = document.getElementById("form");
