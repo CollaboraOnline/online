@@ -16,7 +16,7 @@ export ENABLE_DEBUG
 
 bin_PROGRAMS = \
 	coolforkit \
-	loolmount \
+	coolmount \
 	loolconvert coolconfig
 
 if ENABLE_LIBFUZZER
@@ -33,7 +33,7 @@ man_MANS = man/loolwsd.1 \
            man/coolconfig.1 \
            man/loolwsd-systemplate-setup.1 \
            man/loolwsd-generate-proof-key.1 \
-           man/loolmount.1
+           man/coolmount.1
 
 
 dist_doc_DATA = wsd/README \
@@ -221,7 +221,7 @@ clientnb_SOURCES = net/clientnb.cpp \
                    common/StringVector.cpp \
                    common/Util.cpp
 
-loolmount_SOURCES = tools/mount.cpp
+coolmount_SOURCES = tools/mount.cpp
 
 loolmap_SOURCES = tools/map.cpp
 
@@ -379,7 +379,7 @@ CAPABILITIES = $(if @ENABLE_SETCAP@,true,false)
 RUN_GDB = $(if $(GDB_FRONTEND),$(GDB_FRONTEND),gdb --tui --args)
 
 if ENABLE_SETCAP
-SET_CAPS_COMMAND=sudo @SETCAP@ cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep coolforkit && sudo @SETCAP@ cap_sys_admin=ep loolmount
+SET_CAPS_COMMAND=sudo @SETCAP@ cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep coolforkit && sudo @SETCAP@ cap_sys_admin=ep coolmount
 else
 SET_CAPS_COMMAND=echo "Skipping capability setting"
 endif
@@ -387,10 +387,10 @@ endif
 if ENABLE_LIBFUZZER
 CLEANUP_DEPS=
 else
-CLEANUP_DEPS=coolwsd loolmount coolforkit
+CLEANUP_DEPS=coolwsd coolmount coolforkit
 endif
 
-# Build loolwsd and loolmount first, so we can cleanup before updating
+# Build loolwsd and coolmount first, so we can cleanup before updating
 # the systemplate directory, which we can't rm if it's mounted.
 $(SYSTEM_STAMP): ${top_srcdir}/loolwsd-systemplate-setup $(CLEANUP_DEPS)
 	$(SET_CAPS_COMMAND)
