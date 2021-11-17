@@ -7,9 +7,9 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 %if 0%{?name_suffix:1}
-Name:           loolwsd%{name_suffix}
+Name:           coolwsd%{name_suffix}
 %else
-Name:           loolwsd
+Name:           coolwsd
 %endif
 Version:        @PACKAGE_VERSION@
 Release:        1%{?dist}
@@ -98,7 +98,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 
 %files
 %defattr(-,root,root,-)
-/usr/bin/loolwsd
+/usr/bin/coolwsd
 /usr/bin/loolwsd-systemplate-setup
 /usr/bin/loolwsd-generate-proof-key
 /usr/bin/coolforkit

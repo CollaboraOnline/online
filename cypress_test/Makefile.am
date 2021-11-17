@@ -157,11 +157,11 @@ define start_loolwsd
 		$(if $(findstring $(NEXTCLOUD_PORT),$(FREE_PORT)),,$(error CypressError: $(NEXTCLOUD_PORT) port is unavailable!)))
 	@echo "Found available port for testing: $(FREE_PORT)"
 	@echo
-	@echo "Launching loolwsd..."
+	@echo "Launching coolwsd..."
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@echo
 	@mkdir -p $(dir $(LOOLWSD_OUTPUT))
-	../loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
+	../coolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			--o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			--o:security.capabilities="$(CAPABILITIES)" \
 			--disable-ssl \
