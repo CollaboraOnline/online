@@ -271,6 +271,9 @@ L.Control.JSDialog = L.Control.extend({
 			return;
 
 		var scrollTop = control.scrollTop;
+		var focusedElement = document.activeElement;
+		var focusedElementInDialog = focusedElement ? dialog.querySelector('[id=\'' + focusedElement.id + '\']') : null;
+		var focusedId = focusedElementInDialog ? focusedElementInDialog.id : null;
 
 		control.style.visibility = 'hidden';
 		var builder = new L.control.jsDialogBuilder({windowId: data.id,
@@ -286,6 +289,9 @@ L.Control.JSDialog = L.Control.extend({
 		var newControl = dialog.querySelector('[id=\'' + data.control.id + '\']');
 		if (newControl)
 			newControl.scrollTop = scrollTop;
+
+		if (focusedId)
+			dialog.querySelector('[id=\'' + focusedId + '\']').focus();
 	},
 
 	onJSAction: function (e) {
