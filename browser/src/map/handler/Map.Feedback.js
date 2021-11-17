@@ -44,13 +44,17 @@ L.Map.Feedback = L.Handler.extend({
 		if (window.localStorage.getItem('WSDFeedbackEnabled')) {
 			if (this._map.shouldWelcome())
 				setTimeout(L.bind(this.onFeedback, this), 3000);
-			 else {
-				if (this._iframeDialog && this._iframeDialog.hasLoaded())
-					this._iframeDialog.remove();
-
-				this._iframeDialog = L.iframeDialog(window.feebackLocation);
+			else {
+				this.showFeedbackDialog();
 			}
 		}
+	},
+
+	showFeedbackDialog: function () {
+		if (this._iframeDialog && this._iframeDialog.hasLoaded())
+			this._iframeDialog.remove();
+
+		this._iframeDialog = L.iframeDialog(window.feebackLocation);
 	},
 
 	onError: function () {
