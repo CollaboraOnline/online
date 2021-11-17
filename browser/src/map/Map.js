@@ -1016,7 +1016,13 @@ L.Map = L.Evented.extend({
 		var pixelOrigin = this.getPixelOrigin();
 		var mapPanePos = this._getMapPanePos();
 		var result = L.point(point).clone();
-		if (point.x <= splitPos.x) {
+		var pointX = point.x;
+		if (this._docLayer.isCalc() && this._docLayer.isLayoutRTL()) {
+			pointX = this._container.clientWidth - pointX;
+			result.x = pointX;
+		}
+
+		if (pointX <= splitPos.x) {
 			result.x -= pixelOrigin.x;
 		}
 		else {
