@@ -176,6 +176,10 @@ L.Control.UIManager = L.Control.extend({
 				var interactiveRuler = this.map.isPermissionEdit();
 				L.control.ruler({position:'topleft', interactive:interactiveRuler, showruler: showRuler}).addTo(this.map);
 			}
+
+			var showResolved = this.getSavedStateOrDefault('ShowResolved');
+			if (showResolved === false || showResolved === 'false')
+				this.map.sendUnoCommand('.uno:ShowResolvedAnnotations');
 		}
 
 		if (this.map.isPresentationOrDrawing() && (isDesktop || window.mode.isTablet())) {
