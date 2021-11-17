@@ -503,10 +503,10 @@ int main(int argc, char** argv)
 
     // Continue in privileged mode, but only if:
     // * the user is 'cool' (privileged user)
-    // * the user is 'root', and --disable-lool-user-checking was provided
+    // * the user is 'root', and --disable-cool-user-checking was provided
     // Alternatively allow running in non-privileged mode (with --nocaps), if:
     // * the user is a non-priviled user, the binary is not privileged
-    //   either (no caps set), and --disable-lool-user-checking was provided
+    //   either (no caps set), and --disable-cool-user-checking was provided
 
     if (std::getenv("SLEEPFORDEBUGGER"))
     {

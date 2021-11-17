@@ -1790,7 +1790,7 @@ void LOOLWSD::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false));
 
-    optionSet.addOption(Option("disable-lool-user-checking", "", "Don't check whether loolwsd is running under the user 'cool'.  NOTE: This is insecure, use only when you know what you are doing!")
+    optionSet.addOption(Option("disable-cool-user-checking", "", "Don't check whether loolwsd is running under the user 'cool'.  NOTE: This is insecure, use only when you know what you are doing!")
                         .required(false)
                         .repeatable(false));
 
@@ -1868,7 +1868,7 @@ void LOOLWSD::handleOption(const std::string& optionName,
         ClientPortNumber = std::stoi(value);
     else if (optionName == "disable-ssl")
         _overrideSettings["ssl.enable"] = "false";
-    else if (optionName == "disable-lool-user-checking")
+    else if (optionName == "disable-cool-user-checking")
         CheckLoolUser = false;
     else if (optionName == "override")
     {
@@ -2173,7 +2173,7 @@ bool LOOLWSD::createForKit()
     args.push_back("--ui=" + UserInterface);
 
     if (!CheckLoolUser)
-        args.push_back("--disable-lool-user-checking");
+        args.push_back("--disable-cool-user-checking");
 
 #if ENABLE_DEBUG
     if (SingleKit)

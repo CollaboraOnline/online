@@ -233,7 +233,7 @@ else
 SYSTEM_STAMP =
 endif
 
-CLEANUP_COMMAND=if test -s ../loolwsd; then echo "Cleaning up..." && ../loolwsd --disable-lool-user-checking --cleanup --o:logging.level=trace; fi
+CLEANUP_COMMAND=if test -s ../loolwsd; then echo "Cleaning up..." && ../loolwsd --disable-cool-user-checking --cleanup --o:logging.level=trace; fi
 
 if HAVE_LO_PATH
 check-local:
