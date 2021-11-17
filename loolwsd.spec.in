@@ -99,7 +99,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 %files
 %defattr(-,root,root,-)
 /usr/bin/coolwsd
-/usr/bin/loolwsd-systemplate-setup
+/usr/bin/coolwsd-systemplate-setup
 /usr/bin/coolwsd-generate-proof-key
 /usr/bin/coolforkit
 /usr/bin/coolconvert
@@ -118,7 +118,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /usr/share/man/man1/coolforkit.1.gz
 /usr/share/man/man1/coolconvert.1.gz
 /usr/share/man/man1/coolconfig.1.gz
-/usr/share/man/man1/loolwsd-systemplate-setup.1.gz
+/usr/share/man/man1/coolwsd-systemplate-setup.1.gz
 /usr/share/man/man1/coolwsd-generate-proof-key.1.gz
 /usr/share/man/man1/coolmount.1.gz
 %{_unitdir}/loolwsd.service
@@ -171,7 +171,7 @@ chown cool:cool ${loolparent}/cool
 chown cool:cool ${loolparent}/cool/child-roots
 
 fc-cache ${loroot}/share/fonts/truetype
-loolwsd-systemplate-setup ${loolparent}/cool/systemplate ${loroot} >/dev/null 2>&1
+coolwsd-systemplate-setup ${loolparent}/cool/systemplate ${loroot} >/dev/null 2>&1
 coolwsd-generate-proof-key >/dev/null 2>&1
 
 %if 0%{?rhel} || 0%{?suse_version}

@@ -24,14 +24,14 @@ else
 bin_PROGRAMS += coolwsd
 endif
 
-dist_bin_SCRIPTS = loolwsd-systemplate-setup \
+dist_bin_SCRIPTS = coolwsd-systemplate-setup \
                    coolwsd-generate-proof-key
 
 man_MANS = man/coolwsd.1 \
            man/coolforkit.1 \
            man/coolconvert.1 \
            man/coolconfig.1 \
-           man/loolwsd-systemplate-setup.1 \
+           man/coolwsd-systemplate-setup.1 \
            man/coolwsd-generate-proof-key.1 \
            man/coolmount.1
 
@@ -392,11 +392,11 @@ endif
 
 # Build loolwsd and coolmount first, so we can cleanup before updating
 # the systemplate directory, which we can't rm if it's mounted.
-$(SYSTEM_STAMP): ${top_srcdir}/loolwsd-systemplate-setup $(CLEANUP_DEPS)
+$(SYSTEM_STAMP): ${top_srcdir}/coolwsd-systemplate-setup $(CLEANUP_DEPS)
 	$(SET_CAPS_COMMAND)
 	$(CLEANUP_COMMAND)
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then chmod u+w -R "@SYSTEMPLATE_PATH@" ; rm -rf "@SYSTEMPLATE_PATH@" && \
-	${top_srcdir}/loolwsd-systemplate-setup "@SYSTEMPLATE_PATH@" "@LO_PATH@" && touch $@; fi
+	${top_srcdir}/coolwsd-systemplate-setup "@SYSTEMPLATE_PATH@" "@LO_PATH@" && touch $@; fi
 
 @JAILS_PATH@:
 	$(CLEANUP_COMMAND)
@@ -591,4 +591,5 @@ browser/node_modules: browser/package.json browser/archived-packages
 install-exec-hook:
 	cd $(DESTDIR)$(bindir) && \
 	$(LN_S) coolconfig loolconfig && \
-	$(LN_S) coolwsd loolwsd
+	$(LN_S) coolwsd loolwsd && \
+	$(LN_S) coolwsd-systemplate-setup loolwsd-systemplate-setup

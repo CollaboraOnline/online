@@ -91,7 +91,7 @@ chroot system, and directory for the jails:
     ROOTFORJAILS=`pwd`/jails       # or tweak for your system
 
     rm -Rf ${SYSTEMPLATE} # clean
-    ./loolwsd-systemplate-setup ${SYSTEMPLATE} ${MASTER}/instdir # build template
+    ./coolwsd-systemplate-setup ${SYSTEMPLATE} ${MASTER}/instdir # build template
     mkdir -p ${ROOTFORJAILS} # create location for transient jails.
 
 To run loolwsd the way it is supposed to eventually be run "for real", you can
@@ -100,7 +100,7 @@ now do:
     ./loolwsd --o:sys_template_path=${SYSTEMPLATE} --o:child_root_path=${ROOTFORJAILS}
 
 The ${SYSTEMPLATE} is a directory tree set up using the
-loolwsd-systemplate-setup script here. (It should not exist before
+coolwsd-systemplate-setup script here. (It should not exist before
 running the script.) It will contain the runtime environment needed by
 the LibreOffice dynamic libraries used through LibreOfficeKit.
 Improvements to that script are very likely needed on various distros.

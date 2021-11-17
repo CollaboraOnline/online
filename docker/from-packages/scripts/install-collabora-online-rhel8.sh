@@ -7,7 +7,7 @@
 # Install some more fonts (I did not find open-sans-fonts in RHEL repos)
 # dnf install -y open-sans-fonts
 
-# Install cpio (missing dependency needed by loolwsd-systemplate-setup)
+# Install cpio (missing dependency needed by coolwsd-systemplate-setup)
 dnf install -y cpio
 
 # Install gnupg2
