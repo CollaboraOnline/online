@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-14 17:59+0200\n"
-"PO-Revision-Date: 2021-11-03 22:10+0000\n"
+"PO-Revision-Date: 2021-11-15 10:43+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "help/he/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.9.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -89,7 +89,7 @@ msgid ""
 "--plus\">+</span><kbd>?"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>?‎"
+"--plus\">+</span><kbd>?"
 
 #: html/cool-help.html%2Bdiv.div.h2:33-9
 #: html/cool-help.html%2Bdiv.div.h2:179-9
@@ -1075,6 +1075,8 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"מעביר את הסמן לפינה השמאלית העליונה של טווח הנתונים הנוכחי. אם העמודה שמשמאל "
+"לתא שמכיל את הסמן ריקה, הסמן יעבור לעמודה הבאה משמאל שמכילה נתונים"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-245
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
@@ -1086,6 +1088,8 @@ msgid ""
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
+"מעביר את הסמן לפינה הימנית העליונה של טווח הנתונים הנוכחי. אם העמודה שמימין "
+"לתא שמכיל את הסמן ריקה, הסמן יעבור לעמודה הבאה מימין שמכילה נתונים."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-249
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
@@ -1097,6 +1101,8 @@ msgid ""
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
+"מעביר את הסמן לפינה העליונה של טווח הנתונים הנוכחי. אם השורה שמעל לתא שמכיל "
+"את הסמן ריקה, הסמן יעלה לשורה הבאה שמכילה נתונים."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-221
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
@@ -1108,6 +1114,8 @@ msgid ""
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"מעביר את הסמן לפינה התחתונה של טווח הנתונים הנוכחי. אם השורה שמתחת לתא שמכיל "
+"את הסמן ריקה, הסמן ירד לשורה הבאה שמכילה נתונים."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-226
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
@@ -1120,6 +1128,9 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
+"בוחר את כל התאים שמכילים נתונים מהתא הנוכחי עד סוף הטווח הרציף של תאי "
+"הנתונים, בכיוון החץ שנלחץ. אם משמש לבחירת שורות ועמודות יחד, ייבחר טווח תאים "
+"מרובע."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-272
 msgid ""
@@ -1131,7 +1142,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "עובר גיליון אחד שמאלה."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-73
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
@@ -1139,7 +1150,7 @@ msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "עובר עמוד מסך אחד ימינה."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-80
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
@@ -1151,6 +1162,9 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
+"מוסיף את הגיליון הקודם לבחירת הגיליונות הנוכחית. אם כל הגיליונות בגיליון "
+"הנתונים נבחרו, צירוף מקשים זה בוחר רק את הגיליון הקודם. הופך את הגיליון "
+"הקודם לגיליון הנוכחי."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-260
 msgid ""
@@ -1166,6 +1180,9 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"מוסיף את הגיליון הבא לבחירת הגיליונות הנוכחית. אם כל הגיליונות בגיליון "
+"הנתונים נבחרו, צירוף מקשים זה בוחר רק את הגיליון הבא. הופך את הגיליון הבא "
+"לגיליון הנוכחי."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-248
 msgid ""
@@ -1181,6 +1198,8 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"כאשר (*) הוא סימן הכפל במקלדת הנומרית. בוחר את טווח הנתונים שמכיל את הסמן. "
+"טווח הוא טווח תאים רציף שמכיל נתונים ותחום בשורות ועמודות ריקים."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-249
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
