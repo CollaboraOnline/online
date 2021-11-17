@@ -26,13 +26,13 @@
 
 namespace JailUtil
 {
-bool loolmount(const std::string& arg, std::string source, std::string target)
+bool coolmount(const std::string& arg, std::string source, std::string target)
 {
     source = Util::trim(source, '/');
     target = Util::trim(target, '/');
-    const std::string cmd = Poco::Path(Util::getApplicationPath(), "loolmount").toString() + ' '
+    const std::string cmd = Poco::Path(Util::getApplicationPath(), "coolmount").toString() + ' '
                             + arg + ' ' + source + ' ' + target;
-    LOG_TRC("Executing loolmount command: " << cmd);
+    LOG_TRC("Executing coolmount command: " << cmd);
     return !system(cmd.c_str());
 }
 
@@ -40,7 +40,7 @@ bool bind(const std::string& source, const std::string& target)
 {
     LOG_DBG("Mounting [" << source << "] -> [" << target << "].");
     Poco::File(target).createDirectory();
-    const bool res = loolmount("-b", source, target);
+    const bool res = coolmount("-b", source, target);
     if (res)
         LOG_TRC("Bind-mounted [" << source << "] -> [" << target << "].");
     else
@@ -52,7 +52,7 @@ bool remountReadonly(const std::string& source, const std::string& target)
 {
     LOG_DBG("Remounting [" << source << "] -> [" << target << "].");
     Poco::File(target).createDirectory();
-    const bool res = loolmount("-r", source, target);
+    const bool res = coolmount("-r", source, target);
     if (res)
         LOG_TRC("Mounted [" << source << "] -> [" << target << "] readonly.");
     else
@@ -63,7 +63,7 @@ bool remountReadonly(const std::string& source, const std::string& target)
 bool unmount(const std::string& target)
 {
     LOG_DBG("Unmounting [" << target << ']');
-    const bool res = loolmount("-u", "", target);
+    const bool res = coolmount("-u", "", target);
     if (res)
         LOG_TRC("Unmounted [" << target << "] successfully.");
     else

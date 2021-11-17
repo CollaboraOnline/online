@@ -105,7 +105,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /usr/bin/loolconvert
 /usr/bin/coolconfig
 /usr/bin/loolconfig
-/usr/bin/loolmount
+/usr/bin/coolmount
 /usr/share/loolwsd/discovery.xml
 /usr/share/loolwsd/favicon.ico
 /usr/share/loolwsd/browser
@@ -120,7 +120,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /usr/share/man/man1/coolconfig.1.gz
 /usr/share/man/man1/loolwsd-systemplate-setup.1.gz
 /usr/share/man/man1/loolwsd-generate-proof-key.1.gz
-/usr/share/man/man1/loolmount.1.gz
+/usr/share/man/man1/coolmount.1.gz
 %{_unitdir}/loolwsd.service
 %if 0%{?rhel}
 %config(noreplace) /etc/sysconfig/loolwsd
@@ -182,7 +182,7 @@ echo "   Done."
 
 %post
 setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit
-setcap cap_sys_admin=ep /usr/bin/loolmount
+setcap cap_sys_admin=ep /usr/bin/coolmount
 
 %if 0%{?rhel} >= 7
 %systemd_post loolwsd.service

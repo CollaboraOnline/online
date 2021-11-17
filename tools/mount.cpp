@@ -139,7 +139,7 @@ void usage(const char* program)
 
 int main(int argc, char** argv)
 {
-    if (!hasCorrectUID(/* appName = */"loolmount"))
+    if (!hasCorrectUID(/* appName = */"coolmount"))
     {
         fprintf(stderr, "Aborting.\n");
         return EX_SOFTWARE;

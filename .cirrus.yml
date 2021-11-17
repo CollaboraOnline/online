@@ -25,7 +25,7 @@ task:
         --with-lokit-path=./libreoffice-src/include
         --disable-seccomp --disable-setcap --enable-debug'' '
     - su -m cool -c 'env HOME=/tmp/coolhome gmake -j`sysctl -n hw.ncpu`'
-    - chown root ./loolmount
-    - chmod +s ./loolmount
+    - chown root ./coolmount
+    - chmod +s ./coolmount
   test_script:
 #    - su -m cool -c 'env HOME=/tmp/coolhome gmake check'

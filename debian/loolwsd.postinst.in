@@ -5,7 +5,7 @@ set -e
 case "$1" in
     configure)
 	setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit || true
-	setcap cap_sys_admin=ep /usr/bin/loolmount || true
+	setcap cap_sys_admin=ep /usr/bin/coolmount || true
 
 	adduser --quiet --system --group --home /opt/cool cool
 	chown cool: /etc/loolwsd/loolwsd.xml
