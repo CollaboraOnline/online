@@ -74,16 +74,6 @@ L.Control.ColumnGroup = L.Control.GroupBase.extend({
 		}
 	},
 
-	/// In Calc RTL mode, x-coordinate of a given rectangle of given width is horizontally mirrored
-	transformRectX: function (xcoord, rectWidth) {
-		return this.isCalcRTL() ? this.size[0] - xcoord - rectWidth : xcoord;
-	},
-
-	/// In Calc RTL mode, x-coordinate of a given point is horizontally mirrored
-	transformX: function (xcoord) {
-		return this.isCalcRTL() ? this.size[0] - xcoord : xcoord;
-	},
-
 	drawGroupControl: function (group) {
 		var startX = this.getRelativeX(group.startPos);
 		var startY = this._levelSpacing + (this._groupHeadSize + this._levelSpacing) * group.level;
@@ -169,18 +159,6 @@ L.Control.ColumnGroup = L.Control.GroupBase.extend({
 		else {
 			return -1;
 		}
-	},
-
-	/**
-	 * Checks if the given point is within the bounds of the rectangle defined by
-	 * startX, startY, endX, endY. If mirrorX is true then point is horizontally
-	 * mirrored before checking.
-	 */
-	isPointInRect: function (point, startX, startY, endX, endY, mirrorX) {
-		var x = mirrorX ? this.size[0] - point[0] : point[0];
-		var y = point[1];
-
-		return (x > startX && x < endX && y > startY && y < endY);
 	},
 
 	findClickedGroup: function (point) {
