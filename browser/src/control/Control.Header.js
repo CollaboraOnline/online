@@ -299,7 +299,7 @@ L.Control.Header = L.Class.extend({
 	_getVertLatLng: function (start, offset, e) {
 		var size = this._map.getSize();
 		var drag = this._map.mouseEventToContainerPoint(e);
-		var isRTL = this._map._docLayer.isLayoutRTL();
+		var isRTL = this.isCalcRTL();
 		var entryStart = (isRTL ? this.size[0] - this._dragEntry.pos + this._dragEntry.size : this._dragEntry.pos - this._dragEntry.size) / app.dpiScale;
 		var xpos = isRTL ? Math.min(drag.x, entryStart) : Math.max(drag.x, entryStart);
 		return [
@@ -358,7 +358,7 @@ L.Control.Header = L.Class.extend({
 		var position = isColumn ? point[0]: point[1];
 
 		var result = null;
-		var isRTL = isColumn && this._map._docLayer.isLayoutRTL();
+		var isRTL = isColumn && this.isCalcRTL();
 		this._headerInfo.forEachElement(function(entry) {
 			var end = isRTL ? this.size[0] - entry.pos + entry.size : entry.pos;
 			var start = end - entry.size;
@@ -427,7 +427,7 @@ L.Control.Header = L.Class.extend({
 			return;
 
 		this.containerObject.setPenPosition(this);
-		var isRTL = this._map._docLayer.isLayoutRTL();
+		var isRTL = this.isCalcRTL();
 		var x = this._isColumn ? ((isRTL ? this.size[0] - this._dragEntry.pos: this._dragEntry.pos) + this._dragDistance[0]): (isRTL ? 0 : this.size[0]);
 		var y = this._isColumn ? this.size[1]: (this._dragEntry.pos + this._dragDistance[1]);
 
