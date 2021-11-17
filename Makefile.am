@@ -21,7 +21,7 @@ bin_PROGRAMS = \
 
 if ENABLE_LIBFUZZER
 else
-bin_PROGRAMS += loolwsd
+bin_PROGRAMS += coolwsd
 endif
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup \
@@ -42,14 +42,14 @@ dist_doc_DATA = wsd/README \
                 wsd/reference.md \
                 wsd/metrics.txt
 
-loolwsddatadir = @LOOLWSD_DATADIR@
+coolwsddatadir = @LOOLWSD_DATADIR@
 
-loolwsddata_DATA = discovery.xml \
+coolwsddata_DATA = discovery.xml \
                    favicon.ico
 
-loolwsdconfigdir = @LOOLWSD_CONFIGDIR@
+coolwsdconfigdir = @LOOLWSD_CONFIGDIR@
 
-loolwsdconfig_DATA = loolwsd.xml \
+coolwsdconfig_DATA = loolwsd.xml \
 		     loolkitconfig.xcu
 
 apache2configdir = ${sysconfdir}/apache2/conf-available
@@ -80,7 +80,7 @@ if ENABLE_SSL
 AM_LDFLAGS += -lssl -lcrypto
 else
 loolwsd_fuzzer_LDADD = -lssl -lcrypto
-loolwsd_LDADD = -lssl -lcrypto
+coolwsd_LDADD = -lssl -lcrypto
 coolconfig_LDADD = -lssl -lcrypto
 endif
 
@@ -117,7 +117,7 @@ endif
 
 shared_json = $(patsubst %.cpp,%.cmd,$(shared_sources))
 
-loolwsd_sources = common/Crypto.cpp \
+coolwsd_sources = common/Crypto.cpp \
                   wsd/Admin.cpp \
                   wsd/AdminModel.cpp \
                   wsd/Auth.cpp \
@@ -133,12 +133,12 @@ loolwsd_sources = common/Crypto.cpp \
                   wsd/ProofKey.cpp \
                   wsd/QuarantineUtil.cpp
 
-loolwsd_json = $(patsubst %.cpp,%.cmd,$(loolwsd_sources))
+coolwsd_json = $(patsubst %.cpp,%.cmd,$(coolwsd_sources))
 
-loolwsd_SOURCES = $(loolwsd_sources) \
+coolwsd_SOURCES = $(coolwsd_sources) \
                   $(shared_sources)
 
-EXTRA_loolwsd_DEPENDENCIES = browser/node_modules
+EXTRA_coolwsd_DEPENDENCIES = browser/node_modules
 
 noinst_PROGRAMS = clientnb \
                   connect \
@@ -180,7 +180,7 @@ coolforkit_json = $(patsubst %.cpp,%.cmd,$(coolforkit_sources))
 coolforkit_SOURCES = $(coolforkit_sources) \
                      $(shared_sources)
 
-loolwsd_fuzzer_SOURCES = $(loolwsd_sources) \
+loolwsd_fuzzer_SOURCES = $(coolwsd_sources) \
                          $(coolforkit_sources) \
                          $(shared_sources) \
                          kit/DummyLibreOfficeKit.cpp
@@ -189,7 +189,7 @@ admin_fuzzer_CPPFLAGS = \
 			-DKIT_IN_PROCESS=1 \
 			$(AM_CPPFLAGS)
 admin_fuzzer_SOURCES = \
-		       $(loolwsd_sources) \
+		       $(coolwsd_sources) \
 		       $(coolforkit_sources) \
 		       $(shared_sources) \
 		       fuzzer/Admin.cpp
@@ -199,7 +199,7 @@ clientsession_fuzzer_CPPFLAGS = \
 				-DKIT_IN_PROCESS=1 \
 				$(AM_CPPFLAGS)
 clientsession_fuzzer_SOURCES = \
-			       $(loolwsd_sources) \
+			       $(coolwsd_sources) \
 			       $(coolforkit_sources) \
 			       $(shared_sources) \
 			       fuzzer/ClientSession.cpp
@@ -209,7 +209,7 @@ httpresponse_fuzzer_CPPFLAGS = \
 				-DKIT_IN_PROCESS=1 \
 				$(AM_CPPFLAGS)
 httpresponse_fuzzer_SOURCES = \
-			       $(loolwsd_sources) \
+			       $(coolwsd_sources) \
 			       $(coolforkit_sources) \
 			       $(shared_sources) \
 			       fuzzer/HttpResponse.cpp
@@ -367,9 +367,9 @@ if ENABLE_LIBFUZZER
 CLEANUP_COMMAND=true
 else
 # Use loolwsd to cleanup jails, if any. If it fails, we may have a broken/old loolwsd binary, remove it to rebuild.
-# A CI box may switch branches without cleaning up the binaries, if loolwsd from a broken branch is used here
-# it will fail all subsequent builds, until it's rebuilt from the new branch. So removing loolwsd after failing is needed.
-CLEANUP_COMMAND=if test -s ./loolwsd; then echo "Cleaning up..." && ./loolwsd --disable-cool-user-checking --cleanup --o:logging.level=trace || rm ./loolwsd; fi
+# A CI box may switch branches without cleaning up the binaries, if coolwsd from a broken branch is used here
+# it will fail all subsequent builds, until it's rebuilt from the new branch. So removing coolwsd after failing is needed.
+CLEANUP_COMMAND=if test -s ./coolwsd; then echo "Cleaning up..." && ./coolwsd --disable-cool-user-checking --cleanup --o:logging.level=trace || rm ./coolwsd; fi
 endif
 
 if HAVE_LO_PATH
@@ -387,7 +387,7 @@ endif
 if ENABLE_LIBFUZZER
 CLEANUP_DEPS=
 else
-CLEANUP_DEPS=loolwsd loolmount coolforkit
+CLEANUP_DEPS=coolwsd loolmount coolforkit
 endif
 
 # Build loolwsd and loolmount first, so we can cleanup before updating
@@ -432,7 +432,7 @@ setup-wsd: all @JAILS_PATH@
 	@echo
 
 run: setup-wsd
-	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
+	./coolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			  --o:security.capabilities="$(CAPABILITIES)" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
@@ -444,7 +444,7 @@ run: setup-wsd
 
 if ENABLE_DEBUG
 run-one: setup-wsd
-	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
+	./coolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			  --o:security.capabilities="$(CAPABILITIES)" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
@@ -465,7 +465,7 @@ sync-impress:
 	browser-sync start --config browsersync-config.js --startPath "browser/96c23f663/cool.html?file_path=file://$(abs_top_srcdir)/test/data/hello-world.odp"
 
 run-trace: setup-wsd
-	./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
+	./coolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
@@ -476,9 +476,9 @@ run-trace: setup-wsd
                           --o:trace.outgoing.record=false
 
 run-valgrind: setup-wsd
-	@echo "Launching loolwsd under valgrind (but not forkit/loolkit, yet)"
+	@echo "Launching coolwsd under valgrind (but not forkit/loolkit, yet)"
 	valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
-		./loolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
+		./coolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
 			  --o:ssl.key_file_path="$(abs_top_srcdir)/etc/key.pem" \
@@ -487,9 +487,9 @@ run-valgrind: setup-wsd
 			  --o:logging.file[@enable]=false --o:logging.level=trace
 
 run-gdb: setup-wsd
-	@echo "Launching loolwsd under gdb"
+	@echo "Launching coolwsd under gdb"
 	$(RUN_GDB) \
-		./loolwsd --o:security.capabilities="false" \
+		./coolwsd --o:security.capabilities="false" \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
@@ -499,9 +499,9 @@ run-gdb: setup-wsd
 			  --o:logging.file[@enable]=false --o:logging.level=error
 
 run-callgrind: setup-wsd
-	@echo "Launching loolwsd under valgrind's callgrind"
+	@echo "Launching coolwsd under valgrind's callgrind"
 	valgrind --tool=callgrind --simulate-cache=yes --dump-instr=yes --num-callers=50 --error-limit=no --trace-children=yes \
-		./loolwsd --o:security.capabilities="false" \
+		./coolwsd --o:security.capabilities="false" \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
@@ -511,9 +511,9 @@ run-callgrind: setup-wsd
 			  --o:logging.file[@enable]=false --o:logging.level=error
 
 run-strace: setup-wsd
-	@echo "Launching loolwsd under strace"
+	@echo "Launching coolwsd under strace"
 	strace -o strace.log -f -tt -s 256 \
-		./loolwsd --o:security.capabilities="false" \
+		./coolwsd --o:security.capabilities="false" \
 			  --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			  --o:ssl.cert_file_path="$(abs_top_srcdir)/etc/cert.pem" \
@@ -533,7 +533,7 @@ endif
 if ENABLE_LIBFUZZER
 ALL_LOCAL_DEPS=
 else
-ALL_LOCAL_DEPS=loolwsd
+ALL_LOCAL_DEPS=coolwsd
 endif
 
 # After building coolforkit, set its capabilities as required. Do it
@@ -564,7 +564,7 @@ CLANGXX_COMPILE_FLAGS=clang++ $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 
 JSON_COMPILE_FLAGS=$(subst ",\",$(subst \,\\,$(CLANGXX_COMPILE_FLAGS)))
 
-JSON_COMPILE_SRC = $(loolwsd_json) $(coolforkit_json) $(shared_json)
+JSON_COMPILE_SRC = $(coolwsd_json) $(coolforkit_json) $(shared_json)
 
 $(eval $(call file_targets,$(JSON_COMPILE_SRC)))
 
