@@ -143,7 +143,7 @@ EXTRA_coolwsd_DEPENDENCIES = browser/node_modules
 noinst_PROGRAMS = clientnb \
                   connect \
                   lokitclient \
-                  loolmap \
+                  coolmap \
                   loolstress \
                   loolsocketdump
 
@@ -223,7 +223,7 @@ clientnb_SOURCES = net/clientnb.cpp \
 
 coolmount_SOURCES = tools/mount.cpp
 
-loolmap_SOURCES = tools/map.cpp
+coolmap_SOURCES = tools/map.cpp
 
 loolconvert_SOURCES = tools/Tool.cpp
 

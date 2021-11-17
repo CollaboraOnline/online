@@ -679,7 +679,7 @@ int main(int argc, char **argv)
 
     if (help)
     {
-        fprintf(stderr, "Usage: loolmap --hex <name of process|pid>\n");
+        fprintf(stderr, "Usage: coolmap --hex <name of process|pid>\n");
         fprintf(stderr, "Dump memory map information for a given process\n");
         fprintf(stderr, "    --hex           Hex dump relevant page contents and diff to parent process\n");
         fprintf(stderr, "    --strings       Print all detected strings\n");
