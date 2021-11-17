@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-17 13:48+0100\n"
-"PO-Revision-Date: 2021-11-14 22:50+0000\n"
+"PO-Revision-Date: 2021-11-18 08:06+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -820,23 +820,23 @@ msgstr "Helyi kép beszúrása"
 
 #: src/control/Control.NotebookbarBuilder.js:613
 msgid "Very Tight"
-msgstr ""
+msgstr "Nagyon szoros"
 
 #: src/control/Control.NotebookbarBuilder.js:614
 msgid "Tight"
-msgstr ""
+msgstr "Szoros"
 
 #: src/control/Control.NotebookbarBuilder.js:615
 msgid "Normal"
-msgstr ""
+msgstr "Normál"
 
 #: src/control/Control.NotebookbarBuilder.js:616
 msgid "Loose"
-msgstr ""
+msgstr "Laza"
 
 #: src/control/Control.NotebookbarBuilder.js:617
 msgid "Very Loose"
-msgstr ""
+msgstr "Nagyon laza"
 
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarDraw.js:79
@@ -1962,11 +1962,11 @@ msgstr "Utoljára mentve:"
 
 #: src/map/Map.js:1428
 msgid "Inactive document"
-msgstr ""
+msgstr "Inaktív dokumentum"
 
 #: src/map/Map.js:1429
 msgid "Please click to resume editing"
-msgstr ""
+msgstr "Kérjük, kattintson a szerkesztés folytatásához"
 
 #: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
