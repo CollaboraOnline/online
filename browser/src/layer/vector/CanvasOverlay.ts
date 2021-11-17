@@ -96,7 +96,7 @@ class CanvasOverlay {
 	private paths: Map<number, any>;
 	private bounds: cool.Bounds;
 	private tsManager: any;
-	private overlaySection: any;
+	private overlaySection: CanvasSectionObject;
 	private transforms: TransformationsList;
 
 	constructor(mapObject: any, canvasContext: CanvasRenderingContext2D) {
@@ -387,7 +387,7 @@ class CanvasOverlay {
 		}
 
 		this.transforms.add(transform);
-		if (this.map._docLayer.isCalc() && this.map._docLayer.isLayoutRTL()) {
+		if (this.overlaySection.isCalcRTL()) {
 			const sectionWidth = this.overlaySection.size[0];
 			// Apply horizontal flip transformation.
 			this.transforms.addNew(new cool.Point(-sectionWidth, 0), new cool.Point(-1, 1));
