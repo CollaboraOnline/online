@@ -296,6 +296,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: L.Control.MenubarShortcuts.addShortcut(_('Keyboard shortcuts'), L.Control.MenubarShortcuts.shortcuts.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
+				{name: _('Send Feedback'), id: 'feedback', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -424,6 +425,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: L.Control.MenubarShortcuts.addShortcut(_('Keyboard shortcuts'), L.Control.MenubarShortcuts.shortcuts.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
+				{name: _('Send Feedback'), id: 'feedback', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -534,6 +536,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: L.Control.MenubarShortcuts.addShortcut(_('Keyboard shortcuts'), L.Control.MenubarShortcuts.shortcuts.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
+				{name: _('Send Feedback'), id: 'feedback', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -745,6 +748,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: L.Control.MenubarShortcuts.addShortcut(_('Keyboard shortcuts'), L.Control.MenubarShortcuts.shortcuts.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
 				{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
+				{name: _('Send Feedback'), id: 'feedback', type: 'action'},
 				{name: _('About'), id: 'about', type: 'action'}]
 			},
 			{name: _('Last modification'), id: 'last-mod', type: 'action', tablet: false}
@@ -800,6 +804,7 @@ L.Control.Menubar = L.Control.extend({
 			{uno: '.uno:WordCountDialog'},
 			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
+			{name: _('Send Feedback'), id: 'feedback', type: 'action'},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
 
@@ -855,6 +860,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _('Fullscreen presentation'), id: 'fullscreen-presentation', type: 'action'},
 			{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
+			{name: _('Send Feedback'), id: 'feedback', type: 'action'},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
 
@@ -900,6 +906,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{name: _UNO('.uno:FullScreen', 'presentation'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
+			{name: _('Send Feedback'), id: 'feedback', type: 'action'},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
 
@@ -969,6 +976,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
 			{name: _UNO('.uno:FullScreen', 'spreadsheet'), id: 'fullscreen', type: 'action', mobileapp: false},
 			{name: _('Latest Updates'), id: 'latestupdates', type: 'action', iosapp: false},
+			{name: _('Send Feedback'), id: 'feedback', type: 'action'},
 			{name: _('About'), id: 'about', type: 'action'},
 		],
 
@@ -1088,7 +1096,7 @@ L.Control.Menubar = L.Control.extend({
 			'downloadas-odp', 'downloadas-ppt', 'downloadas-pptx', 'downloadas-odg', 'print', // file menu
 			'downloadas-ods', 'downloadas-xls', 'downloadas-xlsx', 'downloadas-csv', 'closedocument', // file menu
 			'fullscreen', 'zoomin', 'zoomout', 'zoomreset', 'showresolved', // view menu
-			'about', 'keyboard-shortcuts', 'latestupdates', 'online-help', 'report-an-issue', // help menu
+			'about', 'keyboard-shortcuts', 'latestupdates', 'feedback', 'online-help', 'report-an-issue', // help menu
 			'insertcomment'
 		]
 	},
@@ -1622,6 +1630,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.showLOAboutDialog();
 		} else if (id === 'latestupdates') {
 			this._map.showWelcomeDialog(/*calledFromMenu=*/true);
+		} else if (id === 'feedback' && this._map.feedback) {
+			this._map.feedback.showFeedbackDialog();
 		} else if (id === 'report-an-issue') {
 			window.open('https://github.com/CollaboraOnline/online/issues', '_blank');
 		} else if (id === 'inserthyperlink') {
@@ -1873,6 +1883,8 @@ L.Control.Menubar = L.Control.extend({
 			} else if (menu[i].type === 'separator') {
 				$(aItem).addClass('separator');
 			} else if (menu[i].type === 'action') {
+				if (menu[i].id == 'feedback' && !this._map.feedback)
+					continue;
 				$(aItem).data('type', 'action');
 				$(aItem).data('id', menu[i].id);
 			}
