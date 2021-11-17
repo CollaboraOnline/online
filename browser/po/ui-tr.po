@@ -13,12 +13,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-14 17:59+0100\n"
+"POT-Creation-Date: 2021-11-17 13:48+0100\n"
 "PO-Revision-Date: 2021-11-17 11:46+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: tr\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -145,7 +145,7 @@ msgstr "Ağ Grafiği"
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:248
 #: src/control/Control.NotebookbarDraw.js:24
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/layer/tile/CommentListSection.ts:388
+#: src/layer/tile/CommentListSection.ts:393
 #: src/layer/tile/CommentSection.ts:122
 msgid "Save"
 msgstr "Kaydet"
@@ -274,7 +274,7 @@ msgstr "Tamam"
 #: src/control/Control.Menubar.js:1613 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
-#: src/core/Socket.js:952 src/layer/tile/CommentListSection.ts:389
+#: src/core/Socket.js:952 src/layer/tile/CommentListSection.ts:394
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "İptal"
@@ -387,7 +387,7 @@ msgstr "Dizin"
 #: src/control/Control.JSDialogBuilder.js:2114
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
-#: src/layer/tile/CommentListSection.ts:821
+#: src/layer/tile/CommentListSection.ts:826
 msgid "Comment"
 msgstr "Yorum"
 
@@ -468,7 +468,7 @@ msgid "Select range"
 msgstr "Aralığı seç"
 
 #: src/control/Control.JSDialogBuilder.js:1439
-#: src/control/Control.NotebookbarBuilder.js:235
+#: src/control/Control.NotebookbarBuilder.js:236
 msgid "Font Name"
 msgstr "Yazıtipi Adı"
 
@@ -513,12 +513,12 @@ msgstr "Tablo Ekle"
 #: src/control/Control.Menubar.js:279 src/control/Control.Menubar.js:281
 #: src/control/Control.Menubar.js:417 src/control/Control.Menubar.js:530
 #: src/control/Control.Menubar.js:738
-#: src/control/Control.NotebookbarBuilder.js:742
-#: src/control/Control.NotebookbarBuilder.js:744
-#: src/control/Control.NotebookbarBuilder.js:746
-#: src/control/Control.NotebookbarBuilder.js:770
-#: src/control/Control.NotebookbarBuilder.js:805
-#: src/control/Control.NotebookbarBuilder.js:822
+#: src/control/Control.NotebookbarBuilder.js:775
+#: src/control/Control.NotebookbarBuilder.js:777
+#: src/control/Control.NotebookbarBuilder.js:779
+#: src/control/Control.NotebookbarBuilder.js:803
+#: src/control/Control.NotebookbarBuilder.js:838
+#: src/control/Control.NotebookbarBuilder.js:855
 #: src/control/Control.StatusBar.js:514
 msgid "None (Do not check spelling)"
 msgstr "Hiçbiri (İmla denetimi yok)"
@@ -599,10 +599,10 @@ msgstr "Belgeyi kapat"
 #: src/control/Control.Menubar.js:450 src/control/Control.Menubar.js:561
 #: src/control/Control.Menubar.js:775 src/control/Control.Menubar.js:826
 #: src/control/Control.Menubar.js:877 src/control/Control.Menubar.js:925
-#: src/control/Control.NotebookbarBuilder.js:735
-#: src/control/Control.NotebookbarBuilder.js:765
-#: src/control/Control.NotebookbarBuilder.js:800
-#: src/control/Control.NotebookbarBuilder.js:817
+#: src/control/Control.NotebookbarBuilder.js:768
+#: src/control/Control.NotebookbarBuilder.js:798
+#: src/control/Control.NotebookbarBuilder.js:833
+#: src/control/Control.NotebookbarBuilder.js:850
 #: src/control/Control.NotebookbarCalc.js:169
 #: src/control/Control.NotebookbarCalc.js:170
 #: src/control/Control.NotebookbarDraw.js:218
@@ -621,23 +621,23 @@ msgstr "Onar"
 #: src/control/Control.NotebookbarDraw.js:689
 #: src/control/Control.NotebookbarDraw.js:690
 #: src/control/Control.NotebookbarImpress.js:981
-#: src/control/Control.NotebookbarWriter.js:975
-#: src/control/Control.NotebookbarWriter.js:976
+#: src/control/Control.NotebookbarWriter.js:980
+#: src/control/Control.NotebookbarWriter.js:981
 #: src/control/Control.StatusBar.js:188
 msgid "Reset zoom"
 msgstr "Yakınlaştırmayı sıfırla"
 
 #: src/control/Control.Menubar.js:106
-#: src/control/Control.NotebookbarBuilder.js:721
-#: src/control/Control.NotebookbarWriter.js:1025
-#: src/control/Control.NotebookbarWriter.js:1026
+#: src/control/Control.NotebookbarBuilder.js:754
+#: src/control/Control.NotebookbarWriter.js:1030
+#: src/control/Control.NotebookbarWriter.js:1031
 msgid "Show Ruler"
 msgstr "Cetveli Göster"
 
 #: src/control/Control.Menubar.js:107 src/control/Control.Menubar.js:348
 #: src/control/Control.Menubar.js:467
-#: src/control/Control.NotebookbarWriter.js:1036
-#: src/control/Control.NotebookbarWriter.js:1037
+#: src/control/Control.NotebookbarWriter.js:1041
+#: src/control/Control.NotebookbarWriter.js:1042
 msgid "Show Status Bar"
 msgstr "Durum Çubuğunu Göster"
 
@@ -793,10 +793,10 @@ msgid "Gradient End"
 msgstr "Gradyan Sonu"
 
 #: src/control/Control.Notebookbar.js:242
-#: src/control/Control.NotebookbarBuilder.js:716
-#: src/control/Control.NotebookbarBuilder.js:759
-#: src/control/Control.NotebookbarBuilder.js:787
-#: src/control/Control.NotebookbarBuilder.js:812
+#: src/control/Control.NotebookbarBuilder.js:749
+#: src/control/Control.NotebookbarBuilder.js:792
+#: src/control/Control.NotebookbarBuilder.js:820
+#: src/control/Control.NotebookbarBuilder.js:845
 #: src/control/Control.NotebookbarDraw.js:18
 #: src/control/Control.NotebookbarImpress.js:18
 msgid "Menu"
@@ -814,10 +814,30 @@ msgstr "Geri al"
 msgid "Redo"
 msgstr "İleri al"
 
-#: src/control/Control.NotebookbarBuilder.js:552
+#: src/control/Control.NotebookbarBuilder.js:553
 #: src/control/Control.TopToolbar.js:222
 msgid "Insert Local Image"
 msgstr "Yerel Resim Ekle"
+
+#: src/control/Control.NotebookbarBuilder.js:613
+msgid "Very Tight"
+msgstr ""
+
+#: src/control/Control.NotebookbarBuilder.js:614
+msgid "Tight"
+msgstr ""
+
+#: src/control/Control.NotebookbarBuilder.js:615
+msgid "Normal"
+msgstr ""
+
+#: src/control/Control.NotebookbarBuilder.js:616
+msgid "Loose"
+msgstr ""
+
+#: src/control/Control.NotebookbarBuilder.js:617
+msgid "Very Loose"
+msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarDraw.js:79
@@ -1021,16 +1041,16 @@ msgstr "ODF Metin Belgesi (.odt)"
 msgid "EPUB Document (.epub)"
 msgstr "EPUB Belgesi (.epub)"
 
-#: src/control/Control.NotebookbarWriter.js:513
+#: src/control/Control.NotebookbarWriter.js:518
 #: src/control/Control.TopToolbar.js:101
 msgid "Default Style"
 msgstr "Varsayılan Biçem"
 
-#: src/control/Control.NotebookbarWriter.js:517
+#: src/control/Control.NotebookbarWriter.js:522
 msgid "Text Body"
 msgstr "Metin Gövdesi"
 
-#: src/control/Control.NotebookbarWriter.js:520
+#: src/control/Control.NotebookbarWriter.js:525
 msgid "Title"
 msgstr "Başlık"
 
@@ -1639,7 +1659,7 @@ msgstr ""
 
 #: src/errormessages.js:14
 msgid ""
-"The host URL is empty. The loolwsd server is probably misconfigured, please "
+"The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
 "Ana makine URL'si boş. Loolwsd sunucusu muhtemelen yanlış "
@@ -1821,36 +1841,36 @@ msgstr "İşlevler"
 msgid "No Comments"
 msgstr "Yorum Yok"
 
-#: src/layer/tile/CommentListSection.ts:768
+#: src/layer/tile/CommentListSection.ts:773
 msgid "Modify"
 msgstr "Değiştir"
 
-#: src/layer/tile/CommentListSection.ts:774
+#: src/layer/tile/CommentListSection.ts:779
 #: src/layer/tile/CommentSection.ts:125
 msgid "Reply"
 msgstr "Yanıtla"
 
-#: src/layer/tile/CommentListSection.ts:780
+#: src/layer/tile/CommentListSection.ts:785
 msgid "Remove"
 msgstr "Sil"
 
-#: src/layer/tile/CommentListSection.ts:786
+#: src/layer/tile/CommentListSection.ts:791
 msgid "Remove Thread"
 msgstr "Konuyu Kaldır"
 
-#: src/layer/tile/CommentListSection.ts:792
+#: src/layer/tile/CommentListSection.ts:797
 msgid "Resolve"
 msgstr "Çöz"
 
-#: src/layer/tile/CommentListSection.ts:792
+#: src/layer/tile/CommentListSection.ts:797
 msgid "Unresolve"
 msgstr "Çözülmemiş"
 
-#: src/layer/tile/CommentListSection.ts:798
+#: src/layer/tile/CommentListSection.ts:803
 msgid "Unresolve Thread"
 msgstr "Çözülmemiş Sorun"
 
-#: src/layer/tile/CommentListSection.ts:798
+#: src/layer/tile/CommentListSection.ts:803
 msgid "Resolve Thread"
 msgstr "Sorunu Çöz"
 
@@ -1933,13 +1953,17 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Başlatılıyor..."
 
-#: src/map/Map.js:424 src/map/Map.js:427 src/map/Map.js:430
+#: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428
 msgid "Last saved:"
 msgstr "Son kaydedildi:"
 
-#: src/map/Map.js:1430
-msgid "Inactive document - please click to resume editing"
-msgstr "Etkin olmayan belge - düzenlemeye devam etmek için lütfen tıklayın"
+#: src/map/Map.js:1428
+msgid "Inactive document"
+msgstr ""
+
+#: src/map/Map.js:1429
+msgid "Please click to resume editing"
+msgstr ""
 
 #: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
@@ -1980,6 +2004,9 @@ msgstr "Şablondan yeni dosya oluşturuluyor ..."
 #: src/map/handler/Map.WOPI.js:410
 msgid "Creating copy..."
 msgstr "Kopya oluşturuluyor..."
+
+#~ msgid "Inactive document - please click to resume editing"
+#~ msgstr "Etkin olmayan belge - düzenlemeye devam etmek için lütfen tıklayın"
 
 #, javascript-format
 #~ msgid "%d seconds ago"
