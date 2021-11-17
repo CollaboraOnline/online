@@ -203,10 +203,8 @@
 /* options section */
 .notebookbar-options-section {
 	display: inline;
-	position: fixed;
 	height: 32px;
-	right: 0px;
-	z-index: 1000;
+	padding: 2px;
 }
 
 /* root container */

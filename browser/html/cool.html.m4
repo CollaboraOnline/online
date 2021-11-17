@@ -166,17 +166,21 @@ m4_ifelse(MOBILEAPP,[true],
         and width, this being inside the smaller "document-container" will
         cause the content to overflow, creating scrollbars -->
 
-     <nav class="main-nav" role="navigation">
-       <!-- Mobile menu toggle button (hamburger/x icon) -->
-       <input id="main-menu-state" type="checkbox" style="display: none"/>
-       <ul id="main-menu" class="sm sm-simple lo-menu readonly"></ul>
-       <div id="document-titlebar">
-         <div class="document-title">
-           <!-- visuallyhidden: hide it visually but keep it available to screen reader and other assistive technology -->
-           <label class="visuallyhidden" for="document-name-input" aria-hidden="false">Document name</label>
-           <input id="document-name-input" type="text" disabled="true" style="display: none"/>
-         </div>
-       </div>
+    <nav class="main-nav" role="navigation">
+      <!-- Mobile menu toggle button (hamburger/x icon) -->
+      <input id="main-menu-state" type="checkbox" style="display: none"/>
+      <ul id="main-menu" class="sm sm-simple lo-menu readonly"></ul>
+      <div id="document-titlebar">
+        <div class="document-title">
+          <!-- visuallyhidden: hide it visually but keep it available to screen reader and other assistive technology -->
+          <label class="visuallyhidden" for="document-name-input" aria-hidden="false">Document name</label>
+          <input id="document-name-input" type="text" disabled="true" style="display: none"/>
+        </div>
+      </div>
+
+      <div id="closebuttonwrapper">
+        <div class="closebuttonimage" id="closebutton"></div>
+      </div>
      </nav>
 
      <table id="toolbar-wrapper">
@@ -201,10 +205,6 @@ m4_ifelse(MOBILEAPP,[true],
 
     <input id="insertgraphic" aria-labelledby="menu-insertgraphic" type="file" accept="image/*" style="position: fixed; top: -100em">
     <input id="selectbackground" aria-labelledby="menu-selectbackground" type="file" accept="image/*" style="position: fixed; top: -100em">
-
-    <div id="closebuttonwrapper">
-      <div class="closebuttonimage" id="closebutton"></div>
-    </div>
 
     <div id="main-document-content" style="display:flex; flex-direction: row; flex: 1; margin: 0; padding: 0; min-height: 0">
       <div id="presentation-controls-wrapper" class="readonly">

@@ -394,6 +394,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	top: -6px;
 }
 
+#main-document-content {
+	z-index: 0;
+}
+
 nav.text-color-indicator ~ #main-document-content .cool-annotation-reply-count-collapsed {
 	background: rgb(var(--blue1-txt-primary-color));
 }

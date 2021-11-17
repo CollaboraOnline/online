@@ -302,14 +302,9 @@ td[id^='tb_editbar_item_sidebar']{
 }
 
 #closebuttonwrapper {
-	position: fixed;
-	z-index: 1050;
-	right: 4px;
-	top: 0px;
-	width: 32px;
+	width: 37px;
 	height: 32px;
 	background-color: transparent;
-	display: none;
 }
 
 .main-nav:not(.hasnotebookbar) ~ #closebuttonwrapper {
