@@ -40,6 +40,9 @@ L.Control.UserList = L.Control.extend({
 			$('#currently-msg').show();
 			$('#current-editor').text(e.username);
 		});
+
+
+		this.registerHeaderAvatarEvents();
 	},
 
 	escapeHtml: function(input) {
@@ -53,15 +56,14 @@ L.Control.UserList = L.Control.extend({
 		}
 
 		$('#user-' + viewId).addClass('selected-user');
+		L.DomUtil.addClass(document.querySelector('#userListPopover .user-list-item[data-view-id="' + viewId + '"]'), 'selected-user');
 	},
 
-	onUseritemClicked: function(e) { // eslint-disable-line no-unused-vars
+	followUser: function(viewId) {
 		var docLayer = this.map._docLayer;
-		var viewId = parseInt(e.currentTarget.id.replace('user-', ''));
-
 		this.map._goToViewId(viewId);
 
-		if (viewId === this.map._docLayer._viewId) {
+		if (viewId === docLayer._viewId) {
 			this.map._setFollowing(false, null);
 			w2ui['actionbar'].uncheck('userlist');
 			return;
@@ -74,6 +76,15 @@ L.Control.UserList = L.Control.extend({
 		docLayer._followEditor = false;
 
 		this.selectUser(viewId);
+	},
+
+	onUseritemClicked: function(e) { // eslint-disable-line no-unused-vars
+		var viewId = parseInt(e.currentTarget.id.replace('user-', ''));
+
+		if (viewId === this.map._docLayer._viewId) {
+			w2ui['actionbar'].uncheck('userlist');
+			return;
+		}
 
 		w2ui['actionbar'].uncheck('userlist');
 	},
@@ -85,78 +96,93 @@ L.Control.UserList = L.Control.extend({
 
 		var iconTd = L.DomUtil.create('td', 'usercolor', content);
 		var nameTd = L.DomUtil.create('td', 'username cool-font', content);
-		this.options.listUser.push({viewId: viewId, userName: userName, extraInfo: extraInfo, color: color});
 
-		if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
-			this.options.listUser.push({viewId: viewId, userName: userName, extraInfo: extraInfo, color: color});
-			var img = L.DomUtil.create('img', 'avatar-img', iconTd);
-			img.src = extraInfo.avatar;
-			var altImg = L.LOUtil.getImageURL('user.svg');
-			img.setAttribute('onerror', 'this.onerror=null;this.src=\'' + altImg + '\';');
-			$(img).css({'border-color': color});
-		} else {
-			img = L.DomUtil.create('div', 'user-info', iconTd);
-			$(img).css({'background-color': color});
-		}
-
+		iconTd.appendChild(L.control.createAvatar(viewId, userName, extraInfo, color));
 		nameTd.textContent = userName;
 
 		return content;
 	},
 
-	findShowUser: function(id) {
-		var total = 0;
-		this.options.listUser.slice(-3).forEach(function(user) {
-			if (user.viewId == id) {
-				total += 1;
+	registerHeaderAvatarEvents: function() {
+		var outsideClickListener = function(e) {
+			var selector = '#userListPopover';
+			var $target = $(e.target);
+			if (!$target.closest(selector).length && $(selector).is(':visible')) {
+				$(selector).hide();
 			}
-		});
+			document.removeEventListener('click', outsideClickListener);
+		};
 
-		return total > 0;
+		document.getElementById('userListSummary').addEventListener('click', function(e) {
+			e.stopPropagation();
+			$('#userListPopover').show();
+			document.addEventListener('click', outsideClickListener);
+		});
 	},
 
-	renderUserAvatars: function() {
-		var self = this;
+	renderHeaderAvatars: function() {
+		var that = this;
 
-		this.options.listUser.forEach(function(user) {
-			if (!self.findShowUser(user.viewId)) {
-				$('#user-top-' + user.viewId).remove();
-			}
-		});
-
+		// Summary rendering
 		this.options.listUser.slice(-3).forEach(function (user) {
-			if (!$('#user-top-' + user.viewId).length) {
-				$('#userListSummary').append('<p id="user-top-' + user.viewId + '" class="user-top" style="background-image:url(\'https://localhost:9980/loleaflet/81bf78491/images/lc_ellipse_branding.svg\');border-color:' + user.color + ';"></p>');
-			}
-		});
-		this.options.listUser.forEach(function (user) {	
-			var avatarElement = '<div class="user-item-wrapper" id="user-'+ user.viewId + '"><p class="user-item" style="background-image:url(\'https://localhost:9980/loleaflet/81bf78491/images/lc_ellipse_branding.svg\');border-color:' + user.color + '"></p><span> ' 
-			+ user.userName +'</span></div>';
-			if (!$('#user-' + user.viewId).length) {
-				$('#userListPopover').prepend(avatarElement);
+			if (!document.querySelector('#userListSummary [data-view-id="' + user.viewId + '"]')) {
+				document.getElementById('userListSummary').appendChild(L.control.createAvatar(user.viewId, user.userName, user.extraInfo, user.color));
 			}
 		});
 
-		self.renderFollowMainUserOption();
-	},
+		// Popover rendering
+		this.options.listUser.forEach(function (user) {
+			if (document.querySelector('#userListPopover .user-list-item[data-view-id="' + user.viewId + '"]')) {
+				return;
+			}
 
-	renderFollowMainUserOption: function() {
-		if ($('#follow-editor').length == 0) {
-			$('#userListPopover').append('<div id="follow-editor"><input type="checkbox" class="follow-editor-checkbox" name="alwaysFollow" onclick="editorUpdate(event)"/>' + _('Follow current editor') + '</div>');
+			var userLabel = L.DomUtil.create('div', 'user-list-item--name');
+			userLabel.innerText = user.userName;
+
+			var listItem = L.DomUtil.create('div', 'user-list-item');
+			listItem.setAttribute('data-view-id', user.viewId);
+			listItem.setAttribute('role', 'button');
+			listItem.appendChild(L.control.createAvatar(user.viewId, user.userName, user.extraInfo, user.color));
+			listItem.appendChild(userLabel);
+			listItem.addEventListener('click', function () {
+				that.followUser(user.viewId);
+			}, false);
+
+			var popoverList = document.getElementById('userListPopover');
+			popoverList.insertBefore(listItem, popoverList.lastChild);
+		});
+
+		if (!document.getElementById('follow-editor')) {
+			var followEditorWrapper = L.DomUtil.create('div', '');
+			followEditorWrapper.id = 'follow-editor';
+			var followEditorCheckbox = L.DomUtil.create('input', 'follow-editor-checkbox', followEditorWrapper);
+			followEditorCheckbox.id = 'follow-editor-checkbox';
+			followEditorCheckbox.setAttribute('type', 'checkbox');
+			followEditorCheckbox.onchange = function(event) {
+				window.editorUpdate(event);
+			};
+			var followEditorCheckboxLabel = L.DomUtil.create('label', 'follow-editor-label', followEditorWrapper);
+			followEditorCheckboxLabel.innerText = _('Always follow the editor');
+			followEditorCheckboxLabel.setAttribute('for', 'follow-editor-checkbox');
+
+			document.getElementById('userListPopover').appendChild(followEditorWrapper);
 		}
+
+		document.getElementById('follow-editor-checkbox').checked = that.map._docLayer._followEditor;
 	},
 
-	removeUserFromList: function(viewId) {
+	removeUserFromHeaderAvatars: function(viewId) {
 		var index = null;
 		this.options.listUser.forEach(function(item, idx) {
 			if (item.viewId == viewId) {
 				index = idx;
 			}
 		});
-		$('#user-top-' + viewId).remove();
-		$('#user-' + viewId).remove();
+
+		L.DomUtil.remove(document.querySelector('#userListSummary [data-view-id="' + viewId + '"]'));
+		L.DomUtil.remove(document.querySelector('#userListPopover .user-list-item[data-view-id="' + viewId + '"]'));
 		this.options.listUser.splice(index, 1);
-		this.renderUserAvatars();
+		this.renderHeaderAvatars();
 	},
 
 	updateUserListCount: function() {
@@ -201,6 +227,7 @@ L.Control.UserList = L.Control.extend({
 		}
 
 		$('#user-' + e.viewId).removeClass('selected-user');
+		L.DomUtil.removeClass(document.querySelector('#userListPopover .user-list-item[data-view-id="' + e.viewId + '"]'), 'selected-user');
 	},
 
 	onOpenUserList: function() {
@@ -264,8 +291,10 @@ L.Control.UserList = L.Control.extend({
 			var newhtml = $(userlistItem.html).find('#userlist_table tbody').append(this.getUserItem(e.viewId, username, e.extraInfo, color)).parent().parent()[0].outerHTML;
 			userlistItem.html = newhtml;
 			this.updateUserListCount();
-			this.renderUserAvatars();
 		}
+
+		this.options.listUser.push({viewId: e.viewId, userName: username, extraInfo: e.extraInfo, color: color});
+		this.renderHeaderAvatars();
 	},
 
 	onRemoveView: function(e) {
@@ -293,7 +322,7 @@ L.Control.UserList = L.Control.extend({
 		if (userlistItem !== null) {
 			userlistItem.html = $(userlistItem.html).find('#user-' + e.viewId).remove().end()[0].outerHTML;
 			this.updateUserListCount();
-			this.removeUserFromList(e.viewId);
+			this.removeUserFromHeaderAvatars(e.viewId);
 		}
 	},
 });
@@ -312,4 +341,20 @@ L.control.createUserListWidget = function () {
 		'</table>' +
 		'<p id="currently-msg">' + _('Current') + ' - <b><span id="current-editor"></span></b></p>' +
 		'</div>';
+};
+
+L.control.createAvatar = function (viewId, userName, extraInfo, color) {
+	var img;
+	if (extraInfo !== undefined && extraInfo.avatar !== undefined) {
+		img = L.DomUtil.create('img', 'avatar-img');
+		img.src = extraInfo.avatar;
+		var altImg = L.LOUtil.getImageURL('user.svg');
+		img.setAttribute('onerror', 'this.onerror=null;this.src=\'' + altImg + '\';');
+		$(img).css({'border-color': color});
+	} else {
+		img = L.DomUtil.create('div', 'user-info');
+		$(img).css({'border-color': color, 'background-color': '#eee', 'background-image': 'url("' + L.LOUtil.getImageURL('user.svg') + '")'});
+	}
+	img.setAttribute('data-view-id', viewId);
+	return img;
 };

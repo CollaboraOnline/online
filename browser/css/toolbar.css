@@ -1056,38 +1056,45 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	font-family: var(--cool-font);
 	padding-right: 12px;
 	margin-right: 10px;
+	margin-left: 10px;
 	font-size: 12px;
+}
+
+#userListHeader .user-info,
+#userListHeader .avatar-img {
+	width: 24px;
+	height: 24px;
+	background-color: white;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 100%;
+	margin-right: 5px;
 }
 
 #userListSummary {
 	display: flex;
 }
+
+#userListSummary .user-info,
+#userListSummary .avatar-img {
+	margin-left: -10px;
+}
+
 #userListPopover {
 	display: none;
 	position: absolute;
 	z-index: 1;
 	top: 38px;
-	right: -10px;
+	right: 5px;
 	color: #222;
 	background-color: #fff;
 	border-radius: 3px;
-	filter: drop-shadow(0 1px 3px rgba(77, 77, 77, 0.5));
+	filter: drop-shadow(0 1px 3px rgba(87, 54, 54, 0.5));
 	min-width: 150px;
-	font-size: 15px;
-}
-
-#userListHeader:hover #userListPopover {
-	display: block;
-}
-
-.document-title {
-	justify-content: space-between;
-}
-
-#user-avt {
-	width: 35px;
-	height: 35px;
-	border-radius: 100%;
+	font-size: 12px;
 }
 
 #userListPopover::after {
@@ -1103,63 +1110,34 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	right: 16px;
 }
 
-.user-item-wrapper {
+#userListPopover .user-list-item {
 	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	font-family: var(--cool-font);
-	height: 32px;
-	padding: 6px 12px;
-	cursor: pointer;
+	max-width: 100%;
+	padding: 4px 8px;
 }
 
-.user-item {
-	background-position: center;
-	background-size: cover;
-	background-repeat: no-repeat;
-	border-width: 2px;
-	border-style: solid;
-	width: 25px;
-	height: 25px;
-	border-radius: 100%;
-	margin-right: 5px;
+#userListPopover .user-list-item--name {
+	display: flex;
+	flex-grow: 1;
+	padding: 8px;
 }
 
-.user-top {
-	width: 24px;
-	height: 24px;
-	background-color: white;
-	border-radius: 100%;
-	margin-right: -10px;
-	background-size: cover;
-	background-repeat: no-repeat;
-	border-style: solid;
-	border-width: 2px;
+#userListPopover .user-list-item.selected-user {
+	background-color: var(--gray-lighter-bg-color);
 }
 
-.follow-editor-checkbox {
-	margin-right: 16px;
+#userListPopover #follow-editor {
+	padding: 6px 4px;
+}
+
+#userListPopover #follow-editor .follow-editor-checkbox {
+	margin-right: 12px;
 	margin-left: 7px;
 	border-radius: 1px;
 	height: 16px;
 	width: 16px;
 	box-shadow: none !important;
 	background-position: center;
-}
-
-#follow-editor {
-	cursor: pointer;
-	padding: 6px 8px;
-}
-
-.follow-editor-label::before {
-	border-radius: 1px;
-	height: 14px;
-	width: 14px;
-	box-shadow: none !important;
-	background-position: center;
-	content: ' ';
-	border: 1px solid #878787;
 }
 
 @media only screen and (max-width: 600px) {
