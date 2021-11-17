@@ -27,7 +27,7 @@ endif
 dist_bin_SCRIPTS = loolwsd-systemplate-setup \
                    loolwsd-generate-proof-key
 
-man_MANS = man/loolwsd.1 \
+man_MANS = man/coolwsd.1 \
            man/coolforkit.1 \
            man/coolconvert.1 \
            man/coolconfig.1 \
@@ -590,4 +590,5 @@ browser/node_modules: browser/package.json browser/archived-packages
 
 install-exec-hook:
 	cd $(DESTDIR)$(bindir) && \
-	$(LN_S) coolconfig loolconfig
+	$(LN_S) coolconfig loolconfig && \
+	$(LN_S) coolwsd loolwsd
