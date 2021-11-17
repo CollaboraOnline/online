@@ -327,7 +327,8 @@ L.Map.include({
 
 		var isAllowedInReadOnly = false;
 		var allowedCommands = ['.uno:Save', '.uno:WordCountDialog', '.uno:EditAnnotation',
-			'.uno:InsertAnnotation', '.uno:DeleteAnnotation', '.uno:Signature'];
+			'.uno:InsertAnnotation', '.uno:DeleteAnnotation', '.uno:Signature',
+			'.uno:ShowResolvedAnnotations'];
 
 		for (var i in allowedCommands) {
 			if (allowedCommands[i] === command) {
