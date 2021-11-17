@@ -17,7 +17,7 @@ export ENABLE_DEBUG
 bin_PROGRAMS = \
 	coolforkit \
 	coolmount \
-	loolconvert coolconfig
+	coolconvert coolconfig
 
 if ENABLE_LIBFUZZER
 else
@@ -29,7 +29,7 @@ dist_bin_SCRIPTS = loolwsd-systemplate-setup \
 
 man_MANS = man/loolwsd.1 \
            man/coolforkit.1 \
-           man/loolconvert.1 \
+           man/coolconvert.1 \
            man/coolconfig.1 \
            man/loolwsd-systemplate-setup.1 \
            man/loolwsd-generate-proof-key.1 \
@@ -225,7 +225,7 @@ coolmount_SOURCES = tools/mount.cpp
 
 coolmap_SOURCES = tools/map.cpp
 
-loolconvert_SOURCES = tools/Tool.cpp
+coolconvert_SOURCES = tools/Tool.cpp
 
 loolstress_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\" ${include_paths}
 loolstress_SOURCES = tools/Stress.cpp \

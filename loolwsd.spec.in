@@ -102,7 +102,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /usr/bin/loolwsd-systemplate-setup
 /usr/bin/loolwsd-generate-proof-key
 /usr/bin/coolforkit
-/usr/bin/loolconvert
+/usr/bin/coolconvert
 /usr/bin/coolconfig
 /usr/bin/loolconfig
 /usr/bin/coolmount
@@ -116,7 +116,7 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /usr/share/doc/loolwsd/reference.md
 /usr/share/man/man1/loolwsd.1.gz
 /usr/share/man/man1/coolforkit.1.gz
-/usr/share/man/man1/loolconvert.1.gz
+/usr/share/man/man1/coolconvert.1.gz
 /usr/share/man/man1/coolconfig.1.gz
 /usr/share/man/man1/loolwsd-systemplate-setup.1.gz
 /usr/share/man/man1/loolwsd-generate-proof-key.1.gz
