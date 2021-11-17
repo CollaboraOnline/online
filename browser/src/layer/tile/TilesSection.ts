@@ -30,6 +30,8 @@ class TilesSection {
 	offscreenCanvases: Array<any> = new Array(0);
 	oscCtxs: Array<any> = new Array(0);
 
+	isCalcRTL: () => boolean;
+
 	constructor () {
 		this.name = L.CSections.Tiles.name;
 		// Below anchor list may be expanded. For example, Writer may have ruler section. Then ruler section should also be added here.
@@ -129,9 +131,8 @@ class TilesSection {
 	}
 
 	private beforeDraw(canvasCtx: CanvasRenderingContext2D): void {
-		const docLayer = this.map._docLayer;
-		const isRTL: boolean = docLayer.isCalc() && docLayer.isLayoutRTL();
-		if (isRTL) {
+		const mirrorTile: boolean = this.isCalcRTL();
+		if (mirrorTile) {
 			canvasCtx.save();
 			canvasCtx.translate(this.size[0], 0);
 			canvasCtx.scale(-1, 1);
@@ -139,9 +140,8 @@ class TilesSection {
 	}
 
 	private afterDraw(canvasCtx: CanvasRenderingContext2D): void {
-		const docLayer = this.map._docLayer;
-		const isRTL: boolean = docLayer.isCalc() && docLayer.isLayoutRTL();
-		if (isRTL)
+		const mirrorTile: boolean = this.isCalcRTL();
+		if (mirrorTile)
 			canvasCtx.restore();
 	}
 
