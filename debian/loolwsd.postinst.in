@@ -23,7 +23,7 @@ case "$1" in
 	fc-cache @LO_PATH@/share/fonts/truetype
 
 	loolwsd-systemplate-setup /opt/cool/systemplate @LO_PATH@ >/dev/null 2>&1
-	loolwsd-generate-proof-key >/dev/null 2>&1
+	coolwsd-generate-proof-key >/dev/null 2>&1
     cat << EOF > /etc/apt/apt.conf.d/25loolwsd
 // Rebuild systemplate of @APP_NAME@
 DPkg::Post-Invoke { "echo Updating loolwsd systemplate;loolwsd-systemplate-setup /opt/cool/systemplate @LO_PATH@ >/dev/null 2>&1 || true"; };

@@ -25,14 +25,14 @@ bin_PROGRAMS += coolwsd
 endif
 
 dist_bin_SCRIPTS = loolwsd-systemplate-setup \
-                   loolwsd-generate-proof-key
+                   coolwsd-generate-proof-key
 
 man_MANS = man/coolwsd.1 \
            man/coolforkit.1 \
            man/coolconvert.1 \
            man/coolconfig.1 \
            man/loolwsd-systemplate-setup.1 \
-           man/loolwsd-generate-proof-key.1 \
+           man/coolwsd-generate-proof-key.1 \
            man/coolmount.1
 
 
