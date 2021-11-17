@@ -467,10 +467,7 @@ L.Control.Notebookbar = L.Control.extend({
 		$('.notebookbar-options-section').remove();
 
 		var optionsSection = L.DomUtil.create('div', 'notebookbar-options-section');
-		$('#document-titlebar').parent().append(optionsSection);
-
-		if (L.Params.closeButtonEnabled)
-			$(optionsSection).css('right', '30px');
+		$(optionsSection).insertBefore('#closebuttonwrapper');
 
 		var builderOptions = {
 			mobileWizard: this,

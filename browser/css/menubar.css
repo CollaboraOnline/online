@@ -25,7 +25,7 @@
 }
 .document-logo {
 	position: relative;
-	width: 22px;
+	width: 30px;
 	height: 30px;
 }
 
@@ -42,14 +42,11 @@
 }
 
 #document-titlebar {
-	position: relative;
 	display: inline-table; /*new*/
 	table-layout: fixed;
 	border-spacing: 5px 0;
 	max-height: 39px;
-	z-index: 1000;
-	width: calc(100% - 890px);
-	right: 0px;
+	flex-grow: 1;
 }
 
 .readonly #document-titlebar {
@@ -72,6 +69,7 @@
 	padding: 3px 3px 3px 0;
 	white-space: nowrap;
 	z-index: 12;
+	display: flex;
 }
 .main-nav.readonly {
 	position: relative;
