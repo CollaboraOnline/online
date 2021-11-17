@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-17 13:48+0100\n"
-"PO-Revision-Date: 2021-11-14 22:50+0000\n"
+"PO-Revision-Date: 2021-11-18 08:06+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.9.1-dev\n"
 
 #: admin/admin.strings.js:6
@@ -818,23 +818,23 @@ msgstr "Вставити локальне зображення"
 
 #: src/control/Control.NotebookbarBuilder.js:613
 msgid "Very Tight"
-msgstr ""
+msgstr "Дуже щільно"
 
 #: src/control/Control.NotebookbarBuilder.js:614
 msgid "Tight"
-msgstr ""
+msgstr "Щільно"
 
 #: src/control/Control.NotebookbarBuilder.js:615
 msgid "Normal"
-msgstr ""
+msgstr "Звичайно"
 
 #: src/control/Control.NotebookbarBuilder.js:616
 msgid "Loose"
-msgstr ""
+msgstr "Вільно"
 
 #: src/control/Control.NotebookbarBuilder.js:617
 msgid "Very Loose"
-msgstr ""
+msgstr "Дуже вільно"
 
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarDraw.js:79
@@ -1955,11 +1955,11 @@ msgstr "Востаннє збережено:"
 
 #: src/map/Map.js:1428
 msgid "Inactive document"
-msgstr ""
+msgstr "Неактивний документ"
 
 #: src/map/Map.js:1429
 msgid "Please click to resume editing"
-msgstr ""
+msgstr "Клацніть, щоб відновити редагування"
 
 #: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
