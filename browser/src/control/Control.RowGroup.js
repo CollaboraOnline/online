@@ -28,6 +28,7 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 	// This function is called by CanvasSectionContainer when the section is added to the sections list.
 	onInitialize: function () {
 		this._map = L.Map.THIS;
+		this.sectionProperties.docLayer = this._map._docLayer;
 		this._groups = null;
 
 		// group control styles
@@ -81,10 +82,10 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 		if (startY > this._cornerHeaderHeight) {
 			// draw head
 			this.context.fillStyle = this.backgroundColor;
-			this.context.fillRect(startX, startY, this._groupHeadSize, this._groupHeadSize);
+			this.context.fillRect(this.transformRectX(startX, this._groupHeadSize), startY, this._groupHeadSize, this._groupHeadSize);
 			this.context.strokeStyle = 'black';
 			this.context.lineWidth = app.dpiScale;
-			this.context.strokeRect(startX + 0.5, startY + 0.5, this._groupHeadSize, this._groupHeadSize);
+			this.context.strokeRect(this.transformRectX(startX + 0.5, this._groupHeadSize), startY + 0.5, this._groupHeadSize, this._groupHeadSize);
 		}
 
 		if (!group.hidden && endY > startY) {
@@ -93,15 +94,15 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 			this.context.strokeStyle = 'black';
 			this.context.lineWidth = app.dpiScale;
 			this.context.beginPath();
-			this.context.moveTo(startX + 0.5, startY + this._groupHeadSize + 0.5);
-			this.context.lineTo(startX + 0.5, endY - app.roundedDpiScale + 0.5);
-			this.context.lineTo(startX + this._groupHeadSize / 2, endY - app.roundedDpiScale + 0.5);
+			this.context.moveTo(this.transformX(startX + 0.5), startY + this._groupHeadSize + 0.5);
+			this.context.lineTo(this.transformX(startX + 0.5), endY - app.roundedDpiScale + 0.5);
+			this.context.lineTo(this.transformX(startX + this._groupHeadSize / 2), endY - app.roundedDpiScale + 0.5);
 			this.context.stroke();
 			startX -= this._groupHeadSize * 0.5;
 			if (startY > this._cornerHeaderHeight) {
 				// draw '-'
-				this.context.moveTo(startX + this._groupHeadSize * 0.25, startY + this._groupHeadSize / 2 + 0.5);
-				this.context.lineTo(startX + this._groupHeadSize * 0.75 + app.roundedDpiScale, startY + this._groupHeadSize / 2 + 0.5);
+				this.context.moveTo(this.transformX(startX + this._groupHeadSize * 0.25), startY + this._groupHeadSize / 2 + 0.5);
+				this.context.lineTo(this.transformX(startX + this._groupHeadSize * 0.75 + app.roundedDpiScale), startY + this._groupHeadSize / 2 + 0.5);
 				this.context.stroke();
 			}
 		}
@@ -109,11 +110,11 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 			// draw '+'
 			this.context.beginPath();
 
-			this.context.moveTo(startX + this._groupHeadSize * 0.25, startY + this._groupHeadSize / 2 + 0.5);
-			this.context.lineTo(startX + this._groupHeadSize * 0.75 + app.roundedDpiScale, startY + this._groupHeadSize / 2 + 0.5);
+			this.context.moveTo(this.transformX(startX + this._groupHeadSize * 0.25), startY + this._groupHeadSize / 2 + 0.5);
+			this.context.lineTo(this.transformX(startX + this._groupHeadSize * 0.75 + app.roundedDpiScale), startY + this._groupHeadSize / 2 + 0.5);
 
-			this.context.moveTo(startX + this._groupHeadSize * 0.50 + 0.5, startY + this._groupHeadSize * 0.25);
-			this.context.lineTo(startX + this._groupHeadSize * 0.50 + 0.5, startY + this._groupHeadSize * 0.75 + app.roundedDpiScale);
+			this.context.moveTo(this.transformX(startX + this._groupHeadSize * 0.50 + 0.5), startY + this._groupHeadSize * 0.25);
+			this.context.lineTo(this.transformX(startX + this._groupHeadSize * 0.50 + 0.5), startY + this._groupHeadSize * 0.75 + app.roundedDpiScale);
 
 			this.context.stroke();
 		}
@@ -129,13 +130,13 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 
 		ctx.strokeStyle = 'black';
 		ctx.lineWidth = app.dpiScale;
-		ctx.strokeRect(startX + 0.5, startY + 0.5, ctrlHeadSize, ctrlHeadSize);
+		ctx.strokeRect(this.transformRectX(startX + 0.5, ctrlHeadSize), startY + 0.5, ctrlHeadSize, ctrlHeadSize);
 		// draw level number
 		ctx.fillStyle = this._textColor;
 		ctx.font = this._getFont();
 		ctx.textAlign = 'center';
 		ctx.textBaseline = 'middle';
-		ctx.fillText(level + 1, startX + (ctrlHeadSize / 2), startY + (ctrlHeadSize / 2) + 2 * app.dpiScale);
+		ctx.fillText(level + 1, this.transformX(startX + (ctrlHeadSize / 2)), startY + (ctrlHeadSize / 2) + 2 * app.dpiScale);
 	},
 
 	// Handle user interaction.
@@ -149,7 +150,7 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 	// Clicked point is also given to handler function. This function finds the clicked header.
 	findClickedLevel: function (point) {
 		if (point[1] < this._cornerHeaderHeight) {
-			var index = (point[0] / this.size[0]) * 100; // Percentage.
+			var index = (this.transformX(point[0]) / this.size[0]) * 100; // Percentage.
 			var levelPercentage = (1 / (this._groups.length + 1)) * 100; // There is one more button than the number of levels.
 			index = Math.floor(index / levelPercentage);
 			return index;
@@ -160,6 +161,7 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 	},
 
 	findClickedGroup: function (point) {
+		var mirrorX = this.isCalcRTL();
 		for (var i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
 				for (var group in this._groups[i]) {
@@ -169,7 +171,7 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 						var startY = this.getRelativeY(group_.startPos);
 						var endX = startX + this._groupHeadSize;
 						var endY = startY + this._groupHeadSize;
-						if (point[0] > startX && point[0] < endX && point[1] > startY && point[1] < endY) {
+						if (this.isPointInRect(point, startX, startY, endX, endY, mirrorX)) {
 							return group_;
 						}
 					}
@@ -181,6 +183,7 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 
 	// Users can double click on group tails.
 	findTailsGroup: function (point) {
+		var mirrorX = this.isCalcRTL();
 		for (var i = 0; i < this._groups.length; i++) {
 			if (this._groups[i]) {
 				for (var group in this._groups[i]) {
@@ -191,7 +194,7 @@ L.Control.RowGroup = L.Control.GroupBase.extend({
 						var endX = startX + this._groupHeadSize; // Let's use this as thikcness. User doesn't have to double click on a pixel:)
 						var endY = group_.endPos + this._cornerHeaderHeight - this.documentTopLeft[1];
 
-						if (point[0] > startX && point[0] < endX && point[1] > startY && point[1] < endY) {
+						if (this.isPointInRect(point, startX, startY, endX, endY, mirrorX)) {
 							return group_;
 						}
 					}
