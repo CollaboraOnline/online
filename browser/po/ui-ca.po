@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-14 17:59+0100\n"
-"PO-Revision-Date: 2021-11-07 22:01+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2021-11-14 22:50+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.9.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1936,7 +1936,7 @@ msgstr "S'està iniciant..."
 
 #: src/map/Map.js:424 src/map/Map.js:427 src/map/Map.js:430
 msgid "Last saved:"
-msgstr ""
+msgstr "Desat per darrer cop:"
 
 #: src/map/Map.js:1430
 msgid "Inactive document - please click to resume editing"
