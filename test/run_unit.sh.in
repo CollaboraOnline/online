@@ -83,7 +83,7 @@ echo > $test_output
 echo "Running $tst | $tst_log ...";
 echo > $tst_log
 if ${trace} \
-       ${abs_top_builddir}/loolwsd --o:sys_template_path="$systemplate_path" \
+       ${abs_top_builddir}/coolwsd --o:sys_template_path="$systemplate_path" \
 				   --o:child_root_path="$jails_path" \
 				   --o:security.capabilities="${capabilities}" \
 				   --o:storage.filesystem[@allow]=true \
@@ -101,7 +101,7 @@ else
 	cat $tst_log
 	echo "============================================================="
 	echo "Test failed on unit: $tst re-run with:"
-	echo "   $ gdb --args ${abs_top_builddir}/loolwsd --o:sys_template_path=\"$systemplate_path\" \\"
+	echo "   $ gdb --args ${abs_top_builddir}/coolwsd --o:sys_template_path=\"$systemplate_path\" \\"
 	echo "         --o:child_root_path=\"$jails_path\" \\"
 	echo "         --o:security.capabilities=\"${capabilities}\" \\"
 	echo "         --o:storage.filesystem[@allow]=true \\"
