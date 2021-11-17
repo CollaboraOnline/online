@@ -37,7 +37,7 @@ L.IFrameDialog = L.Class.extend({
 	},
 
 	hasLoaded: function () {
-		return document.body.querySelectors('.iframe-dialog-wrap');
+		return document.body.querySelector('.iframe-dialog-wrap');
 	},
 
 	show: function () {
