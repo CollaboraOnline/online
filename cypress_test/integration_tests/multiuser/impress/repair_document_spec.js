@@ -1,7 +1,7 @@
 /* global describe it cy beforeEach require afterEach */
 
 var helper = require('../../common/helper');
-describe.skip('Repair Document', function() {
+describe('Repair Document', function() {
 	var testFileName = 'repair_doc.odp';
 
 	beforeEach(function() {

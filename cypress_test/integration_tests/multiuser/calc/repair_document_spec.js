@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe.skip('Repair Document', function() {
+describe('Repair Document', function() {
 	var testFileName = 'repair_doc.ods';
 
 	beforeEach(function() {
