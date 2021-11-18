@@ -98,9 +98,9 @@ while (my $line = shift @input) {
 	}
     }
 
-    # systemd[1]: loolwsd.service: main process exited, code=killed, status=11/SEGV
-    if ($line =~m/loolwsd.service: main process exited.*status=(.*)$/) {
-	print "loolwsd exit: $1\n";
+    # systemd[1]: coolwsd.service: main process exited, code=killed, status=11/SEGV
+    if ($line =~m/coolwsd.service: main process exited.*status=(.*)$/) {
+	print "coolwsd exit: $1\n";
     }
 
     if ($line =~m/Initializing wsd/) {
@@ -110,25 +110,25 @@ while (my $line = shift @input) {
 
 
     # different PIDs: ...
-    # [loolbroker     ] Spawned kit [1689].
-    # [loolkit        ] loolkit [1689] is ready.
-    # [loolbroker     ] Child 1536 terminated.
-    # [loolbroker     ] Child process [1689] exited with code: 0.
-    if ($line =~ m/loolbroker.*Forked kit \[(\d+)\]./) {
+    # [coolbroker     ] Spawned kit [1689].
+    # [coolkit        ] coolkit [1689] is ready.
+    # [coolbroker     ] Child 1536 terminated.
+    # [coolbroker     ] Child process [1689] exited with code: 0.
+    if ($line =~ m/coolbroker.*Forked kit \[(\d+)\]./) {
 	my $pid = $1;
 	$lok_starting{$pid} = 1;
 	$pevent = "newkit\t\"$pid\"";
 	$pdetail = '';
     }
-    if ($line =~ m/loolkit \[(\d+)\] is ready./) {
+    if ($line =~ m/coolkit \[(\d+)\] is ready./) {
 	my $pid = $1;
 	delete $lok_starting{$pid};
 	$lok_running{$pid} = 1;
 	$pevent = "livekit\t\"$pid\"";
 	$pdetail = '';
     }
-    # [loolbroker     ] Child process [1689] exited with code: 0.
-    if ($line =~ m/loolbroker.*Child process \[(\d+)\]\s+(\S+)\s+.*with /) {
+    # [coolbroker     ] Child process [1689] exited with code: 0.
+    if ($line =~ m/coolbroker.*Child process \[(\d+)\]\s+(\S+)\s+.*with /) {
 	my $pid = $1;
 	my $code = $2;
 	$code = 'exit' if ($code eq 'exited');
@@ -137,7 +137,7 @@ while (my $line = shift @input) {
 	$pdetail = '';
     }
 
-    # loolwsd:
+    # coolwsd:
     if ($line =~ m/Loading new document from URI: \[([^\]]+)\].*for session \[([^\]]+)\]/) {
 	my ($doc_uri, $session) = ($1, $2);
 	$sessions{$session} = $doc_uri;

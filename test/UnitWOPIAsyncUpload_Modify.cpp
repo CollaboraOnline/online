@@ -57,10 +57,10 @@ public:
             LOG_TST("WaitFirstPutFile => Close");
             _phase = Phase::Close;
 
-            LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
+            LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
 
             // We requested the save.
-            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsAutosave"));
+            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
 
             // Fail with error.
             LOG_TST("assertPutFileRequest: returning 404 to simulate PutFile failure");
@@ -74,10 +74,10 @@ public:
                                _phase == Phase::WaitSecondPutFile);
 
             // the document is modified
-            LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
+            LOK_ASSERT_EQUAL(std::string("true"), request.get("X-COOL-WOPI-IsModifiedByUser"));
 
             // Triggered while closing.
-            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsAutosave"));
+            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
 
             passTest("Document uploaded on closing as expected.");
 

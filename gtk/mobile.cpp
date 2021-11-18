@@ -21,16 +21,16 @@
 
 #include "FakeSocket.hpp"
 #include "Log.hpp"
-#include "LOOLWSD.hpp"
+#include "COOLWSD.hpp"
 #include "Protocol.hpp"
 #include "Util.hpp"
 
 const int SHOW_JS_MAXLEN = 70;
 
-int loolwsd_server_socket_fd = -1;
+int coolwsd_server_socket_fd = -1;
 
 static std::string fileURL;
-static LOOLWSD *loolwsd = nullptr;
+static COOLWSD *coolwsd = nullptr;
 static int fakeClientFd;
 static int closeNotificationPipeForForwardingThread[2];
 static WebKitWebView *webView;
@@ -44,7 +44,7 @@ static void send2JS_ready_callback(GObject      *source_object,
 
 static void send2JS(const std::vector<char>& buffer)
 {
-    LOG_TRC_NOFILE("Send to JS: " << LOOLProtocol::getAbbreviatedMessage(buffer.data(), buffer.size()));
+    LOG_TRC_NOFILE("Send to JS: " << COOLProtocol::getAbbreviatedMessage(buffer.data(), buffer.size()));
 
     std::string js;
 
@@ -145,7 +145,7 @@ static void handle_message(const char * type, WebKitJavascriptResult *js_result)
     g_free(string_value);
 }
 
-static void handle_lool_message(WebKitUserContentManager *manager,
+static void handle_cool_message(WebKitUserContentManager *manager,
                                 WebKitJavascriptResult   *js_result,
                                 gpointer                  user_data)
 {
@@ -159,10 +159,10 @@ static void handle_lool_message(WebKitUserContentManager *manager,
         {
             // Now we know that the JS has started completely
 
-            // Contact the permanently (during app lifetime) listening LOOLWSD server
+            // Contact the permanently (during app lifetime) listening COOLWSD server
             // "public" socket
-            assert(loolwsd_server_socket_fd != -1);
-            int rc = fakeSocketConnect(fakeClientFd, loolwsd_server_socket_fd);
+            assert(coolwsd_server_socket_fd != -1);
+            int rc = fakeSocketConnect(fakeClientFd, coolwsd_server_socket_fd);
             assert(rc != -1);
 
             // Create a socket pair to notify the below thread when the document has been closed
@@ -288,17 +288,17 @@ int main(int argc, char* argv[])
 
     std::thread([]
                 {
-                    assert(loolwsd == nullptr);
+                    assert(coolwsd == nullptr);
                     char *argv[2];
                     argv[0] = strdup("mobile");
                     argv[1] = nullptr;
                     Util::setThreadName("app");
                     while (true)
                     {
-                        loolwsd = new LOOLWSD();
-                        loolwsd->run(1, argv);
-                        delete loolwsd;
-                        LOG_TRC("One run of LOOLWSD completed");
+                        coolwsd = new COOLWSD();
+                        coolwsd->run(1, argv);
+                        delete coolwsd;
+                        LOG_TRC("One run of COOLWSD completed");
                     }
                 }).detach();
 
@@ -313,7 +313,7 @@ int main(int argc, char* argv[])
     WebKitUserContentManager *userContentManager = WEBKIT_USER_CONTENT_MANAGER(webkit_user_content_manager_new());
 
     g_signal_connect(userContentManager, "script-message-received::debug", G_CALLBACK(handle_debug_message), nullptr);
-    g_signal_connect(userContentManager, "script-message-received::cool",  G_CALLBACK(handle_lool_message), nullptr);
+    g_signal_connect(userContentManager, "script-message-received::cool",  G_CALLBACK(handle_cool_message), nullptr);
     g_signal_connect(userContentManager, "script-message-received::error", G_CALLBACK(handle_error_message), nullptr);
 
     webkit_user_content_manager_register_script_message_handler(userContentManager, "debug");

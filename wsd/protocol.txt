@@ -354,7 +354,7 @@ loggingleveloverride <default|max|verbose|terse|none|fatal|critical|error|warnin
 server -> client
 ================
 
-coolserver <loolwsd version> <loolwsd git hash> <major.minor[-patch]>
+coolserver <coolwsd version> <coolwsd git hash> <major.minor[-patch]>
 
     Upon connection, the server must announce the version number it supports.
     Major: an integer that must always match between client and server,
@@ -809,7 +809,7 @@ sent_bytes
 recv_bytes
 
     Queries for total memory or bandwidth being consumed by the server
-    in kilobytes. For mem_consumed this includes processes - loolwsd,
+    in kilobytes. For mem_consumed this includes processes - coolwsd,
     coolforkit, and child processes hosting various documents. For
     sent/recv_bytes this includes only external traffic.
 
@@ -827,7 +827,7 @@ settings
     Queries the server for configurable settings from admin console.
 
 log_lines
-    Gets last n lines from "loolwsd.log" file.
+    Gets last n lines from "coolwsd.log" file.
 
 channel_list
     Gets the log channels list with their respective log levels.

@@ -51,9 +51,9 @@ public:
             _phase = Phase::Polling;
 
             // We requested the save.
-            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-LOOL-WOPI-IsAutosave"));
+            LOK_ASSERT_EQUAL(std::string("false"), request.get("X-COOL-WOPI-IsAutosave"));
 
-            if (request.get("X-LOOL-WOPI-IsModifiedByUser") != "true")
+            if (request.get("X-COOL-WOPI-IsModifiedByUser") != "true")
             {
                 // There is a race when closing the document right after modifying,
                 // so the modified flag may not be set, but there should be no data

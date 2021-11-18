@@ -128,7 +128,7 @@ window.app = { // Shouldn't have any functions defined.
 	    gecko3d = 'MozPerspective' in doc.style,
 	    opera12 = 'OTransition' in doc.style;
 
-	var chromebook = window.ThisIsTheAndroidApp && window.LOOLMessageHandler.isChromeOS();
+	var chromebook = window.ThisIsTheAndroidApp && window.COOLMessageHandler.isChromeOS();
 
 	var touch = !window.L_NO_TOUCH && (pointer || 'ontouchstart' in window ||
 			(window.DocumentTouch && document instanceof window.DocumentTouch)) && !chromebook;

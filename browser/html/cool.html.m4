@@ -66,9 +66,9 @@ m4_ifelse(GTKAPP,[true],
 )
 m4_ifelse(ANDROIDAPP,[true],
   [   window.ThisIsTheAndroidApp = true;
-   window.postMobileMessage = function(msg) { window.LOOLMessageHandler.postMobileMessage(msg); };
-   window.postMobileError   = function(msg) { window.LOOLMessageHandler.postMobileError(msg); };
-   window.postMobileDebug   = function(msg) { window.LOOLMessageHandler.postMobileDebug(msg); };],
+   window.postMobileMessage = function(msg) { window.COOLMessageHandler.postMobileMessage(msg); };
+   window.postMobileError   = function(msg) { window.COOLMessageHandler.postMobileError(msg); };
+   window.postMobileDebug   = function(msg) { window.COOLMessageHandler.postMobileDebug(msg); };],
   [   window.ThisIsTheAndroidApp = false;]
 )
 
@@ -252,9 +252,9 @@ m4_ifelse(MOBILEAPP,[true],
         </div>
         <div id="about-dialog-info-container">
           <div id="about-dialog-info">
-            <div> LOOLWSD version:</div>
-            <div id="loolwsd-version"></div>
-            <div id="loolwsd-id" style="visibility: hidden;"></div>
+            <div> COOLWSD version:</div>
+            <div id="coolwsd-version"></div>
+            <div id="coolwsd-id" style="visibility: hidden;"></div>
             <div>LOKit version:</div>
             <div id="lokit-version"></div>
             m4_ifelse(MOBILEAPP,[],[<div id="os-info"></div>],[<p></p>])

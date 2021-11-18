@@ -231,7 +231,7 @@ public:
         }
 
         std::string s;
-        const bool broadcast = (LOOLProtocol::getTokenString(tokens, "broadcast", s) &&
+        const bool broadcast = (COOLProtocol::getTokenString(tokens, "broadcast", s) &&
                                 s == "yes");
 
         TileDesc result(pairs["nviewid"], pairs["part"], pairs["width"], pairs["height"],
@@ -326,37 +326,37 @@ private:
         for (std::size_t i = 0; i < numberOfPositions; ++i)
         {
             int x = 0;
-            if (!LOOLProtocol::stringToInteger(positionXtokens[i], x))
+            if (!COOLProtocol::stringToInteger(positionXtokens[i], x))
             {
                 throw BadArgumentException("Invalid 'tileposx' in tilecombine descriptor.");
             }
 
             int y = 0;
-            if (!LOOLProtocol::stringToInteger(positionYtokens[i], y))
+            if (!COOLProtocol::stringToInteger(positionYtokens[i], y))
             {
                 throw BadArgumentException("Invalid 'tileposy' in tilecombine descriptor.");
             }
 
             int imgSize = 0;
-            if (!imgSizeTokens.empty() && !LOOLProtocol::stringToInteger(imgSizeTokens[i], imgSize))
+            if (!imgSizeTokens.empty() && !COOLProtocol::stringToInteger(imgSizeTokens[i], imgSize))
             {
                 throw BadArgumentException("Invalid 'imgsize' in tilecombine descriptor.");
             }
 
             int ver = -1;
-            if (!verTokens.empty() && !verTokens[i].empty() && !LOOLProtocol::stringToInteger(verTokens[i], ver))
+            if (!verTokens.empty() && !verTokens[i].empty() && !COOLProtocol::stringToInteger(verTokens[i], ver))
             {
                 throw BadArgumentException("Invalid 'ver' in tilecombine descriptor.");
             }
 
             TileWireId oldWireId = 0;
-            if (!oldWireIdTokens.empty() && !LOOLProtocol::stringToUInt32(oldWireIdTokens[i], oldWireId))
+            if (!oldWireIdTokens.empty() && !COOLProtocol::stringToUInt32(oldWireIdTokens[i], oldWireId))
             {
                 throw BadArgumentException("Invalid tilecombine descriptor.");
             }
 
             TileWireId wireId = 0;
-            if (!wireIdTokens.empty() && !LOOLProtocol::stringToUInt32(wireIdTokens[i], wireId))
+            if (!wireIdTokens.empty() && !COOLProtocol::stringToUInt32(wireIdTokens[i], wireId))
             {
                 throw BadArgumentException("Invalid tilecombine descriptor.");
             }
@@ -476,7 +476,7 @@ public:
         {
             std::string name;
             std::string value;
-            if (LOOLProtocol::parseNameValuePair(tokens.getParam(token), name, value))
+            if (COOLProtocol::parseNameValuePair(tokens.getParam(token), name, value))
             {
                 if (name == "tileposx")
                 {
@@ -505,7 +505,7 @@ public:
                 else
                 {
                     int v = 0;
-                    if (LOOLProtocol::stringToInteger(value, v))
+                    if (COOLProtocol::stringToInteger(value, v))
                     {
                         pairs[name] = v;
                     }

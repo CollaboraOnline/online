@@ -27,14 +27,14 @@
 		BE5EB5C8213FE29900E0826C /* FileUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5C0213FE29900E0826C /* FileUtil.cpp */; };
 		BE5EB5CF213FE2D000E0826C /* ClientSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5CC213FE2D000E0826C /* ClientSession.cpp */; };
 		BE5EB5D0213FE2D000E0826C /* TileCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5CD213FE2D000E0826C /* TileCache.cpp */; };
-		BE5EB5D22140039100E0826C /* LOOLWSD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D12140039100E0826C /* LOOLWSD.cpp */; };
+		BE5EB5D22140039100E0826C /* COOLWSD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D12140039100E0826C /* COOLWSD.cpp */; };
 		BE5EB5D421400DC100E0826C /* DocumentBroker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D321400DC100E0826C /* DocumentBroker.cpp */; };
 		BE5EB5D621401E0F00E0826C /* Storage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D521401E0F00E0826C /* Storage.cpp */; };
 		BE5EB5DA2140363100E0826C /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE5EB5D92140363100E0826C /* ios.mm */; };
 		BE5EB5DC2140480B00E0826C /* ICU.dat in Resources */ = {isa = PBXBuildFile; fileRef = BE5EB5DB2140480B00E0826C /* ICU.dat */; };
 		BE6362C22153B5B500F4237E /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE6362C12153B5B500F4237E /* CoreServices.framework */; };
 		BE7228E22417BC9F000ADABD /* StringVector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE7228E02417BC9F000ADABD /* StringVector.cpp */; };
-		BE7D6A6B23FAA8B500C2E605 /* loolkitconfig.xcu in Resources */ = {isa = PBXBuildFile; fileRef = BE7D6A6A23FAA8B500C2E605 /* loolkitconfig.xcu */; };
+		BE7D6A6B23FAA8B500C2E605 /* coolkitconfig.xcu in Resources */ = {isa = PBXBuildFile; fileRef = BE7D6A6A23FAA8B500C2E605 /* coolkitconfig.xcu */; };
 		BE80E43221AD92F700859C97 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = BE80E43121AD92F600859C97 /* Fonts */; };
 		BE80E45821B68F5700859C97 /* TemplateCollectionViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE80E45721B68F5700859C97 /* TemplateCollectionViewController.mm */; };
 		BE80E45E21B6CEF200859C97 /* TemplateSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE80E45D21B6CEF200859C97 /* TemplateSectionHeaderView.m */; };
@@ -560,7 +560,7 @@
 		BE5EB5C0213FE29900E0826C /* FileUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileUtil.cpp; sourceTree = "<group>"; };
 		BE5EB5CC213FE2D000E0826C /* ClientSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ClientSession.cpp; sourceTree = "<group>"; };
 		BE5EB5CD213FE2D000E0826C /* TileCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TileCache.cpp; sourceTree = "<group>"; };
-		BE5EB5D12140039100E0826C /* LOOLWSD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LOOLWSD.cpp; sourceTree = "<group>"; };
+		BE5EB5D12140039100E0826C /* COOLWSD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = COOLWSD.cpp; sourceTree = "<group>"; };
 		BE5EB5D321400DC100E0826C /* DocumentBroker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DocumentBroker.cpp; sourceTree = "<group>"; };
 		BE5EB5D521401E0F00E0826C /* Storage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Storage.cpp; sourceTree = "<group>"; };
 		BE5EB5D92140363100E0826C /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../ios/ios.mm; sourceTree = "<group>"; };
@@ -675,7 +675,7 @@
 		BE7D6A6523FA9C2700C2E605 /* defaultprovider.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = defaultprovider.hxx; path = "../../ios-device/configmgr/source/defaultprovider.hxx"; sourceTree = "<group>"; };
 		BE7D6A6623FA9C2700C2E605 /* parser.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = parser.hxx; path = "../../ios-device/configmgr/source/parser.hxx"; sourceTree = "<group>"; };
 		BE7D6A6723FA9C2700C2E605 /* rootnode.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = rootnode.cxx; path = "../../ios-device/configmgr/source/rootnode.cxx"; sourceTree = "<group>"; };
-		BE7D6A6A23FAA8B500C2E605 /* loolkitconfig.xcu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = loolkitconfig.xcu; path = ../loolkitconfig.xcu; sourceTree = "<group>"; };
+		BE7D6A6A23FAA8B500C2E605 /* coolkitconfig.xcu */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = coolkitconfig.xcu; path = ../coolkitconfig.xcu; sourceTree = "<group>"; };
 		BE7E5B7623AD07BE00F9462A /* SvxPresetListBox.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SvxPresetListBox.cxx; path = "../../ios-device/svx/source/tbxctrls/SvxPresetListBox.cxx"; sourceTree = "<group>"; };
 		BE7E5B7723AD07BE00F9462A /* tbxcolor.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tbxcolor.cxx; path = "../../ios-device/svx/source/tbxctrls/tbxcolor.cxx"; sourceTree = "<group>"; };
 		BE7E5B7823AD07BE00F9462A /* tbxdrctl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = tbxdrctl.cxx; path = "../../ios-device/svx/source/tbxctrls/tbxdrctl.cxx"; sourceTree = "<group>"; };
@@ -1503,7 +1503,7 @@
 		BE00F8922139494E001CE2D4 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BE7D6A6A23FAA8B500C2E605 /* loolkitconfig.xcu */,
+				BE7D6A6A23FAA8B500C2E605 /* coolkitconfig.xcu */,
 				BE18C7DD226DE09A001AD27E /* Branding */,
 				BEB0E5D821C7CA800085A0CF /* Settings.bundle */,
 				BE80E46721B7066C00859C97 /* Templates */,
@@ -2222,7 +2222,7 @@
 				BE5EB5CC213FE2D000E0826C /* ClientSession.cpp */,
 				BE5EB5D321400DC100E0826C /* DocumentBroker.cpp */,
 				BE484B71228D8622001EE76C /* DocumentBroker.hpp */,
-				BE5EB5D12140039100E0826C /* LOOLWSD.cpp */,
+				BE5EB5D12140039100E0826C /* COOLWSD.cpp */,
 				BE5EB5D521401E0F00E0826C /* Storage.cpp */,
 				BE5EB5CD213FE2D000E0826C /* TileCache.cpp */,
 			);
@@ -3631,7 +3631,7 @@
 				BE00F8A721396585001CE2D4 /* cool-help.html in Resources */,
 				BE8D773D2136762600AC58EA /* LaunchScreen.storyboard in Resources */,
 				BE00F8A121396585001CE2D4 /* bundle.css in Resources */,
-				BE7D6A6B23FAA8B500C2E605 /* loolkitconfig.xcu in Resources */,
+				BE7D6A6B23FAA8B500C2E605 /* coolkitconfig.xcu in Resources */,
 				BE8D85CF214055F3009F1860 /* udkapi.rdb in Resources */,
 				BE18C7DE226DE09A001AD27E /* Branding in Resources */,
 				BE8D85D5214055F3009F1860 /* unorc in Resources */,
@@ -3661,7 +3661,7 @@
 				BEA283582146945500848631 /* ChildSession.cpp in Sources */,
 				BE80E45E21B6CEF200859C97 /* TemplateSectionHeaderView.m in Sources */,
 				BE5EB5C3213FE29900E0826C /* Session.cpp in Sources */,
-				BE5EB5D22140039100E0826C /* LOOLWSD.cpp in Sources */,
+				BE5EB5D22140039100E0826C /* COOLWSD.cpp in Sources */,
 				BEFB1EE121C29CC70081D757 /* L10n.mm in Sources */,
 				BEDCC8992456FFAD00FB02BD /* SceneDelegate.m in Sources */,
 				BE5EB5C6213FE29900E0826C /* SigUtil.cpp in Sources */,
@@ -3842,7 +3842,7 @@
 					"IOS=IOS",
 					"DISABLE_DYNLOADING=1",
 					"DEBUG=1",
-					"LOOLWSD_CONFIGDIR='\".\"'",
+					"COOLWSD_CONFIGDIR='\".\"'",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				HEADER_SEARCH_PATHS = (
@@ -3901,7 +3901,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"IOS=IOS",
 					"DISABLE_DYNLOADING=1",
-					"LOOLWSD_CONFIGDIR='\".\"'",
+					"COOLWSD_CONFIGDIR='\".\"'",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				HEADER_SEARCH_PATHS = (

@@ -279,7 +279,7 @@ public:
 private:
     void handleMessage(const std::vector<char>& data) override
     {
-        LOG_DBG("Got message: " << LOOLProtocol::getAbbreviatedMessage(data));
+        LOG_DBG("Got message: " << COOLProtocol::getAbbreviatedMessage(data));
         {
             std::unique_lock<std::mutex> lock(_inMutex);
             _inQueue.put(data);
@@ -291,8 +291,8 @@ private:
     bool matchMessage(const std::string& prefix, const std::vector<char>& message,
                       const std::string& context)
     {
-        const auto header = LOOLProtocol::getFirstLine(message);
-        const bool match = LOOLProtocol::matchPrefix(prefix, header);
+        const auto header = COOLProtocol::getFirstLine(message);
+        const bool match = COOLProtocol::matchPrefix(prefix, header);
         LOG_DBG(context << (match ? "Matched" : "Skipped") << " message [" << prefix
                         << "]: " << header);
         return match;

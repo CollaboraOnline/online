@@ -76,14 +76,14 @@ var AdminSocketSettings = AdminSocketBase.extend({
 		}
 		else if (textMsg.startsWith('coolserver ')) {
 			// This must be the first message, unless we reconnect.
-			var loolwsdVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			var h = loolwsdVersionObj.Hash;
+			var coolwsdVersionObj = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+			var h = coolwsdVersionObj.Hash;
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				h = '<a target="_blank" href="https://github.com/CollaboraOnline/online/commits/' + h + '">' + h + '</a>';
-				$('#loolwsd-version').html(loolwsdVersionObj.Version + ' (git hash: ' + h + ')');
+				$('#coolwsd-version').html(coolwsdVersionObj.Version + ' (git hash: ' + h + ')');
 			}
 			else {
-				$('#loolwsd-version').text(loolwsdVersionObj.Version);
+				$('#coolwsd-version').text(coolwsdVersionObj.Version);
 			}
 		}
 		else if (textMsg.startsWith('lokitversion ')) {

@@ -2,7 +2,7 @@
 export MAX_CONCURRENCY=4
 AUTOMAKE_OPTION = serial-tests
 
-# unittest: tests that run a captive loolwsd as part of themselves.
+# unittest: tests that run a captive coolwsd as part of themselves.
 check_PROGRAMS = fakesockettest
 
 noinst_PROGRAMS = fakesockettest unittest unithttplib
@@ -10,8 +10,8 @@ noinst_PROGRAMS = fakesockettest unittest unithttplib
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit \
 	-I${top_srcdir} \
-	-pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' \
-	-DLOOLWSD_CONFIGDIR='"@LOOLWSD_CONFIGDIR@"' \
+	-pthread -DCOOLWSD_DATADIR='"@COOLWSD_DATADIR@"' \
+	-DCOOLWSD_CONFIGDIR='"@COOLWSD_CONFIGDIR@"' \
 	-DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
 	${include_paths}
 

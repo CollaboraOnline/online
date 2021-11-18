@@ -25,7 +25,7 @@
 #import "FakeSocket.hpp"
 #import "Kit.hpp"
 #import "Log.hpp"
-#import "LOOLWSD.hpp"
+#import "COOLWSD.hpp"
 #import "SetupKitEnvironment.hpp"
 #import "Util.hpp"
 
@@ -180,7 +180,7 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    auto trace = std::getenv("LOOL_LOGLEVEL");
+    auto trace = std::getenv("COOL_LOGLEVEL");
     if (!trace)
         trace = strdup("warning");
 
@@ -198,18 +198,18 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
     NSString *cacheDirectory = [userDirectory stringByAppendingPathComponent:@"cache"];
 
     NSString *coreVersionHashFile = [cacheDirectory stringByAppendingPathComponent:@"core_version_hash"];
-    NSString *loolwsdVersionHashFile = [cacheDirectory stringByAppendingPathComponent:@"loolwsd_version_hash"];
+    NSString *coolwsdVersionHashFile = [cacheDirectory stringByAppendingPathComponent:@"coolwsd_version_hash"];
 
     NSData *oldCoreVersionHash = [NSData dataWithContentsOfFile:coreVersionHashFile];
-    NSData *oldLoolwsdVersionHash = [NSData dataWithContentsOfFile:loolwsdVersionHashFile];
+    NSData *oldCoolwsdVersionHash = [NSData dataWithContentsOfFile:coolwsdVersionHashFile];
 
     NSData *coreVersionHash = [NSData dataWithBytes:CORE_VERSION_HASH length:strlen(CORE_VERSION_HASH)];
-    NSData *loolwsdVersionHash = [NSData dataWithBytes:LOOLWSD_VERSION_HASH length:strlen(LOOLWSD_VERSION_HASH)];
+    NSData *coolwsdVersionHash = [NSData dataWithBytes:COOLWSD_VERSION_HASH length:strlen(COOLWSD_VERSION_HASH)];
 
     if (oldCoreVersionHash == nil
         || ![oldCoreVersionHash isEqualToData:coreVersionHash]
-        || oldLoolwsdVersionHash == nil
-        || ![oldLoolwsdVersionHash isEqualToData:loolwsdVersionHash]) {
+        || oldCoolwsdVersionHash == nil
+        || ![oldCoolwsdVersionHash isEqualToData:coolwsdVersionHash]) {
 
         [[NSFileManager defaultManager] removeItemAtPath:cacheDirectory error:nil];
 
@@ -219,8 +219,8 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
         if (![[NSFileManager defaultManager] createFileAtPath:coreVersionHashFile contents:coreVersionHash attributes:nil])
             NSLog(@"Could not create %@", coreVersionHashFile);
 
-        if (![[NSFileManager defaultManager] createFileAtPath:loolwsdVersionHashFile contents:loolwsdVersionHash attributes:nil])
-            NSLog(@"Could not create %@", loolwsdVersionHashFile);
+        if (![[NSFileManager defaultManager] createFileAtPath:coolwsdVersionHashFile contents:coolwsdVersionHash attributes:nil])
+            NSLog(@"Could not create %@", coolwsdVersionHashFile);
     }
 
     // Having LANG in the environment is expected to happen only when debugging from Xcode. When
@@ -313,8 +313,8 @@ static void updateTemplates(NSData *data, NSURLResponse *response)
                        argv[0] = strdup([[NSBundle mainBundle].executablePath UTF8String]);
                        argv[1] = nullptr;
                        Util::setThreadName("app");
-                       auto loolwsd = new LOOLWSD();
-                       loolwsd->run(1, argv);
+                       auto coolwsd = new COOLWSD();
+                       coolwsd->run(1, argv);
 
                        // Should never return
                        assert(false);

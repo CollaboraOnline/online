@@ -42,31 +42,31 @@ dist_doc_DATA = wsd/README \
                 wsd/reference.md \
                 wsd/metrics.txt
 
-coolwsddatadir = @LOOLWSD_DATADIR@
+coolwsddatadir = @COOLWSD_DATADIR@
 
 coolwsddata_DATA = discovery.xml \
                    favicon.ico
 
-coolwsdconfigdir = @LOOLWSD_CONFIGDIR@
+coolwsdconfigdir = @COOLWSD_CONFIGDIR@
 
-coolwsdconfig_DATA = loolwsd.xml \
-		     loolkitconfig.xcu
+coolwsdconfig_DATA = coolwsd.xml \
+		     coolkitconfig.xcu
 
 apache2configdir = ${sysconfdir}/apache2/conf-available
 
-apache2config_DATA = etc/apache2/loolwsd.conf
+apache2config_DATA = etc/apache2/coolwsd.conf
 
 nginxconfigdir = ${sysconfdir}/nginx/snippets
 
-nginxconfig_DATA = etc/nginx/loolwsd.conf
+nginxconfig_DATA = etc/nginx/coolwsd.conf
 
 ACLOCAL_AMFLAGS = -I m4
 
 # quick and easy for now.
 include_paths = -I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit ${ZLIB_CFLAGS}
 
-AM_CPPFLAGS = -pthread -DLOOLWSD_DATADIR='"@LOOLWSD_DATADIR@"' \
-	      -DLOOLWSD_CONFIGDIR='"@LOOLWSD_CONFIGDIR@"' \
+AM_CPPFLAGS = -pthread -DCOOLWSD_DATADIR='"@COOLWSD_DATADIR@"' \
+	      -DCOOLWSD_CONFIGDIR='"@COOLWSD_CONFIGDIR@"' \
 	      -DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
 	      ${include_paths}
 
@@ -79,12 +79,12 @@ AM_LDFLAGS = -pthread -Wl,-E -lpam $(ZLIB_LIBS)
 if ENABLE_SSL
 AM_LDFLAGS += -lssl -lcrypto
 else
-loolwsd_fuzzer_LDADD = -lssl -lcrypto
+coolwsd_fuzzer_LDADD = -lssl -lcrypto
 coolwsd_LDADD = -lssl -lcrypto
 coolconfig_LDADD = -lssl -lcrypto
 endif
 
-loolwsd_fuzzer_CPPFLAGS = -DKIT_IN_PROCESS=1 -DFUZZER=1 -DTDOC=\"$(abs_top_srcdir)/test/data\" $(AM_CPPFLAGS)
+coolwsd_fuzzer_CPPFLAGS = -DKIT_IN_PROCESS=1 -DFUZZER=1 -DTDOC=\"$(abs_top_srcdir)/test/data\" $(AM_CPPFLAGS)
 
 AM_ETAGSFLAGS = --c++-kinds=+p --fields=+iaS --extra=+q -R --totals=yes --exclude=browser *
 AM_CTAGSFLAGS = $(AM_ETAGSFLAGS)
@@ -123,7 +123,7 @@ coolwsd_sources = common/Crypto.cpp \
                   wsd/Auth.cpp \
                   wsd/DocumentBroker.cpp \
                   wsd/ProxyProtocol.cpp \
-                  wsd/LOOLWSD.cpp \
+                  wsd/COOLWSD.cpp \
                   wsd/ClientSession.cpp \
                   wsd/FileServer.cpp \
                   wsd/FileServerUtil.cpp \
@@ -144,8 +144,8 @@ noinst_PROGRAMS = clientnb \
                   connect \
                   lokitclient \
                   coolmap \
-                  loolstress \
-                  loolsocketdump
+                  coolstress \
+                  coolsocketdump
 
 if ENABLE_LIBFUZZER
 noinst_PROGRAMS += \
@@ -153,7 +153,7 @@ noinst_PROGRAMS += \
 		   clientsession_fuzzer \
 		   httpresponse_fuzzer
 else
-noinst_PROGRAMS += loolwsd_fuzzer
+noinst_PROGRAMS += coolwsd_fuzzer
 endif
 
 connect_SOURCES = tools/Connect.cpp \
@@ -180,7 +180,7 @@ coolforkit_json = $(patsubst %.cpp,%.cmd,$(coolforkit_sources))
 coolforkit_SOURCES = $(coolforkit_sources) \
                      $(shared_sources)
 
-loolwsd_fuzzer_SOURCES = $(coolwsd_sources) \
+coolwsd_fuzzer_SOURCES = $(coolwsd_sources) \
                          $(coolforkit_sources) \
                          $(shared_sources) \
                          kit/DummyLibreOfficeKit.cpp
@@ -227,8 +227,8 @@ coolmap_SOURCES = tools/map.cpp
 
 coolconvert_SOURCES = tools/Tool.cpp
 
-loolstress_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\" ${include_paths}
-loolstress_SOURCES = tools/Stress.cpp \
+coolstress_CPPFLAGS = -DTDOC=\"$(abs_top_srcdir)/test/data\" ${include_paths}
+coolstress_SOURCES = tools/Stress.cpp \
                      common/DummyTraceEventEmitter.cpp \
                      $(shared_sources)
 
@@ -239,7 +239,7 @@ coolconfig_SOURCES = tools/Config.cpp \
 		     common/StringVector.cpp \
 		     common/Util.cpp
 
-loolsocketdump_SOURCES = tools/WebSocketDump.cpp \
+coolsocketdump_SOURCES = tools/WebSocketDump.cpp \
 			 common/DummyTraceEventEmitter.cpp \
 			 $(shared_sources)
 
@@ -251,7 +251,7 @@ wsd_headers = wsd/Admin.hpp \
               wsd/ProxyProtocol.hpp \
               wsd/Exceptions.hpp \
               wsd/FileServer.hpp \
-              wsd/LOOLWSD.hpp \
+              wsd/COOLWSD.hpp \
               wsd/ProofKey.hpp \
               wsd/RequestDetails.hpp \
               wsd/SenderQueue.hpp \
@@ -314,11 +314,11 @@ kit_headers = kit/ChildSession.hpp \
               kit/Watermark.hpp
 
 noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
-                 tools/LOOLWebSocket.hpp \
+                 tools/COOLWebSocket.hpp \
                  test/UnitHTTP.hpp \
                  test/HttpTestServer.hpp \
                  test/WopiTestServer.hpp \
-                 test/countloolkits.hpp \
+                 test/countcoolkits.hpp \
                  test/lokassert.hpp \
                  test/test.hpp \
                  test/testlog.hpp \
@@ -337,27 +337,27 @@ dist-hook:
 
 EXTRA_DIST = discovery.xml \
              favicon.ico \
-             loolkitconfig.xcu \
-             loolwsd.init.rhel6 \
-             loolwsd.spec \
-             loolwsd.xml.in \
-             loolwsd.service \
-             sysconfig.loolwsd \
+             coolkitconfig.xcu \
+             coolwsd.init.rhel6 \
+             coolwsd.spec \
+             coolwsd.xml.in \
+             coolwsd.service \
+             sysconfig.coolwsd \
              debian/compat \
              debian/copyright \
-             debian/loolwsd.preinst \
-             debian/loolwsd.service \
+             debian/coolwsd.preinst \
+             debian/coolwsd.service \
              debian/rules \
              debian/source/format \
              debian/changelog \
              debian/control \
-             debian/loolwsd.postinst \
-             debian/loolwsd.postrm \
+             debian/coolwsd.postinst \
+             debian/coolwsd.postrm \
              etc/key.pem \
              etc/cert.pem \
              etc/ca-chain.cert.pem \
-             etc/apache2/loolwsd.conf \
-             etc/nginx/loolwsd.conf \
+             etc/apache2/coolwsd.conf \
+             etc/nginx/coolwsd.conf \
              scripts/unocommands.py \
              scripts/refresh-git-hooks \
              README.md \
@@ -366,7 +366,7 @@ EXTRA_DIST = discovery.xml \
 if ENABLE_LIBFUZZER
 CLEANUP_COMMAND=true
 else
-# Use loolwsd to cleanup jails, if any. If it fails, we may have a broken/old loolwsd binary, remove it to rebuild.
+# Use coolwsd to cleanup jails, if any. If it fails, we may have a broken/old coolwsd binary, remove it to rebuild.
 # A CI box may switch branches without cleaning up the binaries, if coolwsd from a broken branch is used here
 # it will fail all subsequent builds, until it's rebuilt from the new branch. So removing coolwsd after failing is needed.
 CLEANUP_COMMAND=if test -s ./coolwsd; then echo "Cleaning up..." && ./coolwsd --disable-cool-user-checking --cleanup --o:logging.level=trace || rm ./coolwsd; fi
@@ -390,7 +390,7 @@ else
 CLEANUP_DEPS=coolwsd coolmount coolforkit
 endif
 
-# Build loolwsd and coolmount first, so we can cleanup before updating
+# Build coolwsd and coolmount first, so we can cleanup before updating
 # the systemplate directory, which we can't rm if it's mounted.
 $(SYSTEM_STAMP): ${top_srcdir}/coolwsd-systemplate-setup $(CLEANUP_DEPS)
 	$(SET_CAPS_COMMAND)
@@ -416,15 +416,15 @@ clean-local:
 	rm -rf "${top_srcdir}/loleaflet"
 
 if ENABLE_DEBUG
-# can write to /tmp/loolwsd.log
+# can write to /tmp/coolwsd.log
   OUTPUT_TO_FILE=true
 else
-# can't write to /var/log/loolwsd.log
+# can't write to /var/log/coolwsd.log
   OUTPUT_TO_FILE=false
 endif
 
 setup-wsd: all @JAILS_PATH@
-	@echo "Launching loolwsd"
+	@echo "Launching coolwsd"
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@cp $(abs_top_srcdir)/test/data/hello.odt $(abs_top_srcdir)/test/data/hello-world.odt
 	@cp $(abs_top_srcdir)/test/data/hello.ods $(abs_top_srcdir)/test/data/hello-world.ods
@@ -476,7 +476,7 @@ run-trace: setup-wsd
                           --o:trace.outgoing.record=false
 
 run-valgrind: setup-wsd
-	@echo "Launching coolwsd under valgrind (but not forkit/loolkit, yet)"
+	@echo "Launching coolwsd under valgrind (but not forkit/coolkit, yet)"
 	valgrind --tool=memcheck --trace-children=no -v --read-var-info=yes \
 		./coolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			  --o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \

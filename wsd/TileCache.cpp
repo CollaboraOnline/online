@@ -28,7 +28,7 @@
 #include <Util.hpp>
 #include <common/FileUtil.hpp>
 
-using namespace LOOLProtocol;
+using namespace COOLProtocol;
 
 TileCache::TileCache(std::string docURL, const std::chrono::system_clock::time_point& modifiedTime,
                      bool dontCache)
@@ -38,7 +38,7 @@ TileCache::TileCache(std::string docURL, const std::chrono::system_clock::time_p
     , _maxCacheSize(512 * 1024)
 {
 #ifndef BUILDING_TESTS
-    LOG_INF("TileCache ctor for uri [" << LOOLWSD::anonymizeUrl(_docURL) <<
+    LOG_INF("TileCache ctor for uri [" << COOLWSD::anonymizeUrl(_docURL) <<
             "], modifiedTime=" << std::chrono::duration_cast<std::chrono::seconds>
 							(modifiedTime.time_since_epoch()).count() << "], dontCache=" << _dontCache);
 #endif
@@ -49,7 +49,7 @@ TileCache::~TileCache()
 {
     _owner = std::thread::id();
 #ifndef BUILDING_TESTS
-    LOG_INF("~TileCache dtor for uri [" << LOOLWSD::anonymizeUrl(_docURL) << "].");
+    LOG_INF("~TileCache dtor for uri [" << COOLWSD::anonymizeUrl(_docURL) << "].");
 #endif
 }
 
@@ -259,7 +259,7 @@ bool TileCache::getTextStream(StreamType type, const std::string& fileName, std:
         buffer.pop_back();
 
     content = std::string(buffer.data(), buffer.size());
-    LOG_INF("Read '" << LOOLProtocol::getAbbreviatedMessage(content.c_str(), content.size()) <<
+    LOG_INF("Read '" << COOLProtocol::getAbbreviatedMessage(content.c_str(), content.size()) <<
             "' from " << fileName);
 
     return true;
@@ -267,7 +267,7 @@ bool TileCache::getTextStream(StreamType type, const std::string& fileName, std:
 
 void TileCache::saveTextStream(StreamType type, const std::string& text, const std::string& fileName)
 {
-    LOG_INF("Saving '" << LOOLProtocol::getAbbreviatedMessage(text.c_str(), text.size()) <<
+    LOG_INF("Saving '" << COOLProtocol::getAbbreviatedMessage(text.c_str(), text.size()) <<
             "' to " << fileName << " of size " << text.size() << " bytes");
 
     saveDataToStreamCache(type, fileName, text.c_str(), text.size());

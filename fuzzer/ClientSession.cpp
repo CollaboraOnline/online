@@ -6,7 +6,7 @@
 
 bool DoInitialization()
 {
-    LOOLWSD::ChildRoot = "/fuzz/child-root";
+    COOLWSD::ChildRoot = "/fuzz/child-root";
     return true;
 }
 

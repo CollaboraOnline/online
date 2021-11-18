@@ -28,7 +28,7 @@
 #include "ClientSession.hpp"
 #include "Exceptions.hpp"
 #include "JailUtil.hpp"
-#include "LOOLWSD.hpp"
+#include "COOLWSD.hpp"
 #include "SenderQueue.hpp"
 #include "Storage.hpp"
 #include "TileCache.hpp"
@@ -51,7 +51,7 @@
 
 #define TILES_ON_FLY_MIN_UPPER_LIMIT 10.0f
 
-using namespace LOOLProtocol;
+using namespace COOLProtocol;
 
 using Poco::JSON::Object;
 
@@ -138,13 +138,13 @@ DocumentBroker::DocumentBroker(ChildType type,
     _mobileAppDocId(mobileAppDocId)
 {
     assert(!_docKey.empty());
-    assert(!LOOLWSD::ChildRoot.empty());
+    assert(!COOLWSD::ChildRoot.empty());
 
 #ifdef IOS
     assert(_mobileAppDocId > 0);
 #endif
 
-    LOG_INF("DocumentBroker [" << LOOLWSD::anonymizeUrl(_uriPublic.toString()) <<
+    LOG_INF("DocumentBroker [" << COOLWSD::anonymizeUrl(_uriPublic.toString()) <<
             "] created with docKey [" << _docKey << ']');
 }
 
@@ -153,7 +153,7 @@ void DocumentBroker::setupPriorities()
 #if !MOBILEAPP
     if (_type == ChildType::Batch)
     {
-        int prio = LOOLWSD::getConfigValue<int>("per_document.batch_priority", 5);
+        int prio = COOLWSD::getConfigValue<int>("per_document.batch_priority", 5);
         Util::setProcessAndThreadPriorities(_childProcess->getPid(), prio);
     }
 #endif
@@ -220,7 +220,7 @@ void DocumentBroker::pollThread()
         _poll->removeSockets();
 
         // Async cleanup.
-        LOOLWSD::doHousekeeping();
+        COOLWSD::doHousekeeping();
 
         LOG_INF("Finished docBroker polling thread for docKey [" << _docKey << "].");
         return;
@@ -234,7 +234,7 @@ void DocumentBroker::pollThread()
 
 #if !MOBILEAPP
     static const std::size_t IdleDocTimeoutSecs
-        = LOOLWSD::getConfigValue<int>("per_document.idle_timeout_secs", 3600);
+        = COOLWSD::getConfigValue<int>("per_document.idle_timeout_secs", 3600);
 
     // Used to accumulate B/W deltas.
     uint64_t adminSent = 0;
@@ -248,7 +248,7 @@ void DocumentBroker::pollThread()
         // ignore load time out
         std::getenv("PAUSEFORDEBUGGER") ? -1 :
 #endif
-        LOOLWSD::getConfigValue<int>("per_document.limit_load_secs", 100);
+        COOLWSD::getConfigValue<int>("per_document.limit_load_secs", 100);
 
     auto loadDeadline = std::chrono::steady_clock::now() + std::chrono::seconds(limit_load_secs);
 #endif
@@ -495,7 +495,7 @@ void DocumentBroker::pollThread()
 
 #if !MOBILEAPP
     // Async cleanup.
-    LOOLWSD::doHousekeeping();
+    COOLWSD::doHousekeeping();
 #endif
 
     if (_tileCache)
@@ -589,7 +589,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         // Pass the public URI to storage as it needs to load using the token
         // and other storage-specific data provided in the URI.
         const Poco::URI& uriPublic = session->getPublicUri();
-        LOG_DBG("Loading, and creating new storage instance for URI [" << LOOLWSD::anonymizeUrl(uriPublic.toString()) << "].");
+        LOG_DBG("Loading, and creating new storage instance for URI [" << COOLWSD::anonymizeUrl(uriPublic.toString()) << "].");
 
         try
         {
@@ -638,11 +638,11 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         templateSource = wopifileinfo->getTemplateSource();
 
         if (!wopifileinfo->getUserCanWrite() ||
-            LOOLWSD::IsViewFileExtension(wopiStorage->getFileExtension()))
+            COOLWSD::IsViewFileExtension(wopiStorage->getFileExtension()))
         {
             LOG_DBG("Setting the session as readonly");
             session->setReadOnly();
-            if (LOOLWSD::IsViewWithCommentsFileExtension(wopiStorage->getFileExtension()))
+            if (COOLWSD::IsViewWithCommentsFileExtension(wopiStorage->getFileExtension()))
             {
                 LOG_DBG("Allow session to change comments");
                 session->setAllowChangeComments();
@@ -664,7 +664,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         {
             // Update the scheme to https if ssl or ssl termination is on
             if (wopifileinfo->getPostMessageOrigin().substr(0, 7) == "http://" &&
-                (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination()))
+                (COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination()))
             {
                 wopifileinfo->getPostMessageOrigin().replace(0, 4, "https");
                 LOG_DBG("Updating PostMessageOrigin scheme to HTTPS. Updated origin is [" << wopifileinfo->getPostMessageOrigin() << "].");
@@ -737,11 +737,11 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
             userId = localfileinfo->getUserId();
             username = localfileinfo->getUsername();
 
-            if (LOOLWSD::IsViewFileExtension(localStorage->getFileExtension()))
+            if (COOLWSD::IsViewFileExtension(localStorage->getFileExtension()))
             {
                 LOG_DBG("Setting the session as readonly");
                 session->setReadOnly();
-                if (LOOLWSD::IsViewWithCommentsFileExtension(localStorage->getFileExtension()))
+                if (COOLWSD::IsViewWithCommentsFileExtension(localStorage->getFileExtension()))
                 {
                     LOG_DBG("Allow session to change comments");
                     session->setAllowChangeComments();
@@ -791,8 +791,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 #endif
 
 #if ENABLE_SUPPORT_KEY
-    if (!LOOLWSD::OverrideWatermark.empty())
-        watermarkText = LOOLWSD::OverrideWatermark;
+    if (!COOLWSD::OverrideWatermark.empty())
+        watermarkText = COOLWSD::OverrideWatermark;
 #endif
 
     session->setUserId(userId);
@@ -801,8 +801,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     session->setWatermarkText(watermarkText);
     session->createCanonicalViewId(_sessions);
 
-    LOG_DBG("Setting username [" << LOOLWSD::anonymizeUsername(username) << "] and userId [" <<
-            LOOLWSD::anonymizeUsername(userId) << "] for session [" << sessionId <<
+    LOG_DBG("Setting username [" << COOLWSD::anonymizeUsername(username) << "] and userId [" <<
+            COOLWSD::anonymizeUsername(userId) << "] for session [" << sessionId <<
             "] is canonical id " << session->getCanonicalViewId());
 
     // Basic file information was stored by the above getWOPIFileInfo() or getLocalFileInfo() calls
@@ -868,7 +868,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 
 #if !MOBILEAPP
         // Check if we have a prefilter "plugin" for this document format
-        for (const auto& plugin : LOOLWSD::PluginConfigurations)
+        for (const auto& plugin : COOLWSD::PluginConfigurations)
         {
             try
             {
@@ -941,13 +941,13 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         Poco::DigestOutputStream dos(sha1);
         Poco::StreamCopier::copyStream(istr, dos);
         dos.close();
-        LOG_INF("SHA1 for DocKey [" << _docKey << "] of [" << LOOLWSD::anonymizeUrl(localPath) << "]: " <<
+        LOG_INF("SHA1 for DocKey [" << _docKey << "] of [" << COOLWSD::anonymizeUrl(localPath) << "]: " <<
                 Poco::DigestEngine::digestToHex(sha1.digest()));
 
         std::string localPathEncoded;
         Poco::URI::encode(localPath, "#?", localPathEncoded);
         _uriJailed = Poco::URI(Poco::URI("file://"), localPathEncoded).toString();
-        _uriJailedAnonym = Poco::URI(Poco::URI("file://"), LOOLWSD::anonymizeUrl(localPathEncoded)).toString();
+        _uriJailedAnonym = Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
 
         _filename = fileInfo.getFilename();
 
@@ -979,7 +979,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     }
 
 #if !MOBILEAPP
-    LOOLWSD::dumpNewSessionTrace(getJailId(), sessionId, _uriOrig, _storage->getRootFilePath());
+    COOLWSD::dumpNewSessionTrace(getJailId(), sessionId, _uriOrig, _storage->getRootFilePath());
 
     // Since document has been loaded, send the stats if its WOPI
     if (wopiStorage != nullptr)
@@ -1076,7 +1076,7 @@ DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
     if (isMarkedToDestroy() || _docState.isUnloadRequested())
     {
         static const bool always_save
-            = LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
+            = COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
         if (always_save)
         {
             LOG_INF("Need to upload per always_save_on_exit config (MarkedToDestroy=true).");
@@ -1307,9 +1307,9 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
     // Map the FileId from the docKey to the new filename to anonymize the new filename as the FileId.
     const std::string newFilename = Util::getFilenameFromURL(uri);
     const std::string fileId = Util::getFilenameFromURL(_docKey);
-    if (LOOLWSD::AnonymizeUserData)
+    if (COOLWSD::AnonymizeUserData)
     {
-        LOG_DBG("New filename [" << LOOLWSD::anonymizeUrl(newFilename)
+        LOG_DBG("New filename [" << COOLWSD::anonymizeUrl(newFilename)
                                  << "] will be known by its fileId [" << fileId << ']');
 
         Util::mapAnonymized(newFilename, fileId);
@@ -1317,7 +1317,7 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
 
     assert(_storage && "Must have a valid Storage instance");
 
-    const std::string uriAnonym = LOOLWSD::anonymizeUrl(uri);
+    const std::string uriAnonym = COOLWSD::anonymizeUrl(uri);
 
     // If the file timestamp hasn't changed, skip uploading.
     const std::string filePath = _storage->getRootFilePathUploading();
@@ -1493,7 +1493,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
             const std::string url = uri.toString();
             std::string encodedName;
             Poco::URI::encode(filename, "", encodedName);
-            const std::string filenameAnonym = LOOLWSD::anonymizeUrl(filename);
+            const std::string filenameAnonym = COOLWSD::anonymizeUrl(filename);
             std::ostringstream oss;
             oss << "renamefile: " << "filename=" << encodedName << " url=" << url;
             broadcastMessage(oss.str());
@@ -1509,13 +1509,13 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
             // encode the name
             std::string encodedName;
             Poco::URI::encode(filename, "", encodedName);
-            const std::string filenameAnonym = LOOLWSD::anonymizeUrl(filename);
+            const std::string filenameAnonym = COOLWSD::anonymizeUrl(filename);
 
             const auto session = _uploadRequest->session();
             if (session)
             {
                 LOG_DBG("Uploaded SaveAs docKey [" << _docKey << "] to URI ["
-                                                   << LOOLWSD::anonymizeUrl(url) << "] with name ["
+                                                   << COOLWSD::anonymizeUrl(url) << "] with name ["
                                                    << filenameAnonym << "] successfully.");
 
                 std::ostringstream oss;
@@ -1532,7 +1532,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
             else
             {
                 LOG_DBG("Uploaded SaveAs docKey ["
-                        << _docKey << "] to URI [" << LOOLWSD::anonymizeUrl(url) << "] with name ["
+                        << _docKey << "] to URI [" << COOLWSD::anonymizeUrl(url) << "] with name ["
                         << filenameAnonym << "] successfully, but the client session is closed.");
             }
         }
@@ -1629,7 +1629,7 @@ void DocumentBroker::broadcastSaveResult(bool success, const std::string& result
 {
     const std::string resultstr = success ? "true" : "false";
     // Some sane limit, otherwise we get problems transferring this to the client with large strings (can be a whole webpage)
-    std::string errorMsgFormatted = LOOLProtocol::getAbbreviatedMessage(errorMsg);
+    std::string errorMsgFormatted = COOLProtocol::getAbbreviatedMessage(errorMsg);
     // Replace reserved characters
     errorMsgFormatted = Poco::translate(errorMsgFormatted, "\"", "'");
     broadcastMessage("commandresult: { \"command\": \"save\", \"success\": " + resultstr +
@@ -1745,11 +1745,11 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
     {
         // The configured maximum idle duration before saving. Zero to disable.
         static const std::chrono::milliseconds MaxIdleSaveDurationMs = std::chrono::seconds(
-            LOOLWSD::getConfigValue<int>("per_document.idlesave_duration_secs", 30));
+            COOLWSD::getConfigValue<int>("per_document.idlesave_duration_secs", 30));
 
         // The configured maximum duration before saving. Zero to disable.
         static const std::chrono::milliseconds MaxAutoSaveDurationMs = std::chrono::seconds(
-            LOOLWSD::getConfigValue<int>("per_document.autosave_duration_secs", 300));
+            COOLWSD::getConfigValue<int>("per_document.autosave_duration_secs", 300));
 
         const std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
         const std::chrono::milliseconds inactivityTimeMs
@@ -1859,7 +1859,7 @@ bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminat
 std::string DocumentBroker::getJailRoot() const
 {
     assert(!_jailId.empty());
-    return Poco::Path(LOOLWSD::ChildRoot, _jailId).toString();
+    return Poco::Path(COOLWSD::ChildRoot, _jailId).toString();
 }
 
 std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& session)
@@ -1870,7 +1870,7 @@ std::size_t DocumentBroker::addSession(const std::shared_ptr<ClientSession>& ses
     }
     catch (const std::exception& exc)
     {
-        LOG_ERR("Failed to add session to [" << _docKey << "] with URI [" << LOOLWSD::anonymizeUrl(session->getPublicUri().toString()) << "]: " << exc.what());
+        LOG_ERR("Failed to add session to [" << _docKey << "] with URI [" << COOLWSD::anonymizeUrl(session->getPublicUri().toString()) << "]: " << exc.what());
         if (_sessions.empty())
         {
             LOG_INF("Doc [" << _docKey << "] has no more sessions. Marking to destroy.");
@@ -1959,7 +1959,7 @@ std::size_t DocumentBroker::removeSession(const std::string& id)
         const bool isLastSession = (_sessions.size() == 1);
 
         const bool lastEditableSession = (!session->isReadOnly() || session->isAllowChangeComments()) && !haveAnotherEditableSession(id);
-        static const bool dontSaveIfUnmodified = !LOOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
+        static const bool dontSaveIfUnmodified = !COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
 
         LOG_INF("Removing session ["
                 << id << "] on docKey [" << _docKey << "]. Have " << _sessions.size()
@@ -2036,7 +2036,7 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
         if (it != _sessions.end())
         {
 #if !MOBILEAPP
-            LOOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
+            COOLWSD::dumpEndSessionTrace(getJailId(), id, _uriOrig);
 #endif
             if (_docState.isUnloadRequested())
             {
@@ -2247,11 +2247,11 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
     LOG_TRC("DocumentBroker handling child message: [" << message->abbr() << "].");
 
 #if !MOBILEAPP
-    if (LOOLWSD::TraceDumper)
-        LOOLWSD::dumpOutgoingTrace(getJailId(), "0", message->abbr());
+    if (COOLWSD::TraceDumper)
+        COOLWSD::dumpOutgoingTrace(getJailId(), "0", message->abbr());
 #endif
 
-    if (LOOLProtocol::getFirstToken(message->forwardToken(), '-') == "client")
+    if (COOLProtocol::getFirstToken(message->forwardToken(), '-') == "client")
     {
         forwardToClient(message);
     }
@@ -2269,9 +2269,9 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
         {
             LOG_CHECK_RET(message->tokens().size() == 3, false);
             std::string cmd, kind;
-            LOOLProtocol::getTokenString((*message)[1], "cmd", cmd);
+            COOLProtocol::getTokenString((*message)[1], "cmd", cmd);
             LOG_CHECK_RET(cmd != "", false);
-            LOOLProtocol::getTokenString((*message)[2], "kind", kind);
+            COOLProtocol::getTokenString((*message)[2], "kind", kind);
             LOG_CHECK_RET(kind != "", false);
             Util::alertAllUsers(cmd, kind);
         }
@@ -2279,9 +2279,9 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
         {
             LOG_CHECK_RET(message->tokens().size() == 3, false);
             std::string downloadid, url;
-            LOOLProtocol::getTokenString((*message)[1], "downloadid", downloadid);
+            COOLProtocol::getTokenString((*message)[1], "downloadid", downloadid);
             LOG_CHECK_RET(downloadid != "", false);
-            LOOLProtocol::getTokenString((*message)[2], "url", url);
+            COOLProtocol::getTokenString((*message)[2], "url", url);
             LOG_CHECK_RET(url != "", false);
 
             _registeredDownloadLinks[downloadid] = url;
@@ -2289,21 +2289,21 @@ bool DocumentBroker::handleInput(const std::vector<char>& payload)
         else if (message->firstTokenMatches("traceevent:"))
         {
             LOG_CHECK_RET(message->tokens().size() == 1, false);
-            if (LOOLWSD::TraceEventFile != NULL && TraceEvent::isRecordingOn())
+            if (COOLWSD::TraceEventFile != NULL && TraceEvent::isRecordingOn())
             {
                 const auto newLine = static_cast<const char*>(memchr(payload.data(), '\n', payload.size()));
                 if (newLine)
-                    LOOLWSD::writeTraceEventRecording(newLine + 1, payload.size() - (newLine + 1 - payload.data()));
+                    COOLWSD::writeTraceEventRecording(newLine + 1, payload.size() - (newLine + 1 - payload.data()));
             }
         }
         else if (message->firstTokenMatches("forcedtraceevent:"))
         {
             LOG_CHECK_RET(message->tokens().size() == 1, false);
-            if (LOOLWSD::TraceEventFile != NULL)
+            if (COOLWSD::TraceEventFile != NULL)
             {
                 const auto newLine = static_cast<const char*>(memchr(payload.data(), '\n', payload.size()));
                 if (newLine)
-                    LOOLWSD::writeTraceEventRecording(newLine + 1, payload.size() - (newLine + 1 - payload.data()));
+                    COOLWSD::writeTraceEventRecording(newLine + 1, payload.size() - (newLine + 1 - payload.data()));
             }
         }
         else
@@ -2469,7 +2469,7 @@ bool DocumentBroker::lookupSendClipboardTag(const std::shared_ptr<StreamSocket> 
     LOG_TRC("Clipboard request " << tag << " not for a live session - check cache.");
 #if !MOBILEAPP
     std::shared_ptr<std::string> saved =
-        LOOLWSD::SavedClipboards->getClipboard(tag);
+        COOLWSD::SavedClipboards->getClipboard(tag);
     if (saved)
     {
             std::ostringstream oss;
@@ -2729,7 +2729,7 @@ void DocumentBroker::setModified(const bool value)
 
     if (value || _storageManager.lastUploadSuccessful())
     {
-        // Set the X-LOOL-WOPI-IsModifiedByUser header flag sent to storage.
+        // Set the X-COOL-WOPI-IsModifiedByUser header flag sent to storage.
         // But retain the last value if we failed to upload, so we don't clobber it.
         _storage->setUserModified(value);
     }
@@ -2798,7 +2798,7 @@ bool DocumentBroker::forwardToClient(const std::shared_ptr<Message>& payload)
 
     std::string name;
     std::string sid;
-    if (LOOLProtocol::parseNameValuePair(payload->forwardToken(), name, sid, '-') && name == "client")
+    if (COOLProtocol::parseNameValuePair(payload->forwardToken(), name, sid, '-') && name == "client")
     {
         const auto& data = payload->data().data();
         const auto& size = payload->size();
@@ -2989,7 +2989,7 @@ ConvertToBroker::ConvertToBroker(const std::string& uri,
                                               << format << "], options: [" << sOptions << "].");
 
     static const std::chrono::seconds limit_convert_secs(
-        LOOLWSD::getConfigValue<int>("per_document.limit_convert_secs", 100));
+        COOLWSD::getConfigValue<int>("per_document.limit_convert_secs", 100));
     _limitLifeSeconds = limit_convert_secs;
     ++gConvertToBrokerInstanceCouter;
 }
@@ -3053,7 +3053,7 @@ void ConvertToBroker::setLoaded()
 
     // file:///user/docs/filename.ext normally, file:///<jail-root>/user/docs/filename.ext in the nocaps case
     const std::string toJailURL = "file://" +
-        (LOOLWSD::NoCapsForKit? getJailRoot(): "") +
+        (COOLWSD::NoCapsForKit? getJailRoot(): "") +
         std::string(JAILED_DOCUMENT_ROOT) + toPath.getFileName();
 
     std::string encodedTo;
@@ -3202,7 +3202,7 @@ void DocumentBroker::dumpState(std::ostream& os)
 
     auto now = std::chrono::steady_clock::now();
 
-    os << " Broker: " << LOOLWSD::anonymizeUrl(_filename) << " pid: " << getPid();
+    os << " Broker: " << COOLWSD::anonymizeUrl(_filename) << " pid: " << getPid();
     if (_docState.isMarkedToDestroy())
         os << " *** Marked to destroy ***";
     else
@@ -3217,9 +3217,9 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  recv: " << recv;
     os << "\n  modified?: " << isModified();
     os << "\n  jail id: " << _jailId;
-    os << "\n  filename: " << LOOLWSD::anonymizeUrl(_filename);
+    os << "\n  filename: " << COOLWSD::anonymizeUrl(_filename);
     os << "\n  public uri: " << _uriPublic.toString();
-    os << "\n  jailed uri: " << LOOLWSD::anonymizeUrl(_uriJailed);
+    os << "\n  jailed uri: " << COOLWSD::anonymizeUrl(_uriJailed);
     os << "\n  doc key: " << _docKey;
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();

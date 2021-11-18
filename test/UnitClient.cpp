@@ -13,7 +13,7 @@
 
 #define TST_LOG_REDIRECT
 #include <Unit.hpp>
-#include <wsd/LOOLWSD.hpp>
+#include <wsd/COOLWSD.hpp>
 
 #include <test.hpp>
 

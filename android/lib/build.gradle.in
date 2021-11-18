@@ -93,9 +93,9 @@ task copyUnpackAssets(type: Copy) {
             includes = ['**']
         }
     }
-    into('etc/loolwsd') {
-        from('/android/loolkitconfig.xcu')
-            includes = [ 'loolkitconfig.xcu' ]
+    into('etc/coolwsd') {
+        from('/android/coolkitconfig.xcu')
+            includes = [ 'coolkitconfig.xcu' ]
     }
     into('user/fonts') {
         from "${liboInstdir}/share/fonts/truetype"
@@ -189,9 +189,9 @@ task copyDocTemplates(type: Copy) {
 }
 
 task copyKitConfig(type: Copy) {
-        from "${file(rootProject.getRootDir()).getParent()}/loolkitconfig-mobile.xcu"
-        into "src/main/assets/etc/loolwsd"
-        rename { "loolkitconfig.xcu" }
+        from "${file(rootProject.getRootDir()).getParent()}/coolkitconfig-mobile.xcu"
+        into "src/main/assets/etc/coolwsd"
+        rename { "coolkitconfig.xcu" }
 }
 
 task createStrippedConfig {

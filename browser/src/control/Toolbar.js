@@ -725,9 +725,9 @@ L.Map.include({
 				map._docLayer.toggleTileDebugMode();
 			} else if (event.key === 'l') {
 				// L toggges the Online logging level between the default (whatever
-				// is set in loolwsd.xml or on the loolwsd command line) and the
+				// is set in coolwsd.xml or on the coolwsd command line) and the
 				// most verbose a client is allowed to set (which also can be set in
-				// loolwsd.xml or on the loolwsd command line).
+				// coolwsd.xml or on the coolwsd command line).
 				//
 				// In a typical developer "make run" setup, the default is "trace"
 				// so there is nothing more verbose. But presumably it is different
@@ -741,18 +741,18 @@ L.Map.include({
 
 				var logLevelInformation = newLogLevel;
 				if (newLogLevel === 'default')
-					logLevelInformation = 'default (from loolwsd.xml)';
+					logLevelInformation = 'default (from coolwsd.xml)';
 				else if (newLogLevel === 'verbose')
-					logLevelInformation = 'most verbose (from loolwsd.xml)';
+					logLevelInformation = 'most verbose (from coolwsd.xml)';
 				else if (newLogLevel === 'terse')
-					logLevelInformation = 'least verbose (from loolwsd.xml)';
+					logLevelInformation = 'least verbose (from coolwsd.xml)';
 				else
 					logLevelInformation = newLogLevel;
 
 				$(app.ExpertlyTrickForLOAbout.contentEl).find('#log-level-state').html('Log level: ' + logLevelInformation);
 			} else if (event.key === 't') {
 				// T turns Trace Event recording on in the Kit process
-				// for this document, as long as loolwsd is running with the
+				// for this document, as long as coolwsd is running with the
 				// trace_event[@enable] config option as true. T again
 				// turns it off.
 
@@ -768,7 +768,7 @@ L.Map.include({
 					// as directed by the SAL_LOG environment variable, and
 					// 2) all warnings on plus SAL_INFO for sc.
 					//
-					// (Note that loolwsd sets the SAL_LOG environment variable
+					// (Note that coolwsd sets the SAL_LOG environment variable
 					// to "-WARN-INFO", i.e. the default is that nothing is
 					// logged from core.)
 

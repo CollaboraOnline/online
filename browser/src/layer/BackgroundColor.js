@@ -43,7 +43,7 @@ L.BackgroundColor = L.Layer.extend({
 
 /*
  * A L.BackgroundColor that automatically resets its color
- * based on 'statechange' messages from loolwsd.
+ * based on 'statechange' messages from coolwsd.
  */
 L.CalcBackground = L.BackgroundColor.extend({
 	onAdd: function(map) {

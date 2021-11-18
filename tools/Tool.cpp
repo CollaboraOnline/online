@@ -61,7 +61,7 @@ protected:
 };
 
 
-using namespace LOOLProtocol;
+using namespace COOLProtocol;
 
 using Poco::Net::HTTPClientSession;
 using Poco::Net::HTTPRequest;
@@ -107,7 +107,7 @@ public:
             form.addPart("data", new Poco::Net::FilePartSource(document));
             form.prepareSubmit(request);
 
-            // If this results in a Poco::Net::ConnectionRefusedException, loolwsd is not running.
+            // If this results in a Poco::Net::ConnectionRefusedException, coolwsd is not running.
             form.write(session->sendRequest(request));
         }
         catch (const Poco::Exception &e)

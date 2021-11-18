@@ -8,7 +8,7 @@
 #include <config.h>
 
 #include <Unit.hpp>
-#include <wsd/LOOLWSD.hpp>
+#include <wsd/COOLWSD.hpp>
 
 const int NumToPrefork = 20;
 

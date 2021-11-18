@@ -299,7 +299,7 @@ namespace SigUtil
 #endif
 
 #if !ENABLE_DEBUG
-        if (std::getenv("LOOL_DEBUG"))
+        if (std::getenv("COOL_DEBUG"))
 #endif
         {
             Log::signalLog(FatalGdbString);

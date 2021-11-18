@@ -24,7 +24,7 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
-class LOOLWebSocket;
+class COOLWebSocket;
 
 namespace
 {
@@ -107,27 +107,27 @@ UnitBase::TestResult UnitSession::testHandshake()
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         std::unique_ptr<Poco::Net::HTTPClientSession> session(
             helpers::createSession(Poco::URI(helpers::getTestServerURI())));
-        LOOLWebSocket socket(*session, request, response);
+        COOLWebSocket socket(*session, request, response);
         socket.setReceiveTimeout(0);
 
         int flags = 0;
         char buffer[1024] = { 0 };
         int bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
+        TST_LOG("Got " << COOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
         LOK_ASSERT_MESSAGE(
             "Expected 'statusindicator: find' response from the server but got nothing.",
             bytes > 0);
         LOK_ASSERT_EQUAL(std::string("statusindicator: find"), std::string(buffer, bytes));
 
         bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
+        TST_LOG("Got " << COOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
         if (bytes > 0 && !std::strstr(buffer, "error:"))
         {
             LOK_ASSERT_EQUAL(std::string("statusindicator: connect"),
                                  std::string(buffer, bytes));
 
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
+            TST_LOG("Got " << COOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
             if (!std::strstr(buffer, "error:"))
             {
                 LOK_ASSERT_EQUAL(std::string("statusindicator: ready"),
@@ -140,7 +140,7 @@ UnitBase::TestResult UnitSession::testHandshake()
 
                 // close frame message
                 bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-                TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
+                TST_LOG("Got " << COOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
                 LOK_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK)
                                == Poco::Net::WebSocket::FRAME_OP_CLOSE);
             }
@@ -152,7 +152,7 @@ UnitBase::TestResult UnitSession::testHandshake()
 
             // close frame message
             bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
+            TST_LOG("Got " << COOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
             LOK_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK)
                            == Poco::Net::WebSocket::FRAME_OP_CLOSE);
         }
@@ -177,7 +177,7 @@ UnitBase::TestResult UnitSession::testSlideShow()
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::HTTPResponse httpResponse;
-        std::shared_ptr<LOOLWebSocket> socket = helpers::connectLOKit(
+        std::shared_ptr<COOLWebSocket> socket = helpers::connectLOKit(
             Poco::URI(helpers::getTestServerURI()), request, httpResponse, testname);
 
         helpers::sendTextFrame(socket, "load url=" + documentURL, testname);

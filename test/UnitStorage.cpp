@@ -47,7 +47,7 @@ public:
         assert(_ws.get());
         int flags = 0, len;;
         char reply[4096];
-        while ((len = _ws->getLOOLWebSocket()->receiveFrame(reply, sizeof(reply) - 1, flags)) > 0)
+        while ((len = _ws->getCOOLWebSocket()->receiveFrame(reply, sizeof(reply) - 1, flags)) > 0)
         {
             reply[len] = '\0';
             if (bExpectFailure &&

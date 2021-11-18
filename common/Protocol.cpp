@@ -17,7 +17,7 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
-namespace LOOLProtocol
+namespace COOLProtocol
 {
     std::tuple<int, int, std::string> ParseVersion(const std::string& version)
     {

@@ -9,7 +9,7 @@
     <child_root_path desc="Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate. Must be an empty directory." type="path" relative="true" default="jails"></child_root_path>
     <mount_jail_tree desc="Controls whether the systemplate and lotemplate contents are mounted or not, which is much faster than the default of linking/copying each file." type="bool" default="true"></mount_jail_tree>
 
-    <server_name desc="External hostname:port of the server running loolwsd. If empty, it's derived from the request (please set it if this doesn't work). Must be specified when behind a reverse-proxy or when the hostname is not reachable directly." type="string" default=""></server_name>
+    <server_name desc="External hostname:port of the server running coolwsd. If empty, it's derived from the request (please set it if this doesn't work). Must be specified when behind a reverse-proxy or when the hostname is not reachable directly." type="string" default=""></server_name>
     <file_server_root_path desc="Path to the directory that should be considered root for the file server. This should be the directory containing browser." type="path" relative="true" default="browser/../"></file_server_root_path>
 
     <memproportion desc="The maximum percentage of system memory consumed by all of the Collabora Online Development Edition, after which we start cleaning up idle documents" type="double" default="80.0"></memproportion>
@@ -53,7 +53,7 @@
              See also: https://docs.libreoffice.org/sal/html/sal_log.html -->
         <lokit_sal_log type="string" desc="Fine tune log messages from LOKit. Default is to suppress log messages from LOKit." default="-INFO-WARN">-INFO-WARN</lokit_sal_log>
         <file enable="true">
-            <property name="path" desc="Log file path.">/tmp/loolwsd.log</property>
+            <property name="path" desc="Log file path.">/tmp/coolwsd.log</property>
             <property name="rotation" desc="Log file rotation strategy. See Poco FileChannel.">never</property>
             <property name="archive" desc="Append either timestamp or number to the archived log filename.">timestamp</property>
             <property name="compress" desc="Enable/disable log file compression.">true</property>
@@ -71,7 +71,7 @@
     <browser_logging desc="Logging in the browser console" default="true">true</browser_logging>
 
     <trace desc="Dump commands and notifications for replay. When 'snapshot' is true, the source file is copied to the path first." enable="false">
-        <path desc="Output path to hold trace file and docs. Use '%' for timestamp to avoid overwriting. For example: /some/path/to/looltrace-%.gz" compress="true" snapshot="false"></path>
+        <path desc="Output path to hold trace file and docs. Use '%' for timestamp to avoid overwriting. For example: /some/path/to/cooltrace-%.gz" compress="true" snapshot="false"></path>
         <filter>
             <message desc="Regex pattern of messages to exclude"></message>
         </filter>
@@ -81,10 +81,10 @@
     </trace>
 
     <net desc="Network settings">
-      <!-- On systems where localhost resolves to IPv6 [::1] address first, when net.proto is all and net.listen is loopback, loolwsd unexpectedly listens on [::1] only.
+      <!-- On systems where localhost resolves to IPv6 [::1] address first, when net.proto is all and net.listen is loopback, coolwsd unexpectedly listens on [::1] only.
            You need to change net.proto to IPv4, if you want to use 127.0.0.1. -->
       <proto type="string" default="all" desc="Protocol to use IPv4, IPv6 or all for both">all</proto>
-      <listen type="string" default="any" desc="Listen address that loolwsd binds to. Can be 'any' or 'loopback'.">any</listen>
+      <listen type="string" default="any" desc="Listen address that coolwsd binds to. Can be 'any' or 'loopback'.">any</listen>
       <service_root type="path" default="" desc="Prefix all the pages, websockets, etc. with this path."></service_root>
       <proxy_prefix type="bool" default="false" desc="Enable a ProxyPrefix to be passed int through which to redirect requests"></proxy_prefix>
       <post_allow desc="Allow/deny client IP address for POST(REST)." allow="true">
@@ -96,16 +96,16 @@
         <host desc="The IPv4 private 172.17.0.0/16 subnet (Docker).">172\.17\.[0-9]{1,3}\.[0-9]{1,3}</host>
         <host desc="Ditto, but as IPv4-mapped IPv6 addresses">::ffff:172\.17\.[0-9]{1,3}\.[0-9]{1,3}</host>
       </post_allow>
-      <frame_ancestors desc="Specify who is allowed to embed the LO Online iframe (loolwsd and WOPI host are always allowed). Separate multiple hosts by space."></frame_ancestors>
-      <connection_timeout_secs desc="Specifies the connection, send, recv timeout in seconds for connections initiated by loolwsd (such as WOPI connections)." type="int" default="30"></connection_timeout_secs>
+      <frame_ancestors desc="Specify who is allowed to embed the LO Online iframe (coolwsd and WOPI host are always allowed). Separate multiple hosts by space."></frame_ancestors>
+      <connection_timeout_secs desc="Specifies the connection, send, recv timeout in seconds for connections initiated by coolwsd (such as WOPI connections)." type="int" default="30"></connection_timeout_secs>
     </net>
 
     <ssl desc="SSL settings">
-        <enable type="bool" desc="Controls whether SSL encryption between browser and loolwsd is enabled (do not disable for production deployment). If default is false, must first be compiled with SSL support to enable." default="true">false</enable>
-        <termination desc="Connection via proxy where loolwsd acts as working via https, but actually uses http." type="bool" default="true">false</termination>
-        <cert_file_path desc="Path to the cert file" relative="false">/etc/loolwsd/cert.pem</cert_file_path>
-        <key_file_path desc="Path to the key file" relative="false">/etc/loolwsd/key.pem</key_file_path>
-        <ca_file_path desc="Path to the ca file" relative="false">/etc/loolwsd/ca-chain.cert.pem</ca_file_path>
+        <enable type="bool" desc="Controls whether SSL encryption between browser and coolwsd is enabled (do not disable for production deployment). If default is false, must first be compiled with SSL support to enable." default="true">false</enable>
+        <termination desc="Connection via proxy where coolwsd acts as working via https, but actually uses http." type="bool" default="true">false</termination>
+        <cert_file_path desc="Path to the cert file" relative="false">/etc/coolwsd/cert.pem</cert_file_path>
+        <key_file_path desc="Path to the key file" relative="false">/etc/coolwsd/key.pem</key_file_path>
+        <ca_file_path desc="Path to the ca file" relative="false">/etc/coolwsd/ca-chain.cert.pem</ca_file_path>
         <cipher_list desc="List of OpenSSL ciphers to accept" default="ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"></cipher_list>
         <hpkp desc="Enable HTTP Public key pinning" enable="false" report_only="false">
             <max_age desc="HPKP's max-age directive - time in seconds browser should remember the pins" enable="true">1000</max_age>
@@ -159,7 +159,7 @@
         </webdav>
         <ssl desc="SSL settings">
             <as_scheme type="bool" default="true" desc="When set we exclusively use the WOPI URI's scheme to enable SSL for storage">true</as_scheme>
-            <enable type="bool" desc="If as_scheme is false or not set, this can be set to force SSL encryption between storage and loolwsd. When empty this defaults to following the ssl.enable setting"></enable>
+            <enable type="bool" desc="If as_scheme is false or not set, this can be set to force SSL encryption between storage and coolwsd. When empty this defaults to following the ssl.enable setting"></enable>
             <cert_file_path desc="Path to the cert file" relative="false"></cert_file_path>
             <key_file_path desc="Path to the key file" relative="false"></key_file_path>
             <ca_file_path desc="Path to the ca file. If this is not empty, then SSL verification will be strict, otherwise cert of storage (WOPI-like host) will not be verified." relative="false"></ca_file_path>

@@ -676,7 +676,7 @@ L.TextInput = L.Layer.extend({
 			this._emptyArea();
 	},
 
-	// Sends the given (UTF-8) string of text to loolwsd, as IME (text composition)
+	// Sends the given (UTF-8) string of text to coolwsd, as IME (text composition)
 	// messages
 	_sendText: function(text) {
 		if (false) {
@@ -689,7 +689,7 @@ L.TextInput = L.Layer.extend({
 			s = s + ']';
 			console.log('L.TextInput._sendText: ' + s);
 		}
-		this._fancyLog('send-text-to-loolwsd', text);
+		this._fancyLog('send-text-to-coolwsd', text);
 
 		// MSIE/Edge cannot compare a string to "\n" for whatever reason,
 		// so compare charcode as well
@@ -825,7 +825,7 @@ L.TextInput = L.Layer.extend({
 	_removeTextContent: function(before, after) {
 		console.log('Remove ' + before + ' before, and ' + after + ' after');
 
-		/// TODO: rename the event to 'removetextcontent' as soon as loolwsd supports it
+		/// TODO: rename the event to 'removetextcontent' as soon as coolwsd supports it
 		/// TODO: Ask Marco about it
 		app.socket.sendMessage(
 			'removetextcontext id=' +

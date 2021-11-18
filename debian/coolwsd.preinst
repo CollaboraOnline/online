@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -e
+
+# Stop any running coolwsd process
+if [ -d /run/systemd/system ]; then
+    deb-systemd-invoke stop coolwsd.service >/dev/null || true
+fi
+
+#DEBHELPER#

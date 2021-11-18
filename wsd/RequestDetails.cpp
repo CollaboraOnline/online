@@ -7,7 +7,7 @@
 
 #include <config.h>
 
-#include "LOOLWSD.hpp"
+#include "COOLWSD.hpp"
 #include "RequestDetails.hpp"
 #include "common/Log.hpp"
 

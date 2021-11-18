@@ -74,7 +74,7 @@ my @event_pairs = (
     {
       name => 'Initialize wsd.',
       type => 'INF',
-      emitter => '^loolwsd$',
+      emitter => '^coolwsd$',
       start => 'Initializing wsd.\.*',
       end => 'Listening to prisoner connections.*' },
     {
@@ -354,7 +354,7 @@ while (my $line = $input[$lineno++]) {
 
     $line =~ s/\r*\n*//g;
 
-    # wsd-26974-26974 2019-03-27 03:45:46.735736 [ loolwsd ] INF  Initializing wsd. Local time: Wed 2019-03-27 03:45:46+0000. Log level is [8].| common/Log.cpp:191
+    # wsd-26974-26974 2019-03-27 03:45:46.735736 [ coolwsd ] INF  Initializing wsd. Local time: Wed 2019-03-27 03:45:46+0000. Log level is [8].| common/Log.cpp:191
     if ($line =~ m/^(\w+)-(\d+)-(\d+)\s+\S+\s+(\S+)\s+\[\s+(\S+)\s+\]\s+(\S+)\s+(.+)\|\s+(\S+)$/) {
 	consume($lineno, $1, $2, $3, $4, $5, $6, $7, $8);
 

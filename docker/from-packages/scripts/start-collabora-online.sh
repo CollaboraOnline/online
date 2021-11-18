@@ -24,9 +24,9 @@ else
 openssl req -key certs/servers/localhost/privkey.pem -new -sha256 -out certs/tmp/localhost.csr.pem -subj "/C=DE/ST=BW/L=Stuttgart/O=Dummy Authority/CN=${cert_domain}"
 fi
 openssl x509 -req -in certs/tmp/localhost.csr.pem -CA certs/ca/root.crt.pem -CAkey certs/ca/root.key.pem -CAcreateserial -out certs/servers/localhost/cert.pem -days 9131
-mv certs/servers/localhost/privkey.pem /etc/loolwsd/key.pem
-mv certs/servers/localhost/cert.pem /etc/loolwsd/cert.pem
-mv certs/ca/root.crt.pem /etc/loolwsd/ca-chain.cert.pem
+mv certs/servers/localhost/privkey.pem /etc/coolwsd/key.pem
+mv certs/servers/localhost/cert.pem /etc/coolwsd/cert.pem
+mv certs/ca/root.crt.pem /etc/coolwsd/ca-chain.cert.pem
 fi
 
 # Disable warning/info messages of LOKit by default
@@ -36,19 +36,19 @@ fi
 
 # Replace trusted host and set admin username and password - only if they are set
 if test -n "${domain}"; then
-    perl -pi -e "s/localhost<\/host>/${domain}<\/host>/g" /etc/loolwsd/loolwsd.xml
+    perl -pi -e "s/localhost<\/host>/${domain}<\/host>/g" /etc/coolwsd/coolwsd.xml
 fi
 if test -n "${username}"; then
-    perl -pi -e "s/<username (.*)>.*<\/username>/<username \1>${username}<\/username>/" /etc/loolwsd/loolwsd.xml
+    perl -pi -e "s/<username (.*)>.*<\/username>/<username \1>${username}<\/username>/" /etc/coolwsd/coolwsd.xml
 fi
 if test -n "${password}"; then
-    perl -pi -e "s/<password (.*)>.*<\/password>/<password \1>${password}<\/password>/" /etc/loolwsd/loolwsd.xml
+    perl -pi -e "s/<password (.*)>.*<\/password>/<password \1>${password}<\/password>/" /etc/coolwsd/coolwsd.xml
 fi
 if test -n "${server_name}"; then
-    perl -pi -e "s/<server_name (.*)>.*<\/server_name>/<server_name \1>${server_name}<\/server_name>/" /etc/loolwsd/loolwsd.xml
+    perl -pi -e "s/<server_name (.*)>.*<\/server_name>/<server_name \1>${server_name}<\/server_name>/" /etc/coolwsd/coolwsd.xml
 fi
 if test -n "${dictionaries}"; then
-    perl -pi -e "s/<allowed_languages (.*)>.*<\/allowed_languages>/<allowed_languages \1>${dictionaries:-de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru}<\/allowed_languages>/" /etc/loolwsd/loolwsd.xml
+    perl -pi -e "s/<allowed_languages (.*)>.*<\/allowed_languages>/<allowed_languages \1>${dictionaries:-de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru}<\/allowed_languages>/" /etc/coolwsd/coolwsd.xml
 fi
 if test -n "${user_interface_mode}"; then
     extra_params="${extra_params} --o:user_interface.mode=${user_interface_mode}"
@@ -56,15 +56,15 @@ else
     extra_params="${extra_params} --o:user_interface.mode=notebookbar"
 fi
 
-# Restart when /etc/loolwsd/loolwsd.xml changes
+# Restart when /etc/coolwsd/coolwsd.xml changes
 [ -x /usr/bin/inotifywait -a /usr/bin/killall ] && (
-  /usr/bin/inotifywait -e modify /etc/loolwsd/loolwsd.xml
-  echo "$(ls -l /etc/loolwsd/loolwsd.xml) modified --> restarting"
-  /usr/bin/killall -1 loolwsd
+  /usr/bin/inotifywait -e modify /etc/coolwsd/coolwsd.xml
+  echo "$(ls -l /etc/coolwsd/coolwsd.xml) modified --> restarting"
+  /usr/bin/killall -1 coolwsd
 ) &
 
 # Generate WOPI proof key
 coolwsd-generate-proof-key
 
-# Start loolwsd
-exec /usr/bin/loolwsd --version --o:sys_template_path=/opt/cool/systemplate --o:child_root_path=/opt/cool/child-roots --o:file_server_root_path=/usr/share/loolwsd --o:logging.color=false ${extra_params}
+# Start coolwsd
+exec /usr/bin/coolwsd --version --o:sys_template_path=/opt/cool/systemplate --o:child_root_path=/opt/cool/child-roots --o:file_server_root_path=/usr/share/coolwsd --o:logging.color=false ${extra_params}

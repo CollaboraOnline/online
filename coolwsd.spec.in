@@ -1,4 +1,4 @@
-# spec file for package loolwsd
+# spec file for package coolwsd
 #
 # Copyright (c) 2015 Collabora
 #
@@ -16,7 +16,7 @@ Release:        1%{?dist}
 Vendor:         %{vendor}
 Summary:        Collabora Online WebSocket Daemon
 License:        EULA
-Source0:        loolwsd-@PACKAGE_VERSION@.tar.gz
+Source0:        coolwsd-@PACKAGE_VERSION@.tar.gz
 BuildRequires:  libcap-devel libpng-devel pam-devel gcc-c++ cppunit-devel pam-devel fontconfig make
 
 # Red Hat and CentOS
@@ -36,14 +36,14 @@ BuildRequires:  libcap-progs linux-glibc-devel systemd-rpm-macros python3-polib 
 Requires:       collaboraoffice collaboraoffice-ure collaboraofficebasis-core collaboraofficebasis-writer collaboraofficebasis-impress collaboraofficebasis-graphicfilter collaboraofficebasis-en-US collaboraofficebasis-calc collaboraofficebasis-ooofonts collaboraofficebasis-images collaboraofficebasis-draw collaboraofficebasis-extension-pdf-import collaboraofficebasis-ooolinguistic collaboraofficebasis-math
 Requires(post): coreutils grep sed cpio
 %if 0%{?rhel}
-# loolwsd dependencies
+# coolwsd dependencies
 Requires:       systemd expat keyutils-libs krb5-libs libattr libcap libcom_err libgcc libpng libselinux openssh-clients openssl-libs pcre xz-libs zlib
 # Collabora Office dependencies (unfortunately Collabora Office RPM packages do not have real dependencies)
 Requires:       expat fontconfig freetype libuuid bzip2-libs
 %endif
 
 %if 0%{?suse_version}
-# loolwsd dependencies
+# coolwsd dependencies
 Requires(post): libcap-progs
 Requires:       systemd libopenssl1_0_0 libpcre1 libz1 libcap2 libpng12-0 %{fillup_prereq}
 # Collabora Office dependencies (unfortunately Collabora Office RPM packages do not have real dependencies)
@@ -51,13 +51,16 @@ Requires:       systemd libopenssl1_0_0 libpcre1 libz1 libcap2 libpng12-0 %{fill
 Requires:       fontconfig libbz2-1 libexpat1 libfreetype6 libpng16-16 libuuid1 openssh
 %endif
 
+Provides: loolwsd
+Obsoletes: loolwsd
+
 %description
 
 %if 0%{?suse_version}
 %debug_package
 %endif
 %prep
-%setup -n loolwsd-@PACKAGE_VERSION@
+%setup -n coolwsd-@PACKAGE_VERSION@
 
 %build
 %configure \
@@ -78,23 +81,23 @@ env BUILDING_FROM_RPMBUILD=yes make %{?_smp_mflags}
 env BUILDING_FROM_RPMBUILD=yes make install DESTDIR=%{buildroot}
 install -d -m 755 %{buildroot}/var/adm/fillup-templates
 %if 0%{?rhel}
-install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
+install -D -m 444 coolwsd.service %{buildroot}%{_unitdir}/coolwsd.service
 # systemd in RHEL 7 does not understand these options
 %if 0%{?rhel} <= 7
-sed -i "/^ReadWritePaths/d;/^ProtectControlGroups/d;/^ProtectSystem/d" %{buildroot}%{_unitdir}/loolwsd.service
+sed -i "/^ReadWritePaths/d;/^ProtectControlGroups/d;/^ProtectSystem/d" %{buildroot}%{_unitdir}/coolwsd.service
 %endif
-install -D -m 644 sysconfig.loolwsd %{buildroot}/etc/sysconfig/loolwsd
+install -D -m 644 sysconfig.coolwsd %{buildroot}/etc/sysconfig/coolwsd
 install -d -m 755 %{buildroot}/etc/httpd/conf
-install -D -m 755 etc/apache2/loolwsd.conf %{buildroot}/etc/httpd/conf
-rm %{buildroot}/etc/apache2/conf-available/loolwsd.conf
+install -D -m 755 etc/apache2/coolwsd.conf %{buildroot}/etc/httpd/conf
+rm %{buildroot}/etc/apache2/conf-available/coolwsd.conf
 %endif
 %if 0%{?suse_version}
-install -D -m 444 loolwsd.service %{buildroot}%{_unitdir}/loolwsd.service
-install -D -m 644 sysconfig.loolwsd %{buildroot}/var/adm/fillup-templates
+install -D -m 444 coolwsd.service %{buildroot}%{_unitdir}/coolwsd.service
+install -D -m 644 sysconfig.coolwsd %{buildroot}/var/adm/fillup-templates
 %endif
 mkdir -p %{buildroot}/etc/pam.d
-echo "auth       required     pam_unix.so" > %{buildroot}/etc/pam.d/loolwsd
-echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
+echo "auth       required     pam_unix.so" > %{buildroot}/etc/pam.d/coolwsd
+echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 
 %files
 %defattr(-,root,root,-)
@@ -104,47 +107,47 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/loolwsd
 /usr/bin/coolforkit
 /usr/bin/coolconvert
 /usr/bin/coolconfig
-/usr/bin/loolconfig
+/usr/bin/coolconfig
 /usr/bin/coolmount
-/usr/share/loolwsd/discovery.xml
-/usr/share/loolwsd/favicon.ico
-/usr/share/loolwsd/browser
-/usr/share/doc/loolwsd/README
-/usr/share/doc/loolwsd/README.vars
-/usr/share/doc/loolwsd/metrics.txt
-/usr/share/doc/loolwsd/protocol.txt
-/usr/share/doc/loolwsd/reference.md
-/usr/share/man/man1/loolwsd.1.gz
+/usr/share/coolwsd/discovery.xml
+/usr/share/coolwsd/favicon.ico
+/usr/share/coolwsd/browser
+/usr/share/doc/coolwsd/README
+/usr/share/doc/coolwsd/README.vars
+/usr/share/doc/coolwsd/metrics.txt
+/usr/share/doc/coolwsd/protocol.txt
+/usr/share/doc/coolwsd/reference.md
+/usr/share/man/man1/coolwsd.1.gz
 /usr/share/man/man1/coolforkit.1.gz
 /usr/share/man/man1/coolconvert.1.gz
 /usr/share/man/man1/coolconfig.1.gz
 /usr/share/man/man1/coolwsd-systemplate-setup.1.gz
 /usr/share/man/man1/coolwsd-generate-proof-key.1.gz
 /usr/share/man/man1/coolmount.1.gz
-%{_unitdir}/loolwsd.service
+%{_unitdir}/coolwsd.service
 %if 0%{?rhel}
-%config(noreplace) /etc/sysconfig/loolwsd
+%config(noreplace) /etc/sysconfig/coolwsd
 %endif
 %if 0%{?suse_version}
-/var/adm/fillup-templates/sysconfig.loolwsd
+/var/adm/fillup-templates/sysconfig.coolwsd
 %endif
 
-%config(noreplace) /etc/pam.d/loolwsd
-%config(noreplace) %attr(640, cool, root) /etc/loolwsd/loolwsd.xml
-%config /etc/loolwsd/loolkitconfig.xcu
-%config(noreplace) /etc/nginx/snippets/loolwsd.conf
+%config(noreplace) /etc/pam.d/coolwsd
+%config(noreplace) %attr(640, cool, root) /etc/coolwsd/coolwsd.xml
+%config /etc/coolwsd/coolkitconfig.xcu
+%config(noreplace) /etc/nginx/snippets/coolwsd.conf
 %if 0%{?suse_version} > 0
-%config(noreplace) /etc/apache2/conf-available/loolwsd.conf
+%config(noreplace) /etc/apache2/conf-available/coolwsd.conf
 %endif
 %if 0%{?rhel} > 0
-%config(noreplace) /etc/httpd/conf/loolwsd.conf
+%config(noreplace) /etc/httpd/conf/coolwsd.conf
 %endif
 
 %doc README.md
 
 %pre
 %if 0%{?suse_version}
-%service_add_pre loolwsd.service
+%service_add_pre coolwsd.service
 %endif
 
 getent group cool >/dev/null || groupadd -r cool
@@ -153,29 +156,29 @@ getent passwd cool >/dev/null || useradd -g cool -r cool -d /opt/cool -s /bin/ba
 # for filename in `find /opt/cool/systemplate -type f`;do stripped=$(echo -ne $filename | sed -e "s|/opt/cool/systemplate||");rpm -qf --qf="%{NAME}\n" $stripped;done | grep -v devel | grep -v 32bit | grep -v -- -fonts | sort | uniq
 %triggerin -- expat fontconfig freetype freetype2 glibc glibc-locale kernel keyutils-libs krb5 krb5-libs libbz2-1 libcap libcap-ng libcap2 libexpat1 libfreetype6 libgcc libgcc_s1 libgcrypt libiscsi libpng libpng12 libpng12-0 libpng15-15 libpng16-16 libstdc++ libstdc++6 libuuid libuuid1 libz1 lsb nss-mdns nss-softokn-freebl pcre sssd sssd-client systemd-libs timezone tzdata zlib
 
-echo -ne "Triggered update of loolwsd systemplate..."
+echo -ne "Triggered update of coolwsd systemplate..."
 
 %if 0%{?rhel} >= 7 || 0%{?suse_version} >= 1300
-systemctl is-active -q loolwsd && LOOLWSD_IS_ACTIVE=1 || LOOLWSD_IS_ACTIVE=0
-if [ $LOOLWSD_IS_ACTIVE == "1" ]; then systemctl stop loolwsd; fi
+systemctl is-active -q coolwsd && COOLWSD_IS_ACTIVE=1 || COOLWSD_IS_ACTIVE=0
+if [ $COOLWSD_IS_ACTIVE == "1" ]; then systemctl stop coolwsd; fi
 %endif
 
 # Figure out where LO is installed, let's hope it is not a mount point
-# Create a directory for loolwsd on the same file system
+# Create a directory for coolwsd on the same file system
 loroot=/opt/collaboraoffice
-loolparent=`cd ${loroot} && cd .. && /bin/pwd`
+coolparent=`cd ${loroot} && cd .. && /bin/pwd`
 
-rm -rf ${loolparent}/cool
-mkdir -p ${loolparent}/cool/child-roots
-chown cool:cool ${loolparent}/cool
-chown cool:cool ${loolparent}/cool/child-roots
+rm -rf ${coolparent}/cool
+mkdir -p ${coolparent}/cool/child-roots
+chown cool:cool ${coolparent}/cool
+chown cool:cool ${coolparent}/cool/child-roots
 
 fc-cache ${loroot}/share/fonts/truetype
-coolwsd-systemplate-setup ${loolparent}/cool/systemplate ${loroot} >/dev/null 2>&1
+coolwsd-systemplate-setup ${coolparent}/cool/systemplate ${loroot} >/dev/null 2>&1
 coolwsd-generate-proof-key >/dev/null 2>&1
 
 %if 0%{?rhel} || 0%{?suse_version}
-if [ $LOOLWSD_IS_ACTIVE == "1" ]; then systemctl start loolwsd; fi
+if [ $COOLWSD_IS_ACTIVE == "1" ]; then systemctl start coolwsd; fi
 %endif
 
 echo "   Done."
@@ -185,30 +188,30 @@ setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit
 setcap cap_sys_admin=ep /usr/bin/coolmount
 
 %if 0%{?rhel} >= 7
-%systemd_post loolwsd.service
+%systemd_post coolwsd.service
 %else
 %if 0%{?suse_version}
-%service_add_post loolwsd.service
-%{fillup_only -n loolwsd}
+%service_add_post coolwsd.service
+%{fillup_only -n coolwsd}
 %endif
 %endif
 
 
 %preun
 %if 0%{?rhel} >= 7
-%systemd_preun loolwsd.service
+%systemd_preun coolwsd.service
 %else
 %if 0%{?suse_version}
-%service_del_preun loolwsd.service
+%service_del_preun coolwsd.service
 %endif
 %endif
 
 %postun
 %if 0%{?rhel} >= 7
-%systemd_postun loolwsd.service
+%systemd_postun coolwsd.service
 %else
 %if 0%{?suse_version}
-%service_del_postun loolwsd.service
+%service_del_postun coolwsd.service
 %endif
 %endif
 

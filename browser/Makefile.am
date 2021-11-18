@@ -740,7 +740,7 @@ check-local: $(MOCHA_TS_JS_FILES)
 	@echo "Running mocha tests..."
 	@$(NODE) node_modules/mocha/bin/mocha "$(srcdir)/mocha_tests/**/*.js"
 
-SSL_FLAG = `xmllint --xpath 'string(/config/ssl/enable)' $(abs_top_builddir)/loolwsd.xml`
+SSL_FLAG = `xmllint --xpath 'string(/config/ssl/enable)' $(abs_top_builddir)/coolwsd.xml`
 
 # the delay (in miliseconds) between each emulated key stroke for each view
 typing_speed=100

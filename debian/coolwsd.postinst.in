@@ -8,8 +8,8 @@ case "$1" in
 	setcap cap_sys_admin=ep /usr/bin/coolmount || true
 
 	adduser --quiet --system --group --home /opt/cool cool
-	chown cool: /etc/loolwsd/loolwsd.xml
-	chmod 640 /etc/loolwsd/loolwsd.xml
+	chown cool: /etc/coolwsd/coolwsd.xml
+	chmod 640 /etc/coolwsd/coolwsd.xml
 
 	# We assume that the LibreOffice to be used is built TDF-style
 	# and installs in @LO_PATH@, and that /opt/cool is
@@ -24,9 +24,9 @@ case "$1" in
 
 	coolwsd-systemplate-setup /opt/cool/systemplate @LO_PATH@ >/dev/null 2>&1
 	coolwsd-generate-proof-key >/dev/null 2>&1
-    cat << EOF > /etc/apt/apt.conf.d/25loolwsd
+    cat << EOF > /etc/apt/apt.conf.d/25coolwsd
 // Rebuild systemplate of @APP_NAME@
-DPkg::Post-Invoke { "echo Updating loolwsd systemplate;coolwsd-systemplate-setup /opt/cool/systemplate @LO_PATH@ >/dev/null 2>&1 || true"; };
+DPkg::Post-Invoke { "echo Updating coolwsd systemplate;coolwsd-systemplate-setup /opt/cool/systemplate @LO_PATH@ >/dev/null 2>&1 || true"; };
 EOF
 	;;
 

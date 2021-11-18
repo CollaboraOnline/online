@@ -15,7 +15,7 @@
 #include <FakeSocket.hpp>
 #include <Kit.hpp>
 #include <Log.hpp>
-#include <LOOLWSD.hpp>
+#include <COOLWSD.hpp>
 #include <Protocol.hpp>
 #include <SetupKitEnvironment.hpp>
 #include <Util.hpp>
@@ -26,7 +26,7 @@
 
 const int SHOW_JS_MAXLEN = 70;
 
-int loolwsd_server_socket_fd = -1;
+int coolwsd_server_socket_fd = -1;
 
 const char* user_name;
 
@@ -97,7 +97,7 @@ public:
 
 static void send2JS(const JNIThreadContext &jctx, const std::vector<char>& buffer)
 {
-    LOG_DBG("Send to JS: " << LOOLProtocol::getAbbreviatedMessage(buffer.data(), buffer.size()));
+    LOG_DBG("Send to JS: " << COOLProtocol::getAbbreviatedMessage(buffer.data(), buffer.size()));
 
     std::string js;
 
@@ -183,9 +183,9 @@ void closeDocument()
     // Close one end of the socket pair, that will wake up the forwarding thread that was constructed in HULLO
     fakeSocketClose(closeNotificationPipeForForwardingThread[0]);
 
-    LOG_DBG("Waiting for LOOLWSD to finish...");
-    std::unique_lock<std::mutex> lock(LOOLWSD::lokit_main_mutex);
-    LOG_DBG("LOOLWSD has finished.");
+    LOG_DBG("Waiting for COOLWSD to finish...");
+    std::unique_lock<std::mutex> lock(COOLWSD::lokit_main_mutex);
+    LOG_DBG("COOLWSD has finished.");
 }
 
 /// Handle a message from JavaScript.
@@ -206,11 +206,11 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
         {
             // Now we know that the JS has started completely
 
-            // Contact the permanently (during app lifetime) listening LOOLWSD server
+            // Contact the permanently (during app lifetime) listening COOLWSD server
             // "public" socket
-            assert(loolwsd_server_socket_fd != -1);
+            assert(coolwsd_server_socket_fd != -1);
 
-            int rc = fakeSocketConnect(currentFakeClientFd, loolwsd_server_socket_fd);
+            int rc = fakeSocketConnect(currentFakeClientFd, coolwsd_server_socket_fd);
             assert(rc != -1);
 
             // Create a socket pair to notify the below thread when the document has been closed
@@ -267,7 +267,7 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
             // WebSocket.
             LOG_DBG("Actually sending to Online:" << fileURL);
 
-            // Send the document URL to LOOLWSD to setup the docBroker URL
+            // Send the document URL to COOLWSD to setup the docBroker URL
             struct pollfd pollfd;
             pollfd.fd = currentFakeClientFd;
             pollfd.events = POLLOUT;
@@ -282,7 +282,7 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
         }
         else
         {
-            // Send the message to LOOLWSD
+            // Send the message to COOLWSD
             char *string_copy = strdup(string_value);
 
             struct pollfd pollfd;
@@ -300,9 +300,9 @@ Java_org_libreoffice_androidlib_LOActivity_postMobileMessageNative(JNIEnv *env, 
 
 extern "C" jboolean libreofficekit_initialize(JNIEnv* env, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager);
 
-/// Create the LOOLWSD instance.
+/// Create the COOLWSD instance.
 extern "C" JNIEXPORT void JNICALL
-Java_org_libreoffice_androidlib_LOActivity_createLOOLWSD(JNIEnv *env, jobject instance, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager, jstring loadFileURL, jstring uiMode, jstring userName)
+Java_org_libreoffice_androidlib_LOActivity_createCOOLWSD(JNIEnv *env, jobject instance, jstring dataDir, jstring cacheDir, jstring apkFile, jobject assetManager, jstring loadFileURL, jstring uiMode, jstring userName)
 {
     fileURL = std::string(env->GetStringUTFChars(loadFileURL, nullptr));
 
@@ -343,14 +343,14 @@ Java_org_libreoffice_androidlib_LOActivity_createLOOLWSD(JNIEnv *env, jobject in
                     Util::setThreadName("app");
                     while (true)
                     {
-                        LOG_DBG("Creating LOOLWSD");
+                        LOG_DBG("Creating COOLWSD");
                         {
                             fakeClientFd = fakeSocketSocket();
-                            LOG_DBG("createLOOLWSD created fakeClientFd: " << fakeClientFd);
-                            std::unique_ptr<LOOLWSD> loolwsd(new LOOLWSD());
-                            loolwsd->run(1, argv);
+                            LOG_DBG("createCOOLWSD created fakeClientFd: " << fakeClientFd);
+                            std::unique_ptr<COOLWSD> coolwsd(new COOLWSD());
+                            coolwsd->run(1, argv);
                         }
-                        LOG_DBG("One run of LOOLWSD completed");
+                        LOG_DBG("One run of COOLWSD completed");
                         std::this_thread::sleep_for(std::chrono::milliseconds(100));
                     }
                 }).detach();

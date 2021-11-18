@@ -17,7 +17,7 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
-class LOOLWebSocket;
+class COOLWebSocket;
 
 /// Password protected testcase.
 class UnitPasswordProtected : public UnitWSD
@@ -44,7 +44,7 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithout
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::HTTPResponse httpResponse;
-        std::shared_ptr<LOOLWebSocket> socket = helpers::connectLOKit(
+        std::shared_ptr<COOLWebSocket> socket = helpers::connectLOKit(
             Poco::URI(helpers::getTestServerURI()), request, httpResponse, testname);
 
         // Send a load request without password first
@@ -56,8 +56,8 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithout
 
         std::string errorCommand;
         std::string errorKind;
-        LOOLProtocol::getTokenString(tokens[1], "cmd", errorCommand);
-        LOOLProtocol::getTokenString(tokens[2], "kind", errorKind);
+        COOLProtocol::getTokenString(tokens[1], "cmd", errorCommand);
+        COOLProtocol::getTokenString(tokens[2], "kind", errorKind);
         LOK_ASSERT_EQUAL(std::string("load"), errorCommand);
         LOK_ASSERT_EQUAL(std::string("passwordrequired:to-view"), errorKind);
     }
@@ -80,7 +80,7 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithWro
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::HTTPResponse httpResponse;
-        std::shared_ptr<LOOLWebSocket> socket = helpers::connectLOKit(
+        std::shared_ptr<COOLWebSocket> socket = helpers::connectLOKit(
             Poco::URI(helpers::getTestServerURI()), request, httpResponse, testname);
 
         // Send a load request with incorrect password
@@ -92,8 +92,8 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithWro
 
         std::string errorCommand;
         std::string errorKind;
-        LOOLProtocol::getTokenString(tokens[1], "cmd", errorCommand);
-        LOOLProtocol::getTokenString(tokens[2], "kind", errorKind);
+        COOLProtocol::getTokenString(tokens[1], "cmd", errorCommand);
+        COOLProtocol::getTokenString(tokens[2], "kind", errorKind);
         LOK_ASSERT_EQUAL(std::string("load"), errorCommand);
         LOK_ASSERT_EQUAL(std::string("wrongpassword"), errorKind);
     }
@@ -116,7 +116,7 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithCor
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::HTTPResponse response;
-        std::shared_ptr<LOOLWebSocket> socket = helpers::connectLOKit(
+        std::shared_ptr<COOLWebSocket> socket = helpers::connectLOKit(
             Poco::URI(helpers::getTestServerURI()), request, response, testname);
 
         // Send a load request with correct password
@@ -149,7 +149,7 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedOOXMLDocument()
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::HTTPResponse response;
-        std::shared_ptr<LOOLWebSocket> socket = helpers::connectLOKit(
+        std::shared_ptr<COOLWebSocket> socket = helpers::connectLOKit(
             Poco::URI(helpers::getTestServerURI()), request, response, testname);
 
         // Send a load request with correct password
@@ -177,7 +177,7 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedBinaryMSOfficeD
 
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::Net::HTTPResponse response;
-        std::shared_ptr<LOOLWebSocket> socket = helpers::connectLOKit(
+        std::shared_ptr<COOLWebSocket> socket = helpers::connectLOKit(
             Poco::URI(helpers::getTestServerURI()), request, response, testname);
 
         // Send a load request with correct password

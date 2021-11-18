@@ -132,9 +132,9 @@ namespace Util
     void alertAllUsers(const std::string& msg);
 
     /// Send a 'error:' message with the specified cmd and kind parameters to all connected
-    /// clients. This function can be called either in loolwsd or loolkit processes, even if only
-    /// loolwsd obviously has contact with the actual clients; in loolkit it will be forwarded to
-    /// loolwsd for redistribution. (This function must be implemented separately in each program
+    /// clients. This function can be called either in coolwsd or coolkit processes, even if only
+    /// coolwsd obviously has contact with the actual clients; in coolkit it will be forwarded to
+    /// coolwsd for redistribution. (This function must be implemented separately in each program
     /// that uses it, it is not in Util.cpp.)
     void alertAllUsers(const std::string& cmd, const std::string& kind);
 #else

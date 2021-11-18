@@ -504,15 +504,15 @@ app.definitions.Socket = L.Class.extend({
 			var h = this.WSDServer.Hash;
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				h = '<a href="javascript:void(window.open(\'https://github.com/CollaboraOnline/online/commits/' + h + '\'));">' + h + '</a>';
-				$('#loolwsd-version').html(this.WSDServer.Version + ' (git hash: ' + h + ')');
+				$('#coolwsd-version').html(this.WSDServer.Version + ' (git hash: ' + h + ')');
 			}
 			else {
-				$('#loolwsd-version').text(this.WSDServer.Version);
+				$('#coolwsd-version').text(this.WSDServer.Version);
 			}
 
 			if (!window.ThisIsAMobileApp) {
 				var idUri = window.makeHttpUrl('/hosting/discovery');
-				$('#loolwsd-id').html(_('Served by:') + ' <a target="_blank" href="' + idUri + '">' + this.WSDServer.Id + '</a>');
+				$('#coolwsd-id').html(_('Served by:') + ' <a target="_blank" href="' + idUri + '">' + this.WSDServer.Id + '</a>');
 			}
 
 			// TODO: For now we expect perfect match in protocol versions

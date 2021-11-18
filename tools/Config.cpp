@@ -60,7 +60,7 @@ public:
     unsigned getPwdHashLength() const { return _pwdHashLength; }
 };
 
-// Config tool to change loolwsd configuration (loolwsd.xml)
+// Config tool to change coolwsd configuration (coolwsd.xml)
 class Config: public Application
 {
     // Display help information on the console
@@ -87,9 +87,9 @@ std::string Config::ConfigFile =
 #if ENABLE_DEBUG
     DEBUG_ABSSRCDIR
 #else
-    LOOLWSD_CONFIGDIR
+    COOLWSD_CONFIGDIR
 #endif
-    "/loolwsd.xml";
+    "/coolwsd.xml";
 
 std::string Config::SupportKeyString;
 bool Config::SupportKeyStringProvided = false;
@@ -296,7 +296,7 @@ int Config::main(const std::vector<std::string>& args)
 
         changed = true;
 #else
-        std::cerr << "This application was compiled with old OpenSSL. Operation not supported. You can use plain text password in /etc/loolwsd/loolwsd.xml." << std::endl;
+        std::cerr << "This application was compiled with old OpenSSL. Operation not supported. You can use plain text password in /etc/coolwsd/coolwsd.xml." << std::endl;
         return EX_UNAVAILABLE;
 #endif
     }

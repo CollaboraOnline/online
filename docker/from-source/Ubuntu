@@ -20,7 +20,7 @@ RUN apt-get update && \
 # copy freshly built LOKit and Collabora Online
 COPY /instdir /
 
-# copy the shell script which can start Collabora Online (loolwsd)
+# copy the shell script which can start Collabora Online (coolwsd)
 COPY /start-collabora-online.sh /
 
 # set up Collabora Online (normally done by postinstall script of package)
@@ -31,10 +31,10 @@ RUN setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit 
     rm -rf /opt/cool && \
     mkdir -p /opt/cool/child-roots && \
     coolwsd-systemplate-setup /opt/cool/systemplate /opt/lokit >/dev/null 2>&1 && \
-    touch /var/log/loolwsd.log && \
-    chown cool:cool /var/log/loolwsd.log && \
+    touch /var/log/coolwsd.log && \
+    chown cool:cool /var/log/coolwsd.log && \
     chown -R cool:cool /opt/ && \
-    chown -R cool:cool /etc/loolwsd
+    chown -R cool:cool /etc/coolwsd
 
 EXPOSE 9980
 

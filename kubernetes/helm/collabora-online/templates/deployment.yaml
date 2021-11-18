@@ -67,9 +67,9 @@ spec:
             successThreshold: {{ .Values.probes.readiness.successThreshold }}
             failureThreshold: {{ .Values.probes.readiness.failureThreshold }}
           {{- end }}
-          {{- if .Values.environmentVariablesLool }}
+          {{- if .Values.environmentVariablesCool }}
           env:
-{{ toYaml .Values.environmentVariablesLool | indent 12 }}
+{{ toYaml .Values.environmentVariablesCool | indent 12 }}
           {{- end }}
           volumeMounts:
             - name: tmp

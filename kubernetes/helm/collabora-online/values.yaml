@@ -24,7 +24,7 @@ global:
   ingress:
     name: collabora-online
 
-replicaCount: 3 # This is the amount of how many instances of loolwsd will run
+replicaCount: 3 # This is the amount of how many instances of coolwsd will run
 
 image:
   pullPolicy: Always
@@ -58,7 +58,7 @@ deployment:
   maxUnavailable: 0
   maxSurge: 1
 
-environmentVariablesLool:
+environmentVariablesCool:
   - name: extra_params
     value: --o:ssl.enable=false
   - name: username
@@ -75,7 +75,7 @@ hpa:
   name: collabora-online
 
 hosts:
-  host: loolwsd.public.example.com
+  host: coolwsd.public.example.com
 
 namespace:
   collabora: collabora

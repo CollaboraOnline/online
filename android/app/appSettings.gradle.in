@@ -5,12 +5,12 @@ ext {
     liboLauncherIcon    = '@mipmap/@APP_IC_LAUNCHER@'
     liboHasBranding     = '@APP_HAS_BRANDING@'
     liboBrandingDir     = '@APP_BRANDING_DIR@'
-    liboOVersionHash    = '@LOOLWSD_VERSION_HASH@'
+    liboOVersionHash    = '@COOLWSD_VERSION_HASH@'
     liboCoreVersionHash = '@CORE_VERSION_HASH@'
 
 }
 android.defaultConfig {
     applicationId '@ANDROID_PACKAGE_NAME@'
     versionCode @ANDROID_PACKAGE_VERSIONCODE@
-    versionName '@LOOLWSD_VERSION@'
+    versionName '@COOLWSD_VERSION@'
 }

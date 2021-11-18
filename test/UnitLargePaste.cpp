@@ -17,7 +17,7 @@
 #include <Util.hpp>
 #include <helpers.hpp>
 
-class LOOLWebSocket;
+class COOLWebSocket;
 
 /// Large paste testcase.
 class UnitLargePaste : public UnitWSD
@@ -38,7 +38,7 @@ void UnitLargePaste::invokeWSDTest()
     std::string documentPath;
     std::string documentURL;
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
-    std::shared_ptr<LOOLWebSocket> socket = helpers::loadDocAndGetSocket(
+    std::shared_ptr<COOLWebSocket> socket = helpers::loadDocAndGetSocket(
         Poco::URI(helpers::getTestServerURI()), documentURL, testname);
 
     helpers::sendTextFrame(socket, "uno .uno:SelectAll", testname);

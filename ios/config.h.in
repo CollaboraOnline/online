@@ -77,10 +77,10 @@
 #define HAVE_UNISTD_H 1
 
 /* Collabora Online WebSocket server version */
-#define LOOLWSD_VERSION "@LOOLWSD_VERSION@"
+#define COOLWSD_VERSION "@COOLWSD_VERSION@"
 
 /* Collabora Online git hash if present */
-#define LOOLWSD_VERSION_HASH "@LOOLWSD_VERSION_HASH@"
+#define COOLWSD_VERSION_HASH "@COOLWSD_VERSION_HASH@"
 
 /* Path to LibreOffice installation */
 #define LO_PATH "."

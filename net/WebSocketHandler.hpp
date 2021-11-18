@@ -855,7 +855,7 @@ protected:
                     << "], protocol: [" << wsProtocol << "].");
 
 #if ENABLE_DEBUG
-        if (std::getenv("LOOL_ZERO_BUFFER_SIZE"))
+        if (std::getenv("COOL_ZERO_BUFFER_SIZE"))
             socket.setSocketBufferSize(0);
 #endif
 

@@ -20,7 +20,7 @@
 // Include config.h last, so the test server URI is still HTTP, even in SSL builds.
 #include <config.h>
 
-class LOOLWebSocket;
+class COOLWebSocket;
 
 namespace
 {
@@ -37,7 +37,7 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
         helpers::getDocumentPathAndURL(doc, documentPath, documentURL, testname);
 
         int itView = 0;
-        std::shared_ptr<LOOLWebSocket> socket = helpers::loadDocAndGetSocket(
+        std::shared_ptr<COOLWebSocket> socket = helpers::loadDocAndGetSocket(
             Poco::URI(helpers::getTestServerURI()), documentURL, Poco::format(view, itView));
 
         // Check document size
@@ -68,7 +68,7 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
         LOK_ASSERT_MESSAGE(Poco::format(error, itView, protocol), !response.empty());
 
         // Connect and load 0..N Views, where N<=limit
-        std::vector<std::shared_ptr<LOOLWebSocket>> views;
+        std::vector<std::shared_ptr<COOLWebSocket>> views;
         static_assert(MAX_DOCUMENTS >= 2, "MAX_DOCUMENTS must be at least 2");
         const int limit = std::min(4, MAX_DOCUMENTS - 1); // +1 connection above
         for (itView = 0; itView < limit; ++itView)

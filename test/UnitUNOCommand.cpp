@@ -20,7 +20,7 @@
 #include <Unit.hpp>
 #include <helpers.hpp>
 
-class LOOLWebSocket;
+class COOLWebSocket;
 
 namespace
 {
@@ -30,7 +30,7 @@ void testStateChanged(const std::string& filename, std::set<std::string>& comman
 
     Poco::RegularExpression reUno("\\.[a-zA-Z]*\\:[a-zA-Z]*\\=");
 
-    std::shared_ptr<LOOLWebSocket> socket = helpers::loadDocAndGetSocket(filename, Poco::URI(helpers::getTestServerURI()), testname);
+    std::shared_ptr<COOLWebSocket> socket = helpers::loadDocAndGetSocket(filename, Poco::URI(helpers::getTestServerURI()), testname);
     helpers::SocketProcessor(testname, socket,
         [&](const std::string& msg)
         {

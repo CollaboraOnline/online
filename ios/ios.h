@@ -9,7 +9,7 @@
 
 extern const char *user_name;
 
-extern int loolwsd_server_socket_fd;
+extern int coolwsd_server_socket_fd;
 
 extern LibreOfficeKit *lo_kit;
 

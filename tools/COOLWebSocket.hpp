@@ -23,19 +23,19 @@
 ///
 /// WebSocket that is thread safe, and handles large frames transparently.
 /// Careful - sendFrame and receiveFrame are _not_ virtual,
-/// we need to make sure that we use LOOLWebSocket all over the place.
+/// we need to make sure that we use COOLWebSocket all over the place.
 /// It would be a kind of more natural to encapsulate Poco::Net::WebSocket
 /// instead of inheriting (from that reason,) but that would requite much
 /// larger code changes.
-class LOOLWebSocket : public Poco::Net::WebSocket
+class COOLWebSocket : public Poco::Net::WebSocket
 {
 public:
-    LOOLWebSocket(const Socket& socket) :
+    COOLWebSocket(const Socket& socket) :
         Poco::Net::WebSocket(socket)
     {
     }
 
-    LOOLWebSocket(Poco::Net::HTTPClientSession& cs,
+    COOLWebSocket(Poco::Net::HTTPClientSession& cs,
                   Poco::Net::HTTPRequest& request,
                   Poco::Net::HTTPResponse& response) :
         Poco::Net::WebSocket(cs, request, response)
@@ -144,7 +144,7 @@ public:
         }
         catch (const Poco::Exception& exc)
         {
-            TST_LOG("WARN: LOOLWebSocket::shutdown: Exception: "
+            TST_LOG("WARN: COOLWebSocket::shutdown: Exception: "
                     << exc.displayText()
                     << (exc.nested() ? " (" + exc.nested()->displayText() + ')' : ""));
 
@@ -193,7 +193,7 @@ public:
              (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_BINARY ||
              (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_PING ||
              (flags & Poco::Net::WebSocket::FRAME_OP_BITMASK) == Poco::Net::WebSocket::FRAME_OP_PONG))
-            result << ": '" << LOOLProtocol::getAbbreviatedMessage(message, length) << '\'';
+            result << ": '" << COOLProtocol::getAbbreviatedMessage(message, length) << '\'';
         return result.str();
     }
 };

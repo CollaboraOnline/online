@@ -12,10 +12,10 @@ CAPABILITIES = $(if @ENABLE_SETCAP@,true,false)
 
 PARALLEL_SCRIPT = $(abs_srcdir)/run_parallel.sh
 
-PID_FILE=$(abs_builddir)/workdir/loolwsd.pid
+PID_FILE=$(abs_builddir)/workdir/coolwsd.pid
 ERROR_LOG=$(abs_builddir)/workdir/error.log
-LOOLWSD_LOG=$(abs_builddir)/cypress/wsd_logs/loolwsd.log
-LOOLWSD_OUTPUT=$(abs_builddir)/cypress/wsd_logs/loolwsd_output.log
+COOLWSD_LOG=$(abs_builddir)/cypress/wsd_logs/coolwsd.log
+COOLWSD_OUTPUT=$(abs_builddir)/cypress/wsd_logs/coolwsd_output.log
 
 SUPPORT_FILE_ABS = $(abs_srcdir)/support/index.js
 SUPPORT_FILE = $(if $(findstring $(abs_srcdir),$(abs_builddir)),support/index.js,$(SUPPORT_FILE_ABS))
@@ -101,7 +101,7 @@ $(PID_FILE): @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
 	$(if $(HEADLESS_BUILD),$(call start_Xvfb),)
-	$(call start_loolwsd)
+	$(call start_coolwsd)
 
 $(MOBILE_TEST_FILES_DONE): $(PID_FILE) $(DESKTOP_TEST_FILES_DONE)
 	$(if $(PARALLEL_BUILD),\
@@ -149,7 +149,7 @@ define run_JS_error_check
 	@echo
 endef
 
-define start_loolwsd
+define start_coolwsd
 	$(eval FREE_PORT:=$(shell $(GET_PORT_BINARY) --host=127.0.0.1 $(ALLOWED_PORTS)))
 	$(if $(findstring php-proxy, $(CYPRESS_INTEGRATION)),\
 		$(if $(findstring $(PHP_PROXY_PORT),$(FREE_PORT)),,$(error CypressError: $(PHP_PROXY_PORT) port is unavailable!)))
@@ -160,7 +160,7 @@ define start_loolwsd
 	@echo "Launching coolwsd..."
 	@fc-cache "@LO_PATH@"/share/fonts/truetype
 	@echo
-	@mkdir -p $(dir $(LOOLWSD_OUTPUT))
+	@mkdir -p $(dir $(COOLWSD_OUTPUT))
 	../coolwsd --o:sys_template_path="@SYSTEMPLATE_PATH@" \
 			--o:child_root_path="@JAILS_PATH@" --o:storage.filesystem[@allow]=true \
 			--o:security.capabilities="$(CAPABILITIES)" \
@@ -175,9 +175,9 @@ define start_loolwsd
 			--o:security.enable_macros_execution=true \
 			--port=$(FREE_PORT) \
 			--pidfile=$(PID_FILE) \
-			--o:logging.file.property[0]=$(LOOLWSD_LOG) \
+			--o:logging.file.property[0]=$(COOLWSD_LOG) \
 			$(if $(findstring php-proxy, $(CYPRESS_INTEGRATION)),--o:net.proxy_prefix=true) \
-			 > $(LOOLWSD_OUTPUT) 2>&1 &
+			 > $(COOLWSD_OUTPUT) 2>&1 &
 	@$(WAIT_ON_BINARY) http://localhost:$(FREE_PORT) --timeout 60000
 	@echo
 endef
@@ -224,14 +224,14 @@ clean-local:
 check-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(call start_loolwsd)
+	$(call start_coolwsd)
 	$(call run_mobile_tests,$(spec))
 	@$(KILL_COMMAND) || true
 
 run-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(call start_loolwsd)
+	$(call start_coolwsd)
 	$(call run_interactive_mobile,$(spec)) || true
 	@$(KILL_COMMAND) || true
 
@@ -239,7 +239,7 @@ MOBILE_CONFIG = \
 	integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT)
 
 MOBILE_ENV = \
-	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MOBILE_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MOBILE_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run one mobile test / all mobile tests in interactive test runner.
 # Parameters:
@@ -283,14 +283,14 @@ endef
 check-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(call start_loolwsd)
+	$(call start_coolwsd)
 	$(call run_desktop_tests,$(spec))
 	@$(KILL_COMMAND) || true
 
 run-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(call start_loolwsd)
+	$(call start_coolwsd)
 	$(call run_interactive_desktop,$(spec)) || true
 	@$(KILL_COMMAND) || true
 
@@ -298,7 +298,7 @@ DESKTOP_CONFIG = \
 	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT)
 
 DESKTOP_ENV = \
-	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(DESKTOP_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(DESKTOP_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run one desktop test / all desktop tests in interactive test runner.
 # Parameters:
@@ -341,7 +341,7 @@ endef
 check-multi: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(call start_loolwsd)
+	$(call start_coolwsd)
 	$(if $(spec), \
 		$(call run_multiuser_test,$(spec)), \
 		$(call run_all_multiuser_tests))
@@ -350,7 +350,7 @@ check-multi: @JAILS_PATH@ $(NODE_BINS)
 run-multi: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(call start_loolwsd)
+	$(call start_coolwsd)
 	$(call run_interactive_multiuser,$(spec)) || true
 	@$(KILL_COMMAND) || true
 
@@ -358,7 +358,7 @@ MULTIUSER_CONFIG = \
 	integrationFolder=$(MULTIUSER_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000,retries=0
 
 MULTIUSER_ENV = \
-	DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	DATA_FOLDER=$(MULTIUSER_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run all multi-user tests in headless mode.
 # Parameters:
@@ -409,7 +409,7 @@ do-interfer-mobile-check-log: do-interfer-mobile-check
 do-interfer-mobile-check: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(call start_loolwsd)
+	$(call start_coolwsd)
 	$(if $(spec), \
 		$(call run_mobile_interference_test,$(spec)), \
 		$(call run_mobile_interference_tests))
@@ -418,7 +418,7 @@ do-interfer-mobile-check: @JAILS_PATH@ $(NODE_BINS)
 run-interfer-mobile: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(call start_loolwsd)
+	$(call start_coolwsd)
 	@echo
 	@echo "Running interfer mobile test in interactive test runner..."
 	@echo
@@ -437,13 +437,13 @@ INTERFER_MOBILE_CONFIG1 = \
 	integrationFolder=$(MOBILE_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000
 
 INTERFER_MOBILE_ENV1 = \
-	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
+	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
 
 INTERFER_MOBILE_CONFIG2 = \
 	supportFile=$(SUPPORT_FILE),userAgent=$(MOBILE_USER_AGENT),defaultCommandTimeout=30000,retries=0
 
 INTERFER_MOBILE_ENV2 = \
-	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	DATA_FOLDER=$(MOBILE_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run all mobile interference tests in headless mode.
 define run_mobile_interference_tests
@@ -482,7 +482,7 @@ do-interfer-desktop-check-log: do-interfer-desktop-check
 do-interfer-desktop-check: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(call start_loolwsd)
+	$(call start_coolwsd)
 	$(if $(spec), \
 		$(call run_desktop_interference_test,$(spec)), \
 		$(call run_desktop_interference_tests))
@@ -491,7 +491,7 @@ do-interfer-desktop-check: @JAILS_PATH@ $(NODE_BINS)
 run-interfer-desktop: @JAILS_PATH@ $(NODE_BINS)
 	$(call cleanup_before_run)
 	$(call run_JS_error_check)
-	$(call start_loolwsd)
+	$(call start_coolwsd)
 	@echo
 	@echo "Running interfer desktop test in interactive test runner..."
 	@echo
@@ -510,13 +510,13 @@ INTERFER_DESKTOP_CONFIG1 = \
 	integrationFolder=$(DESKTOP_TEST_FOLDER),supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000
 
 INTERFER_DESKTOP_ENV1 = \
-	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
+	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION),INTERFERENCE_TEST=true
 
 INTERFER_DESKTOP_CONFIG2 = \
 	supportFile=$(SUPPORT_FILE),userAgent=$(DESKTOP_USER_AGENT),defaultCommandTimeout=30000,retries=0
 
 INTERFER_DESKTOP_ENV2 = \
-	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(LOOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
+	DATA_FOLDER=$(DESKTOP_DATA_FOLDER),DATA_WORKDIR=$(MULTIUSER_DATA_WORKDIR),WSD_VERSION_HASH=$(COOLWSD_VERSION_HASH),SERVER_PORT=$(FREE_PORT),LO_CORE_VERSION="$(CORE_VERSION)",INTEGRATION=$(CYPRESS_INTEGRATION)
 
 # Run all desktop interference test in headless mode.
 define run_desktop_interference_tests
@@ -563,7 +563,7 @@ do-run-cov: @JAILS_PATH@ $(NODE_BINS)
 	@echo "Run all tests..."
 	@echo
 	$(call cleanup_before_run)
-	$(call start_loolwsd)
+	$(call start_coolwsd)
 	$(call run_desktop_tests,,,COVERAGE_RUN="1")
 	$(call run_mobile_tests,,,COVERAGE_RUN="1")
 	$(call run_all_multiuser_tests,COVERAGE_RUN="1")

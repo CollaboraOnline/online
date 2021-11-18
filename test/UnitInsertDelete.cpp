@@ -21,7 +21,7 @@
 #include <Unit.hpp>
 #include <helpers.hpp>
 
-class LOOLWebSocket;
+class COOLWebSocket;
 
 namespace
 {
@@ -101,7 +101,7 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
         Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
         Poco::URI uri(helpers::getTestServerURI());
         Poco::Net::HTTPResponse httpResponse;
-        std::shared_ptr<LOOLWebSocket> socket
+        std::shared_ptr<COOLWebSocket> socket
             = helpers::connectLOKit(uri, request, httpResponse, testname);
 
         helpers::sendTextFrame(socket, "load url=" + documentURL);
@@ -206,7 +206,7 @@ UnitBase::TestResult UnitInsertDelete::testPasteBlank()
     {
         // Load a document and make it empty, then paste nothing into it.
         Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<LOOLWebSocket> socket
+        std::shared_ptr<COOLWebSocket> socket
             = helpers::loadDocAndGetSocket("hello.odt", uri, testname);
 
         helpers::deleteAll(socket, testname);
@@ -234,9 +234,9 @@ UnitBase::TestResult UnitInsertDelete::testGetTextSelection()
         helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
         Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<LOOLWebSocket> socket
+        std::shared_ptr<COOLWebSocket> socket
             = helpers::loadDocAndGetSocket(uri, documentURL, testname);
-        std::shared_ptr<LOOLWebSocket> socket2
+        std::shared_ptr<COOLWebSocket> socket2
             = helpers::loadDocAndGetSocket(uri, documentURL, testname);
 
         static const std::string expected = "Hello world";
@@ -263,7 +263,7 @@ UnitBase::TestResult UnitInsertDelete::testCursorPosition()
 
         helpers::getDocumentPathAndURL("Example.odt", docPath, docURL, testname);
         Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<LOOLWebSocket> socket0
+        std::shared_ptr<COOLWebSocket> socket0
             = helpers::loadDocAndGetSocket(uri, docURL, testname);
 
         // receive cursor position
@@ -279,7 +279,7 @@ UnitBase::TestResult UnitInsertDelete::testCursorPosition()
         LOK_ASSERT_EQUAL(static_cast<size_t>(4), cursorTokens.size());
 
         // Create second view
-        std::shared_ptr<LOOLWebSocket> socket1
+        std::shared_ptr<COOLWebSocket> socket1
             = helpers::loadDocAndGetSocket(uri, docURL, testname);
 
         //receive view cursor position

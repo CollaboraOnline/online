@@ -13,7 +13,7 @@
     <child_root_path desc="Path to the directory under which the chroot jails for the child processes will be created. Should be on the same file system as systemplate and lotemplate. Must be an empty directory." type="path" relative="true" default="jails"></child_root_path>
     <mount_jail_tree desc="Controls whether the systemplate and lotemplate contents are mounted or not, which is much faster than the default of linking/copying each file." type="bool" default="true"></mount_jail_tree>
 
-    <server_name desc="External hostname:port of the server running loolwsd. If empty, it's derived from the request (please set it if this doesn't work). Must be specified when behind a reverse-proxy or when the hostname is not reachable directly." type="string" default=""></server_name>
+    <server_name desc="External hostname:port of the server running coolwsd. If empty, it's derived from the request (please set it if this doesn't work). Must be specified when behind a reverse-proxy or when the hostname is not reachable directly." type="string" default=""></server_name>
     <file_server_root_path desc="Path to the directory that should be considered root for the file server. This should be the directory containing cool." type="path" relative="true" default="browser/../"></file_server_root_path>
     <hexify_embedded_urls desc="Enable to protect encoded URLs from getting decoded by intermediate hops. Particularly useful on Azure deployments" type="bool" default="false"></hexify_embedded_urls>
 
@@ -43,7 +43,7 @@
             <idle_time_secs desc="Minimum idle time for a document to be candidate for bad state" type="uint" default="300">300</idle_time_secs>
             <limit_dirty_mem_mb desc="Minimum memory usage for a document to be candidate for bad state" type="uint" default="3072">3072</limit_dirty_mem_mb>
             <limit_cpu_per desc="Minimum CPU usage for a document to be candidate for bad state" type="uint" default="85">85</limit_cpu_per>
-            <lost_kit_grace_period_secs desc="The minimum grace period for a lost kit process (not referenced by loolwsd) to resolve its lost status before it is terminated. To disable the cleanup of lost kits use value 0" default="120">120</lost_kit_grace_period_secs>
+            <lost_kit_grace_period_secs desc="The minimum grace period for a lost kit process (not referenced by coolwsd) to resolve its lost status before it is terminated. To disable the cleanup of lost kits use value 0" default="120">120</lost_kit_grace_period_secs>
         </cleanup>
     </per_document>
 
@@ -58,19 +58,19 @@
         <color type="bool">true</color>
         <!--
              Note to developers: When you do "make run", the logging.level will be set on the
-             loolwsd command line, so if you want to change it for your testing, do it in
+             coolwsd command line, so if you want to change it for your testing, do it in
              Makefile.am, not here.
         -->
-        <level type="string" desc="Can be 0-8 (with the lowest numbers being the least verbose), or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace" default="@LOOLWSD_LOGLEVEL@">@LOOLWSD_LOGLEVEL@</level>
+        <level type="string" desc="Can be 0-8 (with the lowest numbers being the least verbose), or none (turns off logging), fatal, critical, error, warning, notice, information, debug, trace" default="@COOLWSD_LOGLEVEL@">@COOLWSD_LOGLEVEL@</level>
         <most_verbose_level_settable_from_client type="string" desc="A loggingleveloverride message from the client can not set a more verbose log level than this" default="notice">notice</most_verbose_level_settable_from_client>
         <least_verbose_level_settable_from_client type="string" desc="A loggingleveloverride message from a client can not set a less verbose log level than this" default="fatal">fatal</least_verbose_level_settable_from_client>
         <protocol type="bool" desc="Enable minimal client-site JS protocol logging from the start">@ENABLE_DEBUG_PROTOCOL@</protocol>
         <!-- lokit_sal_log example: Log WebDAV-related messages, that is interesting for debugging Insert - Image operation: "+TIMESTAMP+INFO.ucb.ucp.webdav+WARN.ucb.ucp.webdav"
              See also: https://docs.libreoffice.org/sal/html/sal_log.html -->
         <lokit_sal_log type="string" desc="Fine tune log messages from LOKit. Default is to suppress log messages from LOKit." default="-INFO-WARN">-INFO-WARN</lokit_sal_log>
-        <file enable="@LOOLWSD_LOG_TO_FILE@">
-            <!-- If you use other path than /var/log and you run loolwsd from systemd, make sure that you enable that path in loolwsd.service (ReadWritePaths). -->
-            <property name="path" desc="Log file path.">@LOOLWSD_LOGFILE@</property>
+        <file enable="@COOLWSD_LOG_TO_FILE@">
+            <!-- If you use other path than /var/log and you run coolwsd from systemd, make sure that you enable that path in coolwsd.service (ReadWritePaths). -->
+            <property name="path" desc="Log file path.">@COOLWSD_LOGFILE@</property>
             <property name="rotation" desc="Log file rotation strategy. See Poco FileChannel.">never</property>
             <property name="archive" desc="Append either timestamp or number to the archived log filename.">timestamp</property>
             <property name="compress" desc="Enable/disable log file compression.">true</property>
@@ -80,24 +80,24 @@
             <property name="flush" desc="Enable/disable flushing after logging each line. May harm performance. Note that without flushing after each line, the log lines from the different processes will not appear in chronological order.">false</property>
         </file>
         <anonymize>
-            <anonymize_user_data type="bool" desc="Enable to anonymize/obfuscate of user-data in logs. If default is true, it was forced at compile-time and cannot be disabled." default="@LOOLWSD_ANONYMIZE_USER_DATA@">@LOOLWSD_ANONYMIZE_USER_DATA@</anonymize_user_data>
+            <anonymize_user_data type="bool" desc="Enable to anonymize/obfuscate of user-data in logs. If default is true, it was forced at compile-time and cannot be disabled." default="@COOLWSD_ANONYMIZE_USER_DATA@">@COOLWSD_ANONYMIZE_USER_DATA@</anonymize_user_data>
             <anonymization_salt type="uint" desc="The salt used to anonymize/obfuscate user-data in logs. Use a secret 64-bit random number." default="82589933">82589933</anonymization_salt>
         </anonymize>
     </logging>
 
     <!--
          Note to developers: When you do "make run", the trace_event[@enable] will be set on the
-         loolwsd command line, so if you want to change it for your testing, do it in Makefile.am,
+         coolwsd command line, so if you want to change it for your testing, do it in Makefile.am,
          not here.
     -->
     <trace_event desc="The possibility to turn on generation of a Chrome Trace Event file" enable="false">
-        <path desc="Output path for the Trace Event file, to which they will be written if turned on at run-time" type="string" default="@LOOLWSD_TRACEEVENTFILE@">@LOOLWSD_TRACEEVENTFILE@</path>
+        <path desc="Output path for the Trace Event file, to which they will be written if turned on at run-time" type="string" default="@COOLWSD_TRACEEVENTFILE@">@COOLWSD_TRACEEVENTFILE@</path>
     </trace_event>
 
     <browser_logging desc="Logging in the browser console" default="@BROWSER_LOGGING@">@BROWSER_LOGGING@</browser_logging>
 
     <trace desc="Dump commands and notifications for replay. When 'snapshot' is true, the source file is copied to the path first." enable="false">
-        <path desc="Output path to hold trace file and docs. Use '%' for timestamp to avoid overwriting. For example: /some/path/to/looltrace-%.gz" compress="true" snapshot="false"></path>
+        <path desc="Output path to hold trace file and docs. Use '%' for timestamp to avoid overwriting. For example: /some/path/to/cooltrace-%.gz" compress="true" snapshot="false"></path>
         <filter>
             <message desc="Regex pattern of messages to exclude"></message>
         </filter>
@@ -107,10 +107,10 @@
     </trace>
 
     <net desc="Network settings">
-      <!-- On systems where localhost resolves to IPv6 [::1] address first, when net.proto is all and net.listen is loopback, loolwsd unexpectedly listens on [::1] only.
+      <!-- On systems where localhost resolves to IPv6 [::1] address first, when net.proto is all and net.listen is loopback, coolwsd unexpectedly listens on [::1] only.
            You need to change net.proto to IPv4, if you want to use 127.0.0.1. -->
       <proto type="string" default="all" desc="Protocol to use IPv4, IPv6 or all for both">all</proto>
-      <listen type="string" default="any" desc="Listen address that loolwsd binds to. Can be 'any' or 'loopback'.">any</listen>
+      <listen type="string" default="any" desc="Listen address that coolwsd binds to. Can be 'any' or 'loopback'.">any</listen>
       <!-- this allows you to shift all of our URLs into a sub-path from
            https://my.com/browser/a123... to https://my.com/my/sub/path/browser/a123... -->
       <service_root type="path" default="" desc="Prefix all the pages, websockets, etc. with this path."></service_root>
@@ -125,8 +125,8 @@
         <host desc="The IPv4 private 10.0.0.0/8 subnet (Podman).">10\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}</host>
         <host desc="Ditto, but as IPv4-mapped IPv6 addresses">::ffff:10\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}</host>
       </post_allow>
-      <frame_ancestors desc="Specify who is allowed to embed the LO Online iframe (loolwsd and WOPI host are always allowed). Separate multiple hosts by space."></frame_ancestors>
-      <connection_timeout_secs desc="Specifies the connection, send, recv timeout in seconds for connections initiated by loolwsd (such as WOPI connections)." type="int" default="30"></connection_timeout_secs>
+      <frame_ancestors desc="Specify who is allowed to embed the LO Online iframe (coolwsd and WOPI host are always allowed). Separate multiple hosts by space."></frame_ancestors>
+      <connection_timeout_secs desc="Specifies the connection, send, recv timeout in seconds for connections initiated by coolwsd (such as WOPI connections)." type="int" default="30"></connection_timeout_secs>
 
       <!-- this setting radically changes how online works, it should not be used in a production environment -->
       <proxy_prefix type="bool" default="false" desc="Enable a ProxyPrefix to be passed int through which to redirect requests"></proxy_prefix>
@@ -134,12 +134,12 @@
 
     <ssl desc="SSL settings">
         <!-- switches from https:// + wss:// to http:// + ws:// -->
-        <enable type="bool" desc="Controls whether SSL encryption between loolwsd and the network is enabled (do not disable for production deployment). If default is false, must first be compiled with SSL support to enable." default="@ENABLE_SSL@">@ENABLE_SSL@</enable>
+        <enable type="bool" desc="Controls whether SSL encryption between coolwsd and the network is enabled (do not disable for production deployment). If default is false, must first be compiled with SSL support to enable." default="@ENABLE_SSL@">@ENABLE_SSL@</enable>
         <!-- SSL off-load can be done in a proxy, if so disable SSL, and enable termination below in production -->
-        <termination desc="Connection via proxy where loolwsd acts as working via https, but actually uses http." type="bool" default="true">false</termination>
-        <cert_file_path desc="Path to the cert file" relative="false">/etc/loolwsd/cert.pem</cert_file_path>
-        <key_file_path desc="Path to the key file" relative="false">/etc/loolwsd/key.pem</key_file_path>
-        <ca_file_path desc="Path to the ca file" relative="false">/etc/loolwsd/ca-chain.cert.pem</ca_file_path>
+        <termination desc="Connection via proxy where coolwsd acts as working via https, but actually uses http." type="bool" default="true">false</termination>
+        <cert_file_path desc="Path to the cert file" relative="false">/etc/coolwsd/cert.pem</cert_file_path>
+        <key_file_path desc="Path to the key file" relative="false">/etc/coolwsd/key.pem</key_file_path>
+        <ca_file_path desc="Path to the ca file" relative="false">/etc/coolwsd/ca-chain.cert.pem</ca_file_path>
         <cipher_list desc="List of OpenSSL ciphers to accept" default="ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH"></cipher_list>
         <hpkp desc="Enable HTTP Public key pinning" enable="false" report_only="false">
             <max_age desc="HPKP's max-age directive - time in seconds browser should remember the pins" enable="true">1000</max_age>
@@ -191,7 +191,7 @@
         </wopi>
         <ssl desc="SSL settings">
             <as_scheme type="bool" default="true" desc="When set we exclusively use the WOPI URI's scheme to enable SSL for storage">true</as_scheme>
-            <enable type="bool" desc="If as_scheme is false or not set, this can be set to force SSL encryption between storage and loolwsd. When empty this defaults to following the ssl.enable setting"></enable>
+            <enable type="bool" desc="If as_scheme is false or not set, this can be set to force SSL encryption between storage and coolwsd. When empty this defaults to following the ssl.enable setting"></enable>
             <cert_file_path desc="Path to the cert file" relative="false"></cert_file_path>
             <key_file_path desc="Path to the key file" relative="false"></key_file_path>
             <ca_file_path desc="Path to the ca file. If this is not empty, then SSL verification will be strict, otherwise cert of storage (WOPI-like host) will not be verified." relative="false"></ca_file_path>
