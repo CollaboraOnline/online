@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-17 13:48+0100\n"
+"POT-Creation-Date: 2021-11-18 09:08+0100\n"
 "PO-Revision-Date: 2020-12-08 13:30+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Uyghur <https://hosted.weblate.org/projects/collabora-online/"
@@ -141,7 +141,7 @@ msgstr "تور گىرافىكى"
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:248
 #: src/control/Control.NotebookbarDraw.js:24
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/layer/tile/CommentListSection.ts:393
+#: src/layer/tile/CommentListSection.ts:394
 #: src/layer/tile/CommentSection.ts:122
 msgid "Save"
 msgstr "ساقلا"
@@ -258,19 +258,19 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "بۇ جەرياننى راستلا ئاخىرلاشتۇرامسىز؟"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1612
+#: src/control/Control.Menubar.js:1620
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:860
+#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:861
 #: src/core/Socket.js:951
 msgid "OK"
 msgstr ""
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.Command.js:90 src/control/Control.LanguageDialog.js:86
-#: src/control/Control.Menubar.js:1613 src/control/Control.MobileTopBar.js:43
+#: src/control/Control.Menubar.js:1621 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
-#: src/core/Socket.js:952 src/layer/tile/CommentListSection.ts:394
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:862
+#: src/core/Socket.js:952 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "ۋاز كەچ"
@@ -383,7 +383,7 @@ msgstr ""
 #: src/control/Control.JSDialogBuilder.js:2114
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
-#: src/layer/tile/CommentListSection.ts:826
+#: src/layer/tile/CommentListSection.ts:827
 msgid "Comment"
 msgstr "ئىزاھات"
 
@@ -467,7 +467,7 @@ msgid "Select range"
 msgstr "تاللانغان كاتەكچە دائىرىسى"
 
 #: src/control/Control.JSDialogBuilder.js:1439
-#: src/control/Control.NotebookbarBuilder.js:236
+#: src/control/Control.NotebookbarBuilder.js:237
 #, fuzzy
 msgid "Font Name"
 msgstr "خەت نۇسخا"
@@ -513,50 +513,50 @@ msgstr "جەدۋەل قىستۇر"
 
 #: src/control/Control.LanguageDialog.js:69 src/control/Control.Menubar.js:277
 #: src/control/Control.Menubar.js:279 src/control/Control.Menubar.js:281
-#: src/control/Control.Menubar.js:417 src/control/Control.Menubar.js:530
-#: src/control/Control.Menubar.js:738
-#: src/control/Control.NotebookbarBuilder.js:775
-#: src/control/Control.NotebookbarBuilder.js:777
-#: src/control/Control.NotebookbarBuilder.js:779
-#: src/control/Control.NotebookbarBuilder.js:803
-#: src/control/Control.NotebookbarBuilder.js:838
-#: src/control/Control.NotebookbarBuilder.js:855
+#: src/control/Control.Menubar.js:418 src/control/Control.Menubar.js:532
+#: src/control/Control.Menubar.js:741
+#: src/control/Control.NotebookbarBuilder.js:776
+#: src/control/Control.NotebookbarBuilder.js:778
+#: src/control/Control.NotebookbarBuilder.js:780
+#: src/control/Control.NotebookbarBuilder.js:804
+#: src/control/Control.NotebookbarBuilder.js:839
+#: src/control/Control.NotebookbarBuilder.js:856
 #: src/control/Control.StatusBar.js:514
 msgid "None (Do not check spelling)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:60 src/control/Control.Menubar.js:309
-#: src/control/Control.Menubar.js:437 src/control/Control.Menubar.js:546
-#: src/control/Control.Menubar.js:758 src/control/Control.Menubar.js:811
-#: src/control/Control.Menubar.js:866 src/control/Control.Menubar.js:911
+#: src/control/Control.Menubar.js:60 src/control/Control.Menubar.js:310
+#: src/control/Control.Menubar.js:439 src/control/Control.Menubar.js:549
+#: src/control/Control.Menubar.js:762 src/control/Control.Menubar.js:816
+#: src/control/Control.Menubar.js:872 src/control/Control.Menubar.js:918
 msgid "Share..."
 msgstr ""
 
-#: src/control/Control.Menubar.js:61 src/control/Control.Menubar.js:310
-#: src/control/Control.Menubar.js:439 src/control/Control.Menubar.js:547
-#: src/control/Control.Menubar.js:759 src/control/Control.Menubar.js:812
-#: src/control/Control.Menubar.js:868 src/control/Control.Menubar.js:912
+#: src/control/Control.Menubar.js:61 src/control/Control.Menubar.js:311
+#: src/control/Control.Menubar.js:441 src/control/Control.Menubar.js:550
+#: src/control/Control.Menubar.js:763 src/control/Control.Menubar.js:817
+#: src/control/Control.Menubar.js:874 src/control/Control.Menubar.js:919
 msgid "See revision history"
 msgstr "تۈزىتىش تارىخىنى كۆرسەت"
 
-#: src/control/Control.Menubar.js:62 src/control/Control.Menubar.js:311
-#: src/control/Control.Menubar.js:440 src/control/Control.Menubar.js:548
-#: src/control/Control.Menubar.js:764 src/control/Control.Menubar.js:816
-#: src/control/Control.Menubar.js:870 src/control/Control.Menubar.js:916
+#: src/control/Control.Menubar.js:62 src/control/Control.Menubar.js:312
+#: src/control/Control.Menubar.js:442 src/control/Control.Menubar.js:551
+#: src/control/Control.Menubar.js:768 src/control/Control.Menubar.js:821
+#: src/control/Control.Menubar.js:876 src/control/Control.Menubar.js:923
 msgid "Download as"
 msgstr "چۈشۈرۈلمىلەر"
 
-#: src/control/Control.Menubar.js:62 src/control/Control.Menubar.js:311
-#: src/control/Control.Menubar.js:440 src/control/Control.Menubar.js:548
-#: src/control/Control.Menubar.js:764 src/control/Control.Menubar.js:816
-#: src/control/Control.Menubar.js:870 src/control/Control.Menubar.js:916
+#: src/control/Control.Menubar.js:62 src/control/Control.Menubar.js:312
+#: src/control/Control.Menubar.js:442 src/control/Control.Menubar.js:551
+#: src/control/Control.Menubar.js:768 src/control/Control.Menubar.js:821
+#: src/control/Control.Menubar.js:876 src/control/Control.Menubar.js:923
 msgid "Export as"
 msgstr ""
 
-#: src/control/Control.Menubar.js:63 src/control/Control.Menubar.js:312
-#: src/control/Control.Menubar.js:441 src/control/Control.Menubar.js:549
-#: src/control/Control.Menubar.js:765 src/control/Control.Menubar.js:817
-#: src/control/Control.Menubar.js:871 src/control/Control.Menubar.js:917
+#: src/control/Control.Menubar.js:63 src/control/Control.Menubar.js:313
+#: src/control/Control.Menubar.js:443 src/control/Control.Menubar.js:552
+#: src/control/Control.Menubar.js:769 src/control/Control.Menubar.js:822
+#: src/control/Control.Menubar.js:877 src/control/Control.Menubar.js:924
 #: src/control/Control.NotebookbarCalc.js:163
 #: src/control/Control.NotebookbarDraw.js:212
 #: src/control/Control.NotebookbarImpress.js:243
@@ -564,47 +564,47 @@ msgstr ""
 msgid "PDF Document (.pdf)"
 msgstr "PDF پۈتۈك (.pdf)"
 
-#: src/control/Control.Menubar.js:64 src/control/Control.Menubar.js:766
+#: src/control/Control.Menubar.js:64 src/control/Control.Menubar.js:770
 msgid "ODF text document (.odt)"
 msgstr "ODF تېكىست پۈتۈك (.odt)"
 
-#: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:767
+#: src/control/Control.Menubar.js:65 src/control/Control.Menubar.js:771
 #: src/control/Control.NotebookbarWriter.js:149
 msgid "Word 2003 Document (.doc)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:66 src/control/Control.Menubar.js:768
+#: src/control/Control.Menubar.js:66 src/control/Control.Menubar.js:772
 #: src/control/Control.NotebookbarWriter.js:155
 msgid "Word Document (.docx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:769
+#: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:773
 #: src/control/Control.NotebookbarWriter.js:137
 msgid "Rich Text (.rtf)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:770
+#: src/control/Control.Menubar.js:68 src/control/Control.Menubar.js:774
 msgid "EPUB (.epub)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:760
+#: src/control/Control.Menubar.js:69 src/control/Control.Menubar.js:764
 #: src/control/Control.NotebookbarWriter.js:192 src/control/Signing.js:601
 msgid "Sign document"
 msgstr ""
 
-#: src/control/Control.Menubar.js:72 src/control/Control.Menubar.js:319
-#: src/control/Control.Menubar.js:445 src/control/Control.Menubar.js:556
+#: src/control/Control.Menubar.js:72 src/control/Control.Menubar.js:320
+#: src/control/Control.Menubar.js:447 src/control/Control.Menubar.js:559
 msgid "Close document"
 msgstr "پۈتۈك ياپ"
 
-#: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:324
-#: src/control/Control.Menubar.js:450 src/control/Control.Menubar.js:561
-#: src/control/Control.Menubar.js:775 src/control/Control.Menubar.js:826
-#: src/control/Control.Menubar.js:877 src/control/Control.Menubar.js:925
-#: src/control/Control.NotebookbarBuilder.js:768
-#: src/control/Control.NotebookbarBuilder.js:798
-#: src/control/Control.NotebookbarBuilder.js:833
-#: src/control/Control.NotebookbarBuilder.js:850
+#: src/control/Control.Menubar.js:77 src/control/Control.Menubar.js:325
+#: src/control/Control.Menubar.js:452 src/control/Control.Menubar.js:564
+#: src/control/Control.Menubar.js:779 src/control/Control.Menubar.js:831
+#: src/control/Control.Menubar.js:883 src/control/Control.Menubar.js:932
+#: src/control/Control.NotebookbarBuilder.js:769
+#: src/control/Control.NotebookbarBuilder.js:799
+#: src/control/Control.NotebookbarBuilder.js:834
+#: src/control/Control.NotebookbarBuilder.js:851
 #: src/control/Control.NotebookbarCalc.js:169
 #: src/control/Control.NotebookbarCalc.js:170
 #: src/control/Control.NotebookbarDraw.js:218
@@ -616,42 +616,42 @@ msgstr "پۈتۈك ياپ"
 msgid "Repair"
 msgstr ""
 
-#: src/control/Control.Menubar.js:104 src/control/Control.Menubar.js:338
-#: src/control/Control.Menubar.js:464 src/control/Control.Menubar.js:575
+#: src/control/Control.Menubar.js:104 src/control/Control.Menubar.js:339
+#: src/control/Control.Menubar.js:466 src/control/Control.Menubar.js:578
 #: src/control/Control.NotebookbarCalc.js:745
 #: src/control/Control.NotebookbarCalc.js:746
 #: src/control/Control.NotebookbarDraw.js:689
 #: src/control/Control.NotebookbarDraw.js:690
 #: src/control/Control.NotebookbarImpress.js:981
-#: src/control/Control.NotebookbarWriter.js:980
-#: src/control/Control.NotebookbarWriter.js:981
+#: src/control/Control.NotebookbarWriter.js:993
+#: src/control/Control.NotebookbarWriter.js:994
 #: src/control/Control.StatusBar.js:188
 msgid "Reset zoom"
 msgstr "چوڭلۇقىنى ئەسلىگە قايتۇر"
 
 #: src/control/Control.Menubar.js:106
-#: src/control/Control.NotebookbarBuilder.js:754
-#: src/control/Control.NotebookbarWriter.js:1030
-#: src/control/Control.NotebookbarWriter.js:1031
+#: src/control/Control.NotebookbarBuilder.js:755
+#: src/control/Control.NotebookbarWriter.js:1043
+#: src/control/Control.NotebookbarWriter.js:1044
 msgid "Show Ruler"
 msgstr ""
 
-#: src/control/Control.Menubar.js:107 src/control/Control.Menubar.js:348
-#: src/control/Control.Menubar.js:467
-#: src/control/Control.NotebookbarWriter.js:1041
-#: src/control/Control.NotebookbarWriter.js:1042
+#: src/control/Control.Menubar.js:107 src/control/Control.Menubar.js:349
+#: src/control/Control.Menubar.js:469
+#: src/control/Control.NotebookbarWriter.js:1054
+#: src/control/Control.NotebookbarWriter.js:1055
 msgid "Show Status Bar"
 msgstr ""
 
-#: src/control/Control.Menubar.js:116 src/control/Control.Menubar.js:351
-#: src/control/Control.Menubar.js:470 src/control/Control.Menubar.js:586
-#: src/control/Control.Menubar.js:978 src/control/Control.Menubar.js:1020
-#: src/control/Control.Menubar.js:1034 src/control/Control.Menubar.js:1057
+#: src/control/Control.Menubar.js:116 src/control/Control.Menubar.js:352
+#: src/control/Control.Menubar.js:472 src/control/Control.Menubar.js:589
+#: src/control/Control.Menubar.js:986 src/control/Control.Menubar.js:1028
+#: src/control/Control.Menubar.js:1042 src/control/Control.Menubar.js:1065
 msgid "Local Image..."
 msgstr ""
 
 #: src/control/Control.Menubar.js:134 src/control/Control.Menubar.js:136
-#: src/control/Control.Menubar.js:995 src/control/Control.Menubar.js:997
+#: src/control/Control.Menubar.js:1003 src/control/Control.Menubar.js:1005
 msgid "All"
 msgstr ""
 
@@ -659,120 +659,128 @@ msgstr ""
 msgid "Text orientation"
 msgstr ""
 
-#: src/control/Control.Menubar.js:295 src/control/Control.Menubar.js:423
-#: src/control/Control.Menubar.js:533 src/control/Control.Menubar.js:744
-#: src/control/Control.NotebookbarWriter.js:216
+#: src/control/Control.Menubar.js:295 src/control/Control.Menubar.js:424
+#: src/control/Control.Menubar.js:535 src/control/Control.Menubar.js:747
+#: src/control/Control.NotebookbarWriter.js:217
 msgid "Online Help"
 msgstr ""
 
-#: src/control/Control.Menubar.js:296 src/control/Control.Menubar.js:424
-#: src/control/Control.Menubar.js:534 src/control/Control.Menubar.js:745
-#: src/control/Control.NotebookbarWriter.js:227
+#: src/control/Control.Menubar.js:296 src/control/Control.Menubar.js:425
+#: src/control/Control.Menubar.js:536 src/control/Control.Menubar.js:748
+#: src/control/Control.NotebookbarWriter.js:228
 msgid "Keyboard shortcuts"
 msgstr "ھەرپتاختا تېزلەتمىلىرى"
 
-#: src/control/Control.Menubar.js:297 src/control/Control.Menubar.js:425
-#: src/control/Control.Menubar.js:535 src/control/Control.Menubar.js:746
-#: src/control/Control.NotebookbarWriter.js:238
+#: src/control/Control.Menubar.js:297 src/control/Control.Menubar.js:426
+#: src/control/Control.Menubar.js:537 src/control/Control.Menubar.js:749
+#: src/control/Control.NotebookbarWriter.js:239
 msgid "Report an issue"
 msgstr ""
 
-#: src/control/Control.Menubar.js:298 src/control/Control.Menubar.js:426
-#: src/control/Control.Menubar.js:536 src/control/Control.Menubar.js:747
-#: src/control/Control.Menubar.js:802 src/control/Control.Menubar.js:857
-#: src/control/Control.Menubar.js:902 src/control/Control.Menubar.js:971
-#: src/control/Control.NotebookbarWriter.js:250
+#: src/control/Control.Menubar.js:298 src/control/Control.Menubar.js:427
+#: src/control/Control.Menubar.js:538 src/control/Control.Menubar.js:750
+#: src/control/Control.Menubar.js:806 src/control/Control.Menubar.js:862
+#: src/control/Control.Menubar.js:908 src/control/Control.Menubar.js:978
+#: src/control/Control.NotebookbarWriter.js:251
 msgid "Latest Updates"
 msgstr ""
 
-#: src/control/Control.Menubar.js:299 src/control/Control.Menubar.js:427
-#: src/control/Control.Menubar.js:537 src/control/Control.Menubar.js:748
-#: src/control/Control.Menubar.js:803 src/control/Control.Menubar.js:858
-#: src/control/Control.Menubar.js:903 src/control/Control.Menubar.js:972
-#: src/control/Control.NotebookbarWriter.js:261
+#: src/control/Control.Menubar.js:299 src/control/Control.Menubar.js:428
+#: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:751
+#: src/control/Control.Menubar.js:807 src/control/Control.Menubar.js:863
+#: src/control/Control.Menubar.js:909 src/control/Control.Menubar.js:979
+#: src/control/Control.NotebookbarWriter.js:263
+msgid "Send Feedback"
+msgstr ""
+
+#: src/control/Control.Menubar.js:300 src/control/Control.Menubar.js:429
+#: src/control/Control.Menubar.js:540 src/control/Control.Menubar.js:752
+#: src/control/Control.Menubar.js:808 src/control/Control.Menubar.js:864
+#: src/control/Control.Menubar.js:910 src/control/Control.Menubar.js:980
+#: src/control/Control.NotebookbarWriter.js:274
 msgid "About"
 msgstr "ھەققىدە"
 
-#: src/control/Control.Menubar.js:301 src/control/Control.Menubar.js:429
-#: src/control/Control.Menubar.js:539 src/control/Control.Menubar.js:750
+#: src/control/Control.Menubar.js:302 src/control/Control.Menubar.js:431
+#: src/control/Control.Menubar.js:542 src/control/Control.Menubar.js:754
 msgid "Last modification"
 msgstr ""
 
-#: src/control/Control.Menubar.js:308 src/control/Control.Menubar.js:436
+#: src/control/Control.Menubar.js:309 src/control/Control.Menubar.js:438
 #, fuzzy
 msgid "Save Comments"
 msgstr "ئىزاھات"
 
-#: src/control/Control.Menubar.js:313 src/control/Control.Menubar.js:818
+#: src/control/Control.Menubar.js:314 src/control/Control.Menubar.js:823
 msgid "ODF presentation (.odp)"
 msgstr "ODF كۆرسەتمە (.odp)"
 
-#: src/control/Control.Menubar.js:314 src/control/Control.Menubar.js:819
+#: src/control/Control.Menubar.js:315 src/control/Control.Menubar.js:824
 #: src/control/Control.NotebookbarImpress.js:224
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:315 src/control/Control.Menubar.js:820
+#: src/control/Control.Menubar.js:316 src/control/Control.Menubar.js:825
 #: src/control/Control.NotebookbarImpress.js:230
 msgid "PowerPoint Presentation (.pptx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:410 src/control/Control.Menubar.js:855
+#: src/control/Control.Menubar.js:411 src/control/Control.Menubar.js:860
 #: src/control/Control.PresentationBar.js:57
 msgid "Fullscreen presentation"
 msgstr "تولۇق ئېكراندا كۆرسەت"
 
-#: src/control/Control.Menubar.js:411
+#: src/control/Control.Menubar.js:412
 msgid "Present current slide"
 msgstr ""
 
-#: src/control/Control.Menubar.js:442 src/control/Control.Menubar.js:821
-#: src/control/Control.Menubar.js:872
+#: src/control/Control.Menubar.js:444 src/control/Control.Menubar.js:826
+#: src/control/Control.Menubar.js:878
 #: src/control/Control.NotebookbarDraw.js:193
 #: src/control/Control.NotebookbarImpress.js:211
 #, fuzzy
 msgid "ODF Drawing (.odg)"
 msgstr "ODF كۆرسەتمە (.odp)"
 
-#: src/control/Control.Menubar.js:550 src/control/Control.Menubar.js:918
+#: src/control/Control.Menubar.js:553 src/control/Control.Menubar.js:925
 msgid "ODF spreadsheet (.ods)"
 msgstr "ODF ئېلېكتىرونلۇق جەدۋەل (.ods)"
 
-#: src/control/Control.Menubar.js:551 src/control/Control.Menubar.js:919
+#: src/control/Control.Menubar.js:554 src/control/Control.Menubar.js:926
 #: src/control/Control.NotebookbarCalc.js:144
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:552 src/control/Control.Menubar.js:920
+#: src/control/Control.Menubar.js:555 src/control/Control.Menubar.js:927
 #: src/control/Control.NotebookbarCalc.js:150
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:553
+#: src/control/Control.Menubar.js:556
 msgid "CSV file (.csv)"
 msgstr ""
 
-#: src/control/Control.Menubar.js:754 src/control/Control.Menubar.js:807
-#: src/control/Control.Menubar.js:862 src/control/Control.Menubar.js:907
+#: src/control/Control.Menubar.js:758 src/control/Control.Menubar.js:812
+#: src/control/Control.Menubar.js:868 src/control/Control.Menubar.js:914
 #: src/control/Control.StatusBar.js:173
 #, fuzzy
 msgid "Search"
 msgstr "ئىزدە:"
 
-#: src/control/Control.Menubar.js:799
+#: src/control/Control.Menubar.js:803
 msgid "Page Setup"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1163 src/control/Control.StatusBar.js:513
+#: src/control/Control.Menubar.js:1171 src/control/Control.StatusBar.js:513
 msgid "Reset to Default Language"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1517
+#: src/control/Control.Menubar.js:1525
 #, fuzzy
 msgid "Insert Shape"
 msgstr "جەدۋەل قىستۇر"
 
-#: src/control/Control.Menubar.js:1610
+#: src/control/Control.Menubar.js:1618
 msgid "Are you sure you want to delete this slide?"
 msgstr "بۇ تام تەسۋىرنى راستلا ئۆچۈرەمسىز؟"
 
@@ -800,10 +808,10 @@ msgid "Gradient End"
 msgstr ""
 
 #: src/control/Control.Notebookbar.js:242
-#: src/control/Control.NotebookbarBuilder.js:749
-#: src/control/Control.NotebookbarBuilder.js:792
-#: src/control/Control.NotebookbarBuilder.js:820
-#: src/control/Control.NotebookbarBuilder.js:845
+#: src/control/Control.NotebookbarBuilder.js:750
+#: src/control/Control.NotebookbarBuilder.js:793
+#: src/control/Control.NotebookbarBuilder.js:821
+#: src/control/Control.NotebookbarBuilder.js:846
 #: src/control/Control.NotebookbarDraw.js:18
 #: src/control/Control.NotebookbarImpress.js:18
 msgid "Menu"
@@ -821,28 +829,28 @@ msgstr ""
 msgid "Redo"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:553
+#: src/control/Control.NotebookbarBuilder.js:554
 #: src/control/Control.TopToolbar.js:222
 msgid "Insert Local Image"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:613
+#: src/control/Control.NotebookbarBuilder.js:614
 msgid "Very Tight"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:614
+#: src/control/Control.NotebookbarBuilder.js:615
 msgid "Tight"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:615
+#: src/control/Control.NotebookbarBuilder.js:616
 msgid "Normal"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:616
+#: src/control/Control.NotebookbarBuilder.js:617
 msgid "Loose"
 msgstr ""
 
-#: src/control/Control.NotebookbarBuilder.js:617
+#: src/control/Control.NotebookbarBuilder.js:618
 msgid "Very Loose"
 msgstr ""
 
@@ -965,7 +973,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:856
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:857
 msgid "Text"
 msgstr ""
 
@@ -1059,16 +1067,16 @@ msgstr "ODF تېكىست پۈتۈك (.odt)"
 msgid "EPUB Document (.epub)"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:518
+#: src/control/Control.NotebookbarWriter.js:531
 #: src/control/Control.TopToolbar.js:101
 msgid "Default Style"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:522
+#: src/control/Control.NotebookbarWriter.js:535
 msgid "Text Body"
 msgstr ""
 
-#: src/control/Control.NotebookbarWriter.js:525
+#: src/control/Control.NotebookbarWriter.js:538
 msgid "Title"
 msgstr ""
 
@@ -1496,32 +1504,32 @@ msgstr "ساقلاۋاتىدۇ…"
 msgid "Renaming..."
 msgstr ""
 
-#: src/control/Toolbar.js:561
+#: src/control/Toolbar.js:562
 msgid "I understand the risks"
 msgstr ""
 
-#: src/control/Toolbar.js:583
+#: src/control/Toolbar.js:584
 msgid "Dismiss"
 msgstr ""
 
-#: src/control/Toolbar.js:648
+#: src/control/Toolbar.js:649
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 
-#: src/control/Toolbar.js:698
+#: src/control/Toolbar.js:699
 msgid "This version of %productName is powered by"
 msgstr "بۇ نەشرىدىكى %productName نى تەمىنلىگۈچى"
 
-#: src/control/Toolbar.js:708
+#: src/control/Toolbar.js:709
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:854
+#: src/control/Toolbar.js:855
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:857
+#: src/control/Toolbar.js:858
 msgid "Link"
 msgstr ""
 
@@ -1668,8 +1676,9 @@ msgid ""
 msgstr ""
 
 #: src/errormessages.js:14
+#, fuzzy
 msgid ""
-"The host URL is empty. The coolwsd server is probably misconfigured, please "
+"The host URL is empty. The loolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
 "باش ئاپپارات URL ى بوش. coolwsd مۇلازىمېتىرنىڭ سەپلىمىسى توغرا بولماسلىقى "
@@ -1816,36 +1825,36 @@ msgstr "فۇنكسىيە"
 msgid "No Comments"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:773
+#: src/layer/tile/CommentListSection.ts:774
 msgid "Modify"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:779
+#: src/layer/tile/CommentListSection.ts:780
 #: src/layer/tile/CommentSection.ts:125
 msgid "Reply"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:785
+#: src/layer/tile/CommentListSection.ts:786
 msgid "Remove"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:791
+#: src/layer/tile/CommentListSection.ts:792
 msgid "Remove Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:797
+#: src/layer/tile/CommentListSection.ts:798
 msgid "Resolve"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:797
+#: src/layer/tile/CommentListSection.ts:798
 msgid "Unresolve"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:803
+#: src/layer/tile/CommentListSection.ts:804
 msgid "Unresolve Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:803
+#: src/layer/tile/CommentListSection.ts:804
 msgid "Resolve Thread"
 msgstr ""
 
