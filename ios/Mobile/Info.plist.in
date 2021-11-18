@@ -229,7 +229,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<!--
-	     Why not use LOOLWSD_VERSION (surrounded by atsigns) here, you ask? Because in case one
+	     Why not use COOLWSD_VERSION (surrounded by atsigns) here, you ask? Because in case one
 	     build has been approved for release on the App Store, when you want to release a
 	     following version, it has to have a different version number here in Info.plist. And we
 	     don't necessarily want to bump the version number in configure.ac for something that

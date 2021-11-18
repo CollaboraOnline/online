@@ -93,7 +93,7 @@ public class LOActivity extends AppCompatActivity {
     private static final String KEY_IS_EDITABLE = "isEditable";
     private static final String KEY_INTENT_URI = "intentUri";
     private static final String CLIPBOARD_FILE_PATH = "LibreofficeClipboardFile.data";
-    private static final String CLIPBOARD_LOOL_SIGNATURE = "cool-clip-magic-4a22437e49a8-";
+    private static final String CLIPBOARD_COOL_SIGNATURE = "cool-clip-magic-4a22437e49a8-";
     public static final String RECENT_DOCUMENTS_KEY = "RECENT_DOCUMENTS_LIST";
     private static String USER_NAME_KEY = "USER_NAME";
 
@@ -343,7 +343,7 @@ public class LOActivity extends AppCompatActivity {
 
             WebSettings webSettings = mWebView.getSettings();
             webSettings.setJavaScriptEnabled(true);
-            mWebView.addJavascriptInterface(this, "LOOLMessageHandler");
+            mWebView.addJavascriptInterface(this, "COOLMessageHandler");
 
             // allow debugging (when building the debug version); see details in
             // https://developers.google.com/web/tools/chrome-devtools/remote-debugging/webviews
@@ -812,7 +812,7 @@ public class LOActivity extends AppCompatActivity {
     private void loadDocument() {
         mProgressDialog.determinate(R.string.loading);
 
-        // setup the LOOLWSD
+        // setup the COOLWSD
         ApplicationInfo applicationInfo = getApplicationInfo();
         String dataDir = applicationInfo.dataDir;
         Log.i(TAG, String.format("Initializing LibreOfficeKit, dataDir=%s\n", dataDir));
@@ -822,7 +822,7 @@ public class LOActivity extends AppCompatActivity {
         AssetManager assetManager = getResources().getAssets();
         String uiMode = (isLargeScreen() && !isChromeOS()) ? "notebookbar" : "classic";
         String userName = getPrefs().getString(USER_NAME_KEY, "Guest User");
-        createLOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad, uiMode, userName);
+        createCOOLWSD(dataDir, cacheDir, apkFile, assetManager, urlToLoad, uiMode, userName);
 
         // trigger the load of the document
         String finalUrlToLoad = "file:///android_asset/dist/cool.html?file_path=" +
@@ -871,9 +871,9 @@ public class LOActivity extends AppCompatActivity {
     }
 
     /**
-     * Initialize the LOOLWSD to load 'loadFileURL'.
+     * Initialize the COOLWSD to load 'loadFileURL'.
      */
-    public native void createLOOLWSD(String dataDir, String cacheDir, String apkFile, AssetManager assetManager, String loadFileURL, String uiMode, String userName);
+    public native void createCOOLWSD(String dataDir, String cacheDir, String apkFile, AssetManager assetManager, String loadFileURL, String uiMode, String userName);
 
     /**
      * Passing messages from JS (instead of the websocket communication).
@@ -1278,7 +1278,7 @@ public class LOActivity extends AppCompatActivity {
 
     /// Returns a magic that specifies this application - and this document.
     private final String getClipboardMagic() {
-        return CLIPBOARD_LOOL_SIGNATURE + Long.toString(loadDocumentMillis);
+        return CLIPBOARD_COOL_SIGNATURE + Long.toString(loadDocumentMillis);
     }
 
     /// Needs to be executed after the .uno:Copy / Paste has executed
@@ -1336,7 +1336,7 @@ public class LOActivity extends AppCompatActivity {
             if (clipDesc.getMimeType(i).equals(ClipDescription.MIMETYPE_TEXT_HTML)) {
                 final String html = clipData.getItemAt(i).getHtmlText();
                 // Check if the clipboard content was made with the app
-                if (html.contains(CLIPBOARD_LOOL_SIGNATURE)) {
+                if (html.contains(CLIPBOARD_COOL_SIGNATURE)) {
                     // Check if the clipboard content is from the same app instance
                     if (html.contains(getClipboardMagic())) {
                         Log.i(TAG, "clipboard comes from us - same instance: short circuit it " + html);

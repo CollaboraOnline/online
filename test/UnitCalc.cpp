@@ -21,7 +21,7 @@
 #include <Unit.hpp>
 #include <helpers.hpp>
 
-class LOOLWebSocket;
+class COOLWebSocket;
 
 namespace
 {
@@ -46,7 +46,7 @@ double getColRowSize(const std::string& property, const std::string& message, in
     return item->getValue<double>("size");
 }
 
-double getColRowSize(const std::shared_ptr<LOOLWebSocket>& socket, const std::string& item,
+double getColRowSize(const std::shared_ptr<COOLWebSocket>& socket, const std::string& item,
                      int index, const std::string& testname)
 {
     std::vector<char> response;
@@ -77,7 +77,7 @@ UnitBase::TestResult UnitCalc::testCalcEditRendering()
 {
     const char* testname = "calcEditRendering ";
     Poco::URI uri(helpers::getTestServerURI());
-    std::shared_ptr<LOOLWebSocket> socket
+    std::shared_ptr<COOLWebSocket> socket
         = helpers::loadDocAndGetSocket("calc_render.xls", uri, testname);
 
     helpers::sendTextFrame(socket, "mouse type=buttondown x=5000 y=5 count=1 buttons=1 modifier=0",
@@ -100,7 +100,7 @@ UnitBase::TestResult UnitCalc::testCalcEditRendering()
     int minor = 0;
     helpers::getServerVersion(socket, major, minor, testname);
 
-    const std::string firstLine = LOOLProtocol::getFirstLine(tile);
+    const std::string firstLine = COOLProtocol::getFirstLine(tile);
     std::vector<char> res(tile.begin() + firstLine.size() + 1, tile.end());
     std::stringstream streamRes;
     std::copy(res.begin(), res.end(), std::ostream_iterator<char>(streamRes));
@@ -155,7 +155,7 @@ UnitBase::TestResult UnitCalc::testCalcRenderAfterNewView51()
     helpers::getDocumentPathAndURL("empty.ods", documentPath, documentURL, testname);
 
     Poco::URI uri(helpers::getTestServerURI());
-    std::shared_ptr<LOOLWebSocket> socket
+    std::shared_ptr<COOLWebSocket> socket
         = helpers::loadDocAndGetSocket(uri, documentURL, testname);
 
     int major = 0;
@@ -186,7 +186,7 @@ UnitBase::TestResult UnitCalc::testCalcRenderAfterNewView51()
 
     // Connect second client, which will load at the top.
     TST_LOG("Connecting second client.");
-    std::shared_ptr<LOOLWebSocket> socket2
+    std::shared_ptr<COOLWebSocket> socket2
         = helpers::loadDocAndGetSocket(uri, documentURL, testname);
 
     // Up one row on the first view to trigger the bug.
@@ -211,7 +211,7 @@ UnitBase::TestResult UnitCalc::testCalcRenderAfterNewView53()
     helpers::getDocumentPathAndURL("calc-render.ods", documentPath, documentURL, testname);
 
     Poco::URI uri(helpers::getTestServerURI());
-    std::shared_ptr<LOOLWebSocket> socket
+    std::shared_ptr<COOLWebSocket> socket
         = helpers::loadDocAndGetSocket(uri, documentURL, testname);
 
     int major = 0;
@@ -236,7 +236,7 @@ UnitBase::TestResult UnitCalc::testCalcRenderAfterNewView53()
 
     // Connect second client, which will load at the top.
     TST_LOG("Connecting second client.");
-    std::shared_ptr<LOOLWebSocket> socket2
+    std::shared_ptr<COOLWebSocket> socket2
         = helpers::loadDocAndGetSocket(uri, documentURL, testname);
 
     TST_LOG("Waiting for cellviewcursor of second on first.");
@@ -265,7 +265,7 @@ UnitBase::TestResult UnitCalc::testColumnRowResize()
 
         helpers::getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL, testname);
         Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<LOOLWebSocket> socket
+        std::shared_ptr<COOLWebSocket> socket
             = helpers::loadDocAndGetSocket(uri, documentURL, testname);
 
         const std::string commandValues = "commandvalues command=.uno:ViewRowColumnHeaders";
@@ -372,7 +372,7 @@ UnitBase::TestResult UnitCalc::testOptimalResize()
         std::string documentPath, documentURL;
         helpers::getDocumentPathAndURL("empty.ods", documentPath, documentURL, testname);
         Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<LOOLWebSocket> socket
+        std::shared_ptr<COOLWebSocket> socket
             = helpers::loadDocAndGetSocket(uri, documentURL, testname);
 
         const std::string commandValues = "commandvalues command=.uno:ViewRowColumnHeaders";

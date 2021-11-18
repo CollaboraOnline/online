@@ -168,7 +168,7 @@ private:
 
             // NOTE: Check _wsState to choose between HTTP response or WebSocket (app-level) error.
             LOG_INF('#' << socket->getFD() << " Exception while processing incoming request: [" <<
-                    LOOLProtocol::getAbbreviatedMessage(in) << "]: " << exc.what());
+                    COOLProtocol::getAbbreviatedMessage(in) << "]: " << exc.what());
         }
 
         // if we succeeded - remove the request from our input buffer
@@ -239,7 +239,7 @@ int main (int argc, char **argv)
                     std::map<std::string, std::string>());
 
     CoolConfig config;
-    config.load("loolwsd.xml");
+    config.load("coolwsd.xml");
 
     // read the port & ssl support
     int port = 9042;

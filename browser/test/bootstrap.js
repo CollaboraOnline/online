@@ -33,18 +33,18 @@ let ssl_args = [
 if (ssl_flag === 'true')
 	args = [...args, ...ssl_args];
 
-const loolwsd = spawn(`${top_builddir}/loolwsd`, args);
+const coolwsd = spawn(`${top_builddir}/coolwsd`, args);
 /*
-loolwsd.stdout.on('data', (data) => {
+coolwsd.stdout.on('data', (data) => {
 	//console.log(`stdout: ${data}`);
 });
 
-loolwsd.stderr.on('data', (data) => {
+coolwsd.stderr.on('data', (data) => {
 	//console.error(`stderr: ${data}`);
 });
 */
-loolwsd.on('exit', (code) => {
-	console.log(`loolwsd process exited with code ${code}`);
+coolwsd.on('exit', (code) => {
+	console.log(`coolwsd process exited with code ${code}`);
 });
 
 let childNodes = [];
@@ -66,7 +66,7 @@ if(single_view !== "true") {
 function vacuumCleaner(kill, message, code) {
 		console.log(message);
 		childNodes.forEach(n => n.kill(kill));
-		loolwsd.kill(kill);
+		coolwsd.kill(kill);
 		console.log(`Process exited with code ${code}`);
 }
 

@@ -3,7 +3,7 @@ environment (currently enables both asan and ubsan).
 
 online.git can be built the usual way, just the additional `--enable-fuzzers`
 flag is needed to build the fuzzers. It is useful to do this in a separate
-build tree, since the fuzzers config doesn't produce a `loolwsd` binary.
+build tree, since the fuzzers config doesn't produce a `coolwsd` binary.
 
 Run the fuzzers like this:
 

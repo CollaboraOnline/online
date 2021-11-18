@@ -81,7 +81,7 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
 #if !MOBILEAPP
     assert(!get(type));
 #else
-    // The LOOLWSD initialization is called in a loop on mobile, allow reuse
+    // The COOLWSD initialization is called in a loop on mobile, allow reuse
     if (get(type))
         return true;
 #endif

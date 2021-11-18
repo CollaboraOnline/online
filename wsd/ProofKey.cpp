@@ -8,7 +8,7 @@
 #include <config.h>
 
 #include "ProofKey.hpp"
-#include "LOOLWSD.hpp"
+#include "COOLWSD.hpp"
 
 #include <algorithm>
 #include <cassert>
@@ -143,7 +143,7 @@ Proof::Proof()
                 "\n    coolwsd-generate-proof-key"
                 "\nor if your config dir is not /etc, you can run ssh-keygen manually:"
                 "\n    ssh-keygen -t rsa -N \"\" -m PEM -f \"" + keyPath + "\""
-                "\nNote: the proof_key file must be readable by the loolwsd process.";
+                "\nNote: the proof_key file must be readable by the coolwsd process.";
             LOG_WRN(msg);
         }
         catch (const Poco::Exception& e)
@@ -170,7 +170,7 @@ std::string Proof::ProofKeyPath()
 #if ENABLE_DEBUG
         DEBUG_ABSSRCDIR
 #else
-        LOOLWSD_CONFIGDIR
+        COOLWSD_CONFIGDIR
 #endif
         "/proof_key";
     return keyPath;

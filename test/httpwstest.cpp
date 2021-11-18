@@ -26,12 +26,12 @@
 #include <Protocol.hpp>
 
 #include "lokassert.hpp"
-#include <countloolkits.hpp>
+#include <countcoolkits.hpp>
 #include <helpers.hpp>
 
 using namespace helpers;
 
-/// Tests the HTTP WebSocket API of loolwsd. The server has to be started manually before running this test.
+/// Tests the HTTP WebSocket API of coolwsd. The server has to be started manually before running this test.
 class HTTPWSTest : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
@@ -82,7 +82,7 @@ public:
     void setUp()
     {
         resetTestStartTime();
-        testCountHowManyLoolkits();
+        testCountHowManyCoolkits();
         resetTestStartTime();
         _socketPoll->startThread();
     }
@@ -91,7 +91,7 @@ public:
     {
         _socketPoll->joinThread();
         resetTestStartTime();
-        testNoExtraLoolKitsLeft();
+        testNoExtraCoolKitsLeft();
         resetTestStartTime();
     }
 };
@@ -130,7 +130,7 @@ void HTTPWSTest::testSaveOnDisconnect()
         // the socket is closed, when the doc is not even modified yet.
         getResponseMessage(socket1, "statechanged", testname);
 
-        kitcount = getLoolKitProcessCount();
+        kitcount = getCoolKitProcessCount();
 
         // Shutdown abruptly.
         TST_LOG("Closing connection after pasting.");
@@ -149,7 +149,7 @@ void HTTPWSTest::testSaveOnDisconnect()
     }
 
     // Allow time to save and destroy before we connect again.
-    testNoExtraLoolKitsLeft();
+    testNoExtraCoolKitsLeft();
     TST_LOG("Loading again.");
     try
     {
@@ -158,7 +158,7 @@ void HTTPWSTest::testSaveOnDisconnect()
             = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname + "3 ");
 
         // Should have no new instances.
-        LOK_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
+        LOK_ASSERT_EQUAL(kitcount, countCoolKitProcesses(kitcount));
 
         // Check if the document contains the pasted text.
         const std::string selection = getAllText(socket, testname, text);
@@ -209,7 +209,7 @@ void HTTPWSTest::testSavePassiveOnDisconnect()
         // the socket is closed, when the doc is not even modified yet.
         getResponseMessage(socket1, "statechanged", testname);
 
-        kitcount = getLoolKitProcessCount();
+        kitcount = getCoolKitProcessCount();
 
         // Shutdown abruptly.
         TST_LOG("Closing connection after pasting.");
@@ -227,7 +227,7 @@ void HTTPWSTest::testSavePassiveOnDisconnect()
     }
 
     // Allow time to save and destroy before we connect again.
-    testNoExtraLoolKitsLeft();
+    testNoExtraCoolKitsLeft();
     TST_LOG("Loading again.");
     try
     {
@@ -237,7 +237,7 @@ void HTTPWSTest::testSavePassiveOnDisconnect()
         getResponseMessage(socket, "textselection", testname);
 
         // Should have no new instances.
-        LOK_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
+        LOK_ASSERT_EQUAL(kitcount, countCoolKitProcesses(kitcount));
 
         // Check if the document contains the pasted text.
         const std::string selection = getAllText(socket, testname);
@@ -273,7 +273,7 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         // the socket is closed, when the doc is not even modified yet.
         getResponseMessage(socket, "statechanged", testname);
 
-        const int kitcount = getLoolKitProcessCount();
+        const int kitcount = getCoolKitProcessCount();
 
         // Shutdown abruptly.
         TST_LOG("Closing connection after pasting.");
@@ -286,7 +286,7 @@ void HTTPWSTest::testReloadWhileDisconnecting()
         socket = loadDocAndGetSession(_socketPoll, _uri, documentURL, testname);
 
         // Should have no new instances.
-        LOK_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
+        LOK_ASSERT_EQUAL(kitcount, countCoolKitProcesses(kitcount));
 
         // Check if the document contains the pasted text.
         const std::string expected = "aaa bbb ccc";
@@ -328,7 +328,7 @@ void HTTPWSTest::testInactiveClient()
         sendTextFrame(socket2, "useractive", "inactiveClient-2 ");
         SocketProcessor("Second ", socket2, [&](const std::string& msg)
                 {
-                    const auto token = LOOLProtocol::getFirstToken(msg);
+                    const auto token = COOLProtocol::getFirstToken(msg);
                     // 'window:' is e.g. 'window: {"id":"4","action":"invalidate","rectangle":"0, 0,
                     // 0, 0"}', which is probably fine, given that other invalidations are also
                     // expected.

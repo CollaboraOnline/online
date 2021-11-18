@@ -29,7 +29,7 @@
 #include <Log.hpp>
 #include <Util.hpp>
 #include <Protocol.hpp>
-#include "LOOLWSD.hpp"
+#include "COOLWSD.hpp"
 
 using Poco::Base64Decoder;
 using Poco::Base64Encoder;
@@ -193,7 +193,7 @@ const std::string JWTAuth::createPayload()
 {
     std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
     std::time_t curtime = std::chrono::system_clock::to_time_t(now);
-    int expirySeconds = LOOLWSD::getConfigValue<int>("security.jwt_expiry_secs", 1800);
+    int expirySeconds = COOLWSD::getConfigValue<int>("security.jwt_expiry_secs", 1800);
     const std::string exptime = std::to_string(curtime + expirySeconds);
 
     // TODO: Some sane code to represent JSON objects

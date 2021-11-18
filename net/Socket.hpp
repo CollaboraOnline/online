@@ -372,7 +372,7 @@ protected:
 
 #if !MOBILEAPP
 #if ENABLE_DEBUG
-        if (std::getenv("LOOL_ZERO_BUFFER_SIZE"))
+        if (std::getenv("COOL_ZERO_BUFFER_SIZE"))
         {
             const int oldSize = getSocketBufferSize();
             setSocketBufferSize(0);

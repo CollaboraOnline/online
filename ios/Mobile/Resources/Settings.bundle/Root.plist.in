@@ -20,7 +20,7 @@
 			<key>Key</key>
 			<string>onlineVersion</string>
 			<key>DefaultValue</key>
-			<string>@LOOLWSD_VERSION_HASH@</string>
+			<string>@COOLWSD_VERSION_HASH@</string>
 		</dict>
 		<dict>
 			<key>Type</key>

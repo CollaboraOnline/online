@@ -1,11 +1,11 @@
-Source: loolwsd
+Source: coolwsd
 Section: web
 Priority: optional
 Maintainer: Andras Timar <andras.timar@collabora.com>
 Build-Depends: debhelper (>= 9.20160709) | dh-systemd (>= 1.3), libcap-dev, libcap2-bin, libpcre3-dev, libpng-dev, linux-libc-dev, nodejs, python3-polib, python3-lxml, fontconfig, libpam-dev, libcppunit-dev, pkg-config, devscripts, m4
 Standards-Version: 3.9.7
 
-Package: loolwsd
+Package: coolwsd
 Section: web
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends},
@@ -24,6 +24,8 @@ Depends: ${shlibs:Depends}, ${misc:Depends},
  collaboraofficebasis-extension-pdf-import,
  collaboraofficebasis-ooolinguistic,
  collaboraofficebasis-math
+Conflicts: loolwsd
+Replaces: loolwsd
 Description: Collabora Online WebSocket Daemon
- LOOLWSD is a daemon that talks to web browser clients and provides LibreOffice
+ COOLWSD is a daemon that talks to web browser clients and provides LibreOffice
  services.

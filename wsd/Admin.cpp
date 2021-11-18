@@ -37,7 +37,7 @@
 
 #include <common/SigUtil.hpp>
 
-using namespace LOOLProtocol;
+using namespace COOLProtocol;
 
 using Poco::Net::HTTPResponse;
 using Poco::Util::Application;
@@ -73,7 +73,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
             return;
         }
         std::string jwtToken;
-        LOOLProtocol::getTokenString(tokens[1], "jwt", jwtToken);
+        COOLProtocol::getTokenString(tokens[1], "jwt", jwtToken);
 
         LOG_INF("Verifying JWT token: " << jwtToken);
         JWTAuth authAgent("admin", "admin", "admin");
@@ -123,7 +123,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
         // Send COOL version information
         sendTextFrame("coolserver " + Util::getVersionJSON());
         // Send LOKit version information
-        sendTextFrame("lokitversion " + LOOLWSD::LOKitVersion);
+        sendTextFrame("lokitversion " + COOLWSD::LOKitVersion);
     }
     else if (tokens.equals(0, "subscribe") && tokens.size() > 1)
     {
@@ -263,7 +263,7 @@ void AdminSocketHandler::handleMessage(const std::vector<char> &payload)
                     model.notify("settings cpu_stats_interval=" + std::to_string(_admin->getCpuStatsInterval()));
                 }
             }
-            else if (LOOLProtocol::matchPrefix("limit_", settingName))
+            else if (COOLProtocol::matchPrefix("limit_", settingName))
             {
                 DocProcSettings docProcSettings = _admin->getDefDocProcSettings();
                 if (settingName == "limit_virt_mem_mb")
@@ -304,7 +304,7 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager,
     , _isAuthenticated(false)
 {
     // Different session id pool for admin sessions (?)
-    _sessionId = Util::decodeId(LOOLWSD::GetConnectionId());
+    _sessionId = Util::decodeId(COOLWSD::GetConnectionId());
 }
 
 AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
@@ -312,7 +312,7 @@ AdminSocketHandler::AdminSocketHandler(Admin* adminManager)
       _admin(adminManager),
       _isAuthenticated(true)
 {
-    _sessionId = Util::decodeId(LOOLWSD::GetConnectionId());
+    _sessionId = Util::decodeId(COOLWSD::GetConnectionId());
 }
 
 void AdminSocketHandler::sendTextFrame(const std::string& message)
@@ -346,7 +346,7 @@ bool AdminSocketHandler::handleInitialRequest(
     const std::weak_ptr<StreamSocket> &socketWeak,
     const Poco::Net::HTTPRequest& request)
 {
-    if (!LOOLWSD::AdminEnabled)
+    if (!COOLWSD::AdminEnabled)
     {
         LOG_ERR("Request for disabled admin console");
         return false;
@@ -400,7 +400,7 @@ Admin::Admin() :
     _totalSysMemKb = Util::getTotalSystemMemoryKb();
     LOG_TRC("Total system memory:  " << _totalSysMemKb << " KB.");
 
-    const auto memLimit = LOOLWSD::getConfigValue<double>("memproportion", 0.0);
+    const auto memLimit = COOLWSD::getConfigValue<double>("memproportion", 0.0);
     _totalAvailMemKb = _totalSysMemKb;
     if (memLimit != 0.0)
         _totalAvailMemKb = _totalSysMemKb * memLimit / 100.;
@@ -634,8 +634,8 @@ void Admin::setChannelLogLevel(const std::string& channelName, std::string level
         Log::logger().get("wsd").setLevel(level);
     else if (channelName == "kit")
     {
-        LOOLWSD::setLogLevelsOfKits(level); // For current kits.
-        LOOLWSD::sendMessageToForKit("setloglevel " + level); // For forkit and future kits.
+        COOLWSD::setLogLevelsOfKits(level); // For current kits.
+        COOLWSD::sendMessageToForKit("setloglevel " + level); // For forkit and future kits.
         _forkitLogLevel = level; // We will remember this setting rather than asking forkit its loglevel.
     }
 }
@@ -646,7 +646,7 @@ std::string Admin::getLogLines()
 
     try {
         int lineCount = 500;
-        std::string fName = LOOLWSD::getPathFromConfig("logging.file.property[0]");
+        std::string fName = COOLWSD::getPathFromConfig("logging.file.property[0]");
         std::ifstream infile(fName);
 
         std::string line;
@@ -732,13 +732,13 @@ void Admin::notifyForkit()
         << "setconfig limit_file_size_mb " << _defDocProcSettings.getLimitFileSizeMb() << '\n'
         << "setconfig limit_num_open_files " << _defDocProcSettings.getLimitNumberOpenFiles() << '\n';
 
-    LOOLWSD::sendMessageToForKit(oss.str());
+    COOLWSD::sendMessageToForKit(oss.str());
 }
 
 void Admin::triggerMemoryCleanup(const size_t totalMem)
 {
     // Trigger mem cleanup when we are consuming too much memory (as configured by sysadmin)
-    static const double memLimit = LOOLWSD::getConfigValue<double>("memproportion", 0.0);
+    static const double memLimit = COOLWSD::getConfigValue<double>("memproportion", 0.0);
     if (memLimit == 0.0 || _totalSysMemKb == 0)
     {
         LOG_TRC("Total memory consumed: " << totalMem <<
@@ -768,7 +768,7 @@ void Admin::triggerMemoryCleanup(const size_t totalMem)
             {
                 // Kill the saved documents first.
                 LOG_DBG("OOM: Killing saved document with DocKey [" << doc.getDocKey() << "] with " << doc.getMem() << " KB.");
-                LOOLWSD::closeDocument(doc.getDocKey(), "oom");
+                COOLWSD::closeDocument(doc.getDocKey(), "oom");
                 memToFreeKb -= doc.getMem();
                 if (memToFreeKb <= 1024)
                     break;
@@ -777,7 +777,7 @@ void Admin::triggerMemoryCleanup(const size_t totalMem)
             {
                 // Save unsaved documents.
                 LOG_TRC("Saving document: DocKey [" << doc.getDocKey() << "].");
-                LOOLWSD::autoSave(doc.getDocKey());
+                COOLWSD::autoSave(doc.getDocKey());
             }
         }
     }
@@ -802,7 +802,7 @@ void Admin::cleanupLostKits()
     unsigned lostKitsTerminated = 0;
     size_t gracePeriod = _defDocProcSettings.getCleanupSettings().getLostKitGracePeriod();
 
-    internalKitPids = LOOLWSD::getKitPids();
+    internalKitPids = COOLWSD::getKitPids();
     AdminModel::getKitPidsFromSystem(&kitPids);
 
     for (auto itProc = kitPids.begin(); itProc != kitPids.end(); itProc ++)

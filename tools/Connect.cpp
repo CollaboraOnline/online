@@ -31,11 +31,11 @@
 
 #include <Common.hpp>
 #include <Protocol.hpp>
-#include "LOOLWebSocket.hpp"
+#include "COOLWebSocket.hpp"
 #include <Log.hpp>
 #include <Util.hpp>
 
-using namespace LOOLProtocol;
+using namespace COOLProtocol;
 
 using Poco::Net::AcceptCertificateHandler;
 using Poco::Net::Context;
@@ -61,11 +61,11 @@ static std::mutex coutMutex;
 
 constexpr auto Name = "connect ";
 
-/// Prints incoming data from a LOOLWebSocket.
+/// Prints incoming data from a COOLWebSocket.
 class Output : public Runnable
 {
 public:
-    Output(LOOLWebSocket& ws) :
+    Output(COOLWebSocket& ws) :
         _ws(ws)
     {
     }
@@ -84,7 +84,7 @@ public:
                 {
                     {
                         std::unique_lock<std::mutex> lock(coutMutex);
-                        std::cout << "Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, n, flags) << std::endl;
+                        std::cout << "Got " << COOLWebSocket::getAbbreviatedFrameDump(buffer, n, flags) << std::endl;
                     }
 
                     std::string firstLine = getFirstLine(buffer, n);
@@ -121,7 +121,7 @@ public:
     }
 
 private:
-    LOOLWebSocket& _ws;
+    COOLWebSocket& _ws;
 };
 
 /// Program for interactive or scripted testing of a cool server.
@@ -165,7 +165,7 @@ protected:
         URI::encode(args[0], ":/?", encodedUri);
         HTTPRequest request(HTTPRequest::HTTP_GET, "/cool/" + encodedUri + "/ws");
         HTTPResponse response;
-        LOOLWebSocket ws(cs, request, response);
+        COOLWebSocket ws(cs, request, response);
 
         ws.setReceiveTimeout(0);
 

@@ -44,7 +44,7 @@ else
     corever=6.4
 fi
 
-dnf install -y loolwsd collaboraoffice$corever-dict* collaboraofficebasis$corever-ar collaboraofficebasis$corever-as collaboraofficebasis$corever-ast collaboraofficebasis$corever-bg collaboraofficebasis$corever-bn-IN collaboraofficebasis$corever-br collaboraofficebasis$corever-ca collaboraofficebasis$corever-calc collaboraofficebasis$corever-ca-valencia collaboraofficebasis$corever-core collaboraofficebasis$corever-cs collaboraofficebasis$corever-cy collaboraofficebasis$corever-da collaboraofficebasis$corever-de collaboraofficebasis$corever-draw collaboraofficebasis$corever-el collaboraofficebasis$corever-en-GB collaboraofficebasis$corever-en-US collaboraofficebasis$corever-es collaboraofficebasis$corever-et collaboraofficebasis$corever-eu collaboraofficebasis$corever-extension-pdf-import collaboraofficebasis$corever-fi collaboraofficebasis$corever-fr collaboraofficebasis$corever-ga collaboraofficebasis$corever-gd collaboraofficebasis$corever-gl collaboraofficebasis$corever-graphicfilter collaboraofficebasis$corever-gu collaboraofficebasis$corever-he collaboraofficebasis$corever-hi collaboraofficebasis$corever-hr collaboraofficebasis$corever-hu collaboraofficebasis$corever-id collaboraofficebasis$corever-images collaboraofficebasis$corever-impress collaboraofficebasis$corever-is collaboraofficebasis$corever-it collaboraofficebasis$corever-ja collaboraofficebasis$corever-km collaboraofficebasis$corever-kn collaboraofficebasis$corever-ko collaboraofficebasis$corever-lt collaboraofficebasis$corever-lv collaboraofficebasis$corever-ml collaboraofficebasis$corever-mr collaboraofficebasis$corever-nb collaboraofficebasis$corever-nl collaboraofficebasis$corever-nn collaboraofficebasis$corever-oc collaboraofficebasis$corever-ooofonts collaboraofficebasis$corever-ooolinguistic collaboraofficebasis$corever-or collaboraofficebasis$corever-pa-IN collaboraofficebasis$corever-pl collaboraofficebasis$corever-pt collaboraofficebasis$corever-pt-BR collaboraofficebasis$corever-ro collaboraofficebasis$corever-ru collaboraofficebasis$corever-sk collaboraofficebasis$corever-sl collaboraofficebasis$corever-sr collaboraofficebasis$corever-sr-Latn collaboraofficebasis$corever-sv collaboraofficebasis$corever-ta collaboraofficebasis$corever-te collaboraofficebasis$corever-tr collaboraofficebasis$corever-uk collaboraofficebasis$corever-vi collaboraofficebasis$corever-writer collaboraofficebasis$corever-zh-CN collaboraofficebasis$corever-zh-TW
+dnf install -y coolwsd collaboraoffice$corever-dict* collaboraofficebasis$corever-ar collaboraofficebasis$corever-as collaboraofficebasis$corever-ast collaboraofficebasis$corever-bg collaboraofficebasis$corever-bn-IN collaboraofficebasis$corever-br collaboraofficebasis$corever-ca collaboraofficebasis$corever-calc collaboraofficebasis$corever-ca-valencia collaboraofficebasis$corever-core collaboraofficebasis$corever-cs collaboraofficebasis$corever-cy collaboraofficebasis$corever-da collaboraofficebasis$corever-de collaboraofficebasis$corever-draw collaboraofficebasis$corever-el collaboraofficebasis$corever-en-GB collaboraofficebasis$corever-en-US collaboraofficebasis$corever-es collaboraofficebasis$corever-et collaboraofficebasis$corever-eu collaboraofficebasis$corever-extension-pdf-import collaboraofficebasis$corever-fi collaboraofficebasis$corever-fr collaboraofficebasis$corever-ga collaboraofficebasis$corever-gd collaboraofficebasis$corever-gl collaboraofficebasis$corever-graphicfilter collaboraofficebasis$corever-gu collaboraofficebasis$corever-he collaboraofficebasis$corever-hi collaboraofficebasis$corever-hr collaboraofficebasis$corever-hu collaboraofficebasis$corever-id collaboraofficebasis$corever-images collaboraofficebasis$corever-impress collaboraofficebasis$corever-is collaboraofficebasis$corever-it collaboraofficebasis$corever-ja collaboraofficebasis$corever-km collaboraofficebasis$corever-kn collaboraofficebasis$corever-ko collaboraofficebasis$corever-lt collaboraofficebasis$corever-lv collaboraofficebasis$corever-ml collaboraofficebasis$corever-mr collaboraofficebasis$corever-nb collaboraofficebasis$corever-nl collaboraofficebasis$corever-nn collaboraofficebasis$corever-oc collaboraofficebasis$corever-ooofonts collaboraofficebasis$corever-ooolinguistic collaboraofficebasis$corever-or collaboraofficebasis$corever-pa-IN collaboraofficebasis$corever-pl collaboraofficebasis$corever-pt collaboraofficebasis$corever-pt-BR collaboraofficebasis$corever-ro collaboraofficebasis$corever-ru collaboraofficebasis$corever-sk collaboraofficebasis$corever-sl collaboraofficebasis$corever-sr collaboraofficebasis$corever-sr-Latn collaboraofficebasis$corever-sv collaboraofficebasis$corever-ta collaboraofficebasis$corever-te collaboraofficebasis$corever-tr collaboraofficebasis$corever-uk collaboraofficebasis$corever-vi collaboraofficebasis$corever-writer collaboraofficebasis$corever-zh-CN collaboraofficebasis$corever-zh-TW
 
 if [ "$type" == "cool" ] || [ "$type" == "key" ]; then
     dnf -y install collabora-online-brand
@@ -52,7 +52,7 @@ else
     dnf -y install CODE-brand
 fi
 
-# Install inotifywait and killall to automatic restart loolwsd, if loolwsd.xml changes
+# Install inotifywait and killall to automatic restart coolwsd, if coolwsd.xml changes
 dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 dnf install -y inotify-tools psmisc perl
 
@@ -60,12 +60,12 @@ dnf install -y inotify-tools psmisc perl
 dnf clean all
 
 # Remove WOPI Proof key generated by the package, we need unique key for each container
-rm -rf /etc/loolwsd/proof_key*
+rm -rf /etc/coolwsd/proof_key*
 
 # Fix permissions
 # cf. start-collabora-online.sh that is run by cool user
 # # Fix domain name resolution from jails
 # cp /etc/resolv.conf /etc/hosts /opt/cool/systemplate/etc/
 chown cool:cool /opt/cool/systemplate/etc/hosts /opt/cool/systemplate/etc/resolv.conf
-# generated ssl cert/key and WOPI proof key go into /etc/loolwsd
-chown cool:cool /etc/loolwsd
+# generated ssl cert/key and WOPI proof key go into /etc/coolwsd
+chown cool:cool /etc/coolwsd

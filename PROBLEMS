@@ -39,7 +39,7 @@
   removed from the Kit/ChildSession.cppp as/when we move to a single
   threaded Kit process.
 
-- Occasionally Control-C (SIGINT) doesn't shut down loolwsd. One has
+- Occasionally Control-C (SIGINT) doesn't shut down coolwsd. One has
   to kill it with SIGKILL. Which of course leaves all the chroot jails
   around.
 

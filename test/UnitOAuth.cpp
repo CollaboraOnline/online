@@ -100,7 +100,7 @@ public:
                 else
                     initWebsocket("/wopi/files/1?access_header=Authorization: Basic basic==");
 
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(), testName);
+                helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
                 SocketPoll::wakeupWorld();
 
                 if (_phase == Phase::LoadToken)

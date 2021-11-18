@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SUDO=''
-if [ ! -w "/etc/loolwsd" ]; then
+if [ ! -w "/etc/coolwsd" ]; then
     if (( $EUID != 0 )); then
         if hash sudo 2>/dev/null; then
             SUDO='sudo'
@@ -12,20 +12,20 @@ if [ ! -w "/etc/loolwsd" ]; then
     fi
 fi
 
-if [ -f /etc/loolwsd/proof_key ]; then
-    echo "/etc/loolwsd/proof_key exists already."
+if [ -f /etc/coolwsd/proof_key ]; then
+    echo "/etc/coolwsd/proof_key exists already."
     exit 0
 fi
 
 if hash ssh-keygen 2>/dev/null; then
-    $SUDO ssh-keygen -t rsa -N "" -m PEM -f /etc/loolwsd/proof_key
+    $SUDO ssh-keygen -t rsa -N "" -m PEM -f /etc/coolwsd/proof_key
     if [ $? -ne 0 ] ; then
         exit $?
 	fi
     if id -u cool >/dev/null 2>&1; then
-        $SUDO chown cool: /etc/loolwsd/proof_key
+        $SUDO chown cool: /etc/coolwsd/proof_key
     else
-        echo "User cool does not exist. Please reinstall loolwsd package, or in case of manual installation from source, create the cool user manually."
+        echo "User cool does not exist. Please reinstall coolwsd package, or in case of manual installation from source, create the cool user manually."
     fi
 else
 	echo "ssh-keygen command not found. Please install openssh client tools."

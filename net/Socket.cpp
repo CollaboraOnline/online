@@ -56,7 +56,7 @@ std::atomic<bool> Socket::InhibitThreadChecks(false);
 #ifdef __linux__
 #define HAVE_ABSTRACT_UNIX_SOCKETS
 #endif
-#define SOCKET_ABSTRACT_UNIX_NAME "0loolwsd-"
+#define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
 
 int Socket::createSocket(Socket::Type type)
 {
@@ -986,7 +986,7 @@ std::string LocalServerSocket::bind()
     std::string socketAbstractUnixName(SOCKET_ABSTRACT_UNIX_NAME);
     const char* snapInstanceName = std::getenv("SNAP_INSTANCE_NAME");
     if (snapInstanceName && snapInstanceName[0])
-        socketAbstractUnixName = std::string("0snap.") + snapInstanceName + ".loolwsd-";
+        socketAbstractUnixName = std::string("0snap.") + snapInstanceName + ".coolwsd-";
 
     do
     {

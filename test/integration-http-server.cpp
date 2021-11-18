@@ -26,11 +26,11 @@
 #include <Common.hpp>
 #include <common/FileUtil.hpp>
 
-#include <countloolkits.hpp>
+#include <countcoolkits.hpp>
 #include <helpers.hpp>
 #include <memory>
 
-/// Tests the HTTP GET API of loolwsd.
+/// Tests the HTTP GET API of coolwsd.
 class HTTPServerTest : public CPPUNIT_NS::TestFixture
 {
     const Poco::URI _uri;
@@ -91,18 +91,18 @@ public:
     void setUp()
     {
         helpers::resetTestStartTime();
-        testCountHowManyLoolkits();
+        testCountHowManyCoolkits();
         helpers::resetTestStartTime();
     }
 
     void tearDown()
     {
         helpers::resetTestStartTime();
-        testNoExtraLoolKitsLeft();
+        testNoExtraCoolKitsLeft();
         helpers::resetTestStartTime();
     }
 
-    // A server URI which was not added to loolwsd.xml as post_allow IP or a wopi storage host
+    // A server URI which was not added to coolwsd.xml as post_allow IP or a wopi storage host
     Poco::URI getNotAllowedTestServerURI()
     {
         static std::string serverURI(
@@ -134,7 +134,7 @@ void HTTPServerTest::testCoolGet()
     const std::string html = httpResponse->getBody();
     LOK_ASSERT(html.find(param["access_token"]) != std::string::npos);
     LOK_ASSERT(html.find(_uri.getHost()) != std::string::npos);
-    LOK_ASSERT(html.find(std::string(LOOLWSD_VERSION_HASH)) != std::string::npos);
+    LOK_ASSERT(html.find(std::string(COOLWSD_VERSION_HASH)) != std::string::npos);
 }
 
 void HTTPServerTest::testCoolPost()

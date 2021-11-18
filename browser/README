@@ -75,23 +75,23 @@ Running
 
 To see an example:
 
-* run loolwsd, like:
+* run coolwsd, like:
 
-    ./loolwsd --o:sys_template_path=${SYSTEMPLATE} --o:child_root_path=${ROOTFORJAILS}
+    ./coolwsd --o:sys_template_path=${SYSTEMPLATE} --o:child_root_path=${ROOTFORJAILS}
 
-Note that this will, by default, set the loolwsd's file server's root to the parent directory of loolwsd,
+Note that this will, by default, set the coolwsd's file server's root to the parent directory of coolwsd,
 which means you can access all the files in browser using /browser/ path. It is advised to set
 file_server_root_path manually for more control. See wsd/README for more information.
 
-* open dist/cool.html through loolwsd's fileserver
+* open dist/cool.html through coolwsd's fileserver
 
     https://localhost:9980/browser/dist/cool.html?file_path=file:///PATH/TO_DOC&host=wss://localhost:9980
 
 and you should see the document in the browser.
 Note that accessing local storage is disabled by default for security reasons. You need to explicitly enable it
-with the --o:storage.filesystem[@allow]=true option of loolwsd. In case anything goes wrong, check the loolwsd console for
+with the --o:storage.filesystem[@allow]=true option of coolwsd. In case anything goes wrong, check the coolwsd console for
 the debugging output. You might be asked to confirm the certificate if you are using self-signed certificate
-for loolwsd.
+for coolwsd.
 
 Development
 -----------
@@ -105,7 +105,7 @@ Remember to add '--enable-browsersync' argument for './configure' script and del
 
 Run server and start browser-sync:
 
-LOOL_SERVE_FROM_FS=1 make run
+COOL_SERVE_FROM_FS=1 make run
 
 and in the second terminal:
 
@@ -119,16 +119,16 @@ browser-sync start --config browsersync-config.js --startPath "browser/96c23f663
 Admin Panel
 -----------
 
-You can do live monitoring of all the user sessions running on loolwsd instance. To access the admin
-console you need to ask for admin.html file from loolwsd which resides in dist/admin/admin.html.
+You can do live monitoring of all the user sessions running on coolwsd instance. To access the admin
+console you need to ask for admin.html file from coolwsd which resides in dist/admin/admin.html.
 
 For example:
 
     https://localhost:9980/browser/dist/admin/admin.html
 
-It will ask for username and password which is set by the admin_console options of loolwsd. For example you can
+It will ask for username and password which is set by the admin_console options of coolwsd. For example you can
 pass --o:admin_console.username=admin --o:admin_console.password=admin in command line, or set these values in
-loolwsd.xml. After entering the correct password you should be able to monitor the live documents opened, total
+coolwsd.xml. After entering the correct password you should be able to monitor the live documents opened, total
 users, memory consumption, document URLs with number of users viewing that document etc. You can also kill the
 documents directly from the panel which would result in closing the socket connection to the respective document.
 

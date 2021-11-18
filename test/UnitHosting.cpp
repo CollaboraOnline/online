@@ -27,7 +27,7 @@
 #include <Unit.hpp>
 #include <helpers.hpp>
 
-class LOOLWebSocket;
+class COOLWebSocket;
 
 /// Test suite for /hosting, etc.
 class UnitHosting : public UnitWSD

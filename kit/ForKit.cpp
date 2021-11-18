@@ -159,7 +159,7 @@ protected:
         else if (tokens.size() == 2 && tokens.equals(0, "setloglevel"))
         {
             // Set environment variable so that new children will also set their log levels accordingly.
-            setenv("LOOL_LOGLEVEL", tokens[1].c_str(), 1);
+            setenv("COOL_LOGLEVEL", tokens[1].c_str(), 1);
             Log::logger().setLevel(tokens[1]);
         }
         else if (tokens.size() == 3 && tokens.equals(0, "setconfig"))
@@ -357,7 +357,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
     // Used to label the spare kit instances
     static size_t spareKitId = 0;
     ++spareKitId;
-    LOG_DBG("Forking a loolkit process with jailId: " << jailId << " as spare loolkit #"
+    LOG_DBG("Forking a coolkit process with jailId: " << jailId << " as spare coolkit #"
                                                       << spareKitId << '.');
 
     const pid_t pid = fork();
@@ -365,7 +365,7 @@ static int createLibreOfficeKit(const std::string& childRoot,
     {
         // Child
 
-        // Close the pipe from loolwsd
+        // Close the pipe from coolwsd
         close(0);
 
 #ifndef KIT_IN_PROCESS
@@ -447,7 +447,7 @@ static void printArgumentHelp()
 {
     std::cout << "Usage: coolforkit [OPTION]..." << std::endl;
     std::cout << "  Single-threaded process that spawns lok instances" << std::endl;
-    std::cout << "  Note: Running this standalone is not possible. It is spawned by loolwsd" << std::endl;
+    std::cout << "  Note: Running this standalone is not possible. It is spawned by coolwsd" << std::endl;
     std::cout << "        and is controlled via a pipe." << std::endl;
     std::cout << "" << std::endl;
 }
@@ -458,12 +458,12 @@ int main(int argc, char** argv)
 
     /*WARNING*/ // early check for avoiding the security check for username 'cool'
     /*WARNING*/ // (deliberately only this, not moving the entire parameter parsing here)
-    /*WARNING*/ bool checkLoolUser = true;
-    /*WARNING*/ std::string disableLoolUserChecking("--disable-cool-user-checking");
-    /*WARNING*/ for (int i = 1; checkLoolUser && (i < argc); ++i)
+    /*WARNING*/ bool checkCoolUser = true;
+    /*WARNING*/ std::string disableCoolUserChecking("--disable-cool-user-checking");
+    /*WARNING*/ for (int i = 1; checkCoolUser && (i < argc); ++i)
     /*WARNING*/ {
-    /*WARNING*/     if (disableLoolUserChecking == argv[i])
-    /*WARNING*/         checkLoolUser = false;
+    /*WARNING*/     if (disableCoolUserChecking == argv[i])
+    /*WARNING*/         checkCoolUser = false;
     /*WARNING*/ }
 
     /*WARNING*/ if (!hasCorrectUID("coolforkit"))
@@ -481,7 +481,7 @@ int main(int argc, char** argv)
     /*WARNING*/     }
     /*WARNING*/     else if (hasAnyCapability())
     /*WARNING*/     {
-    /*WARNING*/         if (!checkLoolUser)
+    /*WARNING*/         if (!checkCoolUser)
     /*WARNING*/             LOG_FTL("Security: --disable-cool-user-checking failed, coolforkit has some capabilities set.");
 
     /*WARNING*/         LOG_FTL("Aborting.");
@@ -490,7 +490,7 @@ int main(int argc, char** argv)
 
     /*WARNING*/     // even without the capabilities, don't run unless the user really knows
     /*WARNING*/     // what they are doing, and provided a --disable-cool-user-checking
-    /*WARNING*/     if (checkLoolUser)
+    /*WARNING*/     if (checkCoolUser)
     /*WARNING*/     {
     /*WARNING*/         LOG_FTL("Aborting.");
     /*WARNING*/         return EX_SOFTWARE;
@@ -521,17 +521,17 @@ int main(int argc, char** argv)
     }
 
 #ifndef FUZZER
-    SigUtil::setFatalSignals("forkit startup of " LOOLWSD_VERSION " " LOOLWSD_VERSION_HASH);
+    SigUtil::setFatalSignals("forkit startup of " COOLWSD_VERSION " " COOLWSD_VERSION_HASH);
     SigUtil::setTerminationSignals();
 #endif
 
     Util::setApplicationPath(Poco::Path(argv[0]).parent().toString());
 
     // Initialization
-    const bool logToFile = std::getenv("LOOL_LOGFILE");
-    const char* logFilename = std::getenv("LOOL_LOGFILENAME");
-    const char* logLevel = std::getenv("LOOL_LOGLEVEL");
-    const char* logColor = std::getenv("LOOL_LOGCOLOR");
+    const bool logToFile = std::getenv("COOL_LOGFILE");
+    const char* logFilename = std::getenv("COOL_LOGFILENAME");
+    const char* logLevel = std::getenv("COOL_LOGLEVEL");
+    const char* logColor = std::getenv("COOL_LOGCOLOR");
     std::map<std::string, std::string> logProperties;
     if (logToFile && logFilename)
     {
@@ -689,7 +689,7 @@ int main(int argc, char** argv)
 
 #if !MOBILEAPP
     // Parse the configuration.
-    const auto conf = std::getenv("LOOL_CONFIG");
+    const auto conf = std::getenv("COOL_CONFIG");
     config::initialize(std::string(conf ? conf : std::string()));
 #endif
 
@@ -699,7 +699,7 @@ int main(int argc, char** argv)
 
     // We must have at least one child, more are created dynamically.
     // Ask this first child to send version information to master process and trace startup.
-    ::setenv("LOOL_TRACE_STARTUP", "1", 1);
+    ::setenv("COOL_TRACE_STARTUP", "1", 1);
     const pid_t forKitPid
         = createLibreOfficeKit(childRoot, sysTemplate, loTemplate, loSubPath, true);
     if (forKitPid < 0)
@@ -710,7 +710,7 @@ int main(int argc, char** argv)
     }
 
     // No need to trace subsequent children.
-    ::unsetenv("LOOL_TRACE_STARTUP");
+    ::unsetenv("COOL_TRACE_STARTUP");
     if (LogLevel != "trace")
     {
         LOG_INF("Forkit initialization complete: setting log-level to [" << LogLevel << "] as configured.");

@@ -56,7 +56,7 @@ void Stress::handleOption(const std::string& optionName,
 
 void Stress::printHelp()
 {
-    std::cerr << "Usage: loolstress wss://localhost:9980 <test-document-path> <trace-path> " << std::endl;
+    std::cerr << "Usage: coolstress wss://localhost:9980 <test-document-path> <trace-path> " << std::endl;
     std::cerr << "       Trace files may be plain text or gzipped (with .gz extension)." << std::endl;
     std::cerr << "       --help for full arguments list." << std::endl;
 }

@@ -39,7 +39,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(WhiteBoxTests);
 
-    CPPUNIT_TEST(testLOOLProtocolFunctions);
+    CPPUNIT_TEST(testCOOLProtocolFunctions);
     CPPUNIT_TEST(testSplitting);
     CPPUNIT_TEST(testMessage);
     CPPUNIT_TEST(testMessageAbbreviation);
@@ -76,7 +76,7 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE_END();
 
-    void testLOOLProtocolFunctions();
+    void testCOOLProtocolFunctions();
     void testSplitting();
     void testMessage();
     void testMessageAbbreviation();
@@ -112,44 +112,44 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testJsonUtilEscapeJSONValue();
 };
 
-void WhiteBoxTests::testLOOLProtocolFunctions()
+void WhiteBoxTests::testCOOLProtocolFunctions()
 {
     int foo;
-    LOK_ASSERT(LOOLProtocol::getTokenInteger("foo=42", "foo", foo));
+    LOK_ASSERT(COOLProtocol::getTokenInteger("foo=42", "foo", foo));
     LOK_ASSERT_EQUAL(42, foo);
 
     std::string bar;
-    LOK_ASSERT(LOOLProtocol::getTokenString("bar=hello-sailor", "bar", bar));
+    LOK_ASSERT(COOLProtocol::getTokenString("bar=hello-sailor", "bar", bar));
     LOK_ASSERT_EQUAL(std::string("hello-sailor"), bar);
 
-    LOK_ASSERT(LOOLProtocol::getTokenString("bar=", "bar", bar));
+    LOK_ASSERT(COOLProtocol::getTokenString("bar=", "bar", bar));
     LOK_ASSERT_EQUAL(std::string(""), bar);
 
     int mumble;
     std::map<std::string, int> map { { "hello", 1 }, { "goodbye", 2 }, { "adieu", 3 } };
 
-    LOK_ASSERT(LOOLProtocol::getTokenKeyword("mumble=goodbye", "mumble", map, mumble));
+    LOK_ASSERT(COOLProtocol::getTokenKeyword("mumble=goodbye", "mumble", map, mumble));
     LOK_ASSERT_EQUAL(2, mumble);
 
     std::string message("hello x=1 y=2 foo=42 bar=hello-sailor mumble='goodbye' zip zap");
     StringVector tokens(Util::tokenize(message));
 
-    LOK_ASSERT(LOOLProtocol::getTokenInteger(tokens, "foo", foo));
+    LOK_ASSERT(COOLProtocol::getTokenInteger(tokens, "foo", foo));
     LOK_ASSERT_EQUAL(42, foo);
 
-    LOK_ASSERT(LOOLProtocol::getTokenString(tokens, "bar", bar));
+    LOK_ASSERT(COOLProtocol::getTokenString(tokens, "bar", bar));
     LOK_ASSERT_EQUAL(std::string("hello-sailor"), bar);
 
-    LOK_ASSERT(LOOLProtocol::getTokenKeyword(tokens, "mumble", map, mumble));
+    LOK_ASSERT(COOLProtocol::getTokenKeyword(tokens, "mumble", map, mumble));
     LOK_ASSERT_EQUAL(2, mumble);
 
-    LOK_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(message, "foo", foo));
+    LOK_ASSERT(COOLProtocol::getTokenIntegerFromMessage(message, "foo", foo));
     LOK_ASSERT_EQUAL(42, foo);
 
-    LOK_ASSERT(LOOLProtocol::getTokenStringFromMessage(message, "bar", bar));
+    LOK_ASSERT(COOLProtocol::getTokenStringFromMessage(message, "bar", bar));
     LOK_ASSERT_EQUAL(std::string("hello-sailor"), bar);
 
-    LOK_ASSERT(LOOLProtocol::getTokenKeywordFromMessage(message, "mumble", map, mumble));
+    LOK_ASSERT(COOLProtocol::getTokenKeywordFromMessage(message, "mumble", map, mumble));
     LOK_ASSERT_EQUAL(2, mumble);
 
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), Util::trimmed("A").size());
@@ -355,22 +355,22 @@ void WhiteBoxTests::testMessageAbbreviation()
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring("abc", -1, '\n'));
     LOK_ASSERT_EQUAL(std::string("ab"), Util::getDelimitedInitialSubstring("abc", 2, '\n'));
 
-    LOK_ASSERT_EQUAL(std::string(), LOOLProtocol::getAbbreviatedMessage(nullptr, 5));
-    LOK_ASSERT_EQUAL(std::string(), LOOLProtocol::getAbbreviatedMessage(nullptr, -1));
-    LOK_ASSERT_EQUAL(std::string(), LOOLProtocol::getAbbreviatedMessage("abc", 0));
-    LOK_ASSERT_EQUAL(std::string(), LOOLProtocol::getAbbreviatedMessage("abc", -1));
-    LOK_ASSERT_EQUAL(std::string("ab"), LOOLProtocol::getAbbreviatedMessage("abc", 2));
+    LOK_ASSERT_EQUAL(std::string(), COOLProtocol::getAbbreviatedMessage(nullptr, 5));
+    LOK_ASSERT_EQUAL(std::string(), COOLProtocol::getAbbreviatedMessage(nullptr, -1));
+    LOK_ASSERT_EQUAL(std::string(), COOLProtocol::getAbbreviatedMessage("abc", 0));
+    LOK_ASSERT_EQUAL(std::string(), COOLProtocol::getAbbreviatedMessage("abc", -1));
+    LOK_ASSERT_EQUAL(std::string("ab"), COOLProtocol::getAbbreviatedMessage("abc", 2));
 
     std::string s;
     std::string abbr;
 
     s = "abcdefg";
-    LOK_ASSERT_EQUAL(s, LOOLProtocol::getAbbreviatedMessage(s));
+    LOK_ASSERT_EQUAL(s, COOLProtocol::getAbbreviatedMessage(s));
 
     s = "1234567890123\n45678901234567890123456789012345678901234567890123";
     abbr = "1234567890123...";
-    LOK_ASSERT_EQUAL(abbr, LOOLProtocol::getAbbreviatedMessage(s.data(), s.size()));
-    LOK_ASSERT_EQUAL(abbr, LOOLProtocol::getAbbreviatedMessage(s));
+    LOK_ASSERT_EQUAL(abbr, COOLProtocol::getAbbreviatedMessage(s.data(), s.size()));
+    LOK_ASSERT_EQUAL(abbr, COOLProtocol::getAbbreviatedMessage(s));
 }
 
 void WhiteBoxTests::testTokenizer()
@@ -463,21 +463,21 @@ void WhiteBoxTests::testTokenizer()
     // Integer lists.
     std::vector<int> ints;
 
-    ints = LOOLProtocol::tokenizeInts(std::string("-1"));
+    ints = COOLProtocol::tokenizeInts(std::string("-1"));
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(1), ints.size());
     LOK_ASSERT_EQUAL(-1, ints[0]);
 
-    ints = LOOLProtocol::tokenizeInts(std::string("1,2,3,4"));
+    ints = COOLProtocol::tokenizeInts(std::string("1,2,3,4"));
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(4), ints.size());
     LOK_ASSERT_EQUAL(1, ints[0]);
     LOK_ASSERT_EQUAL(2, ints[1]);
     LOK_ASSERT_EQUAL(3, ints[2]);
     LOK_ASSERT_EQUAL(4, ints[3]);
 
-    ints = LOOLProtocol::tokenizeInts("");
+    ints = COOLProtocol::tokenizeInts("");
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), ints.size());
 
-    ints = LOOLProtocol::tokenizeInts(std::string(",,,"));
+    ints = COOLProtocol::tokenizeInts(std::string(",,,"));
     LOK_ASSERT_EQUAL(static_cast<std::size_t>(0), ints.size());
 }
 

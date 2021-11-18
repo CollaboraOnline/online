@@ -12,9 +12,9 @@
 .vscode
 Makefile
 Makefile.in
-loolkitconfig.xcu
-loolwsd.spec
-loolwsd.xml
+coolkitconfig.xcu
+coolwsd.spec
+coolwsd.xml
 aclocal.m4
 autom4te.cache
 config.h
@@ -33,7 +33,7 @@ ltmain.sh
 missing
 stamp-h1
 m4
-debian/loolwsd.postinst
+debian/coolwsd.postinst
 common/support-public-key.hpp
 compile_commands.json
 
@@ -55,7 +55,7 @@ jsstress
 *.exe
 cscope*
 *.orig
-loolwsd.log
+coolwsd.log
 *.log.*.gz
 *.lo
 *.mo
@@ -72,19 +72,20 @@ browser/typescript_js
 
 connect
 lokitclient
+coolwsd
 loolwsd
 coolforkit
 coolmount
 coolmap
 coolconvert
-loolsocketdump
-loolstress
-loolconfig
+coolsocketdump
+coolstress
 coolconfig
+loolconfig
 coolforkit-nocaps
 loadtest
 unittest
-loolwsd_fuzzer
+coolwsd_fuzzer
 clientnb
 
 # make tags

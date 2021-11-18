@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.63])
 
-AC_INIT([loolwsd], [21.11.0.1], [https://github.com/CollaboraOnline/online/issues], [loolwsd], [https://collaboraonline.github.io/])
+AC_INIT([coolwsd], [21.11.0.1], [https://github.com/CollaboraOnline/online/issues], [coolwsd], [https://collaboraonline.github.io/])
 LT_INIT([shared, disable-static, dlopen])
 
 AM_INIT_AUTOMAKE([1.10 foreign subdir-objects tar-pax -Wno-portability])
@@ -13,10 +13,10 @@ AC_CONFIG_MACRO_DIR([m4])
 # We don't want to require pkg-config and PKG_CHECK_MODULES on macOS
 m4_if(m4_esyscmd_s([uname -s]),Darwin,[m4_define([PKG_CHECK_MODULES],[])],[])
 
-LOOLWSD_VERSION_MAJOR=`echo $VERSION | awk -F. '{print $1}'`
-LOOLWSD_VERSION_MINOR=`echo $VERSION | awk -F. '{print $2}'`
-LOOLWSD_VERSION_MICRO=`echo $VERSION | awk -F. '{print $3}'`
-LOOLWSD_VERSION_NANO=`echo $VERSION | awk -F. '{print $4}'`
+COOLWSD_VERSION_MAJOR=`echo $VERSION | awk -F. '{print $1}'`
+COOLWSD_VERSION_MINOR=`echo $VERSION | awk -F. '{print $2}'`
+COOLWSD_VERSION_MICRO=`echo $VERSION | awk -F. '{print $3}'`
+COOLWSD_VERSION_NANO=`echo $VERSION | awk -F. '{print $4}'`
 
 ANDROID_PACKAGE_VERSIONCODE=
 if test "$enable_androidapp" = "yes"; then
@@ -25,10 +25,10 @@ if test "$enable_androidapp" = "yes"; then
         ANDROID_PACKAGE_VERSIONCODE="1"
         AC_MSG_RESULT([not set, using $ANDROID_PACKAGE_VERSIONCODE])
     else
-        LOOLWSD_VERSION_MAJOR=`echo $with_android_package_versioncode | awk -F. '{print $1}'`
-        LOOLWSD_VERSION_MINOR=`echo $with_android_package_versioncode | awk -F. '{print $2}'`
-        LOOLWSD_VERSION_MICRO=`echo $with_android_package_versioncode | awk -F. '{print $3}'`
-        LOOLWSD_VERSION_NANO=`echo $with_android_package_versioncode | awk -F. '{print $4}' | awk -F- '{print $1}'`
+        COOLWSD_VERSION_MAJOR=`echo $with_android_package_versioncode | awk -F. '{print $1}'`
+        COOLWSD_VERSION_MINOR=`echo $with_android_package_versioncode | awk -F. '{print $2}'`
+        COOLWSD_VERSION_MICRO=`echo $with_android_package_versioncode | awk -F. '{print $3}'`
+        COOLWSD_VERSION_NANO=`echo $with_android_package_versioncode | awk -F. '{print $4}' | awk -F- '{print $1}'`
 
         ANDROID_PACKAGE_VERSIONCODE=`echo $with_android_package_versioncode | awk -F- '{print $2}'`
         AC_MSG_RESULT([$ANDROID_PACKAGE_VERSIONCODE])
@@ -36,27 +36,27 @@ if test "$enable_androidapp" = "yes"; then
 fi
 AC_SUBST(ANDROID_PACKAGE_VERSIONCODE)
 
-LOOLWSD_VERSION="$LOOLWSD_VERSION_MAJOR.$LOOLWSD_VERSION_MINOR.$LOOLWSD_VERSION_MICRO.$LOOLWSD_VERSION_NANO"
+COOLWSD_VERSION="$COOLWSD_VERSION_MAJOR.$COOLWSD_VERSION_MINOR.$COOLWSD_VERSION_MICRO.$COOLWSD_VERSION_NANO"
 
-AC_SUBST([LOOLWSD_VERSION_MAJOR])
-AC_SUBST([LOOLWSD_VERSION_MINOR])
-AC_SUBST([LOOLWSD_VERSION_MICRO])
-AC_SUBST([LOOLWSD_VERSION_NANO])
-AC_SUBST([LOOLWSD_VERSION])
+AC_SUBST([COOLWSD_VERSION_MAJOR])
+AC_SUBST([COOLWSD_VERSION_MINOR])
+AC_SUBST([COOLWSD_VERSION_MICRO])
+AC_SUBST([COOLWSD_VERSION_NANO])
+AC_SUBST([COOLWSD_VERSION])
 
-AC_DEFINE_UNQUOTED([LOOLWSD_VERSION],[["$LOOLWSD_VERSION"]],[Collabora Online WebSocket server version])
+AC_DEFINE_UNQUOTED([COOLWSD_VERSION],[["$COOLWSD_VERSION"]],[Collabora Online WebSocket server version])
 
 # try to add a git hash for a version if we're developing
-LOOLWSD_VERSION_HASH="$LOOLWSD_VERSION"
+COOLWSD_VERSION_HASH="$COOLWSD_VERSION"
 git_hash=`cd ${srcdir} && ( cat dist_git_hash 2> /dev/null || git log -1 --format=%h 2> /dev/null )`
 if test "z$git_hash" != "z"; then
-   LOOLWSD_VERSION_HASH=$git_hash
+   COOLWSD_VERSION_HASH=$git_hash
 fi
-AC_SUBST([LOOLWSD_VERSION_HASH])
+AC_SUBST([COOLWSD_VERSION_HASH])
 
-AC_DEFINE_UNQUOTED([LOOLWSD_VERSION_HASH],[["$LOOLWSD_VERSION_HASH"]],[Collabora Online git hash if present])
+AC_DEFINE_UNQUOTED([COOLWSD_VERSION_HASH],[["$COOLWSD_VERSION_HASH"]],[Collabora Online git hash if present])
 
-AC_CONFIG_SRCDIR([wsd/LOOLWSD.cpp])
+AC_CONFIG_SRCDIR([wsd/COOLWSD.cpp])
 
 AC_CONFIG_HEADERS([config.h])
 
@@ -150,7 +150,7 @@ AC_ARG_ENABLE([gtkapp],
 AC_ARG_ENABLE(fuzzers,
     AS_HELP_STRING([--enable-fuzzers],
         [Enables building libfuzzer targets for fuzz testing. It is useful to enable this switch
-         only in a separate build tree, since the switch disables the creation of a loolwsd
+         only in a separate build tree, since the switch disables the creation of a coolwsd
          binary.])
 )
 
@@ -292,7 +292,7 @@ AC_ARG_WITH([feedback-location],
 
 AC_ARG_ENABLE(welcome-message,
     AS_HELP_STRING([--enable-welcome-message],
-        [Enables welcome message on version update. Can be changed later in loolwsd.xml.])
+        [Enables welcome message on version update. Can be changed later in coolwsd.xml.])
 )
 
 AC_ARG_ENABLE(feedback,
@@ -357,11 +357,11 @@ AS_IF([test "$enable_debug" = yes -a -n "$with_poco_libs"],
 ENABLE_DEBUG=false
 ENABLE_DEBUG_PROTOCOL=false
 ENABLE_BUNDLE=true
-LOOLWSD_LOGLEVEL="warning"
-LOOLWSD_LOG_TO_FILE="false"
-LOOLWSD_LOGFILE="/var/log/loolwsd.log"
-LOOLWSD_TRACEEVENTFILE="/var/log/loolwsd.trace.json"
-LOOLWSD_ANONYMIZE_USER_DATA=false
+COOLWSD_LOGLEVEL="warning"
+COOLWSD_LOG_TO_FILE="false"
+COOLWSD_LOGFILE="/var/log/coolwsd.log"
+COOLWSD_TRACEEVENTFILE="/var/log/coolwsd.trace.json"
+COOLWSD_ANONYMIZE_USER_DATA=false
 BROWSER_LOGGING="false"
 debug_msg="secure mode: product build"
 anonym_msg=""
@@ -370,11 +370,11 @@ if test "$enable_debug" = "yes"; then
    AC_DEFINE([ENABLE_DEBUG],1,[Whether to compile in some extra debugging support code and disable some security pieces])
    ENABLE_DEBUG=true
    ENABLE_DEBUG_PROTOCOL=true
-   LOOLWSD_LOGLEVEL="trace"
-   LOOLWSD_LOG_TO_FILE="true"
-   LOOLWSD_LOGFILE="/tmp/loolwsd.log"
-   LOOLWSD_TRACEEVENTFILE="/tmp/loolwsd.trace.json"
-   LOOLWSD_ANONYMIZE_USER_DATA=false
+   COOLWSD_LOGLEVEL="trace"
+   COOLWSD_LOG_TO_FILE="true"
+   COOLWSD_LOGFILE="/tmp/coolwsd.log"
+   COOLWSD_TRACEEVENTFILE="/tmp/coolwsd.trace.json"
+   COOLWSD_ANONYMIZE_USER_DATA=false
    BROWSER_LOGGING="true"
    debug_msg="low security debugging mode"
    if test "$enable_bundle" != "yes"; then
@@ -386,8 +386,8 @@ else
 fi
 AC_SUBST(ENABLE_DEBUG)
 AC_SUBST(ENABLE_BUNDLE)
-AC_SUBST(LOOLWSD_LOGLEVEL)
-AC_SUBST(LOOLWSD_LOG_TO_FILE)
+AC_SUBST(COOLWSD_LOGLEVEL)
+AC_SUBST(COOLWSD_LOG_TO_FILE)
 AC_SUBST(BROWSER_LOGGING)
 
 if test "$enable_debug_protocol" = no; then
@@ -404,22 +404,22 @@ fi
 AC_SUBST(ENABLE_BROWSERSYNC)
 
 if test -n "$with_logfile" ; then
-   LOOLWSD_LOGFILE="$with_logfile"
+   COOLWSD_LOGFILE="$with_logfile"
 fi
-AC_SUBST(LOOLWSD_LOGFILE)
+AC_SUBST(COOLWSD_LOGFILE)
 
 if test -n "$with_trace_event_file" ; then
-   LOOLWSD_TRACEEVENTFILE="$with_trace_event_file"
+   COOLWSD_TRACEEVENTFILE="$with_trace_event_file"
 fi
-AC_SUBST(LOOLWSD_TRACEEVENTFILE)
-AC_DEFINE_UNQUOTED([LOOLWSD_TRACEEVENTFILE], [["]$LOOLWSD_TRACEEVENTFILE["]], [Destination for Trace Event output])
+AC_SUBST(COOLWSD_TRACEEVENTFILE)
+AC_DEFINE_UNQUOTED([COOLWSD_TRACEEVENTFILE], [["]$COOLWSD_TRACEEVENTFILE["]], [Destination for Trace Event output])
 
 if test "$enable_anonymization" = "yes" ; then
-   LOOLWSD_ANONYMIZE_USER_DATA=true
+   COOLWSD_ANONYMIZE_USER_DATA=true
    anonym_msg="anonymization of user-data is enabled"
 fi
-AC_DEFINE_UNQUOTED([LOOLWSD_ANONYMIZE_USER_DATA],[$LOOLWSD_ANONYMIZE_USER_DATA],[Enable permanent anonymization in logs])
-AC_SUBST(LOOLWSD_ANONYMIZE_USER_DATA)
+AC_DEFINE_UNQUOTED([COOLWSD_ANONYMIZE_USER_DATA],[$COOLWSD_ANONYMIZE_USER_DATA],[Enable permanent anonymization in logs])
+AC_SUBST(COOLWSD_ANONYMIZE_USER_DATA)
 
 if test -z "$anonym_msg";  then
   anonym_msg="anonymization of user-data is disabled"
@@ -1162,19 +1162,19 @@ AS_IF([test `uname -s` = "FreeBSD"],
 
 # need this after the other stuff that uses the compiler because we don't want to run configure-tests with the plugins enabled
 AS_IF([test -n "$with_compiler_plugins"],
-      [CPPFLAGS="$CPPFLAGS -Xclang -load -Xclang ${with_compiler_plugins}/compilerplugins/obj/plugin.so -Xclang -add-plugin -Xclang loplugin -Xclang -plugin-arg-loplugin -Xclang --lool-base-path=\${abs_top_srcdir}"])
+      [CPPFLAGS="$CPPFLAGS -Xclang -load -Xclang ${with_compiler_plugins}/compilerplugins/obj/plugin.so -Xclang -add-plugin -Xclang loplugin -Xclang -plugin-arg-loplugin -Xclang --cool-base-path=\${abs_top_srcdir}"])
 
-LOOLWSD_CONFIGDIR=${sysconfdir}/${PACKAGE}
-AC_SUBST(LOOLWSD_CONFIGDIR)
+COOLWSD_CONFIGDIR=${sysconfdir}/${PACKAGE}
+AC_SUBST(COOLWSD_CONFIGDIR)
 
-LOOLWSD_DATADIR=${datadir}/${PACKAGE}
-AC_SUBST(LOOLWSD_DATADIR)
+COOLWSD_DATADIR=${datadir}/${PACKAGE}
+AC_SUBST(COOLWSD_DATADIR)
 
 COOL_USER_ID="cool"
 if test -n "$with_user_id"; then
    COOL_USER_ID="$with_user_id"
 fi
-AC_DEFINE_UNQUOTED([COOL_USER_ID],["$COOL_USER_ID"],[The user-name which is allowed to run loolwsd and its tools])
+AC_DEFINE_UNQUOTED([COOL_USER_ID],["$COOL_USER_ID"],[The user-name which is allowed to run coolwsd and its tools])
 
 AM_CONDITIONAL([ENABLE_SETCAP], [test "$enable_setcap" != "no" -a `uname -s` = "Linux"])
 
@@ -1256,7 +1256,7 @@ AS_IF([test "$ENABLE_IOSAPP" = "true"],
               # iOS app.
               touch ios/Mobile/Branding/branding.css
           fi
-          cp loolkitconfig-mobile.xcu ios/Mobile/loolkitconfig.xcu
+          cp coolkitconfig-mobile.xcu ios/Mobile/coolkitconfig.xcu
        fi
       ])
 AC_SUBST(IOSAPP_FONTS)
@@ -1407,10 +1407,10 @@ AC_CONFIG_FILES([Makefile
                  test/Makefile
                  browser/Makefile
                  browser/npm-shrinkwrap.json
-                 loolkitconfig.xcu
-                 loolwsd.spec
-                 loolwsd.xml
-                 debian/loolwsd.postinst])
+                 coolkitconfig.xcu
+                 coolwsd.spec
+                 coolwsd.xml
+                 debian/coolwsd.postinst])
 
 if test "$enable_iosapp" = "yes"; then
     AC_CONFIG_FILES([ios/config.h
@@ -1501,7 +1501,7 @@ Configuration:
 
     \$ make # to compile"
 if test -n "$with_lo_path"; then
-echo "    \$ make run # to start loolwsd
+echo "    \$ make run # to start coolwsd
     \$ make sync-writer|calc|impress # to start browsersync with specified app
 "
 fi

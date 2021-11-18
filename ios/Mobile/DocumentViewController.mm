@@ -18,7 +18,7 @@
 
 #import "ios.h"
 #import "FakeSocket.hpp"
-#import "LOOLWSD.hpp"
+#import "COOLWSD.hpp"
 #import "Log.hpp"
 #import "MobileApp.hpp"
 #import "SigUtil.hpp"
@@ -302,10 +302,10 @@ static IMP standardImpOfInputAccessoryView = nil;
         if ([message.body isEqualToString:@"HULLO"]) {
             // Now we know that the JS has started completely
 
-            // Contact the permanently (during app lifetime) listening LOOLWSD server
+            // Contact the permanently (during app lifetime) listening COOLWSD server
             // "public" socket
-            assert(loolwsd_server_socket_fd != -1);
-            rc = fakeSocketConnect(self.document->fakeClientFd, loolwsd_server_socket_fd);
+            assert(coolwsd_server_socket_fd != -1);
+            rc = fakeSocketConnect(self.document->fakeClientFd, coolwsd_server_socket_fd);
             assert(rc != -1);
 
             // Create a socket pair to notify the below thread when the document has been closed

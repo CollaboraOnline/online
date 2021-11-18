@@ -137,7 +137,7 @@ public:
         {
             if (_ws)
             {
-                LOG_TRC("Send to " << _name << " message: [" << LOOLProtocol::getAbbreviatedMessage(data) << "].");
+                LOG_TRC("Send to " << _name << " message: [" << COOLProtocol::getAbbreviatedMessage(data) << "].");
                 _ws->sendMessage(data);
                 return true;
             }
@@ -145,11 +145,11 @@ public:
         catch (const std::exception& exc)
         {
             LOG_ERR("Failed to send " << _name << " [" << _pid << "] data [" <<
-                    LOOLProtocol::getAbbreviatedMessage(data) << "] due to: " << exc.what());
+                    COOLProtocol::getAbbreviatedMessage(data) << "] due to: " << exc.what());
             throw;
         }
 
-        LOG_WRN("No socket to " << _name << " to send [" << LOOLProtocol::getAbbreviatedMessage(data) << ']');
+        LOG_WRN("No socket to " << _name << " to send [" << COOLProtocol::getAbbreviatedMessage(data) << ']');
         return false;
     }
 
@@ -210,17 +210,17 @@ public:
 
 #endif
 
-// Forward declarations for classes defined in LOOLWSD.cpp.
+// Forward declarations for classes defined in COOLWSD.cpp.
 class PrisonPoll;
-class LOOLWSDServer;
+class COOLWSDServer;
 
 /// The Server class which is responsible for all
 /// external interactions.
-class LOOLWSD : public Poco::Util::ServerApplication
+class COOLWSD : public Poco::Util::ServerApplication
 {
 public:
-    LOOLWSD();
-    ~LOOLWSD();
+    COOLWSD();
+    ~COOLWSD();
 
     // An Application is a singleton anyway,
     // so just keep these as statics.
@@ -259,7 +259,7 @@ public:
     static std::string MostVerboseLogLevelSettableFromClient;
     static std::string LeastVerboseLogLevelSettableFromClient;
     static bool AnonymizeUserData;
-    static bool CheckLoolUser;
+    static bool CheckCoolUser;
     static bool CleanupOnly;
     static bool IsProxyPrefixEnabled;
     static std::atomic<unsigned> NumConnections;
@@ -300,7 +300,7 @@ public:
     static bool isSSLEnabled()
     {
 #if ENABLE_SSL
-        return !Util::isFuzzing() && LOOLWSD::SSLEnabled.get();
+        return !Util::isFuzzing() && COOLWSD::SSLEnabled.get();
 #else
         return false;
 #endif
@@ -309,7 +309,7 @@ public:
     static bool isSSLTermination()
     {
 #if ENABLE_SSL
-        return !Util::isFuzzing() && LOOLWSD::SSLTermination.get();
+        return !Util::isFuzzing() && COOLWSD::SSLTermination.get();
 #else
         return false;
 #endif
@@ -377,13 +377,13 @@ public:
         // the expected path might not exist, in which case Poco throws an exception
         try
         {
-            value = LOOLWSD::getPathFromConfig(name);
+            value = COOLWSD::getPathFromConfig(name);
         }
         catch (...)
         {
         }
         if (value.empty())
-            return LOOLWSD::getPathFromConfig(fallbackName);
+            return COOLWSD::getPathFromConfig(fallbackName);
         return value;
     }
 
@@ -459,14 +459,14 @@ protected:
         }
         catch (const Poco::Exception& ex)
         {
-            LOG_FTL("Failed to initialize LOOLWSD: "
+            LOG_FTL("Failed to initialize COOLWSD: "
                     << ex.displayText()
                     << (ex.nested() ? " (" + ex.nested()->displayText() + ')' : ""));
             throw; // Nothing further to do.
         }
         catch (const std::exception& ex)
         {
-            LOG_FTL("Failed to initialize LOOLWSD: " << ex.what());
+            LOG_FTL("Failed to initialize COOLWSD: " << ex.what());
             throw; // Nothing further to do.
         }
     }

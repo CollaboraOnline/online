@@ -122,7 +122,7 @@ public:
             socket,
             "POST /cool/convert-to/txt HTTP/1.1\r\n"
             "Host: localhost:9980\r\n"
-            "User-Agent: looltests/1.2.3\r\n"
+            "User-Agent: cooltests/1.2.3\r\n"
             "Accept: */*\r\n"
             "Expect: 100-continue\r\n"
             "Transfer-Encoding: chunked\r\n"

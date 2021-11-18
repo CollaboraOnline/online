@@ -1,6 +1,6 @@
-## Path:	Network/Remote access/LOOLWSD
+## Path:	Network/Remote access/COOLWSD
 ## Description:	Collabora Online WebSocket Daemon settings
 ## Type:	string
 ## Default:	""
-## ServiceRestart: loolwsd
+## ServiceRestart: coolwsd
 #

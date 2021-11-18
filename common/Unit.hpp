@@ -304,7 +304,7 @@ public:
     virtual void configure(Poco::Util::LayeredConfiguration& /* config */);
 
     /// Main-loop reached, time for testing.
-    /// Invoked from loolwsd's main thread.
+    /// Invoked from coolwsd's main thread.
     void invokeTest()
     {
         try

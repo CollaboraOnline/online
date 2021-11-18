@@ -163,8 +163,8 @@ public:
                 _phase = Phase::LockDocument;
                 initWebsocket("/wopi/files/0?access_token=anything");
                 addWebSocket();
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(), testName);
-                helpers::sendTextFrame(*getWsAt(1)->getLOOLWebSocket(), "load url=" + getWopiSrc(), testName);
+                helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
+                helpers::sendTextFrame(*getWsAt(1)->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
                 SocketPoll::wakeupWorld();
                 break;
             }

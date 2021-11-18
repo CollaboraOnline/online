@@ -13,7 +13,7 @@
 #include "Log.hpp"
 
 #include "net/WebSocketHandler.hpp"
-#include "LOOLWSD.hpp"
+#include "COOLWSD.hpp"
 
 class Admin;
 

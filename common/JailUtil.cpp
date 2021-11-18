@@ -73,7 +73,7 @@ bool unmount(const std::string& target)
 
 // This file signifies that we copied instead of mounted.
 // NOTE: jail cleanup helpers are called from forkit and
-// loolwsd, and they may have bind-mounting enabled, but the
+// coolwsd, and they may have bind-mounting enabled, but the
 // kit could have had it removed when falling back to copying.
 // In such cases, we cannot safely know whether the jail was
 // copied or not, since the bind envar will be present and
@@ -196,21 +196,21 @@ void setupJails(bool bindMount, const std::string& jailRoot, const std::string& 
     {
         // Test mounting to verify it actually works,
         // as it might not function in some systems.
-        const std::string target = Poco::Path(jailRoot, "lool_test_mount").toString();
+        const std::string target = Poco::Path(jailRoot, "cool_test_mount").toString();
         if (bind(sysTemplate, target))
         {
             enableBindMounting();
             safeRemoveDir(target);
             LOG_INF("Enabling Bind-Mounting of jail contents for better performance per "
-                    "mount_jail_tree config in loolwsd.xml.");
+                    "mount_jail_tree config in coolwsd.xml.");
         }
         else
             LOG_ERR("Bind-Mounting fails and will be disabled for this run. To disable permanently "
-                    "set mount_jail_tree config entry in loolwsd.xml to false.");
+                    "set mount_jail_tree config entry in coolwsd.xml to false.");
     }
     else
         LOG_INF("Disabling Bind-Mounting of jail contents per "
-                "mount_jail_tree config in loolwsd.xml.");
+                "mount_jail_tree config in coolwsd.xml.");
 }
 
 // This is the second stage of setting up /dev/[u]random
@@ -264,7 +264,7 @@ void setupJailDevNodes(const std::string& root)
 }
 
 /// The envar name used to control bind-mounting of systemplate/jails.
-constexpr const char* BIND_MOUNTING_ENVAR_NAME = "LOOL_BIND_MOUNT";
+constexpr const char* BIND_MOUNTING_ENVAR_NAME = "COOL_BIND_MOUNT";
 
 void enableBindMounting()
 {

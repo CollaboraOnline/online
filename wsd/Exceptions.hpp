@@ -14,7 +14,7 @@
 #include <stdexcept>
 
 // Generic COOL errors and base for others.
-class LoolException : public std::runtime_error
+class CoolException : public std::runtime_error
 {
 public:
     std::string toString() const
@@ -26,26 +26,26 @@ protected:
     using std::runtime_error::runtime_error;
 };
 
-class StorageSpaceLowException : public LoolException
+class StorageSpaceLowException : public CoolException
 {
 public:
-    using LoolException::LoolException;
+    using CoolException::CoolException;
 };
 
 /// General exception thrown when we are not able to
 /// connect to storage.
-class StorageConnectionException : public LoolException
+class StorageConnectionException : public CoolException
 {
 public:
-    using LoolException::LoolException;
+    using CoolException::CoolException;
 };
 
 /// A bad-request exception that is meant to signify,
 /// and translate into, an HTTP bad request.
-class BadRequestException : public LoolException
+class BadRequestException : public CoolException
 {
 public:
-    using LoolException::LoolException;
+    using CoolException::CoolException;
 };
 
 /// A bad-argument exception that is meant to signify,
@@ -58,25 +58,25 @@ public:
 
 /// An authorization exception that is meant to signify,
 /// and translate into, an HTTP unauthorized error.
-class UnauthorizedRequestException : public LoolException
+class UnauthorizedRequestException : public CoolException
 {
 public:
-    using LoolException::LoolException;
+    using CoolException::CoolException;
 };
 
 /// A service-unavailable exception that is meant to signify
 /// an internal error.
-class ServiceUnavailableException : public LoolException
+class ServiceUnavailableException : public CoolException
 {
 public:
-    using LoolException::LoolException;
+    using CoolException::CoolException;
 };
 
 /// Badly formed data we are parsing
-class ParseError : public LoolException
+class ParseError : public CoolException
 {
 public:
-    using LoolException::LoolException;
+    using CoolException::CoolException;
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -33,7 +33,7 @@
  * cool URI: used to load cool.html and other static files.
  * Origin: the page where the document will be embedded.
  * Format:
- *  /browser/<loolwsd-version-hash>/[path/]<filename>.<ext>[?WOPISrc=<encoded-document-URI>]
+ *  /browser/<coolwsd-version-hash>/[path/]<filename>.<ext>[?WOPISrc=<encoded-document-URI>]
  * Identifier: /browser/.
  * Examples:
  *  /browser/49c225146/src/map/Clipboard.js

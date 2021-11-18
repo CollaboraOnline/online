@@ -25,7 +25,7 @@
 
 class WopiTestServer : public UnitWSD
 {
-    enum class LOOLStatusCode
+    enum class COOLStatusCode
     {
         DocChanged = 1010
     };
@@ -256,7 +256,7 @@ protected:
         {
             LOG_TST("Fake wopi host request, handling PutFile: " << uriReq.getPath());
 
-            std::string wopiTimestamp = request.get("X-LOOL-WOPI-Timestamp", std::string());
+            std::string wopiTimestamp = request.get("X-COOL-WOPI-Timestamp", std::string());
             if (!wopiTimestamp.empty())
             {
 
@@ -265,8 +265,8 @@ protected:
                 {
                     http::Response httpResponse(http::StatusLine(409));
                     httpResponse.setBody(
-                        "{\"LOOLStatusCode\":" +
-                        std::to_string(static_cast<int>(LOOLStatusCode::DocChanged)) + '}');
+                        "{\"COOLStatusCode\":" +
+                        std::to_string(static_cast<int>(COOLStatusCode::DocChanged)) + '}');
                     socket->sendAndShutdown(httpResponse);
                     return true;
                 }
@@ -315,7 +315,7 @@ protected:
     do                                                                                             \
     {                                                                                              \
         LOG_TST(": Sending: " << MSG);                                                             \
-        helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), MSG, getTestname());                  \
+        helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), MSG, getTestname());                  \
     } while (false)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

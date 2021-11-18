@@ -104,7 +104,7 @@ void sendFileAndShutdown(const std::shared_ptr<StreamSocket>& socket, const std:
     {
         // 60 * 60 * 24 * 128 (days) = 11059200
         response->set("Cache-Control", "max-age=11059200");
-        response->set("ETag", "\"" LOOLWSD_VERSION_HASH "\"");
+        response->set("ETag", "\"" COOLWSD_VERSION_HASH "\"");
     }
     else
     {

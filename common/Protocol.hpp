@@ -22,7 +22,7 @@
 #define LOK_USE_UNSTABLE_API
 #include <LibreOfficeKit/LibreOfficeKitEnums.h>
 
-namespace LOOLProtocol
+namespace COOLProtocol
 {
     // Protocol Version Number.
     // See protocol.txt.

@@ -20,7 +20,7 @@
 #include <Unit.hpp>
 #include <helpers.hpp>
 
-class LOOLWebSocket;
+class COOLWebSocket;
 
 namespace
 {
@@ -45,7 +45,7 @@ void getCursor(const std::string& message, int& cursorX, int& cursorY, int& curs
     LOK_ASSERT(cursorHeight >= 0);
 }
 
-void limitCursor(const std::function<void(const std::shared_ptr<LOOLWebSocket>& socket, int cursorX,
+void limitCursor(const std::function<void(const std::shared_ptr<COOLWebSocket>& socket, int cursorX,
                                           int cursorY, int cursorWidth, int cursorHeight,
                                           int docWidth, int docHeight)>& keyhandler,
                  const std::function<void(int docWidth, int docHeight, int newWidth,
@@ -69,7 +69,7 @@ void limitCursor(const std::function<void(const std::shared_ptr<LOOLWebSocket>& 
     std::string response;
 
     Poco::URI uri(helpers::getTestServerURI());
-    std::shared_ptr<LOOLWebSocket> socket
+    std::shared_ptr<COOLWebSocket> socket
         = helpers::loadDocAndGetSocket("empty.ods", uri, testname);
 
     // check document size
@@ -126,7 +126,7 @@ UnitBase::TestResult UnitCursor::testMaxColumn()
     {
         limitCursor(
             // move cursor to last column
-            [](const std::shared_ptr<LOOLWebSocket>& socket, int cursorX, int cursorY,
+            [](const std::shared_ptr<COOLWebSocket>& socket, int cursorX, int cursorY,
                int cursorWidth, int cursorHeight, int docWidth, int docHeight) {
                 LOK_ASSERT(cursorX >= 0);
                 LOK_ASSERT(cursorY >= 0);
@@ -162,7 +162,7 @@ UnitBase::TestResult UnitCursor::testMaxRow()
     {
         limitCursor(
             // move cursor to last row
-            [](const std::shared_ptr<LOOLWebSocket>& socket, int cursorX, int cursorY,
+            [](const std::shared_ptr<COOLWebSocket>& socket, int cursorX, int cursorY,
                int cursorWidth, int cursorHeight, int docWidth, int docHeight) {
                 LOK_ASSERT(cursorX >= 0);
                 LOK_ASSERT(cursorY >= 0);
@@ -200,7 +200,7 @@ UnitBase::TestResult UnitCursor::testInsertAnnotationWriter()
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
     Poco::URI uri(helpers::getTestServerURI());
-    std::shared_ptr<LOOLWebSocket> socket
+    std::shared_ptr<COOLWebSocket> socket
         = helpers::loadDocAndGetSocket(uri, documentURL, testname);
 
     // Insert comment.
@@ -251,7 +251,7 @@ UnitBase::TestResult UnitCursor::testInsertAnnotationWriter()
     socket->shutdown();
 
     // Make sure the document is fully unloaded.
-    // testNoExtraLoolKitsLeft();
+    // testNoExtraCoolKitsLeft();
 
     TST_LOG("Reloading ");
     socket = helpers::loadDocAndGetSocket(uri, documentURL, testname);
@@ -291,7 +291,7 @@ UnitBase::TestResult UnitCursor::testEditAnnotationWriter()
     helpers::getDocumentPathAndURL("with_comment.odt", documentPath, documentURL, testname);
 
     Poco::URI uri(helpers::getTestServerURI());
-    std::shared_ptr<LOOLWebSocket> socket
+    std::shared_ptr<COOLWebSocket> socket
         = helpers::loadDocAndGetSocket(uri, documentURL, testname);
 
     // Click in the body.
@@ -320,7 +320,7 @@ UnitBase::TestResult UnitCursor::testEditAnnotationWriter()
     LOK_ASSERT_EQUAL(
         std::string("textselectioncontent: and now for something completely different"), res);
 
-    // const int kitcount = getLoolKitProcessCount();
+    // const int kitcount = getCoolKitProcessCount();
 
     // Close and reopen the same document and test again.
     TST_LOG("Closing connection after pasting.");
@@ -330,7 +330,7 @@ UnitBase::TestResult UnitCursor::testEditAnnotationWriter()
     socket = helpers::loadDocAndGetSocket(uri, documentURL, testname);
 
     // Should have no new instances.
-    // CPPUNIT_ASSERT_EQUAL(kitcount, countLoolKitProcesses(kitcount));
+    // CPPUNIT_ASSERT_EQUAL(kitcount, countCoolKitProcesses(kitcount));
 
     // Confirm that the text is in the comment and not doc body.
     // Click in the body.
@@ -363,7 +363,7 @@ UnitBase::TestResult UnitCursor::testInsertAnnotationCalc()
 {
     const char* testname = "insertAnnotationCalc ";
     Poco::URI uri(helpers::getTestServerURI());
-    std::shared_ptr<LOOLWebSocket> socket
+    std::shared_ptr<COOLWebSocket> socket
         = helpers::loadDocAndGetSocket("setclientpart.ods", uri, testname);
 
     // Insert comment.

@@ -23,14 +23,14 @@ inline void setupKitEnvironment(const std::string& userInterface)
         "userext:${${BRAND_BASE_DIR}/program/lounorc:UNO_USER_PACKAGES_CACHE}/registry/com.sun.star.comp.deployment.configuration.PackageRegistryBackend/configmgr.ini "
         );
 #ifdef IOS
-    layers += "user:*${BRAND_BASE_DIR}/loolkitconfig.xcu ";
+    layers += "user:*${BRAND_BASE_DIR}/coolkitconfig.xcu ";
 #elif ENABLE_DEBUG && !defined(ANDROID) // '*' denotes non-writable.
-    layers += "user:*file://" DEBUG_ABSSRCDIR "/loolkitconfig.xcu ";
+    layers += "user:*file://" DEBUG_ABSSRCDIR "/coolkitconfig.xcu ";
 #else
-    if(::getenv("LOOLKITCONFIG_XCU"))
-        layers += "user:*file://" + std::string(::getenv("LOOLKITCONFIG_XCU")) + " ";
+    if(::getenv("COOLKITCONFIG_XCU"))
+        layers += "user:*file://" + std::string(::getenv("COOLKITCONFIG_XCU")) + " ";
     else
-        layers += "user:*file://" LOOLWSD_CONFIGDIR "/loolkitconfig.xcu ";
+        layers += "user:*file://" COOLWSD_CONFIGDIR "/coolkitconfig.xcu ";
 #endif
     ::setenv("CONFIGURATION_LAYERS", layers.c_str(),
              1 /* override */);

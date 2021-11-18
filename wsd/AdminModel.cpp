@@ -22,7 +22,7 @@
 #include <Log.hpp>
 #include <Unit.hpp>
 #include <Util.hpp>
-#include <wsd/LOOLWSD.hpp>
+#include <wsd/COOLWSD.hpp>
 
 #include <fnmatch.h>
 #include <dirent.h>
@@ -96,7 +96,7 @@ const std::string Document::getHistory() const
     std::ostringstream oss;
     oss << "{";
     oss << "\"docKey\"" << ":\"" << _docKey << "\",";
-    oss << "\"filename\"" << ":\"" << LOOLWSD::anonymizeUrl(getFilename()) << "\",";
+    oss << "\"filename\"" << ":\"" << COOLWSD::anonymizeUrl(getFilename()) << "\",";
     oss << "\"start\"" << ':' << _start << ',';
     oss << "\"end\"" << ':' << _end << ',';
     oss << "\"pid\"" << ':' << getPid() << ',';
@@ -163,7 +163,7 @@ bool Subscriber::notify(const std::string& message)
     std::shared_ptr<WebSocketHandler> webSocket = _ws.lock();
     if (webSocket)
     {
-        if (_subscriptions.find(LOOLProtocol::getFirstToken(message)) == _subscriptions.end())
+        if (_subscriptions.find(COOLProtocol::getFirstToken(message)) == _subscriptions.end())
         {
             // No subscribers for the given message.
             return true;
@@ -241,7 +241,7 @@ std::string AdminModel::query(const std::string& command)
 {
     assertCorrectThread();
 
-    const auto token = LOOLProtocol::getFirstToken(command);
+    const auto token = COOLProtocol::getFirstToken(command);
     if (token == "documents")
     {
         return getDocuments();
@@ -286,7 +286,7 @@ std::string AdminModel::query(const std::string& command)
     return std::string("");
 }
 
-/// Returns memory consumed by all active loolkit processes
+/// Returns memory consumed by all active coolkit processes
 unsigned AdminModel::getKitsMemoryUsage()
 {
     assertCorrectThread();
@@ -820,7 +820,7 @@ double AdminModel::getServerUptimeSecs()
 {
     const auto currentTime = std::chrono::steady_clock::now();
     const std::chrono::milliseconds uptime
-        = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - LOOLWSD::StartTime);
+        = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - COOLWSD::StartTime);
     return uptime.count() / 1000.0; // Convert to seconds and fractions.
 }
 
@@ -1092,10 +1092,10 @@ void PrintKitAggregateMetrics(std::ostringstream &oss, const char* name, const c
 
 void AdminModel::getMetrics(std::ostringstream &oss)
 {
-    oss << "loolwsd_count " << getPidsFromProcName(std::regex("loolwsd"), nullptr) << std::endl;
-    oss << "loolwsd_thread_count " << Util::getStatFromPid(getpid(), 19) << std::endl;
-    oss << "loolwsd_cpu_time_seconds " << Util::getCpuUsage(getpid()) / sysconf (_SC_CLK_TCK) << std::endl;
-    oss << "loolwsd_memory_used_bytes " << Util::getMemoryUsagePSS(getpid()) * 1024 << std::endl;
+    oss << "coolwsd_count " << getPidsFromProcName(std::regex("coolwsd"), nullptr) << std::endl;
+    oss << "coolwsd_thread_count " << Util::getStatFromPid(getpid(), 19) << std::endl;
+    oss << "coolwsd_cpu_time_seconds " << Util::getCpuUsage(getpid()) / sysconf (_SC_CLK_TCK) << std::endl;
+    oss << "coolwsd_memory_used_bytes " << Util::getMemoryUsagePSS(getpid()) * 1024 << std::endl;
     oss << std::endl;
 
     oss << "forkit_count " << getPidsFromProcName(std::regex("forkit"), nullptr) << std::endl;

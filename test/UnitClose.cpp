@@ -25,7 +25,7 @@
 // Include config.h last, so the test server URI is still HTTP, even in SSL builds.
 #include <config.h>
 
-class LOOLWebSocket;
+class COOLWebSocket;
 
 namespace
 {
@@ -61,7 +61,7 @@ UnitBase::TestResult UnitClose::testCloseAfterClose()
     {
         TST_LOG("Connecting and loading.");
         Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<LOOLWebSocket> socket
+        std::shared_ptr<COOLWebSocket> socket
             = helpers::loadDocAndGetSocket("hello.odt", uri, testname);
 
         // send normal socket shutdown
@@ -116,7 +116,7 @@ UnitBase::TestResult UnitClose::testFontList()
     {
         // Load a document
         Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<LOOLWebSocket> socket
+        std::shared_ptr<COOLWebSocket> socket
             = helpers::loadDocAndGetSocket("setclientpart.odp", uri, testname);
 
         helpers::sendTextFrame(socket, "commandvalues command=.uno:CharFontName", testname);
@@ -144,7 +144,7 @@ UnitBase::TestResult UnitClose::testGraphicInvalidate()
     {
         // Load a document.
         Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<LOOLWebSocket> socket
+        std::shared_ptr<COOLWebSocket> socket
             = helpers::loadDocAndGetSocket("shape.ods", uri, testname);
 
         // Send click message
@@ -181,7 +181,7 @@ UnitBase::TestResult UnitClose::testAlertAllUsers()
     const char* testname = "alertAllUsers ";
     try
     {
-        std::shared_ptr<LOOLWebSocket> socket[4];
+        std::shared_ptr<COOLWebSocket> socket[4];
 
         Poco::URI uri(helpers::getTestServerURI());
         socket[0] = helpers::loadDocAndGetSocket("hello.odt", uri, testname);
@@ -197,10 +197,10 @@ UnitBase::TestResult UnitClose::testAlertAllUsers()
                 = helpers::assertResponseString(socket[i], "error:", testname);
             StringVector tokens(Util::tokenize(response.substr(6), ' '));
             std::string cmd;
-            LOOLProtocol::getTokenString(tokens, "cmd", cmd);
+            COOLProtocol::getTokenString(tokens, "cmd", cmd);
             LOK_ASSERT_EQUAL(std::string("internal"), cmd);
             std::string kind;
-            LOOLProtocol::getTokenString(tokens, "kind", kind);
+            COOLProtocol::getTokenString(tokens, "kind", kind);
             LOK_ASSERT_EQUAL(std::string("diskfull"), kind);
         }
     }

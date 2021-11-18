@@ -20,7 +20,7 @@
 #include <Poco/URI.h>
 
 #include "DocumentBroker.hpp"
-#include "LOOLWSD.hpp"
+#include "COOLWSD.hpp"
 #include <common/Common.hpp>
 #include <common/Log.hpp>
 #include <common/Protocol.hpp>
@@ -33,7 +33,7 @@
 #include <net/HttpHelper.hpp>
 #endif
 
-using namespace LOOLProtocol;
+using namespace COOLProtocol;
 
 static constexpr int SYNTHETIC_COOL_PID_OFFSET = 10000000;
 
@@ -74,7 +74,7 @@ ClientSession::ClientSession(
     _isTextDocument(false),
     _lastSentFormFielButtonMessage("")
 {
-    const std::size_t curConnections = ++LOOLWSD::NumConnections;
+    const std::size_t curConnections = ++COOLWSD::NumConnections;
     LOG_INF("ClientSession ctor [" << getName() << "] for URI: [" << _uriPublic.toString()
                                    << "], current number of connections: " << curConnections);
 
@@ -107,7 +107,7 @@ void ClientSession::construct()
 
 ClientSession::~ClientSession()
 {
-    const std::size_t curConnections = --LOOLWSD::NumConnections;
+    const std::size_t curConnections = --COOLWSD::NumConnections;
     LOG_INF("~ClientSession dtor [" << getName() << "], current number of connections: " << curConnections);
 
     std::unique_lock<std::mutex> lock(GlobalSessionMapMutex);
@@ -360,7 +360,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "TRACEEVENT"))
     {
-        if (LOOLWSD::EnableTraceEventLogging)
+        if (COOLWSD::EnableTraceEventLogging)
         {
             if (_performanceCounterEpoch == 0)
             {
@@ -401,7 +401,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     uint64_t dur;
                     if (ph == "i")
                     {
-                        LOOLWSD::writeTraceEventRecording("{\"name\":\""
+                        COOLWSD::writeTraceEventRecording("{\"name\":\""
                                                           + name
                                                           + "\",\"ph\":\"i\""
                                                           + args
@@ -414,7 +414,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     else if ((ph == "S" || ph == "F") &&
                         getTokenUInt64(tokens[4], "id", id))
                     {
-                        LOOLWSD::writeTraceEventRecording("{\"name\":\""
+                        COOLWSD::writeTraceEventRecording("{\"name\":\""
                                                           + name
                                                           + "\",\"ph\":\""
                                                           + ph
@@ -432,7 +432,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                     else if (ph == "X" &&
                              getTokenUInt64(tokens[4], "dur", dur))
                     {
-                        LOOLWSD::writeTraceEventRecording("{\"name\":\""
+                        COOLWSD::writeTraceEventRecording("{\"name\":\""
                                                           + name
                                                           + "\",\"ph\":\"X\""
                                                           + args
@@ -457,9 +457,9 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         return false;
     }
 
-    LOOLWSD::dumpIncomingTrace(docBroker->getJailId(), getId(), firstLine);
+    COOLWSD::dumpIncomingTrace(docBroker->getJailId(), getId(), firstLine);
 
-    if (LOOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
+    if (COOLProtocol::tokenIndicatesUserInteraction(tokens[0]))
     {
         // Keep track of timestamps of incoming client messages that indicate user activity.
         updateLastActivityTime();
@@ -516,11 +516,11 @@ bool ClientSession::_handleInput(const char *buffer, int length)
         // Send COOL version information
         sendTextFrame("coolserver " + Util::getVersionJSON());
         // Send LOKit version information
-        sendTextFrame("lokitversion " + LOOLWSD::LOKitVersion);
+        sendTextFrame("lokitversion " + COOLWSD::LOKitVersion);
 
         // If Trace Event generation and logging is enabled (whether it can be turned on), tell it
         // to cool
-        if (LOOLWSD::EnableTraceEventLogging)
+        if (COOLWSD::EnableTraceEventLogging)
             sendTextFrame("enabletraceeventlogging yes");
 
         #if !MOBILEAPP
@@ -876,27 +876,27 @@ bool ClientSession::_handleInput(const char *buffer, int length)
             {
                 try
                 {
-                    auto leastVerboseAllowed = Poco::Logger::parseLevel(LOOLWSD::LeastVerboseLogLevelSettableFromClient);
-                    auto mostVerboseAllowed = Poco::Logger::parseLevel(LOOLWSD::MostVerboseLogLevelSettableFromClient);
+                    auto leastVerboseAllowed = Poco::Logger::parseLevel(COOLWSD::LeastVerboseLogLevelSettableFromClient);
+                    auto mostVerboseAllowed = Poco::Logger::parseLevel(COOLWSD::MostVerboseLogLevelSettableFromClient);
 
                     if (tokens.equals(1, "verbose"))
                     {
                         LOG_INF("Client sets thread-local logging level to the most verbose allowed ["
-                                << LOOLWSD::MostVerboseLogLevelSettableFromClient
+                                << COOLWSD::MostVerboseLogLevelSettableFromClient
                                 << "]");
-                        Log::setThreadLocalLogLevel(LOOLWSD::MostVerboseLogLevelSettableFromClient);
+                        Log::setThreadLocalLogLevel(COOLWSD::MostVerboseLogLevelSettableFromClient);
                         LOG_INF("Thread-local logging level was set to ["
-                                << LOOLWSD::MostVerboseLogLevelSettableFromClient
+                                << COOLWSD::MostVerboseLogLevelSettableFromClient
                                 << "]");
                     }
                     else if (tokens.equals(1, "terse"))
                     {
                         LOG_INF("Client sets thread-local logging level to the least verbose allowed ["
-                                << LOOLWSD::LeastVerboseLogLevelSettableFromClient
+                                << COOLWSD::LeastVerboseLogLevelSettableFromClient
                                 << "]");
-                        Log::setThreadLocalLogLevel(LOOLWSD::LeastVerboseLogLevelSettableFromClient);
+                        Log::setThreadLocalLogLevel(COOLWSD::LeastVerboseLogLevelSettableFromClient);
                         LOG_INF("Thread-local logging level was set to ["
-                                << LOOLWSD::LeastVerboseLogLevelSettableFromClient
+                                << COOLWSD::LeastVerboseLogLevelSettableFromClient
                                 << "]");
                     }
                     else
@@ -915,8 +915,8 @@ bool ClientSession::_handleInput(const char *buffer, int length)
                             LOG_WRN("Client tries to set logging level to ["
                                     << tokens[1]
                                     << "] which is outside of bounds ["
-                                    << LOOLWSD::LeastVerboseLogLevelSettableFromClient << ","
-                                    << LOOLWSD::MostVerboseLogLevelSettableFromClient << "]");
+                                    << COOLWSD::LeastVerboseLogLevelSettableFromClient << ","
+                                    << COOLWSD::MostVerboseLogLevelSettableFromClient << "]");
                         }
                     }
                 }
@@ -929,7 +929,7 @@ bool ClientSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "traceeventrecording"))
     {
-        if (LOOLWSD::getConfigValue<bool>("trace_event[@enable]", false))
+        if (COOLWSD::getConfigValue<bool>("trace_event[@enable]", false))
         {
             if (tokens.size() > 0)
             {
@@ -1048,14 +1048,14 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             Poco::URI::encode(getUserId(), "", encodedUserId);
             oss << " authorid=" << encodedUserId;
             encodedUserId = "";
-            Poco::URI::encode(LOOLWSD::anonymizeUsername(getUserId()), "", encodedUserId);
+            Poco::URI::encode(COOLWSD::anonymizeUsername(getUserId()), "", encodedUserId);
             oss << " xauthorid=" << encodedUserId;
 
             std::string encodedUserName;
             Poco::URI::encode(getUserName(), "", encodedUserName);
             oss << " author=" << encodedUserName;
             encodedUserName = "";
-            Poco::URI::encode(LOOLWSD::anonymizeUsername(getUserName()), "", encodedUserName);
+            Poco::URI::encode(COOLWSD::anonymizeUsername(getUserName()), "", encodedUserName);
             oss << " xauthor=" << encodedUserName;
         }
 
@@ -1098,18 +1098,18 @@ bool ClientSession::loadDocument(const char* /*buffer*/, int /*length*/,
             std::string encodedWatermarkText;
             Poco::URI::encode(getWatermarkText(), "", encodedWatermarkText);
             oss << " watermarkText=" << encodedWatermarkText;
-            oss << " watermarkOpacity=" << LOOLWSD::getConfigValue<double>("watermark.opacity", 0.2);
+            oss << " watermarkOpacity=" << COOLWSD::getConfigValue<double>("watermark.opacity", 0.2);
         }
 
-        if (LOOLWSD::hasProperty("security.enable_macros_execution"))
+        if (COOLWSD::hasProperty("security.enable_macros_execution"))
         {
             oss << " enableMacrosExecution=" << std::boolalpha
-                << LOOLWSD::getConfigValue<bool>("security.enable_macros_execution", false);
+                << COOLWSD::getConfigValue<bool>("security.enable_macros_execution", false);
         }
 
-        if (LOOLWSD::hasProperty("security.macro_security_level"))
+        if (COOLWSD::hasProperty("security.macro_security_level"))
         {
-            oss << " macroSecurityLevel=" << LOOLWSD::getConfigValue<int>("security.macro_security_level", 1);
+            oss << " macroSecurityLevel=" << COOLWSD::getConfigValue<int>("security.macro_security_level", 1);
         }
 
         if (!getDocOptions().empty())
@@ -1414,7 +1414,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
     const bool isConvertTo = static_cast<bool>(_saveAsSocket);
 
 #if !MOBILEAPP
-    LOOLWSD::dumpOutgoingTrace(docBroker->getJailId(), getId(), firstLine);
+    COOLWSD::dumpOutgoingTrace(docBroker->getJailId(), getId(), firstLine);
 #endif
 
     const auto& tokens = payload->tokens();
@@ -1554,7 +1554,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         Poco::URI resultURL(encodedURL);
 
         // Prepend the jail path in the normal (non-nocaps) case
-        if (resultURL.getScheme() == "file" && !LOOLWSD::NoCapsForKit)
+        if (resultURL.getScheme() == "file" && !COOLWSD::NoCapsForKit)
         {
             std::string relative;
             if (isConvertTo)
@@ -1705,7 +1705,7 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         // final cleanup ...
         if (!empty && _state == SessionState::WAIT_DISCONNECT &&
             (!_wopiFileInfo || !_wopiFileInfo->getDisableCopy()))
-            LOOLWSD::SavedClipboards->insertClipboard(
+            COOLWSD::SavedClipboards->insertClipboard(
                 _clipboardKeys, &payload->data()[header], payload->size() - header);
 
         for (const auto& it : _clipSockets)
@@ -1985,7 +1985,7 @@ Util::Rectangle ClientSession::getNormalizedVisibleArea() const
 
 void ClientSession::onDisconnect()
 {
-    LOG_INF(getName() << " Disconnected, current number of connections: " << LOOLWSD::NumConnections);
+    LOG_INF(getName() << " Disconnected, current number of connections: " << COOLWSD::NumConnections);
 
     const std::shared_ptr<DocumentBroker> docBroker = getDocumentBroker();
     LOG_CHECK_RET(docBroker && "Null DocumentBroker instance", );

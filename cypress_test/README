@@ -324,9 +324,9 @@ Used Packages
     test code.
 
 - get-port-cli:
-    Used by the build system to find an available port to use as loolwsd's
+    Used by the build system to find an available port to use as coolwsd's
     communication port.
 
 - wait-on:
-    Used by the build system to wait on loolwsd server to start before
+    Used by the build system to wait on coolwsd server to start before
     tests are started.

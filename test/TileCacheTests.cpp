@@ -23,7 +23,7 @@
 #include <Unit.hpp>
 #include <Util.hpp>
 
-#include <countloolkits.hpp>
+#include <countcoolkits.hpp>
 #include <helpers.hpp>
 #include <test.hpp>
 #include <sstream>
@@ -126,20 +126,20 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     void checkTiles(std::shared_ptr<http::WebSocketSession>& socket, const std::string& docType,
                     const std::string& testname);
-    void checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const std::string& type,
+    void checkTiles(std::shared_ptr<COOLWebSocket>& socket, const std::string& type,
                     const std::string& testname);
 
     void requestTiles(std::shared_ptr<http::WebSocketSession>& socket, const std::string& docType,
                       const int part, const int docWidth, const int docHeight,
                       const std::string& testname);
-    void requestTiles(std::shared_ptr<LOOLWebSocket>& socket, const std::string& docType,
+    void requestTiles(std::shared_ptr<COOLWebSocket>& socket, const std::string& docType,
                       const int part, const int docWidth, const int docHeight,
                       const std::string& testname);
 
     void checkBlackTiles(std::shared_ptr<http::WebSocketSession>& socket, const int /*part*/,
                          const int /*docWidth*/, const int /*docHeight*/,
                          const std::string& testname);
-    void checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket, const int part, const int docWidth,
+    void checkBlackTiles(std::shared_ptr<COOLWebSocket>& socket, const int part, const int docWidth,
                          const int docHeight, const std::string& testname);
 
     void checkBlackTile(std::stringstream& tile);
@@ -169,7 +169,7 @@ public:
     void setUp()
     {
         resetTestStartTime();
-        testCountHowManyLoolkits();
+        testCountHowManyCoolkits();
         resetTestStartTime();
         _socketPoll->startThread();
     }
@@ -178,7 +178,7 @@ public:
     {
         _socketPoll->joinThread();
         resetTestStartTime();
-        testNoExtraLoolKitsLeft();
+        testNoExtraCoolKitsLeft();
         resetTestStartTime();
     }
 };
@@ -322,7 +322,7 @@ void TileCacheTests::testCancelTiles()
         TST_LOG("cancelTiles try #" << i);
 
         // Wait to clear previous sessions.
-        countLoolKitProcesses(InitialLoolKitCount);
+        countCoolKitProcesses(InitialCoolKitCount);
 
         std::shared_ptr<http::WebSocketSession> socket
             = loadDocAndGetSession(_socketPoll, "setclientpart.ods", _uri, testname);
@@ -367,7 +367,7 @@ void TileCacheTests::testCancelTilesMultiView()
         TST_LOG("cancelTilesMultiView try #" << j);
 
         // Wait to clear previous sessions.
-        countLoolKitProcesses(InitialLoolKitCount);
+        countCoolKitProcesses(InitialCoolKitCount);
 
         // Request a huge tile, and cancel immediately.
         std::shared_ptr<http::WebSocketSession> socket1
@@ -449,7 +449,7 @@ void TileCacheTests::testDisconnectMultiView()
         TST_LOG("disconnectMultiView try #" << j);
 
         // Wait to clear previous sessions.
-        countLoolKitProcesses(InitialLoolKitCount);
+        countCoolKitProcesses(InitialCoolKitCount);
 
         // Request a huge tile, and cancel immediately.
         std::shared_ptr<http::WebSocketSession> socket1
@@ -634,7 +634,7 @@ void TileCacheTests::testTilesRenderedJustOnce()
         sendTextFrame(socket, "ping", testname);
         const auto ping1 = assertResponseString(socket, "pong", testname);
         int renderCount1 = 0;
-        LOK_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping1, "rendercount", renderCount1));
+        LOK_ASSERT(COOLProtocol::getTokenIntegerFromMessage(ping1, "rendercount", renderCount1));
         LOK_ASSERT_EQUAL(i * 3, renderCount1);
 
         // Modify.
@@ -651,31 +651,31 @@ void TileCacheTests::testTilesRenderedJustOnce()
         sendTextFrame(socket, "ping", testname);
         const auto ping2 = assertResponseString(socket, "pong", testname);
         int renderCount2 = 0;
-        LOK_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping2, "rendercount", renderCount2));
+        LOK_ASSERT(COOLProtocol::getTokenIntegerFromMessage(ping2, "rendercount", renderCount2));
         LOK_ASSERT_EQUAL((i+1) * 3, renderCount2);
 
         // Get same 3 tiles.
         sendTextFrame(socket, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname);
         const auto tile1 = assertResponseString(socket, "tile:", testname);
         std::string renderId1;
-        LOOLProtocol::getTokenStringFromMessage(tile1, "renderid", renderId1);
+        COOLProtocol::getTokenStringFromMessage(tile1, "renderid", renderId1);
         LOK_ASSERT_EQUAL(std::string("cached"), renderId1);
 
         const auto tile2 = assertResponseString(socket, "tile:", testname);
         std::string renderId2;
-        LOOLProtocol::getTokenStringFromMessage(tile2, "renderid", renderId2);
+        COOLProtocol::getTokenStringFromMessage(tile2, "renderid", renderId2);
         LOK_ASSERT_EQUAL(std::string("cached"), renderId2);
 
         const auto tile3 = assertResponseString(socket, "tile:", testname);
         std::string renderId3;
-        LOOLProtocol::getTokenStringFromMessage(tile3, "renderid", renderId3);
+        COOLProtocol::getTokenStringFromMessage(tile3, "renderid", renderId3);
         LOK_ASSERT_EQUAL(std::string("cached"), renderId3);
 
         // Get new rendercount.
         sendTextFrame(socket, "ping", testname);
         const auto ping3 = assertResponseString(socket, "pong", testname);
         int renderCount3 = 0;
-        LOK_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping3, "rendercount", renderCount3));
+        LOK_ASSERT(COOLProtocol::getTokenIntegerFromMessage(ping3, "rendercount", renderCount3));
         LOK_ASSERT_EQUAL(renderCount2, renderCount3);
     }
 
@@ -720,7 +720,7 @@ void TileCacheTests::testTilesRenderedJustOnceMultiClient()
         sendTextFrame(socket1, "ping", testname1);
         const auto ping1 = assertResponseString(socket1, "pong", testname1);
         int renderCount1 = 0;
-        LOK_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping1, "rendercount", renderCount1));
+        LOK_ASSERT(COOLProtocol::getTokenIntegerFromMessage(ping1, "rendercount", renderCount1));
         LOK_ASSERT_EQUAL(i * 3, renderCount1);
 
         // Modify.
@@ -755,31 +755,31 @@ void TileCacheTests::testTilesRenderedJustOnceMultiClient()
         sendTextFrame(socket1, "ping", testname1);
         const auto ping2 = assertResponseString(socket1, "pong", testname1);
         int renderCount2 = 0;
-        LOK_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping2, "rendercount", renderCount2));
+        LOK_ASSERT(COOLProtocol::getTokenIntegerFromMessage(ping2, "rendercount", renderCount2));
         LOK_ASSERT_EQUAL((i+1) * 3, renderCount2);
 
         // Get same 3 tiles.
         sendTextFrame(socket1, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840", testname1);
         const auto tile1 = assertResponseString(socket1, "tile:", testname1);
         std::string renderId1;
-        LOOLProtocol::getTokenStringFromMessage(tile1, "renderid", renderId1);
+        COOLProtocol::getTokenStringFromMessage(tile1, "renderid", renderId1);
         LOK_ASSERT_EQUAL(std::string("cached"), renderId1);
 
         const auto tile2 = assertResponseString(socket1, "tile:", testname1);
         std::string renderId2;
-        LOOLProtocol::getTokenStringFromMessage(tile2, "renderid", renderId2);
+        COOLProtocol::getTokenStringFromMessage(tile2, "renderid", renderId2);
         LOK_ASSERT_EQUAL(std::string("cached"), renderId2);
 
         const auto tile3 = assertResponseString(socket1, "tile:", testname1);
         std::string renderId3;
-        LOOLProtocol::getTokenStringFromMessage(tile3, "renderid", renderId3);
+        COOLProtocol::getTokenStringFromMessage(tile3, "renderid", renderId3);
         LOK_ASSERT_EQUAL(std::string("cached"), renderId3);
 
         // Get new rendercount.
         sendTextFrame(socket1, "ping", testname1);
         const auto ping3 = assertResponseString(socket1, "pong", testname1);
         int renderCount3 = 0;
-        LOK_ASSERT(LOOLProtocol::getTokenIntegerFromMessage(ping3, "rendercount", renderCount3));
+        LOK_ASSERT(COOLProtocol::getTokenIntegerFromMessage(ping3, "rendercount", renderCount3));
         LOK_ASSERT_EQUAL(renderCount2, renderCount3);
     }
 
@@ -825,9 +825,9 @@ void TileCacheTests::testSimultaneousTilesRenderedJustOnce()
     if (!response1.empty() && !response2.empty())
     {
         std::string renderId1;
-        LOOLProtocol::getTokenStringFromMessage(response1, "renderid", renderId1);
+        COOLProtocol::getTokenStringFromMessage(response1, "renderid", renderId1);
         std::string renderId2;
-        LOOLProtocol::getTokenStringFromMessage(response2, "renderid", renderId2);
+        COOLProtocol::getTokenStringFromMessage(response2, "renderid", renderId2);
 
         LOK_ASSERT(renderId1 == renderId2 ||
                        (renderId1 == "cached" && renderId2 != "cached") ||
@@ -930,7 +930,7 @@ void TileCacheTests::checkBlackTiles(std::shared_ptr<http::WebSocketSession>& so
         return;
     }
 
-    const std::string firstLine = LOOLProtocol::getFirstLine(tile);
+    const std::string firstLine = COOLProtocol::getFirstLine(tile);
 
 #if 0
     std::fstream outStream("/tmp/black.png", std::ios::out);
@@ -944,7 +944,7 @@ void TileCacheTests::checkBlackTiles(std::shared_ptr<http::WebSocketSession>& so
     checkBlackTile(streamTile);
 }
 
-void TileCacheTests::checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket, const int /*part*/,
+void TileCacheTests::checkBlackTiles(std::shared_ptr<COOLWebSocket>& socket, const int /*part*/,
                                      const int /*docWidth*/, const int /*docHeight*/,
                                      const std::string& testname)
 {
@@ -962,7 +962,7 @@ void TileCacheTests::checkBlackTiles(std::shared_ptr<LOOLWebSocket>& socket, con
         return;
     }
 
-    const std::string firstLine = LOOLProtocol::getFirstLine(tile);
+    const std::string firstLine = COOLProtocol::getFirstLine(tile);
 
 #if 0
     std::fstream outStream("/tmp/black.png", std::ios::out);
@@ -1033,7 +1033,7 @@ void TileCacheTests::testTileInvalidateWriterPage()
     const auto res = assertResponseString(socket, "invalidatetiles:", testname);
     int part = -1;
     LOK_ASSERT_MESSAGE("No part# in invalidatetiles message.",
-                           LOOLProtocol::getTokenIntegerFromMessage(res, "part", part));
+                           COOLProtocol::getTokenIntegerFromMessage(res, "part", part));
     LOK_ASSERT_EQUAL(0, part);
 
     socket->asyncShutdown();
@@ -1193,12 +1193,12 @@ void TileCacheTests::testTileInvalidatePartCalc()
 
         const auto response1 = assertResponseString(socket1, "invalidatetiles:", testname1);
         int value1;
-        LOOLProtocol::getTokenIntegerFromMessage(response1, "part", value1);
+        COOLProtocol::getTokenIntegerFromMessage(response1, "part", value1);
         LOK_ASSERT_EQUAL(2, value1);
 
         const auto response2 = assertResponseString(socket2, "invalidatetiles:", testname2);
         int value2;
-        LOOLProtocol::getTokenIntegerFromMessage(response2, "part", value2);
+        COOLProtocol::getTokenIntegerFromMessage(response2, "part", value2);
         LOK_ASSERT_EQUAL(5, value2);
     }
 
@@ -1242,12 +1242,12 @@ void TileCacheTests::testTileInvalidatePartImpress()
 
         const auto response1 = assertResponseString(socket1, "invalidatetiles:", testname1);
         int value1;
-        LOOLProtocol::getTokenIntegerFromMessage(response1, "part", value1);
+        COOLProtocol::getTokenIntegerFromMessage(response1, "part", value1);
         LOK_ASSERT_EQUAL(2, value1);
 
         const auto response2 = assertResponseString(socket2, "invalidatetiles:", testname2);
         int value2;
-        LOOLProtocol::getTokenIntegerFromMessage(response2, "part", value2);
+        COOLProtocol::getTokenIntegerFromMessage(response2, "part", value2);
         LOK_ASSERT_EQUAL(5, value2);
     }
 
@@ -1418,7 +1418,7 @@ void TileCacheTests::requestTiles(std::shared_ptr<http::WebSocketSession>& socke
     TST_LOG("requestTiles for " << testname << " finished.");
 }
 
-void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const std::string& docType,
+void TileCacheTests::checkTiles(std::shared_ptr<COOLWebSocket>& socket, const std::string& docType,
                                 const std::string& testname)
 {
     const std::string current = "current=";
@@ -1503,7 +1503,7 @@ void TileCacheTests::checkTiles(std::shared_ptr<LOOLWebSocket>& socket, const st
     }
 }
 
-void TileCacheTests::requestTiles(std::shared_ptr<LOOLWebSocket>& socket,
+void TileCacheTests::requestTiles(std::shared_ptr<COOLWebSocket>& socket,
                                   const std::string& , const int part, const int docWidth,
                                   const int docHeight, const std::string& testname)
 {

@@ -20,7 +20,7 @@
 #include "ClientSession.hpp"
 #include "ProxyProtocol.hpp"
 #include "Exceptions.hpp"
-#include "LOOLWSD.hpp"
+#include "COOLWSD.hpp"
 #include <Socket.hpp>
 
 #include <atomic>
@@ -46,8 +46,8 @@ void DocumentBroker::handleProxyRequest(
                 std::make_shared<ProxyProtocolHandler>(),
                 id, uriPublic, isReadOnly, requestDetails);
         addSession(clientSession);
-        LOOLWSD::checkDiskSpaceAndWarnClients(true);
-        LOOLWSD::checkSessionLimitsAndWarnClients();
+        COOLWSD::checkDiskSpaceAndWarnClients(true);
+        COOLWSD::checkSessionLimitsAndWarnClients();
 
         const std::string &sessionId = clientSession->getOrCreateProxyAccess();
         LOG_TRC("proxy: Returning sessionId " << sessionId);

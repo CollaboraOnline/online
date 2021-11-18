@@ -15,7 +15,7 @@ extern "C" {
 
 const char *user_name = nullptr;
 
-int loolwsd_server_socket_fd = -1;
+int coolwsd_server_socket_fd = -1;
 
 LibreOfficeKit *lo_kit;
 

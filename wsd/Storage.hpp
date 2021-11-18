@@ -19,7 +19,7 @@
 
 #include "Auth.hpp"
 #include "HttpRequest.hpp"
-#include "LOOLWSD.hpp"
+#include "COOLWSD.hpp"
 #include "Log.hpp"
 #include "Util.hpp"
 #include <common/Authorization.hpp>
@@ -185,7 +185,7 @@ public:
         UploadResult _result;
     };
 
-    enum class LOOLStatusCode
+    enum class COOLStatusCode
     {
         DOC_CHANGED = 1010 // Document changed externally in storage
     };
@@ -205,7 +205,7 @@ public:
         _isExitSave(false)
     {
         setUri(uri);
-        LOG_DBG("Storage ctor: " << LOOLWSD::anonymizeUrl(_uri.toString()));
+        LOG_DBG("Storage ctor: " << COOLWSD::anonymizeUrl(_uri.toString()));
     }
 
     virtual ~StorageBase() {}
@@ -404,7 +404,7 @@ public:
         , _isCopy(false)
     {
         LOG_INF("LocalStorage ctor with localStorePath: [" << localStorePath <<
-                "], jailPath: [" << jailPath << "], uri: [" << LOOLWSD::anonymizeUrl(uri.toString()) << "].");
+                "], jailPath: [" << jailPath << "], uri: [" << COOLWSD::anonymizeUrl(uri.toString()) << "].");
     }
 
     class LocalFileInfo
@@ -463,7 +463,7 @@ public:
     {
         LOG_INF("WopiStorage ctor with localStorePath: ["
                 << localStorePath << "], jailPath: [" << jailPath << "], uri: ["
-                << LOOLWSD::anonymizeUrl(uri.toString()) << ']');
+                << COOLWSD::anonymizeUrl(uri.toString()) << ']');
     }
 
     class WOPIFileInfo

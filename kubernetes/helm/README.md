@@ -46,18 +46,18 @@ helm install collabora-online ./kubernetes/helm/collabora-online/
 
       C. Now in this case to make our hostname available we have to add following line into /etc/hosts:
       ```
-      192.168.0.106   loolwsd.public.example.com
+      192.168.0.106   coolwsd.public.example.com
       ```
 
 To check if everything is setup correctly you can run:
 ```
-curl -I -H 'Host: loolwsd.public.example.com' 'http://192.168.0.106:30536/'
+curl -I -H 'Host: coolwsd.public.example.com' 'http://192.168.0.106:30536/'
 ```
 It should return a similar output as below:
 ```
 HTTP/1.1 200 OK
 last-modified: Tue, 18 May 2021 10:46:29
-user-agent: LOOLWSD WOPI Agent 6.4.8
+user-agent: COOLWSD WOPI Agent 6.4.8
 content-length: 2
 content-type: text/plain
 ```
@@ -75,7 +75,7 @@ collabora-online-5fb4869564-dnzmk   1/1     Running   0          28h
 collabora-online-5fb4869564-fb4cf   1/1     Running   0          28h
 collabora-online-5fb4869564-wbrv2   1/1     Running   0          28h
 ```
-* What is the outside host that multiple loolwsd servers actually answering ?
+* What is the outside host that multiple coolwsd servers actually answering ?
 ```
 kubectl get ingress -n collabora
 ```
@@ -84,7 +84,7 @@ example output :
 |-----------|------------------|--------------------------|------------------------|-------|
 | NAMESPACE |       NAME       |           HOSTS          |         ADDRESS        | PORTS |
 |-----------|------------------|--------------------------|------------------------|-------|
-| collabora | collabora-online |loolwsd.public.example.com|                        |  80   |
+| collabora | collabora-online |coolwsd.public.example.com|                        |  80   |
 |-----------|------------------|--------------------------|------------------------|-------|
 ```
 

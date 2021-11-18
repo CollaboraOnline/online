@@ -269,7 +269,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	// _handleKeyEvent - checks if the given keyboard event shall trigger
-	// a message to loolwsd, and calls the given keyEventFn(type, charcode, keycode)
+	// a message to coolwsd, and calls the given keyEventFn(type, charcode, keycode)
 	// callback if so.
 	// Called from _onKeyDown
 	_handleKeyEvent: function (ev, keyEventFn) {
@@ -449,7 +449,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	// Given a DOM keyboard event that happened while the Control key was depressed,
-	// triggers the appropriate action or loolwsd message.
+	// triggers the appropriate action or coolwsd message.
 	_handleCtrlCommand: function (e) {
 		if (this._map.uiManager.isUIBlocked())
 			return;

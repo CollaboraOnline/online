@@ -5,16 +5,16 @@ which can be found here: https://prometheus.io/docs/instrumenting/exposition_for
 GLOBAL
 
     global_host_system_memory_bytes - Total host system memory in bytes.
-    global_memory_available_bytes – Memory available to our application in bytes. This is equal to global_host_system_memory_bytes * memproportion where memproportion represents the maximum percentage of system memory consumed by all of the Collabora Online, after which we start cleaning up idle documents. This parameter can be setup in loolwsd.xml.
-    global_memory_used_bytes – Total memory usage: PSS(loolwsd) + RSS(forkit) + Private_Dirty(all assigned loolkits).
+    global_memory_available_bytes – Memory available to our application in bytes. This is equal to global_host_system_memory_bytes * memproportion where memproportion represents the maximum percentage of system memory consumed by all of the Collabora Online, after which we start cleaning up idle documents. This parameter can be setup in coolwsd.xml.
+    global_memory_used_bytes – Total memory usage: PSS(coolwsd) + RSS(forkit) + Private_Dirty(all assigned coolkits).
     global_memory_free_bytes - global_memory_available_bytes - global_memory_used_bytes
 
-LOOLWSD
+COOLWSD
 
-    loolwsd_count – number of running loolwsd processes.
-    loolwsd_thread_count – number of threads in the current loolwsd process.
-    loolwsd_cpu_time_seconds – the CPU usage by current loolwsd process.
-    loolwsd_memory_used_bytes – the memory used by current loolwsd process: PSS(loolwsd).
+    coolwsd_count – number of running coolwsd processes.
+    coolwsd_thread_count – number of threads in the current coolwsd process.
+    coolwsd_cpu_time_seconds – the CPU usage by current coolwsd process.
+    coolwsd_memory_used_bytes – the memory used by current coolwsd process: PSS(coolwsd).
 
 FORKIT
 
@@ -29,7 +29,7 @@ KITS
     kit_unassigned_count – number of running kit processes that are not assigned to documents.
     kit_assigned_count – number of running kit processes that are assigned to documents.
     kit_segfault_count - number of kit processes terminated with SIGSEGV or SIGBUS signals since the start of application.
-    kit_lost_terminated_count - number of kit processes that were lost by loolwsd and were terminated by cleanup mechanism.
+    kit_lost_terminated_count - number of kit processes that were lost by coolwsd and were terminated by cleanup mechanism.
     kit_thread_count_total - total number of threads in all running kit processes.
     kit_thread_count_average – average number of threads per running kit process.
     kit_thread_count_min - minimum from the number of threads in each running kit process.
@@ -43,10 +43,10 @@ KITS
     kit_cpu_time_min_seconds – minimum from the CPU time each running kit process used.
     kit_cpu_time_max_seconds - maximum from the CPU time each running kit process used.
 
-RESOURCE CONSUMING DOCUMENTS (See config.per_document.cleanup section in loolwsd.xml)
+RESOURCE CONSUMING DOCUMENTS (See config.per_document.cleanup section in coolwsd.xml)
 
     document_resource_consuming_count - number of active documents that were detected as resource consuming.
-    document_resource_consuming_abort_started_count - number of resource consuming documents for which the termination process started (SIGABRT/SIGKILL signal was sent to the associated kit process) but they are still considered active by loolwsd. This is relevant because it shows how many resource consuming docs possibly could not be terminated or for which the termination process is too long.
+    document_resource_consuming_abort_started_count - number of resource consuming documents for which the termination process started (SIGABRT/SIGKILL signal was sent to the associated kit process) but they are still considered active by coolwsd. This is relevant because it shows how many resource consuming docs possibly could not be terminated or for which the termination process is too long.
     document_resource_consuming_aborted_count - number of terminated resource consuming documents.
 
 DOCUMENT VIEWS

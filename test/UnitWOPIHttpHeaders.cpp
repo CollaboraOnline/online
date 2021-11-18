@@ -96,7 +96,7 @@ public:
 
                 initWebsocket("/wopi/files/0?" + params);
 
-                helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), "load url=" + getWopiSrc(),
+                helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), "load url=" + getWopiSrc(),
                                        testName);
                 SocketPoll::wakeupWorld();
 
