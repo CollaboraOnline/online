@@ -378,14 +378,6 @@ class CanvasOverlay {
 				paneBounds.min.y ? this.bounds.min.y : 0);
 		}
 
-		if (clipArea) {
-			this.ctx.beginPath();
-			clipArea = transform.applyToBounds(clipArea);
-			var clipSize = clipArea.getSize();
-			this.ctx.rect(clipArea.min.x, clipArea.min.y, clipSize.x, clipSize.y);
-			this.ctx.clip();
-		}
-
 		this.transforms.add(transform);
 		if (this.overlaySection.isCalcRTL()) {
 			const sectionWidth = this.overlaySection.size[0];
@@ -393,6 +385,13 @@ class CanvasOverlay {
 			this.transforms.addNew(new cool.Point(-sectionWidth, 0), new cool.Point(-1, 1));
 		}
 
+		if (clipArea) {
+			this.ctx.beginPath();
+			clipArea = this.transforms.applyToBounds(clipArea);
+			var clipSize = clipArea.getSize();
+			this.ctx.rect(clipArea.min.x, clipArea.min.y, clipSize.x, clipSize.y);
+			this.ctx.clip();
+		}
 	}
 
 	// Undo the canvas translation done by ctStart().
