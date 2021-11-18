@@ -102,12 +102,14 @@ echo "account    required     pam_unix.so" >>  %{buildroot}/etc/pam.d/coolwsd
 %files
 %defattr(-,root,root,-)
 /usr/bin/coolwsd
+/usr/bin/loolwsd
 /usr/bin/coolwsd-systemplate-setup
+/usr/bin/loolwsd-systemplate-setup
 /usr/bin/coolwsd-generate-proof-key
 /usr/bin/coolforkit
 /usr/bin/coolconvert
 /usr/bin/coolconfig
-/usr/bin/coolconfig
+/usr/bin/loolconfig
 /usr/bin/coolmount
 /usr/share/coolwsd/discovery.xml
 /usr/share/coolwsd/favicon.ico
