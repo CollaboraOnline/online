@@ -279,7 +279,7 @@ describe('Insert objects via insertion wizard.', function() {
 			.should('exist');
 
 		// Type text and link
-		cy.get('.vex-content.hyperlink-dialog input[name="text"]')
+		cy.get('.vex-content.hyperlink-dialog textarea[name="text"]')
 			.type('some text');
 		cy.get('.vex-content.hyperlink-dialog input[name="link"]')
 			.type('www.something.com');

@@ -855,7 +855,7 @@ L.Map.include({
 			message: _('Insert hyperlink'),
 			overlayClosesOnClick: false,
 			input: [
-				_('Text') + '<input name="text" id="hyperlink-text-box" type="text" value="' + text + '"/>',
+				_('Text') + '<textarea name="text" id="hyperlink-text-box" style="resize: none" type="text"></textarea>',
 				_('Link') + '<input name="link" id="hyperlink-link-box" type="text" value="' + link + '"/>'
 			].join(''),
 			buttons: [
@@ -883,11 +883,13 @@ L.Map.include({
 			},
 			afterOpen: function() {
 				setTimeout(function() {
-					if (document.getElementById('hyperlink-text-box').value.trim() !== '') {
+					var textBox = document.getElementById('hyperlink-text-box');
+					textBox.textContent = text ? text.trim() : '';
+					if (textBox.textContent.trim() !== '') {
 						document.getElementById('hyperlink-link-box').focus();
 					}
 					else {
-						document.getElementById('hyperlink-text-box').focus();
+						textBox.focus();
 					}
 				}, 0);
 			}
