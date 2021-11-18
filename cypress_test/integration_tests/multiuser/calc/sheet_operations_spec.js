@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe.skip('Multiuser sheet operations', function() {
+describe('Multiuser sheet operations', function() {
 	var testFileName = 'sheet_operations.ods';
 
 	beforeEach(function() {
