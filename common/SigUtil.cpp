@@ -46,15 +46,11 @@ namespace SigUtil
 #ifndef IOS
     bool getShutdownRequestFlag()
     {
-        // ShutdownRequestFlag must be set if TerminationFlag is set.
-        assert(!TerminationFlag || ShutdownRequestFlag);
         return ShutdownRequestFlag;
     }
 
     bool getTerminationFlag()
     {
-        // ShutdownRequestFlag must be set if TerminationFlag is set.
-        assert(!TerminationFlag || ShutdownRequestFlag);
         return TerminationFlag;
     }
 
