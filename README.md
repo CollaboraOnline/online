@@ -15,7 +15,7 @@
 * View and edit text documents, spreadsheets, presentations & more
 * Collaborative editing features
 * Works in any modern browser – no plugin needed
-* Open Source
+* Open Source – primarily under the [MPLv2](http://mozilla.org/MPL/2.0/) license. Some parts are under other open source licences, see e.g. [browser/LICENSE](https://github.com/CollaboraOnline/online/blob/master/browser/LICENSE).
 
 ## Website
 
