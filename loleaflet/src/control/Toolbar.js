@@ -853,6 +853,7 @@ L.Map.include({
 		vex.dialog.open({
 			contentClassName: 'hyperlink-dialog',
 			message: _('Insert hyperlink'),
+			overlayClosesOnClick: false,
 			input: [
 				_('Text') + '<input name="text" id="hyperlink-text-box" type="text" value="' + text + '"/>',
 				_('Link') + '<input name="link" id="hyperlink-link-box" type="text" value="' + link + '"/>'
