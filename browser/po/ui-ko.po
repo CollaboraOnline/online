@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-18 09:08+0100\n"
+"POT-Creation-Date: 2021-11-18 09:22+0100\n"
 "PO-Revision-Date: 2020-08-30 15:35+0000\n"
 "Last-Translator: 김주현 <kjh000121@gmail.com>\n"
 "Language-Team: Korean <https://weblate.documentfoundation.org/projects/"
@@ -1682,9 +1682,8 @@ msgid ""
 msgstr "서버에 남아있는 디스크 공간이 없으므로, 계속하려면 서버 관리자에게 문의하십시오."
 
 #: src/errormessages.js:14
-#, fuzzy
 msgid ""
-"The host URL is empty. The loolwsd server is probably misconfigured, please "
+"The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr "호스트 URL이 비어 있습니다. coolwsd 서버가 잘못 구성된 것일 수 있습니다. 관리자에게 문의하십시오."
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-18 09:08+0100\n"
+"POT-Creation-Date: 2021-11-18 09:22+0100\n"
 "PO-Revision-Date: 2020-07-08 12:37+0000\n"
 "Last-Translator: Andrew Lee (李健秋) <alee@collabora.com>\n"
 "Language-Team: Chinese (Traditional) <https://weblate.documentfoundation.org/"
@@ -1672,9 +1672,8 @@ msgid ""
 msgstr "伺服器上已無剩餘磁碟空間，請聯絡伺服器管理員才得以繼續。"
 
 #: src/errormessages.js:14
-#, fuzzy
 msgid ""
-"The host URL is empty. The loolwsd server is probably misconfigured, please "
+"The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr "主機 URL 空白。coolwsd 伺服器可能設定錯誤，請聯絡管理員。"
 

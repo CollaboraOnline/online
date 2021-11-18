@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-18 09:08+0100\n"
+"POT-Creation-Date: 2021-11-18 09:22+0100\n"
 "PO-Revision-Date: 2020-01-28 16:49+0000\n"
 "Last-Translator: Florian <1234567890@hotmail.de>\n"
 "Language-Team: Bavarian <https://weblate.documentfoundation.org/projects/"
@@ -1649,7 +1649,7 @@ msgstr ""
 
 #: src/errormessages.js:14
 msgid ""
-"The host URL is empty. The loolwsd server is probably misconfigured, please "
+"The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
 

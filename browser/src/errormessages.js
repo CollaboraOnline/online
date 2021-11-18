@@ -11,7 +11,7 @@ if (lang) {
 }
 
 errorMessages.diskfull = _('No disk space left on server, please contact the server administrator to continue.');
-errorMessages.emptyhosturl = _('The host URL is empty. The loolwsd server is probably misconfigured, please contact the administrator.');
+errorMessages.emptyhosturl = _('The host URL is empty. The coolwsd server is probably misconfigured, please contact the administrator.');
 errorMessages.limitreached = _('This is an unsupported version of {productname}. To avoid the impression that it is suitable for deployment in enterprises, this message appears when more than {docs} documents or {connections} connections are in use concurrently');
 errorMessages.infoandsupport = _('More information and support');
 errorMessages.limitreachedprod = _('This service is limited to %0 documents, and %1 connections total by the admin. This limit has been reached. Please try again later.');
