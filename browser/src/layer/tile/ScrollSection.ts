@@ -177,7 +177,7 @@ class ScrollSection {
 				&& this.containerObject.draggingSomething
 				&& L.Map.THIS._docLayer._docType === 'spreadsheet') {
 					var temp = this.containerObject.positionOnMouseDown;
-					var tempPos = [temp[0] * app.dpiScale, temp[1] * app.dpiScale];
+					var tempPos = [(this.isCalcRTL() ? this.map._size.x - temp[0] : temp[0]) * app.dpiScale, temp[1] * app.dpiScale];
 					var docTopLeft = app.sectionContainer.getDocumentTopLeft();
 					tempPos = [tempPos[0] + docTopLeft[0], tempPos[1] + docTopLeft[1]];
 					tempPos = [Math.round(tempPos[0] * app.pixelsToTwips), Math.round(tempPos[1] * app.pixelsToTwips)];
@@ -196,9 +196,12 @@ class ScrollSection {
 		} else if (e.pos.y < 50 && e.map._getTopLeftPoint().y > 50) {
 			vy = -50;
 		}
-		if (e.pos.x > e.map._size.x - 50) {
+
+		const mousePosX: number = this.isCalcRTL() ? e.map._size.x - e.pos.x : e.pos.x;
+		const mapLeft: number = this.isCalcRTL() ? e.map._size.x - e.map._getTopLeftPoint().x : e.map._getTopLeftPoint().x;
+		if (mousePosX > e.map._size.x - 50) {
 			vx = 50;
-		} else if (e.pos.x < 50 && e.map._getTopLeftPoint().x > 50) {
+		} else if (mousePosX < 50 && mapLeft > 50) {
 			vx = -50;
 		}
 
