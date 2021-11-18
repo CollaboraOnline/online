@@ -36,7 +36,7 @@ describe('Mobile wizard state tests', function() {
 		// Open hamburger menu
 		mobileHelper.openHamburgerMenu();
 
-		cy.contains('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon', 'About')
+		cy.contains('.ui-header.level-0.mobile-wizard.ui-widget .menu-entry-with-icon', 'Track Changes')
 			.should('be.visible');
 
 		// Close hamburger menu
