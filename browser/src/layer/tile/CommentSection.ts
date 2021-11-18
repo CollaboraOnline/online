@@ -38,6 +38,9 @@ class Comment {
 	// Implemented by section container. Document objects only.
 	setPosition: (x: number, y: number) => void;
 
+	// Implemented by section container.
+	isCalcRTL: () => boolean;
+
 	map: any;
 	pendingInit: boolean = true;
 	isCollapsed: boolean = false;
@@ -377,7 +380,11 @@ class Comment {
 		}
 		else if (this.sectionProperties.data.cellPos && this.sectionProperties.docLayer._docType === 'spreadsheet') {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
-			this.size = [Math.round(this.sectionProperties.data.cellPos[2] * ratio), Math.round(this.sectionProperties.data.cellPos[3] * ratio)];
+			const sizeX = this.sectionProperties.data.cellPos[2];
+			this.size = [Math.round(sizeX * ratio), Math.round(this.sectionProperties.data.cellPos[3] * ratio)];
+			let startX = this.sectionProperties.data.cellPos[0];
+			if (this.isCalcRTL()) // Mirroring is done in setPosition
+				startX += sizeX;  // but adjust for width of the cell.
 			this.setPosition(Math.round(this.sectionProperties.data.cellPos[0] * ratio), Math.round(this.sectionProperties.data.cellPos[1] * ratio));
 		}
 		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
@@ -601,7 +608,10 @@ class Comment {
 			var ratio: number = (app.tile.size.pixels[0] / app.tile.size.twips[0]);
 			var originalSize = [Math.round((this.sectionProperties.data.cellPos[2]) * ratio), Math.round((this.sectionProperties.data.cellPos[3]) * ratio)];
 
-			var pos: Array<number> = [Math.round((this.myTopLeft[0] + originalSize[0] - 3) / app.dpiScale), Math.round(this.myTopLeft[1] / app.dpiScale)];
+			const commentWidth = parseFloat(getComputedStyle(this.sectionProperties.container).width) * app.dpiScale;
+			const startX = this.isCalcRTL() ? this.myTopLeft[0] - commentWidth : this.myTopLeft[0] + originalSize[0] - 3;
+
+			var pos: Array<number> = [Math.round(startX / app.dpiScale), Math.round(this.myTopLeft[1] / app.dpiScale)];
 			this.sectionProperties.container.style.transform = 'translate3d(' + pos[0] + 'px, ' + pos[1] + 'px, 0px)';
 			this.sectionProperties.commentListSection.selectedComment = this;
 		}
