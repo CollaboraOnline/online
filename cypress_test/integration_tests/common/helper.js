@@ -45,34 +45,45 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser) 
 	if (subFolder === undefined) {
 		URI += '/browser/' +
 			Cypress.env('WSD_VERSION_HASH') +
-			'/cool.html?lang=en-US&file_path=file://' +
+			'/debug.html?lang=en-US&file_path=' +
 			Cypress.env('DATA_WORKDIR') + fileName;
 	} else {
 		URI += '/browser/' +
 			Cypress.env('WSD_VERSION_HASH') +
-			'/cool.html?lang=en-US&file_path=file://' +
+			'/debug.html?lang=en-US&file_path=' +
 			Cypress.env('DATA_WORKDIR') + subFolder + '/' + fileName;
 	}
 
 	if (isMultiUser) {
 		cy.viewport(2000,660);
-		var frameURI = 'http://localhost' +
-			':' + Cypress.env('SERVER_PORT') +
-			'/browser/' +
-			Cypress.env('WSD_VERSION_HASH') +
-			'/cypress-multiuser.html';
+		URI = URI.replace('debug.html', 'cypress-multiuser.html');
+	}
 
-		cy.visit(frameURI, {
-			onLoad: function(win) {
-				win.onerror = cy.onUncaughtException;
-				win.document.getElementById('iframe1').src = URI;
-				win.document.getElementById('iframe2').src = URI;
-			}});
-	} else {
-		cy.visit(URI, {
-			onLoad: function(win) {
-				win.onerror = cy.onUncaughtException;
-			}});
+	cy.visit(URI, {
+		onLoad: function(win) {
+			win.onerror = cy.onUncaughtException;
+		}});
+
+	if (!isMultiUser) {
+		cy.get('iframe#coolframe')
+			.its('0.contentDocument').should('exist')
+			.its('body').should('not.be.undefined')
+			.then(cy.wrap).as('loleafletIFrameGlobal');
+
+		Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
+			if (!selector.startsWith('@')) {
+				if (selector === 'body')
+					return cy.get('@loleafletIFrameGlobal');
+				else
+					return cy.get('@loleafletIFrameGlobal').find(selector, options);
+			} else {
+				return originalFn(selector, options);
+			}
+		});
+
+		Cypress.Commands.overwrite('contains', function(originalFn, selector, content, options) {
+			return cy.get('#document-container').parent().wrap(originalFn(selector, content, options));
+		});
 	}
 	cy.log('Loading test document with a local build - end.');
 }
@@ -562,6 +573,9 @@ function afterAll(fileName, testState) {
 			cy.wait(2000);
 		}
 
+		Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
+			return originalFn(selector, options);
+		});
 		// Make sure that the document is closed
 		cy.visit('http://admin:admin@localhost:' +
 			Cypress.env('SERVER_PORT') +
