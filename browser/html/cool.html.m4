@@ -202,6 +202,11 @@ m4_ifelse(MOBILEAPP,[true],
     <input id="insertgraphic" aria-labelledby="menu-insertgraphic" type="file" accept="image/*" style="position: fixed; top: -100em">
     <input id="selectbackground" aria-labelledby="menu-selectbackground" type="file" accept="image/*" style="position: fixed; top: -100em">
 
+    <div id="userListHeader">
+      <div id="userListSummary"></div>
+      <div id="userListPopover"></div>
+    </div>
+
     <div id="closebuttonwrapper">
       <div class="closebuttonimage" id="closebutton"></div>
     </div>
