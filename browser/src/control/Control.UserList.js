@@ -120,7 +120,20 @@ L.Control.UserList = L.Control.extend({
 		});
 	},
 
+	hideUserList: function() {
+		return window.ThisIsAMobileApp ||
+		(this.map['wopi'].HideUserList !== null && this.map['wopi'].HideUserList !== undefined &&
+			($.inArray('true', this.map['wopi'].HideUserList) >= 0) ||
+			(window.mode.isMobile() && $.inArray('mobile', this.map['wopi'].HideUserList) >= 0) ||
+			(window.mode.isTablet() && $.inArray('tablet', this.map['wopi'].HideUserList) >= 0) ||
+			(window.mode.isDesktop() && $.inArray('desktop', this.map['wopi'].HideUserList) >= 0));
+	},
+
 	renderHeaderAvatars: function() {
+		if (!window.mode.isDesktop() || this.hideUserList() || this.options.listUser.length === 1) {
+			return;
+		}
+
 		var that = this;
 
 		// Summary rendering
@@ -203,15 +216,7 @@ L.Control.UserList = L.Control.extend({
 
 		w2ui['actionbar'].refresh();
 
-		var hideUserList =
-			window.ThisIsAMobileApp ||
-			(this.map['wopi'].HideUserList !== null && this.map['wopi'].HideUserList !== undefined &&
-				($.inArray('true', this.map['wopi'].HideUserList) >= 0) ||
-				(window.mode.isMobile() && $.inArray('mobile', this.map['wopi'].HideUserList) >= 0) ||
-				(window.mode.isTablet() && $.inArray('tablet', this.map['wopi'].HideUserList) >= 0) ||
-				(window.mode.isDesktop() && $.inArray('desktop', this.map['wopi'].HideUserList) >= 0));
-
-		if (!hideUserList && count > 1) {
+		if (!this.hideUserList() && count > 1 && !window.mode.isDesktop()) {
 			actionbar.show('userlist');
 			actionbar.show('userlistbreak');
 		} else {
