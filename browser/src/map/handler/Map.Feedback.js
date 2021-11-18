@@ -12,12 +12,23 @@ L.Map.mergeOptions({
 L.Map.Feedback = L.Handler.extend({
 
 	addHooks: function () {
-		this._map.on('docloaded', this.onDocLoaded, this);
+		if (this._map.wopi)
+			this._map.on('updateviewslist', this.onUpdateList, this);
+		else
+			this._map.on('docloaded', this.onDocLoaded, this);
+
 		L.DomEvent.on(window, 'message', this.onMessage, this);
 	},
 
 	removeHooks: function () {
 		L.DomEvent.off(window, 'message', this.onMessage, this);
+	},
+
+	onUpdateList: function () {
+		var docLayer = this._map._docLayer || {};
+
+		if (docLayer && docLayer._viewId == 0)
+			this.onDocLoaded();
 	},
 
 	onDocLoaded: function () {
