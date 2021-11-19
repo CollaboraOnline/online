@@ -171,7 +171,7 @@
     </welcome>
 
     <user_interface>
-      <mode type="string" desc="Controls the user interface style (classic|notebookbar)" default="notebookbar">notebookbar</mode>
+      <mode type="string" desc="Controls the user interface style. The 'default' means: Take the value from ui_defaults, or decide for one of classic or notebookbar (default|classic|notebookbar)" default="default">default</mode>
     </user_interface>
 
     <storage desc="Backend storage">

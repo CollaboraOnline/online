@@ -866,7 +866,7 @@ FILE *COOLWSD::TraceEventFile = NULL;
 std::string COOLWSD::LogLevel = "trace";
 std::string COOLWSD::MostVerboseLogLevelSettableFromClient = "notice";
 std::string COOLWSD::LeastVerboseLogLevelSettableFromClient = "fatal";
-std::string COOLWSD::UserInterface = "classic";
+std::string COOLWSD::UserInterface = "default";
 bool COOLWSD::AnonymizeUserData = false;
 bool COOLWSD::CheckCoolUser = true;
 bool COOLWSD::CleanupOnly = false; //< If we should cleanup and exit.
@@ -1135,7 +1135,7 @@ void COOLWSD::innerInitialize(Application& self)
 #ifdef ENABLE_FEATURE_RESTRICTION
             { "restricted_commands", "" },
 #endif
-            { "user_interface.mode", "notebookbar" },
+            { "user_interface.mode", "default" },
             { "quarantine_files[@enable]", "false" },
             { "quarantine_files.limit_dir_size_mb", "250" },
             { "quarantine_files.max_versions_to_maintain", "2" },
@@ -1180,7 +1180,7 @@ void COOLWSD::innerInitialize(Application& self)
     UnitWSD::get().configure(config());
 
     // Setup user interface mode
-    UserInterface = getConfigValue<std::string>(conf, "user_interface.mode", "classic");
+    UserInterface = getConfigValue<std::string>(conf, "user_interface.mode", "default");
 
     // Set the log-level after complete initialization to force maximum details at startup.
     LogLevel = getConfigValue<std::string>(conf, "logging.level", "trace");

@@ -1001,8 +1001,17 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         enableWelcomeMessageButton = "true";
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG_BTN%"), enableWelcomeMessageButton);
 
-    if (userInterfaceMode.empty())
-        userInterfaceMode = config.getString("user_interface.mode", "classic");
+    // the config value of 'notebookbar' or 'classic' overrides the UIMode
+    // from the WOPI
+    std::string userInterfaceModeConfig = config.getString("user_interface.mode", "default");
+    if (userInterfaceModeConfig == "classic" || userInterfaceModeConfig == "notebookbar" || userInterfaceMode.empty())
+        userInterfaceMode = userInterfaceModeConfig;
+
+    // default to the notebookbar if the value is "default" or whatever
+    // nonsensical
+    if (userInterfaceMode != "classic" && userInterfaceMode != "notebookbar")
+        userInterfaceMode = "notebookbar";
+
     Poco::replaceInPlace(preprocess, std::string("%USER_INTERFACE_MODE%"), userInterfaceMode);
 
     std::string enableMacrosExecution = "false";
