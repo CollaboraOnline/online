@@ -674,6 +674,16 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		}
 	},
 
+	_countVisiblePanels: function(panels) {
+		var count = 0;
+
+		for (var i in panels)
+			if (panels[i].type === 'panel' && (!panels[i].hidden || panels[i].hidden === false))
+				count++;
+
+		return count;
+	},
+
 	build: function(parent, data) {
 		this._modifySidebarNodes(data);
 
@@ -703,16 +713,11 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 			}
 
 			var handler = this._controlHandlers[childType];
-			var twoPanelsAsChildren =
-					childData.children && childData.children.length == 2
-					&& childData.children[0] && childData.children[0].type == 'panel'
-					&& childData.children[1] && childData.children[1].type == 'panel';
 
-			if (childData.children && childData.children.length == 1
-				&& childData.children[0] && childData.children[0].type == 'panel') {
+			if (childData.children && this._countVisiblePanels(childData.children) == 1) {
 				handler = this._controlHandlers['singlepanel'];
 				processChildren = handler(childObject, childData.children, this);
-			} else if (twoPanelsAsChildren) {
+			} else if (childData.children && this._countVisiblePanels(childData.children) == 2) {
 				handler = this._controlHandlers['paneltabs'];
 				processChildren = handler(childObject, childData.children, this);
 			} else {
