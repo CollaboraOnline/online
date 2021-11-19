@@ -829,6 +829,7 @@ nav.drawing-color-indicator ~ #main-document-content .cool-annotation-reply-coun
 
 #about-dialog-container *, #about-dialog-header * {
 	display: flex;
+	flex-wrap: wrap;
 }
 
 #integrator-logo {
