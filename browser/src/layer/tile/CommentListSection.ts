@@ -1079,7 +1079,7 @@ class CommentSection {
 				modified.setData(modifiedObj);
 				modified.update();
 				this.update();
-				if (!(<any>window).mode.isMobile() && this.isCollapsed) {
+				if (!(<any>window).mode.isMobile() && this.isCollapsed && this.sectionProperties.selectedComment) {
 					var parent = this.sectionProperties.commentList[this.getRootIndexOf(modified.sectionProperties.data.id)];
 					this.openMobileWizardPopup(parent);
 				}
