@@ -429,6 +429,10 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
         {
             int i = LocalFileInfo::getIndex(localPath);
             std::string wopiTimestamp = request.get("X-COOL-WOPI-Timestamp", std::string());
+            if (wopiTimestamp.empty())
+            {
+                wopiTimestamp = request.get("X-LOOL-WOPI-Timestamp", std::string());
+            }
             if (!wopiTimestamp.empty())
             {
                 const std::string fileModifiedTime = Util::getIso8601FracformatTime(LocalFileInfo::fileInfoVec[i].fileLastModifiedTime);
@@ -437,6 +441,8 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
                     http::Response httpResponse(http::StatusLine(409));
                     httpResponse.setBody(
                         "{\"COOLStatusCode\":" +
+                        std::to_string(static_cast<int>(LocalFileInfo::COOLStatusCode::DocChanged)) + ',' +
+                        "{\"LOOLStatusCode\":" +
                         std::to_string(static_cast<int>(LocalFileInfo::COOLStatusCode::DocChanged)) + '}');
                     socket->send(httpResponse);
                     return;

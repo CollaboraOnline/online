@@ -921,7 +921,10 @@ bool WopiStorage::updateLockState(const Authorization& auth, LockContext& lockCt
         request.set("X-WOPI-Override", lock ? "LOCK" : "UNLOCK");
         request.set("X-WOPI-Lock", lockCtx._lockToken);
         if (!getExtendedData().empty())
+        {
             request.set("X-COOL-WOPI-ExtendedData", getExtendedData());
+            request.set("X-LOOL-WOPI-ExtendedData", getExtendedData());
+        }
 
         // IIS requires content-length for POST requests: see https://forums.iis.net/t/1119456.aspx
         request.setContentLength(0);
@@ -1213,18 +1216,25 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
             // normal save
             httpHeader.set("X-WOPI-Override", "PUT");
             httpHeader.set("X-COOL-WOPI-IsModifiedByUser", isUserModified() ? "true" : "false");
+            httpHeader.set("X-LOOL-WOPI-IsModifiedByUser", isUserModified() ? "true" : "false");
             httpHeader.set("X-COOL-WOPI-IsAutosave", isAutosave() ? "true" : "false");
+            httpHeader.set("X-LOOL-WOPI-IsAutosave", isAutosave() ? "true" : "false");
             httpHeader.set("X-COOL-WOPI-IsExitSave", isExitSave() ? "true" : "false");
+            httpHeader.set("X-LOOL-WOPI-IsExitSave", isExitSave() ? "true" : "false");
             if (isExitSave())
                 httpHeader.set("Connection", "close"); // Don't maintain the socket if we are exiting.
             if (!getExtendedData().empty())
+            {
                 httpHeader.set("X-COOL-WOPI-ExtendedData", getExtendedData());
+                httpHeader.set("X-LOOL-WOPI-ExtendedData", getExtendedData());
+            }
 
             if (!getForceSave())
             {
                 // Request WOPI host to not overwrite if timestamps mismatch
-                httpHeader.set("X-COOL-WOPI-Timestamp",
-                               Util::getIso8601FracformatTime(getFileInfo().getModifiedTime()));
+                std::string modifiedTime = Util::getIso8601FracformatTime(getFileInfo().getModifiedTime());
+                httpHeader.set("X-COOL-WOPI-Timestamp", modifiedTime);
+                httpHeader.set("X-LOOL-WOPI-Timestamp", modifiedTime);
             }
         }
         else
@@ -1442,7 +1452,10 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
             {
                 const unsigned coolStatusCode
                     = JsonUtil::getJSONValue<unsigned>(object, "COOLStatusCode");
-                if (coolStatusCode == static_cast<unsigned>(COOLStatusCode::DOC_CHANGED))
+                const unsigned loolStatusCode
+                    = JsonUtil::getJSONValue<unsigned>(object, "LOOLStatusCode");
+                if (coolStatusCode == static_cast<unsigned>(COOLStatusCode::DOC_CHANGED) ||
+                    loolStatusCode == static_cast<unsigned>(COOLStatusCode::DOC_CHANGED))
                 {
                     result.setResult(StorageBase::UploadResult::Result::DOC_CHANGED);
                 }
