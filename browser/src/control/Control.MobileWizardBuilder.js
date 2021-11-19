@@ -65,15 +65,15 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 
 		if (data.unit) {
 			var unit = L.DomUtil.create('span', 'spinfieldunit', div);
-			unit.innerHTML = builder._unitToVisibleString(data.unit);
+			unit.textContent = builder._unitToVisibleString(data.unit);
 		}
 
 		var controlsContainer = L.DomUtil.create('div', 'spinfieldcontrols', div);
 		var minus = L.DomUtil.create('div', 'minus', controlsContainer);
-		minus.innerHTML = '-';
+		minus.textContent = '-';
 
 		var plus = L.DomUtil.create('div', 'plus', controlsContainer);
-		plus.innerHTML = '+';
+		plus.textContent = '+';
 
 		if (data.min != undefined)
 			$(spinfield).attr('min', data.min);
@@ -181,7 +181,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 			if (title && title.length) {
 				var value = data.entries[data.selectedEntries[0]];
 				valueNode = L.DomUtil.create('div', '', null);
-				valueNode.innerHTML = value;
+				valueNode.textContent = value;
 			} else if (selectedEntryIsString)
 				title = builder._cleanText(data.selectedEntries[0]);
 			else
@@ -219,7 +219,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		L.DomUtil.addClass(div, 'checkbutton');
 
 		var checkboxLabel = L.DomUtil.create('label', '', div);
-		checkboxLabel.innerHTML = builder._cleanText(data.text);
+		checkboxLabel.textContent = builder._cleanText(data.text);
 		checkboxLabel.for = data.id;
 		var checkbox = L.DomUtil.createWithId('input', data.id, div);
 		checkbox.type = 'checkbox';
@@ -255,7 +255,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 			radiobutton.name = data.group;
 
 		var radiobuttonLabel = L.DomUtil.create('label', '', container);
-		radiobuttonLabel.innerHTML = builder._cleanText(data.text);
+		radiobuttonLabel.textContent = builder._cleanText(data.text);
 		radiobuttonLabel.for = data.id;
 
 		if (data.enabled === 'false' || data.enabled === false)
@@ -502,7 +502,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 					data.text = _('Gradient Start');
 				else if (data.id === 'fillattr3')
 					data.text = _('Gradient End');
-				titleSpan.innerHTML = data.text;
+				titleSpan.textContent = data.text;
 			}
 		}.bind(this);
 
