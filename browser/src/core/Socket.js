@@ -504,7 +504,7 @@ app.definitions.Socket = L.Class.extend({
 			var h = this.WSDServer.Hash;
 			if (parseInt(h,16).toString(16) === h.toLowerCase().replace(/^0+/, '')) {
 				h = '<a href="javascript:void(window.open(\'https://github.com/CollaboraOnline/online/commits/' + h + '\'));">' + h + '</a>';
-				$('#coolwsd-version').html(this.WSDServer.Version + ' (git hash: ' + h + ')');
+				$('#coolwsd-version').html(this.WSDServer.Version + ' <span>git hash: ' + h + '</span>');
 			}
 			else {
 				$('#coolwsd-version').text(this.WSDServer.Version);
@@ -528,7 +528,7 @@ app.definitions.Socket = L.Class.extend({
 			}
 			$('#lokit-version').html(lokitVersionObj.ProductName + ' ' +
 			                         lokitVersionObj.ProductVersion + lokitVersionObj.ProductExtension +
-			                         ' (git hash: ' + h + ')');
+			                         '<span> git hash: ' + h + '<span>');
 			this.TunnelledDialogImageCacheSize = lokitVersionObj.tunnelled_dialog_image_cache_size;
 		}
 		else if (textMsg.startsWith('enabletraceeventlogging ')) {

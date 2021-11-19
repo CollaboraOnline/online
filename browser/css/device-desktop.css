@@ -12,3 +12,13 @@
 #tb_formulabar_item_formula .inputbar_selection_handles .leaflet-selection-marker-start{
 	margin-left: -20px !important;
 }
+
+#coolwsd-version span:before,
+#lokit-version > span:before {
+	content: ' (';
+	white-space: pre;
+}
+#coolwsd-version span:after,
+#lokit-version > span:after {
+	content: ')';
+}
