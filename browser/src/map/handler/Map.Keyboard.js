@@ -409,6 +409,8 @@ L.Map.Keyboard = L.Handler.extend({
 			if (this._map._docLayer._docType === 'presentation' || this._map._docLayer._docType === 'drawing') {
 				var partToSelect = keyCode === 33 ? 'prev' : 'next';
 				this._map._docLayer._preview._scrollViewByDirection(partToSelect);
+				if (app.file.fileBasedView)
+					this._map._docLayer._checkSelectedPart();
 			}
 			return;
 		}
@@ -416,6 +418,7 @@ L.Map.Keyboard = L.Handler.extend({
 			if (this._map._docLayer._docType === 'drawing' && app.file.fileBasedView === true) {
 				partToSelect = keyCode === 36 ? 0 : this._map._docLayer._parts -1;
 				this._map._docLayer._preview._scrollViewToPartPosition(partToSelect);
+				this._map._docLayer._checkSelectedPart();
 			}
 			return;
 		}

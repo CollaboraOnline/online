@@ -668,6 +668,8 @@ L.Map.TouchGesture = L.Handler.extend({
 	_cancelAutoscrollRAF: function () {
 		this._cancelAutoScroll = false;
 		this._inSwipeAction = false;
+		if (app.file.fileBasedView)
+			this._map._docLayer._checkSelectedPart();
 		L.Util.cancelAnimFrame(this.autoscrollAnimReq);
 		return;
 	},
@@ -723,11 +725,15 @@ L.Map.TouchGesture = L.Handler.extend({
 				this.autoscrollAnimReq = L.Util.requestAnimFrame(this._autoscroll, this, true);
 			} else {
 				this._inSwipeAction = false;
+				if (app.file.fileBasedView)
+					this._map._docLayer._checkSelectedPart();
 			}
 		}
 		else {
 			this._map.dragging._draggable._onUp(e);
 			this._inSwipeAction = false;
+			if (app.file.fileBasedView)
+				this._map._docLayer._checkSelectedPart();
 		}
 	}
 });

@@ -5581,6 +5581,19 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 	},
 
+	// Used with file based view. Check the most visible part and set the selected part if needed.
+	_checkSelectedPart: function () {
+		var queue = this._updateFileBasedView(true);
+		if (queue.length > 0) {
+			var partToSelect = this._getMostVisiblePart(queue);
+			if (this._selectedPart !== partToSelect) {
+				this._selectedPart = partToSelect;
+				this._preview._scrollToPart();
+				this.highlightCurrentPart(partToSelect);
+			}
+		}
+	},
+
 	_updateFileBasedView: function (checkOnly, zoomFrameBounds, forZoom) {
 		if (this._partHeightTwips === 0) // This is true before status message is handled.
 			return [];
@@ -5632,15 +5645,6 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 
 			this._sortFileBasedQueue(queue);
-
-			if (queue.length > 0) {
-				var partToSelect = this._getMostVisiblePart(queue);
-				if (this._selectedPart !== partToSelect) {
-					this._selectedPart = partToSelect;
-					this._preview._scrollToPart();
-					this.highlightCurrentPart(partToSelect);
-				}
-			}
 
 			for (i = 0; i < this._tiles.length; i++) {
 				this._tiles[i].current = false; // Visible ones's "current" property will be set to true below.
