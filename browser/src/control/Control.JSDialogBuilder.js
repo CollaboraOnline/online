@@ -303,7 +303,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (data.unit) {
 			var unit = L.DomUtil.create('span', builder.options.cssClass + ' spinfieldunit', div);
-			unit.innerHTML = builder._unitToVisibleString(data.unit);
+			unit.textContent = builder._unitToVisibleString(data.unit);
 		}
 
 		if (data.min != undefined)
@@ -620,7 +620,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', rightDiv);
-		arrowSpan.innerHTML = '>';
+		arrowSpan.textContent = '>';
 
 		var updateFunction = function(titleSpan) {
 			titleSpan.innerHTML = data.text;
@@ -669,11 +669,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var leftDiv = L.DomUtil.create('div', 'ui-header-left', sectionTitle);
 		var titleClass = 'func-name';
 		var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
-		titleSpan.innerHTML = data.text;
+		titleSpan.textContent = data.text;
 
 		var rightDiv = L.DomUtil.create('div', 'ui-header-right', sectionTitle);
 		var arrowSpan = L.DomUtil.create('div', 'func-info-icon', rightDiv);
-		arrowSpan.innerHTML = '';
+		arrowSpan.textContent = '';
 
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, mainContainer);
 		contentDiv.title = data.text;
@@ -808,7 +808,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			titleSpan.innerHTML = title;
 		}
 		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', sectionTitle);
-		arrowSpan.innerHTML = '>';
+		arrowSpan.textContent = '>';
 
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, mainContainer);
 		contentDiv.title = title;
@@ -965,7 +965,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				tabIds[tabIdx] = item.name;
 
 				var label = L.DomUtil.create('span', 'ui-tab-content ' + builder.options.cssClass + ' unolabel', tab);
-				label.innerHTML = title;
+				label.textContent = title;
 
 				var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
 				contentDiv.id = item.name;
@@ -1039,7 +1039,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			tabs[tabIdx] = tab;
 
 			var label = L.DomUtil.create('span', 'ui-tab-content ' + builder.options.cssClass + ' unolabel', tab);
-			label.innerHTML = title;
+			label.textContent = title;
 			labels[tabIdx] = title;
 
 			var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, contentsContainer);
@@ -1107,7 +1107,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			radiobutton.name = data.group;
 
 		var radiobuttonLabel = L.DomUtil.create('label', '', container);
-		radiobuttonLabel.innerHTML = builder._cleanText(data.text);
+		radiobuttonLabel.textContent = builder._cleanText(data.text);
 		radiobuttonLabel.for = data.id;
 
 		var toggleFunction = function() {
@@ -1141,7 +1141,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var checkbox = L.DomUtil.create('input', builder.options.cssClass, div);
 		checkbox.type = 'checkbox';
 		var checkboxLabel = L.DomUtil.create('label', builder.options.cssClass, div);
-		checkboxLabel.innerHTML = builder._cleanText(data.text);
+		checkboxLabel.textContent = builder._cleanText(data.text);
 		checkboxLabel.for = data.id;
 
 		var toggleFunction = function() {
@@ -1370,7 +1370,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		else
 		{
 			data.text = data.text.replace(/(?:\r\n|\r|\n)/g, '<br>');
-			edit.innerHTML = builder._cleanText(data.text);
+			edit.textContent = builder._cleanText(data.text);
 		}
 
 		edit.id = data.id;
@@ -1460,7 +1460,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var rightDiv = L.DomUtil.create('div', 'ui-header-right', sectionTitle);
 
 		var arrowSpan = L.DomUtil.create('span', 'sub-menu-arrow', rightDiv);
-		arrowSpan.innerHTML = '>';
+		arrowSpan.textContent = '>';
 
 		var contentDiv = L.DomUtil.create('div', 'ui-content level-' + builder._currentDepth + ' ' + builder.options.cssClass, parentContainer);
 		contentDiv.title = data.text;
@@ -1848,7 +1848,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_comboboxEntry: function(parentContainer, data, builder) {
 		var fixedtext = L.DomUtil.create('p', builder.options.cssClass, parentContainer);
-		fixedtext.innerHTML = builder._cleanText(data.text);
+		fixedtext.textContent = builder._cleanText(data.text);
 		fixedtext.parent = data.parent;
 
 		if (data.style && data.style.length)
@@ -1858,13 +1858,13 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			builder.refreshSidebar = true;
 			if (builder.wizard)
 				builder.wizard.goLevelUp();
-			builder.callback('combobox', 'selected', fixedtext.parent, data.pos + ';' + fixedtext.innerHTML, builder);
+			builder.callback('combobox', 'selected', fixedtext.parent, data.pos + ';' + fixedtext.textContent, builder);
 		});
 	},
 
 	_fixedtextControl: function(parentContainer, data, builder) {
 		var fixedtext = L.DomUtil.create('p', builder.options.cssClass, parentContainer);
-		fixedtext.innerHTML = builder._cleanText(data.text);
+		fixedtext.textContent = builder._cleanText(data.text);
 		fixedtext.id = data.id;
 		if (data.style && data.style.length) {
 			L.DomUtil.addClass(fixedtext, data.style);
@@ -2124,7 +2124,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					arrowSpan = L.DomUtil.create('span','sub-menu-arrow', $(container).find('.cool-annotation-content-wrapper')[0]);
 
 				arrowSpan.style.display = 'block';
-				arrowSpan.innerHTML = '>';
+				arrowSpan.textContent = '>';
 				arrowSpan.style.padding = '0px';
 				arrowSpan.id = 'arrow span ' + data.id;
 
@@ -2248,7 +2248,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (builder.options.noLabelsForUnoButtons !== true) {
 				var label = L.DomUtil.create('span', 'ui-content unolabel', div);
 				label.for = buttonId;
-				label.innerHTML = builder._cleanText(data.text);
+				label.textContent = builder._cleanText(data.text);
 
 				controls['label'] = label;
 				$(div).addClass('has-label');
@@ -2264,7 +2264,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(div).addClass('inline');
 				label = L.DomUtil.create('span', 'ui-content unolabel', div);
 				label.for = buttonId;
-				label.innerHTML = data.text;
+				label.textContent = data.text;
 
 				controls['label'] = label;
 			}
@@ -2306,7 +2306,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 		} else {
 			button = L.DomUtil.create('label', 'ui-content unolabel', div);
-			button.innerHTML = builder._cleanText(data.text);
+			button.textContent = builder._cleanText(data.text);
 			controls['label'] = button;
 		}
 
@@ -2547,7 +2547,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (builder.options.noLabelsForUnoButtons !== true) {
 			var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
-			titleSpan.innerHTML =  builder._cleanText(_UNO(data.command));
+			titleSpan.textContent =  builder._cleanText(_UNO(data.command));
 		}
 
 		$(sectionTitle).click(function () {
@@ -2623,7 +2623,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_borderControl: function(parentContainer, data, builder) {
 		var bordercontrollabel = L.DomUtil.create('p', builder.options.cssClass + ' ui-text', parentContainer);
-		bordercontrollabel.innerHTML = _('Cell borders');
+		bordercontrollabel.textContent = _('Cell borders');
 		bordercontrollabel.id = data.id + 'label';
 		var current = builder._getCurrentBorderNumber(builder);
 		for (var i = 1; i < 13; ++i)
