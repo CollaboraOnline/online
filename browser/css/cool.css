@@ -370,7 +370,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	width: 240px;
 }
 
-.annotation-active .cool-annotation-content-wrapper {
+.annotation-active.modify-annotation-container .cool-annotation-content-wrapper,
+.annotation-active.reply-annotation-container .cool-annotation-content-wrapper {
 	min-width: 240px;
 	width: auto;
 }

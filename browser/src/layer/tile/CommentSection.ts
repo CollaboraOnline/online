@@ -684,7 +684,7 @@ class Comment {
 
 	public onLostFocus (e: any) {
 		if (!this.sectionProperties.isRemoved) {
-			$(this.sectionProperties.container).removeClass('annotation-active');
+			$(this.sectionProperties.container).removeClass('annotation-active reply-annotation-container modify-annotation-container');
 			if (this.sectionProperties.contentText.origText !== this.sectionProperties.nodeModifyText.value) {
 				this.onSaveComment(e);
 			}
@@ -722,6 +722,7 @@ class Comment {
 	}
 
 	public reply () {
+		this.sectionProperties.container.classList.add('reply-annotation-container');
 		this.sectionProperties.container.style.visibility = '';
 		this.sectionProperties.contentNode.style.display = '';
 		this.sectionProperties.nodeModify.style.display = 'none';
@@ -731,6 +732,7 @@ class Comment {
 
 	public edit () {
 		this.doPendingInitializationInView(true /* force */);
+		this.sectionProperties.container.classList.add('modify-annotation-container');
 		this.sectionProperties.nodeModify.style.display = '';
 		this.sectionProperties.nodeReply.style.display = 'none';
 		this.sectionProperties.container.style.visibility = '';
