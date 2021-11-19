@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-18 09:22+0100\n"
-"PO-Revision-Date: 2021-11-17 11:46+0000\n"
+"PO-Revision-Date: 2021-11-19 20:17+0000\n"
 "Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.9.1-dev\n"
+"X-Generator: Weblate 4.9.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -691,7 +691,7 @@ msgstr "Dernières mises à jour"
 #: src/control/Control.Menubar.js:909 src/control/Control.Menubar.js:979
 #: src/control/Control.NotebookbarWriter.js:263
 msgid "Send Feedback"
-msgstr ""
+msgstr "Envoyer des commentaires"
 
 #: src/control/Control.Menubar.js:300 src/control/Control.Menubar.js:429
 #: src/control/Control.Menubar.js:540 src/control/Control.Menubar.js:752
@@ -839,7 +839,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarBuilder.js:616
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: src/control/Control.NotebookbarBuilder.js:617
 msgid "Loose"
@@ -1984,11 +1984,11 @@ msgstr "Dernière sauvegarde :"
 
 #: src/map/Map.js:1428
 msgid "Inactive document"
-msgstr ""
+msgstr "Document inactif"
 
 #: src/map/Map.js:1429
 msgid "Please click to resume editing"
-msgstr ""
+msgstr "Veuillez cliquer pour reprendre l'édition"
 
 #: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
