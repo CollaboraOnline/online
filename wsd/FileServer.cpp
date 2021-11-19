@@ -47,6 +47,7 @@
 #include <Log.hpp>
 #include <Protocol.hpp>
 #include <Util.hpp>
+#include <common/ConfigUtil.hpp>
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>
 #endif
@@ -330,10 +331,12 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
 
     //handles request starts with /wopi/files
     void handleWopiRequest(const HTTPRequest& request,
-                        const Poco::Path path,
+                        const RequestDetails &requestDetails,
                         Poco::MemoryInputStream& message,
                         const std::shared_ptr<StreamSocket>& socket)
     {
+        Poco::URI requestUri(request.getURI());
+        const Poco::Path path = requestUri.getPath();
         const std::string prefix = "/wopi/files";
         const std::string suffix = "/contents";
         std::string localPath;
@@ -376,6 +379,11 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             std::string userId = std::to_string(lastLocalId++);
             std::string userNameString = "LocalUser#" + userId;
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
+
+            std::string postMessageOrigin;
+            config::isSslEnabled() ? postMessageOrigin = "https://" : postMessageOrigin = "http://";
+            postMessageOrigin += requestDetails.getHostUntrusted();
+
             fileInfo->set("BaseFileName", localFile.fileName);
             fileInfo->set("Size", localFile.size);
             fileInfo->set("Version", "1.0");
@@ -383,7 +391,7 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             fileInfo->set("UserId", userId);
             fileInfo->set("UserFriendlyName", userNameString);
             fileInfo->set("UserCanWrite", "true");
-            fileInfo->set("PostMessageOrigin", "https://localhost:9980");
+            fileInfo->set("PostMessageOrigin", postMessageOrigin);
             fileInfo->set("LastModifiedTime", Util::getIso8601FracformatTime(localFile.fileLastModifiedTime));
             fileInfo->set("EnableOwnerTermination", "true");
 
@@ -505,9 +513,8 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
             config.getString("ver_suffix", "") + "\"";
 
 #if ENABLE_DEBUG
-        const Poco::Path path = requestUri.getPath();
-        if (Util::startsWith(path.toString(), std::string("/wopi/files"))) {
-            handleWopiRequest(request, path, message, socket);
+        if (Util::startsWith(relPath, std::string("/wopi/files"))) {
+            handleWopiRequest(request, requestDetails, message, socket);
             return;
         }
 #endif
