@@ -260,7 +260,7 @@ int Tool::main(const std::vector<std::string>& origArgs)
             std::vector< std::string > files( toCopy );
             std::copy( args.begin() + offset, args.begin() + offset + toCopy, files.begin() );
             offset += toCopy;
-            clients.emplace_back([this, &files]{Worker(*this, files).run();});
+            clients.emplace_back([this, files]{Worker(*this, files).run();});
         }
     }
 
