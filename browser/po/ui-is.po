@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-18 09:22+0100\n"
-"PO-Revision-Date: 2021-11-18 08:06+0000\n"
+"PO-Revision-Date: 2021-11-19 20:17+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/ui/is/>\n"
-"Language: \n"
+"Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 4.9.1-dev\n"
+"X-Generator: Weblate 4.9.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -683,7 +683,7 @@ msgstr "Nýjustu uppfærslur"
 #: src/control/Control.Menubar.js:909 src/control/Control.Menubar.js:979
 #: src/control/Control.NotebookbarWriter.js:263
 msgid "Send Feedback"
-msgstr ""
+msgstr "Senda umsögn"
 
 #: src/control/Control.Menubar.js:300 src/control/Control.Menubar.js:429
 #: src/control/Control.Menubar.js:540 src/control/Control.Menubar.js:752
