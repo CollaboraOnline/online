@@ -515,6 +515,7 @@ nav.drawing-color-indicator ~ #main-document-content .cool-annotation-reply-coun
 	border-radius: 50%;
 	height: 32px;
 	width: 32px;
+	padding: 0;
 }
 .cool-annotation-img .avatar-img{
 	border: none;
