@@ -604,6 +604,8 @@ class ScrollSection {
 		if (go) {
 			this.map.scroll(0, offset / app.dpiScale, {});
 			this.onUpdateScrollOffset();
+			if (app.file.fileBasedView)
+				this.map._docLayer._checkSelectedPart();
 		}
 	}
 

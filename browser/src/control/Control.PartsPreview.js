@@ -213,6 +213,8 @@ L.Control.PartsPreview = L.Control.extend({
 					document.activeElement.blur();
 				}
 			}
+			if (app.file.fileBasedView)
+				this._map._docLayer._checkSelectedPart();
 		}, this);
 
 		this._layoutPreview(i, img, bottomBound);
