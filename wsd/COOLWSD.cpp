@@ -2804,9 +2804,12 @@ private:
                      requestDetails.equals(2, "ws") && requestDetails.isWebSocket())
                 handleClientWsUpgrade(request, requestDetails, disposition, socket);
 
-            else if (!requestDetails.isWebSocket() && requestDetails.equals(RequestDetails::Field::Type, "cool"))
+            else if (!requestDetails.isWebSocket() &&
+                     (requestDetails.equals(RequestDetails::Field::Type, "cool") ||
+                     requestDetails.equals(RequestDetails::Field::Type, "lool")))
             {
-                // All post requests have url prefix 'cool'.
+                // All post requests have url prefix 'cool', except when the prefix
+                // is 'lool' e.g. when integrations use the old /lool/convert-to endpoint
                 handlePostRequest(requestDetails, request, message, disposition, socket);
             }
             else
@@ -3805,6 +3808,8 @@ private:
         Poco::JSON::Object::Ptr convert_to = new Poco::JSON::Object;
         Poco::Dynamic::Var available = allowConvertTo(socket->clientAddress(), request);
         convert_to->set("available", available);
+        if (available)
+            convert_to->set("endpoint", "/cool/convert-to");
 
         Poco::JSON::Object::Ptr capabilities = new Poco::JSON::Object;
         capabilities->set("convert-to", convert_to);
