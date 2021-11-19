@@ -1026,11 +1026,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		var tabsContainer = L.DomUtil.create('div', 'ui-tabs ' + builder.options.cssClass + ' ui-widget');
 		var contentsContainer = L.DomUtil.create('div', 'ui-tabs-content ' + builder.options.cssClass + ' ui-widget', parentContainer);
 
+		for (var tabIdx = data.length - 1; tabIdx >= 0; tabIdx--) {
+			var item = data[tabIdx];
+			if (item.hidden === true)
+				data.splice(tabIdx, 1);
+		}
+
 		var tabs = [];
 		var contentDivs = [];
 		var labels = [];
-		for (var tabIdx = 0; tabIdx < data.length; tabIdx++) {
-			var item = data[tabIdx];
+		for (tabIdx = 0; tabIdx < data.length; tabIdx++) {
+			item = data[tabIdx];
 
 			var title = builder._cleanText(item.text);
 
