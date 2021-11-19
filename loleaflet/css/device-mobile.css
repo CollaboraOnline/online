@@ -779,6 +779,10 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	margin-left: 16px;
 	margin-top: -5px;
 }
+
+#loolwsd-version, #lokit-version {
+	flex-direction: column;
+}
 /* busy popup */
 
 #mobile-wizard.popup {
