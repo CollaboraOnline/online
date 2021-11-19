@@ -67,8 +67,8 @@ L.Control.AlertDialog = L.Control.extend({
 					type: 'button',
 					className: 'vex-dialog-button-secondary',
 					click: function() {
-						e.map.toggleCommandState('HyperlinkDialog');
 						vex.closeAll();
+						e.map.showHyperlinkDialog();
 					}
 				});
 
