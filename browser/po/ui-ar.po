@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-18 09:22+0100\n"
+"POT-Creation-Date: 2021-11-19 21:19+0100\n"
 "PO-Revision-Date: 2021-10-23 16:43+0000\n"
 "Last-Translator: abidin toumi <abidin24@disroot.org>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
@@ -221,7 +221,7 @@ msgid "Log Levels"
 msgstr ""
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
-#: src/control/Parts.js:419 src/control/Signing.js:608
+#: src/control/Parts.js:421 src/control/Signing.js:608
 msgid "Close"
 msgstr ""
 
@@ -258,18 +258,18 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "أمتأكد من إنهاء هذه الجلسة؟"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1620
+#: src/control/Control.Menubar.js:1634
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:861
+#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:862
 #: src/core/Socket.js:951
 msgid "OK"
 msgstr ""
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.Command.js:90 src/control/Control.LanguageDialog.js:86
-#: src/control/Control.Menubar.js:1621 src/control/Control.MobileTopBar.js:43
+#: src/control/Control.Menubar.js:1635 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:862
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:863
 #: src/core/Socket.js:952 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
@@ -380,7 +380,7 @@ msgid "Index"
 msgstr "المُدخلة"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2114
+#: src/control/Control.JSDialogBuilder.js:2120
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
 #: src/layer/tile/CommentListSection.ts:827
@@ -399,7 +399,7 @@ msgstr "الختم الزمني"
 msgid "Jump to state"
 msgstr "انتقل إلى الحالة"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:196
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:286
 msgid "You"
 msgstr "أنت"
 
@@ -415,6 +415,10 @@ msgstr ""
 #, fuzzy
 msgid "Function Wizard"
 msgstr "الدالة"
+
+#: src/control/Control.FormulaBar.js:46
+msgid "cell address"
+msgstr ""
 
 #: src/control/Control.JSDialogBuilder.js:398
 msgid "Solid"
@@ -448,65 +452,65 @@ msgstr ""
 msgid "Fixed size"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1261
+#: src/control/Control.JSDialogBuilder.js:1267
 msgid "From"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1264
+#: src/control/Control.JSDialogBuilder.js:1270
 msgid "To"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1267
+#: src/control/Control.JSDialogBuilder.js:1273
 msgid "Color"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:1396
+#: src/control/Control.JSDialogBuilder.js:1402
 #, fuzzy
 msgid "Select range"
 msgstr "ارفض التغيير"
 
-#: src/control/Control.JSDialogBuilder.js:1439
+#: src/control/Control.JSDialogBuilder.js:1445
 #: src/control/Control.NotebookbarBuilder.js:237
 #, fuzzy
 msgid "Font Name"
 msgstr "الخط"
 
-#: src/control/Control.JSDialogBuilder.js:1441 src/control/Toolbar.js:123
+#: src/control/Control.JSDialogBuilder.js:1447 src/control/Toolbar.js:123
 #, fuzzy
 msgid "Font Size"
 msgstr "الخط"
 
-#: src/control/Control.JSDialogBuilder.js:1443
+#: src/control/Control.JSDialogBuilder.js:1449
 #: src/control/Control.TopToolbar.js:490
 msgid "Style"
 msgstr "النمط"
 
-#: src/control/Control.JSDialogBuilder.js:2100
+#: src/control/Control.JSDialogBuilder.js:2106
 #, fuzzy
 msgid "reply"
 msgstr "رُدّ"
 
-#: src/control/Control.JSDialogBuilder.js:2103
+#: src/control/Control.JSDialogBuilder.js:2109
 msgid "replies"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2175
+#: src/control/Control.JSDialogBuilder.js:2181
 msgid "Insert Comment"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2626
+#: src/control/Control.JSDialogBuilder.js:2632
 msgid "Cell borders"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2817
+#: src/control/Control.JSDialogBuilder.js:2823
 msgid "Rows"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2818
+#: src/control/Control.JSDialogBuilder.js:2824
 msgid "Columns"
 msgstr ""
 
-#: src/control/Control.JSDialogBuilder.js:2838
+#: src/control/Control.JSDialogBuilder.js:2844
 #, fuzzy
 msgid "Insert Table"
 msgstr "أدرج جدولًا"
@@ -770,18 +774,22 @@ msgstr "البحث"
 msgid "Page Setup"
 msgstr ""
 
-#: src/control/Control.Menubar.js:1171 src/control/Control.StatusBar.js:513
+#: src/control/Control.Menubar.js:1175 src/control/Control.StatusBar.js:513
 msgid "Reset to Default Language"
 msgstr "صفّر إلى اللغة المبدئيّة"
 
-#: src/control/Control.Menubar.js:1525
+#: src/control/Control.Menubar.js:1539
 #, fuzzy
 msgid "Insert Shape"
 msgstr "أدرِج أشكالًا"
 
-#: src/control/Control.Menubar.js:1618
+#: src/control/Control.Menubar.js:1632
 msgid "Are you sure you want to delete this slide?"
 msgstr "أمتأكد من حذف هذه الشريحة؟"
+
+#: src/control/Control.Menubar.js:1758
+msgid "file type icon"
+msgstr ""
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:121
@@ -971,7 +979,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:857
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:858
 msgid "Text"
 msgstr ""
 
@@ -1077,6 +1085,10 @@ msgstr ""
 
 #: src/control/Control.NotebookbarWriter.js:538
 msgid "Title"
+msgstr ""
+
+#: src/control/Control.PartsPreview.js:180
+msgid "preview of page "
 msgstr ""
 
 #: src/control/Control.PresentationBar.js:100
@@ -1272,31 +1284,31 @@ msgstr "انضمّ %user"
 msgid "%user has left"
 msgstr "غادر %user"
 
-#: src/control/Control.UserList.js:33
+#: src/control/Control.UserList.js:34
 msgid "%n users"
 msgstr "%n من المستخدمين"
 
-#: src/control/Control.UserList.js:34
+#: src/control/Control.UserList.js:35
 msgid "1 user"
 msgstr "مستخدم واحد"
 
-#: src/control/Control.UserList.js:35
+#: src/control/Control.UserList.js:36
 msgid "0 users"
 msgstr "لا مستخدمين"
 
-#: src/control/Control.UserList.js:202
-msgid "Readonly"
-msgstr "للقراءة فقط"
-
-#: src/control/Control.UserList.js:250
+#: src/control/Control.UserList.js:178 src/control/Control.UserList.js:344
 msgid "Always follow the editor"
 msgstr ""
 
-#: src/control/Control.UserList.js:253
+#: src/control/Control.UserList.js:292
+msgid "Readonly"
+msgstr "للقراءة فقط"
+
+#: src/control/Control.UserList.js:347
 msgid "Current"
 msgstr ""
 
-#: src/control/Parts.js:420
+#: src/control/Parts.js:422
 msgid "Show Selected Sheets"
 msgstr ""
 
@@ -1342,12 +1354,12 @@ msgstr ""
 msgid "Right Margin"
 msgstr ""
 
-#: src/control/Ruler.js:624
+#: src/control/Ruler.js:622
 #, fuzzy
 msgid "Insert tabstop"
 msgstr "أدرج جدولًا"
 
-#: src/control/Ruler.js:631
+#: src/control/Ruler.js:629
 #, fuzzy
 msgid "Delete tabstop"
 msgstr "أدرج جدولًا"
@@ -1528,7 +1540,7 @@ msgstr ""
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:858
+#: src/control/Toolbar.js:859
 msgid "Link"
 msgstr ""
 
@@ -1972,7 +1984,7 @@ msgstr "يرفع..."
 msgid "Uploading file to server failed with status: %0"
 msgstr ""
 
-#: src/map/handler/Map.Keyboard.js:484
+#: src/map/handler/Map.Keyboard.js:487
 msgid ""
 "<p>Your browser has very limited access to the clipboard</p><p>Please press "
 "now: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to see "
