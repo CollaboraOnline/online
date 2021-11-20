@@ -950,7 +950,9 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         _uriJailedAnonym = Poco::URI(Poco::URI("file://"), COOLWSD::anonymizeUrl(localPathEncoded)).toString();
 
         _filename = fileInfo.getFilename();
-
+#if !MOBILEAPP
+        Quarantine::quarantineFile(this, _filename);
+#endif
         if (!templateSource.empty())
         {
             // Invalid timestamp for templates, to force uploading once we save-after-loading.
@@ -1123,7 +1125,6 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     const std::string oldName = _storage->getRootFilePathToUpload();
     const std::string newName = _storage->getRootFilePathUploading();
 
-    Quarantine::quarantineFile(this, _storage->getFileInfo().getFilename() + TO_UPLOAD_SUFFIX);
 
     if (rename(oldName.c_str(), newName.c_str()) < 0)
     {
@@ -1137,6 +1138,8 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     {
         LOG_TRC("Renamed [" << oldName << "] to [" << newName << ']');
     }
+
+    Quarantine::quarantineFile(this, Util::splitLast(newName, '/').second);
 #endif //!MOBILEAPP
 
     // Record that we got a response to avoid timing out on saving.
