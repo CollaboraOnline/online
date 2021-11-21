@@ -20,6 +20,16 @@ class CPointSet {
 		return ps;
 	}
 
+	static fromBounds(bounds: cool.Bounds) {
+		var ps = new CPointSet();
+		ps.points = [
+			bounds.getTopLeft(),
+			bounds.getTopRight(),
+			bounds.getBottomRight(),
+			bounds.getBottomLeft()];
+		return ps;
+	}
+
 	isFlat(): boolean {
 		return this.points !== undefined;
 	}
