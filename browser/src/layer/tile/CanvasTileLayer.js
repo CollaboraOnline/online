@@ -43,17 +43,16 @@ var CStyleData = L.Class.extend({
 // CSelections is used to add/modify/clear selections (text/cell-area(s)/ole)
 // on canvas using polygons (CPolygon).
 var CSelections = L.Class.extend({
-
-	initialize: function (pointSet, canvasOverlay, selectionsDataDiv, map, isView, viewId, isText) {
+	initialize: function (pointSet, canvasOverlay, selectionsDataDiv, map, isView, viewId, selectionType) {
 		this._pointSet = pointSet ? pointSet : new CPointSet();
 		this._overlay = canvasOverlay;
-		this._darkOverlay = new CDarkOverlay(canvasOverlay);
 		this._styleData = new CStyleData(selectionsDataDiv);
 		this._map = map;
 		this._name = 'selections' + (isView ? '-viewid-' + viewId : '');
 		this._isView = isView;
 		this._viewId = viewId;
-		this._isText = isText;
+		this._isText = selectionType === 'text';
+		this._isOle = selectionType === 'ole';
 		this._selection = undefined;
 		this._updateSelection();
 	},
@@ -84,36 +83,54 @@ var CSelections = L.Class.extend({
 
 	_updateSelection: function() {
 		if (!this._selection) {
-			var fillColor = this._isView ?
-				L.LOUtil.rgbToHex(this._map.getViewColor(this._viewId)) :
-				this._styleData.getPropValue('background-color');
-			var opacity = this._styleData.getFloatPropValue('opacity');
-			var weight = this._styleData.getFloatPropWithoutUnit('border-top-width');
-			var attributes = this._isText ? {
-				viewId: this._isView ? this._viewId : undefined,
-				groupType: PathGroupType.TextSelection,
-				name: this._name,
-				pointerEvents: 'none',
-				fillColor: fillColor,
-				fillOpacity: opacity,
-				color: fillColor,
-				opacity: 0.60,
-				stroke: true,
-				fill: true,
-				weight: 1.0
-			} : {
-				viewId: this._isView ? this._viewId : undefined,
-				name: this._name,
-				pointerEvents: 'none',
-				color: fillColor,
-				fillColor: fillColor,
-				fillOpacity: opacity,
-				opacity: 1.0,
-				weight: Math.round(weight * app.dpiScale)
-			};
+			if (!this._isOle) {
+				var fillColor = this._isView ?
+					L.LOUtil.rgbToHex(this._map.getViewColor(this._viewId)) :
+					this._styleData.getPropValue('background-color');
+				var opacity = this._styleData.getFloatPropValue('opacity');
+				var weight = this._styleData.getFloatPropWithoutUnit('border-top-width');
+				var attributes = this._isText ? {
+					viewId: this._isView ? this._viewId : undefined,
+					groupType: PathGroupType.TextSelection,
+					name: this._name,
+					pointerEvents: 'none',
+					fillColor: fillColor,
+					fillOpacity: opacity,
+					color: fillColor,
+					opacity: 0.60,
+					stroke: true,
+					fill: true,
+					weight: 1.0
+				} : {
+					viewId: this._isView ? this._viewId : undefined,
+					name: this._name,
+					pointerEvents: 'none',
+					color: fillColor,
+					fillColor: fillColor,
+					fillOpacity: opacity,
+					opacity: 1.0,
+					weight: Math.round(weight * app.dpiScale)
+				};
+			}
+			else {
+				var attributes = {
+					pointerEvents: 'none',
+					fillColor: 'black',
+					fillOpacity: 0.25,
+					weight: 0,
+					opacity: 0.25
+				};
+			}
 
-			this._selection = this._isText ? new CPolygon(this._pointSet, attributes) :
-				new CCellSelection(this._pointSet, attributes);
+			if (this._isText) {
+				this._selection = new CPolygon(this._pointSet, attributes);
+			}
+			else if (this._isOle) {
+				this._selection = new CDarkOverlay(this._pointSet, attributes);
+			}
+			else {
+				this._selection = new CCellSelection(this._pointSet, attributes);
+			}
 
 			if (this._isText)
 				this._overlay.initPath(this._selection);
@@ -134,7 +151,7 @@ var CSelections = L.Class.extend({
 			this._overlay.removePathGroup(this._selection);
 	},
 
-	hasObjectFocusDarkOverlay : function() {
+	/*hasObjectFocusDarkOverlay : function() {
 		return this._darkOverlay.hasObjectFocusDarkOverlay();
 	},
 
@@ -148,7 +165,7 @@ var CSelections = L.Class.extend({
 		if (this.hasObjectFocusDarkOverlay()) {
 			this._darkOverlay.remove();
 		}
-	}
+	}*/
 });
 
 // CReferences is used to store and manage the CPath's of all
@@ -2011,10 +2028,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		var northEastPoint = this._latLngToCorePixels(this._graphicSelection.getNorthEast(), zoom);
 		var southWestPoint = this._latLngToCorePixels(this._graphicSelection.getSouthWest(), zoom);
 
-		this._oleCSelections.addObjectFocusDarkOverlay(new L.Bounds(
-			northEastPoint,
-			southWestPoint
-		));
+		var bounds = new L.Bounds(northEastPoint, southWestPoint);
+
+		this._oleCSelections.setPointSet(CPointSet.fromBounds(bounds));
 	},
 
 	_onGraphicSelectionMsg: function (textMsg) {
@@ -2025,11 +2041,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._resetSelectionRanges();
 		}
 		else if (textMsg.match('INPLACE EXIT')) {
-
-			this._oleCSelections.removeObjectFocusDarkOverlay();
+			this._oleCSelections.clear();
 		}
 		else if (textMsg.match('INPLACE')) {
-			if (!this._oleCSelections.hasObjectFocusDarkOverlay()) {
+			if (this._oleCSelections.empty()) {
 				textMsg = '[' + textMsg.substr('graphicselection:'.length) + ']';
 				try {
 					var msgData = JSON.parse(textMsg);
@@ -2051,8 +2066,8 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._extractAndSetGraphicSelection(msgData);
 
 			// Update the dark overlay on zooming & scrolling
-			if (this._oleCSelections.hasObjectFocusDarkOverlay()) {
-				this._oleCSelections.removeObjectFocusDarkOverlay();
+			if (!this._oleCSelections.empty()) {
+				this._oleCSelections.clear();
 				this.renderDarkOverlay();
 			}
 
@@ -5167,11 +5182,11 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._initContainer();
 		this._getToolbarCommandsValues();
 		this._textCSelections = new CSelections(undefined, this._canvasOverlay,
-			this._selectionsDataDiv, this._map, false /* isView */, undefined, true /* isText */);
+			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'text');
 		this._cellCSelections = new CSelections(undefined, this._canvasOverlay,
-			this._selectionsDataDiv, this._map, false /* isView */, undefined, false /* isText */);
+			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'cell');
 		this._oleCSelections = new CSelections(undefined, this._canvasOverlay,
-			this._selectionsDataDiv, this._map, false /* isView */, undefined, false /* isText */);
+			this._selectionsDataDiv, this._map, false /* isView */, undefined, 'ole');
 		this._references = new CReferences(this._canvasOverlay);
 		this._referencesAll = [];
 

@@ -4,17 +4,41 @@
  * CDarkOverlay is used to render a dark overlay around an OLE object when selected
  */
 
-class CDarkOverlay {
+import Bounds = cool.Bounds;
 
-    private overlay: CanvasOverlay;
+class CDarkOverlay extends CPathGroup{
+
     private rectangles: CRectangle[] = [];
+    private options: any;
 
-    constructor(canvasOverlay : CanvasOverlay) {
-        this.overlay = canvasOverlay;
+    constructor(pointSet: CPointSet, options: any) {
+        super([]);
+        this.options = options;
+        this.rectangles = this.createRectangles(4);
+        this.setPointSet(pointSet);
     }
 
-    private invertOleBounds(oleBounds: cool.Bounds) {
-        var rectanglesBounds = [];
+    private setPointSet(pointSet: CPointSet) {
+        var points = pointSet.getPointArray();
+        if (!points) {
+            for (var i = 0; i < this.rectangles.length; i++){
+                this.rectangles[i].setBounds(
+                    new cool.Bounds(new cool.Point(0, 0), new cool.Point(0, 1)));
+                this.push(this.rectangles[i]);
+            }
+            return;
+        }
+        
+        var rectangleBounds = this.invertOleBounds(new cool.Bounds(points[0], points[2]));
+
+        for (var i = 0; i < this.rectangles.length; i++){
+            this.rectangles[i].setBounds(rectangleBounds[i]);
+            this.push(this.rectangles[i]);
+        }
+    }
+
+    private invertOleBounds(oleBounds: cool.Bounds): cool.Bounds[] {
+        var rectanglesBounds: cool.Bounds[] = [];
 
         var minWidth = 0;
         var minHeight = 0;
@@ -29,35 +53,15 @@ class CDarkOverlay {
         return rectanglesBounds;
     }
 
-    private createRectangles(rectanglesBounds: cool.Bounds[]){
-        for (var i = 0; i < rectanglesBounds.length; i++){
-            this.rectangles.push(new CRectangle(rectanglesBounds[i], {
-                pointerEvents: 'none',
-                fillColor: 'black',
-                fillOpacity: 0.25,
-                weight: 0,
-                opacity: 0.25
-            }));
+    private createRectangles(quantity : number): CRectangle[] {
+        var rectangles: CRectangle[] = [];
+        for (var i = 0; i < quantity; i++){
+            rectangles.push(
+                new CRectangle(new cool.Bounds(
+                    new cool.Point(0, 0), new cool.Point(0, 1)
+                ), this.options));
         }
-    }
 
-    hasObjectFocusDarkOverlay() : boolean{
-        return this.rectangles.length > 0;
-    }
-
-    show(oleBounds: cool.Bounds){
-        var rectanglesBounds = this.invertOleBounds(oleBounds);
-        this.createRectangles(rectanglesBounds);
-
-        for (var i = 0; i < this.rectangles.length; i++){
-            this.overlay.initPath(this.rectangles[i]);
-        }
-    }
-
-    remove(){
-        for (var i = 0; i < this.rectangles.length; i++){
-            this.overlay.removePath(this.rectangles[i]);
-        }
-        this.rectangles = [];
+        return rectangles;
     }
 }
