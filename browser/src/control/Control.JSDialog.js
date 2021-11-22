@@ -197,19 +197,28 @@ L.Control.JSDialog = L.Control.extend({
 			if (isModalPopup && data.popupParent) {
 				// in case of toolbox we want to create popup positioned by toolitem not toolbox
 				var parent = L.DomUtil.get(data.popupParent);
-				if (clickToCloseId) {
+
+				if (clickToCloseId && parent) {
 					var childButton = parent.querySelector('[id=\'' + clickToCloseId + '\']');
 					if (childButton)
 						parent = childButton;
 				}
 
-				posX = parent.getBoundingClientRect().left;
-				posY = parent.getBoundingClientRect().bottom + 5;
+				if (!parent && data.popupParent === '_POPOVER_') {
+					// popup was trigerred not by toolbar or menu button, probably on tile area
+					// example: validity listbox
+					parent = document.querySelector('.spreadsheet-drop-down-marker');
+				}
 
-				if (posX + content.clientWidth > window.innerWidth)
-					posX -= posX + content.clientWidth + 10 - window.innerWidth;
-				if (posY + content.clientHeight > window.innerHeight)
-					posY -= posY + content.clientHeight + 10 - window.innerHeight;
+				if (parent) {
+					posX = parent.getBoundingClientRect().left;
+					posY = parent.getBoundingClientRect().bottom + 5;
+
+					if (posX + content.clientWidth > window.innerWidth)
+						posX -= posX + content.clientWidth + 10 - window.innerWidth;
+					if (posY + content.clientHeight > window.innerHeight)
+						posY -= posY + content.clientHeight + 10 - window.innerHeight;
+				}
 			} else if (isSnackbar) {
 				posX = window.innerWidth/2 - container.offsetWidth/2;
 				posY = window.innerHeight - container.offsetHeight - 40;
