@@ -118,7 +118,7 @@ describe('Apply paragraph properties on selected shape.', function() {
 		// Set bottom alignment first
 		openParagraphPropertiesPanel();
 
-		helper.clickOnIdle('#CellVertBottom');
+		helper.clickOnIdle('.unoCellVertBottom');
 
 		triggerNewSVG();
 
