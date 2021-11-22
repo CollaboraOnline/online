@@ -424,8 +424,13 @@ L.Map = L.Evented.extend({
 			} else if (elapsed < 3600000) {
 				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 60000), 'minute');
 				timeout = 60000;
-			} else {
+			} else if (elapsed < 3600000 * 24) {
 				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 3600000), 'hour');
+				timeout = 60000;
+			} else {
+				dateValue = _('Last saved:') + ' ' + dateTime.toLocaleDateString(String.locale,
+					{ year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+				timeout = 60000;
 			}
 
 			this.lastModIndicator.innerHTML = dateValue;
