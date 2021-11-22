@@ -44,6 +44,11 @@ class Cursor {
 		this.initLayout();
 	}
 
+	private isCalcRTL(): boolean {
+		const docLayer = this.map._docLayer;
+		return (docLayer.isCalc() && docLayer.isLayoutRTL());
+	}
+
 	add() {
 		if (!this.container) {
 			this.initLayout();
@@ -234,9 +239,16 @@ class Cursor {
 			.disableScrollPropagation(this.container);
 	}
 
+	private transformX(xpos: number): number {
+		if (!this.isCalcRTL())
+			return xpos;
+
+		return this.map._size.x - xpos;
+	}
+
 	private setPos(pos: cool.Point) {
 		this.container.style.top = pos.y + 'px';
-		this.container.style.left = pos.x + 'px';
+		this.container.style.left = this.transformX(pos.x) + 'px';
 		this.container.style.zIndex = this.zIndex + '';
 		// Restart blinking animation
 		if (this.blink) {
