@@ -31,7 +31,7 @@ fi;
 echo "Using Docker Hub Repository: '$DOCKER_HUB_REPO' with tag '$DOCKER_HUB_TAG'."
 
 if [ -z "$CORE_BRANCH" ]; then
-  CORE_BRANCH="distro/collabora/cp-6.4"
+  CORE_BRANCH="distro/collabora/co-2021"
 fi;
 echo "Building core branch '$CORE_BRANCH'"
 
@@ -106,7 +106,7 @@ fi
 ##### LOKit (core) #####
 
 # build
-if [ "$CORE_BRANCH" == "distro/collabora/cp-6.4" ]; then
+if [ "$CORE_BRANCH" == "distro/collabora/co-2021" ]; then
   ( cd core && ./autogen.sh --with-distro=CPLinux-LOKit --disable-epm --without-package-format ) || exit 1
 else
   ( cd core && ./autogen.sh --with-distro=LibreOfficeOnline ) || exit 1
