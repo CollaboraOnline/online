@@ -176,12 +176,15 @@ L.Layer.getLayerPositionVisibility = function (latlng, boundingClientRect, map, 
 	}
 	var pixelOrigin = map.getPixelOrigin();
 	var mapPanePos = map._getMapPanePos();
+	var mirrorX = map._docLayer.isCalc() && map._docLayer.isLayoutRTL();
 	var layerSplitPos = splitPos.subtract(mapPanePos);
+	if (mirrorX)
+		layerSplitPos.x = map._size.x - splitPos.x - mapPanePos.x;
 
 	var makeHidden = false;
 
 	if (splitPos.x) {
-		layerSplitPos.x += 1;
+		layerSplitPos.x += (mirrorX ? -1 : 1);
 	}
 
 	if (splitPos.y) {
@@ -194,17 +197,24 @@ L.Layer.getLayerPositionVisibility = function (latlng, boundingClientRect, map, 
 
 	if (docPosWithOffset.x <= splitPos.x) {
 		// fixed region.
-		layerPos.x = docPos.x - mapPanePos.x;
-		layerPosWithOffset.x = docPosWithOffset.x - mapPanePos.x;
+		// mirroring should always be done in container coordinates.
+		// In the fixed region, document coordinates and container coordinates are the same.
+		layerPos.x = (mirrorX ? map._size.x - docPosWithOffset.x : docPos.x) - mapPanePos.x;
+		layerPosWithOffset.x = (mirrorX ? map._size.x - docPos.x : docPosWithOffset.x) - mapPanePos.x;
 		if (splitPos.x - docPosWithOffset.x <= eps.x) {
 			// Hide the object if it is close to the split *and* the non-fixed region has moved away from the fixed.
 			makeHidden = (mapPanePos.x !== pixelOrigin.x);
 		}
 	}
 	else {
-		layerPos.x = docPos.x - pixelOrigin.x;
-		layerPosWithOffset.x = docPosWithOffset.x - pixelOrigin.x;
-		if (layerPosWithOffset.x < layerSplitPos.x) {
+		// Movable region.
+		// Mirroring should always be done in container coordinates.
+		// The mirrorX expression does the following:
+		// The document coordinate is first converted to container coordinate,
+		// then it is mirrored w.r.t the container and finally converted to layer coordinate.
+		layerPos.x = mirrorX ? map._size.x - (docPosWithOffset.x - pixelOrigin.x + mapPanePos.x) - mapPanePos.x : docPos.x - pixelOrigin.x;
+		layerPosWithOffset.x = mirrorX ? map._size.x - (docPos.x - pixelOrigin.x + mapPanePos.x) - mapPanePos.x : docPosWithOffset.x - pixelOrigin.x;
+		if ((!mirrorX && layerPosWithOffset.x < layerSplitPos.x) || (mirrorX && layerPosWithOffset.x >= layerSplitPos.x)) {
 			// do not encroach the fixed region.
 			makeHidden = true;
 		}
