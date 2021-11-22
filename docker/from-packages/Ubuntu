@@ -1,0 +1,44 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+FROM ubuntu:18.04
+
+# repo: can be 'repos', 'repos-staging', 'repos-snapshot'
+# Optional. The default is 'repos'.
+ARG repo
+
+# version: can be '4.2', '6.4'
+# Optional. The default is '6.4'.
+ARG version
+
+# type: can be
+# 'code' - Collabora Online Development Edition
+# 'cool' - Collabora Online, to build this you need to give your secret URL part from https://support.collaboraoffice.com, i.e. you have to be Collabora partner or customer
+# 'key'  - Collabora Online, the license key enabled version.
+# Optional. The default is 'code'.
+ARG type
+
+# secret_key is the URL hash from https://support.collaboraoffice.com
+# Mandatory, when you build 'cool', otherwise not needed.
+ARG secret_key
+
+# Environment variables
+ENV domain localhost
+ENV LC_CTYPE C.UTF-8
+
+# Setup scripts for Collabora Online
+ADD /scripts/install-collabora-online-ubuntu.sh /
+RUN bash install-collabora-online-ubuntu.sh
+RUN rm -rf /install-collabora-online-ubuntu.sh
+
+# Start script for Collabora Online
+ADD /scripts/start-collabora-online.sh /
+
+EXPOSE 9980
+
+# switch to lool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
+USER 104
+
+# Entry point
+CMD ["/start-collabora-online.sh"]

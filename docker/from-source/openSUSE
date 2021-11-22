@@ -1,0 +1,39 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+FROM opensuse/leap
+
+# refresh repos otherwise installations later may fail
+# install LibreOffice run-time dependencies
+# install an editor
+# tdf#117557 - Add CJK Fonts to Collabora Online Docker Image
+RUN zypper ref && \
+    zypper --non-interactive install libcap-progs libpng16-16 fontconfig nano openssh inotify-tools
+
+# copy freshly built LOKit and Collabora Online
+COPY /instdir /
+
+# copy the shell script which can start Collabora Online (loolwsd)
+COPY /start-collabora-online.sh /
+
+# set up Collabora Online (normally done by postinstall script of package)
+# Fix permissions
+RUN setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/loolforkit && \
+    setcap cap_sys_admin=ep /usr/bin/loolmount && \
+    groupadd -r lool && \
+    useradd -g lool -r lool -d /opt/lool -s /bin/bash && \
+    rm -rf /opt/lool && \
+    mkdir -p /opt/lool/child-roots && \
+    loolwsd-systemplate-setup /opt/lool/systemplate /opt/lokit >/dev/null 2>&1 && \
+    touch /var/log/loolwsd.log && \
+    chown lool:lool /var/log/loolwsd.log && \
+    chown -R lool:lool /opt/ && \
+    chown -R lool:lool /etc/loolwsd
+
+EXPOSE 9980
+
+# switch to lool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
+USER 481
+
+CMD ["/start-collabora-online.sh"]
