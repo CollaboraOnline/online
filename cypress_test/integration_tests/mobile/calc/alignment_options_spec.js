@@ -89,13 +89,13 @@ describe('Change alignment settings.', function() {
 	it('Right-to-left and left-to-right writing mode.', function() {
 		openAlignmentPaneForFirstCell();
 
-		helper.clickOnIdle('#ParaRightToLeft');
+		helper.clickOnIdle('.unoParaRightToLeft');
 
 		// TODO: we don't have a way of testing this
 		// copy container doesn't have info about this
 		cy.wait(500);
 
-		helper.clickOnIdle('#ParaLeftToRight');
+		helper.clickOnIdle('.unoParaLeftToRight');
 
 		cy.wait(500);
 	});

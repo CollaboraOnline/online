@@ -182,9 +182,9 @@ describe('Focus tests', function() {
 			.should('be.eq', 'BODY');
 
 		// Apply bold
-		helper.clickOnIdle('#Bold');
+		helper.clickOnIdle('.unoBold');
 
-		cy.get('#Boldimg')
+		cy.get('.unoBold img')
 			.should('have.class', 'selected');
 
 		// No focus

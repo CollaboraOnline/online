@@ -2212,6 +2212,21 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			parentContainer);
 	},
 
+	_makeIdUnique: function(id) {
+		var counter = 0;
+		var found = document.querySelector('[id="' + id + '"]');
+
+		while (found) {
+			counter++;
+			found = document.querySelector('[id="' + id + counter + '"]');
+		}
+
+		if (counter)
+			id = id + counter;
+
+		return id;
+	},
+
 	_unoToolButton: function(parentContainer, data, builder, options) {
 		var button = null;
 
@@ -2233,12 +2248,17 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			var id = data.id;
 			var isUnoCommand = data.command && data.command.indexOf('.uno:') >= 0;
 			if (isUnoCommand)
-				id = encodeURIComponent(data.command.substr('.uno:'.length)).replace(/\%/g, '');
+				id = encodeURIComponent(data.command.substr('.uno:'.length));
 			else {
 				id = data.command;
 				isRealUnoCommand = false;
 			}
-			id = id.replace(/\./g, '-');
+			id = id.replace(/\%/g, '').replace(/\./g, '-').replace(' ', '');
+
+			L.DomUtil.addClass(div, 'uno' + id);
+
+			id = builder._makeIdUnique(id);
+
 			div.id = id;
 
 			var icon = data.icon ? data.icon : builder._createIconURL(data.command);
