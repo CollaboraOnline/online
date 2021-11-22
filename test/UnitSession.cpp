@@ -94,76 +94,57 @@ UnitBase::TestResult UnitSession::testBadRequest()
 UnitBase::TestResult UnitSession::testHandshake()
 {
     const char* testname = "handshake ";
-    try
+    TST_LOG("Starting Test: " << testname);
+
+    std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>(testname);
+    std::string documentPath, documentURL;
+    helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
+
+    socketPoll->startThread();
+
+    // NOTE: Do not replace with wrappers. This has to be explicit.
+    auto wsSession = http::WebSocketSession::create(helpers::getTestServerURI());
+    http::Request req(documentURL);
+    wsSession->asyncRequest(req, socketPoll);
+
+    wsSession->sendMessage("load url=" + documentURL);
+
+    auto assertMessage = [&wsSession, &testname](const std::string expectedStr)
     {
-        std::string documentPath, documentURL;
-        helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
-
-        // NOTE: Do not replace with wrappers. This has to be explicit.
-        Poco::Net::HTTPResponse response;
-        Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, documentURL);
-        std::unique_ptr<Poco::Net::HTTPClientSession> session(
-            helpers::createSession(Poco::URI(helpers::getTestServerURI())));
-        LOOLWebSocket socket(*session, request, response);
-        socket.setReceiveTimeout(0);
-
-        int flags = 0;
-        char buffer[1024] = { 0 };
-        int bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
-        LOK_ASSERT_MESSAGE(
-            "Expected 'statusindicator: find' response from the server but got nothing.",
-            bytes > 0);
-        LOK_ASSERT_EQUAL(std::string("statusindicator: find"), std::string(buffer, bytes));
-
-        bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-        TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
-        if (bytes > 0 && !std::strstr(buffer, "error:"))
-        {
-            LOK_ASSERT_EQUAL(std::string("statusindicator: connect"),
-                                 std::string(buffer, bytes));
-
-            bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
-            if (!std::strstr(buffer, "error:"))
+        wsSession->poll(
+            [&](const std::vector<char>& message)
             {
-                LOK_ASSERT_EQUAL(std::string("statusindicator: ready"),
-                                     std::string(buffer, bytes));
-            }
-            else
-            {
-                // check error message
-                LOK_ASSERT(std::strstr(SERVICE_UNAVAILABLE_INTERNAL_ERROR, buffer) != nullptr);
+                const std::string msg = Util::toString(message);
+                if (!Util::startsWith(msg, "error:"))
+                {
+                    LOK_ASSERT_EQUAL(expectedStr, msg);
+                }
+                else
+                {
+                    // check error message
+                    LOK_ASSERT_EQUAL(std::string(SERVICE_UNAVAILABLE_INTERNAL_ERROR), msg);
 
-                // close frame message
-                bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-                TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
-                LOK_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK)
-                               == Poco::Net::WebSocket::FRAME_OP_CLOSE);
-            }
-        }
-        else
-        {
-            // check error message
-            LOK_ASSERT(std::strstr(SERVICE_UNAVAILABLE_INTERNAL_ERROR, buffer) != nullptr);
+                    // close frame message
+                    //TODO: check that the socket is closed.
+                }
 
-            // close frame message
-            bytes = socket.receiveFrame(buffer, sizeof(buffer), flags);
-            TST_LOG("Got " << LOOLWebSocket::getAbbreviatedFrameDump(buffer, bytes, flags));
-            LOK_ASSERT((flags & Poco::Net::WebSocket::FRAME_OP_BITMASK)
-                           == Poco::Net::WebSocket::FRAME_OP_CLOSE);
-        }
-    }
-    catch (const Poco::Exception& exc)
-    {
-        LOK_ASSERT_FAIL(exc.displayText());
-    }
+                return true;
+            },
+            std::chrono::seconds(10), testname);
+    };
+
+    assertMessage("statusindicator: find");
+    assertMessage("statusindicator: connect");
+    assertMessage("statusindicator: ready");
+
+    socketPoll->joinThread();
     return TestResult::Ok;
 }
 
 UnitBase::TestResult UnitSession::testSlideShow()
 {
     const char* testname = "slideshow ";
+    TST_LOG("Starting Test: " << testname);
     try
     {
         // Load a document
