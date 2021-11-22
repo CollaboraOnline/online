@@ -33,10 +33,25 @@ L.Map.Feedback = L.Handler.extend({
 
 	onDocLoaded: function () {
 		if (window.localStorage.getItem('WSDFeedbackEnabled') !== 'false') {
+			var laterDate = new Date();
 			var currentDate = new Date();
-			var laterDate = window.localStorage.getItem('WSDFeedbackLaterDate');
+			var timeValue = window.localStorage.getItem('WSDFeedbackLaterDate');
+			var docCount = window.localStorage.getItem('WSDFeedbackCount');
 
-			if (laterDate !== currentDate.toDateString())
+			docCount = parseInt(docCount);
+			docCount = isNaN(docCount) ? 1 : docCount + 1;
+			window.localStorage.setItem('WSDFeedbackCount', docCount);
+
+			timeValue = Number(timeValue);
+			if (isNaN(timeValue)) {
+				/* - 5 seconds */
+				laterDate.setTime(currentDate.getTime() - 5000);
+			} else {
+				/* + 5 days (432,000,000 Milliseconds) */
+				laterDate.setTime(timeValue + 432000000);
+			}
+
+			if (docCount > 15 && currentDate > laterDate)
 				setTimeout(L.bind(this.onFeedback, this), this._map.options.feedbackTimeout);
 		}
 	},
@@ -84,15 +99,16 @@ L.Map.Feedback = L.Handler.extend({
 		}
 		else if (data == 'feedback-never') {
 			window.localStorage.setItem('WSDFeedbackEnabled', 'false');
+			window.localStorage.removeItem('WSDFeedbackCount');
 			this._iframeDialog.remove();
 		} else if (data == 'feedback-later') {
 			var currentDate = new Date();
 			this._iframeDialog.remove();
-			this._map.options.feedbackTimeout = 86400000;
-			window.localStorage.setItem('WSDFeedbackLaterDate', currentDate.toDateString());
-			setTimeout(L.bind(this.onFeedback, this), this._map.options.feedbackTimeout);
+			window.localStorage.setItem('WSDFeedbackLaterDate', currentDate.getTime());
+			window.localStorage.removeItem('WSDFeedbackCount');
 		} else if (data == 'feedback-submit') {
 			window.localStorage.setItem('WSDFeedbackEnabled', 'false');
+			window.localStorage.removeItem('WSDFeedbackCount');
 			this._iframeDialog.remove();
 		}
 	}
