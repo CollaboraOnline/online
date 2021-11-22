@@ -4287,23 +4287,26 @@ L.CanvasTileLayer = L.Layer.extend({
 		var startPos = this._map.project(this._textSelectionStart.getSouthWest());
 		var endPos = this._map.project(this._textSelectionEnd.getSouthWest());
 		var startMarkerPos = this._map.project(startMarker.getLatLng());
+		// CalcRTL: position from core are in document coordinates. Conversion to layer coordinates for each maker is done
+		// in L.Layer.getLayerPositionVisibility(). Icons of RTL "start" and "end" has to be interchanged.
+		var calcRTL = this.isCalc() && this.isLayoutRTL();
 		if (startMarkerPos.distanceTo(endPos) < startMarkerPos.distanceTo(startPos) && startMarker._icon && endMarker._icon) {
 			// if the start marker is actually closer to the end of the selection
 			// reverse icons and markers
-			L.DomUtil.removeClass(startMarker._icon, 'leaflet-selection-marker-start');
-			L.DomUtil.removeClass(endMarker._icon, 'leaflet-selection-marker-end');
-			L.DomUtil.addClass(startMarker._icon, 'leaflet-selection-marker-end');
-			L.DomUtil.addClass(endMarker._icon, 'leaflet-selection-marker-start');
+			L.DomUtil.removeClass(startMarker._icon, calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
+			L.DomUtil.removeClass(endMarker._icon, calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
+			L.DomUtil.addClass(startMarker._icon, calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
+			L.DomUtil.addClass(endMarker._icon, calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
 			var tmp = startMarker;
 			startMarker = endMarker;
 			endMarker = tmp;
 		}
 		else if (startMarker._icon && endMarker._icon) {
 			// normal markers and normal icons
-			L.DomUtil.removeClass(startMarker._icon, 'leaflet-selection-marker-end');
-			L.DomUtil.removeClass(endMarker._icon, 'leaflet-selection-marker-start');
-			L.DomUtil.addClass(startMarker._icon, 'leaflet-selection-marker-start');
-			L.DomUtil.addClass(endMarker._icon, 'leaflet-selection-marker-end');
+			L.DomUtil.removeClass(startMarker._icon, calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
+			L.DomUtil.removeClass(endMarker._icon, calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
+			L.DomUtil.addClass(startMarker._icon, calcRTL ? 'leaflet-selection-marker-end' : 'leaflet-selection-marker-start');
+			L.DomUtil.addClass(endMarker._icon, calcRTL ? 'leaflet-selection-marker-start' : 'leaflet-selection-marker-end');
 		}
 
 		if (!startMarker.isDragged) {
