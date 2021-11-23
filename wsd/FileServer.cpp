@@ -458,13 +458,13 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             }
 
             std::streamsize size = request.getContentLength();
-            char buffer[size];
-            message.read(buffer, size);
+            std::vector<char> buffer(size);
+            message.read(buffer.data(), size);
             LocalFileInfo::fileInfoVec[i].fileLastModifiedTime = std::chrono::system_clock::now();
 
             std::ofstream outfile;
             outfile.open(LocalFileInfo::fileInfoVec[i].localPath, std::ofstream::binary);
-            outfile.write(buffer, size);
+            outfile.write(buffer.data(), size);
             outfile.close();
 
             const std::string body = "{\"LastModifiedTime\": \"" +
