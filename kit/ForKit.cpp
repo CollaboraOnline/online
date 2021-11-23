@@ -640,6 +640,8 @@ int main(int argc, char** argv)
         {
             eq = std::strchr(cmd, '=');
             UserInterface = std::string(eq+1);
+            if (UserInterface != "classic" && UserInterface != "notebookbar")
+                UserInterface = "notebookbar";
         }
     }
 
