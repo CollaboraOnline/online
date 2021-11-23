@@ -236,8 +236,9 @@ L.Popup = L.Layer.extend({
 
 		offset = offset.add(pos);
 
+		var rtlAdjust = this._map._docLayer.isCalc() && this._map._docLayer.isLayoutRTL();
 		var bottom = this._containerBottom = -offset.y,
-		    left = this._containerLeft = -Math.round(this._containerWidth / 2) + offset.x;
+		    left = this._containerLeft = -Math.round(rtlAdjust ? this._containerWidth : this._containerWidth / 2) + offset.x;
 
 		// bottom position the popup in case the height of the popup changes (images loading etc)
 		this._container.style.bottom = bottom + 'px';
