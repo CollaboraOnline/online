@@ -257,12 +257,11 @@ m4_ifelse(MOBILEAPP,[true],
         </div>
         <div id="about-dialog-info-container">
           <div id="about-dialog-info">
-            <div> COOLWSD version:</div>
+            <div id="coolwsd-version-label"></div>
             <div id="coolwsd-version"></div>
-            <div id="coolwsd-id" style="visibility: hidden;"></div>
-            <div>LOKit version:</div>
+            <div id="lokit-version-label"></div>
             <div id="lokit-version"></div>
-            m4_ifelse(MOBILEAPP,[],[<div id="os-info"></div>],[<p></p>])
+            m4_ifelse(MOBILEAPP,[],[<div id="served-by-label"></div><div id="served-by"><span id="os-info"></span>&nbsp;<wbr><span id="coolwsd-id"></span></div>],[<p></p>])
             <div id="slow-proxy"></div>
             <p>Copyright © _YEAR_, VENDOR.</p>
           </div>
