@@ -2958,11 +2958,20 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			var hasManyChildren = childData.children && childData.children.length > 1;
 			if (hasManyChildren && childData.type !== 'buttonbox') {
-				var tableId = childData.id ? 'table-' + String(childData.id).replace(' ', '') : '';
-				var table = L.DomUtil.createWithId('div', tableId, td);
+				// TODO: remove 'table-' prefix, we need exactly the same id so events coming from core
+				// will reach the elements, for postprocess we need to temporary switch the id in childData
+				var backupId = childData.id;
+				childData.id = childData.id ? 'table-' + String(childData.id).replace(' ', '') : '';
+
+				var table = L.DomUtil.createWithId('div', childData.id, td);
 				$(table).addClass(this.options.cssClass);
 				$(table).addClass('vertical');
 				var childObject = L.DomUtil.create('div', 'row ' + this.options.cssClass, table);
+
+				this.postProcess(td, childData);
+
+				// revert correct id
+				childData.id = backupId;
 			} else {
 				childObject = td;
 			}
