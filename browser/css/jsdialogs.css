@@ -718,7 +718,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	line-height: 0;
 	border: 4px solid transparent;
 	border-top: 5px solid var(--gray-light-txt--color);
-	display: inline-block;
+	display: inline-block !important;
 	margin-left: 3px;
 }
 

@@ -376,6 +376,12 @@
 .unotoolbutton.notebookbar.has-label:not(.inline) img {
 	width: 24px !important;
 	margin: auto !important;
+	display: block;
+}
+.has-label.has-dropdown:not(.inline) .unolabel{
+	display: inline-block;
+	clear: both;
+	float: left;
 }
 
 /* unobuttons with inline labels */
