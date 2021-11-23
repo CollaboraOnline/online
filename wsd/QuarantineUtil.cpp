@@ -145,7 +145,20 @@ namespace Quarantine
         std::string linkedFileName = ts + "_" + std::to_string(docBroker->getPid()) + "_" + docKey;
         std::string linkedFilePath = COOLWSD::QuarantinePath + linkedFileName;
 
-        FileUtil::Stat fileStat(linkedFilePath);
+        auto& fileList = COOLWSD::QuarantineMap[docBroker->getDocKey()];
+        if(!fileList.empty())
+        {
+            FileUtil::Stat sourceStat(sourcefilePath);
+            FileUtil::Stat lastFileStat(fileList[fileList.size()-1]);
+
+            if(lastFileStat.inodeNumber() == sourceStat.inodeNumber())
+            {
+                LOG_INF("Quarantining of file " << sourcefilePath << " to " << linkedFilePath
+                    << " is skipped because this file version is already quarantined.");
+                return false;
+            }
+        }
+
 
         makeQuarantineSpace();
 
@@ -153,7 +166,7 @@ namespace Quarantine
 
         if (result_link == 0)
         {
-            COOLWSD::QuarantineMap[docBroker->getDocKey()].emplace_back(linkedFilePath);
+            fileList.emplace_back(linkedFilePath);
             clearOldQuarantineVersions(docKey);
             makeQuarantineSpace();
 

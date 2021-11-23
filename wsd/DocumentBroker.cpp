@@ -1125,7 +1125,6 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     const std::string oldName = _storage->getRootFilePathToUpload();
     const std::string newName = _storage->getRootFilePathUploading();
 
-
     if (rename(oldName.c_str(), newName.c_str()) < 0)
     {
         // It's not an error if there was no file to rename, when the document isn't modified.
@@ -2890,6 +2889,10 @@ void DocumentBroker::childSocketTerminated()
 void DocumentBroker::terminateChild(const std::string& closeReason)
 {
     assertCorrectThread();
+
+#if !MOBILEAPP
+    Quarantine::quarantineFile(this, _filename);
+#endif
 
     LOG_INF("Terminating doc [" << _docKey << "] with reason: " << closeReason);
 
