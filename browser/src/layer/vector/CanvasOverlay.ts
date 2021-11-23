@@ -129,6 +129,12 @@ class CanvasOverlay {
 		var mousePos = new cool.Point(position[0], position[1]);
 		var overlaySectionBounds = this.bounds.clone();
 		var splitPos = this.tsManager.getSplitPos();
+		if (this.overlaySection.isCalcRTL()) {
+			// Mirror the mouse position in overlay section coordinates.
+			mousePos.x = overlaySectionBounds.max.x - overlaySectionBounds.min.x - mousePos.x;
+		}
+
+		// overlay section coordinates -> document coordinates
 		if (mousePos.x > splitPos.x)
 			mousePos.x += overlaySectionBounds.min.x;
 		if (mousePos.y > splitPos.y)
