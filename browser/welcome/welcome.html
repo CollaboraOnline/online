@@ -7,33 +7,33 @@
 					<fig id="fig-slide1-c"></fig>
 					<fig id="fig-slide1-r"></fig>
 				</fig>
-				<h1>Explore the new 21.11</h1>
-				<h2>Collabora Online Development Edition</h2>
-				<p>Enjoy the latest developments in online productivity, free for you to use, to explore and to use with others in the browser. Various <a href="https://www.collaboraoffice.com/solutions/collabora-office-android-ios/">apps</a> are also available for mobile. 21.11 introduces important improvements, in the areas of security, performance and user interface.</p>
+				<h1 id="welcome-slide1-heading-1"></h1>
+				<h2 id="welcome-slide1-heading-2"></h2>
+				<p id="welcome-slide1-content"></p>
 				<div id="user-welcome--buttons">
 					<form action="#slide-2">
-						<button type="button" class="ui-pushbutton jsdialog" onclick="onSlideClick('i-slide-2')">Next</button>
+						<button id='welcome-button-next-1' type="button" class="ui-pushbutton jsdialog" onclick="onSlideClick('i-slide-2')"></button>
 					</form>
 				</div>
 			</div>
 			<div id="slide-2">
 				<fig></fig>
-				<h1>Discover all the changes</h1>
-				<h2>Collabora Online Development Edition</h2>
-				<p>Check the <a href="https://www.collaboraoffice.com/press-releases/code-21-11-deliv…nt-collaboration/">release notes</a> and learn all about: The latest milestone in performance particularly for larger groups working on documents; New native sidebar; New re-worked avatar list; Asynchronous save; faster spell checking and more.</p>
+				<h1 id="welcome-slide2-heading-1"></h1>
+				<h2 id="welcome-slide2-heading-2"></h2>
+				<p id="welcome-slide2-content"></p>
 				<div id="user-welcome--buttons">
 					<form action="#slide-3">
-						<button type="button" class="ui-pushbutton jsdialog" onclick="onSlideClick('i-slide-3')">Next</button>
+						<button id='welcome-button-next-2' type="button" class="ui-pushbutton jsdialog" onclick="onSlideClick('i-slide-3')"></button>
 					</form>
 				</div>
 			</div>
 			<div id="slide-3">
 				<fig></fig>
-				<h1>Get involved</h1>
-				<h2>https://CollaboraOnline.github.io/</h2>
-				<p>Are you interested in contributing but don’t know where to start? Head over to the <a href="https://collaboraonline.github.io/post/build-code/">step-by-step instructions</a> and build CODE from scratch. You can also help out with <a href="https://collaboraonline.github.io/post/translate/">translations</a> or by <a href="https://github.com/CollaboraOnline/online/issues/new/choose">filing a bug report</a> with all the essential steps on how to reproduce it.</p>
+				<h1 id="welcome-slide3-heading-1"></h1>
+				<h2 id="welcome-slide3-heading-2"></h2>
+				<p id="welcome-slide3-content"></p>
 				<div id="user-welcome--buttons">
-					<button type="button" class="ui-pushbutton jsdialog" onclick="onClose()">Close</button>
+					<button id='welcome-button-close' type="button" class="ui-pushbutton jsdialog" onclick="vex.closeAll()"></button>
 				</div>
 			</div>
 		</div>
@@ -41,5 +41,5 @@
 		<btn id="i-slide-2" onclick="onSlideClick(this.id)">2</btn>
 		<btn id="i-slide-3" onclick="onSlideClick(this.id)">3</btn>
 	</div>
-	<a id="view-supported-versions" href="https://www.collaboraoffice.com/subscriptions/">Browse enterprise-ready versions</a>
+	<a id="view-supported-versions" href="https://www.collaboraoffice.com/subscriptions/" target="_blank"></a>
 </div>
