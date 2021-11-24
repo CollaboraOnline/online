@@ -1280,6 +1280,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
                 // save as
                 httpHeader.set("X-WOPI-Override", "PUT_RELATIVE");
                 httpHeader.set("X-WOPI-Size", std::to_string(size));
+                LOG_TRC("Save as: suggested target is '" << suggestedTarget << "'.");
                 httpHeader.set("X-WOPI-SuggestedTarget", suggestedTarget);
             }
         }
