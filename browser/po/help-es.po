@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-19 21:19+0200\n"
-"PO-Revision-Date: 2021-11-06 20:44+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2021-11-22 19:49+0000\n"
+"Last-Translator: Eloy Crespo <eloy.crespo@collabora.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "help/es/>\n"
 "Language: es\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1046,6 +1046,8 @@ msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
+"Selecciona celdas de la celda actual hasta una página en la columna actual o "
+"extiende la selección existente una página hacia arriba."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-164
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
@@ -1056,6 +1058,8 @@ msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
+"Selecciona celdas de la celda actual hacia abajo a una página en la columna "
+"actual o extiende la selección existente una página hacia abajo."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:139-168
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
@@ -1069,7 +1073,7 @@ msgid ""
 msgstr ""
 "Mueve el cursor al extremo izquierdo del intervalo de datos actual. Si la "
 "columna a la izquierda de la celda con el cursor está vacía, el cursor se "
-"mueve a la siguiente columna que contenga datos."
+"mueve a la siguiente columna que contenga datos"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-245
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
@@ -2605,19 +2609,18 @@ msgstr ""
 msgid ""
 "Text documents: Microsoft formats DOC, DOCX, RTF. OpenDocument Format ODT"
 msgstr ""
-"Documentos de texto.— Formatos de Microsoft DOC, DOCX y RTF. Formato "
-"OpenDocument ODT."
+"Documentos de texto: Formatos de Microsoft DOC, DOCX y RTF. Formato "
+"OpenDocument ODT"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:528-11
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
 msgstr ""
-"Hojas de cálculo.— Formatos de Microsoft XLS y XLSX. Formato OpenDocument "
-"ODS."
+"Hojas de cálculo: Formatos de Microsoft XLS, XLSX y Formato OpenDocument ODS"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:529-11
 msgid "Presentations: Microsoft formats PPT, PPTX, OpenDocument Format ODP"
 msgstr ""
-"Presentaciones.— Formatos de Microsoft PPT y PPTX. Formato OpenDocument ODP."
+"Presentaciones: Formatos de Microsoft PPT, PPTX y Formato OpenDocument ODP"
 
 #: html/cool-help.html%2Bdiv.h4:531-5
 msgid "How do I save a document with another name?"
@@ -2943,7 +2946,7 @@ msgstr "Ajuste los márgenes de la página en el diálogo."
 
 #: html/cool-help.html%2Bdiv.div.h4:592-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr "¿Cómo cambiar la orientación de la página a horizontal en mi documento?"
+msgstr "Cómo cambiar la orientación de la página a horizontal en mi documento"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:594-11
 msgid ""
@@ -2971,7 +2974,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:597-11
 msgid "Select Landscape in “With Page Style”"
-msgstr "Seleccione Horizontal en «Con estilo de página»."
+msgstr "Seleccione Horizontal en «Con estilo de página»"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:598-11
 msgid "Select if you want to change page numbering."
@@ -2995,7 +2998,7 @@ msgstr "Directamente:"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:604-11
 msgid "Select the text with the existing format"
-msgstr "Seleccione el texto con el formato deseado."
+msgstr "Seleccione el texto con el formato deseado"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p.img:605-11
 #: html/cool-help.html%2Bdiv.div.ol.li.p.img:636-11
