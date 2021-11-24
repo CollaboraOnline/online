@@ -1,6 +1,45 @@
-<h3 id="product-name" style="text-align:center;">Welcome</h3>
-<p style="text-align: center; font-size: medium;background-color: #f9f9f9;border-radius: 20px;">to <a href="https://www.collaboraoffice.com/code-6-4-release-notes/" target="_blank">the new version of CODE</a> – the Collabora Online Development Edition</p>
-<p style="font-size: medium;">Enjoy the latest developments in online productivity, free for you to use, to explore and to use with others. For business and production use we recommend you one of our <a href="https://www.collaboraoffice.com/subscriptions/" target="_blank">supported versions</a>.</p>
-<p style="font-size: medium;">Do visit our website! You’ll learn more about our different productivity solutions. We are always looking for opportunities and partnerships that help us to develop more great open source software!</p>
-<hr style="border-top: 1px dashed #dfdfdf;color: #fff;">
-<p style="font-size: small;opacity: 0.8;">Why not try out our mobile apps - you will find our free <a href="https://www.collaboraoffice.com/press-releases/collabora-office-6-4-our-major-release-now-ready-for-android-ios-and-chrome-os/" target="_blank">Collabora Office for Android &amp; iOS</a> in the app stores. <br> Don’t forget to look at <a href="https://www.collaboraoffice.com/case-studies/" target="_blank">how we help</a> businesses, public administrations and others to be more productive with our professional support and SLA.<br>Send us some feedback!</p>
+<div id="user-welcome">
+	<div class="slider">
+		<div class="slides">
+			<div id="slide-1">
+				<fig>
+					<fig id="fig-slide1-l"></fig>
+					<fig id="fig-slide1-c"></fig>
+					<fig id="fig-slide1-r"></fig>
+				</fig>
+				<h1>Explore the new 21.11</h1>
+				<h2>Collabora Online Development Edition</h2>
+				<p>Enjoy the latest developments in online productivity, free for you to use, to explore and to use with others in the browser. Various <a href="https://www.collaboraoffice.com/solutions/collabora-office-android-ios/">apps</a> are also available for mobile. 21.11 introduces important improvements, in the areas of security, performance and user interface.</p>
+				<div id="user-welcome--buttons">
+					<form action="#slide-2">
+						<button type="button" class="ui-pushbutton jsdialog" onclick="onSlideClick('i-slide-2')">Next</button>
+					</form>
+				</div>
+			</div>
+			<div id="slide-2">
+				<fig></fig>
+				<h1>Discover all the changes</h1>
+				<h2>Collabora Online Development Edition</h2>
+				<p>Check the <a href="https://www.collaboraoffice.com/press-releases/code-21-11-deliv…nt-collaboration/">release notes</a> and learn all about: The latest milestone in performance particularly for larger groups working on documents; New native sidebar; New re-worked avatar list; Asynchronous save; faster spell checking and more.</p>
+				<div id="user-welcome--buttons">
+					<form action="#slide-3">
+						<button type="button" class="ui-pushbutton jsdialog" onclick="onSlideClick('i-slide-3')">Next</button>
+					</form>
+				</div>
+			</div>
+			<div id="slide-3">
+				<fig></fig>
+				<h1>Get involved</h1>
+				<h2>https://CollaboraOnline.github.io/</h2>
+				<p>Are you interested in contributing but don’t know where to start? Head over to the <a href="https://collaboraonline.github.io/post/build-code/">step-by-step instructions</a> and build CODE from scratch. You can also help out with <a href="https://collaboraonline.github.io/post/translate/">translations</a> or by <a href="https://github.com/CollaboraOnline/online/issues/new/choose">filing a bug report</a> with all the essential steps on how to reproduce it.</p>
+				<div id="user-welcome--buttons">
+					<button type="button" class="ui-pushbutton jsdialog" onclick="onClose()">Close</button>
+				</div>
+			</div>
+		</div>
+		<btn id="i-slide-1" class="active" onclick="onSlideClick(this.id)">1</btn>
+		<btn id="i-slide-2" onclick="onSlideClick(this.id)">2</btn>
+		<btn id="i-slide-3" onclick="onSlideClick(this.id)">3</btn>
+	</div>
+	<a id="view-supported-versions" href="https://www.collaboraoffice.com/subscriptions/">Browse enterprise-ready versions</a>
+</div>
