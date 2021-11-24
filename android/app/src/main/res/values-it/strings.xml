@@ -110,4 +110,7 @@
     <string name="theme_system_default">Predefinito del sistema</string>
     <string name="choose_theme">Scegli il tema</string>
     <string name="theme">Tema</string>
+    <string name="pref_user_name">Nome utente</string>
+    <string name="pref_user_name_info">Usato quando si aggiunge un commento</string>
+    <string name="pref_user_name_guest">Utente ospite</string>
 </resources>

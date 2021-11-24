@@ -2,18 +2,18 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 # Translators:
 # Andras Timar <andras.timar@collabora.com>, 2020
 # Marc Rodrigues <info@sustain-release.de>, 2020
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-19 21:19+0100\n"
-"PO-Revision-Date: 2021-11-20 14:41+0000\n"
-"Last-Translator: FW <weblate.scordium@slmail.me>\n"
+"PO-Revision-Date: 2021-11-20 21:17+0000\n"
+"Last-Translator: J. Lavoie <j.lavoie@net-c.ca>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -175,8 +175,7 @@ msgstr ""
 
 #: admin/admin.strings.js:42
 msgid "Maximum Document process stack memory (in KB) - reduce only"
-msgstr ""
-"Maximaler Stapelspeicher für Dokumentenprozess (in kB) - nur reduzieren"
+msgstr "Maximaler Stapelspeicher für Dokumentenprozess (in kB) - nur reduzieren"
 
 #: admin/admin.strings.js:43
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
@@ -425,7 +424,7 @@ msgstr "Funktions-Assistent"
 
 #: src/control/Control.FormulaBar.js:46
 msgid "cell address"
-msgstr "Mobiltelefon"
+msgstr "Zelladresse"
 
 #: src/control/Control.JSDialogBuilder.js:398
 msgid "Solid"
@@ -788,7 +787,7 @@ msgstr "Sind Sie sicher, dass Sie diese Folie löschen möchten?"
 
 #: src/control/Control.Menubar.js:1758
 msgid "file type icon"
-msgstr "Dateitypen-Ikone"
+msgstr "Dateitypen-Symbol"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:121
@@ -1948,8 +1947,7 @@ msgstr "Kopieren aus dem Dokument deaktiviert"
 
 #: src/map/Clipboard.js:287
 msgid "Failed to download clipboard, please re-copy"
-msgstr ""
-"Fehler beim Herunterladen der Zwischenablage, bitte kopieren Sie erneut"
+msgstr "Fehler beim Herunterladen der Zwischenablage, bitte kopieren Sie erneut"
 
 #: src/map/Clipboard.js:843
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
@@ -1968,10 +1966,11 @@ msgid ""
 msgstr ""
 "<p>Ihr Browser hat nur sehr eingeschränkten Zugriff auf die Zwischenablage, "
 "verwenden Sie daher diese Tastenkombinationen:</p><table class=\"warn-copy-"
-"paste\"><tr><td><kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>C</"
-"kbd></td><td><kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></"
-"td><td><kbd>Strg</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></"
-"tr><tr><td>Kopieren</td><td>Ausschneiden</td><td>Einfügen</td></tr></table>"
+"paste\"><tr><td><kbd>Strg</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd></td><td><kbd>Strg</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd></td><td><kbd>Strg</kbd><span class=\"kbd--plus\">+</spa"
+"n><kbd>V</kbd></td></tr><tr><td>Kopieren</td><td>Ausschneiden</td><td>Einfüge"
+"n</td></tr></table>"
 
 #: src/map/Clipboard.js:866
 msgid ""
@@ -2012,7 +2011,7 @@ msgstr "Inaktives Dokument"
 
 #: src/map/Map.js:1429
 msgid "Please click to resume editing"
-msgstr "Bitte tippen zum weiteren Editieren"
+msgstr "Bitte tippen zum weiteren Bearbeiten"
 
 #: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
@@ -2046,10 +2045,10 @@ msgid ""
 "more options</p><p class=\"vex-footnote\">Close popup to ignore paste "
 "special</p>"
 msgstr ""
-"<p>Ihr Browser hat nur sehr eingeschränkten Zugriff auf die Zwischenablage</"
-"p><p>Bitte drücken Sie jetzt: <kbd>Strg</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>V</kbd>, um weitere Optionen zu sehen</p><p class=\"vex-footnote"
-"\">Popup schließen, um Einfüge-Spezial zu ignorieren</p>"
+"<p>Ihr Browser hat nur sehr eingeschränkten Zugriff auf die "
+"Zwischenablage</p><p>Bitte drücken Sie jetzt: <kbd>Strg</kbd><span class=\""
+"kbd--plus\">+</span><kbd>V</kbd>, um weitere Optionen zu sehen</p><p class"
+"=\"vex-footnote\">Popup schließen, um Einfüge-Spezial zu ignorieren</p>"
 
 #: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
@@ -2071,16 +2070,16 @@ msgstr "Kopie erstellen …"
 #~ msgstr "vor %d Minuten"
 
 #~ msgid ""
-#~ "IE11 has reached its maximum number of connections. Please see this "
-#~ "document to increase this limit if needed: https://docs.microsoft.com/en-"
-#~ "us/previous-versions/windows/internet-explorer/ie-developer/general-info/"
+#~ "IE11 has reached its maximum number of connections. Please see this document "
+#~ "to increase this limit if needed: https://docs.microsoft.com/en-us/previous-"
+#~ "versions/windows/internet-explorer/ie-developer/general-info/"
 #~ "ee330736(v=vs.85)#websocket-maximum-server-connections"
 #~ msgstr ""
-#~ "IE11 hat die maximale Anzahl an Verbindungen erreicht. Falls benötigt, "
-#~ "lesen Sie in diesem Dokument nach, wie Sie diese Grenze erhöhen können: "
-#~ "https://docs.microsoft.com/en-us/previous-versions/windows/internet-"
-#~ "explorer/ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-"
-#~ "server-connections"
+#~ "IE11 hat die maximale Anzahl an Verbindungen erreicht. Falls benötigt, lesen "
+#~ "Sie in diesem Dokument nach, wie Sie diese Grenze erhöhen können: "
+#~ "https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/"
+#~ "ie-developer/general-info/ee330736(v=vs.85)#websocket-maximum-server-"
+#~ "connections"
 
 #~ msgid "Start upload"
 #~ msgstr "Upload starten"
@@ -2111,17 +2110,17 @@ msgstr "Kopie erstellen …"
 #~ "keyboard shortcuts:<ul><li><b>Ctrl+C</b>: For copying.</li><li><b>Ctrl+X</"
 #~ "b>: For cutting.</li><li><b>Ctrl+V</b>: For pasting.</li></ul></p>"
 #~ msgstr ""
-#~ "<p>Ihr Browser hat nur sehr eingeschränkten Zugriff auf die "
-#~ "Zwischenablage, verwenden Sie deshalb nur folgende Tastaturkürzel:"
-#~ "<ul><li><b>Strg+C</b>: Zum Kopieren.</li><li><b>Strg+X</b>: Zum "
-#~ "Ausschneiden.</li><li><b>Strg+V</b>: Zum Einfügen.</li></ul></p>"
+#~ "<p>Ihr Browser hat nur sehr eingeschränkten Zugriff auf die Zwischenablage, "
+#~ "verwenden Sie deshalb nur folgende Tastaturkürzel:<ul><li><b>Strg+C</b>: Zum "
+#~ "Kopieren.</li><li><b>Strg+X</b>: Zum Ausschneiden.</li><li><b>Strg+V</b>: "
+#~ "Zum Einfügen.</li></ul></p>"
 
 #~ msgid "Subtitle"
 #~ msgstr "Untertitel"
 
 #~ msgid ""
-#~ "The Personal edition is supported by volunteers and intended for "
-#~ "individual use."
+#~ "The Personal edition is supported by volunteers and intended for individual "
+#~ "use."
 #~ msgstr ""
 #~ "Die Personal Edition wird von Freiwilligen unterstützt und ist für den "
 #~ "individuellen Gebrauch bestimmt."
