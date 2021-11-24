@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-19 21:19+0100\n"
-"PO-Revision-Date: 2021-11-18 08:06+0000\n"
+"PO-Revision-Date: 2021-11-20 21:17+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9.1-dev\n"
+"X-Generator: Weblate 4.9.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -420,7 +420,7 @@ msgstr "Függvényvarázsló"
 
 #: src/control/Control.FormulaBar.js:46
 msgid "cell address"
-msgstr ""
+msgstr "cella címe"
 
 #: src/control/Control.JSDialogBuilder.js:398
 msgid "Solid"
@@ -783,7 +783,7 @@ msgstr "Biztosan törölni szeretné ezt a diát?"
 
 #: src/control/Control.Menubar.js:1758
 msgid "file type icon"
-msgstr ""
+msgstr "fájltípus ikon"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:121
@@ -1071,7 +1071,7 @@ msgstr "Cím"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
-msgstr ""
+msgstr "oldal előnézete "
 
 #: src/control/Control.PresentationBar.js:100
 msgid "Are you sure you want to delete this page?"
