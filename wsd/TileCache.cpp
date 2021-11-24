@@ -249,7 +249,9 @@ bool TileCache::getTextStream(StreamType type, const std::string& fileName, std:
     Tile textStream = lookupCachedStream(type, fileName);
     if (!textStream)
     {
-        LOG_ERR("Could not open " << fileName);
+        // This is not an error because the first time
+        // we lookup a file, it won't be in the cache.
+        LOG_INF("Could not open " << fileName);
         return false;
     }
 
