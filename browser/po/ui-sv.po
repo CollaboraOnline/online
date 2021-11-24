@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-24 11:14+0100\n"
+"POT-Creation-Date: 2021-11-24 20:28+0100\n"
 "PO-Revision-Date: 2021-11-22 19:49+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
@@ -221,6 +221,7 @@ msgstr "Loggnivåer"
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
 #: src/control/Parts.js:421 src/control/Signing.js:608
+#: src/control/Toolbar.js:628
 msgid "Close"
 msgstr "Stäng"
 
@@ -259,7 +260,7 @@ msgstr "Är du säker på att du vill avsluta sessionen?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1634
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:862
+#: src/control/Control.Tabs.js:322 src/control/Toolbar.js:892
 #: src/core/Socket.js:954
 msgid "OK"
 msgstr "OK"
@@ -268,7 +269,7 @@ msgstr "OK"
 #: src/control/Control.Command.js:90 src/control/Control.LanguageDialog.js:86
 #: src/control/Control.Menubar.js:1635 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:863
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:893
 #: src/core/Socket.js:955 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
@@ -967,7 +968,7 @@ msgstr "Fraktion"
 msgid "Boolean Value"
 msgstr "Boolskt värde"
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:858
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:888
 msgid "Text"
 msgstr "Text"
 
@@ -1493,34 +1494,95 @@ msgstr "Sparar..."
 msgid "Renaming..."
 msgstr "Byter namn..."
 
-#: src/control/Toolbar.js:562
+#: src/control/Toolbar.js:574
 msgid "I understand the risks"
 msgstr "Jag förstår riskerna"
 
-#: src/control/Toolbar.js:584
+#: src/control/Toolbar.js:596
 msgid "Dismiss"
 msgstr "Avfärda"
 
-#: src/control/Toolbar.js:649
+#: src/control/Toolbar.js:614
+#, javascript-format
+msgid "Explore the new %coolVersion"
+msgstr ""
+
+#: src/control/Toolbar.js:615 src/control/Toolbar.js:619
+msgid "Collabora Online Development Edition"
+msgstr ""
+
+#: src/control/Toolbar.js:616
+#, javascript-format
+msgid ""
+"Enjoy the latest developments in online productivity, free for you to use, "
+"to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
+"target=\"_blank\">Apps</a> are also available for Android and iOS. "
+"%coolVersion introduces important improvements, in the areas of usability, "
+"visual presentation and performance."
+msgstr ""
+
+#: src/control/Toolbar.js:618
+msgid "Discover all the changes"
+msgstr ""
+
+#: src/control/Toolbar.js:620
+#, javascript-format
+msgid ""
+"Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
+"a> and learn all about the latest milestone in performance particularly for "
+"larger groups working on documents, new native sidebar, new re-worked avatar "
+"list, asynchronous saving, faster spell checking and more."
+msgstr ""
+
+#: src/control/Toolbar.js:622
+msgid "Integrate Collabora Online into your webapp"
+msgstr ""
+
+#: src/control/Toolbar.js:623
+msgid "Or get involved in the development"
+msgstr ""
+
+#: src/control/Toolbar.js:624
+#, javascript-format
+msgid ""
+"Learn more about integrating into your web application in the <a href="
+"\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
+"the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
+"instructions</a> and build CODE from scratch. You can also help out with <a "
+"href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
+"href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
+"all the essential steps on how to reproduce it."
+msgstr ""
+
+#: src/control/Toolbar.js:626 src/control/Toolbar.js:627
+#, fuzzy
+msgid "Next"
+msgstr "Text"
+
+#: src/control/Toolbar.js:630
+msgid "Learn more about the enterprise-ready versions"
+msgstr ""
+
+#: src/control/Toolbar.js:679
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 "Vi är ledsna, informationen om de senaste uppdateringarna är inte "
 "tillgänglig."
 
-#: src/control/Toolbar.js:699
+#: src/control/Toolbar.js:729
 msgid "This version of %productName is powered by"
 msgstr "Denna version av %productName drivs av"
 
-#: src/control/Toolbar.js:709
+#: src/control/Toolbar.js:739
 msgid "\"Slow Proxy\""
 msgstr "\"Långsam proxy\""
 
-#: src/control/Toolbar.js:855
+#: src/control/Toolbar.js:885
 msgid "Insert hyperlink"
 msgstr "Lägg in hyperlänk"
 
-#: src/control/Toolbar.js:859
+#: src/control/Toolbar.js:889
 msgid "Link"
 msgstr "Länk"
 
