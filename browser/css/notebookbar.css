@@ -435,7 +435,7 @@
 	padding-right: 0px;
 }
 
-#BackColor.notebookbar, #CharBackColor.notebookbar { /* remove when #2149 is fixed*/
+#CharBackColor.notebookbar { /* remove when #2149 is fixed in impress/draw*/
 	margin-left: 44px !important;
 }
 
