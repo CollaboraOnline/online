@@ -63,7 +63,7 @@
 	display: none;
 }
 .main-nav {
-	height: 32px; /* on mouseover menubar items, border emerges */
+	height: 38px; /* on mouseover menubar items, border emerges */
 	width: auto;
 	background: #ffffff;
 	padding: 3px 3px 3px 0;
@@ -74,6 +74,9 @@
 .main-nav.readonly {
 	position: relative;
 	border-bottom: 1px solid var(--gray-light-bg-color);
+}
+.main-nav.hasnotebookbar {
+	height: 32px;
 }
 .main-nav.hasnotebookbar:not(.readonly) {
 	background: var(--gray-light-bg-color);
@@ -111,9 +114,7 @@
 }
 
 .lo-menu > li > a, .lo-menu > li > a.has-submenu {
-	padding-left: 15px;
-	padding-right: 15px;
-	padding-top: 8px;
+	padding: 8px;
 	z-index: 400;
 	border-left: 1px solid #ffffff;
 	border-right: 1px solid #ffffff;
