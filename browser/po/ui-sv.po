@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-19 21:19+0100\n"
-"PO-Revision-Date: 2021-09-30 12:38+0000\n"
+"PO-Revision-Date: 2021-11-22 19:49+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -357,7 +357,7 @@ msgstr "Servern stötte på ett %0-fel vid utförandet av kommandot %1."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "Lås upp"
 
 #: src/control/Control.ContextMenu.js:180
 msgid "Delete"
@@ -417,7 +417,7 @@ msgstr "Funktionsguide"
 
 #: src/control/Control.FormulaBar.js:46
 msgid "cell address"
-msgstr ""
+msgstr "celladress"
 
 #: src/control/Control.JSDialogBuilder.js:398
 msgid "Solid"
@@ -689,7 +689,7 @@ msgstr "Senaste uppdateringarna"
 #: src/control/Control.Menubar.js:909 src/control/Control.Menubar.js:979
 #: src/control/Control.NotebookbarWriter.js:263
 msgid "Send Feedback"
-msgstr ""
+msgstr "Skicka synpunkter"
 
 #: src/control/Control.Menubar.js:300 src/control/Control.Menubar.js:429
 #: src/control/Control.Menubar.js:540 src/control/Control.Menubar.js:752
@@ -780,7 +780,7 @@ msgstr "Är du säker på att du vill ta bort presentationsbilden?"
 
 #: src/control/Control.Menubar.js:1758
 msgid "file type icon"
-msgstr ""
+msgstr "filtypsikon"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:121
@@ -833,23 +833,23 @@ msgstr "Lägg in lokal bild"
 
 #: src/control/Control.NotebookbarBuilder.js:614
 msgid "Very Tight"
-msgstr ""
+msgstr "Mycket tätt"
 
 #: src/control/Control.NotebookbarBuilder.js:615
 msgid "Tight"
-msgstr ""
+msgstr "Tätt"
 
 #: src/control/Control.NotebookbarBuilder.js:616
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: src/control/Control.NotebookbarBuilder.js:617
 msgid "Loose"
-msgstr ""
+msgstr "Brett"
 
 #: src/control/Control.NotebookbarBuilder.js:618
 msgid "Very Loose"
-msgstr ""
+msgstr "Mycket brett"
 
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarDraw.js:79
@@ -1038,7 +1038,6 @@ msgid "ODF Presentation (.odp)"
 msgstr "ODF-presentation (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:980
-#, fuzzy
 msgid "Reset Zoom"
 msgstr "Återställ zoomning"
 
@@ -1069,7 +1068,7 @@ msgstr "Titel"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
-msgstr ""
+msgstr "förhandsgranskning av sidan "
 
 #: src/control/Control.PresentationBar.js:100
 msgid "Are you sure you want to delete this page?"
@@ -1212,7 +1211,6 @@ msgid "Move Sheet Right"
 msgstr "Flytta blad åt höger"
 
 #: src/control/Control.Tabs.js:303
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Är du säker på att du vill ta bort bladet, %sheet%?"
 
@@ -1444,9 +1442,8 @@ msgid "Signature broken"
 msgstr "Signaturen är trasig"
 
 #: src/control/Signing.js:630
-#, fuzzy
 msgid "The signature was valid, but the document has been modified."
-msgstr "Signaturen var giltig, men dokumentet har ändrats"
+msgstr "Signaturen var giltig, men dokumentet har ändrats."
 
 #: src/control/Signing.js:632
 msgid "Signed but document modified"
@@ -1461,9 +1458,8 @@ msgid "Signed but not validated"
 msgstr "Signerad men inte validerad"
 
 #: src/control/Signing.js:640
-#, fuzzy
 msgid "The signature is OK, but the document is only partially signed."
-msgstr "Signaturen är OK, men dokumentet är endast delvis signerat"
+msgstr "Signaturen är OK, men dokumentet är endast delvis signerat."
 
 #: src/control/Signing.js:642
 msgid "Signed but not all files are signed"
@@ -1474,10 +1470,12 @@ msgid ""
 "The signature is OK, but the certificate could not be validated and the "
 "document is only partially signed."
 msgstr ""
+"Signaturen är OK, men certifikatet kunde inte valideras och dokumentet är "
+"endast delvis signerat."
 
 #: src/control/Signing.js:647
 msgid "Signed but not validated and not all files are signed"
-msgstr ""
+msgstr "Signerad men inte validerad och inte alla filer är signerade"
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -1501,7 +1499,7 @@ msgstr "Jag förstår riskerna"
 
 #: src/control/Toolbar.js:584
 msgid "Dismiss"
-msgstr ""
+msgstr "Avfärda"
 
 #: src/control/Toolbar.js:649
 msgid ""
@@ -1594,7 +1592,7 @@ msgstr ""
 
 #: src/core/Socket.js:700
 msgid "Reloading the document after rename"
-msgstr ""
+msgstr "Ladda om dokumentet efter att ha bytt namn"
 
 #: src/core/Socket.js:819
 msgid ""
@@ -1663,9 +1661,8 @@ msgid ""
 msgstr "Kan inte ansluta till ditt dokument. Vänligen försök igen."
 
 #: src/core/Socket.js:1429
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "Ansluter..."
+msgstr "Ansluter ..."
 
 #: src/core/Socket.js:1435
 msgid "The server has been disconnected."
@@ -1757,11 +1754,10 @@ msgid "Invalid link: '%url'"
 msgstr "Ogiltig länk: '%url'"
 
 #: src/errormessages.js:25
-#, fuzzy
 msgid ""
 "You are leaving the editor, are you sure you want to visit the following URL?"
 msgstr ""
-"Du lämnar redigeringsprogrammet, är du säker att du vill gå till '%url'?"
+"Du lämnar redigeringsprogrammet, är du säker att du vill gå till url:en?"
 
 #: src/errormessages.js:26
 msgid ""
@@ -1773,13 +1769,15 @@ msgstr ""
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
-msgstr ""
+msgstr "Rensning av dokumentet från förra sessionen."
 
 #: src/errormessages.js:28
 msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
 msgstr ""
+"Vi håller på att städa upp dokumentet från den senaste sessionen, försök "
+"igen senare."
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
@@ -1879,12 +1877,11 @@ msgstr "Lös"
 
 #: src/layer/tile/CommentListSection.ts:798
 msgid "Unresolve"
-msgstr ""
+msgstr "Lämnat olöst"
 
 #: src/layer/tile/CommentListSection.ts:804
-#, fuzzy
 msgid "Unresolve Thread"
-msgstr "Lös tråd"
+msgstr "Markera tråden olöst"
 
 #: src/layer/tile/CommentListSection.ts:804
 msgid "Resolve Thread"
@@ -1904,7 +1901,7 @@ msgstr "Avslå ändring"
 
 #: src/main.js:88
 msgid "Warning! The browser you are using is not supported."
-msgstr ""
+msgstr "Varning! Den webbläsare du använder stöds inte."
 
 #: src/map/Clipboard.js:120
 msgid "To paste outside %productName, please first click the 'download' button"
@@ -1972,15 +1969,15 @@ msgstr "Initierar..."
 
 #: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428
 msgid "Last saved:"
-msgstr ""
+msgstr "Senast sparad:"
 
 #: src/map/Map.js:1428
 msgid "Inactive document"
-msgstr ""
+msgstr "Inaktivt dokument"
 
 #: src/map/Map.js:1429
 msgid "Please click to resume editing"
-msgstr ""
+msgstr "Klicka för att återuppta redigeringen"
 
 #: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
@@ -2011,6 +2008,10 @@ msgid ""
 "more options</p><p class=\"vex-footnote\">Close popup to ignore paste "
 "special</p>"
 msgstr ""
+"<p> Din webbläsare har mycket begränsad tillgång till urklipp</p><p>Vänligen "
+"tryck nu: <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> för "
+"att se fler alternativ</p><p class=\"vex-footnote\">Stäng för att ignorera "
+"klistra in special</p>"
 
 #: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
