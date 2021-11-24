@@ -458,14 +458,26 @@ bool FileServerRequestHandler::isAdminLoggedIn(const HTTPRequest& request,
             }
 
             std::streamsize size = request.getContentLength();
-            char buffer[size];
-            message.read(buffer, size);
-            LocalFileInfo::fileInfoVec[i].fileLastModifiedTime = std::chrono::system_clock::now();
-
             std::ofstream outfile;
             outfile.open(LocalFileInfo::fileInfoVec[i].localPath, std::ofstream::binary);
-            outfile.write(buffer, size);
+            constexpr std::streamsize bufferSize = 1024 * 1024;
+            std::unique_ptr<char[]> buffer(new char[bufferSize]);
+            if (size > bufferSize)
+            {
+                int numberOfChunks = (size / bufferSize) + 1;
+                for (int j=0; j<numberOfChunks; j++) {
+                    message.read(buffer.get(), bufferSize);
+                    outfile.write(buffer.get(), size);
+                }
+            }
+            else
+            {
+                message.read(buffer.get(), bufferSize);
+                outfile.write(buffer.get(), size);
+            }
             outfile.close();
+
+            LocalFileInfo::fileInfoVec[i].fileLastModifiedTime = std::chrono::system_clock::now();
 
             const std::string body = "{\"LastModifiedTime\": \"" +
                                         Util::getIso8601FracformatTime(LocalFileInfo::fileInfoVec[i].fileLastModifiedTime) +
