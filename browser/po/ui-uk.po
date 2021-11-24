@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-19 21:19+0100\n"
+"POT-Creation-Date: 2021-11-24 11:14+0100\n"
 "PO-Revision-Date: 2021-11-20 21:17+0000\n"
 "Last-Translator: Ihor Hordiichuk <igor_ck@outlook.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/uk/>\n"
-"Language: uk\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.9.1\n"
 
 #: admin/admin.strings.js:6
@@ -261,7 +261,7 @@ msgstr "Ви справді бажаєте закінчити цей сеанс?
 #: src/control/Control.Menubar.js:1634
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:862
-#: src/core/Socket.js:951
+#: src/core/Socket.js:954
 msgid "OK"
 msgstr "OK"
 
@@ -270,7 +270,7 @@ msgstr "OK"
 #: src/control/Control.Menubar.js:1635 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:863
-#: src/core/Socket.js:952 src/layer/tile/CommentListSection.ts:395
+#: src/core/Socket.js:955 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Скасувати"
@@ -1539,41 +1539,49 @@ msgstr "Сервер уже доступний..."
 msgid "RELOAD"
 msgstr "ПЕРЕЗАВАНТАЖИТИ"
 
-#: src/core/Socket.js:515
+#: src/core/Socket.js:504
+msgid "COOLWSD version:"
+msgstr ""
+
+#: src/core/Socket.js:516
 msgid "Served by:"
 msgstr "Працює на:"
 
-#: src/core/Socket.js:520
+#: src/core/Socket.js:522
 msgid "Unsupported server version."
 msgstr "Непідтримувана версія сервера."
 
-#: src/core/Socket.js:637
+#: src/core/Socket.js:526
+msgid "LOKit version:"
+msgstr ""
+
+#: src/core/Socket.js:640
 msgid "Session terminated by document owner"
 msgstr "Сесія припинена власником документу"
 
-#: src/core/Socket.js:642
+#: src/core/Socket.js:645
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Неактивний документ - клацніть для перезавантаження і відновлення редагування"
 
-#: src/core/Socket.js:644
+#: src/core/Socket.js:647
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Неактивний документ - торкніть для перезавантаження і відновлення редагування"
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:655
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Сервер вимикається на технічне обслуговування (автозбереження)"
 
-#: src/core/Socket.js:656
+#: src/core/Socket.js:659
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ой, виникла проблема під час з’єднання з документом"
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:663
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Сервер не працює, перезапускається автоматично. Будь ласка, зачекайте."
 
-#: src/core/Socket.js:688
+#: src/core/Socket.js:691
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1581,7 +1589,7 @@ msgstr ""
 "Документ змінено у сховищі. Завантажую новий документ. Ваш варіант буде "
 "доступний як версія."
 
-#: src/core/Socket.js:694
+#: src/core/Socket.js:697
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1589,70 +1597,70 @@ msgstr ""
 "Відновлення старішої версії. Незбережені зміни будуть доступн в історії "
 "версій"
 
-#: src/core/Socket.js:700
+#: src/core/Socket.js:703
 msgid "Reloading the document after rename"
 msgstr "Перезавантаження документа після перейменування"
 
-#: src/core/Socket.js:819
+#: src/core/Socket.js:822
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
 "Документ було змінено у сховищі. Що зробити зі своїми незбереженими змінами?"
 
-#: src/core/Socket.js:823
+#: src/core/Socket.js:826
 msgid "Discard"
 msgstr "Відхилити"
 
-#: src/core/Socket.js:828
+#: src/core/Socket.js:831
 msgid "Overwrite"
 msgstr "Перезаписати"
 
-#: src/core/Socket.js:833
+#: src/core/Socket.js:836
 msgid "Save to new file"
 msgstr "Зберегти в новий файл"
 
-#: src/core/Socket.js:903
+#: src/core/Socket.js:906
 msgid "Document requires password to view."
 msgstr "Документ вимагає пароль для перегляду."
 
-#: src/core/Socket.js:906
+#: src/core/Socket.js:909
 msgid "Document requires password to modify."
 msgstr "Документ вимагає пароль для редагування."
 
-#: src/core/Socket.js:908
+#: src/core/Socket.js:911
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Натисніть Скасувати для відкриття у режимі перегляду."
 
-#: src/core/Socket.js:912
+#: src/core/Socket.js:915
 msgid "Wrong password provided. Please try again."
 msgstr "Надано неправильний пароль. Спробуйте знову."
 
-#: src/core/Socket.js:1021
+#: src/core/Socket.js:1024
 msgid "Someone"
 msgstr "Хтось"
 
-#: src/core/Socket.js:1023
+#: src/core/Socket.js:1026
 msgid " saved this document as "
 msgstr " зберігає цей документ як "
 
-#: src/core/Socket.js:1023
+#: src/core/Socket.js:1026
 msgid ". Do you want to join?"
 msgstr ". Бажаєте приєднатися?"
 
-#: src/core/Socket.js:1032
+#: src/core/Socket.js:1035
 msgid "Loading..."
 msgstr "Завантаження…"
 
-#: src/core/Socket.js:1032
+#: src/core/Socket.js:1035
 msgid "Connecting..."
 msgstr "З'єднання..."
 
-#: src/core/Socket.js:1050
+#: src/core/Socket.js:1053
 msgid "The document is being renamed and will reload shortly"
 msgstr "Документ перейменовується і незабаром перезавантажиться"
 
-#: src/core/Socket.js:1412
+#: src/core/Socket.js:1416
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1660,11 +1668,11 @@ msgstr ""
 "Нам ганьба, бо ми не можемо під'єднатися до вашого документа. Будь ласка, "
 "спробуйте знову."
 
-#: src/core/Socket.js:1429
+#: src/core/Socket.js:1433
 msgid "Reconnecting..."
 msgstr "Повторне з'єднання..."
 
-#: src/core/Socket.js:1435
+#: src/core/Socket.js:1439
 msgid "The server has been disconnected."
 msgstr "Сервер від'єднано."
 
@@ -1969,15 +1977,15 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Започаткування…"
 
-#: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428
+#: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428 src/map/Map.js:431
 msgid "Last saved:"
 msgstr "Востаннє збережено:"
 
-#: src/map/Map.js:1428
+#: src/map/Map.js:1433
 msgid "Inactive document"
 msgstr "Неактивний документ"
 
-#: src/map/Map.js:1429
+#: src/map/Map.js:1434
 msgid "Please click to resume editing"
 msgstr "Клацніть, щоб відновити редагування"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-19 21:19+0100\n"
+"POT-Creation-Date: 2021-11-24 11:14+0100\n"
 "PO-Revision-Date: 2021-11-07 22:01+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
@@ -263,7 +263,7 @@ msgstr "Weet u zeker dat u deze sessie wilt afbreken?"
 #: src/control/Control.Menubar.js:1634
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:862
-#: src/core/Socket.js:951
+#: src/core/Socket.js:954
 msgid "OK"
 msgstr "OK"
 
@@ -272,7 +272,7 @@ msgstr "OK"
 #: src/control/Control.Menubar.js:1635 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:863
-#: src/core/Socket.js:952 src/layer/tile/CommentListSection.ts:395
+#: src/core/Socket.js:955 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Annuleren"
@@ -1546,39 +1546,47 @@ msgstr "Server is nu bereikbaar..."
 msgid "RELOAD"
 msgstr "OPNIEUW LADEN"
 
-#: src/core/Socket.js:515
+#: src/core/Socket.js:504
+msgid "COOLWSD version:"
+msgstr ""
+
+#: src/core/Socket.js:516
 msgid "Served by:"
 msgstr "Bediend door:"
 
-#: src/core/Socket.js:520
+#: src/core/Socket.js:522
 msgid "Unsupported server version."
 msgstr "Niet-ondersteunde serverversie."
 
-#: src/core/Socket.js:637
+#: src/core/Socket.js:526
+msgid "LOKit version:"
+msgstr ""
+
+#: src/core/Socket.js:640
 msgid "Session terminated by document owner"
 msgstr "Sessie beëindigd door document-eigenaar"
 
-#: src/core/Socket.js:642
+#: src/core/Socket.js:645
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Niet actief document - klik om het bewerken te hervatten"
 
-#: src/core/Socket.js:644
+#: src/core/Socket.js:647
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "Niet actief document - tap om het bewerken te hervatten"
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:655
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Server wordt afgesloten voor onderhoud (automatische-opslag)"
 
-#: src/core/Socket.js:656
+#: src/core/Socket.js:659
 msgid "Oops, there is a problem connecting the document"
 msgstr "Oeps, er is een probleem met de toegang tot het document"
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:663
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Server niet beschikbaar, automatisch herstarten. Even geduld a.u.b."
 
-#: src/core/Socket.js:688
+#: src/core/Socket.js:691
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1586,7 +1594,7 @@ msgstr ""
 "Het document is in de opslag gewijzigd. Het document opnieuw laden. Uw "
 "versie is beschikbaar als revisie."
 
-#: src/core/Socket.js:694
+#: src/core/Socket.js:697
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1594,11 +1602,11 @@ msgstr ""
 "Oudere revisie herstellen. Niet-opgeslagen wijzigingen zijn beschikbaar in "
 "de versiegeschiedenis"
 
-#: src/core/Socket.js:700
+#: src/core/Socket.js:703
 msgid "Reloading the document after rename"
 msgstr "Document opnieuw laden na hernoemen"
 
-#: src/core/Socket.js:819
+#: src/core/Socket.js:822
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1606,59 +1614,59 @@ msgstr ""
 "Document is gewijzigd tijdens opslag. Wat zou wilt u doen met uw niet-"
 "opgeslagen wijzigingen?"
 
-#: src/core/Socket.js:823
+#: src/core/Socket.js:826
 msgid "Discard"
 msgstr "Verwerpen"
 
-#: src/core/Socket.js:828
+#: src/core/Socket.js:831
 msgid "Overwrite"
 msgstr "Overschrijven"
 
-#: src/core/Socket.js:833
+#: src/core/Socket.js:836
 msgid "Save to new file"
 msgstr "Als nieuw bestand opslaan"
 
-#: src/core/Socket.js:903
+#: src/core/Socket.js:906
 msgid "Document requires password to view."
 msgstr "Er is een wachtwoord nodig om dit document te bekijken."
 
-#: src/core/Socket.js:906
+#: src/core/Socket.js:909
 msgid "Document requires password to modify."
 msgstr "Er is een wachtwoord nodig om dit document te bewerken."
 
-#: src/core/Socket.js:908
+#: src/core/Socket.js:911
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Klik Cancel om het in alleen-lezen modus te openen."
 
-#: src/core/Socket.js:912
+#: src/core/Socket.js:915
 msgid "Wrong password provided. Please try again."
 msgstr "Verkeer wachtwoord ingevoerd. Probeer aub opnieuw."
 
-#: src/core/Socket.js:1021
+#: src/core/Socket.js:1024
 msgid "Someone"
 msgstr "Iemand"
 
-#: src/core/Socket.js:1023
+#: src/core/Socket.js:1026
 msgid " saved this document as "
 msgstr " document opslaan als "
 
-#: src/core/Socket.js:1023
+#: src/core/Socket.js:1026
 msgid ". Do you want to join?"
 msgstr ". Wil je meedoen?"
 
-#: src/core/Socket.js:1032
+#: src/core/Socket.js:1035
 msgid "Loading..."
 msgstr "Laden…"
 
-#: src/core/Socket.js:1032
+#: src/core/Socket.js:1035
 msgid "Connecting..."
 msgstr "Bezig met verbinden..."
 
-#: src/core/Socket.js:1050
+#: src/core/Socket.js:1053
 msgid "The document is being renamed and will reload shortly"
 msgstr "Het document wordt hernoemd en zal binnenkort opnieuw worden geladen"
 
-#: src/core/Socket.js:1412
+#: src/core/Socket.js:1416
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1666,11 +1674,11 @@ msgstr ""
 "Ach, dit is vervelend. We kunnen geen verbinding maken met uw document. "
 "Probeer het aub opnieuw."
 
-#: src/core/Socket.js:1429
+#: src/core/Socket.js:1433
 msgid "Reconnecting..."
 msgstr "Opnieuw verbinden..."
 
-#: src/core/Socket.js:1435
+#: src/core/Socket.js:1439
 msgid "The server has been disconnected."
 msgstr "De verbinding met de server is verbroken."
 
@@ -1979,15 +1987,15 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Initialiseren…"
 
-#: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428
+#: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428 src/map/Map.js:431
 msgid "Last saved:"
 msgstr ""
 
-#: src/map/Map.js:1428
+#: src/map/Map.js:1433
 msgid "Inactive document"
 msgstr ""
 
-#: src/map/Map.js:1429
+#: src/map/Map.js:1434
 msgid "Please click to resume editing"
 msgstr ""
 

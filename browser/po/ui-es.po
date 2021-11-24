@@ -6,12 +6,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-19 21:19+0100\n"
+"POT-Creation-Date: 2021-11-24 11:14+0100\n"
 "PO-Revision-Date: 2021-11-22 19:49+0000\n"
 "Last-Translator: Eloy Crespo <eloy.crespo@collabora.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: es\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -261,7 +261,7 @@ msgstr "¿Confirma que quiere finalizar esta sesión?"
 #: src/control/Control.Menubar.js:1634
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:862
-#: src/core/Socket.js:951
+#: src/core/Socket.js:954
 msgid "OK"
 msgstr "Aceptar"
 
@@ -270,7 +270,7 @@ msgstr "Aceptar"
 #: src/control/Control.Menubar.js:1635 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:863
-#: src/core/Socket.js:952 src/layer/tile/CommentListSection.ts:395
+#: src/core/Socket.js:955 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Cancelar"
@@ -1543,40 +1543,48 @@ msgstr "El servidor es ahora accesible…"
 msgid "RELOAD"
 msgstr "RECARGAR"
 
-#: src/core/Socket.js:515
+#: src/core/Socket.js:504
+msgid "COOLWSD version:"
+msgstr ""
+
+#: src/core/Socket.js:516
 msgid "Served by:"
 msgstr "Servido por:"
 
-#: src/core/Socket.js:520
+#: src/core/Socket.js:522
 msgid "Unsupported server version."
 msgstr "No se admite esta versión del servidor."
 
-#: src/core/Socket.js:637
+#: src/core/Socket.js:526
+msgid "LOKit version:"
+msgstr ""
+
+#: src/core/Socket.js:640
 msgid "Session terminated by document owner"
 msgstr "El propietario del documento finalizó la sesión"
 
-#: src/core/Socket.js:642
+#: src/core/Socket.js:645
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Documento inactivo; pulse para recargarlo y continuar editándolo"
 
-#: src/core/Socket.js:644
+#: src/core/Socket.js:647
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "Documento inactivo; toque para recargarlo y continuar editándolo"
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:655
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "El servidor se apagará por mantenimiento (guardando automáticamente)"
 
-#: src/core/Socket.js:656
+#: src/core/Socket.js:659
 msgid "Oops, there is a problem connecting the document"
 msgstr "Se produjo un problema al conectar con el documento"
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:663
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 "El servidor no está operativo. Espere mientras se reinicia automáticamente."
 
-#: src/core/Socket.js:688
+#: src/core/Socket.js:691
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1584,7 +1592,7 @@ msgstr ""
 "El documento se modificó en el almacenamiento. Cargando el documento nuevo. "
 "Su versión está disponible como una revisión."
 
-#: src/core/Socket.js:694
+#: src/core/Socket.js:697
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1592,11 +1600,11 @@ msgstr ""
 "Se está restaurando una revisión anterior. Cualquier cambio no guardado "
 "estará disponible en el historial de versiones"
 
-#: src/core/Socket.js:700
+#: src/core/Socket.js:703
 msgid "Reloading the document after rename"
 msgstr "Recargar el documento después de cambiar el nombre"
 
-#: src/core/Socket.js:819
+#: src/core/Socket.js:822
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1604,69 +1612,69 @@ msgstr ""
 "El documento fue modificado en el almacenamiento. ¿Qué quiere hacer con sus "
 "cambios no guardados?"
 
-#: src/core/Socket.js:823
+#: src/core/Socket.js:826
 msgid "Discard"
 msgstr "Descartar"
 
-#: src/core/Socket.js:828
+#: src/core/Socket.js:831
 msgid "Overwrite"
 msgstr "Sobrescribir"
 
-#: src/core/Socket.js:833
+#: src/core/Socket.js:836
 msgid "Save to new file"
 msgstr "Guardar en un archivo nuevo"
 
-#: src/core/Socket.js:903
+#: src/core/Socket.js:906
 msgid "Document requires password to view."
 msgstr "Se necesita una contraseña para ver el documento."
 
-#: src/core/Socket.js:906
+#: src/core/Socket.js:909
 msgid "Document requires password to modify."
 msgstr "Se necesita una contraseña para modificar el documento."
 
-#: src/core/Socket.js:908
+#: src/core/Socket.js:911
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Pulse en Cancelar para abrirlo en modo de solo lectura."
 
-#: src/core/Socket.js:912
+#: src/core/Socket.js:915
 msgid "Wrong password provided. Please try again."
 msgstr "Se proporcionó una contraseña incorrecta. Inténtelo de nuevo."
 
-#: src/core/Socket.js:1021
+#: src/core/Socket.js:1024
 msgid "Someone"
 msgstr "Alguien"
 
-#: src/core/Socket.js:1023
+#: src/core/Socket.js:1026
 msgid " saved this document as "
 msgstr " guardó este documento como "
 
-#: src/core/Socket.js:1023
+#: src/core/Socket.js:1026
 msgid ". Do you want to join?"
 msgstr ". ¿Quiere incorporarse?"
 
-#: src/core/Socket.js:1032
+#: src/core/Socket.js:1035
 msgid "Loading..."
 msgstr "Cargando…"
 
-#: src/core/Socket.js:1032
+#: src/core/Socket.js:1035
 msgid "Connecting..."
 msgstr "Conectando…"
 
-#: src/core/Socket.js:1050
+#: src/core/Socket.js:1053
 msgid "The document is being renamed and will reload shortly"
 msgstr "Se está cambiando el nombre del archivo y se recargará pronto"
 
-#: src/core/Socket.js:1412
+#: src/core/Socket.js:1416
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Se produjo un error de conexión con el documento. Inténtelo de nuevo."
 
-#: src/core/Socket.js:1429
+#: src/core/Socket.js:1433
 msgid "Reconnecting..."
 msgstr "Reconectando..."
 
-#: src/core/Socket.js:1435
+#: src/core/Socket.js:1439
 msgid "The server has been disconnected."
 msgstr "Se ha desconectado el servidor."
 
@@ -1976,15 +1984,15 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Iniciando…"
 
-#: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428
+#: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428 src/map/Map.js:431
 msgid "Last saved:"
 msgstr "Guardado por última vez:"
 
-#: src/map/Map.js:1428
+#: src/map/Map.js:1433
 msgid "Inactive document"
 msgstr "Documento inactivo"
 
-#: src/map/Map.js:1429
+#: src/map/Map.js:1434
 msgid "Please click to resume editing"
 msgstr "Por favor, haga clic para reanudar la edición"
 

@@ -4,17 +4,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-19 21:19+0100\n"
+"POT-Creation-Date: 2021-11-24 11:14+0100\n"
 "PO-Revision-Date: 2021-11-22 19:49+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: sl\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 4.10-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -262,7 +262,7 @@ msgstr "Ste prepričani, da želite zaključiti to sejo?"
 #: src/control/Control.Menubar.js:1634
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:862
-#: src/core/Socket.js:951
+#: src/core/Socket.js:954
 msgid "OK"
 msgstr "V redu"
 
@@ -271,7 +271,7 @@ msgstr "V redu"
 #: src/control/Control.Menubar.js:1635 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:863
-#: src/core/Socket.js:952 src/layer/tile/CommentListSection.ts:395
+#: src/core/Socket.js:955 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Prekliči"
@@ -1540,41 +1540,49 @@ msgstr "Strežnik je zdaj dosegljiv ..."
 msgid "RELOAD"
 msgstr "PONOVNO NALOŽI"
 
-#: src/core/Socket.js:515
+#: src/core/Socket.js:504
+msgid "COOLWSD version:"
+msgstr ""
+
+#: src/core/Socket.js:516
 msgid "Served by:"
 msgstr "Streže:"
 
-#: src/core/Socket.js:520
+#: src/core/Socket.js:522
 msgid "Unsupported server version."
 msgstr "Nepodprta različica strežnika."
 
-#: src/core/Socket.js:637
+#: src/core/Socket.js:526
+msgid "LOKit version:"
+msgstr ""
+
+#: src/core/Socket.js:640
 msgid "Session terminated by document owner"
 msgstr "Sejo je zaključil lastnik dokumenta"
 
-#: src/core/Socket.js:642
+#: src/core/Socket.js:645
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Neaktivni dokument – kliknite za ponovno nalaganje in nadaljevanje urejanja"
 
-#: src/core/Socket.js:644
+#: src/core/Socket.js:647
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Neaktivni dokument – tapnite za ponovno nalaganje in nadaljevanje urejanja"
 
-#: src/core/Socket.js:652
+#: src/core/Socket.js:655
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Strežnik se ugaša zaradi vzdrževanja (samodejno shranjevanje)"
 
-#: src/core/Socket.js:656
+#: src/core/Socket.js:659
 msgid "Oops, there is a problem connecting the document"
 msgstr "Pri povezovanju z dokumentom je prišlo do težave."
 
-#: src/core/Socket.js:660
+#: src/core/Socket.js:663
 msgid "Server is down, restarting automatically. Please wait."
 msgstr "Strežnik ne deluje, sledi samodejni ponovni zagon. Prosimo, počakajte."
 
-#: src/core/Socket.js:688
+#: src/core/Socket.js:691
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1582,7 +1590,7 @@ msgstr ""
 "Dokument je bil spremenjen v shrambi. V teku je nalaganje novega dokumenta. "
 "Vaša različica bo ohranjena kot revizija."
 
-#: src/core/Socket.js:694
+#: src/core/Socket.js:697
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1590,11 +1598,11 @@ msgstr ""
 "Obnavljanje starejše revizije. Vse ne shranjene spremembe bodo na voljo v "
 "zgodovini različic."
 
-#: src/core/Socket.js:700
+#: src/core/Socket.js:703
 msgid "Reloading the document after rename"
 msgstr "Ponovno nalaganje dokumenta po preimenovanju"
 
-#: src/core/Socket.js:819
+#: src/core/Socket.js:822
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1602,70 +1610,70 @@ msgstr ""
 "Dokument je bil spremenjen v shrambi. Kaj želite storiti z neshranjenimi "
 "spremembami?"
 
-#: src/core/Socket.js:823
+#: src/core/Socket.js:826
 msgid "Discard"
 msgstr "Zavrzi"
 
-#: src/core/Socket.js:828
+#: src/core/Socket.js:831
 msgid "Overwrite"
 msgstr "Prepiši"
 
-#: src/core/Socket.js:833
+#: src/core/Socket.js:836
 msgid "Save to new file"
 msgstr "Shrani v novo datoteko"
 
-#: src/core/Socket.js:903
+#: src/core/Socket.js:906
 msgid "Document requires password to view."
 msgstr "Za ogled dokumenta je potrebno geslo."
 
-#: src/core/Socket.js:906
+#: src/core/Socket.js:909
 msgid "Document requires password to modify."
 msgstr "Za spreminjanje dokumenta je potrebno geslo."
 
-#: src/core/Socket.js:908
+#: src/core/Socket.js:911
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Pritisnite Prekliči za odpiranje v oglednem načinu."
 
-#: src/core/Socket.js:912
+#: src/core/Socket.js:915
 msgid "Wrong password provided. Please try again."
 msgstr "Vnesli ste napačno geslo. Poskusite znova."
 
-#: src/core/Socket.js:1021
+#: src/core/Socket.js:1024
 msgid "Someone"
 msgstr "Nekdo"
 
-#: src/core/Socket.js:1023
+#: src/core/Socket.js:1026
 msgid " saved this document as "
 msgstr " je dokument shranil kot "
 
-#: src/core/Socket.js:1023
+#: src/core/Socket.js:1026
 msgid ". Do you want to join?"
 msgstr ". Ali se želite pridružiti?"
 
-#: src/core/Socket.js:1032
+#: src/core/Socket.js:1035
 msgid "Loading..."
 msgstr "Nalaganje ..."
 
-#: src/core/Socket.js:1032
+#: src/core/Socket.js:1035
 msgid "Connecting..."
 msgstr "Povezovanje ..."
 
-#: src/core/Socket.js:1050
+#: src/core/Socket.js:1053
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 "Dokument je v postopku preimenovanja in se bo v kratkem ponovno naložil."
 
-#: src/core/Socket.js:1412
+#: src/core/Socket.js:1416
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Žal se ni mogoče povezati z vašim dokumentom. Prosimo, poskusite znova."
 
-#: src/core/Socket.js:1429
+#: src/core/Socket.js:1433
 msgid "Reconnecting..."
 msgstr "Ponovno povezovanje ..."
 
-#: src/core/Socket.js:1435
+#: src/core/Socket.js:1439
 msgid "The server has been disconnected."
 msgstr "Strežnik ni več povezan."
 
@@ -1971,15 +1979,15 @@ msgstr ""
 msgid "Initializing..."
 msgstr "Inicializacija ..."
 
-#: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428
+#: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428 src/map/Map.js:431
 msgid "Last saved:"
 msgstr "Nazadnje shranjeno:"
 
-#: src/map/Map.js:1428
+#: src/map/Map.js:1433
 msgid "Inactive document"
 msgstr "Nedejaven dokument"
 
-#: src/map/Map.js:1429
+#: src/map/Map.js:1434
 msgid "Please click to resume editing"
 msgstr "Kliknite, da nadaljujete z urejanjem"
 
