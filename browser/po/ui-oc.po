@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-19 21:19+0100\n"
-"PO-Revision-Date: 2021-04-20 20:35+0000\n"
+"PO-Revision-Date: 2021-11-22 19:49+0000\n"
 "Last-Translator: Quentin PAGÈS <quentinantonin@free.fr>\n"
 "Language-Team: Occitan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/oc/>\n"
-"Language: \n"
+"Language: oc\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -114,7 +114,7 @@ msgstr "Modificat"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "Òste WOPI"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -165,7 +165,6 @@ msgid "Kill session."
 msgstr "Tampar la session."
 
 #: admin/admin.strings.js:41
-#, fuzzy
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
 msgstr ""
 "Memòria maximala de fila de processús del document (en Ko) - reduire sonque"
@@ -361,7 +360,7 @@ msgstr "Lo servidor a rescontrat una error %0 en analisant la comanda %1."
 
 #: src/control/Control.Command.js:89
 msgid "Unlock"
-msgstr ""
+msgstr "Desverrolhar"
 
 #: src/control/Control.ContextMenu.js:180
 msgid "Delete"
@@ -421,7 +420,7 @@ msgstr "Assistent de foncion"
 
 #: src/control/Control.FormulaBar.js:46
 msgid "cell address"
-msgstr ""
+msgstr "adreça cellulara"
 
 #: src/control/Control.JSDialogBuilder.js:398
 msgid "Solid"
@@ -465,7 +464,7 @@ msgstr "A"
 
 #: src/control/Control.JSDialogBuilder.js:1273
 msgid "Color"
-msgstr ""
+msgstr "Color"
 
 #: src/control/Control.JSDialogBuilder.js:1402
 msgid "Select range"
@@ -693,7 +692,7 @@ msgstr "Darrièras mesas a jorn"
 #: src/control/Control.Menubar.js:909 src/control/Control.Menubar.js:979
 #: src/control/Control.NotebookbarWriter.js:263
 msgid "Send Feedback"
-msgstr ""
+msgstr "Enviar comentaris"
 
 #: src/control/Control.Menubar.js:300 src/control/Control.Menubar.js:429
 #: src/control/Control.Menubar.js:540 src/control/Control.Menubar.js:752
@@ -784,7 +783,7 @@ msgstr "Sètz segur que volètz suprimir aquesta diapositiva ?"
 
 #: src/control/Control.Menubar.js:1758
 msgid "file type icon"
-msgstr ""
+msgstr "icòna de tipe de fichièr"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:121
@@ -845,7 +844,7 @@ msgstr ""
 
 #: src/control/Control.NotebookbarBuilder.js:616
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: src/control/Control.NotebookbarBuilder.js:617
 msgid "Loose"
@@ -928,9 +927,8 @@ msgid "See history"
 msgstr "Veire l'istoric"
 
 #: src/control/Control.NotebookbarCalc.js:125
-#, fuzzy
 msgid "ODF Spreadsheet (.ods)"
-msgstr "Classador ODF (.ods)"
+msgstr "Fuèlh de calcul ODF (.ods)"
 
 #: src/control/Control.NotebookbarCalc.js:131
 msgid "CSV File (.csv)"
@@ -946,7 +944,7 @@ msgstr "Nombre"
 
 #: src/control/Control.NotebookbarCalc.js:418
 msgid "Percent"
-msgstr ""
+msgstr "Percentatge"
 
 #: src/control/Control.NotebookbarCalc.js:419
 msgid "Currency"
@@ -1001,28 +999,24 @@ msgid "Bad"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:651
-#, fuzzy
 msgid "Insert Rows Above"
-msgstr "Inserir un tablèu"
+msgstr "Inserir de linhas en dessús"
 
 #: src/control/Control.NotebookbarCalc.js:656
-#, fuzzy
 msgid "Insert Columns Before"
-msgstr "Inserir un fuèlh abans aquò"
+msgstr "Inserir colomnas abans"
 
 #: src/control/Control.NotebookbarCalc.js:661
-#, fuzzy
 msgid "Delete Rows"
-msgstr "Inserir un tablèu"
+msgstr "Suprimir de linhas"
 
 #: src/control/Control.NotebookbarCalc.js:671
 msgid "Insert Rows Below"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:676
-#, fuzzy
 msgid "Insert Columns After"
-msgstr "Inserir un fuèlh aprèp aquò"
+msgstr "Inserir colomnas aprèp"
 
 #: src/control/Control.NotebookbarCalc.js:681
 msgid "Delete Columns"
@@ -1039,17 +1033,14 @@ msgid "Image (.png)"
 msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:30
-#, fuzzy
 msgid "Start Presentation"
-msgstr "Orientacion del tèxte"
+msgstr "Començar la presentacion"
 
 #: src/control/Control.NotebookbarImpress.js:205
-#, fuzzy
 msgid "ODF Presentation (.odp)"
 msgstr "Presentacion ODF (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:980
-#, fuzzy
 msgid "Reset Zoom"
 msgstr "Reïnicializar lo zoom"
 
@@ -1058,7 +1049,6 @@ msgid "Reference~s"
 msgstr "Referéncia~s"
 
 #: src/control/Control.NotebookbarWriter.js:131
-#, fuzzy
 msgid "ODF Text Document (.odt)"
 msgstr "Document tèxte ODF (.odt)"
 
@@ -1192,7 +1182,6 @@ msgid "Permission Mode"
 msgstr ""
 
 #: src/control/Control.StatusBar.js:423
-#, fuzzy
 msgid "Read-only"
 msgstr "Lectura sola"
 
@@ -1225,9 +1214,8 @@ msgid "Move Sheet Right"
 msgstr ""
 
 #: src/control/Control.Tabs.js:303
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
-msgstr "Sètz segur que volètz suprimir aqueste fuèlh, %sheet% ?"
+msgstr "Volètz  vertadièrament suprimir aqueste fuèlh, %sheet% ?"
 
 #: src/control/Control.Tabs.js:320
 msgid "Enter new sheet name"
@@ -1391,9 +1379,8 @@ msgid "Select document type to upload"
 msgstr ""
 
 #: src/control/Signing.js:330
-#, fuzzy
 msgid "Type:"
-msgstr "Tipe"
+msgstr "Tipe :"
 
 #: src/control/Signing.js:361 src/control/Signing.js:670
 msgid "Document uploaded."
@@ -1437,7 +1424,7 @@ msgstr "Connexion"
 
 #: src/control/Signing.js:617
 msgid "Not Signed"
-msgstr ""
+msgstr "Pas signat"
 
 #: src/control/Signing.js:620
 msgid "This document is digitally signed and the signature is valid."
@@ -1453,7 +1440,7 @@ msgstr ""
 
 #: src/control/Signing.js:627
 msgid "Signature broken"
-msgstr ""
+msgstr "Signatura copada"
 
 #: src/control/Signing.js:630
 msgid "The signature was valid, but the document has been modified."
@@ -1507,11 +1494,11 @@ msgstr ""
 
 #: src/control/Toolbar.js:562
 msgid "I understand the risks"
-msgstr ""
+msgstr "Compri los risques"
 
 #: src/control/Toolbar.js:584
 msgid "Dismiss"
-msgstr ""
+msgstr "Abandonar"
 
 #: src/control/Toolbar.js:649
 msgid ""
@@ -1528,11 +1515,11 @@ msgstr ""
 
 #: src/control/Toolbar.js:855
 msgid "Insert hyperlink"
-msgstr ""
+msgstr "Inserir un ligam"
 
 #: src/control/Toolbar.js:859
 msgid "Link"
-msgstr ""
+msgstr "Ligam"
 
 #: src/core/Socket.js:56
 msgid "Oops, there is a problem connecting to %productName: "
@@ -1548,7 +1535,7 @@ msgstr ""
 
 #: src/core/Socket.js:497
 msgid "RELOAD"
-msgstr ""
+msgstr "RECARGAR"
 
 #: src/core/Socket.js:515
 msgid "Served by:"
@@ -1606,11 +1593,11 @@ msgstr ""
 
 #: src/core/Socket.js:823
 msgid "Discard"
-msgstr ""
+msgstr "Ignorar"
 
 #: src/core/Socket.js:828
 msgid "Overwrite"
-msgstr ""
+msgstr "Remplaçar"
 
 #: src/core/Socket.js:833
 msgid "Save to new file"
@@ -1634,7 +1621,7 @@ msgstr ""
 
 #: src/core/Socket.js:1021
 msgid "Someone"
-msgstr ""
+msgstr "Qualqu’un"
 
 #: src/core/Socket.js:1023
 msgid " saved this document as "
@@ -1663,9 +1650,8 @@ msgid ""
 msgstr ""
 
 #: src/core/Socket.js:1429
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "Connexion..."
+msgstr "Reconnexion..."
 
 #: src/core/Socket.js:1435
 msgid "The server has been disconnected."
@@ -1737,7 +1723,7 @@ msgstr ""
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
-msgstr ""
+msgstr "Ligam invalid : « %url »"
 
 #: src/errormessages.js:25
 msgid ""
@@ -1762,7 +1748,7 @@ msgstr ""
 
 #: src/errormessages.js:32
 msgid "Failed to load document."
-msgstr ""
+msgstr "Fracàs del cargament del document."
 
 #: src/errormessages.js:33
 msgid "Save failed due to no disk space left. Document will now be read-only."
@@ -1774,11 +1760,11 @@ msgstr ""
 
 #: src/errormessages.js:35
 msgid "Document cannot be saved."
-msgstr ""
+msgstr "Impossible d’enregistrar lo document."
 
 #: src/errormessages.js:36
 msgid "Document cannot be renamed."
-msgstr ""
+msgstr "Impossible de renomenar lo document."
 
 #: src/errormessages.js:40
 #, javascript-format
@@ -1816,13 +1802,12 @@ msgid "Uploading file to server failed, the file is too large."
 msgstr ""
 
 #: src/layer/tile/CanvasTileLayer.js:1750
-#, fuzzy
 msgid "Functions"
-msgstr "Foncion"
+msgstr "Foncions"
 
 #: src/layer/tile/CanvasTileLayer.js:4808
 msgid "No Comments"
-msgstr ""
+msgstr "Cap de comentari"
 
 #: src/layer/tile/CommentListSection.ts:774
 msgid "Modify"
@@ -1921,15 +1906,15 @@ msgstr "Inicializacion..."
 
 #: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428
 msgid "Last saved:"
-msgstr ""
+msgstr "Darrièr enregistrament :"
 
 #: src/map/Map.js:1428
 msgid "Inactive document"
-msgstr ""
+msgstr "Document inactiu"
 
 #: src/map/Map.js:1429
 msgid "Please click to resume editing"
-msgstr ""
+msgstr "Volgatz clicar per reprendre l’edicion"
 
 #: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
@@ -1961,11 +1946,11 @@ msgstr ""
 
 #: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
-msgstr ""
+msgstr "Creacion d’un fichièr novèl a partir d’un modèl..."
 
 #: src/map/handler/Map.WOPI.js:410
 msgid "Creating copy..."
-msgstr ""
+msgstr "Creacion de la còpia..."
 
 #~ msgid "Start upload"
 #~ msgstr "Començar lo telecargament"
