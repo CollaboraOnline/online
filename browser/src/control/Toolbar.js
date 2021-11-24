@@ -554,6 +554,18 @@ L.Map.include({
 		});
 	},
 
+	/** Add various content instead of the variables in the Welcome dialog */
+	_replaceVars: function(text) {
+		return text
+			.replace(/%coolVersion/g, app.socket.WSDServer.Version)
+			.replace(/%coolAppsURL/g, 'https://www.collaboraoffice.com/solutions/collabora-office-android-ios/')
+			.replace(/%coolReleaseNotesURL/g, 'https://www.collaboraoffice.com/code-21-11-release-notes/')
+			.replace(/%coolSdkURL/g, 'https://sdk.collaboraonline.com/')
+			.replace(/%coolStepByStepURL/g, 'https://collaboraonline.github.io/post/build-code/')
+			.replace(/%coolTranslationsURL/g, 'https://collaboraonline.github.io/post/translate/')
+			.replace(/%coolBugreportURL/g, 'https://collaboraonline.github.io/post/filebugs/');
+	},
+
 	// show the actual welcome dialog with the given data
 	_showWelcomeDialogVex: function(data, calledFromMenu) {
 		var w;
@@ -599,6 +611,24 @@ L.Map.include({
 				$.extend({}, vex.dialog.buttons.YES, { text: btnText }),
 			],
 			afterOpen: function() {
+				$('#welcome-slide1-heading-1').text(map._replaceVars(_('Explore the new %coolVersion')));
+				$('#welcome-slide1-heading-2').text(_('Collabora Online Development Edition'));
+				$('#welcome-slide1-content').html(map._replaceVars(_('Enjoy the latest developments in online productivity, free for you to use, to explore and to use with others in the browser. <a href="%coolAppsURL" target="_blank">Apps</a> are also available for Android and iOS. %coolVersion introduces important improvements, in the areas of usability, visual presentation and performance.')));
+
+				$('#welcome-slide2-heading-1').text(map._replaceVars(_('Discover all the changes')));
+				$('#welcome-slide2-heading-2').text(_('Collabora Online Development Edition'));
+				$('#welcome-slide2-content').html(map._replaceVars(_('Check the <a href="%coolReleaseNotesURL" target="_blank">release notes</a> and learn all about the latest milestone in performance particularly for larger groups working on documents, new native sidebar, new re-worked avatar list, asynchronous saving, faster spell checking and more.')));
+
+				$('#welcome-slide3-heading-1').text(_('Integrate Collabora Online into your webapp'));
+				$('#welcome-slide3-heading-2').text(_('Or get involved in the development'));
+				$('#welcome-slide3-content').html(map._replaceVars(_('Learn more about integrating into your web application in the <a href="%coolSdkURL" target="_blank">Collabora Online SDK</a>. Or head over to the <a href="%coolStepByStepURL" target="_blank">step-by-step instructions</a> and build CODE from scratch. You can also help out with <a href="%coolTranslationsURL" target="_blank">translations</a> or by <a href="%coolBugreportURL" target="_blank">filing a bug report</a> with all the essential steps on how to reproduce it.')));
+
+				$('#welcome-button-next-1').text(_('Next').replace('~', ''));
+				$('#welcome-button-next-2').text(_('Next').replace('~', ''));
+				$('#welcome-button-close').text(_('Close').replace('~', ''));
+
+				$('#view-supported-versions').text(_('Learn more about the enterprise-ready versions'));
+
 				var $vexContent = $(this.contentEl);
 				this.contentEl.style.width = w + 'px';
 
@@ -623,7 +653,7 @@ L.Map.include({
 
 	showWelcomeDialog: function(calledFromMenu) {
 		console.log('showWelcomeDialog, calledFromMenu: ' + calledFromMenu);
-		var welcomeLocation = 'welcome/welcome-' + String.locale + '.html';
+		var welcomeLocation = 'welcome/welcome.html';
 		if (window.socketProxy)
 			welcomeLocation = window.makeWsUrl('/cool/dist/' + welcomeLocation);
 
