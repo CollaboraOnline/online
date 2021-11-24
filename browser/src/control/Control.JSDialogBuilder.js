@@ -1516,7 +1516,8 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			data.id === 'FontBox' ||
 			data.id === 'rotation' ||
 			data.id === 'LB_ANGLE' ||
-			data.id === 'LB_DISTANCE') {
+			data.id === 'LB_DISTANCE' ||
+			!window.mode.isMobile()) {
 			builder._listboxControl(parentContainer, data, builder);
 		} else if (data.id === 'searchterm' ||
 			data.id === 'replaceterm') {
@@ -1527,8 +1528,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 			builder._controlHandlers['edit'](parentContainer, data, builder, callback);
 		}
-		else
+		else if (window.mode.isMobile())
 			builder._explorableEditControl(parentContainer, data, builder);
+		else
+			console.warn('Unsupported combobox control!');
 	},
 
 	_listboxControl: function(parentContainer, data, builder) {
