@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-24 20:28+0100\n"
-"PO-Revision-Date: 2021-11-24 19:27+0000\n"
+"PO-Revision-Date: 2021-11-24 20:59+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: \n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1510,11 +1510,11 @@ msgstr "Bezárás"
 #: src/control/Toolbar.js:614
 #, javascript-format
 msgid "Explore the new %coolVersion"
-msgstr ""
+msgstr "Megjelent az új %coolVersion. Fedezze fel!"
 
 #: src/control/Toolbar.js:615 src/control/Toolbar.js:619
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online Development Edition"
 
 #: src/control/Toolbar.js:616
 #, javascript-format
@@ -1525,10 +1525,15 @@ msgid ""
 "%coolVersion introduces important improvements, in the areas of usability, "
 "visual presentation and performance."
 msgstr ""
+"Élvezze a legújabb fejlesztések eredményét, használja ingyen és szabadon ezt "
+"a böngészőben futó szoftvert önállóan vagy másokkal közösen. Androidot és "
+"iOS-t futtató mobileszközére is letöltheti az <a href=\"%coolAppsURL\" "
+"target=\"_blank\">alkalmazást</a>. A %coolVersion a használhatóság, a "
+"megjelenés és a teljesítmény terén számos újdonsággal jelentkezik."
 
 #: src/control/Toolbar.js:618
 msgid "Discover all the changes"
-msgstr ""
+msgstr "Fedezze fel az összes újdonságot"
 
 #: src/control/Toolbar.js:620
 #, javascript-format
@@ -1538,14 +1543,19 @@ msgid ""
 "larger groups working on documents, new native sidebar, new re-worked avatar "
 "list, asynchronous saving, faster spell checking and more."
 msgstr ""
+"Olvassa el az <a href=\"%coolReleaseNotesURL\" target=\"_blank\">angol „"
+"release notes”-ot</a>, ahol részletesen le vannak írva az újdonságok, "
+"például a sok ember által egyszerre végzett dokumentumszerkesztés "
+"teljesítménynövekedése, az új natív oldalsáv, az újratervezett avatárlista, "
+"az aszinkron mentés, a gyorsabb helyesírás-ellenőrzés stb."
 
 #: src/control/Toolbar.js:622
 msgid "Integrate Collabora Online into your webapp"
-msgstr ""
+msgstr "Integrálja a Collabora Online-t saját webalkalmazásába"
 
 #: src/control/Toolbar.js:623
 msgid "Or get involved in the development"
-msgstr ""
+msgstr "Vagy vegyen részt a fejlesztésben"
 
 #: src/control/Toolbar.js:624
 #, javascript-format
@@ -1558,15 +1568,22 @@ msgid ""
 "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
 "all the essential steps on how to reproduce it."
 msgstr ""
+"Ha szeretné megtudni, hogyan integrálja a Collabora Online-t saját "
+"webalkalmazásába, látogasson el a <a href=\"%coolSdkURL\" target=\"_blank\""
+">Collabora Online SDK</a> weboldalra. Vagy nézze meg a CODE forráskódból "
+"való lefordításának <a href=\"%coolStepByStepURL\" target=\"_blank\""
+">részletes utasításait</a>. Segíthet a <a href=\"%coolTranslationsURL\" "
+"target=\"_blank\">fordításban</a> is, vagy ha hibát talál, <a href=\"%"
+"coolBugreportURL\" target=\"_blank\">bejelentheti</a> a hiba "
+"reprodukálásának rövid leírása mellett."
 
 #: src/control/Toolbar.js:626 src/control/Toolbar.js:627
-#, fuzzy
 msgid "Next"
-msgstr "Szöveg"
+msgstr "Következő"
 
 #: src/control/Toolbar.js:630
 msgid "Learn more about the enterprise-ready versions"
-msgstr ""
+msgstr "Tudjon meg többet az intézményi használatra kész verziókról"
 
 #: src/control/Toolbar.js:679
 msgid ""
