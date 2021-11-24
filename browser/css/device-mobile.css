@@ -823,3 +823,8 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 #coolwsd-version, #lokit-version {
 	flex-direction: column;
 }
+
+/* hide not usefull style options on mobile */
+div#fontstyletoolbox + div#style.mobile-wizard {
+	display: none !important;
+}
