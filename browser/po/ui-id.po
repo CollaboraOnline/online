@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-19 21:19+0100\n"
-"PO-Revision-Date: 2021-11-07 22:01+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2021-11-20 21:17+0000\n"
+"Last-Translator: Rizal Muttaqin <riz_17_oke@yahoo.co.id>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.9.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -422,7 +422,7 @@ msgstr "Fungsi Wisaya"
 
 #: src/control/Control.FormulaBar.js:46
 msgid "cell address"
-msgstr ""
+msgstr "alamat sel"
 
 #: src/control/Control.JSDialogBuilder.js:398
 msgid "Solid"
@@ -694,7 +694,7 @@ msgstr "Pembaruan Terakhir"
 #: src/control/Control.Menubar.js:909 src/control/Control.Menubar.js:979
 #: src/control/Control.NotebookbarWriter.js:263
 msgid "Send Feedback"
-msgstr ""
+msgstr "Kirim Umpan"
 
 #: src/control/Control.Menubar.js:300 src/control/Control.Menubar.js:429
 #: src/control/Control.Menubar.js:540 src/control/Control.Menubar.js:752
@@ -785,7 +785,7 @@ msgstr "Anda yakin ingin menghapus salindia ini?"
 
 #: src/control/Control.Menubar.js:1758
 msgid "file type icon"
-msgstr ""
+msgstr "ikon jenis berkas"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:121
@@ -838,23 +838,23 @@ msgstr "Sisipkan Citra Lokal"
 
 #: src/control/Control.NotebookbarBuilder.js:614
 msgid "Very Tight"
-msgstr ""
+msgstr "Sangat Ketat"
 
 #: src/control/Control.NotebookbarBuilder.js:615
 msgid "Tight"
-msgstr ""
+msgstr "Ketat"
 
 #: src/control/Control.NotebookbarBuilder.js:616
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: src/control/Control.NotebookbarBuilder.js:617
 msgid "Loose"
-msgstr ""
+msgstr "Longgar"
 
 #: src/control/Control.NotebookbarBuilder.js:618
 msgid "Very Loose"
-msgstr ""
+msgstr "Sangat Longgar"
 
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarDraw.js:79
@@ -1073,7 +1073,7 @@ msgstr "Judul"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
-msgstr ""
+msgstr "pratinjau halaman "
 
 #: src/control/Control.PresentationBar.js:100
 msgid "Are you sure you want to delete this page?"
@@ -1505,7 +1505,7 @@ msgstr "Saya mengerti risikonya"
 
 #: src/control/Toolbar.js:584
 msgid "Dismiss"
-msgstr ""
+msgstr "Singkirkan"
 
 #: src/control/Toolbar.js:649
 msgid ""
@@ -1978,15 +1978,15 @@ msgstr "Menginisialisasi..."
 
 #: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428
 msgid "Last saved:"
-msgstr ""
+msgstr "Terakhir tersimpan:"
 
 #: src/map/Map.js:1428
 msgid "Inactive document"
-msgstr ""
+msgstr "Dokumen tak aktif"
 
 #: src/map/Map.js:1429
 msgid "Please click to resume editing"
-msgstr ""
+msgstr "Mohon klik untuk melanjutkan penyuntingan"
 
 #: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
