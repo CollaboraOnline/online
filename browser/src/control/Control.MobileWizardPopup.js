@@ -52,8 +52,10 @@ L.Control.MobileWizardPopup = L.Control.extend({
 	_hideWizard: function () {
 		this.removeContainer();
 
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
-		app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).layout();
+		if (app.sectionContainer) {
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
+			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).layout();
+		}
 	},
 
 	_setTitle: function(title) {
