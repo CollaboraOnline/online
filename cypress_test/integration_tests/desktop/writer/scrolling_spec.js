@@ -71,6 +71,6 @@ describe('Scroll through document', function() {
 
 		helper.typeIntoDocument('{end}{home}{end}');
 
-		desktopHelper.assertScrollbarPosition('horizontal', [660, 577]);
+		desktopHelper.assertScrollbarPosition('horizontal', 577, 660);
 	});
 });
