@@ -1038,6 +1038,7 @@ void LOOLWSD::initialize(Application& self)
             { "welcome.enable_button", ENABLE_WELCOME_MESSAGE_BUTTON },
             { "welcome.path", "loleaflet/welcome" },
 #ifdef ENABLE_FREEMIUM
+            { "freemium.is_freemium_readonly", "false" },
             { "freemium.disabled_commands", DISABLED_COMMANDS },
             { "freemium.purchase_title", PURCHASE_TITLE },
             { "freemium.purchase_link", PURCHASE_LINK },

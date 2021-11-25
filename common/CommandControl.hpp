@@ -27,6 +27,8 @@ public:
     static const std::string getFreemiumDenyListString();
 
     static bool isFreemiumUser() { return _isFreemiumUser; }
+    static bool isFreemiumReadOnly() { return config::getBool("freemium.is_freemium_readonly", false); }
+    static bool isFreemiumReadOnlyUser() { return isFreemiumUser() && isFreemiumReadOnly(); }
 
     static void setFreemiumUser(bool isFreemiumUser) { _isFreemiumUser = isFreemiumUser; }
 
