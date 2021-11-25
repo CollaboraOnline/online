@@ -5,7 +5,7 @@ ports:
   - port: 9980
     onOpen: ignore
   - port: 6080
-    protocol: "http"
+    onOpen: "open-browser"
   - port: 5900
     onOpen: ignore
 
@@ -33,6 +33,31 @@ github:
 # 1. Ping infra team to re-configure with the new URL
 # 2. Update URL here under tasks
 tasks:
-  - init: cd .. && wget https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-2021-assets.tar.gz
-    prebuild: tar xvf core-co-2021-assets.tar.gz && rm core-co-2021-assets.tar.gz && cd online && ./autogen.sh && ./configure --enable-silent-rules --with-lokit-path=/workspace/include --with-lo-path=/workspace/instdir --enable-debug --disable-setcap && cp .gitpod-files/coolwsd-gitpod.xml coolwsd.xml && mkdir .vscode && cp .gitpod-files/settings.json .vscode/settings.json && make -j `nproc`
+  - name: Get Core & Configure
+    before: |
+      cd ..
+      wget https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-2021-assets.tar.gz
+      tar xvf core-co-2021-assets.tar.gz
+      rm core-co-2021-assets.tar.gz
+      cd online
+    init: |
+      ./autogen.sh
+      ./configure --enable-silent-rules --with-lokit-path=/workspace/include --with-lo-path=/workspace/instdir --enable-debug -enable-cypress --disable-setcap
+      gp sync-done configuring
+      cp .gitpod-files/coolwsd-gitpod.xml coolwsd.xml
+      mkdir .vscode
+      cp .gitpod-files/settings.json .vscode/settings.json
+  - name: Building
+    init: gp sync-await configuring
+    command: make -j$(nproc) run
+  - name: Test
+    init: gp await-port 9980
+    command: |
+      echo "To open and test in the web browser:"
+      echo "1. Make sure your web browser is not blocking any tabs from opening;"
+      echo "2. Check that you have the VCN tab opened (if not, open it up from the left side Remote explorer > 6080)"
+      echo "3. In the terminal where make is running: scroll and copy the the URL ending with: hello-world.odt"
+      echo "4. In a new terminal execute the following:"
+      echo "   firefox  [paste copied URL here]"
+    openMode: split-right
 
