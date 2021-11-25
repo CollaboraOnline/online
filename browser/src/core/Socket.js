@@ -828,6 +828,11 @@ app.definitions.Socket = L.Class.extend({
 						click: function() {
 							this.value = 'overwrite';
 							this.close();
+						}}),
+					$.extend({}, vex.dialog.buttons.YES, { text: _('Cancel'),
+						click: function() {
+							this.value = 'cancel';
+							this.close();
 						}})
 				];
 
