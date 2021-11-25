@@ -333,13 +333,13 @@ function actionOnSelector(name,func) {
 //type represent horizontal/vertical scrollbar
 //arr : In both cypress GUI and CLI the scrollposition are slightly different
 //so we are passing both in array and assert using oneOf
-function assertScrollbarPosition(type, arr) {
+function assertScrollbarPosition(type, lowerBound, upperBound) {
 	cy.wait(500);
 
 	cy.get('#test-div-' + type + '-scrollbar')
 		.then(function($item) {
 			const x = parseInt($item.text());
-			expect(x).to.be.oneOf(arr);
+			expect(x).to.be.within(lowerBound, upperBound);
 		});
 }
 

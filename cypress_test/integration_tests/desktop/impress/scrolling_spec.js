@@ -29,11 +29,10 @@ describe('Scroll through document', function() {
 				var XPos = (items[0].getBoundingClientRect().left + items[0].getBoundingClientRect().right) / 2;
 				var YPos = (items[0].getBoundingClientRect().top + items[0].getBoundingClientRect().bottom) / 2;
 				cy.get('body')
-					.click(XPos, YPos)
+					.dblclick(XPos, YPos)
 					.wait(500);
 			});
 	}
-
 	it('Scrolling to bottom/top', function() {
 		//show vertical scrollbar
 		cy.get('.leaflet-layer')
@@ -50,7 +49,7 @@ describe('Scroll through document', function() {
 
 		desktopHelper.pressKey(18,'downarrow');
 
-		desktopHelper.assertScrollbarPosition('vertical', [384, 337]);
+		desktopHelper.assertScrollbarPosition('vertical', 335, 384);
 	});
 
 	it('Scrolling to left/right', function() {
@@ -62,13 +61,15 @@ describe('Scroll through document', function() {
 
 		clickOnTheCenter();
 
-		helper.typeIntoDocument('{home}{end}{home}');
+		cy.wait(500);
+
+		helper.typeIntoDocument('{home}');
 
 		cy.get('#test-div-horizontal-scrollbar')
 			.should('have.text', '6').wait(500);
 
-		helper.typeIntoDocument('{end}{home}{end}');
+		helper.typeIntoDocument('{end}');
 
-		desktopHelper.assertScrollbarPosition('horizontal', [660, 581]);
+		desktopHelper.assertScrollbarPosition('horizontal', 581, 660);
 	});
 });
