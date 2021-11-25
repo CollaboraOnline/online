@@ -851,8 +851,8 @@ AM_CONDITIONAL([ENABLE_LIBFUZZER], [test "$LIBFUZZER" = "1"])
 
 # check for C++11 support
 HAVE_CXX11=
-AC_MSG_CHECKING([whether $CXX supports C++17, C++14 or C++11])
-for flag in -std=c++17 -std=gnu++14 -std=gnu++1y -std=c++14 -std=c++1y -std=gnu++11 -std=gnu++0x -std=c++11 -std=c++0x ; do
+AC_MSG_CHECKING([whether $CXX supports C++17])
+for flag in -std=c++17 -std=c++1z ; do
     save_CXXFLAGS=$CXXFLAGS
     CXXFLAGS="$CXXFLAGS $flag -Werror"
     AC_LANG_PUSH([C++])
