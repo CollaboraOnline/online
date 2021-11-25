@@ -1387,6 +1387,7 @@ AC_SUBST(DRAW_SUBSCRIPTION_HIGHLIGHTS)
 FREEMIUM_CONFIGURATION=
 if test "$enable_freemium" = "yes"; then
     FREEMIUM_CONFIGURATION="<freemium desc=\"Freemium settings\">
+        <is_freemium_readonly desc=\"Give freemium user read only access to the documents.\" type=\"bool\" default=\"false\">false</is_freemium_readonly>
         <disabled_commands desc=\"List of commands to disable the functionality.\" default=\"$DISABLED_COMMANDS\">$DISABLED_COMMANDS</disabled_commands>
         <purchase_title desc=\"Title to show user when prompting the subscription popup\" default=\"$PURCHASE_TITLE\">$PURCHASE_TITLE</purchase_title>
         <purchase_link desc=\"Link from where user can buy the subscription\" default=\"$PURCHASE_LINK\">$PURCHASE_LINK</purchase_link>

@@ -8,6 +8,7 @@ L.Map.include({
 
 	Freemium: {
 		isFreemiumUser: false,
+		isFreemiumReadOnly: false,
 		freemiumDenyList: [],
 		freemiumPurchaseTitle: '',
 		freemiumPurchaseLink: '',
@@ -20,6 +21,7 @@ L.Map.include({
 
 	_setFreemiumProps: function(freemiumInfo) {
 		this.Freemium.isFreemiumUser = !!freemiumInfo['IsFreemiumUser'];
+		this.Freemium.isFreemiumReadOnly = !!freemiumInfo['IsFreemiumReadOnly'];
 		this.Freemium.freemiumDenyList = freemiumInfo['FreemiumDenyList'];
 		this.Freemium.freemiumPurchaseTitle = _(freemiumInfo['FreemiumPurchaseTitle']);
 		this.Freemium.freemiumPurchaseLink = _(freemiumInfo['FreemiumPurchaseLink']);
@@ -136,6 +138,14 @@ L.Map.include({
 				return true;
 		}
 		return false;
+	},
+
+	isFreemiumReadOnly: function() {
+		return this.Freemium.isFreemiumReadOnly;
+	},
+
+	isFreemiumReadOnlyUser: function() {
+		return this.Freemium.isFreemiumUser && this.Freemium.isFreemiumReadOnly;
 	},
 
 	_extractCommand: function(item) {
