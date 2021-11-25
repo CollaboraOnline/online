@@ -7,7 +7,7 @@ RUN sudo sh -c "echo deb-src http://archive.ubuntu.com/ubuntu/ focal main restri
  && sudo sh -c "echo deb-src http://security.ubuntu.com/ubuntu/ focal-security multiverse >> /etc/apt/sources.list" \
  && sudo apt-get update \
  && sudo apt-get install -y \
-    build-essential git libpoco-dev libcap-dev python3-polib npm libpng-dev python3-lxml libpam-dev firefox \
+    build-essential git libpoco-dev libcap-dev python3-polib npm libpng-dev python3-lxml libpam-dev firefox chromium-browser\
  && sudo apt-get build-dep -y libreoffice \
  && pip install lxml \
  && pip install polib \
