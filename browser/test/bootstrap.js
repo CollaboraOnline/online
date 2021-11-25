@@ -11,6 +11,10 @@ const single_view = process.argv[6];
 const typing_duration = process.argv[7];
 const inspect = process.argv[8];
 const recordStats = process.argv[9];
+
+// verbose console output
+const debug = false;
+
 /* dont use the default port (9980)*/
 const port = '9999';
 let args = [
@@ -19,7 +23,7 @@ let args = [
 	`--o:child_root_path=${top_builddir}/jails`,
 	'--o:storage.filesystem[@allow]=true',
 	'--o:admin_console.username=admin --o:admin_console.password=admin',
-	'--o:logging.file[@enable]=true --o:logging.level=warning',
+	'--o:logging.file[@enable]=true --o:logging.level=' + (debug ? 'trace' : 'warning'),
 	'--o:trace_event[@enable]=true',
 	`--port=${port}`
 ];
@@ -34,18 +38,24 @@ if (ssl_flag === 'true')
 	args = [...args, ...ssl_args];
 
 const coolwsd = spawn(`${top_builddir}/coolwsd`, args);
-/*
-coolwsd.stdout.on('data', (data) => {
-	//console.log(`stdout: ${data}`);
-});
 
-coolwsd.stderr.on('data', (data) => {
-	//console.error(`stderr: ${data}`);
-});
-*/
+if (debug)
+{
+	coolwsd.stdout.on('data', (data) => {
+		console.log(`stdout: ${data}`);
+	});
+	coolwsd.stderr.on('data', (data) => {
+		console.error(`stderr: ${data}`);
+	});
+}
+
 coolwsd.on('exit', (code) => {
 	console.log(`coolwsd process exited with code ${code}`);
 });
+
+console.log('\nTest running - connect to:\n\n\t' +
+	    'https://localhost:9999/browser/1234/cool.html?file_path=file://' +
+	    top_builddir + '/test/data/perf-test-edit.odt\n\n');
 
 let childNodes = [];
 
