@@ -640,7 +640,7 @@ $(DIST_FOLDER)/admin/%: $(srcdir)/admin/%
 
 install-data-hook:
 	mkdir -p $(DESTDIR)$(pkgdatadir)/browser; \
-	cp -ar dist/ $(DESTDIR)$(pkgdatadir)/browser/;
+	cp -a dist/ $(DESTDIR)$(pkgdatadir)/browser/;
 
 libs:
 	@mkdir -p $(abs_srcdir)/libs
