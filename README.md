@@ -68,8 +68,9 @@ Interesting things to keep in mind:
 - Make sure your browser is not blocking windows/tabs from opening from the gitpod workspace URL (maybe add `*.gitpod.io` to your browser's whitelist)
   - The GitPod tasks will run automatically and further instructions will be printed out right in the terminal
   - VNC tab will open automatically if not just click in the left icon `Remote explorer` and click `6080`. You will see a tab completly black, that's normal.
-  - As mentioned in those instructions, do not try to click the URL from the make run out put instead copy that URL and execute `firefox [paste URL here]`
-  - Head over to the tab where the VNC is opened (black page), you will see Firefox opening there, maximize and have fun.
-- You can also run cypress tests via GitPod, for that just prepend `CYPRESS_BROWSER="firefox"` to the desired command. Example: `CYPRESS_BROWSER="firefox" make check` for every test or `CYPRESS_BROWSER="firefox" make check-desktop spec=impress/scrolling_spec.js` for one specific test on desktop
+  - As mentioned in those instructions if you are not using the VS Code desktop and if you are only relying on your browser please:
+    - Do not try to click the URL from the make run out put instead copy that URL and execute `firefox [paste URL here]`
+    - Head over to the tab where the VNC is opened (black page), you will see Firefox opening there, maximize and have fun.
+    - You can also run cypress tests via GitPod but you will need to use Firefox, for that just prepend `CYPRESS_BROWSER="firefox"` to the desired command. Example: `CYPRESS_BROWSER="firefox" make check` for every test or `CYPRESS_BROWSER="firefox" make check-desktop spec=impress/scrolling_spec.js` for one specific test on desktop
 
 ## Enjoy!

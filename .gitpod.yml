@@ -53,7 +53,7 @@ tasks:
   - name: Test
     init: gp await-port 9980
     command: |
-      echo "To open and test in the web browser:"
+      echo "If you are not using the VS Code desktop and instead just your web browser, to open and test Collabora Online:"
       echo "1. Make sure your web browser is not blocking any tabs from opening;"
       echo "2. Check that you have the VCN tab opened (if not, open it up from the left side Remote explorer > 6080)"
       echo "3. In the terminal where make is running: scroll and copy the the URL ending with: hello-world.odt"
