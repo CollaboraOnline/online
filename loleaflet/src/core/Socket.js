@@ -824,27 +824,32 @@ app.definitions.Socket = L.Class.extend({
 
 				vex.closeAll();
 
+				var dialogButtons = [
+					$.extend({}, vex.dialog.buttons.YES, { text: _('Discard'),
+						click: function() {
+							this.value = 'discard';
+							this.close();
+						}}),
+					$.extend({}, vex.dialog.buttons.YES, { text: _('Overwrite'),
+						click: function() {
+							this.value = 'overwrite';
+							this.close();
+						}})
+				];
+
+				if (!that._map['wopi'].UserCanNotWriteRelative) {
+					dialogButtons.push($.extend({}, vex.dialog.buttons.YES, { text: _('Save to new file'),
+						click: function() {
+							this.value = 'saveas';
+							this.close();
+						}}));
+				}
+
 				vex.dialog.open({
 					message: _('Document has been changed in storage. What would you like to do with your unsaved changes?'),
 					escapeButtonCloses: false,
 					overlayClosesOnClick: false,
-					buttons: [
-						$.extend({}, vex.dialog.buttons.YES, { text: _('Discard'),
-						                                      click: function() {
-							                                      this.value = 'discard';
-							                                      this.close();
-						                                      }}),
-						$.extend({}, vex.dialog.buttons.YES, { text: _('Overwrite'),
-						                                      click: function() {
-							                                      this.value = 'overwrite';
-							                                      this.close();
-						                                      }}),
-						$.extend({}, vex.dialog.buttons.YES, { text: _('Save to new file'),
-						                                      click: function() {
-							                                      this.value = 'saveas';
-							                                      this.close();
-						                                      }})
-					],
+					buttons: dialogButtons,
 					callback: function(value) {
 						if (value === 'discard') {
 							// They want to refresh the page and load document again for all
