@@ -293,8 +293,8 @@ protected:
                 const std::string body = "{\"LastModifiedTime\": \"" +
                                          Util::getIso8601FracformatTime(_fileLastModifiedTime) +
                                          "\" }";
-                LOG_TST("Fake wopi host response to POST " << uriReq.getPath() << ": 200 OK "
-                                                           << body);
+                LOG_TST("Fake wopi host (default) response to POST " << uriReq.getPath()
+                                                                     << ": 200 OK " << body);
                 http::Response httpResponse(http::StatusLine(200));
                 httpResponse.setBody(body);
                 socket->sendAndShutdown(httpResponse);
@@ -313,12 +313,13 @@ protected:
 
 };
 
-/// Send a command message to WSD from a WopiTestServer.
+/// Send a command message to WSD from a WopiTestServer and wake polls.
 #define WSD_CMD(MSG)                                                                               \
     do                                                                                             \
     {                                                                                              \
         LOG_TST("Sending: " << MSG);                                                               \
         helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), MSG, getTestname());                  \
+        SocketPoll::wakeupWorld();                                                                 \
     } while (false)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
