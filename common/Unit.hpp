@@ -447,4 +447,70 @@ public:
     virtual ~UnitTool() {}
 };
 
+/// Enum macro specifically for state-machines.
+/// Has several limitations, some intentional. For example,
+/// the states must have automatic, sequential, values.
+/// But also has some advantages, for example it can be used inside classes.
+/// Some ideas from https://stackoverflow.com/questions/28828957/enum-to-string-in-modern-c11-c14-c17-and-future-c20
+/// and from https://github.com/pfultz2/Cloak/wiki/C-Preprocessor-tricks,-tips,-and-idioms
+
+#define STRINGIFY(NAME, e) #NAME "::" #e,
+#define CONCAT(X, Y) X##Y
+#define CALL(X, ...) X(__VA_ARGS__)
+
+#define APPLY1(MACRO, NAME, e) MACRO(NAME, e)
+#define APPLY2(MACRO, NAME, e, ...) MACRO(NAME, e) APPLY1(MACRO, NAME, __VA_ARGS__)
+#define APPLY3(MACRO, NAME, e, ...) MACRO(NAME, e) APPLY2(MACRO, NAME, __VA_ARGS__)
+#define APPLY4(MACRO, NAME, e, ...) MACRO(NAME, e) APPLY3(MACRO, NAME, __VA_ARGS__)
+#define APPLY5(MACRO, NAME, e, ...) MACRO(NAME, e) APPLY4(MACRO, NAME, __VA_ARGS__)
+#define APPLY6(MACRO, NAME, e, ...) MACRO(NAME, e) APPLY5(MACRO, NAME, __VA_ARGS__)
+#define APPLY7(MACRO, NAME, e, ...) MACRO(NAME, e) APPLY6(MACRO, NAME, __VA_ARGS__)
+#define APPLY8(MACRO, NAME, e, ...) MACRO(NAME, e) APPLY7(MACRO, NAME, __VA_ARGS__)
+#define APPLY9(MACRO, NAME, e, ...) MACRO(NAME, e) APPLY8(MACRO, NAME, __VA_ARGS__)
+#define APPLY10(MACRO, NAME, e, ...) MACRO(NAME, e) APPLY9(MACRO, NAME, __VA_ARGS__)
+#define APPLY11(MACRO, NAME, e, ...) MACRO(NAME, e) APPLY10(MACRO, NAME, __VA_ARGS__)
+#define APPLY12(MACRO, NAME, e, ...) MACRO(NAME, e) APPLY11(MACRO, NAME, __VA_ARGS__)
+#define APPLY13(MACRO, NAME, e, ...) MACRO(NAME, e) APPLY12(MACRO, NAME, __VA_ARGS__)
+#define APPLY14(MACRO, NAME, e, ...) MACRO(NAME, e) APPLY13(MACRO, NAME, __VA_ARGS__)
+#define APPLY15(MACRO, NAME, e, ...) MACRO(NAME, e) APPLY14(MACRO, NAME, __VA_ARGS__)
+
+// Credit to Anton Bachin for this trick.
+#define GET_COUNT(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, c, ...) c
+#define COUNT_ARGS(...) GET_COUNT(__VA_ARGS__, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
+
+#define APPLY(MACRO, NAME, ...)                                                                    \
+    CALL(CONCAT, APPLY, COUNT_ARGS(__VA_ARGS__))(MACRO, NAME, __VA_ARGS__)
+#define FOR_EACH(MACRO, NAME, ...) APPLY(MACRO, NAME, __VA_ARGS__)
+
+/// Define a state-machine states, typically used to organize the phases
+/// of a multi-stage test.
+/// NAME is the name of the state enum, VAR is the name of the enum variable,
+/// followed by the names of the states.
+#define STATES_ENUM(NAME, VAR, ...)                                                                \
+    enum class NAME : char                                                                         \
+    {                                                                                              \
+        __VA_ARGS__                                                                                \
+    } VAR;                                                                                         \
+    static const char* toString(NAME e)                                                            \
+    {                                                                                              \
+        static const char* const NAME##_names[] = { FOR_EACH(STRINGIFY, NAME, __VA_ARGS__) };      \
+        assert(static_cast<unsigned>(e) < sizeof(NAME##_names) / sizeof(NAME##_names[0]) &&        \
+               "Enum value is out of range.");                                                     \
+        return NAME##_names[static_cast<int>(e)];                                                  \
+    }
+
+/// Transition the test state of VAR to STATE, with a prefix message, and resume the test.
+/// This will wake up all polls and the new state may be processed in parallel.
+#define TRANSITION_STATE_MSG(VAR, STATE, MSG)                                                      \
+    do                                                                                             \
+    {                                                                                              \
+        LOG_TST(MSG << " " << toString(VAR) << " -> " #STATE);                                     \
+        VAR = STATE;                                                                               \
+        SocketPoll::wakeupWorld();                                                                 \
+    } while (false)
+
+/// Transition the test state of VAR to STATE and resume the test.
+/// This will wake up all polls and the new state may be processed in parallel.
+#define TRANSITION_STATE(VAR, STATE) TRANSITION_STATE_MSG(VAR, STATE, "Transitioning from");
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
