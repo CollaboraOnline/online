@@ -26,17 +26,8 @@
 // Modify, Save, Upload fails, close -> Upload.
 class UnitWOPIAsyncUpload_Close : public WopiTestServer
 {
-    enum class Phase
-    {
-        Load,
-        WaitLoadStatus,
-        Modify,
-        WaitModifiedStatus,
-        WaitFirstPutFile,
-        Close,
-        WaitSecondPutFile,
-        Polling
-    } _phase;
+    STATES_ENUM(Phase, _phase, Load, WaitLoadStatus, Modify, WaitModifiedStatus, WaitFirstPutFile,
+                Close, WaitSecondPutFile, Polling);
 
 public:
     UnitWOPIAsyncUpload_Close()
@@ -53,8 +44,7 @@ public:
         {
             LOG_TST("assertPutFileRequest: First PutFile, which will fail");
 
-            LOG_TST("WaitFirstPutFile => Close");
-            _phase = Phase::Close;
+            TRANSITION_STATE(_phase, Phase::Close);
 
             LOK_ASSERT_EQUAL(std::string("true"), request.get("X-LOOL-WOPI-IsModifiedByUser"));
 
@@ -88,10 +78,8 @@ public:
         LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus",
                            _phase == Phase::WaitLoadStatus);
 
-        LOG_TST("onDocumentModified: Switching to Phase::WaitLoadStatus, SavingPhase::Modify");
-        _phase = Phase::Modify;
+        TRANSITION_STATE(_phase, Phase::Modify);
 
-        SocketPoll::wakeupWorld();
         return true;
     }
 
@@ -99,18 +87,12 @@ public:
     bool onDocumentModified(const std::string& message) override
     {
         LOG_TST("onDocumentModified: Doc (WaitModifiedStatus): [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitModified",
+        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitModifiedStatus",
                            _phase == Phase::WaitModifiedStatus);
-        {
-            LOG_TST("onDocumentModified: Switching to Phase::WaitModifiedStatus, "
-                    "SavingPhase::WaitFirstPutFile");
-            _phase = Phase::WaitFirstPutFile;
+        TRANSITION_STATE(_phase, Phase::WaitFirstPutFile);
 
-            WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
-                    "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
-
-            SocketPoll::wakeupWorld();
-        }
+        WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0 "
+                "extendedData=CustomFlag%3DCustom%20Value%3BAnotherFlag%3DAnotherValue");
 
         return true;
     }
@@ -121,8 +103,7 @@ public:
         {
             case Phase::Load:
             {
-                LOG_TST("Load => WaitLoadStatus");
-                _phase = Phase::WaitLoadStatus;
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
                 LOG_TST("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
@@ -134,8 +115,7 @@ public:
                 break;
             case Phase::Modify:
             {
-                LOG_TST("Modify => WaitModified");
-                _phase = Phase::WaitModifiedStatus;
+                TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
 
                 WSD_CMD("key type=input char=97 key=0");
                 WSD_CMD("key type=up char=0 key=512");
@@ -147,8 +127,7 @@ public:
                 break;
             case Phase::Close:
             {
-                LOG_TST("Close => WaitSecondPutFile");
-                _phase = Phase::WaitSecondPutFile;
+                TRANSITION_STATE(_phase, Phase::WaitSecondPutFile);
 
                 WSD_CMD("closedocument");
                 break;
