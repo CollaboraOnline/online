@@ -14,11 +14,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-24 20:28+0100\n"
-"PO-Revision-Date: 2021-11-24 19:27+0000\n"
+"PO-Revision-Date: 2021-11-25 21:55+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/tr/>\n"
-"Language: \n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1509,11 +1509,11 @@ msgstr "Kapat"
 #: src/control/Toolbar.js:614
 #, javascript-format
 msgid "Explore the new %coolVersion"
-msgstr ""
+msgstr "Yeni %coolVersion sürümünü keşfedin"
 
 #: src/control/Toolbar.js:615 src/control/Toolbar.js:619
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online Geliştirme Sürümü"
 
 #: src/control/Toolbar.js:616
 #, javascript-format
@@ -1524,10 +1524,15 @@ msgid ""
 "%coolVersion introduces important improvements, in the areas of usability, "
 "visual presentation and performance."
 msgstr ""
+"Kullanmanız, keşfetmeniz ve tarayıcıda başkalarıyla kullanmanız için "
+"ücretsiz olan çevrim içi üretkenlikteki en son gelişmelerin keyfini çıkarın. "
+"Android ve iOS için de <a href=\"%coolAppsURL\" target=\"_blank\""
+">Uygulamalar</a> bulunmaktadır. %coolVersion sürümü kullanılabilirlik, "
+"görsel sunum ve performans alanlarında önemli iyileştirmeler getirmektedir."
 
 #: src/control/Toolbar.js:618
 msgid "Discover all the changes"
-msgstr ""
+msgstr "Tüm değişiklikleri keşfedin"
 
 #: src/control/Toolbar.js:620
 #, javascript-format
@@ -1537,14 +1542,19 @@ msgid ""
 "larger groups working on documents, new native sidebar, new re-worked avatar "
 "list, asynchronous saving, faster spell checking and more."
 msgstr ""
+"<a href=\"%coolReleaseNotesURL\" target=\"_blank\">Sürüm notlarına</a> göz "
+"atın ve özellikle belgeler üzerinde çalışan daha büyük gruplar, yeni yerel "
+"kenar çubuğu, yeni elden geçirilen avatar listesi, eşzamansız kaydetme, daha "
+"hızlı yazım denetimi ve daha fazlası için performanstaki en son dönüm "
+"noktası hakkında her şeyi öğrenin."
 
 #: src/control/Toolbar.js:622
 msgid "Integrate Collabora Online into your webapp"
-msgstr ""
+msgstr "Collabora Online'ı web uygulamanızla bütünleştirin"
 
 #: src/control/Toolbar.js:623
 msgid "Or get involved in the development"
-msgstr ""
+msgstr "Veya geliştirmeye dahil olun"
 
 #: src/control/Toolbar.js:624
 #, javascript-format
@@ -1557,15 +1567,21 @@ msgid ""
 "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
 "all the essential steps on how to reproduce it."
 msgstr ""
+"<a href=\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>'da web "
+"uygulamanızla bütünleştirme hakkında daha fazla bilgi edinin. Veya <a href=\""
+"%coolStepByStepURL\" target=\"_blank\">adım adım talimatlara</a> gidin ve "
+"CODE'yi sıfırdan oluşturun. Ayrıca, <a href=\"%coolTranslationsURL\" target="
+"\"_blank\">çevirilerle</a> veya nasıl yeniden oluşturulacağına ilişkin tüm "
+"temel adımları içeren <a href=\"%coolBugreportURL\" target=\"_blank\">bir "
+"hata bildirimi göndererek</a> de yardımcı olabilirsiniz."
 
 #: src/control/Toolbar.js:626 src/control/Toolbar.js:627
-#, fuzzy
 msgid "Next"
-msgstr "Metin"
+msgstr "İleri"
 
 #: src/control/Toolbar.js:630
 msgid "Learn more about the enterprise-ready versions"
-msgstr ""
+msgstr "Kurumsal kullanıma hazır sürümler hakkında daha fazla bilgi edinin"
 
 #: src/control/Toolbar.js:679
 msgid ""
