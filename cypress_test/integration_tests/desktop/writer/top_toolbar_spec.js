@@ -392,7 +392,7 @@ describe('Top toolbar tests.', function() {
 
 	it('Print', function() {
 		// A new window should be opened with the PDF.
-		cy.window()
+		helper.getCoolFrameWindow()
 			.then(function(win) {
 				cy.stub(win, 'open');
 			});
@@ -401,7 +401,10 @@ describe('Top toolbar tests.', function() {
 
 		desktopHelper.actionOnSelector('print', (selector) => { cy.get(selector).click(); });
 
-		cy.window().its('open').should('be.called');
+		helper.getCoolFrameWindow()
+			.then(function(win) {
+				cy.wrap(win).its('open').should('be.called');
+			});
 	});
 
 	it('Apply Undo/Redo.', function() {

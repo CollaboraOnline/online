@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach */
+/* global describe it Cypress cy beforeEach require afterEach */
 
 var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
@@ -22,6 +22,11 @@ describe('Annotation Tests',function() {
 		cy.get('#comment-container-1').should('exist');
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
+
+		//reset get to original function
+		Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
+			return originalFn(selector, options);
+		});
 
 		helper.beforeAll(testFileName, 'calc', true);
 

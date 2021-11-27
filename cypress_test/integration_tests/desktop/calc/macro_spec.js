@@ -33,8 +33,8 @@ describe('macro dialog tests', function() {
 	it('Macro execution warning appears before loading the document.', function() {
 		calcHelper.selectEntireSheet();
 
-		cy.contains('#copy-paste-container table td', 'Macro Executed')
-			.should('not.exist');
+		cy.get('#copy-paste-container table td')
+			.should('not.have.text', 'Macro Executed');
 
 		cy.get('#menu-tools > a')
 			.click();
@@ -59,8 +59,7 @@ describe('macro dialog tests', function() {
 
 		calcHelper.selectEntireSheet();
 
-		cy.contains('#copy-paste-container table td', 'Macro Executed')
-			.should('exist');
+		cy.get('#copy-paste-container table td')
+			.should('have.text', 'Macro Executed');
 	});
-
 });

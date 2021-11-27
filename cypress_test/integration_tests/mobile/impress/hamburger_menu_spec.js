@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach */
+/* global describe it cy Cypress require afterEach */
 
 var helper = require('../../common/helper');
 var impressHelper = require('../../common/impress_helper');
@@ -40,6 +40,11 @@ describe('Trigger hamburger menu options.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
+		//reset get to original function
+		Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
+			return originalFn(selector, options);
+		});
+
 		// Reopen the document and check content.
 		helper.beforeAll(testFileName, 'impress', true);
 
@@ -55,14 +60,17 @@ describe('Trigger hamburger menu options.', function() {
 		before('hamburger_menu.odp');
 
 		// A new window should be opened with the PDF.
-		cy.window()
+		helper.getCoolFrameWindow()
 			.then(function(win) {
 				cy.stub(win, 'open');
 			});
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Print']);
 
-		cy.window().its('open').should('be.called');
+		helper.getCoolFrameWindow()
+			.then(function(win) {
+				cy.wrap(win).its('open').should('be.called');
+			});
 	});
 
 	it('Download as PDF', function() {

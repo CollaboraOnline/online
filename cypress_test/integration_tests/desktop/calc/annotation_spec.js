@@ -75,7 +75,7 @@ describe('Annotation Tests', function() {
 
 		cy.get('#comment-annotation-menu-1').click();
 
-		cy.contains('.context-menu-item','Reply').should('not.exist');
+		cy.get('.context-menu-list:visible .context-menu-item').should('not.have.text', 'Reply');
 	});
 
 	it('Remove',function() {

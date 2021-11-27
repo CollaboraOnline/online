@@ -15,17 +15,7 @@ describe('Row Column Operation', function() {
 
 		cy.wait(500);
 
-		cy.get('#copy-paste-container tbody').within(() => {
-			cy.get('tr').eq(0).within(() => {
-				cy.get('td').eq(0).should('have.text', 'Hello');
-				cy.get('td').eq(1).should('have.text', 'Hi');
-			});
-
-			cy.get('tr').eq(1).within(() => {
-				cy.get('td').eq(0).should('have.text', 'World');
-				cy.get('td').eq(1).should('have.text', 'Bye');
-			});
-		});
+		calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
 
 		calcHelper.clickOnFirstCell(true,false);
 	});
@@ -57,22 +47,7 @@ describe('Row Column Operation', function() {
 
 		cy.wait(500);
 
-		cy.get('#copy-paste-container tbody').within(() => {
-			cy.get('tr').eq(0).within(() => {
-				cy.get('td').eq(0).should('not.have.text');
-				cy.get('td').eq(1).should('not.have.text');
-			});
-
-			cy.get('tr').eq(1).within(() => {
-				cy.get('td').eq(0).should('have.text', 'Hello');
-				cy.get('td').eq(1).should('have.text', 'Hi');
-			});
-
-			cy.get('tr').eq(2).within(() => {
-				cy.get('td').eq(0).should('have.text', 'World');
-				cy.get('td').eq(1).should('have.text', 'Bye');
-			});
-		});
+		calcHelper.assertDataClipboardTable(['','','Hello','Hi','World','Bye']);
 
 		//delete row
 		calcHelper.clickOnFirstCell(true, false);
@@ -83,17 +58,7 @@ describe('Row Column Operation', function() {
 
 		cy.wait(500);
 
-		cy.get('#copy-paste-container tbody').within(() => {
-			cy.get('tr').eq(0).within(() => {
-				cy.get('td').eq(0).should('have.text', 'Hello');
-				cy.get('td').eq(1).should('have.text', 'Hi');
-			});
-
-			cy.get('tr').eq(1).within(() => {
-				cy.get('td').eq(0).should('have.text', 'World');
-				cy.get('td').eq(1).should('have.text', 'Bye');
-			});
-		});
+		calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
 
 		//insert row below
 		calcHelper.clickOnFirstCell(true, false);
@@ -104,22 +69,7 @@ describe('Row Column Operation', function() {
 
 		cy.wait(500);
 
-		cy.get('#copy-paste-container tbody').within(() => {
-			cy.get('tr').eq(0).within(() => {
-				cy.get('td').eq(0).should('have.text', 'Hello');
-				cy.get('td').eq(1).should('have.text', 'Hi');
-			});
-
-			cy.get('tr').eq(1).within(() => {
-				cy.get('td').eq(0).should('not.have.text');
-				cy.get('td').eq(1).should('not.have.text');
-			});
-
-			cy.get('tr').eq(2).within(() => {
-				cy.get('td').eq(0).should('have.text', 'World');
-				cy.get('td').eq(1).should('have.text', 'Bye');
-			});
-		});
+		calcHelper.assertDataClipboardTable(['Hello','Hi','','','World','Bye']);
 	});
 
 	it('Insert/Delete Column', function() {
@@ -130,19 +80,7 @@ describe('Row Column Operation', function() {
 
 		cy.wait(500);
 
-		cy.get('#copy-paste-container tbody').within(() => {
-			cy.get('tr').eq(0).within(() => {
-				cy.get('td').eq(0).should('not.have.text');
-				cy.get('td').eq(1).should('have.text', 'Hello');
-				cy.get('td').eq(2).should('have.text', 'Hi');
-			});
-
-			cy.get('tr').eq(1).within(() => {
-				cy.get('td').eq(0).should('not.have.text');
-				cy.get('td').eq(1).should('have.text', 'World');
-				cy.get('td').eq(2).should('have.text', 'Bye');
-			});
-		});
+		calcHelper.assertDataClipboardTable(['','Hello','Hi','','World','Bye']);
 
 		calcHelper.clickOnFirstCell(true, false);
 
@@ -153,17 +91,7 @@ describe('Row Column Operation', function() {
 
 		cy.wait(500);
 
-		cy.get('#copy-paste-container tbody').within(() => {
-			cy.get('tr').eq(0).within(() => {
-				cy.get('td').eq(0).should('have.text', 'Hello');
-				cy.get('td').eq(1).should('have.text', 'Hi');
-			});
-
-			cy.get('tr').eq(1).within(() => {
-				cy.get('td').eq(0).should('have.text', 'World');
-				cy.get('td').eq(1).should('have.text', 'Bye');
-			});
-		});
+		calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
 
 		calcHelper.clickOnFirstCell(true,false);
 
@@ -174,18 +102,6 @@ describe('Row Column Operation', function() {
 
 		cy.wait(500);
 
-		cy.get('#copy-paste-container tbody').within(() => {
-			cy.get('tr').eq(0).within(() => {
-				cy.get('td').eq(0).should('have.text', 'Hello');
-				cy.get('td').eq(1).should('not.have.text');
-				cy.get('td').eq(2).should('have.text', 'Hi');
-			});
-
-			cy.get('tr').eq(1).within(() => {
-				cy.get('td').eq(0).should('have.text', 'World');
-				cy.get('td').eq(1).should('not.have.text');
-				cy.get('td').eq(2).should('have.text', 'Bye');
-			});
-		});
+		calcHelper.assertDataClipboardTable(['Hello','','Hi','World','','Bye']);
 	});
 });

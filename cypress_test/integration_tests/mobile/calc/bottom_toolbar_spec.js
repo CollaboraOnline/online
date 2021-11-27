@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach */
+/* global describe it cy Cypress require afterEach */
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -29,7 +29,15 @@ describe('Interact with bottom toolbar.', function() {
 
 		helper.getCursorPos('left', 'currentTextEndPos');
 
-		calcHelper.removeTextSelection();
+		cy.get('#tb_actionbar_item_acceptformula').then($ele =>{
+			cy.wait(1000);
+			if (Cypress.dom.isVisible($ele)) {
+				cy.wrap($ele).click();
+			}
+		});
+
+		cy.get('.cursor-overlay .blinking-cursor')
+			.should('not.exist');
 	}
 
 	it('Apply bold.', function() {
@@ -155,56 +163,5 @@ describe('Interact with bottom toolbar.', function() {
 						});
 				});
 		});
-	});
-
-	it.skip('Insert row after.', function() {
-		before('bottom_toolbar2.ods');
-
-		cy.get('.w2ui-tb-image.w2ui-icon.insertrowsafter')
-			.click();
-
-		calcHelper.selectEntireSheet();
-
-		cy.get('#copy-paste-container table tr')
-			.should('have.length', 3);
-
-		cy.get('#copy-paste-container table tr:nth-of-type(1)')
-			.should('contain.text', 'long line long line long line');
-
-		cy.get('#copy-paste-container table tr:nth-of-type(2)')
-			.should('not.contain.text', 'long line long line long line');
-
-		cy.get('#copy-paste-container table tr:nth-of-type(2)')
-			.should('not.contain.text', '2');
-
-		cy.get('#copy-paste-container table tr:nth-of-type(3)')
-			.should('contain.text', '2');
-	});
-
-	it.skip('Insert column after.', function() {
-		before('bottom_toolbar2.ods');
-
-		cy.get('.w2ui-tb-image.w2ui-icon.insertcolumnsafter')
-			.click();
-
-		calcHelper.selectEntireSheet();
-
-		cy.get('#copy-paste-container table tr')
-			.should('have.length', 2);
-
-		cy.get('#copy-paste-container table tr:nth-of-type(1) td')
-			.should('have.length', 3);
-
-		cy.get('#copy-paste-container table tr:nth-of-type(1) td:nth-of-type(1)')
-			.should('contain.text', 'long line long line long line');
-
-		cy.get('#copy-paste-container table tr:nth-of-type(1) td:nth-of-type(2)')
-			.should('not.contain.text', 'long line long line long line');
-
-		cy.get('#copy-paste-container table tr:nth-of-type(1) td:nth-of-type(2)')
-			.should('not.contain.text', '1');
-
-		cy.get('#copy-paste-container table tr:nth-of-type(1) td:nth-of-type(3)')
-			.should('contain.text', '1');
 	});
 });

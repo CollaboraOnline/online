@@ -6,6 +6,13 @@ var desktopHelper = require('../../common/desktop_helper');
 describe('Fullscreen Presentation.', function() {
 	var testFileName = 'text_fields.odp';
 
+	function getSlideShowContent() {
+		return cy.get('@coolIFrameGlobal')
+			.find('.leaflet-slideshow').then(($iframe) =>{
+				cy.wrap($iframe.contents());
+			});
+	}
+
 	function before(fileName) {
 		testFileName = fileName;
 		helper.beforeAll(testFileName, 'impress');
@@ -31,34 +38,34 @@ describe('Fullscreen Presentation.', function() {
 
 		cy.wait(3000);
 
-		cy.get('#id1').should('have.class', 'Slide');
+		getSlideShowContent().find('#id1').should('have.class', 'Slide');
 
-		cy.get('#tf2 > g > text > tspan > tspan > tspan')
+		getSlideShowContent().find('#tf2 > g > text > tspan > tspan > tspan')
 			.should('have.class', 'PlaceholderText')
 			.should('contain', '1');
 
-		cy.get('#tf6 > g > text > tspan > tspan > tspan')
+		getSlideShowContent().find('#tf6 > g > text > tspan > tspan > tspan')
 			.should('have.class', 'PlaceholderText')
 			.should('contain', '1');
 
-		cy.get('#tf5 > g > text > tspan > tspan > tspan')
+		getSlideShowContent().find('#tf5 > g > text > tspan > tspan > tspan')
 			.should('have.class', 'PlaceholderText')
 			.should('contain', 'SlideOne');
 
 		// go to second slide
-		cy.get('#id1').click();
+		getSlideShowContent().find('#id1').click();
 
-		cy.get('#id2').should('have.class', 'Slide');
+		getSlideShowContent().find('#id2').should('have.class', 'Slide');
 
-		cy.get('#tf7 > g > text > tspan > tspan > tspan')
+		getSlideShowContent().find('#tf7 > g > text > tspan > tspan > tspan')
 			.should('have.class', 'PlaceholderText')
 			.should('contain', '2');
 
-		cy.get('#tf9 > g > text > tspan > tspan > tspan')
+		getSlideShowContent().find('#tf9 > g > text > tspan > tspan > tspan')
 			.should('have.class', 'PlaceholderText')
 			.should('contain', '2');
 
-		cy.get('#tf8 > g > text > tspan > tspan > tspan')
+		getSlideShowContent().find('#tf8 > g > text > tspan > tspan > tspan')
 			.should('have.class', 'PlaceholderText')
 			.should('contain', 'SlideHello');
 	});
@@ -68,15 +75,15 @@ describe('Fullscreen Presentation.', function() {
 
 		cy.wait(3000);
 
-		cy.get('#id1')
+		getSlideShowContent().find('#id1')
 			.should('have.class', 'Slide');
-		cy.get('#id1 > g').its('0')
+		getSlideShowContent().find('#id1 > g').its('0')
 			.should('have.class', 'MasterPageView');
-		cy.get('#id1 > g > use')
+		getSlideShowContent().find('#id1 > g > use')
 			.should('have.class', 'Background')
 			.should('have.attr', 'href', '#bg-id1');
 
-		cy.get('#id1 > .Page > .SlideBackground > .Background')
+		getSlideShowContent().find('#id1 > .Page > .SlideBackground > .Background')
 			.should('have.attr', 'id', 'bg-id1');
 	});
 });

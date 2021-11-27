@@ -513,7 +513,7 @@ describe('Impress insertion wizard.', function() {
 			cy.get('#tb_actionbar_item_closemobile')
 				.click();
 
-			cy.contains('.leaflet-control-zoom-in', '+')
+			cy.get('.leaflet-control-zoom-in')
 				.should('not.exist');
 		}
 	});
