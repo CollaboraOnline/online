@@ -7,11 +7,11 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-24 20:28+0100\n"
-"PO-Revision-Date: 2021-11-22 19:49+0000\n"
+"PO-Revision-Date: 2021-11-25 21:55+0000\n"
 "Last-Translator: Eloy Crespo <eloy.crespo@collabora.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1509,11 +1509,11 @@ msgstr "Descartar"
 #: src/control/Toolbar.js:614
 #, javascript-format
 msgid "Explore the new %coolVersion"
-msgstr ""
+msgstr "Explora la nueva %coolVersion"
 
 #: src/control/Toolbar.js:615 src/control/Toolbar.js:619
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online Development Edition"
 
 #: src/control/Toolbar.js:616
 #, javascript-format
@@ -1524,10 +1524,15 @@ msgid ""
 "%coolVersion introduces important improvements, in the areas of usability, "
 "visual presentation and performance."
 msgstr ""
+"Disfrute de los últimos desarrollos en productividad en línea, gratis para "
+"usar, explorar y usar con otros en el navegador. Las <a href=\"%coolAppsURL\""
+" target=\"_blank\"> aplicaciones </a> también están disponibles para Android "
+"e iOS. %coolVersion introduce importantes mejoras en las áreas de "
+"usabilidad, presentación visual y rendimiento."
 
 #: src/control/Toolbar.js:618
 msgid "Discover all the changes"
-msgstr ""
+msgstr "Descubre todos los cambios"
 
 #: src/control/Toolbar.js:620
 #, javascript-format
@@ -1537,14 +1542,19 @@ msgid ""
 "larger groups working on documents, new native sidebar, new re-worked avatar "
 "list, asynchronous saving, faster spell checking and more."
 msgstr ""
+"Consulte las <a href=\"%coolReleaseNotesURL\" target=\"_blank\"> notas de la "
+"versión </a> y aprenda todo sobre el último hito en el rendimiento, "
+"especialmente para grupos más grandes que trabajan en documentos, nueva "
+"barra lateral nativa, nueva lista de avatar reelaborada, guardado "
+"asincrónico, revisión ortográfica más rápida y más."
 
 #: src/control/Toolbar.js:622
 msgid "Integrate Collabora Online into your webapp"
-msgstr ""
+msgstr "Integra Collabora Online en tu aplicación web"
 
 #: src/control/Toolbar.js:623
 msgid "Or get involved in the development"
-msgstr ""
+msgstr "O involúcrate en el desarrollo"
 
 #: src/control/Toolbar.js:624
 #, javascript-format
@@ -1557,15 +1567,21 @@ msgid ""
 "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
 "all the essential steps on how to reproduce it."
 msgstr ""
+"Obtén más información sobre la integración en tu aplicación web en <a href=\""
+"%coolSdkURL\" target=\"_blank\"> Collabora Online SDK </a>. O dirígete a las "
+"<a href=\"%coolStepByStepURL\" target=\"_blank\"> instrucciones paso a paso "
+"</a> y crea el CÓDIGO desde cero. También puedes ayudar con <a href=\"%"
+"coolTranslationsURL\" target=\"_blank\"> traducciones </a> o <a href=\"%"
+"coolBugreportURL\" target=\"_blank\"> presentando un informe de error </a> "
+"con todos los pasos esenciales sobre cómo reproducirlo."
 
 #: src/control/Toolbar.js:626 src/control/Toolbar.js:627
-#, fuzzy
 msgid "Next"
-msgstr "Texto"
+msgstr "Siguiente"
 
 #: src/control/Toolbar.js:630
 msgid "Learn more about the enterprise-ready versions"
-msgstr ""
+msgstr "Obtén más información sobre las versiones listas para la empresa"
 
 #: src/control/Toolbar.js:679
 msgid ""
@@ -1607,7 +1623,7 @@ msgstr "RECARGAR"
 
 #: src/core/Socket.js:504
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "verisión COOLWSD:"
 
 #: src/core/Socket.js:516
 msgid "Served by:"
@@ -1619,7 +1635,7 @@ msgstr "No se admite esta versión del servidor."
 
 #: src/core/Socket.js:526
 msgid "LOKit version:"
-msgstr ""
+msgstr "versión LOKit:"
 
 #: src/core/Socket.js:640
 msgid "Session terminated by document owner"
