@@ -270,16 +270,12 @@ function selectHamburgerMenuItem(menuItems) {
 			.click();
 
 		if (Cypress.env('INTEGRATION') !== 'nextcloud') {
-			if (i === menuItems.length - 1) {
-				cy.contains('.menu-entry-with-icon', menuItems[i])
-					.should('not.exist');
-			} else {
-				cy.contains('.menu-entry-with-icon', menuItems[i])
-					.should('not.be.visible');
+			if (Cypress.$('.menu-entry-with-icon').length) {
+				cy.get('.menu-entry-with-icon')
+					.should('not.have.text', menuItems[i]);
 			}
 		}
 	}
-
 	cy.log('Selecting hamburger menu item - end.');
 }
 

@@ -228,6 +228,18 @@ function ensureViewContainsCellCursor() {
 	});
 }
 
+function assertDataClipboardTable(expectedData) {
+	var data = [];
+	cy.get('#copy-paste-container tbody').find('td').each(($el) => {
+		cy.wrap($el)
+			.invoke('text')
+			.then(text => {
+				data.push(text);
+			});
+		cy.log(data);
+	}).then(() => expect(data).to.deep.eq(expectedData));
+}
+
 module.exports.clickOnFirstCell = clickOnFirstCell;
 module.exports.dblClickOnFirstCell = dblClickOnFirstCell;
 module.exports.clickFormulaBar = clickFormulaBar;
@@ -236,3 +248,4 @@ module.exports.removeTextSelection = removeTextSelection;
 module.exports.selectEntireSheet = selectEntireSheet;
 module.exports.selectFirstColumn = selectFirstColumn;
 module.exports.ensureViewContainsCellCursor = ensureViewContainsCellCursor;
+module.exports.assertDataClipboardTable = assertDataClipboardTable;

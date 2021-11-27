@@ -21,9 +21,7 @@ describe('Focus tests', function() {
 		// Click in the document
 		cy.get('#document-container').click();
 
-		// Clipboard has the focus -> can type in the document
-		cy.document().its('activeElement.className')
-			.should('be.eq', 'clipboard');
+		helper.assertFocus('className', 'clipboard');
 	});
 
 	it('Focus with opened mobile wizard.', function() {
@@ -35,14 +33,12 @@ describe('Focus tests', function() {
 			.click();
 
 		// Clipboard has the focus -> can type in the document
-		cy.document().its('activeElement.className')
-			.should('be.eq', 'clipboard');
+		helper.assertFocus('className', 'clipboard');
 
 		mobileHelper.openMobileWizard();
 
 		// Body should have the focus (no focus on document)
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
+		helper.assertFocus('tagName', 'BODY');
 
 		mobileHelper.closeMobileWizard();
 	});
@@ -62,8 +58,7 @@ describe('Focus tests', function() {
 		helper.clickOnIdle('#aboveparaspacing .spinfield');
 
 		// The spinfield should have the focus now.
-		cy.document().its('activeElement.className')
-			.should('be.eq', 'spinfield');
+		helper.assertFocus('className', 'spinfield');
 
 		mobileHelper.closeMobileWizard();
 	});
@@ -86,8 +81,7 @@ describe('Focus tests', function() {
 			.should('not.be.visible');
 
 		// After insertion the document gets the focus
-		cy.document().its('activeElement.className')
-			.should('be.eq', 'clipboard');
+		helper.assertFocus('className', 'clipboard');
 	});
 
 	it('Shape related focus.', function() {
@@ -119,8 +113,7 @@ describe('Focus tests', function() {
 			});
 
 		// No focus on the document
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
+		helper.assertFocus('tagName', 'BODY');
 
 		// Double tap on the shape
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg')
@@ -138,8 +131,7 @@ describe('Focus tests', function() {
 			.should('be.visible');
 
 		// Document still has the focus
-		cy.document().its('activeElement.className')
-			.should('be.eq', 'clipboard');
+		helper.assertFocus('className', 'clipboard');
 
 		helper.assertHaveKeyboardInput();
 	});
@@ -153,8 +145,7 @@ describe('Focus tests', function() {
 			.click();
 
 		// Clipboard has the focus -> can type in the document
-		cy.document().its('activeElement.className')
-			.should('be.eq', 'clipboard');
+		helper.assertFocus('className', 'clipboard');
 
 		// Open hamburger menu
 		mobileHelper.openHamburgerMenu();
@@ -172,14 +163,12 @@ describe('Focus tests', function() {
 			.click();
 
 		// Clipboard has the focus -> can type in the document
-		cy.document().its('activeElement.className')
-			.should('be.eq', 'clipboard');
+		helper.assertFocus('className', 'clipboard');
 
 		mobileHelper.openMobileWizard();
 
 		// No focus
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
+		helper.assertFocus('tagName', 'BODY');
 
 		// Apply bold
 		helper.clickOnIdle('#Bold');
@@ -188,8 +177,7 @@ describe('Focus tests', function() {
 			.should('have.class', 'selected');
 
 		// No focus
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
+		helper.assertFocus('tagName', 'BODY');
 
 		mobileHelper.closeMobileWizard();
 	});

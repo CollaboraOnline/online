@@ -68,14 +68,14 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser) 
 		cy.get('iframe#coolframe')
 			.its('0.contentDocument').should('exist')
 			.its('body').should('not.be.undefined')
-			.then(cy.wrap).as('loleafletIFrameGlobal');
+			.then(cy.wrap).as('coolIFrameGlobal');
 
 		Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
-			if (!selector.startsWith('@')) {
+			if (!selector.startsWith('@') && !(selector === '#coolframe')) {
 				if (selector === 'body')
-					return cy.get('@loleafletIFrameGlobal');
+					return cy.get('@coolIFrameGlobal');
 				else
-					return cy.get('@loleafletIFrameGlobal').find(selector, options);
+					return cy.get('@coolIFrameGlobal').find(selector, options);
 			} else {
 				return originalFn(selector, options);
 			}
@@ -405,8 +405,7 @@ function assertCursorAndFocus(frameId) {
 
 	if (Cypress.env('INTEGRATION') !== 'nextcloud') {
 		// Active element must be the textarea named clipboard.
-		cy.document().its('activeElement.className')
-			.should('be.eq', 'clipboard');
+		assertFocus('className', 'clipboard');
 	}
 
 	// In edit mode, we should have the blinking cursor.
@@ -1208,6 +1207,18 @@ function getVisibleBounds(domRect) {
 		domRect.height);
 }
 
+function assertFocus(selectorType, selector) {
+	cy.get('#coolframe')
+		.its('0.contentDocument')
+		.its('activeElement.'+selectorType)
+		.should('be.eq', selector);
+}
+
+function getCoolFrameWindow() {
+	return cy.get('#coolframe')
+		.its('0.contentWindow')
+		.should('exist');
+}
 module.exports.loadTestDoc = loadTestDoc;
 module.exports.checkIfDocIsLoaded = checkIfDocIsLoaded;
 module.exports.assertCursorAndFocus = assertCursorAndFocus;
@@ -1249,3 +1260,5 @@ module.exports.overlayItemHasBounds = overlayItemHasBounds;
 module.exports.overlayItemHasDifferentBoundsThan = overlayItemHasDifferentBoundsThan;
 module.exports.typeIntoInputField = typeIntoInputField;
 module.exports.getVisibleBounds = getVisibleBounds;
+module.exports.assertFocus = assertFocus;
+module.exports.getCoolFrameWindow = getCoolFrameWindow;

@@ -23,15 +23,13 @@ describe('Calc focus tests', function() {
 		mobileHelper.enableEditingMobile();
 
 		// Body has the focus -> can't type in the document
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
+		helper.assertFocus('tagName', 'BODY');
 
 		// One tap on another cell -> no focus on the document
 		calcHelper.clickOnFirstCell();
 
 		// No focus
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
+		helper.assertFocus('tagName', 'BODY');
 
 		// Double tap on another cell gives the focus to the document
 		cy.get('.spreadsheet-cell-resize-marker')
@@ -44,8 +42,7 @@ describe('Calc focus tests', function() {
 			});
 
 		// Document has the focus
-		cy.document().its('activeElement.className')
-			.should('be.eq', 'clipboard');
+		helper.assertFocus('className', 'clipboard');
 	});
 
 	it('Focus on second tap.', function() {
@@ -53,22 +50,19 @@ describe('Calc focus tests', function() {
 		mobileHelper.enableEditingMobile();
 
 		// Body has the focus -> can't type in the document
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
+		helper.assertFocus('tagName', 'BODY');
 
 		// One tap on a cell -> no document focus
 		calcHelper.clickOnFirstCell();
 
 		// No focus
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
+		helper.assertFocus('tagName', 'BODY');
 
 		// Second tap on the same cell
 		calcHelper.clickOnFirstCell(false);
 
 		// Document has the focus
-		cy.document().its('activeElement.className')
-			.should('be.eq', 'clipboard');
+		helper.assertFocus('className', 'clipboard');
 	});
 
 	it.skip('Formula-bar focus', function() {
@@ -76,8 +70,7 @@ describe('Calc focus tests', function() {
 		mobileHelper.enableEditingMobile();
 
 		// Body has the focus -> can't type in the document
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
+		helper.assertFocus('tagName', 'BODY');
 
 		helper.assertNoKeyboardInput();
 
@@ -85,8 +78,7 @@ describe('Calc focus tests', function() {
 		calcHelper.clickOnFirstCell();
 
 		// No focus
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
+		helper.assertFocus('tagName', 'BODY');
 
 		// Click in the formula-bar.
 		calcHelper.clickFormulaBar();

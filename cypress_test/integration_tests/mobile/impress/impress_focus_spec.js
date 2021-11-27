@@ -22,8 +22,7 @@ describe('Impress focus tests', function() {
 		impressHelper.assertNotInTextEditMode();
 
 		// Body has the focus -> can't type in the document
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
+		helper.assertFocus('tagName', 'BODY');
 
 		// One tap on a text shape, on the whitespace area,
 		// does not start editing.
@@ -41,8 +40,7 @@ describe('Impress focus tests', function() {
 			});
 
 		// No focus
-		cy.document().its('activeElement.tagName')
-			.should('be.eq', 'BODY');
+		helper.assertFocus('tagName', 'BODY');
 
 		cy.wait(1000);
 

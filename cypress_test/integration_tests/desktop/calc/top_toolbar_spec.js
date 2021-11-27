@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect*/
+/* global describe it Cypress cy beforeEach require afterEach expect*/
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -31,6 +31,10 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_save')
 			.click();
 
+		Cypress.Commands.overwrite('get', function(originalFn, selector, options) {
+			return originalFn(selector, options);
+		});
+
 		helper.beforeAll(testFileName, 'calc', true);
 
 		calcHelper.selectEntireSheet();
@@ -55,20 +59,15 @@ describe('Top toolbar tests.', function() {
 
 		cy.wait(1000);
 
-		cy.get('#copy-paste-container tbody')
-			.within(() => {
-				cy.get('tr').eq(0).within(() => {
-					cy.get('td b').should('exist');
-				});
-				cy.get('tr').eq(1).within(() => {
-					cy.get('td b').should('exist');
-				});
-			});
+		cy.get('#copy-paste-container tbody').find('td b').each(($el) => {
+			cy.wrap($el)
+				.should('exist');
+		});
 	});
 
 	it('Print', function() {
 		// A new window should be opened with the PDF.
-		cy.window()
+		helper.getCoolFrameWindow()
 			.then(function(win) {
 				cy.stub(win, 'open');
 			});
@@ -76,7 +75,10 @@ describe('Top toolbar tests.', function() {
 		cy.get('#tb_editbar_item_print')
 		    .click();
 
-		cy.window().its('open').should('be.called');
+		helper.getCoolFrameWindow()
+			.then(function(win) {
+				cy.wrap(win).its('open').should('be.called');
+			});
 	});
 
 	it('Enable text wrapping.', function() {
@@ -89,13 +91,14 @@ describe('Top toolbar tests.', function() {
 		cy.get('@currentTextEndPos')
 			.should('be.greaterThan', 0);
 
-		calcHelper.selectFirstColumn();
+		helper.typeIntoDocument('{enter}');
+
+		calcHelper.clickOnFirstCell();
 
 		cy.get('.w2ui-tb-image.w2ui-icon.wraptext')
 			.click();
 
-		calcHelper.clickOnFirstCell();
-
+		helper.typeIntoDocument('{enter}');
 		// We use the text position as indicator
 		cy.waitUntil(function() {
 			getTextEndPosForFirstCell();

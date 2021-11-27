@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach expect*/
+/* global describe it cy beforeEach Cypress require afterEach expect*/
 
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
@@ -24,7 +24,16 @@ describe('Change alignment settings.', function() {
 
 		helper.getCursorPos('left', 'currentTextEndPos');
 
-		calcHelper.removeTextSelection();
+		//remove text selection
+		cy.get('#tb_actionbar_item_acceptformula').then($ele =>{
+			cy.wait(1000);
+			if (Cypress.dom.isVisible($ele)) {
+				cy.wrap($ele).click();
+			}
+		});
+
+		cy.get('.cursor-overlay .blinking-cursor')
+			.should('not.exist');
 	}
 
 	function openAlignmentPaneForFirstCell() {
