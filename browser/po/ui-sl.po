@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-24 20:28+0100\n"
-"PO-Revision-Date: 2021-11-22 19:49+0000\n"
+"PO-Revision-Date: 2021-11-25 21:55+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 4.10-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -1507,11 +1507,13 @@ msgstr "Umakni"
 #: src/control/Toolbar.js:614
 #, javascript-format
 msgid "Explore the new %coolVersion"
-msgstr ""
+msgstr "Raziščite novo %coolVersion"
 
 #: src/control/Toolbar.js:615 src/control/Toolbar.js:619
 msgid "Collabora Online Development Edition"
 msgstr ""
+"Razvojna različica Collabora Online (angl. Collabora Online Development "
+"Edition oz. CODE)"
 
 #: src/control/Toolbar.js:616
 #, javascript-format
@@ -1522,10 +1524,15 @@ msgid ""
 "%coolVersion introduces important improvements, in the areas of usability, "
 "visual presentation and performance."
 msgstr ""
+"Uživajte v najnovejšem razvoju spletne produktivnosti, brezplačnem za "
+"uporabo, raziskovanje in souporabo z drugimi v brskalniku. <a href=\"%"
+"coolAppsURL\" target=\"_blank\">Aplikacije</a> so na voljo tudi za Android "
+"in iOS. %coolVersion prinaša pomembne izboljšave na področju uporabnosti, "
+"vizualne podobe in hitrosti delovanja."
 
 #: src/control/Toolbar.js:618
 msgid "Discover all the changes"
-msgstr ""
+msgstr "Odkrijte vse spremembe"
 
 #: src/control/Toolbar.js:620
 #, javascript-format
@@ -1535,14 +1542,20 @@ msgid ""
 "larger groups working on documents, new native sidebar, new re-worked avatar "
 "list, asynchronous saving, faster spell checking and more."
 msgstr ""
+"Preglejte <a href=\"%coolReleaseNotesURL\" target=\"_blank\">opombe ob "
+"izdaji</a> in spoznajte vse o najnovejši ključni izdaji glede hitrosti "
+"delovanja, še posebej za večje skupine, ki sodelujejo pri delu na "
+"dokumentih, novi domorodni stranski vrstici, novem predelanem seznamu "
+"avatarjev, asinhronem shranjevanju, hitrejšem preverjanju črkovanja in "
+"drugem."
 
 #: src/control/Toolbar.js:622
 msgid "Integrate Collabora Online into your webapp"
-msgstr ""
+msgstr "Integrirajte Collabora Online v svojo spletno aplikacijo"
 
 #: src/control/Toolbar.js:623
 msgid "Or get involved in the development"
-msgstr ""
+msgstr "Ali pa se pridružite razvoju"
 
 #: src/control/Toolbar.js:624
 #, javascript-format
@@ -1555,15 +1568,21 @@ msgid ""
 "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
 "all the essential steps on how to reproduce it."
 msgstr ""
+"Pozanimajte se o integraciji v svojo spletno aplikacijo v <a href=\"%"
+"coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Ali pa se namenite "
+"k <a href=\"%coolStepByStepURL\" target=\"_blank\">napotkom korak za "
+"korakom</a> ter zgradite CODE od začetka. Pomagate lahko tudi s <a href=\"%"
+"coolTranslationsURL\" target=\"_blank\">prevajanjem</a> ali <a href=\"%"
+"coolBugreportURL\" target=\"_blank\">vnosom poročila o hrošču</a> z vsemi "
+"ključnimi koraki o tem, kako jih poustvariti."
 
 #: src/control/Toolbar.js:626 src/control/Toolbar.js:627
-#, fuzzy
 msgid "Next"
-msgstr "Besedilo"
+msgstr "Naprej"
 
 #: src/control/Toolbar.js:630
 msgid "Learn more about the enterprise-ready versions"
-msgstr ""
+msgstr "Spoznajte podrobnosti o različicah za podjetja"
 
 #: src/control/Toolbar.js:679
 msgid ""
@@ -1604,7 +1623,7 @@ msgstr "PONOVNO NALOŽI"
 
 #: src/core/Socket.js:504
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "Različica COOLWSD:"
 
 #: src/core/Socket.js:516
 msgid "Served by:"
@@ -1616,7 +1635,7 @@ msgstr "Nepodprta različica strežnika."
 
 #: src/core/Socket.js:526
 msgid "LOKit version:"
-msgstr ""
+msgstr "Različica LOKit:"
 
 #: src/core/Socket.js:640
 msgid "Session terminated by document owner"
