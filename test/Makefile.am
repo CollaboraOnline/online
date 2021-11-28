@@ -24,6 +24,7 @@ noinst_LTLIBRARIES = \
 	unit-wopi.la unit-wopi-saveas.la unit-wopi-saveas-with-encoded-file-name.la \
 	unit-wopi-async-upload-close.la unit-wopi-async-upload-modify.la \
 	unit-wopi-async-upload-modifyclose.la \
+	unit-wopi-async-slow.la \
 	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
 	unit-wopi-documentconflict.la unit_wopi_renamefile.la unit_wopi_watermark.la \
 	unit-wopi-lock.la \
@@ -163,6 +164,8 @@ unit_wopi_async_upload_modify_la_SOURCES = UnitWOPIAsyncUpload_Modify.cpp
 unit_wopi_async_upload_modify_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_async_upload_modifyclose_la_SOURCES = UnitWOPIAsyncUpload_ModifyClose.cpp
 unit_wopi_async_upload_modifyclose_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_async_slow_la_SOURCES = UnitWOPISlow.cpp
+unit_wopi_async_slow_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_saveas_la_SOURCES = UnitWOPISaveAs.cpp
 unit_wopi_saveas_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_saveas_with_encoded_file_name_la_SOURCES = UnitWOPISaveAsWithEncodedFileName.cpp
@@ -249,6 +252,7 @@ TESTS = \
 	unit-oauth.la unit-wopi.la unit-wopi-saveas.la unit-wopi-saveas-with-encoded-file-name.la \
 	unit-wopi-async-upload-close.la unit-wopi-async-upload-modify.la \
 	unit-wopi-async-upload-modifyclose.la \
+	unit-wopi-async-slow.la \
 	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
 	unit-wopi-documentconflict.la unit_wopi_renamefile.la unit_wopi_watermark.la \
 	unit-wopi-lock.la \
