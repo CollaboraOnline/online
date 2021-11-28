@@ -215,6 +215,10 @@ public:
     /// Return true to stop further handling of messages.
     virtual bool onDocumentError(const std::string&) { return false; }
 
+    /// Called when a DocumentBroker is destroyed.
+    /// Useful to detect when unloading was clean and to (re)load again.
+    virtual void onDocBrokerDestroy(const std::string&) {}
+
     /// If the test times out this gets invoked, the default just exits.
     virtual void timeout();
 
