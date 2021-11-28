@@ -142,7 +142,7 @@ namespace Quarantine
 
         std::string sourcefilePath = COOLWSD::ChildRoot + "tmp/cool-" + docBroker->getJailId() + "/user/docs/" + docBroker->getJailId() + "/" + docName;
 
-        std::string linkedFileName = ts + "_" + std::to_string(docBroker->getPid()) + "_" + docKey;
+        std::string linkedFileName = ts + '_' + std::to_string(docBroker->getPid()) + '_' + docKey + '_' + docName;
         std::string linkedFilePath = COOLWSD::QuarantinePath + linkedFileName;
 
         auto& fileList = COOLWSD::QuarantineMap[docBroker->getDocKey()];
