@@ -564,6 +564,8 @@ DocumentBroker::~DocumentBroker()
     // and thread finished before we are destroyed.
     _childProcess.reset();
 
+    UnitWSD::get().onDocBrokerDestroy(_docKey);
+
 #if !MOBILEAPP
     // Remove from the admin last, to avoid racing the next test.
     Admin::instance().rmDoc(_docKey);
