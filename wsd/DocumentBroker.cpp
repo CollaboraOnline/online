@@ -524,6 +524,8 @@ DocumentBroker::~DocumentBroker()
     // Need to first make sure the child exited, socket closed,
     // and thread finished before we are destroyed.
     _childProcess.reset();
+
+    UnitWSD::get().onDocBrokerDestroy(_docKey);
 }
 
 void DocumentBroker::joinThread()
