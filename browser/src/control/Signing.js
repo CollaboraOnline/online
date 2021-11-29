@@ -594,7 +594,7 @@ L.Map.include({
 	},
 	setupSigningToolbarItems: function() {
 		return [
-			{type: 'html',  id: 'logo', html: '<a href="http://www.vereign.com" target="_blank"><img src="images/vereign.png" style="padding-right: 16px; padding-left: 6px; height: 32px"/></a>' },
+			{type: 'html',  id: 'logo', html: '<a href="http://www.vereign.com" target="_blank"><img src="' + L.LOUtil.getImageURL('vereign.png') + '" style="padding-right: 16px; padding-left: 6px; height: 32px"/></a>' },
 			{type: 'menu', id: 'passport', caption: _('Select passport'), items: []},
 			{type: 'html', id: 'current-passport', html: _('Passport: N/A')},
 			{type: 'break', id: 'passport-break' },
