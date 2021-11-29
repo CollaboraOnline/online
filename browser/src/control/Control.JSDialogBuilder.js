@@ -2174,7 +2174,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	_emptyCommentWizard: function(parentContainer, data, builder) {
 		var emptyCommentWizard = L.DomUtil.create('figure', 'empty-comment-wizard-container', parentContainer);
 		var imgNode = L.DomUtil.create('img', 'empty-comment-wizard-img', emptyCommentWizard);
-		imgNode.src = 'images/lc_showannotations.svg';
+		imgNode.src = L.LOUtil.getImageURL('lc_showannotations.svg');
 		imgNode.alt = data.text;
 		var textNode = L.DomUtil.create('figcaption', 'empty-comment-wizard', emptyCommentWizard);
 		textNode.innerText = data.text;
