@@ -1315,6 +1315,17 @@ app.definitions.Socket = L.Class.extend({
 		}
 	},
 
+	// show labels instead of editable fields in message boxes
+	_preProcessMessageDialog: function(msgData) {
+		for (var i in msgData.children) {
+			var child = msgData.children[i];
+			if (child.type === 'multilineedit')
+				child.type = 'fixedtext';
+			else if (child.children)
+				this._preProcessMessageDialog(child);
+		}
+	},
+
 	_onJSDialog: function(textMsg, callback) {
 		var msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
 
@@ -1347,6 +1358,9 @@ app.definitions.Socket = L.Class.extend({
 				return;
 			}
 		}
+
+		if (msgData.type === 'messagebox')
+			this._preProcessMessageDialog(msgData);
 
 		// re/create
 		if (window.mode.isMobile()) {
