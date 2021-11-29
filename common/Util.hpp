@@ -307,31 +307,34 @@ namespace Util
     inline std::string stringifyHexLine(const T& buffer, std::size_t offset,
                                         const std::size_t width = 32)
     {
-        char scratch[64];
-        std::stringstream os;
+        std::string str;
+        str.reserve(width * 4 + width / 8 + 3 + 1);
 
         for (unsigned int i = 0; i < width; i++)
         {
             if (i && (i % 8) == 0)
-                os << ' ';
+                str.push_back(' ');
             if ((offset + i) < buffer.size())
-                sprintf (scratch, "%.2x ", (unsigned char)buffer[offset+i]);
+            {
+                const unsigned short hex = hexFromByte(buffer[offset+i]);
+                str.push_back(hex >> 8);
+                str.push_back(hex & 0xff);
+                str.push_back(' ');
+            }
             else
-                sprintf (scratch, "   ");
-            os << scratch;
+                str.append(3, ' ');
         }
-        os << " | ";
+        str.append(" | ");
 
         for (unsigned int i = 0; i < width; i++)
         {
             if ((offset + i) < buffer.size())
-                sprintf(scratch, "%c", ::isprint(buffer[offset + i]) ? buffer[offset + i] : '.');
+                str.push_back(::isprint(buffer[offset + i]) ? buffer[offset + i] : '.');
             else
-                sprintf(scratch, " "); // Leave blank if we are out of data.
-            os << scratch;
+                str.push_back(' '); // Leave blank if we are out of data.
         }
 
-        return os.str();
+        return str;
     }
 
     /// Dump data as hex and chars to stream.
