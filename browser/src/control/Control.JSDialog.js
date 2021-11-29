@@ -43,13 +43,14 @@ L.Control.JSDialog = L.Control.extend({
 			if (this.dialogs[id].isPopup)
 				this.closePopover(id, sendCloseEvent);
 			else
-				this.closeDialog(id);
+				this.closeDialog(id, sendCloseEvent);
 		}
 	},
 
-	closeDialog: function(id) {
+	closeDialog: function(id, sendCloseEvent) {
 		var builder = this.clearDialog(id);
-		builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
+		if (sendCloseEvent !== false)
+			builder.callback('dialog', 'close', {id: '__DIALOG__'}, null, builder);
 	},
 
 	closePopover: function(id, sendCloseEvent) {
@@ -106,7 +107,7 @@ L.Control.JSDialog = L.Control.extend({
 		}
 		else if (data.action === 'close')
 		{
-			this.close(data.id);
+			this.close(data.id, false);
 			return;
 		}
 
@@ -178,7 +179,7 @@ L.Control.JSDialog = L.Control.extend({
 
 		if (!isModalPopup) {
 			button.onclick = function() {
-				that.closeDialog(data.id);
+				that.closeDialog(data.id, true);
 			};
 
 			var hammerTitlebar = new Hammer(titlebar);
