@@ -80,6 +80,7 @@ public class FileUtilities {
         mExtnMap.put(".ppt",  IMPRESS);
         // mExtnMap.put(".pps",  IMPRESS);
         mExtnMap.put(".xls",  CALC);
+        mExtnMap.put(".xlsb",  CALC);
 
         // MS templates
         mExtnMap.put(".dot",  DOC);
