@@ -27,6 +27,7 @@
 #include <helpers.hpp>
 #include <test.hpp>
 #include <sstream>
+#include <random>
 
 using namespace helpers;
 
@@ -1317,9 +1318,10 @@ void TileCacheTests::checkTiles(std::shared_ptr<http::WebSocketSession>& socket,
     }
 
     // random setclientpart
-    std::srand(std::time(nullptr));
     std::vector<int> vParts = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    std::random_shuffle(vParts.begin(), vParts.end());
+    std::mt19937 random;
+    random.seed(std::time(nullptr));
+    std::shuffle(vParts.begin(), vParts.end(), random);
     int requests = 0;
     for (int it : vParts)
     {
@@ -1474,9 +1476,10 @@ void TileCacheTests::checkTiles(std::shared_ptr<COOLWebSocket>& socket, const st
     }
 
     // random setclientpart
-    std::srand(std::time(nullptr));
     std::vector<int> vParts = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    std::random_shuffle(vParts.begin(), vParts.end());
+    std::mt19937 random;
+    random.seed(std::time(nullptr));
+    std::shuffle(vParts.begin(), vParts.end(), random);
     int requests = 0;
     for (int it : vParts)
     {
