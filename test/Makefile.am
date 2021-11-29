@@ -81,6 +81,7 @@ test_base_source = \
 	WhiteBoxTests.cpp \
 	HttpWhiteBoxTests.cpp \
 	DeltaTests.cpp \
+	UtilTests.cpp \
 	WopiProofTests.cpp \
 	$(wsd_sources)
 
