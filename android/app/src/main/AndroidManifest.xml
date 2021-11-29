@@ -92,6 +92,7 @@
                 <data android:mimeType="application/vnd.visio" />
                 <data android:mimeType="application/vnd.visio.xml" />
                 <data android:mimeType="application/x-mspublisher" />
+                <data android:mimeType="application/vnd.ms-excel.sheet.binary.macroenabled.12" />
 
                 <!-- OOXML -->
                 <data android:mimeType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
