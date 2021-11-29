@@ -21,8 +21,8 @@
  */
 class Buffer
 {
-    std::size_t _size;
-    std::size_t _offset;
+    std::size_t _size;    /// size of data remaining: buffer.size() - _offset()
+    std::size_t _offset;  /// offset into _buffer of data
     std::vector<char> _buffer;
 
 public:
@@ -60,7 +60,7 @@ public:
 
         // avoid regular shuffling down larger chunks of data
         if (_buffer.size() > 16384 && // lots of queued data
-            len < _buffer.size() &&   // not a complete erase
+            len < _size &&            // not a complete erase
             _offset < 16384 * 64 &&   // do cleanup a Mb at a time or so:
             _size > 512)              // early cleanup if what remains is small.
         {
