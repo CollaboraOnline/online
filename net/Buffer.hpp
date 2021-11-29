@@ -21,31 +21,30 @@
  */
 class Buffer
 {
-    std::size_t _size;    /// size of data remaining: buffer.size() - _offset()
     std::size_t _offset;  /// offset into _buffer of data
     std::vector<char> _buffer;
 
 public:
-    Buffer() : _size(0), _offset(0)
+    Buffer() : _offset(0)
     {
     }
 
     typedef std::vector<char>::iterator iterator;
     typedef std::vector<char>::const_iterator const_iterator;
 
-    std::size_t size() const { return _size; }
-    bool empty() const { return _size == 0; }
+    std::size_t size() const { return _buffer.size() - _offset; }
+    bool empty() const { return _offset == _buffer.size(); }
 
     const char *getBlock() const
     {
-        if (_size)
+        if (!empty())
             return &_buffer[_offset];
         return nullptr;
     }
 
     std::size_t getBlockSize() const
     {
-        return _size;
+        return size();
     }
 
     void eraseFirst(std::size_t len)
@@ -54,30 +53,27 @@ public:
             return;
 
         assert(_offset + len <= _buffer.size());
-        assert(_offset + _size == _buffer.size());
+        assert(_offset + size() == _buffer.size());
 
-        len = std::min(len, _size); // Avoid accidental damage.
+        len = std::min(len, size()); // Avoid accidental damage.
 
         // avoid regular shuffling down larger chunks of data
         if (_buffer.size() > 16384 && // lots of queued data
-            len < _size &&            // not a complete erase
+            len < size() &&           // not a complete erase
             _offset < 16384 * 64 &&   // do cleanup a Mb at a time or so:
-            _size > 512)              // early cleanup if what remains is small.
+            size() > 512)             // early cleanup if what remains is small.
         {
             _offset += len;
-            _size -= len;
             return;
         }
 
         _buffer.erase(_buffer.begin(), _buffer.begin() + _offset + len);
         _offset = 0;
-        _size = _buffer.size();
     }
 
     void append(const char *data, const int len)
     {
         _buffer.insert(_buffer.end(), data, data + len);
-        _size = _buffer.size() - _offset;
     }
 
     void append(const std::string& s) { append(s.c_str(), s.size()); }
@@ -91,8 +87,8 @@ public:
 
     void dumpHex(std::ostream &os, const char *legend, const char *prefix) const
     {
-        if (_size > 0 || _offset > 0)
-            os << prefix << "Buffer size: " << _size << " offset: " << _offset << '\n';
+        if (size() > 0 || _offset > 0)
+            os << prefix << "Buffer size: " << size() << " offset: " << _offset << '\n';
         if (_buffer.size() > 0)
             Util::dumpHex(os, _buffer, legend, prefix);
     }
@@ -103,7 +99,6 @@ public:
     {
         _buffer.clear();
         _offset = 0;
-        _size = 0;
     }
 
     iterator begin() { return _buffer.begin() + _offset; }
@@ -130,7 +125,6 @@ public:
             return begin();
         }
         iterator ret = _buffer.erase(first, last);
-        _size = _buffer.size() - _offset;
         return ret;
     }
 };
