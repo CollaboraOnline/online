@@ -292,7 +292,8 @@ void UnitBase::timeout()
     // Don't timeout if we had already finished.
     if (isUnitTesting() && !_setRetValue)
     {
-        LOG_ERR(getTestname() << ": Timed out waiting for unit test to complete");
+        LOG_ERR(getTestname() << ": Timed out waiting for unit test to complete within "
+                              << _timeoutMilliSeconds);
         exitTest(TestResult::TimedOut);
     }
 }
