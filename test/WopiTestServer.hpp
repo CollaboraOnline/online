@@ -308,13 +308,14 @@ protected:
 
         return false;
     }
+
 };
 
 /// Send a command message to WSD from a WopiTestServer.
 #define WSD_CMD(MSG)                                                                               \
     do                                                                                             \
     {                                                                                              \
-        LOG_TST(": Sending: " << MSG);                                                             \
+        LOG_TST("Sending: " << MSG);                                                               \
         helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), MSG, getTestname());                  \
     } while (false)
 
