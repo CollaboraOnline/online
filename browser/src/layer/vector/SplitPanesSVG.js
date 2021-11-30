@@ -72,6 +72,19 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 		L.SplitPanesRenderer.prototype.onRemove.call(this);
 	},
 
+	_isCalcRTL: function () {
+		var docLayer = this._map._docLayer;
+		return docLayer.isCalc() && docLayer.isLayoutRTL();
+	},
+
+	// In RTL Calc mode this h-mirrors the top-left position of a rectangle else it does nothing.
+	_transformContainerPoint: function (pos, size) {
+		if (this._isCalcRTL())
+			return new L.Point(this._map._size.x - pos.x - size.x, pos.y);
+
+		return pos;
+	},
+
 	getChildPosBounds: function (childRenderer) {
 		console.assert(typeof childRenderer.rendererId === 'string', 'Child renderer does not have a rendererId!');
 		var rendererId = childRenderer.rendererId;
@@ -100,14 +113,17 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 			// this is the default splitPane where are no visible splits (splitPos = (0, 0)).
 			topLeft = splitPos;
 			size = size.subtract(splitPos);
-			pos = this._map.containerPointToLayerPointIgnoreSplits(topLeft).round();
-			boundPos = pos;
+			pos = this._map.containerPointToLayerPointIgnoreSplits(
+				this._transformContainerPoint(topLeft, size)).round();
+			// Don't apply container point transformation for viewBox bounds.
+			boundPos = this._map.containerPointToLayerPointIgnoreSplits(topLeft).round();
 		}
 		else if (rendererId === 'topleft') {
 			// is always glued to (0, 0) of the document.
 			size.x = splitPos.x - 1;
 			size.y = splitPos.y - 1;
-			pos = this._map.containerPointToLayerPointIgnoreSplits(topLeft).round();
+			pos = this._map.containerPointToLayerPointIgnoreSplits(
+				this._transformContainerPoint(topLeft, size)).round();
 			boundPos = topLeft.subtract(pixelOrigin);
 		}
 		else if (rendererId === 'topright') {
@@ -115,22 +131,42 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 			topLeft.x = splitPos.x;
 			size.x -= splitPos.x;
 			size.y = splitPos.y - 1;
-			pos = this._map.containerPointToLayerPointIgnoreSplits(topLeft).round();
-			boundPos = new L.Point(pos.x, topLeft.y - pixelOrigin.y);
+			pos = this._map.containerPointToLayerPointIgnoreSplits(
+				this._transformContainerPoint(topLeft, size)).round();
+			// Don't apply container point transformation for viewBox bounds.
+			var boundPosX = this._map.containerPointToLayerPointIgnoreSplits(topLeft).round().x;
+			boundPos = new L.Point(boundPosX, topLeft.y - pixelOrigin.y);
 		}
 		else if (rendererId === 'bottomleft') {
 			// is always glued to left (x = 0) of the document.
 			topLeft.y = splitPos.y;
 			size.y -= splitPos.y;
 			size.x = splitPos.x - 1;
-			pos = this._map.containerPointToLayerPointIgnoreSplits(topLeft).round();
+			pos = this._map.containerPointToLayerPointIgnoreSplits(
+				this._transformContainerPoint(topLeft, size)).round();
 			boundPos = new L.Point(topLeft.x - pixelOrigin.x, pos.y);
 		}
 		else {
 			console.error('unhandled rendererId : ' + rendererId);
 		}
 
-		var bounds = new L.Bounds(boundPos, boundPos.add(size));
+		var bounds;
+		if (this._isCalcRTL()) {
+			// Reason for this specialization:
+			// To make shapes rendering in Calc RTL easier
+			// all shapes have negative document X coordinates.
+			// To match this, each svg viewBox (for each split pane) must
+			// also use negated X coordinates.
+
+			// So find the negated top 'visual' right in layer coordinates.
+			// (negation has to be done in document coordinates)
+
+			var docPosRightX = boundPos.x + size.x + pixelOrigin.x;
+			var negatedTopRightLayerPoint = new L.Point(-docPosRightX - pixelOrigin.x, boundPos.y);
+			bounds = new L.Bounds(negatedTopRightLayerPoint, negatedTopRightLayerPoint.add(size));
+		} else {
+			bounds = new L.Bounds(boundPos, boundPos.add(size));
+		}
 
 		return {
 			bounds: bounds,
