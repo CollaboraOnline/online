@@ -317,7 +317,7 @@ protected:
 #define WSD_CMD(MSG)                                                                               \
     do                                                                                             \
     {                                                                                              \
-        LOG_TST(": Sending: " << MSG);                                                             \
+        LOG_TST("Sending: " << MSG);                                                               \
         helpers::sendTextFrame(*getWs()->getLOOLWebSocket(), MSG, getTestname());                  \
     } while (false)
 
