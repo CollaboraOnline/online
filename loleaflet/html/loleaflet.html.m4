@@ -254,6 +254,7 @@ m4_ifelse(MOBILEAPP,[true],
           <div id="about-dialog-info">
             <div id="loolwsd-version-label"> LOOLWSD version:</div>
             <div id="loolwsd-version"></div>
+            <div class="spacer"></div>
             <div id="lokit-version-label"></div>
             <div id="lokit-version"></div>
             m4_ifelse(MOBILEAPP,[],[<div id="served-by-label"></div><div id="served-by"><span id="os-info"></span>&nbsp;<wbr><span id="loolwsd-id"></span></div>],[<p></p>])
