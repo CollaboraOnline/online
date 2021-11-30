@@ -818,3 +818,8 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	width: 90%;
 	position: absolute;
 }
+
+/* About Dialog */
+#about-dialog-logos * {
+	background-size: 68%;
+}
