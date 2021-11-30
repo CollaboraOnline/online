@@ -523,6 +523,9 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		if (this._isCtrlKey(e) && !e.shiftKey && !e.altKey && (e.key === 'f' || e.key === 'F')) {
+			if (!this._map.uiManager.isStatusBarVisible()) {
+				this._map.uiManager.showStatusBar();
+			}
 			this._map.fire('focussearch');
 			e.preventDefault();
 			return true;
