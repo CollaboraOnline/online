@@ -274,10 +274,10 @@ protected:
                 }
             }
 
-            std::streamsize size = request.getContentLength();
-            char buffer[size];
-            message.read(buffer, size);
-            setFileContent(std::string(buffer, size));
+            const std::streamsize size = request.getContentLength();
+            std::vector<char> buffer(size);
+            message.read(buffer.data(), size);
+            setFileContent(Util::toString(buffer));
 
             std::unique_ptr<http::Response> response = assertPutFileRequest(request);
             if (response)
