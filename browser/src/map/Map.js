@@ -989,6 +989,13 @@ L.Map = L.Evented.extend({
 		return this.options.crs.pointToLatLng(L.point(point), zoom);
 	},
 
+	/// Get LatLng coordinates after negating the X cartesian-coordinate.
+	negateLatLng: function (latlng, zoom) { // (LatLng[, Number]) -> LatLng
+		var docPos = this.project(latlng, zoom);
+		docPos.x = -docPos.x;
+		return this.unproject(docPos, zoom);
+	},
+
 	layerPointToLatLng: function (point) { // (Point)
 		var projectedPoint = L.point(point).add(this.getPixelOrigin());
 		return this.unproject(projectedPoint);

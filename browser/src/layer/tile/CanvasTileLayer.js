@@ -3708,9 +3708,17 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!e.pos) { return; }
 		if (!e.handleId) { return; }
 
+		var calcRTL = this.isCalc() && this.isLayoutRTL();
 		var aPos = this._latLngToTwips(e.pos);
 		var selMin = this._graphicSelectionTwips.min;
 		var selMax = this._graphicSelectionTwips.max;
+		if (calcRTL) {
+			var xMin = selMax.x;
+			var xMax = selMin.x;
+			selMin = new L.Point(xMin, selMin.y);
+			selMax = new L.Point(xMax, selMax.y);
+		}
+
 		var handleId = e.handleId;
 
 		if (e.type === 'scalestart') {
@@ -3738,7 +3746,8 @@ L.CanvasTileLayer = L.Layer.extend({
 				},
 				NewPosX: {
 					type: 'long',
-					value: aPos.x
+					// In Calc RTL mode ensure that we send positive X coordinates.
+					value: calcRTL ? -aPos.x : aPos.x
 				},
 				NewPosY: {
 					type: 'long',
