@@ -23,7 +23,7 @@ public:
     UnitTimeout()
         : _timedOut(false)
     {
-        setTimeout(10);
+        setTimeout(std::chrono::milliseconds(10));
     }
     virtual void timeout() override
     {

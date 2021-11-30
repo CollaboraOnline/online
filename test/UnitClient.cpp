@@ -28,8 +28,7 @@ public:
         : UnitWSD("UnitClient")
         , _workerStarted(false)
     {
-        int timeout_minutes = 5;
-        setTimeout(timeout_minutes * 60 * 1000);
+        setTimeout(std::chrono::minutes(5));
     }
     ~UnitClient()
     {
