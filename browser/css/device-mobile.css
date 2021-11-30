@@ -841,3 +841,9 @@ div#fontstyletoolbox + div#style.mobile-wizard {
 #user-welcome--buttons {
 	display: none;
 }
+
+/* About Dialog */
+#about-dialog-logos * {
+	background-size: 68%;
+}
+
