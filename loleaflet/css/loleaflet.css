@@ -737,6 +737,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	align-items: stretch;
 }
 
+#about-dialog-container .spacer {
+	height: 54px;
+}
+
 #about-dialog-logos {
 	flex-grow: 1;
 	flex-flow: column nowrap;
