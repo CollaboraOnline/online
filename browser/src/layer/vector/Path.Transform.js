@@ -846,18 +846,19 @@ L.Handler.PathTransform = L.Handler.extend({
 		if (!this._rect) {
 			return;
 		}
+		var evtLatLng = this._getEventLatLng(evt);
 		var direction = new L.LatLng(0,0);
 		var middleHandleCursor = 0;
 		if (this._activeMarker.options.cursor == 8) {
-			direction.lat = evt.latlng.lat;
+			direction.lat = evtLatLng.lat;
 			direction.lng = this._activeMarker.getLatLng().lng;
 			middleHandleCursor = 8;
 		} else if (this._activeMarker.options.cursor == 10) {
 			direction.lat = this._activeMarker.getLatLng().lat;
-			direction.lng = evt.latlng.lng;
+			direction.lng = evtLatLng.lng;
 			middleHandleCursor = 10;
 		} else {
-			direction = evt.latlng;
+			direction = evtLatLng;
 		}
 		if (this._polyLine) {
 			var lineTop = this._polyLine.getLatLngs()[0];
@@ -982,8 +983,9 @@ L.Handler.PathTransform = L.Handler.extend({
 		if (!this._rect) {
 			return;
 		}
+		var evtLatLng = this._getEventLatLng(evt);
 		this._handleDragged = true;
-		this._activeMarker.setLatLng(evt.latlng);
+		this._activeMarker.setLatLng(evtLatLng);
 	},
 
 	_onCustomHandleDragEnd: function() {
@@ -1026,6 +1028,37 @@ L.Handler.PathTransform = L.Handler.extend({
 		);
 	},
 
+	/**
+	 * Return true if Calc app is in use in RTL mode.
+	 * @return {boolean}
+	 */
+	 isCalcRTL: function () {
+		var docLayer = this._map._docLayer;
+		return docLayer.isCalc() && docLayer.isLayoutRTL();
+	},
+
+	/**
+	 * Returns the layer coordinates of the event position.
+	 * @return {L.Point}
+	 */
+	_getEventLayerPoint: function (evt) {
+		if (!this.isCalcRTL())
+			return evt.layerPoint;
+
+		var evtLatLng = this._map.negateLatLng(evt.latlng);
+		return this._map.latLngToLayerPoint(evtLatLng);
+	},
+
+	/**
+	 * Returns the latlng coordinates of the event position.
+	 * @return {L.LatLng}
+	 */
+	_getEventLatLng: function (evt) {
+		if (!this.isCalcRTL())
+			return evt.latlng;
+
+		return this._map.negateLatLng(evt.latlng);
+	},
 
 	/**
 	* Secure the rotation origin
@@ -1033,6 +1066,7 @@ L.Handler.PathTransform = L.Handler.extend({
 	*/
 	_onRotateStart: function(evt) {
 		var map = this._map;
+		var evtLayerPoint = this._getEventLayerPoint(evt);
 
 		this._handleDragged = false;
 		this._mapDraggingWasEnabled = false;
@@ -1042,7 +1076,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		}
 		this._originMarker     = null;
 		this._rotationOriginPt = map.latLngToLayerPoint(this._getRotationOrigin());
-		this._rotationStart    = evt.layerPoint;
+		this._rotationStart    = evtLayerPoint;
 		this._initialMatrix    = this._matrix.clone();
 
 		this._angle = 0;
@@ -1065,7 +1099,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		if (!this._rect || !this._rotationStart) {
 			return;
 		}
-		var pos = evt.layerPoint;
+		var pos = this._getEventLayerPoint(evt);
 		var previous = this._rotationStart;
 		var origin   = this._rotationOriginPt;
 
@@ -1092,7 +1126,7 @@ L.Handler.PathTransform = L.Handler.extend({
 		if (!this._rect || !this._rotationStart) {
 			return;
 		}
-		var pos = evt.layerPoint;
+		var pos = this._getEventLayerPoint(evt);
 		var previous = this._rotationStart;
 		var origin = this._rotationOriginPt;
 		var angle = Math.atan2(-(pos.y - origin.y), pos.x - origin.x) -
@@ -1179,11 +1213,13 @@ L.Handler.PathTransform = L.Handler.extend({
 		if (!this._rect || !this._scaleOrigin) {
 			return;
 		}
+
+		var evtLayerPoint = this._getEventLayerPoint(evt);
 		if (this.options.shapes.length > 0) {
 			var glueList = this._glueHandlers;
 			for (var i = 0; i < glueList.length; i++) {
 				var gluePoint = glueList[i];
-				if (gluePoint._pxBounds.intersects(new L.Bounds(evt.layerPoint, evt.layerPoint))) {
+				if (gluePoint._pxBounds.intersects(new L.Bounds(evtLayerPoint, evtLayerPoint))) {
 					gluePoint.options.enter = true;
 					this._gluePointMouseEnter(gluePoint);
 				} else if (gluePoint.options.enter) {
@@ -1206,13 +1242,13 @@ L.Handler.PathTransform = L.Handler.extend({
 			scaleUniform = this.options.uniformScaling ^ this._map._docLayer.shiftKeyPressed;
 
 		if (scaleUniform) {
-			ratioX = originPoint.distanceTo(evt.layerPoint) / this._initialDist;
+			ratioX = originPoint.distanceTo(evtLayerPoint) / this._initialDist;
 			ratioY = ratioX;
 		} else {
 			ratioX = this._initialDistX !== 0 ?
-				(originPoint.x - evt.layerPoint.x) / this._initialDistX : 1;
+				(originPoint.x - evtLayerPoint.x) / this._initialDistX : 1;
 			ratioY = this._initialDistY !== 0 ?
-				(originPoint.y - evt.layerPoint.y) / this._initialDistY : 1;
+				(originPoint.y - evtLayerPoint.y) / this._initialDistY : 1;
 		}
 
 		this._scale = new L.Point(ratioX, ratioY);
