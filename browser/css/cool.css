@@ -827,6 +827,10 @@ nav.drawing-color-indicator ~ #main-document-content .cool-annotation-reply-coun
 	align-items: stretch;
 }
 
+#about-dialog-container .spacer {
+	height: 54px;
+}
+
 #about-dialog-logos {
 	flex-grow: 1;
 	flex-flow: column nowrap;
