@@ -406,7 +406,7 @@ public:
     UnitAdmin()
         : _uri(helpers::getTestServerURI() + "/loleaflet/dist/admin/admin.html")
     {
-        setTimeout(60 * 1000);
+        setTimeout(std::chrono::minutes(60));
 
         // Register tests here.
         _tests.push_back(&UnitAdmin::testIncorrectPassword);

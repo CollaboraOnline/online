@@ -209,8 +209,7 @@ UnitBase::TestResult UnitLoadTorture::testLoadTorture()
 UnitLoadTorture::UnitLoadTorture()
 {
     // Double of the default.
-    int timeout_minutes = 1;
-    setTimeout(timeout_minutes * 60 * 1000);
+    setTimeout(std::chrono::seconds(60));
 }
 
 void UnitLoadTorture::invokeWSDTest()

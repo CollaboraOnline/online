@@ -36,7 +36,7 @@ public:
         _workerStarted(false)
     {
         setHasKitHooks();
-        setTimeout(3600 * 1000); /* one hour */
+        setTimeout(std::chrono::hours(1));
     }
     ~UnitConvert()
     {
@@ -112,7 +112,7 @@ class UnitKitConvert : public UnitKit
 public:
     UnitKitConvert()
     {
-        setTimeout(3600 * 1000); /* one hour */
+        setTimeout(std::chrono::hours(1));
     }
 };
 

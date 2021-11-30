@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <chrono>
 #include <test/testlog.hpp>
 
 #include <atomic>
@@ -68,7 +69,7 @@ public:
 protected:
     // ---------------- Helper API ----------------
     /// After this time we invoke 'timeout' default 30 seconds
-    void setTimeout(int timeoutMilliSeconds);
+    void setTimeout(std::chrono::milliseconds timeoutMilliSeconds);
 
     enum class TestResult
     {
@@ -115,7 +116,7 @@ protected:
         : _dlHandle(nullptr)
         , _setRetValue(false)
         , _retValue(0)
-        , _timeoutMilliSeconds(30000)
+        , _timeoutMilliSeconds(std::chrono::seconds(30))
         , _type(type)
         , _testname(std::move(name))
         , _socketPoll(std::make_shared<SocketPoll>(_testname))
@@ -219,7 +220,7 @@ public:
 
     int getTimeoutMilliSeconds() const
     {
-        return _timeoutMilliSeconds;
+        return _timeoutMilliSeconds.count();
     }
 
     static UnitBase& get()
@@ -262,7 +263,7 @@ private:
     static char *UnitLibPath;
     bool _setRetValue;
     int _retValue;
-    int _timeoutMilliSeconds;
+    std::chrono::milliseconds _timeoutMilliSeconds;
     static UnitBase *Global;
     UnitType _type;
 

@@ -162,7 +162,7 @@ UnitBase::TestResult UnitEachView::testGraphicViewSelectionImpress()
 UnitEachView::UnitEachView()
 {
     // 8 times larger then the default.
-    setTimeout(240 * 1000);
+    setTimeout(std::chrono::seconds(30 * 8));
 }
 
 void UnitEachView::invokeWSDTest()
