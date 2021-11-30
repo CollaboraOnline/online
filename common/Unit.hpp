@@ -135,6 +135,12 @@ public:
     /// Tweak the return value from the process.
     virtual void returnValue(int& /* retValue */);
 
+    /// Trigger a failure due to any reason.
+    virtual void fail(const std::string& reason)
+    {
+        failTest(reason);
+    }
+
     /// Input message either for WSD or Kit
     virtual bool filterSessionInput(Session *, const char */* buffer */,
                                     int /* length */,

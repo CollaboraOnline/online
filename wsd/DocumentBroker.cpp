@@ -495,6 +495,8 @@ void DocumentBroker::pollThread()
         std::stringstream state;
         dumpState(state);
         LOG_WRN("DocumentBroker stopping although flagged as modified " << state.str());
+        if (UnitWSD::isUnitTesting())
+            UnitWSD::get().fail("Unsaved data detected while exiting DocBroker [" + _docKey + ']');
     }
 
     // Flush socket data first.
