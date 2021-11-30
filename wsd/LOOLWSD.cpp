@@ -4385,11 +4385,16 @@ int LOOLWSD::innerMain()
     JailUtil::cleanupJails(ChildRoot);
 #endif // !MOBILEAPP
 
+    int returnValue = EX_OK;
+    UnitWSD::get().returnValue(returnValue);
+
+    LOG_INF("Process [loolwsd] finished with exit status: " << returnValue);
+
     // At least on centos7, Poco deadlocks while
     // cleaning up its SSL context singleton.
-    Util::forcedExit(EX_OK);
+    Util::forcedExit(returnValue);
 
-    return EX_OK;
+    return returnValue;
 }
 
 void LOOLWSD::cleanup()
