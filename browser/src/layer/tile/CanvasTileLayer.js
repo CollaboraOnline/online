@@ -1956,8 +1956,10 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_extractAndSetGraphicSelection: function(messageJSON) {
-		var topLeftTwips = new L.Point(messageJSON[0], messageJSON[1]);
-		var offset = new L.Point(messageJSON[2], messageJSON[3]);
+		// Calc RTL: Negate positive X coordinates from core
+		var signX = this.isCalc() && this.isLayoutRTL() ? -1 : 1;
+		var topLeftTwips = new L.Point(signX * messageJSON[0], messageJSON[1]);
+		var offset = new L.Point(signX * messageJSON[2], messageJSON[3]);
 		var bottomRightTwips = topLeftTwips.add(offset);
 		var hasExtraInfo = messageJSON.length > 5;
 		var hasGridOffset = false;
@@ -1965,7 +1967,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (hasExtraInfo) {
 			extraInfo = messageJSON[5];
 			if (extraInfo.gridOffsetX || extraInfo.gridOffsetY) {
-				this._shapeGridOffset = new L.Point(parseInt(extraInfo.gridOffsetX), parseInt(extraInfo.gridOffsetY));
+				this._shapeGridOffset = new L.Point(signX * parseInt(extraInfo.gridOffsetX), parseInt(extraInfo.gridOffsetY));
 				hasGridOffset = true;
 			}
 		}
@@ -4530,8 +4532,12 @@ L.CanvasTileLayer = L.Layer.extend({
 			return rectangle;
 		}
 
+		// Calc
 		var rectSize = rectangle.getSize();
 		var newTopLeft = this.sheetGeometry.getTileTwipsPointFromPrint(rectangle.getTopLeft());
+		if (this.isLayoutRTL()) // Convert to negative display-twips coordinates.
+			newTopLeft.x = -newTopLeft.x;
+
 		return new L.Bounds(newTopLeft, newTopLeft.add(rectSize));
 	},
 
