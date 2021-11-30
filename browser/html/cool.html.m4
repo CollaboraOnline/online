@@ -271,7 +271,7 @@ m4_ifelse(MOBILEAPP,[true],
             <div class="spacer"></div>
             <div id="lokit-version-label"></div>
             <div id="lokit-version"></div>
-            m4_ifelse(MOBILEAPP,[],[<div id="served-by-label"></div><div id="served-by"><span id="os-info"></span>&nbsp;<wbr><span id="coolwsd-id"></span></div>],[<p></p>])
+            m4_ifelse(MOBILEAPP,[],[<div id="served-by"><span id="served-by-label"></span>&nbsp;<span id="os-info"></span>&nbsp;<wbr><span id="coolwsd-id"></span></div>],[<p></p>])
             <div id="slow-proxy"></div>
             <p>Copyright © _YEAR_, VENDOR.</p>
           </div>
