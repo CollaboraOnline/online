@@ -212,8 +212,7 @@ UnitBase::TestResult UnitClose::testAlertAllUsers()
 
 UnitClose::UnitClose()
 {
-    int timeout_minutes = 2;
-    setTimeout(timeout_minutes * 60 * 1000);
+    setTimeout(std::chrono::minutes(2));
 }
 
 void UnitClose::invokeWSDTest()
