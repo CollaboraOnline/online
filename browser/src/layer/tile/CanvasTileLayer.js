@@ -3726,12 +3726,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		var aPos = this._latLngToTwips(e.pos);
 		var selMin = this._graphicSelectionTwips.min;
 		var selMax = this._graphicSelectionTwips.max;
-		if (calcRTL) {
-			var xMin = selMax.x;
-			var xMax = selMin.x;
-			selMin = new L.Point(xMin, selMin.y);
-			selMax = new L.Point(xMax, selMax.y);
-		}
 
 		var handleId = e.handleId;
 
@@ -4558,8 +4552,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		// Calc
 		var rectSize = rectangle.getSize();
 		var newTopLeft = this.sheetGeometry.getTileTwipsPointFromPrint(rectangle.getTopLeft());
-		if (this.isLayoutRTL()) // Convert to negative display-twips coordinates.
+		if (this.isLayoutRTL()) { // Convert to negative display-twips coordinates.
 			newTopLeft.x = -newTopLeft.x;
+			rectSize.x = -rectSize.x;
+		}
 
 		return new L.Bounds(newTopLeft, newTopLeft.add(rectSize));
 	},
