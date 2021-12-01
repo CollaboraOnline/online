@@ -823,3 +823,8 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 #about-dialog-logos * {
 	background-size: 68%;
 }
+
+#product-name {
+	margin: 2px;
+	font-size: 29px;
+}
