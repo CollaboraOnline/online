@@ -295,6 +295,10 @@ public:
     /// Also notifies clients of the result.
     void handleSaveResponse(const std::string& sessionId, bool success, const std::string& result);
 
+    /// Check if uploading is needed, and start uploading.
+    /// The current state of uploading must be introspected separately.
+    void checkAndUploadToStorage(const std::string& sessionId, bool success, const std::string& result);
+
     /// Upload the document to Storage if it needs persisting.
     /// Results are logged and broadcast to users.
     void uploadToStorage(const std::string& sesionId, bool success, const std::string& result,
@@ -320,6 +324,9 @@ public:
     /// @return true if attempts to save or it also waits
     /// and receives save notification. Otherwise, false.
     bool autoSave(const bool force, const bool dontSaveIfUnmodified = true);
+
+    /// Saves the document and stops if there was nothing to autosave.
+    void autoSaveAndStop(const std::string& reason);
 
     bool isAsyncSaveInProgress() const;
 
@@ -537,12 +544,19 @@ private:
     /// Broadcasts to all sessions the last modification time of the document.
     void broadcastLastModificationTime(const std::shared_ptr<ClientSession>& session = nullptr) const;
 
+    /// True if there has been activity from a client after we last *requested* saving,
+    /// since there are race conditions vis-a-vis user activity while saving.
+    bool haveActivityAfterSaveRequest() const
+    {
+        return _saveManager.lastSaveRequestTime() < _lastActivityTime;
+    }
+
     /// True if we know the doc is modified or
     /// if there has been activity from a client after we last *requested* saving,
     /// since there are race conditions vis-a-vis user activity while saving.
     bool isPossiblyModified() const
     {
-        return isModified() || (_saveManager.lastSaveRequestTime() < _lastActivityTime);
+        return isModified() || haveActivityAfterSaveRequest();
     }
 
     /// True iff there is at least one non-readonly session other than the given.
@@ -767,6 +781,12 @@ private:
         std::chrono::milliseconds timeSinceLastSaveRequest() const
         {
             return _request.timeSinceLastRequest();
+        }
+
+        /// The duration elapsed since we received the last save response from Core.
+        std::chrono::milliseconds timeSinceLastSaveResponse() const
+        {
+            return _request.timeSinceLastResponse();
         }
 
     private:
