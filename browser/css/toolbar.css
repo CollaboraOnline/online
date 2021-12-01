@@ -452,6 +452,9 @@ button.leaflet-control-search-next
 	line-height: 24px;
 	padding-right: 8px;
 }
+#tb_editbar_item_fontsizes .select2-container{
+	min-width: 55px !important;
+}
 .fontsizes-select {
 	width: 55px !important;
 }
