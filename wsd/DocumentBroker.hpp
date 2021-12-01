@@ -295,6 +295,10 @@ public:
     /// Also notifies clients of the result.
     void handleSaveResponse(const std::string& sessionId, bool success, const std::string& result);
 
+    /// Check if uploading is needed, and start uploading.
+    /// The current state of uploading must be introspected separately.
+    void checkAndUploadToStorage(const std::string& sessionId, bool success, const std::string& result);
+
     /// Upload the document to Storage if it needs persisting.
     /// Results are logged and broadcast to users.
     void uploadToStorage(const std::string& sesionId, bool success, const std::string& result,
@@ -320,6 +324,9 @@ public:
     /// @return true if attempts to save or it also waits
     /// and receives save notification. Otherwise, false.
     bool autoSave(const bool force, const bool dontSaveIfUnmodified = true);
+
+    /// Saves the document and stops if there was nothing to autosave.
+    void autoSaveAndStop(const std::string& reason);
 
     bool isAsyncSaveInProgress() const;
 
@@ -767,6 +774,12 @@ private:
         std::chrono::milliseconds timeSinceLastSaveRequest() const
         {
             return _request.timeSinceLastRequest();
+        }
+
+        /// The duration elapsed since we received the last save response from Core.
+        std::chrono::milliseconds timeSinceLastSaveResponse() const
+        {
+            return _request.timeSinceLastResponse();
         }
 
     private:
