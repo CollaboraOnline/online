@@ -3620,6 +3620,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onGraphicMove: function (e) {
 		if (!e.pos) { return; }
 		var aPos = this._latLngToTwips(e.pos);
+		var calcRTL = this.isCalc() && this.isLayoutRTL();
 		if (e.type === 'graphicmovestart') {
 			this._graphicMarker.isDragged = true;
 			this._graphicMarker.setVisible(true);
@@ -3668,8 +3669,17 @@ L.CanvasTileLayer = L.Layer.extend({
 				}
 			}
 			else {
-				var newPos = this._graphicSelectionTwips.min.add(deltaPos);
+				var newPos = new L.Point(
+					// Choose the logical left of the shape.
+					this._graphicSelectionTwips.min.x + deltaPos.x,
+					this._graphicSelectionTwips.min.y + deltaPos.y);
+
 				var size = this._graphicSelectionTwips.getSize();
+
+				if (calcRTL) {
+					// make x coordinate of newPos +ve
+					newPos.x = -newPos.x;
+				}
 
 				// try to keep shape inside document
 				if (newPos.x + size.x > this._docWidthTwips)
@@ -3685,6 +3695,10 @@ L.CanvasTileLayer = L.Layer.extend({
 				if (this.isCalc() && this.options.printTwipsMsgsEnabled) {
 					newPos = this.sheetGeometry.getPrintTwipsPointFromTile(newPos);
 				}
+
+				// restore the sign(negative) of x coordinate.
+				if (calcRTL)
+					newPos.x = -newPos.x;
 
 				param = {
 					TransformPosX: {
