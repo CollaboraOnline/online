@@ -2264,7 +2264,11 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVe
 
     getLOKitDocument()->setView(_viewId);
 
-    success = getLOKitDocument()->saveAs(url.c_str(),
+    std::string encodedURL, encodedWopiFilename;
+    Poco::URI::encode(url, "", encodedURL);
+    Poco::URI::encode(wopiFilename, "", encodedWopiFilename);
+
+    success = getLOKitDocument()->saveAs(encodedURL.c_str(),
                                          format.empty() ? nullptr : format.c_str(),
                                          filterOptions.empty() ? nullptr : filterOptions.c_str());
 
@@ -2287,15 +2291,11 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVe
                     (format.size() == 0 ? "(nullptr)" : format.c_str()) << "', '" <<
                     (filterOptions.size() == 0 ? "(nullptr)" : filterOptions.c_str()) << "'.");
 
-            success = getLOKitDocument()->saveAs(url.c_str(),
+            success = getLOKitDocument()->saveAs(encodedURL.c_str(),
                     format.size() == 0 ? nullptr :format.c_str(),
                     filterOptions.size() == 0 ? nullptr : filterOptions.c_str());
         }
     }
-
-    std::string encodedURL, encodedWopiFilename;
-    Poco::URI::encode(url, "", encodedURL);
-    Poco::URI::encode(wopiFilename, "", encodedWopiFilename);
 
     if (success)
         sendTextFrame("saveas: url=" + encodedURL + " filename=" + encodedWopiFilename);
