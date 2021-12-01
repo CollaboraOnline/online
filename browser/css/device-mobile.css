@@ -847,3 +847,7 @@ div#fontstyletoolbox + div#style.mobile-wizard {
 	background-size: 68%;
 }
 
+#product-name {
+	margin: 2px;
+	font-size: 29px;
+}
