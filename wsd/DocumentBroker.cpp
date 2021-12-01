@@ -466,18 +466,7 @@ void DocumentBroker::pollThread()
         // Remove idle documents after 1 hour.
         if (isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs)
         {
-            // Don't hammer on saving.
-            if (_saveManager.timeSinceLastSaveRequest() >= std::chrono::seconds(5))
-            {
-                // Stop if there is nothing to save.
-                LOG_INF("Autosaving idle DocumentBroker for docKey [" << getDocKey()
-                                                                      << "] to kill.");
-                if (!autoSave(isPossiblyModified()))
-                {
-                    LOG_INF("Terminating idle DocumentBroker for docKey [" << getDocKey() << "].");
-                    stop("idle");
-                }
-            }
+            autoSaveAndStop("idle");
         }
         else
 #endif
@@ -489,9 +478,11 @@ void DocumentBroker::pollThread()
                 continue;
             }
 
-            // If all sessions have been removed, no reason to linger.
-            LOG_INF("Terminating dead DocumentBroker for docKey [" << getDocKey() << "].");
-            stop("dead");
+            autoSaveAndStop("dead");
+        }
+        else if (_docState.isUnloadRequested())
+        {
+            autoSaveAndStop("unloading");
         }
     }
 
@@ -1158,6 +1149,12 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     // Record that we got a response to avoid timing out on saving.
     _saveManager.setLastSaveResult(success || result == "unmodified");
 
+    checkAndUploadToStorage(sessionId, success, result);
+}
+
+void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId, bool success,
+                                             const std::string& result)
+{
     // See if we have anything to upload.
     NeedToUpload needToUploadState = needToUploadToStorage();
 
@@ -1191,6 +1188,15 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
 
         default:
         break;
+    }
+
+    if (_docState.isUnloadRequested() && isPossiblyModified())
+    {
+        // We are unloading but have possible modifications. Save again (done in poll).
+        LOG_DBG("Document [" << getDocKey()
+                             << "] is unloading, but was possibly modified during saving. Skipping "
+                                "upload to save again before unloading.");
+        return;
     }
 
     if (needToUploadState != NeedToUpload::No)
@@ -1561,8 +1567,8 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
             LOG_TRC("Unload requested after uploading, marking to destroy.");
         }
 
-        // If marked to destroy, then this was the last session.
-        if (_docState.isMarkedToDestroy() || _sessions.empty())
+        // If marked to destroy, and there are no late-arriving modifications, then stop.
+        if ((_docState.isMarkedToDestroy() || _sessions.empty()) && !isPossiblyModified())
         {
             // Stop so we get cleaned up and removed.
             LOG_DBG("Stopping after uploading because "
@@ -1800,6 +1806,53 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
     }
 
     return sent;
+}
+
+void DocumentBroker::autoSaveAndStop(const std::string& reason)
+{
+    if (_saveManager.isSaving() || isAsyncSaveInProgress())
+    {
+        LOG_TRC("Async saving/uploading in progress for docKey [" << getDocKey() << ']');
+        return;
+    }
+
+    bool canStop = false;
+    if (!isPossiblyModified() && needToUploadToStorage() == NeedToUpload::No)
+    {
+        canStop = true;
+    }
+
+    // Don't hammer on saving.
+    if (!canStop && _saveManager.timeSinceLastSaveRequest() >= std::chrono::seconds(1) &&
+        _saveManager.timeSinceLastSaveResponse() >= std::chrono::seconds(2))
+    {
+        // Stop if there is nothing to save.
+        LOG_INF("Autosaving " << reason << " DocumentBroker for docKey [" << getDocKey()
+                              << "] before terminating.");
+        if (!autoSave(isPossiblyModified()))
+        {
+            const std::string sessionId = getWriteableSessionId();
+            if (!sessionId.empty())
+            {
+                constexpr bool success = true;
+                std::string result;
+                checkAndUploadToStorage(sessionId, success, result);
+                if (isAsyncSaveInProgress())
+                {
+                    LOG_DBG("Uploading document before stopping.");
+                    return;
+                }
+            }
+        }
+    }
+
+    if (canStop)
+    {
+        // Nothing to save, nothing to upload, and no modifications. Stop.
+        LOG_INF("Nothing to save or upload. Terminating "
+                << reason << " DocumentBroker for docKey [" << getDocKey() << ']');
+        stop(reason);
+    }
 }
 
 bool DocumentBroker::sendUnoSave(const std::string& sessionId, bool dontTerminateEdit,
@@ -2757,7 +2810,7 @@ void DocumentBroker::setModified(const bool value)
         _storage->setUserModified(value);
     }
 
-    LOG_TRC("Modified state set to " << value << " for Doc [" << _docId << ']');
+    LOG_DBG("Modified state set to " << value << " for Doc [" << _docId << ']');
     _isModified = value;
 }
 
