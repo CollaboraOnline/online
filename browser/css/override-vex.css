@@ -70,6 +70,23 @@
 	z-index: 2001 !important;
 }
 
+.vex.vex-theme-plain .vex-dialog-button-spacer {
+	visibility: hidden;
+	padding: 0;
+	margin: 0;
+	border: none;
+	flex: 1;
+	max-width: 24px;
+}
+
+.vex-content.vex-3btns .vex-dialog-buttons {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.vex-content.vex-3btns .vex-dialog-buttons > button:not(.vex-dialog-button-secondary) {
+	flex: 1;
+}
 .vex.vex-theme-plain .vex-content,
 .vex-dialog-message {
 	font-size: 1.1em;

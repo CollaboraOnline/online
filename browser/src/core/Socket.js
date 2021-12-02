@@ -832,7 +832,11 @@ app.definitions.Socket = L.Class.extend({
 						click: function() {
 							this.value = 'overwrite';
 							this.close();
-						}})
+						}}),
+					$.extend({}, vex.dialog.buttons.YES, {
+						text: '',
+						className: 'vex-dialog-button-spacer'
+					})
 				];
 
 				if (!that._map['wopi'].UserCanNotWriteRelative) {
