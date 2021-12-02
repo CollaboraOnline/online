@@ -409,7 +409,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 									},
 									{
 										'type': 'toolitem',
-										'text': _UNO('.uno:CharSpacing', 'text'),
+										'text': _UNO('.uno:Spacing'),
 										'command': '.uno:CharSpacing'
 									},
 									{
