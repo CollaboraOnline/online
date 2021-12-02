@@ -70,6 +70,12 @@
 	z-index: 2001 !important;
 }
 
+.vex.vex-theme-plain .vex-dialog-title {
+	margin-bottom: .5em;
+	font-size: 1.1em;
+	color: #444;
+}
+
 .vex.vex-theme-plain .vex-dialog-button-spacer {
 	visibility: hidden;
 	padding: 0;
