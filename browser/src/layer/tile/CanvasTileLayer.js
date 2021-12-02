@@ -5708,6 +5708,13 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (this.isCalc() && !this._gotFirstCellCursor)
 			return;
 
+		// be sure canvas is initialized already and has correct size
+		var size = map.getSize();
+		if (size.x === 0 || size.y === 0) {
+			setTimeout(function () { this._update(); }.bind(this), 1);
+			return;
+		}
+
 		if (app.file.fileBasedView) {
 			this._updateFileBasedView();
 			return;
