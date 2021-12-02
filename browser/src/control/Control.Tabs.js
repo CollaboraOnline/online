@@ -99,7 +99,7 @@ L.Control.Tabs = L.Control.extend({
 			};
 
 			this._menuItem['.uno:CopyTab'] = {
-				name: _UNO('.uno:CopyTab', 'spreadsheet', true),
+				name: _('Copy Sheet...'),
 				callback: function() {this._map.sendUnoCommand('.uno:Move');}.bind(this),
 				visible: function() {
 					return !areTabsMultiple();
