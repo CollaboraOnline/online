@@ -819,12 +819,16 @@ app.definitions.Socket = L.Class.extend({
 				vex.closeAll();
 
 				var dialogButtons = [
-					$.extend({}, vex.dialog.buttons.YES, { text: _('Discard'),
+					$.extend({}, vex.dialog.buttons.YES, {
+						text: _('Discard'),
+						className: 'vex-dialog-button-secondary',
 						click: function() {
 							this.value = 'discard';
 							this.close();
 						}}),
-					$.extend({}, vex.dialog.buttons.YES, { text: _('Overwrite'),
+					$.extend({}, vex.dialog.buttons.YES, {
+						text: _('Overwrite'),
+						className: 'vex-dialog-button-secondary',
 						click: function() {
 							this.value = 'overwrite';
 							this.close();
@@ -832,7 +836,9 @@ app.definitions.Socket = L.Class.extend({
 				];
 
 				if (!that._map['wopi'].UserCanNotWriteRelative) {
-					dialogButtons.push($.extend({}, vex.dialog.buttons.YES, { text: _('Save to new file'),
+					dialogButtons.push($.extend({}, vex.dialog.buttons.YES, {
+						text: _('Save to new file'),
+						className: 'vex-dialog-button-primary',
 						click: function() {
 							this.value = 'saveas';
 							this.close();
