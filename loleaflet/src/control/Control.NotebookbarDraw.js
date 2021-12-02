@@ -525,7 +525,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:ConnectorToolbox'),
+								'text': _UNO('.uno:ConnectorToolbox', 'presentation'),
 								'command': '.uno:ConnectorToolbox'
 							}
 						]
