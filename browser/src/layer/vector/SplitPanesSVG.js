@@ -177,6 +177,7 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 	getEvents: function () {
 		var events = {
 			splitposchanged: this._update,
+			updateparts: this._update,
 			drag: this._update,
 		};
 
