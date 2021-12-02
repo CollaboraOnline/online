@@ -5,6 +5,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
+#include <chrono>
 #include <config.h>
 
 #include <memory>
@@ -309,7 +310,9 @@ UnitBase::TestResult UnitInsertDelete::testCursorPosition()
 
 void UnitInsertDelete::invokeWSDTest()
 {
-    UnitBase::TestResult result = testInsertDelete();
+    UnitBase::TestResult result = TestResult::Ok;
+
+    result = testInsertDelete();
     if (result != TestResult::Ok)
         exitTest(result);
 
