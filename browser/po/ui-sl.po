@@ -4,17 +4,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-24 20:28+0100\n"
+"POT-Creation-Date: 2021-12-02 14:42+0100\n"
 "PO-Revision-Date: 2021-11-25 21:55+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: sl\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 4.10-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -263,7 +263,7 @@ msgstr "Ste prepričani, da želite zaključiti to sejo?"
 #: src/control/Control.Menubar.js:1634
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:892
-#: src/core/Socket.js:954
+#: src/core/Socket.js:959
 msgid "OK"
 msgstr "V redu"
 
@@ -272,7 +272,7 @@ msgstr "V redu"
 #: src/control/Control.Menubar.js:1635 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:893
-#: src/core/Socket.js:955 src/layer/tile/CommentListSection.ts:395
+#: src/core/Socket.js:960 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Prekliči"
@@ -383,7 +383,7 @@ msgid "Index"
 msgstr "Kazalo"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2120
+#: src/control/Control.JSDialogBuilder.js:2123
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
 #: src/layer/tile/CommentListSection.ts:827
@@ -484,31 +484,31 @@ msgstr "Velikost pisave"
 msgid "Style"
 msgstr "Slog"
 
-#: src/control/Control.JSDialogBuilder.js:2106
+#: src/control/Control.JSDialogBuilder.js:2109
 msgid "reply"
 msgstr "odgovor"
 
-#: src/control/Control.JSDialogBuilder.js:2109
+#: src/control/Control.JSDialogBuilder.js:2112
 msgid "replies"
 msgstr "odgovorov"
 
-#: src/control/Control.JSDialogBuilder.js:2181
+#: src/control/Control.JSDialogBuilder.js:2184
 msgid "Insert Comment"
 msgstr "Vstavi komentar"
 
-#: src/control/Control.JSDialogBuilder.js:2632
+#: src/control/Control.JSDialogBuilder.js:2635
 msgid "Cell borders"
 msgstr "Obrobe celic"
 
-#: src/control/Control.JSDialogBuilder.js:2823
+#: src/control/Control.JSDialogBuilder.js:2826
 msgid "Rows"
 msgstr "Vrstice"
 
-#: src/control/Control.JSDialogBuilder.js:2824
+#: src/control/Control.JSDialogBuilder.js:2827
 msgid "Columns"
 msgstr "Stolpci"
 
-#: src/control/Control.JSDialogBuilder.js:2844
+#: src/control/Control.JSDialogBuilder.js:2847
 msgid "Insert Table"
 msgstr "Vstavi tabelo"
 
@@ -1040,6 +1040,10 @@ msgstr "Zaženi predstavitev"
 msgid "ODF Presentation (.odp)"
 msgstr "Predstavitev ODF (.odp)"
 
+#: src/control/Control.NotebookbarImpress.js:643
+msgid "Presentation"
+msgstr ""
+
 #: src/control/Control.NotebookbarImpress.js:980
 msgid "Reset Zoom"
 msgstr "Ponastavi povečavo"
@@ -1213,6 +1217,10 @@ msgstr "Pomakni delovni list levo"
 msgid "Move Sheet Right"
 msgstr "Pomakni delovni list desno"
 
+#: src/control/Control.Tabs.js:102
+msgid "Copy Sheet..."
+msgstr ""
+
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Ali ste prepričani, da želite izbrisati delovni list %sheet%?"
@@ -1292,27 +1300,27 @@ msgstr "Trenutno"
 msgid "Show Selected Sheets"
 msgstr "Pokaži izbrane delovne liste"
 
-#: src/control/Permission.js:60
+#: src/control/Permission.js:66
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr "Dokumenta ni mogoče zakleniti, zato je odprt v načinu samo za branje."
 
-#: src/control/Permission.js:62 src/control/Permission.js:79
+#: src/control/Permission.js:68 src/control/Permission.js:85
 msgid "Server returned this reason:"
 msgstr "Strežnik je posredoval naslednji razlog:"
 
-#: src/control/Permission.js:77
+#: src/control/Permission.js:83
 msgid "The document could not be locked."
 msgstr "Dokumenta ni mogoče zakleniti."
 
-#: src/control/Permission.js:119
+#: src/control/Permission.js:135
 msgid "Enter a file name"
 msgstr "Vnesite ime datoteke"
 
-#: src/control/Permission.js:120
+#: src/control/Permission.js:136
 msgid "filename"
 msgstr "Ime datoteke"
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:153
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
@@ -1320,13 +1328,17 @@ msgstr ""
 "Ta dokument morda vsebuje oblikovanje ali vsebino, ki je ni možno shraniti v "
 "izbranem zapisu."
 
-#: src/control/Permission.js:145
+#: src/control/Permission.js:164
 msgid "Save as ODF format"
 msgstr "Shrani v zapisu ODF"
 
-#: src/control/Permission.js:146
+#: src/control/Permission.js:165
 msgid "Continue editing"
 msgstr "Nadaljuj z urejanjem"
+
+#: src/control/Permission.js:165
+msgid "Continue read only"
+msgstr ""
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
@@ -1684,6 +1696,18 @@ msgid "Reloading the document after rename"
 msgstr "Ponovno nalaganje dokumenta po preimenovanju"
 
 #: src/core/Socket.js:822
+msgid "Discard"
+msgstr "Zavrzi"
+
+#: src/core/Socket.js:827
+msgid "Overwrite"
+msgstr "Prepiši"
+
+#: src/core/Socket.js:835
+msgid "Save to new file"
+msgstr "Shrani v novo datoteko"
+
+#: src/core/Socket.js:843
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1691,70 +1715,58 @@ msgstr ""
 "Dokument je bil spremenjen v shrambi. Kaj želite storiti z neshranjenimi "
 "spremembami?"
 
-#: src/core/Socket.js:826
-msgid "Discard"
-msgstr "Zavrzi"
-
-#: src/core/Socket.js:831
-msgid "Overwrite"
-msgstr "Prepiši"
-
-#: src/core/Socket.js:836
-msgid "Save to new file"
-msgstr "Shrani v novo datoteko"
-
-#: src/core/Socket.js:906
+#: src/core/Socket.js:911
 msgid "Document requires password to view."
 msgstr "Za ogled dokumenta je potrebno geslo."
 
-#: src/core/Socket.js:909
+#: src/core/Socket.js:914
 msgid "Document requires password to modify."
 msgstr "Za spreminjanje dokumenta je potrebno geslo."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:916
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Pritisnite Prekliči za odpiranje v oglednem načinu."
 
-#: src/core/Socket.js:915
+#: src/core/Socket.js:920
 msgid "Wrong password provided. Please try again."
 msgstr "Vnesli ste napačno geslo. Poskusite znova."
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1029
 msgid "Someone"
 msgstr "Nekdo"
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid " saved this document as "
 msgstr " je dokument shranil kot "
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid ". Do you want to join?"
 msgstr ". Ali se želite pridružiti?"
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Loading..."
 msgstr "Nalaganje ..."
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Connecting..."
 msgstr "Povezovanje ..."
 
-#: src/core/Socket.js:1053
+#: src/core/Socket.js:1058
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 "Dokument je v postopku preimenovanja in se bo v kratkem ponovno naložil."
 
-#: src/core/Socket.js:1416
+#: src/core/Socket.js:1435
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Žal se ni mogoče povezati z vašim dokumentom. Prosimo, poskusite znova."
 
-#: src/core/Socket.js:1433
+#: src/core/Socket.js:1452
 msgid "Reconnecting..."
 msgstr "Ponovno povezovanje ..."
 
-#: src/core/Socket.js:1439
+#: src/core/Socket.js:1458
 msgid "The server has been disconnected."
 msgstr "Strežnik ni več povezan."
 

@@ -11,17 +11,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-24 20:28+0100\n"
+"POT-Creation-Date: 2021-12-02 14:42+0100\n"
 "PO-Revision-Date: 2021-11-25 21:55+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: cs\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
-"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <="
+" 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 "X-Generator: Weblate 4.10-dev\n"
 
 #: admin/admin.strings.js:6
@@ -265,7 +265,7 @@ msgstr "Opravdu si přejete ukončit tuto relaci?"
 #: src/control/Control.Menubar.js:1634
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:892
-#: src/core/Socket.js:954
+#: src/core/Socket.js:959
 msgid "OK"
 msgstr "OK"
 
@@ -274,7 +274,7 @@ msgstr "OK"
 #: src/control/Control.Menubar.js:1635 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:893
-#: src/core/Socket.js:955 src/layer/tile/CommentListSection.ts:395
+#: src/core/Socket.js:960 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Zrušit"
@@ -385,7 +385,7 @@ msgid "Index"
 msgstr "Index"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2120
+#: src/control/Control.JSDialogBuilder.js:2123
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
 #: src/layer/tile/CommentListSection.ts:827
@@ -486,31 +486,31 @@ msgstr "Velikost písma"
 msgid "Style"
 msgstr "Styl"
 
-#: src/control/Control.JSDialogBuilder.js:2106
+#: src/control/Control.JSDialogBuilder.js:2109
 msgid "reply"
 msgstr "odpověď"
 
-#: src/control/Control.JSDialogBuilder.js:2109
+#: src/control/Control.JSDialogBuilder.js:2112
 msgid "replies"
 msgstr "odpovědí"
 
-#: src/control/Control.JSDialogBuilder.js:2181
+#: src/control/Control.JSDialogBuilder.js:2184
 msgid "Insert Comment"
 msgstr "Vložit komentář"
 
-#: src/control/Control.JSDialogBuilder.js:2632
+#: src/control/Control.JSDialogBuilder.js:2635
 msgid "Cell borders"
 msgstr "Ohraničení buněk"
 
-#: src/control/Control.JSDialogBuilder.js:2823
+#: src/control/Control.JSDialogBuilder.js:2826
 msgid "Rows"
 msgstr "Řádky"
 
-#: src/control/Control.JSDialogBuilder.js:2824
+#: src/control/Control.JSDialogBuilder.js:2827
 msgid "Columns"
 msgstr "Sloupce"
 
-#: src/control/Control.JSDialogBuilder.js:2844
+#: src/control/Control.JSDialogBuilder.js:2847
 msgid "Insert Table"
 msgstr "Vložit tabulku"
 
@@ -1042,6 +1042,10 @@ msgstr "Spustit prezentaci"
 msgid "ODF Presentation (.odp)"
 msgstr "Prezentace ODF (.odp)"
 
+#: src/control/Control.NotebookbarImpress.js:643
+msgid "Presentation"
+msgstr ""
+
 #: src/control/Control.NotebookbarImpress.js:980
 msgid "Reset Zoom"
 msgstr "Obnovit přiblížení"
@@ -1215,6 +1219,10 @@ msgstr "Přesunout list doleva"
 msgid "Move Sheet Right"
 msgstr "Přesunout list doprava"
 
+#: src/control/Control.Tabs.js:102
+msgid "Copy Sheet..."
+msgstr ""
+
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Opravdu si přejete smazat list, %sheet%?"
@@ -1294,27 +1302,27 @@ msgstr "Aktuální"
 msgid "Show Selected Sheets"
 msgstr "Zobrazit vybrané listy"
 
-#: src/control/Permission.js:60
+#: src/control/Permission.js:66
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr "Dokument nelze uzamknout a je otevřen v režimu jen pro čtení."
 
-#: src/control/Permission.js:62 src/control/Permission.js:79
+#: src/control/Permission.js:68 src/control/Permission.js:85
 msgid "Server returned this reason:"
 msgstr "Server vrátil tento důvod:"
 
-#: src/control/Permission.js:77
+#: src/control/Permission.js:83
 msgid "The document could not be locked."
 msgstr "Dokument nelze uzamknout."
 
-#: src/control/Permission.js:119
+#: src/control/Permission.js:135
 msgid "Enter a file name"
 msgstr "Zadejte název souboru"
 
-#: src/control/Permission.js:120
+#: src/control/Permission.js:136
 msgid "filename"
 msgstr "název souboru"
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:153
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
@@ -1322,13 +1330,17 @@ msgstr ""
 "Tento dokument může obsahovat formátování nebo obsah, které nelze uložit v "
 "aktuálním formátu souboru."
 
-#: src/control/Permission.js:145
+#: src/control/Permission.js:164
 msgid "Save as ODF format"
 msgstr "Uložit jako formát ODF"
 
-#: src/control/Permission.js:146
+#: src/control/Permission.js:165
 msgid "Continue editing"
 msgstr "Pokračovat v úpravách"
+
+#: src/control/Permission.js:165
+msgid "Continue read only"
+msgstr ""
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
@@ -1571,8 +1583,8 @@ msgstr ""
 "coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Prostřednictvím <a "
 "href=\"%coolStepByStepURL\" target=\"_blank\">názorných postupů</a> lze CODE "
 "sestavit od nuly. Můžete také pomoci s <a href=\"%coolTranslationsURL\" "
-"target=\"_blank\">překlady</a> nebo <a href=\"%coolBugreportURL\" target="
-"\"_blank\">vyplnit hlášení o chybě</a> se všemi kroky nezbytnými pro její "
+"target=\"_blank\">překlady</a> nebo <a href=\"%coolBugreportURL\" target=\""
+"_blank\">vyplnit hlášení o chybě</a> se všemi kroky nezbytnými pro její "
 "zopakování."
 
 #: src/control/Toolbar.js:626 src/control/Toolbar.js:627
@@ -1685,6 +1697,18 @@ msgid "Reloading the document after rename"
 msgstr "Dokument se znovu načítá po přejmenování"
 
 #: src/core/Socket.js:822
+msgid "Discard"
+msgstr "Zahodit"
+
+#: src/core/Socket.js:827
+msgid "Overwrite"
+msgstr "Přepsat"
+
+#: src/core/Socket.js:835
+msgid "Save to new file"
+msgstr "Uložit do nového souboru"
+
+#: src/core/Socket.js:843
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1692,70 +1716,58 @@ msgstr ""
 "Dokument byl v úložišti změněn. Co si přejete provést se svými neuloženými "
 "změnami?"
 
-#: src/core/Socket.js:826
-msgid "Discard"
-msgstr "Zahodit"
-
-#: src/core/Socket.js:831
-msgid "Overwrite"
-msgstr "Přepsat"
-
-#: src/core/Socket.js:836
-msgid "Save to new file"
-msgstr "Uložit do nového souboru"
-
-#: src/core/Socket.js:906
+#: src/core/Socket.js:911
 msgid "Document requires password to view."
 msgstr "Pro prohlížení dokumentu je vyžadováno heslo."
 
-#: src/core/Socket.js:909
+#: src/core/Socket.js:914
 msgid "Document requires password to modify."
 msgstr "Pro úpravy dokumentu je vyžadováno heslo."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:916
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Stisknutím Zrušit dokument otevřete v režimu jen pro čtení."
 
-#: src/core/Socket.js:915
+#: src/core/Socket.js:920
 msgid "Wrong password provided. Please try again."
 msgstr "Chybné heslo. Zkuste ho zadat znovu."
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1029
 msgid "Someone"
 msgstr "Někdo"
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid " saved this document as "
 msgstr " tento dokument uložil jako "
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid ". Do you want to join?"
 msgstr ". Přejete si se přidat?"
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Loading..."
 msgstr "Načítání..."
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Connecting..."
 msgstr "Připojování..."
 
-#: src/core/Socket.js:1053
+#: src/core/Socket.js:1058
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokument se právě přejmenovává a brzy se znovu načte"
 
-#: src/core/Socket.js:1416
+#: src/core/Socket.js:1435
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
 "Toto je nepříjemné, není možné se připojit k dokumentu. Zkuste to znovu."
 
-#: src/core/Socket.js:1433
+#: src/core/Socket.js:1452
 msgid "Reconnecting..."
 msgstr "Opětovné připojování..."
 
-#: src/core/Socket.js:1439
+#: src/core/Socket.js:1458
 msgid "The server has been disconnected."
 msgstr "Server byl odpojen."
 

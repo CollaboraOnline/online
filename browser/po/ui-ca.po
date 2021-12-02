@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-24 20:28+0100\n"
+"POT-Creation-Date: 2021-12-02 14:42+0100\n"
 "PO-Revision-Date: 2021-11-14 22:50+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
@@ -263,7 +263,7 @@ msgstr "Esteu segur que voleu finalitzar aquesta sessió?"
 #: src/control/Control.Menubar.js:1634
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:892
-#: src/core/Socket.js:954
+#: src/core/Socket.js:959
 msgid "OK"
 msgstr "D'acord"
 
@@ -272,7 +272,7 @@ msgstr "D'acord"
 #: src/control/Control.Menubar.js:1635 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:893
-#: src/core/Socket.js:955 src/layer/tile/CommentListSection.ts:395
+#: src/core/Socket.js:960 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Cancel·la"
@@ -384,7 +384,7 @@ msgid "Index"
 msgstr "Índex"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2120
+#: src/control/Control.JSDialogBuilder.js:2123
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
 #: src/layer/tile/CommentListSection.ts:827
@@ -485,31 +485,31 @@ msgstr "Mida de la lletra"
 msgid "Style"
 msgstr "Estil"
 
-#: src/control/Control.JSDialogBuilder.js:2106
+#: src/control/Control.JSDialogBuilder.js:2109
 msgid "reply"
 msgstr "resposta"
 
-#: src/control/Control.JSDialogBuilder.js:2109
+#: src/control/Control.JSDialogBuilder.js:2112
 msgid "replies"
 msgstr "respostes"
 
-#: src/control/Control.JSDialogBuilder.js:2181
+#: src/control/Control.JSDialogBuilder.js:2184
 msgid "Insert Comment"
 msgstr "Insereix un comentari"
 
-#: src/control/Control.JSDialogBuilder.js:2632
+#: src/control/Control.JSDialogBuilder.js:2635
 msgid "Cell borders"
 msgstr "Vores de les cel·les"
 
-#: src/control/Control.JSDialogBuilder.js:2823
+#: src/control/Control.JSDialogBuilder.js:2826
 msgid "Rows"
 msgstr "Files"
 
-#: src/control/Control.JSDialogBuilder.js:2824
+#: src/control/Control.JSDialogBuilder.js:2827
 msgid "Columns"
 msgstr "Columnes"
 
-#: src/control/Control.JSDialogBuilder.js:2844
+#: src/control/Control.JSDialogBuilder.js:2847
 msgid "Insert Table"
 msgstr "Insereix una taula"
 
@@ -1041,6 +1041,10 @@ msgstr "Inicia la presentació"
 msgid "ODF Presentation (.odp)"
 msgstr "Presentació ODF (.odp)"
 
+#: src/control/Control.NotebookbarImpress.js:643
+msgid "Presentation"
+msgstr ""
+
 #: src/control/Control.NotebookbarImpress.js:980
 msgid "Reset Zoom"
 msgstr "Reinicia el zoom"
@@ -1214,6 +1218,10 @@ msgstr "Mou el full cap a l'esquerra"
 msgid "Move Sheet Right"
 msgstr "Mou el full cap a la dreta"
 
+#: src/control/Control.Tabs.js:102
+msgid "Copy Sheet..."
+msgstr ""
+
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Esteu segur que voleu suprimir el full «%sheet%»?"
@@ -1293,28 +1301,28 @@ msgstr "Actual"
 msgid "Show Selected Sheets"
 msgstr "Mostra els fulls seleccionats"
 
-#: src/control/Permission.js:60
+#: src/control/Permission.js:66
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr ""
 "No s'ha pogut blocar el document i s'ha obert en el mode només de lectura."
 
-#: src/control/Permission.js:62 src/control/Permission.js:79
+#: src/control/Permission.js:68 src/control/Permission.js:85
 msgid "Server returned this reason:"
 msgstr "El servidor ha retornat la raó següent:"
 
-#: src/control/Permission.js:77
+#: src/control/Permission.js:83
 msgid "The document could not be locked."
 msgstr "No s'ha pogut blocar el document."
 
-#: src/control/Permission.js:119
+#: src/control/Permission.js:135
 msgid "Enter a file name"
 msgstr "Introduïu un nom de fitxer"
 
-#: src/control/Permission.js:120
+#: src/control/Permission.js:136
 msgid "filename"
 msgstr "nom de fitxer"
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:153
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
@@ -1322,13 +1330,17 @@ msgstr ""
 "Aquest document pot contenir formatació o continguts que no es poden desar "
 "el format de document actual."
 
-#: src/control/Permission.js:145
+#: src/control/Permission.js:164
 msgid "Save as ODF format"
 msgstr "Desa en format ODF"
 
-#: src/control/Permission.js:146
+#: src/control/Permission.js:165
 msgid "Continue editing"
 msgstr "Continua l'edició"
+
+#: src/control/Permission.js:165
+msgid "Continue read only"
+msgstr ""
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
@@ -1670,6 +1682,18 @@ msgid "Reloading the document after rename"
 msgstr "Recàrrega del document després de canviar-ne el nom"
 
 #: src/core/Socket.js:822
+msgid "Discard"
+msgstr "Descarta'ls"
+
+#: src/core/Socket.js:827
+msgid "Overwrite"
+msgstr "Sobreescriu-los"
+
+#: src/core/Socket.js:835
+msgid "Save to new file"
+msgstr "Desa'ls en un fitxer nou"
+
+#: src/core/Socket.js:843
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1677,59 +1701,47 @@ msgstr ""
 "S'ha modificat el document a l'emmagatzematge. Què voleu fer amb els canvis "
 "sense desar?"
 
-#: src/core/Socket.js:826
-msgid "Discard"
-msgstr "Descarta'ls"
-
-#: src/core/Socket.js:831
-msgid "Overwrite"
-msgstr "Sobreescriu-los"
-
-#: src/core/Socket.js:836
-msgid "Save to new file"
-msgstr "Desa'ls en un fitxer nou"
-
-#: src/core/Socket.js:906
+#: src/core/Socket.js:911
 msgid "Document requires password to view."
 msgstr "Cal introduir la contrasenya per a visualitzar el document."
 
-#: src/core/Socket.js:909
+#: src/core/Socket.js:914
 msgid "Document requires password to modify."
 msgstr "Cal introduir la contrasenya per a modificar el document."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:916
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Premeu Cancel·la per a obrir-lo en el mode només de lectura."
 
-#: src/core/Socket.js:915
+#: src/core/Socket.js:920
 msgid "Wrong password provided. Please try again."
 msgstr "Heu indicat una contrasenya errònia. Torneu-ho a intentar."
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1029
 msgid "Someone"
 msgstr "Algú"
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid " saved this document as "
 msgstr " ha desat aquest document com a "
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid ". Do you want to join?"
 msgstr ". Voleu incorporar-vos-hi?"
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Loading..."
 msgstr "S'està carregant..."
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Connecting..."
 msgstr "S'està connectant…"
 
-#: src/core/Socket.js:1053
+#: src/core/Socket.js:1058
 msgid "The document is being renamed and will reload shortly"
 msgstr "S'està canviant de nom el document i es recarregarà de seguida"
 
-#: src/core/Socket.js:1416
+#: src/core/Socket.js:1435
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1737,11 +1749,11 @@ msgstr ""
 "Això no hauria de passar. No podem connectar amb el vostre document. Torneu-"
 "ho a intentar."
 
-#: src/core/Socket.js:1433
+#: src/core/Socket.js:1452
 msgid "Reconnecting..."
 msgstr "S'està tornant a connectar…"
 
-#: src/core/Socket.js:1439
+#: src/core/Socket.js:1458
 msgid "The server has been disconnected."
 msgstr "S'ha desconnectat el servidor."
 

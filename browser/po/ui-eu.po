@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-24 20:28+0100\n"
+"POT-Creation-Date: 2021-12-02 14:42+0100\n"
 "PO-Revision-Date: 2021-07-31 19:50+0000\n"
 "Last-Translator: Gontzal Manuel Pujana Onaindia <thadahdenyse@gmail.com>\n"
 "Language-Team: Basque <https://hosted.weblate.org/projects/collabora-online/"
@@ -263,7 +263,7 @@ msgstr "Ziur zaude saio hau itxi nahi duzula?"
 #: src/control/Control.Menubar.js:1634
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:892
-#: src/core/Socket.js:954
+#: src/core/Socket.js:959
 msgid "OK"
 msgstr "Ados"
 
@@ -272,7 +272,7 @@ msgstr "Ados"
 #: src/control/Control.Menubar.js:1635 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:893
-#: src/core/Socket.js:955 src/layer/tile/CommentListSection.ts:395
+#: src/core/Socket.js:960 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Utzi"
@@ -382,7 +382,7 @@ msgid "Index"
 msgstr "Aurkibidea"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2120
+#: src/control/Control.JSDialogBuilder.js:2123
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
 #: src/layer/tile/CommentListSection.ts:827
@@ -483,31 +483,31 @@ msgstr "Letra-tamaina"
 msgid "Style"
 msgstr "Estiloa"
 
-#: src/control/Control.JSDialogBuilder.js:2106
+#: src/control/Control.JSDialogBuilder.js:2109
 msgid "reply"
 msgstr "erantzuna"
 
-#: src/control/Control.JSDialogBuilder.js:2109
+#: src/control/Control.JSDialogBuilder.js:2112
 msgid "replies"
 msgstr "erantzunak"
 
-#: src/control/Control.JSDialogBuilder.js:2181
+#: src/control/Control.JSDialogBuilder.js:2184
 msgid "Insert Comment"
 msgstr "Txertatu iruzkina"
 
-#: src/control/Control.JSDialogBuilder.js:2632
+#: src/control/Control.JSDialogBuilder.js:2635
 msgid "Cell borders"
 msgstr "Gelaxka-ertzak"
 
-#: src/control/Control.JSDialogBuilder.js:2823
+#: src/control/Control.JSDialogBuilder.js:2826
 msgid "Rows"
 msgstr "Errenkadak"
 
-#: src/control/Control.JSDialogBuilder.js:2824
+#: src/control/Control.JSDialogBuilder.js:2827
 msgid "Columns"
 msgstr "Zutabeak"
 
-#: src/control/Control.JSDialogBuilder.js:2844
+#: src/control/Control.JSDialogBuilder.js:2847
 msgid "Insert Table"
 msgstr "Txertatu taula"
 
@@ -1039,6 +1039,10 @@ msgstr "Hasi aurkezpena"
 msgid "ODF Presentation (.odp)"
 msgstr "ODF aurkezpena (.odp)"
 
+#: src/control/Control.NotebookbarImpress.js:643
+msgid "Presentation"
+msgstr ""
+
 #: src/control/Control.NotebookbarImpress.js:980
 #, fuzzy
 msgid "Reset Zoom"
@@ -1214,6 +1218,10 @@ msgstr "Mugitu orria ezkerrera"
 msgid "Move Sheet Right"
 msgstr "Mugitu orria eskuinera"
 
+#: src/control/Control.Tabs.js:102
+msgid "Copy Sheet..."
+msgstr ""
+
 #: src/control/Control.Tabs.js:303
 #, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
@@ -1294,28 +1302,28 @@ msgstr "Unekoa"
 msgid "Show Selected Sheets"
 msgstr "Erakutsi orri hautatuak"
 
-#: src/control/Permission.js:60
+#: src/control/Permission.js:66
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr ""
 "Dokumentua ezin izan da blokeatu, eta irakurtzeko moduan solik ireki da."
 
-#: src/control/Permission.js:62 src/control/Permission.js:79
+#: src/control/Permission.js:68 src/control/Permission.js:85
 msgid "Server returned this reason:"
 msgstr "Zerbitzariak honako arrazoia itzuli du:"
 
-#: src/control/Permission.js:77
+#: src/control/Permission.js:83
 msgid "The document could not be locked."
 msgstr "Dokumentua ezin izan da blokeatu."
 
-#: src/control/Permission.js:119
+#: src/control/Permission.js:135
 msgid "Enter a file name"
 msgstr "Sartu fitxategi izena"
 
-#: src/control/Permission.js:120
+#: src/control/Permission.js:136
 msgid "filename"
 msgstr "fitxategi izena"
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:153
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
@@ -1323,13 +1331,17 @@ msgstr ""
 "Dokumentu honek uneko fitxategi formatuan gorde ezin den formatua edo edukia "
 "izan dezake."
 
-#: src/control/Permission.js:145
+#: src/control/Permission.js:164
 msgid "Save as ODF format"
 msgstr "Gorde ODF formatu gisa"
 
-#: src/control/Permission.js:146
+#: src/control/Permission.js:165
 msgid "Continue editing"
 msgstr "Jarraitu editatzen"
+
+#: src/control/Permission.js:165
+msgid "Continue read only"
+msgstr ""
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
@@ -1669,6 +1681,18 @@ msgid "Reloading the document after rename"
 msgstr ""
 
 #: src/core/Socket.js:822
+msgid "Discard"
+msgstr "Baztertu"
+
+#: src/core/Socket.js:827
+msgid "Overwrite"
+msgstr "Gainidatzi"
+
+#: src/core/Socket.js:835
+msgid "Save to new file"
+msgstr "Gorde fitxategi berrian"
+
+#: src/core/Socket.js:843
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1676,59 +1700,47 @@ msgstr ""
 "Dokumentua aldatu egin da biltegian. Ez egin nahi duzu gorde ez diren "
 "aldaketekin?"
 
-#: src/core/Socket.js:826
-msgid "Discard"
-msgstr "Baztertu"
-
-#: src/core/Socket.js:831
-msgid "Overwrite"
-msgstr "Gainidatzi"
-
-#: src/core/Socket.js:836
-msgid "Save to new file"
-msgstr "Gorde fitxategi berrian"
-
-#: src/core/Socket.js:906
+#: src/core/Socket.js:911
 msgid "Document requires password to view."
 msgstr "Dokumentua ikusteko pasahitza behar da."
 
-#: src/core/Socket.js:909
+#: src/core/Socket.js:914
 msgid "Document requires password to modify."
 msgstr "Dokumentua aldatzeko pasahitza behar da."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:916
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Sakatu utzi soilik-ikusi moduan irekitzeko."
 
-#: src/core/Socket.js:915
+#: src/core/Socket.js:920
 msgid "Wrong password provided. Please try again."
 msgstr "Pasahitz okerra. Saiatu berriro."
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1029
 msgid "Someone"
 msgstr ""
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid " saved this document as "
 msgstr ""
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid ". Do you want to join?"
 msgstr ""
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Loading..."
 msgstr "Kargatzen..."
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Connecting..."
 msgstr "Konektatzen..."
 
-#: src/core/Socket.js:1053
+#: src/core/Socket.js:1058
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokumentua izena aldatzen ari da eta laster berriro kargatuko da"
 
-#: src/core/Socket.js:1416
+#: src/core/Socket.js:1435
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1736,12 +1748,12 @@ msgstr ""
 "Tira, hau lotsagarria da, ezin dugu zure dokumentuarekin konektatu. Saiatu "
 "berriro."
 
-#: src/core/Socket.js:1433
+#: src/core/Socket.js:1452
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "Konektatzen..."
 
-#: src/core/Socket.js:1439
+#: src/core/Socket.js:1458
 msgid "The server has been disconnected."
 msgstr ""
 

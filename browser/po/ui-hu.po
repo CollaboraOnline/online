@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-24 20:28+0100\n"
+"POT-Creation-Date: 2021-12-02 14:42+0100\n"
 "PO-Revision-Date: 2021-11-24 20:59+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/hu/>\n"
-"Language: hu\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -263,7 +263,7 @@ msgstr "Biztosan be szeretné zárni ezt a munkamenetet?"
 #: src/control/Control.Menubar.js:1634
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:892
-#: src/core/Socket.js:954
+#: src/core/Socket.js:959
 msgid "OK"
 msgstr "OK"
 
@@ -272,7 +272,7 @@ msgstr "OK"
 #: src/control/Control.Menubar.js:1635 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:893
-#: src/core/Socket.js:955 src/layer/tile/CommentListSection.ts:395
+#: src/core/Socket.js:960 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Mégse"
@@ -384,7 +384,7 @@ msgid "Index"
 msgstr "Index"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2120
+#: src/control/Control.JSDialogBuilder.js:2123
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
 #: src/layer/tile/CommentListSection.ts:827
@@ -485,31 +485,31 @@ msgstr "Betűméret"
 msgid "Style"
 msgstr "Stílus"
 
-#: src/control/Control.JSDialogBuilder.js:2106
+#: src/control/Control.JSDialogBuilder.js:2109
 msgid "reply"
 msgstr "válasz"
 
-#: src/control/Control.JSDialogBuilder.js:2109
+#: src/control/Control.JSDialogBuilder.js:2112
 msgid "replies"
 msgstr "válasz"
 
-#: src/control/Control.JSDialogBuilder.js:2181
+#: src/control/Control.JSDialogBuilder.js:2184
 msgid "Insert Comment"
 msgstr "Megjegyzés beszúrása"
 
-#: src/control/Control.JSDialogBuilder.js:2632
+#: src/control/Control.JSDialogBuilder.js:2635
 msgid "Cell borders"
 msgstr "Cellaszegélyek"
 
-#: src/control/Control.JSDialogBuilder.js:2823
+#: src/control/Control.JSDialogBuilder.js:2826
 msgid "Rows"
 msgstr "Sorok"
 
-#: src/control/Control.JSDialogBuilder.js:2824
+#: src/control/Control.JSDialogBuilder.js:2827
 msgid "Columns"
 msgstr "Oszlopok"
 
-#: src/control/Control.JSDialogBuilder.js:2844
+#: src/control/Control.JSDialogBuilder.js:2847
 msgid "Insert Table"
 msgstr "Táblázat beszúrása"
 
@@ -1041,6 +1041,10 @@ msgstr "Bemutató elindítása"
 msgid "ODF Presentation (.odp)"
 msgstr "ODF bemutató (.odp)"
 
+#: src/control/Control.NotebookbarImpress.js:643
+msgid "Presentation"
+msgstr ""
+
 #: src/control/Control.NotebookbarImpress.js:980
 msgid "Reset Zoom"
 msgstr "Alaphelyzet"
@@ -1215,6 +1219,10 @@ msgstr "Munkalap áthelyezése balra"
 msgid "Move Sheet Right"
 msgstr "Munkalap áthelyezése jobbra"
 
+#: src/control/Control.Tabs.js:102
+msgid "Copy Sheet..."
+msgstr ""
+
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Biztosan törli ezt a munkalapot: %sheet%?"
@@ -1294,27 +1302,27 @@ msgstr "Jelenleg"
 msgid "Show Selected Sheets"
 msgstr "Kijelölt munkalapok megjelenítése"
 
-#: src/control/Permission.js:60
+#: src/control/Permission.js:66
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr "A dokumentumot nem lehet zárolni, csak olvasásra lesz megnyitva."
 
-#: src/control/Permission.js:62 src/control/Permission.js:79
+#: src/control/Permission.js:68 src/control/Permission.js:85
 msgid "Server returned this reason:"
 msgstr "A kiszolgáló ezt az okot adta:"
 
-#: src/control/Permission.js:77
+#: src/control/Permission.js:83
 msgid "The document could not be locked."
 msgstr "A dokumentumot nem lehet zárolni."
 
-#: src/control/Permission.js:119
+#: src/control/Permission.js:135
 msgid "Enter a file name"
 msgstr "Fájlnév megadása"
 
-#: src/control/Permission.js:120
+#: src/control/Permission.js:136
 msgid "filename"
 msgstr "fájlnév"
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:153
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
@@ -1322,13 +1330,17 @@ msgstr ""
 "Ez a dokumentum olyan formázást vagy tartalmat tartalmazhat, amely nem "
 "menthető az aktuális fájlformátumban."
 
-#: src/control/Permission.js:145
+#: src/control/Permission.js:164
 msgid "Save as ODF format"
 msgstr "Mentés ODF formátumban"
 
-#: src/control/Permission.js:146
+#: src/control/Permission.js:165
 msgid "Continue editing"
 msgstr "Szerkesztés folytatása"
+
+#: src/control/Permission.js:165
+msgid "Continue read only"
+msgstr ""
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
@@ -1569,11 +1581,11 @@ msgid ""
 "all the essential steps on how to reproduce it."
 msgstr ""
 "Ha szeretné megtudni, hogyan integrálja a Collabora Online-t saját "
-"webalkalmazásába, látogasson el a <a href=\"%coolSdkURL\" target=\"_blank\""
-">Collabora Online SDK</a> weboldalra. Vagy nézze meg a CODE forráskódból "
-"való lefordításának <a href=\"%coolStepByStepURL\" target=\"_blank\""
-">részletes utasításait</a>. Segíthet a <a href=\"%coolTranslationsURL\" "
-"target=\"_blank\">fordításban</a> is, vagy ha hibát talál, <a href=\"%"
+"webalkalmazásába, látogasson el a <a href=\"%coolSdkURL\" target=\"_blank\">"
+"Collabora Online SDK</a> weboldalra. Vagy nézze meg a CODE forráskódból való "
+"lefordításának <a href=\"%coolStepByStepURL\" target=\"_blank\">részletes "
+"utasításait</a>. Segíthet a <a href=\"%coolTranslationsURL\" target=\""
+"_blank\">fordításban</a> is, vagy ha hibát talál, <a href=\"%"
 "coolBugreportURL\" target=\"_blank\">bejelentheti</a> a hiba "
 "reprodukálásának rövid leírása mellett."
 
@@ -1685,66 +1697,66 @@ msgid "Reloading the document after rename"
 msgstr "A dokumentum újratöltése az átnevezés után"
 
 #: src/core/Socket.js:822
+msgid "Discard"
+msgstr "Elvetés"
+
+#: src/core/Socket.js:827
+msgid "Overwrite"
+msgstr "Felülírás"
+
+#: src/core/Socket.js:835
+msgid "Save to new file"
+msgstr "Új fájlba mentés"
+
+#: src/core/Socket.js:843
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
 msgstr ""
 "A dokumentum megváltozott a tárhelyen. Mi legyen a nem mentett változásokkal?"
 
-#: src/core/Socket.js:826
-msgid "Discard"
-msgstr "Elvetés"
-
-#: src/core/Socket.js:831
-msgid "Overwrite"
-msgstr "Felülírás"
-
-#: src/core/Socket.js:836
-msgid "Save to new file"
-msgstr "Új fájlba mentés"
-
-#: src/core/Socket.js:906
+#: src/core/Socket.js:911
 msgid "Document requires password to view."
 msgstr "A dokumentum megnyitásához jelszó szükséges."
 
-#: src/core/Socket.js:909
+#: src/core/Socket.js:914
 msgid "Document requires password to modify."
 msgstr "A dokumentum módosításához jelszó szükséges."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:916
 msgid "Hit Cancel to open in view-only mode."
 msgstr ""
 "A Mégse gombra kattintva a dokumentum csak olvasható módban fog megnyílni."
 
-#: src/core/Socket.js:915
+#: src/core/Socket.js:920
 msgid "Wrong password provided. Please try again."
 msgstr "A megadott jelszó nem jó. Próbálja újra."
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1029
 msgid "Someone"
 msgstr "Valaki"
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid " saved this document as "
 msgstr " mentette ezt a dokumentumot a következő néven: "
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid ". Do you want to join?"
 msgstr ". Csatlakozik?"
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Loading..."
 msgstr "Betöltés…"
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Connecting..."
 msgstr "Kapcsolódás..."
 
-#: src/core/Socket.js:1053
+#: src/core/Socket.js:1058
 msgid "The document is being renamed and will reload shortly"
 msgstr "A dokumentum átnevezése folyamatban van, és hamarosan újratöltődik"
 
-#: src/core/Socket.js:1416
+#: src/core/Socket.js:1435
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1752,11 +1764,11 @@ msgstr ""
 "Nagyon sajnáljuk, de nem lehet kapcsolódni a dokumentumhoz. Próbálja meg "
 "később."
 
-#: src/core/Socket.js:1433
+#: src/core/Socket.js:1452
 msgid "Reconnecting..."
 msgstr "Újrakapcsolódás..."
 
-#: src/core/Socket.js:1439
+#: src/core/Socket.js:1458
 msgid "The server has been disconnected."
 msgstr "Megszűnt a kapcsolat a kiszolgálóval."
 

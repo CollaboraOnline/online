@@ -7,12 +7,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-24 20:28+0100\n"
+"POT-Creation-Date: 2021-12-02 14:42+0100\n"
 "PO-Revision-Date: 2021-12-02 12:57+0000\n"
 "Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/vi/>\n"
-"Language: vi\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -259,7 +259,7 @@ msgstr "Bạn có chắc chắn muốn kết thúc phiên này không?"
 #: src/control/Control.Menubar.js:1634
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:892
-#: src/core/Socket.js:954
+#: src/core/Socket.js:959
 msgid "OK"
 msgstr "Đồng ý"
 
@@ -268,7 +268,7 @@ msgstr "Đồng ý"
 #: src/control/Control.Menubar.js:1635 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:893
-#: src/core/Socket.js:955 src/layer/tile/CommentListSection.ts:395
+#: src/core/Socket.js:960 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Hủy"
@@ -378,7 +378,7 @@ msgid "Index"
 msgstr "Chỉ mục"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2120
+#: src/control/Control.JSDialogBuilder.js:2123
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
 #: src/layer/tile/CommentListSection.ts:827
@@ -479,31 +479,31 @@ msgstr "Cỡ phông chữ"
 msgid "Style"
 msgstr "Kiểu"
 
-#: src/control/Control.JSDialogBuilder.js:2106
+#: src/control/Control.JSDialogBuilder.js:2109
 msgid "reply"
 msgstr "Phản hồi"
 
-#: src/control/Control.JSDialogBuilder.js:2109
+#: src/control/Control.JSDialogBuilder.js:2112
 msgid "replies"
 msgstr "Phản hồi"
 
-#: src/control/Control.JSDialogBuilder.js:2181
+#: src/control/Control.JSDialogBuilder.js:2184
 msgid "Insert Comment"
 msgstr "Chèn bình luận"
 
-#: src/control/Control.JSDialogBuilder.js:2632
+#: src/control/Control.JSDialogBuilder.js:2635
 msgid "Cell borders"
 msgstr "Đường viền ô"
 
-#: src/control/Control.JSDialogBuilder.js:2823
+#: src/control/Control.JSDialogBuilder.js:2826
 msgid "Rows"
 msgstr "Hàng"
 
-#: src/control/Control.JSDialogBuilder.js:2824
+#: src/control/Control.JSDialogBuilder.js:2827
 msgid "Columns"
 msgstr "Cột"
 
-#: src/control/Control.JSDialogBuilder.js:2844
+#: src/control/Control.JSDialogBuilder.js:2847
 msgid "Insert Table"
 msgstr "Chèn bảng"
 
@@ -1035,6 +1035,10 @@ msgstr "Bắt đầu Bản trình chiếu"
 msgid "ODF Presentation (.odp)"
 msgstr "Bản trình chiếu ODF (.odp)"
 
+#: src/control/Control.NotebookbarImpress.js:643
+msgid "Presentation"
+msgstr ""
+
 #: src/control/Control.NotebookbarImpress.js:980
 msgid "Reset Zoom"
 msgstr "Đặt lại thu phóng"
@@ -1208,6 +1212,10 @@ msgstr "Chuyển trang tính sang trái"
 msgid "Move Sheet Right"
 msgstr "Chuyển trang tính sang phải"
 
+#: src/control/Control.Tabs.js:102
+msgid "Copy Sheet..."
+msgstr ""
+
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Bạn có chắc muốn xóa trang tính, %sheet%?"
@@ -1287,27 +1295,27 @@ msgstr "Hiện tại"
 msgid "Show Selected Sheets"
 msgstr "Hiển thị Trang tính đã Chọn"
 
-#: src/control/Permission.js:60
+#: src/control/Permission.js:66
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr "Không thể khóa tài liệu và được mở ở chế độ chỉ đọc."
 
-#: src/control/Permission.js:62 src/control/Permission.js:79
+#: src/control/Permission.js:68 src/control/Permission.js:85
 msgid "Server returned this reason:"
 msgstr "Máy chủ trả về lý do này:"
 
-#: src/control/Permission.js:77
+#: src/control/Permission.js:83
 msgid "The document could not be locked."
 msgstr "Không thể khóa tài liệu."
 
-#: src/control/Permission.js:119
+#: src/control/Permission.js:135
 msgid "Enter a file name"
 msgstr "Nhập tên tệp"
 
-#: src/control/Permission.js:120
+#: src/control/Permission.js:136
 msgid "filename"
 msgstr "tên tệp"
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:153
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
@@ -1315,13 +1323,17 @@ msgstr ""
 "Tài liệu này có thể chứa căn chỉnh hoặc nội dung không thể được lưu ở định "
 "dạng tệp hiện tại."
 
-#: src/control/Permission.js:145
+#: src/control/Permission.js:164
 msgid "Save as ODF format"
 msgstr "Lưu dưới định dạng ODF"
 
-#: src/control/Permission.js:146
+#: src/control/Permission.js:165
 msgid "Continue editing"
 msgstr "Tiếp tục chỉnh sửa"
+
+#: src/control/Permission.js:165
+msgid "Continue read only"
+msgstr ""
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
@@ -1678,6 +1690,18 @@ msgid "Reloading the document after rename"
 msgstr "Đang tải lại tài liệu sau khi đổi tên"
 
 #: src/core/Socket.js:822
+msgid "Discard"
+msgstr "Hủy bỏ"
+
+#: src/core/Socket.js:827
+msgid "Overwrite"
+msgstr "Ghi đè"
+
+#: src/core/Socket.js:835
+msgid "Save to new file"
+msgstr "Lưu vào tệp mới"
+
+#: src/core/Socket.js:843
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1685,69 +1709,57 @@ msgstr ""
 "Tài liệu đã được thay đổi trong bộ nhớ. Bạn muốn làm gì với những thay đổi "
 "chưa được lưu của mình?"
 
-#: src/core/Socket.js:826
-msgid "Discard"
-msgstr "Hủy bỏ"
-
-#: src/core/Socket.js:831
-msgid "Overwrite"
-msgstr "Ghi đè"
-
-#: src/core/Socket.js:836
-msgid "Save to new file"
-msgstr "Lưu vào tệp mới"
-
-#: src/core/Socket.js:906
+#: src/core/Socket.js:911
 msgid "Document requires password to view."
 msgstr "Tài liệu yêu cầu mật khẩu để xem."
 
-#: src/core/Socket.js:909
+#: src/core/Socket.js:914
 msgid "Document requires password to modify."
 msgstr "Tài liệu yêu cầu mật khẩu để sửa đổi."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:916
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Nhấn Hủy để mở ở chế độ chỉ xem."
 
-#: src/core/Socket.js:915
+#: src/core/Socket.js:920
 msgid "Wrong password provided. Please try again."
 msgstr "Đã cung cấp sai mật khẩu. Vui lòng thử lại."
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1029
 msgid "Someone"
 msgstr "Ai đó"
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid " saved this document as "
 msgstr " đã lưu tài liệu này dưới dạng "
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid ". Do you want to join?"
 msgstr ". Bạn có muốn tham gia không?"
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Loading..."
 msgstr "Đang tải..."
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Connecting..."
 msgstr "Đang kết nối..."
 
-#: src/core/Socket.js:1053
+#: src/core/Socket.js:1058
 msgid "The document is being renamed and will reload shortly"
 msgstr "Tài liệu đang được đổi tên và sắp tải lại"
 
-#: src/core/Socket.js:1416
+#: src/core/Socket.js:1435
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Chúng tôi không thể kết nối với tài liệu của bạn. Vui lòng thử lại."
 
-#: src/core/Socket.js:1433
+#: src/core/Socket.js:1452
 msgid "Reconnecting..."
 msgstr "Đang kết nối lại..."
 
-#: src/core/Socket.js:1439
+#: src/core/Socket.js:1458
 msgid "The server has been disconnected."
 msgstr "Máy chủ đã bị ngắt kết nối."
 
@@ -2091,8 +2103,8 @@ msgid ""
 "more options</p><p class=\"vex-footnote\">Close popup to ignore paste "
 "special</p>"
 msgstr ""
-"<p>Trình duyệt của bạn có quyền truy cập rất hạn chế vào bộ nhớ tạm</"
-"p><p>Vui lòng nhấn ngay: <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+"<p>Trình duyệt của bạn có quyền truy cập rất hạn chế vào bộ nhớ tạm</p><p>"
+"Vui lòng nhấn ngay: <kbd>Ctrl</kbd><span class=\"kbd--plus\""
 ">+</span><kbd>V</kbd> để xem thêm tuỳ chọn</p><p class=\"vex-footnote\">Đóng "
 "cửa sổ popup để bỏ qua dán đặc biệt</p>"
 

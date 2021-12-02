@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-24 20:28+0100\n"
+"POT-Creation-Date: 2021-12-02 14:42+0100\n"
 "PO-Revision-Date: 2021-11-20 21:17+0000\n"
 "Last-Translator: Rizal Muttaqin <riz_17_oke@yahoo.co.id>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
@@ -267,7 +267,7 @@ msgstr "Anda yakin ingin mengakhiri sesi ini?"
 #: src/control/Control.Menubar.js:1634
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:892
-#: src/core/Socket.js:954
+#: src/core/Socket.js:959
 msgid "OK"
 msgstr "OK"
 
@@ -276,7 +276,7 @@ msgstr "OK"
 #: src/control/Control.Menubar.js:1635 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:893
-#: src/core/Socket.js:955 src/layer/tile/CommentListSection.ts:395
+#: src/core/Socket.js:960 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Batal"
@@ -386,7 +386,7 @@ msgid "Index"
 msgstr "indeks"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2120
+#: src/control/Control.JSDialogBuilder.js:2123
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
 #: src/layer/tile/CommentListSection.ts:827
@@ -487,31 +487,31 @@ msgstr "Ukuran Fonta"
 msgid "Style"
 msgstr "Gaya"
 
-#: src/control/Control.JSDialogBuilder.js:2106
+#: src/control/Control.JSDialogBuilder.js:2109
 msgid "reply"
 msgstr "balas"
 
-#: src/control/Control.JSDialogBuilder.js:2109
+#: src/control/Control.JSDialogBuilder.js:2112
 msgid "replies"
 msgstr "balasan"
 
-#: src/control/Control.JSDialogBuilder.js:2181
+#: src/control/Control.JSDialogBuilder.js:2184
 msgid "Insert Comment"
 msgstr "Tambah Komentar"
 
-#: src/control/Control.JSDialogBuilder.js:2632
+#: src/control/Control.JSDialogBuilder.js:2635
 msgid "Cell borders"
 msgstr "Tepi sel"
 
-#: src/control/Control.JSDialogBuilder.js:2823
+#: src/control/Control.JSDialogBuilder.js:2826
 msgid "Rows"
 msgstr "Baris"
 
-#: src/control/Control.JSDialogBuilder.js:2824
+#: src/control/Control.JSDialogBuilder.js:2827
 msgid "Columns"
 msgstr "Kolom"
 
-#: src/control/Control.JSDialogBuilder.js:2844
+#: src/control/Control.JSDialogBuilder.js:2847
 msgid "Insert Table"
 msgstr "Sisip Tabel"
 
@@ -1043,6 +1043,10 @@ msgstr "Mulai Presentasi"
 msgid "ODF Presentation (.odp)"
 msgstr "Presentasi ODF (.odp)"
 
+#: src/control/Control.NotebookbarImpress.js:643
+msgid "Presentation"
+msgstr ""
+
 #: src/control/Control.NotebookbarImpress.js:980
 msgid "Reset Zoom"
 msgstr "Reset zum"
@@ -1216,6 +1220,10 @@ msgstr "Pindahkan Sheet ke Kiri"
 msgid "Move Sheet Right"
 msgstr "Pindahkan Sheet ke Kanan"
 
+#: src/control/Control.Tabs.js:102
+msgid "Copy Sheet..."
+msgstr ""
+
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "Anda yakin ingin menghapus lembar %sheet%?"
@@ -1295,27 +1303,27 @@ msgstr "Saat Ini"
 msgid "Show Selected Sheets"
 msgstr "Tampilkan Lembar Yang Dipilih"
 
-#: src/control/Permission.js:60
+#: src/control/Permission.js:66
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr "Dokumen tidak bisa dikunci, dan dibuka dalam mode hanya baca."
 
-#: src/control/Permission.js:62 src/control/Permission.js:79
+#: src/control/Permission.js:68 src/control/Permission.js:85
 msgid "Server returned this reason:"
 msgstr "Server mengembalikan alasan ini:"
 
-#: src/control/Permission.js:77
+#: src/control/Permission.js:83
 msgid "The document could not be locked."
 msgstr "Dokumen tidak dapat dikunci."
 
-#: src/control/Permission.js:119
+#: src/control/Permission.js:135
 msgid "Enter a file name"
 msgstr "Masukkan nama file"
 
-#: src/control/Permission.js:120
+#: src/control/Permission.js:136
 msgid "filename"
 msgstr "nama file"
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:153
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
@@ -1323,13 +1331,17 @@ msgstr ""
 "Dokumen ini mungkin berisi pemformatan atau konten yang tidak dapat disimpan "
 "dalam format file saat ini."
 
-#: src/control/Permission.js:145
+#: src/control/Permission.js:164
 msgid "Save as ODF format"
 msgstr "Simpan sebagai format ODF"
 
-#: src/control/Permission.js:146
+#: src/control/Permission.js:165
 msgid "Continue editing"
 msgstr "Lanjutkan pengeditan"
+
+#: src/control/Permission.js:165
+msgid "Continue read only"
+msgstr ""
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
@@ -1671,6 +1683,18 @@ msgid "Reloading the document after rename"
 msgstr "Memuat ulang dokumen setelah mengganti nama"
 
 #: src/core/Socket.js:822
+msgid "Discard"
+msgstr "Buang"
+
+#: src/core/Socket.js:827
+msgid "Overwrite"
+msgstr "Timpa"
+
+#: src/core/Socket.js:835
+msgid "Save to new file"
+msgstr "Simpan ke file baru"
+
+#: src/core/Socket.js:843
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1678,59 +1702,47 @@ msgstr ""
 "Dokumen telah diubah dalam penyimpanan. Apa yang ingin Anda lakukan dengan "
 "perubahan yang belum disimpan?"
 
-#: src/core/Socket.js:826
-msgid "Discard"
-msgstr "Buang"
-
-#: src/core/Socket.js:831
-msgid "Overwrite"
-msgstr "Timpa"
-
-#: src/core/Socket.js:836
-msgid "Save to new file"
-msgstr "Simpan ke file baru"
-
-#: src/core/Socket.js:906
+#: src/core/Socket.js:911
 msgid "Document requires password to view."
 msgstr "Dokumen perlu sandi untuk menilik."
 
-#: src/core/Socket.js:909
+#: src/core/Socket.js:914
 msgid "Document requires password to modify."
 msgstr "Dokumen perlu sandi untuk mengubah."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:916
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Tekan Batal untuk membuka dalam mode hanya tilik."
 
-#: src/core/Socket.js:915
+#: src/core/Socket.js:920
 msgid "Wrong password provided. Please try again."
 msgstr "Sandi salah. Harap coba lagi."
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1029
 msgid "Someone"
 msgstr "Seseorang"
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid " saved this document as "
 msgstr " simpan dokumen ini sebagai "
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid ". Do you want to join?"
 msgstr ". Apakah Anda ingin bergabung?"
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Loading..."
 msgstr "Memuat..."
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Connecting..."
 msgstr "Menghubungkan..."
 
-#: src/core/Socket.js:1053
+#: src/core/Socket.js:1058
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokumen sedang diganti namanya dan akan segera dimuat ulang"
 
-#: src/core/Socket.js:1416
+#: src/core/Socket.js:1435
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1738,11 +1750,11 @@ msgstr ""
 "Aduh, ini memalukan, kami tidak bisa menyambung ke dokumen Anda. Harap coba "
 "lagi."
 
-#: src/core/Socket.js:1433
+#: src/core/Socket.js:1452
 msgid "Reconnecting..."
 msgstr "Menghubungkan ulang..."
 
-#: src/core/Socket.js:1439
+#: src/core/Socket.js:1458
 msgid "The server has been disconnected."
 msgstr "Server telah terputus."
 

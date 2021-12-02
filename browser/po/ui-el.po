@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-24 20:28+0100\n"
+"POT-Creation-Date: 2021-12-02 14:42+0100\n"
 "PO-Revision-Date: 2021-09-20 17:51+0000\n"
 "Last-Translator: george kitsoukakis <norhorn@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/collabora-online/"
@@ -263,7 +263,7 @@ msgstr "Είστε βέβαιοι ότι θέλετε να τερματίσετ�
 #: src/control/Control.Menubar.js:1634
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:892
-#: src/core/Socket.js:954
+#: src/core/Socket.js:959
 msgid "OK"
 msgstr "Εντάξει"
 
@@ -272,7 +272,7 @@ msgstr "Εντάξει"
 #: src/control/Control.Menubar.js:1635 src/control/Control.MobileTopBar.js:43
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
 #: src/control/Control.Tabs.js:323 src/control/Toolbar.js:893
-#: src/core/Socket.js:955 src/layer/tile/CommentListSection.ts:395
+#: src/core/Socket.js:960 src/layer/tile/CommentListSection.ts:395
 #: src/layer/tile/CommentSection.ts:121 src/layer/tile/CommentSection.ts:124
 msgid "Cancel"
 msgstr "Άκυρο"
@@ -383,7 +383,7 @@ msgid "Index"
 msgstr "Ευρετήριο"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2120
+#: src/control/Control.JSDialogBuilder.js:2123
 #: src/layer/tile/CanvasTileLayer.js:4781
 #: src/layer/tile/CanvasTileLayer.js:4791
 #: src/layer/tile/CommentListSection.ts:827
@@ -484,31 +484,31 @@ msgstr "Μέγεθος γραμματοσειράς"
 msgid "Style"
 msgstr "Τεχνοτροπία"
 
-#: src/control/Control.JSDialogBuilder.js:2106
+#: src/control/Control.JSDialogBuilder.js:2109
 msgid "reply"
 msgstr "απάντηση"
 
-#: src/control/Control.JSDialogBuilder.js:2109
+#: src/control/Control.JSDialogBuilder.js:2112
 msgid "replies"
 msgstr "απαντήσεις"
 
-#: src/control/Control.JSDialogBuilder.js:2181
+#: src/control/Control.JSDialogBuilder.js:2184
 msgid "Insert Comment"
 msgstr "Εισαγωγή σχολίου"
 
-#: src/control/Control.JSDialogBuilder.js:2632
+#: src/control/Control.JSDialogBuilder.js:2635
 msgid "Cell borders"
 msgstr "Περιγράμματα κελιού"
 
-#: src/control/Control.JSDialogBuilder.js:2823
+#: src/control/Control.JSDialogBuilder.js:2826
 msgid "Rows"
 msgstr "Γραμμές"
 
-#: src/control/Control.JSDialogBuilder.js:2824
+#: src/control/Control.JSDialogBuilder.js:2827
 msgid "Columns"
 msgstr "Στήλες"
 
-#: src/control/Control.JSDialogBuilder.js:2844
+#: src/control/Control.JSDialogBuilder.js:2847
 msgid "Insert Table"
 msgstr "Εισαγωγή πίνακα"
 
@@ -1040,6 +1040,10 @@ msgstr "Έναρξη παρουσίασης"
 msgid "ODF Presentation (.odp)"
 msgstr "Παρουσίαση ODF (.odp)"
 
+#: src/control/Control.NotebookbarImpress.js:643
+msgid "Presentation"
+msgstr ""
+
 #: src/control/Control.NotebookbarImpress.js:980
 #, fuzzy
 msgid "Reset Zoom"
@@ -1214,6 +1218,10 @@ msgstr "Μετακίνηση φύλλου αριστερά"
 msgid "Move Sheet Right"
 msgstr "Μετακίνηση φύλλου δεξιά"
 
+#: src/control/Control.Tabs.js:102
+msgid "Copy Sheet..."
+msgstr ""
+
 #: src/control/Control.Tabs.js:303
 #, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
@@ -1294,29 +1302,29 @@ msgstr "Τρέχουσα"
 msgid "Show Selected Sheets"
 msgstr "Εμφάνιση επιλεγμένων φύλλων"
 
-#: src/control/Permission.js:60
+#: src/control/Permission.js:66
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr ""
 "Το έγγραφο δεν μπόρεσε να κλειδωθεί και είναι ανοικτό σε κατάσταση μόνο για "
 "ανάγνωση."
 
-#: src/control/Permission.js:62 src/control/Permission.js:79
+#: src/control/Permission.js:68 src/control/Permission.js:85
 msgid "Server returned this reason:"
 msgstr "Ο διακομιστής επέστρεψε αυτήν την αιτία:"
 
-#: src/control/Permission.js:77
+#: src/control/Permission.js:83
 msgid "The document could not be locked."
 msgstr "Το έγγραφο δεν μπόρεσε να κλειδωθεί."
 
-#: src/control/Permission.js:119
+#: src/control/Permission.js:135
 msgid "Enter a file name"
 msgstr "Εισαγάγετε όνομα αρχείου"
 
-#: src/control/Permission.js:120
+#: src/control/Permission.js:136
 msgid "filename"
 msgstr "όνομα αρχείου"
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:153
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
@@ -1324,13 +1332,17 @@ msgstr ""
 "Αυτό το έγγραφο μπορεί να περιέχει μορφοποίηση ή περιεχόμενο που δεν μπορεί "
 "να αποθηκευτεί στην τρέχουσα μορφή αρχείου."
 
-#: src/control/Permission.js:145
+#: src/control/Permission.js:164
 msgid "Save as ODF format"
 msgstr "Αποθήκευση ως ODF"
 
-#: src/control/Permission.js:146
+#: src/control/Permission.js:165
 msgid "Continue editing"
 msgstr "Συνέχεια επεξεργασίας"
+
+#: src/control/Permission.js:165
+msgid "Continue read only"
+msgstr ""
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
@@ -1677,6 +1689,18 @@ msgid "Reloading the document after rename"
 msgstr ""
 
 #: src/core/Socket.js:822
+msgid "Discard"
+msgstr "Απόρριψη"
+
+#: src/core/Socket.js:827
+msgid "Overwrite"
+msgstr "Αντικατάσταση"
+
+#: src/core/Socket.js:835
+msgid "Save to new file"
+msgstr "Αποθήκευση σε νέο αρχείο"
+
+#: src/core/Socket.js:843
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1684,59 +1708,47 @@ msgstr ""
 "Το έγγραφο έχει αλλαχθεί στην αποθήκευση. Τι θα θέλατε να κάνετε με τις μη "
 "αποθηκευμένες αλλαγές σας;"
 
-#: src/core/Socket.js:826
-msgid "Discard"
-msgstr "Απόρριψη"
-
-#: src/core/Socket.js:831
-msgid "Overwrite"
-msgstr "Αντικατάσταση"
-
-#: src/core/Socket.js:836
-msgid "Save to new file"
-msgstr "Αποθήκευση σε νέο αρχείο"
-
-#: src/core/Socket.js:906
+#: src/core/Socket.js:911
 msgid "Document requires password to view."
 msgstr "Για την προβολή του εγγράφου απαιτείται κωδικός πρόσβασης."
 
-#: src/core/Socket.js:909
+#: src/core/Socket.js:914
 msgid "Document requires password to modify."
 msgstr "Για την τροποποίηση του εγγράφου απαιτείται κωδικός πρόσβασης."
 
-#: src/core/Socket.js:911
+#: src/core/Socket.js:916
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Πατήστε Άκυρο για να ανοιχθεί σε κατάσταση μόνο για προβολή."
 
-#: src/core/Socket.js:915
+#: src/core/Socket.js:920
 msgid "Wrong password provided. Please try again."
 msgstr "Εσφαλμένος κωδικός πρόσβασης. Παρακαλούμε, ξαναπροσπαθήστε."
 
-#: src/core/Socket.js:1024
+#: src/core/Socket.js:1029
 msgid "Someone"
 msgstr "Κάποιος"
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid " saved this document as "
 msgstr " αποθήκευσε το έγγραφο ως "
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1031
 msgid ". Do you want to join?"
 msgstr ". Θέλετε να συμμετέχετε;"
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Loading..."
 msgstr "Φόρτωση..."
 
-#: src/core/Socket.js:1035
+#: src/core/Socket.js:1040
 msgid "Connecting..."
 msgstr "Συνδέεται..."
 
-#: src/core/Socket.js:1053
+#: src/core/Socket.js:1058
 msgid "The document is being renamed and will reload shortly"
 msgstr "Το έγγραφο μετονομάστηκε και θα γίνει ανανέωση σύντομα"
 
-#: src/core/Socket.js:1416
+#: src/core/Socket.js:1435
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1744,12 +1756,12 @@ msgstr ""
 "Δυστυχώς, δεν μπορούμε να συνδεθούμε με το έγγραφό σας. Παρακαλούμε, "
 "ξαναπροσπαθήστε."
 
-#: src/core/Socket.js:1433
+#: src/core/Socket.js:1452
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "Συνδέεται..."
 
-#: src/core/Socket.js:1439
+#: src/core/Socket.js:1458
 msgid "The server has been disconnected."
 msgstr "Ο διακομιστής έχει αποσυνδεθεί."
 
