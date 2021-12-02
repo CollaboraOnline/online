@@ -1002,7 +1002,7 @@ app.definitions.Socket = L.Class.extend({
 				}, 500 * this.ReconnectCount * this.ReconnectCount); // Quadratic back-off.
 
 				if (this.ReconnectCount > 1) {
-					this._map.fire('error', {msg: errorMessages.docunloadingretry});
+					this._map.showBusy(errorMessages.docunloadingretry, false);
 				}
 			}
 
@@ -1476,6 +1476,9 @@ app.definitions.Socket = L.Class.extend({
 
 	_onSocketClose: function () {
 		console.debug('_onSocketClose:');
+		if (this.ReconnectCount > 0)
+			return;
+
 		var isActive = this._map._active;
 		this._map.hideBusy();
 		this._map._active = false;
