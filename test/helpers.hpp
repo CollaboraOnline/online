@@ -1121,7 +1121,7 @@ inline void deleteAll(const std::shared_ptr<http::WebSocketSession>& ws,
                       std::chrono::milliseconds timeoutPerAttempt = std::chrono::seconds(10),
                       int repeat = COMMAND_RETRY_COUNT)
 {
-    selectAll(ws, testname);
+    selectAll(ws, testname, timeoutPerAttempt, repeat);
 
     sendAndWait(ws, testname, "uno .uno:Delete", "textselection:", timeoutPerAttempt, repeat);
 }
