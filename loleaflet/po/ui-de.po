@@ -2,16 +2,16 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 # Translators:
 # Andras Timar <andras.timar@collabora.com>, 2020
 # Marc Rodrigues <info@sustain-release.de>, 2020
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-05 17:05+0100\n"
+"POT-Creation-Date: 2021-12-02 15:12+0100\n"
 "PO-Revision-Date: 2021-09-16 11:11+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
@@ -263,7 +263,8 @@ msgstr "Sind Sie sicher, dass Sie diese Sitzung beenden wollen?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1574
 #: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:295
-#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:860
+#: src/control/Control.Tabs.js:312 src/control/Toolbar.js:862
+#: src/core/Socket.js:968
 msgid "OK"
 msgstr "OK"
 
@@ -271,9 +272,9 @@ msgstr "OK"
 #: src/control/Control.LanguageDialog.js:86 src/control/Control.Menubar.js:1575
 #: src/control/Control.MobileTopBar.js:44
 #: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:296
-#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:861
-#: src/layer/tile/CommentSection.js:87 src/layer/tile/CommentSection.js:90
-#: src/layer/tile/TileLayer.js:581
+#: src/control/Control.Tabs.js:313 src/control/Toolbar.js:863
+#: src/core/Socket.js:969 src/layer/tile/CommentSection.js:87
+#: src/layer/tile/CommentSection.js:90 src/layer/tile/TileLayer.js:581
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -463,7 +464,7 @@ msgid "Select range"
 msgstr "Bereich auswählen"
 
 #: src/control/Control.JSDialogBuilder.js:1677
-#: src/control/Control.NotebookbarBuilder.js:234
+#: src/control/Control.NotebookbarBuilder.js:235
 msgid "Font Name"
 msgstr "Schriftart"
 
@@ -524,12 +525,12 @@ msgstr "Linienstil:"
 #: src/control/Control.Menubar.js:240 src/control/Control.Menubar.js:242
 #: src/control/Control.Menubar.js:378 src/control/Control.Menubar.js:491
 #: src/control/Control.Menubar.js:701 src/control/Control.StatusBar.js:535
-#: src/control/Control.NotebookbarBuilder.js:790
-#: src/control/Control.NotebookbarBuilder.js:792
-#: src/control/Control.NotebookbarBuilder.js:794
-#: src/control/Control.NotebookbarBuilder.js:818
-#: src/control/Control.NotebookbarBuilder.js:853
-#: src/control/Control.NotebookbarBuilder.js:870
+#: src/control/Control.NotebookbarBuilder.js:827
+#: src/control/Control.NotebookbarBuilder.js:829
+#: src/control/Control.NotebookbarBuilder.js:831
+#: src/control/Control.NotebookbarBuilder.js:855
+#: src/control/Control.NotebookbarBuilder.js:890
+#: src/control/Control.NotebookbarBuilder.js:907
 msgid "None (Do not check spelling)"
 msgstr "Keine (Rechtschreibung nicht prüfen)"
 
@@ -609,10 +610,10 @@ msgstr "Dokument schließen"
 #: src/control/Control.Menubar.js:411 src/control/Control.Menubar.js:522
 #: src/control/Control.Menubar.js:736 src/control/Control.Menubar.js:785
 #: src/control/Control.Menubar.js:836 src/control/Control.Menubar.js:884
-#: src/control/Control.NotebookbarBuilder.js:783
-#: src/control/Control.NotebookbarBuilder.js:813
-#: src/control/Control.NotebookbarBuilder.js:848
-#: src/control/Control.NotebookbarBuilder.js:865
+#: src/control/Control.NotebookbarBuilder.js:820
+#: src/control/Control.NotebookbarBuilder.js:850
+#: src/control/Control.NotebookbarBuilder.js:885
+#: src/control/Control.NotebookbarBuilder.js:902
 msgid "Repair"
 msgstr "Reparieren"
 
@@ -623,7 +624,7 @@ msgid "Reset zoom"
 msgstr "Maßstab zurücksetzen"
 
 #: src/control/Control.Menubar.js:67
-#: src/control/Control.NotebookbarBuilder.js:769
+#: src/control/Control.NotebookbarBuilder.js:806
 msgid "Show Ruler"
 msgstr "Lineal anzeigen"
 
@@ -880,7 +881,6 @@ msgid "Permission Mode"
 msgstr "Berechtigungsmodus"
 
 #: src/control/Control.StatusBar.js:444
-#, fuzzy
 msgid "Read-only"
 msgstr "Schreibgeschützt"
 
@@ -944,7 +944,7 @@ msgstr ""
 "Bitte verwenden Sie die Dokumentwiederherstellung zur Lösung"
 
 #: src/control/Control.TopToolbar.js:122
-#: src/control/Control.NotebookbarWriter.js:537
+#: src/control/Control.NotebookbarWriter.js:542
 msgid "Default Style"
 msgstr "Standardvorlage"
 
@@ -957,7 +957,7 @@ msgid "Insert table"
 msgstr "Tabelle einfügen"
 
 #: src/control/Control.TopToolbar.js:243
-#: src/control/Control.NotebookbarBuilder.js:607
+#: src/control/Control.NotebookbarBuilder.js:612
 msgid "Insert Local Image"
 msgstr "Lokales Bild einfügen"
 
@@ -1004,10 +1004,10 @@ msgstr "Aktuell"
 #: src/control/Control.Notebookbar.js:240
 #: src/control/Control.NotebookbarImpress.js:18
 #: src/control/Control.NotebookbarDraw.js:18
-#: src/control/Control.NotebookbarBuilder.js:766
-#: src/control/Control.NotebookbarBuilder.js:807
-#: src/control/Control.NotebookbarBuilder.js:835
-#: src/control/Control.NotebookbarBuilder.js:860
+#: src/control/Control.NotebookbarBuilder.js:803
+#: src/control/Control.NotebookbarBuilder.js:844
+#: src/control/Control.NotebookbarBuilder.js:872
+#: src/control/Control.NotebookbarBuilder.js:897
 msgid "Menu"
 msgstr "Menü"
 
@@ -1105,11 +1105,11 @@ msgstr "ODF-Textdokument (.odt)"
 msgid "EPUB Document (.epub)"
 msgstr "EPUB-Dokument (.epub)"
 
-#: src/control/Control.NotebookbarWriter.js:541
+#: src/control/Control.NotebookbarWriter.js:546
 msgid "Text Body"
 msgstr "Textkörper"
 
-#: src/control/Control.NotebookbarWriter.js:544
+#: src/control/Control.NotebookbarWriter.js:549
 msgid "Title"
 msgstr "Titel"
 
@@ -1161,7 +1161,7 @@ msgstr "Fraktion"
 msgid "Boolean Value"
 msgstr "Boolescher Wert"
 
-#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:856
+#: src/control/Control.NotebookbarCalc.js:441 src/control/Toolbar.js:858
 msgid "Text"
 msgstr "Text"
 
@@ -1221,37 +1221,61 @@ msgstr "Präsentation starten"
 msgid "ODF Presentation (.odp)"
 msgstr "ODF-Präsentation (.odp)"
 
+#: src/control/Control.NotebookbarImpress.js:649
+msgid "Presentation"
+msgstr "Präsentation"
+
 #: src/control/Control.NotebookbarDraw.js:180
 msgid "Image (.png)"
 msgstr "Bild (.png)"
+
+#: src/control/Control.NotebookbarBuilder.js:667
+msgid "Very Tight"
+msgstr "sehr eng"
+
+#: src/control/Control.NotebookbarBuilder.js:668
+msgid "Tight"
+msgstr "eng"
+
+#: src/control/Control.NotebookbarBuilder.js:669
+msgid "Normal"
+msgstr "normal"
+
+#: src/control/Control.NotebookbarBuilder.js:670
+msgid "Loose"
+msgstr "weit"
+
+#: src/control/Control.NotebookbarBuilder.js:671
+msgid "Very Loose"
+msgstr "sehr weit"
 
 #: src/control/Parts.js:429
 msgid "Show Selected Sheets"
 msgstr "Ausgewählte Blätter anzeigen"
 
-#: src/control/Permission.js:60
+#: src/control/Permission.js:66
 msgid "The document could not be locked, and is opened in read-only mode."
 msgstr ""
 "Das Dokument konnte nicht gesperrt werden und wird im schreibgeschützten "
 "Modus geöffnet."
 
-#: src/control/Permission.js:62 src/control/Permission.js:79
+#: src/control/Permission.js:68 src/control/Permission.js:85
 msgid "Server returned this reason:"
 msgstr "Der Server hat diesen Grund zurückgegeben:"
 
-#: src/control/Permission.js:77
+#: src/control/Permission.js:83
 msgid "The document could not be locked."
 msgstr "Das Dokument konnte nicht gesperrt werden."
 
-#: src/control/Permission.js:119
+#: src/control/Permission.js:135
 msgid "Enter a file name"
 msgstr "Geben Sie einen Dateinamen ein"
 
-#: src/control/Permission.js:120
+#: src/control/Permission.js:136
 msgid "filename"
 msgstr "Dateiname"
 
-#: src/control/Permission.js:134
+#: src/control/Permission.js:153
 msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
@@ -1259,13 +1283,17 @@ msgstr ""
 "Dieses Dokument enthält möglicherweise Formatierungen oder Inhalte, die "
 "nicht im aktuellen Dateiformat gespeichert werden können."
 
-#: src/control/Permission.js:145
+#: src/control/Permission.js:164
 msgid "Save as ODF format"
 msgstr "Im ODF-Format speichern"
 
-#: src/control/Permission.js:146
+#: src/control/Permission.js:165
 msgid "Continue editing"
 msgstr "Bearbeitung fortsetzen"
+
+#: src/control/Permission.js:165
+msgid "Continue read only"
+msgstr ""
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
@@ -1423,30 +1451,30 @@ msgstr "Speichern …"
 msgid "Renaming..."
 msgstr "Umbenennen …"
 
-#: src/control/Toolbar.js:561
+#: src/control/Toolbar.js:562
 msgid "I understand the risks"
 msgstr "Ich verstehe das Risiko"
 
-#: src/control/Toolbar.js:648
+#: src/control/Toolbar.js:649
 msgid ""
 "We are sorry, the information about the latest updates is not available."
 msgstr ""
 "Es tut uns leid, die Informationen zu den neuesten Aktualisierungen sind "
 "nicht verfügbar."
 
-#: src/control/Toolbar.js:698
+#: src/control/Toolbar.js:699
 msgid "This version of %productName is powered by"
 msgstr "Diese Version von %productName wird bereitgestellt von"
 
-#: src/control/Toolbar.js:708
+#: src/control/Toolbar.js:709
 msgid "\"Slow Proxy\""
 msgstr "\"Langsamer Proxy\""
 
-#: src/control/Toolbar.js:854
+#: src/control/Toolbar.js:855
 msgid "Insert hyperlink"
 msgstr "Hyperlink einfügen"
 
-#: src/control/Toolbar.js:857
+#: src/control/Toolbar.js:859
 msgid "Link"
 msgstr "Hyperlink"
 
@@ -1480,44 +1508,52 @@ msgstr "Der Server ist jetzt erreichbar …"
 msgid "RELOAD"
 msgstr "NEU LADEN"
 
-#: src/core/Socket.js:524
+#: src/core/Socket.js:513
+msgid "COOLWSD version:"
+msgstr ""
+
+#: src/core/Socket.js:525
 msgid "Served by:"
 msgstr "Angeboten von:"
 
-#: src/core/Socket.js:529
+#: src/core/Socket.js:531
 msgid "Unsupported server version."
 msgstr "Diese Serverversion wird nicht unterstützt."
 
-#: src/core/Socket.js:646
+#: src/core/Socket.js:535
+msgid "LOKit version:"
+msgstr ""
+
+#: src/core/Socket.js:649
 msgid "Session terminated by document owner"
 msgstr "Sitzung durch Dokumenteigentümer beendet"
 
-#: src/core/Socket.js:651
+#: src/core/Socket.js:654
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
 "Leeres Dokument - zum Neuladen und Fortsetzen der Bearbeitung klicken Sie "
 "bitte"
 
-#: src/core/Socket.js:653
+#: src/core/Socket.js:656
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
 "Inaktives Dokument – zum Neuladen und Fortsetzen der Bearbeitung bitte tippen"
 
-#: src/core/Socket.js:661
+#: src/core/Socket.js:664
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Der Server wird für Wartungszwecke heruntergefahren (Auto-Sicherung)"
 
-#: src/core/Socket.js:665
+#: src/core/Socket.js:668
 msgid "Oops, there is a problem connecting the document"
 msgstr "Es besteht ein Problem bei der Verbindung zum Dokument"
 
-#: src/core/Socket.js:669
+#: src/core/Socket.js:672
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 "Der Server ist heruntergefahren und wird automatisch neu gestartet. Bitte "
 "haben Sie einen Moment Geduld."
 
-#: src/core/Socket.js:697
+#: src/core/Socket.js:700
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1525,7 +1561,7 @@ msgstr ""
 "Das Dokument auf dem Speicher wurde geändert. Öffnen Sie das neue Dokument. "
 "Ihre Version steht als Revision zur Verfügung."
 
-#: src/core/Socket.js:703
+#: src/core/Socket.js:706
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1533,11 +1569,23 @@ msgstr ""
 "Ältere Version wiederherstellen. Alle ungespeicherten Änderungen bleiben in "
 "der Versionshistorie erhalten"
 
-#: src/core/Socket.js:709
+#: src/core/Socket.js:712
 msgid "Reloading the document after rename"
 msgstr "Nach der Umbennenung wird das Dokument neu geladen"
 
-#: src/core/Socket.js:828
+#: src/core/Socket.js:831
+msgid "Discard"
+msgstr "Verwerfen"
+
+#: src/core/Socket.js:836
+msgid "Overwrite"
+msgstr "Überschreiben"
+
+#: src/core/Socket.js:844
+msgid "Save to new file"
+msgstr "Als neue Datei speichern"
+
+#: src/core/Socket.js:852
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1545,60 +1593,48 @@ msgstr ""
 "Das Dokument im Speicher wurde geändert. Wie möchten Sie mit Ihren "
 "ungespeicherten Änderungen verfahren?"
 
-#: src/core/Socket.js:832
-msgid "Discard"
-msgstr "Verwerfen"
-
-#: src/core/Socket.js:837
-msgid "Overwrite"
-msgstr "Überschreiben"
-
-#: src/core/Socket.js:842
-msgid "Save to new file"
-msgstr "Als neue Datei speichern"
-
-#: src/core/Socket.js:912
+#: src/core/Socket.js:920
 msgid "Document requires password to view."
 msgstr "Das Dokument benötigt ein Kennwort zum Ansehen."
 
-#: src/core/Socket.js:915
+#: src/core/Socket.js:923
 msgid "Document requires password to modify."
 msgstr "Das Dokument benötigt ein Kennwort zum Bearbeiten."
 
-#: src/core/Socket.js:917
+#: src/core/Socket.js:925
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Klicken Sie auf Abbrechen, um das Dokument im Ansichtsmodus zu öffnen."
 
-#: src/core/Socket.js:921
+#: src/core/Socket.js:929
 msgid "Wrong password provided. Please try again."
 msgstr ""
 "Sie haben ein falsches Kennwort eingegeben. Bitte versuchen Sie es erneut."
 
-#: src/core/Socket.js:1026
+#: src/core/Socket.js:1038
 msgid "Someone"
 msgstr "Jemand"
 
-#: src/core/Socket.js:1028
+#: src/core/Socket.js:1040
 msgid " saved this document as "
 msgstr " dieses Dokument gespeichert unter "
 
-#: src/core/Socket.js:1028
+#: src/core/Socket.js:1040
 msgid ". Do you want to join?"
 msgstr ". Willst du mitmachen?"
 
-#: src/core/Socket.js:1037
+#: src/core/Socket.js:1049
 msgid "Loading..."
 msgstr "Lade …"
 
-#: src/core/Socket.js:1037
+#: src/core/Socket.js:1049
 msgid "Connecting..."
 msgstr "Verbinden …"
 
-#: src/core/Socket.js:1055
+#: src/core/Socket.js:1067
 msgid "The document is being renamed and will reload shortly"
 msgstr "Das Dokument wird umbenannt und in Kürze neu geladen"
 
-#: src/core/Socket.js:1417
+#: src/core/Socket.js:1429
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1606,12 +1642,11 @@ msgstr ""
 "Es konnte keine Verbindung zu Ihrem Dokument hergestellt werden. Bitte "
 "versuchen Sie es erneut."
 
-#: src/core/Socket.js:1434
-#, fuzzy
+#: src/core/Socket.js:1446
 msgid "Reconnecting..."
 msgstr "Verbinden …"
 
-#: src/core/Socket.js:1440
+#: src/core/Socket.js:1452
 msgid "The server has been disconnected."
 msgstr "Die Verbindung zum Server wurde unterbrochen."
 
