@@ -640,7 +640,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Presentation'),
+				'text': _('Presentation'),
 				'command': '.uno:Presentation'
 			},
 			{

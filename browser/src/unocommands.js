@@ -358,7 +358,6 @@ var unoCommandsArray = {
 	'ParaspaceIncrease':{global:{context:_('Increase Paragraph Spacing'),menu:_('Increase Paragraph Spacing'),},},
 	'Paste':{global:{menu:_('~Paste'),},},
 	'PickList':{global:{menu:_('~File'),},},
-	'Presentation':{presentation:{menu:_('Start from ~First Slide'),},},
 	'PreviousTrackedChange':{text:{context:_('Previous Track Change'),menu:_('Pr~evious'),},},
 	'Print':{global:{menu:_('~Print...'),},},
 	'RecalcPivotTable':{spreadsheet:{menu:_('~Refresh'),},},
