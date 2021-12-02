@@ -374,7 +374,6 @@ var unoCommandsArray = {
 	'Paste':{global:{menu:_('~Paste'),},},
 	'PickList':{global:{menu:_('~File'),},},
 	'Polygon_Unfilled':{global:{menu:_('Polygon'),},},
-	'Presentation':{presentation:{menu:_('Start from ~First Slide'),},},
 	'PreviousTrackedChange':{text:{context:_('Previous Track Change'),menu:_('Pr~evious'),},},
 	'Print':{global:{menu:_('~Print...'),},},
 	'ProtectTraceChangeMode':{global:{context:_('Protect Track Changes'),menu:_('~Protect...'),},},
