@@ -850,9 +850,10 @@ app.definitions.Socket = L.Class.extend({
 				}
 
 				vex.dialog.open({
-					message: _('Document has been changed in storage. What would you like to do with your unsaved changes?'),
+					unsafeMessage: '<h1 class="vex-dialog-title">' + vex._escapeHtml(_('Document has been changed')) + '</h1><p class="vex-dialog-message">' + vex._escapeHtml(_('Document has been changed in storage. What would you like to do with your unsaved changes?')) + '</p>',
 					escapeButtonCloses: false,
 					overlayClosesOnClick: false,
+					contentClassName: 'vex-content vex-3btns',
 					buttons: dialogButtons,
 					callback: function(value) {
 						if (value === 'discard') {
