@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-24 20:28+0100\n"
-"PO-Revision-Date: 2020-07-04 16:06+0000\n"
-"Last-Translator: Kolbjørn Stuestøl <kolbjoern@stuestoel.no>\n"
-"Language-Team: Norwegian Nynorsk <https://weblate.documentfoundation.org/"
-"projects/libo_online/cool-ui/nn/>\n"
-"Language: \n"
+"PO-Revision-Date: 2021-11-29 19:44+0000\n"
+"Last-Translator: Rudi Endresen <Rudi@peefy.net>\n"
+"Language-Team: Norwegian Nynorsk <https://hosted.weblate.org/projects/"
+"collabora-online/ui/nn/>\n"
+"Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.1.1\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -44,9 +44,8 @@ msgid "History"
 msgstr "Logg"
 
 #: admin/admin.strings.js:12
-#, fuzzy
 msgid "Log"
-msgstr "Login"
+msgstr "Logg"
 
 #: admin/admin.strings.js:13
 msgid "Dashboard"
@@ -61,20 +60,17 @@ msgid "User Name"
 msgstr "Brukarnamn"
 
 #: admin/admin.strings.js:16
-#, fuzzy
 msgid "Documents open"
-msgstr "Dokument opna"
+msgstr "Opne dokument"
 
 #: admin/admin.strings.js:17 admin/src/AdminSocketOverview.js:73
 #: admin/src/AdminSocketOverview.js:122 admin/src/AdminSocketOverview.js:341
-#, fuzzy
 msgid " user(s)."
-msgstr "0 brukarar"
+msgstr " brukar(ar)."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:195
-#, fuzzy
 msgid " document(s) open."
-msgstr "Dokument opna"
+msgstr " ope/opne dokument."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -102,7 +98,7 @@ msgstr "Dokument"
 
 #: admin/admin.strings.js:25
 msgid "Views"
-msgstr ""
+msgstr "Visningar"
 
 #: admin/admin.strings.js:26
 msgid "Elapsed time"
@@ -118,7 +114,7 @@ msgstr "Endra"
 
 #: admin/admin.strings.js:29
 msgid "WOPI host"
-msgstr ""
+msgstr "WOPI-vert"
 
 #: admin/admin.strings.js:30
 msgid "Kill"
@@ -166,7 +162,7 @@ msgstr "Tidsintervall for CPU-statistikk (i ms)"
 
 #: admin/admin.strings.js:40 admin/src/AdminSocketOverview.js:91
 msgid "Kill session."
-msgstr ""
+msgstr "Avslutt økt."
 
 #: admin/admin.strings.js:41
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
@@ -204,13 +200,12 @@ msgid "Server uptime"
 msgstr "Oppetid for tenar"
 
 #: admin/admin.strings.js:49
-#, fuzzy
 msgid "Refresh Log"
-msgstr "Oppdater"
+msgstr "Oppdater loggen"
 
 #: admin/admin.strings.js:50
 msgid "Channel Filter:"
-msgstr ""
+msgstr "Kanalfilter:"
 
 #: admin/admin.strings.js:51 src/control/Control.JSDialogBuilder.js:395
 #: src/control/Control.StatusBar.js:314
@@ -219,11 +214,11 @@ msgstr "Ingen"
 
 #: admin/admin.strings.js:52
 msgid "Set Log Levels"
-msgstr ""
+msgstr "Set loggnivå"
 
 #: admin/admin.strings.js:53
 msgid "Log Levels"
-msgstr ""
+msgstr "Loggnivå"
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
 #: src/control/Parts.js:421 src/control/Signing.js:608
@@ -233,11 +228,11 @@ msgstr "Lukk"
 
 #: admin/admin.strings.js:55
 msgid "Update Log Levels"
-msgstr ""
+msgstr "Oppdater loggnivå"
 
 #: admin/admin.strings.js:56
 msgid "Version Information"
-msgstr ""
+msgstr "Versjonsinfo"
 
 #: admin/src/AdminSocketAnalytics.js:205
 msgid "Received"
@@ -249,7 +244,7 @@ msgstr "Sendt"
 
 #: admin/src/AdminSocketBase.js:53
 msgid "Server has been shut down; please reload the page."
-msgstr ""
+msgstr "Tenaren har blitt skrudd av; oppdater sida."
 
 #: admin/src/AdminSocketBase.js:63
 msgid "Connection error"
@@ -257,7 +252,7 @@ msgstr "Tilkoplingsfeil"
 
 #: admin/src/AdminSocketOverview.js:97 admin/src/AdminSocketSettings.js:34
 msgid "Confirmation"
-msgstr ""
+msgstr "Stadfesting"
 
 #: admin/src/AdminSocketOverview.js:98
 msgid "Are you sure you want to terminate this session?"
@@ -269,7 +264,7 @@ msgstr "Er du sikker på at du vil avslutta denne økta?"
 #: src/control/Control.Tabs.js:322 src/control/Toolbar.js:892
 #: src/core/Socket.js:954
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.Command.js:90 src/control/Control.LanguageDialog.js:86

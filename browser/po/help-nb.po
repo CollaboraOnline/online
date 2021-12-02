@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-24 20:28+0200\n"
-"PO-Revision-Date: 2021-10-22 13:43+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2021-11-29 19:44+0000\n"
+"Last-Translator: Rudi Endresen <Rudi@peefy.net>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "collabora-online/help/nb_NO/>\n"
 "Language: nb\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1033,33 +1033,36 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Navigering i regneark"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr ""
+msgstr "Flytter markøren til den første cellen i regnearket (A1)."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "Flytter markøren til den siste cellen i regnearket som inneholder data."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:134-18
 msgid "Moves the cursor to the first cell of the current row."
-msgstr ""
+msgstr "Flytter markøren til den første cellen i gjeldende rad."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:135-18
 msgid "Moves the cursor to the last cell of the current row."
-msgstr ""
+msgstr "Flytter markøren til den siste cellen i gjeldende rad."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:136-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
 msgstr ""
+"Markerer celler fra den gjeldende cellen til den første cellen i gjeldende "
+"rad."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
 msgstr ""
+"Markerer celler fra gjeldende celle til den siste cellen i gjeldende rad."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""

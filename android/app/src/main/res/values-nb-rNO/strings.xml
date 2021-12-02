@@ -110,4 +110,7 @@
     <string name="theme_system_default">Systemforvalg</string>
     <string name="choose_theme">Velg drakt</string>
     <string name="theme">Drakt</string>
+    <string name="pref_user_name">Brukernavn</string>
+    <string name="pref_user_name_info">Brukes når du legger til en kommentar</string>
+    <string name="pref_user_name_guest">Gjestebruker</string>
 </resources>
