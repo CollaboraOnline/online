@@ -569,7 +569,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': 'Connectors',
+								'text': _UNO('.uno:ConnectorToolbox'),
 								'command': '.uno:ConnectorToolbox'
 							}
 						]
@@ -1398,7 +1398,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': 'Connectors',
+								'text': _UNO('.uno:ConnectorToolbox'),
 								'command': '.uno:ConnectorToolbox'
 							}
 						]
