@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-24 20:28+0100\n"
-"PO-Revision-Date: 2021-11-25 21:55+0000\n"
-"Last-Translator: Eloy Crespo <eloy.crespo@collabora.com>\n"
+"PO-Revision-Date: 2021-11-29 19:44+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
 "Language: es\n"
@@ -837,11 +837,11 @@ msgstr "Insertar imagen local"
 
 #: src/control/Control.NotebookbarBuilder.js:614
 msgid "Very Tight"
-msgstr "Muy ajustado"
+msgstr "Muy reducido"
 
 #: src/control/Control.NotebookbarBuilder.js:615
 msgid "Tight"
-msgstr "Ajustado"
+msgstr "Reducido"
 
 #: src/control/Control.NotebookbarBuilder.js:616
 msgid "Normal"
@@ -849,11 +849,11 @@ msgstr "Normal"
 
 #: src/control/Control.NotebookbarBuilder.js:617
 msgid "Loose"
-msgstr "Suelto"
+msgstr "Amplio"
 
 #: src/control/Control.NotebookbarBuilder.js:618
 msgid "Very Loose"
-msgstr "Muy suelto"
+msgstr "Muy amplio"
 
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarDraw.js:79
@@ -1072,7 +1072,7 @@ msgstr "Título general"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
-msgstr "vista previa de la página "
+msgstr "previsualización de la página "
 
 #: src/control/Control.PresentationBar.js:100
 msgid "Are you sure you want to delete this page?"
@@ -1509,7 +1509,7 @@ msgstr "Descartar"
 #: src/control/Toolbar.js:614
 #, javascript-format
 msgid "Explore the new %coolVersion"
-msgstr "Explora la nueva %coolVersion"
+msgstr "Explore la nueva %coolVersion"
 
 #: src/control/Toolbar.js:615 src/control/Toolbar.js:619
 msgid "Collabora Online Development Edition"
@@ -1532,7 +1532,7 @@ msgstr ""
 
 #: src/control/Toolbar.js:618
 msgid "Discover all the changes"
-msgstr "Descubre todos los cambios"
+msgstr "Descubra todos los cambios"
 
 #: src/control/Toolbar.js:620
 #, javascript-format
@@ -1550,11 +1550,11 @@ msgstr ""
 
 #: src/control/Toolbar.js:622
 msgid "Integrate Collabora Online into your webapp"
-msgstr "Integra Collabora Online en tu aplicación web"
+msgstr "Integre Collabora Online en su aplicación web"
 
 #: src/control/Toolbar.js:623
 msgid "Or get involved in the development"
-msgstr "O involúcrate en el desarrollo"
+msgstr "O involúcrese en el desarrollo"
 
 #: src/control/Toolbar.js:624
 #, javascript-format
@@ -1567,13 +1567,13 @@ msgid ""
 "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
 "all the essential steps on how to reproduce it."
 msgstr ""
-"Obtén más información sobre la integración en tu aplicación web en <a href=\""
-"%coolSdkURL\" target=\"_blank\"> Collabora Online SDK </a>. O dirígete a las "
-"<a href=\"%coolStepByStepURL\" target=\"_blank\"> instrucciones paso a paso "
-"</a> y crea el CÓDIGO desde cero. También puedes ayudar con <a href=\"%"
-"coolTranslationsURL\" target=\"_blank\"> traducciones </a> o <a href=\"%"
-"coolBugreportURL\" target=\"_blank\"> presentando un informe de error </a> "
-"con todos los pasos esenciales sobre cómo reproducirlo."
+"Obtenga más información sobre la integración en su aplicación web en <a href="
+"\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK </a>. O diríjase a "
+"las <a href=\"%coolStepByStepURL\" target=\"_blank\">instrucciones paso a "
+"paso </a> y compile CODE desde cero. También puede ayudar con las <a href=\"%"
+"coolTranslationsURL\" target=\"_blank\">traducciones</a> o <a href=\"%"
+"coolBugreportURL\" target=\"_blank\">enviando un informe de error</a> con "
+"todos los pasos esenciales sobre cómo reproducirlo."
 
 #: src/control/Toolbar.js:626 src/control/Toolbar.js:627
 msgid "Next"
@@ -1581,7 +1581,7 @@ msgstr "Siguiente"
 
 #: src/control/Toolbar.js:630
 msgid "Learn more about the enterprise-ready versions"
-msgstr "Obtén más información sobre las versiones listas para la empresa"
+msgstr "Obtenga más información sobre las versiones empresariales"
 
 #: src/control/Toolbar.js:679
 msgid ""
@@ -1623,7 +1623,7 @@ msgstr "RECARGAR"
 
 #: src/core/Socket.js:504
 msgid "COOLWSD version:"
-msgstr "verisión COOLWSD:"
+msgstr "Versión de COOLWSD:"
 
 #: src/core/Socket.js:516
 msgid "Served by:"
@@ -1635,7 +1635,7 @@ msgstr "No se admite esta versión del servidor."
 
 #: src/core/Socket.js:526
 msgid "LOKit version:"
-msgstr "versión LOKit:"
+msgstr "Versión de LOKit:"
 
 #: src/core/Socket.js:640
 msgid "Session terminated by document owner"
@@ -2072,7 +2072,7 @@ msgstr "Documento inactivo"
 
 #: src/map/Map.js:1434
 msgid "Please click to resume editing"
-msgstr "Por favor, haga clic para reanudar la edición"
+msgstr "Pulse para reanudar la edición"
 
 #: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
