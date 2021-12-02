@@ -855,6 +855,7 @@ app.definitions.Socket = L.Class.extend({
 					overlayClosesOnClick: false,
 					contentClassName: 'vex-content vex-3btns',
 					buttons: dialogButtons,
+					showCloseButton: true,
 					callback: function(value) {
 						if (value === 'discard') {
 							// They want to refresh the page and load document again for all
