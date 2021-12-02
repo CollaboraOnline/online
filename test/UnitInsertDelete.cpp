@@ -206,18 +206,30 @@ UnitBase::TestResult UnitInsertDelete::testPasteBlank()
     try
     {
         // Load a document and make it empty, then paste nothing into it.
-        Poco::URI uri(helpers::getTestServerURI());
-        std::shared_ptr<COOLWebSocket> socket
-            = helpers::loadDocAndGetSocket("hello.odt", uri, testname);
+        std::string documentPath, documentURL;
+        helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
-        helpers::deleteAll(socket, testname);
+        std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>(testname);
+
+        socketPoll->startThread();
+
+        std::shared_ptr<http::WebSocketSession> wsSession = helpers::loadDocAndGetSession(
+            socketPoll, Poco::URI(helpers::getTestServerURI()), documentURL, testname);
+
+        TST_LOG("deleteAll");
+        helpers::deleteAll(wsSession, testname, std::chrono::seconds(3));
 
         // Paste nothing into it.
-        helpers::sendTextFrame(socket, "paste mimetype=text/plain;charset=utf-8\n", testname);
+        TST_LOG("paste mimetype=text/plain;charset=utf-8");
+        helpers::sendTextFrame(wsSession, "paste mimetype=text/plain;charset=utf-8\n", testname);
 
         // Check if the document contains the pasted text.
-        const std::string selection = helpers::getAllText(socket, testname);
+        TST_LOG("getAllText");
+        const std::string selection = helpers::getAllText(wsSession, testname);
+        TST_LOG("getAllText => " << selection);
         LOK_ASSERT_EQUAL(std::string("textselectioncontent: "), selection);
+
+        socketPoll->joinThread();
     }
     catch (const Poco::Exception& exc)
     {
