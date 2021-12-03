@@ -57,7 +57,7 @@
 }
 
 #gradientstyle > .sidebar.jsdialog.ui-listbox {
-	width: 104px;
+	width: 74px;
 }
 
 .sidebar.jsdialog.row > table.sidebar.jsdialog.ui-grid {
@@ -276,6 +276,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 }
 
 #orientationcontrol,
+#rotation,
 #misc_label {
 	visibility: hidden;
 	height: 16px;
@@ -303,7 +304,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	left: -10px;
 }
 
-#writedirection, #backgroundcolor, #table-indentfieldbox * {
+#writedirection, #backgroundcolor {
 	justify-content: end;
 	margin-right: 0;
 }
