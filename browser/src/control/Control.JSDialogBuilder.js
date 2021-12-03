@@ -43,8 +43,6 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 	_currentDepth: 0,
 
-	_firstDialogHandled: false,
-
 	setWindowId: function (id) {
 		this.windowId = id;
 	},
@@ -267,7 +265,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			// In that state the document is not really loaded and closing or cancelling it
 			// returns docnotloaded error. Instead of this we can return to the integration
 			if (!builder.map._docLoaded &&
-				 !this._firstDialogHandled &&
+				 !window._firstDialogHandled &&
 				 ((object.id === 'cancel' || eventType === 'close') ||
 				 (objectType === 'responsebutton' && (data == 0 || data == 7)))) {
 				window.onClose();
@@ -282,7 +280,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				+ '\", \"data\": \"' + (typeof(data) === 'object' ? encodeURIComponent(JSON.stringify(data)) : data)
 				+ '\", \"type\": \"' + objectType + '\"}';
 			app.socket.sendMessage(message);
-			this._firstDialogHandled = true;
+			window._firstDialogHandled = true;
 		}
 	},
 
