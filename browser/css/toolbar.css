@@ -504,6 +504,23 @@ button.leaflet-control-search-next
 	border: 1px solid #888;
 }
 
+.w2ui-toolbar table.w2ui-button {
+	background-color: transparent;
+	border: 1px solid transparent;
+	color: var(--gray-light-txt--color);
+}
+.w2ui-toolbar table.w2ui-button.checked {
+	background-color: var(--gray-light-bg-color);
+	border: 1px solid var(--gray-light-bg-color);
+	color: var(--gray-light-txt--color);
+}
+.select2-container--default .select2-selection--single:hover,
+.sidebar.jsdialog.ui-listbox:hover,
+.w2ui-toolbar table.w2ui-button.checked:hover {
+	background-color: var(--gray-light-bg-color);
+	border: 1px solid var(--gray-light-txt--color);
+}
+
 .w2ui-icon.basicshapes_rectangle { background: url('images/lc_rect.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_round-rectangle { background: url('images/lc_rect_rounded.svg') no-repeat center !important; }
 .w2ui-icon.basicshapes_quadrat { background: url('images/lc_square.svg') no-repeat center !important; }

@@ -173,26 +173,39 @@ td.jsdialog .jsdialog.cell.sidebar {
 #table-textorientbox.sidebar .jsdialog .radiobutton {
 	border: 1px solid transparent;
 }
+
+/* non selected */
+.hasnotebookbar .ui-content.unotoolbutton.has-label,
+.hasnotebookbar .ui-content.unotoolbutton.inline,
+.hasnotebookbar .ui-content.unotoolbutton:not(.has-label):not(.inline),
+.sidebar.unotoolbutton {
+	background-color: transparent;
+	border: 2px solid transparent;
+	color: var(--gray-light-txt--color);
+	border-radius: 4px;
+}
+/* selected */
+.hasnotebookbar .ui-content.unotoolbutton.selected.has-label,
+.hasnotebookbar .ui-content.unotoolbutton.selected.inline,
+.hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline),
+.sidebar.unotoolbutton.selected {
+	background-color: var(--gray-light-bg-color);
+	border: 2px solid var(--gray-light-bg-color);
+	color: var(--gray-light-txt--color);
+	border-radius: 4px;
+}
+/* selected hover */
+.hasnotebookbar .ui-content.unotoolbutton.selected:hover,
+.unotoolbutton.notebookbar:hover,
+.hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline):hover,
 .sidebar.unotoolbutton:hover,
+.sidebar.unotoolbutton.selected:hover,
 .sidebar #resetattr:hover,
 .sidebar #FormatPaintbrush:hover,
 #table-textorientbox.sidebar .jsdialog .radiobutton:hover {
-	border-color: var(--gray-light-txt--color);
-	background-color: var(--gray-light-bg-color);
-	border-radius: 0.1px;
-}
-
-.sidebar.unotoolbutton.selected {
-	background-color: var(--gray-light-bg-color);
-	outline: 2px solid var(--gray-light-bg-color);
+	outline: 1px solid var(--gray-light-txt--color);
 	color: var(--gray-light-txt--color);
-}
-
-.sidebar.unotoolbutton.selected:hover {
-	background-color: var(--gray-light-bg-color);
-	outline: 1px solid var(--gray-light-bg-color);
-	color: var(--gray-light-txt--color);
-	border-radius: 0.1px;
+	border-radius: 4px;
 }
 
 .sidebar #font select,
