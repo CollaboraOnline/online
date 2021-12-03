@@ -260,20 +260,6 @@
 	vertical-align: middle;
 }
 
-.hasnotebookbar .ui-content.unotoolbutton.selected.has-label,
-.hasnotebookbar .ui-content.unotoolbutton.selected.inline,
-.hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline) {
-	background-color: var(--gray-light-bg-color);
-	outline: 2px solid var(--gray-light-bg-color);
-	color: var(--gray-light-txt--color);
-}
-
-.hasnotebookbar .ui-content.unotoolbutton.selected:hover,
-.unotoolbutton.notebookbar:hover,
-.hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline):hover {
-	box-shadow: 0 0 0 1px var(--gray-color);
-}
-
 /* avoid bug with arrow in new line when window is small */
 #table-Home-Section-Insert #table-LineB9 #InsertGraphic.notebookbar,
 #table-Home-Section-Insert #table-GroupB20 #InsertTable.notebookbar {
@@ -423,11 +409,11 @@
 }
 
 #fontsize.notebookbar .select2.select2-container {
-	width: 60px !important;
+	width: 65px !important;
 }
 
 #fontnamecombobox.notebookbar .select2 {
-	width: 170px !important;
+	width: 195px !important;
 	top: -1px;
 }
 
