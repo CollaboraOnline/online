@@ -22,7 +22,7 @@ noinst_LTLIBRARIES = \
 	unit-timeout.la unit-prefork.la unit-storage.la \
 	unit-admin.la unit-tilecache.la \
 	unit-fuzz.la unit-http.la unit-oauth.la \
-	unit-wopi.la unit-wopi-saveas.la \
+	unit-wopi.la unit-wopi-saveas.la unit-wopi-saveas-with-encoded-file-name.la \
 	unit-wopi-async-upload-close.la unit-wopi-async-upload-modify.la \
 	unit-wopi-async-upload-modifyclose.la \
 	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
@@ -166,6 +166,8 @@ unit_wopi_async_upload_modifyclose_la_SOURCES = UnitWOPIAsyncUpload_ModifyClose.
 unit_wopi_async_upload_modifyclose_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_saveas_la_SOURCES = UnitWOPISaveAs.cpp
 unit_wopi_saveas_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_saveas_with_encoded_file_name_la_SOURCES = UnitWOPISaveAsWithEncodedFileName.cpp
+unit_wopi_saveas_with_encoded_file_name_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_ownertermination_la_SOURCES = UnitWopiOwnertermination.cpp
 unit_wopi_ownertermination_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_versionrestore_la_SOURCES = UnitWOPIVersionRestore.cpp
@@ -245,7 +247,7 @@ TESTS = \
 	unit-base.la unit-tiletest.la \
 	unit-integration.la unit-httpws.la unit-crash.la \
 	unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-tilecache.la unit-timeout.la \
-	unit-oauth.la unit-wopi.la unit-wopi-saveas.la \
+	unit-oauth.la unit-wopi.la unit-wopi-saveas.la unit-wopi-saveas-with-encoded-file-name.la \
 	unit-wopi-async-upload-close.la unit-wopi-async-upload-modify.la \
 	unit-wopi-async-upload-modifyclose.la \
 	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
