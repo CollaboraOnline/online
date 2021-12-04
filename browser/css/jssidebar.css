@@ -111,7 +111,6 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 	display: flex;
 	justify-content: flex-end;
 }
-
 .sidebar.ui-drawing-area {
 	max-width: 290px;
 }
@@ -253,6 +252,11 @@ td.jsdialog .jsdialog.cell.sidebar {
 	width: 160px;
 	position: relative;
 	left: -7px;
+}
+
+#table-verticalalignment {
+	position: relative;
+	top: 6px;
 }
 
 #LB_SHADOW_COLOR, #LB_GLOW_COLOR {
