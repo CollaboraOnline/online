@@ -433,8 +433,6 @@ L.Control.TopToolbar = L.Control.extend({
 				return;
 			var commands = commandValues.Commands;
 			if (commands && commands.length > 0) {
-				// Inserts a separator element
-				data = data.concat({text: '\u2500\u2500\u2500\u2500\u2500\u2500', disabled: true});
 
 				commands.forEach(function (command) {
 					var translated = command.text;
@@ -447,7 +445,7 @@ L.Control.TopToolbar = L.Control.extend({
 			}
 
 			if (this.map.getDocType() === 'text') {
-				styles = commandValues.ParagraphStyles.slice(7, 19);
+				styles = commandValues.ParagraphStyles.slice(7);
 				topStyles = commandValues.ParagraphStyles.slice(0, 7);
 			}
 			else if (this.map.getDocType() === 'spreadsheet') {
