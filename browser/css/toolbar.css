@@ -121,6 +121,12 @@ w2ui-toolbar {
 	box-sizing: border-box;
 }
 
+.w2ui-toolbar .w2ui-break {
+	height: 18px;
+	background-image: none;
+	background-color: #f1f1f1;
+}
+
 /* For MS Edge 40, the select2 combo boxes need to have higher z-index than #map
  * Ideal would be to add the class to select2-container <span>, but
  * https://github.com/select2/select2/issues/285
