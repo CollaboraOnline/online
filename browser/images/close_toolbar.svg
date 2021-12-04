@@ -1,1 +1,14 @@
-<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#5f5f5f" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m4 20 16-16"/><path d="m20 20-16-16"/></g></svg>
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="background"
+	 class="icn icn--text-color"
+     fill="none"
+     stroke="#696969"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     stroke-width="2"
+     >
+      <path d="M 5,19 19,5" />
+      <path d="M 19,19 5,5" />
+  </g>
+</svg>

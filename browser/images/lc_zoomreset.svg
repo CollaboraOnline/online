@@ -1,19 +1,22 @@
 <?xml-stylesheet type="text/css" href="icons.css" ?>
 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <g id="background"
-     class="icn icn--area-color"
-     fill="#fafafa"
-     stroke="#3a3a38"
+	 class="icn icn--text-color"
+     fill="none"
+     stroke="#696969"
      stroke-linecap="round"
      stroke-linejoin="round"
+     stroke-width="2"
      >
-      <path d="M 17.5,10 A 7.5,7.5 0 0 1 10,17.5 7.5,7.5 0 0 1 2.5,10 7.5,7.5 0 0 1 10,2.5 7.5,7.5 0 0 1 17.5,10 Z" />
-      <path d="M 21,21.5 21.5,21 16,15.5 15.5,16 Z" />  
+      <path d="m 17,10 a 7,7 0 0 1 -7,7 7,7 0 0 1 -7,-7 7,7 0 0 1 7,-7 7,7 0 0 1 7,7 z" />
+      <path d="M 20,20 16,16" />
   </g>
-  <g id="symbol"
-	 class="icn icn--highlight-color"  
-     fill="#1e8bcd" 
-      >
-      <path d="m 8,13 h 2 L 10,7.5 8.8,8.6 C 8.7,8.7 8.7,8.7 8.6,8.7 8.5,8.7 8.4,8.5 8.4,8.5 L 8,8 10,6 h 1 v 7 h 1.3 v 1 H 8 Z" />
+  <g
+     id="symbol"
+     class="icn icn--highlight-color"
+     fill="#1e8bcd">
+    <path
+       d="m 8,13 h 2 V 7.5 L 8.8,8.6 C 8.7,8.7 8.7,8.7 8.6,8.7 8.5,8.7 8.4,8.5 8.4,8.5 L 8,8 10,6 h 1 v 7 h 1.3 v 1 H 8 Z"
+       id="path7" />
   </g>
 </svg>

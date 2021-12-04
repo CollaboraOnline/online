@@ -68,6 +68,14 @@
 	border-top: 1px solid #bbbbbb;
 }
 
+#tb_actionbar_item_prev .w2ui-icon.prev {
+	background: url('images/lc_prevrecord.svg') no-repeat center/24px !important;
+}
+
+#tb_actionbar_item_next .w2ui-icon.next {
+	background: url('images/lc_nextrecord.svg') no-repeat center/24px !important;
+}
+
 w2ui-toolbar {
 	position: absolute;
 	right: 10px;
