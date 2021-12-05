@@ -1998,18 +1998,21 @@ std::size_t DocumentBroker::removeSession(const std::string& id)
         }
         std::shared_ptr<ClientSession> session = it->second;
 
-        const bool isLastSession = (_sessions.size() == 1);
+        const std::size_t activeSessionCount = countActiveSessions();
+        const bool isLastSession = (activeSessionCount == 1);
 
         const bool lastEditableSession = (!session->isReadOnly() || session->isAllowChangeComments()) && !haveAnotherEditableSession(id);
         static const bool dontSaveIfUnmodified = !COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
 
-        LOG_INF("Removing session ["
-                << id << "] on docKey [" << _docKey << "]. Have " << _sessions.size()
-                << " sessions. IsReadOnly: " << session->isReadOnly()
-                << ", IsViewLoaded: " << session->isViewLoaded() << ", IsWaitDisconnected: "
-                << session->inWaitDisconnected() << ", MarkToDestroy: " << _docState.isMarkedToDestroy()
-                << ", LastEditableSession: " << lastEditableSession << ", DontSaveIfUnmodified: "
-                << dontSaveIfUnmodified << ", IsPossiblyModified: " << isPossiblyModified());
+        LOG_INF("Removing session [" << id << "] on docKey [" << _docKey << "]. Have "
+                                     << _sessions.size() << " sessions (" << activeSessionCount
+                                     << " active). IsReadOnly: " << session->isReadOnly()
+                                     << ", IsViewLoaded: " << session->isViewLoaded()
+                                     << ", IsWaitDisconnected: " << session->inWaitDisconnected()
+                                     << ", MarkToDestroy: " << _docState.isMarkedToDestroy()
+                                     << ", LastEditableSession: " << lastEditableSession
+                                     << ", DontSaveIfUnmodified: " << dontSaveIfUnmodified
+                                     << ", IsPossiblyModified: " << isPossiblyModified());
 
         // In theory, we almost could do this here:
 
@@ -2756,6 +2759,22 @@ bool DocumentBroker::haveAnotherEditableSession(const std::string& id) const
 
     // None found.
     return false;
+}
+
+std::size_t DocumentBroker::countActiveSessions() const
+{
+    assertCorrectThread();
+
+    std::size_t count = 0;
+    for (const auto& it : _sessions)
+    {
+        if (it.second->isViewLoaded() && !it.second->inWaitDisconnected())
+        {
+            ++count;
+        }
+    }
+
+    return count;
 }
 
 void DocumentBroker::setModified(const bool value)
