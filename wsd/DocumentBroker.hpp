@@ -571,6 +571,10 @@ private:
     /// every editable session disconnect, lest we lose data due to racing.
     bool haveAnotherEditableSession(const std::string& id) const;
 
+    /// Returns the number of active sessions.
+    /// This includes only those that are loaded and not waiting disconnection.
+    std::size_t countActiveSessions() const;
+
     /// Loads a new session and adds to the sessions container.
     size_t addSessionInternal(const std::shared_ptr<ClientSession>& session);
 
