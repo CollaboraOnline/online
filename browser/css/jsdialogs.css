@@ -726,10 +726,16 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	width: 15px;
 	height: 23px;
 	display: inline-block;
+	border-left: 1px solid transparent;
 }
 
 .arrowbackground:hover {
-	border: 1px solid lightgrey;
+	border-left-color: var(--gray-color);
+	background-color: #eee;
+}
+
+.arrowbackground:hover .unoarrow {
+	border-top-color: #333;
 }
 
 /* menu button */
