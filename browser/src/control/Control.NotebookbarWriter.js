@@ -246,7 +246,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'type': 'toolbox',
 							'children': [
 								{
-									'id': 'latest-updates',
+									'id': 'latestupdates',
 									'type': 'bigtoolitem',
 									'text': _('Latest Updates'),
 									'command': '.uno:LatestUpdates'
