@@ -192,6 +192,7 @@ function vereignLoadIdentity(selectedIdentityKey, pincode) {
 
 function vereignPinCodeDialog(selectedIdentityKey) {
 	vex.dialog.open({
+		contentClassName: 'vex-has-inputs',
 		message: _('Please enter the PIN Code'),
 		input: '<input name="pincode" type="password" value="" required />',
 		callback: function(data) {
@@ -293,6 +294,7 @@ function vereignRecoverFromEmailDialog() {
 		return;
 	}
 	vex.dialog.open({
+		contentClassName: 'vex-has-inputs',
 		message: _('Login from email or mobile number'),
 		input: '<input name="emailOrMobileNumber" type="text" value="" required />',
 		callback: function(data) {
@@ -326,6 +328,7 @@ function vereignSignAndUploadDocument() {
 		return;
 	}
 	vex.dialog.open({
+		contentClassName: 'vex-has-inputs',
 		message: _('Select document type to upload'),
 		input: _('Type:') + '<select name="selection"><option value="ODT">ODT</option><option value="DOCX">DOCX</option><option value="PDF">PDF</option></select>',
 		callback: function(data) {

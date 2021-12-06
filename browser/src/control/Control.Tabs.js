@@ -317,6 +317,7 @@ L.Control.Tabs = L.Control.extend({
 		var map = this._map;
 		var nPos = this._tabForContextMenu;
 		vex.dialog.open({
+			contentClassName: 'vex-has-inputs',
 			message: _('Enter new sheet name'),
 			buttons: [
 				$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),

@@ -289,7 +289,14 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	border: none;
 	box-shadow: none;
 	border-radius: none;
+	display: flex;
 }
+.vex.vex-theme-plain .vex-content:not(.vex-has-inputs) .vex-dialog-form {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
 .vex.vex-theme-plain {
 	padding: 0px !important;
 }
@@ -341,6 +348,22 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 
 .vex-welcome-mobile .vex-dialog-button-primary {
 	width: 100%;
+}
+/* Vex: Document document conflict */
+.vex.vex-theme-plain .vex-dialog-button-spacer {
+	min-height: 24px !important;
+}
+
+.vex-content.vex-3btns .vex-dialog-buttons {
+	flex-direction: column !important;
+}
+
+.vex-close {
+	display: none;
+}
+
+.vex-content.vex-3btns .vex-dialog-buttons .vex-dialog-button-cancel {
+	display: flex !important;
 }
 
 /* Related to toolbar.css */
