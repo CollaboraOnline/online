@@ -98,6 +98,10 @@
 	font-size: 1.1em;
 }
 
+.vex-content.vex-3btns .vex-dialog-buttons .vex-dialog-button-cancel {
+	display: none;
+}
+
 .vex.vex-theme-plain .vex-content{
 	border: 1px solid #a4a4a4;
 	box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);

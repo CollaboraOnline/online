@@ -840,13 +840,32 @@ app.definitions.Socket = L.Class.extend({
 				];
 
 				if (!that._map['wopi'].UserCanNotWriteRelative) {
-					dialogButtons.push($.extend({}, vex.dialog.buttons.YES, {
-						text: _('Save to new file'),
-						className: 'vex-dialog-button-primary',
-						click: function() {
-							this.value = 'saveas';
-							this.close();
-						}}));
+					dialogButtons.push(
+						$.extend({}, vex.dialog.buttons.YES, {
+							text: _('Save to new file'),
+							className: 'vex-dialog-button-primary',
+							click: function() {
+								this.value = 'saveas';
+								this.close();
+							}}),
+						$.extend({}, vex.dialog.buttons.YES, {
+							text: _('Cancel'),
+							className: 'vex-dialog-button-secondary vex-dialog-button-cancel',
+							click: function() {
+								this.value = 'cancel';
+								this.close();
+							}})
+					);
+				} else {
+					dialogButtons.push(
+						$.extend({}, vex.dialog.buttons.YES, {
+							text: _('Cancel'),
+							className: 'vex-dialog-button-primary vex-dialog-button-cancel',
+							click: function() {
+								this.value = 'cancel';
+								this.close();
+							}})
+					);
 				}
 
 				vex.dialog.open({
@@ -965,6 +984,7 @@ app.definitions.Socket = L.Class.extend({
 			if (passwordNeeded) {
 				// Ask the user for password
 				vex.dialog.open({
+					contentClassName: 'vex-has-inputs',
 					message: msg,
 					input: '<input name="password" type="password" required />',
 					buttons: [
