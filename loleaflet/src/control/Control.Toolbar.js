@@ -1179,7 +1179,10 @@ function updateVisibilityForToolbar(toolbar, context) {
 			else
 				toHide.push(item.id);
 		} else if (!context && item.context) {
-			toHide.push(item.id);
+			if (item.context.indexOf('default') >= 0)
+				toShow.push(item.id);
+			else
+				toHide.push(item.id);
 		}
 	});
 
