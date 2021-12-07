@@ -385,9 +385,12 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	padding: 0px !important;
 	border-top: 1px solid #bbbbbb !important;
 }
+#toolbar-search {
+	height: 40px !important;
+}
 #tb_actionbar_item_fullscreen{display: none;}
 #toolbar-down {
-	height: 35px !important;
+	height: 40px !important;
 	border-top: 1px solid var(--gray-color) !important;
 }
 #toolbar-down > .w2ui-scroll-wrapper {

@@ -903,7 +903,7 @@ button.leaflet-control-search-next
 .w2ui-icon.fullscreen-presentation{ background: url('images/lc_fullscreen-presentation-toolbar-mobile.svg') no-repeat center !important;}
 .w2ui-icon.mobile_comment_wizard{ background: url('images/lc_mobile_comment_wizard.svg') no-repeat center !important; }
 .w2ui-icon.insertion_mobile_wizard{ background: url('images/lc_insertion_mobile_wizard.svg') no-repeat center !important; }
-.w2ui-icon.viewcomments{ background: url('images/lc_viewcomment.svg') no-repeat center !important; }
+.w2ui-icon.viewcomments{ background: url('images/lc_mobile_comment_wizard.svg') no-repeat center !important; }
 .w2ui-icon.insertcomment{ background: url('images/lc_insertcomment.svg') no-repeat center !important; }
 .w2ui-icon.freezepanes{ background: url('images/lc_freezepanes.svg') no-repeat center !important; }
 .w2ui-icon.freezepanescolumn{ background: url('images/lc_freezepanescolumn.svg') no-repeat center !important; }
