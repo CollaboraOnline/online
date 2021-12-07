@@ -490,6 +490,12 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         sendError(404, request, socket, "404 - file not found!",
                   "There seems to be a problem locating");
     }
+    catch (Poco::SyntaxException& exc)
+    {
+        LOG_ERR("Incorrect config value: " << exc.displayText());
+        sendError(500, request, socket, "500 - Internal Server Error!",
+                  "Cannot process the request");
+    }
 }
 
 void FileServerRequestHandler::sendError(int errorCode, const Poco::Net::HTTPRequest& request,
@@ -717,9 +723,8 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     Poco::replaceInPlace(preprocess, std::string("%SERVICE_ROOT%"), responseRoot);
 
     const auto& config = Application::instance().config();
-    std::string protocolDebug = "false";
-    if (config.getBool("logging.protocol"))
-        protocolDebug = "true";
+
+    std::string protocolDebug = stringifyBoolFromConfig(config, "logging.protocol", false);
     Poco::replaceInPlace(preprocess, std::string("%PROTOCOL_DEBUG%"), protocolDebug);
 
     static const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/loleaflet/" LOOLWSD_VERSION_HASH "/%s.css\">");
@@ -743,29 +748,27 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
 
     // Customization related to document signing.
     std::string documentSigningDiv;
+    std::string escapedDocumentSigningURL;
     const std::string documentSigningURL = config.getString("per_document.document_signing_url", "");
     if (!documentSigningURL.empty())
     {
         documentSigningDiv = "<div id=\"document-signing-bar\"></div>";
+        Poco::URI::encode(documentSigningURL, "'", escapedDocumentSigningURL);
     }
     Poco::replaceInPlace(preprocess, std::string("<!--%DOCUMENT_SIGNING_DIV%-->"), documentSigningDiv);
-    Poco::replaceInPlace(preprocess, std::string("%DOCUMENT_SIGNING_URL%"), documentSigningURL);
+    Poco::replaceInPlace(preprocess, std::string("%DOCUMENT_SIGNING_URL%"), escapedDocumentSigningURL);
 
-    const auto loleafletLogging = config.getString("loleaflet_logging", "false");
+    std::string loleafletLogging = stringifyBoolFromConfig(config, "loleaflet_logging", false);
     Poco::replaceInPlace(preprocess, std::string("%LOLEAFLET_LOGGING%"), loleafletLogging);
-    const std::string outOfFocusTimeoutSecs= config.getString("per_view.out_of_focus_timeout_secs", "60");
-    Poco::replaceInPlace(preprocess, std::string("%OUT_OF_FOCUS_TIMEOUT_SECS%"), outOfFocusTimeoutSecs);
-    const std::string idleTimeoutSecs= config.getString("per_view.idle_timeout_secs", "900");
-    Poco::replaceInPlace(preprocess, std::string("%IDLE_TIMEOUT_SECS%"), idleTimeoutSecs);
+    const unsigned int outOfFocusTimeoutSecs = config.getUInt("per_view.out_of_focus_timeout_secs", 60);
+    Poco::replaceInPlace(preprocess, std::string("%OUT_OF_FOCUS_TIMEOUT_SECS%"), std::to_string(outOfFocusTimeoutSecs));
+    const unsigned int idleTimeoutSecs= config.getUInt("per_view.idle_timeout_secs", 900);
+    Poco::replaceInPlace(preprocess, std::string("%IDLE_TIMEOUT_SECS%"), std::to_string(idleTimeoutSecs));
 
-    std::string enableWelcomeMessage = "false";
-    if (config.getBool("welcome.enable", false))
-        enableWelcomeMessage = "true";
+    std::string enableWelcomeMessage = stringifyBoolFromConfig(config, "welcome.enable", false);
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG%"), enableWelcomeMessage);
 
-    std::string enableWelcomeMessageButton = "false";
-    if (config.getBool("welcome.enable_button", false))
-        enableWelcomeMessageButton = "true";
+    std::string enableWelcomeMessageButton = stringifyBoolFromConfig(config, "welcome.enable_button", false);
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_WELCOME_MSG_BTN%"), enableWelcomeMessageButton);
 
     // Capture cookies so we can optionally reuse them for the storage requests.
@@ -774,7 +777,12 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         request.getCookies(cookies);
         std::ostringstream cookieTokens;
         for (auto it = cookies.begin(); it != cookies.end(); it++)
-            cookieTokens << (*it).first << '=' << (*it).second << (std::next(it) != cookies.end() ? ":" : "");
+        {
+            std::string escapedName, escapedValue;
+            Poco::URI::encode((*it).first, "'", escapedName);
+            Poco::URI::encode((*it).second, "'", escapedValue);
+            cookieTokens << escapedName << '=' << escapedValue << (std::next(it) != cookies.end() ? ":" : "");
+        }
 
         const std::string cookiesString = cookieTokens.str();
         if (!cookiesString.empty())
@@ -827,7 +835,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         //(it's deprecated anyway and CSP works in all major browsers)
         cspOss << "img-src 'self' data: " << frameAncestors << "; "
                 << "frame-ancestors " << frameAncestors;
-        Poco::replaceInPlace(preprocess, std::string("%FRAME_ANCESTORS%"), frameAncestors);
+        std::string escapedFrameAncestors;
+        Poco::URI::encode(frameAncestors, "'", escapedFrameAncestors);
+        Poco::replaceInPlace(preprocess, std::string("%FRAME_ANCESTORS%"), escapedFrameAncestors);
     }
     else
     {
@@ -973,6 +983,17 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     response.write(oss);
     oss << adminFile;
     socket->send(oss.str());
+}
+
+std::string FileServerRequestHandler::stringifyBoolFromConfig(
+                                                const Poco::Util::LayeredConfiguration& config,
+                                                std::string propertyName,
+                                                bool defaultValue)
+{
+    std::string value = "false";
+    if (config.getBool(propertyName, defaultValue))
+        value = "true";
+    return value;
 }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

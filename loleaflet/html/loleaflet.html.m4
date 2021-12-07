@@ -183,7 +183,7 @@ m4_ifelse(MOBILEAPP,[true],
 
     <!--%DOCUMENT_SIGNING_DIV%-->
     <script>
-      window.documentSigningURL = '%DOCUMENT_SIGNING_URL%';
+      window.documentSigningURL = decodeURIComponent('%DOCUMENT_SIGNING_URL%');
     </script>
 
     <input id="insertgraphic" type="file" accept="image/*" style="position: fixed; top: -100em">
@@ -272,9 +272,9 @@ m4_ifelse(MOBILEAPP,[true],
       window.enableWelcomeMessageButton = %ENABLE_WELCOME_MSG_BTN%;
       window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
-      window.reuseCookies = '%REUSE_COOKIES%';
+      window.reuseCookies = decodeURIComponent('%REUSE_COOKIES%');
       window.protocolDebug = %PROTOCOL_DEBUG%;
-      window.frameAncestors = '%FRAME_ANCESTORS%';
+      window.frameAncestors = decodeURIComponent('%FRAME_ANCESTORS%');
       window.socketProxy = %SOCKET_PROXY%;
       window.tileSize = 256;])
 m4_syscmd([cat ]GLOBAL_JS)m4_dnl

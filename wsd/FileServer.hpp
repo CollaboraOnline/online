@@ -13,6 +13,7 @@
 #include "Socket.hpp"
 
 #include <Poco/MemoryStream.h>
+#include <Poco/Util/LayeredConfiguration.h>
 
 class RequestDetails;
 /// Handles file requests over HTTP(S).
@@ -27,6 +28,10 @@ class FileServerRequestHandler
     static void preprocessAdminFile(const Poco::Net::HTTPRequest& request,
                                     const RequestDetails &requestDetails,
                                     const std::shared_ptr<StreamSocket>& socket);
+
+    static std::string stringifyBoolFromConfig(const Poco::Util::LayeredConfiguration& config,
+                                               std::string propertyName,
+                                               bool defaultValue);
 public:
     /// Evaluate if the cookie exists, and if not, ask for the credentials.
     static bool isAdminLoggedIn(const Poco::Net::HTTPRequest& request, Poco::Net::HTTPResponse& response);
