@@ -2599,11 +2599,14 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     {
         rememberEventsForInactiveUser(type, payload);
 
-        // Pass save notifications through.
+        // Pass save and ModifiedStatus notifications through, block others.
         if (type != LOK_CALLBACK_UNO_COMMAND_RESULT || payload.find(".uno:Save") == std::string::npos)
         {
-            LOG_TRC("Skipping callback [" << typeName << "] on inactive session " << getName());
-            return;
+            if (payload.find(".uno:ModifiedStatus") == std::string::npos)
+            {
+                LOG_TRC("Skipping callback [" << typeName << "] on inactive session " << getName());
+                return;
+            }
         }
     }
 
