@@ -134,9 +134,12 @@ L.Map.include({
 		vex.dialog.prompt({
 			message: _('Enter a file name'),
 			placeholder: _('filename'),
+			value: fileName.substring(0, fileName.lastIndexOf('.')) + '.' + saveAsFormat,
 			callback: function (value) {
 				if (!value) return;
-				that.saveAs(value + '.' + saveAsFormat, saveAsFormat);
+				if (value.substring(value.lastIndexOf('.') + 1) !== saveAsFormat)
+					value = value + '.' + saveAsFormat;
+				that.saveAs(value, saveAsFormat);
 			}
 		});
 	},
