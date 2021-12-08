@@ -147,6 +147,8 @@ L.Control.Ruler = L.Control.extend({
 
 	_initLayout: function() {
 		this._rWrapper = L.DomUtil.create('div', 'cool-ruler leaflet-bar leaflet-control leaflet-control-custom');
+		this._rWrapper.style.visibility = 'hidden';
+
 		// We start it hidden rather than not initialzing at all.
 		// It is due to rulerupdate command that comes from LOK.
 		// If we delay its initialization, we can't calculate its margins and have to wait for another rulerupdate message to arrive.
@@ -209,6 +211,8 @@ L.Control.Ruler = L.Control.extend({
 		// this.options.unit = obj['unit'].trim();
 
 		this._updateBreakPoints();
+
+		this._rWrapper.style.visibility = '';
 	},
 
 	_updateParagraphIndentations: function() {
