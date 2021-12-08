@@ -3292,6 +3292,21 @@ private:
                     // we want it enabled (i.e. we shouldn't set the option if we don't want it).
                     options = ",FullSheetPreview=trueFULLSHEETPREVEND";
                 }
+                const std::string pdfVer = (form.has("PDFVer") ? form.get("PDFVer") : "");
+                if (!pdfVer.empty())
+                {
+                    if (strcasecmp(pdfVer.c_str(), "PDF/A-1b") && strcasecmp(pdfVer.c_str(), "PDF/A-2b") && strcasecmp(pdfVer.c_str(), "PDF/A-3b")
+                        && strcasecmp(pdfVer.c_str(), "PDF-1.5") && strcasecmp(pdfVer.c_str(), "PDF-1.6"))
+                    {
+                        LOG_ERR("Wrong PDF type: " << pdfVer << ". Conversion aborted.");
+                        http::Response httpResponse(http::StatusLine(400));
+                        httpResponse.set("Content-Length", "0");
+                        socket->sendAndShutdown(httpResponse);
+                        socket->ignoreInput();
+                        return;
+                    }
+                   options += ",PDFVer=" + pdfVer + "PDFVEREND";
+                }
 
                 // This lock could become a bottleneck.
                 // In that case, we can use a pool and index by publicPath.
