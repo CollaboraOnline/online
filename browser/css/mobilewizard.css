@@ -1017,9 +1017,8 @@ input[type='checkbox'][disabled] {
 	width: 30% !important;
 }
 
-.mobile-wizard.ui-drawing-area {
+.mobile-wizard .ui-drawing-area-container:not(:only-of-type) .ui-drawing-area {
 	margin: 10px 5% !important;
-	width: 90%;
 }
 
 #TableEditPanel + .ui-content #misc_label.mobile-wizard {
