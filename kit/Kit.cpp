@@ -2391,6 +2391,50 @@ void wakeCallback(void* pData)
 
 #ifndef BUILDING_TESTS
 
+namespace
+{
+#if !MOBILEAPP
+void copyCertificateDatabaseToTmp(Poco::Path const& jailPath)
+{
+    std::string aCertificatePathString = config::getString("certificates.database_path", "");
+    if (!aCertificatePathString.empty())
+    {
+        auto aFileStat = FileUtil::Stat(aCertificatePathString);
+
+        if (!aFileStat.exists() || !aFileStat.isDirectory())
+        {
+            LOG_WRN("Certificate database wasn't copied into the jail as path '" << aCertificatePathString << "' doesn't exist");
+            return;
+        }
+
+        Poco::Path aCertificatePath(aCertificatePathString);
+
+        Poco::Path aJailedCertDBPath(jailPath, "/tmp/certdb");
+        Poco::File(aJailedCertDBPath).createDirectories();
+
+        bool bCopied = false;
+        for (const char* pFilename : { "cert8.db", "cert9.db", "secmod.db", "key3.db", "key4.db" })
+        {
+            bool bResult = FileUtil::copy(Poco::Path(aCertificatePath, pFilename).toString(),
+                                Poco::Path(aJailedCertDBPath, pFilename).toString(), false, false);
+            bCopied |= bResult;
+        }
+        if (bCopied)
+        {
+            LOG_INF("Certificate database files found in '" << aCertificatePathString << "' and were copied to the jail");
+            ::setenv("LO_CERTIFICATE_DATABASE_PATH", "/tmp/certdb", 1);
+        }
+        else
+        {
+            LOG_WRN("No Certificate database files could be found in path '" << aCertificatePathString << "'");
+        }
+    }
+}
+#endif
+}
+
+
+
 void lokit_main(
 #if !MOBILEAPP
                 const std::string& childRoot,
@@ -2569,6 +2613,8 @@ void lokit_main(
             // Setup the devices inside /tmp and set TMPDIR.
             JailUtil::setupJailDevNodes(Poco::Path(jailPath, "/tmp").toString());
             ::setenv("TMPDIR", "/tmp", 1);
+
+            copyCertificateDatabaseToTmp(jailPath);
 
             // HOME must be writable, so create it in /tmp.
             constexpr const char* HomePathInJail = "/tmp/home";
