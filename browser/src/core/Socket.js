@@ -77,7 +77,7 @@ app.definitions.Socket = L.Class.extend({
 	_emptyQueue: function () {
 		if (window.queueMsg && window.queueMsg.length > 0) {
 			for (var it = 0; it < window.queueMsg.length; it++) {
-				this._onMessage({data: window.queueMsg[it], textMsg: window.queueMsg[it]});
+				this._slurpMessage({data: window.queueMsg[it], textMsg: window.queueMsg[it]});
 			}
 			window.queueMsg = [];
 		}
