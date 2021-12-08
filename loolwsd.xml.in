@@ -148,6 +148,10 @@
       <enable_metrics_unauthenticated desc="When enabled, the /lool/getMetrics endpoint will not require authentication." type="bool" default="false">false</enable_metrics_unauthenticated>
     </security>
 
+    <certificates>
+      <database_path type="string" desc="Path to the NSS certificates that are used for signing documents" default=""></database_path>
+    </certificates>
+
     <watermark>
       <opacity desc="Opacity of on-screen watermark from 0.0 to 1.0" type="double" default="0.2"></opacity>
       <text desc="Watermark text to be displayed on the document if entered" type="string"></text>

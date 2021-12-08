@@ -1009,6 +1009,7 @@ void LOOLWSD::initialize(Application& self)
             { "security.seccomp", "true" },
             { "security.jwt_expiry_secs", "1800" },
             { "security.enable_metrics_unauthenticated", "false" },
+            { "certificates.database_path", "" },
             { "server_name", "" },
             { "ssl.ca_file_path", LOOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
             { "ssl.cert_file_path", LOOLWSD_CONFIGDIR "/cert.pem" },
