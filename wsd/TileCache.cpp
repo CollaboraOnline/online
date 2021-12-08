@@ -351,14 +351,10 @@ std::pair<int, Util::Rectangle> TileCache::parseInvalidateMsg(const std::string&
         int height = 0;
         if (tokens.size() == 6 &&
             getTokenInteger(tokens[1], "part", part) &&
-            getTokenInteger(tokens[2], "x", x) &&
-            x >= 0 &&
-            getTokenInteger(tokens[3], "y", y) &&
-            y >= 0 &&
-            getTokenInteger(tokens[4], "width", width) &&
-            width >= 0 &&
-            getTokenInteger(tokens[5], "height", height) &&
-            height >= 0)
+            getNonNegTokenInteger(tokens[2], "x", x) &&
+            getNonNegTokenInteger(tokens[3], "y", y) &&
+            getNonNegTokenInteger(tokens[4], "width", width) &&
+            getNonNegTokenInteger(tokens[5], "height", height))
         {
             return std::pair<int, Util::Rectangle>(part, Util::Rectangle(x, y, width, height));
         }

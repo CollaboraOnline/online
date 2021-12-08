@@ -101,6 +101,13 @@ namespace COOLProtocol
         return false;
     }
 
+    /// Extracts a name and value from token. Returns true if value is a non-negative integer.
+    template <std::size_t N>
+    inline bool getNonNegTokenInteger(const std::string& token, const char (&name)[N], int& value)
+    {
+        return getTokenInteger(token, name, value) && value >= 0;
+    }
+
     inline bool getTokenString(const StringVector& tokens,
                                const std::string& name,
                                std::string& value)
