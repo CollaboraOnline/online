@@ -2339,6 +2339,7 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVe
 
     // if the url is a 'wopi:///something/blah.odt', then save to a temporary
     Poco::URI wopiURL(url);
+    bool encodeURL = false;
     if (wopiURL.getScheme() == "wopi")
     {
         std::vector<std::string> pathSegments;
@@ -2360,6 +2361,9 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVe
         const std::string tmpDir = FileUtil::createRandomDir(jailDoc);
         const Poco::Path filenameParam(pathSegments[pathSegments.size() - 1]);
         url = std::string("file://") + jailDoc + tmpDir + '/' + filenameParam.getFileName();
+        // url becomes decoded at this stage
+        // on saveAs we should send encoded!
+        encodeURL = true;
         wopiFilename = wopiURL.getPath();
     }
 
@@ -2391,8 +2395,14 @@ bool ChildSession::saveAs(const char* /*buffer*/, int /*length*/, const StringVe
 
     getLOKitDocument()->setView(_viewId);
 
-    std::string encodedURL, encodedWopiFilename;
-    Poco::URI::encode(url, "", encodedURL);
+    std::string encodedURL;
+    if (encodeURL)
+        Poco::URI::encode(url, "", encodedURL);
+    else
+        // url is already encoded
+        encodedURL = url;
+
+    std::string encodedWopiFilename;
     Poco::URI::encode(wopiFilename, "", encodedWopiFilename);
 
     success = getLOKitDocument()->saveAs(encodedURL.c_str(),
