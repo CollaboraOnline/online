@@ -843,7 +843,7 @@ L.Clipboard = L.Class.extend({
 			msg = _('<p>Please use the copy/paste buttons on your on-screen keyboard.</p>');
 		} else {
 			msg = _('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:</p><table class="warn-copy-paste"><tr><td><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd></td></tr><tr><td>Copy</td><td>Cut</td><td>Paste</td></tr></table>');
-			msg = L.Util.replaceCtrlInMac(msg);
+			msg = L.Util.replaceCtrlAltInMac(msg);
 		}
 		vex.dialog.alert({
 			unsafeMessage: msg,
