@@ -499,34 +499,16 @@ L.Map.include({
 					}
 				}
 
-				// Substitute %productName in Online Help
+				// Substitute %productName in Online Help and replace special Mac key names
 				if (id === 'online-help') {
 					var productNameContent = $vexContent.find('span.productname');
 					for (i = 0, max = productNameContent.length; i < max; i++) {
 						productNameContent[i].innerHTML = productNameContent[i].innerHTML.replace(/%productName/g, productName);
 					}
+					document.getElementById('online-help').innerHTML = L.Util.replaceCtrlAltInMac(document.getElementById('online-help').innerHTML);
 				}
-
-				// Special Mac key names
-				if (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1) {
-					var ctrl = /Ctrl/g;
-					var alt = /Alt/g;
-					if (String.locale.startsWith('de') || String.locale.startsWith('dsb') || String.locale.startsWith('hsb')) {
-						ctrl = /Strg/g;
-					}
-					if (String.locale.startsWith('lt')) {
-						ctrl = /Vald/g;
-					}
-					if (String.locale.startsWith('sl')) {
-						ctrl = /Krmilka/gi;
-						alt = /Izmenjalka/gi;
-					}
-					if (id === 'keyboard-shortcuts') {
-						document.getElementById('keyboard-shortcuts').innerHTML = document.getElementById('keyboard-shortcuts').innerHTML.replace(ctrl, '⌘').replace(alt, '⌥');
-					}
-					if (id === 'online-help') {
-						document.getElementById('online-help').innerHTML = document.getElementById('online-help').innerHTML.replace(ctrl, '⌘').replace(alt, '⌥');
-					}
+				if (id === 'keyboard-shortcuts') {
+					document.getElementById('keyboard-shortcuts').innerHTML = L.Util.replaceCtrlAltInMac(document.getElementById('keyboard-shortcuts').innerHTML);
 				}
 
 				$vexContent.attr('tabindex', -1);

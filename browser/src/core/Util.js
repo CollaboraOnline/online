@@ -191,9 +191,10 @@ L.Util = {
 		return Math.floor(metrics.width);
 	},
 
-	replaceCtrlInMac: function(msg) {
+	replaceCtrlAltInMac: function(msg) {
 		if (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1) {
 			var ctrl = /Ctrl/g;
+			var alt = /Alt/g;
 			if (String.locale.startsWith('de') || String.locale.startsWith('dsb') || String.locale.startsWith('hsb')) {
 				ctrl = /Strg/g;
 			}
@@ -201,9 +202,10 @@ L.Util = {
 				ctrl = /Vald/g;
 			}
 			if (String.locale.startsWith('sl')) {
-				ctrl = /Krmilka/g;
+				ctrl = /Krmilka/gi;
+				alt = /Izmenjalka/gi;
 			}
-			return msg.replace(ctrl, '⌘');
+			return msg.replace(ctrl, '⌘').replace(alt, '⌥');
 		}
 		return msg;
 	}
