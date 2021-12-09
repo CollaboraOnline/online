@@ -93,6 +93,7 @@ L.Control.JSDialog = L.Control.extend({
 		var callback = e.callback;
 		var isSnackbar = data.type === 'snackbar';
 		var isModalPopup = data.type === 'modalpopup' || isSnackbar;
+		var focusWidgetId = data.init_focus_id;
 
 		if (data.action === 'fadeout')
 		{
@@ -253,6 +254,10 @@ L.Control.JSDialog = L.Control.extend({
 			container.style.visibility = '';
 			if (toRemove)
 				L.DomUtil.remove(toRemove);
+			var focusWidget = focusWidgetId ?
+				container.querySelector('[id=\'' + focusWidgetId + '\']') : null;
+			if (focusWidget)
+				focusWidget.focus();
 		}, 200);
 
 		if (isSnackbar) {
