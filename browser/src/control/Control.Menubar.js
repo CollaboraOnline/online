@@ -32,12 +32,18 @@ L.Control.MenubarShortcuts = {
 	},
 
 	addShortcut: function (text, shortcut) {
-		var newText = _(text).replace('~', '') + ' (' + _(shortcut).replace('~', '') + ')';
-
-		// sometimes ''.toLocaleString() doesn't correctly translate the shortcut
-		if (window.lang && window.lang.toLowerCase() === 'de') {
-			newText = newText.replace('Ctrl', 'Strg');
+		// localize shortcut
+		if (String.locale.startsWith('de') || String.locale.startsWith('dsb') || String.locale.startsWith('hsb')) {
+			shortcut = shortcut.replace('Ctrl', 'Strg');
 		}
+		if (String.locale.startsWith('lt')) {
+			shortcut = shortcut.replace('Ctrl', 'Vald');
+		}
+		if (String.locale.startsWith('sl')) {
+			shortcut = shortcut.replace('Ctrl', 'Krmilka').replace('Alt', 'izmenjalka').replace('Shift', 'dvigalka');
+		}
+
+		var newText = _(text).replace('~', '') + ' (' + L.Util.replaceCtrlAltInMac(shortcut) + ')';
 
 		return newText;
 	}
