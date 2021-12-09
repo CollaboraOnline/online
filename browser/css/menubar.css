@@ -16,7 +16,7 @@
 
 #document-header {
 	position: relative;
-	background: #ffffff;
+	background: transparent;
 	margin-right: 5px;
 }
 /*avoid multiple document-headers in readonly mode*/
@@ -116,8 +116,8 @@
 .lo-menu > li > a, .lo-menu > li > a.has-submenu {
 	padding: 8px;
 	z-index: 400;
-	border-left: 1px solid #ffffff;
-	border-right: 1px solid #ffffff;
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
 	border-top: 1px solid transparent;
 }
 
@@ -130,7 +130,7 @@
 	color: #fff;
 }
 .lo-menu > li, .lo-menu > li > .disabled {
-	background: #ffffff; /* top-level menus remain greyish */
+	background: transparent; /* top-level menus remain greyish */
 	border-left-color: transparent;
 }
 .lo-menu > li .disabled {
