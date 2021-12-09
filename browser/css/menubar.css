@@ -16,7 +16,7 @@
 
 #document-header {
 	position: relative;
-	background: #ffffff;
+	background: transparent;
 	margin-right: 5px;
 }
 /*avoid multiple document-headers in readonly mode*/
@@ -63,14 +63,60 @@
 	display: none;
 }
 .main-nav {
-	height: 32px; /* on mouseover menubar items, border emerges */
+	height: 36px; /* on mouseover menubar items, border emerges */
 	width: auto;
 	background: #ffffff;
-	padding: 3px 3px 3px 0;
+	padding: 0;
 	white-space: nowrap;
 	z-index: 12;
 	display: flex;
+	align-items: center;
 }
+
+nav:not(.hasnotebookbar) #main-menu-state:not(:checked) ~ #main-menu {
+	display: flex !important;
+}
+
+nav:not(.hasnotebookbar) #main-menu {
+	width: 100%;
+	height: auto;
+}
+
+nav:not(.hasnotebookbar) #menu-last-mod {
+	opacity: 0.7;
+}
+@media screen and (min-width: 700px) {
+	nav:not(.hasnotebookbar) #menu-last-mod {
+		text-align: right;
+		display: flex;
+		justify-content: end;
+		flex-grow: 1;
+	}
+}
+nav:not(.hasnotebookbar) #menu-last-mod > a, nav:not(.hasnotebookbar) #menu-last-mod > a span {
+	text-decoration: none;
+	color: var(--gray-light-txt--color);
+}
+nav:not(.hasnotebookbar) #menu-last-mod > a:hover, nav:not(.hasnotebookbar) #menu-last-mod > a:hover span {
+	text-decoration: none;
+	background-color: transparent;
+	color: var(--gray-light-txt--color);
+}
+@media screen and (min-width: 1200px) {
+	nav:not(.hasnotebookbar).main-nav #document-titlebar {
+		position: absolute;
+		width: auto;
+		left: 50%;
+		transform: translate(-50%, 0);
+		z-index: 1200;
+	}
+}
+@media screen and (max-width: 1199px) {
+	nav:not(.hasnotebookbar).main-nav #document-titlebar {
+		display: none;
+	}
+}
+
 .main-nav.readonly {
 	position: relative;
 	border-bottom: 1px solid var(--gray-light-bg-color);
@@ -115,8 +161,8 @@
 	padding-right: 15px;
 	padding-top: 8px;
 	z-index: 400;
-	border-left: 1px solid #ffffff;
-	border-right: 1px solid #ffffff;
+	border-left: 1px solid transparent;
+	border-right: 1px solid transparent;
 	border-top: 1px solid transparent;
 }
 
@@ -129,7 +175,7 @@
 	color: #fff;
 }
 .lo-menu > li, .lo-menu > li > .disabled {
-	background: #ffffff; /* top-level menus remain greyish */
+	background: transparent; /* top-level menus remain greyish */
 	border-left-color: transparent;
 }
 .lo-menu > li .disabled {

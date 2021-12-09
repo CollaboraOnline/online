@@ -3,13 +3,13 @@
 
 .notebookbar-tabs-container {
 	display: inline-flex;
+	height: 100%;
 }
 
 .ui-tabs.notebookbar {
 	display: inline-block;
 	z-index: 999;
 	padding: 0px;
-	height: 100%;
 }
 
 .ui-tab.notebookbar {
@@ -19,7 +19,7 @@
 	line-height: normal;
 	color: dimgray;
 	color: var(--gray-light-txt--color);
-	height: 32px;
+	height: 100%;
 	display: flex;
 	align-items: center;
 	padding: 0px 1em;
@@ -100,7 +100,6 @@
 	display: inline-block;
 	position: relative;
 	z-index: 1000;
-	height: 100%;
 	box-sizing: border-box;
 }
 
@@ -187,6 +186,20 @@
 	margin: 0px !important;
 }
 
+@media screen and (min-width: 1760px) {
+	#document-name-input {
+		position: absolute;
+		width: auto;
+		left: 50%;
+		transform: translate(-50%, 0);
+		z-index: 1200;
+	}
+}
+@media screen and (max-width: 1100px) {
+	#document-name-input {
+		display: none;
+	}
+}
 
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar > li > a {
 	cursor: pointer;
