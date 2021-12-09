@@ -478,7 +478,17 @@ L.Map.include({
 				}
 				translatableContent = $vexContent.find('td');
 				for (i = 0, max = translatableContent.length; i < max; i++) {
-					translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+					var orig = translatableContent[i].innerHTML;
+					var trans = translatableContent[i].innerHTML.toLocaleString();
+					// Try harder to get translation of keyboard shortcuts (html2po trims starting <kbd> and ending </kbd>)
+					if (orig === trans && orig.indexOf('kbd') != -1) {
+						var trimmedOrig = orig.replace(/^(<kbd>)/,'').replace(/(<\/kbd>$)/,'');
+						var trimmedTrans = trimmedOrig.toLocaleString();
+						if (trimmedOrig !== trimmedTrans) {
+							trans = '<kbd>' + trimmedTrans + '</kbd>';
+						}
+					}
+					translatableContent[i].innerHTML = trans;
 				}
 				translatableContent = $vexContent.find('p');
 				for (i = 0, max = translatableContent.length; i < max; i++) {
