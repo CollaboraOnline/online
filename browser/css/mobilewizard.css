@@ -1110,6 +1110,15 @@ input[type='checkbox'][disabled] {
 	grid-row: 1;
 }
 
+#mobile-wizard-content.content-has-no-comments {
+	height: calc(100% - 48px);
+	min-height: auto;
+}
+
+#mobile-wizard-content.content-has-no-comments #mobile-wizard-scroll-indicator {
+	display: none;
+}
+
 #mobile-wizard-popup .empty-comment-wizard-container,
 #mobile-wizard .empty-comment-wizard-container {
 	height: 100%;
