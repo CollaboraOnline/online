@@ -329,3 +329,12 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 .sidebar .spinfieldcontainer input {
 	width: calc(100% - 28px);
 }
+
+#NumberFormatPropertyPanel > tr:nth-child(1) > td:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2),
+#NumberFormatPropertyPanel > tr:nth-child(1) > td:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(1) {
+	display: none;
+}
+
+#NumberFormatPropertyPanel > tr:nth-child(1) > td:nth-child(1) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(1) {
+	padding: 0 4px 0 0;
+}
