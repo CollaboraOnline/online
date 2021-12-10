@@ -4172,8 +4172,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_addDropDownMarker: function () {
 		if (this._validatedCellXY && this._cellCursorXY && this._validatedCellXY.equals(this._cellCursorXY)) {
 			var pos = this._cellCursor.getNorthEast();
-			var cellCursorHeightPx = this._twipsToPixels(this._cellCursorTwips.getSize()).y;
-			var dropDownMarker = this._getDropDownMarker(cellCursorHeightPx);
+			var dropDownMarker = this._getDropDownMarker(16);
 			dropDownMarker.setLatLng(pos);
 			this._map.addLayer(dropDownMarker);
 		}
