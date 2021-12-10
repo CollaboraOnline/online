@@ -85,6 +85,23 @@ L.Control.JSDialog = L.Control.extend({
 		// nothing to do here
 	},
 
+	_getDefaultButtonId: function(widgets) {
+		for (var i in widgets) {
+			if (widgets[i].type === 'pushbutton' || widgets[i].type === 'okbutton') {
+				if (widgets[i].has_default === true)
+					return widgets[i].id;
+			}
+
+			if (widgets[i].children) {
+				var found = this._getDefaultButtonId(widgets[i].children);
+				if (found)
+					return found;
+			}
+		}
+
+		return null;
+	},
+
 	onJSDialog: function(e) {
 		var that = this;
 		var posX = 0;
@@ -119,11 +136,27 @@ L.Control.JSDialog = L.Control.extend({
 			toRemove = this.dialogs[data.id].container;
 		}
 
-		container = L.DomUtil.create('div', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', document.body);
+		// it has to be form to handle default button
+		container = L.DomUtil.create('form', 'jsdialog-container ui-dialog ui-widget-content lokdialog_container', document.body);
 		container.id = data.id;
 		container.style.visibility = 'hidden';
 		if (data.collapsed && (data.collapsed === 'true' || data.collapsed === true))
 			L.DomUtil.addClass(container, 'collapsed');
+		// prevent from reloading
+		container.addEventListener('submit', function (event) { event.preventDefault(); });
+
+		var defaultButtonId = this._getDefaultButtonId(data.children);
+
+		// it has to be first button in the form
+		var defaultButton = L.DomUtil.createWithId('button', 'default-button', container);
+		defaultButton.style.display = 'none';
+		defaultButton.onclick = function() {
+			if (defaultButtonId) {
+				var button = container.querySelector('#' + defaultButtonId);
+				if (button)
+					button.click();
+			}
+		};
 
 		if (!isModalPopup) {
 			var titlebar = L.DomUtil.create('div', 'ui-dialog-titlebar ui-corner-all ui-widget-header ui-helper-clearfix', container);
