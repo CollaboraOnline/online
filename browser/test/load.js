@@ -81,6 +81,7 @@ data = data.replace(/%ENABLE_WELCOME_MSG%/g, 'false');
 data = data.replace(/%ENABLE_WELCOME_MSG%/g, 'false');
 data = data.replace(/%ENABLE_WELCOME_MSG_BTN%/g, 'false');
 data = data.replace(/%USER_INTERFACE_MODE%/g, '');
+data = data.replace(/%USE_INTEGRATION_THEME%/g, 'true');
 data = data.replace(/%OUT_OF_FOCUS_TIMEOUT_SECS%/g, '1000000');
 data = data.replace(/%IDLE_TIMEOUT_SECS%/g, '1000000');
 data = data.replace(/%REUSE_COOKIES%/g, 'false');
@@ -90,7 +91,7 @@ data = data.replace(/%SOCKET_PROXY%/g, 'false');
 data = data.replace(/%UI_DEFAULTS%/g, '{}');
 data = data.replace(/%HEXIFY_URL%/g, '""');
 
-window = new JSDOM(data, { 
+window = new JSDOM(data, {
 				runScripts: 'dangerously',
 				verbose: false,
 				pretendToBeVisual: false,

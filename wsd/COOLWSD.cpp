@@ -1141,6 +1141,7 @@ void COOLWSD::innerInitialize(Application& self)
             { "restricted_commands", "" },
 #endif
             { "user_interface.mode", "default" },
+            { "user_interface.use_integration_theme", "true" },
             { "quarantine_files[@enable]", "false" },
             { "quarantine_files.limit_dir_size_mb", "250" },
             { "quarantine_files.max_versions_to_maintain", "2" },
