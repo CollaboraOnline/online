@@ -991,7 +991,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         COOLWSD::getConfigValue<bool>("hexify_embedded_urls", false) ? "true" : "false";
     Poco::replaceInPlace(preprocess, std::string("%HEXIFY_URL%"), hexifyEmbeddedUrls);
 
-    std::string themePreFix = (theme == "nextcloud") ? theme + "/" : "";
+
+    bool useIntegrationTheme = config.getBool("user_interface.use_integration_theme", true);
+    const std::string themePreFix = (theme == "nextcloud") && useIntegrationTheme ? theme + "/" : "";
     const std::string linkCSS("<link rel=\"stylesheet\" href=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix + "%s.css\">");
     const std::string scriptJS("<script src=\"%s/browser/" COOLWSD_VERSION_HASH "/" + themePreFix + "%s.js\"></script>");
 
@@ -1054,6 +1056,9 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     if (isRtlLanguage(requestDetails.getParam("lang")))
         uiRtlSettings = " dir=\"rtl\" ";
     Poco::replaceInPlace(preprocess, std::string("%UI_RTL_SETTINGS%"), uiRtlSettings);
+
+    const std::string useIntegrationThemeString = useIntegrationTheme ? "true" : "false";
+    Poco::replaceInPlace(preprocess, std::string("%USE_INTEGRATION_THEME%"), useIntegrationThemeString);
 
     std::string enableMacrosExecution = stringifyBoolFromConfig(config, "security.enable_macros_execution", false);
     Poco::replaceInPlace(preprocess, std::string("%ENABLE_MACROS_EXECUTION%"), enableMacrosExecution);
