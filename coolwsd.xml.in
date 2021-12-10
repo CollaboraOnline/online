@@ -185,6 +185,7 @@
 
     <user_interface>
       <mode type="string" desc="Controls the user interface style. The 'default' means: Take the value from ui_defaults, or decide for one of classic or notebookbar (default|classic|notebookbar)" default="default">default</mode>
+      <use_integration_theme desc="Use theme from the integrator" type="bool" default="true">true</use_integration_theme>
     </user_interface>
 
     <storage desc="Backend storage">

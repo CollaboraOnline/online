@@ -301,7 +301,8 @@ m4_ifelse(MOBILEAPP,[true],
       window.frameAncestors = '';
       window.socketProxy = false;
       window.tileSize = 256;
-      window.uiDefaults = {};],
+      window.uiDefaults = {};
+      window.useIntegrationTheme = 'false';],
      [window.host = '%HOST%';
       window.serviceRoot = '%SERVICE_ROOT%';
       window.hexifyUrl = %HEXIFY_URL%;
@@ -314,6 +315,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.enableWelcomeMessage = %ENABLE_WELCOME_MSG%;
       window.enableWelcomeMessageButton = %ENABLE_WELCOME_MSG_BTN%;
       window.userInterfaceMode = '%USER_INTERFACE_MODE%';
+      window.useIntegrationTheme = '%USE_INTEGRATION_THEME%';
       window.enableMacrosExecution = '%ENABLE_MACROS_EXECUTION%';
       window.outOfFocusTimeoutSecs = %OUT_OF_FOCUS_TIMEOUT_SECS%;
       window.idleTimeoutSecs = %IDLE_TIMEOUT_SECS%;
@@ -342,7 +344,7 @@ brandingLink.setAttribute("type", "text/css");
 
 var theme_name = document.getElementsByName("theme")[[0]] ? document.getElementsByName("theme")[[0]].value : '';
 var theme_prefix = '';
-if(theme_name.includes("nextcloud")) {
+if(window.useIntegrationTheme === 'true' && theme_name.includes("nextcloud")) {
     theme_prefix = 'nextcloud/';
 }
 
