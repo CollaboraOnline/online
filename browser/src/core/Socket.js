@@ -1714,7 +1714,9 @@ app.definitions.Socket = L.Class.extend({
 		result.finish = function () {
 			if (this.active) {
 				var now = performance.now();
-				that.sendMessage('TRACEEVENT name=' + name + ' ph=X ts=' + Math.round(now * 1000) + ' dur=' + Math.round((now - this.begin) * 1000)
+				that.sendMessage('TRACEEVENT name=' + name +
+						 ' ph=X ts=' + Math.round(this.begin * 1000) +
+						 ' dur=' + Math.round((now - this.begin) * 1000)
 						 + that._stringifyArgs(args));
 				this.active = false;
 			}
