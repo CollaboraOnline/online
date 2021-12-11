@@ -448,7 +448,7 @@ app.definitions.Socket = L.Class.extend({
 			if (e.image.completeTraceEvent)
 				e.image.completeTraceEvent.abort();
 		};
-		e.image.completeTraceEvent = this.createCompleteTraceEvent('cool._extractTextImg');
+		e.image.completeTraceEvent = this.createAsyncTraceEvent('loadTile');
 		e.image.src = img;
 	},
 
@@ -1674,24 +1674,33 @@ app.definitions.Socket = L.Class.extend({
 
 	asyncTraceEventCounter: 0,
 
+	// simulate a threads per live async event to help the chrome renderer
+	asyncTracePseudoThread: 1,
+
 	createAsyncTraceEvent: function (name, args) {
 		if (!this.traceEventRecordingToggle)
 			return null;
 
 		var result = {};
 		result.id = this.asyncTraceEventCounter++;
+		result.tid = this.asyncTracePseudoThread++;
 		result.active = true;
 		result.args = args;
 
 		if (this.traceEventRecordingToggle)
-			this.sendMessage('TRACEEVENT name=' + name + ' ph=S ts=' + Math.round(performance.now() * 1000) + ' id=' + result.id
-					 + this._stringifyArgs(args));
+			this.sendMessage('TRACEEVENT name=' + name +
+					 ' ph=S ts=' + Math.round(performance.now() * 1000) +
+					 ' id=' + result.id + ' tid=' + result.tid +
+					 this._stringifyArgs(args));
 
 		var that = this;
 		result.finish = function () {
+			that.asyncTracePseudoThread--;
 			if (this.active) {
-				that.sendMessage('TRACEEVENT name=' + name + ' ph=F ts=' + Math.round(performance.now() * 1000) + ' id=' + this.id
-						 + that._stringifyArgs(this.args));
+				that.sendMessage('TRACEEVENT name=' + name +
+						 ' ph=F ts=' + Math.round(performance.now() * 1000) +
+						 ' id=' + this.id + ' tid=' + this.tid +
+						 that._stringifyArgs(this.args));
 				this.active = false;
 			}
 		};
