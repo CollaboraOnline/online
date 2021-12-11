@@ -289,7 +289,28 @@ app.definitions.Socket = L.Class.extend({
 									       {'_slurpQueue.length' : String(queueLength)});
 		if (this._map && this._map._docLayer) {
 			this._map._docLayer.pauseDrawing();
+
+			// Queue an instant timeout early to try to measure the
+			// re-rendering delay before we get back to the main-loop.
+			if (this.traceEventRecordingToggle)
+			{
+				var that = this;
+				if (!that._renderEventTimer)
+					that._renderEventTimer = setTimeout(function() {
+						var now = performance.now();
+						var delta = now - that._renderEventTimerStart;
+						if (delta >= 2 /* ms */) // significant
+						{
+							that.sendMessage('TRACEEVENT name=browser-render' +
+									 ' ph=X ts=' + Math.round(that._renderEventTimerStart * 1000) +
+									 ' dur=' + Math.round((now - that._renderEventTimerStart) * 1000));
+							that._renderEventTimerStart = undefined;
+						}
+						that._renderEventTimer = undefined;
+					}, 0);
+			}
 		}
+
 		// console.log2('Slurp events ' + that._slurpQueue.length);
 		var complete = true;
 		try {
@@ -343,6 +364,8 @@ app.definitions.Socket = L.Class.extend({
 			}
 			// Let other layers / overlays catch up.
 			this._map.fire('messagesdone');
+
+			this._renderEventTimerStart = performance.now();
 		}
 	},
 
@@ -1705,6 +1728,7 @@ app.definitions.Socket = L.Class.extend({
 			}
 		};
 		result.abort = function () {
+			that.asyncTracePseudoThread--;
 			this.active = false;
 		};
 		return result;
