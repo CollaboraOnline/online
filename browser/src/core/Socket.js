@@ -285,7 +285,7 @@ app.definitions.Socket = L.Class.extend({
 
 	_emitSlurpedEvents: function() {
 		var queueLength = this._slurpQueue.length;
-		var completeEventWholeFunction = this.createCompleteTraceEvent('cool._emitSlurpedEvents',
+		var completeEventWholeFunction = this.createCompleteTraceEvent('emitSlurped-' + String(queueLength),
 									       {'_slurpQueue.length' : String(queueLength)});
 		if (this._map && this._map._docLayer) {
 			this._map._docLayer.pauseDrawing();
@@ -305,8 +305,7 @@ app.definitions.Socket = L.Class.extend({
 						textMsg = evt.textMsg.replace(/\s+/g, '.');
 					}
 
-					var completeEventOneMessage = this.createCompleteTraceEvent('cool._emitOneSlurpedEvent',
-												    { message: textMsg });
+					var completeEventOneMessage = this.createCompleteTraceEventFromEvent(textMsg);
 					try {
 						// it is - are you ?
 						this._onMessage(evt);
@@ -1725,6 +1724,26 @@ app.definitions.Socket = L.Class.extend({
 			this.active = false;
 		};
 		return result;
+	},
+
+	// something we can grok quickly in the trace viewer
+	createCompleteTraceEventFromEvent: function(textMsg) {
+		if (!this.traceEventRecordingToggle)
+			return null;
+
+		var pretty;
+		if (!textMsg)
+			pretty = 'blob';
+		else {
+			var idx = textMsg.indexOf(':');
+			if (idx > 0)
+				pretty = textMsg.substring(0,idx);
+			else if (textMsg.length < 25)
+				pretty = textMsg;
+			else
+				pretty = textMsg.substring(0, 25);
+		}
+		return this.createCompleteTraceEvent(pretty, { message: textMsg });
 	},
 
 	threadLocalLoggingLevelToggle: false
