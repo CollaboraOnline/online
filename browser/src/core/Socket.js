@@ -1644,6 +1644,22 @@ app.definitions.Socket = L.Class.extend({
 		return command;
 	},
 
+	setTraceEventLogging: function (enabled) {
+		this.traceEventRecordingToggle = enabled;
+		this.sendMessage('traceeventrecording ' + (this.traceEventRecordingToggle ? 'start' : 'stop'));
+
+		// Just as a test, uncomment this to toggle SAL_WARN and
+		// SAL_INFO selection between two states: 1) the default
+		// as directed by the SAL_LOG environment variable, and
+		// 2) all warnings on plus SAL_INFO for sc.
+		//
+		// (Note that coolwsd sets the SAL_LOG environment variable
+		// to "-WARN-INFO", i.e. the default is that nothing is
+		// logged from core.)
+
+		// app.socket.sendMessage('sallogoverride ' + (app.socket.traceEventRecordingToggle ? '+WARN+INFO.sc' : 'default'));
+	},
+
 	traceEventRecordingToggle: false,
 
 	_stringifyArgs: function (args) {
