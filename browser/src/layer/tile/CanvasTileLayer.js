@@ -1689,6 +1689,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			}
 			this._debugInit();
 		}
+		if (app.socket.traceEventRecordingToggle)
+			this._map.addLayer(this._debugTrace);
+		else
+			this._map.removeLayer(this._debugTrace);
 	},
 
 	_onCommandValuesMsg: function (textMsg) {
@@ -4603,6 +4607,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._tilesDevicePixelGrid = new L.LayerGroup();
 			this._debugSidebar = new L.LayerGroup();
 			this._debugTyper = new L.LayerGroup();
+			this._debugTrace = new L.LayerGroup();
 			this._map.addLayer(this._debugInfo);
 			this._map.addLayer(this._debugInfo2);
 			var overlayMaps = {
@@ -4613,6 +4618,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				'Typing': this._debugTyper,
 				'Tiles device pixel grid': this._tilesDevicePixelGrid,
 				'Sidebar Rerendering': this._debugSidebar,
+				'Performance Tracing': this._debugTrace,
 			};
 			L.control.layers({}, overlayMaps, {collapsed: false}).addTo(this._map);
 
@@ -4632,6 +4638,8 @@ L.CanvasTileLayer = L.Layer.extend({
 					this._map._docLayer._painter._sectionContainer.reNewAllSections(true);
 				} else if (e.layer === this._debugSidebar) {
 					this._map._debugSidebar = true;
+				} else if (e.layer === this._debugTrace) {
+					app.socket.setTraceEventLogging(true);
 				}
 			}, this);
 			this._map.on('layerremove', function(e) {
@@ -4650,6 +4658,8 @@ L.CanvasTileLayer = L.Layer.extend({
 					this._map._docLayer._painter._sectionContainer.reNewAllSections(true);
 				} else if (e.layer === this._debugSidebar) {
 					this._map._debugSidebar = false;
+				} else if (e.layer === this._debugTrace) {
+					app.socket.setTraceEventLogging(false);
 				}
 			}, this);
 		}
