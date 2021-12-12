@@ -18,30 +18,40 @@
 	box-sizing: border-box;
 }
 
+.sidebar .spinfieldcontainer input {
+	width: 85px;
+	border: 1px solid var(--gray-color);
+	border-radius: 4px;
+	height: 28px;
+	padding-left: 4px;
+	position: relative;
+	left: 8px;
+}
+
 .sidebar.spinfield {
 	max-width: 104px;
-	border: 1px solid #CCC;
 	padding: 4px 0 4px 4px;
-	border-radius: 3px;
 	height: 28px;
 	box-sizing: border-box;
 	margin-right: 1px;
 }
-.sidebar.spinfield:hover {
-	border: 1px solid var(--gray-color);
+.sidebar .spinfieldcontainer input:hover {
+	border: 1px solid var(--gray-light-txt--color);
 }
 
 .spinfieldunit {
 	font-size: 12px;
 	color: var(--gray-light-txt--color);
 	margin: 5px;
+	position: relative;
+	right: 40px;
 }
 
 .sidebar.ui-listbox {
 	font-size: 13px;
 	height: 28px;
 	box-sizing: border-box;
-	padding: 0 14px 0 4px;
+	padding: 0 0px 0 4px;
 	min-width: auto;
 }
 
@@ -246,12 +256,10 @@ td.jsdialog .jsdialog.cell.sidebar {
 	padding-top: 8px;
 }
 
-.spinfieldcontainer {
-	margin-right: 10px;
-}
-
-#settransparency {
-	margin-right: 5px;
+#settransparency,
+#FillColor {
+	position: relative;
+	left: 23px;
 }
 
 #fillattrhb {
@@ -280,7 +288,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 }
 
 #fillgrad2 {
-	padding-top: 4px;
+	padding: 4px 10px;
 	width: 160px;
 	position: relative;
 	left: -11px;
@@ -290,6 +298,10 @@ td.jsdialog .jsdialog.cell.sidebar {
 #fillgrad2 > span {
 	width: 38px;
 	height: 15px;
+}
+
+#gradangle > .spinfield {
+	width: 70px;
 }
 
 #orientationcontrol,
@@ -326,6 +338,7 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	margin-right: 0;
 }
 
-.sidebar .spinfieldcontainer input {
-	width: calc(100% - 28px);
+#linetransparency {
+	position: relative;
+	left: -20px;
 }
