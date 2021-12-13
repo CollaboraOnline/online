@@ -394,7 +394,7 @@ describe('Top toolbar tests.', function() {
 
 		desktopHelper.actionOnSelector('save', (selector) => { cy.get(selector).click(); });
 
-		helper.beforeAll(testFileName, 'writer', true);
+		helper.reload(testFileName, 'writer', true);
 
 		writerHelper.selectAllTextOfDoc();
 

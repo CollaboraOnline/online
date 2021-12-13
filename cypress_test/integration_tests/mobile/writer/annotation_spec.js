@@ -23,7 +23,7 @@ describe('Annotation tests.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
-		helper.beforeAll(testFileName, 'writer', true);
+		helper.reload(testFileName, 'writer', true);
 
 		mobileHelper.enableEditingMobile();
 

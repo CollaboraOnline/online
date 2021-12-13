@@ -24,7 +24,7 @@ describe('Annotation tests.', function() {
 
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
-		helper.beforeAll(testFileName, 'impress', true);
+		helper.reload(testFileName, 'impress', true);
 
 		mobileHelper.enableEditingMobile();
 

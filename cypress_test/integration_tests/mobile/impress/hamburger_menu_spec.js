@@ -41,7 +41,7 @@ describe('Trigger hamburger menu options.', function() {
 		mobileHelper.selectHamburgerMenuItem(['File', 'Save']);
 
 		// Reopen the document and check content.
-		helper.beforeAll(testFileName, 'impress', true);
+		helper.reload(testFileName, 'impress', true);
 
 		mobileHelper.enableEditingMobile();
 
