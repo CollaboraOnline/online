@@ -3438,7 +3438,9 @@ L.CanvasTileLayer = L.Layer.extend({
 
 			var hasMobileWizardOpened = this._map.uiManager.mobileWizard ? this._map.uiManager.mobileWizard.isOpen() : false;
 			// Don't show the keyboard when the Wizard is visible.
-			if (!window.mobileWizard && !window.pageMobileWizard && !window.insertionMobileWizard && !hasMobileWizardOpened) {
+			if (!window.mobileWizard && !window.pageMobileWizard &&
+				!window.insertionMobileWizard && !hasMobileWizardOpened &&
+				!this._isAnyInputFocused()) {
 				// If the user is editing, show the keyboard, but don't change
 				// anything if nothing is changed.
 
