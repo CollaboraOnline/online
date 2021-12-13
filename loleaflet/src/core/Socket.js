@@ -787,7 +787,7 @@ app.definitions.Socket = L.Class.extend({
 			return;
 		}
 		else if (textMsg.startsWith('error:')
-			&& (command.errorCmd === 'storage' || command.errorCmd === 'saveas')) {
+			&& (command.errorCmd === 'storage' || command.errorCmd === 'saveas' || command.errorCmd === 'downloadas'))  {
 
 			if (command.errorCmd === 'saveas') {
 				this._map.fire('postMessage', {
@@ -812,6 +812,9 @@ app.definitions.Socket = L.Class.extend({
 			}
 			else if (command.errorKind === 'saveunauthorized') {
 				storageError = errorMessages.storage.saveunauthorized;
+			}
+			else if (command.errorKind === 'saveasfailed') {
+				storageError = errorMessages.storage.saveasfailed;
 			}
 			else if (command.errorKind === 'loadfailed') {
 				storageError = errorMessages.storage.loadfailed;
