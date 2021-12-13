@@ -2,6 +2,7 @@
 .vex.vex-theme-plain .vex-dialog-button {
 	font-family: var(--jquery-ui-font);
 	text-transform: full-size-kana;
+	text-decoration: none;
 }
 
 .cool-annotation-edit #annotation-cancel,

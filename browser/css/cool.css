@@ -56,6 +56,10 @@
 	margin: 0;
 }
 
+.no-float {
+	float: none !important;
+}
+
 .leaflet-progress-layer
 {
 	position: absolute;
