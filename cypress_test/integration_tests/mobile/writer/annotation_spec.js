@@ -30,7 +30,7 @@ describe.skip('Annotation tests.', function() {
 			return originalFn(selector, options);
 		});
 
-		helper.beforeAll(testFileName, 'writer', true);
+		helper.reload(testFileName, 'writer', true);
 
 		mobileHelper.enableEditingMobile();
 

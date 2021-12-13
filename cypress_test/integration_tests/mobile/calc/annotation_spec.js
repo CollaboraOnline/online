@@ -28,7 +28,7 @@ describe('Annotation Tests',function() {
 			return originalFn(selector, options);
 		});
 
-		helper.beforeAll(testFileName, 'calc', true);
+		helper.reload(testFileName, 'calc', true);
 
 		mobileHelper.enableEditingMobile();
 

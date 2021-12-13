@@ -35,7 +35,7 @@ describe('Top toolbar tests.', function() {
 			return originalFn(selector, options);
 		});
 
-		helper.beforeAll(testFileName, 'calc', true);
+		helper.reload(testFileName, 'calc', true);
 
 		calcHelper.selectEntireSheet();
 
