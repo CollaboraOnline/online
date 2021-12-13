@@ -62,6 +62,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:VerticalText'] = this._insertTextBoxControl;
 		this._toolitemHandlers['.uno:ShowResolvedAnnotations'] = this._showResolvedAnnotationsControl;
 		this._toolitemHandlers['.uno:OnlineHelp'] = this._onlineHelpControl;
+		this._toolitemHandlers['.uno:ForumHelp'] = this._onlineHelpControl;
 		this._toolitemHandlers['.uno:KeyboardShortcuts'] = this._onlineHelpControl;
 		this._toolitemHandlers['.uno:ReportIssue'] = this._onlineHelpControl;
 		this._toolitemHandlers['.uno:LatestUpdates'] = this._onlineHelpControl;

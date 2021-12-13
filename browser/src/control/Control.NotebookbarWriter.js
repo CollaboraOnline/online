@@ -212,6 +212,17 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 						'type': 'toolbox',
 						'children': [
 							{
+								'id': 'forum',
+								'type': 'bigtoolitem',
+								'text': _('Forum'),
+								'command': '.uno:ForumHelp'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
 								'id': 'online-help',
 								'type': 'bigtoolitem',
 								'text': _('Online Help'),
