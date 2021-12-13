@@ -496,8 +496,21 @@ function matchClipboardText(regexp) {
 	});
 }
 
+
+// This is called during a test to reload the same document after
+// some modification. The purpose is typically to verify that
+// said changes were preserved in the document upon closing.
+function reload(fileName, subFolder, noFileCopy, subsequentLoad) {
+	closeDocument(fileName, '');
+	loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad);
+}
+
 function beforeAll(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad) {
 	loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad);
+}
+
+function afterAll(fileName, testState) {
+	closeDocument(fileName, testState);
 }
 
 // This method is intended to call after each test case.
@@ -506,7 +519,7 @@ function beforeAll(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad,
 // Parameters:
 // fileName - test document name (we can check it on the admin console).
 // testState - whether the test passed or failed before this method was called.
-function afterAll(fileName, testState) {
+function closeDocument(fileName, testState) {
 	cy.log('Waiting for closing the document - start.');
 
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
@@ -1228,6 +1241,8 @@ module.exports.selectAllText = selectAllText;
 module.exports.clearAllText = clearAllText;
 module.exports.expectTextForClipboard = expectTextForClipboard;
 module.exports.matchClipboardText = matchClipboardText;
+module.exports.closeDocument = closeDocument;
+module.exports.reload = reload;
 module.exports.afterAll = afterAll;
 module.exports.initAliasToNegative = initAliasToNegative;
 module.exports.doIfInCalc = doIfInCalc;
