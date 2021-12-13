@@ -145,6 +145,8 @@ class TileCacheTests : public CPPUNIT_NS::TestFixture
 
     void checkBlackTile(std::stringstream& tile);
 
+    bool getPartFromInvalidateMessage(const std::string& message, int& part);
+
 public:
     TileCacheTests()
         : _uri(helpers::getTestServerURI())
@@ -183,6 +185,20 @@ public:
         resetTestStartTime();
     }
 };
+
+
+bool TileCacheTests::getPartFromInvalidateMessage(const std::string& message, int& part)
+{
+    StringVector tokens = Util::tokenize(message);
+    if (tokens.size() == 2 && tokens.equals(1, "EMPTY"))
+    {
+        part = -1;
+        return true;
+    }
+    if (tokens.size() == 3 && tokens.equals(1, "EMPTY,"))
+        return COOLProtocol::stringToInteger(tokens[2], part);
+    return COOLProtocol::getTokenInteger(tokens, "part", part);
+}
 
 void TileCacheTests::testDesc()
 {
@@ -1034,7 +1050,7 @@ void TileCacheTests::testTileInvalidateWriterPage()
     const auto res = assertResponseString(socket, "invalidatetiles:", testname);
     int part = -1;
     LOK_ASSERT_MESSAGE("No part# in invalidatetiles message.",
-                           COOLProtocol::getTokenIntegerFromMessage(res, "part", part));
+                           getPartFromInvalidateMessage(res, part));
     LOK_ASSERT_EQUAL(0, part);
 
     socket->asyncShutdown();
@@ -1194,12 +1210,12 @@ void TileCacheTests::testTileInvalidatePartCalc()
 
         const auto response1 = assertResponseString(socket1, "invalidatetiles:", testname1);
         int value1;
-        COOLProtocol::getTokenIntegerFromMessage(response1, "part", value1);
+        getPartFromInvalidateMessage(response1, value1);
         LOK_ASSERT_EQUAL(2, value1);
 
         const auto response2 = assertResponseString(socket2, "invalidatetiles:", testname2);
         int value2;
-        COOLProtocol::getTokenIntegerFromMessage(response2, "part", value2);
+        getPartFromInvalidateMessage(response2, value2);
         LOK_ASSERT_EQUAL(5, value2);
     }
 
@@ -1243,12 +1259,12 @@ void TileCacheTests::testTileInvalidatePartImpress()
 
         const auto response1 = assertResponseString(socket1, "invalidatetiles:", testname1);
         int value1;
-        COOLProtocol::getTokenIntegerFromMessage(response1, "part", value1);
+        getPartFromInvalidateMessage(response1, value1);
         LOK_ASSERT_EQUAL(2, value1);
 
         const auto response2 = assertResponseString(socket2, "invalidatetiles:", testname2);
         int value2;
-        COOLProtocol::getTokenIntegerFromMessage(response2, "part", value2);
+        getPartFromInvalidateMessage(response2, value2);
         LOK_ASSERT_EQUAL(5, value2);
     }
 
