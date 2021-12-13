@@ -1035,9 +1035,16 @@ bool ChildSession::downloadAs(const char* /*buffer*/, int /*length*/, const Stri
             (format.empty() ? "(nullptr)" : format.c_str()) << "', ' filterOptions=" <<
             (filterOptions.empty() ? "(nullptr)" : filterOptions.c_str()) << "'.");
 
-    getLOKitDocument()->saveAs(url.c_str(),
+    bool success = getLOKitDocument()->saveAs(url.c_str(),
                                format.empty() ? nullptr : format.c_str(),
                                filterOptions.empty() ? nullptr : filterOptions.c_str());
+
+    if (!success)
+    {
+        LOG_ERR("SaveAs Failed for id=" << id << " [" << url << "]. error= " << getLOKitLastError());
+        sendTextFrameAndLogError("error: cmd=downloadas kind=saveasfailed");
+        return false;
+    }
 
     // Register download id -> URL mapping in the DocumentBroker
     std::string docBrokerMessage = "registerdownload: downloadid=" + tmpDir + " url=" + urlToSend;
