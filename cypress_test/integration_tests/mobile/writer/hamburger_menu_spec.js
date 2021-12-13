@@ -74,7 +74,7 @@ describe('Trigger hamburger menu options.', function() {
 		});
 
 		// Reopen the document and check content.
-		helper.beforeAll(testFileName, 'writer', true);
+		helper.reload(testFileName, 'writer', true);
 
 		mobileHelper.enableEditingMobile();
 
