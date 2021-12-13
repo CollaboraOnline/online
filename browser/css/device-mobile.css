@@ -363,7 +363,7 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 }
 
 .vex-content.vex-3btns .vex-dialog-buttons .vex-dialog-button-cancel {
-	display: flex !important;
+	display: block !important;
 }
 
 /* Related to toolbar.css */
