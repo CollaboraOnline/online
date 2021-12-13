@@ -41,7 +41,8 @@ if (window.ThisIsAMobileApp) {
 		savediskfull: _('Save failed due to no disk space left on storage server. Document will now be read-only. Please contact the server (%storageserver) administrator to continue editing.'),
 		saveunauthorized: _('Document cannot be saved due to expired or invalid access token.'),
 		savefailed: _('Document cannot be saved. Check your permissions or contact the storage server administrator.'),
-		renamefailed: _('Document cannot be renamed. Check your permissions or contact the storage server administrator.')
+		renamefailed: _('Document cannot be renamed. Check your permissions or contact the storage server administrator.'),
+		saveasfailed: _('Document cannot be exported. Please contact the storage server administrator.')
 	};
 }
 
