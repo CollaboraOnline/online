@@ -298,6 +298,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
+				{name: _('Forum'), id: 'forum', type: 'action'},
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
 				{name: L.Control.MenubarShortcuts.addShortcut(_('Keyboard shortcuts'), L.Control.MenubarShortcuts.shortcuts.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
@@ -1654,6 +1655,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.feedback.showFeedbackDialog();
 		} else if (id === 'report-an-issue') {
 			window.open('https://github.com/CollaboraOnline/online/issues', '_blank');
+		} else if (id === 'forum') {
+			window.open('https://forum.collaboraonline.com', '_blank');
 		} else if (id === 'inserthyperlink') {
 			this._map.showHyperlinkDialog();
 		} else if (id === 'keyboard-shortcuts' || id === 'online-help') {
