@@ -5,16 +5,16 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-02 14:42+0100\n"
-"PO-Revision-Date: 2021-11-25 21:55+0000\n"
+"PO-Revision-Date: 2021-12-06 15:50+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 4.10-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -1042,7 +1042,7 @@ msgstr "Predstavitev ODF (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:643
 msgid "Presentation"
-msgstr ""
+msgstr "Predstavitev"
 
 #: src/control/Control.NotebookbarImpress.js:980
 msgid "Reset Zoom"
@@ -1219,7 +1219,7 @@ msgstr "Pomakni delovni list desno"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Kopiraj delovni list ..."
 
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
@@ -1338,7 +1338,7 @@ msgstr "Nadaljuj z urejanjem"
 
 #: src/control/Permission.js:165
 msgid "Continue read only"
-msgstr ""
+msgstr "Nadaljuj v načinu samo za branje"
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
