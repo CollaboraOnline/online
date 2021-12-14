@@ -13,7 +13,17 @@ L.IDialog = L.Class.extend({
 
 		container = L.DomUtil.create('div', this.options.prefix + '-wrap');
 		content = L.DomUtil.create('div', this.options.prefix + '-content', container);
+		content.innerHTML = this.innerHtml(options.message);
 		document.body.appendChild(container);
+	},
+
+	innerHtml: function (string) {
+		if (typeof string === 'undefined')
+			return '';
+
+		var elem = L.DomUtil.create('div', '');
+		elem.appendChild(document.createTextNode(string));
+		return elem.innerHTML;
 	},
 
 	isVisible: function () {
