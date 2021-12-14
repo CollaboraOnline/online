@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-02 14:42+0100\n"
-"PO-Revision-Date: 2021-12-02 12:57+0000\n"
+"PO-Revision-Date: 2021-12-12 21:24+0000\n"
 "Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/vi/>\n"
-"Language: \n"
+"Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1037,7 +1037,7 @@ msgstr "Bản trình chiếu ODF (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:643
 msgid "Presentation"
-msgstr ""
+msgstr "Trình chiếu"
 
 #: src/control/Control.NotebookbarImpress.js:980
 msgid "Reset Zoom"
@@ -1214,7 +1214,7 @@ msgstr "Chuyển trang tính sang phải"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Sao chép trang..."
 
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
@@ -1333,7 +1333,7 @@ msgstr "Tiếp tục chỉnh sửa"
 
 #: src/control/Permission.js:165
 msgid "Continue read only"
-msgstr ""
+msgstr "Tiếp tục dạng chỉ đọc"
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
