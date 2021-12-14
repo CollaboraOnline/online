@@ -11,4 +11,11 @@
     <string name="about_license">உரிமத்தைக் காட்டு</string>
     <string name="failed_to_load_file">ஏற்ற வேண்டிய கோப்பை தீர்மானிக்க முடியவில்லை</string>
     <string name="pref_user_name">பயனர் பெயர்</string>
+    <string name="pref_category_explorer">கோப்பு மேலாளர் அமைப்புகள்</string>
+    <string name="pref_show_hidden_files_summary">மறைக்கப்பட்ட கோப்புகள்/கோப்புறைகளைக் காட்ட இயக்கவும்</string>
+    <string name="pref_viewmode_summary">கோப்புகளை ஒரு கட்டமாக அல்லது பட்டியலில் பார்க்கவும்.</string>
+    <string name="pref_file_explorer_title">கோப்பு மேலாளர் தளவமைப்பு</string>
+    <string name="new_textdocument">புதிய உரை ஆவணம்</string>
+    <string name="action_about">என்னை பற்றி</string>
+    <string name="file_exists_warning">இந்தப் பெயரில் ஒரு கோப்பு ஏற்கனவே உள்ளது, மேலும் அது மேலெழுதப்படும்.</string>
 </resources>
