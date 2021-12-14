@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-02 14:42+0100\n"
-"PO-Revision-Date: 2021-12-02 21:40+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2021-12-14 04:31+0000\n"
+"Last-Translator: Marc Rodrigues <marc.rodrigues@collabora.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/collabora-online/"
 "ui/de/>\n"
 "Language: de\n"
@@ -1345,7 +1345,7 @@ msgstr "Bearbeitung fortsetzen"
 
 #: src/control/Permission.js:165
 msgid "Continue read only"
-msgstr ""
+msgstr "Schreibgeschützt fortfahren"
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
@@ -1526,11 +1526,11 @@ msgstr "Verwerfen"
 #: src/control/Toolbar.js:614
 #, javascript-format
 msgid "Explore the new %coolVersion"
-msgstr ""
+msgstr "Entdecken Sie die neue %coolVersion"
 
 #: src/control/Toolbar.js:615 src/control/Toolbar.js:619
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online Development Edition"
 
 #: src/control/Toolbar.js:616
 #, javascript-format
@@ -1541,10 +1541,15 @@ msgid ""
 "%coolVersion introduces important improvements, in the areas of usability, "
 "visual presentation and performance."
 msgstr ""
+"Profitieren Sie von den neuesten Entwicklungen in Sachen Online-"
+"Produktivität. Nutzen Sie die Möglichkeiten kostenlos mit anderen im "
+"Browser. <a href=\"%coolAppsURL\" target=\"_blank\">Apps</a> sind auch für "
+"Android und iOS verfügbar. %coolVersion bringt wichtige Verbesserungen in "
+"den Bereichen Benutzerfreundlichkeit, optischer Präsentation und Leistung."
 
 #: src/control/Toolbar.js:618
 msgid "Discover all the changes"
-msgstr ""
+msgstr "Entdecken Sie alle Veränderungen"
 
 #: src/control/Toolbar.js:620
 #, javascript-format
@@ -1554,14 +1559,19 @@ msgid ""
 "larger groups working on documents, new native sidebar, new re-worked avatar "
 "list, asynchronous saving, faster spell checking and more."
 msgstr ""
+"Lesen Sie die <a href=\"%coolReleaseNotesURL\" target=\"_blank\">Release "
+"Notes</a> und erfahren Sie alles über den neuesten Meilenstein in Sachen "
+"Leistung, insbesondere bei der gemeinsamen Arbeit größerer Gruppen an "
+"Dokumenten, die neue native Seitenleiste, die überarbeitete Avatarübersicht, "
+"asynchrones Speichern, schnellere Rechtschreibprüfung und mehr."
 
 #: src/control/Toolbar.js:622
 msgid "Integrate Collabora Online into your webapp"
-msgstr ""
+msgstr "Integrieren Sie Collabora Online in Ihre Webapp"
 
 #: src/control/Toolbar.js:623
 msgid "Or get involved in the development"
-msgstr ""
+msgstr "Oder beteiligen Sie sich an der Entwicklung"
 
 #: src/control/Toolbar.js:624
 #, javascript-format
@@ -1574,15 +1584,22 @@ msgid ""
 "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
 "all the essential steps on how to reproduce it."
 msgstr ""
+"Erfahren Sie mehr über die Integration in Ihre Webanwendung im <a href=\"%"
+"coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Oder besuchen Sie "
+"die <a href=\"%coolStepByStepURL\" target=\"_blank\">Schritt-für-Schritt-"
+"Anleitung</a> und erstellen Sie CODE von Grund auf. Sie können auch bei <a "
+"href=\"%coolTranslationsURL\" target=\"_blank\">Übersetzungen</a> oder durch "
+"<a href=\"%coolBugreportURL\" target=\"_blank\">Einreichen von "
+"Fehlerberichten</a> mit allen wichtigen Schritten zur Reproduktion des "
+"Problems helfen."
 
 #: src/control/Toolbar.js:626 src/control/Toolbar.js:627
-#, fuzzy
 msgid "Next"
-msgstr "Text"
+msgstr "Weiter"
 
 #: src/control/Toolbar.js:630
 msgid "Learn more about the enterprise-ready versions"
-msgstr ""
+msgstr "Erfahren Sie mehr über die Unternehmensversionen"
 
 #: src/control/Toolbar.js:679
 msgid ""
@@ -1626,7 +1643,7 @@ msgstr "NEU LADEN"
 
 #: src/core/Socket.js:504
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "COOLWSD Version:"
 
 #: src/core/Socket.js:516
 msgid "Served by:"
@@ -1638,7 +1655,7 @@ msgstr "Diese Serverversion wird nicht unterstützt."
 
 #: src/core/Socket.js:526
 msgid "LOKit version:"
-msgstr ""
+msgstr "LOKit Version:"
 
 #: src/core/Socket.js:640
 msgid "Session terminated by document owner"
