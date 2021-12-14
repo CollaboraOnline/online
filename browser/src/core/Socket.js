@@ -272,18 +272,54 @@ app.definitions.Socket = L.Class.extend({
 			     'background:#ddf;color:black', color, 'color:black');
 	},
 
-	_queueSlurpEventEmission: function() {
+	_countSlurpedImages: function() {
+		var res = { pending: 0, images: 0, ready: 0 };
+		var queueLength = this._slurpQueue.length;
+		for (var i = 0; i < queueLength; ++i) {
+			var evt = this._slurpQueue[i];
+			if (!evt.isComplete())
+				res.pending++;
+			else
+				res.ready++;
+			if (evt.image)
+				res.images++;
+		}
+		return res;
+	},
+
+	_delayUntilImagesLoaded: function() {
+		var imgCount = this._countSlurpedImages();
+		var delay = imgCount.images > 0 && // some images
+		    imgCount.ready < 4 && // not enough images and
+		    imgCount.pending > 0; // we have more to come
+		console.log2('Delay ' + delay);
+		return delay;
+	},
+
+	// we delay to allow images to load
+	_queueSlurpEventEmission: function(delay) {
 		var that = this;
 		if (!that._slurpTimer)
 		{
+			that._slurpDelayed = delay;
 			that._slurpTimer = setTimeout(function () {
 				that._slurpTimer = undefined;
 				that._emitSlurpedEvents();
-			}, 1 /* ms */);
+			}, (delay ? 20 : 1) /* ms */);
 		}
 	},
 
 	_emitSlurpedEvents: function() {
+		// if we have un-loaded images, don't process events and touch the DOM
+		// otherwise we just delay loading our tiles a long time, and don't
+		// really win. On the other hand don't defer indefinitely
+		if (this._delayUntilImagesLoaded())
+		{
+			console.log2('Delay until we are loaded');
+			this._queueSlurpEventEmission(true);
+			return;
+		}
+
 		var queueLength = this._slurpQueue.length;
 		var completeEventWholeFunction = this.createCompleteTraceEvent('emitSlurped-' + String(queueLength),
 									       {'_slurpQueue.length' : String(queueLength)});
@@ -318,15 +354,7 @@ app.definitions.Socket = L.Class.extend({
 				var evt = this._slurpQueue[i];
 
 				if (evt.isComplete()) {
-					var textMsg;
-					if (typeof (evt.data) === 'string') {
-						textMsg = evt.data.replace(/\s+/g, '.');
-					}
-					else if (typeof (evt.data) === 'object') {
-						textMsg = evt.textMsg.replace(/\s+/g, '.');
-					}
-
-					var completeEventOneMessage = this.createCompleteTraceEventFromEvent(textMsg);
+					var completeEventOneMessage = this.createCompleteTraceEventFromEvent(evt);
 					try {
 						// it is - are you ?
 						this._onMessage(evt);
@@ -376,12 +404,31 @@ app.definitions.Socket = L.Class.extend({
 	// buffer of web-socket messages in the client that we can't
 	// process so - slurp and the emit at idle - its faster to delay!
 	_slurpMessage: function(e) {
-		if (!this._slurpQueue || !this._slurpQueue.length) {
-			this._queueSlurpEventEmission();
+		if (!this._slurpQueue)
 			this._slurpQueue = [];
+
+		if (typeof (e.data) === 'string')
+			e.textMsg = e.data;
+		else if (typeof (e.data) === 'object')
+			this._extractCopyObject(e);
+
+		var traceSlurp;
+		if (this.traceEventRecordingToggle)
+		{
+			var msg = this.createPrettyMsgFromEvent(e);
+			traceSlurp = this.createCompleteTraceEvent(
+				'slurp-' + msg.pretty,
+				{'_slurpQueue.length' : String(this._slurpQueue.length),
+				 '_slurpDelayed' : String(this._slurpDelayed),
+				 '_slurpTimer' : String(this._slurpTimer) });
 		}
+		if (!this._slurpTimer)
+			this._queueSlurpEventEmission();
 		this._extractTextImg(e);
 		this._slurpQueue.push(e);
+
+		if (traceSlurp)
+			traceSlurp.finish();
 	},
 
 	// make profiling easier
@@ -436,11 +483,6 @@ app.definitions.Socket = L.Class.extend({
 
 	_extractTextImg: function (e) {
 
-		if (typeof (e.data) === 'string')
-			e.textMsg = e.data;
-		else if (typeof (e.data) === 'object')
-			this._extractCopyObject(e);
-
 		e.isComplete = function () {
 			if (this.image)
 				return !!this.imageIsComplete;
@@ -460,12 +502,19 @@ app.definitions.Socket = L.Class.extend({
 		e.image = new Image();
 		e.image.onload = function() {
 			e.imageIsComplete = true;
-			that._queueSlurpEventEmission();
 			if (e.image.completeTraceEvent)
 				e.image.completeTraceEvent.finish();
+			if (that._slurpDelayed &&
+			    !that._delayUntilImagesLoaded())
+			{
+				console.log2('kill timer and get rendering!');
+				clearTimeout(that._slurpTimer);
+				that._slurpTimer = undefined;
+				that._queueSlurpEventEmission(/* no delay */);
+			}
 		};
 		e.image.onerror = function(err) {
-			console.log('Failed to load image ' + img + ' fun ' + err);
+			console.log2('Failed to load image ' + img + ' fun ' + err);
 			e.imageIsComplete = true;
 			that._queueSlurpEventEmission();
 			if (e.image.completeTraceEvent)
@@ -1706,7 +1755,7 @@ app.definitions.Socket = L.Class.extend({
 
 		var result = {};
 		result.id = this.asyncTraceEventCounter++;
-		result.tid = this.asyncTracePseudoThread++;
+		result.tid = (this.asyncTracePseudoThread++ % 4);
 		result.active = true;
 		result.args = args;
 
@@ -1759,12 +1808,11 @@ app.definitions.Socket = L.Class.extend({
 		return result;
 	},
 
-	// something we can grok quickly in the trace viewer
-	createCompleteTraceEventFromEvent: function(textMsg) {
-		if (!this.traceEventRecordingToggle)
-			return null;
-
+	createPrettyMsgFromEvent: function(evt) {
 		var pretty;
+
+		var textMsg = evt.textMsg;
+
 		if (!textMsg)
 			pretty = 'blob';
 		else {
@@ -1776,7 +1824,16 @@ app.definitions.Socket = L.Class.extend({
 			else
 				pretty = textMsg.substring(0, 25);
 		}
-		return this.createCompleteTraceEvent(pretty, { message: textMsg });
+		return { pretty: pretty, textMsg: textMsg };
+	},
+
+	// something we can grok quickly in the trace viewer
+	createCompleteTraceEventFromEvent: function(evt) {
+		if (!this.traceEventRecordingToggle)
+			return null;
+
+		var msg = this.createPrettyMsgFromEvent(evt);
+		return this.createCompleteTraceEvent(msg.pretty);
 	},
 
 	threadLocalLoggingLevelToggle: false
