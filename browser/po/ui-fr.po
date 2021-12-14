@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-02 14:42+0100\n"
-"PO-Revision-Date: 2021-11-27 09:50+0000\n"
+"PO-Revision-Date: 2021-12-06 15:50+0000\n"
 "Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/collabora-online/"
 "ui/fr/>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1046,7 +1046,7 @@ msgstr "Présentation ODF (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:643
 msgid "Presentation"
-msgstr ""
+msgstr "Présentation"
 
 #: src/control/Control.NotebookbarImpress.js:980
 msgid "Reset Zoom"
@@ -1223,7 +1223,7 @@ msgstr "Déplacer la feuille à droite"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Copier la feuille de calcul…"
 
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
@@ -1342,7 +1342,7 @@ msgstr "Continuer à modifier"
 
 #: src/control/Permission.js:165
 msgid "Continue read only"
-msgstr ""
+msgstr "Continuer en lecture seule"
 
 #: src/control/Ruler.js:360
 msgid "Left Margin"
