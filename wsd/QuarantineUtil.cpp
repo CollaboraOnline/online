@@ -16,6 +16,7 @@
 #include <common/Common.hpp>
 #include <common/StringVector.hpp>
 #include <common/Log.hpp>
+#include <common/JailUtil.hpp>
 
 namespace Quarantine
 {
@@ -140,7 +141,15 @@ namespace Quarantine
         const auto timeNow = std::chrono::system_clock::now();
         const std::string ts = std::to_string(std::chrono::duration_cast<std::chrono::seconds>(timeNow.time_since_epoch()).count());
 
-        std::string sourcefilePath = COOLWSD::ChildRoot + "tmp/cool-" + docBroker->getJailId() + "/user/docs/" + docBroker->getJailId() + "/" + docName;
+        std::string sourcefilePath;
+        if(JailUtil::isBindMountingEnabled())
+        {
+            sourcefilePath = COOLWSD::ChildRoot + "tmp/cool-" + docBroker->getJailId() + "/user/docs/" + docBroker->getJailId() + "/" + docName;
+        }
+        else
+        {
+            sourcefilePath = COOLWSD::ChildRoot + docBroker->getJailId() + "/tmp/user/docs/" + docBroker->getJailId() + "/" + docName;
+        }
 
         std::string linkedFileName = ts + '_' + std::to_string(docBroker->getPid()) + '_' + docKey + '_' + docName;
         std::string linkedFilePath = COOLWSD::QuarantinePath + linkedFileName;
