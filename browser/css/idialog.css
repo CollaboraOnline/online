@@ -1,0 +1,25 @@
+.idialog-wrap {
+	position: fixed;
+	overflow: auto;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	box-sizing: border-box;
+	z-index: 1106;
+}
+
+.idialog-content {
+	position: fixed;
+	margin: 0 auto;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	max-width: 100%;
+	width: 100px;
+	border: 1px solid #a4a4a4;
+	border-radius: 4px;
+	background: #fff;
+}
+
