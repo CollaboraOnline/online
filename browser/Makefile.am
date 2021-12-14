@@ -296,6 +296,7 @@ COOL_JS_LST =\
 	src/layer/marker/Marker.Drag.js \
 	src/control/Control.Toolbar.js \
 	src/control/Control.Command.js \
+	src/control/IDialog.js \
 	src/control/Control.js \
 	src/control/Control.PartsPreview.js \
 	src/control/Control.GroupBase.js \
