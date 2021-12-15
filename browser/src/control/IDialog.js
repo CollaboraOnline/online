@@ -4,35 +4,33 @@
  */
 
 L.IDialog = L.Class.extend({
-	options: {
-		prefix: 'idialog'
-	},
+	statics: {
+		container: {},
 
-	show: function (options) {
-		var container, content;
+		show: function (options) {
+			var container, content;
 
-		container = L.DomUtil.create('div', this.options.prefix + '-wrap');
-		content = L.DomUtil.create('div', this.options.prefix + '-content', container);
-		content.innerHTML = this.innerHtml(options.message);
-		document.body.appendChild(container);
-	},
+			container = L.DomUtil.create('div', options.prefix + '-wrap');
+			content = L.DomUtil.create('div', options.prefix + '-content', container);
+			content.innerHTML = L.IDialog.innerHtml(options.message);
+			document.body.appendChild(container);
+			L.IDialog.container = container;
+		},
 
-	innerHtml: function (string) {
-		if (typeof string === 'undefined')
-			return '';
+		innerHtml: function (string) {
+			if (typeof string === 'undefined')
+				return '';
 
-		var elem = L.DomUtil.create('div', '');
-		elem.appendChild(document.createTextNode(string));
-		return elem.innerHTML;
-	},
+			var elem = L.DomUtil.create('div', '');
+			elem.appendChild(document.createTextNode(string));
+			return elem.innerHTML;
+		},
 
-	isVisible: function () {
-		var elem = document.body.querySelector('.' + this.options.prefix + '-wrap');
-		return elem && elem.style.display !== 'none';
+		isVisible: function () {
+			var elem = L.IDialog.container;
+			return elem && elem.parentNode == document.body &&
+				elem.style.display !== 'none';
+		}
 	}
 });
-
-L.iDialog = function (options) {
-	return new L.IDialog(options);
-};
 
