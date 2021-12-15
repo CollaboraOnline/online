@@ -1,0 +1,51 @@
+@media (min-width: 600px) {
+	/* Switch to desktop layout */
+	.sm-simple ul {
+		position: absolute;
+		width: 12em;
+		background: white;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+	}
+
+	.sm-simple li {
+		float: left;
+		border: none;
+	}
+
+	.sm-simple.sm-rtl li {
+		float: right;
+	}
+
+	.sm-simple ul li, .sm-simple.sm-rtl ul li, .sm-simple.sm-vertical li {
+		float: none;
+	}
+
+	.sm-simple a {
+		white-space: nowrap;
+	}
+
+	.sm-simple ul a, .sm-simple.sm-vertical a {
+		white-space: normal;
+	}
+
+	.sm-simple .sm-nowrap > li > a, .sm-simple .sm-nowrap > li > :not(ul) a {
+		white-space: nowrap;
+	}
+
+	.sm-simple span.scroll-up-arrow, .sm-simple span.scroll-down-arrow {
+		display: none;
+	}
+
+}
+
+@media (max-width: 856px) {
+	#document-titlebar {
+		display: none;
+	}
+}
+
+@media (max-width: 752px) {
+	#menu-last-mod {
+		display: none;
+	}
+}
