@@ -7,7 +7,7 @@ L.IDialog = L.Class.extend({
 	statics: {
 		container: {},
 
-		show: function (options) {
+		open: function (options) {
 			var container, content;
 
 			container = L.DomUtil.create('div', options.prefix + '-wrap');
