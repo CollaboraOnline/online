@@ -27,9 +27,7 @@ L.IDialog = L.Class.extend({
 		},
 
 		isVisible: function () {
-			var elem = L.IDialog.container;
-			return elem && elem.parentNode == document.body &&
-				elem.style.display !== 'none';
+			return L.IDialog.container && L.IDialog.container.parentNode == document.body;
 		}
 	}
 });
