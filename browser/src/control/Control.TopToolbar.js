@@ -87,15 +87,18 @@ L.Control.TopToolbar = L.Control.extend({
 	getToolItems: function() {
 		var that = this;
 		return [
+			// section 'mobile'
 			{type: 'button',  id: 'closemobile',  img: 'closemobile', desktop: false, mobile: false, tablet: true, hidden: true},
 			{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save'), uno: '.uno:Save'},
-			{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false, tablet: false, freemiumUno: '.uno:Print'},
+			{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text', true), mobile: false, tablet: false, freemiumUno: '.uno:Print'},
+			{type: 'button',  id: 'presentation', img: 'fullscreen-presentation', hint: _UNO('.uno:FullScreen', 'presentation', true), mobile: false, tablet: false, freemiumUno: '.uno:FullScreen  '},
 			{type: 'break', id: 'savebreak', mobile: false},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: '.uno:Undo', disabled: true, mobile: false},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: '.uno:Redo', disabled: true, mobile: false},
 			{type: 'break', id: 'redobreak', mobile: false, tablet: false,},
+			// section 'style'
 			{type: 'button',  id: 'formatpaintbrush',  img: 'copyformat', hint: _UNO('.uno:FormatPaintbrush'), uno: '.uno:FormatPaintbrush', mobile: false},
-			{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text'), hidden: true, uno: '.uno:ResetAttributes', mobile: false},
+			{type: 'button',  id: 'reset',  img: 'deleteformat', hint: _UNO('.uno:ResetAttributes', 'text', true), hidden: true, uno: '.uno:ResetAttributes', mobile: false},
 			{type: 'button',  id: 'resetimpress',  img: 'deleteformat', hint: _UNO('.uno:SetDefault', 'presentation', 'true'), hidden: true, uno: '.uno:SetDefault', mobile: false},
 			{type: 'html', id: 'styles',
 				html: '<select id="styles-select" class="styles-select"><option>' + _('Default Style') + '</option></select>',
@@ -109,6 +112,7 @@ L.Control.TopToolbar = L.Control.extend({
 						}});
 					}
 				}, hidden: true, desktop: true, mobile: false, tablet: false},
+			// section 'font'
 			{type: 'html', id: 'fonts',
 				html: '<select id="fonts-select" class="fonts-select"><option>Carlito</option></select>',
 				onRefresh: function (edata) {
@@ -132,30 +136,52 @@ L.Control.TopToolbar = L.Control.extend({
 					}
 				}, mobile: false},
 			{type: 'button', id: 'languagecode', desktop: false, mobile: true, tablet: false},
-			{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: '.uno:Bold'},
-			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: '.uno:Italic'},
-			{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: '.uno:Underline'},
-			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: '.uno:Strikeout'},
-			{type: 'break', id: 'breakformatting'},
-			{type: 'drop',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor'), overlay: { onShow : function() { window.showColorPicker('fontcolor'); }} , html: window.getColorPickerHTML('fontcolor'), freemiumUno: '.uno:FontColor'},
-			{type: 'drop',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackColor', 'text'), hidden: true,  overlay: { onShow : function() { window.showColorPicker('backcolor'); }} , html: window.getColorPickerHTML('backcolor'), freemiumUno: '.uno:BackColor'},
-			{type: 'drop',  id: 'backgroundcolor', img: 'backgroundcolor', hint: _UNO('.uno:BackgroundColor'), hidden: true,  overlay: { onShow : function() { window.showColorPicker('backgroundcolor'); }} , html: window.getColorPickerHTML('backcolor'), freemiumUno: '.uno:BackgroundColor'},
+			// section 'b i u s'
+			{type: 'button',  id: 'bold',  img: 'bold', hint: _UNO('.uno:Bold'), uno: '.uno:Bold', context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table', 'Cell', 'EditCell', 'Pivot']},
+			{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: '.uno:Italic', context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table', 'Cell', 'EditCell', 'Pivot']},
+			{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: '.uno:Underline', context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table', 'Cell', 'EditCell', 'Pivot']},
+			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: '.uno:Strikeout', context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table', 'Cell', 'EditCell', 'Pivot']},
+			{type: 'break', id: 'breakformatting', context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table', 'Cell', 'EditCell', 'Pivot']},
+			// section 'color'
+			{type: 'drop',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor'), overlay: { onShow : function() { window.showColorPicker('fontcolor'); }} , html: window.getColorPickerHTML('fontcolor'), freemiumUno: '.uno:FontColor', context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table', 'Cell', 'EditCell', 'Pivot']},
+			{type: 'drop',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackColor', 'text'), hidden: true,  overlay: { onShow : function() { window.showColorPicker('backcolor'); }} , html: window.getColorPickerHTML('backcolor'), freemiumUno: '.uno:BackColor', context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table', 'Cell', 'EditCell', 'Pivot']},
 			{type: 'break' , id: 'breakcolor', mobile:false},
+			// section 'bullet'
+			{type: 'button',  id: 'defaultnumbering',  img: 'numbering', hint: _UNO('.uno:DefaultNumbering', '', true), hidden: true, uno: '.uno:DefaultNumbering', disabled: true, context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table', 'Cell', 'EditCell', 'Pivot']},
+			{type: 'button',  id: 'defaultbullet',  img: 'bullet', hint: _UNO('.uno:DefaultBullet', '', true), hidden: true, uno: '.uno:DefaultBullet', disabled: true, context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table', 'Cell', 'EditCell', 'Pivot']},
+			{type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _UNO('.uno:IncrementIndent', '', true), uno: '.uno:IncrementIndent', hidden: true, disabled: true, context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table', 'Cell', 'EditCell', 'Pivot']},
+			{type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _UNO('.uno:DecrementIndent', '', true), uno: '.uno:DecrementIndent', hidden: true, disabled: true, context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table', 'Cell', 'EditCell', 'Pivot']},
+			{type: 'break', id: 'breakindent', hidden: true, context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table', 'Cell', 'EditCell', 'Pivot']},
+			// section 'paragraph'
+			// align context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table']
 			{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true),
 				uno: {textCommand: '.uno:LeftPara', objectCommand: '.uno:ObjectAlignLeft'},
-				hidden: true, unosheet: '.uno:AlignLeft', disabled: true},
+				hidden: true, unosheet: '.uno:AlignLeft', disabled: true, context: ['default', 'any', 'Text', 'DrawText', 'TextObject']},
 			{type: 'button',  id: 'centerpara',  img: 'alignhorizontal', hint: _UNO('.uno:CenterPara', '', true),
 				uno: {textCommand: '.uno:CenterPara', objectCommand: '.uno:AlignCenter'},
-				hidden: true, unosheet: '.uno:AlignHorizontalCenter', disabled: true},
+				hidden: true, unosheet: '.uno:AlignHorizontalCenter', disabled: true, context: ['default', 'any', 'Text', 'DrawText', 'TextObject',]},
 			{type: 'button',  id: 'rightpara',  img: 'alignright', hint: _UNO('.uno:RightPara', '', true),
 				uno: {textCommand: '.uno:RightPara', objectCommand: '.uno:ObjectAlignRight'},
-				hidden: true, unosheet: '.uno:AlignRight', disabled: true},
-			{type: 'button',  id: 'justifypara',  img: 'alignblock', hint: _UNO('.uno:JustifyPara', '', true), uno: '.uno:JustifyPara', hidden: true, unosheet: '', disabled: true},
-			{type: 'break', id: 'breakpara', hidden: true},
-			{type: 'drop',  id: 'setborderstyle',  img: 'setborderstyle', hint: _('Borders'), hidden: true, html: window.getBorderStyleMenuHtml()},
-			{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _UNO('.uno:ToggleMergeCells', 'spreadsheet', true), hidden: true, uno: '.uno:ToggleMergeCells', disabled: true},
-			{type: 'break', id: 'breakmergecells', hidden: true},
-			{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'), hidden: true, freemiumUno: '.uno:TextAlign',
+				hidden: true, unosheet: '.uno:AlignRight', disabled: true, context: ['default', 'any', 'Text', 'DrawText', 'TextObject']},
+			{type: 'button',  id: 'justifypara',  img: 'alignblock', hint: _UNO('.uno:JustifyPara', '', true), uno: '.uno:JustifyPara', hidden: true, unosheet: '', disabled: true, context: ['default', 'any', 'Text', 'DrawText', 'TextObject']},
+			// align vertical context: ['DrawText', 'TextObject']
+			{type: 'button',  id: 'cellverttop',  img: 'cellverttop', hint: _UNO('.uno:CellVertTop', '', true), uno: '.uno:CellVertTop', hidden: true, unosheet: '', disabled: true, context: ['DrawText', 'TextObject']},
+			{type: 'button',  id: 'cellvertcenter',  img: 'cellvertcenter', hint: _UNO('.uno:CellVertCenter', '', true), uno: '.uno:CellVertCenter', hidden: true, unosheet: '', disabled: true, context: ['DrawText', 'TextObject']},
+			{type: 'button',  id: 'cellvertbottom',  img: 'cellvertbottom', hint: _UNO('.uno:CellVertBottom', '', true), uno: '.uno:CellVertBottom', hidden: true, unosheet: '', disabled: true, context: ['DrawText', 'TextObject']},
+			// context: ['Table']
+			{type: 'menu', id: 'tablealign', img: 'alignblock', hint: _UNO('.uno:TextAlign'), hidden: true, freemiumUno: '.uno:TextAlign', context: ['Table'],
+				items: [
+					{id: 'commonalignleft', text: _UNO('.uno:CommonAlignLeft', '', true), icon: 'alignleft', uno: '.uno:CommonAlignLeft'},
+					{id: 'commonalignhorizontalcenter', text: _UNO('.uno:CommonAlignHorizontalCenter', '', true), icon: 'alignhorizontal', uno: '.uno:CommonAlignHorizontalCenter'},
+					{id: 'commonalignright', text: _UNO('.uno:CommonAlignRight', '', true), icon: 'alignright', uno: '.uno:CommonAlignRight'},
+					{id: 'commonalignjustified', text: _UNO('.uno:CommonAlignJustified', '', true), icon: 'alignblock', uno: '.uno:CommonAlignJustified'},
+					{type: 'break'},
+					{id: 'cellverttop', text: _UNO('.uno:CellVertTop', '', true), icon: 'cellverttop', uno: '.uno:CellVertTop'},
+					{id: 'cellvertcenter', text: _UNO('.uno:CellVertCenter', '', true), icon: 'cellvertcenter', uno: '.uno:CellVertCenter'},
+					{id: 'cellvertbottom', text: _UNO('.uno:CellVertBottom', '', true), icon: 'cellvertbottom', uno: '.uno:CellVertBottom'},
+				]},
+			// align spreadsheet
+			{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'), hidden: true, freemiumUno: '.uno:TextAlign', context: ['default', 'any', 'Cell', 'EditCell', 'Pivot'],
 				items: [
 					{id: 'alignleft', text: _UNO('.uno:AlignLeft', 'spreadsheet', true), icon: 'alignleft', uno: '.uno:AlignLeft'},
 					{id: 'alignhorizontalcenter', text: _UNO('.uno:AlignHorizontalCenter', 'spreadsheet', true), icon: 'alignhorizontal', uno: '.uno:AlignHorizontalCenter'},
@@ -166,7 +192,9 @@ L.Control.TopToolbar = L.Control.extend({
 					{id: 'alignvcenter', text: _UNO('.uno:AlignVCenter', 'spreadsheet', true), icon: 'alignvcenter', uno: '.uno:AlignVCenter'},
 					{id: 'alignbottom', text: _UNO('.uno:AlignBottom', 'spreadsheet', true), icon: 'alignbottom', uno: '.uno:AlignBottom'},
 				]},
-			{type: 'menu',  id: 'linespacing',  img: 'linespacing', hint: _UNO('.uno:FormatSpacingMenu'), hidden: true, freemiumUno: '.uno:FormatSpacingMenu',
+			// {type: 'break', id: 'breaktable', hidden: true, context: ['Table']},
+			// linespacing
+			{type: 'menu',  id: 'linespacing',  img: 'linespacing', hint: _UNO('.uno:FormatSpacingMenu'), hidden: true, freemiumUno: '.uno:FormatSpacingMenu', context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table', 'Cell', 'EditCell', 'Pivot'],
 				items: [
 					{id: 'spacepara1', img: 'spacepara1', text: _UNO('.uno:SpacePara1'), uno: '.uno:SpacePara1'},
 					{id: 'spacepara15', img: 'spacepara15', text: _UNO('.uno:SpacePara15'), uno: '.uno:SpacePara15'},
@@ -198,23 +226,59 @@ L.Control.TopToolbar = L.Control.extend({
 						}
 					}
 				}},
-			{type: 'button',  id: 'wraptext',  img: 'wraptext', hint: _UNO('.uno:WrapText', 'spreadsheet', true), hidden: true, uno: '.uno:WrapText', disabled: true},
-			{type: 'break', id: 'breakspacing', hidden: true},
-			{type: 'button',  id: 'defaultnumbering',  img: 'numbering', hint: _UNO('.uno:DefaultNumbering', '', true), hidden: true, uno: '.uno:DefaultNumbering', disabled: true},
-			{type: 'button',  id: 'defaultbullet',  img: 'bullet', hint: _UNO('.uno:DefaultBullet', '', true), hidden: true, uno: '.uno:DefaultBullet', disabled: true},
-			{type: 'break', id: 'breakbullet', hidden: true},
-			{type: 'button',  id: 'incrementindent',  img: 'incrementindent', hint: _UNO('.uno:IncrementIndent', '', true), uno: '.uno:IncrementIndent', hidden: true, disabled: true},
-			{type: 'button',  id: 'decrementindent',  img: 'decrementindent', hint: _UNO('.uno:DecrementIndent', '', true), uno: '.uno:DecrementIndent', hidden: true, disabled: true},
-			{type: 'break', id: 'breakindent', hidden: true},
-			{type: 'drop', id: 'conditionalformaticonset',  img: 'conditionalformatdialog', hint: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet', true), hidden: true, html: window.getConditionalFormatMenuHtml(), uno: '.uno:ConditionalFormatMenu'},
-			{type: 'button',  id: 'sortascending',  img: 'sortascending', hint: _UNO('.uno:SortAscending', 'spreadsheet', true), uno: '.uno:SortAscending', disabled: true, hidden: true},
-			{type: 'button',  id: 'sortdescending',  img: 'sortdescending', hint: _UNO('.uno:SortDescending', 'spreadsheet', true), uno: '.uno:SortDescending', disabled: true, hidden: true},
-			{type: 'break', id: 'breaksorting', hidden: true},
-			{type: 'button',  id: 'numberformatcurrency',  img: 'numberformatcurrency', hint: _UNO('.uno:NumberFormatCurrency', 'spreadsheet', true), hidden: true, uno: '.uno:NumberFormatCurrency', disabled: true},
-			{type: 'button',  id: 'numberformatpercent',  img: 'numberformatpercent', hint: _UNO('.uno:NumberFormatPercent', 'spreadsheet', true), hidden: true, uno: '.uno:NumberFormatPercent', disabled: true},
-			{type: 'button',  id: 'numberformatdecdecimals',  img: 'numberformatdecdecimals', hint: _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet', true), hidden: true, uno: '.uno:NumberFormatDecDecimals', disabled: true},
-			{type: 'button',  id: 'numberformatincdecimals',  img: 'numberformatincdecimals', hint: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), hidden: true, uno: '.uno:NumberFormatIncDecimals', disabled: true},
-			{type: 'break',   id: 'break-number', hidden: true},
+			{type: 'button',  id: 'wraptext',  img: 'wraptext', hint: _UNO('.uno:WrapText', 'spreadsheet', true), hidden: true, uno: '.uno:WrapText', disabled: true, context: ['Cell', 'EditCell', 'Pivot']},
+			{type: 'break', id: 'breakpara', hidden: true, context: ['default', 'any', 'Text', 'DrawText', 'TextObject', 'Table', 'Cell', 'EditCell', 'Pivot']},
+			// section spreadsheet
+			// context: ['Table']
+			{type: 'drop',  id: 'backgroundcolor', img: 'backgroundcolor', hint: _UNO('.uno:BackgroundColor', 'text', false), hidden: true,  overlay: { onShow : function() { window.showColorPicker('backgroundcolor'); }} , html: window.getColorPickerHTML('backcolor'), freemiumUno: '.uno:BackgroundColor', context: ['Table', 'Cell', 'EditCell', 'Pivot']},
+			{type: 'drop',  id: 'setborderstyle',  img: 'setborderstyle', hint: _('Borders'), hidden: true, html: window.getBorderStyleMenuHtml(), context: ['Table', 'Cell', 'EditCell', 'Pivot']},
+			{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _UNO('.uno:ToggleMergeCells', 'spreadsheet', true), hidden: true, uno: '.uno:ToggleMergeCells', disabled: true, context: ['Cell', 'EditCell', 'Pivot']},
+			{type: 'break', id: 'breaksheet', hidden: true, context: ['Table', 'Cell', 'EditCell', 'Pivot']},
+			//{type: 'break', id: 'breakmergecells', hidden: true},
+			// section spreadsheet
+			// sorting
+			{type: 'drop', id: 'conditionalformaticonset',  img: 'conditionalformatdialog', hint: _UNO('.uno:ConditionalFormatMenu', 'spreadsheet', true), hidden: true, html: window.getConditionalFormatMenuHtml(), uno: '.uno:ConditionalFormatMenu', context: ['Cell', 'EditCell', 'Pivot']},
+			{type: 'button',  id: 'sortascending',  img: 'sortascending', hint: _UNO('.uno:SortAscending', 'spreadsheet', true), uno: '.uno:SortAscending', disabled: true, hidden: true, context: ['Cell', 'EditCell', 'Pivot']},
+			{type: 'button',  id: 'sortdescending',  img: 'sortdescending', hint: _UNO('.uno:SortDescending', 'spreadsheet', true), uno: '.uno:SortDescending', disabled: true, hidden: true, context: ['Cell', 'EditCell', 'Pivot']},
+			{type: 'break', id: 'breaksorting', hidden: true, context: ['Cell', 'EditCell', 'Pivot']},
+			{type: 'button',  id: 'numberformatcurrency',  img: 'numberformatcurrency', hint: _UNO('.uno:NumberFormatCurrency', 'spreadsheet', true), hidden: true, uno: '.uno:NumberFormatCurrency', disabled: true, context: ['Cell', 'EditCell', 'Pivot']},
+			{type: 'button',  id: 'numberformatpercent',  img: 'numberformatpercent', hint: _UNO('.uno:NumberFormatPercent', 'spreadsheet', true), hidden: true, uno: '.uno:NumberFormatPercent', disabled: true, context: ['Cell', 'EditCell', 'Pivot']},
+			{type: 'button',  id: 'numberformatdecdecimals',  img: 'numberformatdecdecimals', hint: _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet', true), hidden: true, uno: '.uno:NumberFormatDecDecimals', disabled: true, context: ['Cell', 'EditCell', 'Pivot']},
+			{type: 'button',  id: 'numberformatincdecimals',  img: 'numberformatincdecimals', hint: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), hidden: true, uno: '.uno:NumberFormatIncDecimals', disabled: true, context: ['Cell', 'EditCell', 'Pivot']},
+			{type: 'break',   id: 'break-number', hidden: true, context: ['Cell', 'EditCell', 'Pivot']},
+			// context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']
+			// wrap
+			{type: 'button',  id: 'wrapoff',  img: 'wrapoff', hint: _UNO('.uno:WrapOff', 'text', true), uno: '.uno:WrapOff', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'button',  id: 'wrapon',  img: 'wrapon', hint: _UNO('.uno:WrapOn', 'text', true), uno: '.uno:WrapOn', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'button',  id: 'wrapideal',  img: 'wrapideal', hint: _UNO('.uno:WrapIdeal', 'text', true), uno: '.uno:WrapIdeal', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'button',  id: 'wrapleft',  img: 'wrapleft', hint: _UNO('.uno:WrapLeft', 'text', true), uno: '.uno:WrapLeft', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'button',  id: 'wrapthrough',  img: 'wrapthrough', hint: _UNO('.uno:WrapThrough', 'text', true), uno: '.uno:WrapThrough', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'button',  id: 'wrapright',  img: 'wrapright', hint: _UNO('.uno:WrapRight', 'text', true), uno: '.uno:WrapRight', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'break',   id: 'breakwrap', hidden: true, context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			// align
+			{type: 'button',  id: 'objectalignleft',  img: 'objectalignleft', hint: _UNO('.uno:ObjectAlignLeft', '', true), uno: '.uno:ObjectAlignLeft', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'button',  id: 'aligncenter',  img: 'aligncenter', hint: _UNO('.uno:AlignCenter', '', true), uno: '.uno:AlignCenter', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'button',  id: 'objectalignright',  img: 'objectalignright', hint: _UNO('.uno:ObjectAlignRight', '', true), uno: '.uno:ObjectAlignRight', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'button',  id: 'alignup',  img: 'alignup', hint: _UNO('.uno:AlignUp', '', true), uno: '.uno:AlignUp', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'button',  id: 'alignmiddle',  img: 'alignmiddle', hint: _UNO('.uno:AlignMiddle', '', true), uno: '.uno:AlignMiddle', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'button',  id: 'aligndown',  img: 'aligndown', hint: _UNO('.uno:AlignDown', '', true), uno: '.uno:AlignDown', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'break', id: 'breakalign', hidden: true, context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			// Arrange
+			{type: 'button',  id: 'bringtofront',  img: 'bringtofront', hint: _UNO('.uno:BringToFront', '', true), uno: '.uno:BringToFront', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'button',  id: 'objectforwardone',  img: 'objectforwardone', hint: _UNO('.uno:ObjectForwardOne', '', true), uno: '.uno:ObjectForwardOne', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'button',  id: 'objectbackone',  img: 'objectbackone', hint: _UNO('.uno:ObjectBackOne', '', true), uno: '.uno:ObjectBackOne', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'button',  id: 'sendtoback',  img: 'sendtoback', hint: _UNO('.uno:SendToBack', '', true), uno: '.uno:SendToBack', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'break',   id: 'breakarrange', hidden: true, context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			// transform
+			{type: 'button',  id: 'flipvertical',  img: 'flipvertical', hint: _UNO('.uno:FlipVertical', '', true), uno: '.uno:FlipVertical', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'button',  id: 'fliphorizontal',  img: 'fliphorizontal', hint: _UNO('.uno:FlipHorizontal', '', true), uno: '.uno:FlipHorizontal', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			{type: 'break', id: 'breaktransform', hidden: true, context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
+			// context: ['DrawPage']
+			{type: 'button',  id: 'insertpage',  img: 'insertpage', hint: _UNO('.uno:InsertPage', 'presentation', true), uno: '.uno:InsertPage'},
+			{type: 'button',  id: 'duplicatepage',  img: 'duplicatepage', hint: _UNO('.uno:DuplicatePage', 'presentation', true), uno: '.uno:DuplicatePage'},
+			{type: 'button',  id: 'deletepage',  img: 'deletepage', hint: _UNO('.uno:DeletePage', 'presentation', true), uno: '.uno:DeletePage'},
+			// section 'insert'
+			{type: 'break',   id: 'breakinsert', desktop: true},
 			{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), hidden: true, overlay: {onShow: window.insertTable}, html: window.getInsertTablePopupHtml(), freemiumUno: '.uno:InsertTable'},
 			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), freemiumUno: '.uno:InsertGraphic'},
 			{type: 'menu', id: 'menugraphic', img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), hidden: true, freemiumUno: '.uno:InsertGraphic',
@@ -226,11 +290,12 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'drop',  id: 'insertshapes',  img: 'basicshapes_ellipse', hint: _('Insert shapes'), overlay: {onShow: function() {window.insertShapes('insertshapes'); }}, html: window.getShapesPopupHtml()},
 			{type: 'button',  id: 'insertline', img: 'line', hint: _UNO('.uno:Line', '', true), uno: '.uno:Line'},
 			{type: 'drop',  id: 'insertconnectors',  img: 'connectors_connector', hint: _('Insert connectors'), overlay: {onShow: function() {window.insertShapes('insertconnectors'); }}, html: window.getShapesPopupHtml(), hidden: true},
-			{type: 'break',   id: 'breakinsert', desktop: true},
+			{type: 'break',   id: 'breakannotation', desktop: true},
 			{type: 'button',  id: 'inserttextbox', img: 'text', hint: _UNO('.uno:Text', '', true), uno: '.uno:Text?CreateDirectly:bool=true', hidden: true},
 			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true), hidden: true, freemiumUno: '.uno:InsertAnnotation'},
 			{type: 'button',  id: 'link',  img: 'link', hint: _UNO('.uno:HyperlinkDialog', '', true), disabled: true, freemiumUno: '.uno:HyperlinkDialog'},
 			{type: 'button',  id: 'insertsymbol', img: 'insertsymbol', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'},
+			// section 'sidebar'
 			{type: 'spacer'},
 			{type: 'break', id: 'breaksidebar', hidden: true},
 			{type: 'button',  id: 'edit',  img: 'edit'},
@@ -326,7 +391,9 @@ L.Control.TopToolbar = L.Control.extend({
 					'numberformatcurrency', 'numberformatpercent',
 					'numberformatincdecimals', 'numberformatdecdecimals', 'break-number', 'togglemergecells', 'breakmergecells',
 					'setborderstyle', 'sortascending', 'sortdescending', 'breaksorting', 'backgroundcolor', 'breaksidebar', 'sidebar');
-				toolbarUp.remove('styles');
+				toolbarUp.remove('styles', 'justifypara', 'leftpara', 'centerpara', 'rightpara', 'justifypara', 'presentation', 'backcolor',
+					'wrapoff', 'wrapon', 'wrapideal', 'wrapleft', 'wrapthrough', 'wrapright', 'breakwrap',
+					'insertpage', 'duplicatepage', 'deletepage');
 			}
 
 			$('#toolbar-wrapper').addClass('spreadsheet');
@@ -337,11 +404,12 @@ L.Control.TopToolbar = L.Control.extend({
 
 			break;
 		case 'text':
-			if (toolbarUp)
+			if (toolbarUp) {
 				toolbarUp.show('reset', 'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'incrementindent', 'decrementindent',
 					'breakindent', 'inserttable', 'insertannotation', 'backcolor', 'breaksidebar', 'sidebar');
-
+				toolbarUp.remove('presentation', 'textalign', 'insertpage', 'duplicatepage', 'deletepage');
+			}
 			break;
 		case 'presentation':
 			// Fill the style select box if not yet filled
@@ -366,6 +434,7 @@ L.Control.TopToolbar = L.Control.extend({
 					'leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable',  'insertannotation', 'backcolor',
 					'breaksidebar', 'modifypage', 'slidechangewindow', 'customanimation', 'masterslidespanel');
+				toolbarUp.remove('print', 'wrapoff', 'wrapon', 'wrapideal', 'wrapleft', 'wrapthrough', 'wrapright', 'breakwrap');
 			}
 			break;
 		case 'drawing':
@@ -373,6 +442,7 @@ L.Control.TopToolbar = L.Control.extend({
 				toolbarUp.show('leftpara', 'centerpara', 'rightpara', 'justifypara', 'breakpara', 'linespacing',
 					'breakspacing', 'defaultbullet', 'defaultnumbering', 'breakbullet', 'inserttextbox', 'inserttable', 'backcolor',
 					'breaksidebar', 'modifypage', 'insertconnectors');
+				toolbarUp.remove('print', 'wrapoff', 'wrapon', 'wrapideal', 'wrapleft', 'wrapthrough', 'wrapright', 'breakwrap');
 			}
 			break;
 		}
