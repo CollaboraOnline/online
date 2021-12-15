@@ -125,6 +125,10 @@
 	flex-direction: column;
 }
 
+.notebookbar-shortcuts-bar .cell.notebookbar {
+	padding: 0 2px;
+}
+
 #Save.savemodified:after {
 	content: '';
 	display: block;
