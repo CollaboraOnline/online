@@ -23,3 +23,16 @@
 	background: #fff;
 }
 
+.idialog-footer {
+	display: flex;
+	margin-right: -5px;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.idialog-button {
+	display: flex;
+	margin: 5px;
+	align-items: center;
+	height: 32px;
+}
