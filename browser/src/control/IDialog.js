@@ -33,7 +33,8 @@ L.IDialog = L.Class.extend({
 			container = L.DomUtil.create('div', prefix + '-footer');
 			for (item in buttons) {
 				data = buttons[item];
-				button = L.DomUtil.create(data.type, data.className, container);
+				button = L.DomUtil.create('button', data.className, container);
+				button.type = data.type;
 				button.textContent = data.text;
 			}
 			return container;
