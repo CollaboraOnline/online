@@ -150,22 +150,6 @@ var CSelections = L.Class.extend({
 		else
 			this._overlay.removePathGroup(this._selection);
 	},
-
-	/*hasObjectFocusDarkOverlay : function() {
-		return this._darkOverlay.hasObjectFocusDarkOverlay();
-	},
-
-	addObjectFocusDarkOverlay : function(bounds) {
-		if (!this.hasObjectFocusDarkOverlay()) {
-			this._darkOverlay.show(bounds);
-		}
-	},
-
-	removeObjectFocusDarkOverlay: function() {
-		if (this.hasObjectFocusDarkOverlay()) {
-			this._darkOverlay.remove();
-		}
-	}*/
 });
 
 // CReferences is used to store and manage the CPath's of all
