@@ -248,6 +248,8 @@ td.jsdialog .jsdialog.cell.sidebar {
 .hasnotebookbar .ui-content.unotoolbutton.selected:hover,
 .unotoolbutton.notebookbar:hover,
 .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline):hover,
+#clearFormatting:hover,
+#FormatPaintbrush:hover,
 .sidebar.unotoolbutton:hover,
 .sidebar.unotoolbutton.selected:hover,
 .sidebar #resetattr:hover,
