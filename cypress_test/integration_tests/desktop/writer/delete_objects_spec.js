@@ -2,7 +2,7 @@
 
 var helper = require('../../common/helper');
 
-describe('Delete Objects', function() {
+describe('Delete Objects', {retries: 2}, function() {
 	var testFileName = 'delete_objects.odt';
 
 	beforeEach(function() {
