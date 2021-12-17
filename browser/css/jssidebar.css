@@ -275,9 +275,8 @@ td.jsdialog .jsdialog.cell.sidebar {
 	left: -7px;
 }
 
-#table-verticalalignment {
-	position: relative;
-	top: 6px;
+#table-box1 > #box1 > div:nth-child(3) {
+	display: table-row;
 }
 
 #LB_SHADOW_COLOR, #LB_GLOW_COLOR {
