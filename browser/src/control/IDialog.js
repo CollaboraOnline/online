@@ -45,6 +45,10 @@ L.IDialog = L.Class.extend({
 				button = L.DomUtil.create('button', data.className, container);
 				button.type = data.type;
 				button.textContent = data.text;
+
+				if (data.click) {
+					button.addEventListener('click', data.click);
+				}
 			}
 			return container;
 		},
