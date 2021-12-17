@@ -3,10 +3,11 @@
 var helper = require('../../common/helper');
 
 describe('Track Changes', function () {
-	var testFileName = 'track_changes.odt';
+	var origTestFileName = 'track_changes.odt';
+	var testFileName;
 
 	beforeEach(function () {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 	});
 
 	afterEach(function () {

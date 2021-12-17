@@ -7,10 +7,11 @@ var mode = Cypress.env('USER_INTERFACE');
 // This whole test suite uses new native sidebar which is not implemented in co-6-4 yet
 //TODO: enable this tests when sidebar is implemented natively
 describe.skip('Table operations', function() {
-	var testFileName = 'table_operation.odt';
+	var origTestFileName = 'table_operation.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 		desktopHelper.selectZoomLevel('70');
 	});
 

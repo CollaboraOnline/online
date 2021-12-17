@@ -5,10 +5,11 @@ var impressHelper = require('../../common/impress_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe('Apply paragraph properties on selected shape.', function() {
-	var testFileName = 'apply_paragraph_props_text.odp';
+	var origTestFileName = 'apply_paragraph_props_text.odp';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 
 		desktopHelper.selectZoomLevel('50');
 

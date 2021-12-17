@@ -3,10 +3,11 @@
 var helper = require('../../common/helper');
 
 describe('Calc sidebar dialog image caching', function() {
-	var testFileName = 'many-sizes.ods';
+	var origTestFileName = 'many-sizes.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		// Wait until the Formula-Bar is loaded.
 		cy.get('.inputbar_container', {timeout : 10000});

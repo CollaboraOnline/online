@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe('Calc focus tests', function() {
-	var testFileName = 'focus.ods';
+	var origTestFileName = 'focus.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 	});
 
 	afterEach(function() {

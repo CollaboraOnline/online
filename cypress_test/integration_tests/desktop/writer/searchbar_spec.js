@@ -5,10 +5,11 @@ var searchHelper = require('../../common/search_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe('Searching via search bar' ,function() {
-	var testFileName = 'search_bar.odt';
+	var origTestFileName = 'search_bar.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 	});
 
 	afterEach(function() {

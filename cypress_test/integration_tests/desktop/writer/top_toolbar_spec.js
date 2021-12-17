@@ -6,10 +6,11 @@ var writerHelper = require('../../common/writer_helper');
 var mode = Cypress.env('USER_INTERFACE');
 
 describe('Top toolbar tests.', function() {
-	var testFileName = 'top_toolbar.odt';
+	var origTestFileName = 'top_toolbar.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showSidebarIfHidden();

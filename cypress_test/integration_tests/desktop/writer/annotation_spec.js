@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var { insertMultipleComment, selectZoomLevel } = require('../../common/desktop_helper');
 
 describe('Annotation Tests', function() {
-	var testFileName = 'annotation.odt';
+	var origTestFileName = 'annotation.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
