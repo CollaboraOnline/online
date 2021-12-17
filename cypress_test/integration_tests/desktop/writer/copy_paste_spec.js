@@ -3,10 +3,11 @@
 var helper = require('../../common/helper');
 
 describe('Clipboard operations.', function() {
-	var testFileName = 'copy_paste.odt';
+	var origTestFileName = 'copy_paste.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 	});
 
 	afterEach(function() {

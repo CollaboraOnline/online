@@ -5,10 +5,11 @@ var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
 describe('Apply font on selected text.', function() {
-	var testFileName = 'apply_font_text.odp';
+	var origTestFileName = 'apply_font_text.odp';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 
 		mobileHelper.enableEditingMobile();
 

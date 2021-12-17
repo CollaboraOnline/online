@@ -5,10 +5,11 @@ var searchHelper = require('../../common/search_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Searching via search bar.', function() {
-	var testFileName = 'search_bar.ods';
+	var origTestFileName = 'search_bar.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		mobileHelper.enableEditingMobile();
 

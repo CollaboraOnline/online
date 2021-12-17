@@ -5,10 +5,11 @@ var calcHelper = require('../../common/calc_helper');
 var mode = Cypress.env('USER_INTERFACE');
 
 describe('AutoFilter', function() {
-	var testFileName = 'autofilter.ods';
+	var origTestFileName = 'autofilter.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		toggleAutofilter();
 

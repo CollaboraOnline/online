@@ -5,10 +5,11 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe('Apply paragraph properties.', function() {
-	var testFileName = 'apply_paragraph_properties.odt';
+	var origTestFileName = 'apply_paragraph_properties.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 
 		mobileHelper.enableEditingMobile();
 
@@ -47,7 +48,7 @@ describe('Apply paragraph properties.', function() {
 
 		cy.get('#Paragraph')
 			.should('have.class', 'selected');
-			
+
 		helper.clickOnIdle('#LeftPara');
 
 		cy.get('#LeftParaimg')

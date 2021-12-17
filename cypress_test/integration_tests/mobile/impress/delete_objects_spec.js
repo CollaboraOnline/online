@@ -4,7 +4,8 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Delete Objects', function() {
-	var testFileName = 'delete_objects.odp';
+	var origTestFileName = 'delete_objects.odp';
+	var testFileName;
 
 	var eventOptions = {
 		force: true,
@@ -13,7 +14,7 @@ describe('Delete Objects', function() {
 	};
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 
 		mobileHelper.enableEditingMobile();
 	});

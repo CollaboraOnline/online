@@ -3,10 +3,11 @@ var helper = require('../../common/helper');
 
 
 describe('Delete Objects', function() {
-	var testFileName = 'delete_objects.ods';
+	var origTestFileName = 'delete_objects.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 	});
 
 	afterEach(function() {

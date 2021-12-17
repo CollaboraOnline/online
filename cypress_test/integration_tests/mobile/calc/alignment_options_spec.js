@@ -6,10 +6,11 @@ var mobileHelper = require('../../common/mobile_helper');
 var calcMobileHelper = require('./calc_mobile_helper');
 
 describe('Change alignment settings.', function() {
-	var testFileName = 'alignment_options.ods';
+	var origTestFileName = 'alignment_options.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

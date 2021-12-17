@@ -5,10 +5,11 @@ var calcHelper = require('../../common/calc_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe('Change cell appearance.', function() {
-	var testFileName = 'cell_appearance.ods';
+	var origTestFileName = 'cell_appearance.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 	});
 
 	afterEach(function() {

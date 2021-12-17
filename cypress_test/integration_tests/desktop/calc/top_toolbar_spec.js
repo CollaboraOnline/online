@@ -5,10 +5,11 @@ var desktopHelper = require('../../common/desktop_helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe('Top toolbar tests.', function() {
-	var testFileName = 'top_toolbar.ods';
+	var origTestFileName = 'top_toolbar.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		calcHelper.clickOnFirstCell();
 	});

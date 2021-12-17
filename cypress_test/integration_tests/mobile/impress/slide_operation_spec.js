@@ -5,10 +5,11 @@ var impressHelper = require('../../common/impress_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Slide operations', function() {
-	var testFileName = 'slide_operations.odp';
+	var origTestFileName = 'slide_operations.odp';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 
 		mobileHelper.enableEditingMobile();
 	});

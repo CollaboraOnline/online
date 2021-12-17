@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe('Calc bottom bar tests.', function() {
-	var testFileName = 'BottomBar.ods';
+	var origTestFileName = 'BottomBar.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 	});
 
 	afterEach(function() {

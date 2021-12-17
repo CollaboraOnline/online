@@ -5,10 +5,11 @@ var mobileHelper = require('../../common/mobile_helper');
 var impressHelper = require('../../common/impress_helper');
 
 describe('Impress insertion wizard.', function() {
-	var testFileName = 'insertion_wizard.odp';
+	var origTestFileName = 'insertion_wizard.odp';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 
 		mobileHelper.enableEditingMobile();
 	});
