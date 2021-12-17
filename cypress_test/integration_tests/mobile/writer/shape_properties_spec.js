@@ -4,7 +4,7 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Change shape properties via mobile wizard.', function() {
-	const defaultStartPoint = [1953, 4875];
+	const defaultStartPoint = [1953, 4800];
 	const defaultBase = 5992;
 	const defaultAltitude = 5992;
 	const unitScale = 2540.37;
