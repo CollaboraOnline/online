@@ -16,6 +16,8 @@ describe('Row Column Operation', function() {
 		calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
 
 		calcHelper.clickOnFirstCell(true,false);
+
+		mode === 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-right').click() : '';
 	});
 
 	afterEach(function() {

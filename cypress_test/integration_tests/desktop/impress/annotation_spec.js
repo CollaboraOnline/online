@@ -15,7 +15,7 @@ describe('Annotation Tests', function() {
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
 		} else if (Cypress.env('USER_INTERFACE') === 'notebookbar') {
-			cy.get('#ModifyPage').click();
+			cy.get('.unospan-optionstoolboxdown.unoModifyPage').click();
 		} else {
 			desktopHelper.hideSidebar();
 		}
@@ -98,7 +98,7 @@ describe('Collapsed Annotation Tests', function() {
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
 		} else if (Cypress.env('USER_INTERFACE') === 'notebookbar') {
-			cy.get('#ModifyPage').click();
+			cy.get('.unospan-optionstoolboxdown.unoModifyPage').click();
 		} else {
 			desktopHelper.hideSidebar();
 		}
@@ -179,7 +179,7 @@ describe('Comment Scrolling',function() {
 		helper.beforeAll(testFileName, 'impress');
 
 		if (Cypress.env('USER_INTERFACE') === 'notebookbar') {
-			cy.get('#ModifyPage').click();
+			cy.get('.unospan-optionstoolboxdown.unoModifyPage').click();
 		} else {
 			desktopHelper.hideSidebar();
 		}
