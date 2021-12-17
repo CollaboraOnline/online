@@ -560,10 +560,6 @@ DocumentBroker::~DocumentBroker()
 {
     assertCorrectThread();
 
-#if !MOBILEAPP
-    Admin::instance().rmDoc(_docKey);
-#endif
-
     LOG_INF("~DocumentBroker [" << _docKey <<
             "] destroyed with " << _sessions.size() << " sessions left.");
 
@@ -571,11 +567,16 @@ DocumentBroker::~DocumentBroker()
     _poll->joinThread();
 
     if (!_sessions.empty())
-        LOG_WRN("DocumentBroker [" << _docKey << "] still has unremoved sessions.");
+        LOG_WRN("Destroying DocumentBroker [" << _docKey << "] while having unremoved sessions.");
 
     // Need to first make sure the child exited, socket closed,
     // and thread finished before we are destroyed.
     _childProcess.reset();
+
+#if !MOBILEAPP
+    // Remove from the admin last, to avoid racing the next test.
+    Admin::instance().rmDoc(_docKey);
+#endif
 }
 
 void DocumentBroker::joinThread()
