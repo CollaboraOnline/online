@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var searchHelper = require('../../common/search_helper');
 
 describe('Searching via search bar.', function() {
-	var testFileName = 'search_bar.ods';
+	var origTestFileName = 'search_bar.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 	});
 
 	afterEach(function() {

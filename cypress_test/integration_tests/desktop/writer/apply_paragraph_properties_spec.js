@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe('Apply paragraph properties.', function() {
-	var testFileName = 'apply_paragraph_properties.odt';
+	var origTestFileName = 'apply_paragraph_properties.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 
 		writerHelper.selectAllTextOfDoc();
 	});

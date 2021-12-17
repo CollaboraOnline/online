@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe('Apply font changes.', function() {
-	var testFileName = 'apply_font.ods';
+	var origTestFileName = 'apply_font.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		calcHelper.clickOnFirstCell();
 	});
