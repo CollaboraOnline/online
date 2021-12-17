@@ -5,7 +5,8 @@ var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe('Delete Objects',function() {
-	var testFileName = 'delete_objects.ods';
+	var origTestFileName = 'delete_objects.ods';
+	var testFileName;
 
 	var eventOptions = {
 		force: true,
@@ -14,7 +15,7 @@ describe('Delete Objects',function() {
 	};
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

@@ -9,9 +9,17 @@ var mobileWizardIdleTime = 1250;
 //				By default, we create a copy to have a clear test document but
 //				but when we test saving functionality we need to open same docuement
 // isMultiUser - whether the test is for multiuser
-function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser) {
+// noRename - whether or not to give the file a unique name, if noFileCopy is false.
+function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser, noRename) {
 	cy.log('Loading test document with a local build - start.');
-	cy.log('Param - fileName: ' + fileName);
+
+	var newFileName = fileName;
+	if (noRename !== true && noFileCopy !== true) {
+		var randomName = (Math.random() + 1).toString(36).substring(7);
+		newFileName = randomName + '_' + fileName;
+	}
+
+	cy.log('Param - fileName: ' + fileName + ' -> ' + newFileName);
 	cy.log('Param - subFolder: ' + subFolder);
 	cy.log('Param - noFileCopy: ' + noFileCopy);
 	cy.log('Param - isMultiUser: ' + isMultiUser);
@@ -24,12 +32,14 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser) 
 				sourceDir: Cypress.env('DATA_FOLDER'),
 				destDir: Cypress.env('DATA_WORKDIR'),
 				fileName: fileName,
+				destFileName: newFileName,
 			});
 		} else {
 			cy.task('copyFile', {
 				sourceDir: Cypress.env('DATA_FOLDER') + subFolder + '/',
 				destDir: Cypress.env('DATA_WORKDIR') + subFolder + '/',
 				fileName: fileName,
+				destFileName: newFileName,
 			});
 		}
 	}
@@ -46,12 +56,12 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser) 
 		URI += '/browser/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/debug.html?lang=en-US&file_path=' +
-			Cypress.env('DATA_WORKDIR') + fileName;
+			Cypress.env('DATA_WORKDIR') + newFileName;
 	} else {
 		URI += '/browser/' +
 			Cypress.env('WSD_VERSION_HASH') +
 			'/debug.html?lang=en-US&file_path=' +
-			Cypress.env('DATA_WORKDIR') + subFolder + '/' + fileName;
+			Cypress.env('DATA_WORKDIR') + subFolder + '/' + newFileName;
 	}
 
 	if (isMultiUser) {
@@ -86,6 +96,7 @@ function loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser) 
 		});
 	}
 	cy.log('Loading test document with a local build - end.');
+	return newFileName;
 }
 
 // Loading the test document inside a Nextcloud integration.
@@ -304,7 +315,8 @@ function waitForInterferingUser() {
 // subsequentLoad - whether we load a test document for the first time in the
 //                  test case or not. It's important for nextcloud because we need to sign in
 //                  with the username + password only for the first time.
-function loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad) {
+// noRename - whether or not to give the file a unique name, if noFileCopy is false.
+function loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename) {
 	cy.log('Loading test document - start.');
 	cy.log('Param - fileName: ' + fileName);
 	cy.log('Param - subFolder: ' + subFolder);
@@ -318,10 +330,11 @@ function loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoa
 		cy.viewport('iphone-6');
 	});
 
+	var destFileName = fileName;
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
 		loadTestDocNextcloud(fileName, subFolder, subsequentLoad);
 	} else {
-		loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser);
+		destFileName = loadTestDocNoIntegration(fileName, subFolder, noFileCopy, noRename);
 	}
 
 	// When dialog appears before document load (eg. macro warning, csv import options)
@@ -333,6 +346,8 @@ function loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoa
 	} else {
 		checkIfBothDocIsLoaded();
 	}
+
+	return destFileName;
 }
 
 function checkIfBothDocIsLoaded() {
@@ -501,12 +516,17 @@ function matchClipboardText(regexp) {
 // some modification. The purpose is typically to verify that
 // said changes were preserved in the document upon closing.
 function reload(fileName, subFolder, noFileCopy, subsequentLoad) {
+	cy.log('Reloading document: ' + subFolder + '/' + fileName);
+	cy.log('Reloading document - noFileCopy: ' + noFileCopy);
+	cy.log('Reloading document - subsequentLoad: ' + subsequentLoad);
 	closeDocument(fileName, '');
-	loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad);
+	var noRename = true;
+	return loadTestDoc(fileName, subFolder, noFileCopy, subsequentLoad, noRename);
 }
 
-function beforeAll(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad) {
-	loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad);
+// noRename - whether or not to give the file a unique name, if noFileCopy is false.
+function beforeAll(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename) {
+	return loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoad, hasInteractionBeforeLoad, noRename);
 }
 
 function afterAll(fileName, testState) {
@@ -606,7 +626,11 @@ function closeDocument(fileName, testState) {
 		// We have PID number before the file names, with matching
 		// also on the PID number we can make sure to match on the
 		// whole file name, not on a suffix of a file name.
-		var regex = new RegExp('[0-9]' + fileName);
+		var rexname = '[0-9]' + fileName;
+		var regex = new RegExp(rexname);
+		cy.log('closeDocument - waiting not.match: ' + rexname);
+		// Saving may take much longer now to ensure no unsaved data exists.
+		// This is not an issue on a fast machine, but on the CI we do timeout often.
 		cy.get('#docview', { timeout: Cypress.config('defaultCommandTimeout') * 2.0 })
 			.invoke('text')
 			.should('not.match', regex);

@@ -5,10 +5,11 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe.skip('Apply font changes.', function() {
-	var testFileName = 'apply_font.odt';
+	var origTestFileName = 'apply_font.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 
 		mobileHelper.enableEditingMobile();
 

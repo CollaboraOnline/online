@@ -5,10 +5,11 @@ var impressHelper = require('../../common/impress_helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe('Top toolbar tests.', function() {
-	var testFileName = 'top_toolbar.odp';
+	var origTestFileName = 'top_toolbar.odp';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();

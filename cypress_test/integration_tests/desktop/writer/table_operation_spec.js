@@ -5,10 +5,11 @@ var desktopHelper = require('../../common/desktop_helper');
 var mode = Cypress.env('USER_INTERFACE');
 
 describe('Table operations', function() {
-	var testFileName = 'table_operation.odt';
+	var origTestFileName = 'table_operation.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 		desktopHelper.selectZoomLevel('70');
 	});
 

@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var { insertImage } = require('../../common/desktop_helper');
 
 describe('Image Operation Tests', function() {
-	var testFileName = 'image_operation.ods';
+	var origTestFileName = 'image_operation.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 	});
 
 	afterEach(function() {

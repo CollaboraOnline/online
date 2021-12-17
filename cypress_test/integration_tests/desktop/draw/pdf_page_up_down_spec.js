@@ -3,10 +3,11 @@
 var helper = require('../../common/helper');
 
 describe('PDF View Tests', function() {
-	var testFileName = 'pdf_page_up_down.pdf';
+	var origTestFileName = 'pdf_page_up_down.pdf';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'draw');
+		testFileName = helper.beforeAll(origTestFileName, 'draw');
 	});
 
 	afterEach(function() {

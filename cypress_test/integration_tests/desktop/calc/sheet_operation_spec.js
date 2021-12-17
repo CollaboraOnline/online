@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe('Sheet Operations.', function () {
-	var testFileName = 'sheet_operation.ods';
+	var origTestFileName = 'sheet_operation.ods';
+	var testFileName;
 
 	beforeEach(function () {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 	});
 
 	afterEach(function () {

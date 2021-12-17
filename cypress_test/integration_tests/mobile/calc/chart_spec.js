@@ -5,10 +5,11 @@ var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe('Chart tests.', function() {
-	var testFileName = 'chart.ods';
+	var origTestFileName = 'chart.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		mobileHelper.enableEditingMobile();
 

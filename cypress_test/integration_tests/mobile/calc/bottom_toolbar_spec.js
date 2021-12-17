@@ -9,8 +9,7 @@ describe('Interact with bottom toolbar.', function() {
 	var testFileName;
 
 	function before(fileName) {
-		testFileName = fileName;
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(fileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

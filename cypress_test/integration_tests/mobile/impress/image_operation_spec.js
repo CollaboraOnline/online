@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Image Operation Tests', function() {
-	var testFileName = 'image_operation.odp';
+	var origTestFileName = 'image_operation.odp';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

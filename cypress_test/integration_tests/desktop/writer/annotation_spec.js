@@ -4,11 +4,12 @@ var helper = require('../../common/helper');
 var { insertMultipleComment, hideSidebar, selectZoomLevel } = require('../../common/desktop_helper');
 
 describe('Annotation Tests', function() {
-	var testFileName = 'annotation.odt';
+	var origTestFileName = 'annotation.odt';
+	var testFileName;
 
 	beforeEach(function() {
 		cy.viewport(1400, 600);
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 		var mode = Cypress.env('USER_INTERFACE');
 		if (mode === 'notebookbar') {
 			cy.get('.unospan-optionstoolboxdown.unoSidebar')

@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Spell checking menu.', function() {
-	var testFileName = 'spellchecking.odp';
+	var origTestFileName = 'spellchecking.odp';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
