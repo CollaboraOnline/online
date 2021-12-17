@@ -8,8 +8,7 @@ describe('Text cursor tests.', function() {
 	var testFileName;
 
 	function before(fileName) {
-		testFileName = fileName;
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(fileName, 'writer');
 
 		mobileHelper.enableEditingMobile();
 	}

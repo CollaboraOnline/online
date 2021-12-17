@@ -6,10 +6,11 @@ var impressHelper = require('../../common/impress_helper');
 var mode = Cypress.env('USER_INTERFACE');
 
 describe('Table operations', function() {
-	var testFileName = 'table_operation.odp';
+	var origTestFileName = 'table_operation.odp';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 		desktopHelper.selectZoomLevel('50');
 	});
 

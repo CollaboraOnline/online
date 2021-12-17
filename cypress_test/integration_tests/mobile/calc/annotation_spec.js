@@ -4,9 +4,11 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Annotation Tests',function() {
-	var testFileName = 'annotation.ods';
+	var origTestFileName = 'annotation.ods';
+	var testFileName;
+
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

@@ -3,10 +3,11 @@
 var helper = require('../../common/helper');
 
 describe('LOK tunnelled dialog tests', function() {
-	var testFileName = 'tunneled_dialog.ods';
+	var origTestFileName = 'tunneled_dialog.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 	});
 
 	afterEach(function() {

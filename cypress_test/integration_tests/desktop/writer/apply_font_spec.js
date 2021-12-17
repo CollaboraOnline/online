@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe('Apply font changes.', function() {
-	var testFileName = 'apply_font.odt';
+	var origTestFileName = 'apply_font.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 	});
 
 	afterEach(function() {

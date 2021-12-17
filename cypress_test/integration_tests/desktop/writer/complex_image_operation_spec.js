@@ -3,11 +3,12 @@
 var helper = require('../../common/helper');
 
 describe('Complex image operation test', function() {
-	var testFileName = 'complex_image_operation.odt';
+	var origTestFileName = 'complex_image_operation.odt';
+	var testFileName;
 
 	beforeEach(function() {
 		localStorage.setItem('image_validation_test', true);
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 	});
 
 	afterEach(function() {

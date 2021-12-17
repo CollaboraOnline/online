@@ -3,10 +3,12 @@
 var helper = require('../../common/helper');
 
 describe('Simultaneous typing: user-1.', function() {
-	var testFileName = 'simultaneous_typing.odt';
+	var origTestFileName = 'simultaneous_typing.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		var noRename = true;
+		testFileName = helper.beforeAll(origTestFileName, 'writer', undefined, undefined, noRename);
 	});
 
 	afterEach(function() {

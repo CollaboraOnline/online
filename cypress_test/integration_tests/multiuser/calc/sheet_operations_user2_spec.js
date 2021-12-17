@@ -3,10 +3,11 @@
 var helper = require('../../common/helper');
 
 describe('Sheet operations: user-2.', function() {
-	var testFileName = 'sheet_operations.ods';
+	var origTestFileName = 'sheet_operations.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc', true);
+		testFileName = helper.beforeAll(origTestFileName, 'calc', true);
 	});
 
 	afterEach(function() {

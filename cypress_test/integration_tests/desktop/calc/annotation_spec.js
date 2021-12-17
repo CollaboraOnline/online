@@ -3,10 +3,11 @@ var helper = require('../../common/helper');
 var { insertMultipleComment, selectZoomLevel } = require('../../common/desktop_helper');
 
 describe('Annotation Tests', function() {
-	var testFileName = 'annotation.ods';
+	var origTestFileName = 'annotation.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();

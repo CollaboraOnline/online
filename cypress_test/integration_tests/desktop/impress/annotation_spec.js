@@ -5,10 +5,11 @@ var { addSlide, changeSlide } = require('../../common/impress_helper');
 var { insertMultipleComment, selectZoomLevel } = require('../../common/desktop_helper');
 
 describe('Annotation Tests', function() {
-	var testFileName = 'comment_switching.odp';
+	var origTestFileName = 'comment_switching.odp';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
@@ -86,10 +87,11 @@ describe('Annotation Tests', function() {
 });
 
 describe('Comment Scrolling',function() {
-	var testFileName = 'comment_switching.odp';
+	var origTestFileName = 'comment_switching.odp';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 	});
 
 	afterEach(function() {

@@ -5,10 +5,11 @@ var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Apply number formatting.', function() {
-	var testFileName = 'number_format.ods';
+	var origTestFileName = 'number_format.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

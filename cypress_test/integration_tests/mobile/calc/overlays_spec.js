@@ -4,12 +4,13 @@ var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
-var testFileName = 'overlays.ods';
+var origTestFileName = 'overlays.ods';
+var testFileName;
 
 describe('Overlay bounds.', function () {
 
 	beforeEach(function () {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		mobileHelper.enableEditingMobile();
 	});
