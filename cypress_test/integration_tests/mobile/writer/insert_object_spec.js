@@ -5,10 +5,11 @@ var mobileHelper = require('../../common/mobile_helper');
 var writerHelper = require('../../common/writer_helper');
 
 describe('Insert objects via insertion wizard.', function() {
-	var testFileName = 'insert_object.odt';
+	var origTestFileName = 'insert_object.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

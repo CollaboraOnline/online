@@ -3,10 +3,11 @@ var helper = require('../../common/helper');
 var { insertMultipleComment } = require('../../common/desktop_helper');
 
 describe('Annotation Tests', function() {
-	var testFileName = 'annotation.ods';
+	var origTestFileName = 'annotation.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 	});
 
 	afterEach(function() {

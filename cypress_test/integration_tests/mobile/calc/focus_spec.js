@@ -5,10 +5,11 @@ var mobileHelper = require('../../common/mobile_helper');
 var calcHelper = require('../../common/calc_helper');
 
 describe('Calc focus tests', function() {
-	var testFileName = 'focus.ods';
+	var origTestFileName = 'focus.ods';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		// Wait until the Formula-Bar is loaded.
 		cy.get('.inputbar_container', {timeout : 10000});

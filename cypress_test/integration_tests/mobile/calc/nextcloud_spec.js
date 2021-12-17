@@ -5,7 +5,8 @@ var mobileHelper = require('../../common/mobile_helper');
 var nextcloudHelper = require('../../common/nextcloud_helper');
 
 describe('Nextcloud specific tests.', function() {
-	var testFileName = 'nextcloud.ods';
+	var origTestFileName = 'nextcloud.ods';
+	var testFileName;
 
 	afterEach(function() {
 		helper.afterAll(testFileName, this.currentTest.state);
@@ -14,7 +15,7 @@ describe('Nextcloud specific tests.', function() {
 	it('Insert image from storage.', function() {
 		helper.upLoadFileToNextCloud('image_to_insert.png', 'calc');
 
-		helper.beforeAll(testFileName, 'calc', undefined, true);
+		testFileName = helper.beforeAll(origTestFileName, 'calc', undefined, true);
 
 		mobileHelper.enableEditingMobile();
 
@@ -26,7 +27,7 @@ describe('Nextcloud specific tests.', function() {
 	});
 
 	it('Save as.', function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();
@@ -52,7 +53,7 @@ describe('Nextcloud specific tests.', function() {
 	});
 
 	it('Share.', function() {
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
 		mobileHelper.enableEditingMobile();
 

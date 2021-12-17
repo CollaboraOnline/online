@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Mobile wizard state tests', function() {
-	var testFileName = 'mobile_wizard_state.odt';
+	var origTestFileName = 'mobile_wizard_state.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 	});
 
 	afterEach(function() {

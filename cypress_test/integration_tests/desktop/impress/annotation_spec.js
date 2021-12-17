@@ -6,11 +6,12 @@ var { addSlide, changeSlide } = require('../../common/impress_helper');
 var { insertMultipleComment } = require('../../common/desktop_helper');
 
 describe('Annotation Tests', function() {
-	var testFileName = 'comment_switching.odp';
+	var origTestFileName = 'comment_switching.odp';
+	var testFileName;
 
 	beforeEach(function() {
 		cy.viewport(1500, 600);
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.hideSidebarIfVisible();
@@ -173,10 +174,11 @@ describe('Collapsed Annotation Tests', function() {
 });
 
 describe('Comment Scrolling',function() {
-	var testFileName = 'comment_switching.odp';
+	var origTestFileName = 'comment_switching.odp';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 
 		if (Cypress.env('USER_INTERFACE') === 'notebookbar') {
 			cy.get('.unospan-optionstoolboxdown.unoModifyPage').click();

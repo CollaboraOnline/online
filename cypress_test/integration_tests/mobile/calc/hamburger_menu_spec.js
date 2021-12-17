@@ -5,11 +5,10 @@ var calcHelper = require('../../common/calc_helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe('Trigger hamburger menu options.', function() {
-	var testFileName = '';
+	var testFileName;
 
 	function before(testFile) {
-		testFileName = testFile;
-		helper.beforeAll(testFileName, 'calc');
+		testFileName = helper.beforeAll(testFile, 'calc');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

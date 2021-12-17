@@ -7,8 +7,7 @@ describe('Form field button tests.', function() {
 	var testFileName = 'shape_operations.odt';
 
 	function before(fileName) {
-		testFileName = fileName;
-		helper.beforeAll(fileName, 'writer');
+		testFileName = helper.beforeAll(fileName, 'writer');
 
 		if (Cypress.env('INTEGRATION') === 'nextcloud') {
 			desktopHelper.showStatusBarIfHidden();

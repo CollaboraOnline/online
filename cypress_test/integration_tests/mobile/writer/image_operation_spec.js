@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var mobileHelper = require('../../common/mobile_helper');
 
 describe.skip('Image Operation Tests', function() {
-	var testFileName = 'annotation.odt';
+	var origTestFileName = 'image_operation.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer');
+		testFileName = helper.beforeAll(origTestFileName, 'writer');
 
 		// Click on edit button
 		mobileHelper.enableEditingMobile();

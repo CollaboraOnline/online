@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe('Delete Objects', function() {
-	var testFileName = 'delete_objects.odp';
+	var origTestFileName = 'delete_objects.odp';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress');
+		testFileName = helper.beforeAll(origTestFileName, 'impress');
 	});
 
 	afterEach(function() {
