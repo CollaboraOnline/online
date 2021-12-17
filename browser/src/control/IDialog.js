@@ -22,6 +22,11 @@ L.IDialog = L.Class.extend({
 			}
 		},
 
+		close: function () {
+			if (L.IDialog.container)
+				document.body.removeChild(L.IDialog.container);
+		},
+
 		innerHtml: function (string) {
 			if (typeof string === 'undefined')
 				return '';
