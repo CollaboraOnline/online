@@ -16,6 +16,10 @@ L.IDialog = L.Class.extend({
 			content.appendChild(L.IDialog.createButtons(options.prefix, options.buttons));
 			document.body.appendChild(container);
 			L.IDialog.container = container;
+
+			if (options.afterOpen && typeof options.afterOpen === 'function') {
+				options.afterOpen.call(container);
+			}
 		},
 
 		innerHtml: function (string) {
