@@ -3,7 +3,7 @@
  * L.Control.DocumentNameInput
  */
 
-/* global $ */
+/* global $ _ */
 L.Control.DocumentNameInput = L.Control.extend({
 
 	onAdd: function (map) {
@@ -69,21 +69,38 @@ L.Control.DocumentNameInput = L.Control.extend({
 	onDocLayerInit: function() {
 		this._setNameInputWidth();
 
+		var el = $('#document-name-input');
+
+		try {
+			var fileNameFullPath = new URL(
+				new URLSearchParams(window.location.search).get('WOPISrc')
+			)
+				.pathname
+				.replace('/wopi/files', '');
+			
+			var basePath = fileNameFullPath.replace(this.map['wopi'].BaseFileName , '').replace(/\/$/, '');
+			var title = this.map['wopi'].BaseFileName + '\n' + _('Path') + ': ' + basePath;
+
+			el.prop('title', title);
+		} catch (e) {
+			// purposely ignore the error for legacy browsers
+		}
+
 		// FIXME: Android app would display a temporary filename, not the actual filename
 		if (window.ThisIsTheAndroidApp) {
-			$('#document-name-input').hide();
+			el.hide();
 		} else {
-			$('#document-name-input').show();
+			el.show();
 		}
 
 		if (window.ThisIsAMobileApp) {
 			// We can now set the document name in the menu bar
-			$('#document-name-input').prop('disabled', false);
-			$('#document-name-input').removeClass('editable');
-			$('#document-name-input').focus(function() { $(this).blur(); });
+			el.prop('disabled', false);
+			el.removeClass('editable');
+			el.focus(function() { $(this).blur(); });
 			// Call decodeURIComponent twice: Reverse both our encoding and the encoding of
 			// the name in the file system.
-			$('#document-name-input').val(decodeURIComponent(decodeURIComponent(this.map.options.doc.replace(/.*\//, '')))
+			el.val(decodeURIComponent(decodeURIComponent(this.map.options.doc.replace(/.*\//, '')))
 							  // To conveniently see the initial visualViewport scale and size, un-comment the following line.
 							  // + ' (' + window.visualViewport.scale + '*' + window.visualViewport.width + 'x' + window.visualViewport.height + ')'
 							  // TODO: Yes, it would be better to see it change as you rotate the device or invoke Split View.
