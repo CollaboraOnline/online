@@ -191,7 +191,7 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 	_updateOptions: function(obj) {
-		// console.log('===> _updateOptions');
+		// window.app.console.log('===> _updateOptions');
 		// Note that the values for margin1, margin2 and leftOffset are not in any sane
 		// units. See the comment in SwCommentRuler::CreateJsonNotification(). The values
 		// are pixels for some virtual device in core, not related to the actual device this
@@ -637,7 +637,7 @@ L.Control.Ruler = L.Control.extend({
 	},
 
 	_initiateTabstopDrag: function(event) {
-		// console.log('===> _initiateTabstopDrag ' + event.type);
+		// window.app.console.log('===> _initiateTabstopDrag ' + event.type);
 
 		var tabstopContainer = null;
 		var pointX = null;
@@ -708,14 +708,14 @@ L.Control.Ruler = L.Control.extend({
 		if (marker === null)
 			return;
 
-		//console.log('===> _moveTabstop ' + event.type);
+		//window.app.console.log('===> _moveTabstop ' + event.type);
 
 		var pixelDiff = pointX - tabstopContainer.tabStopInitialPosiiton;
 		marker.style.left = (marker.tabStopLocation.left + pixelDiff) + 'px';
 	},
 
 	_endTabstopDrag: function(event) {
-		//console.log('===> _endTabstopDrag ' + event.type);
+		//window.app.console.log('===> _endTabstopDrag ' + event.type);
 
 		var tabstopContainer = null;
 		var pointX = null;

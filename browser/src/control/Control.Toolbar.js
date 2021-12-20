@@ -217,7 +217,7 @@ function setBorderStyle(num, color) {
 	case 11: _setBorders(1, 1, 1, 1, 0, 1, color); break;
 	case 12: _setBorders(1, 1, 1, 1, 1, 1, color); break;
 
-	default: console.log('ignored border: ' + num);
+	default: window.app.console.log('ignored border: ' + num);
 	}
 
 	// TODO we may consider keeping it open in the future if we add border color
@@ -1191,8 +1191,8 @@ function updateVisibilityForToolbar(toolbar, context) {
 		}
 	});
 
-	console.log('explicitly hiding: ' + toHide);
-	console.log('explicitly showing: ' + toShow);
+	window.app.console.log('explicitly hiding: ' + toHide);
+	window.app.console.log('explicitly showing: ' + toShow);
 
 	toHide.forEach(function(item) { toolbar.hide(item); });
 	toShow.forEach(function(item) { toolbar.show(item); });

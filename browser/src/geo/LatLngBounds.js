@@ -176,7 +176,7 @@ L.LatLngBounds.prototype = {
 	},
 
 	isInAny: function (latLngBoundsArray) {
-		console.assert(Array.isArray(latLngBoundsArray), 'invalid argument type');
+		window.app.console.assert(Array.isArray(latLngBoundsArray), 'invalid argument type');
 
 		for (var i = 0; i < latLngBoundsArray.length; ++i) {
 			if (latLngBoundsArray[i].contains(this)) {

@@ -17,11 +17,11 @@ L.IFrameDialog = L.Class.extend({
 		if (window.mode.isMobile()) {
 			this._isMobile = true;
 		}
-		console.debug(options);
+		window.app.console.debug(options);
 
-		console.debug('Getting co-bg-color: ');
+		window.app.console.debug('Getting co-bg-color: ');
 		var cssVar = getComputedStyle(document.documentElement).getPropertyValue('--co-primary-element');
-		console.debug(cssVar);
+		window.app.console.debug(cssVar);
 		cssVar = cssVar.replace(/\s/g, '');
 		url += '?'+this._isMobile;
 		url += cssVar;
