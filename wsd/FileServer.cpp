@@ -1107,6 +1107,10 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
     // Setup HTTP Public key pinning
     if ((COOLWSD::isSSLEnabled() || COOLWSD::isSSLTermination()))
     {
+        // HSTS header (RFC 6797)
+        // 1 year, minimum age
+        oss << "Strict-Transport-Security: max-age=31536000\r\n";
+
         if (config.getBool("ssl.hpkp[@enable]", false))
         {
             size_t i = 0;
