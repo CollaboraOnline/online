@@ -57,7 +57,7 @@ L.Control.Sidebar = L.Control.extend({
 
 		var control = this.container.querySelector('[id=\'' + data.control.id + '\']');
 		if (!control) {
-			console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
+			window.app.console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
 			return;
 		}
 
@@ -104,7 +104,7 @@ L.Control.Sidebar = L.Control.extend({
 		if (data.data && (data.data.control_id === 'contents' ||
 			data.data.control_id === 'Panel' ||
 			data.data.control_id === 'titlebar')) {
-			console.log('Ignored action: ' + data.data.action_type + ' for control: ' + data.data.control_id);
+			window.app.console.log('Ignored action: ' + data.data.action_type + ' for control: ' + data.data.control_id);
 			return;
 		}
 

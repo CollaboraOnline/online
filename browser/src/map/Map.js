@@ -940,7 +940,7 @@ L.Map = L.Evented.extend({
 	// We have one global winId that controls what window (dialog, sidebar, or
 	// the main document) has the actual focus.  0 means the document.
 	setWinId: function (id) {
-		// console.log('winId set to: ' + id);
+		// window.app.console.log('winId set to: ' + id);
 		if (typeof id === 'string')
 			id = parseInt(id);
 		this._winId = id;
@@ -1339,7 +1339,7 @@ L.Map = L.Evented.extend({
 						sizeChanged = (currentWidth !== width || currentHeight !== height);
 					}
 					if (width > 0 && height > 0 && sizeChanged) {
-						console.log('_onResize: container width: ' + width + ', container height: ' + height + ', _calcInputBar width: ' + this.dialog._calcInputBar.width);
+						window.app.console.log('_onResize: container width: ' + width + ', container height: ' + height + ', _calcInputBar width: ' + this.dialog._calcInputBar.width);
 						if (width != this.dialog._calcInputbarContainerWidth || height != this.dialog._calcInputbarContainerHeight) {
 							app.socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
 							this.dialog._calcInputbarContainerWidth = width;
@@ -1352,7 +1352,7 @@ L.Map = L.Evented.extend({
 	},
 
 	makeActive: function() {
-		// console.log('Force active');
+		// window.app.console.log('Force active');
 		this.lastActiveTime = Date.now();
 		return this._activate();
 	},
@@ -1362,13 +1362,13 @@ L.Map = L.Evented.extend({
 			return false;
 		}
 
-		// console.debug('_activate:');
+		// window.app.console.debug('_activate:');
 		clearTimeout(vex.timer);
 
 		if (!this._active) {
 			// Only activate when we are connected.
 			if (app.socket.connected()) {
-				// console.debug('sending useractive');
+				// window.app.console.debug('sending useractive');
 				app.socket.sendMessage('useractive');
 				this._active = true;
 				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
@@ -1408,7 +1408,7 @@ L.Map = L.Evented.extend({
 		} else if (typeof document.webkitHidden !== 'undefined') {
 			hidden = document.webkitHidden;
 		} else {
-			console.debug('Unusual browser, cant determine if hidden');
+			window.app.console.debug('Unusual browser, cant determine if hidden');
 		}
 		return hidden;
 	},
@@ -1418,7 +1418,7 @@ L.Map = L.Evented.extend({
 			return;
 		}
 
-		// console.debug('_dim:');
+		// window.app.console.debug('_dim:');
 		if (!app.socket.connected() || isAnyVexDialogActive()) {
 			return;
 		}
@@ -1435,11 +1435,11 @@ L.Map = L.Evented.extend({
 		var multiplier = 1;
 		if (!this.documentHidden(true))
 		{
-			// console.debug('document visible');
+			// window.app.console.debug('document visible');
 			multiplier = 4; // quadruple the grace period
 		}
 		if (inactiveMs <= this.options.outOfFocusTimeoutSecs * 1000 * multiplier) {
-			// console.debug('had activity ' + inactiveMs + 'ms ago vs. threshold ' +
+			// window.app.console.debug('had activity ' + inactiveMs + 'ms ago vs. threshold ' +
 			//	      (this.options.outOfFocusTimeoutSecs * 1000 * multiplier) +
 			//	      ' - so fending off the dim');
 			vex.timer = setTimeout(function() {
@@ -1462,7 +1462,7 @@ L.Map = L.Evented.extend({
 			afterOpen: function() {
 				var $vexContent = $(this.contentEl);
 				$vexContent.bind('click.vex', function() {
-					// console.debug('_dim: click.vex function');
+					// window.app.console.debug('_dim: click.vex function');
 					return map._activate();
 				});
 			},
@@ -1474,7 +1474,7 @@ L.Map = L.Evented.extend({
 			$('.cool-user-idle').css('display', 'none');
 
 		this._doclayer && this._docLayer._onMessage('textselection:', null);
-		// console.debug('_dim: sending userinactive');
+		// window.app.console.debug('_dim: sending userinactive');
 		map.fire('postMessage', {msgId: 'User_Idle'});
 		app.socket.sendMessage('userinactive');
 	},
@@ -1487,7 +1487,7 @@ L.Map = L.Evented.extend({
 	},
 
 	_dimIfInactive: function () {
-		// console.debug('_dimIfInactive: diff=' + (Date.now() - this.lastActiveTime));
+		// window.app.console.debug('_dimIfInactive: diff=' + (Date.now() - this.lastActiveTime));
 		if (this._docLoaded && // don't dim if document hasn't been loaded yet
 		    (Date.now() - this.lastActiveTime) >= this.options.idleTimeoutSecs * 1000) {
 			this._dim();
@@ -1501,7 +1501,7 @@ L.Map = L.Evented.extend({
 			return;
 		}
 
-		// console.debug('_startInactiveTimer:');
+		// window.app.console.debug('_startInactiveTimer:');
 		clearTimeout(vex.timer);
 		var map = this;
 		vex.timer = setTimeout(function() {
@@ -1514,7 +1514,7 @@ L.Map = L.Evented.extend({
 			return;
 		}
 
-		// console.debug('_deactivate:');
+		// window.app.console.debug('_deactivate:');
 		clearTimeout(vex.timer);
 
 		if (!this._active || isAnyVexDialogActive()) {
@@ -1523,7 +1523,7 @@ L.Map = L.Evented.extend({
 			this._active = false;
 			this._docLayer && this._docLayer._onMessage('textselection:', null);
 			if (app.socket.connected()) {
-				// console.debug('_deactivate: sending userinactive');
+				// window.app.console.debug('_deactivate: sending userinactive');
 				app.socket.sendMessage('userinactive');
 			}
 

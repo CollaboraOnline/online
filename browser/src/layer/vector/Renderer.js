@@ -18,7 +18,7 @@ L.Renderer = L.Layer.extend({
 	},
 
 	setParentRenderer: function (parent) {
-		console.assert(parent !== this, 'self reference');
+		window.app.console.assert(parent !== this, 'self reference');
 		this._parentRenderer = parent;
 	},
 
@@ -106,7 +106,7 @@ L.Map.include({
 			}
 		}
 
-		console.assert(renderer, 'Could create a renderer!');
+		window.app.console.assert(renderer, 'Could create a renderer!');
 
 		if (!this.hasLayer(renderer)) {
 			this.addLayer(renderer);
@@ -129,7 +129,7 @@ L.Map.include({
 				renderer = (L.SVG && L.svg({pane: name})) || (L.Canvas && L.canvas({pane: name}));
 			}
 
-			console.assert(renderer, 'Could create a renderer!');
+			window.app.console.assert(renderer, 'Could create a renderer!');
 			this._paneRenderers[name] = renderer;
 		}
 

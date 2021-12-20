@@ -10,7 +10,7 @@ L.FormFieldButton = L.Layer.extend({
 	},
 
 	initialize: function (data) {
-		console.assert(data.type === 'drop-down');
+		window.app.console.assert(data.type === 'drop-down');
 		this._buttonData = data;
 	},
 

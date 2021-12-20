@@ -378,7 +378,7 @@ L.Control.UIManager = L.Control.extend({
 		});
 
 		if (!found) {
-			console.error('Toolbar button with id "' + buttonId + '" not found.');
+			window.app.console.error('Toolbar button with id "' + buttonId + '" not found.');
 			return;
 		}
 	},
@@ -653,7 +653,7 @@ L.Control.UIManager = L.Control.extend({
 		};
 
 		var builderCallback = function(objectType, eventType, object, data) {
-			console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
+			window.app.console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
 
 			if (object.id === 'button' && objectType === 'pushbutton' && eventType === 'click') {
 				if (callback)

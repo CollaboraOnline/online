@@ -226,7 +226,7 @@ L.Map.WOPI = L.Handler.extend({
 		try {
 			msg = JSON.parse(e.data);
 		} catch (e) {
-			console.error(e);
+			window.app.console.error(e);
 			return;
 		}
 
@@ -239,12 +239,12 @@ L.Map.WOPI = L.Handler.extend({
 		// Exception: UI modification can be done before WOPIPostmessageReady was fullfiled
 		if (msg.MessageId === 'Show_Button' || msg.MessageId === 'Hide_Button' || msg.MessageId === 'Remove_Button') {
 			if (!msg.Values) {
-				console.error('Property "Values" not set');
+				window.app.console.error('Property "Values" not set');
 				return;
 			}
 
 			if (!msg.Values.id) {
-				console.error('Property "Values.id" not set');
+				window.app.console.error('Property "Values.id" not set');
 				return;
 			}
 			var show = msg.MessageId === 'Show_Button';
@@ -252,15 +252,15 @@ L.Map.WOPI = L.Handler.extend({
 		}
 		else if (msg.MessageId === 'Remove_Statusbar_Element') {
 			if (!msg.Values) {
-				console.error('Property "Values" not set');
+				window.app.console.error('Property "Values" not set');
 				return;
 			}
 			if (!msg.Values.id) {
-				console.error('Property "Values.id" not set');
+				window.app.console.error('Property "Values.id" not set');
 				return;
 			}
 			if (!w2ui['actionbar'].get(msg.Values.id)) {
-				console.error('Statusbar element with id "' + msg.Values.id + '" not found.');
+				window.app.console.error('Statusbar element with id "' + msg.Values.id + '" not found.');
 				return;
 			}
 			w2ui['actionbar'].remove(msg.Values.id);
@@ -279,15 +279,15 @@ L.Map.WOPI = L.Handler.extend({
 		}
 		else if (msg.MessageId === 'Show_Menu_Item' || msg.MessageId === 'Hide_Menu_Item') {
 			if (!msg.Values) {
-				console.error('Property "Values" not set');
+				window.app.console.error('Property "Values" not set');
 				return;
 			}
 			if (!msg.Values.id) {
-				console.error('Property "Values.id" not set');
+				window.app.console.error('Property "Values.id" not set');
 				return;
 			}
 			if (!this._map.menubar || !this._map.menubar.hasItem(msg.Values.id)) {
-				console.error('Menu item with id "' + msg.Values.id + '" not found.');
+				window.app.console.error('Menu item with id "' + msg.Values.id + '" not found.');
 				return;
 			}
 
@@ -336,7 +336,7 @@ L.Map.WOPI = L.Handler.extend({
 
 		// For all other messages, warn if trying to interact before we are completely loaded
 		if (!this._appLoaded) {
-			console.error('Collabora Online not loaded yet. Listen for App_LoadingStatus (Document_Loaded) event before using PostMessage API. Ignoring post message \'' + msg.MessageId + '\'.');
+			window.app.console.error('Collabora Online not loaded yet. Listen for App_LoadingStatus (Document_Loaded) event before using PostMessage API. Ignoring post message \'' + msg.MessageId + '\'.');
 			return;
 		}
 

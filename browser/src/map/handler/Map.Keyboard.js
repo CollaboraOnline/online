@@ -243,7 +243,7 @@ L.Map.Keyboard = L.Handler.extend({
 			return;
 
 		var completeEvent = app.socket.createCompleteTraceEvent('L.Map.Keyboard._onKeyDown', { type: ev.type, charCode: ev.charCode });
-		console.log('keyboard handler:', ev.type, ev.key, ev.charCode, this._expectingInput, ev);
+		window.app.console.log('keyboard handler:', ev.type, ev.key, ev.charCode, this._expectingInput, ev);
 
 		if (ev.charCode == 0) {
 			this._handleKeyEvent(ev);
@@ -365,7 +365,7 @@ L.Map.Keyboard = L.Handler.extend({
 				// key ignored
 			}
 			else if (ev.type === 'keydown') {
-				// console.log(e);
+				// window.app.console.log(e);
 				if (this.handleOnKeyDownKeys[keyCode] && charCode === 0) {
 					keyEventFn('input', charCode, unoKeyCode);
 					ev.preventDefault();
@@ -375,7 +375,7 @@ L.Map.Keyboard = L.Handler.extend({
 				if (keyCode === 8 || keyCode === 46 || keyCode === 13)
 				{
 					// handled generically in TextInput.js
-					console.log('Ignore backspace/delete/enter keypress');
+					window.app.console.log('Ignore backspace/delete/enter keypress');
 					return;
 				}
 				if (charCode === keyCode && charCode !== 13) {

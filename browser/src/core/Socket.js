@@ -26,7 +26,7 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	initialize: function (map) {
-		console.debug('socket.initialize:');
+		window.app.console.debug('socket.initialize:');
 		this._map = map;
 		this._msgQueue = [];
 		this._delayedMessages = [];
@@ -167,7 +167,7 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	_onSocketOpen: function () {
-		console.debug('_onSocketOpen:');
+		window.app.console.debug('_onSocketOpen:');
 		this._map._serverRecycling = false;
 		this._map._documentIdle = false;
 
@@ -268,7 +268,7 @@ app.definitions.Socket = L.Class.extend({
 			status += '[!bundlejsLoaded]';
 
 		var color = type === 'OUTGOING' ? 'color:red' : 'color:blue';
-		console.log2(+new Date() + ' %c' + type + status + '%c: ' + msg.concat(' ').replace(' ', '%c '),
+		window.app.console.log(+new Date() + ' %c' + type + status + '%c: ' + msg.concat(' ').replace(' ', '%c '),
 			     'background:#ddf;color:black', color, 'color:black');
 	},
 
@@ -310,8 +310,7 @@ app.definitions.Socket = L.Class.extend({
 					}, 0);
 			}
 		}
-
-		// console.log2('Slurp events ' + that._slurpQueue.length);
+		// window.app.console.log('Slurp events ' + that._slurpQueue.length);
 		var complete = true;
 		try {
 			for (var i = 0; i < queueLength; ++i) {
@@ -335,7 +334,7 @@ app.definitions.Socket = L.Class.extend({
 					{
 						// unpleasant - but stops this one problem
 						// event stopping an unknown number of others.
-						console.log2('Exception ' + e + ' emitting event ' + evt.data);
+						window.app.console.log('Exception ' + e + ' emitting event ' + evt.data);
 					}
 					finally {
 						if (completeEventOneMessage)
@@ -423,7 +422,7 @@ app.definitions.Socket = L.Class.extend({
 		else
 		{
 			var data = e.imgBytes.subarray(e.imgIndex);
-			console.assert(data.length == 0 || data[0] != 68 /* D */, 'Socket: got a delta image, not supported !');
+			window.app.console.assert(data.length == 0 || data[0] != 68 /* D */, 'Socket: got a delta image, not supported !');
 			img = 'data:image/png;base64,' + window.btoa(this._strFromUint8(data));
 			if (L.Browser.cypressTest && localStorage.getItem('image_validation_test')) {
 				if (!window.imgDatas)
@@ -465,7 +464,7 @@ app.definitions.Socket = L.Class.extend({
 				e.image.completeTraceEvent.finish();
 		};
 		e.image.onerror = function(err) {
-			console.log('Failed to load image ' + img + ' fun ' + err);
+			window.app.console.log('Failed to load image ' + img + ' fun ' + err);
 			e.imageIsComplete = true;
 			that._queueSlurpEventEmission();
 			if (e.image.completeTraceEvent)
@@ -497,7 +496,7 @@ app.definitions.Socket = L.Class.extend({
 				oldId = this.WSDServer.Id;
 				oldVersion = this.WSDServer.Version;
 
-				console.assert(this._map.options.wopiSrc === window.wopiSrc,
+				window.app.console.assert(this._map.options.wopiSrc === window.wopiSrc,
 					'wopiSrc mismatch!: ' + this._map.options.wopiSrc + ' != ' + window.wopiSrc);
 				// If another file is opened, we will not refresh the page.
 				if (this._map.options.previousWopiSrc && this._map.options.wopiSrc) {
@@ -614,7 +613,7 @@ app.definitions.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('loadstorage: ')) {
 			if (textMsg.substring(textMsg.indexOf(':') + 2) === 'failed') {
-				console.debug('Loading document from a storage failed');
+				window.app.console.debug('Loading document from a storage failed');
 				this._map.fire('postMessage', {
 					msgId: 'App_LoadingStatus',
 					args: {
@@ -705,7 +704,7 @@ app.definitions.Socket = L.Class.extend({
 					try {
 						map.loadDocument(map);
 					} catch (error) {
-						console.warn('Cannot load document.');
+						window.app.console.warn('Cannot load document.');
 					}
 				}, timeoutMs);
 			}
@@ -743,7 +742,7 @@ app.definitions.Socket = L.Class.extend({
 						// Activate and cancel timer and dialogs.
 						map._activate();
 					} catch (error) {
-						console.warn('Cannot activate map');
+						window.app.console.warn('Cannot activate map');
 					}
 				}, 3000);
 			}
@@ -767,7 +766,7 @@ app.definitions.Socket = L.Class.extend({
 				restartConnectionFn = function() {
 					if (map._documentIdle)
 					{
-						console.debug('idleness: reactivating');
+						window.app.console.debug('idleness: reactivating');
 						map._documentIdle = false;
 						map._docLayer._setCursorVisible();
 						// force reinitialization of calcInputBar(formulabar)
@@ -996,7 +995,7 @@ app.definitions.Socket = L.Class.extend({
 						// Activate and cancel timer and dialogs.
 						map._activate();
 					} catch (error) {
-						console.warn('Cannot activate map');
+						window.app.console.warn('Cannot activate map');
 					}
 				// .5, 2, 4.5, 8, 12.5, 18, 24.5, 32, 40.5 seconds
 				}, 500 * this.ReconnectCount * this.ReconnectCount); // Quadratic back-off.
@@ -1265,7 +1264,7 @@ app.definitions.Socket = L.Class.extend({
 			textMsg.startsWith('statechanged:') ||
 			textMsg.startsWith('invalidatecursor:') ||
 			textMsg.startsWith('viewinfo:')) {
-			//console.log('_tryToDelayMessage: textMsg: ' + textMsg);
+			//window.app.console.log('_tryToDelayMessage: textMsg: ' + textMsg);
 			var message = {msg: textMsg};
 			this._delayedMessages.push(message);
 			delayed  = true;
@@ -1302,7 +1301,7 @@ app.definitions.Socket = L.Class.extend({
 				} catch (e) {
 					// unpleasant - but stops this one problem
 					// event stopping an unknown number of others.
-					console.log2('Exception ' + e + ' emitting event ' + messages[k]);
+					window.app.console.log('Exception ' + e + ' emitting event ' + messages[k]);
 				}
 			}
 		}
@@ -1392,7 +1391,7 @@ app.definitions.Socket = L.Class.extend({
 		var msgData = JSON.parse(textMsg.substring('jsdialog:'.length + 1));
 
 		if (msgData.children && !L.Util.isArray(msgData.children)) {
-			console.warn('_onJSDialogMsg: The children\'s data should be created of array type');
+			window.app.console.warn('_onJSDialogMsg: The children\'s data should be created of array type');
 			return;
 		}
 
@@ -1469,13 +1468,13 @@ app.definitions.Socket = L.Class.extend({
 	},
 
 	_onSocketError: function () {
-		console.debug('_onSocketError:');
+		window.app.console.debug('_onSocketError:');
 		this._map.hideBusy();
 		// Let onclose (_onSocketClose) report errors.
 	},
 
 	_onSocketClose: function () {
-		console.debug('_onSocketClose:');
+		window.app.console.debug('_onSocketClose:');
 		if (this.ReconnectCount > 0)
 			return;
 

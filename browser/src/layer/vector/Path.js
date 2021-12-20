@@ -117,11 +117,11 @@ L.Path.PathNodeData = L.Class.extend({
 
 	initialize: function (pathNode, actualRenderer) {
 
-		console.assert(pathNode, 'invalid pathNode argument!');
-		console.assert(actualRenderer, 'invalid actualRenderer argument!');
+		window.app.console.assert(pathNode, 'invalid pathNode argument!');
+		window.app.console.assert(actualRenderer, 'invalid actualRenderer argument!');
 
 		if (!(pathNode instanceof Node)) {
-			console.error('Not a node instance!');
+			window.app.console.error('Not a node instance!');
 		}
 
 		this._pathNode = pathNode;
@@ -135,7 +135,7 @@ L.Path.PathNodeData = L.Class.extend({
 
 	getNode: function () {
 		if (!(this._pathNode instanceof Node)) {
-			console.error('Not a node instance!');
+			window.app.console.error('Not a node instance!');
 		}
 		return this._pathNode;
 	},
@@ -145,17 +145,17 @@ L.Path.PathNodeData = L.Class.extend({
 	},
 
 	setCustomField: function (fieldName, value) {
-		console.assert(typeof fieldName === 'string' && fieldName, 'invalid fieldName');
+		window.app.console.assert(typeof fieldName === 'string' && fieldName, 'invalid fieldName');
 		this._data[fieldName] = value;
 	},
 
 	getCustomField: function (fieldName) {
-		console.assert(typeof fieldName === 'string' && fieldName, 'invalid fieldName');
+		window.app.console.assert(typeof fieldName === 'string' && fieldName, 'invalid fieldName');
 		return this._data[fieldName];
 	},
 
 	clearCustomField: function (fieldName) {
-		console.assert(typeof fieldName === 'string' && fieldName, 'invalid fieldName');
+		window.app.console.assert(typeof fieldName === 'string' && fieldName, 'invalid fieldName');
 		delete this._data[fieldName];
 	},
 
@@ -186,7 +186,7 @@ L.Path.PathNodeCollection = L.Class.extend({
 
 	add: function (pathNodeData) {
 
-		console.assert(pathNodeData instanceof L.Path.PathNodeData,
+		window.app.console.assert(pathNodeData instanceof L.Path.PathNodeData,
 			'invalid pathNodeData argument!');
 
 		this._collection[pathNodeData.key()] = pathNodeData;
@@ -198,11 +198,11 @@ L.Path.PathNodeCollection = L.Class.extend({
 
 	getPathNode: function (actualRenderer) {
 
-		console.assert(actualRenderer, 'invalid actualRenderer argument!');
+		window.app.console.assert(actualRenderer, 'invalid actualRenderer argument!');
 		var key = L.Path.PathNodeData.key(actualRenderer);
 		var nodeData = this._collection[key];
 
-		console.assert(nodeData, 'cannot find path node!');
+		window.app.console.assert(nodeData, 'cannot find path node!');
 
 		return nodeData.getNode();
 	},
@@ -215,7 +215,7 @@ L.Path.PathNodeCollection = L.Class.extend({
 	},
 
 	addOrRemoveClass: function (className, add) {
-		console.assert(className, 'className not provided!');
+		window.app.console.assert(className, 'className not provided!');
 		this.forEachNode(function (nodeData) {
 			nodeData.addOrRemoveClass(className, add);
 		});

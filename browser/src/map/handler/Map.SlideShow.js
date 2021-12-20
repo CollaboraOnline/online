@@ -14,7 +14,7 @@ L.Map.SlideShow = L.Handler.extend({
 
 	initialize: function (map) {
 		this._map = map;
-		console.log('L.Map.SlideShow: Cypress in window: ' + ('Cypress' in window));
+		window.app.console.log('L.Map.SlideShow: Cypress in window: ' + ('Cypress' in window));
 		this._cypressSVGPresentationTest =
 			L.Browser.cypressTest && 'Cypress' in window
 			&& window.Cypress.spec.name === 'impress/fullscreen_presentation_spec.js';
@@ -79,7 +79,7 @@ L.Map.SlideShow = L.Handler.extend({
 
 	_onSlideDownloadReady: function (e) {
 		this._slideURL = e.url;
-		console.debug('slide file url : ', this._slideURL);
+		window.app.console.debug('slide file url : ', this._slideURL);
 		this._startPlaying();
 	},
 
