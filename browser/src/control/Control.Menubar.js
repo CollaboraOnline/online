@@ -591,6 +591,7 @@ L.Control.Menubar = L.Control.extend({
 				]},
 				{type: 'separator'},
 				{uno: '.uno:Sidebar'},
+				{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'}
 			]},
 			{name: _UNO('.uno:InsertMenu', 'spreadsheet'), id: 'insert', type: 'menu', menu: [
 				{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
