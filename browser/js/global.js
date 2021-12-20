@@ -88,7 +88,7 @@ window.app = { // Shouldn't have any functions defined.
 				line: row,
 				column: col
 			};
-			var desc = err ? err.message || {}: {}, stack = err ? err.stack || {}: {};
+			var desc = err ? err.message || '(no message)': '(no err)', stack = err ? err.stack || '(no stack)': '(no err)';
 			var log = 'jserror ' + JSON.stringify(data, null, 2) + '\n' + desc + '\n' + stack + '\n';
 			global.logServer(log);
 
