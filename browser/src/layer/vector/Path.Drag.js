@@ -300,7 +300,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 
 		path._bounds = new L.LatLngBounds();
 
-		// console.time('transform');
+		// window.app.console.time('transform');
 		// all shifts are in-place
 		if (path._point) { // L.Circle
 			dest = projection.unproject(
@@ -338,7 +338,7 @@ L.Handler.PathDrag = L.Handler.extend(/** @lends  L.Path.Drag.prototype */ {
 		}
 
 		return dest;
-		// console.timeEnd('transform');
+		// window.app.console.timeEnd('transform');
 	},
 
 

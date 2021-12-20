@@ -212,9 +212,9 @@ L.TileCoordData = L.Class.extend({
 
 L.TileCoordData.parseKey = function (keyString) {
 
-	console.assert(typeof keyString === 'string', 'key should be a string');
+	window.app.console.assert(typeof keyString === 'string', 'key should be a string');
 	var k = keyString.split(':');
-	console.assert(k.length >= 4, 'invalid key format');
+	window.app.console.assert(k.length >= 4, 'invalid key format');
 	return new L.TileCoordData(+k[0], +k[1], +k[2], +k[3]);
 };
 
@@ -946,7 +946,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 	_initContainer: function () {
 		if (this._canvasContainer) {
-			console.error('called _initContainer() when this._canvasContainer is present!');
+			window.app.console.error('called _initContainer() when this._canvasContainer is present!');
 		}
 
 		if (this._container) { return; }
@@ -970,7 +970,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_setup: function () {
 
 		if (!this._canvasContainer) {
-			console.error('canvas container not found. _initContainer failed ?');
+			window.app.console.error('canvas container not found. _initContainer failed ?');
 		}
 
 		this._canvas = L.DomUtil.createWithId('canvas', 'document-canvas', this._canvasContainer);
@@ -2036,7 +2036,7 @@ L.CanvasTileLayer = L.Layer.extend({
 						this._extractAndSetGraphicSelection(msgData);
 				}
 				catch (error) {
-					console.warn('cannot parse graphicselection command');
+					window.app.console.warn('cannot parse graphicselection command');
 				}
 				this.renderDarkOverlay();
 
@@ -2742,7 +2742,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_onUnoCommandResultMsg: function (textMsg) {
-		// console.log('_onUnoCommandResultMsg: "' + textMsg + '"');
+		// window.app.console.log('_onUnoCommandResultMsg: "' + textMsg + '"');
 		textMsg = textMsg.substring(18);
 		var obj = JSON.parse(textMsg);
 		var commandName = obj.commandName;
@@ -4118,7 +4118,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			if (!this._cellCursorXY.equals(this._prevCellCursorXY) &&
 			    !this._map.calcInputBarHasFocus()) {
 				var scroll = this._calculateScrollForNewCellCursor();
-				console.assert(scroll instanceof L.LatLng, '_calculateScrollForNewCellCursor returned wrong type');
+				window.app.console.assert(scroll instanceof L.LatLng, '_calculateScrollForNewCellCursor returned wrong type');
 				if (scroll.lng !== 0 || scroll.lat !== 0) {
 					var newCenter = mapBounds.getCenter();
 					newCenter.lng += scroll.lng;
@@ -4609,7 +4609,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_getEditCursorRectangle: function (msgObj) {
 
 		if (typeof msgObj !== 'object' || !Object.prototype.hasOwnProperty.call(msgObj,'rectangle')) {
-			console.error('invalid edit cursor message');
+			window.app.console.error('invalid edit cursor message');
 			return undefined;
 		}
 
@@ -4619,7 +4619,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_getTextSelectionRectangles: function (textMsg) {
 
 		if (typeof textMsg !== 'string') {
-			console.error('invalid text selection message');
+			window.app.console.error('invalid text selection message');
 			return [];
 		}
 
@@ -4629,7 +4629,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	// Needed for the split-panes feature to determine the active split-pane.
 	// Needs to be implemented by the app specific TileLayer.
 	getCursorPos: function () {
-		console.error('No implementations available for getCursorPos!');
+		window.app.console.error('No implementations available for getCursorPos!');
 		return new L.Point(0, 0);
 	},
 
@@ -4642,7 +4642,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		// These paneRects are in core pixels.
 		var paneRects = this._splitPanesContext.getPxBoundList();
-		console.assert(paneRects.length, 'number of panes cannot be zero!');
+		window.app.console.assert(paneRects.length, 'number of panes cannot be zero!');
 
 		return paneRects.map(function (pxBound) {
 			return new L.LatLngBounds(
@@ -5704,12 +5704,12 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (!checkOnly) {
 			// zoomFrameBounds and forZoom params were introduced to work only in checkOnly mode.
-			console.assert(zoomFrameBounds === undefined, 'zoomFrameBounds must only be supplied when checkOnly is true');
-			console.assert(forZoom === undefined, 'forZoom must only be supplied when checkOnly is true');
+			window.app.console.assert(zoomFrameBounds === undefined, 'zoomFrameBounds must only be supplied when checkOnly is true');
+			window.app.console.assert(forZoom === undefined, 'forZoom must only be supplied when checkOnly is true');
 		}
 
 		if (forZoom !== undefined) {
-			console.assert(zoomFrameBounds, 'zoomFrameBounds must be valid when forZoom is specified');
+			window.app.console.assert(zoomFrameBounds, 'zoomFrameBounds must be valid when forZoom is specified');
 		}
 
 		var zoom = forZoom || Math.round(this._map.getZoom());
@@ -6272,7 +6272,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			typeof msgObj.tileWidth !== 'number' ||
 			typeof msgObj.tileHeight !== 'number' ||
 			typeof msgObj.part !== 'number') {
-			console.error('Unexpected content in the parsed tile message.');
+			window.app.console.error('Unexpected content in the parsed tile message.');
 		}
 	},
 
@@ -6636,7 +6636,7 @@ L.TilesPreFetcher = L.Class.extend({
 			var paneStatusList = splitPanesContext ? splitPanesContext.getPanesProperties() :
 				[ { xFixed: false, yFixed: false} ];
 
-			console.assert(tileRanges.length === paneStatusList.length, 'tileRanges and paneStatusList should agree on the number of split-panes');
+			window.app.console.assert(tileRanges.length === paneStatusList.length, 'tileRanges and paneStatusList should agree on the number of split-panes');
 
 			for (var paneIdx = 0; paneIdx < tileRanges.length; ++paneIdx) {
 				paneXFixed = paneStatusList[paneIdx].xFixed;
@@ -6791,7 +6791,7 @@ L.TilesPreFetcher = L.Class.extend({
 		} // pane loop end
 
 		if (!immediate)
-			console.assert(finalQueue.length <= maxTilesToFetch,
+			window.app.console.assert(finalQueue.length <= maxTilesToFetch,
 				'finalQueue length(' + finalQueue.length + ') exceeded maxTilesToFetch(' + maxTilesToFetch + ')');
 
 		var tilesRequested = false;
@@ -6885,7 +6885,7 @@ L.MessageStore = L.Class.extend({
 	initialize: function (ownViewTypes, otherViewTypes) {
 
 		if (!Array.isArray(ownViewTypes) || !Array.isArray(otherViewTypes)) {
-			console.error('Unexpected argument types');
+			window.app.console.error('Unexpected argument types');
 			return;
 		}
 
@@ -6943,7 +6943,7 @@ L.MessageStore = L.Class.extend({
 
 	forEach: function (callback) {
 		if (typeof callback !== 'function') {
-			console.error('Invalid callback type');
+			window.app.console.error('Invalid callback type');
 			return;
 		}
 

@@ -392,7 +392,7 @@ L.Control.PartsPreview = L.Control.extend({
 				if (this.firstSelection === undefined)
 					this.firstSelection = this._map._docLayer._selectedPart;
 			} else if (e.altKey) {
-				console.log('alt');
+				window.app.console.log('alt');
 			} else if (e.shiftKey) {
 				if (this.firstSelection === undefined)
 					this.firstSelection = this._map._docLayer._selectedPart;

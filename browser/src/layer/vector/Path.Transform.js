@@ -409,7 +409,7 @@ L.Handler.PathTransform = L.Handler.extend({
 	* Apply final transformation
 	*/
 	_apply: function() {
-		//console.group('apply transform');
+		//window.app.console.group('apply transform');
 		var map = this._map;
 		var matrix = this._matrix.clone();
 		var angle = this._angle;
@@ -444,7 +444,7 @@ L.Handler.PathTransform = L.Handler.extend({
 			// angle: angle * (180 / Math.PI),
 			layer: this._path
 		});
-		// console.groupEnd('apply transform');
+		// window.app.console.groupEnd('apply transform');
 	},
 
 
@@ -579,7 +579,7 @@ L.Handler.PathTransform = L.Handler.extend({
 
 		var projectedMatrix = this._projectedMatrix =
 			this._getProjectedMatrix(angle, scale, rotationOrigin, scaleOrigin);
-		// console.time('transform');
+		// window.app.console.time('transform');
 
 		// all shifts are in-place
 		if (path._point) { // L.Circle

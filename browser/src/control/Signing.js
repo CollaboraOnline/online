@@ -72,7 +72,7 @@ function addPassportToToolbar(passport, i) {
 		name = passport['claims']['passportName']['tags']['notag']['value']['value'];
 	}
 	catch (exception) {
-		console.log(exception);
+		window.app.console.log(exception);
 		name = 'Unknown ' + (i+1);
 	}
 
@@ -213,8 +213,8 @@ function vereignLogin() {
 			}
 			else {
 				vex.dialog.alert(_('Error at login.'));
-				console.log('Error at login of previousa added device');
-				console.log(result);
+				window.app.console.log('Error at login of previousa added device');
+				window.app.console.log(result);
 				identity = null;
 			}
 		});
@@ -241,8 +241,8 @@ function verignNewIdentity(newIdentity) {
 		}
 		else {
 			vex.dialog.alert(_('Couldn\'t get the QR code image.'));
-			console.log('Error getting the QR code');
-			console.log(result);
+			window.app.console.log('Error getting the QR code');
+			window.app.console.log(result);
 			library.clearIdentities();
 		}
 	});
@@ -268,8 +268,8 @@ function vereignRecoverFromEmail(emailOrSMS) {
 		library.identityRestoreAccess(result.data, emailOrSMS).then(function(result) {
 			if (!isSuccess(result)) {
 				vex.dialog.alert(_('Error when trying to restore access to identity.'));
-				console.log('Error at IdentityRestoreAccess');
-				console.log(result);
+				window.app.console.log('Error at IdentityRestoreAccess');
+				window.app.console.log(result);
 				return;
 			}
 			vex.dialog.open({
@@ -539,24 +539,24 @@ L.Map.include({
 				onEvent: function(event) {
 					switch (event.type) {
 					case 'ActionConfirmedAndExecuted':
-						console.log('event ActionConfirmedAndExecuted');
+						window.app.console.log('event ActionConfirmedAndExecuted');
 						break;
 					case 'IdentityNotLoaded':
 						vereignLoadIdentity(event.payloads[0], '00000000');
 						break;
 					case 'Authenticated':
-						console.log('event Authenticated');
+						window.app.console.log('event Authenticated');
 						vereignRestoreIdentity();
 						break;
 					case 'Logout':
-						console.log('event Logout');
+						window.app.console.log('event Logout');
 						_map.signingLogout();
 						break;
 					case 'QRCodeUpdated':
-						console.log('event QRCodeUpdated');
+						window.app.console.log('event QRCodeUpdated');
 						break;
 					default:
-						console.log('UNKNOWN EVENT: ' + event.type);
+						window.app.console.log('UNKNOWN EVENT: ' + event.type);
 						break;
 					}
 				}
@@ -574,7 +574,7 @@ L.Map.include({
 			currentPassport = { uuid: uuid, text: text };
 			updateCurrentPassport();
 			library.passportGetAvatarByPassport(uuid).then(function(result) {
-				console.log(result); // TODO
+				window.app.console.log(result); // TODO
 			});
 			adjustUIState();
 		}

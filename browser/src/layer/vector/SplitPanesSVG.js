@@ -86,10 +86,10 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 	},
 
 	getChildPosBounds: function (childRenderer) {
-		console.assert(typeof childRenderer.rendererId === 'string', 'Child renderer does not have a rendererId!');
+		window.app.console.assert(typeof childRenderer.rendererId === 'string', 'Child renderer does not have a rendererId!');
 		var rendererId = childRenderer.rendererId;
 		var renderer = this._childRenderers[rendererId];
-		console.assert(renderer && L.stamp(renderer) === L.stamp(childRenderer), 'Child renderer does not belong to parent!');
+		window.app.console.assert(renderer && L.stamp(renderer) === L.stamp(childRenderer), 'Child renderer does not belong to parent!');
 
 		var splitPos = this._map.getSplitPanesContext().getSplitPos();
 		var size = this._map.getSize();
@@ -147,7 +147,7 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 			boundPos = new L.Point(topLeft.x - pixelOrigin.x, pos.y);
 		}
 		else {
-			console.error('unhandled rendererId : ' + rendererId);
+			window.app.console.error('unhandled rendererId : ' + rendererId);
 		}
 
 		var bounds;

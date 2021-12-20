@@ -125,7 +125,7 @@ L.Map.include({
 	hideRestrictedItems: function(item, DOMParentElement, buttonToDisable) {
 		if (this.isRestrictedUser() && this.isRestrictedItem(item)) {
 			$(buttonToDisable).addClass('restricted-item');
-			console.log();
+			window.app.console.log();
 		}
 
 	},

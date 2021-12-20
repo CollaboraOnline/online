@@ -203,7 +203,7 @@ L.Control.Tabs = L.Control.extend({
 					} else {
 						L.DomEvent.on(tab, 'dblclick', function(j) {
 							return function() {
-								// console.err('Double clicked ' + j);
+								// window.app.console.err('Double clicked ' + j);
 								this._tabForContextMenu = j;
 								this._renameSheet();
 							};

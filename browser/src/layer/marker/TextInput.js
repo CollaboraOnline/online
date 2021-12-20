@@ -198,7 +198,7 @@ L.TextInput = L.Layer.extend({
 	focus: function(acceptInput) {
 		if (isAnyVexDialogActive())
 			return;
-		// console.trace('L.TextInput.focus(' + acceptInput + ')');
+		// window.app.console.trace('L.TextInput.focus(' + acceptInput + ')');
 
 		// Note that the acceptInput parameter intentionally
 		// is a tri-state boolean: undefined, false, or true.
@@ -310,7 +310,7 @@ L.TextInput = L.Layer.extend({
 				s = s + '0x' + value.charCodeAt(ii).toString(16);
 			}
 			s = s + ']';
-			console.log('L.TextInput.getValueAsCodePoints: ' + s);
+			window.app.console.log('L.TextInput.getValueAsCodePoints: ' + s);
 		}
 		var arr = [];
 		var code;
@@ -519,7 +519,7 @@ L.TextInput = L.Layer.extend({
 
 			state += '[' + this._deleteHint + '] ';
 
-			console.log2(
+			window.app.console.log(
 				+ new Date() + ' %cINPUT%c: ' + state
 				+ '"' + content + '" ' + type + '%c ',
 				'background:#bfb;color:black',
@@ -544,7 +544,7 @@ L.TextInput = L.Layer.extend({
 			    this._textArea.selectionStart === 0)
 			{
 				// It seems some inputs eg. GBoard can magically move the cursor from " | " to "|  "
-				console.log('Oh dear, gboard sabotaged our cursor position, fixing');
+				window.app.console.log('Oh dear, gboard sabotaged our cursor position, fixing');
 				// But when we detect the problem only emit a delete when we have one.
 				if (ev.inputType && ev.inputType === 'deleteContentBackward')
 				{
@@ -565,7 +565,7 @@ L.TextInput = L.Layer.extend({
 		this._map.notifyActive();
 
 		if (this._ignoreInputCount > 0) {
-			console.log('ignoring synthetic input ' + this._ignoreInputCount);
+			window.app.console.log('ignoring synthetic input ' + this._ignoreInputCount);
 			return;
 		}
 
@@ -590,20 +590,20 @@ L.TextInput = L.Layer.extend({
 		// We use a different leading and terminal space character
 		// to differentiate backspace from delete, then replace the character.
 		if (content.length < 1 || content[0] !== preSpaceChar) { // missing initial space
-			console.log('Sending backspace');
+			window.app.console.log('Sending backspace');
 			if (!ignoreBackspace)
 				this._removeTextContent(1, 0);
 			this._emptyArea();
 			return;
 		}
 		if (content[content.length-1] !== postSpaceChar) { // missing trailing space.
-			console.log('Sending delete');
+			window.app.console.log('Sending delete');
 			this._removeTextContent(0, 1);
 			this._emptyArea();
 			return;
 		}
 		if (content.length < 2) {
-			console.log('Missing terminal nodes: ' + this._deleteHint);
+			window.app.console.log('Missing terminal nodes: ' + this._deleteHint);
 			if (this._deleteHint == 'backspace' ||
 			    this._textArea.selectionStart === 0)
 			{
@@ -614,7 +614,7 @@ L.TextInput = L.Layer.extend({
 				 this._textArea.selectionStart === 1)
 				this._removeTextContent(0, 1);
 			else
-				console.log('Cant detect delete or backspace');
+				window.app.console.log('Cant detect delete or backspace');
 			this._emptyArea();
 			return;
 		}
@@ -636,7 +636,7 @@ L.TextInput = L.Layer.extend({
 		while (matchTo < sharedLength && content[matchTo] === this._lastContent[matchTo])
 			matchTo++;
 
-		console.log('Comparison matchAt ' + matchTo + '\n' +
+		window.app.console.log('Comparison matchAt ' + matchTo + '\n' +
 			    '\tnew "' + this.codePointsToString(content) + '" (' + content.length + ')' + '\n' +
 			    '\told "' + this.codePointsToString(this._lastContent) + '" (' + this._lastContent.length + ')');
 
@@ -687,7 +687,7 @@ L.TextInput = L.Layer.extend({
 				s = s + '0x' + text.charCodeAt(ii).toString(16);
 			}
 			s = s + ']';
-			console.log('L.TextInput._sendText: ' + s);
+			window.app.console.log('L.TextInput._sendText: ' + s);
 		}
 		this._fancyLog('send-text-to-coolwsd', text);
 
@@ -735,7 +735,7 @@ L.TextInput = L.Layer.extend({
 		// empty string.
 		// FIXME: is that true !? ...
 
-		// console.log('Set old/lastContent to empty');
+		// window.app.console.log('Set old/lastContent to empty');
 		this._lastContent = [];
 
 		this._textArea.value = this._preSpaceChar + this._postSpaceChar;
@@ -823,7 +823,7 @@ L.TextInput = L.Layer.extend({
 	// message.
 	// Will remove characters from the queue first, if there are any.
 	_removeTextContent: function(before, after) {
-		console.log('Remove ' + before + ' before, and ' + after + ' after');
+		window.app.console.log('Remove ' + before + ' before, and ' + after + ' after');
 
 		/// TODO: rename the event to 'removetextcontent' as soon as coolwsd supports it
 		/// TODO: Ask Marco about it
@@ -846,7 +846,7 @@ L.TextInput = L.Layer.extend({
 				s = s + '0x' + text.charCodeAt(ii).toString(16);
 			}
 			s = s + ']';
-			console.log('L.TextInput._sendCompositionEvent: ' + s);
+			window.app.console.log('L.TextInput._sendCompositionEvent: ' + s);
 		}
 
 		// We want to trigger auto-correction, but not if we may

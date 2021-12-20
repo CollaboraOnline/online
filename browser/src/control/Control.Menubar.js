@@ -1350,7 +1350,7 @@ L.Control.Menubar = L.Control.extend({
 							// will never be invoked on non-mobile browsers? I might be wrong though.
 							// If you notice this logging, please modify this comment to indicate what is
 							// going on.
-							console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #1');
+							window.app.console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #1');
 							$nav.css({height: 'initial', bottom: '38px'});
 							$menu.hide().slideDown(250, function() { $menu.css('display', ''); });
 							$('#mobile-wizard-header').show();
@@ -1363,7 +1363,7 @@ L.Control.Menubar = L.Control.extend({
 						}
 					} else if (!window.mode.isMobile()) {
 						// Ditto.
-						console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #2');
+						window.app.console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #2');
 						$menu.show().slideUp(250, function() { $menu.css('display', ''); });
 						$nav.css({height:'', bottom: ''});
 					} else {
@@ -1431,7 +1431,7 @@ L.Control.Menubar = L.Control.extend({
 					var itemState = self._map[constState].getItemValue(unoCommand);
 					if (itemState === 'disabled') {
 						if (unoCommand.startsWith('.uno:Paste')) {
-							console.log('do not disable paste based on server side data');
+							window.app.console.log('do not disable paste based on server side data');
 						} else {
 							$(aItem).addClass('disabled');
 						}

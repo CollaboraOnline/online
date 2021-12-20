@@ -948,7 +948,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		if (handler)
 			var processChildren = handler(parent, data, this);
 		else
-			console.warn('NotebookbarBuilder: Unsupported control type: "' + type + '"');
+			window.app.console.warn('NotebookbarBuilder: Unsupported control type: "' + type + '"');
 
 		if (processChildren && data.children != undefined)
 			this.build(parent, data.children, isVertical, hasManyChildren);
@@ -1020,7 +1020,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					processChildren = handler(childObject, childData, this);
 					this.postProcess(childObject, childData);
 				} else
-					console.warn('NotebookbarBuilder: Unsupported control type: "' + childType + '"');
+					window.app.console.warn('NotebookbarBuilder: Unsupported control type: "' + childType + '"');
 
 				if (childType === 'toolbox' && hasVerticalParent === true && childData.children.length === 1)
 					this.options.useInLineLabelsForUnoButtons = true;

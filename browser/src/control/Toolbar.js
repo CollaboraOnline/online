@@ -644,7 +644,7 @@ L.Map.include({
 	},
 
 	showWelcomeDialog: function(calledFromMenu) {
-		console.log('showWelcomeDialog, calledFromMenu: ' + calledFromMenu);
+		window.app.console.log('showWelcomeDialog, calledFromMenu: ' + calledFromMenu);
 		var welcomeLocation = 'welcome/welcome.html';
 		if (window.socketProxy)
 			welcomeLocation = window.makeWsUrl('/cool/dist/' + welcomeLocation);

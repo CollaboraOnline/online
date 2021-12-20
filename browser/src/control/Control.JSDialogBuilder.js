@@ -230,7 +230,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			else if (data.text || data.command) {
 				builder._unoToolButton(parentContainer, data, builder);
 			} else
-				console.warn('Unsupported toolitem type: "' + data.command + '"');
+				window.app.console.warn('Unsupported toolitem type: "' + data.command + '"');
 		}
 
 		return false;
@@ -242,7 +242,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (builder.map.uiManager.isUIBlocked())
 			return;
 
-		console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
+		window.app.console.debug('control: \'' + objectType + '\' id:\'' + object.id + '\' event: \'' + eventType + '\' state: \'' + data + '\'');
 
 		if (builder.wizard.setCurrentScrollPosition)
 			builder.wizard.setCurrentScrollPosition();
@@ -645,7 +645,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					$(arrowSpan).hide();
 				}
 			} else {
-				console.debug('Builder used outside of mobile wizard: please implement the click handler');
+				window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
 			}
 		}
 		else
@@ -691,7 +691,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}
 			});
 		} else {
-			console.debug('Builder used outside of mobile wizard: please implement the click handler');
+			window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
 		}
 	},
 
@@ -820,7 +820,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (builder.wizard) {
 			$(sectionTitle).click(function() { builder.wizard.goLevelDown(mainContainer); });
 		} else {
-			console.debug('Builder used outside of mobile wizard: please implement the click handler');
+			window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
 		}
 	},
 
@@ -983,7 +983,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 					$(tabs[t]).click(fn(t));
 				}
 			} else {
-				console.debug('Builder used outside of mobile wizard: please implement the click handler');
+				window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
 			}
 		}
 
@@ -1071,7 +1071,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				$(tabs[t]).click(fn);
 			}
 		} else {
-			console.debug('Builder used outside of mobile wizard: please implement the click handler');
+			window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
 		}
 		$(tabs[0]).click();
 		builder.wizard.goLevelDown(contentsContainer);
@@ -1495,7 +1495,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 						contentNode.onshow();
 				});
 			} else {
-				console.debug('Builder used outside of mobile wizard: please implement the click handler');
+				window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
 			}
 		}
 		else
@@ -1525,7 +1525,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		} else if (window.mode.isMobile())
 			builder._explorableEditControl(parentContainer, data, builder);
 		else
-			console.warn('Unsupported combobox control!');
+			window.app.console.warn('Unsupported combobox control!');
 	},
 
 	_listboxControl: function(parentContainer, data, builder) {
@@ -1991,7 +1991,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				builder.callback('menubutton', 'toggle', button, undefined, builder);
 			});
 		} else {
-			console.warn('Not found menu "' + menuId + '"');
+			window.app.console.warn('Not found menu "' + menuId + '"');
 		}
 
 		return false;
@@ -2839,7 +2839,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				}
 			});
 		} else {
-			console.debug('Builder used outside of mobile wizard: please implement the click handler');
+			window.app.console.debug('Builder used outside of mobile wizard: please implement the click handler');
 		}
 
 		builder.map.hideRestrictedItems(data, menuEntry, menuEntry);
@@ -2901,7 +2901,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	executeAction: function(container, data) {
 		var control = container.querySelector('[id=\'' + data.control_id + '\']');
 		if (!control) {
-			console.warn('executeAction: not found control with id: "' + data.control_id + '"');
+			window.app.console.warn('executeAction: not found control with id: "' + data.control_id + '"');
 			return;
 		}
 
@@ -3015,7 +3015,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				processChildren = handler(childObject, childData, this);
 				this.postProcess(childObject, childData);
 			} else
-				console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
+				window.app.console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
 
 			if (processChildren && childData.children != undefined)
 				this.build(childObject, childData.children, isVertical, hasManyChildren);

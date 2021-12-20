@@ -86,7 +86,7 @@ L.Control.MobileWizard = L.Control.extend({
 			clearTimeout(this.snackBarTimout);
 
 		var docType = this._map.getDocType();
-		//console.log('ContentsLength: ' + ContentsLength + ' | docType: ' + docType + '$(#mobile-wizard-content).scrollTop();'  + 'this._isTabMode: ' + this._isTabMode + ' | _tabs: ' + this._tabs);
+		//window.app.console.log('ContentsLength: ' + ContentsLength + ' | docType: ' + docType + '$(#mobile-wizard-content).scrollTop();'  + 'this._isTabMode: ' + this._isTabMode + ' | _tabs: ' + this._tabs);
 		var maxScrolled = 52;
 		if ((ContentsLength > 5 || this._tabs) && !window.mobileMenuWizard) {
 			$('#mobile-wizard-content').append('<div id="mobile-wizard-scroll-indicator" style="width: 100%;height: 0px;position: fixed;z-index: 2;bottom: -7px;box-shadow: 0 -8px 20px 4px #0b87e770, 0 1px 10px 6px #0b87e7;"></div>');
@@ -648,7 +648,7 @@ L.Control.MobileWizard = L.Control.extend({
 
 		var control = container.querySelector('[id=\'' + data.control.id + '\']');
 		if (!control) {
-			console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
+			window.app.console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
 			return;
 		}
 
@@ -725,7 +725,7 @@ L.Control.MobileWizard = L.Control.extend({
 			(data.data.control_id === 'contents' ||
 			data.data.control_id === 'Panel' ||
 			data.data.control_id === 'titlebar')) {
-			console.log('Ignored action: ' + data.data.action_type + ' for control: ' + data.data.control_id);
+			window.app.console.log('Ignored action: ' + data.data.action_type + ' for control: ' + data.data.control_id);
 			return;
 		}
 
