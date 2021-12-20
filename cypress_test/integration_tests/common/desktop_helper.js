@@ -299,11 +299,6 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 	for (var n=0;n<numberOfComments;n++) {
 
 		actionOnSelector('insertAnnotation', (selector) => {
-			(docType === 'calc' && mode === 'notebookbar') ?
-				selector = selector.split('.')[0] : '';
-
-			cy.wait(500);
-
 			cy.get(selector).click();
 		});
 

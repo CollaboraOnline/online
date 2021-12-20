@@ -281,7 +281,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			return { hasSelection: false };
 
 		var bounds = this._cellCSelections.getBounds();
-		console.assert(bounds.isValid(), 'Non empty selection should have valid bounds');
+		window.app.console.assert(bounds.isValid(), 'Non empty selection should have valid bounds');
 		return {
 			hasSelection: true,
 			start: this._corePixelsToTwips(bounds.min).add([1, 1]),
@@ -575,7 +575,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			this._splitPaneCache = {};
 		}
 
-		console.assert(typeof this._selectedPart === 'number', 'invalid selectedPart');
+		window.app.console.assert(typeof this._selectedPart === 'number', 'invalid selectedPart');
 
 		var spContext = this._splitPaneCache[this._selectedPart];
 		if (!spContext) {
@@ -642,12 +642,12 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (!e.state || e.state.length === 0) {
-			console.warn('Empty argument for ' + e.commandName);
+			window.app.console.warn('Empty argument for ' + e.commandName);
 			return;
 		}
 
 		var newSplitIndex = Math.floor(parseInt(e.state));
-		console.assert(!isNaN(newSplitIndex) && newSplitIndex >= 0, 'invalid argument for ' + e.commandName);
+		window.app.console.assert(!isNaN(newSplitIndex) && newSplitIndex >= 0, 'invalid argument for ' + e.commandName);
 
 		// This stores the current split-cell state of core, so this should not be modified.
 		this._splitCellState[isSplitCol ? 'x' : 'y'] = newSplitIndex;
@@ -783,7 +783,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (typeof msgObj !== 'object') {
-			console.error('invalid edit cursor message');
+			window.app.console.error('invalid edit cursor message');
 			return undefined;
 		}
 
@@ -800,7 +800,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		}
 
 		if (typeof textMsg !== 'string') {
-			console.error('invalid text selection message');
+			window.app.console.error('invalid text selection message');
 			return [];
 		}
 

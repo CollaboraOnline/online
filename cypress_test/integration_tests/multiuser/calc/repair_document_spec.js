@@ -3,7 +3,7 @@
 var helper = require('../../common/helper');
 var calcHelper = require('../../common/calc_helper');
 
-describe('Repair Document', function() {
+describe.skip('Repair Document', function() {
 	var testFileName = 'repair_doc.ods';
 
 	beforeEach(function() {
@@ -65,11 +65,11 @@ describe('Repair Document', function() {
 		helper.expectTextForClipboard('Hello World', frameId1);
 	}
 
-	it('Repair by user-2', function() {
+	it('Repair by user-2', { retries : 2 }, function() {
 		repairDoc('#iframe1', '#iframe2');
 	});
 
-	it('Repair by user-1', function() {
+	it('Repair by user-1', { retries : 2 }, function() {
 		repairDoc('#iframe2', '#iframe1');
 	});
 });

@@ -58,7 +58,7 @@ L.ColorPicker = L.Class.extend({
 		L.setOptions(this, options);
 		if (this.options.noColorControl && this.options.autoColorControl) {
 			this.options.autoColorControl = false;
-			console.warn('L.ColorPicker: requested both no color and auto color control');
+			window.app.console.warn('L.ColorPicker: requested both no color and auto color control');
 		}
 
 		var pickerID = L.ColorPicker.ID++;

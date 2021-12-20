@@ -18,7 +18,7 @@ L.SplitPanesRenderer = L.Layer.extend({
 	},
 
 	onAdd: function () {
-		console.assert(this._map.getSplitPanesContext(), 'no split-panes context object!');
+		window.app.console.assert(this._map.getSplitPanesContext(), 'no split-panes context object!');
 
 		if (!this._container) {
 			this._initContainer(); // defined by renderer implementations
@@ -33,7 +33,7 @@ L.SplitPanesRenderer = L.Layer.extend({
 	},
 
 	setParentRenderer: function () {
-		console.error('SplitPanesRenderer cannot be a child renderer!');
+		window.app.console.error('SplitPanesRenderer cannot be a child renderer!');
 	},
 
 	// All child renderers have dedicated event listeners.

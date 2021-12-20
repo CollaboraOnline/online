@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-02 14:42+0200\n"
-"PO-Revision-Date: 2021-11-22 19:49+0000\n"
+"POT-Creation-Date: 2021-12-16 09:43+0200\n"
+"PO-Revision-Date: 2021-12-08 09:40+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "help/he/>\n"
@@ -1728,13 +1728,15 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.p:366-5
 msgid ""
 "When closing a document, it is automatically saved if it has been changed."
-msgstr ""
+msgstr "סגירת מסמך שומרת אותו אוטומטית אם נערך בו שינוי."
 
 #: html/cool-help.html%2Bdiv.p:369-5
 msgid ""
 "Document editing should be familiar to everyone that has used an office "
 "application before, but here are some distinctive features:"
 msgstr ""
+"עריכת מסמכים אמורה להיות תהליך מוכר לכל מי שהשתמש ביישומים משרדיים בעבר אבל "
+"כאן יש כמה יכולות יחודיות:"
 
 #: html/cool-help.html%2Bdiv.h4:370-5
 msgid "Copy and Paste"

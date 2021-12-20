@@ -257,7 +257,7 @@ L.SVGGroup = L.Layer.extend({
 	},
 
 	_project: function () {
-		// console.log()
+		// window.app.console.log()
 	},
 
 	_reset: function () {
@@ -297,7 +297,7 @@ L.SVGGroup = L.Layer.extend({
 
 	getPathNode: function (actualRenderer) {
 
-		console.assert(this._pathNodeCollection, 'missing _pathNodeCollection member!');
+		window.app.console.assert(this._pathNodeCollection, 'missing _pathNodeCollection member!');
 		return this._pathNodeCollection.getPathNode(actualRenderer);
 	},
 

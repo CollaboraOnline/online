@@ -151,7 +151,7 @@ L.Clipboard = L.Class.extend({
 		    meta.indexOf('%26Tag%3D') > 0)
 			return decodeURIComponent(meta);
 		else
-			console.log('Mis-understood foreign origin: "' + meta + '"');
+			window.app.console.log('Mis-understood foreign origin: "' + meta + '"');
 		return '';
 	},
 
@@ -176,7 +176,7 @@ L.Clipboard = L.Class.extend({
 			if (!dataStr.length)
 				continue;
 			var data = new Blob([dataStr]);
-			console.log('type ' + types[t] + ' length ' + data.size +
+			window.app.console.log('type ' + types[t] + ' length ' + data.size +
 				    ' -> 0x' + data.size.toString(16) + '\n');
 			content.push((types[t] === 'text' ? 'text/plain' : types[t]) + '\n');
 			content.push(data.size.toString(16) + '\n');
@@ -256,7 +256,7 @@ L.Clipboard = L.Class.extend({
 		that._doAsyncDownload(
 			'GET', src, null, false,
 			function(response) {
-				console.log('download done - response ' + response);
+				window.app.console.log('download done - response ' + response);
 				var formData = new FormData();
 				formData.append('data', response, 'clipboard');
 				that._doAsyncDownload(
@@ -264,10 +264,10 @@ L.Clipboard = L.Class.extend({
 					function() {
 						if (this.pasteSpecialVex && this.pasteSpecialVex.isOpen) {
 							vex.close(this.pasteSpecialVex);
-							console.log('up-load done, now paste special');
+							window.app.console.log('up-load done, now paste special');
 							app.socket.sendMessage('uno .uno:PasteSpecial');
 						} else {
-							console.log('up-load done, now paste');
+							window.app.console.log('up-load done, now paste');
 							app.socket.sendMessage('uno .uno:Paste');
 						}
 
@@ -277,7 +277,7 @@ L.Clipboard = L.Class.extend({
 			},
 			function(progress) { return progress/2; },
 			function() {
-				console.log('failed to download clipboard using fallback html');
+				window.app.console.log('failed to download clipboard using fallback html');
 
 				// If it's the stub, avoid pasting.
 				if (that._isStubHtml(fallbackHtml))
@@ -299,10 +299,10 @@ L.Clipboard = L.Class.extend({
 					function() {
 						if (this.pasteSpecialVex && this.pasteSpecialVex.isOpen) {
 							vex.close(this.pasteSpecialVex);
-							console.log('up-load of fallback done, now paste special');
+							window.app.console.log('up-load of fallback done, now paste special');
 							app.socket.sendMessage('uno .uno:PasteSpecial');
 						} else {
-							console.log('up-load of fallback done, now paste');
+							window.app.console.log('up-load of fallback done, now paste');
 							app.socket.sendMessage('uno .uno:Paste');
 						}
 
@@ -349,7 +349,7 @@ L.Clipboard = L.Class.extend({
 		    (meta.indexOf(id) >= 0 || meta.indexOf(idOld) >= 0))
 		{
 			// Home from home: short-circuit internally.
-			console.log('short-circuit, internal paste');
+			window.app.console.log('short-circuit, internal paste');
 			this._doInternalPaste(this._map, usePasteKeyEvent);
 			return true;
 		}
@@ -357,7 +357,7 @@ L.Clipboard = L.Class.extend({
 		// Do we have a remote Online we can suck rich data from ?
 		if (meta !== '')
 		{
-			console.log('Transfer between servers\n\t"' + meta + '" vs. \n\t"' + id + '"');
+			window.app.console.log('Transfer between servers\n\t"' + meta + '" vs. \n\t"' + id + '"');
 			this._dataTransferDownloadAndPasteAsync(meta, this.getMetaURL(), htmlText);
 			return false; // just started async operation - did not finish yet
 		}
@@ -388,13 +388,13 @@ L.Clipboard = L.Class.extend({
 		{
 			var types = dataTransfer.types;
 
-			console.log('Attempting to paste image(s)');
+			window.app.console.log('Attempting to paste image(s)');
 
 			// first try to transfer images
 			// TODO if we have both Files and a normal mimetype, should we handle
 			// both, or prefer one or the other?
 			for (var t = 0; t < types.length; ++t) {
-				console.log('\ttype' + types[t]);
+				window.app.console.log('\ttype' + types[t]);
 				if (types[t] === 'Files') {
 					var files = dataTransfer.files;
 					if (files !== null)
@@ -410,7 +410,7 @@ L.Clipboard = L.Class.extend({
 		}
 
 		if (content != null) {
-			console.log('Normal HTML, so smart paste not possible');
+			window.app.console.log('Normal HTML, so smart paste not possible');
 
 			var formData = new FormData();
 			formData.append('file', content);
@@ -418,20 +418,20 @@ L.Clipboard = L.Class.extend({
 			var that = this;
 			this._doAsyncDownload('POST', this.getMetaURL(), formData, false,
 				function() {
-					console.log('Posted ' + content.size + ' bytes successfully');
+					window.app.console.log('Posted ' + content.size + ' bytes successfully');
 					that._doInternalPaste(that._map, usePasteKeyEvent);
 				},
 				function(progress) { return progress; }
 					    );
 		} else {
-			console.log('Nothing we can paste on the clipboard');
+			window.app.console.log('Nothing we can paste on the clipboard');
 		}
 	},
 
 	_checkSelection: function() {
 		var checkSelect = document.getSelection();
 		if (checkSelect && checkSelect.isCollapsed)
-			console.log('Error: collapsed selection - cannot copy/paste');
+			window.app.console.log('Error: collapsed selection - cannot copy/paste');
 	},
 
 	_getHtmlForClipboard: function() {
@@ -445,25 +445,25 @@ L.Clipboard = L.Class.extend({
 
 		if (this._selectionType === 'complex' ||
 		    this._map._docLayer.hasGraphicSelection()) {
-			console.log('Copy/Cut with complex/graphical selection');
+			window.app.console.log('Copy/Cut with complex/graphical selection');
 			if (this._selectionType === 'text' && this._selectionContent !== '')
 			{ // back here again having downloaded it ...
 				text = this._selectionContent;
-				console.log('Use downloaded selection.');
+				window.app.console.log('Use downloaded selection.');
 			}
 			else
 			{
-				console.log('Downloaded that selection.');
+				window.app.console.log('Downloaded that selection.');
 				text = this._getStubHtml();
 				this._onDownloadOnLargeCopyPaste();
 				this._downloadProgress.setURI( // richer, bigger HTML ...
 					this.getMetaURL() + '&MimeType=text/html');
 			}
 		} else if (this._selectionType === null) {
-			console.log('Copy/Cut with no selection!');
+			window.app.console.log('Copy/Cut with no selection!');
 			text = this._getStubHtml();
 		} else {
-			console.log('Copy/Cut with simple text selection');
+			window.app.console.log('Copy/Cut with simple text selection');
 			text = this._selectionContent;
 		}
 		return text;
@@ -490,7 +490,7 @@ L.Clipboard = L.Class.extend({
 			// if copied content is graphical then plainText is null and it does not work on mobile.
 			ev.clipboardData.setData('text/plain', plainText ? plainText: ' ');
 			ev.clipboardData.setData('text/html', text);
-			console.log('Put "' + text + '" on the clipboard');
+			window.app.console.log('Put "' + text + '" on the clipboard');
 			this._clipboardSerial++;
 		}
 
@@ -518,7 +518,7 @@ L.Clipboard = L.Class.extend({
 
 	// Does the selection of text before an event comes in
 	_beforeSelect: function(ev) {
-		console.log('Got event ' + ev.type + ' setting up selection');
+		window.app.console.log('Got event ' + ev.type + ' setting up selection');
 
 		if (this._isAnyInputFieldSelected())
 			return;
@@ -546,7 +546,7 @@ L.Clipboard = L.Class.extend({
 
 			var checkSelect = document.getSelection();
 			if (checkSelect.isCollapsed)
-				console.log('Error: failed to select - cannot copy/paste');
+				window.app.console.log('Error: failed to select - cannot copy/paste');
 		}
 
 		return false;
@@ -577,7 +577,7 @@ L.Clipboard = L.Class.extend({
 		if (active !== null && active !== document.activeElement)
 			active.focus();
 
-		console.log('fallback ' + operation + ' ' + (success?'success':'fail'));
+		window.app.console.log('fallback ' + operation + ' ' + (success?'success':'fail'));
 
 		return success;
 	},
@@ -589,7 +589,7 @@ L.Clipboard = L.Class.extend({
 		this._unoCommandForCopyCutPaste = cmd;
 		if (document.execCommand(operation) &&
 		    serial !== this._clipboardSerial) {
-			console.log('copied successfully');
+			window.app.console.log('copied successfully');
 			this._unoCommandForCopyCutPaste = null;
 			return;
 		}
@@ -597,7 +597,7 @@ L.Clipboard = L.Class.extend({
 
 		// try a hidden div
 		if (this._execOnElement(operation)) {
-			console.log('copied on element successfully');
+			window.app.console.log('copied on element successfully');
 			return;
 		}
 
@@ -605,10 +605,10 @@ L.Clipboard = L.Class.extend({
 		if (operation === 'paste')
 		{
 			try {
-				console.warn('Asked parent for a paste event');
+				window.app.console.warn('Asked parent for a paste event');
 				this._map.fire('postMessage', {msgId: 'UI_Paste'});
 			} catch (error) {
-				console.warn('Failed to post-message: ' + error);
+				window.app.console.warn('Failed to post-message: ' + error);
 			}
 		}
 
@@ -618,13 +618,13 @@ L.Clipboard = L.Class.extend({
 		setTimeout(function() {
 			if (that._clipboardSerial !== serial)
 			{
-				console.log('successful ' + operation);
+				window.app.console.log('successful ' + operation);
 				if (operation === 'paste')
 					that._stopHideDownload();
 			}
 			else
 			{
-				console.log('help did not arrive for ' + operation);
+				window.app.console.log('help did not arrive for ' + operation);
 				that._warnCopyPaste();
 			}
 		}, 150 /* ms */);
@@ -653,12 +653,12 @@ L.Clipboard = L.Class.extend({
 		} else {
 			return false;
 		}
-		console.log('filtered uno command ' + cmd);
+		window.app.console.log('filtered uno command ' + cmd);
 		return true;
 	},
 
 	_doCopyCut: function(ev, unoName) {
-		console.log(unoName);
+		window.app.console.log(unoName);
 
 		if (this._isAnyInputFieldSelected())
 			return;
@@ -673,7 +673,7 @@ L.Clipboard = L.Class.extend({
 			var text = this._getDisabledCopyStubHtml();
 			var plainText = this.stripHTML(text);
 			if (ev.clipboardData) {
-				console.log('Copying disabled: put stub message on the clipboard');
+				window.app.console.log('Copying disabled: put stub message on the clipboard');
 				ev.clipboardData.setData('text/plain', plainText ? plainText: ' ');
 				ev.clipboardData.setData('text/html', text);
 				this._clipboardSerial++;
@@ -708,7 +708,7 @@ L.Clipboard = L.Class.extend({
 	copy: function(ev) { return this._doCopyCut(ev, 'Copy'); },
 
 	paste: function(ev) {
-		console.log('Paste');
+		window.app.console.log('Paste');
 
 		if (this._isAnyInputFieldSelected())
 			return;
@@ -843,7 +843,7 @@ L.Clipboard = L.Class.extend({
 			msg = _('<p>Please use the copy/paste buttons on your on-screen keyboard.</p>');
 		} else {
 			msg = _('<p>Your browser has very limited access to the clipboard, so use these keyboard shortcuts:</p><table class="warn-copy-paste"><tr><td><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class="kbd--plus">+</span><kbd>V</kbd></td></tr><tr><td>Copy</td><td>Cut</td><td>Paste</td></tr></table>');
-			msg = L.Util.replaceCtrlInMac(msg);
+			msg = L.Util.replaceCtrlAltInMac(msg);
 		}
 		vex.dialog.alert({
 			unsafeMessage: msg,
@@ -891,6 +891,6 @@ L.Clipboard = L.Class.extend({
 
 L.clipboard = function(map) {
 	if (window.ThisIsAMobileApp)
-		console.log('======> Assertion failed!? No L.Clipboard object should be needed in a mobile app');
+		window.app.console.log('======> Assertion failed!? No L.Clipboard object should be needed in a mobile app');
 	return new L.Clipboard(map);
 };

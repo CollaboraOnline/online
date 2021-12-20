@@ -48,7 +48,7 @@ L.Control.LanguageDialog = L.Control.extend({
 		if (split.length > 1)
 			code = split[1];
 		else
-			console.error('Language code not found');
+			window.app.console.error('Language code not found');
 		return code;
 	},
 

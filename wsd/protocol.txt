@@ -463,6 +463,9 @@ invalidatetiles: part=<partNumber> x=<x> y=<y> width=<width> height=<height>
     zoom level.
 
 invalidatetiles: EMPTY
+invalidatetiles: EMPTY, <partNumber>
+
+    Tells the client to invalidate all cached tiles.
 
 pong rendercount=<num>
 

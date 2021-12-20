@@ -179,16 +179,17 @@ class Cursor {
 	}
 
 	setOpacity(opacity: number) {
-		if (this.container) {
+		if (this.container)
 			L.DomUtil.setOpacity(this.cursor, opacity);
-		}
+		if (this.cursorHeader)
+			L.DomUtil.setOpacity(this.cursorHeader, opacity);
 	}
 
 	// Shows cursor header if cursor is in visible area.
 	showCursorHeader() {
 		if (this.cursorHeader) {
-			if (!this.visible) {
-				L.DomUtil.setStyle(this.cursorHeader, 'visibility', 'hidden');
+			if (!this.visible || this.map._docLayer._isZooming) {
+				this.hideCursorHeader();
 				return;
 			}
 
@@ -196,9 +197,14 @@ class Cursor {
 
 			clearTimeout(this.blinkTimeout);
 			this.blinkTimeout = setTimeout(L.bind(function () {
-				L.DomUtil.setStyle(this.cursorHeader, 'visibility', 'hidden');
+				this.hideCursorHeader();
 			}, this), this.headerTimeout);
 		}
+	}
+
+	hideCursorHeader() {
+		if (this.cursorHeader)
+			L.DomUtil.setStyle(this.cursorHeader, 'visibility', 'hidden');
 	}
 
 	private initLayout() {

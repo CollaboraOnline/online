@@ -478,7 +478,17 @@ L.Map.include({
 				}
 				translatableContent = $vexContent.find('td');
 				for (i = 0, max = translatableContent.length; i < max; i++) {
-					translatableContent[i].innerHTML = translatableContent[i].innerHTML.toLocaleString();
+					var orig = translatableContent[i].innerHTML;
+					var trans = translatableContent[i].innerHTML.toLocaleString();
+					// Try harder to get translation of keyboard shortcuts (html2po trims starting <kbd> and ending </kbd>)
+					if (orig === trans && orig.indexOf('kbd') != -1) {
+						var trimmedOrig = orig.replace(/^(<kbd>)/,'').replace(/(<\/kbd>$)/,'');
+						var trimmedTrans = trimmedOrig.toLocaleString();
+						if (trimmedOrig !== trimmedTrans) {
+							trans = '<kbd>' + trimmedTrans + '</kbd>';
+						}
+					}
+					translatableContent[i].innerHTML = trans;
 				}
 				translatableContent = $vexContent.find('p');
 				for (i = 0, max = translatableContent.length; i < max; i++) {
@@ -499,34 +509,16 @@ L.Map.include({
 					}
 				}
 
-				// Substitute %productName in Online Help
+				// Substitute %productName in Online Help and replace special Mac key names
 				if (id === 'online-help') {
 					var productNameContent = $vexContent.find('span.productname');
 					for (i = 0, max = productNameContent.length; i < max; i++) {
 						productNameContent[i].innerHTML = productNameContent[i].innerHTML.replace(/%productName/g, productName);
 					}
+					document.getElementById('online-help').innerHTML = L.Util.replaceCtrlAltInMac(document.getElementById('online-help').innerHTML);
 				}
-
-				// Special Mac key names
-				if (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1) {
-					var ctrl = /Ctrl/g;
-					var alt = /Alt/g;
-					if (String.locale.startsWith('de') || String.locale.startsWith('dsb') || String.locale.startsWith('hsb')) {
-						ctrl = /Strg/g;
-					}
-					if (String.locale.startsWith('lt')) {
-						ctrl = /Vald/g;
-					}
-					if (String.locale.startsWith('sl')) {
-						ctrl = /Krmilka/gi;
-						alt = /Izmenjalka/gi;
-					}
-					if (id === 'keyboard-shortcuts') {
-						document.getElementById('keyboard-shortcuts').innerHTML = document.getElementById('keyboard-shortcuts').innerHTML.replace(ctrl, '⌘').replace(alt, '⌥');
-					}
-					if (id === 'online-help') {
-						document.getElementById('online-help').innerHTML = document.getElementById('online-help').innerHTML.replace(ctrl, '⌘').replace(alt, '⌥');
-					}
+				if (id === 'keyboard-shortcuts') {
+					document.getElementById('keyboard-shortcuts').innerHTML = L.Util.replaceCtrlAltInMac(document.getElementById('keyboard-shortcuts').innerHTML);
 				}
 
 				$vexContent.attr('tabindex', -1);
@@ -652,7 +644,7 @@ L.Map.include({
 	},
 
 	showWelcomeDialog: function(calledFromMenu) {
-		console.log('showWelcomeDialog, calledFromMenu: ' + calledFromMenu);
+		window.app.console.log('showWelcomeDialog, calledFromMenu: ' + calledFromMenu);
 		var welcomeLocation = 'welcome/welcome.html';
 		if (window.socketProxy)
 			welcomeLocation = window.makeWsUrl('/cool/dist/' + welcomeLocation);
@@ -780,30 +772,6 @@ L.Map.include({
 					logLevelInformation = newLogLevel;
 
 				$(app.ExpertlyTrickForLOAbout.contentEl).find('#log-level-state').html('Log level: ' + logLevelInformation);
-			} else if (event.key === 't') {
-				// T turns Trace Event recording on in the Kit process
-				// for this document, as long as coolwsd is running with the
-				// trace_event[@enable] config option as true. T again
-				// turns it off.
-
-				if (app.socket.enableTraceEventLogging) {
-					app.socket.traceEventRecordingToggle = !app.socket.traceEventRecordingToggle;
-
-					app.socket.sendMessage('traceeventrecording '
-							       + (app.socket.traceEventRecordingToggle ? 'start' : 'stop'));
-
-					$(app.ExpertlyTrickForLOAbout.contentEl).find('#trace-event-state').html('Trace Event generation: ' + (app.socket.traceEventRecordingToggle ? 'ON' : 'OFF'));
-					// Just as a test, uncomment this to toggle SAL_WARN and
-					// SAL_INFO selection between two states: 1) the default
-					// as directed by the SAL_LOG environment variable, and
-					// 2) all warnings on plus SAL_INFO for sc.
-					//
-					// (Note that coolwsd sets the SAL_LOG environment variable
-					// to "-WARN-INFO", i.e. the default is that nothing is
-					// logged from core.)
-
-					// app.socket.sendMessage('sallogoverride ' + (app.socket.traceEventRecordingToggle ? '+WARN+INFO.sc' : 'default'));
-				}
 			}
 		};
 		vex.open({

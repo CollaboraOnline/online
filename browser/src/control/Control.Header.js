@@ -526,10 +526,10 @@ L.Control.Header = L.Class.extend({
 L.Control.Header.HeaderInfo = L.Class.extend({
 
 	initialize: function (map, _isColumn) {
-		console.assert(map && _isColumn !== undefined, 'map and isCol required');
+		window.app.console.assert(map && _isColumn !== undefined, 'map and isCol required');
 		this._map = map;
 		this._isColumn = _isColumn;
-		console.assert(this._map._docLayer.sheetGeometry, 'no sheet geometry data-structure found!');
+		window.app.console.assert(this._map._docLayer.sheetGeometry, 'no sheet geometry data-structure found!');
 		var sheetGeom = this._map._docLayer.sheetGeometry;
 		this._dimGeom = this._isColumn ? sheetGeom.getColumnsGeometry() : sheetGeom.getRowsGeometry();
 	},
@@ -676,7 +676,7 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 
 	isZeroSize: function (i) {
 		var elem = this._elements[i];
-		console.assert(elem, 'queried a non existent row/col in the header : ' + i);
+		window.app.console.assert(elem, 'queried a non existent row/col in the header : ' + i);
 		return elem.size === 0;
 	},
 
@@ -693,12 +693,12 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 	},
 
 	getRowData: function (index) {
-		console.assert(!this._isColumn, 'this is a column header instance!');
+		window.app.console.assert(!this._isColumn, 'this is a column header instance!');
 		return this.getElementData(index);
 	},
 
 	getColData: function (index) {
-		console.assert(this._isColumn, 'this is a row header instance!');
+		window.app.console.assert(this._isColumn, 'this is a row header instance!');
 		return this.getElementData(index);
 	},
 
@@ -732,14 +732,14 @@ L.Control.Header.HeaderInfo = L.Class.extend({
 		var idx;
 		if (this._hasSplits) {
 			for (idx = 0; idx < this._splitIndex; ++idx) {
-				console.assert(this._elements[idx], 'forEachElement failed');
+				window.app.console.assert(this._elements[idx], 'forEachElement failed');
 				if (callback(this._elements[idx])) {
 					return;
 				}
 			}
 		}
 		for (idx = this._startIndex; idx <= this._endIndex; ++idx) {
-			console.assert(this._elements[idx], 'forEachElement failed');
+			window.app.console.assert(this._elements[idx], 'forEachElement failed');
 			if (callback(this._elements[idx])) {
 				return;
 			}

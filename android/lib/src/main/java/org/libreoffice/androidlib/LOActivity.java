@@ -337,6 +337,10 @@ public class LOActivity extends AppCompatActivity {
             Toast.makeText(this, getString(R.string.failed_to_load_file), Toast.LENGTH_SHORT).show();
             finish();
         }
+        // some types don't have export filter so we cannot edit them
+        // only set it to false if it returns false otherwise it can break previous controls
+        if (!canDocumentBeExported())
+            isDocEditable = false;
         if (mTempFile != null)
         {
             mWebView = (COWebView) findViewById(R.id.browser);
@@ -649,6 +653,9 @@ public class LOActivity extends AppCompatActivity {
                 requestCode = REQUEST_SAVEAS_ODT;
             }
             else if (getMimeType().equals("text/comma-separated-values")) {
+                requestCode = REQUEST_SAVEAS_ODS;
+            }
+            else if (getMimeType().equals("application/vnd.ms-excel.sheet.binary.macroenabled.12")) {
                 requestCode = REQUEST_SAVEAS_ODS;
             }
             else {
@@ -1123,23 +1130,47 @@ public class LOActivity extends AppCompatActivity {
     }
 
     private void requestForCopy() {
-        buildPrompt(getString(R.string.ask_for_copy), "", getString(R.string.edit_copy), getString(R.string.view_only), new DialogInterface.OnClickListener() {
+        final boolean canBeExported = canDocumentBeExported();
+        buildPrompt(getString(R.string.ask_for_copy), "", canBeExported ? getString(R.string.edit_copy) : getString(R.string.use_odf), getString(R.string.view_only), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                createNewFileInputDialog(mActivity, getFileName(true), getMimeType(), REQUEST_COPY);
+                if (canBeExported)
+                    createNewFileInputDialog(mActivity, getFileName(true), getMimeType(), REQUEST_COPY);
+                else {
+                    String extension = getOdfExtensionForDocType(getMimeType());
+                    createNewFileInputDialog(mActivity, getFileName(false) + "." + extension, getMimeForFormat(extension), REQUEST_COPY);
+                }
+
             }
         }).show();
     }
 
-    private void requestForOdf() {
-        String extTemp = "";
-        if (getMimeType().equals("text/plain")) {
+    // readonly formats here
+    private boolean canDocumentBeExported() {
+        if (getMimeType().equals("application/vnd.ms-excel.sheet.binary.macroenabled.12")) {
+            return false;
+        }
+        return true;
+    }
+
+    private String getOdfExtensionForDocType(String mimeType)
+    {
+        String extTemp = null;
+        if (mimeType.equals("text/plain")) {
             extTemp = "odt";
         }
-        else if (getMimeType().equals("text/comma-separated-values")) {
+        else if (mimeType.equals("text/comma-separated-values")) {
             extTemp = "ods";
-        } else
-            // no need to ask -- not a plain type
+        } else if (mimeType.equals("application/vnd.ms-excel.sheet.binary.macroenabled.12")) {
+            extTemp = "ods";
+        }
+        return extTemp;
+    }
+
+    private void requestForOdf() {
+        String extTemp = getOdfExtensionForDocType(getMimeType());
+        if (extTemp == null)
+            // this means we don't need to request for odf type.
             return;
         final String ext = extTemp;
         buildPrompt(getString(R.string.ask_for_convert_odf), getString(R.string.convert_odf_message), getString(R.string.use_odf), getString(R.string.use_text), new DialogInterface.OnClickListener() {

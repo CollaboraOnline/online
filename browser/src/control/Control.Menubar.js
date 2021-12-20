@@ -32,12 +32,18 @@ L.Control.MenubarShortcuts = {
 	},
 
 	addShortcut: function (text, shortcut) {
-		var newText = _(text).replace('~', '') + ' (' + _(shortcut).replace('~', '') + ')';
-
-		// sometimes ''.toLocaleString() doesn't correctly translate the shortcut
-		if (window.lang && window.lang.toLowerCase() === 'de') {
-			newText = newText.replace('Ctrl', 'Strg');
+		// localize shortcut
+		if (String.locale.startsWith('de') || String.locale.startsWith('dsb') || String.locale.startsWith('hsb')) {
+			shortcut = shortcut.replace('Ctrl', 'Strg');
 		}
+		if (String.locale.startsWith('lt')) {
+			shortcut = shortcut.replace('Ctrl', 'Vald');
+		}
+		if (String.locale.startsWith('sl')) {
+			shortcut = shortcut.replace('Ctrl', 'Krmilka').replace('Alt', 'izmenjalka').replace('Shift', 'dvigalka');
+		}
+
+		var newText = _(text).replace('~', '') + ' (' + L.Util.replaceCtrlAltInMac(shortcut) + ')';
 
 		return newText;
 	}
@@ -292,6 +298,7 @@ L.Control.Menubar = L.Control.extend({
 				{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'}
 			]},
 			{name: _UNO('.uno:HelpMenu', 'text'), id: 'help', type: 'menu', menu: [
+				{name: _('Forum'), id: 'forum', type: 'action'},
 				{name: _('Online Help'), id: 'online-help', type: 'action', iosapp: false},
 				{name: L.Control.MenubarShortcuts.addShortcut(_('Keyboard shortcuts'), L.Control.MenubarShortcuts.shortcuts.KEYBOARD_SHORTCUTS), id: 'keyboard-shortcuts', type: 'action', iosapp: false},
 				{name: _('Report an issue'), id: 'report-an-issue', type: 'action', iosapp: false},
@@ -1341,7 +1348,7 @@ L.Control.Menubar = L.Control.extend({
 							// will never be invoked on non-mobile browsers? I might be wrong though.
 							// If you notice this logging, please modify this comment to indicate what is
 							// going on.
-							console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #1');
+							window.app.console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #1');
 							$nav.css({height: 'initial', bottom: '38px'});
 							$menu.hide().slideDown(250, function() { $menu.css('display', ''); });
 							$('#mobile-wizard-header').show();
@@ -1354,7 +1361,7 @@ L.Control.Menubar = L.Control.extend({
 						}
 					} else if (!window.mode.isMobile()) {
 						// Ditto.
-						console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #2');
+						window.app.console.log('======> Assertion failed!? Not window.mode.isMobile()? Control.Menubar.js #2');
 						$menu.show().slideUp(250, function() { $menu.css('display', ''); });
 						$nav.css({height:'', bottom: ''});
 					} else {
@@ -1418,7 +1425,7 @@ L.Control.Menubar = L.Control.extend({
 					var itemState = self._map[constState].getItemValue(unoCommand);
 					if (itemState === 'disabled') {
 						if (unoCommand.startsWith('.uno:Paste')) {
-							console.log('do not disable paste based on server side data');
+							window.app.console.log('do not disable paste based on server side data');
 						} else {
 							$(aItem).addClass('disabled');
 						}
@@ -1648,6 +1655,8 @@ L.Control.Menubar = L.Control.extend({
 			this._map.feedback.showFeedbackDialog();
 		} else if (id === 'report-an-issue') {
 			window.open('https://github.com/CollaboraOnline/online/issues', '_blank');
+		} else if (id === 'forum') {
+			window.open('https://forum.collaboraonline.com', '_blank');
 		} else if (id === 'inserthyperlink') {
 			this._map.showHyperlinkDialog();
 		} else if (id === 'keyboard-shortcuts' || id === 'online-help') {

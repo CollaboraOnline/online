@@ -251,7 +251,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (!rectangle)
 			return; // Don't request rendering an empty area.
 
-		//console.log('_sendPaintWindow: rectangle: ' + rectangle + ', dpiscale: ' + dpiscale);
+		//window.app.console.log('_sendPaintWindow: rectangle: ' + rectangle + ', dpiscale: ' + dpiscale);
 		app.socket.sendMessage('paintwindow ' + id + ' rectangle=' + rectangle + ' dpiscale=' + app.roundedDpiScale);
 
 		if (this._map._docLayer && this._map._docLayer._debug)
@@ -263,7 +263,7 @@ L.Control.LokDialog = L.Control.extend({
 		// CSV and Macro Security Warning Dialogs are shown before the document load
 		// In that state the document is not really loaded and closing or cancelling it
 		// returns docnotloaded error. Instead of this we can return to the integration
-		if (!this._map._docLoaded) {
+		if (!this._map._docLoaded && !window._firstDialogHandled) {
 			window.onClose();
 		}
 	},
@@ -275,7 +275,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onDialogMsg: function(e) {
-		// console.log('onDialogMsg: id: ' + e.id + ', winType: ' + e.winType + ', action: ' + e.action + ', size: ' + e.size + ', rectangle: ' + e.rectangle);
+		// window.app.console.log('onDialogMsg: id: ' + e.id + ', winType: ' + e.winType + ', action: ' + e.action + ', size: ' + e.size + ', rectangle: ' + e.rectangle);
 		if (e.winType != undefined &&
 		    e.winType !== 'dialog' &&
 		    e.winType !== 'calc-input-win' &&
@@ -569,7 +569,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (startHandle && handles.draggingStopped) {
 			if (!handles.start)
 				handles.start = handles.appendChild(startHandle);
-			// console.log('lokdialog: _updateTextSelection: startPos: x: ' + startPos.x + ', y: ' + startPos.y);
+			// window.app.console.log('lokdialog: _updateTextSelection: startPos: x: ' + startPos.x + ', y: ' + startPos.y);
 			startHandle.pos = startPos;
 			L.DomUtil.setStyle(startHandle, 'left',  startPos.x + 'px');
 			L.DomUtil.setStyle(startHandle, 'top', startPos.y + 'px');
@@ -578,7 +578,7 @@ L.Control.LokDialog = L.Control.extend({
 		if (endHandle && handles.draggingStopped) {
 			if (!handles.end)
 				handles.end = handles.appendChild(endHandle);
-			// console.log('lokdialog: _updateTextSelection: endPos: x: ' + endPos.x + ', y: ' + endPos.y);
+			// window.app.console.log('lokdialog: _updateTextSelection: endPos: x: ' + endPos.x + ', y: ' + endPos.y);
 			endHandle.pos = endPos;
 			L.DomUtil.setStyle(endHandle, 'left',  endPos.x + 'px');
 			L.DomUtil.setStyle(endHandle, 'top', endPos.y + 'px');
@@ -838,7 +838,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_launchCalcInputBar: function(id, left, top, width, height, textLines) {
-		// console.log('_launchCalcInputBar: start: id: ' + id + ', left: ' + left + ', top: ' + top
+		// window.app.console.log('_launchCalcInputBar: start: id: ' + id + ', left: ' + left + ', top: ' + top
 		// 	+ ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
 		if (!this._calcInputBar || this._calcInputBar.id !== id) {
 			if (this._calcInputBar)
@@ -849,7 +849,7 @@ L.Control.LokDialog = L.Control.extend({
 			this._adjustCalcInputBar(id, left, top, width, height, textLines);
 		}
 
-		// console.log('_launchCalcInputBar: end');
+		// window.app.console.log('_launchCalcInputBar: end');
 	},
 
 	_adjustCalcInputBar: function(id, left, top, width, height, textLines) {
@@ -859,19 +859,19 @@ L.Control.LokDialog = L.Control.extend({
 			var oldY = this._calcInputBar.top;
 			var delta = height - oldHeight;
 			if (delta !== 0 || oldX !== left || oldY !== top) {
-				// console.log('_adjustCalcInputBar: start: id: ' + id + ', height: ' + oldHeight + ' -> ' + height);
+				// window.app.console.log('_adjustCalcInputBar: start: id: ' + id + ', height: ' + oldHeight + ' -> ' + height);
 
 				// Recreate the input-bar.
 				$('#' + this._calcInputBar.strId).remove();
 				this._createCalcInputbar(id, left, top, width, height, textLines);
 
-				// console.log('_adjustCalcInputBarHeight: end');
+				// window.app.console.log('_adjustCalcInputBarHeight: end');
 			}
 
 			var oldWidth = this._calcInputBar.width;
 			delta = width - oldWidth;
 			if (delta !== 0) {
-				// console.log('_adjustCalcInputBar: start: id: ' + id + ', width: ' + oldWidth + ' -> ' + width);
+				// window.app.console.log('_adjustCalcInputBar: start: id: ' + id + ', width: ' + oldWidth + ' -> ' + width);
 
 				var strId = this._toStrId(id);
 
@@ -887,7 +887,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_createCalcInputbar: function(id, left, top, width, height, textLines) {
-		// console.log('_createCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
+		// window.app.console.log('_createCalcInputBar: start: id: ' + id + ', width: ' + width + ', height: ' + height + ', textLines: ' + textLines);
 		var strId = this._toStrId(id);
 
 		$('#calc-inputbar-wrapper').css({display: 'block'});
@@ -961,7 +961,7 @@ L.Control.LokDialog = L.Control.extend({
 		this._postLaunch(id, container, handles);
 		this._setupCalcInputBarGestures(id, handles, startHandle, endHandle);
 
-		// console.log('_createCalcInputBar: end');
+		// window.app.console.log('_createCalcInputBar: end');
 	},
 
 	_postLaunch: function(id, panelContainer, panelCanvas) {
@@ -1202,7 +1202,7 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_postWindowGestureEvent: function(winid, type, x, y, offset) {
-		// console.log('x ' + x + ' y ' + y + ' o ' + offset);
+		// window.app.console.log('x ' + x + ' y ' + y + ' o ' + offset);
 		app.socket.sendMessage('windowgesture id=' + winid +  ' type=' + type +
 		                              ' x=' + x + ' y=' + y + ' offset=' + offset);
 		// Keep map active while user is playing with dialog.
@@ -1210,14 +1210,14 @@ L.Control.LokDialog = L.Control.extend({
 	},
 
 	_onCalcInputBarClose: function(dialogId) {
-		// console.log('_onCalcInputBarClose: start: id: ' + dialogId);
+		// window.app.console.log('_onCalcInputBarClose: start: id: ' + dialogId);
 		$('#' + this._calcInputBar.strId).remove();
 		this._map.focus();
 		delete this._dialogs[dialogId];
 		this._calcInputBar = null;
 
 		$('#calc-inputbar-wrapper').css({display: ''});
-		// console.log('_onCalcInputBarClose: end');
+		// window.app.console.log('_onCalcInputBarClose: end');
 	},
 
 	_closeChildWindows: function(dialogId) {
@@ -1314,7 +1314,7 @@ L.Control.LokDialog = L.Control.extend({
 		var isCalcInputBar = that.isCalcInputBar(parentId);
 		var container = L.DomUtil.get(strId);
 		if (isCalcInputBar && container) {
-			// console.log2('_paintDialog: calc input bar: width: ' + that._calcInputBar.width);
+			// window.app.console.log('_paintDialog: calc input bar: width: ' + that._calcInputBar.width);
 			var canvas = L.DomUtil.get(that._calcInputBar.strId + '-canvas');
 			var changed = that._setCanvasWidthHeight(canvas, that._calcInputBar.width, that._calcInputBar.height);
 			$(container).parent().show(); // show or width is 0
@@ -1332,7 +1332,7 @@ L.Control.LokDialog = L.Control.extend({
 			// resize the input bar to the correct size
 			// the input bar is rendered only if when the size is the expected one
 			if (correctWidth !== 0 && that._calcInputBar.width !== correctWidth) {
-				// console.log('_paintDialog: correct width: ' + correctWidth + ', _calcInputBar width: ' + that._calcInputBar.width);
+				// window.app.console.log('_paintDialog: correct width: ' + correctWidth + ', _calcInputBar width: ' + that._calcInputBar.width);
 				that._dialogs[parentId].isPainting = false;
 				app.socket.sendMessage('resizewindow ' + parentId + ' size=' + correctWidth + ',' + that._calcInputBar.height);
 				return;
@@ -1411,7 +1411,7 @@ L.Control.LokDialog = L.Control.extend({
 					var width = calcInputbarContainer.clientWidth;
 					var height = calcInputbarContainer.clientHeight;
 					if (width !== 0 && height !== 0) {
-						// console.log('_resizeCalcInputBar: id: ' + id + ', width: ' + width + ', height: ' + height);
+						// window.app.console.log('_resizeCalcInputBar: id: ' + id + ', width: ' + width + ', height: ' + height);
 						app.socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
 					}
 				}

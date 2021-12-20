@@ -62,6 +62,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:VerticalText'] = this._insertTextBoxControl;
 		this._toolitemHandlers['.uno:ShowResolvedAnnotations'] = this._showResolvedAnnotationsControl;
 		this._toolitemHandlers['.uno:OnlineHelp'] = this._onlineHelpControl;
+		this._toolitemHandlers['.uno:ForumHelp'] = this._onlineHelpControl;
 		this._toolitemHandlers['.uno:KeyboardShortcuts'] = this._onlineHelpControl;
 		this._toolitemHandlers['.uno:ReportIssue'] = this._onlineHelpControl;
 		this._toolitemHandlers['.uno:LatestUpdates'] = this._onlineHelpControl;
@@ -907,7 +908,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		if (handler)
 			var processChildren = handler(parent, data, this);
 		else
-			console.warn('NotebookbarBuilder: Unsupported control type: "' + type + '"');
+			window.app.console.warn('NotebookbarBuilder: Unsupported control type: "' + type + '"');
 
 		if (processChildren && data.children != undefined)
 			this.build(parent, data.children, isVertical, hasManyChildren);
@@ -979,7 +980,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					processChildren = handler(childObject, childData, this);
 					this.postProcess(childObject, childData);
 				} else
-					console.warn('NotebookbarBuilder: Unsupported control type: "' + childType + '"');
+					window.app.console.warn('NotebookbarBuilder: Unsupported control type: "' + childType + '"');
 
 				if (childType === 'toolbox' && hasVerticalParent === true && childData.children.length === 1)
 					this.options.useInLineLabelsForUnoButtons = true;

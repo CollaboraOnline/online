@@ -171,9 +171,9 @@ describe('Focus tests', function() {
 		helper.assertFocus('tagName', 'BODY');
 
 		// Apply bold
-		helper.clickOnIdle('#Bold');
+		helper.clickOnIdle('.unoBold');
 
-		cy.get('#Boldimg')
+		cy.get('.unoBold img')
 			.should('have.class', 'selected');
 
 		// No focus

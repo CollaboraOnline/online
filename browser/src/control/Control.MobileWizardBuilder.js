@@ -725,7 +725,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 					processChildren = handler(childObject, childData, this);
 					this.postProcess(childObject, childData);
 				} else
-					console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
+					window.app.console.warn('JSDialogBuilder: Unsupported control type: "' + childType + '"');
 
 				if (processChildren && childData.children != undefined)
 					this.build(childObject, childData.children);

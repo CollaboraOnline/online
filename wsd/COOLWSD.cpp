@@ -1097,6 +1097,7 @@ void COOLWSD::innerInitialize(Application& self)
             { "security.seccomp", "true" },
             { "security.jwt_expiry_secs", "1800" },
             { "security.enable_metrics_unauthenticated", "false" },
+            { "certificates.database_path", "" },
             { "server_name", "" },
             { "ssl.ca_file_path", COOLWSD_CONFIGDIR "/ca-chain.cert.pem" },
             { "ssl.cert_file_path", COOLWSD_CONFIGDIR "/cert.pem" },
@@ -3291,6 +3292,21 @@ private:
                     //FIXME: We shouldn't have "true" as having the option already implies that
                     // we want it enabled (i.e. we shouldn't set the option if we don't want it).
                     options = ",FullSheetPreview=trueFULLSHEETPREVEND";
+                }
+                const std::string pdfVer = (form.has("PDFVer") ? form.get("PDFVer") : "");
+                if (!pdfVer.empty())
+                {
+                    if (strcasecmp(pdfVer.c_str(), "PDF/A-1b") && strcasecmp(pdfVer.c_str(), "PDF/A-2b") && strcasecmp(pdfVer.c_str(), "PDF/A-3b")
+                        && strcasecmp(pdfVer.c_str(), "PDF-1.5") && strcasecmp(pdfVer.c_str(), "PDF-1.6"))
+                    {
+                        LOG_ERR("Wrong PDF type: " << pdfVer << ". Conversion aborted.");
+                        http::Response httpResponse(http::StatusLine(400));
+                        httpResponse.set("Content-Length", "0");
+                        socket->sendAndShutdown(httpResponse);
+                        socket->ignoreInput();
+                        return;
+                    }
+                   options += ",PDFVer=" + pdfVer + "PDFVEREND";
                 }
 
                 // This lock could become a bottleneck.

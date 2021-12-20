@@ -93,7 +93,7 @@ int mount_wrapper(const char *source, const char *target,
     build_iovec(&iov, &iovlen, "fspath", reinterpret_cast<const void*>(target), (size_t)-1);
     build_iovec(&iov, &iovlen, "from", reinterpret_cast<const void*>(source), (size_t)-1);
 
-    return nmount(iov, iovlen, 0);
+    return nmount(iov, iovlen, freebsd_flags);
 }
 
 #define MNT_DETACH 1

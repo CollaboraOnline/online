@@ -70,7 +70,7 @@ L.Control.Notebookbar = L.Control.extend({
 		var retryNotebookbarInit = function() {
 			if (!that.map._isNotebookbarLoadedOnCore) {
 				// if notebookbar doesn't have any welded controls it can trigger false alarm here
-				console.warn('notebookbar might be not initialized, retrying');
+				window.app.console.warn('notebookbar might be not initialized, retrying');
 				that.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
 			}
 		};
@@ -107,7 +107,7 @@ L.Control.Notebookbar = L.Control.extend({
 
 		var control = this.container.querySelector('[id=\'' + data.control.id + '\']');
 		if (!control) {
-			console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
+			window.app.console.warn('jsdialogupdate: not found control with id: "' + data.control.id + '"');
 			return;
 		}
 

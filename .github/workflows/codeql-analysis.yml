@@ -79,6 +79,7 @@ jobs:
         tar xvf core-co-2021-assets.tar.gz && rm core-co-2021-assets.tar.gz && export LOCOREPATH=$(pwd)
         cd online && ./autogen.sh
         ./configure --enable-silent-rules --with-lokit-path=${LOCOREPATH}/include --with-lo-path=${LOCOREPATH}/instdir --enable-debug --disable-setcap
+        cd browser && npm update
 
     - if: matrix.language == 'cpp'
       name: Build
