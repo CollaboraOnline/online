@@ -1019,6 +1019,8 @@ void LOOLWSD::initialize(Application& self)
             { "ssl.hpkp.report_uri[@enable]", "false" },
             { "ssl.hpkp[@enable]", "false" },
             { "ssl.hpkp[@report_only]", "false" },
+            { "ssl.sts.enabled", "false" },
+            { "ssl.sts.max_age", "31536000" },
             { "ssl.key_file_path", LOOLWSD_CONFIGDIR "/key.pem" },
             { "ssl.termination", "true" },
             { "storage.filesystem[@allow]", "false" },

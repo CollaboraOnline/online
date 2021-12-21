@@ -278,6 +278,22 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
         noCache = true;
 #endif
         Poco::Net::HTTPResponse response;
+
+        const auto& config = Application::instance().config();
+
+        // HSTS hardening. Disabled in debug builds.
+#if !ENABLE_DEBUG
+        if (LOOLWSD::isSSLEnabled() || LOOLWSD::isSSLTermination())
+        {
+            if (config.getBool("ssl.sts.enabled", false))
+            {
+                const auto maxAge = config.getInt("ssl.sts.max_age", 31536000); // Default 1 year.
+                response.add("Strict-Transport-Security",
+                             "max-age=" + std::to_string(maxAge) + "; includeSubDomains");
+            }
+        }
+#endif
+
         Poco::URI requestUri(request.getURI());
         LOG_TRC("Fileserver request: " << requestUri.toString());
         requestUri.normalize(); // avoid .'s and ..'s
@@ -296,7 +312,6 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
 
         std::string relPath = getRequestPathname(request);
         std::string endPoint = requestSegments[requestSegments.size() - 1];
-        const auto& config = Application::instance().config();
 
         static std::string etagString = "\"" LOOLWSD_VERSION_HASH +
             config.getString("ver_suffix", "") + "\"";
