@@ -7,7 +7,7 @@ m4_define([_m4_foreachq],[m4_ifelse([$#],[3],[],[m4_define([$1],[$4])$2[]$0([$1]
 m4_define(_YEAR_,m4_esyscmd(date +%Y|tr -d '\n'))
 <!DOCTYPE html>
 <!-- saved from url=(0054)http://leafletjs.com/examples/quick-start-example.html -->
-<html style="height:100%"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html %UI_RTL_SETTINGS% style="height:100%"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Online Editor</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
