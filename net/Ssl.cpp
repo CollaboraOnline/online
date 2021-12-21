@@ -111,10 +111,13 @@ SslContext::SslContext(const std::string& certFilePath, const std::string& keyFi
     // as we don't expect/support different servers in same process.
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
     _ctx = SSL_CTX_new(TLS_method());
-    SSL_CTX_set_min_proto_version(_ctx, TLS1_VERSION);
+    SSL_CTX_set_min_proto_version(_ctx, TLS1_2_VERSION); // TLS v1.2 is the minimum.
 #else
     _ctx = SSL_CTX_new(SSLv23_method());
+    SSL_CTX_set_options(_ctx, SSL_OP_NO_SSLv2);
     SSL_CTX_set_options(_ctx, SSL_OP_NO_SSLv3);
+    SSL_CTX_set_options(_ctx, SSL_OP_NO_TLSv1);
+    SSL_CTX_set_options(_ctx, SSL_OP_NO_TLSv1_1);
 #endif
 
     // SSL_CTX_set_default_passwd_cb(_ctx, &privateKeyPassphraseCallback);
