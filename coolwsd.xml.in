@@ -152,6 +152,10 @@
             <pin></pin>
             </pins>
         </hpkp>
+        <sts desc="Strict-Transport-Security settings, per rfc6797. Subdomains are always included.">
+            <enabled desc="Whether or not Strict-Transport-Security is enabled. Enable only when ready for production. Cannot be disabled without resetting the browsers." type="bool" default="false">false</enabled>
+            <max_age desc="Strict-Transport-Security max-age directive, in seconds. 0 is allowed; please see rfc6797 for details. Defaults to 1 year." type="int" default="31536000">31536000</max_age>
+        </sts>
     </ssl>
 
     <security desc="Altering these defaults potentially opens you to significant risk">
