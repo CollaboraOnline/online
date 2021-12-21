@@ -21,7 +21,7 @@
 .sidebar .spinfieldcontainer input {
 	width: 85px;
 	border: 1px solid var(--gray-color);
-	border-radius: 4px;
+	border-radius: var(--border-radius);
 	height: 28px;
 	padding-left: 4px;
 	position: relative;
@@ -231,7 +231,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 	background-color: transparent;
 	border: 2px solid transparent;
 	color: var(--gray-light-txt--color);
-	border-radius: 4px;
+	border-radius: var(--border-radius);
 }
 /* selected */
 .hasnotebookbar .ui-content.unotoolbutton.selected.has-label,
@@ -239,9 +239,9 @@ td.jsdialog .jsdialog.cell.sidebar {
 .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline),
 .sidebar.unotoolbutton.selected {
 	background-color: var(--gray-light-bg-color);
-	border: 2px solid var(--gray-light-bg-color);
+	border: 2px solid transparent;
 	color: var(--gray-light-txt--color);
-	border-radius: 4px;
+	border-radius: var(--border-radius);
 }
 /* selected hover */
 .hasnotebookbar .ui-content.unotoolbutton.selected:hover,
@@ -254,7 +254,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 #table-textorientbox.sidebar .jsdialog .radiobutton:hover {
 	outline: 1px solid var(--gray-light-txt--color);
 	color: var(--gray-light-txt--color);
-	border-radius: 4px;
+	border-radius: var(--border-radius);
 }
 
 .sidebar #font select,
