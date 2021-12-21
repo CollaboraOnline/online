@@ -484,6 +484,8 @@ public class LOActivity extends AppCompatActivity {
                     suffix = ".csv";
                 else if ("application/pdf".equals(intentType))
                     suffix = ".pdf";
+                else if ("application/vnd.ms-excel".equals(intentType))
+                    suffix = ".xls";
                 try {
                     try {
                         Uri uri = mActivity.getIntent().getData();
