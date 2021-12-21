@@ -1,5 +1,19 @@
-<svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
- <path d="m12 2c-5.5169 0-10 4.4831-10 10v10h10c5.5169 0 10-4.4831 10-10 0-5.5169-4.4831-10-10-10zm0 1c4.9765 0 9 4.0235 9 9 0 4.9765-4.0235 9-9 9v-9h-9c0-4.9765 4.0235-9 9-9z" fill="#1e8bcd" stroke-linecap="square" stroke-width=".10438" style="paint-order:markers fill stroke"/>
- <path d="m12 2.5c-5.2467 0-9.5 4.2533-9.5 9.5 0 5.2467 4.2533 9.5 9.5 9.5 5.2467 0 9.5-4.2533 9.5-9.5 0-5.2467-4.2533-9.5-9.5-9.5z" color="#000000" color-rendering="auto" dominant-baseline="auto" fill="#83beec" image-rendering="auto" shape-rendering="auto" solid-color="#000000" stop-color="#000000" style="font-feature-settings:normal;font-variant-alternates:normal;font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;font-variant-position:normal;font-variation-settings:normal;inline-size:0;isolation:auto;mix-blend-mode:normal;shape-margin:0;shape-padding:0;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-orientation:mixed;text-transform:none;white-space:normal"/>
- <path d="m13 11h-2v2h2zm3 0h2v2h-2zm-8 0h-2v2h2z" fill="#fafafa"/>
+<?xml-stylesheet type="text/css" href="icons.css" ?>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <g id="symbol"
+	 class="icn icn--highlight-color"
+     fill="#83beec"
+     stroke="#1e8bcd"
+	 stroke-linecap="round"
+	 stroke-linejoin="round"
+      >
+      <path d="m 4.9,2.5 c -1.3,0 -2.4,1 -2.4,2.4 V 14 c 0,1.3 1,2.4 2.4,2.5 H 6.5 v 5 L 11,16.5 h 8.125 C 20.4,16.5 21.5,15.3 21.5,14 V 4.9 c 0,-1.3 -1,-2.4 -2.4,-2.4 z" />
+      <path d="m 18.5,16.5 v 5 L 14,16.5 c 0,0 4.6,0 4.5,0 z" />
+  </g>
+  <g id="background"
+     class="icn icn--area-color"
+     fill="#fafafa"
+     >
+      <path d="m 13,9 h -2 v 2 h 2 z m 3,0 h 2 v 2 H 16 Z M 8,9 H 6 v 2 h 2 z" />
+  </g>
 </svg>
