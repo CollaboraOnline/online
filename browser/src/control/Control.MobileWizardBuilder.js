@@ -61,6 +61,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		var spinfield = L.DomUtil.create('input', 'spinfield', div);
 		spinfield.type = 'number';
 		spinfield.onkeypress = builder._preventNonNumericalInput;
+		spinfield.dir = 'auto';
 		controls['spinfield'] = spinfield;
 
 		if (data.unit) {
@@ -278,6 +279,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		var edit = L.DomUtil.create('input', 'ui-edit ' + builder.options.cssClass, parentContainer);
 		edit.value = builder._cleanText(data.text);
 		edit.id = data.id;
+		edit.dir = 'auto';
 
 		if (data.enabled === 'false' || data.enabled === false)
 			$(edit).prop('disabled', true);
