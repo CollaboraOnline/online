@@ -14,6 +14,7 @@
 	width: 322px;
 	padding: 0;
 	border-left: 1px solid var(--gray-color) !important;
+	border-right: 1px solid var(--gray-color) !important; /* for RTL mode */
 	margin-top: 0 !important;
 	box-sizing: border-box;
 }
@@ -171,19 +172,14 @@ div#box5.row.jsdialog.sidebar > .sidebar.jsdialog.cell {
 	font-size: 11px;
 	line-height: 23px;
 	font-weight: bold;
-}
-
-.sidebar.ui-expander-label.expanded {
 	padding-left: 14px;
-	font-size: 11px;
-	line-height: 23px;
-	font-weight: bold;
+	padding-right: 14px; /* for RTL mode */
 }
 
-.sidebar.ui-expander-label.expanded:before {
-	margin-right: 0;
+.sidebar.ui-expander-label:before {
 	position: absolute;
-	left: 14px;
+	margin-inline-start: -16px;
+	left: unset !important;
 }
 
 .sidebar.root-container.jsdialog > .jsdialog.sidebar {
@@ -212,6 +208,10 @@ td.jsdialog .jsdialog.cell.sidebar {
 .sidebar .menu-entry-icon {
 	width: 24px;
 	height: 24px;
+}
+
+.ui-expander-icon-right .sidebar.unotoolbutton {
+	margin: 0px !important;
 }
 
 .sidebar.unotoolbutton,
