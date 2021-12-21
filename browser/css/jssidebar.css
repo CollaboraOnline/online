@@ -280,14 +280,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 	top: 6px;
 }
 
-#LB_SHADOW_COLOR, #LB_GLOW_COLOR {
-	padding: 4px 10px;
-	width: 130px;
-	position: relative;
-	left: -11px;
-}
-
-#fillgrad2 {
+#LB_SHADOW_COLOR, #LB_GLOW_COLOR, #fillgrad2 {
 	padding: 4px 10px;
 	width: 160px;
 	position: relative;
