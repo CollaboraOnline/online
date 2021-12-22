@@ -8,6 +8,7 @@ L.Control.Notebookbar = L.Control.extend({
 
 	_currentScrollPosition: 0,
 	_showNotebookbar: false,
+	_RTL: false,
 
 	container: null,
 	builder: null,
@@ -23,6 +24,9 @@ L.Control.Notebookbar = L.Control.extend({
 		// log and test window.ThisIsTheiOSApp = true;
 		this.map = map;
 		this._currentScrollPosition = 0;
+
+		if (document.documentElement.dir === 'rtl')
+			this._RTL = true;
 
 		this.builder = new L.control.notebookbarBuilder({mobileWizard: this, map: map, cssClass: 'notebookbar'});
 		var toolbar = L.DomUtil.get('toolbar-up');
@@ -383,20 +387,31 @@ L.Control.Notebookbar = L.Control.extend({
 
 			if ($(rootContainer).outerWidth() > $(window).width()) {
 				// we have overflowed content
-				if ($('.notebookbar-scroll-wrapper').scrollLeft() > 0)
-					$(container).find('.w2ui-scroll-left').show();
+				var direction = this._RTL ? -1 : 1;
+				if (direction * $('.notebookbar-scroll-wrapper').scrollLeft() > 0) {
+					if (this._RTL)
+						$(container).find('.w2ui-scroll-right').show();
+					else
+						$(container).find('.w2ui-scroll-left').show();
+				} else if (this._RTL)
+					$(container).find('.w2ui-scroll-right').hide();
 				else
 					$(container).find('.w2ui-scroll-left').hide();
 
-				if ($('.notebookbar-scroll-wrapper').scrollLeft() < $(rootContainer).outerWidth() - $(window).width() - 1)
-					$(container).find('.w2ui-scroll-right').show();
+				if (direction * $('.notebookbar-scroll-wrapper').scrollLeft() < $(rootContainer).outerWidth() - $(window).width() - 1) {
+					if (this._RTL)
+						$(container).find('.w2ui-scroll-left').show();
+					else
+						$(container).find('.w2ui-scroll-right').show();
+				} else if (this._RTL)
+					$(container).find('.w2ui-scroll-left').hide();
 				else
 					$(container).find('.w2ui-scroll-right').hide();
 			} else {
 				$(container).find('.w2ui-scroll-left').hide();
 				$(container).find('.w2ui-scroll-right').hide();
 			}
-		};
+		}.bind(this);
 
 		$(window).resize(handler);
 		$('.notebookbar-scroll-wrapper').scroll(handler);
