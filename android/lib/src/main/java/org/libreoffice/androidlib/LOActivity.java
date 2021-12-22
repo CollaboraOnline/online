@@ -486,6 +486,8 @@ public class LOActivity extends AppCompatActivity {
                     suffix = ".pdf";
                 else if ("application/vnd.ms-excel".equals(intentType))
                     suffix = ".xls";
+                else if ("application/vnd.ms-powerpoint".equals(intentType))
+                    suffix = ".ppt";
                 try {
                     try {
                         Uri uri = mActivity.getIntent().getData();
