@@ -267,9 +267,9 @@ app.definitions.Socket = L.Class.extend({
 		if (!window.bundlejsLoaded)
 			status += '[!bundlejsLoaded]';
 
-		var color = type === 'OUTGOING' ? 'color:red' : 'color:blue';
+		var color = type === 'OUTGOING' ? 'color:red' : 'color:#2e67cf';
 		window.app.console.log(+new Date() + ' %c' + type + status + '%c: ' + msg.concat(' ').replace(' ', '%c '),
-			     'background:#ddf;color:black', color, 'color:black');
+			     'background:#ddf;color:black', color, 'color:');
 	},
 
 	_queueSlurpEventEmission: function() {
