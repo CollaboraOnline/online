@@ -513,13 +513,58 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var options = {hasDropdownArrow: true};
 		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
+		var closeAll = function (skip) {
+			var menus = ['conditionalformatmenu', 'conditionalformatmenu-sub'];
+			for (var i = 0; i < menus.length; ++i) {
+				// called on onHide so skip it, it is already being hidden
+				if (skip === menus[i])
+					continue;
+				var div = $('#w2ui-overlay-'+ menus[i]);
+				if (div.length && div[0])
+					div[0].hide();
+			}
+		};
+
+		var menu = [
+			{text: _UNO('.uno:ConditionalFormatDialog', 'spreadsheet'), uno: 'ConditionalFormatDialog'},
+			{text: _UNO('.uno:ColorScaleFormatDialog', 'spreadsheet'), uno: 'ColorScaleFormatDialog'},
+			{text: _UNO('.uno:DataBarFormatDialog', 'spreadsheet'), uno: 'DataBarFormatDialog'},
+			{text: _UNO('.uno:IconSetFormatDialog', 'spreadsheet'), uno: 'IconSetFormatDialog', html: window.getConditionalFormatMenuHtml('iconsetoverlay') },
+			{text: _UNO('.uno:CondDateFormatDialog', 'spreadsheet'), uno: 'CondDateFormatDialog'},
+			{type: 'separator'},
+			{text: _UNO('.uno:ConditionalFormatManagerDialog', 'spreadsheet'), uno: 'ConditionalFormatManagerDialog'}
+		];
+
 		$(control.container).unbind('click.toolbutton');
 		$(control.container).click(function () {
 			if (!$('#conditionalformatmenu-grid').length) {
-				$(control.container).w2overlay(window.getConditionalFormatMenuHtml());
-
-				$('#conditionalformatmenu-grid tr td').click(function () {
-					$(control.container).w2overlay();
+				$(control.container).w2menu({
+					name: 'conditionalformatmenu',
+					items: menu,
+					keepOpen: true,
+					onSelect: function (event) {
+						if (event.item.html && !$('#w2ui-overlay-conditionalformatmenu-sub').length) {
+							$(event.originalEvent.target).w2overlay({
+								name: 'conditionalformatmenu-sub',
+								html: event.item.html,
+								left: 100,
+								top: -20,
+								noTip: true,
+								onHide: function() {
+									closeAll(this.name);
+								}
+							});
+							if ($('#iconsetoverlay').length) {
+								$('#iconsetoverlay').click(function() {
+									builder.map.sendUnoCommand('.uno:IconSetFormatDialog');
+									closeAll();
+								});
+							}
+						} else if (!event.item.html) {
+							builder.map.sendUnoCommand('.uno:' + event.item.uno);
+							closeAll();
+						}
+					}
 				});
 			}
 		});
