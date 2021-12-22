@@ -6,7 +6,7 @@
 	overflow: hidden;
 	width: 100%;
 	white-space: nowrap;
-	text-align: left;
+	text-align: start;
 	background-color: transparent;
 	vertical-align: middle;
 }
