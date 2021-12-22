@@ -77,9 +77,9 @@
 
 .jsdialog.ui-button-box-right {
 	display: flex;
-	float: right;
+	float: inline-end;
 }
 
 .jsdialog.ui-button-box-left {
-	float: left;
+	float: inline-start;
 }
