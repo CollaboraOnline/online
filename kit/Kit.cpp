@@ -20,7 +20,6 @@
 #include <sys/sysmacros.h>
 #endif
 #ifdef __FreeBSD__
-#include <sys/capsicum.h>
 #include <ftw.h>
 #define FTW_CONTINUE 0
 #define FTW_STOP (-1)
@@ -2649,8 +2648,6 @@ void lokit_main(
             dropCapability(CAP_MKNOD);
             dropCapability(CAP_FOWNER);
             dropCapability(CAP_CHOWN);
-#else
-            cap_enter();
 #endif
 
             LOG_DBG("Initialized jail nodes, dropped caps.");
