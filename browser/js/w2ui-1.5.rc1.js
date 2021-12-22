@@ -2529,7 +2529,7 @@ w2utils.event = {
             if (typeof options.onRender === 'function' && typeof options.render !== 'function') options.render = options.onRender;
             // since only one overlay can exist at a time
             $.fn.w2menuClick = function (event, index) {
-                var keepOpen = false;
+                var keepOpen = options.keepOpen || false;
                 if (['radio', 'check'].indexOf(options.type) != -1) {
                     if (event.shiftKey || event.metaKey || event.ctrlKey) keepOpen = true;
                 }
