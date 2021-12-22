@@ -1320,8 +1320,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:FormatCellDialog'
 			},
 			{
-				'id': 'ConditionalFormatMenu:ConditionalFormatMenu',
-				'type': 'menubutton',
+				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ConditionalFormatMenu', 'spreadsheet'),
 				'command': '.uno:ConditionalFormatMenu'
 			},
