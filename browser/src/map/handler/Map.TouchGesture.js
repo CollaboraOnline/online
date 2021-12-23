@@ -651,7 +651,7 @@ L.Map.TouchGesture = L.Handler.extend({
 			return;
 
 		this._velocity = new L.Point(e.velocityX, e.velocityY);
-		this._amplitude = this._velocity.multiplyBy(32);
+		this._amplitude = this._velocity.multiplyBy(64);
 		this._newPos = L.DomUtil.getPosition(this._map._mapPane);
 		var evt = this._constructFakeEvent({
 			clientX: e.center.x,
