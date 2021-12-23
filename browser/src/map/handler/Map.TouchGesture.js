@@ -500,6 +500,10 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (window.IgnorePanning)
 			return;
 
+		if (this._inSwipeAction &&  Math.abs(e.velocity) < this._hammer.get('swipe').options.velocity) {
+			this._cancelAutoscrollRAF();
+		}
+
 		var point = e.pointers[0],
 		    containerPoint = this._map.mouseEventToContainerPoint(point),
 		    layerPoint = this._map.containerPointToLayerPoint(containerPoint),
@@ -650,7 +654,12 @@ L.Map.TouchGesture = L.Handler.extend({
 		if (this._map.uiManager.isUIBlocked())
 			return;
 
-		this._velocity = new L.Point(e.velocityX, e.velocityY);
+		if (this._inSwipeAction) {
+			this._velocity = this._velocity.add(new L.Point(e.velocityX, e.velocityY));
+		}
+		else {
+			this._velocity = new L.Point(e.velocityX, e.velocityY);
+		}
 		this._amplitude = this._velocity.multiplyBy(32);
 		this._newPos = L.DomUtil.getPosition(this._map._mapPane);
 		var evt = this._constructFakeEvent({
