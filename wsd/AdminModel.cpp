@@ -508,13 +508,13 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
                              const int smapsFD, const std::string& wopiHost)
 {
     assertCorrectThread();
-
     const auto ret = _documents.emplace(docKey, std::unique_ptr<Document>(new Document(docKey, pid, filename, wopiHost)));
     ret.first->second->setProcSMapsFD(smapsFD);
     ret.first->second->takeSnapshot();
     ret.first->second->addView(sessionId, userName, userId);
     LOG_DBG("Added admin document [" << docKey << "].");
 
+    std::string memoryAllocated;
     std::string encodedUsername;
     std::string encodedFilename;
     std::string encodedUserId;
@@ -537,21 +537,25 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
     {
         if (_memStats.empty())
         {
-            oss << 0;
+            memoryAllocated = "0";
         }
         else
         {
             // Estimate half as much as wsd+forkit.
-            oss << _memStats.front() / 2;
+            memoryAllocated = std::to_string(_memStats.front() / 2);
         }
     }
     else
     {
-        oss << _documents.begin()->second->getMemoryDirty();
+        memoryAllocated = std::to_string(_documents.begin()->second->getMemoryDirty());
     }
 
-    oss << ' ' << wopiHost;
+    oss << memoryAllocated << ' ' << wopiHost;
 
+    LOG_INF("Adding a new document : " << filename
+                                       << " created by : " << COOLWSD::anonymizeUsername(userName)
+                                       << " using WopiHost : " << COOLWSD::anonymizeUrl(wopiHost)
+                                       << " allocating memory of : " << memoryAllocated);
     notify(oss.str());
 }
 
