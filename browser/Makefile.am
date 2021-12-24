@@ -585,7 +585,7 @@ $(DIST_FOLDER)/welcome/%.html: $(srcdir)/welcome/%.html
 
 
 if ENABLE_DEBUG
-SourceMap=--allowJs true --sourceMap true
+SourceMap=--allowJs true --sourceMap true --inlineSources true
 endif
 
 tscompile.done: $(COOL_JS_SRC) $(COOL_TS_SRC)
