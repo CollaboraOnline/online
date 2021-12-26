@@ -140,6 +140,31 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 	max-width: 290px;
 }
 
+div#decimalplaces {
+	text-align: right;
+}
+
+div#numberformatcombobox.jsdialog.sidebar.ui-listbox-container {
+	position: relative;
+	left: 2px;
+}
+
+div#leadingzeroes.jsdialog.sidebar.spinfieldcontainer {
+	text-align: right;
+	position: relative;
+	right: 4px;
+}
+
+p#decimalplaceslabel.jsdialog.sidebar.ui-text,
+p#denominatorplaceslabel.jsdialog.sidebar.ui-text {
+	position: absolute;
+}
+
+div#box2.row.jsdialog.sidebar > .sidebar.jsdialog.row > .sidebar.jsdialog.cell,
+div#box5.row.jsdialog.sidebar > .sidebar.jsdialog.cell {
+	padding: 0 14px 0 0;
+}
+
 .sidebar.ui-expander-label {
 	color: var(--gray-light-txt--color);
 	font-size: 11px;
