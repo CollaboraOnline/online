@@ -104,6 +104,21 @@
 	justify-content: flex-end;
 }
 
+#ShadowPropertyPanel div#table-grid3 table#grid3 td:nth-child(1) {
+	justify-content: flex-start;
+}
+
+#FIELD_TRANSPARENCY {
+	height: 0;
+	position: relative;
+	bottom: 22px;
+}
+
+#transparency_label {
+	position: relative;
+	top: 12px;
+}
+
 #table-box4.sidebar.jsdialog.vertical {
 	width: auto;
 }
