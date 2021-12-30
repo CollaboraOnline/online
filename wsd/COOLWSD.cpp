@@ -4096,6 +4096,14 @@ private:
 
         LOG_INF("Listening to prisoner connections on " << location);
         MasterLocation = location;
+#ifndef HAVE_ABSTRACT_UNIX_SOCKETS
+        if(!socket->link(COOLWSD::SysTemplate + "/0" + MasterLocation))
+        {
+            LOG_FTL("Failed to hardlink local unix domain socket into a jail. Exiting.");
+            Log::shutdown();
+            _exit(EX_SOFTWARE);
+        }
+#endif
 #else
         constexpr int DEFAULT_MASTER_PORT_NUMBER = 9981;
         std::shared_ptr<ServerSocket> socket
