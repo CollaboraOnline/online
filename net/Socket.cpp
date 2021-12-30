@@ -53,9 +53,6 @@ constexpr std::chrono::microseconds WebSocketHandler::PingFrequencyMicroS;
 std::atomic<bool> SocketPoll::InhibitThreadChecks(false);
 std::atomic<bool> Socket::InhibitThreadChecks(false);
 
-#ifdef __linux__
-#define HAVE_ABSTRACT_UNIX_SOCKETS
-#endif
 #define SOCKET_ABSTRACT_UNIX_NAME "0coolwsd-"
 
 int Socket::createSocket(Socket::Type type)
@@ -1014,10 +1011,20 @@ std::string LocalServerSocket::bind()
     return std::string();
 }
 
+#ifndef HAVE_ABSTRACT_UNIX_SOCKETS
+bool LocalServerSocket::link(std::string to)
+{
+    _linkName = to;
+    return 0 == ::link(_name.c_str(), to.c_str());
+}
+#endif
+
 LocalServerSocket::~LocalServerSocket()
 {
 #ifndef HAVE_ABSTRACT_UNIX_SOCKETS
     ::unlink(_name.c_str());
+    if (!_linkName.empty())
+        ::unlink(_linkName.c_str());
 #endif
 }
 

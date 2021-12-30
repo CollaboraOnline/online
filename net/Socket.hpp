@@ -37,6 +37,10 @@
 #include "Buffer.hpp"
 #include "SigUtil.hpp"
 
+#ifdef __linux__
+#define HAVE_ABSTRACT_UNIX_SOCKETS
+#endif
+
 // Enable to dump socket traffic as hex in logs.
 // #define LOG_SOCKET_DATA ENABLE_DEBUG
 
