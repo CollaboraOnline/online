@@ -125,6 +125,9 @@ void removeJail(const std::string& root)
 
     // Unmount the tmp directory. Don't care if we fail.
     const std::string tmpPath = Poco::Path(root, "tmp").toString();
+#ifdef __FreeBSD__
+    unmount(tmpPath + "/dev");
+#endif
     FileUtil::removeFile(tmpPath, true); // Delete tmp contents with prejudice.
     unmount(tmpPath);
 
@@ -237,6 +240,7 @@ void setupJailDevNodes(const std::string& root)
         return;
     }
 
+#ifndef __FreeBSD__
     // Create the urandom and random devices.
     if (!Poco::File(root + "/dev/random").exists())
     {
@@ -261,6 +265,16 @@ void setupJailDevNodes(const std::string& root)
             LOG_SYS("mknod(" << root << "/dev/urandom) failed. Mount must not use nodev flag.");
         }
     }
+#else
+    if (!Poco::File(root + "/dev/random").exists())
+    {
+         const bool res = coolmount("-d", "", root + "/dev");
+         if (res)
+            LOG_TRC("Mounted devfs hierarchy -> [" << root << "/dev].");
+        else
+            LOG_ERR("Failed to mount devfs -> [" << root << "/dev].");
+    }
+#endif
 }
 
 /// The envar name used to control bind-mounting of systemplate/jails.
