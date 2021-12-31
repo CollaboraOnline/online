@@ -6453,9 +6453,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		canvas.height = window.tileSize;
 		var ctx = canvas.getContext('2d');
 
-		var oldImg = new Image();
-		oldImg.src = tile.el.src;
-		ctx.drawImage(oldImg, 0, 0);
+		// FIXME: check if tile.el is a canvas and just re-use it ...
+
+		// render old data to the canvas
+		ctx.drawImage(tile.el, 0, 0);
 
 		// FIXME; can we operate directly on the image ?
 		var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -6526,7 +6527,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		ctx.putImageData(imgData, 0, 0);
 		// FIXME: grim ... can we take as BMP ? as a URL ?
 		// keep as getImageData instead ? and composite ?
-		tile.el.src = canvas.toDataURL('image/png');
+		tile.el = canvas; // .toDataURL('image/png');
 
 		console.log('set new image');
 	},

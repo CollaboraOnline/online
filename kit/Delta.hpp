@@ -279,6 +279,8 @@ class DeltaGenerator {
         {
             for (auto &old : _deltaEntries)
             {
+                // FIXME: we badly need to check the size of the tile
+                // in case of a match across positions at different zooms ...
                 if (old->_left == tileLeft && old->_top == tileTop && old->_part == tilePart)
                 {
                     makeDelta(*old, *update, output);
