@@ -74,6 +74,13 @@ class DeltaGenerator {
             return _height;
         }
 
+        void setTilePos(int left, int top, int part)
+        {
+            _left = left;
+            _top = top;
+            _part = part;
+        }
+
         const std::vector<DeltaBitmapRow>& getRows() const
         {
             return _rows;
@@ -84,6 +91,9 @@ class DeltaGenerator {
             return _rows;
         }
 
+        int _left;
+        int _top;
+        int _part;
     private:
         TileWireId _wid;
         int _width;
@@ -105,6 +115,7 @@ class DeltaGenerator {
             return false;
         }
 
+        size_t startSize = output.size();
         output.push_back('D');
         LOG_TRC("building delta of a " << cur.getWidth() << 'x' << cur.getHeight() << " bitmap");
 
@@ -189,6 +200,8 @@ class DeltaGenerator {
                 }
             }
         }
+        size_t deltaSize = output.size() - startSize;
+        LOG_TRC("Created delta of size " << deltaSize);
 
         return true;
     }
@@ -197,6 +210,7 @@ class DeltaGenerator {
         TileWireId wid,
         unsigned char* pixmap, size_t startX, size_t startY,
         int width, int height,
+        int tileLeft, int tileTop, int tilePart,
         int bufferWidth, int bufferHeight)
     {
         auto data = std::make_shared<DeltaData>();
@@ -211,8 +225,10 @@ class DeltaGenerator {
                 << (width * height * 4) << " width " << width
                 << " height " << height);
 
+        // FIXME: switch to constructor and remove set methods
         data->setWidth(width);
         data->setHeight(height);
+        data->setTilePos(tileLeft, tileTop, tilePart);
         data->getRows().resize(height);
         for (int y = 0; y < height; ++y)
         {
@@ -246,23 +262,34 @@ class DeltaGenerator {
         unsigned char* pixmap, size_t startX, size_t startY,
         int width, int height,
         int bufferWidth, int bufferHeight,
+        int tileLeft, int tileTop, int tilePart,
         std::vector<char>& output,
         TileWireId wid, TileWireId oldWid)
     {
         // First store a copy for later:
-        if (_deltaEntries.size() > 6) // FIXME: hard-coded ...
+        if (_deltaEntries.size() > 16) // FIXME: hard-coded ...
             _deltaEntries.erase(_deltaEntries.begin());
 
         std::shared_ptr<DeltaData> update =
             dataToDeltaData(wid, pixmap, startX, startY, width, height,
+                            tileLeft, tileTop, tilePart,
                             bufferWidth, bufferHeight);
-        _deltaEntries.push_back(update);
 
-        for (auto &old : _deltaEntries)
+        if (oldWid != 0) // zero to force key-frame
         {
-            if (oldWid == old->getWid())
-                return makeDelta(*old, *update, output);
+            for (auto &old : _deltaEntries)
+            {
+                if (old->_left == tileLeft && old->_top == tileTop && old->_part == tilePart)
+                {
+                    makeDelta(*old, *update, output);
+                    // update the cache
+                    *old = *update;
+                    return true;
+                }
+            }
         }
+
+        _deltaEntries.push_back(update);
         return false;
     }
 };

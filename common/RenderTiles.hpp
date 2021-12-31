@@ -491,7 +491,12 @@ namespace RenderTiles
             const uint64_t hash = Png::hashSubBuffer(pixmap.data(), offsetX, offsetY,
                                                      pixelWidth, pixelHeight, pixmapWidth, pixmapHeight);
 
+#ifdef ENABLE_DELTAS
             TileWireId wireId = pngCache.hashToWireId(hash);
+#else
+            static TileWireId nextId = 0;;
+            TileWireId wireId = ++nextId;
+#endif
             TileWireId oldWireId = tiles[tileIndex].getOldWireId();
             if (hash != 0 && oldWireId == wireId)
             {
@@ -543,8 +548,11 @@ namespace RenderTiles
 #ifdef ENABLE_DELTAS
                         // Can we create a delta ? - FIXME: PngCache of this ? ...
                         static DeltaGenerator deltaGen;
-                        if (!deltaGen.createDelta(pixmap.data(), offsetX, offsetY, pixelWidth, pixelHeight,
+                        if (!deltaGen.createDelta(pixmap.data(), offsetX, offsetY,
+                                                  pixelWidth, pixelHeight,
                                                   pixmapWidth, pixmapHeight,
+                                                  tileRect.getLeft(), tileRect.getTop(),
+                                                  tileCombined.getPart(),
                                                   *data, wireId, oldWireId))
 #endif
                         {
