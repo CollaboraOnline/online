@@ -61,6 +61,10 @@ namespace LOKitHelper
             << " height=" << height
             << " viewid=" << loKitDocument->pClass->getView(loKitDocument);
 
+        ptrValue = loKitDocument->pClass->getCommandValues(loKitDocument, ".uno:DocProps");
+        oss << " props=" << (ptrValue ? ptrValue : "{}");
+        std::free(ptrValue);
+
         if (type == LOK_DOCTYPE_SPREADSHEET || type == LOK_DOCTYPE_PRESENTATION || type == LOK_DOCTYPE_DRAWING)
         {
             std::ostringstream hposs;
