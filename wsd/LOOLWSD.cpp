@@ -6,6 +6,7 @@
  */
 
 #include <config.h>
+#include <stdexcept>
 #include "LOOLWSD.hpp"
 #include "ProofKey.hpp"
 
@@ -3649,6 +3650,7 @@ private:
                 else
                 {
                     LOG_WRN("Failed to create Client Session with id [" << _id << "] on docKey [" << docKey << "].");
+                    throw std::runtime_error("Cannot create client session for doc " + docKey);
                 }
             }
             else
