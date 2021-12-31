@@ -100,9 +100,14 @@ function onClick(e, id, item) {
 	else if (id === 'save') {
 		// Save only when not read-only.
 		if (!map.isPermissionReadOnly()) {
-			map.fire('postMessage', {msgId: 'UI_Save'});
-			if (!map._disableDefaultAction['UI_Save']) {
-				map.save(false /* An explicit save should terminate cell edit */, false /* An explicit save should save it again */);
+			if (this._map._docLayer && this._map._docLayer._docProps &&
+			    this._map._docLayer._docProps.AsTemplate)
+				this._map.openSaveAs();
+			else {
+				map.fire('postMessage', {msgId: 'UI_Save'});
+				if (!map._disableDefaultAction['UI_Save']) {
+					map.save(false /* An explicit save should terminate cell edit */, false /* An explicit save should save it again */);
+				}
 			}
 		}
 	}

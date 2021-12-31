@@ -1509,9 +1509,14 @@ L.Control.Menubar = L.Control.extend({
 		if (id === 'save') {
 			// Save only when not read-only.
 			if (!this._map.isPermissionReadOnly()) {
-				this._map.fire('postMessage', {msgId: 'UI_Save'});
-				if (!this._map._disableDefaultAction['UI_Save']) {
-					this._map.save(false, false);
+				if (this._map._docLayer && this._map._docLayer._docProps &&
+				    this._map._docLayer._docProps.AsTemplate)
+					this._map.openSaveAs();
+				else {
+					this._map.fire('postMessage', {msgId: 'UI_Save'});
+					if (!this._map._disableDefaultAction['UI_Save']) {
+						this._map.save(false, false);
+					}
 				}
 			}
 		} else if (id === 'saveas') {
