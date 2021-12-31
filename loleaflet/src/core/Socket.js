@@ -1620,6 +1620,9 @@ app.definitions.Socket = L.Class.extend({
 					command.hiddenparts.push(parseInt(item));
 				});
 			}
+			else if (tokens[i].substring(0, 6) === 'props=') {
+				command.props = JSON.parse(tokens[i].substring('props='.length));
+			}
 			else if (tokens[i].startsWith('selectedparts=')) {
 				var selectedParts = tokens[i].substring(14).split(',');
 				command.selectedParts = [];

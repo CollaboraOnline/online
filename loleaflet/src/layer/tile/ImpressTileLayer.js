@@ -261,6 +261,7 @@ L.ImpressTileLayer = L.CanvasTileLayer.extend({
 			this._docWidthTwips = command.width;
 			this._docHeightTwips = command.height;
 			this._docType = command.type;
+			this._docProps = command.props;
 			if (this._docType === 'drawing') {
 				L.DomUtil.addClass(L.DomUtil.get('presentation-controls-wrapper'), 'drawing');
 			}

@@ -300,6 +300,7 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			app.view.size.pixels = app.file.size.pixels.slice();
 			this._docType = command.type;
 			this._parts = command.parts;
+			this._docProps = command.props;
 			if (this._selectedPart !== command.selectedPart) {
 				app.socket.sendMessage('resetselection');
 			}
