@@ -7,6 +7,8 @@
 
 #pragma once
 
+#define ENABLE_DELTAS 1
+
 #include <cassert>
 #include <memory>
 #include <queue>
