@@ -174,14 +174,14 @@ void DeltaTests::testDeltaSequence()
     LOK_ASSERT(gen.createDelta(
                        reinterpret_cast<unsigned char *>(&text[0]),
                        0, 0, width, height, width, height,
-                       delta, textWid, 0) == false);
+                       1, 2, 0, delta, textWid, 0) == false);
     LOK_ASSERT(delta.size() == 0);
 
     // Build a delta between text2 & textWid
     LOK_ASSERT(gen.createDelta(
                        reinterpret_cast<unsigned char *>(&text2[0]),
                        0, 0, width, height, width, height,
-                       delta, text2Wid, textWid) == true);
+                       1, 2, 0, delta, text2Wid, textWid) == true);
     LOK_ASSERT(delta.size() > 0);
 
     // Apply it to move to the second frame
@@ -193,7 +193,7 @@ void DeltaTests::testDeltaSequence()
     LOK_ASSERT(gen.createDelta(
                        reinterpret_cast<unsigned char *>(&text[0]),
                        0, 0, width, height, width, height,
-                       two2one, textWid, text2Wid) == true);
+                       1, 2, 0, two2one, textWid, text2Wid) == true);
     LOK_ASSERT(two2one.size() > 0);
 
     // Apply it to get back to where we started
