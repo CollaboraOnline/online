@@ -10,6 +10,7 @@
 #include <vector>
 #include <assert.h>
 #include <Log.hpp>
+#include <zlib.h>
 
 #ifndef TILE_WIRE_ID
 #  define TILE_WIRE_ID
@@ -105,7 +106,7 @@ class DeltaGenerator {
     bool makeDelta(
         const DeltaData &prev,
         const DeltaData &cur,
-        std::vector<char>& output)
+        std::vector<char>& outStream)
     {
         // TODO: should we split and compress alpha separately ?
         if (prev.getWidth() != cur.getWidth() || prev.getHeight() != cur.getHeight())
@@ -115,9 +116,11 @@ class DeltaGenerator {
             return false;
         }
 
-        size_t startSize = output.size();
-        output.push_back('D');
         LOG_TRC("building delta of a " << cur.getWidth() << 'x' << cur.getHeight() << " bitmap");
+
+        std::vector<char> output;
+        // guestimated upper-bound delta size
+        output.reserve(cur.getWidth() * (cur.getHeight() + 4) * 4);
 
         // row move/copy src/dest is a byte.
         assert (prev.getHeight() <= 256);
@@ -200,8 +203,43 @@ class DeltaGenerator {
                 }
             }
         }
-        size_t deltaSize = output.size() - startSize;
-        LOG_TRC("Created delta of size " << deltaSize);
+        LOG_TRC("Created delta of size " << output.size());
+
+        z_stream zstr;
+        memset((void *)&zstr, 0, sizeof (zstr));
+
+        if (deflateInit2 (&zstr, Z_DEFAULT_COMPRESSION, Z_DEFLATED,
+                          -MAX_WBITS, 8, Z_DEFAULT_STRATEGY) != Z_OK) {
+            LOG_ERR("Failed to init deflate");
+            return false;
+        }
+
+        // FIXME: avoid allocation & make this more efficient.
+        uLong maxCompressed = compressBound(output.size());
+        Bytef *compressed = (Bytef *)malloc(maxCompressed);
+
+        zstr.next_in = (Bytef *)output.data();
+        zstr.avail_in = output.size();
+        zstr.next_out = compressed;
+        zstr.avail_out = maxCompressed;
+
+        if (!compressed || deflate(&zstr, Z_FINISH) != Z_STREAM_END) {
+            LOG_ERR("Failed to compress delta of size " << output.size());
+            return false;
+        }
+
+        deflateEnd(&zstr);
+
+        uLong compSize = maxCompressed - zstr.avail_out;
+        LOG_TRC("Compressed delta of size " << output.size() << " to size " << compSize);
+//                << Util::dumpHex(std::string((char *)compressed, compSize)));
+
+        // FIXME: should get zlib to drop it directly in really.
+        outStream.push_back('D');
+        size_t oldSize = outStream.size();
+        outStream.resize(oldSize + compSize);
+        memcpy(&outStream[oldSize], compressed, compSize);
+        free (compressed);
 
         return true;
     }

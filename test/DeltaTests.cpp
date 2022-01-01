@@ -64,11 +64,30 @@ class DeltaTests : public CPPUNIT_NS::TestFixture
 std::vector<char> DeltaTests::applyDelta(
     const std::vector<char> &pixmap,
     png_uint_32 width, png_uint_32 height,
-    const std::vector<char> &delta,
+    const std::vector<char> &zDelta,
     const std::string& testname)
 {
-    LOK_ASSERT(delta.size() >= 4);
-    LOK_ASSERT(delta[0] == 'D');
+    LOK_ASSERT(zDelta.size() >= 4);
+    LOK_ASSERT(zDelta[0] == 'D');
+
+    std::vector<char> delta;
+    delta.resize(1024*1024*4); // lots of extra space.
+
+    z_stream zstr;
+    memset((void *)&zstr, 0, sizeof (zstr));
+
+    zstr.next_in = (Bytef *)zDelta.data() + 1;
+    zstr.avail_in = zDelta.size() - 1;
+    zstr.next_out = (Bytef *)delta.data();
+    zstr.avail_out = delta.size();
+
+    LOK_ASSERT(inflateInit2 (&zstr, -MAX_WBITS) == Z_OK);
+
+    LOK_ASSERT(inflate (&zstr, Z_SYNC_FLUSH) == Z_STREAM_END);
+
+    LOK_ASSERT(inflateEnd(&zstr) == Z_OK);
+
+    delta.resize(delta.size() - zstr.avail_out);
 
     // start with the same state.
     std::vector<char> output = pixmap;
@@ -76,7 +95,7 @@ std::vector<char> DeltaTests::applyDelta(
     LOK_ASSERT_EQUAL(output.size(), size_t(width * height * 4));
 
     size_t offset = 0, i;
-    for (i = 1; i < delta.size() && offset < output.size();)
+    for (i = 0; i < delta.size() && offset < output.size();)
     {
         switch (delta[i])
         {
