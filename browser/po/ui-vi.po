@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0100\n"
-"PO-Revision-Date: 2021-12-12 21:24+0000\n"
+"PO-Revision-Date: 2021-12-20 21:49+0000\n"
 "Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/vi/>\n"
-"Language: \n"
+"Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.10\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -659,7 +659,7 @@ msgstr "Hướng văn bản"
 #: src/control/Control.Menubar.js:301
 #: src/control/Control.NotebookbarWriter.js:217
 msgid "Forum"
-msgstr ""
+msgstr "Diễn đàn"
 
 #: src/control/Control.Menubar.js:302 src/control/Control.Menubar.js:431
 #: src/control/Control.Menubar.js:542 src/control/Control.Menubar.js:754
@@ -1709,7 +1709,7 @@ msgstr "Lưu vào tệp mới"
 
 #: src/core/Socket.js:897
 msgid "Document has been changed"
-msgstr ""
+msgstr "Tài liệu đã được thay đổi"
 
 #: src/core/Socket.js:897
 msgid ""
@@ -1950,6 +1950,8 @@ msgstr ""
 msgid ""
 "Document cannot be exported. Please contact the storage server administrator."
 msgstr ""
+"Không thể xuất tài liệu. Vui lòng liên lạc với quản trị viên của máy chủ lưu "
+"trữ."
 
 #: src/errormessages.js:50
 msgid "Uploading file to server failed, file not found."
