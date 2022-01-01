@@ -304,7 +304,10 @@ void DocumentBroker::pollThread()
     // Main polling loop goodness.
     while (!_stop && _poll->continuePolling() && !SigUtil::getTerminationFlag())
     {
-        _poll->poll(SocketPoll::DefaultPollTimeoutMicroS);
+        // Poll more frequently while unloading to cleanup sooner.
+        const bool unloading = isMarkedToDestroy() || _docState.isUnloadRequested();
+        _poll->poll(unloading ? SocketPoll::DefaultPollTimeoutMicroS / 8
+                              : SocketPoll::DefaultPollTimeoutMicroS);
 
 #if !MOBILEAPP
         const auto now = std::chrono::steady_clock::now();
@@ -1223,7 +1226,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId, bool 
             LOG_DBG("Stopping after saving because "
                     << (_sessions.empty() ? "there are no active sessions left."
                                           : "the document is marked to destroy."));
-            _stop = true;
+            stop("unloading");
         }
     }
 }
@@ -1579,7 +1582,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
             LOG_DBG("Stopping after uploading because "
                     << (_sessions.empty() ? "there are no active sessions left."
                                           : "the document is marked to destroy."));
-            _stop = true;
+            stop("unloading");
         }
 
         return;
@@ -1815,6 +1818,8 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 
 void DocumentBroker::autoSaveAndStop(const std::string& reason)
 {
+    LOG_TRC("autoSaveAndStop for docKey [" << getDocKey() << ']');
+
     if (_saveManager.isSaving() || isAsyncSaveInProgress())
     {
         LOG_TRC("Async saving/uploading in progress for docKey [" << getDocKey() << ']');
