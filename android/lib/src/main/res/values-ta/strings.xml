@@ -3,4 +3,9 @@
     <string name="temp_file_saving_disabled">இந்தக் கோப்பு படிக்க மட்டுமே, சேமிப்பது முடக்கப்பட்டுள்ளது.</string>
     <string name="storage_permission_required">சேமிப்பக அனுமதி தேவை</string>
     <string name="failed_to_load_file">ஏற்ற வேண்டிய கோப்பை தீர்மானிக்க முடியவில்லை</string>
+    <string name="failed_to_insert_image">படத்தைச் செருகுவதில் தோல்வி</string>
+    <string name="later">பின்னர்</string>
+    <string name="cannot_open_file_chooser">கோப்பு தேர்வை திறக்க இயலவில்லை</string>
+    <string name="preparing_for_the_first_start_after_an_update">புதுப்பித்தலுக்குப் பிறகு முதல் தொடக்கத்திற்குத் தயாராகிறது.</string>
+    <string name="rate_now">மதிப்பிடு</string>
 </resources>
