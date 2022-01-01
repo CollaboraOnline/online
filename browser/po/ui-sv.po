@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0100\n"
-"PO-Revision-Date: 2021-11-22 19:49+0000\n"
+"PO-Revision-Date: 2022-01-01 19:53+0000\n"
 "Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/sv/>\n"
-"Language: \n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -662,7 +662,7 @@ msgstr "Textriktning"
 #: src/control/Control.Menubar.js:301
 #: src/control/Control.NotebookbarWriter.js:217
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
 
 #: src/control/Control.Menubar.js:302 src/control/Control.Menubar.js:431
 #: src/control/Control.Menubar.js:542 src/control/Control.Menubar.js:754
@@ -1046,7 +1046,7 @@ msgstr "ODF-presentation (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:643
 msgid "Presentation"
-msgstr ""
+msgstr "Presentation"
 
 #: src/control/Control.NotebookbarImpress.js:980
 msgid "Reset Zoom"
@@ -1223,7 +1223,7 @@ msgstr "Flytta blad åt höger"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Kopiera blad ..."
 
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
@@ -1334,7 +1334,7 @@ msgstr "Fortsätt redigera"
 
 #: src/control/Permission.js:160
 msgid "Continue read only"
-msgstr ""
+msgstr "Fortsätt skrivskyddat"
 
 #: src/control/Permission.js:163
 msgid ""
@@ -1523,11 +1523,11 @@ msgstr "Avfärda"
 #: src/control/Toolbar.js:606
 #, javascript-format
 msgid "Explore the new %coolVersion"
-msgstr ""
+msgstr "Utforska den nya %coolVersion"
 
 #: src/control/Toolbar.js:607 src/control/Toolbar.js:611
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online Development Edition"
 
 #: src/control/Toolbar.js:608
 #, javascript-format
@@ -1538,10 +1538,14 @@ msgid ""
 "%coolVersion introduces important improvements, in the areas of usability, "
 "visual presentation and performance."
 msgstr ""
+"Upplev det senaste inom online-produktivitet, fritt att använda, utforska "
+"och använda med andra i webbläsaren. <a href=\"%coolAppsURL\" target=\"_blank"
+"\">Appar</a> finns för Android och iOS. %coolVersion innehåller "
+"förbättringar för användarvänlighet, visuell presentation och prestanda."
 
 #: src/control/Toolbar.js:610
 msgid "Discover all the changes"
-msgstr ""
+msgstr "Upptäck alla förändringar"
 
 #: src/control/Toolbar.js:612
 #, javascript-format
@@ -1551,14 +1555,19 @@ msgid ""
 "larger groups working on documents, new native sidebar, new re-worked avatar "
 "list, asynchronous saving, faster spell checking and more."
 msgstr ""
+"Läs <a href=\"%coolReleaseNotesURL\" target=\"_blank\">släppanteckningarna ("
+"release notes)</a> och lär dig allt om det senaste i fråga om prestanda, "
+"särskilt för större grupper som arbetar med dokument, den nya sidofältet, en "
+"ny omarbetad avatarlista, asynkront sparande, snabbare stavningskontroll och "
+"mycket mer."
 
 #: src/control/Toolbar.js:614
 msgid "Integrate Collabora Online into your webapp"
-msgstr ""
+msgstr "Integrera Collabora Online i din webbapp"
 
 #: src/control/Toolbar.js:615
 msgid "Or get involved in the development"
-msgstr ""
+msgstr "Eller delta i utvecklingen"
 
 #: src/control/Toolbar.js:616
 #, javascript-format
@@ -1571,15 +1580,21 @@ msgid ""
 "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
 "all the essential steps on how to reproduce it."
 msgstr ""
+"Läs mer om integrering i din webbapplikation i <a href=\"%coolSdkURL\" "
+"target=\"_blank\">Collabora Online SDK</a>. Eller följ <a href=\"%"
+"coolStepByStepURL\" target=\"_blank\">steg-för-steg-instruktionerna</a> och "
+"bygg CODE från grunden. Du kan också bidra med <a href=\"%"
+"coolTranslationsURL\" target=\"_blank\">översättningar</a> eller genom att "
+"<a href=\"%coolBugreportURL\" target=\"_blank\">filma en felrapport</a> med "
+"alla viktiga steg för att reproducera den."
 
 #: src/control/Toolbar.js:618 src/control/Toolbar.js:619
-#, fuzzy
 msgid "Next"
-msgstr "Text"
+msgstr "Nästa"
 
 #: src/control/Toolbar.js:622
 msgid "Learn more about the enterprise-ready versions"
-msgstr ""
+msgstr "Läs mer om versionerna för storföretag"
 
 #: src/control/Toolbar.js:671
 msgid ""
@@ -1622,7 +1637,7 @@ msgstr "LADDA OM"
 
 #: src/core/Socket.js:526
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "COOLWSD-version:"
 
 #: src/core/Socket.js:538
 msgid "Served by:"
@@ -1634,7 +1649,7 @@ msgstr "Serverversionen stöds ej."
 
 #: src/core/Socket.js:548
 msgid "LOKit version:"
-msgstr ""
+msgstr "LOKit-version:"
 
 #: src/core/Socket.js:662
 msgid "Session terminated by document owner"
@@ -1696,7 +1711,7 @@ msgstr "Spara i en ny fil"
 
 #: src/core/Socket.js:897
 msgid "Document has been changed"
-msgstr ""
+msgstr "Dokumentet har ändrats"
 
 #: src/core/Socket.js:897
 msgid ""
@@ -1934,6 +1949,7 @@ msgstr ""
 msgid ""
 "Document cannot be exported. Please contact the storage server administrator."
 msgstr ""
+"Dokumentet kan inte exporteras. Kontakta administratören för lagringsservern."
 
 #: src/errormessages.js:50
 msgid "Uploading file to server failed, file not found."
