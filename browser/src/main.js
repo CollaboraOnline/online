@@ -5,7 +5,7 @@
 (function (global) {
 
 
-var wopiParams;
+var wopiParams = {};
 var wopiSrc = getParameterByName('WOPISrc');
 
 if (wopiSrc !== '' && accessToken !== '') {
