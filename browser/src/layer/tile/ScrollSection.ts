@@ -166,7 +166,12 @@ class ScrollSection {
 				this.onScrollBy({x: e.vx, y: e.vy});
 				// Unfortunately, dragging outside the map doesn't work for the map element.
 				// We will keep this until we remove leaflet.
-				if (L.Map.THIS.mouse && L.Map.THIS.mouse._mouseDown && this.containerObject.targetBoundSectionListContains(L.CSections.Tiles.name) && (<any>window).mode.isDesktop() && this.containerObject.draggingSomething && L.Map.THIS._docLayer._docType === 'spreadsheet') {
+				if (L.Map.THIS.mouse
+				&& L.Map.THIS.mouse._mouseDown
+				&& this.containerObject.targetBoundSectionListContains(L.CSections.Tiles.name)
+				&& (<any>window).mode.isDesktop()
+				&& this.containerObject.draggingSomething
+				&& L.Map.THIS._docLayer._docType === 'spreadsheet') {
 					var temp = this.containerObject.positionOnMouseDown;
 					var tempPos = [temp[0] * app.dpiScale, temp[1] * app.dpiScale];
 					var docTopLeft = app.sectionContainer.getDocumentTopLeft();
@@ -184,12 +189,12 @@ class ScrollSection {
 
 		if (e.pos.y > e.map._size.y - 50) {
 			vy = 50;
-		} else if (e.pos.y < 50) {
+		} else if (e.pos.y < 50 && e.map._getTopLeftPoint().y > 50) {
 			vy = -50;
 		}
 		if (e.pos.x > e.map._size.x - 50) {
 			vx = 50;
-		} else if (e.pos.x < 50) {
+		} else if (e.pos.x < 50 && e.map._getTopLeftPoint().x > 50) {
 			vx = -50;
 		}
 
