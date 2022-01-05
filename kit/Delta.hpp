@@ -92,6 +92,15 @@ class DeltaGenerator {
             return _rows;
         }
 
+        void replace(const std::shared_ptr<DeltaData> &repl)
+        {
+            assert (_left == repl->_left && _top == repl->_top && _part == repl->_part);
+            _wid = repl->_wid;
+            _width = repl->_width;
+            _height = repl->_height;
+            _rows = repl->_rows; // FIXME: shared_ptr?
+        }
+
         int _left;
         int _top;
         int _part;
@@ -302,34 +311,58 @@ class DeltaGenerator {
         int bufferWidth, int bufferHeight,
         int tileLeft, int tileTop, int tilePart,
         std::vector<char>& output,
-        TileWireId wid, TileWireId oldWid)
+        TileWireId wid, TileWireId oldWid,
+        std::mutex &pngMutex)
     {
-        // First store a copy for later:
-        if (_deltaEntries.size() > 16) // FIXME: hard-coded ...
-            _deltaEntries.erase(_deltaEntries.begin());
-
+        // FIXME: why duplicate this ? we could overwrite
+        // as we make the delta into an existing cache entry,
+        // and just do this as/when there is no entry.
         std::shared_ptr<DeltaData> update =
             dataToDeltaData(wid, pixmap, startX, startY, width, height,
                             tileLeft, tileTop, tilePart,
                             bufferWidth, bufferHeight);
 
-        if (oldWid != 0) // zero to force key-frame
+        std::shared_ptr<DeltaData> cacheEntry;
+
         {
+            // protect _deltaEntries
+            std::unique_lock<std::mutex> pngLock(pngMutex);
+
+            if (_deltaEntries.size() > 16) // FIXME: hard-coded & not per-view
+                _deltaEntries.erase(_deltaEntries.begin());
+
             for (auto &old : _deltaEntries)
             {
                 // FIXME: we badly need to check the size of the tile
                 // in case of a match across positions at different zooms ...
                 if (old->_left == tileLeft && old->_top == tileTop && old->_part == tilePart)
                 {
-                    makeDelta(*old, *update, output);
-                    // update the cache
-                    *old = *update;
-                    return true;
+                    cacheEntry = old;
+                    break;
                 }
             }
         }
 
-        _deltaEntries.push_back(update);
+        // no other thread can touch the same tile at the same time.
+        if (cacheEntry)
+        {
+            // zero to force key-frame
+            if (oldWid != 0)
+            {
+                makeDelta(*cacheEntry, *update, output);
+                cacheEntry->replace(update);
+                return true;
+            }
+            cacheEntry->replace(update);
+            return false;
+        }
+        else
+        {
+            // protect _deltaEntries
+            std::unique_lock<std::mutex> pngLock(pngMutex);
+            _deltaEntries.push_back(update);
+        }
+
         return false;
     }
 };
