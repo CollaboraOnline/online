@@ -1140,9 +1140,16 @@ DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
     // Get the modified-time of the file on disk.
     const auto st = FileUtil::Stat(_storage->getRootFilePathUploading());
     const std::chrono::system_clock::time_point currentModifiedTime = st.modifiedTimepoint();
+    const std::chrono::system_clock::time_point lastModifiedTime =
+        _storageManager.getLastUploadedFileModifiedTime();
+
+    LOG_TRC("File to upload to storage ["
+            << _storage->getRootFilePathUploading() << "] was modified at " << currentModifiedTime
+            << " and the last uploaded file was modified at " << lastModifiedTime << ", which are "
+            << (currentModifiedTime == lastModifiedTime ? "identical." : "different."));
 
     // Compare to the last uploaded file's modified-time.
-    if (currentModifiedTime != _storageManager.getLastUploadedFileModifiedTime())
+    if (currentModifiedTime != lastModifiedTime)
         return NeedToUpload::Yes; // Timestamp changed, upload.
 
     return NeedToUpload::No; // No reason to upload, seems up-to-date.
@@ -3271,6 +3278,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
     os << "\n  thread start: " << Util::getSteadyClockAsString(_threadStart);
+    os << "\n  possibly-modified: " << isPossiblyModified();
     os << "\n  doc state: " << DocumentState::toString(_docState.status());
     os << "\n  doc activity: " << DocumentState::toString(_docState.activity());
     if (_docState.activity() == DocumentState::Activity::Rename)
@@ -3281,6 +3289,7 @@ void DocumentBroker::dumpState(std::ostream& os)
        << Util::getSteadyClockAsString(_saveManager.lastSaveRequestTime());
     os << "\n  last save response: "
        << Util::getSteadyClockAsString(_saveManager.lastSaveResponseTime());
+    os << "\n  last save successful: " << _saveManager.lastSaveSuccessful();
     os << "\n  last storage upload was successful: " << isLastStorageUploadSuccessful();
     os << "\n  last modified: " << Util::getHttpTime(_storageManager.getLastModifiedTime());
     os << "\n  file last modified: " << Util::getHttpTime(_saveManager.getLastModifiedTime());
