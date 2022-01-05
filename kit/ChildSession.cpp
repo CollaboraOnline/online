@@ -106,7 +106,8 @@ void ChildSession::disconnect()
         }
         else
         {
-            LOG_WRN("Skipping unload on incomplete view.");
+            LOG_WRN("Skipping unload on incomplete view [" << getName()
+                                                           << "], viewId: " << _viewId);
         }
 
 // This shuts down the shared socket, which is not what we want.
