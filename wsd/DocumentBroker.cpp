@@ -474,7 +474,12 @@ void DocumentBroker::pollThread()
 #endif
         if (_sessions.empty() && (isLoaded() || _docState.isMarkedToDestroy()))
         {
-            if (_saveManager.isSaving() || isAsyncSaveInProgress())
+            if (!isLoaded())
+            {
+                // Nothing to do; no sessions, not loaded, marked to destroy.
+                stop("dead");
+            }
+            else if (_saveManager.isSaving() || isAsyncSaveInProgress())
             {
                 LOG_DBG("Don't terminate dead DocumentBroker: async saving in progress for docKey [" << getDocKey() << "].");
                 continue;
