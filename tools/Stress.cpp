@@ -19,8 +19,10 @@
 #include <sysexits.h>
 #include <thread>
 
+#include <Poco/Net/AcceptCertificateHandler.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
+#include <Poco/Net/SSLManager.h>
 #include <Poco/URI.h>
 #include <Poco/Util/Application.h>
 #include <Poco/Util/HelpFormatter.h>
@@ -288,6 +290,17 @@ int Stress::main(const std::vector<std::string>& args)
         std::cerr << "       --help for full arguments list." << std::endl;
         return EX_NOINPUT;
     }
+
+#if ENABLE_SSL
+    Poco::Net::initializeSSL();
+    // Just accept the certificate anyway for testing purposes.
+    Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> invalidCertHandler =
+        new Poco::Net::AcceptCertificateHandler(false);
+    Poco::Net::Context::Params sslParams;
+    Poco::Net::Context::Ptr sslContext =
+        new Poco::Net::Context(Poco::Net::Context::CLIENT_USE, sslParams);
+    Poco::Net::SSLManager::instance().initializeClient(nullptr, invalidCertHandler, sslContext);
+#endif
 
     std::vector<std::shared_ptr<Worker>> workers;
 
