@@ -657,11 +657,12 @@ public:
             _sessions.emplace(sessionId, session);
             session->setCanonicalViewId(canonicalViewId);
 
-            int viewId = session->getViewId();
+            const int viewId = session->getViewId();
             _lastUpdatedAt[viewId] = std::chrono::steady_clock::now();
             _speedCount[viewId] = 0;
 
-            LOG_DBG("Sessions: " << _sessions.size());
+            LOG_DBG("Have " << _sessions.size() << " active sessions after creating "
+                            << session->getId());
             return true;
         }
         catch (const std::exception& ex)
@@ -688,6 +689,7 @@ public:
             {
                 if (it->second->isCloseFrame())
                 {
+                    LOG_DBG("Removing session [" << it->second->getId() << ']');
                     deadSessions.push_back(it->second);
                     it = _sessions.erase(it);
                 }
@@ -709,6 +711,12 @@ public:
 #endif
         }
 
+        LOG_DBG("Purging dead sessions, have " << num_sessions << " active sessions.");
+
+        // Don't destroy sessions while holding our lock.
+        // We may deadlock if a session is waiting on us
+        // during callback initiated while handling a command
+        // and the dtor tries to take its lock (which is taken).
         deadSessions.clear();
 
         return num_sessions;
