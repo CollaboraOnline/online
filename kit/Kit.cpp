@@ -625,10 +625,10 @@ public:
 
     bool createSession(const std::string& sessionId, int canonicalViewId)
     {
-        std::unique_lock<std::mutex> lock(_mutex);
-
         try
         {
+            std::unique_lock<std::mutex> lock(_mutex);
+
             if (_sessions.find(sessionId) != _sessions.end())
             {
                 LOG_WRN("Session [" << sessionId << "] on url [" << anonymizeUrl(_url) << "] already exists.");
@@ -645,11 +645,12 @@ public:
             _sessions.emplace(sessionId, session);
             session->setCanonicalViewId(canonicalViewId);
 
-            int viewId = session->getViewId();
+            const int viewId = session->getViewId();
             _lastUpdatedAt[viewId] = std::chrono::steady_clock::now();
             _speedCount[viewId] = 0;
 
-            LOG_DBG("Sessions: " << _sessions.size());
+            LOG_DBG("Have " << _sessions.size() << " active sessions after creating "
+                            << session->getId());
             return true;
         }
         catch (const std::exception& ex)
@@ -683,6 +684,7 @@ public:
             {
                 if (it->second->isCloseFrame())
                 {
+                    LOG_DBG("Removing session [" << it->second->getId() << ']');
                     deadSessions.push_back(it->second);
                     it = _sessions.erase(it);
                 }
@@ -693,6 +695,7 @@ public:
             }
 
             num_sessions = _sessions.size();
+
 #if !MOBILEAPP
             if (num_sessions == 0)
             {
@@ -703,6 +706,8 @@ public:
             }
 #endif
         }
+
+        LOG_DBG("Purging dead sessions, have " << num_sessions << " active sessions.");
 
         // Don't destroy sessions while holding our lock.
         // We may deadlock if a session is waiting on us
