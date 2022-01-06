@@ -1427,29 +1427,36 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
         const std::size_t index = stringMsg.find_first_of('{');
         if (index != std::string::npos)
         {
-            const std::string stringJSON = stringMsg.substr(index);
-            Poco::JSON::Parser parser;
-            const Poco::Dynamic::Var parsedJSON = parser.parse(stringJSON);
-            const auto& object = parsedJSON.extract<Poco::JSON::Object::Ptr>();
-            if (object->get("commandName").toString() == ".uno:Save")
+            try
             {
-                const bool success = object->get("success").toString() == "true";
-                std::string result;
-                if (object->has("result"))
+                const std::string stringJSON = stringMsg.substr(index);
+                Poco::JSON::Parser parser;
+                const Poco::Dynamic::Var parsedJSON = parser.parse(stringJSON);
+                const auto& object = parsedJSON.extract<Poco::JSON::Object::Ptr>();
+                if (object->get("commandName").toString() == ".uno:Save")
                 {
-                    const Poco::Dynamic::Var parsedResultJSON = object->get("result");
-                    const auto& resultObj = parsedResultJSON.extract<Poco::JSON::Object::Ptr>();
-                    if (resultObj->get("type").toString() == "string")
-                        result = resultObj->get("value").toString();
+                    const bool success = object->get("success").toString() == "true";
+                    std::string result;
+                    if (object->has("result"))
+                    {
+                        const Poco::Dynamic::Var parsedResultJSON = object->get("result");
+                        const auto& resultObj = parsedResultJSON.extract<Poco::JSON::Object::Ptr>();
+                        if (resultObj->get("type").toString() == "string")
+                            result = resultObj->get("value").toString();
+                    }
+
+                    // Save to Storage and log result.
+                    docBroker->handleSaveResponse(getId(), success, result);
+
+                    if (!isCloseFrame())
+                        forwardToClient(payload);
+
+                    return true;
                 }
-
-                // Save to Storage and log result.
-                docBroker->handleSaveResponse(getId(), success, result);
-
-                if (!isCloseFrame())
-                    forwardToClient(payload);
-
-                return true;
+            }
+            catch (const std::exception& exception)
+            {
+                LOG_ERR("unocommandresult parsing failure: " << exception.what());
             }
         }
         else
@@ -1812,16 +1819,23 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             const std::size_t index = stringMsg.find_first_of('{');
             if (index != std::string::npos)
             {
-                const std::string stringJSON = stringMsg.substr(index);
-                Poco::JSON::Parser parser;
-                const Poco::Dynamic::Var result = parser.parse(stringJSON);
-                const auto& object = result.extract<Poco::JSON::Object::Ptr>();
-                const std::string commandName = object->has("commandName") ? object->get("commandName").toString() : "";
-                if (commandName == ".uno:CharFontName" ||
-                    commandName == ".uno:StyleApply")
+                try
                 {
-                    // other commands should not be cached
-                    docBroker->tileCache().saveTextStream(TileCache::StreamType::CmdValues, stringMsg, commandName);
+                    const std::string stringJSON = stringMsg.substr(index);
+                    Poco::JSON::Parser parser;
+                    const Poco::Dynamic::Var result = parser.parse(stringJSON);
+                    const auto& object = result.extract<Poco::JSON::Object::Ptr>();
+                    const std::string commandName = object->has("commandName") ? object->get("commandName").toString() : "";
+                    if (commandName == ".uno:CharFontName" ||
+                        commandName == ".uno:StyleApply")
+                    {
+                        // other commands should not be cached
+                        docBroker->tileCache().saveTextStream(TileCache::StreamType::CmdValues, stringMsg, commandName);
+                    }
+                }
+                catch (const std::exception& exception)
+                {
+                    LOG_ERR("commandvalues parsing failure: " << exception.what());
                 }
             }
         }
@@ -1842,26 +1856,33 @@ bool ClientSession::handleKitToClientMessage(const char* buffer, const int lengt
             const std::size_t index = firstLine.find_first_of('{');
             const std::string stringJSON = firstLine.substr(index);
             Poco::JSON::Parser parser;
-            const Poco::Dynamic::Var result = parser.parse(stringJSON);
-            const auto& object = result.extract<Poco::JSON::Object::Ptr>();
-            const std::string rectangle = object->get("rectangle").toString();
-            StringVector rectangleTokens(Util::tokenize(rectangle, ','));
-            int x = 0, y = 0, w = 0, h = 0;
-            if (rectangleTokens.size() > 2 &&
-                stringToInteger(rectangleTokens[0], x) &&
-                stringToInteger(rectangleTokens[1], y))
+            try
             {
-                if (rectangleTokens.size() > 3)
+                const Poco::Dynamic::Var result = parser.parse(stringJSON);
+                const auto& object = result.extract<Poco::JSON::Object::Ptr>();
+                const std::string rectangle = object->get("rectangle").toString();
+                StringVector rectangleTokens(Util::tokenize(rectangle, ','));
+                int x = 0, y = 0, w = 0, h = 0;
+                if (rectangleTokens.size() > 2 &&
+                    stringToInteger(rectangleTokens[0], x) &&
+                    stringToInteger(rectangleTokens[1], y))
                 {
-                    stringToInteger(rectangleTokens[2], w);
-                    stringToInteger(rectangleTokens[3], h);
-                }
+                    if (rectangleTokens.size() > 3)
+                    {
+                        stringToInteger(rectangleTokens[2], w);
+                        stringToInteger(rectangleTokens[3], h);
+                    }
 
-                docBroker->invalidateCursor(x, y, w, h);
+                    docBroker->invalidateCursor(x, y, w, h);
+                }
+                else
+                {
+                    LOG_ERR("Unable to parse " << firstLine);
+                }
             }
-            else
+            catch (const std::exception& exception)
             {
-                LOG_ERR("Unable to parse " << firstLine);
+                LOG_ERR("invalidatecursor parsing failure: " << exception.what());
             }
         }
         else if (tokens.equals(0, "renderfont:"))
