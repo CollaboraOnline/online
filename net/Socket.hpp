@@ -1298,7 +1298,20 @@ protected:
         while (!_inBuffer.empty() && oldSize != _inBuffer.size() && processInputEnabled())
         {
             oldSize = _inBuffer.size();
-            _socketHandler->handleIncomingMessage(disposition);
+
+            try
+            {
+                _socketHandler->handleIncomingMessage(disposition);
+            }
+            catch (const std::exception& exception)
+            {
+                LOG_ERR('#' << getFD() << ": Error during handleIncomingMessage: " << exception.what());
+            }
+            catch (...)
+            {
+                LOG_ERR('#' << getFD() << ": Error during handleIncomingMessage.");
+            }
+
             if (disposition.isMove() || disposition.isTransfer())
                 return;
         }
