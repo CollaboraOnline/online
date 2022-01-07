@@ -121,7 +121,7 @@ console.log('Finished bootstrapping: ' + window.L.Browser.mobile + ' desktop ' +
 console.debug('Window size ' + window.innerWidth + 'x' + window.innerHeight);
 
 window.HTMLElement.prototype.getBoundingClientRect = function() {
-	console.debug('getBoundingClientRect for ' + this.id);
+//	console.debug('getBoundingClientRect for ' + this.id);
 	return {
 		width: 0, height: 0, top: 0, left: 0
 	};
@@ -172,6 +172,7 @@ function dumpStats() {
 		if (err) console.log('tilestats: error dumping stats to file!', err);
 		else console.log('tilestats: finished dumping the stats to file!');
 	});
+	console.log(output);
 }
 
 window.onload = function() {
@@ -258,8 +259,10 @@ window.onload = function() {
 							dumpStats();
 						}
 						clearInterval(typing);
+						console.log('End typing simulation');
+						process.exit(0);
 					}
-					console.debug('sending input text= ' + dummyInput[inputIndex]);
+//					console.debug('sending input text= ' + dummyInput[inputIndex]);
 					if (dummyInput.charCodeAt(inputIndex) === 32) { // space
 						window.socket._doSend(
 							'key' +
