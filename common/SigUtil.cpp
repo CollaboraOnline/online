@@ -263,12 +263,17 @@ namespace SigUtil
         Log::signalLog(signalName(signal));
         Log::signalLog("\n");
 
+        Log::signalLog("Recent activity:\n");
         for (size_t i = 0; i < ActivityStrings.size(); ++i)
         {
             size_t idx = (ActivityStringIndex + i) % ActivityStrings.size();
             if (!ActivityStrings[idx].empty())
+            {
                 // no plausible impl. will heap allocate in c_str.
+                Log::signalLog("\t");
                 Log::signalLog(ActivityStrings[idx].c_str());
+                Log::signalLog("\n");
+            }
         }
 
         struct sigaction action;

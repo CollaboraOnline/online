@@ -87,7 +87,6 @@ std::string formatUnoCommandInfo(const std::string& sessionId, const std::string
     unoCommandInfo.append(Util::eliminatePrefix(unoCommand,".uno:"));
     unoCommandInfo.append(" - ");
     unoCommandInfo.append(recorded_time);
-    unoCommandInfo.push_back('\n');
 
     return unoCommandInfo;
 }
@@ -708,6 +707,8 @@ bool ChildSession::loadDocument(const char * /*buffer*/, int /*length*/, const S
     }
 #endif
 
+    SigUtil::addActivity("load view: " + getId() + " doc: " + getJailedFilePathAnonym());
+
     const bool loaded = _docManager->onLoad(getId(), getJailedFilePathAnonym(), renderOpts);
     if (!loaded || _viewId < 0)
     {
@@ -1117,6 +1118,8 @@ bool ChildSession::getTextSelection(const char* /*buffer*/, int /*length*/, cons
         return false;
     }
 
+    SigUtil::addActivity("getTextSelection");
+
     if (getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_TEXT &&
         getLOKitDocument()->getDocumentType() != LOK_DOCTYPE_SPREADSHEET)
     {
@@ -1165,6 +1168,8 @@ bool ChildSession::getClipboard(const char* /*buffer*/, int /*length*/, const St
         pMimeTypes[0] = token.c_str();
         pMimeTypes[1] = nullptr;
     }
+
+    SigUtil::addActivity("getClipboard");
 
     bool success = false;
     getLOKitDocument()->setView(_viewId);
@@ -1216,6 +1221,8 @@ bool ChildSession::setClipboard(const char* buffer, int length, const StringVect
     try {
         ClipboardData data;
         Poco::MemoryInputStream stream(buffer, length);
+
+        SigUtil::addActivity("setClipboard " + std::to_string(length) + " bytes");
 
         std::string command; // skip command
         std::getline(stream, command, '\n');
@@ -1317,6 +1324,8 @@ bool ChildSession::insertFile(const char* /*buffer*/, int /*length*/, const Stri
         return false;
     }
 #endif
+
+    SigUtil::addActivity("insertFile " + type);
 
     if (type == "graphic" || type == "graphicurl" || type == "selectbackground")
     {
