@@ -434,7 +434,20 @@ private:
         if (fin)
         {
             // If is final fragment then process the accumulated message.
-            handleMessage(_wsPayload);
+
+            try
+            {
+                handleMessage(_wsPayload);
+            }
+            catch (const std::exception& exception)
+            {
+                LOG_ERR('#' << socket->getFD() << ": Error during handleMessage: " << exception.what());
+            }
+            catch (...)
+            {
+                LOG_ERR('#' << socket->getFD() << ": Error during handleMessage.");
+            }
+
             _inFragmentBlock = false;
         }
         else
@@ -444,7 +457,18 @@ private:
             return true;
         }
 #else
-        handleMessage(_wsPayload);
+        try
+        {
+            handleMessage(_wsPayload);
+        }
+        catch (const std::exception& exception)
+        {
+            LOG_ERR('#' << socket->getFD() << ": Error during handleMessage: " << exception.what());
+        }
+        catch (...)
+        {
+            LOG_ERR('#' << socket->getFD() << ": Error during handleMessage.");
+        }
 #endif
 
         _wsPayload.clear();
