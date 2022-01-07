@@ -1,3 +1,5 @@
+const https = require("https");
+
 const { spawn, fork } = require('child_process');
 if (process.argv.length < 5 || process.argv[2] == '--help') {
 	console.debug('bootstrap.js <ssl_true_or_false> <abs_top_builddir> <abs_srcdir>');
@@ -22,7 +24,8 @@ let args = [
 	'--o:security.capabilities=false',
 	`--o:child_root_path=${top_builddir}/jails`,
 	'--o:storage.filesystem[@allow]=true',
-	'--o:admin_console.username=admin --o:admin_console.password=admin',
+	'--o:admin_console.username=admin',
+	'--o:admin_console.password=admin',
 	'--o:logging.file[@enable]=true --o:logging.level=' + (debug ? 'trace' : 'warning'),
 	'--o:trace_event[@enable]=true',
 	`--port=${port}`
@@ -73,6 +76,8 @@ if(single_view !== "true") {
 	}
 }
 
+
+
 function vacuumCleaner(kill, message, code) {
 		console.log(message);
 		childNodes.forEach(n => n.kill(kill));
@@ -96,5 +101,58 @@ process.on('exit', exitHandler.bind(null,{cleanup: true}));
 process.on('SIGINT', exitHandler.bind(null, {exit: true}));
 
 //catches uncaught exceptions
-process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
+process.on('uncaughtException', ex => {
+	console.error(ex, 'uncaught exception');
+	exitHandler({exit:true});
+});
 
+function parseStats(content) {
+	var stats = {};
+	var lines = content.split('\n');
+	if (content.length < 128 || lines.length < 16)
+		return undefined; // too small
+
+	for (let l of lines) {
+		var keyval = l.split(' ');
+		if (keyval.length >= 2)
+			stats[keyval[0]] = keyval[1];
+	}
+	if (stats.size < 8)
+		return undefined; // not our stats
+
+	return stats;
+}
+
+function dumpMemoryUse() {
+	var url = 'https://admin:admin@localhost:' + port + '/cool/getMetrics/';
+	console.log('Fetching stats from ' + url);
+	var req = https.request(
+		url,
+		{
+			rejectUnauthorized: false,
+			requestCert: false,
+			timeout: 3000, // 3s
+		},
+		response => {
+			let data = [];
+			response.on('data', (frag) => {
+				data.push(frag);
+			});
+			response.on('end', () => {
+				let body = Buffer.concat(data);
+				var stats = parseStats(body.toString());
+				if (stats)
+					console.log('Stats: ' +
+						    'views: ' + stats['document_all_views_all_count_total'] + ' ' +
+						    'mem: ' + (stats['global_memory_used_bytes']/1000000) + 'Mb ' +
+						    'sent: ' + (stats['document_all_sent_to_clients_total_bytes']/1000000) + 'Mb ' +
+						    'recv: ' + (stats['document_all_received_from_clients_total_bytes']/1000) + 'Kb');
+			});
+			response.on('error', (err) => {
+				console.log('failed to get admin stats');
+			});
+		});
+	req.end();
+}
+
+setInterval(dumpMemoryUse, 3000);
