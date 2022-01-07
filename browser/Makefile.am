@@ -758,7 +758,7 @@ single_view="false"
 node_inspect="false"
 # Record tile stats and dump it into the file "test/tilestats.txt"
 # Pipe it with | grep "tilestats"
-record_stats="false"
+record_stats="true"
 perf-test:
 	@echo "Running perf tests..."
 	@mkdir -p $(abs_top_builddir)/test/data
