@@ -200,6 +200,16 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	overflow-x: hidden;
 	overflow-y: auto;
 	z-index: 1200;
+	scrollbar-width: auto;
+	scrollbar-color: #bec0c0 transparent;
+}
+
+#sidebar-panel::-webkit-scrollbar {
+	width: 8px;
+}
+
+#sidebar-panel::-webkit-scrollbar-thumb {
+	background-color: #bec0c0;
 }
 
 #toolbar-wrapper {
