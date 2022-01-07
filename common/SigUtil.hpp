@@ -49,11 +49,8 @@ namespace SigUtil
 
     void checkDumpGlobalState(GlobalDumpStateFn dumpState);
 
-    typedef void (*UnoCommandsDumperFn)(void);
-
-    extern UnoCommandsDumperFn dumpUnoCommandsInfoFn;
-
-    void registerUnoCommandInfoHandler(UnoCommandsDumperFn dumpUnoCommandsInfo);
+    /// Add a message to a round-robin buffer to be dumped on fatal signal
+    void addActivity(const std::string &message);
 
 #if !MOBILEAPP
     /// Wait for the signal handler, if any,

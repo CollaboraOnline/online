@@ -30,6 +30,7 @@
 #include <sstream>
 #include <string>
 #include <thread>
+#include <array>
 
 #include <Socket.hpp>
 #include "Common.hpp"
@@ -40,6 +41,9 @@ static std::atomic<bool> TerminationFlag(false);
 static std::atomic<bool> DumpGlobalState(false);
 static std::atomic<bool> ShutdownRequestFlag(false);
 #endif
+
+static size_t ActivityStringIndex = 0;
+static std::array<std::string,8> ActivityStrings;
 
 namespace SigUtil
 {
@@ -88,13 +92,10 @@ namespace SigUtil
 #endif
     }
 
-    UnoCommandsDumperFn dumpUnoCommandsInfoFn = nullptr;
-
-    void registerUnoCommandInfoHandler(UnoCommandsDumperFn dumpUnoCommandsInfo)
+    void addActivity(const std::string &message)
     {
-        dumpUnoCommandsInfoFn = dumpUnoCommandsInfo;
+        ActivityStrings[ActivityStringIndex++ % ActivityStrings.size()] = message;
     }
-
 
 #if !MOBILEAPP
     /// This traps the signal-handler so we don't _Exit
@@ -260,10 +261,14 @@ namespace SigUtil
         else
             Log::signalLog(" Fatal signal received: ");
         Log::signalLog(signalName(signal));
+        Log::signalLog("\n");
 
-        if (dumpUnoCommandsInfoFn != nullptr)
+        for (size_t i = 0; i < ActivityStrings.size(); ++i)
         {
-            dumpUnoCommandsInfoFn();
+            size_t idx = (ActivityStringIndex + i) % ActivityStrings.size();
+            if (!ActivityStrings[idx].empty())
+                // no plausible impl. will heap allocate in c_str.
+                Log::signalLog(ActivityStrings[idx].c_str());
         }
 
         struct sigaction action;
