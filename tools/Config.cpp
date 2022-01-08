@@ -18,6 +18,7 @@
 #include <openssl/evp.h>
 
 #include <Poco/Exception.h>
+#include <Poco/File.h>
 #include <Poco/Util/Application.h>
 #include <Poco/Util/HelpFormatter.h>
 #include <Poco/Util/Option.h>
@@ -72,10 +73,12 @@ class Config: public Application
 
 public:
     static std::string ConfigFile;
+    static std::string OldConfigFile;
     static std::string SupportKeyString;
     static bool SupportKeyStringProvided;
     static std::uint64_t AnonymizationSalt;
     static bool AnonymizationSaltProvided;
+    static bool Write;
 
 protected:
     void defineOptions(OptionSet&) override;
@@ -91,10 +94,15 @@ std::string Config::ConfigFile =
 #endif
     "/coolwsd.xml";
 
+std::string Config::OldConfigFile = "/etc/loolwsd/loolwsd.xml";
+bool Config::Write = false;
+
 std::string Config::SupportKeyString;
 bool Config::SupportKeyStringProvided = false;
 std::uint64_t Config::AnonymizationSalt = 0;
 bool Config::AnonymizationSaltProvided = false;
+
+int MigrateConfig(std::string, std::string,  bool);
 
 void Config::displayHelp()
 {
@@ -111,6 +119,7 @@ void Config::displayHelp()
     // Command list
     std::cout << std::endl
               << "Commands: " << std::endl
+              << "    migrateconfig [--old-config-file=<path>] [--config-file=<path>] [--write]" << std::endl
               << "    anonymize [string-1]...[string-n]" << std::endl
               << "    set-admin-password" << std::endl
 #if ENABLE_SUPPORT_KEY
@@ -131,11 +140,15 @@ void Config::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false)
                         .argument("path"));
+    optionSet.addOption(Option("old-config-file", "", "Specify configuration file path to migrate manually.")
+                        .required(false)
+                        .repeatable(false)
+                        .argument("path"));
 
     optionSet.addOption(Option("pwd-salt-length", "", "Length of the salt to use to hash password [set-admin-password].")
                         .required(false)
-                        .repeatable(false).
-                        argument("number"));
+                        .repeatable(false)
+                        .argument("number"));
     optionSet.addOption(Option("pwd-iterations", "", "Number of iterations to do in PKDBF2 password hashing [set-admin-password].")
                         .required(false)
                         .repeatable(false)
@@ -156,6 +169,10 @@ void Config::defineOptions(OptionSet& optionSet)
                         .required(false)
                         .repeatable(false)
                         .argument("salt"));
+
+    optionSet.addOption(Option("write", "", "Write migrated configuration.")
+                        .required(false)
+                        .repeatable(false));
 }
 
 void Config::handleOption(const std::string& optionName, const std::string& optionValue)
@@ -169,6 +186,10 @@ void Config::handleOption(const std::string& optionName, const std::string& opti
     else if (optionName == "config-file")
     {
         ConfigFile = optionValue;
+    }
+    else if (optionName == "old-config-file")
+    {
+        OldConfigFile = optionValue;
     }
     else if (optionName == "pwd-salt-length")
     {
@@ -210,6 +231,10 @@ void Config::handleOption(const std::string& optionName, const std::string& opti
         AnonymizationSalt = std::stoull(optionValue);
         AnonymizationSaltProvided = true;
         std::cout << "Anonymization Salt: [" << AnonymizationSalt << "]." << std::endl;
+    }
+    else if (optionName == "write")
+    {
+        Write = true;
     }
 }
 
@@ -382,6 +407,34 @@ int Config::main(const std::vector<std::string>& args)
         for (std::size_t i = 1; i < args.size(); ++i)
         {
             std::cout << '[' << args[i] << "]: " << Util::anonymizeUrl(args[i], AnonymizationSalt) << std::endl;
+        }
+    }
+    else if (args[0] == "migrateconfig")
+    {
+        std::cout << "Migrating old configuration from " << OldConfigFile << " to " << ConfigFile << "." << std::endl;
+        if (!Write)
+            std::cout << "This is a dry run, no changes are written to file." << std::endl;
+        std::cout << std::endl;
+        const std::string OldConfigMigrated = OldConfigFile + ".migrated";
+        Poco::File AlreadyMigrated(OldConfigMigrated);
+        if (AlreadyMigrated.exists())
+        {
+            std::cout << "Migration already performed, file " + OldConfigMigrated + " exists. Aborting." << std::endl;
+        }
+        else
+        {
+            const int Result = MigrateConfig(OldConfigFile, ConfigFile, Write);
+            if (Result == 0)
+            {
+                std::cout << "Successful migration." << std::endl;
+                if (Write)
+                {
+                    Poco::File ConfigToRename(OldConfigFile);
+                    ConfigToRename.renameTo(OldConfigMigrated);
+                }
+            }
+            else
+                std::cout << "Migration of old configuration failed." << std::endl;
         }
     }
     else
