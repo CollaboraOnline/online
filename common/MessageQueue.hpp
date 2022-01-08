@@ -190,8 +190,8 @@ protected:
     std::string combineRemoveText(const StringVector& tokens)
     {
         std::string id;
-        int before;
-        int after;
+        int before = 0;
+        int after = 0;
         if (!COOLProtocol::getTokenString(tokens, "id", id) ||
             !COOLProtocol::getTokenInteger(tokens, "before", before) ||
             !COOLProtocol::getTokenInteger(tokens, "after", after))
@@ -216,8 +216,8 @@ protected:
                 return std::string();
 
             std::string queuedId;
-            int queuedBefore;
-            int queuedAfter;
+            int queuedBefore = 0;
+            int queuedAfter = 0;
             if (queuedTokens.equals(0, tokens, 0) &&
                 queuedTokens.equals(1, "removetextcontext") &&
                 COOLProtocol::getTokenStringFromMessage(queuedMessage, "id", queuedId) &&
