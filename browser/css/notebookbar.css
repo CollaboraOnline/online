@@ -6,14 +6,13 @@
 }
 
 .ui-tabs.notebookbar {
-	display: inline-block;
+	display: inline-flex;
 	z-index: 999;
 	padding: 0px;
 	height: 100%;
 }
 
 .ui-tab.notebookbar {
-	float: left;
 	font-size: 12pt;
 	font-family: var(--cool-font);
 	line-height: normal;
