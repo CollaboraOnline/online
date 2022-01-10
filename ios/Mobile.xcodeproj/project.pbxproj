@@ -111,6 +111,25 @@
 		BE017B8225AE879900244ED8 /* docsh2.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh2.cxx; path = "../../ios-device/sc/source/ui/docshell/docsh2.cxx"; sourceTree = "<group>"; };
 		BE017B8325AE879900244ED8 /* docsh8.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = docsh8.cxx; path = "../../ios-device/sc/source/ui/docshell/docsh8.cxx"; sourceTree = "<group>"; };
 		BE18C7DD226DE09A001AD27E /* Branding */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Branding; path = Mobile/Branding; sourceTree = SOURCE_ROOT; };
+		BE1D50B727870AF200038016 /* salios.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = salios.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/vcl/ios/salios.cxx"; sourceTree = "<group>"; };
+		BE1D50BA27870F4F00038016 /* overlayhandle.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlayhandle.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlayhandle.cxx"; sourceTree = "<group>"; };
+		BE1D50BB27870F4F00038016 /* overlayanimatedbitmapex.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlayanimatedbitmapex.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlayanimatedbitmapex.cxx"; sourceTree = "<group>"; };
+		BE1D50BC27870F4F00038016 /* overlayrollingrectangle.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlayrollingrectangle.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlayrollingrectangle.cxx"; sourceTree = "<group>"; };
+		BE1D50BD27870F4F00038016 /* overlaymanager.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlaymanager.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlaymanager.cxx"; sourceTree = "<group>"; };
+		BE1D50BE27870F4F00038016 /* overlayobjectcell.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlayobjectcell.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlayobjectcell.cxx"; sourceTree = "<group>"; };
+		BE1D50BF27870F4F00038016 /* overlayselection.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlayselection.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlayselection.cxx"; sourceTree = "<group>"; };
+		BE1D50C027870F4F00038016 /* overlayrectangle.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlayrectangle.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlayrectangle.cxx"; sourceTree = "<group>"; };
+		BE1D50C127870F4F00038016 /* overlayline.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlayline.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlayline.cxx"; sourceTree = "<group>"; };
+		BE1D50C227870F4F00038016 /* overlaytriangle.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlaytriangle.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlaytriangle.cxx"; sourceTree = "<group>"; };
+		BE1D50C327870F4F00038016 /* overlayobjectlist.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlayobjectlist.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlayobjectlist.cxx"; sourceTree = "<group>"; };
+		BE1D50C427870F4F00038016 /* overlaypolypolygon.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlaypolypolygon.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlaypolypolygon.cxx"; sourceTree = "<group>"; };
+		BE1D50C527870F4F00038016 /* overlayprimitive2dsequenceobject.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlayprimitive2dsequenceobject.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlayprimitive2dsequenceobject.cxx"; sourceTree = "<group>"; };
+		BE1D50C627870F4F00038016 /* overlaymanagerbuffered.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlaymanagerbuffered.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlaymanagerbuffered.cxx"; sourceTree = "<group>"; };
+		BE1D50C727870F4F00038016 /* overlaytools.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlaytools.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlaytools.cxx"; sourceTree = "<group>"; };
+		BE1D50C827870F4F00038016 /* overlaybitmapex.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlaybitmapex.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlaybitmapex.cxx"; sourceTree = "<group>"; };
+		BE1D50C927870F4F00038016 /* overlayobject.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlayobject.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlayobject.cxx"; sourceTree = "<group>"; };
+		BE1D50CA27870F4F00038016 /* overlayhelpline.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlayhelpline.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlayhelpline.cxx"; sourceTree = "<group>"; };
+		BE1D50CB27870F4F00038016 /* overlaycrosshair.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = overlaycrosshair.cxx; path = "../../../../../Volumes/TML13/lo/ios-device/svx/source/sdr/overlay/overlaycrosshair.cxx"; sourceTree = "<group>"; };
 		BE28F880228CE04600C00C48 /* langselect.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = langselect.hxx; path = "../../ios-device/desktop/source/app/langselect.hxx"; sourceTree = "<group>"; };
 		BE28F881228CE04600C00C48 /* officeipcthread.hxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = officeipcthread.hxx; path = "../../ios-device/desktop/source/app/officeipcthread.hxx"; sourceTree = "<group>"; };
 		BE28F882228CE04600C00C48 /* opencl.cxx */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = opencl.cxx; path = "../../ios-device/desktop/source/app/opencl.cxx"; sourceTree = "<group>"; };
@@ -1577,6 +1596,39 @@
 			name = docshell;
 			sourceTree = "<group>";
 		};
+		BE1D50B827870F0E00038016 /* sdr */ = {
+			isa = PBXGroup;
+			children = (
+				BE1D50B927870F2000038016 /* overlay */,
+			);
+			name = sdr;
+			sourceTree = "<group>";
+		};
+		BE1D50B927870F2000038016 /* overlay */ = {
+			isa = PBXGroup;
+			children = (
+				BE1D50BB27870F4F00038016 /* overlayanimatedbitmapex.cxx */,
+				BE1D50C827870F4F00038016 /* overlaybitmapex.cxx */,
+				BE1D50CB27870F4F00038016 /* overlaycrosshair.cxx */,
+				BE1D50BA27870F4F00038016 /* overlayhandle.cxx */,
+				BE1D50CA27870F4F00038016 /* overlayhelpline.cxx */,
+				BE1D50C127870F4F00038016 /* overlayline.cxx */,
+				BE1D50BD27870F4F00038016 /* overlaymanager.cxx */,
+				BE1D50C627870F4F00038016 /* overlaymanagerbuffered.cxx */,
+				BE1D50C927870F4F00038016 /* overlayobject.cxx */,
+				BE1D50BE27870F4F00038016 /* overlayobjectcell.cxx */,
+				BE1D50C327870F4F00038016 /* overlayobjectlist.cxx */,
+				BE1D50C427870F4F00038016 /* overlaypolypolygon.cxx */,
+				BE1D50C527870F4F00038016 /* overlayprimitive2dsequenceobject.cxx */,
+				BE1D50C027870F4F00038016 /* overlayrectangle.cxx */,
+				BE1D50BC27870F4F00038016 /* overlayrollingrectangle.cxx */,
+				BE1D50BF27870F4F00038016 /* overlayselection.cxx */,
+				BE1D50C727870F4F00038016 /* overlaytools.cxx */,
+				BE1D50C227870F4F00038016 /* overlaytriangle.cxx */,
+			);
+			name = overlay;
+			sourceTree = "<group>";
+		};
 		BE28F87F228CE02500C00C48 /* app */ = {
 			isa = PBXGroup;
 			children = (
@@ -2446,6 +2498,7 @@
 		BE7E6806229D371B00DE73C8 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				BE1D50B727870AF200038016 /* salios.cxx */,
 				BE7E680B229D374500DE73C8 /* clipboard.cxx */,
 				BE7E6807229D374500DE73C8 /* clipboard.hxx */,
 				BE7E680F229D374500DE73C8 /* DataFlavorMapping.cxx */,
@@ -3023,6 +3076,7 @@
 			children = (
 				BECBD31223D9C5B300DA5582 /* engine3d */,
 				BE9273B72372E04500ADB598 /* form */,
+				BE1D50B827870F0E00038016 /* sdr */,
 				BE9273AD2372DC6B00ADB598 /* sidebar */,
 				BEB0E5DD21CA93A50085A0CF /* svdraw */,
 				BE7E5B7523AD079F00F9462A /* tbxctrls */,
