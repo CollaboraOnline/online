@@ -3,32 +3,50 @@
 coolconfig \- Configuration tool for Collabora Online.
 .SH SYNOPSIS
 coolconfig COMMAND [OPTIONS]
-.SH OPTIONS
-Some options make sense only with a specific command.
+.SH COMMANDS AND OPTIONS
 .PP
-.SS "Commands:"
-.PP
-anonymize [string\-1]...[string\-n]
-.PP
-set\-admin\-password
-.PP
-set <key> <value>
-.PP
-update\-system\-template
-.SS "Options:"
+.SS "General options:"
 \fB\-h\fR, \fB\-\-help\fR                Show this usage information.
 .PP
 \fB\-\-config\-file\fR=\fIpath\fR        Specify configuration file path manually.
-.PP
-\fB\-\-pwd\-salt\-length\fR=\fInumber\fR  Length of the salt to use to hash password [set\-admin\-password].
-.PP
-\fB\-\-pwd\-iterations\fR=\fInumber\fR   Number of iterations to do in PKDBF2 password hashing [set\-admin\-password].
-.PP
-\fB\-\-pwd\-hash\-length\fR=\fInumber\fR  Length of password hash to generate [set\-admin\-password].
-.PP
-\fB\-\-anonymization\-salt\fR=\fIsalt\fR Anonymize strings with the given 64-bit salt instead of the one in the config file [anonymize].
-.SH "ANONYMIZE"
+.SS "anonymize"
 The \fBanonymize\fR command helps to read anonymized logs. If you know a document and/or a user had an issue, you can find their session in the logs by running this command with the username and/or document name and get the anonymized hash, which you use to search the logs with.
+.PP
+anonymize [string\-1]...[string\-n]
+.PP
+\fB\-\-anonymization\-salt\fR=\fIsalt\fR Anonymize strings with the given 64-bit salt instead of the one in the config file.
+.PP
+.SS "migrateconfig"
+The \fBmigrateconfig\fR command migrates config file of Collabora Online 6.4 or older to the new format.
+.PP
+migrateconfig
+.PP
+\fB\-\-old\-config\-file\fR=\fIpath\fR    Specify configuration file path manually. The default is \fI/etc/loolwsd/loolwsd.xml\fR.
+.PP
+\fB\-\-write\fR                   Write migrated configuration. Without this option no changes are written to the config file, only information about differences between old and new config is printed.
+.PP
+.SS "set"
+The \fBset\fR command changes an existing configuration setting in the config file. The <key> is the XPath expression of the config item in the config XML file (coolwsd.xml).
+.PP
+set <key> <value>
+.PP
+\fBExample:\fR coolconfig set logging.level trace
+.PP
+.SS "set\-admin\-password"
+The \fBset\-admin\-password\fR command sets the user name and password of the administrator who can access Collabora Online's admin console.
+.PP
+set\-admin\-password
+.PP
+\fB\-\-pwd\-salt\-length\fR=\fInumber\fR  Length of the salt to use to hash password.
+.PP
+\fB\-\-pwd\-iterations\fR=\fInumber\fR   Number of iterations to do in PKDBF2 password hashing.
+.PP
+\fB\-\-pwd\-hash\-length\fR=\fInumber\fR  Length of password hash to generate.
+.PP
+.SS "update\-system\-template"
+The \fBupdate\-system\-template\fR command updates Collabora Online's system template. It is used typically when new fonts are added to the system, that need to be used with Collabora Online.
+.PP
+update\-system\-template
 .PP
 .SH "SEE ALSO"
 coolforkit(1), coolconvert(1), coolwsd(1), coolwsd-systemplate-setup(1), coolwsd-generate-proof-key(1), coolmount(1)
