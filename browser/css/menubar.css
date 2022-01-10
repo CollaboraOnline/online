@@ -77,6 +77,12 @@
 }
 .main-nav.hasnotebookbar {
 	height: 32px;
+	overflow: scroll hidden;
+	scrollbar-width: none;
+	-ms-scrollbar: none;
+}
+.main-nav.hasnotebookbar::-webkit-scrollbar {
+	height: 0;
 }
 .main-nav.hasnotebookbar:not(.readonly) {
 	background: var(--gray-light-bg-color);
