@@ -1,6 +1,6 @@
 #main-menu {
 	top: 0;
-	height: 25px;
+	height: auto;
 	z-index: 1000;
 	outline: none;
 	float: left;
@@ -70,6 +70,7 @@
 	white-space: nowrap;
 	z-index: 12;
 	display: flex;
+	align-items: center;
 }
 .main-nav.readonly {
 	position: relative;
