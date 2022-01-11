@@ -31,6 +31,7 @@ class Comment {
 	zIndex: number = L.CSections.Comment.zIndex;
 	interactable: boolean = true;
 	sectionProperties: any = {};
+	valid: boolean = true;
 
 	// Implemented by section container.
 	stopPropagating: () => void;

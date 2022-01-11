@@ -1777,7 +1777,11 @@ class CommentSection {
 
 	public onCommentsDataUpdate() {
 		for (var i: number = this.sectionProperties.commentList.length -1; i > -1; i--) {
-			this.sectionProperties.commentList[i].onCommentDataUpdate();
+			var comment = this.sectionProperties.commentList[i];
+			if (!comment.valid) {
+				comment.sectionProperties.commentListSection.removeItem(comment.sectionProperties.data.id);
+			}
+			comment.onCommentDataUpdate();
 		}
 	}
 
