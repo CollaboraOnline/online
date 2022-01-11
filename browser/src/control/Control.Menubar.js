@@ -1394,6 +1394,9 @@ L.Control.Menubar = L.Control.extend({
 		}
 	},
 
+	_onMouseOut: function() {
+		$('.main-nav.hasnotebookbar').css('overflow', 'scroll hidden');
+	},
 	_checkedMenu: function(uno, item) {
 		var constChecked = 'lo-menu-item-checked';
 		var state = this._map['stateChangeHandler'].getItemValue(uno);
