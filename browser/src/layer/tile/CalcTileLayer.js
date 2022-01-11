@@ -813,12 +813,16 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 				{
 					var commentObject;
 					for (var i = 0; i < section.sectionProperties.commentList.length; i++) {
-						if (parseInt(section.sectionProperties.commentList[i].sectionProperties.data.tab) === parseInt(comment.tab)) {
-							if (parseInt(section.sectionProperties.commentList[i].sectionProperties.data.id) === parseInt(comment.id)) {
+						if (parseInt(section.sectionProperties.commentList[i].sectionProperties.data.id) === parseInt(comment.id)) {
+							if (parseInt(section.sectionProperties.commentList[i].sectionProperties.data.tab) === parseInt(comment.tab)) {
 								commentObject = section.sectionProperties.commentList[i];
-								commentObject.valid = true;
-								break;
+							} else {
+								// tabs can be moved around and we need to update the tab because the id is still valid.
+								commentObject = section.sectionProperties.commentList[i];
+								commentObject.sectionProperties.data.tab = comment.tab;
 							}
+							commentObject.valid = true;
+							break;
 						}
 					}
 					if (commentObject)
