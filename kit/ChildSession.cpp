@@ -2894,13 +2894,8 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
     case LOK_CALLBACK_DOCUMENT_BACKGROUND_COLOR:
         sendTextFrame("documentbackgroundcolor: " + payload);
         break;
-
-#if !ENABLE_DEBUG
-    // we want a compilation-time failure in the debug builds; but ERR in the
-    // log in the release ones
     default:
         LOG_ERR("Unknown callback event (" << lokCallbackTypeToString(type) << "): " << payload);
-#endif
     }
 }
 
