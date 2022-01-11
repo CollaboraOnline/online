@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0100\n"
-"PO-Revision-Date: 2021-07-21 23:07+0000\n"
-"Last-Translator: Zhou Nan <zhounan@nfschina.com>\n"
+"PO-Revision-Date: 2022-01-06 22:22+0000\n"
+"Last-Translator: Eric <alchemillatruth@purelymail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.7.2-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -1458,9 +1458,8 @@ msgid "Signature broken"
 msgstr "签名损坏"
 
 #: src/control/Signing.js:633
-#, fuzzy
 msgid "The signature was valid, but the document has been modified."
-msgstr "签名有效，但文档已被修改"
+msgstr "签名有效，但文档已被修改。"
 
 #: src/control/Signing.js:635
 msgid "Signed but document modified"
@@ -1475,9 +1474,8 @@ msgid "Signed but not validated"
 msgstr "已签名未验证"
 
 #: src/control/Signing.js:643
-#, fuzzy
 msgid "The signature is OK, but the document is only partially signed."
-msgstr "签名没有问题，但文档仅被部分签名"
+msgstr "签名没有问题，但文档仅被部分签名。"
 
 #: src/control/Signing.js:645
 msgid "Signed but not all files are signed"
@@ -1601,7 +1599,7 @@ msgstr "链接"
 
 #: src/core/Socket.js:56
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "糟糕，连接到文件 %productName:  时出现问题 "
+msgstr "糟糕，连接到 %productName 时出现问题： "
 
 #: src/core/Socket.js:513
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2011,7 +2009,7 @@ msgstr ""
 
 #: src/map/Map.js:1433
 msgid "Inactive document"
-msgstr ""
+msgstr "非活跃文档"
 
 #: src/map/Map.js:1434
 msgid "Please click to resume editing"

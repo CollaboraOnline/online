@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0200\n"
-"PO-Revision-Date: 2020-10-12 07:13+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2022-01-06 22:22+0000\n"
+"Last-Translator: Eric <alchemillatruth@purelymail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/help/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -778,14 +778,13 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
 "instead."
 msgstr ""
-"插入一个制表位（仅用于表格操作）。根据所用的窗口管理器，也可使用 Alt</kbd><span class=\"kbd--plus\""
-">+</span><kbd>Tab 。"
+"插入一个制表位（仅用于表格）。取决于所用的窗口管理器，也可使用 </kbd>Alt</kbd><span class=\"kbd--plus\""
+">+</span><kbd>Tab</kbd>。"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:101-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Arrow Keys"
@@ -835,26 +834,25 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
-"处于插入模式3秒钟，方向键插入行或列，Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>方向键插入单元格"
+"处于插入模式 3 秒钟，方向键插入行或列，<kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>方向键</kbd>插入单元格"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"处于删除模式3秒钟，方向键删除行或列，Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>方向键将单元格与邻近单元格合并"
+"处于删除模式 3 秒，方向键删除行或列，<kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>方向键</kbd>将单元格与相邻单元格合并"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
@@ -1764,7 +1762,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:378-5
 msgid "Inactive document"
-msgstr "不活动文档"
+msgstr "非活跃文档"
 
 #: html/cool-help.html%2Bdiv.p:379-5
 msgid ""
@@ -1978,15 +1976,15 @@ msgid "All spreadsheets functions and mathematical rules applies."
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.p:428-5
-#, fuzzy
 msgid ""
 "The formula language should be extremely familiar to any spreadsheet user, "
 "and is specified in great detail in the <a href=\"https://www.oasis-open.org/"
 "committees/download.php/16826/openformula-spec-20060221.html\" target=\""
 "_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 msgstr ""
-"公式语言是电子表格用户都很熟悉的格式，详见 <a href=\"https://www.oasis-open.org/committees/"
-"download.php/16826/openformula-spec-20060221.html\">OASIS OpenFormula 规范</a>。"
+"公式语言对任何电子表格用户应该都耳熟能详，并且在 <a href=\"https://www.oasis-open.org/committees/"
+"download.php/16826/openformula-spec-20060221.html\" target=\"_blank\" rel="
+"\"noopener noreferrer\">OASIS OpenFormula 规范</a>中有详细说明。"
 
 #: html/cool-help.html%2Bdiv.div.p:431-5
 msgid ""
