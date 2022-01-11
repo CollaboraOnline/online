@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0200\n"
-"PO-Revision-Date: 2020-12-12 15:29+0000\n"
+"PO-Revision-Date: 2022-01-06 22:22+0000\n"
 "Last-Translator: Miloš Šrámek <msramek22@gmail.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/collabora-online/"
 "help/sk/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -787,7 +787,6 @@ msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:100-107
-#, fuzzy
 msgid ""
 "Inserts a tab stop (only in tables). Depending on the Window Manager in use, "
 "<kbd>Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Tab</kbd> may be used "
@@ -847,7 +846,6 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
@@ -860,7 +858,6 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:106-106
-#, fuzzy
 msgid ""
 "3 seconds in Delete mode, Arrow key deletes row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
