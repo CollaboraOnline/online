@@ -5,7 +5,7 @@ var desktopHelper = require('../../common/desktop_helper');
 var impressHelper = require('../../common/impress_helper');
 var mode = Cypress.env('USER_INTERFACE');
 
-describe.skip('Table operations', function() {
+describe('Table operations', function() {
 	var origTestFileName = 'table_operation.odp';
 	var testFileName;
 
@@ -38,6 +38,7 @@ describe.skip('Table operations', function() {
 
 		helper.typeIntoDocument('{ctrl}{a}');
 	}
+
 	function selectFullTable() {
 		helper.typeIntoDocument('{ctrl}{a}');
 
@@ -217,13 +218,7 @@ describe.skip('Table operations', function() {
 	it('Delete Table', function() {
 		selectFullTable();
 
-		//Fixme: there is no option to delete the table from notebookbar toolbar so we cannot use selectOptionNotebookbar() like we did in above tests
-		if (mode !== 'notebookbar') {
-			selectOptionClassic('#menu-table', true, 'Delete', 'Delete Table');
-		} else {
-			selectOptionNotebookbar('#SelectTable');
-			helper.typeIntoDocument('{del}');
-		}
+		mode === 'notebookbar' ? selectOptionNotebookbar('.unospan-Table.unoDeleteTable') : selectOptionClassic('#menu-table', true, 'Delete', 'Delete Table');
 
 		retriggerNewSvgForTableInTheCenter();
 
@@ -292,5 +287,31 @@ describe.skip('Table operations', function() {
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
+	});
+
+	it('Split Cells', function() {
+		//FIXME: https://github.com/CollaboraOnline/online/issues/3964
+		if (mode !== 'notebookbar') {
+			return;
+		}
+
+		impressHelper.selectTableInTheCenter();
+
+		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+			.should('have.length', 3);
+
+		selectOptionNotebookbar('.unospan-Table.unoSplitCell');
+
+		cy.get('.lokdialog_canvas').should('exist');
+
+		helper.waitUntilIdle('.lokdialog_canvas');
+
+		cy.get('.lokdialog_canvas').click();
+
+		//to close the lokdialog
+		helper.typeIntoDocument('{shift}{enter}');
+
+		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+			.should('have.length', 4);
 	});
 });

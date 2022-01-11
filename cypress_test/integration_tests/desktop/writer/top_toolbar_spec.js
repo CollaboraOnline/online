@@ -1,4 +1,4 @@
-/* global describe it cy beforeEach require afterEach Cypress */
+/* global describe it cy beforeEach expect require afterEach Cypress */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -318,7 +318,7 @@ describe('Top toolbar tests.', function() {
 
 	it('Insert hyperlink.', function() {
 		cy.get('#copy-paste-container p')
-			.should('have.text', '\ntext');
+			.should('have.text', '\ntext text1');
 
 		mode === 'notebookbar' ? cy.get('#Insert-tab-label').click() : '';
 
@@ -342,7 +342,7 @@ describe('Top toolbar tests.', function() {
 		writerHelper.selectAllTextOfDoc();
 
 		cy.get('#copy-paste-container p')
-			.should('have.text', '\ntextlink');
+			.should('have.text', '\ntext text1link');
 
 		cy.get('#copy-paste-container p a')
 			.should('have.attr', 'href', 'http://www.something.com/');
@@ -541,5 +541,50 @@ describe('Top toolbar tests.', function() {
 		// Full word should have bold font.
 		cy.get('#copy-paste-container p b')
 			.should('contain', 'text');
+	});
+
+	it('Insert Page Break', function() {
+		cy.get('#StatePageNumber')
+			.should('have.text', 'Page 1 of 1');
+
+		helper.selectAllText();
+
+		helper.expectTextForClipboard('text text1');
+
+		helper.typeIntoDocument('{end}');
+
+		helper.typeIntoDocument('{ctrl}{leftarrow}');
+
+		if (mode === 'notebookbar') {
+			cy.get('#Insert-tab-label').click();
+
+			cy.get('.unospan-Insert.unoInsertPagebreak')
+				.click();
+		} else {
+			cy.get('#menu-insert').click();
+
+			cy.contains('[role=menuitem]', 'Page Break')
+				.click();
+		}
+
+		cy.get('#StatePageNumber')
+			.should('have.text', 'Page 2 of 2');
+
+		helper.selectAllText();
+
+		var data = [];
+		var expectedData = ['\ntext \n', '\ntext1'];
+
+		helper.waitUntilIdle('#copy-paste-container');
+
+		cy.get('#copy-paste-container').find('p').each($el => {
+			cy.wrap($el)
+				.invoke('text')
+				.then(text => {
+					data.push(text);
+				});
+			cy.log(data);
+		}).then(() => expect(data).to.deep.eq(expectedData));
+
 	});
 });

@@ -1,6 +1,6 @@
 /* global cy  require Cypress expect */
 
-const { clickOnIdle, typeIntoDocument } = require('./helper');
+const { clickOnIdle, typeIntoDocument, waitUntilIdle } = require('./helper');
 
 // Make the sidebar visible by clicking on the corresponding toolbar item.
 // We assume that the sidebar is hidden, when this method is called.
@@ -231,43 +231,49 @@ function resetZoomLevel() {
 	shouldHaveZoomLevel('100');
 }
 
-function insertImage() {
+function insertImage(docType) {
 	selectZoomLevel('50');
 
-	cy.get('#menu-insert').click();
+	cy.get('#toolbar-up .w2ui-scroll-right')
+		.click();
 
-	cy.contains('#menu-insertgraphic', 'Local Image...')
-		.should('be.visible');
+	const mode = Cypress.env('USER_INTERFACE');
+	mode === 'notebookbar' ? cy.get('#toolbar-up .w2ui-scroll-right').click() : '';
+
+	if (docType === 'calc' &&  mode === 'notebookbar') {
+		cy.get('#Insert-tab-label').click();
+	}
+
+	actionOnSelector('insertGraphic', (selector) => {
+		cy.get(selector).click();
+	});
 
 	cy.get('#insertgraphic[type=file]')
 		.attachFile('/desktop/writer/image_to_insert.png');
-
-	// hide the menu so it will not cover document area
-	cy.get('#menu-insert > a.has-submenu').then(($submenu) => {
-		if ($submenu.hasClass('highlighted')) {
-			cy.get('#menu-insert').click();
-		}
-	});
-
-	cy.wait(1000);
 
 	cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 		.should('exist');
 }
 
 function deleteImage() {
-	insertImage();
+	typeIntoDocument('{del}');
 
-	cy.get('.leaflet-pane.leaflet-overlay-pane svg g path.leaflet-interactive')
-		.rightclick();
-
-	cy.contains('.context-menu-item','Delete')
-		.click();
-
-	cy.wait(1000);
+	waitUntilIdle('.leaflet-pane.leaflet-overlay-pane');
 
 	cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 		.should('not.exist');
+}
+
+function assertImageSize(expectedWidth, expectedHeight) {
+	cy.get('.leaflet-pane.leaflet-overlay-pane svg svg')
+		.should('exist')
+		.then($ele => {
+			const actualWidth = parseInt($ele.attr('width'));
+			const actualHeight = parseInt($ele.attr('height'));
+
+			expect(actualWidth).to.be.closeTo(expectedWidth, 10);
+			expect(actualHeight).to.be.closeTo(expectedHeight, 10);
+		});
 }
 
 function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) {
@@ -376,3 +382,4 @@ module.exports.insertMultipleComment = insertMultipleComment;
 module.exports.actionOnSelector = actionOnSelector;
 module.exports.assertScrollbarPosition = assertScrollbarPosition;
 module.exports.pressKey = pressKey;
+module.exports.assertImageSize = assertImageSize;

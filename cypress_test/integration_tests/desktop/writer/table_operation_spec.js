@@ -311,4 +311,40 @@ describe('Table operations', function() {
 		cy.get('#copy-paste-container td')
 			.should('have.attr', 'width', '50%');
 	});
+
+	it('Split Cells', function() {
+		helper.typeIntoDocument('{downarrow}');
+
+		helper.typeIntoDocument('{ctrl}{a}');
+
+		helper.waitUntilIdle('#copy-paste-container');
+
+		cy.get('#copy-paste-container colgroup').find('col')
+			.should('have.length', 2);
+
+		cy.get('#copy-paste-container tbody').find('tr')
+			.should('have.length', 3);
+
+		helper.typeIntoDocument('{leftarrow}');
+
+		cy.get('.unospan-split_merge.unoSplitCell')
+			.click();
+
+		cy.get('.lokdialog_canvas').should('exist');
+
+		cy.get('.lokdialog_canvas').click();
+
+		//to close the lokdialog
+		helper.typeIntoDocument('{shift}{enter}');
+
+		helper.typeIntoDocument('{ctrl}{a}');
+
+		helper.waitUntilIdle('#copy-paste-container');
+
+		cy.get('#copy-paste-container colgroup').find('col')
+			.should('have.length', 2);
+
+		cy.get('#copy-paste-container tbody').find('tr')
+			.should('have.length', 4);
+	});
 });

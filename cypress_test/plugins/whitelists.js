@@ -7,6 +7,9 @@ var notebookbarOnlyList = [
 	'desktop/calc/annotation_spec.js',
 	'desktop/impress/annotation_spec.js',
 	'desktop/calc/row_column_operation_spec.js',
+	'desktop/impress/image_operation_spec.js',
+	'desktop/calc/image_operation_spec.js',
+	'desktop/writer/image_operation_spec.js',
 ];
 
 module.exports.notebookbarOnlyList = notebookbarOnlyList;

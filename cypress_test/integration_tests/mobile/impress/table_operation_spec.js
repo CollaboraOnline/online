@@ -209,6 +209,80 @@ describe('Table Operation', function() {
 		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
 			.should('have.attr', 'y', '5644');
 	});
-	//TODO: add delete table, merge row/column tests
-	//bug: no option in hamburger table menu to select table, specific row or specific column
+
+	it('Merge Row', function() {
+		selectFullTable();
+
+		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+			.should('have.length', 3);
+
+		clickOnTableOperation('entirerow');
+
+		helper.waitUntilIdle('.leaflet-control-buttons-disabled svg');
+
+		clickOnTableOperation('mergecells');
+
+		retriggerNewSvgForTableInTheCenter();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+			.should('have.class', 'com.sun.star.drawing.TableShape');
+
+		//assert the number of cells
+		cy.get('g.Page path[fill^="rgb"]')
+			.should(function(cells) {
+				expect(cells).to.have.lengthOf(5);
+			});
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+			.should('have.attr', 'x', '7290');
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+			.should('have.attr', 'y', '5644');
+	});
+
+	it('Merge Column', function() {
+		selectFullTable();
+
+		cy.get('.leaflet-marker-icon.table-row-resize-marker')
+			.should('have.length', 3);
+
+		clickOnTableOperation('entirecolumn');
+
+		helper.waitUntilIdle('.leaflet-control-buttons-disabled svg');
+
+		clickOnTableOperation('mergecells');
+
+		retriggerNewSvgForTableInTheCenter();
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+			.should('have.class', 'com.sun.star.drawing.TableShape');
+
+		//assert the number of cells
+		cy.get('g.Page path[fill^="rgb"]')
+			.should(function(cells) {
+				expect(cells).to.have.lengthOf(4);
+			});
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+			.should('have.attr', 'x', '7290');
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page .TextParagraph .TextPosition')
+			.should('have.attr', 'y', '5644');
+	});
+
+	it('Delete Table', function() {
+		selectFullTable();
+
+		clickOnTableOperation('deletetable');
+
+		retriggerNewSvgForTableInTheCenter();
+
+		cy.get('.leaflet-marker-icon.table-column-resize-marker')
+			.should('not.exist');
+
+		cy.get('.leaflet-pane.leaflet-overlay-pane g.Page g')
+			.should('not.exist');
+	});
+	//TODO: add split cells tests
+	//bug: https://github.com/CollaboraOnline/online/issues/3962
 });
