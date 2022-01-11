@@ -127,6 +127,7 @@ function closeHamburgerMenu() {
 function openMobileWizard() {
 	cy.log('Opening mobile wizard - start.');
 
+	helper.waitUntilIdle('#tb_actionbar_item_mobile_wizard');
 	// Open mobile wizard
 	cy.get('#tb_actionbar_item_mobile_wizard')
 		.should('not.have.class', 'disabled')
