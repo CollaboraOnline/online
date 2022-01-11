@@ -334,7 +334,7 @@ function loadTestDoc(fileName, subFolder, noFileCopy, isMultiUser, subsequentLoa
 	if (Cypress.env('INTEGRATION') === 'nextcloud') {
 		loadTestDocNextcloud(fileName, subFolder, subsequentLoad);
 	} else {
-		destFileName = loadTestDocNoIntegration(fileName, subFolder, noFileCopy, noRename);
+		destFileName = loadTestDocNoIntegration(fileName, subFolder, noFileCopy, isMultiUser, noRename);
 	}
 
 	// When dialog appears before document load (eg. macro warning, csv import options)
