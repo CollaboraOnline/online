@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0100\n"
 "PO-Revision-Date: 2022-01-12 20:55+0000\n"
-"Last-Translator: Abdelmaksoud Zakaria <abdo.zeko17@gmail.com>\n"
+"Last-Translator: Abdelsattar Tantawy <abdelsatar1997@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
 "Language: ar\n"
@@ -1406,7 +1406,7 @@ msgstr "تم تحميل المستند."
 
 #: src/control/Signing.js:491
 msgid "Select identity:"
-msgstr "تحديد الهوية:"
+msgstr "اختر الهوية:"
 
 #: src/control/Signing.js:492
 msgid "Login from mobile"
@@ -1418,7 +1418,7 @@ msgstr "استرداد من البريد الإلكتروني"
 
 #: src/control/Signing.js:601
 msgid "Select passport"
-msgstr "اختيار جواز السفر"
+msgstr "اختر جواز السفر"
 
 #: src/control/Signing.js:602
 msgid "Passport: N/A"
@@ -1482,7 +1482,7 @@ msgstr "التوقيع جيد، ولكن المستند موقع جزئيا فق
 
 #: src/control/Signing.js:645
 msgid "Signed but not all files are signed"
-msgstr "موقعة ولكن لم يتم توقيع جميع الملفات"
+msgstr "موقع ولكن لم يتم توقيع جميع الملفات"
 
 #: src/control/Signing.js:648
 msgid ""
@@ -1493,7 +1493,7 @@ msgstr ""
 
 #: src/control/Signing.js:650
 msgid "Signed but not validated and not all files are signed"
-msgstr "موقعة ولكن لم يتم التحقق من صحتها وليس كل الملفات موقعة"
+msgstr "موقع ولكن لم يتم التحقق من صحته وليست جميع الملفات موقعة"
 
 #: src/control/Toolbar.js:45
 msgid "Font"
@@ -1618,19 +1618,19 @@ msgstr "رابط"
 
 #: src/core/Socket.js:56
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "آخ، حدثت مشكلة في  الاتصال بـ%productName: "
+msgstr "آخ، حدثت مشكلة في الاتصال بـ%productName: "
 
 #: src/core/Socket.js:513
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "يمكن الوصول إلى الخادم الآن. علينا الآن تحديث الصفحة."
+msgstr "يمكننا الوصول إلى الخادم الآن. علينا الآن تحديث الصفحة."
 
 #: src/core/Socket.js:515
 msgid "Server is now reachable..."
-msgstr "يمكن الآن الوصول إلى الخادم ..."
+msgstr "يمكننا الآن الوصول إلى الخادم ..."
 
 #: src/core/Socket.js:519
 msgid "RELOAD"
-msgstr "إعادة تحميل"
+msgstr "إعادة التحميل"
 
 #: src/core/Socket.js:526
 msgid "COOLWSD version:"
@@ -1642,7 +1642,7 @@ msgstr "قدم بواسطة:"
 
 #: src/core/Socket.js:544
 msgid "Unsupported server version."
-msgstr "إصدارة الخادوم غير مدعومة."
+msgstr "إصدار الخادم غير مدعوم."
 
 #: src/core/Socket.js:548
 msgid "LOKit version:"
@@ -1770,14 +1770,14 @@ msgstr "تم قطع اتصال الخادم."
 msgid ""
 "No disk space left on server, please contact the server administrator to "
 "continue."
-msgstr "لم تبق مساحة في قرص الخادوم، رجاءً تواصل مع مدير الخادوم للمتابعة."
+msgstr "لم تبق مساحة في قرص الخادم، رجاءً تواصل مع مدير الخادم للمتابعة."
 
 #: src/errormessages.js:14
 msgid ""
 "The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
-"رابط المضيف فارغ. أغلب الظن أن خادوم coolwsd لم يُضبط كما ينبغي، رجاءً تواصل "
+"رابط المضيف فارغ. أغلب الظن أن خادم coolwsd لم يُضبط كما ينبغي، رجاءً تواصل "
 "مع الإدارة."
 
 #: src/errormessages.js:15
@@ -1873,7 +1873,7 @@ msgid ""
 "We are in the process of cleaning up this document from the last session, "
 "please try again later."
 msgstr ""
-"نحن بصدد تنظيف هذه الوثيقة من جلسة العمل السابقة، يرجى المحاولة مرة أخرى في "
+"نحن بصدد تنظيف هذا المستند من جلسة العمل الأخيرة، يرجى المحاولة مرة أخرى في "
 "وقت لاحق."
 
 #: src/errormessages.js:32
