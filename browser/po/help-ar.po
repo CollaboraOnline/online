@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0200\n"
 "PO-Revision-Date: 2022-01-11 23:11+0000\n"
-"Last-Translator: Abdelsattar Tantawy <abdelsatar1997@gmail.com>\n"
+"Last-Translator: Abdelmaksoud Zakaria <abdo.zeko17@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "help/ar/>\n"
 "Language: ar\n"
@@ -1545,6 +1545,10 @@ msgid ""
 "directly in your browser, in a simple and straight-forward way. You can work "
 "alone on a document, or collaboratively as part of a team."
 msgstr ""
+"<span class=\"productname\">٪productName</span> يسمح لك بإنشاء وتحرير "
+"مستندات أوفيس النصية وجداول البيانات والعروض التقديمية مباشرة في المتصفح "
+"الخاص بك، بطريقة بسيطة ومباشرة. يمكنك العمل بمفردك على مستند، أو بشكل تعاوني "
+"كجزء من فريق."
 
 #: html/cool-help.html%2Bdiv.ul.li.p:335-11
 msgid ""
@@ -1552,18 +1556,24 @@ msgid ""
 "the assigned color. Note: you will see your cursor as black, blinking "
 "cursor, although others will see you with a different color."
 msgstr ""
+"يتم تعيين لون لكل مستخدم. سيظهر مؤشر كل مستخدم باللون المخصص. ملحوظة: سترى "
+"المؤشر باللون الأسود الوامض ، على الرغم من أن الآخرين سيرونك بلون مختلف."
 
 #: html/cool-help.html%2Bdiv.ul.li.p:336-11
 msgid ""
 "You can jump to the cursor of a user by clicking on the name (or avatar) of "
 "the user. It is possible to follow the editor."
 msgstr ""
+"يمكنك الانتقال إلى المؤشر من مستخدم عن طريق النقر على الاسم (أو الصورة "
+"الرمزية) للمستخدم. من الممكن متابعة المحرر."
 
 #: html/cool-help.html%2Bdiv.ul.li.p:337-11
 msgid ""
 "<span class=\"productname\">%productName</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
+"يُعلمك <span class=\"productname\">٪ productName </span> بإخطار صغير في "
+"تذييل عندما يدخل مستخدم جديد أو عندما يغادر المستخدم."
 
 #: html/cool-help.html%2Bdiv.p:341-5
 msgid ""
@@ -1572,12 +1582,18 @@ msgid ""
 "including small screens found in mobile devices. The interface is composed "
 "of:"
 msgstr ""
+"يستخدم <span class=\"productname\">٪productName</span>  موارد المتصفح "
+"الحديثة لتكييف واجهة المستخدم مع حجم منطقة العرض، بما في ذلك الشاشات الصغيرة "
+"الموجودة في الأجهزة المحمولة. تتكون الواجهة من:"
 
 #: html/cool-help.html%2Bdiv.p:342-5
+#, fuzzy
 msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
 msgstr ""
+"<span class=\"def\"> منطقة المستند:</span> تعرض منطقة التطبيق محتويات "
+"المستند، إما جداول البيانات أو العروض التقديمية أو المستندات النصية."
 
 #: html/cool-help.html%2Bdiv.p.img:343-5
 msgid ""
@@ -1594,6 +1610,8 @@ msgid ""
 "<span class=\"def\">Context menus:</span> On clicking with the right mouse "
 "button, a menu appears with commands associated with the underlying object."
 msgstr ""
+"<span class=\"def\"> قوائم السياق:</span> عند النقر بزر الفأرة الأيمن، تظهر "
+"قائمة مع الأوامر المقترنة بالكائن الأساسي."
 
 #: html/cool-help.html%2Bdiv.p:345-5
 msgid ""
@@ -1601,12 +1619,17 @@ msgid ""
 "options for daily editing. Toolbar buttons are dynamic, meaning that their "
 "state (on or off) depends on different factors."
 msgstr ""
+"<span class=\"def\"> شريط الأدوات:</span> يحتوي شريط الأدوات على الخيارات "
+"الأكثر استخداما للتحرير اليومي. أزرار شريط الأدوات ديناميكية، بمعنى أن "
+"حالتها من (التشغيل أو الإيقاف) تعتمد على عوامل مختلفة."
 
 #: html/cool-help.html%2Bdiv.p:346-5
 msgid ""
 "<span class=\"def\">The status bar:</span> The status bar is shown in the "
 "bottom, and contains several useful options and features."
 msgstr ""
+"<span class=\"def\"> شريط الحالة :</span> يظهر شريط الحالة في الأسفل، ويحتوي "
+"على العديد من الخيارات والميزات المفيدة."
 
 #: html/cool-help.html%2Bdiv.p:348-5
 msgid ""
@@ -1615,18 +1638,22 @@ msgid ""
 "automatically moves to the first occurrence found. Searching is not case-"
 "sensitive. There are three buttons right next to the search box:"
 msgstr ""
+"<span class=\"def\"> شريط البحث:</span> يبدأ البحث تلقائيا عند إدراج المحتوى "
+"في مربع البحث، وتنتقل نافذة المستند تلقائيا إلى أول ظهور يتم العثور عليه. "
+"البحث ليس حساسا لحالة الأحرف. هناك ثلاثة أزرار بجوار مربع البحث:"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:350-11
 msgid "Search backwards"
-msgstr ""
+msgstr "البحث العكسي"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:351-11
 msgid "Search forward"
-msgstr ""
+msgstr "البحث للأمام"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:352-11
+#, fuzzy
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr ""
+msgstr "إلغاء البحث (يظهر فقط عند البحث عن نص)"
 
 #: html/cool-help.html%2Bdiv.p:354-5
 msgid ""
@@ -1635,6 +1662,10 @@ msgid ""
 "in. The zoom applies to the document area, the user interface is not "
 "affected. The current level of zoom is shown in this area."
 msgstr ""
+"<span class=\"def\"> شريط التكبير:</span> على يمين شريط المعلومات، هناك "
+"مجموعة من الأزرار التي تسمح لك بالتكبير إلى 100٪، والتصغير والتكبير. يتم "
+"تطبيق التكبير على منطقة المستند، ولا تتأثر واجهة المستخدم. يظهر المستوى "
+"الحالي للتكبير/التصغير في هذه المنطقة."
 
 #: html/cool-help.html%2Bdiv.p:355-5
 msgid ""
@@ -1644,20 +1675,25 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.p:356-5
 msgid "Using the browser zoom affects the document and user interface areas."
-msgstr ""
+msgstr "يؤثر استخدام تكبير المتصفح على مناطق المستندات وواجهة المستخدم."
 
 #: html/cool-help.html%2Bdiv.p:357-5
+#, fuzzy
 msgid ""
 "<span class=\"def\">The information bar:</span> At the right of the search "
 "bar, a set of information on the document is displayed. The actual "
 "information depends on the nature of the document."
 msgstr ""
+"<span class=\"def\"> شريط المعلومات:</span> على يمين شريط البحث، يتم عرض "
+"مجموعة من المعلومات على المستند. تعتمد المعلومات الفعلية على طبيعة المستند."
 
 #: html/cool-help.html%2Bdiv.p:361-5
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
 "integrated with <span class=\"productname\">%productName</span>."
 msgstr ""
+"يتم تخزين مستنداتك وإدارتها في التخزين السحابي المدمج مع <span class="
+"\"productname\">٪productName </span>."
 
 #: html/cool-help.html%2Bdiv.p:362-5
 msgid ""
