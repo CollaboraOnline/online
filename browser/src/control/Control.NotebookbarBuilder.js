@@ -920,6 +920,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(menuHtml[0]).children('a').html('<img class="ui-content unobutton" src="' + L.LOUtil.getImageURL('lc_hamburger.svg') + '" id="Hamburgerimg" alt="Menu">');
 		$(menuHtml[0]).children('a').click(function () {
 			$(control.container).smartmenus('menuHideAll');
+			$('.main-nav.hasnotebookbar').css('overflow', 'visible');
 		});
 
 		$(control.container).bind('beforeshow.smapi', {self: menubar}, menubar._beforeShow);
@@ -928,6 +929,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).bind('mouseenter.smapi', {self: menubar}, menubar._onMouseEnter);
 		$(control.container).bind('mouseleave.smapi', {self: menubar}, menubar._onMouseLeave);
 		$(control.container).bind('keydown', {self: menubar}, menubar._onKeyDown);
+		$(control.container).bind('hideAll.smapi', {self: menubar}, menubar._onMouseOut);
 
 		// initialize languages list
 		builder.map.on('commandvalues', menubar._onInitLanguagesMenu, menubar);
