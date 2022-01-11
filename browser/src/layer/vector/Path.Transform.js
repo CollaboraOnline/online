@@ -1042,8 +1042,9 @@ L.Handler.PathTransform = L.Handler.extend({
 	 * @return {L.Point}
 	 */
 	_getEventLayerPoint: function (evt) {
-		if (!this.isCalcRTL())
+		if (!this.isCalcRTL()) {
 			return evt.layerPoint;
+		}
 
 		var evtLatLng = this._map.negateLatLng(evt.latlng);
 		return this._map.latLngToLayerPoint(evtLatLng);
@@ -1054,8 +1055,9 @@ L.Handler.PathTransform = L.Handler.extend({
 	 * @return {L.LatLng}
 	 */
 	_getEventLatLng: function (evt) {
-		if (!this.isCalcRTL())
+		if (!this.isCalcRTL()) {
 			return evt.latlng;
+		}
 
 		return this._map.negateLatLng(evt.latlng);
 	},

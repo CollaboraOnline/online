@@ -141,8 +141,9 @@ class TilesSection {
 
 	private afterDraw(canvasCtx: CanvasRenderingContext2D): void {
 		const mirrorTile: boolean = this.isCalcRTL();
-		if (mirrorTile)
+		if (mirrorTile) {
 			canvasCtx.restore();
+		}
 	}
 
 	drawTileInPane (tile: any, tileBounds: any, paneBounds: any, paneOffset: any, canvasCtx: CanvasRenderingContext2D, clearBackground: boolean) {

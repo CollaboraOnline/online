@@ -3700,8 +3700,9 @@ L.CanvasTileLayer = L.Layer.extend({
 				}
 
 				// restore the sign(negative) of x coordinate.
-				if (calcRTL)
+				if (calcRTL) {
 					newPos.x = -newPos.x;
+				}
 
 				param = {
 					TransformPosX: {

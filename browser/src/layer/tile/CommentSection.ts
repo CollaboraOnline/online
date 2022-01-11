@@ -383,8 +383,9 @@ class Comment {
 			const sizeX = this.sectionProperties.data.cellPos[2];
 			this.size = [Math.round(sizeX * ratio), Math.round(this.sectionProperties.data.cellPos[3] * ratio)];
 			let startX = this.sectionProperties.data.cellPos[0];
-			if (this.isCalcRTL()) // Mirroring is done in setPosition
+			if (this.isCalcRTL()) { // Mirroring is done in setPosition
 				startX += sizeX;  // but adjust for width of the cell.
+			}
 			this.setPosition(Math.round(this.sectionProperties.data.cellPos[0] * ratio), Math.round(this.sectionProperties.data.cellPos[1] * ratio));
 		}
 		else if (this.sectionProperties.docLayer._docType === 'presentation' || this.sectionProperties.docLayer._docType === 'drawing') {
