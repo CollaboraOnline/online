@@ -3,10 +3,11 @@
 var helper = require('../../common/helper');
 
 describe('Change paragraph properties', function() {
-	var testFileName = 'paragraph_prop.odt';
+	var origTestFileName = 'paragraph_prop.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer', undefined, true);
+		testFileName = helper.beforeAll(origTestFileName, 'writer', undefined, true);
 	});
 
 	afterEach(function() {

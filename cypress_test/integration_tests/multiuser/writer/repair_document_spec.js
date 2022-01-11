@@ -3,10 +3,11 @@
 var helper = require('../../common/helper');
 
 describe('Repair Document', function() {
-	var testFileName = 'repair_doc.odt';
+	var origTestFileName = 'repair_doc.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer', undefined, true);
+		testFileName = helper.beforeAll(origTestFileName, 'writer', undefined, true);
 	});
 
 	afterEach(function() {
