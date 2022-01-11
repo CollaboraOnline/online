@@ -61,13 +61,6 @@ describe('Top toolbar tests.', function() {
 
 
 	it('Apply font name.', function() {
-		//for notebookbar the tab button overlap on change font button so cypress fails
-		//below condition skips the test for notebookbar
-		//remove below condition after https://github.com/CollaboraOnline/online/issues/3935
-		//get solved
-		if (mode === 'notebookbar') {
-			return;
-		}
 		desktopHelper.actionOnSelector('fontName', (selector) => { cy.get(selector).click(); });
 
 		desktopHelper.selectFromListbox('Alef');
