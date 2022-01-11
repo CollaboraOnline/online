@@ -1,7 +1,8 @@
+#include <cassert>
 #include <iostream>
 #include <memory>
-#include <sstream>
 #include <string>
+#include <vector>
 
 #include <Poco/Util/XMLConfiguration.h>
 #include <Poco/Util/AbstractConfiguration.h>
@@ -10,7 +11,9 @@
 using Poco::Util::XMLConfiguration;
 using Poco::Util::AbstractConfiguration;
 
-static const std::set<std::string> multiElems {".net.post_allow.host", ".storage.wopi.host", ".logging.file.property", ".ssl.hpkp.pins"};
+static const std::string NET_POST_ALLOW_HOST = ".net.post_allow.host";
+static const std::string STORAGE_WOPI_HOST = ".storage.wopi.host";
+static const std::set<std::string> multiElems {NET_POST_ALLOW_HOST, STORAGE_WOPI_HOST, ".logging.file.property", ".ssl.hpkp.pins"};
 static const std::map<std::string, std::string> renamedElems { {"loleaflet_logging", "browser_logging"} };
 static const std::map<std::string, std::string> specialDefault {
                     {".ssl.cert_file_path", "/etc/loolwsd/cert.pem"},
@@ -21,6 +24,7 @@ static const std::map<std::string, std::string> specialDefault {
 static const std::map<std::string, std::string> specialAttribute {
                     {".logging.file", "enable"},
                     {".trace_event", "enable"},
+                    {".trace", "enable"},
                     {".trace.path","compress"},
                     {".trace.path","snapshot"},
                     {".net.post_allow","allow"},
@@ -30,15 +34,17 @@ static const std::map<std::string, std::string> specialAttribute {
                     {".ssl.hpkp.report_uri","enable"} };
 //                    {".storage.filesystem","allow"}, // don't migrate this
 //                    {".storage.wopi","allow"}, // and this
+static std::vector<std::string> netPostAllow, netPostAllowDesc, wopiHost, wopiHostDesc, wopiHostAllow;
+static bool netPostAllowAdded, wopiHostAdded;
 
-void MigrateLevel(const XMLConfiguration &sourceConfig, XMLConfiguration &targetConfig, bool write, const std::string sourceLevel)
+void MigrateLevel(const XMLConfiguration &sourceConfig, XMLConfiguration &targetConfig, const std::string sourceLevel)
 {
     Poco::Util::AbstractConfiguration::Keys subKeys;
     sourceConfig.keys(sourceLevel, subKeys);
     for (auto key: subKeys)
     {
         const std::string fullKey = sourceLevel + "." + key;
-        MigrateLevel(sourceConfig, targetConfig, write, fullKey);
+        MigrateLevel(sourceConfig, targetConfig, fullKey);
     }
     if (subKeys.empty())
     {
@@ -61,7 +67,7 @@ void MigrateLevel(const XMLConfiguration &sourceConfig, XMLConfiguration &target
                     targetConfig.setString(targetKey, sourceElement);
                 }
             }
-            else if (commonKeyPart == ".net.post_allow.host" || commonKeyPart == ".storage.wopi.host")
+            else if (commonKeyPart == NET_POST_ALLOW_HOST || commonKeyPart == STORAGE_WOPI_HOST)
             {
                 bool foundKey = false;
                 int id = 0;
@@ -80,19 +86,25 @@ void MigrateLevel(const XMLConfiguration &sourceConfig, XMLConfiguration &target
                 }
                 if (!foundKey)
                 {
-                    const std::string targetKeyRoot(commonKeyPart + "[" + std::to_string(id) + "]");
-                    std::cout << targetKeyRoot << ": added \"" << sourceElement << "\"." << std::endl;
-
-                    targetConfig.setString(targetKeyRoot, sourceElement);
-                    targetConfig.setString(targetKeyRoot + "[@desc]", sourceConfig.getString(sourceLevel + "[@desc]"));
-                    // for WOPI host, copy "allow" attribute as well
-                    if (commonKeyPart == ".storage.wopi.host")
-                    {
-                        targetConfig.setString(targetKeyRoot + "[@allow]", sourceConfig.getString(sourceLevel + "[@allow]"));
-                    }
+                    if (commonKeyPart == NET_POST_ALLOW_HOST)
+                        netPostAllowAdded = true;
+                    else if (commonKeyPart == STORAGE_WOPI_HOST)
+                        wopiHostAdded = true;
+                }
+                // Keep record of these configs for post processing
+                if (commonKeyPart == NET_POST_ALLOW_HOST)
+                {
+                    netPostAllow.push_back(sourceElement);
+                    netPostAllowDesc.push_back(sourceConfig.getString(sourceLevel + "[@desc]"));
+                }
+                else if (commonKeyPart == STORAGE_WOPI_HOST)
+                {
+                    wopiHost.push_back(sourceElement);
+                    wopiHostDesc.push_back(sourceConfig.getString(sourceLevel + "[@desc]"));
+                    wopiHostAllow.push_back(sourceConfig.getString(sourceLevel + "[@allow]"));
                 }
             }
-            // generic handling of lists that are shipped empty
+            // Generic handling of lists that are shipped empty
             else if (commonKeyPart == ".ssl.hpkp.pins.pin" || commonKeyPart == ".monitors.monitor")
             {
                 // Shipped empty, no need to check for existing, append new ones
@@ -128,13 +140,10 @@ void MigrateLevel(const XMLConfiguration &sourceConfig, XMLConfiguration &target
         // Special default and normal default cases
         if (!moveOn && specialDefault.find(sourceLevel) != specialDefault.end())
         {
-            if (sourceElement != specialDefault.at(sourceLevel))
+            if (sourceElement == specialDefault.at(sourceLevel))
             {
-                std::cout << targetKey << ": replaced \"" << targetConfig.getString(targetKey) << "\" with \"" << sourceElement << "\"." << std::endl;
-
-                targetConfig.setString(targetKey, sourceElement);
+                moveOn = true;
             }
-            moveOn = true;
         }
         else if (!moveOn)
         {
@@ -183,10 +192,64 @@ void MigrateLevel(const XMLConfiguration &sourceConfig, XMLConfiguration &target
     }
 }
 
+void PreProcess()
+{
+    netPostAllow.clear();
+    netPostAllowDesc.clear();
+    wopiHost.clear();
+    wopiHostDesc.clear();
+    wopiHostAllow.clear();
+    netPostAllowAdded = false;
+    wopiHostAdded = false;
+}
+
+void PostProcess(XMLConfiguration &targetConfig)
+{
+    assert(netPostAllow.size() == netPostAllowDesc.size());
+    assert(wopiHost.size() == wopiHostDesc.size());
+    assert(wopiHost.size() == wopiHostAllow.size());
+    if (netPostAllowAdded)
+    {
+        // Clear entries in new config first, then replace with migrated entries
+        while (targetConfig.has(NET_POST_ALLOW_HOST))
+        {
+            targetConfig.remove(NET_POST_ALLOW_HOST);
+        }
+        for (size_t i(0); i < netPostAllow.size(); ++i)
+        {
+            const std::string targetKeyRoot(NET_POST_ALLOW_HOST + "[" + std::to_string(i) + "]");
+            std::cout << targetKeyRoot << ": added \"" << netPostAllow[i] << "\"." << std::endl;
+
+            targetConfig.setString(targetKeyRoot, netPostAllow[i]);
+            targetConfig.setString(targetKeyRoot + "[@desc]", netPostAllowDesc[i]);
+        }
+    }
+    if (wopiHostAdded)
+    {
+        // Clear entries in new config first, then replace with migrated entries
+        while (targetConfig.has(STORAGE_WOPI_HOST))
+        {
+            targetConfig.remove(STORAGE_WOPI_HOST);
+        }
+        for (size_t i(0); i < wopiHost.size(); ++i)
+        {
+            const std::string targetKeyRoot(STORAGE_WOPI_HOST + "[" + std::to_string(i) + "]");
+            std::cout << targetKeyRoot << ": added \"" << wopiHost[i] << "\" (allow: " <<
+                         wopiHostAllow[i] << ")." << std::endl;
+
+            targetConfig.setString(targetKeyRoot, wopiHost[i]);
+            targetConfig.setString(targetKeyRoot + "[@desc]", wopiHostDesc[i]);
+            targetConfig.setString(targetKeyRoot + "[@allow]", wopiHostAllow[i]);
+        }
+    }
+}
+
 int MigrateConfig(std::string oldConfigFile, std::string newConfigFile, bool write) {
+    PreProcess();
     Poco::AutoPtr<XMLConfiguration> oldXMLConfig(new XMLConfiguration(oldConfigFile));
     Poco::AutoPtr<XMLConfiguration> newXMLConfig(new XMLConfiguration(newConfigFile));
-    MigrateLevel(*oldXMLConfig, *newXMLConfig, write, "");
+    MigrateLevel(*oldXMLConfig, *newXMLConfig, "");
+    PostProcess(*newXMLConfig);
     if (write)
         newXMLConfig->save(newConfigFile);
     return 0;
