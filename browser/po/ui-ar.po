@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0100\n"
 "PO-Revision-Date: 2022-01-11 19:57+0000\n"
-"Last-Translator: Abdelsattar Tantawy <abdelsatar1997@gmail.com>\n"
+"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
 "Language: ar\n"
@@ -1603,7 +1603,7 @@ msgstr "نحن آسفون، المعلومات حول آخر التحديثات 
 
 #: src/control/Toolbar.js:721
 msgid "This version of %productName is powered by"
-msgstr "هذا الإصدار من ٪productName مدعوم من قبل"
+msgstr "هذا الإصدار من %productName مدعوم من قبل"
 
 #: src/control/Toolbar.js:731
 msgid "\"Slow Proxy\""
@@ -1619,7 +1619,7 @@ msgstr "رابط"
 
 #: src/core/Socket.js:56
 msgid "Oops, there is a problem connecting to %productName: "
-msgstr "آخ، حدثت مشكلة في  الاتصال بـ٪ productName: "
+msgstr "آخ، حدثت مشكلة في  الاتصال بـ%productName: "
 
 #: src/core/Socket.js:513
 msgid "Server is now reachable. We have to refresh the page now."
@@ -2005,9 +2005,8 @@ msgid "Warning! The browser you are using is not supported."
 msgstr "تحذير! المتصفح الذي تستخدمه غير مدعوم."
 
 #: src/map/Clipboard.js:120
-#, fuzzy
 msgid "To paste outside %productName, please first click the 'download' button"
-msgstr "للصق خارج ٪productName، يرجى النقر أولا على زر \"تنزيل\""
+msgstr "للصق خارج %productName، يرجى النقر أولا على زر \"تنزيل\""
 
 #: src/map/Clipboard.js:130
 msgid "Copying from the document disabled"
@@ -2050,7 +2049,7 @@ msgstr ""
 "<p> إذا كنت ترغب في مشاركة عناصر أكبر من مستندك مع تطبيقات أخرى، فمن الضروري "
 "تنزيلها أولا على جهازك. للقيام بذلك اضغط على زر \"ابدأ التنزيل\" أدناه، وعند "
 "الاكتمال انقر فوق \"تأكيد نسخة إلى الحافظة\". </p> <p> إذا كنت تقوم بالنسخ "
-"واللصق بين المستندات داخل ٪productName، فلا حاجة لتنزيلها. </p>"
+"واللصق بين المستندات داخل %productName، فلا حاجة لتنزيلها. </p>"
 
 #: src/map/Clipboard.js:882
 msgid ""
