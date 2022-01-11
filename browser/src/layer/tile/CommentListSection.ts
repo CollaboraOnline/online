@@ -248,6 +248,9 @@ class CommentSection {
 	}
 
 	public shouldCollapse () {
+		if (!this.containerObject.getDocumentAnchorSection())
+			return false;
+
 		var commentWidth = 300;
 		var availableSpace = this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0];
 		return availableSpace < commentWidth * 2;
@@ -1395,8 +1398,10 @@ class CommentSection {
 		for (var i = 0; i < subList.length; i++) {
 			lastY = subList[i].sectionProperties.data.anchorPix[1] > lastY ? subList[i].sectionProperties.data.anchorPix[1]: lastY;
 
+			var isRTL = document.documentElement.dir === 'rtl';
+
 			if (selectedComment && !this.sectionProperties.selectedComment.isCollapsed)
-				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - 60, y: Math.round(lastY / app.dpiScale)});
+				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale) - 60 * (isRTL ? -1 : 1), y: Math.round(lastY / app.dpiScale)});
 			else
 				(new L.PosAnimation()).run(subList[i].sectionProperties.container, {x: Math.round(actualPosition[0] / app.dpiScale), y: Math.round(lastY / app.dpiScale)});
 
@@ -1497,15 +1502,22 @@ class CommentSection {
 
 			this.updateScaling();
 
+			var isRTL = document.documentElement.dir === 'rtl';
+
 			var topRight: Array<number> = [this.myTopLeft[0], this.myTopLeft[1] + this.sectionProperties.marginY - this.documentTopLeft[1]];
 			var yOrigin = null;
 			var selectedIndex = null;
-			var x = topRight[0];
+			var x = isRTL ? 0 : topRight[0];
 			var commentWidth = this.isCollapsed ? 70 : 300;
 			var availableSpace = this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0];
 
-			if (availableSpace > commentWidth)
-				x = topRight[0] - Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0]) * 0.5);
+			if (availableSpace > commentWidth) {
+				if (isRTL)
+					x = Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0]) * 0.5) - this.containerObject.getDocumentAnchorSection().size[0];
+				else
+					x = topRight[0] - Math.round((this.containerObject.getDocumentAnchorSection().size[0] - app.file.size.pixels[0]) * 0.5);
+			} else if (isRTL)
+				x = -this.containerObject.getDocumentAnchorSection().size[0];
 			else
 				x -= commentWidth;
 
@@ -1516,8 +1528,10 @@ class CommentSection {
 				yOrigin = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix[1] - this.documentTopLeft[1];
 				var tempCrd: Array<number> = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.anchorPix;
 				var resolved:string = this.sectionProperties.commentList[selectedIndex].sectionProperties.data.resolved;
-				if (!resolved || resolved === 'false' || this.sectionProperties.showResolved)
-					this.showArrow([tempCrd[0], tempCrd[1]], [x, tempCrd[1]]);
+				if (!resolved || resolved === 'false' || this.sectionProperties.showResolved) {
+					var posX = isRTL ? (this.containerObject.getDocumentAnchorSection().size[0] + x + 15) : x;
+					this.showArrow([tempCrd[0], tempCrd[1]], [posX, tempCrd[1]]);
+				}
 			}
 			else {
 				this.hideArrow();

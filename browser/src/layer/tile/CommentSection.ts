@@ -193,7 +193,8 @@ class Comment {
 	}
 
 	private createContainerAndWrapper () {
-		this.sectionProperties.container = L.DomUtil.create('div', 'cool-annotation');
+		var isRTL = document.documentElement.dir === 'rtl';
+		this.sectionProperties.container = L.DomUtil.create('div', 'cool-annotation' + (isRTL ? ' rtl' : ''));
 		this.sectionProperties.container.id = 'comment-container-' + this.sectionProperties.data.id;
 
 		var mobileClass = (<any>window).mode.isMobile() ? ' wizard-comment-box': '';
