@@ -1544,17 +1544,22 @@ class CanvasSectionContainer {
 						return 0;
 					}
 					else {
-						if (targetEdge === 'top') // eslint-disable-line no-lonely-if
+						if (targetEdge === 'top') { // eslint-disable-line no-lonely-if
 							return targetSection.myTopLeft[1] - app.roundedDpiScale;
-						else if (targetEdge === 'bottom')
+						}
+						else if (targetEdge === 'bottom') {
 							return targetSection.myTopLeft[1] + targetSection.size[1] + app.roundedDpiScale;
-						else if (targetEdge === 'left')
+						}
+						else if (targetEdge === 'left') {
 							return targetSection.myTopLeft[0] - app.roundedDpiScale;
-						else if (targetEdge === 'right')
+						}
+						else if (targetEdge === 'right') {
 							return targetSection.myTopLeft[0] + targetSection.size[0] + app.roundedDpiScale;
+						}
 						else if (targetEdge === '-left') {
-							if (section.expand[0] === 'left' && section.origSizeHint)
+							if (section.expand[0] === 'left' && section.origSizeHint) {
 								section.size[0] = section.origSizeHint[0];
+							}
 							return targetSection.myTopLeft[0] - section.size[0];
 						}
 					}
@@ -1562,10 +1567,12 @@ class CanvasSectionContainer {
 				else {
 					// No target section is found. Use fallback.
 					var anchor: string = section.anchor[index][count - 1];
-					if (index === 0)
+					if (index === 0) {
 						return anchor === 'top' ? section.position[1]: (this.bottom - (section.position[1] + section.size[1]));
-					else
+					}
+					else {
 						return anchor === 'left' ? section.position[0]: (this.right - (section.position[0] + section.size[0]));
+					}
 				}
 			}
 		}
@@ -1880,16 +1887,19 @@ class CanvasSectionContainer {
 
 		section.getTestDiv = function (): HTMLDivElement {
 			var element: HTMLDivElement = <HTMLDivElement>document.getElementById('test-div-' + this.name);
-			if (element)
+			if (element) {
 				return element;
-			else
+			}
+			else {
 				return null;
+			}
 		};
 
 		section.isCalcRTL = function (): boolean {
 			const docLayer = section.sectionProperties.docLayer;
-			if (docLayer && docLayer.isCalc() && docLayer.isLayoutRTL())
+			if (docLayer && docLayer.isCalc() && docLayer.isLayoutRTL()) {
 				return true;
+			}
 
 			return false;
 		};
