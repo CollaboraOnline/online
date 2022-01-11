@@ -36,6 +36,7 @@ class Comment {
 	setPosition: Function; // Implemented by section container. Document objects only.
 	map: any;
 	pendingInit: boolean = true;
+	valid: boolean = true;
 
 	constructor (data: any, options: any, commentListSectionPointer: any) {
 		this.map = L.Map.THIS;
