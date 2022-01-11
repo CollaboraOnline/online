@@ -18,4 +18,9 @@
     <string name="edit_copy">Upraviť kópiu</string>
     <string name="view_only">Len prehliadanie</string>
     <string name="restarting">Reštartovanie...</string>
+    <string name="cant_open_the_document">Dokument nemožno otvoriť</string>
+    <string name="use_text">Použiť textový formát</string>
+    <string name="use_odf">Použiť formát ODF</string>
+    <string name="ask_for_convert_odf">Potvrdiť formát súboru</string>
+    <string name="convert_odf_message">Tento dokument môže obsahovať formátovanie alebo obsah, ktorý nemožno uložiť v aktuálne zvolenom formáte súboru „Text“.</string>
 </resources>

@@ -110,4 +110,7 @@
     <string name="theme_system_default">Predvolená téma</string>
     <string name="choose_theme">Vybrať tému vzhľadu</string>
     <string name="theme">Téma vzhľadu</string>
+    <string name="pref_user_name">Meno používateľa</string>
+    <string name="pref_user_name_info">Používa sa pri pridávaní komentárov</string>
+    <string name="pref_user_name_guest">Používateľ typu Hosť</string>
 </resources>
