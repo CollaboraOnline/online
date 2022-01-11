@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0200\n"
-"PO-Revision-Date: 2020-10-21 10:26+0000\n"
-"Last-Translator: غادة الذياب <ssggg2015@gmail.com>\n"
+"PO-Revision-Date: 2022-01-11 19:50+0000\n"
+"Last-Translator: Abdelsattar Tantawy <abdelsatar1997@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "help/ar/>\n"
 "Language: ar\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -25,7 +25,7 @@ msgstr "اختصارات لوحة المفاتيح العامة"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:23-18
 msgid "Undo"
-msgstr "التراجع"
+msgstr "تراجَع"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:23-49
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
@@ -33,7 +33,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:24-18
 msgid "Redo"
-msgstr "الإعادة"
+msgstr "إعادة"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:24-49
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y"
@@ -1516,7 +1516,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.p:321-5
 msgid "General"
-msgstr ""
+msgstr "عام"
 
 #: html/cool-help.html%2Bdiv.div.p:323-9
 #: html/cool-help.html%2Bdiv.div.h3:554-5
@@ -1753,7 +1753,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:378-5
 msgid "Inactive document"
-msgstr ""
+msgstr "مستند غير نشط"
 
 #: html/cool-help.html%2Bdiv.p:379-5
 msgid ""
