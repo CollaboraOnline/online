@@ -388,4 +388,6 @@ describe('Change table properties / layout via mobile wizard.', function() {
 		cy.get('#copy-paste-container td')
 			.should('have.attr', 'width', '323');
 	});
+	//TODO: add split cell test
+	//bug: https://github.com/CollaboraOnline/online/issues/3962
 });

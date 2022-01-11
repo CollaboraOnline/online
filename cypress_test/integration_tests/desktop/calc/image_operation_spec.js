@@ -1,7 +1,7 @@
 /* global describe it cy require afterEach beforeEach */
 
 var helper = require('../../common/helper');
-var { insertImage } = require('../../common/desktop_helper');
+var { insertImage, deleteImage, assertImageSize } = require('../../common/desktop_helper');
 
 describe('Image Operation Tests', function() {
 	var origTestFileName = 'image_operation.ods';
@@ -15,24 +15,38 @@ describe('Image Operation Tests', function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
 
-	it('Insert Image',function() {
-		cy.wait(1000);
-		insertImage();
+	it('Insert/Delete Image',function() {
+		insertImage('calc');
+
+		//make sure that image is in focus
+		cy.get('.leaflet-pane.leaflet-overlay-pane svg g.leaflet-control-buttons-disabled')
+			.should('exist');
+
+		deleteImage();
 	});
 
-	it('Delete Image', function() {
-		//close sidebar because it is covering other elements
-		cy.get('#toolbar-up > .w2ui-scroll-right').click();
+	it('Resize image when keep ratio option enabled and disabled', function() {
+		insertImage('calc');
+		//when Keep ratio is unchecked
+		assertImageSize(248, 63);
 
-		cy.get('#tb_editbar_item_sidebar').click();
+		cy.contains('.ui-expander-label', 'Position and Size')
+			.click();
 
-		insertImage();
+		cy.get('#selectwidth input').clear({force:true})
+			.type('3{enter}', {force:true});
 
-		helper.typeIntoDocument('{del}');
+		cy.get('#selectheight input').clear({force:true})
+			.type('2{enter}', {force:true});
 
-	    cy.wait(1000);
+		assertImageSize(139, 93);
 
-	    cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
-		    .should('not.exist');
+		//Keep ratio checked
+		cy.get('#ratio input').check();
+
+		cy.get('#selectheight input').clear({force:true})
+			.type('5{enter}', {force:true});
+
+		assertImageSize(347, 232);
 	});
 });
