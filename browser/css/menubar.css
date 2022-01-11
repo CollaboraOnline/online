@@ -77,7 +77,7 @@
 }
 .main-nav.hasnotebookbar {
 	height: 32px;
-	overflow: scroll hidden;
+	/* overflow is set dynamically */
 	scrollbar-width: none;
 	-ms-scrollbar: none;
 }
