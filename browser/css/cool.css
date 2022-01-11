@@ -356,9 +356,13 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	position: absolute;
 	left: 24px;
 }
-.cool-annotation.annotation-active .cool-annotation-collapsed{
+.cool-annotation.annotation-active:not(.rtl) .cool-annotation-collapsed{
 	position: absolute;
 	left: 0 !important;
+}
+.cool-annotation.annotation-active.rtl .cool-annotation-collapsed{
+	position: absolute;
+	left: 48px !important;
 }
 
 #document-container > .cool-annotation:hover .cool-annotation-collapsed{
