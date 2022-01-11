@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0200\n"
-"PO-Revision-Date: 2022-01-11 20:47+0000\n"
-"Last-Translator: Abdelmaksoud Zakaria <abdo.zeko17@gmail.com>\n"
+"PO-Revision-Date: 2022-01-11 20:52+0000\n"
+"Last-Translator: Abdelsattar Tantawy <abdelsatar1997@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "help/ar/>\n"
 "Language: ar\n"
@@ -859,9 +859,9 @@ msgid ""
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 ثوان في وضع الحذف، يقوم مفتاح السهم بحذف الصف/ العمود، <kbd>Ctrl </"
-"kbd><span class=\"kbd--plus\">+</span><kbd>مفتاح السهم </kbd> يدمج الخلية مع "
-"الخلية المجاورة"
+"3 ثوان في وضع الحذف، يقوم مفتاح السهم بحذف الصف/ العمود، <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> يدمج الخلية مع "
+"جارتها"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
@@ -1049,15 +1049,15 @@ msgstr "يحدد الخلايا من الخلية الحالية إلى الخل
 #: html/cool-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
-msgstr "يحدد الخلايا من الخلية الحالية إلى الخلية الأخيرة من الصف الحالي."
+msgstr "تحديد الخلايا من الخلية الحالية إلى الخلية الأخيرة من الصف الحالي."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
-"يحدد خلايا من الخلية الحالية حتى صفحة واحدة في العمود الحالي أو يوسع التحديد "
-"الموجود صفحة واحدة لأعلى."
+"تحديد خلايا من الخلية الحالية حتى صفحة واحدة في العمود الحالي أو توسيع "
+"التحديد الموجود صفحة واحدة لأعلى."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-164
 #, fuzzy
@@ -1069,7 +1069,7 @@ msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
-"تحدد الخلايا من الخلية الحالية وصولا إلى صفحة واحدة في العمود الحالي أو "
+"تحديد الخلايا من الخلية الحالية وصولا إلى صفحة واحدة في العمود الحالي أو "
 "توسيع التحديد الموجود صفحة واحدة لأسفل."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:139-168
@@ -1083,6 +1083,9 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"تحريك المؤشر إلى الحافة اليسرى لنطاق البيانات الحالي. إذا كان العمود الموجود "
+"إلى يسار الخلية التي تحتوي على المؤشر فارغا، ينتقل المؤشر إلى العمود التالي "
+"الموجود على اليسار الذي يحتوي على بيانات"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-245
 #, fuzzy
@@ -1095,6 +1098,9 @@ msgid ""
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
+"تحريك المؤشر إلى الحافة اليمنى لنطاق البيانات الحالي. إذا كان العمود الموجود "
+"إلى يمين الخلية التي تحتوي على المؤشر فارغا، ينتقل المؤشر إلى العمود التالي "
+"إلى اليمين الذي يحتوي على بيانات."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-249
 #, fuzzy
@@ -1107,6 +1113,9 @@ msgid ""
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
+"يتحرك المؤشر إلى الحافة العلوية لنطاق البيانات الحالي. إذا كان الصف الموجود "
+"أعلى الخلية الذي يحتوي على المؤشر فارغًا ، يتحرك المؤشر لأعلى إلى الصف التالي "
+"الذي يحتوي على بيانات."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-221
 #, fuzzy
@@ -1119,6 +1128,9 @@ msgid ""
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"يتحرك المؤشر إلى الحافة السفلية لنطاق البيانات الحالي. إذا كان الصف الموجود "
+"أسفل الخلية الذي يحتوي على المؤشر فارغًا ، يتحرك المؤشر لأسفل إلى الصف التالي "
+"الذي يحتوي على بيانات."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-226
 #, fuzzy
@@ -1132,6 +1144,9 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
+"تحديد كافة الخلايا التي تحتوي على بيانات من الخلية الحالية إلى نهاية النطاق "
+"المستمر لخلايا البيانات في اتجاه السهم المضغوط. وإذا تم استخدامه لتحديد صفوف "
+"وأعمدة معا، يتم تحديد نطاق خلايا مستطيل."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-272
 #, fuzzy
@@ -1144,7 +1159,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "نقل ورقة واحدة إلى اليسار."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-73
 #, fuzzy
@@ -1153,7 +1168,7 @@ msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "نقل صفحة شاشة واحدة إلى اليمين."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-80
 #, fuzzy
@@ -1166,6 +1181,9 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
+"يضيف الورقة السابقة إلى التحديد الحالي للأوراق. إذا تم تحديد جميع الأوراق في "
+"جدول بيانات ، فإن مجموعة مفاتيح الاختصار هذه تحدد فقط الورقة السابقة. يجعل "
+"الورقة السابقة هي الورقة الحالية."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-260
 #, fuzzy
@@ -1182,6 +1200,9 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"إضافة الورقة التالية إلى التحديد الحالي من الأوراق. إذا تم تحديد كافة "
+"الأوراق في جدول بيانات، فإن تركيبة مفاتيح الاختصار هذه تحدد الورقة التالية "
+"فقط. ويجعل الورقة التالية الورقة الحالية."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-248
 #, fuzzy
@@ -1198,6 +1219,9 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"حيث (*) هي علامة الضرب على لوحة المفاتيح الرقمية. تحديد نطاق البيانات الذي "
+"يحتوي على المؤشر. النطاق هو نطاق الخلايا المتجاورة التي تحتوي على بيانات و "
+"يحدها صف فارغ و أعمدة."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-249
 #, fuzzy
@@ -1209,6 +1233,8 @@ msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
 msgstr ""
+"حيث (/) هو علامة القسمة على لوحة المفاتيح الرقمية. تحديد نطاق صيغة المصفوفة "
+"الذي يحتوي على المؤشر."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-158
 #, fuzzy
@@ -1217,7 +1243,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "إدراج خلايا (كما في قائمة إدراج - خلايا)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-85
 #, fuzzy
@@ -1226,12 +1252,12 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "حذف الخلايا (كما في قائمة تحرير - حذف الخلايا)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-90
 #, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
 
 #: html/cool-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"
@@ -1366,7 +1392,7 @@ msgstr "الانتقال وتحديد النص إلى نهاية مربع الن
 
 #: html/cool-help.html%2Bdiv.div.h2:226-9
 msgid "Slide keyboard shortcuts"
-msgstr ""
+msgstr "اختصارات لوحة مفاتيح الشرائح"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:228-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:285-18
@@ -1393,108 +1419,108 @@ msgid "Select objects in the reverse order in which they were created"
 msgstr "اختيار الكائنات بعكس الترتيب الذي أُنشئت فيه"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:231-18
-#, fuzzy
 msgid "Move to next text object on slide"
-msgstr "الانتقال إلى كائن النص التالي في الشريحة / صفحة الرسم"
+msgstr "الانتقال إلى عنصر النص التالي على الشريحة"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:232-18
 msgid "Select all in slide"
-msgstr ""
+msgstr "تحديد الكل في الشريحة"
 
 #: html/cool-help.html%2Bdiv.div.h2:283-9
-#, fuzzy
 msgid "Draw page keyboard shortcuts"
-msgstr "اختصارات لوحة مفاتيح الشريحة / صفحة الرسم"
+msgstr "رسم اختصارات لوحة مفاتيح الصفحة"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:288-18
-#, fuzzy
 msgid "Move to next text object on drawing page"
-msgstr "الانتقال إلى كائن النص التالي في الشريحة / صفحة الرسم"
+msgstr "الانتقال إلى عنصر النص التالي في صفحة الرسم"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:289-18
-#, fuzzy
 msgid "Select all in drawing page"
-msgstr "تحديد الكل في الشريحة / ورقة الرسم"
+msgstr "تحديد الكل في صفحة الرسم"
 
 #: html/cool-help.html%2Bdiv.h1:294-5
+#, fuzzy
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> Help"
 
 #: html/cool-help.html%2Bdiv.p:295-5 html/cool-help.html%2Bdiv.h3:333-5
-#, fuzzy
 msgid "Collaborative editing"
-msgstr "تنسيق الخلايا"
+msgstr "التحرير التعاوني"
 
 #: html/cool-help.html%2Bdiv.p:296-5 html/cool-help.html%2Bdiv.h3:340-5
+#, fuzzy
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> user interface"
 
 #: html/cool-help.html%2Bdiv.p:297-5 html/cool-help.html%2Bdiv.h3:360-5
 msgid "Opening, closing, saving, printing and downloading documents"
-msgstr ""
+msgstr "فتح المستندات وإغلاقها وحفظها وطباعتها وتنزيلها"
 
 #: html/cool-help.html%2Bdiv.p:298-5 html/cool-help.html%2Bdiv.h3:368-5
 msgid "Editing documents"
-msgstr ""
+msgstr "تحرير المستندات"
 
 #: html/cool-help.html%2Bdiv.p:299-5 html/cool-help.html%2Bdiv.div.p:305-9
 #: html/cool-help.html%2Bdiv.div.p:318-9 html/cool-help.html%2Bdiv.h3:389-5
 #: html/cool-help.html%2Bdiv.div.h3:434-5
 #: html/cool-help.html%2Bdiv.div.h3:514-5
 msgid "Advanced features"
-msgstr ""
+msgstr "ميزات متقدمة"
 
 #: html/cool-help.html%2Bdiv.div.p:301-9 html/cool-help.html%2Bdiv.div.h2:419-5
+#, fuzzy
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> spreadsheets"
 
 #: html/cool-help.html%2Bdiv.div.p:302-9 html/cool-help.html%2Bdiv.div.h3:421-5
 msgid "Editing spreadsheets"
-msgstr ""
+msgstr "تحرير جداول البيانات"
 
 #: html/cool-help.html%2Bdiv.div.p:303-9 html/cool-help.html%2Bdiv.div.h3:424-5
 msgid "Formulas"
-msgstr ""
+msgstr "الصيغ"
 
 #: html/cool-help.html%2Bdiv.div.p:304-9 html/cool-help.html%2Bdiv.div.h3:430-5
 msgid "Formatting spreadsheets"
-msgstr ""
+msgstr "تنسيق جداول البيانات"
 
 #: html/cool-help.html%2Bdiv.div.p:308-9 html/cool-help.html%2Bdiv.div.h2:467-5
+#, fuzzy
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> text documents"
 
 #: html/cool-help.html%2Bdiv.div.p:309-9 html/cool-help.html%2Bdiv.div.h3:469-5
 msgid "Editing text documents"
-msgstr ""
+msgstr "تحرير المستندات النصية"
 
 #: html/cool-help.html%2Bdiv.div.p:310-9 html/cool-help.html%2Bdiv.div.h3:472-5
 msgid "Context menus"
-msgstr ""
+msgstr "قوائم السياق"
 
 #: html/cool-help.html%2Bdiv.div.p:311-9 html/cool-help.html%2Bdiv.div.h3:482-5
 msgid "Advanced text document editor features"
-msgstr ""
+msgstr "ميزات محرر المستندات النصية المتقدمة"
 
 #: html/cool-help.html%2Bdiv.div.p:314-9 html/cool-help.html%2Bdiv.div.h2:501-5
+#, fuzzy
 msgid "<span class=\"productname\">%productName</span> presentations"
-msgstr ""
+msgstr "<span class=\"productname\">%productName</span> presentations"
 
 #: html/cool-help.html%2Bdiv.div.p:315-9 html/cool-help.html%2Bdiv.div.h3:503-5
 msgid "Editing presentations"
-msgstr ""
+msgstr "تحرير العروض التقديمية"
 
 #: html/cool-help.html%2Bdiv.div.p:316-9 html/cool-help.html%2Bdiv.div.h3:506-5
 msgid "Slide show"
-msgstr ""
+msgstr "عرض الشرائح"
 
 #: html/cool-help.html%2Bdiv.div.p:317-9 html/cool-help.html%2Bdiv.div.h3:510-5
 msgid "Slide pane"
-msgstr ""
+msgstr "جزء الشرائح"
 
 #: html/cool-help.html%2Bdiv.p:320-5 html/cool-help.html%2Bdiv.h2:523-5
 msgid "Frequently Asked Questions"
-msgstr ""
+msgstr "الأسئلة المتداولة"
 
 #: html/cool-help.html%2Bdiv.p:321-5
 msgid "General"
@@ -2700,11 +2726,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h4:652-5
 msgid "How can I change the line, area and position of a shape in my slides?"
-msgstr ""
+msgstr "كيف يمكنني تغيير خط ومنطقة ووضع الشكل في الشرائح الخاصة بي؟"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:654-11
 msgid "Select the shape in your slide. A set of handles shows."
-msgstr ""
+msgstr "حدد الشكل في شريحتك. تظهر مجموعة من المقابض."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:656-9
 msgid ""
@@ -2712,6 +2738,9 @@ msgid ""
 "<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and Size</"
 "span>). A dialog opens."
 msgstr ""
+"اختر <span class=\"ui\">Format </span> → <span class=\"ui\">Line </span> (أو "
+"<span class=\"ui\">area </span>، أو <span class=\"ui\"> Position and Size </"
+"span>). يفتح مربع حوار."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:659-11
 msgid "Set the properties of the element of the object."
