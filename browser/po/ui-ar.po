@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0100\n"
-"PO-Revision-Date: 2022-01-11 19:57+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2022-01-12 20:55+0000\n"
+"Last-Translator: Abdelmaksoud Zakaria <abdo.zeko17@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
 "Language: ar\n"
@@ -42,7 +42,7 @@ msgstr "التحليلات"
 
 #: admin/admin.strings.js:11
 msgid "History"
-msgstr "التأريخ"
+msgstr "التاريخ"
 
 #: admin/admin.strings.js:12
 msgid "Log"
@@ -70,9 +70,8 @@ msgid " user(s)."
 msgstr " مستخدم."
 
 #: admin/admin.strings.js:18 admin/src/AdminSocketOverview.js:195
-#, fuzzy
 msgid " document(s) open."
-msgstr " المستند (المستندات) مفتوح."
+msgstr " مستندات مفتوحة."
 
 #: admin/admin.strings.js:19
 msgid "Number of Documents"
@@ -827,7 +826,7 @@ msgstr "قائمة"
 #: src/control/Control.NotebookbarDraw.js:36
 #: src/control/Control.NotebookbarImpress.js:36
 msgid "Undo"
-msgstr "تراجَع"
+msgstr "تراجع"
 
 #: src/control/Control.Notebookbar.js:268
 #: src/control/Control.NotebookbarDraw.js:42
@@ -838,11 +837,11 @@ msgstr "إعادة"
 #: src/control/Control.NotebookbarBuilder.js:555
 #: src/control/Control.TopToolbar.js:222
 msgid "Insert Local Image"
-msgstr "إدراج صورة محلية"
+msgstr "أدرج صورة محلية"
 
 #: src/control/Control.NotebookbarBuilder.js:615
 msgid "Very Tight"
-msgstr "ضيق جدا"
+msgstr "ضيق جداً"
 
 #: src/control/Control.NotebookbarBuilder.js:616
 msgid "Tight"
@@ -858,35 +857,35 @@ msgstr "مرن"
 
 #: src/control/Control.NotebookbarBuilder.js:619
 msgid "Very Loose"
-msgstr "مرن جدا"
+msgstr "مرن جداً"
 
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarDraw.js:79
 #: src/control/Control.NotebookbarImpress.js:91
 #: src/control/Control.NotebookbarWriter.js:12
 msgid "~File"
-msgstr "~ ملف"
+msgstr "~ملف"
 
 #: src/control/Control.NotebookbarCalc.js:17
 #: src/control/Control.NotebookbarDraw.js:84
 #: src/control/Control.NotebookbarImpress.js:96
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "~Home"
-msgstr "~ الصفحة الرئيسية"
+msgstr "~الصفحة الرئيسية"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:90
 #: src/control/Control.NotebookbarImpress.js:102
 #: src/control/Control.NotebookbarWriter.js:23
 msgid "~Insert"
-msgstr "~ إدراج"
+msgstr "~إدراج"
 
 #: src/control/Control.NotebookbarCalc.js:28
 #: src/control/Control.NotebookbarDraw.js:95
 #: src/control/Control.NotebookbarImpress.js:107
 #: src/control/Control.NotebookbarWriter.js:28
 msgid "~Layout"
-msgstr "~تخطيط"
+msgstr "~نسق"
 
 #: src/control/Control.NotebookbarCalc.js:33
 msgid "~Data"
@@ -897,7 +896,7 @@ msgstr "~بيانات"
 #: src/control/Control.NotebookbarImpress.js:112
 #: src/control/Control.NotebookbarWriter.js:38
 msgid "~Review"
-msgstr "~ استعراض"
+msgstr "~مراجعة"
 
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarDraw.js:105
@@ -1658,9 +1657,8 @@ msgid "Idle document - please click to reload and resume editing"
 msgstr "المستند خامل - رجاءً انقر عليه لإعادة تحميله ومتابعة التحرير"
 
 #: src/core/Socket.js:669
-#, fuzzy
 msgid "Idle document - please tap to reload and resume editing"
-msgstr "المستند خامل - رجاءً انقر عليه لإعادة تحميله ومتابعة التحرير"
+msgstr "المستند خامل - رجاءاً انقر عليه لإعادة تحميله ومتابعة التحرير"
 
 #: src/core/Socket.js:677
 msgid "Server is shutting down for maintenance (auto-saving)"
@@ -1682,11 +1680,10 @@ msgstr ""
 "تغيّر المستند في التخزين. يُحمِّل المستند الجديد. إصدارتك متاحة كمراجعة."
 
 #: src/core/Socket.js:719
-#, fuzzy
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
-msgstr "استعادة النسخة السابقة. ستتوفر أي تغييرات غير محفوظة في محفوظات الإصدار"
+msgstr "استعادة النسخة القديمة. ستتوفر أي تغييرات غير محفوظة في محفوظات الإصدار"
 
 #: src/core/Socket.js:725
 msgid "Reloading the document after rename"
@@ -1860,13 +1857,12 @@ msgid ""
 msgstr "ستغادر المحرر، هل أنت متأكد من أنك تريد زيارة عنوان URL التالي؟"
 
 #: src/errormessages.js:26
-#, fuzzy
 msgid ""
 "Failed to load the document. This document is either malformed or is taking "
 "more resources than allowed. Please contact the administrator."
 msgstr ""
 "فشل تحميل المستند. هذا المستند إما تالف أو أنه يأخذ موارد أكثر من المسموح "
-"به. الرجاء الاتصال بالمسؤول."
+"به. الرجاء الاتصال بالمسئول."
 
 #: src/errormessages.js:27
 msgid "Cleaning up the document from the last session."
