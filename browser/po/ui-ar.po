@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0100\n"
-"PO-Revision-Date: 2022-01-11 19:50+0000\n"
-"Last-Translator: ahmad assad <delandoor1995@gmail.com>\n"
+"PO-Revision-Date: 2022-01-11 19:57+0000\n"
+"Last-Translator: Abdelsattar Tantawy <abdelsatar1997@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
 "Language: ar\n"
@@ -1209,11 +1209,11 @@ msgstr "وضع التحديد: غير نشط"
 
 #: src/control/Control.Tabs.js:54
 msgid "Insert sheet before this"
-msgstr "أدرج ورقة قبل هذه"
+msgstr "إدراج ورقة قبل هذه"
 
 #: src/control/Control.Tabs.js:57
 msgid "Insert sheet after this"
-msgstr "أدرج ورقة بعد هذه"
+msgstr "إدراج ورقة بعد هذه"
 
 #: src/control/Control.Tabs.js:81
 msgid "Move Sheet Left"
@@ -1221,7 +1221,7 @@ msgstr "تحريك الورقة إلى اليسار"
 
 #: src/control/Control.Tabs.js:86
 msgid "Move Sheet Right"
-msgstr "تحريك الورقة لليمين"
+msgstr "تحريك الورقة إلى اليمين"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
@@ -1233,7 +1233,7 @@ msgstr "أمتأكّد من حذف الورقة، %الورقة% ؟"
 
 #: src/control/Control.Tabs.js:321
 msgid "Enter new sheet name"
-msgstr "أدخل اسم الورقة الجديد"
+msgstr "أدخل اسم جديد للورقة"
 
 #: src/control/Control.Toolbar.js:238
 msgid "More..."
@@ -1260,11 +1260,11 @@ msgstr "الحدود"
 
 #: src/control/Control.TopToolbar.js:218
 msgid "Insert table"
-msgstr "أدرج جدولًا"
+msgstr "إدراج جدول"
 
 #: src/control/Control.TopToolbar.js:226
 msgid "Insert shapes"
-msgstr "أدرِج أشكالًا"
+msgstr "إدراج أشكال"
 
 #: src/control/Control.TopToolbar.js:228
 msgid "Insert connectors"
