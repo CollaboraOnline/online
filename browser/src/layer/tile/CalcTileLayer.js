@@ -531,14 +531,17 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			var cornerGroupSection = sectionContainer.getSectionWithName(L.CSections.CornerGroup.name);
 			// Scroll section covers the entire document area, and needs RTL adjustments internally.
 
-			if (cornerGroupSection)
+			if (cornerGroupSection) {
 				cornerGroupSection.anchor = ['top', 'right'];
+			}
 
-			if (rowGroupSection)
+			if (rowGroupSection) {
 				rowGroupSection.anchor = [[L.CSections.CornerGroup.name, 'bottom', 'top'], 'right'];
+			}
 
-			if (columnGroupSection)
+			if (columnGroupSection) {
 				columnGroupSection.anchor = ['top', [L.CSections.CornerGroup.name, '-left', 'right']];
+			}
 
 			cornerHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, '-left', 'right']];
 
@@ -567,14 +570,17 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 			var rowGroupSection = sectionContainer.getSectionWithName(L.CSections.RowGroup.name);
 			var cornerGroupSection = sectionContainer.getSectionWithName(L.CSections.CornerGroup.name);
 
-			if (cornerGroupSection)
+			if (cornerGroupSection) {
 				cornerGroupSection.anchor = ['top', 'left'];
+			}
 
-			if (rowGroupSection)
+			if (rowGroupSection) {
 				rowGroupSection.anchor = [[L.CSections.CornerGroup.name, 'bottom', 'top'], 'left'];
+			}
 
-			if (columnGroupSection)
+			if (columnGroupSection) {
 				columnGroupSection.anchor = ['top', [L.CSections.CornerGroup.name, 'right', 'left']];
+			}
 
 			cornerHeaderSection.anchor = [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']];
 

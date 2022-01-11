@@ -105,8 +105,9 @@ L.SVGGroup = L.Layer.extend({
 		this.dragging._onDragStart(data);
 
 		var pos = this._map.mouseEventToLatLng(evt);
-		if (this.isCalcRTL())
+		if (this.isCalcRTL()) {
 			pos = this._map.negateLatLng(pos);
+		}
 		this.fire('graphicmovestart', {pos: pos});
 	},
 
@@ -140,8 +141,9 @@ L.SVGGroup = L.Layer.extend({
 
 		if (this._map) {
 			var pos = this._map.mouseEventToLatLng(evt);
-			if (this.isCalcRTL())
+			if (this.isCalcRTL()) {
 				pos = this._map.negateLatLng(pos);
+			}
 			this.fire('graphicmoveend', {pos: pos});
 		}
 

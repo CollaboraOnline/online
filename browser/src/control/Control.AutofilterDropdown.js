@@ -131,8 +131,9 @@ L.Control.AutofilterDropdown = L.Control.extend({
 				top = top - splitPos.y;
 		}
 
-		if (this._map._docLayer.isCalc() && this._map._docLayer.isLayoutRTL())
+		if (this._map._docLayer.isCalc() && this._map._docLayer.isLayoutRTL()) {
 			left = this._map._size.x - left;
+		}
 
 		var mainContainer = null;
 		var builder = null;

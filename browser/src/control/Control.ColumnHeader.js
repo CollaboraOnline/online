@@ -211,10 +211,12 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 			var isRTL = this.isCalcRTL();
 
-			if (isRTL)
+			if (isRTL) {
 				width -= dragDistance[0];
-			else
+			}
+			else {
 				width += dragDistance[0];
+			}
 
 			width /= app.dpiScale;
 			width = this._map._docLayer._pixelsToTwips({x: width, y: 0}).x;

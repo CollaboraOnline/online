@@ -240,8 +240,9 @@ class Cursor {
 	}
 
 	private transformX(xpos: number): number {
-		if (!this.isCalcRTL())
+		if (!this.isCalcRTL()) {
 			return xpos;
+		}
 
 		return this.map._size.x - xpos;
 	}

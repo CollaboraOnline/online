@@ -79,8 +79,9 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 
 	// In RTL Calc mode this h-mirrors the top-left position of a rectangle else it does nothing.
 	_transformContainerPoint: function (pos, size) {
-		if (this._isCalcRTL())
+		if (this._isCalcRTL()) {
 			return new L.Point(this._map._size.x - pos.x - size.x, pos.y);
+		}
 
 		return pos;
 	},
