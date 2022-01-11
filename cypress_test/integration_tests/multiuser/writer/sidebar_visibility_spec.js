@@ -4,10 +4,11 @@ var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
 
 describe('Sidebar visibility', function() {
-	var testFileName = 'sidebar_visibility.odt';
+	var origTestFileName = 'sidebar_visibility.odt';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'writer', undefined, true);
+		testFileName = helper.beforeAll(origTestFileName, 'writer', undefined, true);
 	});
 
 	afterEach(function() {

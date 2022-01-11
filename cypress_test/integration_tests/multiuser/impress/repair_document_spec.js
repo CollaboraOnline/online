@@ -2,10 +2,11 @@
 
 var helper = require('../../common/helper');
 describe.skip('Repair Document', function() {
-	var testFileName = 'repair_doc.odp';
+	var origTestFileName = 'repair_doc.odp';
+	var testFileName;
 
 	beforeEach(function() {
-		helper.beforeAll(testFileName, 'impress', undefined, true);
+		testFileName = helper.beforeAll(origTestFileName, 'impress', undefined, true);
 	});
 
 	afterEach(function() {
