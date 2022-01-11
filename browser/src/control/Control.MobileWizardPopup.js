@@ -21,6 +21,7 @@ L.Control.MobileWizardPopup = L.Control.extend({
 	_currentPath: [],
 	_tabs: [],
 	_currentScrollPosition: 0,
+	_RTL: false,
 
 	initialize: function (options) {
 		L.setOptions(this, options);
@@ -33,6 +34,8 @@ L.Control.MobileWizardPopup = L.Control.extend({
 		map.on('mobilewizardpopupresize', this._onResizeRequest, this);
 		map.on('mobilewizardpopupclose', this._hideWizard, this);
 		window.addEventListener('resize', this._hideWizard.bind(this));
+
+		this._RTL = document.documentElement.dir === 'rtl';
 	},
 
 	removeContainer: function () {
@@ -167,14 +170,17 @@ L.Control.MobileWizardPopup = L.Control.extend({
 			if (bottomY > that.map._container.getBoundingClientRect().bottom) {
 				var diff = bottomY - that.map._container.getBoundingClientRect().bottom + 40;
 
+				var posX = that._popupParent.getBoundingClientRect().left;
+				if (that._RTL)
+					posX -= that.map._container.getBoundingClientRect().width;
 				(new L.PosAnimation()).run(that._popupParent,
 					{
-						x: that._popupParent.getBoundingClientRect().left,
+						x: posX,
 						y: that._popupParent.getBoundingClientRect().top - diff
 					});
 			}
 
-			that._container.style.marginLeft = (15 - that._container.clientWidth) + 'px';
+			that._container.style.marginLeft = (that._RTL ? 15 : (15 - that._container.clientWidth)) + 'px';
 		}, 100);
 	},
 
@@ -251,7 +257,7 @@ L.Control.MobileWizardPopup = L.Control.extend({
 						that._overlay.style.zIndex = 10;
 
 						posY = 15;
-						posX = 15 - content.clientWidth;
+						posX = that._RTL ? 15 : 15 - content.clientWidth;
 
 						// be sure it is fully visible
 						var absolutePosY = parent.getBoundingClientRect().top + posY;
@@ -260,9 +266,12 @@ L.Control.MobileWizardPopup = L.Control.extend({
 							diffY = absolutePosY + content.clientHeight - that.map._container.getBoundingClientRect().bottom + 20;
 
 						if (diffY) {
+							var tmpPosX = parent.getBoundingClientRect().left;
+							if (that._RTL)
+								tmpPosX -= that.map._container.getBoundingClientRect().width;
 							(new L.PosAnimation()).run(parent,
 								{
-									x: parent.getBoundingClientRect().left,
+									x: tmpPosX,
 									y: absolutePosY - diffY - that.map._container.getBoundingClientRect().top
 								});
 						}
