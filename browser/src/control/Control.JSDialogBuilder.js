@@ -593,6 +593,9 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			icon.src = iconURL;
 			icon.alt = '';
 			titleClass = 'menu-entry-with-icon';
+			icon.addEventListener('error', function() {
+				icon.style.display = 'none';
+			});
 		}
 		var titleSpan = L.DomUtil.create('span', titleClass, leftDiv);
 
