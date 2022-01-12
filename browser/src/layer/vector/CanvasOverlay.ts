@@ -97,7 +97,7 @@ class CanvasOverlay {
 	private bounds: cool.Bounds;
 	private tsManager: any;
 	private overlaySection: CanvasSectionObject;
-	private transforms: TransformationsList;
+	private transformList: TransformationsList;
 
 	constructor(mapObject: any, canvasContext: CanvasRenderingContext2D) {
 		this.map = mapObject;
@@ -105,7 +105,7 @@ class CanvasOverlay {
 		this.tsManager = this.map.getTileSectionMgr();
 		this.overlaySection = undefined;
 		this.paths = new Map<number, CPath>();
-		this.transforms = new TransformationsList();
+		this.transformList = new TransformationsList();
 		this.updateCanvasBounds();
 	}
 
@@ -311,7 +311,7 @@ class CanvasOverlay {
 	// Applies canvas translation so that polygons/circles can be drawn using core-pixel coordinates.
 	private ctStart(clipArea?: cool.Bounds, paneBounds?: cool.Bounds, fixed?: boolean) {
 		this.updateCanvasBounds();
-		this.transforms.reset();
+		this.transformList.reset();
 		this.ctx.save();
 
 		if (!paneBounds)
@@ -384,16 +384,16 @@ class CanvasOverlay {
 				paneBounds.min.y ? this.bounds.min.y : 0);
 		}
 
-		this.transforms.add(transform);
+		this.transformList.add(transform);
 		if (this.overlaySection.isCalcRTL()) {
 			const sectionWidth = this.overlaySection.size[0];
 			// Apply horizontal flip transformation.
-			this.transforms.addNew(new cool.Point(-sectionWidth, 0), new cool.Point(-1, 1));
+			this.transformList.addNew(new cool.Point(-sectionWidth, 0), new cool.Point(-1, 1));
 		}
 
 		if (clipArea) {
 			this.ctx.beginPath();
-			clipArea = this.transforms.applyToBounds(clipArea);
+			clipArea = this.transformList.applyToBounds(clipArea);
 			var clipSize = clipArea.getSize();
 			this.ctx.rect(clipArea.min.x, clipArea.min.y, clipSize.x, clipSize.y);
 			this.ctx.clip();
@@ -421,7 +421,7 @@ class CanvasOverlay {
 
 		for (i = 0; i < len; i++) {
 			for (j = 0, len2 = parts[i].length; j < len2; j++) {
-				part = this.transforms.applyToPoint(parts[i][j]);
+				part = this.transformList.applyToPoint(parts[i][j]);
 				this.ctx[j ? 'lineTo' : 'moveTo'](part.x, part.y);
 			}
 			if (closed) {
@@ -440,7 +440,7 @@ class CanvasOverlay {
 
 		this.ctStart(clipArea, paneBounds, path.fixed);
 
-		var point = this.transforms.applyToPoint(path.point);
+		var point = this.transformList.applyToPoint(path.point);
 		var r: number = path.radius;
 		var s: number = (path.radiusY || r) / r;
 
