@@ -410,7 +410,7 @@ L.Control.Ruler = L.Control.extend({
 
 		var rulerOffset = mapPaneXTranslate + firstTileXTranslate + tileContainerXTranslate + (this.options.tileMargin * scale);
 
-		this._rFace.style.marginLeft = rulerOffset + 'px';
+		this._rFace.style.marginInlineStart = rulerOffset + 'px';
 
 		this.rulerOffset = rulerOffset; // Needed on different parts too..
 		this._updateParagraphIndentations();
