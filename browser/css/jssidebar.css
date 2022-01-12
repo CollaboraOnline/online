@@ -318,7 +318,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 	left: -7px;
 }
 
-#LB_SHADOW_COLOR, #LB_GLOW_COLOR {
+#LB_SHADOW_COLOR:not(.mobile-wizard), #LB_GLOW_COLOR:not(.mobile-wizard) {
 	padding: 4px 10px;
 	width: 130px;
 	position: relative;
