@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0200\n"
-"PO-Revision-Date: 2022-01-11 23:11+0000\n"
+"PO-Revision-Date: 2022-01-12 20:55+0000\n"
 "Last-Translator: Abdelmaksoud Zakaria <abdo.zeko17@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "help/ar/>\n"
@@ -52,7 +52,6 @@ msgid "Paste as unformatted text"
 msgstr "اللصق كنص غير منسّق"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>V"
@@ -1060,9 +1059,8 @@ msgstr ""
 "التحديد الموجود صفحة واحدة لأعلى."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-164
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>سهم لأعلى"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:139-18
 msgid ""
@@ -1073,9 +1071,8 @@ msgstr ""
 "توسيع التحديد الموجود صفحة واحدة لأسفل."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:139-168
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>صفحة لأسفل"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-18
 msgid ""
@@ -1088,9 +1085,8 @@ msgstr ""
 "إلى اليسار الذي يحتوي على بيانات"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-245
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Left Arrow"
+msgstr "Ctrl </kbd> <span class = \"kbd - plus\"> + </span> <kbd> سهم لليسار"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-18
 msgid ""
@@ -1103,9 +1099,8 @@ msgstr ""
 "إلى اليمين الذي يحتوي على بيانات."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
+msgstr "Ctrl </kbd> <span class = \"kbd - plus\"> + </span> <kbd> سهم لليمين"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-18
 msgid ""
@@ -1118,9 +1113,8 @@ msgstr ""
 "على بيانات."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-221
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
+msgstr "Ctrl </kbd> <span class = \"kbd - plus\"> + </span> <kbd> سهم لأعلى"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-18
 msgid ""
@@ -1133,9 +1127,8 @@ msgstr ""
 "يحتوي على بيانات."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-226
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
+msgstr "Ctrl</kbd><span فئة =\"kbd--بالإضافة إلى\">+</span><kbd>سهم لأسفل"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-18
 msgid ""
@@ -1149,31 +1142,28 @@ msgstr ""
 "وأعمدة معا، يتم تحديد نطاق خلايا مستطيل."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-272
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Arrow"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Arrow"
+"--plus\">+</span><kbd>سهم"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
 msgstr "نقل ورقة واحدة إلى اليسار."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-73
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>صفحة لأعلى"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
 msgstr "نقل صفحة شاشة واحدة إلى اليمين."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-80
-#, fuzzy
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
-msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
+msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>صفحة لأسفل"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-18
 msgid ""
@@ -1186,13 +1176,12 @@ msgstr ""
 "الورقة السابقة الورقة الحالية."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-260
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Up"
 msgstr ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Page Up"
+"--plus\">+</span><kbd>صفحة لأعلى"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-18
 msgid ""
@@ -1205,13 +1194,12 @@ msgstr ""
 "فقط. يجعل الورقة التالية الورقة الحالية."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-248
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Page Down"
 msgstr ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Page Down"
+"--plus\">+</span><kbd>صفحة لأسفل"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""
@@ -1224,7 +1212,6 @@ msgstr ""
 "يحدها صف فارغ و أعمدة."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
 
@@ -1246,18 +1233,16 @@ msgid "Insert cells (as in menu Insert - Cells)"
 msgstr "إدراج خلايا (كما في قائمة إدراج - خلايا)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-85
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>مفتاح الزائد"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
 msgstr "حذف الخلايا (كما في قائمة تحرير - حذف الخلايا)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-90
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>مفتاح الناقص"
 
 #: html/cool-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"
@@ -1439,18 +1424,16 @@ msgid "Select all in drawing page"
 msgstr "تحديد الكل في صفحة الرسم"
 
 #: html/cool-help.html%2Bdiv.h1:294-5
-#, fuzzy
 msgid "<span class=\"productname\">%productName</span> Help"
-msgstr "<span class=\"productname\">%productName</span> Help"
+msgstr "<span class=\"productname\">%productName</span> مساعدة"
 
 #: html/cool-help.html%2Bdiv.p:295-5 html/cool-help.html%2Bdiv.h3:333-5
 msgid "Collaborative editing"
 msgstr "التحرير التعاوني"
 
 #: html/cool-help.html%2Bdiv.p:296-5 html/cool-help.html%2Bdiv.h3:340-5
-#, fuzzy
 msgid "<span class=\"productname\">%productName</span> user interface"
-msgstr "<span class=\"productname\">%productName</span> user interface"
+msgstr "<span class=\"productname\">٪productName </span> واجهة المستخدم"
 
 #: html/cool-help.html%2Bdiv.p:297-5 html/cool-help.html%2Bdiv.h3:360-5
 msgid "Opening, closing, saving, printing and downloading documents"
@@ -1468,9 +1451,8 @@ msgid "Advanced features"
 msgstr "ميزات متقدمة"
 
 #: html/cool-help.html%2Bdiv.div.p:301-9 html/cool-help.html%2Bdiv.div.h2:419-5
-#, fuzzy
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
-msgstr "<span class=\"productname\">%productName</span> spreadsheets"
+msgstr "<span class=\"productname\">٪productName</span> جداول البيانات"
 
 #: html/cool-help.html%2Bdiv.div.p:302-9 html/cool-help.html%2Bdiv.div.h3:421-5
 msgid "Editing spreadsheets"
@@ -1485,9 +1467,8 @@ msgid "Formatting spreadsheets"
 msgstr "تنسيق جداول البيانات"
 
 #: html/cool-help.html%2Bdiv.div.p:308-9 html/cool-help.html%2Bdiv.div.h2:467-5
-#, fuzzy
 msgid "<span class=\"productname\">%productName</span> text documents"
-msgstr "<span class=\"productname\">%productName</span> text documents"
+msgstr "<span class=\"productname\">٪productName </span> المستندات النصية"
 
 #: html/cool-help.html%2Bdiv.div.p:309-9 html/cool-help.html%2Bdiv.div.h3:469-5
 msgid "Editing text documents"
@@ -1502,7 +1483,6 @@ msgid "Advanced text document editor features"
 msgstr "ميزات محرر المستندات النصية المتقدمة"
 
 #: html/cool-help.html%2Bdiv.div.p:314-9 html/cool-help.html%2Bdiv.div.h2:501-5
-#, fuzzy
 msgid "<span class=\"productname\">%productName</span> presentations"
 msgstr "<span class=\"productname\">٪ productName </span> العروض التقديمية"
 
@@ -1587,7 +1567,6 @@ msgstr ""
 "الموجودة في الأجهزة المحمولة. تتكون الواجهة من:"
 
 #: html/cool-help.html%2Bdiv.p:342-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
@@ -1604,6 +1583,12 @@ msgid ""
 "right. Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/"
 "unfold.svg\"> icon to show the menu."
 msgstr ""
+"<span class = \"def\"> شريط القوائم: </ span> يتم وضع القائمة الرئيسية في "
+"الأعلى وتتضمن العديد من الخيارات والأوامر للطباعة والتحرير والعرض وأوامر "
+"متقدمة أخرى. يمكنك إخفاء شريط القائمة بالنقر على <img style = \"height: 0."
+"6cm؛ width: 0.6cm؛\" src = \"images / fold.svg\"> أيقونة أقصى اليمين. انقر "
+"على <img style = \"height: 0.6cm؛ width: 0.6cm؛\" src = \"images / unfold."
+"svg\"> رمز لإظهار القائمة."
 
 #: html/cool-help.html%2Bdiv.p:344-5
 msgid ""
@@ -1651,7 +1636,6 @@ msgid "Search forward"
 msgstr "البحث للأمام"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:352-11
-#, fuzzy
 msgid "Cancel the search (appears only when a text has been searched)"
 msgstr "إلغاء البحث (يظهر فقط عند البحث عن نص)"
 
@@ -1672,13 +1656,14 @@ msgid ""
 "Text, charts, shapes and svg images will stay sharp, when zooming in, you "
 "will only see pixels appear at inserted images, such as jpg’s or png’s."
 msgstr ""
+"سيبقى النص والمخططات والأشكال وصور svg حادة ، عند التكبير ، سترى فقط بكسل "
+"تظهر في الصور المدرجة ، مثل jpg أو png."
 
 #: html/cool-help.html%2Bdiv.p:356-5
 msgid "Using the browser zoom affects the document and user interface areas."
 msgstr "يؤثر استخدام تكبير المتصفح على مناطق المستندات وواجهة المستخدم."
 
 #: html/cool-help.html%2Bdiv.p:357-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">The information bar:</span> At the right of the search "
 "bar, a set of information on the document is displayed. The actual "
@@ -1702,12 +1687,17 @@ msgid ""
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
+"لتحميل مستند حمله من <span class=\"productname\">٪productName </span> "
+"التطبيق <span class=\"ui\">File </span> القائمة. تعتمد تنسيقات التحميل "
+"المتوفرة على التطبيق. جميع التطبيقات تصدر الوثائق بتنسيق PDF."
 
 #: html/cool-help.html%2Bdiv.p:363-5
 msgid ""
 "To open document, click on the file to open the <span class=\"productname\">"
 "%productName</span> module associated to the document format."
 msgstr ""
+"لفتح المستند، انقر فوق الملف لفتح الوحدة <span class=\"productname\">٪٪ "
+"productName </span> المقترنة بتنسيق المستند."
 
 #: html/cool-help.html%2Bdiv.p:364-5
 msgid ""
@@ -1821,6 +1811,9 @@ msgid ""
 "or browser window, or from outside of the browser, the pasted content will "
 "preserve rich text."
 msgstr ""
+"عند لصق محتوى منسوخ من داخل نفس المستند، يتم الاحتفاظ بالتنسيق والعناصر. إذا "
+"قمت بنسخ من مستند آخر، أو في علامة تبويب أخرى أو نافذة متصفح ، أو من خارج "
+"المتصفح، فسيحتفظ المحتوى الذي تم لصقه بالنص المنسق."
 
 #: html/cool-help.html%2Bdiv.p:384-5
 msgid ""
@@ -1828,6 +1821,9 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus"
 "\">+</span><kbd>V</kbd>"
 msgstr ""
+"يمكنك اللصق كنص غير منسق مع اختصار لوحة المفاتيح: <kbd>Ctrl </kbd><span "
+"class=\"kbd--plus\">+</span><kbd>Shift </kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>"
 
 #: html/cool-help.html%2Bdiv.p:385-5
 msgid ""
@@ -1835,44 +1831,56 @@ msgid ""
 "You can also paste objects, such as images, if they are copied from the "
 "document you are working in."
 msgstr ""
+"عند لصق نص من داخل المستند، سيتم قبول التنسيق. يمكنك أيضا لصق الكائنات، مثل "
+"الصور، إذا تم نسخها من المستند الذي تعمل فيه."
 
 #: html/cool-help.html%2Bdiv.p:386-5
+#, fuzzy
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application, it will be pasted as rich text."
 msgstr ""
+"عند لصق نص من خارج المستند (نافذة متصفح أخرى أو تطبيق سطح مكتب ، سيتم لصقه "
+"كنص منسق."
 
 #: html/cool-help.html%2Bdiv.p:387-5
 msgid ""
 "When you have internal cut or copied content, you can paste this content "
 "using the context menu."
 msgstr ""
+"عندما يكون لديك محتوى داخلي مقصوص أو منسوخ، يمكنك لصق هذا المحتوى باستخدام "
+"قائمة السياق."
 
 #: html/cool-help.html%2Bdiv.h4:390-5
 msgid "Adding charts"
-msgstr ""
+msgstr "إضافة رسوم بيانية"
 
 #: html/cool-help.html%2Bdiv.p:391-5
 msgid ""
 "<span class=\"productname\">%productName</span> supports inserting and "
 "visualization of charts in documents. To add a chart:"
 msgstr ""
+"<span class=\"productname\">٪productName </span> يدعم إدراج الرسوم البيانية "
+"وتصورها في المستندات . لإضافة مخطط:"
 
 #: html/cool-help.html%2Bdiv.ol.li.p:393-11
+#, fuzzy
 msgid ""
 "Select a table in text document, a range in a spreadsheet or a table in a "
 "presentation."
-msgstr ""
+msgstr "حدد جدولا في مستند نصي أو نطاق في جدول بيانات أو جدول في عرض تقديمي."
 
 #: html/cool-help.html%2Bdiv.ol.li.p:395-9
 msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
 "Customize your chart on the sidebar:"
 msgstr ""
+"اختر <span class=\"ui\">إدراج </span> → <span class=\"ui\">Charts</span>. "
+"تخصيص مخططتك على الشريط الجانبي:"
 
 #: html/cool-help.html%2Bdiv.ol.li.p:398-11
 msgid "If no table or range was selected, a prototype chart is displayed."
-msgstr ""
+msgstr "إذا لم يتم تحديد جدول أو نطاق، فسيتم عرض مخطط نموذج أولي."
 
 #: html/cool-help.html%2Bdiv.p:401-5
 msgid ""
@@ -1881,42 +1889,61 @@ msgid ""
 "Choose <span class=\"ui\">Data Range</span> and <span class=\"ui\">Chart "
 "Type</span> to edit chart data and select chart type."
 msgstr ""
+"<span class=\"def\"> تحرير المخطط:</span> انقر نقراً مزدوجا على التخطيط "
+"لتحديده. استخدم قوائم السياق لإضافة عناصر التخطيط مثل العنوان والمحور "
+"وغيرها. اختر <span class=\"ui\">نطاق البيانات </span> و <span class=\"ui\""
+">نوع المخطط </span> لتحرير بيانات المخطط وتحديد نوع المخطط."
 
 #: html/cool-help.html%2Bdiv.p:402-5
 msgid ""
 "<span class=\"def\">Chart formatting:</span> The same context menu brings "
 "you to chart data table and chart type selection."
 msgstr ""
+"<span class=\"def\"> تنسيق المخطط:</span> تنقلك قائمة السياق بنفسها إلى جدول "
+"بيانات المخطط واختيار نوع المخطط."
 
 #: html/cool-help.html%2Bdiv.p:403-5
+#, fuzzy
 msgid ""
 "<span class=\"def\">Data series formatting:</span> Open the context menu and "
 "choose <span class=\"ui\">Format data series</span>."
 msgstr ""
+"<span class=\"def\"> تنسيق سلسلة البيانات:</span> افتح قائمة السياق واختر "
+"<span class=\"ui\">تنسيق سلسلة البيانات </span>."
 
 #: html/cool-help.html%2Bdiv.h4:404-5
+#, fuzzy
 msgid "Handling images"
-msgstr ""
+msgstr "معالجة الصور"
 
 #: html/cool-help.html%2Bdiv.p:405-5
+#, fuzzy
 msgid ""
 "<span class=\"productname\">%productName</span> inserts images in the text "
 "document from your local computer or from your cloud storage. Inserted "
 "images are always embedded in the document."
 msgstr ""
+"<span class=\"productname\">٪productName </span> يدرج الصور في المستند النصي "
+"من الكمبيوتر المحلي أو من التخزين السحابي. يتم تضمين الصور المدرجة دائما في "
+"المستند."
 
 #: html/cool-help.html%2Bdiv.p:406-5
+#, fuzzy
 msgid ""
 "<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui"
 "\">Insert image</span> icon allows you to choose an image from the cloud "
 "storage's folders and shares."
 msgstr ""
+"<span class=\"def\"> إدراج صورة: </span> النقر على أيقونة <span class=\"ui\""
+"> إدراج صورة </span> يسمح لك باختيار صورة من مجلدات ومشاركات التخزين السحابي."
 
 #: html/cool-help.html%2Bdiv.p:407-5
 msgid ""
 "<span class=\"def\">Insert local image:</span> opens the browser file picker "
 "to upload the image from your local computer and insert it into the document."
 msgstr ""
+"<span class=\"def\"> إدراج صورة محلية:</span> يفتح جامع ملفات المتصفح لتحميل "
+"الصورة من الكمبيوتر المحلي وإدراجها في المستند."
 
 #: html/cool-help.html%2Bdiv.p:408-5
 msgid ""
@@ -1924,28 +1951,37 @@ msgid ""
 "image. Select the image and open the context menu. Use the images handles to "
 "resize the image with the mouse."
 msgstr ""
+"يمكن تغيير حجم الصور وتدويرها وتثبيتها. يمكن أن يلتف النص حول الصورة. حدد "
+"الصورة وافتح قائمة السياق. استخدم معالجات الصور لتغيير حجم الصورة بالماوس."
 
 #: html/cool-help.html%2Bdiv.h4:409-5
-#, fuzzy
 msgid "Comments in documents"
-msgstr "الانتقال إلى نهاية المستند"
+msgstr "تعليقات في مستندات"
 
 #: html/cool-help.html%2Bdiv.p:410-5
+#, fuzzy
 msgid ""
 "Insert comments in <span class=\"productname\">%productName</span> in places "
 "that need special reader attention. Comments are displayed on the right and "
 "carry the name and date of the issuer."
 msgstr ""
+"إدراج تعليقات في <span class=\"productname\">٪productName </span> في الأماكن "
+"التي تحتاج إلى اهتمام خاص من القارئ. يتم عرض التعليقات على اليمين وتحمل اسم "
+"وتاريخ المصدر."
 
 #: html/cool-help.html%2Bdiv.p.img:412-5
+#, fuzzy
 msgid ""
 "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
 "\"images/submenu.svg\">) icon to reply, move and delete comments."
 msgstr ""
+"انقر فوق رمز القائمة الفرعية (<img style = \"height: 0.6cm؛ width: 0.6cm؛\" "
+"alt = \"src =\" images / submenu.svg \">) للرد على التعليقات ونقلها وحذفها."
 
 #: html/cool-help.html%2Bdiv.h4:413-5
+#, fuzzy
 msgid "Spellchecking"
-msgstr ""
+msgstr "التدقيق الإملائي"
 
 #: html/cool-help.html%2Bdiv.p:414-5
 msgid ""
@@ -1954,12 +1990,18 @@ msgid ""
 "misspelled words. Click on the right mouse button to open a context menu "
 "with suggested misspelling corrections."
 msgstr ""
+"يمكن لـ <span class=\"productname\">٪ productName </span> إجراء تدقيق إملائي "
+"في المستندات النصية وجداول البيانات والعروض التقديمية. يشير التسطير المتموج "
+"أحمر اللون إلى الكلمات التي بها أخطاء إملائية. انقر على زر الفأرة الأيمن "
+"لفتح قائمة السياق مع التصحيحات الإملائية المقترحة."
 
 #: html/cool-help.html%2Bdiv.p:416-5
 msgid ""
 "To systematically spell-check the whole document use the <span class=\"ui"
 "\">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
 msgstr ""
+"للتدقيق الإملائي بشكل منتظم للمستند بالكامل ، استخدم خيار قائمة <span class="
+"\"ui\"> أدوات </span> <span class=\"ui\"> تدقيق إملائي </span>."
 
 #: html/cool-help.html%2Bdiv.div.p:422-5
 msgid ""
@@ -1972,6 +2014,13 @@ msgid ""
 "cursor to the next cell to the right, and with an <kbd>Enter</kbd> to the "
 "cell below for easy further data entry."
 msgstr ""
+"يمكنك تحرير جدول بيانات عبر الإنترنت بنفس الطريقة التي تقوم بها بتحرير جدول "
+"بيانات سطح المكتب. عمليات مثل إدخال البيانات وتحديد النطاقات والأعمدة "
+"والصفوف أو الأوراق هي نفسها. استخدم لوحة المفاتيح أو القوائم أو شريط الأدوات "
+"للتحكم في الإجراءات في جدول البيانات. كما يتم دعم سحب محتويات الخلايا لتعبئة "
+"الخلايا بالبيانات. تتوفر أوامر النسخ والقص واللصق من قائمة السياق. بعد إدخال "
+"البيانات باستخدام <kbd>Tab </kbd> سينقل المؤشر إلى الخلية التالية إلى اليمين،"
+" ومع <kbd>Enter </kbd> إلى الخلية أدناه لسهولة إدخال البيانات."
 
 #: html/cool-help.html%2Bdiv.div.p:425-5
 msgid ""
@@ -1979,8 +2028,9 @@ msgid ""
 msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.p:426-5
+#, fuzzy
 msgid "All spreadsheets functions and mathematical rules applies."
-msgstr ""
+msgstr "تنطبق جميع وظائف جداول البيانات والقواعد الرياضية."
 
 #: html/cool-help.html%2Bdiv.div.p:428-5
 msgid ""
@@ -1989,6 +2039,10 @@ msgid ""
 "committees/download.php/16826/openformula-spec-20060221.html\" target="
 "\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 msgstr ""
+"يجب أن تكون لغة الصيغة مألوفة للغاية لأي مستخدم لجدول البيانات، ويتم تحديدها "
+"بتفصيل كبير في مواصفات <a href=\"https://www.oasis-open.org/committees/"
+"download.php/16826/openformula-spec-20060221.html\" target=\"_blank\" rel="
+"\"noopener noreferrer\">OASIS OpenFormula </a>."
 
 #: html/cool-help.html%2Bdiv.div.p:431-5
 msgid ""
@@ -2000,6 +2054,12 @@ msgid ""
 "complex and custom number formatting, as well as font, complex border, "
 "background, cell protection and other options."
 msgstr ""
+"<span class=\"def\"> التنسيق المباشر:</span> يمكنك تنسيق خلايا جداول "
+"البيانات والأعمدة والصفوف والأوراق عن طريق التنسيق مباشرة من قوائم أو شريط "
+"الأدوات أو قوائم السياق. ينطبق التنسيق المباشر فقط على الكائن الحالي المحدد. "
+"لتنسيق خلية إما استخدام القائمة أو أضغط <kbd>Ctrl </kbd><span class=\"kbd--"
+"plus\">+</span><kbd>1 </kbd>. يسمح مربع الحوار تنسيق أرقام معقدة ومخصصة، "
+"فضلا عن الخط والحدود المعقدة والخلفية وحماية الخلية وخيارات أخرى."
 
 #: html/cool-help.html%2Bdiv.div.p:435-5
 msgid ""
@@ -2008,6 +2068,9 @@ msgid ""
 "span> automatically detects cells that are headers, and adjoining columns, "
 "to extend the selection."
 msgstr ""
+"<span class=\"def\"> فرز البيانات:</span> يمكنك فرز قائمة بالأرقام أو النص "
+"تصاعديًا أو تنازليًا. يقوم <span class=\"productname\">٪productName </span> "
+"تلقائيا بالكشف عن الخلايا التي هي رؤوس وأعمدة متجاورة لتوسيع التحديد."
 
 #: html/cool-help.html%2Bdiv.div.p:436-5
 msgid ""
@@ -2016,12 +2079,18 @@ msgid ""
 "spreadsheets in <span class=\"productname\">%productName</span> there are "
 "various possibilities for applying filters."
 msgstr ""
+"<span class=\"def\"> تصفية البيانات:</span> تسمح لك عوامل التصفية والمرشحات "
+"المتقدمة بالعمل على صفوف (سجلات) معينة تمت تصفيتها من نطاق بيانات. في جداول "
+"البيانات في <span class=\"productname\">٪productName </span> هناك إمكانيات "
+"مختلفة لتطبيق عوامل التصفية."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:439-10
 msgid ""
 "One use for the <span class=\"ui\">AutoFilter</span> function is to quickly "
 "restrict the display to records with identical entries in a data field."
 msgstr ""
+"استخدام واحد لوظيفة <span class=\"ui\">AutoFilter</span>هو تقييد العرض بسرعة "
+"إلى سجلات ذات إدخالات متطابقة في حقل بيانات."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:442-11
 msgid ""
@@ -2030,6 +2099,10 @@ msgid ""
 "standard filter to connect the conditions with either a logical AND or a "
 "logical OR operator."
 msgstr ""
+"في مربع الحوار <span class=\"ui\"> عامل تصفية قياسي </span> ، يمكنك أيضًا "
+"تحديد النطاقات التي تحتوي على القيم في حقول بيانات معينة. يمكنك استخدام عامل "
+"التصفية القياسي لربط الشروط مع عامل التشغيل المنطقي \"AND\" أو عامل التشغيل "
+"المنطقي \"OR\"."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:443-11
 msgid ""
@@ -2037,6 +2110,8 @@ msgid ""
 "filter conditions. With advanced filters you enter the conditions directly "
 "into the sheet."
 msgstr ""
+"يسمح <span class=\"ui\"> المرشح المتقدم </span> بما يصل إلى ثمانية شروط "
+"تصفية. باستخدام عوامل التصفية المتقدمة، يمكنك إدخال الشروط مباشرة في الورقة."
 
 #: html/cool-help.html%2Bdiv.div.p:445-5
 msgid ""
@@ -2044,6 +2119,9 @@ msgid ""
 "and group rows and columns together so that you can collapse and expand the "
 "groups with a single click making it easy to represent hierarchical data."
 msgstr ""
+"<span class=\"def\"> توضيح: </span> يمكنك إنشاء مخطط تفصيلي للبيانات وتجميع "
+"صفوف وأعمدة معا بحيث يمكنك ضغط المجموعات وتوسيعها بنقرة واحدة مما يسهل تمثيل "
+"البيانات الهرمية."
 
 #: html/cool-help.html%2Bdiv.div.p:447-5
 msgid ""
@@ -2051,12 +2129,18 @@ msgid ""
 "entries to be valid. Invalid entries to a cell will be rejected. To enable "
 "data validation:"
 msgstr ""
+"<span class=\"def\"> التحقق من صلاحية البيانات: </span> لكل خلية ، يمكنك "
+"تعريف الإدخالات لتكون صالحة. سيتم رفض الإدخالات غير الصالحة للخلية. لتمكين "
+"التحقق من صلاحية البيانات:"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:450-9
+#, fuzzy
 msgid ""
 "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</"
 "span> menu. The <span class=\"ui\">Validity</span> dialog opens."
 msgstr ""
+"اختر <span class=\"ui\">الصلاحية </span> من القائمة <span class=\"ui\"> Data "
+"</span>. يفتح مربع الحوار <span class=\"ui\">validity </span>."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:453-11
 msgid ""
@@ -2064,6 +2148,8 @@ msgid ""
 "box list. Depending on the criterion, more options shows. Fill the required "
 "data."
 msgstr ""
+"حدد معيار الصلاحية في قائمة المربع المنسدل <span class=\"ui\"> السماح </"
+"span>. اعتمادًا على المعيار، تظهر المزيد من الخيارات. املأ البيانات المطلوبة."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:455-9
 msgid ""
@@ -2071,12 +2157,17 @@ msgid ""
 "Alert</span> tabs to enhance the user interactions. Click <span class=\"ui"
 "\">OK</span> to close the dialog."
 msgstr ""
+"استخدم علامتي التبويب <span class=\"ui\"> تعليمات الإدخال </span> و <span "
+"class=\"ui\"> تنبيه الخطأ </span> لتحسين تفاعلات المستخدم. انقر فوق <span "
+"class=\"ui\"> موافق </span> لإغلاق مربع الحوار."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:458-11
 msgid ""
 "To remove the validity of the cell, open the dialog and set the <span class="
 "\"ui\">Allow</span> list to “All values”."
 msgstr ""
+"لإزالة صلاحية الخلية، افتح مربع الحوار واضبط قائمة <span class=\"ui\"> "
+"السماح </span> على \"كافة القيم\"."
 
 #: html/cool-help.html%2Bdiv.div.p:460-5
 msgid ""
@@ -2086,6 +2177,10 @@ msgid ""
 "dot shows on the top right corner of the cell when it has a comment. Hover "
 "the mouse on the cell to display comments."
 msgstr ""
+"<span class=\"def\"> تعليقات:</span> في جدول بيانات يمكنك إدراج تعليق واحد "
+"لكل خلية. عند تحديد <span class=\"ui\">إدراج تعليق </span>، تظهر نافذة "
+"منبثقة تسمح لك بكتابة المحتوى للتعليق. تظهر نقطة حمراء في الزاوية اليمنى "
+"العليا من الخلية عندما يكون لها تعليق. مرر الماوس على الخلية لعرض التعليقات."
 
 #: html/cool-help.html%2Bdiv.div.p:462-5
 msgid ""
@@ -2095,6 +2190,10 @@ msgid ""
 "\">Conditional Formatting</span> icon on the toolbar. Select the symbol set "
 "to apply on the range."
 msgstr ""
+"<span class=\"def\"> تنسيق شرطي:</span> <span class=\"productname\">٪"
+"productName </span> يضيف رموزاً لكل خلية من نطاق استناداً إلى ظروف الخلايا. "
+"حدد نطاق الخلية وانقر فوق رمز <span class=\"ui\">تنسيق شرطي </span> على شريط "
+"الأدوات. حدد مجموعة الرموز لتطبيقها على النطاق."
 
 #: html/cool-help.html%2Bdiv.div.p:470-5
 msgid ""
@@ -2106,6 +2205,13 @@ msgid ""
 "tables and charts, are similar to a desktop word processor. Use the "
 "keyboard, menus and toolbars to interact with your document."
 msgstr ""
+"<span class=\"productname\">٪productName </span> يحرر المستندات النصية بنفس "
+"الطريقة التي تقوم فيها بتحرير مستند سطح المكتب. وهو يوفر أن ما تراه هو ما "
+"تحصل عليه (WYSIWYG) تخطيط -- الذي يضع المستند بشكل ملائم حيث ستتم طباعته.. "
+"تشبه عمليات مثل كتابة النص والقص والنسخ ولصق المحتويات وتحديد النص وإدراجها "
+"وإعادة حجمها وترسيخ الصور وإضافة الجداول والرسوم البيانية والتعامل معها "
+"معالج النصوص المكتبي. استخدم لوحة المفاتيح والقوائم وأشرطة الأدوات للتفاعل "
+"مع المستند."
 
 #: html/cool-help.html%2Bdiv.div.p:473-5
 msgid ""
@@ -2113,6 +2219,8 @@ msgid ""
 "available in the context menu are related - not extensively - to the "
 "underlying object in the document."
 msgstr ""
+"تتوفر قوائم السياق عند النقر على زر الماوس الأيمن. ترتبط الأوامر المتوفرة في "
+"قائمة السياق - وليس على نطاق واسع - بالكائن الأساسي في المستند."
 
 #: html/cool-help.html%2Bdiv.div.h3:475-5
 #, fuzzy
@@ -2130,6 +2238,12 @@ msgid ""
 "changes formatting as well, simplifying the effort of formatting many "
 "paragraph individually."
 msgstr ""
+"<span class=\"productname\">٪productName</span> يدعم التقنيات الحديثة لتنسيق "
+"الفقرة من خلال الأنماط. النمط يسمى مجموعة من خصائص النص (الخط واللون "
+"والخلفية وغيرها الكثير) مع اسم، اسم النمط. استخدم النمط لتطبيق نفس مجموعة "
+"الخصائص على العديد من الفقرات في المستند وإنتاج مظهر موحد ومهني. أيضا إذا "
+"قمت بتغيير إحدى خصائص تنسيق النمط فإن كافة الفقرات ذات النمط نفسه تغيير "
+"التنسيق أيضا مما يبسط الجهد المبذول في تنسيق العديد من الفقرات بشكل فردي."
 
 #: html/cool-help.html%2Bdiv.div.p:477-5
 msgid ""
@@ -2138,6 +2252,9 @@ msgid ""
 "in every text excerpt, turning text formatting a long task, subject to "
 "errors and delays."
 msgstr ""
+"في المقابل ، يطبق التنسيق المباشر التنسيق على مقتطفات محددة من محتويات "
+"المستند. في المستند الطويل ، يجب تطبيق التنسيق المباشر في كل مقتطف نصي ، مما "
+"يؤدي إلى تحويل تنسيق النص إلى مهمة طويلة ، وعرضة للأخطاء والتأخيرات."
 
 #: html/cool-help.html%2Bdiv.div.p:478-5
 msgid ""
@@ -2145,6 +2262,9 @@ msgid ""
 "objects by formatting directly from the menus, toolbar or context menus. "
 "Direct formatting applies only to the current object selected."
 msgstr ""
+"<span class=\"def\"> تنسيق مباشر: </span> يمكنك تنسيق كائنات المستند النصي "
+"عن طريق التنسيق بشكل مباشر من القوائم أو شريط الأدوات أو قوائم السياق. ينطبق "
+"التنسيق المباشر فقط على الكائن الحالي المحدد."
 
 #: html/cool-help.html%2Bdiv.div.p:479-5
 msgid ""
@@ -2153,10 +2273,14 @@ msgid ""
 "paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
+"<span class=\"def\"> تنسيق النمط:</span> <span class=\"productname\">٪"
+"productName </span> يدعم أنماط الفقرات. يمكنك تطبيق نمط فقرة موجود على فقرة. "
+"اختر القائمة <span class=\"ui\">Edit </span> → <span class=\"ui\">تحرير "
+"الأنماط </span> لتغيير النمط."
 
 #: html/cool-help.html%2Bdiv.div.h4:483-5
 msgid "Handling Tables"
-msgstr ""
+msgstr "معالجة الجداول"
 
 #: html/cool-help.html%2Bdiv.div.p:484-5
 msgid ""
@@ -2165,6 +2289,10 @@ msgid ""
 "cells with the <span class=\"ui\">Table</span> menu. The default paragraph "
 "style inside cells is “Table contents”."
 msgstr ""
+"إدراج جداول بأيقونة مناسبة في شريط الأدوات. حدد العدد الأولي للصفوف "
+"والأعمدة. إضافة صفوف وأعمدة مع قائمة سياق الخلية. دمج الخلايا مع <span class="
+"\"ui\">الجدول</span> القائمة. نمط الفقرة الافتراضي داخل الخلايا هو \"محتويات "
+"الجدول\"."
 
 #: html/cool-help.html%2Bdiv.div.p:486-5
 msgid ""
@@ -2172,10 +2300,13 @@ msgid ""
 "cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui"
 "\">Properties</span>. Fine tune the table with the properties dialog."
 msgstr ""
+"<span class=\"def\"> تنسيق الخلايا:</span> انقر في الخلية أو نطاق الخلايا "
+"واختر القائمة <span class=\"ui\">الجدول </span> → <span class=\"ui\">خصائص </"
+"span>. ضبط الجدول باستخدام مربع حوار الخصائص."
 
 #: html/cool-help.html%2Bdiv.div.h4:487-5
 msgid "Track changes"
-msgstr ""
+msgstr "تعقب التغييرات"
 
 #: html/cool-help.html%2Bdiv.div.p:488-5
 msgid ""
@@ -2183,6 +2314,9 @@ msgid ""
 "span> marks up new changes made to the document. Select this option again to "
 "turn it off."
 msgstr ""
+"عند تشغيل تعقب التغييرات، <span class=\"productname\">٪productName </span> "
+"بوضع علامات التغييرات الجديدة التي أجريت على المستند. حدد هذا الخيار مرة "
+"أخرى لإيقاف تشغيله."
 
 #: html/cool-help.html%2Bdiv.div.p:490-5
 msgid ""
