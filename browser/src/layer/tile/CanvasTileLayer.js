@@ -1956,7 +1956,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	},
 
 	_extractAndSetGraphicSelection: function(messageJSON) {
-		var calcRTL = this.isCalc() && this.isLayoutRTL();
+		var calcRTL = this.isCalcRTL();
 		var signX =  calcRTL ? -1 : 1;
 		var hasExtraInfo = messageJSON.length > 5;
 		var hasGridOffset = false;
@@ -3623,7 +3623,7 @@ L.CanvasTileLayer = L.Layer.extend({
 	_onGraphicMove: function (e) {
 		if (!e.pos) { return; }
 		var aPos = this._latLngToTwips(e.pos);
-		var calcRTL = this.isCalc() && this.isLayoutRTL();
+		var calcRTL = this.isCalcRTL();
 		if (e.type === 'graphicmovestart') {
 			this._graphicMarker.isDragged = true;
 			this._graphicMarker.setVisible(true);
@@ -3726,7 +3726,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		if (!e.pos) { return; }
 		if (!e.handleId) { return; }
 
-		var calcRTL = this.isCalc() && this.isLayoutRTL();
+		var calcRTL = this.isCalcRTL();
 		var aPos = this._latLngToTwips(e.pos);
 		var selMin = this._graphicSelectionTwips.min;
 		var selMax = this._graphicSelectionTwips.max;
@@ -4312,7 +4312,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		var startMarkerPos = this._map.project(startMarker.getLatLng());
 		// CalcRTL: position from core are in document coordinates. Conversion to layer coordinates for each maker is done
 		// in L.Layer.getLayerPositionVisibility(). Icons of RTL "start" and "end" has to be interchanged.
-		var calcRTL = this.isCalc() && this.isLayoutRTL();
+		var calcRTL = this.isCalcRTL();
 		if (startMarkerPos.distanceTo(endPos) < startMarkerPos.distanceTo(startPos) && startMarker._icon && endMarker._icon) {
 			// if the start marker is actually closer to the end of the selection
 			// reverse icons and markers
@@ -6498,6 +6498,14 @@ L.CanvasTileLayer = L.Layer.extend({
 			coords.y * this.options.tileHeightTwips / this._tileSize / zoomFactor);
 		var tileSize = new L.Point(this.options.tileWidthTwips / zoomFactor, this.options.tileHeightTwips / zoomFactor);
 		return new L.Bounds(tileTopLeft, tileTopLeft.add(tileSize));
+	},
+
+	isLayoutRTL: function () {
+		return !!this._layoutIsRTL;
+	},
+
+	isCalcRTL: function () {
+		return this.isCalc() && this.isLayoutRTL();
 	}
 
 });

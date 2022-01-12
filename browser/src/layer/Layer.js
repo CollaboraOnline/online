@@ -176,7 +176,7 @@ L.Layer.getLayerPositionVisibility = function (latlng, boundingClientRect, map, 
 	}
 	var pixelOrigin = map.getPixelOrigin();
 	var mapPanePos = map._getMapPanePos();
-	var mirrorX = map._docLayer.isCalc() && map._docLayer.isLayoutRTL();
+	var mirrorX = map._docLayer.isCalcRTL();
 	var layerSplitPos = splitPos.subtract(mapPanePos);
 	if (mirrorX)
 		layerSplitPos.x = map._size.x - splitPos.x - mapPanePos.x;

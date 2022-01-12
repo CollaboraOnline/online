@@ -1024,7 +1024,7 @@ L.Map = L.Evented.extend({
 		var mapPanePos = this._getMapPanePos();
 		var result = L.point(point).clone();
 		var pointX = point.x;
-		if (this._docLayer.isCalc() && this._docLayer.isLayoutRTL()) {
+		if (this._docLayer.isCalcRTL()) {
 			pointX = this._container.clientWidth - pointX;
 			result.x = pointX;
 		}
