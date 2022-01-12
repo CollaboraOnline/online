@@ -105,6 +105,7 @@ L.Control.UserList = L.Control.extend({
 
 	registerHeaderAvatarEvents: function() {
 		var outsideClickListener = function(e) {
+			$('.main-nav.hasnotebookbar').css('overflow', 'scroll hidden');
 			var selector = '#userListPopover';
 			var $target = $(e.target);
 			if (!$target.closest(selector).length && $(selector).is(':visible')) {
@@ -115,6 +116,7 @@ L.Control.UserList = L.Control.extend({
 
 		document.getElementById('userListSummary').addEventListener('click', function(e) {
 			e.stopPropagation();
+			$('.main-nav.hasnotebookbar').css('overflow', 'visible');
 			$('#userListPopover').show();
 			document.addEventListener('click', outsideClickListener);
 		});
