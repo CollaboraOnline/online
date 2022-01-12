@@ -44,11 +44,6 @@ class Cursor {
 		this.initLayout();
 	}
 
-	private isCalcRTL(): boolean {
-		const docLayer = this.map._docLayer;
-		return (docLayer.isCalc() && docLayer.isLayoutRTL());
-	}
-
 	add() {
 		if (!this.container) {
 			this.initLayout();
@@ -240,7 +235,7 @@ class Cursor {
 	}
 
 	private transformX(xpos: number): number {
-		if (!this.isCalcRTL()) {
+		if (!this.map._docLayer.isCalcRTL()) {
 			return xpos;
 		}
 

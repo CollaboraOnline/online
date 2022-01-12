@@ -73,8 +73,7 @@ L.SplitPanesSVG = L.SplitPanesRenderer.extend({
 	},
 
 	_isCalcRTL: function () {
-		var docLayer = this._map._docLayer;
-		return docLayer.isCalc() && docLayer.isLayoutRTL();
+		return this._map._docLayer.isCalcRTL();
 	},
 
 	// In RTL Calc mode this h-mirrors the top-left position of a rectangle else it does nothing.
