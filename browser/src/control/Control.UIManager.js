@@ -176,7 +176,8 @@ L.Control.UIManager = L.Control.extend({
 			if ((window.mode.isTablet() || window.mode.isDesktop()) && window.docPermission === 'edit') {
 				var showRuler = this.getSavedStateOrDefault('ShowRuler');
 				var interactiveRuler = this.map.isPermissionEdit();
-				L.control.ruler({position:'topleft', interactive:interactiveRuler, showruler: showRuler}).addTo(this.map);
+				var isRTL = document.documentElement.dir === 'rtl';
+				L.control.ruler({position: (isRTL ? 'topright' : 'topleft'), interactive:interactiveRuler, showruler: showRuler}).addTo(this.map);
 			}
 
 			var showResolved = this.getSavedStateOrDefault('ShowResolved');
