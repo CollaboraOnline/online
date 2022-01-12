@@ -868,7 +868,7 @@ input.clipboard {
 	background-color: var(--gray-light-bg-color);
 	height: 20px;
 	width: 100vw;
-	margin: 0px;
+	margin: 0px !important;
 	position: fixed;
 }
 
