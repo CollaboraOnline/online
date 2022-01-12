@@ -267,10 +267,10 @@ m4_ifelse(MOBILEAPP,[true],
         <div id="about-dialog-info-container">
           <div id="about-dialog-info">
             <div id="coolwsd-version-label"></div>
-            <div id="coolwsd-version"></div>
+            <div style="margin-inline-end: auto;"><div id="coolwsd-version" dir="ltr"></div></div>
             <div class="spacer"></div>
             <div id="lokit-version-label"></div>
-            <div id="lokit-version"></div>
+            <div style="margin-inline-end: auto;"><div id="lokit-version" dir="ltr"></div></div>
             m4_ifelse(MOBILEAPP,[],[<div id="served-by"><span id="served-by-label"></span>&nbsp;<span id="os-info"></span>&nbsp;<wbr><span id="coolwsd-id"></span></div>],[<p></p>])
             <div id="slow-proxy"></div>
             <p style="margin-inline-end: auto;"><span dir="ltr">Copyright © _YEAR_, VENDOR.</span></p>
