@@ -236,7 +236,7 @@ L.Popup = L.Layer.extend({
 
 		offset = offset.add(pos);
 
-		var rtlAdjust = this._map._docLayer.isCalc() && this._map._docLayer.isLayoutRTL();
+		var rtlAdjust = this._map._docLayer.isCalcRTL();
 		var bottom = this._containerBottom = -offset.y,
 		    left = this._containerLeft = -Math.round(rtlAdjust ? this._containerWidth : this._containerWidth / 2) + offset.x;
 

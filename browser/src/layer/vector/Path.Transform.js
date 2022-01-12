@@ -1033,8 +1033,7 @@ L.Handler.PathTransform = L.Handler.extend({
 	 * @return {boolean}
 	 */
 	 isCalcRTL: function () {
-		var docLayer = this._map._docLayer;
-		return docLayer.isCalc() && docLayer.isLayoutRTL();
+		return this._map._docLayer.isCalcRTL();
 	},
 
 	/**

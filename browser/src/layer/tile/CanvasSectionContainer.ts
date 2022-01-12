@@ -1897,7 +1897,7 @@ class CanvasSectionContainer {
 
 		section.isCalcRTL = function (): boolean {
 			const docLayer = section.sectionProperties.docLayer;
-			if (docLayer && docLayer.isCalc() && docLayer.isLayoutRTL()) {
+			if (docLayer && docLayer.isCalcRTL()) {
 				return true;
 			}
 

@@ -77,8 +77,7 @@ L.SVGGroup = L.Layer.extend({
 	},
 
 	isCalcRTL: function () {
-		var docLayer = this._map._docLayer;
-		return docLayer.isCalc() && docLayer.isLayoutRTL();
+		return this._map._docLayer.isCalcRTL();
 	},
 
 	_onDragStart: function(evt) {
