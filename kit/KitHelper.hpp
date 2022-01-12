@@ -93,7 +93,7 @@ namespace LOKitHelper
                     else if (name == "rtllayout")
                     {
                         if (prop.second == "1")
-                            rtlposs << i << ",";
+                            rtlposs << i << ',';
                     }
                 }
             }
