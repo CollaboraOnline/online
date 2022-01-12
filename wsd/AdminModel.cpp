@@ -551,11 +551,18 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
     }
 
     oss << memoryAllocated << ' ' << wopiHost;
-
-    LOG_INF("Adding a new document : " << filename
-                                       << " created by : " << COOLWSD::anonymizeUsername(userName)
-                                       << " using WopiHost : " << COOLWSD::anonymizeUrl(wopiHost)
-                                       << " allocating memory of : " << memoryAllocated);
+    if (COOLWSD::getConfigValue<bool>("logging.docstats", false))
+    {
+        Log::StreamLogger logger = Log::trace();
+        if (logger.enabled())
+        {
+            logger << "docstats : adding a document : " << filename
+                   << " created by : " << COOLWSD::anonymizeUsername(userName)
+                   << " using WopiHost : " << COOLWSD::anonymizeUrl(wopiHost)
+                   << " allocating memory of : " << memoryAllocated;
+        }
+        logger.flush();
+    }
     notify(oss.str());
 }
 
