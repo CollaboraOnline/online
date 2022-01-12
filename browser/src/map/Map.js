@@ -989,7 +989,12 @@ L.Map = L.Evented.extend({
 		return this.options.crs.pointToLatLng(L.point(point), zoom);
 	},
 
-	/// Get LatLng coordinates after negating the X cartesian-coordinate.
+	/**
+	 * Get LatLng coordinates after negating the X cartesian-coordinate.
+	 * This is useful in Calc RTL mode as mouse events have regular document
+	 * coordinates(latlng) but draw-objects(shapes) have negative document
+	 * X coordinates.
+	 */
 	negateLatLng: function (latlng, zoom) { // (LatLng[, Number]) -> LatLng
 		var docPos = this.project(latlng, zoom);
 		docPos.x = -docPos.x;
