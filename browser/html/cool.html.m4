@@ -273,7 +273,7 @@ m4_ifelse(MOBILEAPP,[true],
             <div id="lokit-version"></div>
             m4_ifelse(MOBILEAPP,[],[<div id="served-by"><span id="served-by-label"></span>&nbsp;<span id="os-info"></span>&nbsp;<wbr><span id="coolwsd-id"></span></div>],[<p></p>])
             <div id="slow-proxy"></div>
-            <p>Copyright © _YEAR_, VENDOR.</p>
+            <p style="margin-inline-end: auto;"><span dir="ltr">Copyright © _YEAR_, VENDOR.</span></p>
           </div>
         </div>
       </div>
