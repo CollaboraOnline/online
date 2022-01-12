@@ -647,9 +647,6 @@ class TilesSection {
 			var destPosScaled = (bestZoomSrc == zoom) ? destPos : this.scalePosForZoom(destPos, bestZoomSrc, zoom);
 			var relScale = (bestZoomSrc == zoom) ? 1 : this.map.getZoomScale(bestZoomSrc, zoom);
 
-			var toScaleAbs = relScale * docLayer._tileSize * 15.0 / docLayer._tileWidthTwips;
-			toScaleAbs = docLayer._tileSize * 15.0 / Math.round(15.0 * docLayer._tileSize / toScaleAbs);
-
 			this.beforeDraw(canvasContext);
 			this.forEachTileInArea(docRangeScaled, bestZoomSrc, part, ctx, function (tile: any, coords: any): boolean {
 				if (!tile || !tile.loaded || !docLayer._isValidTile(coords))
