@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0200\n"
 "PO-Revision-Date: 2022-01-12 20:55+0000\n"
-"Last-Translator: Abdelmaksoud Zakaria <abdo.zeko17@gmail.com>\n"
+"Last-Translator: Abdelsattar Tantawy <abdelsatar1997@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "help/ar/>\n"
 "Language: ar\n"
@@ -1706,6 +1706,10 @@ msgid ""
 "quickly as possible you can also force saving using the <span class=\"ui"
 "\">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
+"تحفظ المستندات تلقائيا في <span class=\"productname\">٪productName </span>، "
+"ولكن إذا كنت قلقا من مزامنة مستند ما في أسرع وقت ممكن، يمكنك أيضا فرض الحفظ "
+"باستخدام المدخلة <span class=\"ui\">File </span> <span class=\"ui\""
+">Save</span>."
 
 #: html/cool-help.html%2Bdiv.p:365-5
 msgid ""
@@ -1713,21 +1717,25 @@ msgid ""
 "a “Download PDF export?” popup shows. You can print this PDF in your "
 "favorite PDF reader."
 msgstr ""
+"اعتمادًا على إمكانيات متصفحك، قد تظهر نافذة الطباعة أو \"هل تريد تنزيل ملف "
+"PDF؟\" كنافذة منبثقة. يمكنك طباعة ملف PDF هذا في قارئ PDF المفضل لديك."
 
 #: html/cool-help.html%2Bdiv.p:366-5
 msgid ""
 "When closing a document, it is automatically saved if it has been changed."
-msgstr ""
+msgstr "عند إغلاق مستند، يحفظ تلقائيا إذا تم تغييره."
 
 #: html/cool-help.html%2Bdiv.p:369-5
 msgid ""
 "Document editing should be familiar to everyone that has used an office "
 "application before, but here are some distinctive features:"
 msgstr ""
+"يجب أن يكون تحرير المستندات مألوفا لكل من استخدم تطبيق أوفيس من قبل، ولكن "
+"إليك بعض الميزات المميزة:"
 
 #: html/cool-help.html%2Bdiv.h4:370-5
 msgid "Copy and Paste"
-msgstr ""
+msgstr "نسخ ولصق"
 
 #: html/cool-help.html%2Bdiv.p:371-5
 msgid ""
@@ -1743,6 +1751,18 @@ msgid ""
 "copy. On Android or iOS selecting text by double tapping, and using a long-"
 "tap to access copy/cut/paste via the context menu is required."
 msgstr ""
+"يدعم المحتوى المنسق خيارات النسخ/القص واللصق ليس فقط ضمن مستند معين، ولكن "
+"أيضا للمستندات التى لها نفس التنسيق أو تنسيق مختلف <span class=\"productname"
+"\">%productName</span>. وللاستخدامات الداخلية، يمكن للمستخدمين نسخ/قص "
+"المحتوى، بما في ذلك الصور والمحتوى المختلط على الكمبيوتر باستخدام اختصارات "
+"لوحة المفاتيح المباشرة (<kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>). ولأسباب أمنية من الضروري استخدام <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> للصق على الكمبيوتر، ويمكن "
+"كذلك استخدام قوائم السياق للقص والنسخ. وفي نظام التشغيل Android أو iOS يلزم "
+"تحديد النص عن طريق النقر المزدوج واستخدام نقرة طويلة للوصول إلى النسخ / القص "
+"/ اللصق عبر قائمة السياق."
 
 #: html/cool-help.html%2Bdiv.p:372-5
 msgid ""
@@ -1754,10 +1774,16 @@ msgid ""
 "in external applications. This step also converts complex object types into "
 "static images."
 msgstr ""
+"ولنسخ أجزاء أكبر من المحتوى إلى تطبيقات أخرى على جهازك، يحتاج المستخدمون إلى "
+"الضغط على زر <span class=\"ui\">Start download</span>، ثم إعادة النسخ مرة "
+"أخرى إلى الحافظة الخاصة بهم من أجل إتاحته للتطبيق المستهدف للقراءة. وهذا "
+"ممكن عبر عنصر واجهة مستخدم صغير ينبثق في الزاوية اليمنى السفلية وهو ضروري "
+"فقط لتصدير المحتوى للصقه في التطبيقات الخارجية. تعمل هذه الخطوة أيضًا على "
+"تحويل أنواع العناصر المعقدة إلى صور ثابتة."
 
 #: html/cool-help.html%2Bdiv.h4:373-5
 msgid "Document repair"
-msgstr ""
+msgstr "إصلاح المستند"
 
 #: html/cool-help.html%2Bdiv.p:374-5
 msgid ""
@@ -1766,12 +1792,18 @@ msgid ""
 "Repair function allows users to undo other editor’s changes to the document "
 "to a previous state."
 msgstr ""
+"عندما يقوم العديد من الأشخاص بتحرير نفس المستند بشكل متزامن، فمن الممكن أن "
+"تتعارض تغييراتهم وقد يتسبب ذلك في حدوث بعض الالتباس. تتيح وظيفة إصلاح "
+"المستند للمستخدمين التراجع عن تغييرات المحررين الآخرين للمستند وعودته إلى "
+"حالته السابقة."
 
 #: html/cool-help.html%2Bdiv.p:375-5
 msgid ""
 "To jump back to the selected state, select it with the mouse and hit <span "
 "class=\"ui\">Jump to state</span>."
 msgstr ""
+"للعودة إلى الحالة المحددة، حددها بالماوس واضغط على <span class=\"ui\">Jump "
+"to state</span>."
 
 #: html/cool-help.html%2Bdiv.p:377-5
 msgid ""
@@ -1780,6 +1812,10 @@ msgid ""
 "span><kbd>A</kbd> and proceeded to type over it destroying it – while you "
 "were concurrently editing."
 msgstr ""
+"وهذا مفيد على نحو خاص - لنفترض أنه عندما قام أحد الزملاء بتحديد كل النص في "
+"المستند بدون قصد باستخدام <kbd> Ctrl </kbd> <span class=\"kbd--plus\"> + </"
+"span> <kbd> A </kbd> وشرع في الكتابة فوقه مما أدى إلى إتلافه - بينما كنت "
+"تقوم بالتحرير في نفس الوقت."
 
 #: html/cool-help.html%2Bdiv.h4:378-5
 msgid "Inactive document"
@@ -1792,6 +1828,10 @@ msgid ""
 "“Inactive” state. The document is shown with a transparent gray overlay, "
 "with the message “Inactive document – please click to resume editing”."
 msgstr ""
+"عندما يكتشف <span class=\"productname\">٪productName </span> عدم وجود أي "
+"نشاط في المتصفح لفترة من الوقت، فإنه يضع المستند في حالة \"غير نشط\". يظهر "
+"المستند مع تراكب رمادي شفاف مع رسالة \"وثيقة غير نشطة - يرجى النقر لاستئناف "
+"التحرير\"."
 
 #: html/cool-help.html%2Bdiv.p:381-5
 msgid ""
@@ -1799,10 +1839,13 @@ msgid ""
 "disappear. Any changes that may have been made by other users – while "
 "collaboratively editing the document – are re-loaded."
 msgstr ""
+"لمواصلة التحرير، انقر على المستند والتوقف واخفاء الرسالة. يتم إعادة تحميل أي "
+"تغييرات قد تكون تم إجراؤها من قبل مستخدمين آخرين - أثناء تحرير المستند بشكل "
+"تعاوني."
 
 #: html/cool-help.html%2Bdiv.h4:382-5
 msgid "Pasting"
-msgstr ""
+msgstr "لصق"
 
 #: html/cool-help.html%2Bdiv.p:383-5
 msgid ""
