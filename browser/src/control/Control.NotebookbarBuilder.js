@@ -920,10 +920,10 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(menuHtml[0]).children('a').html('<img class="ui-content unobutton" src="' + L.LOUtil.getImageURL('lc_hamburger.svg') + '" id="Hamburgerimg" alt="Menu">');
 		$(menuHtml[0]).children('a').click(function () {
 			$(control.container).smartmenus('menuHideAll');
-			$('.main-nav.hasnotebookbar').css('overflow', 'visible');
 		});
 
 		$(control.container).bind('beforeshow.smapi', {self: menubar}, menubar._beforeShow);
+		$(control.container).bind('beforehide.smapi', {self: menubar}, menubar._beforeHide);
 		$(control.container).bind('click.smapi', {self: menubar}, menubar._onClicked);
 		$(control.container).bind('select.smapi', {self: menubar}, menubar._onItemSelected);
 		$(control.container).bind('mouseenter.smapi', {self: menubar}, menubar._onMouseEnter);
