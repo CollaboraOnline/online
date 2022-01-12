@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0200\n"
-"PO-Revision-Date: 2022-01-12 21:43+0000\n"
+"PO-Revision-Date: 2022-01-12 23:51+0000\n"
 "Last-Translator: Abdelmaksoud Zakaria <abdo.zeko17@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "help/ar/>\n"
@@ -36,7 +36,6 @@ msgid "Redo"
 msgstr "إعادة"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:24-49
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Y"
 
@@ -45,7 +44,6 @@ msgid "Cut"
 msgstr "قص"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:25-48
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X"
 
@@ -54,7 +52,6 @@ msgid "Paste as unformatted text"
 msgstr "لصق كنص غير منسق"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:26-70
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>V"
@@ -2754,7 +2751,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h4:570-5
 msgid "Why can't I delete text? It just gets a strike-through?"
-msgstr ""
+msgstr "لماذا لا يمكنني حذف النص؟ إنه فقط يتوسطه خط؟"
 
 #: html/cool-help.html%2Bdiv.div.p:571-5
 msgid ""
@@ -2764,32 +2761,38 @@ msgid ""
 "enabled choosing <span class=\"ui\">Edit</span> → <span class=\"ui\">Track "
 "Changes </span> → <span class=\"ui\">Record</span>."
 msgstr ""
+"لديك ميزة تعقب التغييرات ممكنة للمستند. يسجل تعقب التغييرات كافة التغييرات "
+"في النص ويظهر الإصدارات للمراجعة لاحقا. مفيد لوضع علامات على التغييرات في "
+"النص وجداول البيانات. يتم تمكين تعقب التغييرات باختيار <span class=\"ui\""
+">تحرير</span> → <span class=\"ui\"> تعقب التغييرات </span> → <span class=\"ui"
+"\">تسجيل</span>."
 
 #: html/cool-help.html%2Bdiv.div.p:572-5
 msgid "With track changes enabled your document is shown the following manner:"
-msgstr ""
+msgstr "مع تمكين تعقب التغييرات، يتم عرض المستند الخاص بك بالطريقة التالية:"
 
 #: html/cool-help.html%2Bdiv.div.ul.li.p:574-11
+#, fuzzy
 msgid "Deletions are marked with colored strike-through characters."
-msgstr ""
+msgstr "يتم تمييز عمليات الحذف بأحرف خطية ملونة."
 
 #: html/cool-help.html%2Bdiv.div.ul.li.p:575-11
 msgid "Additions are marked with colored underlined characters."
-msgstr ""
+msgstr "يتم تمييز الإضافات بأحرف ملونة تحتها خط."
 
 #: html/cool-help.html%2Bdiv.div.ul.li.p:576-11
 msgid "All changes are marked with a vertical bar in the right margin."
-msgstr ""
+msgstr "يتم تمييز جميع التغييرات بشريط عمودي في الهامش الأيمن."
 
 #: html/cool-help.html%2Bdiv.div.ul.li.p:577-11
 msgid "Changes are displayed as comment in the right of the document area."
-msgstr ""
+msgstr "يتم عرض التغييرات كتعقيب في يمين منطقة المستند."
 
 #: html/cool-help.html%2Bdiv.div.p:580-5
 msgid ""
 "The color assigned to the changes depends on the user that changes the "
 "document."
-msgstr ""
+msgstr "يعتمد اللون المعين للتغييرات على المستخدم الذي يغير المستند."
 
 #: html/cool-help.html%2Bdiv.div.p:581-5
 msgid ""
@@ -2798,6 +2801,10 @@ msgid ""
 "span>. Beware that if track changes are enabled but hidden, you still record "
 "changes and may inadvertently leave unwanted text available in the document."
 msgstr ""
+"لعرض أو إخفاء تعقب التغييرات اختر <span class=\"ui\">تحرير</span> → <span "
+"class=\"ui\"> تعقب التغييرات </span> → <span class=\"ui\">إظهار </span>. "
+"احذر من أنه إذا تم تمكين تغييرات المسار ولكن تم إخفاؤها، فإنك لا تزال تسجل "
+"التغييرات وقد تترك النص غير المرغوب فيه متاحا في المستند عن غير قصد."
 
 #: html/cool-help.html%2Bdiv.div.p:582-5
 msgid ""
@@ -2810,6 +2817,14 @@ msgid ""
 "\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog "
 "shows a list of all tracked changes. Use the dialog buttons accordingly."
 msgstr ""
+"يمكن قبول التغييرات أو رفضها. لقبول التغييرات أو رفضها، انقر على الرموز "
+"المقابلة في مربع التعليق على يمين المستند. بدلا من ذلك، اختر <span class=\"ui"
+"\">تحرير </span> → <span class=\"ui\"> تعقب التغييرات </span> → <span class="
+"\"ui\">قبول</span> أو <span class=\"ui\">رفض </span>. علاوة على ذلك، إذا كنت "
+"بحاجة إلى تصفية التغييرات قبل قبولها أو رفضها، اختر <span class=\"ui\">Edit "
+"</span> → <span class=\"ui\"> تعقب التغييرات </span> → <span class=\"ui\""
+">إدارة</span>. يظهر مربع حوار قائمة بكافة التغييرات المتعقبة. استخدم أزرار "
+"الحوار وفقا لذلك."
 
 #: html/cool-help.html%2Bdiv.div.h4:584-5
 #, fuzzy
@@ -2821,42 +2836,50 @@ msgid ""
 "Using the ruler drag the leftmost edge of the ruler to adjust the left "
 "margin, or the rightmost for the right margin."
 msgstr ""
+"باستخدام المسطرة اسحب الحافة اليسرى من المسطرة لضبط الهامش الأيسر أو أقصى "
+"اليمين للهامش الأيمن."
 
 #: html/cool-help.html%2Bdiv.div.p:586-5
 msgid "Using the page style"
-msgstr ""
+msgstr "استخدام نمط الصفحة"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:588-11
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Page</span> and "
 "select the <span class=\"ui\">Page</span> tab"
 msgstr ""
+"اختر <span class=\"ui\">تنسيق </span> → صفحة <span class=\"ui\"></span> وحدد "
+"علامة التبويب <span class=\"ui\">الصفحة </span>"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:589-11
 msgid "Set the page margins in the dialog."
-msgstr ""
+msgstr "اضبط هوامش الصفحة في مربع الحوار."
 
 #: html/cool-help.html%2Bdiv.div.h4:592-5
 msgid "How do I change the page orientation to landscape inside my document"
-msgstr ""
+msgstr "كيف يمكنني تغيير اتجاه الصفحة إلى أفقي داخل مستندي"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:594-11
 msgid ""
 "Place the cursor at the place where the page orientation is to change. Add "
 "an empty paragraph."
-msgstr ""
+msgstr "ضع المؤشر في المكان الذي سيتم تغيير اتجاه الصفحة فيه. أضف فقرة فارغة."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:595-11
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</"
 "span>, <span class=\"ui\">Text Flow </span> tab"
 msgstr ""
+"اختر <span class=\"ui\">تنسيق</span> → <span class=\"ui\">فقرة</span>، <span "
+"class=\"ui\"> علامة التبويب تدفق النص </span>"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:596-11
 msgid ""
 "In the <span class=\"ui\">Breaks</span> area, mark Insert, Type: Page Break, "
 "Position: Before."
 msgstr ""
+"في منطقة <span class=\"ui\">الفواصل</span>، ضع علامة إدراج، اكتب: فاصل صفحات،"
+" موضع: قبل."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:597-11
 msgid "Select Landscape in “With Page Style”"
@@ -2864,25 +2887,26 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:598-11
 msgid "Select if you want to change page numbering."
-msgstr ""
+msgstr "حدد إذا كنت تريد تغيير ترقيم الصفحات."
 
 #: html/cool-help.html%2Bdiv.div.p:600-5
 msgid ""
 "To return to portrait orientation, repeat the procedure, choosing Portrait "
 "in “With page style”."
 msgstr ""
+"للعودة إلى الاتجاه العمودي، كرر الإجراء ، واختيار عمودي في \"مع نمط الصفحة\"."
 
 #: html/cool-help.html%2Bdiv.div.h4:601-5
 msgid "How can I make the new text look like other existing text?"
-msgstr ""
+msgstr "كيف يمكنني جعل النص الجديد يبدو مثل النص الآخر الموجود؟"
 
 #: html/cool-help.html%2Bdiv.div.p:602-5
 msgid "Directly:"
-msgstr ""
+msgstr "مباشرة:"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:604-11
 msgid "Select the text with the existing format"
-msgstr ""
+msgstr "تحديد النص بالتنسيق الموجود"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p.img:605-11
 #: html/cool-help.html%2Bdiv.div.ol.li.p.img:636-11
@@ -2891,10 +2915,13 @@ msgid ""
 "alt=\"\" src=\"images/lc_formatpaintbrush.svg\">. The mouse pointer turns to "
 "a paint bucket."
 msgstr ""
+"انقر على أيقونة تنسيق النسخ <img style = \"height: 0.6cm؛ width: 0.6cm؛\" "
+"alt = \"\" src = \"images / lc_formatpaintbrush.svg\">. يتحول مؤشر الماوس "
+"إلى دلو طلاء."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:606-11
 msgid "Select the text you want to apply the new format."
-msgstr ""
+msgstr "حدد النص الذي تريد تطبيقه على التنسيق الجديد."
 
 #: html/cool-help.html%2Bdiv.div.p:608-5
 #, fuzzy
@@ -2903,18 +2930,20 @@ msgstr "تطبيق نمط الفقرات «الترويسة الأولى»"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:610-11
 msgid "Place the cursor at the paragraph to be formatted"
-msgstr ""
+msgstr "ضع المؤشر على الفقرة المطلوب تنسيقها"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:611-11
 msgid ""
 "Select the style to apply in the style dropdown list. The paragraph displays "
 "the styles attributes."
 msgstr ""
+"حدد النمط المراد تطبيقه في القائمة المنسدلة للأنماط. تعرض الفقرة سمات "
+"الأنماط."
 
 #: html/cool-help.html%2Bdiv.div.h4:613-5
 msgid ""
 "Why did the text I just typed change automatically? How can I revert it?"
-msgstr ""
+msgstr "لماذا تغير النص الذي كتبته للتو تلقائيًا؟ كيف يمكنني التراجع عنها؟"
 
 #: html/cool-help.html%2Bdiv.div.p:614-5
 msgid ""
@@ -2924,10 +2953,15 @@ msgid ""
 "necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui"
 "\">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
 msgstr ""
+"لديك التصحيح التلقائي مفعل. تغيير التصحيح التلقائي النص المكتوبة في جدول "
+"داخلي من النص المطابق. في معظم الحالات، التصحيح التلقائي بإصلاح الأخطاء "
+"المطبعية أثناء الكتابة. إذا لم يكن التصحيح التلقائي ضروريا، فقم بتعطيله في "
+"<span class=\"ui\">أدوات</span> → <span class=\"ui\">التصحيح التلقائي </"
+"span> → <span class=\"ui\"> أثناء الكتابة</span>."
 
 #: html/cool-help.html%2Bdiv.div.h4:619-5
 msgid "How can I select data to print?"
-msgstr ""
+msgstr "كيف يمكنني تحديد البيانات للطباعة؟"
 
 #: html/cool-help.html%2Bdiv.div.p:620-5
 msgid ""
@@ -2935,22 +2969,27 @@ msgid ""
 "and print the document to download. On printing the PDF, select the pages of "
 "interest."
 msgstr ""
+"أدخل فواصل الأعمدة والصفوف في جدول البيانات لتضييق نطاق الطباعة وطباعة "
+"المستند لتنزيله. عند طباعة ملف PDF، حدد الصفحات التي تهمك."
 
 #: html/cool-help.html%2Bdiv.div.h4:621-5
 msgid "How can I import CSV data?"
-msgstr ""
+msgstr "كيف يمكنني استيراد بيانات CSV؟"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:623-11
 msgid ""
 "Load your CSV data in some native tool to your platform, select and copy it "
 "to the clipboard"
 msgstr ""
+"تحميل بيانات CSV في بعض الأدوات الأصلية إلى النظام الأساسي الخاص بك، حددها "
+"وانسخها إلى الحافظة"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:624-11
 msgid ""
 "Activate the <span class=\"productname\">%productName</span> spreadsheet "
 "window."
 msgstr ""
+"تنشيط <span class=\"productname\">٪productName </span> نافذة جدول البيانات."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:626-9
 msgid ""
@@ -2959,37 +2998,42 @@ msgid ""
 "span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> dialog opens to "
 "let you describe the precise format of the CSV data."
 msgstr ""
+"لصق من المتصفح <span class=\"ui\">تحرير </span> → <span class=\"ui\">لصق </"
+"span> أو اضغط <kbd>Ctrl </kbd><span class=\"kbd--plus\">+</span><kbd>V </"
+"kbd>. يفتح مربع الحوار <span class=\"ui\">Text Import </span> ليتسمح لك بوصف "
+"التنسيق الدقيق لبيانات CSV."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:629-11
 msgid ""
 "Select the character set, language and separator options for the CSV file."
-msgstr ""
+msgstr "حدد مجموعة الأحرف واللغة وخيارات الفاصل لملف CSV."
 
 #: html/cool-help.html%2Bdiv.div.p:631-5
 msgid ""
 "The CSV data is loaded into the selected cell where you pasted, according to "
 "these settings."
 msgstr ""
+"يتم تحميل بيانات CSV في الخلية المحددة حيث قمت بلصقها، وفقا لهذه الإعدادات."
 
 #: html/cool-help.html%2Bdiv.div.h4:632-5
 msgid "How can I copy the formatting of existing cells to new ones?"
-msgstr ""
+msgstr "كيف يمكنني نسخ تنسيق الخلايا الموجودة إلى خلايا جديدة؟"
 
 #: html/cool-help.html%2Bdiv.div.p:633-5
 msgid "This is easy to do using the Paintbrush tool in the toolbar."
-msgstr ""
+msgstr "من السهل القيام بذلك باستخدام أداة الرسام في شريط الأدوات."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:635-11
 msgid "Format the source cell with the font, color background and more."
-msgstr ""
+msgstr "قم بتنسيق الخلية المصدر باستخدام الخط وخلفية اللون والمزيد."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:637-11
 msgid "Select the cells you want to format. Release the mouse button."
-msgstr ""
+msgstr "حدد الخلايا التي تريد تنسيقها. حرر زر الفأرة."
 
 #: html/cool-help.html%2Bdiv.div.h4:639-5
 msgid "What is “Clear Direct Formatting” icon?"
-msgstr ""
+msgstr "ما هو رمز \"مسح التنسيق المباشر\"؟"
 
 #: html/cool-help.html%2Bdiv.div.p:640-5
 msgid ""
@@ -3002,7 +3046,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h4:641-5
 msgid "How do I rename a sheet?"
-msgstr ""
+msgstr "كيف يمكنني إعادة تسمية ورقة؟"
 
 #: html/cool-help.html%2Bdiv.div.p:642-5
 msgid ""
@@ -3010,15 +3054,19 @@ msgid ""
 "right mouse button) over the sheet tab in the bottom. Enter the new sheet "
 "name in the dialog that follows."
 msgstr ""
+"إعادة تسمية ورقة في مستند جدول البيانات باستخدام قائمة السياق (باستخدام زر "
+"الفأرة الأيمن) فوق علامة التبويب ورقة في الأسفل. أدخل اسم الورقة الجديد في "
+"مربع الحوار التالي."
 
 #: html/cool-help.html%2Bdiv.div.h4:647-5
 msgid "How can I run my slide show?"
-msgstr ""
+msgstr "كيف يمكنني تشغيل عرض الشرائح الخاص بي؟"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:649-11
 msgid ""
 "Open the presentation in <span class=\"productname\">%productName</span>"
 msgstr ""
+"افتح العرض التقديمي في <span class=\"productname\">٪ productName </span>"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p.img:650-11
 msgid ""
@@ -3027,6 +3075,10 @@ msgid ""
 "the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
 "\"images/lc_dia.svg\">"
 msgstr ""
+"إما أن تختار <span class = \"ui\"> عرض الشرائح </ span> → <span class = \"ui"
+"\"> عرض ملء الشاشة </ span> أو انقر على الرمز الموجود في أقصى اليسار أسفل "
+"لوحة الشرائح: <img النمط = \"الارتفاع: 0.6 سم ؛ العرض: 0.6 سم ؛\" alt = \"\" "
+"src = \"images / lc_dia.svg\">"
 
 #: html/cool-help.html%2Bdiv.div.h4:652-5
 msgid "How can I change the line, area and position of a shape in my slides?"
