@@ -1131,6 +1131,11 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	font-size: 12px;
 }
 
+#userListPopover.rtl {
+	right: unset !important;
+	left: 5px;
+}
+
 #userListPopover::after {
 	border: 10px solid transparent;
 	border-bottom-color: var(--color-main-background);
@@ -1142,6 +1147,11 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	pointer-events: none;
 	color: #f9f9f9;
 	right: 16px;
+}
+
+#userListPopover.rtl::after {
+	right: unset !important;
+	left: 16px;
 }
 
 #userListPopover .user-list-item {
