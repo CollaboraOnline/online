@@ -1340,7 +1340,11 @@ L.Map = L.Evented.extend({
 					}
 					if (width > 0 && height > 0 && sizeChanged) {
 						console.log('_onResize: container width: ' + width + ', container height: ' + height + ', _calcInputBar width: ' + this.dialog._calcInputBar.width);
-						app.socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
+						if (width != this.dialog._calcInputbarContainerWidth || height != this.dialog._calcInputbarContainerHeight) {
+							app.socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
+							this.dialog._calcInputbarContainerWidth = width;
+							this.dialog._calcInputbarContainerHeight = height;
+						}
 					}
 				}
 			}
