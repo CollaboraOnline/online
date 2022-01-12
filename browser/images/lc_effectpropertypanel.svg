@@ -1,0 +1,26 @@
+<svg version="1.1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="linearGradient4324" x1="6" x2="26" y1="26" y2="6" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fafafa" offset="0"/>
+   <stop stop-color="#fafafa" offset=".74404"/>
+   <stop stop-color="#1e8bcd" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient5309" x1="13.198" x2="27.32" y1="18.581" y2="4.4591" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#fafafa" stop-opacity="0" offset="0"/>
+   <stop stop-color="#fbfbfb" stop-opacity="0" offset=".47717"/>
+   <stop stop-color="#fff" offset=".53161"/>
+   <stop stop-color="#1e8bcd" offset=".59158"/>
+   <stop stop-color="#1e8bcd" offset=".81011"/>
+   <stop stop-color="#1e8bcd" offset="1"/>
+  </linearGradient>
+ </defs>
+ <g transform="matrix(.71429 0 0 .71429 2 -.85714)">
+  <rect y="8" width="24" height="24" ry="2.1818" fill="#b8b8b8" stroke-width="2.1818"/>
+  <g stroke-width="2">
+   <path d="m6 4c-1.108 0-2 0.892-2 2v20c0 1.108 0.892 2 2 2h20c1.108 0 2-0.892 2-2v-20c0-1.108-0.892-2-2-2zm0 2h20v20h-20z" fill="#3a3a38"/>
+   <path d="m6 6v20h20v-20zm2 2h16v16h-16z" fill="#4d4d4d"/>
+   <path d="m6 6h20v20h-20z" fill="url(#linearGradient4324)"/>
+   <path d="m6 4c-1.108 0-2 0.892-2 2v20c0 1.108 0.892 2 2 2h20c1.108 0 2-0.892 2-2v-20c0-1.108-0.892-2-2-2zm0 2h20v20h-20z" fill="url(#linearGradient5309)"/>
+  </g>
+ </g>
+</svg>
