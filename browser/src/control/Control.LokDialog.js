@@ -961,6 +961,9 @@ L.Control.LokDialog = L.Control.extend({
 		this._postLaunch(id, container, handles);
 		this._setupCalcInputBarGestures(id, handles, startHandle, endHandle);
 
+		this._calcInputbarContainerWidth = width;
+		this._calcInputbarContainerHeight = height;
+
 		// console.log('_createCalcInputBar: end');
 	},
 
@@ -1411,8 +1414,12 @@ L.Control.LokDialog = L.Control.extend({
 					var width = calcInputbarContainer.clientWidth;
 					var height = calcInputbarContainer.clientHeight;
 					if (width !== 0 && height !== 0) {
-						// console.log('_resizeCalcInputBar: id: ' + id + ', width: ' + width + ', height: ' + height);
-						app.socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
+						if (width != this._calcInputbarContainerWidth || height != this._calcInputbarContainerHeight) {
+							// console.log('_resizeCalcInputBar: id: ' + id + ', width: ' + width + ', height: ' + height);
+							app.socket.sendMessage('resizewindow ' + id + ' size=' + width + ',' + height);
+							this._calcInputbarContainerWidth = width;
+							this._calcInputbarContainerHeight = height;
+						}
 					}
 				}
 			}
