@@ -17,13 +17,7 @@
 
 class UnitWopiLock : public WopiTestServer
 {
-    enum class Phase
-    {
-        Load,
-        LockDocument,
-        UnlockDocument,
-        Polling
-    } _phase;
+    STATES_ENUM(Phase, _phase, Load, LockDocument, UnlockDocument, Polling);
 
     std::string _lockState;
     std::string _lockString;
@@ -41,7 +35,7 @@ public:
         Poco::URI uriReq(request.getURI());
         Poco::RegularExpression regInfo("/wopi/files/[0-9]");
         Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
-        LOG_INF("Fake wopi host request: " << uriReq.toString());
+        LOG_INF("Fake wopi host request: " << request.getMethod() << ' ' << uriReq.toString());
 
         // CheckFileInfo
         if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
@@ -133,12 +127,14 @@ public:
 
     void assertLockRequest(const Poco::Net::HTTPRequest& request)
     {
+        LOG_TST("assertLockRequest: " << request.getURI());
+
         std::string newLockState = request.get("X-WOPI-Override", std::string());
         std::string lock = request.get("X-WOPI-Lock", std::string());
         if (_phase == Phase::LockDocument && newLockState == "LOCK")
         {
             LOK_ASSERT_MESSAGE("Lock String cannot be empty", lock != std::string());
-            _phase = Phase::UnlockDocument;
+            TRANSITION_STATE(_phase, Phase::UnlockDocument);
             _lockState = newLockState;
             _lockString = lock;
 
@@ -147,7 +143,7 @@ public:
         {
             LOK_ASSERT_MESSAGE("Document it not locked", _lockState != "UNLOCK");
             LOK_ASSERT_EQUAL(_lockString, lock);
-            _phase = Phase::Polling;
+            TRANSITION_STATE(_phase, Phase::Polling);
             exitTest(TestResult::Ok);
         }
     }
@@ -160,12 +156,11 @@ public:
         {
             case Phase::Load:
             {
-                _phase = Phase::LockDocument;
                 initWebsocket("/wopi/files/0?access_token=anything");
                 addWebSocket();
                 helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
                 helpers::sendTextFrame(*getWsAt(1)->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
-                SocketPoll::wakeupWorld();
+                TRANSITION_STATE(_phase, Phase::LockDocument);
                 break;
             }
             case Phase::LockDocument:
