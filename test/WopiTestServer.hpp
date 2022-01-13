@@ -95,7 +95,7 @@ public:
 
     void addWebSocket()
     {
-        LOG_TST("Addigin additional socket to the fake WOPI server: /cool/" << _wopiSrc << "/ws");
+        LOG_TST("Adding additional socket to the fake WOPI server: /cool/" << _wopiSrc << "/ws");
         const auto& _ws = _wsList.emplace(_wsList.end(), std::unique_ptr<UnitWebSocket>(new UnitWebSocket("/cool/" + _wopiSrc + "/ws")));
 
         assert((*_ws).get());
