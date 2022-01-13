@@ -250,7 +250,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 #mobile-edit-button-image {
 	position: relative;
-	left: 16px;
+	margin-inline-start: 16px;
 	top: 16px;
 	width: 24px;
 	height: 24px;
