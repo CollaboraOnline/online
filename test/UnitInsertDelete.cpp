@@ -35,7 +35,7 @@ void getPartHashCodes(const std::string& testname, const std::string& response,
 
     TST_LOG("Reading parts from [" << response << "].");
 
-    // Expected format is something like 'type= parts= current= width= height= viewid= [hiddenparts=]'.
+    // Expected format is something like 'type= parts= current= width= height= viewid= props={} [hiddenparts=]'.
     StringVector tokens(Util::tokenize(line, ' '));
 #if defined CPPUNIT_ASSERT_GREATEREQUAL
     CPPUNIT_ASSERT_GREATEREQUAL(static_cast<size_t>(7), tokens.size());
