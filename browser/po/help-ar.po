@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0200\n"
-"PO-Revision-Date: 2022-01-12 23:51+0000\n"
+"PO-Revision-Date: 2022-01-13 10:12+0000\n"
 "Last-Translator: Abdelsattar Tantawy <abdelsatar1997@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "help/ar/>\n"
@@ -900,9 +900,9 @@ msgid ""
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
 msgstr ""
-"إن لم يكن هناك أيّة خليّة محددة، فسيُحذف النص من المؤشر إلى نهاية الجملة "
-"الحالية. إن كان المؤشر على نهاية إحدى الخلايا وليس هناك كاملة محددة، فسيُحذف "
-"محتوى الخلية التالية."
+"إذا لم تحدد أي خلية كاملة، فسيحذف النص من المؤشر إلى نهاية الجملة الحالية. "
+"وإذا كان المؤشر في نهاية خلية، ولم تحدد خلية كاملة، فستحذف محتويات الخلية "
+"التالية."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td.p:108-1
 msgid ""
@@ -910,8 +910,8 @@ msgid ""
 "paragraph following the table will be deleted, unless it is the last "
 "paragraph in the document."
 msgstr ""
-"إن لم تكن هناك خلية كاملة محددة والمؤشر على نهاية الجدول، فستُحذف الفقرة "
-"التالية للجدول، إلا إن كانت آخر فقرة في المستند."
+"إذا كان المؤشر في نهاية الجدول مع عدم تحديد خلية كاملة، فستحذف الفقرة "
+"التالية للجدول، ما لم تكن الفقرة الأخيرة في المستند."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td.p:109-1
 msgid ""
@@ -919,8 +919,8 @@ msgid ""
 "will be deleted. If all rows are selected completely or partially, the "
 "entire table will be deleted."
 msgstr ""
-"إن كانت هناك خلية محددة فأكثر، الصفوف الكاملة التي تحتوي التحديد ستُحذف. إن "
-"كانت كل الصفوف محددة بشكل كامل أو جزئي، فسيُحذف الجدول بالكامل."
+"إذا تم تحديد خلية واحدة أو أكثر، فستحذف الصفوف بأكملها التي تحتوي على "
+"التحديد. وإذا تم تحديد كافة الصفوف بشكل كامل أو جزئي، فسيحذف الجدول بأكمله."
 
 #: html/cool-help.html%2Bdiv.div.h2:112-9
 msgid "Word processor functions"
@@ -1050,7 +1050,7 @@ msgstr "التنقل في جداول البيانات"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
-msgstr "نقل المؤشر إلى الخلية الأولى في الورقة (A1)."
+msgstr "ينقل المؤشر إلى الخلية الأولى في الورقة (A1)."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
@@ -1072,14 +1072,14 @@ msgstr "يحدد الخلايا من الخلية الحالية إلى الخل
 #: html/cool-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
-msgstr "تحديد الخلايا من الخلية الحالية إلى الخلية الأخيرة من الصف الحالي."
+msgstr "يحدد الخلايا من الخلية الحالية إلى الخلية الأخيرة من الصف الحالي."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
-"تحديد خلايا من الخلية الحالية حتى صفحة واحدة في العمود الحالي أو توسيع "
+"يحدد خلايا من الخلية الحالية حتى صفحة واحدة في العمود الحالي أو توسيع "
 "التحديد الموجود صفحة واحدة لأعلى."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-164
@@ -1091,8 +1091,8 @@ msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
-"تحديد الخلايا من الخلية الحالية وصولا إلى صفحة واحدة في العمود الحالي أو "
-"توسيع التحديد الموجود صفحة واحدة لأسفل."
+"يحدد الخلايا من الخلية الحالية وصولا إلى صفحة واحدة في العمود الحالي أو يوسع "
+"التحديد الموجود صفحة واحدة لأسفل."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:139-168
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
@@ -1104,7 +1104,7 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
-"تحريك المؤشر إلى الحافة اليسرى لنطاق البيانات الحالي. إذا كان العمود الموجود "
+"ينقل المؤشر إلى الحافة اليسرى لنطاق البيانات الحالي. إذا كان العمود الموجود "
 "إلى يسار الخلية التي تحتوي على المؤشر فارغا، ينتقل المؤشر إلى العمود التالي "
 "إلى اليسار الذي يحتوي على بيانات"
 
@@ -1118,7 +1118,7 @@ msgid ""
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
-"تحريك المؤشر إلى الحافة اليمنى لنطاق البيانات الحالي. إذا كان العمود الموجود "
+"ينقل المؤشر إلى الحافة اليمنى لنطاق البيانات الحالي. إذا كان العمود الموجود "
 "إلى يمين الخلية التي تحتوي على المؤشر فارغا، ينتقل المؤشر إلى العمود التالي "
 "إلى اليمين الذي يحتوي على بيانات."
 
@@ -1132,7 +1132,7 @@ msgid ""
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
-"نقل المؤشر إلى الحافة العليا لنطاق البيانات الحالي. إذا كان الصف فوق الخلية "
+"ينقل المؤشر إلى الحافة العليا لنطاق البيانات الحالي. إذا كان الصف فوق الخلية "
 "التي تحتوي على المؤشر فارغا، ينتقل المؤشر لأعلى إلى الصف التالي الذي يحتوي "
 "على بيانات."
 
@@ -1146,7 +1146,7 @@ msgid ""
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
-"نقل المؤشر إلى الحافة السفلية لنطاق البيانات الحالي. إذا كان الصف أسفل "
+"ينقل المؤشر إلى الحافة السفلية لنطاق البيانات الحالي. إذا كان الصف أسفل "
 "الخلية التي تحتوي على المؤشر فارغا، ينتقل المؤشر لأسفل إلى الصف التالي الذي "
 "يحتوي على بيانات."
 
@@ -1161,7 +1161,7 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
-"تحديد كافة الخلايا التي تحتوي على بيانات من الخلية الحالية إلى نهاية النطاق "
+"يحدد كافة الخلايا التي تحتوي على بيانات من الخلية الحالية إلى نهاية النطاق "
 "المستمر لخلايا البيانات، في اتجاه السهم المضغوط. إذا تم استخدامه لتحديد صفوف "
 "وأعمدة معا، يتم تحديد نطاق خلايا مستطيل."
 
@@ -1175,7 +1175,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr "نقل ورقة واحدة إلى اليسار."
+msgstr "ينقل ورقة واحدة إلى اليسار."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-73
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Up"
@@ -1183,7 +1183,7 @@ msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>صفحة لأعلى"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr "نقل صفحة شاشة واحدة إلى اليمين."
+msgstr "ينقل صفحة شاشة واحدة إلى اليمين."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-80
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Page Down"
@@ -1195,8 +1195,8 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
-"إضافة الورقة السابقة إلى التحديد الحالي للأوراق. إذا تم تحديد كافة الأوراق "
-"في جدول بيانات، فإن تركيبة مفاتيح الاختصار هذه تحدد الورقة السابقة فقط. يجعل "
+"يضيف الورقة السابقة إلى التحديد الحالي للأوراق. إذا تم تحديد كافة الأوراق في "
+"جدول البيانات، فإن تركيبة مفاتيح الاختصار هذه تحدد الورقة السابقة فقط. يجعل "
 "الورقة السابقة الورقة الحالية."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-260
@@ -1213,9 +1213,9 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
-"إضافة الورقة التالية إلى التحديد الحالي من الأوراق. إذا تم تحديد كافة "
-"الأوراق في جدول بيانات، فإن تركيبة مفاتيح الاختصار هذه تحدد الورقة التالية "
-"فقط. يجعل الورقة التالية الورقة الحالية."
+"يضيف الورقة التالية إلى التحديد الحالي من الأوراق. إذا تم تحديد كافة الأوراق "
+"في جدول البيانات، فإن تركيبة مفاتيح الاختصار هذه تحدد الورقة التالية فقط. "
+"يجعل الورقة التالية الورقة الحالية."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-248
 msgid ""
@@ -1254,7 +1254,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr "إدراج خلايا (كما في قائمة إدراج - خلايا)"
+msgstr "إدراج الخلايا (كما في قائمة إدراج - الخلايا)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-85
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
@@ -1550,9 +1550,9 @@ msgid ""
 "alone on a document, or collaboratively as part of a team."
 msgstr ""
 "<span class=\"productname\">٪productName</span> يسمح لك بإنشاء وتحرير "
-"مستندات أوفيس النصية وجداول البيانات والعروض التقديمية مباشرة في المتصفح "
-"الخاص بك، بطريقة بسيطة ومباشرة. يمكنك العمل بمفردك على مستند، أو بشكل تعاوني "
-"كجزء من فريق."
+"مستندات أوفيس النصية وجداول البيانات والعروض التقديمية مباشرة في متصفحك "
+"بطريقة بسيطة ومباشرة. كما يمكنك العمل بمفردك على المستند أو بشكل تعاوني كجزء "
+"من فريق."
 
 #: html/cool-help.html%2Bdiv.ul.li.p:335-11
 msgid ""
@@ -1560,24 +1560,25 @@ msgid ""
 "the assigned color. Note: you will see your cursor as black, blinking "
 "cursor, although others will see you with a different color."
 msgstr ""
-"يتم تعيين لون لكل مستخدم. سيظهر مؤشر كل مستخدم باللون المخصص. ملحوظة: سترى "
-"المؤشر باللون الأسود الوامض ، على الرغم من أن الآخرين سيرونك بلون مختلف."
+"يخصص لكل مستخدم لون معين كما سيظهر مؤشر كل مستخدم باللون المخصص له. ملحوظة: "
+"سترى المؤشر باللون الأسود الوامض على الرغم من أن المستخدمين الآخرين سيرونك "
+"بلون مختلف."
 
 #: html/cool-help.html%2Bdiv.ul.li.p:336-11
 msgid ""
 "You can jump to the cursor of a user by clicking on the name (or avatar) of "
 "the user. It is possible to follow the editor."
 msgstr ""
-"يمكنك الانتقال إلى المؤشر من مستخدم عن طريق النقر على الاسم (أو الصورة "
-"الرمزية) للمستخدم. من الممكن متابعة المحرر."
+"بإمكانك الإنتقال إلى مؤشر المستخدم بالنقر فوق الاسم (أو الصورة الرمزية) "
+"للمستخدم. من الممكن متابعة المحرر."
 
 #: html/cool-help.html%2Bdiv.ul.li.p:337-11
 msgid ""
 "<span class=\"productname\">%productName</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
-"يُعلمك <span class=\"productname\">٪ productName </span> بإخطار صغير في "
-"تذييل عندما يدخل مستخدم جديد أو عندما يغادر المستخدم."
+"يُخطرك <span class=\"productname\">٪ productName </span> بإشعار صغير في "
+"التذييل عندما يدخل مستخدم جديد أو عندما يغادر المستخدم."
 
 #: html/cool-help.html%2Bdiv.p:341-5
 msgid ""
