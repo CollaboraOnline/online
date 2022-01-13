@@ -4,7 +4,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-16 09:43+0200\n"
 "PO-Revision-Date: 2022-01-13 10:12+0000\n"
-"Last-Translator: Abdelsattar Tantawy <abdelsatar1997@gmail.com>\n"
+"Last-Translator: Abdelmaksoud Zakaria <abdo.zeko17@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "help/ar/>\n"
 "Language: ar\n"
@@ -84,7 +84,6 @@ msgid "Display the Keyboard shortcuts help"
 msgstr "عرض تعليمات اختصارات لوحة المفاتيح"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:29-80
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>?"
@@ -108,7 +107,6 @@ msgstr "غامق"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:156-49
 #: html/cool-help.html%2Bdiv.div.table.tr.td:181-49
 #: html/cool-help.html%2Bdiv.div.table.tr.td:238-49
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>B"
 
@@ -123,7 +121,6 @@ msgstr "مائل"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:157-51
 #: html/cool-help.html%2Bdiv.div.table.tr.td:182-51
 #: html/cool-help.html%2Bdiv.div.table.tr.td:239-51
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>I"
 
@@ -161,7 +158,6 @@ msgstr "مشطوب"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:159-58
 #: html/cool-help.html%2Bdiv.div.table.tr.td:184-58
 #: html/cool-help.html%2Bdiv.div.table.tr.td:241-58
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Alt</kbd><span class=\"kbd--"
 "plus\">+</span><kbd>5"
@@ -277,7 +273,6 @@ msgid "Apply Default paragraph style"
 msgstr "تطبيق نمط الفقرة الافتراضية"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:50-74
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>0"
 
@@ -578,7 +573,6 @@ msgstr "انتقل وحدد حتى بداية السطر"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:136-118
 #: html/cool-help.html%2Bdiv.div.table.tr.td:218-85
 #: html/cool-help.html%2Bdiv.div.table.tr.td:275-85
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
 msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
 
@@ -593,25 +587,22 @@ msgstr "الانتقال إلى بداية المستند"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:132-98
 #: html/cool-help.html%2Bdiv.div.table.tr.td:219-68
 #: html/cool-help.html%2Bdiv.div.table.tr.td:276-68
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Home"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:79-18
-#, fuzzy
 msgid "Go and select text to start of document"
-msgstr "الانتقال وتحديد النص لبدء المستند"
+msgstr "الانتقال واختيار النص لبدء المستند"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:79-84
 #: html/cool-help.html%2Bdiv.div.table.tr.td:220-83
 #: html/cool-help.html%2Bdiv.div.table.tr.td:277-83
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Home"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Home"
+"--plus\">+</span><kbd>الصفحة الرئيسية"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:80-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:221-18
@@ -623,9 +614,8 @@ msgstr "الانتقال إلى نهاية السطر"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:135-98
 #: html/cool-help.html%2Bdiv.div.table.tr.td:221-62
 #: html/cool-help.html%2Bdiv.div.table.tr.td:278-62
-#, fuzzy
 msgid "End"
-msgstr "End"
+msgstr "نهاية"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:81-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:222-18
@@ -637,9 +627,8 @@ msgstr "انتقل وحدد حتى نهاية السطر"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:137-117
 #: html/cool-help.html%2Bdiv.div.table.tr.td:222-79
 #: html/cool-help.html%2Bdiv.div.table.tr.td:279-79
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>End"
+msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>نهاية"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:82-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:223-18
@@ -652,9 +641,8 @@ msgstr "الانتقال إلى نهاية المستند"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:133-111
 #: html/cool-help.html%2Bdiv.div.table.tr.td:223-66
 #: html/cool-help.html%2Bdiv.div.table.tr.td:280-66
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>End"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>نهاية"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:83-18
 msgid "Go and select text to end of document"
@@ -663,7 +651,6 @@ msgstr "الانتقال وتحديد النص إلى نهاية المستند"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:83-82
 #: html/cool-help.html%2Bdiv.div.table.tr.td:224-81
 #: html/cool-help.html%2Bdiv.div.table.tr.td:281-81
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>End"
@@ -676,7 +663,6 @@ msgid "Move the view up one page"
 msgstr "تحريك المنظور صفحة واحدة لأعلى"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:84-70
-#, fuzzy
 msgid "PageUp"
 msgstr "PageUp"
 
@@ -685,25 +671,22 @@ msgid "Switch cursor between text and header"
 msgstr "تبديل المؤشر بين النص والرأس"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:85-82
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "Ctrl </kbd> <span class = \"kbd - plus\"> + </span> <kbd> PageUp"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:86-18
 msgid "Extend the selection up one page"
 msgstr "توسيع التحديد صفحة واحدة لأعلى"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:86-77
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
-msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
+msgstr "تحول </ kbd> <span class = \"kbd - plus\"> + </span> <kbd> PageUp"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:87-18
 msgid "Move the view down one page"
 msgstr "تحريك المنظور صفحة واحدة لأسفل"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:87-72
-#, fuzzy
 msgid "PageDown"
 msgstr "PageDown"
 
@@ -712,16 +695,14 @@ msgid "Switch cursor between text and footer"
 msgstr "تبديل المؤشر بين النص والذيل"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:88-82
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
+msgstr "Ctrl </kbd> <span class = \"kbd - plus\"> + </span> <kbd> PageDown"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:89-18
 msgid "Extend the selection down one page"
 msgstr "توسيع التحديد صفحة واحدة لأسفل"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:89-79
-#, fuzzy
 msgid "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
 msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageDown"
 
@@ -730,7 +711,6 @@ msgid "Delete to beginning of word"
 msgstr "حذف إلى بداية الكلمة"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:90-72
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace"
 
@@ -739,16 +719,14 @@ msgid "Delete to end of word"
 msgstr "حذف إلى نهاية الكلمة"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-66
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>حذف"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-18
 msgid "Delete to beginning of sentence"
 msgstr "حذف إلى بداية الجملة"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-76
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Backspace"
@@ -761,13 +739,12 @@ msgid "Delete to end of sentence"
 msgstr "حذف إلى نهاية الجملة"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-70
-#, fuzzy
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
 "\"kbd--plus\">+</span><kbd>Del"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
-"--plus\">+</span><kbd>Del"
+"--plus\">+</span><kbd>حذف"
 
 #: html/cool-help.html%2Bdiv.div.h2:95-9
 msgid "Shortcut Keys for Tables"
@@ -802,7 +779,6 @@ msgstr ""
 "الحالي والضغط الثالث ينتقل إلى نهاية المستند."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:100-18
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
 
@@ -848,7 +824,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.table.tr.td:103-160
 #: html/cool-help.html%2Bdiv.div.table.tr.td:104-208
 msgid "Like Alt, but only the active cell is modified"
-msgstr "مثل عمل Alt، ولكن فقط الخلية النشطة هي التي تتأثر بالتعديل."
+msgstr "مثل Alt، ولكن فقط الخلية النشطة هي التي تتأثر بالتعديل"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:104-18
 msgid ""
@@ -1248,7 +1224,6 @@ msgstr ""
 "الذي يحتوي على المؤشر."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-158
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 
@@ -1409,7 +1384,7 @@ msgid ""
 "Escape current mode, i.e. from edit mode switch to object selection mode, "
 "from object selection mode switch to view mode."
 msgstr ""
-"إنهاء الوضع الحالي، مثل الانتقال من وضع التحرير إلى وضع تحديد الكائنات،  أو "
+"إنهاء الوضع الحالي، مثل الانتقال من وضع التحرير إلى وضع تحديد الكائنات، أو "
 "من وضع تحديد الكائنات إلى وضع العرض."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:228-166
@@ -1587,8 +1562,8 @@ msgid ""
 "including small screens found in mobile devices. The interface is composed "
 "of:"
 msgstr ""
-"يستخدم <span class=\"productname\">٪productName</span>  موارد المتصفح "
-"الحديثة لتكييف واجهة المستخدم مع حجم منطقة العرض، بما في ذلك الشاشات الصغيرة "
+"<span class=\"productname\">٪productName</span> يستخدم موارد المتصفح الحديثة "
+"لتكييف واجهة المستخدم مع حجم منطقة العرض، بما في ذلك الشاشات الصغيرة "
 "الموجودة في الأجهزة المحمولة. تتكون الواجهة من:"
 
 #: html/cool-help.html%2Bdiv.p:342-5
@@ -1903,12 +1878,11 @@ msgstr ""
 "الصور، إذا تم نسخها من المستند الذي تعمل فيه."
 
 #: html/cool-help.html%2Bdiv.p:386-5
-#, fuzzy
 msgid ""
 "When you paste text from outside of the document (another browser window or "
 "a desktop application, it will be pasted as rich text."
 msgstr ""
-"عند لصق نص من خارج المستند (نافذة متصفح أخرى أو تطبيق سطح مكتب ، سيتم لصقه "
+"عند لصق نص من خارج المستند (نافذة متصفح أخرى أو تطبيق سطح مكتب، سيتم لصقه "
 "كنص منسق."
 
 #: html/cool-help.html%2Bdiv.p:387-5
@@ -1932,11 +1906,10 @@ msgstr ""
 "وتصورها في المستندات . لإضافة مخطط:"
 
 #: html/cool-help.html%2Bdiv.ol.li.p:393-11
-#, fuzzy
 msgid ""
 "Select a table in text document, a range in a spreadsheet or a table in a "
 "presentation."
-msgstr "حدد جدولا في مستند نصي أو نطاق في جدول بيانات أو جدول في عرض تقديمي."
+msgstr "حدد جدولاً في مستند نصي أو نطاق في جدول بيانات أو جدول في عرض تقديمي."
 
 #: html/cool-help.html%2Bdiv.ol.li.p:395-9
 msgid ""
@@ -1971,7 +1944,6 @@ msgstr ""
 "بيانات المخطط واختيار نوع المخطط."
 
 #: html/cool-help.html%2Bdiv.p:403-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Data series formatting:</span> Open the context menu and "
 "choose <span class=\"ui\">Format data series</span>."
@@ -1980,23 +1952,20 @@ msgstr ""
 "<span class=\"ui\">تنسيق سلسلة البيانات </span>."
 
 #: html/cool-help.html%2Bdiv.h4:404-5
-#, fuzzy
 msgid "Handling images"
 msgstr "معالجة الصور"
 
 #: html/cool-help.html%2Bdiv.p:405-5
-#, fuzzy
 msgid ""
 "<span class=\"productname\">%productName</span> inserts images in the text "
 "document from your local computer or from your cloud storage. Inserted "
 "images are always embedded in the document."
 msgstr ""
 "<span class=\"productname\">٪productName </span> يدرج الصور في المستند النصي "
-"من الكمبيوتر المحلي أو من التخزين السحابي. يتم تضمين الصور المدرجة دائما في "
+"من الكمبيوتر المحلي أو من التخزين السحابي. يتم تضمين الصور المدرجة دائماً في "
 "المستند."
 
 #: html/cool-help.html%2Bdiv.p:406-5
-#, fuzzy
 msgid ""
 "<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui"
 "\">Insert image</span> icon allows you to choose an image from the cloud "
@@ -2027,7 +1996,6 @@ msgid "Comments in documents"
 msgstr "تعليقات في مستندات"
 
 #: html/cool-help.html%2Bdiv.p:410-5
-#, fuzzy
 msgid ""
 "Insert comments in <span class=\"productname\">%productName</span> in places "
 "that need special reader attention. Comments are displayed on the right and "
@@ -2038,7 +2006,6 @@ msgstr ""
 "وتاريخ المصدر."
 
 #: html/cool-help.html%2Bdiv.p.img:412-5
-#, fuzzy
 msgid ""
 "Click on the submenu (<img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
 "\"images/submenu.svg\">) icon to reply, move and delete comments."
@@ -2047,7 +2014,6 @@ msgstr ""
 "alt = \"src =\" images / submenu.svg \">) للرد على التعليقات ونقلها وحذفها."
 
 #: html/cool-help.html%2Bdiv.h4:413-5
-#, fuzzy
 msgid "Spellchecking"
 msgstr "التدقيق الإملائي"
 
@@ -2096,7 +2062,6 @@ msgid ""
 msgstr "يتم إدخال الصيغ في شريط الصيغة. أدخل '=' وأدخل الصيغة."
 
 #: html/cool-help.html%2Bdiv.div.p:426-5
-#, fuzzy
 msgid "All spreadsheets functions and mathematical rules applies."
 msgstr "تنطبق جميع وظائف جداول البيانات والقواعد الرياضية."
 
@@ -2202,13 +2167,12 @@ msgstr ""
 "التحقق من صلاحية البيانات:"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:450-9
-#, fuzzy
 msgid ""
 "Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</"
 "span> menu. The <span class=\"ui\">Validity</span> dialog opens."
 msgstr ""
-"اختر <span class=\"ui\">الصلاحية </span> من القائمة <span class=\"ui\"> Data "
-"</span>. يفتح مربع الحوار <span class=\"ui\">validity </span>."
+"اختر <span class=\"ui\"> الصلاحية </span> من قائمة <span class=\"ui\"> "
+"بيانات </span>. يفتح مربع حوار <span class=\"ui\"> الصلاحية </span>."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:453-11
 msgid ""
@@ -2291,9 +2255,8 @@ msgstr ""
 "قائمة السياق - وليس على نطاق واسع - بالكائن الأساسي في المستند."
 
 #: html/cool-help.html%2Bdiv.div.h3:475-5
-#, fuzzy
 msgid "Formatting text"
-msgstr "تنسيق النصوص"
+msgstr "تنسيق النص"
 
 #: html/cool-help.html%2Bdiv.div.p:476-5
 msgid ""
@@ -2311,7 +2274,7 @@ msgstr ""
 "والخلفية وغيرها الكثير) مع اسم، اسم النمط. استخدم النمط لتطبيق نفس مجموعة "
 "الخصائص على العديد من الفقرات في المستند وإنتاج مظهر موحد ومهني. أيضا إذا "
 "قمت بتغيير إحدى خصائص تنسيق النمط فإن كافة الفقرات ذات النمط نفسه تغيير "
-"التنسيق أيضا مما يبسط الجهد المبذول في تنسيق العديد من الفقرات بشكل فردي."
+"التنسيق أيضاً مما يبسط الجهد المبذول في تنسيق العديد من الفقرات بشكل فردي."
 
 #: html/cool-help.html%2Bdiv.div.p:477-5
 msgid ""
@@ -2459,6 +2422,11 @@ msgid ""
 "presentation application. Use the keyboard, menus and toolbars to perform "
 "actions in your document."
 msgstr ""
+"<span class=\"productname\">٪ productName </span> يقوم Impress بتحرير العروض "
+"التقديمية بطريقة يجب أن تكون مألوفة للأشخاص. العمليات مثل كتابة النص والقص "
+"والنسخ ولصق المحتويات واختيار النص والإدراج وتغيير حجم الصور وربطها وإضافة "
+"الجداول ومعالجتها تشبه تطبيقات عرض سطح المكتب. استخدم لوحة المفاتيح والقوائم "
+"وأشرطة الأدوات لتنفيذ الإجراءات في المستند."
 
 #: html/cool-help.html%2Bdiv.div.p:507-5
 msgid ""
@@ -2567,7 +2535,6 @@ msgstr ""
 "المستندات النصية: تنسيقات Microsoft DOC، DOCX، RTF. تنسيق OpenDocument ODT"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:528-11
-#, fuzzy
 msgid "Spreadsheets: Microsoft formats XLS, XLSX, OpenDocument Format ODS"
 msgstr "جداول البيانات: تنسيقات Microsoft XLS، XLSX، تنسيق OpenDocument ODS"
 
@@ -2704,9 +2671,8 @@ msgstr ""
 "<span class=\"ui\">عرض</span> → <span class=\"ui\"> علامة التنسيق </span>."
 
 #: html/cool-help.html%2Bdiv.div.h4:555-5
-#, fuzzy
 msgid "How do I get a word count of my document?"
-msgstr "الانتقال إلى بداية المستند"
+msgstr "كيف يمكنني الحصول على عدد كلمات مستندي؟"
 
 #: html/cool-help.html%2Bdiv.div.p:556-5
 msgid ""
@@ -2794,7 +2760,6 @@ msgid "With track changes enabled your document is shown the following manner:"
 msgstr "مع تمكين تعقب التغييرات، يتم عرض المستند الخاص بك بالطريقة التالية:"
 
 #: html/cool-help.html%2Bdiv.div.ul.li.p:574-11
-#, fuzzy
 msgid "Deletions are marked with colored strike-through characters."
 msgstr "يتم تمييز عمليات الحذف بأحرف خطية ملونة."
 
@@ -2849,9 +2814,8 @@ msgstr ""
 "الحوار وفقا لذلك."
 
 #: html/cool-help.html%2Bdiv.div.h4:584-5
-#, fuzzy
 msgid "How do I set the margins of the document?"
-msgstr "الانتقال إلى بداية المستند"
+msgstr "كيف يمكنني تعيين هوامش للمستند؟"
 
 #: html/cool-help.html%2Bdiv.div.p:585-5
 msgid ""
@@ -2905,7 +2869,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:597-11
 msgid "Select Landscape in “With Page Style”"
-msgstr ""
+msgstr "حدد أفقي في \"مع نمط الصفحة\""
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:598-11
 msgid "Select if you want to change page numbering."
@@ -2946,9 +2910,8 @@ msgid "Select the text you want to apply the new format."
 msgstr "حدد النص الذي تريد تطبيقه على التنسيق الجديد."
 
 #: html/cool-help.html%2Bdiv.div.p:608-5
-#, fuzzy
 msgid "Applying a paragraph style:"
-msgstr "تطبيق نمط الفقرات «الترويسة الأولى»"
+msgstr "تطبيق نمط فقرة:"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:610-11
 msgid "Place the cursor at the paragraph to be formatted"
@@ -3065,6 +3028,11 @@ msgid ""
 "or spreadsheet cell and choose <span class=\"ui\">Format</span> → <span "
 "class=\"ui\">Clear Direct Formatting</span> or use the button in the toolbar."
 msgstr ""
+"التنسيق المباشر هو تنسيق يتم تطبيقه مباشرة على المحتويات المحددة لفقرة أو "
+"خلية جدول بيانات، ويتداخل مع تنسيق النمط المخصص لها. لاستعادة التنسيق إلى "
+"إعدادات النمط ، حدد خلية النص أو جدول البيانات واختر <span class=\"ui\"> "
+"تنسيق </span> ← <span class=\"ui\"> مسح التنسيق المباشر </span> أو استخدم "
+"الزر في شريط الأدوات."
 
 #: html/cool-help.html%2Bdiv.div.h4:641-5
 msgid "How do I rename a sheet?"
@@ -3121,7 +3089,6 @@ msgstr ""
 "span>). يفتح مربع حوار."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:659-11
-#, fuzzy
 msgid "Set the properties of the element of the object."
 msgstr "تعيين خصائص عنصر الكائن."
 
