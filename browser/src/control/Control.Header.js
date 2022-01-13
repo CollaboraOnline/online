@@ -129,14 +129,16 @@ L.Control.Header = L.Class.extend({
 	},
 
 	hideRow: function(index) {
-		if (!this._headerInfo.getElementData(index).isCurrent) {
+		if (!this._headerInfo.getElementData(index).isCurrent
+		&& !this._headerInfo.getElementData(index).isHighlighted) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:HideRow');
 	},
 
 	showRow: function(index) {
-		if (!this._headerInfo.getElementData(index).isCurrent) {
+		if (!this._headerInfo.getElementData(index).isCurrent
+		&& !this._headerInfo.getElementData(index).isHighlighted) {
 			this._selectRow(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:ShowRow');
@@ -246,7 +248,8 @@ L.Control.Header = L.Class.extend({
 	},
 
 	hideColumn: function(index) {
-		if (!this._headerInfo.getElementData(index).isCurrent) {
+		if (!this._headerInfo.getElementData(index).isCurrent
+		&& !this._headerInfo.getElementData(index).isHighlighted) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:HideColumn');
@@ -254,7 +257,8 @@ L.Control.Header = L.Class.extend({
 	},
 
 	showColumn: function(index) {
-		if (!this._headerInfo.getElementData(index).isCurrent) {
+		if (!this._headerInfo.getElementData(index).isCurrent
+		&& !this._headerInfo.getElementData(index).isHighlighted) {
 			this._selectColumn(index, 0);
 		}
 		this._map.sendUnoCommand('.uno:ShowColumn');
