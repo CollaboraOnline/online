@@ -1469,17 +1469,16 @@ L.Control.LokDialog = L.Control.extend({
 				* So this code adapts to it.
 		*/
 		var containerTop = dialogContainer.getBoundingClientRect().top + dialogContainer.ownerDocument.defaultView.pageYOffset;
-		var containerLeft = dialogContainer.getBoundingClientRect().left + dialogContainer.ownerDocument.defaultView.pageXOffset;
 		var grandParentID = dialogContainer.parentNode.id;
 
 		if (grandParentID.indexOf('calc-inputbar') >= 0) {
 			// This is the calculator input bar.
-			L.DomUtil.setStyle(floatingCanvas, 'left', (containerLeft + left) + 'px');
+			L.DomUtil.setStyle(floatingCanvas, 'margin-inline-start', left + 'px');
 			L.DomUtil.setStyle(floatingCanvas, 'top', (containerTop + 20) + 'px');
 		} else {
 			// Add header height..
 			var addition = 40;
-			L.DomUtil.setStyle(floatingCanvas, 'left', left + 'px');
+			L.DomUtil.setStyle(floatingCanvas, 'margin-inline-start', left + 'px');
 			L.DomUtil.setStyle(floatingCanvas, 'top', (top + addition) + 'px');
 		}
 
