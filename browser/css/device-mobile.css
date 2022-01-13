@@ -289,6 +289,8 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	border: none;
 	box-shadow: none;
 	border-radius: none;
+}
+.vex.vex-theme-plain:not(.vex-about-dialog, .vex-welcome-mobile) .vex-content {
 	display: flex;
 }
 .vex.vex-theme-plain .vex-content:not(.vex-has-inputs) .vex-dialog-form {
@@ -358,7 +360,7 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	flex-direction: column !important;
 }
 
-.vex-close {
+.vex-close:not(.about-dialog) {
 	display: none;
 }
 
