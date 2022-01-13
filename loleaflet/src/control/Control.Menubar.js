@@ -336,7 +336,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:FormatMenu', 'presentation'), id: 'format', type: 'menu', menu: [
 				{uno: '.uno:FontDialog'},
 				{uno: '.uno:ParagraphDialog'},
-				{uno: '.uno:PageSetup'},
+				{name: _UNO('.uno:SlideSetup', 'presentation'), uno: '.uno:PageSetup'},
 				{type: 'separator'},
 				{uno: '.uno:TransformDialog'},
 				{uno: '.uno:FormatLine'},
@@ -452,7 +452,7 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:FormatMenu', 'presentation'), id: 'format', type: 'menu', menu: [
 				{uno: '.uno:FontDialog'},
 				{uno: '.uno:ParagraphDialog'},
-				{uno: '.uno:PageSetup'},
+				{name: _UNO('.uno:PageSetup', 'presentation'), uno: '.uno:PageSetup'},
 				{type: 'separator'},
 				{uno: '.uno:TransformDialog'},
 				{uno: '.uno:FormatLine'},
@@ -476,8 +476,8 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:SelectTable'},
 					{uno: '.uno:EntireRow'},
 					{uno: '.uno:EntireColumn'}]},
-				{uno: '.uno:MergeCells'},
-				{uno: '.uno:TableDialog'}]
+				{name: _UNO('.uno:MergeCells', 'presentation'), uno: '.uno:MergeCells'},
+				{name: _UNO('.uno:TableDialog', 'presentation'), uno: '.uno:TableDialog'}]
 			},
 			{name: _UNO('.uno:PageMenu', 'presentation'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertPage', 'presentation'), id: 'insertpage', type: 'action'},
@@ -849,7 +849,7 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertColumnsAfter'},
 				{uno: '.uno:DeleteRows'},
 				{uno: '.uno:DeleteColumns'},
-				{uno: '.uno:MergeCells'}]
+				{name: _UNO('.uno:MergeCells', 'presentation'), uno: '.uno:MergeCells'}]
 			},
 			{name: _UNO('.uno:SlideMenu', 'presentation'), id: 'slidemenu', type: 'menu', menu: [
 				{name: _UNO('.uno:InsertSlide', 'presentation'), id: 'insertpage', type: 'action'},
