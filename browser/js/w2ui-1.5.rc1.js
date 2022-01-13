@@ -2917,7 +2917,7 @@ w2utils.event = {
                     '   <td><div class="color" style="background-color: #'+ tmp1[3] +';" name="'+ tmp1[3] +'" index="8:0">'+ (options.color == tmp1[3] ? '&#149;' : '&#160;') +'</div></td>'+
                     '</tr>'+
                     '<tr><td style="height: 4px" colspan="8"></td></tr>' +
-                    '<tr><td style="text-align: left;" colspan="8"><span style="margin-left: 1px;">Recent</span></td></tr>' +
+                    '<tr><td style="text-align: left;" colspan="8"><span style="margin-left: 1px;">' + _('Recent') + '</span></td></tr>' +
                     '<tr>'+
                     '   <td><div class="color" style="background-color: #'+ tmp2[0] +';" name="'+ tmp2[0] +'" index="8:0">'+ (options.color == tmp2[0] ? '&#149;' : '&#160;') +'</div></td>'+
                     '   <td><div class="color" style="background-color: #'+ tmp2[1] +';" name="'+ tmp2[1] +'" index="8:0">'+ (options.color == tmp2[1] ? '&#149;' : '&#160;') +'</div></td>'+
