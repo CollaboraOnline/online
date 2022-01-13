@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-16 09:43+0200\n"
+"POT-Creation-Date: 2022-01-13 22:36+0200\n"
 "PO-Revision-Date: 2022-01-13 17:17+0000\n"
 "Last-Translator: Abdelsattar Tantawy <abdelsatar1997@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Translate Toolkit 2.5.0\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -53,8 +53,8 @@ msgstr "لصق كنص غير منسق"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:26-70
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>V"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>V"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>V"
@@ -85,13 +85,14 @@ msgstr "عرض تعليمات اختصارات لوحة المفاتيح"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:29-80
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>?"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>?"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>?"
 
-#: html/cool-help.html%2Bdiv.div.h2:33-9 html/cool-help.html%2Bdiv.div.h2:179-9
+#: html/cool-help.html%2Bdiv.div.h2:33-9
+#: html/cool-help.html%2Bdiv.div.h2:179-9
 #: html/cool-help.html%2Bdiv.div.h2:236-9
 msgid "Text formatting"
 msgstr "تنسيق النصوص"
@@ -175,11 +176,11 @@ msgstr "حرف فوقي"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:185-56
 #: html/cool-help.html%2Bdiv.div.table.tr.td:242-56
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>P"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>P"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>P"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>P"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:41-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:186-18
@@ -191,11 +192,11 @@ msgstr "حرف تحتي"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:186-54
 #: html/cool-help.html%2Bdiv.div.table.tr.td:243-54
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>B"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>B"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>B"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>B"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:42-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:160-18
@@ -207,7 +208,8 @@ msgstr "إزالة التنسيق المباشر"
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M"
 msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>M"
 
-#: html/cool-help.html%2Bdiv.div.h2:44-9 html/cool-help.html%2Bdiv.div.h2:189-9
+#: html/cool-help.html%2Bdiv.div.h2:44-9
+#: html/cool-help.html%2Bdiv.div.h2:189-9
 #: html/cool-help.html%2Bdiv.div.h2:246-9
 msgid "Paragraph formatting"
 msgstr "تنسيق الفقرات"
@@ -388,8 +390,8 @@ msgstr "التحديد إلى اليسار كلمة بكلمة"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:204-76
 #: html/cool-help.html%2Bdiv.div.table.tr.td:261-76
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Arrow Left"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Arrow Left"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>سهم اليسار"
@@ -440,8 +442,8 @@ msgstr "التحديد إلى اليمين كلمة بكلمة"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:208-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:265-77
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Arrow Right"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Arrow Right"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>سهم اليمين"
@@ -492,8 +494,8 @@ msgstr "تحديد إلى بداية الفقرة"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:212-77
 #: html/cool-help.html%2Bdiv.div.table.tr.td:269-77
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Arrow Up"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Arrow Up"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>السهم الأعلى"
@@ -544,8 +546,8 @@ msgstr "التحديد إلى نهاية الفقرة"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:216-71
 #: html/cool-help.html%2Bdiv.div.table.tr.td:273-71
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Arrow Down"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Arrow Down"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>السهم الأسفل"
@@ -598,8 +600,8 @@ msgstr "الانتقال واختيار النص لبدء المستند"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:220-83
 #: html/cool-help.html%2Bdiv.div.table.tr.td:277-83
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Home"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Home"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>الصفحة الرئيسية"
@@ -652,8 +654,8 @@ msgstr "الانتقال وتحديد النص إلى نهاية المستند"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:224-81
 #: html/cool-help.html%2Bdiv.div.table.tr.td:281-81
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>End"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>End"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>End"
@@ -728,8 +730,8 @@ msgstr "حذف إلى بداية الجملة"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:92-76
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Backspace"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Backspace"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Backspace"
@@ -740,8 +742,8 @@ msgstr "حذف إلى نهاية الجملة"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-70
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Del"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Del"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>حذف"
@@ -803,11 +805,11 @@ msgstr "تكبير/تصغير حجم العمود/الصف على حافة ال�
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:102-18
 msgid ""
-"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Arrow Keys"
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Arrow Keys"
 msgstr ""
-"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>مفاتيح الأسهم"
+"Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>مفاتيح الأسهم"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:102-161
 msgid "Increase/decrease the size of the column/row on the left/top cell edge"
@@ -858,17 +860,16 @@ msgid ""
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 ثوان في وضع الحذف، يقوم مفتاح السهم بحذف الصف/ العمود، <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> يدمج الخلية مع "
-"جارتها"
+"3 ثوان في وضع الحذف، يقوم مفتاح السهم بحذف الصف/ العمود، <kbd>Ctrl</kbd><"
+"span class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> يدمج الخلية مع جارتها"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Del"
+"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Del"
 msgstr ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Del"
+"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Del"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td.p:107-177
 msgid ""
@@ -954,11 +955,11 @@ msgstr "إدراج شَرطة غير فاصلة"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:119-71
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>-"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>-"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>-"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>-"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:121-18
 msgid "Insert non-breaking space"
@@ -966,11 +967,11 @@ msgstr "إدراج مسافة غير فاصلة"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:121-70
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Space"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Space"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>المسافة"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>المسافة"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:122-18
 msgid "Insert line break"
@@ -996,11 +997,11 @@ msgstr "فاصل أعمدة (في النصوص متعددة الأعمدة)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:124-81
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Enter"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Enter"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Enter"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Enter"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:125-18
 msgid ""
@@ -1143,8 +1144,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-272
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Arrow"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Arrow"
 msgstr ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>سهم"
@@ -1177,8 +1178,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-260
 msgid ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Up"
+"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Page Up"
 msgstr ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>صفحة لأعلى"
@@ -1195,8 +1196,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-248
 msgid ""
-"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class="
-"\"kbd--plus\">+</span><kbd>Page Down"
+"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Page Down"
 msgstr ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>صفحة لأسفل"
@@ -1269,11 +1270,11 @@ msgstr "خانتان عشريّتان، فاصل الألوف"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:170-84
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>1"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>1"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>1"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>1"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:171-18
 msgid "Standard exponential format"
@@ -1281,11 +1282,11 @@ msgstr "التنسيق الأُسّيّ القياسي"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:171-72
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>2"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>2"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>2"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>2"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:172-18
 msgid "Standard date format"
@@ -1293,11 +1294,11 @@ msgstr "تنسيق التاريخ القياسي"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:172-65
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>3"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>3"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>3"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>3"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:173-18
 msgid "Standard currency format"
@@ -1305,11 +1306,11 @@ msgstr "تنسيق العملة القياسي"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:173-69
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>4"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>4"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>4"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>4"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:174-18
 msgid "Standard percentage format (two decimal places)"
@@ -1317,11 +1318,11 @@ msgstr "تنسيق النسبة القياسي (خانتان عشريّتان)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:174-92
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>5"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>5"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>5"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>5"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:175-18
 msgid "Standard format"
@@ -1329,11 +1330,11 @@ msgstr "التنسيق القياسي"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:175-60
 msgid ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>6"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>6"
 msgstr ""
-"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
-"\"kbd--plus\">+</span><kbd>6"
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>6"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:195-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:252-18
@@ -1426,78 +1427,97 @@ msgstr "تحديد الكل في صفحة الرسم"
 msgid "<span class=\"productname\">%productName</span> Help"
 msgstr "<span class=\"productname\">%productName</span> مساعدة"
 
-#: html/cool-help.html%2Bdiv.p:295-5 html/cool-help.html%2Bdiv.h3:333-5
+#: html/cool-help.html%2Bdiv.p:295-5
+#: html/cool-help.html%2Bdiv.h3:333-5
 msgid "Collaborative editing"
 msgstr "التحرير التعاوني"
 
-#: html/cool-help.html%2Bdiv.p:296-5 html/cool-help.html%2Bdiv.h3:340-5
+#: html/cool-help.html%2Bdiv.p:296-5
+#: html/cool-help.html%2Bdiv.h3:340-5
 msgid "<span class=\"productname\">%productName</span> user interface"
 msgstr "<span class=\"productname\">٪productName </span> واجهة المستخدم"
 
-#: html/cool-help.html%2Bdiv.p:297-5 html/cool-help.html%2Bdiv.h3:360-5
+#: html/cool-help.html%2Bdiv.p:297-5
+#: html/cool-help.html%2Bdiv.h3:360-5
 msgid "Opening, closing, saving, printing and downloading documents"
 msgstr "فتح المستندات وإغلاقها وحفظها وطباعتها وتنزيلها"
 
-#: html/cool-help.html%2Bdiv.p:298-5 html/cool-help.html%2Bdiv.h3:368-5
+#: html/cool-help.html%2Bdiv.p:298-5
+#: html/cool-help.html%2Bdiv.h3:368-5
 msgid "Editing documents"
 msgstr "تحرير المستندات"
 
-#: html/cool-help.html%2Bdiv.p:299-5 html/cool-help.html%2Bdiv.div.p:305-9
-#: html/cool-help.html%2Bdiv.div.p:318-9 html/cool-help.html%2Bdiv.h3:389-5
+#: html/cool-help.html%2Bdiv.p:299-5
+#: html/cool-help.html%2Bdiv.div.p:305-9
+#: html/cool-help.html%2Bdiv.div.p:318-9
+#: html/cool-help.html%2Bdiv.h3:389-5
 #: html/cool-help.html%2Bdiv.div.h3:434-5
 #: html/cool-help.html%2Bdiv.div.h3:514-5
 msgid "Advanced features"
 msgstr "ميزات متقدمة"
 
-#: html/cool-help.html%2Bdiv.div.p:301-9 html/cool-help.html%2Bdiv.div.h2:419-5
+#: html/cool-help.html%2Bdiv.div.p:301-9
+#: html/cool-help.html%2Bdiv.div.h2:419-5
 msgid "<span class=\"productname\">%productName</span> spreadsheets"
 msgstr "<span class=\"productname\">٪productName</span> جداول البيانات"
 
-#: html/cool-help.html%2Bdiv.div.p:302-9 html/cool-help.html%2Bdiv.div.h3:421-5
+#: html/cool-help.html%2Bdiv.div.p:302-9
+#: html/cool-help.html%2Bdiv.div.h3:421-5
 msgid "Editing spreadsheets"
 msgstr "تحرير جداول البيانات"
 
-#: html/cool-help.html%2Bdiv.div.p:303-9 html/cool-help.html%2Bdiv.div.h3:424-5
+#: html/cool-help.html%2Bdiv.div.p:303-9
+#: html/cool-help.html%2Bdiv.div.h3:424-5
 msgid "Formulas"
 msgstr "الصيغ"
 
-#: html/cool-help.html%2Bdiv.div.p:304-9 html/cool-help.html%2Bdiv.div.h3:430-5
+#: html/cool-help.html%2Bdiv.div.p:304-9
+#: html/cool-help.html%2Bdiv.div.h3:430-5
 msgid "Formatting spreadsheets"
 msgstr "تنسيق جداول البيانات"
 
-#: html/cool-help.html%2Bdiv.div.p:308-9 html/cool-help.html%2Bdiv.div.h2:467-5
+#: html/cool-help.html%2Bdiv.div.p:308-9
+#: html/cool-help.html%2Bdiv.div.h2:467-5
 msgid "<span class=\"productname\">%productName</span> text documents"
 msgstr "<span class=\"productname\">٪productName </span> المستندات النصية"
 
-#: html/cool-help.html%2Bdiv.div.p:309-9 html/cool-help.html%2Bdiv.div.h3:469-5
+#: html/cool-help.html%2Bdiv.div.p:309-9
+#: html/cool-help.html%2Bdiv.div.h3:469-5
 msgid "Editing text documents"
 msgstr "تحرير المستندات النصية"
 
-#: html/cool-help.html%2Bdiv.div.p:310-9 html/cool-help.html%2Bdiv.div.h3:472-5
+#: html/cool-help.html%2Bdiv.div.p:310-9
+#: html/cool-help.html%2Bdiv.div.h3:472-5
 msgid "Context menus"
 msgstr "قوائم السياق"
 
-#: html/cool-help.html%2Bdiv.div.p:311-9 html/cool-help.html%2Bdiv.div.h3:482-5
+#: html/cool-help.html%2Bdiv.div.p:311-9
+#: html/cool-help.html%2Bdiv.div.h3:482-5
 msgid "Advanced text document editor features"
 msgstr "ميزات محرر المستندات النصية المتقدمة"
 
-#: html/cool-help.html%2Bdiv.div.p:314-9 html/cool-help.html%2Bdiv.div.h2:501-5
+#: html/cool-help.html%2Bdiv.div.p:314-9
+#: html/cool-help.html%2Bdiv.div.h2:501-5
 msgid "<span class=\"productname\">%productName</span> presentations"
 msgstr "<span class=\"productname\">٪ productName </span> العروض التقديمية"
 
-#: html/cool-help.html%2Bdiv.div.p:315-9 html/cool-help.html%2Bdiv.div.h3:503-5
+#: html/cool-help.html%2Bdiv.div.p:315-9
+#: html/cool-help.html%2Bdiv.div.h3:503-5
 msgid "Editing presentations"
 msgstr "تحرير العروض التقديمية"
 
-#: html/cool-help.html%2Bdiv.div.p:316-9 html/cool-help.html%2Bdiv.div.h3:506-5
+#: html/cool-help.html%2Bdiv.div.p:316-9
+#: html/cool-help.html%2Bdiv.div.h3:506-5
 msgid "Slide show"
 msgstr "عرض الشرائح"
 
-#: html/cool-help.html%2Bdiv.div.p:317-9 html/cool-help.html%2Bdiv.div.h3:510-5
+#: html/cool-help.html%2Bdiv.div.p:317-9
+#: html/cool-help.html%2Bdiv.div.h3:510-5
 msgid "Slide pane"
 msgstr "جزء الشرائح"
 
-#: html/cool-help.html%2Bdiv.p:320-5 html/cool-help.html%2Bdiv.h2:523-5
+#: html/cool-help.html%2Bdiv.p:320-5
+#: html/cool-help.html%2Bdiv.h2:523-5
 msgid "Frequently Asked Questions"
 msgstr "الأسئلة المتداولة"
 
@@ -1505,15 +1525,18 @@ msgstr "الأسئلة المتداولة"
 msgid "General"
 msgstr "عام"
 
-#: html/cool-help.html%2Bdiv.div.p:323-9 html/cool-help.html%2Bdiv.div.h3:554-5
+#: html/cool-help.html%2Bdiv.div.p:323-9
+#: html/cool-help.html%2Bdiv.div.h3:554-5
 msgid "Text documents"
 msgstr "مستندات نصية"
 
-#: html/cool-help.html%2Bdiv.div.p:326-9 html/cool-help.html%2Bdiv.div.h3:618-5
+#: html/cool-help.html%2Bdiv.div.p:326-9
+#: html/cool-help.html%2Bdiv.div.h3:618-5
 msgid "Spreadsheets"
 msgstr "جداول البيانات"
 
-#: html/cool-help.html%2Bdiv.div.p:329-9 html/cool-help.html%2Bdiv.div.h3:646-5
+#: html/cool-help.html%2Bdiv.div.p:329-9
+#: html/cool-help.html%2Bdiv.div.h3:646-5
 msgid "Presentations"
 msgstr "العروض التقديمية"
 
@@ -1578,17 +1601,17 @@ msgstr ""
 msgid ""
 "<span class=\"def\">The menu bar:</span> The main menu is placed on the top "
 "and includes many options, commands for printing, editing, viewing and other "
-"advanced commands. You can hide the menu bar clicking on the <img style="
-"\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> icon on the far "
-"right. Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/"
-"unfold.svg\"> icon to show the menu."
+"advanced commands. You can hide the menu bar clicking on the <img style=\""
+"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> icon on the far right. "
+"Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold."
+"svg\"> icon to show the menu."
 msgstr ""
 "<span class = \"def\"> شريط القوائم: </ span> تُضَع القائمة الرئيسية في "
 "الأعلى وتتضمن العديد من الخيارات والأوامر للطباعة والتحرير والعرض وأوامر "
-"متقدمة أخرى. يمكنك إخفاء شريط القائمة بالنقر على أيقونة <img style = \"height"
-": 0.6cm؛ width: 0.6cm؛\" src = \"images / fold.svg\"> أقصى اليمين. انقر على "
-"رمز <img style = \"height: 0.6cm؛ width: 0.6cm؛\" src = \"images / unfold."
-"svg\"> لإظهار القائمة."
+"متقدمة أخرى. يمكنك إخفاء شريط القائمة بالنقر على أيقونة <img style = \""
+"height: 0.6cm؛ width: 0.6cm؛\" src = \"images / fold.svg\"> أقصى اليمين. "
+"انقر على رمز <img style = \"height: 0.6cm؛ width: 0.6cm؛\" src = \"images / "
+"unfold.svg\"> لإظهار القائمة."
 
 #: html/cool-help.html%2Bdiv.p:344-5
 msgid ""
@@ -1677,13 +1700,13 @@ msgid ""
 "Your documents are stored and managed in the cloud storage that is "
 "integrated with <span class=\"productname\">%productName</span>."
 msgstr ""
-"يتم تخزين مستنداتك وإدارتها في التخزين السحابي المدمج مع <span class="
-"\"productname\">٪productName </span>."
+"يتم تخزين مستنداتك وإدارتها في التخزين السحابي المدمج مع <span class=\""
+"productname\">٪productName </span>."
 
 #: html/cool-help.html%2Bdiv.p:362-5
 msgid ""
-"To download a document download it from the <span class=\"productname\">"
-"%productName</span> application’s <span class=\"ui\">File</span> menu. The "
+"To download a document download it from the <span class=\"productname\""
+">%productName</span> application’s <span class=\"ui\">File</span> menu. The "
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
@@ -1693,8 +1716,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.p:363-5
 msgid ""
-"To open document, click on the file to open the <span class=\"productname\">"
-"%productName</span> module associated to the document format."
+"To open document, click on the file to open the <span class=\"productname\""
+">%productName</span> module associated to the document format."
 msgstr ""
 "لفتح المستند، انقر فوق الملف لفتح الوحدة <span class=\"productname\">٪٪ "
 "productName </span> المقترنة بتنسيق المستند."
@@ -1703,8 +1726,8 @@ msgstr ""
 msgid ""
 "Documents in <span class=\"productname\">%productName</span> save "
 "automatically, but if you are concerned that a document is synchronized as "
-"quickly as possible you can also force saving using the <span class=\"ui"
-"\">File</span> menu’s <span class=\"ui\">Save</span> entry."
+"quickly as possible you can also force saving using the <span class=\"ui\""
+">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
 "تحفظ المستندات تلقائيا في <span class=\"productname\">٪productName </span>، "
 "ولكن إذا كنت قلقا من مزامنة مستند ما في أسرع وقت ممكن، يمكنك أيضا فرض الحفظ "
@@ -1740,29 +1763,30 @@ msgstr "نسخ ولصق"
 #: html/cool-help.html%2Bdiv.p:371-5
 msgid ""
 "Rich content copy/cut and paste is supported, not only within a given "
-"document, but also across documents on the same or different <span class="
-"\"productname\">%productName</span>. For these internal uses, users can copy/"
+"document, but also across documents on the same or different <span class=\""
+"productname\">%productName</span>. For these internal uses, users can copy/"
 "cut content, including images and mixed content, on PC by using the keyboard "
-"shortcuts directly (<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>X</"
-"kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, "
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd>). For security "
-"reasons it is necessary to use <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>V</kbd> to paste on PC, but context menus can be used for cut and "
-"copy. On Android or iOS selecting text by double tapping, and using a long-"
-"tap to access copy/cut/paste via the context menu is required."
-msgstr ""
-"يدعم المحتوى المنسق خيارات النسخ/القص واللصق ليس فقط ضمن مستند معين، ولكن "
-"أيضا للمستندات التى لها نفس التنسيق أو تنسيق مختلف <span class=\"productname"
-"\">%productName</span>. وللاستخدامات الداخلية، يمكن للمستخدمين نسخ/قص "
-"المحتوى، بما في ذلك الصور والمحتوى المختلط على الكمبيوتر باستخدام اختصارات "
-"لوحة المفاتيح المباشرة (<kbd>Ctrl</kbd><span class=\"kbd--plus\""
+"shortcuts directly (<kbd>Ctrl</kbd><span class=\"kbd--plus\""
 ">+</span><kbd>X</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
 ">+</span><kbd>C</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
-">+</span><kbd>V</kbd>). ولأسباب أمنية من الضروري استخدام <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> للصق على الكمبيوتر، ويمكن "
-"كذلك استخدام قوائم السياق للقص والنسخ. وفي نظام التشغيل Android أو iOS يلزم "
-"تحديد النص عن طريق النقر المزدوج واستخدام نقرة طويلة للوصول إلى النسخ / القص "
-"/ اللصق عبر قائمة السياق."
+">+</span><kbd>V</kbd>). For security reasons it is necessary to use "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> to paste on "
+"PC, but context menus can be used for cut and copy. On Android or iOS "
+"selecting text by double tapping, and using a long-tap to access copy/cut/"
+"paste via the context menu is required."
+msgstr ""
+"يدعم المحتوى المنسق خيارات النسخ/القص واللصق ليس فقط ضمن مستند معين، ولكن "
+"أيضا للمستندات التى لها نفس التنسيق أو تنسيق مختلف <span class=\""
+"productname\">%productName</span>. وللاستخدامات الداخلية، يمكن للمستخدمين "
+"نسخ/قص المحتوى، بما في ذلك الصور والمحتوى المختلط على الكمبيوتر باستخدام "
+"اختصارات لوحة المفاتيح المباشرة (<kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd>, <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>). ولأسباب أمنية من الضروري استخدام <kbd>Ctrl</kbd><"
+"span class=\"kbd--plus\">+</span><kbd>V</kbd> للصق على الكمبيوتر، ويمكن كذلك "
+"استخدام قوائم السياق للقص والنسخ. وفي نظام التشغيل Android أو iOS يلزم تحديد "
+"النص عن طريق النقر المزدوج واستخدام نقرة طويلة للوصول إلى النسخ / القص / "
+"اللصق عبر قائمة السياق."
 
 #: html/cool-help.html%2Bdiv.p:372-5
 msgid ""
@@ -1808,13 +1832,13 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.p:377-5
 msgid ""
 "This is particularly useful – say when a colleague inadvertently selected "
-"all text in the document with <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>A</kbd> and proceeded to type over it destroying it – while you "
-"were concurrently editing."
+"all text in the document with <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>A</kbd> and proceeded to type over it destroying it – while "
+"you were concurrently editing."
 msgstr ""
 "وهذا مفيد على نحو خاص - لنفترض أنه عندما قام أحد الزملاء بتحديد كل النص في "
-"المستند بدون قصد باستخدام <kbd> Ctrl </kbd> <span class=\"kbd--plus\"> + </"
-"span> <kbd> A </kbd> وشرع في الكتابة فوقه مما أدى إلى إتلافه - بينما كنت "
+"المستند بدون قصد باستخدام <kbd> Ctrl </kbd> <span class=\"kbd--plus\"> + "
+"</span> <kbd> A </kbd> وشرع في الكتابة فوقه مما أدى إلى إتلافه - بينما كنت "
 "تقوم بالتحرير في نفس الوقت."
 
 #: html/cool-help.html%2Bdiv.h4:378-5
@@ -1860,9 +1884,9 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.p:384-5
 msgid ""
-"You can paste as unformatted text with the keyboard shortcut: <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd--plus"
-"\">+</span><kbd>V</kbd>"
+"You can paste as unformatted text with the keyboard shortcut: "
+"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class="
+"\"kbd--plus\">+</span><kbd>V</kbd>"
 msgstr ""
 "يمكنك اللصق كنص غير منسق مع اختصار لوحة المفاتيح: <kbd>Ctrl </kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Shift </kbd><span class=\"kbd--plus\""
@@ -1916,8 +1940,8 @@ msgid ""
 "Choose <span class=\"ui\">Insert</span> → <span class=\"ui\">Charts</span>. "
 "Customize your chart on the sidebar:"
 msgstr ""
-"اختر <span class=\"ui\">إدراج </span> → <span class=\"ui\">رسوم بيانية</"
-"span>. تخصيص رسوماتك البيانية على الشريط الجانبي:"
+"اختر <span class=\"ui\">إدراج </span> → <span class=\"ui\">رسوم بيانية</span>"
+". تخصيص رسوماتك البيانية على الشريط الجانبي:"
 
 #: html/cool-help.html%2Bdiv.ol.li.p:398-11
 msgid "If no table or range was selected, a prototype chart is displayed."
@@ -1948,8 +1972,8 @@ msgid ""
 "<span class=\"def\">Data series formatting:</span> Open the context menu and "
 "choose <span class=\"ui\">Format data series</span>."
 msgstr ""
-"<span class=\"def\"> تنسيق سلسلة البيانات:</span> افتح قائمة السياق واختر "
-"<span class=\"ui\">تنسيق سلسلة البيانات </span>."
+"<span class=\"def\"> تنسيق سلسلة البيانات:</span> افتح قائمة السياق واختر <"
+"span class=\"ui\">تنسيق سلسلة البيانات </span>."
 
 #: html/cool-help.html%2Bdiv.h4:404-5
 msgid "Handling images"
@@ -1967,12 +1991,12 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.p:406-5
 msgid ""
-"<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui"
-"\">Insert image</span> icon allows you to choose an image from the cloud "
+"<span class=\"def\">Insert image:</span> Clicking on the <span class=\"ui\">"
+"Insert image</span> icon allows you to choose an image from the cloud "
 "storage's folders and shares."
 msgstr ""
-"<span class=\"def\"> إدراج صورة: </span> النقر على أيقونة <span class=\"ui\""
-"> إدراج صورة </span> يسمح لك باختيار صورة من مجلدات ومشاركات التخزين السحابي."
+"<span class=\"def\"> إدراج صورة: </span> النقر على أيقونة <span class=\"ui\">"
+" إدراج صورة </span> يسمح لك باختيار صورة من مجلدات ومشاركات التخزين السحابي."
 
 #: html/cool-help.html%2Bdiv.p:407-5
 msgid ""
@@ -2031,11 +2055,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.p:416-5
 msgid ""
-"To systematically spell-check the whole document use the <span class=\"ui"
-"\">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
+"To systematically spell-check the whole document use the <span class=\"ui\""
+">Tools</span> menu’s <span class=\"ui\">Spelling</span> option."
 msgstr ""
-"للتدقيق الإملائي بشكل منتظم للمستند بالكامل، استخدم خيار قائمة <span class="
-"\"ui\"> أدوات </span> <span class=\"ui\"> تدقيق إملائي </span>."
+"للتدقيق الإملائي بشكل منتظم للمستند بالكامل، استخدم خيار قائمة <span class=\""
+"ui\"> أدوات </span> <span class=\"ui\"> تدقيق إملائي </span>."
 
 #: html/cool-help.html%2Bdiv.div.p:422-5
 msgid ""
@@ -2069,23 +2093,23 @@ msgstr "تنطبق على جميع وظائف جداول البيانات وال
 msgid ""
 "The formula language should be extremely familiar to any spreadsheet user, "
 "and is specified in great detail in the <a href=\"https://www.oasis-open.org/"
-"committees/download.php/16826/openformula-spec-20060221.html\" target="
-"\"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
+"committees/download.php/16826/openformula-spec-20060221.html\" target=\""
+"_blank\" rel=\"noopener noreferrer\">OASIS OpenFormula specification</a>."
 msgstr ""
 "يجب أن تكون لغة الصيغة مألوفة للغاية لأي مستخدم لجدول البيانات، ويتم تحديدها "
 "بتفصيل كبير في مواصفات <a href=\"https://www.oasis-open.org/committees/"
-"download.php/16826/openformula-spec-20060221.html\" target=\"_blank\" rel="
-"\"noopener noreferrer\">OASIS OpenFormula </a>."
+"download.php/16826/openformula-spec-20060221.html\" target=\"_blank\" rel=\""
+"noopener noreferrer\">OASIS OpenFormula </a>."
 
 #: html/cool-help.html%2Bdiv.div.p:431-5
 msgid ""
 "<span class=\"def\">Direct formatting:</span> You can format spreadsheets "
 "cells, columns, rows and sheets by formatting directly from the menus, "
 "toolbar or context menus. Direct formatting applies only to the current "
-"object selected. To format a cell either use the menu or hit <kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>1</kbd>. The dialog allows "
-"complex and custom number formatting, as well as font, complex border, "
-"background, cell protection and other options."
+"object selected. To format a cell either use the menu or hit <kbd>Ctrl</kbd><"
+"span class=\"kbd--plus\">+</span><kbd>1</kbd>. The dialog allows complex and "
+"custom number formatting, as well as font, complex border, background, cell "
+"protection and other options."
 msgstr ""
 "<span class=\"def\"> التنسيق المباشر:</span> يمكنك تنسيق خلايا جداول "
 "البيانات والأعمدة والصفوف والأوراق عن طريق التنسيق مباشرة من القوائم أو شريط "
@@ -2097,9 +2121,9 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.p:435-5
 msgid ""
 "<span class=\"def\">Sorting data:</span> You can sort a list of numbers or "
-"text ascending or descending. <span class=\"productname\">%productName</"
-"span> automatically detects cells that are headers, and adjoining columns, "
-"to extend the selection."
+"text ascending or descending. <span class=\"productname\">%productName</span>"
+" automatically detects cells that are headers, and adjoining columns, to "
+"extend the selection."
 msgstr ""
 "<span class=\"def\"> فرز البيانات:</span> يمكنك فرز قائمة بالأرقام أو النص "
 "تصاعديًا أو تنازليًا. يقوم <span class=\"productname\">٪productName </span> "
@@ -2168,8 +2192,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:450-9
 msgid ""
-"Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\">Data</"
-"span> menu. The <span class=\"ui\">Validity</span> dialog opens."
+"Choose <span class=\"ui\">Validity</span> from the <span class=\"ui\""
+">Data</span> menu. The <span class=\"ui\">Validity</span> dialog opens."
 msgstr ""
 "اختر <span class=\"ui\"> الصلاحية </span> من قائمة <span class=\"ui\"> "
 "البيانات </span>. يفتح مربع حوار <span class=\"ui\"> الصلاحية </span>."
@@ -2180,14 +2204,14 @@ msgid ""
 "box list. Depending on the criterion, more options shows. Fill the required "
 "data."
 msgstr ""
-"حدد معيار الصلاحية في قائمة المربع المنسدل <span class=\"ui\"> السماح </"
-"span>. اعتمادًا على المعيار، تظهر المزيد من الخيارات. املأ البيانات المطلوبة."
+"حدد معيار الصلاحية في قائمة المربع المنسدل <span class=\"ui\"> السماح </span>"
+". اعتمادًا على المعيار، تظهر المزيد من الخيارات. املأ البيانات المطلوبة."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:455-9
 msgid ""
 "Use the <span class=\"ui\">Input Help</span> and <span class=\"ui\">Error "
-"Alert</span> tabs to enhance the user interactions. Click <span class=\"ui"
-"\">OK</span> to close the dialog."
+"Alert</span> tabs to enhance the user interactions. Click <span class=\"ui\""
+">OK</span> to close the dialog."
 msgstr ""
 "استخدم علامتي التبويب <span class=\"ui\"> تعليمات الإدخال </span> و <span "
 "class=\"ui\"> تنبيه الخطأ </span> لتحسين تفاعلات المستخدم. انقر فوق <span "
@@ -2216,11 +2240,11 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.p:462-5
 msgid ""
-"<span class=\"def\">Conditional formatting:</span> <span class=\"productname"
-"\">%productName</span> adds symbols to each cell of a range based on cells "
-"conditions. Select the cell range and click the <span class=\"ui"
-"\">Conditional Formatting</span> icon on the toolbar. Select the symbol set "
-"to apply on the range."
+"<span class=\"def\">Conditional formatting:</span> <span class=\""
+"productname\">%productName</span> adds symbols to each cell of a range based "
+"on cells conditions. Select the cell range and click the <span class=\"ui\">"
+"Conditional Formatting</span> icon on the toolbar. Select the symbol set to "
+"apply on the range."
 msgstr ""
 "<span class=\"def\"> تنسيق شرطي:</span> <span class=\"productname\">٪"
 "productName </span> يضيف رموزاً لكل خلية من النطاق استناداً إلى ظروف "
@@ -2299,8 +2323,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.p:479-5
 msgid ""
-"<span class=\"def\">Style formatting:</span> <span class=\"productname\">"
-"%productName</span> supports paragraph styles. You can apply an existing "
+"<span class=\"def\">Style formatting:</span> <span class=\"productname\""
+">%productName</span> supports paragraph styles. You can apply an existing "
 "paragraph style to a paragraph. Choose menu <span class=\"ui\">Edit</span> → "
 "<span class=\"ui\">Edit styles</span> to change style."
 msgstr ""
@@ -2328,12 +2352,12 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.p:486-5
 msgid ""
 "<span class=\"def\">Formatting cells:</span> Click in the cell or range of "
-"cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui"
-"\">Properties</span>. Fine tune the table with the properties dialog."
+"cells and choose menu <span class=\"ui\">Table</span> → <span class=\"ui\""
+">Properties</span>. Fine tune the table with the properties dialog."
 msgstr ""
 "<span class=\"def\"> تنسيق الخلايا:</span> انقر في الخلية أو نطاق الخلايا "
-"واختر القائمة <span class=\"ui\">الجدول </span> → <span class=\"ui\">خصائص </"
-"span>. ضبط الجدول باستخدام مربع حوار الخصائص."
+"واختر القائمة <span class=\"ui\">الجدول </span> → <span class=\"ui\">خصائص "
+"</span>. ضبط الجدول باستخدام مربع حوار الخصائص."
 
 #: html/cool-help.html%2Bdiv.div.h4:487-5
 msgid "Track changes"
@@ -2341,9 +2365,9 @@ msgstr "تعقب التغييرات"
 
 #: html/cool-help.html%2Bdiv.div.p:488-5
 msgid ""
-"When you turn on Track Changes, <span class=\"productname\">%productName</"
-"span> marks up new changes made to the document. Select this option again to "
-"turn it off."
+"When you turn on Track Changes, <span class=\"productname\""
+">%productName</span> marks up new changes made to the document. Select this "
+"option again to turn it off."
 msgstr ""
 "عند تشغيل تعقب التغييرات، <span class=\"productname\">٪productName </span> "
 "بوضع علامات التغييرات الجديدة التي أجريت على المستند. حدد هذا الخيار مرة "
@@ -2466,8 +2490,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.p:515-5
 msgid ""
-"<span class=\"def\">Slide layouts:</span> <span class=\"productname\">"
-"%productName</span> Impress let you change the slide layout. Select the "
+"<span class=\"def\">Slide layouts:</span> <span class=\"productname\""
+">%productName</span> Impress let you change the slide layout. Select the "
 "desired slide layout in the drop-down layout list."
 msgstr ""
 "تخطيطات الشرائح <span class=\"def\">: </span> <span class=\"productname\">٪ "
@@ -2484,8 +2508,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.p:518-5
 msgid ""
-"<span class=\"def\">Slide transitions:</span> <span class=\"productname\">"
-"%productName</span> Impress provides visual effects when displaying a new "
+"<span class=\"def\">Slide transitions:</span> <span class=\"productname\""
+">%productName</span> Impress provides visual effects when displaying a new "
 "slide in the slide show. Slide transitions are property of the slide, use "
 "the side bar to set the slide transition when in edit mode."
 msgstr ""
@@ -2514,8 +2538,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.h4:524-5
 msgid ""
-"What are the documents file formats supported by <span class=\"productname\">"
-"%productName</span>?"
+"What are the documents file formats supported by <span class=\"productname\""
+">%productName</span>?"
 msgstr ""
 "ما هي تنسيقات ملفات المستندات التي يدعمها <span class=\"productname\">٪ "
 "productName </span>؟"
@@ -2570,8 +2594,8 @@ msgstr ""
 msgid ""
 "<span class=\"productname\">%productName</span> saves the document in the "
 "background regularly, you can't just close without saving it. To abandon "
-"your changes, you must either undo them, or use the <span class=\"ui"
-"\">Revision History </span> in the <span class=\"ui\">File</span> menu."
+"your changes, you must either undo them, or use the <span class=\"ui\">"
+"Revision History </span> in the <span class=\"ui\">File</span> menu."
 msgstr ""
 "<span class=\"productname\">٪productName </span> يحفظ المستند في الخلفية "
 "بانتظام، لا يمكنك الإغلاق دون حفظه. للتخلي عن التغييرات الخاصة بك، يجب عليك "
@@ -2589,8 +2613,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.p:540-5
 msgid ""
 "Yes. <span class=\"productname\">%productName</span> opens password-"
-"protected documents, but it is necessary to supply the password in the "
-"“Enter password” prompt at load time."
+"protected documents, but it is necessary to supply the password in the “"
+"Enter password” prompt at load time."
 msgstr ""
 "نعم. <span class=\"productname\">٪productName</span> يفتح المستندات المحمية "
 "بكلمة مرور، ولكن من الضروري توفير كلمة المرور في المطالبة \"أدخل كلمة "
@@ -2602,12 +2626,12 @@ msgstr "كيف يمكنني التدقيق الإملائي بلغتي؟"
 
 #: html/cool-help.html%2Bdiv.p:542-5
 msgid ""
-"Choose menu <span class=\"ui\">Tools</span> → <span class=\"ui\">Languages</"
-"span> and select the language for the whole document. Optionally you can set "
-"languages for the selected text and for the current paragraph."
+"Choose menu <span class=\"ui\">Tools</span> → <span class=\"ui\""
+">Languages</span> and select the language for the whole document. Optionally "
+"you can set languages for the selected text and for the current paragraph."
 msgstr ""
-"اختر القائمة <span class=\"ui\">أدوات</span> → <span class=\"ui\"> لغات </"
-"span> وحدد اللغة للمستند بأكمله. اختياريا يمكنك تعيين لغات للنص المحدد "
+"اختر القائمة <span class=\"ui\">أدوات</span> → <span class=\"ui\"> لغات "
+"</span> وحدد اللغة للمستند بأكمله. اختياريا يمكنك تعيين لغات للنص المحدد "
 "والفقرة الحالية."
 
 #: html/cool-help.html%2Bdiv.h4:543-5
@@ -2616,11 +2640,11 @@ msgstr "كيف يمكنني إزالة الخطوط الحمراء المتمو�
 
 #: html/cool-help.html%2Bdiv.p:544-5
 msgid ""
-"Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui"
-"\">Automatic Spell Checking</span>."
+"Choose menu <span class=\"ui\">Tools</span> and uncheck <span class=\"ui\">"
+"Automatic Spell Checking</span>."
 msgstr ""
-"اختر القائمة <span class=\"ui\">أدوات </span> وإلغاء <span class=\"ui\""
-">التدقيق الإملائي التلقائي </span>."
+"اختر القائمة <span class=\"ui\">أدوات </span> وإلغاء <span class=\"ui\">"
+"التدقيق الإملائي التلقائي </span>."
 
 #: html/cool-help.html%2Bdiv.h4:545-5
 msgid "What is the blue wavy underline in some words in the text?"
@@ -2647,8 +2671,8 @@ msgid ""
 "<span class=\"ui\">Thesaurus</span>. A dialog opens with many suggestions "
 "for replacements."
 msgstr ""
-"نعم. انقر على الكلمة التي تريدها واختر <span class=\"ui\"> أدوات </span> → "
-"<span class=\"ui\">قاموس المرادفات</span>. يفتح مربع حوار مع العديد من "
+"نعم. انقر على الكلمة التي تريدها واختر <span class=\"ui\"> أدوات </span> → <"
+"span class=\"ui\">قاموس المرادفات</span>. يفتح مربع حوار مع العديد من "
 "الاقتراحات للاستبدال."
 
 #: html/cool-help.html%2Bdiv.h4:550-5
@@ -2663,12 +2687,12 @@ msgstr ""
 msgid ""
 "The <span class=\"blue\">¶</span> symbol is a formatting mark. It is used to "
 "help text alignment and editing and is not printed. To toggle it in the "
-"document display, choose menu <span class=\"ui\">View</span> → <span class="
-"\"ui\">Formatting mark</span>."
+"document display, choose menu <span class=\"ui\">View</span> → <span class=\""
+"ui\">Formatting mark</span>."
 msgstr ""
 "رمز <span class=\"blue\">¶</span> هو علامة تنسيق. يتم استخدامه للمساعدة في "
-"محاذاة النص وتحريره ولا تتم طباعته. لتبديله في عرض المستند، اختر القائمة "
-"<span class=\"ui\">عرض</span> → <span class=\"ui\"> علامة التنسيق </span>."
+"محاذاة النص وتحريره ولا تتم طباعته. لتبديله في عرض المستند، اختر القائمة <"
+"span class=\"ui\">عرض</span> → <span class=\"ui\"> علامة التنسيق </span>."
 
 #: html/cool-help.html%2Bdiv.div.h4:555-5
 msgid "How do I get a word count of my document?"
@@ -2676,8 +2700,8 @@ msgstr "كيف يمكنني الحصول على عدد كلمات مستندي؟
 
 #: html/cool-help.html%2Bdiv.div.p:556-5
 msgid ""
-"Word count is available in <span class=\"ui\">Tools</span> → <span class=\"ui"
-"\">Word count</span>. A dialog shows word counts for selection and for the "
+"Word count is available in <span class=\"ui\">Tools</span> → <span class=\""
+"ui\">Word count</span>. A dialog shows word counts for selection and for the "
 "whole document."
 msgstr ""
 "يتوفر عدد الكلمات في <span class=\"ui\">أدوات </span> → <span class=\"ui\"> "
@@ -2702,8 +2726,8 @@ msgid ""
 "You can insert these special characters in the document using the <span "
 "class=\"ui\">Special Character</span> dialog."
 msgstr ""
-"يمكنك إدراج هذه الأحرف الخاصة في المستند باستخدام مربع الحوار <span class="
-"\"ui\">الأحرف الخاصة </span>."
+"يمكنك إدراج هذه الأحرف الخاصة في المستند باستخدام مربع الحوار <span class=\""
+"ui\">الأحرف الخاصة </span>."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:562-11
 msgid "Place the cursor in the position to insert the character."
@@ -2715,8 +2739,8 @@ msgid ""
 "Characters </span> or click the corresponding icon in the toolbar. A dialog "
 "shows."
 msgstr ""
-"اختر <span class=\"ui\">إدراج</span> → <span class=\"ui\"> الأحرف الخاصة </"
-"span> أو انقر فوق الرمز المقابل في شريط الأدوات. يظهر مربع حوار."
+"اختر <span class=\"ui\">إدراج</span> → <span class=\"ui\"> الأحرف الخاصة "
+"</span> أو انقر فوق الرمز المقابل في شريط الأدوات. يظهر مربع حوار."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:567-11
 msgid ""
@@ -2731,8 +2755,8 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:568-11
 msgid ""
-"Press <span class=\"ui\">Insert</span> button. To close the dialog, press "
-"<span class=\"ui\">Cancel</span>."
+"Press <span class=\"ui\">Insert</span> button. To close the dialog, press <"
+"span class=\"ui\">Cancel</span>."
 msgstr ""
 "اضغط على زر <span class=\"ui\">إدراج</span>. لإغلاق مربع الحوار، اضغط <span "
 "class=\"ui\">إلغاء</span>."
@@ -2752,8 +2776,8 @@ msgstr ""
 "لديك ميزة تعقب التغييرات ممكنة للمستند. يسجل تعقب التغييرات كافة التغييرات "
 "في النص ويظهر الإصدارات للمراجعة لاحقا. مفيد لوضع علامات على التغييرات في "
 "النص وجداول البيانات. يتم تمكين تعقب التغييرات باختيار <span class=\"ui\""
-">تحرير</span> → <span class=\"ui\"> تعقب التغييرات </span> → <span class=\"ui"
-"\">تسجيل</span>."
+">تحرير</span> → <span class=\"ui\"> تعقب التغييرات </span> → <span class=\""
+"ui\">تسجيل</span>."
 
 #: html/cool-help.html%2Bdiv.div.p:572-5
 msgid "With track changes enabled your document is shown the following manner:"
@@ -2783,9 +2807,9 @@ msgstr "يعتمد اللون المعين للتغييرات على المست�
 
 #: html/cool-help.html%2Bdiv.div.p:581-5
 msgid ""
-"To display or hide track changes choose <span class=\"ui\">Edit</span> → "
-"<span class=\"ui\">Track Changes </span> → <span class=\"ui\">Show</"
-"span>. Beware that if track changes are enabled but hidden, you still record "
+"To display or hide track changes choose <span class=\"ui\">Edit</span> → <"
+"span class=\"ui\">Track Changes </span> → <span class=\"ui\">Show</span>. "
+"Beware that if track changes are enabled but hidden, you still record "
 "changes and may inadvertently leave unwanted text available in the document."
 msgstr ""
 "لعرض أو إخفاء تعقب التغييرات اختر <span class=\"ui\">تحرير</span> → <span "
@@ -2797,21 +2821,21 @@ msgstr ""
 msgid ""
 "Changes can be accepted or rejected. To accept or reject changes, click on "
 "the corresponding icons in the comment box on the right of the document. "
-"Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui"
-"\">Track Changes </span> → <span class=\"ui\">Accept</span> or <span class="
-"\"ui\">Reject</span>. Furthermore, if you need to filter changes before "
+"Alternatively, choose <span class=\"ui\">Edit</span> → <span class=\"ui\">"
+"Track Changes </span> → <span class=\"ui\">Accept</span> or <span class=\""
+"ui\">Reject</span>. Furthermore, if you need to filter changes before "
 "accepting or rejecting, choose <span class=\"ui\">Edit</span> → <span class="
 "\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog "
 "shows a list of all tracked changes. Use the dialog buttons accordingly."
 msgstr ""
 "يمكن قبول التغييرات أو رفضها. لقبول التغييرات أو رفضها، انقر على الرموز "
-"المقابلة في مربع التعليق على يمين المستند. بدلا من ذلك، اختر <span class=\"ui"
-"\">تحرير </span> → <span class=\"ui\"> تعقب التغييرات </span> → <span class="
-"\"ui\">قبول</span> أو <span class=\"ui\">رفض </span>. علاوة على ذلك، إذا كنت "
-"بحاجة إلى تصفية التغييرات قبل قبولها أو رفضها، اختر <span class=\"ui\">Edit "
-"</span> → <span class=\"ui\"> تعقب التغييرات </span> → <span class=\"ui\""
-">إدارة</span>. يظهر مربع حوار قائمة بكافة التغييرات المتعقبة. استخدم أزرار "
-"الحوار وفقا لذلك."
+"المقابلة في مربع التعليق على يمين المستند. بدلا من ذلك، اختر <span class=\""
+"ui\">تحرير </span> → <span class=\"ui\"> تعقب التغييرات </span> → <span "
+"class=\"ui\">قبول</span> أو <span class=\"ui\">رفض </span>. علاوة على ذلك، "
+"إذا كنت بحاجة إلى تصفية التغييرات قبل قبولها أو رفضها، اختر <span class=\""
+"ui\">Edit </span> → <span class=\"ui\"> تعقب التغييرات </span> → <span class="
+"\"ui\">إدارة</span>. يظهر مربع حوار قائمة بكافة التغييرات المتعقبة. استخدم "
+"أزرار الحوار وفقا لذلك."
 
 #: html/cool-help.html%2Bdiv.div.h4:584-5
 msgid "How do I set the margins of the document?"
@@ -2853,8 +2877,8 @@ msgstr "ضع المؤشر في المكان الذي سيتم تغيير اتج�
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:595-11
 msgid ""
-"Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</"
-"span>, <span class=\"ui\">Text Flow </span> tab"
+"Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Paragraph</span>"
+", <span class=\"ui\">Text Flow </span> tab"
 msgstr ""
 "اختر <span class=\"ui\">تنسيق</span> → <span class=\"ui\">فقرة</span>، <span "
 "class=\"ui\"> علامة التبويب تدفق النص </span>"
@@ -2935,14 +2959,14 @@ msgid ""
 "You have the AutoCorrection enabled. AutoCorrection changes the text just "
 "typed into an internal table of corresponding text. In most cases, "
 "AutoCorrection fixes typos while you are typing. If AutoCorrection is not "
-"necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui"
-"\">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
+"necessary, disable it in <span class=\"ui\">Tools</span> → <span class=\"ui\""
+">AutoCorrection</span> → <span class=\"ui\">While typing</span>."
 msgstr ""
 "لديك التصحيح التلقائي مفعل. تغيير التصحيح التلقائي النص المكتوبة في جدول "
 "داخلي من النص المطابق. في معظم الحالات، التصحيح التلقائي بإصلاح الأخطاء "
-"المطبعية أثناء الكتابة. إذا لم يكن التصحيح التلقائي ضروريا، فقم بتعطيله في "
-"<span class=\"ui\">أدوات</span> → <span class=\"ui\">التصحيح التلقائي </"
-"span> → <span class=\"ui\"> أثناء الكتابة</span>."
+"المطبعية أثناء الكتابة. إذا لم يكن التصحيح التلقائي ضروريا، فقم بتعطيله في <"
+"span class=\"ui\">أدوات</span> → <span class=\"ui\">التصحيح التلقائي </span> "
+"→ <span class=\"ui\"> أثناء الكتابة</span>."
 
 #: html/cool-help.html%2Bdiv.div.h4:619-5
 msgid "How can I select data to print?"
@@ -2978,15 +3002,15 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:626-9
 msgid ""
-"Paste from the browser <span class=\"ui\">Edit</span> → <span class=\"ui"
-"\">Paste</span> or press <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</"
-"span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> dialog opens to "
-"let you describe the precise format of the CSV data."
+"Paste from the browser <span class=\"ui\">Edit</span> → <span class=\"ui\""
+">Paste</span> or press <kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>V</kbd>. The <span class=\"ui\">Text Import</span> dialog "
+"opens to let you describe the precise format of the CSV data."
 msgstr ""
-"لصق من المتصفح <span class=\"ui\">تحرير </span> → <span class=\"ui\">لصق </"
-"span> أو اضغط <kbd>Ctrl </kbd><span class=\"kbd--plus\">+</span><kbd>V </"
-"kbd>. يفتح مربع الحوار <span class=\"ui\">Text Import </span> ليتسمح لك بوصف "
-"التنسيق الدقيق لبيانات CSV."
+"لصق من المتصفح <span class=\"ui\">تحرير </span> → <span class=\"ui\">لصق "
+"</span> أو اضغط <kbd>Ctrl </kbd><span class=\"kbd--plus\">+</span><kbd>V "
+"</kbd>. يفتح مربع الحوار <span class=\"ui\">Text Import </span> ليتسمح لك "
+"بوصف التنسيق الدقيق لبيانات CSV."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:629-11
 msgid ""
@@ -3062,11 +3086,11 @@ msgstr ""
 msgid ""
 "Either choose <span class=\"ui\">Slide Show</span> → <span class=\"ui\">Full "
 "Screen Presentation</span> or click on the left-most icon in the bottom of "
-"the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src="
-"\"images/lc_dia.svg\">"
+"the slide panel: <img style=\"height:0.6cm;width:0.6cm;\" alt=\"\" src=\""
+"images/lc_dia.svg\">"
 msgstr ""
-"إما أن تختار <span class = \"ui\"> عرض الشرائح </ span> → <span class = \"ui"
-"\"> عرض ملء الشاشة </ span> أو انقر على الرمز الموجود في أقصى اليسار أسفل "
+"إما أن تختار <span class = \"ui\"> عرض الشرائح </ span> → <span class = \""
+"ui\"> عرض ملء الشاشة </ span> أو انقر على الرمز الموجود في أقصى اليسار أسفل "
 "لوحة الشرائح: <img النمط = \"الارتفاع: 0.6 سم ؛ العرض: 0.6 سم ؛\" alt = \"\" "
 "src = \"images / lc_dia.svg\">"
 
@@ -3081,11 +3105,11 @@ msgstr "حدد الشكل في شريحتك. تظهر مجموعة من المق
 #: html/cool-help.html%2Bdiv.div.ol.li.p:656-9
 msgid ""
 "Choose <span class=\"ui\">Format</span> → <span class=\"ui\">Line</span> (or "
-"<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and Size</"
-"span>). A dialog opens."
+"<span class=\"ui\">Area</span>, or <span class=\"ui\">Position and "
+"Size</span>). A dialog opens."
 msgstr ""
-"اختر <span class=\"ui\">تنسيق </span> → <span class=\"ui\">سطر </span> (أو "
-"<span class=\"ui\">منطقة </span>، أو <span class=\"ui\"> الموضع والحجم "
+"اختر <span class=\"ui\">تنسيق </span> → <span class=\"ui\">سطر </span> (أو <"
+"span class=\"ui\">منطقة </span>، أو <span class=\"ui\"> الموضع والحجم "
 "</span>). يفتح مربع حوار."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:659-11
