@@ -60,7 +60,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'children': [
 							{
 								'type': 'toolitem',
-								'text': _UNO('.uno:ModifyPage', 'drawing', true),
+								'text': _('Page layout'),
 								'command': '.uno:ModifyPage'
 							},
 							{
@@ -663,7 +663,7 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 			},
 			{
 				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ModifyPage', 'presentation'),
+				'text': _('Page layout'),
 				'command': '.uno:ModifyPage'
 			},
 			{
