@@ -320,6 +320,7 @@ class CommentSection {
 		var commentData = comment.sectionProperties.data;
 
 		var dialog = vex.dialog.open({
+			contentClassName: 'vex-has-inputs',
 			message: '',
 			input: [
 				'<textarea name="comment" id="new-mobile-comment-input-area" class="loleaflet-annotation-textarea" required>' + (commentData.text && isMod ? commentData.text: '') + '</textarea>'
