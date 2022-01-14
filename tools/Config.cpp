@@ -373,11 +373,14 @@ int Config::main(const std::vector<std::string>& args)
                 const std::string val = _coolConfig.getString(args[1]);
                 std::cout << "Previous value found in config file: \""  << val << '"' << std::endl;
                 std::cout << "Changing value to: \"" << args[2] << '"' << std::endl;
-                _coolConfig.setString(args[1], args[2]);
-                changed = true;
             }
             else
-                std::cerr << "No property, \"" << args[1] << "\"," << " found in config file." << std::endl;
+            {
+                std::cout << "No property, \"" << args[1] << "\"," << " found in config file." << std::endl;
+                std::cout << "Adding it as new with value: \"" << args[2] << '"' << std::endl;
+            }
+            _coolConfig.setString(args[1], args[2]);
+            changed = true;
         }
         else
             std::cerr << "set expects a key and value as arguments" << std::endl
