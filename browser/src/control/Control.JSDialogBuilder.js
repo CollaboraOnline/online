@@ -288,7 +288,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		var spinfield = L.DomUtil.create('input', builder.options.cssClass + ' spinfield', div);
 		spinfield.type = 'number';
-		spinfield.dir = 'auto';
+		spinfield.dir = document.documentElement.dir;
 		controls['spinfield'] = spinfield;
 
 		if (data.unit) {
