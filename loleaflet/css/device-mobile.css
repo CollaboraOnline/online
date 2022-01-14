@@ -300,11 +300,13 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	box-shadow: none;
 	border-radius: none;
 	display: flex;
+	flex-direction: column;
 }
 .vex.vex-theme-plain .vex-content:not(.vex-has-inputs) .vex-dialog-form {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	flex: 1;
 }
 
 .vex.vex-theme-plain {
