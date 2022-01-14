@@ -61,7 +61,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		var spinfield = L.DomUtil.create('input', 'spinfield', div);
 		spinfield.type = 'number';
 		spinfield.onkeypress = builder._preventNonNumericalInput;
-		spinfield.dir = 'auto';
+		spinfield.dir = document.documentElement.dir;
 		controls['spinfield'] = spinfield;
 
 		if (data.unit) {
