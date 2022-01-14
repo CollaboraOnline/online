@@ -1131,7 +1131,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	font-size: 12px;
 }
 
-#userListPopover.rtl {
+html[dir='rtl'] #userListPopover {
 	right: unset !important;
 	left: 5px;
 }
@@ -1149,7 +1149,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	right: 16px;
 }
 
-#userListPopover.rtl::after {
+html[dir='rtl'] #userListPopover::after {
 	right: unset !important;
 	left: 16px;
 }
