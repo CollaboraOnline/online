@@ -131,9 +131,10 @@ class ScrollSection {
 	}
 
 	public onScrollBy (e: any) {
-		if (this.map._docLayer._docType !== 'spreadsheet')
-			this.map.panBy(new L.Point(e.x, e.y), {animate: false});
-		else {
+		if (this.map._docLayer._docType !== 'spreadsheet') {
+			this.scrollVerticalWithOffset(e.y);
+			this.scrollHorizontalWithOffset(e.x);
+		} else {
 			// For Calc, top position shouldn't be below zero, for others, we can activate a similar check if needed (while keeping in mind that top position may be below zero for others).
 			var docTopLef = this.containerObject.getDocumentTopLeft();
 
