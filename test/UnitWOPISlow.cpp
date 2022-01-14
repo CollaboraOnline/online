@@ -55,7 +55,7 @@ public:
         , _inputCount(0)
     {
         // We need more time than the default.
-        setTimeout(std::chrono::minutes(5));
+        setTimeout(std::chrono::minutes(10));
 
         // Read the document data and store as string in memory.
         const auto data = helpers::readDataFromFile(LargeDocumentFilename);
