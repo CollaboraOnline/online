@@ -43,12 +43,6 @@ L.Control.UserList = L.Control.extend({
 
 
 		this.registerHeaderAvatarEvents();
-
-		var isRTL = document.documentElement.dir === 'rtl';
-		if (isRTL) {
-			var popover = document.querySelector('#userListPopover');
-			L.DomUtil.addClass(popover, 'rtl');
-		}
 	},
 
 	escapeHtml: function(input) {
