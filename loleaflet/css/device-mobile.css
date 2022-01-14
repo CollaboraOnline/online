@@ -370,7 +370,7 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	flex-direction: column !important;
 }
 
-.vex-close {
+.vex-close:not(.vex-close-m) {
 	display: none;
 }
 
