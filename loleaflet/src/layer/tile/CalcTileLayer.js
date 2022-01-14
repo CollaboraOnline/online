@@ -716,11 +716,17 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 		} else if (values.comments) {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).clearList();
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).importComments(values.comments);
-		} else if (values.commentsPos) {
+		} else if (values.commentsPos === '' || values.commentsPos) {
+			// as of co-2021 we use a new jsonwriter for json callbacks and it generates an empty array.
+			// but in cp-6.4 we use boost for generating json and it cannot create an empty array but instead it creates empty string
+			if (values.commentsPos === '')
+				values.commentsPos = [];
 			var section = app.sectionContainer.getSectionWithName(L.CSections.CommentList.name);
-			section.sectionProperties.commentList.forEach(function (comment) {
-				comment.valid = false;
-			});
+			if (section) {
+				section.sectionProperties.commentList.forEach(function (comment) {
+					comment.valid = false;
+				});
+			}
 			for (var index in values.commentsPos) {
 				comment = values.commentsPos[index];
 				if (section)
