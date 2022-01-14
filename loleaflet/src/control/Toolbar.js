@@ -779,6 +779,7 @@ L.Map.include({
 		vex.open({
 			unsafeContent: content[0].outerHTML,
 			showCloseButton: true,
+			closeClassName: 'vex-close-m',
 			escapeButtonCloses: true,
 			overlayClosesOnClick: true,
 			buttons: {},
