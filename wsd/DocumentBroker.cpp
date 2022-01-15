@@ -2033,6 +2033,8 @@ std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSessi
             " session [" << id << "] to docKey [" <<
             _docKey << "] to have " << count << " sessions.");
 
+    cleanupPendingSaveSessions();
+
     return count;
 }
 
@@ -2251,6 +2253,34 @@ void DocumentBroker::finalRemoveSession(const std::string& id)
     {
         LOG_ERR("Error while removing session [" << id << "]: " << ex.what());
     }
+}
+
+void DocumentBroker::cleanupPendingSaveSessions()
+{
+    // Don't cleanup the very last session.
+    // That should be done when we are done with it.
+    if (_sessions.size() < 2)
+        return;
+
+    std::string closeId;
+    for (const auto &i : _sessions)
+    {
+        if (!i.second->isCloseFrame())
+           continue;
+
+        closeId = i.second->getId();
+        break;
+    }
+
+    if (closeId.empty())
+       return;
+
+    // We may have missed disconnecting what was the last
+    // editable session being used for uploading.
+    // But now we may have another session and if we don't
+    // cleanup manually, we will never disconnect it.
+    if (haveAnotherEditableSession(closeId) || !isPossiblyModified())
+            disconnectSessionInternal(closeId);
 }
 
 std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(

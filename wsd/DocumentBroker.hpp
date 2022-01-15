@@ -255,6 +255,11 @@ public:
     /// Hard removes a session by ID, only for ClientSession.
     void finalRemoveSession(const std::string& id);
 
+    /// Remove any pending sessions that were used for saving and uploading
+    /// as the last session. This is necessary when we recover an unloading
+    /// document when a new client connects while we are unloading.
+    void cleanupPendingSaveSessions();
+
     /// Create new client session
     std::shared_ptr<ClientSession> createNewClientSession(
         const std::shared_ptr<ProtocolHandlerInterface> &ws,
