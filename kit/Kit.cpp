@@ -1452,6 +1452,9 @@ private:
                 }
 
                 session->sendTextFrameAndLogError("error: cmd=load kind=faileddocloading");
+
+                LOG_FTL("Failed to load the document. Setting TerminationFlag");
+                SigUtil::setTerminationFlag();
                 return nullptr;
             }
 
