@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-13 22:36+0100\n"
-"PO-Revision-Date: 2022-01-06 22:22+0000\n"
+"PO-Revision-Date: 2022-01-15 13:53+0000\n"
 "Last-Translator: Eric <alchemillatruth@purelymail.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "collabora-online/ui/zh_Hans/>\n"
-"Language: \n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1056,7 +1056,6 @@ msgid "Start Presentation"
 msgstr "开始演示"
 
 #: src/control/Control.NotebookbarImpress.js:205
-#, fuzzy
 msgid "ODF Presentation (.odp)"
 msgstr "ODF 演示文稿 (.odp)"
 
@@ -1065,7 +1064,6 @@ msgid "Presentation"
 msgstr ""
 
 #: src/control/Control.NotebookbarImpress.js:980
-#, fuzzy
 msgid "Reset Zoom"
 msgstr "重置缩放"
 
@@ -1207,7 +1205,6 @@ msgid "Permission Mode"
 msgstr ""
 
 #: src/control/Control.StatusBar.js:423
-#, fuzzy
 msgid "Read-only"
 msgstr "只读"
 
@@ -1244,7 +1241,6 @@ msgid "Copy Sheet..."
 msgstr ""
 
 #: src/control/Control.Tabs.js:303
-#, fuzzy
 msgid "Are you sure you want to delete sheet, %sheet%?"
 msgstr "您确定要删除工作表 %sheet% 吗？"
 
@@ -1582,9 +1578,8 @@ msgid ""
 msgstr ""
 
 #: src/control/Toolbar.js:618 src/control/Toolbar.js:619
-#, fuzzy
 msgid "Next"
-msgstr "文本"
+msgstr "下一个"
 
 #: src/control/Toolbar.js:622
 msgid "Learn more about the enterprise-ready versions"
@@ -1752,9 +1747,8 @@ msgid ""
 msgstr "很抱歉，无法连接到您的文档。请重试。"
 
 #: src/core/Socket.js:1512
-#, fuzzy
 msgid "Reconnecting..."
-msgstr "正在连接..."
+msgstr "正在重连…"
 
 #: src/core/Socket.js:1518
 msgid "The server has been disconnected."
@@ -1831,10 +1825,9 @@ msgid "Invalid link: '%url'"
 msgstr "无效链接: 「%url」"
 
 #: src/errormessages.js:25
-#, fuzzy
 msgid ""
 "You are leaving the editor, are you sure you want to visit the following URL?"
-msgstr "您正在离开编辑器，是否确实要访问 %url?"
+msgstr "您正在离开编辑器，是否确实要访问下列 URL？"
 
 #: src/errormessages.js:26
 msgid ""
