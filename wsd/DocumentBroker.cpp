@@ -2295,7 +2295,7 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
 {
     try
     {
-        if (isMarkedToDestroy())
+        if (isMarkedToDestroy() || _docState.isUnloadRequested())
         {
             LOG_INF("DocumentBroker ["
                     << getDocKey()
