@@ -1063,13 +1063,16 @@ private:
         if (viewCount == 1)
         {
 #if !MOBILEAPP
-            if (_sessions.empty())
-            {
-                LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, exiting bluntly.");
-                flushTraceEventRecordings();
-                Log::shutdown();
-                std::_Exit(EX_OK);
-            }
+            LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views"
+                                 << (_sessions.size()
+                                         ? ", but has " + std::to_string(_sessions.size()) +
+                                               " sessions still"
+                                         : "")
+                                 << ", exiting bluntly.");
+
+            flushTraceEventRecordings();
+            Log::shutdown();
+            std::_Exit(EX_OK);
 #endif
             LOG_INF("Document [" << anonymizeUrl(_url) << "] has no more views, but has " <<
                     _sessions.size() << " sessions still. Destroying the document.");
