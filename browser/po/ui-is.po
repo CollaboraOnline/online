@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-13 22:36+0100\n"
-"PO-Revision-Date: 2021-12-04 13:53+0000\n"
+"PO-Revision-Date: 2022-01-15 13:53+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <https://hosted.weblate.org/projects/"
 "collabora-online/ui/is/>\n"
-"Language: \n"
+"Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n % 10 != 1 || n % 100 == 11;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -337,7 +337,7 @@ msgstr " sek"
 
 #: js/w2ui-1.5.rc1.js:2920
 msgid "Recent"
-msgstr ""
+msgstr "Nýlegt"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
@@ -373,7 +373,7 @@ msgstr "Sérstök líming"
 
 #: src/control/Control.DocumentNameInput.js:82
 msgid "Path"
-msgstr ""
+msgstr "Slóð"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -668,7 +668,7 @@ msgstr "Snúningur texta"
 #: src/control/Control.Menubar.js:301
 #: src/control/Control.NotebookbarWriter.js:217
 msgid "Forum"
-msgstr ""
+msgstr "Spjallsvæði"
 
 #: src/control/Control.Menubar.js:302 src/control/Control.Menubar.js:431
 #: src/control/Control.Menubar.js:542 src/control/Control.Menubar.js:755
@@ -1040,7 +1040,7 @@ msgstr "Eyða dálkum"
 #: src/control/Control.NotebookbarDraw.js:63
 #: src/control/Control.NotebookbarDraw.js:666
 msgid "Page layout"
-msgstr ""
+msgstr "Framsetning síðu"
 
 #: src/control/Control.NotebookbarDraw.js:110
 #: src/control/Control.NotebookbarImpress.js:122
@@ -1553,7 +1553,7 @@ msgstr ""
 
 #: src/control/Toolbar.js:610
 msgid "Discover all the changes"
-msgstr ""
+msgstr "Sjá allar breytingar"
 
 #: src/control/Toolbar.js:612
 #, javascript-format
@@ -1703,7 +1703,7 @@ msgstr "Vista í nýja skrá"
 
 #: src/core/Socket.js:897
 msgid "Document has been changed"
-msgstr ""
+msgstr "Skjalinu hefur verið breytt"
 
 #: src/core/Socket.js:897
 msgid ""
@@ -1948,6 +1948,8 @@ msgstr ""
 msgid ""
 "Document cannot be exported. Please contact the storage server administrator."
 msgstr ""
+"Ekki er hægt að flytja út skjalið. Hafðu samband við kerfisstjóra "
+"netþjónsins."
 
 #: src/errormessages.js:50
 msgid "Uploading file to server failed, file not found."
