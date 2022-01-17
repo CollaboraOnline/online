@@ -82,7 +82,7 @@
 /* Document Logo */
 .main-nav.hasnotebookbar #document-header {
 	height: 100%;
-	background: transparent !important;
+	background: transparent;
 	align-items: center;
 	display: flex;
 }
