@@ -7,6 +7,7 @@
 bool DoInitialization()
 {
     COOLWSD::ChildRoot = "/fuzz/child-root";
+    UnitBase::init(UnitBase::UnitType::Wsd, std::string());
     return true;
 }
 
