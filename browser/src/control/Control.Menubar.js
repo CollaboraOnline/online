@@ -1268,6 +1268,7 @@ L.Control.Menubar = L.Control.extend({
 			showFunction: null,
 			showTimeout: 0,
 			collapsibleHideDuration: 0,
+			collapsibleHideFunction: null,
 			subIndicatorsPos: 'append',
 			subIndicatorsText: '&#8250;'
 		});
