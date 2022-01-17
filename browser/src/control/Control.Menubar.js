@@ -1409,10 +1409,6 @@ L.Control.Menubar = L.Control.extend({
 		}
 	},
 
-	_beforeHide: function() {
-		$('.main-nav.hasnotebookbar').css('overflow', 'scroll hidden');
-	},
-
 	_beforeShow: function(e, menu) {
 		$('.main-nav.hasnotebookbar').css('overflow', 'visible');
 		var self = e.data.self;
