@@ -188,6 +188,7 @@ echo "   Done."
 %post
 setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit
 setcap cap_sys_admin=ep /usr/bin/coolmount
+/usr/bin/coolconfig migrateconfig --write
 
 %if 0%{?rhel} >= 7
 %systemd_post coolwsd.service
