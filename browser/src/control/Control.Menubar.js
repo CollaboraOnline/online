@@ -375,9 +375,9 @@ L.Control.Menubar = L.Control.extend({
 					{uno: '.uno:InsertTimeFieldFix'},
 					{uno: '.uno:InsertTimeFieldVar'},
 					{type: 'separator'},
-					{name: _UNO('.uno:InsertSlideField', 'presentation'), id: 'insertslidefield', type: 'action'},
-					{name: _UNO('.uno:InsertSlideTitleField', 'presentation'), id: 'insertslidetitlefield', type: 'action'},
-					{name: _UNO('.uno:InsertSlidesField', 'presentation'), id: 'insertslidesfield', type: 'action'},
+					{name: _UNO('.uno:InsertSlideField', 'presentation'), uno: '.uno:InsertPageField'},
+					{name: _UNO('.uno:InsertSlideTitleField', 'presentation'), uno: '.uno:InsertPageTitleField'},
+					{name: _UNO('.uno:InsertSlidesField', 'presentation'), uno: '.uno:InsertPagesField'},
 				]},
 			]},
 			{name: _UNO('.uno:FormatMenu', 'presentation'), id: 'format', type: 'menu', menu: [
@@ -487,14 +487,14 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:InsertSymbol'},
 				{type: 'separator'},
 				{name: _UNO('.uno:InsertField', 'text'), id: 'insertfield', type: 'menu', menu: [
-					{uno: '.uno:InsertDateFieldFix'},
-					{uno: '.uno:InsertDateFieldVar'},
-					{uno: '.uno:InsertTimeFieldFix'},
-					{uno: '.uno:InsertTimeFieldVar'},
+					{name: _UNO('.uno:InsertDateFieldFix', 'presentation'), uno: '.uno:InsertDateFieldFix'},
+					{name: _UNO('.uno:InsertDateFieldVar', 'presentation'), uno: '.uno:InsertDateFieldVar'},
+					{name: _UNO('.uno:InsertTimeFieldFix', 'presentation'), uno: '.uno:InsertTimeFieldFix'},
+					{name: _UNO('.uno:InsertTimeFieldVar', 'presentation'), uno: '.uno:InsertTimeFieldVar'},
 					{type: 'separator'},
-					{name: _UNO('.uno:InsertSlideField', 'presentation'), id: 'insertslidefield', type: 'action'},
-					{name: _UNO('.uno:InsertSlideTitleField', 'presentation'), id: 'insertslidetitlefield', type: 'action'},
-					{name: _UNO('.uno:InsertSlidesField', 'presentation'), id: 'insertslidesfield', type: 'action'},
+					{name: _UNO('.uno:InsertPageField', 'presentation'), uno: '.uno:InsertPageField'},
+					{name: _UNO('.uno:InsertPageTitleField', 'presentation'), uno: '.uno:InsertPageTitleField'},
+					{name: _UNO('.uno:InsertPagesField', 'presentation'), uno: '.uno:InsertPagesField'},
 				]},
 			]},
 			{name: _UNO('.uno:FormatMenu', 'presentation'), id: 'format', type: 'menu', menu: [
@@ -511,25 +511,25 @@ L.Control.Menubar = L.Control.extend({
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertTable', 'text'), uno: '.uno:InsertTable'},
 				{name: _UNO('.uno:TableInsertMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
-					{uno: '.uno:InsertRowsBefore'},
-					{uno: '.uno:InsertRowsAfter'},
+					{name: _UNO('.uno:InsertRowsBefore', 'presentation'), uno: '.uno:InsertRowsBefore'},
+					{name: _UNO('.uno:InsertRowsAfter', 'presentation'), uno: '.uno:InsertRowsAfter'},
 					{type: 'separator'},
-					{uno: '.uno:InsertColumnsBefore'},
-					{uno: '.uno:InsertColumnsAfter'}]},
+					{name: _UNO('.uno:InsertColumnsBefore', 'presentation'), uno: '.uno:InsertColumnsBefore'},
+					{name: _UNO('.uno:InsertColumnsAfter', 'presentation'), uno: '.uno:InsertColumnsAfter'}]},
 				{name: _UNO('.uno:TableDeleteMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), type: 'menu', menu: [
-					{uno: '.uno:DeleteRows'},
-					{uno: '.uno:DeleteColumns'},
-					{uno: '.uno:DeleteTable'}]},
+					{name: _UNO('.uno:DeleteRows', 'presentation'), uno: '.uno:DeleteRows'},
+					{name: _UNO('.uno:DeleteColumns', 'presentation'), uno: '.uno:DeleteColumns'},
+					{name: _UNO('.uno:DeleteTable', 'presentation'), uno: '.uno:DeleteTable'}]},
 				{name: _UNO('.uno:TableSelectMenu', 'text'), type: 'menu', menu: [
-					{uno: '.uno:SelectTable'},
-					{uno: '.uno:EntireRow'},
-					{uno: '.uno:EntireColumn'}]},
+					{name: _UNO('.uno:SelectTable', 'presentation'), uno: '.uno:SelectTable'},
+					{name: _UNO('.uno:EntireRow', 'presentation'), uno: '.uno:EntireRow'},
+					{name: _UNO('.uno:EntireColumn', 'presentation'), uno: '.uno:EntireColumn'}]},
 				{name: _UNO('.uno:MergeCells', 'presentation'), uno: '.uno:MergeCells'},
 				{name: _UNO('.uno:TableDialog', 'presentation'), uno: '.uno:TableDialog'}]
 			},
 			{name: _UNO('.uno:PageMenu', 'presentation'), type: 'menu', menu: [
 				{name: _UNO('.uno:InsertPage', 'presentation'), id: 'insertpage', type: 'action'},
-				{name: _UNO('.uno:DuplicatePage', 'presentation'), id: 'duplicatedrawpage', type: 'action'},
+				{name: _UNO('.uno:DuplicatePage', 'presentation'), id: 'duplicatepage', type: 'action'},
 				{name: _UNO('.uno:DeletePage', 'presentation'), id: 'deletepage', type: 'action'}]
 			},
 			{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
@@ -896,19 +896,19 @@ L.Control.Menubar = L.Control.extend({
 				{uno: '.uno:SelectAll'}
 			]},
 			{name: _UNO('.uno:TableMenu', 'text'/*HACK should be 'presentation', but not in xcu*/), id: 'tablemenu', type: 'menu', menu: [
-				{uno: '.uno:InsertRowsBefore'},
-				{uno: '.uno:InsertRowsAfter'},
+				{name: _UNO('.uno:InsertRowsBefore', 'presentation'), uno: '.uno:InsertRowsBefore'},
+				{name: _UNO('.uno:InsertRowsAfter', 'presentation'), uno: '.uno:InsertRowsAfter'},
 				{type: 'separator'},
-				{uno: '.uno:InsertColumnsBefore'},
-				{uno: '.uno:InsertColumnsAfter'},
-				{uno: '.uno:DeleteRows'},
-				{uno: '.uno:DeleteColumns'},
+				{name: _UNO('.uno:InsertColumnsBefore', 'presentation'), uno: '.uno:InsertColumnsBefore'},
+				{name: _UNO('.uno:InsertColumnsAfter', 'presentation'), uno: '.uno:InsertColumnsAfter'},
+				{name: _UNO('.uno:DeleteRows', 'presentation'), uno: '.uno:DeleteRows'},
+				{name: _UNO('.uno:DeleteColumns', 'presentation'), uno: '.uno:DeleteColumns'},
 				{name: _UNO('.uno:MergeCells', 'presentation'), uno: '.uno:MergeCells'}]
 			},
-			{name: _UNO('.uno:SlideMenu', 'presentation'), id: 'slidemenu', type: 'menu', menu: [
-				{name: _UNO('.uno:InsertSlide', 'presentation'), id: 'insertpage', type: 'action'},
-				{name: _UNO('.uno:DuplicateSlide', 'presentation'), id: 'duplicatepage', type: 'action'},
-				{name: _UNO('.uno:DeleteSlide', 'presentation'), id: 'deletepage', type: 'action'}]
+			{name: _UNO('.uno:PageMenu', 'presentation'), id: 'pagemenu', type: 'menu', menu: [
+				{name: _UNO('.uno:InsertPage', 'presentation'), id: 'insertpage', type: 'action'},
+				{name: _UNO('.uno:DuplicatePage', 'presentation'), id: 'duplicatepage', type: 'action'},
+				{name: _UNO('.uno:DeletePage', 'presentation'), id: 'deletepage', type: 'action'}]
 			},
 			{uno: '.uno:SpellOnline'},
 			{name: _UNO('.uno:RunMacro'), id: 'runmacro', uno: '.uno:RunMacro'},
@@ -1062,32 +1062,32 @@ L.Control.Menubar = L.Control.extend({
 						{uno: '.uno:InsertTimeFieldFix'},
 						{uno: '.uno:InsertTimeFieldVar'},
 						{type: 'separator'},
-						{name: _UNO('.uno:InsertSlideField', 'presentation'), id: 'insertslidefield', type: 'action'},
-						{name: _UNO('.uno:InsertSlideTitleField', 'presentation'), id: 'insertslidetitlefield', type: 'action'},
-						{name: _UNO('.uno:InsertSlidesField', 'presentation'), id: 'insertslidesfield', type: 'action'},
+						{name: _UNO('.uno:InsertSlideField', 'presentation'), uno: '.uno:InsertPageField'},
+						{name: _UNO('.uno:InsertSlideTitleField', 'presentation'), uno: '.uno:InsertPageTitleField'},
+						{name: _UNO('.uno:InsertSlidesField', 'presentation'), uno: '.uno:InsertPagesField'},
 					]},
 				]
 			},
 			drawing : {
-				name: _UNO('.uno:InsertMenu', 'drawing'), id: 'insert', type: 'menu', menu: [
+				name: _UNO('.uno:InsertMenu', 'presentation'), id: 'insert', type: 'menu', menu: [
 					{name: _('Local Image...'), id: 'insertgraphic', type: 'action'},
-					{name: _UNO('.uno:InsertGraphic', 'drawing'), id: 'insertgraphicremote', type: 'action'},
+					{name: _UNO('.uno:InsertGraphic', 'presentation'), id: 'insertgraphicremote', type: 'action'},
 					{uno: '.uno:InsertObjectChart'},
-					{name: _UNO('.uno:InsertAnnotation', 'drawing'), id: 'insertcomment', type: 'action'},
+					{name: _UNO('.uno:InsertAnnotation', 'presentation'), id: 'insertcomment', type: 'action'},
 					{name: _UNO('.uno:TableMenu'), id: 'inserttable', type: 'action'},
 					{name: _UNO('.uno:HyperlinkDialog'), id: 'inserthyperlink', type: 'action'},
 					{name: _UNO('.uno:ShapesMenu'), id: 'insertshape', type: 'action'},
 					{name: _UNO('.uno:FontworkGalleryFloater'), uno: '.uno:FontworkGalleryFloater'},
-					{name: _UNO('.uno:Text', 'drawing'), id: 'inserttextbox', type: 'action'},
+					{name: _UNO('.uno:Text', 'presentation'), id: 'inserttextbox', type: 'action'},
 					{name: _UNO('.uno:InsertField', 'text'), id: 'insertfield', type: 'menu', menu: [
-						{uno: '.uno:InsertDateFieldFix'},
-						{uno: '.uno:InsertDateFieldVar'},
-						{uno: '.uno:InsertTimeFieldFix'},
-						{uno: '.uno:InsertTimeFieldVar'},
+						{name: _UNO('.uno:InsertDateFieldFix', 'presentation'), uno: '.uno:InsertDateFieldFix'},
+						{name: _UNO('.uno:InsertDateFieldVar', 'presentation'), uno: '.uno:InsertDateFieldVar'},
+						{name: _UNO('.uno:InsertTimeFieldFix', 'presentation'), uno: '.uno:InsertTimeFieldFix'},
+						{name: _UNO('.uno:InsertTimeFieldVar', 'presentation'), uno: '.uno:InsertTimeFieldVar'},
 						{type: 'separator'},
-						{name: _UNO('.uno:InsertSlideField', 'drawing'), id: 'insertslidefield', type: 'action'},
-						{name: _UNO('.uno:InsertSlideTitleField', 'drawing'), id: 'insertslidetitlefield', type: 'action'},
-						{name: _UNO('.uno:InsertSlidesField', 'drawing'), id: 'insertslidesfield', type: 'action'},
+						{name: _UNO('.uno:InsertPageField', 'presentation'), uno: '.uno:InsertPageField'},
+						{name: _UNO('.uno:InsertPageTitleField', 'presentation'), uno: '.uno:InsertPageTitleField'},
+						{name: _UNO('.uno:InsertPagesField', 'presentation'), uno: '.uno:InsertPagesField'},
 					]},
 				]
 			}
@@ -1641,8 +1641,15 @@ L.Control.Menubar = L.Control.extend({
 			this._map.duplicatePage();
 		} else if (id === 'deletepage') {
 			var map = this._map;
+			var msg;
+			if (map.getDocType() === 'presentation') {
+				msg = _('Are you sure you want to delete this slide?');
+			}
+			else { /* drawing */
+				msg = _('Are you sure you want to delete this page?');
+			}
 			vex.dialog.open({
-				message: _('Are you sure you want to delete this slide?'),
+				message: msg,
 				buttons: [
 					$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
 					$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
@@ -1684,12 +1691,6 @@ L.Control.Menubar = L.Control.extend({
 			}
 		} else if (id === 'inserttextbox') {
 			this._map.sendUnoCommand('.uno:Text?CreateDirectly:bool=true');
-		} else if (id === 'insertslidefield') {
-			this._map.sendUnoCommand('.uno:InsertPageField');
-		} else if (id === 'insertslidetitlefield') {
-			this._map.sendUnoCommand('.uno:InsertPageTitleField');
-		} else if (id === 'insertslidesfield') {
-			this._map.sendUnoCommand('.uno:InsertPagesField');
 		} else if (id === 'pagesetup') {
 			this._map.sendUnoCommand('.uno:SidebarShow');
 			this._map.sendUnoCommand('.uno:LOKSidebarWriterPage');
