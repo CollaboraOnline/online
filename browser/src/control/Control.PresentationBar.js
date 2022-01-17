@@ -96,8 +96,15 @@ L.Control.PresentationBar = L.Control.extend({
 			this.map.duplicatePage();
 		}
 		else if (id === 'deletepage') {
+			var msg;
+			if (this.map.getDocType() === 'presentation') {
+				msg = _('Are you sure you want to delete this slide?');
+			}
+			else { /* drawing */
+				msg = _('Are you sure you want to delete this page?');
+			}
 			vex.dialog.confirm({
-				message: _('Are you sure you want to delete this page?'),
+				message: msg,
 				buttons: [
 					$.extend({}, vex.dialog.buttons.YES, { text: _('OK') }),
 					$.extend({}, vex.dialog.buttons.NO, { text: _('Cancel') })
