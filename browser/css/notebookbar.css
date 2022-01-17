@@ -81,7 +81,6 @@
 }
 /* Document Logo */
 .main-nav.hasnotebookbar #document-header {
-	float: left;
 	height: 100%;
 	background: transparent !important;
 	align-items: center;
