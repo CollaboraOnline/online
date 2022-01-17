@@ -24,9 +24,9 @@
 	border: 1px solid var(--gray-color);
 	border-radius: var(--border-radius);
 	height: 28px;
-	padding-left: 4px;
+	padding-inline-start: 4px;
 	position: relative;
-	left: 8px;
+	margin-inline-start: 8px;
 }
 
 .sidebar.spinfield {
@@ -45,7 +45,7 @@
 	color: var(--gray-light-txt--color);
 	margin: 5px;
 	position: relative;
-	right: 40px;
+	margin-inline-start: calc(-40px);
 }
 
 .sidebar.ui-listbox {
