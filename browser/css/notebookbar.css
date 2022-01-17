@@ -351,7 +351,7 @@
 }
 
 .unotoolbutton.notebookbar {
-	margin-right: 5px !important;
+	margin-inline-end: 5px !important;
 	text-align: center;
 }
 .unotoolbutton.notebookbar.has-label > *{ /*so they stay side by side*/
@@ -370,13 +370,13 @@
 .has-label.has-dropdown:not(.inline) .unolabel{
 	display: inline-block;
 	clear: both;
-	float: left;
+	float: inline-start;
 }
 
 /* unobuttons with inline labels */
 
 .inline.notebookbar {
-	float: left;
+	float: inline-start;
 	width: max-content;
 	white-space: nowrap;
 	display: inline-table;
