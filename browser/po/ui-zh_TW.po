@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-13 22:36+0100\n"
+"POT-Creation-Date: 2022-01-17 21:33+0100\n"
 "PO-Revision-Date: 2020-07-08 12:37+0000\n"
 "Last-Translator: Andrew Lee (李健秋) <alee@collabora.com>\n"
 "Language-Team: Chinese (Traditional) <https://weblate.documentfoundation.org/"
@@ -142,7 +142,7 @@ msgstr "網路圖表"
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:252
 #: src/control/Control.NotebookbarDraw.js:24
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/layer/tile/CommentListSection.ts:397
+#: src/layer/tile/CommentListSection.ts:398
 #: src/layer/tile/CommentSection.ts:126
 msgid "Save"
 msgstr "儲存"
@@ -259,20 +259,20 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "您確定要終止本次的作業階段？"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1650
-#: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:860
+#: src/control/Control.Menubar.js:1654
+#: src/control/Control.PresentationBar.js:109 src/control/Control.Tabs.js:305
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
 #: src/core/Socket.js:1016
 msgid "OK"
 msgstr "確定"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.Command.js:92 src/control/Control.LanguageDialog.js:86
-#: src/control/Control.Menubar.js:1651 src/control/Control.MobileTopBar.js:43
-#: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:861
+#: src/control/Control.Menubar.js:1655 src/control/Control.MobileTopBar.js:43
+#: src/control/Control.PresentationBar.js:110 src/control/Control.Tabs.js:306
+#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:862
 #: src/core/Socket.js:877 src/core/Socket.js:887 src/core/Socket.js:1017
-#: src/layer/tile/CommentListSection.ts:398
+#: src/layer/tile/CommentListSection.ts:399
 #: src/layer/tile/CommentSection.ts:125 src/layer/tile/CommentSection.ts:128
 msgid "Cancel"
 msgstr "取消"
@@ -391,9 +391,9 @@ msgstr "索引"
 
 #: src/control/Control.DocumentRepair.js:48
 #: src/control/Control.JSDialogBuilder.js:2117
-#: src/layer/tile/CanvasTileLayer.js:4835
-#: src/layer/tile/CanvasTileLayer.js:4845
-#: src/layer/tile/CommentListSection.ts:830
+#: src/layer/tile/CanvasTileLayer.js:4869
+#: src/layer/tile/CanvasTileLayer.js:4879
+#: src/layer/tile/CommentListSection.ts:831
 msgid "Comment"
 msgstr "評註"
 
@@ -409,7 +409,7 @@ msgstr "時間戳記"
 msgid "Jump to state"
 msgstr "跳回狀態"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:294
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:288
 msgid "You"
 msgstr "您"
 
@@ -789,15 +789,21 @@ msgstr "頁面設定"
 msgid "Reset to Default Language"
 msgstr "重設回預設語言"
 
-#: src/control/Control.Menubar.js:1555
+#: src/control/Control.Menubar.js:1552
 msgid "Insert Shape"
 msgstr "插入形狀"
 
-#: src/control/Control.Menubar.js:1648
+#: src/control/Control.Menubar.js:1646
+#: src/control/Control.PresentationBar.js:101
 msgid "Are you sure you want to delete this slide?"
 msgstr "確定要刪除此投影片？"
 
-#: src/control/Control.Menubar.js:1776
+#: src/control/Control.Menubar.js:1649
+#: src/control/Control.PresentationBar.js:104
+msgid "Are you sure you want to delete this page?"
+msgstr "您確定要刪除這個頁面？"
+
+#: src/control/Control.Menubar.js:1774
 msgid "file type icon"
 msgstr ""
 
@@ -924,6 +930,7 @@ msgid "Format"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:48
+#: src/control/Control.NotebookbarDraw.js:116
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
 msgstr ""
@@ -995,7 +1002,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:856
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:857
 msgid "Text"
 msgstr "文字"
 
@@ -1115,10 +1122,6 @@ msgstr ""
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
 msgstr ""
-
-#: src/control/Control.PresentationBar.js:100
-msgid "Are you sure you want to delete this page?"
-msgstr "您確定要刪除這個頁面？"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1319,15 +1322,15 @@ msgstr "1 位使用者"
 msgid "0 users"
 msgstr "0 位使用者"
 
-#: src/control/Control.UserList.js:186 src/control/Control.UserList.js:352
+#: src/control/Control.UserList.js:180 src/control/Control.UserList.js:346
 msgid "Always follow the editor"
 msgstr "總是跟隨編輯器"
 
-#: src/control/Control.UserList.js:300
+#: src/control/Control.UserList.js:294
 msgid "Readonly"
 msgstr "唯讀"
 
-#: src/control/Control.UserList.js:355
+#: src/control/Control.UserList.js:349
 msgid "Current"
 msgstr "目前"
 
@@ -1624,11 +1627,11 @@ msgstr "此 %productName 版本源自"
 msgid "\"Slow Proxy\""
 msgstr "「緩慢代理」"
 
-#: src/control/Toolbar.js:853
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "插入超連結"
 
-#: src/control/Toolbar.js:857
+#: src/control/Toolbar.js:858
 msgid "Link"
 msgstr "連結"
 
@@ -1935,45 +1938,45 @@ msgstr "檔案上傳至伺服器失敗，找不到檔案。"
 msgid "Uploading file to server failed, the file is too large."
 msgstr "檔案上傳至伺服器失敗，檔案過大。"
 
-#: src/layer/tile/CanvasTileLayer.js:1765
+#: src/layer/tile/CanvasTileLayer.js:1783
 #, fuzzy
 msgid "Functions"
 msgstr "函式精靈"
 
-#: src/layer/tile/CanvasTileLayer.js:4862
+#: src/layer/tile/CanvasTileLayer.js:4896
 msgid "No Comments"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:777
+#: src/layer/tile/CommentListSection.ts:778
 msgid "Modify"
 msgstr "修改"
 
-#: src/layer/tile/CommentListSection.ts:783
+#: src/layer/tile/CommentListSection.ts:784
 #: src/layer/tile/CommentSection.ts:129
 msgid "Reply"
 msgstr "回覆"
 
-#: src/layer/tile/CommentListSection.ts:789
+#: src/layer/tile/CommentListSection.ts:790
 msgid "Remove"
 msgstr "移除"
 
-#: src/layer/tile/CommentListSection.ts:795
+#: src/layer/tile/CommentListSection.ts:796
 msgid "Remove Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:801
+#: src/layer/tile/CommentListSection.ts:802
 msgid "Resolve"
 msgstr "解決"
 
-#: src/layer/tile/CommentListSection.ts:801
+#: src/layer/tile/CommentListSection.ts:802
 msgid "Unresolve"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:807
+#: src/layer/tile/CommentListSection.ts:808
 msgid "Unresolve Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:807
+#: src/layer/tile/CommentListSection.ts:808
 msgid "Resolve Thread"
 msgstr ""
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-13 22:36+0100\n"
+"POT-Creation-Date: 2022-01-17 21:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,7 +140,7 @@ msgstr ""
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:252
 #: src/control/Control.NotebookbarDraw.js:24
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/layer/tile/CommentListSection.ts:397
+#: src/layer/tile/CommentListSection.ts:398
 #: src/layer/tile/CommentSection.ts:126
 msgid "Save"
 msgstr "Иеиқәырхатәуп"
@@ -258,20 +258,20 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "Ишәҭахума асеанс ахыркәшара?"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1650
-#: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:860
+#: src/control/Control.Menubar.js:1654
+#: src/control/Control.PresentationBar.js:109 src/control/Control.Tabs.js:305
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
 #: src/core/Socket.js:1016
 msgid "OK"
 msgstr ""
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.Command.js:92 src/control/Control.LanguageDialog.js:86
-#: src/control/Control.Menubar.js:1651 src/control/Control.MobileTopBar.js:43
-#: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:861
+#: src/control/Control.Menubar.js:1655 src/control/Control.MobileTopBar.js:43
+#: src/control/Control.PresentationBar.js:110 src/control/Control.Tabs.js:306
+#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:862
 #: src/core/Socket.js:877 src/core/Socket.js:887 src/core/Socket.js:1017
-#: src/layer/tile/CommentListSection.ts:398
+#: src/layer/tile/CommentListSection.ts:399
 #: src/layer/tile/CommentSection.ts:125 src/layer/tile/CommentSection.ts:128
 msgid "Cancel"
 msgstr "Иаҟәыхтәуп"
@@ -390,9 +390,9 @@ msgstr "Аиндекс"
 
 #: src/control/Control.DocumentRepair.js:48
 #: src/control/Control.JSDialogBuilder.js:2117
-#: src/layer/tile/CanvasTileLayer.js:4835
-#: src/layer/tile/CanvasTileLayer.js:4845
-#: src/layer/tile/CommentListSection.ts:830
+#: src/layer/tile/CanvasTileLayer.js:4869
+#: src/layer/tile/CanvasTileLayer.js:4879
+#: src/layer/tile/CommentListSection.ts:831
 msgid "Comment"
 msgstr "Азгәаҭа"
 
@@ -408,7 +408,7 @@ msgstr "Аамҭа азгәаҭара"
 msgid "Jump to state"
 msgstr ""
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:294
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:288
 msgid "You"
 msgstr "Шәара"
 
@@ -794,16 +794,22 @@ msgstr ""
 msgid "Reset to Default Language"
 msgstr "Иқәыргылатәуп абызшәа ишыҟаз"
 
-#: src/control/Control.Menubar.js:1555
+#: src/control/Control.Menubar.js:1552
 #, fuzzy
 msgid "Insert Shape"
 msgstr "Иҭаргылатәуп абӷьыц"
 
-#: src/control/Control.Menubar.js:1648
+#: src/control/Control.Menubar.js:1646
+#: src/control/Control.PresentationBar.js:101
 msgid "Are you sure you want to delete this slide?"
 msgstr "Ианыхтәума абри аслаид?"
 
-#: src/control/Control.Menubar.js:1776
+#: src/control/Control.Menubar.js:1649
+#: src/control/Control.PresentationBar.js:104
+msgid "Are you sure you want to delete this page?"
+msgstr "Ианыхтәума абри адаҟьа?"
+
+#: src/control/Control.Menubar.js:1774
 msgid "file type icon"
 msgstr ""
 
@@ -931,6 +937,7 @@ msgid "Format"
 msgstr ""
 
 #: src/control/Control.NotebookbarCalc.js:48
+#: src/control/Control.NotebookbarDraw.js:116
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
 msgstr ""
@@ -1001,7 +1008,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:856
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:857
 msgid "Text"
 msgstr ""
 
@@ -1121,10 +1128,6 @@ msgstr ""
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
 msgstr ""
-
-#: src/control/Control.PresentationBar.js:100
-msgid "Are you sure you want to delete this page?"
-msgstr "Ианыхтәума абри адаҟьа?"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1328,15 +1331,15 @@ msgstr "Ахархәаҩцәа: 1"
 msgid "0 users"
 msgstr "Ахархәаҩцәа: 0"
 
-#: src/control/Control.UserList.js:186 src/control/Control.UserList.js:352
+#: src/control/Control.UserList.js:180 src/control/Control.UserList.js:346
 msgid "Always follow the editor"
 msgstr ""
 
-#: src/control/Control.UserList.js:300
+#: src/control/Control.UserList.js:294
 msgid "Readonly"
 msgstr "Аҧхьара мацара"
 
-#: src/control/Control.UserList.js:355
+#: src/control/Control.UserList.js:349
 msgid "Current"
 msgstr ""
 
@@ -1632,11 +1635,11 @@ msgstr "%productName ари аверсиа аус ауеит аҟны"
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:853
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:857
+#: src/control/Toolbar.js:858
 msgid "Link"
 msgstr ""
 
@@ -1940,45 +1943,45 @@ msgstr ""
 msgid "Uploading file to server failed, the file is too large."
 msgstr ""
 
-#: src/layer/tile/CanvasTileLayer.js:1765
+#: src/layer/tile/CanvasTileLayer.js:1783
 #, fuzzy
 msgid "Functions"
 msgstr "Афункциа"
 
-#: src/layer/tile/CanvasTileLayer.js:4862
+#: src/layer/tile/CanvasTileLayer.js:4896
 msgid "No Comments"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:777
+#: src/layer/tile/CommentListSection.ts:778
 msgid "Modify"
 msgstr "Иҧсахтәуп"
 
-#: src/layer/tile/CommentListSection.ts:783
+#: src/layer/tile/CommentListSection.ts:784
 #: src/layer/tile/CommentSection.ts:129
 msgid "Reply"
 msgstr "Аҭак"
 
-#: src/layer/tile/CommentListSection.ts:789
+#: src/layer/tile/CommentListSection.ts:790
 msgid "Remove"
 msgstr "Ианыхтәуп"
 
-#: src/layer/tile/CommentListSection.ts:795
+#: src/layer/tile/CommentListSection.ts:796
 msgid "Remove Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:801
+#: src/layer/tile/CommentListSection.ts:802
 msgid "Resolve"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:801
+#: src/layer/tile/CommentListSection.ts:802
 msgid "Unresolve"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:807
+#: src/layer/tile/CommentListSection.ts:808
 msgid "Unresolve Thread"
 msgstr ""
 
-#: src/layer/tile/CommentListSection.ts:807
+#: src/layer/tile/CommentListSection.ts:808
 msgid "Resolve Thread"
 msgstr ""
 
