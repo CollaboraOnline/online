@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-13 22:36+0100\n"
+"POT-Creation-Date: 2022-01-17 21:33+0100\n"
 "PO-Revision-Date: 2021-12-20 21:49+0000\n"
 "Last-Translator: bruh <quangtrung02hn16@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/"
@@ -139,7 +139,7 @@ msgstr "Đồ thị Network"
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:252
 #: src/control/Control.NotebookbarDraw.js:24
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/layer/tile/CommentListSection.ts:397
+#: src/layer/tile/CommentListSection.ts:398
 #: src/layer/tile/CommentSection.ts:126
 msgid "Save"
 msgstr "Lưu"
@@ -256,20 +256,20 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "Bạn có chắc chắn muốn kết thúc phiên này không?"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1650
-#: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:860
+#: src/control/Control.Menubar.js:1654
+#: src/control/Control.PresentationBar.js:109 src/control/Control.Tabs.js:305
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
 #: src/core/Socket.js:1016
 msgid "OK"
 msgstr "Đồng ý"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.Command.js:92 src/control/Control.LanguageDialog.js:86
-#: src/control/Control.Menubar.js:1651 src/control/Control.MobileTopBar.js:43
-#: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:861
+#: src/control/Control.Menubar.js:1655 src/control/Control.MobileTopBar.js:43
+#: src/control/Control.PresentationBar.js:110 src/control/Control.Tabs.js:306
+#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:862
 #: src/core/Socket.js:877 src/core/Socket.js:887 src/core/Socket.js:1017
-#: src/layer/tile/CommentListSection.ts:398
+#: src/layer/tile/CommentListSection.ts:399
 #: src/layer/tile/CommentSection.ts:125 src/layer/tile/CommentSection.ts:128
 msgid "Cancel"
 msgstr "Hủy"
@@ -388,9 +388,9 @@ msgstr "Chỉ mục"
 
 #: src/control/Control.DocumentRepair.js:48
 #: src/control/Control.JSDialogBuilder.js:2117
-#: src/layer/tile/CanvasTileLayer.js:4835
-#: src/layer/tile/CanvasTileLayer.js:4845
-#: src/layer/tile/CommentListSection.ts:830
+#: src/layer/tile/CanvasTileLayer.js:4869
+#: src/layer/tile/CanvasTileLayer.js:4879
+#: src/layer/tile/CommentListSection.ts:831
 msgid "Comment"
 msgstr "Chú thích"
 
@@ -406,7 +406,7 @@ msgstr "Dấu thời gian"
 msgid "Jump to state"
 msgstr "Chuyển đến trạng thái"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:294
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:288
 msgid "You"
 msgstr "Bạn"
 
@@ -782,15 +782,21 @@ msgstr "Thiết lập trang"
 msgid "Reset to Default Language"
 msgstr "Đặt lại về ngôn ngữ mặc định"
 
-#: src/control/Control.Menubar.js:1555
+#: src/control/Control.Menubar.js:1552
 msgid "Insert Shape"
 msgstr "Chèn hình dạng"
 
-#: src/control/Control.Menubar.js:1648
+#: src/control/Control.Menubar.js:1646
+#: src/control/Control.PresentationBar.js:101
 msgid "Are you sure you want to delete this slide?"
 msgstr "Bạn có chắc chắn muốn xóa trang trình chiếu này không?"
 
-#: src/control/Control.Menubar.js:1776
+#: src/control/Control.Menubar.js:1649
+#: src/control/Control.PresentationBar.js:104
+msgid "Are you sure you want to delete this page?"
+msgstr "Bạn có chắc chắn muốn xóa trang này không?"
+
+#: src/control/Control.Menubar.js:1774
 msgid "file type icon"
 msgstr "biểu tượng loại tệp"
 
@@ -915,6 +921,7 @@ msgid "Format"
 msgstr "Định dạng"
 
 #: src/control/Control.NotebookbarCalc.js:48
+#: src/control/Control.NotebookbarDraw.js:116
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
 msgstr "Vẽ"
@@ -984,7 +991,7 @@ msgstr "Phân số"
 msgid "Boolean Value"
 msgstr "Giá trị boolean"
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:856
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:857
 msgid "Text"
 msgstr "Bản văn"
 
@@ -1095,10 +1102,6 @@ msgstr "Tiêu đề"
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
 msgstr "xem trước trang "
-
-#: src/control/Control.PresentationBar.js:100
-msgid "Are you sure you want to delete this page?"
-msgstr "Bạn có chắc chắn muốn xóa trang này không?"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1299,15 +1302,15 @@ msgstr "1 người dùng"
 msgid "0 users"
 msgstr "0 người dùng"
 
-#: src/control/Control.UserList.js:186 src/control/Control.UserList.js:352
+#: src/control/Control.UserList.js:180 src/control/Control.UserList.js:346
 msgid "Always follow the editor"
 msgstr "Luôn theo dõi người chỉnh sửa"
 
-#: src/control/Control.UserList.js:300
+#: src/control/Control.UserList.js:294
 msgid "Readonly"
 msgstr "Chỉ đọc"
 
-#: src/control/Control.UserList.js:355
+#: src/control/Control.UserList.js:349
 msgid "Current"
 msgstr "Hiện tại"
 
@@ -1621,11 +1624,11 @@ msgstr "Phiên bản %productName này được cung cấp bởi"
 msgid "\"Slow Proxy\""
 msgstr "\"Proxy chậm\""
 
-#: src/control/Toolbar.js:853
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Chèn siêu liên kết"
 
-#: src/control/Toolbar.js:857
+#: src/control/Toolbar.js:858
 msgid "Link"
 msgstr "Liên kết"
 
@@ -1975,44 +1978,44 @@ msgstr "Tải tệp lên máy chủ không thành công, không tìm thấy tệ
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Tải tệp lên máy chủ không thành công, tệp quá lớn."
 
-#: src/layer/tile/CanvasTileLayer.js:1765
+#: src/layer/tile/CanvasTileLayer.js:1783
 msgid "Functions"
 msgstr "Chức năng"
 
-#: src/layer/tile/CanvasTileLayer.js:4862
+#: src/layer/tile/CanvasTileLayer.js:4896
 msgid "No Comments"
 msgstr "Không có bình luận"
 
-#: src/layer/tile/CommentListSection.ts:777
+#: src/layer/tile/CommentListSection.ts:778
 msgid "Modify"
 msgstr "Chỉnh sửa"
 
-#: src/layer/tile/CommentListSection.ts:783
+#: src/layer/tile/CommentListSection.ts:784
 #: src/layer/tile/CommentSection.ts:129
 msgid "Reply"
 msgstr "Trả lời"
 
-#: src/layer/tile/CommentListSection.ts:789
+#: src/layer/tile/CommentListSection.ts:790
 msgid "Remove"
 msgstr "Xóa"
 
-#: src/layer/tile/CommentListSection.ts:795
+#: src/layer/tile/CommentListSection.ts:796
 msgid "Remove Thread"
 msgstr "Xóa chủ đề"
 
-#: src/layer/tile/CommentListSection.ts:801
+#: src/layer/tile/CommentListSection.ts:802
 msgid "Resolve"
 msgstr "Giải quyết"
 
-#: src/layer/tile/CommentListSection.ts:801
+#: src/layer/tile/CommentListSection.ts:802
 msgid "Unresolve"
 msgstr "Thu hồi giải pháp"
 
-#: src/layer/tile/CommentListSection.ts:807
+#: src/layer/tile/CommentListSection.ts:808
 msgid "Unresolve Thread"
 msgstr "Chủ đề chưa giải quyết"
 
-#: src/layer/tile/CommentListSection.ts:807
+#: src/layer/tile/CommentListSection.ts:808
 msgid "Resolve Thread"
 msgstr "Giải quyết Chủ đề"
 
