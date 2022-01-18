@@ -24,7 +24,7 @@ L.Map.Infobar = L.Handler.extend({
 		this._map.off('updateviewslist', this.onUpdateList, this);
 		L.DomEvent.on(window, 'message', this.onMessage, this);
 
-		var url = window.feedbackLocation.replace(/Rate\/feedback.html/g, '/UpdateCheck/updatecheck.html');
+		var url = window.feedbackLocation.replace(/Rate\/feedback.html/g, 'UpdateCheck/updatecheck.html');
 		this.remove();
 
 		var loolwsdHash = document.querySelector('#loolwsd-version a') || {};
