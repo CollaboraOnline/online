@@ -299,12 +299,6 @@ td.jsdialog .jsdialog.cell.sidebar {
 	padding-top: 8px;
 }
 
-#settransparency,
-#FillColor {
-	position: relative;
-	left: 23px;
-}
-
 #fillattrhb {
 	margin-left: 4px;
 	position: relative;
