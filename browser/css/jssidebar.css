@@ -59,7 +59,24 @@
 .sidebar.jsdialog.menubutton,
 .sidebar.jsdialog.ui-listbox option,
 .sidebar.jsdialog.ui-listbox {
-	width: 150px;
+	width: 121px;
+}
+
+.menubutton.sidebar span {
+	display: none;
+	font-size: 10px;
+}
+
+.menubutton.sidebar:hover span {
+	position: absolute;
+	display: block;
+	width: auto;
+	background-color: #444;
+	color: white;
+	padding: 2px 4px;
+	border-radius: 2px;
+	white-space: nowrap;
+	margin-inline-start: -14px;
 }
 
 #fontnamecombobox > .sidebar.jsdialog.ui-listbox,
