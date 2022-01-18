@@ -58,8 +58,11 @@
 .sidebar.jsdialog.menubutton {
 	padding: 4px 10px;
 }
-.sidebar.jsdialog.ui-listbox {
-	width: 121px;
+.sidebar.jsdialog.ui-listbox,
+.sidebar.jsdialog.menubutton {
+	min-width: 121px;
+	max-width: 121px;
+	box-sizing: border-box;
 }
 
 .menubutton.sidebar span {
