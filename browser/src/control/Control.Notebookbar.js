@@ -259,19 +259,6 @@ L.Control.Notebookbar = L.Control.extend({
 						'text': _UNO('.uno:FullScreen'),
 						'command': '.uno:FullScreen'
 					},
-				]).concat([
-					{
-						'id': 'undo',
-						'type': 'toolitem',
-						'text': _('Undo'),
-						'command': '.uno:Undo'
-					},
-					{
-						'id': 'redo',
-						'type': 'toolitem',
-						'text': _('Redo'),
-						'command': '.uno:Redo'
-					}
 				])
 			}
 		];
