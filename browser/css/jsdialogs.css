@@ -85,7 +85,7 @@ td.jsdialog:hover *,
 	vertical-align: middle;
 }
 
-td.jsdialog .jsdialog.cell,
+td.jsdialog .jsdialog.cell:not(.sidebar),
 [id^='table-dialog-action_area'] .jsdialog.cell{
 	padding: 4px;
 }
@@ -95,7 +95,7 @@ td.jsdialog .jsdialog.cell,
 }
 
 .jsdialog.vertical:not([id^='table-dialog-action_area']) > .jsdialog.row,
-td.jsdialog > [id^='table-box'] {
+td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: table;
 	width: 100%;
 }
