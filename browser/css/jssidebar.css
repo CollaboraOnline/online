@@ -55,9 +55,9 @@
 	padding: 0 0px 0 4px;
 	min-width: auto;
 }
-
-.sidebar.jsdialog.menubutton,
-.sidebar.jsdialog.ui-listbox option,
+.sidebar.jsdialog.menubutton {
+	padding: 4px 10px;
+}
 .sidebar.jsdialog.ui-listbox {
 	width: 121px;
 }
@@ -208,7 +208,6 @@ div#box5.row.jsdialog.sidebar > .sidebar.jsdialog.cell {
 }
 
 td.jsdialog .jsdialog.cell.sidebar {
-	padding: 4px 4px 4px 0;
 	width: auto;
 }
 
@@ -322,32 +321,6 @@ td.jsdialog .jsdialog.cell.sidebar {
 	left: 38px;
 }
 
-#fillgrad1 {
-	padding: 4px 10px;
-	width: 160px;
-	position: relative;
-	left: -7px;
-}
-
-#LB_SHADOW_COLOR:not(.mobile-wizard), #LB_GLOW_COLOR:not(.mobile-wizard) {
-	padding: 4px 10px;
-	width: 130px;
-	position: relative;
-	left: -11px;
-}
-
-#fillgrad2 {
-	padding: 4px 10px;
-	width: 160px;
-	position: relative;
-	left: -11px;
-}
-
-#fillgrad2 > img,
-#fillgrad2 > span {
-	width: 38px;
-	height: 15px;
-}
 
 #gradangle > .spinfield {
 	width: 70px;
