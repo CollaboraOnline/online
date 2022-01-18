@@ -17,11 +17,14 @@
 	padding: 0;
 	bottom: 0;
 	z-index: 11;
-	border-top: 1px solid #bbbbbb;
+	border-top: 1px solid var(--color-border);
 	display: block;
 }
 #toolbar-down *{
 	font-family: var(--cool-font);
+}
+#toolbar-down table {
+	background: var(--color-main-background);
 }
 #tb_actionbar_item_LanguageStatus table table td:first-of-type{
 	min-width: max-content !important;
@@ -132,7 +135,7 @@ w2ui-toolbar {
 .w2ui-toolbar .w2ui-break {
 	height: 18px;
 	background-image: none;
-	background-color: #f1f1f1;
+	background-color: var(--color-border);
 }
 
 /* For MS Edge 40, the select2 combo boxes need to have higher z-index than #map
