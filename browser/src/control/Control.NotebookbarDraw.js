@@ -29,18 +29,6 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 						'type': 'toolitem',
 						'text': _UNO('.uno:FullScreen'),
 						'command': '.uno:FullScreen'
-					},
-					{
-						'id': 'undo',
-						'type': 'toolitem',
-						'text': _('Undo'),
-						'command': '.uno:Undo'
-					},
-					{
-						'id': 'redo',
-						'type': 'toolitem',
-						'text': _('Redo'),
-						'command': '.uno:Redo'
 					}
 				]
 			}
@@ -228,6 +216,23 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 
 	getHomeTab: function() {
 		var content = [
+			{
+				'id': 'home-undo-redo',
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolitem',
+						'text': _UNO('.uno:Undo'),
+						'command': '.uno:Undo'
+					},
+					{
+						'type': 'toolitem',
+						'text': _UNO('.uno:Redo'),
+						'command': '.uno:Redo'
+					},
+				],
+				'vertical': 'true'
+			},
 			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Paste'),
