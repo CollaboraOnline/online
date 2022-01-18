@@ -284,7 +284,10 @@ m4_ifelse(MOBILEAPP,[true],
      [window.host = '';
       window.serviceRoot = '';
       window.hexifyUrl = false;
-      window.versionPath = '%VERSION%';
+      // We can't use %VERSION% here as there is no FileServer.cpp involved in a mobile app that
+      // would expand the %FOO% things. But it seems that window.versionPath is not used in the
+      // mobile apps anyway.
+      // window.versionPath = 'UNKNOWN';
       window.accessToken = '';
       window.accessTokenTTL = '';
       window.accessHeader = '';
