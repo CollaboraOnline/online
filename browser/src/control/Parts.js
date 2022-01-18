@@ -205,6 +205,9 @@ L.Map.include({
 		return {width: maxWidth, height: maxHeight};
 	},
 
+	// getCustomPreview
+	// Triggers the creation of a preview with the given id, of width X height size, of the [(tilePosX,tilePosY), 
+	// (tilePosX + tileWidth, tilePosY + tileHeight)] section of the document.
 	getCustomPreview: function (id, part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, options) {
 		if (!this._docPreviews) {
 			this._docPreviews = {};
