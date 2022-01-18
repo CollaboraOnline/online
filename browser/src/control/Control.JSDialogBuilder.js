@@ -1556,7 +1556,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if ($(this).val())
 				builder.callback('combobox', 'selected', data, $(this).val()+ ';' + $(this).children('option:selected').text(), builder);
 		});
-
+		var hasSelectedEntry = false;
 		if (typeof(data.entries) === 'object') {
 			for (var index in data.entries) {
 				var isSelected = false;
@@ -1569,10 +1569,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 				var option = L.DomUtil.create('option', '', listbox);
 				option.value = index;
 				option.innerText = data.entries[index];
-				if (isSelected)
-					option.selected = 'true';
+				if (isSelected) {
+					option.selected = true;
+					hasSelectedEntry = true;
+				}
 			}
 		}
+		// no selected entry; set the visible value to empty string
+		if (!hasSelectedEntry)
+			$(listbox).val('');
 
 		return false;
 	},
