@@ -81,7 +81,7 @@ L.LOUtil = {
 		if (path === '')
 			return '';
 		if (window.host === '' && window.serviceRoot === '')
-			return path; // mobile
+			return path; // mobile app
 
 		var url = window.makeHttpUrl('/browser/' + window.versionPath);
 		if (path.substr(0,1) !== '/')
