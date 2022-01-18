@@ -233,10 +233,9 @@
 }
 
 #toolbar-wrapper.hasnotebookbar {
-	background: var(--white-bg-color);
+	background: var(--color-main-background);
 	position: relative;
 	z-index: 11;
-	background-color: white;
 }
 
 .cell.notebookbar {
