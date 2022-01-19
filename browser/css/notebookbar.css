@@ -457,23 +457,15 @@
 	padding: 0px;
 	border: 1px solid var(--gray-color);
 	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
-	-webkit-box-shadow: 0 0 3px var(--gray-color);
+    -webkit-box-shadow: 0 0 3px var(--gray-color);
 	box-shadow: inset 0 0 3px var(--gray-color);
-}
-
-#stylesview .ui-iconview-entry {
-	width: 30%;
-	height: 60px;
-	padding: 2px;
-	box-sizing: border-box;
-	border-radius: 0;
 }
 
 #stylesview .ui-iconview-entry.selected {
 	border: 1px solid var(--gray-light-txt--color);
 	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
-	-webkit-box-shadow: 0 0 2px var(--gray-light-txt--color);
-	box-shadow: 0 0 2px var(--gray-light-txt--color);
+	-webkit-box-shadow: 0 0 3px var(--gray-color);
+	box-shadow: inset 0 0 3px var(--gray-color);
 }
 
 #stylesview .ui-iconview-icon img {
@@ -501,20 +493,11 @@
 #stylesview .ui-iconview-entry:hover {
 	border: 1px solid var(--gray-color);
 	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
-	-webkit-box-shadow: 0 0 3px 1px #8080804f, inset -0.5px -0.5px 0 0.5px #ccc, inset 0.5px 0.5px 0 0.5px #ccc;
-	box-shadow: 0 0 3px 1px #8080804f, inset -0.5px -0.5px 0 0.5px #ccc, inset 0.5px 0.5px 0 0.5px #ccc;
 	cursor: pointer;
 }
 
 #stylesview .ui-iconview-icon {
-	height: 35px;
-}
-
-#stylesview .ui-iconview-text {
-	font-size: 10pt;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+	height: 30px;
 }
 
 /* Insert Tab */

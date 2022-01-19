@@ -1769,9 +1769,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		if (entry.image)
 			img.src = entry.image;
 		img.alt = entry.text;
-
-		var text = L.DomUtil.create('div', builder.options.cssClass + ' ui-iconview-text', parentContainer);
-		text.innerText = entry.text;
+		img.title = entry.text;
 
 		if (!disabled) {
 			$(parentContainer).click(function() {
