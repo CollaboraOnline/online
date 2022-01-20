@@ -553,15 +553,17 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
     oss << memoryAllocated << ' ' << wopiHost;
     if (COOLWSD::getConfigValue<bool>("logging.docstats", false))
     {
-        Log::StreamLogger logger = Log::trace();
-        if (logger.enabled())
-        {
-            logger << "docstats : adding a document : " << filename
-                   << " created by : " << COOLWSD::anonymizeUsername(userName)
-                   << " using WopiHost : " << COOLWSD::anonymizeUrl(wopiHost)
-                   << " allocating memory of : " << memoryAllocated;
-        }
-        logger.flush();
+        std::ostringstream osst;
+        Poco::AutoPtr<Poco::Channel> channel = Log::logger().getChannel();
+        const auto now = std::chrono::system_clock::now();
+        const auto current = std::chrono::system_clock::to_time_t(now);
+        osst << std::put_time(std::localtime(&current), "%F %T")
+             << " docstats : adding a document : " << filename
+             << ", created by : " << COOLWSD::anonymizeUsername(userName)
+             << ", using WopiHost : " << COOLWSD::anonymizeUrl(wopiHost)
+             << ", allocating memory of : " << memoryAllocated;
+
+        channel->log(Poco::Message("admin", osst.str(), Poco::Message::Priority::PRIO_INFORMATION));
     }
     notify(oss.str());
 }
