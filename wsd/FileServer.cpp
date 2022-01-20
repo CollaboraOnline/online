@@ -724,7 +724,7 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
     {
         LOG_ERR("Incorrect config value: " << exc.displayText());
         sendError(500, request, socket, "500 - Internal Server Error!",
-                  "Cannot process the request");
+                  "Cannot process the request - " + exc.displayText());
     }
 }
 
