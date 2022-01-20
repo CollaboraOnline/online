@@ -2061,6 +2061,7 @@ std::size_t DocumentBroker::removeSession(const std::string& id)
                                      << " active). IsReadOnly: " << session->isReadOnly()
                                      << ", IsViewLoaded: " << session->isViewLoaded()
                                      << ", IsWaitDisconnected: " << session->inWaitDisconnected()
+                                     << ", Unloading: " << _docState.isUnloadRequested()
                                      << ", MarkToDestroy: " << _docState.isMarkedToDestroy()
                                      << ", LastEditableSession: " << lastEditableSession
                                      << ", DontSaveIfUnmodified: " << dontSaveIfUnmodified
@@ -2261,7 +2262,7 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
 {
     try
     {
-        if (isMarkedToDestroy())
+        if (isMarkedToDestroy() || _docState.isUnloadRequested())
         {
             LOG_INF("DocumentBroker ["
                     << getDocKey()
@@ -3328,6 +3329,7 @@ void DocumentBroker::dumpState(std::ostream& os)
 
     auto now = std::chrono::steady_clock::now();
 
+    os << std::boolalpha;
     os << " Broker: " << COOLWSD::anonymizeUrl(_filename) << " pid: " << getPid();
     if (_docState.isMarkedToDestroy())
         os << " *** Marked to destroy ***";
@@ -3356,6 +3358,7 @@ void DocumentBroker::dumpState(std::ostream& os)
     if (_docState.activity() == DocumentState::Activity::Rename)
         os << "\n  (new name: " << _renameFilename << ')';
     os << "\n  unload requested: " << _docState.isUnloadRequested();
+    os << "\n  marked to destroy: " << _docState.isMarkedToDestroy();
     os << "\n  last saved: " << Util::getSteadyClockAsString(_storageManager.getLastUploadTime());
     os << "\n  last save request: "
        << Util::getSteadyClockAsString(_saveManager.lastSaveRequestTime());
@@ -3379,12 +3382,15 @@ void DocumentBroker::dumpState(std::ostream& os)
 
 #if !MOBILEAPP
     // Bit nasty - need a cleaner way to dump state.
+    os << "\n  Sessions:";
     for (auto &it : _sessions)
     {
         auto proto = it.second->getProtocol();
         auto proxy = dynamic_cast<ProxyProtocolHandler *>(proto.get());
         if (proxy)
             proxy->dumpProxyState(os);
+        else
+            std::static_pointer_cast<MessageHandlerInterface>(it.second)->dumpState(os);
     }
 #endif
 }

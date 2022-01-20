@@ -85,7 +85,7 @@ td.jsdialog:hover *,
 	vertical-align: middle;
 }
 
-td.jsdialog .jsdialog.cell,
+td.jsdialog .jsdialog.cell:not(.sidebar),
 [id^='table-dialog-action_area'] .jsdialog.cell{
 	padding: 4px;
 }
@@ -95,7 +95,7 @@ td.jsdialog .jsdialog.cell,
 }
 
 .jsdialog.vertical:not([id^='table-dialog-action_area']) > .jsdialog.row,
-td.jsdialog > [id^='table-box'] {
+td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: table;
 	width: 100%;
 }
@@ -408,6 +408,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	background: url('images/jquery-ui-lightness/ui-icons_222222_256x240.png') no-repeat transparent;
 	background-position: -67px -18px;
 	display: inline-block;
+	position: relative;
 	width: 11px;
 	height: 11px;
 	cursor: pointer;

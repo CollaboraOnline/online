@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-13 22:36+0100\n"
-"PO-Revision-Date: 2021-12-20 21:49+0000\n"
+"POT-Creation-Date: 2022-01-17 21:33+0100\n"
+"PO-Revision-Date: 2022-01-15 13:53+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <="
 " 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 4.10\n"
+"X-Generator: Weblate 4.10.1\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -144,7 +144,7 @@ msgstr "Graf sítě"
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:252
 #: src/control/Control.NotebookbarDraw.js:24
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/layer/tile/CommentListSection.ts:397
+#: src/layer/tile/CommentListSection.ts:398
 #: src/layer/tile/CommentSection.ts:126
 msgid "Save"
 msgstr "Uložit"
@@ -262,20 +262,20 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "Opravdu si přejete ukončit tuto relaci?"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1650
-#: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:860
+#: src/control/Control.Menubar.js:1654
+#: src/control/Control.PresentationBar.js:109 src/control/Control.Tabs.js:305
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
 #: src/core/Socket.js:1016
 msgid "OK"
 msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.Command.js:92 src/control/Control.LanguageDialog.js:86
-#: src/control/Control.Menubar.js:1651 src/control/Control.MobileTopBar.js:43
-#: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:861
+#: src/control/Control.Menubar.js:1655 src/control/Control.MobileTopBar.js:43
+#: src/control/Control.PresentationBar.js:110 src/control/Control.Tabs.js:306
+#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:862
 #: src/core/Socket.js:877 src/core/Socket.js:887 src/core/Socket.js:1017
-#: src/layer/tile/CommentListSection.ts:398
+#: src/layer/tile/CommentListSection.ts:399
 #: src/layer/tile/CommentSection.ts:125 src/layer/tile/CommentSection.ts:128
 msgid "Cancel"
 msgstr "Zrušit"
@@ -343,7 +343,7 @@ msgstr " s"
 
 #: js/w2ui-1.5.rc1.js:2920
 msgid "Recent"
-msgstr ""
+msgstr "Poslední"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
@@ -379,7 +379,7 @@ msgstr "Vložit jinak"
 
 #: src/control/Control.DocumentNameInput.js:82
 msgid "Path"
-msgstr ""
+msgstr "Cesta"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -395,9 +395,9 @@ msgstr "Index"
 
 #: src/control/Control.DocumentRepair.js:48
 #: src/control/Control.JSDialogBuilder.js:2117
-#: src/layer/tile/CanvasTileLayer.js:4835
-#: src/layer/tile/CanvasTileLayer.js:4845
-#: src/layer/tile/CommentListSection.ts:830
+#: src/layer/tile/CanvasTileLayer.js:4869
+#: src/layer/tile/CanvasTileLayer.js:4879
+#: src/layer/tile/CommentListSection.ts:831
 msgid "Comment"
 msgstr "Komentář"
 
@@ -413,7 +413,7 @@ msgstr "Čas změny"
 msgid "Jump to state"
 msgstr "Přejít na stav"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:294
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:288
 msgid "You"
 msgstr "Vy"
 
@@ -789,15 +789,21 @@ msgstr "Nastavení stránky"
 msgid "Reset to Default Language"
 msgstr "Obnovit výchozí jazyk"
 
-#: src/control/Control.Menubar.js:1555
+#: src/control/Control.Menubar.js:1552
 msgid "Insert Shape"
 msgstr "Vložit tvar"
 
-#: src/control/Control.Menubar.js:1648
+#: src/control/Control.Menubar.js:1646
+#: src/control/Control.PresentationBar.js:101
 msgid "Are you sure you want to delete this slide?"
 msgstr "Opravdu si přejete smazat tento snímek?"
 
-#: src/control/Control.Menubar.js:1776
+#: src/control/Control.Menubar.js:1649
+#: src/control/Control.PresentationBar.js:104
+msgid "Are you sure you want to delete this page?"
+msgstr "Opravdu si přejete smazat tuto stránku?"
+
+#: src/control/Control.Menubar.js:1774
 msgid "file type icon"
 msgstr "ikona typu souboru"
 
@@ -922,6 +928,7 @@ msgid "Format"
 msgstr "Formát"
 
 #: src/control/Control.NotebookbarCalc.js:48
+#: src/control/Control.NotebookbarDraw.js:116
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
 msgstr "~Kresba"
@@ -991,7 +998,7 @@ msgstr "Zlomek"
 msgid "Boolean Value"
 msgstr "Booleovská hodnota"
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:856
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:857
 msgid "Text"
 msgstr "Text"
 
@@ -1046,7 +1053,7 @@ msgstr "Smazat sloupce"
 #: src/control/Control.NotebookbarDraw.js:63
 #: src/control/Control.NotebookbarDraw.js:666
 msgid "Page layout"
-msgstr ""
+msgstr "Rozvržení stránky"
 
 #: src/control/Control.NotebookbarDraw.js:110
 #: src/control/Control.NotebookbarImpress.js:122
@@ -1102,10 +1109,6 @@ msgstr "Název"
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
 msgstr "náhled stránky "
-
-#: src/control/Control.PresentationBar.js:100
-msgid "Are you sure you want to delete this page?"
-msgstr "Opravdu si přejete smazat tuto stránku?"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1306,15 +1309,15 @@ msgstr "1 uživatel"
 msgid "0 users"
 msgstr "Žádný uživatel"
 
-#: src/control/Control.UserList.js:186 src/control/Control.UserList.js:352
+#: src/control/Control.UserList.js:180 src/control/Control.UserList.js:346
 msgid "Always follow the editor"
 msgstr "Vždy následovat tohoto editora"
 
-#: src/control/Control.UserList.js:300
+#: src/control/Control.UserList.js:294
 msgid "Readonly"
 msgstr "Pouze pro čtení"
 
-#: src/control/Control.UserList.js:355
+#: src/control/Control.UserList.js:349
 msgid "Current"
 msgstr "Aktuální"
 
@@ -1628,11 +1631,11 @@ msgstr "Tato verze aplikace %productName využívá"
 msgid "\"Slow Proxy\""
 msgstr "„Pomalé proxy“"
 
-#: src/control/Toolbar.js:853
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Vložit hypertextový odkaz"
 
-#: src/control/Toolbar.js:857
+#: src/control/Toolbar.js:858
 msgid "Link"
 msgstr "Odkaz"
 
@@ -1976,44 +1979,44 @@ msgstr "Nahrávání souboru na server selhalo, soubor nebyl nalezen."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Nahrávání souboru na server selhalo, soubor je příliš velký."
 
-#: src/layer/tile/CanvasTileLayer.js:1765
+#: src/layer/tile/CanvasTileLayer.js:1783
 msgid "Functions"
 msgstr "Funkce"
 
-#: src/layer/tile/CanvasTileLayer.js:4862
+#: src/layer/tile/CanvasTileLayer.js:4896
 msgid "No Comments"
 msgstr "Bez komentářů"
 
-#: src/layer/tile/CommentListSection.ts:777
+#: src/layer/tile/CommentListSection.ts:778
 msgid "Modify"
 msgstr "Změnit"
 
-#: src/layer/tile/CommentListSection.ts:783
+#: src/layer/tile/CommentListSection.ts:784
 #: src/layer/tile/CommentSection.ts:129
 msgid "Reply"
 msgstr "Odpovědět"
 
-#: src/layer/tile/CommentListSection.ts:789
+#: src/layer/tile/CommentListSection.ts:790
 msgid "Remove"
 msgstr "Odstranit"
 
-#: src/layer/tile/CommentListSection.ts:795
+#: src/layer/tile/CommentListSection.ts:796
 msgid "Remove Thread"
 msgstr "Odebrat vlákno"
 
-#: src/layer/tile/CommentListSection.ts:801
+#: src/layer/tile/CommentListSection.ts:802
 msgid "Resolve"
 msgstr "Vyřešit"
 
-#: src/layer/tile/CommentListSection.ts:801
+#: src/layer/tile/CommentListSection.ts:802
 msgid "Unresolve"
 msgstr "Zrušit vyřešení"
 
-#: src/layer/tile/CommentListSection.ts:807
+#: src/layer/tile/CommentListSection.ts:808
 msgid "Unresolve Thread"
 msgstr "Zrušit vyřešení vlákna"
 
-#: src/layer/tile/CommentListSection.ts:807
+#: src/layer/tile/CommentListSection.ts:808
 msgid "Resolve Thread"
 msgstr "Vyřešit vlákno"
 

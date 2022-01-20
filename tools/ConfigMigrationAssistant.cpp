@@ -13,7 +13,8 @@ using Poco::Util::AbstractConfiguration;
 
 static const std::string NET_POST_ALLOW_HOST = ".net.post_allow.host";
 static const std::string STORAGE_WOPI_HOST = ".storage.wopi.host";
-static const std::set<std::string> multiElems {NET_POST_ALLOW_HOST, STORAGE_WOPI_HOST, ".logging.file.property", ".ssl.hpkp.pins"};
+static const std::set<std::string> multiElems {NET_POST_ALLOW_HOST, STORAGE_WOPI_HOST, ".logging.file.property", ".ssl.hpkp.pins.pin"};
+static const std::set<std::string> migrateIfNoTarget {".admin_console.secure_password", ".support_key"};
 static const std::map<std::string, std::string> renamedElems { {"loleaflet_logging", "browser_logging"} };
 static const std::map<std::string, std::string> specialDefault {
                     {".ssl.cert_file_path", "/etc/loolwsd/cert.pem"},
@@ -108,11 +109,12 @@ void MigrateLevel(const XMLConfiguration &sourceConfig, XMLConfiguration &target
             else if (commonKeyPart == ".ssl.hpkp.pins.pin" || commonKeyPart == ".monitors.monitor")
             {
                 // Shipped empty, no need to check for existing, append new ones
+                // Except there's an empty <pin> entry, let's replace empty entries
                 int id = 0;
                 while (true)
                 {
                     const std::string targetKey(id == 0 ? commonKeyPart : commonKeyPart + "[" + std::to_string(id) + "]");
-                    if (!targetConfig.has(targetKey))
+                    if (!targetConfig.has(targetKey) || targetConfig.getString(targetKey) == "")
                     {
                         break;
                     }
@@ -155,15 +157,15 @@ void MigrateLevel(const XMLConfiguration &sourceConfig, XMLConfiguration &target
             }
         }
         // If new config doesn't have the element anymore, disregard
-        if (!moveOn && !targetConfig.has(targetKey))
+        if (!moveOn && !targetConfig.has(targetKey) && migrateIfNoTarget.find(targetKey) == migrateIfNoTarget.end())
         {
             std::cout << targetKey << " does not exist, and is not relevant anymore." << std::endl;
             moveOn = true;
         }
         // Finally, migrate if the source and target values are different
-        if (!moveOn && sourceElement != targetConfig.getString(targetKey))
+        if (!moveOn && (!targetConfig.has(targetKey) || sourceElement != targetConfig.getString(targetKey)))
         {
-            const std::string targetElement = targetConfig.getString(targetKey);
+            const std::string targetElement = targetConfig.has(targetKey) ? targetConfig.getString(targetKey) : "";
             // Don't log password
             if (sourceLevel == ".admin_console.password")
                 std::cout << targetKey << ": replaced \"" << targetElement << "\" with \"******\"." << std::endl;

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-13 22:36+0100\n"
+"POT-Creation-Date: 2022-01-17 21:33+0100\n"
 "PO-Revision-Date: 2021-08-15 11:32+0000\n"
 "Last-Translator: Artem <Localizer_in_Russian@protonmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/collabora-online/"
@@ -140,7 +140,7 @@ msgstr "График сети"
 #: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:252
 #: src/control/Control.NotebookbarDraw.js:24
 #: src/control/Control.NotebookbarImpress.js:24
-#: src/layer/tile/CommentListSection.ts:397
+#: src/layer/tile/CommentListSection.ts:398
 #: src/layer/tile/CommentSection.ts:126
 msgid "Save"
 msgstr "Сохранить"
@@ -263,20 +263,20 @@ msgid "Are you sure you want to terminate this session?"
 msgstr "Действительно завершить сеанс?"
 
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
-#: src/control/Control.Menubar.js:1650
-#: src/control/Control.PresentationBar.js:102 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:860
+#: src/control/Control.Menubar.js:1654
+#: src/control/Control.PresentationBar.js:109 src/control/Control.Tabs.js:305
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
 #: src/core/Socket.js:1016
 msgid "OK"
 msgstr "ОК"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.Command.js:92 src/control/Control.LanguageDialog.js:86
-#: src/control/Control.Menubar.js:1651 src/control/Control.MobileTopBar.js:43
-#: src/control/Control.PresentationBar.js:103 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:861
+#: src/control/Control.Menubar.js:1655 src/control/Control.MobileTopBar.js:43
+#: src/control/Control.PresentationBar.js:110 src/control/Control.Tabs.js:306
+#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:862
 #: src/core/Socket.js:877 src/core/Socket.js:887 src/core/Socket.js:1017
-#: src/layer/tile/CommentListSection.ts:398
+#: src/layer/tile/CommentListSection.ts:399
 #: src/layer/tile/CommentSection.ts:125 src/layer/tile/CommentSection.ts:128
 msgid "Cancel"
 msgstr "Отклонить"
@@ -396,9 +396,9 @@ msgstr "Индекс"
 
 #: src/control/Control.DocumentRepair.js:48
 #: src/control/Control.JSDialogBuilder.js:2117
-#: src/layer/tile/CanvasTileLayer.js:4835
-#: src/layer/tile/CanvasTileLayer.js:4845
-#: src/layer/tile/CommentListSection.ts:830
+#: src/layer/tile/CanvasTileLayer.js:4869
+#: src/layer/tile/CanvasTileLayer.js:4879
+#: src/layer/tile/CommentListSection.ts:831
 msgid "Comment"
 msgstr "Примечание"
 
@@ -414,7 +414,7 @@ msgstr "Отметка времени"
 msgid "Jump to state"
 msgstr "Перейти в состояние"
 
-#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:294
+#: src/control/Control.DocumentRepair.js:95 src/control/Control.UserList.js:288
 msgid "You"
 msgstr "Вы"
 
@@ -790,15 +790,21 @@ msgstr "Параметры страницы"
 msgid "Reset to Default Language"
 msgstr "Установить язык по умолчанию"
 
-#: src/control/Control.Menubar.js:1555
+#: src/control/Control.Menubar.js:1552
 msgid "Insert Shape"
 msgstr "Вставить фигуру"
 
-#: src/control/Control.Menubar.js:1648
+#: src/control/Control.Menubar.js:1646
+#: src/control/Control.PresentationBar.js:101
 msgid "Are you sure you want to delete this slide?"
 msgstr "Действительно удалить этот слайд?"
 
-#: src/control/Control.Menubar.js:1776
+#: src/control/Control.Menubar.js:1649
+#: src/control/Control.PresentationBar.js:104
+msgid "Are you sure you want to delete this page?"
+msgstr "Действительно удалить эту страницу?"
+
+#: src/control/Control.Menubar.js:1774
 msgid "file type icon"
 msgstr ""
 
@@ -923,6 +929,7 @@ msgid "Format"
 msgstr "Формат"
 
 #: src/control/Control.NotebookbarCalc.js:48
+#: src/control/Control.NotebookbarDraw.js:116
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
 msgstr "~Рисование"
@@ -992,7 +999,7 @@ msgstr "Дробь"
 msgid "Boolean Value"
 msgstr "Логический"
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:856
+#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:857
 msgid "Text"
 msgstr "Текст"
 
@@ -1104,10 +1111,6 @@ msgstr "Заголовок"
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
 msgstr ""
-
-#: src/control/Control.PresentationBar.js:100
-msgid "Are you sure you want to delete this page?"
-msgstr "Действительно удалить эту страницу?"
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1310,15 +1313,15 @@ msgstr "Пользователей: 1"
 msgid "0 users"
 msgstr "Пользователей: 0"
 
-#: src/control/Control.UserList.js:186 src/control/Control.UserList.js:352
+#: src/control/Control.UserList.js:180 src/control/Control.UserList.js:346
 msgid "Always follow the editor"
 msgstr "Всегда следовать за редактором"
 
-#: src/control/Control.UserList.js:300
+#: src/control/Control.UserList.js:294
 msgid "Readonly"
 msgstr "Только чтение"
 
-#: src/control/Control.UserList.js:355
+#: src/control/Control.UserList.js:349
 msgid "Current"
 msgstr "Текущий"
 
@@ -1616,11 +1619,11 @@ msgstr "Эта версия %productName работает на"
 msgid "\"Slow Proxy\""
 msgstr "\"Slow Proxy\""
 
-#: src/control/Toolbar.js:853
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Вставить гиперссылку"
 
-#: src/control/Toolbar.js:857
+#: src/control/Toolbar.js:858
 msgid "Link"
 msgstr "Связь"
 
@@ -1972,44 +1975,44 @@ msgstr "Не удалось загрузить файл на сервер, фа�
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Не удалось загрузить файл на сервер, слишком большой размер файла."
 
-#: src/layer/tile/CanvasTileLayer.js:1765
+#: src/layer/tile/CanvasTileLayer.js:1783
 msgid "Functions"
 msgstr "Функции"
 
-#: src/layer/tile/CanvasTileLayer.js:4862
+#: src/layer/tile/CanvasTileLayer.js:4896
 msgid "No Comments"
 msgstr "Нет комментариев"
 
-#: src/layer/tile/CommentListSection.ts:777
+#: src/layer/tile/CommentListSection.ts:778
 msgid "Modify"
 msgstr "Изменить"
 
-#: src/layer/tile/CommentListSection.ts:783
+#: src/layer/tile/CommentListSection.ts:784
 #: src/layer/tile/CommentSection.ts:129
 msgid "Reply"
 msgstr "Ответ"
 
-#: src/layer/tile/CommentListSection.ts:789
+#: src/layer/tile/CommentListSection.ts:790
 msgid "Remove"
 msgstr "Удалить"
 
-#: src/layer/tile/CommentListSection.ts:795
+#: src/layer/tile/CommentListSection.ts:796
 msgid "Remove Thread"
 msgstr "Удалить обсуждение"
 
-#: src/layer/tile/CommentListSection.ts:801
+#: src/layer/tile/CommentListSection.ts:802
 msgid "Resolve"
 msgstr "Решено"
 
-#: src/layer/tile/CommentListSection.ts:801
+#: src/layer/tile/CommentListSection.ts:802
 msgid "Unresolve"
 msgstr "Удалить пометку \"Решено\""
 
-#: src/layer/tile/CommentListSection.ts:807
+#: src/layer/tile/CommentListSection.ts:808
 msgid "Unresolve Thread"
 msgstr "Удалить пометку \"Решено\" с обсуждения"
 
-#: src/layer/tile/CommentListSection.ts:807
+#: src/layer/tile/CommentListSection.ts:808
 msgid "Resolve Thread"
 msgstr "Обсуждение решено"
 

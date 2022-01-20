@@ -297,6 +297,23 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getHomeTab: function() {
 		var content = [
 			{
+				'id': 'home-undo-redo',
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolitem',
+						'text': _UNO('.uno:Undo'),
+						'command': '.uno:Undo'
+					},
+					{
+						'type': 'toolitem',
+						'text': _UNO('.uno:Redo'),
+						'command': '.uno:Redo'
+					},
+				],
+				'vertical': 'true'
+			},
+			{
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Paste'),
 				'command': '.uno:Paste'

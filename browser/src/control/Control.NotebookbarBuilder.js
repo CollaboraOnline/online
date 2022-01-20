@@ -910,9 +910,12 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			showOnClick: true,
 			hideTimeout: 0,
 			hideDuration: 0,
+			hideFunction: null,
 			showDuration: 0,
+			showFunction: null,
 			showTimeout: 0,
 			collapsibleHideDuration: 0,
+			collapsibleHideFunction: null,
 			subIndicatorsPos: 'append',
 			subIndicatorsText: '&#8250;'
 		});
@@ -923,7 +926,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		});
 
 		$(control.container).bind('beforeshow.smapi', {self: menubar}, menubar._beforeShow);
-		$(control.container).bind('beforehide.smapi', {self: menubar}, menubar._beforeHide);
 		$(control.container).bind('click.smapi', {self: menubar}, menubar._onClicked);
 		$(control.container).bind('select.smapi', {self: menubar}, menubar._onItemSelected);
 		$(control.container).bind('mouseenter.smapi', {self: menubar}, menubar._onMouseEnter);

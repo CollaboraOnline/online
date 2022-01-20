@@ -393,6 +393,7 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	padding-top: 0px;
 	padding-bottom: 0px;
 	background: transparent;
+	border-color: transparent;
 }
 #formulabar {
 	padding: 0px !important;
