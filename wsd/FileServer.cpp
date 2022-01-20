@@ -722,9 +722,9 @@ void FileServerRequestHandler::handleRequest(const HTTPRequest& request,
     }
     catch (Poco::SyntaxException& exc)
     {
-        LOG_ERR("Incorrect config value: " << exc.displayText());
+        LOG_ERR("Incorrect config value: " << exc.displayText() << " :: " << exc.extendedMessage());
         sendError(500, request, socket, "500 - Internal Server Error!",
-                  "Cannot process the request");
+                  "Cannot process the request - " + exc.displayText());
     }
 }
 
