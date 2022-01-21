@@ -2259,10 +2259,15 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (isUnoCommand)
 				id = encodeURIComponent(data.command.substr('.uno:'.length));
 			else {
-				id = data.command;
+				if (data.command)
+					id = data.command;
 				isRealUnoCommand = false;
 			}
-			id = id.replace(/\%/g, '').replace(/\./g, '-').replace(' ', '');
+
+			if (id)
+				id.replace(/\%/g, '').replace(/\./g, '-').replace(' ', '');
+			else
+				console.warn('_unoToolButton: no id provided');
 
 			L.DomUtil.addClass(div, 'uno' + id);
 
