@@ -43,6 +43,7 @@ window.app = { // Shouldn't have any functions defined.
 		}
 	},
 	socket: null,
+	console: {},
 };
 
 (function (global) {
@@ -72,6 +73,12 @@ window.app = { // Shouldn't have any functions defined.
 		console.log2(err);
 		global.logServer(log);
 	};
+
+	// belt & braces in case of incomplete back-ports
+	var loggingMethods = ['warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd'];
+	for (var i = 0; i < loggingMethods.length; i++) {
+		window.app.console[loggingMethods[i]] = function() {};
+	}
 
 	if (global.coolLogging !== 'true') {
 		var methods = ['warn', 'info', 'debug', 'trace', 'log', 'logException', 'assert', 'time', 'timeEnd'];
