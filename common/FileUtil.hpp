@@ -169,9 +169,10 @@ namespace FileUtil
         }
 
         /// Returns the modified unix-time in microseconds since epoch.
-        std::size_t modifiedTimeUs() const
+        int64_t modifiedTimeUs() const
         {
-            return (modifiedTime().tv_sec * 1000 * 1000) + (modifiedTime().tv_nsec / 1000);
+            // cast to make sure the calculation happens with enough bits
+            return (static_cast<int64_t>(modifiedTime().tv_sec) * 1000 * 1000) + (modifiedTime().tv_nsec / 1000);
         }
 
         /// Returns the modified unix-time in milliseconds since epoch.
