@@ -369,7 +369,7 @@ bool updateDynamicFilesImpl(const std::string& sysTemplate)
         {
             disableBindMounting(); // We can't mount from incomplete systemplate that can't be updated.
             LinkDynamicFiles = false;
-            LOG_INF("The systemplate directory ["
+            LOG_WRN("The systemplate directory ["
                     << sysTemplate << "] is read-only, and at least [" << dstFilename
                     << "] is out-of-date. Will have to copy sysTemplate to jails. To restore "
                        "optimal performance, make sure the files in ["
