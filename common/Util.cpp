@@ -812,7 +812,8 @@ namespace Util
         char time_now[64];
         std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
         std::time_t now_c = std::chrono::system_clock::to_time_t(now);
-        std::tm now_tm = *std::gmtime(&now_c);
+        std::tm now_tm;
+        gmtime_r(&now_c, &now_tm);
         strftime(time_now, sizeof(time_now), "%a, %d %b %Y %T", &now_tm);
 
         return time_now;
@@ -822,7 +823,8 @@ namespace Util
     {
         char http_time[64];
         std::time_t time_c = std::chrono::system_clock::to_time_t(time);
-        std::tm time_tm = *std::gmtime(&time_c);
+        std::tm time_tm;
+        gmtime_r(&time_c, &time_tm);
         strftime(http_time, sizeof(http_time), "%a, %d %b %Y %T", &time_tm);
 
         return http_time;
@@ -845,7 +847,8 @@ namespace Util
     std::string getIso8601FracformatTime(std::chrono::system_clock::time_point time){
         char time_modified[64];
         std::time_t lastModified_us_t = std::chrono::system_clock::to_time_t(time);
-        std::tm lastModified_tm = *std::gmtime(&lastModified_us_t);
+        std::tm lastModified_tm;
+        gmtime_r(&lastModified_us_t,&lastModified_tm);
         strftime(time_modified, sizeof(time_modified), "%FT%T.", &lastModified_tm);
 
         auto lastModified_s = std::chrono::time_point_cast<std::chrono::seconds>(time);
