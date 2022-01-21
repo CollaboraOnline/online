@@ -306,7 +306,7 @@ L.Control.Notebookbar = L.Control.extend({
 			{
 				id: button.id,
 				type: 'toolitem',
-				text: button.label ? button.label : _(button.hint),
+				text: button.label ? button.label : (button.hint ? _(button.hint) : ' '),
 				icon: button.imgurl,
 				command: button.unoCommand,
 				postmessage: button.unoCommand ? undefined : true,
