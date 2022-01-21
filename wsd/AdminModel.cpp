@@ -555,10 +555,13 @@ void AdminModel::addDocument(const std::string& docKey, pid_t pid,
     {
         std::ostringstream osst;
         Poco::AutoPtr<Poco::Channel> channel = Log::logger().getChannel();
-        const auto now = std::chrono::system_clock::now();
-        const auto current = std::chrono::system_clock::to_time_t(now);
-        osst << std::put_time(std::localtime(&current), "%F %T")
-             << " docstats : adding a document : " << filename
+        char output[64];
+        std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
+        std::time_t current = std::chrono::system_clock::to_time_t(now);
+        std::tm tm;
+        gmtime_r(&current, &tm);
+        strftime(output, sizeof(output), "%F %T", &tm);
+        osst << output << " docstats : adding a document : " << filename
              << ", created by : " << COOLWSD::anonymizeUsername(userName)
              << ", using WopiHost : " << COOLWSD::anonymizeUrl(wopiHost)
              << ", allocating memory of : " << memoryAllocated;
