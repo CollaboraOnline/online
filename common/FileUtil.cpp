@@ -321,7 +321,7 @@ namespace FileUtil
         if (access(path, W_OK) == 0)
             return true;
 
-        LOG_ERR("Cannot access path [" << path << "]: " << strerror(errno));
+        LOG_INF("No write access to path [" << path << "]: " << strerror(errno));
         return false;
     }
 
