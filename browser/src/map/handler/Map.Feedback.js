@@ -72,10 +72,14 @@ L.Map.Feedback = L.Handler.extend({
 		if (this._iframeDialog && this._iframeDialog.hasLoaded())
 			this._iframeDialog.remove();
 
+		var lokitHash = document.querySelector('#lokit-version a') || {};
+		lokitHash = lokitHash ? lokitHash.innerText : '';
+
 		var cssVar = getComputedStyle(document.documentElement).getPropertyValue('--co-primary-element');
 		var params = [{ mobile : window.mode.isMobile() },
 			      { cssvar : cssVar},
-			      { wsdhash : window.app.socket.WSDServer.Hash }];
+			      { wsdhash : window.app.socket.WSDServer.Hash },
+			      { 'lokit_hash' : lokitHash }];
 
 		var options = {
 			prefix: 'iframe-dialog',
