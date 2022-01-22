@@ -1101,6 +1101,12 @@ DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
         return NeedToUpload::Force;
     }
 
+    if (_storage == nullptr)
+    {
+        // This can happen when we reject the connection (unauthorized).
+        return NeedToUpload::No;
+    }
+
     // Get the modified-time of the file on disk.
     const auto st = FileUtil::Stat(_storage->getRootFilePathUploading());
     const std::chrono::system_clock::time_point currentModifiedTime = st.modifiedTimepoint();
