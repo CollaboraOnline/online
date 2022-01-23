@@ -10,6 +10,8 @@
 .yavide_proj
 .yavide_session
 .vscode
+**/.clangd
+**/.cache
 Makefile
 Makefile.in
 coolkitconfig.xcu
