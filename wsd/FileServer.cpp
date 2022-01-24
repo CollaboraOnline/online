@@ -1118,7 +1118,7 @@ void FileServerRequestHandler::preprocessFile(const HTTPRequest& request,
         // X-Frame-Options supports only one ancestor, ignore that
         //(it's deprecated anyway and CSP works in all major browsers)
         // frame anchestors are also allowed for img-src in order to load the views avatars
-        cspOss << imgSrc << frameAncestors << "; "
+        cspOss << imgSrc << " " << frameAncestors << "; "
                 << "frame-ancestors " << frameAncestors;
         std::string escapedFrameAncestors;
         Poco::URI::encode(frameAncestors, "'", escapedFrameAncestors);
