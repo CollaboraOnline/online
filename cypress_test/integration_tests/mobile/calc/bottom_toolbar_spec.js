@@ -28,12 +28,12 @@ describe('Interact with bottom toolbar.', function() {
 
 		helper.getCursorPos('left', 'currentTextEndPos');
 
-		cy.get('#tb_actionbar_item_acceptformula').then($ele =>{
-			cy.wait(1000);
-			if (Cypress.dom.isVisible($ele)) {
-				cy.wrap($ele).click();
-			}
-		});
+		cy.get('#tb_actionbar_item_acceptformula').should('be.visible')
+			.then($ele =>{
+				if (Cypress.dom.isVisible($ele)) {
+					cy.wrap($ele).click();
+				}
+			});
 
 		cy.get('.cursor-overlay .blinking-cursor')
 			.should('not.exist');
