@@ -11,7 +11,6 @@ L.Control.DocumentNameInput = L.Control.extend({
 
 		map.on('doclayerinit', this.onDocLayerInit, this);
 		map.on('wopiprops', this.onWopiProps, this);
-		map.on('resize', this.onResize, this);
 	},
 
 	documentNameConfirm: function() {
@@ -41,13 +40,10 @@ L.Control.DocumentNameInput = L.Control.extend({
 
 	documentNameCancel: function() {
 		$('#document-name-input').val(this.map['wopi'].BreadcrumbDocName);
-		this._setNameInputWidth();
 		this.map._onGotFocus();
 	},
 
 	onDocumentNameKeyPress: function(e) {
-		var tail = (e.keyCode !== 13 && e.keyCode !== 27) ? 'X' : null;
-		this._setNameInputWidth(tail);
 		if (e.keyCode === 13) { // Enter key
 			this.documentNameConfirm();
 		} else if (e.keyCode === 27) { // Escape key
@@ -67,7 +63,6 @@ L.Control.DocumentNameInput = L.Control.extend({
 	},
 
 	onDocLayerInit: function() {
-		this._setNameInputWidth();
 
 		var el = $('#document-name-input');
 
@@ -77,7 +72,7 @@ L.Control.DocumentNameInput = L.Control.extend({
 			)
 				.pathname
 				.replace('/wopi/files', '');
-			
+
 			var basePath = fileNameFullPath.replace(this.map['wopi'].BaseFileName , '').replace(/\/$/, '');
 			var title = this.map['wopi'].BaseFileName + '\n' + _('Path') + ': ' + basePath;
 
@@ -126,10 +121,6 @@ L.Control.DocumentNameInput = L.Control.extend({
 		}
 	},
 
-	onResize: function() {
-		this._setNameInputWidth();
-	},
-
 	_getMaxAvailableWidth: function() {
 		var x = $('#document-titlebar').prop('offsetLeft') + $('.document-title').prop('offsetLeft') + $('#document-name-input').prop('offsetLeft');
 		var containerWidth = parseInt($('.main-nav').css('width'));
@@ -138,16 +129,6 @@ L.Control.DocumentNameInput = L.Control.extend({
 		return maxWidth;
 	},
 
-	_setNameInputWidth: function(tail) {
-		var documentNameInput = $('#document-name-input');
-		var content = (typeof tail === 'string') ? documentNameInput.val() + tail : documentNameInput.val();
-		var font = documentNameInput.css('font');
-		var textWidth = L.getTextWidth(content, font) + 24;
-		var maxWidth = this._getMaxAvailableWidth();
-		//window.app.console.log('_setNameInputWidth: textWidth: ' + textWidth + ', maxWidth: ' + maxWidth);
-		textWidth = Math.min(textWidth, maxWidth);
-		documentNameInput.css('width', textWidth + 'px');
-	}
 });
 
 L.control.documentNameInput = function () {
