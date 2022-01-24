@@ -51,7 +51,7 @@ bool DumpAll = false;
 bool DumpStrings = false;
 int  DumpWidth = 32;
 
-#define MAP_SIZE 20
+#define MAP_SIZE 21
 #define PATH_SIZE 1000 // No harm in having it much larger than strictly necessary. Avoids compiler warning.
 #define BUFFER_SIZE 9600
 
