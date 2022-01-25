@@ -1657,7 +1657,7 @@ void COOLWSD::innerInitialize(Application& self)
 #if ENABLE_DEBUG
     std::string postMessageURI =
         getServiceURI("/browser/dist/framed.doc.html?file_path="
-                      DEBUG_ABSSRCDIR "/" COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC);
+                      DEBUG_ABSSRCDIR "/" COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER);
     std::cerr << "\nLaunch one of these in your browser:\n\n"
               << "    Writer:      " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_WRITER) << '\n'
               << "    Calc:        " << getLaunchURI(COOLWSD_TEST_DOCUMENT_RELATIVE_PATH_CALC) << '\n'
