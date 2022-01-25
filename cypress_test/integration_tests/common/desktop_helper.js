@@ -283,6 +283,63 @@ function deleteImage() {
 		.should('not.exist');
 }
 
+function insertMultipleCommentEx(docType, numberOfComments = 1, isMobile = false) {
+	var mode = Cypress.env('USER_INTERFACE');
+
+	if (docType === 'calc') {
+		cy.wait(1000);
+	}
+
+	if (docType !== 'draw') {
+		cy.get('#toolbar-up .w2ui-scroll-right').then($button => {
+			if ($button.is(':visible'))	{
+				$button.click();
+			}
+		});
+	}
+
+	if (mode === 'notebookbar') {
+		cy.wait(500);
+
+		cy.get('#Insert-tab-label').then($button => {
+			if (!$button.hasClass('selected')) {
+				$button.click();
+			}
+		});
+	}
+
+	if (docType === 'writer' && mode !== 'notebookbar') {
+		cy.get('#toolbar-up .w2ui-scroll-right').click();
+	}
+
+	for (var n=0;n<numberOfComments;n++) {
+
+		if (docType === 'draw') {
+			cy.get('#menu-insert').click().get('#menu-insertcomment').click();
+		} else {
+			actionOnSelector('insertAnnotation', (selector) => {
+				cy.get(selector).click();
+			});
+		}
+
+		cy.wait(100);
+
+		cy.get('.loleaflet-annotation-table').should('exist');
+
+		if (isMobile) {
+			cy.get('#new-mobile-comment-input-area').type('some text' + n);
+
+			cy.get('.vex-dialog-button-primary').click();
+		} else {
+			cy.get('#annotation-modify-textarea-new').type('some text' + n);
+
+			cy.wait(500);
+
+			cy.get('#annotation-save-new').click();
+		}
+	}
+}
+
 function actionOnSelector(name,func) {
 	cy.task('getSelectors', {
 		mode: Cypress.env('USER_INTERFACE'),
@@ -308,4 +365,5 @@ module.exports.resetZoomLevel = resetZoomLevel;
 module.exports.insertMultipleComment = insertMultipleComment;
 module.exports.insertImage = insertImage;
 module.exports.deleteImage = deleteImage;
+module.exports.insertMultipleCommentEx = insertMultipleCommentEx;
 module.exports.actionOnSelector = actionOnSelector;
