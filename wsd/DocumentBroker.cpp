@@ -122,6 +122,7 @@ DocumentBroker::DocumentBroker(ChildType type,
     _docKey(docKey),
     _docId(Util::encodeId(DocBrokerId++, 3)),
     _documentChangedInStorage(false),
+    _isViewFileExtension(false),
     _isModified(false),
     _cursorPosX(0),
     _cursorPosY(0),
@@ -641,9 +642,10 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         watermarkText = wopifileinfo->getWatermarkText();
         templateSource = wopifileinfo->getTemplateSource();
 
+        _isViewFileExtension = COOLWSD::IsViewFileExtension(wopiStorage->getFileExtension());
         if (CommandControl::FreemiumManager::isFreemiumReadOnlyUser() ||
             !wopifileinfo->getUserCanWrite() ||
-            COOLWSD::IsViewFileExtension(wopiStorage->getFileExtension()))
+            _isViewFileExtension)
         {
             LOG_DBG("Setting the session as readonly");
             session->setReadOnly();
@@ -1204,6 +1206,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId, bool 
         break;
     }
 
+    // Avoid multiple uploads during unloading if we know we need to save a new version.
     if (_docState.isUnloadRequested() && isPossiblyModified())
     {
         // We are unloading but have possible modifications. Save again (done in poll).
@@ -1866,6 +1869,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
                               << "] before terminating.");
         if (!autoSave(isPossiblyModified()))
         {
+            // Nothing to save. Try to upload if necessary.
             const std::string sessionId = getWriteableSessionId();
             if (!sessionId.empty())
             {
@@ -1879,6 +1883,10 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
                 }
             }
         }
+    }
+    else if (!canStop)
+    {
+        LOG_TRC("Too soon to issue another save on [" << getDocKey() << ']');
     }
 
     if (canStop)

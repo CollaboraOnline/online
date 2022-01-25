@@ -276,11 +276,14 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 	if (docType === 'calc') {
 		cy.wait(1000);
 	}
-	cy.get('#toolbar-up .w2ui-scroll-right').then($button => {
-		if ($button.is(':visible'))	{
-			$button.click();
-		}
-	});
+
+	if (docType !== 'draw') {
+		cy.get('#toolbar-up .w2ui-scroll-right').then($button => {
+			if ($button.is(':visible'))	{
+				$button.click();
+			}
+		});
+	}
 
 	if (mode === 'notebookbar') {
 		cy.wait(500);
@@ -292,15 +295,19 @@ function insertMultipleComment(docType, numberOfComments = 1, isMobile = false) 
 		});
 	}
 
-	if	(docType === 'writer' && mode !== 'notebookbar') {
+	if (docType === 'writer' && mode !== 'notebookbar') {
 		cy.get('#toolbar-up .w2ui-scroll-right').click();
 	}
 
 	for (var n=0;n<numberOfComments;n++) {
 
-		actionOnSelector('insertAnnotation', (selector) => {
-			cy.get(selector).click();
-		});
+		if (docType === 'draw') {
+			cy.get('#menu-insert').click().get('#menu-insertcomment').click();
+		} else {
+			actionOnSelector('insertAnnotation', (selector) => {
+				cy.get(selector).click();
+			});
+		}
 
 		cy.wait(100);
 
