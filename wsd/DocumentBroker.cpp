@@ -169,6 +169,7 @@ DocumentBroker::DocumentBroker(ChildType type,
     _docKey(docKey),
     _docId(Util::encodeId(DocBrokerId++, 3)),
     _documentChangedInStorage(false),
+    _isViewFileExtension(false),
     _isModified(false),
     _interactive(false),
     _cursorPosX(0),
@@ -677,9 +678,10 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         watermarkText = wopifileinfo->getWatermarkText();
         templateSource = wopifileinfo->getTemplateSource();
 
+        _isViewFileExtension = LOOLWSD::IsViewFileExtension(wopiStorage->getFileExtension());
         if (CommandControl::FreemiumManager::isFreemiumReadOnlyUser() ||
             !wopifileinfo->getUserCanWrite() ||
-            LOOLWSD::IsViewFileExtension(wopiStorage->getFileExtension()))
+            _isViewFileExtension)
         {
             LOG_DBG("Setting the session as readonly");
             session->setReadOnly();
@@ -780,7 +782,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
             userId = localfileinfo->getUserId();
             username = localfileinfo->getUsername();
 
-            if (LOOLWSD::IsViewFileExtension(localStorage->getFileExtension()))
+            _isViewFileExtension = LOOLWSD::IsViewFileExtension(localStorage->getFileExtension());
+            if (_isViewFileExtension)
             {
                 LOG_DBG("Setting the session as readonly");
                 session->setReadOnly();
@@ -1238,6 +1241,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId, bool 
         break;
     }
 
+    // Avoid multiple uploads during unloading if we know we need to save a new version.
     if (_docState.isUnloadRequested() && isPossiblyModified())
     {
         // We are unloading but have possible modifications. Save again (done in poll).
@@ -1899,6 +1903,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
                               << "] before terminating.");
         if (!autoSave(isPossiblyModified()))
         {
+            // Nothing to save. Try to upload if necessary.
             const std::string sessionId = getWriteableSessionId();
             if (!sessionId.empty())
             {
@@ -1912,6 +1917,10 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
                 }
             }
         }
+    }
+    else if (!canStop)
+    {
+        LOG_TRC("Too soon to issue another save on [" << getDocKey() << ']');
     }
 
     if (canStop)
@@ -3280,11 +3289,13 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  filename: " << LOOLWSD::anonymizeUrl(_filename);
     os << "\n  public uri: " << _uriPublic.toString();
     os << "\n  jailed uri: " << LOOLWSD::anonymizeUrl(_uriJailed);
+    os << "\n  isViewFileExtension: " << _isViewFileExtension;
     os << "\n  doc key: " << _docKey;
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
     os << "\n  thread start: " << Util::getSteadyClockAsString(_threadStart);
     os << "\n  possibly-modified: " << isPossiblyModified();
+    os << "\n  haveActivityAfterSaveRequest: " << haveActivityAfterSaveRequest();
     os << "\n  doc state: " << DocumentState::toString(_docState.status());
     os << "\n  doc activity: " << DocumentState::toString(_docState.activity());
     if (_docState.activity() == DocumentState::Activity::Rename)
