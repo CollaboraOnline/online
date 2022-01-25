@@ -1,10 +1,14 @@
 .div-infobar-wrap {
-	height: 80px;
-	width: 100%;
+	left: 50%;
+	bottom: 0;
+	position: absolute;
+	transform: translate(-50%);
+	margin-bottom: 40px;
+	box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
 
 .div-infobar-modal {
-	width: 100%;
+	display: block;
+	height: 42px;
+	border: none;
 }
-
-
