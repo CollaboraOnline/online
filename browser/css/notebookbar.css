@@ -462,8 +462,6 @@
 
 #stylesview .ui-iconview-entry {
 	width: 30%;
-	height: 60px;
-	padding: 2px;
 	box-sizing: border-box;
 	border-radius: 0;
 }
@@ -503,17 +501,11 @@
 	-webkit-box-shadow: 0 0 3px 1px #8080804f, inset -0.5px -0.5px 0 0.5px #ccc, inset 0.5px 0.5px 0 0.5px #ccc;
 	box-shadow: 0 0 3px 1px #8080804f, inset -0.5px -0.5px 0 0.5px #ccc, inset 0.5px 0.5px 0 0.5px #ccc;
 	cursor: pointer;
+	height: 30px;
 }
 
 #stylesview .ui-iconview-icon {
-	height: 35px;
-}
-
-#stylesview .ui-iconview-text {
-	font-size: 10pt;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+	height: 30px;
 }
 
 /* Insert Tab */
