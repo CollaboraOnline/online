@@ -556,7 +556,22 @@ private:
     /// since there are race conditions vis-a-vis user activity while saving.
     bool isPossiblyModified() const
     {
-        return isModified() || haveActivityAfterSaveRequest();
+        if (haveActivityAfterSaveRequest())
+        {
+            // Always assume possible modification when we have
+            // user input after sending a .uno:Save, due to racing.
+            return true;
+        }
+
+        if (_isViewFileExtension)
+        {
+            // ViewFileExtensions do not update the ModifiedStatus,
+            // but, we want a success save anyway (including unmodified).
+            return !_saveManager.lastSaveSuccessful();
+        }
+
+        // Regulard editable files, rely on the ModifiedStatus.
+        return isModified();
     }
 
     /// True iff there is at least one non-readonly session other than the given.
@@ -1104,6 +1119,10 @@ private:
     /// Set to true when document changed in storage and we are waiting
     /// for user's command to act.
     bool _documentChangedInStorage;
+
+    /// True for file that COOLWSD::IsViewFileExtension return true.
+    /// These files, such as PDF, don't have a reliable ModifiedStatus.
+    bool _isViewFileExtension;
 
     /// Manage saving in Core.
     SaveManager _saveManager;
