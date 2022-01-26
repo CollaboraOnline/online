@@ -77,6 +77,10 @@ L.Control.AlertDialog = L.Control.extend({
 					type: 'button',
 					className: 'vex-dialog-button-primary',
 					click: function() {
+						if ('processCoolUrl' in window) {
+							url = window.processCoolUrl({ url: url, type: 'doc' });
+						}
+
 						window.open(url, '_blank');
 						vex.closeAll();
 					}

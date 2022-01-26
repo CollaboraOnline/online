@@ -78,8 +78,17 @@ L.Map.SlideShow = L.Handler.extend({
 	},
 
 	_onSlideDownloadReady: function (e) {
+		if ('processCoolUrl' in window) {
+			e.url = window.processCoolUrl({ url: e.url, type: 'slideshow' });
+		}
+
 		this._slideURL = e.url;
 		window.app.console.debug('slide file url : ', this._slideURL);
+
+		if ('processCoolUrl' in window) {
+			this._processSlideshowLinks();
+		}
+
 		this._startPlaying();
 	},
 
@@ -91,6 +100,43 @@ L.Map.SlideShow = L.Handler.extend({
 		var separator = (this._slideURL.indexOf('?') === -1) ? '?' : '&';
 		this._slideShow.src = this._slideURL + separator + 'StartSlideNumber=' + this._startSlideNumber;
 		this._slideShow.contentWindow.focus();
+	},
+
+	_processSlideshowLinks: function() {
+		var that = this;
+		this._slideShow.onload = function onLoadSlideshow() {
+			var linkElements = [].slice.call(that._slideShow.contentDocument.querySelectorAll('a'))
+				.filter(function(el) {
+					return el.getAttribute('href') || el.getAttribute('xlink:href');
+				})
+				.map(function(el) {
+					return {
+						el: el,
+						link: el.getAttribute('href') || el.getAttribute('xlink:href'),
+						parent: el.parentNode
+					};
+				});
+
+			var setAttributeNs = function(el, link) {
+				link = window.processCoolUrl({ url: link, type: 'slide' });
+
+				el.setAttributeNS('http://www.w3.org/1999/xlink', 'href', link);
+				el.setAttribute('target', '_blank');
+			};
+
+			linkElements.forEach(function(item) {
+				setAttributeNs(item.el, item.link);
+
+				var parentLink = item.parent.getAttribute('xlink:href');
+
+				if (parentLink) {
+					setAttributeNs(item.parent, parentLink);
+				}
+
+				item.parent.parentNode.insertBefore(item.parent.cloneNode(true), item.parent.nextSibling);
+				item.parent.parentNode.removeChild(item.parent);
+			});
+		};
 	}
 });
 

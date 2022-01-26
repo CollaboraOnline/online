@@ -704,6 +704,10 @@ window.app = { // Shouldn't have any functions defined.
 	}
 
 	global.createWebSocket = function(uri) {
+		if ('processCoolUrl' in window) {
+			uri = window.processCoolUrl({ url: uri, type: 'ws' });
+		}
+
 		if (global.socketProxy) {
 			window.socketProxy = true;
 			return new global.ProxySocket(uri);
