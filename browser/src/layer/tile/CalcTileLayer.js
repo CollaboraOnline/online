@@ -23,8 +23,10 @@ L.CalcTileLayer = L.CanvasTileLayer.extend({
 
 		for (var i = 0; i < commentList.length; i++) {
 			if (this._cellCursorTwips.contains(commentList[i].sectionProperties.data.cellPos)) {
-				comment = commentList[i];
-				break;
+				if (commentList[i].tab == this._selectedPart) {
+					comment = commentList[i];
+					break;
+				}
 			}
 		}
 
