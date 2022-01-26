@@ -171,12 +171,21 @@ void cleanupJails(const std::string& root)
         for (const auto& jail : jails)
         {
             const Poco::Path path(root, jail);
+            // Postpone deleting "tmp" directory until we clean all the jails
+            // On FreeBSD the "tmp" dir contains a devfs moint point. Normally,
+            // it gets unmounted by coolmount during shutdown, but coolmount
+            // does nothing if it is called on the non-existing path.
+            // Removing this dir there prevents clean unmounting of devfs later.
+            if (jail == "tmp")
+                continue;
             // Delete tmp and link cache with prejudice.
-            if (jail == "tmp" || jail == "linkable")
+            if (jail == "linkable")
                 FileUtil::removeFile(path.toString(), true);
             else
                 cleanupJails(path.toString());
         }
+        const Poco::Path tmpPath(root, "tmp");
+        FileUtil::removeFile(tmpPath.toString(), true);
     }
 
     // Remove empty directories.
