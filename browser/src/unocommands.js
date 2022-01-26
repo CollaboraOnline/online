@@ -24,7 +24,7 @@ var unoCommandsArray = {
 	'AutoFormatMenu':{text:{menu:_('AutoCorr~ect'),},},
 	'BackColor':{text:{menu:_('Highlight Color'),},},
 	'BackgroundColor':{global:{menu:_('Background Color'),},},
-	'BasicShapes':{global:{context:_('Basic Shapes'),menu:_('Basic Shapes'),},},
+	'BasicShapes':{global:{context:_('Shapes'),menu:_('Shapes'),},},
 	'Bold':{global:{menu:_('Bold'),},},
 	'BringToFront':{global:{menu:_('~Bring to Front'),},},
 	'Calculate':{spreadsheet:{menu:_('~Recalculate'),},},
