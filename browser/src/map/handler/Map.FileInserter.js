@@ -96,6 +96,10 @@ L.Map.FileInserter = L.Handler.extend({
 		var map = this._map;
 		var url = this.getWopiUrl(map);
 
+		if ('processCoolUrl' in window) {
+			url = window.processCoolUrl({ url: url, type: 'insertfile' });
+		}
+
 		if (!(file.filename && file.url) && (file.name === '' || file.size === 0)) {
 			var errMsg =  _('The file of type: %0 cannot be uploaded to server since the file has no name');
 			if (file.size === 0)

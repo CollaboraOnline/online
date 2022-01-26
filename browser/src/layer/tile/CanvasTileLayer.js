@@ -1896,9 +1896,18 @@ L.CanvasTileLayer = L.Layer.extend({
 				url = window.makeHttpUrlWopiSrc('/' + this._map.options.urlPrefix + '/',
 					this._map.options.doc, '/download/' + command.downloadid,
 					'attachment=0');
+
+				if ('processCoolUrl' in window) {
+					url = window.processCoolUrl({ url: url, type: 'print' });
+				}
+
 				window.open(url, '_blank');
 			}
 			else {
+				if ('processCoolUrl' in window) {
+					url = window.processCoolUrl({ url: url, type: 'print' });
+				}
+
 				this._map.fire('filedownloadready', {url: url});
 			}
 		}
@@ -1906,6 +1915,10 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._map.fire('slidedownloadready', {url: url});
 		}
 		else if (command.id === 'export') {
+			if ('processCoolUrl' in window) {
+				url = window.processCoolUrl({ url: url, type: 'export' });
+			}
+
 			// Don't do a real download during testing
 			if (!L.Browser.cypressTest)
 				this._map._fileDownloader.src = url;
