@@ -270,22 +270,6 @@ w2ui-toolbar {
 	font-size: 10pt !important;
 	padding-bottom: 2px;
 }
-.text-color-indicator #document-name-input {
-	color: rgb(3, 105, 163);
-	color: rgb(var(--blue1-txt-primary-color));
-}
-.spreadsheet-color-indicator  #document-name-input {
-	color: rgb(16, 104, 2);
-	color: rgb(var(--green0-txt-primary-color));
-}
-.presentation-color-indicator  #document-name-input {
-	color: rgb(163, 62, 3);
-	color: rgb(var(--orange1-txt-primary-color));
-}
-.drawing-color-indicator  #document-name-input {
-	color: rgb(135, 105, 0);
-	color: rgb(var(--yellow0-txt-primary-color));
-}
 
 #document-name-input.editable:focus {
 	border: none;
