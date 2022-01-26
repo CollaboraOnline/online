@@ -33,8 +33,12 @@ describe('Image Operation Tests', function() {
 		cy.contains('.ui-expander-label', 'Position and Size')
 			.click();
 
+		helper.waitUntilIdle('#selectwidth input');
+
 		cy.get('#selectwidth input').clear({force:true})
 			.type('3{enter}', {force:true});
+
+		helper.waitUntilIdle('#selectheight input');
 
 		cy.get('#selectheight input').clear({force:true})
 			.type('2{enter}', {force:true});
@@ -43,6 +47,8 @@ describe('Image Operation Tests', function() {
 
 		//Keep ratio checked
 		cy.get('#ratio input').check();
+
+		helper.waitUntilIdle('#selectheight input');
 
 		cy.get('#selectheight input').clear({force:true})
 			.type('5{enter}', {force:true});
