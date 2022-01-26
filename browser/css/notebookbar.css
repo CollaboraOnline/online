@@ -41,38 +41,38 @@
 }
 .main-nav.hasnotebookbar.text-color-indicator .ui-tab.selected.notebookbar{
 	color: rgb(3, 105, 163);
-	color: rgb(var(--blue1-txt-primary-color));
+	color: var(--color-text-accent);
 	box-shadow: -1px -1px 1px rgba(var(--blue1-txt-primary-color),0.3), 1px -1px 1px rgba(var(--blue1-txt-primary-color),0.3);
 }
 .main-nav.hasnotebookbar.spreadsheet-color-indicator .ui-tab.selected.notebookbar{
 	color: rgb(16, 104, 2);
-	color: rgb(var(--green0-txt-primary-color));
+	color: var(--color-text-accent);
 	box-shadow: -1px -1px 1px rgba(var(--green0-txt-primary-color),0.3), 1px -1px 1px rgba(var(--green0-txt-primary-color),0.3);
 }
 .main-nav.hasnotebookbar.presentation-color-indicator .ui-tab.selected.notebookbar{
 	color: rgb(163, 62, 3);
-	color: rgb(var(--orange1-txt-primary-color));
+	color: var(--color-text-accent);
 	box-shadow: -1px -1px 1px rgba(var(--orange1-txt-primary-color),0.3), 1px -1px 1px rgba(var(--orange1-txt-primary-color),0.3);
 }
 .main-nav.hasnotebookbar.drawing-color-indicator .ui-tab.selected.notebookbar{
 	color: rgb(135, 105, 0);
-	color: rgb(var(--yellow0-txt-primary-color));
+	color: var(--color-text-accent);
 	box-shadow: -1px -1px 1px rgba(var(--yellow0-txt-primary-color),0.3), 1px -1px 1px rgba(var(--yellow0-txt-primary-color),0.3);
 }
 .main-nav.hasnotebookbar.text-color-indicator .ui-tab.notebookbar:hover {
-	color: rgb(var(--blue1-txt-primary-color));
+	color: var(--color-text-accent);
 	box-shadow: 0 2px rgb(var(--blue1-txt-primary-color));
 }
 .main-nav.hasnotebookbar.spreadsheet-color-indicator .ui-tab.notebookbar:hover {
-	color: rgb(var(--green0-txt-primary-color));
+	color: var(--color-text-accent);
 	box-shadow: 0 2px rgb(var(--green0-txt-primary-color));
 }
 .main-nav.hasnotebookbar.presentation-color-indicator .ui-tab.notebookbar:hover {
-	color: rgb(var(--orange1-txt-primary-color));
+	color: var(--color-text-accent);
 	box-shadow: 0 2px rgb(var(--orange1-txt-primary-color));
 }
 .main-nav.hasnotebookbar.drawing-color-indicator .ui-tab.notebookbar:hover {
-	color: rgb(var(--yellow0-txt-primary-color));
+	color: var(--color-text-accent);
 	box-shadow: 0 2px rgb(var(--yellow0-txt-primary-color));
 }
 .ui-tab.notebookbar:hover {
@@ -325,8 +325,7 @@
 }
 
 .unotoolbutton.notebookbar .unobutton.selected + .ui-content.unolabel {
-	color: rgb(3, 105, 163) !important;
-	color: var(--blue1-txt-primary-color) !important;
+	color: var(--color-text-accent);
 }
 
 .unotoolbutton.notebookbar.disabled:not(.unospan-shortcutstoolbox),
