@@ -43,7 +43,7 @@
 
 .jsdialog.vertical p, .ui-frame-label {
 	margin: 0px;
-	color: #666;
+	color: var(--color-text-lighter);
 	font-size: 10px;
 	font-weight: bold;
 	text-transform: uppercase;
@@ -73,7 +73,7 @@
 
 td.jsdialog:hover *,
 #table-box3:hover p {
-	color: #333;
+	color: var(--color-text-accent);
 }
 
 .jsdialog.row {

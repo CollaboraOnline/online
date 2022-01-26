@@ -16,8 +16,7 @@
 	font-size: 12pt;
 	font-family: var(--cool-font);
 	line-height: normal;
-	color: dimgray;
-	color: var(--gray-light-txt--color);
+	color: var(--color-main-text);
 	height: 32px;
 	display: flex;
 	align-items: center;
@@ -286,8 +285,9 @@
 }
 
 .unotoolbutton.notebookbar .unolabel {
+	font-size: 12pt;
 	font-family: var(--cool-font);
-	color: var(--gray-light-txt--color);
+	color: var(--color-main-text);
 	padding: 0px 5px !important;
 }
 

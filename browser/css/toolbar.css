@@ -22,6 +22,10 @@
 }
 #toolbar-down *{
 	font-family: var(--cool-font);
+	color: var(--color-main-text);
+}
+#toolbar-down *:hover {
+	color: var(--color-text-accent);
 }
 #toolbar-down table {
 	background: var(--color-main-background);
@@ -238,6 +242,7 @@ w2ui-toolbar {
 }
 
 #document-name-input {
+	color: var(--color-text-accent);
 	font-size: 16px;
 	border: 1px solid transparent;
 	background-color: transparent;
@@ -451,9 +456,14 @@ button.leaflet-control-search-next
 .select2-container--default .select2-selection--single,
 .sidebar.jsdialog.ui-listbox {
 	background-color: var(--gray-lighter-bg-color);
+	color: var(--color-main-text);
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered {
 	line-height: 24px;
+	color: var(--color-main-text);
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered:hover {
+	color: var(--color-text-accent);
 }
 .styles-select {
 	width: 150px !important;
@@ -536,6 +546,7 @@ button.leaflet-control-search-next
 .w2ui-toolbar table.w2ui-button.checked:hover {
 	background-color: var(--gray-light-bg-color);
 	border: 1px solid var(--gray-light-txt--color);
+	color: var(--color-text-accent);
 }
 
 .w2ui-icon.basicshapes_rectangle { background: url('images/lc_rect.svg') no-repeat center !important; }
@@ -1033,6 +1044,11 @@ button.leaflet-control-search-next
 	background-color: rgba(128, 128, 128, 0.1);
 	position: static;
 	line-height: 30px;
+	color: var(--color-main-text);
+}
+
+.insertshape-grid:hover div {
+	color: var(--color-text-accent);
 }
 
 .insertshape-grid .col:hover {
