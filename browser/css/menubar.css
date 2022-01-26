@@ -130,22 +130,22 @@
 
 .lo-menu a, .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
 	padding: 5px 22px;
-	color: #000;
+	color: var(--color-main-text);
 }
 .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
 	background: #0b87e7;
-	color: #fff;
+	color: var(--color-text-accent);
 }
 .lo-menu > li, .lo-menu > li > .disabled {
 	background: transparent; /* top-level menus remain greyish */
 	border-left-color: transparent;
 }
 .lo-menu > li .disabled {
-	color: var(--gray-light-txt--color);
+	color: var(--color-text-lighter);
 }
 .lo-menu > li > a:hover, .lo-menu > li > a:focus, .lo-menu > li > a:active, .lo-menu > li > a.highlighted {
 	background: #fff;
-	color: #000;
+	color: var(--color-text-accent);
 	border-color: #bbbbbb;
 	border-bottom: 1px solid #bbb;
 }
@@ -309,7 +309,7 @@
 }
 
 #menu-last-mod a {
-	color: darkslateblue;
+	color: var(--color-text-lighter);
 	text-decoration: underline;
 	padding: 8px 15px 7px;
 	z-index: 400;

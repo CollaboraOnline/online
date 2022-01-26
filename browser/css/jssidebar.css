@@ -27,6 +27,7 @@
 	padding-inline-start: 4px;
 	position: relative;
 	margin-inline-start: 8px;
+	color: var(--color-main-text);
 }
 
 .sidebar.spinfield {
@@ -42,7 +43,7 @@
 
 .spinfieldunit {
 	font-size: 12px;
-	color: var(--gray-light-txt--color);
+	color: var(--color-main-text);
 	margin: 5px;
 	position: relative;
 	margin-inline-start: calc(-40px);
@@ -188,7 +189,7 @@ div#box5.row.jsdialog.sidebar > .sidebar.jsdialog.cell {
 }
 
 .sidebar.ui-expander-label {
-	color: var(--gray-light-txt--color);
+	color: var(--color-main-text);
 	font-size: 11px;
 	line-height: 23px;
 	font-weight: bold;
@@ -275,7 +276,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 .sidebar #FormatPaintbrush:hover,
 #table-textorientbox.sidebar .jsdialog .radiobutton:hover {
 	outline: 1px solid var(--gray-light-txt--color);
-	color: var(--gray-light-txt--color);
+	color: var(--color-text-accent);
 	border-radius: var(--border-radius);
 }
 
