@@ -728,6 +728,11 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'vertical': 'true'
 			},
 			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:SelectAll'),
+				'command': '.uno:SelectAll'
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
