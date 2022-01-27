@@ -9,12 +9,6 @@ describe('Annotation Tests', function() {
 	beforeEach(function() {
 		testFileName = helper.beforeAll(origTestFileName, 'calc');
 
-		cy.get('#toolbar-up .w2ui-scroll-right')
-			.click();
-
-		cy.get('#tb_editbar_item_sidebar')
-			.click();
-
 		selectZoomLevel('50');
 	});
 
@@ -24,7 +18,7 @@ describe('Annotation Tests', function() {
 
 
 	it('Insert',function() {
-		insertMultipleComment();
+		insertMultipleComment('calc');
 
 		cy.get('.loleaflet-annotation').should('exist');
 
@@ -38,7 +32,7 @@ describe('Annotation Tests', function() {
 	});
 
 	it('Modify',function() {
-		insertMultipleComment();
+		insertMultipleComment('calc');
 
 		cy.get('#comment-container-1').should('exist');
 
@@ -70,7 +64,7 @@ describe('Annotation Tests', function() {
 	});
 
 	it('Reply should not be possible', function() {
-		insertMultipleComment();
+		insertMultipleComment('calc');
 
 		cy.get('#comment-container-1').should('exist');
 
@@ -88,7 +82,7 @@ describe('Annotation Tests', function() {
 	});
 
 	it('Remove',function() {
-		insertMultipleComment();
+		insertMultipleComment('calc');
 
 		cy.get('#comment-container-1').should('exist');
 
