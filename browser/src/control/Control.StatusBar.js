@@ -390,6 +390,9 @@ L.Control.StatusBar = L.Control.extend({
 
 		this._updateToolbarsVisibility();
 
+		if (isReadOnly)
+			statusbar.disable('LanguageStatus');
+
 		if (statusbar)
 			statusbar.refresh();
 
