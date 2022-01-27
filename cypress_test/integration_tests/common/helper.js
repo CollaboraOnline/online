@@ -359,6 +359,7 @@ function checkIfBothDocIsLoaded() {
 	checkIfDocIsLoaded('#iframe1');
 	checkIfDocIsLoaded('#iframe2');
 }
+
 function checkIfDocIsLoaded(frameId) {
 	// Wait for the document to fully load
 	cy.customGet('.leaflet-canvas-container canvas', frameId, {timeout : Cypress.config('defaultCommandTimeout') * 2.0});
@@ -1301,3 +1302,4 @@ module.exports.typeIntoInputField = typeIntoInputField;
 module.exports.getVisibleBounds = getVisibleBounds;
 module.exports.assertFocus = assertFocus;
 module.exports.getCoolFrameWindow = getCoolFrameWindow;
+module.exports.loadTestDocNoIntegration = loadTestDocNoIntegration;

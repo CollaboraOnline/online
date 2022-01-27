@@ -242,7 +242,6 @@ function assertDataClipboardTable(expectedData) {
 			.then(text => {
 				data.push(text);
 			});
-		cy.log(data);
 	}).then(() => expect(data).to.deep.eq(expectedData));
 }
 
