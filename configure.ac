@@ -196,7 +196,7 @@ AC_ARG_WITH([user-id],
 
 AC_ARG_WITH([icon-theme],
               AS_HELP_STRING([--with-icon-theme=<path>],
-                             [Path to custom icon theme (similar to loleflet/images).]))
+                             [Path to custom icon theme (similar to browser/images).]))
 
 AC_ARG_WITH(vendor,
     AS_HELP_STRING([--with-vendor="John the Builder"],
