@@ -123,9 +123,7 @@
 .lo-menu > li > a, .lo-menu > li > a.has-submenu {
 	padding: 8px;
 	z-index: 400;
-	border-left: 1px solid transparent;
-	border-right: 1px solid transparent;
-	border-top: 1px solid transparent;
+	border: 1px solid transparent;
 }
 
 .lo-menu a, .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
