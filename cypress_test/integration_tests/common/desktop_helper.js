@@ -231,19 +231,6 @@ function resetZoomLevel() {
 	shouldHaveZoomLevel('100');
 }
 
-function insertMultipleComment(numberOfComments) {
-	numberOfComments = numberOfComments || 1;
-	for (var n=0;n<numberOfComments;n++) {
-
-		cy.get('#menu-insert').click().get('#menu-insertcomment').click();
-
-		cy.get('.loleaflet-annotation-table').should('exist');
-
-		cy.get('#annotation-modify-textarea-new').type('some text' + n);
-
-		cy.get('#annotation-save-new').click();
-	}
-}
 function insertImage() {
 	selectZoomLevel('50');
 
@@ -283,12 +270,8 @@ function deleteImage() {
 		.should('not.exist');
 }
 
-function insertMultipleCommentEx(docType, numberOfComments = 1, isMobile = false) {
+function insertMultipleComment(docType, numberOfComments = 1) {
 	var mode = Cypress.env('USER_INTERFACE');
-
-	if (docType === 'calc') {
-		cy.wait(1000);
-	}
 
 	if (docType !== 'draw') {
 		cy.get('#toolbar-up .w2ui-scroll-right').then($button => {
@@ -308,8 +291,12 @@ function insertMultipleCommentEx(docType, numberOfComments = 1, isMobile = false
 		});
 	}
 
-	if (docType === 'writer' && mode !== 'notebookbar') {
-		cy.get('#toolbar-up .w2ui-scroll-right').click();
+	if (docType === 'writer') {
+		cy.get('#toolbar-up .w2ui-scroll-right').then($button => {
+			if ($button.is(':visible'))	{
+				$button.click();
+			}
+		});
 	}
 
 	for (var n=0;n<numberOfComments;n++) {
@@ -326,17 +313,11 @@ function insertMultipleCommentEx(docType, numberOfComments = 1, isMobile = false
 
 		cy.get('.loleaflet-annotation-table').should('exist');
 
-		if (isMobile) {
-			cy.get('#new-mobile-comment-input-area').type('some text' + n);
+		cy.get('#annotation-modify-textarea-new').type('some text' + n);
 
-			cy.get('.vex-dialog-button-primary').click();
-		} else {
-			cy.get('#annotation-modify-textarea-new').type('some text' + n);
+		cy.wait(500);
 
-			cy.wait(500);
-
-			cy.get('#annotation-save-new').click();
-		}
+		cy.get('#annotation-save-new').click();
 	}
 }
 
@@ -365,5 +346,5 @@ module.exports.resetZoomLevel = resetZoomLevel;
 module.exports.insertMultipleComment = insertMultipleComment;
 module.exports.insertImage = insertImage;
 module.exports.deleteImage = deleteImage;
-module.exports.insertMultipleCommentEx = insertMultipleCommentEx;
+module.exports.insertMultipleComment = insertMultipleComment;
 module.exports.actionOnSelector = actionOnSelector;

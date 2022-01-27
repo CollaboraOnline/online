@@ -26,7 +26,7 @@ describe('PDF View Tests', function() {
 	it('PDF insert comment', { env: { 'pdf-view': true } }, function() {
 
 		// Insert some comment into the PDF.
-		desktopHelper.insertMultipleCommentEx('draw', 1, false);
+		desktopHelper.insertMultipleComment('draw', 1, false);
 		cy.get('.loleaflet-annotation-content-wrapper').should('exist');
 		cy.get('#annotation-content-area-1').should('contain','some text0');
 
