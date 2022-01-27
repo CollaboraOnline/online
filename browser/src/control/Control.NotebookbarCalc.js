@@ -796,6 +796,11 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:SelectAll'),
+				'command': '.uno:SelectAll'
+			},
+			{
 				'id': 'Layout-Section-Align',
 				'type': 'container',
 				'children': [

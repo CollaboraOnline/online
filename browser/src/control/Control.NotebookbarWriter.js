@@ -1088,6 +1088,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'vertical': 'true'
 			},
 			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:SelectAll'),
+				'command': '.uno:SelectAll'
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
