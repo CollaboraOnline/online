@@ -452,7 +452,9 @@ void DocumentBroker::pollThread()
             _poll->continuePolling() << ", ShutdownRequestFlag: " << SigUtil::getShutdownRequestFlag() <<
             ", TerminationFlag: " << SigUtil::getTerminationFlag() << ", closeReason: " << _closeReason << ". Flushing socket.");
 
-    if (isModified())
+    // If the document is modified at exit, dump the state and warn.
+    // Unless, that is, the user discarded the changes.
+    if (isModified() && !(_docState.isCloseRequested() && _documentChangedInStorage))
     {
         std::stringstream state;
         dumpState(state);
@@ -1459,11 +1461,9 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         return;
     }
 
-    // Storage save is considered successful when either storage returns OK or the document on the storage
-    // was changed and it was used to overwrite local changes
+    // Storage upload is considered successful only when storage returns OK.
     const bool lastUploadSuccessful =
-        uploadResult.getResult() == StorageBase::UploadResult::Result::OK ||
-        uploadResult.getResult() == StorageBase::UploadResult::Result::DOC_CHANGED;
+        uploadResult.getResult() == StorageBase::UploadResult::Result::OK;
     LOG_TRC("lastUploadSuccessful: " << lastUploadSuccessful);
     _storageManager.setLastUploadResult(lastUploadSuccessful);
 
@@ -1677,9 +1677,22 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         const std::string message
             = isPossiblyModified() ? "error: cmd=storage kind=documentconflict" : "close: documentconflict";
 
-        broadcastMessage(message);
+        const std::size_t activeClients = broadcastMessage(message);
         broadcastSaveResult(false, "Conflict: Document changed in storage",
                             uploadResult.getReason());
+        if (activeClients == 0)
+        {
+            // No clients were contacted; we will never resolve this conflict.
+            stop("conflict");
+            std::stringstream state;
+            dumpState(state);
+            LOG_WRN("The document ["
+                    << _docKey
+                    << "] could not be uploaded to storage because there is a newer version there, "
+                       "and no active clients exist to resolve the conflict. The document should "
+                       "be recoverable from the quarantine. State:\n"
+                    << state.str());
+        }
     }
 }
 
@@ -3085,20 +3098,33 @@ void DocumentBroker::closeDocument(const std::string& reason)
 {
     assertCorrectThread();
 
-    LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
-    _closeReason = reason;
     _docState.setCloseRequested();
+    _closeReason = reason;
+    if (_documentChangedInStorage)
+    {
+        // Discarding changes in the face of conflict in storage.
+        LOG_DBG("Closing DocumentBroker for docKey ["
+                << _docKey << "] and discarding changes with reason: " << reason);
+        stop(reason);
+    }
+    else
+    {
+        LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
+    }
 }
 
-void DocumentBroker::broadcastMessage(const std::string& message) const
+std::size_t DocumentBroker::broadcastMessage(const std::string& message) const
 {
     assertCorrectThread();
 
     LOG_DBG("Broadcasting message [" << message << "] to all " << _sessions.size() <<  " sessions.");
+    std::size_t count = 0;
     for (const auto& sessionIt : _sessions)
     {
-        sessionIt.second->sendTextFrame(message);
+        count += sessionIt.second->sendTextFrame(message);
     }
+
+    return count;
 }
 
 void DocumentBroker::broadcastMessageToOthers(const std::string& message, const std::shared_ptr<ClientSession>& _session) const

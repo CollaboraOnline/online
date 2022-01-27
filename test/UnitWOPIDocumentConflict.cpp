@@ -145,15 +145,21 @@ public:
     {
         LOG_TST("onDocumentError: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
                                         << "(WaitSaveResponse): [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitSaveResponse but was " + toString(_phase),
-                           _phase == Phase::WaitSaveResponse);
 
-        _phase = Phase::WaitDocClose;
-        LOG_TST("onDocumentError: Switching to Phase::WaitDocClose");
+        if (_phase == Phase::WaitSaveResponse)
+        {
+            LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitSaveResponse but was " +
+                                   toString(_phase),
+                               _phase == Phase::WaitSaveResponse);
 
-        // we don't want to save current changes because doing so would
-        // overwrite the document which was changed underneath us
-        WSD_CMD("closedocument");
+            _phase = Phase::WaitDocClose;
+            LOG_TST("onDocumentError: Switching to Phase::WaitDocClose");
+
+            // we don't want to save current changes because doing so would
+            // overwrite the document which was changed underneath us
+            WSD_CMD("closedocument");
+        }
+
         return true;
     }
 

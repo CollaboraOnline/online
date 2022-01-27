@@ -433,8 +433,9 @@ public:
                      bool dontSaveIfUnmodified = true, bool isAutosave = false,
                      bool isExitSave = false, const std::string& extendedData = std::string());
 
-    /// Sends a message to all sessions
-    void broadcastMessage(const std::string& message) const;
+    /// Sends a message to all sessions.
+    /// Returns the number of sessions sent the message to.
+    std::size_t broadcastMessage(const std::string& message) const;
 
     /// Sends a message to all sessions except for the session passed as the param
     void broadcastMessageToOthers(const std::string& message, const std::shared_ptr<ClientSession>& _session) const;
