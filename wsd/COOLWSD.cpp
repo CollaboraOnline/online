@@ -3290,6 +3290,12 @@ private:
                 const std::string docKey = RequestDetails::getDocKey(uriPublic);
 
                 std::string options;
+                if (form.has("options"))
+                {
+                    // Allow specifying options as-is, in case only data + format are used.
+                    options = form.get("options");
+                }
+
                 const bool fullSheetPreview
                     = (form.has("FullSheetPreview") && form.get("FullSheetPreview") == "true");
                 if (fullSheetPreview && format == "pdf" && isSpreadsheet(fromPath))
