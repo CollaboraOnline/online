@@ -925,13 +925,26 @@ namespace Util
         return timestamp;
     }
 
+    /// Returns the given time_point as string in the local time.
+    /// Format: Thu Jan 27 03:45:27.123 2022
     std::string getSteadyClockAsString(const std::chrono::steady_clock::time_point &time)
     {
         auto now = std::chrono::steady_clock::now();
-        const std::time_t t = std::chrono::system_clock::to_time_t(
-            std::chrono::time_point_cast<std::chrono::seconds>(
-                std::chrono::system_clock::now() + (time - now)));
-        return std::ctime(&t);
+        const auto corrected = std::chrono::system_clock::now() + (time - now);
+        const auto ms = std::chrono::time_point_cast<std::chrono::milliseconds>(corrected);
+        const std::time_t t = std::chrono::system_clock::to_time_t(ms);
+        const int msFraction =
+            std::chrono::duration_cast<std::chrono::milliseconds>(corrected.time_since_epoch())
+                .count() %
+            1000;
+
+        std::tm tm;
+        localtime_r(&t, &tm);
+
+        char buffer[128] = { 0 };
+        const size_t offset = std::strftime(buffer, 80, "%a %b %d %H:%M", &tm);
+        sprintf(&buffer[offset], ".%3d %d", msFraction, tm.tm_year + 1900);
+        return std::string(buffer);
     }
 
     bool isFuzzing()
