@@ -2854,6 +2854,8 @@ L.CanvasTileLayer = L.Layer.extend({
 		else {
 			this._textCSelections.clear();
 			this._cellCSelections.clear();
+			if (this._map._clip && this._map._clip._selectionType === 'complex')
+				this._map._clip.clearSelection();
 		}
 
 		this._onUpdateTextSelection();
