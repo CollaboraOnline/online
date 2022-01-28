@@ -1323,11 +1323,11 @@ L.TileLayer = L.GridLayer.extend({
 		// Graphics are by default complex selections, unless Core tells us otherwise.
 		if (this._map._clip)
 			this._map._clip.onComplexSelection('');
-		if (this._selectionContentRequest) {
+
+		// Reset text selection - important for textboxes in Impress
+		if (this._selectionContentRequest)
 			clearTimeout(this._selectionContentRequest);
-		}
-		this._selectionContentRequest = setTimeout(L.bind(function () {
-			app.socket.sendMessage('gettextselection mimetype=text/html');}, this), 100);
+		this._onMessage('textselectioncontent:');
 
 		this._onUpdateGraphicSelection();
 	},
