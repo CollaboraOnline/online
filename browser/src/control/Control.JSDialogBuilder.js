@@ -158,6 +158,18 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			{text: _UNO('.uno:InsertLRM', 'text'), uno: 'InsertLRM'},
 			{text: _UNO('.uno:InsertRLM', 'text'), uno: 'InsertRLM'}
 		];
+		this._menus['LanguageMenu'] = [
+			{name: _UNO('.uno:SetLanguageSelectionMenu', 'text'), type: 'menu', menu: [
+				{name: _('None (Do not check spelling)'), id: 'noneselection', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}]},
+			{name: _UNO('.uno:SetLanguageParagraphMenu', 'text'), type: 'menu', menu: [
+				{name: _('None (Do not check spelling)'), id: 'noneparagraph', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
+			{name: _UNO('.uno:SetLanguageAllTextMenu', 'text'), type: 'menu', menu: [
+				{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
+			{type: 'separator'},
+			{text: _UNO('.uno:Hyphenate', 'text'), uno: 'Hyphenate'},
+			{text: _UNO('.uno:ChineseConversion', 'text'), uno: 'ChineseConversion'},
+			{text: _UNO('.uno:HangulHanjaConversion', 'text'), uno: 'HangulHanjaConversion'}
+		];
 		this._menus['FormatMenu'] = [
 			{text: _UNO('.uno:Bold', 'text'), uno: 'Bold'},
 			{text: _UNO('.uno:Italic', 'text'), uno: 'Italic'},

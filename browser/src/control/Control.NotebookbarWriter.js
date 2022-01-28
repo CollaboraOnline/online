@@ -1418,6 +1418,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:ThesaurusDialog'
 			},
 			{
+				'id': 'LanguageMenu:LanguageMenu',
+				'type': 'menubutton',
+				'text': _UNO('.uno:LanguageMenu'),
+				'command': '.uno:LanguageMenu'
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
