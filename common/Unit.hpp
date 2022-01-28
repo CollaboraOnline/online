@@ -501,26 +501,31 @@ public:
     {                                                                                              \
         __VA_ARGS__                                                                                \
     } VAR;                                                                                         \
-    static const char* toString(NAME e)                                                            \
+    static const char* name(NAME e)                                                                \
     {                                                                                              \
         static const char* const NAME##_names[] = { FOR_EACH(STRINGIFY, NAME, __VA_ARGS__) };      \
         assert(static_cast<unsigned>(e) < sizeof(NAME##_names) / sizeof(NAME##_names[0]) &&        \
                "Enum value is out of range.");                                                     \
         return NAME##_names[static_cast<int>(e)];                                                  \
-    }
+    }                                                                                              \
+    static std::string toString(NAME e) { return name(e); }
 
 /// Transition the test state of VAR to STATE, with a prefix message, and resume the test.
 /// This will wake up all polls and the new state may be processed in parallel.
 #define TRANSITION_STATE_MSG(VAR, STATE, MSG)                                                      \
     do                                                                                             \
     {                                                                                              \
-        LOG_TST(MSG << " " << toString(VAR) << " -> " #STATE);                                     \
+        LOG_TST(MSG << ' ' << name(VAR) << " -> " #STATE);                                         \
         VAR = STATE;                                                                               \
         SocketPoll::wakeupWorld();                                                                 \
     } while (false)
 
 /// Transition the test state of VAR to STATE and resume the test.
 /// This will wake up all polls and the new state may be processed in parallel.
-#define TRANSITION_STATE(VAR, STATE) TRANSITION_STATE_MSG(VAR, STATE, "Transitioning from");
+#define TRANSITION_STATE(VAR, STATE) TRANSITION_STATE_MSG(VAR, STATE, "Transitioning " #VAR " from")
+
+#define LOK_ASSERT_STATE(VAR, STATE)                                                               \
+    LOK_ASSERT_MESSAGE("Expected " #VAR " to be in " #STATE " but was " + toString(VAR),           \
+                       _phase == STATE)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
