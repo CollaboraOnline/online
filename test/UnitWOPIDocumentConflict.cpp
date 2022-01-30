@@ -23,101 +23,111 @@
  * This test asserts that the unsaved changes in the opened document are
  * discarded in case document is changed in storage behind our back. We don't
  * want to overwrite the document which is in storage when the user asks us to
- * do so.
+ * upload to storage, without giving the user the opportunity to decide.
+ *
+ * There are multiple scenarios to test.
  *
  * The way this works is as follows:
  * 1. Load a document.
  * 2. When we get 'status:' in onFilterSendMessage, we modify it.
  * 3. Simulate content-change in storage and attempt to save it.
- * 4. Saving should fail with 'error:' in onFilterSendMessage.
- * 5. Load the document again and verify the storage-chagned contents.
- * 6. Finish when the second load is processed in assertGetFileRequest.
+ *  4a. Disconnect and the modified data must be discarded.
+ *  4b. Save and, on getting the documentconflict error, discard.
+ *  4c. Save and, on getting the documentconflict error, overwrite.
+ * 5. Load the document again and verify the expected contents.
+ * 6. Move to the next test scenario.
  */
 class UnitWOPIDocumentConflict : public WopiTestServer
 {
-    enum class Phase
-    {
-        Load,
-        WaitLoadStatus,
-        ModifyDoc,
-        WaitModifiedStatus,
-        ChangeStorageDoc,
-        WaitSaveResponse,
-        WaitDocClose,
-        LoadNewDocument,
-        Polling
-    } _phase;
+    STATES_ENUM(Phase, _phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose);
+    STATES_ENUM(Scenario, _scenario, Disconnect, SaveDiscard, SaveOverwrite, VerifyOverwrite);
 
-    /// Return the name of the given Phase.
-    static std::string toString(Phase phase)
-    {
-#define ENUM_CASE(X)                                                                               \
-    case X:                                                                                        \
-        return #X
-
-        switch (phase)
-        {
-            ENUM_CASE(Phase::Load);
-            ENUM_CASE(Phase::WaitLoadStatus);
-            ENUM_CASE(Phase::ModifyDoc);
-            ENUM_CASE(Phase::WaitModifiedStatus);
-            ENUM_CASE(Phase::ChangeStorageDoc);
-            ENUM_CASE(Phase::WaitSaveResponse);
-            ENUM_CASE(Phase::WaitDocClose);
-            ENUM_CASE(Phase::LoadNewDocument);
-            ENUM_CASE(Phase::Polling);
-            default:
-                return "Unknown";
-        }
-#undef ENUM_CASE
-    }
-
-    enum class DocLoaded
-    {
-        Doc1,
-        Doc2
-    } _docLoaded;
-
-    static constexpr auto ExpectedDocContent = "Modified content in storage";
+    static constexpr auto OriginalDocContent = "Original contents";
+    static constexpr auto ModifiedOriginalDocContent = "\ufeffaOriginal contents\n";
+    static constexpr auto ConflictingDocContent = "Modified in-storage contents";
 
 public:
     UnitWOPIDocumentConflict()
-        : WopiTestServer("UnitWOPIDocumentConflict")
+        : WopiTestServer("UnitWOPIDocumentConflict", OriginalDocContent)
         , _phase(Phase::Load)
+        , _scenario(Scenario::Disconnect)
     {
     }
 
     void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
-        LOG_TST("assertGetFileRequest: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2"));
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus but was " + toString(_phase),
-                           _phase == Phase::WaitLoadStatus);
+        LOG_TST("Testing " << toString(_scenario));
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
-        if (_docLoaded == DocLoaded::Doc2)
+        // Note: the expected contents for each scenario
+        // is the result of the *previous* phase!
+        std::string expectedContents;
+        switch (_scenario)
         {
-            // On second doc load, we should have the document in storage which
-            // was changed beneath us, not the one which we modified by pressing 'a'
-            LOK_ASSERT_EQUAL_MESSAGE("File contents not modified in storage",
-                                     std::string(ExpectedDocContent), getFileContent());
-            if (getFileContent() != ExpectedDocContent)
-                failTest("The file is stale and not the one in storage.");
-            else
-                passTest("The file reloaded from the storage as expected.");
+            case Scenario::Disconnect:
+                expectedContents = OriginalDocContent;
+                break;
+            case Scenario::SaveDiscard:
+                expectedContents = ConflictingDocContent;
+                break;
+            case Scenario::SaveOverwrite:
+                LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage",
+                                         std::string(ConflictingDocContent), getFileContent());
+                setFileContent(OriginalDocContent); // Reset to test overwriting.
+                expectedContents = OriginalDocContent;
+                break;
+            case Scenario::VerifyOverwrite:
+                expectedContents = ModifiedOriginalDocContent;
+                break;
         }
+
+        LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage", expectedContents,
+                                 getFileContent());
+    }
+
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    {
+        LOG_TST("Testing " << toString(_scenario));
+        LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
+
+        switch (_scenario)
+        {
+            case Scenario::Disconnect:
+            case Scenario::SaveDiscard:
+            case Scenario::VerifyOverwrite:
+                LOK_ASSERT_FAIL("Unexpectedly overwritting the document in storage");
+                break;
+            case Scenario::SaveOverwrite:
+                LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage",
+                                         std::string(ModifiedOriginalDocContent), getFileContent());
+                LOG_TST("Closing the document to verify its contents after reloading");
+                WSD_CMD("closedocument");
+                break;
+        }
+
+        return nullptr;
     }
 
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
-                                         << "(WaitLoadStatus): [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus but was " + toString(_phase),
-                           _phase == Phase::WaitLoadStatus);
+        LOG_TST("Testing " << toString(_scenario) << ": [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
-        if (_docLoaded == DocLoaded::Doc1)
+        if (_scenario != Scenario::VerifyOverwrite)
         {
-            _phase = Phase::ModifyDoc;
-            LOG_TST("onDocumentLoaded: Switching to Phase::ModifyDoc");
-            SocketPoll::wakeupWorld();
+            LOG_TST("Modifying the document");
+            TRANSITION_STATE(_phase, Phase::WaitModifiedStatus);
+
+            // modify the currently opened document; type 'a'
+            WSD_CMD("key type=input char=97 key=0");
+            WSD_CMD("key type=up char=0 key=512");
+        }
+        else
+        {
+            LOG_TST("Closing the document to finish testing");
+            TRANSITION_STATE_MSG(_phase, Phase::WaitDocClose, "Skipping modifications");
+            WSD_CMD("closedocument");
         }
 
         return true;
@@ -125,17 +135,32 @@ public:
 
     bool onDocumentModified(const std::string& message) override
     {
-        LOG_TST("onDocumentModified: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
-                                           << "(WaitModifiedStatus): [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitModifiedStatus but was "
-                               + toString(_phase),
-                           _phase == Phase::WaitModifiedStatus);
+        LOG_TST("Testing " << toString(_scenario) << ": [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitModifiedStatus);
 
-        if (_docLoaded == DocLoaded::Doc1)
+        // Change the underlying document in storage.
+        LOG_TST("Changing document contents in storage");
+        setFileContent(ConflictingDocContent);
+
+        TRANSITION_STATE(_phase, Phase::WaitDocClose);
+
+        switch (_scenario)
         {
-            _phase = Phase::ChangeStorageDoc;
-            LOG_TST("onDocumentModified: Switching to Phase::ChangeStorageDoc");
-            SocketPoll::wakeupWorld();
+            case Scenario::Disconnect:
+                LOG_TST("Disconnecting");
+                deleteSocketAt(0);
+                break;
+            case Scenario::SaveDiscard:
+            case Scenario::SaveOverwrite:
+                // Save the document; wsd should detect now that document has
+                // been changed underneath it and send us:
+                // "error: cmd=storage kind=documentconflict"
+                LOG_TST("Saving the document");
+                WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
+                break;
+            case Scenario::VerifyOverwrite:
+                LOK_ASSERT_FAIL("Unexpected modification in " + toString(_scenario));
+                break;
         }
 
         return true;
@@ -143,52 +168,70 @@ public:
 
     bool onDocumentError(const std::string& message) override
     {
-        LOG_TST("onDocumentError: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
-                                        << "(WaitSaveResponse): [" << message << ']');
+        LOG_TST("Testing " << toString(_scenario) << ": [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
-        if (_phase == Phase::WaitSaveResponse)
+        LOK_ASSERT_MESSAGE("Expect only documentconflict errors",
+                           message == "error: cmd=storage kind=documentconflict");
+
+        switch (_scenario)
         {
-            LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitSaveResponse but was " +
-                                   toString(_phase),
-                               _phase == Phase::WaitSaveResponse);
-
-            _phase = Phase::WaitDocClose;
-            LOG_TST("onDocumentError: Switching to Phase::WaitDocClose");
-
-            // we don't want to save current changes because doing so would
-            // overwrite the document which was changed underneath us
-            WSD_CMD("closedocument");
+            case Scenario::Disconnect:
+                LOK_ASSERT_FAIL("We can't possibly get anything after disconnecting");
+                break;
+            case Scenario::SaveDiscard:
+                LOG_TST("Discarding own changes via closedocument");
+                WSD_CMD("closedocument");
+                break;
+            case Scenario::SaveOverwrite:
+                LOG_TST("Overwriting with own version via savetostorage");
+                WSD_CMD("savetostorage force=1");
+                break;
+            case Scenario::VerifyOverwrite:
+                LOK_ASSERT_FAIL("Unexpected error in " + toString(_scenario));
+                break;
         }
 
         return true;
     }
 
-    bool onFilterSendMessage(const char* data, const std::size_t len, const WSOpCode /* code */,
-                             const bool /* flush */, int& /*unitReturn*/) override
+    // Called when we have modified document data at exit.
+    void fail(const std::string& reason) override
     {
-        const std::string message(data, len);
-        switch (_phase)
+        // We expect this to happen only with the disonnection test,
+        // because only in that case there is no user input.
+        LOK_ASSERT_MESSAGE("Expected reason to be 'Unsaved data detected'",
+                           Util::startsWith(reason, "Unsaved data detected"));
+        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitDocClose but was " + toString(_phase),
+                           _phase == Phase::WaitDocClose);
+        LOK_ASSERT_MESSAGE("Expected to be in Scenario::Disconnect but was " + toString(_scenario),
+                           _scenario == Scenario::Disconnect);
+    }
+
+    // Wait for clean unloading.
+    void onDocBrokerDestroy(const std::string& docKey) override
+    {
+        LOG_TST("Testing " << toString(_scenario) << " with dockey [" << docKey << "] closed.");
+        LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
+
+        switch (_scenario)
         {
-            case Phase::WaitDocClose:
-            {
-                LOG_TST("onFilterSendMessage: Doc " << (_docLoaded == DocLoaded::Doc1 ? "1" : "2")
-                                                  << "(WaitDocClose): [" << message << ']');
-                if (message == "exit")
-                {
-                    _phase = Phase::LoadNewDocument;
-                    LOG_TST("onFilterSendMessage: Switching to Phase::LoadNewDocument");
-                    SocketPoll::wakeupWorld();
-                }
-            }
-            break;
-            default:
-            {
-                // Nothing to do.
-            }
-            break;
+            case Scenario::Disconnect:
+                TRANSITION_STATE(_scenario, Scenario::SaveDiscard);
+                break;
+            case Scenario::SaveDiscard:
+                TRANSITION_STATE(_scenario, Scenario::SaveOverwrite);
+                break;
+            case Scenario::SaveOverwrite:
+                LOG_TST("Will reload to verify we stored our own version");
+                TRANSITION_STATE(_scenario, Scenario::VerifyOverwrite);
+                break;
+            case Scenario::VerifyOverwrite:
+                passTest("Finished all test scenarios without issues");
+                break;
         }
 
-        return false;
+        TRANSITION_STATE(_phase, Phase::Load);
     }
 
     void invokeWSDTest() override
@@ -197,81 +240,24 @@ public:
         {
             case Phase::Load:
             {
-                LOG_TST("Phase::Load");
-                _docLoaded = DocLoaded::Doc1;
-                _phase = Phase::WaitLoadStatus;
+                LOG_TST("Loading the document for " << toString(_scenario));
+
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
                 initWebsocket("/wopi/files/0?access_token=anything");
-
                 WSD_CMD("load url=" + getWopiSrc());
             }
             break;
             case Phase::WaitLoadStatus:
             {
-                // Nothing to do.
-            }
-            break;
-            case Phase::ModifyDoc:
-            {
-                LOG_TST("Phase::ModifyAndChangeStorageDoc");
-                _phase = Phase::WaitModifiedStatus;
-
-                // modify the currently opened document; type 'a'
-                WSD_CMD("key type=input char=97 key=0");
-                WSD_CMD("key type=up char=0 key=512");
-                SocketPoll::wakeupWorld();
             }
             break;
             case Phase::WaitModifiedStatus:
             {
-                // Nothing to do.
             }
             break;
-            case Phase::ChangeStorageDoc:
-            {
-                // Change the document underneath, in storage.
-                LOG_TST("Phase::ChangeStorageDoc: changing contents in storage");
-                _phase = Phase::WaitSaveResponse;
-
-                setFileContent(ExpectedDocContent);
-
-                // Save the document; wsd should detect now that document has
-                // been changed underneath it and send us:
-                // "error: cmd=storage kind=documentconflict"
-                // When we get it (in onFilterSendMessage, above),
-                // we will switch to Phase::LoadNewDocument.
-                LOG_TST("Phase::ChangeStorageDoc: saving");
-                WSD_CMD("save");
-            }
-            break;
-            case Phase::WaitSaveResponse:
             case Phase::WaitDocClose:
             {
-                // Nothing to do.
-            }
-            break;
-            case Phase::LoadNewDocument:
-            {
-                // Now load the document again and, when we hit
-                // assertGetFileRequest, verify that its contents
-                // are the changed-in-storage (and not our modified).
-                // Unfortunately we don't have a way to find out
-                // if the previous document's DocBroker is gone
-                // since sending 'exit' to the kit, so wait a bit.
-                // We could add a call back after cleaning the
-                // DocBroker, but a short wait will do for now.
-                LOG_TST("Phase::LoadNewDocument: Reloading.");
-                _docLoaded = DocLoaded::Doc2; // Update before loading!
-                _phase = Phase::WaitLoadStatus;
-
-                std::this_thread::sleep_for(std::chrono::seconds(1));
-                initWebsocket("/wopi/files/0?access_token=anything");
-            }
-            break;
-            case Phase::Polling:
-            {
-                LOG_TST("Phase::Polling");
-                // just wait for the results
             }
             break;
         }
