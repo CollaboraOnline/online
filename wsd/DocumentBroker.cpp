@@ -2285,9 +2285,6 @@ std::shared_ptr<ClientSession> DocumentBroker::createNewClientSession(
             return nullptr;
         }
 
-        _docState.resetUnloadRequested(); // We can't unload, if it was requested.
-        LOG_TRC("Creating new session. Resetting UnloadRequested flag.");
-
         // Now we have a DocumentBroker and we're ready to process client commands.
         if (ws)
         {
