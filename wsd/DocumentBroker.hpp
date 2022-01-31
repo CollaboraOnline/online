@@ -1071,7 +1071,6 @@ private:
 
         /// Flag to unload the document. May be reset when a new view is opened.
         void setUnloadRequested() { _unloadRequested = true; }
-        void resetUnloadRequested() { _unloadRequested = false; }
         bool isUnloadRequested() const { return _unloadRequested; }
 
     private:
