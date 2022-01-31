@@ -359,7 +359,34 @@ void DocumentBroker::pollThread()
                     // Nothing more to do until the save is complete.
                     continue;
                 }
-                else if (SigUtil::getShutdownRequestFlag() || _docState.isCloseRequested())
+
+#if !MOBILEAPP
+                // Remove idle documents after 1 hour.
+                if (isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs)
+                {
+                    autoSaveAndStop("idle");
+                }
+                else
+#endif
+                if (_sessions.empty() && (isLoaded() || _docState.isMarkedToDestroy()))
+                {
+                    if (!isLoaded())
+                    {
+                        // Nothing to do; no sessions, not loaded, marked to destroy.
+                        stop("dead");
+                    }
+                    else if (_saveManager.isSaving() || isAsyncUploading())
+                    {
+                        LOG_DBG("Don't terminate dead DocumentBroker: async saving in progress for "
+                                "docKey ["
+                                << getDocKey() << "].");
+                        continue;
+                    }
+
+                    autoSaveAndStop("dead");
+                }
+                else if (_docState.isUnloadRequested() || SigUtil::getShutdownRequestFlag() ||
+                         _docState.isCloseRequested())
                 {
                     const std::string reason =
                         SigUtil::getShutdownRequestFlag()
@@ -408,33 +435,7 @@ void DocumentBroker::pollThread()
 
             lastClipboardHashUpdateTime = now;
         }
-
-        // Remove idle documents after 1 hour.
-        if (isLoaded() && getIdleTimeSecs() >= IdleDocTimeoutSecs)
-        {
-            autoSaveAndStop("idle");
-        }
-        else
 #endif
-        if (_sessions.empty() && (isLoaded() || _docState.isMarkedToDestroy()))
-        {
-            if (!isLoaded())
-            {
-                // Nothing to do; no sessions, not loaded, marked to destroy.
-                stop("dead");
-            }
-            else if (_saveManager.isSaving() || isAsyncUploading())
-            {
-                LOG_DBG("Don't terminate dead DocumentBroker: async saving in progress for docKey [" << getDocKey() << "].");
-                continue;
-            }
-
-            autoSaveAndStop("dead");
-        }
-        else if (_docState.isUnloadRequested())
-        {
-            autoSaveAndStop("unloading");
-        }
     }
 
     LOG_INF("Finished polling doc [" << _docKey << "]. stop: " << _stop << ", continuePolling: " <<
