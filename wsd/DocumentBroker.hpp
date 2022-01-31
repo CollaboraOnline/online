@@ -617,7 +617,7 @@ private:
         RequestManager()
             : _lastRequestTime(now())
             , _lastResponseTime(now())
-            , _lastRequestSuccessful(true)
+            , _lastRequestFailureCount(0)
         {
         }
 
@@ -664,12 +664,21 @@ private:
         void setLastRequestResult(bool success)
         {
             markLastResponseTime();
-            _lastRequestSuccessful = success;
+            if (success)
+            {
+                _lastRequestFailureCount = 0;
+            }
+            else
+            {
+                ++_lastRequestFailureCount;
+            }
         }
 
         /// Indicates whether the last request was successful or not.
-        bool lastRequestSuccessful() const { return _lastRequestSuccessful; }
+        bool lastRequestSuccessful() const { return _lastRequestFailureCount == 0; }
 
+        /// Returns the number of failures in the previous requests. 0 for success.
+        std::size_t lastRequestFailureCount() const { return _lastRequestFailureCount; }
 
 
         /// Helper to get the current time.
@@ -688,11 +697,11 @@ private:
         /// The document's last-modified time.
         std::chrono::system_clock::time_point _modifiedTime;
 
-        /// Indicates whether the last request resulted in success.
+        /// Counts the number of previous request that failed.
         /// Note that this is interpretted by the request in question.
         /// For example, Core's Save operation turns 'false' for success
         /// when the file is unmodified, but that is still a successful result.
-        bool _lastRequestSuccessful;
+        std::size_t _lastRequestFailureCount;
     };
 
     /// Responsible for managing document saving.
@@ -748,6 +757,9 @@ private:
 
         /// Returns whether the last save was successful or not.
         bool lastSaveSuccessful() const { return _request.lastRequestSuccessful(); }
+
+        /// Returns the number of previous save failures. 0 for success.
+        std::size_t saveFailureCount() const { return _request.lastRequestFailureCount(); }
 
         /// Sets whether the last save was successful or not.
         void setLastSaveResult(bool success) { _request.setLastRequestResult(success); }
@@ -877,6 +889,9 @@ private:
 
         /// Sets whether the last upload was successful or not.
         void setLastUploadResult(bool success) { _request.setLastRequestResult(success); }
+
+        /// Returns the number of previous upload failures. 0 for success.
+        std::size_t uploadFailureCount() const { return _request.lastRequestFailureCount(); }
 
         /// Get the modified-timestamp of the local file on disk we last uploaded.
         std::chrono::system_clock::time_point getLastUploadedFileModifiedTime() const
