@@ -1068,7 +1068,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'showruler',
 								'type': 'menubartoolitem',
-								'text': _('Show Ruler'),
+								'text': _('Toggle Ruler'),
 								'command': _('Show Ruler')
 							}
 						]
@@ -1079,7 +1079,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							{
 								'id': 'showstatusbar',
 								'type': 'menubartoolitem',
-								'text': _('Show Status Bar'),
+								'text': _('Toggle Status Bar'),
 								'command': _('Show Status Bar')
 							}
 						]
