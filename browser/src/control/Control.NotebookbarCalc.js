@@ -735,9 +735,32 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'vertical': 'true'
 			},
 			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Sidebar'),
-				'command': '.uno:Sidebar'
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'Sidebar',
+								'type': 'toolitem',
+								'text': _UNO('.uno:Sidebar'),
+								'command': '.uno:Sidebar'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'showstatusbar',
+								'type': 'menubartoolitem',
+								'text': _('Toggle Status Bar'),
+								'command': _('Show Status Bar')
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			},
 			{
 				'type': 'container',
