@@ -362,21 +362,10 @@ void DocumentBroker::pollThread()
                 else if (SigUtil::getShutdownRequestFlag() || _docState.isCloseRequested())
                 {
                     const std::string reason =
-                        SigUtil::getShutdownRequestFlag() ? "recycling" : _closeReason;
-                    const bool possiblyModified = isPossiblyModified();
-                    // If we failed the last upload, save even if unmodified so we upload.
-                    const bool dontSaveIfUnmodified = _storageManager.lastUploadSuccessful();
-                    LOG_INF("Autosave before closing DocumentBroker for docKey ["
-                            << getDocKey()
-                            << "], possiblyModified: " << (possiblyModified ? "yes" : "no")
-                            << ", dontSaveIfUnmodified: " << (dontSaveIfUnmodified ? "yes" : "no")
-                            << ", for " << reason);
-                    if (!autoSave(possiblyModified, dontSaveIfUnmodified))
-                    {
-                        LOG_INF("Terminating DocumentBroker for docKey [" << getDocKey()
-                                                                          << "]: " << reason);
-                        stop(reason);
-                    }
+                        SigUtil::getShutdownRequestFlag()
+                            ? "recycling"
+                            : (!_closeReason.empty() ? _closeReason : "unloading");
+                    autoSaveAndStop(reason);
                 }
                 else if (!_stop && _saveManager.needAutosaveCheck())
                 {
