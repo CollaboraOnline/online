@@ -46,6 +46,8 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.on('updatepermission', this.onUpdatePermission, this);
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
 		this.map.on('jsdialogaction', this.onJSAction, this);
+		this.map.on('statusbarchanged', this.onStatusbarChange, this);
+
 
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
 		$('.main-nav').addClass('hasnotebookbar');
@@ -436,6 +438,15 @@ L.Control.Notebookbar = L.Control.extend({
 			defaultTab.click();
 
 		this.lastContext = event.context;
+	},
+
+	onStatusbarChange: function() {
+		if (this._map.uiManager.isStatusBarVisible()) {
+			$('#showstatusbar').removeClass('selected');
+		}
+		else {
+			$('#showstatusbar').addClass('selected');
+		}
 	},
 
 	getOptionsSectionData: function() {
