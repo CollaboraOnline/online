@@ -711,7 +711,7 @@ public:
 #endif
         }
 
-        LOG_DBG("Purging dead sessions, have " << num_sessions << " active sessions.");
+        LOG_TRC("Purging dead sessions, have " << num_sessions << " active sessions.");
 
         // Don't destroy sessions while holding our lock.
         // We may deadlock if a session is waiting on us

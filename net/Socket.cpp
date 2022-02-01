@@ -81,7 +81,7 @@ bool StreamSocket::simulateSocketError(bool read)
 {
     if ((socketErrorCount++ % 7) == 0)
     {
-        LOG_DBG("Simulating socket error during " << (read ? "read." : "write."));
+        LOG_TRC("Simulating socket error during " << (read ? "read." : "write."));
         errno = EAGAIN;
         return true;
     }
@@ -94,7 +94,7 @@ bool SslStreamSocket::simulateSocketError(bool read)
 {
     if ((socketErrorCount++ % 7) == 0)
     {
-        LOG_DBG("Simulating socket error during " << (read ? "read." : "write."));
+        LOG_TRC("Simulating socket error during " << (read ? "read." : "write."));
         // Note: maintain the _sslWantsTo state so we poll on
         // the right event as that requested by the last ssl API.
         errno = EAGAIN;
@@ -215,7 +215,7 @@ SocketPoll::SocketPoll(const std::string& threadName)
 
 SocketPoll::~SocketPoll()
 {
-    LOG_DBG("~SocketPoll [" << _name << "] destroying. Joining thread now.");
+    LOG_TRC("~SocketPoll [" << _name << "] destroying. Joining thread now.");
 
     joinThread();
 
@@ -447,7 +447,8 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
 
         std::vector<int> toErase;
 
-        LOG_DBG("Starting handling poll results of " << _name << " at index " << _pollStartIndex << " (of " << size << ")");
+        LOG_TRC("Starting handling poll results of " << _name << " at index " << _pollStartIndex
+                                                     << " (of " << size << ")");
 
         size_t i = _pollStartIndex;
         size_t previ = size;
@@ -483,8 +484,8 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             std::sort(toErase.begin(), toErase.end(), [](int a, int b) { return a > b; });
             for (int eraseIndex : toErase)
             {
-                LOG_DBG("Removing socket #" << _pollFds[eraseIndex].fd << " (at " << eraseIndex << " of " <<
-                        _pollSockets.size() << ") from " << _name);
+                LOG_TRC("Removing socket #" << _pollFds[eraseIndex].fd << " (at " << eraseIndex
+                                            << " of " << _pollSockets.size() << ") from " << _name);
                 _pollSockets.erase(_pollSockets.begin() + eraseIndex);
             }
         }
@@ -832,7 +833,7 @@ std::shared_ptr<Socket> ServerSocket::accept()
 #else
     const int rc = fakeSocketAccept4(getFD());
 #endif
-    LOG_DBG("Accepted socket #" << rc << ", creating socket object.");
+    LOG_TRC("Accepted socket #" << rc << ", creating socket object.");
     try
     {
         // Create a socket object using the factory.
@@ -858,8 +859,9 @@ std::shared_ptr<Socket> ServerSocket::accept()
             inet_ntop(clientInfo.sin6_family, inAddr, addrstr, sizeof(addrstr));
             _socket->setClientAddress(addrstr);
 
-            LOG_DBG("Accepted socket has family " << clientInfo.sin6_family <<
-                    " address " << _socket->clientAddress());
+            LOG_DBG("Accepted socket #" << _socket->getFD() << " has family "
+                                        << clientInfo.sin6_family << " address "
+                                        << _socket->clientAddress());
 #endif
             return _socket;
         }
