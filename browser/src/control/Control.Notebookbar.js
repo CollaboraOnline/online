@@ -47,6 +47,7 @@ L.Control.Notebookbar = L.Control.extend({
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
 		this.map.on('jsdialogaction', this.onJSAction, this);
 		this.map.on('statusbarchanged', this.onStatusbarChange, this);
+		this.map.on('rulerchanged', this.onRulerChange, this);
 
 
 		$('#toolbar-wrapper').addClass('hasnotebookbar');
@@ -439,6 +440,15 @@ L.Control.Notebookbar = L.Control.extend({
 		}
 		else {
 			$('#showstatusbar').addClass('selected');
+		}
+	},
+
+	onRulerChange: function() {
+		if (this._map.uiManager.isRulerVisible()) {
+			$('#showruler').removeClass('selected');
+		}
+		else {
+			$('#showruler').addClass('selected');
 		}
 	},
 
