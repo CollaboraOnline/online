@@ -12,12 +12,12 @@
 	--gray-color: #b6b6b6;
 	--white-bg-color: #fff;
 
-	--color-main-text: #696969;
-	--color-text-accent: #333333;
-	--color-text-lighter: #636363;
+	--co-color-main-text: #696969;
+	--co-color-primary-text: #333333;
+	--co-color-text-lighter: #636363;
 
-	--color-main-background: #fff;
+	--co-color-main-background: #fff;
 
-	--color-border: #b6b6b6;
-	--border-radius: 4px;
+	--co-color-border: #b6b6b6;
+	--co-border-radius: 4px;
 }

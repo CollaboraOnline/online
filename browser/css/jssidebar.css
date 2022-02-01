@@ -22,12 +22,12 @@
 .sidebar .spinfieldcontainer input {
 	width: 85px;
 	border: 1px solid var(--gray-color);
-	border-radius: var(--border-radius);
+	border-radius: var(--co-border-radius);
 	height: 28px;
 	padding-inline-start: 4px;
 	position: relative;
 	margin-inline-start: 8px;
-	color: var(--color-main-text);
+	color: var(--co-color-main-text);
 }
 
 .sidebar.spinfield {
@@ -43,7 +43,7 @@
 
 .spinfieldunit {
 	font-size: 12px;
-	color: var(--color-main-text);
+	color: var(--co-color-main-text);
 	margin: 5px;
 	position: relative;
 	margin-inline-start: calc(-40px);
@@ -189,7 +189,7 @@ div#box5.row.jsdialog.sidebar > .sidebar.jsdialog.cell {
 }
 
 .sidebar.ui-expander-label {
-	color: var(--color-main-text);
+	color: var(--co-color-main-text);
 	font-size: 11px;
 	line-height: 23px;
 	font-weight: bold;
@@ -252,7 +252,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 	background-color: transparent;
 	border: 2px solid transparent;
 	color: var(--gray-light-txt--color);
-	border-radius: var(--border-radius);
+	border-radius: var(--co-border-radius);
 }
 /* selected */
 .hasnotebookbar .ui-content.unotoolbutton.selected.has-label,
@@ -262,7 +262,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 	background-color: var(--gray-light-bg-color);
 	border: 2px solid transparent;
 	color: var(--gray-light-txt--color);
-	border-radius: var(--border-radius);
+	border-radius: var(--co-border-radius);
 }
 /* selected hover */
 .hasnotebookbar .ui-content.unotoolbutton.selected:hover,
@@ -276,8 +276,8 @@ td.jsdialog .jsdialog.cell.sidebar {
 .sidebar #FormatPaintbrush:hover,
 #table-textorientbox.sidebar .jsdialog .radiobutton:hover {
 	outline: 1px solid var(--gray-light-txt--color);
-	color: var(--color-text-accent);
-	border-radius: var(--border-radius);
+	color: var(--co-color-primary-text);
+	border-radius: var(--co-border-radius);
 }
 
 .sidebar #font select,

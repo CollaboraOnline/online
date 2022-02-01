@@ -128,22 +128,22 @@
 
 .lo-menu a, .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
 	padding: 5px 22px;
-	color: var(--color-main-text);
+	color: var(--co-color-main-text);
 }
 .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
 	background: #0b87e7;
-	color: var(--color-text-accent);
+	color: var(--co-color-primary-text);
 }
 .lo-menu > li, .lo-menu > li > .disabled {
 	background: transparent; /* top-level menus remain greyish */
 	border-left-color: transparent;
 }
 .lo-menu > li .disabled {
-	color: var(--color-text-lighter);
+	color: var(--co-color-text-lighter);
 }
 .lo-menu > li > a:hover, .lo-menu > li > a:focus, .lo-menu > li > a:active, .lo-menu > li > a.highlighted {
 	background: #fff;
-	color: var(--color-text-accent);
+	color: var(--co-color-primary-text);
 	border-color: #bbbbbb;
 	border-bottom: 1px solid #bbb;
 }
@@ -307,14 +307,14 @@
 }
 
 #menu-last-mod a {
-	color: var(--color-text-lighter);
+	color: var(--co-color-text-lighter);
 	padding: 8px 15px 7px;
 	z-index: 400;
 	border: 1px solid transparent;
 }
 
 #menu-last-mod a:hover {
-	color: var(--color-text-accent);
+	color: var(--co-color-primary-text);
 }
 
 /* For classic mode */
