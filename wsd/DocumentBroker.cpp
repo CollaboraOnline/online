@@ -2088,7 +2088,6 @@ std::size_t DocumentBroker::removeSession(const std::string& id)
         std::shared_ptr<ClientSession> session = it->second;
 
         const std::size_t activeSessionCount = countActiveSessions();
-        const bool isLastSession = (activeSessionCount == 1);
 
         const bool lastEditableSession = (!session->isReadOnly() || session->isAllowChangeComments()) && !haveAnotherEditableSession(id);
         static const bool dontSaveIfUnmodified = !COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
@@ -2130,7 +2129,7 @@ std::size_t DocumentBroker::removeSession(const std::string& id)
             disconnectSessionInternal(id);
 
         // Last view going away; can destroy?
-        if (isLastSession)
+        if (activeSessionCount <= 1)
         {
             if (_saveManager.isSaving() || isAsyncUploading())
             {
@@ -2138,7 +2137,7 @@ std::size_t DocumentBroker::removeSession(const std::string& id)
                 // Notice that the save and/or upload could have been triggered
                 // earlier, and not necessarily here when removing this last session.
                 _docState.setUnloadRequested();
-                LOG_DBG("Removing last session and will unload after saving. Setting "
+                LOG_DBG("Removing last session and will unload after saving and uploading. Setting "
                         "UnloadRequested flag.");
             }
             else if (_sessions.empty())
@@ -2148,8 +2147,11 @@ std::size_t DocumentBroker::removeSession(const std::string& id)
                 LOG_DBG("No more sessions after removing last. Setting MarkToDestroy flag.");
             }
         }
-        else
-            assert(!_docState.isMarkedToDestroy());
+        else if (activeSessionCount > 0)
+        {
+            assert(!_docState.isMarkedToDestroy() &&
+                   "Have active sessions while marked to destroy.");
+        }
     }
     catch (const std::exception& ex)
     {
