@@ -1832,7 +1832,7 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 
 void DocumentBroker::autoSaveAndStop(const std::string& reason)
 {
-    LOG_TRC("autoSaveAndStop for docKey [" << getDocKey() << ']');
+    LOG_TRC("autoSaveAndStop for docKey [" << getDocKey() << "]: " << reason);
 
     if (_saveManager.isSaving() || isAsyncUploading())
     {
@@ -1851,6 +1851,22 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
             _saveManager.lastSaveRequestTime() < _saveManager.lastSaveResponseTime() &&
             _saveManager.lastSaveSuccessful())
         {
+            // We can stop, but the modified flag is set. Delayed ModifiedStatus?
+            if (isModified())
+            {
+                if (_saveManager.timeSinceLastSaveResponse() < std::chrono::seconds(2))
+                {
+                    LOG_INF("Can stop " << reason << " DocumentBroker for docKey [" << getDocKey()
+                                        << "] but will wait for isModified to clear.");
+                    return;
+                }
+                else
+                {
+                    LOG_WRN("Will stop " << reason << " DocumentBroker for docKey [" << getDocKey()
+                                         << "] even with isModified, which is not clearing.");
+                }
+            }
+
             // Nothing to upload and last save was successful; stop.
             canStop = true;
             LOG_TRC("autoSaveAndStop for docKey ["
