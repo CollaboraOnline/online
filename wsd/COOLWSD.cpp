@@ -117,6 +117,7 @@ using Poco::Net::PartHandler;
 #include "DocumentBroker.hpp"
 #include "Exceptions.hpp"
 #include "FileServer.hpp"
+#include <common/JsonUtil.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JailUtil.hpp>
 #if defined KIT_IN_PROCESS || MOBILEAPP
@@ -169,6 +170,7 @@ using Poco::StreamCopier;
 using Poco::URI;
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
+using Poco::Util::LayeredConfiguration;
 using Poco::Util::MissingOptionException;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
@@ -1003,6 +1005,78 @@ COOLWSD::~COOLWSD()
 {
 }
 
+void COOLWSD::fetchRemoteConfig(LayeredConfiguration& conf)
+{
+    std::string body;
+    std::string remoteServerURI = "https://localhost/"; // FIXME get this from config.
+
+    std::cerr << "Fetch remote config !\n";
+    if (!getenv("FETCH_CONFIG"))
+    {
+        std::cerr << "set FETCH_CONFIG=true to test remote config fetching\n";
+        return; // FIXME: for now - breaks tests & compile
+    }
+
+    if (remoteServerURI.empty())
+    {
+        return; // no remote config server setup.
+    }
+
+    // FIXME: a Unit -test hook here to allow straight injection of JSON:
+    // if (!UnitWSD::get().filterFetchRemoteConfig(&body))
+    // { ... do the fetch below ... }
+    // else - allow the unit top push json straight into body etc.
+
+    // FIXME: retry until we have valid config:
+    try
+    {
+        // Must be https for secure config fetching.
+        std::shared_ptr<http::Session> httpSession = http::Session::create(
+            "json.org", http::Session::Protocol::HttpSsl, 443);
+
+        // FIXME: dont' hard-code json.org ;-> use remoteServerURI ;-)
+
+        // FIXME: re-factor and share some of this with Storage.cpp's WOPI session code.
+        static int timeoutSec = COOLWSD::getConfigValue<int>("net.connection_timeout_secs", 30);
+        httpSession->setTimeout(std::chrono::seconds(timeoutSec));
+
+        http::Request request("example.html");
+        request.set("User-Agent", WOPI_AGENT_STRING);
+        // FIXME: other headers ? ...
+
+        // FIXME: check that we are validating & checking certificates here in our fetch.
+        const std::shared_ptr<const http::Response> httpResponse
+            = httpSession->syncRequest(request);
+
+        // FIXME: check for errors:
+        // if (httpResponse->statusLine().statusCode() == Poco::Net::HTTPResponse::HTTP_FOUND  ... etc.
+
+        // ignore re-direction ...
+        body = httpResponse->getBody();
+        std::cerr << "Fetched body " << body << "\n";
+
+        const bool failed
+            = (httpResponse->statusLine().statusCode() != Poco::Net::HTTPResponse::HTTP_OK);
+        // FIXME: logging
+        if (!failed) {
+            Poco::JSON::Object::Ptr object;
+            if (JsonUtil::parseJSON(body, object))
+            {
+                std::string text;
+                JsonUtil::findJSONValue(object, "Attr", text);
+                // FIXME: prolly we want to create a new poco config layer and
+                // stack it over the top.
+                conf.setString("Foo", text);
+            }
+            // else
+                // FIXME: badly formed, log & retry ...
+        }
+    } catch (const BadRequestException& exc) {
+        std::cerr << "BadRequestException " << exc.what() << "\n";
+        // FIXME: log and/or retry ...
+    }
+}
+
 void COOLWSD::innerInitialize(Application& self)
 {
 #if !MOBILEAPP
@@ -1021,7 +1095,7 @@ void COOLWSD::innerInitialize(Application& self)
 
     StartTime = std::chrono::steady_clock::now();
 
-    auto& conf = config();
+    LayeredConfiguration& conf = config();
 
     // Add default values of new entries here, so there is a sensible default in case
     // the setting is missing from the config file. It is possible that users do not
@@ -1184,6 +1258,10 @@ void COOLWSD::innerInitialize(Application& self)
 
     // Allow UT to manipulate before using configuration values.
     UnitWSD::get().configure(config());
+
+    // FIXME: much of this should be pulled out into an 'applyConfig' function
+    // that turns these config() things into these nicer app-level variables
+    // so it can be called when we get SIGHUP and/or updated remote config.
 
     // Setup user interface mode
     UserInterface = getConfigValue<std::string>(conf, "user_interface.mode", "default");
@@ -4203,6 +4281,9 @@ int COOLWSD::innerMain()
 #endif
 
     initializeSSL();
+
+    // Fetch remote settings from server if configured
+    fetchRemoteConfig(config());
 
 #ifndef IOS
     // We can open files with non-ASCII names just fine on iOS without this, and this code is

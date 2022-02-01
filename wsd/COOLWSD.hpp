@@ -493,6 +493,9 @@ private:
     /// The actual main implementation.
     int innerMain();
 
+    /// read config from remote server if neccessary
+    void fetchRemoteConfig(Poco::Util::LayeredConfiguration& conf);
+
     class ConfigValueGetter
     {
         Poco::Util::LayeredConfiguration& _config;
