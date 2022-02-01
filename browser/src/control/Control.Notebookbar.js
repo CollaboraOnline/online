@@ -253,15 +253,8 @@ L.Control.Notebookbar = L.Control.extend({
 						'type': 'toolitem',
 						'text': _('Save'),
 						'command': '.uno:Save'
-					},
-				].concat(window.ThisIsAMobileApp ? [] : [
-					{
-						'id': 'fullscreen',
-						'type': 'toolitem',
-						'text': _UNO('.uno:FullScreen'),
-						'command': '.uno:FullScreen'
-					},
-				])
+					}
+				]
 			}
 		];
 	},
