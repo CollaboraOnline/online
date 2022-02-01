@@ -279,11 +279,15 @@ namespace FileUtil
                 nftw(path.c_str(), nftw_cb, 128, FTW_DEPTH | FTW_PHYS);
             }
         }
-        catch (const std::exception&e)
+        catch (const std::exception& e)
         {
-            // Already removed or we don't care about failures.
-            LOG_ERR("Failed to remove [" << path << "] " << (recursive ? "recursively: " : "only: ")
-                                         << e.what());
+            // Don't complain if already non-existant.
+            if (FileUtil::Stat(path).exists())
+            {
+                // Error only if it still exists.
+                LOG_ERR("Failed to remove ["
+                        << path << "] " << (recursive ? "recursively: " : "only: ") << e.what());
+            }
         }
 #endif
     }

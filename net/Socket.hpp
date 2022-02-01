@@ -928,7 +928,7 @@ public:
         _readType(readType),
         _inputProcessingEnabled(true)
     {
-        LOG_DBG("StreamSocket ctor #" << fd);
+        LOG_TRC("StreamSocket ctor #" << fd);
 
         // Without a handler we make no sense object.
         if (!_socketHandler)
@@ -937,7 +937,7 @@ public:
 
     ~StreamSocket()
     {
-        LOG_DBG("StreamSocket dtor #" << getFD() << " with pending "
+        LOG_TRC("StreamSocket dtor #" << getFD() << " with pending "
                 "write: " << _outBuffer.size() << ", read: " << _inBuffer.size());
 
         if (!_closed)
