@@ -7,6 +7,7 @@
 
 #include <config.h>
 
+#include "lokassert.hpp"
 #include <WopiTestServer.hpp>
 #include <Log.hpp>
 #include <Unit.hpp>
@@ -17,7 +18,7 @@
 
 class UnitWopiLock : public WopiTestServer
 {
-    STATES_ENUM(Phase, _phase, Load, LockDocument, UnlockDocument, Polling);
+    STATES_ENUM(Phase, _phase, Load, LockDocument, UnlockDocument, Done);
 
     std::string _lockState;
     std::string _lockString;
@@ -102,24 +103,33 @@ public:
 
     void assertLockRequest(const Poco::Net::HTTPRequest& request)
     {
-        LOG_TST("assertLockRequest: " << request.getURI());
+        const std::string lock = request.get("X-WOPI-Lock", std::string());
+        const std::string newLockState = request.get("X-WOPI-Override", std::string());
+        LOG_TST("In " << toString(_phase) << ", X-WOPI-Lock: " << lock << ", X-WOPI-Override: "
+                      << newLockState << ", for URI: " << request.getURI());
 
-        std::string newLockState = request.get("X-WOPI-Override", std::string());
-        std::string lock = request.get("X-WOPI-Lock", std::string());
-        if (_phase == Phase::LockDocument && newLockState == "LOCK")
+        if (_phase == Phase::LockDocument)
         {
+            LOK_ASSERT_EQUAL_MESSAGE("Expected X-WOPI-Override:LOCK", std::string("LOCK"),
+                                     newLockState);
             LOK_ASSERT_MESSAGE("Lock String cannot be empty", !lock.empty());
             TRANSITION_STATE(_phase, Phase::UnlockDocument);
             _lockState = newLockState;
             _lockString = lock;
 
         }
-        else if (_phase == Phase::UnlockDocument && newLockState == "UNLOCK")
+        else if (_phase == Phase::UnlockDocument)
         {
+            LOK_ASSERT_EQUAL_MESSAGE("Expected X-WOPI-Override:UNLOCK", std::string("UNLOCK"),
+                                     newLockState);
             LOK_ASSERT_MESSAGE("Document is not unlocked", _lockState != "UNLOCK");
             LOK_ASSERT_EQUAL(_lockString, lock);
-            TRANSITION_STATE(_phase, Phase::Polling);
+            TRANSITION_STATE(_phase, Phase::Done);
             exitTest(TestResult::Ok);
+        }
+        else
+        {
+            LOK_ASSERT_FAIL("Unexpected lock-state change while in " + toString(_phase));
         }
     }
 
@@ -131,6 +141,9 @@ public:
         {
             case Phase::Load:
             {
+                // Always transition before issuing commands.
+                TRANSITION_STATE(_phase, Phase::LockDocument);
+
                 LOG_TST("Creating first connection");
                 initWebsocket("/wopi/files/0?access_token=anything");
                 LOG_TST("Creating second connection");
@@ -139,7 +152,6 @@ public:
                 helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
                 LOG_TST("Loading second view (viewer)");
                 helpers::sendTextFrame(*getWsAt(1)->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
-                TRANSITION_STATE(_phase, Phase::LockDocument);
                 break;
             }
             case Phase::LockDocument:
@@ -151,7 +163,7 @@ public:
                 deleteSocketAt(0);
                 break;
             }
-            case Phase::Polling:
+            case Phase::Done:
             {
                 // just wait for the results
                 break;
