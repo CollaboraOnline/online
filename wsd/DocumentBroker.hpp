@@ -328,7 +328,7 @@ public:
     /// Saves the document and stops if there was nothing to autosave.
     void autoSaveAndStop(const std::string& reason);
 
-    bool isAsyncSaveInProgress() const;
+    bool isAsyncUploading() const;
 
     Poco::URI getPublicUri() const { return _uriPublic; }
     const std::string& getJailId() const { return _jailId; }

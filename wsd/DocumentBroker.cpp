@@ -434,7 +434,7 @@ void DocumentBroker::pollThread()
                 // Nothing to do; no sessions, not loaded, marked to destroy.
                 stop("dead");
             }
-            else if (_saveManager.isSaving() || isAsyncSaveInProgress())
+            else if (_saveManager.isSaving() || isAsyncUploading())
             {
                 LOG_DBG("Don't terminate dead DocumentBroker: async saving in progress for docKey [" << getDocKey() << "].");
                 continue;
@@ -1830,7 +1830,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
 {
     LOG_TRC("autoSaveAndStop for docKey [" << getDocKey() << ']');
 
-    if (_saveManager.isSaving() || isAsyncSaveInProgress())
+    if (_saveManager.isSaving() || isAsyncUploading())
     {
         LOG_TRC("Async saving/uploading in progress for docKey [" << getDocKey() << ']');
         return;
@@ -1876,7 +1876,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
                 constexpr bool success = true;
                 std::string result;
                 checkAndUploadToStorage(sessionId, success, result);
-                if (isAsyncSaveInProgress())
+                if (isAsyncUploading())
                 {
                     LOG_DBG("Uploading document before stopping.");
                     return;
@@ -2109,7 +2109,7 @@ std::size_t DocumentBroker::removeSession(const std::string& id)
         // Last view going away; can destroy?
         if (isLastSession)
         {
-            if (_saveManager.isSaving() || isAsyncSaveInProgress())
+            if (_saveManager.isSaving() || isAsyncUploading())
             {
                 // Don't destroy just yet, wait until save and upload are done.
                 // Notice that the save and/or upload could have been triggered
@@ -3406,7 +3406,7 @@ void DocumentBroker::dumpState(std::ostream& os)
 #endif
 }
 
-bool DocumentBroker::isAsyncSaveInProgress() const
+bool DocumentBroker::isAsyncUploading() const
 {
     if (!_storage)
         return false;
