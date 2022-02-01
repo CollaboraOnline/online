@@ -57,6 +57,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork'
 			},
 			{
+				'text': _('~View'),
+				'id': 'View',
+				'name': 'View',
+			},
+			{
 				'text': _('~Help'),
 				'id': '-2',
 				'name': 'Help',
@@ -76,6 +81,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				this.getFormatTab(),
 				this.getTableTab(),
 				this.getDrawTab(),
+				this.getViewTab(),
 				this.getHelpTab()
 			], selectedId);
 	},
@@ -903,6 +909,87 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		return this.getTabPage('Insert', content);
 	},
 
+	getViewTab: function() {
+		var content = [
+			{
+				'id': 'fullscreen',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FullScreen'),
+				'command': '.uno:FullScreen'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'showruler',
+								'type': 'menubartoolitem',
+								'text': _('Toggle Ruler'),
+								'command': _('Show Ruler')
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'showstatusbar',
+								'type': 'menubartoolitem',
+								'text': _('Toggle Status Bar'),
+								'command': _('Show Status Bar')
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'id': 'zoomreset',
+				'type': 'menubartoolitem',
+				'text': _('Reset zoom'),
+				'command': _('Reset zoom')
+
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoomout',
+								'type': 'menubartoolitem',
+								'text': _UNO('.uno:ZoomMinus'),
+								'command': '.uno:ZoomMinus'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoomin',
+								'type': 'menubartoolitem',
+								'text': _UNO('.uno:ZoomPlus'),
+								'command': '.uno:ZoomPlus'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Sidebar'),
+				'command': '.uno:Sidebar'
+			}
+		];
+
+		return this.getTabPage('View', content);
+	},
+
 	getLayoutTab: function() {
 		var content = [
 			{
@@ -997,95 +1084,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ControlCodes', 'text'),
 				'command': '.uno:ControlCodes'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'fullscreen',
-								'type': 'menubartoolitem',
-								'text': _UNO('.uno:FullScreen'),
-								'command': '.uno:FullScreen'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'zoomreset',
-								'type': 'menubartoolitem',
-								'text': _('Reset zoom'),
-								'command': _('Reset zoom')
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'zoomout',
-								'type': 'menubartoolitem',
-								'text': _UNO('.uno:ZoomMinus'),
-								'command': '.uno:ZoomMinus'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'zoomin',
-								'type': 'menubartoolitem',
-								'text': _UNO('.uno:ZoomPlus'),
-								'command': '.uno:ZoomPlus'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:Sidebar'),
-				'command': '.uno:Sidebar'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'showruler',
-								'type': 'menubartoolitem',
-								'text': _('Toggle Ruler'),
-								'command': _('Show Ruler')
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'showstatusbar',
-								'type': 'menubartoolitem',
-								'text': _('Toggle Status Bar'),
-								'command': _('Show Status Bar')
-							}
-						]
-					}
-				],
-				'vertical': 'true'
 			},
 			{
 				'type': 'bigtoolitem',
