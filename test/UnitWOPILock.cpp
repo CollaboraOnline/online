@@ -35,12 +35,12 @@ public:
         Poco::URI uriReq(request.getURI());
         Poco::RegularExpression regInfo("/wopi/files/[0-9]");
         Poco::RegularExpression regContent("/wopi/files/[0-9]/contents");
-        LOG_INF("Fake wopi host request: " << request.getMethod() << ' ' << uriReq.toString());
+        LOG_TST("Fake wopi host request: " << request.getMethod() << ' ' << uriReq.toString());
 
         // CheckFileInfo
         if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
         {
-            LOG_INF("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
+            LOG_TST("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
             static int requestCount = 0;
 
             const std::string fileName(uriReq.getPath() == "/wopi/files/3" ? "he%llo.txt" : "hello.txt");
@@ -61,21 +61,12 @@ public:
 
             std::ostringstream jsonStream;
             fileInfo->stringify(jsonStream);
-            std::string responseString = jsonStream.str();
 
-            const std::string mimeType = "application/json; charset=utf-8";
+            http::Response httpResponse(http::StatusLine(200));
+            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
+            httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
+            socket->sendAndShutdown(httpResponse);
 
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-                "Last-Modified: " << Util::getHttpTime(getFileLastModifiedTime()) << "\r\n"
-                "User-Agent: " WOPI_AGENT_STRING "\r\n"
-                "Content-Length: " << responseString.size() << "\r\n"
-                "Content-Type: " << mimeType << "\r\n"
-                "\r\n"
-                << responseString;
-
-            socket->send(oss.str());
-            socket->shutdown();
             requestCount++;
 
             return true;
@@ -83,42 +74,26 @@ public:
         // GetFile
         else if (request.getMethod() == "GET" && regContent.match(uriReq.getPath()))
         {
-            LOG_INF("Fake wopi host request, handling GetFile: " << uriReq.getPath());
+            LOG_TST("Fake wopi host request, handling GetFile: " << uriReq.getPath());
 
-            const std::string mimeType = "text/plain; charset=utf-8";
-
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-                "Last-Modified: " << Util::getHttpTime(getFileLastModifiedTime()) << "\r\n"
-                "User-Agent: " WOPI_AGENT_STRING "\r\n"
-                "Content-Length: " << getFileContent().size() << "\r\n"
-                "Content-Type: " << mimeType << "\r\n"
-                "\r\n"
-                << getFileContent();
-
-            socket->send(oss.str());
-            socket->shutdown();
+            http::Response httpResponse(http::StatusLine(200));
+            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
+            httpResponse.setBody(getFileContent(), "text/plain; charset=utf-8");
+            socket->sendAndShutdown(httpResponse);
 
             return true;
         }
         // X-WOPI-Lock
         else if (request.getMethod() == "POST" && regInfo.match(uriReq.getPath()))
         {
-            LOG_INF("Fake wopi host request, handling Update Lock State: " << uriReq.getPath());
+            LOG_TST("Fake wopi host request, handling Update Lock State: " << uriReq.getPath());
 
             assertLockRequest(request);
 
-            const std::string mimeType = "text/html";
-            std::ostringstream oss;
-            oss << "HTTP/1.1 200 OK\r\n"
-                "Last-Modified: " << Util::getHttpTime(getFileLastModifiedTime()) << "\r\n"
-                "User-Agent: " WOPI_AGENT_STRING "\r\n"
-                "Content-Length: 0 \r\n"
-                "Content-Type: " << mimeType << "\r\n"
-                "\r\n";
+            http::Response httpResponse(http::StatusLine(200));
+            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
+            socket->sendAndShutdown(httpResponse);
 
-            socket->send(oss.str());
-            socket->shutdown();
             return true;
         }
 
@@ -133,7 +108,7 @@ public:
         std::string lock = request.get("X-WOPI-Lock", std::string());
         if (_phase == Phase::LockDocument && newLockState == "LOCK")
         {
-            LOK_ASSERT_MESSAGE("Lock String cannot be empty", lock != std::string());
+            LOK_ASSERT_MESSAGE("Lock String cannot be empty", !lock.empty());
             TRANSITION_STATE(_phase, Phase::UnlockDocument);
             _lockState = newLockState;
             _lockString = lock;
@@ -141,7 +116,7 @@ public:
         }
         else if (_phase == Phase::UnlockDocument && newLockState == "UNLOCK")
         {
-            LOK_ASSERT_MESSAGE("Document it not locked", _lockState != "UNLOCK");
+            LOK_ASSERT_MESSAGE("Document is not unlocked", _lockState != "UNLOCK");
             LOK_ASSERT_EQUAL(_lockString, lock);
             TRANSITION_STATE(_phase, Phase::Polling);
             exitTest(TestResult::Ok);
@@ -156,9 +131,13 @@ public:
         {
             case Phase::Load:
             {
+                LOG_TST("Creating first connection");
                 initWebsocket("/wopi/files/0?access_token=anything");
+                LOG_TST("Creating second connection");
                 addWebSocket();
+                LOG_TST("Loading first view (editor)");
                 helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
+                LOG_TST("Loading second view (viewer)");
                 helpers::sendTextFrame(*getWsAt(1)->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
                 TRANSITION_STATE(_phase, Phase::LockDocument);
                 break;
@@ -168,6 +147,7 @@ public:
             case Phase::UnlockDocument:
             {
                 // force kill the session with edit permission
+                LOG_TST("Disconnecting first connection with edit permission");
                 deleteSocketAt(0);
                 break;
             }
