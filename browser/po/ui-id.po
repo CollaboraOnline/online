@@ -12,16 +12,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-17 21:33+0100\n"
-"PO-Revision-Date: 2021-11-20 21:17+0000\n"
+"PO-Revision-Date: 2022-01-19 21:36+0000\n"
 "Last-Translator: Rizal Muttaqin <riz_17_oke@yahoo.co.id>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
-"Language: \n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.9.1\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -344,7 +344,7 @@ msgstr " d"
 
 #: js/w2ui-1.5.rc1.js:2920
 msgid "Recent"
-msgstr ""
+msgstr "Terkini"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
@@ -380,7 +380,7 @@ msgstr "Tempel Khusus"
 
 #: src/control/Control.DocumentNameInput.js:82
 msgid "Path"
-msgstr ""
+msgstr "Jalur"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -640,7 +640,7 @@ msgstr "Perbaiki"
 #: src/control/Control.NotebookbarWriter.js:1005
 #: src/control/Control.StatusBar.js:188
 msgid "Reset zoom"
-msgstr "Reset zum"
+msgstr "Atur ulang zum"
 
 #: src/control/Control.Menubar.js:112
 #: src/control/Control.NotebookbarBuilder.js:801
@@ -675,7 +675,7 @@ msgstr "Orientasi Teks"
 #: src/control/Control.Menubar.js:301
 #: src/control/Control.NotebookbarWriter.js:217
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
 
 #: src/control/Control.Menubar.js:302 src/control/Control.Menubar.js:431
 #: src/control/Control.Menubar.js:542 src/control/Control.Menubar.js:755
@@ -788,7 +788,7 @@ msgstr "Pengaturan Halaman"
 
 #: src/control/Control.Menubar.js:1183 src/control/Control.StatusBar.js:513
 msgid "Reset to Default Language"
-msgstr "Kembalikan ke Bahasa Bawaan"
+msgstr "Atur Ulang ke Bahasa Baku"
 
 #: src/control/Control.Menubar.js:1552
 msgid "Insert Shape"
@@ -1005,7 +1005,7 @@ msgstr "Teks"
 
 #: src/control/Control.NotebookbarCalc.js:558
 msgid "Default"
-msgstr "Bawaan"
+msgstr "Baku"
 
 #: src/control/Control.NotebookbarCalc.js:563
 msgid "Heading 1"
@@ -1054,7 +1054,7 @@ msgstr "Hapus Kolom"
 #: src/control/Control.NotebookbarDraw.js:63
 #: src/control/Control.NotebookbarDraw.js:666
 msgid "Page layout"
-msgstr ""
+msgstr "Tata letak halaman"
 
 #: src/control/Control.NotebookbarDraw.js:110
 #: src/control/Control.NotebookbarImpress.js:122
@@ -1076,11 +1076,11 @@ msgstr "Presentasi ODF (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:643
 msgid "Presentation"
-msgstr ""
+msgstr "Presentasi"
 
 #: src/control/Control.NotebookbarImpress.js:980
 msgid "Reset Zoom"
-msgstr "Reset zum"
+msgstr "Atur ulang zum"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
@@ -1097,7 +1097,7 @@ msgstr "Dokumen EPUB (.epub)"
 #: src/control/Control.NotebookbarWriter.js:542
 #: src/control/Control.TopToolbar.js:101
 msgid "Default Style"
-msgstr "Gaya Bawaan"
+msgstr "Gaya Baku"
 
 #: src/control/Control.NotebookbarWriter.js:546
 msgid "Text Body"
@@ -1249,7 +1249,7 @@ msgstr "Pindahkan Sheet ke Kanan"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Salin Lembar..."
 
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
@@ -1356,7 +1356,7 @@ msgstr "Lanjutkan pengeditan"
 
 #: src/control/Permission.js:167
 msgid "Continue read only"
-msgstr ""
+msgstr "Lanjutkan hanya baca"
 
 #: src/control/Permission.js:170
 msgid ""
@@ -1546,11 +1546,11 @@ msgstr "Singkirkan"
 #: src/control/Toolbar.js:606
 #, javascript-format
 msgid "Explore the new %coolVersion"
-msgstr ""
+msgstr "Jelajahi %coolVersion baru"
 
 #: src/control/Toolbar.js:607 src/control/Toolbar.js:611
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online Edisi Pengembangan"
 
 #: src/control/Toolbar.js:608
 #, javascript-format
@@ -1561,10 +1561,15 @@ msgid ""
 "%coolVersion introduces important improvements, in the areas of usability, "
 "visual presentation and performance."
 msgstr ""
+"Nikmati perkembangan terbaru dalam produktivitas daring, gratis untuk "
+"digunakan, dijelajahi, dan digunakan dengan orang lain di peramban. <a href="
+"\"%coolAppsURL\" target=\"_blank\">Aplikasi</a> juga tersedia untuk Android "
+"dan iOS. %coolVersion memperkenalkan peningkatan penting, di bidang "
+"kegunaan, presentasi visual, dan kinerja."
 
 #: src/control/Toolbar.js:610
 msgid "Discover all the changes"
-msgstr ""
+msgstr "Temukan semua perubahan"
 
 #: src/control/Toolbar.js:612
 #, javascript-format
@@ -1574,14 +1579,19 @@ msgid ""
 "larger groups working on documents, new native sidebar, new re-worked avatar "
 "list, asynchronous saving, faster spell checking and more."
 msgstr ""
+"Periksa <a href=\"%coolReleaseNotesURL\" target=\"_blank\">catatan rilis</a> "
+"dan pelajari semua tentang pencapaian terbaru dalam kinerja terutama untuk "
+"grup yang lebih besar untuk pengerjaan dokumen, bilah sisi asli baru, "
+"senarai avatar baru yang dikerjakan ulang, penyimpanan asinkron, pemeriksaan "
+"ejaan yang lebih cepat, dan banyak lagi."
 
 #: src/control/Toolbar.js:614
 msgid "Integrate Collabora Online into your webapp"
-msgstr ""
+msgstr "Integrasikan Collabora Online ke aplikasi web Anda"
 
 #: src/control/Toolbar.js:615
 msgid "Or get involved in the development"
-msgstr ""
+msgstr "Atau terlibat dalam pengembangan"
 
 #: src/control/Toolbar.js:616
 #, javascript-format
@@ -1594,6 +1604,13 @@ msgid ""
 "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
 "all the essential steps on how to reproduce it."
 msgstr ""
+"Pelajari lebih lanjut tentang mengintegrasikan ke dalam aplikasi web Anda di "
+"<a href=\"%coolSdkURL\" target=\"_blank\">SDK Collabora Online</a>. Atau "
+"buka <a href=\"%coolStepByStepURL\" target=\"_blank\">petunjuk langkah demi "
+"langkah</a> dan build CODE dari awal. Anda juga dapat membantu dengan <a "
+"href=\"%coolTranslationsURL\" target=\"_blank\">terjemahan</a> atau dengan "
+"<a href=\"%coolBugreportURL\" target=\"_blank\">mengajukan laporan kutu</a> "
+"dengan semua langkah penting tentang cara mereproduksinya."
 
 #: src/control/Toolbar.js:618 src/control/Toolbar.js:619
 #, fuzzy
@@ -1602,7 +1619,7 @@ msgstr "Teks"
 
 #: src/control/Toolbar.js:622
 msgid "Learn more about the enterprise-ready versions"
-msgstr ""
+msgstr "Pelajari lebih lanjut tentang versi siap perusahaan"
 
 #: src/control/Toolbar.js:671
 msgid ""
@@ -1644,7 +1661,7 @@ msgstr "MUAT ULANG"
 
 #: src/core/Socket.js:526
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "Versi COOLWSD:"
 
 #: src/core/Socket.js:538
 msgid "Served by:"
@@ -1656,7 +1673,7 @@ msgstr "Versi server tidak didukung."
 
 #: src/core/Socket.js:548
 msgid "LOKit version:"
-msgstr ""
+msgstr "Versi LOKit:"
 
 #: src/core/Socket.js:662
 msgid "Session terminated by document owner"
@@ -1719,7 +1736,7 @@ msgstr "Simpan ke file baru"
 
 #: src/core/Socket.js:897
 msgid "Document has been changed"
-msgstr ""
+msgstr "Dokumen telah diubah"
 
 #: src/core/Socket.js:897
 msgid ""
@@ -1962,6 +1979,8 @@ msgstr ""
 msgid ""
 "Document cannot be exported. Please contact the storage server administrator."
 msgstr ""
+"Dokumen tidak dapat diekspor. Silakan hubungi administrator peladen "
+"penyimpanan."
 
 #: src/errormessages.js:50
 msgid "Uploading file to server failed, file not found."

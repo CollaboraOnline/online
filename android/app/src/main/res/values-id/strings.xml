@@ -14,14 +14,14 @@
     <string name="file_creation_failed">Pembuatan berkas gagal</string>
     <string name="storage_permission_required">Izin penyimpanan diperlukan</string>
     <string name="failed_to_load_file">Gagal menentukan berkas yang akan dimuat</string>
-    <string name="list_view">Daftar</string>
+    <string name="list_view">Senarai</string>
     <string name="grid_view">Kisi</string>
     <string name="pref_category_explorer">Pengaturan Manajer Berkas</string>
     <string name="pref_category_editor">Pengaturan Penyunting</string>
     <string name="pref_show_hidden_files">File/Folder Tersembunyi</string>
     <string name="pref_show_hidden_files_summary">Nyalakan untuk menampilkan berkas/folder tersembunyi</string>
     <string name="pref_sort_summary">Pilih cara untuk mengurutkan berkas: A-Z, berdasarkan ukuran atau tanggal.</string>
-    <string name="pref_viewmode_summary">Lohat berkas sebagai sebuah kisi atau dalam sebuah daftar.</string>
+    <string name="pref_viewmode_summary">Lihat berkas sebagai sebuah kisi atau dalam sebuah senarai.</string>
     <string name="pref_file_explorer_title">tata letak manajer berkas</string>
     <string name="pref_sort_title">Pengurut Berkas</string>
     <string name="pref_filter_title">Penyaring Bawaan Berkas</string>
@@ -54,7 +54,7 @@
     <string name="action_settings">Pengaturan</string>
     <string name="open">Buka</string>
     <string name="share">Bagikan</string>
-    <string name="remove_from_list">Hapus dari daftar</string>
+    <string name="remove_from_list">Hapus dari senarai</string>
     <string name="share_via">Bagikan melalui</string>
     <!-- Document browser filters -->
     <string name="filter_everything">Semuanya</string>

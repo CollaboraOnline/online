@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-17 21:33+0200\n"
-"PO-Revision-Date: 2021-11-20 21:17+0000\n"
+"PO-Revision-Date: 2022-01-20 10:02+0000\n"
 "Last-Translator: Rizal Muttaqin <riz_17_oke@yahoo.co.id>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/help/id/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1024,8 +1024,8 @@ msgid ""
 "Insert new paragraph without numbering inside a list. Does not work when the "
 "cursor is at the end of the list."
 msgstr ""
-"Sisip paragraf baru tanpa penomoran di dalam suatu daftar. Tidak bekerja "
-"ketika kursor di akhir daftar."
+"Sisip paragraf baru tanpa penomoran di dalam suatu senarai. Tidak akan "
+"bekerja ketika kursor ada di akhir senarai."
 
 #: html/cool-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
@@ -1332,7 +1332,7 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.table.tr.td:195-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:252-18
 msgid "Demote list item (list item has to be selected)"
-msgstr "Turun tingkatkan butir daftar (butir daftar mesti dipilih)"
+msgstr "Turun tingkatkan butir senarai (butir senarai harus dipilih)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:195-92
 #: html/cool-help.html%2Bdiv.div.table.tr.td:229-99
@@ -1344,7 +1344,7 @@ msgstr "Tab"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:196-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:253-18
 msgid "Promote list item (list item has to be selected)"
-msgstr "Naik tingkatkan butir daftar (butir daftar mesti dipilih)"
+msgstr "Naik tingkatkan butir senarai (butir daftar harus dipilih)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:196-93
 #: html/cool-help.html%2Bdiv.div.table.tr.td:230-107
@@ -1974,6 +1974,10 @@ msgid ""
 " automatically detects cells that are headers, and adjoining columns, to "
 "extend the selection."
 msgstr ""
+"<span class=\"def\">Mengurutkan data:</span> Anda dapat mengurutkan senarai "
+"angka atau teks secara menaik atau menurun. <span class=\"productname\""
+">%productName</span> secara otomatis mendeteksi sel yang merupakan kepala, "
+"dan kolom yang berdampingan, untuk memperluas pilihan."
 
 #: html/cool-help.html%2Bdiv.div.p:436-5
 msgid ""
@@ -2030,6 +2034,9 @@ msgid ""
 "box list. Depending on the criterion, more options shows. Fill the required "
 "data."
 msgstr ""
+"Pilih kriteria validitas dalam senarai kotak-jatuhan <span class=\"ui\""
+">Izinkan</span>. Bergantung pada kriteria, lebih banyak pilihan ditampilkan. "
+"Isi data yang dibutuhkan."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:455-9
 msgid ""
@@ -2043,6 +2050,8 @@ msgid ""
 "To remove the validity of the cell, open the dialog and set the <span class="
 "\"ui\">Allow</span> list to “All values”."
 msgstr ""
+"Untuk menghapus validitas sel, buka dialog dan setel senarai <span class=\"ui"
+"\">Izinkan</span> ke \"Semua nilai\"."
 
 #: html/cool-help.html%2Bdiv.div.p:460-5
 msgid ""
@@ -2249,6 +2258,9 @@ msgid ""
 ">%productName</span> Impress let you change the slide layout. Select the "
 "desired slide layout in the drop-down layout list."
 msgstr ""
+"<span class=\"def\">Tata letak salindia:</span> <span class=\"productname\""
+">%productName</span> Impress memungkinkan Anda mengubah tata letak salindia. "
+"Pilih tata letak salindia yang diinginkan dalam senarai tata letak drop-down."
 
 #: html/cool-help.html%2Bdiv.div.p:517-5
 msgid ""
@@ -2458,6 +2470,10 @@ msgid ""
 "Unicode numeric code of the special character, enter in the boxes on the "
 "right."
 msgstr ""
+"Anda dapat menelusuri karakter yang ditampilkan dengan senarai jatuh atau "
+"mengetikkan kunci pencarian di kotak <span class=\"ui\">Telusuri</span>. "
+"Jika Anda mengetahui kode numerik Unicode dari karakter khusus, masukkan "
+"dalam kotak di sebelah kanan."
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:568-11
 msgid ""
@@ -2523,6 +2539,15 @@ msgid ""
 "\"ui\">Track Changes </span> → <span class=\"ui\">Manage</span>. A dialog "
 "shows a list of all tracked changes. Use the dialog buttons accordingly."
 msgstr ""
+"Perubahan dapat diterima atau ditolak. Untuk menerima atau menolak "
+"perubahan, klik ikon yang sesuai di kotak komentar di sebelah kanan dokumen. "
+"Atau, pilih <span class=\"ui\">Sunting</span> → <span class=\"ui\">Lacak "
+"Perubahan </span> → <span class=\"ui\">Terima</span> atau <span class= \"ui\""
+">Tolak</span>. Selanjutnya, jika Anda perlu menyaring perubahan sebelum "
+"menerima atau menolak, pilih <span class=\"ui\">Edit</span> → <span class="
+"\"ui\">Lacak Perubahan </span> → <span class=\"ui\" >Kelola</span>. Dialog "
+"menunjukkan senarai semua perubahan terlacak. Gunakan tombol dialog yang "
+"sesuai."
 
 #: html/cool-help.html%2Bdiv.div.h4:584-5
 msgid "How do I set the margins of the document?"
@@ -2632,6 +2657,8 @@ msgid ""
 "Select the style to apply in the style dropdown list. The paragraph displays "
 "the styles attributes."
 msgstr ""
+"Pilih gaya yang akan diterapkan dalam senarai tarik turun gaya. Paragraf "
+"menampilkan atribut gaya."
 
 #: html/cool-help.html%2Bdiv.div.h4:613-5
 msgid ""
