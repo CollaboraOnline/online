@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-17 21:33+0200\n"
-"PO-Revision-Date: 2021-10-25 15:01+0000\n"
+"PO-Revision-Date: 2022-01-21 21:44+0000\n"
 "Last-Translator: sebastiaanveld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "help/nl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -841,9 +841,9 @@ msgid ""
 "class=\"kbd--plus\">+</span><kbd>Arrow key</kbd> merges cell with "
 "neighboring cell"
 msgstr ""
-"3 seconden in Verwijder modus, Pijltoetsen verwijderen rij/kolom,  "
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Pijltoetsen</kbd> "
-"voegen cel samen met naastgelegen cel"
+"3 seconden in Verwijder modus, Pijltoetsen verwijderen rij/kolom, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Pijltoetsen</kbd> voegen cel "
+"samen met naastgelegen cel"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:107-18
 msgid ""
@@ -979,7 +979,7 @@ msgid ""
 "Insert new paragraph directly before or after a section, or before a table"
 msgstr ""
 "Invoegen van een nieuwe alinea direct vóór of achter een sectie of vóór een "
-"tabel."
+"tabel"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:125-119
 #: html/cool-help.html%2Bdiv.div.table.tr.td:126-155
@@ -1075,7 +1075,7 @@ msgstr ""
 "Verplaatst de cursor naar de rechterzijde van het huidige gegevensbereik. "
 "Wanneer de kolom aan de rechterzijde van de cel waarin de cursor zich bevind "
 "leeg is, dan verplaatst de cursor zich naar de volgende kolom aan de "
-"rechterzijde die gegevens bevat"
+"rechterzijde die gegevens bevat."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-249
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Right Arrow"
@@ -1089,7 +1089,7 @@ msgid ""
 msgstr ""
 "Verplaatst de cursor naar de bovenzijde van het huidige gegevensbereik. "
 "Wanneer de rij boven de cel waarin de cursor zich bevind leeg is, dan "
-"verplaatst de cursor zich naar de volgende rij die gegevens bevat"
+"verplaatst de cursor zich naar de volgende rij die gegevens bevat."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-221
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Up Arrow"
@@ -1103,7 +1103,7 @@ msgid ""
 msgstr ""
 "Verplaatst de cursor naar de onderzijde van het huidige gegevensbereik. "
 "Wanneer de rij onder de cel waarin de cursor zich bevind leeg is, dan "
-"verplaatst de cursor zich naar de volgende rij die gegevens bevat"
+"verplaatst de cursor zich naar de volgende rij die gegevens bevat."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-226
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Down Arrow"
@@ -1151,13 +1151,18 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
+"Voegt het voorgaande blad aan de huidige selectie van bladen toe. Wanneer "
+"alle bladen in een werkblad zijn geselecteerd, dan selecteert deze "
+"toetscombinatie enkel het voorgaande blad. Maakt het voorgaande blad het "
+"huidige blad."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-260
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Up"
-msgstr "Shift+Ctrl+Del"
+msgstr ""
+"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Page Up"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-18
 msgid ""
@@ -1165,13 +1170,18 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"Voegt het volgende blad toe aan de huidige selectie van bladen. Wanneer alle "
+"bladen in een werkblad zijn geselecteerd, dan selecteert deze "
+"toetscombinatie enkel het volgende blad. Maakt het volgende blad het huidige "
+"blad."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-248
-#, fuzzy
 msgid ""
 "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>Page Down"
-msgstr "Shift+Ctrl+Del"
+msgstr ""
+"Shift</kbd><span class=\"kbd--plus\">+</span><kbd>Ctrl</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>Page Down"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-18
 msgid ""
@@ -1179,40 +1189,41 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"waar (*) het vermenigvuldig teken op het numeriek toetsenblok is. Selecteert "
+"het data bereik dat de cursor bevat. Een bereik is een aaneengesloten "
+"celbereik dat data bevat en is begrenst door lege rij en kolommen."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-249
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>*"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-18
 msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
 msgstr ""
+"waar (/) het deelteken op het numeriek toetsenblok. Selecteer het matrix "
+"formule bereik dat de cursor bevat."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-158
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>/"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "Cellen toevoegen (als in menu Invoegen - Cellen)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-85
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus key"
-msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Plus toets"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "Verwijder cellen (als in menu Bewerken - Verwijder Cellen)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-90
-#, fuzzy
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Minus key"
-msgstr "Ctrl+Enter"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Min toets"
 
 #: html/cool-help.html%2Bdiv.div.h2:154-9
 msgid "Cell formatting"
@@ -1224,7 +1235,7 @@ msgstr "Notitie weergeven"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:162-60
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1"
-msgstr "Ctrl+F1"
+msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>F1"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:163-18
 msgid "Fill Down"
@@ -1242,7 +1253,9 @@ msgstr "Twee decimalen, scheidingsteken voor duizendtallen"
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>1"
-msgstr "Ctrl+Shift+1"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>1"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:171-18
 msgid "Standard exponential format"
@@ -1282,7 +1295,9 @@ msgstr "Standaardnotatie voor percentages (twee decimalen)"
 msgid ""
 "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
 "--plus\">+</span><kbd>5"
-msgstr "Ctrl+Shift+5"
+msgstr ""
+"Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Shift</kbd><span class=\"kbd"
+"--plus\">+</span><kbd>5"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:175-18
 msgid "Standard format"
@@ -1309,7 +1324,7 @@ msgstr "Tab"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:196-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:253-18
 msgid "Promote list item (list item has to be selected)"
-msgstr "Bevorder lijstitem (lijstitem moet geselecteerd zijn)"
+msgstr "Bevorder lijstitem (lijstitem moet zijn geselecteerd)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:196-93
 #: html/cool-help.html%2Bdiv.div.table.tr.td:230-107
@@ -1359,9 +1374,7 @@ msgstr "Objecten selecteren in de volgorde waarin ze zijn gemaakt"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:230-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:287-18
 msgid "Select objects in the reverse order in which they were created"
-msgstr ""
-"Objecten in omgekeerde volgorde selecteren: van het laatst gemaakte naar het "
-"eerst gemaakte."
+msgstr "Objecten in omgekeerde volgorde selecteren waarin ze zijn gemaakt"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:231-18
 msgid "Move to next text object on slide"
@@ -1381,7 +1394,7 @@ msgstr "Ga naar het volgende tekstobject op de pagina"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:289-18
 msgid "Select all in drawing page"
-msgstr "Selecteer alles op op pagina"
+msgstr "Alles selecteren op de tekenpagina"
 
 #: html/cool-help.html%2Bdiv.h1:294-5
 msgid "<span class=\"productname\">%productName</span> Help"
@@ -1661,12 +1674,17 @@ msgid ""
 "bar, a set of information on the document is displayed. The actual "
 "information depends on the nature of the document."
 msgstr ""
+"<span class=\"def\">De informatie balk:</span> Rechts van de zoekbalk wordt "
+"informatie over het document getoond. Deze informatie hangt af van de aard "
+"van het document."
 
 #: html/cool-help.html%2Bdiv.p:361-5
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
 "integrated with <span class=\"productname\">%productName</span>."
 msgstr ""
+"Uw documenten worden opgeslagen en beheerd in de cloudopslag die is "
+"geïntegreerd met <span class=\"productname\">%productName</span>."
 
 #: html/cool-help.html%2Bdiv.p:362-5
 msgid ""
@@ -1675,12 +1693,19 @@ msgid ""
 "download formats available depends on the application. All applications "
 "exports documents in PDF format."
 msgstr ""
+"Om een document te downloaden, download deze vanuit het <span class="
+"\"productname\">%productName</span> applicatie <span class=\"ui\">Bestand</"
+"span> menu. De beschikbare download formaten kunnen per applicatie "
+"verschillen. Alle applicaties kunnen documenten naar PDF formaat exporteren."
 
 #: html/cool-help.html%2Bdiv.p:363-5
 msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
 ">%productName</span> module associated to the document format."
 msgstr ""
+"Om een document te openen, klik op het bestand om de <span class="
+"\"productname\">%productName</span> module te openen die met het document "
+"formaat is geassocieerd."
 
 #: html/cool-help.html%2Bdiv.p:364-5
 msgid ""
