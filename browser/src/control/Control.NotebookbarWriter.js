@@ -912,45 +912,21 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 	getViewTab: function() {
 		var content = [
 			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:ControlCodes', 'text'),
+				'command': '.uno:ControlCodes'
+			},
+			{
 				'id': 'fullscreen',
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:FullScreen'),
 				'command': '.uno:FullScreen'
 			},
 			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'showruler',
-								'type': 'menubartoolitem',
-								'text': _('Toggle Ruler'),
-								'command': _('Show Ruler')
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'showstatusbar',
-								'type': 'menubartoolitem',
-								'text': _('Toggle Status Bar'),
-								'command': _('Show Status Bar')
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
 				'id': 'zoomreset',
 				'type': 'menubartoolitem',
 				'text': _('Reset zoom'),
 				'command': _('Reset zoom')
-
 			},
 			{
 				'type': 'container',
@@ -984,6 +960,34 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Sidebar'),
 				'command': '.uno:Sidebar'
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'showruler',
+								'type': 'menubartoolitem',
+								'text': _('Toggle Ruler'),
+								'command': _('Show Ruler')
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'showstatusbar',
+								'type': 'menubartoolitem',
+								'text': _('Toggle Status Bar'),
+								'command': _('Show Status Bar')
+							}
+						]
+					}
+				],
+				'vertical': 'true'
 			}
 		];
 
@@ -1079,11 +1083,6 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					}
 				],
 				'vertical': 'true'
-			},
-			{
-				'type': 'bigtoolitem',
-				'text': _UNO('.uno:ControlCodes', 'text'),
-				'command': '.uno:ControlCodes'
 			},
 			{
 				'type': 'bigtoolitem',
