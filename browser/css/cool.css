@@ -269,7 +269,11 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	font-family: var(--cool-font) !important;
 	font-size: 12px !important;
 	font-weight: normal !important;
-	padding: 3px 5px 4px 10px;
+	padding: 3px 5px 3px 3px;
+}
+
+#search-input {
+	height: 22px;
 }
 
 .cool-character {
