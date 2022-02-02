@@ -259,17 +259,10 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:FullScreen'
 			},
 			{
-				'id': 'showstatusbar',
-				'type': 'menubartoolitem',
-				'text': _('Toggle Status Bar'),
-				'command': _('Show Status Bar')
-			},
-			{
 				'id': 'zoomreset',
 				'type': 'menubartoolitem',
 				'text': _('Reset zoom'),
 				'command': _('Reset zoom')
-
 			},
 			{
 				'type': 'container',
@@ -303,6 +296,12 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:Sidebar'),
 				'command': '.uno:Sidebar'
+			},
+			{
+				'id': 'showstatusbar',
+				'type': 'menubartoolitem',
+				'text': _('Toggle Status Bar'),
+				'command': _('Show Status Bar')
 			}
 		];
 
