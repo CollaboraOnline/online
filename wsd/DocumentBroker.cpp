@@ -1464,6 +1464,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
 
     if (uploadResult.getResult() == StorageBase::UploadResult::Result::OK)
     {
+        LOG_DBG("Last upload result: OK");
 #if !MOBILEAPP
         WopiStorage* wopiStorage = dynamic_cast<WopiStorage*>(_storage.get());
         if (wopiStorage != nullptr)
@@ -1613,6 +1614,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
     }
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::UNAUTHORIZED)
     {
+        LOG_DBG("Last upload result: UNAUTHORIZED");
         const auto session = _uploadRequest->session();
         if (session)
         {
@@ -1632,6 +1634,8 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
     }
     else if (uploadResult.getResult() == StorageBase::UploadResult::Result::FAILED)
     {
+        LOG_DBG("Last upload result: FAILED");
+
         //TODO: Should we notify all clients?
         const auto session = _uploadRequest->session();
         if (session)
@@ -1865,9 +1869,12 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
         _saveManager.timeSinceLastSaveResponse() >= std::chrono::seconds(2))
     {
         // Stop if there is nothing to save.
+        const bool possiblyModified = isPossiblyModified();
         LOG_INF("Autosaving " << reason << " DocumentBroker for docKey [" << getDocKey()
-                              << "] before terminating.");
-        if (!autoSave(isPossiblyModified()))
+                              << "] before terminating. isPossiblyModified: "
+                              << (possiblyModified ? "yes" : "no")
+                              << ", conflict: " << (_documentChangedInStorage ? "yes" : "no"));
+        if (!autoSave(possiblyModified))
         {
             // Nothing to save. Try to upload if necessary.
             const std::string sessionId = getWriteableSessionId();
@@ -3359,11 +3366,13 @@ void DocumentBroker::dumpState(std::ostream& os)
     os << "\n  filename: " << COOLWSD::anonymizeUrl(_filename);
     os << "\n  public uri: " << _uriPublic.toString();
     os << "\n  jailed uri: " << COOLWSD::anonymizeUrl(_uriJailed);
+    os << "\n  isViewFileExtension: " << _isViewFileExtension;
     os << "\n  doc key: " << _docKey;
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
     os << "\n  thread start: " << Util::getSteadyClockAsString(_threadStart);
     os << "\n  possibly-modified: " << isPossiblyModified();
+    os << "\n  haveActivityAfterSaveRequest: " << haveActivityAfterSaveRequest();
     os << "\n  doc state: " << DocumentState::toString(_docState.status());
     os << "\n  doc activity: " << DocumentState::toString(_docState.activity());
     if (_docState.activity() == DocumentState::Activity::Rename)
