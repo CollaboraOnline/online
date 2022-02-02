@@ -853,7 +853,7 @@ window.app = { // Shouldn't have any functions defined.
 		}
 	}
 
-	var lang = global.getParameterByName('lang');
+	var lang = encodeURIComponent(global.getParameterByName('lang'));
 	global.queueMsg = [];
 	if (window.ThisIsAMobileApp)
 		window.LANG = lang;
@@ -861,7 +861,7 @@ window.app = { // Shouldn't have any functions defined.
 		global.socket.onopen = function () {
 			if (global.socket.readyState === 1) {
 				var ProtocolVersionNumber = '0.1';
-				var timestamp = global.getParameterByName('timestamp');
+				var timestamp = encodeURIComponent(global.getParameterByName('timestamp'));
 				var msg = 'load url=' + encodeURIComponent(global.docURL);
 
 				var now0 = Date.now();
