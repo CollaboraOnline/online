@@ -23,12 +23,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 						'type': 'toolitem',
 						'text': _('Save'),
 						'command': '.uno:Save'
-					},
-					{
-						'id': 'presentation',
-						'type': 'toolitem',
-						'text': _('Start Presentation'),
-						'command': '.uno:Presentation'
 					}
 				]
 			}
