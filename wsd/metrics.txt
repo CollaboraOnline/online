@@ -161,3 +161,13 @@ DOCUMENT VIEW LOAD DURATION
     document_expired_view_load_duration_average_seconds - average between the load duration of all views (active or expired) of each expired document.
     document_expired_view_load_duration_min_seconds - minimum from the load duration of all views (active or expired) of each expired document.
     document_expired_view_load_duration_max_seconds - maximum from the load duration of all views (active or expired) of each expired document.
+
+SELECTED ERRORS - all integer counts
+
+    error_storage_space_low - local storage space too low to operate
+    error_storage_connection - unable to connect to storage
+    error_bad_request - we returned an HTTP bad request to a caller
+    error_bad_argument - we returned an HTTP bad argument to a caller
+    error_unauthorized_request - an authorization exception usually on CheckFileInfo
+    error_service_unavailable - internal error, service is unavailable
+    error_parse_error - badly formed data provided for us to parse.

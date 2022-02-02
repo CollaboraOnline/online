@@ -3492,4 +3492,9 @@ bool DocumentBroker::isAsyncUploading() const
     return state == StorageBase::AsyncUpload::State::Running;
 }
 
+// not beautiful - but neither is editing mobile project files.
+#if MOBILEAPP
+#  include "Exceptions.cpp"
+#endif
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
