@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-17 21:33+0100\n"
-"PO-Revision-Date: 2022-01-13 22:40+0000\n"
+"PO-Revision-Date: 2022-01-21 21:44+0000\n"
 "Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ar/>\n"
-"Language: \n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -571,11 +571,11 @@ msgstr "تصدير ك"
 #: src/control/Control.NotebookbarImpress.js:243
 #: src/control/Control.NotebookbarWriter.js:167
 msgid "PDF Document (.pdf)"
-msgstr "ملف PDF ‏(.pdf)"
+msgstr "ملف ‪PDF ‏(.pdf)"
 
 #: src/control/Control.Menubar.js:70 src/control/Control.Menubar.js:778
 msgid "ODF text document (.odt)"
-msgstr "ملف ODF نصي (‎.pdf)"
+msgstr "ملف ODF نصي ‪(‎.odt)"
 
 #: src/control/Control.Menubar.js:71 src/control/Control.Menubar.js:779
 #: src/control/Control.NotebookbarWriter.js:149
