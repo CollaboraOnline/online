@@ -7,16 +7,16 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-17 21:33+0100\n"
-"PO-Revision-Date: 2022-01-01 19:53+0000\n"
+"PO-Revision-Date: 2022-01-21 21:44+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/collabora-online/"
 "ui/es/>\n"
-"Language: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -341,7 +341,7 @@ msgstr " s"
 
 #: js/w2ui-1.5.rc1.js:2920
 msgid "Recent"
-msgstr ""
+msgstr "Recientes"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
@@ -378,7 +378,7 @@ msgstr "Pegado especial"
 
 #: src/control/Control.DocumentNameInput.js:82
 msgid "Path"
-msgstr ""
+msgstr "Ruta"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -1052,7 +1052,7 @@ msgstr "Eliminar columnas"
 #: src/control/Control.NotebookbarDraw.js:63
 #: src/control/Control.NotebookbarDraw.js:666
 msgid "Page layout"
-msgstr ""
+msgstr "Disposición de páginas"
 
 #: src/control/Control.NotebookbarDraw.js:110
 #: src/control/Control.NotebookbarImpress.js:122
@@ -1978,8 +1978,8 @@ msgstr ""
 msgid ""
 "Document cannot be exported. Please contact the storage server administrator."
 msgstr ""
-"No se ha podido exportar el documento. Por favor póngase en contacto con el "
-"administrador del servidor de almacenamiento."
+"No se ha podido exportar el documento. Póngase en contacto con el personal a "
+"cargo del servidor de almacenamiento."
 
 #: src/errormessages.js:50
 msgid "Uploading file to server failed, file not found."

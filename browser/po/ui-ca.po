@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-17 21:33+0100\n"
-"PO-Revision-Date: 2021-11-14 22:50+0000\n"
+"PO-Revision-Date: 2022-01-21 21:44+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9.1-dev\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -342,7 +342,7 @@ msgstr " s"
 
 #: js/w2ui-1.5.rc1.js:2920
 msgid "Recent"
-msgstr ""
+msgstr "Recents"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
@@ -378,7 +378,7 @@ msgstr "Enganxament especial"
 
 #: src/control/Control.DocumentNameInput.js:82
 msgid "Path"
-msgstr ""
+msgstr "Camí"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -430,7 +430,7 @@ msgstr "Auxiliar de funcions"
 
 #: src/control/Control.FormulaBar.js:46
 msgid "cell address"
-msgstr ""
+msgstr "adreça de la cel·la"
 
 #: src/control/Control.JSDialogBuilder.js:388
 msgid "Solid"
@@ -673,7 +673,7 @@ msgstr "Orientació del text"
 #: src/control/Control.Menubar.js:301
 #: src/control/Control.NotebookbarWriter.js:217
 msgid "Forum"
-msgstr ""
+msgstr "Fòrum"
 
 #: src/control/Control.Menubar.js:302 src/control/Control.Menubar.js:431
 #: src/control/Control.Menubar.js:542 src/control/Control.Menubar.js:755
@@ -707,7 +707,7 @@ msgstr "Darreres actualitzacions"
 #: src/control/Control.Menubar.js:917 src/control/Control.Menubar.js:987
 #: src/control/Control.NotebookbarWriter.js:274
 msgid "Send Feedback"
-msgstr ""
+msgstr "Envia comentaris"
 
 #: src/control/Control.Menubar.js:307 src/control/Control.Menubar.js:436
 #: src/control/Control.Menubar.js:547 src/control/Control.Menubar.js:760
@@ -804,7 +804,7 @@ msgstr "Esteu segur que voleu suprimir aquesta pàgina?"
 
 #: src/control/Control.Menubar.js:1774
 msgid "file type icon"
-msgstr ""
+msgstr "icona del tipus de fitxer"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:130
@@ -1052,7 +1052,7 @@ msgstr "Suprimeix les columnes"
 #: src/control/Control.NotebookbarDraw.js:63
 #: src/control/Control.NotebookbarDraw.js:666
 msgid "Page layout"
-msgstr ""
+msgstr "Disposició de pàgines"
 
 #: src/control/Control.NotebookbarDraw.js:110
 #: src/control/Control.NotebookbarImpress.js:122
@@ -1074,7 +1074,7 @@ msgstr "Presentació ODF (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:643
 msgid "Presentation"
-msgstr ""
+msgstr "Presentació"
 
 #: src/control/Control.NotebookbarImpress.js:980
 msgid "Reset Zoom"
@@ -1107,7 +1107,7 @@ msgstr "Títol"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
-msgstr ""
+msgstr "previsualització de la pàgina "
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1247,7 +1247,7 @@ msgstr "Mou el full cap a la dreta"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Copia el full..."
 
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
@@ -1355,7 +1355,7 @@ msgstr "Continua l'edició"
 
 #: src/control/Permission.js:167
 msgid "Continue read only"
-msgstr ""
+msgstr "Continua en mode només de lectura"
 
 #: src/control/Permission.js:170
 msgid ""
@@ -1595,9 +1595,8 @@ msgid ""
 msgstr ""
 
 #: src/control/Toolbar.js:618 src/control/Toolbar.js:619
-#, fuzzy
 msgid "Next"
-msgstr "Text"
+msgstr "Següent"
 
 #: src/control/Toolbar.js:622
 msgid "Learn more about the enterprise-ready versions"
@@ -1643,7 +1642,7 @@ msgstr "TORNA A CARREGAR"
 
 #: src/core/Socket.js:526
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "Versió del COOLWSD:"
 
 #: src/core/Socket.js:538
 msgid "Served by:"
@@ -1655,7 +1654,7 @@ msgstr "No s'admet la versió del servidor."
 
 #: src/core/Socket.js:548
 msgid "LOKit version:"
-msgstr ""
+msgstr "Versió del LOKit:"
 
 #: src/core/Socket.js:662
 msgid "Session terminated by document owner"
@@ -1718,7 +1717,7 @@ msgstr "Desa'ls en un fitxer nou"
 
 #: src/core/Socket.js:897
 msgid "Document has been changed"
-msgstr ""
+msgstr "S'ha modificat el document"
 
 #: src/core/Socket.js:897
 msgid ""
@@ -1807,7 +1806,7 @@ msgid ""
 "more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
-"Aquesta és una versió del {productname} sense assistència. Per a evitar la "
+"Aquesta és una versió del {productname} sense servei tècnic. Per a evitar la "
 "impressió que és adequada per a entorns empresarials, aquest missatge "
 "apareix si hi ha més de {docs} documents o {connections} connexions en ús "
 "simultàniament"
@@ -2094,11 +2093,11 @@ msgstr "Desat per darrer cop:"
 
 #: src/map/Map.js:1455
 msgid "Inactive document"
-msgstr ""
+msgstr "Document inactiu"
 
 #: src/map/Map.js:1456
 msgid "Please click to resume editing"
-msgstr ""
+msgstr "Feu clic per a reprendre l'edició"
 
 #: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
