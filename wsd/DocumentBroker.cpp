@@ -1081,6 +1081,12 @@ bool DocumentBroker::attemptLock(const ClientSession& session, std::string& fail
 
 DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
 {
+    if (_storage == nullptr)
+    {
+        // This can happen when we reject the connection (unauthorized).
+        return NeedToUpload::No;
+    }
+
     // When destroying, we might have to force uploading if always_save_on_exit=true.
     // If unloadRequested is set, assume we will unload after uploading and exit.
     if (isMarkedToDestroy() || _docState.isUnloadRequested())
@@ -1089,24 +1095,33 @@ DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
             = COOLWSD::getConfigValue<bool>("per_document.always_save_on_exit", false);
         if (always_save)
         {
-            LOG_INF("Need to upload per always_save_on_exit config (MarkedToDestroy=true).");
+            if (_documentChangedInStorage)
+            {
+                LOG_WRN("Need to upload per always_save_on_exit config, but the document has a "
+                        "conflict. Cannot force uploading.");
+                return NeedToUpload::Yes; // Still try.
+            }
+
+            LOG_INF("Need to upload per always_save_on_exit config "
+                    << (isMarkedToDestroy() ? "MarkedToDestroy" : "Unloading"));
             return NeedToUpload::Force;
         }
     }
 
-    if (!_storageManager.lastUploadSuccessful())
+    // Force uploading only for retryable failures, not conflicts. See FIXME below.
+    if (!_storageManager.lastUploadSuccessful() && !_documentChangedInStorage)
     {
         //FIXME: Forcing is used when overwriting a 'document conflict' and
         // for uploading when otherwise we might not have an immediate
         // reason. We shouldn't use a single flag for both these uses.
+        if (_documentChangedInStorage)
+        {
+            LOG_WRN("Last upload failed due to a conflict. Cannot force uploading.");
+            return NeedToUpload::Yes; // Still try.
+        }
+
         LOG_INF("Enabling forced uploading to storage as last attempt had failed.");
         return NeedToUpload::Force;
-    }
-
-    if (_storage == nullptr)
-    {
-        // This can happen when we reject the connection (unauthorized).
-        return NeedToUpload::No;
     }
 
     // Get the modified-time of the file on disk.
