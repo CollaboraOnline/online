@@ -110,7 +110,8 @@ shared_sources = common/FileUtil.cpp \
                  net/HttpRequest.cpp \
                  net/HttpHelper.cpp \
                  net/NetUtil.cpp \
-                 net/Socket.cpp
+                 net/Socket.cpp \
+                 wsd/Exceptions.cpp
 if ENABLE_SSL
 shared_sources += net/Ssl.cpp
 endif
