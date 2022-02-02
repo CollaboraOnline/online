@@ -38,7 +38,7 @@ namespace Quarantine
         std::string decoded;
 
         std::sort(files.begin(), files.end());
-        for (auto file : files)
+        for (const auto& file : files)
         {
 
             Util::tokenize(file.c_str(), file.size(), '_', tokens);
@@ -69,7 +69,7 @@ namespace Quarantine
         std::vector<std::string> files;
         Poco::File(COOLWSD::QuarantinePath).list(files);
         std::size_t size = 0;
-        for (auto file : files)
+        for (const auto& file : files)
         {
             FileUtil::Stat f(COOLWSD::QuarantinePath + file);
 
@@ -114,7 +114,7 @@ namespace Quarantine
         }
     }
 
-    void clearOldQuarantineVersions(std::string Wopiscr)
+    void clearOldQuarantineVersions(const std::string& Wopiscr)
     {
         if (!isQuarantineEnabled())
             return;
@@ -130,7 +130,7 @@ namespace Quarantine
 
     }
 
-    bool quarantineFile(DocumentBroker* docBroker, std::string docName)
+    bool quarantineFile(DocumentBroker* docBroker, const std::string& docName)
     {
         if (!isQuarantineEnabled())
             return false;
@@ -144,11 +144,13 @@ namespace Quarantine
         std::string sourcefilePath;
         if(JailUtil::isBindMountingEnabled())
         {
-            sourcefilePath = COOLWSD::ChildRoot + "tmp/cool-" + docBroker->getJailId() + "/user/docs/" + docBroker->getJailId() + "/" + docName;
+            sourcefilePath = COOLWSD::ChildRoot + "tmp/cool-" + docBroker->getJailId() +
+                             "/user/docs/" + docBroker->getJailId() + '/' + docName;
         }
         else
         {
-            sourcefilePath = COOLWSD::ChildRoot + docBroker->getJailId() + "/tmp/user/docs/" + docBroker->getJailId() + "/" + docName;
+            sourcefilePath = COOLWSD::ChildRoot + docBroker->getJailId() + "/tmp/user/docs/" +
+                             docBroker->getJailId() + '/' + docName;
         }
 
         std::string linkedFileName = ts + '_' + std::to_string(docBroker->getPid()) + '_' + docKey + '_' + docName;
