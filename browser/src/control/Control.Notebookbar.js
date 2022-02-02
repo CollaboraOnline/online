@@ -435,7 +435,7 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	onStatusbarChange: function() {
-		if (this._map.uiManager.isStatusBarVisible()) {
+		if (this.map.uiManager.isStatusBarVisible()) {
 			$('#showstatusbar').removeClass('selected');
 		}
 		else {
@@ -444,7 +444,7 @@ L.Control.Notebookbar = L.Control.extend({
 	},
 
 	onRulerChange: function() {
-		if (this._map.uiManager.isRulerVisible()) {
+		if (this.map.uiManager.isRulerVisible()) {
 			$('#showruler').removeClass('selected');
 		}
 		else {
