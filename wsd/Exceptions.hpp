@@ -25,6 +25,16 @@
             { type::count++; } \
     };
 
+// not beautiful
+#define EXCEPTION_DECL(type,parent_cl)  \
+    class type : public parent_cl \
+    { \
+    public: \
+        static std::atomic<size_t> count; \
+        type(const std::string &str) : parent_cl(str) \
+            { type::count++; } \
+    };
+
 // Generic COOL errors and base for others.
 class CoolException : public std::runtime_error
 {
