@@ -113,6 +113,11 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'context': 'Draw|DrawLine|3DObject|MultiObject|Graphic|DrawFontwork'
 			},
 			{
+				'text': _('~View'),
+				'id': 'View',
+				'name': 'View',
+			},
+			{
 				'text': _('~Help'),
 				'id': '-2',
 				'name': 'Help',
@@ -131,6 +136,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				this.getFormatTab(),
 				this.getTableTab(),
 				this.getDrawTab(),
+				this.getViewTab(),
 				this.getHelpTab()
 			], selectedId);
 	},
@@ -237,6 +243,70 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 		];
 
 		return this.getTabPage('File', content);
+	},
+
+	getViewTab: function() {
+		var content = [
+			{
+				'type': 'bigtoolitem',
+				'text': _('Presentation'),
+				'command': '.uno:Presentation'
+			},
+			{
+				'id': 'fullscreen',
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:FullScreen'),
+				'command': '.uno:FullScreen'
+			},
+			{
+				'id': 'showstatusbar',
+				'type': 'menubartoolitem',
+				'text': _('Toggle Status Bar'),
+				'command': _('Show Status Bar')
+			},
+			{
+				'id': 'zoomreset',
+				'type': 'menubartoolitem',
+				'text': _('Reset zoom'),
+				'command': _('Reset zoom')
+
+			},
+			{
+				'type': 'container',
+				'children': [
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoomout',
+								'type': 'menubartoolitem',
+								'text': _UNO('.uno:ZoomMinus'),
+								'command': '.uno:ZoomMinus'
+							}
+						]
+					},
+					{
+						'type': 'toolbox',
+						'children': [
+							{
+								'id': 'zoomin',
+								'type': 'menubartoolitem',
+								'text': _UNO('.uno:ZoomPlus'),
+								'command': '.uno:ZoomPlus'
+							}
+						]
+					}
+				],
+				'vertical': 'true'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:Sidebar'),
+				'command': '.uno:Sidebar'
+			}
+		];
+
+		return this.getTabPage('View', content);
 	},
 
 	getHomeTab: function() {
@@ -955,62 +1025,6 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:ModifyPage', 'presentation'),
 				'command': '.uno:ModifyPage'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'fullscreen',
-								'type': 'menubartoolitem',
-								'text': _UNO('.uno:FullScreen'),
-								'command': '.uno:FullScreen'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'zoomreset',
-								'type': 'menubartoolitem',
-								'text': _('Reset Zoom'),
-								'command': _('Reset zoom')
-							}
-						]
-					}
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'zoomout',
-								'type': 'menubartoolitem',
-								'text': _UNO('.uno:ZoomMinus'),
-								'command': '.uno:ZoomMinus'
-							}
-						]
-					},
-					{
-						'type': 'toolbox',
-						'children': [
-							{
-								'id': 'zoomin',
-								'type': 'menubartoolitem',
-								'text': _UNO('.uno:ZoomPlus'),
-								'command': '.uno:ZoomPlus'
-							}
-						]
-					}
-				],
-				'vertical': 'true'
 			},
 			{
 				'type': 'bigtoolitem',
