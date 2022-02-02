@@ -15,13 +15,5 @@ namespace Quarantine
 {
     void createQuarantineMap();
 
-    void removeQuarantine();
-
-    std::size_t quarantineSize();
-
-    void makeQuarantineSpace();
-
-    void clearOldQuarantineVersions(std::string Wopiscr);
-
-    bool quarantineFile(DocumentBroker* docBroker, std::string docName);
+    bool quarantineFile(DocumentBroker* docBroker, const std::string& docName);
 }
