@@ -23,6 +23,7 @@
 #include <Unit.hpp>
 #include <Util.hpp>
 #include <wsd/LOOLWSD.hpp>
+#include <wsd/Exceptions.hpp>
 
 #include <fnmatch.h>
 #include <dirent.h>
@@ -1142,6 +1143,15 @@ void AdminModel::getMetrics(std::ostringstream &oss)
     PrintDocActExpMetrics(oss, "wopi_download_duration", "milliseconds", docStats._wopiDownloadDuration);
     oss << std::endl;
     PrintDocActExpMetrics(oss, "view_load_duration", "milliseconds", docStats._viewLoadDuration);
+
+    oss << std::endl;
+    oss << "error_storage_space_low " << StorageSpaceLowException::count << "\n";
+    oss << "error_storage_connection " << StorageConnectionException::count << "\n";
+    oss << "error_bad_request " << (BadRequestException::count - BadArgumentException::count) << "\n";
+    oss << "error_bad_argument " << BadArgumentException::count << "\n";
+    oss << "error_unauthorized_request " << UnauthorizedRequestException::count << "\n";
+    oss << "error_service_unavailable " << ServiceUnavailableException::count << "\n";
+    oss << "error_parse_error " << ParseError::count << "\n";
 }
 
 std::set<pid_t> AdminModel::getDocumentPids() const
