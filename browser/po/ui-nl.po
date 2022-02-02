@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-17 21:33+0100\n"
-"PO-Revision-Date: 2021-11-07 22:01+0000\n"
-"Last-Translator: Andras Timar <andras.timar@collabora.com>\n"
+"PO-Revision-Date: 2022-01-21 21:44+0000\n"
+"Last-Translator: sebastiaanveld <sebastiaan.veld@gmail.com>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/collabora-online/"
 "ui/nl/>\n"
-"Language: \n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.9-dev\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -341,7 +341,7 @@ msgstr " seconden"
 
 #: js/w2ui-1.5.rc1.js:2920
 msgid "Recent"
-msgstr ""
+msgstr "Recent"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
@@ -378,7 +378,7 @@ msgstr "Plakken speciaal"
 
 #: src/control/Control.DocumentNameInput.js:82
 msgid "Path"
-msgstr ""
+msgstr "Locatie"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -430,7 +430,7 @@ msgstr "Functie-assistent"
 
 #: src/control/Control.FormulaBar.js:46
 msgid "cell address"
-msgstr ""
+msgstr "Cel adres"
 
 #: src/control/Control.JSDialogBuilder.js:388
 msgid "Solid"
@@ -577,7 +577,7 @@ msgstr "PDF-bestand (.pdf)"
 
 #: src/control/Control.Menubar.js:70 src/control/Control.Menubar.js:778
 msgid "ODF text document (.odt)"
-msgstr "ODF-tekstbestand (.odt)"
+msgstr "ODF-tekstdocument (.odt)"
 
 #: src/control/Control.Menubar.js:71 src/control/Control.Menubar.js:779
 #: src/control/Control.NotebookbarWriter.js:149
@@ -659,7 +659,7 @@ msgstr "Toon Statusbalk"
 #: src/control/Control.Menubar.js:994 src/control/Control.Menubar.js:1036
 #: src/control/Control.Menubar.js:1050 src/control/Control.Menubar.js:1073
 msgid "Local Image..."
-msgstr "Locale afbeelding..."
+msgstr "Lokale afbeelding..."
 
 #: src/control/Control.Menubar.js:140 src/control/Control.Menubar.js:142
 #: src/control/Control.Menubar.js:1011 src/control/Control.Menubar.js:1013
@@ -673,7 +673,7 @@ msgstr "Tekstoriëntatie"
 #: src/control/Control.Menubar.js:301
 #: src/control/Control.NotebookbarWriter.js:217
 msgid "Forum"
-msgstr ""
+msgstr "Forum"
 
 #: src/control/Control.Menubar.js:302 src/control/Control.Menubar.js:431
 #: src/control/Control.Menubar.js:542 src/control/Control.Menubar.js:755
@@ -707,7 +707,7 @@ msgstr "Nieuwste updates"
 #: src/control/Control.Menubar.js:917 src/control/Control.Menubar.js:987
 #: src/control/Control.NotebookbarWriter.js:274
 msgid "Send Feedback"
-msgstr ""
+msgstr "Feedback sturen"
 
 #: src/control/Control.Menubar.js:307 src/control/Control.Menubar.js:436
 #: src/control/Control.Menubar.js:547 src/control/Control.Menubar.js:760
@@ -804,7 +804,7 @@ msgstr "Weet u zeker dat u deze pagina wilt verwijderen?"
 
 #: src/control/Control.Menubar.js:1774
 msgid "file type icon"
-msgstr ""
+msgstr "Bestandstypepictogram"
 
 #: src/control/Control.MobileBottomBar.js:28
 #: src/control/Control.MobileBottomBar.js:130
@@ -858,27 +858,27 @@ msgstr "Opnieuw"
 #: src/control/Control.NotebookbarBuilder.js:600
 #: src/control/Control.TopToolbar.js:222
 msgid "Insert Local Image"
-msgstr "Locale afbeelding invoegen"
+msgstr "Lokale afbeelding invoegen"
 
 #: src/control/Control.NotebookbarBuilder.js:660
 msgid "Very Tight"
-msgstr ""
+msgstr "Zeer strak"
 
 #: src/control/Control.NotebookbarBuilder.js:661
 msgid "Tight"
-msgstr ""
+msgstr "Strak"
 
 #: src/control/Control.NotebookbarBuilder.js:662
 msgid "Normal"
-msgstr ""
+msgstr "Normaal"
 
 #: src/control/Control.NotebookbarBuilder.js:663
 msgid "Loose"
-msgstr ""
+msgstr "Los"
 
 #: src/control/Control.NotebookbarBuilder.js:664
 msgid "Very Loose"
-msgstr ""
+msgstr "Zeer los"
 
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarDraw.js:79
@@ -892,7 +892,7 @@ msgstr "~Bestand"
 #: src/control/Control.NotebookbarImpress.js:96
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "~Home"
-msgstr "~Home"
+msgstr "~Start"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:90
@@ -917,7 +917,7 @@ msgstr "~Gegevens"
 #: src/control/Control.NotebookbarImpress.js:112
 #: src/control/Control.NotebookbarWriter.js:38
 msgid "~Review"
-msgstr "Be~oordelen"
+msgstr "~Beoordelen"
 
 #: src/control/Control.NotebookbarCalc.js:43
 #: src/control/Control.NotebookbarDraw.js:105
@@ -930,7 +930,7 @@ msgstr "Formaat"
 #: src/control/Control.NotebookbarDraw.js:116
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
-msgstr "~Draw"
+msgstr "~Tekenen"
 
 #: src/control/Control.NotebookbarCalc.js:54
 #: src/control/Control.NotebookbarDraw.js:122
@@ -1052,7 +1052,7 @@ msgstr "Kolommen verwijderen"
 #: src/control/Control.NotebookbarDraw.js:63
 #: src/control/Control.NotebookbarDraw.js:666
 msgid "Page layout"
-msgstr ""
+msgstr "Pagina lay-out"
 
 #: src/control/Control.NotebookbarDraw.js:110
 #: src/control/Control.NotebookbarImpress.js:122
@@ -1074,7 +1074,7 @@ msgstr "ODF presentatie (.odp)"
 
 #: src/control/Control.NotebookbarImpress.js:643
 msgid "Presentation"
-msgstr ""
+msgstr "Presentatie"
 
 #: src/control/Control.NotebookbarImpress.js:980
 msgid "Reset Zoom"
@@ -1107,7 +1107,7 @@ msgstr "Titel"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
-msgstr ""
+msgstr "voorbeeld van pagina "
 
 #: src/control/Control.Scroll.Annotation.js:10
 msgid "Scroll up annotations"
@@ -1247,7 +1247,7 @@ msgstr "Blad naar rechts verplaatsen"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr ""
+msgstr "Kopieer blad..."
 
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
@@ -1352,11 +1352,11 @@ msgstr "Opslaan als ODF formaat"
 
 #: src/control/Permission.js:167
 msgid "Continue editing"
-msgstr "Verder met bewerken"
+msgstr "Doorgaan met bewerken"
 
 #: src/control/Permission.js:167
 msgid "Continue read only"
-msgstr ""
+msgstr "Alleen lezen voortzetten"
 
 #: src/control/Permission.js:170
 msgid ""
@@ -1392,7 +1392,7 @@ msgstr "Fout bij inloggen."
 
 #: src/control/Signing.js:228
 msgid "Please scan the code"
-msgstr "Scan de code a.u.b."
+msgstr "Scan a.u.b. de code"
 
 #: src/control/Signing.js:243
 msgid "Couldn't get the QR code image."
@@ -1539,20 +1539,20 @@ msgstr "Hernoemen..."
 
 #: src/control/Toolbar.js:566
 msgid "I understand the risks"
-msgstr "Ik begrijp het risico"
+msgstr "Ik begrijp de risico's"
 
 #: src/control/Toolbar.js:588
 msgid "Dismiss"
-msgstr ""
+msgstr "Verwerpen"
 
 #: src/control/Toolbar.js:606
 #, javascript-format
 msgid "Explore the new %coolVersion"
-msgstr ""
+msgstr "Ontdek de nieuwe %coolVersion"
 
 #: src/control/Toolbar.js:607 src/control/Toolbar.js:611
 msgid "Collabora Online Development Edition"
-msgstr ""
+msgstr "Collabora Online Ontwikkel Versie"
 
 #: src/control/Toolbar.js:608
 #, javascript-format
@@ -1563,10 +1563,16 @@ msgid ""
 "%coolVersion introduces important improvements, in the areas of usability, "
 "visual presentation and performance."
 msgstr ""
+"Geniet van de laatste ontwikkelingen in online productiviteit, vrij voor "
+"jouw om te gebruiken, te ontdekken en met anderen samen te werken in de "
+"browser. <a href=\"%coolAppsURL\" target=\"_blank\">Apps</a> zijn ook "
+"beschikbaar voor Android en iOS. %coolVersion introduceert belangrijke "
+"verbeteringen, op het gebied van gebruiksgemak, visuele presentatie en "
+"snelheid."
 
 #: src/control/Toolbar.js:610
 msgid "Discover all the changes"
-msgstr ""
+msgstr "Ontdek alle veranderingen"
 
 #: src/control/Toolbar.js:612
 #, javascript-format
@@ -1576,14 +1582,19 @@ msgid ""
 "larger groups working on documents, new native sidebar, new re-worked avatar "
 "list, asynchronous saving, faster spell checking and more."
 msgstr ""
+"Bekijk de <a href=\"%coolReleaseNotesURL\" target=\"_blank\">versie-"
+"opmerkingen</a> en leer ondermeer alles over de laatste mijlpaal op het "
+"gebied van snelheidverbeteringen met name voor grotere groepen die werken "
+"aan documenten, de nieuwe zijbalk, de vernieuwde avatar lijst, asynchroon "
+"opslaan en de snellere spellingcontrole."
 
 #: src/control/Toolbar.js:614
 msgid "Integrate Collabora Online into your webapp"
-msgstr ""
+msgstr "Integreer Collabora Online in jouw webapplicatie"
 
 #: src/control/Toolbar.js:615
 msgid "Or get involved in the development"
-msgstr ""
+msgstr "Of doe mee aan de ontwikkeling"
 
 #: src/control/Toolbar.js:616
 #, javascript-format
@@ -1596,15 +1607,22 @@ msgid ""
 "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
 "all the essential steps on how to reproduce it."
 msgstr ""
+"Leer meer over het integreren in jouw web applicatie met behulp van de <a "
+"href=\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Of ga naar "
+"de <a href=\"%coolStepByStepURL\" target=\"_blank\">stapsgewijze "
+"instructies</a> en bouw CODE vanuit het niets. Je kunt ons ook helpen met <a "
+"href=\"%coolTranslationsURL\" target=\"_blank\">vertalen</a> of met het <a "
+"href=\"%coolBugreportURL\" target=\"_blank\">indienen van een bug rapport</"
+"a> waarin alle essentiële stappen staan beschreven om het probleem te "
+"reproduceren."
 
 #: src/control/Toolbar.js:618 src/control/Toolbar.js:619
-#, fuzzy
 msgid "Next"
-msgstr "Tekst"
+msgstr "Volgende"
 
 #: src/control/Toolbar.js:622
 msgid "Learn more about the enterprise-ready versions"
-msgstr ""
+msgstr "Leer meer over versies gereed voor ondernemingen"
 
 #: src/control/Toolbar.js:671
 msgid ""
@@ -1645,7 +1663,7 @@ msgstr "OPNIEUW LADEN"
 
 #: src/core/Socket.js:526
 msgid "COOLWSD version:"
-msgstr ""
+msgstr "COOLWSD versie:"
 
 #: src/core/Socket.js:538
 msgid "Served by:"
@@ -1657,7 +1675,7 @@ msgstr "Niet-ondersteunde serverversie."
 
 #: src/core/Socket.js:548
 msgid "LOKit version:"
-msgstr ""
+msgstr "LOKit versie:"
 
 #: src/core/Socket.js:662
 msgid "Session terminated by document owner"
@@ -1717,7 +1735,7 @@ msgstr "Als nieuw bestand opslaan"
 
 #: src/core/Socket.js:897
 msgid "Document has been changed"
-msgstr ""
+msgstr "Document is gewijzigd"
 
 #: src/core/Socket.js:897
 msgid ""
@@ -1962,6 +1980,8 @@ msgstr ""
 msgid ""
 "Document cannot be exported. Please contact the storage server administrator."
 msgstr ""
+"Document kan niet worden geëxporteerd. Neem a.u.b. contact op met de opslag "
+"beheerder."
 
 #: src/errormessages.js:50
 msgid "Uploading file to server failed, file not found."
@@ -2026,7 +2046,7 @@ msgstr "Wijziging accepteren"
 
 #: src/layer/tile/CommentSection.ts:284 src/layer/tile/CommentSection.ts:285
 msgid "Reject change"
-msgstr "Wijziging verwerpen"
+msgstr "Ongedaan maken"
 
 #: src/main.js:88
 msgid "Warning! The browser you are using is not supported."
@@ -2095,15 +2115,15 @@ msgstr "Initialiseren…"
 
 #: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428 src/map/Map.js:431
 msgid "Last saved:"
-msgstr ""
+msgstr "Laatst opgeslagen:"
 
 #: src/map/Map.js:1455
 msgid "Inactive document"
-msgstr ""
+msgstr "Inactief document"
 
 #: src/map/Map.js:1456
 msgid "Please click to resume editing"
-msgstr ""
+msgstr "Klik om bewerken voort te zetten"
 
 #: src/map/handler/Map.FileInserter.js:100
 #, javascript-format
