@@ -99,6 +99,7 @@ common_sources = \
 	../common/Util.cpp \
 	../common/StringVector.cpp \
 	../common/TraceEvent.cpp \
+	../wsd/Exceptions.cpp \
 	../net/HttpRequest.cpp \
 	../net/Socket.cpp \
 	../net/NetUtil.cpp \
