@@ -1,6 +1,7 @@
 
 
 "Version information" = "معلومات الإصدار";
-"Online git hash" = "Online git hash";
-"Core git hash" = "Core git hash";
-"Settings" = "الاعدادات";
+"Online git hash" = "تشفير البعثرة لـ غِت أونلاين";
+"Core git hash" = "تشفير البعثرة لـ غِت الصميم";
+"Settings" = "الإعدادات";
+"Template list URL" = "رابط قائمة القوالب";

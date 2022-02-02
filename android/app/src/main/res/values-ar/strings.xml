@@ -1,4 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name_settings">الإعدادات</string>
+    <string name="app_vendor">هذا الإصدار وفّره $VENDOR.</string>
+    <string name="no_recent_items">لطفاً افتح ملفاً باستخدام أيقونة المجلد في شريط الأدوات.</string>
+    <string name="pref_category_editor">إعدادات المحرر</string>
+    <string name="temp_file_saving_disabled">هذا الملف للقراءة فقط، الحفظ معطّل.</string>
+    <string name="file_exists_warning">يوجد مسبقًا ملف بهذا الإسم، وسوف يُكتَب عليه.</string>
+    <string name="file_creation_failed">فشل إنشاء الملف</string>
+    <string name="storage_permission_required">إذن الخزن مطلوب</string>
+    <string name="failed_to_load_file">فشل تحديد الملف للتحميل</string>
+    <string name="list_view">قائمة</string>
+    <string name="grid_view">شبكة</string>
+    <string name="pref_category_explorer">إعدادات مدير الملفات</string>
+    <string name="pref_show_hidden_files">ملفات/مجلدات مخفية</string>
+    <string name="pref_show_hidden_files_summary">مكّن لإظهار الملفات/المجلدات المخفية</string>
+    <string name="pref_viewmode_summary">عاين الملفات كشبكة أو في قائمة.</string>
+    <string name="pref_file_explorer_title">مخطط مدير الملفات</string>
+    <string name="pref_sort_title">تنظيم الملفات</string>
+    <string name="pref_filter_title">عامل تصفية الملفات المبدئي</string>
+    <string name="pref_filter_summary">عيّن عامل تصفية الملفات الذي ينبغي استخدامه مبدئيا.</string>
+    <string name="pref_show_debug_info">أظهِر معلومات التنقيح</string>
+    <string name="pref_show_debug_info_summary">مكّن لتُظهِر معلومات التنقيح في معاين المستندات</string>
+    <string name="pref_enable_chrome_debugger">تنقيح كروم</string>
+    <string name="pref_enable_chrome_debugger_info">مكِّن لتستخدم أداة تنقيح كروم في المستند</string>
+    <string name="about_license">أظهِر الرخصة</string>
+    <string name="loading">يحمّل...</string>
+    <string name="pref_user_name">اسم المستخدم</string>
+    <string name="pref_user_name_info">يُستخدَم عند إضافة تعليق</string>
+    <string name="app_version_and_hash">الإصدار: %1$s
+\nتشفير البعثرة لـ غِت online : %2$s
+\nتشفير البعثرة لـ غِت core : %3$s</string>
+    <string name="app_description">$APP_NAME هو حزمة إنتاجية حديثة سهلة الإستخدام لمعالجة الكلمات والأوراق الممتدة والعروض التقديمية والمزيد.</string>
+    <string name="no_items">لا عناصر</string>
+    <string name="pref_sort_summary">حدد كيفية تنظيم الملفات: أبجديا أو بالحجم أو بالتأريخ.</string>
+    <string name="pref_user_name_guest">مستخدم ضيف</string>
 </resources>
