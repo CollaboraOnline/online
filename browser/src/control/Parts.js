@@ -73,8 +73,8 @@ L.Map.include({
 		docLayer._updateOnChangePart();
 		docLayer._pruneTiles();
 		docLayer._prevSelectedPartNeedsUpdate = true;
-		if (docLayer._invalidatePreview) {
-			docLayer._invalidatePreview();
+		if (docLayer._invalidatePreviews) {
+			docLayer._invalidatePreviews();
 		}
 		docLayer._drawSearchResults();
 		if (!this._searchRequested) {
@@ -206,7 +206,7 @@ L.Map.include({
 	},
 
 	// getCustomPreview
-	// Triggers the creation of a preview with the given id, of width X height size, of the [(tilePosX,tilePosY), 
+	// Triggers the creation of a preview with the given id, of width X height size, of the [(tilePosX,tilePosY),
 	// (tilePosX + tileWidth, tilePosY + tileHeight)] section of the document.
 	getCustomPreview: function (id, part, width, height, tilePosX, tilePosY, tileWidth, tileHeight, options) {
 		if (!this._docPreviews) {

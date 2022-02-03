@@ -65,7 +65,6 @@ namespace LOKitHelper
         {
             std::ostringstream hposs;
             std::ostringstream sposs;
-            std::ostringstream mposs;
             std::ostringstream rtlposs;
             for (int i = 0; i < parts; ++i)
             {
@@ -84,11 +83,6 @@ namespace LOKitHelper
                     {
                         if (prop.second == "1")
                             sposs << i << ',';
-                    }
-                    else if (name == "masterPageCount")
-                    {
-                        if (mposs.str().empty())
-                            mposs << prop.second;
                     }
                     else if (name == "rtllayout")
                     {
@@ -110,12 +104,6 @@ namespace LOKitHelper
             {
                 selectedparts.pop_back(); // Remove last ','
                 oss << " selectedparts=" << selectedparts;
-            }
-
-            std::string masterpagecount = mposs.str();
-            if (!masterpagecount.empty())
-            {
-                oss << " masterpagecount=" << masterpagecount;
             }
 
             std::string rtlparts = rtlposs.str();

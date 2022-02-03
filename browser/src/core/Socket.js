@@ -1655,8 +1655,6 @@ app.definitions.Socket = L.Class.extend({
 			else if (tokens[i] === 'nopng') {
 				command.nopng = true;
 			}
-			else if (tokens[i].startsWith('masterpagecount='))
-				command.masterPageCount = parseInt(tokens[i].substring(16));
 			else if (tokens[i].substring(0, 9) === 'username=') {
 				command.username = tokens[i].substring(9);
 			}
