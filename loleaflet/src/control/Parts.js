@@ -76,8 +76,8 @@ L.Map.include({
 		docLayer._updateOnChangePart();
 		docLayer._pruneTiles();
 		docLayer._prevSelectedPartNeedsUpdate = true;
-		if (docLayer._invalidatePreview) {
-			docLayer._invalidatePreview();
+		if (docLayer._invalidatePreviews) {
+			docLayer._invalidatePreviews();
 		}
 		docLayer._drawSearchResults();
 		if (!this._searchRequested) {

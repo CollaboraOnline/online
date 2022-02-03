@@ -520,18 +520,6 @@ L.Control.PartsPreview = L.Control.extend({
 		}
 	},
 
-	_showMasterSlides: function() {
-		for (var i = this._map._docLayer._masterPageCount; i < this._previewTiles.length; ++i) {
-			$(this._previewTiles[i]).hide();
-		}
-	},
-
-	_hideMasterSlides: function() {
-		for (var i = this._map._docLayer._masterPageCount; i < this._previewTiles.length; ++i) {
-			$(this._previewTiles[i]).show();
-		}
-	},
-
 	_onScroll: function (e) {
 		setTimeout(L.bind(function (e) {
 			var scrollOffset = 0;

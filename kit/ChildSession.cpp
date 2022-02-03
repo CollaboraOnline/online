@@ -2708,6 +2708,16 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_CALLBACK_STATE_CHANGED:
         sendTextFrame("statechanged: " + payload);
+        if (Util::startsWith(payload, ".uno:SlideMasterPage"))
+        {
+            std::string status = LOKitHelper::documentStatus(getLOKitDocument()->get());
+            sendTextFrame("status: " + status);
+            for (int i = 0; i < getLOKitDocument()->getParts(); i++)
+            {
+                const std::string parts = std::to_string(i);
+                sendTextFrame("invalidatetiles: EMPTY, " + parts);
+            }
+        }
         break;
     case LOK_CALLBACK_SEARCH_NOT_FOUND:
         sendTextFrame("searchnotfound: " + payload);
