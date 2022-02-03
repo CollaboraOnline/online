@@ -254,6 +254,16 @@ L.SVGGroup = L.Layer.extend({
 		});
 	},
 
+	_hasVisibleEmbeddedSVG: function () {
+		var result = false;
+		this._forEachSVGNode(function (svgNode) {
+			if (svgNode.getAttribute('opacity') !== 0)
+				result = true;
+		});
+
+		return result;
+	},
+
 	_transform: function(matrix) {
 		if (this._renderer) {
 			if (matrix) {
