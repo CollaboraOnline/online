@@ -574,6 +574,11 @@ L.Handler.PathTransform = L.Handler.extend({
 	*/
 	_transformPoints: function(path, angle, scale, rotationOrigin, scaleOrigin) {
 		var map = path._map;
+		if (!map) {
+			console.warn('Cannot get map from path in _transformPoints');
+			return;
+		}
+
 		var zoom = map.getMaxZoom() || this.options.maxZoom;
 		var i, len;
 
