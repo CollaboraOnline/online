@@ -1207,8 +1207,11 @@ L.TileLayer = L.GridLayer.extend({
 			if (extraInfo.id) {
 				this._map._cacheSVG[extraInfo.id] = textMsg;
 			}
+			var wasVisibleSVG = this._graphicMarker._hasVisibleEmbeddedSVG();
 			this._graphicMarker.removeEmbeddedSVG();
 			this._graphicMarker.addEmbeddedSVG(textMsg);
+			if (wasVisibleSVG)
+				this._graphicMarker._showEmbeddedSVG();
 		}
 	},
 
