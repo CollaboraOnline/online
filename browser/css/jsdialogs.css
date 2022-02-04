@@ -156,7 +156,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 /* Expander */
 
 .jsdialog.ui-expander {
-	box-shadow: 0 1px 0px 0 #f1f1f1;
+	box-shadow: 0 1px 0px 0 var(--color-border-lighter);
 }
 
 #options.ui-expander {
