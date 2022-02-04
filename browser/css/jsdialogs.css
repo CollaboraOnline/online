@@ -43,7 +43,7 @@
 
 .jsdialog.vertical p, .ui-frame-label {
 	margin: 0px;
-	color: var(--color-text-lighter);
+	color: var(--color-main-text);
 	font-size: 10px;
 	font-weight: bold;
 	text-transform: uppercase;
