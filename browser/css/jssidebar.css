@@ -13,15 +13,15 @@
 #document-container:not(.mobile) + #sidebar-dock-wrapper {
 	width: 322px;
 	padding: 0;
-	border-left: 1px solid var(--gray-color) !important;
-	border-right: 1px solid var(--gray-color) !important; /* for RTL mode */
+	border-left: 1px solid var(--color-border) !important;
+	border-right: 1px solid var(--color-border) !important; /* for RTL mode */
 	margin-top: 0 !important;
 	box-sizing: border-box;
 }
 
 .sidebar .spinfieldcontainer input {
 	width: 85px;
-	border: 1px solid var(--gray-color);
+	border: 1px solid var(--color-border);
 	border-radius: var(--border-radius);
 	height: 28px;
 	padding-inline-start: 4px;
@@ -38,7 +38,7 @@
 	margin-right: 1px;
 }
 .sidebar .spinfieldcontainer input:hover {
-	border: 1px solid var(--gray-light-txt--color);
+	border: 1px solid var(--color-border-darker);
 }
 
 .spinfieldunit {
@@ -251,7 +251,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 .hasnotebookbar .ui-content.unotoolbutton:not(.has-label):not(.inline),
 .sidebar.unotoolbutton {
 	background-color: transparent;
-	border: 2px solid transparent;
+	border: 1px solid transparent;
 	color: var(--gray-light-txt--color);
 	border-radius: var(--border-radius);
 }
@@ -261,7 +261,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline),
 .sidebar.unotoolbutton.selected {
 	background-color: var(--gray-light-bg-color);
-	border: 2px solid transparent;
+	border: 1px solid var(--color-border-dark);
 	color: var(--gray-light-txt--color);
 	border-radius: var(--border-radius);
 }
@@ -276,7 +276,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 .sidebar #resetattr:hover,
 .sidebar #FormatPaintbrush:hover,
 #table-textorientbox.sidebar .jsdialog .radiobutton:hover {
-	outline: 1px solid var(--gray-light-txt--color);
+	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-accent);
 	border-radius: var(--border-radius);
 }

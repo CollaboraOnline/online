@@ -175,7 +175,7 @@ body {
 #presentation-controls-wrapper {
 	background: #dfdfdf;
 	position: relative;
-	border-top: 1px solid var(--gray-color);
+	border-top: 1px solid var(--color-border);
 	display: none;
 }
 
@@ -183,8 +183,8 @@ body {
 	display: none;
 	background: #fff;
 	position: relative;
-	border-top: 1px solid var(--gray-color);
-	border-left: 1px solid var(--gray-color);
+	border-top: 1px solid var(--color-border);
+	border-left: 1px solid var(--color-border);
 	overflow: hidden;
 	z-index: 990;
 }
@@ -332,6 +332,10 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 .context-menu-icon-lo-checkmark:before {
 	content: '\2713';
+}
+
+.context-menu-list {
+	border: 1px solid var(--color-border-dark) !important;
 }
 
 .context-menu-hover {
@@ -511,7 +515,7 @@ nav.drawing-color-indicator ~ #main-document-content .cool-annotation-reply-coun
 .cool-annotation-textarea {
 	font-family: var(--cool-font) !important;
 	font-size: 13px;
-	border: 1px solid #c8c8c8;
+	border: 1px solid var(--color-border-dark);
 	background-color: white;
 	overflow-x: hidden;
 	height: 50px;
@@ -603,7 +607,7 @@ nav.drawing-color-indicator ~ #main-document-content .cool-annotation-reply-coun
 }
 
 .cool-annotation-menu:hover, .cool-annotation-menu-redline:hover, .cool-redline-accept-button:hover, .cool-redline-reject-button:hover {
-	border: 1px solid darkgrey;
+	border: 1px solid var(--color-border-darker);
 }
 
 .cool-annotation-date {

@@ -144,8 +144,8 @@
 .lo-menu > li > a:hover, .lo-menu > li > a:focus, .lo-menu > li > a:active, .lo-menu > li > a.highlighted {
 	background: #fff;
 	color: var(--color-text-accent);
-	border-color: #bbbbbb;
-	border-bottom: 1px solid #bbb;
+	border-color: var(--color-border-darker);
+	border-bottom: 1px solid var(--color-border-darker);
 }
 .lo-menu > li > a.highlighted {
 	border-bottom-color: #fff;
@@ -158,7 +158,7 @@
 	display: none;
 }
 .lo-menu ul {
-	border: 1px solid #bbbbbb;
+	border: 1px solid var(--color-border-darker);
 	background: white;
 }
 .lo-menu ul a span.sub-arrow {
@@ -182,7 +182,7 @@
 	overflow: hidden;
 	padding-top: 0;
 	padding-bottom: 0;
-	background-color: var(--gray-light-bg-color);
+	background-color: var(--color-border-lighter);
 }
 /* lo-menu customizations end */
 

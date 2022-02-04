@@ -7,7 +7,7 @@
 	z-index: 999;
 	overflow: visible !important;
 	background-color: white;
-	border-bottom: 1px solid var(--gray-color);
+	border-bottom: 1px solid var(--color-border);
 }
 
 #toolbar-down {
@@ -72,7 +72,7 @@
 	position: fixed;
 	bottom: 0;
 	z-index: 1000;
-	border-top: 1px solid #bbbbbb;
+	border-top: 1px solid var(--color-border);
 }
 
 #tb_actionbar_item_prev .w2ui-icon.prev {
@@ -87,7 +87,7 @@ w2ui-toolbar {
 	position: absolute;
 	right: 10px;
 	top: 40px;
-	border: 1px solid darkgrey;
+	border: 1px solid var(--color-border);
 	z-index: 1000;
 	display: none;
 	overflow: visible !important;
@@ -139,7 +139,7 @@ w2ui-toolbar {
 .w2ui-toolbar .w2ui-break {
 	height: 18px;
 	background-image: none;
-	background-color: var(--color-border);
+	background-color: var(--color-border-lighter);
 }
 
 /* For MS Edge 40, the select2 combo boxes need to have higher z-index than #map
@@ -154,6 +154,26 @@ w2ui-toolbar {
 
 .select2-container .select2-selection--single {
 	height: 100%;
+}
+
+.select2-dropdown {
+	border: 1px solid var(--color-border-dark);
+}
+
+#search-input, .select2-search__field {
+	border: 1px solid var(--color-border-lighter) !important;
+}
+
+.select2-container--default .select2-results__option[aria-disabled='true'] {
+	color: var(--color-border-lighter);
+}
+
+.w2ui-overlay > div {
+	border: 1px solid var(--color-border-darker);
+	border-radius: 0px;
+}
+.w2ui-overlay {
+	box-shadow: 0px 2px 10px var(--color-border-darker);
 }
 
 .w2ui-scroll-left,
@@ -439,7 +459,7 @@ button.leaflet-control-search-next
 }
 .select2-container--default .select2-selection--single,
 .sidebar.jsdialog.ui-listbox {
-	background-color: var(--gray-lighter-bg-color);
+	background-color: var(--color-background-dark);
 	color: var(--color-main-text);
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered {
@@ -451,6 +471,10 @@ button.leaflet-control-search-next
 }
 .styles-select {
 	width: 150px !important;
+}
+.select2-container--default .select2-selection--single {
+	border-radius: var(--border-radius);
+	border-color: var(--color-border-dark);
 }
 #tb_editbar_item_fonts .select2-container{
 	margin-left: 5px;
@@ -494,12 +518,12 @@ button.leaflet-control-search-next
 	background: rgba(255, 255, 255, 0.5);
 	position: relative;
 	padding: 2px;
-	border: 1px solid #ccc;
+	border: 1px solid var(--color-border);
 	overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
 }
 
 #setborderstyle-grid td:hover {
-	border: 1px solid #888;
+	border: 1px solid var(--color-border-darker);
 }
 
 #conditionalformatmenu-grid tr td {
@@ -507,12 +531,12 @@ button.leaflet-control-search-next
 	background: rgba(255, 255, 255, 0.5);
 	position: relative;
 	padding: 2px;
-	border: 1px solid #ccc;
+	border: 1px solid var(--color-border);
 	overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
 }
 
 #conditionalformatmenu-grid td:hover {
-	border: 1px solid #888;
+	border: 1px solid var(--color-border-darker);
 }
 
 .w2ui-toolbar table.w2ui-button {
@@ -522,14 +546,14 @@ button.leaflet-control-search-next
 }
 .w2ui-toolbar table.w2ui-button.checked {
 	background-color: var(--gray-light-bg-color);
-	border: 1px solid var(--gray-light-bg-color);
+	border: 1px solid var(--color-border-dark);
 	color: var(--gray-light-txt--color);
 }
 .select2-container--default .select2-selection--single:hover,
 .sidebar.jsdialog.ui-listbox:hover,
 .w2ui-toolbar table.w2ui-button.checked:hover {
 	background-color: var(--gray-light-bg-color);
-	border: 1px solid var(--gray-light-txt--color);
+	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-accent);
 }
 
@@ -979,9 +1003,7 @@ button.leaflet-control-search-next
 	float: left;
 	padding: 2px;
 	width: 20px;
-	border: 1px;
-	border-style: solid;
-	border-color: rgba(120, 120, 120, 0.5);
+	border: 1px solid var(--color-border);
 	background: rgba(255, 255, 255, 1);
 	margin: 3px 0 0 3px;
 }
@@ -1036,7 +1058,7 @@ button.leaflet-control-search-next
 }
 
 .insertshape-grid .col:hover {
-	border: 1px solid #ccc;
+	border: 1px solid var(--color-border-darker);
 }
 
 tr.useritem:hover {

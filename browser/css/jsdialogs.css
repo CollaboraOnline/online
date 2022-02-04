@@ -32,7 +32,7 @@
 
 .jsdialog-container.modalpopup {
 	border: 1px solid #a4a4a4 !important;
-	border-radius: 4px;
+	border-radius: var(--border-radius);
 	box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -156,7 +156,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 /* Expander */
 
 .jsdialog.ui-expander {
-	box-shadow: 0 1px 0px 0 #f1f1f1;
+	box-shadow: 0 1px 0px 0 var(--color-border-lighter);
 }
 
 #options.ui-expander {
@@ -219,8 +219,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-treeview {
 	display: block;
-	border: 1px solid silver;
-	border-radius: 2px;
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius);
 	overflow-y: auto;
 	overflow-x: hidden;
 	max-width: 1000px;
@@ -307,10 +307,10 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 
 .ui-treeview.droptarget {
-	border: 1px solid #888;
+	border: 1px solid var(--color-border-dark);
 }
 .ui-treeview.droptarget:hover{
-	border: 1px solid #888;
+	border: 1px solid var(--color-border-darker);
 	box-shadow: 0 0 2px 0 #777;
 }
 /* input text */
@@ -383,8 +383,8 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	line-height: normal;
 	font-size: 14px;
 	font-family: var(--jquery-ui-font);
-	border: 1px solid #CCC;
-	border-radius: 3px;
+	border: 1px solid var(--color-border-dark);
+	border-radius: var(--border-radius);
 	padding-right: 2em;
 	padding-left: 0.4em;
 	margin: 2px 0px;
@@ -454,7 +454,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .ui-iconview-entry.selected {
-	border: 2px solid gray;
+	border: 2px solid var(--color-border-dark);
 }
 
 /* Autofilter dropdown */
@@ -471,7 +471,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 .autofilter-container {
 	background-color: white;
-	border: solid 1px silver;
+	border: 1px solid var(--color-border);
 	position: absolute;
 	z-index: 1105;
 	padding: 10px;
@@ -704,9 +704,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	width: 24px;
 	position: relative;
 	top: -6px;
-	border: 1px solid var(--gray-color);
-	border-radius: 7px;
-	outline: 1px solid white;
+	border: 1px solid var(--color-border-dark);
+	border-radius: var(--border-radius);
+	outline: 1px solid var(--color-main-background);
 }
 
 /* dropdown arrow */

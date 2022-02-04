@@ -30,9 +30,9 @@
 	--color-primary-lighter: #63BBEE;
 
 	--color-border: #b6b6b6;
-	--color-border-dark: #EFEFEF;
-	--color-border-darker: #b6b6b6;
-	--color-border-lighter: #f1f1f1;
+	--color-border-dark: #EFEFEF; /* select */
+	--color-border-darker: #b6b6b6; /* hover */
+	--color-border-lighter: #f1f1f1; /* separator */
 
 	--border-radius: 4px;
 }

@@ -103,9 +103,9 @@
 }
 
 .vex.vex-theme-plain .vex-content{
-	border: 1px solid #a4a4a4;
+	border: 1px solid var(--color-border-dark);
 	box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
-	border-radius: 4px;
+	border-radius: var(--border-radius);
 	outline: none;
 }
 
