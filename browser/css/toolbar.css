@@ -139,7 +139,7 @@ w2ui-toolbar {
 .w2ui-toolbar .w2ui-break {
 	height: 18px;
 	background-image: none;
-	background-color: var(--color-border);
+	background-color: var(--color-border-lighter);
 }
 
 /* For MS Edge 40, the select2 combo boxes need to have higher z-index than #map
