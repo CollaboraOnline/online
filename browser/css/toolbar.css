@@ -6,8 +6,8 @@
 	text-align: center;
 	z-index: 999;
 	overflow: visible !important;
-	background-color: white;
-	border-bottom: 1px solid var(--gray-color);
+	background-color: var(--color-main-background);
+	border-bottom: 1px solid var(--color-border);
 }
 
 #toolbar-down {
