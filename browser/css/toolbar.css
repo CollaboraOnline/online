@@ -25,7 +25,7 @@
 	color: var(--color-main-text);
 }
 #toolbar-down *:hover {
-	color: var(--color-text-accent);
+	color: var(--color-text-darker);
 }
 #toolbar-down table {
 	background: var(--color-main-background);

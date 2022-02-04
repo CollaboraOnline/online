@@ -280,6 +280,13 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 #search-input {
 	height: 22px;
 }
+#search-input:hover {
+	border: 1px solid var(--color-border-darker) !important;
+}
+#search-input::placeholder,
+#search-input::-ms-input-placeholder {
+	color: var(--color-main-text);
+}
 
 .cool-character {
 	table-layout: fixed;
