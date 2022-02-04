@@ -23,7 +23,7 @@ L.Control.SearchBar = L.Control.extend({
 					html: '<div id="search-input-group" style="padding: 3px 10px;" class="cool-font">' +
 						'    <label for="search-input">Search:</label>' +
 						'    <input size="10" id="search-input"' +
-						'style="padding: 2px; border-radius: 2px; border: 1px solid silver"/>' +
+						'style="padding: 2px; border-radius: var(--border-radius); border: 1px solid var(--color-border)"/>' +
 						'</div>'
 				},
 				{type: 'button', id: 'searchprev', img: 'prev', hint: _UNO('.uno:UpSearch'), disabled: true},

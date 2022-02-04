@@ -171,7 +171,7 @@ L.Control.StatusBar = L.Control.extend({
 						html: '<div class="cool-font">' +
 					'<label for="search-input" class="visuallyhidden" aria-hidden="false">Search:</label>' +
 					'<input size="15" id="search-input" placeholder="' + _('Search') + '"' +
-					'style="padding: 3px; border-radius: 2px; border: 1px solid silver"/>' +
+					'style="padding: 3px; border-radius: var(--border-radius); border: 1px solid var(--color-border)"/>' +
 					'</div>'
 					},
 					{type: 'button',  id: 'searchprev', img: 'prev', hint: _UNO('.uno:UpSearch'), disabled: true},
