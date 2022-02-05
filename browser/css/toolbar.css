@@ -296,7 +296,8 @@ w2ui-toolbar {
 	margin: 0px 14px 0px 4px !important;
 }
 #tb_editbar_item_fold table.w2ui-button.over {
-	background-color: #fff !important;
+	background-color: var(--color-background-darker) !important;
+	border: 1px solid var(--color-border-darker);
 }
 td[id^='tb_editbar_item_sidebar']{
 	padding: 0px 8px;
