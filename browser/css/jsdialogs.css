@@ -716,7 +716,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	font-size: 0;
 	line-height: 0;
 	border: 4px solid transparent;
-	border-top: 5px solid var(--gray-light-txt--color);
+	border-top: 5px solid var(--color-main-text);
 	display: inline-block !important;
 	margin-left: 3px;
 }
@@ -726,15 +726,16 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	height: 23px;
 	display: inline-block;
 	border-left: 1px solid transparent;
+	background-color: transparent;
 }
 
 .arrowbackground:hover {
-	border-left-color: var(--gray-color);
-	background-color: #eee;
+	border-left-color: transparent;
+	background-color: transparent;
 }
 
 .arrowbackground:hover .unoarrow {
-	border-top-color: #333;
+	border-top-color: var(--color-text-darker);
 }
 
 /* menu button */
