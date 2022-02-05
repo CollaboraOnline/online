@@ -9,7 +9,7 @@ noinst_PROGRAMS = fakesockettest unittest unithttplib
 
 AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 	-I${top_srcdir}/common -I${top_srcdir}/net -I${top_srcdir}/wsd -I${top_srcdir}/kit \
-	-I${top_srcdir} \
+	-I${top_srcdir} -I${top_srcdir}/test \
 	-pthread -DCOOLWSD_DATADIR='"@COOLWSD_DATADIR@"' \
 	-DCOOLWSD_CONFIGDIR='"@COOLWSD_CONFIGDIR@"' \
 	-DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
@@ -26,8 +26,8 @@ noinst_LTLIBRARIES = \
 	unit-wopi-async-upload-close.la unit-wopi-async-upload-modify.la \
 	unit-wopi-async-upload-modifyclose.la \
 	unit-wopi-async-slow.la \
-	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
-	unit-wopi-documentconflict.la unit_wopi_renamefile.la unit_wopi_watermark.la \
+	unit-wopi-ownertermination.la unit-wopi-versionrestore.la unit-wopi-documentconflict.la \
+	unit-wopi-save-on-exit.la unit_wopi_renamefile.la unit_wopi_watermark.la \
 	unit-wopi-lock.la \
 	unit-tiff-load.la \
 	unit-large-paste.la \
@@ -178,6 +178,8 @@ unit_wopi_versionrestore_la_SOURCES = UnitWOPIVersionRestore.cpp
 unit_wopi_versionrestore_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_documentconflict_la_SOURCES = UnitWOPIDocumentConflict.cpp
 unit_wopi_documentconflict_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_save_on_exit_la_SOURCES = UnitWOPISaveOnExit.cpp
+unit_wopi_save_on_exit_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_renamefile_la_SOURCES = UnitWOPIRenameFile.cpp
 unit_wopi_renamefile_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_lock_la_SOURCES = UnitWOPILock.cpp
@@ -255,8 +257,8 @@ TESTS = \
 	unit-wopi-async-upload-close.la unit-wopi-async-upload-modify.la \
 	unit-wopi-async-upload-modifyclose.la \
 	unit-wopi-async-slow.la \
-	unit-wopi-ownertermination.la unit-wopi-versionrestore.la \
-	unit-wopi-documentconflict.la unit_wopi_renamefile.la unit_wopi_watermark.la \
+	unit-wopi-ownertermination.la unit-wopi-versionrestore.la unit-wopi-documentconflict.la \
+	unit-wopi-save-on-exit.la unit_wopi_renamefile.la unit_wopi_watermark.la \
 	unit-wopi-lock.la \
 	unit-http.la \
 	unit-tiff-load.la \
