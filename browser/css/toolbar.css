@@ -124,7 +124,7 @@ w2ui-toolbar {
 
 #presentation-toolbar {
 	bottom: 0;
-	background-color: #dfdfdf;
+	background-color: transparent;
 	text-align: center;
 	position: absolute;
 	z-index: 500;
