@@ -96,7 +96,7 @@
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	box-shadow: none;
-	background: #ffffff;
+	background: var(--color-main-background);
 	-webkit-touch-callout: none; /* iOS Safari */
 	-webkit-user-select: none;   /* Chrome/Safari/Opera */
 	-khtml-user-select: none;    /* Konqueror */
@@ -131,8 +131,8 @@
 	color: var(--color-main-text);
 }
 .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active, .lo-menu a.highlighted {
-	background: #0b87e7;
-	color: var(--color-text-accent);
+	background: var(--color-background-darker);
+	color: var(--color-text-darker);
 }
 .lo-menu > li, .lo-menu > li > .disabled {
 	background: transparent; /* top-level menus remain greyish */
@@ -141,11 +141,15 @@
 .lo-menu > li .disabled {
 	color: var(--color-text-lighter);
 }
+.lo-menu > li .disabled:hover {
+	color: var(--color-main-text);
+	background-color: var(--color-background-lighter);
+}
 .lo-menu > li > a:hover, .lo-menu > li > a:focus, .lo-menu > li > a:active, .lo-menu > li > a.highlighted {
-	background: #fff;
-	color: var(--color-text-accent);
-	border-color: #bbbbbb;
-	border-bottom: 1px solid #bbb;
+	background: var(--color-background-darker);
+	color: var(--color-text-darker);
+	border-color: var(--color-border-darker);
+	border-bottom: 1px solid var(--color-border-darker);
 }
 .lo-menu > li > a.highlighted {
 	border-bottom-color: #fff;
@@ -158,8 +162,8 @@
 	display: none;
 }
 .lo-menu ul {
-	border: 1px solid #bbbbbb;
-	background: white;
+	border: 1px solid var(--color-border);
+	background: var(--color-main-background);
 }
 .lo-menu ul a span.sub-arrow {
 	right: 0;
@@ -169,8 +173,8 @@
 	/*transform: rotate(180deg);*/
 }
 .lo-menu ul a:hover > span.sub-arrow {
-	-webkit-filter: brightness(100);
-	filter: brightness(100);
+	-webkit-filter: brightness(0.5);
+	filter: brightness(0.5);
 }
 .lo-menu ul > li {
 	border-left: 0;
@@ -182,7 +186,7 @@
 	overflow: hidden;
 	padding-top: 0;
 	padding-bottom: 0;
-	background-color: var(--gray-light-bg-color);
+	background-color: var(--color-border-lighter);
 }
 /* lo-menu customizations end */
 
@@ -274,8 +278,6 @@
 
 .lo-menu-item-checked:hover::before {
 	color: #fff;
-	-webkit-filter: brightness(100);
-	filter: brightness(100);
 }
 
 .writer-icon-img {
