@@ -93,8 +93,7 @@ w2ui-toolbar {
 	overflow: visible !important;
 }
 #toolbar-down .ToolbarStatusInactive {
-	color: var(--gray-light-txt--color);
-	box-shadow: inset 0px 0px 0px 10px #f2f2f2, 0px 0px 0px 2px #f2f2f2, 4px 0px 0px 1px #fff, -4px 0px 0px 1px #fff, 0px 0px 0px 5px #fff;
+	color: var(--color-text-lighter);
 }
 .w2ui-overlay .menu {
 	overflow: hidden auto;
