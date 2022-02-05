@@ -637,13 +637,16 @@ a.leaflet-control-zoom-in {
 	border: none !important;
 }
 #slide-sorter .preview-img{
-	border-radius: 3px;
-	border-color: #eee;
+	border-radius: var(--border-radius);
+	border-color: var(--color-border);
+}
+#slide-sorter .preview-img:hover{
+	border-color: var(--color-primary-darker);
 }
 #slide-sorter .preview-img-currentpart, #mobile-wizard-header .preview-img-currentpart{
-	border-color: #0b87e780;
+	border-color: var(--color-primary-dark);
 	border-style: solid;
-	border-radius: 3px;
+	border-radius: var(--border-radius);
 }
 #presentation-controls-wrapper {
 	background: none;
