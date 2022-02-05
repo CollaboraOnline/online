@@ -245,7 +245,7 @@ w2ui-toolbar {
 	font-size: 16px;
 	border: 1px solid transparent;
 	background-color: transparent;
-	border-radius: 1px;
+	border-radius: var(--border-radius);
 	padding: 0px 2px;
 	transition: 0.5s;
 }
@@ -261,8 +261,8 @@ w2ui-toolbar {
 	padding: 0px 4px;
 	width: auto !important;
 	border-radius: 20px;
-	box-shadow: inset 0 0 2px 0 var(--gray-color);
-	background-color: white;
+	box-shadow: inset 0 0 2px 0 var(--color-border-dark);
+	background-color: var(--color-background-lighter);
 }
 
 .main-nav:not(.hasnotebookbar) #document-name-input.editable {
@@ -273,7 +273,7 @@ w2ui-toolbar {
 #document-name-input.editable:focus {
 	border: none;
 	box-shadow: inset 0 0 2px 1px #f0f0f0, 0 0 0.1px 1px #bbb;
-	background-color: white;
+	background-color: var(--color-main-background);
 	background-image: none;
 	outline: none;
 	flex: 2;
@@ -288,7 +288,7 @@ w2ui-toolbar {
 #document-name-input.editable:hover:not(:focus) {
 	border: none;
 	box-shadow: 0 0 0.1px 1px #d7d7d7, 0 0 3px 2px #f0f0f0;
-	background-color: white;
+	background-color: var(--color-main-background);
 	background-position: right;
 	background-repeat: no-repeat;
 }
