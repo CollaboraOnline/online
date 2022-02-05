@@ -241,7 +241,7 @@ w2ui-toolbar {
 }
 
 #document-name-input {
-	color: var(--color-text-accent);
+	color: var(--color-main-text);
 	font-size: 16px;
 	border: 1px solid transparent;
 	background-color: transparent;
