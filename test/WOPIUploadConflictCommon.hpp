@@ -5,35 +5,48 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-#include <config.h>
-
-#include "WOPIUploadConflictCommon.hpp"
-
 #include <string>
 #include <memory>
 
 #include <Poco/Net/HTTPRequest.h>
 
-#include "Util.hpp"
-#include "Log.hpp"
-#include "Unit.hpp"
-#include "UnitHTTP.hpp"
-#include "helpers.hpp"
-#include "lokassert.hpp"
+#include "WopiTestServer.hpp"
 
-class UnitWOPIDocumentConflict : public WOPIUploadConflictCommon
+/**
+ * This is a base class with a number of test cases which assert that the
+ * unsaved changes in the opened document are discarded in case document
+ * is changed in storage behind our back. We don't want to overwrite
+ * the document which is in storage when the user asks us to
+ * upload to storage, without giving the user the opportunity to decide.
+ *
+ * There are multiple scenarios to test.
+ *
+ * The way this works is as follows:
+ * 1. Load a document.
+ * 2. When we get 'status:' in onFilterSendMessage, we modify it.
+ * 3. Simulate content-change in storage and attempt to save it.
+ *  4a. Disconnect and the modified data must be discarded.
+ *  4b. Save and, on getting the documentconflict error, discard.
+ *  4c. Close and, on getting the documentconflict error, discard.
+ *  4d. Save and, on getting the documentconflict error, overwrite.
+ * 5. Load the document again and verify the expected contents.
+ * 6. Move to the next test scenario.
+ */
+
+class WOPIUploadConflictCommon : public WopiTestServer
 {
 protected:
     STATES_ENUM(Phase, _phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose);
-    STATES_ENUM(Scenario, _scenario, Disconnect, SaveDiscard, CloseDiscard, SaveOverwrite, VerifyOverwrite);
+    STATES_ENUM(Scenario, _scenario, Disconnect, SaveDiscard, CloseDiscard, SaveOverwrite,
+                VerifyOverwrite);
 
     static constexpr auto OriginalDocContent = "Original contents";
     static constexpr auto ModifiedOriginalDocContent = "\ufeffaOriginal contents\n";
     static constexpr auto ConflictingDocContent = "Modified in-storage contents";
 
 public:
-    UnitWOPIDocumentConflict()
-        : WOPIUploadConflictCommon("UnitWOPIDocumentConflict", OriginalDocContent)
+    WOPIUploadConflictCommon(std::string testname, const std::string& fileContent)
+        : WopiTestServer(std::move(testname), fileContent)
         , _phase(Phase::Load)
         , _scenario(Scenario::Disconnect)
     {
@@ -260,7 +273,5 @@ public:
         }
     }
 };
-
-UnitBase* unit_create_wsd(void) { return new UnitWOPIDocumentConflict(); }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

@@ -324,6 +324,7 @@ noinst_HEADERS = $(wsd_headers) $(shared_headers) $(kit_headers) \
                  test/test.hpp \
                  test/testlog.hpp \
                  test/HttpTestServer.hpp \
+                 test/WOPIUploadConflictCommon.hpp \
                  test/helpers.hpp
 
 dist-hook:
