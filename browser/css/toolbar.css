@@ -441,15 +441,18 @@ button.leaflet-control-search-next
 }
 .select2-container--default .select2-selection--single,
 .sidebar.jsdialog.ui-listbox {
-	background-color: var(--gray-lighter-bg-color);
-	color: var(--color-main-text);
+	background-color: var(--color-background-dark);
+	color: var(--color-text-dark);
+	border-radius: var(--border-radius);
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered {
 	line-height: 24px;
+	background-color: var(--color-background-dark);
 	color: var(--color-main-text);
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered:hover {
-	color: var(--color-text-accent);
+	background-color: var(--color-background-darker);
+	color: var(--color-text-darker);
 }
 .styles-select {
 	width: 150px !important;
