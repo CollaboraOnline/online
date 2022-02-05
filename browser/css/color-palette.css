@@ -13,14 +13,14 @@
 	--white-bg-color: #fff;
 	--color-text-accent: #333333;
 
-	--color-main-text: #696969;
-	--color-text-dark: #636363;  /* select */
-	--color-text-darker: #333333;  /* hover */
-	--color-text-lighter: #b6b6b6;
+	--color-main-text: #333333;
+	--color-text-dark: #333333;  /* select */
+	--color-text-darker: #000;  /* hover */
+	--color-text-lighter: #696969;
 
 	--color-main-background: #fff;
 	--color-background-dark: #F7F7F7;  /* select */
-	--color-background-darker: #EFEFEF;  /* hover */
+	--color-background-darker: #e4e4e4;  /* hover */
 	--color-background-lighter: #F7F7F7;
 
 	--color-primary: #1C99E0;
@@ -30,8 +30,8 @@
 	--color-primary-lighter: #63BBEE;
 
 	--color-border: #b6b6b6;
-	--color-border-dark: #EFEFEF; /* select */
-	--color-border-darker: #b6b6b6;  /* hover */
+	--color-border-dark: #959595; /* select */
+	--color-border-darker: #696969;  /* hover */
 	--color-border-lighter: #f1f1f1;
 
 	--border-radius: 4px;
