@@ -33,14 +33,15 @@
  * 3. Simulate content-change in storage and attempt to save it.
  *  4a. Disconnect and the modified data must be discarded.
  *  4b. Save and, on getting the documentconflict error, discard.
- *  4c. Save and, on getting the documentconflict error, overwrite.
+ *  4c. Close and, on getting the documentconflict error, discard.
+ *  4d. Save and, on getting the documentconflict error, overwrite.
  * 5. Load the document again and verify the expected contents.
  * 6. Move to the next test scenario.
  */
 class UnitWOPIDocumentConflict : public WopiTestServer
 {
     STATES_ENUM(Phase, _phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose);
-    STATES_ENUM(Scenario, _scenario, Disconnect, SaveDiscard, SaveOverwrite, VerifyOverwrite);
+    STATES_ENUM(Scenario, _scenario, Disconnect, SaveDiscard, CloseDiscard, SaveOverwrite, VerifyOverwrite);
 
     static constexpr auto OriginalDocContent = "Original contents";
     static constexpr auto ModifiedOriginalDocContent = "\ufeffaOriginal contents\n";
@@ -70,6 +71,7 @@ public:
             case Scenario::SaveDiscard:
                 expectedContents = ConflictingDocContent;
                 break;
+            case Scenario::CloseDiscard:
             case Scenario::SaveOverwrite:
                 LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage",
                                          std::string(ConflictingDocContent), getFileContent());
@@ -95,6 +97,7 @@ public:
         {
             case Scenario::Disconnect:
             case Scenario::SaveDiscard:
+            case Scenario::CloseDiscard:
             case Scenario::VerifyOverwrite:
                 LOK_ASSERT_FAIL("Unexpectedly overwritting the document in storage");
                 break;
@@ -158,6 +161,13 @@ public:
                 LOG_TST("Saving the document");
                 WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
                 break;
+            case Scenario::CloseDiscard:
+                // Close the document; wsd should detect now that document has
+                // been changed underneath it and send us:
+                // "error: cmd=storage kind=documentconflict"
+                LOG_TST("Closing the document");
+                WSD_CMD("closedocument");
+                break;
             case Scenario::VerifyOverwrite:
                 LOK_ASSERT_FAIL("Unexpected modification in " + toString(_scenario));
                 break;
@@ -180,6 +190,7 @@ public:
                 LOK_ASSERT_FAIL("We can't possibly get anything after disconnecting");
                 break;
             case Scenario::SaveDiscard:
+            case Scenario::CloseDiscard:
                 LOG_TST("Discarding own changes via closedocument");
                 WSD_CMD("closedocument");
                 break;
@@ -220,10 +231,12 @@ public:
                 TRANSITION_STATE(_scenario, Scenario::SaveDiscard);
                 break;
             case Scenario::SaveDiscard:
+                TRANSITION_STATE(_scenario, Scenario::CloseDiscard);
+                break;
+            case Scenario::CloseDiscard:
                 TRANSITION_STATE(_scenario, Scenario::SaveOverwrite);
                 break;
             case Scenario::SaveOverwrite:
-                LOG_TST("Will reload to verify we stored our own version");
                 TRANSITION_STATE(_scenario, Scenario::VerifyOverwrite);
                 break;
             case Scenario::VerifyOverwrite:
