@@ -167,7 +167,7 @@ body {
 	margin: 0;
 	overflow: hidden;
 	overscroll-behavior-y: none; /* disable the pull to reload gesture */
-	background: #ffffff;
+	background: var(--color-main-background);
 	touch-action: none;
 	line-height: normal;
 }
@@ -175,16 +175,16 @@ body {
 #presentation-controls-wrapper {
 	background: #dfdfdf;
 	position: relative;
-	border-top: 1px solid var(--gray-color);
+	border-top: 1px solid var(--color-border);
 	display: none;
 }
 
 #sidebar-dock-wrapper {
 	display: none;
-	background: #fff;
+	background: var(--color-background-lighter);
 	position: relative;
-	border-top: 1px solid var(--gray-color);
-	border-left: 1px solid var(--gray-color);
+	border-top: 1px solid var(--color-border);
+	border-left: 1px solid var(--color-border);
 	overflow: hidden;
 	z-index: 990;
 }
