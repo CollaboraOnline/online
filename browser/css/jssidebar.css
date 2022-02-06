@@ -250,13 +250,14 @@ td.jsdialog .jsdialog.cell.sidebar {
 }
 
 /* non selected */
+#clearFormatting, #FormatPaintbrush,
 .hasnotebookbar .ui-content.unotoolbutton.has-label,
 .hasnotebookbar .ui-content.unotoolbutton.inline,
 .hasnotebookbar .ui-content.unotoolbutton:not(.has-label):not(.inline),
 .sidebar.unotoolbutton {
 	background-color: transparent;
-	border: 2px solid transparent;
-	color: var(--gray-light-txt--color);
+	border: 1px solid transparent;
+	color: var(--color-main-text);
 	border-radius: var(--border-radius);
 }
 /* selected */
@@ -264,9 +265,9 @@ td.jsdialog .jsdialog.cell.sidebar {
 .hasnotebookbar .ui-content.unotoolbutton.selected.inline,
 .hasnotebookbar .ui-content.unotoolbutton.selected:not(.has-label):not(.inline),
 .sidebar.unotoolbutton.selected {
-	background-color: var(--gray-light-bg-color);
-	border: 2px solid transparent;
-	color: var(--gray-light-txt--color);
+	background-color: var(--color-background-dark);
+	border: 1px solid var(--color-border-dark);
+	color: var(--color-text-dark);
 	border-radius: var(--border-radius);
 }
 /* selected hover */
@@ -280,8 +281,9 @@ td.jsdialog .jsdialog.cell.sidebar {
 .sidebar #resetattr:hover,
 .sidebar #FormatPaintbrush:hover,
 #table-textorientbox.sidebar .jsdialog .radiobutton:hover {
-	outline: 1px solid var(--gray-light-txt--color);
-	color: var(--color-text-accent);
+	border: 1px solid var(--color-border-darker) !important;
+	color: var(--color-text-darker);
+	background-color: var(--color-background-darker) !important;
 	border-radius: var(--border-radius);
 }
 
