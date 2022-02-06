@@ -28,6 +28,7 @@
 	position: relative;
 	margin-inline-start: 8px;
 	color: var(--color-main-text);
+	background-color: var(--color-background-dark);
 }
 
 .sidebar.spinfield {
@@ -39,6 +40,8 @@
 }
 .sidebar .spinfieldcontainer input:hover {
 	border: 1px solid var(--gray-light-txt--color);
+	color: var(--color-text-darker);
+	background-color: var(--color-background-darker);
 }
 
 .spinfieldunit {
