@@ -141,6 +141,11 @@
 	top: 12px;
 }
 
+#table-indentfieldbox {
+	position: relative;
+	left: -20px;
+}
+
 #table-box4.sidebar.jsdialog.vertical {
 	width: auto;
 }
