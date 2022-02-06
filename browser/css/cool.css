@@ -214,7 +214,8 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 #toolbar-wrapper {
 	table-layout: fixed;
-	border-collapse: collapse;
+	border-collapse: separate;
+	border-spacing: 0;
 	width: 100%;
 	border-top: none;
 	z-index: 11 !important;
