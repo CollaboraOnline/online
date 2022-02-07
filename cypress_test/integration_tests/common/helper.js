@@ -495,13 +495,13 @@ function closeDocument(fileName, testState) {
 		if (Cypress.env('IFRAME_LEVEL') === '2') {
 			// Close the document, with the close button.
 			doIfOnMobile(function() {
-				cy.get('#tb_actionbar_item_closemobile')
+				cy.get('#toolbar-mobile-back')
 					.click();
 
 				cy.get('#mobile-edit-button')
 					.should('be.visible');
 
-				cy.get('#tb_actionbar_item_closemobile')
+				cy.get('#toolbar-mobile-back')
 					.then(function(item) {
 						cy.wrap(item)
 							.click();
