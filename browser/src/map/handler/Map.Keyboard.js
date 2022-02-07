@@ -7,7 +7,7 @@
  * at TextInput.
  */
 
-/* global app vex _ */
+/* global app vex UNOKey UNOModifier _ */
 
 L.Map.mergeOptions({
 	keyboard: true,
@@ -17,107 +17,99 @@ L.Map.mergeOptions({
 
 L.Map.Keyboard = L.Handler.extend({
 
-	keyModifier: {
-		shift: 4096,
-		ctrl: 8192,
-		alt: 16384,
-		ctrlMac: 32768
-	},
-
-	// For UNO keycodes cf. offapi/com/sun/star/awt/Key.idl
 	keymap: {
-		8   : 1283, // backspace	: BACKSPACE
-		9   : 1282, // tab 		: TAB
-		13  : 1280, // enter 		: RETURN
+		8   : UNOKey.BACKSPACE,
+		9   : UNOKey.TAB,
+		13  : UNOKey.RETURN,
 		16  : null, // shift		: UNKOWN
 		17  : null, // ctrl		: UNKOWN
 		18  : null, // alt		: UNKOWN
 		19  : null, // pause/break	: UNKOWN
 		20  : null, // caps lock	: UNKOWN
-		27  : 1281, // escape		: ESCAPE
-		32  : 1284, // space		: SPACE
-		33  : 1030, // page up		: PAGEUP
-		34  : 1031, // page down	: PAGEDOWN
-		35  : 1029, // end		: END
-		36  : 1028, // home		: HOME
-		37  : 1026, // left arrow	: LEFT
-		38  : 1025, // up arrow		: UP
-		39  : 1027, // right arrow	: RIGHT
-		40  : 1024, // down arrow	: DOWN
-		45  : 1285, // insert		: INSERT
-		46  : 1286, // delete		: DELETE
-		48  : 256,  // 0		: NUM0
-		49  : 257,  // 1		: NUM1
-		50  : 258,  // 2		: NUM2
-		51  : 259,  // 3		: NUM3
-		52  : 260,  // 4		: NUM4
-		53  : 261,  // 5		: NUM5
-		54  : 262,  // 6		: NUM6
-		55  : 263,  // 7		: NUM7
-		56  : 264,  // 8		: NUM8
-		57  : 265,  // 9		: NUM9
-		65  : 512,  // A		: A
-		66  : 513,  // B		: B
-		67  : 514,  // C		: C
-		68  : 515,  // D		: D
-		69  : 516,  // E		: E
-		70  : 517,  // F		: F
-		71  : 518,  // G		: G
-		72  : 519,  // H		: H
-		73  : 520,  // I		: I
-		74  : 521,  // J		: J
-		75  : 522,  // K		: K
-		76  : 523,  // L		: L
-		77  : 524,  // M		: M
-		78  : 525,  // N		: N
-		79  : 526,  // O		: O
-		80  : 527,  // P		: P
-		81  : 528,  // Q		: Q
-		82  : 529,  // R		: R
-		83  : 530,  // S		: S
-		84  : 531,  // T		: T
-		85  : 532,  // U		: U
-		86  : 533,  // V		: V
-		87  : 534,  // W		: W
-		88  : 535,  // X		: X
-		89  : 536,  // Y		: Y
-		90  : 537,  // Z		: Z
+		27  : UNOKey.ESCAPE,
+		32  : UNOKey.SPACE,
+		33  : UNOKey.PAGEUP,
+		34  : UNOKey.PAGEDOWN,
+		35  : UNOKey.END,
+		36  : UNOKey.HOME,
+		37  : UNOKey.LEFT,
+		38  : UNOKey.UP,
+		39  : UNOKey.RIGHT,
+		40  : UNOKey.DOWN,
+		45  : UNOKey.INSERT,
+		46  : UNOKey.DELETE,
+		48  : UNOKey.NUM0,
+		49  : UNOKey.NUM1,
+		50  : UNOKey.NUM2,
+		51  : UNOKey.NUM3,
+		52  : UNOKey.NUM4,
+		53  : UNOKey.NUM5,
+		54  : UNOKey.NUM6,
+		55  : UNOKey.NUM7,
+		56  : UNOKey.NUM8,
+		57  : UNOKey.NUM9,
+		65  : UNOKey.A,
+		66  : UNOKey.B,
+		67  : UNOKey.C,
+		68  : UNOKey.D,
+		69  : UNOKey.E,
+		70  : UNOKey.F,
+		71  : UNOKey.G,
+		72  : UNOKey.H,
+		73  : UNOKey.I,
+		74  : UNOKey.J,
+		75  : UNOKey.K,
+		76  : UNOKey.L,
+		77  : UNOKey.M,
+		78  : UNOKey.N,
+		79  : UNOKey.O,
+		80  : UNOKey.P,
+		81  : UNOKey.Q,
+		82  : UNOKey.R,
+		83  : UNOKey.S,
+		84  : UNOKey.T,
+		85  : UNOKey.U,
+		86  : UNOKey.V,
+		87  : UNOKey.W,
+		88  : UNOKey.X,
+		89  : UNOKey.Y,
+		90  : UNOKey.Z,
 		91  : null, // left window key	: UNKOWN
 		92  : null, // right window key	: UNKOWN
 		93  : null, // select key	: UNKOWN
-		96  : 256,  // numpad 0		: NUM0
-		97  : 257,  // numpad 1		: NUM1
-		98  : 258,  // numpad 2		: NUM2
-		99  : 259,  // numpad 3		: NUM3
-		100 : 260,  // numpad 4		: NUM4
-		101 : 261,  // numpad 5		: NUM5
-		102 : 262,  // numpad 6		: NUM6
-		103 : 263,  // numpad 7		: NUM7
-		104 : 264,  // numpad 8		: NUM8
-		105 : 265,  // numpad 9		: NUM9
-		106 : 1289, // multiply		: MULTIPLY
-		107 : 1287, // add		: ADD
-		109 : 1288, // subtract		: SUBTRACT
-		110 : 1309, // decimal point	: DECIMAL
-		111 : 1290, // divide		: DIVIDE
-		112 : 768,  // f1		: F1
-		113 : 769,  // f2		: F2
-		114 : 770,  // f3		: F3
-		115 : 771,  // f4		: F4
-		116 : 772,  // f5		: F5
-		117 : 773,  // f6		: F6
-		118 : 774,  // f7		: F7
-		119 : 775,  // f8		: F8
-		120 : 776,  // f9		: F9
-		121 : 777,  // f10		: F10
-		122 : 778,  // f11		: F11
-		144 : 1313, // num lock		: NUMLOCK
-		145 : 1314, // scroll lock	: SCROLLLOCK
-		173 : 1288, // dash		: DASH (on Firefox)
-		186 : 1317, // semi-colon	: SEMICOLON
-		187 : 1295, // equal sign	: EQUAL
-		188 : 1292, // comma		: COMMA
-		189 : 1288, // dash		: DASH
+		96  : UNOKey.NUM0,
+		97  : UNOKey.NUM1,
+		98  : UNOKey.NUM2,
+		99  : UNOKey.NUM3,
+		100 : UNOKey.NUM4,
+		101 : UNOKey.NUM5,
+		102 : UNOKey.NUM6,
+		103 : UNOKey.NUM7,
+		104 : UNOKey.NUM8,
+		105 : UNOKey.NUM9,
+		106 : UNOKey.MULTIPLY,
+		107 : UNOKey.ADD,
+		109 : UNOKey.SUBTRACT,
+		110 : UNOKey.DECIMAL,
+		111 : UNOKey.DIVIDE,
+		112 : UNOKey.F1,
+		113 : UNOKey.F2,
+		114 : UNOKey.F3,
+		115 : UNOKey.F4,
+		116 : UNOKey.F5,
+		117 : UNOKey.F6,
+		118 : UNOKey.F7,
+		119 : UNOKey.F8,
+		120 : UNOKey.F9,
+		121 : UNOKey.F10,
+		122 : UNOKey.F11,
+		144 : UNOKey.NUMLOCK,
+		145 : UNOKey.SCROLLLOCK,
+		173 : UNOKey.SUBTRACT,
+		186 : UNOKey.SEMICOLON,
+		187 : UNOKey.EQUAL,
+		188 : UNOKey.COMMA,
+		189 : UNOKey.SUBTRACT,
 		190 : null, // period		: UNKOWN
 		191 : null, // forward slash	: UNKOWN
 		192 : null, // grave accent	: UNKOWN
@@ -187,7 +179,7 @@ L.Map.Keyboard = L.Handler.extend({
 	},
 
 	_ignoreKeyEvent: function(ev) {
-		var shift = ev.shiftKey ? this.keyModifier.shift : 0;
+		var shift = ev.shiftKey ? UNOModifier.SHIFT : 0;
 		if (shift && (ev.keyCode === 45 || ev.keyCode === 46)) {
 			// don't handle shift+insert, shift+delete
 			// These are converted to 'cut', 'paste' events which are
@@ -287,10 +279,10 @@ L.Map.Keyboard = L.Handler.extend({
 		}
 
 		this.modifier = 0;
-		var shift = ev.shiftKey ? this.keyModifier.shift : 0;
-		var ctrl = ev.ctrlKey ? this.keyModifier.ctrl : 0;
-		var alt = ev.altKey ? this.keyModifier.alt : 0;
-		var cmd = ev.metaKey ? this.keyModifier.ctrl : 0;
+		var shift = ev.shiftKey ? UNOModifier.SHIFT : 0;
+		var ctrl = ev.ctrlKey ? UNOModifier.CTRL : 0;
+		var alt = ev.altKey ? UNOModifier.ALT : 0;
+		var cmd = ev.metaKey ? UNOModifier.CTRL : 0;
 		var location = ev.location;
 		this.modifier = shift | ctrl | alt | cmd;
 
@@ -327,7 +319,7 @@ L.Map.Keyboard = L.Handler.extend({
 		var charCode = ev.charCode;
 		var keyCode = ev.keyCode;
 
-		if ((this.modifier == this.keyModifier.alt || this.modifier == this.keyModifier.shift + this.keyModifier.alt) &&
+		if ((this.modifier == UNOModifier.ALT || this.modifier == UNOModifier.SHIFT + UNOModifier.ALT) &&
 		    keyCode >= 48) {
 			// Presumably a Mac or iOS client accessing a "special character". Just ignore the alt modifier.
 			// But don't ignore it for Alt + non-printing keys.
@@ -394,7 +386,7 @@ L.Map.Keyboard = L.Handler.extend({
 			else if (ev.type === 'keyup') {
 				if ((this.handleOnKeyDownKeys[keyCode] && charCode === 0) ||
 				    (this.modifier) ||
-				    unoKeyCode === 1280) {
+				    unoKeyCode === UNOKey.RETURN) {
 					keyEventFn('up', charCode, unoKeyCode);
 				} else {
 					// was handled as textinput
