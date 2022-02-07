@@ -215,7 +215,7 @@ m4_ifelse(MOBILEAPP,[true],
        </td>
      </tr>
      <tr>
-       <td colspan="3" id="formulabar" style="display: none"></td>
+       <td colspan="4" id="formulabar" style="display: none"></td>
      </tr>
     </table>
 
