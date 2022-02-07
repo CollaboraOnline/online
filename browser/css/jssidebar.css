@@ -85,7 +85,7 @@
 
 #fontnamecombobox > .sidebar.jsdialog.ui-listbox,
 #applystyle > .sidebar.jsdialog.ui-listbox {
-	width: 172px;
+	min-width: 186px;
 }
 
 #gradientstyle > .sidebar.jsdialog.ui-listbox {
@@ -101,7 +101,7 @@
 }
 
 #fontsizecombobox > .sidebar.jsdialog.ui-listbox {
-	width: 86px;
+	min-width: 86px;
 }
 
 .sidebar.ui-expander {
