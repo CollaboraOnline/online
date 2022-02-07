@@ -35,7 +35,7 @@ describe('Nextcloud specific tests.', function() {
 		cy.get('#mobile-edit-button')
 			.should('be.visible');
 
-		cy.get('#tb_actionbar_item_closemobile')
+		cy.get('##toolbar-mobile-back')
 			.then(function(item) {
 				cy.wrap(item)
 					.click();

@@ -510,7 +510,7 @@ describe('Impress insertion wizard.', function() {
 		impressHelper.assertNumberOfSlidePreviews(2);
 
 		if (Cypress.env('INTEGRATION') !== 'nextcloud') {
-			cy.get('#tb_actionbar_item_closemobile')
+			cy.get('#toolbar-mobile-back')
 				.click();
 
 			cy.contains('.leaflet-control-zoom-in', '+')
