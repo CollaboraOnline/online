@@ -54,8 +54,8 @@ endif
 COOL_HTML_SRC = $(shell find $(srcdir)/html -name '*.html')
 COOL_HTML_DST = $(patsubst $(srcdir)/html/%.html,$(DIST_FOLDER)/%.html,$(COOL_HTML_SRC))
 
-COOL_WELCOME_SRC = $(shell find $(srcdir)/welcome -name '*.html')
-COOL_WELCOME_DST = $(patsubst $(srcdir)/welcome/%.html,$(DIST_FOLDER)/welcome/%.html,$(COOL_WELCOME_SRC))
+COOL_WELCOME_SRC = $(shell find $(srcdir)/welcome -name '*')
+COOL_WELCOME_DST = $(patsubst $(srcdir)/welcome/%,$(DIST_FOLDER)/welcome/%,$(COOL_WELCOME_SRC))
 
 COOL_ADMIN_SRC = $(shell find $(srcdir)/admin -name '*.html' -or -name '*.css' -or -name '*.ttf' -or -name 'OFL.txt' -or -name '*.svg')
 COOL_ADMIN_ALL = $(shell find $(srcdir)/admin -name '*')
@@ -583,7 +583,7 @@ $(DIST_FOLDER)/%.html: $(srcdir)/html/%.html
 		`ln -sf $(abs_srcdir)/$< $@`; \
 	fi
 
-$(DIST_FOLDER)/welcome/%.html: $(srcdir)/welcome/%.html
+$(DIST_FOLDER)/welcome/%: $(srcdir)/welcome/%
 	@mkdir -p $(dir $@)
 	@if test -z '$(ENABLE_BROWSERSYNC)'; then \
 		`cp $< $@`; \
