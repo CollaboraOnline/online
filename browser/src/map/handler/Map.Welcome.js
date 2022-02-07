@@ -95,9 +95,9 @@ L.Map.Welcome = L.Handler.extend({
 				this.remove();
 			} else {
 				// fallback
-				var welcomeLocation = 'welcome/welcome-' + String.locale + '.html';
+				var welcomeLocation = L.LOUtil.getURL('/welcome/welcome.html');
 				if (window.socketProxy)
-					welcomeLocation = window.makeWsUrl('/loleaflet/dist/' + welcomeLocation);
+					welcomeLocation = window.makeWsUrl(welcomeLocation);
 
 				this._url = welcomeLocation;
 				this._fallback = true;
