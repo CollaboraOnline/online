@@ -86,7 +86,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	top: 0;
 }
 #toolbar-logo {
-	width: 0px !important;
+	display: none !important;
 }
 #document-header{
 	display: none !important;
