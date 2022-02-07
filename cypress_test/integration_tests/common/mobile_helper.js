@@ -20,11 +20,11 @@ function enableEditingMobile() {
 		.then(function(button) {
 			if (button.css('display') !== 'none') {
 
-				cy.get('#tb_actionbar_item_closemobile .editmode')
-					.should('not.exist');
+				cy.get('#toolbar-mobile-back')
+					.should('not.have.class', 'editmode-on');
 
-				cy.get('#tb_actionbar_item_closemobile .closemobile')
-					.should('be.visible');
+				cy.get('#toolbar-mobile-back')
+					.should('have.class', 'editmode-off');
 
 				cy.get('#mobile-edit-button')
 					.click();
@@ -32,11 +32,11 @@ function enableEditingMobile() {
 		});
 
 
-	cy.get('#tb_actionbar_item_closemobile .editmode')
-		.should('be.visible');
+	cy.get('#toolbar-mobile-back')
+		.should('have.class', 'editmode-on');
 
-	cy.get('#tb_actionbar_item_closemobile .closemobile')
-		.should('not.exist');
+	cy.get('#toolbar-mobile-back')
+		.should('not.have.class', 'editmode-off');
 
 	// Wait until all UI update is finished.
 	cy.get('#toolbar-down')
