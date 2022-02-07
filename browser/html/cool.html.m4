@@ -206,6 +206,7 @@ m4_ifelse(MOBILEAPP,[true],
      <table id="toolbar-wrapper">
      <tr>
        <td id="toolbar-logo"></td>
+       <td id="toolbar-mobile-back" class="editmode-off"></td>
        <td id="toolbar-up"></td>
        <td id="toolbar-hamburger">
          <label class="main-menu-btn" for="main-menu-state">

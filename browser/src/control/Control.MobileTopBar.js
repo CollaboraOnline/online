@@ -25,7 +25,6 @@ L.Control.MobileTopBar = L.Control.extend({
 	getToolItems: function(docType) {
 		if (docType == 'text') {
 			return [
-				{type: 'button',  id: 'closemobile',  img: 'closemobile'},
 				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
 				{type: 'spacer'},
@@ -36,7 +35,6 @@ L.Control.MobileTopBar = L.Control.extend({
 			];
 		} else if (docType == 'spreadsheet') {
 			return [
-				{type: 'button',  id: 'closemobile',  img: 'closemobile'},
 				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
 				{type: 'button', hidden: true, id: 'acceptformula',  img: 'ok', hint: _('Accept')},
@@ -49,7 +47,6 @@ L.Control.MobileTopBar = L.Control.extend({
 			];
 		} else if (docType == 'presentation') {
 			return [
-				{type: 'button',  id: 'closemobile',  img: 'closemobile'},
 				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
 				{type: 'spacer'},
@@ -61,7 +58,6 @@ L.Control.MobileTopBar = L.Control.extend({
 			];
 		} else if (docType == 'drawing') {
 			return [
-				{type: 'button',  id: 'closemobile',  img: 'closemobile'},
 				{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: 'Undo', disabled: true},
 				{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: 'Redo', disabled: true},
 				{type: 'spacer'},
@@ -154,10 +150,6 @@ L.Control.MobileTopBar = L.Control.extend({
 				toolbar.check(id);
 			}
 		}
-		else if (id === 'closemobile') {
-			// Call global onClick handler
-			window.onClick(e, id, item);
-		}
 		else if (id === 'fullscreen-drawing') {
 			if (item.checked) {
 				toolbar.uncheck(id);
@@ -220,7 +212,6 @@ L.Control.MobileTopBar = L.Control.extend({
 				toolbarDownButtons.forEach(function(id) {
 					toolbar.enable(id);
 				});
-				toolbar.set('closemobile', {img: 'editmode'});
 			}
 		} else {
 			toolbar = w2ui['actionbar'];
@@ -229,7 +220,6 @@ L.Control.MobileTopBar = L.Control.extend({
 					toolbar.disable(id);
 				});
 				toolbar.enable('comment_wizard');
-				toolbar.set('closemobile', {img: 'closemobile'});
 			}
 		}
 	},

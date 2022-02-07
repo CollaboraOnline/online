@@ -42,11 +42,18 @@ L.Control.UIManager = L.Control.extend({
 
 	initializeBasicUI: function() {
 		var enableNotebookbar = window.userInterfaceMode === 'notebookbar';
+		var that = this;
 
 		if (window.mode.isMobile() || !enableNotebookbar) {
 			var menubar = L.control.menubar();
 			this.map.menubar = menubar;
 			this.map.addControl(menubar);
+		}
+
+		if (window.mode.isMobile()) {
+			$('#toolbar-mobile-back').on('click', function() {
+				that.enterReadonlyOrClose();
+			});
 		}
 
 		if (!window.mode.isMobile()) {
