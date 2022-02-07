@@ -73,7 +73,7 @@ void ChildProcess::setDocumentBroker(const std::shared_ptr<DocumentBroker>& docB
 void DocumentBroker::broadcastLastModificationTime(
     const std::shared_ptr<ClientSession>& session) const
 {
-    if (_storageManager.getLastModifiedTime() == std::chrono::system_clock::time_point())
+    if (_storageManager.getLastModifiedTime().empty())
         // No time from the storage (e.g., SharePoint 2013 and 2016) -> don't send
         return;
 
@@ -823,21 +823,21 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
 
     if (firstInstance)
     {
-        _storageManager.setLastModifiedTime(fileInfo.getModifiedTime());
+        _storageManager.setLastModifiedTime(fileInfo.getLastModifiedTime());
         LOG_DBG("Document timestamp: " << _storageManager.getLastModifiedTime());
     }
     else
     {
         // Check if document has been modified by some external action
-        LOG_TRC("Document modified time: " << fileInfo.getModifiedTime());
-        std::chrono::system_clock::time_point Zero;
-        if (_storageManager.getLastModifiedTime() != Zero && fileInfo.getModifiedTime() != Zero
-            && _storageManager.getLastModifiedTime() != fileInfo.getModifiedTime())
+        LOG_TRC("Document modified time: " << fileInfo.getLastModifiedTime());
+        if (!_storageManager.getLastModifiedTime().empty() &&
+            !fileInfo.getLastModifiedTime().empty() &&
+            _storageManager.getLastModifiedTime() != fileInfo.getLastModifiedTime())
         {
             LOG_DBG("Document " << _docKey << "] has been modified behind our back. "
                                 << "Informing all clients. Expected: "
                                 << _storageManager.getLastModifiedTime()
-                                << ", Actual: " << fileInfo.getModifiedTime());
+                                << ", Actual: " << fileInfo.getLastModifiedTime());
 
             _documentChangedInStorage = true;
             const std::string message = isModified() ? "error: cmd=storage kind=documentconflict"
@@ -1478,7 +1478,7 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
             _storageManager.markLastUploadTime();
 
             // Save the storage timestamp.
-            _storageManager.setLastModifiedTime(_storage->getFileInfo().getModifiedTime());
+            _storageManager.setLastModifiedTime(_storage->getFileInfo().getLastModifiedTime());
 
             // Set the timestamp of the file we uploaded, to detect changes.
             _storageManager.setLastUploadedFileModifiedTime(_uploadRequest->newFileModifiedTime());
@@ -3386,7 +3386,7 @@ void DocumentBroker::dumpState(std::ostream& os)
        << Util::getSteadyClockAsString(_saveManager.lastSaveResponseTime());
     os << "\n  last save successful: " << _saveManager.lastSaveSuccessful();
     os << "\n  last storage upload was successful: " << isLastStorageUploadSuccessful();
-    os << "\n  last modified: " << Util::getHttpTime(_storageManager.getLastModifiedTime());
+    os << "\n  last modified: " << _storageManager.getLastModifiedTime();
     os << "\n  file last modified: " << Util::getHttpTime(_saveManager.getLastModifiedTime());
     os << "\n  isSaving now: " << std::boolalpha << _saveManager.isSaving();
     if (_limitLifeSeconds > std::chrono::seconds::zero())
