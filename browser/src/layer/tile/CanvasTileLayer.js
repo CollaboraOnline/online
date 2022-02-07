@@ -1,4 +1,4 @@
-/* -*- js-indent-level: 8 -*- */
+/* -*- js-indent-level: 8; fill-column: 100 -*- */
 /*
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
@@ -783,6 +783,8 @@ L.TileSectionManager = L.Class.extend({
 });
 
 L.CanvasTileLayer = L.Layer.extend({
+
+	isMacClient: (navigator.appVersion.indexOf('Mac') != -1 || navigator.userAgent.indexOf('Mac') != -1),
 
 	options: {
 		pane: 'tilePane',
@@ -3325,6 +3327,31 @@ L.CanvasTileLayer = L.Layer.extend({
 	postKeyboardEvent: function(type, charCode, unoKeyCode) {
 		if (!this._map._docLoaded)
 			return;
+
+		if (this.isMacClient) {
+			// Map Mac standard shortcuts to the LO shortcuts for the corresponding
+			// functions when possible.
+
+			// Cmd+UpArrow -> Ctrl+Home
+			if (unoKeyCode == 1025 + 8192)
+				unoKeyCode = 1028 + 8192;
+			// Cmd+DownArrow -> Ctrl+End
+			else if (unoKeyCode == 1024 + 8192)
+				unoKeyCode = 1029 + 8192;
+			// Cmd+LeftArrow -> Home
+			else if (unoKeyCode == 1026 + 8192)
+				unoKeyCode = 1028;
+			// Cmd+RightArrow -> End
+			else if (unoKeyCode == 1027 + 8192)
+				unoKeyCode = 1029;
+			// Option+LeftArrow -> Ctrl+LeftArrow
+			else if (unoKeyCode == 1026 + 16384)
+				unoKeyCode = 1026 + 8192;
+			// Option+RightArrow -> Ctrl+RightArrow (Not entirely equivalent, should go
+			// to end of word (or next), LO goes to beginning of next word.)
+			else if (unoKeyCode == 1027 + 16384)
+				unoKeyCode = 1027 + 8192;
+		}
 
 		var completeEvent = app.socket.createCompleteTraceEvent('L.TileSectionManager.postKeyboardEvent', { type: type, charCode: charCode });
 
