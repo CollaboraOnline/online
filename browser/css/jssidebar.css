@@ -88,6 +88,10 @@
 	min-width: 186px;
 }
 
+#table-style {
+	padding-left: 4px;
+}
+
 #gradientstyle > .sidebar.jsdialog.ui-listbox {
 	width: 74px;
 }
