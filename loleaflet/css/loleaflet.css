@@ -230,6 +230,11 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	width: 0;
 }
 
+/* Hide back btn except on mobile phones */
+#toolbar-mobile-back {
+	width: 0;
+}
+
 #mobile-edit-button {
 	position: absolute;
 	width: 56px;

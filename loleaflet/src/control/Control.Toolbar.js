@@ -1053,8 +1053,12 @@ function onUpdatePermission(e) {
 			}
 		}
 		if (e.perm === 'edit') {
+			$('#toolbar-mobile-back').removeClass('editmode-off');
+			$('#toolbar-mobile-back').addClass('editmode-on');
 			toolbar.set('closemobile', {img: 'editmode'});
 		} else {
+			$('#toolbar-mobile-back').removeClass('editmode-on');
+			$('#toolbar-mobile-back').addClass('editmode-off');
 			toolbar.set('closemobile', {img: 'closemobile'});
 		}
 
