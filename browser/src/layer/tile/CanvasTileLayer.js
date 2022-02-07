@@ -3,7 +3,7 @@
  * L.CanvasTileLayer is a layer with canvas based rendering.
  */
 
-/* global app L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CStyleData $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType */
+/* global app L CanvasSectionContainer CanvasOverlay CDarkOverlay CSplitterLine CStyleData $ _ isAnyVexDialogActive CPointSet CPolyUtil CPolygon Cursor CCellCursor CCellSelection PathGroupType UNOKey UNOModifier */
 
 /*eslint no-extend-native:0*/
 if (typeof String.prototype.startsWith !== 'function') {
@@ -3330,27 +3330,27 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		if (this.isMacClient) {
 			// Map Mac standard shortcuts to the LO shortcuts for the corresponding
-			// functions when possible.
+			// functions when possible. Note that the Cmd modifier comes here as CTRL.
 
 			// Cmd+UpArrow -> Ctrl+Home
-			if (unoKeyCode == 1025 + 8192)
-				unoKeyCode = 1028 + 8192;
+			if (unoKeyCode == UNOKey.UP + UNOModifier.CTRL)
+				unoKeyCode = UNOKey.HOME + UNOModifier.CTRL;
 			// Cmd+DownArrow -> Ctrl+End
-			else if (unoKeyCode == 1024 + 8192)
-				unoKeyCode = 1029 + 8192;
+			else if (unoKeyCode == UNOKey.DOWN + UNOModifier.CTRL)
+				unoKeyCode = UNOKey.END + UNOModifier.CTRL;
 			// Cmd+LeftArrow -> Home
-			else if (unoKeyCode == 1026 + 8192)
-				unoKeyCode = 1028;
+			else if (unoKeyCode == UNOKey.LEFT + UNOModifier.CTRL)
+				unoKeyCode = UNOKey.HOME;
 			// Cmd+RightArrow -> End
-			else if (unoKeyCode == 1027 + 8192)
-				unoKeyCode = 1029;
+			else if (unoKeyCode == UNOKey.RIGHT + UNOModifier.CTRL)
+				unoKeyCode = UNOKey.END;
 			// Option+LeftArrow -> Ctrl+LeftArrow
-			else if (unoKeyCode == 1026 + 16384)
-				unoKeyCode = 1026 + 8192;
+			else if (unoKeyCode == UNOKey.LEFT + UNOModifier.ALT)
+				unoKeyCode = UNOKey.LEFT + UNOModifier.CTRL;
 			// Option+RightArrow -> Ctrl+RightArrow (Not entirely equivalent, should go
 			// to end of word (or next), LO goes to beginning of next word.)
-			else if (unoKeyCode == 1027 + 16384)
-				unoKeyCode = 1027 + 8192;
+			else if (unoKeyCode == UNOKey.RIGHT + UNOModifier.ALT)
+				unoKeyCode = UNOKey.RIGHT + UNOModifier.CTRL;
 		}
 
 		var completeEvent = app.socket.createCompleteTraceEvent('L.TileSectionManager.postKeyboardEvent', { type: type, charCode: charCode });
@@ -3362,22 +3362,22 @@ L.CanvasTileLayer = L.Layer.extend({
 			type === 'input' &&
 			winId === 0
 		) {
-			if (unoKeyCode === 1030) { // PgUp
+			if (unoKeyCode === UNOKey.PAGEUP) {
 				if (this._cellCursorOnPgUp) {
 					return;
 				}
 				this._cellCursorOnPgUp = new L.LatLngBounds(this._prevCellCursor.getSouthWest(), this._prevCellCursor.getNorthEast());
 			}
-			else if (unoKeyCode === 1031) { // PgDn
+			else if (unoKeyCode === UNOKey.PAGEDOWN) {
 				if (this._cellCursorOnPgDn) {
 					return;
 				}
 				this._cellCursorOnPgDn = new L.LatLngBounds(this._prevCellCursor.getSouthWest(), this._prevCellCursor.getNorthEast());
 			}
-			else if (unoKeyCode === 9476) { // Select whole column.
+			else if (unoKeyCode === UNOKey.SPACE + UNOModifier.CTRL) { // Select whole column.
 				this._map.wholeColumnSelected = true;
 			}
-			else if (unoKeyCode === 5380) { // Select whole row.
+			else if (unoKeyCode === UNOKey.SPACE + UNOModifier.SHIFT) { // Select whole row.
 				this._map.wholeRowSelected = true;
 			}
 		}

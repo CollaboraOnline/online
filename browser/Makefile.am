@@ -197,6 +197,7 @@ COOL_JS_LST =\
 	src/Leaflet.js \
 	src/errormessages.js \
 	src/unocommands.js \
+	src/UNO/Key.js \
 	src/core/Log.js \
 	src/core/Util.js \
 	src/core/LOUtil.js \

@@ -3,6 +3,8 @@
  * L.Map.Mouse is handling mouse interaction with the document
  */
 
+/* global UNOModifier */
+
 L.Map.mergeOptions({
 	mouse: true
 });
@@ -79,10 +81,10 @@ L.Map.Mouse = L.Handler.extend({
 		}
 
 		var modifier = 0;
-		var shift = e.originalEvent.shiftKey ? this._map.keyboard.keyModifier.shift : 0;
-		var ctrl = e.originalEvent.ctrlKey ? this._map.keyboard.keyModifier.ctrl : 0;
-		var alt = e.originalEvent.altKey ? this._map.keyboard.keyModifier.alt : 0;
-		var cmd = e.originalEvent.metaKey ? this._map.keyboard.keyModifier.ctrlMac : 0;
+		var shift = e.originalEvent.shiftKey ? UNOModifier.SHIFT : 0;
+		var ctrl = e.originalEvent.ctrlKey ? UNOModifier.CTRL : 0;
+		var alt = e.originalEvent.altKey ? UNOModifier.ALT : 0;
+		var cmd = e.originalEvent.metaKey ? UNOModifier.CTRLMAC : 0;
 		modifier = shift | ctrl | alt | cmd;
 
 		var buttons = 0;

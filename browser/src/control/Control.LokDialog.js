@@ -3,7 +3,8 @@
  * L.Control.LokDialog used for displaying LOK dialogs
  */
 
-/* global app $ L Hammer w2ui brandProductName */
+/* global app $ L Hammer w2ui brandProductName UNOModifier */
+
 L.WinUtil = {
 
 };
@@ -1027,10 +1028,10 @@ L.Control.LokDialog = L.Control.extend({
 			}
 
 			var modifier = 0;
-			var shift = e.shiftKey ? this._map.keyboard.keyModifier.shift : 0;
-			var ctrl = e.ctrlKey ? this._map.keyboard.keyModifier.ctrl : 0;
-			var alt = e.altKey ? this._map.keyboard.keyModifier.alt : 0;
-			var cmd = e.metaKey ? this._map.keyboard.keyModifier.ctrlMac : 0;
+			var shift = e.shiftKey ? UNOModifier.SHIFT : 0;
+			var ctrl = e.ctrlKey ? UNOModifier.CTRL : 0;
+			var alt = e.altKey ? UNOModifier.ALT : 0;
+			var cmd = e.metaKey ? UNOModifier.CTRLMAC : 0;
 			modifier = shift | ctrl | alt | cmd;
 
 			// 'mousedown' -> 'buttondown'

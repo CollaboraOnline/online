@@ -3,7 +3,8 @@
  * L.Control.RowHeader
 */
 
-/* global _UNO app */
+/* global _UNO app UNOModifier */
+
 L.Control.RowHeader = L.Control.Header.extend({
 	name: L.CSections.RowHeader.name,
 	anchor: [[L.CSections.CornerHeader.name, 'bottom', 'top'], [L.CSections.RowGroup.name, 'right', 'left']],
@@ -164,10 +165,10 @@ L.Control.RowHeader = L.Control.Header.extend({
 
 		var modifier = 0;
 		if (e.shiftKey) {
-			modifier += this._map.keyboard.keyModifier.shift;
+			modifier += UNOModifier.SHIFT;
 		}
 		if (e.ctrlKey) {
-			modifier += this._map.keyboard.keyModifier.ctrl;
+			modifier += UNOModifier.CTRL;
 		}
 
 		this._selectRow(row, modifier);

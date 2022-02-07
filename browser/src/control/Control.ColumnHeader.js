@@ -3,7 +3,8 @@
 * Control.ColumnHeader
 */
 
-/* global _UNO app */
+/* global _UNO app UNOModifier */
+
 L.Control.ColumnHeader = L.Control.Header.extend({
 	name: L.CSections.ColumnHeader.name,
 	anchor: [[L.CSections.ColumnGroup.name, 'bottom', 'top'], [L.CSections.CornerHeader.name, 'right', 'left']],
@@ -173,10 +174,10 @@ L.Control.ColumnHeader = L.Control.Header.extend({
 
 		var modifier = 0;
 		if (e.shiftKey) {
-			modifier += this._map.keyboard.keyModifier.shift;
+			modifier += UNOModifier.SHIFT;
 		}
 		if (e.ctrlKey) {
-			modifier += this._map.keyboard.keyModifier.ctrl;
+			modifier += UNOModifier.CTRL;
 		}
 
 		this._selectColumn(col, modifier);
