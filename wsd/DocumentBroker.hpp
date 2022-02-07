@@ -670,12 +670,6 @@ private:
         bool lastRequestSuccessful() const { return _lastRequestSuccessful; }
 
 
-        /// Set the modified time of the document.
-        void setModifiedTime(std::chrono::system_clock::time_point time) { _modifiedTime = time; }
-
-        /// Returns the modified time of the document.
-        std::chrono::system_clock::time_point getModifiedTime() const { return _modifiedTime; }
-
 
         /// Helper to get the current time.
         static std::chrono::steady_clock::time_point now()
@@ -775,16 +769,10 @@ private:
         }
 
         /// Set the last modified time of the document.
-        void setLastModifiedTime(std::chrono::system_clock::time_point time)
-        {
-            _request.setModifiedTime(time);
-        }
+        void setLastModifiedTime(std::chrono::system_clock::time_point time) { _modifiedTime = time; }
 
         /// Returns the last modified time of the document.
-        std::chrono::system_clock::time_point getLastModifiedTime() const
-        {
-            return _request.getModifiedTime();
-        }
+        std::chrono::system_clock::time_point getLastModifiedTime() const { return _modifiedTime; }
 
         /// True iff a save is in progress (requested but not completed).
         bool isSaving() const { return _request.isActive(); }
@@ -811,6 +799,9 @@ private:
     private:
         /// Request tracking logic.
         RequestManager _request;
+
+        /// The document's last-modified time.
+        std::chrono::system_clock::time_point _modifiedTime;
 
         /// The number of seconds between autosave checks for modification.
         const std::chrono::seconds _autosaveInterval;
@@ -899,16 +890,10 @@ private:
         }
 
         /// Set the last modified time of the document.
-        void setLastModifiedTime(std::chrono::system_clock::time_point time)
-        {
-            _request.setModifiedTime(time);
-        }
+        void setLastModifiedTime(const std::string& time) { _lastModifiedTime = time; }
 
         /// Returns the last modified time of the document.
-        std::chrono::system_clock::time_point getLastModifiedTime() const
-        {
-            return _request.getModifiedTime();
-        }
+        const std::string& getLastModifiedTime() const { return _lastModifiedTime; }
 
     private:
         /// Request tracking logic.
@@ -925,6 +910,9 @@ private:
 
         /// The modified-timestamp of the local file on disk we uploaded last.
         std::chrono::system_clock::time_point _lastUploadedFileModifiedTime;
+
+        /// The modified time of the document in storage, as reported by the server.
+        std::string _lastModifiedTime;
     };
 
 protected:

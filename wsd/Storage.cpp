@@ -289,9 +289,9 @@ std::unique_ptr<LocalStorage::LocalFileInfo> LocalStorage::getLocalFileInfo()
 
     const FileUtil::Stat stat(path.toString());
     const std::chrono::system_clock::time_point lastModified = stat.modifiedTimepoint();
-    const std::size_t size = stat.size();
 
-    setFileInfo(FileInfo(path.getFileName(), "LocalOwner", lastModified, size));
+    setFileInfo(FileInfo(path.getFileName(), "LocalOwner",
+                         Util::getIso8601FracformatTime(lastModified)));
 
     // Set automatic userid and username.
     const std::string userId = std::to_string(LastLocalStorageId++);
@@ -422,8 +422,9 @@ LocalStorage::uploadLocalFileToStorage(const Authorization& /*auth*/, LockContex
 
         // update its fileinfo object. This is used later to check if someone else changed the
         // document while we are/were editing it
-        getFileInfo().setModifiedTime(FileUtil::Stat(path).modifiedTimepoint());
-        LOG_TRC("New FileInfo modified time in storage " << getFileInfo().getModifiedTime());
+        getFileInfo().setLastModifiedTime(
+            Util::getIso8601FracformatTime(FileUtil::Stat(path).modifiedTimepoint()));
+        LOG_TRC("New FileInfo modified time in storage " << getFileInfo().getLastModifiedTime());
     }
     catch (const Poco::Exception& exc)
     {
@@ -726,8 +727,7 @@ WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& aut
         JsonUtil::findJSONValue(object, "BaseFileName", filename);
         JsonUtil::findJSONValue(object, "LastModifiedTime", lastModifiedTime);
 
-        const std::chrono::system_clock::time_point modifiedTime = Util::iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime");
-        FileInfo fileInfo = FileInfo({filename, ownerId, modifiedTime, size});
+        FileInfo fileInfo = FileInfo({filename, ownerId, lastModifiedTime});
         setFileInfo(fileInfo);
 
         if (COOLWSD::AnonymizeUserData)
@@ -1232,9 +1232,8 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
             if (!getForceSave())
             {
                 // Request WOPI host to not overwrite if timestamps mismatch
-                std::string modifiedTime = Util::getIso8601FracformatTime(getFileInfo().getModifiedTime());
-                httpHeader.set("X-COOL-WOPI-Timestamp", modifiedTime);
-                httpHeader.set("X-LOOL-WOPI-Timestamp", modifiedTime);
+                httpHeader.set("X-COOL-WOPI-Timestamp", getFileInfo().getLastModifiedTime());
+                httpHeader.set("X-LOOL-WOPI-Timestamp", getFileInfo().getLastModifiedTime());
             }
         }
         else
@@ -1414,8 +1413,7 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
                 const std::string lastModifiedTime
                     = JsonUtil::getJSONValue<std::string>(object, "LastModifiedTime");
                 LOG_TRC(wopiLog << " returns LastModifiedTime [" << lastModifiedTime << "].");
-                getFileInfo().setModifiedTime(
-                    Util::iso8601ToTimestamp(lastModifiedTime, "LastModifiedTime"));
+                getFileInfo().setLastModifiedTime(lastModifiedTime);
 
                 if (details.isSaveAs || details.isRename)
                 {
