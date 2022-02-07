@@ -163,6 +163,10 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 	justify-content: flex-end;
 }
 
+#TableEditPanel #table-grid1 #grid1 > tr > td:nth-child(2) {
+	display: inherit;
+}
+
 .sidebar.ui-drawing-area {
 	max-width: 290px;
 }
