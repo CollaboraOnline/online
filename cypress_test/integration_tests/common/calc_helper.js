@@ -229,7 +229,13 @@ function ensureViewContainsCellCursor() {
 }
 
 function assertDataClipboardTable(expectedData) {
+	cy.get('#copy-paste-container table td')
+		.should(function(cells) {
+			expect(cells).to.have.lengthOf(expectedData.length);
+		});
+
 	var data = [];
+
 	cy.get('#copy-paste-container tbody').find('td').each(($el) => {
 		cy.wrap($el)
 			.invoke('text')

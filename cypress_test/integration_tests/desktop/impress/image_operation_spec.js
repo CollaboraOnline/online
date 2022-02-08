@@ -31,13 +31,14 @@ describe('Image Operation Tests', function() {
 		//when Keep ratio is unchecked
 		assertImageSize(438, 111);
 
+		//sidebar needs more time
 		cy.get('#sidebar-panel')
+			.should('be.visible')
+			.wait(2000)
 			.scrollTo('bottom');
 
-		helper.waitUntilIdle('#sidebar-panel');
-
 		cy.contains('.ui-expander-label', 'Position and Size')
-			.click();
+			.should('be.visible').click();
 
 		cy.get('#selectwidth input').clear({force:true})
 			.type('10{enter}', {force:true});
@@ -50,11 +51,14 @@ describe('Image Operation Tests', function() {
 		assertImageSize(463, 185);
 
 		//Keep ratio checked
+		//sidebar needs more time
 		cy.get('#sidebar-panel')
+			.should('be.visible')
+			.wait(2000)
 			.scrollTo('bottom');
 
 		cy.contains('.ui-expander-label', 'Position and Size')
-			.click();
+			.should('be.visible').click();
 
 		helper.waitUntilIdle('#ratio input');
 
