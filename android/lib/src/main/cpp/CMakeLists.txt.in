@@ -22,6 +22,7 @@ add_library(androidapp SHARED
             ../../../../../kit/Kit.cpp
             ../../../../../net/FakeSocket.cpp
             ../../../../../net/Socket.cpp
+            ../../../../../wsd/Exceptions.cpp
             ../../../../../wsd/ClientSession.cpp
             ../../../../../wsd/DocumentBroker.cpp
             ../../../../../wsd/LOOLWSD.cpp

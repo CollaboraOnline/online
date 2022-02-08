@@ -13,6 +13,7 @@
 #include <atomic>
 #include <exception>
 #include <stdexcept>
+#include <string>
 
 // not beautiful
 #define EXCEPTION_DECL(type,parent_cl)  \
