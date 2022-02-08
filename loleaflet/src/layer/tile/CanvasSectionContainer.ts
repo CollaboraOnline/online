@@ -625,6 +625,9 @@ class CanvasSectionContainer {
 	}
 
 	private orderBoundsList(section: CanvasSectionObject) {
+		if (!section.boundsList)
+			return;
+
 		// According to zIndex & drawingOrder.
 		for (var i: number = 0; i < section.boundsList.length - 1; i++) {
 			for (var j = i + 1; j < section.boundsList.length; j++) {
@@ -682,6 +685,9 @@ class CanvasSectionContainer {
 		}
 
 		if (propagate) {
+			if (!section.boundsList)
+				return;
+
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
 					section.boundsList[i].onClick((position ? [position[0], position[1]]: null), e);
@@ -707,6 +713,9 @@ class CanvasSectionContainer {
 		}
 
 		if (propagate) {
+			if (!section.boundsList)
+				return;
+
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
 					section.boundsList[i].onDoubleClick((position ? [position[0], position[1]]: null), e);
@@ -730,6 +739,9 @@ class CanvasSectionContainer {
 			}
 		}
 
+		if (!section.boundsList)
+			return;
+
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
 				section.boundsList[i].onMouseLeave((position ? [position[0], position[1]]: null), e);
@@ -743,6 +755,9 @@ class CanvasSectionContainer {
 		this.targetSection = section.name;
 
 		// This event is handled in the mouseEnter event of the canvas itself (for window sections).
+
+		if (!section.boundsList)
+			return;
 
 		for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 			if (section.boundsList[i].interactable)
@@ -768,6 +783,9 @@ class CanvasSectionContainer {
 		}
 
 		if (propagate) {
+			if (!section.boundsList)
+				return;
+
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
 					section.boundsList[i].onMouseMove((position ? [position[0], position[1]]: null), dragDistance, e);
@@ -793,6 +811,9 @@ class CanvasSectionContainer {
 		}
 
 		if (propagate) {
+			if (!section.boundsList)
+				return;
+
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
 					section.boundsList[i].onLongPress((position ? [position[0], position[1]]: null), e);
@@ -818,6 +839,9 @@ class CanvasSectionContainer {
 		}
 
 		if (propagate) {
+			if (!section.boundsList)
+				return;
+
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
 					section.boundsList[i].onMouseDown((position ? [position[0], position[1]]: null), e);
@@ -843,6 +867,9 @@ class CanvasSectionContainer {
 		}
 
 		if (propagate) {
+			if (!section.boundsList)
+				return;
+
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
 					section.boundsList[i].onMouseUp((position ? [position[0], position[1]]: null), e);
@@ -867,6 +894,9 @@ class CanvasSectionContainer {
 		}
 
 		if (propagate) {
+			if (!section.boundsList)
+				return;
+
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
 					section.boundsList[i].onContextMenu();
@@ -892,6 +922,9 @@ class CanvasSectionContainer {
 		}
 
 		if (propagate) {
+			if (!section.boundsList)
+				return;
+
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
 					section.boundsList[i].onMouseWheel((position ? [position[0], position[1]]: null), delta, e);
@@ -916,6 +949,9 @@ class CanvasSectionContainer {
 		}
 
 		if (propagate) {
+			if (!section.boundsList)
+				return;
+
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
 					section.boundsList[i].onMultiTouchStart(e);
@@ -941,6 +977,9 @@ class CanvasSectionContainer {
 		}
 
 		if (propagate) {
+			if (!section.boundsList)
+				return;
+
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
 					section.boundsList[i].onMultiTouchMove((position ? [position[0], position[1]]: null), distance, e);
@@ -965,6 +1004,9 @@ class CanvasSectionContainer {
 		}
 
 		if (propagate) {
+			if (!section.boundsList)
+				return;
+
 			for (var i: number = section.boundsList.length - 1; i > -1; i--) {
 				if (section.boundsList[i].interactable)
 					section.boundsList[i].onMultiTouchEnd(e);
