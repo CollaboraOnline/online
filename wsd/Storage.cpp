@@ -84,26 +84,20 @@ std::string StorageBase::getLocalRootPath() const
     return rootPath.toString();
 }
 
-#endif
-
-void StorageBase::initialize()
+void StorageBase::parseWopiHost(Poco::Util::LayeredConfiguration& conf)
 {
-#if !MOBILEAPP
-    const auto& app = Poco::Util::Application::instance();
-    FilesystemEnabled = app.config().getBool("storage.filesystem[@allow]", false);
-
     // Parse the WOPI settings.
     WopiHosts.clear();
-    WopiEnabled = app.config().getBool("storage.wopi[@allow]", false);
+    WopiEnabled = conf.getBool("storage.wopi[@allow]", false);
     if (WopiEnabled)
     {
-        for (size_t i = 0; ; ++i)
+        for (size_t i = 0;; ++i)
         {
             const std::string path = "storage.wopi.host[" + std::to_string(i) + ']';
-            const std::string host = app.config().getString(path, "");
+            const std::string host = conf.getString(path, "");
             if (!host.empty())
             {
-                if (app.config().getBool(path + "[@allow]", false))
+                if (conf.getBool(path + "[@allow]", false))
                 {
                     LOG_INF("Adding trusted WOPI host: [" << host << "].");
                     WopiHosts.allow(host);
@@ -114,12 +108,27 @@ void StorageBase::initialize()
                     WopiHosts.deny(host);
                 }
             }
-            else if (!app.config().has(path))
+            else if (!conf.has(path))
             {
                 break;
             }
         }
     }
+}
+
+#endif
+
+void StorageBase::initialize()
+{
+#if !MOBILEAPP
+    const auto& app = Poco::Util::Application::instance();
+    FilesystemEnabled = app.config().getBool("storage.filesystem[@allow]", false);
+
+    parseWopiHost(app.config());
+
+#ifdef ENABLE_FEATURE_LOCK
+    CommandControl::LockManager::parseLockedHost(app.config());
+#endif
 
 #if ENABLE_SSL
     // FIXME: should use our own SSL socket implementation here.
@@ -734,7 +743,7 @@ WopiStorage::getWOPIFileInfoForUri(Poco::URI uriObject, const Authorization& aut
         if (COOLWSD::AnonymizeUserData)
             Util::mapAnonymized(Util::getFilenameFromURL(filename), Util::getFilenameFromURL(getUri().toString()));
 
-        auto wopiInfo = Util::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, callDurationMs, object);
+        auto wopiInfo = Util::make_unique<WopiStorage::WOPIFileInfo>(fileInfo, callDurationMs, object, uriObject);
         if (wopiInfo->getSupportsLocks())
             lockCtx.initSupportsLocks();
 
@@ -790,7 +799,7 @@ void WopiStorage::WOPIFileInfo::init()
 
 WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
                                         std::chrono::milliseconds callDurationMs,
-                                        Poco::JSON::Object::Ptr &object)
+                                        Poco::JSON::Object::Ptr &object, Poco::URI &uriObject)
 {
     init();
 
@@ -873,11 +882,42 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
     JsonUtil::findJSONValue(object, "BreadcrumbDocName", _breadcrumbDocName);
     JsonUtil::findJSONValue(object, "FileUrl", _fileUrl);
 
-    bool booleanFlag = false;
-    JsonUtil::findJSONValue(object, "IsUserLocked", booleanFlag);
-    CommandControl::LockManager::setLockedUser(booleanFlag);
+#ifdef ENABLE_FEATURE_LOCK
+    bool isUserLocked = false;
+    JsonUtil::findJSONValue(object, "IsUserLocked", isUserLocked);
 
-    booleanFlag = false;
+    if (config::getBool("feature_lock.locked_hosts[@allow]", false))
+    {
+        bool isReadOnly = false;
+        isUserLocked = false;
+
+        const std::string host = uriObject.getHost();
+
+        if (CommandControl::LockManager::hostExist(host))
+        {
+            isReadOnly = CommandControl::LockManager::isHostReadOnly(host);
+            isUserLocked = CommandControl::LockManager::isHostCommandDisabled(host);
+        }
+        else
+        {
+            LOG_INF("Could not find matching locked host so applying fallback settings");
+            isReadOnly = config::getBool("feature_lock.locked_hosts.fallback[@read_only]", false);
+            isUserLocked =
+                config::getBool("feature_lock.locked_hosts.fallback[@disabled_commands]", false);
+        }
+
+        if (isReadOnly)
+        {
+            isUserLocked = true;
+        }
+        CommandControl::LockManager::setHostReadOnly(isReadOnly);
+    }
+    CommandControl::LockManager::setLockedUser(isUserLocked);
+#else
+    (void)uriObject;
+#endif
+
+    bool booleanFlag = false;
     JsonUtil::findJSONValue(object, "IsUserRestricted", booleanFlag);
     CommandControl::RestrictionManager::setRestrictedUser(booleanFlag);
 

@@ -328,6 +328,8 @@ public:
     static Poco::Net::HTTPClientSession* getHTTPClientSession(const Poco::URI& uri);
     static std::shared_ptr<http::Session> getHttpSession(const Poco::URI& uri);
 
+    static void parseWopiHost(Poco::Util::LayeredConfiguration& conf);
+
 protected:
 
     /// Sanitize a URI by removing authorization tokens.
@@ -476,7 +478,7 @@ public:
 
         /// warning - removes items from object.
         WOPIFileInfo(const FileInfo& fileInfo, std::chrono::milliseconds callDurationMs,
-                     Poco::JSON::Object::Ptr& object);
+                     Poco::JSON::Object::Ptr& object, Poco::URI &uriObject);
 
         const std::string& getUserId() const { return _userId; }
         const std::string& getUsername() const { return _username; }

@@ -1389,7 +1389,13 @@ AC_SUBST(DRAW_UNLOCK_HIGHLIGHTS)
 LOCK_CONFIGURATION=
 if test "$enable_feature_lock" = "yes"; then
     LOCK_CONFIGURATION="<feature_lock desc=\"Feature lock settings\">
-        <is_lock_readonly desc=\"Give locked users read only access to the documents\" type=\"bool\" default=\"false\">false</is_lock_readonly>
+        <locked_hosts desc=\"Allow/deny feature-locked hosts. When allowed, the below host specification overrides the CheckFileInfo response.\" allow=\"false\">
+            <fallback desc=\"What to do if the given host is not covered by any rule in locked_hosts\" read_only=\"true\" disabled_commands=\"true\"/>
+            <host desc=\"Regex pattern of hostname to set as full-featured or locked.\" read_only=\"false\" disabled_commands=\"false\">localhost</host>
+            <host desc=\"Regex pattern of hostname to set as full-featured or locked.\" read_only=\"false\" disabled_commands=\"false\">10\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}</host>
+            <host desc=\"Regex pattern of hostname to set as full-featured or locked.\" read_only=\"false\" disabled_commands=\"false\">172\\.3[01]\\.[0-9]{1,3}\\.[0-9]{1,3}</host>
+        </locked_hosts>
+        <is_lock_readonly desc=\"Give locked users read only access to the documents. If this is set to true it will make all the locked_host readonly who has disabled_commands set to true\" type=\"bool\" default=\"false\">false</is_lock_readonly>
         <locked_commands desc=\"List of commands to lock the functionality\" default=\"$LOCKED_COMMANDS\">$LOCKED_COMMANDS</locked_commands>
         <unlock_title desc=\"Title to show user when prompting the unlock popup\" default=\"$UNLOCK_TITLE\">$UNLOCK_TITLE</unlock_title>
         <unlock_link desc=\"Link from where user can unlock the features\" default=\"$UNLOCK_LINK\">$UNLOCK_LINK</unlock_link>

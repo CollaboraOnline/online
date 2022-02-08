@@ -1128,6 +1128,12 @@ int main(int argc, char**argv)
             return (_allowByDefault || match(_allowed, subject)) && !match(_denied, subject);
         }
 
+        // whether a match exist within both _allowed and _denied
+        bool matchExist(const std::string& subject) const
+        {
+            return ( match(_allowed, subject) || match(_denied, subject) );
+        }
+
     private:
         static bool match(const std::set<std::string>& set, const std::string& subject)
         {
