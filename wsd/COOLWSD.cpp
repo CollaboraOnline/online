@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include "COOLWSD.hpp"
 #include "ProofKey.hpp"
+#include "CommandControl.hpp"
 
 /* Default host used in the start test URI */
 #define COOLWSD_TEST_HOST "localhost"
@@ -73,6 +74,10 @@
 #include <Poco/Net/PartHandler.h>
 #include <Poco/Net/SocketAddress.h>
 #include <net/HttpHelper.hpp>
+#include <Poco/Net/AcceptCertificateHandler.h>
+#include <Poco/Net/Context.h>
+#include <Poco/Net/KeyConsoleHandler.h>
+#include <Poco/Net/SSLManager.h>
 
 using Poco::Net::HTMLForm;
 using Poco::Net::PartHandler;
@@ -117,6 +122,7 @@ using Poco::Net::PartHandler;
 #include "DocumentBroker.hpp"
 #include "Exceptions.hpp"
 #include "FileServer.hpp"
+#include <common/JsonUtil.hpp>
 #include <common/FileUtil.hpp>
 #include <common/JailUtil.hpp>
 #if defined KIT_IN_PROCESS || MOBILEAPP
@@ -169,6 +175,7 @@ using Poco::StreamCopier;
 using Poco::URI;
 using Poco::Util::Application;
 using Poco::Util::HelpFormatter;
+using Poco::Util::LayeredConfiguration;
 using Poco::Util::MissingOptionException;
 using Poco::Util::Option;
 using Poco::Util::OptionSet;
@@ -1004,6 +1011,242 @@ COOLWSD::~COOLWSD()
 {
 }
 
+#if !MOBILEAPP
+
+// A custom socket poll to fetch remote config every 60 seconds
+// if config changes it applies the new config using LayeredConfiguration
+class RemoteConfigPoll : public SocketPoll
+{
+public:
+    RemoteConfigPoll(LayeredConfiguration& config)
+        : SocketPoll("remoteconfig_poll")
+        , conf(config)
+    {
+        remoteServerURI = Poco::URI(conf.getString("remote_config.remote_url"));
+    };
+
+    void start()
+    {
+        if (remoteServerURI.empty())
+        {
+            LOG_INF("Remote config url is not specified in coolwsd.xml");
+            return; // no remote config server setup.
+        }
+        else if (!Util::iequal(remoteServerURI.getScheme(), "https"))
+        {
+            LOG_ERR("Remote config url should only use HTTPS protocol");
+            return;
+        }
+
+        startThread();
+    }
+
+    void pollingThread()
+    {
+        while (!isStop() && !SigUtil::getTerminationFlag() && !SigUtil::getShutdownRequestFlag())
+        {
+            try
+            {
+                std::shared_ptr<http::Session> httpSession(
+                    StorageBase::getHttpSession(remoteServerURI));
+                http::Request request(remoteServerURI.getPathAndQuery());
+
+                //we use ETag header to check whether JSON is modified or not
+                if (!eTagValue.empty())
+                {
+                    request.set("If-None-Match", eTagValue);
+                }
+
+                const std::shared_ptr<const http::Response> httpResponse =
+                    httpSession->syncRequest(request);
+
+                unsigned int statusCode = httpResponse->statusLine().statusCode();
+
+                if (statusCode == Poco::Net::HTTPResponse::HTTP_OK)
+                {
+                    eTagValue = httpResponse->get("ETag");
+
+                    std::string body = httpResponse->getBody();
+
+                    Poco::JSON::Object::Ptr remoteJson;
+                    if (JsonUtil::parseJSON(body, remoteJson))
+                    {
+                        std::string kind;
+                        JsonUtil::findJSONValue(remoteJson, "kind", kind);
+                        if (kind == "configuration")
+                        {
+                            applyNewConfig(remoteJson);
+                        }
+                        else
+                        {
+                            LOG_ERR("Make sure that remote config JSON contains kind property with "
+                                    "value 'configuration'");
+                        }
+                    }
+                    else
+                    {
+                        LOG_ERR("Could not parse the remote config JSON");
+                    }
+                }
+                else if (statusCode == Poco::Net::HTTPResponse::HTTP_NOT_MODIFIED)
+                {
+                    LOG_WRN("Remote config server has response status code: " +
+                            std::to_string(statusCode) + ", JSON has not been changed");
+                }
+                else
+                {
+                    LOG_ERR("Remote config server has response status code: " +
+                            std::to_string(statusCode));
+                }
+            }
+            catch (...)
+            {
+                LOG_ERR("Failed to fetch remote config JSON");
+            }
+            poll(std::chrono::seconds(60));
+        }
+    }
+
+    void applyNewConfig(Poco::JSON::Object::Ptr remoteJson)
+    {
+        constexpr int PRIO_JSON = -200; // highest priority
+
+        std::map<std::string, std::string> newAppConfig;
+
+        fetchWopiHostPatterns(newAppConfig, remoteJson);
+
+#ifdef ENABLE_FEATURE_LOCK
+        fetchLockedHostPatterns(newAppConfig, remoteJson);
+#endif
+
+        AutoPtr<AppConfigMap> newConfig(new AppConfigMap(newAppConfig));
+        conf.addWriteable(newConfig, PRIO_JSON);
+
+        StorageBase::parseWopiHost(conf);
+
+#ifdef ENABLE_FEATURE_LOCK
+        CommandControl::LockManager::parseLockedHost(conf);
+#endif
+    }
+
+    void fetchWopiHostPatterns(std::map<std::string, std::string>& newAppConfig,
+                               Poco::JSON::Object::Ptr remoteJson)
+    {
+        //wopi host patterns
+        if (!conf.getBool("storage.wopi[@allow]", false))
+        {
+            LOG_INF("WOPI host feature is disabled in coolwsd.xml");
+            return;
+        }
+
+        Poco::JSON::Array::Ptr wopiHostPatterns =
+            remoteJson->getObject("storage")->getObject("wopi")->getArray("hosts");
+
+        if (wopiHostPatterns->size() == 0)
+        {
+            LOG_WRN("Not overwriting any wopi host pattern because JSON contains empty array");
+            return;
+        }
+
+        std::size_t i;
+        for (i = 0; i < wopiHostPatterns->size(); i++)
+        {
+            std::string host;
+
+            Poco::JSON::Object::Ptr subObject = wopiHostPatterns->getObject(i);
+            JsonUtil::findJSONValue(subObject, "host", host);
+            Poco::Dynamic::Var allow = subObject->get("allow");
+
+            const std::string path = "storage.wopi.host[" + std::to_string(i) + ']';
+            newAppConfig.insert(std::make_pair(path, host));
+            newAppConfig.insert(std::make_pair(path + "[@allow]", booleanToString(allow)));
+        }
+
+        //if number of wopi host patterns defined in coolwsd.xml are greater than number of host
+        //fetched from json, overwrite the remaining host from config file to empty strings and
+        //set allow to false
+        for (;; ++i)
+        {
+            const std::string path = "storage.wopi.host[" + std::to_string(i) + "]";
+            if (!conf.has(path))
+            {
+                break;
+            }
+            newAppConfig.insert(std::make_pair(path, ""));
+            newAppConfig.insert(std::make_pair(path + "[@allow]", "false"));
+        }
+    }
+
+    void fetchLockedHostPatterns(std::map<std::string, std::string>& newAppConfig,
+                                 Poco::JSON::Object::Ptr remoteJson)
+    {
+        if (!conf.getBool("feature_lock.locked_hosts[@allow]", false))
+        {
+            LOG_INF("locked_hosts feature is disabled from coolwsd.xml");
+            return;
+        }
+
+        Poco::JSON::Array::Ptr lockedHostPatterns =
+            remoteJson->getObject("feature_locking")->getObject("locked_hosts")->getArray("hosts");
+
+        if (lockedHostPatterns->size() == 0)
+        {
+            LOG_WRN(
+                "Not overwriting any locked wopi host pattern because JSON contains empty array");
+            return;
+        }
+
+        std::size_t i;
+        for (i = 0; i < lockedHostPatterns->size(); i++)
+        {
+            std::string host;
+
+            Poco::JSON::Object::Ptr subObject = lockedHostPatterns->getObject(i);
+            JsonUtil::findJSONValue(subObject, "host", host);
+            Poco::Dynamic::Var readOnly = subObject->get("read_only");
+            Poco::Dynamic::Var disabledCommands = subObject->get("disabled_commands");
+
+            const std::string path = "feature_lock.locked_hosts.host[" + std::to_string(i) + "]";
+            newAppConfig.insert(std::make_pair(path, host));
+            newAppConfig.insert(std::make_pair(path + "[@read_only]", booleanToString(readOnly)));
+            newAppConfig.insert(
+                std::make_pair(path + "[@disabled_commands]", booleanToString(disabledCommands)));
+        }
+
+        //if number of locked wopi host patterns defined in coolwsd.xml are greater than number of host
+        //fetched from json, overwrite the remaining host from config file to empty strings and
+        //set read_only and disabled_commands to false
+        for (;; ++i)
+        {
+            const std::string path = "feature_lock.locked_hosts.host[" + std::to_string(i) + "]";
+            if (!conf.has(path))
+            {
+                break;
+            }
+            newAppConfig.insert(std::make_pair(path, ""));
+            newAppConfig.insert(std::make_pair(path + "[@read_only]", "false"));
+            newAppConfig.insert(std::make_pair(path + "[@disabled_commands]", "false"));
+        }
+    }
+
+    //sets property to false if it is missing from JSON
+    //and returns std::string
+    std::string booleanToString(Poco::Dynamic::Var& booleanFlag)
+    {
+        if (booleanFlag.isEmpty())
+        {
+            booleanFlag = "false";
+        }
+        return booleanFlag.toString();
+    }
+
+private:
+    Poco::URI remoteServerURI;
+    LayeredConfiguration& conf;
+    std::string eTagValue;
+};
+#endif
+
 void COOLWSD::innerInitialize(Application& self)
 {
 #if !MOBILEAPP
@@ -1022,7 +1265,7 @@ void COOLWSD::innerInitialize(Application& self)
 
     StartTime = std::chrono::steady_clock::now();
 
-    auto& conf = config();
+    LayeredConfiguration& conf = config();
 
     // Add default values of new entries here, so there is a sensible default in case
     // the setting is missing from the config file. It is possible that users do not
@@ -1129,6 +1372,12 @@ void COOLWSD::innerInitialize(Application& self)
         { "welcome.enable_button", ENABLE_WELCOME_MESSAGE_BUTTON },
         { "welcome.path", "browser/welcome" },
 #ifdef ENABLE_FEATURE_LOCK
+        { "feature_lock.locked_hosts[@allow]", "false"},
+        { "feature_lock.locked_hosts.fallback[@read_only]", "false"},
+        { "feature_lock.locked_hosts.fallback[@disabled_commands]", "false"},
+        { "feature_lock.locked_hosts.host[0]", "localhost"},
+        { "feature_lock.locked_hosts.host[0][@read_only]", "false"},
+        { "feature_lock.locked_hosts.host[0][@disabled_commands]", "false"},
         { "feature_lock.is_lock_readonly", "false" },
         { "feature_lock.locked_commands", LOCKED_COMMANDS },
         { "feature_lock.unlock_title", UNLOCK_TITLE },
@@ -1148,7 +1397,8 @@ void COOLWSD::innerInitialize(Application& self)
         { "quarantine_files.limit_dir_size_mb", "250" },
         { "quarantine_files.max_versions_to_maintain", "2" },
         { "quarantine_files.path", "quarantine" },
-        { "quarantine_files.expiry_min", "30" }
+        { "quarantine_files.expiry_min", "30" },
+        { "remote_config.remote_url", ""}
     };
 
     // Set default values, in case they are missing from the config file.
@@ -4217,6 +4467,13 @@ int COOLWSD::innerMain()
 #endif
 
     initializeSSL();
+
+    // Fetch remote settings from server if configured
+#if !MOBILEAPP
+    RemoteConfigPoll remoteConfigThread(config());
+    remoteConfigThread.start();
+#endif
+
 
 #ifndef IOS
     // We can open files with non-ASCII names just fine on iOS without this, and this code is

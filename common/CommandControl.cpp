@@ -15,8 +15,12 @@
 namespace CommandControl
 {
 bool LockManager::_isLockedUser = false;
+bool LockManager::_isHostReadOnly = false;
 std::unordered_set<std::string> LockManager::LockedCommandList;
 std::string LockManager::LockedCommandListString;
+Util::RegexListMatcher LockManager::readOnlyWopiHosts;
+Util::RegexListMatcher LockManager::disabledCommandWopiHosts;
+bool LockManager::lockHostEnabled = false;
 
 LockManager::LockManager() {}
 
@@ -56,6 +60,62 @@ const std::string LockManager::getLockedCommandListString()
         generateLockedCommandList();
 
     return LockedCommandListString;
+}
+
+void LockManager::parseLockedHost(Poco::Util::LayeredConfiguration& conf)
+{
+    readOnlyWopiHosts.clear();
+    disabledCommandWopiHosts.clear();
+
+    lockHostEnabled = config::getBool("feature_lock.locked_hosts[@allow]", false);
+
+    if (lockHostEnabled)
+    {
+        for (size_t i = 0;; i++)
+        {
+            const std::string path = "feature_lock.locked_hosts.host[" + std::to_string(i) + ']';
+            const std::string host = conf.getString(path, "");
+            if (!host.empty())
+            {
+                if (conf.getBool(path + "[@read_only]", false))
+                {
+                    readOnlyWopiHosts.allow(host);
+                }
+                else
+                {
+                    readOnlyWopiHosts.deny(host);
+                }
+
+                if (conf.getBool(path + "[@disabled_commands]", false))
+                {
+                    disabledCommandWopiHosts.allow(host);
+                }
+                else
+                {
+                    disabledCommandWopiHosts.deny(host);
+                }
+            }
+            else if (!conf.has(path))
+            {
+                break;
+            }
+        }
+    }
+}
+
+bool LockManager::isHostReadOnly(const std::string& host)
+{
+    return LockManager::lockHostEnabled && LockManager::readOnlyWopiHosts.match(host);
+}
+
+bool LockManager::isHostCommandDisabled(const std::string& host)
+{
+    return LockManager::lockHostEnabled && LockManager::disabledCommandWopiHosts.match(host);
+}
+
+bool LockManager::hostExist(const std::string& host)
+{
+    return LockManager::lockHostEnabled && LockManager::readOnlyWopiHosts.matchExist(host);
 }
 
 bool RestrictionManager::_isRestrictedUser = false;

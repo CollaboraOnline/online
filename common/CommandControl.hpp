@@ -10,6 +10,7 @@
 #include <string>
 #include <unordered_set>
 #include "ConfigUtil.hpp"
+#include <Poco/Util/LayeredConfiguration.h>
 
 namespace CommandControl
 {
@@ -17,6 +18,7 @@ class LockManager
 {
     static std::unordered_set<std::string> LockedCommandList;
     static bool _isLockedUser;
+    static bool _isHostReadOnly;
     static std::string LockedCommandListString;
 
     static void generateLockedCommandList();
@@ -26,11 +28,27 @@ public:
     static const std::unordered_set<std::string>& getLockedCommandList();
     static const std::string getLockedCommandListString();
 
+    // Allow/deny Locked hosts
+    static Util::RegexListMatcher readOnlyWopiHosts;
+    static Util::RegexListMatcher disabledCommandWopiHosts;
+    static bool lockHostEnabled;
+
+    static void parseLockedHost(Poco::Util::LayeredConfiguration& conf);
+
     static bool isLockedUser() { return _isLockedUser; }
-    static bool isLockReadOnly() { return config::getBool("feature_lock.is_lock_readonly", false); }
+    static bool isLockReadOnly()
+    {
+        return config::getBool("feature_lock.is_lock_readonly", false) || isHostReadOnly();
+    }
+    static bool isHostReadOnly() { return _isHostReadOnly; };
     static bool isLockedReadOnlyUser() { return isLockedUser() && isLockReadOnly(); }
 
+    static bool isHostReadOnly(const std::string& host);
+    static bool isHostCommandDisabled(const std::string& host);
+    static bool hostExist(const std::string& host);
+
     static void setLockedUser(bool isLocked) { _isLockedUser = isLocked; }
+    static void setHostReadOnly(bool isReadOnly) { _isHostReadOnly = isReadOnly; }
 
     static std::string getUnlockTitle()
     {
