@@ -8020,7 +8020,7 @@
     "vex-js": {
       "version": "4.1.0",
       "resolved": "file:archived-packages/vex-js-4.1.0-9ff760927.tar",
-      "integrity": "sha512-t8cpwh28HrmrkcqqvFTJl+xjLuPnusW3Eb3zczPm2RzX0Q8HbjHiywq1+ttQL+tLVob80CaQYOmmFY8rhtPEug== sha512-n/dgknlD5CVl+Bn87kARnjwSknxZvSMflwzrBdgV0LLdLXpgmF6AKQ//bEEBBwK2JLXR0wG2R+il1zjcBtOi6Q==",
+      "integrity": "sha512-dCY//NzVfd5UmSGVLyoaIYEhZgeB8i3UoK/Ji4PfIf3OQnGs+BElehb1oYt00Gzr5XUkLv7bsHvQcGmQXdLteg==",
       "dev": true,
       "requires": {
         "classlist-polyfill": "1.2.0",
