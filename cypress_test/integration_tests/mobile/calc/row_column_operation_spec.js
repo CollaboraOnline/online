@@ -13,8 +13,6 @@ describe('Row Column Operation', function() {
 
 		calcHelper.selectEntireSheet();
 
-		cy.wait(500);
-
 		calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
 
 		calcHelper.clickOnFirstCell(true,false);
@@ -45,8 +43,6 @@ describe('Row Column Operation', function() {
 
 		calcHelper.selectEntireSheet();
 
-		cy.wait(500);
-
 		calcHelper.assertDataClipboardTable(['','','Hello','Hi','World','Bye']);
 
 		//delete row
@@ -55,8 +51,6 @@ describe('Row Column Operation', function() {
 		selectOption('Delete Rows');
 
 		calcHelper.selectEntireSheet();
-
-		cy.wait(500);
 
 		calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
 
@@ -67,8 +61,6 @@ describe('Row Column Operation', function() {
 
 		calcHelper.selectEntireSheet();
 
-		cy.wait(500);
-
 		calcHelper.assertDataClipboardTable(['Hello','Hi','','','World','Bye']);
 	});
 
@@ -77,8 +69,6 @@ describe('Row Column Operation', function() {
 		selectOption('Insert Columns', 'Columns Before');
 
 		calcHelper.selectEntireSheet();
-
-		cy.wait(500);
 
 		calcHelper.assertDataClipboardTable(['','Hello','Hi','','World','Bye']);
 
@@ -89,8 +79,6 @@ describe('Row Column Operation', function() {
 
 		calcHelper.selectEntireSheet();
 
-		cy.wait(500);
-
 		calcHelper.assertDataClipboardTable(['Hello','Hi','World','Bye']);
 
 		calcHelper.clickOnFirstCell(true,false);
@@ -99,8 +87,6 @@ describe('Row Column Operation', function() {
 		selectOption('Insert Columns', 'Columns After');
 
 		calcHelper.selectEntireSheet();
-
-		cy.wait(500);
 
 		calcHelper.assertDataClipboardTable(['Hello','','Hi','World','','Bye']);
 	});

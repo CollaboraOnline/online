@@ -17,6 +17,7 @@ describe('Top toolbar tests.', function() {
 	afterEach(function() {
 		helper.afterAll(testFileName, this.currentTest.state);
 	});
+
 	function getTextEndPosForFirstCell() {
 		calcHelper.dblClickOnFirstCell();
 
@@ -452,6 +453,9 @@ describe('Top toolbar tests.', function() {
 
 	it('Add/Delete decimal places', function() {
 		// Add decimal place
+		cy.get('#toolbar-up .w2ui-scroll-right')
+			.click();
+
 		cy.get('#tb_editbar_item_numberformatincdecimals')
 			.click();
 
