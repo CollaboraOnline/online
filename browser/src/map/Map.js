@@ -418,7 +418,11 @@ L.Map = L.Evented.extend({
 
 			var elapsed = Date.now() - dateTime;
 			var rtf1 = new Intl.RelativeTimeFormat(String.locale, { style: 'narrow' });
-			if (elapsed < 60000) {
+
+			if (('minSavedMessageTimeoutSecs' in window) && (elapsed < (window.minSavedMessageTimeoutSecs * 1000))) {
+				timeout = window.minSavedMessageTimeoutSecs * 1000;
+				dateValue = '';
+			} else if (elapsed < 60000) {
 				dateValue = _('Last saved:') + ' ' + rtf1.format(-Math.round(elapsed / 1000), 'second');
 				timeout = 6000;
 			} else if (elapsed < 3600000) {
