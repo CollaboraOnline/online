@@ -10,6 +10,7 @@ window.app = { // Shouldn't have any functions defined.
 	file: {
 		editComment: false,
 		readOnly: true,
+		disableSidebar: false,
 		size: {
 			pixels: [0, 0], // This can change according to the zoom level and document's size.
 			twips: [0, 0]
