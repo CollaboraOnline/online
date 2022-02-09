@@ -181,11 +181,11 @@ while (<FILES>)
         continue;
     }
     my $size = `git cat-file -s :$_`;
-    # For now let's say large is 500KB
-    my $limit = 500;
+    # For now let's say large is 550KB
+    my $limit = 550;
     if ($size > $limit * 1024)
     {
-        print "Error: Attempt to add a large file: $_, pleasy try to fit into $limit KB.\n";
+        print "Error: Attempt to add a large file: $_, please try to fit into $limit KB.\n";
         exit( 1 );
     }
 }

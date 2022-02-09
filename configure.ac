@@ -1423,7 +1423,6 @@ AC_CONFIG_FILES([Makefile
                  gtk/Makefile
                  test/Makefile
                  browser/Makefile
-                 browser/npm-shrinkwrap.json
                  coolkitconfig.xcu
                  coolwsd.spec
                  coolwsd.xml
