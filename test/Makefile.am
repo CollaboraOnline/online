@@ -28,7 +28,7 @@ noinst_LTLIBRARIES = \
 	unit-wopi-async-slow.la \
 	unit-wopi-ownertermination.la unit-wopi-versionrestore.la unit-wopi-documentconflict.la \
 	unit-wopi-save-on-exit.la unit_wopi_renamefile.la unit_wopi_watermark.la \
-	unit-wopi-lock.la \
+	unit-wopi-fail-upload.la unit-wopi-lock.la \
 	unit-tiff-load.la \
 	unit-large-paste.la \
 	unit-paste.la \
@@ -180,6 +180,8 @@ unit_wopi_documentconflict_la_SOURCES = UnitWOPIDocumentConflict.cpp
 unit_wopi_documentconflict_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_save_on_exit_la_SOURCES = UnitWOPISaveOnExit.cpp
 unit_wopi_save_on_exit_la_LIBADD = $(CPPUNIT_LIBS)
+unit_wopi_fail_upload_la_SOURCES = UnitWOPIFailUpload.cpp
+unit_wopi_fail_upload_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_renamefile_la_SOURCES = UnitWOPIRenameFile.cpp
 unit_wopi_renamefile_la_LIBADD = $(CPPUNIT_LIBS)
 unit_wopi_lock_la_SOURCES = UnitWOPILock.cpp
@@ -252,14 +254,16 @@ check-local:
 TESTS = \
 	unit-base.la unit-tiletest.la \
 	unit-integration.la unit-httpws.la unit-crash.la \
-	unit-copy-paste.la unit-typing.la unit-convert.la unit-prefork.la unit-tilecache.la unit-timeout.la \
-	unit-oauth.la unit-wopi.la unit-wopi-saveas.la unit-wopi-saveas-with-encoded-file-name.la \
+	unit-convert.la unit-typing.la unit-copy-paste.la \
+	unit-timeout.la unit-prefork.la unit-tilecache.la \
+	unit-oauth.la \
+	unit-wopi.la unit-wopi-saveas.la unit-wopi-saveas-with-encoded-file-name.la \
 	unit-wopi-async-upload-close.la unit-wopi-async-upload-modify.la \
 	unit-wopi-async-upload-modifyclose.la \
 	unit-wopi-async-slow.la \
 	unit-wopi-ownertermination.la unit-wopi-versionrestore.la unit-wopi-documentconflict.la \
 	unit-wopi-save-on-exit.la unit_wopi_renamefile.la unit_wopi_watermark.la \
-	unit-wopi-lock.la \
+	unit-wopi-fail-upload.la unit-wopi-lock.la \
 	unit-http.la \
 	unit-tiff-load.la \
 	unit-large-paste.la \

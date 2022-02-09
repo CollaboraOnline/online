@@ -1085,6 +1085,7 @@ void COOLWSD::innerInitialize(Application& self)
             { "per_document.limit_file_size_mb", "0" },
             { "per_document.limit_num_open_files", "0" },
             { "per_document.limit_load_secs", "100" },
+            { "per_document.limit_store_failures", "5" },
             { "per_document.limit_convert_secs", "100" },
             { "per_document.limit_stack_mem_kb", "8000" },
             { "per_document.limit_virt_mem_mb", "0" },
