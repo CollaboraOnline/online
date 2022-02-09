@@ -582,6 +582,7 @@ app.definitions.Socket = L.Class.extend({
 				this._map.setPermission(this._map.options.permission);
 			}
 
+			app.file.disableSidebar = perm !== 'edit';
 			app.file.readOnly = this._map.options.permission === 'readonly';
 			return;
 		}
