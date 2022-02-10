@@ -25,25 +25,26 @@
 
 class WopiTestServer : public UnitWSD
 {
+private:
+
     enum class COOLStatusCode
     {
         DocChanged = 1010
     };
 
-private:
     /// The WOPISrc URL.
     std::string _wopiSrc;
 
     /// Websockets to communicate.
     std::vector< std::unique_ptr<UnitWebSocket> > _wsList;
 
-protected:
-
     /// Content of the file.
     std::string _fileContent;
 
     /// Last modified time of the file
     std::chrono::system_clock::time_point _fileLastModifiedTime;
+
+protected:
 
     const std::string& getWopiSrc() const { return _wopiSrc; }
 
@@ -72,7 +73,6 @@ protected:
         return _fileLastModifiedTime;
     }
 
-public:
     WopiTestServer(std::string testname, const std::string& fileContent = "Hello, world")
         : UnitWSD(std::move(testname))
     {
@@ -131,7 +131,6 @@ public:
         config.setBool("storage.ssl.as_scheme", false);
     }
 
-protected:
     /// Here we act as a WOPI server, so that we have a server that responds to
     /// the wopi requests without additional expensive setup.
     virtual bool handleHttpRequest(const Poco::Net::HTTPRequest& request,
