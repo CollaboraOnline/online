@@ -145,7 +145,7 @@ UnitBase::TestResult UnitHosting::testCapabilities()
         Poco::JSON::Object::Ptr convert_to
             = features->get("convert-to").extract<Poco::JSON::Object::Ptr>();
         LOK_ASSERT(convert_to->has("available"));
-        LOK_ASSERT(convert_to->get("available"));
+        LOK_ASSERT(convert_to->get("available").convert<bool>());
     }
     return TestResult::Ok;
 }

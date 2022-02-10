@@ -401,7 +401,7 @@ $(SYSTEM_STAMP): ${top_srcdir}/coolwsd-systemplate-setup $(CLEANUP_DEPS)
 	${top_srcdir}/coolwsd-systemplate-setup "@SYSTEMPLATE_PATH@" "@LO_PATH@" && touch $@; fi
 
 @JAILS_PATH@:
-	$(CLEANUP_COMMAND)
+	@$(CLEANUP_COMMAND)
 	mkdir -p $@
 
 cleanup:
