@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-17 21:33+0100\n"
+"POT-Creation-Date: 2022-02-10 10:29+0100\n"
 "PO-Revision-Date: 2022-01-16 22:54+0000\n"
 "Last-Translator: Petri Heinämäki <heinamakipetri@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/collabora-online/"
@@ -136,7 +136,7 @@ msgstr "Suoritingraafi"
 msgid "Network Graph"
 msgstr "Verkkograafi"
 
-#: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:252
+#: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:255
 #: src/control/Control.NotebookbarDraw.js:24
 #: src/control/Control.NotebookbarImpress.js:24
 #: src/layer/tile/CommentListSection.ts:398
@@ -218,8 +218,7 @@ msgid "Log Levels"
 msgstr "Lokitaso"
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
-#: src/control/Parts.js:421 src/control/Signing.js:611
-#: src/control/Toolbar.js:620
+#: src/control/Parts.js:424 src/control/Signing.js:611
 msgid "Close"
 msgstr "Sulje"
 
@@ -258,17 +257,17 @@ msgstr "Haluatko varmasti lopettaa tämän istunnon?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1654
 #: src/control/Control.PresentationBar.js:109 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
-#: src/core/Socket.js:1016
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:706
+#: src/core/Socket.js:1015
 msgid "OK"
 msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.Command.js:92 src/control/Control.LanguageDialog.js:86
-#: src/control/Control.Menubar.js:1655 src/control/Control.MobileTopBar.js:43
+#: src/control/Control.Menubar.js:1655 src/control/Control.MobileTopBar.js:41
 #: src/control/Control.PresentationBar.js:110 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:862
-#: src/core/Socket.js:877 src/core/Socket.js:887 src/core/Socket.js:1017
+#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:707
+#: src/core/Socket.js:876 src/core/Socket.js:886 src/core/Socket.js:1016
 #: src/layer/tile/CommentListSection.ts:399
 #: src/layer/tile/CommentSection.ts:125 src/layer/tile/CommentSection.ts:128
 msgid "Cancel"
@@ -348,7 +347,7 @@ msgstr "Ei väriä"
 msgid "Automatic color"
 msgstr "Automaattinen väritys"
 
-#: src/control/Control.AlertDialog.js:66 src/control/Control.StatusBar.js:424
+#: src/control/Control.AlertDialog.js:66 src/control/Control.StatusBar.js:427
 msgid "Edit"
 msgstr "Muokkaa"
 
@@ -356,7 +355,7 @@ msgstr "Muokkaa"
 msgid "Open link"
 msgstr "Avaa linkki"
 
-#: src/control/Control.AlertDialog.js:100
+#: src/control/Control.AlertDialog.js:104
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Palvelin kohtasi virheen %0 jäsennellessään komentoa %1."
 
@@ -372,7 +371,7 @@ msgstr "Poista"
 msgid "Paste Special"
 msgstr "Liitä määräten"
 
-#: src/control/Control.DocumentNameInput.js:82
+#: src/control/Control.DocumentNameInput.js:77
 msgid "Path"
 msgstr "Tiedostosijainti"
 
@@ -389,9 +388,9 @@ msgid "Index"
 msgstr "Hakemisto"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2117
-#: src/layer/tile/CanvasTileLayer.js:4869
-#: src/layer/tile/CanvasTileLayer.js:4879
+#: src/control/Control.JSDialogBuilder.js:2127
+#: src/layer/tile/CanvasTileLayer.js:4912
+#: src/layer/tile/CanvasTileLayer.js:4922
 #: src/layer/tile/CommentListSection.ts:831
 msgid "Comment"
 msgstr "Huomautus"
@@ -490,31 +489,31 @@ msgstr "Kirjasinkoko"
 msgid "Style"
 msgstr "Tyyli"
 
-#: src/control/Control.JSDialogBuilder.js:2103
+#: src/control/Control.JSDialogBuilder.js:2113
 msgid "reply"
 msgstr "vastaa"
 
-#: src/control/Control.JSDialogBuilder.js:2106
+#: src/control/Control.JSDialogBuilder.js:2116
 msgid "replies"
 msgstr "vastaukset"
 
-#: src/control/Control.JSDialogBuilder.js:2178
+#: src/control/Control.JSDialogBuilder.js:2189
 msgid "Insert Comment"
 msgstr "Lisää Kommentti"
 
-#: src/control/Control.JSDialogBuilder.js:2649
+#: src/control/Control.JSDialogBuilder.js:2665
 msgid "Cell borders"
 msgstr "Solun reunat"
 
-#: src/control/Control.JSDialogBuilder.js:2840
+#: src/control/Control.JSDialogBuilder.js:2856
 msgid "Rows"
 msgstr "Rivejä"
 
-#: src/control/Control.JSDialogBuilder.js:2841
+#: src/control/Control.JSDialogBuilder.js:2857
 msgid "Columns"
 msgstr "Sarakkeita"
 
-#: src/control/Control.JSDialogBuilder.js:2861
+#: src/control/Control.JSDialogBuilder.js:2877
 msgid "Insert Table"
 msgstr "Lisää taulukko"
 
@@ -522,13 +521,13 @@ msgstr "Lisää taulukko"
 #: src/control/Control.Menubar.js:285 src/control/Control.Menubar.js:287
 #: src/control/Control.Menubar.js:425 src/control/Control.Menubar.js:539
 #: src/control/Control.Menubar.js:749
-#: src/control/Control.NotebookbarBuilder.js:822
-#: src/control/Control.NotebookbarBuilder.js:824
-#: src/control/Control.NotebookbarBuilder.js:826
-#: src/control/Control.NotebookbarBuilder.js:850
-#: src/control/Control.NotebookbarBuilder.js:876
-#: src/control/Control.NotebookbarBuilder.js:893
-#: src/control/Control.StatusBar.js:514
+#: src/control/Control.NotebookbarBuilder.js:819
+#: src/control/Control.NotebookbarBuilder.js:821
+#: src/control/Control.NotebookbarBuilder.js:823
+#: src/control/Control.NotebookbarBuilder.js:846
+#: src/control/Control.NotebookbarBuilder.js:871
+#: src/control/Control.NotebookbarBuilder.js:887
+#: src/control/Control.StatusBar.js:517
 msgid "None (Do not check spelling)"
 msgstr "Ei mitään (Älä tarkista oikeinkirjoitusta)"
 
@@ -564,10 +563,10 @@ msgstr "Vie muodossa"
 #: src/control/Control.Menubar.js:450 src/control/Control.Menubar.js:559
 #: src/control/Control.Menubar.js:777 src/control/Control.Menubar.js:830
 #: src/control/Control.Menubar.js:885 src/control/Control.Menubar.js:932
-#: src/control/Control.NotebookbarCalc.js:163
-#: src/control/Control.NotebookbarDraw.js:212
-#: src/control/Control.NotebookbarImpress.js:243
-#: src/control/Control.NotebookbarWriter.js:167
+#: src/control/Control.NotebookbarCalc.js:169
+#: src/control/Control.NotebookbarDraw.js:200
+#: src/control/Control.NotebookbarImpress.js:231
+#: src/control/Control.NotebookbarWriter.js:173
 msgid "PDF Document (.pdf)"
 msgstr "PDF-asiakirja (.pdf)"
 
@@ -576,17 +575,17 @@ msgid "ODF text document (.odt)"
 msgstr "ODF-tekstiasiakirja (.odt)"
 
 #: src/control/Control.Menubar.js:71 src/control/Control.Menubar.js:779
-#: src/control/Control.NotebookbarWriter.js:149
+#: src/control/Control.NotebookbarWriter.js:155
 msgid "Word 2003 Document (.doc)"
 msgstr "Word 2003 -asiakirja (.doc)"
 
 #: src/control/Control.Menubar.js:72 src/control/Control.Menubar.js:780
-#: src/control/Control.NotebookbarWriter.js:155
+#: src/control/Control.NotebookbarWriter.js:161
 msgid "Word Document (.docx)"
 msgstr "Word-asiakirja (.docx)"
 
 #: src/control/Control.Menubar.js:73 src/control/Control.Menubar.js:781
-#: src/control/Control.NotebookbarWriter.js:137
+#: src/control/Control.NotebookbarWriter.js:143
 msgid "Rich Text (.rtf)"
 msgstr "Rikasteksti (.rtf)"
 
@@ -595,7 +594,7 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:75 src/control/Control.Menubar.js:772
-#: src/control/Control.NotebookbarWriter.js:192 src/control/Signing.js:604
+#: src/control/Control.NotebookbarWriter.js:198 src/control/Signing.js:604
 msgid "Sign document"
 msgstr "Allekirjoita asiakirja"
 
@@ -608,45 +607,47 @@ msgstr "Sulje asiakirja"
 #: src/control/Control.Menubar.js:459 src/control/Control.Menubar.js:571
 #: src/control/Control.Menubar.js:787 src/control/Control.Menubar.js:839
 #: src/control/Control.Menubar.js:891 src/control/Control.Menubar.js:940
-#: src/control/Control.NotebookbarBuilder.js:815
-#: src/control/Control.NotebookbarBuilder.js:845
-#: src/control/Control.NotebookbarBuilder.js:871
-#: src/control/Control.NotebookbarBuilder.js:888
-#: src/control/Control.NotebookbarCalc.js:169
-#: src/control/Control.NotebookbarCalc.js:170
-#: src/control/Control.NotebookbarDraw.js:218
-#: src/control/Control.NotebookbarDraw.js:219
-#: src/control/Control.NotebookbarImpress.js:249
-#: src/control/Control.NotebookbarImpress.js:250
-#: src/control/Control.NotebookbarWriter.js:185
-#: src/control/Control.NotebookbarWriter.js:186
+#: src/control/Control.NotebookbarBuilder.js:812
+#: src/control/Control.NotebookbarBuilder.js:841
+#: src/control/Control.NotebookbarBuilder.js:866
+#: src/control/Control.NotebookbarBuilder.js:882
+#: src/control/Control.NotebookbarCalc.js:175
+#: src/control/Control.NotebookbarCalc.js:176
+#: src/control/Control.NotebookbarDraw.js:206
+#: src/control/Control.NotebookbarDraw.js:207
+#: src/control/Control.NotebookbarImpress.js:237
+#: src/control/Control.NotebookbarImpress.js:238
+#: src/control/Control.NotebookbarWriter.js:191
+#: src/control/Control.NotebookbarWriter.js:192
 msgid "Repair"
 msgstr "Korjaa"
 
 #: src/control/Control.Menubar.js:110 src/control/Control.Menubar.js:346
 #: src/control/Control.Menubar.js:473 src/control/Control.Menubar.js:585
-#: src/control/Control.NotebookbarCalc.js:745
-#: src/control/Control.NotebookbarCalc.js:746
-#: src/control/Control.NotebookbarDraw.js:689
-#: src/control/Control.NotebookbarDraw.js:690
-#: src/control/Control.NotebookbarImpress.js:981
-#: src/control/Control.NotebookbarWriter.js:1004
-#: src/control/Control.NotebookbarWriter.js:1005
+#: src/control/Control.NotebookbarCalc.js:852
+#: src/control/Control.NotebookbarCalc.js:853
+#: src/control/Control.NotebookbarDraw.js:228
+#: src/control/Control.NotebookbarDraw.js:229
+#: src/control/Control.NotebookbarImpress.js:264
+#: src/control/Control.NotebookbarImpress.js:265
+#: src/control/Control.NotebookbarWriter.js:928
+#: src/control/Control.NotebookbarWriter.js:929
 #: src/control/Control.StatusBar.js:188
 msgid "Reset zoom"
 msgstr "Nollaa zoomaus"
 
 #: src/control/Control.Menubar.js:112
-#: src/control/Control.NotebookbarBuilder.js:801
-#: src/control/Control.NotebookbarWriter.js:1054
-#: src/control/Control.NotebookbarWriter.js:1055
+#: src/control/Control.NotebookbarBuilder.js:798
+#: src/control/Control.NotebookbarWriter.js:974
 msgid "Show Ruler"
 msgstr "Näytä viivotin"
 
 #: src/control/Control.Menubar.js:113 src/control/Control.Menubar.js:356
 #: src/control/Control.Menubar.js:476 src/control/Control.Menubar.js:594
-#: src/control/Control.NotebookbarWriter.js:1065
-#: src/control/Control.NotebookbarWriter.js:1066
+#: src/control/Control.NotebookbarCalc.js:892
+#: src/control/Control.NotebookbarDraw.js:268
+#: src/control/Control.NotebookbarImpress.js:304
+#: src/control/Control.NotebookbarWriter.js:985
 msgid "Show Status Bar"
 msgstr "Näytä tilapalkki"
 
@@ -667,25 +668,25 @@ msgid "Text orientation"
 msgstr "Tekstin suunta"
 
 #: src/control/Control.Menubar.js:301
-#: src/control/Control.NotebookbarWriter.js:217
+#: src/control/Control.NotebookbarWriter.js:223
 msgid "Forum"
 msgstr "Foorumi"
 
 #: src/control/Control.Menubar.js:302 src/control/Control.Menubar.js:431
 #: src/control/Control.Menubar.js:542 src/control/Control.Menubar.js:755
-#: src/control/Control.NotebookbarWriter.js:228
+#: src/control/Control.NotebookbarWriter.js:234
 msgid "Online Help"
 msgstr "Online-avustus"
 
 #: src/control/Control.Menubar.js:303 src/control/Control.Menubar.js:432
 #: src/control/Control.Menubar.js:543 src/control/Control.Menubar.js:756
-#: src/control/Control.NotebookbarWriter.js:239
+#: src/control/Control.NotebookbarWriter.js:245
 msgid "Keyboard shortcuts"
 msgstr "Pikanäppäimet"
 
 #: src/control/Control.Menubar.js:304 src/control/Control.Menubar.js:433
 #: src/control/Control.Menubar.js:544 src/control/Control.Menubar.js:757
-#: src/control/Control.NotebookbarWriter.js:250
+#: src/control/Control.NotebookbarWriter.js:256
 msgid "Report an issue"
 msgstr "Ilmoita virhe"
 
@@ -693,7 +694,7 @@ msgstr "Ilmoita virhe"
 #: src/control/Control.Menubar.js:545 src/control/Control.Menubar.js:758
 #: src/control/Control.Menubar.js:814 src/control/Control.Menubar.js:870
 #: src/control/Control.Menubar.js:916 src/control/Control.Menubar.js:986
-#: src/control/Control.NotebookbarWriter.js:262
+#: src/control/Control.NotebookbarWriter.js:268
 msgid "Latest Updates"
 msgstr "Viimeisimmät päivitykset"
 
@@ -701,7 +702,7 @@ msgstr "Viimeisimmät päivitykset"
 #: src/control/Control.Menubar.js:546 src/control/Control.Menubar.js:759
 #: src/control/Control.Menubar.js:815 src/control/Control.Menubar.js:871
 #: src/control/Control.Menubar.js:917 src/control/Control.Menubar.js:987
-#: src/control/Control.NotebookbarWriter.js:274
+#: src/control/Control.NotebookbarWriter.js:280
 msgid "Send Feedback"
 msgstr "Lähetä palautetta"
 
@@ -709,7 +710,7 @@ msgstr "Lähetä palautetta"
 #: src/control/Control.Menubar.js:547 src/control/Control.Menubar.js:760
 #: src/control/Control.Menubar.js:816 src/control/Control.Menubar.js:872
 #: src/control/Control.Menubar.js:918 src/control/Control.Menubar.js:988
-#: src/control/Control.NotebookbarWriter.js:285
+#: src/control/Control.NotebookbarWriter.js:291
 msgid "About"
 msgstr "Tietoja"
 
@@ -727,12 +728,12 @@ msgid "ODF presentation (.odp)"
 msgstr "ODF-esitys (.odp)"
 
 #: src/control/Control.Menubar.js:322 src/control/Control.Menubar.js:832
-#: src/control/Control.NotebookbarImpress.js:224
+#: src/control/Control.NotebookbarImpress.js:212
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "PowerPoint 2003 -esitys (.ppt)"
 
 #: src/control/Control.Menubar.js:323 src/control/Control.Menubar.js:833
-#: src/control/Control.NotebookbarImpress.js:230
+#: src/control/Control.NotebookbarImpress.js:218
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "PowerPoint-esitys (.pptx)"
 
@@ -747,8 +748,8 @@ msgstr "Esitä nykyinen dia"
 
 #: src/control/Control.Menubar.js:451 src/control/Control.Menubar.js:834
 #: src/control/Control.Menubar.js:886
-#: src/control/Control.NotebookbarDraw.js:193
-#: src/control/Control.NotebookbarImpress.js:211
+#: src/control/Control.NotebookbarDraw.js:181
+#: src/control/Control.NotebookbarImpress.js:199
 msgid "ODF Drawing (.odg)"
 msgstr "ODF-piirros (.odg)"
 
@@ -757,12 +758,12 @@ msgid "ODF spreadsheet (.ods)"
 msgstr "ODF-laskentataulukko (.ods)"
 
 #: src/control/Control.Menubar.js:561 src/control/Control.Menubar.js:934
-#: src/control/Control.NotebookbarCalc.js:144
+#: src/control/Control.NotebookbarCalc.js:150
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Excel 2003 -laskentataulukko (.xls)"
 
 #: src/control/Control.Menubar.js:562 src/control/Control.Menubar.js:935
-#: src/control/Control.NotebookbarCalc.js:150
+#: src/control/Control.NotebookbarCalc.js:156
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Excel-laskentataulukko (.xlsx)"
 
@@ -780,7 +781,7 @@ msgstr "Etsi"
 msgid "Page Setup"
 msgstr "Sivuasetukset"
 
-#: src/control/Control.Menubar.js:1183 src/control/Control.StatusBar.js:513
+#: src/control/Control.Menubar.js:1183 src/control/Control.StatusBar.js:516
 msgid "Reset to Default Language"
 msgstr "Palauta oletuskielelle"
 
@@ -813,7 +814,7 @@ msgstr "Näytä hakupalkki"
 msgid "Borders"
 msgstr "Reunat"
 
-#: src/control/Control.MobileTopBar.js:42
+#: src/control/Control.MobileTopBar.js:40
 msgid "Accept"
 msgstr "Hyväksy"
 
@@ -829,27 +830,15 @@ msgstr "Liukuvärin alku"
 msgid "Gradient End"
 msgstr "Liukuvärin loppu"
 
-#: src/control/Control.Notebookbar.js:246
+#: src/control/Control.Notebookbar.js:249
 #: src/control/Control.NotebookbarBuilder.js:796
-#: src/control/Control.NotebookbarBuilder.js:839
-#: src/control/Control.NotebookbarBuilder.js:858
-#: src/control/Control.NotebookbarBuilder.js:883
+#: src/control/Control.NotebookbarBuilder.js:836
+#: src/control/Control.NotebookbarBuilder.js:854
+#: src/control/Control.NotebookbarBuilder.js:878
 #: src/control/Control.NotebookbarDraw.js:18
 #: src/control/Control.NotebookbarImpress.js:18
 msgid "Menu"
 msgstr "Valikko"
-
-#: src/control/Control.Notebookbar.js:266
-#: src/control/Control.NotebookbarDraw.js:36
-#: src/control/Control.NotebookbarImpress.js:36
-msgid "Undo"
-msgstr "Kumoa"
-
-#: src/control/Control.Notebookbar.js:272
-#: src/control/Control.NotebookbarDraw.js:42
-#: src/control/Control.NotebookbarImpress.js:42
-msgid "Redo"
-msgstr "Tee uudelleen"
 
 #: src/control/Control.NotebookbarBuilder.js:600
 #: src/control/Control.TopToolbar.js:222
@@ -877,29 +866,29 @@ msgid "Very Loose"
 msgstr "Hyvin väljä"
 
 #: src/control/Control.NotebookbarCalc.js:12
-#: src/control/Control.NotebookbarDraw.js:79
-#: src/control/Control.NotebookbarImpress.js:91
+#: src/control/Control.NotebookbarDraw.js:61
+#: src/control/Control.NotebookbarImpress.js:73
 #: src/control/Control.NotebookbarWriter.js:12
 msgid "~File"
 msgstr "~Tiedosto"
 
 #: src/control/Control.NotebookbarCalc.js:17
-#: src/control/Control.NotebookbarDraw.js:84
-#: src/control/Control.NotebookbarImpress.js:96
+#: src/control/Control.NotebookbarDraw.js:66
+#: src/control/Control.NotebookbarImpress.js:78
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "~Home"
 msgstr "~Aloitus"
 
 #: src/control/Control.NotebookbarCalc.js:23
-#: src/control/Control.NotebookbarDraw.js:90
-#: src/control/Control.NotebookbarImpress.js:102
+#: src/control/Control.NotebookbarDraw.js:72
+#: src/control/Control.NotebookbarImpress.js:84
 #: src/control/Control.NotebookbarWriter.js:23
 msgid "~Insert"
 msgstr "~Lisää"
 
 #: src/control/Control.NotebookbarCalc.js:28
-#: src/control/Control.NotebookbarDraw.js:95
-#: src/control/Control.NotebookbarImpress.js:107
+#: src/control/Control.NotebookbarDraw.js:77
+#: src/control/Control.NotebookbarImpress.js:89
 #: src/control/Control.NotebookbarWriter.js:28
 msgid "~Layout"
 msgstr "~Asettelu"
@@ -909,197 +898,208 @@ msgid "~Data"
 msgstr "~Tiedot"
 
 #: src/control/Control.NotebookbarCalc.js:38
-#: src/control/Control.NotebookbarDraw.js:100
-#: src/control/Control.NotebookbarImpress.js:112
+#: src/control/Control.NotebookbarDraw.js:82
+#: src/control/Control.NotebookbarImpress.js:94
 #: src/control/Control.NotebookbarWriter.js:38
 msgid "~Review"
 msgstr "~Yleiskatsaus"
 
 #: src/control/Control.NotebookbarCalc.js:43
-#: src/control/Control.NotebookbarDraw.js:105
-#: src/control/Control.NotebookbarImpress.js:117
+#: src/control/Control.NotebookbarDraw.js:87
+#: src/control/Control.NotebookbarImpress.js:99
 #: src/control/Control.NotebookbarWriter.js:43
 msgid "Format"
 msgstr "Muotoilu"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#: src/control/Control.NotebookbarDraw.js:116
+#: src/control/Control.NotebookbarDraw.js:98
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
 msgstr "~Piirto"
 
 #: src/control/Control.NotebookbarCalc.js:54
-#: src/control/Control.NotebookbarDraw.js:122
-#: src/control/Control.NotebookbarImpress.js:134
+#: src/control/Control.NotebookbarDraw.js:104
+#: src/control/Control.NotebookbarImpress.js:116
 #: src/control/Control.NotebookbarWriter.js:60
+msgid "~View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:59
+#: src/control/Control.NotebookbarDraw.js:109
+#: src/control/Control.NotebookbarImpress.js:121
+#: src/control/Control.NotebookbarWriter.js:65
 msgid "~Help"
 msgstr "~Apua"
 
-#: src/control/Control.NotebookbarCalc.js:98
-#: src/control/Control.NotebookbarDraw.js:166
-#: src/control/Control.NotebookbarImpress.js:178
-#: src/control/Control.NotebookbarWriter.js:105
+#: src/control/Control.NotebookbarCalc.js:104
+#: src/control/Control.NotebookbarDraw.js:154
+#: src/control/Control.NotebookbarImpress.js:166
+#: src/control/Control.NotebookbarWriter.js:111
 msgid "Share"
 msgstr "Jaa"
 
-#: src/control/Control.NotebookbarCalc.js:105
-#: src/control/Control.NotebookbarDraw.js:173
-#: src/control/Control.NotebookbarImpress.js:185
-#: src/control/Control.NotebookbarWriter.js:112
+#: src/control/Control.NotebookbarCalc.js:111
+#: src/control/Control.NotebookbarDraw.js:161
+#: src/control/Control.NotebookbarImpress.js:173
+#: src/control/Control.NotebookbarWriter.js:118
 msgid "See history"
 msgstr "Näytä historia"
 
-#: src/control/Control.NotebookbarCalc.js:125
+#: src/control/Control.NotebookbarCalc.js:131
 msgid "ODF Spreadsheet (.ods)"
 msgstr "ODF-laskentataulukko (.ods)"
 
-#: src/control/Control.NotebookbarCalc.js:131
+#: src/control/Control.NotebookbarCalc.js:137
 msgid "CSV File (.csv)"
 msgstr "CSV-tiedosto (.csv)"
 
-#: src/control/Control.NotebookbarCalc.js:416
+#: src/control/Control.NotebookbarCalc.js:439
 msgid "General"
 msgstr "Tavallinen"
 
-#: src/control/Control.NotebookbarCalc.js:417
+#: src/control/Control.NotebookbarCalc.js:440
 msgid "Number"
 msgstr "Numero"
 
-#: src/control/Control.NotebookbarCalc.js:418
+#: src/control/Control.NotebookbarCalc.js:441
 msgid "Percent"
 msgstr "Prosentti"
 
-#: src/control/Control.NotebookbarCalc.js:419
+#: src/control/Control.NotebookbarCalc.js:442
 msgid "Currency"
 msgstr "Valuutta"
 
-#: src/control/Control.NotebookbarCalc.js:420
+#: src/control/Control.NotebookbarCalc.js:443
 msgid "Date"
 msgstr "Päivämäärä"
 
-#: src/control/Control.NotebookbarCalc.js:421
+#: src/control/Control.NotebookbarCalc.js:444
 msgid "Time"
 msgstr "Aika"
 
-#: src/control/Control.NotebookbarCalc.js:422
+#: src/control/Control.NotebookbarCalc.js:445
 msgid "Scientific"
 msgstr "Tieteellinen"
 
-#: src/control/Control.NotebookbarCalc.js:423
+#: src/control/Control.NotebookbarCalc.js:446
 msgid "Fraction"
 msgstr "Murtoluku"
 
-#: src/control/Control.NotebookbarCalc.js:424
+#: src/control/Control.NotebookbarCalc.js:447
 msgid "Boolean Value"
 msgstr "Totuusarvo"
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:857
+#: src/control/Control.NotebookbarCalc.js:448 src/control/Toolbar.js:702
 msgid "Text"
 msgstr "Teksti"
 
-#: src/control/Control.NotebookbarCalc.js:558
+#: src/control/Control.NotebookbarCalc.js:581
 msgid "Default"
 msgstr "Oletus"
 
-#: src/control/Control.NotebookbarCalc.js:563
+#: src/control/Control.NotebookbarCalc.js:586
 msgid "Heading 1"
 msgstr "Otsikko 1"
 
-#: src/control/Control.NotebookbarCalc.js:568
+#: src/control/Control.NotebookbarCalc.js:591
 msgid "Heading 2"
 msgstr "Otsikko 2"
 
-#: src/control/Control.NotebookbarCalc.js:579
+#: src/control/Control.NotebookbarCalc.js:602
 msgid "Good"
 msgstr "Hyvä"
 
-#: src/control/Control.NotebookbarCalc.js:584
+#: src/control/Control.NotebookbarCalc.js:607
 msgid "Neutral"
 msgstr "Neutraali"
 
-#: src/control/Control.NotebookbarCalc.js:589
+#: src/control/Control.NotebookbarCalc.js:612
 msgid "Bad"
 msgstr "Huono"
 
-#: src/control/Control.NotebookbarCalc.js:651
+#: src/control/Control.NotebookbarCalc.js:674
 msgid "Insert Rows Above"
 msgstr "Lisää rivejä yläpuolelle"
 
-#: src/control/Control.NotebookbarCalc.js:656
+#: src/control/Control.NotebookbarCalc.js:679
 msgid "Insert Columns Before"
 msgstr "Lisää sarakkeita edelle"
 
-#: src/control/Control.NotebookbarCalc.js:661
+#: src/control/Control.NotebookbarCalc.js:684
 msgid "Delete Rows"
 msgstr "Poista rivit"
 
-#: src/control/Control.NotebookbarCalc.js:671
+#: src/control/Control.NotebookbarCalc.js:694
 msgid "Insert Rows Below"
 msgstr "Lisää rivejä alapuolelle"
 
-#: src/control/Control.NotebookbarCalc.js:676
+#: src/control/Control.NotebookbarCalc.js:699
 msgid "Insert Columns After"
 msgstr "Lisää sarakkeita jälkeen"
 
-#: src/control/Control.NotebookbarCalc.js:681
+#: src/control/Control.NotebookbarCalc.js:704
 msgid "Delete Columns"
 msgstr "Poista sarakkeet"
 
-#: src/control/Control.NotebookbarDraw.js:63
-#: src/control/Control.NotebookbarDraw.js:666
+#: src/control/Control.NotebookbarCalc.js:891
+#: src/control/Control.NotebookbarDraw.js:267
+#: src/control/Control.NotebookbarImpress.js:303
+#: src/control/Control.NotebookbarWriter.js:984
+msgid "Toggle Status Bar"
+msgstr ""
+
+#: src/control/Control.NotebookbarDraw.js:45
+#: src/control/Control.NotebookbarDraw.js:729
 msgid "Page layout"
 msgstr "Sivuasetttelu"
 
-#: src/control/Control.NotebookbarDraw.js:110
-#: src/control/Control.NotebookbarImpress.js:122
+#: src/control/Control.NotebookbarDraw.js:92
+#: src/control/Control.NotebookbarImpress.js:104
 #: src/control/Control.NotebookbarWriter.js:48
 msgid "~Table"
 msgstr "~Taulukko"
 
-#: src/control/Control.NotebookbarDraw.js:199
+#: src/control/Control.NotebookbarDraw.js:187
 msgid "Image (.png)"
 msgstr "Kuva (.png)"
 
-#: src/control/Control.NotebookbarImpress.js:30
-msgid "Start Presentation"
-msgstr "Aloita esitys"
-
-#: src/control/Control.NotebookbarImpress.js:205
+#: src/control/Control.NotebookbarImpress.js:193
 msgid "ODF Presentation (.odp)"
 msgstr "ODF-esitys (.odp)"
 
-#: src/control/Control.NotebookbarImpress.js:643
+#: src/control/Control.NotebookbarImpress.js:252
+#: src/control/Control.NotebookbarImpress.js:711
 msgid "Presentation"
 msgstr "Esitys"
-
-#: src/control/Control.NotebookbarImpress.js:980
-msgid "Reset Zoom"
-msgstr "Nollaa zoomaus"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
 msgstr "Viittaukset"
 
-#: src/control/Control.NotebookbarWriter.js:131
+#: src/control/Control.NotebookbarWriter.js:137
 msgid "ODF Text Document (.odt)"
 msgstr "ODF-tekstiasiakirja (.odt)"
 
-#: src/control/Control.NotebookbarWriter.js:173
+#: src/control/Control.NotebookbarWriter.js:179
 msgid "EPUB Document (.epub)"
 msgstr "EPUB-tiedosto (.epub)"
 
-#: src/control/Control.NotebookbarWriter.js:542
+#: src/control/Control.NotebookbarWriter.js:565
 #: src/control/Control.TopToolbar.js:101
 msgid "Default Style"
 msgstr "Oletustyyli"
 
-#: src/control/Control.NotebookbarWriter.js:546
+#: src/control/Control.NotebookbarWriter.js:569
 msgid "Text Body"
 msgstr "Leipäteksti"
 
-#: src/control/Control.NotebookbarWriter.js:549
+#: src/control/Control.NotebookbarWriter.js:572
 msgid "Title"
 msgstr "Otsikko"
+
+#: src/control/Control.NotebookbarWriter.js:973
+msgid "Toggle Ruler"
+msgstr ""
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1205,23 +1205,23 @@ msgstr "Sanalaskuri"
 msgid "Number of Slides"
 msgstr "Diojen lukumäärä"
 
-#: src/control/Control.StatusBar.js:423 src/control/Control.StatusBar.js:424
+#: src/control/Control.StatusBar.js:426 src/control/Control.StatusBar.js:427
 msgid "Permission Mode"
 msgstr "Käyttöoikeustila"
 
-#: src/control/Control.StatusBar.js:423
+#: src/control/Control.StatusBar.js:426
 msgid "Read-only"
 msgstr "Kirjoitussuojattu"
 
-#: src/control/Control.StatusBar.js:457
+#: src/control/Control.StatusBar.js:460
 msgid "Select multiple cells"
 msgstr "Valitse useampia soluja"
 
-#: src/control/Control.StatusBar.js:460
+#: src/control/Control.StatusBar.js:463
 msgid "Insert mode: inactive"
 msgstr "Lisäämistila: pois käytöstä"
 
-#: src/control/Control.StatusBar.js:473
+#: src/control/Control.StatusBar.js:476
 msgid "Selection mode: inactive"
 msgstr "Valitsemistila: pois käytöstä"
 
@@ -1316,7 +1316,7 @@ msgstr "Kirjoituslukittu"
 msgid "Current"
 msgstr "Nykyinen"
 
-#: src/control/Parts.js:422
+#: src/control/Parts.js:425
 msgid "Show Selected Sheets"
 msgstr "Näytä valitut taulukot"
 
@@ -1361,19 +1361,19 @@ msgstr ""
 "Tämä asiakirja saattaa sisältää muotoilua tai sisältöä jota ei voi tallentaa "
 "nykyisessä tiedostomuodossa."
 
-#: src/control/Ruler.js:360
+#: src/control/Ruler.js:364
 msgid "Left Margin"
 msgstr "Vasen marginaali"
 
-#: src/control/Ruler.js:361
+#: src/control/Ruler.js:365
 msgid "Right Margin"
 msgstr "Oikea marginaali"
 
-#: src/control/Ruler.js:622
+#: src/control/Ruler.js:626
 msgid "Insert tabstop"
 msgstr "Lisää sarkainkohta"
 
-#: src/control/Ruler.js:629
+#: src/control/Ruler.js:633
 msgid "Delete tabstop"
 msgstr "Poista sarkainkohta"
 
@@ -1538,108 +1538,18 @@ msgid "Renaming..."
 msgstr "Nimetään uudelleen..."
 
 #: src/control/Toolbar.js:566
-msgid "I understand the risks"
-msgstr "Ymmärrän riskin"
-
-#: src/control/Toolbar.js:588
-msgid "Dismiss"
-msgstr "Hylkää"
-
-#: src/control/Toolbar.js:606
-#, javascript-format
-msgid "Explore the new %coolVersion"
-msgstr "Tutki uutta %coolVersion"
-
-#: src/control/Toolbar.js:607 src/control/Toolbar.js:611
-msgid "Collabora Online Development Edition"
-msgstr "Collabora Onlinen kehitysversio"
-
-#: src/control/Toolbar.js:608
-#, javascript-format
-msgid ""
-"Enjoy the latest developments in online productivity, free for you to use, "
-"to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
-"target=\"_blank\">Apps</a> are also available for Android and iOS. "
-"%coolVersion introduces important improvements, in the areas of usability, "
-"visual presentation and performance."
-msgstr ""
-"Nauti viimeisimmistä kehityksistä sähköisessä tuottavuudessa, vapaasti sinun "
-"ja muiden käytettävissä selaimen kautta. Saatavilla on myös <a href=\"%"
-"coolAppsURL\" target=\"_blank\">sovellukset</a> android- ja iOS-käyttöön. "
-"Versio %coolVersion tarjoaa tärkeitä parannuksia käytettävyydessä, "
-"visuaalisuudessa ja tehokkuudessa."
-
-#: src/control/Toolbar.js:610
-msgid "Discover all the changes"
-msgstr "Katso kaikki muutokset"
-
-#: src/control/Toolbar.js:612
-#, javascript-format
-msgid ""
-"Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
-"a> and learn all about the latest milestone in performance particularly for "
-"larger groups working on documents, new native sidebar, new re-worked avatar "
-"list, asynchronous saving, faster spell checking and more."
-msgstr ""
-"Katso <a href=\"%coolReleaseNotesURL\" target=\"_blank\">julkaisutiedot</a> "
-"ja lue viimeisimmästä edistysaskeleesta tehokkuudessa etenkin suuremmille "
-"tiedostoa muokkaaville ryhmille, uudesta natiivista sivupalkista, "
-"uudistetusta avatarlistasta, taustalla tapahtuvasta tallentamisesta, "
-"nopeammasta kielentarkistuksesta ja muista parannuksista."
-
-#: src/control/Toolbar.js:614
-msgid "Integrate Collabora Online into your webapp"
-msgstr "Integroi Collabora Online web-sovellukseesi"
-
-#: src/control/Toolbar.js:615
-msgid "Or get involved in the development"
-msgstr "Tai osallistu kehittämiseen"
-
-#: src/control/Toolbar.js:616
-#, javascript-format
-msgid ""
-"Learn more about integrating into your web application in the <a href="
-"\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
-"the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
-"instructions</a> and build CODE from scratch. You can also help out with <a "
-"href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
-"href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
-"all the essential steps on how to reproduce it."
-msgstr ""
-"Lue lisää web-applikaatioosi integroimisesta <a href=\"%coolSdkURL\" target="
-"\"_blank\">Collabora Online SDK:sta</a>. Tai suuntaa kohti <a href=\"%"
-"coolStepByStepURL\" target=\"_blank\">vaiheittaisia ohjeita</a> ja buildaa "
-"CODE ihan itse. Voit myös auttaa <a href=\"%coolTranslationsURL\" target=\""
-"_blank\">tekemällä käännöksiä</a> tai <a href=\"%coolBugreportURL\" target=\""
-"_blank\">tekemällä ilmoituksen bugista</a> sisällyttäen myös ohjeet bugin "
-"toistamiseen."
-
-#: src/control/Toolbar.js:618 src/control/Toolbar.js:619
-msgid "Next"
-msgstr "Seuraava"
-
-#: src/control/Toolbar.js:622
-msgid "Learn more about the enterprise-ready versions"
-msgstr "Lue lisää yrityskäyttöön valmiista versioista"
-
-#: src/control/Toolbar.js:671
-msgid ""
-"We are sorry, the information about the latest updates is not available."
-msgstr "Pahoittelumme, tietoja viimeisimmistä julkaisuista ei ole saatavilla."
-
-#: src/control/Toolbar.js:721
 msgid "This version of %productName is powered by"
 msgstr "Tämä versio %productName-tuotteesta perustuu tuotteeseen"
 
-#: src/control/Toolbar.js:731
+#: src/control/Toolbar.js:576
 msgid "\"Slow Proxy\""
 msgstr "\"Hidas välityspalvelin\""
 
-#: src/control/Toolbar.js:854
+#: src/control/Toolbar.js:699
 msgid "Insert hyperlink"
 msgstr "Lisää hyperlinkki"
 
-#: src/control/Toolbar.js:858
+#: src/control/Toolbar.js:703
 msgid "Link"
 msgstr "Linkki"
 
@@ -1647,62 +1557,62 @@ msgstr "Linkki"
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Virhe yhdistettäessä kohteeseen %productName: "
 
-#: src/core/Socket.js:513
+#: src/core/Socket.js:512
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Palvelin on nyt saavutettavissa. Sivu päivitetään nyt."
 
-#: src/core/Socket.js:515
+#: src/core/Socket.js:514
 msgid "Server is now reachable..."
 msgstr "Palvelin on nyt saavutettavissa..."
 
-#: src/core/Socket.js:519
+#: src/core/Socket.js:518
 msgid "RELOAD"
 msgstr "PÄIVITÄ"
 
-#: src/core/Socket.js:526
+#: src/core/Socket.js:525
 msgid "COOLWSD version:"
 msgstr "COOLWSD-versio:"
 
-#: src/core/Socket.js:538
+#: src/core/Socket.js:537
 msgid "Served by:"
 msgstr "Palvelin:"
 
-#: src/core/Socket.js:544
+#: src/core/Socket.js:543
 msgid "Unsupported server version."
 msgstr "Palvelimen versiota ei tueta."
 
-#: src/core/Socket.js:548
+#: src/core/Socket.js:547
 msgid "LOKit version:"
 msgstr "LOKit-versio:"
 
-#: src/core/Socket.js:662
+#: src/core/Socket.js:661
 msgid "Session terminated by document owner"
 msgstr "Asiakirjan omistaja katkaisi istunnon"
 
-#: src/core/Socket.js:667
+#: src/core/Socket.js:666
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Asiakirja jouten - klikkaa jatkaaksesi editointia"
 
-#: src/core/Socket.js:669
+#: src/core/Socket.js:668
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "Asiakirja jouten - klikkaa jatkaaksesi editointia"
 
-#: src/core/Socket.js:677
+#: src/core/Socket.js:676
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr ""
 "Palvelinta ajetaan alas huoltoa varten (asiakirja tallentuu automaattisesti)"
 
-#: src/core/Socket.js:681
+#: src/core/Socket.js:680
 msgid "Oops, there is a problem connecting the document"
 msgstr "Virhe asiakirjaan yhdistäessä"
 
-#: src/core/Socket.js:685
+#: src/core/Socket.js:684
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 "Palvelin on sammuksissa, käynnistetään automaattisesti uudelleen. Ole hyvä "
 "ja odota."
 
-#: src/core/Socket.js:713
+#: src/core/Socket.js:712
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1710,34 +1620,34 @@ msgstr ""
 "Asiakirjan sisältöä on muutettu tallennustilassa. Luetaan uusi sisältö. "
 "Sinun versioisi on saatavana versiohistoriassa."
 
-#: src/core/Socket.js:719
+#: src/core/Socket.js:718
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
 msgstr ""
 "Palautetaan vanha versio. Tähänastiset muutokset tallentuvat versiohistoriaan"
 
-#: src/core/Socket.js:725
+#: src/core/Socket.js:724
 msgid "Reloading the document after rename"
 msgstr "Päivitetään asiakirjaa uudelleennimeämisen jälkeen"
 
-#: src/core/Socket.js:848
+#: src/core/Socket.js:847
 msgid "Discard"
 msgstr "Hylkää ne"
 
-#: src/core/Socket.js:855
+#: src/core/Socket.js:854
 msgid "Overwrite"
 msgstr "Korvaa"
 
-#: src/core/Socket.js:870
+#: src/core/Socket.js:869
 msgid "Save to new file"
 msgstr "Tallenna uuteen tiedostoon"
 
-#: src/core/Socket.js:897
+#: src/core/Socket.js:896
 msgid "Document has been changed"
 msgstr "Asiakirjaa on muutettu"
 
-#: src/core/Socket.js:897
+#: src/core/Socket.js:896
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1745,47 +1655,47 @@ msgstr ""
 "Asiakirjaa on muokattu tallennustilassa. Mitä haluat tehdä omille "
 "tallentamattomille muutoksillesi?"
 
-#: src/core/Socket.js:967
+#: src/core/Socket.js:966
 msgid "Document requires password to view."
 msgstr "Asiakirjan katselu edellyttää salasanaa."
 
-#: src/core/Socket.js:970
+#: src/core/Socket.js:969
 msgid "Document requires password to modify."
 msgstr "Asiakirjan muokkaaminen edellyttää salasanaa."
 
-#: src/core/Socket.js:972
+#: src/core/Socket.js:971
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Napsauta Peruuta avataksesi katselutilassa."
 
-#: src/core/Socket.js:976
+#: src/core/Socket.js:975
 msgid "Wrong password provided. Please try again."
 msgstr "Väärä salasana, yritä uudelleen."
 
-#: src/core/Socket.js:1086
+#: src/core/Socket.js:1085
 msgid "Someone"
 msgstr "Joku"
 
-#: src/core/Socket.js:1088
+#: src/core/Socket.js:1087
 msgid " saved this document as "
 msgstr " tallensi tämän asiakirjan "
 
-#: src/core/Socket.js:1088
+#: src/core/Socket.js:1087
 msgid ". Do you want to join?"
 msgstr ". Haluatko liittyä?"
 
-#: src/core/Socket.js:1097
+#: src/core/Socket.js:1096
 msgid "Loading..."
 msgstr "Ladataan..."
 
-#: src/core/Socket.js:1097
+#: src/core/Socket.js:1096
 msgid "Connecting..."
 msgstr "Yhdistetään..."
 
-#: src/core/Socket.js:1115
+#: src/core/Socket.js:1114
 msgid "The document is being renamed and will reload shortly"
 msgstr "Asiakirjaa nimetään uudelleen ja se päivittyy piakkoin"
 
-#: src/core/Socket.js:1495
+#: src/core/Socket.js:1494
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1793,11 +1703,11 @@ msgstr ""
 "Harmillista kyllä, asiakirjaasi ei saada yhteyttä. Ole hyvä ja yritä "
 "uudelleen."
 
-#: src/core/Socket.js:1512
+#: src/core/Socket.js:1511
 msgid "Reconnecting..."
 msgstr "Yhdistetään..."
 
-#: src/core/Socket.js:1518
+#: src/core/Socket.js:1517
 msgid "The server has been disconnected."
 msgstr "Palvelimen yhteys on katkennut."
 
@@ -1984,11 +1894,11 @@ msgstr "Asiakirjan lähetys palvelimelle epäonnistui, tiedostoa ei löytynyt."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Asiakirjan lähetys palvelimelle epäonnistui, tiedosto on liian iso."
 
-#: src/layer/tile/CanvasTileLayer.js:1783
+#: src/layer/tile/CanvasTileLayer.js:1785
 msgid "Functions"
 msgstr "Funktiot"
 
-#: src/layer/tile/CanvasTileLayer.js:4896
+#: src/layer/tile/CanvasTileLayer.js:4939
 msgid "No Comments"
 msgstr "Ei kommentteja"
 
@@ -2051,15 +1961,15 @@ msgstr ""
 msgid "Copying from the document disabled"
 msgstr "Asiakirjasta kopiointi poistettu käytöstä"
 
-#: src/map/Clipboard.js:287
+#: src/map/Clipboard.js:292
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Leikepöydän lataus epäonnistui, tee kopiointi uudelleen"
 
-#: src/map/Clipboard.js:843
+#: src/map/Clipboard.js:848
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Käytä näyttökoskettimiston kopoi- ja liitä-nappeja</p>"
 
-#: src/map/Clipboard.js:845
+#: src/map/Clipboard.js:850
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2076,7 +1986,7 @@ msgstr ""
 "n><kbd>V</kbd></td></tr><tr><td>Kopioi</td><td>Leikkaa</td><td>Liitä</td></tr"
 "></table>"
 
-#: src/map/Clipboard.js:866
+#: src/map/Clipboard.js:871
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -2090,7 +2000,7 @@ msgstr ""
 ".</p><p>Jos leikkaat ja liität asiakirjojen välissä %productName-tuotteen "
 "sisällä, latausta ei tarvita.</p>"
 
-#: src/map/Clipboard.js:882
+#: src/map/Clipboard.js:887
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2115,7 +2025,7 @@ msgstr "Epäaktiivinen asiakirja"
 msgid "Please click to resume editing"
 msgstr "Ole hyvä ja klikkaa jatkaaksesi muokkaamista"
 
-#: src/map/handler/Map.FileInserter.js:100
+#: src/map/handler/Map.FileInserter.js:104
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
@@ -2123,7 +2033,7 @@ msgstr ""
 "Tiedostoa jonka laji on %0 ei voida lähettää palvelimelle koska ei ole nimeä "
 "tiedostolle"
 
-#: src/map/handler/Map.FileInserter.js:102
+#: src/map/handler/Map.FileInserter.js:106
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
@@ -2131,11 +2041,11 @@ msgstr ""
 "Tiedostoa jonka laji on %0 ei voida lähettää palvelimelle koska tiedosto on "
 "tyhjä"
 
-#: src/map/handler/Map.FileInserter.js:133
+#: src/map/handler/Map.FileInserter.js:137
 msgid "Uploading..."
 msgstr "Lähetetään..."
 
-#: src/map/handler/Map.FileInserter.js:147
+#: src/map/handler/Map.FileInserter.js:151
 msgid "Uploading file to server failed with status: %0"
 msgstr "Tiedoston lähetys palvelumelle epäonnistui, tila: %0"
 
@@ -2158,6 +2068,95 @@ msgstr "Luodaan uusi tiedosto mallista..."
 #: src/map/handler/Map.WOPI.js:410
 msgid "Creating copy..."
 msgstr "Luodaan kopiota..."
+
+#~ msgid "Undo"
+#~ msgstr "Kumoa"
+
+#~ msgid "Redo"
+#~ msgstr "Tee uudelleen"
+
+#~ msgid "Start Presentation"
+#~ msgstr "Aloita esitys"
+
+#~ msgid "Reset Zoom"
+#~ msgstr "Nollaa zoomaus"
+
+#~ msgid "I understand the risks"
+#~ msgstr "Ymmärrän riskin"
+
+#~ msgid "Dismiss"
+#~ msgstr "Hylkää"
+
+#, javascript-format
+#~ msgid "Explore the new %coolVersion"
+#~ msgstr "Tutki uutta %coolVersion"
+
+#~ msgid "Collabora Online Development Edition"
+#~ msgstr "Collabora Onlinen kehitysversio"
+
+#, javascript-format
+#~ msgid ""
+#~ "Enjoy the latest developments in online productivity, free for you to use, "
+#~ "to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
+#~ "target=\"_blank\">Apps</a> are also available for Android and iOS. "
+#~ "%coolVersion introduces important improvements, in the areas of usability, "
+#~ "visual presentation and performance."
+#~ msgstr ""
+#~ "Nauti viimeisimmistä kehityksistä sähköisessä tuottavuudessa, vapaasti sinun "
+#~ "ja muiden käytettävissä selaimen kautta. Saatavilla on myös <a href=\"%"
+#~ "coolAppsURL\" target=\"_blank\">sovellukset</a> android- ja iOS-käyttöön. "
+#~ "Versio %coolVersion tarjoaa tärkeitä parannuksia käytettävyydessä, "
+#~ "visuaalisuudessa ja tehokkuudessa."
+
+#~ msgid "Discover all the changes"
+#~ msgstr "Katso kaikki muutokset"
+
+#, javascript-format
+#~ msgid ""
+#~ "Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
+#~ "a> and learn all about the latest milestone in performance particularly for "
+#~ "larger groups working on documents, new native sidebar, new re-worked avatar "
+#~ "list, asynchronous saving, faster spell checking and more."
+#~ msgstr ""
+#~ "Katso <a href=\"%coolReleaseNotesURL\" target=\"_blank\">julkaisutiedot</a> "
+#~ "ja lue viimeisimmästä edistysaskeleesta tehokkuudessa etenkin suuremmille "
+#~ "tiedostoa muokkaaville ryhmille, uudesta natiivista sivupalkista, "
+#~ "uudistetusta avatarlistasta, taustalla tapahtuvasta tallentamisesta, "
+#~ "nopeammasta kielentarkistuksesta ja muista parannuksista."
+
+#~ msgid "Integrate Collabora Online into your webapp"
+#~ msgstr "Integroi Collabora Online web-sovellukseesi"
+
+#~ msgid "Or get involved in the development"
+#~ msgstr "Tai osallistu kehittämiseen"
+
+#, javascript-format
+#~ msgid ""
+#~ "Learn more about integrating into your web application in the <a href="
+#~ "\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
+#~ "the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
+#~ "instructions</a> and build CODE from scratch. You can also help out with <a "
+#~ "href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
+#~ "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
+#~ "all the essential steps on how to reproduce it."
+#~ msgstr ""
+#~ "Lue lisää web-applikaatioosi integroimisesta <a href=\"%coolSdkURL\" target="
+#~ "\"_blank\">Collabora Online SDK:sta</a>. Tai suuntaa kohti <a href=\"%"
+#~ "coolStepByStepURL\" target=\"_blank\">vaiheittaisia ohjeita</a> ja buildaa "
+#~ "CODE ihan itse. Voit myös auttaa <a href=\"%coolTranslationsURL\" target=\""
+#~ "_blank\">tekemällä käännöksiä</a> tai <a href=\"%coolBugreportURL\" target=\""
+#~ "_blank\">tekemällä ilmoituksen bugista</a> sisällyttäen myös ohjeet bugin "
+#~ "toistamiseen."
+
+#~ msgid "Next"
+#~ msgstr "Seuraava"
+
+#~ msgid "Learn more about the enterprise-ready versions"
+#~ msgstr "Lue lisää yrityskäyttöön valmiista versioista"
+
+#~ msgid ""
+#~ "We are sorry, the information about the latest updates is not available."
+#~ msgstr "Pahoittelumme, tietoja viimeisimmistä julkaisuista ei ole saatavilla."
 
 #~ msgid "Inactive document - please click to resume editing"
 #~ msgstr "Asiakirja ei ole aktiivinen - klikkaa jatkaaksesi muokkausta"
