@@ -51,7 +51,7 @@ inline void tstLog(const std::ostringstream& stream) { writeTestLog(stream.str()
     {                                                                                              \
         char b_[1024];                                                                             \
         OSS << Log::prefix<sizeof(b_) - 1>(b_, "TST") << NAME << " [" << __func__ << "] (+"        \
-            << helpers::timeSinceTestStartMs() << "): " << X;                                      \
+            << helpers::timeSinceTestStartMs() << "): " << std::boolalpha << X;                    \
         if (FLUSH)                                                                                 \
             tstLog(OSS);                                                                           \
     } while (false)

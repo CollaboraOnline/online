@@ -9,7 +9,6 @@
 
 #include <vector>
 #include <ostream>
-inline std::ostream& operator<<(std::ostream& os, const std::vector<char>& v);
 
 #include "testlog.hpp"
 #include <assert.h>
@@ -81,19 +80,30 @@ std::string inline lokFormatAssertEq(const std::string& expected, const std::str
     } while (false)
 #endif
 
-/// Assert the truth of a condition. WARNING: Multiple evaluations!
-#define LOK_ASSERT(condition)                                                                      \
+/// Assert the truth of a condition, with a custom message.
+#define LOK_ASSERT_MESSAGE(message, condition)                                                     \
     do                                                                                             \
     {                                                                                              \
-        if (!(condition))                                                                          \
+        auto&& cond##__LINE__ = !!(condition);                                                     \
+        if (!cond##__LINE__)                                                                       \
         {                                                                                          \
-            TST_LOG_NAME("unittest", "ERROR: Assertion failure: " << (#condition));                \
-            LOK_ASSERT_IMPL(condition);                                                            \
-            CPPUNIT_ASSERT(condition);                                                             \
+            std::ostringstream oss##__LINE__;                                                      \
+            oss##__LINE__ << message;                                                              \
+            const auto msg##__LINE__ = oss##__LINE__.str();                                        \
+            TST_LOG_NAME("unittest", "ERROR: Assertion failure: "                                  \
+                                         << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ". ")    \
+                                         << "Condition: " << (#condition));                        \
+            LOK_ASSERT_IMPL(cond##__LINE__);                                                       \
+            CPPUNIT_ASSERT_MESSAGE((message), cond##__LINE__);                                     \
         }                                                                                          \
         else                                                                                       \
-            LOK_TRACE("PASS: " << (#condition));                                                   \
+        {                                                                                          \
+            LOK_TRACE("PASS: " << (#condition) << " [true]");                                      \
+        }                                                                                          \
     } while (false)
+
+/// Assert the truth of a condition.
+#define LOK_ASSERT(condition) LOK_ASSERT_MESSAGE("", condition)
 
 /// Assert the equality of two expressions. WARNING: Multiple evaluations!
 /// Captures full expressions, but only meaningful when they have no side-effects when evaluated.
@@ -116,8 +126,6 @@ std::string inline lokFormatAssertEq(const std::string& expected, const std::str
             LOK_ASSERT_IMPL((expected) == (actual));                                               \
             CPPUNIT_ASSERT_EQUAL_MESSAGE(msg##__LINE__, (expected), (actual));                     \
         }                                                                                          \
-        else                                                                                       \
-            LOK_TRACE("PASS: [" << (expected) << "] == [" << (actual) << ']');                     \
     } while (false)
 
 /// Assert the equality of two expressions, and a custom message, with guaranteed single evaluation.
@@ -126,38 +134,22 @@ std::string inline lokFormatAssertEq(const std::string& expected, const std::str
     {                                                                                              \
         auto&& exp##__LINE__ = EXP;                                                                \
         auto&& act##__LINE__ = ACT;                                                                \
-        LOK_ASSERT_EQUAL_MESSAGE_UNSAFE(MSG, exp##__LINE__, act##__LINE__);                        \
+        if (!(exp##__LINE__ == act##__LINE__))                                                     \
+        {                                                                                          \
+            LOK_ASSERT_EQUAL_MESSAGE_UNSAFE(MSG, exp##__LINE__, act##__LINE__);                    \
+        }                                                                                          \
+        else                                                                                       \
+        {                                                                                          \
+            LOK_TRACE("PASS: " << #EXP << " == " << #ACT << " == [" << act##__LINE__ << ']');      \
+        }                                                                                          \
     } while (false)
 
 /// Assert the equality of two expressions with guarantees of single evaluation.
-#define LOK_ASSERT_EQUAL(EXP, ACT)                                                                 \
-    do                                                                                             \
-    {                                                                                              \
-        LOK_ASSERT_EQUAL_MESSAGE((#EXP) << " == " << (#ACT), EXP, ACT);                            \
-    } while (false)
+#define LOK_ASSERT_EQUAL(EXP, ACT) LOK_ASSERT_EQUAL_MESSAGE((#EXP) << " != " << (#ACT), EXP, ACT)
 
 /// Assert the equality of two expressions with guarantees of single evaluation.
 #define LOK_ASSERT_EQUAL_STR(EXP, ACT)                                                             \
-    do                                                                                             \
-    {                                                                                              \
-        LOK_ASSERT_EQUAL_MESSAGE((#EXP) << " == " << (#ACT), Util::toString(EXP),                  \
-                                 Util::toString(ACT));                                             \
-    } while (false)
-
-/// Assert the truth of a condition, with a custom message. WARNING: Multiple evaluations!
-#define LOK_ASSERT_MESSAGE(message, condition)                                                     \
-    do                                                                                             \
-    {                                                                                              \
-        if (!(condition))                                                                          \
-        {                                                                                          \
-            TST_LOG_NAME("unittest", "ERROR: Assertion failure: ["                                 \
-                                         << (message) << "] Condition: " << (#condition));         \
-            LOK_ASSERT_IMPL(condition);                                                            \
-            CPPUNIT_ASSERT_MESSAGE((message), (condition));                                        \
-        }                                                                                          \
-        else                                                                                       \
-            LOK_TRACE("PASS: " << (#condition));                                                   \
-    } while (false)
+    LOK_ASSERT_EQUAL_MESSAGE((#EXP) << " != " << (#ACT), Util::toString(EXP), Util::toString(ACT))
 
 #define LOK_ASSERT_FAIL(message)                                                                   \
     do                                                                                             \
