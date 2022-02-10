@@ -859,15 +859,15 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	}
 }
 
-#toolbar-down .freemium-disabled .w2ui-tb-image {
+#toolbar-down .locking-disabled .w2ui-tb-image {
 	overflow: visible;
 }
-#toolbar-down .freemium-disabled .w2ui-icon:before {
+#toolbar-down .locking-disabled .w2ui-icon:before {
 	display: block;
 	content: '';
 	width: 18px;
 	height: 18px;
-	background: url('images/lc_freeemiumlock.svg') no-repeat center -15px /16px white;
+	background: url('images/lc_lock.svg') no-repeat center -15px /16px white;
 	box-shadow: 0 0 1px 0 #0b87e7,0 0 3px 0 #00000075;
 	border-radius: 18px;
 	position: relative;

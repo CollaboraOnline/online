@@ -873,8 +873,8 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
     JsonUtil::findJSONValue(object, "FileUrl", _fileUrl);
 
     bool booleanFlag = false;
-    JsonUtil::findJSONValue(object, "IsUserFreemium", booleanFlag);
-    CommandControl::FreemiumManager::setFreemiumUser(booleanFlag);
+    JsonUtil::findJSONValue(object, "IsUserLocked", booleanFlag);
+    CommandControl::LockManager::setLockedUser(booleanFlag);
 
     booleanFlag = false;
     JsonUtil::findJSONValue(object, "IsUserRestricted", booleanFlag);

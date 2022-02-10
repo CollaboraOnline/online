@@ -14,20 +14,19 @@
 
 namespace CommandControl
 {
+bool LockManager::_isLockedUser = false;
+std::unordered_set<std::string> LockManager::LockedCommandList;
+std::string LockManager::LockedCommandListString;
 
-bool FreemiumManager::_isFreemiumUser = false;
-std::unordered_set<std::string> FreemiumManager::FreemiumDenyList;
-std::string FreemiumManager::FreemiumDenyListString;
+LockManager::LockManager() {}
 
-FreemiumManager::FreemiumManager() {}
-
-void FreemiumManager::generateDenyList()
+void LockManager::generateLockedCommandList()
 {
-#ifdef ENABLE_FREEMIUM
+#ifdef ENABLE_FEATURE_LOCK
 
-    FreemiumDenyListString = config::getString("freemium.disabled_commands", "");
-    Util::trim(FreemiumDenyListString);
-    StringVector commandList = Util::tokenize(FreemiumDenyListString);
+    LockedCommandListString = config::getString("feature_lock.locked_commands", "");
+    Util::trim(LockedCommandListString);
+    StringVector commandList = Util::tokenize(LockedCommandListString);
 
     std::string command;
     for (std::size_t i = 0; i < commandList.size(); i++)
@@ -35,30 +34,29 @@ void FreemiumManager::generateDenyList()
         // just an extra check to make sure any whitespace does not sniff in command
         // or else command will not be recognized
         command = Util::trim_whitespace(commandList[i]);
-        if(!command.empty())
+        if (!command.empty())
         {
-            FreemiumDenyList.emplace(command);
+            LockedCommandList.emplace(command);
         }
     }
 #endif
 }
 
-const std::unordered_set<std::string>& FreemiumManager::getFreemiumDenyList()
+const std::unordered_set<std::string>& LockManager::getLockedCommandList()
 {
-    if (FreemiumDenyList.empty())
-        generateDenyList();
+    if (LockedCommandList.empty())
+        generateLockedCommandList();
 
-    return FreemiumDenyList;
+    return LockedCommandList;
 }
 
-const std::string FreemiumManager::getFreemiumDenyListString()
+const std::string LockManager::getLockedCommandListString()
 {
-    if (FreemiumDenyListString.empty())
-        generateDenyList();
+    if (LockedCommandListString.empty())
+        generateLockedCommandList();
 
-    return FreemiumDenyListString;
+    return LockedCommandListString;
 }
-
 
 bool RestrictionManager::_isRestrictedUser = false;
 std::unordered_set<std::string> RestrictionManager::RestrictedCommandList;
@@ -79,7 +77,7 @@ void RestrictionManager::generateRestrictedCommandList()
         // just an extra check to make sure any whitespace does not sniff in command
         // or else command will not be recognized
         command = Util::trim_whitespace(commandList[i]);
-        if(!command.empty())
+        if (!command.empty())
         {
             RestrictedCommandList.emplace(command);
         }

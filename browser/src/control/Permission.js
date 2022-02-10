@@ -45,9 +45,9 @@ L.Map.include({
 			}
 		}
 		else if (perm === 'view' || perm === 'readonly') {
-			if (this.isFreemiumReadOnlyUser()) {
+			if (this.isLockedReadOnlyUser()) {
 				button.on('click', function () {
-					that.openSubscriptionPopup();
+					that.openUnlockPopup();
 				});
 			}
 			else if (window.ThisIsTheAndroidApp) {
@@ -99,7 +99,7 @@ L.Map.include({
 	},
 
 	_shouldStartReadOnly: function () {
-		if (this.isFreemiumReadOnlyUser())
+		if (this.isLockedReadOnlyUser())
 			return true;
 		var fileName = this['wopi'].BaseFileName;
 		// use this feature for only integration.

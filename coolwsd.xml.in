@@ -233,7 +233,7 @@
         <expiry_min desc="Time in mins after quarantined files will be deleted." type="int" default="30"></expiry_min>
     </quarantine_files>
 
-    @FREEMIUM_CONFIGURATION@
+    @LOCK_CONFIGURATION@
 
     @FEATURE_RESTRICTION_CONFIGURATION@
 

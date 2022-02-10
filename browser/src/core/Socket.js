@@ -1121,10 +1121,10 @@ app.definitions.Socket = L.Class.extend({
 			this._map.fire('unblockUI');
 			return;
 		}
-		else if (textMsg.startsWith('freemium: ')) {
-			// Handle freemium related messages
-			var freemiumInfo = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
-			this._map._setFreemiumProps(freemiumInfo);
+		else if (textMsg.startsWith('featurelock: ')) {
+			// Handle feature locking related messages
+			var lockInfo = JSON.parse(textMsg.substring(textMsg.indexOf('{')));
+			this._map._setLockProps(lockInfo);
 			return;
 		}
 		else if (textMsg.startsWith('restrictedCommands: ')) {
@@ -1135,8 +1135,10 @@ app.definitions.Socket = L.Class.extend({
 		}
 		else if (textMsg.startsWith('blockedcommand: ')) {
 			var blockedInfo = app.socket.parseServerCmd(textMsg.substring(16));
-			if (blockedInfo.errorKind === 'freemiumdeny')
-				this._map.openSubscriptionPopup(blockedInfo.errorCmd);
+			if (blockedInfo.errorKind === 'restricted')
+				window.app.console.log('Restricted command "' + blockedInfo.errorCmd + '" was blocked');
+			else if (blockedInfo.errorKind === 'locked')
+				this._map.openUnlockPopup(blockedInfo.errorCmd);
 			return;
 		}
 		else if (!textMsg.startsWith('tile:') && !textMsg.startsWith('renderfont:') && !textMsg.startsWith('windowpaint:')) {
