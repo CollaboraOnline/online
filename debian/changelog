@@ -1,3 +1,9 @@
+coolwsd (21.11.2.0-1) unstable; urgency=medium
+
+  * https://github.com/CollaboraOnline/online/releases/tag/cp-21.11.2-0
+
+ -- Andras Timar <andras.timar@collabora.com>  Thu, 10 Feb 2022 10:15:00 +0100
+
 coolwsd (21.11.1.4-1) unstable; urgency=medium
 
   * https://github.com/CollaboraOnline/online/releases/tag/cp-21.11.1-4
