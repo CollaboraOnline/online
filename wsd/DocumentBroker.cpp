@@ -147,6 +147,11 @@ DocumentBroker::DocumentBroker(ChildType type,
 
     LOG_INF("DocumentBroker [" << COOLWSD::anonymizeUrl(_uriPublic.toString()) <<
             "] created with docKey [" << _docKey << ']');
+
+    if (UnitWSD::isUnitTesting())
+    {
+        UnitWSD::get().onDocBrokerCreate(_docKey);
+    }
 }
 
 void DocumentBroker::setupPriorities()
@@ -542,12 +547,15 @@ DocumentBroker::~DocumentBroker()
     // and thread finished before we are destroyed.
     _childProcess.reset();
 
-    UnitWSD::get().onDocBrokerDestroy(_docKey);
-
 #if !MOBILEAPP
     // Remove from the admin last, to avoid racing the next test.
     Admin::instance().rmDoc(_docKey);
 #endif
+
+    if (UnitWSD::isUnitTesting())
+    {
+        UnitWSD::get().onDocBrokerDestroy(_docKey);
+    }
 }
 
 void DocumentBroker::joinThread()
@@ -2106,6 +2114,11 @@ std::size_t DocumentBroker::addSessionInternal(const std::shared_ptr<ClientSessi
             " session [" << id << "] to docKey [" <<
             _docKey << "] to have " << count << " sessions.");
 
+    if (UnitWSD::isUnitTesting())
+    {
+        UnitWSD::get().onDocBrokerAddSession(_docKey, session);
+    }
+
     return count;
 }
 
@@ -2314,7 +2327,10 @@ void DocumentBroker::finalRemoveSession(const std::string& id)
                 LOG_END(logger, true);
             }
 
-            return;
+            if (UnitWSD::isUnitTesting())
+            {
+                UnitWSD::get().onDocBrokerRemoveSession(_docKey, it->second);
+            }
         }
         else
         {

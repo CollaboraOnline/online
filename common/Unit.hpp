@@ -23,6 +23,7 @@ class UnitKit;
 class UnitTimeout;
 
 class WebSocketHandler;
+class ClientSession;
 
 // Forward declaration to avoid pulling the world here.
 namespace Poco
@@ -221,7 +222,19 @@ public:
     /// Return true to stop further handling of messages.
     virtual bool onDocumentError(const std::string&) { return false; }
 
-    /// Called when a DocumentBroker is destroyed.
+    /// Called when a DocumentBroker is created (from the constructor).
+    /// Useful to detect track the beginning of a document's life cycle.
+    virtual void onDocBrokerCreate(const std::string&) {}
+
+    /// Called when a new client session is added to a DocumentBroker.
+    virtual void onDocBrokerAddSession(const std::string&, const std::shared_ptr<ClientSession>&) {}
+
+    /// Called when a client session is removed to a DocumentBroker.
+    virtual void onDocBrokerRemoveSession(const std::string&, const std::shared_ptr<ClientSession>&)
+    {
+    }
+
+    /// Called when a DocumentBroker is destroyed (from the destructor).
     /// Useful to detect when unloading was clean and to (re)load again.
     virtual void onDocBrokerDestroy(const std::string&) {}
 
