@@ -35,8 +35,16 @@
 
 class WOPIUploadConflictCommon : public WopiTestServer
 {
+private:
+    std::size_t _expectedCheckFileInfo;
+    std::size_t _expectedGetFile;
+    std::size_t _expectedPutRelative;
+    std::size_t _expectedPutFile;
+
 protected:
     STATES_ENUM(Phase, _phase, Load, WaitLoadStatus, WaitModifiedStatus, WaitDocClose);
+
+    /// The different test scenarios. All but VerifyOverwrite modify the document.
     STATES_ENUM(Scenario, _scenario, Disconnect, SaveDiscard, CloseDiscard, SaveOverwrite,
                 VerifyOverwrite);
 
@@ -44,9 +52,41 @@ protected:
     static constexpr auto ModifiedOriginalDocContent = "\ufeffaOriginal contents\n";
     static constexpr auto ConflictingDocContent = "Modified in-storage contents";
 
+    std::size_t getExpectedCheckFileInfo() const { return _expectedCheckFileInfo; }
+    void incExpectedCheckFileInfo()
+    {
+        ++_expectedCheckFileInfo;
+        LOG_TST("Expecting " << _expectedCheckFileInfo << " CheckFileInfo requests.");
+    }
+
+    std::size_t getExpectedGetFile() const { return _expectedGetFile; }
+    void incExpectedGetFile()
+    {
+        ++_expectedGetFile;
+        LOG_TST("Expecting " << _expectedGetFile << " GetFile requests.");
+    }
+
+    std::size_t getExpectedPutRelative() const { return _expectedPutRelative; }
+    void incExpectedPutRelative()
+    {
+        ++_expectedPutRelative;
+        LOG_TST("Expecting " << _expectedPutRelative << " PutRelative requests.");
+    }
+
+    std::size_t getExpectedPutFile() const { return _expectedPutFile; }
+    void incExpectedPutFile()
+    {
+        ++_expectedPutFile;
+        LOG_TST("Expecting " << _expectedPutFile << " PutFile requests.");
+    }
+
 public:
     WOPIUploadConflictCommon(std::string testname, const std::string& fileContent)
         : WopiTestServer(std::move(testname), fileContent)
+        , _expectedCheckFileInfo(0)
+        , _expectedGetFile(0)
+        , _expectedPutRelative(0)
+        , _expectedPutFile(0)
         , _phase(Phase::Load)
         , _scenario(Scenario::Disconnect)
     {

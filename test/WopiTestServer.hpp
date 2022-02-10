@@ -44,6 +44,15 @@ private:
     /// Last modified time of the file
     std::chrono::system_clock::time_point _fileLastModifiedTime;
 
+    /// The number of CheckFileInfo invocations.
+    std::size_t _countCheckFileInfo;
+    /// The number of GetFile invocations.
+    std::size_t _countGetFile;
+    /// The number of rename invocations.
+    std::size_t _countPutRelative;
+    /// The number of upload invocations.
+    std::size_t _countPutFile;
+
 protected:
 
     const std::string& getWopiSrc() const { return _wopiSrc; }
@@ -75,10 +84,19 @@ protected:
 
     WopiTestServer(std::string testname, const std::string& fileContent = "Hello, world")
         : UnitWSD(std::move(testname))
+        , _countCheckFileInfo(0)
+        , _countGetFile(0)
+        , _countPutRelative(0)
+        , _countPutFile(0)
     {
         LOG_TST("WopiTestServer created for [" << testname << ']');
         setFileContent(fileContent);
     }
+
+    std::size_t getCountCheckFileInfo() const { return _countCheckFileInfo; }
+    std::size_t getCountGetFile() const { return _countGetFile; }
+    std::size_t getCountPutRelative() const { return _countPutRelative; }
+    std::size_t getCountPutFile() const { return _countPutFile; }
 
     void initWebsocket(const std::string& wopiName)
     {
@@ -157,7 +175,9 @@ protected:
         // CheckFileInfo
         if (request.getMethod() == "GET" && regInfo.match(uriReq.getPath()))
         {
-            LOG_TST("Fake wopi host request, handling CheckFileInfo: " << uriReq.getPath());
+            ++_countCheckFileInfo;
+            LOG_TST("Fake wopi host request, handling CheckFileInfo (#"
+                    << _countCheckFileInfo << "): " << uriReq.getPath());
 
             assertCheckFileInfoRequest(request);
 
@@ -187,7 +207,9 @@ protected:
         // GetFile
         else if (request.getMethod() == "GET" && regContent.match(uriReq.getPath()))
         {
-            LOG_TST("Fake wopi host request, handling GetFile: " << uriReq.getPath());
+            ++_countGetFile;
+            LOG_TST("Fake wopi host request, handling GetFile (#" << _countGetFile
+                                                                  << "): " << uriReq.getPath());
 
             assertGetFileRequest(request);
 
@@ -200,11 +222,16 @@ protected:
         }
         else if (request.getMethod() == "POST" && regInfo.match(uriReq.getPath()))
         {
-            LOG_TST("Fake wopi host request, handling PutRelativeFile: " << uriReq.getPath());
-            std::string wopiURL = helpers::getTestServerURI() + "/something wopi/files/1?access_token=anything&reuse_cookies=cook=well";
-            std::string content;
+            ++_countPutRelative;
+            LOG_TST("Fake wopi host request, handling PutRelativeFile (#"
+                    << _countPutRelative << "): " << uriReq.getPath());
 
-            if(request.get("X-WOPI-Override") == std::string("PUT_RELATIVE"))
+            const std::string wopiURL =
+                helpers::getTestServerURI() +
+                "/something wopi/files/1?access_token=anything&reuse_cookies=cook=well";
+
+            std::string content;
+            if (request.get("X-WOPI-Override") == std::string("PUT_RELATIVE"))
             {
                 LOK_ASSERT_EQUAL(std::string("PUT_RELATIVE"), request.get("X-WOPI-Override"));
                 assertPutRelativeFileRequest(request);
@@ -227,9 +254,11 @@ protected:
         }
         else if (request.getMethod() == "POST" && regContent.match(uriReq.getPath()))
         {
-            LOG_TST("Fake wopi host request, handling PutFile: " << uriReq.getPath());
+            ++_countPutFile;
+            LOG_TST("Fake wopi host request, handling PutFile (#" << _countPutFile
+                                                                  << "): " << uriReq.getPath());
 
-            std::string wopiTimestamp = request.get("X-COOL-WOPI-Timestamp", std::string());
+            const std::string wopiTimestamp = request.get("X-COOL-WOPI-Timestamp", std::string());
             if (!wopiTimestamp.empty())
             {
 
