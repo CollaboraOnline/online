@@ -297,7 +297,7 @@ bool ChildSession::_handleInput(const char *buffer, int length)
     }
     else if (tokens.equals(0, "blockingcommandstatus"))
     {
-#if defined(ENABLE_FREEMIUM) || defined(ENABLE_FEATURE_RESTRICTION)
+#if defined(ENABLE_FEATURE_LOCK) || defined(ENABLE_FEATURE_RESTRICTION)
         return updateBlockingCommandStatus(buffer, length, tokens);
 #endif
     }
@@ -2647,26 +2647,27 @@ int ChildSession::getSpeed()
     return _cursorInvalidatedEvent.size();
 }
 
-#if defined(ENABLE_FEATURE_RESTRICTION) || defined(ENABLE_FREEMIUM)
+#if defined(ENABLE_FEATURE_LOCK) || defined(ENABLE_FEATURE_RESTRICTION)
 bool ChildSession::updateBlockingCommandStatus(const char* /*buffer*/, int /*length*/, const StringVector& tokens)
 {
-    std::string freemiumStatus, restrictedStatus;
+    std::string lockStatus, restrictedStatus;
     if (tokens.size() < 2 || !getTokenString(tokens[1], "isRestrictedUser", restrictedStatus))
     {
         sendTextFrameAndLogError("error: cmd=restrictionstatus kind=failure");
         return false;
     }
-    else if (tokens.size() < 2 || !getTokenString(tokens[2], "isFreemiumUser", freemiumStatus))
+    else if (tokens.size() < 2 || !getTokenString(tokens[2], "isLockedUser", lockStatus))
     {
-        sendTextFrameAndLogError("error: cmd=freemiumstatus kind=failure");
+        sendTextFrameAndLogError("error: cmd=lockstatus kind=failure");
         return false;
     }
     std::string blockedCommands = "";
     if (restrictedStatus == "true")
         blockedCommands += CommandControl::RestrictionManager::getRestrictedCommandListString();
-    if (freemiumStatus == "true")
-        blockedCommands += blockedCommands.empty() ? CommandControl::FreemiumManager::getFreemiumDenyListString() :
-                            " " + CommandControl::FreemiumManager::getFreemiumDenyListString();
+    if (lockStatus == "true")
+        blockedCommands += blockedCommands.empty()
+                               ? CommandControl::LockManager::getLockedCommandListString()
+                               : " " + CommandControl::LockManager::getLockedCommandListString();
 
     getLOKitDocument()->setBlockedCommandList(_viewId, blockedCommands.c_str());
     return true;
@@ -2678,9 +2679,9 @@ std::string ChildSession::getBlockedCommandType(std::string command)
     != CommandControl::RestrictionManager::getRestrictedCommandList().end())
         return "restricted";
 
-    if(CommandControl::FreemiumManager::getFreemiumDenyList().find(command)
-    != CommandControl::FreemiumManager::getFreemiumDenyList().end())
-        return "freemiumdeny";
+    if (CommandControl::LockManager::getLockedCommandList().find(command) !=
+        CommandControl::LockManager::getLockedCommandList().end())
+        return "locked";
 
     return "";
 }
@@ -3006,7 +3007,7 @@ void ChildSession::loKitCallback(const int type, const std::string& payload)
         break;
     case LOK_COMMAND_BLOCKED:
         {
-#if defined(ENABLE_FREEMIUM) || defined(ENABLE_FEATURE_RESTRICTION)
+#if defined(ENABLE_FEATURE_LOCK) || defined(ENABLE_FEATURE_RESTRICTION)
             LOG_INF("COMMAND_BLOCKED: " << payload);
             Parser parser;
             Poco::Dynamic::Var var = parser.parse(payload);

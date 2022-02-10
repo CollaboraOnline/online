@@ -330,11 +330,11 @@
 
 .unotoolbutton.notebookbar.disabled:not(.unospan-shortcutstoolbox),
 .mobile-wizard-widebutton.disabled,
-.freemium-disabled {
+.locking-disabled {
 	opacity: 0.65;
 }
 
-.freemium-disabled:hover {
+.locking-disabled:hover {
 	opacity: 1;
 }
 

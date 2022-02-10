@@ -1399,7 +1399,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 	},
 
 	_pushbuttonControl: function(parentContainer, data, builder, customCallback) {
-		var wrapper = L.DomUtil.create('div', '', parentContainer); // need for freemium overlay
+		var wrapper = L.DomUtil.create('div', '', parentContainer); // need for locking overlay
 		var pushbutton = L.DomUtil.create('button', 'ui-pushbutton ' + builder.options.cssClass, wrapper);
 		pushbutton.id = data.id;
 		var pushbuttonText = builder._customPushButtonTextForId(data.id) !== '' ? builder._customPushButtonTextForId(data.id) : builder._cleanText(data.text);
@@ -1427,7 +1427,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		});
 
 		builder.map.hideRestrictedItems(data, wrapper, pushbutton);
-		builder.map.disableFreemiumItem(data, wrapper, pushbutton);
+		builder.map.disableLockedItem(data, wrapper, pushbutton);
 		if (data.hidden)
 			$(pushbutton).hide();
 
@@ -2386,11 +2386,11 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			$(button).prop('disabled', true);
 		if (window.mode.isMobile()) {
 			builder.map.hideRestrictedItems(data, controls['container'], controls['container']);
-			builder.map.disableFreemiumItem(data, controls['container'], controls['container']);
+			builder.map.disableLockedItem(data, controls['container'], controls['container']);
 		}
 		else {
 			builder.map.hideRestrictedItems(data, parentContainer, controls['container']);
-			builder.map.disableFreemiumItem(data, parentContainer, controls['container']);
+			builder.map.disableLockedItem(data, parentContainer, controls['container']);
 		}
 		return controls;
 	},
@@ -2843,7 +2843,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 		}
 
 		builder.map.hideRestrictedItems(data, menuEntry, menuEntry);
-		builder.map.disableFreemiumItem(data, menuEntry, menuEntry);
+		builder.map.disableLockedItem(data, menuEntry, menuEntry);
 
 		return false;
 	},
