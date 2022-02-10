@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-17 21:33+0100\n"
+"POT-Creation-Date: 2022-02-10 10:29+0100\n"
 "PO-Revision-Date: 2022-01-15 13:53+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/collabora-online/"
@@ -143,7 +143,7 @@ msgstr "Monitor CPU"
 msgid "Network Graph"
 msgstr "Wykres sieci"
 
-#: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:252
+#: admin/admin.strings.js:35 src/control/Control.Notebookbar.js:255
 #: src/control/Control.NotebookbarDraw.js:24
 #: src/control/Control.NotebookbarImpress.js:24
 #: src/layer/tile/CommentListSection.ts:398
@@ -225,8 +225,7 @@ msgid "Log Levels"
 msgstr "Poziomy dziennika"
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
-#: src/control/Parts.js:421 src/control/Signing.js:611
-#: src/control/Toolbar.js:620
+#: src/control/Parts.js:424 src/control/Signing.js:611
 msgid "Close"
 msgstr "Zamknij"
 
@@ -265,17 +264,17 @@ msgstr "Czy jesteś pewien, że chcesz zamknąć tą sesję?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1654
 #: src/control/Control.PresentationBar.js:109 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
-#: src/core/Socket.js:1016
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:706
+#: src/core/Socket.js:1015
 msgid "OK"
 msgstr "OK"
 
 #: admin/src/AdminSocketOverview.js:100 admin/src/AdminSocketSettings.js:37
 #: src/control/Control.Command.js:92 src/control/Control.LanguageDialog.js:86
-#: src/control/Control.Menubar.js:1655 src/control/Control.MobileTopBar.js:43
+#: src/control/Control.Menubar.js:1655 src/control/Control.MobileTopBar.js:41
 #: src/control/Control.PresentationBar.js:110 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:862
-#: src/core/Socket.js:877 src/core/Socket.js:887 src/core/Socket.js:1017
+#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:707
+#: src/core/Socket.js:876 src/core/Socket.js:886 src/core/Socket.js:1016
 #: src/layer/tile/CommentListSection.ts:399
 #: src/layer/tile/CommentSection.ts:125 src/layer/tile/CommentSection.ts:128
 msgid "Cancel"
@@ -355,7 +354,7 @@ msgstr "Bez koloru"
 msgid "Automatic color"
 msgstr "Automatyczny kolor"
 
-#: src/control/Control.AlertDialog.js:66 src/control/Control.StatusBar.js:424
+#: src/control/Control.AlertDialog.js:66 src/control/Control.StatusBar.js:427
 msgid "Edit"
 msgstr "Edycja"
 
@@ -363,7 +362,7 @@ msgstr "Edycja"
 msgid "Open link"
 msgstr "Otwórz łącze"
 
-#: src/control/Control.AlertDialog.js:100
+#: src/control/Control.AlertDialog.js:104
 msgid "The server encountered a %0 error while parsing the %1 command."
 msgstr "Serwer napotkał błąd %0 podczas analizowania polecenia %1."
 
@@ -379,7 +378,7 @@ msgstr "Usuń"
 msgid "Paste Special"
 msgstr "Wklej specjalnie"
 
-#: src/control/Control.DocumentNameInput.js:82
+#: src/control/Control.DocumentNameInput.js:77
 msgid "Path"
 msgstr "Ścieżka"
 
@@ -396,9 +395,9 @@ msgid "Index"
 msgstr "Indeks"
 
 #: src/control/Control.DocumentRepair.js:48
-#: src/control/Control.JSDialogBuilder.js:2117
-#: src/layer/tile/CanvasTileLayer.js:4869
-#: src/layer/tile/CanvasTileLayer.js:4879
+#: src/control/Control.JSDialogBuilder.js:2127
+#: src/layer/tile/CanvasTileLayer.js:4912
+#: src/layer/tile/CanvasTileLayer.js:4922
 #: src/layer/tile/CommentListSection.ts:831
 msgid "Comment"
 msgstr "Komentarz"
@@ -497,31 +496,31 @@ msgstr "Rozmiar czcionki"
 msgid "Style"
 msgstr "Styl"
 
-#: src/control/Control.JSDialogBuilder.js:2103
+#: src/control/Control.JSDialogBuilder.js:2113
 msgid "reply"
 msgstr "odpowiedź"
 
-#: src/control/Control.JSDialogBuilder.js:2106
+#: src/control/Control.JSDialogBuilder.js:2116
 msgid "replies"
 msgstr "odpowiedzi"
 
-#: src/control/Control.JSDialogBuilder.js:2178
+#: src/control/Control.JSDialogBuilder.js:2189
 msgid "Insert Comment"
 msgstr "Wstaw komentarz"
 
-#: src/control/Control.JSDialogBuilder.js:2649
+#: src/control/Control.JSDialogBuilder.js:2665
 msgid "Cell borders"
 msgstr "Krawędzie komórek"
 
-#: src/control/Control.JSDialogBuilder.js:2840
+#: src/control/Control.JSDialogBuilder.js:2856
 msgid "Rows"
 msgstr "Wiersze"
 
-#: src/control/Control.JSDialogBuilder.js:2841
+#: src/control/Control.JSDialogBuilder.js:2857
 msgid "Columns"
 msgstr "Kolumny"
 
-#: src/control/Control.JSDialogBuilder.js:2861
+#: src/control/Control.JSDialogBuilder.js:2877
 msgid "Insert Table"
 msgstr "Wstaw tabelę"
 
@@ -529,13 +528,13 @@ msgstr "Wstaw tabelę"
 #: src/control/Control.Menubar.js:285 src/control/Control.Menubar.js:287
 #: src/control/Control.Menubar.js:425 src/control/Control.Menubar.js:539
 #: src/control/Control.Menubar.js:749
-#: src/control/Control.NotebookbarBuilder.js:822
-#: src/control/Control.NotebookbarBuilder.js:824
-#: src/control/Control.NotebookbarBuilder.js:826
-#: src/control/Control.NotebookbarBuilder.js:850
-#: src/control/Control.NotebookbarBuilder.js:876
-#: src/control/Control.NotebookbarBuilder.js:893
-#: src/control/Control.StatusBar.js:514
+#: src/control/Control.NotebookbarBuilder.js:819
+#: src/control/Control.NotebookbarBuilder.js:821
+#: src/control/Control.NotebookbarBuilder.js:823
+#: src/control/Control.NotebookbarBuilder.js:846
+#: src/control/Control.NotebookbarBuilder.js:871
+#: src/control/Control.NotebookbarBuilder.js:887
+#: src/control/Control.StatusBar.js:517
 msgid "None (Do not check spelling)"
 msgstr "Brak (nie sprawdzaj pisowni)"
 
@@ -571,10 +570,10 @@ msgstr "Eksportuj jako"
 #: src/control/Control.Menubar.js:450 src/control/Control.Menubar.js:559
 #: src/control/Control.Menubar.js:777 src/control/Control.Menubar.js:830
 #: src/control/Control.Menubar.js:885 src/control/Control.Menubar.js:932
-#: src/control/Control.NotebookbarCalc.js:163
-#: src/control/Control.NotebookbarDraw.js:212
-#: src/control/Control.NotebookbarImpress.js:243
-#: src/control/Control.NotebookbarWriter.js:167
+#: src/control/Control.NotebookbarCalc.js:169
+#: src/control/Control.NotebookbarDraw.js:200
+#: src/control/Control.NotebookbarImpress.js:231
+#: src/control/Control.NotebookbarWriter.js:173
 msgid "PDF Document (.pdf)"
 msgstr "Dokument PDF (.pdf)"
 
@@ -583,17 +582,17 @@ msgid "ODF text document (.odt)"
 msgstr "Dokument tekstowy ODF (.odt)"
 
 #: src/control/Control.Menubar.js:71 src/control/Control.Menubar.js:779
-#: src/control/Control.NotebookbarWriter.js:149
+#: src/control/Control.NotebookbarWriter.js:155
 msgid "Word 2003 Document (.doc)"
 msgstr "Dokument Word 2003 (.doc)"
 
 #: src/control/Control.Menubar.js:72 src/control/Control.Menubar.js:780
-#: src/control/Control.NotebookbarWriter.js:155
+#: src/control/Control.NotebookbarWriter.js:161
 msgid "Word Document (.docx)"
 msgstr "Dokument Word (.docx)"
 
 #: src/control/Control.Menubar.js:73 src/control/Control.Menubar.js:781
-#: src/control/Control.NotebookbarWriter.js:137
+#: src/control/Control.NotebookbarWriter.js:143
 msgid "Rich Text (.rtf)"
 msgstr "Rich Text (.rtf)"
 
@@ -602,7 +601,7 @@ msgid "EPUB (.epub)"
 msgstr "EPUB (.epub)"
 
 #: src/control/Control.Menubar.js:75 src/control/Control.Menubar.js:772
-#: src/control/Control.NotebookbarWriter.js:192 src/control/Signing.js:604
+#: src/control/Control.NotebookbarWriter.js:198 src/control/Signing.js:604
 msgid "Sign document"
 msgstr "Podpisz dokument"
 
@@ -615,45 +614,47 @@ msgstr "Zamknij dokument"
 #: src/control/Control.Menubar.js:459 src/control/Control.Menubar.js:571
 #: src/control/Control.Menubar.js:787 src/control/Control.Menubar.js:839
 #: src/control/Control.Menubar.js:891 src/control/Control.Menubar.js:940
-#: src/control/Control.NotebookbarBuilder.js:815
-#: src/control/Control.NotebookbarBuilder.js:845
-#: src/control/Control.NotebookbarBuilder.js:871
-#: src/control/Control.NotebookbarBuilder.js:888
-#: src/control/Control.NotebookbarCalc.js:169
-#: src/control/Control.NotebookbarCalc.js:170
-#: src/control/Control.NotebookbarDraw.js:218
-#: src/control/Control.NotebookbarDraw.js:219
-#: src/control/Control.NotebookbarImpress.js:249
-#: src/control/Control.NotebookbarImpress.js:250
-#: src/control/Control.NotebookbarWriter.js:185
-#: src/control/Control.NotebookbarWriter.js:186
+#: src/control/Control.NotebookbarBuilder.js:812
+#: src/control/Control.NotebookbarBuilder.js:841
+#: src/control/Control.NotebookbarBuilder.js:866
+#: src/control/Control.NotebookbarBuilder.js:882
+#: src/control/Control.NotebookbarCalc.js:175
+#: src/control/Control.NotebookbarCalc.js:176
+#: src/control/Control.NotebookbarDraw.js:206
+#: src/control/Control.NotebookbarDraw.js:207
+#: src/control/Control.NotebookbarImpress.js:237
+#: src/control/Control.NotebookbarImpress.js:238
+#: src/control/Control.NotebookbarWriter.js:191
+#: src/control/Control.NotebookbarWriter.js:192
 msgid "Repair"
 msgstr "Napraw"
 
 #: src/control/Control.Menubar.js:110 src/control/Control.Menubar.js:346
 #: src/control/Control.Menubar.js:473 src/control/Control.Menubar.js:585
-#: src/control/Control.NotebookbarCalc.js:745
-#: src/control/Control.NotebookbarCalc.js:746
-#: src/control/Control.NotebookbarDraw.js:689
-#: src/control/Control.NotebookbarDraw.js:690
-#: src/control/Control.NotebookbarImpress.js:981
-#: src/control/Control.NotebookbarWriter.js:1004
-#: src/control/Control.NotebookbarWriter.js:1005
+#: src/control/Control.NotebookbarCalc.js:852
+#: src/control/Control.NotebookbarCalc.js:853
+#: src/control/Control.NotebookbarDraw.js:228
+#: src/control/Control.NotebookbarDraw.js:229
+#: src/control/Control.NotebookbarImpress.js:264
+#: src/control/Control.NotebookbarImpress.js:265
+#: src/control/Control.NotebookbarWriter.js:928
+#: src/control/Control.NotebookbarWriter.js:929
 #: src/control/Control.StatusBar.js:188
 msgid "Reset zoom"
 msgstr "Resetuj powiększenie"
 
 #: src/control/Control.Menubar.js:112
-#: src/control/Control.NotebookbarBuilder.js:801
-#: src/control/Control.NotebookbarWriter.js:1054
-#: src/control/Control.NotebookbarWriter.js:1055
+#: src/control/Control.NotebookbarBuilder.js:798
+#: src/control/Control.NotebookbarWriter.js:974
 msgid "Show Ruler"
 msgstr "Pokaż linijkę"
 
 #: src/control/Control.Menubar.js:113 src/control/Control.Menubar.js:356
 #: src/control/Control.Menubar.js:476 src/control/Control.Menubar.js:594
-#: src/control/Control.NotebookbarWriter.js:1065
-#: src/control/Control.NotebookbarWriter.js:1066
+#: src/control/Control.NotebookbarCalc.js:892
+#: src/control/Control.NotebookbarDraw.js:268
+#: src/control/Control.NotebookbarImpress.js:304
+#: src/control/Control.NotebookbarWriter.js:985
 msgid "Show Status Bar"
 msgstr "Pokaż pasek stanu"
 
@@ -674,25 +675,25 @@ msgid "Text orientation"
 msgstr "Orientacja tekstu"
 
 #: src/control/Control.Menubar.js:301
-#: src/control/Control.NotebookbarWriter.js:217
+#: src/control/Control.NotebookbarWriter.js:223
 msgid "Forum"
 msgstr "Forum"
 
 #: src/control/Control.Menubar.js:302 src/control/Control.Menubar.js:431
 #: src/control/Control.Menubar.js:542 src/control/Control.Menubar.js:755
-#: src/control/Control.NotebookbarWriter.js:228
+#: src/control/Control.NotebookbarWriter.js:234
 msgid "Online Help"
 msgstr "Pomoc online"
 
 #: src/control/Control.Menubar.js:303 src/control/Control.Menubar.js:432
 #: src/control/Control.Menubar.js:543 src/control/Control.Menubar.js:756
-#: src/control/Control.NotebookbarWriter.js:239
+#: src/control/Control.NotebookbarWriter.js:245
 msgid "Keyboard shortcuts"
 msgstr "Skróty klawiszowe"
 
 #: src/control/Control.Menubar.js:304 src/control/Control.Menubar.js:433
 #: src/control/Control.Menubar.js:544 src/control/Control.Menubar.js:757
-#: src/control/Control.NotebookbarWriter.js:250
+#: src/control/Control.NotebookbarWriter.js:256
 msgid "Report an issue"
 msgstr "Zgłoś problem"
 
@@ -700,7 +701,7 @@ msgstr "Zgłoś problem"
 #: src/control/Control.Menubar.js:545 src/control/Control.Menubar.js:758
 #: src/control/Control.Menubar.js:814 src/control/Control.Menubar.js:870
 #: src/control/Control.Menubar.js:916 src/control/Control.Menubar.js:986
-#: src/control/Control.NotebookbarWriter.js:262
+#: src/control/Control.NotebookbarWriter.js:268
 msgid "Latest Updates"
 msgstr "Najnowsze aktualizacje"
 
@@ -708,7 +709,7 @@ msgstr "Najnowsze aktualizacje"
 #: src/control/Control.Menubar.js:546 src/control/Control.Menubar.js:759
 #: src/control/Control.Menubar.js:815 src/control/Control.Menubar.js:871
 #: src/control/Control.Menubar.js:917 src/control/Control.Menubar.js:987
-#: src/control/Control.NotebookbarWriter.js:274
+#: src/control/Control.NotebookbarWriter.js:280
 msgid "Send Feedback"
 msgstr "Wyślij opinię"
 
@@ -716,7 +717,7 @@ msgstr "Wyślij opinię"
 #: src/control/Control.Menubar.js:547 src/control/Control.Menubar.js:760
 #: src/control/Control.Menubar.js:816 src/control/Control.Menubar.js:872
 #: src/control/Control.Menubar.js:918 src/control/Control.Menubar.js:988
-#: src/control/Control.NotebookbarWriter.js:285
+#: src/control/Control.NotebookbarWriter.js:291
 msgid "About"
 msgstr "Informacje"
 
@@ -734,12 +735,12 @@ msgid "ODF presentation (.odp)"
 msgstr "Prezentacja ODF (.odp)"
 
 #: src/control/Control.Menubar.js:322 src/control/Control.Menubar.js:832
-#: src/control/Control.NotebookbarImpress.js:224
+#: src/control/Control.NotebookbarImpress.js:212
 msgid "PowerPoint 2003 Presentation (.ppt)"
 msgstr "Prezentacja PowerPoint 2003 (.ppt)"
 
 #: src/control/Control.Menubar.js:323 src/control/Control.Menubar.js:833
-#: src/control/Control.NotebookbarImpress.js:230
+#: src/control/Control.NotebookbarImpress.js:218
 msgid "PowerPoint Presentation (.pptx)"
 msgstr "Prezentacja PowerPoint (.pptx)"
 
@@ -754,8 +755,8 @@ msgstr "Prezentuj bieżący slajd"
 
 #: src/control/Control.Menubar.js:451 src/control/Control.Menubar.js:834
 #: src/control/Control.Menubar.js:886
-#: src/control/Control.NotebookbarDraw.js:193
-#: src/control/Control.NotebookbarImpress.js:211
+#: src/control/Control.NotebookbarDraw.js:181
+#: src/control/Control.NotebookbarImpress.js:199
 msgid "ODF Drawing (.odg)"
 msgstr "Rysunek ODF (.odg)"
 
@@ -764,12 +765,12 @@ msgid "ODF spreadsheet (.ods)"
 msgstr "Arkusz kalkulacyjny ODF (.ods)"
 
 #: src/control/Control.Menubar.js:561 src/control/Control.Menubar.js:934
-#: src/control/Control.NotebookbarCalc.js:144
+#: src/control/Control.NotebookbarCalc.js:150
 msgid "Excel 2003 Spreadsheet (.xls)"
 msgstr "Arkusz kalkulacyjny Excel 2003 (.xls)"
 
 #: src/control/Control.Menubar.js:562 src/control/Control.Menubar.js:935
-#: src/control/Control.NotebookbarCalc.js:150
+#: src/control/Control.NotebookbarCalc.js:156
 msgid "Excel Spreadsheet (.xlsx)"
 msgstr "Arkusz kalkulacyjny Excel (.xlsx)"
 
@@ -787,7 +788,7 @@ msgstr "Znajdź"
 msgid "Page Setup"
 msgstr "Ustawienia strony"
 
-#: src/control/Control.Menubar.js:1183 src/control/Control.StatusBar.js:513
+#: src/control/Control.Menubar.js:1183 src/control/Control.StatusBar.js:516
 msgid "Reset to Default Language"
 msgstr "Przywróć domyślny język"
 
@@ -820,7 +821,7 @@ msgstr "Pokaż pasek wyszukiwania"
 msgid "Borders"
 msgstr "Krawędzie"
 
-#: src/control/Control.MobileTopBar.js:42
+#: src/control/Control.MobileTopBar.js:40
 msgid "Accept"
 msgstr "Akceptuj"
 
@@ -836,27 +837,15 @@ msgstr "Początek gradientu"
 msgid "Gradient End"
 msgstr "Koniec gradientu"
 
-#: src/control/Control.Notebookbar.js:246
+#: src/control/Control.Notebookbar.js:249
 #: src/control/Control.NotebookbarBuilder.js:796
-#: src/control/Control.NotebookbarBuilder.js:839
-#: src/control/Control.NotebookbarBuilder.js:858
-#: src/control/Control.NotebookbarBuilder.js:883
+#: src/control/Control.NotebookbarBuilder.js:836
+#: src/control/Control.NotebookbarBuilder.js:854
+#: src/control/Control.NotebookbarBuilder.js:878
 #: src/control/Control.NotebookbarDraw.js:18
 #: src/control/Control.NotebookbarImpress.js:18
 msgid "Menu"
 msgstr "Menu"
-
-#: src/control/Control.Notebookbar.js:266
-#: src/control/Control.NotebookbarDraw.js:36
-#: src/control/Control.NotebookbarImpress.js:36
-msgid "Undo"
-msgstr "Cofnij"
-
-#: src/control/Control.Notebookbar.js:272
-#: src/control/Control.NotebookbarDraw.js:42
-#: src/control/Control.NotebookbarImpress.js:42
-msgid "Redo"
-msgstr "Ponów"
 
 #: src/control/Control.NotebookbarBuilder.js:600
 #: src/control/Control.TopToolbar.js:222
@@ -884,29 +873,29 @@ msgid "Very Loose"
 msgstr "Bardzo luźno"
 
 #: src/control/Control.NotebookbarCalc.js:12
-#: src/control/Control.NotebookbarDraw.js:79
-#: src/control/Control.NotebookbarImpress.js:91
+#: src/control/Control.NotebookbarDraw.js:61
+#: src/control/Control.NotebookbarImpress.js:73
 #: src/control/Control.NotebookbarWriter.js:12
 msgid "~File"
 msgstr "~Plik"
 
 #: src/control/Control.NotebookbarCalc.js:17
-#: src/control/Control.NotebookbarDraw.js:84
-#: src/control/Control.NotebookbarImpress.js:96
+#: src/control/Control.NotebookbarDraw.js:66
+#: src/control/Control.NotebookbarImpress.js:78
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "~Home"
 msgstr "~Główne"
 
 #: src/control/Control.NotebookbarCalc.js:23
-#: src/control/Control.NotebookbarDraw.js:90
-#: src/control/Control.NotebookbarImpress.js:102
+#: src/control/Control.NotebookbarDraw.js:72
+#: src/control/Control.NotebookbarImpress.js:84
 #: src/control/Control.NotebookbarWriter.js:23
 msgid "~Insert"
 msgstr "~Wstaw"
 
 #: src/control/Control.NotebookbarCalc.js:28
-#: src/control/Control.NotebookbarDraw.js:95
-#: src/control/Control.NotebookbarImpress.js:107
+#: src/control/Control.NotebookbarDraw.js:77
+#: src/control/Control.NotebookbarImpress.js:89
 #: src/control/Control.NotebookbarWriter.js:28
 msgid "~Layout"
 msgstr "~Układ"
@@ -916,197 +905,208 @@ msgid "~Data"
 msgstr "~Dane"
 
 #: src/control/Control.NotebookbarCalc.js:38
-#: src/control/Control.NotebookbarDraw.js:100
-#: src/control/Control.NotebookbarImpress.js:112
+#: src/control/Control.NotebookbarDraw.js:82
+#: src/control/Control.NotebookbarImpress.js:94
 #: src/control/Control.NotebookbarWriter.js:38
 msgid "~Review"
 msgstr "~Recenzja"
 
 #: src/control/Control.NotebookbarCalc.js:43
-#: src/control/Control.NotebookbarDraw.js:105
-#: src/control/Control.NotebookbarImpress.js:117
+#: src/control/Control.NotebookbarDraw.js:87
+#: src/control/Control.NotebookbarImpress.js:99
 #: src/control/Control.NotebookbarWriter.js:43
 msgid "Format"
 msgstr "Format"
 
 #: src/control/Control.NotebookbarCalc.js:48
-#: src/control/Control.NotebookbarDraw.js:116
+#: src/control/Control.NotebookbarDraw.js:98
 #: src/control/Control.NotebookbarWriter.js:54
 msgid "~Draw"
 msgstr "Ry~suj"
 
 #: src/control/Control.NotebookbarCalc.js:54
-#: src/control/Control.NotebookbarDraw.js:122
-#: src/control/Control.NotebookbarImpress.js:134
+#: src/control/Control.NotebookbarDraw.js:104
+#: src/control/Control.NotebookbarImpress.js:116
 #: src/control/Control.NotebookbarWriter.js:60
+msgid "~View"
+msgstr ""
+
+#: src/control/Control.NotebookbarCalc.js:59
+#: src/control/Control.NotebookbarDraw.js:109
+#: src/control/Control.NotebookbarImpress.js:121
+#: src/control/Control.NotebookbarWriter.js:65
 msgid "~Help"
 msgstr "Po~moc"
 
-#: src/control/Control.NotebookbarCalc.js:98
-#: src/control/Control.NotebookbarDraw.js:166
-#: src/control/Control.NotebookbarImpress.js:178
-#: src/control/Control.NotebookbarWriter.js:105
+#: src/control/Control.NotebookbarCalc.js:104
+#: src/control/Control.NotebookbarDraw.js:154
+#: src/control/Control.NotebookbarImpress.js:166
+#: src/control/Control.NotebookbarWriter.js:111
 msgid "Share"
 msgstr "Udostępnij"
 
-#: src/control/Control.NotebookbarCalc.js:105
-#: src/control/Control.NotebookbarDraw.js:173
-#: src/control/Control.NotebookbarImpress.js:185
-#: src/control/Control.NotebookbarWriter.js:112
+#: src/control/Control.NotebookbarCalc.js:111
+#: src/control/Control.NotebookbarDraw.js:161
+#: src/control/Control.NotebookbarImpress.js:173
+#: src/control/Control.NotebookbarWriter.js:118
 msgid "See history"
 msgstr "Zobacz historię"
 
-#: src/control/Control.NotebookbarCalc.js:125
+#: src/control/Control.NotebookbarCalc.js:131
 msgid "ODF Spreadsheet (.ods)"
 msgstr "Arkusz kalkulacyjny ODF (.ods)"
 
-#: src/control/Control.NotebookbarCalc.js:131
+#: src/control/Control.NotebookbarCalc.js:137
 msgid "CSV File (.csv)"
 msgstr "Plik CSV (.csv)"
 
-#: src/control/Control.NotebookbarCalc.js:416
+#: src/control/Control.NotebookbarCalc.js:439
 msgid "General"
 msgstr "Ogólne"
 
-#: src/control/Control.NotebookbarCalc.js:417
+#: src/control/Control.NotebookbarCalc.js:440
 msgid "Number"
 msgstr "Liczba"
 
-#: src/control/Control.NotebookbarCalc.js:418
+#: src/control/Control.NotebookbarCalc.js:441
 msgid "Percent"
 msgstr "Procent"
 
-#: src/control/Control.NotebookbarCalc.js:419
+#: src/control/Control.NotebookbarCalc.js:442
 msgid "Currency"
 msgstr "Waluta"
 
-#: src/control/Control.NotebookbarCalc.js:420
+#: src/control/Control.NotebookbarCalc.js:443
 msgid "Date"
 msgstr "Data"
 
-#: src/control/Control.NotebookbarCalc.js:421
+#: src/control/Control.NotebookbarCalc.js:444
 msgid "Time"
 msgstr "Godzina"
 
-#: src/control/Control.NotebookbarCalc.js:422
+#: src/control/Control.NotebookbarCalc.js:445
 msgid "Scientific"
 msgstr "Naukowy"
 
-#: src/control/Control.NotebookbarCalc.js:423
+#: src/control/Control.NotebookbarCalc.js:446
 msgid "Fraction"
 msgstr "Ułamek"
 
-#: src/control/Control.NotebookbarCalc.js:424
+#: src/control/Control.NotebookbarCalc.js:447
 msgid "Boolean Value"
 msgstr "Wartość logiczna"
 
-#: src/control/Control.NotebookbarCalc.js:425 src/control/Toolbar.js:857
+#: src/control/Control.NotebookbarCalc.js:448 src/control/Toolbar.js:702
 msgid "Text"
 msgstr "Tekst"
 
-#: src/control/Control.NotebookbarCalc.js:558
+#: src/control/Control.NotebookbarCalc.js:581
 msgid "Default"
 msgstr "Domyślne"
 
-#: src/control/Control.NotebookbarCalc.js:563
+#: src/control/Control.NotebookbarCalc.js:586
 msgid "Heading 1"
 msgstr "Nagłówek 1"
 
-#: src/control/Control.NotebookbarCalc.js:568
+#: src/control/Control.NotebookbarCalc.js:591
 msgid "Heading 2"
 msgstr "Nagłówek 2"
 
-#: src/control/Control.NotebookbarCalc.js:579
+#: src/control/Control.NotebookbarCalc.js:602
 msgid "Good"
 msgstr "Dobry"
 
-#: src/control/Control.NotebookbarCalc.js:584
+#: src/control/Control.NotebookbarCalc.js:607
 msgid "Neutral"
 msgstr "Neutralny"
 
-#: src/control/Control.NotebookbarCalc.js:589
+#: src/control/Control.NotebookbarCalc.js:612
 msgid "Bad"
 msgstr "Zły"
 
-#: src/control/Control.NotebookbarCalc.js:651
+#: src/control/Control.NotebookbarCalc.js:674
 msgid "Insert Rows Above"
 msgstr "Wstaw wiersze powyżej"
 
-#: src/control/Control.NotebookbarCalc.js:656
+#: src/control/Control.NotebookbarCalc.js:679
 msgid "Insert Columns Before"
 msgstr "Wstaw kolumny przed"
 
-#: src/control/Control.NotebookbarCalc.js:661
+#: src/control/Control.NotebookbarCalc.js:684
 msgid "Delete Rows"
 msgstr "Usuń wiersze"
 
-#: src/control/Control.NotebookbarCalc.js:671
+#: src/control/Control.NotebookbarCalc.js:694
 msgid "Insert Rows Below"
 msgstr "Wstaw wiersze poniżej"
 
-#: src/control/Control.NotebookbarCalc.js:676
+#: src/control/Control.NotebookbarCalc.js:699
 msgid "Insert Columns After"
 msgstr "Wstaw kolumny po"
 
-#: src/control/Control.NotebookbarCalc.js:681
+#: src/control/Control.NotebookbarCalc.js:704
 msgid "Delete Columns"
 msgstr "Usuń kolumny"
 
-#: src/control/Control.NotebookbarDraw.js:63
-#: src/control/Control.NotebookbarDraw.js:666
+#: src/control/Control.NotebookbarCalc.js:891
+#: src/control/Control.NotebookbarDraw.js:267
+#: src/control/Control.NotebookbarImpress.js:303
+#: src/control/Control.NotebookbarWriter.js:984
+msgid "Toggle Status Bar"
+msgstr ""
+
+#: src/control/Control.NotebookbarDraw.js:45
+#: src/control/Control.NotebookbarDraw.js:729
 msgid "Page layout"
 msgstr "Układ strony"
 
-#: src/control/Control.NotebookbarDraw.js:110
-#: src/control/Control.NotebookbarImpress.js:122
+#: src/control/Control.NotebookbarDraw.js:92
+#: src/control/Control.NotebookbarImpress.js:104
 #: src/control/Control.NotebookbarWriter.js:48
 msgid "~Table"
 msgstr "~Tabela"
 
-#: src/control/Control.NotebookbarDraw.js:199
+#: src/control/Control.NotebookbarDraw.js:187
 msgid "Image (.png)"
 msgstr "Obraz (.png)"
 
-#: src/control/Control.NotebookbarImpress.js:30
-msgid "Start Presentation"
-msgstr "Rozpocznij prezentację"
-
-#: src/control/Control.NotebookbarImpress.js:205
+#: src/control/Control.NotebookbarImpress.js:193
 msgid "ODF Presentation (.odp)"
 msgstr "Prezentacja ODF (.odp)"
 
-#: src/control/Control.NotebookbarImpress.js:643
+#: src/control/Control.NotebookbarImpress.js:252
+#: src/control/Control.NotebookbarImpress.js:711
 msgid "Presentation"
 msgstr "Prezentacja"
-
-#: src/control/Control.NotebookbarImpress.js:980
-msgid "Reset Zoom"
-msgstr "Resetuj powiększenie"
 
 #: src/control/Control.NotebookbarWriter.js:33
 msgid "Reference~s"
 msgstr "O~dwołania"
 
-#: src/control/Control.NotebookbarWriter.js:131
+#: src/control/Control.NotebookbarWriter.js:137
 msgid "ODF Text Document (.odt)"
 msgstr "Dokument tekstowy ODF (.odt)"
 
-#: src/control/Control.NotebookbarWriter.js:173
+#: src/control/Control.NotebookbarWriter.js:179
 msgid "EPUB Document (.epub)"
 msgstr "Dokument EPUB (.epub)"
 
-#: src/control/Control.NotebookbarWriter.js:542
+#: src/control/Control.NotebookbarWriter.js:565
 #: src/control/Control.TopToolbar.js:101
 msgid "Default Style"
 msgstr "Styl domyślny"
 
-#: src/control/Control.NotebookbarWriter.js:546
+#: src/control/Control.NotebookbarWriter.js:569
 msgid "Text Body"
 msgstr "Treść tekstu"
 
-#: src/control/Control.NotebookbarWriter.js:549
+#: src/control/Control.NotebookbarWriter.js:572
 msgid "Title"
 msgstr "Tytuł"
+
+#: src/control/Control.NotebookbarWriter.js:973
+msgid "Toggle Ruler"
+msgstr ""
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1212,23 +1212,23 @@ msgstr "Licznik słów"
 msgid "Number of Slides"
 msgstr "Liczba slajdów"
 
-#: src/control/Control.StatusBar.js:423 src/control/Control.StatusBar.js:424
+#: src/control/Control.StatusBar.js:426 src/control/Control.StatusBar.js:427
 msgid "Permission Mode"
 msgstr "Tryb uprawnień"
 
-#: src/control/Control.StatusBar.js:423
+#: src/control/Control.StatusBar.js:426
 msgid "Read-only"
 msgstr "Tylko do odczytu"
 
-#: src/control/Control.StatusBar.js:457
+#: src/control/Control.StatusBar.js:460
 msgid "Select multiple cells"
 msgstr "Wybierz wiele komórek"
 
-#: src/control/Control.StatusBar.js:460
+#: src/control/Control.StatusBar.js:463
 msgid "Insert mode: inactive"
 msgstr "Tryb wstawiania: nieaktywny"
 
-#: src/control/Control.StatusBar.js:473
+#: src/control/Control.StatusBar.js:476
 msgid "Selection mode: inactive"
 msgstr "Tryb zaznaczania: nieaktywny"
 
@@ -1323,7 +1323,7 @@ msgstr "Tylko do odczytu"
 msgid "Current"
 msgstr "Bieżący"
 
-#: src/control/Parts.js:422
+#: src/control/Parts.js:425
 msgid "Show Selected Sheets"
 msgstr "Pokaż zaznaczone arkusze"
 
@@ -1369,19 +1369,19 @@ msgstr ""
 "Ten dokument może zawierać formatowanie lub zawartość, których nie można "
 "zapisać w bieżącym formacie pliku."
 
-#: src/control/Ruler.js:360
+#: src/control/Ruler.js:364
 msgid "Left Margin"
 msgstr "Lewy margines"
 
-#: src/control/Ruler.js:361
+#: src/control/Ruler.js:365
 msgid "Right Margin"
 msgstr "Prawy margines"
 
-#: src/control/Ruler.js:622
+#: src/control/Ruler.js:626
 msgid "Insert tabstop"
 msgstr "Wstaw tabulator"
 
-#: src/control/Ruler.js:629
+#: src/control/Ruler.js:633
 msgid "Delete tabstop"
 msgstr "Usuń tabulator"
 
@@ -1538,109 +1538,18 @@ msgid "Renaming..."
 msgstr "Zmiana nazwy..."
 
 #: src/control/Toolbar.js:566
-msgid "I understand the risks"
-msgstr "Rozumiem ryzyko"
-
-#: src/control/Toolbar.js:588
-msgid "Dismiss"
-msgstr "Odrzuć"
-
-#: src/control/Toolbar.js:606
-#, javascript-format
-msgid "Explore the new %coolVersion"
-msgstr "Poznaj nową %coolVersion"
-
-#: src/control/Toolbar.js:607 src/control/Toolbar.js:611
-msgid "Collabora Online Development Edition"
-msgstr "Collabora Online Development Edition"
-
-#: src/control/Toolbar.js:608
-#, javascript-format
-msgid ""
-"Enjoy the latest developments in online productivity, free for you to use, "
-"to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
-"target=\"_blank\">Apps</a> are also available for Android and iOS. "
-"%coolVersion introduces important improvements, in the areas of usability, "
-"visual presentation and performance."
-msgstr ""
-"Korzystaj z najnowszych osiągnięć w dziedzinie produktywności online, z "
-"których możesz bezpłatnie korzystać, odkrywać i używać z innymi osobami w "
-"przeglądarce. <a href=\"%coolAppsURL\" target=\"_blank\">Aplikacje</a> są "
-"również dostępne na Androida i iOS. %coolVersion wprowadza ważne ulepszenia "
-"w obszarach użyteczności, prezentacji wizualnej i wydajności."
-
-#: src/control/Toolbar.js:610
-msgid "Discover all the changes"
-msgstr "Odkryj wszystkie zmiany"
-
-#: src/control/Toolbar.js:612
-#, javascript-format
-msgid ""
-"Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
-"a> and learn all about the latest milestone in performance particularly for "
-"larger groups working on documents, new native sidebar, new re-worked avatar "
-"list, asynchronous saving, faster spell checking and more."
-msgstr ""
-"Zapoznaj się z <a href=\"%coolReleaseNotesURL\" target=\"_blank\">"
-"informacjami o wydaniu</a> i dowiedz się wszystkiego o najnowszych "
-"osiągnięciach w kwestii wydajności, szczególnie w przypadku większych grup "
-"pracujących nad dokumentami, nowym natywnym pasku bocznym, na nowo "
-"przerobionej liście awatarów, zapisywaniu asynchronicznym, szybszym "
-"sprawdzaniu pisowni i nie tylko."
-
-#: src/control/Toolbar.js:614
-msgid "Integrate Collabora Online into your webapp"
-msgstr "Zintegruj Collabora Online z własną aplikacją internetową"
-
-#: src/control/Toolbar.js:615
-msgid "Or get involved in the development"
-msgstr "Albo zaangażuj się w rozwój"
-
-#: src/control/Toolbar.js:616
-#, javascript-format
-msgid ""
-"Learn more about integrating into your web application in the <a href="
-"\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
-"the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
-"instructions</a> and build CODE from scratch. You can also help out with <a "
-"href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
-"href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
-"all the essential steps on how to reproduce it."
-msgstr ""
-"Dowiedz się więcej o integracji z aplikacją internetową w <a href=\"%"
-"coolSdkURL\" target=\"_blank\">SDK Collabora Online</a>. Lub przejdź do <a "
-"href=\"%coolStepByStepURL\" target=\"_blank\">instrukcji krok po kroku</a> i "
-"skompiluj CODE od podstaw. Możesz również pomóc w <a href=\"%"
-"coolTranslationsURL\" target=\"_blank\">tłumaczeniu</a> lub poprzez <a href="
-"\"%coolBugreportURL\" target=\"_blank\">zgłoszenie błędu</a> wraz ze "
-"wszystkimi niezbędnymi krokami, jak go odtworzyć."
-
-#: src/control/Toolbar.js:618 src/control/Toolbar.js:619
-msgid "Next"
-msgstr "Dalej"
-
-#: src/control/Toolbar.js:622
-msgid "Learn more about the enterprise-ready versions"
-msgstr "Dowiedz się więcej o wersjach dla przedsiębiorstw"
-
-#: src/control/Toolbar.js:671
-msgid ""
-"We are sorry, the information about the latest updates is not available."
-msgstr "Przepraszamy, informacje o najnowszych aktualizacjach nie są dostępne."
-
-#: src/control/Toolbar.js:721
 msgid "This version of %productName is powered by"
 msgstr "Ta wersja %productName jest wspomagana przez"
 
-#: src/control/Toolbar.js:731
+#: src/control/Toolbar.js:576
 msgid "\"Slow Proxy\""
 msgstr "\"Powolne proxy\""
 
-#: src/control/Toolbar.js:854
+#: src/control/Toolbar.js:699
 msgid "Insert hyperlink"
 msgstr "Wstaw hiperłącze"
 
-#: src/control/Toolbar.js:858
+#: src/control/Toolbar.js:703
 msgid "Link"
 msgstr "Łącze"
 
@@ -1648,60 +1557,60 @@ msgstr "Łącze"
 msgid "Oops, there is a problem connecting to %productName: "
 msgstr "Ups, wystąpił problem z połączeniem z %productName: "
 
-#: src/core/Socket.js:513
+#: src/core/Socket.js:512
 msgid "Server is now reachable. We have to refresh the page now."
 msgstr "Serwer jest teraz osiągalny. Teraz musimy odświeżyć stronę."
 
-#: src/core/Socket.js:515
+#: src/core/Socket.js:514
 msgid "Server is now reachable..."
 msgstr "Serwer jest teraz osiągalny..."
 
-#: src/core/Socket.js:519
+#: src/core/Socket.js:518
 msgid "RELOAD"
 msgstr "PRZEŁADUJ"
 
-#: src/core/Socket.js:526
+#: src/core/Socket.js:525
 msgid "COOLWSD version:"
 msgstr "Wersja COOLWSD:"
 
-#: src/core/Socket.js:538
+#: src/core/Socket.js:537
 msgid "Served by:"
 msgstr "Dostarczone przez:"
 
-#: src/core/Socket.js:544
+#: src/core/Socket.js:543
 msgid "Unsupported server version."
 msgstr "Nieobsługiwana wersja serwera."
 
-#: src/core/Socket.js:548
+#: src/core/Socket.js:547
 msgid "LOKit version:"
 msgstr "Wersja LOKit:"
 
-#: src/core/Socket.js:662
+#: src/core/Socket.js:661
 msgid "Session terminated by document owner"
 msgstr "Sesja zakończona przez właściciela dokumentu"
 
-#: src/core/Socket.js:667
+#: src/core/Socket.js:666
 msgid "Idle document - please click to reload and resume editing"
 msgstr "Nieaktywny dokument - kliknij, aby przeładować i wznowić edycję"
 
-#: src/core/Socket.js:669
+#: src/core/Socket.js:668
 msgid "Idle document - please tap to reload and resume editing"
 msgstr "Nieaktywny dokument - stuknij, aby przeładować i wznowić edycję"
 
-#: src/core/Socket.js:677
+#: src/core/Socket.js:676
 msgid "Server is shutting down for maintenance (auto-saving)"
 msgstr "Serwer jest wyłączany w celu konserwacji (automatyczne zapisywanie)"
 
-#: src/core/Socket.js:681
+#: src/core/Socket.js:680
 msgid "Oops, there is a problem connecting the document"
 msgstr "Ups, wystąpił problem z połączeniem dokumentu"
 
-#: src/core/Socket.js:685
+#: src/core/Socket.js:684
 msgid "Server is down, restarting automatically. Please wait."
 msgstr ""
 "Serwer jest wyłączony, automatyczne ponowne uruchomienie. Proszę czekać."
 
-#: src/core/Socket.js:713
+#: src/core/Socket.js:712
 msgid ""
 "Document has changed in storage. Loading the new document. Your version is "
 "available as revision."
@@ -1709,7 +1618,7 @@ msgstr ""
 "Dokument zmienił się w pamięci. Ładowanie nowego dokumentu. Twoja wersja "
 "jest dostępna jako wersja."
 
-#: src/core/Socket.js:719
+#: src/core/Socket.js:718
 msgid ""
 "Restoring older revision. Any unsaved changes will be available in version "
 "history"
@@ -1717,27 +1626,27 @@ msgstr ""
 "Przywracanie starszej wersji. Wszelkie niezapisane zmiany będą dostępne w "
 "historii wersji"
 
-#: src/core/Socket.js:725
+#: src/core/Socket.js:724
 msgid "Reloading the document after rename"
 msgstr "Ponowne ładowanie dokumentu po zmianie nazwy"
 
-#: src/core/Socket.js:848
+#: src/core/Socket.js:847
 msgid "Discard"
 msgstr "Odrzuć"
 
-#: src/core/Socket.js:855
+#: src/core/Socket.js:854
 msgid "Overwrite"
 msgstr "Zastąp"
 
-#: src/core/Socket.js:870
+#: src/core/Socket.js:869
 msgid "Save to new file"
 msgstr "Zapisz do nowego pliku"
 
-#: src/core/Socket.js:897
+#: src/core/Socket.js:896
 msgid "Document has been changed"
 msgstr "Dokument został zmieniony"
 
-#: src/core/Socket.js:897
+#: src/core/Socket.js:896
 msgid ""
 "Document has been changed in storage. What would you like to do with your "
 "unsaved changes?"
@@ -1745,48 +1654,48 @@ msgstr ""
 "Dokument został zmieniony w pamięci. Co chciałbyś zrobić ze swoimi "
 "niezapisanymi zmianami?"
 
-#: src/core/Socket.js:967
+#: src/core/Socket.js:966
 msgid "Document requires password to view."
 msgstr "Ten dokument wymaga hasła do wyświetlenia."
 
-#: src/core/Socket.js:970
+#: src/core/Socket.js:969
 msgid "Document requires password to modify."
 msgstr "Ten dokument wymaga hasła do modyfikacji."
 
-#: src/core/Socket.js:972
+#: src/core/Socket.js:971
 msgid "Hit Cancel to open in view-only mode."
 msgstr "Kliknij Anuluj, aby otworzyć w trybie podglądu."
 
-#: src/core/Socket.js:976
+#: src/core/Socket.js:975
 msgid "Wrong password provided. Please try again."
 msgstr "Błędne hasło. Proszę spróbować ponownie."
 
-#: src/core/Socket.js:1086
+#: src/core/Socket.js:1085
 msgid "Someone"
 msgstr "Ktoś"
 
-#: src/core/Socket.js:1088
+#: src/core/Socket.js:1087
 msgid " saved this document as "
 msgstr " zapisał ten dokument jako "
 
-#: src/core/Socket.js:1088
+#: src/core/Socket.js:1087
 msgid ". Do you want to join?"
 msgstr ". Chcesz dołączyć?"
 
-#: src/core/Socket.js:1097
+#: src/core/Socket.js:1096
 msgid "Loading..."
 msgstr "Ładowanie..."
 
-#: src/core/Socket.js:1097
+#: src/core/Socket.js:1096
 msgid "Connecting..."
 msgstr "Łączenie..."
 
-#: src/core/Socket.js:1115
+#: src/core/Socket.js:1114
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 "Dokument jest w trakcie zmiany nazwy i wkrótce zostanie ponownie załadowany"
 
-#: src/core/Socket.js:1495
+#: src/core/Socket.js:1494
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1794,11 +1703,11 @@ msgstr ""
 "To jest zawstydzające, nie możemy połączyć się z Twoim dokumentem. Proszę "
 "spróbować ponownie."
 
-#: src/core/Socket.js:1512
+#: src/core/Socket.js:1511
 msgid "Reconnecting..."
 msgstr "Ponowne łączenie..."
 
-#: src/core/Socket.js:1518
+#: src/core/Socket.js:1517
 msgid "The server has been disconnected."
 msgstr "Serwer został odłączony."
 
@@ -1990,11 +1899,11 @@ msgstr "Przesyłanie pliku na serwer nie powiodło się, nie znaleziono pliku."
 msgid "Uploading file to server failed, the file is too large."
 msgstr "Przesyłanie pliku na serwer nie powiodło się, plik jest za duży."
 
-#: src/layer/tile/CanvasTileLayer.js:1783
+#: src/layer/tile/CanvasTileLayer.js:1785
 msgid "Functions"
 msgstr "Funkcje"
 
-#: src/layer/tile/CanvasTileLayer.js:4896
+#: src/layer/tile/CanvasTileLayer.js:4939
 msgid "No Comments"
 msgstr "Bez komentarzy"
 
@@ -2055,15 +1964,15 @@ msgstr "Aby wkleić poza %productName, najpierw kliknij przycisk 'Pobierz'"
 msgid "Copying from the document disabled"
 msgstr "Kopiowanie z dokumentu wyłączone"
 
-#: src/map/Clipboard.js:287
+#: src/map/Clipboard.js:292
 msgid "Failed to download clipboard, please re-copy"
 msgstr "Nie udało się pobrać schowka, proszę ponownie skopiować"
 
-#: src/map/Clipboard.js:843
+#: src/map/Clipboard.js:848
 msgid "<p>Please use the copy/paste buttons on your on-screen keyboard.</p>"
 msgstr "<p>Użyj przycisków kopiuj/wklej na klawiaturze ekranowej.</p>"
 
-#: src/map/Clipboard.js:845
+#: src/map/Clipboard.js:850
 msgid ""
 "<p>Your browser has very limited access to the clipboard, so use these "
 "keyboard shortcuts:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
@@ -2080,7 +1989,7 @@ msgstr ""
 "n><kbd>V</kbd></td></tr><tr><td>Kopiuj</td><td>Wytnij</td><td>Wklej</td></tr>"
 "</table>"
 
-#: src/map/Clipboard.js:866
+#: src/map/Clipboard.js:871
 msgid ""
 "<p>If you would like to share larger elements of your document with other "
 "applications it is necessary to first download them onto your device. To do "
@@ -2094,7 +2003,7 @@ msgstr ""
 "Potwierdź kopiowanie do schowka\".</p><p>Jeśli kopiujesz i wklejasz "
 "dokumenty wewnątrz %productName, nie musisz pobierać.</p>"
 
-#: src/map/Clipboard.js:882
+#: src/map/Clipboard.js:887
 msgid ""
 "<p>A download due to a large copy/paste operation has already started. "
 "Please, wait for the current download or cancel it before starting a new "
@@ -2120,23 +2029,23 @@ msgstr "Nieaktywny dokument"
 msgid "Please click to resume editing"
 msgstr "Kliknij, aby wznowić edycję"
 
-#: src/map/handler/Map.FileInserter.js:100
+#: src/map/handler/Map.FileInserter.js:104
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
 msgstr "Pliku typu: %0 nie można przesłać na serwer, ponieważ plik nie ma nazwy"
 
-#: src/map/handler/Map.FileInserter.js:102
+#: src/map/handler/Map.FileInserter.js:106
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
 msgstr "Pliku typu: %0 nie można przesłać na serwer, ponieważ plik jest pusty"
 
-#: src/map/handler/Map.FileInserter.js:133
+#: src/map/handler/Map.FileInserter.js:137
 msgid "Uploading..."
 msgstr "Przesyłanie..."
 
-#: src/map/handler/Map.FileInserter.js:147
+#: src/map/handler/Map.FileInserter.js:151
 msgid "Uploading file to server failed with status: %0"
 msgstr "Przesyłanie pliku na serwer nie powiodło się ze statusem: %0"
 
@@ -2159,6 +2068,96 @@ msgstr "Tworzenie nowego pliku z szablonu..."
 #: src/map/handler/Map.WOPI.js:410
 msgid "Creating copy..."
 msgstr "Tworzenie kopii..."
+
+#~ msgid "Undo"
+#~ msgstr "Cofnij"
+
+#~ msgid "Redo"
+#~ msgstr "Ponów"
+
+#~ msgid "Start Presentation"
+#~ msgstr "Rozpocznij prezentację"
+
+#~ msgid "Reset Zoom"
+#~ msgstr "Resetuj powiększenie"
+
+#~ msgid "I understand the risks"
+#~ msgstr "Rozumiem ryzyko"
+
+#~ msgid "Dismiss"
+#~ msgstr "Odrzuć"
+
+#, javascript-format
+#~ msgid "Explore the new %coolVersion"
+#~ msgstr "Poznaj nową %coolVersion"
+
+#~ msgid "Collabora Online Development Edition"
+#~ msgstr "Collabora Online Development Edition"
+
+#, javascript-format
+#~ msgid ""
+#~ "Enjoy the latest developments in online productivity, free for you to use, "
+#~ "to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
+#~ "target=\"_blank\">Apps</a> are also available for Android and iOS. "
+#~ "%coolVersion introduces important improvements, in the areas of usability, "
+#~ "visual presentation and performance."
+#~ msgstr ""
+#~ "Korzystaj z najnowszych osiągnięć w dziedzinie produktywności online, z "
+#~ "których możesz bezpłatnie korzystać, odkrywać i używać z innymi osobami w "
+#~ "przeglądarce. <a href=\"%coolAppsURL\" target=\"_blank\">Aplikacje</a> są "
+#~ "również dostępne na Androida i iOS. %coolVersion wprowadza ważne ulepszenia "
+#~ "w obszarach użyteczności, prezentacji wizualnej i wydajności."
+
+#~ msgid "Discover all the changes"
+#~ msgstr "Odkryj wszystkie zmiany"
+
+#, javascript-format
+#~ msgid ""
+#~ "Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
+#~ "a> and learn all about the latest milestone in performance particularly for "
+#~ "larger groups working on documents, new native sidebar, new re-worked avatar "
+#~ "list, asynchronous saving, faster spell checking and more."
+#~ msgstr ""
+#~ "Zapoznaj się z <a href=\"%coolReleaseNotesURL\" target=\"_blank\">"
+#~ "informacjami o wydaniu</a> i dowiedz się wszystkiego o najnowszych "
+#~ "osiągnięciach w kwestii wydajności, szczególnie w przypadku większych grup "
+#~ "pracujących nad dokumentami, nowym natywnym pasku bocznym, na nowo "
+#~ "przerobionej liście awatarów, zapisywaniu asynchronicznym, szybszym "
+#~ "sprawdzaniu pisowni i nie tylko."
+
+#~ msgid "Integrate Collabora Online into your webapp"
+#~ msgstr "Zintegruj Collabora Online z własną aplikacją internetową"
+
+#~ msgid "Or get involved in the development"
+#~ msgstr "Albo zaangażuj się w rozwój"
+
+#, javascript-format
+#~ msgid ""
+#~ "Learn more about integrating into your web application in the <a href="
+#~ "\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
+#~ "the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
+#~ "instructions</a> and build CODE from scratch. You can also help out with <a "
+#~ "href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
+#~ "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
+#~ "all the essential steps on how to reproduce it."
+#~ msgstr ""
+#~ "Dowiedz się więcej o integracji z aplikacją internetową w <a href=\"%"
+#~ "coolSdkURL\" target=\"_blank\">SDK Collabora Online</a>. Lub przejdź do <a "
+#~ "href=\"%coolStepByStepURL\" target=\"_blank\">instrukcji krok po kroku</a> i "
+#~ "skompiluj CODE od podstaw. Możesz również pomóc w <a href=\"%"
+#~ "coolTranslationsURL\" target=\"_blank\">tłumaczeniu</a> lub poprzez <a href="
+#~ "\"%coolBugreportURL\" target=\"_blank\">zgłoszenie błędu</a> wraz ze "
+#~ "wszystkimi niezbędnymi krokami, jak go odtworzyć."
+
+#~ msgid "Next"
+#~ msgstr "Dalej"
+
+#~ msgid "Learn more about the enterprise-ready versions"
+#~ msgstr "Dowiedz się więcej o wersjach dla przedsiębiorstw"
+
+#~ msgid ""
+#~ "We are sorry, the information about the latest updates is not available."
+#~ msgstr "Przepraszamy, informacje o najnowszych aktualizacjach nie są dostępne."
 
 #~ msgid "Inactive document - please click to resume editing"
 #~ msgstr "Nieaktywny dokument - kliknij, aby wznowić edycję"
