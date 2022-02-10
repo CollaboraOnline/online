@@ -463,7 +463,7 @@ void HTTPWSTest::testUndoConflict()
     Poco::JSON::Parser parser;
     std::string docPath;
     std::string docURL;
-    int conflict;
+    int conflict = 0;
 
     getDocumentPathAndURL("empty.odt", docPath, docURL, testname);
 
