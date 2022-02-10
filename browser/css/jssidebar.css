@@ -220,6 +220,14 @@ div#box5.row.jsdialog.sidebar > .sidebar.jsdialog.cell {
 	width: 100%;
 }
 
+#ScCellAppearancePropertyPanelPanelExpander #CellAppearancePropertyPanel table.jsdialog.sidebar.ui-grid,
+#CellAppearancePropertyPanel table.jsdialog.sidebar.ui-grid tr.jsdialog.sidebar {
+	display: flex;
+}
+#ScCellAppearancePropertyPanelPanelExpander #CellAppearancePropertyPanel table.jsdialog.sidebar.ui-grid {
+	justify-content: space-between;
+}
+
 .sidebar-container > .root-container.jsdialog.sidebar {
 	margin: 0;
 }
