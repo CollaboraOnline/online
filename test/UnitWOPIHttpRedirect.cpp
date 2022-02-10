@@ -85,21 +85,21 @@ public:
             const std::string fileName(uriReq.getPath() == "/wopi/files/3" ? "he%llo.txt" : "hello.txt");
             Poco::JSON::Object::Ptr fileInfo = new Poco::JSON::Object();
             fileInfo->set("BaseFileName", fileName);
-            fileInfo->set("Size", _fileContent.size());
+            fileInfo->set("Size", getFileContent().size());
             fileInfo->set("Version", "1.0");
             fileInfo->set("OwnerId", "test");
             fileInfo->set("UserId", "test");
             fileInfo->set("UserFriendlyName", "test");
             fileInfo->set("UserCanWrite", "true");
             fileInfo->set("PostMessageOrigin", "localhost");
-            fileInfo->set("LastModifiedTime", Util::getIso8601FracformatTime(_fileLastModifiedTime));
+            fileInfo->set("LastModifiedTime", Util::getIso8601FracformatTime(getFileLastModifiedTime()));
             fileInfo->set("EnableOwnerTermination", "true");
 
             std::ostringstream jsonStream;
             fileInfo->stringify(jsonStream);
 
             http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(_fileLastModifiedTime));
+            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
             httpResponse.setBody(jsonStream.str(), "application/json; charset=utf-8");
             socket->sendAndShutdown(httpResponse);
 
@@ -136,8 +136,8 @@ public:
             _phase = Phase::Loaded;
 
             http::Response httpResponse(http::StatusLine(200));
-            httpResponse.set("Last-Modified", Util::getHttpTime(_fileLastModifiedTime));
-            httpResponse.setBody(_fileContent, "text/plain; charset=utf-8");
+            httpResponse.set("Last-Modified", Util::getHttpTime(getFileLastModifiedTime()));
+            httpResponse.setBody(getFileContent(), "text/plain; charset=utf-8");
             socket->sendAndShutdown(httpResponse);
 
             exitTest(TestResult::Ok);

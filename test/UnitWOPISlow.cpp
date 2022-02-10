@@ -94,7 +94,7 @@ public:
             fileInfo->set("UserCanWrite", "true");
             fileInfo->set("PostMessageOrigin", "localhost");
             fileInfo->set("LastModifiedTime",
-                          Util::getIso8601FracformatTime(_fileLastModifiedTime));
+                          Util::getIso8601FracformatTime(getFileLastModifiedTime()));
             fileInfo->set("EnableOwnerTermination", "true");
 
             std::ostringstream jsonStream;
@@ -144,7 +144,7 @@ public:
             {
                 // By default we return success.
                 const std::string body = "{\"LastModifiedTime\": \"" +
-                                         Util::getIso8601FracformatTime(_fileLastModifiedTime) +
+                                         Util::getIso8601FracformatTime(getFileLastModifiedTime()) +
                                          "\" }";
                 LOG_TST("Fake wopi host (default) response to POST " << uriReq.getPath()
                                                                      << ": 200 OK " << body);
