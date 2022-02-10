@@ -56,6 +56,7 @@ public class SlideShowActivity extends AppCompatActivity {
         slideShowWebViewSettings.setJavaScriptEnabled(true);
         slideShowWebViewSettings.setSupportZoom(true);
         slideShowWebViewSettings.setBuiltInZoomControls(true);
+        slideShowWebViewSettings.setAllowFileAccess(true);
         slideShowWebView.loadUrl(slidesSvgUri);
     }
 
