@@ -26,9 +26,9 @@ class UnitWOPISaveOnExit : public WOPIUploadConflictCommon
     using WOPIUploadConflictCommon::Phase;
     using WOPIUploadConflictCommon::Scenario;
 
-    using WOPIUploadConflictCommon::OriginalDocContent;
-    using WOPIUploadConflictCommon::ModifiedOriginalDocContent;
     using WOPIUploadConflictCommon::ConflictingDocContent;
+    using WOPIUploadConflictCommon::ModifiedOriginalDocContent;
+    using WOPIUploadConflictCommon::OriginalDocContent;
 
 public:
     UnitWOPISaveOnExit()
@@ -36,14 +36,14 @@ public:
     {
     }
 
-    void configure(Poco::Util::LayeredConfiguration& config)
+    void configure(Poco::Util::LayeredConfiguration& config) override
     {
         WopiTestServer::configure(config);
 
         config.setBool("per_document.always_save_on_exit", true);
     }
 
-    void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/)
+    void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
         LOG_TST("Testing " << toString(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
@@ -75,7 +75,8 @@ public:
                                  getFileContent());
     }
 
-    std::unique_ptr<http::Response> assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/)
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
         LOG_TST("Testing " << toString(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
