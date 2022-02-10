@@ -521,6 +521,7 @@ L.Control.UIManager = L.Control.extend({
 		$('#document-container').css('bottom', this.documentBottom);
 		$('#toolbar-down').show();
 		this.setSavedState('ShowStatusbar', true);
+		this.map.fire('statusbarchanged');
 	},
 
 	hideStatusBar: function(firstStart) {
@@ -532,10 +533,10 @@ L.Control.UIManager = L.Control.extend({
 		$('#toolbar-down').hide();
 		if (!firstStart)
 			this.setSavedState('ShowStatusbar', false);
+		this.map.fire('statusbarchanged');
 	},
 
 	toggleStatusBar: function() {
-		this.map.fire('statusbarchanged');
 		if (this.isStatusBarVisible())
 			this.hideStatusBar();
 		else

@@ -436,10 +436,10 @@ L.Control.Notebookbar = L.Control.extend({
 
 	onStatusbarChange: function() {
 		if (this.map.uiManager.isStatusBarVisible()) {
-			$('#showstatusbar').removeClass('selected');
+			$('#showstatusbar').addClass('selected');
 		}
 		else {
-			$('#showstatusbar').addClass('selected');
+			$('#showstatusbar').removeClass('selected');
 		}
 	},
 
