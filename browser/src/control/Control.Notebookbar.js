@@ -445,10 +445,10 @@ L.Control.Notebookbar = L.Control.extend({
 
 	onRulerChange: function() {
 		if (this.map.uiManager.isRulerVisible()) {
-			$('#showruler').removeClass('selected');
+			$('#showruler').addClass('selected');
 		}
 		else {
-			$('#showruler').addClass('selected');
+			$('#showruler').removeClass('selected');
 		}
 	},
 
