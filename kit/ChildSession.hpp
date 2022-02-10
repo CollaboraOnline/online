@@ -302,7 +302,7 @@ private:
     bool exportSignAndUploadDocument(const char* buffer, int length, const StringVector& tokens);
     bool renderShapeSelection(const char* buffer, int length, const StringVector& tokens);
     bool removeTextContext(const char* /*buffer*/, int /*length*/, const StringVector& tokens);
-#if defined(ENABLE_FREEMIUM) || defined(ENABLE_FEATURE_RESTRICTION)
+#if defined(ENABLE_FEATURE_LOCK) || defined(ENABLE_FEATURE_RESTRICTION)
     bool updateBlockingCommandStatus(const char* buffer, int length, const StringVector& tokens);
     std::string getBlockedCommandType(std::string command);
 #endif

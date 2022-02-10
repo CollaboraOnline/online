@@ -344,13 +344,13 @@ AC_ARG_WITH([dictionaries],
                  on this instance. Allowing too many has negative effect on startup performance. Default: de_DE en_GB
                  en_US es_ES fr_FR it nl pt_BR pt_PT ru.]))
 
-AC_ARG_ENABLE([freemium],
-              AS_HELP_STRING([--enable-freemium],
-                             [Enable freemium model.]))
+AC_ARG_ENABLE([feature-lock],
+              AS_HELP_STRING([--enable-feature-lock],
+                             [Enable control over which uno-commands/feature to lock.]))
 
 AC_ARG_ENABLE([feature-restriction],
               AS_HELP_STRING([--enable-feature-restriction],
-                             [Enable control over which uno-commands/feature to disable.]))
+                             [Enable control over which uno-commands/feature to disable completely.]))
 
 
 # Handle options
@@ -1319,12 +1319,12 @@ else
     ALLOWED_LANGUAGES="de_DE en_GB en_US es_ES fr_FR it nl pt_BR pt_PT ru"
 fi
 
-AS_IF([test "$enable_freemium" = "yes"],
-      [AC_DEFINE([ENABLE_FREEMIUM],1,[Whether to compile and enable freemium mode])])
+AS_IF([test "$enable_feature_lock" = "yes"],
+      [AC_DEFINE([ENABLE_FEATURE_LOCK],1,[Whether to compile and enable feature locking])])
 
-DISABLED_COMMANDS=
-if test "$enable_freemium" = "yes"; then
-    DISABLED_COMMANDS=".uno:DataDataPilotRun .uno:RecalcPivotTable \
+LOCKED_COMMANDS=
+if test "$enable_feature_lock" = "yes"; then
+    LOCKED_COMMANDS=".uno:DataDataPilotRun .uno:RecalcPivotTable \
 .uno:DeletePivotTable .uno:SamplingDialog .uno:DescriptiveStatisticsDialog \
 .uno:AnalysisOfVarianceDialog .uno:CorrelationDialog .uno:CovarianceDialog \
 .uno:ExponentialSmoothingDialog .uno:MovingAverageDialog .uno:RegressionDialog \
@@ -1334,75 +1334,75 @@ if test "$enable_freemium" = "yes"; then
 .uno:Watermark .uno:InsertIndexesEntry .uno:InsertAuthoritiesEntry \
 .uno:InsertMultiIndex .uno:SlideMasterPage downloadas-epub downloadas-rtf masterslidebutton"
 fi
-AC_DEFINE_UNQUOTED([DISABLED_COMMANDS],["$DISABLED_COMMANDS"],[Default value of freemium.disabled_commands])
-AC_SUBST(DISABLED_COMMANDS)
+AC_DEFINE_UNQUOTED([LOCKED_COMMANDS],["$LOCKED_COMMANDS"],[Default value of feature_lock.locked_commands])
+AC_SUBST(LOCKED_COMMANDS)
 
-PURCHASE_TITLE=
-if test "$enable_freemium" = "yes"; then
-    PURCHASE_TITLE="Unlock your potential"
+UNLOCK_TITLE=
+if test "$enable_feature_lock" = "yes"; then
+    UNLOCK_TITLE="Unlock your potential"
 fi
-AC_DEFINE_UNQUOTED([PURCHASE_TITLE],["$PURCHASE_TITLE"],[Default value of freemium.purchase_title])
-AC_SUBST(PURCHASE_TITLE)
+AC_DEFINE_UNQUOTED([UNLOCK_TITLE],["$UNLOCK_TITLE"],[Default value of feature_lock.unlock_title])
+AC_SUBST(UNLOCK_TITLE)
 
-PURCHASE_LINK=
-if test "$enable_freemium" = "yes"; then
-    PURCHASE_LINK="https://www.collaboraoffice.com/subscriptions/"
+UNLOCK_LINK=
+if test "$enable_feature_lock" = "yes"; then
+    UNLOCK_LINK="https://www.collaboraoffice.com/subscriptions/"
 fi
-AC_DEFINE_UNQUOTED([PURCHASE_LINK],["$PURCHASE_LINK"],[Default value of freemium.purchase_link])
-AC_SUBST(PURCHASE_LINK)
+AC_DEFINE_UNQUOTED([UNLOCK_LINK],["$UNLOCK_LINK"],[Default value of feature_lock.unlock_link])
+AC_SUBST(UNLOCK_LINK)
 
-PURCHASE_DESCRIPTION=
-if test "$enable_freemium" = "yes"; then
-    PURCHASE_DESCRIPTION="Head over to the subscription page and discover all the features:"
+UNLOCK_DESCRIPTION=
+if test "$enable_feature_lock" = "yes"; then
+    UNLOCK_DESCRIPTION="Head over to the details page and discover all the features:"
 fi
-AC_DEFINE_UNQUOTED([PURCHASE_DESCRIPTION],["$PURCHASE_DESCRIPTION"],[Default value of freemium.purchase_description])
-AC_SUBST(PURCHASE_DESCRIPTION)
+AC_DEFINE_UNQUOTED([UNLOCK_DESCRIPTION],["$UNLOCK_DESCRIPTION"],[Default value of feature_lock.unlock_description])
+AC_SUBST(UNLOCK_DESCRIPTION)
 
-WRITER_SUBSCRIPTION_HIGHLIGHTS=
-if test "$enable_freemium" = "yes"; then
-    WRITER_SUBSCRIPTION_HIGHLIGHTS="Review and write with ease"
+WRITER_UNLOCK_HIGHLIGHTS=
+if test "$enable_feature_lock" = "yes"; then
+    WRITER_UNLOCK_HIGHLIGHTS="Review and write with ease"
 fi
-AC_DEFINE_UNQUOTED([WRITER_SUBSCRIPTION_HIGHLIGHTS],["$WRITER_SUBSCRIPTION_HIGHLIGHTS"],[Default value of freemium.writer_subscription_highlights])
-AC_SUBST(WRITER_SUBSCRIPTION_HIGHLIGHTS)
+AC_DEFINE_UNQUOTED([WRITER_UNLOCK_HIGHLIGHTS],["$WRITER_UNLOCK_HIGHLIGHTS"],[Default value of feature_lock.writer_unlock_highlights])
+AC_SUBST(WRITER_UNLOCK_HIGHLIGHTS)
 
-CALC_SUBSCRIPTION_HIGHLIGHTS=
-if test "$enable_freemium" = "yes"; then
-    CALC_SUBSCRIPTION_HIGHLIGHTS="Get a better picture of your data"
+CALC_UNLOCK_HIGHLIGHTS=
+if test "$enable_feature_lock" = "yes"; then
+    CALC_UNLOCK_HIGHLIGHTS="Get a better picture of your data"
 fi
-AC_DEFINE_UNQUOTED([CALC_SUBSCRIPTION_HIGHLIGHTS],["$CALC_SUBSCRIPTION_HIGHLIGHTS"],[Default value of freemium.calc_subscription_highlights])
-AC_SUBST(CALC_SUBSCRIPTION_HIGHLIGHTS)
+AC_DEFINE_UNQUOTED([CALC_UNLOCK_HIGHLIGHTS],["$CALC_UNLOCK_HIGHLIGHTS"],[Default value of feature_lock.calc_unlock_highlights])
+AC_SUBST(CALC_UNLOCK_HIGHLIGHTS)
 
-IMPRESS_SUBSCRIPTION_HIGHLIGHTS=
-if test "$enable_freemium" = "yes"; then
-    IMPRESS_SUBSCRIPTION_HIGHLIGHTS="Nail your next presentation"
+IMPRESS_UNLOCK_HIGHLIGHTS=
+if test "$enable_feature_lock" = "yes"; then
+    IMPRESS_UNLOCK_HIGHLIGHTS="Nail your next presentation"
 fi
-AC_DEFINE_UNQUOTED([IMPRESS_SUBSCRIPTION_HIGHLIGHTS],["$IMPRESS_SUBSCRIPTION_HIGHLIGHTS"],[Default value of freemium.impress_subscription_highlights])
-AC_SUBST(IMPRESS_SUBSCRIPTION_HIGHLIGHTS)
+AC_DEFINE_UNQUOTED([IMPRESS_UNLOCK_HIGHLIGHTS],["$IMPRESS_UNLOCK_HIGHLIGHTS"],[Default value of feature_lock.impress_unlock_highlights])
+AC_SUBST(IMPRESS_UNLOCK_HIGHLIGHTS)
 
-DRAW_SUBSCRIPTION_HIGHLIGHTS=
-if test "$enable_freemium" = "yes"; then
-    DRAW_SUBSCRIPTION_HIGHLIGHTS="Draw and get organized"
+DRAW_UNLOCK_HIGHLIGHTS=
+if test "$enable_feature_lock" = "yes"; then
+    DRAW_UNLOCK_HIGHLIGHTS="Draw and get organized"
 fi
-AC_DEFINE_UNQUOTED([DRAW_SUBSCRIPTION_HIGHLIGHTS],["$DRAW_SUBSCRIPTION_HIGHLIGHTS"],[Default value of freemium.draw_subscription_highlights])
-AC_SUBST(DRAW_SUBSCRIPTION_HIGHLIGHTS)
+AC_DEFINE_UNQUOTED([DRAW_UNLOCK_HIGHLIGHTS],["$DRAW_UNLOCK_HIGHLIGHTS"],[Default value of feature_lock.draw_unlock_highlights])
+AC_SUBST(DRAW_UNLOCK_HIGHLIGHTS)
 
-FREEMIUM_CONFIGURATION=
-if test "$enable_freemium" = "yes"; then
-    FREEMIUM_CONFIGURATION="<freemium desc=\"Freemium settings\">
-        <is_freemium_readonly desc=\"Give freemium user read only access to the documents.\" type=\"bool\" default=\"false\">false</is_freemium_readonly>
-        <disabled_commands desc=\"List of commands to disable the functionality.\" default=\"$DISABLED_COMMANDS\">$DISABLED_COMMANDS</disabled_commands>
-        <purchase_title desc=\"Title to show user when prompting the subscription popup\" default=\"$PURCHASE_TITLE\">$PURCHASE_TITLE</purchase_title>
-        <purchase_link desc=\"Link from where user can buy the subscription\" default=\"$PURCHASE_LINK\">$PURCHASE_LINK</purchase_link>
-        <purchase_description desc=\"Description about the subscription\" default=\"$PURCHASE_DESCRIPTION\">$PURCHASE_DESCRIPTION</purchase_description>
-        <writer_subscription_highlights desc=\"Short note about Writer benefits of subscription\" default=\"$WRITER_SUBSCRIPTION_HIGHLIGHTS\">$WRITER_SUBSCRIPTION_HIGHLIGHTS</writer_subscription_highlights>
-        <calc_subscription_highlights desc=\"Short note about Calc benefits of subscription\" default=\"$CALC_SUBSCRIPTION_HIGHLIGHTS\">$CALC_SUBSCRIPTION_HIGHLIGHTS</calc_subscription_highlights>
-        <impress_subscription_highlights desc=\"Short note about Impress benefits of subscription\" default=\"$IMPRESS_SUBSCRIPTION_HIGHLIGHTS\">$IMPRESS_SUBSCRIPTION_HIGHLIGHTS</impress_subscription_highlights>
-        <draw_subscription_highlights desc=\"Short note about Draw benefits of subscription\" default=\"$DRAW_SUBSCRIPTION_HIGHLIGHTS\">$DRAW_SUBSCRIPTION_HIGHLIGHTS</draw_subscription_highlights>
-    </freemium>"
+LOCK_CONFIGURATION=
+if test "$enable_feature_lock" = "yes"; then
+    LOCK_CONFIGURATION="<feature_lock desc=\"Feature lock settings\">
+        <is_lock_readonly desc=\"Give locked users read only access to the documents\" type=\"bool\" default=\"false\">false</is_lock_readonly>
+        <locked_commands desc=\"List of commands to lock the functionality\" default=\"$LOCKED_COMMANDS\">$LOCKED_COMMANDS</locked_commands>
+        <unlock_title desc=\"Title to show user when prompting the unlock popup\" default=\"$UNLOCK_TITLE\">$UNLOCK_TITLE</unlock_title>
+        <unlock_link desc=\"Link from where user can unlock the features\" default=\"$UNLOCK_LINK\">$UNLOCK_LINK</unlock_link>
+        <unlock_description desc=\"Description about unlocking features\" default=\"$UNLOCK_DESCRIPTION\">$UNLOCK_DESCRIPTION</unlock_description>
+        <writer_unlock_highlights desc=\"Short note about Writer benefits of unlocking\" default=\"$WRITER_UNLOCK_HIGHLIGHTS\">$WRITER_UNLOCK_HIGHLIGHTS</writer_unlock_highlights>
+        <calc_unlock_highlights desc=\"Short note about Calc benefits of unlocking\" default=\"$CALC_UNLOCK_HIGHLIGHTS\">$CALC_UNLOCK_HIGHLIGHTS</calc_unlock_highlights>
+        <impress_unlock_highlights desc=\"Short note about Impress benefits of unlocking\" default=\"$IMPRESS_UNLOCK_HIGHLIGHTS\">$IMPRESS_UNLOCK_HIGHLIGHTS</impress_unlock_highlights>
+        <draw_unlock_highlights desc=\"Short note about Draw benefits of unlocking\" default=\"$DRAW_UNLOCK_HIGHLIGHTS\">$DRAW_UNLOCK_HIGHLIGHTS</draw_unlock_highlights>
+    </feature_lock>"
 fi
 
-AC_SUBST(FREEMIUM_CONFIGURATION)
-AM_SUBST_NOTMAKE(FREEMIUM_CONFIGURATION)
+AC_SUBST(LOCK_CONFIGURATION)
+AM_SUBST_NOTMAKE(LOCK_CONFIGURATION)
 
 AS_IF([test "$enable_feature_restriction" = "yes"],
     [AC_DEFINE([ENABLE_FEATURE_RESTRICTION],1,[Whether to compile and enable feature restrictions])])

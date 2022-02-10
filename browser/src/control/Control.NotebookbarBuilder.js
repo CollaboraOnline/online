@@ -405,7 +405,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		builder.options.useInLineLabelsForUnoButtons = originalInLineState;
 
 		$(control.container).unbind('click.toolbutton');
-		if (!builder.map.isFreemiumDeniedItem(data)) {
+		if (!builder.map.isLockedItem(data)) {
 			$(control.container).click(function () {
 				L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
 			});

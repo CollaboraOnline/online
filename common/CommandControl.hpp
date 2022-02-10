@@ -13,32 +13,50 @@
 
 namespace CommandControl
 {
-class FreemiumManager
+class LockManager
 {
-    static std::unordered_set<std::string> FreemiumDenyList;
-    static bool _isFreemiumUser;
-    static std::string FreemiumDenyListString;
+    static std::unordered_set<std::string> LockedCommandList;
+    static bool _isLockedUser;
+    static std::string LockedCommandListString;
 
-    static void generateDenyList();
+    static void generateLockedCommandList();
 
 public:
-    FreemiumManager();
-    static const std::unordered_set<std::string>& getFreemiumDenyList();
-    static const std::string getFreemiumDenyListString();
+    LockManager();
+    static const std::unordered_set<std::string>& getLockedCommandList();
+    static const std::string getLockedCommandListString();
 
-    static bool isFreemiumUser() { return _isFreemiumUser; }
-    static bool isFreemiumReadOnly() { return config::getBool("freemium.is_freemium_readonly", false); }
-    static bool isFreemiumReadOnlyUser() { return isFreemiumUser() && isFreemiumReadOnly(); }
+    static bool isLockedUser() { return _isLockedUser; }
+    static bool isLockReadOnly() { return config::getBool("feature_lock.is_lock_readonly", false); }
+    static bool isLockedReadOnlyUser() { return isLockedUser() && isLockReadOnly(); }
 
-    static void setFreemiumUser(bool isFreemiumUser) { _isFreemiumUser = isFreemiumUser; }
+    static void setLockedUser(bool isLocked) { _isLockedUser = isLocked; }
 
-    static std::string getFreemiumPurchaseTitle() { return config::getString("freemium.purchase_title", ""); }
-    static std::string getFreemiumPurchaseLink() { return config::getString("freemium.purchase_link", ""); }
-    static std::string getFreemiumPurchaseDescription() { return config::getString("freemium.purchase_description", ""); }
-    static std::string getWriterHighlights() { return config::getString("freemium.writer_subscription_highlights", ""); }
-    static std::string getCalcHighlights() { return config::getString("freemium.calc_subscription_highlights", ""); }
-    static std::string getImpressHighlights() { return config::getString("freemium.impress_subscription_highlights", ""); }
-    static std::string getDrawHighlights() { return config::getString("freemium.draw_subscription_highlights", ""); }
+    static std::string getUnlockTitle()
+    {
+        return config::getString("feature_lock.unlock_title", "");
+    }
+    static std::string getUnlockLink() { return config::getString("feature_lock.unlock_link", ""); }
+    static std::string getUnlockDescription()
+    {
+        return config::getString("feature_lock.unlock_description", "");
+    }
+    static std::string getWriterHighlights()
+    {
+        return config::getString("feature_lock.writer_unlock_highlights", "");
+    }
+    static std::string getCalcHighlights()
+    {
+        return config::getString("feature_lock.calc_unlock_highlights", "");
+    }
+    static std::string getImpressHighlights()
+    {
+        return config::getString("feature_lock.impress_unlock_highlights", "");
+    }
+    static std::string getDrawHighlights()
+    {
+        return config::getString("feature_lock.draw_unlock_highlights", "");
+    }
 };
 
 class RestrictionManager

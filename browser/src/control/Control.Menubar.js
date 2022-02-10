@@ -1725,8 +1725,8 @@ L.Control.Menubar = L.Control.extend({
 	},
 
 	_onItemSelected: function(e, item) {
-		// TODO: Find a way to disable click/select events for freemium elements in disableFreemiumItem
-		if ($(item).data('freemiumDenied') === true)
+		// TODO: Find a way to disable click/select events for locked elements in disableLockedItem
+		if ($(item).data('locked') === true)
 			return;
 
 		var self = e.data.self;
@@ -1939,7 +1939,7 @@ L.Control.Menubar = L.Control.extend({
 			}
 
 			this._map.hideRestrictedItems(menu[i], aItem, aItem);
-			this._map.disableFreemiumItem(menu[i], aItem, aItem);
+			this._map.disableLockedItem(menu[i], aItem, aItem);
 			itemList.push(liItem);
 		}
 

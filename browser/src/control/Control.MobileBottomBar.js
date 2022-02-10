@@ -32,11 +32,11 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: '.uno:Italic', context: ['default', 'Text', 'DrawText', 'Table']},
 				{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: '.uno:Underline', context: ['default', 'Text', 'DrawText', 'Table']},
 				{type: 'break', id: 'breakcolor', context: ['default', 'Text', 'DrawText', 'Table']},
-				{type: 'button',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor'), freemiumUno: '.uno:FontColor', context: ['default', 'Text', 'DrawText', 'Table']},
-				{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackColor'), freemiumUno: '.uno:BackColor', context: ['default', 'Text', 'DrawText', 'Table']},
+				{type: 'button',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor'), lockUno: '.uno:FontColor', context: ['default', 'Text', 'DrawText', 'Table']},
+				{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackColor'), lockUno: '.uno:BackColor', context: ['default', 'Text', 'DrawText', 'Table']},
 				{type: 'drop',  id: 'setborderstyle',  img: 'setborderstyle', hint: _('Borders'), hidden: true, html: window.getBorderStyleMenuHtml(), context: ['Table']},
 				{type: 'break', id: 'breakalign-text', context: ['default', 'Text', 'DrawText']},
-				{type: 'menu', id: 'align-text', img: 'alignblock', hint: _UNO('.uno:TextAlign'), freemiumUno: '.uno:TextAlign', context: ['default', 'Text'],
+				{type: 'menu', id: 'align-text', img: 'alignblock', hint: _UNO('.uno:TextAlign'), lockUno: '.uno:TextAlign', context: ['default', 'Text'],
 					items: [
 						{id: 'leftpara-text', text: _UNO('.uno:LeftPara', 'text', true), img: 'alignleft', uno: '.uno:LeftPara'},
 						{id: 'centerpara-text', text: _UNO('.uno:CenterPara', 'text', true), img: 'alignhorizontal', uno: '.uno:CenterPara'},
@@ -44,7 +44,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 						{id: 'justifypara-text', text: _UNO('.uno:JustifyPara', 'text', true), img: 'alignblock', uno: '.uno:JustifyPara'},
 					]},
 				{type: 'break', id: 'breakalign-table', context: ['Table']},
-				{type: 'menu', id: 'align-table', img: 'alignblock', hint: _UNO('.uno:TextAlign'), freemiumUno: '.uno:TextAlign', context: ['Table', 'DrawText'],
+				{type: 'menu', id: 'align-table', img: 'alignblock', hint: _UNO('.uno:TextAlign'), lockUno: '.uno:TextAlign', context: ['Table', 'DrawText'],
 					items: [
 						{id: 'leftpara-table', text: _UNO('.uno:LeftPara', 'text', true), img: 'alignleft', uno: '.uno:LeftPara'},
 						{id: 'centerpara-table', text: _UNO('.uno:CenterPara', 'text', true), img: 'alignhorizontal', uno: '.uno:CenterPara'},
@@ -61,7 +61,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'decrementindent-text',  img: 'decrementindent', hint: _UNO('.uno:DecrementIndent', '', true), uno: '.uno:DecrementIndent', disabled: true, context: ['default', 'Text', 'DrawText', 'Table']},
 				// context: ['Table']
 				{type: 'break', context: ['Table']},
-				{type: 'menu', id: 'insertrowsbefore', img: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore'), freemiumUno: '.uno:InsertRowsBefore', context: ['Table'],
+				{type: 'menu', id: 'insertrowsbefore', img: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore'), lockUno: '.uno:InsertRowsBefore', context: ['Table'],
 					items: [
 						{id: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore', 'text', true), img: 'insertrowsbefore', uno: '.uno:InsertRowsBefore'},
 						{id: 'insertrowsafter', hint: _UNO('.uno:InsertRowsAfter', 'text', true), img: 'insertrowsafter', uno: '.uno:InsertRowsAfter'},
@@ -73,7 +73,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 						{type: 'break'},
 						{id: 'setoptimalrowheight', hint: _UNO('.uno:SetOptimalRowHeight', 'text', true), img: 'setoptimalrowheight', uno: '.uno:SetOptimalRowHeight'},
 					]},
-				{type: 'menu', id: 'insertcolumnsbefore', img: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore'), freemiumUno: '.uno:InsertColumnsBefore', context: ['Table'],
+				{type: 'menu', id: 'insertcolumnsbefore', img: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore'), lockUno: '.uno:InsertColumnsBefore', context: ['Table'],
 					items: [
 						{id: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore', 'text', true), img: 'insertcolumnsbefore', uno: '.uno:InsertColumnsBefore'},
 						{id: 'insertcolumnsafter', hint: _UNO('.uno:InsertColumnsAfter', 'text', true), img: 'insertcolumnsafter', uno: '.uno:InsertColumnsAfter'},
@@ -88,7 +88,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _UNO('.uno:ToggleMergeCells', 'text', true), uno: '.uno:MergeCells', context: ['Table']},
 				{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _UNO('.uno:ToggleMergeCells', 'text', true), uno: '.uno:ToggleMergeCells', context: ['Table']},
 				// context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']
-				{type: 'menu', id: 'wrapmenu', img: 'wrapmenu', hint: _UNO('.uno:WrapMenu'), freemiumUno: '.uno:WrapMenu', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork'],
+				{type: 'menu', id: 'wrapmenu', img: 'wrapmenu', hint: _UNO('.uno:WrapMenu'), lockUno: '.uno:WrapMenu', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork'],
 					items: [
 						{id: 'wrapoff', hint: _UNO('.uno:WrapOff', 'text', true), img: 'wrapoff', uno: '.uno:WrapOff'},
 						{id: 'wrapon', hint: _UNO('.uno:WrapOn', 'text', true), img: 'wrapon', uno: '.uno:WrapOn'},
@@ -103,7 +103,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 						{id: 'wrapanchoronly', hint: _UNO('.uno:WrapAnchorOnly', 'text', true), img: 'wrapanchoronly', uno: '.uno:WrapAnchorOnly'},
 					]},
 				{type: 'break', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']},
-				{type: 'menu', id: 'aligncenter', img: 'aligncenter', hint: _UNO('.uno:AlignCenter'), freemiumUno: '.uno:AlignCenter', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork'],
+				{type: 'menu', id: 'aligncenter', img: 'aligncenter', hint: _UNO('.uno:AlignCenter'), lockUno: '.uno:AlignCenter', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork'],
 					items: [
 						{id: 'objectalignleft', hint: _UNO('.uno:ObjectAlignLeft', 'text', true), img: 'objectalignleft', uno: '.uno:ObjectAlignLeft'},
 						{id: 'aligncenter', hint: _UNO('.uno:AlignCenter', 'text', true), img: 'aligncenter', uno: '.uno:AlignCenter'},
@@ -113,7 +113,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 						{id: 'alignmiddle', hint: _UNO('.uno:AlignMiddle', 'text', true), img: 'alignmiddle', uno: '.uno:AlignMiddle'},
 						{id: 'aligndown', hint: _UNO('.uno:AlignDown', 'text', true), img: 'aligndown', uno: '.uno:AlignDown'},
 					]},
-				{type: 'menu', id: 'arrangemenu', img: 'arrangemenu', hint: _UNO('.uno:ArrangeMenu'), freemiumUno: '.uno:ArrangeMenu', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork'],
+				{type: 'menu', id: 'arrangemenu', img: 'arrangemenu', hint: _UNO('.uno:ArrangeMenu'), lockUno: '.uno:ArrangeMenu', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork'],
 					items: [
 						{id: 'bringtofront', hint: _UNO('.uno:BringToFront', 'text', true), img: 'bringtofront', uno: '.uno:BringToFront'},
 						{type: 'break'},
@@ -133,10 +133,10 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: '.uno:Italic'},
 				{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: '.uno:Underline'},
 				{type: 'break'},
-				{type: 'button',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor'), freemiumUno: '.uno:FontColor'},
-				{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor'), freemiumUno: '.uno:BackgroundColor'},
+				{type: 'button',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor'), lockUno: '.uno:FontColor'},
+				{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor'), lockUno: '.uno:BackgroundColor'},
 				{type: 'break'},
-				{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'), freemiumUno: '.uno:TextAlign',
+				{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'), lockUno: '.uno:TextAlign',
 					items: [
 						{id: 'alignleft', hint: _UNO('.uno:AlignLeft', 'spreadsheet', true), img: 'alignleft', uno: '.uno:AlignLeft'},
 						{id: 'alignhorizontalcenter', hint: _UNO('.uno:AlignHorizontalCenter', 'spreadsheet', true), img: 'alignhorizontal', uno: '.uno:AlignHorizontalCenter'},
@@ -149,7 +149,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 					]},
 				{type: 'button',  id: 'wraptext',  img: 'wraptext', hint: _UNO('.uno:WrapText', 'spreadsheet', true), uno: '.uno:WrapText', disabled: true},
 				{type: 'break'},
-				{type: 'menu', id: 'insertrowsbefore', img: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore'), freemiumUno: '.uno:InsertRowsBefore',
+				{type: 'menu', id: 'insertrowsbefore', img: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore'), lockUno: '.uno:InsertRowsBefore',
 					items: [
 						{id: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore', 'spreadsheet', true), img: 'insertrowsbefore', uno: '.uno:InsertRowsBefore'},
 						{id: 'insertrowsafter', hint: _UNO('.uno:InsertRowsAfter', 'spreadsheet', true), img: 'insertrowsafter', uno: '.uno:InsertRowsAfter'},
@@ -160,7 +160,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 						{type: 'break'},
 						{id: 'freezepanesrow', hint: _UNO('.uno:FreezePanesRow', 'spreadsheet', true), img: 'freezepanesrow', uno: '.uno:FreezePanesRow'},
 					]},
-				{type: 'menu', id: 'insertcolumnsbefore', img: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore'), freemiumUno: '.uno:InsertColumnsBefore',
+				{type: 'menu', id: 'insertcolumnsbefore', img: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore'), lockUno: '.uno:InsertColumnsBefore',
 					items: [
 						{id: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore', 'spreadsheet', true), img: 'insertcolumnsbefore', uno: '.uno:InsertColumnsBefore'},
 						{id: 'insertcolumnsafter', hint: _UNO('.uno:InsertColumnsAfter', 'spreadsheet', true), img: 'insertcolumnsafter', uno: '.uno:InsertColumnsAfter'},
@@ -177,7 +177,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'sortascending',  img: 'sortascending', hint: _UNO('.uno:SortAscending', 'spreadsheet', true), uno: '.uno:SortAscending'},
 				{type: 'button',  id: 'sortdescending',  img: 'sortdescending', hint: _UNO('.uno:SortDescending', 'spreadsheet', true), uno: '.uno:SortDescending'},
 				{type: 'break'},
-				{type: 'menu', id: 'numberformatstandard', img: 'numberformatstandard', hint: _UNO('.uno:NumberFormatStandard'), freemiumUno: '.uno:NumberFormatStandard',
+				{type: 'menu', id: 'numberformatstandard', img: 'numberformatstandard', hint: _UNO('.uno:NumberFormatStandard'), lockUno: '.uno:NumberFormatStandard',
 					items: [
 						{id: 'numberformatstandard', hint: _UNO('.uno:NumberFormatStandard', 'spreadsheet', true), img: 'numberformatstandard', uno: '.uno:NumberFormatStandard'},
 						{id: 'numberformatdecimal', hint: _UNO('.uno:NumberFormatDecimal', 'spreadsheet', true), img: 'numberformatdecimal', uno: '.uno:NumberFormatDecimal'},
@@ -207,10 +207,10 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'italic', img: 'italic', hint: _UNO('.uno:Italic'), uno: 'Italic', context: ['default', 'Text', 'DrawText', 'TextObject', 'Table']},
 				{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: '.uno:Underline', context: ['default', 'Text', 'DrawText', 'TextObject', 'Table']},
 				{type: 'break', context: ['default', 'Text', 'DrawText', 'TextObject', 'Table']},
-				{type: 'button',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor'), freemiumUno: '.uno:FontColor', context: ['default', 'Text', 'DrawText', 'TextObject', 'Table']},
-				{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor'), freemiumUno: '.uno:BackgroundColor', context: ['default', 'Text', 'DrawText', 'TextObject', 'Table']},
+				{type: 'button',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor'), lockUno: '.uno:FontColor', context: ['default', 'Text', 'DrawText', 'TextObject', 'Table']},
+				{type: 'button',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackgroundColor'), lockUno: '.uno:BackgroundColor', context: ['default', 'Text', 'DrawText', 'TextObject', 'Table']},
 				{type: 'break', context: ['default', 'Text', 'DrawText', 'TextObject', 'Table']},
-				{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'), freemiumUno: '.uno:TextAlign', context: ['default', 'Text', 'DrawText', 'TextObject', 'Table'],
+				{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'), lockUno: '.uno:TextAlign', context: ['default', 'Text', 'DrawText', 'TextObject', 'Table'],
 					items: [
 						{id: 'leftpara', hint: _UNO('.uno:LeftPara', '', true), img: 'alignleft',
 							uno: {textCommand: '.uno:LeftPara', objectCommand: '.uno:ObjectAlignLeft'}},
@@ -228,7 +228,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'defaultnumbering-text',  img: 'numbering', hint: _UNO('.uno:DefaultNumbering', '', true),uno: '.uno:DefaultNumbering', disabled: true, context: ['default', 'Text', 'DrawText', 'TextObject', 'Table']},
 				{type: 'button',  id: 'defaultbullet',  img: 'bullet', hint: _UNO('.uno:DefaultBullet', '', true), uno: '.uno:DefaultBullet', disabled: true, context: ['default', 'Text', 'DrawText', 'TextObject', 'Table']},
 				{type: 'break', context: ['Table']},
-				{type: 'menu', id: 'insertrowsbefore', img: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore'), freemiumUno: '.uno:InsertRowsBefore', context: ['Table'],
+				{type: 'menu', id: 'insertrowsbefore', img: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore'), lockUno: '.uno:InsertRowsBefore', context: ['Table'],
 					items: [
 						{id: 'insertrowsbefore', hint: _UNO('.uno:InsertRowsBefore', 'presentation', true), img: 'insertrowsbefore', uno: '.uno:InsertRowsBefore'},
 						{id: 'insertrowsafter', hint: _UNO('.uno:InsertRowsAfter', 'presentation', true), img: 'insertrowsafter', uno: '.uno:InsertRowsAfter'},
@@ -239,7 +239,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 						{type: 'break'},
 						{id: 'setoptimalrowheight', hint: _UNO('.uno:SetOptimalRowHeight', 'presentation', true), img: 'setoptimalrowheight', uno: '.uno:SetOptimalRowHeight'},
 					]},
-				{type: 'menu', id: 'insertcolumnsbefore', img: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore'), freemiumUno: '.uno:InsertColumnsBefore', context: ['Table'],
+				{type: 'menu', id: 'insertcolumnsbefore', img: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore'), lockUno: '.uno:InsertColumnsBefore', context: ['Table'],
 					items: [
 						{id: 'insertcolumnsbefore', hint: _UNO('.uno:InsertColumnsBefore', 'presentation', true), img: 'insertcolumnsbefore', uno: '.uno:InsertColumnsBefore'},
 						{id: 'insertcolumnsafter', hint: _UNO('.uno:InsertColumnsAfter', 'presentation', true), img: 'insertcolumnsafter', uno: '.uno:InsertColumnsAfter'},
@@ -253,7 +253,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 				{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _UNO('.uno:ToggleMergeCells', 'presentation', true), uno: '.uno:MergeCells', context: ['Table']},
 				{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _UNO('.uno:ToggleMergeCells', 'presentation', true), uno: '.uno:ToggleMergeCells', context: ['Table']},
 				// context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork']
-				{type: 'menu', id: 'aligncenter', img: 'aligncenter', hint: _UNO('.uno:AlignCenter'), freemiumUno: '.uno:AlignCenter', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork'],
+				{type: 'menu', id: 'aligncenter', img: 'aligncenter', hint: _UNO('.uno:AlignCenter'), lockUno: '.uno:AlignCenter', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork'],
 					items: [
 						{id: 'objectalignleft', hint: _UNO('.uno:ObjectAlignLeft', '', true), img: 'objectalignleft', uno: '.uno:ObjectAlignLeft'},
 						{id: 'aligncenter', hint: _UNO('.uno:AlignCenter', '', true), img: 'aligncenter', uno: '.uno:AlignCenter'},
@@ -263,7 +263,7 @@ L.Control.MobileBottomBar = L.Control.extend({
 						{id: 'alignmiddle', hint: _UNO('.uno:AlignMiddle', '', true), img: 'alignmiddle', uno: '.uno:AlignMiddle'},
 						{id: 'aligndown', hint: _UNO('.uno:AlignDown', '', true), img: 'aligndown', uno: '.uno:AlignDown'},
 					]},
-				{type: 'menu', id: 'arrangemenu', img: 'arrangemenu', hint: _UNO('.uno:ArrangeMenu'), freemiumUno: '.uno:ArrangeMenu', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork'],
+				{type: 'menu', id: 'arrangemenu', img: 'arrangemenu', hint: _UNO('.uno:ArrangeMenu'), lockUno: '.uno:ArrangeMenu', context: ['Draw', 'DrawLine', '3DObject', 'MultiObject', 'Graphic', 'DrawFontwork'],
 					items: [
 						{id: 'bringtofront', hint: _UNO('.uno:BringToFront', '', true), img: 'bringtofront', uno: '.uno:BringToFront'},
 						{type: 'break'},
@@ -308,10 +308,10 @@ L.Control.MobileBottomBar = L.Control.extend({
 			}
 		}
 
-		if (this.map.isFreemiumUser()) {
+		if (this.map.isLockedUser()) {
 			for (var i = 0; i < toolItems.length; i++) {
 				var it = toolItems[i];
-				this.map.disableFreemiumItem(it, $('#tb_editbar_item_'+ it.id)[0], $('#tb_editbar_item_'+ it.id)[0]);
+				this.map.disableLockedItem(it, $('#tb_editbar_item_'+ it.id)[0], $('#tb_editbar_item_'+ it.id)[0]);
 			}
 		}
 

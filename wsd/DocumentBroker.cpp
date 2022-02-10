@@ -653,9 +653,8 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         templateSource = wopifileinfo->getTemplateSource();
 
         _isViewFileExtension = COOLWSD::IsViewFileExtension(wopiStorage->getFileExtension());
-        if (CommandControl::FreemiumManager::isFreemiumReadOnlyUser() ||
-            !wopifileinfo->getUserCanWrite() ||
-            _isViewFileExtension)
+        if (CommandControl::LockManager::isLockedReadOnlyUser() ||
+            !wopifileinfo->getUserCanWrite() || _isViewFileExtension)
         {
             LOG_DBG("Setting the session as readonly");
             session->setReadOnly();
@@ -768,28 +767,29 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         }
     }
 
-#ifdef ENABLE_FREEMIUM
-    Object::Ptr freemiumInfo = new Object();
-    freemiumInfo->set("IsFreemiumUser", CommandControl::FreemiumManager::isFreemiumUser());
-    freemiumInfo->set("IsFreemiumReadOnly", CommandControl::FreemiumManager::isFreemiumReadOnly());
+#ifdef ENABLE_FEATURE_LOCK
+    Object::Ptr lockInfo = new Object();
+    lockInfo->set("IsLockedUser", CommandControl::LockManager::isLockedUser());
+    lockInfo->set("IsLockReadOnly", CommandControl::LockManager::isLockReadOnly());
 
     // Poco:Dynamic:Var does not support std::unordred_set so converted to std::vector
-    std::vector<std::string> freemiumDenyList(CommandControl::FreemiumManager::getFreemiumDenyList().begin(),
-                                                CommandControl::FreemiumManager::getFreemiumDenyList().end());
-    freemiumInfo->set("FreemiumDenyList", freemiumDenyList);
-    freemiumInfo->set("FreemiumPurchaseTitle", CommandControl::FreemiumManager::getFreemiumPurchaseTitle());
-    freemiumInfo->set("FreemiumPurchaseLink", CommandControl::FreemiumManager::getFreemiumPurchaseLink());
-    freemiumInfo->set("FreemiumPurchaseDescription", CommandControl::FreemiumManager::getFreemiumPurchaseDescription());
-    freemiumInfo->set("WriterHighlights", CommandControl::FreemiumManager::getWriterHighlights());
-    freemiumInfo->set("CalcHighlights", CommandControl::FreemiumManager::getCalcHighlights());
-    freemiumInfo->set("ImpressHighlights", CommandControl::FreemiumManager::getImpressHighlights());
-    freemiumInfo->set("DrawHighlights", CommandControl::FreemiumManager::getDrawHighlights());
+    std::vector<std::string> lockedCommandList(
+        CommandControl::LockManager::getLockedCommandList().begin(),
+        CommandControl::LockManager::getLockedCommandList().end());
+    lockInfo->set("LockedCommandList", lockedCommandList);
+    lockInfo->set("UnlockTitle", CommandControl::LockManager::getUnlockTitle());
+    lockInfo->set("UnlockLink", CommandControl::LockManager::getUnlockLink());
+    lockInfo->set("UnlockDescription", CommandControl::LockManager::getUnlockDescription());
+    lockInfo->set("WriterHighlights", CommandControl::LockManager::getWriterHighlights());
+    lockInfo->set("CalcHighlights", CommandControl::LockManager::getCalcHighlights());
+    lockInfo->set("ImpressHighlights", CommandControl::LockManager::getImpressHighlights());
+    lockInfo->set("DrawHighlights", CommandControl::LockManager::getDrawHighlights());
 
-    std::ostringstream ossFreemiumInfo;
-    freemiumInfo->stringify(ossFreemiumInfo);
-    const std::string freemiumInfoString = ossFreemiumInfo.str();
-    LOG_TRC("Sending freemium info to client: " << freemiumInfoString);
-    session->sendMessage("freemium: " + freemiumInfoString);
+    std::ostringstream ossLockInfo;
+    lockInfo->stringify(ossLockInfo);
+    const std::string lockInfoString = ossLockInfo.str();
+    LOG_TRC("Sending feature locking info to client: " << lockInfoString);
+    session->sendMessage("featurelock: " + lockInfoString);
 #endif
 
 #ifdef ENABLE_FEATURE_RESTRICTION
@@ -804,7 +804,7 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
     std::ostringstream ossRestrictionInfo;
     restrictionInfo->stringify(ossRestrictionInfo);
     const std::string restrictionInfoString = ossRestrictionInfo.str();
-    LOG_TRC("Sending freemium info to client: " << restrictionInfoString);
+    LOG_TRC("Sending command restriction info to client: " << restrictionInfoString);
     session->sendMessage("restrictedCommands: " + restrictionInfoString);
 #endif
 

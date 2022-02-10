@@ -89,7 +89,7 @@ L.Control.TopToolbar = L.Control.extend({
 		return [
 			{type: 'button',  id: 'closemobile',  img: 'closemobile', desktop: false, mobile: false, tablet: true, hidden: true},
 			{type: 'button',  id: 'save', img: 'save', hint: _UNO('.uno:Save'), uno: '.uno:Save'},
-			{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false, tablet: false, freemiumUno: '.uno:Print'},
+			{type: 'button',  id: 'print', img: 'print', hint: _UNO('.uno:Print', 'text'), mobile: false, tablet: false, lockUno: '.uno:Print'},
 			{type: 'break', id: 'savebreak', mobile: false},
 			{type: 'button',  id: 'undo',  img: 'undo', hint: _UNO('.uno:Undo'), uno: '.uno:Undo', disabled: true, mobile: false},
 			{type: 'button',  id: 'redo',  img: 'redo', hint: _UNO('.uno:Redo'), uno: '.uno:Redo', disabled: true, mobile: false},
@@ -137,9 +137,9 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'button',  id: 'underline',  img: 'underline', hint: _UNO('.uno:Underline'), uno: '.uno:Underline'},
 			{type: 'button',  id: 'strikeout', img: 'strikeout', hint: _UNO('.uno:Strikeout'), uno: '.uno:Strikeout'},
 			{type: 'break', id: 'breakformatting'},
-			{type: 'drop',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor'), overlay: { onShow : function() { window.showColorPicker('fontcolor'); }} , html: window.getColorPickerHTML('fontcolor'), freemiumUno: '.uno:FontColor'},
-			{type: 'drop',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackColor', 'text'), hidden: true,  overlay: { onShow : function() { window.showColorPicker('backcolor'); }} , html: window.getColorPickerHTML('backcolor'), freemiumUno: '.uno:BackColor'},
-			{type: 'drop',  id: 'backgroundcolor', img: 'backgroundcolor', hint: _UNO('.uno:BackgroundColor'), hidden: true,  overlay: { onShow : function() { window.showColorPicker('backgroundcolor'); }} , html: window.getColorPickerHTML('backcolor'), freemiumUno: '.uno:BackgroundColor'},
+			{type: 'drop',  id: 'fontcolor', img: 'textcolor', hint: _UNO('.uno:FontColor'), overlay: { onShow : function() { window.showColorPicker('fontcolor'); }} , html: window.getColorPickerHTML('fontcolor'), lockUno: '.uno:FontColor'},
+			{type: 'drop',  id: 'backcolor', img: 'backcolor', hint: _UNO('.uno:BackColor', 'text'), hidden: true,  overlay: { onShow : function() { window.showColorPicker('backcolor'); }} , html: window.getColorPickerHTML('backcolor'), lockUno: '.uno:BackColor'},
+			{type: 'drop',  id: 'backgroundcolor', img: 'backgroundcolor', hint: _UNO('.uno:BackgroundColor'), hidden: true,  overlay: { onShow : function() { window.showColorPicker('backgroundcolor'); }} , html: window.getColorPickerHTML('backcolor'), lockUno: '.uno:BackgroundColor'},
 			{type: 'break' , id: 'breakcolor', mobile:false},
 			{type: 'button',  id: 'leftpara',  img: 'alignleft', hint: _UNO('.uno:LeftPara', '', true),
 				uno: {textCommand: '.uno:LeftPara', objectCommand: '.uno:ObjectAlignLeft'},
@@ -155,7 +155,7 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'drop',  id: 'setborderstyle',  img: 'setborderstyle', hint: _('Borders'), hidden: true, html: window.getBorderStyleMenuHtml()},
 			{type: 'button',  id: 'togglemergecells',  img: 'togglemergecells', hint: _UNO('.uno:ToggleMergeCells', 'spreadsheet', true), hidden: true, uno: '.uno:ToggleMergeCells', disabled: true},
 			{type: 'break', id: 'breakmergecells', hidden: true},
-			{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'), hidden: true, freemiumUno: '.uno:TextAlign',
+			{type: 'menu', id: 'textalign', img: 'alignblock', hint: _UNO('.uno:TextAlign'), hidden: true, lockUno: '.uno:TextAlign',
 				items: [
 					{id: 'alignleft', text: _UNO('.uno:AlignLeft', 'spreadsheet', true), icon: 'alignleft', uno: '.uno:AlignLeft'},
 					{id: 'alignhorizontalcenter', text: _UNO('.uno:AlignHorizontalCenter', 'spreadsheet', true), icon: 'alignhorizontal', uno: '.uno:AlignHorizontalCenter'},
@@ -166,7 +166,7 @@ L.Control.TopToolbar = L.Control.extend({
 					{id: 'alignvcenter', text: _UNO('.uno:AlignVCenter', 'spreadsheet', true), icon: 'alignvcenter', uno: '.uno:AlignVCenter'},
 					{id: 'alignbottom', text: _UNO('.uno:AlignBottom', 'spreadsheet', true), icon: 'alignbottom', uno: '.uno:AlignBottom'},
 				]},
-			{type: 'menu',  id: 'linespacing',  img: 'linespacing', hint: _UNO('.uno:FormatSpacingMenu'), hidden: true, freemiumUno: '.uno:FormatSpacingMenu',
+			{type: 'menu',  id: 'linespacing',  img: 'linespacing', hint: _UNO('.uno:FormatSpacingMenu'), hidden: true, lockUno: '.uno:FormatSpacingMenu',
 				items: [
 					{id: 'spacepara1', img: 'spacepara1', text: _UNO('.uno:SpacePara1'), uno: '.uno:SpacePara1'},
 					{id: 'spacepara15', img: 'spacepara15', text: _UNO('.uno:SpacePara15'), uno: '.uno:SpacePara15'},
@@ -215,9 +215,9 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'button',  id: 'numberformatdecdecimals',  img: 'numberformatdecdecimals', hint: _UNO('.uno:NumberFormatDecDecimals', 'spreadsheet', true), hidden: true, uno: '.uno:NumberFormatDecDecimals', disabled: true},
 			{type: 'button',  id: 'numberformatincdecimals',  img: 'numberformatincdecimals', hint: _UNO('.uno:NumberFormatIncDecimals', 'spreadsheet', true), hidden: true, uno: '.uno:NumberFormatIncDecimals', disabled: true},
 			{type: 'break',   id: 'break-number', hidden: true},
-			{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), hidden: true, overlay: {onShow: window.insertTable}, html: window.getInsertTablePopupHtml(), freemiumUno: '.uno:InsertTable'},
-			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), freemiumUno: '.uno:InsertGraphic'},
-			{type: 'menu', id: 'menugraphic', img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), hidden: true, freemiumUno: '.uno:InsertGraphic',
+			{type: 'drop',  id: 'inserttable',  img: 'inserttable', hint: _('Insert table'), hidden: true, overlay: {onShow: window.insertTable}, html: window.getInsertTablePopupHtml(), lockUno: '.uno:InsertTable'},
+			{type: 'button',  id: 'insertgraphic',  img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), lockUno: '.uno:InsertGraphic'},
+			{type: 'menu', id: 'menugraphic', img: 'insertgraphic', hint: _UNO('.uno:InsertGraphic', '', true), hidden: true, lockUno: '.uno:InsertGraphic',
 				items: [
 					{id: 'localgraphic', text: _('Insert Local Image')},
 					{id: 'remotegraphic', text: _UNO('.uno:InsertGraphic', '', true)},
@@ -228,8 +228,8 @@ L.Control.TopToolbar = L.Control.extend({
 			{type: 'drop',  id: 'insertconnectors',  img: 'connectors_connector', hint: _('Insert connectors'), overlay: {onShow: function() {window.insertShapes('insertconnectors'); }}, html: window.getShapesPopupHtml(), hidden: true},
 			{type: 'break',   id: 'breakinsert', desktop: true},
 			{type: 'button',  id: 'inserttextbox', img: 'text', hint: _UNO('.uno:Text', '', true), uno: '.uno:Text?CreateDirectly:bool=true', hidden: true},
-			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true), hidden: true, freemiumUno: '.uno:InsertAnnotation'},
-			{type: 'button',  id: 'link',  img: 'link', hint: _UNO('.uno:HyperlinkDialog', '', true), disabled: true, freemiumUno: '.uno:HyperlinkDialog'},
+			{type: 'button',  id: 'insertannotation', img: 'annotation', hint: _UNO('.uno:InsertAnnotation', '', true), hidden: true, lockUno: '.uno:InsertAnnotation'},
+			{type: 'button',  id: 'link',  img: 'link', hint: _UNO('.uno:HyperlinkDialog', '', true), disabled: true, lockUno: '.uno:HyperlinkDialog'},
 			{type: 'button',  id: 'insertsymbol', img: 'insertsymbol', hint: _UNO('.uno:InsertSymbol', '', true), uno: '.uno:InsertSymbol'},
 			{type: 'spacer'},
 			{type: 'break', id: 'breaksidebar', hidden: true},
@@ -296,10 +296,10 @@ L.Control.TopToolbar = L.Control.extend({
 					}
 				}
 
-				if (that.map.isFreemiumUser()) {
+				if (that.map.isLockedUser()) {
 					for (var i = 0; i < this.items.length; i++) {
 						var it = this.items[i];
-						that.map.disableFreemiumItem(it, $('#tb_editbar_item_'+ it.id)[0], $('#tb_editbar_item_'+ it.id)[0]);
+						that.map.disableLockedItem(it, $('#tb_editbar_item_'+ it.id)[0], $('#tb_editbar_item_'+ it.id)[0]);
 					}
 				}
 			}
