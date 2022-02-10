@@ -265,7 +265,7 @@ UnitKit& UnitKit::get()
 
 void UnitBase::exitTest(TestResult result)
 {
-    if (_setRetValue)
+    if (isFinished())
     {
         return;
     }
@@ -290,10 +290,10 @@ void UnitBase::exitTest(TestResult result)
 void UnitBase::timeout()
 {
     // Don't timeout if we had already finished.
-    if (isUnitTesting() && !_setRetValue)
+    if (isUnitTesting() && !isFinished())
     {
-        LOG_ERR(getTestname() << ": Timed out waiting for unit test to complete within "
-                              << _timeoutMilliSeconds);
+        LOG_TST("ERROR " << getTestname() << ": Timed out waiting for unit test to complete within "
+                         << _timeoutMilliSeconds);
         exitTest(TestResult::TimedOut);
     }
 }

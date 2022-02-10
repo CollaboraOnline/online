@@ -228,9 +228,21 @@ public:
     /// If the test times out this gets invoked, the default just exits.
     virtual void timeout();
 
+    bool isFinished() const { return _setRetValue; }
+
     std::chrono::milliseconds getTimeoutMilliSeconds() const
     {
         return _timeoutMilliSeconds;
+    }
+
+    void checkTimeout(const std::chrono::milliseconds elapsedTime)
+    {
+        if (isUnitTesting() && !isFinished() && elapsedTime > getTimeoutMilliSeconds())
+        {
+            LOG_TST("ERROR Test exceeded its time limit of "
+                    << getTimeoutMilliSeconds() << ". It's been running for " << elapsedTime);
+            timeout();
+        }
     }
 
     static UnitBase& get()
