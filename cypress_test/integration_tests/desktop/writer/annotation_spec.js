@@ -9,12 +9,6 @@ describe('Annotation Tests', function() {
 	beforeEach(function() {
 		helper.beforeAll(testFileName, 'writer');
 
-		cy.get('#toolbar-up .w2ui-scroll-right')
-			.click();
-
-		cy.get('#tb_editbar_item_sidebar')
-			.click();
-
 		selectZoomLevel('50');
 	});
 
@@ -23,7 +17,7 @@ describe('Annotation Tests', function() {
 	});
 
 	it('Insert',function() {
-		insertMultipleComment();
+		insertMultipleComment('writer');
 
 		cy.get('.loleaflet-annotation-content-wrapper').should('exist');
 
@@ -31,7 +25,7 @@ describe('Annotation Tests', function() {
 	});
 
 	it('Modify',function() {
-		insertMultipleComment();
+		insertMultipleComment('writer');
 
 		cy.get('.loleaflet-annotation-content-wrapper').should('exist');
 
@@ -51,7 +45,7 @@ describe('Annotation Tests', function() {
 	});
 
 	it('Reply',function() {
-		insertMultipleComment();
+		insertMultipleComment('writer');
 
 		cy.get('.loleaflet-annotation-content-wrapper').should('exist');
 
@@ -69,7 +63,7 @@ describe('Annotation Tests', function() {
 	});
 
 	it('Remove',function() {
-		insertMultipleComment();
+		insertMultipleComment('writer');
 
 		cy.get('.loleaflet-annotation-content-wrapper').should('exist');
 
