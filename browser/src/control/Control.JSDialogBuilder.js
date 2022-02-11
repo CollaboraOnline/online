@@ -2384,14 +2384,10 @@ L.Control.JSDialogBuilder = L.Control.extend({
 
 		if (data.enabled === 'false' || data.enabled === false)
 			$(button).prop('disabled', true);
-		if (window.mode.isMobile()) {
-			builder.map.hideRestrictedItems(data, controls['container'], controls['container']);
-			builder.map.disableLockedItem(data, controls['container'], controls['container']);
-		}
-		else {
-			builder.map.hideRestrictedItems(data, parentContainer, controls['container']);
-			builder.map.disableLockedItem(data, parentContainer, controls['container']);
-		}
+
+		builder.map.hideRestrictedItems(data, controls['container'], controls['container']);
+		builder.map.disableLockedItem(data, controls['container'], controls['container']);
+
 		return controls;
 	},
 
