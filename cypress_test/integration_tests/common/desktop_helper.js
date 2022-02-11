@@ -231,19 +231,6 @@ function resetZoomLevel() {
 	shouldHaveZoomLevel('100');
 }
 
-function insertMultipleComment(numberOfComments) {
-	numberOfComments = numberOfComments || 1;
-	for (var n=0;n<numberOfComments;n++) {
-
-		cy.get('#menu-insert').click().get('#menu-insertcomment').click();
-
-		cy.get('.loleaflet-annotation-table').should('exist');
-
-		cy.get('#annotation-modify-textarea-new').type('some text' + n);
-
-		cy.get('#annotation-save-new').click();
-	}
-}
 function insertImage() {
 	selectZoomLevel('50');
 
@@ -283,6 +270,57 @@ function deleteImage() {
 		.should('not.exist');
 }
 
+function insertMultipleComment(docType, numberOfComments = 1) {
+	var mode = Cypress.env('USER_INTERFACE');
+
+	if (docType !== 'draw') {
+		cy.get('#toolbar-up .w2ui-scroll-right').then($button => {
+			if ($button.is(':visible'))	{
+				$button.click();
+			}
+		});
+	}
+
+	if (mode === 'notebookbar') {
+		cy.wait(500);
+
+		cy.get('#Insert-tab-label').then($button => {
+			if (!$button.hasClass('selected')) {
+				$button.click();
+			}
+		});
+	}
+
+	if (docType === 'writer') {
+		cy.get('#toolbar-up .w2ui-scroll-right').then($button => {
+			if ($button.is(':visible'))	{
+				$button.click();
+			}
+		});
+	}
+
+	for (var n=0;n<numberOfComments;n++) {
+
+		if (docType === 'draw') {
+			cy.get('#menu-insert').click().get('#menu-insertcomment').click();
+		} else {
+			actionOnSelector('insertAnnotation', (selector) => {
+				cy.get(selector).click();
+			});
+		}
+
+		cy.wait(100);
+
+		cy.get('.loleaflet-annotation-table').should('exist');
+
+		cy.get('#annotation-modify-textarea-new').type('some text' + n);
+
+		cy.wait(500);
+
+		cy.get('#annotation-save-new').click();
+	}
+}
+
 function actionOnSelector(name,func) {
 	cy.task('getSelectors', {
 		mode: Cypress.env('USER_INTERFACE'),
@@ -308,4 +346,5 @@ module.exports.resetZoomLevel = resetZoomLevel;
 module.exports.insertMultipleComment = insertMultipleComment;
 module.exports.insertImage = insertImage;
 module.exports.deleteImage = deleteImage;
+module.exports.insertMultipleComment = insertMultipleComment;
 module.exports.actionOnSelector = actionOnSelector;
