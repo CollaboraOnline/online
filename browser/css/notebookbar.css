@@ -17,10 +17,12 @@
 	font-family: var(--cool-font);
 	line-height: normal;
 	color: var(--color-main-text);
-	height: 32px;
+	height: 24px;
 	display: flex;
 	align-items: center;
 	padding: 0px 1em;
+	border: 1px solid transparent;
+	border-radius: var(--border-radius);
 }
 
 .ui-tab.notebookbar[style*='block'] {
@@ -32,52 +34,17 @@
 }
 
 .ui-tab.selected.notebookbar {
-	border: 0px;
-	border-radius: 0px;
-	background: var(--white-bg-color);
-}
-.main-nav.hasnotebookbar .ui-tab.selected.notebookbar {
-	text-shadow: 0px 0px 1px #0004;
-}
-.main-nav.hasnotebookbar.text-color-indicator .ui-tab.selected.notebookbar{
-	color: rgb(3, 105, 163);
-	color: var(--color-text-accent);
-	box-shadow: -1px -1px 1px rgba(var(--blue1-txt-primary-color),0.3), 1px -1px 1px rgba(var(--blue1-txt-primary-color),0.3);
-}
-.main-nav.hasnotebookbar.spreadsheet-color-indicator .ui-tab.selected.notebookbar{
-	color: rgb(16, 104, 2);
-	color: var(--color-text-accent);
-	box-shadow: -1px -1px 1px rgba(var(--green0-txt-primary-color),0.3), 1px -1px 1px rgba(var(--green0-txt-primary-color),0.3);
-}
-.main-nav.hasnotebookbar.presentation-color-indicator .ui-tab.selected.notebookbar{
-	color: rgb(163, 62, 3);
-	color: var(--color-text-accent);
-	box-shadow: -1px -1px 1px rgba(var(--orange1-txt-primary-color),0.3), 1px -1px 1px rgba(var(--orange1-txt-primary-color),0.3);
-}
-.main-nav.hasnotebookbar.drawing-color-indicator .ui-tab.selected.notebookbar{
-	color: rgb(135, 105, 0);
-	color: var(--color-text-accent);
-	box-shadow: -1px -1px 1px rgba(var(--yellow0-txt-primary-color),0.3), 1px -1px 1px rgba(var(--yellow0-txt-primary-color),0.3);
-}
-.main-nav.hasnotebookbar.text-color-indicator .ui-tab.notebookbar:hover {
-	color: var(--color-text-accent);
-	box-shadow: 0 2px rgb(var(--blue1-txt-primary-color));
-}
-.main-nav.hasnotebookbar.spreadsheet-color-indicator .ui-tab.notebookbar:hover {
-	color: var(--color-text-accent);
-	box-shadow: 0 2px rgb(var(--green0-txt-primary-color));
-}
-.main-nav.hasnotebookbar.presentation-color-indicator .ui-tab.notebookbar:hover {
-	color: var(--color-text-accent);
-	box-shadow: 0 2px rgb(var(--orange1-txt-primary-color));
-}
-.main-nav.hasnotebookbar.drawing-color-indicator .ui-tab.notebookbar:hover {
-	color: var(--color-text-accent);
-	box-shadow: 0 2px rgb(var(--yellow0-txt-primary-color));
+	color: var(--color-text-dark);
+	background: var(--color-background-dark);
+	border: 1px solid var(--color-border-dark);
 }
 .ui-tab.notebookbar:hover {
+	color: var(--color-text-darker);
+	background: var(--color-background-darker);
+	border: 1px solid var(--color-border-darker);
 	cursor: pointer;
 }
+
 /* Document Logo */
 .main-nav.hasnotebookbar #document-header {
 	height: 100%;
