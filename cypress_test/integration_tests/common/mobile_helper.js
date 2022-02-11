@@ -313,7 +313,10 @@ function selectListBoxItem2(listboxSelector, item) {
 
 	helper.clickOnIdle(listboxSelector);
 
-	helper.clickOnIdle('.ui-combobox-text', item);
+	helper.waitUntilIdle('.ui-combobox-text');
+
+	cy.contains('.ui-combobox-text', new RegExp('^' + item + '$'))
+		.click();
 
 	cy.get(listboxSelector + ' .ui-header-left')
 		.should('have.text', item);
