@@ -49,7 +49,7 @@ describe('Scroll through document', function() {
 
 		desktopHelper.pressKey(18,'downarrow');
 
-		desktopHelper.assertScrollbarPosition('vertical', 335, 384);
+		desktopHelper.assertScrollbarPosition('vertical', 306, 355);
 	});
 
 	it('Scrolling to left/right', function() {
