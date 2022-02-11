@@ -176,19 +176,22 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 	max-width: 290px;
 }
 
-div#decimalplaces {
-	text-align: right;
+#NumberFormatPropertyPanel {
+	width: 290px;
 }
-
-div#numberformatcombobox.jsdialog.sidebar.ui-listbox-container {
-	position: relative;
-	left: 2px;
-}
-
+div#decimalplaces,
+div#numberformatcombobox.jsdialog.sidebar.ui-listbox-container,
 div#leadingzeroes.jsdialog.sidebar.spinfieldcontainer {
 	text-align: right;
+}
+#leadingzeroes,
+#leadingzeroeslabel {
 	position: relative;
-	right: 4px;
+	left: 4px;
+}
+#decimalplaces {
+	position: relative;
+	left: 6px;
 }
 
 p#decimalplaceslabel.jsdialog.sidebar.ui-text,
@@ -198,7 +201,7 @@ p#denominatorplaceslabel.jsdialog.sidebar.ui-text {
 
 div#box2.row.jsdialog.sidebar > .sidebar.jsdialog.row > .sidebar.jsdialog.cell,
 div#box5.row.jsdialog.sidebar > .sidebar.jsdialog.cell {
-	padding: 0 14px 0 0;
+	padding: 0;
 }
 
 .sidebar.ui-expander-label {
