@@ -570,8 +570,18 @@ void DocumentBroker::joinThread()
 
 void DocumentBroker::stop(const std::string& reason)
 {
-    LOG_DBG("Stopping DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
-    _closeReason = reason; // used later in the polling loop
+    if (_closeReason.empty())
+    {
+        LOG_DBG("Stopping DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
+        _closeReason = reason; // used later in the polling loop
+    }
+    else
+    {
+        LOG_DBG("Stopping DocumentBroker for docKey ["
+                << _docKey << "] with existing close reason: " << _closeReason
+                << " (ignoring requested reason: " << reason << ')');
+    }
+
     _stop = true;
     _poll->wakeup();
 }
