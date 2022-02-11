@@ -181,7 +181,7 @@ body {
 
 #sidebar-dock-wrapper {
 	display: none;
-	background: var(--color-background-lighter);
+	background: var(--color-main-background);
 	position: relative;
 	border-top: 1px solid var(--color-border);
 	border-left: 1px solid var(--color-border);
