@@ -65,45 +65,48 @@ window.app = { // Shouldn't have any functions defined.
 		}
 	};
 
-	var loggingMethods = ['warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd', 'group', 'groupEnd'];
+	// enable later toggling
+	global.setLogging = function(doLogging)
+	{
+		var loggingMethods = ['warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd', 'group', 'groupEnd'];
+		if (!doLogging) {
+			var noop = function() {};
 
-	if (global.coolLogging !== 'true') {
-		var noop = function() {};
+			for (var i = 0; i < loggingMethods.length; i++) {
+				window.app.console[loggingMethods[i]] = noop;
+			}
+		} else {
+			for (var i = 0; i < loggingMethods.length; i++) {
+				if (!Object.prototype.hasOwnProperty.call(window.console, loggingMethods[i])) {
+					continue;
+				}
+				(function(method) {
+					window.app.console[method] = function logWithCool() {
+						var args = Array.prototype.slice.call(arguments);
 
-		for (var i = 0; i < loggingMethods.length; i++) {
-			window.app.console[loggingMethods[i]] = noop;
-		}
-	} else {
-		for (var i = 0; i < loggingMethods.length; i++) {
-			if (!Object.prototype.hasOwnProperty.call(window.console, loggingMethods[i])) {
-				continue;
+						return window.console[method].apply(console, args);
+					};
+				}(loggingMethods[i]));
 			}
 
-			(function(method) {
-				window.app.console[method] = function logWithCool() {
-					var args = Array.prototype.slice.call(arguments);
-
-					return window.console[method].apply(console, args);
+			window.onerror = function (msg, src, row, col, err) {
+				var data = {
+					userAgent: navigator.userAgent.toLowerCase(),
+					vendor: navigator.vendor.toLowerCase(),
+					message: msg,
+					source: src,
+					line: row,
+					column: col
 				};
-			}(loggingMethods[i]));
-		}
-
-		window.onerror = function (msg, src, row, col, err) {
-			var data = {
-				userAgent: navigator.userAgent.toLowerCase(),
-				vendor: navigator.vendor.toLowerCase(),
-				message: msg,
-				source: src,
-				line: row,
-				column: col
+				var desc = err ? err.message || '(no message)': '(no err)', stack = err ? err.stack || '(no stack)': '(no err)';
+				var log = 'jserror ' + JSON.stringify(data, null, 2) + '\n' + desc + '\n' + stack + '\n';
+				global.logServer(log);
+				return false;
 			};
-			var desc = err ? err.message || '(no message)': '(no err)', stack = err ? err.stack || '(no stack)': '(no err)';
-			var log = 'jserror ' + JSON.stringify(data, null, 2) + '\n' + desc + '\n' + stack + '\n';
-			global.logServer(log);
+		}
+	};
 
-			return false;
-		};
-	}
+	global.setLogging(global.coolLogging == 'true');
 
 	global.getParameterByName = function (name) {
 		name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
@@ -818,7 +821,7 @@ window.app = { // Shouldn't have any functions defined.
 	global.hexEncode = function (string) {
 		var bytes = new TextEncoder().encode(string);
 		var hex = '0x';
-		for (i = 0; i < bytes.length; ++i) {
+		for (var i = 0; i < bytes.length; ++i) {
 			hex += bytes[i].toString(16);
 		}
 		return hex;
@@ -829,7 +832,7 @@ window.app = { // Shouldn't have any functions defined.
 		if (hex.startsWith('0x'))
 			hex = hex.substr(2);
 		var bytes = new Uint8Array(hex.length / 2);
-		for (i = 0; i < bytes.length; i++) {
+		for (var i = 0; i < bytes.length; i++) {
 			bytes[i] = parseInt(hex.substr(i * 2, 2), 16);
 		}
 		return new TextDecoder().decode(bytes);
