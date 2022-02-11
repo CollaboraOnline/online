@@ -457,6 +457,7 @@ button.leaflet-control-search-next
 	background-color: var(--color-background-dark);
 	color: var(--color-text-dark);
 	border-radius: var(--border-radius);
+	border: 1px solid var(--color-border-dark);
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered {
 	line-height: 24px;
@@ -536,22 +537,22 @@ button.leaflet-control-search-next
 .w2ui-toolbar table.w2ui-button {
 	background-color: transparent;
 	border: 1px solid transparent;
-	color: var(--gray-light-txt--color);
+	color: var(--color-main-text);
 }
 .w2ui-toolbar table.w2ui-button.over {
 	border: 1px solid var(--color-border-darker) !important;
 }
 .w2ui-toolbar table.w2ui-button.checked {
-	background-color: var(--gray-light-bg-color);
-	border: 1px solid var(--gray-light-bg-color);
-	color: var(--gray-light-txt--color);
+	background-color: var(--color-background-dark);
+	border: 1px solid var(--color-border-dark);
+	color: var(--color-text-dark);
 }
 .select2-container--default .select2-selection--single:hover,
 .sidebar.jsdialog.ui-listbox:hover,
 .w2ui-toolbar table.w2ui-button.checked:hover {
-	background-color: var(--gray-light-bg-color);
-	border: 1px solid var(--gray-light-txt--color);
-	color: var(--color-text-accent);
+	background-color: var(--color-background-darker);
+	border: 1px solid var(--color-border-darker);
+	color: var(--color-text-darker);
 }
 
 .w2ui-icon.basicshapes_rectangle { background: url('images/lc_rect.svg') no-repeat center !important; }
