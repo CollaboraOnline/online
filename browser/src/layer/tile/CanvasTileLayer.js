@@ -4729,6 +4729,7 @@ L.CanvasTileLayer = L.Layer.extend({
 			this._debugSidebar = new L.LayerGroup();
 			this._debugTyper = new L.LayerGroup();
 			this._debugTrace = new L.LayerGroup();
+			this._debugLogging = new L.LayerGroup();
 			this._map.addLayer(this._debugInfo);
 			this._map.addLayer(this._debugInfo2);
 			var overlayMaps = {
@@ -4740,6 +4741,7 @@ L.CanvasTileLayer = L.Layer.extend({
 				'Tiles device pixel grid': this._tilesDevicePixelGrid,
 				'Sidebar Rerendering': this._debugSidebar,
 				'Performance Tracing': this._debugTrace,
+				'Protocol logging': this._debugLogging,
 			};
 			L.control.layers({}, overlayMaps, {collapsed: false}).addTo(this._map);
 
@@ -4761,6 +4763,8 @@ L.CanvasTileLayer = L.Layer.extend({
 					this._map._debugSidebar = true;
 				} else if (e.layer === this._debugTrace) {
 					app.socket.setTraceEventLogging(true);
+				} else if (e.layer === this._debugLogging) {
+					window.setLogging(true);
 				}
 			}, this);
 			this._map.on('layerremove', function(e) {
@@ -4781,6 +4785,8 @@ L.CanvasTileLayer = L.Layer.extend({
 					this._map._debugSidebar = false;
 				} else if (e.layer === this._debugTrace) {
 					app.socket.setTraceEventLogging(false);
+				} else if (e.layer === this._debugLogging) {
+					window.setLogging(false);
 				}
 			}, this);
 		}
