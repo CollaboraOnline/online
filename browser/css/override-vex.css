@@ -103,9 +103,9 @@
 }
 
 .vex.vex-theme-plain .vex-content{
-	border: 1px solid #a4a4a4;
-	box-shadow: 0 -1px 2px 0 rgba(0, 0, 0, 0.15), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
-	border-radius: 4px;
+	box-shadow: 0 1px 10px 1px var(--color-border-dark);
+	border-radius: var(--border-radius-large);
+	background-color: var(--color-main-background);
 	outline: none;
 }
 
@@ -122,6 +122,13 @@
 	width: 20px;
 	height: 20px;
 	line-height: 20px;
+}
+
+#about-dialog {
+	color: var(--color-main-text);
+}
+#about-dialog hr {
+	border: 1px solid var(--color-border);
 }
 
 .vex-closing {

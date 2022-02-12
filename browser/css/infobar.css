@@ -16,3 +16,12 @@
 	height: 42px;
 	border: none;
 }
+
+.ui-widget-header {
+	background: var(--color-background-darker);
+	border: none;
+	color: var(--color-text-darker);
+}
+.ui-widget-content {
+	color: var(--color-main-text);
+}
