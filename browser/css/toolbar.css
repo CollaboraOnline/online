@@ -1192,7 +1192,7 @@ html[dir='rtl'] #userListPopover::after {
 }
 
 #userListPopover .user-list-item.selected-user {
-	background-color: var(--gray-lighter-bg-color);
+	background-color: var(--color-background-dark);
 }
 
 #userListPopover #follow-editor {
