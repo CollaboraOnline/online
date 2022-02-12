@@ -73,7 +73,7 @@
 
 td.jsdialog:hover *,
 #table-box3:hover p {
-	color: var(--color-text-accent);
+	color: var(--color-text-darker);
 }
 
 .jsdialog.row {
