@@ -730,11 +730,11 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .arrowbackground:hover {
-	border-left-color: var(--gray-color);
-	background-color: #eee;
+	border-left-color: transparent;
+	background-color: transparent;
 }
 
-.arrowbackground:hover .unoarrow {
+.unoarrow:hover, .arrowbackground:hover .unoarrow {
 	border-top-color: var(--color-text-darker);
 }
 
