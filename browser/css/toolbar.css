@@ -1054,7 +1054,7 @@ button.leaflet-control-search-next
 }
 
 .insertshape-grid:hover div {
-	color: var(--color-text-accent);
+	color: var(--color-text-darker);
 }
 
 .insertshape-grid .col:hover {
