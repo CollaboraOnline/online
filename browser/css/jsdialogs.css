@@ -37,8 +37,10 @@
 }
 
 .jsdialog-container .ui-dialog-content {
-	background-color: white !important;
+	background-color: var(--color-main-background) !important;
 	font-family: var(--jquery-ui-font);
+	-webkit-box-shadow: 0 0 3px var(--color-border);
+	box-shadow: 0 0 3px var(--color-border);
 }
 
 .jsdialog.vertical p, .ui-frame-label {
@@ -47,6 +49,13 @@
 	font-size: 10px;
 	font-weight: bold;
 	text-transform: uppercase;
+}
+
+.lokdialog_container.ui-dialog.ui-widget-content, .autofilter-container {
+	border: 1px solid var(--color-border-dark);
+	-webkit-box-shadow: 0 0 3px var(--color-border);
+	box-shadow: 0 0 3px var(--color-border);
+	border-radius: var(--border-radius);
 }
 
 .jsdialog.ui-separator.vertical {
@@ -91,7 +100,7 @@ td.jsdialog .jsdialog.cell:not(.sidebar),
 }
 
 .jsdialog.vertical:not(.sidebar) {
-	width: max-content;
+	width: 100%;
 }
 
 .jsdialog.vertical:not([id^='table-dialog-action_area']) > .jsdialog.row,
@@ -107,6 +116,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .jsdialog.ui-grid {
 	border-spacing: 0px;
+	width: 100%;
 }
 
 /* Tabs */
@@ -318,6 +328,9 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 .jsdialog.ui-edit {
 	line-height: 28px;
 	max-height: 32px;
+	width: 100%;
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius);
 }
 
 #search_edit.ui-edit.autofilter {
@@ -339,8 +352,8 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 .jsdialog.checkbutton label {
 	padding: 0px 2px;
+	line-height: 28px;
 }
-
 /* Radio button */
 
 .jsdialog input[type='radio'] {
