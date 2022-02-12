@@ -114,7 +114,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	display: inline-flex;
 	width: 100%;
 	background: white;
-	background: var(--white-bg-color);
+	background: var(--color-main-background);
 }
 
 .jsdialog-tabs:empty {
