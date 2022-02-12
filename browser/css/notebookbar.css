@@ -292,7 +292,7 @@
 }
 
 .unotoolbutton.notebookbar .unobutton.selected + .ui-content.unolabel {
-	color: var(--color-text-accent);
+	color: var(--color-text-dark);
 }
 
 .unotoolbutton.notebookbar.disabled:not(.unospan-shortcutstoolbox),
