@@ -2,3 +2,7 @@
 	background-color: #c2d5ed;
 	box-shadow: inset 0px 0px 5px 0px #4a96d3;
 }
+
+#presentation-controls-wrapper {
+	border-top: 1px solid var(--color-border) !important;
+}
