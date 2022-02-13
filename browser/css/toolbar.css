@@ -62,7 +62,7 @@
 	content: '%';
 }
 #document-signing-bar {
-	background-color: #ef324e;
+	background-color: var(--color-error);
 }
 
 #toolbar-search {
