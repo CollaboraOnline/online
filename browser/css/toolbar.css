@@ -88,7 +88,7 @@ w2ui-toolbar {
 	position: absolute;
 	right: 10px;
 	top: 40px;
-	border: 1px solid darkgrey;
+	border: 1px solid var(--color-border);
 	z-index: 1000;
 	display: none;
 	overflow: visible !important;
