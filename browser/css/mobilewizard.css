@@ -968,11 +968,6 @@ label.disabled {
 	color: grey !important;
 }
 
-input[type='checkbox'][disabled] {
-	background-color: grey !important;
-	border-color: grey !important;
-}
-
 .ui-checkbox.mobile-wizard {
 	margin-top: 25px;
 	padding-left: 2% !important;
