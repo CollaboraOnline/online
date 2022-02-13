@@ -463,7 +463,7 @@ button.leaflet-control-search-next
 .select2-container--default .select2-selection--single .select2-selection__rendered {
 	line-height: 24px;
 	background-color: var(--color-background-dark);
-	color: var(--color-main-text);
+	color: var(--color-text-dark);
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered:hover {
 	background-color: var(--color-background-darker);
