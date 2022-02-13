@@ -65,7 +65,7 @@
 .main-nav {
 	height: 38px; /* on mouseover menubar items, border emerges */
 	width: auto;
-	background: #ffffff;
+	background: transparent;
 	padding: 3px 3px 3px 0;
 	white-space: nowrap;
 	z-index: 12;
@@ -74,7 +74,7 @@
 }
 .main-nav.readonly {
 	position: relative;
-	border-bottom: 1px solid var(--gray-light-bg-color);
+	border-bottom: 1px solid var(--color-border);
 }
 .main-nav.hasnotebookbar {
 	height: 32px;
