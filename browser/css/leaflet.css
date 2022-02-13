@@ -262,7 +262,7 @@
 	display: inline-block;
 	margin: 3px;
 	vertical-align: middle;
-	border-bottom: solid 1px #bbbbbb;
+	border-bottom: solid 1px var(--color-border);
 }
 .leaflet-bar a,
 .leaflet-bar a:hover {
@@ -865,7 +865,7 @@ input.clipboard {
 	margin: 0px; /*Ruler styling*/
 }
 .cool-ruler {
-	background-color: var(--gray-light-bg-color);
+	background-color: var(--color-background-lighter);
 	height: 20px;
 	width: 100vw;
 	margin: 0px !important;
@@ -934,7 +934,7 @@ input.clipboard {
 
 .cool-ruler-face {
 	height: 100%;
-	background-color: white;
+	background-color: var(--color-main-background);
 }
 
 .cool-ruler-maj {
@@ -983,7 +983,7 @@ input.clipboard {
 
 .cool-ruler-margin {
 	height: 100%;
-	background-color: var(--gray-light-bg-color);
+	background-color: var(--color-background-lighter);
 }
 
 .cool-ruler-left {
@@ -1004,21 +1004,21 @@ input.clipboard {
 }
 
 .cool-ruler-drag.cool-ruler-right {
-	border-left: 3px solid grey;
+	border-left: 3px solid var(--color-border-dark);
 }
 
 .cool-ruler-drag.cool-ruler-left {
-	border-right: 3px solid grey;
+	border-right: 3px solid var(--color-border-dark);
 }
 
 .cool-ruler-left.leaflet-drag-moving {
 	height: 100vh;
-	border-right: 2px dotted grey;
+	border-right: 2px dotted var(--color-border-dark);
 }
 
 .cool-ruler-right.leaflet-drag-moving {
 	height: 100vh;
-	border-left: 2px dotted grey;
+	border-left: 2px dotted var(--color-border-dark);
 }
 
 .cool-ruler-ltooltip, .cool-ruler-rtooltip {
@@ -1029,9 +1029,9 @@ input.clipboard {
 	padding: 2px 4px;
 	line-height: 20px;
 	position: absolute;
-	border: 1px solid grey;
+	border: 1px solid var(--color-border);
 	background-color: rgba(0,0,0,.4);
-	border-radius: 2px;
+	border-radius: var(--border-radius);
 	top: 24px;
 	color: white;
 }
