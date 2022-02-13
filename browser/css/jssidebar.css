@@ -11,7 +11,7 @@
 }
 
 #document-container:not(.mobile) + #sidebar-dock-wrapper {
-	width: 322px;
+	width: 330px;
 	padding: 0;
 	border-left: 1px solid var(--gray-color) !important;
 	border-right: 1px solid var(--gray-color) !important; /* for RTL mode */

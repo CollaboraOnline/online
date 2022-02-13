@@ -7,7 +7,6 @@
 	z-index: 999;
 	overflow: visible !important;
 	background-color: var(--color-main-background);
-	border-bottom: 1px solid var(--color-border);
 }
 
 #toolbar-down {
