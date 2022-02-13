@@ -73,7 +73,7 @@
 	position: fixed;
 	bottom: 0;
 	z-index: 1000;
-	border-top: 1px solid #bbbbbb;
+	border-top: 1px solid var(--color-border);
 }
 
 #tb_actionbar_item_prev .w2ui-icon.prev {
