@@ -417,11 +417,17 @@
 #stylesview {
 	height: 64px;
 	width: 530px;
-	overflow-x: hidden;
+	overflow: auto;
 	padding: 0px;
 	border: 1px solid var(--color-border);
 	border-radius: var(--border-radius);
 	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
+	scrollbar-width: none;
+}
+
+#stylesview::-webkit-scrollbar {
+	width: 0;
+	height: 0;
 }
 
 #stylesview .ui-iconview-entry {
