@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-10 10:29+0100\n"
-"PO-Revision-Date: 2022-01-13 22:40+0000\n"
+"PO-Revision-Date: 2022-02-11 21:22+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -921,7 +921,7 @@ msgstr "~ציור"
 #: src/control/Control.NotebookbarImpress.js:116
 #: src/control/Control.NotebookbarWriter.js:60
 msgid "~View"
-msgstr ""
+msgstr "~תצוגה"
 
 #: src/control/Control.NotebookbarCalc.js:59
 #: src/control/Control.NotebookbarDraw.js:109
@@ -1045,7 +1045,7 @@ msgstr "מחיקת עמודות"
 #: src/control/Control.NotebookbarImpress.js:303
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Toggle Status Bar"
-msgstr ""
+msgstr "החלפת מצב סרגל מצב"
 
 #: src/control/Control.NotebookbarDraw.js:45
 #: src/control/Control.NotebookbarDraw.js:729
@@ -1098,7 +1098,7 @@ msgstr "כותרת"
 
 #: src/control/Control.NotebookbarWriter.js:973
 msgid "Toggle Ruler"
-msgstr ""
+msgstr "החלפת מצב סרגל"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
