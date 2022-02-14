@@ -80,10 +80,14 @@ struct Histogram {
 struct Stats {
     Stats() :
         _start(std::chrono::steady_clock::now()),
+        _bytesSent(0),
+        _bytesRecvd(0),
         _tileCount(0)
     {
     }
     std::chrono::steady_clock::time_point _start;
+    size_t _bytesSent;
+    size_t _bytesRecvd;
     size_t _tileCount;
     Histogram _pingLatency;
     Histogram _tileLatency;
@@ -95,6 +99,8 @@ struct Stats {
         std::cout << "  tiles: " << _tileCount << " => TPS: " << ((_tileCount * 1000.0)/runMs) << "\n";
         _pingLatency.dump("ping latency:");
         _tileLatency.dump("tile latency:");
+        std::cout << "  we sent " << Util::getHumanizedBytes(_bytesSent) <<
+            " server sent " << Util::getHumanizedBytes(_bytesRecvd) << "\n";
     }
 };
 
@@ -259,6 +265,8 @@ public:
     {
         const auto now = std::chrono::steady_clock::now();
 
+        _stats->_bytesRecvd += data.size();
+
         const std::string firstLine = COOLProtocol::getFirstLine(data.data(), data.size());
         StringVector tokens = Util::tokenize(firstLine);
         std::cerr << "Got a message ! " << firstLine << "\n";
@@ -278,6 +286,13 @@ public:
 
         // FIXME: implement code to send new view-ports based
         // on cursor position etc.
+    }
+
+    /// override ProtocolHandlerInterface piece
+    int sendTextMessage(const char* msg, const size_t len, bool flush = false) const override
+    {
+        _stats->_bytesSent += len;
+        return WebSocketHandler::sendTextMessage(msg, len, flush);
     }
 
     static void addPollFor(SocketPoll &poll, const std::string &server,
