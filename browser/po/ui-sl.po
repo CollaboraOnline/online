@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-10 10:29+0100\n"
-"PO-Revision-Date: 2022-01-15 13:53+0000\n"
+"PO-Revision-Date: 2022-02-11 21:22+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: \n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.11-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: admin/admin.strings.js:6
@@ -925,7 +925,7 @@ msgstr "Ri~sanje"
 #: src/control/Control.NotebookbarImpress.js:116
 #: src/control/Control.NotebookbarWriter.js:60
 msgid "~View"
-msgstr ""
+msgstr "Po~gled"
 
 #: src/control/Control.NotebookbarCalc.js:59
 #: src/control/Control.NotebookbarDraw.js:109
@@ -1049,7 +1049,7 @@ msgstr "Izbriši stolpce"
 #: src/control/Control.NotebookbarImpress.js:303
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Toggle Status Bar"
-msgstr ""
+msgstr "Preklopi vrstico stanja"
 
 #: src/control/Control.NotebookbarDraw.js:45
 #: src/control/Control.NotebookbarDraw.js:729
@@ -1102,7 +1102,7 @@ msgstr "Naslov"
 
 #: src/control/Control.NotebookbarWriter.js:973
 msgid "Toggle Ruler"
-msgstr ""
+msgstr "Preklopi ravnilo"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
