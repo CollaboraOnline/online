@@ -702,7 +702,7 @@ window.app = { // Shouldn't have any functions defined.
 	console.log2 = console.log;
 
 	// belt & braces in case of incomplete back-ports
-	var loggingMethods = ['warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd'];
+	var loggingMethods = ['error', 'warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd'];
 	for (var i = 0; i < loggingMethods.length; i++) {
 		window.app.console[loggingMethods[i]] = function() {};
 	}
