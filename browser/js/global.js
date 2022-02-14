@@ -68,7 +68,7 @@ window.app = { // Shouldn't have any functions defined.
 	// enable later toggling
 	global.setLogging = function(doLogging)
 	{
-		var loggingMethods = ['warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd', 'group', 'groupEnd'];
+		var loggingMethods = ['error', 'warn', 'info', 'debug', 'trace', 'log', 'assert', 'time', 'timeEnd', 'group', 'groupEnd'];
 		if (!doLogging) {
 			var noop = function() {};
 
