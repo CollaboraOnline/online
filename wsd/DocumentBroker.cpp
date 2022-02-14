@@ -3449,40 +3449,39 @@ void DocumentBroker::dumpState(std::ostream& os)
                 now - _threadStart).count() << 's';
     os << "\n  sent: " << sent;
     os << "\n  recv: " << recv;
-    os << "\n  modified?: " << isModified();
     os << "\n  jail id: " << _jailId;
     os << "\n  filename: " << COOLWSD::anonymizeUrl(_filename);
     os << "\n  public uri: " << _uriPublic.toString();
     os << "\n  jailed uri: " << COOLWSD::anonymizeUrl(_uriJailed);
-    os << "\n  isViewFileExtension: " << _isViewFileExtension;
     os << "\n  doc key: " << _docKey;
     os << "\n  doc id: " << _docId;
     os << "\n  num sessions: " << _sessions.size();
     os << "\n  thread start: " << Util::getSteadyClockAsString(_threadStart);
+    os << "\n  modified?: " << isModified();
     os << "\n  possibly-modified: " << isPossiblyModified();
     os << "\n  haveActivityAfterSaveRequest: " << haveActivityAfterSaveRequest();
-    os << "\n  doc state: " << DocumentState::toString(_docState.status());
-    os << "\n  doc activity: " << DocumentState::toString(_docState.activity());
-    if (_docState.activity() == DocumentState::Activity::Rename)
-        os << "\n  (new name: " << _renameFilename << ')';
-    os << "\n  unload requested: " << _docState.isUnloadRequested();
-    os << "\n  marked to destroy: " << _docState.isMarkedToDestroy();
-    os << "\n  last saved: " << Util::getSteadyClockAsString(_storageManager.getLastUploadTime());
-    os << "\n  last save request: "
-       << Util::getSteadyClockAsString(_saveManager.lastSaveRequestTime());
-    os << "\n  last save response: "
-       << Util::getSteadyClockAsString(_saveManager.lastSaveResponseTime());
-    os << "\n  last save successful: " << _saveManager.lastSaveSuccessful();
-    os << "\n  last storage upload was successful: " << isLastStorageUploadSuccessful();
-    os << "\n  last modified: " << _storageManager.getLastModifiedTime();
-    os << "\n  file last modified: " << Util::getHttpTime(_saveManager.getLastModifiedTime());
-    os << "\n  isSaving now: " << std::boolalpha << _saveManager.isSaving();
+    os << "\n  isViewFileExtension: " << _isViewFileExtension;
+
     if (_limitLifeSeconds > std::chrono::seconds::zero())
         os << "\n  life limit in seconds: " << _limitLifeSeconds.count();
     os << "\n  idle time: " << getIdleTimeSecs();
-    os << "\n  cursor " << _cursorPosX << ", " << _cursorPosY
-      << "( " << _cursorWidth << ',' << _cursorHeight << ")\n";
+    os << "\n  cursor X: " << _cursorPosX << ", Y: " << _cursorPosY
+      << ", W:" << _cursorWidth << ", H: " << _cursorHeight;
+
+    os << "\n  DocumentState:";
+    _docState.dumpState(os, "\n    ");
+
+    if (_docState.activity() == DocumentState::Activity::Rename)
+        os << "\n  (new name: " << _renameFilename << ')';
+
+    os << "\n  SaveManager:";
+    _saveManager.dumpState(os, "\n    ");
+
+    os << "\n  StorageManager:";
+    _storageManager.dumpState(os, "\n    ");
+
     _lockCtx->dumpState(os);
+
     if (_tileCache)
         _tileCache->dumpState(os);
 
@@ -3491,7 +3490,7 @@ void DocumentBroker::dumpState(std::ostream& os)
 #if !MOBILEAPP
     // Bit nasty - need a cleaner way to dump state.
     os << "\n  Sessions:";
-    for (auto &it : _sessions)
+    for (const auto &it : _sessions)
     {
         auto proto = it.second->getProtocol();
         auto proxy = dynamic_cast<ProxyProtocolHandler *>(proto.get());
