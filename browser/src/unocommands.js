@@ -5,6 +5,7 @@ var unoCommandsArray = {
 	'AcceptTrackedChange':{text:{context:_('Accept Change'),menu:_('Accept'),},},
 	'AcceptTrackedChangeToNext':{text:{context:_('Accept Track Change and select the next one'),menu:_('Accept and Move to Next'),},},
 	'AcceptTrackedChanges':{text:{context:_('Manage Track Changes'),menu:_('~Manage...'),},},
+	'AccessibilityCheck':{text:{menu:_('~Accessibility Check...'),},},
 	'AddName':{spreadsheet:{menu:_('~Define...'),},},
 	'AlignBlock':{spreadsheet:{menu:_('Justified'),},},
 	'AlignBottom':{spreadsheet:{menu:_('Align Bottom'),},text:{menu:_('Align Bottom to Anchor'),},},

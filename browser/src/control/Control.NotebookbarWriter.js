@@ -1601,6 +1601,11 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'type': 'bigtoolitem',
 				'text': _UNO('.uno:AcceptTrackedChanges', 'text'),
 				'command': '.uno:AcceptTrackedChanges'
+			},
+			{
+				'type': 'bigtoolitem',
+				'text': _UNO('.uno:AccessibilityCheck', 'text'),
+				'command': '.uno:AccessibilityCheck'
 			}
 		];
 
