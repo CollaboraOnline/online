@@ -223,11 +223,17 @@ L.Map.WOPI = L.Handler.extend({
 			return;
 
 		var msg;
-		try {
-			msg = JSON.parse(e.data);
-		} catch (e) {
-			window.app.console.error(e);
-			return;
+
+		if (('data' in e) && Object.hasOwnProperty.call(e.data, 'MessageId')) {
+			// when e.data already contains the right props, but isn't JSON (a blob is passed for ex)
+			msg = e.data;
+		} else {
+			try {
+				msg = JSON.parse(e.data);
+			} catch (e) {
+				window.app.console.error(e);
+				return;
+			}
 		}
 
 		// allow closing documents before they are completely loaded
@@ -376,6 +382,11 @@ L.Map.WOPI = L.Handler.extend({
 		else if (msg.MessageId == 'Action_InsertGraphic') {
 			if (msg.Values) {
 				this._map.insertURL(msg.Values.url);
+			}
+		}
+		else if (msg.MessageId === 'Action_InsertFile') {
+			if (msg.Values && (msg.Values.File instanceof Blob)) {
+				this._map.fire('insertfile', {file: msg.Values.File});
 			}
 		}
 		else if (msg.MessageId == 'Action_Paste') {
