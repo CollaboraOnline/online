@@ -54,7 +54,8 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     CPPUNIT_TEST(testAuthorization);
     CPPUNIT_TEST(testJson);
     CPPUNIT_TEST(testAnonymization);
-    CPPUNIT_TEST(testTime);
+    CPPUNIT_TEST(testIso8601Time);
+    CPPUNIT_TEST(testClockAsString);
     CPPUNIT_TEST(testBufferClass);
     CPPUNIT_TEST(testStringVector);
     CPPUNIT_TEST(testHexify);
@@ -91,7 +92,8 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
     void testAuthorization();
     void testJson();
     void testAnonymization();
-    void testTime();
+    void testIso8601Time();
+    void testClockAsString();
     void testBufferClass();
     void testStringVector();
     void testHexify();
@@ -957,7 +959,7 @@ void WhiteBoxTests::testAnonymization()
     LOK_ASSERT_EQUAL(urlAnonymized3, Util::anonymizeUrl(fileUrl, nAnonymizationSalt));
 }
 
-void WhiteBoxTests::testTime()
+void WhiteBoxTests::testIso8601Time()
 {
     std::ostringstream oss;
 
@@ -1038,6 +1040,25 @@ void WhiteBoxTests::testTime()
         // Allow a small delay to get a different timestamp on next iteration.
         sleep(0);
     }
+}
+
+void WhiteBoxTests::testClockAsString()
+{
+    // This test depends on locale and timezone.
+    // It is only here to test changes to these functions,
+    // but the tests can't be run elsewhere.
+    // I left them here to avoid recreating them when needed.
+#if 0
+    const auto steady_tp = std::chrono::steady_clock::time_point(
+        std::chrono::steady_clock::duration(std::chrono::nanoseconds(295708311764285)));
+    LOK_ASSERT_EQUAL(std::string("Sat Feb 12 18:58.889 2022"),
+                     Util::getSteadyClockAsString(steady_tp));
+
+    const auto sys_tp = std::chrono::system_clock::time_point(
+        std::chrono::system_clock::duration(std::chrono::nanoseconds(1644764467739980124)));
+    LOK_ASSERT_EQUAL(std::string("Sat Feb 12 18:58.889 2022"),
+                     Util::getSystemClockAsString(sys_tp));
+#endif
 }
 
 void WhiteBoxTests::testBufferClass()
