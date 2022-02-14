@@ -422,8 +422,6 @@
 	border: 1px solid var(--color-border);
 	border-radius: var(--border-radius);
 	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
-	-webkit-box-shadow: 0 0 3px var(--color-border);
-	box-shadow: 0 0 3px var(--color-border);
 }
 
 #stylesview .ui-iconview-entry {
