@@ -1218,6 +1218,10 @@ int main(int argc, char**argv)
     /// Convert time from ISO8061 fraction format
     std::chrono::system_clock::time_point iso8601ToTimestamp(const std::string& iso8601Time, const std::string& logName);
 
+    /// Converts from system_clock to string for debugging / tracing.
+    /// Format (local time): Thu Jan 27 03:45:27.123 2022
+    std::string getSystemClockAsString(const std::chrono::system_clock::time_point &time);
+
     /// conversion from steady_clock for debugging / tracing
     /// Format (local time): Thu Jan 27 03:45:27.123 2022
     std::string getSteadyClockAsString(const std::chrono::steady_clock::time_point &time);
