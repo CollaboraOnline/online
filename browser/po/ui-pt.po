@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-10 10:29+0100\n"
-"PO-Revision-Date: 2022-01-16 22:54+0000\n"
-"Last-Translator: ssantos <ssantos@web.de>\n"
+"PO-Revision-Date: 2022-02-11 21:22+0000\n"
+"Last-Translator: SC <lalocas@protonmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/"
 "collabora-online/ui/pt/>\n"
-"Language: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -925,7 +925,7 @@ msgstr "~Desenho"
 #: src/control/Control.NotebookbarImpress.js:116
 #: src/control/Control.NotebookbarWriter.js:60
 msgid "~View"
-msgstr ""
+msgstr "~Ver"
 
 #: src/control/Control.NotebookbarCalc.js:59
 #: src/control/Control.NotebookbarDraw.js:109
@@ -1049,7 +1049,7 @@ msgstr "Eliminar colunas"
 #: src/control/Control.NotebookbarImpress.js:303
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Toggle Status Bar"
-msgstr ""
+msgstr "Alternar barra de estado"
 
 #: src/control/Control.NotebookbarDraw.js:45
 #: src/control/Control.NotebookbarDraw.js:729
@@ -1102,7 +1102,7 @@ msgstr "Título"
 
 #: src/control/Control.NotebookbarWriter.js:973
 msgid "Toggle Ruler"
-msgstr ""
+msgstr "Alternar régua"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1246,7 +1246,7 @@ msgstr "Mover folha para a direita"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr "Copiar folha ..."
+msgstr "Copiar folha..."
 
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
@@ -1353,7 +1353,7 @@ msgstr "Continuar a editar"
 
 #: src/control/Permission.js:167
 msgid "Continue read only"
-msgstr "Continuar somente leitura"
+msgstr "Continuar no modo de leitura"
 
 #: src/control/Permission.js:170
 msgid ""
