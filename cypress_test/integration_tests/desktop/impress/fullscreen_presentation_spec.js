@@ -1,4 +1,4 @@
-/* global describe it cy require afterEach Cypress */
+/* global describe it cy require afterEach Cypress expect */
 
 var helper = require('../../common/helper');
 var desktopHelper = require('../../common/desktop_helper');
@@ -86,4 +86,116 @@ describe('Fullscreen Presentation.', function() {
 		getSlideShowContent().find('#id1 > .Page > .SlideBackground > .Background')
 			.should('have.attr', 'id', 'bg-id1');
 	});
+
+	it('Leading spaces shorter than a text line.', function() {
+		before('white-spaces.odp');
+
+		cy.wait(3000);
+
+		getSlideShowContent().find('#id8 > .SVGTextShape > .TextParagraph > .TextPosition')
+			.as('textLines')
+			.should('contain', '2');
+
+		getSlideShowContent().get('@textLines').eq(0).find('tspan').first()
+			.should('have.text', '    ')
+			.then((spaces) => {
+				const spacesLength = spaces.prop('textLength').baseVal.valueAsString;
+				getSlideShowContent().get('@textLines').eq(1).find('tspan').first()
+					.should('have.text', '1234')
+					.then((template) => {
+						const templateLength = template.prop('textLength').baseVal.valueAsString;
+						expect(spacesLength).to.eq(templateLength);
+					});
+			});
+	});
+
+	it('Leading spaces as long as a text line.', function() {
+		before('white-spaces.odp');
+
+		cy.wait(3000);
+
+		getSlideShowContent().find('#id10 > .SVGTextShape > .TextParagraph > .TextPosition')
+			.as('textLines')
+			.should('contain', '2');
+
+		getSlideShowContent().get('@textLines').eq(0).find('tspan').first()
+			.then((spaces) => {
+				expect(spaces).to.have.prop('textContent').match(/ +/);
+				const spacesLength = spaces.prop('textLength').baseVal.value;
+				getSlideShowContent().get('@textLines').eq(1).find('tspan').first()
+					.should('have.text', '1234567890')
+					.then((template) => {
+						const templateLength = template.prop('textLength').baseVal.value;
+						expect(spacesLength).to.be.gte(templateLength);
+						const textX = parseFloat(this.textLines[1].getAttribute('x'));
+						expect(template.get(0).getBBox().x).to.be.closeTo(textX, 0.001);
+					});
+			});
+	});
+
+	it('Leading spaces longer than a text line.', function() {
+		before('white-spaces.odp');
+
+		cy.wait(3000);
+
+		getSlideShowContent().find('#id12 > .SVGTextShape > .TextParagraph > .TextPosition')
+			.as('textLines')
+			.should('contain', '3');
+
+		getSlideShowContent().get('@textLines').eq(1).find('tspan').first()
+			.should('have.text', '    ')
+			.then((spaces) => {
+				const spacesLength = spaces.prop('textLength').baseVal.valueAsString;
+				getSlideShowContent().get('@textLines').eq(2).find('tspan').first()
+					.should('have.text', '1234')
+					.then((template) => {
+						const templateLength = template.prop('textLength').baseVal.valueAsString;
+						expect(spacesLength).to.eq(templateLength);
+					});
+			});
+	});
+
+	it('Internal spaces up to the end of the line.', function() {
+		before('white-spaces.odp');
+
+		cy.wait(3000);
+
+		getSlideShowContent().find('#id14 > .SVGTextShape > .TextParagraph > .TextPosition')
+			.as('textLines')
+			.should('contain', '2');
+
+		getSlideShowContent().get('@textLines').eq(0).find('tspan').first()
+			.then((spaces) => {
+				expect(spaces).to.have.prop('textContent').match(/1 +/);
+				getSlideShowContent().get('@textLines').eq(1).find('tspan').first()
+					.should('have.text', '1234567890')
+					.then((template) => {
+						const textX = parseFloat(this.textLines[1].getAttribute('x'));
+						expect(template.get(0).getBBox().x).to.be.closeTo(textX, 0.001);
+					});
+			});
+	});
+
+	it('Internal spaces crossing two lines.', function() {
+		before('white-spaces.odp');
+
+		cy.wait(3000);
+
+		getSlideShowContent().find('#id16 > .SVGTextShape > .TextParagraph > .TextPosition')
+			.as('textLines')
+			.should('contain', '3');
+
+		getSlideShowContent().get('@textLines').eq(1).find('tspan').first()
+			.should('have.text', '    567890')
+			.then((spaces) => {
+				const spacesLength = spaces.prop('textLength').baseVal.valueAsString;
+				getSlideShowContent().get('@textLines').eq(2).find('tspan').first()
+					.should('have.text', '1234567890')
+					.then((template) => {
+						const templateLength = template.prop('textLength').baseVal.valueAsString;
+						expect(spacesLength).to.eq(templateLength);
+					});
+			});
+	});
+
 });
