@@ -20,16 +20,20 @@ L.Map.Welcome = L.Handler.extend({
 	addHooks: function () {
 		L.DomEvent.on(window, 'message', this.onMessage, this);
 		this.remove();
+
+		this._iframeWelcome = L.iframeDialog(this._url, null, null, { prefix: 'iframe-welcome' });
 	},
 
 	onStatusIndicator: function (e) {
 		if (e.statusType === 'alltilesloaded' && this.shouldWelcome()) {
-			this._map.off('statusindicator', this.onStatusIndicator, this);
-			this.showWelcomeDialog();
+			//this._map.showWelcomeDialog();
 		}
 	},
 
 	shouldWelcome: function() {
+		if (!window.isLocalStorageAllowed || !window.enableWelcomeMessage)
+			return false;
+
 		var storedVersion = localStorage.getItem('WSDWelcomeVersion');
 		var currentVersion = app.socket.WSDServer.Version;
 		var welcomeDisabledCookie = localStorage.getItem('WSDWelcomeDisabled');
@@ -55,20 +59,13 @@ L.Map.Welcome = L.Handler.extend({
 		return false;
 	},
 
-	showWelcomeDialog: function() {
-		if (this._iframeWelcome && this._iframeWelcome.queryContainer())
-			this.remove();
-
-		this._iframeWelcome = L.iframeDialog(this._url, null, null, { prefix: 'iframe-welcome' });
-	},
-
 	removeHooks: function () {
 		L.DomEvent.off(window, 'message', this.onMessage, this);
 		this.remove();
 	},
 
 	remove: function () {
-		if (this._iframeWelcome) {
+		if (this._iframeWelcome && this._iframeWelcome.hasLoaded()) {
 			this._iframeWelcome.remove();
 			delete this._iframeWelcome;
 		}
@@ -80,18 +77,12 @@ L.Map.Welcome = L.Handler.extend({
 		if (data === 'welcome-show') {
 			this._iframeWelcome.show();
 		} else if (data === 'welcome-close') {
-			localStorage.setItem('WSDWelcomeVersion', app.socket.WSDServer.Version);
-			this.remove();
-		} else if (data == 'iframe-welcome-load' && !this._iframeWelcome.isVisible()) {
-			var currentDate = new Date();
-			localStorage.setItem('WSDWelcomeDisabled', 'true');
-			localStorage.setItem('WSDWelcomeDisabledDate', currentDate.toDateString());
 			this.remove();
 		}
 	}
 });
 
-if (window.enableWelcomeMessage && window.feedbackLocation && window.isLocalStorageAllowed) {
+if (window.feedbackLocation && window.isLocalStorageAllowed) {
 	L.Map.addInitHook('addHandler', 'welcome', L.Map.Welcome);
 }
 
