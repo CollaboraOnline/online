@@ -92,7 +92,7 @@ L.Map.Welcome = L.Handler.extend({
 				var currentDate = new Date();
 				localStorage.setItem('WSDWelcomeDisabled', 'true');
 				localStorage.setItem('WSDWelcomeDisabledDate', currentDate.toDateString());
-				this.remove();
+				this._iframeWelcome.show();
 			} else {
 				// fallback
 				var welcomeLocation = 'welcome/welcome-' + String.locale + '.html';
