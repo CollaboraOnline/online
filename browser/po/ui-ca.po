@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-10 10:29+0100\n"
-"PO-Revision-Date: 2022-01-21 21:44+0000\n"
+"PO-Revision-Date: 2022-02-11 21:22+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
-"Language: \n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -851,23 +851,23 @@ msgstr "Insereix una imatge local"
 
 #: src/control/Control.NotebookbarBuilder.js:660
 msgid "Very Tight"
-msgstr ""
+msgstr "Molt estret"
 
 #: src/control/Control.NotebookbarBuilder.js:661
 msgid "Tight"
-msgstr ""
+msgstr "Estret"
 
 #: src/control/Control.NotebookbarBuilder.js:662
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: src/control/Control.NotebookbarBuilder.js:663
 msgid "Loose"
-msgstr ""
+msgstr "Ample"
 
 #: src/control/Control.NotebookbarBuilder.js:664
 msgid "Very Loose"
-msgstr ""
+msgstr "Molt ample"
 
 #: src/control/Control.NotebookbarCalc.js:12
 #: src/control/Control.NotebookbarDraw.js:61
@@ -926,7 +926,7 @@ msgstr "~Dibuix"
 #: src/control/Control.NotebookbarImpress.js:116
 #: src/control/Control.NotebookbarWriter.js:60
 msgid "~View"
-msgstr ""
+msgstr "~Visualitza"
 
 #: src/control/Control.NotebookbarCalc.js:59
 #: src/control/Control.NotebookbarDraw.js:109
@@ -1050,7 +1050,7 @@ msgstr "Suprimeix les columnes"
 #: src/control/Control.NotebookbarImpress.js:303
 #: src/control/Control.NotebookbarWriter.js:984
 msgid "Toggle Status Bar"
-msgstr ""
+msgstr "Activa o desactiva la barra d'estat"
 
 #: src/control/Control.NotebookbarDraw.js:45
 #: src/control/Control.NotebookbarDraw.js:729
@@ -1103,7 +1103,7 @@ msgstr "Títol"
 
 #: src/control/Control.NotebookbarWriter.js:973
 msgid "Toggle Ruler"
-msgstr ""
+msgstr "Activa o desactiva el regle"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1886,6 +1886,8 @@ msgstr ""
 msgid ""
 "Document cannot be exported. Please contact the storage server administrator."
 msgstr ""
+"No s'ha pogut exportar el document. Poseu-vos en contacte amb els "
+"administradors del servidor d'emmagatzematge."
 
 #: src/errormessages.js:50
 msgid "Uploading file to server failed, file not found."
