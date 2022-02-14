@@ -923,7 +923,8 @@ class CommentSection {
 			this.showHideComment(annotation);
 		}
 		else {
-			this.containerObject.addSection(annotation);
+			if (!this.containerObject.addSection(annotation))
+				return;
 			this.sectionProperties.commentList.push(annotation);
 		}
 
@@ -1699,7 +1700,8 @@ class CommentSection {
 					comment.avatar = this.map._viewInfoByUserName[comment.author].userextrainfo.avatar;
 				}
 				var commentSection = new app.definitions.Comment(comment, {}, this);
-				this.containerObject.addSection(commentSection);
+				if (!this.containerObject.addSection(commentSection))
+					continue;
 				this.sectionProperties.commentList.push(commentSection);
 				this.idIndexMap.set(commentSection.sectionProperties.data.id, i);
 				this.updateResolvedState(this.sectionProperties.commentList[i]);
