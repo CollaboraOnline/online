@@ -8,11 +8,11 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-10 10:29+0100\n"
-"PO-Revision-Date: 2022-01-21 21:44+0000\n"
+"PO-Revision-Date: 2022-02-11 21:22+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Asturian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/ast/>\n"
-"Language: \n"
+"Language: ast\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -876,7 +876,7 @@ msgstr "~Ficheru"
 #: src/control/Control.NotebookbarImpress.js:78
 #: src/control/Control.NotebookbarWriter.js:17
 msgid "~Home"
-msgstr ""
+msgstr "~Aniciu"
 
 #: src/control/Control.NotebookbarCalc.js:23
 #: src/control/Control.NotebookbarDraw.js:72
@@ -929,7 +929,7 @@ msgstr ""
 #: src/control/Control.NotebookbarImpress.js:121
 #: src/control/Control.NotebookbarWriter.js:65
 msgid "~Help"
-msgstr ""
+msgstr "Ay~uda"
 
 #: src/control/Control.NotebookbarCalc.js:104
 #: src/control/Control.NotebookbarDraw.js:154
@@ -1851,7 +1851,7 @@ msgstr "Funciones"
 
 #: src/layer/tile/CanvasTileLayer.js:4939
 msgid "No Comments"
-msgstr ""
+msgstr "Ensin comentarios"
 
 #: src/layer/tile/CommentListSection.ts:778
 msgid "Modify"
