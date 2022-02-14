@@ -1,36 +1,18 @@
-<?xml-stylesheet type="text/css" href="icons.css" ?>
 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-  <g id="background"
-     class="icn icn--area-color"
-     fill="#fafafa"
-     stroke="#3a3a38"
-     stroke-linecap="round"
-     stroke-linejoin="round"
-     transform="matrix(0,1,1,0,0,0)"
-     >
-      <path d="m 4.5,21.5 h 15 V 7 L 15,2.5 H 4.5 Z" />
-      <path d="m 14.5,7.5 h 5 V 7 L 15,2.5 h -0.5 z" />
-  </g>
-  <g id="symbol-background"
-	 class="icn icn--background"
-     stroke="#fff" 
-     stroke-width="3px"
-	 stroke-linecap="round" 
-	 stroke-linejoin="round"
-      >
-      <path d="m 10.5,22.5 5,-2 -3,-3 z" />
-      <path d="m 15.5,20.5 5,-5 -3,-3 -5,5 z" />
-      <path d="m 22.5,13.5 -2,2 -3,-3 2,-2 z" />
-  </g>
-  <g id="symbol"
-	 class="icn icn--highlight-color"  
-     fill="#83beec" 
-     stroke="#1e8bcd" 
-	 stroke-linecap="round" 
-	 stroke-linejoin="round"
-      >
-      <path d="m 10.5,22.5 5,-2 -3,-3 z" />
-      <path d="m 15.5,20.5 5,-5 -3,-3 -5,5 z" />
-      <path d="m 22.5,13.5 -2,2 -3,-3 2,-2 z" />
-  </g>
+  <path
+     style="fill:#ffffff"
+     d="M 3 4 L 3 20 L 21 20 L 21 4 L 3 4 z " />
+  <path
+     d="m 7,14.5 a 0.5,0.5 0 0 1 0.2,-0.4 l 3,-3 a 0.5,0.5 0 1 1 0.7,0.7 l -2.1,2.1 5.8,0 a 0.5,0.5 0 1 1 0,1 l -5.8,-0 2.1,2.1 a 0.5,0.5 0 1 1 -0.7,0.7 L 7.2,14.9 a 0.5,0.5 0 0 1 -0.2,-0.4 z"
+     fill="#1e8bcd"
+     />
+  <path
+     style="fill:#3a3a38"
+     d="M 3 3 C 2.446 3 2 3.446 2 4 L 2 20 C 2 20.554 2.446 21 3 21 L 21 21 C 21.554 21 22 20.554 22 20 L 22 4 C 22 3.446 21.554 3 21 3 L 3 3 z M 3 4 L 21 4 L 21 20 L 3 20 L 3 4 z " />
+  <path
+     style="fill:#1e8bcd"
+     d="M 17 3 C 16.446 3 16 3.446 16 4 L 16 20 C 16 20.554 16.446 21 17 21 L 21 21 C 21.554 21 22 20.554 22 20 L 22 4 C 22 3.446 21.554 3 21 3 L 17 3 z M 17 4 L 21 4 L 21 20 L 17 20 L 17 4 z " />
+  <path
+     style="fill:#83beec"
+     d="M 17 4 L 17 20 L 21 20 L 21 4 L 17 4 z " />
 </svg>
