@@ -100,48 +100,25 @@
 	height: 4px;
 	border-radius: 2px;
 	filter: none !important;
-	background: #f12131;
-	box-shadow: 0 0 2px 2px #efefef;
+	background: var(--color-warning);
+	box-shadow: 0 0 2px 2px var(--color-main-background);
 	position: absolute;
 	top: 8px;
 	margin-left: 11px;
 }
 
-.hasnotebookbar.spreadsheet-color-indicator #table-shortcutstoolbox .unotoolbutton:not(.integrator-shortcut) img {
-	-webkit-filter: hue-rotate(290deg);
-	filter: hue-rotate(290deg);
-}
-
-.hasnotebookbar.presentation-color-indicator #table-shortcutstoolbox .unotoolbutton:not(.integrator-shortcut) img {
-	-webkit-filter: hue-rotate(190deg);
-	filter: hue-rotate(190deg);
-}
-
-.hasnotebookbar.drawing-color-indicator #table-shortcutstoolbox .unotoolbutton:not(.integrator-shortcut) img {
-	-webkit-filter: hue-rotate(210deg);
-	filter: hue-rotate(210deg);
-}
-
-.hasnotebookbar #table-shortcutstoolbox .unotoolbutton.savemodified:not(.integrator-shortcut) img {
-	filter: hue-rotate(508deg) contrast(1.5);
-}
-
-/* Hamburger icon: from shortcutsbar (notebookbar) */
-.hasnotebookbar.text-color-indicator #shortcuts-menubar-icon {
-	background: rgb(3, 105, 163);
-	background: rgb(var(--blue1-txt-primary-color));
-}
-.hasnotebookbar.spreadsheet-color-indicator #shortcuts-menubar-iconr {
-	background: rgb(16, 104, 2);
-	background: rgb(var(--green0-txt-primary-color));
-}
-.hasnotebookbar.presentation-color-indicator #shortcuts-menubar-icon {
-	background: rgb(163, 62, 3);
-	background: rgb(var(--orange1-txt-primary-color));
-}
-.hasnotebookbar.drawing-color-indicator #shortcuts-menubar-icon {
-	background: rgb(135, 105, 0);
-	background: rgb(var(--yellow0-txt-primary-color));
+#Save1.savemodified:after {
+	content: '';
+	display: block;
+	width: 9px;
+	height: 9px;
+	border-radius: 6px;
+	filter: none !important;
+	background: var(--color-warning);
+	box-shadow: 0 0 2px 2px var(--color-main-background);
+	position: absolute;
+	top: 14px;
+	margin-left: 48px;
 }
 
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar,

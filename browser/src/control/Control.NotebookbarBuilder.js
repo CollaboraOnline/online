@@ -245,9 +245,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		}
 		else if (commandName === '.uno:ModifiedStatus') {
 			if (e.state === 'true') {
+				$('#Save1').addClass('savemodified');
 				$('#Save').addClass('savemodified');
 			}
 			else {
+				$('#Save1').removeClass('savemodified');
 				$('#Save').removeClass('savemodified');
 			}
 		}
