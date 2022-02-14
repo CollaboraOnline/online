@@ -287,6 +287,7 @@ L.Control.Menubar = L.Control.extend({
 						{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 				]},
 				{uno: '.uno:WordCountDialog'},
+				{uno: '.uno:AccessibilityCheck'},
 				{type: 'separator'},
 				{name: _UNO('.uno:AutoFormatMenu', 'text'), type: 'menu', menu: [
 					{uno: '.uno:OnlineAutoFormat'}]},
