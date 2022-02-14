@@ -566,10 +566,11 @@ void LockContext::dumpState(std::ostream& os) const
 {
     if (!_supportsLocks)
         return;
-    os << "  lock:"
-          "\n    locked: " << _isLocked;
-    os << "\n    token: '" << _lockToken;
-    os << "\n    last locked: " << Util::getSteadyClockAsString(_lastLockTime) << '\n';
+
+    os << "\n  LockContext:";
+    os << "\n    locked: " << _isLocked;
+    os << "\n    token: " << _lockToken;
+    os << "\n    last locked: " << Util::getSteadyClockAsString(_lastLockTime);
 }
 
 #if !MOBILEAPP

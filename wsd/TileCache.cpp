@@ -672,7 +672,8 @@ void TileCache::TileBeingRendered::dumpState(std::ostream& os)
 
 void TileCache::dumpState(std::ostream& os)
 {
-    os << "  tile cache: num: " << _cache.size() << " size: " << _cacheSize << " bytes\n";
+    os << "\n  TileCache:";
+    os << "\n    num: " << _cache.size() << " size: " << _cacheSize << " bytes\n";
     for (const auto& it : _cache)
     {
         os << "    " << std::setw(4) << it.first.getWireId()
@@ -691,7 +692,7 @@ void TileCache::dumpState(std::ostream& os)
             size += it.second->size();
         }
 
-        os << "  stream cache: " << type++ << " num: " << num << " size: " << size << " bytes\n";
+        os << "    stream cache: " << type++ << " num: " << num << " size: " << size << " bytes\n";
         for (const auto& it : i)
         {
             os << "    " << it.first
@@ -699,7 +700,7 @@ void TileCache::dumpState(std::ostream& os)
         }
     }
 
-    os << "  tiles being rendered " << _tilesBeingRendered.size() << '\n';
+    os << "    tiles being rendered " << _tilesBeingRendered.size() << '\n';
     for (const auto& it : _tilesBeingRendered)
         it.second->dumpState(os);
 }

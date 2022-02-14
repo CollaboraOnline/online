@@ -43,8 +43,6 @@ struct LockContext;
 class TileCache;
 class Message;
 
-#include "COOLWSD.hpp"
-
 /// A ChildProcess object represents a Kit process that hosts a document and manipulates the
 /// document using the LibreOfficeKit API. It isn't actually a child of the WSD process, but a
 /// grandchild. The comments loosely talk about "child" anyway.
@@ -284,8 +282,6 @@ public:
     bool attemptLock(const ClientSession& session, std::string& failReason);
 
     bool isDocumentChangedInStorage() { return _documentChangedInStorage; }
-
-    bool isLastStorageUploadSuccessful() { return _storageManager.lastUploadSuccessful(); }
 
     /// Invoked by the client to rename the document filename.
     /// Returns an error message in case of failure, otherwise an empty string.
@@ -694,9 +690,6 @@ private:
         /// The last time we received a response.
         std::chrono::steady_clock::time_point _lastResponseTime;
 
-        /// The document's last-modified time.
-        std::chrono::system_clock::time_point _modifiedTime;
-
         /// Counts the number of previous request that failed.
         /// Note that this is interpretted by the request in question.
         /// For example, Core's Save operation turns 'false' for success
@@ -765,7 +758,6 @@ private:
         void setLastSaveResult(bool success) { _request.setLastRequestResult(success); }
 
         /// Returns the last save request time.
-        /// TODO: Remove: temporary for logging only.
         std::chrono::steady_clock::time_point lastSaveRequestTime() const
         {
             return _request.lastRequestTime();
@@ -775,17 +767,22 @@ private:
         void markLastSaveResponseTime() { _request.markLastResponseTime(); }
 
         /// Returns the last save response time.
-        /// TODO: Remove: temporary for logging only.
         std::chrono::steady_clock::time_point lastSaveResponseTime() const
         {
             return _request.lastResponseTime();
         }
 
         /// Set the last modified time of the document.
-        void setLastModifiedTime(std::chrono::system_clock::time_point time) { _modifiedTime = time; }
+        void setLastModifiedTime(std::chrono::system_clock::time_point time)
+        {
+            _lastModifiedTime = time;
+        }
 
         /// Returns the last modified time of the document.
-        std::chrono::system_clock::time_point getLastModifiedTime() const { return _modifiedTime; }
+        std::chrono::system_clock::time_point getLastModifiedTime() const
+        {
+            return _lastModifiedTime;
+        }
 
         /// True iff a save is in progress (requested but not completed).
         bool isSaving() const { return _request.isActive(); }
@@ -809,12 +806,36 @@ private:
             return _request.timeSinceLastResponse();
         }
 
+        void dumpState(std::ostream& os, const std::string& indent = "\n  ")
+        {
+            os << indent << "isSaving now: " << std::boolalpha << isSaving();
+            os << indent << "auto-save enabled: " << std::boolalpha << _isAutosaveEnabled;
+            os << indent << "auto-save interval: " << _autosaveInterval;
+            os << indent << "last auto-save check time: "
+               << Util::getSteadyClockAsString(_lastAutosaveCheckTime);
+            os << indent << "auto-save check needed: " << std::boolalpha << needAutosaveCheck();
+
+            os << indent
+               << "last save request: " << Util::getSteadyClockAsString(lastSaveRequestTime());
+            os << indent
+               << "last save response: " << Util::getSteadyClockAsString(lastSaveResponseTime());
+
+            os << indent << "since last save request: " << timeSinceLastSaveRequest();
+            os << indent << "since last save response: " << timeSinceLastSaveResponse();
+
+            os << indent
+               << "file last modified time: " << Util::getSystemClockAsString(_lastModifiedTime);
+            os << indent << "last save timed-out: " << std::boolalpha << hasSavingTimedOut();
+            os << indent << "last save successful: " << lastSaveSuccessful();
+            os << indent << "save failure count: " << saveFailureCount();
+        }
+
     private:
         /// Request tracking logic.
         RequestManager _request;
 
         /// The document's last-modified time.
-        std::chrono::system_clock::time_point _modifiedTime;
+        std::chrono::system_clock::time_point _lastModifiedTime;
 
         /// The number of seconds between autosave checks for modification.
         const std::chrono::seconds _autosaveInterval;
@@ -910,6 +931,18 @@ private:
 
         /// Returns the last modified time of the document.
         const std::string& getLastModifiedTime() const { return _lastModifiedTime; }
+
+        void dumpState(std::ostream& os, const std::string& indent = "\n  ")
+        {
+            os << indent
+               << "last upload time: " << Util::getSteadyClockAsString(getLastUploadTime());
+            os << indent << "last upload was successful: " << lastUploadSuccessful();
+            os << indent << "upload failure count: " << uploadFailureCount();
+            os << indent << "last modified time: " << _lastModifiedTime;
+            os << indent << "last upload time: " << Util::getSteadyClockAsString(_lastUploadTime);
+            os << indent << "file last modified: "
+               << Util::getSystemClockAsString(_lastUploadedFileModifiedTime);
+        }
 
     private:
         /// Request tracking logic.
@@ -1076,6 +1109,15 @@ private:
         /// Flag to unload the document. May be reset when a new view is opened.
         void setUnloadRequested() { _unloadRequested = true; }
         bool isUnloadRequested() const { return _unloadRequested; }
+
+        void dumpState(std::ostream& os, const std::string& indent = "\n  ")
+        {
+            os << indent << "doc state: " << toString(status());
+            os << indent << "doc activity: " << toString(activity());
+            os << indent << "doc loaded: " << _loaded;
+            os << indent << "interactive: " << _interactive;
+            os << indent << "unload requested: " << _unloadRequested;
+        }
 
     private:
         Status _status;
