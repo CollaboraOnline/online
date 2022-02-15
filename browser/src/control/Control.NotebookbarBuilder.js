@@ -245,9 +245,11 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		}
 		else if (commandName === '.uno:ModifiedStatus') {
 			if (e.state === 'true') {
+				$('#Save1').addClass('savemodified');
 				$('#Save').addClass('savemodified');
 			}
 			else {
+				$('#Save1').removeClass('savemodified');
 				$('#Save').removeClass('savemodified');
 			}
 		}
@@ -794,7 +796,26 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		var menu = {
 			text: [
 				{id: 'nb-hamburger', name: _('Menu'), type: 'menu', menu: [
+					{uno: '.uno:SelectAll'},
+					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
+					{type: 'separator'},
+					{name: _UNO('.uno:ChangesMenu', 'text'), id: 'changesmenu', type: 'menu', menu: [
+						{uno: '.uno:TrackChanges'},
+						{uno: '.uno:ShowTrackedChanges'},
+						{type: 'separator'},
+						{uno: '.uno:AcceptTrackedChanges'},
+						{uno: '.uno:AcceptAllTrackedChanges'},
+						{uno: '.uno:RejectAllTrackedChanges'},
+						{uno: '.uno:PreviousTrackedChange'},
+						{uno: '.uno:NextTrackedChange'}
+					]},
+					{uno: '.uno:SearchDialog'},
+					{type: 'separator'},
+					{name: _('Repair'), id: 'repair',  type: 'action'},
 					{name: _UNO('.uno:ToolsMenu', 'text'), id: 'tools', type: 'menu', menu: [
+						{uno: '.uno:SpellingAndGrammarDialog'},
+						{uno: '.uno:SpellOnline'},
+						{uno: '.uno:ThesaurusDialog'},
 						{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 							{name: _UNO('.uno:SetLanguageSelectionMenu', 'text'), type: 'menu', menu: [
 								{name: _('None (Do not check spelling)'), id: 'noneselection', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}]},
@@ -803,6 +824,8 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 							{name: _UNO('.uno:SetLanguageAllTextMenu', 'text'), type: 'menu', menu: [
 								{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
 						]},
+						{uno: '.uno:WordCountDialog'},
+						{uno: '.uno:LineNumberingDialog'},
 						{type: 'separator'},
 						{uno: '.uno:RunMacro', hidden: disabledMacros},
 						{type: 'separator', hidden: disabledMacros},
@@ -813,9 +836,17 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			],
 			spreadsheet: [
 				{id: 'nb-hamburger', name: _('Menu'), type: 'menu', menu: [
+					{uno: '.uno:SelectAll'},
+					{type: 'separator'},
+					{uno: '.uno:SearchDialog'},
+					{type: 'separator'},
+					{name: _('Repair'), id: 'repair',  type: 'action'},
 					{name: _UNO('.uno:ToolsMenu', 'spreadsheet'), id: 'tools', type: 'menu', menu: [
+						{uno: '.uno:SpellDialog'},
+						{uno: '.uno:SpellOnline'},
 						{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 							{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
+						{uno: '.uno:GoalSeekDialog'},
 						{type: 'separator', hidden: disabledMacros},
 						{uno: '.uno:RunMacro', hidden: disabledMacros}
 					]}
@@ -823,7 +854,21 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			],
 			presentation: [
 				{id: 'nb-hamburger', name: _('Menu'), type: 'menu', menu: [
+					{uno: '.uno:SelectAll'},
+					{type: 'separator'},
+					{uno: '.uno:SlideMasterPage'},
+					{type: 'separator'},
+					{uno: '.uno:ModifyPage'},
+					{uno: '.uno:SlideChangeWindow'},
+					{uno: '.uno:CustomAnimation'},
+					{uno: '.uno:MasterSlidesPanel'},
+					{type: 'separator'},
+					{uno: '.uno:SearchDialog'},
+					{type: 'separator'},
+					{name: _('Repair'), id: 'repair',  type: 'action'},
 					{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
+						{uno: '.uno:SpellDialog'},
+						{uno: '.uno:SpellOnline'},
 						{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 							{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
 						{type: 'separator', hidden: disabledMacros},
@@ -834,7 +879,12 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 			drawing: [
 				{id: 'nb-hamburger', name: _('Menu'), type: 'menu', menu: [
 					{type: 'separator'},
+					{uno: '.uno:SearchDialog'},
+					{type: 'separator'},
+					{name: _('Repair'), id: 'repair',  type: 'action'},
 					{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
+						{uno: '.uno:SpellDialog'},
+						{uno: '.uno:SpellOnline'},
 						{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
 							{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
 					]},
