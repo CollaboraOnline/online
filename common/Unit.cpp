@@ -7,12 +7,13 @@
 
 #include <config.h>
 
-#include <iostream>
 #include "Unit.hpp"
 
+#include <iostream>
 #include <cassert>
 #include <dlfcn.h>
 #include <fstream>
+#include <sstream>
 #include <sysexits.h>
 #include <thread>
 
@@ -271,11 +272,11 @@ void UnitBase::exitTest(TestResult result)
     }
 
     if (result == TestResult::Ok)
-        LOG_INF(getTestname() << ": SUCCESS: exitTest: " << testResultAsString(result)
+        LOG_TST(getTestname() << ": SUCCESS: exitTest: " << testResultAsString(result)
                               << ". Flagging to shutdown.");
     else
-        LOG_ERR(getTestname() << ": FAILURE: exitTest: " << testResultAsString(result)
-                              << ". Flagging to shutdown.");
+        LOG_TST("ERROR " << getTestname() << ": FAILURE: exitTest: " << testResultAsString(result)
+                         << ". Flagging to shutdown.");
 
     _setRetValue = true;
     _retValue = result == TestResult::Ok ? EX_OK : EX_SOFTWARE;

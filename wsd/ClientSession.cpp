@@ -27,7 +27,6 @@
 #include <common/Clipboard.hpp>
 #include <common/Session.hpp>
 #include <common/TraceEvent.hpp>
-#include <common/Unit.hpp>
 #include <common/Util.hpp>
 #if !MOBILEAPP
 #include <net/HttpHelper.hpp>

@@ -16,7 +16,6 @@
 
 #include "Util.hpp"
 #include "Log.hpp"
-#include "Unit.hpp"
 #include "UnitHTTP.hpp"
 #include "helpers.hpp"
 #include "lokassert.hpp"
