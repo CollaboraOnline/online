@@ -223,22 +223,6 @@ public:
     /// Return true to stop further handling of messages.
     virtual bool onDocumentError(const std::string&) { return false; }
 
-    /// Called when a DocumentBroker is created (from the constructor).
-    /// Useful to detect track the beginning of a document's life cycle.
-    virtual void onDocBrokerCreate(const std::string&) {}
-
-    /// Called when a new client session is added to a DocumentBroker.
-    virtual void onDocBrokerAddSession(const std::string&, const std::shared_ptr<ClientSession>&) {}
-
-    /// Called when a client session is removed to a DocumentBroker.
-    virtual void onDocBrokerRemoveSession(const std::string&, const std::shared_ptr<ClientSession>&)
-    {
-    }
-
-    /// Called when a DocumentBroker is destroyed (from the destructor).
-    /// Useful to detect when unloading was clean and to (re)load again.
-    virtual void onDocBrokerDestroy(const std::string&) {}
-
     /// If the test times out this gets invoked, the default just exits.
     virtual void timeout();
 
@@ -415,6 +399,24 @@ public:
     virtual void onAdminNotifyMessage(const std::string& /* message */) {}
     /// When admin message is sent in response to a query
     virtual void onAdminQueryMessage(const std::string& /* message */) {}
+
+    // ---------------- DocBroker events ----------------
+
+    /// Called when a DocumentBroker is created (from the constructor).
+    /// Useful to detect track the beginning of a document's life cycle.
+    virtual void onDocBrokerCreate(const std::string&) {}
+
+    /// Called when a new client session is added to a DocumentBroker.
+    virtual void onDocBrokerAddSession(const std::string&, const std::shared_ptr<ClientSession>&) {}
+
+    /// Called when a client session is removed to a DocumentBroker.
+    virtual void onDocBrokerRemoveSession(const std::string&, const std::shared_ptr<ClientSession>&)
+    {
+    }
+
+    /// Called when a DocumentBroker is destroyed (from the destructor).
+    /// Useful to detect when unloading was clean and to (re)load again.
+    virtual void onDocBrokerDestroy(const std::string&) {}
 
     // ---------------- TileCache events ----------------
     virtual void onTileCacheHit(int /*part*/, int /*width*/, int /*height*/,
