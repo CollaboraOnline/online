@@ -824,11 +824,11 @@ void parseDocSize(const std::string& message, const std::string& type,
     height = std::stoi(tokens[4].substr(std::string("height=").size()));
     viewid = std::stoi(tokens[5].substr(std::string("viewid=").size()));
     LOK_ASSERT_EQUAL(type, text);
-    CPPUNIT_ASSERT(parts > 0);
-    CPPUNIT_ASSERT(part >= 0);
-    CPPUNIT_ASSERT(width > 0);
-    CPPUNIT_ASSERT(height > 0);
-    CPPUNIT_ASSERT(viewid >= 0);
+    LOK_ASSERT(parts > 0);
+    LOK_ASSERT(part >= 0);
+    LOK_ASSERT(width > 0);
+    LOK_ASSERT(height > 0);
+    LOK_ASSERT(viewid >= 0);
 }
 
 inline std::vector<char> getTileMessage(const std::shared_ptr<http::WebSocketSession>& ws,
@@ -1046,7 +1046,7 @@ inline bool svgMatch(const char *testname, const std::vector<char> &response, co
         TST_LOG_END;
 
         FILE *of = fopen(Poco::Path(TDOC, newName).toString().c_str(), "w");
-        CPPUNIT_ASSERT(fwrite(response.data(), response.size(), 1, of) == response.size());
+        LOK_ASSERT(fwrite(response.data(), response.size(), 1, of) == response.size());
         fclose(of);
         return false;
     }

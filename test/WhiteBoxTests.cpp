@@ -1064,31 +1064,31 @@ void WhiteBoxTests::testClockAsString()
 void WhiteBoxTests::testBufferClass()
 {
     Buffer buf;
-    CPPUNIT_ASSERT_EQUAL(0UL, buf.size());
-    CPPUNIT_ASSERT_EQUAL(true, buf.empty());
-    CPPUNIT_ASSERT(buf.getBlock() == nullptr);
+    LOK_ASSERT_EQUAL(0UL, buf.size());
+    LOK_ASSERT_EQUAL(true, buf.empty());
+    LOK_ASSERT(buf.getBlock() == nullptr);
     buf.eraseFirst(buf.size());
-    CPPUNIT_ASSERT_EQUAL(0UL, buf.size());
-    CPPUNIT_ASSERT_EQUAL(true, buf.empty());
+    LOK_ASSERT_EQUAL(0UL, buf.size());
+    LOK_ASSERT_EQUAL(true, buf.empty());
 
     // Small data.
     const char data[] = "abcdefghijklmnop";
     buf.append(data, sizeof(data));
 
-    CPPUNIT_ASSERT_EQUAL(static_cast<std::size_t>(sizeof(data)), buf.size());
-    CPPUNIT_ASSERT_EQUAL(false, buf.empty());
-    CPPUNIT_ASSERT(buf.getBlock() != nullptr);
-    CPPUNIT_ASSERT_EQUAL(0, memcmp(buf.getBlock(), data, buf.size()));
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(sizeof(data)), buf.size());
+    LOK_ASSERT_EQUAL(false, buf.empty());
+    LOK_ASSERT(buf.getBlock() != nullptr);
+    LOK_ASSERT_EQUAL(0, memcmp(buf.getBlock(), data, buf.size()));
 
     // Erase one char at a time.
     for (std::size_t i = buf.size(); i > 0; --i)
     {
         buf.eraseFirst(1);
-        CPPUNIT_ASSERT_EQUAL(i - 1, buf.size());
-        CPPUNIT_ASSERT_EQUAL(i == 1, buf.empty()); // Not empty until the last element.
-        CPPUNIT_ASSERT_EQUAL(buf.getBlock() != nullptr, !buf.empty());
+        LOK_ASSERT_EQUAL(i - 1, buf.size());
+        LOK_ASSERT_EQUAL(i == 1, buf.empty()); // Not empty until the last element.
+        LOK_ASSERT_EQUAL(buf.getBlock() != nullptr, !buf.empty());
         if (!buf.empty())
-            CPPUNIT_ASSERT_EQUAL(0, memcmp(buf.getBlock(), data + (sizeof(data) - i) + 1, buf.size()));
+            LOK_ASSERT_EQUAL(0, memcmp(buf.getBlock(), data + (sizeof(data) - i) + 1, buf.size()));
     }
 
     // Large data.
@@ -1100,48 +1100,48 @@ void WhiteBoxTests::testBufferClass()
 
         const std::vector<char> dataLarge(2 * BlockSize, 'a' + i); // Block of a single char.
         buf.append(dataLarge.data(), dataLarge.size());
-        CPPUNIT_ASSERT_EQUAL(prevSize + (2 * BlockSize), buf.size());
+        LOK_ASSERT_EQUAL(prevSize + (2 * BlockSize), buf.size());
 
         // Remove half.
         buf.eraseFirst(BlockSize);
-        CPPUNIT_ASSERT_EQUAL(prevSize + BlockSize, buf.size());
-        CPPUNIT_ASSERT_EQUAL(0, memcmp(buf.getBlock() + prevSize, dataLarge.data(), BlockSize));
+        LOK_ASSERT_EQUAL(prevSize + BlockSize, buf.size());
+        LOK_ASSERT_EQUAL(0, memcmp(buf.getBlock() + prevSize, dataLarge.data(), BlockSize));
     }
 
-    CPPUNIT_ASSERT_EQUAL(BlockSize * BlockCount, buf.size());
-    CPPUNIT_ASSERT_EQUAL(false, buf.empty());
+    LOK_ASSERT_EQUAL(BlockSize * BlockCount, buf.size());
+    LOK_ASSERT_EQUAL(false, buf.empty());
 
     // Remove each block of data and test.
     for (std::size_t i = BlockCount / 2; i < BlockCount; ++i) // We removed half above.
     {
-        CPPUNIT_ASSERT_EQUAL(false, buf.empty());
-        CPPUNIT_ASSERT_EQUAL(BlockSize * 2 * (BlockCount - i), buf.size());
+        LOK_ASSERT_EQUAL(false, buf.empty());
+        LOK_ASSERT_EQUAL(BlockSize * 2 * (BlockCount - i), buf.size());
 
         const std::vector<char> dataLarge(BlockSize * 2, 'a' + i); // Block of a single char.
-        CPPUNIT_ASSERT_EQUAL(0, memcmp(buf.getBlock(), dataLarge.data(), BlockSize));
+        LOK_ASSERT_EQUAL(0, memcmp(buf.getBlock(), dataLarge.data(), BlockSize));
 
         buf.eraseFirst(BlockSize * 2);
     }
 
-    CPPUNIT_ASSERT_EQUAL(0UL, buf.size());
-    CPPUNIT_ASSERT_EQUAL(true, buf.empty());
+    LOK_ASSERT_EQUAL(0UL, buf.size());
+    LOK_ASSERT_EQUAL(true, buf.empty());
 
     // Very large data.
     const std::vector<char> dataLarge(20 * BlockSize, 'x'); // Block of a single char.
     buf.append(dataLarge.data(), dataLarge.size());
-    CPPUNIT_ASSERT_EQUAL(dataLarge.size(), buf.size());
+    LOK_ASSERT_EQUAL(dataLarge.size(), buf.size());
 
     buf.append(data, sizeof(data)); // Add small data.
-    CPPUNIT_ASSERT_EQUAL(dataLarge.size() + sizeof(data), buf.size());
+    LOK_ASSERT_EQUAL(dataLarge.size() + sizeof(data), buf.size());
 
     buf.eraseFirst(dataLarge.size()); // Remove large data.
-    CPPUNIT_ASSERT_EQUAL(sizeof(data), buf.size());
-    CPPUNIT_ASSERT_EQUAL(false, buf.empty());
-    CPPUNIT_ASSERT_EQUAL(0, memcmp(buf.getBlock(), data, buf.size()));
+    LOK_ASSERT_EQUAL(sizeof(data), buf.size());
+    LOK_ASSERT_EQUAL(false, buf.empty());
+    LOK_ASSERT_EQUAL(0, memcmp(buf.getBlock(), data, buf.size()));
 
     buf.eraseFirst(buf.size()); // Remove all.
-    CPPUNIT_ASSERT_EQUAL(0UL, buf.size());
-    CPPUNIT_ASSERT_EQUAL(true, buf.empty());
+    LOK_ASSERT_EQUAL(0UL, buf.size());
+    LOK_ASSERT_EQUAL(true, buf.empty());
 }
 
 void WhiteBoxTests::testStringVector()
@@ -1150,84 +1150,84 @@ void WhiteBoxTests::testStringVector()
     StringVector vector;
     vector.push_back("a");
     vector.push_back("b");
-    CPPUNIT_ASSERT_EQUAL(static_cast<std::size_t>(2), vector.size());
+    LOK_ASSERT_EQUAL(static_cast<std::size_t>(2), vector.size());
     auto it = vector.begin();
-    CPPUNIT_ASSERT_EQUAL(std::string("a"), vector.getParam(*it));
+    LOK_ASSERT_EQUAL(std::string("a"), vector.getParam(*it));
     ++it;
-    CPPUNIT_ASSERT_EQUAL(std::string("b"), vector.getParam(*it));
+    LOK_ASSERT_EQUAL(std::string("b"), vector.getParam(*it));
 
     // Test cat().
-    CPPUNIT_ASSERT_EQUAL(std::string("a b"), vector.cat(" ", 0));
-    CPPUNIT_ASSERT_EQUAL(std::string("a b"), vector.cat(' ', 0));
-    CPPUNIT_ASSERT_EQUAL(std::string("a*b"), vector.cat('*', 0));
-    CPPUNIT_ASSERT_EQUAL(std::string("a blah mlah b"), vector.cat(" blah mlah ", 0));
-    CPPUNIT_ASSERT_EQUAL(std::string(), vector.cat(" ", 3));
-    CPPUNIT_ASSERT_EQUAL(std::string(), vector.cat(" ", 42));
+    LOK_ASSERT_EQUAL(std::string("a b"), vector.cat(" ", 0));
+    LOK_ASSERT_EQUAL(std::string("a b"), vector.cat(' ', 0));
+    LOK_ASSERT_EQUAL(std::string("a*b"), vector.cat('*', 0));
+    LOK_ASSERT_EQUAL(std::string("a blah mlah b"), vector.cat(" blah mlah ", 0));
+    LOK_ASSERT_EQUAL(std::string(), vector.cat(" ", 3));
+    LOK_ASSERT_EQUAL(std::string(), vector.cat(" ", 42));
 
     // Test operator []().
-    CPPUNIT_ASSERT_EQUAL(std::string("a"), vector[0]);
-    CPPUNIT_ASSERT_EQUAL(std::string(""), vector[2]);
+    LOK_ASSERT_EQUAL(std::string("a"), vector[0]);
+    LOK_ASSERT_EQUAL(std::string(""), vector[2]);
 
     // Test equals().
-    CPPUNIT_ASSERT(vector.equals(0, "a"));
-    CPPUNIT_ASSERT(!vector.equals(0, "A"));
-    CPPUNIT_ASSERT(vector.equals(1, "b"));
-    CPPUNIT_ASSERT(!vector.equals(1, "B"));
-    CPPUNIT_ASSERT(!vector.equals(2, ""));
+    LOK_ASSERT(vector.equals(0, "a"));
+    LOK_ASSERT(!vector.equals(0, "A"));
+    LOK_ASSERT(vector.equals(1, "b"));
+    LOK_ASSERT(!vector.equals(1, "B"));
+    LOK_ASSERT(!vector.equals(2, ""));
 
     // Test equals(), StringVector argument version.
     StringVector vector2;
     vector2.push_back("a");
     vector2.push_back("B");
 
-    CPPUNIT_ASSERT(vector.equals(0, vector2, 0));
-    CPPUNIT_ASSERT(!vector.equals(0, vector2, 1));
+    LOK_ASSERT(vector.equals(0, vector2, 0));
+    LOK_ASSERT(!vector.equals(0, vector2, 1));
 
     // Test startsWith().
     StringVector vector3;
     vector3.push_back("hello, world");
     vector3.push_back("goodbye, world");
 
-    CPPUNIT_ASSERT(vector3.startsWith(0, "hello"));
-    CPPUNIT_ASSERT(vector3.startsWith(0, "hello, world"));
-    CPPUNIT_ASSERT(!vector3.startsWith(0, "hello, world!"));
-    CPPUNIT_ASSERT(!vector3.startsWith(0, "hello, world! super long text"));
-    CPPUNIT_ASSERT(vector3.startsWith(1, "goodbye"));
-    CPPUNIT_ASSERT(!vector3.startsWith(1, "hello"));
+    LOK_ASSERT(vector3.startsWith(0, "hello"));
+    LOK_ASSERT(vector3.startsWith(0, "hello, world"));
+    LOK_ASSERT(!vector3.startsWith(0, "hello, world!"));
+    LOK_ASSERT(!vector3.startsWith(0, "hello, world! super long text"));
+    LOK_ASSERT(vector3.startsWith(1, "goodbye"));
+    LOK_ASSERT(!vector3.startsWith(1, "hello"));
 
     // Test startsWith(), StringToken argument version
     StringToken hello = *vector3.begin();
     StringToken goodbye = *std::next(vector3.begin());
     StringToken unrelated(50, 10); // out of vector3 range
 
-    CPPUNIT_ASSERT(vector3.startsWith(hello, "hello"));
-    CPPUNIT_ASSERT(vector3.startsWith(hello, "hello, world"));
-    CPPUNIT_ASSERT(!vector3.startsWith(hello, "hello, world!"));
-    CPPUNIT_ASSERT(!vector3.startsWith(hello, "hello, world! super long text"));
-    CPPUNIT_ASSERT(vector3.startsWith(goodbye, "goodbye"));
-    CPPUNIT_ASSERT(!vector3.startsWith(goodbye, "hello"));
-    CPPUNIT_ASSERT(!vector3.startsWith(unrelated, "hello"));
+    LOK_ASSERT(vector3.startsWith(hello, "hello"));
+    LOK_ASSERT(vector3.startsWith(hello, "hello, world"));
+    LOK_ASSERT(!vector3.startsWith(hello, "hello, world!"));
+    LOK_ASSERT(!vector3.startsWith(hello, "hello, world! super long text"));
+    LOK_ASSERT(vector3.startsWith(goodbye, "goodbye"));
+    LOK_ASSERT(!vector3.startsWith(goodbye, "hello"));
+    LOK_ASSERT(!vector3.startsWith(unrelated, "hello"));
 
     {
         StringVector tokens;
         tokens.push_back("a=1");
         uint32_t value{};
-        CPPUNIT_ASSERT(tokens.getUInt32(0, "a", value));
-        CPPUNIT_ASSERT_EQUAL(static_cast<uint32_t>(1), value);
+        LOK_ASSERT(tokens.getUInt32(0, "a", value));
+        LOK_ASSERT_EQUAL(static_cast<uint32_t>(1), value);
 
         // Prefix does not match.
-        CPPUNIT_ASSERT(!tokens.getUInt32(0, "b", value));
+        LOK_ASSERT(!tokens.getUInt32(0, "b", value));
 
         // Index is out of bounds.
-        CPPUNIT_ASSERT(!tokens.getUInt32(1, "a", value));
+        LOK_ASSERT(!tokens.getUInt32(1, "a", value));
 
         // Expected key is prefix of actual key.
         tokens.push_back("bb=1");
-        CPPUNIT_ASSERT(!tokens.getUInt32(1, "b", value));
+        LOK_ASSERT(!tokens.getUInt32(1, "b", value));
 
         // Actual key is prefix of expected key.
         tokens.push_back("c=1");
-        CPPUNIT_ASSERT(!tokens.getUInt32(1, "cc", value));
+        LOK_ASSERT(!tokens.getUInt32(1, "cc", value));
     }
 
     {
@@ -1235,19 +1235,19 @@ void WhiteBoxTests::testStringVector()
         tokens.push_back("a=1");
         std::string name;
         int value{};
-        CPPUNIT_ASSERT(tokens.getNameIntegerPair(0, name, value));
-        CPPUNIT_ASSERT_EQUAL(std::string("a"), name);
-        CPPUNIT_ASSERT_EQUAL(1, value);
+        LOK_ASSERT(tokens.getNameIntegerPair(0, name, value));
+        LOK_ASSERT_EQUAL(std::string("a"), name);
+        LOK_ASSERT_EQUAL(1, value);
 
         tokens.push_back("aa=1");
-        CPPUNIT_ASSERT(tokens.getNameIntegerPair(1, name, value));
-        CPPUNIT_ASSERT_EQUAL(std::string("aa"), name);
-        CPPUNIT_ASSERT_EQUAL(1, value);
+        LOK_ASSERT(tokens.getNameIntegerPair(1, name, value));
+        LOK_ASSERT_EQUAL(std::string("aa"), name);
+        LOK_ASSERT_EQUAL(1, value);
 
         tokens.push_back("a=11");
-        CPPUNIT_ASSERT(tokens.getNameIntegerPair(2, name, value));
-        CPPUNIT_ASSERT_EQUAL(std::string("a"), name);
-        CPPUNIT_ASSERT_EQUAL(11, value);
+        LOK_ASSERT(tokens.getNameIntegerPair(2, name, value));
+        LOK_ASSERT_EQUAL(std::string("a"), name);
+        LOK_ASSERT_EQUAL(11, value);
     }
 }
 
@@ -1256,19 +1256,19 @@ void WhiteBoxTests::testHexify()
     const std::string s1 = "some ascii text with !@#$%^&*()_+/-\\|";
     const auto hex = Util::dataToHexString(s1, 0, s1.size());
     std::string decoded;
-    CPPUNIT_ASSERT(Util::dataFromHexString(hex, decoded));
-    CPPUNIT_ASSERT_EQUAL(s1, decoded);
+    LOK_ASSERT(Util::dataFromHexString(hex, decoded));
+    LOK_ASSERT_EQUAL(s1, decoded);
 
     for (std::size_t randStrLen = 1; randStrLen < 129; ++randStrLen)
     {
         const auto s2 = Util::rng::getBytes(randStrLen);
-        CPPUNIT_ASSERT_EQUAL(randStrLen, s2.size());
+        LOK_ASSERT_EQUAL(randStrLen, s2.size());
         const auto hex2 = Util::dataToHexString(s2, 0, s2.size());
-        CPPUNIT_ASSERT_EQUAL(randStrLen * 2, hex2.size());
+        LOK_ASSERT_EQUAL(randStrLen * 2, hex2.size());
         std::vector<char> decoded2;
-        CPPUNIT_ASSERT(Util::dataFromHexString(hex2, decoded2));
-        CPPUNIT_ASSERT_EQUAL(randStrLen, decoded2.size());
-        CPPUNIT_ASSERT_EQUAL(s2, decoded2);
+        LOK_ASSERT(Util::dataFromHexString(hex2, decoded2));
+        LOK_ASSERT_EQUAL(randStrLen, decoded2.size());
+        LOK_ASSERT_EQUAL(Util::toString(s2), Util::toString(decoded2));
     }
 }
 

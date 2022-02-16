@@ -330,7 +330,7 @@ UnitBase::TestResult UnitCursor::testEditAnnotationWriter()
     socket = helpers::loadDocAndGetSocket(uri, documentURL, testname);
 
     // Should have no new instances.
-    // CPPUNIT_ASSERT_EQUAL(kitcount, countCoolKitProcesses(kitcount));
+    // LOK_ASSERT_EQUAL(kitcount, countCoolKitProcesses(kitcount));
 
     // Confirm that the text is in the comment and not doc body.
     // Click in the body.
