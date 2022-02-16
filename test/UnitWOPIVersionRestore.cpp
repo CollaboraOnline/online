@@ -26,12 +26,7 @@
  */
 class UnitWOPIVersionRestore : public WopiTestServer
 {
-    enum class Phase
-    {
-        Load,
-        WaitLoadStatus,
-        WaitPutFile
-    } _phase;
+    STATES_ENUM(Phase, _phase, Load, WaitLoadStatus, WaitPutFile);
 
     bool _isDocumentSaved = false;
 
@@ -46,23 +41,20 @@ public:
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
-        if (_phase == Phase::WaitPutFile)
-        {
-            LOG_TST("assertPutFileRequest: document saved.");
-            _isDocumentSaved = true;
-        }
+        LOK_ASSERT_STATE(_phase, Phase::WaitPutFile);
+
+        LOG_TST("Document uploaded.");
+        _isDocumentSaved = true;
 
         return nullptr;
     }
 
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded: [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus",
-                           _phase == Phase::WaitLoadStatus);
+        LOG_TST("Got [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
-        LOG_TST("onDocumentModified: Switching to Phase::WaitPutFile and modifying document");
-        _phase = Phase::WaitPutFile;
+        TRANSITION_STATE(_phase, Phase::WaitPutFile);
 
         // Modify the document.
         WSD_CMD("key type=input char=97 key=0");
@@ -71,7 +63,6 @@ public:
         // tell wsd that we are about to restore
         WSD_CMD("versionrestore prerestore");
 
-        SocketPoll::wakeupWorld();
         return true;
     }
 
@@ -81,7 +72,7 @@ public:
         std::string message(data, len);
         if (message == "close: versionrestore: prerestore_ack")
         {
-            LOK_ASSERT_MESSAGE("Must be in Phase::WaitPutFile", _phase == Phase::WaitPutFile);
+            LOK_ASSERT_STATE(_phase, Phase::WaitPutFile);
             LOK_ASSERT_MESSAGE("Must have already saved the file", _isDocumentSaved);
 
             if (_isDocumentSaved)
@@ -99,7 +90,7 @@ public:
         {
             case Phase::Load:
             {
-                _phase = Phase::WaitLoadStatus;
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
                 LOG_TST("Load: initWebsocket.");
                 initWebsocket("/wopi/files/0?access_token=anything");
