@@ -25,7 +25,8 @@ class COOLWebSocket;
 
 namespace
 {
-double getColRowSize(const std::string& property, const std::string& message, int index)
+double getColRowSize(const std::string& property, const std::string& message, int index,
+                     const std::string& testname)
 {
     Poco::JSON::Parser parser;
     const Poco::Dynamic::Var result = parser.parse(message);
@@ -56,7 +57,7 @@ double getColRowSize(const std::shared_ptr<COOLWebSocket>& socket, const std::st
     std::vector<char> json(response.begin() + std::string("commandvalues:").length(),
                            response.end());
     json.push_back(0);
-    return getColRowSize(item, json.data(), index);
+    return getColRowSize(item, json.data(), index, testname);
 }
 }
 
@@ -70,12 +71,16 @@ class UnitCalc : public UnitWSD
     TestResult testOptimalResize();
 
 public:
+    UnitCalc()
+        : UnitWSD("UnitCalc")
+    {
+    }
+
     void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitCalc::testCalcEditRendering()
 {
-    const char* testname = "calcEditRendering ";
     Poco::URI uri(helpers::getTestServerURI());
     std::shared_ptr<COOLWebSocket> socket
         = helpers::loadDocAndGetSocket("calc_render.xls", uri, testname);
@@ -148,8 +153,6 @@ UnitBase::TestResult UnitCalc::testCalcEditRendering()
 /// This only happens at high rows.
 UnitBase::TestResult UnitCalc::testCalcRenderAfterNewView51()
 {
-    const char* testname = "calcRenderAfterNewView51 ";
-
     // Load a doc with the cursor saved at a top row.
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL("empty.ods", documentPath, documentURL, testname);
@@ -204,8 +207,6 @@ UnitBase::TestResult UnitCalc::testCalcRenderAfterNewView51()
 
 UnitBase::TestResult UnitCalc::testCalcRenderAfterNewView53()
 {
-    const char* testname = "calcRenderAfterNewView53 ";
-
     // Load a doc with the cursor saved at a top row.
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL("calc-render.ods", documentPath, documentURL, testname);
@@ -256,7 +257,6 @@ UnitBase::TestResult UnitCalc::testCalcRenderAfterNewView53()
 
 UnitBase::TestResult UnitCalc::testColumnRowResize()
 {
-    const char* testname = "columnRowResize ";
     try
     {
         std::vector<char> response;
@@ -279,9 +279,9 @@ UnitBase::TestResult UnitCalc::testColumnRowResize()
             json.push_back(0);
 
             // get column 2
-            oldHeight = getColRowSize("rows", json.data(), 1);
+            oldHeight = getColRowSize("rows", json.data(), 1, testname);
             // get row 2
-            oldWidth = getColRowSize("columns", json.data(), 1);
+            oldWidth = getColRowSize("columns", json.data(), 1, testname);
         }
 
         // send column width
@@ -309,7 +309,7 @@ UnitBase::TestResult UnitCalc::testColumnRowResize()
             std::vector<char> json(response.begin() + std::string("commandvalues:").length(),
                                    response.end());
             json.push_back(0);
-            newWidth = getColRowSize("columns", json.data(), 1);
+            newWidth = getColRowSize("columns", json.data(), 1, testname);
             LOK_ASSERT(newWidth > oldWidth);
         }
 
@@ -338,7 +338,7 @@ UnitBase::TestResult UnitCalc::testColumnRowResize()
             std::vector<char> json(response.begin() + std::string("commandvalues:").length(),
                                    response.end());
             json.push_back(0);
-            newHeight = getColRowSize("rows", json.data(), 1);
+            newHeight = getColRowSize("rows", json.data(), 1, testname);
             LOK_ASSERT(newHeight > oldHeight);
         }
     }
@@ -351,7 +351,6 @@ UnitBase::TestResult UnitCalc::testColumnRowResize()
 
 UnitBase::TestResult UnitCalc::testOptimalResize()
 {
-    const char* testname = "optimalResize ";
     try
     {
         double newWidth, newHeight;

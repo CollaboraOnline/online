@@ -30,12 +30,16 @@ class UnitPasswordProtected : public UnitWSD
     TestResult testPasswordProtectedBinaryMSOfficeDocument();
 
 public:
+    UnitPasswordProtected()
+        : UnitWSD("UnitPasswordProtect")
+    {
+    }
+
     void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithoutPassword()
 {
-    const char* testname = "testPasswordProtectedDocumentWithoutPassword";
     try
     {
         std::string documentPath, documentURL;
@@ -71,7 +75,6 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithout
 
 UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithWrongPassword()
 {
-    const char* testname = "testPasswordProtectedDocumentWithWrongPassword";
     try
     {
         std::string documentPath, documentURL;
@@ -107,7 +110,6 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithWro
 
 UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithCorrectPassword()
 {
-    const char* testname = "testPasswordProtectedDocumentWithCorrectPassword";
     try
     {
         std::string documentPath, documentURL;
@@ -140,7 +142,6 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithCor
 
 UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedOOXMLDocument()
 {
-    const char* testname = "testPasswordProtectedOOXMLDocument";
     try
     {
         std::string documentPath, documentURL;
@@ -168,7 +169,6 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedOOXMLDocument()
 
 UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedBinaryMSOfficeDocument()
 {
-    const char* testname = "testPasswordProtectedBinaryMSOfficeDocument";
     try
     {
         std::string documentPath, documentURL;

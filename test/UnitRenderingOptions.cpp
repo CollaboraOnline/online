@@ -23,13 +23,16 @@ class COOLWebSocket;
 class UnitRenderingOptions : public UnitWSD
 {
 public:
+    UnitRenderingOptions()
+        : UnitWSD("UnitRenderRenderingOptions")
+    {
+    }
+
     void invokeWSDTest() override;
 };
 
 void UnitRenderingOptions::invokeWSDTest()
 {
-    const char testname[] = "UnitRenderingOptions";
-
     try
     {
         // Load a document and make it empty, then paste some text into it.

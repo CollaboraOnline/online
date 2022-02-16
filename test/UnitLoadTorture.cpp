@@ -25,7 +25,7 @@ class COOLWebSocket;
 /// Load torture testcase.
 class UnitLoadTorture : public UnitWSD
 {
-    int loadTorture(const std::string& testname, const std::string& docName,
+    int loadTorture(const std::string& name, const std::string& docName,
                     const size_t thread_count, const size_t max_jitter_ms);
     TestResult testLoadTortureODT();
     TestResult testLoadTortureODS();
@@ -37,12 +37,12 @@ public:
     void invokeWSDTest() override;
 };
 
-int UnitLoadTorture::loadTorture(const std::string& testname, const std::string& docName,
+int UnitLoadTorture::loadTorture(const std::string& name, const std::string& docName,
                                  const size_t thread_count, const size_t max_jitter_ms)
 {
     // Load same document from many threads together.
     std::string documentPath, documentURL;
-    helpers::getDocumentPathAndURL(docName, documentPath, documentURL, testname);
+    helpers::getDocumentPathAndURL(docName, documentPath, documentURL, name);
 
     TST_LOG("Starting test on " << documentURL << ' ' << documentPath);
 
@@ -73,7 +73,7 @@ int UnitLoadTorture::loadTorture(const std::string& testname, const std::string&
 
                 // 20s is double of the default.
                 std::vector<char> message
-                    = wsSession->waitForMessage("status:", std::chrono::seconds(20), testname + id + ' ');
+                    = wsSession->waitForMessage("status:", std::chrono::seconds(20), name + id + ' ');
                 const std::string status = COOLProtocol::getFirstLine(message);
 
                 int viewid = -1;
@@ -142,7 +142,6 @@ UnitBase::TestResult UnitLoadTorture::testLoadTortureODT()
     const int thread_count = 6;
     const int max_jitter_ms = 100;
 
-    const char* testname = "loadTortureODT ";
     const int sum_view_ids = loadTorture(testname, "empty.odt", thread_count, max_jitter_ms);
 
     // This only works when the first view-ID is 0 and increments monotonously.
@@ -157,7 +156,6 @@ UnitBase::TestResult UnitLoadTorture::testLoadTortureODS()
     const int thread_count = 6;
     const int max_jitter_ms = 100;
 
-    const char* testname = "loadTortureODS ";
     const int sum_view_ids = loadTorture(testname, "empty.ods", thread_count, max_jitter_ms);
 
     // This only works when the first view-ID is 0 and increments monotonously.
@@ -172,7 +170,6 @@ UnitBase::TestResult UnitLoadTorture::testLoadTortureODP()
     const int thread_count = 6;
     const int max_jitter_ms = 100;
 
-    const char* testname = "loadTortureODP ";
     const int sum_view_ids = loadTorture(testname, "empty.odp", thread_count, max_jitter_ms);
 
     // For ODP the view-id is always odd, and we expect not to skip any ids.
@@ -194,8 +191,8 @@ UnitBase::TestResult UnitLoadTorture::testLoadTorture()
     for (const auto& docName : docNames)
     {
         threads.emplace_back([&] {
-            const auto testname = "loadTorture_" + docName + ' ';
-            loadTorture(testname, docName, thread_count, max_jitter_ms);
+            const auto name = "loadTorture_" + docName + ' ';
+            loadTorture(name, docName, thread_count, max_jitter_ms);
         });
     }
 
@@ -207,6 +204,7 @@ UnitBase::TestResult UnitLoadTorture::testLoadTorture()
 }
 
 UnitLoadTorture::UnitLoadTorture()
+    : UnitWSD("UnitLoadTorture")
 {
     // Double of the default.
     constexpr std::chrono::minutes timeout_minutes(1);

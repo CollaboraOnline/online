@@ -23,13 +23,16 @@ class COOLWebSocket;
 class UnitPaste : public UnitWSD
 {
 public:
+    UnitPaste()
+        : UnitWSD("UnitPaste")
+    {
+    }
+
     void invokeWSDTest() override;
 };
 
 void UnitPaste::invokeWSDTest()
 {
-    const char testname[] = "UnitPaste";
-
     // Load a document and make it empty, then paste some text into it.
     std::string documentPath;
     std::string documentURL;

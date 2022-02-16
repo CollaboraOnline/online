@@ -166,6 +166,8 @@ constexpr std::chrono::seconds HttpRequestTests::DefTimeoutSeconds;
 
 void HttpRequestTests::testInvalidURI()
 {
+    constexpr auto testname = __func__;
+
     try
     {
         // Cannot create from a blank URI.
@@ -180,6 +182,8 @@ void HttpRequestTests::testInvalidURI()
 
 void HttpRequestTests::testBadResponse()
 {
+    constexpr auto testname = __func__;
+
     const std::string URL = "/inject/" + Util::bytesToHexString("\0\0xa", 2);
 
     http::Request httpRequest(URL);
@@ -198,6 +202,8 @@ void HttpRequestTests::testBadResponse()
 
 void HttpRequestTests::testGoodResponse()
 {
+    constexpr auto testname = __func__;
+
     // Inject the following response:
     // HTTP/1.1 200 OK
     // Date: Wed, 02 Jun 2021 02:30:52 GMT
@@ -238,6 +244,8 @@ void HttpRequestTests::testGoodResponse()
 
 void HttpRequestTests::testSimpleGet()
 {
+    constexpr auto testname = __func__;
+
     constexpr auto URL = "/";
 
     // Start the polling thread.
@@ -413,7 +421,8 @@ void HttpRequestTests::testChunkedGetSync_External()
 /// This is useful when we don't care about the content of the body, just that
 /// there is some content at all or not.
 static void compare(const Poco::Net::HTTPResponse& pocoResponse, const std::string& pocoBody,
-                    const http::Response& httpResponse, bool checkReasonPhrase, bool checkBody)
+                    const http::Response& httpResponse, bool checkReasonPhrase, bool checkBody,
+                    const std::string& testname)
 {
     LOK_ASSERT_EQUAL_MESSAGE("Response state", httpResponse.state(),
                              http::Response::State::Complete);
@@ -514,7 +523,7 @@ void HttpRequestTests::test500GetStatuses()
         // Poco throws exception "No message received" for 1xx Status Codes.
         if (statusCode > 100)
         {
-            compare(*pocoResponse.first, pocoResponse.second, *httpResponse, true, true);
+            compare(*pocoResponse.first, pocoResponse.second, *httpResponse, true, true, testname);
 
 #ifdef ENABLE_EXTERNAL_REGRESSION_CHECK
             // These Status Codes are not recognized by httpbin.org,
@@ -525,7 +534,7 @@ void HttpRequestTests::test500GetStatuses()
                    && statusCode != 440 && statusCode != 508 && statusCode != 511);
             const bool checkBody = (statusCode != 402 && statusCode != 418);
             compare(*pocoResponseExt.first, pocoResponseExt.second, *httpResponse,
-                    checkReasonPhrase, checkBody);
+                    checkReasonPhrase, checkBody, testname);
 #endif
         }
     }
@@ -535,6 +544,8 @@ void HttpRequestTests::test500GetStatuses()
 
 void HttpRequestTests::testSimplePost_External()
 {
+    constexpr auto testname = __func__;
+
     const std::string Host = "httpbin.org";
     const char* URL = "/post";
 
@@ -589,6 +600,8 @@ void HttpRequestTests::testSimplePost_External()
 
 void HttpRequestTests::testTimeout()
 {
+    constexpr auto testname = __func__;
+
     const char* URL = "/timeout";
 
     http::Request httpRequest(URL);
@@ -605,6 +618,8 @@ void HttpRequestTests::testTimeout()
 
 void HttpRequestTests::testOnFinished_Complete()
 {
+    constexpr auto testname = __func__;
+
     const char* URL = "/";
 
     http::Request httpRequest(URL);
@@ -628,6 +643,8 @@ void HttpRequestTests::testOnFinished_Complete()
 
 void HttpRequestTests::testOnFinished_Timeout()
 {
+    constexpr auto testname = __func__;
+
     const char* URL = "/timeout";
 
     http::Request httpRequest(URL);

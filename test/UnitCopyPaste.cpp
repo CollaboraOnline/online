@@ -176,8 +176,7 @@ public:
         Poco::URI clipURI(clipURIstr);
 
         std::unique_ptr<HTTPClientSession> session(helpers::createSession(clipURI));
-        Poco::URI clipURIPoco(clipURI);
-        HTTPRequest request(HTTPRequest::HTTP_POST, clipURIPoco.getPathAndQuery());
+        HTTPRequest request(HTTPRequest::HTTP_POST, clipURI.getPathAndQuery());
         HTMLForm form;
         form.setEncoding(HTMLForm::ENCODING_MULTIPART);
         form.set("format", "txt");
@@ -234,8 +233,6 @@ public:
 
     void invokeWSDTest() override
     {
-        std::string testname = "copypaste ";
-
         // NOTE: This code has multiple race-conditions!
         // The main one is that the fetching of clipboard
         // data (via fetchClipboardAssert) is done via
