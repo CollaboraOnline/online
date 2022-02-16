@@ -177,6 +177,7 @@ define start_coolwsd
 			--port=$(FREE_PORT) \
 			--pidfile=$(PID_FILE) \
 			--o:logging.file.property[0]=$(COOLWSD_LOG) \
+			--unattended \
 			$(if $(findstring php-proxy, $(CYPRESS_INTEGRATION)),--o:net.proxy_prefix=true) \
 			 > $(COOLWSD_OUTPUT) 2>&1 &
 	@$(WAIT_ON_BINARY) http://localhost:$(FREE_PORT) --timeout 60000

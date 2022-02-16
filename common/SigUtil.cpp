@@ -44,6 +44,7 @@ static std::atomic<bool> ShutdownRequestFlag(false);
 
 static size_t ActivityStringIndex = 0;
 static std::array<std::string,8> ActivityStrings;
+static bool UnattendedRun = false;
 
 namespace SigUtil
 {
@@ -95,6 +96,11 @@ namespace SigUtil
     void addActivity(const std::string &message)
     {
         ActivityStrings[ActivityStringIndex++ % ActivityStrings.size()] = message;
+    }
+
+    void setUnattended()
+    {
+        UnattendedRun = true;
     }
 
 #if !MOBILEAPP
@@ -318,12 +324,23 @@ namespace SigUtil
         if (std::getenv("COOL_DEBUG"))
 #endif
         {
-            Log::signalLog(FatalGdbString);
-            LOG_ERR("Sleeping 60s to allow debugging: attach " << getpid());
-            std::cerr << "Sleeping 60s to allow debugging: attach " << getpid() << "\n";
-            sleep(60);
-            LOG_ERR("Finished sleeping to allow debugging of: " << getpid());
-            std::cerr << "Finished sleeping to allow debugging of: " << getpid() << "\n";
+            if (UnattendedRun)
+            {
+                static constexpr auto msg =
+                    "Crashed in unattended run and won't wait for debugger. Re-run without "
+                    "--unattended to attach a debugger.";
+                LOG_ERR(msg);
+                std::cerr << msg << '\n';
+            }
+            else
+            {
+                Log::signalLog(FatalGdbString);
+                LOG_ERR("Sleeping 60s to allow debugging: attach " << getpid());
+                std::cerr << "Sleeping 60s to allow debugging: attach " << getpid() << '\n';
+                sleep(60);
+                LOG_ERR("Finished sleeping to allow debugging of: " << getpid());
+                std::cerr << "Finished sleeping to allow debugging of: " << getpid() << '\n';
+            }
         }
     }
 
