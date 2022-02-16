@@ -30,8 +30,9 @@ class UnitTyping : public UnitWSD
     std::thread _worker;
 
 public:
-    UnitTyping() :
-        _workerStarted(false)
+    UnitTyping()
+        : UnitWSD("UnitTyping")
+        , _workerStarted(false)
     {
         constexpr std::chrono::minutes timeout_minutes(5);
         setTimeout(timeout_minutes);
@@ -52,7 +53,6 @@ public:
 
     TestResult testWriterTyping()
     {
-        const char* testname = "writerCompositionTest ";
         std::string serverURL = COOLWSD::getServerURL();
         const Poco::URI uri(serverURL);
 
@@ -224,7 +224,6 @@ public:
 
     TestResult testCalcTyping()
     {
-        const char* testname = "calcMultiViewEdit ";
         std::string serverURL = COOLWSD::getServerURL();
         const Poco::URI uri(serverURL);
 

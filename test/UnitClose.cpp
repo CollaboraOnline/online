@@ -29,7 +29,7 @@ class COOLWebSocket;
 
 namespace
 {
-std::string getFontList(const std::string& message)
+std::string getFontList(const std::string& message, const std::string& testname)
 {
     Poco::JSON::Parser parser;
     const Poco::Dynamic::Var result = parser.parse(message);
@@ -56,7 +56,6 @@ public:
 
 UnitBase::TestResult UnitClose::testCloseAfterClose()
 {
-    const char* testname = "closeAfterClose ";
     try
     {
         TST_LOG("Connecting and loading.");
@@ -111,7 +110,6 @@ UnitBase::TestResult UnitClose::testCloseAfterClose()
 
 UnitBase::TestResult UnitClose::testFontList()
 {
-    const char* testname = "fontList ";
     try
     {
         // Load a document
@@ -128,7 +126,7 @@ UnitBase::TestResult UnitClose::testFontList()
         std::stringstream streamResponse;
         std::copy(response.begin() + std::string("commandvalues:").length() + 1, response.end(),
                   std::ostream_iterator<char>(streamResponse));
-        LOK_ASSERT(!getFontList(streamResponse.str()).empty());
+        LOK_ASSERT(!getFontList(streamResponse.str(), testname).empty());
     }
     catch (const Poco::Exception& exc)
     {
@@ -139,7 +137,6 @@ UnitBase::TestResult UnitClose::testFontList()
 
 UnitBase::TestResult UnitClose::testGraphicInvalidate()
 {
-    const char* testname = "graphicInvalidate ";
     try
     {
         // Load a document.
@@ -178,7 +175,6 @@ UnitBase::TestResult UnitClose::testAlertAllUsers()
     // Load two documents, each in two sessions. Tell one session to fake a disk full
     // situation. Expect to get the corresponding error back in all sessions.
     static_assert(MAX_DOCUMENTS >= 2, "MAX_DOCUMENTS must be at least 2");
-    const char* testname = "alertAllUsers ";
     try
     {
         std::shared_ptr<COOLWebSocket> socket[4];
@@ -212,6 +208,7 @@ UnitBase::TestResult UnitClose::testAlertAllUsers()
 }
 
 UnitClose::UnitClose()
+    : UnitWSD("UnitClose")
 {
     constexpr std::chrono::minutes timeout_minutes(2);
     setTimeout(timeout_minutes);

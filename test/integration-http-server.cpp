@@ -65,7 +65,8 @@ protected:
     void assertHTTPFilesExist(const Poco::URI& uri,
                               Poco::RegularExpression& expr,
                               const std::string& html,
-                              const std::string& mimetype = std::string());
+                              const std::string& mimetype,
+                              const std::string& testname);
 
 public:
     HTTPServerTest()
@@ -119,6 +120,8 @@ public:
 
 void HTTPServerTest::testCoolGet()
 {
+    constexpr auto testname = __func__;
+
     const auto pathAndQuery = "/browser/dist/cool.html?access_token=111111111";
     const std::shared_ptr<const http::Response> httpResponse
         = http::get(_uri.toString(), pathAndQuery);
@@ -139,6 +142,8 @@ void HTTPServerTest::testCoolGet()
 
 void HTTPServerTest::testCoolPost()
 {
+    constexpr auto testname = __func__;
+
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/browser/dist/cool.html");
@@ -159,7 +164,9 @@ void HTTPServerTest::testCoolPost()
     LOK_ASSERT(html.find(_uri.getHost()) != std::string::npos);
 }
 
-void HTTPServerTest::assertHTTPFilesExist(const Poco::URI& uri, Poco::RegularExpression& expr, const std::string& html, const std::string& mimetype)
+void HTTPServerTest::assertHTTPFilesExist(const Poco::URI& uri, Poco::RegularExpression& expr,
+                                          const std::string& html, const std::string& mimetype,
+                                          const std::string& testname)
 {
     Poco::RegularExpression::MatchVec matches;
     bool found = false;
@@ -196,6 +203,8 @@ void HTTPServerTest::assertHTTPFilesExist(const Poco::URI& uri, Poco::RegularExp
 
 void HTTPServerTest::testScriptsAndLinksGet()
 {
+    constexpr auto testname = __func__;
+
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, "/browser/dist/cool.html");
@@ -209,14 +218,16 @@ void HTTPServerTest::testScriptsAndLinksGet()
     Poco::StreamCopier::copyToString(rs, html);
 
     Poco::RegularExpression script("<script.*?src=\"(.*?)\"");
-    assertHTTPFilesExist(_uri, script, html, "application/javascript");
+    assertHTTPFilesExist(_uri, script, html, "application/javascript", testname);
 
     Poco::RegularExpression link("<link.*?href=\"(.*?)\"");
-    assertHTTPFilesExist(_uri, link, html);
+    assertHTTPFilesExist(_uri, link, html, std::string(), testname);
 }
 
 void HTTPServerTest::testScriptsAndLinksPost()
 {
+    constexpr auto testname = __func__;
+
     std::unique_ptr<Poco::Net::HTTPClientSession> session(helpers::createSession(_uri));
 
     Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, "/browser/dist/cool.html");
@@ -232,10 +243,10 @@ void HTTPServerTest::testScriptsAndLinksPost()
     Poco::StreamCopier::copyToString(rs, html);
 
     Poco::RegularExpression script("<script.*?src=\"(.*?)\"");
-    assertHTTPFilesExist(_uri, script, html, "application/javascript");
+    assertHTTPFilesExist(_uri, script, html, "application/javascript", testname);
 
     Poco::RegularExpression link("<link.*?href=\"(.*?)\"");
-    assertHTTPFilesExist(_uri, link, html);
+    assertHTTPFilesExist(_uri, link, html, std::string(), testname);
 }
 
 void HTTPServerTest::testConvertTo()

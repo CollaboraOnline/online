@@ -82,14 +82,14 @@ protected:
         return _fileLastModifiedTime;
     }
 
-    WopiTestServer(std::string testname, const std::string& fileContent = "Hello, world")
-        : UnitWSD(std::move(testname))
+    WopiTestServer(std::string name, const std::string& fileContent = "Hello, world")
+        : UnitWSD(std::move(name))
         , _countCheckFileInfo(0)
         , _countGetFile(0)
         , _countPutRelative(0)
         , _countPutFile(0)
     {
-        LOG_TST("WopiTestServer created for [" << testname << ']');
+        LOG_TST("WopiTestServer created for [" << getTestname() << ']');
         setFileContent(fileContent);
     }
 

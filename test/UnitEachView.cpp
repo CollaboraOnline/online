@@ -50,7 +50,7 @@ void testEachView(const std::string& doc, const std::string& type, const std::st
         int docWidth = 0;
         int docViewId = -1;
         helpers::parseDocSize(response.substr(7), type, docPart, docParts, docWidth, docHeight,
-                              docViewId);
+                              docViewId, testname);
 
         // Send click message
         std::string text;

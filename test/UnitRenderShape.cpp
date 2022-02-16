@@ -74,12 +74,16 @@ class UnitRenderShape : public UnitWSD
     TestResult testRenderShapeSelectionWriterImage();
 
 public:
+    UnitRenderShape()
+        : UnitWSD("UnitRenderShape")
+    {
+    }
+
     void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionImpress()
 {
-    const char* testname = "testRenderShapeSelectionImpress ";
     try
     {
         std::string documentPath, documentURL;
@@ -122,7 +126,6 @@ UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionImpress()
 
 UnitBase::TestResult UnitRenderShape::testRenderShapeSelectionWriterImage()
 {
-    const char* testname = "testRenderShapeSelectionWriterImage ";
     try
     {
         std::string documentPath, documentURL;
