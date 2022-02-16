@@ -408,6 +408,8 @@ button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
 	padding-top: 0px;
 	padding-bottom: 0px;
 	background: transparent;
+}
+nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolbar {
 	border-color: transparent;
 }
 #formulabar {
