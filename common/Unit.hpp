@@ -226,7 +226,12 @@ public:
     /// If the test times out this gets invoked, the default just exits.
     virtual void timeout();
 
+    /// True iff exitTest is called.
     bool isFinished() const { return _setRetValue; }
+
+    /// True iff exitTest was called with anything but TestResult::Ok.
+    /// Meaningful only when isFinished() is true.
+    bool failed() const { return _retValue; }
 
     std::chrono::milliseconds getTimeoutMilliSeconds() const
     {
