@@ -52,6 +52,11 @@ namespace SigUtil
     /// Add a message to a round-robin buffer to be dumped on fatal signal
     void addActivity(const std::string &message);
 
+    /// Called to flag that we are running in unattended mode, not interactive.
+    /// In unattended mode we know there is no one to attach a debugger on
+    /// faulting, so we do not wait unnecessarily. Otherwise, we wait for 60s.
+    void setUnattended();
+
 #if !MOBILEAPP
     /// Wait for the signal handler, if any,
     /// and prevent _Exit while collecting backtrace.

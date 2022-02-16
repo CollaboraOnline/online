@@ -609,6 +609,10 @@ int main(int argc, char** argv)
                 }
             }
         }
+        else if (std::strstr(cmd, "--unattended") == cmd)
+        {
+            SigUtil::setUnattended();
+        }
 #if ENABLE_DEBUG
         // this process has various privileges - don't run arbitrary code.
         else if (std::strstr(cmd, "--unitlib=") == cmd)

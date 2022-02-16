@@ -844,6 +844,7 @@ std::shared_ptr<ForKitProcess> COOLWSD::ForKitProc;
 bool COOLWSD::NoCapsForKit = false;
 bool COOLWSD::NoSeccomp = false;
 bool COOLWSD::AdminEnabled = true;
+bool COOLWSD::UnattendedRun = false;
 #if ENABLE_DEBUG
 bool COOLWSD::SingleKit = false;
 #endif
@@ -1822,6 +1823,10 @@ void COOLWSD::defineOptions(OptionSet& optionSet)
                         .repeatable(false)
                         .argument("path"));
 
+    optionSet.addOption(Option("unattended", "", "Unattended run, won't wait for a debugger on faulting.")
+                        .required(false)
+                        .repeatable(false));
+
 #if ENABLE_DEBUG
     optionSet.addOption(Option("unitlib", "", "Unit testing library path.")
                         .required(false)
@@ -1894,6 +1899,11 @@ void COOLWSD::handleOption(const std::string& optionName,
 #if ENABLE_DEBUG
     else if (optionName == "unitlib")
         UnitTestLibrary = value;
+    else if (optionName == "unattended")
+    {
+        UnattendedRun = true;
+        SigUtil::setUnattended();
+    }
     else if (optionName == "careerspan")
         careerSpanMs = std::chrono::seconds(std::stoi(value)); // Convert second to ms
     else if (optionName == "singlekit")
@@ -2182,6 +2192,9 @@ bool COOLWSD::createForKit()
 
     if (!CheckCoolUser)
         args.push_back("--disable-cool-user-checking");
+
+    if (UnattendedRun)
+        args.push_back("--unattended");
 
 #if ENABLE_DEBUG
     if (SingleKit)
