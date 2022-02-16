@@ -25,7 +25,7 @@ class COOLWebSocket;
 namespace
 {
 void getCursor(const std::string& message, int& cursorX, int& cursorY, int& cursorWidth,
-               int& cursorHeight)
+               int& cursorHeight, const std::string& testname)
 {
     Poco::JSON::Parser parser;
     const Poco::Dynamic::Var result = parser.parse(message);
@@ -76,7 +76,7 @@ void limitCursor(const std::function<void(const std::shared_ptr<COOLWebSocket>& 
     helpers::sendTextFrame(socket, "status", testname);
     response = helpers::assertResponseString(socket, "status:", testname);
     helpers::parseDocSize(response.substr(7), "spreadsheet", docSheet, docSheets, docWidth,
-                          docHeight, docViewId);
+                          docHeight, docViewId, testname);
 
     // Send an arrow key to initialize the CellCursor, otherwise we get "EMPTY".
     helpers::sendTextFrame(socket, "key type=input char=0 key=1027", testname);
@@ -89,7 +89,7 @@ void limitCursor(const std::function<void(const std::shared_ptr<COOLWebSocket>& 
                  256, 256, 3840, 3840);
     helpers::sendTextFrame(socket, text, testname);
     const auto cursor = helpers::getResponseString(socket, "commandvalues:", testname);
-    getCursor(cursor.substr(14), cursorX, cursorY, cursorWidth, cursorHeight);
+    getCursor(cursor.substr(14), cursorX, cursorY, cursorWidth, cursorHeight, testname);
 
     // move cursor
     keyhandler(socket, cursorX, cursorY, cursorWidth, cursorHeight, docWidth, docHeight);
@@ -97,7 +97,7 @@ void limitCursor(const std::function<void(const std::shared_ptr<COOLWebSocket>& 
     // filter messages, and expect to receive new document size
     response = helpers::assertResponseString(socket, "status:", testname);
     helpers::parseDocSize(response.substr(7), "spreadsheet", newSheet, newSheets, newWidth,
-                          newHeight, docViewId);
+                          newHeight, docViewId, testname);
 
     LOK_ASSERT_EQUAL(docSheets, newSheets);
     LOK_ASSERT_EQUAL(docSheet, newSheet);
@@ -117,6 +117,11 @@ class UnitCursor : public UnitWSD
     TestResult testInsertAnnotationCalc();
 
 public:
+    UnitCursor()
+        : UnitWSD("UnitCursor")
+    {
+    }
+
     void invokeWSDTest() override;
 };
 
@@ -126,7 +131,7 @@ UnitBase::TestResult UnitCursor::testMaxColumn()
     {
         limitCursor(
             // move cursor to last column
-            [](const std::shared_ptr<COOLWebSocket>& socket, int cursorX, int cursorY,
+            [&](const std::shared_ptr<COOLWebSocket>& socket, int cursorX, int cursorY,
                int cursorWidth, int cursorHeight, int docWidth, int docHeight) {
                 LOK_ASSERT(cursorX >= 0);
                 LOK_ASSERT(cursorY >= 0);
@@ -143,7 +148,7 @@ UnitBase::TestResult UnitCursor::testMaxColumn()
                 }
             },
             // check new document width
-            [](int docWidth, int docHeight, int newWidth, int newHeight) {
+            [&](int docWidth, int docHeight, int newWidth, int newHeight) {
                 LOK_ASSERT_EQUAL(docHeight, newHeight);
                 LOK_ASSERT(newWidth > docWidth);
             },
@@ -162,7 +167,7 @@ UnitBase::TestResult UnitCursor::testMaxRow()
     {
         limitCursor(
             // move cursor to last row
-            [](const std::shared_ptr<COOLWebSocket>& socket, int cursorX, int cursorY,
+            [&](const std::shared_ptr<COOLWebSocket>& socket, int cursorX, int cursorY,
                int cursorWidth, int cursorHeight, int docWidth, int docHeight) {
                 LOK_ASSERT(cursorX >= 0);
                 LOK_ASSERT(cursorY >= 0);
@@ -179,7 +184,7 @@ UnitBase::TestResult UnitCursor::testMaxRow()
                 }
             },
             // check new document height
-            [](int docWidth, int docHeight, int newWidth, int newHeight) {
+            [&](int docWidth, int docHeight, int newWidth, int newHeight) {
                 LOK_ASSERT_EQUAL(docWidth, newWidth);
                 LOK_ASSERT(newHeight > docHeight);
             },
@@ -194,8 +199,6 @@ UnitBase::TestResult UnitCursor::testMaxRow()
 
 UnitBase::TestResult UnitCursor::testInsertAnnotationWriter()
 {
-    const char* testname = "insertAnnotationWriter ";
-
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 
@@ -285,8 +288,6 @@ UnitBase::TestResult UnitCursor::testInsertAnnotationWriter()
 
 UnitBase::TestResult UnitCursor::testEditAnnotationWriter()
 {
-    const char* testname = "editAnnotationWriter ";
-
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL("with_comment.odt", documentPath, documentURL, testname);
 
@@ -361,7 +362,6 @@ UnitBase::TestResult UnitCursor::testEditAnnotationWriter()
 
 UnitBase::TestResult UnitCursor::testInsertAnnotationCalc()
 {
-    const char* testname = "insertAnnotationCalc ";
     Poco::URI uri(helpers::getTestServerURI());
     std::shared_ptr<COOLWebSocket> socket
         = helpers::loadDocAndGetSocket("setclientpart.ods", uri, testname);

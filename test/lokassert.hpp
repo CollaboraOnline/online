@@ -71,7 +71,7 @@ std::string inline lokFormatAssertEq(const std::string& expected, const std::str
 #define LOK_TRACE(X)                                                                               \
     do                                                                                             \
     {                                                                                              \
-        TST_LOG_NAME("unittest", X);                                                               \
+        TST_LOG(X);                                                                                \
     } while (false)
 #else
 #define LOK_TRACE(X)                                                                               \
@@ -90,9 +90,9 @@ std::string inline lokFormatAssertEq(const std::string& expected, const std::str
             std::ostringstream oss##__LINE__;                                                      \
             oss##__LINE__ << message;                                                              \
             const auto msg##__LINE__ = oss##__LINE__.str();                                        \
-            TST_LOG_NAME("unittest", "ERROR: Assertion failure: "                                  \
-                                         << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ". ")    \
-                                         << "Condition: " << (#condition));                        \
+            TST_LOG("ERROR: Assertion failure: "                                                   \
+                    << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ". ")                         \
+                    << "Condition: " << (#condition));                                             \
             LOK_ASSERT_IMPL(cond##__LINE__);                                                       \
             CPPUNIT_ASSERT_MESSAGE((message), cond##__LINE__);                                     \
         }                                                                                          \
@@ -120,9 +120,9 @@ std::string inline lokFormatAssertEq(const std::string& expected, const std::str
             std::ostringstream oss##__LINE__;                                                      \
             oss##__LINE__ << message;                                                              \
             const auto msg##__LINE__ = oss##__LINE__.str();                                        \
-            TST_LOG_NAME("unittest", "ERROR: Assertion failure: "                                  \
-                                         << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ' ')     \
-                                         << lokFormatAssertEq(expected, actual));                  \
+            TST_LOG("ERROR: Assertion failure: "                                                   \
+                    << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ' ')                          \
+                    << lokFormatAssertEq(expected, actual));                                       \
             LOK_ASSERT_IMPL((expected) == (actual));                                               \
             CPPUNIT_ASSERT_EQUAL_MESSAGE(msg##__LINE__, (expected), (actual));                     \
         }                                                                                          \
@@ -154,7 +154,7 @@ std::string inline lokFormatAssertEq(const std::string& expected, const std::str
 #define LOK_ASSERT_FAIL(message)                                                                   \
     do                                                                                             \
     {                                                                                              \
-        TST_LOG_NAME("unittest", "ERROR: Forced failure: " << (message));                          \
+        TST_LOG("ERROR: Forced failure: " << (message));                                           \
         LOK_ASSERT_IMPL(!"Forced failure: " #message);                                             \
         CPPUNIT_FAIL((message));                                                                   \
     } while (false)

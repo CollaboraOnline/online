@@ -30,8 +30,9 @@ class UnitConvert : public UnitWSD
     std::thread _worker;
 
 public:
-    UnitConvert() :
-        _workerStarted(false)
+    UnitConvert()
+        : UnitWSD("UnitConvert")
+        , _workerStarted(false)
     {
         setHasKitHooks();
         setTimeout(std::chrono::hours(1));

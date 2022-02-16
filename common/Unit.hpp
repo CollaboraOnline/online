@@ -118,8 +118,8 @@ protected:
         , _retValue(0)
         , _timeoutMilliSeconds(std::chrono::seconds(30))
         , _type(type)
-        , _testname(std::move(name))
-        , _socketPoll(std::make_shared<SocketPoll>(_testname))
+        , _socketPoll(std::make_shared<SocketPoll>(name))
+        , testname(std::move(name))
     {
     }
 
@@ -256,8 +256,8 @@ public:
 
     static std::string getUnitLibPath() { return std::string(UnitLibPath); }
 
-    const std::string& getTestname() const { return _testname; }
-    void setTestname(const std::string& testname) { _testname = testname; }
+    const std::string& getTestname() const { return testname; }
+    void setTestname(const std::string& name) { testname = name; }
 
     std::shared_ptr<SocketPoll> socketPoll() { return _socketPoll; }
 
@@ -292,10 +292,12 @@ private:
     static UnitBase *Global;
     UnitType _type;
 
-    /// The name of the current test.
-    std::string _testname;
-
     std::shared_ptr<SocketPoll> _socketPoll; //< Poll thread for async http comm.
+
+protected:
+
+    /// The name of the current test. Accessed from logs in derived classes.
+    std::string testname;
 };
 
 /// Derive your WSD unit test / hooks from me.
@@ -485,8 +487,8 @@ public:
 class UnitTool : public UnitBase
 {
 public:
-    explicit UnitTool(std::string testname = std::string())
-        : UnitBase(testname, UnitType::Tool) {}
+    explicit UnitTool(std::string name = std::string())
+        : UnitBase(name, UnitType::Tool) {}
     virtual ~UnitTool() {}
 };
 

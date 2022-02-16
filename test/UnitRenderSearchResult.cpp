@@ -22,13 +22,16 @@ class COOLWebSocket;
 class UnitRenderSearchResult : public UnitWSD
 {
 public:
+    UnitRenderSearchResult()
+        : UnitWSD("UnitRenderSearchResult")
+    {
+    }
+
     void invokeWSDTest() override;
 };
 
 void UnitRenderSearchResult::invokeWSDTest()
 {
-    const char testname[] = "UnitRenderSearchResult";
-
     try
     {
         std::string documentPath;

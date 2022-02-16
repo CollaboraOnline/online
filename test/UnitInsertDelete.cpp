@@ -84,12 +84,16 @@ class UnitInsertDelete : public UnitWSD
     TestResult testCursorPosition();
 
 public:
+    UnitInsertDelete()
+        : UnitWSD("UnitInsertDelete")
+    {
+    }
+
     void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitInsertDelete::testInsertDelete()
 {
-    const char* testname = "insertDelete ";
     try
     {
         std::vector<std::string> parts;
@@ -202,7 +206,6 @@ UnitBase::TestResult UnitInsertDelete::testInsertDelete()
 
 UnitBase::TestResult UnitInsertDelete::testPasteBlank()
 {
-    const char* testname = "pasteBlank ";
     try
     {
         // Load a document and make it empty, then paste nothing into it.
@@ -240,7 +243,6 @@ UnitBase::TestResult UnitInsertDelete::testPasteBlank()
 
 UnitBase::TestResult UnitInsertDelete::testGetTextSelection()
 {
-    const char* testname = "getTextSelection ";
     try
     {
         std::string documentPath, documentURL;
@@ -267,8 +269,6 @@ UnitBase::TestResult UnitInsertDelete::testCursorPosition()
 {
     try
     {
-        const char* testname = "cursorPosition ";
-
         // Load a document.
         std::string docPath;
         std::string docURL;
