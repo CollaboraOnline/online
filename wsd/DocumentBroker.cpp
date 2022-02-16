@@ -132,7 +132,6 @@ DocumentBroker::DocumentBroker(ChildType type,
     _stop(false),
     _closeReason("stopped"),
     _lockCtx(new LockContext()),
-    _lastEditingSessionId(),
     _tileVersion(0),
     _debugRenderedTileCount(0),
     _wopiDownloadDuration(0),
@@ -474,6 +473,12 @@ void DocumentBroker::pollThread()
         LOG_WRN("DocumentBroker stopping although flagged as modified " << state.str());
         if (UnitWSD::isUnitTesting())
             UnitWSD::get().fail("Unsaved data detected while exiting DocBroker [" + _docKey + ']');
+    }
+    else if (UnitWSD::isUnitTesting() && UnitWSD::get().isFinished() && UnitWSD::get().failed())
+    {
+        std::stringstream state;
+        dumpState(state);
+        LOG_WRN("Test failed with doc [" << _docKey << "]: " << state.str());
     }
 
     // Flush socket data first.
