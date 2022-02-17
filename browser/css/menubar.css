@@ -285,30 +285,30 @@
 
 .writer-icon-img {
 	background-image: url('images/x-office-document.svg');
-	background-size: 30px 30px;
+	background-size: 16px 16px;
 	background-repeat: no-repeat;
-	background-position: bottom;
+	background-position: center;
 }
 
 .calc-icon-img {
 	background-image: url('images/x-office-spreadsheet.svg');
-	background-size: 30px 30px;
+	background-size: 16px 16px;
 	background-repeat: no-repeat;
-	background-position: bottom;
+	background-position: center;
 }
 
 .impress-icon-img {
 	background-image: url('images/x-office-presentation.svg');
-	background-size: 30px 30px;
+	background-size: 16px 16px;
 	background-repeat: no-repeat;
-	background-position: bottom;
+	background-position: center;
 }
 
 .draw-icon-img {
 	background-image: url('images/x-office-drawing.svg');
-	background-size: 30px 30px;
+	background-size: 16px 16px;
 	background-repeat: no-repeat;
-	background-position: bottom;
+	background-position: center;
 }
 
 #menu-last-mod a {
