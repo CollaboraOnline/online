@@ -37,6 +37,39 @@ public:
     {
     }
 
+    void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    {
+        LOG_TST("Testing " << toString(_scenario));
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        assertGetFileCount();
+    }
+
+    std::unique_ptr<http::Response>
+    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    {
+        LOG_TST("Testing " << toString(_scenario));
+        LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
+
+        assertPutFileCount();
+
+        switch (_scenario)
+        {
+            case Scenario::Disconnect:
+            case Scenario::SaveDiscard:
+            case Scenario::CloseDiscard:
+            case Scenario::VerifyOverwrite:
+                LOK_ASSERT_FAIL("Unexpectedly overwritting the document in storage");
+                break;
+            case Scenario::SaveOverwrite:
+                LOG_TST("Closing the document to verify its contents after reloading");
+                WSD_CMD("closedocument");
+                break;
+        }
+
+        return nullptr;
+    }
+
     void onDocBrokerDestroy(const std::string& docKey) override
     {
         LOG_TST("Testing " << toString(_scenario) << " with dockey [" << docKey << "] closed.");

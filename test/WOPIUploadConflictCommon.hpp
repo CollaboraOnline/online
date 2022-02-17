@@ -130,31 +130,37 @@ public:
         }
     }
 
-    void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override {}
+    void assertGetFileCount()
+    {
+        if (getExpectedCheckFileInfo() < getCountCheckFileInfo())
+        {
+            LOK_ASSERT_EQUAL_MESSAGE("Too many CheckFileInfo requests", getExpectedCheckFileInfo(),
+                                     getCountCheckFileInfo());
+        }
 
-    std::unique_ptr<http::Response>
-    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+        if (getExpectedGetFile() < getCountGetFile())
+        {
+            LOK_ASSERT_EQUAL_MESSAGE("Too many GetFile requests", getExpectedGetFile(),
+                                     getCountGetFile());
+        }
+    }
+
+    void assertPutFileCount()
     {
         LOG_TST("Testing " << toString(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
-        switch (_scenario)
+        if (getExpectedPutRelative() < getCountPutRelative())
         {
-            case Scenario::Disconnect:
-            case Scenario::SaveDiscard:
-            case Scenario::CloseDiscard:
-            case Scenario::VerifyOverwrite:
-                LOK_ASSERT_FAIL("Unexpectedly overwritting the document in storage");
-                break;
-            case Scenario::SaveOverwrite:
-                LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage",
-                                         std::string(ConflictingDocContent), getFileContent());
-                LOG_TST("Closing the document to verify its contents after reloading");
-                WSD_CMD("closedocument");
-                break;
+            LOK_ASSERT_EQUAL_MESSAGE("Too many PutRelative requests", getExpectedPutRelative(),
+                                     getCountPutRelative());
         }
 
-        return nullptr;
+        if (getExpectedPutFile() < getCountPutFile())
+        {
+            LOK_ASSERT_EQUAL_MESSAGE("Too many PutFile requests", getExpectedPutFile(),
+                                     getCountPutFile());
+        }
     }
 
     bool onDocumentLoaded(const std::string& message) override
