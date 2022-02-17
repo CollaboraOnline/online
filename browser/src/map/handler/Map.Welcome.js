@@ -45,7 +45,8 @@ L.Map.Welcome = L.Handler.extend({
 	}
 });
 
-if (window.feedbackLocation && window.isLocalStorageAllowed) {
-	L.Map.addInitHook('addHandler', 'welcome', L.Map.Welcome);
-}
+// Disabled for now
+// if (window.feedbackLocation && window.isLocalStorageAllowed) {
+// 	L.Map.addInitHook('addHandler', 'welcome', L.Map.Welcome);
+// }
 

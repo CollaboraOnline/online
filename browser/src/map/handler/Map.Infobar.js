@@ -69,6 +69,7 @@ L.Map.Infobar = L.Handler.extend({
 	}
 });
 
-if (window.feedbackLocation) {
-	L.Map.addInitHook('addHandler', 'infobar', L.Map.Infobar);
-}
+// Disabled for now
+// if (window.feedbackLocation) {
+// 	L.Map.addInitHook('addHandler', 'infobar', L.Map.Infobar);
+// }
