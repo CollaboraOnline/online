@@ -221,7 +221,10 @@ m4_ifelse(MOBILEAPP,[true],
 
     <!--%DOCUMENT_SIGNING_DIV%-->
     <script>
-      window.documentSigningURL = decodeURIComponent('%DOCUMENT_SIGNING_URL%');
+    m4_ifelse(MOBILEAPP,[true],
+      [ window.documentSigningURL = ''; ],
+      [ window.documentSigningURL = decodeURIComponent('%DOCUMENT_SIGNING_URL%'); ]
+    )
     </script>
 
     <input id="insertgraphic" aria-labelledby="menu-insertgraphic" type="file" accept="image/*" style="position: fixed; top: -100em">
