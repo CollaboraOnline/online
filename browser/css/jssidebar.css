@@ -243,10 +243,14 @@ td.jsdialog .jsdialog.cell.sidebar {
 	width: auto;
 }
 
-.spreadsheet-document + #sidebar-dock-wrapper #ScAlignmentPropertyPanelPanelExpander #box3 > div:last-of-type,
-.presentation-doctype + #sidebar-dock-wrapper #ParaPropertyPanelPanelExpander #box1 > div:last-of-type,
-.drawing-doctype + #sidebar-dock-wrapper #ParaPropertyPanelPanelExpander #box1 > div:last-of-type {
+#sidebar-dock-wrapper #ParaPropertyPanelPanelExpander #box1 > div:last-of-type,
+.spreadsheet-document + #sidebar-dock-wrapper #ScAlignmentPropertyPanelPanelExpander #box3 > div:last-of-type {
 	display: table-row;
+}
+
+#sidebar-dock-wrapper #ParaPropertyPanelPanelExpander #box1 > div:last-of-type > div,
+.spreadsheet-document + #sidebar-dock-wrapper #ScAlignmentPropertyPanelPanelExpander #box3 > div:last-of-type > div {
+	padding: 2px;
 }
 
 .sidebar.jsdialog.checkbutton {
