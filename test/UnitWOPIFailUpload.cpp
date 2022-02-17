@@ -78,10 +78,12 @@ public:
         LOG_TST("Testing " << toString(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
 
+        assertGetFileCount();
+
         //FIXME: check that unloading modified documents trigger test failure.
         // LOK_ASSERT_EQUAL_MESSAGE("Expected modified document detection to have triggered", true,
         //                          _unloadingModifiedDocDetected);
-        _unloadingModifiedDocDetected = false;
+        _unloadingModifiedDocDetected = false; // Reset.
     }
 
     std::unique_ptr<http::Response>
@@ -89,6 +91,8 @@ public:
     {
         LOG_TST("Testing " << toString(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
+
+        assertPutFileCount();
 
         switch (_scenario)
         {

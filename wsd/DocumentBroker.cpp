@@ -1532,9 +1532,6 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
             // Handle activity-specific logic.
             switch (_docState.activity())
             {
-                case DocumentState::Activity::None:
-                    break;
-
                 case DocumentState::Activity::Rename:
                 {
                     LOG_DBG("Renaming in storage after uploading the last saved version.");
@@ -1547,7 +1544,10 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
                 break;
 
                 default:
-                    break;
+                {
+                    // Check stop conditions.
+                }
+                break;
             }
 
             // Resume polling.

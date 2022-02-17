@@ -42,14 +42,27 @@ public:
     {
         Base::configure(config);
 
+        // Small value to shorten the test run time.
+        config.setUInt("per_document.limit_store_failures", 2);
         config.setBool("per_document.always_save_on_exit", true);
     }
+
+    void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    {
+        LOG_TST("Testing " << toString(_scenario));
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        assertGetFileCount();
+    }
+
 
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
         LOG_TST("Testing " << toString(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
+
+        assertPutFileCount();
 
         switch (_scenario)
         {
@@ -59,7 +72,6 @@ public:
             case Scenario::SaveDiscard:
             case Scenario::CloseDiscard:
             case Scenario::VerifyOverwrite:
-                LOK_ASSERT_FAIL("Unexpectedly overwritting the document in storage");
                 break;
             case Scenario::SaveOverwrite:
                 LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage",
