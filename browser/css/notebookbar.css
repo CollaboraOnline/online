@@ -100,8 +100,8 @@
 	height: 4px;
 	border-radius: 2px;
 	filter: none !important;
-	background: var(--color-warning);
-	box-shadow: 0 0 2px 2px var(--color-main-background);
+	background: var(--color-primary-lighter);
+	border: 1px solid var(--color-primary);
 	position: absolute;
 	top: 8px;
 	margin-left: 11px;
@@ -110,12 +110,12 @@
 #Save1.savemodified:after {
 	content: '';
 	display: block;
-	width: 9px;
-	height: 9px;
-	border-radius: 6px;
+	width: 6px;
+	height: 6px;
+	border-radius: 3px;
 	filter: none !important;
-	background: var(--color-warning);
-	box-shadow: 0 0 2px 2px var(--color-main-background);
+	background: var(--color-primary-lighter);
+	border: 1px solid var(--color-primary);
 	position: absolute;
 	top: 14px;
 	margin-left: 48px;
