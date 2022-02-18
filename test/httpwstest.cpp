@@ -41,6 +41,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE(HTTPWSTest);
 
+    CPPUNIT_TEST(testExoticLang);
     CPPUNIT_TEST(testSaveOnDisconnect);
     CPPUNIT_TEST(testSavePassiveOnDisconnect);
     // This test is failing
@@ -51,6 +52,7 @@ class HTTPWSTest : public CPPUNIT_NS::TestFixture
 
     CPPUNIT_TEST_SUITE_END();
 
+    void testExoticLang();
     void testSaveOnDisconnect();
     void testSavePassiveOnDisconnect();
     void testReloadWhileDisconnecting();
@@ -96,6 +98,27 @@ public:
         resetTestStartTime();
     }
 };
+
+void HTTPWSTest::testExoticLang()
+{
+    const std::string testname = "saveOnDisconnect- ";
+
+    std::string documentPath, documentURL;
+    getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
+
+    try
+    {
+        std::shared_ptr<http::WebSocketSession> socket
+            = loadDocAndGetSession(_socketPoll, _uri, documentURL,
+                                   "exoticlocale", true, true,
+                                   " lang=es-419");
+        socket->asyncShutdown();
+    }
+    catch (const Poco::Exception& exc)
+    {
+        LOK_ASSERT_FAIL(exc.displayText());
+    }
+}
 
 void HTTPWSTest::testSaveOnDisconnect()
 {

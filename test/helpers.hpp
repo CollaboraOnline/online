@@ -702,7 +702,8 @@ std::shared_ptr<LOOLWebSocket> loadDocAndGetSocket(const std::string& docFilenam
 inline std::shared_ptr<http::WebSocketSession>
 loadDocAndGetSession(std::shared_ptr<SocketPoll> socketPoll, const Poco::URI& uri,
                      const std::string& documentURL, const std::string& testname,
-                     bool isView = true, bool isAssert = true)
+                     bool isView = true, bool isAssert = true,
+                     const std::string &loadParams = "")
 {
     try
     {
@@ -711,7 +712,7 @@ loadDocAndGetSession(std::shared_ptr<SocketPoll> socketPoll, const Poco::URI& ur
         http::Request req(documentURL);
         ws->asyncRequest(req, std::move(socketPoll));
 
-        sendTextFrame(ws, "load url=" + documentURL, testname);
+        sendTextFrame(ws, "load url=" + documentURL + loadParams, testname);
         const bool isLoaded = isDocumentLoaded(ws, testname, isView);
         if (!isLoaded && !isAssert)
         {
