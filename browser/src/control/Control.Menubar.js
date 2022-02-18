@@ -1583,7 +1583,8 @@ L.Control.Menubar = L.Control.extend({
 		if (id === 'save') {
 			// Save only when not read-only.
 			if (!this._map.isPermissionReadOnly()) {
-				this._map.fire('postMessage', {msgId: 'UI_Save'});
+				this._map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'filemenu' }});
+
 				if (!this._map._disableDefaultAction['UI_Save']) {
 					this._map.save(false, false);
 				}

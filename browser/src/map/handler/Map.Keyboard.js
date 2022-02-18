@@ -605,7 +605,7 @@ L.Map.Keyboard = L.Handler.extend({
 		case 83: // s
 			// Save only when not read-only.
 			if (!this._map.isPermissionReadOnly()) {
-				this._map.fire('postMessage', {msgId: 'UI_Save'});
+				this._map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'keyboard' }});
 				if (!this._map._disableDefaultAction['UI_Save']) {
 					this._map.save(false /* An explicit save should terminate cell edit */,
 					               false /* An explicit save should save it again */);
