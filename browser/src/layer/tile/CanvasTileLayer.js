@@ -2764,10 +2764,10 @@ L.CanvasTileLayer = L.Layer.extend({
 		textMsg = textMsg.substring(18);
 		var obj = JSON.parse(textMsg);
 		var commandName = obj.commandName;
-		if (obj.success === 'true') {
+		if (obj.success === 'true' || obj.success === true) {
 			var success = true;
 		}
-		else if (obj.success === 'false') {
+		else if (obj.success === 'false' || obj.success === false) {
 			success = false;
 		}
 
