@@ -87,6 +87,9 @@ function onClick(e, id, item) {
 		map.fire('postMessage', {msgId: 'Clicked_Button', args: {Id: item.id} });
 	}
 	else if (item.uno) {
+		if (id === 'save') {
+			map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'toolbar' }});
+		}
 		if (item.unosheet && map.getDocType() === 'spreadsheet') {
 			map.toggleCommandState(item.unosheet);
 		}
@@ -100,7 +103,7 @@ function onClick(e, id, item) {
 	else if (id === 'save') {
 		// Save only when not read-only.
 		if (!map.isPermissionReadOnly()) {
-			map.fire('postMessage', {msgId: 'UI_Save'});
+			map.fire('postMessage', {msgId: 'UI_Save', args: { source: 'toolbar' }});
 			if (!map._disableDefaultAction['UI_Save']) {
 				map.save(false /* An explicit save should terminate cell edit */, false /* An explicit save should save it again */);
 			}
