@@ -90,6 +90,12 @@
         window.frames[0].postMessage(JSON.stringify({'MessageId': messageId}), '*');
       }
 
+      function ShowInsertButton() {
+        post({'MessageId': 'Insert_Button',
+              'Values': { 'id': 'Save', 'imgurl': 'images/lc_save.svg', 'hint': '', 'mobile': false, 'label': 'Show additional btns via Insert_Button', 'insertBefore': 'Save', 'unoCommand': '.uno:Save'}
+            });
+      }
+
       function ShowNotebookbar(notebookbar) {
         var value = notebookbar ? 'notebookbar' : 'classic';
         window.frames[0].postMessage(JSON.stringify({'MessageId': 'Host_PostmessageReady'}), '*');
@@ -186,6 +192,7 @@
     <form id="menubar-toggle">
       <button onclick="ShowMenubar(false); return false;">Hide Menubar</button>
       <button onclick="ShowMenubar(true); return false;">Show Menubar</button>
+      <button onclick="ShowInsertButton(); return false;" title="via Insert_Button">Insert custom button</button>
       <p>
       <button onclick="ShowNotebookbar(false); return false;">Classic Toolbar</button>
       <button onclick="ShowNotebookbar(true); return false;">Notebookbar</button>
