@@ -139,6 +139,7 @@
 	border-left-color: transparent;
 }
 .lo-menu > li .disabled {
+	background: var(--color-main-background);
 	color: var(--color-text-lighter);
 }
 .lo-menu > li .disabled:hover {
