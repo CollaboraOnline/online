@@ -313,13 +313,16 @@ protected:
 
 };
 
-/// Send a command message to WSD from a WopiTestServer.
-#define WSD_CMD(MSG)                                                                               \
+/// Send a command message to WSD from a WopiTestServer on the given connection.
+#define WSD_CMD_BY_CONNECTION_INDEX(INDEX, MSG)                                                    \
     do                                                                                             \
     {                                                                                              \
-        LOG_TST("Sending: " << MSG);                                                               \
-        helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), MSG, getTestname());                  \
+        LOG_TST("Sending from #" << INDEX << ": " << MSG);                                         \
+        helpers::sendTextFrame(*getWsAt(INDEX)->getCOOLWebSocket(), MSG, getTestname());           \
         SocketPoll::wakeupWorld();                                                                 \
     } while (false)
+
+/// Send a command message to WSD from a WopiTestServer on the primary connection.
+#define WSD_CMD(MSG) WSD_CMD_BY_CONNECTION_INDEX(0, MSG)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
