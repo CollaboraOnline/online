@@ -17,72 +17,91 @@
 
 class UnitWopiOwnertermination : public WopiTestServer
 {
-    enum class Phase
-    {
-        Load,
-        WaitLoadStatus,
-        Polling
-    } _phase;
+    STATES_ENUM(Phase, _phase, Load, WaitLoadStatus, WaitDocClose);
 
-    /// Return the name of the given Phase.
-    static std::string toString(Phase phase)
-    {
-#define ENUM_CASE(X)                                                                               \
-    case X:                                                                                        \
-        return #X
+    static constexpr int RepeatCount = 2;
 
-        switch (phase)
-        {
-            ENUM_CASE(Phase::Load);
-            ENUM_CASE(Phase::WaitLoadStatus);
-            ENUM_CASE(Phase::Polling);
-            default:
-                return "Unknown";
-        }
-#undef ENUM_CASE
-    }
+    int _loadCount;
+    int _uploadCount;
 
 public:
     UnitWopiOwnertermination()
         : WopiTestServer("UnitWOPIOwnerTermination")
         , _phase(Phase::Load)
+        , _loadCount(0)
+        , _uploadCount(0)
     {
     }
 
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
-        if (_phase == Phase::Polling)
-        {
-            // Document got saved, that's what we wanted
-            passTest("Document saved on closing after modification.");
-        }
-        else
-        {
-            failTest("Saving in an unexpected phase: " + toString(_phase));
-        }
+        LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
+
+        ++_uploadCount;
+        LOK_ASSERT_EQUAL_MESSAGE("Mismatching load and upload counts", _loadCount, _uploadCount);
+
+        LOG_TST("Disconnecting #" << _loadCount);
+        deleteSocketAt(0);
+
+        // Load again, while we are still uploading.
+        TRANSITION_STATE(_phase, Phase::Load);
 
         return nullptr;
     }
 
     bool onDocumentLoaded(const std::string& message) override
     {
-        LOG_TST("onDocumentLoaded: [" << message << ']');
-        LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitLoadStatus but was " + toString(_phase),
-                           _phase == Phase::WaitLoadStatus);
+        LOG_TST("Loaded: [" << message << ']');
+        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+        TRANSITION_STATE(_phase, Phase::WaitDocClose);
 
         // Modify the document.
-        LOG_TST("onDocumentLoaded: Modifying");
+        LOG_TST("Modifying");
         WSD_CMD("key type=input char=97 key=0");
         WSD_CMD("key type=up char=0 key=512");
 
         // And close. We expect the document to be marked as modified and saved.
-        LOG_TST("onDocumentLoaded: Closing");
+        LOG_TST("Closing");
         WSD_CMD("closedocument");
 
-        _phase = Phase::Polling;
-        SocketPoll::wakeupWorld();
         return true;
+    }
+
+    bool onDocumentError(const std::string& message) override
+    {
+        LOK_ASSERT_EQUAL_MESSAGE("Mismatching load and upload counts", _loadCount,
+                                 _uploadCount + 1);
+
+        if (message != "error: cmd=internal kind=load")
+        {
+            LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+
+            LOK_ASSERT_EQUAL_MESSAGE("Expect only documentunloading errors",
+                                     std::string("error: cmd=load kind=docunloading"), message);
+
+            TRANSITION_STATE(_phase, Phase::WaitDocClose);
+        }
+        else
+        {
+            // We send out two errors when we fail to load.
+            // This is the second one, which is 'cmd=internal kind=load'.
+            LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
+        }
+
+        return true;
+    }
+
+    // Wait for clean unloading.
+    void onDocBrokerDestroy(const std::string&) override
+    {
+        LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
+
+        LOK_ASSERT_EQUAL_MESSAGE("Mismatching load and upload counts", _loadCount,
+                                 _uploadCount + 1);
+
+        passTest("Unloaded successfully.");
     }
 
     void invokeWSDTest() override
@@ -91,30 +110,32 @@ public:
         {
             case Phase::Load:
             {
-                initWebsocket("/wopi/files/0?access_token=anything");
+                // First time loading, transition.
+                TRANSITION_STATE(_phase, Phase::WaitLoadStatus);
 
-                _phase = Phase::WaitLoadStatus;
+                ++_loadCount;
+                if (_loadCount == 1)
+                {
+                    LOG_TST("Creating first connection");
+                    initWebsocket("/wopi/files/0?access_token=anything");
+                }
+                else
+                {
+                    LOG_TST("Creating connection #" << _loadCount);
+                    addWebSocket();
+                }
 
-                WSD_CMD("load url=" + getWopiSrc());
+                WSD_CMD_BY_CONNECTION_INDEX(_loadCount - 1, "load url=" + getWopiSrc());
+
                 break;
             }
             case Phase::WaitLoadStatus:
-            {
-                // Wait for onDocumentLoaded.
+            case Phase::WaitDocClose:
                 break;
-            }
-            case Phase::Polling:
-            {
-                // just wait for the results
-                break;
-            }
         }
     }
 };
 
-UnitBase *unit_create_wsd(void)
-{
-    return new UnitWopiOwnertermination();
-}
+UnitBase* unit_create_wsd(void) { return new UnitWopiOwnertermination(); }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
