@@ -135,8 +135,6 @@ public:
 
     void invokeWSDTest() override
     {
-        constexpr char testName[] = "UnitWopiLock";
-
         switch (_phase)
         {
             case Phase::Load:
@@ -146,12 +144,14 @@ public:
 
                 LOG_TST("Creating first connection");
                 initWebsocket("/wopi/files/0?access_token=anything");
+
                 LOG_TST("Creating second connection");
                 addWebSocket();
+
                 LOG_TST("Loading first view (editor)");
-                helpers::sendTextFrame(*getWs()->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
+                WSD_CMD_BY_CONNECTION_INDEX(0, "load url=" + getWopiSrc());
                 LOG_TST("Loading second view (viewer)");
-                helpers::sendTextFrame(*getWsAt(1)->getCOOLWebSocket(), "load url=" + getWopiSrc(), testName);
+                WSD_CMD_BY_CONNECTION_INDEX(1, "load url=" + getWopiSrc());
                 break;
             }
             case Phase::LockDocument:
