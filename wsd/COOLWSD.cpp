@@ -2275,9 +2275,11 @@ static std::shared_ptr<DocumentBroker>
 
     cleanupDocBrokers();
 
-    if (SigUtil::getTerminationFlag())
+    if (SigUtil::getShutdownRequestFlag())
     {
-        LOG_ERR("TerminationFlag set. Not loading new session [" << id << ']');
+        // TerminationFlag implies ShutdownRequested.
+        LOG_ERR((SigUtil::getTerminationFlag() ? "TerminationFlag" : "ShudownRequestedFlag")
+                << " set. Not loading new session [" << id << ']');
         return nullptr;
     }
 
@@ -2292,14 +2294,15 @@ static std::shared_ptr<DocumentBroker>
         docBroker = it->second;
 
         // Destroying the document? Let the client reconnect.
-        if (docBroker->isMarkedToDestroy())
+        if (docBroker->isUnloading())
         {
-            LOG_WRN("DocBroker with docKey [" << docKey << "] that is marked to be destroyed. Rejecting client request.");
+            LOG_WRN("DocBroker with docKey ["
+                    << docKey << "] is unloading. Rejecting client request to load.");
             if (proto)
             {
-                std::string msg("error: cmd=load kind=docunloading");
+                const std::string msg("error: cmd=load kind=docunloading");
                 proto->sendTextMessage(msg.data(), msg.size());
-                proto->shutdown(true, "error: cmd=load kind=docunloading");
+                proto->shutdown(true, msg);
             }
             return nullptr;
         }
@@ -2309,9 +2312,11 @@ static std::shared_ptr<DocumentBroker>
         LOG_DBG("No DocumentBroker with docKey [" << docKey << "] found. New Child and Document.");
     }
 
-    if (SigUtil::getTerminationFlag())
+    if (SigUtil::getShutdownRequestFlag())
     {
-        LOG_ERR("TerminationFlag is set. Not loading new session [" << id << ']');
+        // TerminationFlag implies ShutdownRequested.
+        LOG_ERR((SigUtil::getTerminationFlag() ? "TerminationFlag" : "ShudownRequestedFlag")
+                << " set. Not loading new session [" << id << ']');
         return nullptr;
     }
 
