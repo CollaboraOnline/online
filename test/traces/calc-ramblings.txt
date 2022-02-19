@@ -12,7 +12,6 @@
 >+189>4l6G0aoGPY43cueY>031>commandvalues command=.uno:StyleApply
 >+141>4l6G0aoGPY43cueY>031>commandvalues command=.uno:CharFontName
 >+3494>4l6G0aoGPY43cueY>031>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3072&tileWidth=3072
->+144887>4l6G0aoGPY43cueY>031>freemiumstatus isFreemiumUser=false
 >+100343>4l6G0aoGPY43cueY>031>paintwindow 2 rectangle=0,0,800,29 dpiscale=1
 >+2781>4l6G0aoGPY43cueY>031>paintwindow 2 rectangle=0,0,799,28 dpiscale=1
 >+188338>4l6G0aoGPY43cueY>031>uno .uno:SidebarHide
@@ -47,7 +46,6 @@
 >+35975>4l6G0aoGPY43cueY>031>clientvisiblearea x=0 y=0 width=22170 height=21420 splitx=0 splity=0
 >+235>4l6G0aoGPY43cueY>031>mouse type=move x=9285 y=7082.999954999999 count=1 buttons=0 modifier=0
 >+1061>4l6G0aoGPY43cueY>031>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3072&tileWidth=3072
->+5834>4l6G0aoGPY43cueY>031>freemiumstatus isFreemiumUser=false
 >+3841>4l6G0aoGPY43cueY>031>canceltiles
 >+1499>4l6G0aoGPY43cueY>031>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504 tileposy=0,0,0,0,0,0,0,0,3072,3072,3072,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360,15360,15360,15360,18432,18432,18432,18432,18432,18432,18432,18432 tilewidth=3072 tileheight=3072
 >+17124>4l6G0aoGPY43cueY>031>commandvalues command=.uno:ViewAnnotationsPosition
@@ -56,7 +54,6 @@
 >+3948>4l6G0aoGPY43cueY>031>paintwindow 2 rectangle=0,0,1386,28 dpiscale=1
 >+1100>4l6G0aoGPY43cueY>031>commandvalues command=.uno:ViewAnnotationsPosition
 >+1147>4l6G0aoGPY43cueY>031>paintwindow 2 rectangle=0,0,1386,28 dpiscale=1
->+1613>4l6G0aoGPY43cueY>031>freemiumstatus isFreemiumUser=false
 >+3749>4l6G0aoGPY43cueY>031>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,18432,21504,18432,21504 tileposy=0,0,0,0,0,0,0,0,3072,3072,3072,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,12288,12288,12288,15360,15360,18432,18432 tilewidth=3072 tileheight=3072
 >+803>4l6G0aoGPY43cueY>031>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3072&tileWidth=3072
 >+3737>4l6G0aoGPY43cueY>031>paintwindow 2 rectangle=0,0,1386,28 dpiscale=1
@@ -332,7 +329,6 @@
 >+237454>4l6G0aoGPY43cueY>031>key type=input char=0 key=9219
 >+22384>4l6G0aoGPY43cueY>031>commandvalues command=.uno:ViewAnnotationsPosition
 >+48597>4l6G0aoGPY43cueY>031>paintwindow 2 rectangle=2,2,1341,24 dpiscale=1
->+1010>4l6G0aoGPY43cueY>031>freemiumstatus isFreemiumUser=false
 >+9054>4l6G0aoGPY43cueY>031>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,15360,18432,21504 tileposy=0,0,0,0,0,0,0,0 tilewidth=3072 tileheight=3072
 >+10315>4l6G0aoGPY43cueY>031>clientvisiblearea x=1280670 y=0 width=22170 height=21420 splitx=0 splity=0
 >+376>4l6G0aoGPY43cueY>031>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3072 tiletwipheight=3072
@@ -347,7 +343,6 @@
 >+181599>4l6G0aoGPY43cueY>031>key type=input char=0 key=9216
 >+45041>4l6G0aoGPY43cueY>031>commandvalues command=.uno:ViewAnnotationsPosition
 >+66748>4l6G0aoGPY43cueY>031>paintwindow 2 rectangle=2,2,161,24 dpiscale=1
->+1614>4l6G0aoGPY43cueY>031>freemiumstatus isFreemiumUser=false
 >+3083>4l6G0aoGPY43cueY>031>clientvisiblearea x=1280370 y=0 width=22170 height=21420 splitx=0 splity=0
 >+11918>4l6G0aoGPY43cueY>031>clientvisiblearea x=1280370 y=125978895 width=22170 height=21420 splitx=0 splity=0
 >+456>4l6G0aoGPY43cueY>031>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3072 tiletwipheight=3072
@@ -361,7 +356,6 @@
 >+92>4l6G0aoGPY43cueY>031>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3072&tileWidth=3072
 >+122>4l6G0aoGPY43cueY>031>commandvalues command=.uno:ViewAnnotationsPosition
 >+306>4l6G0aoGPY43cueY>031>paintwindow 2 rectangle=2,2,161,24 dpiscale=1
->+292>4l6G0aoGPY43cueY>031>freemiumstatus isFreemiumUser=false
 >+171>4l6G0aoGPY43cueY>031>clientvisiblearea x=0 y=125978895 width=22170 height=21420 splitx=0 splity=0
 >+331>4l6G0aoGPY43cueY>031>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3072 tiletwipheight=3072
 >+382>4l6G0aoGPY43cueY>031>canceltiles
@@ -1118,7 +1112,6 @@
 >+741962>4l6G0aoGPY43cueY>031>mouse type=move x=4695 y=1877.9999549999998 count=1 buttons=0 modifier=0
 >+234699>4l6G0aoGPY43cueY>031>mouse type=move x=5190 y=152.999955 count=1 buttons=0 modifier=0
 >+824505>4l6G0aoGPY43cueY>031>uno .uno:Bold
->+78686>4l6G0aoGPY43cueY>031>freemiumstatus isFreemiumUser=false
 >+4433>4l6G0aoGPY43cueY>031>canceltiles
 >+3096>4l6G0aoGPY43cueY>031>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504 tileposy=0,0,0,0,0,0,0,0,3072,3072,3072,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360,15360,15360,15360,18432,18432,18432,18432,18432,18432,18432,18432 tilewidth=3072 tileheight=3072
 >+5314>4l6G0aoGPY43cueY>031>commandvalues command=.uno:SheetGeometryData?rows=1&sizes=1
@@ -1276,7 +1269,6 @@
 >+719981>4l6G0aoGPY43cueY>031>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=3072,6144,9216,12288,15360 tileposy=27648,27648,27648,27648,27648 tilewidth=3072 tileheight=3072
 >+523>4l6G0aoGPY43cueY>031>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3072&tileWidth=3072
 >+298776>4l6G0aoGPY43cueY>031>uno .uno:WrapText
->+87793>4l6G0aoGPY43cueY>031>freemiumstatus isFreemiumUser=false
 >+5064>4l6G0aoGPY43cueY>031>canceltiles
 >+1681>4l6G0aoGPY43cueY>031>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504,0,3072,6144,9216,12288,15360,18432,21504 tileposy=0,0,0,0,0,0,0,0,3072,3072,3072,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360,15360,15360,15360,18432,18432,18432,18432,18432,18432,18432,18432 tilewidth=3072 tileheight=3072
 >+2696>4l6G0aoGPY43cueY>031>commandvalues command=.uno:SheetGeometryData?rows=1&sizes=1

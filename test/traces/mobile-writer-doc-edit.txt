@@ -8,7 +8,6 @@
 >+1916>uuU1te2SMAotIIKa>02e>commandvalues command=.uno:ViewAnnotations
 >+3050>uuU1te2SMAotIIKa>02e>commandvalues command=.uno:StyleApply
 >+268>uuU1te2SMAotIIKa>02e>commandvalues command=.uno:CharFontName
->+61283>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
 >+12226>uuU1te2SMAotIIKa>02e>clientvisiblearea x=0 y=0 width=0 height=0 splitx=0 splity=0
 >+435>uuU1te2SMAotIIKa>02e>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=1920 tiletwipheight=1920
 >+459>uuU1te2SMAotIIKa>02e>canceltiles
@@ -141,7 +140,6 @@
 >+977>uuU1te2SMAotIIKa>02e>mouse type=buttonup x=2284.32747 y=2480.438925 count=1 buttons=1 modifier=0
 >+138955>uuU1te2SMAotIIKa>02e>gettextselection mimetype=text/html
 >+10199977>uuU1te2SMAotIIKa>02e>uno .uno:InsertAnnotation {"Text":{"type":"string","value":"Great comment"},"Author":{"type":"string","value":"admin"}}
->+695578>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
 >+69924>uuU1te2SMAotIIKa>02e>clientvisiblearea x=0 y=0 width=5385 height=8115 splitx=0 splity=0
 >+2977>uuU1te2SMAotIIKa>02e>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,1920,3840,0,1920,0,1920,3840,0,1920,3840 tileposy=1920,1920,1920,3840,3840,5760,5760,5760,7680,7680,7680 tilewidth=1920 tileheight=1920
 >+12667>uuU1te2SMAotIIKa>02e>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,1920,3840,0,1920,0,1920,3840,0,1920,3840 tileposy=1920,1920,1920,3840,3840,5760,5760,5760,7680,7680,7680 tilewidth=1920 tileheight=1920
@@ -152,7 +150,6 @@
 >+944>uuU1te2SMAotIIKa>02e>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=5760,7680 tileposy=7680,7680 tilewidth=1920 tileheight=1920
 >+818036>uuU1te2SMAotIIKa>02e>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=9600,9600,9600,9600,9600 tileposy=0,1920,3840,5760,7680 tilewidth=1920 tileheight=1920
 >+2465726>uuU1te2SMAotIIKa>02e>uno .uno:ReplyComment {"Id":{"type":"string","value":"1"},"Text":{"type":"string","value":"Reply to comment"}}
->+218678>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
 >+222250>uuU1te2SMAotIIKa>02e>clientvisiblearea x=0 y=0 width=5385 height=4485 splitx=0 splity=0
 >+418>uuU1te2SMAotIIKa>02e>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,1920,3840 tileposy=1920,1920,1920 tilewidth=1920 tileheight=1920
 >+465>uuU1te2SMAotIIKa>02e>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,1920,3840 tileposy=1920,1920,1920 tilewidth=1920 tileheight=1920
@@ -165,7 +162,6 @@
 >+443>uuU1te2SMAotIIKa>02e>clientvisiblearea x=0 y=1080 width=5385 height=2430 splitx=0 splity=0
 >+6042033>uuU1te2SMAotIIKa>02e>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=7680,9600 tileposy=1920,1920 tilewidth=1920 tileheight=1920
 >+1740737>uuU1te2SMAotIIKa>02e>uno .uno:EditAnnotation {"Id":{"type":"string","value":"1"},"Text":{"type":"string","value":"This is a modified Great comment"}}
->+204505>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
 >+16425>uuU1te2SMAotIIKa>02e>clientvisiblearea x=0 y=0 width=5385 height=2430 splitx=0 splity=0
 >+904696>uuU1te2SMAotIIKa>02e>clientvisiblearea x=0 y=1080 width=5385 height=2430 splitx=0 splity=0
 >+2046653>uuU1te2SMAotIIKa>02e>key type=input char=13 key=1280
@@ -218,15 +214,11 @@
 >+1329595>uuU1te2SMAotIIKa>02e>key type=input char=13 key=1280
 >+1196>uuU1te2SMAotIIKa>02e>clientvisiblearea x=0 y=1380 width=5385 height=4380 splitx=0 splity=0
 >+1049>uuU1te2SMAotIIKa>02e>key type=up char=0 key=1280
->+60273>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
->+7821>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
 >+395242>uuU1te2SMAotIIKa>02e>clientvisiblearea x=0 y=0 width=5385 height=4380 splitx=0 splity=0
 >+467>uuU1te2SMAotIIKa>02e>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,1920,3840,0,1920,3840 tileposy=1920,1920,1920,3840,3840,3840 tilewidth=1920 tileheight=1920
 >+625>uuU1te2SMAotIIKa>02e>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,1920,3840,0,1920,3840 tileposy=1920,1920,1920,3840,3840,3840 tilewidth=1920 tileheight=1920
 >+406>uuU1te2SMAotIIKa>02e>key type=input char=13 key=1280
 >+298>uuU1te2SMAotIIKa>02e>key type=up char=0 key=1280
->+386370>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
->+17595>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
 >+970845>uuU1te2SMAotIIKa>02e>mouse type=buttondown x=2950.90164 y=3334.2301949999996 count=1 buttons=1 modifier=0
 >+774>uuU1te2SMAotIIKa>02e>mouse type=buttonup x=2950.90164 y=3334.2301949999996 count=1 buttons=1 modifier=0
 >+111079>uuU1te2SMAotIIKa>02e>mouse type=buttondown x=3003.32886 y=3296.753535 count=2 buttons=1 modifier=0
@@ -360,11 +352,7 @@
 >+315>uuU1te2SMAotIIKa>02e>key type=up char=0 key=1280
 >+520230>uuU1te2SMAotIIKa>02e>textinput id=0 text=n
 >+277>uuU1te2SMAotIIKa>02e>textinput id=0 text=o
->+1562>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
->+480>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
 >+32771>uuU1te2SMAotIIKa>02e>textinput id=0 text=w
->+509063>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
->+243>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
 >+254>uuU1te2SMAotIIKa>02e>textinput id=0 text=%20
 >+4512>uuU1te2SMAotIIKa>02e>textinput id=0 text=f
 >+330693>uuU1te2SMAotIIKa>02e>textinput id=0 text=o
@@ -385,10 +373,6 @@
 >+408>uuU1te2SMAotIIKa>02e>key type=up char=0 key=1280
 >+12719>uuU1te2SMAotIIKa>02e>key type=input char=13 key=1280
 >+445>uuU1te2SMAotIIKa>02e>key type=up char=0 key=1280
->+308925>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
->+214>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
->+8007>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
->+6247>uuU1te2SMAotIIKa>02e>freemiumstatus isFreemiumUser=false
 >+1077444>uuU1te2SMAotIIKa>02e>mouse type=buttondown x=2643.8280449999997 y=2299.8765599999997 count=1 buttons=1 modifier=0
 >+1101>uuU1te2SMAotIIKa>02e>mouse type=buttonup x=2643.8280449999997 y=2299.8765599999997 count=1 buttons=1 modifier=0
 >+216023>uuU1te2SMAotIIKa>02e>mouse type=buttondown x=2718.7241400000003 y=2179.951635 count=2 buttons=1 modifier=0
