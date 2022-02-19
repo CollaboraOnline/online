@@ -38,6 +38,7 @@ m4
 debian/coolwsd.postinst
 common/support-public-key.hpp
 compile_commands.json
+**/gdb.txt
 
 # Test stuff
 systemplate
@@ -90,6 +91,14 @@ unittest
 coolwsd_fuzzer
 clientnb
 
+# Fuzzer
+*_fuzzer
+fuzz*.log
+slow-unit-*
+crash-*
+leak-*
+timeout-*
+
 # make tags
 tags
 test/tags
@@ -137,13 +146,8 @@ gtk/mobile
 .settings
 .eclipsesettingfile
 eclipsesettingfile.xml
-.clang_complete
 .clangd
 .cache
-.cxx_tags
-.yavide_proj
-.yavide_session
-.vscode
 *.code-workspace
 Makecache
 
