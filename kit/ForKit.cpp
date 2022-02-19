@@ -734,7 +734,8 @@ int main(int argc, char** argv)
 
     SigUtil::setUserSignals();
 
-    LOG_INF("ForKit process is ready.");
+    const int parentPid = getppid();
+    LOG_INF("ForKit process is ready. Parent: " << parentPid);
 
     while (!SigUtil::getTerminationFlag())
     {
@@ -743,6 +744,13 @@ int main(int argc, char** argv)
         mainPoll.poll(std::chrono::microseconds(POLL_TIMEOUT_MICRO_S));
 
         SigUtil::checkDumpGlobalState(dump_forkit_state);
+
+        // When our parent exits, we are assigned a new parent (typically init).
+        if (getppid() != parentPid)
+        {
+            LOG_SFL("Parent process has died. Will exit now.");
+            break;
+        }
 
 #if ENABLE_DEBUG
         if (!SingleKit)
