@@ -1232,13 +1232,8 @@ void FileServerRequestHandler::preprocessAdminFile(const HTTPRequest& request,
     const std::string relPath = getRequestPathname(request);
     LOG_DBG("Preprocessing file: " << relPath);
     std::string adminFile = *getUncompressedFile(relPath);
-    std::vector<std::string> templatePath_vec = Util::splitStringToVector(relPath, '/');
-    std::string templatePath = "";
-    for (unsigned int i = 0; i < templatePath_vec.size() - 1; i++)
-    {
-        templatePath += templatePath_vec[i] + "/";
-    }
-    templatePath = "/" + templatePath + "admintemplate.html";
+    const std::string templatePath =
+        Poco::Path(relPath).setFileName("admintemplate.html").toString();
     std::string templateFile = *getUncompressedFile(templatePath);
     Poco::replaceInPlace(templateFile, std::string("<!--%MAIN_CONTENT%-->"), adminFile); // Now template has the main content..
 
