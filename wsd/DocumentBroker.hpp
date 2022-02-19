@@ -398,6 +398,14 @@ public:
     static bool lookupSendClipboardTag(const std::shared_ptr<StreamSocket> &socket,
                                        const std::string &tag, bool sendError = false);
 
+    /// True if any flag to unload or terminate is set.
+    bool isUnloading() const
+    {
+        return _docState.isMarkedToDestroy() || _stop || _docState.isUnloadRequested() ||
+               _docState.isCloseRequested() || SigUtil::getShutdownRequestFlag() ||
+               SigUtil::getTerminationFlag();
+    }
+
     bool isMarkedToDestroy() const { return _docState.isMarkedToDestroy() || _stop; }
 
     virtual bool handleInput(const std::vector<char>& payload);
