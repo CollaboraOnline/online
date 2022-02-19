@@ -9,7 +9,6 @@
 >+3696>8OA2W8oMcgbJB52v>067>commandvalues command=.uno:ViewAnnotations
 >+828>8OA2W8oMcgbJB52v>067>commandvalues command=.uno:StyleApply
 >+2174>8OA2W8oMcgbJB52v>067>commandvalues command=.uno:CharFontName
->+86348>8OA2W8oMcgbJB52v>067>freemiumstatus isFreemiumUser=false
 >+15288>8OA2W8oMcgbJB52v>067>clientvisiblearea x=-2640 y=-3720 width=18090 height=23850 splitx=0 splity=0
 >+921>8OA2W8oMcgbJB52v>067>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3072 tiletwipheight=3072
 >+1343>8OA2W8oMcgbJB52v>067>canceltiles

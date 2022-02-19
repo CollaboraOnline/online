@@ -9,7 +9,6 @@
 >48870118>SH1x9l8hEeFGasMA>044>commandvalues command=.uno:ViewAnnotations
 >48870376>SH1x9l8hEeFGasMA>044>commandvalues command=.uno:StyleApply
 >48870736>SH1x9l8hEeFGasMA>044>commandvalues command=.uno:CharFontName
->48986527>SH1x9l8hEeFGasMA>044>freemiumstatus isFreemiumUser=false
 >49003805>SH1x9l8hEeFGasMA>044>clientvisiblearea x=-2625 y=0 width=18060 height=23805 splitx=0 splity=0
 >49004032>SH1x9l8hEeFGasMA>044>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3072 tiletwipheight=3072
 >49004271>SH1x9l8hEeFGasMA>044>canceltiles

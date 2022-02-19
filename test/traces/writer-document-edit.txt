@@ -13,7 +13,6 @@
 >+266>ObOgeUSNlVNMdCb6>001>commandvalues command=.uno:CharFontName
 >+266>ObOgeUSNlVNMdCb6>001>canceltiles
 >+1316>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+1052>ObOgeUSNlVNMdCb6>001>freemiumstatus isFreemiumUser=false
 >+212>ObOgeUSNlVNMdCb6>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
 >+247>ObOgeUSNlVNMdCb6>001>clientvisiblearea x=-5025 y=0 width=22860 height=13215 splitx=0 splity=0
 >+236>ObOgeUSNlVNMdCb6>001>mouse type=move x=3150 y=2220 count=1 buttons=0 modifier=0
@@ -1049,7 +1048,6 @@
 >+30248>ObOgeUSNlVNMdCb6>001>clientvisiblearea x=-5025 y=0 width=22860 height=13215 splitx=0 splity=0
 >+123293>ObOgeUSNlVNMdCb6>001>clientvisiblearea x=-2775 y=0 width=18360 height=13215 splitx=0 splity=0
 >+386>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=3840,3840,3840 tilewidth=3840 tileheight=3840
->+1743>ObOgeUSNlVNMdCb6>001>freemiumstatus isFreemiumUser=false
 >+79474>ObOgeUSNlVNMdCb6>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=3840,3840,3840 tilewidth=3840 tileheight=3840
 >+1055096>ObOgeUSNlVNMdCb6>001>mouse type=move x=13215 y=1515 count=1 buttons=0 modifier=0
 >+670756>ObOgeUSNlVNMdCb6>001>mouse type=move x=15105 y=60 count=1 buttons=0 modifier=0

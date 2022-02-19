@@ -13,7 +13,6 @@
 >+261>HfMXF9jEpdKA03Ux>001>commandvalues command=.uno:CharFontName
 >+196>HfMXF9jEpdKA03Ux>001>canceltiles
 >+4142>HfMXF9jEpdKA03Ux>001>tilecombine nviewid=0 part=29 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+2357>HfMXF9jEpdKA03Ux>001>freemiumstatus isFreemiumUser=false
 >+1378>HfMXF9jEpdKA03Ux>001>commandvalues command=.uno:SheetGeometryData
 >+175>HfMXF9jEpdKA03Ux>001>clientvisiblearea x=0 y=0 width=22125 height=11745 splitx=0 splity=0
 >+157>HfMXF9jEpdKA03Ux>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
@@ -24,7 +23,6 @@
 >+765127>HfMXF9jEpdKA03Ux>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3840&tileWidth=3840
 >+1523>HfMXF9jEpdKA03Ux>001>gettextselection mimetype=text/html
 >+5683>HfMXF9jEpdKA03Ux>001>resizewindow 2 size=1385,29
->+1016060>HfMXF9jEpdKA03Ux>001>freemiumstatus isFreemiumUser=false
 >+276>HfMXF9jEpdKA03Ux>001>canceltiles
 >+669158>HfMXF9jEpdKA03Ux>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 ~+5140045~HfMXF9jEpdKA03Ux~001~EndSession: file:///home/ezinne/collaboraOnline/test/data/hello-world.ods?permission=edit
@@ -39,7 +37,6 @@
 >+993>pHihGD0xXrR2Dt82>02d>commandvalues command=.uno:ViewAnnotations
 >+777>pHihGD0xXrR2Dt82>02d>commandvalues command=.uno:StyleApply
 >+1574>pHihGD0xXrR2Dt82>02d>commandvalues command=.uno:CharFontName
->+736>pHihGD0xXrR2Dt82>02d>freemiumstatus isFreemiumUser=false
 >+345>pHihGD0xXrR2Dt82>02d>clientvisiblearea x=-3495 y=-1125 width=22860 height=14145 splitx=0 splity=0
 >+414>pHihGD0xXrR2Dt82>02d>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
 >+294>pHihGD0xXrR2Dt82>02d>canceltiles
@@ -162,7 +159,6 @@
 >+510>pHihGD0xXrR2Dt82>02d>canceltiles
 >+228>pHihGD0xXrR2Dt82>02d>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+1312>pHihGD0xXrR2Dt82>02d>gettextselection mimetype=text/html
->+1488986>pHihGD0xXrR2Dt82>02d>freemiumstatus isFreemiumUser=false
 >+826>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+466>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+382>pHihGD0xXrR2Dt82>02d>gettextselection mimetype=text/html
@@ -379,7 +375,6 @@
 >+781>pHihGD0xXrR2Dt82>02d>setclientpart part=2
 >+13270>pHihGD0xXrR2Dt82>02d>canceltiles
 >+149>pHihGD0xXrR2Dt82>02d>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+2941823>pHihGD0xXrR2Dt82>02d>freemiumstatus isFreemiumUser=false
 >+287>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+352>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+357>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
@@ -559,7 +554,6 @@
 >+4510>pHihGD0xXrR2Dt82>02d>canceltiles
 >+994>pHihGD0xXrR2Dt82>02d>tilecombine nviewid=0 part=3 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+902346>pHihGD0xXrR2Dt82>02d>mouse type=move x=60 y=-450 count=1 buttons=0 modifier=0
->+10010>pHihGD0xXrR2Dt82>02d>freemiumstatus isFreemiumUser=false
 >+1175>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+490>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+427>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
@@ -587,7 +581,6 @@
 >+1171302>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
 >+382>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=3 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=3 broadcast=no
 >+504284>pHihGD0xXrR2Dt82>02d>mouse type=move x=2835 y=5640 count=1 buttons=0 modifier=0
->+744147>pHihGD0xXrR2Dt82>02d>freemiumstatus isFreemiumUser=false
 >+968>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+848>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+3008>pHihGD0xXrR2Dt82>02d>mouse type=move x=-1935 y=7215 count=1 buttons=0 modifier=0
@@ -673,7 +666,6 @@
 >+3865>pHihGD0xXrR2Dt82>02d>setclientpart part=5
 >+13513>pHihGD0xXrR2Dt82>02d>canceltiles
 >+1583>pHihGD0xXrR2Dt82>02d>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+1550095>pHihGD0xXrR2Dt82>02d>freemiumstatus isFreemiumUser=false
 >+433>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+479>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+628>pHihGD0xXrR2Dt82>02d>gettextselection mimetype=text/html
@@ -932,7 +924,6 @@
 >+1981>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=5 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=5 broadcast=no
 >+4066932>pHihGD0xXrR2Dt82>02d>uno .uno:DeletePage
 >+358>pHihGD0xXrR2Dt82>02d>setclientpart part=3
->+861872>pHihGD0xXrR2Dt82>02d>freemiumstatus isFreemiumUser=false
 >+802>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+519>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+264>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
@@ -981,8 +972,7 @@
 >+10113124>pHihGD0xXrR2Dt82>02d>mouse type=move x=105 y=1770 count=1 buttons=0 modifier=0
 >+522627>pHihGD0xXrR2Dt82>02d>uno .uno:InsertAnnotation {"Text":{"type":"string","value":"Comments"},"Author":{"type":"string","value":"LocalUser#1"}}
 >+1085663>pHihGD0xXrR2Dt82>02d>clientvisiblearea x=0 y=-660 width=15540 height=13215 splitx=0 splity=0
->+311>pHihGD0xXrR2Dt82>02d>freemiumstatus isFreemiumUser=false
->+328>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
+>+311>pHihGD0xXrR2Dt82>02d>>+328>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+581>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+1650>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
 >+2172>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=3 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=3 broadcast=no
@@ -1009,7 +999,6 @@
 >+543>pHihGD0xXrR2Dt82>02d>setclientpart part=3
 >+23366>pHihGD0xXrR2Dt82>02d>canceltiles
 >+2089>pHihGD0xXrR2Dt82>02d>tilecombine nviewid=0 part=3 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+761935>pHihGD0xXrR2Dt82>02d>freemiumstatus isFreemiumUser=false
 >+3467>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+441>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+361>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
@@ -1421,7 +1410,6 @@
 >+125>pHihGD0xXrR2Dt82>02d>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+1314379>pHihGD0xXrR2Dt82>02d>mouse type=move x=7200 y=3825 count=1 buttons=0 modifier=0
 >+1020323>pHihGD0xXrR2Dt82>02d>mouse type=move x=15255 y=-660 count=1 buttons=0 modifier=0
->+2121032>pHihGD0xXrR2Dt82>02d>freemiumstatus isFreemiumUser=false
 >+325>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+433>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+4080>pHihGD0xXrR2Dt82>02d>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
@@ -1670,7 +1658,6 @@
 >+707>AUTT5BSR07Ovh3kp>1d5>commandvalues command=.uno:CharFontName
 >+746>AUTT5BSR07Ovh3kp>1d5>canceltiles
 >+958>AUTT5BSR07Ovh3kp>1d5>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+6211>AUTT5BSR07Ovh3kp>1d5>freemiumstatus isFreemiumUser=false
 >+385>AUTT5BSR07Ovh3kp>1d5>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+1455>AUTT5BSR07Ovh3kp>1d5>clientvisiblearea x=-1980 y=-660 width=19815 height=13215 splitx=0 splity=0
 >+780>AUTT5BSR07Ovh3kp>1d5>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
@@ -1708,7 +1695,6 @@
 >+11702>AUTT5BSR07Ovh3kp>1d5>setclientpart part=5
 >+1048>AUTT5BSR07Ovh3kp>1d5>canceltiles
 >+466>AUTT5BSR07Ovh3kp>1d5>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+839369>AUTT5BSR07Ovh3kp>1d5>freemiumstatus isFreemiumUser=false
 >+312>AUTT5BSR07Ovh3kp>1d5>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+473>AUTT5BSR07Ovh3kp>1d5>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+391>AUTT5BSR07Ovh3kp>1d5>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
@@ -1732,7 +1718,6 @@
 >+2996>AUTT5BSR07Ovh3kp>1d5>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+633092>AUTT5BSR07Ovh3kp>1d5>tile nviewid=0 part=4 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=4 broadcast=no
 >+376>AUTT5BSR07Ovh3kp>1d5>tile nviewid=0 part=5 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=5 broadcast=no
->+11289>AUTT5BSR07Ovh3kp>1d5>freemiumstatus isFreemiumUser=false
 >+1779>AUTT5BSR07Ovh3kp>1d5>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+392>AUTT5BSR07Ovh3kp>1d5>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+387>AUTT5BSR07Ovh3kp>1d5>canceltiles
@@ -1745,7 +1730,6 @@
 >+653>AUTT5BSR07Ovh3kp>1d5>tile nviewid=0 part=5 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=5 broadcast=no
 >+8904>AUTT5BSR07Ovh3kp>1d5>tile nviewid=0 part=6 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=6 broadcast=no
 >+747>AUTT5BSR07Ovh3kp>1d5>tile nviewid=0 part=6 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=6 broadcast=no
->+2364568>AUTT5BSR07Ovh3kp>1d5>freemiumstatus isFreemiumUser=false
 >+1489>AUTT5BSR07Ovh3kp>1d5>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+274>AUTT5BSR07Ovh3kp>1d5>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+251>AUTT5BSR07Ovh3kp>1d5>canceltiles
