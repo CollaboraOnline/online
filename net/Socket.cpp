@@ -462,8 +462,8 @@ int SocketPoll::poll(int64_t timeoutMaxMicroS)
             }
             catch (const std::exception& exc)
             {
-                LOG_ERR("Error while handling poll for socket #" <<
-                        _pollFds[i].fd << " at " << i << " in " << _name << ": " << exc.what());
+                LOG_ERR('#' << _pollFds[i].fd << " Error while handling poll at " << i << " in "
+                            << _name << ": " << exc.what());
                 disposition.setClosed();
                 rc = -1;
             }
@@ -860,7 +860,7 @@ std::shared_ptr<Socket> ServerSocket::accept()
             inet_ntop(clientInfo.sin6_family, inAddr, addrstr, sizeof(addrstr));
             _socket->setClientAddress(addrstr);
 
-            LOG_DBG("Accepted socket #" << _socket->getFD() << " has family "
+            LOG_TRC("Accepted socket #" << _socket->getFD() << " has family "
                                         << clientInfo.sin6_family << " address "
                                         << _socket->clientAddress());
 #endif

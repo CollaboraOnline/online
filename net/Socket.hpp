@@ -314,7 +314,7 @@ public:
     {
         if (id != _owner)
         {
-            LOG_DBG('#' << _fd << " thread affinity set to " << Log::to_string(id) << " (was "
+            LOG_TRC('#' << _fd << " thread affinity set to " << Log::to_string(id) << " (was "
                         << Log::to_string(_owner) << ')');
             _owner = id;
         }
@@ -325,7 +325,7 @@ public:
     {
         if (std::thread::id() != _owner)
         {
-            LOG_DBG('#' << _fd << " resetting thread affinity while in transit (was "
+            LOG_TRC('#' << _fd << " resetting thread affinity while in transit (was "
                         << Log::to_string(_owner) << ')');
             _owner = std::thread::id();
         }
@@ -372,7 +372,7 @@ protected:
         _ignoreInput = false;
         _sendBufferSize = DefaultSendBufferSize;
         _owner = std::this_thread::get_id();
-        LOG_DBG('#' << _fd << " Created socket. Thread affinity set to " << Log::to_string(_owner));
+        LOG_TRC('#' << _fd << " Created socket. Thread affinity set to " << Log::to_string(_owner));
 
 #if !MOBILEAPP
 #if ENABLE_DEBUG
@@ -735,7 +735,8 @@ public:
     {
         if (newSocket)
         {
-            LOG_DBG("Inserting socket #" << newSocket->getFD() << " into " << _name);
+            LOG_DBG("Inserting socket #" << newSocket->getFD() << ", address "
+                                         << newSocket->clientAddress() << ", into " << _name);
             // sockets in transit are un-owned.
             newSocket->resetThreadOwner();
 
@@ -1383,19 +1384,21 @@ public:
                 len = writeData(_outBuffer.getBlock(), size);
                 last_errno = errno; // Save right after the syscall.
 
-                LOG_TRC('#' << getFD() << ": Wrote outgoing data " << len << " bytes of "
-                            << _outBuffer.size() << " buffered bytes ("
-                            << Util::symbolicErrno(last_errno) << ": " << std::strerror(last_errno)
-                            << ')');
-
-#ifdef LOG_SOCKET_DATA
-                if (len > 0 && !_outBuffer.empty())
-                    LOG_TRC('#' << getFD() << " outBuffer (" << _outBuffer.size() << " bytes):\n"
-                                << Util::dumpHex(std::string(_outBuffer.getBlock(), len)));
-#endif
-
-                if (len <= 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
+                // 0 len is unspecified result, according to man write(2).
+                if (len < 0 && last_errno != EAGAIN && last_errno != EWOULDBLOCK)
                     LOG_SYS_ERRNO(last_errno, '#' << getFD() << ": Socket write returned " << len);
+                else if (len <= 0) // Trace errno for debugging, even for "unspecified result."
+                    LOG_TRC('#' << getFD() << ": Write failed, have " << _outBuffer.size()
+                                << " buffered bytes (" << Util::symbolicErrno(last_errno) << ": "
+                                << std::strerror(last_errno) << ')');
+                else // Success.
+                    LOG_TRC('#' << getFD() << ": Wrote " << len << " bytes of " << _outBuffer.size()
+                                << " buffered data"
+#ifdef LOG_SOCKET_DATA
+                                << ":\n"
+                                << Util::dumpHex(std::string(_outBuffer.getBlock(), len))
+#endif
+                    );
             }
             while (len < 0 && last_errno == EINTR);
 

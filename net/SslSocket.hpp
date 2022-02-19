@@ -8,6 +8,8 @@
 #pragma once
 
 #include <cerrno>
+#include <sstream>
+#include <string>
 
 #include "Ssl.hpp"
 #include "Socket.hpp"
@@ -25,7 +27,7 @@ public:
         , _sslWantsTo(SslWantsTo::Neither)
         , _doHandshake(true)
     {
-        LOG_DBG("SslStreamSocket ctor #" << fd);
+        LOG_TRC("SslStreamSocket ctor #" << fd);
 
         _bio = BIO_new(BIO_s_socket());
         if (_bio == nullptr)
@@ -62,7 +64,7 @@ public:
 
     ~SslStreamSocket()
     {
-        LOG_DBG("SslStreamSocket dtor #" << getFD());
+        LOG_TRC("SslStreamSocket dtor #" << getFD());
 
         if (!isShutdownSignalled())
         {
@@ -275,8 +277,9 @@ private:
             if (last_errno != 0)
             {
                 // Posix API error, let the caller handle.
-                LOG_SYS_ERRNO(last_errno,
-                              "Socket #" << getFD() << " SSL error: SYSCALL (" << sslError << ')');
+                LOG_TRC("Socket #" << getFD() << " SSL error: SYSCALL error " << sslError << " ("
+                                   << Util::symbolicErrno(last_errno) << ": "
+                                   << std::strerror(last_errno) << ')');
                 errno = last_errno; // Restore errno.
                 return rc;
             }
@@ -325,29 +328,25 @@ private:
                     }
                     else if (rc == -1)
                     {
-                        LOG_SYS_ERRNO(last_errno,
-                                      "Socket #" << getFD()
-                                                 << " SSL BIO error: closed unexpectedly (-1)");
                         errno = last_errno; // Restore errno.
-                        throw std::runtime_error("SSL Socket closed unexpectedly.");
+                        throw std::runtime_error('#' + std::to_string(getFD()) +
+                                                 " SSL BIO error: socket closed unexpectedly (-1)");
                     }
                     else
                     {
-                        LOG_SYS_ERRNO(last_errno, "Socket #" << getFD()
-                                                             << " SSL BIO error: unknown (" << rc
-                                                             << ')');
                         errno = last_errno; // Restore errno.
-                        throw std::runtime_error("SSL BIO reported error [" + std::to_string(rc)
-                                                 + ']');
+                        throw std::runtime_error('#' + std::to_string(getFD()) +
+                                                 " SSL BIO error: unknown (" + std::to_string(rc) +
+                                                 ')');
                     }
                 }
                 else
                 {
                     char buf[512];
                     ERR_error_string_n(bioError, buf, sizeof(buf));
-                    LOG_SYS_ERRNO(last_errno, "Socket #" << getFD() << " SSL BIO error: " << buf);
                     errno = last_errno; // Restore errno.
-                    throw std::runtime_error(buf);
+                    throw std::runtime_error('#' + std::to_string(getFD()) +
+                                             " SSL BIO error: " + buf);
                 }
             }
             break;

@@ -425,7 +425,7 @@ void TileCache::subscribeToTileRendering(const TileDesc& tile, const std::shared
         {
             if (s.lock().get() == subscriber.get())
             {
-                LOG_DBG("Redundant request to subscribe on tile " << tile.debugName());
+                LOG_TRC("Redundant request to subscribe on tile " << tile.debugName());
                 tileBeingRendered->setVersion(tile.getVersion());
                 return;
             }

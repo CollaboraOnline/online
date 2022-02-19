@@ -1421,17 +1421,16 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
     StorageBase::AsyncUploadCallback asyncUploadCallback =
         [this](const StorageBase::AsyncUpload& asyncUp)
     {
-        LOG_TRC("onAsyncUploadCallback");
         switch (asyncUp.state())
         {
             case StorageBase::AsyncUpload::State::Running:
-                LOG_DBG("Async upload of [" << _docKey << "] is in progress during "
+                LOG_TRC("Async upload of [" << _docKey << "] is in progress during "
                                             << DocumentState::toString(_docState.activity()));
                 return;
 
             case StorageBase::AsyncUpload::State::Complete:
             {
-                LOG_DBG("Finished uploading [" << _docKey << "] during "
+                LOG_TRC("Finished uploading [" << _docKey << "] during "
                                                << DocumentState::toString(_docState.activity())
                                                << ", processing results.");
                 return handleUploadToStorageResponse(asyncUp.result());
@@ -1618,8 +1617,8 @@ void DocumentBroker::handleUploadToStorageResponse(const StorageBase::UploadResu
         if (_docState.isUnloadRequested())
         {
             // We just uploaded, flag to destroy if unload is requested.
+            LOG_DBG("Unload requested after uploading, marking to destroy.");
             _docState.markToDestroy();
-            LOG_TRC("Unload requested after uploading, marking to destroy.");
         }
 
         // If marked to destroy, and there are no late-arriving modifications, then stop.
@@ -1909,11 +1908,9 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
                                         << "] but will wait for isModified to clear.");
                     return;
                 }
-                else
-                {
-                    LOG_WRN("Will stop " << reason << " DocumentBroker for docKey [" << getDocKey()
-                                         << "] even with isModified, which is not clearing.");
-                }
+
+                LOG_WRN("Will stop " << reason << " DocumentBroker for docKey [" << getDocKey()
+                                     << "] even with isModified, which is not clearing.");
             }
 
             // Nothing to upload and last save was successful; stop.

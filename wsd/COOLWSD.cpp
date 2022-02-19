@@ -2702,7 +2702,7 @@ private:
         if (!socket->parseHeader("Client", startmessage, request, &map))
             return;
 
-        LOG_INF("Handling request: " << request.getURI());
+        LOG_DBG("Handling request: " << request.getURI());
         try
         {
             // We may need to re-write the chunks moving the inBuffer.
@@ -2930,7 +2930,7 @@ private:
     {
         assert(socket && "Must have a valid socket");
 
-        LOG_DBG("Favicon request: " << requestDetails.getURI());
+        LOG_TRC("Favicon request: " << requestDetails.getURI());
         std::string mimeType = "image/vnd.microsoft.icon";
         std::string faviconPath = Path(Application::instance().commandPath()).parent().toString() + "favicon.ico";
         if (!File(faviconPath).exists())
@@ -3655,7 +3655,7 @@ private:
             bool isReadOnly = false;
             for (const auto& param : uriPublic.getQueryParameters())
             {
-                LOG_DBG("Query param: " << param.first << ", value: " << param.second);
+                LOG_TRC("Query param: " << param.first << ", value: " << param.second);
                 if (param.first == "permission" && param.second == "readonly")
                 {
                     isReadOnly = true;
