@@ -1301,7 +1301,7 @@ void WopiStorage::uploadLocalFileToStorageAsync(const Authorization& auth, LockC
 
             _wopiSaveDuration = std::chrono::duration_cast<std::chrono::milliseconds>(
                 std::chrono::steady_clock::now() - startTime);
-            LOG_DBG("Finished async uploading in " << _wopiSaveDuration);
+            LOG_TRC("Finished async uploading in " << _wopiSaveDuration);
 
             WopiUploadDetails details = { filePathAnonym,
                                           uriAnonym,

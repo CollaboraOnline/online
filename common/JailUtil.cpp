@@ -368,7 +368,7 @@ bool updateDynamicFilesImpl(const std::string& sysTemplate)
         const std::string srcFilename = FileUtil::realpath(dynFilename);
         if (srcFilename != dynFilename)
         {
-            LOG_DBG("Dynamic file [" << dynFilename << "] points to real path [" << srcFilename
+            LOG_TRC("Dynamic file [" << dynFilename << "] points to real path [" << srcFilename
                                      << "], which will be used instead.");
         }
 
@@ -383,7 +383,7 @@ bool updateDynamicFilesImpl(const std::string& sysTemplate)
         // Is it outdated?
         if (dstStat.isUpToDate(srcStat))
         {
-            LOG_DBG("File [" << dstFilename << "] is already up-to-date.");
+            LOG_TRC("File [" << dstFilename << "] is already up-to-date.");
             continue;
         }
 

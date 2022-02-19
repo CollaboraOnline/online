@@ -170,7 +170,7 @@ public:
             if (it != _cache.end())
             {
                 ++_cacheHits;
-                LOG_DBG("PNG cache with hash " << hash << " hit.");
+                LOG_TRC("PNG cache with hash " << hash << " hit.");
                 output.insert(output.end(),
                               it->second.getData()->begin(),
                               it->second.getData()->end());
@@ -181,7 +181,7 @@ public:
             }
         }
 
-        LOG_DBG("PNG cache with hash " << hash << " missed.");
+        LOG_TRC("PNG cache with hash " << hash << " missed.");
         return false;
     }
 
@@ -511,7 +511,7 @@ namespace RenderTiles
             }
             else
             {
-                LOG_DBG("PNG cache with hash " << hash << " missed.");
+                LOG_TRC("PNG cache with hash " << hash << " missed.");
 
                 // Don't re-compress the same thing multiple times.
                 for (auto id : renderingIds)
@@ -538,7 +538,7 @@ namespace RenderTiles
                         PngCache::CacheData data(new std::vector< char >() );
                         data->reserve(pixmapWidth * pixmapHeight * 1);
 
-                        LOG_DBG("Encode a new png for tile #" << tileIndex);
+                        LOG_TRC("Encode a new png for tile #" << tileIndex);
                         if (!Png::encodeSubBufferToPNG(pixmap.data(), offsetX, offsetY, pixelWidth, pixelHeight,
                                                        pixmapWidth, pixmapHeight, *data, mode))
                         {
@@ -548,7 +548,7 @@ namespace RenderTiles
                             return;
                         }
 
-                        LOG_DBG("Tile " << tileIndex << " is " << data->size() << " bytes.");
+                        LOG_TRC("Tile " << tileIndex << " is " << data->size() << " bytes.");
                         std::unique_lock<std::mutex> pngLock(pngMutex);
                         output.insert(output.end(), data->begin(), data->end());
                         pngCache.addToCache(data, wireId, hash);
