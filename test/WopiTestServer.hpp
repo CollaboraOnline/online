@@ -105,16 +105,32 @@ protected:
         _wopiSrc.clear();
         Poco::URI::encode(wopiURL.toString(), ":/?", _wopiSrc);
 
-        LOG_TST("Connecting to the fake WOPI server: /cool/" << _wopiSrc << "/ws");
+        // This is just a client connection that is used from the tests.
+        // It really has nothing to do with this fake WOPI server, exept
+        // that it manages it since it is the base of WOPI tests, so
+        // it's a common bit of housekeeping that all WOPI tests must do.
+        LOG_TST("Connecting test client to COOL (#" << (_wsList.size() + 1)
+                                                    << " connection): /cool/" << _wopiSrc << "/ws");
 
-        const auto& _ws = _wsList.emplace(_wsList.begin(), std::unique_ptr<UnitWebSocket>(new UnitWebSocket("/cool/" + _wopiSrc + "/ws")));
+        // Insert at the front.
+        const auto& _ws = _wsList.emplace(
+            _wsList.begin(), Util::make_unique<UnitWebSocket>("/cool/" + _wopiSrc + "/ws"));
+
         assert((*_ws).get());
     }
 
     void addWebSocket()
     {
-        LOG_TST("Adding additional socket to the fake WOPI server: /cool/" << _wopiSrc << "/ws");
-        const auto& _ws = _wsList.emplace(_wsList.end(), std::unique_ptr<UnitWebSocket>(new UnitWebSocket("/cool/" + _wopiSrc + "/ws")));
+        // This is just a client connection that is used from the tests.
+        // It really has nothing to do with this fake WOPI server, exept
+        // that it manages it since it is the base of WOPI tests, so
+        // it's a common bit of housekeeping that all WOPI tests must do.
+        LOG_TST("Connecting test client to COOL (#" << (_wsList.size() + 1)
+                                                    << " connection): /cool/" << _wopiSrc << "/ws");
+
+        // Insert at the back.
+        const auto& _ws = _wsList.emplace(
+            _wsList.end(), Util::make_unique<UnitWebSocket>("/cool/" + _wopiSrc + "/ws"));
 
         assert((*_ws).get());
     }
