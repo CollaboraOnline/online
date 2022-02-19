@@ -282,6 +282,10 @@ public:
             // eg. tileprocessed tile=0:9216:0:3072:3072:0
             TileDesc desc = TileDesc::parse(tokens);
             sendMessage("tileprocessed tile=" + desc.generateID());
+            std::cerr << "Sent tileprocessed tile= " + desc.generateID() << "\n";
+        } if (tokens.equals(0, "error:")) {
+            std::cerr << "Error: " << firstLine << "\n";
+            exit(1);
         }
 
         // FIXME: implement code to send new view-ports based

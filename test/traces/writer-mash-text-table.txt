@@ -9,7 +9,6 @@
 >3129678>HWCp8Bcln3Hg7xKN>02d>commandvalues command=.uno:ViewAnnotations
 >3129921>HWCp8Bcln3Hg7xKN>02d>commandvalues command=.uno:StyleApply
 >3130160>HWCp8Bcln3Hg7xKN>02d>commandvalues command=.uno:CharFontName
->3225449>HWCp8Bcln3Hg7xKN>02d>freemiumstatus isFreemiumUser=false
 >3241335>HWCp8Bcln3Hg7xKN>02d>clientvisiblearea x=-2625 y=-3705 width=18060 height=23805 splitx=0 splity=0
 >3241571>HWCp8Bcln3Hg7xKN>02d>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3072 tiletwipheight=3072
 >3241992>HWCp8Bcln3Hg7xKN>02d>canceltiles
@@ -1735,7 +1734,6 @@
 >158565088>HWCp8Bcln3Hg7xKN>02d>clientvisiblearea x=-2625 y=-3240 width=18060 height=22890 splitx=0 splity=0
 >158650029>HWCp8Bcln3Hg7xKN>02d>clientvisiblearea x=-375 y=-3240 width=13560 height=22890 splitx=0 splity=0
 >158650639>HWCp8Bcln3Hg7xKN>02d>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216 tileposy=12288,12288,12288,12288 tilewidth=3072 tileheight=3072
->158653112>HWCp8Bcln3Hg7xKN>02d>freemiumstatus isFreemiumUser=false
 >159694572>HWCp8Bcln3Hg7xKN>02d>mouse type=move x=6555 y=4727.999954999999 count=1 buttons=0 modifier=0
 >160113528>HWCp8Bcln3Hg7xKN>02d>mouse type=move x=5805 y=-3177.0000450000002 count=1 buttons=0 modifier=0
 >166327972>HWCp8Bcln3Hg7xKN>02d>mouse type=move x=5670 y=11912.999955 count=1 buttons=0 modifier=0
@@ -1743,7 +1741,6 @@
 >167055527>HWCp8Bcln3Hg7xKN>02d>mouse type=buttonup x=2820 y=14447.999955 count=1 buttons=1 modifier=0
 >167056464>HWCp8Bcln3Hg7xKN>02d>mouse type=move x=2820 y=14447.999955 count=1 buttons=0 modifier=0
 >167366366>HWCp8Bcln3Hg7xKN>02d>key type=input char=0 key=9472
->167393146>HWCp8Bcln3Hg7xKN>02d>freemiumstatus isFreemiumUser=false
 >167399549>HWCp8Bcln3Hg7xKN>02d>clientvisiblearea x=-375 y=0 width=13560 height=22890 splitx=0 splity=0
 >167399858>HWCp8Bcln3Hg7xKN>02d>canceltiles
 >167401039>HWCp8Bcln3Hg7xKN>02d>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288,0,3072,6144,9216,12288 tileposy=0,0,0,0,0,3072,3072,3072,3072,3072,6144,6144,6144,6144,6144,9216,9216,9216,9216,9216,12288,12288,12288,12288,12288,15360,15360,15360,15360,15360,18432,18432,18432,18432,18432,21504,21504,21504,21504,21504 tilewidth=3072 tileheight=3072

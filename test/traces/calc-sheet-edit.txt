@@ -13,12 +13,10 @@
 >+303>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:CharFontName
 >+256>5F60VM3GSNLKvaFE>001>canceltiles
 >+4179>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+1362>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+265>5F60VM3GSNLKvaFE>001>clientvisiblearea x=0 y=0 width=22125 height=11745 splitx=0 splity=0
 >+263>5F60VM3GSNLKvaFE>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
 >+238>5F60VM3GSNLKvaFE>001>canceltiles
 >+2268>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+3068121>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+249>5F60VM3GSNLKvaFE>001>canceltiles
 >+2149>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+1499>5F60VM3GSNLKvaFE>001>mouse type=move x=1950 y=135 count=1 buttons=0 modifier=0
@@ -36,7 +34,6 @@
 >+433267>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+406>5F60VM3GSNLKvaFE>001>paintwindow 2 rectangle=0,0,1384,28 dpiscale=1
 >+5137>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
->+2069>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+154>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData
 >+8684>5F60VM3GSNLKvaFE>001>canceltiles
 >+125>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
@@ -60,7 +57,6 @@
 >+722361>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3840&tileWidth=3840
 >+972>5F60VM3GSNLKvaFE>001>gettextselection mimetype=text/html
 >+464383>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
->+7081>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+10980>5F60VM3GSNLKvaFE>001>canceltiles
 >+535425>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=3 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+995>5F60VM3GSNLKvaFE>001>paintwindow 2 rectangle=0,0,1384,28 dpiscale=1
@@ -68,7 +64,6 @@
 >+1340>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+3225211>5F60VM3GSNLKvaFE>001>uno .uno:Insert {"Name":{"type":"string","value":""},"Index":{"type":"long","value":7}}
 >+30795>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
->+1739>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+292>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData
 >+798813>5F60VM3GSNLKvaFE>001>canceltiles
 >+222>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
@@ -104,13 +99,11 @@
 >+18023>5F60VM3GSNLKvaFE>001>uno .uno:Insert {"Name":{"type":"string","value":""},"Index":{"type":"long","value":8}}
 >+603733>5F60VM3GSNLKvaFE>001>setclientpart part=7
 >+309>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData?columns=1&rows=1&sizes=1&hidden=1&filtered=1&groups=1
->+5038>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+327>5F60VM3GSNLKvaFE>001>canceltiles
 >+5073>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+1159>5F60VM3GSNLKvaFE>001>gettextselection mimetype=text/html
 >+532>5F60VM3GSNLKvaFE>001>uno .uno:Insert {"Name":{"type":"string","value":""},"Index":{"type":"long","value":11}}
 >+834914>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
->+459>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+359>5F60VM3GSNLKvaFE>001>canceltiles
 >+2674>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+7324>5F60VM3GSNLKvaFE>001>uno .uno:Insert {"Name":{"type":"string","value":""},"Index":{"type":"long","value":13}}
@@ -144,12 +137,10 @@
 >+387>5F60VM3GSNLKvaFE>001>mouse type=move x=690 y=105 count=1 buttons=0 modifier=0
 >+429>5F60VM3GSNLKvaFE>001>mouse type=buttondown x=690 y=105 count=1 buttons=1 modifier=0
 >+1329>5F60VM3GSNLKvaFE>001>mouse type=buttonup x=690 y=105 count=1 buttons=1 modifier=0
->+325484>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+237>5F60VM3GSNLKvaFE>001>canceltiles
 >+392>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=12 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+1330>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+2306>5F60VM3GSNLKvaFE>001>gettextselection mimetype=text/html
->+4325>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+521269>5F60VM3GSNLKvaFE>001>canceltiles
 >+4098>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=12 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+4030>5F60VM3GSNLKvaFE>001>key type=input char=0 key=20
@@ -161,7 +152,6 @@
 >+18177>5F60VM3GSNLKvaFE>001>canceltiles
 >+2162>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+401014>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
->+483>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+330>5F60VM3GSNLKvaFE>001>canceltiles
 >+224>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+5258>5F60VM3GSNLKvaFE>001>paintwindow 2 rectangle=2,2,161,24 dpiscale=1
@@ -1414,7 +1404,6 @@
 >+351>5F60VM3GSNLKvaFE>001>mouse type=move x=12330 y=390 count=1 buttons=0 modifier=0
 >+323>5F60VM3GSNLKvaFE>001>windowmouse id=2 type=move x=388 y=36 count=1 buttons=0 modifier=0
 >+424>5F60VM3GSNLKvaFE>001>windowmouse id=2 type=move x=381 y=36 count=1 buttons=0 modifier=0
->+10947>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+442314>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+577>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData?rows=1&sizes=1
 >+3664>5F60VM3GSNLKvaFE>001>paintwindow 2 rectangle=2,2,161,24 dpiscale=1
@@ -1552,7 +1541,6 @@
 >+781653>5F60VM3GSNLKvaFE>001>mouse type=move x=15855 y=4755 count=1 buttons=0 modifier=0
 >+396>5F60VM3GSNLKvaFE>001>mouse type=buttondown x=15855 y=4755 count=1 buttons=1 modifier=0
 >+398>5F60VM3GSNLKvaFE>001>mouse type=buttonup x=15855 y=4755 count=1 buttons=1 modifier=0
->+546028>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+262>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+4457>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData?rows=1&sizes=1
 >+945>5F60VM3GSNLKvaFE>001>paintwindow 2 rectangle=2,2,161,24 dpiscale=1
@@ -1707,7 +1695,6 @@
 >+484>5F60VM3GSNLKvaFE>001>mouse type=move x=14715 y=3270 count=1 buttons=0 modifier=0
 >+470>5F60VM3GSNLKvaFE>001>mouse type=buttondown x=14715 y=3270 count=2 buttons=1 modifier=0
 >+415>5F60VM3GSNLKvaFE>001>mouse type=buttonup x=14715 y=3270 count=2 buttons=1 modifier=0
->+1160262>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+242>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData?rows=1&sizes=1
 >+302>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+229>5F60VM3GSNLKvaFE>001>paintwindow 2 rectangle=2,0,1661,26 dpiscale=1
@@ -1853,7 +1840,6 @@
 >+2851608>5F60VM3GSNLKvaFE>001>uno .uno:SetBorderStyle {"OuterBorder":{"type":"[]any","value":[{"type":"com.sun.star.table.BorderLine2","value":{"Color":{"type":"com.sun.star.util.Color","value":0},"InnerLineWidth":{"type":"short","value":0},"OuterLineWidth":{"type":"short","value":1},"LineDistance":{"type":"short","value":0},"LineStyle":{"type":"short","value":0},"LineWidth":{"type":"unsigned long","value":0}}},{"type":"com.sun.star.table.BorderLine2","value":{"Color":{"type":"com.sun.star.util.Color","value":0},"InnerLineWidth":{"type":"short","value":0},"OuterLineWidth":{"type":"short","value":1},"LineDistance":{"type":"short","value":0},"LineStyle":{"type":"short","value":0},"LineWidth":{"type":"unsigned long","value":0}}},{"type":"com.sun.star.table.BorderLine2","value":{"Color":{"type":"com.sun.star.util.Color","value":0},"InnerLineWidth":{"type":"short","value":0},"OuterLineWidth":{"type":"short","value":1},"LineDistance":{"type":"short","value":0},"LineStyle":{"type":"short","value":0},"LineWidth":{"type":"unsigned long","value":0}}},{"type":"com.sun.star.table.BorderLine2","value":{"Color":{"type":"com.sun.star.util.Color","value":0},"InnerLineWidth":{"type":"short","value":0},"OuterLineWidth":{"type":"short","value":1},"LineDistance":{"type":"short","value":0},"LineStyle":{"type":"short","value":0},"LineWidth":{"type":"unsigned long","value":0}}},{"type":"long","value":0},{"type":"long","value":0},{"type":"long","value":0},{"type":"long","value":0},{"type":"long","value":0}]},"InnerBorder":{"type":"[]any","value":[{"type":"com.sun.star.table.BorderLine2","value":{"Color":{"type":"com.sun.star.util.Color","value":0},"InnerLineWidth":{"type":"short","value":0},"OuterLineWidth":{"type":"short","value":1},"LineDistance":{"type":"short","value":0},"LineStyle":{"type":"short","value":0},"LineWidth":{"type":"unsigned long","value":0}}},{"type":"com.sun.star.table.BorderLine2","value":{"Color":{"type":"com.sun.star.util.Color","value":0},"InnerLineWidth":{"type":"short","value":0},"OuterLineWidth":{"type":"short","value":0},"LineDistance":{"type":"short","value":0},"LineStyle":{"type":"short","value":0},"LineWidth":{"type":"unsigned long","value":0}}},{"type":"short","value":0},{"type":"short","value":127},{"type":"long","value":0}]}}
 >+735008>5F60VM3GSNLKvaFE>001>gettextselection mimetype=text/html
 >+396>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360 tileposy=15360,15360,15360,15360,15360 tilewidth=3840 tileheight=3840
->+497732>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+1123>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData?rows=1&sizes=1
 >+408>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+767368>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360 tileposy=15360,15360,15360,15360,15360 tilewidth=3840 tileheight=3840
@@ -1875,7 +1861,6 @@
 >+428239>5F60VM3GSNLKvaFE>001>dialogevent 42 {"id":"border1", "cmd": "click", "data": "outside", "type": "toolbox"}
 >+711250>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=26880 tileposy=0 tilewidth=3840 tileheight=3840
 >+348>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=15360,19200,23040,26880 tileposy=19200,19200,19200,19200 tilewidth=3840 tileheight=3840
->+313036>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+277>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData?rows=1&sizes=1
 >+408>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+396342>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360 tileposy=19200,19200,19200,19200,19200 tilewidth=3840 tileheight=3840
@@ -1968,7 +1953,6 @@
 >+731351>5F60VM3GSNLKvaFE>001>gettextselection mimetype=text/html
 >+463>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=26880 tileposy=0 tilewidth=3840 tileheight=3840
 >+1467>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=23040 tileposy=11520 tilewidth=3840 tileheight=3840
->+552128>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+271>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData?rows=1&sizes=1
 >+684>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+913578>5F60VM3GSNLKvaFE>001>gettextselection mimetype=text/html
@@ -2306,7 +2290,6 @@
 >+619986>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=23040,23040,23040 tileposy=0,3840,7680 tilewidth=3840 tileheight=3840
 >+477>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=19200,23040 tileposy=15360,15360 tilewidth=3840 tileheight=3840
 >+11102>5F60VM3GSNLKvaFE>001>paintwindow 2 rectangle=68,5,1273,17 dpiscale=1
->+9009>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+550198>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData?rows=1&sizes=1
 >+428>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+1074>5F60VM3GSNLKvaFE>001>gettextselection mimetype=text/html
@@ -2433,7 +2416,6 @@
 >+564>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+1132792>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+473>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
->+649>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+342>5F60VM3GSNLKvaFE>001>clientvisiblearea x=0 y=13755 width=22125 height=11745 splitx=0 splity=0
 >+463>5F60VM3GSNLKvaFE>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
 >+430>5F60VM3GSNLKvaFE>001>canceltiles
@@ -2459,7 +2441,6 @@
 >+648766>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+475>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData?columns=1&sizes=1&hidden=1&filtered=1
 >+428>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
->+1004>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+3888>5F60VM3GSNLKvaFE>001>mouse type=move x=2490 y=4485 count=1 buttons=0 modifier=0
 >+630403>5F60VM3GSNLKvaFE>001>gettextselection mimetype=text/html
 >+428>5F60VM3GSNLKvaFE>001>mouse type=move x=4620 y=2115 count=1 buttons=0 modifier=0
@@ -2467,7 +2448,6 @@
 >+699>5F60VM3GSNLKvaFE>001>mouse type=buttondown x=4620 y=2115 count=1 buttons=4 modifier=0
 >+494>5F60VM3GSNLKvaFE>001>mouse type=buttonup x=4620 y=2115 count=1 buttons=4 modifier=0
 >+740058>5F60VM3GSNLKvaFE>001>gettextselection mimetype=text/html
->+5440>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+566427>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=7680,11520 tileposy=0,0 tilewidth=3840 tileheight=3840
 >+876>5F60VM3GSNLKvaFE>001>mouse type=move x=5385 y=30 count=1 buttons=0 modifier=0
 >+696131>5F60VM3GSNLKvaFE>001>paintwindow 2 rectangle=2,2,1339,24 dpiscale=1
@@ -2534,7 +2514,6 @@
 >+576>5F60VM3GSNLKvaFE>001>canceltiles
 >+1462>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=23 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+643535>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
->+347>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+256>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData
 >+287>5F60VM3GSNLKvaFE>001>canceltiles
 >+2108>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=22 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
@@ -2572,7 +2551,6 @@
 >+1184987>5F60VM3GSNLKvaFE>001>uno .uno:Insert {"Name":{"type":"string","value":""},"Index":{"type":"long","value":25}}
 >+594>5F60VM3GSNLKvaFE>001>setclientpart part=24
 >+482>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData?columns=1&rows=1&sizes=1&hidden=1&filtered=1&groups=1
->+666>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+292>5F60VM3GSNLKvaFE>001>canceltiles
 >+5004>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=24 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+1652>5F60VM3GSNLKvaFE>001>uno .uno:Insert {"Name":{"type":"string","value":""},"Index":{"type":"long","value":30}}
@@ -2583,17 +2561,14 @@
 >+424>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData?columns=1&rows=1&sizes=1&hidden=1&filtered=1&groups=1
 >+524>5F60VM3GSNLKvaFE>001>canceltiles
 >+2481>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=29 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+1136610>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+227>5F60VM3GSNLKvaFE>001>canceltiles
 >+2074>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=24 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+2485900>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+13854>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=3840&tileWidth=3840
->+650>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+237>5F60VM3GSNLKvaFE>001>canceltiles
 >+622>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=24 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+683275>5F60VM3GSNLKvaFE>001>gettextselection mimetype=text/html
 >+2849847>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:ViewAnnotationsPosition
->+1951>5F60VM3GSNLKvaFE>001>freemiumstatus isFreemiumUser=false
 >+298>5F60VM3GSNLKvaFE>001>commandvalues command=.uno:SheetGeometryData
 >+421>5F60VM3GSNLKvaFE>001>canceltiles
 >+2286>5F60VM3GSNLKvaFE>001>tilecombine nviewid=0 part=29 width=256 height=256 tileposx=0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200,0,3840,7680,11520,15360,19200 tileposy=0,0,0,0,0,0,3840,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840

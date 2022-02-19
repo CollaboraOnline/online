@@ -6,7 +6,6 @@
 >+1112136>JAS3oubZPeri3ovV>001>requestloksession
 >+947760>JAS3oubZPeri3ovV>001>canceltiles
 >+116>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
->+554>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
 >+172>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
 >+367>JAS3oubZPeri3ovV>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=1920 tiletwipheight=1920
 >+305>JAS3oubZPeri3ovV>001>canceltiles
@@ -21,7 +20,6 @@
 >+500>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
 >+1491>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
 >+2938>JAS3oubZPeri3ovV>001>resizewindow 2 size=273,29
->+775769>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
 >+446>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=8910 splitx=0 splity=0
 >+595>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,1920,3840 tileposy=7680,7680,7680 tilewidth=1920 tileheight=1920
 >+693697>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
@@ -122,7 +120,6 @@
 >+3123092>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
 >+26480>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
 >+33145>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
->+304016>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
 >+299>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=2310 width=4650 height=1620 splitx=0 splity=0
 >+417>JAS3oubZPeri3ovV>001>canceltiles
 >+149>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,1920,3840,0,1920,3840 tileposy=1920,1920,1920,3840,3840,3840 tilewidth=1920 tileheight=1920
@@ -167,14 +164,12 @@
 >+1109747>JAS3oubZPeri3ovV>001>rendershapeselection mimetype=image/svg+xml
 >+441289>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
 >+3407>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
->+772>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
 >+437>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
 >+898>JAS3oubZPeri3ovV>001>canceltiles
 >+403>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
 >+421685>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
 >+889749>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
 >+3169>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,-42,544,102 dpiscale=2
->+637074>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
 >+264>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=3675 splitx=0 splity=0
 >+522>JAS3oubZPeri3ovV>001>canceltiles
 >+174>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920 tilewidth=1920 tileheight=1920
@@ -206,7 +201,6 @@
 >+258729>JAS3oubZPeri3ovV>001>commandvalues command=.uno:SheetGeometryData?rows=1&sizes=1
 >+191488>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
 >+201488>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
->+624>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
 >+6511>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=6690 splitx=0 splity=0
 >+440>JAS3oubZPeri3ovV>001>canceltiles
 >+197>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
@@ -214,7 +208,6 @@
 >+1042572>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
 >+123723>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
 >+275573>JAS3oubZPeri3ovV>001>gettextselection mimetype=text/html
->+368>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
 >+205>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=3675 splitx=0 splity=0
 >+3915676>JAS3oubZPeri3ovV>001>uno .uno:ArrowShapes.circular-arrow
 >+1051677>JAS3oubZPeri3ovV>001>rendershapeselection mimetype=image/svg+xml
@@ -246,7 +239,6 @@
 >+1305>JAS3oubZPeri3ovV>001>commandvalues command=.uno:CellCursor?outputHeight=256&outputWidth=256&tileHeight=1920&tileWidth=1920
 >+583>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
 >+511522>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
->+580>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
 >+331>JAS3oubZPeri3ovV>001>canceltiles
 >+1876>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
 >+2194801>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
@@ -259,7 +251,6 @@
 >+588>JAS3oubZPeri3ovV>001>dialogevent -1 {"id":"-1"}
 >+349>JAS3oubZPeri3ovV>001>uno .uno:Insert {"Name":{"type":"string","value":""},"Index":{"type":"long","value":9}}
 >+1556076>JAS3oubZPeri3ovV>001>commandvalues command=.uno:ViewAnnotationsPosition
->+652>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
 >+354>JAS3oubZPeri3ovV>001>commandvalues command=.uno:SheetGeometryData
 >+541>JAS3oubZPeri3ovV>001>canceltiles
 >+782>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,1920,3840,0,1920,3840,0,1920,3840,0,1920,3840 tileposy=0,0,0,1920,1920,1920,3840,3840,3840,5760,5760,5760 tilewidth=1920 tileheight=1920
@@ -305,7 +296,6 @@
 >+869414>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2
 >+363>JAS3oubZPeri3ovV>001>clientvisiblearea x=0 y=0 width=4650 height=2955 splitx=0 splity=0
 >+248>JAS3oubZPeri3ovV>001>key type=input char=0 key=769
->+173514>JAS3oubZPeri3ovV>001>freemiumstatus isFreemiumUser=false
 >+429>JAS3oubZPeri3ovV>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,1920 tileposy=0,0 tilewidth=1920 tileheight=1920
 >+605>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=22,10,436,34 dpiscale=2
 >+2225985>JAS3oubZPeri3ovV>001>paintwindow 2 rectangle=0,0,544,56 dpiscale=2

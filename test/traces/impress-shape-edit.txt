@@ -14,7 +14,6 @@
 >+221>Zpw35k42cC20faEL>001>commandvalues command=.uno:CharFontName
 >+212>Zpw35k42cC20faEL>001>canceltiles
 >+1547>Zpw35k42cC20faEL>001>tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+3559>Zpw35k42cC20faEL>001>freemiumstatus isFreemiumUser=false
 >+409>Zpw35k42cC20faEL>001>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+557>Zpw35k42cC20faEL>001>clientvisiblearea x=-2085 y=-195 width=20040 height=12300 splitx=0 splity=0
 >+545>Zpw35k42cC20faEL>001>clientzoom tilepixelwidth=256 tilepixelheight=256 tiletwipwidth=3840 tiletwipheight=3840
@@ -28,7 +27,6 @@
 >+434>Zpw35k42cC20faEL>001>setclientpart part=1
 >+468>Zpw35k42cC20faEL>001>canceltiles
 >+169>Zpw35k42cC20faEL>001>tilecombine nviewid=0 part=1 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+1188340>Zpw35k42cC20faEL>001>freemiumstatus isFreemiumUser=false
 >+713010>Zpw35k42cC20faEL>001>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+318>Zpw35k42cC20faEL>001>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+331>Zpw35k42cC20faEL>001>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
@@ -259,7 +257,6 @@
 >+501>Zpw35k42cC20faEL>001>setclientpart part=2
 >+11523>Zpw35k42cC20faEL>001>canceltiles
 >+1234>Zpw35k42cC20faEL>001>tilecombine nviewid=0 part=2 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+1083744>Zpw35k42cC20faEL>001>freemiumstatus isFreemiumUser=false
 >+273>Zpw35k42cC20faEL>001>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+417>Zpw35k42cC20faEL>001>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+5434>Zpw35k42cC20faEL>001>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
@@ -416,7 +413,6 @@
 >+159>Zpw35k42cC20faEL>001>tilecombine nviewid=0 part=3 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+673525>Zpw35k42cC20faEL>001>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
 >+1005843>Zpw35k42cC20faEL>001>mouse type=move x=3930 y=6915 count=1 buttons=0 modifier=0
->+1274081>Zpw35k42cC20faEL>001>freemiumstatus isFreemiumUser=false
 >+537>Zpw35k42cC20faEL>001>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+578>Zpw35k42cC20faEL>001>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+584>Zpw35k42cC20faEL>001>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
@@ -458,7 +454,6 @@
 >+425>Zpw35k42cC20faEL>001>setclientpart part=4
 >+472>Zpw35k42cC20faEL>001>canceltiles
 >+175>Zpw35k42cC20faEL>001>tilecombine nviewid=0 part=4 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+1398018>Zpw35k42cC20faEL>001>freemiumstatus isFreemiumUser=false
 >+502>Zpw35k42cC20faEL>001>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+860>Zpw35k42cC20faEL>001>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+527>Zpw35k42cC20faEL>001>gettextselection mimetype=text/html
@@ -539,7 +534,6 @@
 >+444>Zpw35k42cC20faEL>001>setclientpart part=5
 >+341>Zpw35k42cC20faEL>001>canceltiles
 >+292>Zpw35k42cC20faEL>001>tilecombine nviewid=0 part=5 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+1577862>Zpw35k42cC20faEL>001>freemiumstatus isFreemiumUser=false
 >+2963>Zpw35k42cC20faEL>001>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+357>Zpw35k42cC20faEL>001>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+328>Zpw35k42cC20faEL>001>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
@@ -667,7 +661,6 @@
 >+1578>Zpw35k42cC20faEL>001>setclientpart part=6
 >+2121>Zpw35k42cC20faEL>001>canceltiles
 >+843>Zpw35k42cC20faEL>001>tilecombine nviewid=0 part=6 width=256 height=256 tileposx=0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360,0,3840,7680,11520,15360 tileposy=0,0,0,0,0,3840,3840,3840,3840,3840,7680,7680,7680,7680,7680,11520,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+876834>Zpw35k42cC20faEL>001>freemiumstatus isFreemiumUser=false
 >+2015>Zpw35k42cC20faEL>001>tile nviewid=0 part=0 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=0 broadcast=no
 >+482>Zpw35k42cC20faEL>001>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+434>Zpw35k42cC20faEL>001>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
@@ -827,7 +820,6 @@
 >+4126>Zpw35k42cC20faEL>001>tile nviewid=0 part=1 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=1 broadcast=no
 >+397>Zpw35k42cC20faEL>001>tile nviewid=0 part=2 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=2 broadcast=no
 >+357>Zpw35k42cC20faEL>001>tile nviewid=0 part=3 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=3 broadcast=no
->+435888>Zpw35k42cC20faEL>001>freemiumstatus isFreemiumUser=false
 >+371043>Zpw35k42cC20faEL>001>mouse type=move x=6300 y=1515 count=1 buttons=0 modifier=0
 >+500>Zpw35k42cC20faEL>001>mouse type=buttondown x=6300 y=1515 count=1 buttons=1 modifier=0
 >+383>Zpw35k42cC20faEL>001>mouse type=buttonup x=6300 y=1515 count=1 buttons=1 modifier=0
@@ -891,7 +883,6 @@
 >+10792>Zpw35k42cC20faEL>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
 >+3673>Zpw35k42cC20faEL>001>canceltiles
 >+1033>Zpw35k42cC20faEL>001>tilecombine nviewid=0 part=7 width=256 height=256 tileposx=0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520,0,3840,7680,11520 tileposy=0,0,0,0,3840,3840,3840,3840,7680,7680,7680,7680,11520,11520,11520,11520 tilewidth=3840 tileheight=3840
->+931971>Zpw35k42cC20faEL>001>freemiumstatus isFreemiumUser=false
 >+454>Zpw35k42cC20faEL>001>gettextselection mimetype=text/html
 >+349302>Zpw35k42cC20faEL>001>tile nviewid=0 part=7 width=180 height=135 tileposx=0 tileposy=0 tilewidth=15875 tileheight=11906 id=7 broadcast=no
 >+315>Zpw35k42cC20faEL>001>mouse type=move x=150 y=780 count=1 buttons=0 modifier=0
