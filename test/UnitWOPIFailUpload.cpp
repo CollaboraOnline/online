@@ -23,23 +23,25 @@
 /// This test simulates a permanently-failing upload.
 class UnitWOPIFailUpload : public WOPIUploadConflictCommon
 {
-    using WOPIUploadConflictCommon::Phase;
-    using WOPIUploadConflictCommon::Scenario;
+    using Base = WOPIUploadConflictCommon;
 
-    using WOPIUploadConflictCommon::OriginalDocContent;
+    using Base::Phase;
+    using Base::Scenario;
+
+    using Base::OriginalDocContent;
 
     bool _unloadingModifiedDocDetected;
 
 public:
     UnitWOPIFailUpload()
-        : WOPIUploadConflictCommon("UnitWOPIFailUpload", OriginalDocContent)
+        : Base("UnitWOPIFailUpload", OriginalDocContent)
         , _unloadingModifiedDocDetected(true)
     {
     }
 
     void configure(Poco::Util::LayeredConfiguration& config) override
     {
-        WopiTestServer::configure(config);
+        Base::configure(config);
 
         // Small value to shorten the test run time.
         config.setUInt("per_document.limit_store_failures", 2);
