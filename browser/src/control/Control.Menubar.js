@@ -112,6 +112,7 @@ L.Control.Menubar = L.Control.extend({
 					{name: _('Reset zoom'), id: 'zoomreset', type: 'action'},
 					{type: 'separator'},
 					{name: _('Show Ruler'), id: 'showruler', type: 'action'},
+					{name: _('Toggle UI Mode'), id: 'toggleuimode', type: 'action'},
 					{name: _('Show Status Bar'), id: 'showstatusbar', type: 'action'},
 				]).concat([
 					{uno: '.uno:Sidebar'},
@@ -1519,6 +1520,13 @@ L.Control.Menubar = L.Control.extend({
 							$(aItem).removeClass(constChecked);
 						}
 
+					} else if (id === 'toggleuimode') {
+						if (window.userInterfaceMode === 'notebookbar') {
+							$(aItem).text(_('Use Classic UI'));
+						} else {
+							$(aItem).text(_('Use Notebookbar UI'));
+						}
+
 					} else if (self._map.getDocType() === 'presentation' && (id === 'deletepage' || id === 'insertpage' || id === 'duplicatepage')) {
 						if (id === 'deletepage') {
 							itemState = self._map['stateChangeHandler'].getItemValue('.uno:DeletePage');
@@ -1656,6 +1664,12 @@ L.Control.Menubar = L.Control.extend({
 			L.toggleFullScreen();
 		} else if (id === 'showruler') {
 			this._map.uiManager.toggleRuler();
+		} else if (id === 'toggleuimode') {
+			if (window.userInterfaceMode === 'notebookbar') {
+				this._map.uiManager.onChangeUIMode({mode: 'classic', force: true});
+			} else {
+				this._map.uiManager.onChangeUIMode({mode: 'notebookbar', force: true});
+			}
 		} else if (id === 'showstatusbar') {
 			this._map.uiManager.toggleStatusBar();
 		} else if (id === 'fullscreen-presentation' && this._map.getDocType() === 'presentation') {
