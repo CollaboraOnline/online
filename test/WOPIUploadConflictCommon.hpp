@@ -220,8 +220,8 @@ public:
         LOG_TST("Testing " << toString(_scenario) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
-        LOK_ASSERT_MESSAGE("Expect only documentconflict errors",
-                           message == "error: cmd=storage kind=documentconflict");
+        LOK_ASSERT_EQUAL_MESSAGE("Expect only documentconflict errors",
+                                 std::string("error: cmd=storage kind=documentconflict"), message);
 
         switch (_scenario)
         {

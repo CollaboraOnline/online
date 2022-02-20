@@ -22,16 +22,18 @@
 
 class UnitWOPIDocumentConflict : public WOPIUploadConflictCommon
 {
-    using WOPIUploadConflictCommon::Phase;
-    using WOPIUploadConflictCommon::Scenario;
+    using Base = WOPIUploadConflictCommon;
 
-    using WOPIUploadConflictCommon::ConflictingDocContent;
-    using WOPIUploadConflictCommon::ModifiedOriginalDocContent;
-    using WOPIUploadConflictCommon::OriginalDocContent;
+    using Base::Phase;
+    using Base::Scenario;
+
+    using Base::ConflictingDocContent;
+    using Base::ModifiedOriginalDocContent;
+    using Base::OriginalDocContent;
 
 public:
     UnitWOPIDocumentConflict()
-        : WOPIUploadConflictCommon("UnitWOPIDocumentConflict", OriginalDocContent)
+        : Base("UnitWOPIDocumentConflict", OriginalDocContent)
     {
     }
 };

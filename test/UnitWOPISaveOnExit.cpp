@@ -23,22 +23,24 @@
 
 class UnitWOPISaveOnExit : public WOPIUploadConflictCommon
 {
-    using WOPIUploadConflictCommon::Phase;
-    using WOPIUploadConflictCommon::Scenario;
+    using Base = WOPIUploadConflictCommon;
 
-    using WOPIUploadConflictCommon::ConflictingDocContent;
-    using WOPIUploadConflictCommon::ModifiedOriginalDocContent;
-    using WOPIUploadConflictCommon::OriginalDocContent;
+    using Base::Phase;
+    using Base::Scenario;
+
+    using Base::ConflictingDocContent;
+    using Base::ModifiedOriginalDocContent;
+    using Base::OriginalDocContent;
 
 public:
     UnitWOPISaveOnExit()
-        : WOPIUploadConflictCommon("UnitWOPISaveOnExit", OriginalDocContent)
+        : Base("UnitWOPISaveOnExit", OriginalDocContent)
     {
     }
 
     void configure(Poco::Util::LayeredConfiguration& config) override
     {
-        WopiTestServer::configure(config);
+        Base::configure(config);
 
         config.setBool("per_document.always_save_on_exit", true);
     }
