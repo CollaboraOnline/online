@@ -266,7 +266,7 @@ void DocumentBroker::pollThread()
     {
         // Poll more frequently while unloading to cleanup sooner.
         const bool unloading = isMarkedToDestroy() || _docState.isUnloadRequested();
-        _poll->poll(unloading ? SocketPoll::DefaultPollTimeoutMicroS / 8
+        _poll->poll(unloading ? SocketPoll::DefaultPollTimeoutMicroS / 16
                               : SocketPoll::DefaultPollTimeoutMicroS);
 
 #if !MOBILEAPP
@@ -1929,8 +1929,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     }
 
     // Don't hammer on saving.
-    if (!canStop && _saveManager.timeSinceLastSaveRequest() >= std::chrono::seconds(1) &&
-        _saveManager.timeSinceLastSaveResponse() >= std::chrono::seconds(2))
+    if (!canStop && _saveManager.canSaveNow(std::chrono::milliseconds(500)))
     {
         // Stop if there is nothing to save.
         const bool possiblyModified = isPossiblyModified();
