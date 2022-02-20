@@ -273,6 +273,12 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'command': '.uno:Sidebar'
 			},
 			{
+				'id': 'toggleuimode',
+				'type': 'menubartoolitem',
+				'text': _('Classic UI'),
+				'command': _('Toggle UI Mode')
+			},
+			{
 				'id': 'showstatusbar',
 				'type': 'menubartoolitem',
 				'text': _('Toggle Status Bar'),
