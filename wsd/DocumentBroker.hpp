@@ -816,6 +816,13 @@ private:
             return _request.timeSinceLastResponse();
         }
 
+        /// True if we aren't saving and the minimum time since last save has elapsed.
+        bool canSaveNow(std::chrono::milliseconds minTime) const
+        {
+            return !isSaving() && std::min(_request.timeSinceLastRequest(),
+                                           _request.timeSinceLastResponse()) >= minTime;
+        }
+
         void dumpState(std::ostream& os, const std::string& indent = "\n  ")
         {
             os << indent << "isSaving now: " << std::boolalpha << isSaving();
