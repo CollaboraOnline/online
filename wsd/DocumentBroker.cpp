@@ -1147,6 +1147,15 @@ DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
         return NeedToUpload::Force;
     }
 
+    // Finally, see if we have a newer version than storage.
+    if (isStorageOutdated())
+        return NeedToUpload::Yes; // Timestamp changed, upload.
+
+    return NeedToUpload::No; // No reason to upload, seems up-to-date.
+}
+
+bool DocumentBroker::isStorageOutdated() const
+{
     // Get the modified-time of the file on disk.
     const auto st = FileUtil::Stat(_storage->getRootFilePathUploading());
     const std::chrono::system_clock::time_point currentModifiedTime = st.modifiedTimepoint();
@@ -1159,10 +1168,7 @@ DocumentBroker::NeedToUpload DocumentBroker::needToUploadToStorage() const
             << (currentModifiedTime == lastModifiedTime ? "identical." : "different."));
 
     // Compare to the last uploaded file's modified-time.
-    if (currentModifiedTime != lastModifiedTime)
-        return NeedToUpload::Yes; // Timestamp changed, upload.
-
-    return NeedToUpload::No; // No reason to upload, seems up-to-date.
+    return currentModifiedTime != lastModifiedTime;
 }
 
 void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool success,
@@ -1950,6 +1956,23 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
                     LOG_DBG("Uploading document before stopping.");
                     return;
                 }
+            }
+            else
+            {
+                // There is nothing to do here except to detect data-loss and stop.
+                if (isStorageOutdated())
+                {
+                    std::stringstream state;
+                    dumpState(state);
+                    LOG_WRN("The document ["
+                            << _docKey
+                            << "] could not be uploaded to storage because there are no writable "
+                               "sessions to upload. The document should be recoverable from the "
+                               "quarantine. Stopping. State:\n"
+                            << state.str());
+                }
+
+                canStop = true;
             }
         }
     }
