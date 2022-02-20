@@ -516,9 +516,13 @@ private:
         Force //< Force uploading, typically because always_save_on_exit is set.
     };
 
-    /// Returns true iff the Document in Storage is
-    /// out-of-date and we must upload the last file on disk.
+    /// Returns true if, for any reason, we need to upload.
+    /// This includes out-of-date Document in Storage or
+    /// always_save_on_exit.
     NeedToUpload needToUploadToStorage() const;
+
+    /// Returns true iff the document on disk is newer than the one in Storage.
+    bool isStorageOutdated() const;
 
     /// Upload the doc to the storage.
     void uploadToStorageInternal(const std::string& sesionId, bool success,
