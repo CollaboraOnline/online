@@ -219,6 +219,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	border-top: none;
 	z-index: 11 !important;
 	border-bottom: 1px solid var(--color-border);
+	padding: 3px 0;
 }
 
 #toolbar-logo {
