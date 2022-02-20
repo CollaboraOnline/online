@@ -90,6 +90,8 @@ public:
         , _phase(Phase::Load)
         , _scenario(Scenario::Disconnect)
     {
+        // We have multiple scenarios to cover.
+        setTimeout(std::chrono::seconds(90));
     }
 
     void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override

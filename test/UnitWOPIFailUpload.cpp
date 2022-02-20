@@ -35,7 +35,6 @@ public:
         : WOPIUploadConflictCommon("UnitWOPIFailUpload", OriginalDocContent)
         , _unloadingModifiedDocDetected(true)
     {
-        setTimeout(std::chrono::seconds(60));
     }
 
     void configure(Poco::Util::LayeredConfiguration& config) override
