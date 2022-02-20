@@ -279,6 +279,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 #search-input {
 	height: 22px;
+	background: var(--color-background-lighter);
 }
 #search-input:hover {
 	border: 1px solid var(--color-border-darker) !important;
