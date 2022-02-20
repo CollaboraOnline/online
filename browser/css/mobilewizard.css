@@ -526,7 +526,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 
 .spinfieldunit {
-	color: #777 !important;
+	color: var(--color-text-dark) !important;
 	width: 30px;
 	margin: 0px 10px;
 }

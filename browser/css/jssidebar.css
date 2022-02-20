@@ -21,7 +21,7 @@
 
 .sidebar .spinfieldcontainer input {
 	width: 85px;
-	border: 1px solid var(--gray-color);
+	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 	height: 28px;
 	padding-inline-start: 4px;
@@ -39,7 +39,7 @@
 	margin-right: 1px;
 }
 .sidebar .spinfieldcontainer input:hover {
-	border: 1px solid var(--gray-light-txt--color);
+	border: 1px solid var(--color-border-darker);
 	color: var(--color-text-darker);
 	background-color: var(--color-background-darker);
 }
