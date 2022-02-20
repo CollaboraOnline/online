@@ -41,6 +41,7 @@
 	font-family: var(--jquery-ui-font);
 	-webkit-box-shadow: 0 0 3px var(--color-border);
 	box-shadow: 0 0 3px var(--color-border);
+	line-height: 1.5;
 }
 
 .jsdialog.vertical p, .ui-frame-label {
@@ -304,11 +305,16 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	padding-left: 20px;
 }
 
-.ui-treeview-entry:hover,
 .ui-treeview-entry.selected,
-.ui-listview-entry:hover,
 .ui-listview-entry.selected {
-	background-color: silver;
+	background-color: var(--color-background-dark);
+	color: var(--color-text-dark);
+}
+
+.ui-treeview-entry:hover,
+.ui-listview-entry:hover {
+	background-color: var(--color-background-darker);
+	color: var(--color-text-darker);
 }
 
 #mobile-wizard .ui-treeview-body input[type='checkbox'] {
@@ -624,7 +630,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 
 #MacroWarnMedium p {
 	max-width: 400px;
-	color: #333;
+	color: var(--color-main-text);
 	text-transform: none;
 }
 
@@ -673,42 +679,44 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #MacroSelectorDialog #categories {
 	box-sizing: border-box;
 	border-color: transparent;
-	padding-right: 8px
+	padding-right: 12px
 }
 
 #MacroSelectorDialog #categories .ui-treeview-entry.selected {
-	color: #222;
-	background-color: #dfdfdf;
-	border-radius: 3px;
-	border-bottom-right-radius: 8px;
-	border-top-right-radius: 8px;
+	color: var(--color-text-dark);
+	background-color: var(--color-background-dark);
 }
 
 #MacroSelectorDialog #categories .ui-treeview-entry.selected::after {
 	margin-right: -6px;
 	margin-right: -11px;
-	color: #dfdfdf;
+	color: var(--color-border-darker);
 	content: '\23F5';
 	font-size: 16px;
 }
 
 #MacroSelectorDialog #categories .ui-treeview-entry {
-	color: #555;
+	color: var(--color-main-text);
 }
 
 #MacroSelectorDialog #categories .ui-treeview-entry:hover {
-	box-shadow: inset -6px 0 0 white;
+	box-shadow: inset -6px 0 0 var(--color-border-darker);
 }
 
 #MacroSelectorDialog #categories > tbody > ul > li > ul .ui-treeview-expandable.selected > .ui-treeview::before {
 	/* visibility: hidden; hide when javascript sets properly expanders*/
 }
-#MacroSelectorDialog #categories .ui-treeview-entry:hover, .ui-treeview-entry.selected, .ui-listview-entry:hover, .ui-listview-entry.selected {
-	background-color: #dfdfdf;
+#MacroSelectorDialog #categories .ui-treeview-entry.selected, .ui-listview-entry, .ui-listview-entry.selected {
+	background-color: var(--color-background-dark);
+	color: var(--color-text-dark);
+}
+#MacroSelectorDialog #categories .ui-treeview-entry:hover, .ui-treeview-entry.selected:hover, .ui-listview-entry:hover, .ui-listview-entry.selected:hover {
+	background-color: var(--color-background-darker);
+	color: var(--color-text-darker);
 }
 
 #MacroSelectorDialog #table-frame3 .jsdialog.ui-treeview-entry {
-	padding-left: 8px;
+	padding-left: 12px;
 }
 
 /* color selector */
