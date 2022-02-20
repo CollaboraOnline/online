@@ -137,6 +137,8 @@ L.Control.UIManager = L.Control.extend({
 		var isDesktop = window.mode.isDesktop();
 		var enableNotebookbar = window.userInterfaceMode === 'notebookbar';
 
+		document.body.setAttribute('data-userInterfaceMode', window.userInterfaceMode);
+
 		if (window.mode.isMobile()) {
 			$('#mobile-edit-button').show();
 			this.map.addControl(L.control.mobileBottomBar(docType));
@@ -296,6 +298,8 @@ L.Control.UIManager = L.Control.extend({
 
 		if (uiMode.mode !== 'classic' && uiMode.mode !== 'notebookbar')
 			return;
+
+		document.body.setAttribute('data-userInterfaceMode', uiMode.mode);
 
 		switch (window.userInterfaceMode) {
 		case 'classic':
