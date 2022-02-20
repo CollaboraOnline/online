@@ -997,6 +997,12 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 				'command': '.uno:Sidebar'
 			},
 			{
+				'id': 'toggleuimode',
+				'type': 'menubartoolitem',
+				'text': _('Classic UI'),
+				'command': _('Toggle UI Mode')
+			},
+			{
 				'type': 'container',
 				'children': [
 					{
