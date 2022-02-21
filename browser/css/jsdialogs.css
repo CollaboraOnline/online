@@ -358,7 +358,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 
 .jsdialog input[type='radio'] {
 	vertical-align: middle;
-	margin: 0px 4px 0px 0px;
+	margin: 0px 3px 0px 2px;
 }
 
 .jsdialog .radiobutton > label {
