@@ -411,8 +411,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 .annotation-active.modify-annotation-container .cool-annotation-content-wrapper,
 .annotation-active.reply-annotation-container .cool-annotation-content-wrapper {
-	min-width: 240px;
-	width: auto;
+	width: 240px;
 }
 
 .cool-annotation-content {
