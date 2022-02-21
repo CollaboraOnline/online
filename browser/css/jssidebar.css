@@ -153,6 +153,21 @@
 	left: -13px;
 }
 
+#leftindent {
+	position: relative;
+	right: 16px;
+}
+#orientationdegrees {
+	position: relative;
+	right: 21px;
+}
+#textorientbox {
+	position: relative;
+	left: 15px;
+	display: flex;
+	justify-content: space-between;
+}
+
 #table-box4.sidebar.jsdialog.vertical {
 	width: auto;
 }
@@ -180,7 +195,7 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 }
 
 #NumberFormatPropertyPanel {
-	width: 290px;
+	width: 296px;
 }
 div#decimalplaces,
 div#numberformatcombobox.jsdialog.sidebar.ui-listbox-container,
