@@ -69,6 +69,7 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		this._toolitemHandlers['.uno:Feedback'] = this._onlineHelpControl;
 		this._toolitemHandlers['.uno:About'] = this._onlineHelpControl;
 		this._toolitemHandlers['.uno:FullScreen'] = this._onlineHelpControl;
+		this._toolitemHandlers['.uno:LanguageMenu'] = this._languageMenu;
 
 		this._toolitemHandlers['.uno:SelectWidth'] = function() {};
 		this._toolitemHandlers['.uno:SetOutline'] = function() {};
@@ -784,6 +785,85 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		builder._preventDocumentLosingFocusOnClick(control.container);
 	},
 
+	_languageMenu: function(parentContainer, data, builder) {
+		var menu = [
+			{id: 'nb-LanguageMenu', name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
+				{name: _UNO('.uno:SetLanguageSelectionMenu', 'text'), type: 'menu', menu: [
+					{name: _('None (Do not check spelling)'), id: 'noneselection', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}]},
+				{name: _UNO('.uno:SetLanguageParagraphMenu', 'text'), type: 'menu', menu: [
+					{name: _('None (Do not check spelling)'), id: 'noneparagraph', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
+				{name: _UNO('.uno:SetLanguageAllTextMenu', 'text'), type: 'menu', menu: [
+					{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
+			]}
+		];
+
+		if (builder.map.getDocType() !== 'text') {
+			menu = [
+				{id: 'nb-LanguageMenu', name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
+					{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
+						{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
+				]}
+			];
+		}
+
+		var noLabels = builder.options.noLabelsForUnoButtons;
+		builder.options.noLabelsForUnoButtons = false;
+
+		var options = {hasDropdownArrow: true};
+		var control = builder._unoToolButton(parentContainer, data, builder, options);
+
+		$(control.container).tooltip({disabled: true});
+		$(control.container).unbind('click');
+
+		builder.options.noLabelsForUnoButtons = noLabels;
+
+		$(control.container).unbind('click.toolbutton');
+		$(control.container).tooltip({disabled: true});
+		$(control.container).addClass('sm sm-simple lo-menu');
+
+		var menubar = L.control.menubar({allowedReadonlyMenus: ['nb-hamburger']});
+		menubar._map = builder.map;
+		var menuHtml = menubar._createMenu(menu);
+		document.getElementById(data.id).setAttribute('role', 'menu');
+
+		var oldContent = $(control.container).children().detach();
+		$(control.container).append(menuHtml);
+
+		$(control.container).smartmenus({
+			hideOnClick: true,
+			showOnClick: true,
+			hideTimeout: 0,
+			hideDuration: 0,
+			hideFunction: null,
+			showDuration: 0,
+			showFunction: null,
+			showTimeout: 0,
+			collapsibleHideDuration: 0,
+			collapsibleHideFunction: null,
+			subIndicatorsPos: 'append',
+			subIndicatorsText: '&#8250;'
+		});
+
+		$(menuHtml[0]).children('a').empty();
+		$(menuHtml[0]).children('a').append(oldContent);
+		$(menuHtml[0]).children('a').click(function () {
+			$(control.container).smartmenus('menuHideAll');
+		});
+
+		$(control.container).bind('beforeshow.smapi', {self: menubar}, menubar._beforeShow);
+		$(control.container).bind('click.smapi', {self: menubar}, menubar._onClicked);
+		$(control.container).bind('select.smapi', {self: menubar}, menubar._onItemSelected);
+		$(control.container).bind('mouseenter.smapi', {self: menubar}, menubar._onMouseEnter);
+		$(control.container).bind('mouseleave.smapi', {self: menubar}, menubar._onMouseLeave);
+		$(control.container).bind('keydown', {self: menubar}, menubar._onKeyDown);
+		$(control.container).bind('hideAll.smapi', {self: menubar}, menubar._onMouseOut);
+
+		builder.map.on('commandvalues', menubar._onInitLanguagesMenu, menubar);
+		app.socket.sendMessage('commandvalues command=.uno:LanguageStatus');
+
+		return false;
+	},
+
 	_menubarControl: function(parentContainer, data, builder) {
 		var control = builder._unoToolButton(parentContainer, data, builder);
 
@@ -816,14 +896,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 						{uno: '.uno:SpellingAndGrammarDialog'},
 						{uno: '.uno:SpellOnline'},
 						{uno: '.uno:ThesaurusDialog'},
-						{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
-							{name: _UNO('.uno:SetLanguageSelectionMenu', 'text'), type: 'menu', menu: [
-								{name: _('None (Do not check spelling)'), id: 'noneselection', uno: '.uno:LanguageStatus?Language:string=Current_LANGUAGE_NONE'}]},
-							{name: _UNO('.uno:SetLanguageParagraphMenu', 'text'), type: 'menu', menu: [
-								{name: _('None (Do not check spelling)'), id: 'noneparagraph', uno: '.uno:LanguageStatus?Language:string=Paragraph_LANGUAGE_NONE'}]},
-							{name: _UNO('.uno:SetLanguageAllTextMenu', 'text'), type: 'menu', menu: [
-								{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]}
-						]},
 						{uno: '.uno:WordCountDialog'},
 						{uno: '.uno:LineNumberingDialog'},
 						{type: 'separator'},
@@ -844,8 +916,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					{name: _UNO('.uno:ToolsMenu', 'spreadsheet'), id: 'tools', type: 'menu', menu: [
 						{uno: '.uno:SpellDialog'},
 						{uno: '.uno:SpellOnline'},
-						{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
-							{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
 						{uno: '.uno:GoalSeekDialog'},
 						{type: 'separator', hidden: disabledMacros},
 						{uno: '.uno:RunMacro', hidden: disabledMacros}
@@ -869,8 +939,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 					{name: _UNO('.uno:ToolsMenu', 'presentation'), id: 'tools', type: 'menu', menu: [
 						{uno: '.uno:SpellDialog'},
 						{uno: '.uno:SpellOnline'},
-						{name: _UNO('.uno:LanguageMenu'), type: 'menu', menu: [
-							{name: _('None (Do not check spelling)'), id: 'nonelanguage', uno: '.uno:LanguageStatus?Language:string=Default_LANGUAGE_NONE'}]},
 						{type: 'separator', hidden: disabledMacros},
 						{uno: '.uno:RunMacro', hidden: disabledMacros}
 					]},
@@ -928,10 +996,6 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		$(control.container).bind('mouseleave.smapi', {self: menubar}, menubar._onMouseLeave);
 		$(control.container).bind('keydown', {self: menubar}, menubar._onKeyDown);
 		$(control.container).bind('hideAll.smapi', {self: menubar}, menubar._onMouseOut);
-
-		// initialize languages list
-		builder.map.on('commandvalues', menubar._onInitLanguagesMenu, menubar);
-		app.socket.sendMessage('commandvalues command=.uno:LanguageStatus');
 	},
 
 	buildControl: function(parent, data) {
