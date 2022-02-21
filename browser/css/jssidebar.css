@@ -172,6 +172,11 @@
 	width: auto;
 }
 
+#masterslidebutton {
+	line-height: 22px;
+	min-width: 121px;
+}
+
 div#negativenumbersred.checkbutton.jsdialog.sidebar,
 div#thousandseparator.checkbutton.jsdialog.sidebar {
 	height: 24px;
