@@ -341,12 +341,12 @@ td.jsdialog .jsdialog.cell.sidebar {
 }
 
 #spacinglabel {
-	padding-top: 0;
+	margin-top: -4px;
 }
 
 
 #indentlabel {
-	padding-top: 8px;
+	margin-top: 2px;
 }
 
 #fillattrhb {
