@@ -76,11 +76,11 @@ mkdir -p "$INSTDIR"
 ##### build static poco #####
 
 if test ! -f poco/lib/libPocoFoundation.a ; then
-    wget https://github.com/pocoproject/poco/archive/poco-1.10.1-release.tar.gz
-    tar -xzf poco-1.10.1-release.tar.gz
-    cd poco-poco-1.10.1-release/
-    ./configure --static --no-tests --no-samples --no-sharedlibs --cflags="-fPIC" --omit=Zip,Data,Data/SQLite,Data/ODBC,Data/MySQL,MongoDB,PDF,CppParser,PageCompiler,Redis,Encodings --prefix=$BUILDDIR/poco
-    make -j 8
+    wget https://github.com/pocoproject/poco/archive/poco-1.11.1-release.tar.gz
+    tar -xzf poco-1.11.1-release.tar.gz
+    cd poco-poco-1.11.1-release/
+    ./configure --static --no-tests --no-samples --no-sharedlibs --cflags="-fPIC" --omit=Zip,Data,Data/SQLite,Data/ODBC,Data/MySQL,MongoDB,PDF,CppParser,PageCompiler,Redis,Encodings,ActiveRecord --prefix=$BUILDDIR/poco
+    make -j $(nproc)
     make install
     cd ..
 fi
