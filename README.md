@@ -1,3 +1,5 @@
+[![Build Status](https://cpci.cbg.collabora.co.uk:8080/view/Tinderbox/job/Tinderbox%20for%20online%20master/badge/icon?subject=master)](https://cpci.cbg.collabora.co.uk:8080/view/Tinderbox/job/Tinderbox%20for%20online%20master/) [![Build Status](https://cpci.cbg.collabora.co.uk:8080/job/Github%20for%20core%20side%20of%20online%20master/badge/icon?subject=GH+core "GitHub core side for online master")](https://cpci.cbg.collabora.co.uk:8080/job/Github%20for%20core%20side%20of%20online%20master/)
+
 <p align="right"><a href="#gitpod"><img alt="Open in Gitpod" src="https://gitpod.io/button/open-in-gitpod.svg"></a></p>
 
 # Collabora Online
