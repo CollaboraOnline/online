@@ -1,3 +1,7 @@
+.sm.notebookbar {
+	position: static !important;
+}
+
 @media (min-width: 500px) {
 	/* Switch to desktop layout */
 	.sm-simple ul {
