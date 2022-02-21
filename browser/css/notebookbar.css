@@ -64,7 +64,6 @@
 	display: inline-block;
 	position: relative;
 	z-index: 1000;
-	height: 100%;
 	box-sizing: border-box;
 }
 
