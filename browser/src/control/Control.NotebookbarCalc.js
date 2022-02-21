@@ -1306,8 +1306,8 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 				'command': '.uno:SpellDialog'
 			},
 			{
-				'id': 'LanguageMenu:LanguageMenu',
-				'type': 'menubutton',
+				'id': 'LanguageMenu',
+				'type': 'bigtoolitem',
 				'text': _UNO('.uno:LanguageMenu'),
 				'command': '.uno:LanguageMenu'
 			},
