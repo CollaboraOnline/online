@@ -17,7 +17,6 @@
 #document-header {
 	position: relative;
 	background: transparent;
-	margin-inline-end: 5px;
 }
 /*avoid multiple document-headers in readonly mode*/
 .main-nav.hasnotebookbar.readonly > #main-menu #document-header {
