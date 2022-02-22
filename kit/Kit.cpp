@@ -2811,7 +2811,12 @@ void lokit_main(
             std::make_shared<KitWebSocketHandler>("child_ws", loKit, jailId, mainKit, numericIdentifier);
 
 #if !MOBILEAPP
-        mainKit->insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler, ProcSMapsFile);
+        if (!mainKit->insertNewUnixSocket(MasterLocation, pathAndQuery, websocketHandler,
+                                          ProcSMapsFile))
+        {
+            LOG_SFL("Failed to connect to WSD. Will exit.");
+            Util::forcedExit(EX_SOFTWARE);
+        }
 #else
         mainKit->insertNewFakeSocket(docBrokerSocket, websocketHandler);
 #endif
