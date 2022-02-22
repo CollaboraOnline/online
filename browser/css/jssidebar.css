@@ -20,7 +20,7 @@
 }
 
 .sidebar .spinfieldcontainer input {
-	width: 85px;
+	width: 121px;
 	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 	height: 28px;
@@ -30,9 +30,13 @@
 	color: var(--color-text-dark);
 	background-color: var(--color-background-dark);
 }
+#TableEditPanelPanelExpander .sidebar .spinfieldcontainer input,
+#ParaPropertyPanelPanelExpander .sidebar .spinfieldcontainer input {
+	width: 85px;
+}
 
 .sidebar.spinfield {
-	max-width: 104px;
+	max-width: 121px;
 	padding: 4px 0 4px 4px;
 	height: 28px;
 	box-sizing: border-box;
