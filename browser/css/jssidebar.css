@@ -180,12 +180,17 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 }
 
 #settransparency, #fontheight,
-#document-container:not(.presentation-doctype) ~ #sidebar-dock-wrapper .sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.ui-grid > tr.sidebar > td.sidebar:last-child,
+#document-container ~ #sidebar-dock-wrapper .sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.ui-grid > tr.sidebar > td.sidebar:last-child,
 .sidebar.jsdialog.cell > #table-box3 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child,
 .sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:last-child,
 .sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:nth-child(4) {
 	display: flex;
 	justify-content: flex-end;
+}
+
+#table-paperformat, #table-orientation, #table-fillstyle, #table-masterslide,
+#table-marginLB, #displaymasterbackground, #displaymasterobjects, #table-box1 {
+	width: 100%;
 }
 
 #TableEditPanel #table-grid1 #grid1 > tr > td:nth-child(2) {
