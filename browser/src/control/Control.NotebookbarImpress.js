@@ -146,6 +146,7 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 		var hasPrint = !this._map['wopi'].HidePrintOption;
 		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
 		var hasShare = this._map['wopi'].EnableShare;
+		var hasGroupedDownloadAs = !!window.groupDownloadAsForNb;
 
 		var content = [
 			{
@@ -193,55 +194,28 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:Print', 'presentation'),
 					'command': '.uno:Print'
-				} : {},
-			{
-				'id': 'file-downloadas-odp-downloadas-odg',
+				} : {}
+		];
+		 
+		if (hasGroupedDownloadAs) {
+			content.push({
+				'id': 'downloadas-container',
 				'type': 'container',
+				'text': '',
+				'enabled': 'true',
 				'children': [
 					{
-						'id': 'downloadas-odp',
+						'id': 'downloadas2',
 						'type': 'menubartoolitem',
-						'text': _('ODF Presentation (.odp)'),
-						'command': ''
-					},
-					{
-						'id': 'downloadas-odg',
-						'type': 'menubartoolitem',
-						'text': _('ODF Drawing (.odg)'),
-						'command': ''
-					},
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'file-downloadas-ppt-downloadas-pptx',
+						'text': _('Download as'),
+						'command': '.uno:InsertGraphic'
+					}
+				]
+			});
+
+			content.push({
 				'type': 'container',
 				'children': [
-					{
-						'id': 'downloadas-ppt',
-						'type': 'menubartoolitem',
-						'text': _('PowerPoint 2003 Presentation (.ppt)'),
-						'command': ''
-					},
-					{
-						'id': 'downloadas-pptx',
-						'type': 'menubartoolitem',
-						'text': _('PowerPoint Presentation (.pptx)'),
-						'command': ''
-					},
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'file-downloadas-pdf',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'downloadas-pdf',
-						'type': 'menubartoolitem',
-						'text': _('PDF Document (.pdf)'),
-						'command': ''
-					},
 					{
 						'id': 'repair',
 						'type': 'menubartoolitem',
@@ -250,8 +224,68 @@ L.Control.NotebookbarImpress = L.Control.NotebookbarWriter.extend({
 					}
 				],
 				'vertical': 'true'
-			}
-		];
+			});
+		} else {
+			content = content.concat([
+				{
+					'id': 'file-downloadas-odp-downloadas-odg',
+					'type': 'container',
+					'children': [
+						{
+							'id': 'downloadas-odp',
+							'type': 'menubartoolitem',
+							'text': _('ODF Presentation (.odp)'),
+							'command': ''
+						},
+						{
+							'id': 'downloadas-odg',
+							'type': 'menubartoolitem',
+							'text': _('ODF Drawing (.odg)'),
+							'command': ''
+						},
+					],
+					'vertical': 'true'
+				},
+				{
+					'id': 'file-downloadas-ppt-downloadas-pptx',
+					'type': 'container',
+					'children': [
+						{
+							'id': 'downloadas-ppt',
+							'type': 'menubartoolitem',
+							'text': _('PowerPoint 2003 Presentation (.ppt)'),
+							'command': ''
+						},
+						{
+							'id': 'downloadas-pptx',
+							'type': 'menubartoolitem',
+							'text': _('PowerPoint Presentation (.pptx)'),
+							'command': ''
+						},
+					],
+					'vertical': 'true'
+				},
+				{
+					'id': 'file-downloadas-pdf',
+					'type': 'container',
+					'children': [
+						{
+							'id': 'downloadas-pdf',
+							'type': 'menubartoolitem',
+							'text': _('PDF Document (.pdf)'),
+							'command': ''
+						},
+						{
+							'id': 'repair',
+							'type': 'menubartoolitem',
+							'text': _('Repair'),
+							'command': _('Repair')
+						}
+					],
+					'vertical': 'true'
+				}
+			]);
+		}
 
 		return this.getTabPage('File', content);
 	},

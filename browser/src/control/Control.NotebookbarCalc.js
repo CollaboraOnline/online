@@ -84,6 +84,7 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 		var hasPrint = !this._map['wopi'].HidePrintOption;
 		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
 		var hasShare = this._map['wopi'].EnableShare;
+		var hasGroupedDownloadAs = !!window.groupDownloadAsForNb;
 
 		var content = [
 			{
@@ -131,55 +132,28 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:Print', 'spreadsheet'),
 					'command': '.uno:Print'
-				} : {},
-			{
-				'id': 'file-downloadas-ods-downloadas-csv',
+				} : {}
+		];
+
+		if (hasGroupedDownloadAs) {
+			content.push({
+				'id': 'downloadas-container',
 				'type': 'container',
+				'text': '',
+				'enabled': 'true',
 				'children': [
 					{
-						'id': 'downloadas-ods',
+						'id': 'downloadas2',
 						'type': 'menubartoolitem',
-						'text': _('ODF Spreadsheet (.ods)'),
-						'command': ''
-					},
-					{
-						'id': 'downloadas-csv',
-						'type': 'menubartoolitem',
-						'text': _('CSV File (.csv)'),
-						'command': ''
-					},
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'file-downloadas-xls-downloadas-xlsx',
+						'text': _('Download as'),
+						'command': '.uno:InsertGraphic'
+					}
+				]
+			});
+
+			content.push({
 				'type': 'container',
 				'children': [
-					{
-						'id': 'downloadas-xls',
-						'type': 'menubartoolitem',
-						'text': _('Excel 2003 Spreadsheet (.xls)'),
-						'command': ''
-					},
-					{
-						'id': 'downloadas-xlsx',
-						'type': 'menubartoolitem',
-						'text': _('Excel Spreadsheet (.xlsx)'),
-						'command': ''
-					},
-				],
-				'vertical': 'true'
-			},
-			{
-				'id': 'file-downloadas-pdf',
-				'type': 'container',
-				'children': [
-					{
-						'id': 'downloadas-pdf',
-						'type': 'menubartoolitem',
-						'text': _('PDF Document (.pdf)'),
-						'command': ''
-					},
 					{
 						'id': 'repair',
 						'type': 'menubartoolitem',
@@ -188,8 +162,68 @@ L.Control.NotebookbarCalc = L.Control.NotebookbarWriter.extend({
 					}
 				],
 				'vertical': 'true'
-			}
-		];
+			});
+		} else {
+			content = content.concat([
+				{
+					'id': 'file-downloadas-ods-downloadas-csv',
+					'type': 'container',
+					'children': [
+						{
+							'id': 'downloadas-ods',
+							'type': 'menubartoolitem',
+							'text': _('ODF Spreadsheet (.ods)'),
+							'command': ''
+						},
+						{
+							'id': 'downloadas-csv',
+							'type': 'menubartoolitem',
+							'text': _('CSV File (.csv)'),
+							'command': ''
+						},
+					],
+					'vertical': 'true'
+				},
+				{
+					'id': 'file-downloadas-xls-downloadas-xlsx',
+					'type': 'container',
+					'children': [
+						{
+							'id': 'downloadas-xls',
+							'type': 'menubartoolitem',
+							'text': _('Excel 2003 Spreadsheet (.xls)'),
+							'command': ''
+						},
+						{
+							'id': 'downloadas-xlsx',
+							'type': 'menubartoolitem',
+							'text': _('Excel Spreadsheet (.xlsx)'),
+							'command': ''
+						},
+					],
+					'vertical': 'true'
+				},
+				{
+					'id': 'file-downloadas-pdf',
+					'type': 'container',
+					'children': [
+						{
+							'id': 'downloadas-pdf',
+							'type': 'menubartoolitem',
+							'text': _('PDF Document (.pdf)'),
+							'command': ''
+						},
+						{
+							'id': 'repair',
+							'type': 'menubartoolitem',
+							'text': _('Repair'),
+							'command': _('Repair')
+						}
+					],
+					'vertical': 'true'
+				}
+			]);
+		}
 
 		return this.getTabPage('File', content);
 	},
