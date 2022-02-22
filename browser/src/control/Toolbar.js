@@ -434,7 +434,7 @@ L.Map.include({
 						for (var p = 0; p < imgList.length; p++) {
 							var imgSrc = imgList[p].src;
 							imgSrc = imgSrc.substring(imgSrc.indexOf('/images'));
-							imgList[p].src = window.makeWsUrl('/cool/dist'+ imgSrc);
+							imgList[p].src = window.makeWsUrl('/browser/dist'+ imgSrc);
 						}
 					}
 					// Display help according to document opened
@@ -540,7 +540,7 @@ L.Map.include({
 		}
 		var helpLocation = 'cool-help.html';
 		if (window.socketProxy)
-			helpLocation = window.makeWsUrl('/cool/dist/' + helpLocation);
+			helpLocation = window.makeWsUrl('/browser/dist/' + helpLocation);
 		$.get(helpLocation, function(data) {
 			map._doVexOpenHelpFile(data, id, map);
 		});
