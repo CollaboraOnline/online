@@ -421,7 +421,6 @@ nav:not(.spreadsheet-color-indicator) ~ #toolbar-wrapper #toolbar-up.w2ui-toolba
 }
 #tb_actionbar_item_fullscreen{display: none;}
 #toolbar-down {
-	height: 39px !important;
 	border-top: 1px solid var(--gray-color) !important;
 }
 #toolbar-down > .w2ui-scroll-wrapper {
