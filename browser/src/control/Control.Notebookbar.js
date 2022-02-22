@@ -79,6 +79,7 @@ L.Control.Notebookbar = L.Control.extend({
 				// if notebookbar doesn't have any welded controls it can trigger false alarm here
 				window.app.console.warn('notebookbar might be not initialized, retrying');
 				that.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=notebookbar_online.ui');
+				that.retry = setTimeout(retryNotebookbarInit, 3000);
 			}
 		};
 
@@ -87,6 +88,7 @@ L.Control.Notebookbar = L.Control.extend({
 
 	onRemove: function() {
 		clearTimeout(this.retry);
+		this.map._isNotebookbarLoadedOnCore = false;
 		this.map.sendUnoCommand('.uno:ToolbarMode?Mode:string=Default');
 		this.map.off('contextchange', this.onContextChange, this);
 		this.map.off('updatepermission', this.onUpdatePermission, this);
