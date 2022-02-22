@@ -6,7 +6,6 @@
 	text-align: center;
 	z-index: 999;
 	overflow: visible !important;
-	background-color: var(--color-main-background);
 }
 
 #toolbar-down {
@@ -143,7 +142,7 @@ w2ui-toolbar {
 
 #presentation-toolbar {
 	bottom: 0;
-	background-color: var(--color-background-lighter);
+	background-color: var(--color-main-background);
 	text-align: center;
 	position: absolute;
 	z-index: 500;
@@ -260,7 +259,7 @@ w2ui-toolbar {
 }
 
 #document-name-input {
-	color: var(--color-main-text);
+	color: var(--color-text-darker);
 	font-size: 16px;
 	border: 1px solid transparent;
 	background-color: transparent;

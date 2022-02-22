@@ -15,10 +15,10 @@
 	--color-text-darker: #000;  /* hover */
 	--color-text-lighter: #696969;
 
-	--color-main-background: #fff;
-	--color-background-dark: #F7F7F7;  /* select */
-	--color-background-darker: #e4e4e4;  /* hover */
-	--color-background-lighter: #f8f9fa;
+	--color-main-background: #F8F9FA;
+	--color-background-dark: #e8e8e8;  /* select */
+	--color-background-darker: #c0bfbc;  /* hover */
+	--color-background-lighter: #fff; /* toolbar */
 
 	--color-primary: #1C99E0;
 	--color-primary-text: #fff;
@@ -27,8 +27,8 @@
 	--color-primary-lighter: #63BBEE;
 
 	--color-border: #b6b6b6;
-	--color-border-dark: #959595; /* select */
-	--color-border-darker: #696969;  /* hover */
+	--color-border-dark: #cecece; /* select */
+	--color-border-darker: #c0bfbc;  /* hover */
 	--color-border-lighter: #f1f1f1;
 
 	--color-error: #e9322d;
