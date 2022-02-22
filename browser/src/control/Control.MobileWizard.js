@@ -135,7 +135,7 @@ L.Control.MobileWizard = L.Control.extend({
 			window.mobileDialogId = undefined;
 		}
 
-		if (window.commentWizard === true) {
+		if (window.commentWizard === true && app.sectionContainer) {
 			app.sectionContainer.getSectionWithName(L.CSections.CommentList.name).removeHighlighters();
 		}
 
