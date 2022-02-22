@@ -442,8 +442,13 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	position: relative;
 	left: 4px;
 }
-#LB_GLOW_TRANSPARENCY, #LB_DISTANCE,
-#LB_SHADOW_BLUR {
+#LB_GLOW_TRANSPARENCY, #LB_DISTANCE, #LB_SHADOW_BLUR,
+#setbrightness, #setcontrast, #setgraphtransparency {
 	position: relative;
 	right: 18px;
+}
+
+#AreaPropertyPanelPanelExpander #table-box8 {
+	position: relative;
+	left: 14px;
 }
