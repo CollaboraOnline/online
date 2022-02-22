@@ -34,6 +34,6 @@ RUN setcap cap_fowner,cap_chown,cap_mknod,cap_sys_chroot=ep /usr/bin/coolforkit 
 EXPOSE 9980
 
 # switch to cool user (use numeric user id to be compatible with Kubernetes Pod Security Policies)
-USER 481
+USER 498
 
 CMD ["/start-collabora-online.sh"]
