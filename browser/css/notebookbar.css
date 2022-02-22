@@ -175,7 +175,7 @@
 }
 
 #toolbar-wrapper.hasnotebookbar {
-	background: var(--color-main-background);
+	background: var(--color-background-lighter);
 	position: relative;
 	z-index: 11;
 }
