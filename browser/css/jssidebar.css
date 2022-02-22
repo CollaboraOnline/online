@@ -99,10 +99,6 @@
 	width: 74px;
 }
 
-.sidebar.jsdialog.row > table.sidebar.jsdialog.ui-grid {
-	width: 290px;
-}
-
 #table-grid3.sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.jsdialog.ui-grid > tr.sidebar.jsdialog > td.sidebar.jsdialog > .sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.jsdialog.ui-grid {
 	width: 10px;
 }
@@ -140,7 +136,8 @@
 #FIELD_TRANSPARENCY {
 	height: 0;
 	position: relative;
-	bottom: 22px;
+	bottom: 10px;
+	right: 17px;
 }
 
 #transparency_label {
@@ -242,6 +239,7 @@ div#box5.row.jsdialog.sidebar > .sidebar.jsdialog.cell {
 	left: unset !important;
 }
 
+#ShadowPropertyPanelPanelExpander #table-box2,
 .sidebar.root-container.jsdialog > .jsdialog.sidebar {
 	width: 100%;
 }
@@ -377,7 +375,7 @@ td.jsdialog .jsdialog.cell.sidebar {
 
 
 #gradangle > .spinfield {
-	width: 70px;
+	margin-left: 0;
 }
 
 #orientationcontrol,
@@ -416,5 +414,36 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 
 #linetransparency {
 	position: relative;
-	left: -20px;
+	left: -18px;
+}
+
+#horizontalpos,
+#verticalpos,
+#selectwidth,
+#selectheight {
+	position: relative;
+	right: 24px;
+}
+
+#fillgrad1 {
+	position: relative;
+	left: 7px;
+}
+#fillgrad2, #LB_SHADOW_COLOR {
+	position: relative;
+	left: 5px;
+}
+
+#LB_GLOW_RADIUS, #SB_SOFTEDGE_RADIUS {
+	position: relative;
+	right: 20px;
+}
+#LB_GLOW_COLOR {
+	position: relative;
+	left: 4px;
+}
+#LB_GLOW_TRANSPARENCY, #LB_DISTANCE,
+#LB_SHADOW_BLUR {
+	position: relative;
+	right: 18px;
 }
