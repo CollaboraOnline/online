@@ -92,6 +92,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		var hasPrint = !this._map['wopi'].HidePrintOption;
 		var hasSaveAs = !this._map['wopi'].UserCanNotWriteRelative;
 		var hasShare = this._map['wopi'].EnableShare;
+		var hasGroupedDownloadAs = !!window.groupDownloadAsForNb;
 
 		var content = [
 			{
@@ -138,81 +139,102 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 					'type': 'bigtoolitem',
 					'text': _UNO('.uno:Print', 'text'),
 					'command': '.uno:Print'
-				} : {},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'id': 'downloadas-odt',
-						'type': 'menubartoolitem',
-						'text': _('ODF Text Document (.odt)'),
-						'command': ''
-					},
-					{
-						'id': 'downloadas-rtf',
-						'type': 'menubartoolitem',
-						'text': _('Rich Text (.rtf)'),
-						'command': ''
-					},
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'id': 'downloadas-doc',
-						'type': 'menubartoolitem',
-						'text': _('Word 2003 Document (.doc)'),
-						'command': ''
-					},
-					{
-						'id': 'downloadas-docx',
-						'type': 'menubartoolitem',
-						'text': _('Word Document (.docx)'),
-						'command': ''
-					},
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'id': 'downloadas-pdf',
-						'type': 'menubartoolitem',
-						'text': _('PDF Document (.pdf)'),
-						'command': ''
-					},
-					{
-						'id': 'downloadas-epub',
-						'type': 'menubartoolitem',
-						'text': _('EPUB Document (.epub)'),
-						'command': ''
-					},
-				],
-				'vertical': 'true'
-			},
-			{
-				'type': 'container',
-				'children': [
-					{
-						'id': 'repair',
-						'type': 'menubartoolitem',
-						'text': _('Repair'),
-						'command': _('Repair')
-					},
-					hasSigning ?
-						{
-							'id': 'signdocument',
-							'type': 'menubartoolitem',
-							'text': _('Sign document'),
-							'command': ''
-						} : {},
-				],
-				'vertical': 'true'
-			}
+				} : {}
 		];
+
+		if (hasGroupedDownloadAs) {
+			content.push({
+				'id': 'downloadas-container',
+				'type': 'container',
+				'text': '',
+				'enabled': 'true',
+				'children': [
+					{
+						'id': 'downloadas2',
+						'type': 'menubartoolitem',
+						'text': _('Download as'),
+						'command': '.uno:InsertGraphic'
+					}
+				]
+			});
+		} else {
+			content = content.concat([
+				{
+					'type': 'container',
+					'children': [
+						{
+							'id': 'downloadas-odt',
+							'type': 'menubartoolitem',
+							'text': _('ODF Text Document (.odt)'),
+							'command': ''
+						},
+						{
+							'id': 'downloadas-rtf',
+							'type': 'menubartoolitem',
+							'text': _('Rich Text (.rtf)'),
+							'command': ''
+						},
+					],
+					'vertical': 'true'
+				},
+				{
+					'type': 'container',
+					'children': [
+						{
+							'id': 'downloadas-doc',
+							'type': 'menubartoolitem',
+							'text': _('Word 2003 Document (.doc)'),
+							'command': ''
+						},
+						{
+							'id': 'downloadas-docx',
+							'type': 'menubartoolitem',
+							'text': _('Word Document (.docx)'),
+							'command': ''
+						},
+					],
+					'vertical': 'true'
+				},
+				{
+					'type': 'container',
+					'children': [
+						{
+							'id': 'downloadas-pdf',
+							'type': 'menubartoolitem',
+							'text': _('PDF Document (.pdf)'),
+							'command': ''
+						},
+						{
+							'id': 'downloadas-epub',
+							'type': 'menubartoolitem',
+							'text': _('EPUB Document (.epub)'),
+							'command': ''
+						},
+					],
+					'vertical': 'true'
+				}
+			]);
+		}
+
+		content.push({
+			'type': 'container',
+			'children': [
+				{
+					'id': 'repair',
+					'type': 'menubartoolitem',
+					'text': _('Repair'),
+					'command': _('Repair')
+				},
+				hasSigning ?
+					{
+						'id': 'signdocument',
+						'type': 'menubartoolitem',
+						'text': _('Sign document'),
+						'command': ''
+					} : {},
+			],
+			'vertical': 'true'
+		});
 
 		return this.getTabPage('File', content);
 	},
@@ -2156,6 +2178,26 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 		};
 	},
 
+	// filter out empty children options so that the HTML isn't cluttered
+	// and individual items missaligned
+	cleanOpts: function(children) {
+		var that = this;
+
+		return children.map(function(c) {
+			if (!c.type) { return null; }
+			
+			var opts = Object.assign(c, {});
+
+			if (c.children && c.children.length) {
+				opts.children = that.cleanOpts(c.children);
+			}
+
+			return opts;
+		}).filter(function(c) {
+			return c !== null;
+		});
+	},
+
 	getTabPage: function(tabName, content) {
 		return {
 			'id': '',
@@ -2174,7 +2216,7 @@ L.Control.NotebookbarWriter = L.Control.Notebookbar.extend({
 							'type': 'container',
 							'text': '',
 							'enabled': 'true',
-							'children': content
+							'children': this.cleanOpts(content)
 						}
 					]
 				}

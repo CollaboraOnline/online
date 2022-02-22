@@ -402,16 +402,120 @@ L.Control.NotebookbarBuilder = L.Control.JSDialogBuilder.extend({
 		builder.options.useInLineLabelsForUnoButtons = true;
 
 		data.command = data.id;
-		var control = builder._unoToolButton(parentContainer, data, builder);
+
+		var isDownloadAsGroup = data.id === 'downloadas2';
+		var options = {};
+		if (isDownloadAsGroup) {
+			options.hasDropdownArrow = true;
+		}
+
+		var control = builder._unoToolButton(parentContainer, data, builder, options);
 
 		builder.options.useInLineLabelsForUnoButtons = originalInLineState;
 
 		$(control.container).unbind('click.toolbutton');
 		if (!builder.map.isLockedItem(data)) {
 			$(control.container).click(function () {
-				L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
+				if (!isDownloadAsGroup) {
+					L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: data.id});
+					return;
+				}
+
+				var downloadasSubmenuOpts = builder._getDownloadAsSubmenuOpts(builder.options.map._docLayer._docType);
+
+				$(control.container).w2menu({
+					items: downloadasSubmenuOpts,
+					onSelect: function (event) {
+						L.control.menubar()._executeAction.bind({_map: builder.options.map})(undefined, {id: event.item.id});
+					}
+				});
 			});
 		}
+	},
+
+	_getDownloadAsSubmenuOpts: function(docType) {
+		var submenuOpts = [];
+
+		if (docType === 'text') {
+			submenuOpts = [
+				{
+					'id': 'downloadas-odt',
+					'text': _('ODF text document (.odt)')
+				},
+				{
+					'id': 'downloadas-rtf',
+					'text': _('Rich Text (.rtf)')
+				},
+				{
+					'id': 'downloadas-docx',
+					'text': _('Word Document (.docx)')
+				},
+				{
+					'id': 'downloadas-doc',
+					'text': _('Word 2003 Document (.doc)')
+				},
+				{
+					'id': 'downloadas-epub',
+					'text': _('EPUB (.epub)')
+				},
+				{
+					'id': 'downloadas-pdf',
+					'text': _('PDF Document (.pdf)')
+				}
+			];
+		} else if (docType === 'spreadsheet') {
+			submenuOpts = [
+				{
+					'id': 'downloadas-ods',
+					'text': _('ODF spreadsheet (.ods)')
+				},
+				{
+					'id': 'downloadas-xlsx',
+					'text': _('Excel Spreadsheet (.xlsx)')
+				},
+				{
+					'id': 'downloadas-xls',
+					'text': _('Excel 2003 Spreadsheet (.xls)')
+				},
+				{
+					'id': 'downloadas-csv',
+					'text': _('CSV File (.csv)')
+				},
+				{
+					'id': 'downloadas-pdf',
+					'text': _('PDF Document (.pdf)')
+				}
+			];
+		} else if (docType === 'presentation') {
+			submenuOpts = [
+				{
+					'id': 'downloadas-odp',
+					'text': _('ODF presentation (.odp)')
+				},
+				{
+					'id': 'downloadas-odg',
+					'text': _('ODF Drawing (.odg)')
+				},
+				{
+					'id': 'downloadas-pptx',
+					'text': _('PowerPoint Presentation (.pptx)')
+				},
+				{
+					'id': 'downloadas-ppt',
+					'text': _('PowerPoint 2003 Presentation (.ppt)')
+				},
+				{
+					'id': 'downloadas-pdf',
+					'text': _('PDF Document (.pdf)')
+				}
+			];
+		}
+	
+		submenuOpts.forEach(function mapIconToItem(menuItem) {
+			menuItem.icon = menuItem.id + '-submenu-icon';
+		});
+
+		return submenuOpts;
 	},
 
 	_insertHyperlinkControl: function(parentContainer, data, builder) {
