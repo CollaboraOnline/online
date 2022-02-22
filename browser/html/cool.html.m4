@@ -333,6 +333,7 @@ m4_ifelse(MOBILEAPP,[true],
       window.frameAncestors = decodeURIComponent('%FRAME_ANCESTORS%');
       window.socketProxy = %SOCKET_PROXY%;
       window.tileSize = 256;
+      window.groupDownloadAsForNb = %GROUP_DOWNLOAD_AS%;
       window.uiDefaults = %UI_DEFAULTS%;])
 
 // This is GLOBAL_JS:
