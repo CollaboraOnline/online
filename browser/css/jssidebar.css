@@ -13,8 +13,8 @@
 #document-container:not(.mobile) + #sidebar-dock-wrapper {
 	width: 330px;
 	padding: 0;
-	border-left: 1px solid var(--gray-color) !important;
-	border-right: 1px solid var(--gray-color) !important; /* for RTL mode */
+	border-left: 1px solid var(--color-border) !important;
+	border-right: 1px solid var(--color-border) !important; /* for RTL mode */
 	margin-top: 0 !important;
 	box-sizing: border-box;
 }
