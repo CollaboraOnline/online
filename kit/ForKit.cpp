@@ -729,7 +729,11 @@ int main(int argc, char** argv)
     WSHandler = std::make_shared<ServerWSHandler>("forkit_ws");
 
 #if !MOBILEAPP
-    mainPoll.insertNewUnixSocket(MasterLocation, FORKIT_URI, WSHandler);
+    if (!mainPoll.insertNewUnixSocket(MasterLocation, FORKIT_URI, WSHandler))
+    {
+        LOG_SFL("Failed to connect to WSD. Will exit.");
+        Util::forcedExit(EX_SOFTWARE);
+    }
 #endif
 
     SigUtil::setUserSignals();
@@ -761,14 +765,8 @@ int main(int argc, char** argv)
     int returnValue = EX_OK;
     UnitKit::get().returnValue(returnValue);
 
-#if 0
-    int status = 0;
-    waitpid(forKitPid, &status, WUNTRACED);
-#endif
-
     LOG_INF("ForKit process finished.");
-    Log::shutdown();
-    std::_Exit(returnValue);
+    Util::forcedExit(returnValue);
 }
 #endif
 

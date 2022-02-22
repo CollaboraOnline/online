@@ -752,7 +752,7 @@ public:
     void insertNewWebSocketSync(const Poco::URI& uri,
                                 const std::shared_ptr<WebSocketHandler>& websocketHandler);
 
-    void insertNewUnixSocket(
+    bool insertNewUnixSocket(
         const std::string &location,
         const std::string &pathAndQuery,
         const std::shared_ptr<WebSocketHandler>& websocketHandler,

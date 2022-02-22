@@ -538,7 +538,7 @@ void SocketPoll::insertNewWebSocketSync(const Poco::URI& uri,
     }
 }
 
-void SocketPoll::insertNewUnixSocket(
+bool SocketPoll::insertNewUnixSocket(
     const std::string &location,
     const std::string &pathAndQuery,
     const std::shared_ptr<WebSocketHandler>& websocketHandler,
@@ -560,9 +560,9 @@ void SocketPoll::insertNewUnixSocket(
     const int res = connect(fd, (const struct sockaddr*)&addrunix, sizeof(addrunix));
     if (fd < 0 || (res < 0 && errno != EINPROGRESS))
     {
-        LOG_ERR("Failed to connect to unix socket at " << location);
+        LOG_SYS("Failed to connect to unix socket at " << location);
         ::close(fd);
-        return;
+        return false;
     }
 
     std::shared_ptr<StreamSocket> socket
@@ -570,7 +570,7 @@ void SocketPoll::insertNewUnixSocket(
     if (!socket)
     {
         LOG_ERR("Failed to create socket unix socket at " << location);
-        return;
+        return false;
     }
 
     LOG_DBG("Connected to local UDS " << location << " #" << socket->getFD());
@@ -601,6 +601,8 @@ void SocketPoll::insertNewUnixSocket(
 
     // We send lots of data back via this local UDS'
     socket->setSocketBufferSize(Socket::MaximumSendBufferSize);
+
+    return true;
 }
 
 #else
