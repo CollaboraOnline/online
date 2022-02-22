@@ -433,6 +433,10 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	position: relative;
 	left: 5px;
 }
+#LB_SHADOW_COLOR {
+	border: 1px solid var(--color-border-lighter);
+	background-color: var(--color-background-lighter);
+}
 
 #LB_GLOW_RADIUS, #SB_SOFTEDGE_RADIUS {
 	position: relative;
