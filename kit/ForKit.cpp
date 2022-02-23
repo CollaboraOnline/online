@@ -170,6 +170,14 @@ protected:
                 LOG_ERR("Unknown setconfig command: " << message);
             }
         }
+        else if (tokens.size() == 2 && tokens.equals(0, "addfont"))
+        {
+            // Tell core to use that font file
+            std::string fontFile = tokens[1];
+
+            assert(loKitPtr);
+            loKitPtr->pClass->setOption(loKitPtr, "addfont", Poco::URI(Poco::Path(fontFile)).toString().c_str());
+        }
         else if (tokens.equals(0, "exit"))
         {
             LOG_INF("Setting TerminationFlag due to 'exit' command from parent.");

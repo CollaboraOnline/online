@@ -868,6 +868,7 @@ std::string COOLWSD::ChildRoot;
 std::string COOLWSD::ServerName;
 std::string COOLWSD::FileServerRoot;
 std::string COOLWSD::ServiceRoot;
+std::string COOLWSD::TmpFontDir;
 std::string COOLWSD::LOKitVersion;
 std::string COOLWSD::ConfigFile = COOLWSD_CONFIGDIR "/coolwsd.xml";
 std::string COOLWSD::ConfigDir = COOLWSD_CONFIGDIR "/conf.d";
@@ -1031,11 +1032,14 @@ public:
 
     virtual void handleJSON(Poco::JSON::Object::Ptr json) = 0;
 
+    virtual void handleUnchangedJSON()
+    { }
+
     void start()
     {
         if (remoteServerURI.empty())
         {
-            LOG_INF("Remote config url is not specified in coolwsd.xml");
+            LOG_INF("Remote " << expectedKind << " is not specified in coolwsd.xml");
             return; // no remote config server setup.
         }
 #if !ENABLE_DEBUG
@@ -1100,6 +1104,7 @@ public:
                 {
                     LOG_WRN("Remote config server has response status code: " +
                             std::to_string(statusCode) + ", JSON has not been changed");
+                    handleUnchangedJSON();
                 }
                 else
                 {
@@ -1117,6 +1122,8 @@ public:
 
 protected:
     LayeredConfiguration& conf;
+
+private:
     Poco::URI remoteServerURI;
     std::string expectedKind;
     std::string eTagValue;
@@ -1359,6 +1366,115 @@ public:
         }
         return booleanFlag.toString();
     }
+};
+
+class RemoteFontConfigPoll : public RemoteJSONPoll
+{
+public:
+    RemoteFontConfigPoll(LayeredConfiguration& config)
+        : RemoteJSONPoll(config, Poco::URI(config.getString("remote_font_config.url")), "remotefontconfig_poll", "fontconfiguration")
+    {
+    }
+
+    virtual ~RemoteFontConfigPoll() { }
+
+    void handleJSON(Poco::JSON::Object::Ptr remoteJson) override
+    {
+        // First mark all fonts we have downloaded previously as "inactive" to be able to check if
+        // some font gets deleted from the list in the JSON file.
+        for (auto& it : fonts)
+            it.second.active = false;
+
+        // Just pick up new fonts.
+        for (auto& fontPtr : *remoteJson->getArray("fonts"))
+        {
+            if (!fontPtr.isString())
+                LOG_WRN("Element in fonts array is not a string");
+            else
+            {
+                fonts[std::string(fontPtr)].active = true;
+            }
+        }
+
+        // Any font that has been deleted from the JSON needs to be removed on this side, too.
+        for (auto it = fonts.begin(); it != fonts.end();)
+        {
+            if (!it->second.active)
+            {
+                LOG_DBG("Font no longer mentioned in the remote font config: " << it->first);
+                // FIXME: Removing the font file will make it unusable, but sadly it is not possible
+                // for ForKit to remove knowledge of it from core, so it would still show up in the
+                // font menu. Not sure what to do here.
+                // COOLWSD::sendMessageToForKit("removefont " + it->second.active);
+                // Oh well, at least remove it from our map.
+                it = fonts.erase(it);
+            }
+            else
+                ++it;
+        }
+    }
+
+    void handleUnchangedJSON() override
+    {
+        // Iterate over the fonts that were mentioned in the JSON file when it was last downloaded.
+        for (auto& it : fonts)
+        {
+            const Poco::URI fontURI{it.first};
+            std::shared_ptr<http::Session> httpSession(StorageBase::getHttpSession(fontURI));
+            http::Request request(fontURI.getPathAndQuery());
+
+            if (!it.second.eTag.empty())
+            {
+                request.set("If-None-Match", it.second.eTag);
+            }
+
+            request.set("User-Agent", WOPI_AGENT_STRING);
+
+            const std::shared_ptr<const http::Response> httpResponse
+                = httpSession->syncRequest(request);
+
+            unsigned int statusCode = httpResponse->statusLine().statusCode();
+
+            if (statusCode == Poco::Net::HTTPResponse::HTTP_NOT_MODIFIED)
+                LOG_DBG("Not modified since last time: " << it.first);
+            else if (statusCode != Poco::Net::HTTPResponse::HTTP_OK)
+                LOG_WRN("Could not fetch " << it.first);
+            else
+            {
+                it.second.eTag = httpResponse->get("ETag");
+
+                const std::string body = httpResponse->getBody();
+
+                const std::string fontFile = COOLWSD::TmpFontDir + "/" + Util::encodeId(Util::rng::getNext()) + ".ttf";
+                std::ofstream fontStream(fontFile);
+                fontStream.write(body.data(), body.size());
+                if (fontStream.good())
+                {
+                    LOG_DBG("Got " << body.size() << " bytes for " << it.first << " and wrote to " << fontFile);
+
+                    it.second.pathName = fontFile;
+                    COOLWSD::sendMessageToForKit("addfont " + fontFile);
+                }
+                else
+                    LOG_ERR("Could not write to " << fontFile);
+            }
+        }
+    }
+
+private:
+    struct FontData
+    {
+        std::string eTag;
+
+        // Where the font has been stored
+        std::string pathName;
+
+        // Flag that tells whether the font is mentioned in the JSON file that is being handled.
+        bool active;
+    };
+
+    // The key of this map is the download URI of the font.
+    std::map<std::string, FontData> fonts;
 };
 #endif
 
@@ -4590,12 +4706,11 @@ int COOLWSD::innerMain()
 
     initializeSSL();
 
-    // Fetch remote settings from server if configured
 #if !MOBILEAPP
+    // Fetch remote settings from server if configured
     RemoteConfigPoll remoteConfigThread(config());
     remoteConfigThread.start();
 #endif
-
 
 #ifndef IOS
     // We can open files with non-ASCII names just fine on iOS without this, and this code is
@@ -4643,6 +4758,8 @@ int COOLWSD::innerMain()
     // Allocate our port - passed to prisoners.
     assert(Server && "The COOLWSDServer instance does not exist.");
     Server->findClientPort();
+
+    TmpFontDir = SysTemplate + "/tmpfonts";
 
     // Start the internal prisoner server and spawn forkit,
     // which in turn forks first child.
@@ -4714,6 +4831,21 @@ int COOLWSD::innerMain()
 
 #if !MOBILEAPP
     std::cerr << "Ready to accept connections on port " << ClientPortNumber <<  ".\n" << std::endl;
+#endif
+
+#if !MOBILEAPP
+    // Start the remote font downloading polling thread.
+    std::unique_ptr<RemoteFontConfigPoll> remoteFontConfigThread;
+    try
+    {
+        // Fetch font settings from server if configured
+        remoteFontConfigThread = Util::make_unique<RemoteFontConfigPoll>(config());
+        remoteFontConfigThread->start();
+    }
+    catch (const Poco::Exception&)
+    {
+        LOG_DBG("No remote_font_config");
+    }
 #endif
 
     const auto startStamp = std::chrono::steady_clock::now();
