@@ -35,6 +35,11 @@
 	--color-warning: #eca700;
 	--color-success: #46ba61;
 
+	--color-box-shadow: rgba(77, 77, 77, 0.5);
 	--border-radius: 4px;
 	--border-radius-large: 10px;
+
+	--default-font-size: 12px;
+
+	--header-height: 38px;
 }
