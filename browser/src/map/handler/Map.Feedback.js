@@ -96,6 +96,7 @@ L.Map.Feedback = L.Handler.extend({
 
 	onMessage: function (e) {
 		var data = e.data;
+		data = JSON.parse(data).MessageId;
 
 		if (data == 'feedback-show') {
 			this._iframeDialog.show();
@@ -112,7 +113,11 @@ L.Map.Feedback = L.Handler.extend({
 		} else if (data == 'feedback-submit') {
 			window.localStorage.setItem('WSDFeedbackEnabled', 'false');
 			window.localStorage.removeItem('WSDFeedbackCount');
-			this._iframeDialog.remove();
+			var that = this;
+			setTimeout(function() {
+				that._iframeDialog.remove();
+			}, 400);
+
 		} else if (data == 'iframe-feedback-load' && !this._iframeDialog.isVisible()) {
 			this._iframeDialog.remove();
 			setTimeout(L.bind(this.onFeedback, this), this._map.options.feedbackTimeout);

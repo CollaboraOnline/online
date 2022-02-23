@@ -70,7 +70,7 @@ L.IFrameDialog = L.Class.extend({
 		this._loading = true;
 		setTimeout(function () {
 			if (!that.isVisible()) {
-				window.postMessage(msg);
+				window.postMessage('{"MessageId":"' + msg + '"}');
 			}
 		}, 500);
 	},
