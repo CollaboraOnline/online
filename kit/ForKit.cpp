@@ -278,6 +278,9 @@ static void cleanupChildren()
     int status = 0;
     int segFaultCount = 0;
 
+    LOG_TRC("cleanupChildren with " << childJails.size()
+                                    << (childJails.size() == 1 ? " child" : " children"));
+
     // Reap quickly without doing slow cleanup so WSD can spawn more rapidly.
     while ((exitedChildPid = waitpid(-1, &status, WUNTRACED | WNOHANG)) > 0)
     {
@@ -302,6 +305,16 @@ static void cleanupChildren()
         {
             LOG_ERR("Unknown child " << exitedChildPid << " has exited");
         }
+    }
+
+    if (Log::traceEnabled())
+    {
+        std::ostringstream oss;
+        for (const auto& pair : childJails)
+            oss << pair.first << ' ';
+
+        LOG_TRC("cleanupChildren reaped " << cleanupJailPaths.size() << " children to have "
+                                          << childJails.size() << " left: " << oss.str());
     }
 
     if (segFaultCount)
@@ -414,6 +427,8 @@ void forkLibreOfficeKit(const std::string& childRoot,
                         const std::string& loSubPath,
                         int limit)
 {
+    LOG_TRC("forkLibreOfficeKit limit: " << limit);
+
     // Cleanup first, to reduce disk load.
     cleanupChildren();
 
