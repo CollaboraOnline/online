@@ -1219,11 +1219,26 @@ void DocumentBroker::handleSaveResponse(const std::string& sessionId, bool succe
     // Record that we got a response to avoid timing out on saving.
     _saveManager.setLastSaveResult(success || result == "unmodified");
 
-    checkAndUploadToStorage(sessionId, success, result);
+    // The the clients know of any save failures.
+    if (!success && result != "unmodified")
+    {
+        const auto it = _sessions.find(sessionId);
+        if (it != _sessions.end())
+        {
+            LOG_DBG("Failed to save docKey ["
+                    << _docKey << "] as .uno:Save has failed in LOK. Notifying client "
+                    << sessionId);
+            it->second->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
+            broadcastSaveResult(false, "Could not save the document");
+        }
+    }
+
+    checkAndUploadToStorage(sessionId);
 }
 
-void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId, bool success,
-                                             const std::string& result)
+// This is called when either we just got save response, or,
+// there was nothing to save and want to check for uploading.
+void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId)
 {
     // See if we have anything to upload.
     NeedToUpload needToUploadState = needToUploadToStorage();
@@ -1272,8 +1287,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId, bool 
 
     if (needToUploadState != NeedToUpload::No)
     {
-        uploadToStorage(sessionId, success, result,
-                        /*force=*/needToUploadState == NeedToUpload::Force);
+        uploadToStorage(sessionId, /*force=*/needToUploadState == NeedToUpload::Force);
     }
     else
     {
@@ -1294,8 +1308,7 @@ void DocumentBroker::checkAndUploadToStorage(const std::string& sessionId, bool 
     }
 }
 
-void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
-                                     const std::string& result, bool force)
+void DocumentBroker::uploadToStorage(const std::string& sessionId, bool force)
 {
     assertCorrectThread();
 
@@ -1305,7 +1318,7 @@ void DocumentBroker::uploadToStorage(const std::string& sessionId, bool success,
     }
 
     constexpr bool isRename = false;
-    uploadToStorageInternal(sessionId, success, result, /*saveAsPath*/ std::string(),
+    uploadToStorageInternal(sessionId, /*saveAsPath*/ std::string(),
                             /*saveAsFilename*/ std::string(), isRename, force);
 
     // If marked to destroy, or session is disconnected, remove.
@@ -1320,8 +1333,7 @@ void DocumentBroker::uploadAsToStorage(const std::string& sessionId,
 {
     assertCorrectThread();
 
-    uploadToStorageInternal(sessionId, true, "", uploadAsPath, uploadAsFilename, isRename,
-                            /*force=*/false);
+    uploadToStorageInternal(sessionId, uploadAsPath, uploadAsFilename, isRename, /*force=*/false);
 }
 
 void DocumentBroker::uploadAfterLoadingTemplate(const std::string& sessionId)
@@ -1344,31 +1356,18 @@ void DocumentBroker::uploadAfterLoadingTemplate(const std::string& sessionId)
     }
 #endif //!MOBILEAPP
 
-    std::string result;
-    uploadToStorage(sessionId, true, result, /*force=*/false);
+    uploadToStorage(sessionId, /*force=*/false);
 }
 
-void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool success,
-                                             const std::string& result,
+void DocumentBroker::uploadToStorageInternal(const std::string& sessionId,
                                              const std::string& saveAsPath,
                                              const std::string& saveAsFilename, const bool isRename,
                                              const bool force)
 {
     assertCorrectThread();
 
-    // If save requested, but core didn't save because document was unmodified
-    // notify the waiting thread, if any.
-    LOG_TRC("Uploading to storage docKey [" << _docKey << "] for session [" << sessionId <<
-            "]. Success: " << success << ", result: " << result << ", force: " << force);
-    if (!success && result == "unmodified" && !isRename && !force)
-    {
-        LOG_DBG("Skipped uploading as document [" << _docKey << "] was not modified.");
-        _storageManager.markLastUploadTime(); // Mark that the storage is up-to-date.
-        broadcastSaveResult(true, "unmodified");
-        _poll->wakeup();
-        return;
-    }
-
+    LOG_DBG("Uploading to storage docKey [" << _docKey << "] for session [" << sessionId
+                                            << "]. Force: " << force);
     const auto it = _sessions.find(sessionId);
     if (it == _sessions.end())
     {
@@ -1376,25 +1375,12 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
                 << sessionId << "] not found while storing document docKey [" << _docKey
                 << "]. The document will not be uploaded to storage at this time.");
         broadcastSaveResult(false, "Session not found");
-        return;
-    }
 
-    // Check that we are actually about to upload a successfully saved document.
-    auto session = it->second;
-    if (!success && !force)
-    {
-        LOG_ERR("Cannot store docKey [" << _docKey << "] as .uno:Save has failed in LOK.");
-        session->sendTextFrameAndLogError("error: cmd=storage kind=savefailed");
-        broadcastSaveResult(false, "Could not save document in LibreOfficeKit");
         return;
-    }
-
-    if (force)
-    {
-        LOG_DBG("Document docKey [" << _docKey << "] will be forcefully uploaded to storage.");
     }
 
     const bool isSaveAs = !saveAsPath.empty();
+    auto session = it->second;
     const std::string uri = isSaveAs ? saveAsPath : session->getPublicUri().toString();
 
     // Map the FileId from the docKey to the new filename to anonymize the new filename as the FileId.
@@ -1455,7 +1441,7 @@ void DocumentBroker::uploadToStorageInternal(const std::string& sessionId, bool 
             case StorageBase::AsyncUpload::State::None: // Unexpected: fallback.
             case StorageBase::AsyncUpload::State::Error:
             default:
-                break;
+                broadcastSaveResult(false, "Could not upload document to storage");
         }
 
         //FIXME: flag the failure so we retry.
@@ -1958,9 +1944,7 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
             const std::string sessionId = getWriteableSessionId();
             if (!sessionId.empty())
             {
-                constexpr bool success = true;
-                std::string result;
-                checkAndUploadToStorage(sessionId, success, result);
+                checkAndUploadToStorage(sessionId);
                 if (isAsyncUploading())
                 {
                     LOG_DBG("Uploading document before stopping.");

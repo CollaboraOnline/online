@@ -293,12 +293,11 @@ public:
 
     /// Check if uploading is needed, and start uploading.
     /// The current state of uploading must be introspected separately.
-    void checkAndUploadToStorage(const std::string& sessionId, bool success, const std::string& result);
+    void checkAndUploadToStorage(const std::string& sessionId);
 
     /// Upload the document to Storage if it needs persisting.
     /// Results are logged and broadcast to users.
-    void uploadToStorage(const std::string& sesionId, bool success, const std::string& result,
-                         bool force);
+    void uploadToStorage(const std::string& sesionId, bool force);
 
     /// UploadAs the document to Storage, with a new name.
     /// @param uploadAsPath Absolute path to the jailed file.
@@ -533,8 +532,7 @@ private:
     bool isStorageOutdated() const;
 
     /// Upload the doc to the storage.
-    void uploadToStorageInternal(const std::string& sesionId, bool success,
-                                 const std::string& result, const std::string& saveAsPath,
+    void uploadToStorageInternal(const std::string& sesionId, const std::string& saveAsPath,
                                  const std::string& saveAsFilename, const bool isRename,
                                  const bool force);
 
