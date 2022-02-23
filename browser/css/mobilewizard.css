@@ -746,7 +746,7 @@ a.leaflet-control-zoom-in {
 	color: rgba(var(--blue1-txt-primary-color),0.5) !important;
 	margin-left: 4%;
 	width: 94%;
-	font-size: 12px;
+	font-size: var(--default-font-size);
 	font-weight: bold;
 	clear: both;
 }
