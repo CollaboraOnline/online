@@ -13,12 +13,6 @@ L.Control.NotebookbarDraw = L.Control.NotebookbarImpress.extend({
 				'type': 'toolbox',
 				'children': [
 					{
-						'id': 'menu',
-						'type': 'toolitem',
-						'text': _('Menu'),
-						'command': '.uno:Menubar'
-					},
-					{
 						'id': 'save',
 						'type': 'toolitem',
 						'text': _('Save'),
