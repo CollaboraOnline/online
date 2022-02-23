@@ -440,7 +440,7 @@ button.leaflet-control-search-next
 
 #zoomlevel {
 	min-width: 36px;
-	font-size: 12px;
+	font-size: var(--default-font-size);
 }
 
 /* select box */
@@ -448,13 +448,13 @@ button.leaflet-control-search-next
 	padding: 5px;
 	font-family: var(--cool-font);
 	color: var(--color-main-text);
-	font-size: 12px;
+	font-size: var(--default-font-size);
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 .select2-selection__rendered {
 	font-family: var(--cool-font);
-	font-size: 12px;
+	font-size: var(--default-font-size);
 }
 .select2-container--default .select2-selection--single,
 .sidebar.jsdialog.ui-listbox {
@@ -1142,7 +1142,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	padding-right: 12px;
 	margin-right: 10px;
 	margin-left: 10px;
-	font-size: 12px;
+	font-size: var(--default-font-size);
 }
 
 #userListHeader .user-info,
@@ -1179,7 +1179,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	border-radius: 3px;
 	filter: drop-shadow(0 1px 3px rgba(87, 54, 54, 0.5));
 	min-width: 150px;
-	font-size: 12px;
+	font-size: var(--default-font-size);
 }
 
 html[dir='rtl'] #userListPopover {

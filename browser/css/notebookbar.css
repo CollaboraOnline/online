@@ -228,7 +228,7 @@
 }
 
 .unotoolbutton.notebookbar .unolabel {
-	font-size: 12pt;
+	font-size: var(--default-font-size);
 	font-family: var(--cool-font);
 	color: var(--color-main-text);
 	padding: 0px 5px !important;

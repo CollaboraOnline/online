@@ -274,7 +274,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 
 .cool-font {
 	font-family: var(--cool-font) !important;
-	font-size: 12px !important;
+	font-size: var(--default-font-size) !important;
 	font-weight: normal !important;
 	padding: 3px 5px 3px 3px;
 }

@@ -107,12 +107,12 @@
 
 .lo-menu a, .lo-menu a:hover, .lo-menu a:focus, .lo-menu a:active {
 	font-family: var(--cool-font);
-	font-size: 12px;
+	font-size: var(--default-font-size);
 	line-height: 15px;
 }
 
 .lo-menu ul a, .lo-menu ul a:hover, .lo-menu ul a:focus, .lo-menu ul a:active {
-	font-size: 12px;
+	font-size: var(--default-font-size);
 }
 
 .lo-menu a.disabled {

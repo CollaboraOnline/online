@@ -631,7 +631,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #MacroSelectorDialog #helpmacro {
 	margin-bottom: 8px;
 	text-transform: none;
-	font-size: 12px;
+	font-size: var(--default-font-size);
 }
 
 #MacroSelectorDialog #table-box2 {
