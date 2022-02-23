@@ -45,6 +45,7 @@ L.SVGGroup = L.Layer.extend({
 		this._forEachSVGNode(function (svgNode) {
 			svgNode.setAttribute('width', size.x);
 			svgNode.setAttribute('height', size.y);
+			svgNode.setAttribute('preserveAspectRatio', 'none');
 		});
 	},
 
