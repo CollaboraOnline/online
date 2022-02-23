@@ -319,7 +319,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 .ui-header.mobile-wizard {
 	width: 100%;
 	height: 56px !important;
-	font-size: 11pt !important;
+	font-size: var(--default-font-size) !important;
 	margin: 0px;
 	padding: 0px;
 	border: solid 1px #fff;
@@ -341,7 +341,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 #mobile-wizard .ui-header.mobile-wizard-widebutton {
 	width: 100%;
 	height: 56px !important;
-	font-size: 11pt !important;
+	font-size: var(--default-font-size) !important;
 	margin: 0px;
 	padding: 0px;
 	border: solid 1px #fff;
@@ -938,7 +938,7 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 	background-color: #0b87e7;
 	border: 1px solid #0b87e7;
 	margin: 5px 4%;
-	font-size: 13px;
+	font-size: var(--default-font-size);
 }
 #mobile-wizard button:focus{
 	outline: none;
@@ -997,18 +997,18 @@ label.disabled {
 
 #mobile-wizard #label9, #documentlabel-mobile {
 	border: none;
-	font-size: 15pt;
+	font-size: calc(var(--default-font-size)*1.3);
 }
 
 #mobile-spell-error {
 	border: none;
-	font-size: 15pt;
+	font-size: calc(var(--default-font-size)*1.3);
 	color: red !important;
 }
 
 #searchlabel {
 	border: none;
-	font-size: 11pt;
+	font-size: var(--default-font-size);
 }
 
 #criteria.ui-tab, #inputhelp.ui-tab {
@@ -1063,7 +1063,7 @@ label.disabled {
 #mobile-wizard-popup .cool-annotation-author *,
 #mobile-wizard .cool-annotation-author * {
 	color: var(--gray-light-txt--color) !important;
-	font-size: 11px;
+	font-size: var(--default-font-size);
 }
 
 #mobile-wizard-popup .cool-annotation-reply-count,
