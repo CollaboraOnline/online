@@ -4923,7 +4923,8 @@ std::set<pid_t> COOLWSD::getKitPids()
         for (const auto &child : NewChildren)
         {
             pid = child->getPid();
-            pids.emplace(pid);
+            if (pid > 0)
+                pids.emplace(pid);
         }
     }
     {
