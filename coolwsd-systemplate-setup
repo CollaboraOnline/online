@@ -5,7 +5,10 @@ test $# -eq 2 || { echo "Usage: $0 <chroot template directory for system libs to
 
 # No provision for spaces or other weird characters in pathnames. So sue me.
 
+# First parameter is the pathname where this script will create the "systemplate" tree
 CHROOT=$1
+
+# Second parameter is the instdir directory of the LibreOffice installation to be used
 INSTDIR=$2
 
 test -d "$INSTDIR" || { echo "$0: No such directory: $INSTDIR"; exit 1; }
@@ -81,7 +84,7 @@ mkdir -p $CHROOT/etc/
 for file in hosts nsswitch.conf resolv.conf passwd group host.conf timezone localtime
 do
     # echo "Linking/Copying /etc/$file"
-    # Prefer hard-linking, fallback to just copying (do *not* use soft-linking because that would be relative to the jail).
+    # Prefer hard-linking, fallback to just copying (do *not* use symlinking because that would be relative to the jail).
     # When copying, we must make sure that we copy the source and not a symlink. Otherwise, the source won't be accessible from the jail.
     # In addition, we flag that at least one file is copied by creating the 'copied' file, so that we do check for updates.
     ln -f `${REALPATH} /etc/$file` $CHROOT/etc/$file 2> /dev/null || (${CP} --dereference --preserve=all /etc/$file $CHROOT/etc/$file && touch $CHROOT/etc/copied) || echo "$0: Failed to link or copy /etc/$file"
@@ -93,7 +96,7 @@ mkdir -p $CHROOT/dev
 mkdir -p $CHROOT/tmp/dev
 for file in random urandom
 do
-    # This link is relative anyway, so can be soft.
+    # This link is relative anyway, so can be symbolic.
     ln -f ../tmp/dev/$file $CHROOT/dev/ 2> /dev/null || ln -f -s ../tmp/dev/$file $CHROOT/dev/ || echo "$0: Failed to link dev/$file"
 done
 
@@ -104,11 +107,19 @@ mkdir -p $CHROOT/lo
 # In case the original path is different from
 for path in $INSTDIR $INSTDIR_LOGICAL
 do
-    # Create a soft-link, as it's a relative directory path (can't be a hard-link).
+    # Create a symlink, as it's a relative directory path (can't be a hard-link).
     INSTDIR_PARENT="$(dirname "$CHROOT/$path")"
     mkdir -p $INSTDIR_PARENT
     ln -f -s `${REALPATH} --relative-to=$INSTDIR_PARENT $CHROOT/lo` $CHROOT/$path
 done
+
+# A similar dance also for the directory where "temporary" fonts are
+# stored. Such are downloaded from other servers based on a separate
+# configuration file. They need to be accessible using the same
+# pathname both in the ForKit process and in the Kit processes.
+mkdir -p $CHROOT/tmpfonts
+mkdir -p $CHROOT$CHROOT
+ln -f -s `${REALPATH} --relative-to=$CHROOT$CHROOT $CHROOT/tmpfonts` $CHROOT$CHROOT
 
 # /usr/share/fonts needs to be taken care of separately because the
 # directory time stamps must be preserved for fontconfig to trust

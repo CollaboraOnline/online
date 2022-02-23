@@ -241,6 +241,10 @@
         <remote_url desc="remote server to which you will send resquest to get remote config in response" type="string" default=""></remote_url>
     </remote_config>
 
+    <remote_font_config>
+        <url desc="URL of optional JSON file that lists fonts to be included in Online" type="string" default=""></url>
+    </remote_font_config>
+
     @LOCK_CONFIGURATION@
 
     @FEATURE_RESTRICTION_CONFIGURATION@
