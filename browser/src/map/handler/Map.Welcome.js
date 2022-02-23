@@ -78,6 +78,7 @@ L.Map.Welcome = L.Handler.extend({
 
 	onMessage: function (e) {
 		var data = e.data;
+		data = JSON.parse(data).MessageId;
 
 		if (data === 'welcome-show') {
 			this._iframeWelcome.show();
