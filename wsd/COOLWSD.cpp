@@ -1036,11 +1036,13 @@ public:
             LOG_INF("Remote config url is not specified in coolwsd.xml");
             return; // no remote config server setup.
         }
-        else if (!Util::iequal(remoteServerURI.getScheme(), "https"))
+#if !ENABLE_DEBUG
+        if (Util::iequal(remoteServerURI.getScheme(),"http"))
         {
-            LOG_ERR("Remote config url should only use HTTPS protocol");
+            LOG_ERR("Remote config url should only use HTTPS protocol: " << remoteServerURI.toString());
             return;
         }
+#endif
 
         startThread();
     }
