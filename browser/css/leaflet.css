@@ -23,7 +23,7 @@
 	outline: 0;
 	margin: auto;
 	/* general typography */
-	font: 12px/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font: var(--default-font-size)/1.5 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 .leaflet-tile,
 .leaflet-marker-icon,
@@ -847,7 +847,7 @@ input.clipboard {
 
 .leaflet-progress-label {
 	text-align: center;
-	font: 12px/1.5 var(--cool-font);
+	font: var(--default-font-size)/1.5 var(--cool-font);
 }
 
 .leaflet-progress-label.brand-label {

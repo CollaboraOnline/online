@@ -49,7 +49,7 @@
 }
 
 .spinfieldunit {
-	font-size: 12px;
+	font-size: var(--default-font-size);
 	color: var(--color-text-dark);
 	margin: 5px;
 	position: relative;
