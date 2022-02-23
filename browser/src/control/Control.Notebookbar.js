@@ -244,12 +244,6 @@ L.Control.Notebookbar = L.Control.extend({
 				'type': 'toolbox',
 				'children': [
 					{
-						'id': 'menu',
-						'type': 'toolitem',
-						'text': _('Menu'),
-						'command': '.uno:Menubar'
-					},
-					{
 						'id': 'save',
 						'type': 'toolitem',
 						'text': _('Save'),
