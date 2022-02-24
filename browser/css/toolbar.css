@@ -51,7 +51,7 @@
 #InsertMode.insert-mode-false,
 #PermissionMode.status-readonly-mode {
 	background-color: var(--color-warning);
-	color: white;
+	color: var(--color-primary-text);
 	border-radius: var(--border-radius);
 }
 #tb_actionbar_item_zoom .w2ui-tb-caption{
