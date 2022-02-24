@@ -2988,7 +2988,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			}
 
 			var hasManyChildren = childData.children && childData.children.length > 1;
-			if (hasManyChildren && childData.type !== 'buttonbox') {
+			if (hasManyChildren && childData.type !== 'buttonbox' && childData.type !== 'treelistbox') {
 				// TODO: remove 'table-' prefix, we need exactly the same id so events coming from core
 				// will reach the elements, for postprocess we need to temporary switch the id in childData
 				var backupId = childData.id;
