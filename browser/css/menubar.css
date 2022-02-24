@@ -152,7 +152,7 @@
 	border-bottom: 1px solid var(--color-border-darker);
 }
 .lo-menu > li > a.highlighted {
-	border-bottom-color: #fff;
+	border-bottom-color: var(--color-border-dark);
 }
 .lo-menu > li > ul {
 	margin-top: -1px !important;
@@ -284,7 +284,7 @@
 }
 
 .lo-menu-item-checked:hover::before {
-	color: #fff;
+	color: var(--color-text-dark);
 	-webkit-filter: brightness(100);
 	filter: brightness(100);
 }
@@ -330,8 +330,8 @@
 
 /* For classic mode */
 #main-menu .locking-disabled, #menu-nb-hamburger .locking-disabled {
-	color: var(--gray-light-txt--color) !important;
-	background-color: #fafafa;
+	color: var(--color-text-lighter) !important;
+	background-color: var(--color-background-lighter);
 	box-shadow: inset 0 0 2px 0 rgba(0,0,0,0.2);
 	background: url('images/lc_lock.svg') right top / 24px no-repeat
 }
@@ -342,7 +342,7 @@
 }
 
 #main-menu .locking-disabled:hover, #menu-nb-hamburger .locking-disabled:hover {
-	background-color: #fafafa;
+	background-color: var(--color-background-lighter);
 	background-position: right bottom !important;
 }
 
