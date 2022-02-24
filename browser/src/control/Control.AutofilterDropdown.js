@@ -3,7 +3,7 @@
  * L.Control.AutofilterDropdown
  */
 
-/* global $ */
+/* global app $ */
 L.Control.AutofilterDropdown = L.Control.extend({
 	container: null,
 	subMenu: null,
@@ -84,26 +84,17 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		if (!isSubMenu && this.subMenu)
 			L.DomUtil.remove(this.subMenu);
 
-		var scale = this._map.getZoomScale(this._map.getZoom(), this._map.options.defaultZoom);
+		var scale = this._map.zoomToFactor(this._map.getZoom());
 		var origin = this._map.getPixelOrigin();
 		var panePos = this._map._getMapPanePos();
-		var cursorPos = this._map._docLayer.getCursorPos();
 
-		// autofilter docking window position is relative to the main window
-		// we have to take into account calc input bar and notebookbar height (where spreadsheet starts)
-		// best to base on input bar position and size (it can be also expanded)
-		var spreadsheetAreaOffset = new L.Point(35, 75); // in classic toolbar mode
-
-		var calcInputBar = this._map.dialog._calcInputBar;
-		var offsetX = spreadsheetAreaOffset.x;
-		var offsetY = calcInputBar ?
-			(spreadsheetAreaOffset.y + (calcInputBar.top - 28) + (calcInputBar.height - 29))
-			: spreadsheetAreaOffset.y;
+		var offsetX = app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name).size[0];
+		var offsetY = app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name).size[1];
 
 		if (parseInt(data.posx) === 0 && parseInt(data.posy) === 0)
 			var corePoint = new L.Point(this.position.x, this.position.y);
 		else
-			corePoint = new L.Point(parseInt(data.posx) - offsetX, parseInt(data.posy) - offsetY);
+			corePoint = new L.Point(parseInt(data.posx) + offsetX, parseInt(data.posy) + offsetY);
 
 		var left = corePoint.x * scale;
 		var top = corePoint.y * scale;
@@ -121,15 +112,6 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		var newTop = top + panePos.y - origin.y;
 		if (top >= splitPos.y && newTop >= 0)
 			top = newTop;
-
-		// some documents with split panes have coordinates increased by split position...
-		if (left >= L.Map.THIS._docLayer._painter._sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name).size[0]) {
-			if (cursorPos.x >= splitPos.x && left >= splitPos.x)
-				left = left - splitPos.x;
-
-			if (cursorPos.y >= splitPos.y && top >= splitPos.y)
-				top = top - splitPos.y;
-		}
 
 		if (this._map._docLayer.isCalcRTL()) {
 			left = this._map._size.x - left;
