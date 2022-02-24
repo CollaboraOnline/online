@@ -6,6 +6,7 @@
 	text-align: center;
 	z-index: 999;
 	overflow: visible !important;
+	background-color: transparent;
 }
 
 #toolbar-down {
