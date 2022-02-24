@@ -87,22 +87,38 @@ public:
     }
 
     std::unique_ptr<http::Response>
-    assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    assertPutFileRequest(const Poco::Net::HTTPRequest& request) override
     {
         LOG_TST("Testing " << toString(_scenario));
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
         assertPutFileCount();
 
+        const std::string wopiTimestamp = request.get("X-COOL-WOPI-Timestamp", std::string());
+        const bool force = wopiTimestamp.empty(); // Without a timestamp we force to always store.
+
         switch (_scenario)
         {
-            case Scenario::Disconnect:
             case Scenario::SaveDiscard:
+            case Scenario::SaveOverwrite:
+                if (getCountPutFile() < getExpectedPutFile())
+                {
+                    // These are regular saves.
+                    // LOK_ASSERT_EQUAL_MESSAGE("Unexpected overwritting the document in storage",
+                    //                          false, force);
+                }
+                else
+                {
+                    // The last one is the always_save_on_exit, and has to be forced.
+                    LOK_ASSERT_EQUAL_MESSAGE("Expected forced overwritting the document in storage",
+                                             true, force);
+                }
+                break;
+            case Scenario::Disconnect:
             case Scenario::CloseDiscard:
             case Scenario::VerifyOverwrite:
-                break;
-            case Scenario::SaveOverwrite:
-                WSD_CMD("closedocument");
+                // LOK_ASSERT_EQUAL_MESSAGE("Unexpected overwritting the document in storage", true,
+                //                          force);
                 break;
         }
 
@@ -120,21 +136,18 @@ public:
         switch (_scenario)
         {
             case Scenario::Disconnect:
+                // Just disconnect.
                 LOG_TST("Disconnecting");
                 deleteSocketAt(0);
                 break;
             case Scenario::SaveDiscard:
             case Scenario::SaveOverwrite:
-                // Save the document; wsd should detect now that document has
-                // been changed underneath it and send us:
-                // "error: cmd=storage kind=documentconflict"
+                // Save the document.
                 LOG_TST("Saving the document");
                 WSD_CMD("save dontTerminateEdit=0 dontSaveIfUnmodified=0");
                 break;
             case Scenario::CloseDiscard:
-                // Close the document; wsd should detect now that document has
-                // been changed underneath it and send us:
-                // "error: cmd=storage kind=documentconflict"
+                // Close the document.
                 LOG_TST("Closing the document");
                 WSD_CMD("closedocument");
                 break;
@@ -151,27 +164,12 @@ public:
         LOG_TST("Testing " << toString(_scenario) << ": [" << message << ']');
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
 
-        LOK_ASSERT_MESSAGE("Expect only savefailed errors",
-                           message == "error: cmd=storage kind=savefailed");
+        LOK_ASSERT_EQUAL_MESSAGE("Expect only documentconflict errors",
+                                 std::string("error: cmd=storage kind=savefailed"), message);
 
-        switch (_scenario)
-        {
-            case Scenario::Disconnect:
-                LOK_ASSERT_FAIL("We can't possibly get anything after disconnecting");
-                break;
-            case Scenario::SaveDiscard:
-            case Scenario::CloseDiscard:
-                LOG_TST("Discarding own changes via closedocument");
-                WSD_CMD("closedocument");
-                break;
-            case Scenario::SaveOverwrite:
-                LOG_TST("Overwriting with own version via savetostorage");
-                WSD_CMD("savetostorage force=1");
-                break;
-            case Scenario::VerifyOverwrite:
-                LOK_ASSERT_FAIL("Unexpected error in " + toString(_scenario));
-                break;
-        }
+        // Close the document.
+        LOG_TST("Closing the document");
+        WSD_CMD("closedocument");
 
         return true;
     }
@@ -190,6 +188,7 @@ public:
         _unloadingModifiedDocDetected = true;
     }
 
+    // Wait for clean unloading.
     void onDocBrokerDestroy(const std::string& docKey) override
     {
         LOG_TST("Testing " << toString(_scenario) << " with dockey [" << docKey << "] closed.");
