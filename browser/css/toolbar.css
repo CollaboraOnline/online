@@ -1049,7 +1049,7 @@ button.leaflet-control-search-next
 /* Insert shape grid - based on inserttable grid */
 .insertshape-grid {
 	box-sizing: border-box;
-	background: rgba(255, 255, 255, 0.5);
+	background: var(--color-background-lighter);
 	position: static;
 	padding: 2px;
 	display: block;
@@ -1080,7 +1080,7 @@ button.leaflet-control-search-next
 	text-align: center;
 	padding: 0 7px;
 	clear: both;
-	background-color: rgba(128, 128, 128, 0.1);
+	background-color: var(--color-background-dark);
 	position: static;
 	line-height: 30px;
 	color: var(--color-main-text);
@@ -1091,7 +1091,9 @@ button.leaflet-control-search-next
 }
 
 .insertshape-grid .col:hover {
-	border: 1px solid #ccc;
+	border: 1px solid var(--color-border-darker);
+	border-radius: var(--border-radius);
+	background-color: var(--color-background-darker) !important;
 }
 
 tr.useritem:hover {
