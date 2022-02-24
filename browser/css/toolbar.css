@@ -346,8 +346,8 @@ td[id^='tb_editbar_item_sidebar']{
 }
 
 #closebutton:hover {
-	border-color: #ccc;
-	background-color: #eee;
+	border-color: var(--color-border-darker);
+	background-color: var(--color-background-darker);
 }
 
 #tb_actionbar_item_left {
