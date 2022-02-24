@@ -94,14 +94,14 @@ if ${trace} \
 				   --o:admin_console.username=admin --o:admin_console.password=admin \
 				   --o:storage.ssl.enable=false \
 				   --unattended \
-				   --unitlib="${abs_top_builddir}/test/.libs/$tst.so" 2> "$tst_log"; then
+				   --unitlib="${abs_top_builddir}/test/.libs/$tst.so" 2> "$tst_log" 1>&2; then
 	echo "Test $tst passed."
 	echo ":test-result: PASS $tst" >> $test_output
 else
 	echo "Test $tst FAILED."
 	cat $tst_log
 	echo "============================================================="
-	echo "Test failed on unit: $tst re-run with:"
+	echo "Test failed on unit: $tst re-run with (remove --unattended to run without gdb and get prompted):"
 	echo "   $ gdb --args ${abs_top_builddir}/coolwsd --o:sys_template_path=\"$systemplate_path\" \\"
 	echo "         --o:child_root_path=\"$jails_path\" \\"
 	echo "         --o:security.capabilities=\"${capabilities}\" \\"
@@ -112,6 +112,7 @@ else
 	echo "         --o:ssl.ca_file_path=\"${abs_top_builddir}/etc/ca-chain.cert.pem\" \\"
 	echo "         --o:admin_console.username=admin --o:admin_console.password=admin \\"
 	echo "         --o:storage.ssl.enable=false \\"
+	echo "         --unattended \\"
 	echo "         --unitlib=\"${abs_top_builddir}/test/.libs/$tst.so\""
 	echo ""
 	echo "   $ less $tst_log # for detailed failure log files"
