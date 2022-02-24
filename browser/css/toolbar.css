@@ -1183,10 +1183,10 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	z-index: 1;
 	top: 38px;
 	right: 5px;
-	color: #222;
-	background-color: #fff;
+	color: var(--color-main-text);
+	background-color: var(--color-background-lighter);
 	border-radius: 3px;
-	filter: drop-shadow(0 1px 3px rgba(87, 54, 54, 0.5));
+	filter: drop-shadow(0 1px 3px var(--color-box-shadow));
 	min-width: 150px;
 	font-size: var(--default-font-size);
 }
@@ -1205,7 +1205,7 @@ html[dir='rtl'] #userListPopover {
 	width: 0;
 	position: absolute;
 	pointer-events: none;
-	color: #f9f9f9;
+	color: var(--color-main-text);
 	right: 16px;
 }
 
