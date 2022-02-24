@@ -379,7 +379,7 @@ td[id^='tb_editbar_item_sidebar']{
 }
 
 div .leaflet-bar a:last-child {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid var(--color-border);
 }
 
 .leaflet-control-zoom.leaflet-bar {
@@ -413,7 +413,7 @@ input.leaflet-control-search-bar {
 
 select {
 	padding: 0.2em 0.4em 0.4em 0em;
-	background-color: white;
+	background-color: var(--color-background-lighter);
 }
 
 button.leaflet-control-search-prev {
@@ -427,16 +427,15 @@ button.leaflet-control-search-next
 
 #toolbar label
 , .leaflet-control-search {
-	background-color: #fff;
+	background-color: var(--color-background-lighter);
 }
 
 .search-not-found {
-	background-color: red !important;
+	background-color: var(--color-error) !important;
 	-webkit-transition: background-color 0.8s linear;
 	-moz-transition: background-color 0.8s linear;
 	-o-transition: background-color 0.8s linear;
 	transition: background-color 0.8s linear;
-
 }
 
 #zoomlevel {
