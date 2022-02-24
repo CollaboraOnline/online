@@ -555,13 +555,16 @@ button.leaflet-control-search-next
 	box-sizing: border-box;
 	background: rgba(255, 255, 255, 0.5);
 	position: relative;
-	padding: 2px;
-	border: 1px solid #ccc;
+	padding: 3px;
+	border: 1px solid var(--color-border-dark);
+	border-radius: var(--border-radius);
+	margin: 3px;
 	overflow: auto; /* child margins otherwise don't expand *this* element (parent) */
 }
 
 #conditionalformatmenu-grid td:hover {
-	border: 1px solid #888;
+	border: 1px solid var(--color-border-darker);
+	background-color: var(--color-background-darker) !important;
 }
 
 .w2ui-toolbar table.w2ui-button {
