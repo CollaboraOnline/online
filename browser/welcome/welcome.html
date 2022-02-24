@@ -1,66 +1,63 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <link rel="stylesheet" href="/browser/%VERSION%/welcome/welcome.css">
-  </head>
-<body onload="onLoaded()">
-<div id="user-welcome">
-	<div class="slider">
-		<div class="slides">
-			<div id="slide-1">
-				<fig>
-					<fig id="fig-slide1-l"></fig>
-					<fig id="fig-slide1-c"></fig>
-					<fig id="fig-slide1-r"></fig>
-				</fig>
-				<h1 id="welcome-slide1-heading-1"></h1>
-				<h2 id="welcome-slide1-heading-2"></h2>
-				<p id="welcome-slide1-content"></p>
-				<div id="user-welcome--buttons">
-					<form action="#slide-2">
-						<button id='welcome-button-next-1' type="button" class="ui-pushbutton jsdialog" onclick="onSlideClick('i-slide-2')"></button>
-					</form>
-				</div>
-			</div>
-			<div id="slide-2">
-				<fig></fig>
-				<h1 id="welcome-slide2-heading-1"></h1>
-				<h2 id="welcome-slide2-heading-2"></h2>
-				<p id="welcome-slide2-content"></p>
-				<div id="user-welcome--buttons">
-					<form action="#slide-3">
-						<button id='welcome-button-next-2' type="button" class="ui-pushbutton jsdialog" onclick="onSlideClick('i-slide-3')"></button>
-					</form>
-				</div>
-			</div>
-			<div id="slide-3">
-				<fig></fig>
-				<h1 id="welcome-slide3-heading-1"></h1>
-				<h2 id="welcome-slide3-heading-2"></h2>
-				<p id="welcome-slide3-content"></p>
-				<div id="user-welcome--buttons">
-					<button id='welcome-button-close' type="button" class="ui-pushbutton jsdialog" onclick="onClose()"></button>
-				</div>
-			</div>
-		</div>
-		<btn id="i-slide-1" class="active" onclick="onSlideClick(this.id)">1</btn>
-		<btn id="i-slide-2" onclick="onSlideClick(this.id)">2</btn>
-		<btn id="i-slide-3" onclick="onSlideClick(this.id)">3</btn>
-	</div>
-	<a id="view-supported-versions" href="https://www.collaboraoffice.com/subscriptions/" target="_blank"></a>
-</div>
-<script>
-  function onLoaded() {
-      if (window.parent !== window.self) {
-	  window.parent.postMessage('welcome-show', '*');
-      }
-  }
 
-  function onClose() {
-      if (window.parent !== window.self) {
-	  window.parent.postMessage('welcome-close', '*');
-      }
-  }
-</script>
-</body>
+<html>
+	<head>
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Expires" content="0">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Collabora Online Welcome</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="welcome.css">
+		<script src="welcome.js"></script>
+	</head>
+
+	<body>
+		<div id="user-welcome">
+			<div class="slider">
+				<div class="slides">
+					<div id="slide-1">
+						<fig>
+							<fig id="fig-slide1-l"></fig>
+							<fig id="fig-slide1-c"></fig>
+							<fig id="fig-slide1-r"></fig>
+						</fig>
+						<h1 id="welcome-slide1-heading-1"></h1>
+						<h2 id="welcome-slide1-heading-2"></h2>
+						<p id="welcome-slide1-content"></p>
+						<div id="user-welcome--buttons">
+							<form action="#slide-2">
+								<button type="button" id="slide-1-button">Next</button>
+							</form>
+						</div>
+					</div>
+					<div id="slide-2">
+						<fig></fig>
+						<h1 id="welcome-slide2-heading-1"></h1>
+						<h2 id="welcome-slide2-heading-2"></h2>
+						<p id="welcome-slide2-content"></p>
+						<div id="user-welcome--buttons">
+							<form action="#slide-3">
+								<button type="button" id="slide-2-button">Next</button>
+							</form>
+						</div>
+					</div>
+					<div id="slide-3">
+						<fig></fig>
+						<h1 id="welcome-slide3-heading-1"></h1>
+						<h2 id="welcome-slide3-heading-2"></h2>
+						<p id="welcome-slide3-content"></p>
+						<div id="user-welcome--buttons">
+							<button type="button" id="slide-3-button">Close</button>
+						</div>
+					</div>
+				</div>
+				<a id="slide-1-indicator" class="active" href="#slide-1">1</a>
+				<a id="slide-2-indicator" href="#slide-2">2</a>
+				<a id="slide-3-indicator" href="#slide-3">3</a>
+			</div>
+			<a id="view-supported-versions" href="https://www.collaboraoffice.com/subscriptions/" target="_blank"></a>
+		</div>
+	</body>
 </html>
