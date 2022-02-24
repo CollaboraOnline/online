@@ -119,7 +119,7 @@ w2ui-toolbar {
 #tb_actionbar_item_StateTableCellMenu .w2ui-button.checked .w2ui-tb-down > div,
 #tb_actionbar_item_zoom .w2ui-button.checked .w2ui-tb-down > div {
 	border-color: transparent;
-	border-bottom: 5px solid #888;
+	border-bottom: 5px solid var(--color-text-dark);
 	margin-top: -5px;
 }
 #spreadsheet-toolbar {
