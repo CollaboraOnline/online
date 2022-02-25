@@ -50,6 +50,7 @@
 	font-size: calc(var(--default-font-size)*0.9);
 	font-weight: bold;
 	text-transform: uppercase;
+	text-align: left;
 }
 
 .lokdialog_container.ui-dialog.ui-widget-content, .autofilter-container {
