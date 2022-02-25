@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-10 10:29+0100\n"
-"PO-Revision-Date: 2022-02-17 12:58+0000\n"
-"Last-Translator: Jan Holesovsky <kendy@collabora.com>\n"
+"PO-Revision-Date: 2022-02-23 21:37+0000\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
 "Language: cs\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
-msgstr "Ovládací panel administrátora"
+msgstr "Ovládací panel pro správce"
 
 #: admin/admin.strings.js:7
 msgid "Settings"
@@ -38,7 +38,7 @@ msgstr "Přehled"
 
 #: admin/admin.strings.js:9
 msgid "(current)"
-msgstr "(aktuální)"
+msgstr "(stávající)"
 
 #: admin/admin.strings.js:10
 msgid "Analytics"
@@ -171,16 +171,16 @@ msgstr "Ukončit relaci."
 
 #: admin/admin.strings.js:41
 msgid "Maximum Document process virtual memory (in MB) - reduce only"
-msgstr "Maximální virtuální paměť procesu dokumentu (v MB) - lze pouze zmenšit"
+msgstr "Maximální virtuální paměť procesu dokumentu (v MB) – lze pouze zmenšit"
 
 #: admin/admin.strings.js:42
 msgid "Maximum Document process stack memory (in KB) - reduce only"
 msgstr ""
-"Maximální paměť procesu dokumentu v zásobníku (v kB) - lze pouze zmenšit"
+"Maximální paměť procesu dokumentu v zásobníku (v kB) – lze pouze zmenšit"
 
 #: admin/admin.strings.js:43
 msgid "Maximum file size allowed to write to disk (in MB) - reduce only"
-msgstr "Maximální velikost souboru pro zápis na disk (v MB) - lze pouze zmenšit"
+msgstr "Maximální velikost souboru pro zápis na disk (v MB) – lze pouze zmenšit"
 
 #: admin/admin.strings.js:44
 msgid "Documents:"
@@ -188,11 +188,11 @@ msgstr "Dokumenty:"
 
 #: admin/admin.strings.js:45
 msgid "Expired:"
-msgstr "Platnost vypršela:"
+msgstr "Platnost skončila:"
 
 #: admin/admin.strings.js:46
 msgid "Refresh"
-msgstr "Obnovit"
+msgstr "Načíst znovu"
 
 #: admin/admin.strings.js:47
 msgid "Shutdown Server"
@@ -204,7 +204,7 @@ msgstr "Doba běhu serveru"
 
 #: admin/admin.strings.js:49
 msgid "Refresh Log"
-msgstr "Obnovit protokol"
+msgstr "Znovu načíst protokol"
 
 #: admin/admin.strings.js:50
 msgid "Channel Filter:"
@@ -217,11 +217,11 @@ msgstr "Žádný"
 
 #: admin/admin.strings.js:52
 msgid "Set Log Levels"
-msgstr "Nastavit úroveň protokolu"
+msgstr "Nastavit úroveň podrobností protokolu"
 
 #: admin/admin.strings.js:53
 msgid "Log Levels"
-msgstr "Úroveň protokolu"
+msgstr "Úrovně podrobností protokolu"
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
 #: src/control/Parts.js:424 src/control/Signing.js:611
@@ -230,7 +230,7 @@ msgstr "Zavřít"
 
 #: admin/admin.strings.js:55
 msgid "Update Log Levels"
-msgstr "Aktualizovat úrovně protokolu"
+msgstr "Aktualizovat úrovně podrobností protokolu"
 
 #: admin/admin.strings.js:56
 msgid "Version Information"
@@ -342,7 +342,7 @@ msgstr " s"
 
 #: js/w2ui-1.5.rc1.js:2920
 msgid "Recent"
-msgstr "Poslední"
+msgstr "Nedávná"
 
 #: src/control/ColorPicker.js:122
 msgid "No color"
@@ -378,7 +378,7 @@ msgstr "Vložit jinak"
 
 #: src/control/Control.DocumentNameInput.js:77
 msgid "Path"
-msgstr "Cesta"
+msgstr "Popis umístění"
 
 #: src/control/Control.DocumentRepair.js:33
 msgid "Repair Document"
@@ -422,7 +422,7 @@ msgstr "Zahájit stahování"
 
 #: src/control/Control.DownloadProgress.js:62
 msgid "Confirm copy to clipboard"
-msgstr "Potvrdit kopírování do schránky"
+msgstr "Potvrdit zkopírování do schránky"
 
 #: src/control/Control.FormulaBar.js:34
 msgid "Function Wizard"
@@ -541,7 +541,7 @@ msgstr "Žádný (bez kontroly pravopisu)"
 #: src/control/Control.Menubar.js:770 src/control/Control.Menubar.js:824
 #: src/control/Control.Menubar.js:880 src/control/Control.Menubar.js:926
 msgid "Share..."
-msgstr "Sdílet..."
+msgstr "Sdílet…"
 
 #: src/control/Control.Menubar.js:67 src/control/Control.Menubar.js:318
 #: src/control/Control.Menubar.js:448 src/control/Control.Menubar.js:557
@@ -639,7 +639,7 @@ msgstr "Opravit"
 #: src/control/Control.NotebookbarWriter.js:929
 #: src/control/Control.StatusBar.js:188
 msgid "Reset zoom"
-msgstr "Obnovit přiblížení"
+msgstr "Vrátit na výchozí přiblížení"
 
 #: src/control/Control.Menubar.js:112
 #: src/control/Control.NotebookbarBuilder.js:798
@@ -661,7 +661,7 @@ msgstr "Zobrazovat stavový řádek"
 #: src/control/Control.Menubar.js:994 src/control/Control.Menubar.js:1036
 #: src/control/Control.Menubar.js:1050 src/control/Control.Menubar.js:1073
 msgid "Local Image..."
-msgstr "Místní obrázek..."
+msgstr "Místní obrázek…"
 
 #: src/control/Control.Menubar.js:140 src/control/Control.Menubar.js:142
 #: src/control/Control.Menubar.js:1011 src/control/Control.Menubar.js:1013
@@ -675,13 +675,13 @@ msgstr "Orientace textu"
 #: src/control/Control.Menubar.js:301
 #: src/control/Control.NotebookbarWriter.js:223
 msgid "Forum"
-msgstr "Fórum"
+msgstr "Diskuzní fórum"
 
 #: src/control/Control.Menubar.js:302 src/control/Control.Menubar.js:431
 #: src/control/Control.Menubar.js:542 src/control/Control.Menubar.js:755
 #: src/control/Control.NotebookbarWriter.js:234
 msgid "Online Help"
-msgstr "Online nápověda"
+msgstr "Nápověda na Intenetu"
 
 #: src/control/Control.Menubar.js:303 src/control/Control.Menubar.js:432
 #: src/control/Control.Menubar.js:543 src/control/Control.Menubar.js:756
@@ -788,7 +788,7 @@ msgstr "Nastavení stránky"
 
 #: src/control/Control.Menubar.js:1183 src/control/Control.StatusBar.js:516
 msgid "Reset to Default Language"
-msgstr "Obnovit výchozí jazyk"
+msgstr "Navrátit do výchozího jazyka"
 
 #: src/control/Control.Menubar.js:1552
 msgid "Insert Shape"
@@ -1020,7 +1020,7 @@ msgstr "Neutrální"
 
 #: src/control/Control.NotebookbarCalc.js:612
 msgid "Bad"
-msgstr "Špatné"
+msgstr "Chybné"
 
 #: src/control/Control.NotebookbarCalc.js:674
 msgid "Insert Rows Above"
@@ -1104,7 +1104,7 @@ msgstr "Název"
 
 #: src/control/Control.NotebookbarWriter.js:973
 msgid "Toggle Ruler"
-msgstr "Přepnout pravítko"
+msgstr "(ne)zobrazovat pravítko"
 
 #: src/control/Control.PartsPreview.js:180
 msgid "preview of page "
@@ -1248,7 +1248,7 @@ msgstr "Přesunout list doprava"
 
 #: src/control/Control.Tabs.js:102
 msgid "Copy Sheet..."
-msgstr "Kopírovat list..."
+msgstr "Zkopírovat list…"
 
 #: src/control/Control.Tabs.js:303
 msgid "Are you sure you want to delete sheet, %sheet%?"
@@ -1260,7 +1260,7 @@ msgstr "Zadejte nový název listu"
 
 #: src/control/Control.Toolbar.js:238 src/control/Control.Toolbar.js:266
 msgid "More..."
-msgstr "Více..."
+msgstr "Více…"
 
 #: src/control/Control.Toolbar.js:967
 msgid "Previous slide"
@@ -1362,8 +1362,8 @@ msgid ""
 "This document may contain formatting or content that cannot be saved in the "
 "current file format."
 msgstr ""
-"Tento dokument může obsahovat formátování nebo obsah, které nelze uložit v "
-"aktuálním formátu souboru."
+"Tento dokument může obsahovat formátování nebo obsah, které nelze uložit ve "
+"stávajícím souborovém formátu."
 
 #: src/control/Ruler.js:364
 msgid "Left Margin"
@@ -1395,7 +1395,7 @@ msgstr "Prosím naskenujte kód"
 
 #: src/control/Signing.js:243
 msgid "Couldn't get the QR code image."
-msgstr "Nelze získat obrázek QR kódu."
+msgstr "Nedaří se získat obrázek QR kódu."
 
 #: src/control/Signing.js:270
 msgid "Error when trying to restore access to identity."
@@ -1407,7 +1407,7 @@ msgstr "PIN kód"
 
 #: src/control/Signing.js:277
 msgid "Please enter the PIN code from the EMail or SMS"
-msgstr "Zadejte kód PIN z e-mailu nebo SMS"
+msgstr "Zadejte PIN kód z e-mailu nebo SMS"
 
 #: src/control/Signing.js:298
 msgid "Login from email or mobile number"
@@ -1471,7 +1471,7 @@ msgstr "Tento dokument je elektronicky podepsán platným podpisem."
 
 #: src/control/Signing.js:625
 msgid "Signed and validated"
-msgstr "Podepsáno a validováno"
+msgstr "Podepsáno a ověřeno"
 
 #: src/control/Signing.js:628
 msgid "This document has an invalid signature."
@@ -1495,7 +1495,7 @@ msgstr "Podpis je v pořádku, ale certifikát nelze ověřit."
 
 #: src/control/Signing.js:640
 msgid "Signed but not validated"
-msgstr "Podepsán, ale není validován"
+msgstr "Podepsán, ale není ověřen"
 
 #: src/control/Signing.js:643
 msgid "The signature is OK, but the document is only partially signed."
@@ -1523,15 +1523,15 @@ msgstr "Písmo"
 
 #: src/control/Toolbar.js:230 src/control/Toolbar.js:242
 msgid "Downloading..."
-msgstr "Stahování..."
+msgstr "Stahování…"
 
 #: src/control/Toolbar.js:258
 msgid "Saving..."
-msgstr "Ukládání..."
+msgstr "Ukládání…"
 
 #: src/control/Toolbar.js:269
 msgid "Renaming..."
-msgstr "Přejmenovávání..."
+msgstr "Přejmenovávání…"
 
 #: src/control/Toolbar.js:566
 msgid "This version of %productName is powered by"
@@ -1555,11 +1555,11 @@ msgstr "Došlo k problému při připojování k %productName: "
 
 #: src/core/Socket.js:512
 msgid "Server is now reachable. We have to refresh the page now."
-msgstr "Server je nyní dostupný. Stránku je nutné obnovit."
+msgstr "Server je nyní dostupný. Stránku je nutné znovu načíst."
 
 #: src/core/Socket.js:514
 msgid "Server is now reachable..."
-msgstr "Server je nyní dostupný..."
+msgstr "Server je nyní dostupný…"
 
 #: src/core/Socket.js:518
 msgid "RELOAD"
@@ -1588,13 +1588,13 @@ msgstr "Relace byla ukončena vlastníkem dokumentu"
 #: src/core/Socket.js:666
 msgid "Idle document - please click to reload and resume editing"
 msgstr ""
-"Neaktivní dokument - kliknutím jej znovu načtete a budete moci pokračovat v "
+"Neaktivní dokument – kliknutím ho znovu načtete a budete moci pokračovat v "
 "úpravách"
 
 #: src/core/Socket.js:668
 msgid "Idle document - please tap to reload and resume editing"
 msgstr ""
-"Neaktivní dokument - klepnutím jej znovu načtete a budete moci pokračovat v "
+"Neaktivní dokument – klepnutím ho znovu načtete a budete moci pokračovat v "
 "úpravách"
 
 #: src/core/Socket.js:676
@@ -1607,7 +1607,7 @@ msgstr "Došlo k problému při připojování k dokumentu"
 
 #: src/core/Socket.js:684
 msgid "Server is down, restarting automatically. Please wait."
-msgstr "Server je vypnutý, automaticky se restartuje. Počkejte prosím."
+msgstr "Server není dostupný, ale automaticky se restartuje. Počkejte prosím."
 
 #: src/core/Socket.js:712
 msgid ""
@@ -1627,7 +1627,7 @@ msgstr ""
 
 #: src/core/Socket.js:724
 msgid "Reloading the document after rename"
-msgstr "Dokument se znovu načítá po přejmenování"
+msgstr "Dokument je znovu načítán po přejmenování"
 
 #: src/core/Socket.js:847
 msgid "Discard"
@@ -1683,26 +1683,25 @@ msgstr ". Přejete si se přidat?"
 
 #: src/core/Socket.js:1096
 msgid "Loading..."
-msgstr "Načítání..."
+msgstr "Načítání…"
 
 #: src/core/Socket.js:1096
 msgid "Connecting..."
-msgstr "Připojování..."
+msgstr "Připojování…"
 
 #: src/core/Socket.js:1114
 msgid "The document is being renamed and will reload shortly"
-msgstr "Dokument se právě přejmenovává a brzy se znovu načte"
+msgstr "Dokument je právě přejmenováván a brzy bude znovu načten"
 
 #: src/core/Socket.js:1494
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
-msgstr ""
-"Toto je nepříjemné, není možné se připojit k dokumentu. Zkuste to znovu."
+msgstr "Toto je nepříjemné, nedaří se připojit k dokumentu. Zkuste to znovu."
 
 #: src/core/Socket.js:1511
 msgid "Reconnecting..."
-msgstr "Opětovné připojování..."
+msgstr "Opětovné připojování…"
 
 #: src/core/Socket.js:1517
 msgid "The server has been disconnected."
@@ -1713,7 +1712,7 @@ msgid ""
 "No disk space left on server, please contact the server administrator to "
 "continue."
 msgstr ""
-"Nedostatek volného místa na serveru. Chcete-li pokračovat, obraťte se na "
+"Nedostatek volného místa na serveru. Pokud chcete pokračovat, obraťte se na "
 "správce serveru."
 
 #: src/errormessages.js:14
@@ -1721,8 +1720,8 @@ msgid ""
 "The host URL is empty. The coolwsd server is probably misconfigured, please "
 "contact the administrator."
 msgstr ""
-"Hostitelská URL je prázdná. Coolwsd server je pravděpodobně nesprávně "
-"nakonfigurován, obraťte se na správce."
+"URL adresa hostitele je prázdná. Coolwsd server pravděpodobně není správně "
+"nastavený – obraťte se na správce."
 
 #: src/errormessages.js:15
 msgid ""
@@ -1731,9 +1730,10 @@ msgid ""
 "more than {docs} documents or {connections} connections are in use "
 "concurrently"
 msgstr ""
-"Toto je nepodporovaná verze {productname}. Protože není vhodná pro nasazení "
-"v podnikovém prostředí, zobrazuje se tato zpráva v případě, že je současně "
-"použito {docs} dokumentů nebo {connections} připojení"
+"Toto je varianta {productname}, ke které není poskytována komerční podpora. "
+"Aby nedošlo k mylnému závěru, že je vhodná pro nasazení v podnikovém "
+"prostředí, zobrazuje se tato zpráva v případě, že je souběžně otevřeno více "
+"než {docs} dokumentů nebo {connections} připojení"
 
 #: src/errormessages.js:16
 msgid "More information and support"
@@ -1753,7 +1753,7 @@ msgid ""
 "administrator if the issue persists."
 msgstr ""
 "Služba není dostupná. Zkuste to později a v případě přetrvávajících problémů "
-"kontaktujte správce."
+"se obraťte na správce."
 
 #: src/errormessages.js:19
 msgid ""
@@ -1761,39 +1761,39 @@ msgid ""
 "administrator if the issue persists."
 msgstr ""
 "Neoprávněný WOPI hostitel. Zkuste to později a v případě přetrvávajících "
-"problémů kontaktujte správce."
+"problémů se obraťte na správce."
 
 #: src/errormessages.js:20
 msgid "Wrong or missing WOPISrc parameter, please contact support."
-msgstr "Chybný nebo chybějící parametr WOPISrc, kontaktujte podporu."
+msgstr "Chybný nebo chybějící parametr WOPISrc – obraťte se na podporu."
 
 #: src/errormessages.js:21
 msgid ""
 "Your session will expire in %time. Please save your work and refresh the "
 "session (or webpage) to continue."
 msgstr ""
-"Relace vyprší v %time. Chcete-li pokračovat, uložte si práci a obnovte "
-"relaci (nebo webovou stránku)."
+"Platnost relace skončí v %time. Pokud chcete pokračovat, uložte si práci a "
+"obnovte relaci (nebo webovou stránku znovu načtěte)."
 
 #: src/errormessages.js:22
 msgid ""
 "Your session has been expired. Further changes to document might not be "
 "saved. Please refresh the session (or webpage) to continue."
 msgstr ""
-"Vaše relace vypršela. Další změny dokumentu se neuloží. Chcete-li "
-"pokračovat, obnovte relaci (nebo webovou stránku)."
+"Doba platnosti vaší relace skončila. Další změny dokumentu se neuloží. Pokud "
+"chcete pokračovat, obnovte relaci (nebo webovou stránku znovu načtěte)."
 
 #: src/errormessages.js:23
 msgid ""
 "Failed to load the document. Please ensure the file type is supported and "
 "not corrupted, and try again."
 msgstr ""
-"Dokument se nepodařilo načíst. Ujistěte se, že je tento typ souboru "
-"podporován a soubor není poškozen, a zkuste to znovu."
+"Dokument se nepodařilo načíst. Ověřte, že je tento typ souboru podporován a "
+"soubor není poškozen, a zkuste to znovu."
 
 #: src/errormessages.js:24
 msgid "Invalid link: '%url'"
-msgstr "Neplatný odkaz: '%url'"
+msgstr "Neplatný odkaz: „%url“"
 
 #: src/errormessages.js:25
 msgid ""
@@ -1873,21 +1873,21 @@ msgid ""
 "Document cannot be renamed. Check your permissions or contact the storage "
 "server administrator."
 msgstr ""
-"Dokument nelze přejmenovat. Ujistěte se, zda máte dostatečná oprávnění, nebo "
+"Dokument se nedaří přejmenovat. Ověřte, zda máte dostatečná oprávnění, nebo "
 "se obraťte na správce serveru."
 
 #: src/errormessages.js:45
 msgid ""
 "Document cannot be exported. Please contact the storage server administrator."
-msgstr "Dokument nelze exportovat. Obraťte se na správce serveru."
+msgstr "Dokument se nedaří exportovat. Obraťte se na správce serveru."
 
 #: src/errormessages.js:50
 msgid "Uploading file to server failed, file not found."
-msgstr "Nahrávání souboru na server selhalo, soubor nebyl nalezen."
+msgstr "Nahrávání souboru na server se nezdařilo – soubor nebyl nalezen."
 
 #: src/errormessages.js:51
 msgid "Uploading file to server failed, the file is too large."
-msgstr "Nahrávání souboru na server selhalo, soubor je příliš velký."
+msgstr "Nahrávání souboru na server se nezdařilo – soubor je příliš velký."
 
 #: src/layer/tile/CanvasTileLayer.js:1785
 msgid "Functions"
@@ -1971,8 +1971,8 @@ msgid ""
 "kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</"
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
-"<p>Prohlížeč má velmi omezený přístup ke schránce, proto používejte tyto "
-"klávesové zkratky:</p><table class=\"warn-copy-paste\""
+"<p>Vámi používaný prohlížeč má jen velmi omezený přístup ke schránce, proto "
+"používejte tyto klávesové zkratky:</p><table class=\"warn-copy-paste\""
 "><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
 ">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
 ">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
@@ -1988,10 +1988,10 @@ msgid ""
 "documents inside %productName, there is no need to download.</p>"
 msgstr ""
 "<p>Pokud si přejete sdílet větší části dokumentu s jinou aplikací, je "
-"nezbytné je napřed stáhnout na vaše zařízení. K tomu slouží níže zobrazené "
-"tlačítko „Zahájit stahování“, po skončení klikněte na „Potvrdit kopírování "
-"do schránky“.</p><p>Jestliže kopírujete a vkládáte mezi dokumenty v rámci %"
-"productName, nic stahovat nepotřebujete.</p>"
+"nezbytné si je napřed stáhnout na své zařízení. K tomu slouží níže zobrazené "
+"tlačítko „Zahájit stahování“. Po jeho dokončení klikněte na „Potvrdit "
+"kopírování do schránky“.</p><p>Jestliže kopírujete a vkládáte mezi dokumenty "
+"v rámci %productName, nic stahovat nepotřebujete.</p>"
 
 #: src/map/Clipboard.js:887
 msgid ""
@@ -1999,12 +1999,12 @@ msgid ""
 "Please, wait for the current download or cancel it before starting a new "
 "one</p>"
 msgstr ""
-"<p>Stahování za účelem rozsáhlého kopírování/vkládání již začalo. Počkejte "
-"na jeho dokončení, nebo ho před zahájením nového nejprve zrušte.</p>"
+"<p>Stahování za účelem rozsáhlého kopírování/vkládání už začalo. Počkejte na "
+"jeho dokončení, nebo ho před zahájením nového nejprve zrušte.</p>"
 
 #: src/map/Map.js:233
 msgid "Initializing..."
-msgstr "Inicializace..."
+msgstr "Inicializace…"
 
 #: src/map/Map.js:422 src/map/Map.js:425 src/map/Map.js:428 src/map/Map.js:431
 msgid "Last saved:"
@@ -2022,21 +2022,22 @@ msgstr "Po kliknutí budete moci pokračovat v úpravách"
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file has no name"
-msgstr "Soubor typu: %0 nelze nahrát na server, protože soubor nemá název"
+msgstr ""
+"Soubor typu: %0 nelze nahrát na server, protože soubor není nijak nazván"
 
 #: src/map/handler/Map.FileInserter.js:106
 #, javascript-format
 msgid ""
 "The file of type: %0 cannot be uploaded to server since the file is empty"
-msgstr "Soubor typu: %0 nelze nahrát na server, protože je prázdný"
+msgstr "Soubor typu: %0 nelze nahrát na server, protože je soubor prázdný"
 
 #: src/map/handler/Map.FileInserter.js:137
 msgid "Uploading..."
-msgstr "Nahrávání..."
+msgstr "Nahrávání…"
 
 #: src/map/handler/Map.FileInserter.js:151
 msgid "Uploading file to server failed with status: %0"
-msgstr "Nahrávání souboru na server selhalo se stavem: %0"
+msgstr "Nahrávání souboru na server se nezdařilo se stavem: %0"
 
 #: src/map/handler/Map.Keyboard.js:487
 msgid ""
@@ -2045,18 +2046,18 @@ msgid ""
 "more options</p><p class=\"vex-footnote\">Close popup to ignore paste "
 "special</p>"
 msgstr ""
-"<p>Váš prohlížeč má velmi omezený přístup ke schránce</p><p>Stisknutím "
-"<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> zobrazíte "
-"další možnosti</p><p class=\"vex-footnote\">Zavřením vyskakovacího okna "
-"vložení jinak zrušíte</p>"
+"<p>Vámi používaný prohlížeč má jen velmi omezený přístup ke schránce</"
+"p><p>Stisknutím <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</"
+"kbd> zobrazíte další možnosti</p><p class=\"vex-footnote\">Zavřením "
+"vyskakovacího okna celé vložení jinak zrušíte</p>"
 
 #: src/map/handler/Map.WOPI.js:133
 msgid "Creating new file from template..."
-msgstr "Vytváří se nový soubor ze šablony ..."
+msgstr "Vytváření nového souboru ze šablony…"
 
 #: src/map/handler/Map.WOPI.js:410
 msgid "Creating copy..."
-msgstr "Vytváření kopie..."
+msgstr "Vytváření kopie…"
 
 #~ msgid "Undo"
 #~ msgstr "Zpět"
