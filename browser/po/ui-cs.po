@@ -11,17 +11,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-10 10:29+0100\n"
+"POT-Creation-Date: 2022-02-25 15:20+0100\n"
 "PO-Revision-Date: 2022-02-24 20:27+0000\n"
 "Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: cs\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
-"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <="
+" 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 "X-Generator: Weblate 4.11-dev\n"
 
 #: admin/admin.strings.js:6
@@ -225,6 +225,7 @@ msgstr "Úrovně podrobností protokolu"
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
 #: src/control/Parts.js:424 src/control/Signing.js:611
+#: src/control/Toolbar.js:620
 msgid "Close"
 msgstr "Zavřít"
 
@@ -263,7 +264,7 @@ msgstr "Opravdu si přejete ukončit tuto relaci?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1654
 #: src/control/Control.PresentationBar.js:109 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:706
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
 #: src/core/Socket.js:1015
 msgid "OK"
 msgstr "OK"
@@ -272,7 +273,7 @@ msgstr "OK"
 #: src/control/Control.Command.js:92 src/control/Control.LanguageDialog.js:86
 #: src/control/Control.Menubar.js:1655 src/control/Control.MobileTopBar.js:41
 #: src/control/Control.PresentationBar.js:110 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:707
+#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:862
 #: src/core/Socket.js:876 src/core/Socket.js:886 src/core/Socket.js:1016
 #: src/layer/tile/CommentListSection.ts:399
 #: src/layer/tile/CommentSection.ts:125 src/layer/tile/CommentSection.ts:128
@@ -394,8 +395,8 @@ msgstr "Index"
 
 #: src/control/Control.DocumentRepair.js:48
 #: src/control/Control.JSDialogBuilder.js:2127
-#: src/layer/tile/CanvasTileLayer.js:4912
-#: src/layer/tile/CanvasTileLayer.js:4922
+#: src/layer/tile/CanvasTileLayer.js:4918
+#: src/layer/tile/CanvasTileLayer.js:4928
 #: src/layer/tile/CommentListSection.ts:831
 msgid "Comment"
 msgstr "Komentář"
@@ -994,7 +995,7 @@ msgstr "Zlomek"
 msgid "Boolean Value"
 msgstr "Booleovská hodnota"
 
-#: src/control/Control.NotebookbarCalc.js:448 src/control/Toolbar.js:702
+#: src/control/Control.NotebookbarCalc.js:448 src/control/Toolbar.js:857
 msgid "Text"
 msgstr "Text"
 
@@ -1534,18 +1535,108 @@ msgid "Renaming..."
 msgstr "Přejmenovávání…"
 
 #: src/control/Toolbar.js:566
+msgid "I understand the risks"
+msgstr "Beru riziko na vědomí"
+
+#: src/control/Toolbar.js:588
+msgid "Dismiss"
+msgstr "Odmítnout"
+
+#: src/control/Toolbar.js:606
+#, javascript-format
+msgid "Explore the new %coolVersion"
+msgstr "Seznamte se s novou verzí %coolVersion"
+
+#: src/control/Toolbar.js:607 src/control/Toolbar.js:611
+msgid "Collabora Online Development Edition"
+msgstr "Collabora Online Development Edition"
+
+#: src/control/Toolbar.js:608
+#, javascript-format
+msgid ""
+"Enjoy the latest developments in online productivity, free for you to use, "
+"to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
+"target=\"_blank\">Apps</a> are also available for Android and iOS. "
+"%coolVersion introduces important improvements, in the areas of usability, "
+"visual presentation and performance."
+msgstr ""
+"Využijte naplno výsledky nejnovějšího vývoje online kancelářského balíku, "
+"který můžete svobodně používat, zkoumat a spolupracovat pomocí něj v "
+"prohlížeči s ostatními. K dispozici jsou také <a href=\"%coolAppsURL\" "
+"target=\"_blank\">aplikace</a> pro Android a iOS. %coolVersion přináší "
+"značná vylepšení, co se týče použitelnosti, vzhledu a rychlosti."
+
+#: src/control/Toolbar.js:610
+msgid "Discover all the changes"
+msgstr "Prohlédněte si všechny změny"
+
+#: src/control/Toolbar.js:612
+#, javascript-format
+msgid ""
+"Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
+"a> and learn all about the latest milestone in performance particularly for "
+"larger groups working on documents, new native sidebar, new re-worked avatar "
+"list, asynchronous saving, faster spell checking and more."
+msgstr ""
+"V <a href=\"%coolReleaseNotesURL\" target=\"_blank\">poznámkách k vydání</a> "
+"se dočtete všechno o výrazném zrychlení, a to zvláště pro větší skupiny "
+"pracující na dokumentech, nové nativní postranní liště, přepracovaném "
+"seznamu obrázků uživatelů, asynchronním ukládání, rychlejší kontrole "
+"pravopisu a dalších změnách."
+
+#: src/control/Toolbar.js:614
+msgid "Integrate Collabora Online into your webapp"
+msgstr "Integrujte aplikaci Collabora Online se svou webovou aplikací"
+
+#: src/control/Toolbar.js:615
+msgid "Or get involved in the development"
+msgstr "Nebo se zapojte do vývoje"
+
+#: src/control/Toolbar.js:616
+#, javascript-format
+msgid ""
+"Learn more about integrating into your web application in the <a href="
+"\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
+"the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
+"instructions</a> and build CODE from scratch. You can also help out with <a "
+"href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
+"href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
+"all the essential steps on how to reproduce it."
+msgstr ""
+"Informace o integraci webové aplikace naleznete na stránce <a href=\"%"
+"coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Prostřednictvím <a "
+"href=\"%coolStepByStepURL\" target=\"_blank\">názorných postupů</a> lze CODE "
+"sestavit od nuly. Můžete také pomoci s <a href=\"%coolTranslationsURL\" "
+"target=\"_blank\">překlady</a> nebo <a href=\"%coolBugreportURL\" target=\""
+"_blank\">vyplnit hlášení o chybě</a> se všemi kroky nezbytnými pro její "
+"zopakování."
+
+#: src/control/Toolbar.js:618 src/control/Toolbar.js:619
+msgid "Next"
+msgstr "Další"
+
+#: src/control/Toolbar.js:622
+msgid "Learn more about the enterprise-ready versions"
+msgstr "Zjistěte informace o verzích pro podnikové nasazení"
+
+#: src/control/Toolbar.js:671
+msgid ""
+"We are sorry, the information about the latest updates is not available."
+msgstr "Informace o nejnovějších aktualizacích není k dispozici."
+
+#: src/control/Toolbar.js:721
 msgid "This version of %productName is powered by"
 msgstr "Tato verze aplikace %productName využívá"
 
-#: src/control/Toolbar.js:576
+#: src/control/Toolbar.js:731
 msgid "\"Slow Proxy\""
 msgstr "„Pomalé proxy“"
 
-#: src/control/Toolbar.js:699
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Vložit hypertextový odkaz"
 
-#: src/control/Toolbar.js:703
+#: src/control/Toolbar.js:858
 msgid "Link"
 msgstr "Odkaz"
 
@@ -1693,18 +1784,18 @@ msgstr "Připojování…"
 msgid "The document is being renamed and will reload shortly"
 msgstr "Dokument se právě přejmenovává a brzy se znovu načte"
 
-#: src/core/Socket.js:1494
+#: src/core/Socket.js:1496
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
 "Toto je nepříjemné, nepodařilo se připojit k dokumentu. Zkuste to znovu."
 
-#: src/core/Socket.js:1511
+#: src/core/Socket.js:1513
 msgid "Reconnecting..."
 msgstr "Opětovné připojování…"
 
-#: src/core/Socket.js:1517
+#: src/core/Socket.js:1519
 msgid "The server has been disconnected."
 msgstr "Server byl odpojen."
 
@@ -1894,7 +1985,7 @@ msgstr "Nepodařilo se nahrát soubor na server, soubor je příliš velký."
 msgid "Functions"
 msgstr "Funkce"
 
-#: src/layer/tile/CanvasTileLayer.js:4939
+#: src/layer/tile/CanvasTileLayer.js:4945
 msgid "No Comments"
 msgstr "Bez komentářů"
 
@@ -1973,11 +2064,12 @@ msgid ""
 "td><td>Cut</td><td>Paste</td></tr></table>"
 msgstr ""
 "<p>Prohlížeč má jen velmi omezený přístup ke schránce, proto používejte tyto "
-"klávesové zkratky:</p><table class=\"warn-copy-paste\"><tr><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd></td><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>X</kbd></td><td><kbd>Ctrl</"
-"kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd></td></tr><tr><td>Copy</td>"
-"<td>Cut</td><td>Paste</td></tr></table>"
+"klávesové zkratky:</p><table class=\"warn-copy-paste\""
+"><tr><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>C</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\""
+">+</span><kbd>X</kbd></td><td><kbd>Ctrl</kbd><span class=\"kbd--plus\">+</spa"
+"n><kbd>V</kbd></td></tr><tr><td>Copy</td><td>Cut</td><td>Paste</td></tr></tab"
+"le>"
 
 #: src/map/Clipboard.js:871
 msgid ""
@@ -2071,83 +2163,6 @@ msgstr "Vytváření kopie…"
 
 #~ msgid "Reset Zoom"
 #~ msgstr "Obnovit přiblížení"
-
-#~ msgid "I understand the risks"
-#~ msgstr "Beru riziko na vědomí"
-
-#~ msgid "Dismiss"
-#~ msgstr "Odmítnout"
-
-#, javascript-format
-#~ msgid "Explore the new %coolVersion"
-#~ msgstr "Seznamte se s novou verzí %coolVersion"
-
-#~ msgid "Collabora Online Development Edition"
-#~ msgstr "Collabora Online Development Edition"
-
-#, javascript-format
-#~ msgid ""
-#~ "Enjoy the latest developments in online productivity, free for you to use, "
-#~ "to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
-#~ "target=\"_blank\">Apps</a> are also available for Android and iOS. "
-#~ "%coolVersion introduces important improvements, in the areas of usability, "
-#~ "visual presentation and performance."
-#~ msgstr ""
-#~ "Využijte naplno výsledky nejnovějšího vývoje online kancelářského balíku, "
-#~ "který můžete svobodně používat, zkoumat a spolupracovat pomocí něj v "
-#~ "prohlížeči s ostatními. K dispozici jsou také <a href=\"%coolAppsURL\" "
-#~ "target=\"_blank\">aplikace</a> pro Android a iOS. %coolVersion přináší "
-#~ "značná vylepšení, co se týče použitelnosti, vzhledu a rychlosti."
-
-#~ msgid "Discover all the changes"
-#~ msgstr "Prohlédněte si všechny změny"
-
-#, javascript-format
-#~ msgid ""
-#~ "Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
-#~ "a> and learn all about the latest milestone in performance particularly for "
-#~ "larger groups working on documents, new native sidebar, new re-worked avatar "
-#~ "list, asynchronous saving, faster spell checking and more."
-#~ msgstr ""
-#~ "V <a href=\"%coolReleaseNotesURL\" target=\"_blank\">poznámkách k vydání</a> "
-#~ "se dočtete všechno o výrazném zrychlení, a to zvláště pro větší skupiny "
-#~ "pracující na dokumentech, nové nativní postranní liště, přepracovaném "
-#~ "seznamu obrázků uživatelů, asynchronním ukládání, rychlejší kontrole "
-#~ "pravopisu a dalších změnách."
-
-#~ msgid "Integrate Collabora Online into your webapp"
-#~ msgstr "Integrujte aplikaci Collabora Online se svou webovou aplikací"
-
-#~ msgid "Or get involved in the development"
-#~ msgstr "Nebo se zapojte do vývoje"
-
-#, javascript-format
-#~ msgid ""
-#~ "Learn more about integrating into your web application in the <a href="
-#~ "\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
-#~ "the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
-#~ "instructions</a> and build CODE from scratch. You can also help out with <a "
-#~ "href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
-#~ "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
-#~ "all the essential steps on how to reproduce it."
-#~ msgstr ""
-#~ "Informace o integraci webové aplikace naleznete na stránce <a href=\"%"
-#~ "coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Prostřednictvím <a "
-#~ "href=\"%coolStepByStepURL\" target=\"_blank\">názorných postupů</a> lze CODE "
-#~ "sestavit od nuly. Můžete také pomoci s <a href=\"%coolTranslationsURL\" "
-#~ "target=\"_blank\">překlady</a> nebo <a href=\"%coolBugreportURL\" target=\""
-#~ "_blank\">vyplnit hlášení o chybě</a> se všemi kroky nezbytnými pro její "
-#~ "zopakování."
-
-#~ msgid "Next"
-#~ msgstr "Další"
-
-#~ msgid "Learn more about the enterprise-ready versions"
-#~ msgstr "Zjistěte informace o verzích pro podnikové nasazení"
-
-#~ msgid ""
-#~ "We are sorry, the information about the latest updates is not available."
-#~ msgstr "Informace o nejnovějších aktualizacích není k dispozici."
 
 #~ msgid "Inactive document - please click to resume editing"
 #~ msgstr "Neaktivní dokument - po kliknutí budete moci pokračovat v úpravách"

@@ -4,17 +4,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Collabora Online UI\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-10 10:29+0100\n"
+"POT-Creation-Date: 2022-02-25 15:20+0100\n"
 "PO-Revision-Date: 2022-02-11 21:22+0000\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/sl/>\n"
-"Language: sl\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
-"%100==4 ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Accelerator-Marker: ~\n"
 "X-Generator: Weblate 4.11-dev\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -223,6 +223,7 @@ msgstr "Ravni beleženja"
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
 #: src/control/Parts.js:424 src/control/Signing.js:611
+#: src/control/Toolbar.js:620
 msgid "Close"
 msgstr "Zapri"
 
@@ -261,7 +262,7 @@ msgstr "Ste prepričani, da želite zaključiti to sejo?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1654
 #: src/control/Control.PresentationBar.js:109 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:706
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
 #: src/core/Socket.js:1015
 msgid "OK"
 msgstr "V redu"
@@ -270,7 +271,7 @@ msgstr "V redu"
 #: src/control/Control.Command.js:92 src/control/Control.LanguageDialog.js:86
 #: src/control/Control.Menubar.js:1655 src/control/Control.MobileTopBar.js:41
 #: src/control/Control.PresentationBar.js:110 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:707
+#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:862
 #: src/core/Socket.js:876 src/core/Socket.js:886 src/core/Socket.js:1016
 #: src/layer/tile/CommentListSection.ts:399
 #: src/layer/tile/CommentSection.ts:125 src/layer/tile/CommentSection.ts:128
@@ -392,8 +393,8 @@ msgstr "Kazalo"
 
 #: src/control/Control.DocumentRepair.js:48
 #: src/control/Control.JSDialogBuilder.js:2127
-#: src/layer/tile/CanvasTileLayer.js:4912
-#: src/layer/tile/CanvasTileLayer.js:4922
+#: src/layer/tile/CanvasTileLayer.js:4918
+#: src/layer/tile/CanvasTileLayer.js:4928
 #: src/layer/tile/CommentListSection.ts:831
 msgid "Comment"
 msgstr "Komentar"
@@ -992,7 +993,7 @@ msgstr "Ulomek"
 msgid "Boolean Value"
 msgstr "Logična vrednost"
 
-#: src/control/Control.NotebookbarCalc.js:448 src/control/Toolbar.js:702
+#: src/control/Control.NotebookbarCalc.js:448 src/control/Toolbar.js:857
 msgid "Text"
 msgstr "Besedilo"
 
@@ -1532,18 +1533,111 @@ msgid "Renaming..."
 msgstr "Preimenovanje ..."
 
 #: src/control/Toolbar.js:566
+msgid "I understand the risks"
+msgstr "Razumem tveganje"
+
+#: src/control/Toolbar.js:588
+msgid "Dismiss"
+msgstr "Umakni"
+
+#: src/control/Toolbar.js:606
+#, javascript-format
+msgid "Explore the new %coolVersion"
+msgstr "Raziščite novo %coolVersion"
+
+#: src/control/Toolbar.js:607 src/control/Toolbar.js:611
+msgid "Collabora Online Development Edition"
+msgstr ""
+"Razvojna različica Collabora Online (angl. Collabora Online Development "
+"Edition oz. CODE)"
+
+#: src/control/Toolbar.js:608
+#, javascript-format
+msgid ""
+"Enjoy the latest developments in online productivity, free for you to use, "
+"to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
+"target=\"_blank\">Apps</a> are also available for Android and iOS. "
+"%coolVersion introduces important improvements, in the areas of usability, "
+"visual presentation and performance."
+msgstr ""
+"Uživajte v najnovejšem razvoju spletne produktivnosti, brezplačnem za "
+"uporabo, raziskovanje in souporabo z drugimi v brskalniku. <a href=\"%"
+"coolAppsURL\" target=\"_blank\">Aplikacije</a> so na voljo tudi za Android "
+"in iOS. %coolVersion prinaša pomembne izboljšave na področju uporabnosti, "
+"vizualne podobe in hitrosti delovanja."
+
+#: src/control/Toolbar.js:610
+msgid "Discover all the changes"
+msgstr "Odkrijte vse spremembe"
+
+#: src/control/Toolbar.js:612
+#, javascript-format
+msgid ""
+"Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
+"a> and learn all about the latest milestone in performance particularly for "
+"larger groups working on documents, new native sidebar, new re-worked avatar "
+"list, asynchronous saving, faster spell checking and more."
+msgstr ""
+"Preglejte <a href=\"%coolReleaseNotesURL\" target=\"_blank\">opombe ob "
+"izdaji</a> in spoznajte vse o najnovejši ključni izdaji glede hitrosti "
+"delovanja, še posebej za večje skupine, ki sodelujejo pri delu na "
+"dokumentih, novi domorodni stranski vrstici, novem predelanem seznamu "
+"avatarjev, asinhronem shranjevanju, hitrejšem preverjanju črkovanja in "
+"drugem."
+
+#: src/control/Toolbar.js:614
+msgid "Integrate Collabora Online into your webapp"
+msgstr "Integrirajte Collabora Online v svojo spletno aplikacijo"
+
+#: src/control/Toolbar.js:615
+msgid "Or get involved in the development"
+msgstr "Ali pa se pridružite razvoju"
+
+#: src/control/Toolbar.js:616
+#, javascript-format
+msgid ""
+"Learn more about integrating into your web application in the <a href="
+"\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
+"the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
+"instructions</a> and build CODE from scratch. You can also help out with <a "
+"href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
+"href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
+"all the essential steps on how to reproduce it."
+msgstr ""
+"Pozanimajte se o integraciji v svojo spletno aplikacijo v <a href=\"%"
+"coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Ali pa se namenite "
+"k <a href=\"%coolStepByStepURL\" target=\"_blank\">napotkom korak za "
+"korakom</a> ter zgradite CODE od začetka. Pomagate lahko tudi s <a href=\"%"
+"coolTranslationsURL\" target=\"_blank\">prevajanjem</a> ali <a href=\"%"
+"coolBugreportURL\" target=\"_blank\">vnosom poročila o hrošču</a> z vsemi "
+"ključnimi koraki o tem, kako jih poustvariti."
+
+#: src/control/Toolbar.js:618 src/control/Toolbar.js:619
+msgid "Next"
+msgstr "Naprej"
+
+#: src/control/Toolbar.js:622
+msgid "Learn more about the enterprise-ready versions"
+msgstr "Spoznajte podrobnosti o različicah za podjetja"
+
+#: src/control/Toolbar.js:671
+msgid ""
+"We are sorry, the information about the latest updates is not available."
+msgstr "Žal podatki o najnovejših posodobitvah niso na voljo."
+
+#: src/control/Toolbar.js:721
 msgid "This version of %productName is powered by"
 msgstr "To različico %productName poganja"
 
-#: src/control/Toolbar.js:576
+#: src/control/Toolbar.js:731
 msgid "\"Slow Proxy\""
 msgstr "»Počasno posredovanje«"
 
-#: src/control/Toolbar.js:699
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Vstavi hiperpovezavo"
 
-#: src/control/Toolbar.js:703
+#: src/control/Toolbar.js:858
 msgid "Link"
 msgstr "Povezava"
 
@@ -1690,17 +1784,17 @@ msgid "The document is being renamed and will reload shortly"
 msgstr ""
 "Dokument je v postopku preimenovanja in se bo v kratkem ponovno naložil."
 
-#: src/core/Socket.js:1494
+#: src/core/Socket.js:1496
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr "Žal se ni mogoče povezati z vašim dokumentom. Prosimo, poskusite znova."
 
-#: src/core/Socket.js:1511
+#: src/core/Socket.js:1513
 msgid "Reconnecting..."
 msgstr "Ponovno povezovanje ..."
 
-#: src/core/Socket.js:1517
+#: src/core/Socket.js:1519
 msgid "The server has been disconnected."
 msgstr "Strežnik ni več povezan."
 
@@ -1896,7 +1990,7 @@ msgstr "Nalaganje datoteke na strežnik je spodletelo, datoteka je prevelika."
 msgid "Functions"
 msgstr "Funkcije"
 
-#: src/layer/tile/CanvasTileLayer.js:4939
+#: src/layer/tile/CanvasTileLayer.js:4945
 msgid "No Comments"
 msgstr "Ni komentarjev"
 
@@ -2077,86 +2171,6 @@ msgstr "Ustvarjanje kopije ..."
 
 #~ msgid "Reset Zoom"
 #~ msgstr "Ponastavi povečavo"
-
-#~ msgid "I understand the risks"
-#~ msgstr "Razumem tveganje"
-
-#~ msgid "Dismiss"
-#~ msgstr "Umakni"
-
-#, javascript-format
-#~ msgid "Explore the new %coolVersion"
-#~ msgstr "Raziščite novo %coolVersion"
-
-#~ msgid "Collabora Online Development Edition"
-#~ msgstr ""
-#~ "Razvojna različica Collabora Online (angl. Collabora Online Development "
-#~ "Edition oz. CODE)"
-
-#, javascript-format
-#~ msgid ""
-#~ "Enjoy the latest developments in online productivity, free for you to use, "
-#~ "to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
-#~ "target=\"_blank\">Apps</a> are also available for Android and iOS. "
-#~ "%coolVersion introduces important improvements, in the areas of usability, "
-#~ "visual presentation and performance."
-#~ msgstr ""
-#~ "Uživajte v najnovejšem razvoju spletne produktivnosti, brezplačnem za "
-#~ "uporabo, raziskovanje in souporabo z drugimi v brskalniku. <a href=\"%"
-#~ "coolAppsURL\" target=\"_blank\">Aplikacije</a> so na voljo tudi za Android "
-#~ "in iOS. %coolVersion prinaša pomembne izboljšave na področju uporabnosti, "
-#~ "vizualne podobe in hitrosti delovanja."
-
-#~ msgid "Discover all the changes"
-#~ msgstr "Odkrijte vse spremembe"
-
-#, javascript-format
-#~ msgid ""
-#~ "Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
-#~ "a> and learn all about the latest milestone in performance particularly for "
-#~ "larger groups working on documents, new native sidebar, new re-worked avatar "
-#~ "list, asynchronous saving, faster spell checking and more."
-#~ msgstr ""
-#~ "Preglejte <a href=\"%coolReleaseNotesURL\" target=\"_blank\">opombe ob "
-#~ "izdaji</a> in spoznajte vse o najnovejši ključni izdaji glede hitrosti "
-#~ "delovanja, še posebej za večje skupine, ki sodelujejo pri delu na "
-#~ "dokumentih, novi domorodni stranski vrstici, novem predelanem seznamu "
-#~ "avatarjev, asinhronem shranjevanju, hitrejšem preverjanju črkovanja in "
-#~ "drugem."
-
-#~ msgid "Integrate Collabora Online into your webapp"
-#~ msgstr "Integrirajte Collabora Online v svojo spletno aplikacijo"
-
-#~ msgid "Or get involved in the development"
-#~ msgstr "Ali pa se pridružite razvoju"
-
-#, javascript-format
-#~ msgid ""
-#~ "Learn more about integrating into your web application in the <a href="
-#~ "\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
-#~ "the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
-#~ "instructions</a> and build CODE from scratch. You can also help out with <a "
-#~ "href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
-#~ "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
-#~ "all the essential steps on how to reproduce it."
-#~ msgstr ""
-#~ "Pozanimajte se o integraciji v svojo spletno aplikacijo v <a href=\"%"
-#~ "coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Ali pa se namenite "
-#~ "k <a href=\"%coolStepByStepURL\" target=\"_blank\">napotkom korak za "
-#~ "korakom</a> ter zgradite CODE od začetka. Pomagate lahko tudi s <a href=\"%"
-#~ "coolTranslationsURL\" target=\"_blank\">prevajanjem</a> ali <a href=\"%"
-#~ "coolBugreportURL\" target=\"_blank\">vnosom poročila o hrošču</a> z vsemi "
-#~ "ključnimi koraki o tem, kako jih poustvariti."
-
-#~ msgid "Next"
-#~ msgstr "Naprej"
-
-#~ msgid "Learn more about the enterprise-ready versions"
-#~ msgstr "Spoznajte podrobnosti o različicah za podjetja"
-
-#~ msgid ""
-#~ "We are sorry, the information about the latest updates is not available."
-#~ msgstr "Žal podatki o najnovejših posodobitvah niso na voljo."
 
 #~ msgid "Inactive document - please click to resume editing"
 #~ msgstr "Neaktivni dokument – kliknite za nadaljevanje urejanja"

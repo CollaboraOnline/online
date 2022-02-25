@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-10 10:29+0100\n"
+"POT-Creation-Date: 2022-02-25 15:20+0100\n"
 "PO-Revision-Date: 2022-01-25 02:21+0000\n"
 "Last-Translator: Rob Pearson <rob.dunedin@gmail.com>\n"
 "Language-Team: English (United Kingdom) <https://hosted.weblate.org/projects/"
@@ -219,6 +219,7 @@ msgstr "Log Levels"
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
 #: src/control/Parts.js:424 src/control/Signing.js:611
+#: src/control/Toolbar.js:620
 msgid "Close"
 msgstr "Close"
 
@@ -257,7 +258,7 @@ msgstr "Are you sure you want to terminate this session?"
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1654
 #: src/control/Control.PresentationBar.js:109 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:706
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
 #: src/core/Socket.js:1015
 msgid "OK"
 msgstr "OK"
@@ -266,7 +267,7 @@ msgstr "OK"
 #: src/control/Control.Command.js:92 src/control/Control.LanguageDialog.js:86
 #: src/control/Control.Menubar.js:1655 src/control/Control.MobileTopBar.js:41
 #: src/control/Control.PresentationBar.js:110 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:707
+#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:862
 #: src/core/Socket.js:876 src/core/Socket.js:886 src/core/Socket.js:1016
 #: src/layer/tile/CommentListSection.ts:399
 #: src/layer/tile/CommentSection.ts:125 src/layer/tile/CommentSection.ts:128
@@ -387,8 +388,8 @@ msgstr "Index"
 
 #: src/control/Control.DocumentRepair.js:48
 #: src/control/Control.JSDialogBuilder.js:2127
-#: src/layer/tile/CanvasTileLayer.js:4912
-#: src/layer/tile/CanvasTileLayer.js:4922
+#: src/layer/tile/CanvasTileLayer.js:4918
+#: src/layer/tile/CanvasTileLayer.js:4928
 #: src/layer/tile/CommentListSection.ts:831
 msgid "Comment"
 msgstr "Comment"
@@ -987,7 +988,7 @@ msgstr "Fraction"
 msgid "Boolean Value"
 msgstr "Boolean Value"
 
-#: src/control/Control.NotebookbarCalc.js:448 src/control/Toolbar.js:702
+#: src/control/Control.NotebookbarCalc.js:448 src/control/Toolbar.js:857
 msgid "Text"
 msgstr "Text"
 
@@ -1526,18 +1527,108 @@ msgid "Renaming..."
 msgstr "Renaming..."
 
 #: src/control/Toolbar.js:566
+msgid "I understand the risks"
+msgstr "I understand the risks"
+
+#: src/control/Toolbar.js:588
+msgid "Dismiss"
+msgstr "Dismiss"
+
+#: src/control/Toolbar.js:606
+#, javascript-format
+msgid "Explore the new %coolVersion"
+msgstr "Explore the new %coolVersion"
+
+#: src/control/Toolbar.js:607 src/control/Toolbar.js:611
+msgid "Collabora Online Development Edition"
+msgstr "Collabora Online Development Edition"
+
+#: src/control/Toolbar.js:608
+#, javascript-format
+msgid ""
+"Enjoy the latest developments in online productivity, free for you to use, "
+"to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
+"target=\"_blank\">Apps</a> are also available for Android and iOS. "
+"%coolVersion introduces important improvements, in the areas of usability, "
+"visual presentation and performance."
+msgstr ""
+"Enjoy the latest developments in online productivity, free for you to use, "
+"to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
+"target=\"_blank\">Apps</a> are also available for Android and iOS. %"
+"coolVersion introduces important improvements, in the areas of usability, "
+"visual presentation and performance."
+
+#: src/control/Toolbar.js:610
+msgid "Discover all the changes"
+msgstr "Discover all the changes"
+
+#: src/control/Toolbar.js:612
+#, javascript-format
+msgid ""
+"Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
+"a> and learn all about the latest milestone in performance particularly for "
+"larger groups working on documents, new native sidebar, new re-worked avatar "
+"list, asynchronous saving, faster spell checking and more."
+msgstr ""
+"Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release "
+"notes</a> and learn all about the latest milestone in performance "
+"particularly for larger groups working on documents, new native sidebar, new "
+"re-worked avatar list, asynchronous saving, faster spell checking and more."
+
+#: src/control/Toolbar.js:614
+msgid "Integrate Collabora Online into your webapp"
+msgstr "Integrate Collabora Online into your webapp"
+
+#: src/control/Toolbar.js:615
+msgid "Or get involved in the development"
+msgstr "Or get involved in the development"
+
+#: src/control/Toolbar.js:616
+#, javascript-format
+msgid ""
+"Learn more about integrating into your web application in the <a href="
+"\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
+"the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
+"instructions</a> and build CODE from scratch. You can also help out with <a "
+"href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
+"href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
+"all the essential steps on how to reproduce it."
+msgstr ""
+"Learn more about integrating into your web application in the <a href=\"%"
+"coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to the "
+"<a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
+"instructions</a> and build CODE from scratch. You can also help out with <a "
+"href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
+"href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
+"all the essential steps on how to reproduce it."
+
+#: src/control/Toolbar.js:618 src/control/Toolbar.js:619
+msgid "Next"
+msgstr "Text"
+
+#: src/control/Toolbar.js:622
+msgid "Learn more about the enterprise-ready versions"
+msgstr "Learn more about the enterprise-ready versions"
+
+#: src/control/Toolbar.js:671
+msgid ""
+"We are sorry, the information about the latest updates is not available."
+msgstr ""
+"We are sorry, the information about the latest updates is not available."
+
+#: src/control/Toolbar.js:721
 msgid "This version of %productName is powered by"
 msgstr "This version of %productName is powered by"
 
-#: src/control/Toolbar.js:576
+#: src/control/Toolbar.js:731
 msgid "\"Slow Proxy\""
 msgstr "\"Slow Proxy\""
 
-#: src/control/Toolbar.js:699
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr "Insert hyperlink"
 
-#: src/control/Toolbar.js:703
+#: src/control/Toolbar.js:858
 msgid "Link"
 msgstr "Link"
 
@@ -1681,7 +1772,7 @@ msgstr "Connecting..."
 msgid "The document is being renamed and will reload shortly"
 msgstr "The document is being renamed and will reload shortly"
 
-#: src/core/Socket.js:1494
+#: src/core/Socket.js:1496
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
@@ -1689,11 +1780,11 @@ msgstr ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 
-#: src/core/Socket.js:1511
+#: src/core/Socket.js:1513
 msgid "Reconnecting..."
 msgstr "Reconnecting..."
 
-#: src/core/Socket.js:1517
+#: src/core/Socket.js:1519
 msgid "The server has been disconnected."
 msgstr "The server has been disconnected."
 
@@ -1885,7 +1976,7 @@ msgstr "Uploading file to server failed, the file is too large."
 msgid "Functions"
 msgstr "Functions"
 
-#: src/layer/tile/CanvasTileLayer.js:4939
+#: src/layer/tile/CanvasTileLayer.js:4945
 msgid "No Comments"
 msgstr "No Comments"
 
@@ -2064,83 +2155,6 @@ msgstr "Creating copy..."
 
 #~ msgid "Reset Zoom"
 #~ msgstr "Reset Zoom"
-
-#~ msgid "I understand the risks"
-#~ msgstr "I understand the risks"
-
-#~ msgid "Dismiss"
-#~ msgstr "Dismiss"
-
-#, javascript-format
-#~ msgid "Explore the new %coolVersion"
-#~ msgstr "Explore the new %coolVersion"
-
-#~ msgid "Collabora Online Development Edition"
-#~ msgstr "Collabora Online Development Edition"
-
-#, javascript-format
-#~ msgid ""
-#~ "Enjoy the latest developments in online productivity, free for you to use, "
-#~ "to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
-#~ "target=\"_blank\">Apps</a> are also available for Android and iOS. "
-#~ "%coolVersion introduces important improvements, in the areas of usability, "
-#~ "visual presentation and performance."
-#~ msgstr ""
-#~ "Enjoy the latest developments in online productivity, free for you to use, "
-#~ "to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
-#~ "target=\"_blank\">Apps</a> are also available for Android and iOS. %"
-#~ "coolVersion introduces important improvements, in the areas of usability, "
-#~ "visual presentation and performance."
-
-#~ msgid "Discover all the changes"
-#~ msgstr "Discover all the changes"
-
-#, javascript-format
-#~ msgid ""
-#~ "Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
-#~ "a> and learn all about the latest milestone in performance particularly for "
-#~ "larger groups working on documents, new native sidebar, new re-worked avatar "
-#~ "list, asynchronous saving, faster spell checking and more."
-#~ msgstr ""
-#~ "Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release "
-#~ "notes</a> and learn all about the latest milestone in performance "
-#~ "particularly for larger groups working on documents, new native sidebar, new "
-#~ "re-worked avatar list, asynchronous saving, faster spell checking and more."
-
-#~ msgid "Integrate Collabora Online into your webapp"
-#~ msgstr "Integrate Collabora Online into your webapp"
-
-#~ msgid "Or get involved in the development"
-#~ msgstr "Or get involved in the development"
-
-#, javascript-format
-#~ msgid ""
-#~ "Learn more about integrating into your web application in the <a href="
-#~ "\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
-#~ "the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
-#~ "instructions</a> and build CODE from scratch. You can also help out with <a "
-#~ "href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
-#~ "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
-#~ "all the essential steps on how to reproduce it."
-#~ msgstr ""
-#~ "Learn more about integrating into your web application in the <a href=\"%"
-#~ "coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to the "
-#~ "<a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
-#~ "instructions</a> and build CODE from scratch. You can also help out with <a "
-#~ "href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
-#~ "href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
-#~ "all the essential steps on how to reproduce it."
-
-#~ msgid "Next"
-#~ msgstr "Text"
-
-#~ msgid "Learn more about the enterprise-ready versions"
-#~ msgstr "Learn more about the enterprise-ready versions"
-
-#~ msgid ""
-#~ "We are sorry, the information about the latest updates is not available."
-#~ msgstr ""
-#~ "We are sorry, the information about the latest updates is not available."
 
 #~ msgid "Inactive document - please click to resume editing"
 #~ msgstr "Inactive document - please click to resume editing"

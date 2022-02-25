@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-10 10:29+0100\n"
+"POT-Creation-Date: 2022-02-25 15:20+0100\n"
 "PO-Revision-Date: 2020-04-08 11:11+0000\n"
 "Last-Translator: Muḥend Velqasem <belkacem77@gmail.com>\n"
 "Language-Team: Kabyle <https://weblate.documentfoundation.org/projects/"
@@ -223,6 +223,7 @@ msgstr ""
 
 #: admin/admin.strings.js:54 src/control/Control.AlertDialog.js:25
 #: src/control/Parts.js:424 src/control/Signing.js:611
+#: src/control/Toolbar.js:620
 msgid "Close"
 msgstr "Mdel"
 
@@ -261,7 +262,7 @@ msgstr ""
 #: admin/src/AdminSocketOverview.js:99 admin/src/AdminSocketSettings.js:36
 #: src/control/Control.Menubar.js:1654
 #: src/control/Control.PresentationBar.js:109 src/control/Control.Tabs.js:305
-#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:706
+#: src/control/Control.Tabs.js:323 src/control/Toolbar.js:861
 #: src/core/Socket.js:1015
 msgid "OK"
 msgstr "Seɣbel"
@@ -270,7 +271,7 @@ msgstr "Seɣbel"
 #: src/control/Control.Command.js:92 src/control/Control.LanguageDialog.js:86
 #: src/control/Control.Menubar.js:1655 src/control/Control.MobileTopBar.js:41
 #: src/control/Control.PresentationBar.js:110 src/control/Control.Tabs.js:306
-#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:707
+#: src/control/Control.Tabs.js:324 src/control/Toolbar.js:862
 #: src/core/Socket.js:876 src/core/Socket.js:886 src/core/Socket.js:1016
 #: src/layer/tile/CommentListSection.ts:399
 #: src/layer/tile/CommentSection.ts:125 src/layer/tile/CommentSection.ts:128
@@ -392,8 +393,8 @@ msgstr "Index"
 
 #: src/control/Control.DocumentRepair.js:48
 #: src/control/Control.JSDialogBuilder.js:2127
-#: src/layer/tile/CanvasTileLayer.js:4912
-#: src/layer/tile/CanvasTileLayer.js:4922
+#: src/layer/tile/CanvasTileLayer.js:4918
+#: src/layer/tile/CanvasTileLayer.js:4928
 #: src/layer/tile/CommentListSection.ts:831
 msgid "Comment"
 msgstr "Commentaire"
@@ -1002,7 +1003,7 @@ msgstr ""
 msgid "Boolean Value"
 msgstr ""
 
-#: src/control/Control.NotebookbarCalc.js:448 src/control/Toolbar.js:702
+#: src/control/Control.NotebookbarCalc.js:448 src/control/Toolbar.js:857
 msgid "Text"
 msgstr "Texte"
 
@@ -1541,18 +1542,92 @@ msgid "Renaming..."
 msgstr ""
 
 #: src/control/Toolbar.js:566
+msgid "I understand the risks"
+msgstr ""
+
+#: src/control/Toolbar.js:588
+msgid "Dismiss"
+msgstr ""
+
+#: src/control/Toolbar.js:606
+#, javascript-format
+msgid "Explore the new %coolVersion"
+msgstr ""
+
+#: src/control/Toolbar.js:607 src/control/Toolbar.js:611
+msgid "Collabora Online Development Edition"
+msgstr ""
+
+#: src/control/Toolbar.js:608
+#, javascript-format
+msgid ""
+"Enjoy the latest developments in online productivity, free for you to use, "
+"to explore and to use with others in the browser. <a href=\"%coolAppsURL\" "
+"target=\"_blank\">Apps</a> are also available for Android and iOS. "
+"%coolVersion introduces important improvements, in the areas of usability, "
+"visual presentation and performance."
+msgstr ""
+
+#: src/control/Toolbar.js:610
+msgid "Discover all the changes"
+msgstr ""
+
+#: src/control/Toolbar.js:612
+#, javascript-format
+msgid ""
+"Check the <a href=\"%coolReleaseNotesURL\" target=\"_blank\">release notes</"
+"a> and learn all about the latest milestone in performance particularly for "
+"larger groups working on documents, new native sidebar, new re-worked avatar "
+"list, asynchronous saving, faster spell checking and more."
+msgstr ""
+
+#: src/control/Toolbar.js:614
+msgid "Integrate Collabora Online into your webapp"
+msgstr ""
+
+#: src/control/Toolbar.js:615
+msgid "Or get involved in the development"
+msgstr ""
+
+#: src/control/Toolbar.js:616
+#, javascript-format
+msgid ""
+"Learn more about integrating into your web application in the <a href="
+"\"%coolSdkURL\" target=\"_blank\">Collabora Online SDK</a>. Or head over to "
+"the <a href=\"%coolStepByStepURL\" target=\"_blank\">step-by-step "
+"instructions</a> and build CODE from scratch. You can also help out with <a "
+"href=\"%coolTranslationsURL\" target=\"_blank\">translations</a> or by <a "
+"href=\"%coolBugreportURL\" target=\"_blank\">filing a bug report</a> with "
+"all the essential steps on how to reproduce it."
+msgstr ""
+
+#: src/control/Toolbar.js:618 src/control/Toolbar.js:619
+#, fuzzy
+msgid "Next"
+msgstr "Texte"
+
+#: src/control/Toolbar.js:622
+msgid "Learn more about the enterprise-ready versions"
+msgstr ""
+
+#: src/control/Toolbar.js:671
+msgid ""
+"We are sorry, the information about the latest updates is not available."
+msgstr ""
+
+#: src/control/Toolbar.js:721
 msgid "This version of %productName is powered by"
 msgstr ""
 
-#: src/control/Toolbar.js:576
+#: src/control/Toolbar.js:731
 msgid "\"Slow Proxy\""
 msgstr ""
 
-#: src/control/Toolbar.js:699
+#: src/control/Toolbar.js:854
 msgid "Insert hyperlink"
 msgstr ""
 
-#: src/control/Toolbar.js:703
+#: src/control/Toolbar.js:858
 msgid "Link"
 msgstr "Aseɣwen"
 
@@ -1690,18 +1765,18 @@ msgstr "Tuqqna..."
 msgid "The document is being renamed and will reload shortly"
 msgstr ""
 
-#: src/core/Socket.js:1494
+#: src/core/Socket.js:1496
 msgid ""
 "Well, this is embarrassing, we cannot connect to your document. Please try "
 "again."
 msgstr ""
 
-#: src/core/Socket.js:1511
+#: src/core/Socket.js:1513
 #, fuzzy
 msgid "Reconnecting..."
 msgstr "Tuqqna..."
 
-#: src/core/Socket.js:1517
+#: src/core/Socket.js:1519
 msgid "The server has been disconnected."
 msgstr ""
 
@@ -1859,7 +1934,7 @@ msgstr ""
 msgid "Functions"
 msgstr "Amarag n twuri"
 
-#: src/layer/tile/CanvasTileLayer.js:4939
+#: src/layer/tile/CanvasTileLayer.js:4945
 msgid "No Comments"
 msgstr ""
 
@@ -2006,10 +2081,6 @@ msgstr ""
 #: src/map/handler/Map.WOPI.js:410
 msgid "Creating copy..."
 msgstr ""
-
-#, fuzzy
-#~ msgid "Next"
-#~ msgstr "Texte"
 
 #, javascript-format
 #~ msgid "%d seconds ago"
