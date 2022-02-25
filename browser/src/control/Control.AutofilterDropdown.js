@@ -20,8 +20,8 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		L.DomEvent.on(this.map, 'mouseup', this.onClosePopup, this);
 		this.map.on('jsdialogupdate', this.onJSUpdate, this);
 
-		this.builder = new L.control.jsDialogBuilder({mobileWizard: this, map: this.map, cssClass: 'autofilter'});
-		this.subMenuBuilder = new L.control.jsDialogBuilder({mobileWizard: this, map: this.map, cssClass: 'autofilter'});
+		this.builder = new L.control.jsDialogBuilder({mobileWizard: this, map: this.map, cssClass: 'autofilter jsdialog'});
+		this.subMenuBuilder = new L.control.jsDialogBuilder({mobileWizard: this, map: this.map, cssClass: 'autofilter jsdialog'});
 	},
 
 	onRemove: function() {
