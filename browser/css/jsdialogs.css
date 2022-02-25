@@ -520,8 +520,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .autofilter-container #select_current {
-	height: 16px;
-	width: 16px;
+	/* Same size as #toggle_all.checkbutton > input */
+	height: 18px;
+	width: 18px;
 	margin: 8px;
 	border: none;
 }
@@ -532,8 +533,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 }
 
 .autofilter-container #unselect_current {
-	height: 16px;
-	width: 16px;
+	/* Same size as #toggle_all.checkbutton > input */
+	height: 18px;
+	width: 18px;
 	margin: 8px 8px 8px 0px;
 	border: none;
 }
