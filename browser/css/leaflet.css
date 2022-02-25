@@ -497,7 +497,7 @@ a.leaflet-control-buttons:hover:first-child {
 .leaflet-popup-content-wrapper {
 	padding: 1px;
 	text-align: left;
-	border-radius: 12px;
+	border-radius: var(--border-radius);
 }
 .leaflet-popup-content {
 	margin: 13px 19px;
@@ -539,8 +539,8 @@ a.leaflet-control-buttons:hover:first-child {
 }
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
-	background: white;
-	color: #333;
+	background: var(--color-background-lighter);
+	color: var(--color-main-text);
 	-webkit-box-shadow: 0 0 2px 0 rgba(0,0,0,0.4);
 	box-shadow: 0 0 2px 0 rgba(0,0,0,0.4);
 }

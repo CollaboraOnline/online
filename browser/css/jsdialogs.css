@@ -39,8 +39,8 @@
 .jsdialog-container .ui-dialog-content {
 	background-color: var(--color-main-background) !important;
 	font-family: var(--jquery-ui-font);
-	-webkit-box-shadow: 0 0 3px var(--color-border);
-	box-shadow: 0 0 3px var(--color-border);
+	-webkit-box-shadow: 0 0 3px var(--color-box-shadow);
+	box-shadow: 0 0 3px var(--color-box-shadow);
 	line-height: 1.5;
 }
 
@@ -55,8 +55,8 @@
 
 .lokdialog_container.ui-dialog.ui-widget-content, .autofilter-container {
 	border: 1px solid var(--color-border-dark);
-	-webkit-box-shadow: 0 0 3px var(--color-border);
-	box-shadow: 0 0 3px var(--color-border);
+	-webkit-box-shadow: 0 0 3px var(--color-box-shadow);
+	box-shadow: 0 0 3px var(--color-box-shadow);
 	border-radius: calc(var(--border-radius)/2);
 	background: var(--color-background-darker);
 }
@@ -170,7 +170,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-expander-label {
-	color: #666;
+	color: var(--color-main-text);;
 }
 
 .ui-expander-label::before,
@@ -203,7 +203,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-expander-label.expanded {
 	padding-left: 14px; /*adding extra padding to account for image absolute position*/
-	color: #444;
+	color: var(--color-main-text);
 }
 
 .ui-expander-content.expanded {
