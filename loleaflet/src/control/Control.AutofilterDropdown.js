@@ -56,11 +56,15 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		if (!isSubMenu && this.subMenu)
 			L.DomUtil.remove(this.subMenu);
 
+		// only difference is when file is RTL not UI
+		// var isViewRTL = document.documentElement.dir === 'rtl';
+		var isSpreadsheetRTL = this._map._docLayer.isCalcRTL && this._map._docLayer.isCalcRTL();
+
 		var scale = this._map.zoomToFactor(this._map.getZoom());
 		var origin = this._map.getPixelOrigin();
 		var panePos = this._map._getMapPanePos();
 
-		var offsetX = app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name).size[0];
+		var offsetX = isSpreadsheetRTL ? 0 : app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name).size[0];
 		var offsetY = app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name).size[1];
 
 		if (parseInt(data.posx) === 0 && parseInt(data.posy) === 0)
@@ -70,6 +74,9 @@ L.Control.AutofilterDropdown = L.Control.extend({
 
 		var left = corePoint.x * scale;
 		var top = corePoint.y * scale;
+
+		if (left < 0)
+			left = -1 * left;
 
 		var splitPanesContext = this._map.getSplitPanesContext();
 		var splitPos = new L.Point(0, 0);
@@ -85,9 +92,8 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		if (top >= splitPos.y && newTop >= 0)
 			top = newTop;
 
-		if (this._map._docLayer.isCalcRTL && this._map._docLayer.isCalcRTL()) {
+		if (isSpreadsheetRTL)
 			left = this._map._size.x - left;
-		}
 
 		var mainContainer = null;
 		var builder = null;
@@ -123,6 +129,7 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		L.DomUtil.setStyle(mainContainer, 'margin-top', top + 'px');
 
 		builder.build(mainContainer, [data]);
+		mainContainer.firstChild.dir = document.documentElement.dir;
 
 		var height = $(mainContainer).height();
 		if (top + height > $('#document-container').height()) {
