@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="temp_file_saving_disabled">Tento soubor je pouze pro čtení, ukládání je proto znepřístupněno.</string>
+    <string name="temp_file_saving_disabled">Soubor je pouze pro čtení, ukládání je zakázáno.</string>
     <string name="loading">Načítání…</string>
-    <string name="cannot_open_file_chooser">Nedaří se otevřít dialog pro výběr souboru</string>
-    <string name="failed_to_insert_image">Vkládání obrázku se nezdařilo</string>
+    <string name="cannot_open_file_chooser">Nelze otevřít dialog pro výběr souboru</string>
+    <string name="failed_to_insert_image">Obrázek se nepodařilo vložit</string>
     <string name="failed_to_load_file">Nepodařilo se určit soubor, který se má načíst</string>
     <string name="storage_permission_required">Je vyžadováno povolení přístupu k úložišti</string>
     <string name="preparing_for_the_first_start_after_an_update">Připravuje se první spuštění po aktualizaci.</string>
@@ -15,7 +15,7 @@
     <string name="rate_now">Ohodnotit nyní</string>
     <string name="file_chromeos_read_only">Soubor nelze v tomto umístění uložit, je proto otevřen jen pro čtení. Pokud chcete využít přístup pro čtení i zápis, přesuňte jej mezi soubory Play.</string>
     <string name="ask_for_copy">Tento dokument je pouze pro čtení. Chcete vytvořit kopii a tu upravovat\?</string>
-    <string name="edit_copy">Upravovat jako kopii</string>
+    <string name="edit_copy">Upravit kopii</string>
     <string name="view_only">Jen prohlížení</string>
     <string name="restarting">Restartování…</string>
     <string name="cant_open_the_document">Dokument nelze otevřít</string>

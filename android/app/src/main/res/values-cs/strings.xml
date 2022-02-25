@@ -3,16 +3,15 @@
     <!--string name="app_name" definition is deliberately missing here, it is filled in in build.gradle.-->
     <string name="app_name_settings">Nastavení</string>
     <string name="app_version_and_hash">Verze: %1$s
-\nOkamžiky stavu (git hash) repozitářů pro součásti, ve kterých jsou používány
-\nonline: %2$s
-\ncore: %3$s</string>
+\ngit-hash pro online: %2$s
+\ngit-hash pro core: %3$s</string>
     <string name="app_description">$APP_NAME je moderní, snadno použitelný, open source kancelářský balík pro zpracování textu, tabulek, prezentací a dalšího.</string>
     <string name="app_vendor">Toto vydání bylo dodáno společností $VENDOR.</string>
     <string name="no_recent_items">Otevřete soubor klepnutím na ikonu složky v nástrojové liště.</string>
     <string name="no_items">Žádné položky</string>
-    <string name="temp_file_saving_disabled">Tento soubor je pouze pro čtení, ukládání je proto znepřístupněno.</string>
-    <string name="file_exists_warning">Soubor s tímto názvem už existuje a bude přepsán.</string>
-    <string name="file_creation_failed">Vytváření souboru se nezdařilo</string>
+    <string name="temp_file_saving_disabled">Soubor je pouze pro čtení, ukládání je zakázáno.</string>
+    <string name="file_exists_warning">Soubor s tímto názvem již existuje a bude přepsán.</string>
+    <string name="file_creation_failed">Nepodařilo se vytvořit soubor</string>
     <string name="storage_permission_required">Je vyžadováno povolení přístupu k úložišti</string>
     <string name="failed_to_load_file">Nepodařilo se určit soubor, který se má načíst</string>
     <string name="list_view">Seznam</string>
@@ -48,7 +47,7 @@
     <string name="sort_newest">Nejnovější první</string>
     <string name="file_icon_desc">Ikona souboru</string>
     <string name="file_actions_icon_desc">Operace se soubory</string>
-    <string name="title_recents">Nedávné soubory</string>
+    <string name="title_recents">Poslední soubory</string>
     <string name="title_browser">Všechny soubory</string>
     <!-- Pref keys as resources ; Not currently used -->
     <string name="action_about">O aplikaci</string>
@@ -95,8 +94,8 @@
     <string name="cancel_label">Zrušit</string>
     <string name="search_label">Jít</string>
     <string name="directory_browser_label">Zvolte adresář</string>
-    <string name="bad_directory">Neplatný popis umístění adresáře</string>
-    <string name="current_dir">Stávající adresář: %1$s</string>
+    <string name="bad_directory">Neplatná cesta k adresáři</string>
+    <string name="current_dir">Aktuální adresář: %1$s</string>
     <!-- Permission rationale alert dialog strings -->
     <string name="title_permission_required">Je vyžadováno povolení</string>
     <string name="reason_required_to_read_documents">Ke čtení dokumentů je vyžadováno oprávnění pro přístup k úložišti.</string>
@@ -107,7 +106,7 @@
     <string name="action_cancel">Zrušit</string>
     <!-- Create New Document Dialog Strings -->
     <string name="create_new_document_title">Vytvořit nový dokument</string>
-    <string name="enter_filename">Zadejte název pro soubor:</string>
+    <string name="enter_filename">Zadejte název souboru:</string>
     <string name="action_create">Vytvořit</string>
     <string name="action_overwrite">Přepsat</string>
     <!-- Loading SlideShow Dialog Strings -->
