@@ -331,7 +331,12 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	max-height: 32px;
 	width: 100%;
 	border: 1px solid var(--color-border);
-	border-radius: var(--border-radius);
+	border-radius: var(--border-radius-large);
+	background: var(--color-background-lighter);
+	color: var(--color-main-text);
+}
+.jsdialog.ui-edit:hover {
+	border: 1px solid var(--color-border-darker);
 }
 
 #search_edit.ui-edit.autofilter {
@@ -404,7 +409,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	font-size: calc(var(--default-font-size)*1.2);
 	font-family: var(--jquery-ui-font);
 	border: 1px solid #CCC;
-	border-radius: 3px;
+	border-radius: var(--border-radius);
 	padding-right: 2em;
 	padding-left: 0.4em;
 	margin: 2px 0px;
