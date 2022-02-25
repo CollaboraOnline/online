@@ -1,8 +1,8 @@
 
 
 
-"Template list URL" = "Adresa seznamu šablon";
+"Template list URL" = "URL adresa seznamu šablon";
 "Settings" = "Nastavení";
-"Core git hash" = "Hash v gitu pro core";
-"Online git hash" = "Hash v gitu pro online";
+"Core git hash" = "Okamžik stavu (git hash) repozitáře pro součást Core, ze kterého je používána";
+"Online git hash" = "Okamžik stavu (git hash) repozitáře pro součást Online, ze kterého je používána";
 "Version information" = "Informace o verzi";
