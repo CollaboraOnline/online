@@ -70,9 +70,10 @@ static int countCoolKitProcesses(const int expected,
 
     std::set<pid_t> pids = getKitPids();
     std::ostringstream oss;
-    oss << "Test kit pids are ";
+    oss << "Test kit pids are [";
     for (pid_t i : pids)
         oss << i << ' ';
+    oss << ']';
     TST_LOG(oss.str());
 
     return count;
