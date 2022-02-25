@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-10 10:29+0200\n"
-"PO-Revision-Date: 2022-02-23 21:37+0000\n"
-"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
+"PO-Revision-Date: 2022-02-24 20:26+0000\n"
+"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "help/cs/>\n"
 "Language: cs\n"
@@ -539,7 +539,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>šipka dolů"
 #: html/cool-help.html%2Bdiv.div.table.tr.td:216-18
 #: html/cool-help.html%2Bdiv.div.table.tr.td:273-18
 msgid "Select to end of paragraph"
-msgstr "Vybrat po konec odstavce"
+msgstr "Vybrat do konce odstavce"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:75-71
 #: html/cool-help.html%2Bdiv.div.table.tr.td:216-71
@@ -717,7 +717,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Backspace"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-18
 msgid "Delete to end of word"
-msgstr "Smazat po konec slova"
+msgstr "Smazat do konce slova"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:91-66
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
@@ -737,7 +737,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-18
 msgid "Delete to end of sentence"
-msgstr "Smazat po konec věty"
+msgstr "Smazat do konce věty"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:93-70
 msgid ""
@@ -756,8 +756,8 @@ msgid ""
 "If the active cell is empty: selects the whole table. Otherwise: selects the "
 "contents of the active cell. Pressing again selects the entire table."
 msgstr ""
-"Pokud je právě vybraná buňka prázdná: vybere celou tabulku. Pokud prázdná "
-"není: vybere obsah této buňky. Opětovné stisknutí těchto kláves vybere celou "
+"Pokud je aktivní buňka prázdná: vybere celou tabulku. Pokud prázdná není: "
+"vybere obsah této buňky. Opětovné stisknutí těchto kláves vybere celou "
 "tabulku."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:98-108
@@ -766,10 +766,10 @@ msgid ""
 "first press goes to beginning of the active cell, second press goes to "
 "beginning of the current table, third press goes to beginning of document."
 msgstr ""
-"Pokud je právě vybraná buňka prázdná: přemístí kurzor na začátek tabulky. "
-"Pokud prázdná není: prvním stisknutí těchto kláves přemístí kurzor na "
-"začátek této buňky, druhé jej přemístí na začátek právě vybrané tabulky a "
-"třetí jej přemístí na začátek dokumentu."
+"Pokud je aktivní buňka prázdná: přemístí kurzor na začátek tabulky. Pokud "
+"prázdná není: první stisknutí těchto kláves přemístí kurzor na začátek této "
+"buňky, druhé jej přemístí na začátek aktuální tabulky a třetí jej přemístí "
+"na začátek dokumentu."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:99-107
 msgid ""
@@ -777,10 +777,10 @@ msgid ""
 "press goes to the end of the active cell, second press goes to the end of "
 "the current table, third press goes to the end of the document."
 msgstr ""
-"Pokud je právě vybraná buňka prázdná: přemístí kurzor na konec tabulky. "
-"Pokud prázdná není: prvním stisknutí těchto kláves přemístí kurzor na konec "
-"této buňky, druhé jej přemístí na konec nyní vybrané tabulky a třetí jej "
-"přemístí na konec dokumentu."
+"Pokud je aktivní buňka prázdná: přemístí kurzor na konec tabulky. Pokud "
+"prázdná není: první stisknutí těchto kláves přemístí kurzor na konec této "
+"buňky, druhé jej přemístí na konec aktuální tabulky a třetí jej přemístí na "
+"konec dokumentu."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:100-18
 msgid "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Tab"
@@ -880,7 +880,7 @@ msgid ""
 "current sentence is deleted. If the cursor is at the end of a cell, and no "
 "whole cell is selected, the contents of the next cell are deleted."
 msgstr ""
-"Pokud není vybrána celá buňka, smaže se text od pozice kurzoru po konec dané "
+"Pokud není vybrána celá buňka, smaže se text od pozice kurzoru do konce dané "
 "věty. Pokud je kurzor na konci buňky a není označena celá buňka, smaže se "
 "obsah následující buňky."
 
