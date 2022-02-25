@@ -458,10 +458,10 @@ nav.drawing-color-indicator ~ #main-document-content .cool-annotation-reply-coun
 	box-shadow: 0 0 3px 5px white, 0 0 1px 5px grey;
 }
 
-.jsdialog-container.cool-annotation-collapsed.modalpopup {
+#mobile-wizard-popup.jsdialog-container.cool-annotation-collapsed.modalpopup {
 	border-radius: 8px !important;
 	border: 1px solid var(--gray-color) !important;
-	background: white !important;
+	background-color: white !important;
 }
 
 .jsdialog-container.cool-annotation-collapsed.modalpopup .lokdialog.ui-dialog-content {
