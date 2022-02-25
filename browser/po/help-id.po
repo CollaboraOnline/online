@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-10 10:29+0200\n"
-"PO-Revision-Date: 2022-01-20 10:02+0000\n"
-"Last-Translator: Rizal Muttaqin <riz_17_oke@yahoo.co.id>\n"
+"PO-Revision-Date: 2022-02-25 14:14+0000\n"
+"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/help/id/>\n"
 "Language: id\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -843,13 +843,12 @@ msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 msgstr "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Insert"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:105-109
-#, fuzzy
 msgid ""
 "3 seconds in Insert mode, Arrow Key inserts row/column, <kbd>Ctrl</kbd><span "
 "class=\"kbd--plus\">+</span><kbd>Arrow Key</kbd> inserts cell"
 msgstr ""
-"3 detik dalam mode Sisip, Tombol Panah menyisipkan baris/kolom, Ctrl</kbd><"
-"span class=\"kbd--plus\">+</span><kbd>Tombol Panah menyisipkan sel"
+"3 detik dalam mode Sisip, Tombol Panah menyisipkan baris/kolom, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>Tombol Panah</kbd> menyisipkan sel"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:106-18
 msgid "Alt</kbd><span class=\"kbd--plus\">+</span><kbd>Del"
@@ -1029,7 +1028,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr ""
+msgstr "Menavigasi dalam Spreadsheet"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
@@ -1037,27 +1036,25 @@ msgstr "Memindahkan kursor ke sel pertama di lembar (A1)."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:133-18
 msgid "Moves the cursor to the last cell on the sheet that contains data."
-msgstr ""
+msgstr "Memindahkan kursor ke sel terakhir pada lembar yang berisi data."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:134-18
-#, fuzzy
 msgid "Moves the cursor to the first cell of the current row."
-msgstr "Memindahkan kursor ke sel pertama di lembar (A1)."
+msgstr "Memindahkan kursor ke sel pertama dari baris saat ini."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:135-18
-#, fuzzy
 msgid "Moves the cursor to the last cell of the current row."
-msgstr "Memindahkan kursor ke sel pertama di lembar (A1)."
+msgstr "Memindahkan kursor ke sel terakhir dari baris saat ini."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:136-18
 msgid ""
 "Selects cells from the current cell to the first cell of the current row."
-msgstr ""
+msgstr "Memilih sel dari sel saat ini ke sel pertama dari baris saat ini."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:137-18
 msgid ""
 "Selects cells from the current cell to the last cell of the current row."
-msgstr ""
+msgstr "Memilih sel dari sel saat ini ke sel terakhir dari baris saat ini."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-18
 msgid ""
