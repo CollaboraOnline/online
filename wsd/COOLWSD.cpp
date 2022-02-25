@@ -520,6 +520,9 @@ static size_t addNewChild(const std::shared_ptr<ChildProcess>& child)
     if (OutstandingForks < 0)
         ++OutstandingForks;
 
+    // Reset the child-spawn timeout to the default, now that we're set.
+    ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS;
+
     LOG_TRC("Adding one child to NewChildren");
     NewChildren.emplace_back(child);
     const size_t count = NewChildren.size();
@@ -560,10 +563,8 @@ std::shared_ptr<ChildProcess> getNewChild_Blocks(unsigned mobileAppDocId)
         return nullptr;
     }
 
-    // With valgrind we need extended time to spawn kits.
-    const auto timeoutMs = std::chrono::milliseconds(ChildSpawnTimeoutMs / 2);
-    LOG_TRC("Waiting for a new child for a max of " << timeoutMs);
-    const auto timeout = std::chrono::milliseconds(timeoutMs);
+    const auto timeout = std::chrono::milliseconds(ChildSpawnTimeoutMs / 2);
+    LOG_TRC("Waiting for a new child for a max of " << timeout);
 #else
     const auto timeout = std::chrono::hours(100);
 
@@ -2419,6 +2420,9 @@ bool COOLWSD::createForKit()
     return true;
 #else
     LOG_INF("Creating new forkit process.");
+
+    // Creating a new forkit is always a slow process.
+    ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS * 4;
 
     std::unique_lock<std::mutex> newChildrenLock(NewChildrenMutex);
 
@@ -4635,9 +4639,6 @@ int COOLWSD::innerMain()
 #if !MOBILEAPP
     std::cerr << "Ready to accept connections on port " << ClientPortNumber <<  ".\n" << std::endl;
 #endif
-
-    // Reset the child-spawn timeout to the default, now that we're set.
-    ChildSpawnTimeoutMs = CHILD_TIMEOUT_MS;
 
     const auto startStamp = std::chrono::steady_clock::now();
 
