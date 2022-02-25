@@ -19,8 +19,9 @@
 
 .ui-widget-header {
 	background: var(--color-background-darker);
-	border: none;
+	border: var(--color-border-darker);
 	color: var(--color-text-darker);
+	border-radius: var(--border-radius);
 }
 .ui-widget-content {
 	color: var(--color-main-text);

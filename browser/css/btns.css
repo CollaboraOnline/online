@@ -31,7 +31,7 @@
 	font-size: var(--default-font-size);
 	min-width: 62px;
 	background-color: var(--color-background-dark);
-	border: 1px solid var(--color-border);
+	border: 1px solid var(--color-border-dark);
 	border-radius: var(--border-radius);
 	margin: 5px;
 	vertical-align: middle;
@@ -40,6 +40,13 @@
 	justify-content: center;
 }
 
+.cool-annotation-edit .annotation-button:hover,
+#annotation-reply:hover,
+.ui-button-box.jsdialog #ok:hover,
+.ui-button-box.autofilter #ok:hover,
+.cell.jsdialog > button:hover,
+.ui-button-box.jsdialog button:hover,
+.vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-primary:hover,
 .cool-annotation-edit #annotation-cancel:hover,
 .ui-pushbutton.jsdialog:not(#ok):not(.sidebar):hover,
 .ui-button-box.jsdialog #cancel:hover,
@@ -70,11 +77,11 @@
 .vex.vex-theme-plain .vex-dialog-button.vex-dialog-button-primary {
 	height: 32px;
 	line-height: 0em;
-	color: #111;
+	color: var(--color-text-dark);
 	min-width: 62px;
-	background-color: #f4f4f4;
-	border: 1px solid #777;
-	border-radius: 3px;
+	background-color: var(--color-background-dark);
+	border: 1px solid var(--color-border-dark);
+	border-radius: var(--border-radius);
 	margin: 5px;
 	vertical-align: middle;
 }

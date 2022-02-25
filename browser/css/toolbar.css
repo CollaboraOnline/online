@@ -22,6 +22,7 @@
 #toolbar-down *{
 	font-family: var(--cool-font);
 	color: var(--color-main-text);
+	border-radius: var(--border-radius);
 }
 #toolbar-down *:hover {
 	color: var(--color-text-darker);
@@ -83,6 +84,10 @@
 	background: url('images/lc_nextrecord.svg') no-repeat center/24px !important;
 }
 
+.w2ui-icon-check:before {
+	color: var(--color-primary);
+}
+
 w2ui-toolbar {
 	position: absolute;
 	right: 10px;
@@ -100,8 +105,17 @@ w2ui-toolbar {
 	color: var(--color-text-lighter);
 	box-shadow: inset 0px 0px 0px 10px var(--color-background-dark), 0px 0px 0px 2px var(--color-background-dark), 4px 0px 0px 1px var(--color-background-lighter), -4px 0px 0px 1px #fff, 0px 0px 0px 5px var(--color-background-lighter);
 }
+.w2ui-overlay {
+	box-shadow: 0px 2px 10px var(--color-box-shadow);
+	border-radius: var(--border-radius);
+	background-color: var(--color-background-lighter);
+}
+.w2ui-overlay.bottom-arrow:before {
+	border-top: 6px solid var(--color-border-dark);
+}
 .w2ui-overlay .menu {
 	overflow: hidden auto;
+	border-radius: var(--border-radius);
 }
 .w2ui-overlay > div {
 	border: 1px solid var(--color-border-dark);
@@ -114,6 +128,9 @@ w2ui-toolbar {
 .w2ui-overlay table.w2ui-drop-menu tr:hover {
 	color: var(--color-text-darker);
 	background-color: var(--color-background-darker);
+}
+.w2ui-overlay.bottom-arrow:after {
+	border-top-color: var(--color-background-lighter);
 }
 #tb_actionbar_item_LanguageStatus .w2ui-button.checked .w2ui-tb-down > div,
 #tb_actionbar_item_StateTableCellMenu .w2ui-button.checked .w2ui-tb-down > div,
@@ -993,7 +1010,6 @@ button.leaflet-control-search-next
 
 .inserttable-pop {
 	z-index: 1000;
-	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 #fontcolor-wrapper {
@@ -1017,7 +1033,6 @@ button.leaflet-control-search-next
 /* for 10x10 grid 10x20+10*.col.margin */
 .inserttable-grid {
 	box-sizing: border-box;
-	background: var(--color-main-background);
 	position: relative;
 	padding: 2px;
 	display: block;
@@ -1049,7 +1064,6 @@ button.leaflet-control-search-next
 /* Insert shape grid - based on inserttable grid */
 .insertshape-grid {
 	box-sizing: border-box;
-	background: var(--color-background-lighter);
 	position: static;
 	padding: 2px;
 	display: block;
@@ -1084,6 +1098,7 @@ button.leaflet-control-search-next
 	position: static;
 	line-height: 30px;
 	color: var(--color-main-text);
+	border-radius: var(--border-radius);
 }
 
 .insertshape-grid:hover div {
@@ -1254,4 +1269,12 @@ html[dir='rtl'] #userListPopover::after {
 
 #w2ui-overlay-actionbar {
 	top: 270px;
+}
+
+.w2ui-color {
+	background-color: transparent;
+}
+
+.w2ui-reset table tr th, .w2ui-reset table tr td {
+	font-size: var(--default-font-size);
 }
