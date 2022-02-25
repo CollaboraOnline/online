@@ -54,6 +54,7 @@
 	margin: 5px;
 	position: relative;
 	margin-inline-start: calc(-40px);
+	text-align: left;
 }
 
 .sidebar.ui-listbox {
@@ -65,6 +66,7 @@
 }
 .sidebar.jsdialog.menubutton {
 	padding: 4px 10px;
+	text-align: left;
 }
 .sidebar.jsdialog.ui-listbox,
 .sidebar.jsdialog.menubutton {
@@ -121,6 +123,7 @@
 #selectcolor {
 	display: flex;
 	justify-content: flex-end;
+	text-align: right;
 }
 
 .sidebar.jsdialog.cell > #table-box3 {
@@ -131,6 +134,7 @@
 .sidebar.jsdialog.cell > #table-box4 {
 	display: flex;
 	justify-content: flex-end;
+	text-align: right;
 }
 
 #ShadowPropertyPanel div#table-grid3 table#grid3 td:nth-child(1) {
@@ -150,8 +154,7 @@
 }
 
 #table-indentfieldbox {
-	position: relative;
-	left: -13px;
+	text-align: left;
 }
 
 #leftindent {
@@ -194,11 +197,13 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 .sidebar.jsdialog.cell > #table-box4 > .sidebar.jsdialog.row > .sidebar.jsdialog.cell:nth-child(4) {
 	display: flex;
 	justify-content: flex-end;
+	text-align: right;
 }
 
 #table-paperformat, #table-orientation, #table-fillstyle, #table-masterslide,
 #table-marginLB, #displaymasterbackground, #displaymasterobjects, #table-box1 {
 	width: 100%;
+	text-align: left;
 }
 
 #TableEditPanel #table-grid1 #grid1 > tr > td:nth-child(2) {
@@ -378,6 +383,10 @@ td.jsdialog .jsdialog.cell.sidebar {
 
 #indentlabel {
 	margin-top: 2px;
+}
+
+#table-fillattrhb {
+	display: none;
 }
 
 #fillattrhb {
