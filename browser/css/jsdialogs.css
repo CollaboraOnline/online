@@ -538,6 +538,10 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border: none;
 }
 
+.autofilter-container #unselect_current img,
+.autofilter-container #select_current img {
+	display: none;
+}
 
 .autofilter-container #toggle_all.checkbutton > label,
 .autofilter-container #toggle_all.checkbutton > input {
