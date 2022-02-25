@@ -277,6 +277,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	font-size: var(--default-font-size) !important;
 	font-weight: normal !important;
 	padding: 3px 5px 3px 3px;
+	color: var(--color-main-text);
 }
 
 #search-input {
@@ -737,12 +738,13 @@ nav.drawing-color-indicator ~ #main-document-content .cool-annotation-reply-coun
 }
 
 .lokdialog_container.ui-dialog.ui-widget-content.jsdialog-container {
-	background: white !important;
+	background: var(--color-background-darker) !important;
 }
 
 .lokdialog.ui-dialog-content.ui-widget-content {
 	padding: 0px;
 	overflow: auto;
+	border-radius: calc(var(--border-radius)/2);
 }
 
 .lokdialog_canvas {
