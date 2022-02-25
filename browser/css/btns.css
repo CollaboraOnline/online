@@ -11,7 +11,7 @@
 }
 
 .cool-annotation-edit #annotation-cancel,
-.ui-pushbutton.jsdialog:not(#ok):not(.sidebar),
+.ui-pushbutton.jsdialog:not(#ok):not([id*='select_current']):not(.sidebar),
 .ui-button-box.jsdialog #cancel,
 .ui-button-box.autofilter #cancel,
 .cell.jsdialog > button:not(#ok),
