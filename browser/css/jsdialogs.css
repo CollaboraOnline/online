@@ -170,7 +170,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-expander-label {
-	color: var(--color-main-text);;
+	color: var(--color-main-text);
 }
 
 .ui-expander-label::before,
