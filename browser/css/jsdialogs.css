@@ -338,6 +338,10 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 	width: -moz-available;
 	width: -webkit-fill-available;
 	width: fill-available;
+	margin-top: 8px;
+	border-radius: 0;
+	border-left: none;
+	border-right: none;
 }
 /* checkbox */
 
@@ -496,10 +500,20 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	border: solid 1px silver;
 	position: absolute;
 	z-index: 1105;
-	padding: 10px;
+	padding: 0;
 	font-family: var(--jquery-ui-font);
 }
 
+.autofilter-container > .root-container,
+.autofilter-container .cell,
+.autofilter-container .row {
+	margin: 0;
+	padding: 0;
+}
+
+.autofilter-container .ui-treeview {
+	border: none;
+}
 .autofilter-container #menu.ui-treeview .ui-treeview-body {
 	height: auto;
 	width: 100%;
