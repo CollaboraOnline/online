@@ -106,7 +106,8 @@ w2ui-toolbar {
 	box-shadow: inset 0px 0px 0px 10px var(--color-background-dark), 0px 0px 0px 2px var(--color-background-dark), 4px 0px 0px 1px var(--color-background-lighter), -4px 0px 0px 1px #fff, 0px 0px 0px 5px var(--color-background-lighter);
 }
 .w2ui-overlay {
-	box-shadow: 0px 2px 10px var(--color-box-shadow);
+	-webkit-box-shadow: 0 0 3px var(--color-border);
+	box-shadow: 0 0 3px var(--color-box-shadow);
 	border-radius: var(--border-radius);
 	background-color: var(--color-background-lighter);
 }
