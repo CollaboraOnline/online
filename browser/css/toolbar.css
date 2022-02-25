@@ -194,6 +194,23 @@ w2ui-toolbar {
 .w2ui-scroll-left,
 .w2ui-scroll-right {
 	z-index: 1001;
+	background-color: var(--color-background-dark) !important;
+	box-shadow: var(--color-box-shadow);
+	border: 1px solid var(--color-border-dark);
+	border-radius: 100%;
+	width: 32px;
+}
+.w2ui-scroll-left:hover,
+.w2ui-scroll-right:hover {
+	background-color: var(--color-background-darker) !important;
+	border: 1px solid var(--color-border-darker);
+}
+
+.w2ui-scroll-left {
+	background: url('images/lc_prevrecord.svg') center;
+}
+.w2ui-scroll-right {
+	background: url('images/lc_nextrecord.svg') center;
 }
 
 /* center the toolbar */
@@ -1277,4 +1294,5 @@ html[dir='rtl'] #userListPopover::after {
 
 .w2ui-reset table tr th, .w2ui-reset table tr td {
 	font-size: var(--default-font-size);
+	color: var(--color-main-text);
 }

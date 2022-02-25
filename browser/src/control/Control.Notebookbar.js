@@ -341,8 +341,8 @@ L.Control.Notebookbar = L.Control.extend({
 		var left = L.DomUtil.create('div', 'w2ui-scroll-left', parent);
 		var right = L.DomUtil.create('div', 'w2ui-scroll-right', parent);
 
-		$(left).css({'height': '72px'});
-		$(right).css({'height': '72px'});
+		$(left).css({'height': '32px'});
+		$(right).css({'height': '32px'});
 
 		$(left).click(function () {
 			var scroll = $('.notebookbar-scroll-wrapper').scrollLeft() - 300;
