@@ -72,7 +72,7 @@
 
 .vex.vex-theme-plain .vex-dialog-title {
 	margin-bottom: .5em;
-	font-size: calc(var(--default-font-size)*1.4);
+	font-size: var(--header-font-size);
 	color: var(--color-main-text);
 }
 
@@ -95,7 +95,7 @@
 }
 .vex.vex-theme-plain .vex-content,
 .vex-dialog-message {
-	font-size: calc(var(--default-font-size)*1.4);
+	font-size: var(--header-font-size);
 	color: var(--color-main-text);
 }
 
