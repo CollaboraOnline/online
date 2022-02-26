@@ -53,30 +53,30 @@ protected:
     static constexpr auto ConflictingDocContent = "Modified in-storage contents";
 
     std::size_t getExpectedCheckFileInfo() const { return _expectedCheckFileInfo; }
-    void incExpectedCheckFileInfo()
+    void setExpectedCheckFileInfo(std::size_t value)
     {
-        ++_expectedCheckFileInfo;
+        _expectedCheckFileInfo = value;
         LOG_TST("Expecting " << _expectedCheckFileInfo << " CheckFileInfo requests.");
     }
 
     std::size_t getExpectedGetFile() const { return _expectedGetFile; }
-    void incExpectedGetFile()
+    void setExpectedGetFile(std::size_t value)
     {
-        ++_expectedGetFile;
+        _expectedGetFile = value;
         LOG_TST("Expecting " << _expectedGetFile << " GetFile requests.");
     }
 
     std::size_t getExpectedPutRelative() const { return _expectedPutRelative; }
-    void incExpectedPutRelative()
+    void setExpectedPutRelative(std::size_t value)
     {
-        ++_expectedPutRelative;
+        _expectedPutRelative = value;
         LOG_TST("Expecting " << _expectedPutRelative << " PutRelative requests.");
     }
 
     std::size_t getExpectedPutFile() const { return _expectedPutFile; }
-    void incExpectedPutFile()
+    void setExpectedPutFile(std::size_t value)
     {
-        ++_expectedPutFile;
+        _expectedPutFile = value;
         LOG_TST("Expecting " << _expectedPutFile << " PutFile requests.");
     }
 
@@ -88,43 +88,40 @@ public:
         , _expectedPutRelative(0)
         , _expectedPutFile(0)
         , _phase(Phase::Load)
-        , _scenario(Scenario::Disconnect)
+        , _scenario(Scenario::SaveOverwrite)
     {
         // We have multiple scenarios to cover.
         setTimeout(std::chrono::seconds(90));
     }
 
-    void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
+    void onDocBrokerCreate(const std::string&) override
     {
-        LOG_TST("Testing " << toString(_scenario));
-        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
+        LOG_TST("Testing " << toString(_scenario) << ": resetting the document in storage");
+        setFileContent(OriginalDocContent); // Reset to test overwriting.
 
-        // Note: the expected contents for each scenario
-        // is the result of the *previous* phase!
-        std::string expectedContents;
-        switch (_scenario)
+        resetCountCheckFileInfo();
+        resetCountGetFile();
+        resetCountPutRelative();
+        resetCountPutFile();
+
+        // We always load once per scenario.
+        setExpectedCheckFileInfo(1);
+        setExpectedGetFile(1);
+        setExpectedPutRelative(0); // No renaming in these tests.
+
+        if (_scenario == Scenario::VerifyOverwrite)
         {
-            case Scenario::Disconnect:
-                expectedContents = OriginalDocContent;
-                break;
-            case Scenario::SaveDiscard:
-                expectedContents = ConflictingDocContent;
-                break;
-            case Scenario::CloseDiscard:
-            case Scenario::SaveOverwrite:
-                LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage",
-                                         std::string(ConflictingDocContent), getFileContent());
-                setFileContent(OriginalDocContent); // Reset to test overwriting.
-                expectedContents = OriginalDocContent;
-                break;
-            case Scenario::VerifyOverwrite:
-                expectedContents = ModifiedOriginalDocContent;
-                break;
+            // By default, we don't upload when verifying (unless always_save_on_exit is set).
+            setExpectedPutFile(0);
         }
-
-        LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage", expectedContents,
-                                 getFileContent());
+        else
+        {
+            // With conflicts, we typically do two PutFile requests.
+            setExpectedPutFile(2);
+        }
     }
+
+    void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override {}
 
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
@@ -263,6 +260,11 @@ public:
     {
         LOG_TST("Testing " << toString(_scenario) << " with dockey [" << docKey << "] closed.");
         LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
+
+        LOK_ASSERT_EQUAL(getExpectedCheckFileInfo(), getCountCheckFileInfo());
+        LOK_ASSERT_EQUAL(getExpectedGetFile(), getCountGetFile());
+        LOK_ASSERT_EQUAL(getExpectedPutRelative(), getCountPutRelative());
+        LOK_ASSERT_EQUAL(getExpectedPutFile(), getCountPutFile());
 
         switch (_scenario)
         {

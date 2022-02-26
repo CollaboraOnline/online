@@ -32,6 +32,8 @@ class UnitWOPIFailUpload : public WOPIUploadConflictCommon
 
     bool _unloadingModifiedDocDetected;
 
+    static constexpr std::size_t LimitStoreFailures = 2;
+
 public:
     UnitWOPIFailUpload()
         : Base("UnitWOPIFailUpload", OriginalDocContent)
@@ -44,8 +46,26 @@ public:
         Base::configure(config);
 
         // Small value to shorten the test run time.
-        config.setUInt("per_document.limit_store_failures", 2);
+        config.setUInt("per_document.limit_store_failures", LimitStoreFailures);
         config.setBool("per_document.always_save_on_exit", true);
+    }
+
+    void onDocBrokerCreate(const std::string& docKey) override
+    {
+        Base::onDocBrokerCreate(docKey);
+
+        // With always_save_on_exit=true and limit_store_failures=LimitStoreFailures,
+        // we expect exactly two PutFile requests per document.
+        if (_scenario == Scenario::VerifyOverwrite)
+        {
+            // By default, we don't upload when verifying (unless always_save_on_exit is set).
+            setExpectedPutFile(0);
+        }
+        else
+        {
+            // With conflicts, we will retry PutFile as many as LimitStoreFailures.
+            setExpectedPutFile(LimitStoreFailures);
+        }
     }
 
     void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
@@ -159,6 +179,37 @@ public:
         LOK_ASSERT_MESSAGE("Expected to be in Phase::WaitDocClose but was " + toString(_phase),
                            _phase == Phase::WaitDocClose);
         _unloadingModifiedDocDetected = true;
+    }
+
+    void onDocBrokerDestroy(const std::string& docKey) override
+    {
+        LOG_TST("Testing " << toString(_scenario) << " with dockey [" << docKey << "] closed.");
+        LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
+
+        std::string expectedContents;
+        switch (_scenario)
+        {
+            case Scenario::Disconnect:
+                expectedContents = ModifiedOriginalDocContent; //TODO: save-as in this case.
+                break;
+            case Scenario::SaveDiscard:
+                expectedContents = ConflictingDocContent;
+                break;
+            case Scenario::CloseDiscard:
+                expectedContents = ConflictingDocContent;
+                break;
+            case Scenario::SaveOverwrite:
+                expectedContents = ModifiedOriginalDocContent;
+                break;
+            case Scenario::VerifyOverwrite:
+                expectedContents = OriginalDocContent;
+                break;
+        }
+
+        LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage", expectedContents,
+                                 getFileContent());
+
+        Base::onDocBrokerDestroy(docKey);
     }
 };
 

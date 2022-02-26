@@ -45,38 +45,6 @@ public:
         config.setBool("per_document.always_save_on_exit", true);
     }
 
-    void assertGetFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
-    {
-        LOG_TST("Testing " << toString(_scenario));
-        LOK_ASSERT_STATE(_phase, Phase::WaitLoadStatus);
-
-        // Note: the expected contents for each scenario
-        // is the result of the *previous* phase!
-        std::string expectedContents;
-        switch (_scenario)
-        {
-            case Scenario::Disconnect:
-                expectedContents = OriginalDocContent;
-                break;
-            case Scenario::SaveDiscard:
-                expectedContents = ModifiedOriginalDocContent; // Disconnect will clobber.
-                break;
-            case Scenario::CloseDiscard:
-            case Scenario::SaveOverwrite:
-                LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage",
-                                         std::string(ConflictingDocContent), getFileContent());
-                setFileContent(OriginalDocContent); // Reset to test overwriting.
-                expectedContents = OriginalDocContent;
-                break;
-            case Scenario::VerifyOverwrite:
-                expectedContents = ModifiedOriginalDocContent;
-                break;
-        }
-
-        LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage", expectedContents,
-                                 getFileContent());
-    }
-
     std::unique_ptr<http::Response>
     assertPutFileRequest(const Poco::Net::HTTPRequest& /*request*/) override
     {
@@ -102,6 +70,62 @@ public:
         }
 
         return nullptr;
+    }
+
+    void onDocBrokerCreate(const std::string& docKey) override
+    {
+        Base::onDocBrokerCreate(docKey);
+
+        // When overwriting, we will do so twice.
+        // Once to find out that we have a conflict and another time to force it.
+        if (_scenario == Scenario::SaveOverwrite)
+        {
+            setExpectedPutFile(2);
+        }
+        else
+        {
+            // With always_save_on_exit, we expect exactly one PutFile per document.
+            if (_scenario == Scenario::VerifyOverwrite)
+            {
+                //FIXME: this uncovers a bug with unmodified files!
+                setExpectedPutFile(0);
+            }
+            else
+            {
+                setExpectedPutFile(1);
+            }
+        }
+    }
+
+    void onDocBrokerDestroy(const std::string& docKey) override
+    {
+        LOG_TST("Testing " << toString(_scenario) << " with dockey [" << docKey << "] closed.");
+        LOK_ASSERT_STATE(_phase, Phase::WaitDocClose);
+
+        std::string expectedContents;
+        switch (_scenario)
+        {
+            case Scenario::Disconnect:
+                expectedContents = ModifiedOriginalDocContent; //TODO: save-as in this case.
+                break;
+            case Scenario::SaveDiscard:
+                expectedContents = ConflictingDocContent;
+                break;
+            case Scenario::CloseDiscard:
+                expectedContents = ConflictingDocContent;
+                break;
+            case Scenario::SaveOverwrite:
+                expectedContents = ModifiedOriginalDocContent;
+                break;
+            case Scenario::VerifyOverwrite:
+                expectedContents = OriginalDocContent;
+                break;
+        }
+
+        LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage", expectedContents,
+                                 getFileContent());
+
+        Base::onDocBrokerDestroy(docKey);
     }
 };
 
