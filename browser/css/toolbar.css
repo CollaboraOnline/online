@@ -409,11 +409,11 @@ div.leaflet-control-zoom leaflet-bar {
 }
 
 .leaflet-bar a:first-child {
-	border-radius: 4px 0 0 4px;
+	border-radius: var(--border-radius) 0 0 var(--border-radius);
 }
 
 .leaflet-bar a:last-child {
-	border-radius: 0 4px 4px 0;
+	border-radius: 0 var(--border-radius) var(--border-radius) 0;
 }
 
 label.leaflet-control-editviewswitch {
@@ -1201,7 +1201,7 @@ menu-entry-with-icon.padding-left + menu-entry-icon.width */
 	right: 5px;
 	color: var(--color-main-text);
 	background-color: var(--color-background-lighter);
-	border-radius: 3px;
+	border-radius: var(--border-radius);
 	filter: drop-shadow(0 1px 3px var(--color-box-shadow));
 	min-width: 150px;
 	font-size: var(--default-font-size);
