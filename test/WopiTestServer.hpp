@@ -94,9 +94,13 @@ protected:
     }
 
     std::size_t getCountCheckFileInfo() const { return _countCheckFileInfo; }
+    void resetCountCheckFileInfo() { _countCheckFileInfo = 0; }
     std::size_t getCountGetFile() const { return _countGetFile; }
+    void resetCountGetFile() { _countGetFile = 0; }
     std::size_t getCountPutRelative() const { return _countPutRelative; }
+    void resetCountPutRelative() { _countPutRelative = 0; }
     std::size_t getCountPutFile() const { return _countPutFile; }
+    void resetCountPutFile() { _countPutFile = 0; }
 
     void initWebsocket(const std::string& wopiName)
     {
