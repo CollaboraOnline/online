@@ -365,6 +365,78 @@ class DeltaGenerator {
 
         return false;
     }
+
+    /**
+     * Compress the relevant pixmap data either to a delta if we can
+     * or a plain deflated stream if we cannot.
+     */
+    void compressOrDelta(
+        unsigned char* pixmap, size_t startX, size_t startY,
+        int width, int height,
+        int bufferWidth, int bufferHeight,
+        int tileLeft, int tileTop, int tilePart,
+        std::vector<char>& output,
+        TileWireId wid, TileWireId oldWid,
+        std::mutex &pngMutex)
+    {
+        if (!createDelta(pixmap, startX, startY, width, height, bufferWidth, bufferHeight,
+                         tileLeft, tileTop, tilePart, output, wid, oldWid, pngMutex))
+        {
+            // FIXME: should stream it in =)
+
+
+            // FIXME: get sizes right [!] ...
+            z_stream zstr;
+            memset((void *)&zstr, 0, sizeof (zstr));
+
+            if (deflateInit2 (&zstr, Z_DEFAULT_COMPRESSION, Z_DEFLATED,
+                              -MAX_WBITS, 8, Z_DEFAULT_STRATEGY) != Z_OK)
+            {
+                LOG_ERR("Failed to init deflate");
+                return;
+            }
+
+            uLong maxCompressed = compressBound(width * height * 4);
+            Bytef *compressed = (Bytef *)malloc(maxCompressed);
+            if (!compressed)
+            {
+                LOG_ERR("Failed to allocate buffer of size " << maxCompressed << " to compress into");
+                return;
+            }
+
+            zstr.next_out = compressed;
+            zstr.avail_out = maxCompressed;
+
+            // FIXME: should we RLE in pixels first ?
+            for (int y = 0; y < height; ++y)
+            {
+                zstr.next_in = (Bytef *)pixmap + ((startY + y) * bufferWidth * 4) + (startX * 4);
+                zstr.avail_in = width * 4;
+
+                bool lastRow = (y == height - 1);
+                int flushFlag = lastRow ? Z_FINISH : Z_NO_FLUSH;
+                int expected = lastRow ? Z_STREAM_END : Z_OK;
+                if (deflate(&zstr,  flushFlag) != expected)
+                {
+                    LOG_ERR("failed to compress image ");
+                    return;
+                }
+            }
+
+            deflateEnd(&zstr);
+
+            uLong compSize = maxCompressed - zstr.avail_out;
+            LOG_TRC("Compressed image of size " << (width * height * 4) << " to size " << compSize
+                    << Util::dumpHex(std::string((char *)compressed, compSize)));
+
+            // FIXME: get zlib to drop it directly into this buffer really.
+            output.push_back('Z');
+            size_t oldSize = output.size();
+            output.resize(oldSize + compSize);
+            memcpy(&output[oldSize], compressed, compSize);
+            free (compressed);
+        }
+    }
 };
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

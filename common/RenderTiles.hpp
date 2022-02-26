@@ -543,6 +543,8 @@ namespace RenderTiles
                 // Queue to be executed later in parallel inside 'run'
                 pngPool.pushWork([=,&output,&pixmap,&tiles,&renderedTiles,&pngCache,&pngMutex](){
 
+                    // FIXME: PngCache useless compared with DeltaCache (?)
+
                         PngCache::CacheData data(new std::vector< char >() );
                         data->reserve(pixmapWidth * pixmapHeight * 1);
 #ifdef ENABLE_DELTAS
@@ -550,24 +552,24 @@ namespace RenderTiles
 
                         // Can we create a delta ?
                         static DeltaGenerator deltaGen;
-                        if (!deltaGen.createDelta(pixmap.data(), offsetX, offsetY,
-                                                  pixelWidth, pixelHeight,
-                                                  pixmapWidth, pixmapHeight,
-                                                  tileRect.getLeft(), tileRect.getTop(),
-                                                  tileCombined.getPart(),
-                                                  *data, wireId, oldWireId, pngMutex))
-#endif
+                        LOG_TRC("Compress new tile #" << tileIndex);
+                        deltaGen.compressOrDelta(pixmap.data(), offsetX, offsetY,
+                                                 pixelWidth, pixelHeight,
+                                                 pixmapWidth, pixmapHeight,
+                                                 tileRect.getLeft(), tileRect.getTop(),
+                                                 tileCombined.getPart(),
+                                                 *data, wireId, oldWireId, pngMutex);
+#else
+                        LOG_TRC("Encode a new png for tile #" << tileIndex);
+                        if (!Png::encodeSubBufferToPNG(pixmap.data(), offsetX, offsetY, pixelWidth, pixelHeight,
+                                                       pixmapWidth, pixmapHeight, *data, mode))
                         {
-                            LOG_TRC("Encode a new png for tile #" << tileIndex);
-                            if (!Png::encodeSubBufferToPNG(pixmap.data(), offsetX, offsetY, pixelWidth, pixelHeight,
-                                                           pixmapWidth, pixmapHeight, *data, mode))
-                            {
-                                // FIXME: Return error.
-                                // sendTextFrameAndLogError("error: cmd=tile kind=failure");
-                                LOG_ERR("Failed to encode tile into PNG.");
-                                return;
-                            }
+                            // FIXME: Return error.
+                            // sendTextFrameAndLogError("error: cmd=tile kind=failure");
+                            LOG_ERR("Failed to encode tile into PNG.");
+                            return;
                         }
+#endif
 
                         LOG_TRC("Tile " << tileIndex << " is " << data->size() << " bytes.");
                         std::unique_lock<std::mutex> pngLock(pngMutex);

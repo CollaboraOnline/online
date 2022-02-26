@@ -422,7 +422,8 @@ app.definitions.Socket = L.Class.extend({
 		else
 		{
 			var data = e.imgBytes.subarray(e.imgIndex);
-			window.app.console.assert(data.length == 0 || data[0] != 68 /* D */, 'Socket: got a delta image, not supported !');
+			window.app.console.assert(data.length == 0 || data[0] != 68 /* D */ || data[0] == 90 /* Z */,
+						  'Socket: got a delta image, not supported !');
 			img = 'data:image/png;base64,' + window.btoa(this._strFromUint8(data));
 			if (L.Browser.cypressTest && localStorage.getItem('image_validation_test')) {
 				if (!window.imgDatas)
@@ -455,7 +456,8 @@ app.definitions.Socket = L.Class.extend({
 			return;
 
 		// pass deltas through quickly.
-		if (e.imgBytes && e.imgBytes[e.imgIndex] === 68 /* D */)
+		if (e.imgBytes && (e.imgBytes[e.imgIndex] === 68 /* D */ ||
+				   e.imgBytes[e.imgIndex] === 90 /* Z */))
 		{
 			window.app.console.log('Passed through delta object');
 			e.image = e.imgBytes.subarray(e.imgIndex);
