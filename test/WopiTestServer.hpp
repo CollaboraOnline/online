@@ -4,13 +4,14 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-#include "Util.hpp"
 #include "config.h"
 
+#include "HttpRequest.hpp"
 #include "helpers.hpp"
 #include "Log.hpp"
 #include "Unit.hpp"
 #include "UnitHTTP.hpp"
+#include "Util.hpp"
 
 #include <Poco/DateTimeFormat.h>
 #include <Poco/DateTimeFormatter.h>
@@ -294,12 +295,18 @@ protected:
                 }
             }
 
-            const std::streamsize size = request.getContentLength();
-            std::vector<char> buffer(size);
-            message.read(buffer.data(), size);
-            setFileContent(Util::toString(buffer));
-
             std::unique_ptr<http::Response> response = assertPutFileRequest(request);
+            if (!response || response->statusLine().statusCategory() ==
+                                 http::StatusLine::StatusCodeClass::Successful)
+            {
+                const std::streamsize size = request.getContentLength();
+                LOG_TST("Fake wopi host writing document contents in storage (" << size
+                                                                                << "bytes)");
+                std::vector<char> buffer(size);
+                message.read(buffer.data(), size);
+                setFileContent(Util::toString(buffer));
+            }
+
             if (response)
             {
                 LOG_TST("Fake wopi host response to POST "

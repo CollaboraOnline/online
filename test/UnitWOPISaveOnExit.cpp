@@ -63,7 +63,7 @@ public:
                 break;
             case Scenario::SaveOverwrite:
                 LOK_ASSERT_EQUAL_MESSAGE("Unexpected contents in storage",
-                                         std::string(ModifiedOriginalDocContent), getFileContent());
+                                         std::string(ConflictingDocContent), getFileContent());
                 LOG_TST("Closing the document to verify its contents after reloading");
                 WSD_CMD("closedocument");
                 break;
