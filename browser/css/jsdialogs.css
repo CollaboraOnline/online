@@ -47,7 +47,7 @@
 .jsdialog.vertical p, .ui-frame-label {
 	margin: 0px;
 	color: var(--color-main-text);
-	font-size: calc(var(--default-font-size)*0.9);
+	font-size: var(--default-font-size);
 	font-weight: bold;
 	text-transform: uppercase;
 	text-align: left;
@@ -738,7 +738,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	margin-right: -11px;
 	color: var(--color-border-darker);
 	content: '\23F5';
-	font-size: calc(var(--default-font-size)*1.3);
+	font-size: var(--header-font-size);
 }
 
 #MacroSelectorDialog #categories .ui-treeview-entry {
@@ -1072,7 +1072,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #mobile-wizard.popup.snackbar #label-no-action,
 .snackbar.jsdialog-container #label-no-action {
 	color: white !important;
-	font-size: calc(var(--default-font-size)*1.2) !important;
+	font-size: var(--header-font-size) !important;
 	margin: 0px !important;
 	border-bottom: none !important;
 	padding-left: 12px;

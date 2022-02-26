@@ -13,7 +13,7 @@
 }
 
 .ui-tab.notebookbar {
-	font-size: calc(var(--default-font-size)*1.3);
+	font-size: var(--header-font-size);
 	font-family: var(--cool-font);
 	line-height: normal;
 	color: var(--color-main-text);
@@ -229,7 +229,7 @@
 }
 
 .unotoolbutton.notebookbar .unolabel {
-	font-size: calc(var(--default-font-size)*1.3);
+	font-size: var(--header-font-size);
 	font-family: var(--cool-font);
 	color: var(--color-main-text);
 	padding: 0px 5px !important;

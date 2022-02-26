@@ -22,6 +22,8 @@
 	border: var(--color-border-darker);
 	color: var(--color-text-darker);
 	border-radius: var(--border-radius);
+	font-size: var(--header-font-size);
+	font-family: var(--cool-font);
 }
 .ui-widget-content {
 	color: var(--color-main-text);
