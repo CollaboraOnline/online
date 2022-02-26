@@ -1134,7 +1134,7 @@ tr.useritem > td > img {
 
 .context-menu-link {
 	text-decoration: none;
-	color: black;
+	color: var(--color-main-text);
 	width: 100%;
 }
 .menu-entry-icon {

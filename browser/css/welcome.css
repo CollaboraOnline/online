@@ -11,7 +11,7 @@
 .iframe-welcome-modal {
 	height: 512px;
 	width: 700px;
-	-webkit-box-shadow: 0 0 3px var(--color-border);
+	-webkit-box-shadow: 0 0 3px var(--color-box-shadow);
 	box-shadow: 0 0 3px var(--color-box-shadow);
 	border-width: 0;
 	border-radius: var(--border-radius-large);

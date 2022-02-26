@@ -343,19 +343,19 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 .context-menu-icon::before {
 	font-family: var(--cool-font) !important;
 	content: '\2713';
-	color: #000 !important;
+	color: var(--color-main-text) !important;
 }
 .context-menu-icon-lo-checkmark:before {
 	content: '\2713';
 }
 
 .context-menu-hover {
-	background-color: #0b87e7 !important;
-	color: #fff !important;
+	background-color: var(--color-background-darker) !important;
+	color: var(--color-text-darker) !important;
 }
 
 .context-menu-hover > span > a {
-	color: #fff;
+	color: var(--color-text-darker);
 }
 
 .context-menu-submenu.context-menu-hover:after {
