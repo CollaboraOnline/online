@@ -396,12 +396,16 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	font-size: var(--default-font-size);
 	text-align: left;
 	background-color: #EFEFEF; /* Fallback color for IE11. */
-	background-color: var(--gray-light-bg-color);
-	box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
-	color: #222;
+	background-color: var(--color-background-lighter);
+	box-shadow: 0 0 3px var(--color-box-shadow);
+	color: var(--color-main-text);
 	border: none;
-	border-radius: 2px;
+	border-radius: var(--border-radius);
 	width: 240px;
+}
+.cool-annotation-content-wrapper:hover, .cool-annotation-redline-content-wrapper:hover {
+	background-color: var(--color-background-dark);
+	color: var(--color-text-dark);
 }
 
 .annotation-active.modify-annotation-container .cool-annotation-content-wrapper,
@@ -416,17 +420,19 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 }
 
 .cool-annotation-reply-count-collapsed {
-	background-color: var(--gray-light-txt--color);
-	color: white;
+	background-color: var(--color-primary-lighter);
+	color: var(--color-primary-text);
 	font-weight: bold;
-	font-size: calc(var(--default-font-size)*0.9);
+	font-family: var(--cool-font);
+	font-size: 20px;
+	border: 1px solid var(--color-primary);
 	border-radius: 50%;
 	z-index: 10;
 	position: absolute;
-	width: 20px;
-	height: 20px;
-	left: 24px;
-	top: -6px;
+	width: 24px;
+	height: 24px;
+	left: 26px;
+	top: -10px;
 }
 
 #main-document-content {
@@ -447,21 +453,25 @@ nav.drawing-color-indicator ~ #main-document-content .cool-annotation-reply-coun
 }
 
 .cool-annotation-collapsed {
-	background: white;
+	background: var(--color-background-lighter);
 	border-radius: 50%;
 	width: 36px;
 	height: 36px;
-	box-shadow: 0 0 1px 0 rgba(0,0,0,0.5), 0 0 8px 2px rgba(0,0,0,0.1);
+	box-shadow: 0 0 3px 5px var(--color-background-lighter), 0 0 1px 5px var(--color-box-shadow);
 }
 
 .annotation-active .cool-annotation-collapsed {
-	box-shadow: 0 0 3px 5px white, 0 0 1px 5px grey;
+	box-shadow: 0 0 3px 5px var(--color-background-lighter), 0 0 1px 5px var(--color-box-shadow);
 }
 
 .jsdialog-container.cool-annotation-collapsed.modalpopup {
 	border-radius: 8px !important;
-	border: 1px solid var(--gray-color) !important;
-	background: white !important;
+	border: 1px solid var(--color-border) !important;
+	background: var(--color-background-lighter) !important;
+}
+
+#mobile-wizard-popup {
+	background-color: var(--color-background-lighter) !important;
 }
 
 .jsdialog-container.cool-annotation-collapsed.modalpopup .lokdialog.ui-dialog-content {
@@ -483,9 +493,9 @@ nav.drawing-color-indicator ~ #main-document-content .cool-annotation-reply-coun
 .jsdialog-container.cool-annotation-collapsed.modalpopup .cool-annotation-content-wrapper {
 	box-shadow: none;
 	border-width: 0px 0px 1px !important;
-	border-bottom: 1px solid var(--gray-light-bg-color) !important;
+	border-bottom: 1px solid var(--color-border) !important;
 	border-radius: 0 !important;
-	background: white;
+	background: var(--color-background-lighter);
 }
 
 .jsdialog-container.cool-annotation-collapsed.modalpopup [id^='comment-container-']:last-child > .cool-annotation-content-wrapper{
