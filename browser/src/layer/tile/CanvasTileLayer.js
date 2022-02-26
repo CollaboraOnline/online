@@ -6499,7 +6499,28 @@ L.CanvasTileLayer = L.Layer.extend({
 		canvas.height = window.tileSize;
 		var ctx = canvas.getContext('2d');
 
+		var pixSize = canvas.width * canvas.height * 4;
+
 		// FIXME: check if tile.el is a canvas and just re-use it ...
+		if (rawDelta[0] === 90 /* Z */)
+		{
+			// FIXME: really necessary ?
+			ctx.rect(0, 0, canvas.width, canvas.height);
+			ctx.fill();
+
+			var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+			// FIXME: is this really necessary ?
+			for (var i = 0; i < pixSize; ++i)
+				imgData.data[i] = delta[i];
+			ctx.putImageData(imgData, 0, 0);
+
+			tile.el = canvas;
+
+			console.log('cleanly set new image');
+			return;
+		}
+
+		// else - apply delta:
 
 		// render old data to the canvas
 		ctx.drawImage(tile.el, 0, 0);
@@ -6508,7 +6529,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 		var oldData = new Uint8ClampedArray(imgData.data);
 
-		var pixSize = canvas.width * canvas.height * 4;
 		var offset = 0;
 
 		console.log('Applying a delta of length ' + delta.length + ' pix size: ' + pixSize + '\nhex: ' + hex2string(delta));
@@ -6570,11 +6590,9 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		ctx.putImageData(imgData, 0, 0);
-		// FIXME: grim ... can we take as BMP ? as a URL ?
-		// keep as getImageData instead ? and composite ?
-		tile.el = canvas; // .toDataURL('image/png');
+		tile.el = canvas;
 
-		console.log('set new image');
+		console.log('set new image from delta');
 	},
 
 	_onTileMsg: function (textMsg, img) {
