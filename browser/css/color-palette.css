@@ -40,6 +40,8 @@
 	--border-radius-large: 10px;
 
 	--default-font-size: 12px;
+	--header-font-size: 16px;
 
+	--default-height: 24px;
 	--header-height: 38px;
 }
