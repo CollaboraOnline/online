@@ -101,22 +101,20 @@
 	padding-left: 4px;
 }
 
-#gradientstyle > .sidebar.jsdialog.ui-listbox {
-	width: 74px;
-}
-
 #table-grid3.sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.jsdialog.ui-grid > tr.sidebar.jsdialog > td.sidebar.jsdialog > .sidebar.jsdialog.vertical > .sidebar.jsdialog.row > table.sidebar.jsdialog.ui-grid {
 	width: 10px;
 }
-
+#gradangle > input,
+#gradientstyle > .sidebar.jsdialog.ui-listbox,
 #fontsizecombobox > .sidebar.jsdialog.ui-listbox {
 	min-width: 86px;
+	width: 86px;
 }
 
 .sidebar.ui-expander {
 	display: flex;
 	justify-content: space-between;
-	width: 290px;
+	width: 292px;
 	align-items: center;
 }
 
@@ -157,10 +155,6 @@
 	text-align: left;
 }
 
-#leftindent {
-	position: relative;
-	right: 16px;
-}
 #orientationdegrees {
 	position: relative;
 	right: 21px;
@@ -245,10 +239,10 @@ div#box5.row.jsdialog.sidebar > .sidebar.jsdialog.cell {
 .sidebar.ui-expander-label {
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
-	line-height: 23px;
+	line-height: var(--default-height);
 	font-weight: bold;
-	padding-left: 14px;
-	padding-right: 14px; /* for RTL mode */
+	padding-left: 8px;
+	padding-right: 8px; /* for RTL mode */
 }
 
 .sidebar.ui-expander-label:before {
@@ -279,12 +273,10 @@ td.jsdialog .jsdialog.cell.sidebar {
 	width: auto;
 }
 
-#sidebar-dock-wrapper #ParaPropertyPanelPanelExpander #box1 > div:last-of-type,
 .spreadsheet-document + #sidebar-dock-wrapper #ScAlignmentPropertyPanelPanelExpander #box3 > div:last-of-type {
 	display: table-row;
 }
 
-#sidebar-dock-wrapper #ParaPropertyPanelPanelExpander #box1 > div:last-of-type > div,
 .spreadsheet-document + #sidebar-dock-wrapper #ScAlignmentPropertyPanelPanelExpander #box3 > div:last-of-type > div {
 	padding: 2px;
 }
@@ -362,14 +354,6 @@ td.jsdialog .jsdialog.cell.sidebar {
 	height: 10px;
 }
 
-.ui-expander.jsdialog.sidebar .ui-expander-icon-right img {
-	filter: brightness(2);
-}
-
-.ui-expander.jsdialog.sidebar .ui-expander-icon-right:hover img {
-	filter: none;
-}
-
 #table-textorientbox.sidebar .jsdialog input[type='radio'] {
 	background: none !important;
 	width: auto;
@@ -434,11 +418,6 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	margin-right: 0;
 }
 
-#linetransparency {
-	position: relative;
-	left: -18px;
-}
-
 #horizontalpos,
 #verticalpos,
 #selectwidth,
@@ -472,4 +451,22 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 #setbrightness, #setcontrast, #setgraphtransparency {
 	position: relative;
 	right: 18px;
+}
+
+#fontheight {
+	padding-right: 6px;
+}
+#ParaPropertyPanelPanelExpander #grid4 > tr:nth-child(4) > td:nth-child(2) {
+	justify-content: unset !important;
+}
+#aboveparaspacing, #belowparaspacing {
+	padding-right: 34px;
+}
+
+#rowheight, #columnwidth {
+	padding-left: 24px;
+}
+#SetMinimalRowHeight, #SetMinimalColumnWidth {
+	position: relative;
+	bottom: 28px;
 }

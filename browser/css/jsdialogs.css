@@ -47,10 +47,13 @@
 .jsdialog.vertical p, .ui-frame-label {
 	margin: 0px;
 	color: var(--color-main-text);
-	font-size: calc(var(--default-font-size)*0.9);
-	font-weight: bold;
-	text-transform: uppercase;
+	font-size: var(--default-font-size);
 	text-align: left;
+	line-height: var(--default-height);
+}
+#glowframe > div.ui-frame.jsdialog.sidebar > span,
+#softedgeframe > div.ui-frame.jsdialog.sidebar > span {
+	font-weight: bold;
 }
 
 .lokdialog_container.ui-dialog.ui-widget-content, .autofilter-container {
@@ -219,7 +222,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-expander-content > .root-container.jsdialog {
-	margin: 4px 0px;
+	margin: 4px;
 }
 /* TreeView */
 
