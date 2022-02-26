@@ -13,31 +13,31 @@
 	--color-main-text: #333333;
 	--color-text-dark: #333333;  /* select */
 	--color-text-darker: #000;  /* hover */
-	--color-text-lighter: #696969;
+	--color-text-lighter: #696969; /* secondard text, disabled */
 
 	--color-main-background: #F8F9FA;
 	--color-background-dark: #e8e8e8;  /* select */
 	--color-background-darker: #c0bfbc;  /* hover */
-	--color-background-lighter: #fff; /* toolbar */
+	--color-background-lighter: #fff; /* toolbar, dialog, disabled */
 
-	--color-primary: #1C99E0;
-	--color-primary-text: #fff;
+	--color-primary: #1C99E0; /* border-color */
+	--color-primary-text: #fff; /* text color when primary-lighter is background */
 	--color-primary-dark: #0369A3;
 	--color-primary-darker: #023F62;
-	--color-primary-lighter: #63BBEE;
+	--color-primary-lighter: #63BBEE; /* background-color */
 
 	--color-border: #b6b6b6;
 	--color-border-dark: #cecece; /* select */
 	--color-border-darker: #c0bfbc;  /* hover */
-	--color-border-lighter: #f1f1f1;
+	--color-border-lighter: #f1f1f1; /* disabled */
 
 	--color-error: #e9322d;
 	--color-warning: #eca700;
 	--color-success: #46ba61;
 
 	--color-box-shadow: rgba(77, 77, 77, 0.5);
-	--border-radius: 4px;
-	--border-radius-large: 10px;
+	--border-radius: 4px; /* buttons, widgets */
+	--border-radius-large: 10px; /* dialog */
 
 	--default-font-size: 12px;
 	--header-font-size: 16px;
