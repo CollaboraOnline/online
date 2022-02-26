@@ -199,7 +199,7 @@ public:
                 expectedContents = ConflictingDocContent;
                 break;
             case Scenario::SaveOverwrite:
-                expectedContents = ModifiedOriginalDocContent;
+                expectedContents = OriginalDocContent;
                 break;
             case Scenario::VerifyOverwrite:
                 expectedContents = OriginalDocContent;
