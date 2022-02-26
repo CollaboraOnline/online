@@ -89,23 +89,23 @@ print_error() {
         echo -e "\n\
         CypressError: a test failed, please do one of the following:\n\n\
         Run the failing test in headless mode:\n\
-        \tcd cypress_test && make USER_INTERFACE=notebookbar check-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
+        \tmake -C cypress_test USER_INTERFACE=notebookbar check-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
     else
         echo -e "\n\
         CypressError: a test failed, please do one of the following:\n\n\
         Run the failing test in headless mode:\n\
-        \tcd cypress_test && make check-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
+        \tmake -C cypress_test check-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
     fi
 
     if [ "${TEST_TYPE}" == "mobile" -o "${TEST_TYPE}" == "desktop" ]; then
         if [ "${USER_INTERFACE}" == "notebookbar" ]; then
             echo -e "\
         Run the failing test with video recording:\n\
-            \tcd cypress_test && ENABLE_VIDEO_REC="1" make USER_INTERFACE=notebookbar check-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
+            \tmake -C cypress_test ENABLE_VIDEO_REC="1" USER_INTERFACE=notebookbar check-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
         else
             echo -e "\
             Run the failing test with video recording:\n\
-            \tcd cypress_test && ENABLE_VIDEO_REC="1" make check-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
+            \tmake -C cypress_test ENABLE_VIDEO_REC="1" check-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
         fi
     fi
 
@@ -113,20 +113,20 @@ print_error() {
     if [ "${USER_INTERFACE}" == "notebookbar" ]; then
         echo -e "\
         Open the failing test in the interactive test runner:\n\
-        \tcd cypress_test && make USER_INTERFACE=notebookbar run-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
+        \tmake -C cypress_test USER_INTERFACE=notebookbar run-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
     else
         echo -e "\
         Open the failing test in the interactive test runner:\n\
-        \tcd cypress_test && make run-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
+        \tmake -C cypress_test run-${COMMAND} spec=${SPEC}\n" >> ${ERROR_LOG}
     fi
     elif [[ ${TEST_FILE} == *"user1"* ]]; then
     echo -e "\
     Open the failing test in the interactive test runner:\n\
-    \tcd cypress_test && make run-${COMMAND} spec=${SPEC} user=1\n" >> ${ERROR_LOG}
+    \tmake -C cypress_test run-${COMMAND} spec=${SPEC} user=1\n" >> ${ERROR_LOG}
     else
     echo -e "\
     Open the failing test in the interactive test runner:\n\
-    \tcd cypress_test && make run-${COMMAND} spec=${SPEC} user=2\n" >> ${ERROR_LOG}
+    \tmake -C cypress_test run-${COMMAND} spec=${SPEC} user=2\n" >> ${ERROR_LOG}
     fi
 }
 
