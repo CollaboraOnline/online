@@ -2,9 +2,9 @@
 	white-space: nowrap;
 	overflow-x: hidden;
 	overflow-y: visible;
-	background: #dfdfdf;
+	background: var(--color-background-lighter);
 	max-height: 100%;
-	scrollbar-color: #ccc #dfdfdf;
+	scrollbar-color: var(--color-background-darker) var(--color-background-lighter);
 	scrollbar-width: thin;
 }
 
@@ -31,24 +31,22 @@
 	vertical-align: middle;
 	max-width: 164px;
 	cursor: pointer;
-	border: 2px solid #dfdfdf;
+	border: 1px solid var(--color-border);
 	margin-left: 10px;
 	margin-right: 10px;
 }
 
 /* The current part the user is on. */
 .preview-img-currentpart {
-	border-color: #000000;
-	border-style: solid;
+	border: 1px solid var(--color-border-dark);
 }
 
 /* One of (potentially many) selected parts, but not the current. */
 .preview-img-selectedpart {
-	border-color: #0b87e780 !important;
-	border-style: solid;
+	border: 1px solid var(--color-border-dark) !important;
 }
 
 /* Highlight where a slide can be dropped when reordering by drag-and-drop. */
 .preview-img-dropsite {
-	border-bottom: 20px solid var(--gray-color);
+	border-bottom: 20px solid var(--color-primary);
 }
