@@ -44,14 +44,14 @@
 }
 
 .vex-content .vex-footnote {
-	color: var(--gray-light-txt--color) !important;
+	color: var(--color-main-text) !important;
 	font-size: 0.78em;
 }
 /* dialog shown when user is idle */
 .vex-open .cool-user-idle {
-	background: #ffffffe0 !important;
+	background: var(--color-background-lighter) !important;
 	font-size: xx-large !important;
-	color: #7a8592 !important;
+	color: var(--color-main-text) !important;
 	text-align: center !important;
 }
 .vex-open .cool-user-idle .vex-dialog-buttons {
