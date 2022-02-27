@@ -97,9 +97,9 @@
 }
 
 .jsdialog.ui-button-box button[disabled='disabled'] {
-	color: var(--gray-light-txt--color) !important;
-	background-color: #fafafa !important;
-	border-color: #ccc !important;
+	color: var(--color-text-lighter) !important;
+	background-color: var(--color-background-lighter) !important;
+	border-color: var(--color-border-lighter) !important;
 }
 
 .ui-button-box .jsdialog.ui-pushbutton:not(.hidden) {
