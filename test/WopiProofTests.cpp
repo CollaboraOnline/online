@@ -73,6 +73,7 @@ void WopiProofTests::verifySignature(const std::string &access,
                                      const std::string &msgProofStr,
                                      const std::string &testname)
 {
+    (void)testname; // unused
 #if OPENSSL_VERSION_NUMBER > 0x10100000L
     std::vector<unsigned char> proof = Proof::GetProof(access, uri, ticks);
 
