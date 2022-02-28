@@ -115,10 +115,11 @@
 	border-radius: 3px;
 	filter: none !important;
 	background: var(--color-primary-lighter);
+	box-shadow: 0 0 0 2px var(--color-main-background);
 	border: 1px solid var(--color-primary);
 	position: absolute;
-	top: 14px;
-	margin-left: 48px;
+	top: 18px;
+	margin-left: 28px;
 }
 
 .hasnotebookbar .notebookbar-shortcuts-bar #Menubar,
