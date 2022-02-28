@@ -153,8 +153,8 @@ There are two spec files which you can to update the screenshots in help dialog
 2. cypress_test/integration_tests/desktop/calc/help_dialog_update_spec.js
 
 You can run the specfile individually using:
-    1. cd cypress_test && make UPDATE_SCREENSHOT=true check-desktop spec=writer/help_dialog_update_spec.js
-    2. cd cypress_test && make UPDATE_SCREENSHOT=true check-desktop spec=calc/help_dialog_update_spec.js
+    1. make -C cypress_test UPDATE_SCREENSHOT=true check-desktop spec=writer/help_dialog_update_spec.js
+    2. make -C cypress_test UPDATE_SCREENSHOT=true check-desktop spec=calc/help_dialog_update_spec.js
 
 If UPDATE_SCREENSHOT is true then only cypress will run the spec file and replace the original screenshot with new screenshot, the default value of UPDATE_SCREENSHOT is false
 
