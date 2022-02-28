@@ -52,8 +52,6 @@ class TileQueueTests : public CPPUNIT_NS::TestFixture
 
 void TileQueueTests::testTileQueuePriority()
 {
-    constexpr auto testname = __func__;
-
     const std::string reqHigh = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 oldwid=0 wid=0";
     const std::string resHigh = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840 oldwid=0 wid=0 ver=-1";
     const TileQueue::Payload payloadHigh(resHigh.data(), resHigh.data() + resHigh.size());
@@ -100,8 +98,6 @@ void TileQueueTests::testTileQueuePriority()
 
 void TileQueueTests::testTileCombinedRendering()
 {
-    constexpr auto testname = __func__;
-
     const std::string req1 = "tile nviewid=0 nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=0 tilewidth=3840 tileheight=3840";
     const std::string req2 = "tile nviewid=0 part=0 width=256 height=256 tileposx=3840 tileposy=0 tilewidth=3840 tileheight=3840";
     const std::string req3 = "tile nviewid=0 part=0 width=256 height=256 tileposx=0 tileposy=3840 tilewidth=3840 tileheight=3840";
@@ -134,8 +130,6 @@ void TileQueueTests::testTileCombinedRendering()
 
 void TileQueueTests::testTileRecombining()
 {
-    constexpr auto testname = __func__;
-
     TileQueue queue;
 
     queue.put("tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
@@ -156,8 +150,6 @@ void TileQueueTests::testTileRecombining()
 
 void TileQueueTests::testViewOrder()
 {
-    constexpr auto testname = __func__;
-
     TileQueue queue;
 
     // should result in the 3, 2, 1, 0 order of the views
@@ -191,8 +183,6 @@ void TileQueueTests::testViewOrder()
 
 void TileQueueTests::testPreviewsDeprioritization()
 {
-    constexpr auto testname = __func__;
-
     TileQueue queue;
 
     // simple case - put previews to the queue and get everything back again
@@ -258,8 +248,6 @@ void TileQueueTests::testPreviewsDeprioritization()
 
 void TileQueueTests::testSenderQueue()
 {
-    constexpr auto testname = __func__;
-
     SenderQueue<std::shared_ptr<Message>> queue;
 
     std::shared_ptr<Message> item;
@@ -299,8 +287,6 @@ void TileQueueTests::testSenderQueue()
 
 void TileQueueTests::testSenderQueueTileDeduplication()
 {
-    constexpr auto testname = __func__;
-
     SenderQueue<std::shared_ptr<Message>> queue;
 
     std::shared_ptr<Message> item;
@@ -351,8 +337,6 @@ void TileQueueTests::testSenderQueueTileDeduplication()
 
 void TileQueueTests::testInvalidateViewCursorDeduplication()
 {
-    constexpr auto testname = __func__;
-
     SenderQueue<std::shared_ptr<Message>> queue;
 
     std::shared_ptr<Message> item;
@@ -412,8 +396,6 @@ void TileQueueTests::testInvalidateViewCursorDeduplication()
 
 void TileQueueTests::testCallbackInvalidation()
 {
-    constexpr auto testname = __func__;
-
     TileQueue queue;
 
     // join tiles
@@ -441,8 +423,6 @@ void TileQueueTests::testCallbackInvalidation()
 
 void TileQueueTests::testCallbackIndicatorValue()
 {
-    constexpr auto testname = __func__;
-
     TileQueue queue;
 
     // join tiles
@@ -455,8 +435,6 @@ void TileQueueTests::testCallbackIndicatorValue()
 
 void TileQueueTests::testCallbackPageSize()
 {
-    constexpr auto testname = __func__;
-
     TileQueue queue;
 
     // join tiles
@@ -469,8 +447,6 @@ void TileQueueTests::testCallbackPageSize()
 
 void TileQueueTests::testCallbackModifiedStatusIsSkipped()
 {
-    constexpr auto testname = __func__;
-
     TileQueue queue;
     std::stringstream ss;
     ss << "callback all " << LOK_CALLBACK_STATE_CHANGED;

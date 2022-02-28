@@ -97,6 +97,6 @@ inline void tstLog(const std::ostringstream& stream) { writeTestLog(stream.str()
 #define TST_LOG(X) TST_LOG_NAME(testname, X)
 
 /// Used by the "new-style" tests. FIXME: Unify.
-#define LOG_TST(X) TST_LOG(X)
+#define LOG_TST(X) TST_LOG_NAME(getTestname(), X)
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

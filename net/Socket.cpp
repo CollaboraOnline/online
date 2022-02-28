@@ -184,8 +184,8 @@ namespace {
     }
 }
 
-SocketPoll::SocketPoll(std::string threadName)
-    : _name(std::move(threadName)),
+SocketPoll::SocketPoll(const std::string& threadName)
+    : _name(threadName),
       _pollStartIndex(0),
       _stop(false),
       _threadStarted(0),

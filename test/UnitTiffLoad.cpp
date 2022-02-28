@@ -28,13 +28,12 @@ public:
     void invokeWSDTest() override;
 };
 
-UnitTiffLoad::UnitTiffLoad()
-    : UnitWSD("UnitTiffLoad")
-{
-}
+UnitTiffLoad::UnitTiffLoad() {}
 
 void UnitTiffLoad::invokeWSDTest()
 {
+    const char testname[] = "UnitTiffLoad";
+
     // Load a document which has a TIFF image in it.
     std::string documentPath;
     std::string documentURL;

@@ -25,8 +25,6 @@ class UtilTests : public CPPUNIT_NS::TestFixture
 
 void UtilTests::testStringifyHexLine()
 {
-    constexpr auto testname = __func__;
-
     std::string test("hello here\ntest");
     std::string result1("68 65 6C 6C 6F 20 68 65  72 65 0A 74 65 73 74"
                         "                                                       "

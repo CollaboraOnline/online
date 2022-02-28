@@ -68,11 +68,6 @@ class UnitLoad : public UnitWSD
     }
 
 public:
-    UnitLoad()
-        : UnitWSD("UnitLoad")
-    {
-    }
-
     void invokeWSDTest() override;
 };
 
@@ -126,6 +121,8 @@ UnitBase::TestResult UnitLoad::testConnectNoLoad()
 
 UnitBase::TestResult UnitLoad::testLoadSimple()
 {
+    const char* testname = "loadSimple ";
+
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
     loadDoc(documentURL, "load ");
@@ -134,6 +131,7 @@ UnitBase::TestResult UnitLoad::testLoadSimple()
 
 UnitBase::TestResult UnitLoad::testBadLoad()
 {
+    const char* testname = "badLoad ";
     try
     {
         // Load a document and get its status.
@@ -161,6 +159,7 @@ UnitBase::TestResult UnitLoad::testBadLoad()
 
 UnitBase::TestResult UnitLoad::testExcelLoad()
 {
+    const char* testname = "excelLoad ";
     try
     {
         // Load a document and get status.
@@ -184,6 +183,8 @@ UnitBase::TestResult UnitLoad::testExcelLoad()
 
 UnitBase::TestResult UnitLoad::testReload()
 {
+    const char* testname = "reload ";
+
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
     for (int i = 0; i < 3; ++i)
@@ -196,6 +197,8 @@ UnitBase::TestResult UnitLoad::testReload()
 
 UnitBase::TestResult UnitLoad::testLoad()
 {
+    const char* testname = "load ";
+
     std::string documentPath, documentURL;
     helpers::getDocumentPathAndURL("hello.odt", documentPath, documentURL, testname);
 

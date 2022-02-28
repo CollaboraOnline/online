@@ -202,8 +202,6 @@ bool TileCacheTests::getPartFromInvalidateMessage(const std::string& message, in
 
 void TileCacheTests::testDesc()
 {
-    constexpr auto testname = __func__;
-
     TileDesc descA = TileDesc(0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 0, 1234, 1, true);
     TileDesc descB = TileDesc(0, 0, 256, 256, 0, 0, 3200, 3200, /* ignored in cache */ 1, 1235, 2, false);
 
@@ -214,8 +212,6 @@ void TileCacheTests::testDesc()
 
 void TileCacheTests::testSimple()
 {
-    constexpr auto testname = __func__;
-
     if (isStandalone())
     {
         if (!UnitWSD::init(UnitWSD::UnitType::Wsd, ""))
@@ -304,8 +300,6 @@ void TileCacheTests::testSimpleCombine()
 
 void TileCacheTests::testSize()
 {
-    constexpr auto testname = __func__;
-
     // Create TileCache and pretend the file was modified as recently as
     // now, so it discards the cached data.
     TileCache tc("doc.ods", std::chrono::system_clock::time_point());
@@ -580,9 +574,9 @@ void TileCacheTests::testUnresponsiveClient()
 
 void TileCacheTests::testImpressTiles()
 {
-    const std::string testname = "impressTiles ";
     try
     {
+        const std::string testname = "impressTiles ";
         std::shared_ptr<http::WebSocketSession> socket
             = loadDocAndGetSession(_socketPoll, "setclientpart.odp", _uri, testname);
 
@@ -604,9 +598,9 @@ void TileCacheTests::testImpressTiles()
 
 void TileCacheTests::testClientPartImpress()
 {
-    const std::string testname = "clientPartImpress ";
     try
     {
+        const std::string testname = "clientPartImpress ";
         std::shared_ptr<http::WebSocketSession> socket
             = loadDocAndGetSession(_socketPoll, "setclientpart.odp", _uri, testname);
 
@@ -624,9 +618,9 @@ void TileCacheTests::testClientPartImpress()
 
 void TileCacheTests::testClientPartCalc()
 {
-    const std::string testname = "clientPartCalc ";
     try
     {
+        const std::string testname = "clientPartCalc ";
         std::shared_ptr<http::WebSocketSession> socket
             = loadDocAndGetSession(_socketPoll, "setclientpart.ods", _uri, testname);
 
@@ -868,9 +862,9 @@ void TileCacheTests::testSimultaneousTilesRenderedJustOnce()
 
 void TileCacheTests::testLoad12ods()
 {
-    const char* testname = "load12ods ";
     try
     {
+        const char* testname = "load12ods ";
         std::shared_ptr<http::WebSocketSession> socket
             = loadDocAndGetSession(_socketPoll, "load12.ods", _uri, testname);
 
@@ -884,8 +878,7 @@ void TileCacheTests::testLoad12ods()
         sendTextFrame(socket, "status");
 
         const auto response = assertResponseString(socket, "status:", testname);
-        parseDocSize(response.substr(7), "spreadsheet", docSheet, docSheets, docWidth, docHeight,
-                     docViewId, testname);
+        parseDocSize(response.substr(7), "spreadsheet", docSheet, docSheets, docWidth, docHeight, docViewId);
 
         checkBlackTiles(socket, docSheet, docWidth, docWidth, testname);
 
@@ -905,8 +898,6 @@ void TileCacheTests::testLoad12ods()
 
 void TileCacheTests::checkBlackTile(std::stringstream& tile)
 {
-    constexpr auto testname = __func__;
-
     png_uint_32 height = 0;
     png_uint_32 width = 0;
     png_uint_32 rowBytes = 0;

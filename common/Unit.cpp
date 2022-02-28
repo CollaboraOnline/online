@@ -91,7 +91,7 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
     {
         UnitBase* instance = linkAndCreateUnit(type, unitLibPath);
         rememberInstance(type, instance);
-        LOG_DBG(instance->getTestname() << ": Initializing");
+        LOG_DBG(instance->_testname << ": Initializing");
 
         if (instance && type == UnitType::Kit)
         {
@@ -102,13 +102,13 @@ bool UnitBase::init(UnitType type, const std::string &unitLibPath)
 
                     if (TimeoutThreadMutex.try_lock_for(instance->_timeoutMilliSeconds))
                     {
-                        LOG_DBG(instance->getTestname() << ": Unit test finished in time");
+                        LOG_DBG(instance->_testname << ": Unit test finished in time");
                         TimeoutThreadMutex.unlock();
                     }
                     else
                     {
-                        LOG_ERR(instance->getTestname()
-                                << ": Unit test timeout after " << instance->_timeoutMilliSeconds);
+                        LOG_ERR(instance->_testname << ": Unit test timeout after "
+                                                  << instance->_timeoutMilliSeconds);
                         instance->timeout();
                     }
                     TimeoutThreadRunning = false;
@@ -202,8 +202,8 @@ UnitBase::~UnitBase()
     _socketPoll->joinThread();
 }
 
-UnitWSD::UnitWSD(std::string name)
-    : UnitBase(std::move(name), UnitType::Wsd)
+UnitWSD::UnitWSD(std::string testname)
+    : UnitBase(std::move(testname), UnitType::Wsd)
     , _hasKitHooks(false)
 {
 }
@@ -244,8 +244,8 @@ UnitWSD& UnitWSD::get()
     return *GlobalWSD;
 }
 
-UnitKit::UnitKit(std::string name)
-    : UnitBase(std::move(name), UnitType::Kit)
+UnitKit::UnitKit(std::string testname)
+    : UnitBase(std::move(testname), UnitType::Kit)
 {
 }
 

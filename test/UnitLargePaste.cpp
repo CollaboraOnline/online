@@ -28,13 +28,12 @@ public:
     void invokeWSDTest() override;
 };
 
-UnitLargePaste::UnitLargePaste()
-    : UnitWSD("UnitLargePaste")
-{
-}
+UnitLargePaste::UnitLargePaste() {}
 
 void UnitLargePaste::invokeWSDTest()
 {
+    const char testname[] = "UnitLargePaste";
+
     // Load a document and make it empty, then paste some text into it.
     std::string documentPath;
     std::string documentURL;

@@ -73,7 +73,7 @@ std::string inline lokFormatAssertEq(const std::string& expected, const char*,
 #define LOK_TRACE(X)                                                                               \
     do                                                                                             \
     {                                                                                              \
-        TST_LOG(X);                                                                                \
+        TST_LOG_NAME("unittest", X);                                                               \
     } while (false)
 #else
 #define LOK_TRACE(X)                                                                               \
@@ -92,9 +92,9 @@ std::string inline lokFormatAssertEq(const std::string& expected, const char*,
             std::ostringstream oss##__LINE__;                                                      \
             oss##__LINE__ << message;                                                              \
             const auto msg##__LINE__ = oss##__LINE__.str();                                        \
-            TST_LOG("ERROR: Assertion failure: "                                                   \
-                    << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ". ")                         \
-                    << "Condition: " << (#condition));                                             \
+            TST_LOG_NAME("unittest", "ERROR: Assertion failure: "                                  \
+                                         << (msg##__LINE__.empty() ? "" : msg##__LINE__ + ". ")    \
+                                         << "Condition: " << (#condition));                        \
             LOK_ASSERT_IMPL(cond##__LINE__);                                                       \
             CPPUNIT_ASSERT_MESSAGE((message), cond##__LINE__);                                     \
         }                                                                                          \
@@ -156,7 +156,7 @@ std::string inline lokFormatAssertEq(const std::string& expected, const char*,
 #define LOK_ASSERT_FAIL(message)                                                                   \
     do                                                                                             \
     {                                                                                              \
-        TST_LOG("ERROR: Forced failure: " << (message));                                           \
+        TST_LOG_NAME("unittest", "ERROR: Forced failure: " << (message));                          \
         LOK_ASSERT_IMPL(!"Forced failure: " #message);                                             \
         CPPUNIT_FAIL((message));                                                                   \
     } while (false)

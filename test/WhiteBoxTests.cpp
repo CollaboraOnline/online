@@ -116,8 +116,6 @@ class WhiteBoxTests : public CPPUNIT_NS::TestFixture
 
 void WhiteBoxTests::testCOOLProtocolFunctions()
 {
-    constexpr auto testname = __func__;
-
     int foo;
     LOK_ASSERT(COOLProtocol::getTokenInteger("foo=42", "foo", foo));
     LOK_ASSERT_EQUAL(42, foo);
@@ -209,8 +207,6 @@ void WhiteBoxTests::testCOOLProtocolFunctions()
 
 void WhiteBoxTests::testSplitting()
 {
-    constexpr auto testname = __func__;
-
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring(nullptr, 5, '\n'));
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring(nullptr, -1, '\n'));
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring("abc", 0, '\n'));
@@ -355,8 +351,6 @@ void WhiteBoxTests::testMessage()
 
 void WhiteBoxTests::testMessageAbbreviation()
 {
-    constexpr auto testname = __func__;
-
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring(nullptr, 5, '\n'));
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring(nullptr, -1, '\n'));
     LOK_ASSERT_EQUAL(std::string(), Util::getDelimitedInitialSubstring("abc", 0, '\n'));
@@ -383,8 +377,6 @@ void WhiteBoxTests::testMessageAbbreviation()
 
 void WhiteBoxTests::testTokenizer()
 {
-    constexpr auto testname = __func__;
-
     StringVector tokens;
 
     tokens = Util::tokenize("");
@@ -493,8 +485,6 @@ void WhiteBoxTests::testTokenizer()
 
 void WhiteBoxTests::testTokenizerTokenizeAnyOf()
 {
-    constexpr auto testname = __func__;
-
     StringVector tokens;
     const char delimiters[] = "\n\r"; // any of these delimits; and we trim whitespace
 
@@ -568,8 +558,6 @@ void WhiteBoxTests::testTokenizerTokenizeAnyOf()
 
 void WhiteBoxTests::testReplace()
 {
-    constexpr auto testname = __func__;
-
     LOK_ASSERT_EQUAL(std::string("zesz one zwo flee"), Util::replace("test one two flee", "t", "z"));
     LOK_ASSERT_EQUAL(std::string("testt one two flee"), Util::replace("test one two flee", "tes", "test"));
     LOK_ASSERT_EQUAL(std::string("testest one two flee"), Util::replace("test one two flee", "tes", "testes"));
@@ -580,8 +568,6 @@ void WhiteBoxTests::testReplace()
 
 void WhiteBoxTests::testRegexListMatcher()
 {
-    constexpr auto testname = __func__;
-
     Util::RegexListMatcher matcher;
 
     matcher.allow("localhost");
@@ -622,8 +608,6 @@ void WhiteBoxTests::testRegexListMatcher()
 
 void WhiteBoxTests::testRegexListMatcher_Init()
 {
-    constexpr auto testname = __func__;
-
     Util::RegexListMatcher matcher({"localhost", "192\\..*"}, {"192\\.168\\..*"});
 
     LOK_ASSERT(matcher.match("localhost"));
@@ -759,8 +743,6 @@ void WhiteBoxTests::testTileDesc()
 
 void WhiteBoxTests::testRectanglesIntersect()
 {
-    constexpr auto testname = __func__;
-
     // these intersect
     LOK_ASSERT(TileDesc::rectanglesIntersect(1000, 1000, 2000, 1000,
                                                  2000, 1000, 2000, 1000));
@@ -786,8 +768,6 @@ void WhiteBoxTests::testRectanglesIntersect()
 
 void WhiteBoxTests::testAuthorization()
 {
-    constexpr auto testname = __func__;
-
     Authorization auth1(Authorization::Type::Token, "abc");
     Poco::URI uri1("http://localhost");
     auth1.authorizeURI(uri1);
@@ -883,8 +863,6 @@ void WhiteBoxTests::testAuthorization()
 
 void WhiteBoxTests::testJson()
 {
-    constexpr auto testname = __func__;
-
     static const char* testString =
          "{\"BaseFileName\":\"SomeFile.pdf\",\"DisableCopy\":true,\"DisableExport\":true,\"DisableInactiveMessages\":true,\"DisablePrint\":true,\"EnableOwnerTermination\":true,\"HideExportOption\":true,\"HidePrintOption\":true,\"OwnerId\":\"id@owner.com\",\"PostMessageOrigin\":\"*\",\"Size\":193551,\"UserCanWrite\":true,\"UserFriendlyName\":\"Owning user\",\"UserId\":\"user@user.com\",\"WatermarkText\":null}";
 
@@ -917,8 +895,6 @@ void WhiteBoxTests::testJson()
 
 void WhiteBoxTests::testAnonymization()
 {
-    constexpr auto testname = __func__;
-
     static const std::string name = "some name with space";
     static const std::string filename = "filename.ext";
     static const std::string filenameTestx = "testx (6).odt";
@@ -985,8 +961,6 @@ void WhiteBoxTests::testAnonymization()
 
 void WhiteBoxTests::testIso8601Time()
 {
-    constexpr auto testname = __func__;
-
     std::ostringstream oss;
 
     std::chrono::system_clock::time_point t(std::chrono::duration_cast<std::chrono::system_clock::duration>(std::chrono::nanoseconds(1567444337874777375)));
@@ -1075,8 +1049,6 @@ void WhiteBoxTests::testClockAsString()
     // but the tests can't be run elsewhere.
     // I left them here to avoid recreating them when needed.
 #if 0
-    constexpr auto testname = __func__;
-
     const auto steady_tp = std::chrono::steady_clock::time_point(
         std::chrono::steady_clock::duration(std::chrono::nanoseconds(295708311764285)));
     LOK_ASSERT_EQUAL(std::string("Sat Feb 12 18:58.889 2022"),
@@ -1091,8 +1063,6 @@ void WhiteBoxTests::testClockAsString()
 
 void WhiteBoxTests::testBufferClass()
 {
-    constexpr auto testname = __func__;
-
     Buffer buf;
     LOK_ASSERT_EQUAL(0UL, buf.size());
     LOK_ASSERT_EQUAL(true, buf.empty());
@@ -1176,8 +1146,6 @@ void WhiteBoxTests::testBufferClass()
 
 void WhiteBoxTests::testStringVector()
 {
-    constexpr auto testname = __func__;
-
     // Test push_back() and getParam().
     StringVector vector;
     vector.push_back("a");
@@ -1285,8 +1253,6 @@ void WhiteBoxTests::testStringVector()
 
 void WhiteBoxTests::testHexify()
 {
-    constexpr auto testname = __func__;
-
     const std::string s1 = "some ascii text with !@#$%^&*()_+/-\\|";
     const auto hex = Util::dataToHexString(s1, 0, s1.size());
     std::string decoded;
@@ -1308,8 +1274,6 @@ void WhiteBoxTests::testHexify()
 
 void WhiteBoxTests::testRequestDetails_DownloadURI()
 {
-    constexpr auto testname = __func__;
-
     static const std::string Root = "localhost:9980";
 
     {
@@ -1357,8 +1321,6 @@ void WhiteBoxTests::testRequestDetails_DownloadURI()
 
 void WhiteBoxTests::testRequestDetails_coolURI()
 {
-    constexpr auto testname = __func__;
-
     static const std::string Root = "localhost:9980";
 
     static const std::string URI
@@ -1393,8 +1355,6 @@ void WhiteBoxTests::testRequestDetails_coolURI()
 
 void WhiteBoxTests::testRequestDetails_local()
 {
-    constexpr auto testname = __func__;
-
     static const std::string Root = "localhost:9980";
 
     static const std::string ProxyPrefix
@@ -1539,8 +1499,6 @@ void WhiteBoxTests::testRequestDetails_local()
 
 void WhiteBoxTests::testRequestDetails_local_hexified()
 {
-    constexpr auto testname = __func__;
-
     static const std::string Root = "localhost:9980";
 
     static const std::string ProxyPrefix
@@ -1670,8 +1628,6 @@ void WhiteBoxTests::testRequestDetails_local_hexified()
 
 void WhiteBoxTests::testRequestDetails()
 {
-    constexpr auto testname = __func__;
-
     static const std::string Root = "localhost:9980";
 
     static const std::string ProxyPrefix
@@ -2028,8 +1984,6 @@ void WhiteBoxTests::testRequestDetails()
 
 void WhiteBoxTests::testUIDefaults()
 {
-    constexpr auto testname = __func__;
-
     std::string uiMode;
 
     LOK_ASSERT_EQUAL(std::string("{\"uiMode\":\"classic\"}"),
@@ -2051,8 +2005,6 @@ void WhiteBoxTests::testUIDefaults()
 
 void WhiteBoxTests::testCSSVars()
 {
-    constexpr auto testname = __func__;
-
     LOK_ASSERT_EQUAL(std::string("<style>:root {--co-somestyle-text:#123456;--co-somestyle-size:15px;}</style>"),
                      FileServerRequestHandler::cssVarsToStyle("--co-somestyle-text=#123456;--co-somestyle-size=15px;"));
 
@@ -2068,8 +2020,6 @@ void WhiteBoxTests::testCSSVars()
 
 void WhiteBoxTests::testStat()
 {
-    constexpr auto testname = __func__;
-
     FileUtil::Stat invalid("/missing/file/path");
     LOK_ASSERT(!invalid.good());
     LOK_ASSERT(invalid.bad());
@@ -2118,8 +2068,6 @@ void WhiteBoxTests::testStat()
 
 void WhiteBoxTests::testStringCompare()
 {
-    constexpr auto testname = __func__;
-
     LOK_ASSERT(Util::iequal("abcd", "abcd"));
     LOK_ASSERT(Util::iequal("aBcd", "abCd"));
     LOK_ASSERT(Util::iequal("", ""));
@@ -2141,8 +2089,6 @@ void WhiteBoxTests::testStringCompare()
 
 void WhiteBoxTests::testParseUri()
 {
-    constexpr auto testname = __func__;
-
     std::string scheme = "***";
     std::string host = "***";
     std::string port = "***";
@@ -2205,8 +2151,6 @@ void WhiteBoxTests::testParseUri()
 
 void WhiteBoxTests::testParseUriUrl()
 {
-    constexpr auto testname = __func__;
-
     std::string scheme = "***";
     std::string host = "***";
     std::string port = "***";
@@ -2280,8 +2224,6 @@ void WhiteBoxTests::testParseUriUrl()
 
 void WhiteBoxTests::testParseUrl()
 {
-    constexpr auto testname = __func__;
-
     LOK_ASSERT_EQUAL(std::string(), net::parseUrl(""));
 
     LOK_ASSERT_EQUAL(std::string(), net::parseUrl("https://sub.domain.com:80"));
@@ -2293,8 +2235,6 @@ void WhiteBoxTests::testParseUrl()
 
 void WhiteBoxTests::testSafeAtoi()
 {
-    constexpr auto testname = __func__;
-
     {
         std::string s("7");
         LOK_ASSERT_EQUAL(7, Util::safe_atoi(s.data(), s.size()));
@@ -2342,8 +2282,6 @@ void WhiteBoxTests::testSafeAtoi()
 
 void WhiteBoxTests::testBytesToHex()
 {
-    constexpr auto testname = __func__;
-
     {
         const std::string d("Some text");
         const std::string hex = Util::bytesToHexString(d);
@@ -2354,8 +2292,6 @@ void WhiteBoxTests::testBytesToHex()
 
 void WhiteBoxTests::testJsonUtilEscapeJSONValue()
 {
-    constexpr auto testname = __func__;
-
     const std::string in = "domain\\username";
     const std::string expected = "domain\\\\username";
     LOK_ASSERT_EQUAL(JsonUtil::escapeJSONValue(in), expected);

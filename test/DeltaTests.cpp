@@ -51,21 +51,18 @@ class DeltaTests : public CPPUNIT_NS::TestFixture
     std::vector<char> applyDelta(
         const std::vector<char> &pixmap,
         png_uint_32 width, png_uint_32 height,
-        const std::vector<char> &delta,
-        const std::string& testname);
+        const std::vector<char> &delta);
 
     void assertEqual(const std::vector<char> &a,
                      const std::vector<char> &b,
-                     int width, int height,
-                     const std::string& testname);
+                     int width, int height);
 };
 
 // Quick hack for debugging
 std::vector<char> DeltaTests::applyDelta(
     const std::vector<char> &pixmap,
     png_uint_32 width, png_uint_32 height,
-    const std::vector<char> &delta,
-    const std::string& testname)
+    const std::vector<char> &delta)
 {
     LOK_ASSERT(delta.size() >= 4);
     LOK_ASSERT(delta[0] == 'D');
@@ -124,8 +121,7 @@ std::vector<char> DeltaTests::applyDelta(
 
 void DeltaTests::assertEqual(const std::vector<char> &a,
                              const std::vector<char> &b,
-                             int width, int /* height */,
-                             const std::string& testname)
+                             int width, int /* height */)
 {
     LOK_ASSERT_EQUAL(a.size(), b.size());
     for (size_t i = 0; i < a.size(); ++i)
@@ -150,8 +146,6 @@ void DeltaTests::assertEqual(const std::vector<char> &a,
 
 void DeltaTests::testDeltaSequence()
 {
-    constexpr auto testname = __func__;
-
     DeltaGenerator gen;
 
     png_uint_32 height, width, rowBytes;
@@ -185,8 +179,8 @@ void DeltaTests::testDeltaSequence()
     LOK_ASSERT(delta.size() > 0);
 
     // Apply it to move to the second frame
-    std::vector<char> reText2 = applyDelta(text, width, height, delta, testname);
-    assertEqual(reText2, text2, width, height, testname);
+    std::vector<char> reText2 = applyDelta(text, width, height, delta);
+    assertEqual(reText2, text2, width, height);
 
     // Build a delta between text & text2Wid
     std::vector<char> two2one;
@@ -197,8 +191,8 @@ void DeltaTests::testDeltaSequence()
     LOK_ASSERT(two2one.size() > 0);
 
     // Apply it to get back to where we started
-    std::vector<char> reText = applyDelta(text2, width, height, two2one, testname);
-    assertEqual(reText, text, width, height, testname);
+    std::vector<char> reText = applyDelta(text2, width, height, two2one);
+    assertEqual(reText, text, width, height);
 }
 
 void DeltaTests::testRandomDeltas()

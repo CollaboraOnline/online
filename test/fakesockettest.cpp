@@ -60,8 +60,6 @@ public:
 
 void FakeSocketTest::testBasic()
 {
-    constexpr auto testname = __func__;
-
     int rc;
     char buf[100];
 

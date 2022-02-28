@@ -812,8 +812,7 @@ SocketProcessor(const std::string& testname, const std::shared_ptr<http::WebSock
 
 inline
 void parseDocSize(const std::string& message, const std::string& type,
-                  int& part, int& parts, int& width, int& height, int& viewid,
-                  const std::string& testname)
+                  int& part, int& parts, int& width, int& height, int& viewid)
 {
     StringVector tokens(Util::tokenize(message, ' '));
 
@@ -1029,8 +1028,7 @@ inline void getServerVersion(std::shared_ptr<COOLWebSocket>& socket,
     getServerVersion(*socket, major, minor, testname);
 }
 
-inline bool svgMatch(const std::string& testname, const std::vector<char>& response,
-                     const char* templateFile)
+inline bool svgMatch(const char *testname, const std::vector<char> &response, const char *templateFile)
 {
     const std::vector<char> expectedSVG = helpers::readDataFromFile(templateFile);
     if (expectedSVG != response)

@@ -58,16 +58,12 @@ class UnitSession : public UnitWSD
     TestResult testSlideShow();
 
 public:
-    UnitSession()
-        : UnitWSD("UnitSession")
-    {
-    }
-
     void invokeWSDTest() override;
 };
 
 UnitBase::TestResult UnitSession::testBadRequest()
 {
+    const char* testname = "badrequest ";
     TST_LOG("Starting Test: " << testname);
     try
     {
@@ -99,6 +95,7 @@ UnitBase::TestResult UnitSession::testBadRequest()
 
 UnitBase::TestResult UnitSession::testHandshake()
 {
+    const char* testname = "handshake ";
     TST_LOG("Starting Test: " << testname);
 
     std::shared_ptr<SocketPoll> socketPoll = std::make_shared<SocketPoll>(testname);
@@ -114,7 +111,7 @@ UnitBase::TestResult UnitSession::testHandshake()
 
     wsSession->sendMessage("load url=" + documentURL);
 
-    auto assertMessage = [&wsSession, this](const std::string expectedStr)
+    auto assertMessage = [&wsSession, &testname](const std::string expectedStr)
     {
         wsSession->poll(
             [&](const std::vector<char>& message)
@@ -148,6 +145,7 @@ UnitBase::TestResult UnitSession::testHandshake()
 
 UnitBase::TestResult UnitSession::testSlideShow()
 {
+    const char* testname = "slideshow ";
     TST_LOG("Starting Test: " << testname);
     try
     {
