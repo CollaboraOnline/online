@@ -13,10 +13,13 @@
 #document-container:not(.mobile) + #sidebar-dock-wrapper {
 	width: 330px;
 	padding: 0;
-	border-left: 1px solid var(--color-border) !important;
-	border-right: 1px solid var(--color-border) !important; /* for RTL mode */
 	margin-top: 0 !important;
 	box-sizing: border-box;
+}
+
+[data-userinterfacemode='classic'] #document-container:not(.mobile) + #sidebar-dock-wrapper,
+#document-container.spreadsheet-doctype:not(.mobile) + #sidebar-dock-wrapper {
+	border-inline-start: 1px solid var(--color-border) !important;
 }
 
 .sidebar .spinfieldcontainer input {
@@ -77,7 +80,7 @@
 
 .menubutton.sidebar span {
 	display: none;
-	font-size: calc(var(--default-font-size)*0.9);
+	font-size: var(--default-font-size);
 }
 
 .menubutton.sidebar:hover span {

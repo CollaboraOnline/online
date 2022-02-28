@@ -279,7 +279,7 @@ w2ui-toolbar {
 
 #document-name-input {
 	color: var(--color-text-darker);
-	font-size: calc(var(--default-font-size)*1.3);
+	font-size: var(--header-font-size);
 	border: 1px solid transparent;
 	background-color: transparent;
 	border-radius: var(--border-radius);
@@ -303,7 +303,7 @@ w2ui-toolbar {
 }
 
 .main-nav:not(.hasnotebookbar) #document-name-input.editable {
-	font-size: calc(var(--default-font-size)*0.9) !important;
+	font-size: var(--default-font-size) !important;
 	padding-bottom: 2px;
 }
 

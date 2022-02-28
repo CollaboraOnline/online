@@ -1015,15 +1015,19 @@ COOLWSD::~COOLWSD()
 
 // A custom socket poll to fetch remote config every 60 seconds
 // if config changes it applies the new config using LayeredConfiguration
-class RemoteConfigPoll : public SocketPoll
+class RemoteJSONPoll : public SocketPoll
 {
 public:
-    RemoteConfigPoll(LayeredConfiguration& config)
-        : SocketPoll("remoteconfig_poll")
+    RemoteJSONPoll(LayeredConfiguration& config, Poco::URI uri, const std::string& name, const std::string& kind)
+        : SocketPoll(name)
         , conf(config)
-    {
-        remoteServerURI = Poco::URI(conf.getString("remote_config.remote_url"));
-    };
+        , remoteServerURI(uri)
+        , expectedKind(kind)
+    { }
+
+    virtual ~RemoteJSONPoll() { }
+
+    virtual void handleJSON(Poco::JSON::Object::Ptr json) = 0;
 
     void start()
     {
@@ -1032,11 +1036,13 @@ public:
             LOG_INF("Remote config url is not specified in coolwsd.xml");
             return; // no remote config server setup.
         }
-        else if (!Util::iequal(remoteServerURI.getScheme(), "https"))
+#if !ENABLE_DEBUG
+        if (Util::iequal(remoteServerURI.getScheme(),"http"))
         {
-            LOG_ERR("Remote config url should only use HTTPS protocol");
+            LOG_ERR("Remote config url should only use HTTPS protocol: " << remoteServerURI.toString());
             return;
         }
+#endif
 
         startThread();
     }
@@ -1073,9 +1079,9 @@ public:
                     {
                         std::string kind;
                         JsonUtil::findJSONValue(remoteJson, "kind", kind);
-                        if (kind == "configuration")
+                        if (kind == expectedKind)
                         {
-                            applyNewConfig(remoteJson);
+                            handleJSON(remoteJson);
                         }
                         else
                         {
@@ -1107,7 +1113,24 @@ public:
         }
     }
 
-    void applyNewConfig(Poco::JSON::Object::Ptr remoteJson)
+protected:
+    LayeredConfiguration& conf;
+    Poco::URI remoteServerURI;
+    std::string expectedKind;
+    std::string eTagValue;
+};
+
+class RemoteConfigPoll : public RemoteJSONPoll
+{
+public:
+    RemoteConfigPoll(LayeredConfiguration& config) :
+        RemoteJSONPoll(config, Poco::URI(config.getString("remote_config.remote_url")), "remoteconfig_poll", "configuration")
+    {
+    }
+
+    virtual ~RemoteConfigPoll() { }
+
+    void handleJSON(Poco::JSON::Object::Ptr remoteJson) override
     {
         constexpr int PRIO_JSON = -200; // highest priority
 
@@ -1239,11 +1262,6 @@ public:
         }
         return booleanFlag.toString();
     }
-
-private:
-    Poco::URI remoteServerURI;
-    LayeredConfiguration& conf;
-    std::string eTagValue;
 };
 #endif
 

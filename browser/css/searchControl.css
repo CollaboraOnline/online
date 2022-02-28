@@ -11,7 +11,7 @@
 	z-index: 1100;
 	left: calc(50vw - 325px);
 	box-shadow: 0 4px 16px rgba(0,0,0,.2);
-	border: 1px solid rgba(0,0,0,.333);
+	border: 1px solid var(--color-border);
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
@@ -30,7 +30,7 @@
 	text-transform: initial !important;
 }
 .search-not-found {
-	background-color: red;
+	background-color: var(--color-error);
 	-webkit-transition: background-color 0.8s linear;
 	-moz-transition: background-color 0.8s linear;
 	-o-transition: background-color 0.8s linear;

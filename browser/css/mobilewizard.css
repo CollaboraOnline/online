@@ -997,12 +997,12 @@ label.disabled {
 
 #mobile-wizard #label9, #documentlabel-mobile {
 	border: none;
-	font-size: calc(var(--default-font-size)*1.3);
+	font-size: var(--header-font-size);
 }
 
 #mobile-spell-error {
 	border: none;
-	font-size: calc(var(--default-font-size)*1.3);
+	font-size: var(--header-font-size);
 	color: red !important;
 }
 
