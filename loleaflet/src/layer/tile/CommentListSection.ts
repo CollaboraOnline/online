@@ -840,7 +840,8 @@ class CommentSection {
 		if (comment.parent && comment.parent > '0') {
 			var parentIdx = this.getIndexOf(comment.parent);
 
-			this.containerObject.addSection(annotation);
+			if (!this.containerObject.addSection(annotation))
+				return;
 			this.sectionProperties.commentList.splice(parentIdx + 1, 0, annotation);
 
 			this.updateResolvedState(annotation);
@@ -1462,7 +1463,10 @@ class CommentSection {
 	private getRootIndexOf (id: any) {
 		var index = this.getIndexOf(id);
 		for (var idx = index - 1;
-			     idx >=0 && this.sectionProperties.commentList[idx].sectionProperties.data.id === this.sectionProperties.commentList[idx + 1].sectionProperties.data.parent;
+			     idx >=0 &&
+				 this.sectionProperties.commentList[idx] &&
+				 this.sectionProperties.commentList[idx + 1] &&
+				 this.sectionProperties.commentList[idx].sectionProperties.data.id === this.sectionProperties.commentList[idx + 1].sectionProperties.data.parent;
 			     idx--)
 		{
 			index = idx;
@@ -1567,7 +1571,8 @@ class CommentSection {
 					changeComment.avatar = this.map._viewInfoByUserName[changeComment.author].userextrainfo.avatar;
 				}
 				var commentSection = new app.definitions.Comment(changeComment, {}, this);
-				this.containerObject.addSection(commentSection);
+				if (!this.containerObject.addSection(commentSection))
+					continue;
 				this.sectionProperties.commentList.push(commentSection);
 			}
 
