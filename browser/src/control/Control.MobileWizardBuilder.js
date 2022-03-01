@@ -24,6 +24,7 @@ L.Control.MobileWizardBuilder = L.Control.JSDialogBuilder.extend({
 		this._controlHandlers['panel'] = this._panelHandler;
 		this._controlHandlers['toolbox'] = this._toolboxHandler;
 		this._controlHandlers['mobile-popup-container'] = this._mobilePopupContainer;
+		this._controlHandlers['scrollwindow'] = undefined;
 
 		this._toolitemHandlers['.uno:FontworkAlignmentFloater'] = function () { return false; };
 		this._toolitemHandlers['.uno:FontworkCharacterSpacingFloater'] = function () { return false; };
