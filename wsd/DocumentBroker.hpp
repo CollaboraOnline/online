@@ -825,23 +825,24 @@ private:
 
         void dumpState(std::ostream& os, const std::string& indent = "\n  ")
         {
+            const auto now = std::chrono::steady_clock::now();
             os << indent << "isSaving now: " << std::boolalpha << isSaving();
             os << indent << "auto-save enabled: " << std::boolalpha << _isAutosaveEnabled;
             os << indent << "auto-save interval: " << _autosaveInterval;
-            os << indent << "last auto-save check time: "
-               << Util::getSteadyClockAsString(_lastAutosaveCheckTime);
+            os << indent
+               << "last auto-save check time: " << Util::getTimeForLog(now, _lastAutosaveCheckTime);
             os << indent << "auto-save check needed: " << std::boolalpha << needAutosaveCheck();
 
             os << indent
-               << "last save request: " << Util::getSteadyClockAsString(lastSaveRequestTime());
+               << "last save request: " << Util::getTimeForLog(now, lastSaveRequestTime());
             os << indent
-               << "last save response: " << Util::getSteadyClockAsString(lastSaveResponseTime());
+               << "last save response: " << Util::getTimeForLog(now, lastSaveResponseTime());
 
             os << indent << "since last save request: " << timeSinceLastSaveRequest();
             os << indent << "since last save response: " << timeSinceLastSaveResponse();
 
             os << indent
-               << "file last modified time: " << Util::getSystemClockAsString(_lastModifiedTime);
+               << "file last modified time: " << Util::getTimeForLog(now, _lastModifiedTime);
             os << indent << "last save timed-out: " << std::boolalpha << hasSavingTimedOut();
             os << indent << "last save successful: " << lastSaveSuccessful();
             os << indent << "save failure count: " << saveFailureCount();
@@ -951,14 +952,14 @@ private:
 
         void dumpState(std::ostream& os, const std::string& indent = "\n  ")
         {
-            os << indent
-               << "last upload time: " << Util::getSteadyClockAsString(getLastUploadTime());
+            const auto now = std::chrono::steady_clock::now();
+            os << indent << "last upload time: " << Util::getTimeForLog(now, getLastUploadTime());
             os << indent << "last upload was successful: " << lastUploadSuccessful();
             os << indent << "upload failure count: " << uploadFailureCount();
             os << indent << "last modified time: " << _lastModifiedTime;
-            os << indent << "last upload time: " << Util::getSteadyClockAsString(_lastUploadTime);
-            os << indent << "file last modified: "
-               << Util::getSystemClockAsString(_lastUploadedFileModifiedTime);
+            os << indent << "last upload time: " << Util::getTimeForLog(now, _lastUploadTime);
+            os << indent
+               << "file last modified: " << Util::getTimeForLog(now, _lastUploadedFileModifiedTime);
         }
 
     private:
