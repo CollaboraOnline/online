@@ -940,20 +940,11 @@ namespace Util
         localtime_r(&t, &tm);
 
         char buffer[128] = { 0 };
-        const size_t offset = std::strftime(buffer, 80, "%a %b %d %H:%M", &tm);
-        sprintf(&buffer[offset], ".%3d %d", msFraction, tm.tm_year + 1900);
-        return std::string(buffer);
-    }
-
-    /// Returns the given time_point as string in the local time.
-    /// Format: Thu Jan 27 03:45:27.123 2022
-    std::string getSteadyClockAsString(const std::chrono::steady_clock::time_point &time)
-    {
-        const std::chrono::system_clock::time_point corrected =
-            std::chrono::system_clock::now() +
-            std::chrono::duration_cast<std::chrono::system_clock::duration>(
-                time - std::chrono::steady_clock::now());
-        return getSystemClockAsString(corrected);
+        std::strftime(buffer, 80, "%a %b %d %H:%M", &tm);
+        std::stringstream ss;
+        ss << buffer << '.' << std::setfill('0') << std::setw(3) << msFraction << ' '
+           << tm.tm_year + 1900;
+        return ss.str();
     }
 
     bool isFuzzing()

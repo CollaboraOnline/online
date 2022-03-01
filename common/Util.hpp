@@ -9,6 +9,7 @@
 
 #include <cassert>
 #include <cerrno>
+#include <chrono>
 #include <cinttypes>
 #include <cstddef>
 #include <cstdint>
@@ -1224,13 +1225,62 @@ int main(int argc, char**argv)
     /// Convert time from ISO8061 fraction format
     std::chrono::system_clock::time_point iso8601ToTimestamp(const std::string& iso8601Time, const std::string& logName);
 
+    /// A null-converter between two identical clocks.
+    template <typename Dst, typename Src, typename std::is_same<Src, Dst>::type>
+    Dst convertChronoClock(const Src time)
+    {
+        return std::chrono::time_point_cast<Dst>(time);
+    }
+
+    /// Converter between two different clocks,
+    /// such as system_clock and stead_clock.
+    /// Note: by nature this has limited accuracy.
+    template <typename Dst, typename Src, typename Enable = void>
+    Dst convertChronoClock(const Src time)
+    {
+        const auto before = Src::clock::now();
+        const auto now = Dst::clock::now();
+        const auto after = Src::clock::now();
+        const auto diff = after - before;
+        const auto correction = before + (diff / 2);
+        return std::chrono::time_point_cast<typename Dst::duration>(now + (time - correction));
+    }
+
     /// Converts from system_clock to string for debugging / tracing.
     /// Format (local time): Thu Jan 27 03:45:27.123 2022
     std::string getSystemClockAsString(const std::chrono::system_clock::time_point &time);
 
     /// conversion from steady_clock for debugging / tracing
     /// Format (local time): Thu Jan 27 03:45:27.123 2022
-    std::string getSteadyClockAsString(const std::chrono::steady_clock::time_point &time);
+    inline std::string getSteadyClockAsString(const std::chrono::steady_clock::time_point& time)
+    {
+        return getSystemClockAsString(
+            convertChronoClock<std::chrono::system_clock::time_point>(time));
+    }
+
+    /// See getSystemClockAsString.
+    inline std::string getClockAsString(const std::chrono::system_clock::time_point& time)
+    {
+        return getSystemClockAsString(time);
+    }
+
+    /// See getSteadyClockAsString.
+    inline std::string getClockAsString(const std::chrono::steady_clock::time_point& time)
+    {
+        return getSteadyClockAsString(time);
+    }
+
+    template <typename U, typename T> std::string getTimeForLog(const U& now, const T& time)
+    {
+        const auto elapsed = now - convertChronoClock<U>(time);
+        const auto elapsedS = std::chrono::duration_cast<std::chrono::seconds>(elapsed);
+        const auto elapsedMS =
+            std::chrono::duration_cast<std::chrono::milliseconds>(elapsed) - elapsedS;
+
+        std::stringstream ss;
+        ss << getClockAsString(time) << " (" << elapsedS << ' ' << elapsedMS << " ago)";
+        return ss.str();
+    }
 
     /**
      * Avoid using the configuration layer and rely on defaults which is only useful for special
