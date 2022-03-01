@@ -113,6 +113,13 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	width: 100%;
 }
 
+/* Scrollwindow - used eg. in accessibility check in writer */
+.jsdialog.ui-scrollwindow {
+	overflow: scroll;
+	max-height: 500px;
+	max-width: fit-content;
+}
+
 /* Tabs */
 .jsdialog-tabs {
 	display: inline-flex;
