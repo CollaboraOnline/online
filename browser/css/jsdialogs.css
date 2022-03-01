@@ -117,7 +117,12 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .jsdialog.ui-scrollwindow {
 	overflow: scroll;
 	max-height: 500px;
-	max-width: fit-content;
+	max-width: 700px;
+}
+
+/* AccessibilityCheckDialog hack to prevent huge height in Firefox */
+#AccessibilityCheckDialog .cell {
+	vertical-align: unset !important;
 }
 
 /* Tabs */
