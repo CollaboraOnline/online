@@ -1371,6 +1371,10 @@ L.Map = L.Evented.extend({
 				// window.app.console.debug('sending useractive');
 				app.socket.sendMessage('useractive');
 				this._active = true;
+				var docLayer = this._docLayer;
+				if (docLayer.isCalc() && docLayer.options.sheetGeometryDataEnabled) {
+					docLayer.requestSheetGeometryData();
+				}
 				app.socket.sendMessage('commandvalues command=.uno:ViewAnnotations');
 
 				if (isAnyVexDialogActive()) {
