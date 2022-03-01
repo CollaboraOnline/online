@@ -414,19 +414,21 @@
 }
 
 #stylesview .ui-iconview-entry.selected {
-	border: 1px solid var(--color-border-dark);
+	border: 1px solid var(--color-border-darker);
 	border-collapse: separate; /*To use box-shadow in Internet Explorer 9 or later*/
+	background-color: transparent;
 }
 
 #stylesview .ui-iconview-entry:not(.selected) {
 	border: 1px solid transparent;
 }
 
-#stylesview .ui-iconview-entry:hover {
-	border: 1px solid var(--color-border-darker);
-	-webkit-box-shadow: 0 0 5px var(--color-background-darker);
-	box-shadow: 0 0 5px var(--color-background-darker);
+#stylesview .ui-iconview-entry:not(.selected):hover {
+	border: 1px solid var(--color-border-dark);
+	-webkit-box-shadow: 0 0 2px 0 var(--color-background-darker);
+	box-shadow: 0 0 2px 0 var(--color-background-darker);
 	cursor: pointer;
+	background-color: transparent;
 }
 
 #stylesview .ui-iconview-icon {
