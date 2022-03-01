@@ -545,7 +545,7 @@ inline bool isDocumentLoaded(const std::shared_ptr<http::WebSocketSession>& ws,
                              const std::string& testname, bool isView = true)
 {
     const std::string prefix = isView ? "status:" : "statusindicatorfinish:";
-    constexpr std::chrono::milliseconds timeout = std::chrono::seconds(20); // Allow 20 secs to load
+    constexpr std::chrono::milliseconds timeout = std::chrono::seconds(40); // Allow 40 secs to load
     const std::string message = getResponseString(ws, prefix, testname, timeout.count());
 
     const bool success = LOOLProtocol::matchPrefix(prefix, message);
