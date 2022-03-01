@@ -228,7 +228,7 @@ L.Control.JSDialog = L.Control.extend({
 		if (clickToCloseId && clickToCloseId.indexOf('.uno:') === 0)
 			clickToCloseId = clickToCloseId.substr('.uno:'.length);
 
-		var setupPosition = function() {
+		var setupPosition = function(force) {
 			if (isModalPopup && data.popupParent) {
 				// in case of toolbox we want to create popup positioned by toolitem not toolbox
 				var parent = L.DomUtil.get(data.popupParent);
@@ -257,7 +257,7 @@ L.Control.JSDialog = L.Control.extend({
 			} else if (isSnackbar) {
 				posX = window.innerWidth/2 - container.offsetWidth/2;
 				posY = window.innerHeight - container.offsetHeight - 40;
-			} else if (posX === 0 && posY === 0) {
+			} else if (force || (posX === 0 && posY === 0)) {
 				posX = window.innerWidth/2 - container.offsetWidth/2;
 				posY = window.innerHeight/2 - container.offsetHeight/2;
 			}
@@ -265,6 +265,22 @@ L.Control.JSDialog = L.Control.extend({
 
 		setupPosition();
 		this.updatePosition(container, posX, posY);
+
+		// after some updates, eg. drawing areas window can be bigger than initially
+		// update possition according to that with small delay
+
+		var that = this;
+		var initialPositionSetup = function (force) {
+			setupPosition(force);
+			that.updatePosition(container, posX, posY);
+			container.style.visibility = '';
+			if (toRemove)
+				L.DomUtil.remove(toRemove);
+			var focusWidget = focusWidgetId ?
+				container.querySelector('[id=\'' + focusWidgetId + '\']') : null;
+			if (focusWidget)
+				focusWidget.focus();
+		};
 
 		this.dialogs[data.id] = {
 			container: container,
@@ -274,24 +290,12 @@ L.Control.JSDialog = L.Control.extend({
 			startY: posY,
 			clickToClose: clickToCloseId ? L.DomUtil.get(clickToCloseId) : null,
 			overlay: overlay,
-			isPopup: isModalPopup
+			isPopup: isModalPopup,
+			invalidated: false,
+			setupPosFunc: initialPositionSetup
 		};
 
-		// after some updates, eg. drawing areas window can be bigger than initially
-		// update possition according to that with small delay
-
-		var that = this;
-		setTimeout(function () {
-			setupPosition();
-			that.updatePosition(container, posX, posY);
-			container.style.visibility = '';
-			if (toRemove)
-				L.DomUtil.remove(toRemove);
-			var focusWidget = focusWidgetId ?
-				container.querySelector('[id=\'' + focusWidgetId + '\']') : null;
-			if (focusWidget)
-				focusWidget.focus();
-		}, 200);
+		setTimeout(initialPositionSetup, 200);
 
 		if (isSnackbar) {
 			setTimeout(function () { that.closePopover(data.id, false); }, this.options.snackbarTimeout);
@@ -340,6 +344,12 @@ L.Control.JSDialog = L.Control.extend({
 
 		if (focusedId)
 			dialog.querySelector('[id=\'' + focusedId + '\']').focus();
+
+		var dialogInfo = this.dialogs[data.id];
+		if (!dialogInfo.invalidated && dialogInfo.setupPosFunc) {
+			setTimeout(dialogInfo.setupPosFunc(true), 100);
+			dialogInfo.invalidated = true;
+		}
 	},
 
 	onJSAction: function (e) {
