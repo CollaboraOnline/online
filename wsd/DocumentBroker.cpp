@@ -2245,7 +2245,7 @@ void DocumentBroker::disconnectSessionInternal(const std::string& id)
             if (_docState.isUnloadRequested())
             {
                 // We must be the last session, flag to destroy if unload is requested.
-                assert(_sessions.size() == 1 && "Unload-requested with multiple sessions.");
+                assert(countActiveSessions() <= 1 && "Unload-requested with multiple sessions.");
                 _docState.markToDestroy();
                 LOG_TRC("Unload requested while disconnecting session ["
                         << id << "], having " << _sessions.size()
