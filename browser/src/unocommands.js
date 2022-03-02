@@ -244,6 +244,8 @@ var unoCommandsArray = {
 	'InsertFieldCtrl':{text:{context:_('Insert Field'),menu:_('Fiel~d'),},},
 	'InsertFootnote':{text:{context:_('Insert Footnote'),menu:_('~Footnote'),},},
 	'InsertGraphic':{global:{context:_('Insert Image...'),menu:_('~Image...'),},},
+	'GraphicDialog':{text:{context:_('Image Properties...'),menu:_('~Properties...'),},},
+	'CompressGraphic':{global:{context:_('Compress Image...'),menu:_('Co~mpress...'),},},
 	'InsertHardHyphen':{global:{menu:_('Insert non-br~eaking hyphen'),},},
 	'InsertHeaderFooterMenu':{text:{menu:_('He~ader and Footer'),},},
 	'InsertIndexesEntry':{text:{context:_('Insert Index Entry'),menu:_('~Index Entry...'),},},

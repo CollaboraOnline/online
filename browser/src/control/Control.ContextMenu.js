@@ -39,7 +39,8 @@ L.Control.ContextMenu = L.Control.extend({
 					  'FormatStockGain', 'InsertDataLabel' , 'DeleteDataLabel', 'ResetDataPoint',
 					  'InsertTrendline', 'InsertMeanValue', 'InsertXErrorBars' , 'InsertYErrorBars', 'ResetAllDataPoints' , 'DeleteAxis',
 					  'InsertAxisTitle', 'InsertMinorGrid', 'InsertMajorGrid' , 'InsertAxis', 'DeleteMajorGrid' , 'DeleteMinorGrid',
-					  'SpellCheckIgnoreAll', 'LanguageStatus', 'SpellCheckApplySuggestion',
+					  'SpellCheckIgnoreAll', 'LanguageStatus', 'SpellCheckApplySuggestion','PageDialog',
+					  'CompressGraphic', 'GraphicDialog', 'InsertCaptionDialog',
 					  'NextTrackedChange', 'PreviousTrackedChange', 'RejectTrackedChange', 'AcceptTrackedChange'],
 
 			text: ['TableInsertMenu',
@@ -49,7 +50,7 @@ L.Control.ContextMenu = L.Control.extend({
 				   'MergeCells', 'SetOptimalColumnWidth', 'SetOptimalRowHeight',
 				   'UpdateCurIndex','RemoveTableOf',
 				   'ReplyComment', 'DeleteComment', 'DeleteAuthor', 'DeleteAllNotes',
-				   'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph',
+				   'SpellingAndGrammarDialog', 'FontDialog', 'FontDialogForParagraph', 'TableDialog',
 				   'SpellCheckIgnore'],
 
 			spreadsheet: ['MergeCells', 'SplitCell', 'RecalcPivotTable', 'DataDataPilotRun', 'DeletePivotTable',
