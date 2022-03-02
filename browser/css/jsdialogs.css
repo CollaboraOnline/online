@@ -51,6 +51,14 @@
 	text-align: left;
 }
 
+#accessibilityCheckBox .jsdialog.ui-text {
+	margin: 0;
+	padding-inline-end: 112px;
+	color: var(--color-main-text);
+	font-size: var(--default-font-size);
+	text-transform: none;
+}
+
 .lokdialog_container.ui-dialog.ui-widget-content, .autofilter-container {
 	border: 1px solid var(--color-border-dark);
 	-webkit-box-shadow: 0 0 3px var(--color-border);
