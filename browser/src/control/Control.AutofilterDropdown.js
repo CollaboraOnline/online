@@ -95,13 +95,8 @@ L.Control.AutofilterDropdown = L.Control.extend({
 		var offsetX = isSpreadsheetRTL ? 0 : app.sectionContainer.getSectionWithName(L.CSections.RowHeader.name).size[0];
 		var offsetY = app.sectionContainer.getSectionWithName(L.CSections.ColumnHeader.name).size[1];
 
-		if (parseInt(data.posx) === 0 && parseInt(data.posy) === 0)
-			var corePoint = new L.Point(this.position.x, this.position.y);
-		else
-			corePoint = new L.Point(parseInt(data.posx) + offsetX, parseInt(data.posy) + offsetY);
-
-		var left = corePoint.x * scale;
-		var top = corePoint.y * scale;
+		var left = parseInt(data.posx) * scale;
+		var top = parseInt(data.posy) * scale;
 
 		if (left < 0)
 			left = -1 * left;
@@ -122,6 +117,9 @@ L.Control.AutofilterDropdown = L.Control.extend({
 
 		if (isSpreadsheetRTL)
 			left = this._map._size.x - left;
+
+		left = left + offsetX;
+		top = top + offsetY;
 
 		var mainContainer = null;
 		var builder = null;
