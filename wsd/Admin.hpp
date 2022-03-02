@@ -67,6 +67,7 @@ public:
     }
 
     void start();
+    void stop();
 
     /// Custom poll thread function
     void pollingThread() override;
