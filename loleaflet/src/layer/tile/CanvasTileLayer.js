@@ -755,7 +755,7 @@ L.CanvasTileLayer = L.TileLayer.extend({
 	},
 
 	_getRealMapSize: function() {
-		this._map._sizeChanged = true; // force using real size
+		this._map._sizeChanged = true; // Force using real size.
 		return this._map.getPixelBounds().getSize();
 	},
 
