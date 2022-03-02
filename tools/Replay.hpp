@@ -112,6 +112,7 @@ class StressSocketHandler : public WebSocketHandler
     std::chrono::steady_clock::time_point _start;
     std::chrono::steady_clock::time_point _nextPing;
     bool _connecting;
+    std::string _logPre;
     std::string _uri;
     std::string _trace;
 
@@ -129,6 +130,8 @@ public:
         _trace(trace),
         _stats(stats)
     {
+        static std::atomic<int> number;
+        _logPre = "[" + std::to_string(++number) + "] ";
         std::cerr << "Attempt connect to " << uri << " for trace " << _trace << "\n";
         getNextRecord();
         _start = std::chrono::steady_clock::now();
@@ -148,7 +151,7 @@ public:
     {
         if (_connecting)
         {
-            std::cerr << "Waiting for outbound connection to " << _uri <<
+            std::cerr << _logPre << "Waiting for outbound connection to " << _uri <<
                 " to complete for trace " << _trace << "\n";
             return POLLOUT;
         }
@@ -204,14 +207,15 @@ public:
     void performWrites(std::size_t capacity) override
     {
         if (_connecting)
-            std::cerr << "Outbound websocket - connected\n";
+            std::cerr << _logPre << "Outbound websocket - connected\n";
         _connecting = false;
         return WebSocketHandler::performWrites(capacity);
     }
 
     void onDisconnect() override
     {
-        std::cerr << "Websocket " << _uri << " dis-connected, re-trying in 20 seconds\n";
+        std::cerr << _logPre << "Websocket " << _uri <<
+            " dis-connected, re-trying in 20 seconds\n";
         WebSocketHandler::onDisconnect();
     }
 
@@ -224,13 +228,13 @@ public:
         std::string msg = rewriteMessage(_next.getPayload());
         if (!msg.empty())
         {
-            std::cerr << "Send: '" << msg << "'\n";
+            std::cerr << _logPre << "Send: '" << msg << "'\n";
             sendMessage(msg);
         }
 
         if (!getNextRecord())
         {
-            std::cerr << "Shutdown\n";
+            std::cerr << _logPre << "Shutdown\n";
             shutdown();
         }
     }
@@ -253,7 +257,7 @@ public:
             out = "load url=" + _uri; // already encoded
             for (size_t i = 2; i < tokens.size(); ++i)
                 out += " " + tokens[i];
-            std::cerr << "msg " << out << "\n";
+            std::cerr << _logPre << "msg " << out << "\n";
         }
 
         // FIXME: translate mouse events relative to view-port etc.
@@ -269,7 +273,7 @@ public:
 
         const std::string firstLine = COOLProtocol::getFirstLine(data.data(), data.size());
         StringVector tokens = Util::tokenize(firstLine);
-        std::cerr << "Got a message ! " << firstLine << "\n";
+        std::cerr << _logPre << "Got msg: " << firstLine << "\n";
 
         if (tokens.equals(0, "tile:")) {
             // accumulate latencies
@@ -281,10 +285,13 @@ public:
 
             // eg. tileprocessed tile=0:9216:0:3072:3072:0
             TileDesc desc = TileDesc::parse(tokens);
+
             sendMessage("tileprocessed tile=" + desc.generateID());
-            std::cerr << "Sent tileprocessed tile= " + desc.generateID() << "\n";
+            std::cerr << _logPre << "Sent tileprocessed tile= " + desc.generateID() << "\n";
         } if (tokens.equals(0, "error:")) {
-            std::cerr << "Error: " << firstLine << "\n";
+            std::cerr << _logPre << "Error while processing " << _uri
+                      << " and trace " << _trace << ":\n"
+                      << firstLine << "\n";
             exit(1);
         }
 
