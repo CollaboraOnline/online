@@ -959,4 +959,9 @@ void Admin::start()
     startThread();
 }
 
+void Admin::stop()
+{
+    joinThread();
+}
+
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

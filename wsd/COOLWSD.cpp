@@ -4274,6 +4274,9 @@ public:
         _acceptPoll.joinThread();
         if (WebServerPoll)
             WebServerPoll->joinThread();
+#if !MOBILEAPP
+        Admin::instance().stop();
+#endif
     }
 
     void dumpState(std::ostream& os)
