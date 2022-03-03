@@ -107,6 +107,7 @@ struct Stats {
 // Avoid a MessageHandler for now.
 class StressSocketHandler : public WebSocketHandler
 {
+    SocketPoll &_poll;
     TraceFileReader _reader;
     TraceFileRecord _next;
     std::chrono::steady_clock::time_point _start;
@@ -121,9 +122,12 @@ class StressSocketHandler : public WebSocketHandler
 
 public:
 
-    StressSocketHandler(const std::shared_ptr<Stats> stats,
-                        const std::string &uri, const std::string &trace) :
+    StressSocketHandler(SocketPoll &poll, /* bad style */
+                        const std::shared_ptr<Stats> stats,
+                        const std::string &uri, const std::string &trace,
+                        const int delayMs = 0) :
         WebSocketHandler(true, true),
+        _poll(poll),
         _reader(trace),
         _connecting(true),
         _uri(uri),
@@ -134,7 +138,7 @@ public:
         _logPre = "[" + std::to_string(++number) + "] ";
         std::cerr << "Attempt connect to " << uri << " for trace " << _trace << "\n";
         getNextRecord();
-        _start = std::chrono::steady_clock::now();
+        _start = std::chrono::steady_clock::now() + std::chrono::milliseconds(delayMs);
         _nextPing = _start + std::chrono::milliseconds((long)(std::rand() * 1000.0) / RAND_MAX);
         _lastTile = _start;
         sendMessage("load url=" + uri);
@@ -289,10 +293,36 @@ public:
             sendMessage("tileprocessed tile=" + desc.generateID());
             std::cerr << _logPre << "Sent tileprocessed tile= " + desc.generateID() << "\n";
         } if (tokens.equals(0, "error:")) {
-            std::cerr << _logPre << "Error while processing " << _uri
-                      << " and trace " << _trace << ":\n"
-                      << firstLine << "\n";
-            exit(1);
+
+            bool reconnect = false;
+            if (firstLine == "error: cmd=load kind=docunloading")
+            {
+                std::cerr << ": wait and try again later ...!\n";
+                reconnect = true;
+            }
+            else if (firstLine == "error: cmd=storage kind=documentconflict")
+            {
+                std::cerr << "Document conflict - need to resolve it first ...\n";
+                sendMessage("closedocument");
+                reconnect = true;
+            }
+            else
+            {
+                std::cerr << _logPre << "Error while processing " << _uri
+                          << " and trace " << _trace << ":\n"
+                          << "'" << firstLine << "'\n";
+            }
+
+            if (reconnect)
+            {
+                shutdown(true, "bye");
+                auto handler = std::make_shared<StressSocketHandler>(
+                    _poll, _stats, _uri, _trace, 1000 /* delay 1 second */);
+                _poll.insertNewWebSocketSync(Poco::URI(_uri), handler);
+                return;
+            }
+            else
+                exit(1);
         }
 
         // FIXME: implement code to send new view-ports based
@@ -316,7 +346,7 @@ public:
         Poco::URI::encode(file, ":/?", wrap); // double encode.
         std::string uri = server + "/cool/" + wrap + "/ws";
 
-        auto handler = std::make_shared<StressSocketHandler>(optStats, file, tracePath);
+        auto handler = std::make_shared<StressSocketHandler>(poll, optStats, file, tracePath);
         poll.insertNewWebSocketSync(Poco::URI(uri), handler);
     }
 
