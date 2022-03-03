@@ -46,9 +46,14 @@
 	margin: 0px;
 	color: var(--color-main-text);
 	font-size: var(--default-font-size);
-	font-weight: bold;
-	text-transform: uppercase;
+	line-height: var(--default-height);
 	text-align: left;
+}
+#glowframe > div.ui-frame.jsdialog.sidebar > span,
+#softedgeframe > div.ui-frame.jsdialog.sidebar > span {
+	color: var(--color-main-text);
+	font-size: var(--header-font-size);
+	line-height: var(--header-height);
 }
 
 #accessibilityCheckBox .jsdialog.ui-text {
