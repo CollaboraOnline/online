@@ -417,7 +417,8 @@ clean-local:
 	if test "z@JAILS_PATH@" != "z"; then rm -rf "@JAILS_PATH@"; fi
 	if test "z@SYSTEMPLATE_PATH@" != "z"; then rm -rf "@SYSTEMPLATE_PATH@"; fi
 	rm -rf "${top_srcdir}/loleaflet"
-	rm -rf loolconfig loolconvert loolforkit loolmap loolmount loolwsd loolwsd_fuzzer loolstress loolsocketdump
+	rm -rf loolconfig loolconvert loolforkit loolmap loolmount # kill old binaries
+	rm -rf loolwsd loolwsd_fuzzer loolstress loolsocketdump
 
 if ENABLE_DEBUG
 # can write to /tmp/coolwsd.log
@@ -597,3 +598,18 @@ install-exec-hook:
 	$(LN_S) coolconfig loolconfig && \
 	$(LN_S) coolwsd loolwsd && \
 	$(LN_S) coolwsd-systemplate-setup loolwsd-systemplate-setup
+
+stress_file=$(abs_top_srcdir)/test/data/hello-world.odt
+trace_dir=$(abs_top_srcdir)/test/traces
+stress:
+	@cp $(abs_top_srcdir)/test/data/hello.odt $(stress_file)
+	@echo "Watch at: https://localhost:9980/browser/12345/cool.html?file_path=$(stress_file)"
+	./coolstress wss://localhost:9980 \
+		$(stress_file) $(trace_dir)/writer-quick.txt \
+		$(stress_file) $(trace_dir)/writer-add-bullet.txt \
+		$(stress_file) $(trace_dir)/writer-mash-text-table.txt \
+		$(stress_file) $(trace_dir)/writer-document-edit.txt \
+		$(stress_file) $(trace_dir)/writer-mash-text-table.txt \
+		$(stress_file) $(trace_dir)/writer-hello-shape.txt \
+		$(stress_file) $(trace_dir)/writer-quick.txt
+
