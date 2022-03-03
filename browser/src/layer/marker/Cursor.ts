@@ -97,15 +97,19 @@ class Cursor {
 		return this.domAttached;
 	}
 
+	addCursorClass(visible: boolean) {
+		if (visible)
+			$('.leaflet-cursor').removeClass('blinking-cursor-hidden');
+		else
+			$('.leaflet-cursor').addClass('blinking-cursor-hidden');
+	}
+
 	isVisible(): boolean {
 		return this.visible;
 	}
 
 	onFocusBlur(ev: FocusEvent) {
-		if (ev.type === 'blur')
-			$('.leaflet-cursor').addClass('blinking-cursor-hidden');
-		else
-			$('.leaflet-cursor').removeClass('blinking-cursor-hidden');
+		this.addCursorClass(ev.type !== 'blur');
 	}
 
 	// position and size should be in core pixels.
@@ -161,6 +165,7 @@ class Cursor {
 			if (!paneBounds.contains(cursorBounds)) {
 				this.container.style.visibility = 'hidden';
 				this.visible = false;
+				this.addCursorClass(this.visible);
 				this.showCursorHeader();
 				return;
 			}
@@ -168,6 +173,7 @@ class Cursor {
 
 		this.container.style.visibility = 'visible';
 		this.visible = true;
+		this.addCursorClass(this.visible);
 
 		var tileSectionPos = this.map._docLayer.getTileSectionPos();
 		// Compute tile-section offset in css pixels.
