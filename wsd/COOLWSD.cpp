@@ -1107,7 +1107,7 @@ public:
             }
             catch (...)
             {
-                LOG_ERR("Failed to fetch remote config JSON");
+                LOG_ERR("Failed to fetch remote config JSON, Please check JSON format");
             }
             poll(std::chrono::seconds(60));
         }
@@ -1161,42 +1161,48 @@ public:
             LOG_INF("WOPI host feature is disabled in coolwsd.xml");
             return;
         }
-
-        Poco::JSON::Array::Ptr wopiHostPatterns =
-            remoteJson->getObject("storage")->getObject("wopi")->getArray("hosts");
-
-        if (wopiHostPatterns->size() == 0)
+        try
         {
-            LOG_WRN("Not overwriting any wopi host pattern because JSON contains empty array");
-            return;
-        }
+            Poco::JSON::Array::Ptr wopiHostPatterns =
+                remoteJson->getObject("storage")->getObject("wopi")->getArray("hosts");
 
-        std::size_t i;
-        for (i = 0; i < wopiHostPatterns->size(); i++)
-        {
-            std::string host;
-
-            Poco::JSON::Object::Ptr subObject = wopiHostPatterns->getObject(i);
-            JsonUtil::findJSONValue(subObject, "host", host);
-            Poco::Dynamic::Var allow = subObject->get("allow");
-
-            const std::string path = "storage.wopi.host[" + std::to_string(i) + ']';
-            newAppConfig.insert(std::make_pair(path, host));
-            newAppConfig.insert(std::make_pair(path + "[@allow]", booleanToString(allow)));
-        }
-
-        //if number of wopi host patterns defined in coolwsd.xml are greater than number of host
-        //fetched from json, overwrite the remaining host from config file to empty strings and
-        //set allow to false
-        for (;; ++i)
-        {
-            const std::string path = "storage.wopi.host[" + std::to_string(i) + "]";
-            if (!conf.has(path))
+            if (wopiHostPatterns->size() == 0)
             {
-                break;
+                LOG_WRN("Not overwriting any wopi host pattern because JSON contains empty array");
+                return;
             }
-            newAppConfig.insert(std::make_pair(path, ""));
-            newAppConfig.insert(std::make_pair(path + "[@allow]", "false"));
+
+            std::size_t i;
+            for (i = 0; i < wopiHostPatterns->size(); i++)
+            {
+                std::string host;
+
+                Poco::JSON::Object::Ptr subObject = wopiHostPatterns->getObject(i);
+                JsonUtil::findJSONValue(subObject, "host", host);
+                Poco::Dynamic::Var allow = subObject->get("allow");
+
+                const std::string path = "storage.wopi.host[" + std::to_string(i) + ']';
+                newAppConfig.insert(std::make_pair(path, host));
+                newAppConfig.insert(std::make_pair(path + "[@allow]", booleanToString(allow)));
+            }
+
+            //if number of wopi host patterns defined in coolwsd.xml are greater than number of host
+            //fetched from json, overwrite the remaining host from config file to empty strings and
+            //set allow to false
+            for (;; ++i)
+            {
+                const std::string path = "storage.wopi.host[" + std::to_string(i) + "]";
+                if (!conf.has(path))
+                {
+                    break;
+                }
+                newAppConfig.insert(std::make_pair(path, ""));
+                newAppConfig.insert(std::make_pair(path + "[@allow]", "false"));
+            }
+        }
+        catch (std::exception& exc)
+        {
+            LOG_ERR("Failed to fetch wopi host patterns, please check JSON format: " << exc.what());
         }
     }
 
@@ -1209,46 +1215,55 @@ public:
             return;
         }
 
-        Poco::JSON::Array::Ptr lockedHostPatterns =
-            remoteJson->getObject("feature_locking")->getObject("locked_hosts")->getArray("hosts");
-
-        if (lockedHostPatterns->size() == 0)
+        try
         {
-            LOG_WRN(
-                "Not overwriting any locked wopi host pattern because JSON contains empty array");
-            return;
-        }
+            Poco::JSON::Array::Ptr lockedHostPatterns =
+                remoteJson->getObject("feature_locking")->getObject("locked_hosts")->getArray("hosts");
 
-        std::size_t i;
-        for (i = 0; i < lockedHostPatterns->size(); i++)
-        {
-            std::string host;
-
-            Poco::JSON::Object::Ptr subObject = lockedHostPatterns->getObject(i);
-            JsonUtil::findJSONValue(subObject, "host", host);
-            Poco::Dynamic::Var readOnly = subObject->get("read_only");
-            Poco::Dynamic::Var disabledCommands = subObject->get("disabled_commands");
-
-            const std::string path = "feature_lock.locked_hosts.host[" + std::to_string(i) + "]";
-            newAppConfig.insert(std::make_pair(path, host));
-            newAppConfig.insert(std::make_pair(path + "[@read_only]", booleanToString(readOnly)));
-            newAppConfig.insert(
-                std::make_pair(path + "[@disabled_commands]", booleanToString(disabledCommands)));
-        }
-
-        //if number of locked wopi host patterns defined in coolwsd.xml are greater than number of host
-        //fetched from json, overwrite the remaining host from config file to empty strings and
-        //set read_only and disabled_commands to false
-        for (;; ++i)
-        {
-            const std::string path = "feature_lock.locked_hosts.host[" + std::to_string(i) + "]";
-            if (!conf.has(path))
+            if (lockedHostPatterns->size() == 0)
             {
-                break;
+                LOG_WRN("Not overwriting any locked wopi host pattern because JSON contains empty "
+                        "array");
+                return;
             }
-            newAppConfig.insert(std::make_pair(path, ""));
-            newAppConfig.insert(std::make_pair(path + "[@read_only]", "false"));
-            newAppConfig.insert(std::make_pair(path + "[@disabled_commands]", "false"));
+
+            std::size_t i;
+            for (i = 0; i < lockedHostPatterns->size(); i++)
+            {
+                std::string host;
+
+                Poco::JSON::Object::Ptr subObject = lockedHostPatterns->getObject(i);
+                JsonUtil::findJSONValue(subObject, "host", host);
+                Poco::Dynamic::Var readOnly = subObject->get("read_only");
+                Poco::Dynamic::Var disabledCommands = subObject->get("disabled_commands");
+
+                const std::string path =
+                    "feature_lock.locked_hosts.host[" + std::to_string(i) + "]";
+                newAppConfig.insert(std::make_pair(path, host));
+                newAppConfig.insert(std::make_pair(path + "[@read_only]", booleanToString(readOnly)));
+                newAppConfig.insert(std::make_pair(path + "[@disabled_commands]",
+                                                   booleanToString(disabledCommands)));
+            }
+
+            //if number of locked wopi host patterns defined in coolwsd.xml are greater than number of host
+            //fetched from json, overwrite the remaining host from config file to empty strings and
+            //set read_only and disabled_commands to false
+            for (;; ++i)
+            {
+                const std::string path =
+                    "feature_lock.locked_hosts.host[" + std::to_string(i) + "]";
+                if (!conf.has(path))
+                {
+                    break;
+                }
+                newAppConfig.insert(std::make_pair(path, ""));
+                newAppConfig.insert(std::make_pair(path + "[@read_only]", "false"));
+                newAppConfig.insert(std::make_pair(path + "[@disabled_commands]", "false"));
+            }
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Failed to fetch locked_hosts, please check JSON format: " << exc.what());
         }
     }
 
