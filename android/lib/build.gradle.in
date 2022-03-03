@@ -295,12 +295,26 @@ preBuild.dependsOn 'createRCfiles',
         'createFullConfig',
         'copyBrandTheme'
 
-task generateCoolDebugAssets(type: Exec) {
-	commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", "DIST_FOLDER=${project.getProjectDir()}/src/debug/assets/dist", 'BUNDLE=DEBUG'
+task generateCoolDebugAssets {
+    doLast {
+        exec {
+            commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", 'clean'
+        }
+        exec {
+            commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", "DIST_FOLDER=${project.getProjectDir()}/src/debug/assets/dist", 'BUNDLE=DEBUG'
+        }
+    }
 }
 
-task generateCoolReleaseAssets(type: Exec) {
-	commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", "DIST_FOLDER=${project.getProjectDir()}/src/release/assets/dist", 'BUNDLE=RELEASE'
+task generateCoolReleaseAssets {
+    doLast {
+        exec {
+            commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", 'clean'
+        }
+        exec {
+            commandLine 'make', '-C', "${rootProject.getBuildDir()}/../../browser", "DIST_FOLDER=${project.getProjectDir()}/src/release/assets/dist", 'BUNDLE=RELEASE'
+        }
+    }
 }
 
 afterEvaluate {
