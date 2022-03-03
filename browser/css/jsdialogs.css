@@ -54,6 +54,7 @@
 	color: var(--color-main-text);
 	font-size: var(--header-font-size);
 	line-height: var(--header-height);
+	margin: 4px;
 }
 
 #accessibilityCheckBox .jsdialog.ui-text {
@@ -242,7 +243,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-expander-content > .root-container.jsdialog {
-	margin: 4px 0px;
+	margin: 4px;
 }
 /* TreeView */
 

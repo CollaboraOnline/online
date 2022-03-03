@@ -249,8 +249,8 @@ div#box5.row.jsdialog.sidebar > .sidebar.jsdialog.cell {
 	color: var(--color-main-text);
 	font-size: var(--header-font-size);
 	line-height: var(--header-height);
-	padding-left: 14px;
-	padding-right: 14px; /* for RTL mode */
+	padding-left: 8px;
+	padding-right: 8px; /* for RTL mode */
 }
 
 .sidebar.ui-expander-label:before {
