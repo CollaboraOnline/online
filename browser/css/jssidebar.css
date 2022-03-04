@@ -160,10 +160,12 @@
 	text-align: left;
 }
 
-#leftindent {
-	position: relative;
-	right: 16px;
+#ParaPropertyPanelPanelExpander #grid4 > tr:last-child {
+	display: flex;
+	justify-content: space-between;
+	width: 275px;
 }
+
 #orientationdegrees {
 	position: relative;
 	right: 21px;
@@ -376,15 +378,6 @@ td.jsdialog .jsdialog.cell.sidebar {
 	background: none !important;
 	width: auto;
 	height: auto;
-}
-
-#spacinglabel {
-	margin-top: -4px;
-}
-
-
-#indentlabel {
-	margin-top: 2px;
 }
 
 #table-fillattrhb {
