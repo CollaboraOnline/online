@@ -468,3 +468,14 @@ button#button2.ui-pushbutton.jsdialog.sidebar {
 	position: relative;
 	right: 18px;
 }
+
+#TableEditPanelPanelExpander #grid1 > tr > td {
+	width: 176px;
+}
+#rowheight, #columnwidth {
+	padding-left: 24px;
+}
+#SetMinimalRowHeight:not(.mobile-wizard), #SetMinimalColumnWidth:not(.mobile-wizard) {
+	position: relative;
+	bottom: 28px;
+}
