@@ -130,7 +130,7 @@
 }
 
 .sidebar.jsdialog.cell > #table-box3 {
-	width: 290px;
+	width: 292px;
 }
 
 .sidebar.jsdialog.cell > #table-box3,
@@ -281,16 +281,6 @@ div#box5.row.jsdialog.sidebar > .sidebar.jsdialog.cell {
 td.jsdialog .jsdialog.cell.sidebar {
 	padding: 2px;
 	width: auto;
-}
-
-#sidebar-dock-wrapper #ParaPropertyPanelPanelExpander #box1 > div:last-of-type,
-.spreadsheet-document + #sidebar-dock-wrapper #ScAlignmentPropertyPanelPanelExpander #box3 > div:last-of-type {
-	display: table-row;
-}
-
-#sidebar-dock-wrapper #ParaPropertyPanelPanelExpander #box1 > div:last-of-type > div,
-.spreadsheet-document + #sidebar-dock-wrapper #ScAlignmentPropertyPanelPanelExpander #box3 > div:last-of-type > div {
-	padding: 2px;
 }
 
 .sidebar.jsdialog.checkbutton {
