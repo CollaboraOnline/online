@@ -919,7 +919,10 @@ L.Handler.PathTransform = L.Handler.extend({
 
 	_createAnchor: function() {
 		var map = this._map;
-		var handle = this.options.handles['anchor']['16'][0];
+		var anchor = this.options.handles['anchor'];
+		if (!anchor['16'])
+			return;
+		var handle = anchor['16'][0];
 		var point = new L.Point(handle.point.x, handle.point.y);
 		point = map._docLayer._convertCalcTileTwips(point);
 		var anchorPos = map._docLayer._twipsToLatLng(point, this._map.getZoom());
