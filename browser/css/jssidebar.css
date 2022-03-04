@@ -219,32 +219,16 @@ div#thousandseparator.checkbutton.jsdialog.sidebar {
 	max-width: 290px;
 }
 
-#NumberFormatPropertyPanel {
-	width: 296px;
-}
-div#decimalplaces,
-div#numberformatcombobox.jsdialog.sidebar.ui-listbox-container,
-div#leadingzeroes.jsdialog.sidebar.spinfieldcontainer {
+#NumberFormatPropertyPanel > tr > td > div > div > div > div > div > div {
 	text-align: right;
 }
-#leadingzeroes,
-#leadingzeroeslabel {
+#NumberFormatPropertyPanel #table-box2,
+#NumberFormatPropertyPanel #leadingzeroes {
 	position: relative;
-	left: 4px;
+	left: 9px;
 }
-#decimalplaces {
-	position: relative;
-	left: 6px;
-}
-
-p#decimalplaceslabel.jsdialog.sidebar.ui-text,
-p#denominatorplaceslabel.jsdialog.sidebar.ui-text {
-	position: absolute;
-}
-
-div#box2.row.jsdialog.sidebar > .sidebar.jsdialog.row > .sidebar.jsdialog.cell,
-div#box5.row.jsdialog.sidebar > .sidebar.jsdialog.cell {
-	padding: 0;
+#NumberFormatPropertyPanel #leadingzeroeslabel {
+	margin-left: 2px;
 }
 
 .sidebar.ui-expander-label {
@@ -261,7 +245,6 @@ div#box5.row.jsdialog.sidebar > .sidebar.jsdialog.cell {
 	left: unset !important;
 }
 
-#ShadowPropertyPanelPanelExpander #table-box2,
 .sidebar.root-container.jsdialog > .jsdialog.sidebar {
 	width: 100%;
 }
