@@ -142,6 +142,7 @@
 
 #ShadowPropertyPanel div#table-grid3 table#grid3 td:nth-child(1) {
 	justify-content: flex-start;
+	width: 294px;
 }
 
 #FIELD_TRANSPARENCY {
