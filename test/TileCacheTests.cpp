@@ -1920,8 +1920,7 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
 
     // For the first input wsd will send all invalidated tiles
     LOK_ASSERT_MESSAGE("Expected at least two tiles.",
-                       countMessages(socket1, "tile:", testname, std::chrono::milliseconds(500))
-                           > 1);
+                       countMessages(socket1, "tile:", testname, std::chrono::seconds(1)) > 1);
 
     // Let WSD know we got these so it wouldn't stop sending us modified tiles automatically.
     sendTextFrame(socket1, "tileprocessed tile=0:0:0:3840:3840:0", testname);
@@ -1933,8 +1932,7 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     assertResponseString(socket1, "invalidatetiles:", testname);
 
     // For the second input wsd will send one tile, since some of them are identical.
-    const int arrivedTiles
-        = countMessages(socket1, "tile:", testname, std::chrono::milliseconds(500));
+    const int arrivedTiles = countMessages(socket1, "tile:", testname, std::chrono::seconds(1));
     if (arrivedTiles == 1)
         return;
 
@@ -1947,19 +1945,18 @@ void TileCacheTests::testWireIDFilteringOnWSDSide()
     assertResponseString(socket1, "invalidatetiles:", testname);
 
     LOK_ASSERT_MESSAGE("Expected exactly one tile.",
-                       countMessages(socket1, "tile:", testname, std::chrono::milliseconds(500))
-                           == 1);
+                       countMessages(socket1, "tile:", testname, std::chrono::seconds(1)) == 1);
 
     //2. Now request the same tiles by the other client (e.g. scroll to the same view)
 
     sendTextFrame(socket2, "tilecombine nviewid=0 part=0 width=256 height=256 tileposx=0,3840,7680 tileposy=0,0,0 tilewidth=3840 tileheight=3840");
 
     // We expect three tiles sent to the second client
-    LOK_ASSERT_EQUAL(3, countMessages(socket2, "tile:", testname, std::chrono::milliseconds(500)));
+    LOK_ASSERT_EQUAL(3, countMessages(socket2, "tile:", testname, std::chrono::seconds(1)));
 
     // wsd should not send tiles messages for the first client
     const std::vector<char> tile
-        = getResponseMessage(socket1, "tile:", testname, std::chrono::milliseconds(1000));
+        = getResponseMessage(socket1, "tile:", testname, std::chrono::seconds(1));
     LOK_ASSERT_MESSAGE("Not expected tile message arrived!", tile.empty());
 
     socket1->asyncShutdown();
