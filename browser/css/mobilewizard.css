@@ -294,7 +294,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 
 .ui-content.mobile-wizard:not(.unotoolbutton) {
-	background-color: white !important;
+	background-color: var(--color-main-background) !important;
 	border: none !important;
 	padding: 0px 0px 16px;
 }
@@ -344,11 +344,11 @@ p.mobile-wizard.ui-combobox-text.selected {
 	font-size: var(--default-font-size) !important;
 	margin: 0px;
 	padding: 0px;
-	border: solid 1px #fff;
+	border: solid 1px transparent;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	background-color: #fff;
+	background-color: var(--color-main-background);
 }
 
 #mobile-wizard .ui-content .unobutton {
@@ -474,7 +474,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	position: sticky;
 	top: 0;
 	z-index: 2;
-	background-color: white;
+	background-color: var(--color-background-lighter);
 }
 
 #mobile-wizard-header {
@@ -493,14 +493,14 @@ p.mobile-wizard.ui-combobox-text.selected {
 	margin: 0px 1%;
 	border-radius: 10px;
 	border: none;
-	color: #777;
+	color: var(--color-text-lighter);
 }
 
 .ui-tab.selected.mobile-wizard {
 	border: none;
-	color: #0b87e7;
+	color: var(--color-primary);
 	border-radius: 0px;
-	border-bottom: solid 1px #0b87e7;
+	border-bottom: solid 1px var(--color-primary-dark);
 }
 
 [id|='tb_colorselector'] .w2ui-tb-caption > div {
