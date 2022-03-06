@@ -268,7 +268,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 	position: relative;
 	bottom: 0px;
 	z-index: 2001;
-	background-color: white;
+	background-color: var(--color-main-background);
 	box-shadow: 0px -2px 4px 1px #00000030;
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -280,7 +280,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 
 #mobile-wizard-content *{
 	font-family: var(--mobile-font);
-	color: #212121;
+	color: var(--color-main-text);
 }
 
 .mobile-wizard-titlebar {
@@ -322,11 +322,11 @@ p.mobile-wizard.ui-combobox-text.selected {
 	font-size: var(--default-font-size) !important;
 	margin: 0px;
 	padding: 0px;
-	border: solid 1px #fff;
+	border: solid 1px transparent;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	background-color: #fff;
+	background-color: var(--color-main-background);
 	justify-content: space-between;
 }
 
