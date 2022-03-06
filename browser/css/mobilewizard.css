@@ -1013,6 +1013,13 @@ label.disabled {
 	font-size: var(--default-font-size);
 }
 
+#toolbar-search {
+	background-color: var(--color-main-background);
+}
+.w2ui-toolbar table {
+	height: var(--header-height);
+}
+
 #criteria.ui-tab, #inputhelp.ui-tab {
 	width: 30% !important;
 }
