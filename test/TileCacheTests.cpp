@@ -339,7 +339,7 @@ void TileCacheTests::testCancelTiles()
 
     // The tile response can race past the canceltiles,
     // so be forgiving to avoid spurious failures.
-    constexpr size_t repeat = 4;
+    constexpr size_t repeat = 2;
     for (size_t i = 1; i <= repeat; ++i)
     {
         TST_LOG("cancelTiles try #" << i);
@@ -384,7 +384,7 @@ void TileCacheTests::testCancelTilesMultiView()
 
     // The tile response can race past the canceltiles,
     // so be forgiving to avoid spurious failures.
-    constexpr size_t repeat = 4;
+    constexpr size_t repeat = 2;
     for (size_t j = 1; j <= repeat; ++j)
     {
         TST_LOG("cancelTilesMultiView try #" << j);
@@ -466,7 +466,7 @@ void TileCacheTests::testDisconnectMultiView()
     std::string documentPath, documentURL;
     getDocumentPathAndURL("setclientpart.ods", documentPath, documentURL, "disconnectMultiView ");
 
-    constexpr size_t repeat = 3;
+    constexpr size_t repeat = 2;
     for (size_t j = 1; j <= repeat; ++j)
     {
         TST_LOG("disconnectMultiView try #" << j);
