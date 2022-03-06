@@ -190,7 +190,7 @@ p.mobile-wizard.ui-combobox-text {
 	width: 100% !important;
 }
 p.mobile-wizard.ui-combobox-text:not(.selected) {
-	color: #333333 !important;
+	color: var(--color-main-text) !important;
 }
 
 p.mobile-wizard.ui-combobox-text.selected {
