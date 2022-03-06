@@ -1033,6 +1033,7 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
         {
             LOG_ERR("Could not download template from [" + templateUriAnonym + "]. Error: "
                     << ex.what());
+            throw; // Bubble-up the exception.
         }
 
         return std::string();
@@ -1046,6 +1047,10 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
         {
             LOG_INF("WOPI::GetFile using FileUrl: " << fileUrlAnonym);
             return downloadDocument(Poco::URI(_fileUrl), fileUrlAnonym, auth, RedirectionLimit);
+        }
+        catch (const StorageSpaceLowException&)
+        {
+            throw; // Bubble-up the exception.
         }
         catch (const std::exception& ex)
         {
@@ -1071,17 +1076,11 @@ std::string WopiStorage::downloadStorageFileToLocal(const Authorization& auth,
         LOG_INF("WOPI::GetFile using default URI: " << uriAnonym);
         return downloadDocument(uriObject, uriAnonym, auth, RedirectionLimit);
     }
-    catch (const Poco::Exception& ex)
-    {
-        LOG_ERR("Cannot download document from WOPI storage uri [" + uriAnonym + "]. Error: "
-                << ex.displayText()
-                << (ex.nested() ? " (" + ex.nested()->displayText() + ')' : ""));
-        throw;
-    }
     catch (const std::exception& ex)
     {
         LOG_ERR("Cannot download document from WOPI storage uri [" + uriAnonym + "]. Error: "
                 << ex.what());
+        throw; // Bubble-up the exception.
     }
 
     return std::string();
@@ -1097,6 +1096,11 @@ std::string WopiStorage::downloadDocument(const Poco::URI& uriObject, const std:
 
     setRootFilePath(Poco::Path(getLocalRootPath(), getFileInfo().getFilename()).toString());
     setRootFilePathAnonym(COOLWSD::anonymizeUrl(getRootFilePath()));
+
+    if (!FileUtil::checkDiskSpace(getRootFilePath()))
+    {
+        throw StorageSpaceLowException("Low disk space for " + getRootFilePathAnonym());
+    }
 
     LOG_TRC("Downloading from [" << uriAnonym << "] to [" << getRootFilePath()
                                  << "]: " << httpRequest.header().toString());

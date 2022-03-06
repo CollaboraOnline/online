@@ -501,9 +501,9 @@ namespace FileUtil
 
         // we should be able to run just OK with 5GB for production or 1GB for development
 #if ENABLE_DEBUG
-        const int64_t gb(1);
+        constexpr int64_t gb(1);
 #else
-        const int64_t gb(5);
+        constexpr int64_t gb(5);
 #endif
         constexpr int64_t ENOUGH_SPACE = gb*1024*1024*1024;
 
