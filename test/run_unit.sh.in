@@ -59,15 +59,6 @@ while test $# -gt 0; do
   shift
 done
 
-echo
-echo "Running ${tst}"
-echo "	$cmd_line"
-
-# drop .la suffix
-tst=`echo $tst | sed "s/\.la//"`;
-
-export COOL_LOGLEVEL=trace
-
 if test "z$enable_debug" != "ztrue"; then
     echo ""
     echo "It is necessary to configure with --enable-debug for unit tests to pass"
@@ -76,11 +67,13 @@ if test "z$enable_debug" != "ztrue"; then
     exit 1;
 fi
 
+# drop .la suffix
+tst=`echo $tst | sed "s/\.la//"`;
+
 # result logging
-echo "Test output is '$test_output'"
 echo > $test_output
 
-echo "Running $tst | $tst_log ...";
+printf "\nRunning $tst | $tst_log | $test_output $cmd_line\n";
 echo > $tst_log
 if ${trace} \
        ${abs_top_builddir}/coolwsd --o:sys_template_path="$systemplate_path" \
@@ -95,10 +88,10 @@ if ${trace} \
 				   --o:storage.ssl.enable=false \
 				   --unattended \
 				   --unitlib="${abs_top_builddir}/test/.libs/$tst.so" 2> "$tst_log" 1>&2; then
-	echo "Test $tst passed."
+	echo "Test $tst passed. Finished in ${SECONDS}s."
 	echo ":test-result: PASS $tst" >> $test_output
 else
-	echo "Test $tst FAILED."
+	echo "Test $tst FAILED. Finished in ${SECONDS}s."
 	cat $tst_log
 	echo "============================================================="
 	echo "Test failed on unit: $tst re-run with (remove --unattended to run without gdb and get prompted):"
@@ -119,7 +112,5 @@ else
 	echo "============================================================="
 	echo ":test-result: FAIL $tst" >> $test_output
 fi
-
-echo "Finished $tst in ${SECONDS}s";
 
 # vim:set shiftwidth=4 expandtab:
