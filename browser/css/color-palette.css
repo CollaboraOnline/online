@@ -22,9 +22,9 @@
 
 	--color-primary: #1C99E0; /* border-color */
 	--color-primary-text: #fff; /* text color when primary-lighter is background */
-	--color-primary-dark: #0369A3;
-	--color-primary-darker: #023F62;
-	--color-primary-lighter: #63BBEE; /* background-color */
+	--color-primary-dark: #0063b1;
+	--color-primary-darker: #004b86;
+	--color-primary-lighter: #83beec; /* background-color */
 
 	--color-border: #b6b6b6;
 	--color-border-dark: #cecece; /* select */
