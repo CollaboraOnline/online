@@ -7,90 +7,89 @@
 
 #include <config.h>
 
-#include <iostream>
-
-#include <Exceptions.hpp>
-#include <Log.hpp>
-#include <Unit.hpp>
-#include <UnitHTTP.hpp>
-#include <helpers.hpp>
+#include "Unit.hpp"
+#include "WopiTestServer.hpp"
 
 using namespace helpers;
 
-class UnitStorage : public UnitWSD
+class UnitStorage : public WopiTestServer
 {
-    enum class Phase {
-        Load,             // load the document
-        Filter,           // throw filter exception
-        Reload,           // re-load the document
-    } _phase;
-    std::unique_ptr<UnitWebSocket> _ws;
+    STATES_ENUM(Phase, _phase,
+                Load, // load the document
+                Filter, // throw filter exception
+                Reload, // re-load the document
+                Done
+    );
+
 public:
-    UnitStorage() :
-        _phase(Phase::Load)
+    UnitStorage()
+        : WopiTestServer("UnitStorage")
+        , _phase(Phase::Load)
     {
     }
 
-    bool filterCheckDiskSpace(const std::string & /* path */,
-                              bool &newResult) override
+    bool filterCheckDiskSpace(const std::string& /* path */, bool& newResult) override
     {
+        // Fail the disk-space check in Filter phase.
         newResult = _phase != Phase::Filter;
+        LOG_TST("Result: " << (newResult ? "success" : "out-of-disk-space"));
         return true;
     }
 
-    void loadDocument(bool bExpectFailure)
+    bool onDocumentLoaded(const std::string& message) override
     {
-        std::string docPath;
-        std::string docURL;
-        getDocumentPathAndURL("empty.odt", docPath, docURL, "unitStorage ");
-        _ws = std::unique_ptr<UnitWebSocket>(new UnitWebSocket(docURL));
-        assert(_ws.get());
-        int flags = 0, len;;
-        char reply[4096];
-        while ((len = _ws->getCOOLWebSocket()->receiveFrame(reply, sizeof(reply) - 1, flags)) > 0)
+        LOG_TST("Loaded: [" << message << ']');
+
+        LOK_ASSERT_STATE(_phase, Phase::Done);
+        passTest("Loaded successfully");
+
+        return true;
+    }
+
+    bool onDocumentError(const std::string& message) override
+    {
+        // This may trigger multiple times.
+        LOK_ASSERT_EQUAL_MESSAGE("Expect only documentunloading errors",
+                                 std::string("error: cmd=internal kind=diskfull"), message);
+
+        LOK_ASSERT_STATE(_phase, Phase::Filter);
+
+        return true;
+    }
+
+    // When we fail to load, we must destroy the DocBroker.
+    void onDocBrokerDestroy(const std::string&) override
+    {
+        if (_phase == Phase::Filter)
         {
-            reply[len] = '\0';
-            if (bExpectFailure &&
-                !strcmp(reply, "error: cmd=internal kind=diskfull"))
-            {
-                LOG_TRC("Got expected load failure error");
-                _phase = Phase::Reload;
-                break;
-            }
-            else if (!bExpectFailure &&
-                     !strncmp(reply, "status: ", sizeof("status: ") - 1))
-            {
-                LOG_TRC("Load completed as expected");
-                break;
-            }
-            else
-                std::cerr << "reply '" << reply << "'\n";
+            TRANSITION_STATE(_phase, Phase::Reload);
         }
     }
 
     void invokeWSDTest() override
     {
-        LOG_TRC("invokeWSDTest: " << (int)_phase);
+        LOG_TRC("invokeWSDTest: " << toString(_phase));
         switch (_phase)
         {
-        case Phase::Load:
-            _phase = Phase::Filter;
-            loadDocument(true);
-            break;
-        case Phase::Filter:
-            break;
-        case Phase::Reload:
-            loadDocument(false);
-            _ws.reset();
-            exitTest(TestResult::Ok);
-            break;
+            case Phase::Load:
+                TRANSITION_STATE(_phase, Phase::Filter);
+                initWebsocket("/wopi/files/0?access_token=anything");
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            case Phase::Filter:
+                break;
+            case Phase::Reload:
+                LOG_TST("Reloading the document");
+                TRANSITION_STATE(_phase, Phase::Done);
+                initWebsocket("/wopi/files/0?access_token=anything");
+                WSD_CMD("load url=" + getWopiSrc());
+                break;
+            case Phase::Done:
+                break;
         }
     }
 };
 
-UnitBase *unit_create_wsd(void)
-{
-    return new UnitStorage();
-}
+UnitBase* unit_create_wsd(void) { return new UnitStorage(); }
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

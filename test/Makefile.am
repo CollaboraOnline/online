@@ -54,6 +54,7 @@ all_la_unit_tests = \
 	unit_wopi_renamefile.la \
 	unit-wopi-async-upload-modifyclose.la \
 	unit-convert.la \
+	unit-storage.la \
 	unit-rendering-options.la \
 	unit-paste.la \
 	unit-large-paste.la \
@@ -75,8 +76,7 @@ all_la_unit_tests = \
 	unit-tilecache.la \
 	unit-timeout.la \
 	unit-base.la
-#	unit-admin.la \
-#	unit-storage.la
+#	unit-admin.la
 
 if ENABLE_LIBFUZZER
 all_la_unit_tests += unit-fuzz.la
@@ -189,6 +189,7 @@ unit_convert_la_SOURCES = UnitConvert.cpp
 unit_timeout_la_SOURCES = UnitTimeout.cpp
 unit_prefork_la_SOURCES = UnitPrefork.cpp
 unit_storage_la_SOURCES = UnitStorage.cpp
+unit_storage_la_LIBADD = $(CPPUNIT_LIBS)
 unit_tilecache_la_SOURCES = UnitTileCache.cpp
 unit_oauth_la_SOURCES = UnitOAuth.cpp
 unit_oauth_la_LIBADD = $(CPPUNIT_LIBS)
