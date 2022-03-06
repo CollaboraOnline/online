@@ -17,7 +17,7 @@ span.menu-entry-icon img {
 #toolbar-hamburger.menuwizard-opened{
 	z-index: 1501 !important;
 	position: relative !important;
-	background-color: #dae6f3 !important;
+	background-color: var(--color-primary-lighter) !important;
 	padding-left: 3px !important;
 	border-radius: 0 0 0 15px !important;
 }
@@ -284,11 +284,11 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 
 .mobile-wizard-titlebar {
-	background-color: white;
+	background-color: var(--color-background-lighter);
 	top: 63px;
-	height: 48px;
-	color: #636363;
-	border-bottom: 1px solid #dddddd !important;
+	height: var(--header-height);
+	color: var(--color-main-text);
+	border-bottom: 1px solid var(--color-border) !important;
 	position: sticky;
 	z-index: 2;
 }
