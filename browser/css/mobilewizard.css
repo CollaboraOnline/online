@@ -1127,7 +1127,7 @@ label.disabled {
 	flex-direction: column;
 	justify-content: center;
 	align-content: center;
-	background: var(--gray-light-bg-color);
+	background: var(--color-main-background);
 }
 
 #mobile-wizard-popup .empty-comment-wizard-img,
@@ -1143,13 +1143,13 @@ label.disabled {
 	flex: 1;
 	font-size: xx-large;
 	text-align: center;
-	color: #888;
+	color: var(--color-text-lighter);
 	padding-bottom: 32px;
 }
 
 #mobile-wizard-popup .empty-comment-wizard-link,
 #mobile-wizard .empty-comment-wizard-link{
-	color: #0b87e7;
+	color: var(--color-primary);
 	display: flex;
 	justify-content: center;
 	font-size: large;
