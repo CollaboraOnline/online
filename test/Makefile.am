@@ -15,44 +15,74 @@ AM_CXXFLAGS = $(CPPUNIT_CFLAGS) -DTDOC=\"$(abs_top_srcdir)/test/data\" \
 	-DDEBUG_ABSSRCDIR='"@abs_srcdir@"' \
 	${include_paths}
 
-noinst_LTLIBRARIES = \
-	unit-base.la unit-tiletest.la \
-	unit-integration.la unit-httpws.la unit-crash.la \
-	unit-convert.la unit-typing.la unit-copy-paste.la \
-	unit-timeout.la unit-prefork.la unit-storage.la \
-	unit-admin.la unit-tilecache.la \
-	unit-fuzz.la unit-http.la unit-oauth.la \
-	unit-wopi.la unit-wopi-saveas.la unit-wopi-saveas-with-encoded-file-name.la \
-	unit-wopi-async-upload-close.la unit-wopi-async-upload-modify.la \
-	unit-wopi-async-upload-modifyclose.la \
+# These are ordered by how long each takes to run.
+# The longest-running tests are put first, the
+# fastest tests are last. This reduces the
+# total time with parallel runs.
+# The time each test takes is logged, looked for
+# 'Finished in' in the `make check` output.
+# When adding new tests, please maintain order.
+all_la_unit_tests = \
 	unit-wopi-async-slow.la \
-	unit-wopi-ownertermination.la unit-wopi-versionrestore.la unit-wopi-documentconflict.la \
-	unit-wopi-save-on-exit.la unit_wopi_renamefile.la unit_wopi_watermark.la \
-	unit-wopi-fail-upload.la unit-wopi-lock.la \
-	unit-tiff-load.la \
-	unit-large-paste.la \
-	unit-paste.la \
-	unit-load-torture.la \
-	unit-rendering-options.la \
-	unit-password-protected.la \
-	unit-render-search-result.la \
-	unit-render-shape.la \
+	unit-tiletest.la \
 	unit-each-view.la \
-	unit-session.la \
-	unit-uno-command.la \
-	unit-load.la \
-	unit-cursor.la \
-	unit-calc.la \
+	unit-httpws.la \
 	unit-insert-delete.la \
+	unit-uno-command.la \
+	unit-wopi-fail-upload.la \
+	unit-wopi-documentconflict.la \
+	unit-load-torture.la \
+	unit-wopi-save-on-exit.la \
+	unit-crash.la \
+	unit-integration.la \
 	unit-close.la \
-	unit-bad-doc-load.la \
-	unit-hosting.la \
-	unit-wopi-loadencoded.la \
-	unit-wopi-temp.la \
+	unit-calc.la \
+	unit-password-protected.la \
 	unit-wopi-fileurl.la \
-	unit-wopi-httpheaders.la \
+	unit-copy-paste.la \
+	unit-http.la \
+	unit-wopi-async-upload-modify.la \
+	unit-wopi-temp.la \
+	unit-cursor.la \
+	unit-session.la \
+	unit-render-shape.la \
+	unit-wopi-versionrestore.la \
+	unit-wopi-async-upload-close.la \
+	unit-wopi.la \
+	unit-render-search-result.la \
+	unit-tiff-load.la \
+	unit_wopi_renamefile.la \
+	unit-wopi-async-upload-modifyclose.la \
+	unit-convert.la \
+	unit-rendering-options.la \
+	unit-paste.la \
+	unit-large-paste.la \
+	unit_wopi_watermark.la \
+	unit-wopi-saveas-with-encoded-file-name.la \
+	unit-wopi-saveas.la \
+	unit-typing.la \
+	unit-wopi-httpredirectloop.la \
 	unit-wopi-httpredirect.la \
-	unit-wopi-httpredirectloop.la
+	unit-wopi-loadencoded.la \
+	unit-load.la \
+	unit-wopi-lock.la \
+	unit-oauth.la \
+	unit-wopi-httpheaders.la \
+	unit-wopi-ownertermination.la \
+	unit-prefork.la \
+	unit-hosting.la \
+	unit-bad-doc-load.la \
+	unit-tilecache.la \
+	unit-timeout.la \
+	unit-base.la
+#	unit-admin.la \
+#	unit-storage.la
+
+if ENABLE_LIBFUZZER
+all_la_unit_tests += unit-fuzz.la
+endif
+
+noinst_LTLIBRARIES = ${all_la_unit_tests}
 
 MAGIC_TO_FORCE_SHLIB_CREATION = -rpath /dummy
 AM_LDFLAGS = -pthread -module $(MAGIC_TO_FORCE_SHLIB_CREATION) $(ZLIB_LIBS)
@@ -145,7 +175,9 @@ unit_crash_la_LIBADD = $(CPPUNIT_LIBS)
 # unit test modules:
 unit_http_la_SOURCES = UnitHTTP.cpp
 unit_http_la_LIBADD = $(CPPUNIT_LIBS)
+if ENABLE_LIBFUZZER
 unit_fuzz_la_SOURCES = UnitFuzz.cpp
+endif
 unit_admin_la_SOURCES = UnitAdmin.cpp
 unit_admin_la_LIBADD = $(CPPUNIT_LIBS)
 unit_typing_la_SOURCES = UnitTyping.cpp
@@ -254,46 +286,8 @@ check-local:
 	@echo "Done test check-local"
 
 TESTS = \
-	unit-base.la unit-tiletest.la \
-	unit-integration.la unit-httpws.la unit-crash.la \
-	unit-convert.la unit-typing.la unit-copy-paste.la \
-	unit-timeout.la unit-prefork.la unit-tilecache.la \
-	unit-oauth.la \
-	unit-wopi.la unit-wopi-saveas.la unit-wopi-saveas-with-encoded-file-name.la \
-	unit-wopi-async-upload-close.la unit-wopi-async-upload-modify.la \
-	unit-wopi-async-upload-modifyclose.la \
-	unit-wopi-async-slow.la \
-	unit-wopi-ownertermination.la unit-wopi-versionrestore.la unit-wopi-documentconflict.la \
-	unit-wopi-save-on-exit.la unit_wopi_renamefile.la unit_wopi_watermark.la \
-	unit-wopi-fail-upload.la unit-wopi-lock.la \
-	unit-http.la \
-	unit-tiff-load.la \
-	unit-large-paste.la \
-	unit-paste.la \
-	unit-load-torture.la \
-	unit-rendering-options.la \
-	unit-password-protected.la \
-	unit-render-search-result.la \
-	unit-render-shape.la \
-	unit-each-view.la \
-	unit-session.la \
-	unit-uno-command.la \
-	unit-load.la \
-	unit-cursor.la \
-	unit-calc.la \
-	unit-insert-delete.la \
-	unit-close.la \
-	unit-bad-doc-load.la \
-	unit-hosting.la \
-	unit-wopi-loadencoded.la \
-	unit-wopi-temp.la \
-	unit-wopi-fileurl.la \
-	unit-wopi-httpheaders.la \
-	unit-wopi-httpredirect.la \
-	unit-wopi-httpredirectloop.la \
+	${all_la_unit_tests} \
 	unithttplib
-# TESTS += unit-admin.test
-# TESTS += unit-storage.test
 
 endif
 
