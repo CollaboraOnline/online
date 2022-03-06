@@ -22,7 +22,6 @@
 #toolbar-down *{
 	font-family: var(--cool-font);
 	color: var(--color-main-text);
-	border-radius: var(--border-radius);
 }
 #toolbar-down *:hover {
 	color: var(--color-text-darker);
