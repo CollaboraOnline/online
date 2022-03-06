@@ -85,17 +85,19 @@ span#main-menu-btn-icon {
 }
 
 .colors-container-selected-basic-color{
-	box-shadow: 0 2px 3px -2px #0b87e7;
-	border-radius: 4px;
+	box-shadow: 0 2px 3px -2px var(--color-primary);
+	border-radius: var(--border-radius);
+	border: 2px solid var(--color-primary) !important;
 }
 .color-sample-small {
-	border: 2px solid #fff;
+	border: 2px solid var(--color-border-lighter);
 	width: 28px;
 	height: 28px;
 	color: #f0f8ff;
 	text-align: center;
 	vertical-align: bottom;
 	display: table-cell;
+	border-radius: var(--border-radius);
 }
 
 .color-sample-big {
@@ -106,7 +108,7 @@ span#main-menu-btn-icon {
 	text-align: right;
 	vertical-align: bottom;
 	display: table-cell;
-	box-shadow: 0px 0px 0px 1px #dddddd, 1px 1px 0 3px #ffffff;
+	box-shadow: 0px 0px 0px 1px var(--color-border-lighter), 1px 1px 0 3px var(--color-background-lighter);
 }
 
 .colors-container {
