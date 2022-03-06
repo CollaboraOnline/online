@@ -334,7 +334,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	width: -webkit-fill-available !important;
 	width: fill-available !important;
 	top: 0;
-	background-color: white;
+	background-color: var(--color-main-background);
 }
 .vex.vex-theme-plain input {
 	font-size: 1.1em !important;
@@ -345,15 +345,15 @@ textarea.cool-annotation-textarea {
 	min-width: fill-available !important;
 }
 button.vex-dialog-button-primary.vex-dialog-button.vex-first {
-	border: 1px solid #0b87e7 !important;
-	border-radius: 4px !important;
-	background-color: #0b87e7 !important;
-	color: #fff !important;
+	border: 1px solid var(--color-primary) !important;
+	border-radius: var(--border-radius) !important;
+	background-color: var(--color-primary-lighter) !important;
+	color: var(--color-primary-text) !important;
 }
 button.vex-dialog-button-secondary.vex-dialog-button.vex-last {
-	border-radius: 4px;
-	background-color: #fff !important;
-	border: 1px solid #aaa !important;
+	border-radius: var(--border-radius);
+	background-color: var(--color-background-lighter) !important;
+	border: 1px solid var(--color-border-lighter) !important;
 }
 .vex.vex-theme-plain .vex-dialog-button{
 	line-height: 1em !important;
