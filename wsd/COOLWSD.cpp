@@ -2649,14 +2649,10 @@ public:
     }
     ~PrisonerRequestDispatcher()
     {
+        LOG_TRC("~PrisonerRequestDispatcher");
+
         // Notify the broker that we're done.
-        std::shared_ptr<ChildProcess> child = _childProcess.lock();
-        std::shared_ptr<DocumentBroker> docBroker = child ? child->getDocumentBroker() : nullptr;
-        if (docBroker)
-        {
-            // FIXME: No need to notify if asked to stop.
-            docBroker->stop("Request dispatcher destroyed.");
-        }
+        onDisconnect();
     }
 
 private:
@@ -2681,11 +2677,7 @@ private:
         if (docBroker)
         {
             std::unique_lock<std::mutex> lock = docBroker->getLock();
-            docBroker->assertCorrectThread();
-            if (docBroker->isAsyncUploading())
-                LOG_DBG("Don't stop DocumentBroker on disconnect: async saving in progress.");
-            else
-                docBroker->stop("docdisconnected");
+            docBroker->disconnectedFromKit();
         }
     }
 
