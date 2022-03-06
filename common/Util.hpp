@@ -42,6 +42,27 @@
 
 #include <StringVector.hpp>
 
+/// Format seconds with the units suffix until we migrate to C++20.
+inline std::ostream& operator<<(std::ostream& os, const std::chrono::seconds& s)
+{
+    os << s.count() << 's';
+    return os;
+}
+
+/// Format milliseconds with the units suffix until we migrate to C++20.
+inline std::ostream& operator<<(std::ostream& os, const std::chrono::milliseconds& ms)
+{
+    os << ms.count() << "ms";
+    return os;
+}
+
+/// Format microseconds with the units suffix until we migrate to C++20.
+inline std::ostream& operator<<(std::ostream& os, const std::chrono::microseconds& ms)
+{
+    os << ms.count() << "us";
+    return os;
+}
+
 namespace Util
 {
     namespace rng
@@ -1443,5 +1464,11 @@ int main(int argc, char**argv)
     void forcedExit(int code) __attribute__ ((__noreturn__));
 
 } // end namespace Util
+
+inline std::ostream& operator<<(std::ostream& os, const std::chrono::system_clock::time_point& ts)
+{
+    os << Util::getIso8601FracformatTime(ts);
+    return os;
+}
 
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */
