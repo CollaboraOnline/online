@@ -890,6 +890,10 @@ bool DocumentBroker::download(const std::shared_ptr<ClientSession>& session, con
         std::chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
         std::string localPath = _storage->downloadStorageFileToLocal(session->getAuthorization(),
                                                                      *_lockCtx, templateSource);
+        if (localPath.empty())
+        {
+            throw std::runtime_error("Failed to retrieve document from storage");
+        }
 
         getFileCallDurationMs = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::steady_clock::now() - start);
