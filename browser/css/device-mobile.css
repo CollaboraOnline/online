@@ -86,10 +86,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 }
 #toolbar-hamburger.menuwizard-opened {
 	width: 36px;
-	height: 43px;
-}
-#toolbar-hamburger.menuwizard-opened .main-menu-btn {
-	padding-top: 10px;
+	height: 36px;
 }
 
 .logo {
