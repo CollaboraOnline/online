@@ -347,13 +347,6 @@ void DocumentBroker::pollThread()
             refreshLock();
 #endif
 
-        //TODO: Review if we need this here.
-        if (_saveManager.isSaving() && !_saveManager.hasSavingTimedOut())
-        {
-            // We are saving, nothing more to do but wait (until we save or we timeout).
-            continue;
-        }
-
         LOG_TRC("Poll: current activity: " << DocumentState::toString(_docState.activity()));
         switch (_docState.activity())
         {
@@ -420,6 +413,18 @@ void DocumentBroker::pollThread()
                 {
                     LOG_TRC("Triggering an autosave.");
                     autoSave(false);
+                }
+            }
+            break;
+
+            case DocumentState::Activity::Save:
+            case DocumentState::Activity::SaveAs:
+            {
+                if (_docState.isDisconnected())
+                {
+                    // We will never save. No need to wait for timeout.
+                    _saveManager.setLastSaveResult(false);
+                    endActivity();
                 }
             }
             break;
@@ -570,7 +575,7 @@ void DocumentBroker::joinThread()
 
 void DocumentBroker::stop(const std::string& reason)
 {
-    if (_closeReason.empty())
+    if (_closeReason.empty() || _closeReason == reason)
     {
         LOG_DBG("Stopping DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
         _closeReason = reason; // used later in the polling loop
@@ -1804,11 +1809,16 @@ bool DocumentBroker::autoSave(const bool force, const bool dontSaveIfUnmodified)
 
     LOG_TRC("autoSave(): forceful? " << force
                                      << ", dontSaveIfUnmodified: " << dontSaveIfUnmodified);
-    if (_sessions.empty() || _storage == nullptr || !isLoaded() ||
-        !_childProcess->isAlive() || (!isModified() && !force))
+    if (_sessions.empty() || _storage == nullptr || !isLoaded() || (!isModified() && !force))
     {
         // Nothing to do.
         LOG_TRC("Nothing to autosave [" << _docKey << "].");
+        return false;
+    }
+
+    if (_docState.isDisconnected())
+    {
+        LOG_DBG("Cannot autosave when disconnected from Kit.");
         return false;
     }
 
@@ -1975,7 +1985,10 @@ void DocumentBroker::autoSaveAndStop(const std::string& reason)
     }
     else if (!canStop)
     {
-        LOG_TRC("Too soon to issue another save on [" << getDocKey() << ']');
+        LOG_TRC("Too soon to issue another save on ["
+                << getDocKey() << "]: " << _saveManager.timeSinceLastSaveRequest()
+                << " since last save request and " << _saveManager.timeSinceLastSaveRequest()
+                << " since last save response");
     }
 
     if (canStop)
@@ -3157,6 +3170,13 @@ void DocumentBroker::closeDocument(const std::string& reason)
     {
         LOG_DBG("Closing DocumentBroker for docKey [" << _docKey << "] with reason: " << reason);
     }
+}
+
+void DocumentBroker::disconnectedFromKit()
+{
+    LOG_DBG("DocBroker " << _docKey << " Disconnected from Kit. Flagging to close.");
+    _docState.setDisconnected();
+    closeDocument("docdisconnected");
 }
 
 std::size_t DocumentBroker::broadcastMessage(const std::string& message) const

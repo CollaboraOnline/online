@@ -417,6 +417,9 @@ public:
     /// Ask the document broker to close. Makes sure that the document is saved.
     void closeDocument(const std::string& reason);
 
+    /// Flag that we have been disconnected from the Kit and request unloading.
+    void disconnectedFromKit();
+
     /// Get the PID of the associated child process
     pid_t getPid() const { return _childProcess ? _childProcess->getPid() : 0; }
 
@@ -1073,9 +1076,10 @@ private:
         DocumentState()
             : _status(Status::None)
             , _activity(Activity::None)
-            , _closeRequested(false)
             , _loaded(false)
+            , _closeRequested(false)
             , _unloadRequested(false)
+            , _disconnected(false)
             , _interactive(false)
         {
         }
@@ -1128,21 +1132,28 @@ private:
         void setUnloadRequested() { _unloadRequested = true; }
         bool isUnloadRequested() const { return _unloadRequested; }
 
+        /// Flag that we are disconnected from the Kit. Irreversible.
+        void setDisconnected() { _disconnected = true; }
+        bool isDisconnected() const { return _disconnected; }
+
         void dumpState(std::ostream& os, const std::string& indent = "\n  ")
         {
             os << indent << "doc state: " << toString(status());
             os << indent << "doc activity: " << toString(activity());
             os << indent << "doc loaded: " << _loaded;
             os << indent << "interactive: " << _interactive;
+            os << indent << "close requested: " << _closeRequested;
             os << indent << "unload requested: " << _unloadRequested;
+            os << indent << "disconnected from kit: " << _disconnected;
         }
 
     private:
         Status _status;
         Activity _activity;
-        std::atomic<bool> _closeRequested; //< Owner-Termination flag.
         std::atomic<bool> _loaded; //< If the document ever loaded (check isLive to see if it still is).
+        std::atomic<bool> _closeRequested; //< Owner-Termination flag.
         std::atomic<bool> _unloadRequested; //< Unload-Requested flag, which may be reset.
+        std::atomic<bool> _disconnected; //< Disconnected from the Kit. Implies unloading.
         bool _interactive; //< If the document has interactive dialogs before load
     };
 
