@@ -70,7 +70,7 @@ input#follow-checkbox:checked ~ .checkmark:after {
 	display: block;
 }
 input#follow-checkbox:checked ~ .checkmark {
-	background-color: #0b87e7;
+	background-color: var(--color-primary);
 }
 #userlist_table + hr { display: none;}
 div#w2ui-overlay-actionbar.w2ui-overlay{

@@ -245,7 +245,7 @@ nav.spreadsheet-color-indicator ~ #sidebar-dock-wrapper {
 	height: 56px;
 	right: 16px;
 	bottom: 16px;
-	background-color: #0b87e7;
+	background-color: var(--color-primary);
 	border-radius: 50%;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	z-index: 1001;
@@ -823,7 +823,7 @@ nav.drawing-color-indicator ~ #main-document-content .cool-annotation-reply-coun
 	background: #99CCFF;
 }
 .drop-down-field-list-item:hover {
-	background: #0b87e7;
+	background-color: var(--color-primary);
 }
 
 .word-wrap-for-vex-dialog {
