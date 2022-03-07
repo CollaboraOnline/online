@@ -217,7 +217,6 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 
 .spreadsheet-tabs-container, #spreadsheet-toolbar{
 	background-color: var(--color-main-background);
-	border-top: 1px solid var(--color-border);
 }
 #spreadsheet-toolbar{
 	background-color: var(--color-main-background);
