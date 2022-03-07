@@ -520,11 +520,11 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 
 .spinfieldcontrols {
-	background-color: #eee;
+	background-color: var(--color-background-darker);
 	text-align: center;
 	display: inline-block;
 	vertical-align: middle;
-	border-left: 1px solid #ccc;
+	border-left: 1px solid var(--color-border-dark);
 }
 
 .spinfieldunit {
@@ -534,27 +534,25 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 
 .plus {
-	border-left: 1px solid #ccc;
+	border-left: 1px solid var(--color-border-dark);
+	font-size: 22px;
 	width: 48px;
 	height: 48px;
-	color: #777 !important;
+	color: var(--color-text-dark) !important;
 	display: table-cell;
 	vertical-align: middle;
 }
 .minus {
-	border-right: 1px solid #ccc;
+	border-right: 1px solid var(--color-border-dark);
+	font-size: 22px;
 	width: 48px;
 	height: 48px;
-	color: #777 !important;
+	color: var(--color-text-dark) !important;
 	display: table-cell;
 	vertical-align: middle;
 }
 .spinfieldcontainer .plus:active, .spinfieldcontainer .minus:active{
-	border-color: #0b87e7;
-	-webkit-filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
-	filter: grayscale(100%) brightness(80%) sepia(100%) hue-rotate(-190deg) saturate(900%) contrast(0.8);
-	background-color: #0087ff75;
-	font-size: 22px;
+	background-color: var(--color-primary-lighter);
 	font-weight: bold
 }
 .spinfieldimage {
@@ -573,21 +571,21 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 .mobile-wizard input.spinfield:disabled {
 	background: linear-gradient(to right, white 0%, #ebebe4 15%, #ebebe4 40%, white 100%);
-	color: #bbb !important;
+	color: var(--color-text-lighter) !important;
 }
 
 input.spinfield:disabled + .spinfieldunit {
-	color: #bbb !important;
+	color: var(--color-text-lighter) !important;
 }
 
 input.spinfield:disabled ~ .spinfieldcontrols * {
-	color: #bbb !important;
-	border-color: #dfdfdf !important;
-	background-color: #f9f9f9;
+	color: var(--color-text-lighter) !important;
+	border-color: var(--color-border-lighter) !important;
+	background-color: var(--color-background-lighter);
 }
 
 input.spinfield:disabled ~ .spinfieldcontrols *:active, input.spinfield:disabled ~ .spinfieldcontrols *:hover, input.spinfield:disabled ~ .spinfieldcontrols *:focus {
-	background-color: #f9f9f9 !important;
+	background-color: var(--color-background-lighter) !important;
 	filter: none;
 	font-size: 100%;
 	font-weight: normal;
@@ -604,8 +602,7 @@ input.spinfield:disabled ~ .spinfieldcontrols *:active, input.spinfield:disabled
 
 .inserttablecontrols #rows, .inserttablecontrols #cols{
 	background: url('images/lc_inserttable_row_mono.svg') no-repeat left;
-	border: none !important;
-	border-bottom: 1px solid #ccc !important;
+	border-bottom: 1px solid var(--color-border-lighter) !important;
 	width: 90%;
 	border-radius: none;
 }
@@ -616,10 +613,6 @@ input.spinfield:disabled ~ .spinfieldcontrols *:active, input.spinfield:disabled
 	width: 35% !important;
 	margin-left: 10% !important;
 	text-align: center;
-}
-.inserttablecontrols .spinfieldcontrols{
-	border: none;
-	background: none;
 }
 .inserttablecontrols .plus, .inserttablecontrols .minus{
 	border: none;
@@ -744,10 +737,10 @@ a.leaflet-control-zoom-in {
 #mobile-wizard #leadingzeroeslabel, #mobile-wizard #leftindentlabel,
 #mobile-wizard #orientationlabel, #mobile-wizard #cellbackgroundlabel,
 #mobile-wizard .mobile-wizard.ui-text {
-	border-bottom: 1px solid rgba(var(--blue1-txt-primary-color),0.5);
-	color: rgba(var(--blue1-txt-primary-color),0.5) !important;
+	border-bottom: 1px solid var(--color-primary-dark);
+	color: var(--color-primary) !important;
 	margin-left: 4%;
-	width: 94%;
+	width: 92%;
 	font-size: var(--default-font-size);
 	font-weight: bold;
 	clear: both;
@@ -755,20 +748,23 @@ a.leaflet-control-zoom-in {
 
 #DecrementIndent + input:disabled{display: none;}
 div#mobile-wizard-content input[type='number']{
+	color: var(--color-text-dark);
 	height: 46px;
 	width: 37%;
 	padding-left: 8%;
 	border: none;
 	-moz-appearance: textfield;
 	-webkit-appearance: textfield;
+	background-color: var(--color-background-dark);
 }
 div#mobile-wizard-content .spinfieldcontainer{
 	height: 48px;
 	width: -moz-available;
 	width: -webkit-fill-available;
 	margin: 0px 4% 8px !important;
-	border: 1px solid #ccc;
-	border-radius: 2px;
+	border: 1px solid var(--color-border-dark);
+	background-color: var(--color-background-dark);
+	border-radius: var(--border-radius);
 	background-size: 28px;
 	display: inline-block;
 	overflow: hidden;
@@ -935,10 +931,10 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 	height: 44px;
 	width: 92%;
 	border-radius: 4px;
-	color: #fff !important;
+	color: var(--color-primary-text) !important;
 	font-weight: bold;
-	background-color: #0b87e7;
-	border: 1px solid #0b87e7;
+	background-color: var(--color-primary-lighter);
+	border: 1px solid var(--color-primary);
 	margin: 5px 4%;
 	font-size: var(--default-font-size);
 }
