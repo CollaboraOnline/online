@@ -249,7 +249,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-treeview {
 	display: block;
-	border: 1px solid silver;
+	border: 1px solid var(--color-border);
 	border-radius: 2px;
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -257,8 +257,8 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-treeview.disabled {
-	background-color: silver;
-	color: var(--gray-light-txt--color) !important;
+	background-color: var(--color-background-lighter);
+	color: var(--color-text-lighter) !important;
 }
 
 .ui-treeview-body {
@@ -293,6 +293,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 
 .ui-treeview-entry:not(.autofilter) {
 	padding-left: 2px;
+	background-color: var(--color-background-lighter);
 }
 
 input[type='checkbox'].autofilter, .jsdialog input[type='checkbox'] {
