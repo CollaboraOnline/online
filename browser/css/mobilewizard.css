@@ -176,6 +176,7 @@ p.mobile-wizard.ui-combobox-text {
 	width: 96%;
 	vertical-align: middle;
 	line-height: 42px;
+	font-size: var(--default-font-size);
 	padding-left: 4%;
 }
 .menuwizard #mobile-wizard-content > div .ui-widget {
