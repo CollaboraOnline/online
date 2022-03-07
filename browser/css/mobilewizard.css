@@ -570,6 +570,8 @@ p.mobile-wizard.ui-combobox-text.selected {
 .mobile-wizard input.spinfield:disabled {
 	background: linear-gradient(to right, white 0%, #ebebe4 15%, #ebebe4 40%, white 100%);
 	color: var(--color-text-lighter) !important;
+	border-radius: var(--border-radius);
+	height: 48px !important;
 }
 
 input.spinfield:disabled + .spinfieldunit {
@@ -823,8 +825,8 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	padding: 10px 2px 10px 15px;
 }
 #mobile-wizard input[type='checkbox']:disabled{
-	border: 2px solid #ddd;
-	box-shadow: none;
+	border: 2px solid var(--color-border-lighter);
+	box-shadow: 0px 0px 2px 1px var(--color-border-lighter);
 }
 #mobile-wizard input[type='checkbox']{
 	width: 24px;
@@ -835,10 +837,10 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 	-moz-appearance: none;
 	-o-appearance: none;
 	appearance: none;
-	border-radius: 2px;
-	border: 2px solid #aaa;
+	border-radius: var(--border-radius);
+	border: 2px solid var(--color-border);
 	outline: none;
-	box-shadow: #00000015 0px 0px 2px 1px;
+	box-shadow: 0px 0px 2px 1px var(--color-box-shadow);
 }
 #mobile-wizard input[type='checkbox']:checked{
 	background: url('images/lc_ok_white.svg') no-repeat center;
@@ -956,7 +958,7 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 div#enablecontour + p, #arrangelabel, #SetMinimalRowHeight {clear: both;}
 
 label.disabled {
-	color: grey !important;
+	color: var(--color-text-lighter) !important;
 }
 
 .ui-checkbox.mobile-wizard {
