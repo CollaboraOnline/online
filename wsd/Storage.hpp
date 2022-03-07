@@ -330,6 +330,16 @@ public:
 
     static void parseWopiHost(Poco::Util::LayeredConfiguration& conf);
 
+    static void parseAliases(Poco::Util::LayeredConfiguration& conf);
+
+    /// if request uri is an alias, replace request uri host and port with
+    /// original hostname and port defined by group tag from coolwsd.xml
+    /// to avoid possibility of opening the same file as two if the WOPI host
+    /// is accessed using different aliases
+    static std::string getNewUri(const Poco::URI& uri);
+
+    static void addWopiHost(std::string host, bool allow);
+
 protected:
 
     /// Sanitize a URI by removing authorization tokens.
@@ -390,6 +400,12 @@ private:
     static bool SSLEnabled;
     /// Allowed/denied WOPI hosts, if any and if WOPI is enabled.
     static Util::RegexListMatcher WopiHosts;
+    /// mapping of alias host and port to real host and port
+    static std::map<std::string, std::string> AliasHosts;
+    /// When group configuration is not defined only the firstHost gets access
+    static std::string FirstHost;
+    /// This contains all real and aliases host from group configuration
+    static std::set<std::string> AllHosts;
 };
 
 /// Trivial implementation of local storage that does not need do anything.

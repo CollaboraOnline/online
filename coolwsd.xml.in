@@ -204,6 +204,13 @@
             <locking desc="Locking settings">
                 <refresh desc="How frequently we should re-acquire a lock with the storage server, in seconds (default 15 mins) or 0 for no refresh" type="int" default="900">900</refresh>
             </locking>
+
+            <!-- <group>
+                <host desc="hostname to allow or deny." allow="true">hostname</host>
+                <alias>aliasname1</alias>
+                <alias>aliasname2</alias>
+            </group> -->
+
         </wopi>
         <ssl desc="SSL settings">
             <as_scheme type="bool" default="true" desc="When set we exclusively use the WOPI URI's scheme to enable SSL for storage">true</as_scheme>

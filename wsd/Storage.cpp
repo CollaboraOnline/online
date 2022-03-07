@@ -65,6 +65,9 @@ bool StorageBase::WopiEnabled;
 bool StorageBase::SSLAsScheme = true;
 bool StorageBase::SSLEnabled = false;
 Util::RegexListMatcher StorageBase::WopiHosts;
+std::map<std::string, std::string> StorageBase::AliasHosts;
+std::set<std::string> StorageBase::AllHosts;
+std::string StorageBase::FirstHost;
 
 #if !MOBILEAPP
 
@@ -94,29 +97,114 @@ void StorageBase::parseWopiHost(Poco::Util::LayeredConfiguration& conf)
         for (size_t i = 0;; ++i)
         {
             const std::string path = "storage.wopi.host[" + std::to_string(i) + ']';
-            const std::string host = conf.getString(path, "");
-            if (!host.empty())
-            {
-                if (conf.getBool(path + "[@allow]", false))
-                {
-                    LOG_INF("Adding trusted WOPI host: [" << host << "].");
-                    WopiHosts.allow(host);
-                }
-                else
-                {
-                    LOG_INF("Adding blocked WOPI host: [" << host << "].");
-                    WopiHosts.deny(host);
-                }
-            }
-            else if (!conf.has(path))
+            if (!conf.has(path))
             {
                 break;
             }
+            StorageBase::addWopiHost(conf.getString(path, ""), conf.getBool(path + "[@allow]", false));
         }
     }
 }
 
+void StorageBase::addWopiHost(std::string host, bool allow)
+{
+    if (!host.empty())
+    {
+        if (allow)
+        {
+            LOG_INF("Adding trusted WOPI host: [" << host << "].");
+            WopiHosts.allow(host);
+        }
+        else
+        {
+            LOG_INF("Adding blocked WOPI host: [" << host << "].");
+            WopiHosts.deny(host);
+        }
+    }
+}
+
+void StorageBase::parseAliases(Poco::Util::LayeredConfiguration& conf)
+{
+    AliasHosts.clear();
+
+    for (size_t i = 0;; i++)
+    {
+        const std::string path = "storage.wopi.group[" + std::to_string(i) + ']';
+        if (!conf.has(path + ".host"))
+        {
+            break;
+        }
+
+        const std::string hostAndPort = conf.getString(path + ".host", "");
+        if (hostAndPort.empty())
+        {
+            continue;
+        }
+
+        StringVector tokens = Util::tokenize(hostAndPort, ":");
+        bool allow = conf.getBool(path + ".host[@allow]", false);
+        StorageBase::addWopiHost(tokens[0], allow);
+        AllHosts.insert(tokens[0]);
+
+        for (size_t j = 0;; j++)
+        {
+            const std::string aliasPath = path + ".alias[" + std::to_string(j) + ']';
+            if (!conf.has(aliasPath))
+            {
+                break;
+            }
+            const std::string aliasHostAndPort = conf.getString(aliasPath, "");
+            if (!aliasHostAndPort.empty())
+            {
+                AliasHosts.insert({ aliasHostAndPort, hostAndPort });
+            }
+
+            tokens = Util::tokenize(aliasHostAndPort, ":");
+            AllHosts.insert(tokens[0]);
+            StorageBase::addWopiHost(tokens[0], allow);
+        }
+    }
+}
+
+std::string StorageBase::getNewUri(const Poco::URI& uri)
+{
+    std::string uriHost = uri.getHost();
+    std::string uriPort = std::to_string(uri.getPort());
+    const std::string uriScheme = uri.getScheme();
+    const std::string uriPath = uri.getPath();
+
+    const std::string key = uriHost + ":" + uriPort;
+    if (AliasHosts.find(key) != AliasHosts.end())
+    {
+        const std::string aliasDetails = AliasHosts[key];
+        StringVector tokens = Util::tokenize(aliasDetails, ':');
+
+        if (!tokens[0].empty())
+        {
+            uriHost = tokens[0];
+        }
+
+        if (!tokens[1].empty())
+        {
+            uriPort = tokens[1];
+        }
+    }
+
+    std::string newUri;
+    if (!uriScheme.empty() && !uriHost.empty() && !Util::iequal(uriPort, "0"))
+    {
+        newUri = uriScheme + "://" + uriHost + ":" + uriPort + uriPath;
+    }
+    else
+    {
+        newUri = uri.getPath();
+    }
+    return newUri;
+}
+
 #endif
+
+#if !defined(BUILDING_TESTS)
 
 void StorageBase::initialize()
 {
@@ -125,6 +213,8 @@ void StorageBase::initialize()
     FilesystemEnabled = app.config().getBool("storage.filesystem[@allow]", false);
 
     parseWopiHost(app.config());
+
+    parseAliases(app.config());
 
 #ifdef ENABLE_FEATURE_LOCK
     CommandControl::LockManager::parseLockedHost(app.config());
@@ -197,7 +287,30 @@ void StorageBase::initialize()
 
 bool StorageBase::allowedWopiHost(const std::string& host)
 {
-    return WopiEnabled && WopiHosts.match(host);
+    bool allow = WopiEnabled && WopiHosts.match(host);
+    if (!allow)
+    {
+        return false;
+    }
+    if (AliasHosts.empty())
+    {
+        if (FirstHost.empty())
+        {
+            FirstHost = host;
+        }
+        else if (FirstHost != host)
+        {
+            LOG_ERR("Only allowed host is: " << FirstHost
+                                             << ", no aliases groups are defined in configuration");
+            return false;
+        }
+    }
+    else if (AllHosts.find(host) == AllHosts.end())
+    {
+        LOG_ERR("Host: " << host << " is not allowed, It is not part of aliases group");
+        return false;
+    }
+    return allow;
 }
 
 #if !MOBILEAPP
@@ -263,7 +376,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
         LOG_INF("Public URI [" << COOLWSD::anonymizeUrl(uri.toString()) << "] considered WOPI.");
         const auto& targetHost = uri.getHost();
         bool allowed(false);
-        if (WopiHosts.match(targetHost) || isLocalhost(targetHost))
+        if (StorageBase::allowedWopiHost(targetHost) || isLocalhost(targetHost))
         {
             allowed = true;
         }
@@ -273,7 +386,7 @@ std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std
             const auto hostAddresses(Poco::Net::DNS::resolve(targetHost));
             for (auto &address : hostAddresses.addresses())
             {
-                if (WopiHosts.match(address.toString()))
+                if (StorageBase::allowedWopiHost(address.toString()))
                 {
                     allowed = true;
                     break;
@@ -1534,4 +1647,5 @@ WopiStorage::handleUploadToStorageResponse(const WopiUploadDetails& details,
 
 #endif // !MOBILEAPP
 
+#endif // !defined(BUILDING_TESTS)
 /* vim:set shiftwidth=4 softtabstop=4 expandtab: */

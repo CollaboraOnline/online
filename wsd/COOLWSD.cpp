@@ -1138,6 +1138,8 @@ public:
 
         fetchWopiHostPatterns(newAppConfig, remoteJson);
 
+        fetchAliasGroups(newAppConfig, remoteJson);
+
 #ifdef ENABLE_FEATURE_LOCK
         fetchLockedHostPatterns(newAppConfig, remoteJson);
 #endif
@@ -1146,6 +1148,8 @@ public:
         conf.addWriteable(newConfig, PRIO_JSON);
 
         StorageBase::parseWopiHost(conf);
+
+        StorageBase::parseAliases(conf);
 
 #ifdef ENABLE_FEATURE_LOCK
         CommandControl::LockManager::parseLockedHost(conf);
@@ -1158,7 +1162,7 @@ public:
         //wopi host patterns
         if (!conf.getBool("storage.wopi[@allow]", false))
         {
-            LOG_INF("WOPI host feature is disabled in coolwsd.xml");
+            LOG_INF("WOPI host feature is disabled in configuration");
             return;
         }
         try
@@ -1211,7 +1215,7 @@ public:
     {
         if (!conf.getBool("feature_lock.locked_hosts[@allow]", false))
         {
-            LOG_INF("locked_hosts feature is disabled from coolwsd.xml");
+            LOG_INF("locked_hosts feature is disabled from configuration");
             return;
         }
 
@@ -1264,6 +1268,74 @@ public:
         catch (const std::exception& exc)
         {
             LOG_ERR("Failed to fetch locked_hosts, please check JSON format: " << exc.what());
+        }
+    }
+
+    void fetchAliasGroups(std::map<std::string, std::string>& newAppConfig,
+                          Poco::JSON::Object::Ptr remoteJson)
+    {
+        try
+        {
+            Poco::JSON::Array::Ptr aliasGroups =
+                remoteJson->getObject("storage")->getObject("wopi")->getArray("alias_groups");
+
+            if (aliasGroups->size() == 0)
+            {
+                LOG_WRN("Not overwriting any alias groups because alias_group array is empty");
+                return;
+            }
+
+            std::size_t i;
+            for (i = 0; i < aliasGroups->size(); i++)
+            {
+                Poco::JSON::Object::Ptr group = aliasGroups->getObject(i);
+                std::string host;
+                JsonUtil::findJSONValue(group, "host", host);
+                Poco::Dynamic::Var allow = group->get("allow");
+                const std::string path = "storage.wopi.group[" + std::to_string(i) + ']';
+
+                newAppConfig.insert(std::make_pair(path + ".host", host));
+                newAppConfig.insert(std::make_pair(path + ".host[@allow]", booleanToString(allow)));
+
+                Poco::JSON::Array::Ptr aliases = group->getArray("aliases");
+
+                auto it = aliases->begin();
+
+                size_t j;
+                for (j = 0; j < aliases->size(); j++)
+                {
+                    const std::string aliasPath = path + ".alias[" + std::to_string(j) + ']';
+                    newAppConfig.insert(std::make_pair(aliasPath, it->toString()));
+                    it++;
+                }
+                for (;; j++)
+                {
+                    const std::string aliasPath = path + ".alias[" + std::to_string(j) + ']';
+                    if (!conf.has(aliasPath))
+                    {
+                        break;
+                    }
+                    newAppConfig.insert(std::make_pair(aliasPath, ""));
+                }
+            }
+
+            //if number of alias_groups defined in configuration are greater than number of alias_group
+            //fetched from json, overwrite the remaining alias_groups from config file to empty strings and
+            for (;; i++)
+            {
+                const std::string path = "storage.wopi.group[" + std::to_string(i) + "].host";
+                if (!conf.has(path))
+                {
+                    break;
+                }
+                newAppConfig.insert(std::make_pair(path, ""));
+                newAppConfig.insert(std::make_pair(path + "[@allowed]", "false"));
+            }
+        }
+        catch (const std::exception& exc)
+        {
+            LOG_ERR("Fetching of alias groups failed with error: " << exc.what()
+                                                                   << "please check JSON format");
         }
     }
 
