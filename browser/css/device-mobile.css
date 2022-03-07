@@ -231,14 +231,14 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	margin-bottom: 0px !important;
 }
 #toolbar-down table.w2ui-button.over {
-	border: 1px solid #eee;
-	background-color: #eeeeee;
-	border-radius: 0px;
+	border: 1px solid transparent;
+	background-color: var(--color-background-darker);
+	border-radius: 0;
 }
 #toolbar-down table.w2ui-button.checked {
-	border: 1px solid #e5f1ff;
-	background-color: #e5f1ff;
-	border-radius: 0px;
+	border: 1px solid transparent;
+	background-color: var(--color-background-dark);
+	border-radius: 0;
 }
 /* Related to vex.css */
 .vex-open .cool-user-idle {
