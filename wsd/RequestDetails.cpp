@@ -78,6 +78,7 @@ RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::strin
     const std::string &method = request.getMethod();
     _isGet = method == "GET";
     _isHead = method == "HEAD";
+    _isPost = method == "POST";
     auto it = request.find("ProxyPrefix");
 	_isProxy = it != request.end();
     if (_isProxy)
@@ -96,6 +97,7 @@ RequestDetails::RequestDetails(Poco::Net::HTTPRequest &request, const std::strin
 RequestDetails::RequestDetails(const std::string &mobileURI)
     : _isGet(true)
     , _isHead(false)
+    , _isPost(false)
     , _isProxy(false)
     , _isWebSocket(false)
 {

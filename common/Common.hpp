@@ -49,6 +49,8 @@ constexpr const char FORKIT_URI[] = "/coolws/forkit";
 
 constexpr const char CAPABILITIES_END_POINT[] = "/hosting/capabilities";
 
+constexpr const char CHECK_END_POINT[] = "/hosting/check";
+
 /// The file suffix used to mark the file slated for uploading.
 constexpr const char TO_UPLOAD_SUFFIX[] = ".upload";
 /// The file suffix used to mark the file being uploaded.

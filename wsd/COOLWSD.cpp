@@ -3093,6 +3093,9 @@ private:
                      requestDetails.isGet("/hosting/discovery/"))
                 handleWopiDiscoveryRequest(requestDetails, socket);
 
+            else if (requestDetails.isPost(CHECK_END_POINT))
+                handleCheckRequest(request, socket, message);
+
             else if (requestDetails.isGet(CAPABILITIES_END_POINT))
                 handleCapabilitiesRequest(request, socket);
 
@@ -3272,6 +3275,103 @@ private:
         httpResponse.set("X-Content-Type-Options", "nosniff");
         socket->sendAndShutdown(httpResponse);
         LOG_INF("Sent capabilities.json successfully.");
+    }
+
+    void handleCheckRequest(const Poco::Net::HTTPRequest& request,
+                                   const std::shared_ptr<StreamSocket>& socket,
+                                   Poco::MemoryInputStream& message)
+    {
+        assert(socket && "Must have a valid socket");
+
+        LOG_DBG("Check request: " << request.getURI());
+
+        bool validWopiConfig = false;
+        std::string connectMessage;
+        bool validConnectBack = false;
+
+        ConvertToPartHandler handler;
+        HTMLForm form(request, message, handler);
+
+        std::string url = (form.has("url") ? form.get("url") : "");
+        Poco::URI remoteServerURI(url);
+
+        // Validate allowed WOPI host
+        std::string addressToCheck = remoteServerURI.getHost();
+        LOG_DBG("Checking remote host: " << addressToCheck);
+        try
+            {
+                if (!StorageBase::allowedWopiHost(addressToCheck) && !net::isLocalhost(addressToCheck))
+                {
+                    // FIXME: does not automatically detect that 127.0.0.1 matches localhost in coolwsd.xml
+                    const auto hostAddresses(Poco::Net::DNS::resolve(addressToCheck));
+                    for (auto &address : hostAddresses.addresses())
+                    {
+                        LOG_DBG("Checking resolved remote host: " << address.toString());
+                        if (StorageBase::allowedWopiHost(address.toString()))
+                        {
+                            validWopiConfig = true;
+                            break;
+                        }
+                        LOG_DBG("Invalid resolved remote host: " << address.toString());
+                    }
+                } else {
+                    validWopiConfig = true;
+                }
+
+            }
+            catch (const Poco::Exception& exc)
+            {
+                LOG_ERR("Poco::Net::DNS::resolve(\"" << addressToCheck << "\") failed: " << exc.displayText());
+                // We can't find out the hostname, and it already failed the IP check
+                validWopiConfig = false;
+            }
+
+        // Validate connecting back to WOPI host
+        try
+            {
+                std::shared_ptr<http::Session> httpSession(
+                    StorageBase::getHttpSession(remoteServerURI));
+                http::Request wopiRequest(remoteServerURI.getPathAndQuery());
+
+                const std::shared_ptr<const http::Response> httpResponse =
+                    httpSession->syncRequest(wopiRequest);
+
+                unsigned int statusCode = httpResponse->statusLine().statusCode();
+
+                if (statusCode == Poco::Net::HTTPResponse::HTTP_OK)
+                {
+                    validConnectBack = true;
+                    connectMessage = "OK";
+
+                    std::string body = httpResponse->getBody();
+                }
+                else
+                {
+                    connectMessage = "Collabora received unexpected status code from the WOPI host: " +
+                            std::to_string(statusCode);
+                }
+            }
+            catch (...)
+            {
+                connectMessage = "Failed to fetch";
+            }
+
+
+        Poco::JSON::Object::Ptr check = new Poco::JSON::Object;
+        check->set("status", validWopiConfig && validConnectBack);
+        check->set("status_config", validWopiConfig);
+        check->set("status_connect", validConnectBack);
+        check->set("status_connect_message", connectMessage);
+        check->set("message", "Validated configuration and connectivity");
+        std::ostringstream ostrJSON;
+        check->stringify(ostrJSON);
+
+        http::Response httpResponse(http::StatusLine(200));
+        httpResponse.set("Last-Modified", Util::getHttpTimeNow());
+        httpResponse.setBody(ostrJSON.str(), "application/json");
+        httpResponse.set("X-Content-Type-Options", "nosniff");
+        socket->sendAndShutdown(httpResponse);
+        LOG_INF("Sent check results successfully.");
     }
 
     static void handleClipboardRequest(const Poco::Net::HTTPRequest& request,

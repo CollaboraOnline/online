@@ -110,6 +110,7 @@ private:
 
     bool _isGet : 1;
     bool _isHead : 1;
+    bool _isPost : 1;
     bool _isProxy : 1;
     bool _isWebSocket : 1;
     bool _isMobile : 1;
@@ -182,6 +183,10 @@ public:
     bool isGet(const char *path) const
     {
         return _isGet && _uriString == path;
+    }
+    bool isPost(const char *path) const
+    {
+        return _isPost && _uriString == path;
     }
     bool isGetOrHead(const char *path) const
     {
