@@ -102,6 +102,7 @@ wsd_sources = \
             ../common/Authorization.cpp \
             ../kit/Kit.cpp \
             ../kit/TestStubs.cpp \
+            ../wsd/Storage.cpp \
             ../wsd/FileServerUtil.cpp \
             ../wsd/RequestDetails.cpp \
             ../wsd/TileCache.cpp \
