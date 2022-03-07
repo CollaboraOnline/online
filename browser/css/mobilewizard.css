@@ -360,11 +360,9 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 
 #mobile-wizard .ui-content.unobutton.selected {
-	-webkit-filter: grayscale(0) brightness(90%) sepia(90%) hue-rotate(-179deg) saturate(800%) contrast(0.7);
-	filter: grayscale(0) brightness(90%) sepia(90%) hue-rotate(-179deg) saturate(800%) contrast(0.7);
-	box-shadow: 0 0 0px 8px #e6e6e640;
-	border-radius: 0.1px;
-	background-color: #e6e6e640;
+	box-shadow: 0 0 0px 8px var(--color-background-dark);
+	border-radius: var(--border-radius);
+	background-color: var(--color-background-dark);
 }
 
 .unotoolbutton.disabled, .mobile-wizard-widebutton.disabled {
