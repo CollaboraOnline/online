@@ -26,8 +26,8 @@
 #toolbar-down *:hover {
 	color: var(--color-text-darker);
 }
-#toolbar-down table {
-	background: var(--color-main-background);
+#toolbar-down:not(.mobile) {
+	background-color: var(--color-main-background);
 }
 #tb_actionbar_item_LanguageStatus table table td:first-of-type{
 	min-width: max-content !important;
