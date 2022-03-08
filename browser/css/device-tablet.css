@@ -127,17 +127,17 @@
 
 .notebookbar-tabs-container::before {
 	max-width: 2rem;
-	background: -webkit-gradient(linear,left top, right top,from(var(--gray-light-bg-color)),color-stop(50%, var(--gray-light-bg-color)),to(rgba(255,255,255,0)));
-	background: -webkit-linear-gradient(left,var(--gray-light-bg-color),var(--gray-light-bg-color) 50%,rgba(255,255,255,0));
-	background: -o-linear-gradient(left,var(--gray-light-bg-color),var(--gray-light-bg-color) 50%,rgba(255,255,255,0));
-	background: linear-gradient(to right,var(--gray-light-bg-color),var(--gray-light-bg-color) 50%,rgba(255,255,255,0));
+	background: -webkit-gradient(linear,left top, right top,from(var(--color-background-dark)),color-stop(20%, var(--color-background-dark)),to(rgba(255,255,255,0)));
+	background: -webkit-linear-gradient(left,var(--color-background-dark),var(--color-background-dark) 20%,rgba(255,255,255,0));
+	background: -o-linear-gradient(left,var(--color-background-dark),var(--color-background-dark) 20%,rgba(255,255,255,0));
+	background: linear-gradient(to right,var(--color-background-dark),var(--color-background-dark) 20%,rgba(255,255,255,0));
 }
 
 .notebookbar-tabs-container:after {
-	background: -webkit-gradient(linear,left top, right top,from(rgba(255,255,255,0)),color-stop(50%, var(--gray-light-bg-color)),to(var(--gray-light-bg-color)));
-	background: -webkit-linear-gradient(left,rgba(255,255,255,0),var(--gray-light-bg-color) 50%,var(--gray-light-bg-color));
-	background: -o-linear-gradient(left,rgba(255,255,255,0),var(--gray-light-bg-color) 50%,var(--gray-light-bg-color));
-	background: linear-gradient(to right,rgba(255,255,255,0),var(--gray-light-bg-color) 50%,var(--gray-light-bg-color));
+	background: -webkit-gradient(linear,left top, right top,from(rgba(255,255,255,0)),color-stop(20%, var(--color-background-dark)),to(var(--color-background-dark)));
+	background: -webkit-linear-gradient(left,rgba(255,255,255,0),var(--color-background-dark) 20%,var(--color-background-dark));
+	background: -o-linear-gradient(left,rgba(255,255,255,0),var(--color-background-dark) 20%,var(--color-background-dark));
+	background: linear-gradient(to right,rgba(255,255,255,0),var(--color-background-dark) 20%,var(--color-background-dark));
 }
 
 .hasnotebookbar #document-titlebar {

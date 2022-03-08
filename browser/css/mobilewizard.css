@@ -952,8 +952,8 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 	background-color: #ebf2fb;
 }
 #mobile-wizard button:disabled{
-	background-color: var(--gray-light-bg-color);
-	border-color: var(--gray-light-bg-color);
+	background-color: var(--color-background-lighter);
+	border-color: var(--color-background-lighter);
 	color: var(--color-text-lighter) !important;
 }
 #mobile-wizard button#cancel {

@@ -173,14 +173,14 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-tab.selected.jsdialog {
-	background: var(--gray-light-bg-color);
+	background-color: var(--color-background-lighter);
 	color: var(--color-text-lighter);
 }
 
 .ui-tab.jsdialog:hover {
 	cursor: pointer;
-	background: var(--gray-light-bg-color);
-	color: var(--color-text-lighter);
+	background-color: var(--color-background-darker);
+	color: var(--color-text-darker);
 }
 
 /* Expander */

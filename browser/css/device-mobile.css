@@ -748,7 +748,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	box-sizing: border-box;
 	color: var(--color-text-lighter) !important;
 	border-radius: var(--border-radius);
-	border: 1px solid var(--gray-light-bg-color);
+	border: 1px solid var(--color-border-lighter);
 	font-family: var(--mobile-font);
 	font-size: 16px;
 	font-weight: normal;
@@ -759,10 +759,10 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 #mobile-wizard-content #MacroSelectorDialog #commands {
 	border-radius: var(--border-radius);
 	height: auto;
-	border-color: var(--gray-light-bg-color);
+	border-color: var(--color-border);
 }
 #mobile-wizard-content #MacroSelectorDialog #categories > .ui-treeview-body > .mobile-wizard li {
-	border-bottom: 1px solid var(--gray-light-bg-color);
+	border-bottom: 1px solid var(--color-border);
 }
 #mobile-wizard-content #MacroSelectorDialog #commands {
 	margin-bottom: 6px;
