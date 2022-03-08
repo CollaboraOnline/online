@@ -250,7 +250,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 .ui-treeview {
 	display: block;
 	border: 1px solid var(--color-border);
-	border-radius: 2px;
+	border-radius: var(--border-radius);
 	overflow-y: auto;
 	overflow-x: hidden;
 	max-width: 1000px;

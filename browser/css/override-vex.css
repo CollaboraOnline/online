@@ -10,7 +10,7 @@
 }
 .vex-dialog-external-url::before {
 	content: 'URL';
-	border-radius: 3px;
+	border-radius: var(--border-radius);
 	padding: 1px 2px;
 	margin-right: 2px;
 	font-size: 11px;
@@ -145,7 +145,7 @@
 }
 
 .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input{
-	border-radius: 3px;
+	border-radius: var(--border-radius);
 	box-shadow: inset 0 0 2px 0 lightgray;
 	box-sizing: border-box;
 }
@@ -163,7 +163,7 @@
 kbd,
 .kbd {
 	background-color: #eee;
-	border-radius: 3px;
+	border-radius: var(--border-radius);
 	border: 1px solid #dcdcdc;
 	box-shadow: 0 1px 1px 0px rgba(0,0,0,.2), 0 2px 0 0 rgba(255,255,255,.7) inset;
 	color: #555;

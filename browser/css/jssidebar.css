@@ -90,7 +90,7 @@
 	background-color: #444;
 	color: white;
 	padding: 2px 4px;
-	border-radius: 2px;
+	border-radius: var(--border-radius);
 	white-space: nowrap;
 	margin-inline-start: -14px;
 }
