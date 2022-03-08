@@ -70,6 +70,6 @@ describe('Scroll through document', function() {
 
 		helper.typeIntoDocument('{end}');
 
-		desktopHelper.assertScrollbarPosition('horizontal', 581, 660);
+		desktopHelper.assertScrollbarPosition('horizontal', 540, 660);
 	});
 });
