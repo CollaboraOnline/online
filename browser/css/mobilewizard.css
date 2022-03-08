@@ -60,7 +60,7 @@ span#main-menu-btn-icon {
 	background-color: #dddddd;
 	box-shadow: inset 0px -1px 2px 5px #eee;
 	border-color: #dddddd;
-	border-radius: 2px
+	border-radius: var(--border-radius)
 }
 
 .mobile-wizard.ui-button-box {
@@ -709,7 +709,7 @@ a.leaflet-control-zoom-in {
 }
 #DeleteTable{
 	background-color: #fbf4f5;
-	border-radius: 6px;
+	border-radius: var(--border-radius);
 	padding-right: 4% !important;
 }
 #DeleteTable > span{
@@ -855,7 +855,7 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 #mobile-wizard input[type='checkbox']:checked{
 	background: url('images/lc_ok_white.svg') no-repeat center;
 	background-color: var(--color-primary-lighter);
-	border-radius: 2px;
+	border-radius: var(--border-radius);
 	border: 2px solid var(--color-primary);
 	outline: none;
 	box-shadow: none;
@@ -935,7 +935,7 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 #mobile-wizard #FontworkSameLetterHeights {
 	height: 44px;
 	width: 92%;
-	border-radius: 4px;
+	border-radius: var(--border-radius);
 	color: var(--color-primary-text) !important;
 	font-weight: bold;
 	background-color: var(--color-primary-lighter);

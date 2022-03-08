@@ -30,7 +30,7 @@ input#follow-checkbox {
 	-moz-appearance: none;
 	-o-appearance: none;
 	appearance: none;
-	border-radius: 2px;
+	border-radius: var(--border-radius);
 	border: 2px solid #aaa;
 	outline: none;
 	box-shadow: #00000015 0px 0px 2px 1px;
@@ -283,7 +283,7 @@ div#w2ui-overlay-actionbar.w2ui-overlay{
 	vertical-align: text-bottom;
 }
 .vex.vex-theme-plain .vex-dialog-form .vex-dialog-input input[type='text'] {
-	border-radius: 4px !important;
+	border-radius: var(--border-radius) !important;
 	background-color: #fff !important;
 	width: 100%;
 	width: -moz-available !important;
@@ -537,7 +537,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	margin-bottom: 5px !important;
 }
 #w2ui-overlay-editbar .menu{
-	border-radius: 3px;
+	border-radius: var(--border-radius);
 }
 #w2ui-overlay-editbar:before{
 	border: none !important;
@@ -747,7 +747,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	width: auto;
 	box-sizing: border-box;
 	color: var(--gray-light-txt--color) !important;
-	border-radius: 4px;
+	border-radius: var(--border-radius);
 	border: 1px solid var(--gray-light-bg-color);
 	font-family: var(--mobile-font);
 	font-size: 16px;
@@ -757,7 +757,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 }
 #mobile-wizard-content #MacroSelectorDialog #categories,
 #mobile-wizard-content #MacroSelectorDialog #commands {
-	border-radius: 4px;
+	border-radius: var(--border-radius);
 	height: auto;
 	border-color: var(--gray-light-bg-color);
 }
