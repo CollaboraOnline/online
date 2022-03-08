@@ -220,6 +220,15 @@ bool isLocalhost(const std::string& targetHost)
 
 #endif
 
+bool isTemplate(const std::string& filename)
+{
+    std::vector<std::string> templateExtensions {".stw", ".ott", ".dot", ".dotx", ".dotm", ".otm", ".stc", ".ots", ".xltx", ".xltm", ".sti", ".otp", ".potx", ".potm", ".std", ".otg"};
+    for (auto & extension : templateExtensions)
+        if (Util::endsWith(filename, extension))
+            return true;
+    return false;
+}
+
 std::unique_ptr<StorageBase> StorageBase::create(const Poco::URI& uri, const std::string& jailRoot,
                                                  const std::string& jailPath, bool takeOwnership)
 {
@@ -932,6 +941,8 @@ WopiStorage::WOPIFileInfo::WOPIFileInfo(const FileInfo &fileInfo,
         = COOLWSD::getConfigValue<std::string>("watermark.text", "");
     if (!overrideWatermarks.empty())
         _watermarkText = overrideWatermarks;
+    if (isTemplate(filename))
+        _disableExport = true;
 }
 
 bool WopiStorage::updateLockState(const Authorization& auth, LockContext& lockCtx, bool lock)
