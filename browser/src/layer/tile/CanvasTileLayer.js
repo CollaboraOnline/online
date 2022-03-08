@@ -6574,11 +6574,11 @@ L.CanvasTileLayer = L.Layer.extend({
 				i += 4;
 				console.log('apply new span of size ' + span + ' at pos ' + destCol + ', ' + destRow + ' into delta at byte: ' + offset);
 				span *= 4;
-				imgData.data[offset + 1] = 256; // debug - greener start
+				// imgData.data[offset + 1] = 256; // debug - greener start
 				while (span-- > 0) {
 					imgData.data[offset++] = delta[i++];
 				}
-				imgData.data[offset - 2] = 256; // debug - blue terminator
+				// imgData.data[offset - 2] = 256; // debug - blue terminator
 				break;
 			default:
 				console.log('ERROR: Unknown code ' + delta[i] +

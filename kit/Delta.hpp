@@ -112,6 +112,39 @@ class DeltaGenerator {
     };
     std::vector<std::shared_ptr<DeltaData>> _deltaEntries;
 
+    // Unpremultiplies data and converts native endian ARGB => RGBA bytes
+    static void
+    unpremult_copy (unsigned char *dest, const unsigned char *src, unsigned int count)
+    {
+        for (unsigned int i = 0; i < count; i += 4)
+        {
+            uint32_t pix;
+            uint8_t  alpha;
+
+            std::memcpy (&pix, src + i, sizeof (uint32_t));
+
+            alpha = (pix & 0xff000000) >> 24;
+            if (alpha == 255)
+            {
+                dest[0] = ((pix & 0xff0000) >> 16);
+                dest[1] = ((pix & 0x00ff00) >>  8);
+                dest[2] = ((pix & 0x0000ff) >>  0);
+                dest[3] = 255;
+            }
+            else if (alpha == 0)
+                dest[0] = dest[1] = dest[2] = dest[3] = 0;
+
+            else
+            {
+                dest[0] = (((pix & 0xff0000) >> 16) * 255 + alpha / 2) / alpha;
+                dest[1] = (((pix & 0x00ff00) >>  8) * 255 + alpha / 2) / alpha;
+                dest[2] = (((pix & 0x0000ff) >>  0) * 255 + alpha / 2) / alpha;
+                dest[3] = alpha;
+            }
+            dest += 4;
+        }
+    }
+
     bool makeDelta(
         const DeltaData &prev,
         const DeltaData &cur,
@@ -205,7 +238,10 @@ class DeltaGenerator {
 
                     size_t dest = output.size();
                     output.resize(dest + diff * 4);
-                    memcpy(&output[dest], &curRow.getPixels()[x], diff * 4);
+
+                    unpremult_copy(reinterpret_cast<unsigned char *>(&output[dest]),
+                                   (const unsigned char *)(&curRow.getPixels()[x]),
+                                   diff * 4);
 
                     LOG_TRC("different " << diff << "pixels");
                     x += diff;
@@ -407,10 +443,14 @@ class DeltaGenerator {
             zstr.next_out = compressed;
             zstr.avail_out = maxCompressed;
 
+            unsigned char fixedupLine[width * 4];
+
             // FIXME: should we RLE in pixels first ?
             for (int y = 0; y < height; ++y)
             {
-                zstr.next_in = (Bytef *)pixmap + ((startY + y) * bufferWidth * 4) + (startX * 4);
+                unpremult_copy(fixedupLine, (Bytef *)pixmap + ((startY + y) * bufferWidth * 4) + (startX * 4), width * 4);
+
+                zstr.next_in = fixedupLine;
                 zstr.avail_in = width * 4;
 
                 bool lastRow = (y == height - 1);
