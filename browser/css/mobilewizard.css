@@ -954,12 +954,12 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 #mobile-wizard button:disabled{
 	background-color: var(--gray-light-bg-color);
 	border-color: var(--gray-light-bg-color);
-	color: var(--gray-light-txt--color) !important;
+	color: var(--color-text-lighter) !important;
 }
 #mobile-wizard button#cancel {
 	background-color: transparent;
 	border-color: var(--gray-color);
-	color: var(--gray-light-txt--color) !important;
+	color: var(--color-text-lighter) !important;
 }
 #enablecontour + button {
 	float: right;
@@ -1072,7 +1072,7 @@ label.disabled {
 
 #mobile-wizard-popup .cool-annotation-author *,
 #mobile-wizard .cool-annotation-author * {
-	color: var(--gray-light-txt--color) !important;
+	color: var(--color-text-lighter) !important;
 	font-size: var(--default-font-size);
 }
 

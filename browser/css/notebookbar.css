@@ -244,7 +244,7 @@
 }
 
 .unotoolbutton.notebookbar:hover .unoarrow {
-	border-top: 5px solid var(--gray-light-txt--color);
+	border-top: 5px solid var(--color-border-darker);
 }
 
 #table-HomeTab .unospan-uptoolbar:not(.disabled) {
