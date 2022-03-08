@@ -2030,6 +2030,14 @@ L.CanvasTileLayer = L.Layer.extend({
 		var northEastPoint = this._latLngToCorePixels(this._graphicSelection.getNorthEast(), zoom);
 		var southWestPoint = this._latLngToCorePixels(this._graphicSelection.getSouthWest(), zoom);
 
+		if (this.isCalcRTL()) {
+			// Dark overlays (like any other overlay) need regular document coordinates.
+			// But in calc-rtl mode, charts (like shapes) have negative x document coordinate
+			// internal representation.
+			northEastPoint.x = Math.abs(northEastPoint.x);
+			southWestPoint.x = Math.abs(southWestPoint.x);
+		}
+
 		var bounds = new L.Bounds(northEastPoint, southWestPoint);
 
 		this._oleCSelections.setPointSet(CPointSet.fromBounds(bounds));
