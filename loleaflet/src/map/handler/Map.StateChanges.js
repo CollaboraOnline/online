@@ -42,6 +42,11 @@ L.Map.StateChangeHandler = L.Handler.extend({
 			var redlineId = 'change-' + state;
 			this._map._docLayer._annotations.selectById(redlineId);
 		}
+
+		if (e.commandName === '.uno:SlideMasterPage') {
+			this._map._docLayer._masterPageChanged = true;
+		}
+
 		$('#document-container').removeClass('slide-master-mode');
 		$('#document-container').addClass('slide-normal-mode');
 		if (slideMasterPageItem) {

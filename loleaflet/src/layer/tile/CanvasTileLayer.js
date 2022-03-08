@@ -1428,6 +1428,13 @@ L.CanvasTileLayer = L.TileLayer.extend({
 		this._sendClientVisibleArea();
 		this._sendClientZoom();
 
+		if (this._masterPageChanged) {
+			// avoid cancelling tiles on masterpage view switches
+			// it will be cancelled updateOnPartChange when necessary
+			this._masterPageChanged = false;
+			cancelTiles = false;
+		}
+
 		if (queue.length !== 0) {
 			if (cancelTiles) {
 				// we know that a new set of tiles (that completely cover one/more panes) has been requested
