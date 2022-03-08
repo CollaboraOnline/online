@@ -259,6 +259,7 @@ L.TileLayer = L.GridLayer.extend({
 		this._cellCursorOnPgUp = null;
 		this._cellCursorOnPgDn = null;
 		this._shapeGridOffset = new L.Point(0, 0);
+		this._masterPageChanged = false;
 
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
