@@ -2075,7 +2075,7 @@ void COOLWSD::innerInitialize(Application& self)
         {
             // Cleanup and exit.
             JailUtil::cleanupJails(ChildRoot);
-            std::exit(EX_OK);
+            Util::forcedExit(EX_OK);
         }
 #endif
         if (ChildRoot[ChildRoot.size() - 1] != '/')
@@ -2511,14 +2511,14 @@ void COOLWSD::handleOption(const std::string& optionName,
     if (optionName == "help")
     {
         displayHelp();
-        std::exit(EX_OK);
+        Util::forcedExit(EX_OK);
     }
     else if (optionName == "version-hash")
     {
         std::string version, hash;
         Util::getVersionInfo(version, hash);
         std::cout << hash << std::endl;
-        std::exit(EX_OK);
+        Util::forcedExit(EX_OK);
     }
     else if (optionName == "version")
         ; // ignore for compatibility
