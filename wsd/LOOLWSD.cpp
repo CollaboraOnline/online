@@ -1328,7 +1328,7 @@ void LOOLWSD::initialize(Application& self)
         {
             // Cleanup and exit.
             JailUtil::cleanupJails(ChildRoot);
-            std::exit(EX_OK);
+            Util::forcedExit(EX_OK);
         }
 #endif
         if (ChildRoot[ChildRoot.size() - 1] != '/')
