@@ -857,6 +857,7 @@ L.CanvasTileLayer = L.Layer.extend({
 		this._cellCursorOnPgUp = null;
 		this._cellCursorOnPgDn = null;
 		this._shapeGridOffset = new L.Point(0, 0);
+		this._masterPageChanged = false;
 
 		// Position and size of the selection start (as if there would be a cursor caret there).
 
@@ -5922,6 +5923,13 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		this._sendClientVisibleArea();
 		this._sendClientZoom();
+
+		if (this._masterPageChanged) {
+			// avoid cancelling tiles on masterpage view switches
+			// it will be cancelled updateOnPartChange when necessary
+			this._masterPageChanged = false;
+			cancelTiles = false;
+		}
 
 		if (queue.length !== 0) {
 			if (cancelTiles) {
