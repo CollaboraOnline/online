@@ -89,6 +89,10 @@ L.IFrameDialog = L.Class.extend({
 		return document.body.querySelector('.' + this.options.prefix + '-wrap');
 	},
 
+	postMessage: function (msg) {
+		this._iframe.contentWindow.postMessage(JSON.stringify(msg), '*');
+	},
+
 	isVisible: function () {
 		var elem = this.queryContainer();
 		return elem && elem.style.display !== 'none';
