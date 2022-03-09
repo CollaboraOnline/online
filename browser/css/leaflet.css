@@ -942,10 +942,10 @@ input.clipboard {
 	display: inline-block;
 	border-width: 0px .5px;
 	border-style: solid;
-	border-color: var(--gray-light-txt--color);
+	border-color: var(--color-border);
 	font-size: 10px;
 	text-align: center;
-	color: var(--gray-light-txt--color);
+	color: var(--color-text-lighter);
 	line-height: 7px;
 }
 

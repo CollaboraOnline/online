@@ -2429,7 +2429,7 @@ L.Control.JSDialogBuilder = L.Control.extend({
 			if (bgColor.style.backgroundColor == '#000000' || bgColor.style.backgroundColor == 'rgb(0, 0, 0)') {
 				bgColor.style.borderColor = '#6a6a6a';
 			} else {
-				bgColor.style.borderColor = 'var(--gray-color)';
+				bgColor.style.borderColor = 'var(--color-border)';
 			}
 		}
 	},
