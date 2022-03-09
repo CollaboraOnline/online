@@ -225,18 +225,20 @@
 .anchor-marker {
 	background: url('images/lc_anchormenu.svg') rgba(255,255,255,.85) no-repeat center;
 	border: 1px solid transparent;
+	border-radius: 4px;
 }
 
 .anchor-marker:hover {
 	background-color: rgba(255,255,255,.95);
 	cursor: grab;
-	border-color: #4d82b8;
+	border: 1px solid var(--color-primary);
 }
 
 .anchor-marker.anchor-dragging::before {
 	content: '';
 	display: block;
-	background: radial-gradient(#4d82b8 10%, rgba(255,255,255,0) 18%);
+	background: radial-gradient(var(--color-primary) 10%, rgba(255,255,255,0) 18%);
+	border-radius: 4px;
 	width: 18px;
 	height: 18px;
 }
@@ -244,7 +246,7 @@
 .anchor-marker.anchor-dragging {
 	background: rgba(255, 255, 255, 0.75);
 	cursor: grabbing;
-	border-color: #4d82b8;
+	border: 1px solid var(--color-primary);
 }
 
 /* visual tweaks */
