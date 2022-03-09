@@ -916,7 +916,6 @@ private:
     public:
         StorageManager()
             : _lastUploadTime(RequestManager::now())
-            , _lastUploadedFileModifiedTime(std::chrono::system_clock::now())
         {
         }
 
