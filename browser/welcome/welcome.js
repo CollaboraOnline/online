@@ -1,6 +1,8 @@
 window.onload = onLoaded;
 
 function onLoaded() {
+    window.addEventListener('message', onMessage, false);
+
     document.getElementById('slide-1-button').onclick = function() {
         onSlideClick('slide-2-indicator', true);
     };
@@ -50,6 +52,18 @@ function onSlideClick(e, isButton = false) {
         document.location = '#' + e.replace('-indicator', '');
 }
 
+function onMessage(e) {
+    try {
+        var msg = JSON.parse(e.data);
+        if (window.parent !== window.self && msg.MessageId === 'welcome-translate') {
+            setTranslatable(document.body, msg.strings);
+            window.parent.postMessage('{"MessageId":"welcome-show"}', '*');
+        }
+    } catch (err) {
+        return;
+    }
+}
+
 function getTranslatable(root, strings) {
     var nodes = root.childNodes;
     for (var it = 0; it < nodes.length; ++it) {
@@ -57,5 +71,15 @@ function getTranslatable(root, strings) {
             strings[nodes[it].nodeValue] = '';
         }
         getTranslatable(nodes[it], strings);
+    }
+}
+
+function setTranslatable(root, strings) {
+    var nodes = root.childNodes;
+    for (var it = 0; it < nodes.length; ++it) {
+        if (nodes[it].nodeType == Node.TEXT_NODE) {
+            nodes[it].nodeValue = strings[nodes[it].nodeValue];
+        }
+        setTranslatable(nodes[it], strings);
     }
 }
