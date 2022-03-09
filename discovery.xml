@@ -9,10 +9,10 @@
             <action name="edit" default="true" ext="fodt"/>
             <!-- Text template documents -->
             <action name="view" default="true" ext="stw"/>
-            <action name="edit" default="true" ext="ott"/>
+            <action name="view" default="true" ext="ott"/>
             <!-- MS Word -->
             <action name="edit" default="true" ext="doc"/>
-            <action name="edit" default="true" ext="dot"/>
+            <action name="view" default="true" ext="dot"/>
             <!-- OOXML wordprocessing -->
             <action name="edit" default="true" ext="docx"/>
             <action name="edit" default="true" ext="docm"/>
@@ -40,7 +40,7 @@
             <action name="view" default="true" ext="sxg"/>
             <action name="edit" default="true" ext="odm"/>
             <!-- Writer master document templates -->
-            <action name="edit" default="true" ext="otm"/>
+            <action name="view" default="true" ext="otm"/>
         </app>
 
         <app name="writer-web">
@@ -54,7 +54,7 @@
             <action name="edit" default="true" ext="fods"/>
             <!-- Spreadsheet template documents -->
             <action name="view" default="true" ext="stc"/>
-            <action name="edit" default="true" ext="ots"/>
+            <action name="view" default="true" ext="ots"/>
             <!-- MS Excel -->
             <action name="edit" default="true" ext="xls"/>
             <action name="edit" default="true" ext="xla"/>
@@ -81,15 +81,15 @@
             <action name="edit" default="true" ext="fodp"/>
             <!-- Presentation template documents -->
             <action name="view" default="true" ext="sti"/>
-            <action name="edit" default="true" ext="otp"/>
+            <action name="view" default="true" ext="otp"/>
             <!-- MS PowerPoint -->
             <action name="edit" default="true" ext="ppt"/>
-            <action name="edit" default="true" ext="pot"/>
+            <action name="view" default="true" ext="pot"/>
             <!-- OOXML presentation -->
             <action name="edit" default="true" ext="pptx"/>
             <action name="edit" default="true" ext="pptm"/>
-            <action name="edit" default="true" ext="potx"/>
-            <action name="edit" default="true" ext="potm"/>
+            <action name="view" default="true" ext="potx"/>
+            <action name="view" default="true" ext="potm"/>
             <action name="edit" default="true" ext="ppsx"/>
             <!-- Others -->
             <action name="view" default="true" ext="cgm"/>
@@ -103,7 +103,7 @@
             <action name="edit" default="true" ext="fodg"/>
             <!-- Drawing template documents -->
             <action name="view" default="true" ext="std"/>
-            <action name="edit" default="true" ext="otg"/>
+            <action name="view" default="true" ext="otg"/>
             <!-- Others -->
             <action name="view" ext="svg"/>
             <action name="view" default="true" ext="dxf"/>
@@ -219,12 +219,12 @@
             <action name="view" default="true" ext=""/>
         </app>
         <app name="application/vnd.oasis.opendocument.text-template">
-            <action name="edit" default="true" ext=""/>
+            <action name="view" default="true" ext=""/>
         </app>
 
         <!-- Writer master document templates -->
         <app name="application/vnd.oasis.opendocument.text-master-template">
-            <action name="edit" default="true" ext=""/>
+            <action name="view" default="true" ext=""/>
         </app>
 
         <!-- Spreadsheet template documents -->
@@ -232,7 +232,7 @@
             <action name="view" default="true" ext=""/>
         </app>
         <app name="application/vnd.oasis.opendocument.spreadsheet-template">
-            <action name="edit" default="true" ext=""/>
+            <action name="view" default="true" ext=""/>
         </app>
 
         <!-- Presentation template documents -->
@@ -240,7 +240,7 @@
             <action name="view" default="true" ext=""/>
         </app>
         <app name="application/vnd.oasis.opendocument.presentation-template">
-            <action name="edit" default="true" ext=""/>
+            <action name="view" default="true" ext=""/>
         </app>
 
         <!-- Drawing template documents -->
@@ -248,7 +248,7 @@
             <action name="view" default="true" ext=""/>
         </app>
         <app name="application/vnd.oasis.opendocument.graphics-template">
-            <action name="edit" default="true" ext=""/>
+            <action name="view" default="true" ext=""/>
         </app>
 
         <!-- MS Word -->
@@ -308,10 +308,10 @@
             <action name="edit" default="true" ext=""/>
         </app>
         <app name="application/vnd.openxmlformats-officedocument.presentationml.template">
-            <action name="edit" default="true" ext=""/>
+            <action name="view" default="true" ext=""/>
         </app>
         <app name="application/vnd.ms-powerpoint.template.macroEnabled.12">
-            <action name="edit" default="true" ext=""/>
+            <action name="view" default="true" ext=""/>
         </app>
 
         <!-- Others -->
