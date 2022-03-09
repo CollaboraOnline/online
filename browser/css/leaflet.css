@@ -139,6 +139,7 @@
 .leaflet-right .leaflet-control {
 	float: right;
 	margin-right: 10px;
+	line-height: 28px;
 
 }
 .leaflet-top .leaflet-control {
@@ -380,9 +381,9 @@ a.leaflet-control-buttons:hover:first-child {
 /* layers control */
 
 .leaflet-control-layers {
-	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-	background: #fff;
-	border-radius: var(--border-radius);
+	box-shadow: 0 1px 10px 1px var(--color-box-shadow);
+	border-radius: var(--border-radius-large);
+	background-color: var(--color-main-background);
 }
 .leaflet-control-layers-toggle {
 	background-image: url('images/layers.png');
@@ -501,13 +502,15 @@ a.leaflet-control-buttons:hover:first-child {
 }
 .leaflet-popup-content {
 	margin: 13px 19px;
-	line-height: 1.4;
+	line-height: 1.5em;
+	font-size: var(--default-font-size);
 }
 .leaflet-popup-content p {
 	margin: 18px 0;
 }
 .leaflet-popup-content tr:hover {
-	background-color: #eee;
+	background-color: var(--color-background-darker);
+	color: var(--color-text-darker);
 	cursor: pointer;
 }
 .leaflet-popup-content tbody {
@@ -515,7 +518,8 @@ a.leaflet-control-buttons:hover:first-child {
 	overflow-y: auto;
 }
 .leaflet-popup-selected {
-	background-color: #eee;
+	background-color: var(--color-background-dark);
+	color: var(--color-text-dark);
 }
 .leaflet-popup-tip-container {
 	margin: 0 auto;
@@ -539,8 +543,8 @@ a.leaflet-control-buttons:hover:first-child {
 }
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
-	background: white;
-	color: #333;
+	background: var(--color-background-lighter);
+	color: var(--color-main-text);
 	-webkit-box-shadow: 0 0 2px 0 rgba(0,0,0,0.4);
 	box-shadow: 0 0 2px 0 rgba(0,0,0,0.4);
 }
@@ -548,18 +552,20 @@ a.leaflet-control-buttons:hover:first-child {
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding: 4px 4px 0 0;
+	padding: 4px;
 	text-align: center;
-	width: 18px;
-	height: 14px;
-	font: 16px/14px Tahoma, Verdana, sans-serif;
-	color: #c3c3c3;
+	width: 32px;
+	height: 32px;
+	font-size: 32px;
+	color: var(--color-main-text);
 	text-decoration: none;
-	font-weight: bold;
-	background: transparent;
+	background-color: transparent;
+	border: 1px solid transparent;
+	border-radius: 50%;
 }
 .leaflet-container a.leaflet-popup-close-button:hover {
-	color: #999;
+	background-color: var(--color-background-darker);
+	border: 1px solid var(--color-border-darker);
 }
 .leaflet-popup-scrolled {
 	overflow: auto;
