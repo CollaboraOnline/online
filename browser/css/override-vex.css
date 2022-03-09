@@ -127,9 +127,9 @@
 }
 
 .vex.vex-theme-plain .vex-close:before {
-	width: 20px;
-	height: 20px;
-	line-height: 20px;
+	width: 32px;
+	height: 32px;
+	line-height: 32px;
 }
 
 #about-dialog {
@@ -162,24 +162,22 @@
 /* Keyboard input keys */
 kbd,
 .kbd {
-	background-color: #eee;
+	background-color: var(--color-background-dark);
 	border-radius: var(--border-radius);
-	border: 1px solid #dcdcdc;
-	box-shadow: 0 1px 1px 0px rgba(0,0,0,.2), 0 2px 0 0 rgba(255,255,255,.7) inset;
-	color: #555;
+	border: 1px solid var(--color-border-dark);
+	color: var(--color-text-dark);
 	display: inline-block;
 	font-family: monospace;
 	font-size: .85em;
-	font-weight: 700;
 	line-height: 1;
 	padding: 4px;
 	white-space: nowrap;
 }
 
 .kbd--plus {
-	color: #ccc;
-	padding: 0 2px;
-	font-size: 0.65em;
+	color: var(--color-text-dark);
+	padding: 0 4px;
+	font-size: 0.85em;
 }
 
 .warn-copy-paste {
