@@ -258,7 +258,7 @@ L.SVGGroup = L.Layer.extend({
 	_hasVisibleEmbeddedSVG: function () {
 		var result = false;
 		this._forEachSVGNode(function (svgNode) {
-			if (svgNode.getAttribute('opacity') !== 0)
+			if (parseInt(svgNode.getAttribute('opacity')) !== 0)
 				result = true;
 		});
 
