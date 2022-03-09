@@ -751,9 +751,16 @@ jsconfig: $(abs_srcdir)/jsconfig.json $(abs_srcdir)/admin/jsconfig.json
 build-tests: $(MOCHA_TS_JS_FILES)
 	@echo "Build of mocha test finished."
 
+MOCHA_TEST_LOG = "`pwd`/mocha.log"
 check-local: $(MOCHA_TS_JS_FILES)
 	@echo "Running mocha tests..."
-	@$(NODE) node_modules/mocha/bin/mocha "$(srcdir)/mocha_tests/**/*.js"
+	@echo > ${MOCHA_TEST_LOG}
+	@if $(NODE) node_modules/mocha/bin/mocha "$(srcdir)/mocha_tests/**/*.js" 2> ${MOCHA_TEST_LOG} 1>&2; then \
+		echo "Mocha tests finished successfully. Results in ${MOCHA_TEST_LOG}"; \
+	else \
+		cat ${MOCHA_TEST_LOG}; \
+		exit 1; \
+	fi
 
 SSL_FLAG = `xmllint --xpath 'string(/config/ssl/enable)' $(abs_top_builddir)/coolwsd.xml`
 
