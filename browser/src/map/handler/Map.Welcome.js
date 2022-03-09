@@ -3,7 +3,7 @@
  * L.Map.Welcome.
  */
 
-/* global app */
+/* global app _ */
 L.Map.mergeOptions({
 	welcome: true
 });
@@ -77,15 +77,20 @@ L.Map.Welcome = L.Handler.extend({
 	},
 
 	onMessage: function (e) {
-		var data = e.data;
-		data = JSON.parse(data).MessageId;
+		var data = JSON.parse(e.data);
 
-		if (data === 'welcome-show') {
+		if (data.MessageId === 'welcome-show') {
 			this._iframeWelcome.show();
-		} else if (data === 'welcome-close') {
+		} else if (data.MessageId == 'welcome-translate') {
+			var keys = Object.keys(data.strings);
+			for (var it in keys) {
+				data.strings[keys[it]] = _(keys[it]);
+			}
+			this._iframeWelcome.postMessage(data);
+		} else if (data.MessageId === 'welcome-close') {
 			localStorage.setItem('WSDWelcomeVersion', app.socket.WSDServer.Version);
 			this.remove();
-		} else if (data == 'iframe-welcome-load' && !this._iframeWelcome.isVisible()) {
+		} else if (data.MessageId == 'iframe-welcome-load' && !this._iframeWelcome.isVisible()) {
 			if (this._retries-- > 0) {
 				this.remove();
 				setTimeout(L.bind(this.showWelcomeDialog, this), 200);
