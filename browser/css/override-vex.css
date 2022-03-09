@@ -127,9 +127,18 @@
 }
 
 .vex.vex-theme-plain .vex-close:before {
-	width: 32px;
-	height: 32px;
-	line-height: 32px;
+	color: var(--color-main-text);
+	border: 1px solid transparent;
+	border-radius: 50%;
+	width: 48px;
+	height: 48px;
+	line-height: 48px;
+	font-size: 36px;
+}
+.vex.vex-theme-plain:hover .vex-close:hover:before {
+	color: var(--color-text-darker);
+	background-color: var(--color-background-darker);
+	border: 1px solid var(--color-border-darker);
 }
 
 #about-dialog {
