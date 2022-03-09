@@ -26,7 +26,12 @@ function onLoaded() {
     };
 
     if (window.parent !== window.self) {
-        window.parent.postMessage('{"MessageId":"welcome-show"}', '*');
+        var message = {
+            MessageId: 'welcome-translate',
+            strings: {}
+        };
+        getTranslatable(document.body, message.strings);
+        window.parent.postMessage(JSON.stringify(message), '*');
     }
 }
 
@@ -43,4 +48,14 @@ function onSlideClick(e, isButton = false) {
     document.getElementById(e).classList.add("active");
     if (isButton)
         document.location = '#' + e.replace('-indicator', '');
+}
+
+function getTranslatable(root, strings) {
+    var nodes = root.childNodes;
+    for (var it = 0; it < nodes.length; ++it) {
+        if (nodes[it].nodeType == Node.TEXT_NODE) {
+            strings[nodes[it].nodeValue] = '';
+        }
+        getTranslatable(nodes[it], strings);
+    }
 }
