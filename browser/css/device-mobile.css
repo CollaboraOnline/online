@@ -629,7 +629,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 
 #slide-sorter.portrait .preview-frame.preview-img-dropsite {
 	padding-right: 0px;
-	border-right: 20px solid var(--gray-color);
+	border-right: 20px solid var(--color-border);
 	border-bottom: none;
 }
 
@@ -657,7 +657,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 
 /* Highlight where a slide can be dropped when reordering by drag-and-drop. */
 #slide-sorter.landscape .preview-frame.preview-img-dropsite {
-	border-bottom: 10px solid var(--gray-color);
+	border-bottom: 10px solid var(--color-border-darker);
 }
 
 #mobile-wizard.menuwizard {
@@ -728,7 +728,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 /* Related to jsdialogs.css */
 /*   - macros */
 #mobile-wizard-content #MacroWarnMedium p {
-	color: var(--gray-light-txt--color);
+	color: var(--color-text-lighter);
 }
 #mobile-wizard-content #MacroWarnMedium p:first-child {
 	color: #333;
@@ -746,9 +746,8 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	padding: 5px;
 	width: auto;
 	box-sizing: border-box;
-	color: var(--gray-light-txt--color) !important;
 	border-radius: var(--border-radius);
-	border: 1px solid var(--gray-light-bg-color);
+	border: 1px solid var(--color-border-lighter);
 	font-family: var(--mobile-font);
 	font-size: 16px;
 	font-weight: normal;
@@ -759,16 +758,16 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 #mobile-wizard-content #MacroSelectorDialog #commands {
 	border-radius: var(--border-radius);
 	height: auto;
-	border-color: var(--gray-light-bg-color);
+	border-color: var(--color-border);
 }
 #mobile-wizard-content #MacroSelectorDialog #categories > .ui-treeview-body > .mobile-wizard li {
-	border-bottom: 1px solid var(--gray-light-bg-color);
+	border-bottom: 1px solid var(--color-border);
 }
 #mobile-wizard-content #MacroSelectorDialog #commands {
 	margin-bottom: 6px;
 }
 #mobile-wizard-content #MacroSelectorDialog #commands.selected {
-	border-color: #0b87e7;
+	border-color: var(--color-primary-dark);
 }
 #mobile-wizard-content #MacroSelectorDialog #commands > .mobile-wizard.ui-treeview-body {
 	min-height: auto;
@@ -780,7 +779,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	line-height: 11px;
 	display: block;
 	padding-left: 8px;
-	color: var(--gray-color);
+	color: var(--color-text-lighter);
 	font-size: 22px;
 }
 

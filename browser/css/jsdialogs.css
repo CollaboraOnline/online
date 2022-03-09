@@ -161,7 +161,7 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 	font-family: var(--cool-font);
 	line-height: normal;
 	color: dimgray;
-	color: var(--gray-light-txt--color);
+	color: var(--color-text-lighter);
 	height: 32px;
 	display: flex;
 	align-items: center;
@@ -173,14 +173,14 @@ td.jsdialog > [id^='table-box']:not(.sidebar) {
 }
 
 .ui-tab.selected.jsdialog {
-	background: var(--gray-light-bg-color);
-	color: var(--gray-light-txt--color);
+	background-color: var(--color-background-lighter);
+	color: var(--color-text-lighter);
 }
 
 .ui-tab.jsdialog:hover {
 	cursor: pointer;
-	background: var(--gray-light-bg-color);
-	color: var(--gray-light-txt--color);
+	background-color: var(--color-background-darker);
+	color: var(--color-text-darker);
 }
 
 /* Expander */
@@ -419,7 +419,7 @@ input[type='checkbox']:checked.autofilter, .jsdialog input[type='checkbox']:chec
 }
 
 .jsdialog input[type='radio'][disabled='disabled'] ~ label {
-	color: var(--gray-light-txt--color);
+	color: var(--color-text-lighter);
 }
 /* spinfield (number) */
 input[type='number'] {
@@ -796,9 +796,9 @@ input[type='number']:hover::-webkit-outer-spin-button {
 	width: 24px;
 	position: relative;
 	top: -6px;
-	border: 1px solid var(--gray-color);
+	border: 1px solid var(--color-border-dark);
 	border-radius: 7px;
-	outline: 1px solid white;
+	outline: 1px solid var(--color-background-lighter);
 }
 
 /* dropdown arrow */
