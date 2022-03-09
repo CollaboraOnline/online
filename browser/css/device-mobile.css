@@ -767,7 +767,7 @@ td[id^='tb_spreadsheet-toolbar_item']:focus table.w2ui-button div.w2ui-icon, td[
 	margin-bottom: 6px;
 }
 #mobile-wizard-content #MacroSelectorDialog #commands.selected {
-	border-color: #0b87e7;
+	border-color: var(--color-primary-dark);
 }
 #mobile-wizard-content #MacroSelectorDialog #commands > .mobile-wizard.ui-treeview-body {
 	min-height: auto;
