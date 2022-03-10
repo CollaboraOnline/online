@@ -47,7 +47,7 @@ describe('Top toolbar tests.', function() {
 
 	it('Apply style.', function() {
 		if (mode === 'notebookbar') {
-			cy.contains('.notebookbar.ui-iconview-entry','Title')
+			cy.get('.notebookbar.ui-iconview-entry img[title=Title]')
 				.click({force: true});
 		} else {
 			cy.get('#tb_editbar_item_styles')
@@ -59,7 +59,6 @@ describe('Top toolbar tests.', function() {
 		cy.get('#copy-paste-container p font font')
 			.should('have.attr', 'style', 'font-size: 28pt');
 	});
-
 
 	it('Apply font name.', function() {
 		desktopHelper.actionOnSelector('fontName', (selector) => { cy.get(selector).click(); });
@@ -280,7 +279,7 @@ describe('Top toolbar tests.', function() {
 		cy.get('#annotation-content-area-1').should('contain','some text0');
 	});
 
-	it('Insert table.', function() {
+	it('Insert/delete table.', function() {
 		cy.get('#toolbar-up .w2ui-scroll-right')
 			.click();
 
@@ -293,12 +292,17 @@ describe('Top toolbar tests.', function() {
 		cy.get('.inserttable-grid > .row > .col').eq(3)
 		   .click();
 
-		// Move cursor outside of the table to make selection work.
-		helper.moveCursor('down');
-		writerHelper.selectAllTextOfDoc();
+		helper.typeIntoDocument('{ctrl}a');
 
 		cy.get('#copy-paste-container table')
 			.should('exist');
+
+		helper.typeIntoDocument('{ctrl}a');
+
+		helper.typeIntoDocument('{shift}{del}');
+
+		cy.get('.leaflet-marker-icon.table-column-resize-marker')
+			.should('not.exist');
 	});
 
 	it('Insert image.', function() {
@@ -348,7 +352,7 @@ describe('Top toolbar tests.', function() {
 			.should('have.attr', 'href', 'http://www.something.com/');
 	});
 
-	it('Insert shape.', function() {
+	it('Insert/delete shape.', function() {
 
 		mode === 'notebookbar' ? cy.get('#Insert-tab-label').click() : '';
 
@@ -362,9 +366,15 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 			.should('exist');
+
+		//delete
+		helper.typeIntoDocument('{del}');
+
+		cy.get('.leaflet-control-buttons-disabled path.leaflet-interactive')
+			.should('not.exist');
 	});
 
-	it('Insert chart.', function() {
+	it('Insert/delete chart.', function() {
 		mode === 'notebookbar' ? cy.get('#Insert-tab-label').click() : '';
 
 		cy.get('#toolbar-up .w2ui-scroll-right')
@@ -374,6 +384,12 @@ describe('Top toolbar tests.', function() {
 
 		cy.get('.leaflet-pane.leaflet-overlay-pane svg g')
 			.should('exist');
+
+		//delete
+		helper.typeIntoDocument('{del}');
+
+		cy.get('.leaflet-control-buttons-disabled path.leaflet-interactive')
+			.should('not.exist');
 	});
 
 	it.skip('Save.', function() {
@@ -586,5 +602,90 @@ describe('Top toolbar tests.', function() {
 			cy.log(data);
 		}).then(() => expect(data).to.deep.eq(expectedData));
 
+	});
+
+	it('Apply superscript.', function() {
+		writerHelper.selectAllTextOfDoc();
+
+		if (mode == 'notebookbar') {
+			cy.get('.unospan-Home.unoSuperScript')
+				.click();
+		} else {
+			// classic mode doesnot have superscript button
+			helper.typeIntoDocument('{ctrl}{shift}p');
+		}
+
+		cy.get('.leaflet-layer').click('center');
+
+		writerHelper.selectAllTextOfDoc();
+
+		cy.get('#copy-paste-container p sup')
+			.should('exist');
+	});
+
+	it('Apply subscript.', function() {
+		writerHelper.selectAllTextOfDoc();
+
+		if (mode == 'notebookbar') {
+			cy.get('.unospan-Home.unoSubScript')
+				.click();
+		} else {
+			// classic mode doesnot have subscript button
+			helper.typeIntoDocument('{ctrl}{shift}b');
+		}
+
+		cy.get('.leaflet-layer').click('center');
+
+		writerHelper.selectAllTextOfDoc();
+
+		cy.get('#copy-paste-container p sub')
+			.should('exist');
+	});
+
+	it('Delete Text', function() {
+		helper.selectAllText();
+
+		helper.expectTextForClipboard('text text1');
+
+		helper.typeIntoDocument('{del}');
+
+		helper.typeIntoDocument('{ctrl}a');
+
+		helper.textSelectionShouldNotExist();
+	});
+
+	it('Insert/delete Fontwork', function() {
+		writerHelper.selectAllTextOfDoc();
+
+		if (mode == 'notebookbar')
+		{
+			cy.get('#Insert-tab-label')
+				.click();
+
+			cy.get('#toolbar-up .w2ui-scroll-right')
+				.click();
+
+			cy.get('.unospan-Insert.unoFontworkGalleryFloater')
+				.click();
+		}
+		else
+		{
+			cy.get('#menu-insert')
+				.click()
+				.contains('a','Fontwork...')
+				.click();
+		}
+
+		cy.get('#ok')
+			.click();
+
+		cy.get('.leaflet-control-buttons-disabled path.leaflet-interactive')
+			.should('exist');
+
+		//delete
+		helper.typeIntoDocument('{del}');
+
+		cy.get('.leaflet-control-buttons-disabled path.leaflet-interactive')
+			.should('not.exist');
 	});
 });
