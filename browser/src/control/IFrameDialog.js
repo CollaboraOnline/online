@@ -68,11 +68,16 @@ L.IFrameDialog = L.Class.extend({
 		var msg = this.options.prefix + '-load';
 		var that = this;
 		this._loading = true;
-		setTimeout(function () {
+		this._errorTimer = setTimeout(function () {
 			if (!that.isVisible()) {
 				window.postMessage('{"MessageId":"' + msg + '"}');
 			}
-		}, 500);
+		}, 1000);
+	},
+
+	clearTimeout: function ()
+	{
+		clearTimeout(this._errorTimer);
 	},
 
 	remove: function () {

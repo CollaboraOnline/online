@@ -82,6 +82,7 @@ L.Map.Welcome = L.Handler.extend({
 		if (data.MessageId === 'welcome-show') {
 			this._iframeWelcome.show();
 		} else if (data.MessageId == 'welcome-translate') {
+			this._iframeWelcome.clearTimeout();
 			var keys = Object.keys(data.strings);
 			for (var it in keys) {
 				data.strings[keys[it]] = _(keys[it]);
