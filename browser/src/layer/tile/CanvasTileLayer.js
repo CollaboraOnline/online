@@ -6993,6 +6993,8 @@ L.MessageStore = L.Class.extend({
 			return;
 		}
 
+		this._cleanUpSelectionMessages(this._ownMessages);
+
 		var ownMessages = this._ownMessages;
 		Object.keys(this._ownMessages).forEach(function (msgType) {
 			callback(ownMessages[msgType]);
@@ -7002,5 +7004,17 @@ L.MessageStore = L.Class.extend({
 		Object.keys(othersMessages).forEach(function (msgType) {
 			othersMessages[msgType].forEach(callback);
 		});
+	},
+
+	_cleanUpSelectionMessages: function(messages) {
+		// must be called only from _replayPrintTwipsMsg !!
+		// check if textselection is empty
+		// if it is, we need to handle textselectionstart and textselectionend
+		// otherwise we get handles without selection and they also may appear in the wrong cell
+		// but it is also reproducible on the same cell too. e.g. selection handles without selection
+		if (!messages && !messages['textselection'] && messages['textselection'] !== 'textselection: ')
+			return;
+		messages['textselectionstart'] = 'textselectionstart: ';
+		messages['textselectionend'] = 'textselectionend: ';
 	}
 });
