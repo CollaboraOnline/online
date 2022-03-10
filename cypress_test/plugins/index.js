@@ -5,7 +5,6 @@ var uuid = require('uuid');
 
 var tasks = require('./tasks');
 var blacklists = require('./blacklists');
-var whitelists = require('./whitelists');
 var selectTests = require('cypress-select-tests');
 
 function plugin(on, config) {
@@ -74,9 +73,9 @@ function removeBlacklistedTest(filename, testsToRun, blackList) {
 	return testsToRun;
 }
 
-function isNotebookbarTest(filename, whitelist) {
-	for (var i =0 ; i < whitelist.length; i++) {
-		if (filename.endsWith(whitelist[i])) {
+function isNotebookbarTest(filename, notebookbarOnlyList) {
+	for (var i =0 ; i < notebookbarOnlyList.length; i++) {
+		if (filename.endsWith(notebookbarOnlyList[i])) {
 			return true;
 		}
 	}
@@ -97,7 +96,7 @@ function pickTests(filename, foundTests) {
 	}
 
 	if (process.env.USER_INTERFACE === 'notebookbar') {
-		if (!isNotebookbarTest(filename,whitelists.notebookbarOnlyList)) {
+		if (!isNotebookbarTest(filename,blacklists.notebookbarOnlyList)) {
 			testsToRun = [];
 		}
 	}
