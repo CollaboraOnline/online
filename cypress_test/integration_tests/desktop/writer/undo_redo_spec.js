@@ -48,6 +48,8 @@ describe('Editing Operations', function() {
 		cy.contains('.leaflet-popup-content table tbody tr','Typing: “World”')
 			.dblclick();
 
-		helper.expectTextForClipboard('\nHello');
+		helper.selectAllText();
+
+		helper.expectTextForClipboard('\nHello \n');
 	});
 });
