@@ -19,4 +19,5 @@ for entry in welcome:
     if entry.msgid == '':
         continue
     coolui.append(entry)
+coolui.metadata['Content-Type'] = 'text/plain; charset=UTF-8'
 coolui.save(sys.argv[2])
