@@ -1275,6 +1275,7 @@ html[dir='rtl'] #userListPopover::after {
 	background-color: transparent;
 }
 
+.w2ui-toolbar table.w2ui-button .w2ui-tb-caption,
 .w2ui-toolbar table.w2ui-button.checked .w2ui-tb-caption,
 .w2ui-reset table tr th, .w2ui-reset table tr td {
 	font-size: var(--default-font-size);
