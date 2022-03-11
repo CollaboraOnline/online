@@ -6492,36 +6492,39 @@ L.CanvasTileLayer = L.Layer.extend({
 		var delta = inflator.decompress();
 
 		// 'Uint8Array' delta
-		var canvas = document.createElement('canvas');
-		canvas.width = window.tileSize;
-		canvas.height = window.tileSize;
+		var canvas;
+		var initCanvas = false;
+		if (tile.el && (tile.el instanceof HTMLCanvasElement))
+			canvas = tile.el;
+		else
+		{
+			canvas = document.createElement('canvas');
+			canvas.width = window.tileSize;
+			canvas.height = window.tileSize;
+			initCanvas = true;
+		}
 		var ctx = canvas.getContext('2d');
+
+		if (initCanvas) // render old image data to the canvas
+			ctx.drawImage(tile.el, 0, 0);
+
+		tile.el = canvas;
 
 		var pixSize = canvas.width * canvas.height * 4;
 
 		// FIXME: check if tile.el is a canvas and just re-use it ...
 		if (rawDelta[0] === 90 /* Z */)
 		{
-			// FIXME: really necessary ?
-			ctx.rect(0, 0, canvas.width, canvas.height);
-			ctx.fill();
-
 			var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 			// FIXME: is this really necessary ?
 			for (var i = 0; i < pixSize; ++i)
 				imgData.data[i] = delta[i];
 			ctx.putImageData(imgData, 0, 0);
-
-			tile.el = canvas;
+			// ctx.putImageData(new ImageData(canvas.width, canvas.height, delta), 0, 0);
 
 			console.log('cleanly set new image');
 			return;
 		}
-
-		// else - apply delta:
-
-		// render old data to the canvas
-		ctx.drawImage(tile.el, 0, 0);
 
 		// FIXME; can we operate directly on the image ?
 		var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -6589,7 +6592,6 @@ L.CanvasTileLayer = L.Layer.extend({
 		}
 
 		ctx.putImageData(imgData, 0, 0);
-		tile.el = canvas;
 
 		console.log('set new image from delta');
 	},
