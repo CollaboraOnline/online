@@ -538,8 +538,8 @@ nav.drawing-color-indicator ~ #main-document-content .cool-annotation-reply-coun
 .cool-annotation-textarea {
 	font-family: var(--cool-font) !important;
 	font-size: var(--default-font-size);
-	border: 1px solid #c8c8c8;
-	background-color: white;
+	border: 1px solid var(--color-border);
+	background-color: var(--color-background-dark);
 	overflow-x: hidden;
 	height: 50px;
 	width: 100%;
