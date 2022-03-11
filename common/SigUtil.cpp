@@ -254,7 +254,7 @@ namespace SigUtil
     static char FatalGdbString[256] = { '\0' };
 
     static
-    void handleFatalSignal(const int signal)
+    void handleFatalSignal(const int signal, siginfo_t *info, void * /* uctxt */)
     {
         SigHandlerTrap guard;
         bool bReEntered = !guard.isExclusive();
@@ -267,6 +267,13 @@ namespace SigUtil
         else
             Log::signalLog(" Fatal signal received: ");
         Log::signalLog(signalName(signal));
+        if (info)
+        {
+            Log::signalLog(" code: ");
+            Log::signalLogNumber(info->si_code);
+            Log::signalLog(" for address: 0x");
+            Log::signalLogNumber((size_t)info->si_addr, 16);
+        }
         Log::signalLog("\n");
 
         Log::signalLog("Recent activity:\n");
@@ -358,8 +365,8 @@ namespace SigUtil
         setVersionInfo(versionInfo);
 
         sigemptyset(&action.sa_mask);
-        action.sa_flags = 0;
-        action.sa_handler = handleFatalSignal;
+        action.sa_flags = SA_SIGINFO;
+        action.sa_sigaction = handleFatalSignal;
 
         sigaction(SIGSEGV, &action, nullptr);
         sigaction(SIGBUS, &action, nullptr);
