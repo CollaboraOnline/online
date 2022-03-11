@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-10 10:29+0200\n"
-"PO-Revision-Date: 2022-02-25 14:14+0000\n"
-"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
+"PO-Revision-Date: 2022-02-27 21:06+0000\n"
+"Last-Translator: Rizal Muttaqin <riz_17_oke@yahoo.co.id>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/help/id/>\n"
 "Language: id\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.11.1-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -1028,7 +1028,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.h2:130-9
 msgid "Navigating in Spreadsheets"
-msgstr "Menavigasi dalam Spreadsheet"
+msgstr "Menavigasi dalam Lembar Sebar"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:132-18
 msgid "Moves the cursor to the first cell in the sheet (A1)."
@@ -1061,6 +1061,8 @@ msgid ""
 "Selects cells from the current cell up to one page in the current column or "
 "extends the existing selection one page up."
 msgstr ""
+"Memilih sel dari sel saat ini ke atas hingga satu halaman di kolom saat ini "
+"atau memperluas pilihan yang ada satu halaman ke atas."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:138-164
 #, fuzzy
@@ -1072,6 +1074,8 @@ msgid ""
 "Selects cells from the current cell down to one page in the current column "
 "or extends the existing selection one page down."
 msgstr ""
+"Memilih sel dari sel saat ini ke bawah menuju satu halaman di kolom saat ini "
+"atau memperluas pilihan yang ada satu halaman ke bawah."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:139-168
 #, fuzzy
@@ -1084,6 +1088,9 @@ msgid ""
 "to the left of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the left that contains data"
 msgstr ""
+"Memindahkan kursor ke tepi kiri rentang data saat ini. Jika kolom di sebelah "
+"kiri sel yang berisi kursor kosong, kursor berpindah ke kolom berikutnya di "
+"sebelah kiri yang berisi data"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:140-245
 #, fuzzy
@@ -1096,6 +1103,9 @@ msgid ""
 "to the right of the cell that contains the cursor is empty, the cursor moves "
 "to the next column to the right that contains data."
 msgstr ""
+"Memindahkan kursor ke tepi kanan rentang data saat ini. Jika kolom di "
+"sebelah kanan sel yang berisi kursor kosong, kursor berpindah ke kolom "
+"berikutnya di sebelah kanan yang berisi data."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:141-249
 #, fuzzy
@@ -1108,6 +1118,9 @@ msgid ""
 "the cell that contains the cursor is empty, the cursor moves up to the next "
 "row that contains data."
 msgstr ""
+"Memindahkan kursor ke tepi atas rentang data saat ini. Jika baris di atas "
+"sel yang berisi kursor kosong, kursor akan berpindah ke baris berikutnya "
+"yang berisi data."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:142-221
 #, fuzzy
@@ -1120,6 +1133,9 @@ msgid ""
 "below the cell that contains the cursor is empty, the cursor moves down to "
 "the next row that contains data."
 msgstr ""
+"Memindahkan kursor ke tepi bawah rentang data saat ini. Jika baris di bawah "
+"sel yang berisi kursor kosong, kursor bergerak ke bawah ke baris berikutnya "
+"yang berisi data."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:143-226
 #, fuzzy
@@ -1133,6 +1149,9 @@ msgid ""
 "used to select rows and columns together, a rectangular cell range is "
 "selected."
 msgstr ""
+"Memilih semua sel yang berisi data dari sel saat ini hingga akhir rentang "
+"sel data yang berkelanjutan, ke arah yang ditekan panah. Jika digunakan "
+"untuk memilih baris dan kolom bersama-sama, rentang sel persegi akan dipilih."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:144-272
 #, fuzzy
@@ -1145,7 +1164,7 @@ msgstr ""
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-18
 msgid "Moves one sheet to the left."
-msgstr ""
+msgstr "Memindahkan satu lembar ke kiri."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:145-73
 #, fuzzy
@@ -1154,7 +1173,7 @@ msgstr "Shift</kbd><span class=\"kbd--plus\">+</span><kbd>PageUp"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-18
 msgid "Moves one screen page to the right."
-msgstr ""
+msgstr "Memindahkan satu halaman layar ke kanan."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:146-80
 #, fuzzy
@@ -1167,6 +1186,9 @@ msgid ""
 "sheets in a spreadsheet are selected, this shortcut key combination only "
 "selects the previous sheet. Makes the previous sheet the current sheet."
 msgstr ""
+"Menambahkan lembar sebelumnya ke pilihan lembar saat ini. Jika semua lembar "
+"dalam lembar sebar dipilih, kombinasi tombol pintasan ini hanya memilih "
+"lembar sebelumnya. Membuat lembar sebelumnya menjadi lembar saat ini."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:147-260
 #, fuzzy
@@ -1183,6 +1205,9 @@ msgid ""
 "a spreadsheet are selected, this shortcut key combination only selects the "
 "next sheet. Makes the next sheet the current sheet."
 msgstr ""
+"Menambahkan lembar berikutnya ke pilihan lembar saat ini. Jika semua lembar "
+"dalam lembar sebar dipilih, kombinasi tombol pintasan ini hanya memilih "
+"lembar berikutnya. Membuat lembar berikutnya menjadi lembar saat ini."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:148-248
 #, fuzzy
@@ -1199,6 +1224,9 @@ msgid ""
 "data range that contains the cursor. A range is a contiguous cell range that "
 "contains data and is bounded by empty row and columns."
 msgstr ""
+"di mana (*) adalah tanda perkalian pada papan tombol numerik. Memilih "
+"rentang data yang berisi kursor. Rentang adalah rentang sel yang berdekatan "
+"yang berisi data dan dibatasi oleh baris dan kolom kosong."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:149-249
 #, fuzzy
@@ -1210,6 +1238,8 @@ msgid ""
 "where (/) is the division sign on the numeric key pad. Selects the matrix "
 "formula range that contains the cursor."
 msgstr ""
+"di mana (/) adalah tanda pembagian pada papan tombol numerik. Memilih "
+"rentang rumus matriks yang berisi kursor."
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:150-158
 #, fuzzy
@@ -1218,7 +1248,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>Z"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-18
 msgid "Insert cells (as in menu Insert - Cells)"
-msgstr ""
+msgstr "Sisipkan sel (seperti pada menu Sisip - Sel)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:151-85
 #, fuzzy
@@ -1227,7 +1257,7 @@ msgstr "Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>P"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-18
 msgid "Delete cells (as in menu Edit - Delete Cells)"
-msgstr ""
+msgstr "Hapus sel (seperti pada menu Sunting - Hapus Sel)"
 
 #: html/cool-help.html%2Bdiv.div.table.tr.td:152-90
 #, fuzzy
@@ -1549,18 +1579,27 @@ msgid ""
 "the assigned color. Note: you will see your cursor as black, blinking "
 "cursor, although others will see you with a different color."
 msgstr ""
+"Setiap pengguna diberi warna. Kursor setiap pengguna akan ditampilkan dalam "
+"warna yang ditetapkan. Catatan: Anda akan melihat kursor Anda sebagai kursor "
+"hitam yang berkedip, meskipun orang lain akan melihat Anda dengan warna yang "
+"berbeda."
 
 #: html/cool-help.html%2Bdiv.ul.li.p:336-11
 msgid ""
 "You can jump to the cursor of a user by clicking on the name (or avatar) of "
 "the user. It is possible to follow the editor."
 msgstr ""
+"Anda dapat melompat ke kursor pengguna dengan mengklik nama (atau avatar) "
+"pengguna. Hal ini dimungkinkan untuk mengikuti penyunting."
 
 #: html/cool-help.html%2Bdiv.ul.li.p:337-11
 msgid ""
 "<span class=\"productname\">%productName</span> notifies you with a small "
 "notification in the footer when a new user enters or when a user leaves."
 msgstr ""
+"<span class=\"productname\">%productName</span> memberi tahu Anda dengan "
+"pemberitahuan kecil di kaki saat pengguna baru masuk atau saat pengguna "
+"keluar."
 
 #: html/cool-help.html%2Bdiv.p:341-5
 msgid ""
@@ -1569,12 +1608,18 @@ msgid ""
 "including small screens found in mobile devices. The interface is composed "
 "of:"
 msgstr ""
+"<span class=\"productname\">%productName</span> menggunakan sumber daya "
+"peramban modern untuk menyesuaikan antarmuka pengguna dengan ukuran area "
+"tampilan, termasuk layar kecil yang ditemukan di perangkat seluler. "
+"Antarmuka terdiri dari:"
 
 #: html/cool-help.html%2Bdiv.p:342-5
 msgid ""
 "<span class=\"def\">The document area:</span> The application area shows the "
 "document contents, either spreadsheets, presentations or text documents."
 msgstr ""
+"<span class=\"def\">Wilayah dokumen:</span> Wilayah aplikasi menampilkan "
+"konten dokumen, baik lembar sebar, presentasi, atau dokumen teks."
 
 #: html/cool-help.html%2Bdiv.p.img:343-5
 msgid ""
@@ -1585,12 +1630,21 @@ msgid ""
 "Click on the <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/unfold."
 "svg\"> icon to show the menu."
 msgstr ""
+"<span class=\"def\">Bilah menu:</span> Menu utama ditempatkan di atas dan "
+"mencakup banyak pilihan, perintah untuk mencetak, menyunting, melihat, dan "
+"perintah lanjutan lainnya. Anda dapat menyembunyikan bilah menu dengan "
+"mengklik <img style=\"height:0.6cm;width:0.6cm;\" src=\"images/fold.svg\"> "
+"ikon di paling kanan. Klik pada <img style=\"height:0.6cm;width:0.6cm;\" src="
+"\"images/unfold.svg\"> ikon untuk menampilkan menu."
 
 #: html/cool-help.html%2Bdiv.p:344-5
 msgid ""
 "<span class=\"def\">Context menus:</span> On clicking with the right mouse "
 "button, a menu appears with commands associated with the underlying object."
 msgstr ""
+"<span class=\"def\">Menu konteks:</span> Saat mengklik dengan tombol kanan "
+"tetikus, menu muncul dengan perintah yang terkait dengan objek yang "
+"mendasarinya."
 
 #: html/cool-help.html%2Bdiv.p:345-5
 msgid ""
@@ -1598,12 +1652,18 @@ msgid ""
 "options for daily editing. Toolbar buttons are dynamic, meaning that their "
 "state (on or off) depends on different factors."
 msgstr ""
+"<span class=\"def\">Bilah alat:</span> Bilah alat berisi pilihan yang paling "
+"sering digunakan untuk penyuntingan harian. Tombol bilah alat bersifat "
+"dinamis, artinya statusnya (menyala atau mati) bergantung pada berbagai "
+"faktor."
 
 #: html/cool-help.html%2Bdiv.p:346-5
 msgid ""
 "<span class=\"def\">The status bar:</span> The status bar is shown in the "
 "bottom, and contains several useful options and features."
 msgstr ""
+"<span class=\"def\">Bilah status:</span> Bilah status ditampilkan di bagian "
+"bawah, dan berisi beberapa pilihan dan fitur yang berguna."
 
 #: html/cool-help.html%2Bdiv.p:348-5
 msgid ""
@@ -1612,18 +1672,23 @@ msgid ""
 "automatically moves to the first occurrence found. Searching is not case-"
 "sensitive. There are three buttons right next to the search box:"
 msgstr ""
+"<span class=\"def\">Bilah pencarian:</span> Pencarian dimulai secara "
+"otomatis ketika konten dimasukkan ke dalam kotak pencarian, dan jendela "
+"dokumen secara otomatis berpindah ke kemunculan pertama yang ditemukan. "
+"Pencarian tidak peka huruf besar/kecil. Ada tiga tombol tepat di sebelah "
+"kotak pencarian:"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:350-11
 msgid "Search backwards"
-msgstr ""
+msgstr "Cari mundur"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:351-11
 msgid "Search forward"
-msgstr ""
+msgstr "Cari maju"
 
 #: html/cool-help.html%2Bdiv.ul.li.p:352-11
 msgid "Cancel the search (appears only when a text has been searched)"
-msgstr ""
+msgstr "Batalkan pencarian (hanya muncul ketika teks telah dicari)"
 
 #: html/cool-help.html%2Bdiv.p:354-5
 msgid ""
@@ -1632,16 +1697,24 @@ msgid ""
 "in. The zoom applies to the document area, the user interface is not "
 "affected. The current level of zoom is shown in this area."
 msgstr ""
+"<span class=\"def\">Bilah zum:</span> Di sebelah kanan bilah status, "
+"terdapat serangkaian tombol yang memungkinkan Anda memperbesar hingga 100%, "
+"memperkecil, dan memperbesar. Zum berlaku untuk wilayah dokumen, antarmuka "
+"pengguna tidak terpengaruh. Tingkat zum saat ini ditampilkan di wilayah ini."
 
 #: html/cool-help.html%2Bdiv.p:355-5
 msgid ""
 "Text, charts, shapes and svg images will stay sharp, when zooming in, you "
 "will only see pixels appear at inserted images, such as jpg’s or png’s."
 msgstr ""
+"Teks, bagan, bentuk, dan citra svg akan tetap tajam, saat memperbesar, Anda "
+"hanya akan melihat piksel muncul pada gambar yang disisipkan, seperti jpeg "
+"atau png."
 
 #: html/cool-help.html%2Bdiv.p:356-5
 msgid "Using the browser zoom affects the document and user interface areas."
 msgstr ""
+"Menggunakan peramban zum memengaruhi wilayah antarmuka dokumen dan pengguna."
 
 #: html/cool-help.html%2Bdiv.p:357-5
 msgid ""
@@ -1649,12 +1722,17 @@ msgid ""
 "bar, a set of information on the document is displayed. The actual "
 "information depends on the nature of the document."
 msgstr ""
+"<span class=\"def\">Bilah informasi:</span> Di sebelah kanan bilah "
+"pencarian, sekumpulan informasi pada dokumen ditampilkan. Informasi aktual "
+"tergantung pada sifat dokumen."
 
 #: html/cool-help.html%2Bdiv.p:361-5
 msgid ""
 "Your documents are stored and managed in the cloud storage that is "
 "integrated with <span class=\"productname\">%productName</span>."
 msgstr ""
+"Dokumen Anda disimpan dan dikelola di penyimpanan awan yang terintegrasi "
+"dengan <span class=\"productname\">%productName</span>."
 
 #: html/cool-help.html%2Bdiv.p:362-5
 msgid ""
@@ -1669,6 +1747,8 @@ msgid ""
 "To open document, click on the file to open the <span class=\"productname\""
 ">%productName</span> module associated to the document format."
 msgstr ""
+"Untuk membuka dokumen, klik berkas untuk membuka modul <span class="
+"\"productname\">%productName</span> yang terkait dengan format dokumen."
 
 #: html/cool-help.html%2Bdiv.p:364-5
 msgid ""
@@ -1677,6 +1757,10 @@ msgid ""
 "quickly as possible you can also force saving using the <span class=\"ui\""
 ">File</span> menu’s <span class=\"ui\">Save</span> entry."
 msgstr ""
+"Dokumen di <span class=\"productname\">%productName</span> disimpan secara "
+"otomatis, tetapi jika Anda khawatir dokumen akan disinkronkan secepat "
+"mungkin, Anda juga dapat memaksa menyimpan menggunakan entri menu <span "
+"class=\"ui\">Berkas</span> <span class=\"ui\">Simpan</span>."
 
 #: html/cool-help.html%2Bdiv.p:365-5
 msgid ""
@@ -1684,17 +1768,23 @@ msgid ""
 "a “Download PDF export?” popup shows. You can print this PDF in your "
 "favorite PDF reader."
 msgstr ""
+"Tergantung pada kemampuan peramban Anda, jendela cetak mungkin muncul atau "
+"\"Unduh ekspor PDF?\" yang akan muncul. Anda dapat mencetak PDF ini di "
+"pembaca PDF kesayangan."
 
 #: html/cool-help.html%2Bdiv.p:366-5
 msgid ""
 "When closing a document, it is automatically saved if it has been changed."
-msgstr ""
+msgstr "Saat menutup dokumen, secara otomatis disimpan jika telah diubah."
 
 #: html/cool-help.html%2Bdiv.p:369-5
 msgid ""
 "Document editing should be familiar to everyone that has used an office "
 "application before, but here are some distinctive features:"
 msgstr ""
+"Penyuntingan dokumen seharusnya sudah tidak asing lagi bagi semua orang yang "
+"pernah menggunakan aplikasi perkantoran sebelumnya, namun berikut adalah "
+"beberapa fitur khasnya:"
 
 #: html/cool-help.html%2Bdiv.h4:370-5
 msgid "Copy and Paste"
@@ -1715,6 +1805,19 @@ msgid ""
 "selecting text by double tapping, and using a long-tap to access copy/cut/"
 "paste via the context menu is required."
 msgstr ""
+"Salin/potong dan tempel konten yang kaya didukung, tidak hanya di dalam "
+"dokumen tertentu, tetapi juga di seluruh dokumen pada <span class="
+"\"productname\">%productName</span> yang sama atau berbeda. Untuk penggunaan "
+"internal ini, pengguna dapat menyalin/memotong konten, termasuk gambar dan "
+"konten campuran, di PC dengan menggunakan pintasan papan tik secara langsung "
+"(<kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span ><kbd>X</kbd>, <kbd>Ctrl</"
+"kbd><span class=\"kbd--plus\">+</span><kbd>C</kbd>, <kbd>Ctrl</kbd ><span "
+"class=\"kbd--plus\">+</span><kbd>V</kbd>). Untuk alasan keamanan, perlu "
+"menggunakan <kbd>Ctrl</kbd><span class=\"kbd--plus\">+</span><kbd>V</kbd> "
+"untuk menempel di PC, tetapi menu konteks dapat digunakan untuk memotong dan "
+"menyalin. Di Android atau iOS, pilih teks dengan mengetuk dua kali, dan "
+"menggunakan ketuk lama untuk mengakses salin/potong/tempel melalui menu "
+"konteks diperlukan."
 
 #: html/cool-help.html%2Bdiv.p:372-5
 msgid ""
@@ -1726,6 +1829,13 @@ msgid ""
 "in external applications. This step also converts complex object types into "
 "static images."
 msgstr ""
+"Untuk menyalin konten yang lebih besar ke aplikasi lain di perangkat Anda, "
+"pengguna perlu menekan tombol <span class=\"ui\">Mulai unduh</span>, lalu "
+"salin ulang ini ke papan klip mereka agar tersedia untuk aplikasi target "
+"untuk membaca. Ini dimungkinkan melalui widget kecil yang muncul di sudut "
+"kanan bawah, dan hanya diperlukan untuk mengekspor konten untuk ditempelkan "
+"di aplikasi eksternal. Langkah ini juga mengubah jenis objek kompleks "
+"menjadi gambar statis."
 
 #: html/cool-help.html%2Bdiv.h4:373-5
 msgid "Document repair"

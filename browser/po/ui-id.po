@@ -12,8 +12,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-10 10:29+0100\n"
-"PO-Revision-Date: 2022-02-25 14:14+0000\n"
-"Last-Translator: Andika Triwidada <andika@gmail.com>\n"
+"PO-Revision-Date: 2022-02-26 22:55+0000\n"
+"Last-Translator: Rizal Muttaqin <riz_17_oke@yahoo.co.id>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/"
 "collabora-online/ui/id/>\n"
 "Language: id\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.11.1-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -761,7 +761,7 @@ msgstr "Gambar ODF (.odg)"
 
 #: src/control/Control.Menubar.js:560 src/control/Control.Menubar.js:933
 msgid "ODF spreadsheet (.ods)"
-msgstr "Lembar Sebar ODF (.ods)"
+msgstr "Lembar sebar ODF (.ods)"
 
 #: src/control/Control.Menubar.js:561 src/control/Control.Menubar.js:934
 #: src/control/Control.NotebookbarCalc.js:150
