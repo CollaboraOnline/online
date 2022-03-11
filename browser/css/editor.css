@@ -4,7 +4,7 @@
 	width: 100%;
 }
 .selected-user {
-	background-color: darkgrey;
+	background-color: var(--color-background-dark);
 }
 #editor-btn {
 	padding: 3px 5px;
