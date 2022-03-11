@@ -919,10 +919,17 @@ L.Handler.PathTransform = L.Handler.extend({
 
 	_createAnchor: function() {
 		var map = this._map;
+		// 'anchor' contains number defined by SdrHdlKind in the core
+		// https://opengrok.libreoffice.org/xref/core/include/svx/svdhdl.hxx?r=e3077168&fi=BitmapMarkerKind#52
 		var anchor = this.options.handles['anchor'];
-		if (!anchor['16'])
+
+		var anchorKind = '16'; // Anchor
+		if (!anchor[anchorKind])
+			anchorKind = '21'; // Anchor_TR - RTL
+		if (!anchor[anchorKind])
 			return;
-		var handle = anchor['16'][0];
+
+		var handle = anchor[anchorKind][0];
 		var point = new L.Point(handle.point.x, handle.point.y);
 		point = map._docLayer._convertCalcTileTwips(point);
 		var anchorPos = map._docLayer._twipsToLatLng(point, this._map.getZoom());
