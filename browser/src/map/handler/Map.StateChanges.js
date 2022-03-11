@@ -45,6 +45,9 @@ L.Map.StateChangeHandler = L.Handler.extend({
 
 		if (e.commandName === '.uno:SlideMasterPage') {
 			this._map._docLayer._masterPageChanged = true;
+			// clear the old tiles because they are saved in the same place
+			// since the part no will be the same for both views and it will think it is cached
+			this._map._docLayer._onMessage('invalidatetiles: EMPTY', null);
 		}
 
 		$('#document-container').removeClass('slide-master-mode');
