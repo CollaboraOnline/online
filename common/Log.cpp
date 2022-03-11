@@ -115,15 +115,22 @@ namespace Log
 
     // We need a signal safe means of writing messages
     //   $ man 7 signal
-    void signalLogNumber(std::size_t num)
+    void signalLogNumber(std::size_t num, int base)
     {
         int i;
         char buf[22];
+        if (num == 0)
+        {
+            signalLog("0");
+            return;
+        }
         buf[21] = '\0';
+        assert (base == 10 || base == 16);
         for (i = 20; i > 0 && num > 0; --i)
         {
-            buf[i] = '0' + num % 10;
-            num /= 10;
+            int d = num % base;
+            buf[i] = (d < 10) ? ('0' + d) : ('a' + d - 10);
+            num /= base;
         }
         signalLog(buf + i + 1);
     }
