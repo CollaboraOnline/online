@@ -1038,10 +1038,7 @@ private:
         try
         {
             if (!load(session, renderOpts))
-            {
-                session->sendTextFrameAndLogError("error: cmd=load kind=faileddocloading");
                 return false;
-            }
         }
         catch (const std::exception &exc)
         {
