@@ -2,6 +2,7 @@
 
 /* global vex _ getParameterByName */
 var errorMessages = {};
+var welcomeStrings = {};
 
 vex.defaultOptions.className = 'vex-theme-plain';
 
@@ -51,6 +52,28 @@ errorMessages.uploadfile = {
 	toolarge: _('Uploading file to server failed, the file is too large.')
 };
 
+
+welcomeStrings.explore = _('Explore the new ');
+welcomeStrings.slide11 = _('Enjoy the latest developments in online productivity, free for you to use, to explore and to use with others in the browser. Various ');
+welcomeStrings.slide12 = _('apps');
+welcomeStrings.slide13 = _(' are also available for mobile. ');
+welcomeStrings.slide14 = _(' introduces important improvements, in the areas of usability, visual presentation and performance.');
+welcomeStrings.slide21 = _('Discover all the changes');
+welcomeStrings.slide22 = _('Check the ');
+welcomeStrings.slide23 = _('release notes');
+welcomeStrings.slide24 = _(' and learn all about: The latest milestone in performance particularly for larger groups working on documents; New scrollbars; Improved spreadsheet\'s tabs and more.');
+welcomeStrings.slide31 = _('Get involved');
+welcomeStrings.slide32 = _('Are you interested in contributing but don’t know where to start? Head over to the ');
+welcomeStrings.slide33 = _('step-by-step instructions');
+welcomeStrings.slide34 = _('and build CODE from scratch. You can also help out with');
+welcomeStrings.slide35 = _('translations');
+welcomeStrings.slide36 = _(' or by ');
+welcomeStrings.slide37 = _('filing a bug report');
+welcomeStrings.slide38 = _(' with all the essential steps on how to reproduce it.');
+
 if (typeof window !== 'undefined') {
 	window.errorMessages = errorMessages;
+	// silence unused variable welcomeStrings
+	window.welcomeStrings = welcomeStrings;
+	delete window.welcomeStrings;
 }
