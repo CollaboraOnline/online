@@ -6503,28 +6503,20 @@ L.CanvasTileLayer = L.Layer.extend({
 			canvas.height = window.tileSize;
 			initCanvas = true;
 		}
-		var ctx = canvas.getContext('2d');
-
-		if (initCanvas) // render old image data to the canvas
-			ctx.drawImage(tile.el, 0, 0);
-
 		tile.el = canvas;
 
-		var pixSize = canvas.width * canvas.height * 4;
-
-		// FIXME: check if tile.el is a canvas and just re-use it ...
+		var ctx = canvas.getContext('2d');
 		if (rawDelta[0] === 90 /* Z */)
 		{
-			var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-			// FIXME: is this really necessary ?
-			for (var i = 0; i < pixSize; ++i)
-				imgData.data[i] = delta[i];
-			ctx.putImageData(imgData, 0, 0);
-			// ctx.putImageData(new ImageData(canvas.width, canvas.height, delta), 0, 0);
-
-			console.log('cleanly set new image');
+			// FIXME: zlib.js to de-compress directly into Uint8ClampedArray?
+			// FIXME: re-use that same Uint8ClampedArray each time too ...
+			ctx.putImageData(new ImageData(new Uint8ClampedArray(delta),
+						       canvas.width, canvas.height), 0, 0);
 			return;
 		}
+
+		if (initCanvas && tile.el) // render old image data to the canvas
+			ctx.drawImage(tile.el, 0, 0);
 
 		// FIXME; can we operate directly on the image ?
 		var imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -6532,6 +6524,7 @@ L.CanvasTileLayer = L.Layer.extend({
 
 		var offset = 0;
 
+		var pixSize = canvas.width * canvas.height * 4;
 		console.log('Applying a delta of length ' + delta.length + ' pix size: ' + pixSize + '\nhex: ' + hex2string(delta));
 
 		// Green-tinge the old-Data ...
