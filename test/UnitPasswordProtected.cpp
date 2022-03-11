@@ -54,7 +54,7 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithout
         // Send a load request without password first
         helpers::sendTextFrame(socket, "load url=" + documentURL);
 
-        const auto response = helpers::getResponseString(socket, "error:", testname);
+        auto response = helpers::getResponseString(socket, "error:", testname);
         StringVector tokens(Util::tokenize(response, ' '));
         LOK_ASSERT_EQUAL(static_cast<size_t>(3), tokens.size());
 
@@ -64,6 +64,9 @@ UnitBase::TestResult UnitPasswordProtected::testPasswordProtectedDocumentWithout
         COOLProtocol::getTokenString(tokens[2], "kind", errorKind);
         LOK_ASSERT_EQUAL(std::string("load"), errorCommand);
         LOK_ASSERT_EQUAL(std::string("passwordrequired:to-view"), errorKind);
+
+        response = helpers::getResponseString(socket, "error:", testname);
+        LOK_ASSERT_MESSAGE("Unexpected second error message", !response.size());
     }
     catch (const Poco::Exception& exc)
     {
