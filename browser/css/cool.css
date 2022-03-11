@@ -30,7 +30,7 @@
 	position: fixed;
 }
 #document-container {
-	background: #DFDFDF;
+	background-color: var(--color-main-background);
 	position: relative;
 	margin: 0;
 	padding: 0;
@@ -149,7 +149,7 @@
 }
 
 .table-select-marker:hover::before {
-	border-color: #1C99E0;
+	border-color: var(--color-primary);
 }
 
 .table-move-marker {
@@ -173,7 +173,7 @@ body {
 }
 
 #presentation-controls-wrapper {
-	background: #dfdfdf;
+	background: var(--color-main-background);
 	position: relative;
 	border-top: 1px solid var(--color-border);
 	display: none;
