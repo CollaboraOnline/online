@@ -19,7 +19,7 @@
 	height: 100%;
 	width: 0px;
 	top: 0%;
-	box-shadow: 8px 0 13px 2px #0b87e7, -6px 0px 6px 6px #007cdc;
+	box-shadow: 8px 0 13px 2px var(--color-primary), -6px 0px 6px 6px var(--color-primary);
 	border-radius: 0px;
 }
 #toolbar-up .w2ui-scroll-right{
@@ -99,12 +99,6 @@
 	flex-wrap: nowrap;
 	word-wrap: nowrap;
 	max-width: 60%;
-	background: transparent no-repeat;
-	background-image: -webkit-radial-gradient(0 50%, farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0)), -webkit-radial-gradient(100% 50%, farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0));
-	background-image: -o-radial-gradient(0 50%, farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0)), -o-radial-gradient(100% 50%, farthest-side, rgba(0,0,0,0.2), rgba(0,0,0,0));
-	background-image: radial-gradient(farthest-side at 0 50%, rgba(0,0,0,0.2), rgba(0,0,0,0)), radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,0.2), rgba(0,0,0,0));
-	background-position: 0 0, 100% 0;
-	background-size: 1rem 100%;
 }
 
 .main-nav.readonly.hasnotebookbar .notebookbar-tabs-container {
@@ -123,21 +117,8 @@
 	-webkit-flex: 1 0 auto;
 	-ms-flex: 1 0 auto;
 	flex: 1 0 auto;
-}
-
-.notebookbar-tabs-container::before {
 	max-width: 2rem;
-	background: -webkit-gradient(linear,left top, right top,from(var(--color-background-dark)),color-stop(20%, var(--color-background-dark)),to(rgba(255,255,255,0)));
-	background: -webkit-linear-gradient(left,var(--color-background-dark),var(--color-background-dark) 20%,rgba(255,255,255,0));
-	background: -o-linear-gradient(left,var(--color-background-dark),var(--color-background-dark) 20%,rgba(255,255,255,0));
-	background: linear-gradient(to right,var(--color-background-dark),var(--color-background-dark) 20%,rgba(255,255,255,0));
-}
-
-.notebookbar-tabs-container:after {
-	background: -webkit-gradient(linear,left top, right top,from(rgba(255,255,255,0)),color-stop(20%, var(--color-background-dark)),to(var(--color-background-dark)));
-	background: -webkit-linear-gradient(left,rgba(255,255,255,0),var(--color-background-dark) 20%,var(--color-background-dark));
-	background: -o-linear-gradient(left,rgba(255,255,255,0),var(--color-background-dark) 20%,var(--color-background-dark));
-	background: linear-gradient(to right,rgba(255,255,255,0),var(--color-background-dark) 20%,var(--color-background-dark));
+	box-shadow: 0px 0 13px 2px var(--color-primary), 0px 0px 26px 6px var(--color-primary-lighter);
 }
 
 .hasnotebookbar #document-titlebar {
