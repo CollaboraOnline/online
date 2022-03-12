@@ -495,8 +495,8 @@
 
 .ui-drawing-area-loader
 {
-	border: 5px solid #f3f3f3;
-	border-top: 5px solid #d6d6d6;
+	border: 5px solid var(--color-border-lighter);
+	border-top: 5px solid var(--color-border);
 	border-radius: 50%;
 	width: 20px;
 	height: 20px;
