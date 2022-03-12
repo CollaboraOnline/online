@@ -87,8 +87,8 @@
 	position: absolute;
 	display: block;
 	width: auto;
-	background-color: #444;
-	color: white;
+	background-color: var(--color-background-darker);
+	color: var(--color-text-darker);
 	padding: 2px 4px;
 	border-radius: var(--border-radius);
 	white-space: nowrap;
