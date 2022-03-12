@@ -8,17 +8,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-11 23:55+0100\n"
-"PO-Revision-Date: 2022-02-11 21:22+0000\n"
+"PO-Revision-Date: 2022-03-12 18:25+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/collabora-online/"
 "ui/he/>\n"
-"Language: \n"
+"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -2044,11 +2044,11 @@ msgstr "נוצר עותק…"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "ברוך בואך אל Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New %COOLWSD_VERSION%"
-msgstr ""
+msgstr "הנה החידושים ב־%COOLWSD_VERSION% החדשה"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -2069,7 +2069,6 @@ msgid "Next"
 msgstr "הבא"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
-#, fuzzy
 msgid "Discover All The Changes"
 msgstr "לגלות את כל השינויים"
 
