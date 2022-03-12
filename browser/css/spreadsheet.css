@@ -52,12 +52,12 @@
 	padding-top: 8px;
 	vertical-align: bottom;
 	display: inline-block;
-	background-color: gray;
+	background-color: var(--color-main-background);
 	padding-bottom: 5px;
 }
 
 .tab-dropsite {
-	border-right: gray solid 5px;
+	border-right: 5px solid var(--color-border);
 }
 
 #first-tab-drop-site.tab-dropsite {
@@ -66,8 +66,8 @@
 }
 
 #spreadsheet-header-corner-container {
-	border: 1px solid darkgrey;
-	background-color: #f1f4f7;
+	border: 1px solid var(--color-border-dark);
+	background-color: var(--colo-background-dark);
 	cursor: pointer;
 
 	position: absolute;
@@ -91,16 +91,16 @@
 }
 
 .spreadsheet-header-corner-styles {
-	border: 1px solid darkgray;
+	border: 1px solid var(--color-border-dark);
+	background-color: var(--colo-background-dark);
 	font: var(--default-font-size)/1.5 var(--cool-font);
-	color: black;
-	background-color: #f1f4f7;
+	color: var(--color-text-dark);
 	cursor: pointer;
 }
 
 #spreadsheet-header-columns-container {
-	border: 1px solid darkgrey;
-	background-color: lightgrey;
+	border: 1px solid var(--color-border-dark);
+	background-color: var(--colo-background-dark);
 
 	position: absolute;
 	display: inline-block;
@@ -112,6 +112,19 @@
 	overflow: hidden;
 }
 
+#spreadsheet-header-rows-container {
+	border: 1px solid var(--color-border-dark);
+	background-color: var(--colo-background-dark);
+
+	position: absolute;
+	left: 0;
+	top: 20px;
+	width: 48px;
+	bottom: 0;
+	overflow: hidden;
+}
+
+.spreadsheet-header-rows,
 .spreadsheet-header-columns {
 	display: inline-block;
 	white-space: nowrap;
@@ -123,63 +136,28 @@
 	padding: 0px;
 }
 
+.spreadsheet-header-row,
 .spreadsheet-header-column {
-	border: 1px solid darkgray;
+	border: 1px solid var(--color-border-dark);
+	background-color: var(--colo-background-dark);
 	font: var(--default-font-size)/1.5 var(--cool-font);
-	color: black;
-	background-color: #f1f4f7;
+	color: var(--color-text-dark);
 	cursor: pointer;
 }
 
+.spreadsheet-header-row-hover,
 .spreadsheet-header-column-hover {
-	background-color: #DDD;
+	background-color: var(--background-color-darker);
 }
 
+.spreadsheet-header-row-selected,
 .spreadsheet-header-column-selected {
-	color: white;
-	background: linear-gradient(#0b87e7, #0b87e7, #0b87e7);
+	color: var(--color-primary-text);
+	background: linear-gradient(var(--color-primary), var(--color-primary), var(--color-primary));
 }
 
 .spreadsheet-header-column-resize {
 	cursor: col-resize;
-}
-
-#spreadsheet-header-rows-container {
-	border: 1px solid darkgrey;
-	background-color: lightgrey;
-
-	position: absolute;
-	left: 0;
-	top: 20px;
-	width: 48px;
-	bottom: 0;
-	overflow: hidden;
-}
-
-.spreadsheet-header-rows {
-	width: 100%;
-	height: 100%;
-	border-spacing: 0px !important;
-	position: relative;
-	margin: 0px;
-	padding: 0px;
-}
-
-.spreadsheet-header-row {
-	border: 1px solid darkgray;
-	font: var(--default-font-size)/1.5 var(--cool-font);
-	color: black;
-	background-color: #f1f4f7;
-	cursor: pointer;
-}
-
-.spreadsheet-header-row-hover {
-	background-color: #DDD;
-}
-
-.spreadsheet-header-row-selected {
-	color: white;
-	background: linear-gradient(#0b87e7, #0b87e7, #0b87e7);
 }
 
 .spreadsheet-header-row-resize {
@@ -210,8 +188,8 @@
 	margin-top: 0px;
 	width: 18px;
 	height: 17px;
-	background: url('images/drop-down-button.svg') center top/16px #eee no-repeat;
-	border: 1px solid #ccc;
+	background: url('images/drop-down-button.svg') center top/16px var(--color-background-lighter) no-repeat;
+	border: 1px solid var(--color-border-lighter);
 	box-sizing: border-box;
 	box-shadow: 0 0 1px 1px #00000015
 }
