@@ -2088,8 +2088,8 @@ msgid "Collabora Online Welcome"
 msgstr "Collabora Online'a Hoş Geldiniz"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %COOLWSD_VERSION%"
-msgstr "Yeni %COOLWSD_VERSION% sürümünü keşfedin"
+msgid "Explore The New %coolVersion"
+msgstr "Yeni %coolVersion sürümünü keşfedin"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7

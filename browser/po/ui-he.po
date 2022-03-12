@@ -2047,8 +2047,8 @@ msgid "Collabora Online Welcome"
 msgstr "ברוך בואך אל Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %COOLWSD_VERSION%"
-msgstr "הנה החידושים ב־%COOLWSD_VERSION% החדשה"
+msgid "Explore The New %coolVersion"
+msgstr "הנה החידושים ב־%coolVersion החדשה"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7

@@ -2,7 +2,7 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -2093,8 +2093,8 @@ msgid "Collabora Online Welcome"
 msgstr "Üdvözli a Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %COOLWSD_VERSION%"
-msgstr "Fedezze fel az új %COOLWSD_VERSION%-t"
+msgid "Explore The New %coolVersion"
+msgstr "Fedezze fel az új %coolVersion-t"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7

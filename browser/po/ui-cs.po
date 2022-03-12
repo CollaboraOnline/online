@@ -2082,8 +2082,8 @@ msgid "Collabora Online Welcome"
 msgstr "Vítejte v Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
-msgid "Explore The New %COOLWSD_VERSION%"
-msgstr "Prozkoumejte nové %COOLWSD_VERSION%"
+msgid "Explore The New %coolVersion"
+msgstr "Prozkoumejte nové %coolVersion"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
