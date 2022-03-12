@@ -12,17 +12,17 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-11 23:55+0100\n"
-"PO-Revision-Date: 2022-02-24 20:27+0000\n"
-"Last-Translator: Stanislav Horáček <stanislav.horacek@gmail.com>\n"
+"PO-Revision-Date: 2022-03-12 18:25+0000\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/collabora-online/"
 "ui/cs/>\n"
-"Language: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <="
-" 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: admin/admin.strings.js:6
 msgid "Admin console"
@@ -2079,11 +2079,11 @@ msgstr "Vytváření kopie…"
 
 #: welcome/welcome.html%2Bhtml.head.title:9-3
 msgid "Collabora Online Welcome"
-msgstr ""
+msgstr "Vítejte v Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New %COOLWSD_VERSION%"
-msgstr ""
+msgstr "Prozkoumejte nové %COOLWSD_VERSION%"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
@@ -2097,6 +2097,11 @@ msgid ""
 "\" href=\"https://www.collaboraoffice.com/solutions/collabora-office-"
 "android-ios/\">apps</a> are also available for mobile."
 msgstr ""
+"Užívejte si nejnovějších pokroků ve vývoji online produktivity, které máte "
+"zdarma k využívání a objevujte je a používejte společně s ostatními ve "
+"webovém prohlížeči. Různé <a target=\"_blank\" href=\"https://www."
+"collaboraoffice.com/solutions/collabora-office-android-ios/\">aplikace</a> "
+"jsou také k dispozici pro mobilní platformy."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:29-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.div:40-7
@@ -2104,9 +2109,8 @@ msgid "Next"
 msgstr "Další"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
-#, fuzzy
 msgid "Discover All The Changes"
-msgstr "Prohlédněte si všechny změny"
+msgstr "Objevte všechny změny"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -2115,14 +2119,18 @@ msgid ""
 "latest Collabora Online Development Edition, aimed at home users and small "
 "teams."
 msgstr ""
+"Podívejte se do <a target=\"_blank\" href=\"https://www.collaboraoffice.com/"
+"code-21-11-release-notes/\">poznámek k vydání</a> a dozvíte se vše o "
+"nejnovějším vydání Collabora Online Development Edition, určeného domácím "
+"uživatelům a malým kolektivům."
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:48-7
 msgid "Get Involved"
-msgstr ""
+msgstr "Zapojte se"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
@@ -2135,6 +2143,14 @@ msgid ""
 "\">filing a bug report</a> with all the essential steps on how to reproduce "
 "it."
 msgstr ""
+"Máte zájem o to se zapojit, ale nevíte kde začít? Zamiřte do <a target="
+"\"_blank\" href=\"https://collaboraonline.github.io/post/build-code/\""
+">návodu krok za krokem</a> a sestavte si CODE ze zdrojových kódů. Je také "
+"možné pomoci s <a target=\"_blank\" href=\"https://collaboraonline.github.io/"
+"post/translate/\">překlady</a> a nebo prostřednictvím <a target=\"_blank\" "
+"href=\"https://collaboraonline.github.io/post/filebugs/\">vyplňování hlášení "
+"chyb</a> (doprovázených popisem kroků nezbytných k vyvolání si jejich "
+"projevů vývojáři samotnými."
 
 #~ msgid "Menu"
 #~ msgstr "Nabídka"
