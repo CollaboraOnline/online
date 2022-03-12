@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-11 23:55+0200\n"
-"PO-Revision-Date: 2022-03-11 20:48+0000\n"
-"Last-Translator: Omar Macías Molina <omar.maciasmolina@gmail.com>\n"
+"PO-Revision-Date: 2022-03-13 21:44+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "help/ca/>\n"
 "Language: ca\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Translate Toolkit 2.5.0\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 #: html/cool-help.html%2Bdiv.h1:19-5
 msgid "Keyboard Shortcuts"
@@ -2866,8 +2866,8 @@ msgstr ""
 #: html/cool-help.html%2Bdiv.div.h4:570-5
 msgid "Why can't I delete text? It just gets a strike-through?"
 msgstr ""
-"Per què no puc suprimir text? Només puc obtenur una ratlla per sobre les "
-"paraules?"
+"Per què no puc suprimir text? Tot el que obtinc és una ratlla per sobre les "
+"paraules."
 
 #: html/cool-help.html%2Bdiv.div.p:571-5
 msgid ""
@@ -2979,7 +2979,7 @@ msgstr "Ajusteu els marges en el diàleg."
 #: html/cool-help.html%2Bdiv.div.h4:592-5
 msgid "How do I change the page orientation to landscape inside my document"
 msgstr ""
-"Com  canviar en el document l'orientació de la pàgina i posar-lo apaïsat"
+"Com puc canviar en el document l'orientació de la pàgina i posar-lo apaïsat?"
 
 #: html/cool-help.html%2Bdiv.div.ol.li.p:594-11
 msgid ""
