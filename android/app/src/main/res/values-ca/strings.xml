@@ -15,9 +15,9 @@
     <string name="otg_warning">Funció experimental: feu-la servir només si es pot escriure al dispositiu OTG.</string>
     <string name="otg_device_path">Camí del dispositiu OTG</string>
     <string name="external_sd_path">Camí de la SD externa</string>
-    <string name="physical_storage_settings">Config. de l\'emmag. físic</string>
-    <string name="owncloud_settings">Config. del servidor al núvol</string>
-    <string name="storage_provider_settings">Config. del proveïdor d\'emmag.</string>
+    <string name="physical_storage_settings">Paràms. de l\'emmag. físic</string>
+    <string name="owncloud_settings">Paràms. del servidor al núvol</string>
+    <string name="storage_provider_settings">Paràms. del proveïdor d\'emmag.</string>
     <string name="pref_show_debug_info_summary">Activeu aquesta opció per a mostrar informació de depuració al visor de documents</string>
     <string name="pref_viewmode_summary">Mostra els fitxers en graella o en llista.</string>
     <string name="remote_server">Servidor remot</string>
@@ -75,7 +75,7 @@
     <string name="pref_sort_summary">Trieu com classificar els fitxers: A-Z, per mida o per data.</string>
     <string name="pref_show_hidden_files_summary">Activeu aquesta opció per a mostrar fitxers i carpetes amagats</string>
     <string name="pref_show_hidden_files">Fitxers i carpetes amagats</string>
-    <string name="pref_category_explorer">Configuració del gestor de fitxers</string>
+    <string name="pref_category_explorer">Paràmetres del gestor de fitxers</string>
     <string name="grid_view">Graella</string>
     <string name="list_view">Llista</string>
     <string name="failed_to_load_file">No s\'ha pogut determinar el fitxer a carregar</string>
@@ -101,7 +101,7 @@
     <string name="otg_missing_error">El fitxer d\'arrel no és vàlid. Comproveu el dispositiu OTG o la seva configuració.</string>
     <string name="ext_document_provider_error">El fitxer d\'arrel no és vàlid. Comproveu la configuració de la targeta SD.</string>
     <string name="pref_enable_chrome_debugger">Depuració del Chrome</string>
-    <string name="pref_category_editor">Configuració de l\'editor</string>
+    <string name="pref_category_editor">Paràmetres de l\'editor</string>
     <string name="remove_from_list">Treu de la llista</string>
     <string name="file_actions_icon_desc">Accions del fitxer</string>
     <string name="app_version_and_hash">Versió: %1$s
