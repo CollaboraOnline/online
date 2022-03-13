@@ -64,6 +64,11 @@ coolwsd.log
 *.lo
 *.mo
 
+gcov/*
+*.gcno
+*.gcda
+*.gcov
+
 # browser
 browser/debug
 browser/release

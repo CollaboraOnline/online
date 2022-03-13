@@ -22,6 +22,8 @@ constexpr int DEFAULT_CLIENT_PORT_NUMBER = 9980;
 
 #if VALGRIND_COOLFORKIT
 constexpr int TRACE_MULTIPLIER = 20;
+#elif CODE_COVERAGE
+constexpr int TRACE_MULTIPLIER = 5;
 #else
 constexpr int TRACE_MULTIPLIER = 1;
 #endif
