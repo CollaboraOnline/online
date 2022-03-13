@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-11 23:55+0100\n"
-"PO-Revision-Date: 2022-03-13 05:17+0000\n"
-"Last-Translator: Omar Macías Molina <omar.maciasmolina@gmail.com>\n"
+"PO-Revision-Date: 2022-03-13 21:44+0000\n"
+"Last-Translator: Adolfo Jayme Barrientos <fitojb@ubuntu.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/collabora-online/"
 "ui/ca/>\n"
 "Language: ca\n"
@@ -2089,12 +2089,12 @@ msgstr "Benvinguda del Collabora Online"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:26-7
 msgid "Explore The New %coolVersion"
-msgstr "Explora la Nova Versió %cool"
+msgstr "Doneu un cop d'ull a la nova %coolVersion"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:27-7
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:38-7
 msgid "Collabora Online Development Edition"
-msgstr "Collabora Online Development Edition"
+msgstr "Collabora Online, edició de desenvolupament"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:28-7
 msgid ""
@@ -2111,7 +2111,7 @@ msgstr "Següent"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h1:37-7
 msgid "Discover All The Changes"
-msgstr ""
+msgstr "Descobriu-ne tots els canvis"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:39-7
 msgid ""
@@ -2127,7 +2127,7 @@ msgstr "Impliqueu-vos-hi"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.h2:49-7
 msgid "https://collaboraonline.github.io/"
-msgstr ""
+msgstr "https://collaboraonline.github.io/ (en anglès)"
 
 #: welcome/welcome.html%2Bhtml.body.div.div.div.div.p:50-7
 msgid ""
