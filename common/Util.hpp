@@ -42,6 +42,15 @@
 
 #include <StringVector.hpp>
 
+#if CODE_COVERAGE
+extern "C"
+{
+    void __gcov_reset(void);
+    void __gcov_flush(void);
+    void __gcov_dump(void);
+}
+#endif
+
 /// Format seconds with the units suffix until we migrate to C++20.
 inline std::ostream& operator<<(std::ostream& os, const std::chrono::seconds& s)
 {

@@ -299,6 +299,11 @@ AC_ARG_WITH([infobar-url],
             AS_HELP_STRING([--with-infobar-url=<url>],
                            [Infobar URL.]))
 
+AC_ARG_WITH([coverage],
+             AS_HELP_STRING([--with-coverage=<gcov>],
+                            [Enable a code-coverage method. Currently only gcov is supported (works with both gcc and clang).
+                            Output HTML in gcov/ directory.]))
+
 AC_ARG_WITH([sanitizer],
              AS_HELP_STRING([--with-sanitizer],
                            [Enable one or more compatible sanitizers. E.g. --with-sanitizer=address,undefined,leak]))
@@ -842,6 +847,23 @@ if test -z "$enable_werror" -o "$enable_werror" = "yes"; then
 else
     AC_MSG_RESULT([no])
 fi
+
+# Code Coverage.
+AC_MSG_CHECKING([whether code-coverage is enabled])
+if test "x$with_coverage" != "x"; then
+    AC_MSG_RESULT([yes ($with_coverage)])
+    CODE_COVERAGE=1
+    CXXFLAGS="$CXXFLAGS --coverage"
+    CFLAGS="$CFLAGS --coverage"
+    LDFLAGS="$LDFLAGS -Wl,--dynamic-list-data --coverage"
+    coverage_msg="Code-Coverage is enabled"
+else
+    AC_MSG_RESULT([no])
+    CODE_COVERAGE=0
+    coverage_msg="Code-Coverage is disabled"
+fi
+AC_DEFINE_UNQUOTED([CODE_COVERAGE],[$CODE_COVERAGE],[Define to 1 if this is a code-coverage build.])
+AM_CONDITIONAL([ENABLE_CODE_COVERAGE], [test "$CODE_COVERAGE" = "1"])
 
 # Fuzzing.
 AC_MSG_CHECKING([whether to build fuzzers])
@@ -1562,6 +1584,7 @@ Configuration:
     Browsersync               $browsersync_msg
     cypress                   $cypress_msg
     C++ compiler flags        $CXXFLAGS
+    Code-Coverage             $coverage_msg
 
     \$ make # to compile"
 if test -n "$with_lo_path"; then

@@ -2164,6 +2164,10 @@ void COOLWSD::innerInitialize(Application& self)
         if (ChildRoot[ChildRoot.size() - 1] != '/')
             ChildRoot += '/';
 
+#if CODE_COVERAGE
+        ::setenv("BASE_CHILD_ROOT", Poco::Path(ChildRoot).absolute().toString().c_str(), 1);
+#endif
+
         // Create a custom sub-path for parallelized unit tests.
         if (UnitBase::isUnitTesting())
         {
@@ -2203,9 +2207,18 @@ void COOLWSD::innerInitialize(Application& self)
     // Initialize the config subsystem too.
     config::initialize(&config());
 
+    bool bindMount = getConfigValue<bool>(conf, "mount_jail_tree", true);
+#if CODE_COVERAGE
+    // Code coverage is not supported with bind-mounting.
+    if (bindMount)
+    {
+        LOG_WRN("Mounting is not compatible with code-coverage. Disabling.");
+        bindMount = false;
+    }
+#endif // CODE_COVERAGE
+
     // Setup the jails.
-    JailUtil::setupChildRoot(getConfigValue<bool>(conf, "mount_jail_tree", true), ChildRoot,
-                             SysTemplate);
+    JailUtil::setupChildRoot(bindMount, ChildRoot, SysTemplate);
 
     LOG_DBG("FileServerRoot before config: " << FileServerRoot);
     FileServerRoot = getPathFromConfig("file_server_root_path");
@@ -5307,7 +5320,12 @@ int COOLWSD::innerMain()
 #if !defined(KIT_IN_PROCESS) && !MOBILEAPP
     // Terminate child processes
     LOG_INF("Requesting forkit process " << ForKitProcId << " to terminate.");
-    SigUtil::killChild(ForKitProcId, SIGKILL);
+#if CODE_COVERAGE
+    constexpr auto signal = SIGTERM;
+#else
+    constexpr auto signal = SIGKILL;
+#endif
+    SigUtil::killChild(ForKitProcId, signal);
 #endif
 
     Server->stopPrisoners();
@@ -5430,6 +5448,11 @@ int COOLWSD::main(const std::vector<std::string>& /*args*/)
     UnitWSD::get().returnValue(returnValue);
 
     LOG_INF("Process [coolwsd] finished with exit status: " << returnValue);
+
+#if CODE_COVERAGE
+    __gcov_dump();
+#endif
+
     return returnValue;
 }
 
