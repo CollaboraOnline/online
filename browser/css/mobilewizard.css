@@ -334,7 +334,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 }
 
 .ui-header.mobile-wizard.disabled .ui-header-left * {
-	color: grey !important;
+	color: var(--color-text-lighter) !important;
 }
 
 .ui-header.mobile-wizard:active, .mobile-wizard.ui-combobox-text:active, .ui-header.mobile-wizard:focus, .mobile-wizard.ui-combobox-text:focus, .ui-header.mobile-wizard:hover, .mobile-wizard.ui-combobox-text:hover {
@@ -481,7 +481,7 @@ p.mobile-wizard.ui-combobox-text.selected {
 #mobile-wizard-header {
 	position: sticky;
 	top: 0;
-	background-color: white;
+	background-color: var(--color-background-lighter);
 	z-index: 2;
 }
 
@@ -635,8 +635,8 @@ input.ui-edit.mobile-wizard {
 a.leaflet-control-zoom-in {
 	border-radius: 100px !important;
 	padding: 8px !important;
-	background-color: #0b87e7 !important;
-	color: white !important;
+	background-color: var(--color-primary) !important;
+	color: var(--color-primary-text) !important;
 	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 6px 0 rgba(0, 0, 0, 0.19) !important;
 	border: none !important;
 }
@@ -658,7 +658,7 @@ a.leaflet-control-zoom-in {
 }
 
 .mobile-wizard.ui-combobox-text.checked {
-	color: #0b87e7 !important;
+	color: var(--color-primary-dark) !important;
 }
 
 .w2ui-icon.users{
@@ -674,7 +674,7 @@ a.leaflet-control-zoom-in {
 }
 #mobile-wizard #Color > img{
 	border-radius: 100px;
-	background-color: #696969;
+	background-color: var(--color-background);
 }
 #mobile-wizard .unoSendToBack > span, #mobile-wizard .unoObjectBackOne > span, #mobile-wizard  .unoObjectForwardOne > span, #mobile-wizard .unoBringToFront > span, #mobile-wizard .unoSetObjectToBackground > span, #mobile-wizard .unoSetObjectToForeground > #mobile-wizard span, #mobile-wizard .unoFlipVertical > span, #mobile-wizard .unoFlipHorizontal > span, #mobile-wizard .unoBold > span, #mobile-wizard .unoItalic > span, #mobile-wizard .unoUnderline > span, #mobile-wizard .unoStrikeout > span, #mobile-wizard .unoStyleApply > span, #mobile-wizard .unoStyleUpdateByExample > span, #mobile-wizard .unoStyleNewByExample > span, #mobile-wizard .unoShadowed > span, #mobile-wizard .unoGrow > span, #mobile-wizard .unoShrink > span, #mobile-wizard .unoColor > span, #mobile-wizard .unoSpacing > span, #mobile-wizard .unoSuperScript > span, #mobile-wizard .unoSubScript > span, #mobile-wizard .unoAlignLeft > span, #mobile-wizard .unoAlignRight > span, #mobile-wizard .unoAlignHorizontalCenter > span, #mobile-wizard .unoAlignBlock > span, #mobile-wizard .unoParaLeftToRight > span, #mobile-wizard .unoParaRightToLeft > span, #mobile-wizard .unoAlignTop > span, #mobile-wizard .unoAlignVCenter > span, #mobile-wizard .unoAlignBottom > span, #mobile-wizard .unoIncrementIndent > span, #mobile-wizard .unoDecrementIndent > span, #mobile-wizard .unoLeftPara > span, #mobile-wizard .unoRightPara > span, #mobile-wizard .unoCenterPara > span, #mobile-wizard .unoJustifyPara > span, #mobile-wizard .unoDefaultBullet > span, #mobile-wizard .unoDefaultNumbering > span, #mobile-wizard .unoParaspaceIncrease > span, #mobile-wizard .unoParaspaceDecrease > span, #mobile-wizard #LineSpacing > span, #mobile-wizard .unoHangingIndent > span, #mobile-wizard .unoCellVertTop > span, #mobile-wizard #CellVertCenter > span, #mobile-wizard .unoCellVertBottom > span, #mobile-wizard div[id*='Table'] > span, #mobile-wizard div[id*='Row'] > span,  #mobile-wizard div[id*='Column'] > span, #mobile-wizard div[id*='Cell'] > span, #mobile-wizard div[id^='Outline'] > span, #mobile-wizard #nolines > img, #mobile-wizard .unoSetObjectToForeground > span, .aligntoolbar {
 	display: none !important;
@@ -714,7 +714,7 @@ a.leaflet-control-zoom-in {
 }
 #DeleteTable > span{
 	font-weight: bold;
-	color: #e68497;
+	color: var(--color-error);
 	text-align: end;
 	vertical-align: bottom;
 }
@@ -803,8 +803,8 @@ div#mobile-wizard-content .spinfieldcontainer .spinfieldimage.disabled {
 }
 #mobile-wizard-content > .unobutton:focus, #mobile-wizard-content .unobutton:active{
 	outline: none;
-	background-color: #e5f1ff !important;
-	box-shadow: 0 0 0px 8px #e5f1ff;
+	background-color: var(--color-primary-lighter) !important;
+	box-shadow: 0 0 0px 8px var(--color-primary-lighter);
 	border-radius: 0.1px;
 }
 #mobile-wizard #buttonbefore{background: url('images/sc_wrapleft.svg') no-repeat center;}
@@ -926,7 +926,7 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 }
 #mobile-wizard #FontworkSameLetterHeights > * {
 	flex: 1 auto;
-	color: white;
+	color: var(--color-primary-text);
 }
 #mobile-wizard #FontworkSameLetterHeights > img {
 	filter: brightness(3);
@@ -949,7 +949,7 @@ input[type='checkbox']#UseBandingColumnStyle, input[type='checkbox']#UseLastColu
 #mobile-wizard button:active{
 	outline: none;
 	border: none;
-	background-color: #ebf2fb;
+	background-color: var(--color-primary-lighter);
 }
 #mobile-wizard button:disabled{
 	background-color: var(--color-background-lighter);

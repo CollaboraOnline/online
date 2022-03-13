@@ -235,15 +235,16 @@ kbd,
 }
 
 .vex.vex-theme-plain .vex-content.vex-locking .vex-dialog-button-primary {
-	background-color: #fda918;
-	color: white;
-	border-color: #cc8202;
-	text-shadow: 0 0 8px #cc8202;
+	background-color: var(--color-primary);
+	color: var(--color-primary-text);
+	border-color: var(--color-primary-dark);
+	text-shadow: 0 0 8px var(--color-primary-dark);
 }
 
 .vex.vex-theme-plain .vex-content.vex-locking .vex-dialog-button-primary:hover {
-	border-color: #fda918 !important;
-	color: #cc8202 !important;
+	border-color: var(--color-primary-darker) !important;
+	background-color: var(--color-primary-darker);
+	color: var(--color-primary-text);
 	text-shadow: none;
 }
 
@@ -328,8 +329,8 @@ kbd,
 	margin-left: 164px;
 }
 .author-info {
-	background: rgba(0, 0, 0, 0.75);
-	color: white;
+	background: var(--color-main-background);
+	color: var(--color-main-text);
 	padding: 0.75rem;
 	text-align: center;
 	position: absolute;
@@ -339,14 +340,15 @@ kbd,
 	margin: 0;
 }
 .author-info a {
-	color: white;
+	background: var(--color-main-background);
+	color: var(--color-main-text);
 }
 
 .slider > [id^='i-slide'] {
 	display: inline-flex;
 	width: 14px;
 	height: 14px;
-	background: linear-gradient(to top, #d6d6d6, #bababa);
+	background: linear-gradient(to top, var(--color-background), var(--color-background-darker));
 	text-decoration: none;
 	align-items: center;
 	justify-content: center;

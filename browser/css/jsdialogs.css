@@ -889,7 +889,7 @@ input[type='number']:hover::-webkit-outer-spin-button {
 #busypopup.jsdialog-container {
 	min-width: 200px;
 	min-height: 100px;
-	background: white;
+	background: var(--color-background-lighter);
 }
 
 #busypopup .lokdialog {

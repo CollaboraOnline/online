@@ -382,7 +382,7 @@
 
 #mobile-wizard:not(.menuwizard) .locking-overlay {
 	top: -38px;
-	background: white;
+	background: var(--color-background-lighter);
 	left: -8px;
 	box-shadow: 0 0 1px 2px #00000025;
 }
@@ -437,14 +437,14 @@
 }
 .sidebar .locking-overlay-lock {
 	width: 20px;
-	background-color: white;
+	background-color: var(--color-background-lighter);
 	padding: 1px;
 }
 .sidebar .locking-disabled:hover .locking-overlay-lock {
 	margin-top: -20px;
 }
 .sidebar .locking-disabled button:hover ~ .locking-overlay {
-	box-shadow: 0 0 4px 0 #0b87e7;
+	box-shadow: 0 0 4px 0 var(--color-primary-darker);
 }
 .restricted-item {
 	display: none !important;
